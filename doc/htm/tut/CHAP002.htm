@@ -1,0 +1,744 @@
+<html><head><title>[tut] 2 A First Session with GAP</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 A First Session with GAP</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP002.htm#SECT001">Starting and Leaving GAP</a>
+<li> <A HREF="CHAP002.htm#SECT002">Loading Source Code from a File</a>
+<li> <A HREF="CHAP002.htm#SECT003">The Read Evaluate Print Loop</a>
+<li> <A HREF="CHAP002.htm#SECT004">Constants and Operators</a>
+<li> <A HREF="CHAP002.htm#SECT005">Variables versus Objects</a>
+<li> <A HREF="CHAP002.htm#SECT006">Objects vs. Elements</a>
+<li> <A HREF="CHAP002.htm#SECT007">About Functions</a>
+<li> <A HREF="CHAP002.htm#SECT008">Help</a>
+<li> <A HREF="CHAP002.htm#SECT009">Further Information introducing the System</a>
+</ol><p>
+<p>
+This tutorial introduces you to  the <font face="Gill Sans,Helvetica,Arial">GAP</font>  system.  It is written  with
+users in mind who have just managed to start <font face="Gill Sans,Helvetica,Arial">GAP</font> for the first time on
+their computer and want to learn the basic facts  about <font face="Gill Sans,Helvetica,Arial">GAP</font> by playing
+around with some instructive  examples. Therefore, this tutorial contains
+at many  places several lines of  input  (which you  should type  on your
+terminal) followed by the corresponding output  (which <font face="Gill Sans,Helvetica,Arial">GAP</font> produces as
+an answer to your input).
+<pre>
+This ``session protocol'' is indented and printed in typewriter style
+(like this paragraph) in this tutorial and should look exactly as it
+looks on your text terminal or text window.
+</pre>
+This is  to encourage you to actually  run through these examples on your
+computer. This will support your  feeling for <font face="Gill Sans,Helvetica,Arial">GAP</font>  as a tool, which is
+the leading aim of this  tutorial. Do not believe any  statement in it as
+long  as you cannot verify  it for your own  version of  <font face="Gill Sans,Helvetica,Arial">GAP</font>. You will
+learn to distinguish  between small  deviations of  the behavior of  your
+personal <font face="Gill Sans,Helvetica,Arial">GAP</font> from the printed examples and serious nonsense.
+<p>
+Since the printing routines of <font face="Gill Sans,Helvetica,Arial">GAP</font> are in some sense machine dependent
+you will for instance encounter a different layout of the printed objects
+in different environments.  But the  contents should always be the  same.
+In case you encounter serious nonsense  it is highly recommended that you
+send a bug report to <a href="mailto:support@gap-system.org">support@gap-system.org</a>.
+<p>
+The  examples in this  tutorial should explain  everything you have to
+know in order  to be able  to use <font face="Gill Sans,Helvetica,Arial">GAP</font>.   The reference  manual then
+gives a more systematic treatment of the various types of objects that
+<font face="Gill Sans,Helvetica,Arial">GAP</font> can manipulate.   It   seems desirable neither to    start this
+systematic  course  with  the   most   elementary (and  most   boring)
+structures, nor to confront you with all the complex data types before
+you know how  they are composed from  elementary structures.  For this
+reason this tutorial  wants to provide  you with a basic understanding
+of <font face="Gill Sans,Helvetica,Arial">GAP</font> objects, on which the reference  manual will then build when
+it  explains everything in  detail.   So  after having mastered   this
+tutorial, you can immediately plunge into the exciting parts of <font face="Gill Sans,Helvetica,Arial">GAP</font>
+and  only read detailed  information about  elementary things (in  the
+reference manual) when you really need them.
+<p>
+Each chapter of this tutorial contains an  overview of its sections at
+the beginning,  and a section  with references to the reference manual
+at the end.
+<p>
+<p>
+<h2><a name="SECT001">2.1 Starting and Leaving GAP</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+<a name = "I1"></a>
+
+<a name = "I2"></a>
+
+If the  program is correctly  installed then you usually start <font face="Gill Sans,Helvetica,Arial">GAP</font> by
+simply
+typing  <code>gap</code> at  the  prompt of your   operating system followed by  the
+<var>return</var> key, sometimes this is also called the <var>newline</var> key.
+<pre>
+$ gap
+</pre>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> answers your request with its beautiful banner and then it shows
+its own prompt <code>gap&gt;</code> asking you for further input.
+(You can avoid the banner with the command line option <code>-b</code>;
+more command line options are described in
+Section&nbsp;<a href="../ref/CHAP003.htm#SECT001">Command Line Options</a> in the reference manual.)
+<pre>
+gap&gt; 
+</pre>
+The usual  way to end a  <font face="Gill Sans,Helvetica,Arial">GAP</font> session is  to type <code>quit;</code> at the <code>gap&gt;</code>
+prompt. Do not omit the semicolon!
+<pre>
+gap&gt; quit;
+$ 
+</pre>
+On some systems you could type  <var>ctl</var>-<code>D</code> to yield the same effect.
+In any situation   <font face="Gill Sans,Helvetica,Arial">GAP</font> is ended by  typing  <var>ctl</var>-<code>C</code> twice  within  a
+second. Here as always, a combination like  <var>ctl</var>-<code>D</code> means that you have
+to press the <code>D</code> key while you hold down the <var>ctl</var> key.
+<p>
+On some systems (for example the Apple Macintosh) minor changes might be
+necessary. This is explained in chapter <a href="../ref/CHAP073.htm">Installing GAP</a> in the reference
+manual.
+<p>
+<a name = "I3"></a>
+
+In  most   places <strong>whitespace</strong>  characters   (i.e.  <var>space</var>s, <var>tab</var>s  and
+<var>return</var>s) are insignificant for the meaning of <font face="Gill Sans,Helvetica,Arial">GAP</font> input. Identifiers
+and keywords must however not contain any whitespace.  On the other hand,
+sometimes there  must be  whitespace  around identifiers and keywords  to
+separate them from each other and from numbers. We will use whitespace to
+format more complicated commands for better readability.
+<p>
+<a name = "I4"></a>
+
+A <strong>comment</strong> in  <font face="Gill Sans,Helvetica,Arial">GAP</font> starts with the  symbol <code>#</code> and continues to  the
+end of the line. Comments are  treated like whitespace  by <font face="Gill Sans,Helvetica,Arial">GAP</font>. We use
+comments in   the printed examples  in this  tutorial to  explain certain
+lines of input or output.
+<p>
+You should be able to reproduce the results of the <strong>examples</strong> of <font face="Gill Sans,Helvetica,Arial">GAP</font>
+sessions in this manual, in the following sense.
+If you start the <font face="Gill Sans,Helvetica,Arial">GAP</font> session with the two commands
+<pre>
+gap&gt; SizeScreen( [ 80, ] ); LogTo( "logfile1" );
+</pre>
+(which are used to set the line length to 80 if this isn't already your
+default line length and to save a listing of
+the session on some file), then choose any chapter and rerun its
+examples in one continuous session and in the given order, the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+output should look like the output shown in the manual, except for a
+few lines of output which we have edited a little bit with respect to
+blanks or line breaks in order to improve the readability.  However,
+when random processes are involved, you may get different results if
+you extract single examples and run them separately.
+<p>
+<p>
+<h2><a name="SECT002">2.2 Loading Source Code from a File</a></h2>
+<p><p>
+<a name = "I5"></a>
+
+<a name = "I6"></a>
+
+<a name = "I7"></a>
+
+The most convenient way of creating larger pieces of <font face="Gill Sans,Helvetica,Arial">GAP</font> code is to
+write them to some text file -- for this purpose you can simply use your
+favorite text editor.
+You can load such a file into <font face="Gill Sans,Helvetica,Arial">GAP</font> using the <code>Read</code> function:
+<pre>
+gap&gt; Read("../../GAPProgs/Example.g");
+</pre>
+You can either give the full absolute path name of the source file or
+its relative path name from the <font face="Gill Sans,Helvetica,Arial">GAP</font> root directory (the directory
+containing <code>bin/</code>, <code>doc/</code>, <code>lib/</code>, etc.).
+<p>
+<p>
+<h2><a name="SECT003">2.3 The Read Evaluate Print Loop</a></h2>
+<p><p>
+<a name = "I8"></a>
+
+<font face="Gill Sans,Helvetica,Arial">GAP</font>  is  an   interactive   system.    It  continuously   executes   a
+read evaluate print loop.  Each  expression you type  at the  keyboard is
+read by <font face="Gill Sans,Helvetica,Arial">GAP</font>, evaluated, and then the result is shown.
+<p>
+The interactive nature of <font face="Gill Sans,Helvetica,Arial">GAP</font> allows you to type  an expression at the
+keyboard and see its value immediately.  You can  define a  function  and
+apply it to arguments  to  see how  it  works.  You may  even write whole
+programs containing lots  of functions and test them without leaving  the
+program.
+<p>
+When  your program is large it  will be more  convenient to write it on a
+file and then read that file  into <font face="Gill Sans,Helvetica,Arial">GAP</font>. Preparing  your functions in a
+file   has  several advantages.  You  can   compose  your functions  more
+carefully in a  file (with your favorite  text  editor), you can  correct
+errors without retyping  the whole function and you  can keep a  copy for
+later use. Moreover you can write lots of comments into the program text,
+which are ignored  by <font face="Gill Sans,Helvetica,Arial">GAP</font>, but are   very useful for  human readers of
+your program text. <font face="Gill Sans,Helvetica,Arial">GAP</font> treats  input from a  file in the same way that
+it treats input from the keyboard. Further details can be found in
+section <a href="../ref/CHAP009.htm#SSEC007.1">Read</a> in the Reference Manual.
+<p>
+A simple calculation with <font face="Gill Sans,Helvetica,Arial">GAP</font> is as easy as one can imagine.  You type
+the problem just after the prompt, terminate it with a semicolon and then
+pass the problem to the  program with the <var>return</var> key.  For  example, to
+multiply the difference between 9 and 7 by the sum of 5 and 6, that is to
+calculate  (9 <font face="symbol">&#8722;</font> 7) * (5 + 6), you type exactly this  last sequence  of
+symbols followed by <code>;</code> and <var>return</var>.
+<pre>
+gap&gt; (9 - 7) * (5 + 6);
+22
+gap&gt; 
+</pre>
+Then <font face="Gill Sans,Helvetica,Arial">GAP</font> echoes   the result 22 on the   next line and shows with  the
+prompt  that it is ready  for the  next problem.  Henceforth,  we will no
+longer print this additional prompt.
+<p>
+<a name = "I9"></a>
+
+If you make a mistake while typing the line,
+but <strong>before</strong> typing the final <var>return</var>,
+you can use the <var>delete</var> key (or sometimes <var>backspace</var> key)
+to delete the last typed character.
+You can also move the cursor back and forward in the line with <var>ctl</var>-<code>B</code>
+and <var>ctl</var>-<code>F</code> and insert or delete characters anywhere in the line.
+The line editing commands are fully described
+in section&nbsp;<a href="../ref/CHAP006.htm#SECT008">Line Editing</a> of the reference manual.
+<p>
+If you did omit the semicolon at the end of  the line but have already
+typed  <var>return</var>, then <font face="Gill Sans,Helvetica,Arial">GAP</font> has  read  everything you typed, but does
+not know  that the command  is  complete.  The program is  waiting for
+further  input and indicates  this with  a  partial prompt <code>&gt;</code>.   This
+problem is solved by simply  typing the missing  semicolon on the next
+line  of  input. Then  the result  is printed   and  the normal prompt
+returns.
+<pre>
+gap&gt; (9 - 7) * (5 + 6)
+&gt; ;
+22
+</pre>
+So the input can consist of several lines, and <font face="Gill Sans,Helvetica,Arial">GAP</font> prints a partial
+prompt <code>&gt;</code> in each input line except the first, until the command is
+completed with a semicolon.
+(<font face="Gill Sans,Helvetica,Arial">GAP</font> may already evaluate part of the input when <var>return</var> is typed,
+so for long calculations it might take some time until the partial prompt
+appears.)
+Whenever you see the partial prompt and you cannot decide what <font face="Gill Sans,Helvetica,Arial">GAP</font> is
+still  waiting for, then  you have  to type  semicolons  until the normal
+prompt returns.
+In  every situation the exact meaning of the prompt <code>gap&gt;</code> is that the
+program is waiting for a new problem.
+<p>
+But even if you  mistyped the command more  seriously, you do not have to
+type   it all again. Suppose   you  mistyped or  forgot  the last closing
+parenthesis. Then your command is syntactically incorrect and <font face="Gill Sans,Helvetica,Arial">GAP</font> will
+notice it, incapable of computing the desired result.
+<pre>
+gap&gt; (9 - 7) * (5 + 6;
+Syntax error: ) expected
+(9 - 7) * (5 + 6;
+                ^
+</pre>
+
+Instead of the result an error message  occurs indicating the place where
+an unexpected  symbol occurred with   an arrow sign  <code>^</code>  under it.  As a
+computer program  cannot know what your  intentions really were,  this is
+only  a hint. But in this  case <font face="Gill Sans,Helvetica,Arial">GAP</font>  is  right by  claiming that there
+should be a closing  parenthesis before the  semicolon. Now you  can type
+<var>ctl</var>-<code>P</code> to recover the last line of input. It will be written after the
+prompt with the cursor in the first  position. Type <var>ctl</var>-<code>E</code> to take the
+cursor  to the end of   the line, then <var>ctl</var>-<code>B</code>   to move the cursor one
+character back. The cursor is now on the position of the semicolon. Enter
+the missing parenthesis by simply typing <code>)</code>. Now the line is correct and
+may be passed to <font face="Gill Sans,Helvetica,Arial">GAP</font>  by hitting the <var>return</var>  key. Note that for this
+action it is not necessary to move the cursor  past the last character of
+the input line.
+<p>
+Each line  of commands  you  type is sent to    <font face="Gill Sans,Helvetica,Arial">GAP</font> for evaluation  by
+pressing <var>return</var> regardless of the position of  the cursor in that line.
+We will no longer mention the <var>return</var> key from now on.
+<p>
+<a name = "I10"></a>
+
+Sometimes a syntax error will cause <font face="Gill Sans,Helvetica,Arial">GAP</font> to enter a <strong>break loop</strong>.  This
+is indicated by the special prompt <code>brk&gt;</code>. If another syntax error occurs
+while  <font face="Gill Sans,Helvetica,Arial">GAP</font> is in  a break loop, the prompt  will  change to <code>brk_02&gt;</code>,
+<code>brk_03&gt;</code> and so on. You can leave the current break loop and exit to the
+next outer one by either typing <code>quit;</code> or by hitting <var>ctl</var>-<code>D</code>.
+Eventually <font face="Gill Sans,Helvetica,Arial">GAP</font> will return to its normal state and show its normal
+prompt <code>gap&gt;</code> again.
+<p>
+<p>
+<h2><a name="SECT004">2.4 Constants and Operators</a></h2>
+<p><p>
+<a name = "I11"></a>
+
+<a name = "I11"></a>
+<a name = "I12"></a>
+
+In an  expression like <code>(9  - 7) * (5 +  6)</code> the constants <code>5</code>, <code>6</code>, <code>7</code>,
+and <code>9</code> are being composed by the operators <code>+</code>, <code>*</code> and <code>-</code> to result in
+a new value.
+<p>
+There are  three kinds  of operators in  <font face="Gill Sans,Helvetica,Arial">GAP</font>, arithmetical  operators,
+comparison operators, and logical operators.  You  have already seen that
+it is possible to form  the sum,  the  difference, and the product of two
+integer values.  There are some  more operators applicable to integers in
+<font face="Gill Sans,Helvetica,Arial">GAP</font>.   Of  course integers  may  be divided  by  each other,  possibly
+resulting in noninteger rational values.
+<pre>
+gap&gt; 12345/25;
+2469/5
+</pre>
+Note  that  the numerator and denominator  are divided by their  greatest
+common divisor  and that the result is uniquely represented as a division
+instruction.
+<p>
+We     haven't met negative numbers      yet.  So consider the  following
+self-explanatory examples.
+<pre>
+gap&gt; -3; 17 - 23;
+-3
+-6
+</pre>
+The exponentiation   operator  is  written  as  <code>^</code>. This   operation  in
+particular might lead  to  very large numbers.  This  is  no problem  for
+<font face="Gill Sans,Helvetica,Arial">GAP</font> as it can handle numbers of (almost) any size.
+<pre>
+gap&gt; 3^132;
+955004950796825236893190701774414011919935138974343129836853841
+</pre>
+The <code>mod</code> operator allows you to compute one value modulo another.
+<pre>
+gap&gt; 17 mod 3;
+2
+</pre>
+Note  that  there must be   whitespace around the  keyword  <code>mod</code> in this
+example since <code>17mod3</code> or <code>17mod</code> would be interpreted as identifiers.
+The whitespace around operators that do not consist of letters, e.g.,
+the operators <code>*</code> and <code>-</code>, is not necessary.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font>  knows a  precedence  between operators that may be overridden  by
+parentheses.
+<pre>
+gap&gt; (9 - 7) * 5 = 9 - 7  * 5;
+false
+</pre>
+Besides these arithmetical operators there are comparison operators in
+<font face="Gill Sans,Helvetica,Arial">GAP</font>. A comparison results  in a  <strong>boolean  value</strong> which is  another
+kind  of constant.  The comparison  operators <code>=</code>, <code>&lt;&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>,
+<code>&gt;</code> and <code>&gt;=</code>,  test for equality, inequality,  less than, less than or
+equal, greater than and greater than or equal, respectively.
+<pre>
+gap&gt; 10^5 &lt; 10^4;
+false
+</pre>
+The boolean values  <code>true</code> and   <code>false</code>  can be  manipulated via logical
+operators, i.&nbsp;e., the unary operator <code>not</code> and the binary operators <code>and</code>
+and <code>or</code>.  Of course boolean values can be compared, too.
+<pre>
+gap&gt; not true; true and false; true or false;
+false
+false
+true
+gap&gt; 10 &gt; 0 and 10 &lt; 100;
+true
+</pre>
+Another important  type of constants in   <font face="Gill Sans,Helvetica,Arial">GAP</font> are <strong>permutations</strong>. They
+are written in cycle notation and they can be multiplied.
+<pre>
+gap&gt; (1,2,3);
+(1,2,3)
+gap&gt; (1,2,3) * (1,2);
+(2,3)
+</pre>
+The inverse of the   permutation  <code>(1,2,3)</code> is denoted   by <code>(1,2,3)^-1</code>.
+Moreover the caret operator <code>^</code> is used to determine the image of a point
+under a permutation and to conjugate one permutation by another.
+<pre>
+gap&gt; (1,2,3)^-1;
+(1,3,2)
+gap&gt; 2^(1,2,3);
+3
+gap&gt; (1,2,3)^(1,2);
+(1,3,2)
+</pre>
+The various other constants that <font face="Gill Sans,Helvetica,Arial">GAP</font> can deal with will be introduced
+when they are used, for example there are elements of finite fields
+such as <code>Z(8)</code>, and complex roots of unity such as <code>E(4)</code>.
+<p>
+The    last  type  of   constants  we  want  to mention    here are the
+<strong>characters</strong>, which are simply objects in <font face="Gill Sans,Helvetica,Arial">GAP</font> that represent arbitrary
+characters  from  the character set   of the  operating system. Character
+literals can  be  entered   in  <font face="Gill Sans,Helvetica,Arial">GAP</font> by  enclosing  the   character  in
+<strong>singlequotes</strong> <code>'</code>.
+<pre>
+gap&gt; 'a';
+'a'
+gap&gt; '*';
+'*'
+</pre>
+There are no  operators defined for characters except that characters can
+be compared.
+<p>
+In this  section you  have  seen that values  may  be preceded  by  unary
+operators  and combined by  binary operators placed between the operands.
+There are rules for precedence which may be overridden by parentheses.  A
+comparison  results in a boolean value.   Boolean values are combined via
+logical operators.  Moreover you have seen that <font face="Gill Sans,Helvetica,Arial">GAP</font> handles numbers of
+arbitrary size.   Numbers and boolean   values are constants.   There are
+other types of  constants in <font face="Gill Sans,Helvetica,Arial">GAP</font> like permutations.   You are now in a
+position to use <font face="Gill Sans,Helvetica,Arial">GAP</font> as a simple desktop calculator.
+<p>
+<p>
+<h2><a name="SECT005">2.5 Variables versus Objects</a></h2>
+<p><p>
+<a name = "I13"></a>
+
+<a name = "I13"></a>
+<a name = "I14"></a>
+
+<a name = "I13"></a>
+<a name = "I14"></a>
+<a name = "I15"></a>
+
+<a name = "I13"></a>
+<a name = "I14"></a>
+<a name = "I15"></a>
+<a name = "I16"></a>
+
+<a name = "I17"></a>
+
+The  constants described  in the  last  section are  specified by certain
+combinations   of digits and  minus  signs (in  the case  of integers) or
+digits,  commas  and parentheses  (in   the case  of permutations). These
+sequences of characters always  have the same meaning  to <font face="Gill Sans,Helvetica,Arial">GAP</font>.  On the
+other hand, there are <strong>variables</strong>, specified by a sequence of letters and
+digits (including at least one letter), and their meaning depends on what
+has been  assigned to them.  An <strong>assignment</strong> is  done by a <font face="Gill Sans,Helvetica,Arial">GAP</font> command
+<code></code><var>sequence_of_letters_and_digits</var><code> := </code><var>meaning</var><code></code>,  where the  sequence  on
+the left hand side is called the <strong>identifier</strong>  of the variable and it serves
+as its name. The meaning on the right hand side can be a constant like an
+integer or  a  permutation, but  it can  also be almost  any other <font face="Gill Sans,Helvetica,Arial">GAP</font>
+object. From now on,  we will use the  term <strong>object</strong> to denote  something
+that can be assigned to a variable.
+<p>
+There must be no whitespace between the <code>:</code> and the <code>=</code> in the assignment
+operator.  Also do not confuse  the  assignment operator with the  single
+equality sign <code>=</code> which in <font face="Gill Sans,Helvetica,Arial">GAP</font> is only used for the test of equality.
+<pre>
+gap&gt; a:= (9 - 7) * (5 + 6);
+22
+gap&gt; a;
+22
+gap&gt; a * (a + 1);
+506
+gap&gt; a = 10;
+false
+gap&gt; a:= 10;
+10
+gap&gt; a * (a + 1);
+110
+</pre>
+After an assignment the assigned object is echoed on the  next line.  The
+printing of the  object of a statement may  be in every case prevented by
+typing a double semicolon.
+<pre>
+gap&gt; w:= 2;; 
+</pre>
+After the assignment the variable evaluates  to that object if evaluated.
+Thus it is possible to  refer to that object by  the name of the variable
+in any situation.
+<p>
+This is in fact the whole secret of an assignment. An identifier is bound
+to an  object and from this moment  points to that object.  Nothing more.
+This binding  is changed by the  next  assignment to that  identifier. An
+identifier does not denote a block of memory as in some other programming
+languages. It simply points to an object, which has  been given its place
+in memory by the <font face="Gill Sans,Helvetica,Arial">GAP</font> storage manager.   This place may change during a
+<font face="Gill Sans,Helvetica,Arial">GAP</font> session, but that doesn't  bother the identifier.  <strong>The identifier
+points to the object, not to a place in the memory.</strong>
+<p>
+For the  same reason it is  not the  identifier that has   a type but the
+object.  This means  on the other hand that  the identifier <code>a</code> which now
+is bound to an integer object may in the  same session point to any other
+object regardless of its type.
+<p>
+Identifiers  may be sequences  of letters and digits containing at  least
+one letter.   For example  <code>abc</code> and <code>a0bc1</code>  are valid identifiers.  But
+also <code>123a</code>  is  a valid identifier as  it cannot be  confused  with  any
+number.  Just <code>1234</code> indicates the  number 1234 and cannot be at the same
+time the name of a variable.
+<p>
+Since  <font face="Gill Sans,Helvetica,Arial">GAP</font> distinguishes  upper and  lower  case, <code>a1</code>  and  <code>A1</code>  are
+different  identifiers.   Keywords  such as <code>quit</code>  must not  be used  as
+identifiers.  You will see more keywords in the following sections.
+<p>
+In  the remaining  part of  this manual   we  will ignore the  difference
+between variables, their names  (identifiers), and the objects they point
+to.  It may be useful  to think from time  to  time about what is  really
+meant by terms such as ``the integer <code>w</code>''.
+<p>
+There are some predefined variables coming with <font face="Gill Sans,Helvetica,Arial">GAP</font>.  Many of them you
+will find in the remaining  chapters of  this manual, since functions are
+also referred to via identifiers.
+<p>
+You    can get   an  overview   of  <strong>all</strong>  <font face="Gill Sans,Helvetica,Arial">GAP</font>   variables by entering
+<code>NamesGVars()</code>.  Many of these are predefined.  If  you are interested in
+the variables you  have defined yourself  in the current <font face="Gill Sans,Helvetica,Arial">GAP</font>  session,
+you can enter <code>NamesUserGVars()</code>.
+<pre>
+gap&gt; NamesUserGVars();
+[ "a", "w" ]
+</pre>
+This seems to be the  right place to state the  following rule:
+The name of every global variable in the <font face="Gill Sans,Helvetica,Arial">GAP</font> library starts with a
+<strong>capital letter</strong>.
+Thus if you choose only names starting with a small letter for your own
+variables you will not attempt to overwrite any predefined variable.
+(Note that most of the predefined variables are read-only,
+and trying to change their values will result in an error message.)
+<p>
+There are some further interesting variables one of which will be
+introduced now.
+<p>
+<a name = "I18"></a>
+
+<a name = "I18"></a>
+<a name = "I19"></a>
+
+<a name = "I18"></a>
+<a name = "I19"></a>
+<a name = "I20"></a>
+
+Whenever <font face="Gill Sans,Helvetica,Arial">GAP</font> returns an object by printing it  on  the next  line this
+object is assigned to the variable <code>last</code>.  So if you computed
+<pre>
+gap&gt; (9 - 7) * (5 + 6);
+22
+</pre>
+and forgot to assign the object to the  variable <code>a</code> for further use, you
+can still do it by the following assignment.
+<pre>
+gap&gt; a:= last;
+22
+</pre>
+Moreover there are variables <code>last2</code> and <code>last3</code>, you can guess their values.
+<p>
+In this section you  have seen how to  assign objects to variables. These
+objects  can  later be accessed  through the  name  of the  variable, its
+identifier. You  have also encountered the  useful concept of  the <code>last</code>
+variables storing the latest returned  objects. And you have learned that
+a double semicolon prevents the result of a statement from being printed.
+<p>
+<p>
+<h2><a name="SECT006">2.6 Objects vs. Elements</a></h2>
+<p><p>
+<a name = "I21"></a>
+
+<a name = "I21"></a>
+<a name = "I22"></a>
+
+In the last section  we mentioned that every object   is given a  certain
+place  in memory by the  <font face="Gill Sans,Helvetica,Arial">GAP</font> storage manager  (although that place may
+change in the course  of  a <font face="Gill Sans,Helvetica,Arial">GAP</font>  session). In  this sense, objects  at
+different places in memory are never equal, and if  the object pointed to
+by the  variable  <code>a</code> (to be more  precise,  the variable with identifier
+<code>a</code>)  is  equal to the   object pointed to by  the  variable <code>b</code>, then we
+should better  say that they  are not only  equal but <strong>identical</strong>. <font face="Gill Sans,Helvetica,Arial">GAP</font>
+provides the function <code>IsIdenticalObj</code> to test whether this is the case.
+<p>
+<pre>
+gap&gt; a:= (1,2);; IsIdenticalObj( a, a );
+true
+gap&gt; b:= (1,2);; IsIdenticalObj( a, b );
+false
+gap&gt; b:= a;; IsIdenticalObj( a, b );
+true
+</pre>
+<p>
+<a name = "I23"></a>
+
+As the above example indicates, <font face="Gill Sans,Helvetica,Arial">GAP</font>
+objects  <var>a</var>  and  <var>b</var> can  be  unequal  although they are   equal from a
+mathematical point of view, i.e., although we should have <code></code><var>a</var><code> = </code><var>b</var><code></code>. It
+may  be that the objects <var>a</var>  and <var>b</var> are  stored  in different places in
+memory, or it may be that we have  an equivalence relation defined on the
+set of  objects under which <var>a</var>  and <var>b</var> belong   to the same equivalence
+class.  For example, if <code></code><var>a</var><code>  = <i>x</i><sup>3</sup></code> and  <code></code><var>b</var><code> = <i>x</i><sup><font face="symbol">&#8722;</font>5</sup></code> are words in
+the finitely presented group <font face="symbol">&#9001;</font><i>x</i> | <i>x</i><sup>2</sup>=1<font face="symbol">&#9002;</font>, we would have
+<code></code><var>a</var><code> = </code><var>b</var><code></code> in that group.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font>   uses  the equality operator  <code>=</code>  to  denote such a mathematical
+equality, <strong>not</strong> the identity of objects. Hence we often  have <code></code><var>a</var><code> = </code><var>b</var><code></code>
+although <code>IsIdenticalObj( </code><var>a</var><code>, </code><var>b</var><code> ) =  false</code>.  The operator <code>=</code> defines
+an equivalence relation on the set of all <font face="Gill Sans,Helvetica,Arial">GAP</font> objects, and we call the
+corresponding  equivalence classes <strong>elements</strong>.   Phrasing it differently,
+the same element may be represented by various <font face="Gill Sans,Helvetica,Arial">GAP</font> objects.
+<p>
+Non-trivial examples of   elements   that are represented by    different
+objects (objects  that really  look different,  not ones  that are merely
+stored in  different  memory places)  will  occur only   when  we will be
+considering composite objects such as lists or domains.
+<p>
+<p>
+<h2><a name="SECT007">2.7 About Functions</a></h2>
+<p><p>
+A  program  written  in  the  <font face="Gill Sans,Helvetica,Arial">GAP</font> language  is  called  a  <strong>function</strong>.
+Functions  are   special  <font face="Gill Sans,Helvetica,Arial">GAP</font>  objects.   Most  of  them  behave  like
+mathematical functions.  They are applied to  objects and  will return  a
+new  object  depending  on  the input.   The  function  <code>Factorial</code>,  for
+example,  can be applied to an  integer and will  return the factorial of
+this integer.
+<pre>
+gap&gt; Factorial(17);
+355687428096000
+</pre>
+Applying  a  function  to arguments  means  to  write  the  arguments  in
+parentheses following the function.   Several arguments are  separated by
+commas, as for the  function  <code>Gcd</code> which  computes  the greatest  common
+divisor of two integers.
+<pre>
+gap&gt; Gcd(1234, 5678);
+2
+</pre>
+There   are other functions that  do  not return   an  object but only
+produce  a side effect, for  example changing one  of their arguments.
+These functions are sometimes called procedures.  The function <code>Print</code>
+is only called for the side effect of printing something on the screen.
+<pre>
+gap&gt; Print(1234, "\n");
+1234
+</pre>
+In order to be able to compose arbitrary text with <code>Print</code>, this function
+itself will not produce a line break  after printing. Thus we had another
+newline character <code>"\n"</code> printed to start a new line.
+<p>
+Some functions will both change an argument  and return an object such as
+the function <code>Sortex</code>  that sorts a  list and returns the permutation  of
+the list  elements that it has  performed.  You will not understand right
+now what it means  to change an object.   We will return to this  subject
+several times in the next sections.
+<p>
+<a name = "I24"></a>
+
+A comfortable way to define a function yourself is the <strong>maps-to</strong> operator
+<code>-&gt;</code> consisting of  a minus sign and a   greater sign with  no whitespace
+between them. The function  <code>cubed</code> which maps a  number  to its  cube is
+defined on the following line.
+<pre>
+gap&gt; cubed:= x -&gt; x^3;
+function( x ) ... end
+</pre>
+After the function has been defined, it can now be applied.
+<pre>
+gap&gt; cubed(5);
+125
+</pre>
+More complicated  functions,  especially  functions with   more  than one
+argument cannot be defined in this way.
+You will see how to write your own <font face="Gill Sans,Helvetica,Arial">GAP</font> functions in
+Section&nbsp;<a href="CHAP004.htm#SECT001">Writing Functions</a>.
+<p>
+In  this section you have seen <font face="Gill Sans,Helvetica,Arial">GAP</font> objects of type function.  You have
+learned how to apply a function to  arguments.  This  yields as result  a
+new object or a side effect.  A side effect may change an argument of the
+function.   Moreover you have seen an easy  way  to define a  function in
+<font face="Gill Sans,Helvetica,Arial">GAP</font> with the maps-to operator.
+<p>
+<p>
+<h2><a name="SECT008">2.8 Help</a></h2>
+<p><p>
+The  content of  the <font face="Gill Sans,Helvetica,Arial">GAP</font>  manuals is  also available  as on-line  help. A
+<font face="Gill Sans,Helvetica,Arial">GAP</font> session loads  a long list of index entries.  This typically contains
+all  chapter  and  section  headers,  all  names  of  documented  functions,
+operations and so on, as well as  some explicit index entries defined in the
+manuals.
+<p>
+The format of a query is as follows.
+<p>
+<code>?[</code><var>book</var><code>:][?]</code><var>topic</var><code></code>
+<p>
+A simple example would be to type  <code>?help</code> at the <font face="Gill Sans,Helvetica,Arial">GAP</font> prompt. If there is
+a single section with index entry <var>topic</var> then this is displayed directly.
+<p>
+If  there are  several matches  you get  an overview  like in  the following
+example.
+<p>
+<pre>
+gap&gt; ?sets
+Help: several entries match this topic - type ?2 to get match [2]
+
+[1] Tutorial: Sets
+[2] Reference: Sets
+[3] Reference: sets
+[4] Reference: Sets of Subgroups
+[5] Reference: setstabilizer
+</pre>
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font>'s manuals consist of several  <strong>books</strong>, which are indicated before the
+colon in the list above. A help query can be restricted to one book by using
+the optional <var>book</var>: part. For example  <code>?tut : sets</code> will display the first
+of these help sections. More precisely, the parts of the string <var>book</var> which
+are separated  by white  space are  interpreted as  beginnings of  the first
+words in  the name of the  book. Try <code>?books</code>  to see the list  of available
+books and their names.
+<p>
+The  search for  a  matching <var>topic</var>  (and optional  <var>book</var>)  is done  <strong>case
+insensitively</strong>.  If  there  is  another  <code>?</code>  before  the  <var>topic</var>,  then  a
+<strong>substring search</strong> for <var>topic</var> is  performed on all index entries. Otherwise
+the parts  of <var>topic</var> which are  separated by white space  are considered as
+<strong>beginnings of the first words</strong> in an index entry.
+<p>
+White space is normalized in the search string (and the index entries). 
+<p>
+<strong>Examples.</strong> All the  following queries lead to the chapter  of the reference
+manual which explains the use of <font face="Gill Sans,Helvetica,Arial">GAP</font>'s help system in more detail.
+<p>
+<pre>
+gap&gt; ?Reference: The Help System
+gap&gt; ?  REF : t h s
+gap&gt; ?ref:?  help   system 
+</pre>
+<p>
+The query <code>??sets</code> shows all help  sections in all books whose index entries
+contain the substring <code>sets</code>.
+<p>
+As mentioned in the  example above a complete list of  commands for the help
+system  is available  in Section&nbsp;<code>?Ref:  The Help  System</code> of  the reference
+manual.  In  particular  there  are  commands to  browse  through  the  help
+sections, see&nbsp;<code>?Ref:  Browsing through the Sections</code>  and there is a  way to
+influence  the  way  <strong>how</strong>  the  help  sections  are  displayed,  see&nbsp;<code>?Ref:
+SetHelpViewer</code>. For  example you can  use an  external pager program,  a Web
+browser,  <code>dvi</code>-previewer and/or  <code>pdf</code>-viewer for  reading <font face="Gill Sans,Helvetica,Arial">GAP</font>'s  online
+help.
+<p>
+<p>
+<h2><a name="SECT009">2.9 Further Information introducing the System</a></h2>
+<p><p>
+For large amounts of input data, it might be advisable to write your
+input first into a file, and then read this into <font face="Gill Sans,Helvetica,Arial">GAP</font>;
+see&nbsp;<a href="../ref/CHAP009.htm#SSEC007.1">Read</a>, <a href="../ref/CHAP006.htm#SSEC009.1">Edit</a> for this.
+<p>
+The definition of the <font face="Gill Sans,Helvetica,Arial">GAP</font> syntax can be looked up in
+Chapter&nbsp;<a href="../ref/CHAP004.htm">The Programming Language</a>.
+A complete list of command line editing facilities is found
+in Section&nbsp;<a href="../ref/CHAP006.htm#SECT008">Line Editing</a>.
+The break loop is described in Section&nbsp;<a href="../ref/CHAP006.htm#SECT003">Break Loops</a>.
+<p>
+Operators are explained in more detail in Sections&nbsp;<a href="../ref/CHAP004.htm#SECT007">Expressions</a> and
+<a href="../ref/CHAP004.htm#SECT011">Comparisons</a>.
+You will find more information about boolean values in
+Chapters&nbsp;<a href="../ref/CHAP020.htm">Booleans</a> and <a href="../ref/CHAP022.htm">Boolean Lists</a>.
+Permutations are described in Chapter&nbsp;<a href="../ref/CHAP040.htm">Permutations</a> and characters
+in Chapter&nbsp;<a href="../ref/CHAP026.htm">Strings and Characters</a>.
+<p>
+Variables and assignments are described in more detail in&nbsp;<a href="../ref/CHAP004.htm#SECT008">Variables</a>
+and <a href="../ref/CHAP004.htm#SECT014">Assignments</a>.
+A complete list of keywords is contained in&nbsp;<a href="../ref/CHAP004.htm#SECT005">Keywords</a>.
+<p>
+More about functions can be found in&nbsp;<a href="../ref/CHAP004.htm#SECT010">Function Calls</a>
+and&nbsp;<a href="../ref/CHAP004.htm#SECT015">Procedure Calls</a>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,60 @@
+\chapcontents {\tocstrut }{Copyright Notice}{9}
+\chapcontents {1}{About: Extending GAP}{10}
+\chapcontents {2}{The gapmacro.tex Manual Format}{11}
+\seccontents {2.1}{The Main File} {11}
+\seccontents {2.2}{Chapters and Sections} {14}
+\seccontents {2.3}{Suppressing Indexing and Labelling of a Section and Resolving Label Clashes} {15}
+\seccontents {2.4}{Labels and References} {15}
+\seccontents {2.5}{TeX Macros} {16}
+\seccontents {2.6}{TeX Macros for Domains} {20}
+\seccontents {2.7}{Examples, Lists, and Verbatim} {20}
+\seccontents {2.8}{Tables, Displayed Mathematics and Mathematics Alignments} {23}
+\seccontents {2.9}{Testing the Examples} {24}
+\seccontents {2.10}{Usage of the Percent Symbol} {24}
+\seccontents {2.11}{Catering for Plain Text and HTML Formats} {25}
+\seccontents {2.12}{Umlauts} {26}
+\seccontents {2.13}{Producing a Manual} {26}
+\seccontents {2.14}{Using buildman.pe} {27}
+\chapcontents {3}{Library Files}{32}
+\seccontents {3.1}{File Types} {32}
+\seccontents {3.2}{File Structure} {32}
+\seccontents {3.3}{Finding Implementations in the Library} {33}
+\seccontents {3.4}{Undocumented Variables} {33}
+\chapcontents {4}{Writing a GAP Package}{35}
+\seccontents {4.1}{The Files of a GAP Package} {35}
+\seccontents {4.2}{Writing Documentation} {36}
+\seccontents {4.3}{An Example of a GAP Package} {36}
+\seccontents {4.4}{The WWW Homepage of a Package} {37}
+\seccontents {4.5}{The PackageInfo.g File} {37}
+\seccontents {4.6}{Requesting one GAP Package from within Another} {37}
+\seccontents {4.7}{Declaration and Implementation Part} {38}
+\seccontents {4.8}{Standalone Programs in a GAP Package} {38}
+\seccontents {4.9}{Installation of GAP Package Binaries} {38}
+\seccontents {4.10}{Test for the Existence of GAP Package Binaries} {39}
+\seccontents {4.11}{Calling of and Communication with External Binaries} {39}
+\seccontents {4.12}{Package Completion} {40}
+\seccontents {4.13}{DeclareAutoreadableVariables} {40}
+\seccontents {4.14}{Version Numbers} {40}
+\seccontents {4.15}{Wrapping Up a GAP Package} {41}
+\chapcontents {5}{Interface to the GAP Help System}{42}
+\seccontents {5.1}{Installing a Help Book} {42}
+\seccontents {5.2}{The manual.six File} {43}
+\seccontents {5.3}{The Help Book Handler} {43}
+\seccontents {5.4}{Introducing new Viewer for the Online Help} {45}
+\chapcontents {6}{Function-Operation-Attribute Triples}{46}
+\seccontents {6.1}{Key Dependent Operations} {46}
+\seccontents {6.2}{In Parent Attributes} {47}
+\seccontents {6.3}{Operation Functions} {48}
+\chapcontents {7}{Weak Pointers}{51}
+\seccontents {7.1}{Weak Pointer Objects} {51}
+\seccontents {7.2}{WeakPointerObj} {51}
+\seccontents {7.3}{Low Level Access Functions for Weak Pointer Objects} {52}
+\seccontents {7.4}{Accessing Weak Pointer Objects as Lists} {53}
+\seccontents {7.5}{Copying Weak Pointer Objects} {53}
+\seccontents {7.6}{The GASMAN Interface for Weak Pointer Objects} {53}
+\chapcontents {8}{Stabilizer Chains (preliminary)}{54}
+\seccontents {8.1}{Generalized Conjugation Technique} {54}
+\seccontents {8.2}{The General Backtrack Algorithm with Ordered Partitions} {55}
+\seccontents {8.3}{Stabilizer Chains for Automorphisms Acting on Enumerators} {61}
+\chapcontents {}{Bibliography}{66}
+\chapcontents {}{Index}{67}

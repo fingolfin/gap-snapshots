@@ -1,0 +1,60 @@
+#############################################################################
+##
+#W  mgmhom.gi                    GAP library                  Andrew Solomon
+##
+#H  @(#)$Id: mgmhom.gi,v 4.3 2002/04/15 10:05:03 sal Exp $
+##
+#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C) 2002 The GAP Group
+##
+##  This file contains generic methods for magma homomorphisms
+##
+Revision.mgmhom_gi :=
+    "@(#)$Id: mgmhom.gi,v 4.3 2002/04/15 10:05:03 sal Exp $";
+
+#############################################################################
+##
+#F  MagmaHomomorphismByFunctionNC( <G>, <H>, <fn> ) 
+##
+##  Creates the homomorphism from G to H without checking
+##  that <fn> is a homomorphism.
+##
+InstallGlobalFunction( MagmaHomomorphismByFunctionNC,
+function( G, H, imgfn )
+	local   hom;
+	
+	if not IsMagma(G) and IsMagma(H) and IsFunction(imgfn) then
+		Error("Usage:  MagmaHomomorphismByFunctionNC(<Magma>,<Magma>,<fn>)");
+	fi;
+
+	hom := MappingByFunction(G, H, imgfn);
+	SetIsMagmaHomomorphism(hom, true);
+	return hom;
+end );
+
+#############################################################################
+##
+#F  MagmaIsomorphismByFunctionsNC( <G>, <H>, <fn>, <inv> )
+##
+##  Creates the isomorphism from G to H without checking
+##  that <fn> or <inv> are a homomorphisms or bijective or inverse.
+##
+InstallGlobalFunction( MagmaIsomorphismByFunctionsNC,
+function( G, H, imgfn, preimgfn )
+	local   hom;
+	
+	if not IsMagma(G) and IsMagma(H) and IsFunction(imgfn) 
+		and IsFunction(preimgfn) then
+		Error("Usage:  MagmaIsomorphismByFunctionsNC(<Magma>,<Magma>,<fn>,<inv>)");
+	fi;
+
+	hom := MappingByFunction(G, H, imgfn,preimgfn);
+	SetIsMagmaHomomorphism(hom, true);
+	return hom;
+end );
+
+#############################################################################
+##
+#E
+

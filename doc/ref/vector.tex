@@ -1,0 +1,601 @@
+% This file was created automatically from vector.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  vector.msk                  GAP documentation            Martin Schoenert
+%A                                                           Alexander Hulpke
+%%
+%A  @(#)$Id: vector.msk,v 1.23 2003/03/26 17:45:05 gap Exp $
+%%
+%Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+\Chapter{Row Vectors}
+
+Just as in mathematics, a vector in {\GAP} is any object which
+supports appropriate addition and scalar multiplication operations
+(see Chapter~"Vector Spaces"). As in mathematics, an especially important
+class of vectors are those represented by a list of coefficients with
+respect to some basis. These correspond roughly to the {\GAP} concept
+of *row vectors*.
+
+\>IsRowVector( <obj> ) C
+
+A *row vector* is a vector (see~"IsVector") that is also a homogeneous
+list of odd additive nesting depth
+(see~"Filters Controlling the Arithmetic Behaviour of Lists").
+Typical examples are lists of integers and rationals,
+lists of finite field elements of the same characteristic,
+and lists of polynomials from a common polynomial ring.
+Note that matrices are *not* regarded as row vectors, because they have
+even additive nesting depth.
+
+The additive operations of the vector must thus be compatible with
+that for lists, implying that the list entries are the
+coefficients of the vector with respect to some basis.
+
+Note that not all row vectors admit a multiplication via `\*'
+(which is to be understood as a scalar product);
+for example, class functions are row vectors but the product of two
+class functions is defined in a different way.
+For the installation of a scalar product of row vectors, the entries of
+the vector must be ring elements; note that the default method expects
+the row vectors to lie in `IsRingElementList', and this category may not
+be implied by `IsRingElement' for all entries of the row vector
+(see the comment for `IsVector' in~"IsVector").
+
+Note that methods for special types of row vectors really must be
+installed with the requirement `IsRowVector',
+since `IsVector' may lead to a rank of the method below
+that of the default method for row vectors (see file `lib/vecmat.gi').
+
+
+\beginexample
+gap> IsRowVector([1,2,3]);
+true
+\endexample
+
+Because row vectors are just a special case of lists, all operations
+and functions for lists are applicable to row vectors as well (see
+Chapter~"Lists"). This especially includes accessing elements of a row
+vector (see "List Elements"), changing elements of a mutable row
+vector (see "List Assignment"), and comparing row vectors (see
+"Comparisons of Lists").
+
+Note that, unless your algorithms specifically require you to be able
+to change entries of your vectors, it is generally better and faster
+to work with immutable row vectors. See Section~"Mutability and
+Copyability" for more details.
+
+%%  The basic design of the row vector support in {\GAP} 4 is due to
+%%  Martin Sch{\"o}nert. Frank Celler added the special support for
+%%  vectors over the field of two elements; Steve Linton added special
+%%  support for vectors over fields of sizes between 3 and 256; and Werner
+%%  Nickel added special methods for vectors over large finite fields.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Operators for Row Vectors}
+
+The rules for arithmetic operations involving row vectors are in fact
+special cases of those for the arithmetic of lists,
+as given in Section~"Arithmetic for Lists" and the following sections,
+here we reiterate that definition, in the language of vectors.
+
+Note that the additive behaviour sketched below is defined only for lists in
+the category `IsGeneralizedRowVector',
+and the multiplicative behaviour is defined only for lists in the category
+`IsMultiplicativeGeneralizedRowVector'
+(see~"Filters Controlling the Arithmetic Behaviour of Lists").
+
+
+\>`<vec1> + <vec2>'{addition!vectors} O
+
+returns the sum of the two row vectors <vec1> and <vec2>.
+Probably the most usual situation is that <vec1> and <vec2> have the same
+length and are defined over a common field;
+in this case the sum is a new row vector over the same field where each entry
+is the sum of the corresponding entries of the vectors.
+
+In more general situations, the sum of two row vectors need not be a row
+vector, for example adding an integer vector <vec1> and a vector <vec2> over
+a finite field yields the list of pointwise sums,
+which will be a mixture of finite field elements and integers if <vec1> is
+longer than <vec2>.
+
+
+\>`<scalar> + <vec>'{addition!scalar and vector} O
+\>`<vec> + <scalar>'{addition!vector and scalar} O
+
+returns the sum of the scalar <scalar> and the row vector <vec>.
+Probably the most usual situation is that the elements of <vec> lie in a
+common field with <scalar>;
+in this case the sum is a new row vector over the same field where each entry
+is the sum of the scalar and the corresponding entry of the vector.
+
+More general situations are for example the sum of an integer scalar and a
+vector over a finite field, or the sum of a finite field element and an
+integer vector.
+
+\beginexample
+gap> [ 1, 2, 3 ] + [ 1/2, 1/3, 1/4 ];
+[ 3/2, 7/3, 13/4 ]
+gap>  [ 1/2, 3/2, 1/2 ] + 1/2;
+[ 1, 2, 1 ]
+\endexample
+
+
+\>`<vec1> - <vec2>'{subtraction!vectors} O
+\>`<scalar> - <vec>'{subtraction!scalar and vector} O
+\>`<vec> - <scalar>'{subtraction!vector and scalar} O
+
+Subtracting a vector or scalar is defined as adding its additive inverse,
+so the statements for the addition hold likewise.
+
+\beginexample
+gap> [ 1, 2, 3 ] - [ 1/2, 1/3, 1/4 ];
+[ 1/2, 5/3, 11/4 ]
+gap> [ 1/2, 3/2, 1/2 ] - 1/2;
+[ 0, 1, 0 ]
+\endexample
+
+
+\>`<scalar> * <vec>'{multiplication!scalar and vector} O
+\>`<vec> * <scalar>'{multiplication!vector and scalar} O
+
+returns the product of the scalar <scalar> and the row vector <vec>.
+Probably the most usual situation is that the elements of <vec> lie in a
+common field with <scalar>;
+in this case the product is a new row vector over the same field where each
+entry is the product of the scalar and the corresponding entry of the vector.
+
+More general situations are for example the product of an integer scalar and
+a vector over a finite field,
+or the product of a finite field element and an integer vector.
+
+\beginexample
+gap> [ 1/2, 3/2, 1/2 ] * 2;
+[ 1, 3, 1 ]
+\endexample
+
+
+\>`<vec1> * <vec2>'{multiplication!vectors} O
+
+returns the standard scalar product of <vec1> and <vec2>,
+i.e., the sum of the products of the corresponding entries of the vectors.
+Probably the most usual situation is that <vec1> and <vec2> have the same
+length and are defined over a common field;
+in this case the sum is an element of this field.
+
+More general situations are for example the inner product of an integer
+vector and a vector over a finite field,
+or the inner product of two row vectors of different lengths.
+
+\beginexample
+gap> [ 1, 2, 3 ] * [ 1/2, 1/3, 1/4 ];
+23/12
+\endexample
+
+For the mutability of results of arithmetic operations,
+see~"Mutability and Copyability".
+
+Further operations with vectors as operands are defined by the matrix
+operations (see~"Operators for Matrices").
+
+\>NormedRowVector( <v> ) A
+
+returns a scalar multiple `<w> = <c> \* <v>' of the row vector <v>
+with the property that the first nonzero entry of <w> is an identity
+element in the sense of `IsOne'.
+
+
+\beginexample
+gap> NormedRowVector([5,2,3]);
+[ 1, 2/5, 3/5 ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Row Vectors over Finite Fields}
+
+{\GAP} can use compact formats to store row vectors over fields of
+order at most 256, based on those used by the Meat-Axe
+\cite{Rin93}. This format also permits extremely efficient vector
+arithmetic. On the other hand element access and assignment is
+significantly slower than for plain lists.
+
+The function `ConvertToVectorRep' is used to convert a list into a
+compressed vector, or to rewrite a compressed vector over another
+field. Note that this function is *much* faster when it is given a
+field (or field size) as an argument, rather than having to scan the
+vector and try to decide the field. Supplying the field can also
+avoid errors and/or loss of performance, when one vector from some
+collection happens to have all of its entries over a smaller field
+than the \"natural\" field of the problem.
+
+\>ConvertToVectorRep( <list> ) F
+\>ConvertToVectorRep( <list> , <field> ) F
+\>ConvertToVectorRep( <list> , <fieldsize> ) F
+\>ConvertToVectorRepNC( <list> ) F
+\>ConvertToVectorRepNC( <list> , <field> ) F
+\>ConvertToVectorRepNC( <list> , <fieldsize> ) F
+
+`ConvertToVectorRep( <list> )' converts <list> to an internal
+vector representation if possible.
+
+`ConvertToVectorRep( <list> , <field> )' converts <list> to an
+internal vector representation appropriate for a vector over
+<field>.
+
+It is forbidden to call this function unless <list> is a plain
+list or a vector, <field> a field, and all elements
+of <list> lie in <field>, violation of this condition can lead to
+unpredictable behaviour or a system crash. (Setting the assertion level
+to at least 2 might catch some violations before a crash,
+see~"SetAssertionLevel".)
+
+Instead of a <field> also its size <fieldsize> may be given.
+
+<list> may already be a compressed vector. In this case, if no
+<field> or <fieldsize> is given, then nothing happens. If one is
+given then the vector is rewritten as a compressed vector over the
+given <field> unless it has the filter
+`IsLockedRepresentationVector', in which case it is not changed.
+
+The return value is the size of the field over which the vector
+ends up written, if it is written in a compressed representation.
+
+
+
+
+In this example, we first create a row vector and then ask {\GAP} to
+rewrite it, first over GF(2) and then over GF(4).
+
+\beginexample
+gap> v := [Z(2)^0,Z(2),Z(2),0*Z(2)];
+[ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ]
+gap> RepresentationsOfObject(v);
+[ "IS_PLIST_REP", "IsInternalRep" ]
+gap> ConvertToVectorRep(v);
+2
+gap> v;
+<a GF2 vector of length 4>
+gap> ConvertToVectorRep(v,4);
+4
+gap> v;
+[ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ]
+gap> RepresentationsOfObject(v);
+[ "IsDataObjectRep", "Is8BitVectorRep" ]
+\endexample
+
+A vector in the special representation over $GF(2)$ is always viewed
+as `\<a GF2 vector of length ...>'. Over fields of orders 3 to 256, a
+vector of length 10 or less is viewed as the list of its coefficients,
+but a longer one is abbreviated.
+
+Arithmetic operations (see~"Arithmetic for Lists" and the following
+sections) preserve the compression status of row vectors in the sense that
+if all arguments are compressed row vectors written over the same field and
+the result is a row vector then also the result is a compressed row vector
+written over this field.
+
+\>NumberFFVector( <vec>, <sz> ) O
+
+returns an integer that gives the position of the finite field row vector
+(<vec>) in the sorted list of all row vectors over the field with <sz>
+elements in the same dimension as <vec>. `NumberFFVector' returns `fail'
+if the vector cannot be represented over the field with <sz> elements.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Coefficient List Arithmetic}
+
+The following operations all perform arithmetic on row vectors.
+given as homogeneous lists of the same length, containing
+elements of a commutative ring.
+
+There are two reasons for using  `AddRowVector'
+in preference to arithmetic operators. Firstly, the three argument 
+form has no single-step equivalent. Secondly
+`AddRowVector' changes its first argument in-place, rather than allocating
+a new vector to hold the result, and may thus produce less garbage.
+
+
+\>AddRowVector( <dst>, <src>, [ <mul> [, <from>, <to>]] ) O
+
+Adds the product of <src> and <mul> to <dst>, changing <dst>.
+If <from> and <to> are given then only the index range `[<from>..<to>]' is
+guaranteed to be affected. Other indices MAY be affected, if it is 
+more convenient to do so. Even when <from> and <to> are given,
+<dst> and <src> must be row vectors of the *same* length.
+
+If <mul> is not given either then this Operation simply adds <src> to <dst>.
+
+
+
+\>AddCoeffs( <list1>, <poss1>, <list2>, <poss2>, <mul> ) O
+\>AddCoeffs( <list1>, <list2>, <mul> ) O
+\>AddCoeffs( <list1>, <list2> ) O
+
+`AddCoeffs' adds the entries  of `<list2>\{<poss2>\}', multiplied by the
+scalar <mul>, to
+`<list1>\{<poss1>\}'.  Non-existing  entries  in  <list1> are assumed  to  be
+zero.  The position of the right-most non-zero element is returned.
+
+If the ranges <poss1> and <poss2> are not given, they are assumed to
+span the whole vectors. If the scalar <mul> is omitted, one is used as a
+default.
+
+Note  that it is  the responsibility  of the  caller  to ensure  that the
+<list2> has elements at position <poss2> and that the result (in <list1>)
+will be a dense list.
+
+The function is free to remove trailing (right-most) zeros.
+
+
+\beginexample
+gap> l:=[1,2,3,4];;m:=[5,6,7];;AddCoeffs(l,m);
+4
+gap> l;
+[ 6, 8, 10, 4 ]
+\endexample
+
+\>MultRowVector( <list1>, <poss1>, <list2>, <poss2>, <mul> ) O
+\>MultRowVector( <list>, <mul> ) O
+
+The five-argument version of this Operation replaces
+`<list1>[<poss1>[<i>]]' by `<mul>*<list2>[<poss2>[<i>]]' for <i>
+between 1 and `Length(<poss1>)'.
+
+The two-argument version simply multiplies each element of <list>, 
+in-place, by <mul>.
+
+
+\>CoeffsMod( <list1>, [<len1>, ] <mod> ) O
+
+returns the coefficient list obtained by reducing the entries in <list1>
+modulo <mod>. After reducing it shrinks the list to remove trailing
+zeroes.
+
+\beginexample
+gap> l:=[1,2,3,4];;CoeffsMod(l,2);
+[ 1, 0, 1 ]
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Shifting and Trimming Coefficient Lists}
+
+The following functions change coefficient lists by shifting or
+trimming.
+
+\>LeftShiftRowVector( <list>, <shift> ) O
+
+changes <list> by assigning
+`<list>[i]:=<list>[i+<shift>]' and removing the last <shift> entries of
+the result.
+
+\>RightShiftRowVector( <list>, <shift>, <fill> ) O
+
+changes <list> by assigning
+`<list>[i+<shift>]:=<list>[i]' and filling each of the <shift> first
+entries with <fill>.
+
+\>ShrinkRowVector( <list> ) O
+
+removes trailing zeroes from the list <list>.
+
+
+
+\>RemoveOuterCoeffs( <list>, <coef> ) O
+
+removes <coef> at the beginning and at the end of <list> and returns the
+number of elements removed at the beginning.
+
+\beginexample
+gap> l:=[1,1,2,1,2,1,1,2,1];;RemoveOuterCoeffs(l,1);
+2
+gap> l;
+[ 2, 1, 2, 1, 1, 2 ]
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Functions for Coding Theory}
+
+The following functions perform operations on Finite fields vectors
+considered as code words in a linear code.
+
+
+\>WeightVecFFE( <vec> ) O
+
+returns the weight of the finite field vector <vec>, i.e. the number of
+nonzero entries.
+
+\>DistanceVecFFE( <vec1>, <vec2> ) O
+
+returns the distance between the two vectors <vec1> and <vec2>, which
+must have the same length and whose elements must lie in a common field.
+The distance is the number of places where <vec1> and <vec2> differ.
+
+\>DistancesDistributionVecFFEsVecFFE( <vecs>, <vec> ) O
+
+returns the distances distribution of the vector <vec> to the vectors in
+the list <vecs>. All vectors must have the same length, and all elements
+must lie in a common field. The distances distribution is a list <d> of
+length `Length(<vec>)+1', such that the value `<d>[<i>]' is the number
+of vectors in <vecs> that have distance `<i>+1' to <vec>.
+
+\>DistancesDistributionMatFFEVecFFE( <mat>, <f>, <vec> ) O
+
+returns the distances distribution of the vector <vec> to the vectors in
+the vector space generated by the rows of the matrix <mat> over the
+finite field <f>. The length of the rows of <mat> and the length of
+<vec> must be equal, and all elements must lie in <f>. The rows of <mat>
+must be linearly independent. The distances distribution is a list <d>
+of length `Length(<vec>)+1', such that the value `<d>[<i>]' is the
+number of vectors in the vector space generated by the rows of <mat>
+that have distance `<i>+1' to <vec>.
+
+\>AClosestVectorCombinationsMatFFEVecFFE( <mat>, <f>, <vec>, <l>, <stop> ) O
+
+runs through the <f>-linear combinations of the vectors in the rows of
+the matrix <mat> that can be written as linear combinations of exactly
+<l> rows (that is without using zero as a coefficient) and returns a
+vector from these that is closest to the vector <vec>. The length of the
+rows of <mat> and the length of <vec> must be equal, and all elements
+must lie in <f>. The rows of <mat> must be linearly independent. If it
+finds a vector of distance at most <stop>, which must be a nonnegative
+integer, then it stops immediately and returns this vector.
+
+\>CosetLeadersMatFFE( <mat>, <f> ) O
+
+returns a list of representatives of minimal weight for the cosets of a
+code. <mat> must be a *check matrix* for the code, the code is defined
+over the finite field <f>.   All rows of <mat> must have the same
+length, and all elements must lie in <f>. The rows of <mat> must be
+linearly independent.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Vectors as coefficients of polynomials}
+
+
+A list of ring elements can be interpreted as a row vector or the list of
+coefficients of a polynomial. There are a couple of functions that implement
+arithmetic operations based on these interpretations. {\GAP} contains proper
+support for polynomials (see~"Polynomials and Rational Functions"), the
+operations described in this section are on a lower level.
+
+The following operations all perform arithmetic on univariate
+polynomials given by their coefficient lists. These lists can have
+different lengths but must be dense homogeneous lists containing
+elements of a commutative ring.
+Not all input lists may be empty.
+
+In the following descriptions we will always assume that <list1> is the
+coefficient list of the polynomial <pol1> and so forth.
+If length parameter <leni> is not given, it is set to the length of
+<listi> by default.
+
+
+\>ValuePol( <coeff>, <x> ) F
+
+Let <coeff> be the coefficients list of a univariate polynomial $f$,
+and <x> a ring element. Then
+`ValuePol' returns the value $f(<x>)$.
+
+The coefficient of $x^i$ is assumed to be stored at position $i+1$ in
+the coefficients list.
+
+
+\beginexample
+gap> ValuePol([1,2,3],4);
+57
+\endexample
+
+%\ Declaration{ProductPol}
+%\ beginexample
+%gap> ProductPol([1,2,3],[4,5,6]);
+%[ 4, 13, 28, 27, 18 ]
+%\ endexample
+
+%\ Declaration{MultCoeffs}
+%\ beginexample
+%gap> a:=[];;l:=[1,2,3,4];;m:=[5,6,7];;
+%gap> MultCoeffs(a,l,4,m,3);
+%6
+%gap> a;
+%[ 5, 16, 34, 52, 45, 28 ]
+%\ endexample
+
+\>ProductCoeffs( <list1>, [<len1>, ] <list2> [, <len2>] ) O
+
+Let <pol1> (and <pol2>) be polynomials given by the first <len1> (<len2>)
+entries of the coefficient list <list2> (<list2>).
+If <len1> and <len2> are omitted, they default to the lengths of <list1>
+and <list2>.
+This operation returns the coefficient list of the product of <pol1> and
+<pol2>.
+
+\beginexample
+gap> l:=[1,2,3,4];;m:=[5,6,7];;ProductCoeffs(l,m);
+[ 5, 16, 34, 52, 45, 28 ]
+\endexample
+
+\>ReduceCoeffs( <list1> [, <len1>], <list2> [, <len2>] ) O
+
+changes <list1> to the coefficient list of the remainder when dividing
+<pol1> by <pol2>.
+This operation changes <list1> which therefore must be a mutable list.
+The operations returns the position of the last non-zero entry of the
+result but is not guaranteed to remove trailing zeroes.
+
+\beginexample
+gap> l:=[1,2,3,4];;m:=[5,6,7];;ReduceCoeffs(l,m);
+2
+gap> l;
+[ 64/49, -24/49, 0, 0 ]
+\endexample
+
+\>ReduceCoeffsMod( <list1>, [<len1>, ] <list2>, [<len2>, ] <mod> ) O
+
+changes <list1> to the coefficient list of the remainder when dividing
+<pol1> by <pol2> modulo <mod>. <mod> must be a positive integer.
+This operation changes <list1> which therefore must be a mutable list.
+The operations returns the position of the last non-zero entry of the
+result but is not guaranteed to remove trailing zeroes.
+
+\beginexample
+gap> l:=[1,2,3,4];;m:=[5,6,7];;ReduceCoeffsMod(l,m,3);
+1
+gap> l;
+[ 1, 0, 0, 0 ]
+\endexample
+
+\>PowerModCoeffs( <list1>[, <len1>], <exp>, <list2>[, <len2>] ) O
+
+Let $p_1$ and $p_2$ be polynomials whose coefficients are given by the
+first <len1> resp. <len2> entries of the lists <list1> and <list2>,
+respectively.
+If <len1> and <len2> are omitted, they default to the lengths of <list1>
+and <list2>.
+Let <exp> be a positive integer.
+`PowerModCoeffs' returns the coefficient list of the remainder
+when dividing the <exp>-th power of $p_1$ by $p_2$.
+The coefficients are reduced already while powers are computed,
+therefore avoiding an explosion in list length.
+
+
+\beginexample
+gap> l:=[1,2,3,4];;m:=[5,6,7];;PowerModCoeffs(l,5,m);
+[ -839462813696/678223072849, -7807439437824/678223072849, 0 ]
+\endexample
+
+\>ShiftedCoeffs( <list>, <shift> ) O
+
+produces a new coefficient list <new> obtained by the rule
+`<new>[i+<shift>]:=<list>[i]' and filling initial holes by the
+appropriate zero.
+
+\beginexample
+gap> l:=[1,2,3];;ShiftedCoeffs(l,2);ShiftedCoeffs(l,-2);
+[ 0, 0, 1, 2, 3 ]
+[ 3 ]
+\endexample
+
+\>ShrinkCoeffs( <list> ) O
+
+removes trailing zeroes from <list>. It returns the position of the last
+non-zero entry, that is the length of <list> after the operation.
+
+\beginexample
+gap> l:=[1,0,0];;ShrinkCoeffs(l);l;
+1
+[ 1 ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E
+

@@ -1,0 +1,230 @@
+<html><head><title>[ext] 5 Interface to the GAP Help System</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP004.htm">Previous</a>] [<a href ="CHAP006.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>5 Interface to the GAP Help System</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP005.htm#SECT001">Installing a Help Book</a>
+<li> <A HREF="CHAP005.htm#SECT002">The manual.six File</a>
+<li> <A HREF="CHAP005.htm#SECT003">The Help Book Handler</a>
+<li> <A HREF="CHAP005.htm#SECT004">Introducing new Viewer for the Online Help</a>
+</ol><p>
+<p>
+In this chapter we describe which  information the help system needs about a
+manual book and  how to tell it this information.  The code which implements
+this interface can be found in <code>lib/helpbase.gi</code>.
+<p>
+If you are intending to use a documentation format that is already  used  by
+some other help book you probably don't need  to  know  anything  from  this
+chapter. However, if you want to create a new format and make  it  available
+to <font face="Gill Sans,Helvetica,Arial">GAP</font> then hopefully you will find the necessary information here.
+<p>
+The basic idea of the  help  system  is  as  follows:  One  tells  <font face="Gill Sans,Helvetica,Arial">GAP</font>  a
+directory which contains a file <code>manual.six</code>, see&nbsp;<a href="CHAP005.htm#SECT001">Installing a Help  Book</a>.
+When the <font face="Gill Sans,Helvetica,Arial">GAP</font> help is asked something about this book  it  reads  in  some
+basic information from the file <code>manual.six</code>: strings like section  headers,
+function names, and index  entries  to  be  searched  by  the  online  help;
+information about the available formats of this book like text,  html,  dvi,
+and pdf;  the  actual  files  containing  the  documentation,  corresponding
+section numbers, and page numbers: and so on. See&nbsp;<a href="CHAP005.htm#SECT002">The manual.six file</a>  for
+a description of the format of the <code>manual.six</code> file.
+<p>
+It  turns  out  that there  is  almost  no  restriction  on  the  format  of
+the  <code>manual.six</code>  file,   except  that  it  must  provide   a  string,  say
+<code>"myownformat"</code> which  identifies the  format of the  help book.  Then the
+basic actions  on a help  book are delegated by  the help system  to handler
+functions stored in a  record <code>HELP_BOOK_HANDLER.myownformat</code>. See&nbsp;<a href="CHAP005.htm#SECT003">The Help Book  Handler</a> for  information  which  functions must  be  provided by  the
+handler and what they  are supposed to do. The main work  to teach <font face="Gill Sans,Helvetica,Arial">GAP</font> to
+use a new document format is to write these handler functions and to produce
+an appropriate <code>manual.six</code> file.
+<p>
+<p>
+<h2><a name="SECT001">5.1 Installing a Help Book</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>HELP_ADD_BOOK( </code><var>short</var><code>, </code><var>long</var><code>, </code><var>dir</var><code> )</code>
+<p>
+This command tells <font face="Gill Sans,Helvetica,Arial">GAP</font> that in directory <var>dir</var> (given as either a  string
+describing   the   path   relative   to   the    <font face="Gill Sans,Helvetica,Arial">GAP</font>    root    directory
+<code>GAPInfo.RootPaths[1]</code> or as directory object) contains the basic information
+about a help book. The string <var>short</var> is used as  an  identifying  name  for
+that book  by  the  online  help.  The  string  <var>long</var>  should  be  a  short
+explanation of the content of the book. Both strings together should  easily
+fit on a line, since they are displayed with <code>?books</code>.
+<p>
+It is possible to reinstall a book with different strings  <var>short</var>,  <var>long</var>;
+(for example, documentation of a not-loaded <font face="Gill Sans,Helvetica,Arial">GAP</font> package indicates this in
+the string <var>short</var> and if you later load the package,  <font face="Gill Sans,Helvetica,Arial">GAP</font>  quietly
+changes the string <var>short</var> as it reinstalls its documentation).
+<p>
+The only condition necessary to make the installation of a book  <strong>valid</strong>  is
+that the directory <var>dir</var> must contain a file <code>manual.six</code>. The next  section
+explains how this file must look.
+<p>
+<p>
+<h2><a name="SECT002">5.2 The manual.six File</a></h2>
+<p><p>
+If  a <code>manual.six</code>  file  for  a help  book  is not  in  the  format of  the
+<code>gapmacro.tex</code> macros, explained in chapter <code>The gapmacro.tex Manual Format</code>
+(see&nbsp;<a href="CHAP002.htm">The  gapmacro.tex  Manual  Format</a>),   the  first  non-empty  line  of
+<code>manual.six</code> must be of the form
+<p>
+<code>#SIXFORMAT </code><var>myownformat</var><code></code>
+<p>
+where <var>myownformat</var> is an identifying string for this format. The reading of
+the  (remainder  of  the)  file  is   then   delegated   to   the   function
+<code>HELP_BOOK_HANDLER.</code><var>myownformat</var><code>.ReadSix</code> which must exist. Thus  there  are
+no further regulations for the format of the <code>manual.six</code> file,  other  that
+what you yourself impose. If such a line is missing then it is assumed  that
+the <code>manual.six</code> file complies with the <code>gapmacro.tex</code> documentation  format
+which is the <code>default</code> format.
+<p>
+The    next    section    explains    what    the    return     value     of
+<code>HELP_BOOK_HANDLER.</code><var>myownformat</var><code>.ReadSix</code> should look like and which further
+function should be contained in <code>HELP_BOOK_HANDLER.</code><var>myownformat</var><code></code>.
+<p>
+<p>
+<h2><a name="SECT003">5.3 The Help Book Handler</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+For  each  document  format   <var>myownformat</var>   there   must   be   a   record
+<code>HELP_BOOK_HANDLER.</code><var>myownformat</var><code></code> of functions with the following names  and
+functionality.
+<p>
+An implementation example  of  such  a  set  of  handler  functions  is  the
+<code>default</code> format, which is the  format  name  used  for  the  <code>gapmacro.tex</code>
+documentation format, and this is contained in the file <code>lib/helpdef.gi</code>.
+<p>
+The package <font face="Gill Sans,Helvetica,Arial">GapDoc</font> (see Chapter&nbsp;<a href="../../../pkg/gapdoc/doc/chap1.html#s0ss0">gapdoc:Introduction and Example</a>)
+also defines a format (as it should) which is called: <code>GapDocGAP</code> (the  case
+<strong>is</strong> significant).
+<p>
+As you can see by the above two examples, the name for a document format can
+be anything, but it should be in some way meaningful.
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>ReadSix( </code><var>stream</var><code> )</code> <dd>
+  For an input text stream <var>stream</var> to a <code>manual.six</code> file, this must return
+  a  record  <var>info</var>  which  has  at  least  the  following  two  components:
+  <code>bookname</code> which is the short identifying  name  of  the  help  book,  and
+  <code>entries</code>. Here <var>info</var><code>.entries</code> must be a list with one entry per  search
+  string (which can be a section header,  function  name,  index  entry,  or
+  whatever seems sensible to be searched  for  matching  a  help  query).  A
+  <strong>match</strong> for the <font face="Gill Sans,Helvetica,Arial">GAP</font> help is a pair (<var>info</var>, <var>i</var>) where <var>i</var> refers to an
+  index for the list <var>info</var><code>.entries</code> and  this  corresponds  to  a  certain
+  position in the document. There is one further regulation for  the  format
+  of the entries of <var>info</var><code>.entries</code>. They  must  be  lists  and  the  first
+  element of such a list must be a string which is  printed  by  <font face="Gill Sans,Helvetica,Arial">GAP</font>  for
+  example when  several  matches  are  found  for  a  query  (so  it  should
+  essentially be the string which is searched for the match, except that  it
+  may contain upper and lower case letters or some  markup).  There  may  be
+  other components in <var>info</var> which are needed by the  functions  below,  but
+  their names and formats are  not  prescribed.  The  <var>stream</var>  argument  is
+  typically generated using <code>InputTextFile</code> (see&nbsp;<a href="../ref/CHAP010.htm#SSEC005.1">InputTextFile</a>), e.g.
+<p>
+<pre>
+gap&gt; dirs := DirectoriesPackageLibrary("gapdoc", "doc");;
+gap&gt; file := Filename(dirs, "manual.six");;
+gap&gt; stream := InputTextFile(file);;
+</pre>
+<p>
+<dt><code>ShowChapters( </code><var>info</var><code> )</code> <dd>
+  This must return a text string or list of text lines  which  contains  the
+  chapter headers of the book <var>info</var><code>.bookname</code>.
+<p>
+<dt><code>ShowSection( </code><var>info</var><code> )</code> <dd>
+  This must return  a text string or  list of text lines  which contains the
+  section (and chapter) headers of the book <var>info</var><code>.bookname</code>.
+<p>
+<dt><code>SearchMatches( </code><var>info</var><code>, </code><var>topic</var><code>, </code><var>frombegin</var><code> )</code> <dd>
+  This  function must  return  a  list of  indices  of <var>info</var><code>.entries</code>  for
+  entries which  match the search  string <var>topic</var>. If <var>frombegin</var>  is <code>true</code>
+  then  those parts  of  <var>topic</var> which  are separated  by  spaces should  be
+  considered  as  the  beginnings  of  words  to  decide  the  matching.  It
+  <var>frombegin</var> is <code>false</code>, a substring search should be performed. The string
+  <var>topic</var>  can be  assumed to  be already  normalized (transformed  to lower
+  case, and whitespace normalized). The function must return a list with two
+  entries <code>[exact,  match]</code> where <code>exact</code> is  the list of indices  for exact
+  matches and <code>match</code> a list of indices of the remaining matches.
+<p>
+<dt><code>MatchPrevChap( </code><var>info</var><code>, </code><var>i</var><code> )</code> <dd>
+  This should return  the match [<var>info</var>, <code>j</code>] which points  to the beginning
+  of  the  chapter  containing  match [<var>info</var>,  <var>i</var>],  respectively  to  the
+  beginning  of  the  previous  chapter  if [<var>info</var>,  <var>i</var>]  is  already  the
+  beginning of a chapter. (Corresponds to <code>?&lt;&lt;</code>.)
+<p>
+<dt><code>MatchNextChap( </code><var>info</var><code>, </code><var>i</var><code> )</code> <dd>
+  Like the previous function except that it should return the match for  the
+  beginning of the next chapter. (Corresponds to <code>?&gt;&gt;</code>.)
+<p>
+<dt><code>MatchPrev( </code><var>info</var><code>, </code><var>i</var><code> )</code> <dd>
+  This should return the previous section (or  appropriate  portion  of  the
+  document). (Corresponds to <code>?&lt;</code>.)
+<p>
+<dt><code>MatchNext( </code><var>info</var><code>, </code><var>i</var><code> )</code> <dd>
+  Like the previous function except that it should return the  next  section
+  (or appropriate portion of the document). (Corresponds to <code>?&gt;</code>.)
+<p>
+<dt><code>HelpData( </code><var>info</var><code>, </code><var>i</var><code>, </code><var>type</var><code> )</code> <dd>
+  This returns for match [<var>info</var>, <var>i</var>] some data whose format depends on the
+  string <var>type</var>,  or <code>fail</code> if these  data are not available.  The values of
+  <var>type</var> which currently must be handled and the corresponding result format
+  are described in the list below.
+<p>
+</dl>
+<p>
+The <code>HELP_BOOK_HANDLER.</code><var>myownformat</var><code>.HelpData</code> function must recognize the
+following values of the <var>type</var> argument.
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>"text"</code> <dd>
+  This must return a corresponding text string in a format which can be fed
+  into the <code>Pager</code>, see&nbsp;<a href="../ref/CHAP002.htm#SSEC004.1">Ref:Pager</a>. 
+<p>
+<dt><code>"url"</code> <dd>
+  If the help book is available in HTML  format this must return an URL as a
+  string (Probably  a <code>file://</code> URL containing  a label for the  exact start
+  position in that file). Otherwise it returns <code>fail</code>.
+<p>
+<dt><code>"dvi"</code> <dd>
+  If the help book  is available in dvi-format this must  return a record of
+  form  <code>rec( file  := </code><var>filename</var><code>,  page  := </code><var>pagenumber</var><code>  )</code>. Otherwise  it
+  returns <code>fail</code>.
+<p>
+<dt><code>"pdf"</code> <dd>
+  Same as case <code>"dvi"</code>, but for the corresponding pdf-file.
+<p>
+<dt><code>"secnr"</code> <dd>
+  This  must return  a  pair  like <code>[[3,3,1],  "3.3.1"]</code>  which gives  the
+  section  number  as  chapter  number, section  number,  subsection  number
+  triple  and a  corresponding  string  (a chapter  itself  is encoded  like
+  <code>[[4,0,0], "4."]</code>). Useful for cross-referencing between help books.
+<p>
+</dl>
+<p>
+<p>
+<h2><a name="SECT004">5.4 Introducing new Viewer for the Online Help</a></h2>
+<p><p>
+There is a  record <code>HELP_VIEWER_INFO</code> which contains one  component for each
+help viewer. Such a record contains two components.
+<p>
+The  component <code>.type</code>  refers  to  one of  the  <var>type</var>s  recognized by  the
+<code>HelpData</code> handler function explained in the previous section (currently one
+of <code>"text"</code>, <code>"url"</code>, <code>"dvi"</code>, or <code>"pdf"</code>).
+<p>
+The component  <code>.show</code> is  a function which  gets as input  the result  of a
+corresponding <code>HelpData</code> handler  call, if it was not  <code>fail</code>. This function
+has to perform the actual display of  the data. (E.g., by calling a function
+like <code>Pager</code> or by starting up an external viewer program.)
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP004.htm">Previous</a>] [<a href ="CHAP006.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

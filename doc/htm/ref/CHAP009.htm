@@ -1,0 +1,529 @@
+<html><head><title>[ref] 9 Files and Filenames</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP008.htm">Previous</a>] [<a href ="CHAP010.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>9 Files and Filenames</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP009.htm#SECT001">Portability</a>
+<li> <A HREF="CHAP009.htm#SECT002">GAP Root Directory</a>
+<li> <A HREF="CHAP009.htm#SECT003">Directories</a>
+<li> <A HREF="CHAP009.htm#SECT004">Filename</a>
+<li> <A HREF="CHAP009.htm#SECT005">Special Filenames</a>
+<li> <A HREF="CHAP009.htm#SECT006">File Access</a>
+<li> <A HREF="CHAP009.htm#SECT007">File Operations</a>
+</ol><p>
+<p>
+Files are identified by filenames, which are represented in <font face="Gill Sans,Helvetica,Arial">GAP</font> as
+strings.  Filenames can be created directly by the user or a program, but
+of course this is operating system dependent.
+<p>
+Filenames for some files can  be constructed in  a system independent way
+using the following functions.  This is done by first getting a directory
+object for the directory the file shall  reside in, and then constructing
+the filename.  However, it is  sometimes necessary to construct filenames
+of files in subdirectories relative to a given directory object.  In this
+case the directory separator is <strong>always</strong> <code>'/'</code> even under DOS or MacOS.
+<p>
+Section <a href="CHAP009.htm#SECT003">Directories</a> describes how  to  construct directory objects
+for the common <font face="Gill Sans,Helvetica,Arial">GAP</font> and system directories.
+Using the command <code>Filename</code> described in section&nbsp;<a href="CHAP009.htm#SSEC004.1">Filename</a>
+it is possible to construct a filename pointing to a file in these
+directories.
+There are also functions to test for accessibility of files,
+see&nbsp;<a href="CHAP009.htm#SECT006">File Access</a>.
+<p>
+<p>
+<h2><a name="SECT001">9.1 Portability</a></h2>
+<p><p>
+For portability filenames and directory  names should be restricted to at
+most   8 alphanumerical characters  optionally followed  by a dot <code>'.'</code>
+and between 1 and 3 alphanumerical characters.  Upper case letters should
+be  avoided because some  operating systems  do  not make any distinction
+between case,  so that <code>NaMe</code>, <code>Name</code>  and  <code>name</code> all  refer to the same
+file  whereas  some   operating  systems are case   sensitive.   To avoid
+problems only lower case characters should be used.
+<p>
+Another function which is system-dependent is:
+<a name = "SSEC001.1"></a>
+<li><code>LastSystemError() F</code>
+<p>
+<code>LastSystemError</code> returns a record describing the last system error  that
+has occurred.
+This record   contains  at least   the  component  <code>message</code> which   is a
+string. This message is, however,  highly operating system dependent  and
+should only be used as an informational message for the user.
+<p>
+<p>
+<h2><a name="SECT002">9.2 GAP Root Directory</a></h2>
+<p><p>
+When   starting <font face="Gill Sans,Helvetica,Arial">GAP</font> it is possible   to specify various directories as
+root directories.  In  <font face="Gill Sans,Helvetica,Arial">GAP</font>'s view of  the world these  directories are
+merged  into one meta-directory.  This  directory is called <strong><font face="Gill Sans,Helvetica,Arial">GAP</font>  root
+directory</strong> in the following.
+<p>
+For example, if <code></code><var>root1</var><code>;</code><var>root2</var><code>;...</code> is passed as argument to <code>-l</code>  when
+<font face="Gill Sans,Helvetica,Arial">GAP</font> is started and <font face="Gill Sans,Helvetica,Arial">GAP</font> wants to locate a file <code>lib/group.gd</code> in the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> root  directory  it  will  first  check  if  the  file  exists  in
+<code></code><var>root1</var><code></code>, if not, it checks <code></code><var>root2</var><code></code>, and so on.
+<p>
+This layout makes  it possible to  have one  system-wide  installation of
+<font face="Gill Sans,Helvetica,Arial">GAP</font>  which is read-only  but still  allows users  to modify individual
+files.  Therefore instead of constructing an absolute path name to a file
+you should always use <code>DirectoriesLibrary</code> or <code>DirectoriesPackageLibrary</code>
+together with <code>Filename</code> to construct a filename for a file in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+root directory.
+<p>
+<strong>Example</strong>
+<p>
+Suppose that the system-wide installation lives in  <code>/usr/local/lib/gap4</code>
+and you want to modify the file  <code>lib/files.gd</code>  without  disturbing  the
+system installation.
+<p>
+In this case create  a  new  directory  <code>/home/myhome/gap</code>  containing  a
+subdirectory <code>lib</code> which contains the modified <code>lib/files.gd</code>.
+<p>
+The directory/file structure now looks like
+<p>
+<pre>
+/usr/local/lib/gap4/
+/usr/local/lib/gap4/lib/
+/usr/local/lib/gap4/lib/files.gd
+/home/myhome/gap/
+/home/myhome/gap/lib
+/home/myhome/gap/lib/files.gd
+</pre>
+<p>
+If you start <font face="Gill Sans,Helvetica,Arial">GAP</font> using (under UNIX)
+<p>
+<pre>
+you@unix&gt; gap -l '/home/myhome/gap;/usr/local/lib/gap4'
+</pre>
+<p>
+then the  file  <code>/home/myhome/gap/lib/files.gd</code>  will  be  used  whenever
+<font face="Gill Sans,Helvetica,Arial">GAP</font> references the file with filename  <code>lib/files.gd</code>  in  the  <font face="Gill Sans,Helvetica,Arial">GAP</font>
+root directory.
+<p>
+This setup also  allows one to easily install  new <font face="Gill Sans,Helvetica,Arial">GAP</font> packages or
+bugfixes even if no access to the system <font face="Gill Sans,Helvetica,Arial">GAP</font> installation  is possible.
+Simply unpack the files into ``/home/myhome/gap''.
+<p>
+<p>
+<h2><a name="SECT003">9.3 Directories</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>Directory( </code><var>string</var><code> ) O</code>
+<p>
+returns a directory object for the string <var>string</var>.
+<code>Directory</code> understands <code>.</code> for ``current directory'', that is, the
+directory in which <font face="Gill Sans,Helvetica,Arial">GAP</font> was started.
+It also understands absolute paths.
+<p>
+If the variable <code>GAPInfo.UserHome</code> is defined (this may depend on the
+operating system) then <code>Directory</code> understands a string with a leading
+<code>&nbsp;</code> character for a path relative to the user's home directory.
+<p>
+Paths are otherwise taken relative to the current directory.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>DirectoryTemporary( </code><var>hint</var><code> ) F</code>
+<li><code>DirectoryTemporary( ) F</code>
+<p>
+returns  a directory  object in the   category <code>IsDirectory</code> for a  <strong>new</strong>
+temporary directory.   This is guaranteed to  be  newly created and empty
+immediately  after the call to <code>DirectoryTemporary</code>.   <font face="Gill Sans,Helvetica,Arial">GAP</font> will make a
+reasonable effort   to <strong>remove</strong> this   directory  either  when a  garbage
+collection  collects the directory   object  or upon termination  of  the
+<font face="Gill Sans,Helvetica,Arial">GAP</font>   job that   created  the  directory.     <var>hint</var> can  be  used  by
+<code>DirectoryTemporary</code> to construct    the  name  of the    directory   but
+<code>DirectoryTemporary</code> is free to use only a  part of <var>hint</var> or even ignore
+it completely.
+<p>
+If <code>DirectoryTemporary</code> is  unable to create a  new  directory, <code>fail</code> is
+returned.  In this case <code>LastSystemError</code> can be  used to get information
+about the error.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>DirectoryCurrent( ) F</code>
+<p>
+returns the directory object for the current directory.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>DirectoriesLibrary( ) F</code>
+<li><code>DirectoriesLibrary( </code><var>name</var><code> ) F</code>
+<p>
+returns the directory objects for the <font face="Gill Sans,Helvetica,Arial">GAP</font> library <var>name</var> as a list.
+<var>name</var> must be one of <code>"lib"</code> (the default), <code>"grp"</code>, <code>"prim"</code>,
+and so on.
+The string <code>""</code> is also legal and with this argument <code>DirectoriesLibrary</code>
+returns the list of <font face="Gill Sans,Helvetica,Arial">GAP</font> root directories; the return value of
+<code>DirectoriesLibrary("");</code> differs from <code>GAPInfo.RootPaths</code> in that the
+former is a list of directory objects and the latter a list of strings.
+<p>
+The directory <var>name</var> must exist in at least one of the root directories,
+otherwise <code>fail</code> is returned.
+<p>
+As the files in the <font face="Gill Sans,Helvetica,Arial">GAP</font> root directory (see&nbsp;<a href="CHAP009.htm#SECT002">GAP Root Directory</a>) can
+be distributed into different directories in the filespace a list of
+directories is returned.  In order to find an existing file in a <font face="Gill Sans,Helvetica,Arial">GAP</font>
+root directory you should pass that list to <code>Filename</code> (see&nbsp;<a href="CHAP009.htm#SSEC004.1">Filename</a>)
+as the first argument.
+In order to create a filename for a new file inside a <font face="Gill Sans,Helvetica,Arial">GAP</font> root
+directory you should pass the first entry of that list.
+However, creating files inside the <font face="Gill Sans,Helvetica,Arial">GAP</font> root directory is not
+recommended, you should use <code>DirectoryTemporary</code> instead.
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>DirectoriesSystemPrograms( ) F</code>
+<p>
+<code>DirectoriesSystemPrograms</code> returns the directory objects for the list of
+directories where the system programs reside as a list.  Under UNIX this
+would usually represent <code>$PATH</code>.
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>DirectoryContents( </code><var>name</var><code> ) F</code>
+<p>
+This function returns a list of filenames/directory names that reside in
+the directory with name <var>name</var> (given as a string). It is an error, if
+such a directory does not exist. 
+<p>
+<p>
+<h2><a name="SECT004">9.4 Filename</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>Filename( </code><var>dir</var><code>, </code><var>name</var><code> ) O</code>
+<li><code>Filename( </code><var>list-of-dirs</var><code>, </code><var>name</var><code> ) O</code>
+<p>
+If the first argument is a directory object <var>dir</var>, <code>Filename</code> returns the
+(system dependent) filename as a string for the file with name <var>name</var>  in
+the directory <var>dir</var>.
+<code>Filename</code> returns the filename regardless of whether the directory
+contains a file with name <var>name</var> or not.
+<p>
+If the first argument is a list <var>list-of-dirs</var> (possibly of length 1) of
+directory objects, then <code>Filename</code> searches the directories in order, and
+returns the filename for the file <var>name</var> in the first directory which
+contains a file <var>name</var> or <code>fail</code> if no directory contains a file <var>name</var>.
+<p>
+<strong>Examples</strong>
+<p>
+In    order    to    locate    the    system    program    <code>date</code>     use
+<code>DirectoriesSystemPrograms</code> together with the second form of <code>Filename</code>.
+<p>
+<pre>
+gap&gt; path := DirectoriesSystemPrograms();;
+gap&gt; date := Filename( path, "date" );
+"/bin/date"
+</pre>
+<p>
+In order to locate the library file <code>files.gd</code>  use  <code>DirectoriesLibrary</code>
+together with the second form of <code>Filename</code>.
+<p>
+<pre>
+gap&gt; path := DirectoriesLibrary();;
+gap&gt; Filename( path, "files.gd" );
+"./lib/files.gd"
+</pre>
+<p>
+In  order to construct filenames for  new  files in a temporary directory
+use <code>DirectoryTemporary</code> together with the first form of <code>Filename</code>.
+<p>
+<pre>
+gap&gt; tmpdir := DirectoryTemporary();;
+gap&gt; Filename( [ tmpdir ], "file.new" );
+fail
+gap&gt; Filename( tmpdir, "file.new" );    
+"/var/tmp/tmp.0.021738.0001/file.new"
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">9.5 Special Filenames</a></h2>
+<p><p>
+The special filename <code>"*stdin*"</code> denotes the standard  input,  i.e.,  the
+stream through which the  user  enters  commands  to  <font face="Gill Sans,Helvetica,Arial">GAP</font>.  The  exact
+behaviour of reading from <code>"*stdin*"</code> is operating system dependent,  but
+usually the following happens.  If  <font face="Gill Sans,Helvetica,Arial">GAP</font>  was  started  with  no  input
+redirection, statements are read from the terminal stream until the  user
+enters the end of file character, which is usually <var>ctr</var>-'D'.  Note  that
+terminal streams are special, in  that  they  may  yield  ordinary  input
+<strong>after</strong>  an  end  of  file.  Thus  when  control  returns  to  the   main
+read-eval-print loop the user can continue with  <font face="Gill Sans,Helvetica,Arial">GAP</font>.  If  <font face="Gill Sans,Helvetica,Arial">GAP</font>  was
+started with an input redirection, statements are read from  the  current
+position in the input file up to  the  end  of  the  file.  When  control
+returns to the main read eval view  loop  the  input  stream  will  still
+return end of file, and <font face="Gill Sans,Helvetica,Arial">GAP</font> will terminate.
+<p>
+The  special filename <code>"*errin*"</code> denotes   the stream connected  to  the
+UNIX <code>stderr</code> output. This stream is usually connected to  the  terminal,
+even if the standard input was  redirected,  unless  the  standard  error
+stream was also redirected, in which case opening of <code>"*errin*"</code> fails.
+<p>
+The special filename <code>"*stdout*"</code>  can be used to  print to  the standard
+output.
+<p>
+The special  filename <code>"*errout*"</code> can be  used to  print to the standard
+error output file, which is usually  connected  to  the terminal, even if
+the standard output was redirected.
+<p>
+<p>
+<h2><a name="SECT006">9.6 File Access</a></h2>
+<p><p>
+When the following functions return <code>false</code> one can use <code>LastSystemError</code>
+(see&nbsp;<a href="CHAP009.htm#SSEC001.1">LastSystemError</a>) to find  out  the  reason  (as  provided  by  the
+operating system).
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>IsExistingFile( </code><var>name-file</var><code> ) F</code>
+<p>
+returns <code>true</code> if a file with the filename <var>name-file</var> exists and can be
+seen by the <font face="Gill Sans,Helvetica,Arial">GAP</font> process. Otherwise <code>false</code> is returned.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>IsReadableFile( </code><var>name-file</var><code> ) F</code>
+<p>
+returns <code>true</code> if a file with the filename <var>name-file</var> exists  <strong>and</strong>  the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> process has read permissions for the file, or <code>false</code> if 
+this is not the case.
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>IsWritableFile( </code><var>name-file</var><code> ) F</code>
+<p>
+returns <code>true</code> if a file with the filename <var>name-file</var> exists  <strong>and</strong>  the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> process has write permissions for  the  file,  or  <code>false</code>  if  
+this is not the case.
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>IsExecutableFile( </code><var>name-file</var><code> ) F</code>
+<p>
+returns <code>true</code>  if a  file with  the filename  <var>name-file</var> exists  <strong>and</strong> the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> process has  execute permissions for the file, or  <code>false</code> if this is
+not the case. Note that execute permissions do not imply that it is possible
+to execute the file, e.g., it may only be executable on a different machine.
+<p>
+<a name = "SSEC006.5"></a>
+<li><code>IsDirectoryPath( </code><var>name-file</var><code> ) F</code>
+<p>
+returns <code>true</code> if the file with the filename <var>name-file</var> exists <strong>and</strong>  is
+a directory and  <code>false</code> otherwise.
+Note that this function does not check if the <font face="Gill Sans,Helvetica,Arial">GAP</font> process actually has
+write  or  execute  permissions  for   the   directory   (you   can   use
+<code>IsWritableFile</code>   (see&nbsp;<a href="CHAP009.htm#SSEC006.3">IsWritableFile</a>),    resp.    <code>IsExecutableFile</code>
+(see&nbsp;<a href="CHAP009.htm#SSEC006.4">IsExecutableFile</a>) to check such permissions).
+<p>
+<strong>Examples</strong>
+<p>
+Note,   in   particular,    how    one    may    use    <code>LastSystemError</code>
+(see&nbsp;<a href="CHAP009.htm#SSEC001.1">LastSystemError</a>) to discover the reason  a  file  access  function
+returns <code>false</code>.
+<p>
+<pre>
+gap&gt; IsExistingFile( "/bin/date" );     # the file `/bin/date' exists
+true
+gap&gt; IsExistingFile( "/bin/date.new" ); # the file `/bin/date.new' does not exist
+false
+gap&gt; IsExistingFile( "/bin/date/new" ); # `/bin/date' is not a directory
+false
+gap&gt; LastSystemError().message;
+"Not a directory"
+gap&gt; IsReadableFile( "/bin/date" );     # the file `/bin/date' is readable
+true
+gap&gt; IsReadableFile( "/bin/date.new" ); # the file `/bin/date.new' does not exist
+false
+gap&gt; LastSystemError().message;        
+"No such file or directory"
+gap&gt; IsWritableFile( "/bin/date" );     # the file `/bin/date' is not writable ...
+false
+gap&gt; IsExecutableFile( "/bin/date" );   # ... but executable
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">9.7 File Operations</a></h2>
+<p><p>
+<a name = "SSEC007.1"></a>
+<li><code>Read( </code><var>name-file</var><code> ) O</code>
+<p>
+reads the input from the file with the filename <var>name-file</var>, which must
+be given as a string.
+<p>
+<code>Read</code> first opens the file <var>name-file</var>.  If the file does not exist, or
+if <font face="Gill Sans,Helvetica,Arial">GAP</font> cannot open it, e.g., because of access restrictions,
+an error is signalled.
+<p>
+Then the contents of the file are read and evaluated, but the results are
+not printed.  The reading and evaluations happens exactly as described
+for the main loop (see <a href="CHAP006.htm#SECT001">Main Loop</a>).
+<p>
+If a statement in the file causes an error a break loop is entered
+(see&nbsp;<a href="CHAP006.htm#SECT003">Break Loops</a>).
+The input for this break loop is not taken from the file, but from the
+input connected to the <code>stderr</code> output of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+If <code>stderr</code> is not connected to a terminal, no break loop is entered.
+If this break loop is left with <code>quit</code> (or <code></code><var>ctr</var><code>-D</code>), <font face="Gill Sans,Helvetica,Arial">GAP</font> exits from
+the <code>Read</code> command, and from all enclosing <code>Read</code> commands,
+so that control is normally returned to an interactive prompt.
+The <code>QUIT</code> statement (see&nbsp;<a href="CHAP006.htm#SECT007">Leaving GAP</a>) can also be used in the break
+loop to exit <font face="Gill Sans,Helvetica,Arial">GAP</font> immediately.
+<p>
+Note that a statement must not begin in one file and end in another.
+I.e., <var>eof</var> (<code>end-of-file</code>) is not treated as whitespace,
+but as a special symbol that must not appear inside any statement.
+<p>
+Note that one file may very well contain a read statement causing another
+file to be read, before input is again taken from the first file.
+There is an operating system dependent maximum on the number of files
+that may be open simultaneously.  Usually it is 15.
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>ReadAsFunction( </code><var>name-file</var><code> ) O</code>
+<p>
+reads the file with filename <var>name-file</var> as a function and returns this
+function.
+<p>
+<strong>Example</strong>
+<p>
+Suppose that the file <code>/tmp/example.g</code> contains the following
+<p>
+<pre>
+local a;
+
+a := 10;
+return a*10;
+</pre>
+<p>
+Reading the file as a function will not affect a global variable <code>a</code>.
+<p>
+<pre>
+gap&gt; a := 1;
+1
+gap&gt; ReadAsFunction("/tmp/example.g")();
+100
+gap&gt; a;
+1
+</pre>
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>PrintTo( </code><var>name-file</var><code>[, </code><var>obj1</var><code>, ...] ) F</code>
+<p>
+works like <code>Print</code>  (see&nbsp;<a href="CHAP006.htm#SSEC002.2">Print</a>),  except  that  the  arguments  <var>obj1</var>,
+... (if present) are printed to the file with  the  name  <var>name-file</var>
+instead of the standard output. This file must of course be  writable  by
+<font face="Gill Sans,Helvetica,Arial">GAP</font>. Otherwise  an  error  is  signalled.  Note  that  <code>PrintTo</code>  will
+<strong>overwrite</strong> the previous contents of this file if it already existed;  in
+particular, <code>PrintTo</code> with just the  <var>name-file</var>  argument  empties  that
+file. <code>AppendTo</code> can be used to append to a file (see <a href="CHAP009.htm#SSEC007.4">AppendTo</a>).  There
+is an operating system dependent maximum on the number  of  output  files
+that may be open simultaneously, usually this is 14.
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>AppendTo( </code><var>name-file</var><code>[, </code><var>obj1</var><code>, ...] ) F</code>
+<p>
+works like <code>PrintTo</code> (see&nbsp;<a href="CHAP009.htm#SSEC007.3">PrintTo</a>), except that  the  output  does  not
+overwrite the previous contents of the file, but is appended to the file.
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>LogTo( </code><var>name-file</var><code> ) O</code>
+<p>
+causes the subsequent interaction to be logged  to the file with the name
+<var>name-file</var>, i.e., everything you  see on your  terminal will also appear
+in this file. <code>LogTo</code> may also be used to log to a stream (see&nbsp;<a href="CHAP010.htm#SSEC004.5">LogTo!for streams</a>).
+This file must of course be writable  by <font face="Gill Sans,Helvetica,Arial">GAP</font>, otherwise an error is
+signalled.  Note  that   <code>LogTo</code>  will overwrite the   previous
+contents of this file if it already existed.
+<p>
+<a name = "SSEC007.6"></a>
+<li><code>LogTo() M</code>
+<p>
+In this form <code>LogTo</code> stops logging to a file or stream.
+<p>
+<a name = "SSEC007.7"></a>
+<li><code>InputLogTo( </code><var>name-file</var><code> ) O</code>
+<p>
+causes the  subsequent  input to be   logged to the   file with  the name
+<var>name-file</var>, i.e., everything you type  on your terminal will also appear
+in this file.  Note that <code>InputLogTo</code>  and <code>LogTo</code> cannot  be used at the
+same time while <code>InputLogTo</code> and <code>OutputLogTo</code> can.
+Note  that   <code>InputLogTo</code>  will overwrite the   previous
+contents of this file if it already existed.
+<p>
+<a name = "SSEC007.8"></a>
+<li><code>InputLogTo() M</code>
+<p>
+In this form <code>InputLogTo</code> stops logging to a file or stream.
+<p>
+<a name = "SSEC007.9"></a>
+<li><code>OutputLogTo( </code><var>name-file</var><code> ) O</code>
+<p>
+causes   the subsequent output to   be logged to  the file  with the name
+<var>name-file</var>,  i.e., everything <font face="Gill Sans,Helvetica,Arial">GAP</font> prints  on  your terminal will also
+appear in this file.  Note that  <code>OutputLogTo</code> and <code>LogTo</code> cannot be used
+at the same time while <code>InputLogTo</code> and <code>OutputLogTo</code> can.
+Note  that   <code>OutputLogTo</code>  will overwrite the   previous
+contents of this file if it already existed.
+<p>
+<a name = "SSEC007.10"></a>
+<li><code>OutputLogTo() M</code>
+<p>
+In this form <code>OutputLogTo</code> stops logging to a file or stream.
+<p>
+<strong>Note</strong> that one should be careful not to write to a logfile with
+<code>PrintTo</code> or <code>AppendTo</code>.
+<p>
+<a name = "SSEC007.11"></a>
+<li><code>CrcFile( </code><var>name-file</var><code> ) F</code>
+<p>
+computes a checksum value for the file with filename <var>name-file</var> and
+returns this value as an integer.
+See Section&nbsp;<a href="CHAP003.htm#SECT010">CRC Numbers</a> for an example.
+The function returns <code>fail</code> if a system error occurred, say, for example,
+if <var>name-file</var> does not exist.
+In this case the function <code>LastSystemError</code> (see&nbsp;<a href="CHAP009.htm#SSEC001.1">LastSystemError</a>)
+can be used to get information about the error.
+<p>
+<a name = "SSEC007.12"></a>
+<li><code>RemoveFile( </code><var>name-file</var><code> ) F</code>
+<p>
+will remove the file with filename <var>name-file</var> and returns <code>true</code> in case
+of  success.  The function returns <code>fail</code> if a system error occurred, for
+example, if your permissions do not allow the removal of <var>name-file</var>.
+In this case the function <code>LastSystemError</code> (see&nbsp;<a href="CHAP009.htm#SSEC001.1">LastSystemError</a>)
+can be used to get information about the error.
+<p>
+<a name = "SSEC007.13"></a>
+<li><code>Reread( </code><var>name-file</var><code> ) F</code>
+<a name = "SSEC007.13"></a>
+<li><code>REREADING</code>
+<p>
+In general, it is not possible to read the same <font face="Gill Sans,Helvetica,Arial">GAP</font> library file
+twice, or to read a compiled version after reading a <font face="Gill Sans,Helvetica,Arial">GAP</font> version,
+because crucial global variables are made read-only (see <a href="CHAP004.htm#SECT009">More about Global Variables</a>) and filters and methods are added to global tables.
+<p>
+A partial solution to this problem is provided by the function
+<code>Reread</code> (and related functions <code>RereadLib</code> etc.).  <code>Reread(
+</code><var>name-file</var><code> )</code> sets the global variable <code>REREADING</code> to <code>true</code>, reads
+the file named by <var>name-file</var> and then resets <code>REREADING</code>. Various
+system functions behave differently when <code>REREADING</code> is set to
+true. In particular, assignment to read-only global variables is
+permitted, calls to <code>NewRepresentation</code> (see <a href="../prg/CHAP003.htm#SSEC002.1">NewRepresentation</a>
+in ``Programming in <font face="Gill Sans,Helvetica,Arial">GAP</font>'') and
+<code>NewInfoClass</code> (see <a href="CHAP007.htm#SSEC004.1">NewInfoClass</a>) with parameters identical to those
+of an existing representation or info class will return the existing
+object, and methods installed with <code>InstallMethod</code> (see
+<a href="../prg/CHAP002.htm#SSEC002.1">InstallMethod</a> in ``Programming in <font face="Gill Sans,Helvetica,Arial">GAP</font>'') may sometimes displace
+existing methods.
+<p>
+This function may not entirely produce the intended results,
+especially if what has changed is the super-representation of a
+representation or the requirements of a method. In these cases, it is
+necessary to restart <font face="Gill Sans,Helvetica,Arial">GAP</font> to read the modified file.
+<p>
+An additional use of <code>Reread</code> is to load the compiled version of a
+file for which the <font face="Gill Sans,Helvetica,Arial">GAP</font> language version had previously been read
+(or perhaps was included in a saved workspace). See <a href="CHAP003.htm#SECT007">The Compiler</a> and 
+<a href="CHAP003.htm#SECT011">Saving and Loading a Workspace</a> for more information.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP008.htm">Previous</a>] [<a href ="CHAP010.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,101 @@
+\makelabel{prg:Copyright Notice}{{\setbox 0=\hbox {1}\vrule width 0pt height\ht 0}}
+\makelabel{prg:About Programming in GAP}{1}
+\makelabel{prg:Method Selection}{2}
+\makelabel{prg:Operations and Methods}{2.1}
+\makelabel{prg:Method Installation}{2.2}
+\makelabel{prg:InstallMethod}{2.2.1}
+\makelabel{prg:InstallOtherMethod}{2.2.2}
+\makelabel{prg:Applicable Methods and Method Selection}{2.3}
+\makelabel{prg:Partial Methods}{2.4}
+\makelabel{prg:TryNextMethod}{2.4.1}
+\makelabel{prg:Redispatching}{2.5}
+\makelabel{prg:RedispatchOnCondition}{2.5.1}
+\makelabel{prg:Immediate Methods}{2.6}
+\makelabel{prg:InstallImmediateMethod}{2.6.1}
+\makelabel{prg:Logical Implications}{2.7}
+\makelabel{prg:InstallTrueMethod}{2.7.1}
+\makelabel{prg:Operations and Mathematical Terms}{2.8}
+\makelabel{prg:Creating New Objects}{3}
+\makelabel{prg:Creating Categories}{3.1}
+\makelabel{prg:NewCategory}{3.1.1}
+\makelabel{prg:CategoryCollections}{3.1.2}
+\makelabel{prg:CategoryFamily}{3.1.3}
+\makelabel{prg:Creating Representations}{3.2}
+\makelabel{prg:NewRepresentation}{3.2.1}
+\makelabel{prg:Creating Attributes and Properties}{3.3}
+\makelabel{prg:NewAttribute}{3.3.1}
+\makelabel{prg:NewAttribute}{3.3.1}
+\makelabel{prg:NewAttribute!mutable}{3.3.2}
+\makelabel{prg:NewAttribute!mutable}{3.3.2}
+\makelabel{prg:NewProperty}{3.3.3}
+\makelabel{prg:Creating Other Filters}{3.4}
+\makelabel{prg:NewFilter}{3.4.1}
+\makelabel{prg:SetFilterObj}{3.4.2}
+\makelabel{prg:ResetFilterObj}{3.4.2}
+\makelabel{prg:Creating Operations}{3.5}
+\makelabel{prg:NewOperation}{3.5.1}
+\makelabel{prg:Creating Families}{3.6}
+\makelabel{prg:NewFamily}{3.6.1}
+\makelabel{prg:CollectionsFamily}{3.6.2}
+\makelabel{prg:ElementsFamily}{3.6.3}
+\makelabel{prg:Creating Types}{3.7}
+\makelabel{prg:NewType}{3.7.1}
+\makelabel{prg:Creating Objects}{3.8}
+\makelabel{prg:Objectify}{3.8.1}
+\makelabel{prg:ObjectifyWithAttributes}{3.8.2}
+\makelabel{prg:Component Objects}{3.9}
+\makelabel{prg:NamesOfComponents}{3.9.1}
+\makelabel{prg:Positional Objects}{3.10}
+\makelabel{prg:Implementing New List Objects}{3.11}
+\makelabel{prg:Example -- Constructing Enumerators}{3.12}
+\makelabel{prg:Example -- Constructing Iterators}{3.13}
+\makelabel{prg:Arithmetic Issues in the Implementation of New Kinds of Lists}{3.14}
+\makelabel{prg:External Representation}{3.15}
+\makelabel{prg:ExtRepOfObj}{3.15.1}
+\makelabel{prg:ObjByExtRep}{3.15.1}
+\makelabel{prg:Mutability and Copying}{3.16}
+\makelabel{prg:Global Variables in the Library}{3.17}
+\makelabel{prg:BindGlobal}{3.17.1}
+\makelabel{prg:DeclareAttribute}{3.17.2}
+\makelabel{prg:DeclareCategory}{3.17.2}
+\makelabel{prg:DeclareFilter}{3.17.2}
+\makelabel{prg:DeclareProperty}{3.17.2}
+\makelabel{prg:DeclareRepresentation}{3.17.2}
+\makelabel{prg:DeclareOperation}{3.17.3}
+\makelabel{prg:DeclareGlobalFunction}{3.17.3}
+\makelabel{prg:InstallGlobalFunction}{3.17.4}
+\makelabel{prg:DeclareGlobalVariable}{3.17.5}
+\makelabel{prg:InstallValue}{3.17.6}
+\makelabel{prg:InstallFlushableValue}{3.17.6}
+\makelabel{prg:DeclareSynonym}{3.17.7}
+\makelabel{prg:DeclareSynonymAttr}{3.17.8}
+\makelabel{prg:FlushCaches}{3.17.9}
+\makelabel{prg:Declaration and Implementation Part}{3.18}
+\makelabel{prg:Examples of Extending the System}{4}
+\makelabel{prg:Addition of a Method}{4.1}
+\makelabel{prg:Extending the Range of Definition of an Existing Operation}{4.2}
+\makelabel{prg:Enforcing Property Tests}{4.3}
+\makelabel{prg:Adding a new Operation}{4.4}
+\makelabel{prg:Adding a new Attribute}{4.5}
+\makelabel{prg:Adding a new Representation}{4.6}
+\makelabel{prg:Components versus Attributes}{4.7}
+\makelabel{prg:Adding new Concepts}{4.8}
+\makelabel{prg:Example: M-groups}{4.9}
+\makelabel{prg:Example: Groups with a word length}{4.10}
+\makelabel{prg:Example: Groups with a decomposition as semidirect product}{4.11}
+\makelabel{prg:Creating Own Arithmetic Objects}{4.12}
+\makelabel{prg:ArithmeticElementCreator}{4.12.1}
+\makelabel{prg:An Example -- Residue Class Rings}{5}
+\makelabel{prg:A First Attempt to Implement Elements of Residue Class Rings}{5.1}
+\makelabel{prg:Why Proceed in a Different Way?}{5.2}
+\makelabel{prg:A Second Attempt to Implement Elements of Residue Class Rings}{5.3}
+\makelabel{prg:Compatibility of Residue Class Rings with Prime Fields}{5.4}
+\makelabel{prg:Further Improvements in Implementing Residue Class Rings}{5.5}
+\makelabel{prg:An Example -- Designing Arithmetic Operations}{6}
+\makelabel{prg:New Arithmetic Operations vs. New Objects}{6.1}
+\makelabel{prg:Designing new Multiplicative Objects}{6.2}
+\makelabel{prg:Bibliography}{}
+\setcitlab {Isa76}{Isa76}
+\setcitlab {luksrakocziwright97}{LRW97}
+\setcitlab {wielandt69}{Wie69}
+\makelabel{prg:Index}{}

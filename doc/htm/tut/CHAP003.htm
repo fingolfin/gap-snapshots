@@ -1,0 +1,885 @@
+<html><head><title>[tut] 3 Lists and Records</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>3 Lists and Records</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP003.htm#SECT001">Plain Lists</a>
+<li> <A HREF="CHAP003.htm#SECT002">Identical Lists</a>
+<li> <A HREF="CHAP003.htm#SECT003">Immutability</a>
+<li> <A HREF="CHAP003.htm#SECT004">Sets</a>
+<li> <A HREF="CHAP003.htm#SECT005">Ranges</a>
+<li> <A HREF="CHAP003.htm#SECT006">For and While Loops</a>
+<li> <A HREF="CHAP003.htm#SECT007">List Operations</a>
+<li> <A HREF="CHAP003.htm#SECT008">Vectors and Matrices</a>
+<li> <A HREF="CHAP003.htm#SECT009">Plain Records</a>
+<li> <A HREF="CHAP003.htm#SECT010">Further Information about Lists</a>
+</ol><p>
+<p>
+Modern mathematics, especially algebra, is based on set theory. When sets
+are represented in a computer, they inadvertently turn into lists. That's
+why we start our  survey of the various  objects <font face="Gill Sans,Helvetica,Arial">GAP</font> can handle with a
+description of  lists  and their  manipulation. <font face="Gill Sans,Helvetica,Arial">GAP</font>  regards sets as a
+special kind of lists, namely as lists without  holes or duplicates whose
+entries are ordered with respect to the precedence relation&nbsp;<code>&lt;</code>.
+<p>
+After  the introduction of  the basic  manipulations with lists in&nbsp;<a href="CHAP003.htm#SECT001">Plain Lists</a>, some difficulties concerning identity and mutability of lists are
+discussed  in&nbsp;<a href="CHAP003.htm#SECT002">Identical Lists</a>  and&nbsp;<a href="CHAP003.htm#SECT003">Immutability</a>.  Sets,  ranges, row
+vectors, and matrices are introduced as special kinds of lists in&nbsp;<a href="CHAP003.htm#SECT004">Sets</a>,
+<a href="CHAP003.htm#SECT005">Ranges</a>, <a href="CHAP003.htm#SECT008">Vectors and Matrices</a>.   Handy list   operations are
+shown in&nbsp;<a href="CHAP003.htm#SECT007">List Operations</a>. Finally we explain how to use records
+in&nbsp;<a href="CHAP003.htm#SECT009">Plain Records</a>. 
+<p>
+<p>
+<h2><a name="SECT001">3.1 Plain Lists</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+A <strong>list</strong> is a collection of objects separated by  commas and enclosed  in
+brackets.  Let us for example construct the list <code>primes</code> of the first 10
+prime numbers.
+<pre>
+gap&gt; primes:= [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ]
+</pre>
+The next two primes are  31 and 37.  They may be appended to the existing
+list by the function <code>Append</code> which takes  the existing list as its first
+and another list as a second argument.  The  second argument  is appended
+to the list <code>primes</code> and  no  value is returned.  Note that  by appending
+another list the object <code>primes</code> is changed.
+<pre>
+gap&gt; Append(primes, [31, 37]);
+gap&gt; primes;
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 ]
+</pre>
+You can as well add single new elements to existing lists by the function
+<code>Add</code>  which takes  the existing list  as its  first argument  and  a new
+element as  its second argument.  The  new  element  is added to the list
+<code>primes</code> and again no value is returned but the list <code>primes</code> is changed.
+<pre>
+gap&gt; Add(primes, 41);
+gap&gt; primes;
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41 ]
+</pre>
+Single elements of a list are referred to by their position in the  list.
+To get the value  of the seventh prime, that is the seventh entry in  our
+list <code>primes</code>, you simply type
+<pre>
+gap&gt; primes[7];
+17
+</pre>
+This value can be handled like any other value, for example multiplied by 2
+or assigned to a  variable. On the other hand  this mechanism allows one to
+assign a value to  a position in  a  list. So the   next prime 43  may be
+inserted  in the   list directly  after the  last   occupied position  of
+<code>primes</code>. This  last occupied    position  is returned  by  the  function
+<code>Length</code>.
+<pre>
+gap&gt; Length(primes);
+13
+gap&gt; primes[14]:= 43;
+43
+gap&gt; primes;
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43 ]
+</pre>
+Note that this operation again has changed the object <code>primes</code>.  The
+next position after the end of a list is not the only position capable
+of taking a new value.  If you know that 71 is the 20th prime, you can
+enter it right now in the 20th position of <code>primes</code>.  This will result
+in a list with holes which is however still a list and now has length
+20.
+<pre>
+gap&gt; primes[20]:= 71;
+71
+gap&gt; primes;
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,,,,,, 71 ]
+gap&gt; Length(primes);
+20
+</pre>
+The list itself however must  exist before a  value can be  assigned to a
+position of the list.  This list may be the empty list <code>[ ]</code>.
+<pre>
+gap&gt; lll[1]:= 2;
+Variable: 'lll' must have a value
+
+</pre>
+<p>
+<pre>
+gap&gt; lll:= []; lll[1]:= 2;
+[  ]
+2
+</pre>
+Of course  existing entries of a list  can be  changed by this mechanism,
+too. We will not do it here because <code>primes</code> then may no longer be a list
+of primes. Try for yourself to change the 17 in the list into a 9.
+<p>
+To get the position    of 17 in  the   list  <code>primes</code> use   the  function
+<code>Position</code> which takes the list as its  first argument and the element as
+its second argument  and returns the position of  the first occurrence of
+the element 17 in the list <code>primes</code>.
+If the element is not contained in the list then <code>Position</code> will return
+the special object <code>fail</code>.
+<pre>
+gap&gt; Position(primes, 17);
+7
+gap&gt; Position(primes, 20);
+fail
+</pre>
+In  all  of the  above changes to  the  list <code>primes</code>,  the list has been
+automatically resized.  There  is no need  for you to tell <font face="Gill Sans,Helvetica,Arial">GAP</font> how big
+you want a list to be.  This is all done dynamically.
+<p>
+It is not necessary for the objects collected in a list to be of the same
+type.
+<pre>
+gap&gt; lll:= [true, "This is a String",,, 3];
+[ true, "This is a String",,, 3 ]
+</pre>
+In the same way a list may be part of another  list.  A list  may even be
+part of itself.
+<pre>
+gap&gt; lll[3]:= [4,5,6];; lll;
+[ true, "This is a String", [ 4, 5, 6 ],, 3 ]
+gap&gt; lll[4]:= lll;
+[ true, "This is a String", [ 4, 5, 6 ], ~, 3 ]
+</pre>
+Now the tilde in the fourth position of <code>lll</code>  denotes the object that is
+currently  printed. Note that  the result  of the  last operation is  the
+actual value  of  the  object  <code>lll</code>   on  the  right  hand side  of  the
+assignment. In  fact it is  identical to the value  of the whole list
+<code>lll</code> on the left hand side of the assignment.
+<p>
+<a name = "I1"></a>
+
+<a name = "I1"></a>
+<a name = "I2"></a>
+
+A <strong>string</strong>  is a  special type  of list,
+namely a dense  list of <strong>characters</strong>, where <strong>dense</strong> means  that the list has
+no  holes. Here,  <strong>characters</strong> are  special <font face="Gill Sans,Helvetica,Arial">GAP</font>  objects representing  an
+element of the character set of the operating system. The input of printable
+characters is  by enclosing them in  single quotes <code>'</code>. A  string literal
+can either be entered as the list of characters or by writing the characters
+between doublequotes <code>"</code>. Strings are  handled specially by <code>Print</code>. You can
+learn much more about strings in the reference manual.
+<p>
+<pre>
+gap&gt; s1 := ['H','a','l','l','o',' ','w','o','r','l','d','.'];
+"Hallo world."
+gap&gt; s1 = "Hallo world.";
+true
+gap&gt; s1[7];
+'w'
+</pre>
+<p>
+Sublists of lists can easily be extracted and assigned using the operator
+<code></code><var>list</var><code>{ </code><var>positions</var><code> }</code>.
+<pre>
+gap&gt; sl := lll{ [ 1, 2, 3 ] };
+[ true, "This is a String", [ 4, 5, 6 ] ]
+gap&gt; sl{ [ 2, 3 ] } := [ "New String", false ];
+[ "New String", false ]
+gap&gt; sl;
+[ true, "New String", false ]
+</pre>
+This way you get a new list whose <var>i</var>th entry is that element of the
+original list whose position is the <var>i</var>th entry of the argument in the
+curly braces.
+<p>
+<p>
+<h2><a name="SECT002">3.2 Identical Lists</a></h2>
+<p><p>
+<a name = "I3"></a>
+
+This second  section  about lists is dedicated  to  the subtle difference
+between  <strong>equality</strong>  and <strong>identity</strong>  of lists. It is really important to
+understand   this  difference in  order   to  understand how complex data
+structures are  realized in <font face="Gill Sans,Helvetica,Arial">GAP</font>.   This section applies  to all <font face="Gill Sans,Helvetica,Arial">GAP</font>
+objects  that have  subobjects,  e.g.,  to lists   and to  records. After
+reading the section&nbsp;<a href="CHAP003.htm#SECT009">Plain Records</a> about records you should return to
+this section and translate it into the record context.
+<p>
+Two  lists are <strong>equal</strong> if all their entries are equal.  This means that the
+equality operator <code>=</code> returns <code>true</code> for the  comparison of  two lists if
+and  only if these two lists are of the same length and for each position
+the values in the respective lists are equal.
+<pre>
+gap&gt; numbers := primes;; numbers = primes;
+true
+</pre>
+We assigned  the  list <code>primes</code> to the variable  <code>numbers</code> and, of course
+they are equal as they have  both  the same length  and the same entries.
+Now we  will change the  third number to  4 and  compare the result again
+with <code>primes</code>.
+<pre>
+gap&gt; numbers[3]:= 4;; numbers = primes;
+true
+</pre>
+You  see that  <code>numbers</code> and  <code>primes</code>  are still   equal, check this  by
+printing the value of <code>primes</code>. The list <code>primes</code> is  no longer a list of
+primes! What has  happened?  The truth is  that  the  lists  <code>primes</code> and
+<code>numbers</code> are  not only equal but they are also <strong>identical</strong>. <code>primes</code> and
+<code>numbers</code> are two variables pointing to the  same list. If you change the
+value of  the subobject <code>numbers[3]</code>  of <code>numbers</code> this will  also change
+<code>primes</code>.  Variables do <strong>not</strong> point to  a certain block of storage memory
+but they do  point  to an object that  occupies  storage memory.   So the
+assignment <code>numbers := primes</code> did <strong>not</strong> create a new list in a different
+place of memory but only created the new name <code>numbers</code>  for the same old
+list of primes.
+<p>
+From this we see that <strong>the same object can have several names.</strong>
+<p>
+If you want to change a list with the  contents of <code>primes</code> independently
+from <code>primes</code>  you will have to  make a copy of  <code>primes</code> by the function
+<code>ShallowCopy</code> which takes an object as its argument and returns a copy of
+the argument. (We will first restore the old value of <code>primes</code>.)
+<pre>
+gap&gt; primes[3]:= 5;; primes;
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,,,,,, 71 ]
+gap&gt; numbers:= ShallowCopy(primes);; numbers = primes;
+true
+gap&gt; numbers[3]:= 4;; numbers = primes;
+false
+</pre>
+Now <code>numbers</code> is no longer equal to <code>primes</code> and <code>primes</code> still is a list
+of primes.  Check this by printing the values of <code>numbers</code> and <code>primes</code>.
+<p>
+Lists and records can be changed this way because <font face="Gill Sans,Helvetica,Arial">GAP</font> objects of these
+types have subobjects.
+To clarify this statement consider the following example.
+<pre>
+gap&gt; i:= 1;; j:= i;; i:= i+1;; 
+</pre>
+By adding 1 to <code>i</code> the value of <code>i</code> has  changed.   What  happens to <code>j</code>?
+After the second statement <code>j</code> points to the same object  as <code>i</code>,  namely
+to the  integer 1.  The  addition  does <strong>not</strong> change  the object <code>1</code>  but
+creates a new object according  to the instruction <code>i+1</code>.  It is actually
+the assignment that changes the value of <code>i</code>.  Therefore <code>j</code> still points
+to  the object <code>1</code>.  Integers  (like permutations and  booleans)  have no
+subobjects.  Objects  of these types  cannot  be  changed but can only be
+replaced by other objects.   And a replacement does not change the values
+of other variables.  In the above example an assignment of a new value to
+the variable <code>numbers</code> would also not change the value of <code>primes</code>.
+<p>
+Finally try the following examples and explain the results.
+<pre>
+gap&gt; l:= [];; l:= [l];
+[ [  ] ]
+gap&gt; l[1]:= l;
+[ ~ ]
+</pre>
+Now return to Section&nbsp;<a href="CHAP003.htm#SECT001">Plain Lists</a> and find out whether the functions
+<code>Add</code> and <code>Append</code> change their arguments.
+<p>
+<p>
+<h2><a name="SECT003">3.3 Immutability</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> has a mechanism that protects lists against  changes like the ones
+that have bothered   us in    Section&nbsp;<a href="CHAP003.htm#SECT002">Identical Lists</a>. The     function
+<code>Immutable</code> takes as argument a list and returns an immutable copy of it,
+i.e., a list  which  looks exactly like the   old one, but has  two extra
+properties:
+(1)&nbsp;The new list is immutable, i.e.,  the list itself and its subobjects 
+    cannot be changed.
+(2)&nbsp;In constructing the copy, every part of  the list that can be changed
+    has been copied, so that changes to the  old list will not affect the
+    new one.  In other words, the new  list has no  mutable subobjects in
+    common with the old list.
+<pre>
+gap&gt; list := [ 1, 2, "three", [ 4 ] ];; copy := Immutable( list );;
+gap&gt; list[3][5] := 'w';; list; copy;
+[ 1, 2, "threw", [ 4 ] ]
+[ 1, 2, "three", [ 4 ] ]
+gap&gt; copy[3][5] := 'w';
+Lists Assignment: &lt;list&gt; must be a mutable list
+not in any function
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' and ignore the assignment to continue
+brk&gt; quit;
+</pre>
+As a consequence of  these rules, in the  immutable copy of a list  which
+contains an already immutable list as subobject, this immutable subobject
+need not be copied,  because it is unchangeable. Immutable lists are
+useful in many complex <font face="Gill Sans,Helvetica,Arial">GAP</font> objects,  for example as generator lists of
+groups. By  making them immutable, <font face="Gill Sans,Helvetica,Arial">GAP</font>  ensures that no generators can
+be added to the list, removed or exchanged. Such  changes would of course
+lead  to serious inconsistencies with  other  knowledge that may already
+have been calculated for the group.
+<p>
+A converse function to <code>Immutable</code> is <code>ShallowCopy</code>, which produces a
+new mutable list whose <i>i</i>th entry is the <i>i</i>th entry of the old
+list. The single entries are not copied, they are just placed in the
+new list.  If the old list is immutable, and hence the list entries
+are immutable themselves, the result of <code>ShallowCopy</code> is mutable only
+on the top level.
+<p>
+It should be noted that also other objects than lists can appear in
+mutable or immutable form.
+Records (see Section&nbsp;<a href="CHAP003.htm#SECT009">Plain Records</a>) provide another example.
+<p>
+<p>
+<h2><a name="SECT004">3.4 Sets</a></h2>
+<p><p>
+<a name = "I4"></a>
+
+<a name = "I4"></a>
+<a name = "I5"></a>
+
+<font face="Gill Sans,Helvetica,Arial">GAP</font> knows several special kinds of lists.  A <strong>set</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a
+list that contains no holes (such a list is called <strong>dense</strong>) and whose
+elements are strictly sorted w.r.t.&nbsp;<code>&lt;</code>; in particular, a set cannot
+contain duplicates.  (More precisely, the elements of a set in <font face="Gill Sans,Helvetica,Arial">GAP</font>
+are required to lie in the same <strong>family</strong>, but roughly this means that
+they can be compared using the <code>&lt;</code> operator.)
+<p>
+This provides a natural model for mathematical sets whose elements are
+given by an explicit enumeration.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> also calls a set a <strong>strictly sorted list</strong>, and the function
+<code>IsSSortedList</code> tests whether a given list is a set.  It returns a
+boolean value.  For almost any list whose elements are contained in
+the same family, there exists a corresponding set.  This set is
+constructed by the function <code>Set</code> which takes the list as its argument
+and returns a set obtained from this list by ignoring holes and
+duplicates and by sorting the elements.
+<p>
+The elements of the sets used in the examples of this section are
+strings.
+<pre>
+gap&gt; fruits:= ["apple", "strawberry", "cherry", "plum"];
+[ "apple", "strawberry", "cherry", "plum" ]
+gap&gt; IsSSortedList(fruits);
+false
+gap&gt; fruits:= Set(fruits);
+[ "apple", "cherry", "plum", "strawberry" ]
+</pre>
+Note that the original list <code>fruits</code> is not changed by the function
+<code>Set</code>.  We have to make a new assignment to the variable <code>fruits</code> in
+order to make it a set.
+<p>
+The operator <code>in</code> is  used  to test whether an  object is an element of a
+set.  It returns a boolean value <code>true</code> or <code>false</code>.
+<pre>
+gap&gt; "apple" in fruits;
+true
+gap&gt; "banana" in fruits;
+false
+</pre>
+The operator <code>in</code> can also be applied to ordinary lists. It is however
+much  faster  to perform  a  membership test for   sets since sets are
+always  sorted and a  binary search  can be  used  instead of a linear
+search.  New elements  may be added to a  set by the function <code>AddSet</code>
+which takes the  set <code>fruits</code> as its first  argument and an element as
+its second argument   and adds the element  to  the set  if  it wasn't
+already there. Note that the object <code>fruits</code> is changed.
+<pre>
+gap&gt; AddSet(fruits, "banana");
+gap&gt; fruits;  #  The banana is inserted in the right place.
+[ "apple", "banana", "cherry", "plum", "strawberry" ]
+gap&gt; AddSet(fruits, "apple");
+gap&gt; fruits;  #  fruits has not changed.
+[ "apple", "banana", "cherry", "plum", "strawberry" ]
+</pre>
+Note that inserting new elements into a set with <code>AddSet</code> is usually more
+expensive than simply adding new elements at the end of a list.
+<p>
+Sets can be intersected by the function <code>Intersection</code>  and united by the
+function <code>Union</code> which both take  two sets as their arguments  and return
+the intersection resp. union of the two sets as a new object.
+<pre>
+gap&gt; breakfast:= ["tea", "apple", "egg"];
+[ "tea", "apple", "egg" ]
+gap&gt; Intersection(breakfast, fruits);
+[ "apple" ]
+</pre>
+The  arguments  of the functions  <code>Intersection</code>  and <code>Union</code> could be
+ordinary lists, while their  result is always  a set. Note that in the
+preceding  example at least one  argument of  <code>Intersection</code> was not a
+set.   The functions   <code>IntersectSet</code> and  <code>UniteSet</code>   also form  the
+intersection resp.&nbsp;union of two sets. They will however not return the
+result  but change their  first argument  to be  the result.  Try them
+carefully.
+<p>
+<p>
+<h2><a name="SECT005">3.5 Ranges</a></h2>
+<p><p>
+A <strong>range</strong> is a finite arithmetic progression of integers. This is another
+special kind of list. A range is described by the first two values and the last
+value of the arithmetic progression which are given in the form
+<code>[</code><var>first</var><code>,</code><var>second</var><code>..</code><var>last</var><code>]</code>.
+In the usual case of an ascending list of
+consecutive integers the second entry may be omitted.
+<pre>
+gap&gt; [1..999999];     #  a range of almost a million numbers
+[ 1 .. 999999 ]
+gap&gt; [1, 2..999999];  #  this is equivalent
+[ 1 .. 999999 ]
+gap&gt; [1, 3..999999];  #  here the step is 2
+[ 1, 3 .. 999999 ]
+gap&gt; Length( last );
+500000
+gap&gt; [ 999999, 999997 .. 1 ];
+[ 999999, 999997 .. 1 ]
+</pre>
+This compact printed representation of a fairly long  list corresponds to
+a  compact internal representation.
+The function <code>IsRange</code> tests whether an object is a range,
+the function <code>ConvertToRangeRep</code> changes the representation of a list
+that is in fact a range to this compact internal representation.
+<pre>
+gap&gt; a:= [-2,-1,0,1,2,3,4,5];
+[ -2, -1, 0, 1, 2, 3, 4, 5 ]
+gap&gt; IsRange( a );
+true
+gap&gt; ConvertToRangeRep( a );;  a;
+[ -2 .. 5 ]
+gap&gt; a[1]:= 0;; IsRange( a );
+false
+</pre>
+Note that this  change of representation does  <strong>not</strong> change the  value of
+the list <code>a</code>. The list <code>a</code>  still behaves in any context  in the same way
+as it would have in the long representation.
+<p>
+<p>
+<h2><a name="SECT006">3.6 For and While Loops</a></h2>
+<p><p>
+<a name = "I6"></a>
+
+<a name = "I7"></a>
+
+Given a list <code>pp</code> of permutations we can form their product by means of a
+<code>for</code> loop instead of writing down the product explicitly.
+<p>
+<pre>
+gap&gt; pp:= [ (1,3,2,6,8)(4,5,9), (1,6)(2,7,8), (1,5,7)(2,3,8,6),
+&gt;           (1,8,9)(2,3,5,6,4), (1,9,8,6,3,4,7,2)];;
+gap&gt; prod:= ();        
+()
+gap&gt; for p in pp do
+&gt;       prod:= prod*p;    
+&gt;    od;
+gap&gt; prod;        
+(1,8,4,2,3,6,5,9)
+</pre>
+<p>
+First a  new variable <code>prod</code>  is initialized  to the identity permutation
+<code>()</code>. Then the loop variable <code>p</code> takes as its value one permutation after
+the other from the list <code>pp</code> and is multiplied with  the present value of
+<code>prod</code>  resulting in a  new value which  is then assigned  to <code>prod</code>.
+<p>
+The <code>for</code> loop has the following syntax
+<p>
+<code>&nbsp;for </code><var>var</var><code> in </code><var>list</var><code> do </code><var>statements</var><code> od;</code>
+<p>
+The  effect of the <code>for</code>  loop  is to execute the <var>statements</var> for  every
+element  of  the <var>list</var>.   A <code>for</code>  loop  is  a  statement  and therefore
+terminated by a semicolon.  The list of <var>statements</var>  is enclosed by  the
+keywords <code>do</code> and <code>od</code>  (reverse  <code>do</code>).  A <code>for</code>  loop returns no value.
+Therefore we had to ask explicitly for the value of <code>prod</code> in the
+preceding example.
+<p>
+The <code>for</code> loop can loop over any kind of list, even a list with holes.
+In many programming languages the <code>for</code> loop has the form
+<p>
+<code>for </code><var>var</var><code> from </code><var>first</var><code> to </code><var>last</var><code> do </code><var>statements</var><code> od;</code>
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font> this is merely a special case of the general <code>for</code> loop as defined
+above where the <var>list</var> in the loop body is a range (see&nbsp;<a href="CHAP003.htm#SECT005">Ranges</a>):
+<p>
+<code>&nbsp;for </code><var>var</var><code> in [</code><var>first</var><code>..</code><var>last</var><code>] do </code><var>statements</var><code>  od;</code>
+<p>
+You can for  instance loop over a range to compute the factorial 15!
+of the number 15 in the following way.
+<p>
+<pre>
+gap&gt; ff:= 1;
+1
+gap&gt; for i in [1..15] do
+&gt;       ff:= ff * i;
+&gt;    od;
+gap&gt; ff;
+1307674368000
+</pre>
+<p>
+The  <code>while</code> loop has the following syntax
+<p>
+<code>&nbsp;while </code><var>condition</var><code> do </code><var>statements</var><code>  od; </code>
+<p>
+The <code>while</code>  loop loops over the <var>statements</var>  as long as  the 
+<var>condition</var> evaluates  to  <code>true</code>. Like the <code>for</code> loop the <code>while</code> loop 
+is terminated by the keyword <code>od</code> followed by a semicolon.
+<p>
+We can use  our list <code>primes</code> to perform a very simple factorization.  We
+begin by  initializing a list <code>factors</code> to the empty list.   In this list
+we want to collect the prime factors of the number 1333.  Remember that a
+list has to exist  before any values  can be assigned to positions of the
+list.  Then we  will loop over the list <code>primes</code> and  test for each prime
+whether it divides the  number.  If it does we will  divide the number by
+that prime, add it to the list <code>factors</code> and continue.
+<p>
+<pre>
+gap&gt; n:= 1333;;
+gap&gt; factors:= [];;
+gap&gt; for p in primes do
+&gt;       while n mod p = 0 do
+&gt;          n:= n/p;
+&gt;          Add(factors, p);
+&gt;       od;
+&gt;    od;
+gap&gt; factors;
+[ 31, 43 ]
+gap&gt; n;
+1
+</pre>
+<p>
+As <code>n</code> now has the value 1 all prime factors  of 1333 have been found and
+<code>factors</code> contains a complete factorization of  1333.  This can of course
+be verified by multiplying 31 and 43.
+<p>
+This loop  may  be applied  to arbitrary  numbers in order  to find prime
+factors.  But  as <code>primes</code> is not a complete list of all primes this loop
+may fail  to find all prime factors of  a number greater than 2000,  say.
+You  can try to improve it in such a way that new primes are added to the
+list <code>primes</code> if needed.
+<p>
+You have already seen that list objects may be  changed.   This of
+course also holds  for the  list in a loop body.  In most  cases  you have to be
+careful not  to change this list, but there are situations  where this is
+quite useful.  The following example  shows a quick way  to determine the
+primes smaller than 1000 by a sieve method.  Here we will make use of the
+function <code>Unbind</code> to delete entries from a list, and the 'if'
+statement covered in <a href="CHAP004.htm#SECT002">If Statements</a>.
+<pre>
+gap&gt; primes:= [];;
+gap&gt; numbers:= [2..1000];;
+gap&gt; for p in numbers do
+&gt;       Add(primes, p);
+&gt;       for n in numbers do
+&gt;          if n mod p = 0 then
+&gt;             Unbind(numbers[n-1]);
+&gt;          fi;
+&gt;       od;
+&gt;    od;
+</pre>
+The inner loop  removes all entries from <code>numbers</code> that are  divisible by
+the last detected prime <code>p</code>.  This is done by the function <code>Unbind</code> which
+deletes the binding of the list position  <code>numbers[n-1]</code> to the value <code>n</code>
+so that afterwards <code>numbers[n-1]</code> no longer has  an  assigned value.  The
+next  element encountered in <code>numbers</code>  by the outer  loop necessarily is
+the next prime.
+<p>
+In a similar way it is possible to enlarge the list which is looped over.
+This yields a nice and short orbit  algorithm for the  action of a group,
+for example.
+<p>
+More about <code>for</code> and <code>while</code> loops can be found in the
+sections&nbsp;<a href="../ref/CHAP004.htm#SECT017">While</a> and&nbsp;<a href="../ref/CHAP004.htm#SECT019">For</a> of the reference manual.
+<p>
+<p>
+<h2><a name="SECT007">3.7 List Operations</a></h2>
+<p><p>
+There is a more comfortable way than that given in the previous section to
+compute the product of a list of numbers or permutations.
+<pre>
+gap&gt; Product([1..15]);
+1307674368000
+gap&gt; Product(pp);
+(1,8,4,2,3,6,5,9)
+</pre>
+The function  <code>Product</code>  takes a  list as  its argument and computes  the
+product  of  the  elements  of the  list.   This  is possible whenever  a
+multiplication of  the elements of the list is defined.  So  <code>Product</code> 
+executes a loop over all elements of the list.
+<p>
+There are other often used loops available as functions.   Guess what the
+function <code>Sum</code> does.  The function <code>List</code> may  take a list and a function
+as its arguments.  It will then apply the function to each element of the
+list  and return  the corresponding list of results.   A list of cubes is
+produced as follows with the function <code>cubed</code> from Section&nbsp;<a href="CHAP004.htm">Functions</a>.
+<pre>
+gap&gt; cubed:= x -&gt; x^3;;
+gap&gt; List([2..10], cubed);
+[ 8, 27, 64, 125, 216, 343, 512, 729, 1000 ]
+</pre>
+To add all these cubes  we might apply the  function  <code>Sum</code> to  the  last
+list.  But we may  as well  give the  function  <code>cubed</code> to  <code>Sum</code>  as  an
+additional argument.
+<pre>
+gap&gt; Sum(last) = Sum([2..10], cubed);
+true
+</pre>
+The  primes less than 30 can  be retrieved out  of the list <code>primes</code> from
+Section&nbsp;<a href="CHAP003.htm#SECT001">Plain Lists</a> by the function <code>Filtered</code>. This function takes the
+list <code>primes</code> and a property as its arguments and will return the list of
+those elements of <code>primes</code> which have this property. Such a property will
+be represented  by  a function  that  returns  a boolean  value. In  this
+example the property  of  being less than  30 can be represented  by  the
+function <code>x  -&gt; x &lt;   30</code> since <code>x &lt;   30</code> will evaluate to <code>true</code>  for
+values <code>x</code> less than 30 and to <code>false</code> otherwise.
+<pre>
+gap&gt; Filtered(primes, x-&gt; x &lt; 30);
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ]
+</pre>
+We have already  mentioned the operator <code>{  }</code> that  forms sublists. It
+takes a  list of positions  as its argument  and will return  the list of
+elements from the original list corresponding to these positions.
+<pre>
+gap&gt; primes{ [1 .. 10] };
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ]
+</pre>
+<p>
+Finally we mention the function <code>ForAll</code> that checks whether a property
+holds for all elements of a list. It takes as its arguments  a list and a 
+function that returns a boolean value. <code>ForAll</code> checks whether the
+function returns <code>true</code> for all elements of the list.
+<p>
+<pre>
+gap&gt; list:= [ 1, 2, 3, 4 ];;
+gap&gt; ForAll( list, x -&gt; x &gt; 0 );
+true
+gap&gt; ForAll( list, x -&gt; x in primes );
+false
+</pre>
+<p>
+You will find more predefined <code>for</code> loops in chapter&nbsp;<a href="../ref/CHAP021.htm">Lists</a> of the
+reference manual.
+<p>
+<p>
+<h2><a name="SECT008">3.8 Vectors and Matrices</a></h2>
+<p><p>
+<a name = "I8"></a>
+
+<a name = "I8"></a>
+<a name = "I9"></a>
+
+This section describes how <font face="Gill Sans,Helvetica,Arial">GAP</font> uses lists to represent row vectors and
+matrices. A <strong>row vector</strong> is a dense list of elements from a common field.
+A <strong>matrix</strong> is a dense list of row vectors over a common field and of
+equal length.
+<pre>
+gap&gt; v:= [3, 6, 2, 5/2];;  IsRowVector(v);
+true
+</pre>
+Row vectors  may be  added and multiplied   by scalars from  their field.
+Multiplication of   row vectors of  equal length  results in their scalar
+product.
+<pre>
+gap&gt; 2 * v;  v * 1/3;
+[ 6, 12, 4, 5 ]
+[ 1, 2, 2/3, 5/6 ]
+gap&gt; v * v;   # the scalar product of `v' with itself
+221/4
+</pre>
+Note  that   the expression <code>v   *  1/3</code> is   actually evaluated by first
+multiplying <code>v</code> by 1 (which yields again <code>v</code>)  and by then dividing by 3.
+This  is  also an allowed scalar   operation.  The expression <code>v/3</code> would
+result in  the same value.
+<p>
+Such arithmetical operations (if the results are again vectors)
+result in <strong>mutable</strong> vectors except if the operation is binary
+and both operands are immutable;
+thus the vectors shown in the examples above are all mutable.
+<p>
+So if you want to produce a mutable list with 100&nbsp;entries equal to&nbsp;25,
+you can simply say <code>25  + 0 * [ 1 .. 100 ]</code>.
+Note that ranges are also vectors (over the rationals),
+and that <code>[ 1 .. 100 ]</code> is mutable.
+<p>
+A matrix is a dense list of row vectors of equal length.
+<pre>
+gap&gt; m:= [[1,-1, 1],
+&gt;         [2, 0,-1],
+&gt;         [1, 1, 1]];
+[ [ 1, -1, 1 ], [ 2, 0, -1 ], [ 1, 1, 1 ] ]
+gap&gt; m[2][1];
+2
+</pre>
+Syntactically a matrix is a list of lists. So the number  2 in the second
+row  and the first  column of the matrix <code>m</code>  is referred to as the first
+element of the second element of the list <code>m</code> via <code>m[2][1]</code>.
+<p>
+A matrix may be multiplied by scalars, row vectors and other matrices.
+(If the row vectors and matrices involved in such a multiplication do not
+have suitable dimensions then the ``missing'' entries are treated as zeros,
+so the results may look unexpectedly in such cases.)
+<p>
+<pre>
+gap&gt; [1, 0, 0] * m;
+[ 1, -1, 1 ]
+gap&gt; [1, 0, 0, 2] * m;
+[ 1, -1, 1 ]
+gap&gt; m * [1, 0, 0];
+[ 1, 2, 1 ]
+gap&gt; m * [1, 0, 0, 2];
+[ 1, 2, 1 ]
+</pre>
+Note that multiplication  of a row vector with  a matrix will result in a
+linear combination of the  rows of the  matrix, while multiplication of a
+matrix with a row  vector results in  a linear combination of the columns
+of the  matrix. In  the latter case  the  row vector is considered   as a
+column vector.
+<p>
+A vector or matrix of integers can also be multiplied
+with a finite field scalar and vice versa.
+Such products result in a matrix over the finite field with the integers
+mapped into the finite field in the obvious way.
+Finite field matrices are nicer to read when they are <code>Display</code>ed rather
+than <code>Print</code>ed.
+(Here  we write <code>Z(q)</code> to denote a  primitive root of the finite field
+with <code>q</code> elements.)
+<pre>
+gap&gt; Display( m * One( GF(5) ) );
+ 1 4 1
+ 2 . 4
+ 1 1 1
+gap&gt; Display( m^2 * Z(2) + m * Z(4) );
+z = Z(4)
+ z^1 z^1 z^2
+   1   1 z^2
+ z^1 z^1 z^2
+</pre>
+Submatrices    can  easily     be    extracted  using    the   expression
+<code></code><var>mat</var><code>{</code><var>rows</var><code>}{</code><var>columns</var><code>}</code>. They   can also be  assigned to, provided
+the big matrix  is mutable (which  it is not if it  is  the result of  an
+arithmetical operation, see above).
+<pre>
+gap&gt; sm := m{ [ 1, 2 ] }{ [ 2, 3 ] };
+[ [ -1, 1 ], [ 0, -1 ] ]
+gap&gt; sm{ [ 1, 2 ] }{ [2] } := [[-2],[0]];;  sm;
+[ [ -1, -2 ], [ 0, 0 ] ]
+</pre>
+The first curly brackets contain the selection of rows,
+the second that of columns.
+<p>
+Matrices appear not only in linear algebra, but also as group elements,
+provided they are invertible.
+Here we have the opportunity to meet a group-theoretical function,
+namely <code>Order</code>, which computes the order of a group element.
+<pre>
+gap&gt; Order( m * One( GF(5) ) );
+8
+gap&gt; Order( m );
+infinity
+</pre>
+For matrices whose entries are more complex objects, for example rational
+functions, <font face="Gill Sans,Helvetica,Arial">GAP</font>'s <code>Order</code> methods might not be able to prove that the
+matrix has infinite order, and one gets the following warning.
+<pre>
+|#I  Order: warning, order of &lt;mat&gt; might be infinite
+</pre>
+In such a case, if the order of the matrix really is infinite, you will
+have to interrupt <font face="Gill Sans,Helvetica,Arial">GAP</font> by  pressing <code></code><var>ctl</var><code>-C</code> (followed by <code></code><var>ctl</var><code>-D</code> or
+<code>quit;</code>  to leave the   break loop).
+<p>
+To prove that the order of <code>m</code> is infinite, we also could look at the
+minimal polynomial of <code>m</code> over the rationals.
+<pre>
+gap&gt; f:= MinimalPolynomial( Rationals, m );;  Factors( f );
+[ x_1-2, x_1^2+3 ]
+</pre>
+<code>Factors</code>  returns a list of  irreducible factors  of the polynomial <code>f</code>.
+The first  irreducible factor <i>X</i><font face="symbol">&#8722;</font>2 reveals   that 2 is an  eigenvalue of
+<code>m</code>, hence its order cannot be finite.
+<p>
+<p>
+<h2><a name="SECT009">3.9 Plain Records</a></h2>
+<p><p>
+A record provides another way to  build new data structures.  Like a list
+a record contains subobjects.
+In a record the elements, the so-called <strong>record components</strong>,
+are not indexed by numbers but by names.
+<p>
+In this section you will see how to define and how to use records.
+Records are changed by assignments to record components.
+<p>
+Initially a record is defined as a comma separated list of assignments to
+its record components.
+<p>
+<pre>
+gap&gt; date:= rec(year:= 1997,
+&gt;               month:= "Jul",
+&gt;               day:= 14);
+rec( year := 1997, month := "Jul", day := 14 )
+</pre>
+<p>
+The value of a record component is accessible by  the record name and the
+record  component name separated   by one dot   as  the record  component
+selector.
+<p>
+<pre>
+gap&gt; date.year;
+1997
+</pre>
+<p>
+Assignments to new record components  are possible in  the same way.  The
+record is automatically resized to hold the new component.
+<p>
+<pre>
+gap&gt; date.time:= rec(hour:= 19, minute:= 23, second:= 12);
+rec( hour := 19, minute := 23, second := 12 )
+gap&gt; date;
+rec( year := 1997, month := "Jul", day := 14, 
+  time := rec( hour := 19, minute := 23, second := 12 ) )
+</pre>
+<p>
+We may use the <code>Display</code> function to illustrate the hierarchy of the record
+components.
+<p>
+<pre>
+gap&gt; Display( date );
+rec(
+  year := 1997,
+  month := "Jul",
+  day := 14,
+  time := rec(
+      hour := 19,
+      minute := 23,
+      second := 12 ) )
+</pre>
+<p>
+Records are objects  that  may be  changed.   An assignment to  a  record
+component  changes the original  object.
+The remarks made in Sections&nbsp;<a href="CHAP003.htm#SECT002">Identical Lists</a> and <a href="CHAP003.htm#SECT003">Immutability</a>
+about identity and mutability of lists are also true for records.
+<p>
+Sometimes it is interesting to know which  components of a certain record
+are  bound.  This information is available  from the function <code>RecNames</code>,
+which  takes a record as  its  argument and  returns  a list of names of
+all bound components of this record as a list of strings.
+<p>
+<pre>
+gap&gt; RecNames(date);
+[ "year", "month", "day", "time" ]
+</pre>
+<p>
+Now return to Sections <a href="CHAP003.htm#SECT002">Identical Lists</a>  and <a href="CHAP003.htm#SECT003">Immutability</a> and find out
+what these sections mean for records.
+<p>
+<p>
+<h2><a name="SECT010">3.10 Further Information about Lists</a></h2>
+<p><p>
+(The following cross-references point to the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual.)
+<p>
+You will find more about lists, sets, and ranges in Chapter&nbsp;<a href="../ref/CHAP021.htm">Lists</a>,
+in particular more about identical lists in Section&nbsp;<a href="../ref/CHAP021.htm#SECT006">Identical Lists</a>.
+A more detailed description of strings is contained in
+Chapter&nbsp;<a href="../ref/CHAP026.htm">Strings and Characters</a>.
+Fields are described in Chapter&nbsp;<a href="../ref/CHAP056.htm">Fields and Division Rings</a>, some
+known fields in <font face="Gill Sans,Helvetica,Arial">GAP</font> are described in Chapters&nbsp;<a href="../ref/CHAP016.htm">Rational Numbers</a>, <a href="../ref/CHAP058.htm">Abelian Number Fields</a>, and&nbsp;<a href="../ref/CHAP057.htm">Finite Fields</a>.  Row
+vectors and matrices are described in more detail in Chapters&nbsp;<a href="../ref/CHAP023.htm">Row Vectors</a> and&nbsp;<a href="../ref/CHAP024.htm">Matrices</a>.  Vector spaces are described in
+Chapter&nbsp;<a href="../ref/CHAP059.htm">Vector Spaces</a>, further matrix related structures are
+described in Chapters&nbsp;<a href="../ref/CHAP042.htm">Matrix Groups</a>, <a href="../ref/CHAP060.htm">Algebras</a>,
+and&nbsp;<a href="../ref/CHAP061.htm">Lie Algebras</a>.
+<p>
+You will find more list operations in Chapter&nbsp;<a href="../ref/CHAP021.htm">Lists</a>.
+<p>
+Records and functions for records are described in detail
+in Chapter&nbsp;<a href="../ref/CHAP027.htm">Records</a>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

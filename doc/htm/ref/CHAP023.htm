@@ -1,0 +1,588 @@
+<html><head><title>[ref] 23 Row Vectors</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP022.htm">Previous</a>] [<a href ="CHAP024.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>23 Row Vectors</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP023.htm#SECT001">Operators for Row Vectors</a>
+<li> <A HREF="CHAP023.htm#SECT002">Row Vectors over Finite Fields</a>
+<li> <A HREF="CHAP023.htm#SECT003">Coefficient List Arithmetic</a>
+<li> <A HREF="CHAP023.htm#SECT004">Shifting and Trimming Coefficient Lists</a>
+<li> <A HREF="CHAP023.htm#SECT005">Functions for Coding Theory</a>
+<li> <A HREF="CHAP023.htm#SECT006">Vectors as coefficients of polynomials</a>
+</ol><p>
+<p>
+Just as in mathematics, a vector in <font face="Gill Sans,Helvetica,Arial">GAP</font> is any object which
+supports appropriate addition and scalar multiplication operations
+(see Chapter&nbsp;<a href="CHAP059.htm">Vector Spaces</a>). As in mathematics, an especially important
+class of vectors are those represented by a list of coefficients with
+respect to some basis. These correspond roughly to the <font face="Gill Sans,Helvetica,Arial">GAP</font> concept
+of <strong>row vectors</strong>.
+<p>
+<a name = ""></a>
+<li><code>IsRowVector( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>row vector</strong> is a vector (see&nbsp;<a href="CHAP030.htm#SSEC014.14">IsVector</a>) that is also a homogeneous
+list of odd additive nesting depth
+(see&nbsp;<a href="CHAP021.htm#SECT012">Filters Controlling the Arithmetic Behaviour of Lists</a>).
+Typical examples are lists of integers and rationals,
+lists of finite field elements of the same characteristic,
+and lists of polynomials from a common polynomial ring.
+Note that matrices are <strong>not</strong> regarded as row vectors, because they have
+even additive nesting depth.
+<p>
+The additive operations of the vector must thus be compatible with
+that for lists, implying that the list entries are the
+coefficients of the vector with respect to some basis.
+<p>
+Note that not all row vectors admit a multiplication via <code>*</code>
+(which is to be understood as a scalar product);
+for example, class functions are row vectors but the product of two
+class functions is defined in a different way.
+For the installation of a scalar product of row vectors, the entries of
+the vector must be ring elements; note that the default method expects
+the row vectors to lie in <code>IsRingElementList</code>, and this category may not
+be implied by <code>IsRingElement</code> for all entries of the row vector
+(see the comment for <code>IsVector</code> in&nbsp;<a href="CHAP030.htm#SSEC014.14">IsVector</a>).
+<p>
+Note that methods for special types of row vectors really must be
+installed with the requirement <code>IsRowVector</code>,
+since <code>IsVector</code> may lead to a rank of the method below
+that of the default method for row vectors (see file <code>lib/vecmat.gi</code>).
+<p>
+<pre>
+gap&gt; IsRowVector([1,2,3]);
+true
+</pre>
+<p>
+Because row vectors are just a special case of lists, all operations
+and functions for lists are applicable to row vectors as well (see
+Chapter&nbsp;<a href="CHAP021.htm">Lists</a>). This especially includes accessing elements of a row
+vector (see <a href="CHAP021.htm#SECT003">List Elements</a>), changing elements of a mutable row
+vector (see <a href="CHAP021.htm#SECT004">List Assignment</a>), and comparing row vectors (see
+<a href="CHAP021.htm#SECT010">Comparisons of Lists</a>).
+<p>
+Note that, unless your algorithms specifically require you to be able
+to change entries of your vectors, it is generally better and faster
+to work with immutable row vectors. See Section&nbsp;<a href="CHAP012.htm#SECT006">Mutability and Copyability</a> for more details.
+<p>
+<p>
+<h2><a name="SECT001">23.1 Operators for Row Vectors</a></h2>
+<p><p>
+The rules for arithmetic operations involving row vectors are in fact
+special cases of those for the arithmetic of lists,
+as given in Section&nbsp;<a href="CHAP021.htm#SECT011">Arithmetic for Lists</a> and the following sections,
+here we reiterate that definition, in the language of vectors.
+<p>
+Note that the additive behaviour sketched below is defined only for lists in
+the category <code>IsGeneralizedRowVector</code>,
+and the multiplicative behaviour is defined only for lists in the category
+<code>IsMultiplicativeGeneralizedRowVector</code>
+(see&nbsp;<a href="CHAP021.htm#SECT012">Filters Controlling the Arithmetic Behaviour of Lists</a>).
+<p>
+<a name = "SSEC001.1"></a>
+<li><code></code><var>vec1</var><code> + </code><var>vec2</var><code> O</code>
+<p>
+returns the sum of the two row vectors <var>vec1</var> and <var>vec2</var>.
+Probably the most usual situation is that <var>vec1</var> and <var>vec2</var> have the same
+length and are defined over a common field;
+in this case the sum is a new row vector over the same field where each entry
+is the sum of the corresponding entries of the vectors.
+<p>
+In more general situations, the sum of two row vectors need not be a row
+vector, for example adding an integer vector <var>vec1</var> and a vector <var>vec2</var> over
+a finite field yields the list of pointwise sums,
+which will be a mixture of finite field elements and integers if <var>vec1</var> is
+longer than <var>vec2</var>.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code></code><var>scalar</var><code> + </code><var>vec</var><code> O</code>
+<a name = "SSEC001.2"></a>
+<li><code></code><var>vec</var><code> + </code><var>scalar</var><code> O</code>
+<p>
+returns the sum of the scalar <var>scalar</var> and the row vector <var>vec</var>.
+Probably the most usual situation is that the elements of <var>vec</var> lie in a
+common field with <var>scalar</var>;
+in this case the sum is a new row vector over the same field where each entry
+is the sum of the scalar and the corresponding entry of the vector.
+<p>
+More general situations are for example the sum of an integer scalar and a
+vector over a finite field, or the sum of a finite field element and an
+integer vector.
+<p>
+<pre>
+gap&gt; [ 1, 2, 3 ] + [ 1/2, 1/3, 1/4 ];
+[ 3/2, 7/3, 13/4 ]
+gap&gt;  [ 1/2, 3/2, 1/2 ] + 1/2;
+[ 1, 2, 1 ]
+</pre>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code></code><var>vec1</var><code> - </code><var>vec2</var><code> O</code>
+<a name = "SSEC001.3"></a>
+<li><code></code><var>scalar</var><code> - </code><var>vec</var><code> O</code>
+<a name = "SSEC001.3"></a>
+<li><code></code><var>vec</var><code> - </code><var>scalar</var><code> O</code>
+<p>
+Subtracting a vector or scalar is defined as adding its additive inverse,
+so the statements for the addition hold likewise.
+<p>
+<pre>
+gap&gt; [ 1, 2, 3 ] - [ 1/2, 1/3, 1/4 ];
+[ 1/2, 5/3, 11/4 ]
+gap&gt; [ 1/2, 3/2, 1/2 ] - 1/2;
+[ 0, 1, 0 ]
+</pre>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code></code><var>scalar</var><code> * </code><var>vec</var><code> O</code>
+<a name = "SSEC001.4"></a>
+<li><code></code><var>vec</var><code> * </code><var>scalar</var><code> O</code>
+<p>
+returns the product of the scalar <var>scalar</var> and the row vector <var>vec</var>.
+Probably the most usual situation is that the elements of <var>vec</var> lie in a
+common field with <var>scalar</var>;
+in this case the product is a new row vector over the same field where each
+entry is the product of the scalar and the corresponding entry of the vector.
+<p>
+More general situations are for example the product of an integer scalar and
+a vector over a finite field,
+or the product of a finite field element and an integer vector.
+<p>
+<pre>
+gap&gt; [ 1/2, 3/2, 1/2 ] * 2;
+[ 1, 3, 1 ]
+</pre>
+<p>
+<a name = "SSEC001.5"></a>
+<li><code></code><var>vec1</var><code> * </code><var>vec2</var><code> O</code>
+<p>
+returns the standard scalar product of <var>vec1</var> and <var>vec2</var>,
+i.e., the sum of the products of the corresponding entries of the vectors.
+Probably the most usual situation is that <var>vec1</var> and <var>vec2</var> have the same
+length and are defined over a common field;
+in this case the sum is an element of this field.
+<p>
+More general situations are for example the inner product of an integer
+vector and a vector over a finite field,
+or the inner product of two row vectors of different lengths.
+<p>
+<pre>
+gap&gt; [ 1, 2, 3 ] * [ 1/2, 1/3, 1/4 ];
+23/12
+</pre>
+<p>
+For the mutability of results of arithmetic operations,
+see&nbsp;<a href="CHAP012.htm#SECT006">Mutability and Copyability</a>.
+<p>
+Further operations with vectors as operands are defined by the matrix
+operations (see&nbsp;<a href="CHAP024.htm#SECT002">Operators for Matrices</a>).
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>NormedRowVector( </code><var>v</var><code> ) A</code>
+<p>
+returns a scalar multiple <code></code><var>w</var><code> = </code><var>c</var><code> * </code><var>v</var><code></code> of the row vector <var>v</var>
+with the property that the first nonzero entry of <var>w</var> is an identity
+element in the sense of <code>IsOne</code>.
+<p>
+<pre>
+gap&gt; NormedRowVector([5,2,3]);
+[ 1, 2/5, 3/5 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">23.2 Row Vectors over Finite Fields</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> can use compact formats to store row vectors over fields of
+order at most 256, based on those used by the Meat-Axe
+<a href="biblio.htm#Rin93"><cite>Rin93</cite></a>. This format also permits extremely efficient vector
+arithmetic. On the other hand element access and assignment is
+significantly slower than for plain lists.
+<p>
+The function <code>ConvertToVectorRep</code> is used to convert a list into a
+compressed vector, or to rewrite a compressed vector over another
+field. Note that this function is <strong>much</strong> faster when it is given a
+field (or field size) as an argument, rather than having to scan the
+vector and try to decide the field. Supplying the field can also
+avoid errors and/or loss of performance, when one vector from some
+collection happens to have all of its entries over a smaller field
+than the "natural" field of the problem.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>ConvertToVectorRep( </code><var>list</var><code> ) F</code>
+<li><code>ConvertToVectorRep( </code><var>list</var><code> , </code><var>field</var><code> ) F</code>
+<li><code>ConvertToVectorRep( </code><var>list</var><code> , </code><var>fieldsize</var><code> ) F</code>
+<a name = "SSEC002.1"></a>
+<li><code>ConvertToVectorRepNC( </code><var>list</var><code> ) F</code>
+<li><code>ConvertToVectorRepNC( </code><var>list</var><code> , </code><var>field</var><code> ) F</code>
+<li><code>ConvertToVectorRepNC( </code><var>list</var><code> , </code><var>fieldsize</var><code> ) F</code>
+<p>
+<code>ConvertToVectorRep( </code><var>list</var><code> )</code> converts <var>list</var> to an internal
+vector representation if possible.
+<p>
+<code>ConvertToVectorRep( </code><var>list</var><code> , </code><var>field</var><code> )</code> converts <var>list</var> to an
+internal vector representation appropriate for a vector over
+<var>field</var>.
+<p>
+It is forbidden to call this function unless <var>list</var> is a plain
+list or a vector, <var>field</var> a field, and all elements
+of <var>list</var> lie in <var>field</var>, violation of this condition can lead to
+unpredictable behaviour or a system crash. (Setting the assertion level
+to at least 2 might catch some violations before a crash,
+see&nbsp;<a href="CHAP007.htm#SSEC005.1">SetAssertionLevel</a>.)
+<p>
+Instead of a <var>field</var> also its size <var>fieldsize</var> may be given.
+<p>
+<var>list</var> may already be a compressed vector. In this case, if no
+<var>field</var> or <var>fieldsize</var> is given, then nothing happens. If one is
+given then the vector is rewritten as a compressed vector over the
+given <var>field</var> unless it has the filter
+<code>IsLockedRepresentationVector</code>, in which case it is not changed.
+<p>
+The return value is the size of the field over which the vector
+ends up written, if it is written in a compressed representation.
+<p>
+In this example, we first create a row vector and then ask <font face="Gill Sans,Helvetica,Arial">GAP</font> to
+rewrite it, first over GF(2) and then over GF(4).
+<p>
+<pre>
+gap&gt; v := [Z(2)^0,Z(2),Z(2),0*Z(2)];
+[ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ]
+gap&gt; RepresentationsOfObject(v);
+[ "IS_PLIST_REP", "IsInternalRep" ]
+gap&gt; ConvertToVectorRep(v);
+2
+gap&gt; v;
+&lt;a GF2 vector of length 4&gt;
+gap&gt; ConvertToVectorRep(v,4);
+4
+gap&gt; v;
+[ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ]
+gap&gt; RepresentationsOfObject(v);
+[ "IsDataObjectRep", "Is8BitVectorRep" ]
+</pre>
+<p>
+A vector in the special representation over <i>GF</i>(2) is always viewed
+as <code>&lt;a GF2 vector of length ...&gt;</code>. Over fields of orders 3 to 256, a
+vector of length 10 or less is viewed as the list of its coefficients,
+but a longer one is abbreviated.
+<p>
+Arithmetic operations (see&nbsp;<a href="CHAP021.htm#SECT011">Arithmetic for Lists</a> and the following
+sections) preserve the compression status of row vectors in the sense that
+if all arguments are compressed row vectors written over the same field and
+the result is a row vector then also the result is a compressed row vector
+written over this field.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>NumberFFVector( </code><var>vec</var><code>, </code><var>sz</var><code> ) O</code>
+<p>
+returns an integer that gives the position of the finite field row vector
+(<var>vec</var>) in the sorted list of all row vectors over the field with <var>sz</var>
+elements in the same dimension as <var>vec</var>. <code>NumberFFVector</code> returns <code>fail</code>
+if the vector cannot be represented over the field with <var>sz</var> elements.
+<p>
+<p>
+<h2><a name="SECT003">23.3 Coefficient List Arithmetic</a></h2>
+<p><p>
+The following operations all perform arithmetic on row vectors.
+given as homogeneous lists of the same length, containing
+elements of a commutative ring.
+<p>
+There are two reasons for using  <code>AddRowVector</code>
+in preference to arithmetic operators. Firstly, the three argument 
+form has no single-step equivalent. Secondly
+<code>AddRowVector</code> changes its first argument in-place, rather than allocating
+a new vector to hold the result, and may thus produce less garbage.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>AddRowVector( </code><var>dst</var><code>, </code><var>src</var><code>, [ </code><var>mul</var><code> [, </code><var>from</var><code>, </code><var>to</var><code>]] ) O</code>
+<p>
+Adds the product of <var>src</var> and <var>mul</var> to <var>dst</var>, changing <var>dst</var>.
+If <var>from</var> and <var>to</var> are given then only the index range <code>[</code><var>from</var><code>..</code><var>to</var><code>]</code> is
+guaranteed to be affected. Other indices MAY be affected, if it is 
+more convenient to do so. Even when <var>from</var> and <var>to</var> are given,
+<var>dst</var> and <var>src</var> must be row vectors of the <strong>same</strong> length.
+<p>
+If <var>mul</var> is not given either then this Operation simply adds <var>src</var> to <var>dst</var>.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>AddCoeffs( </code><var>list1</var><code>, </code><var>poss1</var><code>, </code><var>list2</var><code>, </code><var>poss2</var><code>, </code><var>mul</var><code> ) O</code>
+<li><code>AddCoeffs( </code><var>list1</var><code>, </code><var>list2</var><code>, </code><var>mul</var><code> ) O</code>
+<li><code>AddCoeffs( </code><var>list1</var><code>, </code><var>list2</var><code> ) O</code>
+<p>
+<code>AddCoeffs</code> adds the entries  of <code></code><var>list2</var><code>{</code><var>poss2</var><code>}</code>, multiplied by the
+scalar <var>mul</var>, to
+<code></code><var>list1</var><code>{</code><var>poss1</var><code>}</code>.  Non-existing  entries  in  <var>list1</var> are assumed  to  be
+zero.  The position of the right-most non-zero element is returned.
+<p>
+If the ranges <var>poss1</var> and <var>poss2</var> are not given, they are assumed to
+span the whole vectors. If the scalar <var>mul</var> is omitted, one is used as a
+default.
+<p>
+Note  that it is  the responsibility  of the  caller  to ensure  that the
+<var>list2</var> has elements at position <var>poss2</var> and that the result (in <var>list1</var>)
+will be a dense list.
+<p>
+The function is free to remove trailing (right-most) zeros.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;AddCoeffs(l,m);
+4
+gap&gt; l;
+[ 6, 8, 10, 4 ]
+</pre>
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>MultRowVector( </code><var>list1</var><code>, </code><var>poss1</var><code>, </code><var>list2</var><code>, </code><var>poss2</var><code>, </code><var>mul</var><code> ) O</code>
+<li><code>MultRowVector( </code><var>list</var><code>, </code><var>mul</var><code> ) O</code>
+<p>
+The five-argument version of this Operation replaces
+<code></code><var>list1</var><code>[</code><var>poss1</var><code>[</code><var>i</var><code>]]</code> by <code></code><var>mul</var><code>*</code><var>list2</var><code>[</code><var>poss2</var><code>[</code><var>i</var><code>]]</code> for <var>i</var>
+between 1 and <code>Length(</code><var>poss1</var><code>)</code>.
+<p>
+The two-argument version simply multiplies each element of <var>list</var>, 
+in-place, by <var>mul</var>.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>CoeffsMod( </code><var>list1</var><code>, [</code><var>len1</var><code>, ] </code><var>mod</var><code> ) O</code>
+<p>
+returns the coefficient list obtained by reducing the entries in <var>list1</var>
+modulo <var>mod</var>. After reducing it shrinks the list to remove trailing
+zeroes.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;CoeffsMod(l,2);
+[ 1, 0, 1 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">23.4 Shifting and Trimming Coefficient Lists</a></h2>
+<p><p>
+The following functions change coefficient lists by shifting or
+trimming.
+<p>
+<a name = "SSEC004.1"></a>
+<li><code>LeftShiftRowVector( </code><var>list</var><code>, </code><var>shift</var><code> ) O</code>
+<p>
+changes <var>list</var> by assigning
+<code></code><var>list</var><code>[i]:=</code><var>list</var><code>[i+</code><var>shift</var><code>]</code> and removing the last <var>shift</var> entries of
+the result.
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>RightShiftRowVector( </code><var>list</var><code>, </code><var>shift</var><code>, </code><var>fill</var><code> ) O</code>
+<p>
+changes <var>list</var> by assigning
+<code></code><var>list</var><code>[i+</code><var>shift</var><code>]:=</code><var>list</var><code>[i]</code> and filling each of the <var>shift</var> first
+entries with <var>fill</var>.
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>ShrinkRowVector( </code><var>list</var><code> ) O</code>
+<p>
+removes trailing zeroes from the list <var>list</var>.
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>RemoveOuterCoeffs( </code><var>list</var><code>, </code><var>coef</var><code> ) O</code>
+<p>
+removes <var>coef</var> at the beginning and at the end of <var>list</var> and returns the
+number of elements removed at the beginning.
+<p>
+<pre>
+gap&gt; l:=[1,1,2,1,2,1,1,2,1];;RemoveOuterCoeffs(l,1);
+2
+gap&gt; l;
+[ 2, 1, 2, 1, 1, 2 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">23.5 Functions for Coding Theory</a></h2>
+<p><p>
+The following functions perform operations on Finite fields vectors
+considered as code words in a linear code.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>WeightVecFFE( </code><var>vec</var><code> ) O</code>
+<p>
+returns the weight of the finite field vector <var>vec</var>, i.e. the number of
+nonzero entries.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>DistanceVecFFE( </code><var>vec1</var><code>, </code><var>vec2</var><code> ) O</code>
+<p>
+returns the distance between the two vectors <var>vec1</var> and <var>vec2</var>, which
+must have the same length and whose elements must lie in a common field.
+The distance is the number of places where <var>vec1</var> and <var>vec2</var> differ.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>DistancesDistributionVecFFEsVecFFE( </code><var>vecs</var><code>, </code><var>vec</var><code> ) O</code>
+<p>
+returns the distances distribution of the vector <var>vec</var> to the vectors in
+the list <var>vecs</var>. All vectors must have the same length, and all elements
+must lie in a common field. The distances distribution is a list <var>d</var> of
+length <code>Length(</code><var>vec</var><code>)+1</code>, such that the value <code></code><var>d</var><code>[</code><var>i</var><code>]</code> is the number
+of vectors in <var>vecs</var> that have distance <code></code><var>i</var><code>+1</code> to <var>vec</var>.
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>DistancesDistributionMatFFEVecFFE( </code><var>mat</var><code>, </code><var>f</var><code>, </code><var>vec</var><code> ) O</code>
+<p>
+returns the distances distribution of the vector <var>vec</var> to the vectors in
+the vector space generated by the rows of the matrix <var>mat</var> over the
+finite field <var>f</var>. The length of the rows of <var>mat</var> and the length of
+<var>vec</var> must be equal, and all elements must lie in <var>f</var>. The rows of <var>mat</var>
+must be linearly independent. The distances distribution is a list <var>d</var>
+of length <code>Length(</code><var>vec</var><code>)+1</code>, such that the value <code></code><var>d</var><code>[</code><var>i</var><code>]</code> is the
+number of vectors in the vector space generated by the rows of <var>mat</var>
+that have distance <code></code><var>i</var><code>+1</code> to <var>vec</var>.
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>AClosestVectorCombinationsMatFFEVecFFE( </code><var>mat</var><code>, </code><var>f</var><code>, </code><var>vec</var><code>, </code><var>l</var><code>, </code><var>stop</var><code> ) O</code>
+<p>
+runs through the <var>f</var>-linear combinations of the vectors in the rows of
+the matrix <var>mat</var> that can be written as linear combinations of exactly
+<var>l</var> rows (that is without using zero as a coefficient) and returns a
+vector from these that is closest to the vector <var>vec</var>. The length of the
+rows of <var>mat</var> and the length of <var>vec</var> must be equal, and all elements
+must lie in <var>f</var>. The rows of <var>mat</var> must be linearly independent. If it
+finds a vector of distance at most <var>stop</var>, which must be a nonnegative
+integer, then it stops immediately and returns this vector.
+<p>
+<a name = "SSEC005.6"></a>
+<li><code>CosetLeadersMatFFE( </code><var>mat</var><code>, </code><var>f</var><code> ) O</code>
+<p>
+returns a list of representatives of minimal weight for the cosets of a
+code. <var>mat</var> must be a <strong>check matrix</strong> for the code, the code is defined
+over the finite field <var>f</var>.   All rows of <var>mat</var> must have the same
+length, and all elements must lie in <var>f</var>. The rows of <var>mat</var> must be
+linearly independent.
+<p>
+<p>
+<h2><a name="SECT006">23.6 Vectors as coefficients of polynomials</a></h2>
+<p><p>
+A list of ring elements can be interpreted as a row vector or the list of
+coefficients of a polynomial. There are a couple of functions that implement
+arithmetic operations based on these interpretations. <font face="Gill Sans,Helvetica,Arial">GAP</font> contains proper
+support for polynomials (see&nbsp;<a href="CHAP064.htm">Polynomials and Rational Functions</a>), the
+operations described in this section are on a lower level.
+<p>
+The following operations all perform arithmetic on univariate
+polynomials given by their coefficient lists. These lists can have
+different lengths but must be dense homogeneous lists containing
+elements of a commutative ring.
+Not all input lists may be empty.
+<p>
+In the following descriptions we will always assume that <var>list1</var> is the
+coefficient list of the polynomial <var>pol1</var> and so forth.
+If length parameter <var>leni</var> is not given, it is set to the length of
+<var>listi</var> by default.
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>ValuePol( </code><var>coeff</var><code>, </code><var>x</var><code> ) F</code>
+<p>
+Let <var>coeff</var> be the coefficients list of a univariate polynomial <i>f</i>,
+and <var>x</var> a ring element. Then
+<code>ValuePol</code> returns the value <i>f</i>(<i>x</i> ).
+<p>
+The coefficient of <i>x</i><sup><i>i</i></sup> is assumed to be stored at position <i>i</i>+1 in
+the coefficients list.
+<p>
+<pre>
+gap&gt; ValuePol([1,2,3],4);
+57
+</pre>
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>ProductCoeffs( </code><var>list1</var><code>, [</code><var>len1</var><code>, ] </code><var>list2</var><code> [, </code><var>len2</var><code>] ) O</code>
+<p>
+Let <var>pol1</var> (and <var>pol2</var>) be polynomials given by the first <var>len1</var> (<var>len2</var>)
+entries of the coefficient list <var>list2</var> (<var>list2</var>).
+If <var>len1</var> and <var>len2</var> are omitted, they default to the lengths of <var>list1</var>
+and <var>list2</var>.
+This operation returns the coefficient list of the product of <var>pol1</var> and
+<var>pol2</var>.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;ProductCoeffs(l,m);
+[ 5, 16, 34, 52, 45, 28 ]
+</pre>
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>ReduceCoeffs( </code><var>list1</var><code> [, </code><var>len1</var><code>], </code><var>list2</var><code> [, </code><var>len2</var><code>] ) O</code>
+<p>
+changes <var>list1</var> to the coefficient list of the remainder when dividing
+<var>pol1</var> by <var>pol2</var>.
+This operation changes <var>list1</var> which therefore must be a mutable list.
+The operations returns the position of the last non-zero entry of the
+result but is not guaranteed to remove trailing zeroes.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;ReduceCoeffs(l,m);
+2
+gap&gt; l;
+[ 64/49, -24/49, 0, 0 ]
+</pre>
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>ReduceCoeffsMod( </code><var>list1</var><code>, [</code><var>len1</var><code>, ] </code><var>list2</var><code>, [</code><var>len2</var><code>, ] </code><var>mod</var><code> ) O</code>
+<p>
+changes <var>list1</var> to the coefficient list of the remainder when dividing
+<var>pol1</var> by <var>pol2</var> modulo <var>mod</var>. <var>mod</var> must be a positive integer.
+This operation changes <var>list1</var> which therefore must be a mutable list.
+The operations returns the position of the last non-zero entry of the
+result but is not guaranteed to remove trailing zeroes.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;ReduceCoeffsMod(l,m,3);
+1
+gap&gt; l;
+[ 1, 0, 0, 0 ]
+</pre>
+<p>
+<a name = "SSEC006.5"></a>
+<li><code>PowerModCoeffs( </code><var>list1</var><code>[, </code><var>len1</var><code>], </code><var>exp</var><code>, </code><var>list2</var><code>[, </code><var>len2</var><code>] ) O</code>
+<p>
+Let <i>p</i><sub>1</sub> and <i>p</i><sub>2</sub> be polynomials whose coefficients are given by the
+first <var>len1</var> resp. <var>len2</var> entries of the lists <var>list1</var> and <var>list2</var>,
+respectively.
+If <var>len1</var> and <var>len2</var> are omitted, they default to the lengths of <var>list1</var>
+and <var>list2</var>.
+Let <var>exp</var> be a positive integer.
+<code>PowerModCoeffs</code> returns the coefficient list of the remainder
+when dividing the <var>exp</var>-th power of <i>p</i><sub>1</sub> by <i>p</i><sub>2</sub>.
+The coefficients are reduced already while powers are computed,
+therefore avoiding an explosion in list length.
+<p>
+<pre>
+gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;PowerModCoeffs(l,5,m);
+[ -839462813696/678223072849, -7807439437824/678223072849, 0 ]
+</pre>
+<p>
+<a name = "SSEC006.6"></a>
+<li><code>ShiftedCoeffs( </code><var>list</var><code>, </code><var>shift</var><code> ) O</code>
+<p>
+produces a new coefficient list <var>new</var> obtained by the rule
+<code></code><var>new</var><code>[i+</code><var>shift</var><code>]:=</code><var>list</var><code>[i]</code> and filling initial holes by the
+appropriate zero.
+<p>
+<pre>
+gap&gt; l:=[1,2,3];;ShiftedCoeffs(l,2);ShiftedCoeffs(l,-2);
+[ 0, 0, 1, 2, 3 ]
+[ 3 ]
+</pre>
+<p>
+<a name = "SSEC006.7"></a>
+<li><code>ShrinkCoeffs( </code><var>list</var><code> ) O</code>
+<p>
+removes trailing zeroes from <var>list</var>. It returns the position of the last
+non-zero entry, that is the length of <var>list</var> after the operation.
+<p>
+<pre>
+gap&gt; l:=[1,0,0];;ShrinkCoeffs(l);l;
+1
+[ 1 ]
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP022.htm">Previous</a>] [<a href ="CHAP024.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

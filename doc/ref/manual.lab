@@ -1,0 +1,4295 @@
+\makelabel{ref:Copyright Notice}{{\setbox 0=\hbox {1}\vrule width 0pt height\ht 0}}
+\makelabel{ref:About the GAP Reference Manual}{1}
+\makelabel{ref:Manual Conventions}{1.1}
+\makelabel{ref:Credit}{1.2}
+\makelabel{ref:The Help System}{2}
+\makelabel{ref:Invoking the Help}{2.1}
+\makelabel{ref:getting help}{2.1.1}
+\makelabel{ref:Browsing through the Sections}{2.2}
+\makelabel{ref:browsing forward}{2.2.1}
+\makelabel{ref:browsing backwards}{2.2.1}
+\makelabel{ref:browsing forward one chapter}{2.2.2}
+\makelabel{ref:browsing backwards one chapter}{2.2.2}
+\makelabel{ref:browsing the previous section browsed}{2.2.3}
+\makelabel{ref:browsing the next section browsed}{2.2.3}
+\makelabel{ref:list of available books}{2.2.4}
+\makelabel{ref:table of sections for help books}{2.2.5}
+\makelabel{ref:table of chapters for help books}{2.2.5}
+\makelabel{ref:redisplay a help section}{2.2.6}
+\makelabel{ref:redisplay with next help viewer}{2.2.6}
+\makelabel{ref:Changing the Help Viewer}{2.3}
+\makelabel{ref:SetHelpViewer}{2.3.1}
+\makelabel{ref:The Pager Command}{2.4}
+\makelabel{ref:Pager}{2.4.1}
+\makelabel{ref:Running GAP}{3}
+\makelabel{ref:Command Line Options}{3.1}
+\makelabel{ref:Advanced Features of GAP}{3.2}
+\makelabel{ref:Running GAP under MacOS}{3.3}
+\makelabel{ref:The .gaprc file}{3.4}
+\makelabel{ref:Completion Files}{3.5}
+\makelabel{ref:CreateCompletionFiles}{3.5.1}
+\makelabel{ref:CreateCompletionFiles}{3.5.1}
+\makelabel{ref:Testing for the System Architecture}{3.6}
+\makelabel{ref:ARCH_IS_UNIX}{3.6.1}
+\makelabel{ref:ARCH_IS_MAC}{3.6.2}
+\makelabel{ref:ARCH_IS_WINDOWS}{3.6.3}
+\makelabel{ref:The Compiler}{3.7}
+\makelabel{ref:LoadDynamicModule}{3.7.1}
+\makelabel{ref:LoadDynamicModule}{3.7.1}
+\makelabel{ref:Suitability for Compilation}{3.8}
+\makelabel{ref:Compiling Library Code}{3.9}
+\makelabel{ref:CRC Numbers}{3.10}
+\makelabel{ref:Saving and Loading a Workspace}{3.11}
+\makelabel{ref:SaveWorkspace}{3.11.1}
+\makelabel{ref:loading a saved workspace}{3.11.2}
+\makelabel{ref:The Programming Language}{4}
+\makelabel{ref:Language Overview}{4.1}
+\makelabel{ref:Lexical Structure}{4.2}
+\makelabel{ref:Symbols}{4.3}
+\makelabel{ref:Whitespaces}{4.4}
+\makelabel{ref:Keywords}{4.5}
+\makelabel{ref:Identifiers}{4.6}
+\makelabel{ref:IsValidIdentifier}{4.6.1}
+\makelabel{ref:Expressions}{4.7}
+\makelabel{ref:Variables}{4.8}
+\makelabel{ref:Unbind}{4.8.1}
+\makelabel{ref:More About Global Variables}{4.9}
+\makelabel{ref:IsReadOnlyGlobal}{4.9.1}
+\makelabel{ref:MakeReadOnlyGlobal}{4.9.2}
+\makelabel{ref:MakeReadWriteGlobal}{4.9.3}
+\makelabel{ref:ValueGlobal}{4.9.4}
+\makelabel{ref:IsBoundGlobal}{4.9.5}
+\makelabel{ref:UnbindGlobal}{4.9.6}
+\makelabel{ref:BindGlobal}{4.9.7}
+\makelabel{ref:NamesGVars}{4.9.8}
+\makelabel{ref:NamesSystemGVars}{4.9.9}
+\makelabel{ref:NamesUserGVars}{4.9.10}
+\makelabel{ref:TemporaryGlobalVarName}{4.9.11}
+\makelabel{ref:Function Calls}{4.10}
+\makelabel{ref:function call}{4.10.1}
+\makelabel{ref:function call!with arguments}{4.10.1}
+\makelabel{ref:function call!with options}{4.10.2}
+\makelabel{ref:Comparisons}{4.11}
+\makelabel{ref:equality test}{4.11.1}
+\makelabel{ref:inequality test}{4.11.1}
+\makelabel{ref:smaller test}{4.11.2}
+\makelabel{ref:larger test}{4.11.2}
+\makelabel{ref:smaller or equal}{4.11.2}
+\makelabel{ref:larger or equal}{4.11.2}
+\makelabel{ref:Arithmetic Operators}{4.12}
+\makelabel{ref:positive number}{4.12.1}
+\makelabel{ref:negative number}{4.12.1}
+\makelabel{ref:addition}{4.12.1}
+\makelabel{ref:subtraction}{4.12.1}
+\makelabel{ref:multiplication}{4.12.1}
+\makelabel{ref:division}{4.12.1}
+\makelabel{ref:mod}{4.12.1}
+\makelabel{ref:power}{4.12.1}
+\makelabel{ref:Statements}{4.13}
+\makelabel{ref:Assignments}{4.14}
+\makelabel{ref:assignment!variable}{4.14.1}
+\makelabel{ref:Procedure Calls}{4.15}
+\makelabel{ref:procedure call}{4.15.1}
+\makelabel{ref:procedure call with arguments}{4.15.1}
+\makelabel{ref:If}{4.16}
+\makelabel{ref:if statement}{4.16.1}
+\makelabel{ref:While}{4.17}
+\makelabel{ref:while loop}{4.17.1}
+\makelabel{ref:Repeat}{4.18}
+\makelabel{ref:repeat loop}{4.18.1}
+\makelabel{ref:For}{4.19}
+\makelabel{ref:for loop}{4.19.1}
+\makelabel{ref:loop over range}{4.19.2}
+\makelabel{ref:loop over iterator}{4.19.3}
+\makelabel{ref:loop over object}{4.19.4}
+\makelabel{ref:Break}{4.20}
+\makelabel{ref:break statement}{4.20.1}
+\makelabel{ref:Continue}{4.21}
+\makelabel{ref:continue statement}{4.21.1}
+\makelabel{ref:function}{4.22.1}
+\makelabel{ref:arrow notation for functions}{4.22.2}
+\makelabel{ref:Return}{4.23}
+\makelabel{ref:return!no value}{4.23.1}
+\makelabel{ref:return!with value}{4.23.2}
+\makelabel{ref:The Syntax in BNF}{4.24}
+\makelabel{ref:Functions}{5}
+\makelabel{ref:Information about a function}{5.1}
+\makelabel{ref:NameFunction}{5.1.1}
+\makelabel{ref:NumberArgumentsFunction}{5.1.2}
+\makelabel{ref:Calling a function with a list argument that is interpreted as several arguments}{5.2}
+\makelabel{ref:CallFuncList}{5.2.1}
+\makelabel{ref:Functions that do nothing}{5.3}
+\makelabel{ref:ReturnTrue}{5.3.1}
+\makelabel{ref:ReturnFalse}{5.3.2}
+\makelabel{ref:ReturnFail}{5.3.3}
+\makelabel{ref:IdFunc}{5.3.4}
+\makelabel{ref:Function Types}{5.4}
+\makelabel{ref:IsFunction}{5.4.1}
+\makelabel{ref:IsOperation}{5.4.2}
+\makelabel{ref:FunctionsFamily}{5.4.3}
+\makelabel{ref:Main Loop and Break Loop}{6}
+\makelabel{ref:Main Loop}{6.1}
+\makelabel{ref:View and Print}{6.2}
+\makelabel{ref:View}{6.2.1}
+\makelabel{ref:Print}{6.2.2}
+\makelabel{ref:ViewObj}{6.2.3}
+\makelabel{ref:PrintObj}{6.2.3}
+\makelabel{ref:Display}{6.2.4}
+\makelabel{ref:Break Loops}{6.3}
+\makelabel{ref:quit}{6.3.1}
+\makelabel{ref:return from break loop}{6.3.2}
+\makelabel{ref:OnBreak}{6.3.3}
+\makelabel{ref:OnBreakMessage}{6.3.4}
+\makelabel{ref:Where}{6.3.5}
+\makelabel{ref:Variable Access in a Break Loop}{6.4}
+\makelabel{ref:DownEnv}{6.4.1}
+\makelabel{ref:UpEnv}{6.4.1}
+\makelabel{ref:Error}{6.5.1}
+\makelabel{ref:ErrorCount}{6.6.1}
+\makelabel{ref:Leaving GAP}{6.7}
+\makelabel{ref:QUIT!emergency quit}{6.7.1}
+\makelabel{ref:InstallAtExit}{6.7.2}
+\makelabel{ref:QUITTING}{6.7.2}
+\makelabel{ref:SaveOnExitFile}{6.7.3}
+\makelabel{ref:Line Editing}{6.8}
+\makelabel{ref:Edit}{6.9.1}
+\makelabel{ref:SizeScreen}{6.11.1}
+\makelabel{ref:SizeScreen}{6.11.1}
+\makelabel{ref:Debugging and Profiling Facilities}{7}
+\makelabel{ref:Recovery from NoMethodFound-Errors}{7.1}
+\makelabel{ref:ShowArguments}{7.1.1}
+\makelabel{ref:ShowArgument}{7.1.2}
+\makelabel{ref:ShowDetails}{7.1.3}
+\makelabel{ref:ShowMethods}{7.1.4}
+\makelabel{ref:ShowMethods}{7.1.4}
+\makelabel{ref:ShowOtherMethods}{7.1.5}
+\makelabel{ref:ShowOtherMethods}{7.1.5}
+\makelabel{ref:ApplicableMethod}{7.2.1}
+\makelabel{ref:ApplicableMethod}{7.2.1}
+\makelabel{ref:ApplicableMethod}{7.2.1}
+\makelabel{ref:ApplicableMethodTypes}{7.2.1}
+\makelabel{ref:ApplicableMethodTypes}{7.2.1}
+\makelabel{ref:ApplicableMethodTypes}{7.2.1}
+\makelabel{ref:Tracing Methods}{7.3}
+\makelabel{ref:TraceMethods}{7.3.1}
+\makelabel{ref:UntraceMethods}{7.3.2}
+\makelabel{ref:TraceImmediateMethods}{7.3.3}
+\makelabel{ref:Info Functions}{7.4}
+\makelabel{ref:NewInfoClass}{7.4.1}
+\makelabel{ref:DeclareInfoClass}{7.4.2}
+\makelabel{ref:SetInfoLevel}{7.4.3}
+\makelabel{ref:InfoLevel}{7.4.4}
+\makelabel{ref:Info}{7.4.5}
+\makelabel{ref:InfoWarning}{7.4.6}
+\makelabel{ref:Assertions}{7.5}
+\makelabel{ref:SetAssertionLevel}{7.5.1}
+\makelabel{ref:AssertionLevel}{7.5.2}
+\makelabel{ref:Assert}{7.5.3}
+\makelabel{ref:Assert}{7.5.3}
+\makelabel{ref:Timing}{7.6}
+\makelabel{ref:Runtimes}{7.6.1}
+\makelabel{ref:Runtime}{7.6.2}
+\makelabel{ref:time}{7.6.3}
+\makelabel{ref:Profiling}{7.7}
+\makelabel{ref:ProfileOperations}{7.7.1}
+\makelabel{ref:ProfileOperationsAndMethods}{7.7.2}
+\makelabel{ref:ProfileMethods}{7.7.3}
+\makelabel{ref:UnprofileMethods}{7.7.4}
+\makelabel{ref:ProfileFunctions}{7.7.5}
+\makelabel{ref:UnprofileFunctions}{7.7.6}
+\makelabel{ref:ProfileGlobalFunctions}{7.7.7}
+\makelabel{ref:ProfileGlobalFunctions}{7.7.7}
+\makelabel{ref:DisplayProfile}{7.7.8}
+\makelabel{ref:DisplayProfile}{7.7.8}
+\makelabel{ref:PROFILETHRESHOLD}{7.7.9}
+\makelabel{ref:ClearProfile}{7.7.10}
+\makelabel{ref:DisplayCacheStats}{7.7.11}
+\makelabel{ref:ClearCacheStats}{7.7.12}
+\makelabel{ref:Information about the version used}{7.8}
+\makelabel{ref:DisplayRevision}{7.8.1}
+\makelabel{ref:Test Files}{7.9}
+\makelabel{ref:ReadTest}{7.9.1}
+\makelabel{ref:Debugging Recursion}{7.10}
+\makelabel{ref:SetRecursionTrapInterval}{7.10.1}
+\makelabel{ref:Global Memory Information}{7.11}
+\makelabel{ref:GasmanStatistics}{7.11.1}
+\makelabel{ref:GasmanMessageStatus}{7.11.2}
+\makelabel{ref:SetGasmanMessageStatus}{7.11.2}
+\makelabel{ref:GasmanLimits}{7.11.3}
+\makelabel{ref:Options Stack}{8}
+\makelabel{ref:PushOptions}{8}
+\makelabel{ref:PopOptions}{8}
+\makelabel{ref:ResetOptionsStack}{8}
+\makelabel{ref:ValueOption}{8}
+\makelabel{ref:DisplayOptionsStack}{8}
+\makelabel{ref:InfoOptions}{8}
+\makelabel{ref:Files and Filenames}{9}
+\makelabel{ref:Portability}{9.1}
+\makelabel{ref:LastSystemError}{9.1.1}
+\makelabel{ref:GAP Root Directory}{9.2}
+\makelabel{ref:Directories}{9.3}
+\makelabel{ref:Directory}{9.3.1}
+\makelabel{ref:DirectoryTemporary}{9.3.2}
+\makelabel{ref:DirectoryTemporary}{9.3.2}
+\makelabel{ref:DirectoryCurrent}{9.3.3}
+\makelabel{ref:DirectoriesLibrary}{9.3.4}
+\makelabel{ref:DirectoriesLibrary}{9.3.4}
+\makelabel{ref:DirectoriesSystemPrograms}{9.3.5}
+\makelabel{ref:DirectoryContents}{9.3.6}
+\makelabel{ref:Filename}{9.4.1}
+\makelabel{ref:Filename}{9.4.1}
+\makelabel{ref:Special Filenames}{9.5}
+\makelabel{ref:File Access}{9.6}
+\makelabel{ref:IsExistingFile}{9.6.1}
+\makelabel{ref:IsReadableFile}{9.6.2}
+\makelabel{ref:IsWritableFile}{9.6.3}
+\makelabel{ref:IsExecutableFile}{9.6.4}
+\makelabel{ref:IsDirectoryPath}{9.6.5}
+\makelabel{ref:File Operations}{9.7}
+\makelabel{ref:Read}{9.7.1}
+\makelabel{ref:ReadAsFunction}{9.7.2}
+\makelabel{ref:PrintTo}{9.7.3}
+\makelabel{ref:AppendTo}{9.7.4}
+\makelabel{ref:LogTo}{9.7.5}
+\makelabel{ref:LogTo!stop logging}{9.7.6}
+\makelabel{ref:InputLogTo}{9.7.7}
+\makelabel{ref:InputLogTo!stop logging input}{9.7.8}
+\makelabel{ref:OutputLogTo}{9.7.9}
+\makelabel{ref:OutputLogTo!stop logging output}{9.7.10}
+\makelabel{ref:CrcFile}{9.7.11}
+\makelabel{ref:RemoveFile}{9.7.12}
+\makelabel{ref:Reread}{9.7.13}
+\makelabel{ref:REREADING}{9.7.13}
+\makelabel{ref:Streams}{10}
+\makelabel{ref:Categories for Streams and the StreamsFamily}{10.1}
+\makelabel{ref:IsStream}{10.1.1}
+\makelabel{ref:IsClosedStream}{10.1.2}
+\makelabel{ref:IsInputStream}{10.1.3}
+\makelabel{ref:IsInputTextStream}{10.1.4}
+\makelabel{ref:IsInputTextNone}{10.1.5}
+\makelabel{ref:IsOutputStream}{10.1.6}
+\makelabel{ref:IsOutputTextStream}{10.1.7}
+\makelabel{ref:IsOutputTextNone}{10.1.8}
+\makelabel{ref:StreamsFamily}{10.1.9}
+\makelabel{ref:Operations applicable to All Streams}{10.2}
+\makelabel{ref:CloseStream}{10.2.1}
+\makelabel{ref:FileDescriptorOfStream}{10.2.2}
+\makelabel{ref:UNIXSelect}{10.2.3}
+\makelabel{ref:Operations for Input Streams}{10.3}
+\makelabel{ref:Read!for streams}{10.3.1}
+\makelabel{ref:ReadAsFunction!for streams}{10.3.2}
+\makelabel{ref:ReadTest!for streams}{10.3.3}
+\makelabel{ref:ReadByte}{10.3.4}
+\makelabel{ref:ReadLine}{10.3.5}
+\makelabel{ref:ReadAll}{10.3.6}
+\makelabel{ref:ReadAll}{10.3.6}
+\makelabel{ref:IsEndOfStream}{10.3.7}
+\makelabel{ref:PositionStream}{10.3.8}
+\makelabel{ref:RewindStream}{10.3.9}
+\makelabel{ref:SeekPositionStream}{10.3.10}
+\makelabel{ref:Operations for Output Streams}{10.4}
+\makelabel{ref:WriteByte}{10.4.1}
+\makelabel{ref:WriteLine}{10.4.2}
+\makelabel{ref:WriteAll}{10.4.3}
+\makelabel{ref:PrintTo!for streams}{10.4.4}
+\makelabel{ref:AppendTo!for streams}{10.4.4}
+\makelabel{ref:LogTo!for streams}{10.4.5}
+\makelabel{ref:InputLogTo!for streams}{10.4.6}
+\makelabel{ref:OutputLogTo!for streams}{10.4.7}
+\makelabel{ref:SetPrintFormattingStatus}{10.4.8}
+\makelabel{ref:PrintFormattingStatus}{10.4.9}
+\makelabel{ref:File Streams}{10.5}
+\makelabel{ref:InputTextFile}{10.5.1}
+\makelabel{ref:OutputTextFile}{10.5.2}
+\makelabel{ref:User Streams}{10.6}
+\makelabel{ref:InputTextUser}{10.6.1}
+\makelabel{ref:OutputTextUser}{10.6.2}
+\makelabel{ref:String Streams}{10.7}
+\makelabel{ref:InputTextString}{10.7.1}
+\makelabel{ref:OutputTextString}{10.7.2}
+\makelabel{ref:Input-Output Streams}{10.8}
+\makelabel{ref:IsInputOutputStream}{10.8.1}
+\makelabel{ref:InputOutputLocalProcess}{10.8.2}
+\makelabel{ref:ReadAllLine}{10.8.3}
+\makelabel{ref:Dummy Streams}{10.9}
+\makelabel{ref:InputTextNone}{10.9.1}
+\makelabel{ref:OutputTextNone}{10.9.2}
+\makelabel{ref:Handling of Streams in the Background}{10.10}
+\makelabel{ref:InstallCharReadHookFunc}{10.10.1}
+\makelabel{ref:UnInstallCharReadHookFunc}{10.10.2}
+\makelabel{ref:Processes}{11}
+\makelabel{ref:Process}{11.1.1}
+\makelabel{ref:Exec}{11.2.1}
+\makelabel{ref:Objects and Elements}{12}
+\makelabel{ref:Objects}{12.1}
+\makelabel{ref:IsObject}{12.1.1}
+\makelabel{ref:Elements as equivalence classes}{12.2}
+\makelabel{ref:Sets}{12.3}
+\makelabel{ref:Domains}{12.4}
+\makelabel{ref:Identical Objects}{12.5}
+\makelabel{ref:IsIdenticalObj}{12.5.1}
+\makelabel{ref:IsNotIdenticalObj}{12.5.2}
+\makelabel{ref:Mutability and Copyability}{12.6}
+\makelabel{ref:IsCopyable}{12.6.1}
+\makelabel{ref:IsMutable}{12.6.2}
+\makelabel{ref:Immutable}{12.6.3}
+\makelabel{ref:MakeImmutable}{12.6.4}
+\makelabel{ref:Duplication of Objects}{12.7}
+\makelabel{ref:ShallowCopy}{12.7.1}
+\makelabel{ref:StructuralCopy}{12.7.2}
+\makelabel{ref:Other Operations Applicable to any Object}{12.8}
+\makelabel{ref:SetName}{12.8.1}
+\makelabel{ref:Name}{12.8.2}
+\makelabel{ref:IsInternallyConsistent}{12.8.3}
+\makelabel{ref:Types of Objects}{13}
+\makelabel{ref:Families}{13.1}
+\makelabel{ref:FamilyObj}{13.1.1}
+\makelabel{ref:Filters}{13.2}
+\makelabel{ref:RankFilter}{13.2.1}
+\makelabel{ref:NamesFilter}{13.2.2}
+\makelabel{ref:ShowImpliedFilters}{13.2.3}
+\makelabel{ref:Categories}{13.3}
+\makelabel{ref:CategoriesOfObject}{13.3.1}
+\makelabel{ref:Representation}{13.4}
+\makelabel{ref:RepresentationsOfObject}{13.4.1}
+\makelabel{ref:Attributes}{13.5}
+\makelabel{ref:KnownAttributesOfObject}{13.5.1}
+\makelabel{ref:Setter and Tester for Attributes}{13.6}
+\makelabel{ref:Tester}{13.6.1}
+\makelabel{ref:Setter}{13.6.2}
+\makelabel{ref:AttributeValueNotSet}{13.6.3}
+\makelabel{ref:InfoAttributes}{13.6.4}
+\makelabel{ref:DisableAttributeValueStoring}{13.6.5}
+\makelabel{ref:EnableAttributeValueStoring}{13.6.6}
+\makelabel{ref:Properties}{13.7}
+\makelabel{ref:KnownPropertiesOfObject}{13.7.1}
+\makelabel{ref:KnownTruePropertiesOfObject}{13.7.2}
+\makelabel{ref:Other Filters}{13.8}
+\makelabel{ref:Types}{13.9}
+\makelabel{ref:TypeObj}{13.9.1}
+\makelabel{ref:DataType}{13.9.2}
+\makelabel{ref:Integers}{14}
+\makelabel{ref:Integers}{14}
+\makelabel{ref:PositiveIntegers}{14}
+\makelabel{ref:NonnegativeIntegers}{14}
+\makelabel{ref:IsIntegers}{14}
+\makelabel{ref:IsPositiveIntegers}{14}
+\makelabel{ref:IsNonnegativeIntegers}{14}
+\makelabel{ref:Elementary Operations for Integers}{14.1}
+\makelabel{ref:IsInt}{14.1.1}
+\makelabel{ref:IsPosInt}{14.1.2}
+\makelabel{ref:Int}{14.1.3}
+\makelabel{ref:IsEvenInt}{14.1.4}
+\makelabel{ref:IsOddInt}{14.1.5}
+\makelabel{ref:AbsInt}{14.1.6}
+\makelabel{ref:SignInt}{14.1.7}
+\makelabel{ref:LogInt}{14.1.8}
+\makelabel{ref:RootInt}{14.1.9}
+\makelabel{ref:RootInt}{14.1.9}
+\makelabel{ref:SmallestRootInt}{14.1.10}
+\makelabel{ref:Random!for integers}{14.1.11}
+\makelabel{ref:Quotients and Remainders}{14.2}
+\makelabel{ref:QuoInt}{14.2.1}
+\makelabel{ref:BestQuoInt}{14.2.2}
+\makelabel{ref:RemInt}{14.2.3}
+\makelabel{ref:GcdInt}{14.2.4}
+\makelabel{ref:Gcdex}{14.2.5}
+\makelabel{ref:LcmInt}{14.2.6}
+\makelabel{ref:CoefficientsQadic}{14.2.7}
+\makelabel{ref:CoefficientsMultiadic}{14.2.8}
+\makelabel{ref:ChineseRem}{14.2.9}
+\makelabel{ref:PowerModInt}{14.2.10}
+\makelabel{ref:Prime Integers and Factorization}{14.3}
+\makelabel{ref:Primes}{14.3.1}
+\makelabel{ref:IsPrimeInt}{14.3.2}
+\makelabel{ref:IsProbablyPrimeInt}{14.3.2}
+\makelabel{ref:IsPrimePowerInt}{14.3.3}
+\makelabel{ref:NextPrimeInt}{14.3.4}
+\makelabel{ref:PrevPrimeInt}{14.3.5}
+\makelabel{ref:FactorsInt}{14.3.6}
+\makelabel{ref:FactorsInt}{14.3.6}
+\makelabel{ref:PrintFactorsInt}{14.3.7}
+\makelabel{ref:PrimePowersInt}{14.3.8}
+\makelabel{ref:DivisorsInt}{14.3.9}
+\makelabel{ref:Residue Class Rings}{14.4}
+\makelabel{ref:modulo!residue class rings}{14.4.1}
+\makelabel{ref:ZmodnZ}{14.4.2}
+\makelabel{ref:ZmodpZ}{14.4.2}
+\makelabel{ref:ZmodpZNC}{14.4.2}
+\makelabel{ref:ZmodnZObj}{14.4.3}
+\makelabel{ref:ZmodnZObj}{14.4.3}
+\makelabel{ref:IsZmodnZObj}{14.4.4}
+\makelabel{ref:IsZmodnZObjNonprime}{14.4.4}
+\makelabel{ref:IsZmodpZObj}{14.4.4}
+\makelabel{ref:IsZmodpZObjSmall}{14.4.4}
+\makelabel{ref:IsZmodpZObjLarge}{14.4.4}
+\makelabel{ref:Number Theory}{15}
+\makelabel{ref:InfoNumtheor}{15}
+\makelabel{ref:Prime Residues}{15.1}
+\makelabel{ref:PrimeResidues!function}{15.1.1}
+\makelabel{ref:Phi}{15.1.2}
+\makelabel{ref:Lambda}{15.1.3}
+\makelabel{ref:GeneratorsPrimeResidues}{15.1.4}
+\makelabel{ref:Primitive Roots and Discrete Logarithms}{15.2}
+\makelabel{ref:OrderMod}{15.2.1}
+\makelabel{ref:LogMod}{15.2.2}
+\makelabel{ref:LogModShanks}{15.2.2}
+\makelabel{ref:PrimitiveRootMod}{15.2.3}
+\makelabel{ref:IsPrimitiveRootMod}{15.2.4}
+\makelabel{ref:Roots Modulo Integers}{15.3}
+\makelabel{ref:Jacobi}{15.3.1}
+\makelabel{ref:Legendre}{15.3.2}
+\makelabel{ref:RootMod}{15.3.3}
+\makelabel{ref:RootsMod}{15.3.4}
+\makelabel{ref:RootsUnityMod}{15.3.5}
+\makelabel{ref:Multiplicative Arithmetic Functions}{15.4}
+\makelabel{ref:Sigma}{15.4.1}
+\makelabel{ref:Tau}{15.4.2}
+\makelabel{ref:MoebiusMu}{15.4.3}
+\makelabel{ref:Miscellaneous}{15.5}
+\makelabel{ref:TwoSquares}{15.5.1}
+\makelabel{ref:Rational Numbers}{16}
+\makelabel{ref:Rationals}{16}
+\makelabel{ref:IsRationals}{16}
+\makelabel{ref:Elementary Operations for Rationals}{16.1}
+\makelabel{ref:IsRat}{16.1.1}
+\makelabel{ref:IsPosRat}{16.1.2}
+\makelabel{ref:IsNegRat}{16.1.3}
+\makelabel{ref:NumeratorRat}{16.1.4}
+\makelabel{ref:DenominatorRat}{16.1.5}
+\makelabel{ref:Rat}{16.1.6}
+\makelabel{ref:Random!for rationals}{16.1.7}
+\makelabel{ref:Combinatorics}{17}
+\makelabel{ref:Combinatorial Numbers}{17.1}
+\makelabel{ref:Factorial}{17.1.1}
+\makelabel{ref:Binomial}{17.1.2}
+\makelabel{ref:Bell}{17.1.3}
+\makelabel{ref:Bernoulli}{17.1.4}
+\makelabel{ref:Stirling1}{17.1.5}
+\makelabel{ref:Stirling2}{17.1.6}
+\makelabel{ref:Combinations, Arrangements and Tuples}{17.2}
+\makelabel{ref:Combinations}{17.2.1}
+\makelabel{ref:NrCombinations}{17.2.2}
+\makelabel{ref:Arrangements}{17.2.3}
+\makelabel{ref:NrArrangements}{17.2.4}
+\makelabel{ref:UnorderedTuples}{17.2.5}
+\makelabel{ref:NrUnorderedTuples}{17.2.6}
+\makelabel{ref:Tuples}{17.2.7}
+\makelabel{ref:NrTuples}{17.2.8}
+\makelabel{ref:PermutationsList}{17.2.9}
+\makelabel{ref:NrPermutationsList}{17.2.10}
+\makelabel{ref:Derangements}{17.2.11}
+\makelabel{ref:NrDerangements}{17.2.12}
+\makelabel{ref:PartitionsSet}{17.2.13}
+\makelabel{ref:NrPartitionsSet}{17.2.14}
+\makelabel{ref:Partitions}{17.2.15}
+\makelabel{ref:NrPartitions}{17.2.16}
+\makelabel{ref:OrderedPartitions}{17.2.17}
+\makelabel{ref:NrOrderedPartitions}{17.2.18}
+\makelabel{ref:PartitionsGreatestLE}{17.2.19}
+\makelabel{ref:PartitionsGreatestEQ}{17.2.20}
+\makelabel{ref:RestrictedPartitions}{17.2.21}
+\makelabel{ref:NrRestrictedPartitions}{17.2.22}
+\makelabel{ref:SignPartition}{17.2.23}
+\makelabel{ref:AssociatedPartition}{17.2.24}
+\makelabel{ref:PowerPartition}{17.2.25}
+\makelabel{ref:PartitionTuples}{17.2.26}
+\makelabel{ref:NrPartitionTuples}{17.2.27}
+\makelabel{ref:Fibonacci and Lucas Sequences}{17.3}
+\makelabel{ref:Fibonacci}{17.3.1}
+\makelabel{ref:Lucas}{17.3.2}
+\makelabel{ref:Permanent of a Matrix}{17.4}
+\makelabel{ref:Permanent}{17.4.1}
+\makelabel{ref:Cyclotomic Numbers}{18}
+\makelabel{ref:Operations for Cyclotomics}{18.1}
+\makelabel{ref:E}{18.1.1}
+\makelabel{ref:Cyclotomics}{18.1.2}
+\makelabel{ref:IsCyclotomic}{18.1.3}
+\makelabel{ref:IsCyc}{18.1.3}
+\makelabel{ref:IsIntegralCyclotomic}{18.1.4}
+\makelabel{ref:Conductor}{18.1.5}
+\makelabel{ref:Conductor}{18.1.5}
+\makelabel{ref:AbsoluteValue}{18.1.6}
+\makelabel{ref:RoundCyc}{18.1.7}
+\makelabel{ref:CoeffsCyc}{18.1.8}
+\makelabel{ref:DenominatorCyc}{18.1.9}
+\makelabel{ref:ExtRepOfObj!external representation!for cyclotomics}{18.1.10}
+\makelabel{ref:DescriptionOfRootOfUnity}{18.1.11}
+\makelabel{ref:IsGaussInt}{18.1.12}
+\makelabel{ref:IsGaussRat}{18.1.13}
+\makelabel{ref:IsInfinity}{18.2.1}
+\makelabel{ref:infinity}{18.2.1}
+\makelabel{ref:Comparisons of Cyclotomics}{18.3}
+\makelabel{ref:ATLAS Irrationalities}{18.4}
+\makelabel{ref:EB}{18.4.1}
+\makelabel{ref:EC}{18.4.1}
+\makelabel{ref:ED}{18.4.1}
+\makelabel{ref:EE}{18.4.1}
+\makelabel{ref:EF}{18.4.1}
+\makelabel{ref:EG}{18.4.1}
+\makelabel{ref:EH}{18.4.1}
+\makelabel{ref:EI}{18.4.2}
+\makelabel{ref:ER}{18.4.2}
+\makelabel{ref:EY}{18.4.3}
+\makelabel{ref:EX}{18.4.3}
+\makelabel{ref:EW}{18.4.3}
+\makelabel{ref:EV}{18.4.3}
+\makelabel{ref:EU}{18.4.3}
+\makelabel{ref:ET}{18.4.3}
+\makelabel{ref:ES}{18.4.3}
+\makelabel{ref:EM}{18.4.4}
+\makelabel{ref:EL}{18.4.4}
+\makelabel{ref:EK}{18.4.4}
+\makelabel{ref:EJ}{18.4.4}
+\makelabel{ref:NK}{18.4.5}
+\makelabel{ref:AtlasIrrationality}{18.4.6}
+\makelabel{ref:Galois Conjugacy of Cyclotomics}{18.5}
+\makelabel{ref:GaloisCyc}{18.5.1}
+\makelabel{ref:GaloisCyc}{18.5.1}
+\makelabel{ref:ComplexConjugate}{18.5.2}
+\makelabel{ref:StarCyc}{18.5.3}
+\makelabel{ref:Quadratic}{18.5.4}
+\makelabel{ref:GaloisMat}{18.5.5}
+\makelabel{ref:RationalizedMat}{18.5.6}
+\makelabel{ref:Internally Represented Cyclotomics}{18.6}
+\makelabel{ref:Unknowns}{19}
+\makelabel{ref:Unknown}{19}
+\makelabel{ref:Unknown}{19}
+\makelabel{ref:LargestUnknown}{19}
+\makelabel{ref:IsUnknown}{19}
+\makelabel{ref:Booleans}{20}
+\makelabel{ref:IsBool}{20}
+\makelabel{ref:fail}{20.1.1}
+\makelabel{ref:Comparisons of Booleans}{20.2}
+\makelabel{ref:comparisons!of booleans}{20.2.1}
+\makelabel{ref:comparisons!of booleans}{20.2.1}
+\makelabel{ref:ordering!booleans}{20.2.2}
+\makelabel{ref:Operations for Booleans}{20.3}
+\makelabel{ref:or}{20.3.1}
+\makelabel{ref:and}{20.3.2}
+\makelabel{ref:and!for filters}{20.3.3}
+\makelabel{ref:not}{20.3.4}
+\makelabel{ref:Lists}{21}
+\makelabel{ref:List Categories}{21.1}
+\makelabel{ref:IsList}{21.1.1}
+\makelabel{ref:IsDenseList}{21.1.2}
+\makelabel{ref:IsHomogeneousList}{21.1.3}
+\makelabel{ref:IsTable}{21.1.4}
+\makelabel{ref:IsConstantTimeAccessList}{21.1.5}
+\makelabel{ref:Basic Operations for Lists}{21.2}
+\makelabel{ref:list element!operation}{21.2.1}
+\makelabel{ref:list boundedness test!operation}{21.2.1}
+\makelabel{ref:list assignment!operation}{21.2.1}
+\makelabel{ref:list unbind!operation}{21.2.1}
+\makelabel{ref:List Elements}{21.3}
+\makelabel{ref:list element!access}{21.3.1}
+\makelabel{ref:sublist!access}{21.3.2}
+\makelabel{ref:sublist!operation}{21.3.3}
+\makelabel{ref:List Assignment}{21.4}
+\makelabel{ref:list element!assignment}{21.4.1}
+\makelabel{ref:sublist!assignment}{21.4.2}
+\makelabel{ref:sublist assignment!operation}{21.4.3}
+\makelabel{ref:Add}{21.4.4}
+\makelabel{ref:Append}{21.4.5}
+\makelabel{ref:IsBound and Unbind for Lists}{21.5}
+\makelabel{ref:IsBound!for lists}{21.5.1}
+\makelabel{ref:Unbind!for lists}{21.5.2}
+\makelabel{ref:Identical Lists}{21.6}
+\makelabel{ref:Duplication of Lists}{21.7}
+\makelabel{ref:Membership Test for Lists}{21.8}
+\makelabel{ref:element test!for lists}{21.8.1}
+\makelabel{ref:Enlarging Internally Represented Lists}{21.9}
+\makelabel{ref:Comparisons of Lists}{21.10}
+\makelabel{ref:list equal!comparison}{21.10.1}
+\makelabel{ref:list smaller!comparison}{21.10.2}
+\makelabel{ref:Arithmetic for Lists}{21.11}
+\makelabel{ref:Filters Controlling the Arithmetic Behaviour of Lists}{21.12}
+\makelabel{ref:IsGeneralizedRowVector}{21.12.1}
+\makelabel{ref:IsMultiplicativeGeneralizedRowVector}{21.12.2}
+\makelabel{ref:IsListDefault}{21.12.3}
+\makelabel{ref:NestingDepthA}{21.12.4}
+\makelabel{ref:NestingDepthM}{21.12.5}
+\makelabel{ref:Additive Arithmetic for Lists}{21.13}
+\makelabel{ref:Multiplicative Arithmetic for Lists}{21.14}
+\makelabel{ref:Mutability Status and List Arithmetic}{21.15}
+\makelabel{ref:ListWithIdenticalEntries}{21.15.1}
+\makelabel{ref:Finding Positions in Lists}{21.16}
+\makelabel{ref:Position}{21.16.1}
+\makelabel{ref:PositionCanonical}{21.16.2}
+\makelabel{ref:PositionNthOccurrence}{21.16.3}
+\makelabel{ref:PositionSorted}{21.16.4}
+\makelabel{ref:PositionSorted}{21.16.4}
+\makelabel{ref:PositionSet}{21.16.5}
+\makelabel{ref:PositionSet}{21.16.5}
+\makelabel{ref:PositionProperty}{21.16.6}
+\makelabel{ref:PositionBound}{21.16.7}
+\makelabel{ref:PositionNot}{21.16.8}
+\makelabel{ref:PositionNonZero}{21.16.9}
+\makelabel{ref:PositionSublist}{21.16.10}
+\makelabel{ref:PositionSublist}{21.16.10}
+\makelabel{ref:Properties and Attributes for Lists}{21.17}
+\makelabel{ref:IsMatchingSublist}{21.17.1}
+\makelabel{ref:IsMatchingSublist}{21.17.1}
+\makelabel{ref:IsDuplicateFree}{21.17.2}
+\makelabel{ref:IsDuplicateFreeList}{21.17.2}
+\makelabel{ref:IsSortedList}{21.17.3}
+\makelabel{ref:IsSSortedList}{21.17.4}
+\makelabel{ref:IsSet}{21.17.4}
+\makelabel{ref:Length}{21.17.5}
+\makelabel{ref:ConstantTimeAccessList}{21.17.6}
+\makelabel{ref:Sorting Lists}{21.18}
+\makelabel{ref:Sort}{21.18.1}
+\makelabel{ref:Sort}{21.18.1}
+\makelabel{ref:SortParallel}{21.18.2}
+\makelabel{ref:SortParallel}{21.18.2}
+\makelabel{ref:Sortex}{21.18.3}
+\makelabel{ref:SortingPerm}{21.18.4}
+\makelabel{ref:Sorted Lists and Sets}{21.19}
+\makelabel{ref:in!for strictly sorted lists}{21.19.1}
+\makelabel{ref:IsEqualSet}{21.19.2}
+\makelabel{ref:IsSubsetSet}{21.19.3}
+\makelabel{ref:AddSet}{21.19.4}
+\makelabel{ref:RemoveSet}{21.19.5}
+\makelabel{ref:UniteSet}{21.19.6}
+\makelabel{ref:IntersectSet}{21.19.7}
+\makelabel{ref:SubtractSet}{21.19.8}
+\makelabel{ref:Operations for Lists}{21.20}
+\makelabel{ref:Concatenation}{21.20.1}
+\makelabel{ref:Concatenation}{21.20.1}
+\makelabel{ref:Compacted}{21.20.2}
+\makelabel{ref:Collected}{21.20.3}
+\makelabel{ref:DuplicateFreeList}{21.20.4}
+\makelabel{ref:Unique}{21.20.4}
+\makelabel{ref:AsDuplicateFreeList}{21.20.5}
+\makelabel{ref:Flat}{21.20.6}
+\makelabel{ref:Reversed}{21.20.7}
+\makelabel{ref:IsLexicographicallyLess}{21.20.8}
+\makelabel{ref:Apply}{21.20.9}
+\makelabel{ref:Perform}{21.20.10}
+\makelabel{ref:PermListList}{21.20.11}
+\makelabel{ref:Maximum}{21.20.12}
+\makelabel{ref:Maximum}{21.20.12}
+\makelabel{ref:Minimum}{21.20.13}
+\makelabel{ref:Minimum}{21.20.13}
+\makelabel{ref:MaximumList}{21.20.14}
+\makelabel{ref:MinimumList}{21.20.14}
+\makelabel{ref:Cartesian}{21.20.15}
+\makelabel{ref:Cartesian}{21.20.15}
+\makelabel{ref:Permuted}{21.20.16}
+\makelabel{ref:List}{21.20.17}
+\makelabel{ref:List}{21.20.17}
+\makelabel{ref:List}{21.20.17}
+\makelabel{ref:Filtered}{21.20.18}
+\makelabel{ref:Filtered}{21.20.18}
+\makelabel{ref:Number}{21.20.19}
+\makelabel{ref:Number}{21.20.19}
+\makelabel{ref:Number}{21.20.19}
+\makelabel{ref:First}{21.20.20}
+\makelabel{ref:ForAll}{21.20.21}
+\makelabel{ref:ForAll}{21.20.21}
+\makelabel{ref:ForAny}{21.20.22}
+\makelabel{ref:ForAny}{21.20.22}
+\makelabel{ref:Product}{21.20.23}
+\makelabel{ref:Product}{21.20.23}
+\makelabel{ref:Product}{21.20.23}
+\makelabel{ref:Product}{21.20.23}
+\makelabel{ref:Sum}{21.20.24}
+\makelabel{ref:Sum}{21.20.24}
+\makelabel{ref:Sum}{21.20.24}
+\makelabel{ref:Sum}{21.20.24}
+\makelabel{ref:Iterated}{21.20.25}
+\makelabel{ref:ListN}{21.20.26}
+\makelabel{ref:Advanced List Manipulations}{21.21}
+\makelabel{ref:ListX}{21.21.1}
+\makelabel{ref:SetX}{21.21.2}
+\makelabel{ref:SumX}{21.21.3}
+\makelabel{ref:ProductX}{21.21.4}
+\makelabel{ref:Ranges}{21.22}
+\makelabel{ref:IsRange}{21.22.1}
+\makelabel{ref:ConvertToRangeRep}{21.22.2}
+\makelabel{ref:Enumerators}{21.23}
+\makelabel{ref:IsQuickPositionList}{21.23.1}
+\makelabel{ref:Boolean Lists}{22}
+\makelabel{ref:IsBlist}{22}
+\makelabel{ref:Boolean Lists Representing Subsets}{22.1}
+\makelabel{ref:BlistList}{22.1.1}
+\makelabel{ref:ListBlist}{22.1.2}
+\makelabel{ref:SizeBlist}{22.1.3}
+\makelabel{ref:IsSubsetBlist}{22.1.4}
+\makelabel{ref:Set Operations via Boolean Lists}{22.2}
+\makelabel{ref:UnionBlist}{22.2.1}
+\makelabel{ref:UnionBlist}{22.2.1}
+\makelabel{ref:IntersectionBlist}{22.2.2}
+\makelabel{ref:IntersectionBlist}{22.2.2}
+\makelabel{ref:DifferenceBlist}{22.2.3}
+\makelabel{ref:Function that Modify Boolean Lists}{22.3}
+\makelabel{ref:UniteBlist}{22.3.1}
+\makelabel{ref:UniteBlistList}{22.3.2}
+\makelabel{ref:IntersectBlist}{22.3.3}
+\makelabel{ref:SubtractBlist}{22.3.4}
+\makelabel{ref:More about Boolean Lists}{22.4}
+\makelabel{ref:Row Vectors}{23}
+\makelabel{ref:IsRowVector}{23}
+\makelabel{ref:Operators for Row Vectors}{23.1}
+\makelabel{ref:addition!vectors}{23.1.1}
+\makelabel{ref:addition!scalar and vector}{23.1.2}
+\makelabel{ref:addition!vector and scalar}{23.1.2}
+\makelabel{ref:subtraction!vectors}{23.1.3}
+\makelabel{ref:subtraction!scalar and vector}{23.1.3}
+\makelabel{ref:subtraction!vector and scalar}{23.1.3}
+\makelabel{ref:multiplication!scalar and vector}{23.1.4}
+\makelabel{ref:multiplication!vector and scalar}{23.1.4}
+\makelabel{ref:multiplication!vectors}{23.1.5}
+\makelabel{ref:NormedRowVector}{23.1.6}
+\makelabel{ref:Row Vectors over Finite Fields}{23.2}
+\makelabel{ref:ConvertToVectorRep}{23.2.1}
+\makelabel{ref:ConvertToVectorRep}{23.2.1}
+\makelabel{ref:ConvertToVectorRep}{23.2.1}
+\makelabel{ref:ConvertToVectorRepNC}{23.2.1}
+\makelabel{ref:ConvertToVectorRepNC}{23.2.1}
+\makelabel{ref:ConvertToVectorRepNC}{23.2.1}
+\makelabel{ref:NumberFFVector}{23.2.2}
+\makelabel{ref:Coefficient List Arithmetic}{23.3}
+\makelabel{ref:AddRowVector}{23.3.1}
+\makelabel{ref:AddCoeffs}{23.3.2}
+\makelabel{ref:AddCoeffs}{23.3.2}
+\makelabel{ref:AddCoeffs}{23.3.2}
+\makelabel{ref:MultRowVector}{23.3.3}
+\makelabel{ref:MultRowVector}{23.3.3}
+\makelabel{ref:CoeffsMod}{23.3.4}
+\makelabel{ref:Shifting and Trimming Coefficient Lists}{23.4}
+\makelabel{ref:LeftShiftRowVector}{23.4.1}
+\makelabel{ref:RightShiftRowVector}{23.4.2}
+\makelabel{ref:ShrinkRowVector}{23.4.3}
+\makelabel{ref:RemoveOuterCoeffs}{23.4.4}
+\makelabel{ref:Functions for Coding Theory}{23.5}
+\makelabel{ref:WeightVecFFE}{23.5.1}
+\makelabel{ref:DistanceVecFFE}{23.5.2}
+\makelabel{ref:DistancesDistributionVecFFEsVecFFE}{23.5.3}
+\makelabel{ref:DistancesDistributionMatFFEVecFFE}{23.5.4}
+\makelabel{ref:AClosestVectorCombinationsMatFFEVecFFE}{23.5.5}
+\makelabel{ref:CosetLeadersMatFFE}{23.5.6}
+\makelabel{ref:Vectors as coefficients of polynomials}{23.6}
+\makelabel{ref:ValuePol}{23.6.1}
+\makelabel{ref:ProductCoeffs}{23.6.2}
+\makelabel{ref:ReduceCoeffs}{23.6.3}
+\makelabel{ref:ReduceCoeffsMod}{23.6.4}
+\makelabel{ref:PowerModCoeffs}{23.6.5}
+\makelabel{ref:ShiftedCoeffs}{23.6.6}
+\makelabel{ref:ShrinkCoeffs}{23.6.7}
+\makelabel{ref:Matrices}{24}
+\makelabel{ref:InfoMatrix}{24}
+\makelabel{ref:Categories of Matrices}{24.1}
+\makelabel{ref:IsMatrix}{24.1.1}
+\makelabel{ref:IsOrdinaryMatrix}{24.1.2}
+\makelabel{ref:IsLieMatrix}{24.1.3}
+\makelabel{ref:Operators for Matrices}{24.2}
+\makelabel{ref:addition!matrices}{24.2.1}
+\makelabel{ref:addition!scalar and matrix}{24.2.2}
+\makelabel{ref:addition!matrix and scalar}{24.2.2}
+\makelabel{ref:subtraction!matrices}{24.2.3}
+\makelabel{ref:subtraction!scalar and matrix}{24.2.3}
+\makelabel{ref:subtraction!matrix and scalar}{24.2.3}
+\makelabel{ref:multiplication!scalar and matrix}{24.2.4}
+\makelabel{ref:multiplication!matrix and scalar}{24.2.4}
+\makelabel{ref:multiplication!vector and matrix}{24.2.5}
+\makelabel{ref:multiplication!matrix and vector}{24.2.6}
+\makelabel{ref:multiplication!matrices}{24.2.7}
+\makelabel{ref:inverse!matrix}{24.2.8}
+\makelabel{ref:quotient!matrices}{24.2.9}
+\makelabel{ref:quotient!scalar and matrix}{24.2.9}
+\makelabel{ref:quotient!matrix and scalar}{24.2.9}
+\makelabel{ref:quotient!vector and matrix}{24.2.9}
+\makelabel{ref:power!matrix}{24.2.10}
+\makelabel{ref:conjugate!matrix}{24.2.10}
+\makelabel{ref:image!vector under matrix}{24.2.10}
+\makelabel{ref:matrices!commutator}{24.2.11}
+\makelabel{ref:addition!scalar and matrix list}{24.2.12}
+\makelabel{ref:addition!scalar and matrix list}{24.2.12}
+\makelabel{ref:subtraction!scalar and matrix list}{24.2.12}
+\makelabel{ref:subtraction!scalar and matrix list}{24.2.12}
+\makelabel{ref:multiplication!scalar and matrix list}{24.2.12}
+\makelabel{ref:multiplication!scalar and matrix list}{24.2.12}
+\makelabel{ref:quotient!scalar and matrix list}{24.2.12}
+\makelabel{ref:multiplication!matrix and matrix list}{24.2.13}
+\makelabel{ref:multiplication!matrix and matrix list}{24.2.13}
+\makelabel{ref:quotient!matrix and matrix list}{24.2.14}
+\makelabel{ref:multiplication!vector and matrix list}{24.2.15}
+\makelabel{ref:Properties and Attributes of Matrices}{24.3}
+\makelabel{ref:DimensionsMat}{24.3.1}
+\makelabel{ref:DefaultFieldOfMatrix}{24.3.2}
+\makelabel{ref:TraceMat}{24.3.3}
+\makelabel{ref:Trace}{24.3.3}
+\makelabel{ref:DeterminantMat}{24.3.4}
+\makelabel{ref:Determinant}{24.3.4}
+\makelabel{ref:DeterminantMatDestructive}{24.3.5}
+\makelabel{ref:DeterminantMatDivFree}{24.3.6}
+\makelabel{ref:IsMonomialMatrix}{24.3.7}
+\makelabel{ref:IsDiagonalMat}{24.3.8}
+\makelabel{ref:IsUpperTriangularMat}{24.3.9}
+\makelabel{ref:IsLowerTriangularMat}{24.3.10}
+\makelabel{ref:Matrix Constructions}{24.4}
+\makelabel{ref:IdentityMat}{24.4.1}
+\makelabel{ref:NullMat}{24.4.2}
+\makelabel{ref:EmptyMatrix}{24.4.3}
+\makelabel{ref:DiagonalMat}{24.4.4}
+\makelabel{ref:PermutationMat}{24.4.5}
+\makelabel{ref:TransposedMatImmutable}{24.4.6}
+\makelabel{ref:TransposedMatAttr}{24.4.6}
+\makelabel{ref:TransposedMat}{24.4.6}
+\makelabel{ref:TransposedMatMutable}{24.4.6}
+\makelabel{ref:TransposedMatOp}{24.4.6}
+\makelabel{ref:TransposedMatDestructive}{24.4.7}
+\makelabel{ref:KroneckerProduct}{24.4.8}
+\makelabel{ref:ReflectionMat}{24.4.9}
+\makelabel{ref:ReflectionMat}{24.4.9}
+\makelabel{ref:ReflectionMat}{24.4.9}
+\makelabel{ref:ReflectionMat}{24.4.9}
+\makelabel{ref:PrintArray}{24.4.10}
+\makelabel{ref:MutableIdentityMat}{24.4.11}
+\makelabel{ref:MutableNullMat}{24.4.12}
+\makelabel{ref:Random Matrices}{24.5}
+\makelabel{ref:RandomMat}{24.5.1}
+\makelabel{ref:RandomInvertibleMat}{24.5.2}
+\makelabel{ref:RandomUnimodularMat}{24.5.3}
+\makelabel{ref:Matrices Representing Linear Equations and the Gaussian Algorithm}{24.6}
+\makelabel{ref:RankMat}{24.6.1}
+\makelabel{ref:TriangulizeMat}{24.6.2}
+\makelabel{ref:NullspaceMat}{24.6.3}
+\makelabel{ref:TriangulizedNullspaceMat}{24.6.3}
+\makelabel{ref:NullspaceMatDestructive}{24.6.4}
+\makelabel{ref:TriangulizedNullspaceMatDestructive}{24.6.4}
+\makelabel{ref:SolutionMat}{24.6.5}
+\makelabel{ref:SolutionMatDestructive}{24.6.6}
+\makelabel{ref:BaseFixedSpace}{24.6.7}
+\makelabel{ref:Eigenvectors and eigenvalues}{24.7}
+\makelabel{ref:GeneralisedEigenvalues}{24.7.1}
+\makelabel{ref:GeneralizedEigenvalues}{24.7.1}
+\makelabel{ref:GeneralisedEigenspaces}{24.7.2}
+\makelabel{ref:GeneralizedEigenspaces}{24.7.2}
+\makelabel{ref:Eigenvalues}{24.7.3}
+\makelabel{ref:Eigenspaces}{24.7.4}
+\makelabel{ref:Eigenvectors}{24.7.5}
+\makelabel{ref:Elementary Divisors}{24.8}
+\makelabel{ref:ElementaryDivisorsMat}{24.8.1}
+\makelabel{ref:ElementaryDivisorsMatDestructive}{24.8.1}
+\makelabel{ref:DiagonalizeMat}{24.8.2}
+\makelabel{ref:Echelonized Matrices}{24.9}
+\makelabel{ref:SemiEchelonMat}{24.9.1}
+\makelabel{ref:SemiEchelonMatDestructive}{24.9.2}
+\makelabel{ref:SemiEchelonMatTransformation}{24.9.3}
+\makelabel{ref:SemiEchelonMats}{24.9.4}
+\makelabel{ref:SemiEchelonMatsDestructive}{24.9.5}
+\makelabel{ref:Matrices as Basis of a Row Space}{24.10}
+\makelabel{ref:BaseMat}{24.10.1}
+\makelabel{ref:BaseMatDestructive}{24.10.2}
+\makelabel{ref:BaseOrthogonalSpaceMat}{24.10.3}
+\makelabel{ref:SumIntersectionMat}{24.10.4}
+\makelabel{ref:BaseSteinitzVectors}{24.10.5}
+\makelabel{ref:Triangular Matrices}{24.11}
+\makelabel{ref:DiagonalOfMat}{24.11.1}
+\makelabel{ref:UpperSubdiagonal}{24.11.2}
+\makelabel{ref:DepthOfUpperTriangularMatrix}{24.11.3}
+\makelabel{ref:Matrices as Linear Mappings}{24.12}
+\makelabel{ref:CharacteristicPolynomial}{24.12.1}
+\makelabel{ref:CharacteristicPolynomial}{24.12.1}
+\makelabel{ref:JordanDecomposition}{24.12.2}
+\makelabel{ref:BlownUpMat}{24.12.3}
+\makelabel{ref:BlownUpVector}{24.12.4}
+\makelabel{ref:CompanionMat}{24.12.5}
+\makelabel{ref:Matrices over Finite Fields}{24.13}
+\makelabel{ref:ImmutableMatrix}{24.13.1}
+\makelabel{ref:ConvertToMatrixRep}{24.13.2}
+\makelabel{ref:ConvertToMatrixRep}{24.13.2}
+\makelabel{ref:ConvertToMatrixRep}{24.13.2}
+\makelabel{ref:ConvertToMatrixRepNC}{24.13.2}
+\makelabel{ref:ConvertToMatrixRepNC}{24.13.2}
+\makelabel{ref:ConvertToMatrixRepNC}{24.13.2}
+\makelabel{ref:ProjectiveOrder}{24.13.3}
+\makelabel{ref:SimultaneousEigenvalues}{24.13.4}
+\makelabel{ref:InverseMatMod}{24.13.5}
+\makelabel{ref:NullspaceModQ}{24.13.6}
+\makelabel{ref:Special Multiplication Algorithms for Matrices over GF(2)}{24.14}
+\makelabel{ref:PROD_GF2MAT_GF2MAT_SIMPLE}{24.14.1}
+\makelabel{ref:PROD_GF2MAT_GF2MAT_ADVANCED}{24.14.2}
+\makelabel{ref:Block Matrices}{24.15}
+\makelabel{ref:AsBlockMatrix}{24.15.1}
+\makelabel{ref:BlockMatrix}{24.15.2}
+\makelabel{ref:BlockMatrix}{24.15.2}
+\makelabel{ref:MatrixByBlockMatrix}{24.15.3}
+\makelabel{ref:Integral matrices and lattices}{25}
+\makelabel{ref:Linear equations over the integers and Integral Matrices}{25.1}
+\makelabel{ref:NullspaceIntMat}{25.1.1}
+\makelabel{ref:SolutionIntMat}{25.1.2}
+\makelabel{ref:SolutionNullspaceIntMat}{25.1.3}
+\makelabel{ref:BaseIntMat}{25.1.4}
+\makelabel{ref:BaseIntersectionIntMats}{25.1.5}
+\makelabel{ref:ComplementIntMat}{25.1.6}
+\makelabel{ref:Normal Forms over the Integers}{25.2}
+\makelabel{ref:TriangulizedIntegerMat}{25.2.1}
+\makelabel{ref:TriangulizedIntegerMatTransform}{25.2.2}
+\makelabel{ref:TriangulizeIntegerMat}{25.2.3}
+\makelabel{ref:HermiteNormalFormIntegerMat}{25.2.4}
+\makelabel{ref:HermiteNormalFormIntegerMatTransform}{25.2.5}
+\makelabel{ref:SmithNormalFormIntegerMat}{25.2.6}
+\makelabel{ref:SmithNormalFormIntegerMatTransforms}{25.2.7}
+\makelabel{ref:DiagonalizeIntMat}{25.2.8}
+\makelabel{ref:NormalFormIntMat}{25.2.9}
+\makelabel{ref:AbelianInvariantsOfList}{25.2.10}
+\makelabel{ref:Determinant of an integer matrix}{25.3}
+\makelabel{ref:DeterminantIntMat}{25.3.1}
+\makelabel{ref:Decompositions}{25.4}
+\makelabel{ref:Decomposition}{25.4.1}
+\makelabel{ref:Decomposition}{25.4.1}
+\makelabel{ref:LinearIndependentColumns}{25.4.2}
+\makelabel{ref:PadicCoefficients}{25.4.3}
+\makelabel{ref:IntegralizedMat}{25.4.4}
+\makelabel{ref:IntegralizedMat}{25.4.4}
+\makelabel{ref:DecompositionInt}{25.4.5}
+\makelabel{ref:Lattice Reduction}{25.5}
+\makelabel{ref:LLLReducedBasis}{25.5.1}
+\makelabel{ref:LLLReducedGramMat}{25.5.2}
+\makelabel{ref:LLLReducedGramMat}{25.5.2}
+\makelabel{ref:OrthogonalEmbeddings}{25.6.1}
+\makelabel{ref:ShortestVectors}{25.6.2}
+\makelabel{ref:Strings and Characters}{26}
+\makelabel{ref:IsChar}{26}
+\makelabel{ref:IsCharCollection}{26}
+\makelabel{ref:IsString}{26}
+\makelabel{ref:Special Characters}{26.1}
+\makelabel{ref:Internally Represented Strings}{26.2}
+\makelabel{ref:IsStringRep}{26.2.1}
+\makelabel{ref:ConvertToStringRep}{26.2.2}
+\makelabel{ref:IsEmptyString}{26.2.3}
+\makelabel{ref:CharsFamily}{26.2.4}
+\makelabel{ref:Recognizing Characters}{26.3}
+\makelabel{ref:IsDigitChar}{26.3.1}
+\makelabel{ref:IsLowerAlphaChar}{26.3.2}
+\makelabel{ref:IsUpperAlphaChar}{26.3.3}
+\makelabel{ref:IsAlphaChar}{26.3.4}
+\makelabel{ref:Comparisons of Strings}{26.4}
+\makelabel{ref:strings!equality of}{26.4.1}
+\makelabel{ref:strings!inequality of}{26.4.1}
+\makelabel{ref:strings!lexicographic ordering of}{26.4.2}
+\makelabel{ref:Operations to Produce or Manipulate Strings}{26.5}
+\makelabel{ref:String}{26.5.1}
+\makelabel{ref:String}{26.5.1}
+\makelabel{ref:HexStringInt}{26.5.2}
+\makelabel{ref:StringPP}{26.5.3}
+\makelabel{ref:WordAlp}{26.5.4}
+\makelabel{ref:LowercaseString}{26.5.5}
+\makelabel{ref:SplitString}{26.5.6}
+\makelabel{ref:ReplacedString}{26.5.7}
+\makelabel{ref:NormalizeWhitespace}{26.5.8}
+\makelabel{ref:NormalizedWhitespace}{26.5.9}
+\makelabel{ref:JoinStringsWithSeparator}{26.5.10}
+\makelabel{ref:Chomp}{26.5.11}
+\makelabel{ref:Character Conversion}{26.6}
+\makelabel{ref:INT_CHAR}{26.6.1}
+\makelabel{ref:CHAR_INT}{26.6.2}
+\makelabel{ref:SINT_CHAR}{26.6.3}
+\makelabel{ref:CHAR_SINT}{26.6.4}
+\makelabel{ref:Operations to Evaluate Strings}{26.7}
+\makelabel{ref:Int!for strings}{26.7.1}
+\makelabel{ref:Rat!for strings}{26.7.1}
+\makelabel{ref:IntHexString}{26.7.1}
+\makelabel{ref:Ordinal}{26.7.2}
+\makelabel{ref:EvalString}{26.7.3}
+\makelabel{ref:Calendar Arithmetic}{26.8}
+\makelabel{ref:DaysInYear}{26.8.1}
+\makelabel{ref:DaysInMonth}{26.8.2}
+\makelabel{ref:DMYDay}{26.8.3}
+\makelabel{ref:DayDMY}{26.8.4}
+\makelabel{ref:WeekDay}{26.8.5}
+\makelabel{ref:StringDate}{26.8.6}
+\makelabel{ref:HMSMSec}{26.8.7}
+\makelabel{ref:SecHMSM}{26.8.8}
+\makelabel{ref:StringTime}{26.8.9}
+\makelabel{ref:SecondsDMYhms}{26.8.10}
+\makelabel{ref:DMYhmsSeconds}{26.8.11}
+\makelabel{ref:Records}{27}
+\makelabel{ref:IsRecord}{27}
+\makelabel{ref:IsRecordCollection}{27}
+\makelabel{ref:IsRecordCollColl}{27}
+\makelabel{ref:RecNames}{27}
+\makelabel{ref:Accessing Record Elements}{27.1}
+\makelabel{ref:record!component access}{27.1.1}
+\makelabel{ref:record!component variable}{27.1.2}
+\makelabel{ref:Record Assignment}{27.2}
+\makelabel{ref:record!component assignment}{27.2.1}
+\makelabel{ref:record!component variable assignment}{27.2.2}
+\makelabel{ref:Identical Records}{27.3}
+\makelabel{ref:Comparisons of Records}{27.4}
+\makelabel{ref:equality!of records}{27.4.1}
+\makelabel{ref:inequality!of records}{27.4.1}
+\makelabel{ref:ordering!of records}{27.4.2}
+\makelabel{ref:ordering!of records}{27.4.2}
+\makelabel{ref:IsBound and Unbind for Records}{27.5}
+\makelabel{ref:Record Access Operations}{27.6}
+\makelabel{ref:NameRNam}{27.6.1}
+\makelabel{ref:RNamObj}{27.6.2}
+\makelabel{ref:RNamObj}{27.6.2}
+\makelabel{ref:record component!operation}{27.6.3}
+\makelabel{ref:record boundness test!operation}{27.6.3}
+\makelabel{ref:record assignment!operation}{27.6.3}
+\makelabel{ref:record unbind!operation}{27.6.3}
+\makelabel{ref:Collections}{28}
+\makelabel{ref:IsCollection}{28}
+\makelabel{ref:Collection Families}{28.1}
+\makelabel{ref:CollectionsFamily}{28.1.1}
+\makelabel{ref:IsCollectionFamily}{28.1.2}
+\makelabel{ref:ElementsFamily}{28.1.3}
+\makelabel{ref:CategoryCollections}{28.1.4}
+\makelabel{ref:Lists and Collections}{28.2}
+\makelabel{ref:IsListOrCollection}{28.2.1}
+\makelabel{ref:Enumerator}{28.2.2}
+\makelabel{ref:Enumerator}{28.2.2}
+\makelabel{ref:EnumeratorSorted}{28.2.3}
+\makelabel{ref:EnumeratorSorted}{28.2.3}
+\makelabel{ref:EnumeratorByFunctions}{28.2.4}
+\makelabel{ref:EnumeratorByFunctions}{28.2.4}
+\makelabel{ref:SortedList}{28.2.5}
+\makelabel{ref:SortedList}{28.2.5}
+\makelabel{ref:SSortedList}{28.2.6}
+\makelabel{ref:SSortedList}{28.2.6}
+\makelabel{ref:Set}{28.2.6}
+\makelabel{ref:AsList}{28.2.7}
+\makelabel{ref:AsList}{28.2.7}
+\makelabel{ref:AsSortedList}{28.2.8}
+\makelabel{ref:AsSortedList}{28.2.8}
+\makelabel{ref:AsSSortedList}{28.2.9}
+\makelabel{ref:AsSSortedList}{28.2.9}
+\makelabel{ref:AsSet}{28.2.9}
+\makelabel{ref:Elements}{28.2.10}
+\makelabel{ref:Attributes and Properties for Collections}{28.3}
+\makelabel{ref:IsEmpty}{28.3.1}
+\makelabel{ref:IsEmpty}{28.3.1}
+\makelabel{ref:IsFinite}{28.3.2}
+\makelabel{ref:IsTrivial}{28.3.3}
+\makelabel{ref:IsNonTrivial}{28.3.4}
+\makelabel{ref:IsWholeFamily}{28.3.5}
+\makelabel{ref:Size}{28.3.6}
+\makelabel{ref:Size}{28.3.6}
+\makelabel{ref:Representative}{28.3.7}
+\makelabel{ref:RepresentativeSmallest}{28.3.8}
+\makelabel{ref:Operations for Collections}{28.4}
+\makelabel{ref:IsSubset}{28.4.1}
+\makelabel{ref:Intersection}{28.4.2}
+\makelabel{ref:Intersection}{28.4.2}
+\makelabel{ref:Intersection2}{28.4.2}
+\makelabel{ref:Union}{28.4.3}
+\makelabel{ref:Union}{28.4.3}
+\makelabel{ref:Union2}{28.4.3}
+\makelabel{ref:Difference}{28.4.4}
+\makelabel{ref:Membership Test for Collections}{28.5}
+\makelabel{ref:in!for collections}{28.5.1}
+\makelabel{ref:in!operation for}{28.5.1}
+\makelabel{ref:Random Elements}{28.6}
+\makelabel{ref:Random}{28.6.1}
+\makelabel{ref:Random}{28.6.1}
+\makelabel{ref:StateRandom}{28.6.2}
+\makelabel{ref:RestoreStateRandom}{28.6.2}
+\makelabel{ref:PseudoRandom}{28.6.3}
+\makelabel{ref:PseudoRandom}{28.6.3}
+\makelabel{ref:RandomList}{28.6.4}
+\makelabel{ref:Iterators}{28.7}
+\makelabel{ref:Iterator}{28.7.1}
+\makelabel{ref:Iterator}{28.7.1}
+\makelabel{ref:IteratorSorted}{28.7.2}
+\makelabel{ref:IteratorSorted}{28.7.2}
+\makelabel{ref:IsIterator}{28.7.3}
+\makelabel{ref:IsDoneIterator}{28.7.4}
+\makelabel{ref:NextIterator}{28.7.5}
+\makelabel{ref:IteratorList}{28.7.6}
+\makelabel{ref:TrivialIterator}{28.7.7}
+\makelabel{ref:IteratorByFunctions}{28.7.8}
+\makelabel{ref:Orderings}{29}
+\makelabel{ref:IsOrdering}{29}
+\makelabel{ref:OrderingsFamily}{29}
+\makelabel{ref:Building new orderings}{29.1}
+\makelabel{ref:OrderingByLessThanFunctionNC}{29.1.1}
+\makelabel{ref:OrderingByLessThanFunctionNC}{29.1.1}
+\makelabel{ref:OrderingByLessThanOrEqualFunctionNC}{29.1.2}
+\makelabel{ref:OrderingByLessThanOrEqualFunctionNC}{29.1.2}
+\makelabel{ref:Properties and basic functionality}{29.2}
+\makelabel{ref:IsWellFoundedOrdering}{29.2.1}
+\makelabel{ref:IsTotalOrdering}{29.2.2}
+\makelabel{ref:IsIncomparableUnder}{29.2.3}
+\makelabel{ref:FamilyForOrdering}{29.2.4}
+\makelabel{ref:LessThanFunction}{29.2.5}
+\makelabel{ref:LessThanOrEqualFunction}{29.2.6}
+\makelabel{ref:IsLessThanUnder}{29.2.7}
+\makelabel{ref:IsLessThanOrEqualUnder}{29.2.8}
+\makelabel{ref:Orderings on families of associative words}{29.3}
+\makelabel{ref:IsOrderingOnFamilyOfAssocWords}{29.3.1}
+\makelabel{ref:IsTranslationInvariantOrdering}{29.3.2}
+\makelabel{ref:IsReductionOrdering}{29.3.3}
+\makelabel{ref:OrderingOnGenerators}{29.3.4}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:LexicographicOrdering}{29.3.5}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:ShortLexOrdering}{29.3.6}
+\makelabel{ref:IsShortLexOrdering}{29.3.7}
+\makelabel{ref:WeightLexOrdering}{29.3.8}
+\makelabel{ref:WeightLexOrdering}{29.3.8}
+\makelabel{ref:WeightLexOrdering}{29.3.8}
+\makelabel{ref:WeightLexOrdering}{29.3.8}
+\makelabel{ref:IsWeightLexOrdering}{29.3.9}
+\makelabel{ref:WeightOfGenerators}{29.3.10}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:BasicWreathProductOrdering}{29.3.11}
+\makelabel{ref:IsBasicWreathProductOrdering}{29.3.12}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:WreathProductOrdering}{29.3.13}
+\makelabel{ref:IsWreathProductOrdering}{29.3.14}
+\makelabel{ref:LevelsOfGenerators}{29.3.15}
+\makelabel{ref:Domains and their Elements}{30}
+\makelabel{ref:Operational Structure of Domains}{30.1}
+\makelabel{ref:Equality and Comparison of Domains}{30.2}
+\makelabel{ref:Constructing Domains}{30.3}
+\makelabel{ref:Struct}{30.3.1}
+\makelabel{ref:IsGeneratorsOfStruct}{30.3.2}
+\makelabel{ref:GeneratorsOfStruct}{30.3.3}
+\makelabel{ref:StructByGenerators}{30.3.4}
+\makelabel{ref:StructWithGenerators}{30.3.5}
+\makelabel{ref:ClosureStruct}{30.3.6}
+\makelabel{ref:Changing the Structure}{30.4}
+\makelabel{ref:AsStruct}{30.4.1}
+\makelabel{ref:Changing the Representation}{30.5}
+\makelabel{ref:IsomorphismRepStruct}{30.5.1}
+\makelabel{ref:Domain Categories}{30.6}
+\makelabel{ref:IsStruct}{30.6.1}
+\makelabel{ref:Parents}{30.7}
+\makelabel{ref:Parent}{30.7.1}
+\makelabel{ref:SetParent}{30.7.1}
+\makelabel{ref:HasParent}{30.7.1}
+\makelabel{ref:Constructing Subdomains}{30.8}
+\makelabel{ref:Substruct}{30.8.1}
+\makelabel{ref:SubstructNC}{30.8.2}
+\makelabel{ref:AsSubstruct}{30.8.3}
+\makelabel{ref:IsSubstruct}{30.8.4}
+\makelabel{ref:Operations for Domains}{30.9}
+\makelabel{ref:IsGeneralizedDomain}{30.9.1}
+\makelabel{ref:IsDomain}{30.9.1}
+\makelabel{ref:GeneratorsOfDomain}{30.9.2}
+\makelabel{ref:Domain}{30.9.3}
+\makelabel{ref:DomainByGenerators}{30.9.3}
+\makelabel{ref:Attributes and Properties of Elements}{30.10}
+\makelabel{ref:Characteristic}{30.10.1}
+\makelabel{ref:OneImmutable}{30.10.2}
+\makelabel{ref:OneAttr}{30.10.2}
+\makelabel{ref:One}{30.10.2}
+\makelabel{ref:Identity}{30.10.2}
+\makelabel{ref:OneMutable}{30.10.2}
+\makelabel{ref:OneOp}{30.10.2}
+\makelabel{ref:OneSameMutability}{30.10.2}
+\makelabel{ref:OneSM}{30.10.2}
+\makelabel{ref:ZeroImmutable}{30.10.3}
+\makelabel{ref:ZeroAttr}{30.10.3}
+\makelabel{ref:Zero}{30.10.3}
+\makelabel{ref:ZeroMutable}{30.10.3}
+\makelabel{ref:ZeroOp}{30.10.3}
+\makelabel{ref:ZeroSameMutability}{30.10.3}
+\makelabel{ref:ZeroSM}{30.10.3}
+\makelabel{ref:MultiplicativeZeroOp}{30.10.4}
+\makelabel{ref:IsOne}{30.10.5}
+\makelabel{ref:IsZero}{30.10.6}
+\makelabel{ref:IsIdempotent}{30.10.7}
+\makelabel{ref:InverseImmutable}{30.10.8}
+\makelabel{ref:InverseAttr}{30.10.8}
+\makelabel{ref:Inverse}{30.10.8}
+\makelabel{ref:InverseMutable}{30.10.8}
+\makelabel{ref:InverseOp}{30.10.8}
+\makelabel{ref:InverseSameMutability}{30.10.8}
+\makelabel{ref:InverseSM}{30.10.8}
+\makelabel{ref:AdditiveInverseImmutable}{30.10.9}
+\makelabel{ref:AdditiveInverseAttr}{30.10.9}
+\makelabel{ref:AdditiveInverse}{30.10.9}
+\makelabel{ref:AdditiveInverseMutable}{30.10.9}
+\makelabel{ref:AdditiveInverseOp}{30.10.9}
+\makelabel{ref:AdditiveInverseSameMutability}{30.10.9}
+\makelabel{ref:AdditiveInverseSM}{30.10.9}
+\makelabel{ref:Order}{30.10.10}
+\makelabel{ref:Comparison Operations for Elements}{30.11}
+\makelabel{ref:equality!operation}{30.11.1}
+\makelabel{ref:comparison!operation}{30.11.1}
+\makelabel{ref:CanEasilyCompareElements}{30.11.2}
+\makelabel{ref:CanEasilyCompareElementsFamily}{30.11.2}
+\makelabel{ref:CanEasilySortElements}{30.11.2}
+\makelabel{ref:CanEasilySortElementsFamily}{30.11.2}
+\makelabel{ref:Arithmetic Operations for Elements}{30.12}
+\makelabel{ref:addition!operation}{30.12.1}
+\makelabel{ref:multiplication!operation}{30.12.1}
+\makelabel{ref:division!operation}{30.12.1}
+\makelabel{ref:exponentiation!operation}{30.12.1}
+\makelabel{ref:remainder!operation}{30.12.1}
+\makelabel{ref:LeftQuotient}{30.12.2}
+\makelabel{ref:Comm}{30.12.3}
+\makelabel{ref:LieBracket}{30.12.4}
+\makelabel{ref:Sqrt}{30.12.5}
+\makelabel{ref:Relations Between Domains}{30.13}
+\makelabel{ref:UseSubsetRelation}{30.13.1}
+\makelabel{ref:UseIsomorphismRelation}{30.13.2}
+\makelabel{ref:UseFactorRelation}{30.13.3}
+\makelabel{ref:InstallSubsetMaintenance}{30.13.4}
+\makelabel{ref:InstallIsomorphismMaintenance}{30.13.5}
+\makelabel{ref:InstallFactorMaintenance}{30.13.6}
+\makelabel{ref:Useful Categories of Elements}{30.14}
+\makelabel{ref:IsExtAElement}{30.14.1}
+\makelabel{ref:IsNearAdditiveElement}{30.14.2}
+\makelabel{ref:IsAdditiveElement}{30.14.3}
+\makelabel{ref:IsNearAdditiveElementWithZero}{30.14.4}
+\makelabel{ref:IsAdditiveElementWithZero}{30.14.5}
+\makelabel{ref:IsNearAdditiveElementWithInverse}{30.14.6}
+\makelabel{ref:IsAdditiveElementWithInverse}{30.14.7}
+\makelabel{ref:IsExtLElement}{30.14.8}
+\makelabel{ref:IsExtRElement}{30.14.9}
+\makelabel{ref:IsMultiplicativeElement}{30.14.10}
+\makelabel{ref:IsMultiplicativeElementWithOne}{30.14.11}
+\makelabel{ref:IsMultiplicativeElementWithZero}{30.14.12}
+\makelabel{ref:IsMultiplicativeElementWithInverse}{30.14.13}
+\makelabel{ref:IsVector}{30.14.14}
+\makelabel{ref:IsNearRingElement}{30.14.15}
+\makelabel{ref:IsRingElement}{30.14.16}
+\makelabel{ref:IsNearRingElementWithOne}{30.14.17}
+\makelabel{ref:IsRingElementWithOne}{30.14.18}
+\makelabel{ref:IsNearRingElementWithInverse}{30.14.19}
+\makelabel{ref:IsRingElementWithInverse}{30.14.20}
+\makelabel{ref:IsScalar}{30.14.20}
+\makelabel{ref:Useful Categories for all Elements of a Family}{30.15}
+\makelabel{ref:IsAssociativeElement}{30.15.1}
+\makelabel{ref:IsAssociativeElementCollection}{30.15.1}
+\makelabel{ref:IsAssociativeElementCollColl}{30.15.1}
+\makelabel{ref:IsAdditivelyCommutativeElement}{30.15.2}
+\makelabel{ref:IsAdditivelyCommutativeElementCollection}{30.15.2}
+\makelabel{ref:IsAdditivelyCommutativeElementCollColl}{30.15.2}
+\makelabel{ref:IsAdditivelyCommutativeElementFamily}{30.15.2}
+\makelabel{ref:IsCommutativeElement}{30.15.3}
+\makelabel{ref:IsCommutativeElementCollection}{30.15.3}
+\makelabel{ref:IsCommutativeElementCollColl}{30.15.3}
+\makelabel{ref:IsFiniteOrderElement}{30.15.4}
+\makelabel{ref:IsFiniteOrderElementCollection}{30.15.4}
+\makelabel{ref:IsFiniteOrderElementCollColl}{30.15.4}
+\makelabel{ref:IsJacobianElement}{30.15.5}
+\makelabel{ref:IsJacobianElementCollection}{30.15.5}
+\makelabel{ref:IsJacobianElementCollColl}{30.15.5}
+\makelabel{ref:IsZeroSquaredElement}{30.15.6}
+\makelabel{ref:IsZeroSquaredElementCollection}{30.15.6}
+\makelabel{ref:IsZeroSquaredElementCollColl}{30.15.6}
+\makelabel{ref:Mappings}{31}
+\makelabel{ref:IsTuple}{31}
+\makelabel{ref:Creating Mappings}{31.1}
+\makelabel{ref:GeneralMappingByElements}{31.1.1}
+\makelabel{ref:MappingByFunction}{31.1.2}
+\makelabel{ref:MappingByFunction}{31.1.2}
+\makelabel{ref:MappingByFunction}{31.1.2}
+\makelabel{ref:InverseGeneralMapping}{31.1.3}
+\makelabel{ref:CompositionMapping}{31.1.4}
+\makelabel{ref:CompositionMapping2}{31.1.5}
+\makelabel{ref:IsCompositionMappingRep}{31.1.6}
+\makelabel{ref:ConstituentsCompositionMapping}{31.1.7}
+\makelabel{ref:ZeroMapping}{31.1.8}
+\makelabel{ref:IdentityMapping}{31.1.9}
+\makelabel{ref:Embedding}{31.1.10}
+\makelabel{ref:Embedding}{31.1.10}
+\makelabel{ref:Projection}{31.1.11}
+\makelabel{ref:Projection}{31.1.11}
+\makelabel{ref:Projection}{31.1.11}
+\makelabel{ref:RestrictedMapping}{31.1.12}
+\makelabel{ref:Properties and Attributes of (General) Mappings}{31.2}
+\makelabel{ref:IsTotal}{31.2.1}
+\makelabel{ref:IsSingleValued}{31.2.2}
+\makelabel{ref:IsMapping}{31.2.3}
+\makelabel{ref:IsInjective}{31.2.4}
+\makelabel{ref:IsSurjective}{31.2.5}
+\makelabel{ref:IsBijective}{31.2.6}
+\makelabel{ref:Range}{31.2.7}
+\makelabel{ref:Source}{31.2.8}
+\makelabel{ref:UnderlyingRelation}{31.2.9}
+\makelabel{ref:UnderlyingGeneralMapping}{31.2.10}
+\makelabel{ref:Images under Mappings}{31.3}
+\makelabel{ref:ImagesSource}{31.3.1}
+\makelabel{ref:ImagesRepresentative}{31.3.2}
+\makelabel{ref:ImagesElm}{31.3.3}
+\makelabel{ref:ImagesSet}{31.3.4}
+\makelabel{ref:ImageElm}{31.3.5}
+\makelabel{ref:Image}{31.3.6}
+\makelabel{ref:Image}{31.3.6}
+\makelabel{ref:Image}{31.3.6}
+\makelabel{ref:Images}{31.3.7}
+\makelabel{ref:Images}{31.3.7}
+\makelabel{ref:Images}{31.3.7}
+\makelabel{ref:Preimages under Mappings}{31.4}
+\makelabel{ref:PreImagesRange}{31.4.1}
+\makelabel{ref:PreImagesElm}{31.4.2}
+\makelabel{ref:PreImageElm}{31.4.3}
+\makelabel{ref:PreImagesRepresentative}{31.4.4}
+\makelabel{ref:PreImagesSet}{31.4.5}
+\makelabel{ref:PreImage}{31.4.6}
+\makelabel{ref:PreImage}{31.4.6}
+\makelabel{ref:PreImage}{31.4.6}
+\makelabel{ref:PreImages}{31.4.7}
+\makelabel{ref:PreImages}{31.4.7}
+\makelabel{ref:PreImages}{31.4.7}
+\makelabel{ref:Arithmetic Operations for General Mappings}{31.5}
+\makelabel{ref:Mappings which are Compatible with Algebraic Structures}{31.6}
+\makelabel{ref:Magma Homomorphisms}{31.7}
+\makelabel{ref:IsMagmaHomomorphism}{31.7.1}
+\makelabel{ref:MagmaHomomorphismByFunctionNC}{31.7.2}
+\makelabel{ref:NaturalHomomorphismByGenerators}{31.7.3}
+\makelabel{ref:Mappings that Respect Multiplication}{31.8}
+\makelabel{ref:RespectsMultiplication}{31.8.1}
+\makelabel{ref:RespectsOne}{31.8.2}
+\makelabel{ref:RespectsInverses}{31.8.3}
+\makelabel{ref:IsGroupGeneralMapping}{31.8.4}
+\makelabel{ref:IsGroupHomomorphism}{31.8.4}
+\makelabel{ref:KernelOfMultiplicativeGeneralMapping}{31.8.5}
+\makelabel{ref:CoKernelOfMultiplicativeGeneralMapping}{31.8.6}
+\makelabel{ref:Mappings that Respect Addition}{31.9}
+\makelabel{ref:RespectsAddition}{31.9.1}
+\makelabel{ref:RespectsAdditiveInverses}{31.9.2}
+\makelabel{ref:RespectsZero}{31.9.3}
+\makelabel{ref:IsAdditiveGroupGeneralMapping}{31.9.4}
+\makelabel{ref:IsAdditiveGroupHomomorphism}{31.9.4}
+\makelabel{ref:KernelOfAdditiveGeneralMapping}{31.9.5}
+\makelabel{ref:CoKernelOfAdditiveGeneralMapping}{31.9.6}
+\makelabel{ref:Linear Mappings}{31.10}
+\makelabel{ref:RespectsScalarMultiplication}{31.10.1}
+\makelabel{ref:IsLeftModuleGeneralMapping}{31.10.2}
+\makelabel{ref:IsLeftModuleHomomorphism}{31.10.2}
+\makelabel{ref:IsLinearMapping}{31.10.3}
+\makelabel{ref:Ring Homomorphisms}{31.11}
+\makelabel{ref:IsRingGeneralMapping}{31.11.1}
+\makelabel{ref:IsRingHomomorphism}{31.11.1}
+\makelabel{ref:IsRingWithOneGeneralMapping}{31.11.2}
+\makelabel{ref:IsRingWithOneHomomorphism}{31.11.2}
+\makelabel{ref:IsAlgebraGeneralMapping}{31.11.3}
+\makelabel{ref:IsAlgebraHomomorphism}{31.11.3}
+\makelabel{ref:IsAlgebraWithOneGeneralMapping}{31.11.4}
+\makelabel{ref:IsAlgebraWithOneHomomorphism}{31.11.4}
+\makelabel{ref:IsFieldHomomorphism}{31.11.5}
+\makelabel{ref:General Mappings}{31.12}
+\makelabel{ref:IsGeneralMapping}{31.12.1}
+\makelabel{ref:IsConstantTimeAccessGeneralMapping}{31.12.2}
+\makelabel{ref:IsEndoGeneralMapping}{31.12.3}
+\makelabel{ref:Technical Matters Concerning General Mappings}{31.13}
+\makelabel{ref:IsSPGeneralMapping}{31.13.1}
+\makelabel{ref:IsNonSPGeneralMapping}{31.13.1}
+\makelabel{ref:IsGeneralMappingFamily}{31.13.2}
+\makelabel{ref:FamilyRange}{31.13.3}
+\makelabel{ref:FamilySource}{31.13.4}
+\makelabel{ref:FamiliesOfGeneralMappingsAndRanges}{31.13.5}
+\makelabel{ref:GeneralMappingsFamily}{31.13.6}
+\makelabel{ref:TypeOfDefaultGeneralMapping}{31.13.7}
+\makelabel{ref:Relations}{32}
+\makelabel{ref:General Binary Relations}{32.1}
+\makelabel{ref:IsBinaryRelation}{32.1.1}
+\makelabel{ref:BinaryRelationByElements}{32.1.2}
+\makelabel{ref:IdentityBinaryRelation}{32.1.3}
+\makelabel{ref:IdentityBinaryRelation}{32.1.3}
+\makelabel{ref:EmptyBinaryRelation}{32.1.4}
+\makelabel{ref:EmptyBinaryRelation}{32.1.4}
+\makelabel{ref:Properties and Attributes of Binary Relations}{32.2}
+\makelabel{ref:IsReflexiveBinaryRelation}{32.2.1}
+\makelabel{ref:IsSymmetricBinaryRelation}{32.2.2}
+\makelabel{ref:IsTransitiveBinaryRelation}{32.2.3}
+\makelabel{ref:IsAntisymmetricBinaryRelation}{32.2.4}
+\makelabel{ref:IsPreOrderBinaryRelation}{32.2.5}
+\makelabel{ref:IsPartialOrderBinaryRelation}{32.2.6}
+\makelabel{ref:IsHasseDiagram}{32.2.7}
+\makelabel{ref:IsEquivalenceRelation}{32.2.8}
+\makelabel{ref:Successors}{32.2.9}
+\makelabel{ref:DegreeOfBinaryRelation}{32.2.10}
+\makelabel{ref:PartialOrderOfHasseDiagram}{32.2.11}
+\makelabel{ref:Binary Relations on Points}{32.3}
+\makelabel{ref:BinaryRelationOnPoints}{32.3.1}
+\makelabel{ref:BinaryRelationOnPointsNC}{32.3.1}
+\makelabel{ref:RandomBinaryRelationOnPoints}{32.3.2}
+\makelabel{ref:AsBinaryRelationOnPoints}{32.3.3}
+\makelabel{ref:AsBinaryRelationOnPoints}{32.3.3}
+\makelabel{ref:AsBinaryRelationOnPoints}{32.3.3}
+\makelabel{ref:Closure Operations and Other Constructors}{32.4}
+\makelabel{ref:ReflexiveClosureBinaryRelation}{32.4.1}
+\makelabel{ref:SymmetricClosureBinaryRelation}{32.4.2}
+\makelabel{ref:TransitiveClosureBinaryRelation}{32.4.3}
+\makelabel{ref:HasseDiagramBinaryRelation}{32.4.4}
+\makelabel{ref:StronglyConnectedComponents}{32.4.5}
+\makelabel{ref:PartialOrderByOrderingFunction}{32.4.6}
+\makelabel{ref:Equivalence Relations}{32.5}
+\makelabel{ref:EquivalenceRelationByPartition}{32.5.1}
+\makelabel{ref:EquivalenceRelationByPartitionNC}{32.5.1}
+\makelabel{ref:EquivalenceRelationByRelation}{32.5.2}
+\makelabel{ref:EquivalenceRelationByPairs}{32.5.3}
+\makelabel{ref:EquivalenceRelationByPairsNC}{32.5.3}
+\makelabel{ref:EquivalenceRelationByProperty}{32.5.4}
+\makelabel{ref:Attributes of and Operations on Equivalence Relations}{32.6}
+\makelabel{ref:EquivalenceRelationPartition}{32.6.1}
+\makelabel{ref:GeneratorsOfEquivalenceRelationPartition}{32.6.2}
+\makelabel{ref:JoinEquivalenceRelations}{32.6.3}
+\makelabel{ref:MeetEquivalenceRelations}{32.6.3}
+\makelabel{ref:Equivalence Classes}{32.7}
+\makelabel{ref:IsEquivalenceClass}{32.7.1}
+\makelabel{ref:EquivalenceClassRelation}{32.7.2}
+\makelabel{ref:EquivalenceClasses!attribute}{32.7.3}
+\makelabel{ref:EquivalenceClassOfElement}{32.7.4}
+\makelabel{ref:EquivalenceClassOfElementNC}{32.7.4}
+\makelabel{ref:Magmas}{33}
+\makelabel{ref:Magma Categories}{33.1}
+\makelabel{ref:IsMagma}{33.1.1}
+\makelabel{ref:IsMagmaWithOne}{33.1.2}
+\makelabel{ref:IsMagmaWithInversesIfNonzero}{33.1.3}
+\makelabel{ref:IsMagmaWithInverses}{33.1.4}
+\makelabel{ref:Magma Generation}{33.2}
+\makelabel{ref:Magma}{33.2.1}
+\makelabel{ref:Magma}{33.2.1}
+\makelabel{ref:MagmaWithOne}{33.2.2}
+\makelabel{ref:MagmaWithOne}{33.2.2}
+\makelabel{ref:MagmaWithInverses}{33.2.3}
+\makelabel{ref:MagmaWithInverses}{33.2.3}
+\makelabel{ref:MagmaByGenerators}{33.2.4}
+\makelabel{ref:MagmaByGenerators}{33.2.4}
+\makelabel{ref:MagmaWithOneByGenerators}{33.2.5}
+\makelabel{ref:MagmaWithOneByGenerators}{33.2.5}
+\makelabel{ref:MagmaWithInversesByGenerators}{33.2.6}
+\makelabel{ref:MagmaWithInversesByGenerators}{33.2.6}
+\makelabel{ref:Submagma}{33.2.7}
+\makelabel{ref:SubmagmaNC}{33.2.7}
+\makelabel{ref:SubmagmaWithOne}{33.2.8}
+\makelabel{ref:SubmagmaWithOneNC}{33.2.8}
+\makelabel{ref:SubmagmaWithInverses}{33.2.9}
+\makelabel{ref:SubmagmaWithInversesNC}{33.2.9}
+\makelabel{ref:AsMagma}{33.2.10}
+\makelabel{ref:AsSubmagma}{33.2.11}
+\makelabel{ref:InjectionZeroMagma}{33.2.12}
+\makelabel{ref:Magmas Defined by Multiplication Tables}{33.3}
+\makelabel{ref:MagmaByMultiplicationTable}{33.3.1}
+\makelabel{ref:MagmaWithOneByMultiplicationTable}{33.3.2}
+\makelabel{ref:MagmaWithInversesByMultiplicationTable}{33.3.3}
+\makelabel{ref:MagmaElement}{33.3.4}
+\makelabel{ref:MultiplicationTable}{33.3.5}
+\makelabel{ref:Attributes and Properties for Magmas}{33.4}
+\makelabel{ref:GeneratorsOfMagma}{33.4.1}
+\makelabel{ref:GeneratorsOfMagmaWithOne}{33.4.2}
+\makelabel{ref:GeneratorsOfMagmaWithInverses}{33.4.3}
+\makelabel{ref:Centralizer}{33.4.4}
+\makelabel{ref:Centralizer}{33.4.4}
+\makelabel{ref:Centralizer}{33.4.4}
+\makelabel{ref:Centre}{33.4.5}
+\makelabel{ref:Center}{33.4.5}
+\makelabel{ref:Idempotents}{33.4.6}
+\makelabel{ref:IsAssociative}{33.4.7}
+\makelabel{ref:IsCentral}{33.4.8}
+\makelabel{ref:IsCommutative}{33.4.9}
+\makelabel{ref:IsAbelian}{33.4.9}
+\makelabel{ref:MultiplicativeNeutralElement}{33.4.10}
+\makelabel{ref:MultiplicativeZero}{33.4.11}
+\makelabel{ref:IsMultiplicativeZero}{33.4.12}
+\makelabel{ref:SquareRoots}{33.4.13}
+\makelabel{ref:TrivialSubmagmaWithOne}{33.4.14}
+\makelabel{ref:Words}{34}
+\makelabel{ref:Categories of Words and Nonassociative Words}{34.1}
+\makelabel{ref:IsWord}{34.1.1}
+\makelabel{ref:IsWordWithOne}{34.1.1}
+\makelabel{ref:IsWordWithInverse}{34.1.1}
+\makelabel{ref:IsWordCollection}{34.1.2}
+\makelabel{ref:IsNonassocWord}{34.1.3}
+\makelabel{ref:IsNonassocWordWithOne}{34.1.3}
+\makelabel{ref:IsNonassocWordCollection}{34.1.4}
+\makelabel{ref:IsNonassocWordWithOneCollection}{34.1.4}
+\makelabel{ref:Comparison of Words}{34.2}
+\makelabel{ref:equality!nonassociative words}{34.2.1}
+\makelabel{ref:smaller!nonassociative words}{34.2.2}
+\makelabel{ref:Operations for Words}{34.3}
+\makelabel{ref:MappedWord}{34.3.1}
+\makelabel{ref:Free Magmas}{34.4}
+\makelabel{ref:FreeMagma}{34.4.1}
+\makelabel{ref:FreeMagma}{34.4.1}
+\makelabel{ref:FreeMagma}{34.4.1}
+\makelabel{ref:FreeMagma}{34.4.1}
+\makelabel{ref:FreeMagma}{34.4.1}
+\makelabel{ref:FreeMagmaWithOne}{34.4.2}
+\makelabel{ref:FreeMagmaWithOne}{34.4.2}
+\makelabel{ref:FreeMagmaWithOne}{34.4.2}
+\makelabel{ref:FreeMagmaWithOne}{34.4.2}
+\makelabel{ref:FreeMagmaWithOne}{34.4.2}
+\makelabel{ref:External Representation for Nonassociative Words}{34.5}
+\makelabel{ref:Associative Words}{35}
+\makelabel{ref:Categories of Associative Words}{35.1}
+\makelabel{ref:IsAssocWord}{35.1.1}
+\makelabel{ref:IsAssocWordWithOne}{35.1.1}
+\makelabel{ref:IsAssocWordWithInverse}{35.1.1}
+\makelabel{ref:Free Groups, Monoids and Semigroups}{35.2}
+\makelabel{ref:FreeGroup}{35.2.1}
+\makelabel{ref:FreeGroup}{35.2.1}
+\makelabel{ref:FreeGroup}{35.2.1}
+\makelabel{ref:FreeGroup}{35.2.1}
+\makelabel{ref:FreeGroup}{35.2.1}
+\makelabel{ref:IsFreeGroup}{35.2.2}
+\makelabel{ref:FreeMonoid!with example}{35.2.3}
+\makelabel{ref:FreeMonoid!with example}{35.2.3}
+\makelabel{ref:FreeMonoid!with example}{35.2.3}
+\makelabel{ref:FreeMonoid!with example}{35.2.3}
+\makelabel{ref:FreeMonoid!with example}{35.2.3}
+\makelabel{ref:FreeSemigroup}{35.2.4}
+\makelabel{ref:FreeSemigroup}{35.2.4}
+\makelabel{ref:FreeSemigroup}{35.2.4}
+\makelabel{ref:FreeSemigroup}{35.2.4}
+\makelabel{ref:FreeSemigroup}{35.2.4}
+\makelabel{ref:AssignGeneratorVariables}{35.2.5}
+\makelabel{ref:Comparison of Associative Words}{35.3}
+\makelabel{ref:equality!associative words}{35.3.1}
+\makelabel{ref:smaller!associative words}{35.3.2}
+\makelabel{ref:IsShortLexLessThanOrEqual}{35.3.3}
+\makelabel{ref:IsBasicWreathLessThanOrEqual}{35.3.4}
+\makelabel{ref:Operations for Associative Words}{35.4}
+\makelabel{ref:Length!of an associative word}{35.4.1}
+\makelabel{ref:ExponentSumWord}{35.4.2}
+\makelabel{ref:Subword}{35.4.3}
+\makelabel{ref:PositionWord}{35.4.4}
+\makelabel{ref:SubstitutedWord}{35.4.5}
+\makelabel{ref:SubstitutedWord}{35.4.5}
+\makelabel{ref:EliminatedWord}{35.4.6}
+\makelabel{ref:Operations for Associative Words by their Syllables}{35.5}
+\makelabel{ref:NumberSyllables}{35.5.1}
+\makelabel{ref:ExponentSyllable}{35.5.2}
+\makelabel{ref:GeneratorSyllable}{35.5.3}
+\makelabel{ref:SubSyllables}{35.5.4}
+\makelabel{ref:Representations for Associative Words}{35.6}
+\makelabel{ref:IsLetterAssocWordRep}{35.6.1}
+\makelabel{ref:IsLetterWordsFamily}{35.6.2}
+\makelabel{ref:IsBLetterAssocWordRep}{35.6.3}
+\makelabel{ref:IsWLetterAssocWordRep}{35.6.3}
+\makelabel{ref:IsBLetterWordsFamily}{35.6.4}
+\makelabel{ref:IsWLetterWordsFamily}{35.6.4}
+\makelabel{ref:IsSyllableAssocWordRep}{35.6.5}
+\makelabel{ref:IsSyllableWordsFamily}{35.6.6}
+\makelabel{ref:Is8BitsFamily}{35.6.7}
+\makelabel{ref:Is16BitsFamily}{35.6.7}
+\makelabel{ref:Is32BitsFamily}{35.6.7}
+\makelabel{ref:IsInfBitsFamily}{35.6.7}
+\makelabel{ref:LetterRepAssocWord}{35.6.8}
+\makelabel{ref:LetterRepAssocWord}{35.6.8}
+\makelabel{ref:AssocWordByLetterRep}{35.6.9}
+\makelabel{ref:The External Representation for Associative Words}{35.7}
+\makelabel{ref:Straight Line Programs}{35.8}
+\makelabel{ref:IsStraightLineProgram}{35.8.1}
+\makelabel{ref:StraightLineProgram}{35.8.2}
+\makelabel{ref:StraightLineProgram}{35.8.2}
+\makelabel{ref:StraightLineProgramNC}{35.8.2}
+\makelabel{ref:StraightLineProgramNC}{35.8.2}
+\makelabel{ref:LinesOfStraightLineProgram}{35.8.3}
+\makelabel{ref:NrInputsOfStraightLineProgram}{35.8.4}
+\makelabel{ref:ResultOfStraightLineProgram}{35.8.5}
+\makelabel{ref:StringOfResultOfStraightLineProgram}{35.8.6}
+\makelabel{ref:CompositionOfStraightLinePrograms}{35.8.7}
+\makelabel{ref:IntegratedStraightLineProgram}{35.8.8}
+\makelabel{ref:Straight Line Program Elements}{35.9}
+\makelabel{ref:IsStraightLineProgElm}{35.9.1}
+\makelabel{ref:StraightLineProgElm}{35.9.2}
+\makelabel{ref:StraightLineProgGens}{35.9.3}
+\makelabel{ref:EvalStraightLineProgElm}{35.9.4}
+\makelabel{ref:StretchImportantSLPElement}{35.9.5}
+\makelabel{ref:Rewriting Systems}{36}
+\makelabel{ref:Operations on rewriting systems}{36.1}
+\makelabel{ref:IsRewritingSystem}{36.1.1}
+\makelabel{ref:Rules}{36.1.2}
+\makelabel{ref:OrderOfRewritingSystem}{36.1.3}
+\makelabel{ref:OrderingOfRewritingSystem}{36.1.3}
+\makelabel{ref:ReducedForm}{36.1.4}
+\makelabel{ref:IsConfluent}{36.1.5}
+\makelabel{ref:IsConfluent}{36.1.5}
+\makelabel{ref:ConfluentRws}{36.1.6}
+\makelabel{ref:IsReduced}{36.1.7}
+\makelabel{ref:ReduceRules}{36.1.8}
+\makelabel{ref:AddRule}{36.1.9}
+\makelabel{ref:AddRuleReduced}{36.1.10}
+\makelabel{ref:MakeConfluent}{36.1.11}
+\makelabel{ref:GeneratorsOfRws}{36.1.12}
+\makelabel{ref:AddGenerators}{36.1.13}
+\makelabel{ref:Operations on elements of the algebra}{36.2}
+\makelabel{ref:ReducedProduct}{36.2.1}
+\makelabel{ref:ReducedSum}{36.2.2}
+\makelabel{ref:ReducedOne}{36.2.3}
+\makelabel{ref:ReducedAdditiveInverse}{36.2.4}
+\makelabel{ref:ReducedComm}{36.2.5}
+\makelabel{ref:ReducedConjugate}{36.2.6}
+\makelabel{ref:ReducedDifference}{36.2.7}
+\makelabel{ref:ReducedInverse}{36.2.8}
+\makelabel{ref:ReducedLeftQuotient}{36.2.9}
+\makelabel{ref:ReducedPower}{36.2.10}
+\makelabel{ref:ReducedQuotient}{36.2.11}
+\makelabel{ref:ReducedScalarProduct}{36.2.12}
+\makelabel{ref:ReducedZero}{36.2.13}
+\makelabel{ref:Properties of rewriting systems}{36.3}
+\makelabel{ref:IsBuiltFromAdditiveMagmaWithInverses}{36.3.1}
+\makelabel{ref:IsBuiltFromMagma}{36.3.2}
+\makelabel{ref:IsBuiltFromMagmaWithOne}{36.3.3}
+\makelabel{ref:IsBuiltFromMagmaWithInverses}{36.3.4}
+\makelabel{ref:IsBuiltFromSemigroup}{36.3.5}
+\makelabel{ref:IsBuiltFromGroup}{36.3.6}
+\makelabel{ref:Rewriting in Groups and Monoids}{36.4}
+\makelabel{ref:Developing rewriting systems}{36.5}
+\makelabel{ref:Groups}{37}
+\makelabel{ref:Group Elements}{37.1}
+\makelabel{ref:Creating Groups}{37.2}
+\makelabel{ref:Group}{37.2.1}
+\makelabel{ref:Group}{37.2.1}
+\makelabel{ref:Group}{37.2.1}
+\makelabel{ref:GroupWithGenerators}{37.2.2}
+\makelabel{ref:GroupWithGenerators}{37.2.2}
+\makelabel{ref:GeneratorsOfGroup}{37.2.3}
+\makelabel{ref:AsGroup}{37.2.4}
+\makelabel{ref:ConjugateGroup}{37.2.5}
+\makelabel{ref:IsGroup}{37.2.6}
+\makelabel{ref:InfoGroup}{37.2.7}
+\makelabel{ref:Subgroups}{37.3}
+\makelabel{ref:Subgroup}{37.3.1}
+\makelabel{ref:SubgroupNC}{37.3.1}
+\makelabel{ref:Index}{37.3.2}
+\makelabel{ref:IndexNC}{37.3.2}
+\makelabel{ref:IndexInWholeGroup}{37.3.3}
+\makelabel{ref:AsSubgroup}{37.3.4}
+\makelabel{ref:IsSubgroup}{37.3.5}
+\makelabel{ref:IsNormal}{37.3.6}
+\makelabel{ref:IsCharacteristicSubgroup}{37.3.7}
+\makelabel{ref:ConjugateSubgroup}{37.3.8}
+\makelabel{ref:ConjugateSubgroups}{37.3.9}
+\makelabel{ref:IsSubnormal}{37.3.10}
+\makelabel{ref:SubgroupByProperty}{37.3.11}
+\makelabel{ref:SubgroupShell}{37.3.12}
+\makelabel{ref:Closures of (Sub)groups}{37.4}
+\makelabel{ref:ClosureGroup}{37.4.1}
+\makelabel{ref:ClosureGroupAddElm}{37.4.2}
+\makelabel{ref:ClosureGroupCompare}{37.4.2}
+\makelabel{ref:ClosureGroupIntest}{37.4.2}
+\makelabel{ref:ClosureGroupDefault}{37.4.3}
+\makelabel{ref:ClosureSubgroup}{37.4.4}
+\makelabel{ref:ClosureSubgroupNC}{37.4.4}
+\makelabel{ref:Expressing Group Elements as Words in Generators}{37.5}
+\makelabel{ref:Factorization}{37.5.1}
+\makelabel{ref:Cosets}{37.6}
+\makelabel{ref:RightCoset}{37.6.1}
+\makelabel{ref:RightCosets}{37.6.2}
+\makelabel{ref:RightCosetsNC}{37.6.2}
+\makelabel{ref:CanonicalRightCosetElement}{37.6.3}
+\makelabel{ref:IsRightCoset}{37.6.4}
+\makelabel{ref:Transversals}{37.7}
+\makelabel{ref:RightTransversal}{37.7.1}
+\makelabel{ref:Double Cosets}{37.8}
+\makelabel{ref:DoubleCoset}{37.8.1}
+\makelabel{ref:RepresentativesContainedRightCosets}{37.8.2}
+\makelabel{ref:DoubleCosets!operation}{37.8.3}
+\makelabel{ref:DoubleCosetsNC!operation}{37.8.3}
+\makelabel{ref:IsDoubleCoset}{37.8.4}
+\makelabel{ref:DoubleCosetRepsAndSizes}{37.8.5}
+\makelabel{ref:InfoCoset}{37.8.6}
+\makelabel{ref:Conjugacy Classes}{37.9}
+\makelabel{ref:ConjugacyClass}{37.9.1}
+\makelabel{ref:ConjugacyClasses!attribute}{37.9.2}
+\makelabel{ref:ConjugacyClassesByRandomSearch}{37.9.3}
+\makelabel{ref:ConjugacyClassesByOrbits}{37.9.4}
+\makelabel{ref:NrConjugacyClasses}{37.9.5}
+\makelabel{ref:RationalClass}{37.9.6}
+\makelabel{ref:RationalClasses}{37.9.7}
+\makelabel{ref:GaloisGroup!of rational class of a group}{37.9.8}
+\makelabel{ref:IsConjugate}{37.9.9}
+\makelabel{ref:IsConjugate}{37.9.9}
+\makelabel{ref:Normal Structure}{37.10}
+\makelabel{ref:Normalizer}{37.10.1}
+\makelabel{ref:Normalizer}{37.10.1}
+\makelabel{ref:Core}{37.10.2}
+\makelabel{ref:PCore}{37.10.3}
+\makelabel{ref:NormalClosure}{37.10.4}
+\makelabel{ref:NormalIntersection}{37.10.5}
+\makelabel{ref:Complementclasses}{37.10.6}
+\makelabel{ref:InfoComplement}{37.10.7}
+\makelabel{ref:Specific and Parametrized Subgroups}{37.11}
+\makelabel{ref:TrivialSubgroup}{37.11.1}
+\makelabel{ref:CommutatorSubgroup}{37.11.2}
+\makelabel{ref:DerivedSubgroup}{37.11.3}
+\makelabel{ref:CommutatorLength}{37.11.4}
+\makelabel{ref:FittingSubgroup}{37.11.5}
+\makelabel{ref:FrattiniSubgroup}{37.11.6}
+\makelabel{ref:PrefrattiniSubgroup}{37.11.7}
+\makelabel{ref:PerfectResiduum}{37.11.8}
+\makelabel{ref:RadicalGroup}{37.11.9}
+\makelabel{ref:Socle}{37.11.10}
+\makelabel{ref:SupersolvableResiduum}{37.11.11}
+\makelabel{ref:PRump}{37.11.12}
+\makelabel{ref:Sylow Subgroups and Hall Subgroups}{37.12}
+\makelabel{ref:SylowSubgroup}{37.12.1}
+\makelabel{ref:SylowComplement}{37.12.2}
+\makelabel{ref:HallSubgroup}{37.12.3}
+\makelabel{ref:SylowSystem}{37.12.4}
+\makelabel{ref:ComplementSystem}{37.12.5}
+\makelabel{ref:HallSystem}{37.12.6}
+\makelabel{ref:Subgroups characterized by prime powers}{37.13}
+\makelabel{ref:Omega}{37.13.1}
+\makelabel{ref:Agemo}{37.13.2}
+\makelabel{ref:Group Properties}{37.14}
+\makelabel{ref:IsCyclic}{37.14.1}
+\makelabel{ref:IsElementaryAbelian}{37.14.2}
+\makelabel{ref:IsNilpotentGroup}{37.14.3}
+\makelabel{ref:NilpotencyClassOfGroup}{37.14.4}
+\makelabel{ref:IsPerfectGroup}{37.14.5}
+\makelabel{ref:IsSolvableGroup}{37.14.6}
+\makelabel{ref:IsPolycyclicGroup}{37.14.7}
+\makelabel{ref:IsSupersolvableGroup}{37.14.8}
+\makelabel{ref:IsMonomialGroup}{37.14.9}
+\makelabel{ref:IsSimpleGroup}{37.14.10}
+\makelabel{ref:IsomorphismTypeInfoFiniteSimpleGroup}{37.14.11}
+\makelabel{ref:IsFinitelyGeneratedGroup}{37.14.12}
+\makelabel{ref:IsSubsetLocallyFiniteGroup}{37.14.13}
+\makelabel{ref:IsPGroup}{37.14.14}
+\makelabel{ref:PrimePGroup}{37.14.15}
+\makelabel{ref:PClassPGroup}{37.14.16}
+\makelabel{ref:RankPGroup}{37.14.17}
+\makelabel{ref:IsPSolvable}{37.14.18}
+\makelabel{ref:IsPNilpotent}{37.14.19}
+\makelabel{ref:Numerical Group Attributes}{37.15}
+\makelabel{ref:AbelianInvariants!for groups}{37.15.1}
+\makelabel{ref:Exponent}{37.15.2}
+\makelabel{ref:EulerianFunction}{37.15.3}
+\makelabel{ref:Subgroup Series}{37.16}
+\makelabel{ref:ChiefSeries}{37.16.1}
+\makelabel{ref:ChiefSeriesThrough}{37.16.2}
+\makelabel{ref:ChiefSeriesUnderAction}{37.16.3}
+\makelabel{ref:SubnormalSeries}{37.16.4}
+\makelabel{ref:CompositionSeries}{37.16.5}
+\makelabel{ref:DisplayCompositionSeries}{37.16.6}
+\makelabel{ref:DerivedSeriesOfGroup}{37.16.7}
+\makelabel{ref:DerivedLength}{37.16.8}
+\makelabel{ref:ElementaryAbelianSeries}{37.16.9}
+\makelabel{ref:ElementaryAbelianSeriesLargeSteps}{37.16.9}
+\makelabel{ref:ElementaryAbelianSeries}{37.16.9}
+\makelabel{ref:InvariantElementaryAbelianSeries}{37.16.10}
+\makelabel{ref:LowerCentralSeriesOfGroup}{37.16.11}
+\makelabel{ref:UpperCentralSeriesOfGroup}{37.16.12}
+\makelabel{ref:PCentralSeries}{37.16.13}
+\makelabel{ref:JenningsSeries}{37.16.14}
+\makelabel{ref:DimensionsLoewyFactors}{37.16.15}
+\makelabel{ref:AscendingChain}{37.16.16}
+\makelabel{ref:IntermediateGroup}{37.16.17}
+\makelabel{ref:IntermediateSubgroups}{37.16.18}
+\makelabel{ref:Factor Groups}{37.17}
+\makelabel{ref:NaturalHomomorphismByNormalSubgroup}{37.17.1}
+\makelabel{ref:NaturalHomomorphismByNormalSubgroupNC}{37.17.1}
+\makelabel{ref:FactorGroup}{37.17.2}
+\makelabel{ref:FactorGroupNC}{37.17.2}
+\makelabel{ref:CommutatorFactorGroup}{37.17.3}
+\makelabel{ref:MaximalAbelianQuotient}{37.17.4}
+\makelabel{ref:HasAbelianFactorGroup}{37.17.5}
+\makelabel{ref:HasElementaryAbelianFactorGroup}{37.17.6}
+\makelabel{ref:CentralizerModulo}{37.17.7}
+\makelabel{ref:Sets of Subgroups}{37.18}
+\makelabel{ref:ConjugacyClassSubgroups}{37.18.1}
+\makelabel{ref:IsConjugacyClassSubgroupsRep}{37.18.2}
+\makelabel{ref:IsConjugacyClassSubgroupsByStabilizerRep}{37.18.2}
+\makelabel{ref:ConjugacyClassesSubgroups}{37.18.3}
+\makelabel{ref:ConjugacyClassesMaximalSubgroups}{37.18.4}
+\makelabel{ref:MaximalSubgroupClassReps}{37.18.5}
+\makelabel{ref:MaximalSubgroups}{37.18.6}
+\makelabel{ref:NormalSubgroups}{37.18.7}
+\makelabel{ref:MaximalNormalSubgroups}{37.18.8}
+\makelabel{ref:MinimalNormalSubgroups}{37.18.9}
+\makelabel{ref:Subgroup Lattice}{37.19}
+\makelabel{ref:LatticeSubgroups}{37.19.1}
+\makelabel{ref:ClassElementLattice}{37.19.2}
+\makelabel{ref:MaximalSubgroupsLattice}{37.19.3}
+\makelabel{ref:MinimalSupergroupsLattice}{37.19.4}
+\makelabel{ref:RepresentativesPerfectSubgroups}{37.19.5}
+\makelabel{ref:RepresentativesSimpleSubgroups}{37.19.5}
+\makelabel{ref:ConjugacyClassesPerfectSubgroups}{37.19.6}
+\makelabel{ref:Zuppos}{37.19.7}
+\makelabel{ref:InfoLattice}{37.19.8}
+\makelabel{ref:Specific Methods for Subgroup Lattice Computations}{37.20}
+\makelabel{ref:LatticeByCyclicExtension}{37.20.1}
+\makelabel{ref:InvariantSubgroupsElementaryAbelianGroup}{37.20.2}
+\makelabel{ref:SubgroupsSolvableGroup}{37.20.3}
+\makelabel{ref:SizeConsiderFunction}{37.20.4}
+\makelabel{ref:ExactSizeConsiderFunction}{37.20.5}
+\makelabel{ref:InfoPcSubgroup}{37.20.6}
+\makelabel{ref:Special Generating Sets}{37.21}
+\makelabel{ref:GeneratorsSmallest}{37.21.1}
+\makelabel{ref:LargestElementGroup}{37.21.2}
+\makelabel{ref:MinimalGeneratingSet}{37.21.3}
+\makelabel{ref:SmallGeneratingSet}{37.21.4}
+\makelabel{ref:IndependentGeneratorsOfAbelianGroup}{37.21.5}
+\makelabel{ref:1-Cohomology}{37.22}
+\makelabel{ref:OneCocycles}{37.22.1}
+\makelabel{ref:OneCocycles}{37.22.1}
+\makelabel{ref:OneCocycles}{37.22.1}
+\makelabel{ref:OneCocycles}{37.22.1}
+\makelabel{ref:OneCoboundaries}{37.22.2}
+\makelabel{ref:OCOneCocycles}{37.22.3}
+\makelabel{ref:ComplementclassesEA}{37.22.4}
+\makelabel{ref:InfoCoh}{37.22.5}
+\makelabel{ref:Schur Covers and Multipliers}{37.23}
+\makelabel{ref:EpimorphismSchurCover}{37.23.1}
+\makelabel{ref:SchurCover}{37.23.2}
+\makelabel{ref:AbelianInvariantsMultiplier}{37.23.3}
+\makelabel{ref:Tests for the Availability of Methods}{37.24}
+\makelabel{ref:CanEasilyTestMembership}{37.24.1}
+\makelabel{ref:CanComputeSize}{37.24.2}
+\makelabel{ref:CanComputeSizeAnySubgroup}{37.24.3}
+\makelabel{ref:CanComputeIndex}{37.24.4}
+\makelabel{ref:CanComputeIsSubset}{37.24.5}
+\makelabel{ref:KnowsHowToDecompose}{37.24.6}
+\makelabel{ref:KnowsHowToDecompose}{37.24.6}
+\makelabel{ref:Group Homomorphisms}{38}
+\makelabel{ref:Creating Group Homomorphisms}{38.1}
+\makelabel{ref:GroupHomomorphismByImages}{38.1.1}
+\makelabel{ref:GroupHomomorphismByImagesNC}{38.1.2}
+\makelabel{ref:GroupGeneralMappingByImages}{38.1.3}
+\makelabel{ref:GroupHomomorphismByFunction}{38.1.4}
+\makelabel{ref:GroupHomomorphismByFunction}{38.1.4}
+\makelabel{ref:GroupHomomorphismByFunction}{38.1.4}
+\makelabel{ref:AsGroupGeneralMappingByImages}{38.1.5}
+\makelabel{ref:Operations for Group Homomorphisms}{38.2}
+\makelabel{ref:Efficiency of Homomorphisms}{38.3}
+\makelabel{ref:ImagesSmallestGenerators}{38.3.1}
+\makelabel{ref:Homomorphism for very large groups}{38.4}
+\makelabel{ref:Nice Monomorphisms}{38.5}
+\makelabel{ref:IsHandledByNiceMonomorphism}{38.5.1}
+\makelabel{ref:NiceMonomorphism}{38.5.2}
+\makelabel{ref:NiceObject}{38.5.3}
+\makelabel{ref:IsCanonicalNiceMonomorphism}{38.5.4}
+\makelabel{ref:Group Automorphisms}{38.6}
+\makelabel{ref:ConjugatorIsomorphism}{38.6.1}
+\makelabel{ref:ConjugatorAutomorphism}{38.6.2}
+\makelabel{ref:ConjugatorAutomorphismNC}{38.6.2}
+\makelabel{ref:InnerAutomorphism}{38.6.3}
+\makelabel{ref:InnerAutomorphismNC}{38.6.3}
+\makelabel{ref:IsConjugatorIsomorphism}{38.6.4}
+\makelabel{ref:IsConjugatorAutomorphism}{38.6.4}
+\makelabel{ref:IsInnerAutomorphism}{38.6.4}
+\makelabel{ref:ConjugatorOfConjugatorIsomorphism}{38.6.5}
+\makelabel{ref:Groups of Automorphisms}{38.7}
+\makelabel{ref:IsGroupOfAutomorphisms}{38.7.1}
+\makelabel{ref:AutomorphismDomain}{38.7.2}
+\makelabel{ref:AutomorphismGroup}{38.7.3}
+\makelabel{ref:IsAutomorphismGroup}{38.7.4}
+\makelabel{ref:InnerAutomorphismsAutomorphismGroup}{38.7.5}
+\makelabel{ref:InducedAutomorphism}{38.7.6}
+\makelabel{ref:Calculating with Group Automorphisms}{38.8}
+\makelabel{ref:AssignNiceMonomorphismAutomorphismGroup}{38.8.1}
+\makelabel{ref:NiceMonomorphismAutomGroup}{38.8.2}
+\makelabel{ref:Searching for Homomorphisms}{38.9}
+\makelabel{ref:IsomorphismGroups}{38.9.1}
+\makelabel{ref:GQuotients}{38.9.2}
+\makelabel{ref:IsomorphicSubgroups}{38.9.3}
+\makelabel{ref:MorClassLoop}{38.9.4}
+\makelabel{ref:Representations for Group Homomorphisms}{38.10}
+\makelabel{ref:IsGroupGeneralMappingByImages}{38.10.1}
+\makelabel{ref:IsGroupGeneralMappingByAsGroupGeneralMappingByImages}{38.10.2}
+\makelabel{ref:IsPreimagesByAsGroupGeneralMappingByImages}{38.10.3}
+\makelabel{ref:IsPermGroupGeneralMappingByImages}{38.10.4}
+\makelabel{ref:IsPermGroupHomomorphismByImages}{38.10.4}
+\makelabel{ref:IsToPermGroupGeneralMappingByImages}{38.10.5}
+\makelabel{ref:IsToPermGroupHomomorphismByImages}{38.10.5}
+\makelabel{ref:IsGroupGeneralMappingByPcgs}{38.10.6}
+\makelabel{ref:IsPcGroupGeneralMappingByImages}{38.10.7}
+\makelabel{ref:IsPcGroupHomomorphismByImages}{38.10.7}
+\makelabel{ref:IsToPcGroupGeneralMappingByImages}{38.10.8}
+\makelabel{ref:IsToPcGroupHomomorphismByImages}{38.10.8}
+\makelabel{ref:IsFromFpGroupGeneralMappingByImages}{38.10.9}
+\makelabel{ref:IsFromFpGroupHomomorphismByImages}{38.10.9}
+\makelabel{ref:IsFromFpGroupStdGensGeneralMappingByImages}{38.10.10}
+\makelabel{ref:IsFromFpGroupStdGensHomomorphismByImages}{38.10.10}
+\makelabel{ref:Group Actions}{39}
+\makelabel{ref:About Group Actions}{39.1}
+\makelabel{ref:Basic Actions}{39.2}
+\makelabel{ref:OnPoints}{39.2.1}
+\makelabel{ref:OnRight}{39.2.2}
+\makelabel{ref:OnLeftInverse}{39.2.3}
+\makelabel{ref:OnSets}{39.2.4}
+\makelabel{ref:OnTuples}{39.2.5}
+\makelabel{ref:OnPairs}{39.2.6}
+\makelabel{ref:OnSetsSets}{39.2.7}
+\makelabel{ref:OnSetsDisjointSets}{39.2.8}
+\makelabel{ref:OnSetsTuples}{39.2.9}
+\makelabel{ref:OnTuplesSets}{39.2.10}
+\makelabel{ref:OnTuplesTuples}{39.2.11}
+\makelabel{ref:OnLines}{39.2.12}
+\makelabel{ref:OnIndeterminates!as a permutation action}{39.2.13}
+\makelabel{ref:Permuted!as a permutation action}{39.2.14}
+\makelabel{ref:OnSubspacesByCanonicalBasis}{39.2.15}
+\makelabel{ref:Orbits}{39.3}
+\makelabel{ref:Orbit}{39.3.1}
+\makelabel{ref:Orbits!operation/attribute}{39.3.2}
+\makelabel{ref:Orbits!operation/attribute}{39.3.2}
+\makelabel{ref:OrbitsDomain}{39.3.3}
+\makelabel{ref:OrbitsDomain}{39.3.3}
+\makelabel{ref:OrbitLength}{39.3.4}
+\makelabel{ref:OrbitLengths}{39.3.5}
+\makelabel{ref:OrbitLengths}{39.3.5}
+\makelabel{ref:OrbitLengthsDomain}{39.3.6}
+\makelabel{ref:OrbitLengthsDomain}{39.3.6}
+\makelabel{ref:Stabilizers}{39.4}
+\makelabel{ref:OrbitStabilizer}{39.4.1}
+\makelabel{ref:Stabilizer}{39.4.2}
+\makelabel{ref:OrbitStabilizerAlgorithm}{39.4.3}
+\makelabel{ref:Elements with Prescribed Images}{39.5}
+\makelabel{ref:RepresentativeAction}{39.5.1}
+\makelabel{ref:The Permutation Image of an Action}{39.6}
+\makelabel{ref:ActionHomomorphism}{39.6.1}
+\makelabel{ref:ActionHomomorphism}{39.6.1}
+\makelabel{ref:ActionHomomorphism}{39.6.1}
+\makelabel{ref:Action}{39.6.2}
+\makelabel{ref:Action}{39.6.2}
+\makelabel{ref:SparseActionHomomorphism}{39.6.3}
+\makelabel{ref:SortedSparseActionHomomorphism}{39.6.3}
+\makelabel{ref:Action of a group on itself}{39.7}
+\makelabel{ref:FactorCosetAction}{39.7.1}
+\makelabel{ref:RegularActionHomomorphism}{39.7.2}
+\makelabel{ref:AbelianSubfactorAction}{39.7.3}
+\makelabel{ref:Permutations Induced by Elements and Cycles}{39.8}
+\makelabel{ref:Permutation}{39.8.1}
+\makelabel{ref:Permutation}{39.8.1}
+\makelabel{ref:PermutationCycle}{39.8.2}
+\makelabel{ref:Cycle}{39.8.3}
+\makelabel{ref:CycleLength}{39.8.4}
+\makelabel{ref:Cycles}{39.8.5}
+\makelabel{ref:CycleLengths}{39.8.6}
+\makelabel{ref:Tests for Actions}{39.9}
+\makelabel{ref:IsTransitive!for group actions}{39.9.1}
+\makelabel{ref:IsTransitive!for group actions}{39.9.1}
+\makelabel{ref:Transitivity!for group actions}{39.9.2}
+\makelabel{ref:Transitivity!for group actions}{39.9.2}
+\makelabel{ref:RankAction}{39.9.3}
+\makelabel{ref:RankAction}{39.9.3}
+\makelabel{ref:IsSemiRegular}{39.9.4}
+\makelabel{ref:IsSemiRegular}{39.9.4}
+\makelabel{ref:IsRegular}{39.9.5}
+\makelabel{ref:IsRegular}{39.9.5}
+\makelabel{ref:Earns}{39.9.6}
+\makelabel{ref:Earns}{39.9.6}
+\makelabel{ref:IsPrimitive}{39.9.7}
+\makelabel{ref:IsPrimitive}{39.9.7}
+\makelabel{ref:Block Systems}{39.10}
+\makelabel{ref:Blocks}{39.10.1}
+\makelabel{ref:Blocks}{39.10.1}
+\makelabel{ref:MaximalBlocks}{39.10.2}
+\makelabel{ref:MaximalBlocks}{39.10.2}
+\makelabel{ref:RepresentativesMinimalBlocks}{39.10.3}
+\makelabel{ref:RepresentativesMinimalBlocks}{39.10.3}
+\makelabel{ref:AllBlocks}{39.10.4}
+\makelabel{ref:External Sets}{39.11}
+\makelabel{ref:IsExternalSet}{39.11.1}
+\makelabel{ref:ExternalSet}{39.11.2}
+\makelabel{ref:ActingDomain}{39.11.3}
+\makelabel{ref:FunctionAction}{39.11.4}
+\makelabel{ref:HomeEnumerator}{39.11.5}
+\makelabel{ref:IsExternalSubset}{39.11.6}
+\makelabel{ref:ExternalSubset}{39.11.7}
+\makelabel{ref:IsExternalOrbit}{39.11.8}
+\makelabel{ref:ExternalOrbit}{39.11.9}
+\makelabel{ref:StabilizerOfExternalSet}{39.11.10}
+\makelabel{ref:ExternalOrbits}{39.11.11}
+\makelabel{ref:ExternalOrbits}{39.11.11}
+\makelabel{ref:ExternalOrbitsStabilizers}{39.11.12}
+\makelabel{ref:ExternalOrbitsStabilizers}{39.11.12}
+\makelabel{ref:CanonicalRepresentativeOfExternalSet}{39.11.13}
+\makelabel{ref:CanonicalRepresentativeDeterminatorOfExternalSet}{39.11.14}
+\makelabel{ref:ActorOfExternalSet}{39.11.15}
+\makelabel{ref:UnderlyingExternalSet}{39.11.16}
+\makelabel{ref:SurjectiveActionHomomorphismAttr}{39.11.17}
+\makelabel{ref:Permutations}{40}
+\makelabel{ref:IsPerm}{40}
+\makelabel{ref:IsPermCollection}{40}
+\makelabel{ref:IsPermCollColl}{40}
+\makelabel{ref:PermutationsFamily}{40}
+\makelabel{ref:Comparison of Permutations}{40.1}
+\makelabel{ref:equality test!for permutations}{40.1.1}
+\makelabel{ref:precedence test!for permutations}{40.1.1}
+\makelabel{ref:SmallestGeneratorPerm}{40.1.2}
+\makelabel{ref:Moved Points of Permutations}{40.2}
+\makelabel{ref:SmallestMovedPoint}{40.2.1}
+\makelabel{ref:SmallestMovedPoint}{40.2.1}
+\makelabel{ref:LargestMovedPoint}{40.2.2}
+\makelabel{ref:LargestMovedPoint}{40.2.2}
+\makelabel{ref:MovedPoints}{40.2.3}
+\makelabel{ref:MovedPoints}{40.2.3}
+\makelabel{ref:NrMovedPoints}{40.2.4}
+\makelabel{ref:NrMovedPoints}{40.2.4}
+\makelabel{ref:Sign and Cycle Structure}{40.3}
+\makelabel{ref:SignPerm}{40.3.1}
+\makelabel{ref:CycleStructurePerm}{40.3.2}
+\makelabel{ref:Creating Permutations}{40.4}
+\makelabel{ref:ListPerm}{40.4.1}
+\makelabel{ref:PermList}{40.4.2}
+\makelabel{ref:MappingPermListList}{40.4.3}
+\makelabel{ref:RestrictedPerm}{40.4.4}
+\makelabel{ref:Permutation Groups}{41}
+\makelabel{ref:IsPermGroup}{41}
+\makelabel{ref:The Natural Action}{41.1}
+\makelabel{ref:OrbitPerms}{41.1.1}
+\makelabel{ref:OrbitsPerms}{41.1.2}
+\makelabel{ref:Computing a Permutation Representation}{41.2}
+\makelabel{ref:IsomorphismPermGroup}{41.2.1}
+\makelabel{ref:SmallerDegreePermutationRepresentation}{41.2.2}
+\makelabel{ref:Symmetric and Alternating Groups}{41.3}
+\makelabel{ref:IsNaturalSymmetricGroup}{41.3.1}
+\makelabel{ref:IsNaturalAlternatingGroup}{41.3.2}
+\makelabel{ref:IsSymmetricGroup}{41.3.3}
+\makelabel{ref:IsAlternatingGroup}{41.3.4}
+\makelabel{ref:SymmetricParentGroup}{41.3.5}
+\makelabel{ref:Primitive Groups}{41.4}
+\makelabel{ref:ONanScottType}{41.4.1}
+\makelabel{ref:SocleTypePrimitiveGroup}{41.4.2}
+\makelabel{ref:Stabilizer Chains}{41.5}
+\makelabel{ref:Randomized Methods for Permutation Groups}{41.6}
+\makelabel{ref:Construction of Stabilizer Chains}{41.7}
+\makelabel{ref:StabChain}{41.7.1}
+\makelabel{ref:StabChain}{41.7.1}
+\makelabel{ref:StabChainOp}{41.7.1}
+\makelabel{ref:StabChainMutable}{41.7.1}
+\makelabel{ref:StabChainMutable}{41.7.1}
+\makelabel{ref:StabChainImmutable}{41.7.1}
+\makelabel{ref:StabChainOptions}{41.7.2}
+\makelabel{ref:DefaultStabChainOptions}{41.7.3}
+\makelabel{ref:StabChainBaseStrongGenerators}{41.7.4}
+\makelabel{ref:MinimalStabChain}{41.7.5}
+\makelabel{ref:Stabilizer Chain Records}{41.8}
+\makelabel{ref:Operations for Stabilizer Chains}{41.9}
+\makelabel{ref:BaseStabChain}{41.9.1}
+\makelabel{ref:BaseOfGroup}{41.9.2}
+\makelabel{ref:SizeStabChain}{41.9.3}
+\makelabel{ref:StrongGeneratorsStabChain}{41.9.4}
+\makelabel{ref:GroupStabChain}{41.9.5}
+\makelabel{ref:OrbitStabChain}{41.9.6}
+\makelabel{ref:IndicesStabChain}{41.9.7}
+\makelabel{ref:ListStabChain}{41.9.8}
+\makelabel{ref:ElementsStabChain}{41.9.9}
+\makelabel{ref:InverseRepresentative}{41.9.10}
+\makelabel{ref:SiftedPermutation}{41.9.11}
+\makelabel{ref:MinimalElementCosetStabChain}{41.9.12}
+\makelabel{ref:LargestElementStabChain}{41.9.13}
+\makelabel{ref:ApproximateSuborbitsStabilizerPermGroup}{41.9.14}
+\makelabel{ref:Low Level Routines to Modify and Create Stabilizer Chains}{41.10}
+\makelabel{ref:CopyStabChain}{41.10.1}
+\makelabel{ref:CopyOptionsDefaults}{41.10.2}
+\makelabel{ref:ChangeStabChain}{41.10.3}
+\makelabel{ref:ExtendStabChain}{41.10.4}
+\makelabel{ref:ReduceStabChain}{41.10.5}
+\makelabel{ref:RemoveStabChain}{41.10.6}
+\makelabel{ref:EmptyStabChain}{41.10.7}
+\makelabel{ref:InsertTrivialStabilizer}{41.10.8}
+\makelabel{ref:IsFixedStabilizer}{41.10.9}
+\makelabel{ref:AddGeneratorsExtendSchreierTree}{41.10.10}
+\makelabel{ref:Backtrack}{41.11}
+\makelabel{ref:SubgroupProperty}{41.11.1}
+\makelabel{ref:ElementProperty}{41.11.2}
+\makelabel{ref:TwoClosure}{41.11.3}
+\makelabel{ref:InfoBckt}{41.11.4}
+\makelabel{ref:Working with large degree permutation groups}{41.12}
+\makelabel{ref:Matrix Groups}{42}
+\makelabel{ref:IsMatrixGroup}{42}
+\makelabel{ref:Attributes and Properties for Matrix Groups}{42.1}
+\makelabel{ref:DimensionOfMatrixGroup}{42.1.1}
+\makelabel{ref:DefaultFieldOfMatrixGroup}{42.1.2}
+\makelabel{ref:FieldOfMatrixGroup}{42.1.3}
+\makelabel{ref:TransposedMatrixGroup}{42.1.4}
+\makelabel{ref:Actions of Matrix Groups}{42.2}
+\makelabel{ref:ProjectiveActionOnFullSpace}{42.2.1}
+\makelabel{ref:ProjectiveActionHomomorphismMatrixGroup}{42.2.2}
+\makelabel{ref:BlowUpIsomorphism}{42.2.3}
+\makelabel{ref:GL and SL}{42.3}
+\makelabel{ref:IsGeneralLinearGroup}{42.3.1}
+\makelabel{ref:IsGL}{42.3.1}
+\makelabel{ref:IsNaturalGL}{42.3.2}
+\makelabel{ref:IsSpecialLinearGroup}{42.3.3}
+\makelabel{ref:IsSL}{42.3.3}
+\makelabel{ref:IsNaturalSL}{42.3.4}
+\makelabel{ref:IsSubgroupSL}{42.3.5}
+\makelabel{ref:Invariant Forms}{42.4}
+\makelabel{ref:InvariantBilinearForm}{42.4.1}
+\makelabel{ref:IsFullSubgroupGLorSLRespectingBilinearForm}{42.4.2}
+\makelabel{ref:InvariantSesquilinearForm}{42.4.3}
+\makelabel{ref:IsFullSubgroupGLorSLRespectingSesquilinearForm}{42.4.4}
+\makelabel{ref:InvariantQuadraticForm}{42.4.5}
+\makelabel{ref:IsFullSubgroupGLorSLRespectingQuadraticForm}{42.4.6}
+\makelabel{ref:Matrix Groups in Characteristic 0}{42.5}
+\makelabel{ref:IsCyclotomicMatrixGroup}{42.5.1}
+\makelabel{ref:IsRationalMatrixGroup}{42.5.2}
+\makelabel{ref:IsIntegerMatrixGroup}{42.5.3}
+\makelabel{ref:IsNaturalGLnZ}{42.5.4}
+\makelabel{ref:IsNaturalSLnZ}{42.5.5}
+\makelabel{ref:InvariantLattice}{42.5.6}
+\makelabel{ref:NormalizerInGLnZ}{42.5.7}
+\makelabel{ref:CentralizerInGLnZ}{42.5.8}
+\makelabel{ref:ZClassRepsQClass}{42.5.9}
+\makelabel{ref:IsBravaisGroup}{42.5.10}
+\makelabel{ref:BravaisGroup}{42.5.11}
+\makelabel{ref:BravaisSubgroups}{42.5.12}
+\makelabel{ref:BravaisSupergroups}{42.5.13}
+\makelabel{ref:NormalizerInGLnZBravaisGroup}{42.5.14}
+\makelabel{ref:Acting OnRight and OnLeft}{42.6}
+\makelabel{ref:CrystGroupDefaultAction}{42.6.1}
+\makelabel{ref:SetCrystGroupDefaultAction}{42.6.2}
+\makelabel{ref:Polycyclic Groups}{43}
+\makelabel{ref:Polycyclic Generating Systems}{43.1}
+\makelabel{ref:Computing a Pcgs}{43.2}
+\makelabel{ref:Pcgs}{43.2.1}
+\makelabel{ref:IsPcgs}{43.2.2}
+\makelabel{ref:CanEasilyComputePcgs}{43.2.3}
+\makelabel{ref:Defining a Pcgs Yourself}{43.3}
+\makelabel{ref:PcgsByPcSequence}{43.3.1}
+\makelabel{ref:PcgsByPcSequenceNC}{43.3.1}
+\makelabel{ref:Elementary Operations for a Pcgs}{43.4}
+\makelabel{ref:RelativeOrders!of a pcgs}{43.4.1}
+\makelabel{ref:IsFiniteOrdersPcgs}{43.4.2}
+\makelabel{ref:IsPrimeOrdersPcgs}{43.4.3}
+\makelabel{ref:PcSeries}{43.4.4}
+\makelabel{ref:GroupOfPcgs}{43.4.5}
+\makelabel{ref:OneOfPcgs}{43.4.6}
+\makelabel{ref:Elementary Operations for a Pcgs and an Element}{43.5}
+\makelabel{ref:RelativeOrderOfPcElement}{43.5.1}
+\makelabel{ref:ExponentOfPcElement}{43.5.2}
+\makelabel{ref:ExponentsOfPcElement}{43.5.3}
+\makelabel{ref:ExponentsOfPcElement}{43.5.3}
+\makelabel{ref:DepthOfPcElement}{43.5.4}
+\makelabel{ref:LeadingExponentOfPcElement}{43.5.5}
+\makelabel{ref:PcElementByExponents}{43.5.6}
+\makelabel{ref:PcElementByExponentsNC}{43.5.6}
+\makelabel{ref:PcElementByExponentsNC}{43.5.6}
+\makelabel{ref:LinearCombinationPcgs}{43.5.7}
+\makelabel{ref:SiftedPcElement}{43.5.8}
+\makelabel{ref:CanonicalPcElement}{43.5.9}
+\makelabel{ref:ReducedPcElement}{43.5.10}
+\makelabel{ref:CleanedTailPcElement}{43.5.11}
+\makelabel{ref:HeadPcElementByNumber}{43.5.12}
+\makelabel{ref:Exponents of Special Products}{43.6}
+\makelabel{ref:ExponentsConjugateLayer}{43.6.1}
+\makelabel{ref:ExponentsOfRelativePower}{43.6.2}
+\makelabel{ref:ExponentsOfConjugate}{43.6.3}
+\makelabel{ref:ExponentsOfCommutator}{43.6.4}
+\makelabel{ref:Subgroups of Polycyclic Groups - Induced Pcgs}{43.7}
+\makelabel{ref:IsInducedPcgs}{43.7.1}
+\makelabel{ref:InducedPcgsByPcSequence}{43.7.2}
+\makelabel{ref:InducedPcgsByPcSequenceNC}{43.7.2}
+\makelabel{ref:InducedPcgsByPcSequenceNC}{43.7.2}
+\makelabel{ref:ParentPcgs}{43.7.3}
+\makelabel{ref:InducedPcgs}{43.7.4}
+\makelabel{ref:InducedPcgsByGenerators}{43.7.5}
+\makelabel{ref:InducedPcgsByGeneratorsNC}{43.7.5}
+\makelabel{ref:InducedPcgsByPcSequenceAndGenerators}{43.7.6}
+\makelabel{ref:LeadCoeffsIGS}{43.7.7}
+\makelabel{ref:ExtendedPcgs}{43.7.8}
+\makelabel{ref:SubgroupByPcgs}{43.7.9}
+\makelabel{ref:Subgroups of Polycyclic Groups - Canonical Pcgs}{43.8}
+\makelabel{ref:IsCanonicalPcgs}{43.8.1}
+\makelabel{ref:CanonicalPcgs}{43.8.2}
+\makelabel{ref:Factor Groups of Polycyclic Groups - Modulo Pcgs}{43.9}
+\makelabel{ref:ModuloPcgs}{43.9.1}
+\makelabel{ref:IsModuloPcgs}{43.9.2}
+\makelabel{ref:NumeratorOfModuloPcgs}{43.9.3}
+\makelabel{ref:DenominatorOfModuloPcgs}{43.9.4}
+\makelabel{ref:modulo!for pcgs}{43.9.5}
+\makelabel{ref:CorrespondingGeneratorsByModuloPcgs}{43.9.6}
+\makelabel{ref:CanonicalPcgsByGeneratorsWithImages}{43.9.7}
+\makelabel{ref:Factor Groups of Polycyclic Groups in their Own Representation}{43.10}
+\makelabel{ref:ProjectedPcElement}{43.10.1}
+\makelabel{ref:ProjectedInducedPcgs}{43.10.2}
+\makelabel{ref:LiftedPcElement}{43.10.3}
+\makelabel{ref:LiftedInducedPcgs}{43.10.4}
+\makelabel{ref:Pcgs and Normal Series}{43.11}
+\makelabel{ref:IsPcgsElementaryAbelianSeries}{43.11.1}
+\makelabel{ref:PcgsElementaryAbelianSeries}{43.11.2}
+\makelabel{ref:PcgsElementaryAbelianSeries}{43.11.2}
+\makelabel{ref:IndicesEANormalSteps}{43.11.3}
+\makelabel{ref:EANormalSeriesByPcgs}{43.11.4}
+\makelabel{ref:IsPcgsCentralSeries}{43.11.5}
+\makelabel{ref:PcgsCentralSeries}{43.11.6}
+\makelabel{ref:IndicesCentralNormalSteps}{43.11.7}
+\makelabel{ref:CentralNormalSeriesByPcgs}{43.11.8}
+\makelabel{ref:IsPcgsPCentralSeriesPGroup}{43.11.9}
+\makelabel{ref:PcgsPCentralSeriesPGroup}{43.11.10}
+\makelabel{ref:IndicesPCentralNormalStepsPGroup}{43.11.11}
+\makelabel{ref:PCentralNormalSeriesByPcgsPGroup}{43.11.12}
+\makelabel{ref:IsPcgsChiefSeries}{43.11.13}
+\makelabel{ref:PcgsChiefSeries}{43.11.14}
+\makelabel{ref:IndicesChiefNormalSteps}{43.11.15}
+\makelabel{ref:ChiefNormalSeriesByPcgs}{43.11.16}
+\makelabel{ref:IndicesNormalSteps}{43.11.17}
+\makelabel{ref:NormalSeriesByPcgs}{43.11.18}
+\makelabel{ref:Sum and Intersection of Pcgs}{43.12}
+\makelabel{ref:SumFactorizationFunctionPcgs}{43.12.1}
+\makelabel{ref:Special Pcgs}{43.13}
+\makelabel{ref:IsSpecialPcgs}{43.13.1}
+\makelabel{ref:SpecialPcgs!attribute}{43.13.2}
+\makelabel{ref:SpecialPcgs!attribute}{43.13.2}
+\makelabel{ref:LGWeights}{43.13.3}
+\makelabel{ref:LGLayers}{43.13.4}
+\makelabel{ref:LGFirst}{43.13.5}
+\makelabel{ref:LGLength}{43.13.6}
+\makelabel{ref:IsInducedPcgsWrtSpecialPcgs}{43.13.7}
+\makelabel{ref:InducedPcgsWrtSpecialPcgs}{43.13.8}
+\makelabel{ref:Action on Subfactors Defined by a Pcgs}{43.14}
+\makelabel{ref:VectorSpaceByPcgsOfElementaryAbelianGroup}{43.14.1}
+\makelabel{ref:LinearOperation}{43.14.2}
+\makelabel{ref:LinearAction}{43.14.2}
+\makelabel{ref:LinearOperationLayer}{43.14.3}
+\makelabel{ref:LinearActionLayer}{43.14.3}
+\makelabel{ref:AffineOperation}{43.14.4}
+\makelabel{ref:AffineAction}{43.14.4}
+\makelabel{ref:AffineOperationLayer}{43.14.5}
+\makelabel{ref:AffineActionLayer}{43.14.5}
+\makelabel{ref:Orbit Stabilizer Methods for Polycyclic Groups}{43.15}
+\makelabel{ref:StabilizerPcgs}{43.15.1}
+\makelabel{ref:Pcgs_OrbitStabilizer}{43.15.2}
+\makelabel{ref:Operations which have Special Methods for Groups with Pcgs}{43.16}
+\makelabel{ref:Conjugacy Classes in Solvable Groups}{43.17}
+\makelabel{ref:ClassesSolvableGroup}{43.17.1}
+\makelabel{ref:CentralizerSizeLimitConsiderFunction}{43.17.2}
+\makelabel{ref:Pc Groups}{44}
+\makelabel{ref:The family pcgs}{44.1}
+\makelabel{ref:FamilyPcgs}{44.1.1}
+\makelabel{ref:IsFamilyPcgs}{44.1.2}
+\makelabel{ref:InducedPcgsWrtFamilyPcgs}{44.1.3}
+\makelabel{ref:IsParentPcgsFamilyPcgs}{44.1.4}
+\makelabel{ref:Elements of pc groups}{44.2}
+\makelabel{ref:equality!pcwords}{44.2.1}
+\makelabel{ref:smaller!pcwords}{44.2.1}
+\makelabel{ref:Pc groups versus fp groups}{44.3}
+\makelabel{ref:IsPcGroup}{44.3.1}
+\makelabel{ref:IsomorphismFpGroupByPcgs}{44.3.2}
+\makelabel{ref:Constructing Pc Groups}{44.4}
+\makelabel{ref:PcGroupFpGroup}{44.4.1}
+\makelabel{ref:SingleCollector}{44.4.2}
+\makelabel{ref:CombinatorialCollector}{44.4.2}
+\makelabel{ref:SetConjugate}{44.4.3}
+\makelabel{ref:SetCommutator}{44.4.4}
+\makelabel{ref:SetPower}{44.4.5}
+\makelabel{ref:GroupByRws}{44.4.6}
+\makelabel{ref:GroupByRwsNC}{44.4.6}
+\makelabel{ref:IsConfluent!for pc groups}{44.4.7}
+\makelabel{ref:IsomorphismRefinedPcGroup}{44.4.8}
+\makelabel{ref:RefinedPcGroup}{44.4.9}
+\makelabel{ref:Computing Pc Groups}{44.5}
+\makelabel{ref:PcGroupWithPcgs}{44.5.1}
+\makelabel{ref:IsomorphismPcGroup}{44.5.2}
+\makelabel{ref:IsomorphismSpecialPcGroup}{44.5.3}
+\makelabel{ref:Saving a Pc Group}{44.6}
+\makelabel{ref:GapInputPcGroup}{44.6.1}
+\makelabel{ref:Operations for Pc Groups}{44.7}
+\makelabel{ref:2-Cohomology and Extensions}{44.8}
+\makelabel{ref:TwoCoboundaries}{44.8.1}
+\makelabel{ref:TwoCocycles}{44.8.2}
+\makelabel{ref:TwoCohomology}{44.8.3}
+\makelabel{ref:Extensions}{44.8.4}
+\makelabel{ref:Extension}{44.8.5}
+\makelabel{ref:ExtensionNC}{44.8.5}
+\makelabel{ref:SplitExtension}{44.8.6}
+\makelabel{ref:ModuleOfExtension}{44.8.7}
+\makelabel{ref:CompatiblePairs}{44.8.8}
+\makelabel{ref:ExtensionRepresentatives}{44.8.9}
+\makelabel{ref:SplitExtensions}{44.8.10}
+\makelabel{ref:Coding a Pc Presentation}{44.9}
+\makelabel{ref:CodePcgs}{44.9.1}
+\makelabel{ref:CodePcGroup}{44.9.2}
+\makelabel{ref:PcGroupCode}{44.9.3}
+\makelabel{ref:PcGroupCodeRec}{44.9.4}
+\makelabel{ref:Random Isomorphism Testing}{44.10}
+\makelabel{ref:RandomIsomorphismTest}{44.10.1}
+\makelabel{ref:Finitely Presented Groups}{45}
+\makelabel{ref:IsSubgroupFpGroup}{45}
+\makelabel{ref:IsFpGroup}{45}
+\makelabel{ref:InfoFpGroup}{45}
+\makelabel{ref:Creating Finitely Presented Groups}{45.1}
+\makelabel{ref:quotient!for finitely presented groups}{45.1.1}
+\makelabel{ref:FactorGroupFpGroupByRels}{45.1.2}
+\makelabel{ref:Comparison of Elements of Finitely Presented Groups}{45.2}
+\makelabel{ref:equality!elements of finitely presented groups}{45.2.1}
+\makelabel{ref:smaller!elements of finitely presented groups}{45.2.2}
+\makelabel{ref:FpElmComparisonMethod}{45.2.3}
+\makelabel{ref:SetReducedMultiplication}{45.2.4}
+\makelabel{ref:SetReducedMultiplication}{45.2.4}
+\makelabel{ref:SetReducedMultiplication}{45.2.4}
+\makelabel{ref:Preimages in the Free Group}{45.3}
+\makelabel{ref:FreeGroupOfFpGroup}{45.3.1}
+\makelabel{ref:FreeGeneratorsOfFpGroup}{45.3.2}
+\makelabel{ref:FreeGeneratorsOfWholeGroup}{45.3.2}
+\makelabel{ref:RelatorsOfFpGroup}{45.3.3}
+\makelabel{ref:UnderlyingElement!fp group elements}{45.3.4}
+\makelabel{ref:ElementOfFpGroup}{45.3.5}
+\makelabel{ref:Operations for Finitely Presented Groups}{45.4}
+\makelabel{ref:Coset Tables and Coset Enumeration}{45.5}
+\makelabel{ref:CosetTable}{45.5.1}
+\makelabel{ref:TracedCosetFpGroup}{45.5.2}
+\makelabel{ref:FactorCosetAction!for fp groups}{45.5.3}
+\makelabel{ref:FactorCosetOperation}{45.5.3}
+\makelabel{ref:CosetTableBySubgroup}{45.5.4}
+\makelabel{ref:CosetTableFromGensAndRels}{45.5.5}
+\makelabel{ref:CosetTableDefaultMaxLimit}{45.5.6}
+\makelabel{ref:CosetTableDefaultLimit}{45.5.7}
+\makelabel{ref:MostFrequentGeneratorFpGroup}{45.5.8}
+\makelabel{ref:IndicesInvolutaryGenerators}{45.5.9}
+\makelabel{ref:Standardization of coset tables}{45.6}
+\makelabel{ref:CosetTableStandard}{45.6.1}
+\makelabel{ref:StandardizeTable}{45.6.2}
+\makelabel{ref:Coset tables for subgroups in the whole group}{45.7}
+\makelabel{ref:CosetTableInWholeGroup}{45.7.1}
+\makelabel{ref:TryCosetTableInWholeGroup}{45.7.1}
+\makelabel{ref:SubgroupOfWholeGroupByCosetTable}{45.7.2}
+\makelabel{ref:Augmented Coset Tables and Rewriting}{45.8}
+\makelabel{ref:AugmentedCosetTableInWholeGroup}{45.8.1}
+\makelabel{ref:AugmentedCosetTableMtc}{45.8.2}
+\makelabel{ref:AugmentedCosetTableRrs}{45.8.3}
+\makelabel{ref:RewriteWord}{45.8.4}
+\makelabel{ref:Low Index Subgroups}{45.9}
+\makelabel{ref:LowIndexSubgroupsFpGroup}{45.9.1}
+\makelabel{ref:Converting Groups to Finitely Presented Groups}{45.10}
+\makelabel{ref:IsomorphismFpGroup}{45.10.1}
+\makelabel{ref:IsomorphismFpGroupByGenerators}{45.10.2}
+\makelabel{ref:IsomorphismFpGroupByGeneratorsNC}{45.10.2}
+\makelabel{ref:New Presentations and Presentations for Subgroups}{45.11}
+\makelabel{ref:IsomorphismSimplifiedFpGroup}{45.11.1}
+\makelabel{ref:Preimages under Homomorphisms from an FpGroup}{45.12}
+\makelabel{ref:SubgroupOfWholeGroupByQuotientSubgroup}{45.12.1}
+\makelabel{ref:IsSubgroupOfWholeGroupByQuotientRep}{45.12.2}
+\makelabel{ref:AsSubgroupOfWholeGroupByQuotient}{45.12.3}
+\makelabel{ref:DefiningQuotientHomomorphism}{45.12.4}
+\makelabel{ref:Quotient Methods}{45.13}
+\makelabel{ref:PQuotient}{45.13.1}
+\makelabel{ref:EpimorphismQuotientSystem}{45.13.2}
+\makelabel{ref:EpimorphismPGroup}{45.13.3}
+\makelabel{ref:EpimorphismPGroup}{45.13.3}
+\makelabel{ref:EpimorphismNilpotentQuotient}{45.13.4}
+\makelabel{ref:Abelian Invariants for Subgroups}{45.14}
+\makelabel{ref:AbelianInvariantsSubgroupFpGroup}{45.14.1}
+\makelabel{ref:AbelianInvariantsSubgroupFpGroupMtc}{45.14.2}
+\makelabel{ref:AbelianInvariantsSubgroupFpGroupRrs}{45.14.3}
+\makelabel{ref:AbelianInvariantsSubgroupFpGroupRrs}{45.14.3}
+\makelabel{ref:AbelianInvariantsNormalClosureFpGroup}{45.14.4}
+\makelabel{ref:AbelianInvariantsNormalClosureFpGroupRrs}{45.14.5}
+\makelabel{ref:Testing Finiteness of Finitely Presented Groups}{45.15}
+\makelabel{ref:NewmanInfinityCriterion}{45.15.1}
+\makelabel{ref:Presentations and Tietze Transformations}{46}
+\makelabel{ref:Creating Presentations}{46.1}
+\makelabel{ref:PresentationFpGroup}{46.1.1}
+\makelabel{ref:TzSort}{46.1.2}
+\makelabel{ref:GeneratorsOfPresentation}{46.1.3}
+\makelabel{ref:FpGroupPresentation}{46.1.4}
+\makelabel{ref:PresentationViaCosetTable}{46.1.5}
+\makelabel{ref:PresentationViaCosetTable}{46.1.5}
+\makelabel{ref:SimplifiedFpGroup}{46.2.1}
+\makelabel{ref:Subgroup Presentations}{46.3}
+\makelabel{ref:PresentationSubgroup}{46.3.1}
+\makelabel{ref:PresentationSubgroupRrs}{46.3.2}
+\makelabel{ref:PresentationSubgroupRrs}{46.3.2}
+\makelabel{ref:PrimaryGeneratorWords}{46.3.3}
+\makelabel{ref:PresentationSubgroupMtc}{46.3.4}
+\makelabel{ref:PresentationNormalClosureRrs}{46.3.5}
+\makelabel{ref:PresentationNormalClosure}{46.3.6}
+\makelabel{ref:Relators in a Presentation}{46.4}
+\makelabel{ref:TietzeWordAbstractWord}{46.4.1}
+\makelabel{ref:AbstractWordTietzeWord}{46.4.2}
+\makelabel{ref:Printing Presentations}{46.5}
+\makelabel{ref:TzPrintGenerators}{46.5.1}
+\makelabel{ref:TzPrintRelators}{46.5.2}
+\makelabel{ref:TzPrintLengths}{46.5.3}
+\makelabel{ref:TzPrintStatus}{46.5.4}
+\makelabel{ref:TzPrintPresentation}{46.5.5}
+\makelabel{ref:TzPrint}{46.5.6}
+\makelabel{ref:TzPrintPairs}{46.5.7}
+\makelabel{ref:Changing Presentations}{46.6}
+\makelabel{ref:AddGenerator}{46.6.1}
+\makelabel{ref:TzNewGenerator}{46.6.2}
+\makelabel{ref:AddRelator}{46.6.3}
+\makelabel{ref:RemoveRelator}{46.6.4}
+\makelabel{ref:Tietze Transformations}{46.7}
+\makelabel{ref:TzGo}{46.7.1}
+\makelabel{ref:SimplifyPresentation}{46.7.2}
+\makelabel{ref:TzGoGo}{46.7.3}
+\makelabel{ref:Elementary Tietze Transformations}{46.8}
+\makelabel{ref:TzEliminate}{46.8.1}
+\makelabel{ref:TzEliminate}{46.8.1}
+\makelabel{ref:TzEliminate}{46.8.1}
+\makelabel{ref:TzSearch}{46.8.2}
+\makelabel{ref:TzSearchEqual}{46.8.3}
+\makelabel{ref:TzFindCyclicJoins}{46.8.4}
+\makelabel{ref:Tietze Transformations that introduce new Generators}{46.9}
+\makelabel{ref:TzSubstitute}{46.9.1}
+\makelabel{ref:TzSubstitute}{46.9.1}
+\makelabel{ref:TzSubstituteCyclicJoins}{46.9.2}
+\makelabel{ref:Tracing generator images through Tietze transformations}{46.10}
+\makelabel{ref:TzInitGeneratorImages}{46.10.1}
+\makelabel{ref:OldGeneratorsOfPresentation}{46.10.2}
+\makelabel{ref:TzImagesOldGens}{46.10.3}
+\makelabel{ref:TzPreImagesNewGens}{46.10.4}
+\makelabel{ref:TzPrintGeneratorImages}{46.10.5}
+\makelabel{ref:DecodeTree}{46.11.1}
+\makelabel{ref:Tietze Options}{46.12}
+\makelabel{ref:TzOptions}{46.12.1}
+\makelabel{ref:TzPrintOptions}{46.12.2}
+\makelabel{ref:Group Products}{47}
+\makelabel{ref:Direct Products}{47.1}
+\makelabel{ref:DirectProduct}{47.1.1}
+\makelabel{ref:DirectProductOp}{47.1.1}
+\makelabel{ref:Semidirect Products}{47.2}
+\makelabel{ref:SemidirectProduct}{47.2.1}
+\makelabel{ref:SemidirectProduct}{47.2.1}
+\makelabel{ref:Subdirect Products}{47.3}
+\makelabel{ref:SubdirectProduct}{47.3.1}
+\makelabel{ref:SubdirectProducts}{47.3.2}
+\makelabel{ref:Wreath Products}{47.4}
+\makelabel{ref:WreathProduct}{47.4.1}
+\makelabel{ref:WreathProduct}{47.4.1}
+\makelabel{ref:WreathProductImprimitiveAction}{47.4.2}
+\makelabel{ref:WreathProductProductAction}{47.4.3}
+\makelabel{ref:KuKGenerators}{47.4.4}
+\makelabel{ref:Embeddings and Projections for Group Products}{47.5}
+\makelabel{ref:Embedding!for group products}{47.5.1}
+\makelabel{ref:Projection!for group products}{47.5.2}
+\makelabel{ref:Group Libraries}{48}
+\makelabel{ref:Basic Groups}{48.1}
+\makelabel{ref:TrivialGroup}{48.1.1}
+\makelabel{ref:CyclicGroup}{48.1.2}
+\makelabel{ref:AbelianGroup}{48.1.3}
+\makelabel{ref:ElementaryAbelianGroup}{48.1.4}
+\makelabel{ref:DihedralGroup}{48.1.5}
+\makelabel{ref:ExtraspecialGroup}{48.1.6}
+\makelabel{ref:AlternatingGroup}{48.1.7}
+\makelabel{ref:AlternatingGroup}{48.1.7}
+\makelabel{ref:SymmetricGroup}{48.1.8}
+\makelabel{ref:SymmetricGroup}{48.1.8}
+\makelabel{ref:MathieuGroup}{48.1.9}
+\makelabel{ref:SuzukiGroup}{48.1.10}
+\makelabel{ref:Sz}{48.1.10}
+\makelabel{ref:ReeGroup}{48.1.11}
+\makelabel{ref:Ree}{48.1.11}
+\makelabel{ref:Classical Groups}{48.2}
+\makelabel{ref:GeneralLinearGroup}{48.2.1}
+\makelabel{ref:GL}{48.2.1}
+\makelabel{ref:GeneralLinearGroup}{48.2.1}
+\makelabel{ref:GL}{48.2.1}
+\makelabel{ref:SpecialLinearGroup}{48.2.2}
+\makelabel{ref:SL}{48.2.2}
+\makelabel{ref:SpecialLinearGroup}{48.2.2}
+\makelabel{ref:SL}{48.2.2}
+\makelabel{ref:GeneralUnitaryGroup}{48.2.3}
+\makelabel{ref:GU}{48.2.3}
+\makelabel{ref:SpecialUnitaryGroup}{48.2.4}
+\makelabel{ref:SU}{48.2.4}
+\makelabel{ref:SymplecticGroup}{48.2.5}
+\makelabel{ref:Sp}{48.2.5}
+\makelabel{ref:SP}{48.2.5}
+\makelabel{ref:GeneralOrthogonalGroup}{48.2.6}
+\makelabel{ref:GO}{48.2.6}
+\makelabel{ref:SpecialOrthogonalGroup}{48.2.7}
+\makelabel{ref:SO}{48.2.7}
+\makelabel{ref:ProjectiveGeneralLinearGroup}{48.2.8}
+\makelabel{ref:PGL}{48.2.8}
+\makelabel{ref:ProjectiveSpecialLinearGroup}{48.2.9}
+\makelabel{ref:PSL}{48.2.9}
+\makelabel{ref:ProjectiveGeneralUnitaryGroup}{48.2.10}
+\makelabel{ref:PGU}{48.2.10}
+\makelabel{ref:ProjectiveSpecialUnitaryGroup}{48.2.11}
+\makelabel{ref:PSU}{48.2.11}
+\makelabel{ref:ProjectiveSymplecticGroup}{48.2.12}
+\makelabel{ref:PSP}{48.2.12}
+\makelabel{ref:PSp}{48.2.12}
+\makelabel{ref:Conjugacy Classes in Classical Groups}{48.3}
+\makelabel{ref:NrConjugacyClassesGL}{48.3.1}
+\makelabel{ref:NrConjugacyClassesGU}{48.3.1}
+\makelabel{ref:NrConjugacyClassesSL}{48.3.1}
+\makelabel{ref:NrConjugacyClassesSU}{48.3.1}
+\makelabel{ref:NrConjugacyClassesPGL}{48.3.1}
+\makelabel{ref:NrConjugacyClassesPGU}{48.3.1}
+\makelabel{ref:NrConjugacyClassesPSL}{48.3.1}
+\makelabel{ref:NrConjugacyClassesPSU}{48.3.1}
+\makelabel{ref:NrConjugacyClassesSLIsogeneous}{48.3.1}
+\makelabel{ref:NrConjugacyClassesSUIsogeneous}{48.3.1}
+\makelabel{ref:Constructors for Basic Groups}{48.4}
+\makelabel{ref:Selection Functions}{48.5}
+\makelabel{ref:AllLibraryGroups}{48.5.1}
+\makelabel{ref:OneLibraryGroup}{48.5.2}
+\makelabel{ref:Transitive Permutation Groups}{48.6}
+\makelabel{ref:TransitiveGroup}{48.6.1}
+\makelabel{ref:NrTransitiveGroups}{48.6.2}
+\makelabel{ref:TransitiveIdentification}{48.6.3}
+\makelabel{ref:Small Groups}{48.7}
+\makelabel{ref:SmallGroup}{48.7.1}
+\makelabel{ref:SmallGroup}{48.7.1}
+\makelabel{ref:AllSmallGroups}{48.7.2}
+\makelabel{ref:OneSmallGroup}{48.7.3}
+\makelabel{ref:NumberSmallGroups}{48.7.4}
+\makelabel{ref:IdSmallGroup}{48.7.5}
+\makelabel{ref:IdGroup}{48.7.5}
+\makelabel{ref:IdsOfAllSmallGroups}{48.7.6}
+\makelabel{ref:IdGap3SolvableGroup}{48.7.7}
+\makelabel{ref:Gap3CatalogueIdGroup}{48.7.7}
+\makelabel{ref:SmallGroupsInformation}{48.7.8}
+\makelabel{ref:UnloadSmallGroupsData}{48.7.9}
+\makelabel{ref:Finite Perfect Groups}{48.8}
+\makelabel{ref:SizesPerfectGroups}{48.8.1}
+\makelabel{ref:PerfectGroup}{48.8.2}
+\makelabel{ref:PerfectGroup}{48.8.2}
+\makelabel{ref:PerfectIdentification}{48.8.3}
+\makelabel{ref:NumberPerfectGroups}{48.8.4}
+\makelabel{ref:NumberPerfectLibraryGroups}{48.8.5}
+\makelabel{ref:SizeNumbersPerfectGroups}{48.8.6}
+\makelabel{ref:DisplayInformationPerfectGroups}{48.8.7}
+\makelabel{ref:DisplayInformationPerfectGroups}{48.8.7}
+\makelabel{ref:DisplayInformationPerfectGroups}{48.8.7}
+\makelabel{ref:Primitive Permutation Groups}{48.9}
+\makelabel{ref:PrimitiveGroup}{48.9.1}
+\makelabel{ref:NrPrimitiveGroups}{48.9.2}
+\makelabel{ref:PrimitiveGroupsIterator}{48.9.3}
+\makelabel{ref:COHORTS_PRIMITIVE_GROUPS}{48.9.4}
+\makelabel{ref:Index numbers of primitive groups}{48.10}
+\makelabel{ref:PrimitiveIdentification}{48.10.1}
+\makelabel{ref:SimsNo}{48.10.2}
+\makelabel{ref:PRIMITIVE_INDICES_MAGMA}{48.10.3}
+\makelabel{ref:Irreducible Solvable Matrix Groups}{48.11}
+\makelabel{ref:IrreducibleSolvableGroupMS}{48.11.1}
+\makelabel{ref:NumberIrreducibleSolvableGroups}{48.11.2}
+\makelabel{ref:AllIrreducibleSolvableGroups}{48.11.3}
+\makelabel{ref:OneIrreducibleSolvableGroup}{48.11.4}
+\makelabel{ref:PrimitiveIndexIrreducibleSolvableGroup}{48.11.5}
+\makelabel{ref:IrreducibleSolvableGroup}{48.11.6}
+\makelabel{ref:Irreducible Maximal Finite Integral Matrix Groups}{48.12}
+\makelabel{ref:ImfNumberQQClasses}{48.12.1}
+\makelabel{ref:ImfNumberQClasses}{48.12.1}
+\makelabel{ref:ImfNumberZClasses}{48.12.1}
+\makelabel{ref:DisplayImfInvariants}{48.12.2}
+\makelabel{ref:DisplayImfInvariants}{48.12.2}
+\makelabel{ref:ImfInvariants}{48.12.3}
+\makelabel{ref:ImfInvariants}{48.12.3}
+\makelabel{ref:ImfMatrixGroup}{48.12.4}
+\makelabel{ref:ImfMatrixGroup}{48.12.4}
+\makelabel{ref:IsomorphismPermGroup!for Imf matrix groups}{48.12.5}
+\makelabel{ref:IsomorphismPermGroupImfGroup}{48.12.6}
+\makelabel{ref:Semigroups}{49}
+\makelabel{ref:IsSemigroup}{49}
+\makelabel{ref:Semigroup}{49}
+\makelabel{ref:Semigroup}{49}
+\makelabel{ref:Subsemigroup}{49}
+\makelabel{ref:SubsemigroupNC}{49}
+\makelabel{ref:SemigroupByGenerators}{49}
+\makelabel{ref:AsSemigroup}{49}
+\makelabel{ref:AsSubsemigroup}{49}
+\makelabel{ref:GeneratorsOfSemigroup}{49}
+\makelabel{ref:FreeSemigroup!with examples}{49}
+\makelabel{ref:FreeSemigroup!with examples}{49}
+\makelabel{ref:FreeSemigroup!with examples}{49}
+\makelabel{ref:FreeSemigroup!with examples}{49}
+\makelabel{ref:FreeSemigroup!with examples}{49}
+\makelabel{ref:SemigroupByMultiplicationTable}{49}
+\makelabel{ref:IsRegularSemigroup}{49}
+\makelabel{ref:IsRegularSemigroupElement}{49}
+\makelabel{ref:IsSimpleSemigroup}{49}
+\makelabel{ref:IsZeroSimpleSemigroup}{49}
+\makelabel{ref:IsZeroGroup}{49}
+\makelabel{ref:IsReesCongruenceSemigroup}{49}
+\makelabel{ref:Making transformation semigroups}{49.1}
+\makelabel{ref:IsTransformationSemigroup}{49.1.1}
+\makelabel{ref:IsTransformationMonoid}{49.1.1}
+\makelabel{ref:DegreeOfTransformationSemigroup}{49.1.2}
+\makelabel{ref:IsomorphismTransformationSemigroup}{49.1.3}
+\makelabel{ref:HomomorphismTransformationSemigroup}{49.1.3}
+\makelabel{ref:IsFullTransformationSemigroup}{49.1.4}
+\makelabel{ref:FullTransformationSemigroup}{49.1.5}
+\makelabel{ref:Ideals of semigroups}{49.2}
+\makelabel{ref:SemigroupIdealByGenerators}{49.2.1}
+\makelabel{ref:ReesCongruenceOfSemigroupIdeal}{49.2.2}
+\makelabel{ref:IsLeftSemigroupIdeal}{49.2.3}
+\makelabel{ref:IsRightSemigroupIdeal}{49.2.3}
+\makelabel{ref:IsSemigroupIdeal}{49.2.3}
+\makelabel{ref:Congruences for semigroups}{49.3}
+\makelabel{ref:IsSemigroupCongruence}{49.3.1}
+\makelabel{ref:IsReesCongruence}{49.3.2}
+\makelabel{ref:Quotients}{49.4}
+\makelabel{ref:IsQuotientSemigroup}{49.4.1}
+\makelabel{ref:HomomorphismQuotientSemigroup}{49.4.2}
+\makelabel{ref:QuotientSemigroupPreimage}{49.4.3}
+\makelabel{ref:QuotientSemigroupCongruence}{49.4.3}
+\makelabel{ref:QuotientSemigroupHomomorphism}{49.4.3}
+\makelabel{ref:Green's Relations}{49.5}
+\makelabel{ref:GreensRRelation}{49.5.1}
+\makelabel{ref:GreensLRelation}{49.5.1}
+\makelabel{ref:GreensJRelation}{49.5.1}
+\makelabel{ref:GreensDRelation}{49.5.1}
+\makelabel{ref:GreensHRelation}{49.5.1}
+\makelabel{ref:IsGreensRelation}{49.5.2}
+\makelabel{ref:IsGreensRRelation}{49.5.2}
+\makelabel{ref:IsGreensLRelation}{49.5.2}
+\makelabel{ref:IsGreensJRelation}{49.5.2}
+\makelabel{ref:IsGreensHRelation}{49.5.2}
+\makelabel{ref:IsGreensDRelation}{49.5.2}
+\makelabel{ref:IsGreensClass}{49.5.3}
+\makelabel{ref:IsGreensRClass}{49.5.3}
+\makelabel{ref:IsGreensLClass}{49.5.3}
+\makelabel{ref:IsGreensJClass}{49.5.3}
+\makelabel{ref:IsGreensHClass}{49.5.3}
+\makelabel{ref:IsGreensDClass}{49.5.3}
+\makelabel{ref:IsGreensLessThanOrEqual}{49.5.4}
+\makelabel{ref:RClassOfHClass}{49.5.5}
+\makelabel{ref:LClassOfHClass}{49.5.5}
+\makelabel{ref:EggBoxOfDClass}{49.5.6}
+\makelabel{ref:DisplayEggBoxOfDClass}{49.5.7}
+\makelabel{ref:GreensRClassOfElement}{49.5.8}
+\makelabel{ref:GreensLClassOfElement}{49.5.8}
+\makelabel{ref:GreensDClassOfElement}{49.5.8}
+\makelabel{ref:GreensJClassOfElement}{49.5.8}
+\makelabel{ref:GreensHClassOfElement}{49.5.8}
+\makelabel{ref:GreensRClasses}{49.5.9}
+\makelabel{ref:GreensLClasses}{49.5.9}
+\makelabel{ref:GreensJClasses}{49.5.9}
+\makelabel{ref:GreensDClasses}{49.5.9}
+\makelabel{ref:GreensHClasses}{49.5.9}
+\makelabel{ref:GroupHClassOfGreensDClass}{49.5.10}
+\makelabel{ref:IsGroupHClass}{49.5.11}
+\makelabel{ref:IsRegularDClass}{49.5.12}
+\makelabel{ref:Rees Matrix Semigroups}{49.6}
+\makelabel{ref:ReesMatrixSemigroup}{49.6.1}
+\makelabel{ref:ReesZeroMatrixSemigroup}{49.6.2}
+\makelabel{ref:IsReesMatrixSemigroup}{49.6.3}
+\makelabel{ref:IsReesZeroMatrixSemigroup}{49.6.4}
+\makelabel{ref:ReesMatrixSemigroupElement}{49.6.5}
+\makelabel{ref:ReesZeroMatrixSemigroupElement}{49.6.5}
+\makelabel{ref:IsReesMatrixSemigroupElement}{49.6.6}
+\makelabel{ref:IsReesZeroMatrixSemigroupElement}{49.6.6}
+\makelabel{ref:SandwichMatrixOfReesMatrixSemigroup}{49.6.7}
+\makelabel{ref:SandwichMatrixOfReesZeroMatrixSemigroup}{49.6.7}
+\makelabel{ref:RowIndexOfReesMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:RowIndexOfReesZeroMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:ColumnIndexOfReesMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:ColumnIndexOfReesZeroMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:UnderlyingElementOfReesMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:UnderlyingElementOfReesZeroMatrixSemigroupElement}{49.6.8}
+\makelabel{ref:ReesZeroMatrixSemigroupElementIsZero}{49.6.9}
+\makelabel{ref:AssociatedReesMatrixSemigroupOfDClass}{49.6.10}
+\makelabel{ref:IsomorphismReesMatrixSemigroup}{49.6.11}
+\makelabel{ref:Monoids}{50}
+\makelabel{ref:IsMonoid}{50}
+\makelabel{ref:Monoid}{50}
+\makelabel{ref:Monoid}{50}
+\makelabel{ref:Monoid}{50}
+\makelabel{ref:Submonoid}{50}
+\makelabel{ref:SubmonoidNC}{50}
+\makelabel{ref:MonoidByGenerators}{50}
+\makelabel{ref:MonoidByGenerators}{50}
+\makelabel{ref:AsMonoid}{50}
+\makelabel{ref:AsSubmonoid}{50}
+\makelabel{ref:GeneratorsOfMonoid}{50}
+\makelabel{ref:TrivialSubmonoid}{50}
+\makelabel{ref:FreeMonoid}{50}
+\makelabel{ref:FreeMonoid}{50}
+\makelabel{ref:FreeMonoid}{50}
+\makelabel{ref:FreeMonoid}{50}
+\makelabel{ref:FreeMonoid}{50}
+\makelabel{ref:MonoidByMultiplicationTable}{50}
+\makelabel{ref:Finitely Presented Semigroups and Monoids}{51}
+\makelabel{ref:IsSubsemigroupFpSemigroup}{51}
+\makelabel{ref:IsSubmonoidFpMonoid}{51}
+\makelabel{ref:IsFpSemigroup}{51}
+\makelabel{ref:IsFpMonoid}{51}
+\makelabel{ref:IsElementOfFpSemigroup}{51}
+\makelabel{ref:IsElementOfFpMonoid}{51}
+\makelabel{ref:FpGrpMonSmgOfFpGrpMonSmgElement}{51}
+\makelabel{ref:Creating Finitely Presented Semigroups}{51.1}
+\makelabel{ref:quotient!of free semigroup}{51.1.1}
+\makelabel{ref:FactorFreeSemigroupByRelations}{51.1.2}
+\makelabel{ref:IsomorphismFpSemigroup}{51.1.3}
+\makelabel{ref:Comparison of Elements of Finitely Presented Semigroups}{51.2}
+\makelabel{ref:comparison!fp semigroup elements}{51.2.1}
+\makelabel{ref:Preimages in the Free Semigroup}{51.3}
+\makelabel{ref:FreeSemigroupOfFpSemigroup}{51.3.1}
+\makelabel{ref:FreeGeneratorsOfFpSemigroup}{51.3.2}
+\makelabel{ref:RelationsOfFpSemigroup}{51.3.3}
+\makelabel{ref:UnderlyingElement!fp semigroup elements}{51.3.4}
+\makelabel{ref:ElementOfFpSemigroup}{51.3.5}
+\makelabel{ref:Finitely presented monoids}{51.4}
+\makelabel{ref:quotient!of free monoid}{51.4.1}
+\makelabel{ref:Rewriting Systems and the Knuth-Bendix Procedure}{51.5}
+\makelabel{ref:ReducedConfluentRewritingSystem}{51.5.1}
+\makelabel{ref:ReducedConfluentRewritingSystem}{51.5.1}
+\makelabel{ref:KB_REW}{51.5.2}
+\makelabel{ref:GAPKB_REW}{51.5.2}
+\makelabel{ref:KnuthBendixRewritingSystem}{51.5.3}
+\makelabel{ref:KnuthBendixRewritingSystem}{51.5.3}
+\makelabel{ref:SemigroupOfRewritingSystem}{51.5.4}
+\makelabel{ref:MonoidOfRewritingSystem}{51.5.5}
+\makelabel{ref:FreeSemigroupOfRewritingSystem}{51.5.6}
+\makelabel{ref:FreeMonoidOfRewritingSystem}{51.5.7}
+\makelabel{ref:Todd-Coxeter Procedure}{51.6}
+\makelabel{ref:CosetTableOfFpSemigroup}{51.6.1}
+\makelabel{ref:Transformations}{52}
+\makelabel{ref:IsTransformation}{52}
+\makelabel{ref:IsTransformationCollection}{52}
+\makelabel{ref:TransformationFamily}{52}
+\makelabel{ref:TransformationType}{52}
+\makelabel{ref:TransformationData}{52}
+\makelabel{ref:Transformation}{52}
+\makelabel{ref:TransformationNC}{52}
+\makelabel{ref:IdentityTransformation}{52}
+\makelabel{ref:RandomTransformation}{52}
+\makelabel{ref:DegreeOfTransformation}{52}
+\makelabel{ref:ImageListOfTransformation}{52}
+\makelabel{ref:ImageSetOfTransformation}{52}
+\makelabel{ref:RankOfTransformation}{52}
+\makelabel{ref:KernelOfTransformation}{52}
+\makelabel{ref:PreimagesOfTransformation}{52}
+\makelabel{ref:RestrictedTransformation}{52}
+\makelabel{ref:AsTransformation}{52}
+\makelabel{ref:AsTransformation}{52}
+\makelabel{ref:AsTransformationNC}{52}
+\makelabel{ref:PermLeftQuoTransformation}{52}
+\makelabel{ref:BinaryRelationTransformation}{52}
+\makelabel{ref:TransformationRelation}{52}
+\makelabel{ref:Additive Magmas}{53}
+\makelabel{ref:(Near-)Additive Magma Categories}{53.1}
+\makelabel{ref:IsNearAdditiveMagma}{53.1.1}
+\makelabel{ref:IsNearAdditiveMagmaWithZero}{53.1.2}
+\makelabel{ref:IsNearAdditiveGroup}{53.1.3}
+\makelabel{ref:IsNearAdditiveMagmaWithInverses}{53.1.3}
+\makelabel{ref:IsAdditiveMagma}{53.1.4}
+\makelabel{ref:IsAdditiveMagmaWithZero}{53.1.5}
+\makelabel{ref:IsAdditiveGroup}{53.1.6}
+\makelabel{ref:IsAdditiveMagmaWithInverses}{53.1.6}
+\makelabel{ref:(Near-)Additive Magma Generation}{53.2}
+\makelabel{ref:NearAdditiveMagma}{53.2.1}
+\makelabel{ref:NearAdditiveMagma}{53.2.1}
+\makelabel{ref:NearAdditiveMagmaWithZero}{53.2.2}
+\makelabel{ref:NearAdditiveMagmaWithZero}{53.2.2}
+\makelabel{ref:NearAdditiveGroup}{53.2.3}
+\makelabel{ref:NearAdditiveGroup}{53.2.3}
+\makelabel{ref:NearAdditiveMagmaByGenerators}{53.2.4}
+\makelabel{ref:NearAdditiveMagmaByGenerators}{53.2.4}
+\makelabel{ref:NearAdditiveMagmaWithZeroByGenerators}{53.2.5}
+\makelabel{ref:NearAdditiveMagmaWithZeroByGenerators}{53.2.5}
+\makelabel{ref:NearAdditiveGroupByGenerators}{53.2.6}
+\makelabel{ref:NearAdditiveGroupByGenerators}{53.2.6}
+\makelabel{ref:SubnearAdditiveMagma}{53.2.7}
+\makelabel{ref:SubnearAdditiveMagmaNC}{53.2.7}
+\makelabel{ref:SubnearAdditiveMagmaWithZero}{53.2.8}
+\makelabel{ref:SubnearAdditiveMagmaWithZeroNC}{53.2.8}
+\makelabel{ref:SubnearAdditiveGroup}{53.2.9}
+\makelabel{ref:SubnearAdditiveGroupNC}{53.2.9}
+\makelabel{ref:Attributes and Properties for (Near-)Additive Magmas}{53.3}
+\makelabel{ref:IsAdditivelyCommutative}{53.3.1}
+\makelabel{ref:GeneratorsOfNearAdditiveMagma}{53.3.2}
+\makelabel{ref:GeneratorsOfAdditiveMagma}{53.3.2}
+\makelabel{ref:GeneratorsOfNearAdditiveMagmaWithZero}{53.3.3}
+\makelabel{ref:GeneratorsOfAdditiveMagmaWithZero}{53.3.3}
+\makelabel{ref:GeneratorsOfNearAdditiveGroup}{53.3.4}
+\makelabel{ref:GeneratorsOfAdditiveGroup}{53.3.4}
+\makelabel{ref:AdditiveNeutralElement}{53.3.5}
+\makelabel{ref:TrivialSubnearAdditiveMagmaWithZero}{53.3.6}
+\makelabel{ref:Operations for (Near-)Additive Magmas}{53.4}
+\makelabel{ref:ClosureNearAdditiveGroup}{53.4.1}
+\makelabel{ref:ClosureNearAdditiveGroup}{53.4.1}
+\makelabel{ref:Rings}{54}
+\makelabel{ref:Generating Rings}{54.1}
+\makelabel{ref:IsRing}{54.1.1}
+\makelabel{ref:Ring}{54.1.2}
+\makelabel{ref:Ring}{54.1.2}
+\makelabel{ref:DefaultRing}{54.1.3}
+\makelabel{ref:DefaultRing}{54.1.3}
+\makelabel{ref:RingByGenerators}{54.1.4}
+\makelabel{ref:DefaultRingByGenerators}{54.1.5}
+\makelabel{ref:GeneratorsOfRing}{54.1.6}
+\makelabel{ref:AsRing}{54.1.7}
+\makelabel{ref:Subring}{54.1.8}
+\makelabel{ref:SubringNC}{54.1.8}
+\makelabel{ref:ClosureRing}{54.1.9}
+\makelabel{ref:ClosureRing}{54.1.9}
+\makelabel{ref:Quotient}{54.1.10}
+\makelabel{ref:Quotient}{54.1.10}
+\makelabel{ref:Ideals in Rings}{54.2}
+\makelabel{ref:TwoSidedIdeal}{54.2.1}
+\makelabel{ref:Ideal}{54.2.1}
+\makelabel{ref:LeftIdeal}{54.2.1}
+\makelabel{ref:RightIdeal}{54.2.1}
+\makelabel{ref:TwoSidedIdealNC}{54.2.2}
+\makelabel{ref:IdealNC}{54.2.2}
+\makelabel{ref:LeftIdealNC}{54.2.2}
+\makelabel{ref:RightIdealNC}{54.2.2}
+\makelabel{ref:IsTwoSidedIdeal}{54.2.3}
+\makelabel{ref:IsLeftIdeal}{54.2.3}
+\makelabel{ref:IsRightIdeal}{54.2.3}
+\makelabel{ref:IsTwoSidedIdealInParent}{54.2.3}
+\makelabel{ref:IsLeftIdealInParent}{54.2.3}
+\makelabel{ref:IsRightIdealInParent}{54.2.3}
+\makelabel{ref:TwoSidedIdealByGenerators}{54.2.4}
+\makelabel{ref:IdealByGenerators}{54.2.4}
+\makelabel{ref:LeftIdealByGenerators}{54.2.5}
+\makelabel{ref:RightIdealByGenerators}{54.2.6}
+\makelabel{ref:GeneratorsOfTwoSidedIdeal}{54.2.7}
+\makelabel{ref:GeneratorsOfIdeal}{54.2.7}
+\makelabel{ref:GeneratorsOfLeftIdeal}{54.2.8}
+\makelabel{ref:GeneratorsOfRightIdeal}{54.2.9}
+\makelabel{ref:LeftActingRingOfIdeal}{54.2.10}
+\makelabel{ref:RightActingRingOfIdeal}{54.2.10}
+\makelabel{ref:AsLeftIdeal}{54.2.11}
+\makelabel{ref:AsRightIdeal}{54.2.11}
+\makelabel{ref:AsTwoSidedIdeal}{54.2.11}
+\makelabel{ref:Rings With One}{54.3}
+\makelabel{ref:IsRingWithOne}{54.3.1}
+\makelabel{ref:RingWithOne}{54.3.2}
+\makelabel{ref:RingWithOne}{54.3.2}
+\makelabel{ref:RingWithOneByGenerators}{54.3.3}
+\makelabel{ref:GeneratorsOfRingWithOne}{54.3.4}
+\makelabel{ref:SubringWithOne}{54.3.5}
+\makelabel{ref:SubringWithOneNC}{54.3.5}
+\makelabel{ref:Properties of Rings}{54.4}
+\makelabel{ref:IsIntegralRing}{54.4.1}
+\makelabel{ref:IsUniqueFactorizationRing}{54.4.2}
+\makelabel{ref:IsLDistributive}{54.4.3}
+\makelabel{ref:IsRDistributive}{54.4.4}
+\makelabel{ref:IsDistributive}{54.4.5}
+\makelabel{ref:IsAnticommutative}{54.4.6}
+\makelabel{ref:IsZeroSquaredRing}{54.4.7}
+\makelabel{ref:IsJacobianRing}{54.4.8}
+\makelabel{ref:Units and Factorizations}{54.5}
+\makelabel{ref:IsUnit}{54.5.1}
+\makelabel{ref:IsUnit}{54.5.1}
+\makelabel{ref:Units}{54.5.2}
+\makelabel{ref:IsAssociated}{54.5.3}
+\makelabel{ref:IsAssociated}{54.5.3}
+\makelabel{ref:Associates}{54.5.4}
+\makelabel{ref:Associates}{54.5.4}
+\makelabel{ref:StandardAssociate}{54.5.5}
+\makelabel{ref:StandardAssociate}{54.5.5}
+\makelabel{ref:IsIrreducibleRingElement}{54.5.6}
+\makelabel{ref:IsIrreducibleRingElement}{54.5.6}
+\makelabel{ref:IsPrime}{54.5.7}
+\makelabel{ref:IsPrime}{54.5.7}
+\makelabel{ref:Factors}{54.5.8}
+\makelabel{ref:Factors}{54.5.8}
+\makelabel{ref:Euclidean Rings}{54.6}
+\makelabel{ref:IsEuclideanRing}{54.6.1}
+\makelabel{ref:EuclideanDegree}{54.6.2}
+\makelabel{ref:EuclideanDegree}{54.6.2}
+\makelabel{ref:EuclideanQuotient}{54.6.3}
+\makelabel{ref:EuclideanQuotient}{54.6.3}
+\makelabel{ref:EuclideanRemainder}{54.6.4}
+\makelabel{ref:EuclideanRemainder}{54.6.4}
+\makelabel{ref:QuotientRemainder}{54.6.5}
+\makelabel{ref:QuotientRemainder}{54.6.5}
+\makelabel{ref:Gcd and Lcm}{54.7}
+\makelabel{ref:Gcd}{54.7.1}
+\makelabel{ref:Gcd}{54.7.1}
+\makelabel{ref:Gcd}{54.7.1}
+\makelabel{ref:Gcd}{54.7.1}
+\makelabel{ref:GcdOp}{54.7.2}
+\makelabel{ref:GcdOp}{54.7.2}
+\makelabel{ref:GcdRepresentation}{54.7.3}
+\makelabel{ref:GcdRepresentation}{54.7.3}
+\makelabel{ref:GcdRepresentation}{54.7.3}
+\makelabel{ref:GcdRepresentation}{54.7.3}
+\makelabel{ref:GcdRepresentationOp}{54.7.4}
+\makelabel{ref:GcdRepresentationOp}{54.7.4}
+\makelabel{ref:Lcm}{54.7.5}
+\makelabel{ref:Lcm}{54.7.5}
+\makelabel{ref:Lcm}{54.7.5}
+\makelabel{ref:Lcm}{54.7.5}
+\makelabel{ref:LcmOp}{54.7.6}
+\makelabel{ref:LcmOp}{54.7.6}
+\makelabel{ref:QuotientMod}{54.7.7}
+\makelabel{ref:QuotientMod}{54.7.7}
+\makelabel{ref:PowerMod}{54.7.8}
+\makelabel{ref:PowerMod}{54.7.8}
+\makelabel{ref:InterpolatedPolynomial}{54.7.9}
+\makelabel{ref:Modules}{55}
+\makelabel{ref:Generating modules}{55.1}
+\makelabel{ref:IsLeftOperatorAdditiveGroup}{55.1.1}
+\makelabel{ref:IsLeftModule}{55.1.2}
+\makelabel{ref:GeneratorsOfLeftOperatorAdditiveGroup}{55.1.3}
+\makelabel{ref:GeneratorsOfLeftModule}{55.1.4}
+\makelabel{ref:AsLeftModule}{55.1.5}
+\makelabel{ref:IsRightOperatorAdditiveGroup}{55.1.6}
+\makelabel{ref:IsRightModule}{55.1.7}
+\makelabel{ref:GeneratorsOfRightOperatorAdditiveGroup}{55.1.8}
+\makelabel{ref:GeneratorsOfRightModule}{55.1.9}
+\makelabel{ref:LeftModuleByGenerators}{55.1.10}
+\makelabel{ref:LeftModuleByGenerators}{55.1.10}
+\makelabel{ref:LeftActingDomain}{55.1.11}
+\makelabel{ref:Submodules}{55.2}
+\makelabel{ref:Submodule}{55.2.1}
+\makelabel{ref:Submodule}{55.2.1}
+\makelabel{ref:SubmoduleNC}{55.2.2}
+\makelabel{ref:SubmoduleNC}{55.2.2}
+\makelabel{ref:ClosureLeftModule}{55.2.3}
+\makelabel{ref:TrivialSubmodule}{55.2.4}
+\makelabel{ref:Free Modules}{55.3}
+\makelabel{ref:IsFreeLeftModule}{55.3.1}
+\makelabel{ref:FreeLeftModule}{55.3.2}
+\makelabel{ref:FreeLeftModule}{55.3.2}
+\makelabel{ref:FreeLeftModule}{55.3.2}
+\makelabel{ref:FreeLeftModule}{55.3.2}
+\makelabel{ref:AsFreeLeftModule}{55.3.3}
+\makelabel{ref:Dimension}{55.3.4}
+\makelabel{ref:IsFiniteDimensional}{55.3.5}
+\makelabel{ref:UseBasis}{55.3.6}
+\makelabel{ref:IsRowModule}{55.3.7}
+\makelabel{ref:IsMatrixModule}{55.3.8}
+\makelabel{ref:IsFullRowModule}{55.3.9}
+\makelabel{ref:FullRowModule}{55.3.10}
+\makelabel{ref:IsFullMatrixModule}{55.3.11}
+\makelabel{ref:FullMatrixModule}{55.3.12}
+\makelabel{ref:IsHandledByNiceBasis}{55.3.13}
+\makelabel{ref:Fields and Division Rings}{56}
+\makelabel{ref:Generating Fields}{56.1}
+\makelabel{ref:IsDivisionRing}{56.1.1}
+\makelabel{ref:IsField}{56.1.2}
+\makelabel{ref:Field}{56.1.3}
+\makelabel{ref:Field}{56.1.3}
+\makelabel{ref:Field}{56.1.3}
+\makelabel{ref:DefaultField}{56.1.4}
+\makelabel{ref:DefaultField}{56.1.4}
+\makelabel{ref:DefaultFieldByGenerators}{56.1.5}
+\makelabel{ref:GeneratorsOfDivisionRing}{56.1.6}
+\makelabel{ref:GeneratorsOfField}{56.1.7}
+\makelabel{ref:DivisionRingByGenerators}{56.1.8}
+\makelabel{ref:DivisionRingByGenerators}{56.1.8}
+\makelabel{ref:AsDivisionRing}{56.1.9}
+\makelabel{ref:AsDivisionRing}{56.1.9}
+\makelabel{ref:AsField}{56.1.9}
+\makelabel{ref:AsField}{56.1.9}
+\makelabel{ref:Subfields of Fields}{56.2}
+\makelabel{ref:Subfield}{56.2.1}
+\makelabel{ref:SubfieldNC}{56.2.1}
+\makelabel{ref:FieldOverItselfByGenerators}{56.2.2}
+\makelabel{ref:PrimitiveElement}{56.2.3}
+\makelabel{ref:PrimeField}{56.2.4}
+\makelabel{ref:IsPrimeField}{56.2.5}
+\makelabel{ref:DegreeOverPrimeField}{56.2.6}
+\makelabel{ref:DefiningPolynomial}{56.2.7}
+\makelabel{ref:RootOfDefiningPolynomial}{56.2.8}
+\makelabel{ref:FieldExtension}{56.2.9}
+\makelabel{ref:Subfields}{56.2.10}
+\makelabel{ref:Galois Action}{56.3}
+\makelabel{ref:GaloisGroup!of field}{56.3.1}
+\makelabel{ref:MinimalPolynomial!over a field}{56.3.2}
+\makelabel{ref:TracePolynomial}{56.3.3}
+\makelabel{ref:Norm}{56.3.4}
+\makelabel{ref:Norm}{56.3.4}
+\makelabel{ref:Norm}{56.3.4}
+\makelabel{ref:Trace!for field elements}{56.3.5}
+\makelabel{ref:Trace!for field elements}{56.3.5}
+\makelabel{ref:Trace!for field elements}{56.3.5}
+\makelabel{ref:Trace!for field elements}{56.3.5}
+\makelabel{ref:Conjugates}{56.3.6}
+\makelabel{ref:Conjugates}{56.3.6}
+\makelabel{ref:Conjugates}{56.3.6}
+\makelabel{ref:NormalBase}{56.3.7}
+\makelabel{ref:NormalBase}{56.3.7}
+\makelabel{ref:Finite Fields}{57}
+\makelabel{ref:Finite Field Elements}{57.1}
+\makelabel{ref:IsFFE}{57.1.1}
+\makelabel{ref:IsFFECollection}{57.1.1}
+\makelabel{ref:IsFFECollColl}{57.1.1}
+\makelabel{ref:Z}{57.1.2}
+\makelabel{ref:Operations for Finite Field Elements}{57.2}
+\makelabel{ref:DegreeFFE}{57.2.1}
+\makelabel{ref:DegreeFFE}{57.2.1}
+\makelabel{ref:DegreeFFE}{57.2.1}
+\makelabel{ref:LogFFE}{57.2.2}
+\makelabel{ref:IntFFE}{57.2.3}
+\makelabel{ref:IntFFESymm}{57.2.4}
+\makelabel{ref:IntFFESymm}{57.2.4}
+\makelabel{ref:IntVecFFE}{57.2.5}
+\makelabel{ref:Creating Finite Fields}{57.3}
+\makelabel{ref:GaloisField}{57.3.1}
+\makelabel{ref:GF}{57.3.1}
+\makelabel{ref:GaloisField}{57.3.1}
+\makelabel{ref:GF}{57.3.1}
+\makelabel{ref:GaloisField}{57.3.1}
+\makelabel{ref:GF}{57.3.1}
+\makelabel{ref:GaloisField}{57.3.1}
+\makelabel{ref:GF}{57.3.1}
+\makelabel{ref:GaloisField}{57.3.1}
+\makelabel{ref:GF}{57.3.1}
+\makelabel{ref:PrimitiveRoot}{57.3.2}
+\makelabel{ref:FrobeniusAutomorphism}{57.4.1}
+\makelabel{ref:Conway Polynomials}{57.5}
+\makelabel{ref:ConwayPolynomial}{57.5.1}
+\makelabel{ref:Abelian Number Fields}{58}
+\makelabel{ref:Construction of Abelian Number Fields}{58.1}
+\makelabel{ref:CyclotomicField}{58.1.1}
+\makelabel{ref:CyclotomicField}{58.1.1}
+\makelabel{ref:CyclotomicField}{58.1.1}
+\makelabel{ref:CyclotomicField}{58.1.1}
+\makelabel{ref:AbelianNumberField}{58.1.2}
+\makelabel{ref:GaussianRationals}{58.1.3}
+\makelabel{ref:IsGaussianRationals}{58.1.3}
+\makelabel{ref:Operations for Abelian Number Fields}{58.2}
+\makelabel{ref:IsNumberField}{58.2.1}
+\makelabel{ref:IsAbelianNumberField}{58.2.2}
+\makelabel{ref:IsCyclotomicField}{58.2.3}
+\makelabel{ref:GaloisStabilizer}{58.2.4}
+\makelabel{ref:Integral Bases of Abelian Number Fields}{58.3}
+\makelabel{ref:ZumbroichBase}{58.3.1}
+\makelabel{ref:LenstraBase}{58.3.2}
+\makelabel{ref:Galois Groups of Abelian Number Fields}{58.4}
+\makelabel{ref:ANFAutomorphism}{58.4.1}
+\makelabel{ref:Gaussians}{58.5}
+\makelabel{ref:GaussianIntegers}{58.5.1}
+\makelabel{ref:IsGaussianIntegers}{58.5.2}
+\makelabel{ref:Vector Spaces}{59}
+\makelabel{ref:IsLeftVectorSpace}{59}
+\makelabel{ref:IsVectorSpace}{59}
+\makelabel{ref:Constructing Vector Spaces}{59.1}
+\makelabel{ref:VectorSpace}{59.1.1}
+\makelabel{ref:Subspace}{59.1.2}
+\makelabel{ref:SubspaceNC}{59.1.2}
+\makelabel{ref:AsVectorSpace}{59.1.3}
+\makelabel{ref:AsSubspace}{59.1.4}
+\makelabel{ref:Operations and Attributes for Vector Spaces}{59.2}
+\makelabel{ref:GeneratorsOfLeftVectorSpace}{59.2.1}
+\makelabel{ref:GeneratorsOfVectorSpace}{59.2.1}
+\makelabel{ref:TrivialSubspace}{59.2.2}
+\makelabel{ref:Domains of Subspaces of Vector Spaces}{59.3}
+\makelabel{ref:Subspaces}{59.3.1}
+\makelabel{ref:Subspaces}{59.3.1}
+\makelabel{ref:IsSubspacesVectorSpace}{59.3.2}
+\makelabel{ref:Bases of Vector Spaces}{59.4}
+\makelabel{ref:IsBasis}{59.4.1}
+\makelabel{ref:Basis}{59.4.2}
+\makelabel{ref:Basis}{59.4.2}
+\makelabel{ref:BasisNC}{59.4.2}
+\makelabel{ref:CanonicalBasis}{59.4.3}
+\makelabel{ref:RelativeBasis}{59.4.4}
+\makelabel{ref:RelativeBasisNC}{59.4.4}
+\makelabel{ref:Operations for Vector Space Bases}{59.5}
+\makelabel{ref:BasisVectors}{59.5.1}
+\makelabel{ref:UnderlyingLeftModule}{59.5.2}
+\makelabel{ref:Coefficients}{59.5.3}
+\makelabel{ref:LinearCombination}{59.5.4}
+\makelabel{ref:LinearCombination}{59.5.4}
+\makelabel{ref:EnumeratorByBasis}{59.5.5}
+\makelabel{ref:IteratorByBasis}{59.5.6}
+\makelabel{ref:Operations for Special Kinds of Bases}{59.6}
+\makelabel{ref:IsCanonicalBasis}{59.6.1}
+\makelabel{ref:IsIntegralBasis}{59.6.2}
+\makelabel{ref:IsNormalBasis}{59.6.3}
+\makelabel{ref:StructureConstantsTable}{59.6.4}
+\makelabel{ref:Mutable Bases}{59.7}
+\makelabel{ref:IsMutableBasis}{59.7.1}
+\makelabel{ref:MutableBasis}{59.7.2}
+\makelabel{ref:NrBasisVectors}{59.7.3}
+\makelabel{ref:ImmutableBasis}{59.7.4}
+\makelabel{ref:IsContainedInSpan}{59.7.5}
+\makelabel{ref:CloseMutableBasis}{59.7.6}
+\makelabel{ref:Row and Matrix Spaces}{59.8}
+\makelabel{ref:IsRowSpace}{59.8.1}
+\makelabel{ref:IsMatrixSpace}{59.8.2}
+\makelabel{ref:IsGaussianSpace}{59.8.3}
+\makelabel{ref:FullRowSpace}{59.8.4}
+\makelabel{ref:FullMatrixSpace}{59.8.5}
+\makelabel{ref:DimensionOfVectors}{59.8.6}
+\makelabel{ref:IsSemiEchelonized}{59.8.7}
+\makelabel{ref:SemiEchelonBasis}{59.8.8}
+\makelabel{ref:SemiEchelonBasis}{59.8.8}
+\makelabel{ref:SemiEchelonBasisNC}{59.8.8}
+\makelabel{ref:IsCanonicalBasisFullRowModule}{59.8.9}
+\makelabel{ref:IsCanonicalBasisFullMatrixModule}{59.8.10}
+\makelabel{ref:NormedRowVectors}{59.8.11}
+\makelabel{ref:SiftedVector}{59.8.12}
+\makelabel{ref:Vector Space Homomorphisms}{59.9}
+\makelabel{ref:LeftModuleGeneralMappingByImages}{59.9.1}
+\makelabel{ref:LeftModuleHomomorphismByImages}{59.9.2}
+\makelabel{ref:LeftModuleHomomorphismByImagesNC}{59.9.2}
+\makelabel{ref:LeftModuleHomomorphismByMatrix}{59.9.3}
+\makelabel{ref:NaturalHomomorphismBySubspace}{59.9.4}
+\makelabel{ref:Hom}{59.9.5}
+\makelabel{ref:End}{59.9.6}
+\makelabel{ref:IsFullHomModule}{59.9.7}
+\makelabel{ref:IsPseudoCanonicalBasisFullHomModule}{59.9.8}
+\makelabel{ref:IsLinearMappingsModule}{59.9.9}
+\makelabel{ref:Vector Spaces Handled By Nice Bases}{59.10}
+\makelabel{ref:NiceFreeLeftModule}{59.10.1}
+\makelabel{ref:NiceVector}{59.10.2}
+\makelabel{ref:UglyVector}{59.10.2}
+\makelabel{ref:NiceFreeLeftModuleInfo}{59.10.3}
+\makelabel{ref:NiceBasis}{59.10.4}
+\makelabel{ref:IsBasisByNiceBasis}{59.10.5}
+\makelabel{ref:IsHandledByNiceBasis!for vector spaces}{59.10.6}
+\makelabel{ref:How to Implement New Kinds of Vector Spaces}{59.11}
+\makelabel{ref:DeclareHandlingByNiceBasis}{59.11.1}
+\makelabel{ref:InstallHandlingByNiceBasis}{59.11.1}
+\makelabel{ref:NiceBasisFiltersInfo}{59.11.2}
+\makelabel{ref:CheckForHandlingByNiceBasis}{59.11.3}
+\makelabel{ref:Algebras}{60}
+\makelabel{ref:InfoAlgebra}{60}
+\makelabel{ref:Constructing Algebras by Generators}{60.1}
+\makelabel{ref:Algebra}{60.1.1}
+\makelabel{ref:Algebra}{60.1.1}
+\makelabel{ref:Algebra}{60.1.1}
+\makelabel{ref:Algebra}{60.1.1}
+\makelabel{ref:AlgebraWithOne}{60.1.2}
+\makelabel{ref:AlgebraWithOne}{60.1.2}
+\makelabel{ref:AlgebraWithOne}{60.1.2}
+\makelabel{ref:AlgebraWithOne}{60.1.2}
+\makelabel{ref:Constructing Algebras as Free Algebras}{60.2}
+\makelabel{ref:FreeAlgebra}{60.2.1}
+\makelabel{ref:FreeAlgebra}{60.2.1}
+\makelabel{ref:FreeAlgebra}{60.2.1}
+\makelabel{ref:FreeAlgebraWithOne}{60.2.2}
+\makelabel{ref:FreeAlgebraWithOne}{60.2.2}
+\makelabel{ref:FreeAlgebraWithOne}{60.2.2}
+\makelabel{ref:FreeAssociativeAlgebra}{60.2.3}
+\makelabel{ref:FreeAssociativeAlgebra}{60.2.3}
+\makelabel{ref:FreeAssociativeAlgebra}{60.2.3}
+\makelabel{ref:FreeAssociativeAlgebraWithOne}{60.2.4}
+\makelabel{ref:FreeAssociativeAlgebraWithOne}{60.2.4}
+\makelabel{ref:FreeAssociativeAlgebraWithOne}{60.2.4}
+\makelabel{ref:Constructing Algebras by Structure Constants}{60.3}
+\makelabel{ref:EmptySCTable}{60.3.1}
+\makelabel{ref:EmptySCTable}{60.3.1}
+\makelabel{ref:EmptySCTable}{60.3.1}
+\makelabel{ref:SetEntrySCTable}{60.3.2}
+\makelabel{ref:GapInputSCTable}{60.3.3}
+\makelabel{ref:TestJacobi}{60.3.4}
+\makelabel{ref:AlgebraByStructureConstants}{60.3.5}
+\makelabel{ref:AlgebraByStructureConstants}{60.3.5}
+\makelabel{ref:AlgebraByStructureConstants}{60.3.5}
+\makelabel{ref:AlgebraByStructureConstants}{60.3.5}
+\makelabel{ref:IdentityFromSCTable}{60.3.6}
+\makelabel{ref:QuotientFromSCTable}{60.3.7}
+\makelabel{ref:Some Special Algebras}{60.4}
+\makelabel{ref:QuaternionAlgebra}{60.4.1}
+\makelabel{ref:QuaternionAlgebra}{60.4.1}
+\makelabel{ref:ComplexificationQuat}{60.4.2}
+\makelabel{ref:ComplexificationQuat}{60.4.2}
+\makelabel{ref:OctaveAlgebra}{60.4.3}
+\makelabel{ref:FullMatrixAlgebra}{60.4.4}
+\makelabel{ref:MatrixAlgebra}{60.4.4}
+\makelabel{ref:MatAlgebra}{60.4.4}
+\makelabel{ref:NullAlgebra}{60.4.5}
+\makelabel{ref:Subalgebras}{60.5}
+\makelabel{ref:Subalgebra}{60.5.1}
+\makelabel{ref:Subalgebra}{60.5.1}
+\makelabel{ref:SubalgebraNC}{60.5.2}
+\makelabel{ref:SubalgebraNC}{60.5.2}
+\makelabel{ref:SubalgebraWithOne}{60.5.3}
+\makelabel{ref:SubalgebraWithOne}{60.5.3}
+\makelabel{ref:SubalgebraWithOneNC}{60.5.4}
+\makelabel{ref:SubalgebraWithOneNC}{60.5.4}
+\makelabel{ref:TrivialSubalgebra}{60.5.5}
+\makelabel{ref:Ideals}{60.6}
+\makelabel{ref:Categories and Properties of Algebras}{60.7}
+\makelabel{ref:IsFLMLOR}{60.7.1}
+\makelabel{ref:IsFLMLORWithOne}{60.7.2}
+\makelabel{ref:IsAlgebra}{60.7.3}
+\makelabel{ref:IsAlgebraWithOne}{60.7.4}
+\makelabel{ref:IsLieAlgebra}{60.7.5}
+\makelabel{ref:IsSimpleAlgebra}{60.7.6}
+\makelabel{ref:IsFiniteDimensional!for matrix algebras}{60.7.7}
+\makelabel{ref:IsQuaternion}{60.7.8}
+\makelabel{ref:IsQuaternionCollection}{60.7.8}
+\makelabel{ref:IsQuaternionCollColl}{60.7.8}
+\makelabel{ref:Attributes and Operations for Algebras}{60.8}
+\makelabel{ref:GeneratorsOfAlgebra}{60.8.1}
+\makelabel{ref:GeneratorsOfAlgebraWithOne}{60.8.2}
+\makelabel{ref:ProductSpace}{60.8.3}
+\makelabel{ref:PowerSubalgebraSeries}{60.8.4}
+\makelabel{ref:AdjointBasis}{60.8.5}
+\makelabel{ref:IndicesOfAdjointBasis}{60.8.6}
+\makelabel{ref:AsAlgebra}{60.8.7}
+\makelabel{ref:AsAlgebraWithOne}{60.8.8}
+\makelabel{ref:AsSubalgebra}{60.8.9}
+\makelabel{ref:AsSubalgebraWithOne}{60.8.10}
+\makelabel{ref:MutableBasisOfClosureUnderAction}{60.8.11}
+\makelabel{ref:MutableBasisOfNonassociativeAlgebra}{60.8.12}
+\makelabel{ref:MutableBasisOfIdealInNonassociativeAlgebra}{60.8.13}
+\makelabel{ref:DirectSumOfAlgebras}{60.8.14}
+\makelabel{ref:DirectSumOfAlgebras}{60.8.14}
+\makelabel{ref:FullMatrixAlgebraCentralizer}{60.8.15}
+\makelabel{ref:RadicalOfAlgebra}{60.8.16}
+\makelabel{ref:CentralIdempotentsOfAlgebra}{60.8.17}
+\makelabel{ref:DirectSumDecomposition}{60.8.18}
+\makelabel{ref:LeviMalcevDecomposition}{60.8.19}
+\makelabel{ref:Grading}{60.8.20}
+\makelabel{ref:Homomorphisms of Algebras}{60.9}
+\makelabel{ref:AlgebraGeneralMappingByImages}{60.9.1}
+\makelabel{ref:AlgebraHomomorphismByImages}{60.9.2}
+\makelabel{ref:AlgebraHomomorphismByImagesNC}{60.9.3}
+\makelabel{ref:AlgebraWithOneGeneralMappingByImages}{60.9.4}
+\makelabel{ref:AlgebraWithOneHomomorphismByImages}{60.9.5}
+\makelabel{ref:AlgebraWithOneHomomorphismByImagesNC}{60.9.6}
+\makelabel{ref:NaturalHomomorphismByIdeal}{60.9.7}
+\makelabel{ref:OperationAlgebraHomomorphism}{60.9.8}
+\makelabel{ref:OperationAlgebraHomomorphism}{60.9.8}
+\makelabel{ref:IsomorphismFpAlgebra}{60.9.9}
+\makelabel{ref:IsomorphismMatrixAlgebra}{60.9.10}
+\makelabel{ref:IsomorphismSCAlgebra}{60.9.11}
+\makelabel{ref:IsomorphismSCAlgebra}{60.9.11}
+\makelabel{ref:RepresentativeLinearOperation}{60.9.12}
+\makelabel{ref:Representations of Algebras}{60.10}
+\makelabel{ref:LeftAlgebraModuleByGenerators}{60.10.1}
+\makelabel{ref:RightAlgebraModuleByGenerators}{60.10.2}
+\makelabel{ref:BiAlgebraModuleByGenerators}{60.10.3}
+\makelabel{ref:LeftAlgebraModule}{60.10.4}
+\makelabel{ref:RightAlgebraModule}{60.10.5}
+\makelabel{ref:BiAlgebraModule}{60.10.6}
+\makelabel{ref:GeneratorsOfAlgebraModule}{60.10.7}
+\makelabel{ref:IsAlgebraModuleElement}{60.10.8}
+\makelabel{ref:IsAlgebraModuleElementCollection}{60.10.8}
+\makelabel{ref:IsAlgebraModuleElementFamily}{60.10.8}
+\makelabel{ref:IsLeftAlgebraModuleElement}{60.10.9}
+\makelabel{ref:IsLeftAlgebraModuleElementCollection}{60.10.9}
+\makelabel{ref:IsRightAlgebraModuleElement}{60.10.10}
+\makelabel{ref:IsRightAlgebraModuleElementCollection}{60.10.10}
+\makelabel{ref:LeftActingAlgebra}{60.10.11}
+\makelabel{ref:RightActingAlgebra}{60.10.12}
+\makelabel{ref:ActingAlgebra}{60.10.13}
+\makelabel{ref:IsBasisOfAlgebraModuleElementSpace}{60.10.14}
+\makelabel{ref:MatrixOfAction}{60.10.15}
+\makelabel{ref:MatrixOfAction}{60.10.15}
+\makelabel{ref:SubAlgebraModule}{60.10.16}
+\makelabel{ref:LeftModuleByHomomorphismToMatAlg}{60.10.17}
+\makelabel{ref:RightModuleByHomomorphismToMatAlg}{60.10.18}
+\makelabel{ref:AdjointModule}{60.10.19}
+\makelabel{ref:FaithfulModule}{60.10.20}
+\makelabel{ref:ModuleByRestriction}{60.10.21}
+\makelabel{ref:ModuleByRestriction}{60.10.21}
+\makelabel{ref:NaturalHomomorphismBySubAlgebraModule}{60.10.22}
+\makelabel{ref:DirectSumOfAlgebraModules}{60.10.23}
+\makelabel{ref:DirectSumOfAlgebraModules}{60.10.23}
+\makelabel{ref:TranslatorSubalgebra}{60.10.24}
+\makelabel{ref:Lie Algebras}{61}
+\makelabel{ref:Lie objects}{61.1}
+\makelabel{ref:LieObject}{61.1.1}
+\makelabel{ref:IsLieObject}{61.1.2}
+\makelabel{ref:IsLieObjectCollection}{61.1.2}
+\makelabel{ref:LieFamily}{61.1.3}
+\makelabel{ref:UnderlyingFamily}{61.1.4}
+\makelabel{ref:Constructing Lie algebras}{61.2}
+\makelabel{ref:LieAlgebraByStructureConstants}{61.2.1}
+\makelabel{ref:LieAlgebraByStructureConstants}{61.2.1}
+\makelabel{ref:LieAlgebraByStructureConstants}{61.2.1}
+\makelabel{ref:LieAlgebra}{61.2.2}
+\makelabel{ref:LieAlgebra}{61.2.2}
+\makelabel{ref:LieAlgebra}{61.2.2}
+\makelabel{ref:LieAlgebra}{61.2.2}
+\makelabel{ref:LieAlgebra}{61.2.2}
+\makelabel{ref:FreeLieAlgebra}{61.2.3}
+\makelabel{ref:FreeLieAlgebra}{61.2.3}
+\makelabel{ref:FreeLieAlgebra}{61.2.3}
+\makelabel{ref:FullMatrixLieAlgebra}{61.2.4}
+\makelabel{ref:MatrixLieAlgebra}{61.2.4}
+\makelabel{ref:MatLieAlgebra}{61.2.4}
+\makelabel{ref:RightDerivations}{61.2.5}
+\makelabel{ref:LeftDerivations}{61.2.5}
+\makelabel{ref:Derivations}{61.2.5}
+\makelabel{ref:SimpleLieAlgebra}{61.2.6}
+\makelabel{ref:Distinguished Subalgebras}{61.3}
+\makelabel{ref:LieCentre}{61.3.1}
+\makelabel{ref:LieCenter}{61.3.1}
+\makelabel{ref:LieCentralizer}{61.3.2}
+\makelabel{ref:LieNormalizer}{61.3.3}
+\makelabel{ref:LieDerivedSubalgebra}{61.3.4}
+\makelabel{ref:LieNilRadical}{61.3.5}
+\makelabel{ref:LieSolvableRadical}{61.3.6}
+\makelabel{ref:CartanSubalgebra}{61.3.7}
+\makelabel{ref:Series of Ideals}{61.4}
+\makelabel{ref:LieDerivedSeries}{61.4.1}
+\makelabel{ref:LieLowerCentralSeries}{61.4.2}
+\makelabel{ref:LieUpperCentralSeries}{61.4.3}
+\makelabel{ref:Properties of a Lie Algebra}{61.5}
+\makelabel{ref:IsLieAbelian}{61.5.1}
+\makelabel{ref:IsLieNilpotent}{61.5.2}
+\makelabel{ref:IsLieSolvable}{61.5.3}
+\makelabel{ref:Direct Sum Decompositions}{61.6}
+\makelabel{ref:LeviMalcevDecomposition!for Lie algebras}{61.6.1}
+\makelabel{ref:DirectSumDecomposition!for Lie algebras}{61.6.2}
+\makelabel{ref:Semisimple Lie Algebras and Root Systems}{61.7}
+\makelabel{ref:SemiSimpleType}{61.7.1}
+\makelabel{ref:ChevalleyBasis}{61.7.2}
+\makelabel{ref:IsRootSystem}{61.7.3}
+\makelabel{ref:IsRootSystemFromLieAlgebra}{61.7.4}
+\makelabel{ref:RootSystem}{61.7.5}
+\makelabel{ref:UnderlyingLieAlgebra}{61.7.6}
+\makelabel{ref:PositiveRoots}{61.7.7}
+\makelabel{ref:NegativeRoots}{61.7.8}
+\makelabel{ref:PositiveRootVectors}{61.7.9}
+\makelabel{ref:NegativeRootVectors}{61.7.10}
+\makelabel{ref:SimpleSystem}{61.7.11}
+\makelabel{ref:CartanMatrix}{61.7.12}
+\makelabel{ref:BilinearFormMat}{61.7.13}
+\makelabel{ref:CanonicalGenerators}{61.7.14}
+\makelabel{ref:IsWeylGroup}{61.7.15}
+\makelabel{ref:SparseCartanMatrix}{61.7.16}
+\makelabel{ref:WeylGroup}{61.7.17}
+\makelabel{ref:ApplySimpleReflection}{61.7.18}
+\makelabel{ref:LongestWeylWordPerm}{61.7.19}
+\makelabel{ref:ConjugateDominantWeight}{61.7.20}
+\makelabel{ref:ConjugateDominantWeightWithWord}{61.7.20}
+\makelabel{ref:WeylOrbitIterator}{61.7.21}
+\makelabel{ref:Restricted Lie algebras}{61.8}
+\makelabel{ref:IsRestrictedLieAlgebra}{61.8.1}
+\makelabel{ref:PthPowerImages}{61.8.2}
+\makelabel{ref:PthPowerImage}{61.8.3}
+\makelabel{ref:JenningsLieAlgebra}{61.8.4}
+\makelabel{ref:PCentralLieAlgebra}{61.8.5}
+\makelabel{ref:The Adjoint Representation}{61.9}
+\makelabel{ref:AdjointMatrix}{61.9.1}
+\makelabel{ref:AdjointAssociativeAlgebra}{61.9.2}
+\makelabel{ref:KillingMatrix}{61.9.3}
+\makelabel{ref:KappaPerp}{61.9.4}
+\makelabel{ref:IsNilpotentElement}{61.9.5}
+\makelabel{ref:NonNilpotentElement}{61.9.6}
+\makelabel{ref:FindSl2}{61.9.7}
+\makelabel{ref:Universal Enveloping Algebras}{61.10}
+\makelabel{ref:UniversalEnvelopingAlgebra}{61.10.1}
+\makelabel{ref:UniversalEnvelopingAlgebra}{61.10.1}
+\makelabel{ref:Finitely Presented Lie Algebras}{61.11}
+\makelabel{ref:FpLieAlgebraByCartanMatrix}{61.11.1}
+\makelabel{ref:NilpotentQuotientOfFpLieAlgebra}{61.11.2}
+\makelabel{ref:NilpotentQuotientOfFpLieAlgebra}{61.11.2}
+\makelabel{ref:Modules over Lie Algebras and Their Cohomology}{61.12}
+\makelabel{ref:FaithfulModule!for Lie algebras}{61.12.1}
+\makelabel{ref:IsCochain}{61.12.2}
+\makelabel{ref:IsCochainCollection}{61.12.2}
+\makelabel{ref:Cochain}{61.12.3}
+\makelabel{ref:CochainSpace}{61.12.4}
+\makelabel{ref:ValueCochain}{61.12.5}
+\makelabel{ref:LieCoboundaryOperator}{61.12.6}
+\makelabel{ref:Cocycles}{61.12.7}
+\makelabel{ref:Coboundaries}{61.12.8}
+\makelabel{ref:Modules over Semisimple Lie Algebras}{61.13}
+\makelabel{ref:DominantWeights}{61.13.1}
+\makelabel{ref:DominantCharacter}{61.13.2}
+\makelabel{ref:DominantCharacter}{61.13.2}
+\makelabel{ref:DecomposeTensorProduct}{61.13.3}
+\makelabel{ref:DimensionOfHighestWeightModule}{61.13.4}
+\makelabel{ref:IsUEALatticeElement}{61.13.5}
+\makelabel{ref:IsUEALatticeElementCollection}{61.13.5}
+\makelabel{ref:IsUEALatticeElementFamily}{61.13.5}
+\makelabel{ref:LatticeGeneratorsInUEA}{61.13.6}
+\makelabel{ref:ObjByExtRep}{61.13.7}
+\makelabel{ref:IsWeightRepElement}{61.13.8}
+\makelabel{ref:IsWeightRepElementCollection}{61.13.8}
+\makelabel{ref:IsWeightRepElementFamily}{61.13.8}
+\makelabel{ref:HighestWeightModule}{61.13.9}
+\makelabel{ref:Tensor Products and Exterior and Symmetric Powers}{61.14}
+\makelabel{ref:TensorProductOfAlgebraModules}{61.14.1}
+\makelabel{ref:TensorProductOfAlgebraModules}{61.14.1}
+\makelabel{ref:ExteriorPowerOfAlgebraModule}{61.14.2}
+\makelabel{ref:SymmetricPowerOfAlgebraModule}{61.14.3}
+\makelabel{ref:DirectSumOfAlgebraModules!for Lie algebras}{61.14.4}
+\makelabel{ref:DirectSumOfAlgebraModules!for Lie algebras}{61.14.4}
+\makelabel{ref:Finitely Presented Algebras}{62}
+\makelabel{ref:Magma Rings}{63}
+\makelabel{ref:Free Magma Rings}{63.1}
+\makelabel{ref:FreeMagmaRing}{63.1.1}
+\makelabel{ref:GroupRing}{63.1.2}
+\makelabel{ref:IsFreeMagmaRing}{63.1.3}
+\makelabel{ref:IsFreeMagmaRingWithOne}{63.1.4}
+\makelabel{ref:IsGroupRing}{63.1.5}
+\makelabel{ref:UnderlyingMagma}{63.1.6}
+\makelabel{ref:AugmentationIdeal}{63.1.7}
+\makelabel{ref:Elements of Free Magma Rings}{63.2}
+\makelabel{ref:IsElementOfFreeMagmaRing}{63.2.1}
+\makelabel{ref:IsElementOfFreeMagmaRingCollection}{63.2.1}
+\makelabel{ref:IsElementOfFreeMagmaRingFamily}{63.2.2}
+\makelabel{ref:CoefficientsAndMagmaElements}{63.2.3}
+\makelabel{ref:ZeroCoefficient}{63.2.4}
+\makelabel{ref:ElementOfMagmaRing}{63.2.5}
+\makelabel{ref:Natural Embeddings related to Magma Rings}{63.3}
+\makelabel{ref:Magma Rings modulo Relations}{63.4}
+\makelabel{ref:IsElementOfMagmaRingModuloRelations}{63.4.1}
+\makelabel{ref:IsElementOfMagmaRingModuloRelationsCollection}{63.4.1}
+\makelabel{ref:IsElementOfMagmaRingModuloRelationsFamily}{63.4.2}
+\makelabel{ref:NormalizedElementOfMagmaRingModuloRelations}{63.4.3}
+\makelabel{ref:IsMagmaRingModuloRelations}{63.4.4}
+\makelabel{ref:Magma Rings modulo the Span of a Zero Element}{63.5}
+\makelabel{ref:IsElementOfMagmaRingModuloSpanOfZeroFamily}{63.5.1}
+\makelabel{ref:IsMagmaRingModuloSpanOfZero}{63.5.2}
+\makelabel{ref:MagmaRingModuloSpanOfZero}{63.5.3}
+\makelabel{ref:Technical Details about the Implementation of Magma Rings}{63.6}
+\makelabel{ref:Polynomials and Rational Functions}{64}
+\makelabel{ref:Indeterminates}{64.1}
+\makelabel{ref:Indeterminate}{64.1.1}
+\makelabel{ref:Indeterminate}{64.1.1}
+\makelabel{ref:Indeterminate}{64.1.1}
+\makelabel{ref:Indeterminate}{64.1.1}
+\makelabel{ref:IndeterminateNumberOfUnivariateRationalFunction}{64.1.2}
+\makelabel{ref:IndeterminateOfUnivariateRationalFunction}{64.1.3}
+\makelabel{ref:IndeterminateName}{64.1.4}
+\makelabel{ref:HasIndeterminateName}{64.1.4}
+\makelabel{ref:SetIndeterminateName}{64.1.4}
+\makelabel{ref:CIUnivPols}{64.1.5}
+\makelabel{ref:Operations for Rational Functions}{64.2}
+\makelabel{ref:addition!rational functions}{64.2.1}
+\makelabel{ref:subtraction!rational functions}{64.2.1}
+\makelabel{ref:product!rational functions}{64.2.1}
+\makelabel{ref:quotient!rational functions}{64.2.1}
+\makelabel{ref:mod!Laurent polynomials}{64.2.2}
+\makelabel{ref:Comparison of Rational Functions}{64.3}
+\makelabel{ref:comparison!rational functions}{64.3.1}
+\makelabel{ref:smaller!rational functions}{64.3.2}
+\makelabel{ref:Properties and Attributes of Rational Functions}{64.4}
+\makelabel{ref:IsPolynomialFunction}{64.4.1}
+\makelabel{ref:IsRationalFunction}{64.4.1}
+\makelabel{ref:NumeratorOfRationalFunction}{64.4.2}
+\makelabel{ref:DenominatorOfRationalFunction}{64.4.3}
+\makelabel{ref:IsPolynomial}{64.4.4}
+\makelabel{ref:AsPolynomial}{64.4.5}
+\makelabel{ref:IsUnivariateRationalFunction}{64.4.6}
+\makelabel{ref:CoefficientsOfUnivariateRationalFunction}{64.4.7}
+\makelabel{ref:IsUnivariatePolynomial}{64.4.8}
+\makelabel{ref:CoefficientsOfUnivariatePolynomial}{64.4.9}
+\makelabel{ref:IsLaurentPolynomial}{64.4.10}
+\makelabel{ref:IsConstantRationalFunction}{64.4.11}
+\makelabel{ref:IsPrimitivePolynomial}{64.4.12}
+\makelabel{ref:SplittingField}{64.4.13}
+\makelabel{ref:Univariate Polynomials}{64.5}
+\makelabel{ref:UnivariatePolynomial}{64.5.1}
+\makelabel{ref:UnivariatePolynomialByCoefficients}{64.5.2}
+\makelabel{ref:DegreeOfLaurentPolynomial}{64.5.3}
+\makelabel{ref:RootsOfUPol}{64.5.4}
+\makelabel{ref:RootsOfUPol}{64.5.4}
+\makelabel{ref:RootsOfUPol}{64.5.4}
+\makelabel{ref:UnivariatenessTestRationalFunction}{64.5.5}
+\makelabel{ref:Polynomials as Univariate Polynomials in one Indeterminate}{64.6}
+\makelabel{ref:DegreeIndeterminate}{64.6.1}
+\makelabel{ref:DegreeIndeterminate}{64.6.1}
+\makelabel{ref:PolynomialCoefficientsOfPolynomial}{64.6.2}
+\makelabel{ref:PolynomialCoefficientsOfPolynomial}{64.6.2}
+\makelabel{ref:LeadingCoefficient}{64.6.3}
+\makelabel{ref:LeadingMonomial}{64.6.4}
+\makelabel{ref:Derivative}{64.6.5}
+\makelabel{ref:Derivative}{64.6.5}
+\makelabel{ref:Discriminant}{64.6.6}
+\makelabel{ref:Discriminant}{64.6.6}
+\makelabel{ref:Resultant}{64.6.7}
+\makelabel{ref:Resultant}{64.6.7}
+\makelabel{ref:Multivariate Polynomials}{64.7}
+\makelabel{ref:Value}{64.7.1}
+\makelabel{ref:Value}{64.7.1}
+\makelabel{ref:OnIndeterminates}{64.7.2}
+\makelabel{ref:Minimal Polynomials}{64.8}
+\makelabel{ref:MinimalPolynomial}{64.8.1}
+\makelabel{ref:Cyclotomic Polynomials}{64.9}
+\makelabel{ref:CyclotomicPolynomial}{64.9.1}
+\makelabel{ref:Polynomial Factorization}{64.10}
+\makelabel{ref:Factors!of univariate polynomial}{64.10.1}
+\makelabel{ref:FactorsSquarefree}{64.10.2}
+\makelabel{ref:Polynomials over the Rationals}{64.11}
+\makelabel{ref:PrimitivePolynomial}{64.11.1}
+\makelabel{ref:PolynomialModP}{64.11.2}
+\makelabel{ref:GaloisType}{64.11.3}
+\makelabel{ref:ProbabilityShapes}{64.11.4}
+\makelabel{ref:BombieriNorm}{64.11.5}
+\makelabel{ref:MinimizedBombieriNorm}{64.11.6}
+\makelabel{ref:HenselBound}{64.11.7}
+\makelabel{ref:OneFactorBound}{64.11.8}
+\makelabel{ref:Laurent Polynomials}{64.12}
+\makelabel{ref:LaurentPolynomialByCoefficients}{64.12.1}
+\makelabel{ref:CoefficientsOfLaurentPolynomial}{64.12.2}
+\makelabel{ref:IndeterminateNumberOfLaurentPolynomial}{64.12.3}
+\makelabel{ref:QuotRemLaurpols}{64.12.4}
+\makelabel{ref:Univariate Rational Functions}{64.13}
+\makelabel{ref:UnivariateRationalFunctionByCoefficients}{64.13.1}
+\makelabel{ref:Polynomial Rings}{64.14}
+\makelabel{ref:PolynomialRing}{64.14.1}
+\makelabel{ref:PolynomialRing}{64.14.1}
+\makelabel{ref:PolynomialRing}{64.14.1}
+\makelabel{ref:PolynomialRing}{64.14.1}
+\makelabel{ref:IndeterminatesOfPolynomialRing}{64.14.2}
+\makelabel{ref:CoefficientsRing}{64.14.3}
+\makelabel{ref:IsPolynomialRing}{64.14.4}
+\makelabel{ref:IsFiniteFieldPolynomialRing}{64.14.5}
+\makelabel{ref:IsAbelianNumberFieldPolynomialRing}{64.14.6}
+\makelabel{ref:IsRationalsPolynomialRing}{64.14.7}
+\makelabel{ref:Univariate Polynomial Rings}{64.15}
+\makelabel{ref:UnivariatePolynomialRing}{64.15.1}
+\makelabel{ref:UnivariatePolynomialRing}{64.15.1}
+\makelabel{ref:UnivariatePolynomialRing}{64.15.1}
+\makelabel{ref:IsUnivariatePolynomialRing}{64.15.2}
+\makelabel{ref:Monomial Orderings}{64.16}
+\makelabel{ref:IsMonomialOrdering}{64.16.1}
+\makelabel{ref:LeadingMonomialOfPolynomial}{64.16.2}
+\makelabel{ref:LeadingTermOfPolynomial}{64.16.3}
+\makelabel{ref:LeadingCoefficientOfPolynomial}{64.16.4}
+\makelabel{ref:MonomialComparisonFunction}{64.16.5}
+\makelabel{ref:MonomialExtrepComparisonFun}{64.16.6}
+\makelabel{ref:MonomialLexOrdering}{64.16.7}
+\makelabel{ref:MonomialLexOrdering}{64.16.7}
+\makelabel{ref:MonomialGrlexOrdering}{64.16.8}
+\makelabel{ref:MonomialGrlexOrdering}{64.16.8}
+\makelabel{ref:MonomialGrevlexOrdering}{64.16.9}
+\makelabel{ref:MonomialGrevlexOrdering}{64.16.9}
+\makelabel{ref:EliminationOrdering}{64.16.10}
+\makelabel{ref:EliminationOrdering}{64.16.10}
+\makelabel{ref:PolynomialReduction}{64.16.11}
+\makelabel{ref:PolynomialReducedRemainder}{64.16.12}
+\makelabel{ref:PolynomialDivisionAlgorithm}{64.16.13}
+\makelabel{ref:MonomialExtGrlexLess}{64.16.14}
+\makelabel{ref:Groebner Bases}{64.17}
+\makelabel{ref:GroebnerBasis}{64.17.1}
+\makelabel{ref:GroebnerBasis}{64.17.1}
+\makelabel{ref:GroebnerBasisNC}{64.17.1}
+\makelabel{ref:ReducedGroebnerBasis}{64.17.2}
+\makelabel{ref:ReducedGroebnerBasis}{64.17.2}
+\makelabel{ref:StoredGroebnerBasis}{64.17.3}
+\makelabel{ref:InfoGroebner}{64.17.4}
+\makelabel{ref:Rational Function Families}{64.18}
+\makelabel{ref:RationalFunctionsFamily}{64.18.1}
+\makelabel{ref:IsPolynomialFunctionsFamily}{64.18.2}
+\makelabel{ref:IsRationalFunctionsFamily}{64.18.2}
+\makelabel{ref:CoefficientsFamily}{64.18.3}
+\makelabel{ref:The Representations of Rational Functions}{64.19}
+\makelabel{ref:The Defining Attributes of Rational Functions}{64.20}
+\makelabel{ref:IsRationalFunctionDefaultRep}{64.20.1}
+\makelabel{ref:ExtRepNumeratorRatFun}{64.20.2}
+\makelabel{ref:ExtRepDenominatorRatFun}{64.20.3}
+\makelabel{ref:ZeroCoefficientRatFun}{64.20.4}
+\makelabel{ref:IsPolynomialDefaultRep}{64.20.5}
+\makelabel{ref:ExtRepPolynomialRatFun}{64.20.6}
+\makelabel{ref:IsLaurentPolynomialDefaultRep}{64.20.7}
+\makelabel{ref:Creation of Rational Functions}{64.21}
+\makelabel{ref:RationalFunctionByExtRep}{64.21.1}
+\makelabel{ref:PolynomialByExtRep}{64.21.2}
+\makelabel{ref:LaurentPolynomialByExtRep}{64.21.3}
+\makelabel{ref:Arithmetic for External Representations of Polynomials}{64.22}
+\makelabel{ref:ZippedSum}{64.22.1}
+\makelabel{ref:ZippedProduct}{64.22.2}
+\makelabel{ref:QuotientPolynomialsExtRep}{64.22.3}
+\makelabel{ref:Cancellation Tests for Rational Functions}{64.23}
+\makelabel{ref:RationalFunctionByExtRepWithCancellation}{64.23.1}
+\makelabel{ref:TryGcdCancelExtRepPolynomials}{64.23.2}
+\makelabel{ref:HeuristicCancelPolynomials}{64.23.3}
+\makelabel{ref:Algebraic extensions of fields}{65}
+\makelabel{ref:Creation of Algebraic Extensions}{65.1}
+\makelabel{ref:AlgebraicExtension}{65.1.1}
+\makelabel{ref:IsAlgebraicExtension}{65.1.2}
+\makelabel{ref:Elements in Algebraic Extensions}{65.2}
+\makelabel{ref:IsAlgebraicElement}{65.2.1}
+\makelabel{ref:p-adic Numbers}{66}
+\makelabel{ref:Pure p-adic Numbers}{66.1}
+\makelabel{ref:PurePadicNumberFamily}{66.1.1}
+\makelabel{ref:PadicNumber!for pure padics}{66.1.2}
+\makelabel{ref:Valuation}{66.1.3}
+\makelabel{ref:ShiftedPadicNumber}{66.1.4}
+\makelabel{ref:IsPurePadicNumber}{66.1.5}
+\makelabel{ref:IsPurePadicNumberFamily}{66.1.6}
+\makelabel{ref:Extensions of the p-adic Numbers}{66.2}
+\makelabel{ref:PadicExtensionNumberFamily}{66.2.1}
+\makelabel{ref:PadicNumber}{66.2.2}
+\makelabel{ref:PadicNumber}{66.2.2}
+\makelabel{ref:PadicNumber}{66.2.2}
+\makelabel{ref:IsPadicExtensionNumber}{66.2.3}
+\makelabel{ref:IsPadicExtensionNumberFamily}{66.2.4}
+\makelabel{ref:The MeatAxe}{67}
+\makelabel{ref:MeatAxe Modules}{67.1}
+\makelabel{ref:GModuleByMats}{67.1.1}
+\makelabel{ref:GModuleByMats}{67.1.1}
+\makelabel{ref:Module Constructions}{67.2}
+\makelabel{ref:TensorProductGModule }{67.2.1}
+\makelabel{ref:WedgeGModule }{67.2.2}
+\makelabel{ref:Selecting a Different MeatAxe}{67.3}
+\makelabel{ref:Accessing a Module}{67.4}
+\makelabel{ref:MTX.Generators}{67.4.1}
+\makelabel{ref:MTX.Dimension}{67.4.2}
+\makelabel{ref:MTX.Field}{67.4.3}
+\makelabel{ref:Irreducibility Tests}{67.5}
+\makelabel{ref:MTX.IsIrreducible}{67.5.1}
+\makelabel{ref:MTX.IsAbsolutelyIrreducible}{67.5.2}
+\makelabel{ref:MTX.DegreeSplittingField}{67.5.3}
+\makelabel{ref:Finding Submodules}{67.6}
+\makelabel{ref:MTX.SubmoduleGModule}{67.6.1}
+\makelabel{ref:MTX.SubGModule}{67.6.1}
+\makelabel{ref:MTX.ProperSubmoduleBasis}{67.6.2}
+\makelabel{ref:MTX.BasesSubmodules}{67.6.3}
+\makelabel{ref:MTX.BasesMinimalSubmodules}{67.6.4}
+\makelabel{ref:MTX.BasesMaximalSubmodules}{67.6.5}
+\makelabel{ref:MTX.BasisRadical}{67.6.6}
+\makelabel{ref:MTX.BasisSocle}{67.6.7}
+\makelabel{ref:MTX.BasesMinimalSupermodules}{67.6.8}
+\makelabel{ref:MTX.BasesCompositionSeries}{67.6.9}
+\makelabel{ref:MTX.CompositionFactors}{67.6.10}
+\makelabel{ref:MTX.CollectedFactors}{67.6.11}
+\makelabel{ref:Induced Actions}{67.7}
+\makelabel{ref:MTX.NormedBasisAndBaseChange}{67.7.1}
+\makelabel{ref:MTX.InducedActionSubmodule}{67.7.2}
+\makelabel{ref:MTX.InducedActionSubmoduleNB}{67.7.2}
+\makelabel{ref:MTX.InducedActionFactorModule}{67.7.3}
+\makelabel{ref:MTX.InducedActionMatrix}{67.7.4}
+\makelabel{ref:MTX.InducedActionMatrixNB}{67.7.4}
+\makelabel{ref:MTX.InducedActionFactorMatrix}{67.7.4}
+\makelabel{ref:MTX.InducedAction}{67.7.5}
+\makelabel{ref:Module Homomorphisms}{67.8}
+\makelabel{ref:MTX.IsEquivalent}{67.8.1}
+\makelabel{ref:MTX.Isomorphism}{67.8.2}
+\makelabel{ref:MTX.Homomorphism}{67.8.3}
+\makelabel{ref:MTX.Homomorphisms}{67.8.4}
+\makelabel{ref:MTX.Distinguish}{67.8.5}
+\makelabel{ref:Invariant Forms}{67.9}
+\makelabel{ref:MTX.InvariantBilinearForm}{67.9.1}
+\makelabel{ref:MTX.InvariantSesquilinearForm}{67.9.2}
+\makelabel{ref:MTX.InvariantQuadraticForm}{67.9.3}
+\makelabel{ref:MTX.BasisInOrbit}{67.9.4}
+\makelabel{ref:MTX.OrthogonalSign}{67.9.5}
+\makelabel{ref:The Smash MeatAxe}{67.10}
+\makelabel{ref:SMTX.RandomIrreducibleSubGModule}{67.10.1}
+\makelabel{ref:SMTX.GoodElementGModule}{67.10.2}
+\makelabel{ref:SMTX.SortHomGModule}{67.10.3}
+\makelabel{ref:SMTX.MinimalSubGModules}{67.10.4}
+\makelabel{ref:SMTX.Setter}{67.10.5}
+\makelabel{ref:SMTX.Getter}{67.10.6}
+\makelabel{ref:SMTX.IrreducibilityTest}{67.10.7}
+\makelabel{ref:SMTX.AbsoluteIrreducibilityTest}{67.10.8}
+\makelabel{ref:SMTX.MinimalSubGModule}{67.10.9}
+\makelabel{ref:SMTX.MatrixSum}{67.10.10}
+\makelabel{ref:SMTX.CompleteBasis}{67.10.11}
+\makelabel{ref:Smash MeatAxe Flags}{67.11}
+\makelabel{ref:SMTX.Subbasis}{67.11.1}
+\makelabel{ref:SMTX.AlgEl}{67.11.2}
+\makelabel{ref:SMTX.AlgElMat}{67.11.3}
+\makelabel{ref:SMTX.AlgElCharPol}{67.11.4}
+\makelabel{ref:SMTX.AlgElCharPolFac}{67.11.5}
+\makelabel{ref:SMTX.AlgElNullspaceVec}{67.11.6}
+\makelabel{ref:SMTX.AlgElNullspaceDimension}{67.11.7}
+\makelabel{ref:SMTX.CentMat}{67.11.8}
+\makelabel{ref:SMTX.CentMatMinPoly}{67.11.9}
+\makelabel{ref:Tables of Marks}{68}
+\makelabel{ref:More about Tables of Marks}{68.1}
+\makelabel{ref:Table of Marks Objects in GAP}{68.2}
+\makelabel{ref:Constructing Tables of Marks}{68.3}
+\makelabel{ref:TableOfMarks}{68.3.1}
+\makelabel{ref:TableOfMarks}{68.3.1}
+\makelabel{ref:TableOfMarks}{68.3.1}
+\makelabel{ref:TableOfMarksByLattice}{68.3.2}
+\makelabel{ref:LatticeSubgroupsByTom}{68.3.3}
+\makelabel{ref:Printing Tables of Marks}{68.4}
+\makelabel{ref:Sorting Tables of Marks}{68.5}
+\makelabel{ref:SortedTom}{68.5.1}
+\makelabel{ref:PermutationTom}{68.5.2}
+\makelabel{ref:Technical Details about Tables of Marks}{68.6}
+\makelabel{ref:InfoTom}{68.6.1}
+\makelabel{ref:IsTableOfMarks}{68.6.2}
+\makelabel{ref:TableOfMarksFamily}{68.6.3}
+\makelabel{ref:TableOfMarksComponents}{68.6.4}
+\makelabel{ref:ConvertToTableOfMarks}{68.6.5}
+\makelabel{ref:Attributes of Tables of Marks}{68.7}
+\makelabel{ref:MarksTom}{68.7.1}
+\makelabel{ref:SubsTom}{68.7.1}
+\makelabel{ref:NrSubsTom}{68.7.2}
+\makelabel{ref:OrdersTom}{68.7.2}
+\makelabel{ref:LengthsTom}{68.7.3}
+\makelabel{ref:ClassTypesTom}{68.7.4}
+\makelabel{ref:ClassNamesTom}{68.7.5}
+\makelabel{ref:FusionsTom}{68.7.6}
+\makelabel{ref:UnderlyingGroup!for tables of marks}{68.7.7}
+\makelabel{ref:IdempotentsTom}{68.7.8}
+\makelabel{ref:IdempotentsTomInfo}{68.7.8}
+\makelabel{ref:Identifier!for tables of marks}{68.7.9}
+\makelabel{ref:MatTom}{68.7.10}
+\makelabel{ref:MoebiusTom}{68.7.11}
+\makelabel{ref:WeightsTom}{68.7.12}
+\makelabel{ref:Properties of Tables of Marks}{68.8}
+\makelabel{ref:IsAbelianTom}{68.8.1}
+\makelabel{ref:IsCyclicTom}{68.8.1}
+\makelabel{ref:IsNilpotentTom}{68.8.1}
+\makelabel{ref:IsPerfectTom}{68.8.1}
+\makelabel{ref:IsSolvableTom}{68.8.1}
+\makelabel{ref:Other Operations for Tables of Marks}{68.9}
+\makelabel{ref:IsInternallyConsistent!for tables of marks}{68.9.1}
+\makelabel{ref:DerivedSubgroupTom}{68.9.2}
+\makelabel{ref:DerivedSubgroupsTom}{68.9.2}
+\makelabel{ref:DerivedSubgroupsTomPossible}{68.9.3}
+\makelabel{ref:DerivedSubgroupsTomUnique}{68.9.3}
+\makelabel{ref:NormalizerTom}{68.9.4}
+\makelabel{ref:NormalizersTom}{68.9.4}
+\makelabel{ref:ContainedTom}{68.9.5}
+\makelabel{ref:ContainingTom}{68.9.6}
+\makelabel{ref:CyclicExtensionsTom}{68.9.7}
+\makelabel{ref:CyclicExtensionsTom}{68.9.7}
+\makelabel{ref:CyclicExtensionsTom}{68.9.7}
+\makelabel{ref:DecomposedFixedPointVector}{68.9.8}
+\makelabel{ref:EulerianFunctionByTom}{68.9.9}
+\makelabel{ref:IntersectionsTom}{68.9.10}
+\makelabel{ref:FactorGroupTom}{68.9.11}
+\makelabel{ref:MaximalSubgroupsTom}{68.9.12}
+\makelabel{ref:MaximalSubgroupsTom}{68.9.12}
+\makelabel{ref:MinimalSupergroupsTom}{68.9.13}
+\makelabel{ref:Standard Generators of Groups}{68.10}
+\makelabel{ref:StandardGeneratorsInfo!for groups}{68.10.1}
+\makelabel{ref:HumanReadableDefinition}{68.10.2}
+\makelabel{ref:ScriptFromString}{68.10.2}
+\makelabel{ref:StandardGeneratorsFunctions}{68.10.3}
+\makelabel{ref:IsStandardGeneratorsOfGroup}{68.10.4}
+\makelabel{ref:StandardGeneratorsOfGroup}{68.10.5}
+\makelabel{ref:Accessing Subgroups via Tables of Marks}{68.11}
+\makelabel{ref:GeneratorsSubgroupsTom}{68.11.1}
+\makelabel{ref:StraightLineProgramsTom}{68.11.2}
+\makelabel{ref:IsTableOfMarksWithGens}{68.11.3}
+\makelabel{ref:RepresentativeTom}{68.11.4}
+\makelabel{ref:RepresentativeTomByGenerators}{68.11.4}
+\makelabel{ref:RepresentativeTomByGeneratorsNC}{68.11.4}
+\makelabel{ref:StandardGeneratorsInfo!for tables of marks}{68.11.5}
+\makelabel{ref:The Interface between Tables of Marks and Character Tables}{68.12}
+\makelabel{ref:FusionCharTableTom}{68.12.1}
+\makelabel{ref:PossibleFusionsCharTableTom}{68.12.1}
+\makelabel{ref:PermCharsTom}{68.12.2}
+\makelabel{ref:PermCharsTom}{68.12.2}
+\makelabel{ref:Generic Construction of Tables of Marks}{68.13}
+\makelabel{ref:TableOfMarksCyclic}{68.13.1}
+\makelabel{ref:TableOfMarksDihedral}{68.13.2}
+\makelabel{ref:TableOfMarksFrobenius}{68.13.3}
+\makelabel{ref:The Library of Tables of Marks}{68.14}
+\makelabel{ref:Character Tables}{69}
+\makelabel{ref:Some Remarks about Character Theory in GAP}{69.1}
+\makelabel{ref:History of Character Theory Stuff in GAP}{69.2}
+\makelabel{ref:Creating Character Tables}{69.3}
+\makelabel{ref:CharacterTable}{69.3.1}
+\makelabel{ref:CharacterTable}{69.3.1}
+\makelabel{ref:CharacterTable}{69.3.1}
+\makelabel{ref:CharacterTable}{69.3.1}
+\makelabel{ref:BrauerTable}{69.3.2}
+\makelabel{ref:BrauerTable}{69.3.2}
+\makelabel{ref:BrauerTableOp}{69.3.2}
+\makelabel{ref:ComputedBrauerTables}{69.3.2}
+\makelabel{ref:SupportedCharacterTableInfo}{69.3.3}
+\makelabel{ref:ConvertToCharacterTable}{69.3.4}
+\makelabel{ref:ConvertToCharacterTableNC}{69.3.4}
+\makelabel{ref:Character Table Categories}{69.4}
+\makelabel{ref:IsNearlyCharacterTable}{69.4.1}
+\makelabel{ref:IsCharacterTable}{69.4.1}
+\makelabel{ref:IsOrdinaryTable}{69.4.1}
+\makelabel{ref:IsBrauerTable}{69.4.1}
+\makelabel{ref:IsCharacterTableInProgress}{69.4.1}
+\makelabel{ref:InfoCharacterTable}{69.4.2}
+\makelabel{ref:NearlyCharacterTablesFamily}{69.4.3}
+\makelabel{ref:Conventions for Character Tables}{69.5}
+\makelabel{ref:The Interface between Character Tables and Groups}{69.6}
+\makelabel{ref:UnderlyingGroup!for character tables}{69.6.1}
+\makelabel{ref:ConjugacyClasses!for character tables}{69.6.2}
+\makelabel{ref:IdentificationOfConjugacyClasses}{69.6.3}
+\makelabel{ref:ConnectGroupAndCharacterTable}{69.6.4}
+\makelabel{ref:ConnectGroupAndCharacterTable}{69.6.4}
+\makelabel{ref:CompatibleConjugacyClasses}{69.6.5}
+\makelabel{ref:CompatibleConjugacyClasses}{69.6.5}
+\makelabel{ref:Operators for Character Tables}{69.7}
+\makelabel{ref:Attributes and Properties of Character Tables}{69.8}
+\makelabel{ref:CharacterDegrees}{69.8.1}
+\makelabel{ref:CharacterDegrees}{69.8.1}
+\makelabel{ref:CharacterDegrees}{69.8.1}
+\makelabel{ref:Irr}{69.8.2}
+\makelabel{ref:Irr}{69.8.2}
+\makelabel{ref:Irr}{69.8.2}
+\makelabel{ref:LinearCharacters}{69.8.3}
+\makelabel{ref:LinearCharacters}{69.8.3}
+\makelabel{ref:LinearCharacters}{69.8.3}
+\makelabel{ref:OrdinaryCharacterTable}{69.8.4}
+\makelabel{ref:OrdinaryCharacterTable}{69.8.4}
+\makelabel{ref:OrdersClassRepresentatives}{69.8.5}
+\makelabel{ref:SizesCentralizers}{69.8.6}
+\makelabel{ref:SizesConjugacyClasses}{69.8.7}
+\makelabel{ref:AutomorphismsOfTable}{69.8.8}
+\makelabel{ref:UnderlyingCharacteristic}{69.8.9}
+\makelabel{ref:UnderlyingCharacteristic}{69.8.9}
+\makelabel{ref:ClassNames}{69.8.10}
+\makelabel{ref:ClassNames}{69.8.10}
+\makelabel{ref:CharacterNames}{69.8.10}
+\makelabel{ref:Identifier!for character tables}{69.8.11}
+\makelabel{ref:InfoText}{69.8.12}
+\makelabel{ref:InverseClasses}{69.8.13}
+\makelabel{ref:RealClasses}{69.8.14}
+\makelabel{ref:ClassOrbit}{69.8.15}
+\makelabel{ref:ClassRoots}{69.8.16}
+\makelabel{ref:ClassPositionsOfNormalSubgroups}{69.8.17}
+\makelabel{ref:ClassPositionsOfMaximalNormalSubgroups}{69.8.17}
+\makelabel{ref:ClassPositionsOfAgemo}{69.8.18}
+\makelabel{ref:ClassPositionsOfCentre!for character tables}{69.8.19}
+\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.20}
+\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.20}
+\makelabel{ref:ClassPositionsOfDerivedSubgroup}{69.8.21}
+\makelabel{ref:ClassPositionsOfElementaryAbelianSeries}{69.8.22}
+\makelabel{ref:ClassPositionsOfFittingSubgroup}{69.8.23}
+\makelabel{ref:ClassPositionsOfLowerCentralSeries}{69.8.24}
+\makelabel{ref:ClassPositionsOfUpperCentralSeries}{69.8.25}
+\makelabel{ref:ClassPositionsOfSupersolvableResiduum}{69.8.26}
+\makelabel{ref:ClassPositionsOfNormalClosure}{69.8.27}
+\makelabel{ref:Operations Concerning Blocks}{69.9}
+\makelabel{ref:PrimeBlocks}{69.9.1}
+\makelabel{ref:PrimeBlocksOp}{69.9.1}
+\makelabel{ref:ComputedPrimeBlockss}{69.9.1}
+\makelabel{ref:SameBlock}{69.9.2}
+\makelabel{ref:BlocksInfo}{69.9.3}
+\makelabel{ref:DecompositionMatrix}{69.9.4}
+\makelabel{ref:DecompositionMatrix}{69.9.4}
+\makelabel{ref:LaTeXStringDecompositionMatrix}{69.9.5}
+\makelabel{ref:Other Operations for Character Tables}{69.10}
+\makelabel{ref:IsInternallyConsistent!for character tables}{69.10.1}
+\makelabel{ref:IsPSolvableCharacterTable}{69.10.2}
+\makelabel{ref:IsPSolvableCharacterTableOp}{69.10.2}
+\makelabel{ref:ComputedIsPSolvableCharacterTables}{69.10.2}
+\makelabel{ref:IsClassFusionOfNormalSubgroup}{69.10.3}
+\makelabel{ref:Indicator}{69.10.4}
+\makelabel{ref:Indicator}{69.10.4}
+\makelabel{ref:Indicator}{69.10.4}
+\makelabel{ref:IndicatorOp}{69.10.4}
+\makelabel{ref:ComputedIndicators}{69.10.4}
+\makelabel{ref:NrPolyhedralSubgroups}{69.10.5}
+\makelabel{ref:ClassMultiplicationCoefficient!for character tables}{69.10.6}
+\makelabel{ref:ClassStructureCharTable}{69.10.7}
+\makelabel{ref:MatClassMultCoeffsCharTable}{69.10.8}
+\makelabel{ref:Printing Character Tables}{69.11}
+\makelabel{ref:DisplayOptions}{69.11.1}
+\makelabel{ref:PrintCharacterTable}{69.11.2}
+\makelabel{ref:Computing the Irreducible Characters of a Group}{69.12}
+\makelabel{ref:IrrDixonSchneider}{69.12.1}
+\makelabel{ref:IrrConlon}{69.12.2}
+\makelabel{ref:IrrBaumClausen}{69.12.3}
+\makelabel{ref:IrreducibleRepresentations}{69.12.4}
+\makelabel{ref:IrreducibleRepresentations}{69.12.4}
+\makelabel{ref:IrreducibleRepresentationsDixon}{69.12.5}
+\makelabel{ref:IrreducibleRepresentationsDixon}{69.12.5}
+\makelabel{ref:IrreducibleRepresentationsDixon}{69.12.5}
+\makelabel{ref:Representations given by modules}{69.13}
+\makelabel{ref:IrreducibleModules}{69.13.1}
+\makelabel{ref:AbsoluteIrreducibleModules}{69.13.2}
+\makelabel{ref:AbsolutIrreducibleModules}{69.13.2}
+\makelabel{ref:RegularModule}{69.13.3}
+\makelabel{ref:The Dixon-Schneider Algorithm}{69.14}
+\makelabel{ref:Advanced Methods for Dixon-Schneider Calculations}{69.15}
+\makelabel{ref:DixonRecord}{69.15.1}
+\makelabel{ref:DixonInit}{69.15.2}
+\makelabel{ref:DixontinI}{69.15.3}
+\makelabel{ref:DixonSplit}{69.15.4}
+\makelabel{ref:BestSplittingMatrix}{69.15.5}
+\makelabel{ref:DxIncludeIrreducibles}{69.15.6}
+\makelabel{ref:SplitCharacters}{69.15.7}
+\makelabel{ref:IsDxLargeGroup}{69.15.8}
+\makelabel{ref:Components of a Dixon Record}{69.16}
+\makelabel{ref:An Example of Advanced Dixon-Schneider Calculations}{69.17}
+\makelabel{ref:Constructing Character Tables from Others}{69.18}
+\makelabel{ref:CharacterTableDirectProduct}{69.18.1}
+\makelabel{ref:FactorsOfDirectProduct}{69.18.2}
+\makelabel{ref:CharacterTableFactorGroup}{69.18.3}
+\makelabel{ref:CharacterTableIsoclinic}{69.18.4}
+\makelabel{ref:CharacterTableIsoclinic}{69.18.4}
+\makelabel{ref:CharacterTableIsoclinic}{69.18.4}
+\makelabel{ref:CharacterTableWreathSymmetric}{69.18.5}
+\makelabel{ref:Sorted Character Tables}{69.19}
+\makelabel{ref:CharacterTableWithSortedCharacters}{69.19.1}
+\makelabel{ref:CharacterTableWithSortedCharacters}{69.19.1}
+\makelabel{ref:SortedCharacters}{69.19.2}
+\makelabel{ref:SortedCharacters}{69.19.2}
+\makelabel{ref:SortedCharacters}{69.19.2}
+\makelabel{ref:CharacterTableWithSortedClasses}{69.19.3}
+\makelabel{ref:CharacterTableWithSortedClasses}{69.19.3}
+\makelabel{ref:CharacterTableWithSortedClasses}{69.19.3}
+\makelabel{ref:CharacterTableWithSortedClasses}{69.19.3}
+\makelabel{ref:SortedCharacterTable}{69.19.4}
+\makelabel{ref:SortedCharacterTable}{69.19.4}
+\makelabel{ref:SortedCharacterTable}{69.19.4}
+\makelabel{ref:ClassPermutation}{69.19.5}
+\makelabel{ref:Automorphisms and Equivalence of Character Tables}{69.20}
+\makelabel{ref:MatrixAutomorphisms}{69.20.1}
+\makelabel{ref:TableAutomorphisms}{69.20.2}
+\makelabel{ref:TableAutomorphisms}{69.20.2}
+\makelabel{ref:TableAutomorphisms}{69.20.2}
+\makelabel{ref:TransformingPermutations}{69.20.3}
+\makelabel{ref:TransformingPermutationsCharacterTables}{69.20.4}
+\makelabel{ref:FamiliesOfRows}{69.20.5}
+\makelabel{ref:Storing Normal Subgroup Information}{69.21}
+\makelabel{ref:NormalSubgroupClassesInfo}{69.21.1}
+\makelabel{ref:ClassPositionsOfNormalSubgroup}{69.21.2}
+\makelabel{ref:NormalSubgroupClasses}{69.21.3}
+\makelabel{ref:FactorGroupNormalSubgroupClasses}{69.21.4}
+\makelabel{ref:Class Functions}{70}
+\makelabel{ref:IsClassFunction}{70}
+\makelabel{ref:Why Class Functions?}{70.1}
+\makelabel{ref:Basic Operations for Class Functions}{70.2}
+\makelabel{ref:UnderlyingCharacterTable}{70.2.1}
+\makelabel{ref:ValuesOfClassFunction}{70.2.2}
+\makelabel{ref:Comparison of Class Functions}{70.3}
+\makelabel{ref:Arithmetic Operations for Class Functions}{70.4}
+\makelabel{ref:Printing Class Functions}{70.5}
+\makelabel{ref:Creating Class Functions from Values Lists}{70.6}
+\makelabel{ref:ClassFunction}{70.6.1}
+\makelabel{ref:ClassFunction}{70.6.1}
+\makelabel{ref:VirtualCharacter}{70.6.2}
+\makelabel{ref:VirtualCharacter}{70.6.2}
+\makelabel{ref:Character}{70.6.3}
+\makelabel{ref:ClassFunctionSameType}{70.6.4}
+\makelabel{ref:Creating Class Functions using Groups}{70.7}
+\makelabel{ref:TrivialCharacter}{70.7.1}
+\makelabel{ref:TrivialCharacter}{70.7.1}
+\makelabel{ref:NaturalCharacter}{70.7.2}
+\makelabel{ref:NaturalCharacter}{70.7.2}
+\makelabel{ref:PermutationCharacter}{70.7.3}
+\makelabel{ref:PermutationCharacter}{70.7.3}
+\makelabel{ref:Operations for Class Functions}{70.8}
+\makelabel{ref:IsCharacter}{70.8.1}
+\makelabel{ref:IsVirtualCharacter}{70.8.2}
+\makelabel{ref:IsIrreducibleCharacter}{70.8.3}
+\makelabel{ref:DegreeOfCharacter}{70.8.4}
+\makelabel{ref:ScalarProduct!for characters}{70.8.5}
+\makelabel{ref:MatScalarProducts}{70.8.6}
+\makelabel{ref:MatScalarProducts}{70.8.6}
+\makelabel{ref:Norm!of character}{70.8.7}
+\makelabel{ref:ConstituentsOfCharacter}{70.8.8}
+\makelabel{ref:KernelOfCharacter}{70.8.9}
+\makelabel{ref:ClassPositionsOfKernel}{70.8.10}
+\makelabel{ref:CentreOfCharacter}{70.8.11}
+\makelabel{ref:ClassPositionsOfCentre!for characters}{70.8.12}
+\makelabel{ref:InertiaSubgroup}{70.8.13}
+\makelabel{ref:CycleStructureClass}{70.8.14}
+\makelabel{ref:IsTransitive!for characters}{70.8.15}
+\makelabel{ref:Transitivity!for characters}{70.8.16}
+\makelabel{ref:CentralCharacter}{70.8.17}
+\makelabel{ref:DeterminantOfCharacter}{70.8.18}
+\makelabel{ref:EigenvaluesChar}{70.8.19}
+\makelabel{ref:Tensored}{70.8.20}
+\makelabel{ref:Restricted and Induced Class Functions}{70.9}
+\makelabel{ref:RestrictedClassFunction}{70.9.1}
+\makelabel{ref:RestrictedClassFunction}{70.9.1}
+\makelabel{ref:RestrictedClassFunction}{70.9.1}
+\makelabel{ref:RestrictedClassFunctions}{70.9.2}
+\makelabel{ref:RestrictedClassFunctions}{70.9.2}
+\makelabel{ref:RestrictedClassFunctions}{70.9.2}
+\makelabel{ref:InducedClassFunction}{70.9.3}
+\makelabel{ref:InducedClassFunction}{70.9.3}
+\makelabel{ref:InducedClassFunction}{70.9.3}
+\makelabel{ref:InducedClassFunctions}{70.9.4}
+\makelabel{ref:InducedClassFunctions}{70.9.4}
+\makelabel{ref:InducedClassFunctions}{70.9.4}
+\makelabel{ref:InducedCyclic}{70.9.5}
+\makelabel{ref:InducedCyclic}{70.9.5}
+\makelabel{ref:InducedCyclic}{70.9.5}
+\makelabel{ref:InducedCyclic}{70.9.5}
+\makelabel{ref:Reducing Virtual Characters}{70.10}
+\makelabel{ref:ReducedClassFunctions}{70.10.1}
+\makelabel{ref:ReducedClassFunctions}{70.10.1}
+\makelabel{ref:ReducedCharacters}{70.10.2}
+\makelabel{ref:IrreducibleDifferences}{70.10.3}
+\makelabel{ref:IrreducibleDifferences}{70.10.3}
+\makelabel{ref:IrreducibleDifferences}{70.10.3}
+\makelabel{ref:IrreducibleDifferences}{70.10.3}
+\makelabel{ref:LLL}{70.10.4}
+\makelabel{ref:Extract}{70.10.5}
+\makelabel{ref:OrthogonalEmbeddingsSpecialDimension}{70.10.6}
+\makelabel{ref:Decreased}{70.10.7}
+\makelabel{ref:DnLattice}{70.10.8}
+\makelabel{ref:DnLatticeIterative}{70.10.9}
+\makelabel{ref:Symmetrizations of Class Functions}{70.11}
+\makelabel{ref:Symmetrizations}{70.11.1}
+\makelabel{ref:Symmetrizations}{70.11.1}
+\makelabel{ref:SymmetricParts}{70.11.2}
+\makelabel{ref:AntiSymmetricParts}{70.11.3}
+\makelabel{ref:OrthogonalComponents}{70.11.4}
+\makelabel{ref:SymplecticComponents}{70.11.5}
+\makelabel{ref:MolienSeries}{70.12.1}
+\makelabel{ref:MolienSeries}{70.12.1}
+\makelabel{ref:MolienSeries}{70.12.1}
+\makelabel{ref:MolienSeries}{70.12.1}
+\makelabel{ref:MolienSeriesInfo}{70.12.2}
+\makelabel{ref:ValueMolienSeries}{70.12.3}
+\makelabel{ref:MolienSeriesWithGivenDenominator}{70.12.4}
+\makelabel{ref:Possible Permutation Characters}{70.13}
+\makelabel{ref:PermCharInfo}{70.13.1}
+\makelabel{ref:PermCharInfo}{70.13.1}
+\makelabel{ref:PermCharInfoRelative}{70.13.2}
+\makelabel{ref:Computing Possible Permutation Characters}{70.14}
+\makelabel{ref:PermChars}{70.14.1}
+\makelabel{ref:PermChars}{70.14.1}
+\makelabel{ref:PermChars}{70.14.1}
+\makelabel{ref:TestPerm1}{70.14.2}
+\makelabel{ref:TestPerm2}{70.14.2}
+\makelabel{ref:TestPerm3}{70.14.2}
+\makelabel{ref:TestPerm4}{70.14.2}
+\makelabel{ref:TestPerm5}{70.14.2}
+\makelabel{ref:PermBounds}{70.14.3}
+\makelabel{ref:PermComb}{70.14.4}
+\makelabel{ref:Inequalities}{70.14.5}
+\makelabel{ref:Operations for Brauer Characters}{70.15}
+\makelabel{ref:FrobeniusCharacterValue}{70.15.1}
+\makelabel{ref:BrauerCharacterValue}{70.15.2}
+\makelabel{ref:SizeOfFieldOfDefinition}{70.15.3}
+\makelabel{ref:RealizableBrauerCharacters}{70.15.4}
+\makelabel{ref:Domains Generated by Class Functions}{70.16}
+\makelabel{ref:Maps Concerning Character Tables}{71}
+\makelabel{ref:Power Maps}{71.1}
+\makelabel{ref:PowerMap}{71.1.1}
+\makelabel{ref:PowerMapOp}{71.1.1}
+\makelabel{ref:ComputedPowerMaps}{71.1.1}
+\makelabel{ref:PossiblePowerMaps}{71.1.2}
+\makelabel{ref:ElementOrdersPowerMap}{71.1.3}
+\makelabel{ref:PowerMapByComposition}{71.1.4}
+\makelabel{ref:OrbitPowerMaps}{71.1.5}
+\makelabel{ref:RepresentativesPowerMaps}{71.1.6}
+\makelabel{ref:Class Fusions between Character Tables}{71.2}
+\makelabel{ref:FusionConjugacyClasses}{71.2.1}
+\makelabel{ref:FusionConjugacyClasses}{71.2.1}
+\makelabel{ref:FusionConjugacyClasses}{71.2.1}
+\makelabel{ref:FusionConjugacyClassesOp}{71.2.1}
+\makelabel{ref:FusionConjugacyClassesOp}{71.2.1}
+\makelabel{ref:ComputedClassFusions}{71.2.2}
+\makelabel{ref:GetFusionMap}{71.2.3}
+\makelabel{ref:GetFusionMap}{71.2.3}
+\makelabel{ref:StoreFusion}{71.2.4}
+\makelabel{ref:NamesOfFusionSources}{71.2.5}
+\makelabel{ref:PossibleClassFusions}{71.2.6}
+\makelabel{ref:OrbitFusions}{71.2.7}
+\makelabel{ref:RepresentativesFusions}{71.2.8}
+\makelabel{ref:RepresentativesFusions}{71.2.8}
+\makelabel{ref:ConsiderStructureConstants}{71.2.9}
+\makelabel{ref:Parametrized Maps}{71.3}
+\makelabel{ref:CompositionMaps}{71.3.1}
+\makelabel{ref:InverseMap}{71.3.2}
+\makelabel{ref:ProjectionMap}{71.3.3}
+\makelabel{ref:Indirected}{71.3.4}
+\makelabel{ref:Parametrized}{71.3.5}
+\makelabel{ref:ContainedMaps}{71.3.6}
+\makelabel{ref:UpdateMap}{71.3.7}
+\makelabel{ref:MeetMaps}{71.3.8}
+\makelabel{ref:CommutativeDiagram}{71.3.9}
+\makelabel{ref:CheckFixedPoints}{71.3.10}
+\makelabel{ref:TransferDiagram}{71.3.11}
+\makelabel{ref:TestConsistencyMaps}{71.3.12}
+\makelabel{ref:Indeterminateness}{71.3.13}
+\makelabel{ref:PrintAmbiguity}{71.3.14}
+\makelabel{ref:ContainedSpecialVectors}{71.3.15}
+\makelabel{ref:IntScalarProducts}{71.3.15}
+\makelabel{ref:NonnegIntScalarProducts}{71.3.15}
+\makelabel{ref:ContainedPossibleVirtualCharacters}{71.3.15}
+\makelabel{ref:ContainedPossibleCharacters}{71.3.15}
+\makelabel{ref:CollapsedMat}{71.3.16}
+\makelabel{ref:ContainedDecomposables}{71.3.17}
+\makelabel{ref:ContainedCharacters}{71.3.17}
+\makelabel{ref:Subroutines for the Construction of Power Maps}{71.4}
+\makelabel{ref:InitPowerMap}{71.4.1}
+\makelabel{ref:Congruences!for character tables}{71.4.2}
+\makelabel{ref:ConsiderKernels}{71.4.3}
+\makelabel{ref:ConsiderSmallerPowerMaps}{71.4.4}
+\makelabel{ref:MinusCharacter}{71.4.5}
+\makelabel{ref:PowerMapsAllowedBySymmetrizations}{71.4.6}
+\makelabel{ref:Subroutines for the Construction of Class Fusions}{71.5}
+\makelabel{ref:InitFusion}{71.5.1}
+\makelabel{ref:CheckPermChar}{71.5.2}
+\makelabel{ref:ConsiderTableAutomorphisms}{71.5.3}
+\makelabel{ref:FusionsAllowedByRestrictions}{71.5.4}
+\makelabel{ref:Monomiality Questions}{72}
+\makelabel{ref:InfoMonomial}{72}
+\makelabel{ref:Character Degrees and Derived Length}{72.1}
+\makelabel{ref:Alpha}{72.1.1}
+\makelabel{ref:Delta}{72.1.2}
+\makelabel{ref:IsBergerCondition}{72.1.3}
+\makelabel{ref:IsBergerCondition}{72.1.3}
+\makelabel{ref:Primitivity of Characters}{72.2}
+\makelabel{ref:TestHomogeneous}{72.2.1}
+\makelabel{ref:IsPrimitiveCharacter}{72.2.2}
+\makelabel{ref:TestQuasiPrimitive}{72.2.3}
+\makelabel{ref:IsQuasiPrimitive}{72.2.3}
+\makelabel{ref:TestInducedFromNormalSubgroup}{72.2.4}
+\makelabel{ref:IsInducedFromNormalSubgroup}{72.2.4}
+\makelabel{ref:Testing Monomiality}{72.3}
+\makelabel{ref:TestMonomial}{72.3.1}
+\makelabel{ref:TestMonomial}{72.3.1}
+\makelabel{ref:TestMonomial}{72.3.1}
+\makelabel{ref:TestMonomial}{72.3.1}
+\makelabel{ref:TestMonomialUseLattice}{72.3.2}
+\makelabel{ref:IsMonomialNumber}{72.3.3}
+\makelabel{ref:TestMonomialQuick}{72.3.4}
+\makelabel{ref:TestMonomialQuick}{72.3.4}
+\makelabel{ref:TestSubnormallyMonomial}{72.3.5}
+\makelabel{ref:TestSubnormallyMonomial}{72.3.5}
+\makelabel{ref:IsSubnormallyMonomial}{72.3.5}
+\makelabel{ref:IsSubnormallyMonomial}{72.3.5}
+\makelabel{ref:TestRelativelySM}{72.3.6}
+\makelabel{ref:TestRelativelySM}{72.3.6}
+\makelabel{ref:TestRelativelySM}{72.3.6}
+\makelabel{ref:TestRelativelySM}{72.3.6}
+\makelabel{ref:IsRelativelySM}{72.3.6}
+\makelabel{ref:IsRelativelySM}{72.3.6}
+\makelabel{ref:Minimal Nonmonomial Groups}{72.4}
+\makelabel{ref:IsMinimalNonmonomial}{72.4.1}
+\makelabel{ref:MinimalNonmonomialGroup}{72.4.2}
+\makelabel{ref:Installing GAP}{73}
+\makelabel{ref:Installation Overview}{73.1}
+\makelabel{ref:Get the Archives}{73.2}
+\makelabel{ref:Unpacking}{73.3}
+\makelabel{ref:Compilation}{73.4}
+\makelabel{ref:Test of the installation}{73.5}
+\makelabel{ref:Packages}{73.6}
+\makelabel{ref:Finish Installation and Cleanup}{73.7}
+\makelabel{ref:The Documentation}{73.8}
+\makelabel{ref:If Things Go Wrong}{73.9}
+\makelabel{ref:Known Problems of the Configure Process}{73.10}
+\makelabel{ref:Problems on Particular Systems}{73.11}
+\makelabel{ref:Optimization and Compiler Options}{73.12}
+\makelabel{ref:Porting GAP}{73.13}
+\makelabel{ref:GAP for Macintosh OS X}{73.14}
+\makelabel{ref:GAP for MacOS}{73.15}
+\makelabel{ref:Installation of GAP for MacOS}{73.16}
+\makelabel{ref:Expert Windows installation}{73.17}
+\makelabel{ref:Copyrights}{73.18}
+\makelabel{ref:GAP Packages}{74}
+\makelabel{ref:Installing a GAP Package}{74.1}
+\makelabel{ref:Loading a GAP Package}{74.2}
+\makelabel{ref:LoadPackage}{74.2.1}
+\makelabel{ref:LoadPackage}{74.2.1}
+\makelabel{ref:Functions for GAP Packages}{74.3}
+\makelabel{ref:ReadPackage}{74.3.1}
+\makelabel{ref:ReadPackage}{74.3.1}
+\makelabel{ref:RereadPackage}{74.3.1}
+\makelabel{ref:RereadPackage}{74.3.1}
+\makelabel{ref:TestPackageAvailability}{74.3.2}
+\makelabel{ref:TestPackageAvailability}{74.3.2}
+\makelabel{ref:InstalledPackageVersion}{74.3.3}
+\makelabel{ref:DirectoriesPackageLibrary}{74.3.4}
+\makelabel{ref:DirectoriesPackagePrograms}{74.3.5}
+\makelabel{ref:CompareVersionNumbers}{74.3.6}
+\makelabel{ref:Replaced and Removed Command Names}{75}
+\makelabel{ref:Group Actions - Name Changes}{75.1}
+\makelabel{ref:Package Interface - Obsolete Functions and Name Changes}{75.2}
+\makelabel{ref:Normal Forms of Integer Matrices - Name Changes}{75.3}
+\makelabel{ref:Miscellaneous Name Changes or Removed Names}{75.4}
+\makelabel{ref:Copyright}{76}
+\makelabel{ref:Copyright Notice}{76}
+\makelabel{ref:Bibliography}{}
+\setcitlab {AMW82}{AMW82}
+\setcitlab {AR84}{AR84}
+\setcitlab {Art68}{Art68}
+\setcitlab {Durham1982}{Atk84}
+\setcitlab {Baker84}{Bak84}
+\setcitlab {BC76}{BC76}
+\setcitlab {BC89}{BC89}
+\setcitlab {BC94}{BC94}
+\setcitlab {BCFS91}{BCFS91}
+\setcitlab {BescheEick98}{BE99a}
+\setcitlab {BescheEick1000}{BE99b}
+\setcitlab {BescheEick768}{BE01}
+\setcitlab {BEO01}{BEOon}
+\setcitlab {Ber76}{Ber76}
+\setcitlab {Besche92}{Bes92}
+\setcitlab {BuekenhoutLeemans96}{BL96}
+\setcitlab {BreuerLinton98}{BL98}
+\setcitlab {BM83}{BM83}
+\setcitlab {Bourbaki70}{Bou70}
+\setcitlab {BP98}{BP98}
+\setcitlab {Bre91}{Bre91}
+\setcitlab {Bre97}{Bre97}
+\setcitlab {Bre99}{Bre99}
+\setcitlab {BTW93}{BTW93}
+\setcitlab {Bur55}{Bur55}
+\setcitlab {Butler93}{But93}
+\setcitlab {Can73}{Can73}
+\setcitlab {Car72a}{Car72}
+\setcitlab {CCN85}{CCN{+}85}
+\setcitlab {ConwayHulpkeMcKay98}{CHM98}
+\setcitlab {coxlittleoshea}{CLO97}
+\setcitlab {Coh93}{Coh93}
+\setcitlab {Con90a}{Con90a}
+\setcitlab {Con90b}{Con90b}
+\setcitlab {GrpsStAndrews81}{CR82}
+\setcitlab {Dix67}{Dix67}
+\setcitlab {Dix93}{Dix93}
+\setcitlab {DixonMortimer88}{DM88}
+\setcitlab {Dre69}{Dre69}
+\setcitlab {EickHoefling02}{EH02}
+\setcitlab {Eick97}{Eic97}
+\setcitlab {FJNT95}{FJNT95}
+\setcitlab {FelschNeubueser79}{FN79}
+\setcitlab {Fra82}{Fra82}
+\setcitlab {ISSAC98}{Glo98}
+\setcitlab {Hall}{Hal59}
+\setcitlab {Hav69}{Hav69}
+\setcitlab {Hav74b}{Hav74}
+\setcitlab {Hup82}{HB82}
+\setcitlab {HIO89}{HI{\accent 127O}89}
+\setcitlab {HJLP92}{HJLP}
+\setcitlab {HKRR84}{HKRR84}
+\setcitlab {Howie76}{How76}
+\setcitlab {HP89}{HP89}
+\setcitlab {HR94}{HR94}
+\setcitlab {Hulpke93}{Hul93}
+\setcitlab {Hulpke96}{Hul96}
+\setcitlab {Hulpke98}{Hul98}
+\setcitlab {Hulpke99}{Hul99}
+\setcitlab {HulpkeClasses}{Hul00}
+\setcitlab {HulpkeQuot}{Hul01}
+\setcitlab {HulpkeTG}{Hular}
+\setcitlab {Hum72}{Hum72}
+\setcitlab {Hum78}{Hum78}
+\setcitlab {Hup67}{Hup67}
+\setcitlab {IshibashiEarnest94}{IE94}
+\setcitlab {Isa76}{Isa76}
+\setcitlab {JLPW95}{JLPW95}
+\setcitlab {Joh97}{Joh97}
+\setcitlab {Kaup92}{Kau92}
+\setcitlab {KleidmanLiebeck90}{KL90}
+\setcitlab {Klimyk66}{Kli66}
+\setcitlab {Klimyk68}{Kli68}
+\setcitlab {KLM01}{KLM01}
+\setcitlab {TACP2}{Knu98}
+\setcitlab {Leon91}{Leo91}
+\setcitlab {LLL82}{LLL82}
+\setcitlab {SOGOS}{LNS84}
+\setcitlab {LP91}{LP91}
+\setcitlab {Mac81}{Mac81}
+\setcitlab {MeckyNeubueser89}{MN89}
+\setcitlab {MS85}{MS85}
+\setcitlab {Mur58}{Mur58}
+\setcitlab {MV97}{MV97}
+\setcitlab {Neb95}{Neb95}
+\setcitlab {Neb96}{Neb96}
+\setcitlab {Neu82}{Neu82}
+\setcitlab {neukirch}{Neu92}
+\setcitlab {New77}{New77}
+\setcitlab {New90}{New90}
+\setcitlab {NPbook95}{NP95a}
+\setcitlab {NP95}{NP95b}
+\setcitlab {NPP84}{NPP84}
+\setcitlab {OBr90}{O'B90}
+\setcitlab {OBr91}{O'B91}
+\setcitlab {Pah93}{Pah93}
+\setcitlab {Par84}{Par84}
+\setcitlab {Pfe91}{Pfe91}
+\setcitlab {Pfe97}{Pfe97}
+\setcitlab {Ple85}{Ple85}
+\setcitlab {Ple90}{Ple90}
+\setcitlab {PN95}{PN95}
+\setcitlab {Poh87}{Poh87}
+\setcitlab {PP77}{PP77}
+\setcitlab {PP80}{PP80}
+\setcitlab {RoneyDougal02}{RDU02}
+\setcitlab {Rin93}{Rin93}
+\setcitlab {Rob88}{Rob88}
+\setcitlab {Roy87}{Roy87}
+\setcitlab {Sch90}{Sch90}
+\setcitlab {Scherner92}{Sch92}
+\setcitlab {Schiffer94}{Sch94}
+\setcitlab {Sco73}{Sco73}
+\setcitlab {Sho92}{Sho92}
+\setcitlab {Sim70}{Sim70}
+\setcitlab {Sims90b}{Sim90}
+\setcitlab {Sims94}{Sim94}
+\setcitlab {Sims97}{Sim97}
+\setcitlab {Sou94}{Sou94}
+\setcitlab {Spa89}{SPA89}
+\setcitlab {Tay87}{Tay87}
+\setcitlab {Theissen93}{The93}
+\setcitlab {Theissen97}{The97}
+\setcitlab {vdW76}{vdW76}
+\setcitlab {Wagon90}{Wag90}
+\setcitlab {AGR}{Wil}
+\setcitlab {Wil96}{Wil96}
+\setcitlab {Zagier90}{Zag90}
+\setcitlab {Zum89}{Zum89}
+\makelabel{ref:Index}{}

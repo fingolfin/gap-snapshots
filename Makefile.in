@@ -1,0 +1,70 @@
+#############################################################################
+##
+#W  Makefile                    GAP source                       Frank Celler
+##
+#H  @(#)$Id: Makefile.in,v 4.17 2003/11/24 20:32:52 gap Exp $
+##
+#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+##
+##  This file is the top level make file.  It is generated from `Makefile.in'
+##  by the `configure' script.  After unpacking GAP you simply type
+##
+##    ./configure
+##
+##  to create a make file and then
+##
+##    make
+##
+##  to compile and link GAP.
+##
+##  The "default" traget:
+##    - creates a subdirectory CPU-VENDOR-OS in the directory `bin',
+##    - copies the configuration script into this directory,
+##    - it switches into this directory and executes the configure script,
+##    - it makes GAP in this directory.
+##
+##  The "clean" target:
+##    - removes the subdirectory CPU-VENDOR-OS in the directory `bin'
+##    - removes any files created by `configure'
+##
+SHELL=/bin/sh
+CC=@CC@
+BASECC=@BASECC@
+@SET_MAKE@
+
+default: strip
+
+config: bin/@target@-@BASECC@/configure bin/@target@-@BASECC@/Makefile 
+
+bin/@target@-@BASECC@/configure: cnf/configure.out
+	if test ! -d bin;  then mkdir bin;  fi
+	if test ! -d bin/@target@-@BASECC@;  then mkdir bin/@target@-@BASECC@;  fi
+	@rm -f bin/@target@-@BASECC@/configure
+	cp cnf/configure.out bin/@target@-@BASECC@/configure
+
+bin/@target@-@BASECC@/Makefile: bin/@target@-@BASECC@/configure cnf/config.hin cnf/gac.in
+	( cd bin/@target@-@BASECC@ ; CC='$(CC)' ./configure --target=@target@ @gp_configure_options@ )
+
+compile: config
+	( cd bin/@target@-@BASECC@ ; $(MAKE) CC='$(CC)' )
+	chmod +x bin/gap.sh
+
+static: config
+	( cd bin/@target@-@BASECC@ ; $(MAKE) static CC='$(CC)' )
+	chmod +x bin/gap.sh
+	( cd bin/@target@-@BASECC@ ; strip gap)
+
+strip: compile
+	( cd bin/@target@-@BASECC@ ; strip gap)
+       
+removewin: strip
+	( rm -f bin/*.exe bin/*.dll bin/*.bat bin/*.pif "bin/GAP 4 PPC")
+
+rebuild:
+	rm -f config.cache config.log config.status
+	touch src/*
+
+clean: rebuild
+	rm Makefile
+	rm -rf bin/@target@-@BASECC@
+	rm -f bin/gap.sh

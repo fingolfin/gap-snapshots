@@ -1,0 +1,295 @@
+<html><head><title>[tut] 7 Domains</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP006.htm">Previous</a>] [<a href ="CHAP008.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>7 Domains</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP007.htm#SECT001">Domains as Sets</a>
+<li> <A HREF="CHAP007.htm#SECT002">Algebraic Structure</a>
+<li> <A HREF="CHAP007.htm#SECT003">Notions of Generation</a>
+<li> <A HREF="CHAP007.htm#SECT004">Domain Constructors</a>
+<li> <A HREF="CHAP007.htm#SECT005">Forming Closures of Domains</a>
+<li> <A HREF="CHAP007.htm#SECT006">Changing the Structure</a>
+<li> <A HREF="CHAP007.htm#SECT007">Subdomains</a>
+<li> <A HREF="CHAP007.htm#SECT008">Further Information about Domains</a>
+</ol><p>
+<p>
+<strong>Domain</strong> is <font face="Gill Sans,Helvetica,Arial">GAP</font>'s name for structured sets.
+We already saw examples of domains in Chapters&nbsp;<a href="CHAP005.htm">Groups and Homomorphisms</a>
+and&nbsp;<a href="CHAP006.htm">Vector Spaces and Algebras</a>:
+the groups <code>s8</code> and <code>a8</code> in Section&nbsp;<a href="CHAP005.htm#SECT001">Permutation groups</a> are domains,
+likewise the field <code>f</code> and the vector space <code>v</code> in
+Section&nbsp;<a href="CHAP006.htm#SECT001">Vector Spaces</a> are domains.
+They were constructed by functions such as <code>Group</code> and <code>GF</code>,
+and they could be passed as arguments to other functions such as
+<code>DerivedSubgroup</code> and <code>Dimension</code>.
+<p>
+<p>
+<h2><a name="SECT001">7.1 Domains as Sets</a></h2>
+<p><p>
+First of all, a domain <i>D</i> is a set.
+If <i>D</i> is finite then a list with the elements of this set can be
+computed with the functions <code>AsList</code> and <code>AsSortedList</code>.
+For infinite <i>D</i>, <code>Enumerator</code> and <code>EnumeratorSorted</code> may work,
+but it is also possible that one gets an error message.
+<p>
+Domains can be used as arguments of set functions such as <code>Intersection</code>
+and <code>Union</code>.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> tries to return a domain in these cases,
+moreover it tries to return a domain with as much structure as possible.
+For example, the intersection of two groups is (either empty or) again a
+group, and <font face="Gill Sans,Helvetica,Arial">GAP</font> will try to return it as a group.
+For <code>Union</code>, the situation is different because the union of two groups
+is in general not a group.
+<p>
+<pre>
+gap&gt; g:= Group( (1,2), (3,4) );;
+gap&gt; h:= Group( (3,4), (5,6) );;
+gap&gt; Intersection( g, h );
+Group([ (3,4) ])
+</pre>
+<p>
+Two domains are regarded as equal w.r.t. the operator ``<code>=</code>'' if and only
+if they are equal <strong>as sets</strong>, regardless of the additional structure of the
+domains.
+<p>
+<pre>
+gap&gt; mats:= [ [ [ 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2) ] ],
+&gt;             [ [ Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0 ] ] ];;
+gap&gt; Ring( mats ) = VectorSpace( GF(2), mats );
+true
+</pre>
+<p>
+Additionally, a domain is regarded as equal to the sorted list
+of its elements.
+<p>
+<pre>
+gap&gt; g:= Group( (1,2) );;
+gap&gt; l:= AsSortedList( g );
+[ (), (1,2) ]
+gap&gt; g = l;
+true
+gap&gt; IsGroup( l ); IsList( g );
+false
+false
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">7.2 Algebraic Structure</a></h2>
+<p><p>
+The additional structure of <i>D</i> is constituted by the facts that <i>D</i> is
+known to be closed under certain operations such as addition or
+multiplication, and that these operations have additional properties.
+For example, if <i>D</i> is a group then it is closed under multiplication
+(<i>D</i> &times;<i>D</i> <font face="symbol">&#8594;</font> <i>D</i>, (<tt>g</tt>,<tt>h</tt>) <font face="symbol">&#8594;</font> <tt>g</tt> <tt>*</tt> <tt>h</tt>),
+under taking inverses (<i>D</i> <font face="symbol">&#8594;</font> <i>D</i>, <tt>g</tt> <font face="symbol">&#8594;</font> <code>g^-1</code>)
+and under taking the identity <code>g^0</code> of each element <code>g</code> in <i>D</i>;
+additionally, the multiplication in <i>D</i> is associative.
+<p>
+The same set of elements can carry different algebraic structures.
+For example, a semigroup is defined as being closed under an associative
+multiplication, so each group is also a semigroup.
+Likewise, a monoid is defined as a semigroup <i>D</i> in which the identity
+<code>g^0</code> is defined for every element <code>g</code>, so each group is a monoid,
+and each monoid is a semigroup.
+<p>
+Other examples of domains are vector spaces, which are defined as
+additive groups that are closed under (left) multiplication with elements
+in a certain domain of scalars.
+Also conjugacy classes in a group <i>D</i> are domains,
+they are closed under the conjugation action of <i>D</i>.
+<p>
+<p>
+<h2><a name="SECT003">7.3 Notions of Generation</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+We have seen that a domain is closed under certain operations.
+Usually a domain is constructed as the closure of some elements under
+these operations.
+In this situation, we say that the elements <strong>generate</strong> the domain.
+<p>
+For example, a list of matrices of the same shape over a common field
+can be used to generate an additive group or a vector space over a
+suitable field; if the matrices are square then we can also use the
+matrices as generators of a semigroup , a ring, or an algebra. We
+illustrate some of these possibilities:
+<p>
+<pre>
+gap&gt; mats:= [ [ [ 0*Z(2), Z(2)^0 ],
+&gt;               [ Z(2)^0, 0*Z(2) ] ], 
+&gt;             [ [ Z(2)^0, 0*Z(2) ],
+&gt;               [ 0*Z(2), Z(2)^0 ] ] ];;
+gap&gt; Size( AdditiveMagma( mats ) );
+4
+gap&gt; Size( VectorSpace( GF(8), mats ) );
+64
+gap&gt; Size( Algebra( GF(2), mats ) );    
+4
+gap&gt; Size( Group( mats ) );         
+2
+</pre>
+Each combination of operations under which a domain could be closed
+gives a notion of generation.
+So each group has group generators, and since it is a monoid,
+one can also ask for monoid generators of a group.
+<p>
+Note that one cannot simply ask for ``the generators of a domain'',
+it is always necessary to specify what notion of generation is meant.
+Access to the different generators is provided by functions with
+names of the form <code>GeneratorsOfSomething</code>.
+For example, <code>GeneratorsOfGroup</code> denotes group generators,
+<code>GeneratorsOfMonoid</code> denotes monoid generators, and so on.
+The result of <code>GeneratorsOfVectorSpace</code> is of course to be understood
+relative to the field of scalars of the vector space in question.
+<p>
+<pre>
+gap&gt; GeneratorsOfVectorSpace( GF(4)^2 );
+[ [ Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0 ] ]
+gap&gt; v:= AsVectorSpace( GF(2), GF(4)^2 );;
+gap&gt; GeneratorsOfVectorSpace( v );
+[ [ Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0 ], [ Z(2^2), 0*Z(2) ], 
+  [ 0*Z(2), Z(2^2) ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">7.4 Domain Constructors</a></h2>
+<p><p>
+<a name = "I1"></a>
+
+A group can be constructed from a list of group generators <var>gens</var> by
+<code>Group( </code><var>gens</var><code> )</code>,
+likewise one can construct rings and algebras with the functions <code>Ring</code>
+and <code>Algebra</code>.
+<p>
+Note that it is not always or completely checked that <var>gens</var> is in
+fact a valid list of group generators, for example whether the
+elements of <var>gens</var> can be multiplied or whether they are invertible.
+This means that <font face="Gill Sans,Helvetica,Arial">GAP</font> trusts you, at least to some extent, that the
+desired domain <code>Something( </code><var>gens</var><code> )</code> does exist.
+<p>
+<p>
+<h2><a name="SECT005">7.5 Forming Closures of Domains</a></h2>
+<p><p>
+<a name = "I2"></a>
+
+Besides constructing domains from generators, one can also form the
+closure of a given domain with an element or another domain.
+There are different notions of closure, one has to specify one
+according to the desired result and the structure of the given domain.
+The functions to compute closures have names such as
+<code>ClosureSomething</code>.
+For example, if <i>D</i> is a group and one wants to construct the group
+generated by <i>D</i> and an element <i>g</i> then one can use
+<code>ClosureGroup( <i>D</i>, <i>g</i> )</code>.
+<p>
+<p>
+<h2><a name="SECT006">7.6 Changing the Structure</a></h2>
+<p><p>
+<a name = "I3"></a>
+
+The same set of elements can have different algebraic structures.
+For example, it may happen that a monoid <i>M</i> does in fact contain
+the inverses of all of its elements, and thus <i>M</i> is equal to the group
+formed by the elements of <i>M</i>.
+<p>
+<pre>
+gap&gt; m:= Monoid( mats );;
+gap&gt; m = Group( mats );
+true
+gap&gt; IsGroup( m );
+false
+</pre>
+<p>
+The last result in the above example may be surprising.
+But the monoid <code>m</code> is not regarded as a group in <font face="Gill Sans,Helvetica,Arial">GAP</font>,
+and moreover there is no way to turn <code>m</code> into a group.
+Let us formulate this as a rule:
+<p>
+<strong>The set of operations under which the domain is closed is fixed
+in the construction of a domain, and cannot be changed later.</strong>
+<p>
+(Contrary to this, a domain <strong>can</strong> acquire knowledge about properties
+such as whether the multiplication is associative or commutative.)
+<p>
+If one needs a domain with a different structure than the given one,
+one can construct a new domain with the required structure.
+The functions that do these constructions have names such as
+<code>AsSomething</code>, they return a domain that has the same elements as the
+argument in question but the structure <code>Something</code>.
+In the above situation, one can use <code>AsGroup</code>.
+<p>
+<pre>
+gap&gt; g:= AsGroup( m );;
+gap&gt; m = g;
+true
+gap&gt; IsGroup( g );
+true
+</pre>
+<p>
+If it is impossible to construct the desired domain, the <code>AsSomething</code>
+functions return <code>fail</code>.
+<p>
+<pre>
+gap&gt; AsVectorSpace( GF(4), GF(2)^2 );
+fail
+</pre>
+<p>
+The functions <code>AsList</code> and <code>AsSortedList</code> mentioned above do not return
+domains, but they fit into the general pattern in the sense that they
+forget all the structure of the argument, including the fact that it is
+a domain, and return a list with the same elements as the argument has.
+<p>
+<p>
+<h2><a name="SECT007">7.7 Subdomains</a></h2>
+<p><p>
+<a name = "I4"></a>
+
+<a name = "I4"></a>
+<a name = "I5"></a>
+
+It is possible to construct a domain as a subset of an existing domain.
+The respective functions have names such as <code>Subsomething</code>,
+they return domains with the structure <code>Something</code>.
+(Note that the second <code>s</code> in <code>Subsomething</code> is not capitalized.)
+For example, if one wants to deal with the subgroup of the domain <var>D</var>
+that is generated by the elements in the list <var>gens</var>,
+one can use <code>Subgroup( </code><var>D</var><code>, </code><var>gens</var><code> )</code>.
+It is not required that <var>D</var> is itself a group, only that the group generated
+by <var>gens</var> must be a subset of <var>D</var>.
+<p>
+The superset of a domain <i>S</i> that was constructed by a <code>Subsomething</code>
+function can be accessed as <code>Parent( <i>S</i> )</code>.
+<p>
+<pre>
+gap&gt; g:= SymmetricGroup( 5 );;
+gap&gt; gens:= [ (1,2), (1,2,3,4) ];;
+gap&gt; s:= Subgroup( g, gens );;
+gap&gt; h:= Group( gens );;
+gap&gt; s = h;
+true
+gap&gt; Parent( s ) = g;
+true
+</pre>
+<p>
+Many functions return subdomains of their arguments, for example
+the result of <code>SylowSubgroup( <i>G</i> )</code> is a group with parent group <i>G</i>.
+<p>
+If you are sure that the domain <code>Something( </code><var>gens</var><code> )</code> is contained in the
+domain <var>D</var> then you can also call <code>SubsomethingNC( </code><var>D</var><code>, </code><var>gens</var><code> )</code> instead
+of <code>Subsomething( </code><var>D</var><code>, </code><var>gens</var><code> )</code>.
+The <code>NC</code> stands for ``no check'', and the functions whose names end with
+<code>NC</code> omit the check of containment.
+<p>
+<h2><a name="SECT008">7.8 Further Information about Domains</a></h2>
+<p><p>
+More information about domains can be found in
+Chapter&nbsp;<a href="../ref/CHAP012.htm#SECT004">Domains</a>. Many other other chapters deal with specific
+types of domain such as groups, vector spaces or algebras.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP006.htm">Previous</a>] [<a href ="CHAP008.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,287 @@
+<html><head><title>[tut] 4 Functions</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>4 Functions</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP004.htm#SECT001">Writing Functions</a>
+<li> <A HREF="CHAP004.htm#SECT002">If Statements</a>
+<li> <A HREF="CHAP004.htm#SECT003">Local Variables</a>
+<li> <A HREF="CHAP004.htm#SECT004">Recursion</a>
+<li> <A HREF="CHAP004.htm#SECT005">Further Information about Functions</a>
+</ol><p>
+<p>
+You  have already  seen how to   use functions in the <font face="Gill Sans,Helvetica,Arial">GAP</font>  library,
+i.e., how to apply them to arguments.
+<p>
+In this section  you will see  how to  write  functions in  the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+language.  You will also see how to use the <code>if</code> statement and declare
+local variables with the <code>local</code> statement in the function definition.
+Loop constructions via <code>while</code> and <code>for</code> are discussed further, as are
+recursive functions.
+<p>
+<p>
+<h2><a name="SECT001">4.1 Writing Functions</a></h2>
+<p><p>
+Writing a function that prints <code>hello, world.</code>  on the screen is a simple
+exercise in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<pre>
+gap&gt; sayhello:= function()
+&gt; Print("hello, world.\n");
+&gt; end;
+function(  ) ... end
+</pre>
+<p>
+This function when called will only execute the  <code>Print</code> statement in the
+second line.  This will  print the string  <code>hello, world.</code>  on the screen
+followed by a  newline character <code>\n</code> that causes  the <font face="Gill Sans,Helvetica,Arial">GAP</font> prompt  to
+appear  on the next  line rather  than  immediately following the printed
+characters.
+<p>
+The function definition has the following syntax.
+<p>
+<code>&nbsp;function( </code><var>arguments</var><code> ) </code><var>statements</var><code> end</code>
+<p>
+A function definition starts with the keyword <code>function</code> followed by
+the formal parameter list <var>arguments</var> enclosed in parenthesis '( )'.
+The formal parameter list may be empty as in the example.  Several
+parameters are separated by commas.  Note that there must be <strong>no</strong>
+semicolon behind the closing parenthesis.  The function definition is
+terminated by the keyword <code>end</code>.
+<p>
+A <font face="Gill Sans,Helvetica,Arial">GAP</font> function is an expression  like an integer,  a sum or a list.
+Therefore it may be assigned to a variable.  The terminating semicolon
+in the  example   does not belong    to the  function  definition  but
+terminates the  assignment  of the  function to the  name  <code>sayhello</code>.
+Unlike in the case   of integers, sums, and  lists  the value of   the
+function <code>sayhello</code> is echoed in the abbreviated fashion <code>function ( )
+...   end</code>.  This shows the most  interesting part  of a function: its
+formal parameter list (which is empty  in this example).  The complete
+value of <code>sayhello</code> is returned if you use the function <code>Print</code>.
+<p>
+<pre>
+gap&gt; Print(sayhello, "\n");
+function (  )
+    Print( "hello, world.\n" );
+    return;
+end
+</pre>
+<p>
+Note  the  additional   newline  character   <code>"\n"</code>  in  the  <code>Print</code>
+statement.  It is  printed after the object  <code>sayhello</code> to start a new
+line. The extra <code>return</code>  statement is inserted  by <font face="Gill Sans,Helvetica,Arial">GAP</font> to simplify
+the process of executing the function.
+<p>
+The newly defined function <code>sayhello</code> is executed by calling <code>sayhello()</code>
+with an empty argument list.
+<p>
+<pre>
+gap&gt; sayhello();
+hello, world.
+</pre>
+<p>
+However, this is not a typical example as no  value is returned but only a
+string is printed.
+<p>
+<p>
+<h2><a name="SECT002">4.2 If Statements</a></h2>
+<p><p>
+In the following example we define a function <code>sign</code> which determines
+the sign of a number.
+<p>
+<pre>
+gap&gt; sign:= function(n)
+&gt;        if n &lt; 0 then
+&gt;           return -1;
+&gt;        elif n = 0 then
+&gt;           return 0;
+&gt;        else
+&gt;           return 1;
+&gt;        fi;
+&gt;    end;
+function( n ) ... end
+gap&gt; sign(0); sign(-99); sign(11);
+0
+-1
+1
+</pre>
+<p>
+This example also introduces the <code>if</code> statement which is  used to execute
+statements  depending  on  a  condition.   The  <code>if</code>  statement  has  the
+following syntax.
+<p>
+&nbsp;<code>if </code><var>condition</var><code> then
+    </code><var>statements</var><code>
+elif </code><var>condition</var><code> then
+    </code><var>statements</var><code>
+else
+    </code><var>statements</var><code>
+fi</code>
+<p>
+There may be several <code>elif</code> parts.  The <code>elif</code> part as well as the <code>else</code>
+part  of the  <code>if</code> statement may be omitted.   An  <code>if</code>  statement  is no
+expression and  can therefore not be assigned to a variable.  Furthermore
+an <code>if</code> statement does not return a value.
+<p>
+Fibonacci numbers are defined recursively by <i>f</i>(1) = <i>f</i>(2) = 1 and
+<i>f</i>(<i>n</i>) = <i>f</i>(<i>n</i><font face="symbol">&#8722;</font>1) + <i>f</i>(<i>n</i><font face="symbol">&#8722;</font>2) for <i>n</i>  <font face="symbol">&#8805;</font> 3.
+Since functions in <font face="Gill Sans,Helvetica,Arial">GAP</font> may call themselves,
+a function <code>fib</code> that computes Fibonacci numbers can be implemented
+basically by typing the above equations. (Note however that this is a very
+inefficient way to compute <i>f</i>(<i>n</i>).)
+<p>
+<pre>
+gap&gt; fib:= function(n)
+&gt;       if n in [1, 2] then
+&gt;          return 1;
+&gt;       else
+&gt;          return fib(n-1) + fib(n-2);
+&gt;       fi;
+&gt;    end;
+function( n ) ... end
+gap&gt; fib(15);
+610
+</pre>
+<p>
+There should be additional tests for the  argument  <code>n</code> being  a positive
+integer.   This  function <code>fib</code> might  lead to strange  results if called
+with other arguments.  Try inserting the necessary tests into this example.
+<p>
+<p>
+<h2><a name="SECT003">4.3 Local Variables</a></h2>
+<p><p>
+A function <code>gcd</code> that computes the greatest common divisor of two
+integers by Euclid's algorithm will need a variable in addition to the
+formal arguments.
+<p>
+<pre>
+gap&gt; gcd:= function(a, b)
+&gt;       local c;
+&gt;       while b &lt;&gt; 0 do
+&gt;          c:= b;
+&gt;          b:= a mod b;
+&gt;          a:= c;
+&gt;       od;
+&gt;       return c;
+&gt;    end;
+function( a, b ) ... end
+gap&gt; gcd(30, 63);
+3
+</pre>
+<p>
+The additional  variable <code>c</code>  is declared as  a  <strong>local</strong>  variable in the
+<code>local</code> statement  of the function definition.  The <code>local</code> statement, if
+present, must  be the first  statement of  a function  definition.   When
+several local variables are  declared in only one  <code>local</code> statement they
+are separated by commas.                                 
+<p>
+The  variable <code>c</code>  is  indeed  a local  variable,  that  is local to  the
+function <code>gcd</code>.  If you try  to use the value of <code>c</code> in the main loop you
+will see that <code>c</code>  has no assigned value unless you have already assigned
+a value to the variable <code>c</code>  in  the  main loop.  In this case  the local
+nature of <code>c</code> in the function <code>gcd</code> prevents  the value of the <code>c</code> in the
+main loop from being overwritten.
+<p>
+<pre>
+gap&gt; c:= 7;;
+gap&gt; gcd(30, 63);
+3
+gap&gt; c;
+7
+</pre>
+<p>
+We say  that in a given scope an identifier identifies a unique variable.
+A <strong>scope</strong> is a lexical part of a program text.  There is the global scope
+that encloses  the  entire program text, and there are local  scopes that
+range from the <code>function</code>  keyword, denoting the beginning of  a function
+definition, to the corresponding <code>end</code> keyword.  A local scope introduces
+new  variables, whose identifiers are  given in the formal argument  list
+and the local declaration of the function.  The usage of an identifier in
+a program text refers to  the  variable in  the  innermost scope that has
+this identifier as its name.
+<p>
+<p>
+<h2><a name="SECT004">4.4 Recursion</a></h2>
+<p><p>
+We have already seen recursion in the function <code>fib</code>
+in Section&nbsp;<a href="CHAP004.htm#SECT002">If Statements</a>.
+Here is another, slightly more complicated example.
+<p>
+We will now write a function to determine  the number of partitions of
+a positive integer.  A partition of a positive integer is a descending
+list  of numbers   whose sum   is the   given   integer.  For  example
+[4,2,1,1] is a partition of 8. Note that there is just one partition
+of 0, namely [&nbsp;]. The complete set of all  partitions of an integer
+<i>n</i> may be divided  into subsets with respect  to the largest element.
+The number  of  partitions of   <i>n</i> therefore  equals  the  sum of the
+numbers of partitions of <i>n</i><font face="symbol">&#8722;</font><i>i</i> with elements less than or equal to <i>i</i>
+for all possible <i>i</i>.  More generally the  number of partitions of <i>n</i>
+with elements less than <i>m</i> is the sum of the numbers of partitions of
+<i>n</i><font face="symbol">&#8722;</font><i>i</i> with elements less than <i>i</i> for <i>i</i> less than <i>m</i> and <i>n</i>.  This
+description yields the following function.
+<p>
+<pre>
+gap&gt; nrparts:= function(n)
+&gt;    local np;
+&gt;    np:= function(n, m)
+&gt;       local i, res;
+&gt;       if n = 0 then
+&gt;          return 1;
+&gt;       fi;
+&gt;       res:= 0;
+&gt;       for i in [1..Minimum(n,m)] do
+&gt;          res:= res + np(n-i, i);
+&gt;       od;
+&gt;       return res;
+&gt;    end;
+&gt;    return np(n,n);
+&gt; end;
+function( n ) ... end
+</pre>
+<p>
+We wanted to  write a function that  takes one argument.   We solved  the
+problem of determining the number  of partitions in  terms of a recursive
+procedure with two arguments.  So we had to write  in fact two functions.
+The  function  <code>nrparts</code> that  can  be  used  to  compute the  number  of
+partitions indeed takes only one  argument.  The  function <code>np</code> takes two
+arguments and solves the problem in the indicated way.  The  only task of
+the function <code>nrparts</code> is to call <code>np</code> with two equal arguments.
+<p>
+We made <code>np</code> local to <code>nrparts</code>.  This  illustrates the possibility of
+having local functions in <font face="Gill Sans,Helvetica,Arial">GAP</font>.  It is  however not necessary to put
+it there.  <code>np</code> could as well  be defined on  the main level, but then
+the  identifier <code>np</code> would  be bound and could   not be used for other
+purposes, and if  it were used  the  essential function <code>np</code> would  no
+longer be available for <code>nrparts</code>.
+<p>
+Now have a look at the function <code>np</code>. It has two local variables <code>res</code>
+and <code>i</code>. The  variable <code>res</code> is  used to collect the sum  and <code>i</code> is a
+loop  variable. In the loop the  function <code>np</code> calls itself again with
+other arguments. It would be very disturbing if this call of <code>np</code> was
+to use the same <code>i</code> and <code>res</code> as the calling <code>np</code>.  Since the new call
+of <code>np</code> creates a new scope with new variables this is fortunately not
+the case.
+<p>
+Note that the formal parameters 'n' and 'm' of 'np' are treated like
+local variables.
+<p>
+(Regardless   of the recursive structure of   an algorithm it is often
+cheaper (in    terms  of  computing    time)  to  avoid  a   recursive
+implementation if possible (and it  is possible in this case), because
+a function call is not very cheap.)
+<p>
+<p>
+<h2><a name="SECT005">4.5 Further Information about Functions</a></h2>
+<p><p>
+The function  syntax is described  in Section <a href="../ref/CHAP005.htm">Functions</a>.   The <code>if</code>
+statement is described  in more detail in  Section <a href="../ref/CHAP004.htm#SECT016">If</a>.  More  about
+Fibonacci  numbers is found  in  Section <a href="../ref/CHAP017.htm#SSEC003.1">Fibonacci</a>  and more  about
+partitions in Section <a href="../ref/CHAP017.htm#SSEC002.15">Partitions</a>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,178 @@
+<html><head><title>[ref] 66 p-adic Numbers</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP065.htm">Previous</a>] [<a href ="CHAP067.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>66 p-adic Numbers</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP066.htm#SECT001">Pure p-adic Numbers</a>
+<li> <A HREF="CHAP066.htm#SECT002">Extensions of the p-adic Numbers</a>
+</ol><p>
+<p>
+In this chapter <i>p</i> is always a (fixed) prime.
+<p>
+The <i>p</i>-adic numbers <i>Q</i><sub><i>p</i></sub> are the completion of the rational numbers with
+respect to the valuation <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>p</i><sup><i>v</i></sup>[(<i>a</i>)/(<i>b</i>)])=<i>v</i> if <i>p</i> divides neither
+<i>a</i> nor <i>b</i>. They form a field of characteristic 0 which nevertheless shows
+some behaviour of the finite field with <i>p</i> elements.
+<p>
+A <i>p</i>-adic numbers can be approximated by a ``<i>p</i>-adic expansion'' which is 
+similar to the decimal expansion used for the reals (but written from left
+to right). So for example if
+<i>p</i>=2, the numbers 1,2,3,4,[&nbsp;1/2] and [&nbsp;4/5] are
+represented as 1(2), 0&#183;1(2), 1&#183;1(2), 0&#183;01(2), 10(2) and
+0&#183;0101(2).  Approximation means to ignore powers of <i>p</i>, so for example
+with only 2 digits accuracy [&nbsp;4/5] would be approximated as
+0&#183;01(2).
+The important difference to the decimal approximation is that
+<i>p</i>-adic approximation is a ring homomorphism on the subrings of <i>p</i>-adic
+numbers whose valuation is bounded from below.
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>, <i>p</i>-adic numbers are represented by approximations. A family of
+(approximated) <i>p</i>-adic numbers consists of <i>p</i>-adic numbers with a certain
+precision and arithmetic with these numbers is done with this precision.
+<p>
+<p>
+<h2><a name="SECT001">66.1 Pure p-adic Numbers</a></h2>
+<p><p>
+Pure <i>p</i>-adic numbers are the <i>p</i>-adic numbers described so far.
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>PurePadicNumberFamily( </code><var>p</var><code>, </code><var>precision</var><code> ) O</code>
+<p>
+returns the family of pure <i>p</i>-adic numbers over the
+prime <var>p</var> with  <var>precision</var>  ``digits''.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>PadicNumber(</code><var>fam</var><code>,</code><var>rat</var><code>)</code>
+<p>
+returns the element of the <i>p</i>-adic number family <var>fam</var> that is used to
+represent the rational number <var>rat</var>.
+<p>
+<i>p</i>-adic numbers allow the usual operations for fields.
+<p>
+<pre>
+gap&gt; fam:=PurePadicNumberFamily(2,3);;
+gap&gt; a:=PadicNumber(fam,4/5);
+0.0101(2)
+gap&gt; 3*a;
+0.0111(2)
+gap&gt; a/2;
+0.101(2)
+gap&gt; a*10;
+0.001(2)
+</pre>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>Valuation( </code><var>obj</var><code> ) O</code>
+<p>
+The Valuation is the <i>p</i>-part of the <i>p</i>-adic number.
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>ShiftedPadicNumber( </code><var>padic</var><code>, </code><var>int</var><code> ) O</code>
+<p>
+ShiftedPadicNumber takes a <i>p</i>-adic number <var>padic</var> and an integer <var>shift</var>
+and returns the <i>p</i>-adic number <i>c</i>, that is <code></code><var>padic</var><code>* p^</code><var>shift</var><code></code>. The
+<var>shift</var> is just added to the <i>p</i>-part.
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>IsPurePadicNumber( </code><var>obj</var><code> ) C</code>
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>IsPurePadicNumberFamily( </code><var>fam</var><code> ) C</code>
+<p>
+<p>
+<h2><a name="SECT002">66.2 Extensions of the p-adic Numbers</a></h2>
+<p><p>
+The usual Kronecker construction with an irreducible polynomial can be used
+to construct extensions of the <i>p</i>-adic numbers. 
+Let <i>L</i> be such an
+extension. Then there is a subfield <i>K</i> &lt; <i>L</i> such that <i>K</i> is an unramified
+extension of the <i>p</i>-adic numbers and <i>L</i>/<i>K</i> is purely ramified.
+(For an explanation of ``ramification'' see for example <a href="biblio.htm#neukirch"><cite>neukirch</cite></a>,
+section II.7 or another book on algebraic number theory. Essentially, an
+extension <i>L</i> of the <i>p</i>-adic numbers generated
+by a rational polynomial <i>f</i> is unramified if <i>f</i> remains squarefree modulo
+<i>p</i> and is completely ramified if modulo <i>p</i> the polynomial <i>f</i> is a power of
+a linear factor while remaining irreducible over the <i>p</i>-adic numbers.)
+The representation of extensions of <i>p</i>-adic numbers in <font face="Gill Sans,Helvetica,Arial">GAP</font> uses this
+subfield.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>PadicExtensionNumberFamily( </code><var>p</var><code>, </code><var>precision</var><code>, </code><var>unram</var><code>, </code><var>ram</var><code> ) F</code>
+<p>
+An extended <i>p</i>-adic field <i>L</i> is given by two polynomials h and g with
+coeff.-lists   <var>unram</var> (for  the  unramified  part)  and <var>ram</var>  (for  the
+ramified part). Then <i>L</i> is isomorphic to <i>Q</i><sub><i>p</i></sub>[<i>x</i>,<i>y</i>]/(<i>h</i>(<i>x</i>),<i>g</i>(<i>y</i>)).
+<p>
+This function takes the prime number  <var>p</var> and the two coefficient lists
+<var>unram</var> and <var>ram</var> for the two polynomials. The polynomial given by the
+coefficients in <var>unram</var> must be a cyclotomic polynomial and the
+polynomial given by <var>ram</var> an Eisenstein-polynomial (or 1+x). <strong>This is
+not checked by <font face="Gill Sans,Helvetica,Arial">GAP</font>.</strong>
+<p>
+Every number  out   of  <i>L</i> is  represented   as   a coeff.-list   for
+the basis {1,<i>x</i>,<i>x</i><sup>2</sup>,<font face="symbol">&#8230;</font>,<i>y</i>,<i>xy</i>,<i>x</i><sup>2</sup><i>y</i>,<font face="symbol">&#8230;</font>} of <i>L</i>. The integer
+<var>precision</var> is the number of ``digits'' that all the coefficients have.
+<p>
+A general  comment: the polynomials with which
+<code>PadicExtensionNumberFamily</code>  is called define an extension of <i>Q</i><sub><i>p</i></sub>. It
+must be ensured that both polynomials are  really irreducible over
+<i>Q</i><sub><i>p</i></sub>!  For example x^2+x+1 is <strong>not</strong> irreducible over Q_p. Therefore the
+``extension'' PadicExtensionNumberFamily(3, 4, [1,1,1], [1,1]) contains
+non-invertible ``pseudo-<i>p</i>-adic numbers''. Conversely, if an
+``extension'' contains noninvertible elements one of the polynomials was
+not irreducible.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>PadicNumber( </code><var>fam</var><code>, </code><var>rat</var><code> ) O</code>
+<li><code>PadicNumber( </code><var>purefam</var><code>, </code><var>list</var><code> ) O</code>
+<li><code>PadicNumber( </code><var>extfam</var><code>, </code><var>list</var><code> ) O</code>
+<p>
+create a <i>p</i>-adic number in the <i>p</i>-adic numbers family <var>fam</var>. The
+first usage returns the <i>p</i>-adic number corresponding to the rational
+<var>rat</var>.
+<p>
+The second usage takes a pure <i>p</i>-adic numbers family <var>purefam</var> and a
+list <var>list</var> of length 2 and returns the number <code>p^</code><var>list</var><code>[1]  *
+</code><var>list</var><code>[2]</code>.  It must be guaranteed that no entry of list[2] is 
+divisible by the prime p. (Otherwise precision will get lost.)
+<p>
+The third usage creates a number in the family <var>extfam</var> of a <i>p</i>-adic
+extension. The second entry must be a list <var>L</var> of length 2 such that
+<var>list</var>[2] is  the list of coeff. for  the  basis
+{1,<font face="symbol">&#8230;</font>,<i>x</i><sup><i>f</i><font face="symbol">&#8722;</font>1</sup>&#183;<i>y</i><sup><i>e</i><font face="symbol">&#8722;</font>1</sup>} of the extended <i>p</i>-adic field and
+<var>list</var>[1] is a common <i>p</i>-part of all the coeff.
+<p>
+<i>p</i>-adic numbers allow the usual field operations.
+<p>
+<pre>
+gap&gt; efam:=PadicExtensionNumberFamily(3, 5, [1,1,1], [1,1]);;
+gap&gt; PadicNumber(efam,7/9);
+padic(120(3),0(3))
+</pre>
+<p>
+A word of warning:
+Depending on the actual representation of quotients, precision may seem
+to ``vanish''.
+For example in PadicExtensionNumberFamily(3, 5, [1,1,1], [1,1]) the
+number (1.2000, 0.1210)(3) can be represented as <code>[ 0, [ 1.2000, 0.1210
+] ]</code>   or as <code>[-1, [ 12.000, 1.2100 ] ]</code> (here the coefficients have to be
+multiplied by <i>p</i><sup><font face="symbol">&#8722;</font>1</sup>).
+<p>
+So there may be a number (1.2, 2.2)(3) which seems to have only two
+digits of precision instead of the declared 5. But internally the number
+is stored as <code>[-3, [ 0.0012, 0.0022  ] ]</code>  and  so has in  fact maximum
+precision.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>IsPadicExtensionNumber( </code><var>obj</var><code> ) C</code>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>IsPadicExtensionNumberFamily( </code><var>fam</var><code> ) C</code>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP065.htm">Previous</a>] [<a href ="CHAP067.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

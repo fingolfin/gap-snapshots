@@ -1,0 +1,1010 @@
+<html><head><title>[ref] 54 Rings</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP053.htm">Previous</a>] [<a href ="CHAP055.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>54 Rings</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP054.htm#SECT001">Generating Rings</a>
+<li> <A HREF="CHAP054.htm#SECT002">Ideals in Rings</a>
+<li> <A HREF="CHAP054.htm#SECT003">Rings With One</a>
+<li> <A HREF="CHAP054.htm#SECT004">Properties of Rings</a>
+<li> <A HREF="CHAP054.htm#SECT005">Units and Factorizations</a>
+<li> <A HREF="CHAP054.htm#SECT006">Euclidean Rings</a>
+<li> <A HREF="CHAP054.htm#SECT007">Gcd and Lcm</a>
+</ol><p>
+<p>
+This chapter deals with domains that are additive groups closed under
+multiplication <code>*</code>.
+Such a domain, if <code>*</code> and <code>+</code> are distributive,
+is called a <strong>ring</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+Each division ring, field (see&nbsp;<a href="CHAP056.htm">Fields and Division Rings</a>),
+or algebra (see&nbsp;<a href="CHAP060.htm">Algebras</a>) is a ring,
+important examples are the integers (see&nbsp;<a href="CHAP014.htm">Integers</a>) and matrix rings.
+<p>
+In the case of a <strong>ring-with-one</strong>, additional multiplicative structure is
+present, see&nbsp;<a href="CHAP054.htm#SSEC003.1">IsRingWithOne</a>.
+<p>
+Several functions for ring elements, such as <code>IsPrime</code> (<a href="CHAP054.htm#SSEC005.7">IsPrime</a>) and
+<code>Factors</code> (<a href="CHAP054.htm#SSEC005.8">Factors</a>), are defined only relative to a ring <var>R</var>,
+which can be entered as an optional argument;
+if <var>R</var> is omitted then a <strong>default ring</strong> is formed from the ring elements
+given as arguments, see&nbsp;<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>.
+<p>
+<p>
+<h2><a name="SECT001">54.1 Generating Rings</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsRing( </code><var>R</var><code> ) P</code>
+<p>
+A <strong>ring</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is an additive group (see&nbsp;<a href="CHAP053.htm#SSEC001.6">IsAdditiveGroup</a>)
+that is also a magma (see&nbsp;<a href="CHAP033.htm#SSEC001.1">IsMagma</a>),
+such that addition <code>+</code> and multiplication <code>*</code> are distributive.
+<p>
+The multiplication need <strong>not</strong> be associative (see&nbsp;<a href="CHAP033.htm#SSEC004.7">IsAssociative</a>).
+For example, a Lie algebra (see&nbsp;<a href="CHAP061.htm">Lie Algebras</a>) is regarded as a
+ring in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>Ring( </code><var>r</var><code> , </code><var>s</var><code>, ... ) F</code>
+<li><code>Ring( </code><var>coll</var><code> ) F</code>
+<p>
+In the first form <code>Ring</code> returns the smallest ring that
+contains all the elements <var>r</var>, <var>s</var>... etc.
+In the second form <code>Ring</code> returns the smallest ring that
+contains all the elements in the collection <var>coll</var>.
+If any element is not an element of a ring or if the elements lie in no
+common ring an error is raised.
+<p>
+<code>Ring</code> differs from <code>DefaultRing</code> (see&nbsp;<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>) in that it returns
+the smallest ring in which the elements lie, while <code>DefaultRing</code> may
+return a larger ring if that makes sense.
+<p>
+<pre>
+gap&gt; Ring( 2, E(4) );
+&lt;ring with 2 generators&gt;
+</pre>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>DefaultRing( </code><var>r</var><code> , </code><var>s</var><code>, ... ) F</code>
+<li><code>DefaultRing( </code><var>coll</var><code> ) F</code>
+<p>
+In the first form <code>DefaultRing</code> returns a ring that contains
+all the elements <var>r</var>, <var>s</var>, ... etc.
+In the second form <code>DefaultRing</code> returns a ring that contains
+all the elements in the collection <var>coll</var>.
+If any element is not an element of a ring or if the elements lie in no
+common ring an error is raised.
+<p>
+The ring returned by <code>DefaultRing</code> need not be the smallest ring in which
+the elements lie.
+For example for elements from cyclotomic fields,
+<code>DefaultRing</code> may return the ring of integers of the smallest cyclotomic
+field in which the elements lie, which need not be the smallest ring
+overall, because the elements may in fact lie in a smaller number field
+which is itself not a cyclotomic field.
+<p>
+(For the exact definition of the default ring of a certain type of
+elements, look at the corresponding method installation.)
+<p>
+<code>DefaultRing</code> is used by the ring functions like <code>Quotient</code>, <code>IsPrime</code>,
+<code>Factors</code>, or <code>Gcd</code> if no explicit ring is given.
+<p>
+<code>Ring</code> (see&nbsp;<a href="CHAP054.htm#SSEC001.2">Ring</a>) differs from <code>DefaultRing</code> in that it returns the
+smallest ring in which the elements lie, while <code>DefaultRing</code> may return
+a larger ring if that makes sense.
+<p>
+<pre>
+gap&gt; DefaultRing( 2, E(4) );
+GaussianIntegers
+</pre>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>RingByGenerators( </code><var>C</var><code> ) O</code>
+<p>
+<code>RingByGenerators</code> returns the ring generated by the elements in the
+collection <var>C</var>,
+i.&nbsp;e., the closure of <var>C</var> under addition, multiplication,
+and taking additive inverses.
+<p>
+<pre>
+gap&gt; RingByGenerators([ 2, E(4) ]);
+&lt;ring with 2 generators&gt;
+</pre>
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>DefaultRingByGenerators( </code><var>coll</var><code> ) O</code>
+<p>
+<pre>
+gap&gt; DefaultRingByGenerators([ 2, E(4) ]);
+GaussianIntegers
+</pre>
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>GeneratorsOfRing( </code><var>R</var><code> ) A</code>
+<p>
+<code>GeneratorsOfRing</code> returns a list of elements such that the ring <var>R</var> is
+the closure of these elements under addition, multiplication,
+and taking additive inverses.
+<p>
+<pre>
+gap&gt; R:=Ring( 2, 1/2 );
+&lt;ring with 2 generators&gt;
+gap&gt; GeneratorsOfRing( R );
+[ 2, 1/2 ]
+</pre>
+<p>
+<a name = "SSEC001.7"></a>
+<li><code>AsRing( </code><var>C</var><code> ) A</code>
+<p>
+If the elements in the collection <var>C</var> form a ring then <code>AsRing</code> returns
+this ring, otherwise <code>fail</code> is returned.
+<p>
+<a name = "SSEC001.8"></a>
+<li><code>Subring( </code><var>R</var><code>, </code><var>gens</var><code> ) F</code>
+<a name = "SSEC001.8"></a>
+<li><code>SubringNC( </code><var>R</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+returns the ring with parent <var>R</var> generated by the elements in
+<var>gens</var>. When the second form, <code>SubringNC</code> is used, it is <strong>not</strong> checked
+whether all elements in <var>gens</var> lie in <var>R</var>. 
+<p>
+<pre>
+gap&gt; R:= Integers;
+Integers
+gap&gt; S:= Subring( R, [ 4, 6 ] );
+&lt;ring with 2 generators&gt;
+gap&gt; Parent( S );
+Integers
+</pre>
+<p>
+<a name = "SSEC001.9"></a>
+<li><code>ClosureRing( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>ClosureRing( </code><var>R</var><code>, </code><var>S</var><code> ) O</code>
+<p>
+For a ring <var>R</var> and either an element <var>r</var> of its elements family or a ring
+<var>S</var>, <code>ClosureRing</code> returns the ring generated by both arguments.
+<p>
+<pre>
+gap&gt; ClosureRing( Integers, E(4) );
+&lt;ring-with-one, with 2 generators&gt;
+</pre>
+<p>
+<a name = "SSEC001.10"></a>
+<li><code>Quotient( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>Quotient( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+In the first form <code>Quotient</code> returns the quotient of the two ring
+elements <var>r</var> and <var>s</var> in the ring <var>R</var>.
+In the second form <code>Quotient</code> returns the quotient of the two ring
+elements <var>r</var> and <var>s</var> in their default ring.
+It returns <code>fail</code> if the quotient does not exist in the respective ring.
+<p>
+(To perform the division in the quotient field of a ring, use the
+quotient operator <code>/</code>.)
+<p>
+<pre>
+gap&gt; Quotient( 2, 3 );
+fail
+gap&gt; Quotient( 6, 3 );
+2
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">54.2 Ideals in Rings</a></h2>
+<p><p>
+A <strong>left ideal</strong> in a ring <i>R</i> is a subring of <i>R</i>
+that is closed under multiplication with elements of <i>R</i> from the left.
+<p>
+A <strong>right ideal</strong> in a ring <i>R</i> is a subring of <i>R</i>
+that is closed under multiplication with elements of <i>R</i> from the right.
+<p>
+A <strong>two-sided ideal</strong> or simply <strong>ideal</strong> in a ring <i>R</i> is both a left ideal
+and a right ideal in <i>R</i>.
+<p>
+So being a (left/right/two-sided) ideal is not a property of a domain
+but refers to the acting ring(s).
+Hence we must ask, e.&nbsp;g., <code>IsIdeal( </code><var>R</var><code>, </code><var>I</var><code> )</code> if we want to know
+whether the ring <var>I</var> is an ideal in the ring <var>R</var>.
+The property <code>IsIdealInParent</code> can be used to store whether a ring is an
+ideal in its parent.
+<p>
+(Whenever the term <code>Ideal</code> occurs without specifying prefix <code>Left</code> or
+<code>Right</code>, this means the same as <code>TwoSidedIdeal</code>. Conversely, any 
+occurrence of <code>TwoSidedIdeal</code> can be substituted by <code>Ideal</code>.)
+<p>
+For any of the above kinds of ideals, there is a notion of generators,
+namely <code>GeneratorsOfLeftIdeal</code>, <code>GeneratorsOfRightIdeal</code>, and
+<code>GeneratorsOfTwoSidedIdeal</code>.
+The acting rings can be accessed as <code>LeftActingRingOfIdeal</code> and
+<code>RightActingRingOfIdeal</code>, respectively.
+Note that ideals are detected from known values of these attributes,
+especially it is assumed that whenever a domain has both a left and a
+right acting ring then these two are equal.
+<p>
+Note that we cannot use <code>LeftActingDomain</code> and <code>RightActingDomain</code> here,
+since ideals in algebras are themselves vector spaces, and such a space
+can of course also be a module for an action from the right.
+In order to make the usual vector space functionality automatically
+available for ideals, we have to distinguish the left and right module
+structure from the additional closure properties of the ideal.
+<p>
+Further note that the attributes denoting ideal generators and acting
+ring are used to create ideals if this is explicitly wanted, but the
+ideal relation in the sense of <code>IsIdeal</code> is of course independent of the
+presence of the attribute values.
+<p>
+Ideals are constructed with <code>LeftIdeal</code>, <code>RightIdeal</code>, <code>TwoSidedIdeal</code>.
+Principal ideals of the form <i>x</i> * <i>R</i>, <i>R</i> * <i>x</i>, <i>R</i> * <i>x</i> * <i>R</i> can also be
+constructed with a simple multiplication.
+<p>
+Currently many methods for dealing with ideals need linear algebra to
+work, so they are mainly applicable to ideals in algebras.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>TwoSidedIdeal( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.1"></a>
+<li><code>Ideal( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.1"></a>
+<li><code>LeftIdeal( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.1"></a>
+<li><code>RightIdeal( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<p>
+Let <var>R</var> be a ring, and <var>gens</var> a list of collection of elements in <var>R</var>.
+<code>TwoSidedIdeal</code>, <code>LeftIdeal</code>, and <code>RightIdeal</code> return the two-sided,
+left, or right ideal, respectively, <i>I</i> in <var>R</var> that is generated by
+<var>gens</var>.
+The ring <var>R</var> can be accessed as <code>LeftActingRingOfIdeal</code> or
+<code>RightActingRingOfIdeal</code>
+(or both) of <i>I</i>.
+<p>
+If <var>R</var> is a left <i>F</i>-module then also <i>I</i> is a left <i>F</i>-module,
+in particular the <code>LeftActingDomain</code> (see&nbsp;<a href="CHAP055.htm#SSEC001.11">LeftActingDomain</a>) values of
+<var>R</var> and <i>I</i> are equal.
+<p>
+If the optional argument <code>"basis"</code> is given then <var>gens</var> are assumed to
+be a list of basis vectors of <i>I</i> viewed as a free <i>F</i>-module.
+(This is mainly applicable to ideals in algebras.)
+In this case, it is <strong>not</strong> checked whether <var>gens</var> really is linearly
+independent and whether <var>gens</var> is a subset of <var>R</var>.
+<p>
+<code>Ideal</code> is simply a synonym of <code>TwoSidedIdeal</code>.
+<p>
+<pre>
+gap&gt; R:= Integers;;
+gap&gt; I:= Ideal( R, [ 2 ] );
+&lt;two-sided ideal in Integers, (1 generators)&gt;
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>TwoSidedIdealNC( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.2"></a>
+<li><code>IdealNC( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.2"></a>
+<li><code>LeftIdealNC( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC002.2"></a>
+<li><code>RightIdealNC( </code><var>R</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<p>
+The effects of <code>TwoSidedIdealNC</code>, <code>LeftIdealNC</code>, and <code>RightIdealNC</code> are
+the same as <code>TwoSidedIdeal</code>, <code>LeftIdeal</code>, and <code>RightIdeal</code>, respectively
+(see&nbsp;<a href="CHAP054.htm#SSEC002.1">TwoSidedIdeal</a>), but they do not check whether all entries
+of <var>gens</var> lie in <var>R</var>.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>IsTwoSidedIdeal( </code><var>R</var><code>, </code><var>I</var><code> ) O</code>
+<a name = "SSEC002.3"></a>
+<li><code>IsLeftIdeal( </code><var>R</var><code>, </code><var>I</var><code> ) O</code>
+<a name = "SSEC002.3"></a>
+<li><code>IsRightIdeal( </code><var>R</var><code>, </code><var>I</var><code> ) O</code>
+<a name = "SSEC002.3"></a>
+<li><code>IsTwoSidedIdealInParent( </code><var>I</var><code> ) P</code>
+<a name = "SSEC002.3"></a>
+<li><code>IsLeftIdealInParent( </code><var>I</var><code> ) P</code>
+<a name = "SSEC002.3"></a>
+<li><code>IsRightIdealInParent( </code><var>I</var><code> ) P</code>
+<p>
+The properties <code>IsTwoSidedIdealInParent</code> etc., are attributes of the
+ideal, and once known they are stored in the ideal. 
+<p>
+<pre>
+gap&gt; A:= FullMatrixAlgebra( Rationals, 3 );
+( Rationals^[ 3, 3 ] )
+gap&gt; I:= Ideal( A, [ Random( A ) ] );
+&lt;two-sided ideal in ( Rationals^[ 3, 3 ] ), (1 generators)&gt;
+gap&gt; IsTwoSidedIdeal( A, I );
+true
+</pre>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>TwoSidedIdealByGenerators( </code><var>R</var><code>, </code><var>gens</var><code> ) O</code>
+<a name = "SSEC002.4"></a>
+<li><code>IdealByGenerators( </code><var>R</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+<code>TwoSidedIdealByGenerators</code> returns the ring that is generated by the
+elements of the collection <var>gens</var> under addition, multiplication, and
+multiplication with elements of the ring <var>R</var> from the left and from the
+right.
+<p>
+<var>R</var> can be accessed by <code>LeftActingRingOfIdeal</code> or
+<code>RightActingRingOfIdeal</code>,
+<var>gens</var> can be accessed by <code>GeneratorsOfTwoSidedIdeal</code>.
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>LeftIdealByGenerators( </code><var>R</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+<code>LeftIdealByGenerators</code> returns the ring that is generated by the
+elements of the collection <var>gens</var> under addition, multiplication, and
+multiplication with elements of the ring <var>R</var> from the left.
+<p>
+<var>R</var> can be accessed by <code>LeftActingRingOfIdeal</code>,
+<var>gens</var> can be accessed by <code>GeneratorsOfLeftIdeal</code>.
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>RightIdealByGenerators( </code><var>R</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+<code>RightIdealByGenerators</code> returns the ring that is generated by the
+elements of the collection <var>gens</var> under addition, multiplication, and
+multiplication with elements of the ring <var>R</var> from the right.
+<p>
+<var>R</var> can be accessed by <code>RightActingRingOfIdeal</code>,
+<var>gens</var> can be accessed by <code>GeneratorsOfRightIdeal</code>.
+<p>
+<a name = "SSEC002.7"></a>
+<li><code>GeneratorsOfTwoSidedIdeal( </code><var>I</var><code> ) A</code>
+<a name = "SSEC002.7"></a>
+<li><code>GeneratorsOfIdeal( </code><var>I</var><code> ) A</code>
+<p>
+is a list of generators for the bi-ideal <var>I</var>, with respect to the action of
+<code>LeftActingRingOfIdeal( </code><var>I</var><code> )</code> from the left and the action of
+<code>RightActingRingOfIdeal( </code><var>I</var><code> )</code>from the right.
+<p>
+Note that <code>LeftActingRingOfIdeal(</code><var>I</var><code>)</code> and <code>RightActingRingOfIdeal(</code><var>I</var><code>)</code>
+coincide if <var>I</var> is a two-sided ideal.
+<p>
+<pre>
+gap&gt; A:= FullMatrixAlgebra( Rationals, 3 );;
+gap&gt; I:= Ideal( A, [ One( A ) ] );;
+gap&gt; GeneratorsOfIdeal( I );
+[ [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] ]
+</pre>
+<p>
+<a name = "SSEC002.8"></a>
+<li><code>GeneratorsOfLeftIdeal( </code><var>I</var><code> ) A</code>
+<p>
+is a list of generators for the left ideal <var>I</var>, with respect to the 
+action of
+<code>LeftActingRingOfIdeal( </code><var>I</var><code> )</code> from the left.
+<p>
+<a name = "SSEC002.9"></a>
+<li><code>GeneratorsOfRightIdeal( </code><var>I</var><code> ) A</code>
+<p>
+is a list of generators for the right ideal <var>I</var>, with respect to the 
+action of
+<code>RightActingRingOfIdeal( </code><var>I</var><code> )</code> from the right.
+<p>
+<a name = "SSEC002.10"></a>
+<li><code>LeftActingRingOfIdeal( </code><var>I</var><code> ) A</code>
+<a name = "SSEC002.10"></a>
+<li><code>RightActingRingOfIdeal( </code><var>I</var><code> ) A</code>
+<p>
+<a name = "SSEC002.11"></a>
+<li><code>AsLeftIdeal( </code><var>R</var><code>, </code><var>S</var><code> ) O</code>
+<a name = "SSEC002.11"></a>
+<li><code>AsRightIdeal( </code><var>R</var><code>, </code><var>S</var><code> ) O</code>
+<a name = "SSEC002.11"></a>
+<li><code>AsTwoSidedIdeal( </code><var>R</var><code>, </code><var>S</var><code> ) O</code>
+<p>
+Let <var>S</var> be a subring of <var>R</var>.
+<p>
+If <var>S</var> is a left ideal in <var>R</var> then <code>AsLeftIdeal</code> returns this left ideal,
+otherwise <code>fail</code> is returned.
+If <var>S</var> is a right ideal in <var>R</var> then <code>AsRightIdeal</code> returns this right
+ideal, otherwise <code>fail</code> is returned.
+If <var>S</var> is a two-sided ideal in <var>R</var> then <code>AsTwoSidedIdeal</code> returns this
+two-sided ideal, otherwise <code>fail</code> is returned.
+<p>
+<pre>
+gap&gt; A:= FullMatrixAlgebra( Rationals, 3 );;
+gap&gt; B:= DirectSumOfAlgebras( A, A );
+&lt;algebra over Rationals, with 6 generators&gt;
+gap&gt; C:= Subalgebra( B, Basis( B ){[1..9]} );
+&lt;algebra over Rationals, with 9 generators&gt;
+gap&gt; I:= AsTwoSidedIdeal( B, C );
+&lt;two-sided ideal in &lt;algebra of dimension 18 over Rationals&gt;, (9 generators)&gt;
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">54.3 Rings With One</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>IsRingWithOne( </code><var>R</var><code> ) P</code>
+<p>
+A <strong>ring-with-one</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a ring (see&nbsp;<a href="CHAP054.htm#SSEC001.1">IsRing</a>)
+that is also a magma-with-one (see&nbsp;<a href="CHAP033.htm#SSEC001.2">IsMagmaWithOne</a>).
+<p>
+Note that the identity and the zero of a ring-with-one need <strong>not</strong> be
+distinct.
+This means that a ring that consists only of its zero element can be
+regarded as a ring-with-one.
+<p>
+This is especially useful in the case of finitely presented rings,
+in the sense that each factor of a ring-with-one is again a
+ring-with-one.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>RingWithOne( </code><var>r</var><code>, </code><var>s</var><code>, ... ) F</code>
+<li><code>RingWithOne( </code><var>C</var><code> ) F</code>
+<p>
+In the first form <code>RingWithOne</code> returns the smallest ring with one that
+contains all the elements <var>r</var>, <var>s</var>... etc.
+In the second form <code>RingWithOne</code> returns the smallest ring with one that
+contains all the elements in the collection <var>C</var>.
+If any element is not an element of a ring or if the elements lie in no
+common ring an error is raised.
+<p>
+<pre>
+gap&gt; RingWithOne( [ 4, 6 ] );
+&lt;ring-with-one, with 2 generators&gt;
+</pre>
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>RingWithOneByGenerators( </code><var>coll</var><code> ) O</code>
+<p>
+<code>RingWithOneByGenerators</code> returns the ring-with-one generated by the
+elements in the collection <var>coll</var>, i.&nbsp;e., the closure of <var>coll</var> under
+addition, multiplication, taking additive inverses,
+and taking the identity of an element.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>GeneratorsOfRingWithOne( </code><var>R</var><code> ) A</code>
+<p>
+<code>GeneratorsOfRingWithOne</code> returns a list of elements
+such that the ring <var>R</var> is the closure of these elements
+under addition, multiplication, taking additive inverses, and taking
+the identity element <code>One( </code><var>R</var><code> )</code>.
+<p>
+<var>R</var> itself need <strong>not</strong> be known to be a ring-with-one.
+<p>
+<pre>
+gap&gt; R:= RingWithOne( [ 4, 6 ] );
+&lt;ring-with-one, with 2 generators&gt;
+gap&gt; GeneratorsOfRingWithOne( R );
+[ 4, 6 ]
+</pre>
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>SubringWithOne( </code><var>R</var><code>, </code><var>gens</var><code> ) F</code>
+<a name = "SSEC003.5"></a>
+<li><code>SubringWithOneNC( </code><var>R</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+returns the ring with one with parent <var>R</var> generated by the elements in
+<var>gens</var>. When the second form, <code>SubringNC</code> is used, it is <strong>not</strong> checked
+whether all elements in <var>gens</var> lie in <var>R</var>. 
+<p>
+<pre>
+gap&gt; R:= SubringWithOne( Integers, [ 4, 6 ] );
+&lt;ring-with-one, with 2 generators&gt;
+gap&gt; Parent( R );
+Integers
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">54.4 Properties of Rings</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>IsIntegralRing( </code><var>R</var><code> ) P</code>
+<p>
+A ring-with-one <var>R</var> is integral if it is commutative, contains no
+nontrivial zero divisors,
+and if its identity is distinct from its zero.
+<p>
+<pre>
+gap&gt; IsIntegralRing( Integers );
+true
+</pre>
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>IsUniqueFactorizationRing( </code><var>R</var><code> ) C</code>
+<p>
+A ring <var>R</var> is called a <strong>unique factorization ring</strong> if it is an integral
+ring (see&nbsp;<a href="CHAP054.htm#SSEC004.1">IsIntegralRing</a>),
+and every element has a unique factorization into irreducible elements,
+i.e., a  unique representation as product  of irreducibles (see
+<a href="CHAP054.htm#SSEC005.6">IsIrreducibleRingElement</a>).
+Unique in this context means unique up to permutations of the factors and
+up to multiplication of the factors by units (see&nbsp;<a href="CHAP054.htm#SSEC005.2">Units</a>).
+<p>
+Mathematically, a field should therefore also be a  unique factorization
+ring, since every element is a unit. In <font face="Gill Sans,Helvetica,Arial">GAP</font>, however, at least at present
+fields do not lie in the filter <code>IsUniqueFactorizationRing</code> 
+(see&nbsp;<a href="CHAP054.htm#SSEC004.2">IsUniqueFactorizationRing</a>), since 
+Operations such as <code>Factors</code>, <code>Gcd</code>, <code>StandardAssociate</code> and so on do
+not apply to fields (the results would be trivial, and not
+especially useful) and Methods which require their arguments to
+lie in <code>IsUniqueFactorizationRing</code> expect these Operations to work.
+<p>
+(Note that we cannot install a subset maintained method for this category
+since the factorization of an element needs not exist in a subring.
+As an example, consider the subring 4 <b>N</b>+ 1 of the ring 4 <b>Z</b>+ 1;
+in the subring, the element 3 &#183;3 &#183;11 &#183;7 has the two
+factorizations 33 &#183;21 = 9 &#183;77, but in the large ring there
+is the unique factorization (<font face="symbol">&#8722;</font>3) &#183;(<font face="symbol">&#8722;</font>3) &#183;(<font face="symbol">&#8722;</font>11) &#183;(<font face="symbol">&#8722;</font>7),
+and it is easy to see that every element in 4 <b>Z</b>+ 1 has a unique
+factorization.)
+<p>
+<pre>
+gap&gt; IsUniqueFactorizationRing( PolynomialRing( Rationals, 1 ) );
+true
+</pre>
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>IsLDistributive( </code><var>C</var><code> ) P</code>
+<p>
+is <code>true</code> if the relation <i>a</i> * ( <i>b</i> + <i>c</i> ) = ( <i>a</i> * <i>b</i> ) + ( <i>a</i> * <i>c</i> )
+holds for all elements <i>a</i>, <i>b</i>, <i>c</i> in the collection <var>C</var>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>IsRDistributive( </code><var>C</var><code> ) P</code>
+<p>
+is <code>true</code> if the relation ( <i>a</i> + <i>b</i> ) * <i>c</i> = ( <i>a</i> * <i>c</i> ) + ( <i>b</i> * <i>c</i> )
+holds for all elements <i>a</i>, <i>b</i>, <i>c</i> in the collection <var>C</var>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC004.5"></a>
+<li><code>IsDistributive( </code><var>C</var><code> ) P</code>
+<p>
+is <code>true</code> if the collection <var>C</var> is both left and right distributive,
+and <code>false</code> otherwise.
+<p>
+<pre>
+gap&gt; IsDistributive( Integers );
+true
+</pre>
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>IsAnticommutative( </code><var>R</var><code> ) P</code>
+<p>
+is <code>true</code> if the relation <i>a</i> * <i>b</i> = <font face="symbol">&#8722;</font> <i>b</i> * <i>a</i>
+holds for all elements <i>a</i>, <i>b</i> in the ring <var>R</var>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC004.7"></a>
+<li><code>IsZeroSquaredRing( </code><var>R</var><code> ) P</code>
+<p>
+is <code>true</code> if <i>a</i> * <i>a</i> is the zero element of the ring <var>R</var>
+for all <i>a</i> in <var>R</var>, and <code>false</code> otherwise.
+<p>
+<a name = "SSEC004.8"></a>
+<li><code>IsJacobianRing( </code><var>R</var><code> ) P</code>
+<p>
+is <code>true</code> if the Jacobi identity holds in <var>R</var>, and <code>false</code> otherwise.
+The Jacobi identity means that <i>x</i> * (<i>y</i> * <i>z</i>) + <i>z</i> * (<i>x</i> * <i>y</i>) + <i>y</i> * (<i>z</i> * <i>x</i>)
+is the zero element of <var>R</var>, for all elements <i>x</i>, <i>y</i>, <i>z</i> in <var>R</var>.
+<p>
+<pre>
+gap&gt; L:= FullMatrixLieAlgebra( GF( 5 ), 7 );
+&lt;Lie algebra over GF(5), with 13 generators&gt;
+gap&gt; IsJacobianRing( L );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">54.5 Units and Factorizations</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>IsUnit( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>IsUnit( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>IsUnit</code> returns <code>true</code> if <var>r</var> is a unit in the ring
+<var>R</var>.
+In the second form <code>IsUnit</code> returns <code>true</code> if the ring element <var>r</var> is a
+unit in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<p>
+An element <i>r</i> is called a <strong>unit</strong> in a ring <i>R</i>, if <i>r</i> has an inverse in
+<i>R</i>.
+<p>
+<code>IsUnit</code> may call <code>Quotient</code>.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>Units( </code><var>R</var><code> ) A</code>
+<p>
+<code>Units</code> returns the group of units of the ring <var>R</var>.
+This may either be returned as a list or as a group.
+<p>
+An element <i>r</i> is called a <strong>unit</strong> of a ring <i>R</i>, if <i>r</i> has an inverse in
+<i>R</i>.
+It is easy to see that the set of units forms a multiplicative group.
+<p>
+<pre>
+gap&gt; Units( GaussianIntegers );
+[ -1, 1, -E(4), E(4) ]
+gap&gt; Units( GF( 16 ) );
+&lt;group with 1 generators&gt;
+</pre>
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>IsAssociated( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>IsAssociated( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+In the first form <code>IsAssociated</code> returns <code>true</code> if the two ring elements
+<var>r</var> and <var>s</var> are associated in the ring <var>R</var> and <code>false</code> otherwise.
+In the second form <code>IsAssociated</code> returns <code>true</code> if the two ring elements
+<var>r</var> and <var>s</var> are associated in their default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>) and
+<code>false</code> otherwise.
+<p>
+Two elements <i>r</i> and <i>s</i> of a ring <i>R</i> are called <strong>associated</strong> if there
+is a unit <i>u</i> of <i>R</i> such that <i>r</i> <i>u</i> = <i>s</i>.
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>Associates( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>Associates( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>Associates</code> returns the set of associates of <var>r</var> in
+the ring <var>R</var>.
+In the second form <code>Associates</code> returns the set of associates of the
+ring element <var>r</var> in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<p>
+Two elements <i>r</i> and <i>s</i> of a ring <i>R</i> are called <strong>associated</strong> if there
+is a unit <i>u</i> of <i>R</i> such that <i>r</i> <i>u</i> = <i>s</i>.
+<p>
+<pre>
+gap&gt; Associates( Integers, 2 );
+[ -2, 2 ]
+gap&gt; Associates( GaussianIntegers, 2 );
+[ -2, 2, -2*E(4), 2*E(4) ]
+</pre>
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>StandardAssociate( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>StandardAssociate( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>StandardAssociate</code> returns the standard associate of
+the ring element <var>r</var> in the ring <var>R</var>.
+In the second form <code>StandardAssociate</code> returns the standard associate of
+the ring element <var>r</var> in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<p>
+The <strong>standard associate</strong> of a ring element <i>r</i> of <i>R</i> is an associated
+element of <i>r</i> which is, in a ring dependent way, distinguished among the
+set of associates of <i>r</i>.
+For example, in the ring of integers the standard associate is the
+absolute value.
+<p>
+<pre>
+gap&gt; x:= Indeterminate( Rationals, "x" );;
+gap&gt; StandardAssociate( -x^2-x+1 );
+x^2+x-1
+</pre>
+<p>
+<a name = "SSEC005.6"></a>
+<li><code>IsIrreducibleRingElement( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>IsIrreducibleRingElement( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>IsIrreducibleRingElement</code> returns <code>true</code> if the ring
+element <var>r</var> is irreducible in the ring <var>R</var> and <code>false</code> otherwise.
+In the second form <code>IsIrreducibleRingElement</code> returns <code>true</code> if the ring
+element <var>r</var> is irreducible in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>) and
+<code>false</code> otherwise.
+<p>
+An element <i>r</i> of a ring <i>R</i> is called <strong>irreducible</strong> if <i>r</i> is not a
+unit in <i>R</i> and if there is no nontrivial factorization of <i>r</i> in <i>R</i>,
+i.e., if there is no representation of <i>r</i> as product <i>s</i> <i>t</i> such that
+neither <i>s</i> nor <i>t</i> is a unit (see <a href="CHAP054.htm#SSEC005.1">IsUnit</a>).
+Each prime element (see <a href="CHAP054.htm#SSEC005.7">IsPrime</a>) is irreducible.
+<p>
+<pre>
+gap&gt; IsIrreducibleRingElement( Integers, 2 );
+true
+</pre>
+<p>
+<a name = "SSEC005.7"></a>
+<li><code>IsPrime( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>IsPrime( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>IsPrime</code> returns <code>true</code> if the ring element <var>r</var> is a
+prime in the ring <var>R</var> and <code>false</code> otherwise.
+In the second form <code>IsPrime</code> returns <code>true</code> if the ring element <var>r</var> is a
+prime in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>) and <code>false</code> otherwise.
+<p>
+An element <i>r</i> of a ring <i>R</i> is called <strong>prime</strong> if for each pair <i>s</i> and
+<i>t</i> such that <i>r</i> divides <i>s</i> <i>t</i> the element <i>r</i> divides either <i>s</i> or
+<i>t</i>.
+Note that there are rings where not every irreducible element
+(see <a href="CHAP054.htm#SSEC005.6">IsIrreducibleRingElement</a>) is a prime.
+<p>
+<a name = "SSEC005.8"></a>
+<li><code>Factors( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>Factors( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>Factors</code> returns the factorization of the ring
+element <var>r</var> in the ring <var>R</var>.
+In the second form <code>Factors</code> returns the factorization of the ring
+element <var>r</var> in its default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+The factorization is returned as a list of primes (see <a href="CHAP054.htm#SSEC005.7">IsPrime</a>).
+Each element in the list is a standard associate (see
+<a href="CHAP054.htm#SSEC005.5">StandardAssociate</a>) except the first one, which is multiplied by a unit
+as necessary to have <code>Product( Factors( </code><var>R</var><code>, </code><var>r</var><code> )  )  = </code><var>r</var><code></code>.
+This list is usually also sorted, thus smallest prime factors come first.
+If <var>r</var> is a unit or zero, <code>Factors( </code><var>R</var><code>, </code><var>r</var><code> ) = [ </code><var>r</var><code> ]</code>.
+<p>
+<pre>
+gap&gt; x:= Indeterminate( GF(2), "x" );;
+gap&gt; pol:= x^2+x+1;
+x^2+x+Z(2)^0
+gap&gt; Factors( pol );
+[ x^2+x+Z(2)^0 ]
+gap&gt; Factors( PolynomialRing( GF(4) ), pol );
+[ x+Z(2^2), x+Z(2^2)^2 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">54.6 Euclidean Rings</a></h2>
+<p><p>
+<a name = "SSEC006.1"></a>
+<li><code>IsEuclideanRing( </code><var>R</var><code> ) C</code>
+<p>
+A ring <i>R</i> is called a Euclidean ring if it is an integral ring and
+there exists a function <font face="symbol">&#948;</font>, called the Euclidean degree, from
+<i>R</i><font face="symbol">&#8722;</font>{0<sub><i>R</i></sub>} to the nonnegative integers, such that for every pair <i>r</i>  <font face="symbol">&#8712;</font> <i>R</i> and <i>s</i>  <font face="symbol">&#8712;</font> <i>R</i><font face="symbol">&#8722;</font>{0<sub><i>R</i></sub>} there exists an element <i>q</i> such that either
+<i>r</i> <font face="symbol">&#8722;</font> <i>q</i> <i>s</i> = 0<sub><i>R</i></sub> or <font face="symbol">&#948;</font>(<i>r</i> <font face="symbol">&#8722;</font> <i>q</i> <i>s</i>)  &lt;  <font face="symbol">&#948;</font>( <i>s</i> ). In <font face="Gill Sans,Helvetica,Arial">GAP</font> the
+Euclidean degree <font face="symbol">&#948;</font> is implicitly built into an ring and cannot be
+changed.  The existence of this division with remainder implies that the
+Euclidean algorithm can be applied to compute a greatest common divisor
+of two elements, which in turn implies that <i>R</i> is a unique
+factorization ring.
+<p>
+<pre>
+gap&gt; IsEuclideanRing( GaussianIntegers );
+true
+</pre>
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>EuclideanDegree( </code><var>R</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>EuclideanDegree( </code><var>r</var><code> ) O</code>
+<p>
+In the first form <code>EuclideanDegree</code> returns the Euclidean degree of the
+ring element in the ring <var>R</var>.
+In the second form <code>EuclideanDegree</code> returns the Euclidean degree of the
+ring element <var>r</var> in its default ring.
+<var>R</var> must of course be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>).
+<p>
+<pre>
+gap&gt; EuclideanDegree( GaussianIntegers, 3 );
+9
+</pre>
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>EuclideanQuotient( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>m</var><code> ) O</code>
+<li><code>EuclideanQuotient( </code><var>r</var><code>, </code><var>m</var><code> ) O</code>
+<p>
+In the first form <code>EuclideanQuotient</code> returns the Euclidean quotient of
+the ring elements <var>r</var> and <var>m</var> in the ring <var>R</var>.
+In the second form <code>EuclideanQuotient</code> returns the Euclidean quotient of
+the ring elements <var>r</var> and <var>m</var> in their default ring.
+The ring <var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) otherwise
+an error is signalled.
+<p>
+<pre>
+gap&gt; EuclideanQuotient( 8, 3 );
+2
+</pre>
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>EuclideanRemainder( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>m</var><code> ) O</code>
+<li><code>EuclideanRemainder( </code><var>r</var><code>, </code><var>m</var><code> ) O</code>
+<p>
+In the first form <code>EuclideanRemainder</code> returns the remainder of the ring
+element <var>r</var> modulo the ring element <var>m</var> in the ring <var>R</var>.
+In the second form <code>EuclideanRemainder</code> returns the remainder of the ring
+element <var>r</var> modulo the ring element <var>m</var> in their default ring.
+The ring <var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) otherwise
+an error is signalled.
+<p>
+<pre>
+gap&gt; EuclideanRemainder( 8, 3 );
+2
+</pre>
+<p>
+<a name = "SSEC006.5"></a>
+<li><code>QuotientRemainder( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>QuotientRemainder( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+In the first form <code>QuotientRemainder</code> returns the Euclidean quotient
+and the Euclidean remainder of the ring elements <var>r</var> and <var>m</var> in the ring
+<var>R</var>.
+In the second form <code>QuotientRemainder</code> returns the Euclidean quotient and
+the Euclidean remainder of the ring elements <var>r</var> and <var>m</var> in their default
+ring as pair of ring elements.
+The ring <var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) otherwise
+an error is signalled.
+<p>
+<pre>
+gap&gt; QuotientRemainder( GaussianIntegers, 8, 3 );
+[ 3, -1 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">54.7 Gcd and Lcm</a></h2>
+<p><p>
+<a name = "SSEC007.1"></a>
+<li><code>Gcd( </code><var>R</var><code>, </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>Gcd( </code><var>R</var><code>, </code><var>list</var><code> ) F</code>
+<li><code>Gcd( </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>Gcd( </code><var>list</var><code> ) F</code>
+<p>
+In the first two forms <code>Gcd</code> returns the greatest common divisor of the
+ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp. of the ring elements in the list
+<var>list</var> in the ring <var>R</var>.
+In the second two forms <code>Gcd</code> returns the greatest common divisor of the
+ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp. of the ring elements in the list
+<var>list</var> in their default ring (see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that
+<code>QuotientRemainder</code> (see <a href="CHAP054.htm#SSEC006.5">QuotientRemainder</a>) can be applied to its
+elements.
+<code>Gcd</code> returns the standard associate (see <a href="CHAP054.htm#SSEC005.5">StandardAssociate</a>) of the
+greatest common divisors.
+<p>
+A greatest common divisor of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> of the
+ring <i>R</i> is an element of largest Euclidean degree (see
+<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a divisor of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> .
+<p>
+We define 
+<code>Gcd( </code><var>r</var><code>, 0<sub><i>R</i> </sub> ) = Gcd( 0<sub><i>R</i> </sub>, </code><var>r</var><code> ) = StandardAssociate( </code><var>r</var><code> )</code>
+and <code>Gcd( 0<sub><i>R</i> </sub>, 0<sub><i>R</i> </sub> ) = 0<sub><i>R</i> </sub></code>.
+<p>
+<pre>
+gap&gt; Gcd( Integers, [ 10, 15 ] );
+5
+</pre>
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>GcdOp( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>GcdOp( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+<code>GcdOp</code> is the operation to compute the greatest common divisor of
+two ring elements <var>r</var>, <var>s</var> in the ring <var>R</var> or in their default ring.
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>GcdRepresentation( </code><var>R</var><code>, </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>GcdRepresentation( </code><var>R</var><code>, </code><var>list</var><code> ) F</code>
+<li><code>GcdRepresentation( </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>GcdRepresentation( </code><var>list</var><code> ) F</code>
+<p>
+In the first two forms <code>GcdRepresentation</code> returns the representation of
+the greatest common divisor of the ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp.
+of the ring elements in the list <var>list</var> in the ring <var>R</var>.
+In the second two forms <code>GcdRepresentation</code> returns the representation of
+the greatest common divisor of the ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp.
+of the ring elements in the list <var>list</var> in their default ring
+(see <a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that
+<code>Gcd</code> (see <a href="CHAP054.htm#SSEC007.1">Gcd</a>) can be applied to its elements.
+<p>
+The representation of the gcd  <i>g</i> of  the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font>
+of a ring <i>R</i> is a list of ring elements <i>s</i><sub>1</sub>, <i>s</i><sub>2</sub>, <font face="symbol">&#8230;</font> of <i>R</i>,
+such that <i>g</i> = <i>s</i><sub>1</sub> <i>r</i><sub>1</sub> + <i>s</i><sub>2</sub> <i>r</i><sub>2</sub> + <font face="symbol">&#8230;</font>.
+That this representation exists can be shown using the Euclidean
+algorithm, which in fact can compute those coefficients.
+<p>
+<pre>
+gap&gt; x:= Indeterminate( Rationals, "x" );;
+gap&gt; GcdRepresentation( x^2+1, x^3+1 );
+[ -1/2*x^2-1/2*x+1/2, 1/2*x+1/2 ]
+</pre>
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>GcdRepresentationOp( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>GcdRepresentationOp( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+<code>GcdRepresentationOp</code> is the operation to compute the representation of
+the greatest common divisor of two ring elements <var>r</var>, <var>s</var> in the ring
+<var>R</var> or in their default ring, respectively.
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>Lcm( </code><var>R</var><code>, </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>Lcm( </code><var>R</var><code>, </code><var>list</var><code> ) F</code>
+<li><code>Lcm( </code><var>r1</var><code>, </code><var>r2</var><code>, ... ) F</code>
+<li><code>Lcm( </code><var>list</var><code> ) F</code>
+<p>
+In the first two forms <code>Lcm</code> returns the least common multiple of the
+ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp. of the ring elements in the list
+<var>list</var> in the ring <var>R</var>.
+In the second two forms <code>Lcm</code> returns the least common multiple of the
+ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...</code> resp. of the ring elements in the list
+<var>list</var> in their default ring (see&nbsp;<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<p>
+<var>R</var> must be a Euclidean ring (see&nbsp;<a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that <code>Gcd</code>
+(see&nbsp;<a href="CHAP054.htm#SSEC007.1">Gcd</a>) can be applied to its elements.
+<code>Lcm</code> returns the standard associate (see&nbsp;<a href="CHAP054.htm#SSEC005.5">StandardAssociate</a>) of the
+least common multiples.
+<p>
+A least common multiple of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> of the
+ring <i>R</i> is an element of smallest Euclidean degree
+(see&nbsp;<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a multiple of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> .
+<p>
+We define 
+<code>Lcm( </code><var>r</var><code>, 0<sub><i>R</i> </sub> ) = Lcm( 0<sub><i>R</i> </sub>, </code><var>r</var><code> ) = StandardAssociate( </code><var>r</var><code> )</code>
+and <code>Lcm( 0<sub><i>R</i> </sub>, 0<sub><i>R</i> </sub> ) = 0<sub><i>R</i> </sub></code>.
+<p>
+<code>Lcm</code> uses the equality <i>lcm</i>(<i>m</i>,<i>n</i>) = <i>m</i>*<i>n</i> / <i>gcd</i>(<i>m</i>,<i>n</i>) (see&nbsp;<a href="CHAP054.htm#SSEC007.1">Gcd</a>).
+<p>
+<a name = "SSEC007.6"></a>
+<li><code>LcmOp( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<li><code>LcmOp( </code><var>r</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+<code>LcmOp</code> is the operation to compute the least common multiple of
+two ring elements <var>r</var>, <var>s</var> in the ring <var>R</var> or in their default ring,
+respectively.
+<p>
+<a name = "SSEC007.7"></a>
+<li><code>QuotientMod( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>s</var><code>, </code><var>m</var><code> ) O</code>
+<li><code>QuotientMod( </code><var>r</var><code>, </code><var>s</var><code>, </code><var>m</var><code> ) O</code>
+<p>
+In the first form <code>QuotientMod</code> returns the quotient of the ring
+elements <var>r</var> and <var>s</var> modulo the ring element <var>m</var> in the ring <var>R</var>.
+In the second form <code>QuotientMod</code> returns the quotient of the ring elements
+<var>r</var> and  <var>s</var> modulo the ring element <var>m</var> in their default ring (see
+<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that
+<code>EuclideanRemainder</code> (see <a href="CHAP054.htm#SSEC006.4">EuclideanRemainder</a>) can be applied.
+If the modular quotient does not exist, <code>fail</code> is returned.
+<p>
+The quotient <i>q</i> of <i>r</i> and <i>s</i> modulo <i>m</i> is an element of <i>R</i> such that
+<i>q</i> <i>s</i> = <i>r</i> modulo <i>m</i>, i.e., such that <i>q</i> <i>s</i> <font face="symbol">&#8722;</font> <i>r</i> is divisible by <i>m</i> in
+<i>R</i> and that <i>q</i> is either 0 (if <i>r</i> is divisible by <i>m</i>) or the
+Euclidean degree of <i>q</i> is strictly smaller than the Euclidean degree of
+<i>m</i>.
+<p>
+<pre>
+gap&gt; QuotientMod( 7, 2, 3 );
+2
+</pre>
+<p>
+<a name = "SSEC007.8"></a>
+<li><code>PowerMod( </code><var>R</var><code>, </code><var>r</var><code>, </code><var>e</var><code>, </code><var>m</var><code> ) O</code>
+<li><code>PowerMod( </code><var>r</var><code>, </code><var>e</var><code>, </code><var>m</var><code> ) O</code>
+<p>
+In the first form <code>PowerMod</code> returns the <var>e</var>-th power of the ring
+element <var>r</var> modulo the ring element <var>m</var> in the ring <var>R</var>.
+In the second form <code>PowerMod</code> returns the <var>e</var>-th power of the ring
+element <var>r</var> modulo the ring element <var>m</var> in their default ring (see
+<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>).
+<var>e</var> must be an integer.
+<var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that
+<code>EuclideanRemainder</code> (see <a href="CHAP054.htm#SSEC006.4">EuclideanRemainder</a>) can be applied to its
+elements.
+<p>
+If <i>e</i> is positive the result is <i>r</i><sup><i>e</i></sup> modulo <i>m</i>.
+If <i>e</i> is negative then <code>PowerMod</code> first tries to find the inverse of <i>r</i>
+modulo <i>m</i>, i.e., <i>i</i> such that <i>i</i> <i>r</i> = 1 modulo <i>m</i>.
+If the inverse does not exist an error is signalled.
+If the inverse does exist <code>PowerMod</code> returns
+<code>PowerMod( </code><var>R</var><code>, </code><var>i</var><code>, -</code><var>e</var><code>, </code><var>m</var><code> )</code>.
+<p>
+<code>PowerMod</code> reduces the intermediate values modulo <i>m</i>, improving
+performance drastically when <var>e</var> is large and <var>m</var> small.
+<p>
+<pre>
+gap&gt; PowerMod( 12, 100000, 7 );
+2
+</pre>
+<p>
+<a name = "SSEC007.9"></a>
+<li><code>InterpolatedPolynomial( </code><var>R</var><code>, </code><var>x</var><code>, </code><var>y</var><code> ) O</code>
+<p>
+<code>InterpolatedPolynomial</code> returns, for given lists <var>x</var>, <var>y</var> of elements in
+a ring <var>R</var> of the same length <i>n</i>, say, the unique  polynomial of  degree
+less than <i>n</i> which has value <var>y</var>[<i>i</i>] at <var>x</var>[<i>i</i>], 
+for all <i>i</i> <font face="symbol">&#8712;</font> {1,<font face="symbol">&#8230;</font>,<i>n</i>}. 
+Note that the elements in <var>x</var> must be distinct.
+<p>
+<pre>
+gap&gt;  InterpolatedPolynomial( Integers, [ 1, 2, 3 ], [ 5, 7, 0 ] );
+-9/2*x^2+31/2*x-6
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP053.htm">Previous</a>] [<a href ="CHAP055.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

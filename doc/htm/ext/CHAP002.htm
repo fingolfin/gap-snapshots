@@ -1,0 +1,1997 @@
+<html><head><title>[ext] 2 The gapmacro.tex Manual Format</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 The gapmacro.tex Manual Format</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP002.htm#SECT001">The Main File</a>
+<li> <A HREF="CHAP002.htm#SECT002">Chapters and Sections</a>
+<li> <A HREF="CHAP002.htm#SECT003">Suppressing Indexing and Labelling of a Section and Resolving Label Clashes</a>
+<li> <A HREF="CHAP002.htm#SECT004">Labels and References</a>
+<li> <A HREF="CHAP002.htm#SECT005">TeX Macros</a>
+<li> <A HREF="CHAP002.htm#SECT006">TeX Macros for Domains</a>
+<li> <A HREF="CHAP002.htm#SECT007">Examples, Lists, and Verbatim</a>
+<li> <A HREF="CHAP002.htm#SECT008">Tables, Displayed Mathematics and Mathematics Alignments</a>
+<li> <A HREF="CHAP002.htm#SECT009">Testing the Examples</a>
+<li> <A HREF="CHAP002.htm#SECT010">Usage of the Percent Symbol</a>
+<li> <A HREF="CHAP002.htm#SECT011">Catering for Plain Text and HTML Formats</a>
+<li> <A HREF="CHAP002.htm#SECT012">Umlauts</a>
+<li> <A HREF="CHAP002.htm#SECT013">Producing a Manual</a>
+<li> <A HREF="CHAP002.htm#SECT014">Using buildman.pe</a>
+</ol><p>
+<p>
+The  current  <font face="Gill Sans,Helvetica,Arial">GAP</font>  manual  books  and  most  of  the  <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 package
+documentation is written in a restricted TeX format, using  a  set  of
+macros defined  in  the  file  <code>GAPPATH/doc/gapmacro.tex</code>.  This  chapter
+describes this format and how to create the final documents (which can be
+printed or used by <font face="Gill Sans,Helvetica,Arial">GAP</font>'s online help) from it.
+<p>
+See <a href="CHAP002.htm#SECT005">TeX Macros</a> and <a href="CHAP002.htm#SECT007">Examples, Lists, and Verbatim</a> for details  on  the
+restricted set of available TeX commands.
+<p>
+The first sections <a href="CHAP002.htm#SECT001">The main file</a>  and <a href="CHAP002.htm#SECT002">Chapters and Sections</a>  describe
+the  general  layout of the  files  in case  you need to   write your own
+package documentation.
+<p>
+If you are planning to write new documentation for a <font face="Gill Sans,Helvetica,Arial">GAP</font>  package  you
+can either use the format described in this chapter or use an alternative
+approach.  For  example  some  packages   have   started   to   use   the
+<font face="Gill Sans,Helvetica,Arial">GAPDoc</font>   package   for   their    documentation,    see
+Chapter&nbsp;<a href="../../../pkg/gapdoc/doc/chap1.html#s0ss0">GAPDoc:Introduction and Example</a> in the <font face="Gill Sans,Helvetica,Arial">GAPDoc</font>  manual
+or type
+<p>
+<pre>
+gap&gt; ?GAPDoc:chapters
+</pre>
+<p>
+in <font face="Gill Sans,Helvetica,Arial">GAP</font>'s online help for a  table  of  contents,  or  (if  it  is  not
+available in your installation) see:
+<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/">http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/</a>
+<p>
+If you want to use yet another document format you must  provide  certain
+information to the interface of <font face="Gill Sans,Helvetica,Arial">GAP</font>'s online help. This  is  described
+in chapter&nbsp;<a href="CHAP005.htm">Interface to the GAP Help System</a>.
+<p>
+<p>
+<h2><a name="SECT001">2.1 The Main File</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+<a name = "I0"></a>
+<a name = "I1"></a>
+
+<a name = "I0"></a>
+<a name = "I1"></a>
+<a name = "I2"></a>
+
+<a name = "I3"></a>
+
+<a name = "I3"></a>
+<a name = "I4"></a>
+
+<a name = "I3"></a>
+<a name = "I4"></a>
+<a name = "I5"></a>
+
+<a name = "I6"></a>
+
+<a name = "I7"></a>
+
+<a name = "I7"></a>
+<a name = "I8"></a>
+
+<a name = "I7"></a>
+<a name = "I8"></a>
+<a name = "I9"></a>
+
+<a name = "I10"></a>
+
+<a name = "I10"></a>
+<a name = "I11"></a>
+
+<a name = "I10"></a>
+<a name = "I11"></a>
+<a name = "I12"></a>
+
+<a name = "I13"></a>
+
+<a name = "I13"></a>
+<a name = "I14"></a>
+
+The main TeX file is called <code>manual.tex</code>.
+This file should contain the following commands:
+<p>
+<code>\input ../gapmacro</code>
+<br><code>\Package{</code><var>package-name</var><code>}</code>
+<br><code>\BeginningOfBook{</code><var>name-of-book</var><code>}</code>
+<br><code>  \UseReferences{</code><var>book1</var><code>}</code>
+<br><code>  ...</code>
+<br><code>  \UseReferences{</code><var>bookn</var><code>}</code>
+<br><code>  \TitlePage{</code><var>title</var><code>}</code>
+<br><code>  \Colophon{</code><var>text</var><code>}</code>
+<br><code>  \TableOfContents</code>
+<br><code>  \FrontMatter</code>
+<br><code>    \immediate\write\citeout{\bs bibdata{</code><var>mybibliography</var><code>}}</code>
+<br><code>    \Input{</code><var>file1</var><code>}</code>
+<br><code>    ...</code>
+<br><code>    \Input{</code><var>filen</var><code>}</code>
+<br><code>  \Chapters</code>
+<br><code>    \Input{</code><var>file1</var><code>}</code>
+<br><code>    ...</code>
+<br><code>    \Input{</code><var>filen</var><code>}</code>
+<br><code>  \Appendices</code>
+<br><code>    \Input{</code><var>file1</var><code>}</code>
+<br><code>    ...</code>
+<br><code>    \Input{</code><var>filen</var><code>}</code>
+<br><code>    \Bibliography</code>
+<br><code>    \Index</code>
+<br><code>\EndOfBook</code>
+<p>
+Now we describe what these commands do:
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>\input </code><var>path</var><code>/gapmacro.tex</code><dd>
+inputs the <font face="Gill Sans,Helvetica,Arial">GAP</font> ``style'' and macros file <code>gapmacro.tex</code>.  If  you  are
+writing a <font face="Gill Sans,Helvetica,Arial">GAP</font> package either copy this file or use  a  relative  path.
+The former method will always work but requires  you  to  keep  the  file
+consistent with the system while the latter forces users  to  change  the
+<code>manual.tex</code> file if they are installing a package in a private location.
+See also Section <a href="../ref/CHAP009.htm#SECT002">GAP Root Directory</a> in the Reference Manual.
+<p>
+
+<dt><code>\Package{</code><var>package-name</var><code>}</code><dd>
+defines   a   macro   <code>\</code><var>package-name</var><code></code>   so   that   when   you    type
+<code>{\</code><var>package-name</var><code>}</code>  (please  include  the  curly  braces)  the   text
+<var>package-name</var> is typeset in the right way for <font face="Gill Sans,Helvetica,Arial">GAP</font>  packages,  e.g.&nbsp;if
+you are writing a package <font face="Gill Sans,Helvetica,Arial">MyPackage</font> then you should include the
+line
+<p>
+<dt><code>\Package{MyPackage}</code>
+<p>
+<dt>  <dd>
+in  your  <code>manual.tex</code>  file  and  then  in  your   chapter   files   use
+<code>{\MyPackage}</code> when you refer to <font face="Gill Sans,Helvetica,Arial">MyPackage</font> by name. There is
+also the command <code>\package{</code><var>pkg</var><code>}</code> when you wish  to  refer  to  other
+<font face="Gill Sans,Helvetica,Arial">GAP</font> packages; don't confuse the two i.e.&nbsp;<code>\Package{</code><var>package-name</var><code>}</code>
+defines  a  macro  <code>\</code><var>package-name</var><code></code>   but   produces   no   text,   and
+<code>\package{</code><var>pkg</var><code>}</code> produces <var>pkg</var> set in the font  that  is  right  for
+<font face="Gill Sans,Helvetica,Arial">GAP</font> packages.
+<p>
+
+<dt><code>\BeginningOfBook{</code><var>name-of-book</var><code>}</code><dd>
+starts the book <var>name-of-book</var>. It  is  used  for  cross-references,  see
+<a href="CHAP002.htm#SECT004">Labels and References</a>. If you are writing a <font face="Gill Sans,Helvetica,Arial">GAP</font> package use the name
+of your package here.
+<p>
+
+<a name = "I15"></a>
+
+<dt><code>\UseReferences{</code><var>booki</var><code>}</code><dd>
+If your manual cross-refers to another manual, <code>\UseReferences</code>  can  be
+used to load the labels of  the  other  books  in  case  cross-references
+occur. <var>booki</var> should be the path of the directory  containing  the  book
+whose references you want to load. If you are writing  a  <font face="Gill Sans,Helvetica,Arial">GAP</font>  package
+and you need to reference the main <font face="Gill Sans,Helvetica,Arial">GAP</font> manual,  use  <code>\UseReferences</code>
+for each book you want to reference. However, as said above this requires
+changes to the <code>manual.tex</code> file if the package is not installed  in  the
+standard location.
+<p>
+<dt>  <dd>
+If your <code>manual.tex</code> file lives in <code>pkg/qwer/doc</code> and  you  want  to  use
+references to the tutorial use
+<p>
+<pre>
+\UseReferences{../../../doc/tut}
+</pre>
+<p>
+<dt>  <dd>
+You  may  also  cross-refer   to   other   package   manuals   and   even
+<font face="Gill Sans,Helvetica,Arial">GapDoc</font>-produced manuals. Just ensure you get the  path  to  the
+other manual's directory correct <strong>relative</strong> to  the  directory  in  which
+your manual resides, and if it's a <font face="Gill Sans,Helvetica,Arial">GapDoc</font>-produced manual  that
+you  are  cross-referring  to,  use  <code>\UseGapDocReferences</code>  instead  of
+<code>\UseReferences</code>.
+<p>
+
+<dt><code>\TitlePage</code><dd>
+produces a page containing the <strong>title</strong>. Please see the example.
+<p>
+
+<dt><code>\Colophon</code><dd>
+<code>\Colophon</code> produces a page following the title that  can  be  used  for
+more  explicit  author  information,  acknowledgements,  dedications   or
+whatsoever.
+<p>
+
+
+<dt><code>\TableOfContents</code><dd>
+produces a table of contents in double-column format. For short  manuals,
+the  double-column  format  may  be  inappropriate;  in  this  case,  use
+<code>\OneColumnTableOfContents</code> instead.
+<p>
+
+<dt><code>\FrontMatter</code><dd>
+starts the front matter chapters such as a copyright notice or a preface.
+<p>
+<dt>  <dd>
+The line
+<p>
+<dt><code>\immediate\write\citeout{\bs bibdata{</code><var>mybibliography</var><code>}}</code>
+<p>
+<dt>  <dd>
+is for users of BibTeX. It will use the file <code></code><var>mybibliography</var><code>.bib</code> to
+fetch bibliography information.
+<p>
+
+<dt><code>\Chapters</code><dd>
+starts the chapters of the manual,  which  are  included  via  <code>\Input</code>.
+<code>\Input{</code><var>filei</var><code>}</code> inputs the file <code></code><var>filei</var><code>.tex</code>,  i.e.&nbsp;<var>filei</var>  should
+be the name of the file <strong>without</strong> the <code>.tex</code> extension. For  the  chapter
+format, see Section&nbsp;<a href="CHAP002.htm#SECT002">Chapters and Sections</a>.
+<p>
+
+<dt><code>\Appendices</code><dd>
+starts the appendices, i.e.&nbsp;it modifies the <code>\Chapter</code>  command  to  use
+uppercase letters to number chapters.
+<p>
+
+<dt><code>\Bibliography</code><dd>
+produces a bibliography, i.e. it reads and typesets the <code>manual.bbl</code> file
+produced by BibTeX.
+<p>
+
+<dt><code>\Index</code><dd>
+produces an index, i.e. it  reads  and  typesets  the  <code>manual.ind</code>  file
+produced by the external <code>manualindex</code> program.
+<p>
+
+<dt><code>\EndOfBook</code><dd>
+Finally <code>\EndOfBook</code> closes the book.
+<p>
+</dl>
+<p>
+<strong>Example</strong>
+<p>
+Assume you have a <font face="Gill Sans,Helvetica,Arial">GAP</font> package <code>qwert</code> with two  chapters  <code>Qwert</code>  and
+<code>Extending Qwert</code>, a copyright notice, a preface, no exercises, then your
+<code>manual.tex</code> would basically look like:
+<p>
+<pre>
+\input ../../../doc/gapmacro         % The right path from pkg/qwert/doc
+\Package{Qwert}                      % Defines macro {\Qwert}
+\BeginningOfBook{qwert}
+  \TitlePage{
+    \centerline{\titlefont Qwert}\medskip           % Package name
+    \centerline{\titlefont ---}\medskip
+    \centerline{\titlefont A GAP4 Package}\bigskip\bigskip
+    \centerline{\secfont Version 1.0}\medskip
+    % If the package interfaces with an external program ...
+    \centerline{\secfont Based on qwert Standalone Version 3.14}\vfill
+    \centerline{\secfont by}\vfill
+    \centerline{\secfont Q. Mustermensch}\medskip   % Author
+    \centerline{Department of Mathematics}\medskip  % Affiliation
+    \centerline{University of Erewhon}\medskip
+    \centerline{\secfont email: qmuster@erewhon.uxyz.edu.ut} % Email address
+    \vfill
+    \centerline{\secfont{\Month} \Year}
+  }
+  \TableOfContents
+  \FrontMatter
+    \Input{copyright}
+    \Input{preface}
+  \Chapters
+    \Input{qwert}
+    \Input{extend}
+  \Appendices
+    \Index
+\EndOfBook
+</pre>
+<p>
+<a name = "I16"></a>
+
+<a name = "I16"></a>
+<a name = "I17"></a>
+
+<a name = "I16"></a>
+<a name = "I17"></a>
+<a name = "I18"></a>
+
+<a name = "I16"></a>
+<a name = "I17"></a>
+<a name = "I18"></a>
+<a name = "I19"></a>
+
+<a name = "I20"></a>
+
+Occasionally there will be the need  for  additional  commands  over  and
+above those shown above. The ones described below should  be  the  <strong>only</strong>
+exceptions.
+<ul>
+<p>
+<li>
+There may be other packages that are referred to  a  lot,  so  that  it's
+worthwhile to add more <code>\Package</code>  commands.  (There's  nothing  special
+about <code>\Package</code>, you can use it to define  macros  for  other  packages
+besides the package being documented.)
+<p>
+<li>
+Besides the macros <code>{\Month}</code>  and  <code>{\Year}</code>,  which  typeset  the
+current month (as an English  word)  and  the  year  (all  four  digits),
+respectively, there are also  <code>{\Day}</code>  and  <code>{\Today}</code>  which  are
+mainly intended for drafts. <code>{\Day}</code> typesets the day of the month  as
+a number and  <code>{\Today}</code>  is  equivalent  to:  <code>{\Day}  {\Month}
+{\Year}</code>.
+<p>
+<li>
+Sometimes one desires a chapter to be unnumbered in  the  TeX-produced
+manuals, e.g.&nbsp;the Tutorial manual has <font face="Gill Sans,Helvetica,Arial">GAP</font>'s  Copyright  Notice  as  an
+unnumbered chapter. To achieve this one inputs the  file  containing  the
+chapter via TeX's <code>\input</code> command rather  than  <code>\Input</code>.  However,
+neither the on-line help browser nor the  HTML  converter  ``sees''  such
+chapters. Thus if it is desired that the on-line  help  browser  and  the
+HTML manuals should also have such chapters, they must be ``input'' again
+via the <code>\PseudoInput</code> command (not necessarily in the same manual).
+<p>
+<li>
+For chapters that should only appear via the on-line help browser  or  in
+the  HTML  manuals,  one  may  use  the  <code>\PseudoInput</code>   command.   Any
+<code>\PseudoInput</code>  commands should come  <strong>after</strong>  all  <code>\Input</code>  commands;
+failure to do this  will  result  in  different  numbering  of  <code>\Input</code>
+chapters for TeX-produced and HTML manuals. The syntax of this command
+is as follows:
+<p>
+<code>\PseudoInput{</code><var>filename</var><code>}{</code><var>six-entry</var><code>}{</code><var>chaptername</var><code>}</code>
+<p>
+where <var>filename</var> is the name of the file containing the  chapter  without
+the <code>.tex</code> extension, as for the <code>\Input</code> command,  <var>six-entry</var>  is  the
+section-index-entry for the chapter (written to  the  <code>manual.six</code>  file)
+and <var>chaptername</var> is the <strong>actual</strong> argument  of  the  <code>\Chapter</code>  command
+that  appears  at  the  beginning  of  <code></code><var>filename</var><code>.tex</code>.   The   argument
+<var>six-entry</var> enables the on-line text browser to reference the chapter  by
+a name other than <var>chaptername</var>. Thus a copyright chapter  for  the  book
+with name <var>name-of-book</var> might have <var>chaptername</var> ``<code>Copyright  Notice</code>''
+but <var>six-entry</var> ``<code>Copyright</code>'', which would enable  one  to  access  the
+chapter ``<code>Copyright Notice</code>'' via  <code>?</code><var>name-of-book</var><code>:copyright</code>  via  the
+on-line browser.  The  HTML  converter  adds  an  index  entry  for  both
+<var>six-entry</var> and <var>chaptername</var>.
+<p>
+</ul>
+<p>
+<strong>Note</strong>
+<p>
+Usage of the commands <code>\input</code> and <code>\PseudoInput</code> in the way  described
+above will necessitate special treatment of references to such  chapters.
+For such  purposes,  there  is  a  special  variant  of  the  <code>%display</code>
+environment (see <a href="CHAP002.htm#SECT011">Catering for Plain  Text  and  HTML  Formats</a>),  e.g.&nbsp;a
+copyright  notice  appearing  via  <code>\input</code>  at  the  beginning   of   a
+TeX-produced manual and appearing in the  non-TeX  manuals  --  the
+on-line help browser or HTML manual -- via a <code>\PseudoInput</code>  command  as
+described above, may be referenced via
+<p>
+<pre>
+%display{tex}
+See the copyright notice at the beginning of this book.
+%display{nontex}
+%See "Copyright".
+%enddisplay
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">2.2 Chapters and Sections</a></h2>
+<p><p>
+<a name = "I21"></a>
+
+<a name = "I21"></a>
+<a name = "I22"></a>
+
+The contents of each chapter must  be  in  its  <strong>own</strong>  <code>.tex</code>  file.  The
+command  <code>\Chapter{</code><var>chaptername</var><code>}</code>  starts   a   new   chapter   named
+<var>chaptername</var>; it should constitute the first non-comment (and non-blank)
+line of  the  file  containing  a  chapter.  A  chapter  begins  with  an
+introduction to the chapter and is followed by sections created with  the
+<code>\Section{</code><var>secname</var><code>}</code> command. The strings <var>chaptername</var> and <var>secname</var>
+are  automatically  available  as  references  (see  Section&nbsp;<a href="CHAP002.htm#SECT004">Labels  and References</a>).
+<p>
+There must be <strong>no further commands</strong> on the same line as  the  <code>\Chapter</code>
+or  <code>\Section</code>  line,  and  there  <strong>must</strong>  be  an  empty  line  after  a
+<code>\Chapter</code> or <code>\Section</code> command. This means  that  <code>\index</code>  commands
+referring to the chapter or section can be placed only after  this  empty
+line.
+<p>
+Finally, the HTML  converter  requires  that  each  <code>\Section</code>  line  is
+preceded  by  a  line  starting  with  at  least  16   percentage   signs
+(conventionally, one actually types a full line of percentage signs). The
+HTML converter stops converting a section whenever it hits such  a  line;
+therefore do not add lines starting with 16 or more %  signs  which  are
+<strong>not</strong> just before a <code>\Section</code> command. Failure to include the  line  of
+percentage signs before a <code>\Section</code> line will cause  the  converter  to
+crash, due to the discovery of what it sees as two  <code>\Section</code>  commands
+within the one section.
+<p>
+<p>
+<h2><a name="SECT003">2.3 Suppressing Indexing and Labelling of a Section and Resolving Label Clashes</a></h2>
+<p><p>
+<a name = "I23"></a>
+
+Sometimes one does not wish a section to  be  indexed.  To  suppress  the
+indexing  of  a  section,  simply  add  the  macro  <code>\null</code>  after   the
+<code>\Section</code> command, e.g.
+<p>
+<code>\Section{</code><var>section-name</var><code>}\null</code>
+<p>
+and then <var>section-name</var> will still generate a  label  (so  that  you  can
+still refer to it via <code>Section&nbsp;"</code><var>section-name</var><code>"</code>),  but  <var>section-name</var>
+will not appear in the index.
+<p>
+<a name = "I24"></a>
+
+Occasionally, one has a dedicated section for the description of a single
+function. If the label generated for the section coincides with the label
+for a subsection (generated by a <code>\&gt;</code> command) a multiply defined  label
+results. In these cases, one would generally rather that the section  did
+not generate a label or an index entry. To  suppress  the  generation  of
+both the label and the index entry of such  a  section,  simply  add  the
+macro <code>\nolabel</code> immediately after the <code>\Section</code> command,  e.g.&nbsp;for  a
+section dedicated to the function <var>func</var>:
+<p>
+<code>\Section{</code><var>func</var><code>}\nolabel</code>
+<p>
+<strong>Note:</strong> Labels are generated by  converting  to  lowercase  and  removing
+whitespace. So coincidences can occur when you might  not  have  expected
+it. An alternative to index suppression to resolve label  clashes  is  to
+include  a  sub-label  for  the  function  in  the  <code>\&gt;</code>  command   (see
+Section&nbsp;<a href="CHAP002.htm#SECT005">TeX Macros</a>).
+<p>
+<p>
+<h2><a name="SECT004">2.4 Labels and References</a></h2>
+<p><p>
+Each <code>\Chapter</code>, <code>\Section</code> and <code>\&gt;</code> command generates a (short) label
+<var>label</var>,  which  is  extended  by   <var>name-of-book</var>   (the   argument   of
+<code>\BeginningOfBook</code> mentioned earlier in  Section&nbsp;<a href="CHAP002.htm#SECT001">The  Main  File</a>),  to
+create a ``long label'' <var>long-label</var>, and emitted to a file <code>manual.lab</code>.
+The construction of <var>long-label</var> is <code></code><var>name-of-book</var><code>:</code><var>label</var><code></code>,  where  the
+<var>label</var> generated by either of the commands <code>\Chapter</code> or <code>\Section</code> is
+just its <var>chaptername</var> or <var>secname</var> argument. For <code>\&gt;</code>, there are a  few
+cases to consider, and we'll consider them in Section&nbsp;<a href="CHAP002.htm#SECT005">TeX Macros</a>, where
+we meet the various forms of the <code>\&gt;</code> command. To  see  how  to  resolve
+problems  with  label  clashes  see  Section&nbsp;<a href="CHAP002.htm#SECT003">Suppressing  Indexing   and Labelling of a Section and Resolving Label Clashes</a>.
+<p>
+<a name = "I25"></a>
+
+A reference to a label <var>any-label</var> (long or short) is made  by  enclosing
+<var>any-label</var> in a pair of double quotation marks: <code>"</code><var>any-label</var><code>"</code>; it is
+replaced by the number of the <code>\Chapter</code>, <code>\Section</code> or  <code>\&gt;</code>  command
+that generated <var>any-label</var> in the first place. Generally, one only  needs
+to make references to long labels when referring to  other  manuals.  For
+references within the same manual, short labels  are  sufficient,  except
+when the short label itself contains a colon.
+<p>
+<strong>Example</strong>
+<p>
+Since  the  <code>\BeginningOfBook</code>   command   for   this   manual   defines
+<var>name-of-book</var> to be <code>ext</code>, the long label for  the  current  section  is
+<code>ext:Labels and References</code> and so a reference  to  this  section  within
+this manual might be:  <code>Section  "Labels  and  References"</code>  (which  is
+typeset as: Section <a href="CHAP002.htm#SECT004">Labels and References</a>). From another manual, a long
+label reference is required.
+<p>
+<strong>Another example</strong>
+<p>
+The first chapter of this manual has the title ``About: Extending <font face="Gill Sans,Helvetica,Arial">GAP</font>'',
+which contains a colon. Hence, to refer to that chapter, one <strong>must</strong> use a
+long label: 
+<pre>
+Chapter "ext:About: Extending GAP"
+</pre>
+produces: Chapter <a href="../ext/CHAP001.htm">About: Extending GAP</a>.
+<p>
+<strong>Note</strong>
+<p>
+In actual fact long labels are first sanitised by conversion to lower case
+and removal of superfluous white space (multiple blanks and new lines are
+converted to a single space). The same sanitisation process is applied to
+references. Thus, 
+<pre>
+Chapter "ext:about:                                             extending
+Gap"
+</pre>
+also produces: 
+Chapter <a href="../ext/CHAP001.htm">about:                                             extending Gap</a>. So, don't worry about references to labels being broken over  lines
+and think of  them  as  being  case-insensitive,  except  that  the  HTML
+converter  requires  that  one  respects  case  for  the   <var>name-of-book</var>
+component of a long label.
+<p>
+<p>
+<h2><a name="SECT005">2.5 TeX Macros</a></h2>
+<p><p>
+<a name = "I26"></a>
+
+<a name = "I26"></a>
+<a name = "I27"></a>
+
+<a name = "I26"></a>
+<a name = "I27"></a>
+<a name = "I28"></a>
+
+<a name = "I26"></a>
+<a name = "I27"></a>
+<a name = "I28"></a>
+<a name = "I29"></a>
+
+<a name = "I30"></a>
+
+<a name = "I30"></a>
+<a name = "I31"></a>
+
+<a name = "I30"></a>
+<a name = "I31"></a>
+<a name = "I32"></a>
+
+<a name = "I30"></a>
+<a name = "I31"></a>
+<a name = "I32"></a>
+<a name = "I33"></a>
+
+<a name = "I30"></a>
+<a name = "I31"></a>
+<a name = "I32"></a>
+<a name = "I33"></a>
+<a name = "I34"></a>
+
+<a name = "I35"></a>
+
+<a name = "I35"></a>
+<a name = "I36"></a>
+
+<a name = "I35"></a>
+<a name = "I36"></a>
+<a name = "I37"></a>
+
+<a name = "I38"></a>
+
+<a name = "I38"></a>
+<a name = "I39"></a>
+
+<a name = "I38"></a>
+<a name = "I39"></a>
+<a name = "I40"></a>
+
+<a name = "I41"></a>
+
+<a name = "I41"></a>
+<a name = "I42"></a>
+
+<a name = "I43"></a>
+
+<a name = "I43"></a>
+<a name = "I44"></a>
+
+<a name = "I45"></a>
+
+<a name = "I45"></a>
+<a name = "I46"></a>
+
+<a name = "I47"></a>
+
+<a name = "I47"></a>
+<a name = "I48"></a>
+
+<a name = "I49"></a>
+
+<a name = "I50"></a>
+
+<a name = "I50"></a>
+<a name = "I51"></a>
+
+As the manual pages are also used as on-line help, and are  automatically
+converted to HTML, the use of special TeX commands should be  avoided.
+The following macros can be used to structure  the  text,  the  mentioned
+fonts are used when printing the manual, however  the  on-line  help  and
+HTML are free to use other fonts or even colour. Since,  the  plain  text
+on-line help, doesn't have special  fonts,  it  leaves  in  much  of  the
+markup, including the left  and  right  quotes  that  surround  something
+intended to be displayed in typewriter  type,  the  angle  brackets  that
+surround something intended to appear in italics,  and  the  dollar-signs
+enclosing mathematics; you will need to keep that in  mind  when  reading
+the following section.
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>`</code><var>text</var><code>'</code> <dd>
+    sets <var>text</var> in <code>typewriter style</code>.
+    This is typically used to denote <font face="Gill Sans,Helvetica,Arial">GAP</font> keywords such  as  <code>for</code>  and
+    <code>false</code> or variables that are not  arguments  to  a  function,  e.g.,
+    <code>`for'</code> produces <code>for</code>. 
+    See also <code>&lt;</code><var>text</var><code>&gt;</code>. 
+    Use <code>\&lt;</code> to get a ``less than'' sign.
+<p>
+<dt><code>``</code><var>text</var><code>''</code> <dd>
+    encloses <var>text</var> in double quotes, 
+    e.g., <code>``double-quoted text''</code> produces 
+    ``double-quoted text''.
+    In particular, <code>``</code><var>text</var><code>''</code> does <strong>not</strong> set  <code>`</code><var>text</var><code>'</code>
+    in typewriter  style;  use  <code>`{`text'}'</code>  to  produce
+    <code>`text'</code>. Double quotes are mainly used to mark a phrase which will
+    be defined later or is used in an uncommon way.
+<p>
+<dt><code>\lq</code> <dd>
+    sets a single left quote: <code>`</code>. 
+    For a phrase <var>text</var> that is to be defined later  or  is  used  in  an
+    uncommon way, please use <code>``</code><var>text</var><code>''</code> (which encloses <var>text</var>
+    in double quotes rather than single quotes).
+<p>
+<dt><code>\rq</code>, <code>\pif</code> <dd>
+    each set a single apostrophe (right quote): <code>'</code>.  For the HTML and 
+    on-line manuals <code>\accent19{}</code> also sets an apostrophe; however the
+    TeX-derived manuals produce an acute-d blankspace (what it in fact
+    is).
+<p>
+<dt><code>\accent127</code> <dd>
+    sets an umlaut, e.g. <code>\accent127a</code> produces  <code>&auml;</code>.  Do  not
+    use the shorthand <code>\"</code>  (otherwise  the  HTML  converter  will  not
+    translate it properly).
+<p>
+<dt><code>&lt;</code><var>text</var><code>&gt;</code> <dd>
+    sets <var>text</var> in italics. This can also be used  inside  <code>$...$</code>  and
+    <code>`...'</code>. Use <code>\&lt;</code> to get a ``less than'' sign. <code>&lt;...&gt;</code>  is  used
+    to denote a variable which is an argument of a  function;  a  typical
+    application is the description of a function:
+<p>
+<pre>
+\&gt;Group( &lt;gens&gt; ) F
+The function `Group' constructs a group generated by &lt;gens&gt;.
+</pre>
+<p>
+<dt>  <dd> 
+    The <code>F</code> at the end of the first line in the above  example  indicates
+    that <code>Group</code> is a function (see the <code>\&gt;</code> entry, below).
+<p>
+<dt><code>*</code><var>text</var><code>*</code> <dd>
+    sets <var>text</var> in <strong>emphasized style</strong>.
+<p>
+<dt><code>$a.b$</code> <dd>
+    Inside math mode, you can use <code>.</code>  instead  of  <code>\cdot</code>  (a  centred
+    multiplication dot). Use <code>\.</code> for a full stop inside math mode.  For
+    example, <code>$a.b$</code> produces <i>a</i>&#183;<i>b</i> while <code>$a\.b$</code> produces <i>a</i>.<i>b</i>.
+<p>
+<dt><code>\cite{...}</code> <dd>
+    produces  a     reference     to    a    bibliography   entry    (the
+    <code>\cite[...]{...}</code> option of LaTeX is <strong>not</strong> supported).
+<p>
+<dt><code>"</code><var>label</var><code>"</code> <dd>
+    produces a reference to <var>label</var>. Labels are generated by the commands
+    <code>\Chapter</code>, <code>\Section</code> (see&nbsp;<a href="CHAP002.htm#SECT004">Labels  and  References</a>),  and  <code>\&gt;</code>
+    commands (see below).
+<p>
+<dt><code>\index{</code><var>index-entry</var><code>}</code> <dd>
+    defines an index entry <var>index-entry</var>. Besides appearing in the index,
+    <var>index-entry</var> is also written to the section index file  <code>manual.six</code>
+    used by the on-line help. An exclamation mark (<code>!</code>), if  present,  is
+    used to partition <var>index-entry</var>  into  main  entry  (left  part)  and
+    subentry (right part)  components,  in  the  index.  TeX  converts
+    <var>index-entry</var> to lowercase and sets it in roman type, in  the  index.
+    The HTML converter respects  case  and  uses  the  default  font,  in
+    producing the HTML manual index.  <var>index-entry</var>  must  be  completely
+    free of special characters and font changing commands;  if  you  need
+    special fonts, characters or  commands  use  one  of  <code>\indextt</code>  or
+    <code>\atindex</code>.
+<p>
+<dt>  <dd> Note that for  the  HTML  converter  to  process  indexing   commands
+    (<code>\index</code>, <code>\indextt</code> and <code>\atindex</code>) correctly they <strong>must</strong> be  on
+    lines of their own. There can be several  indexing  commands  on  the
+    same line, but there should be no horizontal whitespace  before  each
+    indexing command, and if an indexing command needs to be broken  over
+    lines place a <code>%</code> at the point of the break at the end of  the  line
+    to mark a ``continuation''.
+<p>
+<dt>  <dd> For the HTML converter it works best to  put  indexing  commands  all
+    together at the beginning of a paragraph, rather than strewn  between
+    lines of a paragraph. However, for the TeX-produced manuals  after
+    a maths display one gets a rogue space if you  do  this  (this  is  a
+    bug); you can work around the bug by putting at least one word of the
+    paragraph followed by your line(s) of indexing commands.
+<p>
+<dt>  <dd> <strong>Note</strong> also that  indexing  commands  do  <strong>not</strong>  produce  labels  for
+    cross-references; they <strong>only</strong> produce entries for the  index.  Labels
+    are  <strong>only</strong>  produced   by   the   chapter   (<code>\Chapter</code>),   section
+    (<code>\Section</code>) and subsection (<code>\&gt;</code>) commands.
+<p>
+<dt><code>\indextt{</code><var>index-entry</var><code>}</code> <dd>
+    is the same as <code>\index{</code><var>index-entry</var><code>}</code>, except that  <var>index-entry</var>
+    is set by TeX in  typewriter  style,  respecting  case;  the  HTML
+    converter  sets   <var>index-entry</var>   in   the   default   font.   Again,
+    <var>index-entry</var> should be completely free  of  special  characters  and
+    font changing commands, and <code>!</code> may be used for  sub-entries  in  the
+    same way as for  <code>\index</code>.  Note  that  a  sub-entry  component,  if
+    present, is <strong>not</strong> set in typewriter  style  for  the  TeX-produced
+    manuals; if you want that it is, use <code>\atindex</code>.
+<p>
+<dt><code>\atindex{</code><var>sort-entry</var><code>}{|indexit}</code> <dd>
+    is simply a special form of the <code>\index</code> command that  tells  TeX
+    to typeset the page number in italics.
+<p>
+<dt><code>\atindex{</code><var>sort-entry</var><code>}{@</code><var>index-entry</var><code>}</code> <dd>
+    The   HTML   converter   treats   this   command   as   if   it   was
+    <code>\index{</code><var>index-entry</var><code>}</code>,  except  that  it  strips  out  any  font
+    information and  sets  it  in  the  default  font,  but  nevertheless
+    respects case. <var>index-entry</var> may have <code>|indexit</code> at the end which is
+    ignored by the HTML converter.
+<p>
+<dt>  <dd> The TeX-produced manuals set  the  index  entry  as  <var>index-entry</var>
+    respecting font and case, and list it according to <var>sort-entry</var>. If a
+    sub-entry is required then it should  be  present  behind  a  <code>!</code>  in
+    <strong>both</strong>  the  <var>sort-entry</var>  and  <var>index-entry</var>;  the  only  difference
+    between the sub-entry in <var>sort-entry</var> and that in  <var>index-entry</var>,  is
+    that the <var>sort-entry</var> sub-entry should be  stripped  of  mark-up  and
+    font changing command. The <var>index-entry</var> component  is  ignored  when
+    constructing the <code>manual.six</code> files, and is also ignored by the  HTML
+    converter. Anything after an <code>!</code>  in  <var>sort-entry</var>  is  ignored  when
+    constructing the <code>manual.idx</code> file that is  processed  by  MakeIndex.
+    Macros like <code>{\GAP}</code> are allowed in  <var>index-entry</var>.  However,  any
+    <code>`</code>  that  appears  in  <var>index-entry</var>   <strong>must</strong>   be   preceded   by
+    <code>\noexpand</code>;  <var>sort-entry</var>  must  be  completely  free  of   special
+    characters and font changing commands.
+<p>
+<dt>  <dd> In general, one should make <var>sort-entry</var> the  same  as  <var>index-entry</var>
+    modulo fonts and other mark-up, e.g.,
+<p>
+<pre>
+\atindex{Fred!Nerk}{@\noexpand`Fred'!\noexpand`Nerk'}
+</pre>
+<p>
+<dt><code>{\GAP}</code> <dd>
+    typesets <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<dt><code>\package{</code><var>pkg</var><code>}</code> <dd>
+    typesets <var>pkg</var> in the font correct  for <font face="Gill Sans,Helvetica,Arial">GAP</font>  packages  (respecting
+    case). This is intended for cross-referencing  other <font face="Gill Sans,Helvetica,Arial">GAP</font> packages.
+    There  is  also  the  command  <code>\Package{</code><var>mypkg</var><code>}</code>  command  which
+    defines a macro <code>\</code><var>mypkg</var><code></code> so that  when  you  type  <code>{\</code><var>mypkg</var><code>}</code>
+    (please include the curly braces) the text <var>mypkg</var> is typeset in  the
+    right way for <font face="Gill Sans,Helvetica,Arial">GAP</font> packages. The <code>\Package</code> command should normally
+    be included in one's <code>manual.tex</code> file (see&nbsp;<a href="CHAP002.htm#SECT001">The Main File</a>) and just
+    allows  one  to  type  <code>{\</code><var>mypkg</var><code>}</code>   rather   than   the   longer
+    <code>\Package{</code><var>mypkg</var><code>}</code>  as  one  is  frequently  likely  to  do  when
+    formulating one's own <font face="Gill Sans,Helvetica,Arial">GAP</font> package documentation.  So, just  to  be
+    clear about  the  difference  between  <code>\Package</code>  and  <code>\package</code>,
+    <code>\Package{</code><var>mypkg</var><code>}</code> defines a macro <code>\</code><var>mypkg</var><code></code>  but  produces  no
+    text, and <code>\package{</code><var>pkg</var><code>}</code> produces <var>pkg</var> set in the font that is
+    right for <font face="Gill Sans,Helvetica,Arial">GAP</font> packages.
+<p>
+<dt><code>\&gt;</code> <dd>
+    produces a subsection. 
+    The line following the <code>\&gt;</code> entry must either contain another <code>\&gt;</code>
+    entry (in which case the further entries are assumed to be variants
+    and do not start a new subsection) or must be empty.
+    The description text will follow this empty line.
+<p>
+<dt>  <dd> There are several forms of the <code>\&gt;</code> command.
+    In all forms, a label and index entry are generated; the HTML 
+    converter uses the label to form an index entry, respecting case
+    and setting in roman type.
+    If the next non-space character is not a left quote (<code>`</code>) it is 
+    assumed that the subsection is for a ``function''; we exhibit 
+    these forms first. 
+<p>
+<dt><code>\&gt;</code><var>func</var><code></code> <dd>
+    While this form is supported; it  is  discouraged.  If  <var>func</var>  is  a
+    0-argument function, <var>func</var> should be followed by an  empty  pair  of
+    brackets (see <code>\&gt;</code><var>func</var><code>(</code><var>args</var><code>)</code> below). If  <var>func</var>  is  actually  a
+    global variable  then  <code>\&gt;`</code><var>global-var</var><code>'  V</code>  should  be  used
+    instead (see below). In order for this form to  be  parsed  correctly
+    the remainder of the line to the right of <var>func</var> must  be  empty.  It
+    generates <var>func</var> as both a label and index entry; <var>func</var>  appears  as
+    is, in typewriter type in the TeX-derived manual index.
+<p>
+<dt><code>\&gt;</code><var>func</var><code>(</code><var>args</var><code>)</code> <dd>
+    The macro uses the brackets  after  <var>func</var>  to  parse  the  arguments
+    <var>args</var>. Thus, it is necessary for the function to  use  brackets  and
+    for the arguments to have none. (We use the term ``function'' loosely
+    here to mean ``a <font face="Gill Sans,Helvetica,Arial">GAP</font> command with arguments''; we really  mean  an
+    object  that  <font face="Gill Sans,Helvetica,Arial">GAP</font>  knows   as   a:   ``Function'',   ``Property'',
+    ``Operation'',  ``Category'',  or  ``Representation''  ---  but   not
+    ``Variable'', since a ``Variable''  does  not  have  arguments.)  The
+    label and index entry generated consists of the text between the  <code>&gt;</code>
+    and opening bracket. The index entry is  set  as  is  (i.e.  without
+    conversion to lowercase) in typewriter  type  in  the  TeX-derived
+    manual index. Here is an example of how to use <code>\&gt;</code>; the index entry
+    is ``<code>Size</code>''  (in  typewriter  type,  with  mixed  case  preserved).
+<p>
+<pre>
+\&gt;Size( &lt;obj&gt; ) A
+</pre>
+<p>
+<dt>  <dd> The <code>A</code> indicates that <code>Size</code> is an  ``Attribute''.  Instead  of  <code>A</code>
+    there can be <code>F</code>, <code>P</code>, <code>O</code>, <code>C</code>, or <code>R</code> which indicate that a command
+    is  a  ``Function''  (probably  the   most   common),   ``Property'',
+    ``Operation'', ``Category'', or ``Representation'', respectively. For
+    the forms of  the  <code>\&gt;</code>  command  followed  by  a  left  quote,  <code>V</code>
+    indicating  ``Variable''  (an  object  without  arguments),  is  also
+    possible.     (See     Section&nbsp;<a href="../ref/CHAP001.htm#SECT001">Manual      Conventions</a>      and
+    Chapter&nbsp;<a href="../ref/CHAP013.htm">Types of Objects</a> in the reference manual).
+<p>
+<dt><code>\&gt;</code><var>func</var><code>(</code><var>args</var><code>)!{</code><var>sub-entry</var><code>}</code> <dd>
+    This is a special form of the previous command, that  forms  a  label
+    <code></code><var>func</var><code>!</code><var>sub-entry</var><code></code> and an index entry with main entry  <var>func</var>  (set
+    in typewriter type and respecting  case)  and  sub-entry  <var>sub-entry</var>
+    (set in roman type but also respecting case).
+<p>
+<dt>  <dd> The remaining forms of the command <code>\&gt;</code> expect to be followed by a
+    <code>`</code>.
+<p>
+<dt><code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}</code> <dd>
+    works  as  <code>\&gt;</code>  without  <code>`...'</code>,  but  will  not  use  bracket
+    matching; it simply displays <var>command</var> as a header, which appears  in
+    typewriter type. It will use <var>label</var> as  both  the  label  and  index
+    entry, and the index entry is set in  roman  type.  Whenever  <var>label</var>
+    contains a <code>!</code>, it is used to partition <var>label</var> into main entry (left
+    part) and subentry (right part) components, in the index.
+<p>
+<pre>
+\&gt;`&lt;a&gt; + &lt;b&gt;'{addition}
+\&gt;`Size( &lt;obj&gt; )'{size} A
+</pre>
+<p>
+<dt>  <dd> In the first of the examples immediately above,  the  first  form  of
+    <code>\&gt;</code> cannot be used because no brackets occur.  Also,  observe  that
+    there is no command type (it's not appropriate here); TeX does not
+    need it to correctly parse a <code>\&gt;</code>  entry,  in  general.  The  second
+    example differs from our previous <code>Size</code> example, in that  the  index
+    entry will be typeset  as  ``size''  (in  roman  type),  rather  than
+    ``<code>Size</code>''. Also, the index entry is always converted to lowercase,
+    no matter what case or mixed case was used.
+<p>
+<dt><code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}!{</code><var>sub-entry</var><code>}</code> <dd>
+    is equivalent to: <code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>!</code><var>sub-entry</var><code>}</code>.
+<p>
+<dt><code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}@{</code><var>index-entry</var><code>}</code> <dd>
+    works as <code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}</code>, except that it uses <var>label</var>
+    for sorting the index entry and the index entry itself is printed  as
+    <var>index-entry</var>. References to the subsection use <var>label</var>.  (Note  that
+    the HTML converter ignores everything after an <code>@</code>  symbol  in  these
+    commands,  essentially  treating  the   command   as   if   it   were
+    <code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}</code>. However,  the  HTML  converter  also
+    always preserves the case in a label. ) Here are two examples.
+<p>
+<pre>
+\&gt;`Size( &lt;obj&gt; )'{size}@{`Size'} A
+\&gt;`Size( GL( &lt;n&gt;, &lt;q&gt; ) )'{Size!GL( n, q )}@{`Size'! `GL'( \noexpand&lt;n&gt;, \noexpand&lt;q&gt; )} A
+</pre>
+<p>
+<dt>  <dd> The first of these examples is equivalent to ``<code>\&gt;Size( &lt;obj&gt; )</code>''.
+    For the second example, it was necessary  to  use  <code>`</code>  and  <code>'</code>,
+    since the argument contained  brackets.  Note  that  <code>\noexpand</code>  is
+    needed  before  <code>&lt;</code>  here,  but  not  needed  before  <code>`</code>  in  the
+    <var>index-entry</var> argument. Otherwise, the rules for sub-entries are  the
+    same as for <code>\atindex</code>.
+<p>
+<dt><code>\&gt;`</code><var>global-var</var><code>' V</code> <dd>
+    This is actually a short-hand for: 
+    ``<code>\&gt;`</code><var>global-var</var><code>'{</code><var>global-var</var><code>}@{`</code><var>global-var</var><code>'} V</code>''
+    to  save  you  some  typing  when  creating  subsections  for  global
+    variables, i.e., <var>global-var</var>  is  the  label  and  the  index  entry
+    appears in typewriter type, with mixed case preserved.
+<p>
+<dt><code>\){\fmark ...}</code> <dd>
+    is like <code>\&gt;</code> except that it produces no label and index entry. It is
+    <code>\fmark</code> that produces  the  filled  in  right  arrow.  Omitting  it
+    produces a line in typewriter type.
+<p>
+<dt><code>\){\kernttindent ...}</code> <dd>
+    is useful for producing a line in typewriter  type,  that  you  might
+    otherwise have typed between <code>\begintt</code> and <code>\endtt</code>, but where you
+    actually  want  the  TeX  macros  and  variables  <code>&lt;...&gt;</code>  to  be
+    interpreted.
+<p>
+<dt><code>\URL{</code><var>url</var><code>}</code> <dd>
+    prints the WWW URL <var>url</var>. In the HTML version this will be a HREF link.
+<p>
+<dt><code>\Mailto{</code><var>email</var><code>}</code> <dd>
+    prints the email address <var>email</var>. In the HTML version this will be  a
+    <code>mailto</code> link.
+<p>
+</dl>
+<p>
+<strong>Note:</strong>
+When a TeX macro is followed by a space, TeX generally swallows  up
+the space; one way, and it is the <font face="Gill Sans,Helvetica,Arial">GAP</font>-preferred way, of preventing the
+space being swallowed up, is by enclosing the macro in <code>{...}</code>. When  a
+macro is often followed by a space, it's a good  habit  to  get  into  to
+<strong>always</strong> enclose that macro in <code>{...}</code> (the braces do nothing when  the
+macro is not followed by a space, and prevent TeX from  swallowing  up
+the space, otherwise). Thus the macro for <font face="Gill Sans,Helvetica,Arial">GAP</font> should <strong>always</strong> be typed
+<code>{\GAP}</code>. Similarly, macros like <code>\lq</code>,  <code>\rq</code>  and  <code>\pif</code>  should
+probably always  appear  in  braces;  moreover  the  word  ``don't''
+typeset via ``<code>don{\pif}t</code>'' will actually be interpreted  correctly
+by the on-line browser.
+<p>
+<p>
+<h2><a name="SECT006">2.6 TeX Macros for Domains</a></h2>
+<p><p>
+<a name = "I52"></a>
+
+<a name = "I52"></a>
+<a name = "I53"></a>
+
+<a name = "I52"></a>
+<a name = "I53"></a>
+<a name = "I54"></a>
+
+<a name = "I52"></a>
+<a name = "I53"></a>
+<a name = "I54"></a>
+<a name = "I55"></a>
+
+<a name = "I56"></a>
+
+<a name = "I56"></a>
+<a name = "I57"></a>
+
+<a name = "I56"></a>
+<a name = "I57"></a>
+<a name = "I58"></a>
+
+The following macros are required for the following common domains:
+<p>
+<dl compact>
+<p>
+<dt><code>\N</code><dd>
+the natural  numbers  (you  should  probably  indicate  whether  by  your
+convention <b>N</b> includes zero or not, when using this);
+<p>
+<dt><code>\Z</code><dd>
+the integers;
+<p>
+<dt><code>\Q</code><dd>
+the rational numbers;
+<p>
+<dt><code>\R</code><dd>
+the real numbers;
+<p>
+<dt><code>\C</code><dd>
+the complex numbers;
+<p>
+<dt><code>\F</code><dd>
+a field; and
+<p>
+<dt><code>\calR</code><dd>
+a general domain e.g.&nbsp;a ring.
+<p>
+</dl>
+<p>
+<p>
+<h2><a name="SECT007">2.7 Examples, Lists, and Verbatim</a></h2>
+<p><p>
+<a name = "I59"></a>
+
+<a name = "I60"></a>
+
+<a name = "I60"></a>
+<a name = "I61"></a>
+
+In order  to   produce  a  list   of  items with   descriptions  use  the
+<code>\beginitems</code>, <code>\enditems</code> environment, i.e. this is a ``description''
+environment in the parlance of LaTeX and HTML.
+<p>
+For example, the   following  list describes   <code>base</code>, <code>knownBase</code>,  and
+<code>reduced</code>.
+The different item/description pairs must be separated by blank lines.
+<p>
+<pre>
+\beginitems
+`base' &amp;
+    must be a  list of points ...
+
+`knownBase' &amp;
+    If a base for &lt;G&gt; is known in advance ...
+
+`reduced' (default `true') &amp;
+    If this is `true' the resulting stabilizer chain will be ...
+\enditems
+</pre>
+<p>
+This will be printed as
+<p>
+<dl compact>
+<dt><code>base</code> <dd>
+    must be a  list of points ...
+<p>
+<dt><code>knownBase</code> <dd>
+    If a base for <var>G</var> is known in advance ...
+<p>
+<dt><code>reduced</code> (default <code>true</code>) <dd>
+    If this is <code>true</code> the resulting stabilizer chain will be ...
+</dl>
+<p>
+<a name = "I62"></a>
+
+<a name = "I63"></a>
+
+<a name = "I63"></a>
+<a name = "I64"></a>
+
+<a name = "I63"></a>
+<a name = "I64"></a>
+<a name = "I65"></a>
+
+<a name = "I63"></a>
+<a name = "I64"></a>
+<a name = "I65"></a>
+<a name = "I66"></a>
+
+In order to produce a list in a more compact format,
+use the <code>\beginlist</code>, <code>\endlist</code> environment.
+<p>
+An example is the following list.
+<p>
+<pre>
+\beginlist
+\item{(a)}
+    first entry
+\item{(b)}
+    second entry
+\itemitem{--}
+    a sub-item of the second entry
+\itemitem{--}
+    another sub-item of the second entry
+\item{(c)}
+    third entry
+\endlist
+</pre>
+<p>
+It is printed as follows.
+<dl compact>
+<dt>(a)<dd>
+    first entry
+<dt>(b)<dd>
+    second entry
+<dl compact>
+<dt>--<dd>
+    a sub-item of the second entry
+<dt>--<dd>
+    another sub-item of the second entry
+
+</dl>
+<dt>(c)<dd>
+    third entry
+</dl>
+<p>
+<a name = "I67"></a>
+
+<a name = "I67"></a>
+<a name = "I68"></a>
+
+The above example will take advantage of the ordered and unordered list
+environments in the HTML version, with the addition of slightly more mark-up.
+First, we present the example again with that additional mark-up, and then
+we explain how it works.
+<p>
+<pre>
+\beginlist%ordered{a}
+\item{(a)}
+    first entry
+\item{(b)}
+    second entry
+\itemitem{--}%unordered
+    a sub-item of the second entry
+\itemitem{--}
+    another sub-item of the second entry
+\item{(c)}
+    third entry
+\endlist
+</pre>
+<p>
+It is printed as follows (of course, you should see no difference in the
+TeX-produced and on-line versions of this manual).
+<ol type=a>
+<li>
+    first entry
+<li>
+    second entry
+<ul>
+<li>
+    a sub-item of the second entry
+<li>
+    another sub-item of the second entry
+
+</ol>
+<li>
+    third entry
+</ol>
+<p>
+In the HTML version the above example is interpreted as a nested list. The
+outer list is interpreted as an <strong>ordered</strong> list. The HTML standard provides
+5 different types of ordered list, and these mirror the types provided by the
+<code>enumerate</code> LaTeX package. To signify that the outer list was <strong>ordered</strong>
+the comment <code>%ordered</code> was added after <code>\beginlist</code>. If there is no further
+markup the list is numbered in the default manner, namely with integers.
+Otherwise, following <code>%ordered</code> there should be one of the following:
+<p>
+<dl compact>
+<dt><code>{1}</code><dd>
+indicates the list should be numbered with integers (the default obtained
+when there is nothing following <code>%ordered</code>);
+<p>
+<dt><code>{a}</code><dd>
+indicates the list should be numbered with lowercase letters (<code>a</code>, <code>b</code>,
+...);
+<p>
+<dt><code>{A}</code><dd>
+indicates the list should be numbered with uppercase letters (<code>A</code>, <code>B</code>,
+...);
+<p>
+<dt><code>{i}</code><dd>
+indicates the list should be numbered with lowercase roman numerals (<code>i</code>, <code>ii</code>,
+...); and finally
+<p>
+<dt><code>{I}</code><dd>
+indicates the list should be numbered with uppercase roman numerals (<code>I</code>, <code>II</code>,
+...).
+<p>
+</dl>
+<p>
+The <code>\beginlist</code> of the above example was followed by <code>%ordered{a}</code> and
+so the list is numbered using lowercase letters in the HTML version and using
+the ordered list environment (rather than the description environment). 
+<p>
+Occasionally, it is necessary to break from a list, add some explanatory
+text and then restart the list, and resume numbering the items from where
+you left off. To do this follow the comment mark-up already mentioned by an
+<strong>integer</strong> in curly braces, i.e.&nbsp;if the outer list should actually start at
+<code>c</code> then you would need to have <code>%ordered{a}{3}</code> after <code>\beginlist</code>
+because <code>c</code> is the 3rd letter of our alphabet. Note that, for an
+integer-numbered list not starting at 1, you must have the full markup; you
+cannot omit the <code>{1}</code> after <code>%ordered</code> in this case.
+<p>
+The inner list of the above example is an <strong>unordered</strong> list (this corresponds
+to a plain <code>itemize</code> environment in LaTeX). To indicate this the first
+<code>\itemitem</code> above was followed by <code>%unordered</code>.
+<p>
+Of course, to get an unordered outer list, one would start the list with
+<code>\beginlist%ordered</code>, and to get an ordered inner list numbered with
+lowercase letters the first <code>\itemitem</code> would need to be followed by
+<code>%ordered{a}</code>, i.e.&nbsp;the same syntax is used for the comment added after
+a <code>\beginlist</code> and after the first <code>\itemitem</code> in a sequence of
+<code>\itemitem</code>s.
+<p>
+<strong>Notes</strong>
+<p>
+<ol>
+<li> Only lists to a maximum depth of two are supported.
+<p>
+<li> You cannot change the type of a sublist halfway through. Only
+the comment after the first <code>\itemitem</code> in a sequence is interpreted.
+<p>
+</ol>
+<p>
+<a name = "I69"></a>
+
+<a name = "I70"></a>
+
+<a name = "I70"></a>
+<a name = "I71"></a>
+
+<a name = "I72"></a>
+
+<a name = "I72"></a>
+<a name = "I73"></a>
+
+There are two types of <strong>verbatim</strong> environments.
+Example <font face="Gill Sans,Helvetica,Arial">GAP</font> sessions are typeset in typewriter style
+using the <code>\beginexample</code>, <code>\endexample</code> environment.
+<p>
+<pre>
+\beginexample
+gap&gt; 1+2;
+3
+\endexample
+</pre>
+<p>
+typesets the example
+<pre>
+gap&gt; 1+2;
+3
+</pre>
+<p>
+<a name = "I74"></a>
+
+Examples whose output may vary should use the macro <code>|unstableoutput</code>, e.g.
+<p>
+<pre>
+\beginexample|unstableoutput
+gap&gt; Exec("date");
+Sun Oct  7 16:23:45 CEST 2001
+\endexample
+</pre>
+<p>
+typesets in all manual versions in the same way:
+<p>
+<pre>
+gap&gt; Exec("date");
+Sun Oct  7 16:23:45 CEST 2001
+</pre>
+<p>
+but the <code>testexample</code> routine knows to treat the example differently
+(namely, it ensures there is output but does not insist on it being
+the same).
+<p>
+Non-<font face="Gill Sans,Helvetica,Arial">GAP</font> examples are typeset in typewriter style
+using the <code>\begintt</code>, <code>\endtt</code> environment.
+<p>
+<strong>Notes</strong>
+<p>
+<ol>
+<p>
+<li>
+The manual style will automatically indent examples. It also will break
+examples which become too long to fit on one page. If you want to encourage
+breaks at specific points in an example, end the example with <code>\endexample</code>
+and immediately start a new example environment with <code>\beginexample</code> on
+the next line.
+<p>
+<li>
+To typeset a pipe symbol <code>|</code> in the <code>\begintt</code>, <code>\endtt</code> environment or
+<code>\beginexample</code>, <code>\endexample</code> you need to actually type <code>||</code>.
+<p>
+</ol>
+<p>
+<p>
+<h2><a name="SECT008">2.8 Tables, Displayed Mathematics and Mathematics Alignments</a></h2>
+<p><p>
+<a name = "I75"></a>
+
+<a name = "I75"></a>
+<a name = "I76"></a>
+
+<a name = "I75"></a>
+<a name = "I76"></a>
+<a name = "I77"></a>
+
+<a name = "I78"></a>
+
+Tables  should  normally  be  set  using   the   <code>\begintt</code>,   <code>\endtt</code>
+environment. This means that one should enter the appropriate white space
+so that columns line up. Note that to get a  vertical  line  <code>|</code>  in  the
+<code>\begintt</code>, <code>\endtt</code> environment  one  must  actually  type  <code>||</code>.  The
+reason for setting tables this way is so that both the HTML converter and
+<font face="Gill Sans,Helvetica,Arial">GAP</font>'s built-in  text  browser  have  no  trouble  in  displaying  them
+correctly.
+<p>
+The HTML converter when used with its <code>-t</code> option (which causes it to use
+TtH to translate mathematics) usually does a reasonable job of converting
+mathematics  displays  and  mathematics  alignments.  To  help   <font face="Gill Sans,Helvetica,Arial">GAP</font>'s
+built-in text browser, however, one should follow a few rules:
+<p>
+<ul>
+<p>
+<li> Place the <code>$$</code>s that begin and end the mathematics display on
+lines of their own. (If you don't do this it will  be  displayed  in  the
+same way as ordinary in-line mathematics.)
+<p>
+<li> Use only the <code>\matrix{ ..  }</code>  environment  for  mathematics
+alignments. The <code>\matrix{</code> starting the alignment should be on  a  line
+on its own, (flush left and no trailing whitespace). The <code>}</code> closing the
+environment should also be on a line of its  own.  The  built-in  browser
+doesn't do anything special to  line  things  up;  you  must  insert  the
+whitespace where it's needed. Any <code>\hfill</code> macros you add  to  help  the
+line things up in the TeX and HTML formats is ignored by the  <font face="Gill Sans,Helvetica,Arial">GAP</font>'s
+built-in text browser. The <code>\matrix{ .. }</code> environment should be  used
+even when one might like to use TeX's <code>\cases{ .. }</code> environment.
+<p>
+</ul>
+<p>
+The following example shows a typical usage of  the  <code>\matrix{  ..  }</code>
+environment (in particular, it shows how one can use it  to  avoid  using
+the <code>\cases{ .. }</code> environment). Observe,  how  sufficient  whitespace
+has been added in order that alignment is maintained by <font face="Gill Sans,Helvetica,Arial">GAP</font>'s built-in
+text browser. (Recall that <code>\right.</code> which produces nothing is  required
+to match <code>\left\{</code>.)
+<p>
+<pre>
+From a theorem of Gauss we know that
+$$
+b_N = \left\{
+\matrix{
+\frac{1}{2}(-1+\sqrt{N})    &amp;{\rm if} &amp;N \equiv 1  &amp;\pmod 4\cr
+\frac{1}{2}(-1+i \sqrt{N})  &amp;{\rm if} &amp;N \equiv -1 &amp;\pmod 4\cr
+}
+\right.
+$$
+</pre>
+<p>
+The example produces ...
+<p>
+From a theorem of Gauss we know that
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>b</i><sub><i>N</i></sub> = </td><td align="left" class="cl"><font face="symbol">&#63729;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63730;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63731;</font> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(<font face="symbol">&#8722;</font>1+<font face="symbol">&#8730;</font><i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><i>N</i>  <font face="symbol">&#8801;</font> 1 </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"> mod  4</td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(<font face="symbol">&#8722;</font>1+<i>i</i> <font face="symbol">&#8730;</font><i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><i>N</i>  <font face="symbol">&#8801;</font> <font face="symbol">&#8722;</font>1 </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"> mod  4</td></tr></table></td></tr></table></td><td nowrap="nowrap">  </td></tr></table></td></tr></table>
+<p>
+<p>
+<h2><a name="SECT009">2.9 Testing the Examples</a></h2>
+<p><p>
+For purposes of automatically checking the manual,
+the <font face="Gill Sans,Helvetica,Arial">GAP</font> examples in one chapter (the text between <code>\beginexample</code>
+and <code>\endexample</code>) should produce the same output, up to line breaks
+and whitespace, whenever they are run in the same order
+immediately after starting <font face="Gill Sans,Helvetica,Arial">GAP</font>
+(this will ensure that the global random number generator is initialized
+to the <strong>same</strong> values).
+For more details,
+see the last paragraph of&nbsp;<a href="../tut/CHAP002.htm#SECT001">Starting and Leaving GAP</a> in the Tutorial.
+<p>
+To permit this automatic running,
+examples that shall produce error messages should be put between
+<code>\begintt</code> and <code>\endtt</code>
+such that they will not be seen by this automatic test.
+<p>
+The automatic test also requires that examples are not indented
+in the files;
+in the printed manual,
+the lines between <code>\beginexample</code> and <code>\endexample</code>
+and the lines between <code>\begintt</code> and <code>\endtt</code> are automatically
+indented.
+<p>
+<p>
+<h2><a name="SECT010">2.10 Usage of the Percent Symbol</a></h2>
+<p><p>
+<a name = "I79"></a>
+
+The <code>%</code> symbol has a number of very specific uses. Take  care  that  you
+use it correctly. These uses are:
+<ol>
+<li>
+A line <strong>beginning</strong> with 16 (or more) <code>%</code> symbols marks the  <strong>end</strong>  of  a
+section, or the <strong>end</strong> of a chapter introduction  (which  may  be  empty).
+Such  a  line  <strong>must</strong>  precede  <strong>every</strong>  <code>\Section</code>  (see&nbsp;<a href="CHAP002.htm#SECT002">Chapters  and Sections</a>).
+<p>
+<li>
+A <code>%</code> at the beginning of a line tells TeX that the line is a comment
+and is to be ignored by TeX, <strong>except</strong> in  the  verbatim  environments:
+<code>\begintt..\endtt</code>   and    <code>\beginexample..\endexample</code>.    However,
+<code>%display</code> or <code>%enddisplay</code>  commands  have  special  meaning  for  the
+on-line text help browser and for the HTML converter and may  temporarily
+alter the meaning of an initial <code>%</code> for these (see&nbsp;<a href="CHAP002.htm#SECT011">Catering  for  Plain Text and HTML Formats</a> for details); otherwise the meaning of an  initial
+<code>%</code> is the same as for TeX.
+<p>
+<a name = "I80"></a>
+
+<li>
+A <code>%</code> at the end of a line marks a  ``continuation'',  <strong>except</strong>  in  the
+situation mentioned in item 4. A ``continuation'' may be needed for lines
+of  indexing  commands  (<code>\index</code>,  <code>\indextt</code>  or  <code>\atindex</code>).  Such
+commands <strong>must</strong> occur on lines of their  own  (see&nbsp;<a href="CHAP002.htm#SECT005">TeX  Macros</a>),  <strong>not</strong>
+mixed with text, and there must not be any superfluous whitespace (modulo
+the next statement). Occasionally an indexing  command  is  too  long  to
+easily fit on a line; this is where a continuation is desirable;  a  <code>%</code>
+at the end of such a line indicates that the line is to  be  joined  with
+the next line after removal of the <code>%</code> symbol and any initial whitespace
+on the next line (this is what  TeX  does!  ...&nbsp;and  we  mimic  this
+behaviour for both the on-line text help browser and the HTML manuals).
+<p>
+A ``continuation'' may also  be  necessary  for  subsections,  i.e.&nbsp;lines
+beginning with <code>\&gt;</code> or <code>\)</code> (again see&nbsp;<a href="CHAP002.htm#SECT005">TeX Macros</a>); the usage  is  as
+for indexing line continuations.
+<p>
+<li>
+A line ending with a <code>%</code> that is not  an  indexing  command  line  or  a
+subsection line that after any  initial  whitespace  is  removed  matches
+<strong>exactly</strong> <code>{%</code> or <code>}%</code>, or begins with <code>{\</code> or <code>\</code> and is followed
+by a letter, is  ignored  by  both  the  on-line  browser  and  the  HTML
+converter. This is intended  to  screen  the  on-line  browser  and  HTML
+converter from TeX commands  such  as  <code>\obeylines</code>,  <code>\begingroup</code>,
+<code>\def</code>   etc.,   without    having    to    resort    to    using    the
+<code>%display{tex}..%enddisplay</code> environment.
+<p>
+</ol>
+<p>
+<strong>Warning.</strong> In view of items 3.&nbsp;and 4.&nbsp;above, avoid using a  <code>%</code>  at  the
+end of a line  unless  you  really  need  it,  and  it  fits  into  those
+categories. In particular, do <strong>not</strong> put a <code>%</code> at the end of an  indexing
+command line that is immediately followed by a line of  text;  otherwise,
+the text line will not appear in the HTML manual or on-line via the  text
+help browser. Similarly, do not put a <code>%</code> line at the end of a text line
+that is immediately followed by an indexing command line; this causes the
+indexing command line to be ignored by the HTML converter. For  the  HTML
+converter it works best to put indexing  commands  all  together  at  the
+beginning  of  a  paragraph,  rather  than  strewn  between  lines  of  a
+paragraph. However, for the TeX-produced manuals after a maths display
+one gets a rogue space if you do this (this  is  a  bug);  you  can  work
+around the bug by putting at least one word of the paragraph followed  by
+your lines(s) of indexing commands.
+<p>
+<p>
+<h2><a name="SECT011">2.11 Catering for Plain Text and HTML Formats</a></h2>
+<p><p>
+<a name = "I81"></a>
+
+<a name = "I81"></a>
+<a name = "I82"></a>
+
+As described in&nbsp;<a href="CHAP002.htm#SECT005">TeX Macros</a>, the use of macros should be  restricted  to
+the ones given in the previous sections. By doing  so,  you  should  find
+that the documentation you write will still look ok in  <font face="Gill Sans,Helvetica,Arial">GAP</font>'s  on-line
+help (plain text format) and in the translated  HTML.  However,  in  rare
+situations one might be forced to use other TeX macros, for example in
+order  to  typeset  a  lattice.  In  this  case  you  should  provide  an
+alternative for the on-line help, and possibly also for the HTML version.
+This can be done by putting in guiding commands as TeX comments:
+<p>
+<pre>
+%display{tex}
+TeX version (only used by TeX manual)
+%display{html}
+%HTML version (only used by HTML manual)
+%display{text}
+%Text version (only used by the built-in manual browser)
+%enddisplay
+</pre>
+<p>
+Observe that the lines that should appear  only  in  the  TeX-produced
+manuals do not begin with a <code>%</code>. For the HTML (resp.&nbsp;text)  version  the
+lines  begin  with  a  <code>%</code>;   each   line   of   a   <code>%display{html}</code>
+(resp.&nbsp;<code>%display{text}</code>)  environment  is  printed   verbatim,   after
+removing the initial <code>%</code> symbol. The above example produces:
+<p>
+
+HTML version (only used by HTML manual)
+<p>
+(Note the above example will vary according to whether you are viewing it
+as a TeX-produced manual,  or as an HTML manual,  or via the  built-in
+manual browser --- as it should!)
+<p>
+Sometimes one needs a <code>%display</code> environment to be not seen  by  TeX,
+but still interpreted normally (i.e.&nbsp;not printed verbatim). The following
+variant of the above provides this capability.
+<p>
+<pre>
+%display{tex}
+TeX version (only used by TeX manual)
+%display{nontex}
+%HTML and Text version (interpreted normally, after removing the \% symbol)
+%enddisplay
+</pre>
+<p>
+The above example produces:
+<p>
+HTML and Text version (interpreted normally, after removing the % symbol)
+<p>
+It  is  permissible  to  abbreviate  any  of  the   above   by   omitting
+<code>%display{tex}</code>, <code>%display{html}</code>, or <code>%display{text}</code>  if  that
+portion of the environment would be empty.
+<p>
+There are yet two more variants of conditional display. Firstly,
+<p>
+<pre>
+%display{nonhtml}
+%Text version (interpreted normally by built-in browser, after removing the
+%\% symbol)
+%enddisplay
+</pre>
+<p>
+is normally used to  ensure  text  only  appears  via  the  on-line  help
+browser.  If  there  is  no  initial  <code>%</code>  it  also   appears   in   the
+TeX-produced manuals. The above example produces:
+<p>
+Finally, there is
+<p>
+<pre>
+%display{nontext}
+%HTML version (interpreted normally by HTML converter, after removing the 
+%\% symbol)
+%enddisplay
+</pre>
+<p>
+which  excludes  text  from  the   on-line   help   browser.   Like   the
+<code>%display{nonhtml}</code> environment, if there is no initial <code>%</code>  it  also
+appears in the TeX-produced manuals. The example produces:
+<p>
+HTML version (interpreted normally by HTML converter, after removing the
+% symbol)
+<p>
+However, the use of these special environments should be avoided as  much
+as  possible,  since  it  is  much  more  difficult  to   maintain   such
+pseudo-duplicated documentation.
+<p>
+<p>
+<h2><a name="SECT012">2.12 Umlauts</a></h2>
+<p><p>
+To produce umlauts,  use  <code>\accent127</code>  and  not  the  shorthand  <code>\"</code>
+(otherwise the HTML converter will not translate it properly).
+<p>
+<p>
+<h2><a name="SECT013">2.13 Producing a Manual</a></h2>
+<p><p>
+<a name = "I83"></a>
+
+<a name = "I83"></a>
+<a name = "I84"></a>
+
+<a name = "I83"></a>
+<a name = "I84"></a>
+<a name = "I85"></a>
+
+<a name = "I86"></a>
+
+<a name = "I86"></a>
+<a name = "I87"></a>
+
+<a name = "I86"></a>
+<a name = "I87"></a>
+<a name = "I88"></a>
+
+<a name = "I86"></a>
+<a name = "I87"></a>
+<a name = "I88"></a>
+<a name = "I89"></a>
+
+<a name = "I90"></a>
+
+<a name = "I90"></a>
+<a name = "I91"></a>
+
+<a name = "I90"></a>
+<a name = "I91"></a>
+<a name = "I92"></a>
+
+To produce a manual you will need the following files:
+<p>
+<p>
+<dl compact>
+<dt><code>manual.tex</code><dd>
+    contains the body of the manual
+    (as described in Section&nbsp;<a href="CHAP002.htm#SECT001">The Main File</a>)
+    and an <code>\Input</code> command for each chapter/appendix file.
+<p>
+<dt><code></code><var>file1</var><code>.tex</code>, <code></code><var>file2</var><code>.tex</code>, ...<dd>
+    the chapter/appendix files. There must be one file for each chapter
+    or appendix, and each such file should have a <code>\Chapter</code> or
+    <code>\PreliminaryChapter</code> command. Alternatively, one can write
+    <code>.msk</code> files and use <code>buildman.pe</code> to generate the corresponding
+    <code>.tex</code> files (see&nbsp;<a href="CHAP002.htm#SECT014">Using buildman.pe</a>).
+<p>
+<dt><code>gapmacro.tex</code><dd>
+    contains the macros for the manual.
+    It must be input by an <code>\input</code> statement (<strong>not</strong> and <code>\Input</code>
+    statement, which creates a Table of Contents entry) in <code>manual.tex</code>.
+    You can either use the version in the <code>doc</code> directory of <font face="Gill Sans,Helvetica,Arial">GAP</font>
+    (use a relative path then) or make a copy.
+<p>
+<dt><code>manual.mst</code><dd>
+    is a ``configure'' file used by <code>makeindex</code> when processing
+    index information in a TeX-generated and <code>manualindex</code>-preprocessed
+    <code>manual.idx</code> file.
+    It must reside in your manual directory.
+<p>
+<dt><code>GAPDOCPATH/manualindex</code><dd>
+    is used to call <code>makeindex</code>.
+    <code>GAPDOCPATH</code> is the path of the <code>doc</code> directory of your <font face="Gill Sans,Helvetica,Arial">GAP</font>
+    distribution.
+</dl>
+<p>
+For bibliography information you will need a file <code>manual.bbl</code>. If you
+intend to create it with BibTeX, you will need to indicate the
+appropriate <code>.bib</code> file (as described in section <a href="CHAP002.htm#SECT001">The main file</a>). Then
+after running TeX once over the manual, run BibTeX to create the
+<code>manual.bbl</code> file.
+<p>
+Assuming that all necessary files are there (a <code>manual.lab</code> file for each
+<var>book</var> argument of a <code>\UseReferences</code> command, <code>mrabbrev.bib</code> and
+<code>manualindex</code> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> <code>doc</code> directory),
+on a Unix system the following calls will then produce a file <code>manual.dvi</code>
+as well as a file <code>manual.six</code> which is used by the <font face="Gill Sans,Helvetica,Arial">GAP</font> help functions.
+If you are missing some of the needed files and don't have <code>CVS</code> access to
+<font face="Gill Sans,Helvetica,Arial">GAP</font>, just send an email request for them to 
+<a href="mailto:support@gap-system.org">support@gap-system.org</a>.
+<p>
+Go to the directory holding the manual. Call
+<pre>
+tex manual
+</pre>
+to produce bibliography information. Unless you provide a <code>manual.bbl</code> file
+which is not produced by BibTeX, call
+<pre>
+bibtex manual
+</pre>
+to produce the <code>manual.bbl</code> file. Then run TeX twice over the manual to
+fill all references and produce a stable table of contents:
+<pre>
+tex manual
+tex manual
+</pre>
+If you have sections which are named like commands, you may get messages
+about redefined labels. At this point you can ignore these.
+<p>
+Now it is time to produce the index. Call
+<pre>
+GAPDOCPATH/manualindex manual
+</pre>
+which preprocesses the <code>manual.idx</code> file and then
+runs <code>makeindex</code>. Provided that <code>manual.mst</code> exists, this produces a file
+<code>manual.ind</code>. Finally, once again run
+<pre>
+tex manual
+</pre>
+to incorporate the index. The manual is ready.
+<p>
+<p>
+<h2><a name="SECT014">2.14 Using buildman.pe</a></h2>
+<p><p>
+<a name = "I93"></a>
+
+<a name = "I93"></a>
+<a name = "I94"></a>
+
+<a name = "I93"></a>
+<a name = "I94"></a>
+<a name = "I95"></a>
+
+Rather than write the chapter/appendix <code>.tex</code>  files  directly,  one  may
+incorporate one's documentation in comments in one's <font face="Gill Sans,Helvetica,Arial">GAP</font> code.  To  do
+it this way, there are four ingredients:
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>.gd</code> files <dd>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> files with <code>.gd</code> suffixes that have the documentation in  comments
+(actually files with <code>.g</code> or  <code>.gi</code>  or  any  other  extension  are  also
+possible, but files with extension <code>.gd</code> are the default);
+<p>
+<dt><code>.msk</code> files <dd>
+which are just like the <code>.tex</code> files, and must obey all the  rules  given
+for <code>.tex</code> files previously, but additionally may have <code>\FileHeader</code>  or
+<code>\Declaration</code> commands at places where text should be inserted  from  a
+<code>.gd</code> file, and with <code>{{</code><var>variable</var><code>}}</code> patterns which are replaced  by
+<var>replacement</var> when written to the <code>.tex</code> file, if the configuration  file
+<var>configfile</var> has a line of form: <code></code><var>variable</var><code>=</code><var>replacement</var><code></code>;
+<p>
+<dt><var>configfile</var> <dd>
+a file which defines <code>msfiles</code> (the list of <code>.msk</code> files), <code>gdfiles</code> (the
+list of <code>.gd</code> files), <code>LIB</code> (the directory containing the  <code>.gd</code>  files),
+<code>DIR</code> (the directory in which to put the constructed  <code>.tex</code>  files,  one
+<code>.tex</code> file for each <code>.msk</code> file), and optionally  a  line  <code>check</code>  (see
+below) and <code></code><var>variable</var><code>=</code><var>replacement</var><code></code> lines; and
+<p>
+<dt><code>buildman.pe</code> <dd>
+a perl program (in the <code>etc</code> directory for those  with  <code>CVS</code>  access  to
+<font face="Gill Sans,Helvetica,Arial">GAP</font>), which strips the comments from the <code>.gd</code> files according to  the
+<code>\FileHeader</code>  or  <code>\Declaration</code>  commands  in   the   <code>.msk</code>   files,
+translates  any  <code>{{</code><var>variable</var><code>}}</code>  patterns  defined  by   the   file
+<var>configfile</var> and constructs the <code>.tex</code> files.
+<p>
+</dl>
+<p>
+If you don't have <code>CVS</code> access and want to use <code>buildman.pe</code>, just  email
+<a href="mailto:support@gap-system.org">support@gap-system.org</a> and ask for it.  Please  note  that
+there is no obligation for package authors to <code>buildman.pe</code>; nor does  it
+attract the same level of support as the rest of <font face="Gill Sans,Helvetica,Arial">GAP</font>; in general, bugs
+can be expected to be fixed (eventually), but no  new  features  will  be
+added. Also, note that the <font face="Gill Sans,Helvetica,Arial">GAPDoc</font> package  provides  a  similar
+facility.
+<p>
+The perl program <code>buildman.pe</code> is called as follows:
+<p>
+<code>buildman.pe -f </code><var>configfile</var><code></code>
+<p>
+<strong>The form of <var>configfile</var></strong>
+<p>
+There is no restriction on how to name <var>configfile</var>, but by convention it
+is of form <code>config.</code><var>something</var><code></code> or <code>buildman.config</code>; <var>configfile</var> should
+contain lines of form:
+<p>
+<code>msfiles=</code><var>msfile1</var><code>,</code><var>msfile2</var><code>,...,</code><var>msfilem</var><code>;</code>
+<br><code>gdfiles=</code><var>gdfile1</var><code>,</code><var>gdfile2</var><code>,...,</code><var>gdfilen</var><code>;</code>
+<br><code>LIB=</code><var>gdfile_dir</var><code>;</code>
+<br><code>DIR=</code><var>TeX_dir</var><code>;</code>
+<p>
+Optionally, as mentioned above, one may also have:
+<p>
+<code>check;</code>
+<p>
+which says to construct a <code>notfound</code> file  that  lists  missing  expected
+data, and any number of lines of form
+<p>
+<code></code><var>variable</var><code>=</code><var>replacement</var><code></code>
+<p>
+The file <var>configfile</var> should obey the following syntactic rules:
+<p>
+<ul>
+<p>
+<li>
+After   <code>msfiles=</code>   there    should    be    a    comma-separated    and
+semicolon-terminated list of <code>.msk</code>  files  with  the  <code>.msk</code>  extensions
+removed; <code>buildman.pe</code> assumes that the <code>.msk</code> files are all  in,  or  at
+least have path relative to, the  directory  in  which  <code>buildman.pe</code>  is
+called.
+<p>
+<li>
+Similar to the <code>msfiles</code> definition, after <code>gdfiles=</code> there should  be  a
+comma-separated and semicolon-terminated list of ``<code>.gd</code>''  files.  If  a
+``<code>.gd</code>'' file really does have a  <code>.gd</code>  extension,  it  may  be  listed
+without extension; otherwise the extension <strong>must</strong> be  included.  All  the
+``<code>.gd</code>'' files must be  listed  with  path  relative  to  the  directory
+defined by <code>LIB</code>.
+<p>
+<li>
+For both the <code>msfiles</code> and <code>gdfiles</code> definitions, the lists following the
+<code>=</code> may continue over several lines if  necessary,  and  any  whitespace,
+parentheses (round brackets) or double-quotes characters are ignored.
+<p>
+<li>
+The paths after <code>LIB=</code> and <code>DIR=</code> are assumed relative to  the  ``current
+directory'', i.e. the directory in which <code>buildman.pe</code> is  executed.  For
+each  <var>msfilei</var>  listed  after  the  <code>msfiles</code>   keyword,   <code>buildman.pe</code>
+constructs  from  <code></code><var>msfilei</var><code>.msk</code>  a  corresponding  <code></code><var>msfilei</var><code>.tex</code>   in
+<var>TeX_dir</var>. The <code>LIB</code> and <code>DIR</code> definitions must be on a single line.
+<p>
+<li>
+The terminating <code>;</code> is optional on  the  lines  containing  the  keywords
+<code>LIB</code>, <code>DIR</code> or <code>check</code>.
+<p>
+<li>
+Superfluous characters around any of the keywords  <code>msfiles</code>,  <code>gdfiles</code>,
+<code>LIB</code>, <code>DIR</code> or <code>check</code>, but before the <code>=</code> on the  lines  where  <code>=</code>  is
+required,  are  ignored.  Whitespace  and  double-quotes  characters  are
+ignored, everywhere.
+<p>
+<li>
+The <code></code><var>variable</var><code>=</code><var>replacement</var><code></code> lines (if there are any)  should  have  no
+other punctuation or whitespace.  These  lines  direct  <code>buildman.pe</code>  to
+replace any string of form <code>{{</code><var>variable</var><code>}}</code> in  a  <code>.msk</code>  file  with
+<var>replacement</var>.
+<p>
+</ul>
+<p>
+<strong>Special <code>.msk</code> file commands</strong>
+<p>
+Now  we  describe  the  special   (non-TeX)   commands   that   direct
+<code>buildman.pe</code> to extract text from ``<code>.gd</code>'' files.
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>\FileHeader[</code><var>n</var><code>]{</code><var>gdfile</var><code>}</code> <dd>
+This command is replaced by  the  text  following  a  <code>#</code><var>n</var><code></code>  line  (for
+positive integer <var>n</var>) in file  <code></code><var>gdfile</var><code>.gd</code>  (or  <var>gdfile</var>  if  <var>gdfile</var>
+already contains a suffix). The argument  <code>[</code><var>n</var><code>]</code>  of  <code>\FileHeader</code>  is
+optional; if it is omitted <var>n</var> is taken  to  be  1.  See  below  for  the
+typical form of a fileheader extracted by the <code>\FileHeader</code> command; the
+comments in the example describe its required format.
+<p>
+<dt><code>\Declaration{</code><var>func</var><code>}[</code><var>gdfile</var><code>]{</code><var>label</var><code>}!{</code><var>sub-entry</var><code>}@{</code><var>index-entry</var><code>}</code> <dd>
+This command is replaced by a <code>\&gt;</code> subsection declaration  or  block  of
+<code>\&gt;</code> declarations, and their description extracted from  a  block  in  a
+``<code>.gd</code>'' file that starts with a line matching <code>#</code><var>X</var><code> </code><var>func</var><code></code>, for  some
+letter <var>X</var> in <code>F</code>, <code>M</code>,  <code>A</code>,  <code>P</code>,  <code>O</code>,  <code>C</code>,  <code>R</code>  or  <code>V</code>.  The  line
+``matches'' if there is a  <code>(</code>,  space,  or  newline  after  <var>func</var>.  The
+argument <var>func</var> (in <code>{..}</code>) is the only mandatory argument.
+<p>
+<dt><dd>
+If present, <code>[</code><var>gdfile</var><code>]</code>, says that <var>func</var> is to be  found  in  the  file
+<code></code><var>gdfile</var><code>.gd</code> (or <var>gdfile</var> if <var>gdfile</var> already contains a suffix); it  is
+required only if <var>func</var> appears in more than one of the  ``<code>.gd</code>''  files
+listed in the file  <var>configfile</var>.  The  <var>gdfile</var>  argument  is  typically
+required for distinguishing methods of operations.
+<p>
+<dt><dd>
+The remaining arguments (if present) have exactly the purpose  that  they
+have  in subsection   declarations, i.e.&nbsp;lines of the following forms:
+<p>
+<dt><code>\&gt;</code><var>func</var><code>!{</code><var>sub-entry</var><code>}</code>
+<dt><br><code>\&gt;`</code><var>command</var><code>'{</code><var>label</var><code>}</code>
+<dt><br><code>\&gt;`</code><var>command</var><code>'!{</code><var>sub-entry</var><code>}</code>
+<dt><br><code>\&gt;`</code><var>command</var><code>'</code>
+<p>
+<dt><dd>
+(see Section&nbsp;<a href="CHAP002.htm#SECT005">TeX Macros</a>), and are used to build subsection  declaration
+lines  of  these  forms.  Note  that   the   <var>label</var>,   <var>sub-entry</var>   and
+<var>index-entry</var> arguments, if needed,  should  follow  the  <code>\Declaration</code>
+command (and <strong>not</strong> be in the  ``<code>.gd</code>''  file  <code>#</code><var>X</var><code>  </code><var>func</var><code>...</code>  lines,
+where they will be indistinguishable from comments). If in the  ``<code>.gd</code>''
+file the <code>#</code><var>X</var><code> </code><var>func</var><code></code> line is followed by other <code>#</code><var>Xi</var><code> </code><var>funci</var><code></code> lines,
+then each <code>\&gt;</code> subsection  declaration  formed  has  the  same  <var>label</var>,
+<var>sub-entry</var> and <var>index-entry</var> arguments appended.
+<p>
+</dl>
+<p>
+Corresponding to <code>\FileHeader[</code><var>n</var><code>]{</code><var>gdfile</var><code>}</code>, in the  ``<code>.gd</code>''  file
+denoted by <var>gdfile</var>, there should be:
+<p>
+<code>#</code><var>n</var><code></code>
+<br><code>##  Text for \FileHeader[</code><var>n</var><code>]{</code><var>gdfile</var><code>}. Each line</code>
+<br><code>##  should have two # characters followed by 2 blank</code>
+<br><code>##  space characters at the left margin. The text</code>
+<br><code>##  can and should include any necessary {\TeX}</code>
+<br><code>##  mark-up and indexing commands. </code>
+<br><code>##</code>
+<br><code>##  A fileheader may consist of any number of paragraphs.</code>
+<br><code>##  It is terminated by a totally empty line (i.e.&nbsp;a </code>
+<br><code>##  line devoid even of # characters).</code>
+<br><code>##</code>
+<p>
+Corresponding to each <code>\Declaration{</code><var>func</var><code>}...</code> line of a <code>.msk</code>  file
+there should be in one of the ``<code>.gd</code>'' files, a block of form:
+<p>
+<code>#</code><var>X</var><code>  </code><var>func</var><code>( </code><var>args</var><code> ) </code><var>comment</var><code></code>
+<br><code>#</code><var>Y</var><code>  </code><var>func2</var><code>( </code><var>args2</var><code> ) </code><var>comment2</var><code></code>
+<br><code>.</code>
+<br><code>.</code>
+<br><code>#</code><var>Z</var><code>  </code><var>funcn</var><code>( </code><var>argsn</var><code> ) </code><var>commentn</var><code></code>
+<br><code>##</code>
+<br><code>##  description of </code><var>func</var><code>, </code><var>func2</var><code>, ..., </code><var>funcn</var><code>.</code>
+<br><code>##</code>
+<br><code>Declare...( "</code><var>func</var><code>" ...);</code>
+<br><code>Declare...( "</code><var>func2</var><code>" ...);</code>
+<br><code>.</code>
+<br><code>.</code>
+<br><code>Declare...( "</code><var>funcn</var><code>" ...);</code>
+<p>
+The above block should comply with the following syntactic  rules.  Below
+we use the term ``function'' in a  general  sense  to  mean  any  one  of
+function  (in   the   strict   sense),   attribute,   category,   method,
+representation, operation, property or variable.
+<p>
+<ul>
+<p>
+<li>
+<i>X</i> , <i>Y</i> , ..., <i>Z</i>   <font face="symbol">&#8712;</font> { <tt>A</tt>, <tt>C</tt>, <tt>F</tt>, <tt>M</tt>, <tt>R</tt>, <tt>O</tt>, <tt>P</tt>, <tt>V</tt> }.
+If the letter is <code>V</code> then no parentheses or arguments should  follow  the
+``function name'' <var>funci</var>.
+<p>
+<li> 
+The letters, <var>X</var>, <var>Y</var>, ..., <var>Z</var> are printed in the manual. If a  letter
+is <code>A</code> or <code>P</code>, then also the letters <code>S</code>  and  <code>T</code>  are  printed  if  the
+setter and the tester are available. If  the  letter  is  <code>A</code>,  then  the
+letter <code>M</code> is printed if the attribute is mutable.
+<p>
+<li>
+The comments <var>comment</var>,  <var>comment2</var>,  ...,  <var>commentn</var>  (by  convention
+starting with spaced dots)  which  do  not  appear  in  the  manual,  are
+optional.
+<p>
+<li>
+The  <var>X</var>,  <var>Y</var>,  ...,  <var>Z</var>  ``function  name''  lines  must  appear  on
+consecutive lines, i.e.&nbsp;not intermingled with text lines.
+<p>
+<li>
+After the ``function name'' lines there should be text  lines  describing
+the ``functions''. As  with  fileheader  text  these  text  lines  should
+contain any TeX mark-up and indexing commands that are necessary,  and
+there should be two blank space characters between  the  <code>##</code>  and  the
+text. Lines starting with <code>#T</code> (or  some  other  non-<code>#</code>  character  in
+place of <code>T</code>) are ignored.
+<p>
+<li> 
+It is assumed that for each ``function  name''  <var>func</var>,  <var>func2</var>,  ...,
+<var>funcn</var> there is a corresponding <font face="Gill Sans,Helvetica,Arial">GAP</font> declaration (which  need  not  be
+via a <code>Declare...</code> command, e.g.&nbsp;it  might  be  <code>BindGlobal</code>)  after  the
+<code>##</code> text lines (and comment lines), <strong>and</strong>  that  they  appear  in  the
+<strong>same</strong> order.
+<p>
+</ul>
+<p>
+<strong>Example</strong>
+<p>
+The file <code>lib/algebra.gd</code> contains the following declaration:
+<p>
+<pre>
+#############################################################################
+##
+#O  DirectSumOfAlgebras( &lt;A1&gt;, &lt;A2&gt; )
+#O  DirectSumOfAlgebras( &lt;list&gt; )
+##
+##  is the direct sum of the two algebras &lt;A1&gt; and &lt;A2&gt; respectively of the
+##  algebras in the list &lt;list&gt;.
+##
+##  If all involved algebras are associative algebras then the result is also
+##  known to be associative.
+##  If all involved algebras are Lie algebras then the result is also known
+##  to be a Lie algebra.
+##
+##  All involved algebras must have the same left acting domain.
+##
+##  The default case is that the result is a structure constants algebra.
+##  If all involved algebras are matrix algebras, and either both are Lie
+##  algebras or both are associative then the result is again a
+##  matrix algebra of the appropriate type.
+##
+DeclareOperation( "DirectSumOfAlgebras", [ IsDenseList ] );
+</pre>
+<p>
+The file <code>doc/build/algebra.msk</code> contains the line:
+<p>
+<pre>
+\Declaration{DirectSumOfAlgebras}
+</pre>
+<p>
+The ``config'' file <code>doc/build/config.alg</code>:
+<p>
+<pre>
+@msfiles = ("algebra","algfp","alglie","mgmring");
+@gdfiles = ("algebra","alghom","alglie","object","liefam","mgmring","algrep",
+            "lierep");
+DIR = "../ref";
+LIB = "../../lib";
+</pre>
+<p>
+specifies  <code>algebra.msk</code>  via  the   first   entry   of   <code>msfiles</code>   and
+<code>lib/algebra.gd</code> via the first entry of <code>gdfiles</code> and (its directory  by)
+the definition of <code>LIB</code>. Observe that there are <code>@</code> and <code>"</code>  symbols,  as
+well as parentheses and whitespace, in the above ``config'' file;  <strong>none</strong>
+of these is necessary, but they don't do any harm either. Generally,  one
+calls <code>buildman.pe</code> in the same directory  that  contains  the  <code>msfiles</code>
+(which is why one doesn't need to specify the  directory  containing  the
+<code>msfiles</code>) and the ``config'' file. Since <code>DIR = "../ref"</code>, <code>buildman.pe</code>
+constructs <code>algebra.tex</code> from <code>algebra.msk</code> in directory  <code>doc/ref</code>.  The
+subsection  generated  in  <code>algebra.tex</code>  by  the  above  <code>\Declaration</code>
+command starts with the header:
+<p>
+<pre>
+\&gt;DirectSumOfAlgebras( &lt;A1&gt;, &lt;A2&gt; ) O
+\&gt;DirectSumOfAlgebras( &lt;list&gt; ) O
+</pre>
+<p>
+and is followed by its description, i.e.&nbsp;the  lines  beginning  with  two
+hashes and two blanks, but with the hashes and blanks stripped  away,  so
+that when it is processed the resulting subsection appears as:
+<p>
+<code>&nbsp;DirectSumOfAlgebras( </code><var>A1</var><code>, </code><var>A2</var><code> ) O</code>
+<br><code>&nbsp;DirectSumOfAlgebras( </code><var>list</var><code> ) O</code>
+<p>
+is the direct sum of the two algebras <var>A1</var> and <var>A2</var> respectively of the
+algebras in the list <var>list</var>.
+<p>
+If all involved algebras are associative algebras then the result is also
+known to be associative.
+If all involved algebras are Lie algebras then the result is also known
+to be a Lie algebra.
+<p>
+All involved algebras must have the same left acting domain.
+<p>
+The default case is that the result is a structure constants algebra.
+If all involved algebras are matrix algebras, and either both are Lie
+algebras or both are associative then the result is again a
+matrix algebra of the appropriate type.
+<p>
+<strong>Variable replacement</strong>
+<p>
+As mentioned above the ``config'' file may also contain lines that assign
+variables, e.g.
+<p>
+<pre>
+versionnumber=4.3
+versionsuffix=4r3
+</pre>
+<p>
+Occurrences of these variables in double curly braces will be replaced by
+their value. For example the lines
+<p>
+<pre>
+When `unzoo -x' is applied to {\GAP}~{{versionnumber}}'s `zoo' file
+`gap{{versionsuffix}}.zoo' a directory `gap{{versionsuffix}}' is formed.
+</pre>
+<p>
+in a <code>.msk</code> file will be replaced by:
+<p>
+<pre>
+When `unzoo -x' is applied to {\GAP}~4.3's `zoo' file
+`gap4r3.zoo' a directory `gap4r3' is formed.
+</pre>
+<p>
+in the corresponding <code>.tex</code> file.
+This feature is very handy for information that changes over time.
+<p>
+<strong>Final note</strong>
+<p>
+There is a document for version <code>0.0</code>  of  <code>buildman.pe</code>  that  describes
+features that have either never been used or have  since  been  disabled.
+Only the features described in this section can be relied  upon  to  have
+currency.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,242 @@
+% This file was created automatically from grpchain.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  grpchain.msk              GAP documentation               Gene Cooperman
+%A							     and Scott Murray
+%%
+%A  @(#)$Id: grpchain.msk,v 1.9 2002/04/15 10:02:29 sal Exp $
+%%
+%Y  (C) 2000 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+\PreliminaryChapter{Chains of subgroups}
+
+*The functions and operations described in this chapter have been added
+very recently and are still undergoing development. It is conceivable that
+names of variants of the functionality might change in future versions. If
+you plan to use these functions in your own code, please contact us.*
+
+Data structures for storing general group chains. Note that this does 
+*not* replace `StabChain'.
+The group attribute `ChainSubgroup(<G>)' stores the next group down 
+in the chain (i.e.~the structure is recursive).  `ChainSubgroup(<G>)' 
+should have an attribute `Transversal' which describes a transversal 
+of `ChainSubgroup(<G>)' in <G>, as in `gptransv.[gd,gi]'.
+
+The command `ChainSubgroup' will use the default method for computing
+chains -- currently this is random Schreier-Sims, unless the group is
+nilpotent.
+*Warning:* This algorithm is Monte-Carlo.
+`ChainSubgroup' is mutable, since it may start as the trivial subgroup,
+and then grow as elements are sifted in, and some stick.
+This allows us to do, if we want, things like:
+
+\){\kernttindent}SetChainSubgroup(<G>, ClosureGroup(ChainSubgroup(<G>), %
+<siftee>) );
+
+Whether this code is used instead of previous methods is determined by 
+4 variables which control the behaviour of the filter `IsChainTypeGroup'.
+See the file `gap.../lib/grpchain.gd' for details.
+
+
+
+\>IsChainTypeGroup( <G> ) P
+
+returns `true' if the group <G> is ``chain type'', i.e. it is the kind
+of group where computations are best done with chains.
+
+
+
+\>ChainSubgroup( <G> ) AM
+
+Computes the chain, if necessary, and returns the next subgroup in the 
+chain.  The current default is to use the random Schreier-Sims algorithm,
+unless the group is known to be nilpotent, in which case `MakeHomChain'
+is used.
+
+
+\>Transversal( <G> ) A
+
+The transversal of the group <G> in the previous subgroup of the chain.
+
+
+\>IsInChain( <G> ) O
+
+A group <G> is in a chain if it has either a `ChainSubgroup' or 
+a `Transversal'.
+
+
+\>GeneratingSetIsComplete( <G> ) P
+
+returns `true' if the generating set of the group <G> is complete.  For 
+example, for a stabiliser subgroup this is true if our strong generators
+have been verified.
+
+
+
+\>SiftOneLevel( <G>, <g> )!{for chains of subgroups} O
+
+Sift <g> though one level of the chain.
+
+
+\>Sift( <G>, <g> )!{for chains of subgroups} O
+
+Sift <g> through the entire chain.
+
+
+\>SizeOfChainOfGroup( <G> ) F
+
+Uses the chain to compute the size of a group.  Unlike `Size(<G>)',
+this does not set the `Size' attribute, which is useful if the chain is
+not known to be complete.
+
+
+\>TransversalOfChainSubgroup( <G> ) F
+
+Returns the transversal of the next group in the chain, inside <G>.
+
+
+\>ChainStatistics( <G> ) F
+
+Returns a record containing useful statistics about the chain of <G>.
+
+
+\>HasChainHomomorphicImage( <G> ) F
+
+Does <G> have a chain subgroup derived from a homomorphic image?
+This will be `false' for stabiliser, trivial, and sift function chain 
+subgroups.  It will be true for homomorphism and direct product chain
+subgroups.
+
+
+\>ChainHomomorphicImage( <G> ) F
+
+Returns the chain homomorphic image, or `fail' if no such image exists.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Stabiliser chain subgroups}
+
+\>BaseOfGroup( <G> ) A
+
+If the group <G> has a chain consisting entirely of stabiliser subgroups,
+then this command returns the base as a list.  This command does not 
+compute a base, however.
+
+
+\>ExtendedGroup( <G>, <g> ) O
+
+Add a new Schreier generator for <G>.
+
+
+\>StrongGens( <G> ) F
+
+Returns a list of generating sets for each level of the chain.
+
+
+\>ChainSubgroupByStabiliser( <G>, <basePoint>, <Action> ) F
+
+Form a chain subgroup by stabilising <basePoint> under the given action.
+The subgroup will start with no generators, and will have a transversal
+by Schreier tree.
+
+
+\>OrbitGeneratorsOfGroup( <G> ) A
+
+Generators used to compute the orbit of <G>.  Used by `baseim.[gd,gi]'.
+
+
+
+\>RandomSchreierSims( <G> ) F
+
+The random Schreier-Sims algorithm.
+
+
+\>ChangedBaseGroup( <G> ) F
+
+We assume we have a chain for <G>, which gives a complete BSGS.
+We are given a new base <newBase> and wish to find strong generators for 
+it. Options are the same as for random Schreier-Sims.  
+Note that this function does not modify <G>, but returns a new group,
+isomorphic to <G> with the specified base.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Hom coset chain subgroups}
+
+\>ChainSubgroupByHomomorphism( <hom> ) F
+
+Form a chain subgroup by the kernel of <hom>.
+The subgroup will start with no generators, and will have a <hom>
+transversal.
+
+
+\>ChainSubgroupByProjectionFunction( <G>, <kernelSubgp>, <imgSubgp>, %
+ <projFnc> ) F
+
+When the homomorphism of a quotient group is a projection, then
+there is an internal semidirect product, for which `TransversalElt()'
+has a direct implementation as the projection.
+<hom> will be the projection, and `<elt> -> ImageElm(<hom>, <elt>)' is 
+the map.
+
+
+\>QuotientGroupByChainHomomorphicImage( <quo>[, <quo2>] ) F
+
+This function deals with quotient groups of quotient groups in a chain.
+
+
+\>ChainSubgroupQuotient( <G> ) A
+
+The quotient by the chain subgroup.
+
+
+
+\>MakeHomChain( <G> ) O
+
+Computes a chain of subgroups for the group <G> which are kernels of 
+homomorphisms.
+Currently only implemented for nilpotent groups.  We use the algorithm of
+E. Luks, Computing in Solvable Matrix Groups, FOCS/STOC.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Direct product chain subgroups}
+
+\>ChainSubgroupByDirectProduct( <proj>, <inj > ) F
+
+Form a chain subgroup by internal direct product.
+
+
+\>ChainSubgroupByPSubgroupOfAbelian( <G>, <p> ) F
+
+<G> is an abelian group, <p> a prime involved in <G>.
+Form a direct sum chain where the subgroup is the <p>-prime part of <G>.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Trivial chain subgroups and sift function chain subgroups}
+
+\>ChainSubgroupByTrivialSubgroup( <G> ) F
+
+Form a chain subgroup by enumerating the group.
+
+
+\>ChainSubgroupBySiftFunction( <G>, <subgroup>, <siftFnc> ) F
+
+Form a chain subgroup using a sift function.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E
+

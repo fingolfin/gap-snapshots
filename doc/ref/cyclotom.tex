@@ -1,0 +1,860 @@
+% This file was created automatically from cyclotom.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  cyclotom.msk                GAP documentation               Thomas Breuer
+%A                                                           Alexander Hulpke
+%%
+%A  @(#)$Id: cyclotom.msk,v 1.30 2003/10/30 15:23:58 gap Exp $
+%%
+%Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+%%  This file is being maintained by Thomas Breuer.
+%%  Please do not make any changes without consulting him.
+%%  (This holds also for minor changes such as the removal of whitespace or
+%%  the correction of typos.)
+%%
+\Chapter{Cyclotomic Numbers}
+
+\index{type!cyclotomic}\index{irrationalities}
+\index{cyclotomic field elements}
+
+{\GAP} admits computations in abelian extension fields of the rational
+number field $\Q$, that is fields with abelian Galois group over $\Q$.
+These fields are subfields of *cyclotomic fields* $\Q(e_n)$
+where $e_n = e^{2\pi i/n}$ is a primitive complex $n$-th root of unity.
+The elements of these fields are called *cyclotomics*.
+
+Information concerning operations for domains of cyclotomics,
+for example certain integral bases of fields of cyclotomics,
+can be found in Chapter~"Abelian Number Fields".
+For more general operations that take a field extension as a
+---possibly optional--- argument, e.g., `Trace' or `Coefficients',
+see Chapter~"Fields and Division Rings".
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Operations for Cyclotomics}
+
+\index{roots of unity}
+
+\>E( <n> ) F
+
+`E' returns the primitive <n>-th root of unity $e_n = e^{2\pi i/n}$.
+Cyclotomics are usually entered as sums of roots of unity,
+with rational coefficients,
+and irrational cyclotomics are displayed in the same way.
+(For special cyclotomics, see~"ATLAS irrationalities".)
+
+
+\beginexample
+gap> E(9); E(9)^3; E(6); E(12) / 3;
+-E(9)^4-E(9)^7
+E(3)
+-E(3)^2
+-1/3*E(12)^7
+\endexample
+A particular basis is used to express cyclotomics,
+see~"Integral Bases of Abelian Number Fields";
+note that `E(9)' is *not* a basis element,
+as the above example shows.
+
+\>`Cyclotomics' V
+
+is the domain of all cyclotomics.
+
+
+\beginexample
+gap> E(9) in Cyclotomics; 37 in Cyclotomics; true in Cyclotomics;
+true
+true
+false
+\endexample
+
+As the cyclotomics are field elements the usual arithmetic operators
+`+',`-',`*' and `/' (and `^' to take powers by integers) are applicable.
+Note that `^' does *not* denote the conjugation of group elements,
+so it is *not* possible to explicitly construct groups of cyclotomics.
+(However, it is possible to compute the inverse and the multiplicative
+order of a nonzero cyclotomic.)
+Also, taking the $k$-th power of a root of unity $z$ defines a Galois
+automorphism if and only if $k$ is coprime to the conductor of $z$.
+
+\beginexample
+gap> E(5) + E(3); (E(5) + E(5)^4) ^ 2; E(5) / E(3); E(5) * E(3);
+-E(15)^2-2*E(15)^8-E(15)^11-E(15)^13-E(15)^14
+-2*E(5)-E(5)^2-E(5)^3-2*E(5)^4
+E(15)^13
+E(15)^8
+gap> Order( E(5) ); Order( 1+E(5) );
+5
+infinity
+\endexample
+
+\>IsCyclotomic( <obj> ) C
+\>IsCyc( <obj> ) C
+
+Every object in the family `CyclotomicsFamily' lies in the category
+`IsCyclotomic'.
+This covers integers, rationals, proper cyclotomics, the object
+`infinity' (see~"Infinity"), and unknowns (see Chapter~"Unknowns").
+All these objects except `infinity' and unknowns lie also in the category
+`IsCyc',
+`infinity' lies in (and can be detected from) the category `IsInfinity',
+and unknowns lie in `IsUnknown'.
+
+
+\beginexample
+gap> IsCyclotomic(0); IsCyclotomic(1/2*E(3)); IsCyclotomic( infinity );
+true
+true
+true
+gap> IsCyc(0); IsCyc(1/2*E(3)); IsCyc( infinity );
+true
+true
+false
+\endexample
+
+\>IsIntegralCyclotomic( <obj> ) P
+
+A cyclotomic is called *integral* or a *cyclotomic integer* if all
+coefficients of its minimal polynomial over the rationals are integers.
+Since the underlying basis of the external representation of cyclotomics
+is an integral basis (see~"Integral Bases of Abelian Number Fields"),
+the subring of cyclotomic integers in a cyclotomic field is formed
+by those cyclotomics for which the external representation is a list of
+integers.
+For example, square roots of integers are cyclotomic integers
+(see~"ATLAS irrationalities"), any root of unity is a cyclotomic integer,
+character values are always cyclotomic integers,
+but all rationals which are not integers are not cyclotomic integers.
+
+
+\beginexample
+gap> r:= ER( 5 );                # The square root of 5 is a cyclotomic integer.
+E(5)-E(5)^2-E(5)^3+E(5)^4
+gap> IsIntegralCyclotomic( r );  # It has integral coefficients.
+true
+gap> r2:= 1/2 * r;               # This is not a cyclotomic integer, ...
+1/2*E(5)-1/2*E(5)^2-1/2*E(5)^3+1/2*E(5)^4
+gap> IsIntegralCyclotomic( r2 );
+false
+gap> r3:= 1/2 * r - 1/2;         # ... but this is one.
+E(5)+E(5)^4
+gap> IsIntegralCyclotomic( r3 );
+true
+\endexample
+
+\indextt{Int!for cyclotomics}
+The operation `Int'
+can be used to find a cyclotomic integer near to an arbitrary cyclotomic.
+For rationals, `Int' returns the largest integer smaller or equal to the
+argument.
+\beginexample
+gap> Int( E(5)+1/2*E(5)^2 ); Int( 2/3*E(7)+3/2*E(4) );
+E(5)
+E(4)
+\endexample
+
+\indextt{String!for cyclotomics}
+The operation `String'
+returns for a cyclotomic a string corresponding to the way
+the cyclotomic is printed by `ViewObj' and `PrintObj'.
+\beginexample
+gap> String( E(5)+1/2*E(5)^2 ); String( 17/3 );
+"E(5)+1/2*E(5)^2"
+"17/3"
+\endexample
+
+\>Conductor( <cyc> ) A
+\>Conductor( <C> ) A
+
+For an element <cyc> of a cyclotomic field, `Conductor' returns the
+smallest integer $n$ such that <cyc> is contained in the $n$-th
+cyclotomic field.
+For a collection <C> of cyclotomics (for example a dense list of
+cyclotomics or a field of cyclotomics), `Conductor' returns the
+smallest integer $n$ such that all elements of <C> are contained in the
+$n$-th cyclotomic field.
+
+
+\beginexample
+gap> Conductor( 0 ); Conductor( E(10) ); Conductor( E(12) );
+1
+5
+12
+\endexample
+
+\>AbsoluteValue( <cyc> ) A
+
+returns the absolute value of a cyclotomic number <cyc>.
+At the moment only methods for rational numbers exist.
+
+\beginexample
+gap> AbsoluteValue(-3);
+3
+\endexample
+
+\>RoundCyc( <cyc> ) O
+
+is a cyclotomic integer $z$ (see "IsIntegralCyclotomic") near to the
+cyclotomic <cyc> in the sense that the $i$-th coefficient in the external
+representation (see~"CoeffsCyc") of $z$ is `Int( c+1/2 )' where `c' is
+the $i$-th coefficient in the external representation of <cyc>.
+Expressed in terms of the Zumbroich basis (see~"Integral Bases of
+Abelian Number Fields"), the coefficients of <cyc> w.r.t.~this basis are
+rounded.
+
+
+\beginexample
+gap> RoundCyc( E(5)+1/2*E(5)^2 ); RoundCyc( 2/3*E(7)+3/2*E(4) );
+E(5)+E(5)^2
+-2*E(28)^3+E(28)^4-2*E(28)^11-2*E(28)^15-2*E(28)^19-2*E(28)^23-2*E(28)^27
+\endexample
+
+\>CoeffsCyc( <cyc>, <N> ) F
+
+Let <cyc> be a cyclotomic with conductor $n$.
+If <N> is not a multiple of $n$ then `CoeffsCyc' returns `fail' because
+<cyc> cannot be expressed in terms of <N>-th roots of unity.
+Otherwise `CoeffsCyc' returns a list of length <N> with entry at position
+$j$ equal to the coefficient of $e^{2 \pi i (j-1)/<N>}$ if this root
+belongs to the <N>-th Zumbroich basis (see~"Integral Bases of Abelian
+Number Fields"),
+and equal to zero otherwise.
+So we have                                        
+`<cyc> = CoeffsCyc(<cyc>,<N>) * List( [1..<N>], j -> E(<N>)^(j-1) )'.
+
+
+\index{coefficients!for cyclotomics}
+\beginexample
+gap> cyc:= E(5)+E(5)^2;
+E(5)+E(5)^2
+gap> CoeffsCyc( cyc, 5 );  CoeffsCyc( cyc, 15 );  CoeffsCyc( cyc, 7 );
+[ 0, 1, 1, 0, 0 ]
+[ 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, -1, 0, -1, 0 ]
+fail
+\endexample
+
+\>DenominatorCyc( <cyc> ) F
+
+For a cyclotomic number <cyc> (see~"IsCyclotomic"),
+this function returns the smallest positive integer <n> such that
+`<n> * <cyc>' is a cyclotomic integer (see~"IsIntegralCyclotomic").
+For rational numbers <cyc>, the result is the same as that of
+`DenominatorRat' (see~"DenominatorRat").
+
+
+
+\>ExtRepOfObj( <cyc> )!{external representation!for cyclotomics}
+\beginexample
+gap> ExtRepOfObj( E(5) ); CoeffsCyc( E(5), 15 );
+[ 0, 1, 0, 0, 0 ]
+[ 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0 ]
+gap> CoeffsCyc( 1+E(3), 9 ); CoeffsCyc( E(5), 7 );
+[ 0, 0, 0, 0, 0, 0, -1, 0, 0 ]
+fail
+\endexample
+
+\>DescriptionOfRootOfUnity( <root> ) F
+
+\index{logarithm!of a root of unity}
+
+Given a cyclotomic <root> that is known to be a root of unity
+(this is *not* checked),
+`DescriptionOfRootOfUnity' returns a list $[ n, e ]$ of coprime
+positive integers such that $<root> = `E'(n)^e$ holds.
+
+
+\beginexample
+gap> E(9);  DescriptionOfRootOfUnity( E(9) );
+-E(9)^4-E(9)^7
+[ 9, 1 ]
+gap> DescriptionOfRootOfUnity( -E(3) );
+[ 6, 5 ]
+\endexample
+
+\>IsGaussInt( <x> ) F
+
+`IsGaussInt' returns `true' if the object <x> is a Gaussian integer
+(see~"GaussianIntegers") and `false' otherwise.
+Gaussian integers are of the form `<a> + <b>\*E(4)',
+where <a> and <b> are integers.
+
+
+\>IsGaussRat( <x> ) F
+
+`IsGaussRat' returns `true' if the object <x> is a Gaussian rational
+(see~"GaussianRationals") and `false' otherwise.
+Gaussian rationals are of the form `<a> + <b>\*E(4)',
+where <a> and <b> are rationals.
+
+
+
+
+\indextt{DefaultField!for cyclotomics}
+`DefaultField' (see~"DefaultField")
+for cyclotomics is defined to return the smallest *cyclotomic* field
+containing the given elements.
+
+
+\beginexample
+gap> Field( E(5)+E(5)^4 );  DefaultField( E(5)+E(5)^4 );
+NF(5,[ 1, 4 ])
+CF(5)
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Infinity}\nolabel
+
+\>IsInfinity( <obj> ) C
+\>`infinity' V
+
+`infinity' is a special {\GAP} object that lies in `CyclotomicsFamily'.
+It is larger than all other objects in this family.
+`infinity' is mainly used as return value of operations such as `Size'
+and `Dimension' for infinite and infinite dimensional domains,
+respectively.
+
+Note that *no* arithmetic operations are provided for `infinity',
+in particular there is no problem to define what `0 * infinity' or
+`infinity - infinity' means.
+
+Often it is useful to distinguish `infinity' from ``proper''
+cyclotomics.
+For that, `infinity' lies in the category `IsInfinity' but not in
+`IsCyc', and the other cyclotomics lie in the category `IsCyc' but not
+in `IsInfinity'.
+
+
+\beginexample
+gap> s:= Size( Rationals );
+infinity
+gap> s = infinity; IsCyclotomic( s ); IsCyc( s ); IsInfinity( s );
+true
+true
+false
+true
+gap> s in Rationals; s > 17;
+false
+true
+gap> Set( [ s, 2, s, E(17), s, 19 ] );
+[ 2, 19, E(17), infinity ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Comparisons of Cyclotomics}
+
+\index{operators!for cyclotomics}
+
+To compare  cyclotomics, the operators `\<', `\<=', `=', `>=', `>' and
+`\<>' can  be used, the result will be  `true' if the first operand is
+smaller, smaller or equal, equal, larger or equal, larger, or unequal,
+respectively, and `false' otherwise.
+
+Cyclotomics are ordered as follows:
+The relation between rationals is the natural one,
+rationals are smaller than irrational cyclotomics,
+and `infinity' is the largest cyclotomic.
+For two irrational cyclotomics with different conductors,
+the one with smaller conductor is regarded as smaller.
+Two irrational cyclotomics with same conductor are compared via their
+external representation.
+
+For comparisons of cyclotomics and other {\GAP} objects,
+see Section~"Comparisons".
+
+\beginexample
+gap> E(5) < E(6);      # the latter value has conductor 3
+false
+gap> E(3) < E(3)^2;    # both have conductor 3, compare the ext. repr.
+false
+gap> 3 < E(3); E(5) < E(7);
+true
+true
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{ATLAS Irrationalities}
+
+\index{atomic irrationalities}
+
+\atindex{b_N}{@$b\noexpand_N$}\atindex{c_N}{@$c\noexpand_N$}
+\atindex{d_N}{@$d\noexpand_N$}\atindex{e_N}{@$e\noexpand_N$}
+\atindex{f_N}{@$f\noexpand_N$}\atindex{g_N}{@$g\noexpand_N$}
+\atindex{h_N}{@$h\noexpand_N$}
+\>EB( <n> ) F
+\>EC( <n> ) F
+\>ED( <n> ) F
+\>EE( <n> ) F
+\>EF( <n> ) F
+\>EG( <n> ) F
+\>EH( <n> ) F
+
+For $N$ a positive integer, let $z = `E(<N>)' = \exp(2 \pi i/N)$.
+The following so-called *atomic irrationalities*
+(see Chapter~7, Section~10 of~\cite{CCN85}) can be entered using functions.
+(Note that the values are not necessary irrational.)
+
+$$
+\matrix{
+`EB(<N>)' &=& b_N &=& \frac{1}{2}\sum_{j=1}^{N-1}z^{j^{2}},& %
+ N \equiv 1 \pmod 2\cr
+`EC(<N>)' &=& c_N &=& \frac{1}{3}\sum_{j=1}^{N-1}z^{j^{3}},& %
+ N \equiv 1 \pmod 3\cr
+`ED(<N>)' &=& d_N &=& \frac{1}{4}\sum_{j=1}^{N-1}z^{j^{4}},& %
+ N \equiv 1 \pmod 4\cr
+`EE(<N>)' &=& e_N &=& \frac{1}{5}\sum_{j=1}^{N-1}z^{j^{5}},& %
+ N \equiv 1 \pmod 5\cr
+`EF(<N>)' &=& f_N &=& \frac{1}{6}\sum_{j=1}^{N-1}z^{j^{6}},& %
+ N \equiv 1 \pmod 6\cr
+`EG(<N>)' &=& g_N &=& \frac{1}{7}\sum_{j=1}^{N-1}z^{j^{7}},& %
+ N \equiv 1 \pmod 7\cr
+`EH(<N>)' &=& h_N &=& \frac{1}{8}\sum_{j=1}^{N-1}z^{j^{8}},& %
+ N \equiv 1 \pmod 8\cr
+}
+$$
+
+(Note that in $c_N, \ldots, h_N$, <N> must be a prime.)
+
+
+\atindex{i_N}{@$i\noexpand_N$}\atindex{r_N}{@$r\noexpand_N$}
+\>EI( <n> ) F
+\>ER( <n> ) F
+
+For a rational number <N>, `ER' returns the square root $\sqrt{<N>}$
+of <N>, and `EI' returns $\sqrt{-<N>}$.
+By the chosen embedding of cyclotomic fields into the complex numbers,
+`ER' returns the positive square root if <N> is positive,
+and if <N> is negative then `ER(<N>) = EI(-<N>)'.
+In any case, `EI(<N>) = E(4) \* ER(<N>)'.
+
+`ER' is installed as method for the operation `Sqrt' (see~"Sqrt") for
+rational argument.
+
+From a theorem of Gauss we know that
+$$
+b_N = \left\{
+\matrix{
+\frac{1}{2}(-1+\sqrt{N})    &{\rm if} &N \equiv 1  &\pmod 4\cr
+\frac{1}{2}(-1+i \sqrt{N})  &{\rm if} &N \equiv -1 &\pmod 4\cr
+}
+\right.
+$$
+So $\sqrt{N}$ can be computed from $b_N$ (see~"EB").
+
+
+\atindex{s_N}{@$s\noexpand_N$}\atindex{t_N}{@$t\noexpand_N$}
+\atindex{u_N}{@$u\noexpand_N$}\atindex{v_N}{@$v\noexpand_N$}
+\atindex{w_N}{@$w\noexpand_N$}\atindex{x_N}{@$x\noexpand_N$}
+\atindex{y_N}{@$y\noexpand_N$}
+\>EY( <n>[, <d>] ) F
+\>EX( <n>[, <d>] ) F
+\>EW( <n>[, <d>] ) F
+\>EV( <n>[, <d>] ) F
+\>EU( <n>[, <d>] ) F
+\>ET( <n>[, <d>] ) F
+\>ES( <n>[, <d>] ) F
+
+For given <N>, let $n_k = n_k(N)$ be the first integer with
+multiplicative order exactly <k> modulo <N>,
+chosen in the order of preference
+$$
+1, -1, 2, -2, 3, -3, 4, -4, \ldots \.
+$$
+
+We define
+$$
+\matrix{
+`EY(<N>)' & = & y_n & = & z+z^n                         &(n=n_2)\cr
+`EX(<N>)' & = & x_n & = & z+z^n+z^{n^2}                 &(n=n_3)\cr
+`EW(<N>)' & = & w_n & = & z+z^n+z^{n^2}+z^{n^3}         &(n=n_4)\cr
+`EV(<N>)' & = & v_n & = & z+z^n+z^{n^2}+z^{n^3}+z^{n^4} &(n=n_5)\cr
+`EU(<N>)' & = & u_n & = & z+z^n+z^{n^2}+  \ldots  +z^{n^5} &(n=n_6)\cr
+`ET(<N>)' & = & t_n & = & z+z^n+z^{n^2}+  \ldots  +z^{n^6} &(n=n_7)\cr
+`ES(<N>)' & = & s_n & = & z+z^n+z^{n^2}+  \ldots  +z^{n^7} &(n=n_8)\cr
+}
+$$
+
+
+\atindex{j_N}{@$j\noexpand_N$}\atindex{k_N}{@$k\noexpand_N$}
+\atindex{l_N}{@$l\noexpand_N$}\atindex{m_N}{@$m\noexpand_N$}
+\>EM( <n>[, <d>] ) F
+\>EL( <n>[, <d>] ) F
+\>EK( <n>[, <d>] ) F
+\>EJ( <n>[, <d>] ) F
+
+$$
+\matrix{
+`EM(<N>)' & = & m_n & = & z-z^n                 &(n=n_2)\cr
+`EL(<N>)' & = & l_n & = & z-z^n+z^{n^2}-z^{n^3} &(n=n_4)\cr
+`EK(<N>)' & = & k_n & = & z-z^n+  \ldots  -z^{n^5} &(n=n_6)\cr
+`EJ(<N>)' & = & j_n & = & z-z^n+  \ldots  -z^{n^7} &(n=n_8)\cr
+}
+$$
+
+
+\atindex{n_k}{@$n\noexpand_k$}
+\>NK( <n>, <k>, <d> ) F
+
+Let $n_k^{(d)} = n_k^{(d)}(N)$ be the $d+1$-th integer with
+multiplicative order exactly <k> modulo <N>, chosen in the order of
+preference defined above; we write
+$n_k=n_k^{(0)},n_k^{\prime}=n_k^{(1)}, n_k^{\prime\prime} = n_k^{(2)}$
+and so on.
+These values can be computed as `NK(<N>,<k>,<d>)'$ = n_k^{(d)}(N)$;
+if there is no integer with the required multiplicative order,
+`NK' returns `fail'.
+
+The algebraic numbers
+$$
+y_N^{\prime}=y_N^{(1)},y_N^{\prime\prime}=y_N^{(2)},\ldots,
+x_N^{\prime},x_N^{\prime\prime},\ldots,%
+j_N^{\prime},j_N^{\prime\prime},\ldots
+$$
+are obtained on replacing $n_k$ in the above
+definitions by $n_k^{\prime},n_k^{\prime\prime},\ldots$;
+they can be entered as
+
+$$
+\matrix{
+`EY(<N>,<d>)' &=& y_N^{(d)}\cr
+`EX(<N>,<d>)' &=& x_N^{(d)}\cr
+              &\vdots&\cr
+`EJ(<N>,<d>)' &=& j_n^{(d)}\cr
+}
+$$
+
+
+\>AtlasIrrationality( <irratname> ) F
+
+Let <irratname> be a string that describes an irrational value as
+described in Chapter~6, Section~10 of~\cite{CCN85}, that is,
+a linear combination of the atomic irrationalities introduced above.
+(The following definition is mainly copied from~\cite{CCN85}.)
+If $q_N$ is such a value (e.g. $y_{24}^{\prime\prime}$) then linear
+combinations of algebraic conjugates of $q_N$ are abbreviated as in the
+following examples:
+
+$$
+\matrix{
+`2qN+3\&5-4\&7+\&9' & {\rm means}
+& 2 q_N + 3 q_N^{\ast 5} - 4 q_N^{\ast 7} + q_N^{\ast 9} \cr
+`4qN\&3\&5\&7-3\&4'  & {\rm means}
+& 4 (q_N + q_N^{\ast 3} + q_N^{\ast 5} + q_N^{\ast 7})
+  - 3 q_N^{\ast 11} \cr
+`4qN*3\&5+\&7'     & {\rm means}
+& 4 (q_N^{\ast 3} + q_N^{\ast 5}) + q_N^{\ast 7} \cr
+}
+$$
+
+To explain the ``ampersand'' syntax in general we remark that ``\&k''
+is interpreted as $q_N^{\ast k}$, where $q_N$ is the most recently named
+atomic irrationality, and that the scope of any premultiplying
+coefficient is broken by a $+$ or $-$ sign, but not by $\&$ or $\ast k$.
+The algebraic conjugations indicated by the ampersands apply directly to
+the *atomic* irrationality $q_N$, even when, as in the last example,
+$q_N$ first appears with another conjugacy $\ast k$.
+
+
+
+\beginexample
+gap> EW(16,3); EW(17,2); ER(3); EI(3); EY(5); EB(9);
+0
+E(17)+E(17)^4+E(17)^13+E(17)^16
+-E(12)^7+E(12)^11
+E(3)-E(3)^2
+E(5)+E(5)^4
+1
+gap> AtlasIrrationality( "b7*3" );
+E(7)^3+E(7)^5+E(7)^6
+gap> AtlasIrrationality( "y'''24" );
+E(24)-E(24)^19
+gap> AtlasIrrationality( "-3y'''24*13&5" );
+3*E(8)-3*E(8)^3
+gap> AtlasIrrationality( "3y'''24*13-2&5" );
+-3*E(24)-2*E(24)^11+2*E(24)^17+3*E(24)^19
+gap> AtlasIrrationality( "3y'''24*13-&5" );
+-3*E(24)-E(24)^11+E(24)^17+3*E(24)^19
+gap> AtlasIrrationality( "3y'''24*13-4&5&7" );
+-7*E(24)-4*E(24)^11+4*E(24)^17+7*E(24)^19
+gap> AtlasIrrationality( "3y'''24&7" );
+6*E(24)-6*E(24)^19
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Galois Conjugacy of Cyclotomics}
+
+\>GaloisCyc( <cyc>, <k> ) O
+\>GaloisCyc( <list>, <k> ) O
+
+For a cyclotomic <cyc> and an integer <k>,
+`GaloisCyc' returns the cyclotomic obtained by raising the roots of unity
+in the Zumbroich basis representation of <cyc> to the <k>-th power.
+If <k> is coprime to the integer $n$,
+`GaloisCyc( ., <k> )' acts as a Galois automorphism of the $n$-th
+cyclotomic field (see~"Galois Groups of Abelian Number Fields");
+to get the Galois automorphisms themselves,
+use `GaloisGroup' (see~"GaloisGroup!of field").
+
+The *complex conjugate* of <cyc> is `GaloisCyc( <cyc>, -1 )',
+which can also be computed using `ComplexConjugate'
+(see~"ComplexConjugate").
+
+For a list or matrix <list> of cyclotomics, `GaloisCyc' returns the list
+obtained by applying `GaloisCyc' to the entries of <list>.
+
+
+\>ComplexConjugate( <z> ) A
+
+For a cyclotomic number <z>, `ComplexConjugate' returns
+`GaloisCyc( <z>, -1 )'.
+For a quaternion $<z> = c_1 e + c_2 i + c_3 j + c_4 k$,
+`ComplexConjugate' returns $c_1 e - c_2 i - c_3 j - c_4 k$.
+
+
+\beginexample
+gap> GaloisCyc( E(5) + E(5)^4, 2 );
+E(5)^2+E(5)^3
+gap> GaloisCyc( E(5), -1 );           # the complex conjugate
+E(5)^4
+gap> GaloisCyc( E(5) + E(5)^4, -1 );  # this value is real
+E(5)+E(5)^4
+gap> GaloisCyc( E(15) + E(15)^4, 3 );
+E(5)+E(5)^4
+gap> ComplexConjugate( E(7) );
+E(7)^6
+\endexample
+
+\>StarCyc( <cyc> ) F
+
+If the cyclotomic <cyc> is an irrational element of a quadratic
+extension of the rationals then `StarCyc' returns the unique Galois
+conjugate of <cyc> that is different from <cyc>,
+otherwise `fail' is returned.
+In the first case, the return value is often called $<cyc>\ast$
+(see~"Printing Character Tables").
+
+
+\beginexample
+gap> StarCyc( EB(5) ); StarCyc( E(5) );
+E(5)^2+E(5)^3
+fail
+\endexample
+
+\>Quadratic( <cyc> ) F
+
+Let <cyc> be a cyclotomic integer that lies in a quadratic extension
+field of the rationals.
+Then we have $<cyc> = (a + b \sqrt{n}) / d$ for integers $a$, $b$, $n$,
+$d$, such that $d$ is either $1$ or $2$.
+In this case, `Quadratic' returns a record with the components `a', `b',
+`root', `d', `ATLAS', and `display';
+the values of the first four are $a$, $b$, $n$, and $d$,
+the `ATLAS' value is a (not necessarily shortest) representation of <cyc>
+in terms of the {\ATLAS} irrationalities $b_{|n|}$, $i_{|n|}$, $r_{|n|}$,
+and the `display' value is a string that expresses <cyc> in
+{\GAP} notation, corresponding to the value of the `ATLAS' component.
+
+If <cyc> is not a cyclotomic integer or does not lie in a quadratic
+extension field of the rationals then `fail' is returned.
+
+If the denominator $d$ is $2$ then necessarily $n$ is congruent to $1$
+modulo $4$, and $r_n$, $i_n$ are not possible;
+we have `<cyc> = x + y * EB( root )' with `y = b', `x = ( a + b ) / 2'.
+
+If $d = 1$, we have the possibilities
+$i_{|n|}$ for $n \< -1$, $a + b * i$ for $n = -1$, $a + b * r_n$
+for $n > 0$. Furthermore if $n$ is congruent to $1$ modulo $4$, also
+$<cyc> = (a+b) + 2 * b * b_{|n|}$ is possible; the shortest string
+of these is taken as the value for the component `ATLAS'.
+
+
+\beginexample
+gap> Quadratic( EB(5) ); Quadratic( EB(27) );
+rec( a := -1, b := 1, root := 5, d := 2, ATLAS := "b5", 
+  display := "(-1+ER(5))/2" )
+rec( a := -1, b := 3, root := -3, d := 2, ATLAS := "1+3b3", 
+  display := "(-1+3*ER(-3))/2" )
+gap> Quadratic(0); Quadratic( E(5) );
+rec( a := 0, b := 0, root := 1, d := 1, ATLAS := "0", display := "0" )
+fail
+\endexample
+
+\>GaloisMat( <mat> ) A
+
+Let <mat> be a matrix of cyclotomics.
+`GaloisMat' calculates the complete orbits under the operation of
+the Galois group of the (irrational) entries of <mat>,
+and the permutations of rows corresponding to the generators of the
+Galois group.
+
+If some rows of <mat> are identical, only the first one is considered
+for the permutations, and a warning will be printed.
+
+`GaloisMat' returns a record with the components `mat', `galoisfams',
+and `generators'.
+
+\beginitems
+`mat':& 
+   a list with initial segment being the rows of <mat>
+   (*not* shallow copies of these rows);
+   the list consists of full orbits under the action of the Galois
+   group of the entries of <mat> defined above.
+   The last rows in the list are those not contained in <mat> but
+   must be added in order to complete the orbits;
+   so if the orbits were already complete, <mat> and `mat' have
+   identical rows.
+
+`galoisfams':&
+   a list that has the same length as the `mat' component,
+   its entries are either 1, 0, -1, or lists.
+   `galoisfams[i]  = 1' means that `mat[i]' consists of rationals,
+   i.e. `[ mat[i] ]' forms an orbit;
+   `galoisfams[i] = -1' means that `mat[i]' contains unknowns
+   (see Chapter~"Unknowns");
+   in this case `[ mat[i] ]' is regarded as an orbit, too,
+   even if `mat[i]' contains irrational entries;
+   if $`galoisfams[i]' = [ l_1, l_2 ]$ is a list then
+   `mat[i]' is the first element of its orbit in `mat',
+   $l_1$ is the list of positions of rows that form the orbit,
+   and $l_2$ is the list of corresponding Galois automorphisms
+   (as exponents, not as functions),
+   so we have $`mat'[ l_1[j] ][k] = `GaloisCyc'( `mat'[i][k], l_2[j] )$;
+   `galoisfams[i] = 0' means that `mat[i]' is an element of a
+   nontrivial orbit but not the first element of it.
+
+`generators':&
+   a list of permutations generating the permutation group
+   corresponding to the action of the Galois group on the rows of
+   `mat'.
+\enditems
+
+
+
+In the following example we temporarily increase the line length limit from
+its default value 80 to 84 in order to get a nicer output format.
+
+\beginexample
+gap> SizeScreen([ 84, ]);;
+gap> GaloisMat( [ [ E(3), E(4) ] ] );
+rec( 
+  mat := [ [ E(3), E(4) ], [ E(3), -E(4) ], [ E(3)^2, E(4) ], [ E(3)^2, -E(4) ] ],
+  galoisfams := [ [ [ 1, 2, 3, 4 ], [ 1, 7, 5, 11 ] ], 0, 0, 0 ], 
+  generators := [ (1,2)(3,4), (1,3)(2,4) ] )
+gap> SizeScreen([ 80, ]);;
+gap> GaloisMat( [ [ 1, 1, 1 ], [ 1, E(3), E(3)^2 ] ] );
+rec( mat := [ [ 1, 1, 1 ], [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ], 
+  galoisfams := [ 1, [ [ 2, 3 ], [ 1, 2 ] ], 0 ], generators := [ (2,3) ] )
+\endexample
+
+\>RationalizedMat( <mat> ) A
+
+returns the list of rationalized rows of <mat>,
+which must be a matrix of cyclotomics.
+This is the set of sums over orbits under the action of the Galois group
+of the entries of <mat> (see "GaloisMat"),
+so the operation may be viewed as a kind of trace on the rows.
+
+Note that no two rows of <mat> should be equal.
+
+
+\beginexample
+gap> mat:= [ [ 1, 1, 1 ], [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ];;
+gap> RationalizedMat( mat );
+[ [ 1, 1, 1 ], [ 2, -1, -1 ] ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Internally Represented Cyclotomics}
+
+The implementation of an *internally represented cyclotomic* is based on
+a list of length equal to its conductor.
+This means that the internal representation of a cyclotomic does *not*
+refer to the smallest number field but the smallest *cyclotomic* field
+containing it.
+The reason for this is the wish to reflect the natural embedding of two
+cyclotomic fields into a larger one that contains both.
+With such embeddings, it is easy to construct the sum or the product
+of two arbitrary cyclotomics (in possibly different fields) as an element
+of a cyclotomic field.
+
+The disadvantage of this approach is that the arithmetical operations
+are quite expensive, so the use of internally represented cyclotomics
+is not recommended for doing arithmetics over number fields, such as
+calculations with matrices of cyclotomics.
+But internally represented cyclotomics are good enough for dealing
+with irrationalities in character tables (see chapter~"Character Tables").
+
+For the representation of cyclotomics one has to recall that the
+$n$-th cyclotomic field $\Q(e_n)$ is a vector space of dimension
+$\varphi(n)$ over the rationals where $\varphi$ denotes Euler's
+phi-function (see~"Phi").
+
+A special integral basis of cyclotomic fields is chosen that allows one to
+easily convert arbitrary sums of roots of unity into the
+basis, as well as to convert  a cyclotomic represented w.r.t.~the basis
+into the smallest possible cyclotomic field.
+This basis is accessible in {\GAP},
+see~"Integral Bases of Abelian Number Fields" for more information and
+references.
+
+Note that the set of all $n$-th roots of unity is linearly dependent
+for $n > 1$, so multiplication is *not* the multiplication of the group
+ring $\Q\langle e_n \rangle$;
+given a $\Q$-basis of $\Q(e_n)$ the result of the multiplication
+(computed as multiplication of polynomials in $e_n$,
+using $(e_n)^n = 1$) will be converted to the basis.
+
+\beginexample
+gap> E(5) * E(5)^2; ( E(5) + E(5)^4 ) * E(5)^2;
+E(5)^3
+E(5)+E(5)^3
+gap> ( E(5) + E(5)^4 ) * E(5);
+-E(5)-E(5)^3-E(5)^4
+\endexample
+
+An internally represented cyclotomic is always represented in the smallest
+cyclotomic field it is contained in.
+The internal coefficients list coincides with the external representation
+returned by `ExtRepOfObj'.
+
+Since the conductor of internally represented cyclotomics must be
+in the filter `IsSmallIntRep', the biggest possible (though not very
+useful) conductor is $2^{28}-1$.
+So the maximal cyclotomic field implemented in {\GAP} is not really
+the field $\Q^{ab}$.
+
+\beginexample
+gap> IsSmallIntRep( 2^28-1 );
+true
+gap> IsSmallIntRep( 2^28 );
+false
+\endexample
+
+It should be emphasized that one disadvantage of representing a cyclotomic in
+the smallest *cyclotomic* field (and not in the smallest field) is that
+arithmetic operations in a fixed small extension field of the rational
+number field are comparatively expensive.
+For example, take a prime integer $p$ and suppose that we want to work with
+a matrix group over the field $\Q(\sqrt{p})$.
+Then each matrix entry could be described by two rational coefficients,
+whereas the representation in the smallest cyclotomic field requires
+$p-1$ rational coefficients for each entry.
+So it is worth thinking about using elements in a field constructed with
+`AlgebraicExtension' (see~"AlgebraicExtension") when natural embeddings
+of cyclotomic fields are not needed.
+
+% show an example?
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E
+

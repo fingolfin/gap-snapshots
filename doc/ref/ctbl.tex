@@ -1,0 +1,3263 @@
+% This file was created automatically from ctbl.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  ctbl.msk                    GAP documentation               Thomas Breuer
+%A                                                           Alexander Hulpke
+%%
+%A  @(#)$Id: ctbl.msk,v 1.47 2003/10/06 07:27:57 gap Exp $
+%%
+%Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+%%  The documentation in this chapter corresponds to the declarations in the
+%%  library files `ctbl.gd', `ctblauto.gd', `ctblgrp.gd', `ctblothe.gd',
+%%  `ctblsolv.gd'.
+%%
+\Chapter{Character Tables}
+
+\index{tables}
+
+This chapter describes operations for *character tables of finite groups*.
+
+Operations for *characters* (or, more general, *class functions*) are
+described in Chapter~"Class Functions".
+
+For a description of the {\GAP} Library of Character Tables,
+see the separate manual for the {\GAP} package `ctbllib'.
+
+Several examples in this chapter require the {\GAP} Character Table Library
+to be available.
+If it is not yet loaded then we load it now.
+
+\beginexample
+gap> LoadPackage( "ctbllib" );
+true
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Some Remarks about Character Theory in GAP}
+
+It seems to be necessary to state some basic facts --and maybe warnings--
+at the beginning of the character theory package.
+This holds for people who are familiar with character theory because
+there is no global reference on computational character theory,
+although there are many papers on this topic,
+such as~\cite{NPP84} or~\cite{LP91}.
+It holds, however, also for people who are familiar with {\GAP} because
+the general concept of domains (see Chapter~"Domains") plays no important
+role here --we  will justify this later in this section.
+
+Intuitively, *characters* (or more generally, *class functions*) of a
+finite group $G$ can be thought of as certain mappings defined on $G$,
+with values in the complex number field;
+the set of all characters of $G$ forms a semiring, with both addition
+and multiplication defined pointwise, which is naturally embedded into
+the ring of *generalized* (or *virtual*) *characters* in the natural way.
+A ${\Z}$-basis of this ring, and also a vector space basis of the
+complex vector space of class functions of $G$,
+is given by the irreducible characters of $G$.
+
+At this stage one could ask where there is a problem, since all these
+algebraic structures are supported by {\GAP}.
+But in practice, these structures are of minor importance,
+compared to individual characters and the *character tables* themselves
+(which are not domains in the sense of {\GAP}).
+
+For computations with characters of a finite group $G$ with $n$ conjugacy
+classes, say, we fix an ordering of the classes, and then identify each
+class with its position according to this ordering.
+Each character of $G$ can be represented by a list of length $n$ in which
+the character value for elements of the $i$-th class is stored at
+the $i$-th position.
+Note that we need not know the conjugacy classes of $G$ physically,
+even our knowledge of $G$ may be implicit in the sense that, e.g.,
+we know how many classes of involutions $G$ has, and which length these
+classes have, but we never have seen an element of $G$, or a presentation
+or representation of $G$.
+This allows us to work with the character tables of very large groups,
+e.g., of the so-called monster, where {\GAP} has (currently) no chance
+to deal with the group.
+
+As a consequence, also other information involving characters is given
+implicitly.  For example, we can talk about the kernel of a character not
+as a group but as a list of classes (more exactly: a list of their
+positions according to the chosen ordering of classes) forming this
+kernel; we can deduce the group order, the contained cyclic subgroups
+and so on, but we do not get the group itself.
+
+So typical calculations with characters involve loops over lists of
+character values.
+For  example, the scalar product of two characters $\chi$, $\psi$ of $G$
+given by
+$$
+[\chi,\psi] = \frac{1}{|G|} \sum_{g\in G} \chi(g) \psi(g^{-1})
+$$
+can be written as
+\begintt
+Sum( [ 1 .. n ], i -> SizesConjugacyClasses( t )[i] * chi[i]
+                          * ComplexConjugate( psi[i] ) );
+\endtt
+where `t' is the character table of $G$, and `chi', `psi' are the lists
+of values of $\chi$, $\psi$, respectively.
+
+It is one of the advantages of character theory that after one has
+translated a problem concerning groups into a problem concerning
+only characters, the necessary calculations are mostly simple.
+For example, one can often prove that a group is a Galois group over the
+rationals using calculations with structure constants that can be
+computed from the character table,
+and information about (the character tables of) maximal subgroups.
+When one deals with such questions,
+the translation back to groups is just an interpretation by the user,
+it does not take place in {\GAP}.
+
+{\GAP} uses character *tables* to store information such as class
+lengths, element orders, the irreducible characters of $G$ etc.~in a
+consistent way;
+in the example above, we have seen that `SizesConjugacyClasses( t )' is
+the list of class lengths of the character table `t'.
+Note that the values of these attributes rely on the chosen ordering
+of conjugacy classes,
+a character table is not determined by something similar to generators
+of groups or rings in {\GAP} where knowledge could in principle be
+recovered from the generators but is stored mainly for the sake of
+efficiency.
+
+Note that the character table of a group $G$ in {\GAP} must *not* be
+mixed up with the list of complex irreducible characters of $G$.
+The irreducible characters are stored in a character table via the
+attribute `Irr' (see~"Irr").
+
+Two further important instances of information that depends on the
+ordering of conjugacy classes are *power maps* and *fusion maps*.
+Both are represented as lists of integers in {\GAP}.
+The $k$-th power map maps each class to the class of $k$-th powers
+of its elements, the corresponding list contains at each position the
+position of the image.
+A class fusion map between the classes of a subgroup $H$ of $G$ and
+the classes of $G$ maps each class $c$ of $H$ to that class of $G$ that
+contains $c$, the corresponding list contains again the positions of
+image classes;
+if we know only the character tables of $H$ and $G$ but not the groups
+themselves,
+this means with respect to a fixed embedding of $H$ into $G$.
+More about power maps and fusion maps can be found in
+Chapter~"Maps Concerning Character Tables".
+
+So class functions, power maps, and fusion maps are represented by lists
+in {\GAP}.
+If they are plain lists then they are regarded as class functions etc.~of
+an appropriate character table when they are passed to {\GAP} functions
+that expect class functions etc.
+For example, a list with all entries equal to 1 is regarded as the
+trivial character if it is passed to a function that expects a character.
+Note that this approach requires the character table as an argument for
+such a function.
+
+One can construct class function objects that store their underlying
+character table and other attribute values
+(see Chapter~"Class Functions").
+This allows one to omit the character table argument in many functions,
+and it allows one to use infix operations for tensoring or inducing
+class functions.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{History of Character Theory Stuff in GAP}
+
+{\GAP} provides functions for dealing with group characters since the version
+{\GAP}~3.1, which was released in March 1992.
+The reason for adding this branch of mathematics to the topics of {\GAP} was
+(apart from the usefulness of character theoretic computations in general)
+the insight that {\GAP} provides an ideal environment for developing the
+algorithms needed.
+In particular, it had been decided at Lehrstuhl D f{\accent127 u}r Mathematik
+that the {\sf CAS} system (a standalone Fortran program together with a
+database of character tables, see~\cite{NPP84})
+should not be developed further and the functionality of {\sf CAS} should be
+made available in {\GAP}.
+The background was that extending {\sf CAS} (by new Fortran code) had turned
+out to be much less flexible than writing analogous {\GAP} library code.
+
+For integrating the existing character theory algorithms,
+{\GAP}'s memory management and long integer arithmetic were useful as well as
+the list handling --it is an important feature of character theoretic methods
+that questions about groups are translated into manipulations of lists;
+on the other hand, the datatype of cyclotomics (see Chapter~"Cyclotomics")
+was added to the {\GAP} kernel because of the character theory algorithms.
+For developing further code, also other areas of {\GAP}'s library became
+interesting, such as permutation groups, finite fields, and polynomials.
+
+The development of character theory code for {\GAP} has been supported
+by several DFG grants,
+in particular the project ``Representation Theory of Finite Groups and Finite
+Dimensional Algebras'' (until 1991),
+and the Schwerpunkt ``Algorithmische Zahlentheorie und Algebra''
+(from 1991 until 1997).
+Besides that, several Diploma theses at Lehrstuhl D were concerned with
+the development and/or implementation of algorithms dealing with characters
+in {\GAP}.
+
+The major contributions can be listed as follows.
+\beginlist%unordered
+\item{$\bullet$}
+    The arithmetic for the cyclotomics data type, following~\cite{Zum89},
+    was first implemented by Marco van Meegen; an alternative approach was
+    studied in the diploma thesis of Michael Scherner (see~\cite{Scherner92})
+    but was not efficient enough;
+    later Martin Sch{\accent127 o}nert replaced the implementation
+    by a better one.
+    % and since then, there have been more than 30 local improvements ...
+
+\item{$\bullet$}
+    The basic routines for characters and character tables were written
+    by Thomas Breuer and G{\accent127 o}tz Pfeiffer.
+
+\item{$\bullet$}
+    The lattice related functions, such as `LLL', `OrthogonalEmbeddings',
+    and `DnLattice', were implemented by Ansgar Kaup (see~\cite{Kaup92}).
+
+\item{$\bullet$}
+    Functions for computing possible class fusions, possible power maps,
+    and table automorphisms were written by Thomas Breuer (see~\cite{Bre91}).
+
+\item{$\bullet$}
+    Functions for computing possible permutation characters were written by
+    Thomas Breuer (see~\cite{Bre91})
+    and G{\accent127 o}tz Pfeiffer (see~\cite{Pfe91}).
+
+\item{$\bullet$}
+    Functions for computing character tables from groups were written by
+    Alexander Hulpke (Dixon-Schneider algorithm, see~\cite{Hulpke93})
+    and Hans Ulrich Besche (Baum algorithm and Conlon algorithm,
+    see~\cite{Besche92}).
+
+\item{$\bullet$}
+    Functions for dealing with Clifford matrices were written by
+    Ute Schiffer (see~\cite{Schiffer94}).
+
+\item{$\bullet$}
+    Functions for monomiality questions were written by Thomas Breuer and
+    Erzs\'ebet Horv\'ath.
+\endlist
+
+Since then, the code has been maintained and extended further by
+Alexander Hulpke (code related to his implementation of the Dixon-Schneider
+algorithm) and Thomas Breuer.
+
+% D. Bauten?
+
+Currently {\GAP} does not provide special functionality for computing
+Brauer character tables, but there is an interface to the {\sf MOC} system
+(see~\cite{HJLP92}), and the {\GAP} Character Table Library contains many
+known Brauer character tables.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Creating Character Tables}
+
+\index{tables}
+\index{character tables}
+\index{library tables}
+\index{character tables!access to}
+\index{character tables!calculate}
+\index{character tables!of groups}
+
+There are in general five different ways to get a character table in
+{\GAP}.
+You can
+\beginlist%ordered
+\item{1.}
+    compute the table from a group,
+\item{2.}
+    read a file that contains the table data,
+\item{3.}
+    construct the table using generic formulae,
+\item{4.}
+    derive it from known character tables, or
+\item{5.}
+    combine partial information about conjugacy classes, power maps
+    of the group in question, and about (character tables of) some
+    subgroups and supergroups.
+\endlist
+
+In 1., the computation of the irreducible characters is the hardest part;
+the different algorithms available for this are described
+in~"Computing the Irreducible Characters of a Group".
+Possibility 2.~is used for the character tables in the {\GAP} Character 
+Table Library, see the manual of this library.
+Generic character tables --as addressed by 3.-- are described
+in~"ctbllib:Generic Character Tables" in the manual of the {\GAP}
+Character Table Library.
+Several occurrences of 4.~are described
+in~"Constructing Character Tables from Others".
+The last of the above possibilities
+*@is currently not supported and will be described in a chapter of its
+own when it becomes available@*.
+
+The operation `CharacterTable' (see~"CharacterTable") can be used for the
+cases 1.--3.
+
+
+
+\>CharacterTable( <G> ) O
+\>CharacterTable( <G>, <p> ) O
+\>CharacterTable( <ordtbl>, <p> ) O
+\>CharacterTable( <name>[, <param>] ) O
+
+Called with a group <G>, `CharacterTable' calls the attribute
+`OrdinaryCharacterTable' (see~"OrdinaryCharacterTable").
+Called with first argument a group <G> or an ordinary character table
+<ordtbl>, and second argument a prime <p>, `CharacterTable' calls
+the operation `BrauerTable' (see~"BrauerTable").
+Called with a string <name> and perhaps optional parameters <param>,
+`CharacterTable' delegates to `CharacterTableFromLibrary', which
+tries to access the {\GAP} Character Table Library (see the manual of
+this library for an overview of admissible strings <name>).
+
+Probably the most interesting information about the character table is
+its list of irreducibles, which can be accessed as the value of the
+attribute `Irr' (see~"Irr").
+If the argument of `CharacterTable' is a string <name> then the
+irreducibles are just read from the library file,
+therefore the returned table stores them already.
+However, if `CharacterTable' is called with a group <G> or with an
+ordinary character table <ordtbl>, the irreducible characters are *not*
+computed by `CharacterTable'.
+They are only computed when the `Irr' value is accessed for the first
+time, for example when `Display' is called for the table
+(see~"Printing Character Tables").
+This means for example that `CharacterTable' returns its result very
+quickly, and the first call of `Display' for this table may take some
+time because the irreducible characters must be computed at that time
+before they can be displayed together with other information stored on
+the character table.
+The value of the filter `HasIrr' indicates whether the irreducible
+characters have been computed already.
+
+The reason why `CharacterTable' does not compute the irreducible
+characters is that there are situations where one only needs the
+``table head'', that is, the information about class lengths, power maps
+etc., but not the irreducibles.
+For example, if one wants to inspect permutation characters of a group
+then all one has to do is to induce the trivial characters of subgroups
+one is interested in; for that, only class lengths and the class fusion
+are needed.
+Or if one wants to compute the Molien series (see~"MolienSeries") for a
+given complex matrix group, the irreducible characters of this group are
+in general of no interest.
+
+For details about different algorithms to compute the irreducible
+characters, see~"Computing the Irreducible Characters of a Group".
+
+If the group <G> is given as an argument, `CharacterTable' accesses the
+conjugacy classes of <G> and therefore causes that these classes are
+computed if they were not yet stored
+(see~"The Interface between Character Tables and Groups").
+
+
+\>BrauerTable( <ordtbl>, <p> ) O
+\>BrauerTable( <G>, <p> ) O
+\>BrauerTableOp( <ordtbl>, <p> ) O
+\>ComputedBrauerTables( <ordtbl> ) AM
+
+Called with an ordinary character table <ordtbl> or a group <G>,
+`BrauerTable' returns its <p>-modular character table
+if {\GAP} can compute this table, and `fail' otherwise.
+The <p>-modular table can be computed for <p>-solvable groups
+(using the Fong-Swan Theorem) and in the case that <ordtbl> is a table
+from the {\GAP} character table library for which also the <p>-modular
+table is contained in the table library.
+
+The default method for a group and a prime delegates to `BrauerTable' for
+the ordinary character table of this group.
+The default method for <ordtbl> uses the attribute
+`ComputedBrauerTables' for storing the computed Brauer table
+at position <p>, and calls the operation `BrauerTableOp' for
+computing values that are not yet known.
+
+So if one wants to install a new method for computing Brauer tables
+then it is sufficient to install it for `BrauerTableOp'.
+
+The `\\mod' operator for a character table and a prime
+(see~"Operators for Character Tables") delegates to
+`BrauerTable'.
+
+
+\beginexample
+gap> g:= SymmetricGroup( 4 );
+Sym( [ 1 .. 4 ] )
+gap> tbl:= CharacterTable( g );;  HasIrr( tbl );
+false
+gap> tblmod2:= CharacterTable( tbl, 2 );
+BrauerTable( Sym( [ 1 .. 4 ] ), 2 )
+gap> tblmod2 = CharacterTable( tbl, 2 );
+true
+gap> tblmod2 = BrauerTable( tbl, 2 );
+true
+gap> tblmod2 = BrauerTable( g, 2 );
+true
+gap> CharacterTable( "A5" );
+CharacterTable( "A5" )
+gap> CharacterTable( "Symmetric", 4 );
+CharacterTable( "Sym(4)" )
+gap> ComputedBrauerTables( tbl );
+[ , BrauerTable( Sym( [ 1 .. 4 ] ), 2 ) ]
+\endexample
+
+\>`SupportedCharacterTableInfo' V
+
+`SupportedCharacterTableInfo' is a list that contains at position $3i-2$
+an attribute getter function, at position $3i-1$ the name of this
+attribute, and at position $3i$ a list containing one or two of the
+strings `\"class\"', `\"character\"',
+depending on whether the attribute value relies on the ordering of
+classes or characters.
+This allows one to set exactly the components with these names in the
+record that is later converted to the new table,
+in order to use the values as attribute values.
+So the record components that shall *not* be regarded as attribute values
+can be ignored.
+Also other attributes of the old table are ignored.
+
+`SupportedCharacterTableInfo' is used when (ordinary or Brauer) character
+table objects are created from records, using `ConvertToCharacterTable'
+(see~"ConvertToCharacterTable").
+
+New attributes and properties can be notified to
+`SupportedCharacterTableInfo' by creating them with
+`DeclareAttributeSuppCT' and `DeclarePropertySuppCT' instead of
+`DeclareAttribute' and `DeclareProperty'.
+
+
+\>ConvertToCharacterTable( <record> ) F
+\>ConvertToCharacterTableNC( <record> ) F
+
+Let <record> be a record.
+`ConvertToCharacterTable' converts <record> into a component object
+(see~"prg:Component Objects" in ``Programming in {\GAP}'')
+representing a character table.
+The values of those components of <record> whose names occur in
+`SupportedCharacterTableInfo' (see~"SupportedCharacterTableInfo")
+correspond to attribute values of the returned character table.
+All other components of the record simply become components of the
+character table object.
+
+If inconsistencies in <record> are detected, `fail' is returned.
+<record> must have the component `UnderlyingCharacteristic' bound
+(see~"UnderlyingCharacteristic"),
+since this decides about whether the returned character table lies in
+`IsOrdinaryTable' or in `IsBrauerTable'
+(see~"IsOrdinaryTable", "IsBrauerTable").
+
+`ConvertToCharacterTableNC' does the same except that all checks of
+<record> are omitted.
+
+An example of a conversion from a record to a character table object
+can be found in Section~"PrintCharacterTable".
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Character Table Categories}
+
+\>IsNearlyCharacterTable( <obj> ) C
+\>IsCharacterTable( <obj> ) C
+\>IsOrdinaryTable( <obj> ) C
+\>IsBrauerTable( <obj> ) C
+\>IsCharacterTableInProgress( <obj> ) C
+
+Every ``character table like object'' in {\GAP} lies in the category
+`IsNearlyCharacterTable'.
+There are four important subcategories,
+namely the *ordinary* tables in `IsOrdinaryTable',
+the *Brauer* tables in `IsBrauerTable',
+the union of these two in `IsCharacterTable',
+and the *incomplete ordinary* tables in `IsCharacterTableInProgress'.
+
+We want to distinguish ordinary and Brauer tables because a Brauer table
+may delegate tasks to the ordinary table of the same group,
+for example the computation of power maps.
+A Brauer table is constructed from an ordinary table and stores this
+table upon construction (see~"OrdinaryCharacterTable").
+
+Furthermore,  `IsOrdinaryTable'  and  `IsBrauerTable'  denote   character
+tables that provide enough information to  compute  all  power  maps  and
+irreducible characters (and in the case  of  Brauer  tables  to  get  the
+ordinary   table),   for   example   because   the    underlying    group
+(see~"UnderlyingGroup!for character tables")  is  known  or  because  the
+table is a library table
+(see the manual of the {\GAP} Character Table Library).
+We want to distinguish these tables from partially known ordinary tables
+that cannot be asked for all power maps or all irreducible characters.
+
+The character table objects in `IsCharacterTable' are always immutable
+(see~"Mutability and Copyability").
+This means mainly that the ordering of conjugacy classes used for the
+various attributes of the character table cannot be changed;
+see~"Sorted Character Tables" for how to compute a character table with a
+different ordering of classes.
+
+The {\GAP} objects in `IsCharacterTableInProgress' represent incomplete
+ordinary character tables.
+This means that not all irreducible characters, not all power maps are
+known, and perhaps even the number of classes and the centralizer orders
+are known.
+Such tables occur when the character table of a group $G$ is constructed
+using character tables of related groups and information about $G$ but
+for example without explicitly computing the conjugacy classes of $G$.
+An object in `IsCharacterTableInProgress' is first of all *mutable*,
+so *nothing is stored automatically* on such a table,
+since otherwise one has no control of side-effects when
+a hypothesis is changed.
+Operations for such tables may return more general values than for
+other tables, for example class functions may contain unknowns
+(see Chapter~"Unknowns") or lists of possible values in certain
+positions,
+the same may happen also for power maps and class fusions
+(see~"Parametrized Maps").
+*@Incomplete tables in this sense are currently not supported and will be
+described in a chapter of their own when they become available.@*
+Note that the term ``incomplete table'' shall express that {\GAP} cannot
+compute certain values such as irreducible characters or power maps.
+A table with access to its group is therefore always complete,
+also if its irreducible characters are not yet stored.
+
+
+\beginexample
+gap> g:= SymmetricGroup( 4 );;
+gap> tbl:= CharacterTable( g );  modtbl:= tbl mod 2;
+CharacterTable( Sym( [ 1 .. 4 ] ) )
+BrauerTable( Sym( [ 1 .. 4 ] ), 2 )
+gap> IsCharacterTable( tbl );  IsCharacterTable( modtbl );
+true
+true
+gap> IsBrauerTable( modtbl );  IsBrauerTable( tbl );
+true
+false
+gap> IsOrdinaryTable( tbl );  IsOrdinaryTable( modtbl );
+true
+false
+gap> IsCharacterTable( g );  IsCharacterTable( Irr( g ) );
+false
+false
+\endexample
+
+\>`InfoCharacterTable' V
+
+is the info class (see~"Info Functions") for computations with
+character tables.
+
+
+
+\>`NearlyCharacterTablesFamily' V
+
+Every character table like object lies in this family (see~"Families").
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Conventions for Character Tables}
+
+The following few conventions should be noted.
+\beginlist%unordered
+\item{--}
+    The class of the *identity element* is expected to be the first one;
+    thus the degree of a character is the character value at position $1$.
+\item{--}
+    The *trivial character* of a character table need not be the first in
+    the list of irreducibles.
+\item{--}
+    Most functions that take a character table as an argument and work with
+    characters expect these characters as an argument, too.
+    For some functions, the list of irreducible characters serves as the
+    default, i.e, the value of the attribute `Irr' (see~"Irr");
+    in these cases, the `Irr' value is automatically computed if it was not
+    yet known.
+\item{--}
+    For a stored class fusion, the image table is denoted by its `Identifier'
+    value (see~"Identifier!for character tables");
+    each library table has a unique identifier by which it can be accessed
+    (see~"ctbllib:Access to Library Character Tables" in the manual for the
+    {\GAP} Character Table Library),
+    tables constructed from groups get an identifier that is unique in the
+    current {\GAP} session.
+\endlist
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The Interface between Character Tables and Groups}
+
+For a character table  with  underlying  group  (see~"UnderlyingGroup!for
+character tables"), the interface between table  and  group  consists  of
+three attribute values,  namely  the  *group*,  the  *conjugacy  classes*
+stored  in   the   table   (see   `ConjugacyClasses'   below)   and   the
+*identification*  of  the  conjugacy   classes   of   table   and   group
+(see~`IdentificationOfConjugacyClasses' below).
+
+Character tables constructed from groups know these values upon
+construction,
+and for character tables constructed without groups, these values are
+usually not known and cannot be computed from the table.
+
+However, given a group $G$ and a character table of a group isomorphic to
+$G$ (for example a character table from the {\GAP} table library),
+one can tell {\GAP} to use the given table as the character table of $G$
+(see~"ConnectGroupAndCharacterTable").
+
+Tasks may be delegated from a group to its character table or vice versa
+only if these three attribute values are stored in the character table.
+
+
+
+\>UnderlyingGroup( <ordtbl> )!{for character tables} A
+
+For an ordinary character table <ordtbl> of a finite group,
+the group can be stored as value of `UnderlyingGroup'.
+
+Brauer tables do not store the underlying group,
+they access it via the ordinary table (see~"OrdinaryCharacterTable").
+
+
+\>ConjugacyClasses( <tbl> )!{for character tables} A
+
+For a character table <tbl> with known underlying group $G$,
+the `ConjugacyClasses' value of <tbl> is a list of conjugacy classes of
+$G$.
+All those lists stored in the table that are related to the ordering
+of conjugacy classes (such as sizes of centralizers and conjugacy
+classes, orders of representatives, power maps, and all class functions)
+refer to the ordering of this list.
+
+This ordering need *not* coincide with the ordering of conjugacy classes
+as stored in the underlying group of the table
+(see~"Sorted Character Tables").
+One reason for this is that otherwise we would not be allowed to
+use a library table as the character table of a group for which the
+conjugacy classes are stored already.
+(Another, less important reason is that we can use the same group as
+underlying group of character tables that differ only w.r.t.~the ordering
+of classes.)
+
+The class of the identity element must be the first class
+(see~"Conventions for Character Tables").
+
+If <tbl> was constructed from $G$ then the conjugacy classes have been
+stored at the same time when $G$ was stored.
+If $G$ and <tbl> were connected later than in the construction of <tbl>,
+the recommended way to do this is via `ConnectGroupAndCharacterTable'
+(see~"ConnectGroupAndCharacterTable").
+So there is no method for `ConjugacyClasses' that computes the value for
+<tbl> if it is not yet stored.
+
+Brauer tables do not store the ($p$-regular) conjugacy classes,
+they access them via the ordinary table (see~"OrdinaryCharacterTable")
+if necessary.
+
+
+\>IdentificationOfConjugacyClasses( <tbl> ) A
+
+For an ordinary character table <tbl> with known underlying group $G$,
+`IdentificationOfConjugacyClasses' returns a list of positive integers
+that contains at position $i$ the position of the $i$-th conjugacy class
+of <tbl> in the list $`ConjugacyClasses'( G )$.
+
+
+\beginexample
+gap> g:= SymmetricGroup( 4 );;
+gap> repres:= [ (1,2), (1,2,3), (1,2,3,4), (1,2)(3,4), () ];;
+gap> ccl:= List( repres, x -> ConjugacyClass( g, x ) );;
+gap> SetConjugacyClasses( g, ccl );
+gap> tbl:= CharacterTable( g );;   # the table stores already the values
+gap> HasConjugacyClasses( tbl );  HasUnderlyingGroup( tbl );
+true
+true
+gap> UnderlyingGroup( tbl ) = g;
+true
+gap> HasIdentificationOfConjugacyClasses( tbl );
+true
+gap> IdentificationOfConjugacyClasses( tbl );
+[ 5, 1, 2, 3, 4 ]
+\endexample
+
+\>ConnectGroupAndCharacterTable( <G>, <tbl>[, <arec>] ) F
+\>ConnectGroupAndCharacterTable( <G>, <tbl>, <bijection> ) F
+
+Let <G> be a group and <tbl> a character table of (a group isomorphic to)
+<G>, such that <G> does not store its `OrdinaryCharacterTable' value
+and <tbl> does not store its `UnderlyingGroup' value.
+`ConnectGroupAndCharacterTable' calls `CompatibleConjugacyClasses',
+trying to identify the classes of <G> with the columns of <tbl>.
+
+If this identification is unique up to automorphisms of <tbl>
+(see~"AutomorphismsOfTable") then <tbl> is stored as `CharacterTable'
+value of <G>,
+in <tbl> the values of `UnderlyingGroup', `ConjugacyClasses', and
+`IdentificationOfConjugacyClasses' are set,
+and `true' is returned.
+
+Otherwise, i.e., if {\GAP} cannot identify the classes of <G> up to
+automorphisms of <G>, `false' is returned.
+
+If a record <arec> is present as third argument, its meaning is the
+same as for `CompatibleConjugacyClasses'
+(see~"CompatibleConjugacyClasses").
+
+If a list <bijection> is entered as third argument,
+it is used as value of `IdentificationOfConjugacyClasses',
+relative to `ConjugacyClasses( <G> )',
+without further checking, and `true' is returned.
+
+
+\>CompatibleConjugacyClasses( <G>, <ccl>, <tbl>[, <arec>] ) O
+\>CompatibleConjugacyClasses( <tbl>[, <arec>] ) O
+
+In the first form, <ccl> must be a list of the conjugacy classes of the
+group <G>, and <tbl> the ordinary character table of <G>.
+Then `CompatibleConjugacyClasses' returns a list $l$ of positive integers
+that describes an identification of the columns of <tbl> with the
+conjugacy classes <ccl> in the sense that $l[i]$ is the position in <ccl>
+of the class corresponding to the $i$-th column of <tbl>,
+if this identification is unique up to automorphisms of <tbl>
+(see~"AutomorphismsOfTable");
+if {\GAP} cannot identify the classes, `fail' is returned.
+
+In the second form, <tbl> must be an ordinary character table, and
+`CompatibleConjugacyClasses' checks whether the columns of <tbl> can be
+identified with the conjugacy classes of a group isomorphic to that for
+which <tbl> is the character table;
+the return value is a list of all those sets of class positions for which
+the columns of <tbl> cannot be distinguished with the invariants used,
+up to automorphisms of <tbl>.
+So the identification is unique if and only if the returned list is
+empty.
+
+The usual approach is that one first calls `CompatibleConjugacyClasses'
+in the second form for checking quickly whether the first form will be
+successful, and only if this is the case the more time consuming
+calculations with both group and character table are done.
+
+The following invariants are used.
+\beginlist%ordered
+\item{1.} element orders (see~"OrdersClassRepresentatives"),
+\item{2.} class lengths (see~"SizesConjugacyClasses"),
+\item{3.} power maps (see~"PowerMap", "ComputedPowerMaps"),
+\item{4.} symmetries of the table (see~"AutomorphismsOfTable").
+\endlist
+
+If the optional argument <arec> is present then it must be a record
+whose components describe additional information for the class
+identification.
+The following components are supported.
+\beginitems
+`natchar' &
+    if $G$ is a permutation group or matrix group then the value of this
+    component is regarded as the list of values of the natural character
+    (see~"NaturalCharacter") of <G>,
+    w.r.t.~the ordering of classes in <tbl>,
+
+`bijection' &
+    a list describing a partial bijection; the $i$-th entry, if bound,
+    is the position of the $i$-th conjugacy class of <tbl> in the list
+    <ccl>.
+\enditems
+
+
+\beginexample
+gap> g:= AlternatingGroup( 5 );
+Alt( [ 1 .. 5 ] )
+gap> tbl:= CharacterTable( "A5" );
+CharacterTable( "A5" )
+gap> HasUnderlyingGroup( tbl );  HasOrdinaryCharacterTable( g );
+false
+false
+gap> CompatibleConjugacyClasses( tbl );   # unique identification
+[  ]
+gap> ConnectGroupAndCharacterTable( g, tbl );
+true
+gap> HasConjugacyClasses( tbl );  HasUnderlyingGroup( tbl );
+true
+true
+gap> IdentificationOfConjugacyClasses( tbl );
+[ 1, 2, 3, 4, 5 ]
+gap> # Here is an example where the identification is not unique.
+gap> CompatibleConjugacyClasses( CharacterTable( "J2" ) );
+[ [ 17, 18 ], [ 9, 10 ] ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Operators for Character Tables}
+
+\indextt{\*!for character tables}
+\indextt{/!for character tables}
+\indextt{mod!for character tables}
+\index{character tables!infix operators}
+
+The following infix operators are defined for character tables.
+\beginitems
+`<tbl1> \* <tbl2>' &
+    the direct product of two character tables
+    (see~"CharacterTableDirectProduct"),
+
+`<tbl> / <list>' &
+    the table of the factor group modulo the normal subgroup spanned by
+    the classes in the list <list> (see~"CharacterTableFactorGroup"),
+
+`<tbl> mod <p>' &
+    the <p>-modular Brauer character table corresponding to the ordinary
+    character table <tbl> (see~"CharacterTable"),
+
+`<tbl>.<name>' &
+    the position of the class with name <name> in <tbl>
+    (see~"ClassNames").
+\enditems
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Attributes and Properties of Character Tables}
+
+Several *attributes for groups* are valid also for character tables.
+These are on one hand those that have the same meaning for both group and
+character table, and whose values can be read off or computed,
+respectively, from the character table,
+such as `Size', `IsAbelian', or `IsSolvable'.
+On the other hand, there are attributes whose meaning for character
+tables is different from the meaning for groups, such as
+`ConjugacyClasses'.
+
+
+
+\>CharacterDegrees( <G> ) A
+\>CharacterDegrees( <G>, <p> ) O
+\>CharacterDegrees( <tbl> ) A
+
+In the first two forms, `CharacterDegrees' returns a collected list of
+the degrees of the absolutely irreducible characters of the group <G>;
+the optional second argument <p> must be either zero or a prime integer
+denoting the characteristic, the default value is zero.
+In the third form, <tbl> must be an (ordinary or Brauer) character
+table, and `CharacterDegrees' returns a collected list of the degrees of
+the absolutely irreducible characters of <tbl>.
+
+(The default method for the call with only argument a group is to call
+the operation with second argument `0'.)
+
+For solvable groups, the default method is based on~\cite{Con90b}.
+
+
+\beginexample
+gap> CharacterDegrees( SymmetricGroup( 4 ) );
+[ [ 1, 2 ], [ 2, 1 ], [ 3, 2 ] ]
+gap> CharacterDegrees( SymmetricGroup( 4 ), 2 );
+[ [ 1, 1 ], [ 2, 1 ] ]
+gap> CharacterDegrees( CharacterTable( "A5" ) );
+[ [ 1, 1 ], [ 3, 2 ], [ 4, 1 ], [ 5, 1 ] ]
+gap> CharacterDegrees( CharacterTable( "A5" ) mod 2 );
+[ [ 1, 1 ], [ 2, 2 ], [ 4, 1 ] ]
+\endexample
+
+\>Irr( <G> ) A
+\>Irr( <G>, <p> ) O
+\>Irr( <tbl> ) A
+
+Called with a group <G>, `Irr' returns the irreducible characters of the
+ordinary character table of <G>.
+Called with a group <G> and a prime integer <p>, `Irr' returns the
+irreducible characters of the <p>-modular Brauer table of <G>.
+Called with an (ordinary or Brauer) character table <tbl>,
+`Irr' returns the list of all complex absolutely irreducible characters
+of <tbl>.
+
+For a character table <tbl> with underlying group,
+`Irr' may delegate to the group.
+For a group <G>, `Irr' may delegate to its character table only if the
+irreducibles are already stored there.
+
+If a group has both ordinary irreducible characters in `Irr' and
+irreducible representations in `IrreducibleRepresentations' these are
+*not* guaranteed to be ordered in the same way.
+
+(If <G> is <p>-solvable (see~"IsPSolvable") then the <p>-modular
+irreducible characters can be computed by the Fong-Swan Theorem;
+in all other cases, there may be no method.)
+
+Note that the ordering of columns in the `Irr' matrix of the group <G>
+refers to the ordering of conjugacy classes in `CharacterTable( <G> )',
+which may differ from the ordering of conjugacy classes in <G>
+(see~"The Interface between Character Tables and Groups").
+As an extreme example, for a character table obtained from sorting the
+classes of `CharacterTable( <G> )',
+the ordering of columns in the `Irr' matrix respects the sorting of
+classes (see~"Sorted Character Tables"),
+so the irreducibles of such a table will in general not coincide with
+the irreducibles stored as `Irr( <G> )' although also the sorted table
+stores the group <G>.
+
+
+
+In the following example we temporarily increase the line length limit from
+its default value 80 to 85 in order to get a nicer output format.
+
+\beginexample
+gap> Irr( SymmetricGroup( 4 ) );
+[ Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 1, -1, 1, 1, -1 ] ), 
+  Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 3, -1, -1, 0, 1 ] ), 
+  Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 2, 0, 2, -1, 0 ] ), 
+  Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 3, 1, -1, 0, -1 ] ), 
+  Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 1, 1, 1, 1, 1 ] ) ]
+gap> Irr( SymmetricGroup( 4 ), 2 );
+[ Character( BrauerTable( Sym( [ 1 .. 4 ] ), 2 ), [ 1, 1 ] ), 
+  Character( BrauerTable( Sym( [ 1 .. 4 ] ), 2 ), [ 2, -1 ] ) ]
+gap> SizeScreen([ 85, ]);;
+gap> Irr( CharacterTable( "A5" ) );
+[ Character( CharacterTable( "A5" ), [ 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( "A5" ), [ 3, -1, 0, -E(5)-E(5)^4, -E(5)^2-E(5)^3 ] ), 
+  Character( CharacterTable( "A5" ), [ 3, -1, 0, -E(5)^2-E(5)^3, -E(5)-E(5)^4 ] ), 
+  Character( CharacterTable( "A5" ), [ 4, 0, 1, -1, -1 ] ), 
+  Character( CharacterTable( "A5" ), [ 5, 1, -1, 0, 0 ] ) ]
+gap> SizeScreen([ 80, ]);;
+gap> Irr( CharacterTable( "A5" ) mod 2 );
+[ Character( BrauerTable( "A5", 2 ), [ 1, 1, 1, 1 ] ), 
+  Character( BrauerTable( "A5", 2 ), [ 2, -1, E(5)+E(5)^4, E(5)^2+E(5)^3 ] ), 
+  Character( BrauerTable( "A5", 2 ), [ 2, -1, E(5)^2+E(5)^3, E(5)+E(5)^4 ] ), 
+  Character( BrauerTable( "A5", 2 ), [ 4, 1, -1, -1 ] ) ]
+\endexample
+
+\>LinearCharacters( <G> ) A
+\>LinearCharacters( <G>, <p> ) O
+\>LinearCharacters( <tbl> ) A
+
+`LinearCharacters' returns the linear (i.e., degree $1$) characters in
+the `Irr' (see~"Irr") list of the group <G> or the character table <tbl>,
+respectively.
+In the second form, `LinearCharacters' returns the <p>-modular linear
+characters of the group <G>.
+
+For a character table <tbl> with underlying group,
+`LinearCharacters' may delegate to the group.
+For a group <G>, `LinearCharacters' may delegate to its character table
+only if the irreducibles are already stored there.
+
+The ordering of linear characters in <tbl> need not coincide with the
+ordering of linear characters in the irreducibles of <tbl> (see~"Irr").
+
+
+\beginexample
+gap> LinearCharacters( SymmetricGroup( 4 ) );
+[ Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( Sym( [ 1 .. 4 ] ) ), [ 1, -1, 1, 1, -1 ] ) ]
+\endexample
+
+\>OrdinaryCharacterTable( <G> ) A
+\>OrdinaryCharacterTable( <modtbl> ) A
+
+`OrdinaryCharacterTable' returns the ordinary character table of the
+group <G> or the Brauer character table <modtbl>, respectively.
+
+Since Brauer character tables are constructed from ordinary tables,
+the attribute value for <modtbl> is already stored
+(cf.~"Character Table Categories").
+
+
+\beginexample
+gap> OrdinaryCharacterTable( SymmetricGroup( 4 ) );
+CharacterTable( Sym( [ 1 .. 4 ] ) )
+gap> tbl:= CharacterTable( "A5" );;  modtbl:= tbl mod 2;
+BrauerTable( "A5", 2 )
+gap> OrdinaryCharacterTable( modtbl ) = tbl;
+true
+\endexample
+
+The following operations for groups are applicable to character tables
+and mean the same for a character table as for the group;
+see the chapter about groups for the definition.
+\beginitems
+\indextt{AbelianInvariants!for character tables}
+`AbelianInvariants'&
+\indextt{CommutatorLength!for character tables}
+`CommutatorLength'&
+\indextt{Exponent!for character tables}
+`Exponent'&
+\indextt{IsAbelian!for character tables}
+`IsAbelian'&
+\indextt{IsCyclic!for character tables}
+`IsCyclic'&
+\indextt{IsFinite!for character tables}
+`IsFinite'&
+\indextt{IsMonomial!for character tables}
+`IsMonomial'&
+\indextt{IsNilpotent!for character tables}
+`IsNilpotent'&
+\indextt{IsPerfect!for character tables}
+`IsPerfect'&
+\indextt{IsSimple!for character tables}
+`IsSimple'&
+\indextt{IsSolvable!for character tables}
+`IsSolvable'&
+\indextt{IsSporadicSimple!for character tables}
+`IsSporadicSimple'&
+\indextt{IsSupersolvable!for character tables}
+`IsSupersolvable'&
+\indextt{NrConjugacyClasses!for character tables}
+`NrConjugacyClasses'&
+\indextt{Size!for character tables}
+`Size'&
+\enditems
+These operations are mainly useful for selecting character tables with
+certain properties, also for character tables without access to a group.
+
+
+\beginexample
+gap> tables:= [ CharacterTable( CyclicGroup( 3 ) ),
+>               CharacterTable( SymmetricGroup( 4 ) ),
+>               CharacterTable( AlternatingGroup( 5 ) ) ];;
+gap> List( tables, AbelianInvariants );
+[ [ 3 ], [ 2 ], [  ] ]
+gap> List( tables, CommutatorLength );
+[ 1, 1, 1 ]
+gap> List( tables, Exponent );
+[ 3, 12, 30 ]
+gap> List( tables, IsAbelian );
+[ true, false, false ]
+gap> List( tables, IsCyclic );
+[ true, false, false ]
+gap> List( tables, IsFinite );
+[ true, true, true ]
+gap> List( tables, IsMonomial );
+[ true, true, false ]
+gap> List( tables, IsNilpotent );
+[ true, false, false ]
+gap> List( tables, IsPerfect );
+[ false, false, true ]
+gap> List( tables, IsSimple );
+[ true, false, true ]
+gap> List( tables, IsSolvable );
+[ true, true, false ]
+gap> List( tables, IsSupersolvable );
+[ true, false, false ]
+gap> List( tables, NrConjugacyClasses );
+[ 3, 5, 5 ]
+gap> List( tables, Size );
+[ 3, 24, 60 ]
+\endexample
+
+The following three *attributes for character tables* would make sense
+also for groups but are in fact *not* used for groups.
+This is because the values depend on the ordering of conjugacy classes
+stored as value of `ConjugacyClasses', and this value may differ for a
+group and its character table
+(see~"The Interface between Character Tables and Groups").
+Note that for character tables, the consistency of attribute values must
+be guaranteed,
+whereas for groups, there is no need to impose such a consistency rule.
+
+
+
+\>OrdersClassRepresentatives( <tbl> ) A
+
+is a list of orders of representatives of conjugacy classes of the
+character table <tbl>,
+in the same ordering as the conjugacy classes of <tbl>.
+
+
+\>SizesCentralizers( <tbl> ) A
+
+is a list that stores at position $i$ the size of the centralizer of any
+element in the $i$-th conjugacy class of the character table <tbl>.
+
+
+\>SizesConjugacyClasses( <tbl> ) A
+
+is a list that stores at position $i$ the size of the $i$-th conjugacy
+class of the character table <tbl>.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "A5" );;
+gap> OrdersClassRepresentatives( tbl );
+[ 1, 2, 3, 5, 5 ]
+gap> SizesCentralizers( tbl );
+[ 60, 4, 3, 5, 5 ]
+gap> SizesConjugacyClasses( tbl );
+[ 1, 15, 20, 12, 12 ]
+\endexample
+
+The following attributes apply only to character tables, not to groups.
+
+
+
+\>AutomorphismsOfTable( <tbl> ) A
+
+is the permutation group of all column permutations of the character
+table <tbl> that leave the set of irreducibles and each power map of
+<tbl> invariant (see also~"TableAutomorphisms").
+
+
+\beginexample
+gap> tbl:= CharacterTable( "Dihedral", 8 );;
+gap> AutomorphismsOfTable( tbl );
+Group([ (4,5) ])
+gap> OrdersClassRepresentatives( tbl );
+[ 1, 4, 2, 2, 2 ]
+gap> SizesConjugacyClasses( tbl );
+[ 1, 2, 1, 2, 2 ]
+\endexample
+
+\>UnderlyingCharacteristic( <tbl> ) A
+\>UnderlyingCharacteristic( <psi> ) A
+
+For an ordinary character table <tbl>, the result is `0',
+for a $p$-modular Brauer table <tbl>, it is $p$.
+The underlying characteristic of a class function <psi> is equal to
+that of its underlying character table.
+
+The underlying characteristic must be stored when the table is
+constructed, there is no method to compute it.
+
+We cannot use the attribute `Characteristic' (see~"Characteristic")
+to denote this, since of course each Brauer character is an element
+of characteristic zero in the sense of {\GAP}
+(see Chapter~"Class Functions").
+
+
+\beginexample
+gap> tbl:= CharacterTable( "A5" );;
+gap> UnderlyingCharacteristic( tbl );
+0
+gap> UnderlyingCharacteristic( tbl mod 17 );
+17
+\endexample
+
+\>ClassNames( <tbl> ) A
+\>ClassNames( <tbl>, \"ATLAS\" ) O
+\>CharacterNames( <tbl> ) A
+
+`ClassNames' and `CharacterNames' return lists of strings,
+one for each conjugacy class or irreducible character, respectively,
+of the character table <tbl>.
+These names are used when <tbl> is displayed.
+
+The default method for `ClassNames' computes class names consisting of
+the order of an element in the class and at least one distinguishing
+letter.
+
+The default method for `CharacterNames' returns the list
+`[ "X.1", "X.2", ... ]', whose length is the number of
+irreducible characters of <tbl>.
+
+The position of the class with name <name> in <tbl> can be accessed as
+`<tbl>.<name>'.
+
+When `ClassNames' is called with two arguments, the second being the
+string `\"ATLAS\"', the class names returned obey the convention used in
+Chapter~7, Section~5 of the {\ATLAS} of Finite Groups~\cite{CCN85}.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "A5" );;
+gap> ClassNames( tbl );
+[ "1a", "2a", "3a", "5a", "5b" ]
+gap> tbl.2a;
+2
+\endexample
+
+\>Identifier( <tbl> )!{for character tables} A
+
+is a string that identifies the character table <tbl> in the current
+{\GAP} session.
+It is used mainly for class fusions into <tbl> that are stored on other
+character tables.
+For character tables without group,
+the identifier is also used to print the table;
+this is the case for library tables,
+but also for tables that are constructed as direct products, factors
+etc.~involving tables that may or may not store their groups.
+
+The default method for ordinary tables constructs strings of the form
+`\"CT<n>\"', where <n> is a positive integer.
+`LARGEST_IDENTIFIER_NUMBER' is a list containing the largest integer <n>
+used in the current {\GAP} session.
+
+The default method for Brauer tables returns the concatenation of the
+identifier of the ordinary table, the string `\"mod\"',
+and the (string of the) underlying characteristic.
+
+
+\beginexample
+gap> Identifier( CharacterTable( "A5" ) );
+"A5"
+gap> tbl:= CharacterTable( Group( () ) );;
+gap> Identifier( tbl );  Identifier( tbl mod 2 );
+"CT8"
+"CT8mod2"
+\endexample
+
+\>InfoText( <tbl> ) A
+
+is a mutable string with information about the character table <tbl>.
+There is no default method to create an info text.
+
+This attribute is used mainly for library tables (see the manual of the
+{\GAP} Character Table Library).
+Usual parts of the information are the origin of the table,
+tests it has passed (`1.o.r.' for the test of orthogonality,
+`pow[<p>]' for the construction of the <p>-th power map,
+`DEC' for the decomposition of ordinary into Brauer characters,
+`TENS' for the decomposition of tensor products of irreducibles),
+and choices made without loss of generality.
+
+
+\beginexample
+gap> Print( InfoText( CharacterTable( "A5" ) ), "\n" );
+origin: ATLAS of finite groups, tests: 1.o.r., pow[2,3,5]
+\endexample
+
+\>InverseClasses( <tbl> ) A
+
+For a character table <tbl>, `InverseClasses' returns the list mapping
+each conjugacy class to its inverse class.
+This list can be regarded as $(-1)$-st power map of <tbl>
+(see~"PowerMap").
+
+
+\>RealClasses( <tbl> ) A
+
+\index{classes!real}
+
+For a character table <tbl>, `RealClasses' returns the strictly sorted
+list of positions of classes in <tbl> that consist of real elements.
+
+An element $x$ is *real* iff it is conjugate to its inverse
+$x^{-1} = x^{o(x)-1}$.
+
+
+\beginexample
+gap> InverseClasses( CharacterTable( "A5" ) );
+[ 1, 2, 3, 4, 5 ]
+gap> InverseClasses( CharacterTable( "Cyclic", 3 ) );
+[ 1, 3, 2 ]
+gap> RealClasses( CharacterTable( "A5" ) );
+[ 1, 2, 3, 4, 5 ]
+gap> RealClasses( CharacterTable( "Cyclic", 3 ) );
+[ 1 ]
+\endexample
+
+\>ClassOrbit( <tbl>, <cc> ) O
+
+is the list of positions of those conjugacy classes
+of the character table <tbl> that are Galois conjugate to the <cc>-th
+class.
+That is, exactly the classes at positions given by the list returned by
+`ClassOrbit' contain generators of the cyclic group generated
+by an element in the <cc>-th class.
+
+This information is computed from the power maps of <tbl>.
+
+
+\>ClassRoots( <tbl> ) A
+
+For a character table <tbl>, `ClassRoots' returns a list
+containing at position $i$ the list of positions of the classes
+of all nontrivial $p$-th roots, where $p$ runs over the prime divisors
+of `Size( <tbl> )'.
+
+This information is computed from the power maps of <tbl>.
+
+
+\beginexample
+gap> ClassOrbit( CharacterTable( "A5" ), 4 );
+[ 4, 5 ]
+gap> ClassRoots( CharacterTable( "A5" ) );
+[ [ 2, 3, 4, 5 ], [  ], [  ], [  ], [  ] ]
+gap> ClassRoots( CharacterTable( "Cyclic", 6 ) );
+[ [ 3, 4, 5 ], [  ], [ 2 ], [ 2, 6 ], [ 6 ], [  ] ]
+\endexample
+
+The following attributes for a character table <tbl> correspond to
+attributes for the group $G$ of <tbl>.
+But instead of a normal subgroup (or a list of normal subgroups) of $G$,
+they return a strictly sorted list of positive integers (or a list of
+such lists) which are the positions
+--relative to `ConjugacyClasses( <tbl> )'--
+of those classes forming the normal subgroup in question.
+
+
+
+\>ClassPositionsOfNormalSubgroups( <ordtbl> ) A
+\>ClassPositionsOfMaximalNormalSubgroups( <ordtbl> ) A
+
+correspond to `NormalSubgroups' and `MaximalNormalSubgroups'
+for the group of the ordinary character table <ordtbl>
+(see~"NormalSubgroups", "MaximalNormalSubgroups").
+
+The entries of the result lists are sorted according to increasing
+length.
+(So this total order respects the partial order of normal subgroups
+given by inclusion.)
+
+
+\>ClassPositionsOfAgemo( <ordtbl>, <p> ) O
+
+corresponds to `Agemo' (see~"Agemo")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfCentre( <ordtbl> )!{for character tables} A
+
+corresponds to `Centre' (see~"Centre")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfDirectProductDecompositions( <tbl> ) A
+\>ClassPositionsOfDirectProductDecompositions( <tbl>, <nclasses> ) O
+
+Let <tbl> be the ordinary character table of the group $G$, say.
+Called with the only argument <tbl>,
+`ClassPositionsOfDirectProductDecompositions' returns the list of all
+those pairs $[ l_1, l_2 ]$ where $l_1$ and $l_2$ are lists of
+class positions of normal subgroups $N_1$, $N_2$ of $G$
+such that $G$ is their direct product and $|N_1| \leq |N_2|$ holds.
+Called with second argument a list <nclasses> of class positions of a
+normal subgroup $N$ of $G$,
+`ClassPositionsOfDirectProductDecompositions' returns the list of pairs
+describing the decomposition of $N$ as a direct product of two
+normal subgroups of $G$.
+
+
+\>ClassPositionsOfDerivedSubgroup( <ordtbl> ) A
+
+corresponds to `DerivedSubgroup' (see~"DerivedSubgroup")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfElementaryAbelianSeries( <ordtbl> ) A
+
+corresponds to `ElementaryAbelianSeries' (see~"ElementaryAbelianSeries")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfFittingSubgroup( <ordtbl> ) A
+
+corresponds to `FittingSubgroup' (see~"FittingSubgroup")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfLowerCentralSeries( <tbl> ) A
+
+corresponds to `LowerCentralSeries' (see~"LowerCentralSeriesOfGroup")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfUpperCentralSeries( <ordtbl> ) A
+
+corresponds to `UpperCentralSeries' (see~"UpperCentralSeriesOfGroup")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfSupersolvableResiduum( <ordtbl> ) A
+
+corresponds to `SupersolvableResiduum' (see~"SupersolvableResiduum")
+for the group of the ordinary character table <ordtbl>.
+
+
+\>ClassPositionsOfNormalClosure( <ordtbl>, <classes> ) O
+
+is the sorted list of the positions of all conjugacy classes of the
+ordinary character table <ordtbl> that form the normal closure
+(see~"NormalClosure") of the conjugacy classes at positions in the
+list <classes>.
+
+
+\beginexample
+gap> tbla5:= CharacterTable( "A5" );;
+gap> tbls4:= CharacterTable( "Symmetric", 4 );;
+gap> tbld8:= CharacterTable( "Dihedral", 8 );;
+gap> ClassPositionsOfNormalSubgroups( tbls4 );
+[ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1 .. 5 ] ]
+gap> ClassPositionsOfAgemo( tbls4, 2 );
+[ 1, 3, 4 ]
+gap> ClassPositionsOfCentre( tbld8 );
+[ 1, 3 ]
+gap> ClassPositionsOfDerivedSubgroup( tbld8 );
+[ 1, 3 ]
+gap> ClassPositionsOfElementaryAbelianSeries( tbls4 );
+[ [ 1 .. 5 ], [ 1, 3, 4 ], [ 1, 3 ], [ 1 ] ]
+gap> ClassPositionsOfElementaryAbelianSeries( tbla5 );
+fail
+gap> ClassPositionsOfFittingSubgroup( tbls4 );
+[ 1, 3 ]
+gap> ClassPositionsOfLowerCentralSeries( tbls4 );
+[ [ 1 .. 5 ], [ 1, 3, 4 ] ]
+gap> ClassPositionsOfLowerCentralSeries( tbld8 );
+[ [ 1 .. 5 ], [ 1, 3 ], [ 1 ] ]
+gap> ClassPositionsOfUpperCentralSeries( tbls4 );
+[ [ 1 ] ]
+gap> ClassPositionsOfUpperCentralSeries( tbld8 );
+[ [ 1, 3 ], [ 1, 2, 3, 4, 5 ] ]
+gap> ClassPositionsOfSupersolvableResiduum( tbls4 );
+[ 1, 3 ]
+gap> ClassPositionsOfNormalClosure( tbls4, [ 1, 4 ] );
+[ 1, 3, 4 ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Operations Concerning Blocks}
+
+\>PrimeBlocks( <ordtbl>, <p> ) O
+\>PrimeBlocksOp( <ordtbl>, <p> ) O
+\>ComputedPrimeBlockss( <tbl> ) A
+
+For an ordinary character table <ordtbl> and a prime integer <p>,
+`PrimeBlocks' returns a record with the following components.
+\beginitems
+`block' &
+    a list, the value $j$ at position $i$ means that the $i$-th
+    irreducible character of <ordtbl> lies in the $j$-th <p>-block
+    of <ordtbl>,
+
+`defect' &
+    a list containing at position $i$ the defect of the $i$-th block,
+
+`height' &
+    a list containing at position $i$ the height of the $i$-th
+    irreducible character of <ordtbl> in its block,
+
+`relevant' &
+    a list of class positions such that only the restriction to these
+    classes need be checked for deciding whether two characters lie
+    in the same block, and
+
+`centralcharacter' &
+    a list containing at position $i$ a list whose values at the
+    positions stored in the component `relevant' are the values of
+    a central character in the $i$-th block.
+\enditems
+
+The components `relevant' and `centralcharacters' are
+used by `SameBlock' (see~"SameBlock").
+
+If `InfoCharacterTable' has level at least 2,
+the defects of the blocks and the heights of the characters are printed.
+
+The default method uses the attribute
+`ComputedPrimeBlockss' for storing the computed value at
+position <p>, and calls the operation `PrimeBlocksOp' for
+computing values that are not yet known.
+
+Two ordinary irreducible characters $\chi, \psi$ of a group $G$ are said
+to lie in the same $p$-*block* if the images of their central characters
+$\omega_{\chi}, \omega_{\psi}$ (see~"CentralCharacter") under the
+ring homomorphism $\ast \colon R \rightarrow R / M$ are equal,
+where $R$ denotes the ring of algebraic integers in the complex number
+field, and $M$ is a maximal ideal in $R$ with $pR \subseteq M$.
+(The distribution to $p$-blocks is in fact independent of the choice of
+$M$, see~\cite{Isa76}.)
+
+For $|G| = p^a m$ where $p$ does not divide $m$, the *defect* of a block
+is the integer $d$ such that $p^{a-d}$ is the largest power of $p$ that
+divides the degrees of all characters in the block.
+
+The *height* of a character $\chi$ in the block is defined as the largest
+exponent $h$ for which $p^h$ divides $\chi(1) / p^{a-d}$.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "L3(2)" );;
+gap> pbl:= PrimeBlocks( tbl, 2 );
+rec( block := [ 1, 1, 1, 1, 1, 2 ], defect := [ 3, 0 ], 
+  height := [ 0, 0, 0, 1, 0, 0 ], relevant := [ 3, 5 ], 
+  centralcharacter := [ [ ,, 56,, 24 ], [ ,, -7,, 3 ] ] )
+\endexample
+
+\>SameBlock( <p>, <omega1>, <omega2>, <relevant> ) F
+
+Let <p> be a prime integer, <omega1> and <omega2> be two central
+characters (or their values lists) of a character table,
+and <relevant> be a list of positions as is stored in the component
+`relevantclasses' of a record returned by `PrimeBlocks'
+(see~"PrimeBlocks").
+
+`SameBlock' returns `true' if <omega1> and <omega2> are equal modulo any
+maximal ideal in the ring of complex algebraic integers containing the
+ideal spanned by <p>, and `false' otherwise.
+
+
+\beginexample
+gap> omega:= List( Irr( tbl ), CentralCharacter );;
+gap> SameBlock( 2, omega[1], omega[2], pbl.relevant );
+true
+gap> SameBlock( 2, omega[1], omega[6], pbl.relevant );
+false
+\endexample
+
+\>BlocksInfo( <modtbl> ) A
+
+For a Brauer character table <modtbl>, the value of `BlocksInfo'
+is a list of (mutable) records, the $i$-th entry containing information
+about the $i$-th block.
+Each record has the following components.
+\beginitems
+`defect' &
+     the defect of the block,
+
+`ordchars' &
+     the list of positions of the ordinary characters that belong to the
+     block, relative to `Irr( OrdinaryCharacterTable( <modtbl> ) )',
+
+`modchars' &
+     the list of positions of the Brauer characters that belong to the
+     block, relative to `IBr( <modtbl> )'.
+\enditems
+Optional components are
+\beginitems
+`basicset' &
+     a list of positions of ordinary characters in the block whose
+     restriction to <modtbl> is maximally linearly independent,
+     relative to `Irr( OrdinaryCharacterTable( <modtbl> ) )',
+
+`decmat' &
+     the decomposition matrix of the block,
+     it is stored automatically when `DecompositionMatrix' is called for
+     the block (see~"DecompositionMatrix"),
+
+`decinv' &
+     inverse of the decomposition matrix of the block, restricted to the
+     ordinary characters described by `basicset',
+
+`brauertree' &
+     a list that describes the Brauer tree of the block,
+     in the case that the block is of defect $1$.
+\enditems
+
+
+\beginexample
+gap> BlocksInfo( CharacterTable( "L3(2)" ) mod 2 );
+[ rec( defect := 3, ordchars := [ 1, 2, 3, 4, 5 ], modchars := [ 1, 2, 3 ], 
+      decinv := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ], 
+      basicset := [ 1, 2, 3 ] ), 
+  rec( defect := 0, ordchars := [ 6 ], modchars := [ 4 ], decinv := [ [ 1 ] ],
+      basicset := [ 6 ] ) ]
+\endexample
+
+\>DecompositionMatrix( <modtbl> ) A
+\>DecompositionMatrix( <modtbl>, <blocknr> ) O
+
+Let <modtbl> be a Brauer character table.
+
+In the first version `DecompositionMatrix' returns the decomposition
+matrix of <modtbl>, where the rows and columns are indexed by the
+irreducible characters of the ordinary character table of <modtbl>
+and the irreducible characters of <modtbl>, respectively,
+
+In the second version `DecompositionMatrix' returns the decomposition
+matrix of the block of <modtbl> with number <blocknr>;
+the matrix is stored as value of the `decmat' component of the
+<blocknr>-th entry of the `BlocksInfo' list (see~"BlocksInfo") of
+<modtbl>.
+
+An ordinary irreducible character is in block $i$ if and only if all
+characters before the first character of the same block lie in $i-1$
+different blocks.
+An irreducible Brauer character is in block $i$ if it has nonzero scalar
+product with an ordinary irreducible character in block $i$.
+
+`DecompositionMatrix' is based on the more general function
+`Decomposition' (see~"Decomposition").
+
+
+\beginexample
+gap> modtbl:= CharacterTable( "L3(2)" ) mod 2;
+BrauerTable( "L3(2)", 2 )
+gap> DecompositionMatrix( modtbl );
+[ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 1, 0 ], 
+  [ 1, 1, 1, 0 ], [ 0, 0, 0, 1 ] ]
+gap> DecompositionMatrix( modtbl, 1 );
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 1 ], [ 1, 1, 1 ] ]
+gap> DecompositionMatrix( modtbl, 2 );
+[ [ 1 ] ]
+\endexample
+
+\>LaTeXStringDecompositionMatrix( <modtbl>[, <blocknr>][, <options>] ) F
+
+is a string that contains La{\TeX} code to print a decomposition matrix
+(see~"DecompositionMatrix") nicely.
+
+The optional argument <options>, if present, must be a record with
+components
+`phi', `chi' (strings used in each label for columns and rows),
+`collabels', `rowlabels' (subscripts for the labels).
+The defaults for `phi' and `chi' are `\"{\\tt Y}\"' and `\"{\\tt X}\"',
+the defaults for `collabels' and `rowlabels' are the lists of positions
+of the Brauer characters and ordinary characters in the respective lists
+of irreducibles in the character tables.
+
+The optional components `nrows' and `ncols' denote the maximal number of
+rows and columns per array;
+if they are present then each portion of `nrows' rows and `ncols' columns
+forms an array of its own which is enclosed in `\\[', `\\]'.
+
+If the component `decmat' is bound in <options> then it must be the
+decomposition matrix in question, in this case the matrix is not computed
+from the information in <modtbl>.
+
+For those character tables from the {\GAP} table library that belong to
+the {\ATLAS} of Finite Groups~\cite{CCN85},
+`AtlasLabelsOfIrreducibles' constructs character labels that are
+compatible with those used in the {\ATLAS}
+(see~"ctbllib:ATLAS Tables" and ~"ctbllib:AtlasLabelsOfIrreducibles"
+in the manual of the {\GAP} Character Table Library).
+
+
+\beginexample
+gap> modtbl:= CharacterTable( "L3(2)" ) mod 2;;
+gap> Print( LaTeXStringDecompositionMatrix( modtbl, 1 ) );
+\[
+\begin{array}{r||rrr} \hline
+ & {\tt Y}_{1}
+ & {\tt Y}_{2}
+ & {\tt Y}_{3}
+ \rule[-7pt]{0pt}{20pt} \\ \hline
+{\tt X}_{1} & 1 & . & . \rule[0pt]{0pt}{13pt} \\
+{\tt X}_{2} & . & 1 & . \\
+{\tt X}_{3} & . & . & 1 \\
+{\tt X}_{4} & . & 1 & 1 \\
+{\tt X}_{5} & 1 & 1 & 1 \rule[-7pt]{0pt}{5pt} \\
+\hline
+\end{array}
+\]
+gap> options:= rec( phi:= "\\varphi", chi:= "\\chi" );;
+gap> Print( LaTeXStringDecompositionMatrix( modtbl, 1, options ) );
+\[
+\begin{array}{r||rrr} \hline
+ & \varphi_{1}
+ & \varphi_{2}
+ & \varphi_{3}
+ \rule[-7pt]{0pt}{20pt} \\ \hline
+\chi_{1} & 1 & . & . \rule[0pt]{0pt}{13pt} \\
+\chi_{2} & . & 1 & . \\
+\chi_{3} & . & . & 1 \\
+\chi_{4} & . & 1 & 1 \\
+\chi_{5} & 1 & 1 & 1 \rule[-7pt]{0pt}{5pt} \\
+\hline
+\end{array}
+\]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Other Operations for Character Tables}
+
+In the following, we list operations for character tables that are not
+attributes.
+
+\>IsInternallyConsistent( <tbl> )!{for character tables} O
+
+For an *ordinary* character table <tbl>, `IsInternallyConsistent'
+checks the consistency of the following attribute values (if stored).
+\beginlist%unordered
+\item{--}
+    `Size', `SizesCentralizers', and `SizesConjugacyClasses'.
+\item{--}
+    `SizesCentralizers' and `OrdersClassRepresentatives'.
+\item{--}
+    `ComputedPowerMaps' and `OrdersClassRepresentatives'.
+\item{--}
+    `SizesCentralizers' and `Irr'.
+\item{--}
+    `Irr' (first orthogonality relation).
+\endlist
+
+For a *Brauer* table <tbl>, `IsInternallyConsistent'
+checks the consistency of the following attribute values (if stored).
+\beginlist%unordered
+\item{--}
+    `Size', `SizesCentralizers', and `SizesConjugacyClasses'.
+\item{--}
+    `SizesCentralizers' and `OrdersClassRepresentatives'.
+\item{--}
+    `ComputedPowerMaps' and `OrdersClassRepresentatives'.
+\item{--}
+    `Irr' (closure under complex conjugation and Frobenius map).
+\endlist
+
+If no inconsistency occurs, `true' is returned,
+otherwise each inconsistency is printed to the screen if the level of
+`InfoWarning' is at least $1$ (see~"Info Functions"),
+and `false' is returned at the end.
+
+
+
+\>IsPSolvableCharacterTable( <tbl>, <p> ) O
+\>IsPSolvableCharacterTableOp( <tbl>, <p> ) O
+\>ComputedIsPSolvableCharacterTables( <tbl> ) A
+
+`IsPSolvableCharacterTable' for the ordinary character table <tbl>
+corresponds to `IsPSolvable' for the group of <tbl> (see~"IsPSolvable").
+<p> must be either a prime integer or `0'.
+
+The default method uses the attribute
+`ComputedIsPSolvableCharacterTables' for storing the computed value at
+position <p>, and calls the operation `IsPSolvableCharacterTableOp' for
+computing values that are not yet known.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "Sz(8)" );;
+gap> IsPSolvableCharacterTable( tbl, 2 );
+false
+gap> IsPSolvableCharacterTable( tbl, 3 );
+true
+\endexample
+
+\>IsClassFusionOfNormalSubgroup( <subtbl>, <fus>, <tbl> ) F
+
+For two ordinary character tables <tbl> and <subtbl> of a group $G$ and
+its subgroup $U$, say,
+and a list <fus> of positive integers that describes the class fusion of
+$U$ into $G$,
+`IsClassFusionOfNormalSubgroup' returns `true'
+if $U$ is a normal subgroup of $G$, and `false' otherwise.
+
+
+\beginexample
+gap> tblc2:= CharacterTable( "Cyclic", 2 );;
+gap> tbld8:= CharacterTable( "Dihedral", 8 );;
+gap> fus:= PossibleClassFusions( tblc2, tbld8 );
+[ [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ]
+gap> List( fus, map -> IsClassFusionOfNormalSubgroup( tblc2, map, tbld8 ) );
+[ true, false, false ]
+\endexample
+
+\>Indicator( <tbl>, <n> ) O
+\>Indicator( <tbl>[, <characters>], <n> ) O
+\>Indicator( <modtbl>, 2 ) O
+\>IndicatorOp( <tbl>, <characters>, <n> ) O
+\>ComputedIndicators( <tbl> ) A
+
+If <tbl> is an ordinary character table then `Indicator' returns the
+list of <n>-th Frobenius-Schur indicators of the characters in the list
+<characters>; the default of <characters> is `Irr( <tbl> )'.
+
+The $n$-th Frobenius-Schur indicator $\nu_n(\chi)$ of an ordinary
+character $\chi$ of the group $G$ is given by
+$\nu_n(\chi) = \frac{1}{|G|} \sum_{g \in G} \chi(g^n)$.
+
+If <tbl> is a Brauer table in characteristic $\not= 2$ and $<n> = 2$
+then `Indicator' returns the second indicator.
+
+The default method uses the attribute
+`ComputedIndicators' for storing the computed value at
+position <n>, and calls the operation `IndicatorOp' for
+computing values that are not yet known.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "L3(2)" );;
+gap> Indicator( tbl, 2 );
+[ 1, 0, 0, 1, 1, 1 ]
+\endexample
+
+\>NrPolyhedralSubgroups( <tbl>, <c1>, <c2>, <c3> ) F
+
+\index{subgroups!polyhedral}
+
+returns the number and isomorphism type of polyhedral subgroups of the
+group with ordinary character table <tbl> which are generated by an
+element $g$ of class <c1> and an element $h$ of class <c2> with the
+property that the product $gh$ lies in class <c3>.
+
+According to p.~233 in~\cite{NPP84}, the number of polyhedral subgroups
+of isomorphism type $V_4$, $D_{2n}$, $A_4$, $S_4$, and $A_5$
+can be derived from the class multiplication coefficient
+(see~"ClassMultiplicationCoefficient!for character tables")
+and the number of Galois
+conjugates of a class (see~"ClassOrbit").
+
+The classes <c1>, <c2> and <c3> in the parameter list must be ordered
+according to the order of the elements in these classes.
+
+
+\beginexample
+gap> NrPolyhedralSubgroups( tbl, 2, 2, 4 );
+rec( number := 21, type := "D8" )
+\endexample
+
+\>ClassMultiplicationCoefficient( <tbl>, <i>, <j>, <k> )!{for character tables} O
+
+\index{class multiplication coefficient}
+\index{structure constant}
+
+returns the class multiplication coefficient of the classes <i>, <j>,
+and <k> of the group $G$ with ordinary character table <tbl>.
+
+The class multiplication coefficient $c_{i,j,k}$ of the classes <i>,
+<j>, <k> equals the number of pairs $(x,y)$ of elements $x, y \in G$
+such that $x$ lies in class <i>, $y$ lies in class <j>,
+and their product $xy$ is a fixed element of class <k>.
+
+In the center of the group algebra of $G$, these numbers are found as
+coefficients of the decomposition of the product of two class sums $K_i$
+and $K_j$ into class sums,
+$$
+K_i K_j = \sum_k c_{ijk} K_k\.
+$$
+Given the character table of a finite group $G$,
+whose classes  are $C_1, \dots, C_r$ with representatives $g_i \in C_i$,
+the class multiplication coefficient $c_{ijk}$ can be computed
+by the following formula.
+$$
+c_{ijk} = \frac{\|C_i\|\|C_j\|}{\|G\|}
+          \sum_{\chi \in Irr(G)}
+          \frac{\chi(g_i) \chi(g_j) \overline{\chi(g_k)}}{\chi(1)}\.
+$$
+On the other hand the knowledge of the class multiplication coefficients
+admits the computation of the irreducible characters of $G$.
+(see~"IrrDixonSchneider").
+
+
+\>ClassStructureCharTable( <tbl>, <classes> ) F
+
+\index{class multiplication coefficient}
+\index{structure constant}
+
+returns the so-called class structure of the classes in the list
+<classes>, for the character table <tbl> of the group $G$.
+The length of <classes> must be at least 2.
+
+Let $C = (C_1, C_2, \dots, C_n)$ denote the $n$-tuple of conjugacy
+classes of $G$ that are indexed by <classes>.
+The class structure $n(C)$ equals
+the number of $n$-tuples $(g_1, g_2, \ldots, g_n)$ of elements
+$g_i\in C_i$ with $g_1 g_2 \cdots g_n = 1$.
+Note the difference to the definition of the class multiplication
+coefficients in `ClassMultiplicationCoefficient'
+(see~"ClassMultiplicationCoefficient!for character tables").
+
+$n(C_1, C_2, \ldots, C_n)$ is computed using the formula
+$$
+n(C_1, C_2, \ldots, C_n) 
+       = \frac{\|C_1\|\|C_2\|\cdots\|C_n\|}{\|G\|}
+         \sum_{\chi \in Irr(G)}
+         \frac{\chi(g_1)\chi(g_2)\cdots\chi(g_n)}{\chi(1)^{n-2}}.
+$$
+
+
+\>MatClassMultCoeffsCharTable( <tbl>, <i> ) F
+
+\index{structure constant}
+\index{class multiplication coefficient}
+
+For an ordinary character table <tbl> and a class position <i>,
+`MatClassMultCoeffsCharTable' returns the matrix
+$[ a_{ijk} ]_{j,k}$ of structure constants
+(see~"ClassMultiplicationCoefficient!for character tables").
+
+
+\beginexample
+gap> tbl:= CharacterTable( "L3(2)" );;
+gap> ClassMultiplicationCoefficient( tbl, 2, 2, 4 );
+4
+gap> ClassStructureCharTable( tbl, [ 2, 2, 4 ] );
+168
+gap> ClassStructureCharTable( tbl, [ 2, 2, 2, 4 ] );
+1848
+gap> MatClassMultCoeffsCharTable( tbl, 2 );
+[ [ 0, 1, 0, 0, 0, 0 ], [ 21, 4, 3, 4, 0, 0 ], [ 0, 8, 6, 8, 7, 7 ], 
+  [ 0, 8, 6, 1, 7, 7 ], [ 0, 0, 3, 4, 0, 7 ], [ 0, 0, 3, 4, 7, 0 ] ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Printing Character Tables}
+
+\indextt{ViewObj!for character tables}
+The default  `ViewObj'  (see~"ViewObj")  method  for  ordinary  character
+tables prints the string `\"CharacterTable\"', followed by the identifier
+(see~"Identifier!for character tables") or, if known, the  group  of  the
+character table enclosed in brackets. `ViewObj' for  Brauer  tables  does
+the same, except that the first string is replaced by  `\"BrauerTable\"',
+and that the characteristic is also shown.
+
+\indextt{PrintObj!for character tables}
+The default `PrintObj' (see~"PrintObj") method for character tables
+does the same as `ViewObj',
+except that the group is is `Print'-ed instead of `View'-ed.
+
+\indextt{Display!for character tables}
+The default `Display' (see~"Display") method for a character table <tbl>
+prepares the data contained in <tbl> for a pretty columnwise output.
+The number of columns printed at one time depends on the actual
+line length, which can be accessed and changed by the function
+`SizeScreen' (see~"SizeScreen").
+
+`Display' shows certain characters (by default all irreducible
+characters) of <tbl>, together with the orders of the centralizers in
+factorized form and the available power maps (see~"ComputedPowerMaps").
+Each displayed character is given a name `X.<n>'.
+
+The first lines of the output describe the order of the centralizer
+of an element of the class factorized into its prime divisors.
+
+The next line gives the name of each class.
+If no class names are stored on <tbl>, `ClassNames' is called
+(see~"ClassNames").
+
+Preceded by a name `P<n>', the next lines show the <n>th power maps
+of <tbl> in terms of the former shown class names.
+
+Every ambiguous or unknown (see Chapter~"Unknowns") value of the table
+is displayed as a question mark `?'.
+
+Irrational character values are not printed explicitly because the
+lengths of their printed representation might disturb the layout.
+Instead of that every irrational value is indicated by a name,
+which is a string of at least one capital letter.
+
+Once a name for an irrational value is found, it is used all over the
+printed table.
+Moreover the complex conjugate (see~"ComplexConjugate", "GaloisCyc")
+and the star of an irrationality (see~"StarCyc") are represented by
+that very name preceded by a `/' and a `\*', respectively.
+
+The printed character table is then followed by a legend,
+a list identifying the occurring symbols with their actual values.
+Occasionally this identification is supplemented by a quadratic
+representation of the irrationality together with the corresponding
+{\ATLAS}-notation (see~\cite{CCN85}).
+
+The optional second argument <arec> of `Display' can be used to change
+the default style (mentioned above) for displaying a character.
+<arec> must be a record, its relevant components are the following.
+
+\beginitems
+`chars' &
+    an integer or a list of integers to select a sublist of the
+    irreducible characters of <tbl>,
+    or a list of characters of <tbl>
+    (in this case the letter `\"X\"' is replaced by `\"Y\"'),
+
+`classes' &
+    an integer or a list of integers to select a sublist of the
+    classes of <tbl>,
+
+`centralizers' &
+    suppresses the printing of the orders of the centralizers
+    if `false',
+
+`powermap' &
+    an integer or a list of integers to select a subset of the
+    available power maps, or `false' to suppress the printing of
+    power maps,
+
+`letter' &
+    a single capital letter (e.~g.~`\"P\"' for permutation characters)
+    to replace `\"X\"',
+
+`indicator' &
+    `true' enables the printing of the second Frobenius Schur indicator,
+    a list of integers enables the printing of the corresponding
+    indicators (see~"Indicator"),
+
+`StringEntry' &
+    a function that takes either a character value or a character value
+    and the return value of `StringEntryData' (see below),
+    and returns the string that is actually displayed;
+    it is called for all character values to be displayed,
+    and also for the displayed indicator values (see above);
+    the default `StringEntry' function is 
+    `CharacterTableDisplayStringEntryDefault',
+
+`StringEntryData' &
+    a unary function that is called once with argument <tbl> before the
+    character values are displayed;
+    it returns an object that is used as second argument of the function
+    `StringEntry';
+    the default `StringEntryData' function is
+    `CharacterTableDisplayStringEntryDataDefault',
+
+`PrintLegend' &
+    a function that is called with the result of the `StringEntryData'
+    call after the character table has been displayed;
+    the default `PrintLegend' function is
+    `CharacterTableDisplayPrintLegendDefault'.
+\enditems
+If the value of `DisplayOptions' (see~"DisplayOptions") is stored on
+<tbl>, it is used as default value for <arec> in the one argument call of
+`Display'.
+
+
+
+\>DisplayOptions( <tbl> ) A
+
+There is no default method to compute a value,
+one can set a value with `SetDisplayOptions'.
+
+
+\beginexample
+gap> tbl:= CharacterTable( "A5" );;
+gap> Display( tbl );
+A5
+
+     2  2  2  .  .  .
+     3  1  .  1  .  .
+     5  1  .  .  1  1
+
+       1a 2a 3a 5a 5b
+    2P 1a 1a 3a 5b 5a
+    3P 1a 2a 1a 5b 5a
+    5P 1a 2a 3a 1a 1a
+
+X.1     1  1  1  1  1
+X.2     3 -1  .  A *A
+X.3     3 -1  . *A  A
+X.4     4  .  1 -1 -1
+X.5     5  1 -1  .  .
+
+A = -E(5)-E(5)^4
+  = (1-ER(5))/2 = -b5
+gap> options:= rec( chars:= 4, classes:= [ tbl.3a .. tbl.5a ],
+>                   centralizers:= false, indicator:= true,
+>                   powermap:= [ 2 ] );;
+gap> Indicator( tbl, 2 );;
+gap> Display( tbl, options );
+A5
+
+          3a 5a
+       2P 3a 5b
+       2
+X.4    +   1 -1
+gap> SetDisplayOptions( tbl, options );  Display( tbl );
+A5
+
+          3a 5a
+       2P 3a 5b
+       2
+X.4    +   1 -1
+\endexample
+
+\>PrintCharacterTable( <tbl>, <varname> ) F
+
+Let <tbl> be a nearly character table, and <varname> a string.
+`PrintCharacterTable' prints those values of the supported attributes
+(see~"SupportedCharacterTableInfo") that are known for <tbl>;
+
+The output of `PrintCharacterTable' is {\GAP} readable;
+actually reading it into {\GAP} will bind the variable with name
+<varname> to a character table that coincides with <tbl> for all
+printed components.
+
+This is used mainly for saving character tables to files.
+A more human readable form is produced by `Display'.
+
+
+
+
+\beginexample
+gap> PrintCharacterTable( CharacterTable( "Cyclic", 2 ), "tbl" );
+tbl:= function()
+local tbl;
+tbl:=rec();
+tbl.Irr:=
+[ [ 1, 1 ], [ 1, -1 ] ];
+tbl.NrConjugacyClasses:=
+2;
+tbl.Size:=
+2;
+tbl.OrdersClassRepresentatives:=
+[ 1, 2 ];
+tbl.SizesCentralizers:=
+[ 2, 2 ];
+tbl.UnderlyingCharacteristic:=
+0;
+tbl.ClassParameters:=
+[ [ 1, 0 ], [ 1, 1 ] ];
+tbl.CharacterParameters:=
+[ [ 1, 0 ], [ 1, 1 ] ];
+tbl.Identifier:=
+"C2";
+tbl.InfoText:=
+"computed using generic character table for cyclic groups";
+tbl.ComputedPowerMaps:=
+[ , [ 1, 1 ] ];
+ConvertToLibraryCharacterTableNC(tbl);
+return tbl;
+end;
+tbl:= tbl();
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Computing the Irreducible Characters of a Group}
+
+Several algorithms are available for computing the irreducible characters of
+a finite group $G$.
+The default method for arbitrary finite groups is to use the Dixon-Schneider
+algorithm (see~"IrrDixonSchneider").
+For supersolvable groups, Conlon's algorithm can be used (see~"IrrConlon").
+For abelian-by-supersolvable groups, the Baum-Clausen algorithm for computing
+the irreducible representations (see~"IrreducibleRepresentations")
+can be used to compute the irreducible characters (see~"IrrBaumClausen").
+
+These functions are installed in methods for `Irr' (see~"Irr"),
+but explicitly calling one of them will *not* set the `Irr' value of $G$.
+
+\>IrrDixonSchneider( <G> ) A
+
+computes the irreducible characters of the finite group <G>,
+using the Dixon-Schneider method (see~"The Dixon-Schneider Algorithm").
+It calls `DixonInit' and `DixonSplit',
+and finally returns the list returned by `DixontinI'
+(see~"Advanced Methods for Dixon-Schneider Calculations",
+"Components of a Dixon Record",
+"An Example of Advanced Dixon-Schneider Calculations").
+
+
+\>IrrConlon( <G> ) A
+
+For a finite solvable group <G>, `IrrConlon' returns a list of certain
+irreducible characters of <G>, among those all irreducibles that have the
+supersolvable residuum of <G> in their kernels;
+so if <G> is supersolvable, all irreducible characters of <G> are
+returned.
+An error is signalled if <G> is not solvable.
+
+The characters are computed using Conlon's algorithm
+(see~\cite{Con90a} and~\cite{Con90b}).
+For each irreducible character in the returned list,
+the monomiality information (see~"TestMonomial") is stored.
+
+
+\>IrrBaumClausen( <G> ) A
+
+`IrrBaumClausen' returns the absolutely irreducible ordinary characters
+of the factor group of the finite solvable group <G>
+by the derived subgroup of its supersolvable residuum.
+
+The characters are computed using the algorithm by Baum and Clausen
+(see~\cite{BC94}).
+An error is signalled if <G> is not solvable.
+
+
+
+In the following example we temporarily increase the line length limit from
+its default value 80 to 87 in order to get a nicer output format.
+
+\beginexample
+gap> g:= SL(2,3);;
+gap> SizeScreen([ 87, ]);;
+gap> irr1:= IrrDixonSchneider( g );
+[ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3), E(3)^2, -E(3)^2, -E(3), 0 ] ),
+  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3)^2, E(3), -E(3), -E(3)^2, 0 ] ),
+  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+gap> irr2:= IrrConlon( g );
+[ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+gap> irr3:= IrrBaumClausen( g );
+[ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+gap> SizeScreen([ 80, ]);;
+gap> chi:= irr2[4];;  HasTestMonomial( chi );
+true
+\endexample
+
+\>IrreducibleRepresentations( <G> ) A
+\>IrreducibleRepresentations( <G>, <F> ) O
+
+Called with a finite group <G> and a field <F>,
+`IrreducibleRepresentations' returns a list of representatives of the
+irreducible matrix representations of <G> over <F>, up to equivalence.
+
+If <G> is the only argument then `IrreducibleRepresentations' returns a
+list of representatives of the absolutely irreducible complex
+representations of <G>, up to equivalence.
+
+At the moment, methods are available for the following cases: If <G> is
+abelian by supersolvable the method of~\cite{BC94} is used.
+
+Otherwise, if <F> and <G> are both finite, the regular module of <G> is
+split by MeatAxe methods which can make this an expensive operation.
+
+Finally, if <F> is not given (i.e. it defaults to the cyclotomic
+numbers) and <G> is a finite group, the method of \cite{Dix93} (see
+"IrreducibleRepresentationsDixon") is used.
+
+For other cases no methods are implemented yet.
+
+See also `IrreducibleModules', which provides efficient
+methods for solvable groups.
+
+
+\beginexample
+gap> g:= AlternatingGroup( 4 );;
+gap> repr:= IrreducibleRepresentations( g );
+[ Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -> 
+    [ [ [ 1 ] ], [ [ 1 ] ], [ [ 1 ] ] ], 
+  Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -> 
+    [ [ [ E(3) ] ], [ [ 1 ] ], [ [ 1 ] ] ], 
+  Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -> 
+    [ [ [ E(3)^2 ] ], [ [ 1 ] ], [ [ 1 ] ] ], 
+  Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -> 
+    [ [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], 
+      [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], 
+      [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ] ]
+gap> ForAll( repr, IsGroupHomomorphism );
+true
+gap> Length( repr );
+4
+gap> gens:= GeneratorsOfGroup( g );
+[ (1,2,3), (2,3,4) ]
+gap> List( gens, x -> x^repr[1] );
+[ [ [ 1 ] ], [ [ 1 ] ] ]
+gap>  List( gens, x -> x^repr[4] );
+[ [ [ 0, 0, -1 ], [ 1, 0, 0 ], [ 0, -1, 0 ] ], 
+  [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ]
+\endexample
+
+\>IrreducibleRepresentationsDixon( <G> ) F
+\>IrreducibleRepresentationsDixon( <G>, <chi> ) F
+\>IrreducibleRepresentationsDixon( <G>, <chilist> ) F
+
+computes (reresentatives of) all irreducible complex representations for
+the finite group <G>, using the method of~\cite{Dix93}, which computes
+the character table and computes the representation as constituent of an
+induced monomial representation of a subgroup.
+
+This method can be quite expensive for larger groups, for example it
+might involve calculation of the subgroup lattice of <G>.
+
+If given, <chi> must be a character, in this case only a representation
+for <chi> is returned.
+
+If given, <chilist> must be a list of characters, in this case only
+representations for characters in <chilist> are computed.
+
+Note that this method might fail if for an irreducible representation
+there is no subgroup in which its reduction has a linear constituent
+with multiplicity one.
+
+\beginexample
+gap> a5:= AlternatingGroup( 5 );
+Alt( [ 1 .. 5 ] )
+gap> char:= First( Irr( a5 ), x -> x[1] = 4 );
+Character( CharacterTable( Alt( [ 1 .. 5 ] ) ), [ 4, 0, 1, -1, -1 ] )
+gap> hom:=IrreducibleRepresentationsDixon( a5, char );;
+gap> Order( a5.1*a5.2 ) = Order( Image( hom, a5.1 )*Image( hom, a5.2 ) );
+true
+gap> reps:= List( ConjugacyClasses( a5 ), Representative );;
+gap> List( reps, g -> TraceMat( Image( hom, g ) ) );
+[ 4, 0, 1, -1, -1 ]
+\endexample
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Representations given by modules}
+
+\>IrreducibleModules( <G>, <F>, <dim> ) O
+
+returns a list of length 2. The first entry is a generating system of
+<G>. The second entry is a list of all irreducible modules of
+<G> over the field <F> in dimension <dim>, given as MeatAxe modules
+(see~"GModuleByMats").
+
+\>AbsoluteIrreducibleModules( <G>, <F>, <dim> ) O
+\>AbsolutIrreducibleModules( <G>, <F>, <dim> ) O
+
+returns a list of length 2. The first entry is a generating system of
+<G>. The second entry is a list of all absolute irreducible modules of
+<G> over the field <F> in dimension <dim>, given as MeatAxe modules
+(see~"GModuleByMats").
+
+\>RegularModule( <G>, <F> ) O
+
+returns a list of length 2. The first entry is a generating system of
+<G>. The second entry is the regular module of <G> over <F>, given as a
+MeatAxe module (see~"GModuleByMats").
+
+
+(Extensions by modules can be formed by the command `Extensions', see
+"Extensions".)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The Dixon-Schneider Algorithm}
+
+\atindex{Dixon-Schneider algorithm}{@Dixon-Schneider algorithm}
+
+The {\GAP} library implementation of the Dixon-Schneider algorithm
+first computes the linear characters, using the commutator factor group.
+If irreducible characters are missing afterwards,
+they are computed using the techniques described in~\cite{Dix67},
+\cite{Sch90} and \cite{Hulpke93}.
+
+Called with a group $G$, the function `CharacterTable'
+(see~"CharacterTable") returns a character table object that stores
+already information such as class lengths, but not the irreducible
+characters.
+The routines that compute the irreducibles may use the information that
+is already contained in this table object.
+In particular the ordering of classes in the computed characters
+coincides with the ordering of classes in the character table of <G>
+(see~"The Interface between Character Tables and Groups").
+Thus it is possible to combine computations using the group
+with character theoretic computations
+(see~"Advanced Methods for Dixon-Schneider Calculations" for details),
+for example one can enter known characters.
+Note that the user is responsible for the correctness of the characters.
+(There is little use in providing the trivial character to the routine.)
+
+The computation of irreducible characters from the group needs to
+identify the classes of group elements very often,
+so it can be helpful to store a class list of all group elements.
+Since this is obviously limited by the group order,
+it is controlled by the global function `IsDxLargeGroup'
+(see~"IsDxLargeGroup").
+
+The routines compute in a prime field of size $p$,
+such that the exponent of the group divides $(p-1)$ and such that
+$2 \sqrt{|G|} \< p$.
+Currently prime fields of size smaller than $65\,536$ are handled more
+efficiently than larger prime fields,
+so the runtime of the character calculation depends on how large the
+chosen prime is.
+
+The routine stores a Dixon record (see~"DixonRecord") in the group
+that helps routines that identify classes,
+for example `FusionConjugacyClasses', to work much faster.
+Note that interrupting Dixon-Schneider calculations will prevent {\GAP}
+from cleaning up the Dixon record;
+when the computation by `IrrDixonSchneider' is complete,
+the possibly large record is shrunk to an acceptable size.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Advanced Methods for Dixon-Schneider Calculations}
+
+\index{irreducible characters!computation}
+
+The computation of irreducible characters of very large groups may take quite
+some time.
+On the other hand, for the expert only a few irreducible characters may be
+needed,
+since the other ones can be computed using character theoretic methods
+such as tensoring, induction, and restriction.
+Thus {\GAP} provides also step-by-step routines for doing the calculations.
+These routines allow one to compute some characters and to stop before all
+are calculated.
+Note that there is no ``safety net'':
+The routines (being somehow internal) do no error checking,
+and assume the information given is correct.
+
+When the info level of `InfoCharacterTable' if positive,
+information about the progress of splitting is printed.
+(The default value is zero.)
+
+\>DixonRecord( <G> ) AM
+
+The `DixonRecord' of a group contains information used by the routines
+to compute the irreducible characters and related information via the
+Dixon-Schneider algorithm such as class arrangement and character spaces
+split obtained so far.
+Usually this record is passed as argument to all subfunctions to avoid a
+long argument list.
+It has a component `.conjugacyClasses' which contains the classes of <G>
+*ordered as the algorithm needs them*.
+
+
+\>DixonInit( <G> ) F
+
+This function does all the initializations for the Dixon-Schneider
+algorithm. This includes calculation of conjugacy classes, power maps,
+linear characters and character morphisms.
+It returns a record (see~"DixonRecord", "Components of a Dixon Record")
+that can be used when calculating the irreducible characters of <G>
+interactively.
+
+
+\>DixontinI( <D> ) F
+
+This function ends a Dixon-Schneider calculation.
+It sorts the characters according to the degree and
+unbinds components in the Dixon record that are not of use any longer.
+It returns a list of irreducible characters.
+
+
+\>DixonSplit( <D> ) F
+
+This function performs one splitting step in the Dixon-Schneider
+algorithm. It selects a class, computes the (partial) class sum matrix,
+uses it to split character spaces and stores all the irreducible
+characters obtained that way.
+
+The class to use for splitting is chosen via `BestSplittingMatrix' and
+the options described for this function apply here.
+
+`DixonSplit' returns `true' if a split was performed and `fail'
+otherwise.
+
+
+\>BestSplittingMatrix( <D> ) F
+
+returns the number of the class sum matrix that is assumed to yield the 
+best (cost/earning ration) split. This matrix then will be the next one
+computed and used.
+
+The global option `maxclasslen' (defaulting to `infinity') is recognized
+by `BestSplittingMatrix': Only classes whose length is limited by the
+value of this option will be considered for splitting. If no usable class
+remains, `fail' is returned.
+
+
+\>DxIncludeIrreducibles( <D>, <new>[, <newmod>] ) F
+
+This function takes a list of irreducible characters <new>, each given as
+a list of values (corresponding to the class arrangement in <D>), and
+adds these to a partial computed list of irreducibles as maintained by
+the Dixon record <D>.
+This permits one to add characters in interactive use obtained from other
+sources and to continue the Dixon-Schneider calculation afterwards.
+If the optional argument <newmod> is given, it must be a
+list of reduced characters, corresponding to <new>.
+(Otherwise the function has to reduce the characters itself.)
+
+The function closes the new characters under the action of Galois
+automorphisms and tensor products with linear characters.
+
+
+\>SplitCharacters( <D>, <list> ) F
+
+This routine decomposes the characters given in <list> according to the
+character spaces found up to this point. By applying this routine to
+tensor products etc., it may result in characters with smaller norm,
+even irreducible ones. Since the recalculation of characters is only
+possible if the degree is small enough, the splitting process is
+applied only to characters of sufficiently small degree.
+
+
+\>IsDxLargeGroup( <G> ) F
+
+returns `true' if the order of the group <G> is smaller than the current
+value of the global variable `DXLARGEGROUPORDER',
+and `false' otherwise.
+In Dixon-Schneider calculations, for small groups in the above sense a
+class map is stored, whereas for large groups,
+each occurring element is identified individually.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Components of a Dixon Record}
+
+The ``Dixon record'' <D> returned by `DixonInit' (see~"DixonInit")
+stores all the information that is used by the Dixon-Schneider routines
+while computing the irreducible characters of a group.
+Some entries, however, may be useful to know about when using the algorithm
+interactively (see~"An Example of Advanced Dixon-Schneider Calculations").
+\beginitems
+`group':&
+the group $G$ of which the character table is to be computed,
+
+`conjugacyClasses':&
+classes of $G$ (all characters stored in the Dixon record correspond to this
+arrangement of classes),
+
+`irreducibles':&
+the already known irreducible characters
+(given as lists of their values on the conjugacy classes),
+
+`characterTable':&
+the `CharacterTable' value of $G$ (whose characters are not yet known),
+
+`ClassElement( <D>, <el> )':&
+a function that returns the number of the class of $G$ that contains the
+element <el>.
+\enditems
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{An Example of Advanced Dixon-Schneider Calculations}
+
+First, we set the appropriate info level higher
+\beginexample
+gap> SetInfoLevel( InfoCharacterTable, 1 );
+\endexample
+for printout of some internal results.
+We now define our group, which is isomorphic to ${\rm PSL}_4(3)$.
+\beginexample
+gap> g:= PrimitiveGroup(40,5);
+PSL(4,3)
+gap> Size(g);
+6065280
+gap> d:= DixonInit( g );;
+#I  29 classes
+#I  choosing prime 28081
+gap> c:= d.characterTable;;
+\endexample
+After the initialisation, one structure matrix is evaluated,
+yielding smaller spaces and several irreducible characters.
+\beginexample
+gap> DixonSplit( d );
+#I  Matrix 20,Representative of Order 3,Centralizer: 5832
+#I  Dimensions: [ 1, 12, 2, 2, 4, 2, 1, 1, 1, 1, 1 ]
+#I  Two-dim space split
+#I  Two-dim space split
+#I  Two-dim space split
+20
+\endexample
+In this case spaces of the listed dimensions are a result of the
+splitting process.
+The three two dimensional spaces are split successfully by combinatoric
+means.
+
+We obtain several irreducible characters by tensor products and notify them
+to the Dixon record.
+\beginexample
+gap> asp:= AntiSymmetricParts( c, d.irreducibles, 2 );;
+gap> ro:= ReducedOrdinary( c, d.irreducibles, asp );;
+gap> Length( ro.irreducibles );
+3
+gap> DxIncludeIrreducibles( d, ro.irreducibles );
+\endexample
+The tensor products of the nonlinear characters among each other are reduced
+with the irreducible characters.
+The result is split according to the spaces found, which yields characters
+of smaller norms, but no new irreducibles.
+\beginexample
+gap> nlc:= Filtered( d.irreducibles, i -> i[1] > 1 );;
+gap> t:= Tensored( nlc, nlc );;
+gap> ro:= ReducedOrdinary( c, d.irreducibles, t );;  ro.irreducibles;
+[  ]
+gap> List( ro.remainders, i -> ScalarProduct( c, i, i) );
+[ 2, 2, 4, 4, 4, 4, 13, 13, 18, 18, 19, 21, 21, 36, 36, 29, 34, 34, 42, 34, 
+  48, 54, 62, 68, 68, 78, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 
+  271, 268, 274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 
+  768, 768, 890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 
+  2058, 2379, 2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 
+  4760, 5112, 5115, 5115, 5414, 6080, 6318, 7100, 7369, 7369, 7798, 8644, 
+  10392, 12373, 12922, 14122, 14122, 18948, 21886, 24641, 24641, 25056, 
+  38942, 44950, 78778 ]
+gap> t:= SplitCharacters( d, ro.remainders );;
+gap> List( t, i -> ScalarProduct( c, i, i ) );
+[ 2, 2, 4, 2, 2, 4, 4, 3, 6, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
+  16, 42, 36, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
+  274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 768, 768, 
+  890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 2058, 2379, 
+  2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 4760, 5112, 
+  5115, 5115, 5414, 6080, 6318, 7100, 7369, 7369, 7798, 8644, 10392, 12373, 
+  12922, 14122, 14122, 18948, 21886, 24641, 24641, 25056, 38942, 44950, 78778 
+ ]
+\endexample
+Finally we calculate the characters induced from all cyclic subgroups and
+obtain the missing irreducibles by applying the LLL-algorithm to them.
+\beginexample
+gap> ic:= InducedCyclic( c, "all" );;
+gap> ro:= ReducedOrdinary( c, d.irreducibles, ic );;
+gap> Length( ro.irreducibles );
+0
+gap> l:= LLL( c, ro.remainders );;
+gap> Length( l.irreducibles );
+13
+\endexample
+The LLL returns class function objects (see Chapter~"Class Functions"),
+and the Dixon record works with character values lists.
+So we convert them to a list of values
+before feeding them in the machinery of the Dixon-algorithm.
+\beginexample
+gap> l.irreducibles[1];
+Character( CharacterTable( PSL(4,3) ), [ 640, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  -8, 0, 0, -8, 0, 0, 0, 1, -8, 0, 1, 0, 0, E(13)^7+E(13)^8+E(13)^11, 
+  E(13)+E(13)^3+E(13)^9, E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 
+  1 ] )
+gap> l:=List(l.irreducibles,ValuesOfClassFunction);;
+gap> DxIncludeIrreducibles( d, l );
+gap> Length( d.irreducibles );
+29
+gap> Length( d.classes );
+29
+\endexample
+It turns out we have found all irreducible characters.
+As the last step, we obtain the irreducible characters and tell them to the
+group.
+This makes them available also to the character table.
+\beginexample
+gap> irrs:= DixontinI( d );;
+#I  Total:1 matrices,[ 20 ]
+gap> SetIrr(g,irrs);
+gap> Length(Irr(c));
+29
+gap> SetInfoLevel( InfoCharacterTable, 0 );
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Constructing Character Tables from Others}
+
+
+The following operations take one or more character table arguments,
+and return a character table.
+This holds also for `BrauerTable' (see~"BrauerTable");
+note that the return value of `BrauerTable' will in general not
+know the irreducible Brauer characters,
+and {\GAP} might be unable to compute these characters.
+
+*Note* that whenever fusions between input and output tables occur in
+these operations,
+they are stored on the concerned tables,
+and the `NamesOfFusionSources' values are updated.
+
+(The interactive construction of character tables using character
+theoretic methods and incomplete tables is not described here.)
+*@Currently it is not supported and will be described in a chapter of its
+own when it becomes available@*.
+
+
+
+\>CharacterTableDirectProduct( <tbl1>, <tbl2> ) O
+
+is the table of the direct product of the character tables <tbl1>
+and <tbl2>.
+
+The matrix of irreducibles of this table is the Kronecker product
+(see~"KroneckerProduct") of the irreducibles of <tbl1> and <tbl2>.
+
+Products of ordinary and Brauer character tables are supported.
+
+In general, the result will not know an underlying group,
+so missing power maps (for prime divisors of the result)
+and irreducibles of the input tables may be computed in order to
+construct the table of the direct product.
+
+The embeddings of the input tables into the direct product are stored,
+they can be fetched with `GetFusionMap' (see~"GetFusionMap");
+if <tbl1> is equal to <tbl2> then the two embeddings are distinguished
+by their `specification' components `"1"' and `"2"', respectively.
+
+Analogously, the projections from the direct product onto the input
+tables are stored, and can be distinguished by the `specification'
+components.
+
+
+The attribute `FactorsOfDirectProduct' (see~"FactorsOfDirectProduct")
+is set to the lists of arguments.
+
+The `\*' operator for two character tables
+(see~"Operators for Character Tables") delegates to
+`CharacterTableDirectProduct'.
+
+
+\beginexample
+gap> c2:= CharacterTable( "Cyclic", 2 );;
+gap> s3:= CharacterTable( "Symmetric", 3 );;
+gap> Display( CharacterTableDirectProduct( c2, s3 ) );
+C2xSym(3)
+
+     2  2  2  1  2  2  1
+     3  1  .  1  1  .  1
+
+       1a 2a 3a 2b 2c 6a
+    2P 1a 1a 3a 1a 1a 3a
+    3P 1a 2a 1a 2b 2c 2b
+
+X.1     1 -1  1  1 -1  1
+X.2     2  . -1  2  . -1
+X.3     1  1  1  1  1  1
+X.4     1 -1  1 -1  1 -1
+X.5     2  . -1 -2  .  1
+X.6     1  1  1 -1 -1 -1
+\endexample
+
+\>FactorsOfDirectProduct( <tbl> ) A
+
+For an ordinary character table that has been constructed via
+`CharacterTableDirectProduct' (see~"CharacterTableDirectProduct"),
+the value of `FactorsOfDirectProduct' is the list of arguments in the
+`CharacterTableDirectProduct' call.
+
+Note that there is no default method for *computing* the value of
+`FactorsOfDirectProduct'.
+
+
+
+\>CharacterTableFactorGroup( <tbl>, <classes> ) O
+
+is the character table of the factor group of the ordinary character
+table <tbl> by the normal closure of the classes whose positions are
+contained in the list <classes>.
+
+The `\/' operator for a character table and a list of class positions
+(see~"Operators for Character Tables") delegates to
+`CharacterTableFactorGroup'.
+
+
+\beginexample
+gap> s4:= CharacterTable( "Symmetric", 4 );;
+gap> ClassPositionsOfNormalSubgroups( s4 );
+[ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1 .. 5 ] ]
+gap> f:= CharacterTableFactorGroup( s4, [ 3 ] );
+CharacterTable( "Sym(4)/[ 1, 3 ]" )
+gap> Display( f );
+Sym(4)/[ 1, 3 ]
+
+     2  1  1  .
+     3  1  .  1
+
+       1a 2a 3a
+    2P 1a 1a 3a
+    3P 1a 2a 1a
+
+X.1     1 -1  1
+X.2     2  . -1
+X.3     1  1  1
+\endexample
+
+\>CharacterTableIsoclinic( <tbl> ) O
+\>CharacterTableIsoclinic( <tbl>, <classes> ) O
+\>CharacterTableIsoclinic( <tbl>, <classes>, <centre> ) O
+
+If <tbl> is the character table of a group with structure $2\.G\.2$
+with a central subgroup $Z$ of order $2$ and a normal subgroup $N$ of
+index $2$ that contains $Z$ then `CharacterTableIsoclinic' returns
+the character table of the isoclinic group in the sense of the {\ATLAS}
+of Finite Groups~\cite{CCN85}, Chapter~6, Section~7.
+If $N$ is not uniquely determined then the positions of the classes
+forming $N$ must be entered as list <classes>.
+If $Z$ is not unique in $N$ then the position of the class consisting
+of the involution in $Z$ must be entered as <centre>.
+
+
+
+\beginexample
+gap> d8:= CharacterTable( "Dihedral", 8 );;
+gap> nsg:= ClassPositionsOfNormalSubgroups( d8 );
+[ [ 1 ], [ 1, 3 ], [ 1 .. 3 ], [ 1, 3, 4 ], [ 1, 3 .. 5 ], [ 1 .. 5 ] ]
+gap> Display( CharacterTableIsoclinic( d8, nsg[3] ) );
+Isoclinic(Dihedral(8))
+
+     2  3  2  3  2  2
+
+       1a 4a 2a 4b 4c
+    2P 1a 2a 1a 2a 2a
+
+X.1     1  1  1  1  1
+X.2     1  1  1 -1 -1
+X.3     1 -1  1  1 -1
+X.4     1 -1  1 -1  1
+X.5     2  . -2  .  .
+\endexample
+
+%Declaration{CharacterTableOfNormalSubgroup}
+
+\>CharacterTableWreathSymmetric( <tbl>, <n> ) F
+
+returns the character table of the wreath product of a group $G$ with
+the full symmetric group on $n$ points,
+where <tbl> is the character table of $G$.
+
+The result has values for `ClassParameters' and `CharacterParameters'
+(see~"ctbllib:ClassParameters"
+in the manual for the {\GAP} Character Table Library) stored,
+the entries in these lists are sequences of partitions.
+Note that this parametrization prevents the principal character from
+being the first one in the list of irreducibles.
+
+
+\beginexample
+gap> c3:= CharacterTable( "Cyclic", 3 );;
+gap> wr:= CharacterTableWreathSymmetric( c3, 2 );;
+gap> Display( wr );
+C3wrS2
+
+     2  1   .   .   1  .   1  1   1   1
+     3  2   2   2   2  2   2  1   1   1
+
+       1a  3a  3b  3c 3d  3e 2a  6a  6b
+    2P 1a  3b  3a  3e 3d  3c 1a  3c  3e
+    3P 1a  1a  1a  1a 1a  1a 2a  2a  2a
+
+X.1     1   1   1   1  1   1 -1  -1  -1
+X.2     2   A  /A   B -1  /B  .   .   .
+X.3     2  /A   A  /B -1   B  .   .   .
+X.4     1 -/A  -A  -A  1 -/A -1  /A   A
+X.5     2  -1  -1   2 -1   2  .   .   .
+X.6     1  -A -/A -/A  1  -A -1   A  /A
+X.7     1   1   1   1  1   1  1   1   1
+X.8     1 -/A  -A  -A  1 -/A  1 -/A  -A
+X.9     1  -A -/A -/A  1  -A  1  -A -/A
+
+A = -E(3)^2
+  = (1+ER(-3))/2 = 1+b3
+B = 2*E(3)
+  = -1+ER(-3) = 2b3
+gap> CharacterParameters( wr )[1];
+[ [ 1, 1 ], [  ], [  ] ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Sorted Character Tables}
+
+\>CharacterTableWithSortedCharacters( <tbl> ) O
+\>CharacterTableWithSortedCharacters( <tbl>, <perm> ) O
+
+is a character table that differs from <tbl> only by the succession of
+its irreducible characters.
+This affects the values of the attributes `Irr' (see~"Irr") and
+`CharacterParameters' (see~"ctbllib:CharacterParameters" in the manual
+for the {\GAP} Character Table Library).
+Namely, these lists are permuted by the permutation <perm>.
+
+If no second argument is given then a permutation is used that yields
+irreducible characters of increasing degree for the result.
+For the succession of characters in the result, see~"SortedCharacters".
+
+The result has all those attributes and properties of <tbl> that are
+stored in `SupportedCharacterTableInfo' and do not depend on the
+ordering of characters (see~"SupportedCharacterTableInfo").
+
+
+\>SortedCharacters( <tbl>, <chars> ) O
+\>SortedCharacters( <tbl>, <chars>, \"norm\" ) O
+\>SortedCharacters( <tbl>, <chars>, \"degree\" ) O
+
+is a list containing the characters <chars>, ordered as specified
+by the other arguments.
+
+There are three possibilities to sort characters:
+They can be sorted according to ascending norms (parameter `\"norm\"'),
+to ascending degree (parameter `\"degree\"'),
+or both (no third parameter),
+i.e., characters with same norm are sorted according to ascending degree,
+and characters with smaller norm precede those with bigger norm.
+
+Rational characters in the result precede other ones with same norm
+and/or same degree.
+
+The trivial character, if contained in <chars>, will always be sorted to
+the first position.
+
+
+\>CharacterTableWithSortedClasses( <tbl> ) O
+\>CharacterTableWithSortedClasses( <tbl>, \"centralizers\" ) O
+\>CharacterTableWithSortedClasses( <tbl>, \"representatives\" ) O
+\>CharacterTableWithSortedClasses( <tbl>, <permutation> ) O
+
+is a character table obtained by permutation of the classes of <tbl>.
+If the second argument is the string `\"centralizers\"' then the classes
+of the result are sorted according to descending centralizer orders.
+If the second argument is the string `\"representatives\"' then the
+classes of the result are sorted according to ascending representative
+orders.
+If no second argument is given then the classes of the result are sorted
+according to ascending representative orders,
+and classes with equal representative orders are sorted according to
+descending centralizer orders.
+
+If the second argument is a permutation <perm> then the classes of the
+result are sorted by application of this permutation.
+
+The result has all those attributes and properties of <tbl> that are
+stored in `SupportedCharacterTableInfo' and do not depend on the
+ordering of classes (see~"SupportedCharacterTableInfo").
+
+
+\>SortedCharacterTable( <tbl>, <kernel> ) F
+\>SortedCharacterTable( <tbl>, <normalseries> ) F
+\>SortedCharacterTable( <tbl>, <facttbl>, <kernel> ) F
+
+is a character table obtained on permutation of the classes and the
+irreducibles characters of <tbl>.
+
+The first form sorts the classes at positions contained in the list
+<kernel> to the beginning, and sorts all characters in
+`Irr( <tbl> )' such that the first characters are those that contain
+<kernel> in their kernel.
+
+The second form does the same successively for all kernels $k_i$ in
+the list $<normalseries> = [ k_1, k_2, \ldots, k_n ]$ where
+$k_i$ must be a sublist of $k_{i+1}$ for $1 \leq i \leq n-1$.
+
+The third form computes the table $F$ of the factor group of <tbl>
+modulo the normal subgroup formed by the classes whose positions are
+contained in the list <kernel>;
+$F$ must be permutation equivalent to the table <facttbl>,
+in the sense of `TransformingPermutationsCharacterTables'
+(see~"TransformingPermutationsCharacterTables"),
+otherwise `fail' is returned.
+The classes of <tbl> are sorted such that the preimages
+of a class of $F$ are consecutive,
+and that the succession of preimages is that of <facttbl>.
+`Irr( <tbl> )' is sorted as with `SortCharTable( <tbl>, <kernel> )'.
+
+(*Note* that the transformation is only unique up to table automorphisms
+of $F$, and this need not be unique up to table automorphisms of <tbl>.)
+
+All rearrangements of classes and characters are stable,
+i.e., the relative positions of classes and characters that are not
+distinguished by any relevant property is not changed.
+
+The result has all those attributes and properties of <tbl> that are
+stored in `SupportedCharacterTableInfo' and do not depend on the
+ordering of classes and characters (see~"SupportedCharacterTableInfo").
+
+The `ClassPermutation' value of <tbl> is changed if necessary,
+see~"Conventions for Character Tables".
+
+`SortedCharacterTable' uses `CharacterTableWithSortedClasses' and
+`CharacterTableWithSortedCharacters'
+(see~"CharacterTableWithSortedClasses",
+"CharacterTableWithSortedCharacters").
+
+
+\>ClassPermutation( <tbl> ) A
+
+is a permutation $\pi$ of classes of the character table <tbl>.
+If it is stored then class fusions into <tbl> that are stored on other
+tables must be followed by $\pi$ in order to describe the correct
+fusion.
+
+This attribute value is bound only if <tbl> was obtained from another
+table by permuting the classes, using
+`CharacterTableWithSortedClasses' or `SortedCharacterTable',
+(see~"CharacterTableWithSortedClasses", "SortedCharacterTable").
+
+It is necessary because the original table and the sorted table have the
+same identifier (and the same group if known),
+and hence the same fusions are valid for the two tables.
+
+
+
+\beginexample
+gap> tbl:= CharacterTable( "Symmetric", 4 );
+CharacterTable( "Sym(4)" )
+gap> Display( tbl );
+Sym(4)
+
+     2  3  2  3  .  2
+     3  1  .  .  1  .
+
+       1a 2a 2b 3a 4a
+    2P 1a 1a 1a 3a 2b
+    3P 1a 2a 2b 1a 4a
+
+X.1     1 -1  1  1 -1
+X.2     3 -1 -1  .  1
+X.3     2  .  2 -1  .
+X.4     3  1 -1  . -1
+X.5     1  1  1  1  1
+\endexample
+
+\beginexample
+gap> srt1:= CharacterTableWithSortedCharacters( tbl );
+CharacterTable( "Sym(4)" )
+gap> List( Irr( srt1 ), Degree );
+[ 1, 1, 2, 3, 3 ]
+gap> srt2:= CharacterTableWithSortedClasses( tbl );
+CharacterTable( "Sym(4)" )
+gap> SizesCentralizers( tbl );
+[ 24, 4, 8, 3, 4 ]
+gap> SizesCentralizers( srt2 );
+[ 24, 8, 4, 3, 4 ]
+gap> nsg:= ClassPositionsOfNormalSubgroups( tbl );
+[ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1 .. 5 ] ]
+gap> srt3:= SortedCharacterTable( tbl, nsg );
+CharacterTable( "Sym(4)" )
+gap> nsg:= ClassPositionsOfNormalSubgroups( srt3 );
+[ [ 1 ], [ 1, 2 ], [ 1 .. 3 ], [ 1 .. 5 ] ]
+gap> Display( srt3 );
+Sym(4)
+
+     2  3  3  .  2  2
+     3  1  .  1  .  .
+
+       1a 2a 3a 2b 4a
+    2P 1a 1a 3a 1a 2a
+    3P 1a 2a 1a 2b 4a
+
+X.1     1  1  1  1  1
+X.2     1  1  1 -1 -1
+X.3     2  2 -1  .  .
+X.4     3 -1  . -1  1
+X.5     3 -1  .  1 -1
+\endexample
+
+\beginexample
+gap> ClassPermutation( srt3 );
+(2,4,3)
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Automorphisms and Equivalence of Character Tables}
+
+\>MatrixAutomorphisms( <mat>[, <maps>, <subgroup>] ) O
+
+For a matrix <mat>, `MatrixAutomorphisms' returns the group of those
+permutations of the columns of <mat> that leave the set of rows of <mat>
+invariant.
+
+If the arguments <maps> and <subgroup> are given,
+only the group of those permutations is constructed that additionally
+fix each list in the list <maps> under pointwise action `OnTuples',
+and <subgroup> is a permutation group that is known to be a subgroup of
+this group of automorphisms.
+
+Each entry in <maps> must be a list of same length as the rows of <mat>.
+For example, if <mat> is a list of irreducible characters of a group
+then the list of element orders of the conjugacy classes
+(see~"OrdersClassRepresentatives") may be an entry in <maps>.
+
+
+\>TableAutomorphisms( <tbl>, <characters> ) O
+\>TableAutomorphisms( <tbl>, <characters>, \"closed\" ) O
+\>TableAutomorphisms( <tbl>, <characters>, <subgroup> ) O
+
+`TableAutomorphisms' returns the permutation group of those matrix
+automorphisms (see~"MatrixAutomorphisms") of the list <characters>
+that leave the element orders (see~"OrdersClassRepresentatives")
+and all stored power maps (see~"ComputedPowerMaps") of the character
+table <tbl>.
+
+If <characters> is closed under Galois conjugacy --this is always
+fulfilled for ordinary character tables--
+the string `\"closed\"' may be entered as the third argument.
+Alternatively, a known subgroup <subgroup> of the table automorphisms
+can be entered as the third argument.
+
+The attribute `AutomorphismsOfTable' (see~"AutomorphismsOfTable")
+can be used to compute and store the table automorphisms for the case
+that <characters> equals `Irr( <tbl> )'.
+
+
+\beginexample
+gap> tbld8:= CharacterTable( "Dihedral", 8 );;
+gap> irrd8:= Irr( tbld8 );
+[ Character( CharacterTable( "Dihedral(8)" ), [ 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( "Dihedral(8)" ), [ 1, 1, 1, -1, -1 ] ), 
+  Character( CharacterTable( "Dihedral(8)" ), [ 1, -1, 1, 1, -1 ] ), 
+  Character( CharacterTable( "Dihedral(8)" ), [ 1, -1, 1, -1, 1 ] ), 
+  Character( CharacterTable( "Dihedral(8)" ), [ 2, 0, -2, 0, 0 ] ) ]
+gap> orders:= OrdersClassRepresentatives( tbld8 );
+[ 1, 4, 2, 2, 2 ]
+gap> MatrixAutomorphisms( irrd8 );
+Group([ (4,5), (2,4) ])
+gap> MatrixAutomorphisms( irrd8, [ orders ], Group( () ) );
+Group([ (4,5) ])
+gap> TableAutomorphisms( tbld8, irrd8 );
+Group([ (4,5) ])
+\endexample
+
+\>TransformingPermutations( <mat1>, <mat2> ) O
+
+Let <mat1> and <mat2> be matrices.
+`TransformingPermutations' tries to construct
+a permutation $\pi$ that transforms the set of rows of the matrix
+<mat1> to the set of rows of the matrix <mat2>
+by permuting the columns.
+
+If such a permutation exists,
+a record with components `columns', `rows', and `group' is returned,
+otherwise `fail'.
+For $`TransformingPermutations( <mat1>, <mat2> ) = <r>' \not= `fail'$,
+we have `<mat2> =
+ Permuted( List( <mat1>, x -> Permuted( x, <r>.columns ) ),<r>.rows )'.
+
+`<r>.group' is the group of matrix automorphisms of <mat2>
+(see~"MatrixAutomorphisms").
+This group stabilizes the transformation in the sense that applying any
+of its elements to the columns of <mat2>
+preserves the set of rows of <mat2>.
+
+
+\>TransformingPermutationsCharacterTables( <tbl1>, <tbl2> ) O
+
+Let <tbl1> and <tbl2> be character tables.
+`TransformingPermutationsCharacterTables' tries to construct
+a permutation $\pi$ that transforms the set of rows of the matrix
+`Irr( <tbl1> )' to the set of rows of the matrix `Irr( <tbl2> )'
+by permuting the columns (see~"TransformingPermutations"),
+such that $\pi$ transforms also the power maps and the element orders.
+
+If such a permutation $\pi$ exists then a record with the components
+`columns' ($\pi$),
+`rows' (the permutation of `Irr( <tbl1> )' corresponding to $\pi$), and
+`group' (the permutation group of table automorphisms of <tbl2>,
+see~"AutomorphismsOfTable") is returned.
+If no such permutation exists, `fail' is returned.
+
+
+\beginexample
+gap> tblq8:= CharacterTable( "Quaternionic", 8 );;
+gap> irrq8:= Irr( tblq8 );
+[ Character( CharacterTable( "Q8" ), [ 1, 1, 1, 1, 1 ] ), 
+  Character( CharacterTable( "Q8" ), [ 1, 1, 1, -1, -1 ] ), 
+  Character( CharacterTable( "Q8" ), [ 1, -1, 1, 1, -1 ] ), 
+  Character( CharacterTable( "Q8" ), [ 1, -1, 1, -1, 1 ] ), 
+  Character( CharacterTable( "Q8" ), [ 2, 0, -2, 0, 0 ] ) ]
+gap> OrdersClassRepresentatives( tblq8 );
+[ 1, 4, 2, 4, 4 ]
+gap> TransformingPermutations( irrd8, irrq8 );
+rec( columns := (), rows := (), group := Group([ (4,5), (2,4) ]) )
+gap> TransformingPermutationsCharacterTables( tbld8, tblq8 );
+fail
+gap> tbld6:= CharacterTable( "Dihedral", 6 );;
+gap> tbls3:= CharacterTable( "Symmetric", 3 );;
+gap> TransformingPermutationsCharacterTables( tbld6, tbls3 );
+rec( columns := (2,3), rows := (1,3,2), group := Group(()) )
+\endexample
+
+\>FamiliesOfRows( <mat>, <maps> ) F
+
+distributes the rows of the matrix <mat> into families as follows.
+Two rows of <mat> belong to the same family if there is a permutation
+of columns that maps one row to the other row.
+Each entry in the list <maps> is regarded to form a family of length 1.
+
+`FamiliesOfRows( <mat>, <maps> )' returns a record with components
+\beginitems
+`famreps' &
+     the list of representatives for each family,
+
+`permutations' &
+     the list that contains at position `i' a list of permutations
+     that map the members of the family with representative `famreps[i]'
+     to that representative,
+
+`families' &
+     the list that contains at position <i> the list of positions
+     of members of the family of representative `famreps[<i>]';
+     (for the element `<maps>[i]' the only member of the family
+     will get the number `Length( <mat> ) + i').
+\enditems
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Storing Normal Subgroup Information}
+
+\>NormalSubgroupClassesInfo( <tbl> ) AM
+
+Let <tbl> be the ordinary character table of the group $G$.
+Many computations for group characters of $G$ involve computations
+in normal subgroups or factor groups of $G$.
+
+In some cases the character table <tbl> is sufficient;
+for example questions about a normal subgroup $N$ of $G$ can be answered
+if one knows the conjugacy classes that form $N$,
+e.g., the question whether a character of $G$ restricts
+irreducibly to $N$.
+But other questions require the computation of $N$ or
+even more information, like the character table of $N$.
+
+In order to do these computations only once, one stores in the group a
+record with components to store normal subgroups, the corresponding lists
+of conjugacy classes, and (if necessary) the factor groups, namely
+
+\beginitems
+`nsg': &
+    list of normal subgroups of $G$, may be incomplete,
+
+`nsgclasses': &
+    at position $i$, the list of positions of conjugacy
+    classes of <tbl> forming the $i$-th entry of the `nsg' component,
+
+`nsgfactors': &
+    at position $i$, if bound, the factor group
+    modulo the $i$-th entry of the `nsg' component.
+\enditems
+
+`NormalSubgroupClasses',
+`FactorGroupNormalSubgroupClasses', and
+`ClassPositionsOfNormalSubgroup'
+each use these components, and they are the only functions to do so.
+
+So if you need information about a normal subgroup for that you know the
+conjugacy classes, you should get it using `NormalSubgroupClasses'.  If
+the normal subgroup was already used it is just returned, with all the
+knowledge it contains.  Otherwise the normal subgroup is added to the
+lists, and will be available for the next call.
+
+For example, if you are dealing with kernels of characters using the
+`KernelOfCharacter' function you make use of this feature
+because `KernelOfCharacter' calls `NormalSubgroupClasses'.
+
+
+\>ClassPositionsOfNormalSubgroup( <tbl>, <N> ) F
+
+is the list of positions of conjugacy classes of the character table
+<tbl> that are contained in the normal subgroup <N>
+of the underlying group of <tbl>.
+
+
+\>NormalSubgroupClasses( <tbl>, <classes> ) F
+
+returns the normal subgroup of the underlying group $G$ of the ordinary
+character table <tbl>
+that consists of those conjugacy classes of <tbl> whose positions are in
+the list <classes>.
+
+If `NormalSubgroupClassesInfo( <tbl> ).nsg' does not yet contain
+the required normal subgroup,
+and if `NormalSubgroupClassesInfo( <tbl> ).normalSubgroups' is bound then
+the result will be identical to the group in
+`NormalSubgroupClassesInfo( <tbl> ).normalSubgroups'.
+
+
+\>FactorGroupNormalSubgroupClasses( <tbl>, <classes> ) F
+
+is the factor group of the underlying group $G$ of the ordinary character
+table <tbl> modulo the normal subgroup of $G$ that consists of those
+conjugacy classes of <tbl> whose positions are in the list <classes>.
+
+
+\beginexample
+gap> g:= SymmetricGroup( 4 );
+Sym( [ 1 .. 4 ] )
+gap> SetName( g, "S4" );
+gap> tbl:= CharacterTable( g );
+CharacterTable( S4 )
+gap> irr:= Irr( g );
+[ Character( CharacterTable( S4 ), [ 1, -1, 1, 1, -1 ] ), 
+  Character( CharacterTable( S4 ), [ 3, -1, -1, 0, 1 ] ), 
+  Character( CharacterTable( S4 ), [ 2, 0, 2, -1, 0 ] ), 
+  Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
+  Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
+gap> kernel:= KernelOfCharacter( irr[3] );
+Group([ (1,2)(3,4), (1,4)(2,3) ])
+gap> HasNormalSubgroupClassesInfo( tbl );
+true
+gap> NormalSubgroupClassesInfo( tbl );
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+  nsgfactors := [  ] )
+gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
+[ 1, 3 ]
+gap> FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
+Group([ f1, f2 ])
+gap> NormalSubgroupClassesInfo( tbl );
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+  nsgfactors := [ Group([ f1, f2 ]) ] )
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E
+

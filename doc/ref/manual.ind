@@ -1,0 +1,4216 @@
+\letter {}
+  (Near-)Additive Magma Categories, \indexit{546}
+  (Near-)Additive Magma Generation, \indexit{547}
+  `+', 47
+  `-', 47
+  `-A', 29
+  `-B', 30
+  `-C', 30
+  `-D', 30
+  `-K', 28
+  `-L', 29
+  `-M', 30
+  `-N', 30
+  `-O', 30
+  `-P', 30
+    \sub on Macintosh, 31
+  `-R', 29
+  `-T', 30
+  `-U', 30
+  `-W', 30
+    \sub on Macintosh, 31
+  `-X', 30
+  `-Y', 30
+  `-a', 29
+    \sub on Macintosh, 31
+  `-b', 27
+  `-e', 27
+    \sub on Macintosh, 31
+  `-f', 27
+    \sub on Macintosh, 31
+  `-g', 28
+  `-g -g', 28
+  `-h', 27
+  `-i', 30
+  `-l', 28
+  `-m', 28
+  `-n', 27
+    \sub on Macintosh, 31
+  `-o', 28
+    \sub on Macintosh, 31
+  `-q', 27
+  `-r', 29
+  `-x', 27
+  `-y', 28
+  `-z', 30
+    \sub on Macintosh, 31
+  `.gaprc', 33
+  `/', 47
+    \sub for character tables, 717
+  `\*', 47
+    \sub for character tables, 717
+  `\\\char 39', 244
+  `\\XYZ', 244
+  `\\\"', 244
+  `\\\\', 244
+  `\\b', 244
+  `\\c', 244
+  `\\in', operation for testing membership, 268
+  `\\n', 244
+  `\\r', 244
+  `{\accent 94 }', 47
+    \sub for class functions, 755
+  1-Cohomology, \indexit{370}
+  2-Cohomology and Extensions, \indexit{448}
+\letter A
+  `AbelianGroup', 500
+  `AbelianInvariants', for character tables, 720
+    \sub for groups, 358
+  Abelian Invariants for Subgroups, \indexit{468}
+  `AbelianInvariantsMultiplier', 373
+  `AbelianInvariantsNormalClosureFpGroup', 469
+  `Abelian\-Invariants\-Normal\-Closure\-Fp\-Group\-Rrs', 469
+  `AbelianInvariantsOfList', 236
+  `AbelianInvariantsSubgroupFpGroup', 468
+  `AbelianInvariantsSubgroupFpGroupMtc', 468
+  `AbelianInvariantsSubgroupFpGroupRrs', 468
+  `AbelianNumberField', 577
+  abelian number field, 578
+  abelian number fields, canonicalbasis, 580
+  abelian number fields, Galois group, 581
+  `AbelianSubfactorAction', 395
+  About Group Actions, \indexit{387}
+  `AbsInt', 126
+  `AbsoluteIrreducibleModules', 736
+  `AbsoluteValue', 155
+  absolute value of an integer, 126
+  `AbsolutIrreducibleModules', 736
+  abstract word, 318
+  `AbstractWordTietzeWord', 477
+  accessing, list elements, 170
+    \sub record elements, 254
+  Accessing a Module, \indexit{682}
+  Accessing Record Elements, \indexit{254}
+  Accessing Subgroups via Tables of Marks, \indexit{703}
+  `AClosestVectorCombinationsMatFFEVecFFE', 213
+  `ActingAlgebra', 620
+  `ActingDomain', 399
+  Acting OnRight and OnLeft, \indexit{424}
+  `Action', 394
+  action, by conjugation, 388
+    \sub on blocks, 388
+    \sub on sets, 388
+  `ActionHomomorphism', 393
+  Action of a group on itself, \indexit{395}
+  Action on Subfactors Defined by a Pcgs, \indexit{439}
+  actions, 388
+  Actions of Matrix Groups, \indexit{421}
+  `ActorOfExternalSet', 401
+  `Add', 173
+  add, an element to a set, 191
+  `AddCoeffs', 211
+  `AddGenerator', 479
+  `AddGenerators', 337
+  `AddGeneratorsExtendSchreierTree', 416
+  addition, 47
+    \sub list and non-list, 181
+    \sub matrices, 216
+    \sub matrix and scalar, 216
+    \sub operation, 289
+    \sub rational functions, 656
+    \sub scalar and matrix, 216
+    \sub scalar and matrix list, 217
+    \sub scalar and vector, 209
+    \sub vector and scalar, 209
+    \sub vectors, 208
+  Additive Arithmetic for Lists, \indexit{180}
+  `AdditiveInverse', 287
+  `AdditiveInverseAttr', 287
+  `AdditiveInverseImmutable', 287
+  `AdditiveInverseMutable', 287
+  `AdditiveInverseOp', 287
+  `AdditiveInverseSameMutability', 287
+  `AdditiveInverseSM', 287
+  `AdditiveNeutralElement', 548
+  `AddRelator', 479
+  `AddRowVector', 211
+  `AddRule', 337
+  `AddRuleReduced', 337
+  `AddSet', 191
+  `AdjointAssociativeAlgebra', 637
+  `AdjointBasis', 609
+  `AdjointMatrix', 637
+  `AdjointModule', 621
+  Advanced Features of GAP, \indexit{29}
+  Advanced List Manipulations, \indexit{199}
+  Advanced Methods for Dixon-Schneider Calculations, \indexit{737}
+  `AffineAction', 440
+  `AffineActionLayer', 440
+  `AffineOperation', 440
+  `AffineOperationLayer', 440
+  `Agemo', 356
+  `Algebra', 600
+  `AlgebraByStructureConstants', 603
+  `AlgebraGeneralMappingByImages', 614
+  `AlgebraHomomorphismByImages', 614
+  `AlgebraHomomorphismByImagesNC', 614
+  `AlgebraicExtension', 677
+  `AlgebraWithOne', 600
+  `AlgebraWithOneGeneralMappingByImages', 614
+  `AlgebraWithOneHomomorphismByImages', 615
+  `AlgebraWithOneHomomorphismByImagesNC', 615
+  `AllBlocks', 398
+  `AllIrreducibleSolvableGroups', 518
+  `All<Library>Groups', 506
+  `AllPrimitiveGroups', 506
+  `AllSmallGroups', 509
+  `AllTransitiveGroups', 506
+  `Alpha', 806
+  `AlternatingGroup', 500
+  `and', 166
+    \sub for filters, 116, 167
+  An Example of Advanced Dixon-Schneider Calculations, \indexit{738}
+  `ANFAutomorphism', 582
+  `AntiSymmetricParts', 772
+  antisymmetric relation, 308
+  `Append', 173
+  `AppendTo', 94
+    \sub for streams, 100
+  Apple, 822, 823
+  `ApplicableMethod', 76
+  ApplicableMethod, \indexit{76}
+  `ApplicableMethodTypes', 76
+  `Apply', 194
+  `ApplySimpleReflection', 634
+  `ApproximateSuborbitsStabilizerPermGroup', 415
+  `ARCH_IS_MAC', 34
+  `ARCH_IS_UNIX', 34
+  `ARCH_IS_WINDOWS', 34
+  `arg', special function argument, 45, 55
+  Arithmetic for External Representations of Polynomials, \indexit{675}
+  Arithmetic for Lists, \indexit{178}
+  Arithmetic Operations for Class Functions, \indexit{753}
+  Arithmetic Operations for Elements, \indexit{289}
+  Arithmetic Operations for General Mappings, \indexit{301}
+  Arithmetic Operators, \indexit{47}
+  `Arrangements', 145
+  arrow notation for functions, 56
+  `AsAlgebra', 609
+  `AsAlgebraWithOne', 610
+  `AsBinaryRelationOnPoints', 309
+  `AsBlockMatrix', 231
+  `AscendingChain', 362
+  `AsDivisionRing', 567
+  `AsDuplicateFreeList', 193
+  `AsField', 567
+  `AsFreeLeftModule', 564
+  `AsGroup', 342
+  `AsGroupGeneralMappingByImages', 376
+  `AsLeftIdeal', 554
+  `AsLeftModule', 562
+  `AsList', 264
+  `AsMagma', 313
+  `AsMonoid', 534
+  `AsPolynomial', 658
+  `AsRightIdeal', 554
+  `AsRing', 551
+  `AsSemigroup', 527
+  `Assert', 79
+  `AssertionLevel', 79
+  Assertions, \indexit{79}
+  `AsSet', 264
+  `AssignGeneratorVariables', 325
+  assignment, to a list, 171
+    \sub to a record, 255
+    \sub variable, 48
+  Assignments, \indexit{48}
+  `AssignNiceMonomorphismAutomorphismGroup', 383
+  `AssociatedPartition', 150
+  `AssociatedReesMatrixSemigroupOfDClass', 533
+  `Associates', 557
+  associativity, 47
+  `AssocWordByLetterRep', 330
+  `AsSortedList', 264
+  `AsSSortedList', 264
+  `As<Struct>', 281
+  `AsSubalgebra', 610
+  `AsSubalgebraWithOne', 610
+  `AsSubgroup', 343
+  `AsSubgroupOfWholeGroupByQuotient', 466
+  `AsSubmagma', 313
+  `AsSubmonoid', 534
+  `AsSubsemigroup', 527
+  `AsSubspace', 585
+  `AsSub<struct>', 284
+  `AsTransformation', 544
+  `AsTransformationNC', 544
+  `AsTwoSidedIdeal', 554
+  `AsVectorSpace', 584
+  at exit functions, 71
+  ATLAS Irrationalities, \indexit{157}
+  `AtlasIrrationality', 159
+  atomic irrationalities, 157
+  Attributes, \indexit{120}
+  Attributes and Operations for Algebras, \indexit{608}
+  Attributes and Properties for (Near-)Additive Magmas, \indexit{548}
+  Attributes and Properties for Collections, \indexit{265}
+  Attributes and Properties for Magmas, \indexit{315}
+  Attributes and Properties for Matrix Groups, \indexit{420}
+  Attributes and Properties of Character Tables, \indexit{718}
+  Attributes and Properties of Elements, \indexit{285}
+  Attributes of and Operations on Equivalence Relations, \indexit{310}
+  Attributes of Tables of Marks, \indexit{693}
+  `AttributeValueNotSet', 121
+  `AugmentationIdeal', 649
+  `AugmentedCosetTableInWholeGroup', 461
+  `AugmentedCosetTableMtc', 461
+  `AugmentedCosetTableRrs', 461
+  Augmented Coset Tables and Rewriting, \indexit{461}
+  automatic loading of gap packages, 828
+  `AutomorphismDomain', 382
+  `AutomorphismGroup', 382
+    \sub for groups with pcgs, 441
+  automorphism group, of number fields, 581
+  Automorphisms and Equivalence of Character Tables, \indexit{745}
+  `AutomorphismsOfTable', 721
+\letter B
+  $b_N$, 157
+  backslash character, 244
+  backspace character, 244
+  `Backtrace', GAP3 name for `Where', 69
+  Backtrack, \indexit{417}
+  `BANNER', 833
+  `BaseFixedSpace', 223
+  `BaseIntersectionIntMats', 233
+  `BaseIntMat', 233
+  `BaseMat', 225
+  `BaseMatDestructive', 225
+  `BaseOfGroup', 414
+  `BaseOrthogonalSpaceMat', 226
+  Bases of Vector Spaces, \indexit{586}
+  `BaseStabChain', 414
+  `BaseSteinitzVectors', 226
+  Basic Actions, \indexit{388}
+  Basic Groups, \indexit{499}
+  Basic Operations for Class Functions, \indexit{752}
+  Basic Operations for Lists, \indexit{169}
+  `BasicWreathProductOrdering', 277
+  `Basis', 587
+  `BasisNC', 587
+  `BasisVectors', 588
+  `Bell', 143
+  `Bernoulli', 144
+  `BestQuoInt', 128
+  `BestSplittingMatrix', 738
+  `BiAlgebraModule', 618
+  `BiAlgebraModuleByGenerators', 618
+  `BilinearFormMat', 632
+  binary relation, 307
+  `BinaryRelationByElements', 307
+  `BinaryRelationOnPoints', 308
+  `BinaryRelationOnPointsNC', 308
+  Binary Relations on Points, \indexit{308}
+  `BinaryRelationTransformation', 545
+  `BindGlobal', 44
+  `Binomial', 143
+  blank, 39
+  `BlistList', 204
+  Block Matrices, \indexit{231}
+  `BlockMatrix', 231
+  `Blocks', 398
+  `BlocksInfo', 726
+  Block Systems, \indexit{398}
+  `BlownUpMat', 228
+  `BlownUpVector', 228
+  `BlowUpIsomorphism', 421
+  BNF, 57
+  body, 54
+  `BombieriNorm', 664
+  Boolean Lists Representing Subsets, \indexit{204}
+  bound, 41
+  Brauer character, 759
+  `BrauerCharacterValue', 782
+  `BrauerTable', 712
+  `BrauerTableOp', 712
+  `BravaisGroup', 424
+  `BravaisSubgroups', 424
+  `BravaisSupergroups', 424
+  Break, \indexit{53}
+  break loop message, 68
+  Break Loops, \indexit{66}
+  `break' statement, 53
+  browsing backwards, 22
+  browsing backwards one chapter, 22
+  browsing forward, 22
+  browsing forward one chapter, 22
+  browsing the next section browsed, 22
+  browsing the previous section browsed, 22
+  Browsing through the Sections, \indexit{22}
+  bug reports, see If Things Go Wrong, 820
+  Building new orderings, \indexit{273}
+\letter C
+  $c_N$, 157
+  Calculating with Group Automorphisms, \indexit{383}
+  Calendar Arithmetic, \indexit{251}
+  `CallFuncList', 60
+  Calling a function with a list argument that is interpreted as several arguments, \indexit{60}
+  Cancellation Tests for Rational Functions, \indexit{675}
+  `CanComputeIndex', 374
+  `CanComputeIsSubset', 374
+  `CanComputeSize', 373
+  `CanComputeSizeAnySubgroup', 374
+  candidates, for permutation characters, 775, 777
+  `CanEasilyCompareElements', 288
+  `CanEasilyCompareElementsFamily', 288
+  `CanEasilyComputePcgs', 427
+  `CanEasilySortElements', 288
+  `CanEasilySortElementsFamily', 288
+  `CanEasilyTestMembership', 373
+  `CanonicalBasis', 587
+  canonical basis, for matrix spaces, 594
+    \sub for row spaces, 594
+  `CanonicalGenerators', 632
+  `CanonicalPcElement', 429
+  `CanonicalPcgs', 432
+  `CanonicalPcgsByGeneratorsWithImages', 434
+  `Canonical\-Representative\-Determinator\-Of\-External\-Set', 401
+  `CanonicalRepresentativeOfExternalSet', 400
+  `CanonicalRightCosetElement', 347
+  Carmichael's lambda function, 134
+  carriage return character, 244
+  `CartanMatrix', 632
+  `CartanSubalgebra', 629
+  `Cartesian', 195
+  Categories, \indexit{117}
+  Categories and Properties of Algebras, \indexit{607}
+  Categories for Streams and the StreamsFamily, \indexit{96}
+  Categories of Associative Words, \indexit{323}
+  Categories of Matrices, \indexit{215}
+  `CategoriesOfObject', 119
+  Categories of Words and Nonassociative Words, \indexit{318}
+  `CategoryCollections', 260
+  `Center', 316
+  center, 315
+  `CentralCharacter', 762
+  central character, 762
+  `CentralIdempotentsOfAlgebra', 612
+  centraliser, 315
+  `Centralizer', 315
+    \sub for groups with pcgs, 441
+  `CentralizerInGLnZ', 424
+  `CentralizerModulo', 363
+  `CentralizerSizeLimitConsiderFunction', 442
+  `CentralNormalSeriesByPcgs', 435
+  `Centre', 316
+    \sub for groups with pcgs, 441
+  centre, of a character, 761
+  `CentreOfCharacter', 761
+  `CF', 577
+  `ChangeStabChain', 416
+  Changing Presentations, \indexit{478}
+  Changing the Help Viewer, \indexit{23}
+  Changing the Representation, \indexit{282}
+  Changing the Structure, \indexit{281}
+  `CHAR_INT', 249
+  `CHAR_SINT', 250
+  `Character', 757
+  Character Conversion, \indexit{249}
+  `CharacterDegrees', 718
+  Character Degrees and Derived Length, \indexit{806}
+  `Characteristic', 285
+  characteristic, for class functions, 756
+  `CharacteristicPolynomial', 227
+  characteristic polynomial, for field elements, 569
+  `CharacterNames', 722
+  characters, 750
+    \sub permutation, 775, 777
+    \sub symmetrizations of, 771
+  `CharacterTable', 712
+  Character Table Categories, \indexit{713}
+  `CharacterTableDirectProduct', 740
+  `CharacterTableFactorGroup', 741
+  `CharacterTableIsoclinic', 742
+  character tables, 711
+    \sub access to, 711
+    \sub calculate, 711
+    \sub infix operators, 717
+    \sub of groups, 711
+  `CharacterTableWithSortedCharacters', 743
+  `CharacterTableWithSortedClasses', 743
+  `CharacterTableWreathSymmetric', 742
+  character value, of group element using powering operator, 755
+  `CharsFamily', 245
+  `CheckFixedPoints', 796
+  `CheckForHandlingByNiceBasis', 599
+  `CheckPermChar', 803
+  `ChevalleyBasis', 631
+  `ChiefNormalSeriesByPcgs', 436
+  `ChiefSeries', 359
+  `ChiefSeriesThrough', 359
+  `ChiefSeriesUnderAction', 359
+  `ChineseRem', 129
+  Chinese remainder, 129
+  `Chomp', 249
+  `CIUnivPols', 655
+  `ClassElementLattice', 365
+  classes, real, 723
+  `ClassesSolvableGroup', 441
+  `ClassFunction', 757
+  class function, 750
+  class function objects, 750
+  class functions, 793
+    \sub as ring elements, 754
+  `ClassFunctionSameType', 758
+  Class Fusions between Character Tables, \indexit{788}
+  Classical Groups, \indexit{501}
+  `ClassMultiplicationCoefficient', for character tables, 730
+  class multiplication coefficient, 730, 731
+  `ClassNames', 722
+  `ClassNamesTom', 694
+  `ClassOrbit', 723
+  `ClassPermutation', 744
+  `ClassPositionsOfAgemo', 724
+  `ClassPositionsOfCentre', for characters, 761
+    \sub for character tables, 724
+  `ClassPositionsOfDerivedSubgroup', 724
+  `Class\-Positions\-Of\-Direct\-Product\-Decompositions', 724
+  `ClassPositionsOfElementaryAbelianSeries', 724
+  `ClassPositionsOfFittingSubgroup', 724
+  `ClassPositionsOfKernel', 761
+  `ClassPositionsOfLowerCentralSeries', 724
+  `ClassPositionsOfMaximalNormalSubgroups', 724
+  `ClassPositionsOfNormalClosure', 724
+  `ClassPositionsOfNormalSubgroup', 748
+  `ClassPositionsOfNormalSubgroups', 724
+  `ClassPositionsOfSupersolvableResiduum', 724
+  `ClassPositionsOfUpperCentralSeries', 724
+  `ClassRoots', 723
+  `ClassStructureCharTable', 730
+  `ClassTypesTom', 694
+  `CleanedTailPcElement', 429
+  `ClearCacheStats', 82
+  `ClearProfile', 81
+  clone, an object, 113
+  `CloseMutableBasis', 592
+  `CloseStream', 97
+  `ClosureGroup', 344
+  `ClosureGroupAddElm', 345
+  `ClosureGroupCompare', 345
+  `ClosureGroupDefault', 345
+  `ClosureGroupIntest', 345
+  `ClosureLeftModule', 563
+  `ClosureNearAdditiveGroup', 548
+  Closure Operations and Other Constructors, \indexit{309}
+  `ClosureRing', 551
+  Closures of (Sub)groups, \indexit{344}
+  `Closure<Struct>', 281
+  `ClosureSubgroup', 345
+  `ClosureSubgroupNC', 345
+  `Coboundaries', 642
+  `Cochain', 641
+  `CochainSpace', 641
+  `Cocycles', 642
+  cocycles, 370
+  `CodePcGroup', 451
+  `CodePcgs', 451
+  Coding a Pc Presentation, \indexit{451}
+  coefficient, binomial, 143
+  Coefficient List Arithmetic, \indexit{211}
+  `Coefficients', 588
+  coefficients, for cyclotomics, 155
+  `CoefficientsAndMagmaElements', 650
+  `CoefficientsFamily', 672
+  `CoefficientsMultiadic', 129
+  `CoefficientsOfLaurentPolynomial', 664
+  `CoefficientsOfUnivariatePolynomial', 658
+  `Coefficients\-Of\-Univariate\-Rational\-Function', 658
+  `CoefficientsQadic', 129
+  `CoefficientsRing', 665
+  `CoeffsCyc', 155
+  `CoeffsMod', 212
+  cohomology, 370
+  `COHORTS_PRIMITIVE_GROUPS', 516
+  `CoKernelOfAdditiveGeneralMapping', 304
+  `CoKernelOfMultiplicativeGeneralMapping', 303
+  `CollapsedMat', 799
+  `Collected', 193
+  Collection Families, \indexit{260}
+  `CollectionsFamily', 260
+  `ColumnIndexOfReesMatrixSemigroupElement', 533
+  `Column\-Index\-Of\-Rees\-Zero\-Matrix\-Semigroup\-Element', 533
+  `Combinations', 145
+  Combinations, Arrangements and Tuples, \indexit{145}
+  `CombinatorialCollector', 446
+  Combinatorial Numbers, \indexit{143}
+  `Comm', 289
+    \sub for words, 326
+  Command Line Options, \indexit{27}
+  comments, 39
+  `CommutativeDiagram', 796
+  `CommutatorFactorGroup', 363
+  `CommutatorLength', 353
+    \sub for character tables, 720
+  `CommutatorSubgroup', 352
+  `Compacted', 193
+  `CompanionMat', 228
+  `CompareVersionNumbers', 830
+  comparison, fp semigroup elements, 539
+    \sub operation, 288
+    \sub rational functions, 656
+  Comparison of Associative Words, \indexit{326}
+  Comparison of Class Functions, \indexit{753}
+  Comparison of Elements of Finitely Presented Groups, \indexit{454}
+  Comparison of Elements of Finitely Presented Semigroups, \indexit{539}
+  Comparison of Permutations, \indexit{403}
+  Comparison of Rational Functions, \indexit{656}
+  Comparison of Words, \indexit{319}
+  Comparison Operations for Elements, \indexit{288}
+  Comparisons, \indexit{46}
+  comparisons, of booleans, 165
+    \sub of lists, 177
+  Comparisons of Booleans, \indexit{165}
+  Comparisons of Cyclotomics, \indexit{157}
+  Comparisons of Lists, \indexit{177}
+  Comparisons of Records, \indexit{257}
+  Comparisons of Strings, \indexit{246}
+  `CompatibleConjugacyClasses', 716
+  `CompatiblePairs', 450
+  Compilation, \indexit{815}
+  Compiling Library Code, \indexit{35}
+  `Complementclasses', 352
+  `ComplementclassesEA', 372
+  `ComplementIntMat', 234
+  `ComplementSystem', 355
+  Completion Files, \indexit{33}
+  `ComplexConjugate', 160
+    \sub for class functions, 756
+  `ComplexificationQuat', 604
+  Components of a Dixon Record, \indexit{738}
+  `CompositionMapping', 297
+    \sub for Frobenius automorphisms, 576
+  `CompositionMapping2', 297
+  `CompositionMaps', 793
+  `CompositionOfStraightLinePrograms', 334
+  `CompositionSeries', 360
+    \sub for groups with pcgs, 441
+  `ComputedBrauerTables', 712
+  `ComputedClassFusions', 789
+  `ComputedIndicators', 729
+  `ComputedIsPSolvableCharacterTables', 729
+  `ComputedPowerMaps', 785
+  `ComputedPrimeBlockss', 725
+  Computing a Pcgs, \indexit{426}
+  Computing a Permutation Representation, \indexit{406}
+  Computing Pc Groups, \indexit{447}
+  Computing Possible Permutation Characters, \indexit{777}
+  Computing the Irreducible Characters of a Group, \indexit{734}
+  `Concatenation', 193
+  concatenation, of lists, 193
+  `Conductor', 155
+  `ConfluentRws', 337
+  `Congruences', for character tables, 801
+  Congruences for semigroups, \indexit{529}
+  `ConjugacyClass', 349
+  Conjugacy Classes, \indexit{349}
+  `ConjugacyClasses', attribute, 349
+    \sub for character tables, 715
+    \sub for groups with pcgs, 441
+    \sub for linear groups, 504
+  `ConjugacyClassesByOrbits', 350
+  `ConjugacyClassesByRandomSearch', 350
+  Conjugacy Classes in Classical Groups, \indexit{504}
+  Conjugacy Classes in Solvable Groups, \indexit{441}
+  `ConjugacyClassesMaximalSubgroups', 364
+  `ConjugacyClassesPerfectSubgroups', 367
+  `ConjugacyClassesSubgroups', 364
+  `ConjugacyClassSubgroups', 363
+  conjugate, matrix, 217
+    \sub of a word, 326
+  `ConjugateDominantWeight', 634
+  `ConjugateDominantWeightWithWord', 634
+  `ConjugateGroup', 342
+  `Conjugates', 570
+  `ConjugateSubgroup', 344
+  `ConjugateSubgroups', 344
+  conjugation, 388
+  `ConjugatorAutomorphism', 380
+  `ConjugatorAutomorphismNC', 380
+  `ConjugatorIsomorphism', 380
+  `ConjugatorOfConjugatorIsomorphism', 381
+  `ConnectGroupAndCharacterTable', 716
+  `ConsiderKernels', 801
+  `ConsiderSmallerPowerMaps', 802
+  `ConsiderStructureConstants', 793
+  `ConsiderTableAutomorphisms', 804
+  `ConstantTimeAccessList', 189
+  constituent, of a group character, 760
+  `ConstituentsCompositionMapping', 297
+  `ConstituentsOfCharacter', 761
+  Constructing Algebras as Free Algebras, \indexit{601}
+  Constructing Algebras by Generators, \indexit{600}
+  Constructing Algebras by Structure Constants, \indexit{602}
+  Constructing Character Tables from Others, \indexit{740}
+  Constructing Domains, \indexit{280}
+  Constructing Lie algebras, \indexit{626}
+  Constructing Pc Groups, \indexit{445}
+  Constructing Subdomains, \indexit{284}
+  Constructing Tables of Marks, \indexit{689}
+  Constructing Vector Spaces, \indexit{584}
+  Construction of Abelian Number Fields, \indexit{577}
+  Construction of Stabilizer Chains, \indexit{411}
+  Constructors for Basic Groups, \indexit{505}
+  `ContainedCharacters', 800
+  `ContainedDecomposables', 800
+  `ContainedMaps', 795
+  `ContainedPossibleCharacters', 798, 799
+  `ContainedPossibleVirtualCharacters', 798, 799
+  `ContainedSpecialVectors', 798, 799
+  `ContainedTom', 698
+  `ContainingTom', 698
+  `continue' statement, 54
+  Conventions for Character Tables, \indexit{715}
+  convert, to a string, 245
+  Converting Groups to Finitely Presented Groups, \indexit{462}
+  `ConvertToCharacterTable', 713
+  `ConvertToCharacterTableNC', 713
+  `ConvertToMatrixRep', 229
+  `ConvertToMatrixRepNC', 229
+  `ConvertToRangeRep', 202
+  `ConvertToStringRep', 245
+  `ConvertToTableOfMarks', 693
+  `ConvertToVectorRep', 210
+  `ConvertToVectorRepNC', 210
+  `ConwayPolynomial', 576
+  Conway Polynomials, \indexit{576}
+  coprime, 47
+  copy, 113
+    \sub an object, 113
+  `CopyOptionsDefaults', 416
+  Copyrights, \indexit{827}
+  `CopyStabChain', 415
+  `Core', 351
+  `CorrespondingGeneratorsByModuloPcgs', 434
+  coset, 346
+  `CosetLeadersMatFFE', 213
+  Cosets, \indexit{346}
+  `CosetTable', 457
+  `CosetTableBySubgroup', 458
+  `CosetTableDefaultLimit', 459
+  `CosetTableDefaultMaxLimit', 458
+  `CosetTableFromGensAndRels', 458
+  `CosetTableInWholeGroup', 461
+  `CosetTableOfFpSemigroup', 542
+  Coset Tables and Coset Enumeration, \indexit{457}
+  Coset tables for subgroups in the whole group, \indexit{461}
+  `CosetTableStandard', 460
+  CRC, 36
+  `CrcFile', 94
+    \sub example, 36
+  CRC Numbers, \indexit{36}
+  `CreateCompletionFiles', 34
+  `CreateCompletionFilesPkg', 832
+  Creating Character Tables, \indexit{711}
+  Creating Class Functions from Values Lists, \indexit{757}
+  Creating Class Functions using Groups, \indexit{758}
+  Creating Finite Fields, \indexit{574}
+  Creating Finitely Presented Groups, \indexit{454}
+  Creating Finitely Presented Semigroups, \indexit{538}
+  Creating Group Homomorphisms, \indexit{375}
+  Creating Groups, \indexit{341}
+  Creating Mappings, \indexit{296}
+  Creating Permutations, \indexit{404}
+  Creating Presentations, \indexit{471}
+  Creation of Algebraic Extensions, \indexit{677}
+  Creation of Rational Functions, \indexit{674}
+  Credit, \indexit{21}
+  `CrystGroupDefaultAction', 425
+  `Cycle', 396
+  `CycleLength', 396
+  `CycleLengths', 396
+  `Cycles', 396
+  `CycleStructureClass', 762
+  `CycleStructurePerm', 404
+  `CyclicExtensionsTom', 698
+  `CyclicGroup', 499
+  `CyclotomicField', 577
+  cyclotomic field elements, 153
+  cyclotomic fields, canonicalbasis, 579
+  `CyclotomicPolynomial', 662
+  Cyclotomic Polynomials, \indexit{662}
+  `Cyclotomics', 153
+  cyclotomics, defaultfield, 578
+\letter D
+  $d_N$, 157
+  Darstellungsgruppe, see `EpimorphismSchurCover', 372
+  `DataType', 124
+  data type, unknown, 163
+  `DayDMY', 251
+  `DaysInMonth', 251
+  `DaysInYear', 251
+  Debugging Recursion, \indexit{83}
+  DEC, 237
+  `DeclareAutoPackage', 832
+  `DeclareHandlingByNiceBasis', 598
+  `DeclareInfoClass', 78
+  `DeclarePackage', 832
+  `DeclarePackageAutoDocumentation', 832
+  `DeclarePackageDocumentation', 832
+  `DecodeTree', 488
+  DecodeTree, \indexit{488}
+  decompose, a group character, 760
+  `DecomposedFixedPointVector', 699
+  `DecomposeTensorProduct', 642
+  `Decomposition', 237
+  `DecompositionInt', 238
+  `DecompositionMatrix', 727
+  decomposition matrix, 237
+  Decompositions, \indexit{237}
+  `Decreased', 769
+  `DefaultField', 566
+    \sub for cyclotomics, 156
+    \sub for finite field elements, 574
+  `DefaultFieldByGenerators', 567
+  `DefaultFieldOfMatrix', 218
+  `DefaultFieldOfMatrixGroup', 420
+  `DefaultRing', 550
+    \sub for finite field elements, 574
+  `DefaultRingByGenerators', 551
+  `DefaultStabChainOptions', 413
+  Defining a Pcgs Yourself, \indexit{427}
+  `DefiningPolynomial', 568
+  `DefiningQuotientHomomorphism', 466
+  `DegreeFFE', 573
+  `DegreeIndeterminate', 660
+  `DegreeOfBinaryRelation', 308
+  `DegreeOfCharacter', 760
+  `DegreeOfLaurentPolynomial', 659
+  `DegreeOfTransformation', 543
+  `DegreeOfTransformationSemigroup', 529
+  `DegreeOverPrimeField', 568
+  `Delta', 807
+  denominator, of a rational, 142
+  `DenominatorCyc', 155
+  `DenominatorOfModuloPcgs', 433
+  `DenominatorOfRationalFunction', 657
+  `DenominatorRat', 142
+  deprecated, 832
+  `DepthOfPcElement', 429
+  `DepthOfUpperTriangularMatrix', 227
+  `Derangements', 147
+  `Derivations', 627
+  `Derivative', 661
+  `DerivedLength', 360
+  `DerivedSeriesOfGroup', 360
+  `DerivedSubgroup', 352
+  `DerivedSubgroupsTom', 697
+  `DerivedSubgroupsTomPossible', 697
+  `DerivedSubgroupsTomUnique', 697
+  `DerivedSubgroupTom', 697
+  `DescriptionOfRootOfUnity', 156
+  `Determinant', 218
+  determinant character, 762
+  `DeterminantIntMat', 237
+  `DeterminantMat', 218
+  `DeterminantMatDestructive', 219
+  `DeterminantMatDivFree', 219
+  Determinant of an integer matrix, \indexit{237}
+  `DeterminantOfCharacter', 762
+  Developing rewriting systems, \indexit{339}
+  `DiagonalizeIntMat', 235
+  `DiagonalizeMat', 224
+  `DiagonalMat', 220
+  `DiagonalOfMat', 226
+  `Difference', 268
+  `DifferenceBlist', 205
+  `DihedralGroup', 500
+  `Dimension', 564
+  `DimensionOfHighestWeightModule', 643
+  `DimensionOfMatrixGroup', 420
+  `DimensionOfVectors', 593
+  `DimensionsLoewyFactors', 361
+  `DimensionsMat', 218
+  Directories, \indexit{90}
+  `DirectoriesLibrary', 90
+  `DirectoriesPackageLibrary', 830
+  `DirectoriesPackagePrograms', 830
+  `DirectoriesSystemPrograms', 91
+  `Directory', 90
+  `DirectoryContents', 91
+  `DirectoryCurrent', 90
+  `DirectoryTemporary', 90
+  `DirectProduct', 494
+  `DirectProductOp', 494
+  Direct Products, \indexit{494}
+  `DirectSumDecomposition', 612
+    \sub for Lie algebras, 631
+  Direct Sum Decompositions, \indexit{630}
+  `DirectSumOfAlgebraModules', 623
+    \sub for Lie algebras, 646
+  `DirectSumOfAlgebras', 611
+  `DisableAttributeValueStoring', 122
+  disable automatic loading, 828
+  `Discriminant', 661
+  `Display', 65
+    \sub for character tables, 731, 756
+    \sub for tables of marks, 691
+  `DisplayCacheStats', 82
+  `DisplayCompositionSeries', 360
+  `DisplayEggBoxOfDClass', 531
+  `DisplayImfInvariants', 520
+  `DisplayInformationPerfectGroups', 513
+  `DisplayOptions', 732
+  `DisplayOptionsStack', 88
+  `DisplayProfile', 81
+  `DisplayRevision', 82
+  `DistancesDistributionMatFFEVecFFE', 212
+  `DistancesDistributionVecFFEsVecFFE', 212
+  `DistanceVecFFE', 212
+  Distinguished Subalgebras, \indexit{628}
+  division, 47
+    \sub operation, 289
+  `DivisionRingByGenerators', 567
+  division rings, 566
+  divisors, of an integer, 132
+  `DivisorsInt', 132
+  Dixon-Schneider algorithm, 736
+  `DixonInit', 737
+  `DixonRecord', 737
+  `DixonSplit', 737
+  `DixontinI', 737
+  `DMYDay', 251
+  `DMYhmsSeconds', 252
+  `DnLattice', 770
+  `DnLatticeIterative', 771
+  `do', 51
+  document formats (text, dvi, ps, pdf, html), 23
+  `Domain', 285
+  `DomainByGenerators', 285
+  Domain Categories, \indexit{282}
+  Domains, \indexit{110}
+  Domains Generated by Class Functions, \indexit{783}
+  Domains of Subspaces of Vector Spaces, \indexit{585}
+  `DominantCharacter', 642
+  `DominantWeights', 642
+  `DoubleCoset', 348
+  `DoubleCosetRepsAndSizes', 349
+  Double Cosets, \indexit{348}
+  `DoubleCosets', operation, 348
+  `DoubleCosetsNC', operation, 348
+  doublequote character, 244
+  doublequotes, 242
+  `DownEnv', 69
+  Dummy Streams, \indexit{105}
+  duplicate free, 188
+  `DuplicateFreeList', 193
+  Duplication of Lists, \indexit{175}
+  Duplication of Objects, \indexit{113}
+  `DxIncludeIrreducibles', 738
+\letter E
+  `E', 153
+  $e_N$, 157
+  `EANormalSeriesByPcgs', 435
+  `Earns', 397
+  `EB', 157
+  `EC', 157
+  Echelonized Matrices, \indexit{224}
+  `ED', 157
+  `Edit', 73
+  Editing Files, \indexit{73}
+  Editor Support, \indexit{73}
+  `EE', 157
+  `EF', 157
+  Efficiency of Homomorphisms, \indexit{378}
+  `EG', 157
+  `EggBoxOfDClass', 531
+  `EH', 157
+  `EI', 158
+  `Eigenspaces', 223
+  `Eigenvalues', 223
+  `EigenvaluesChar', 763
+  `Eigenvectors', 223
+  Eigenvectors and eigenvalues, \indexit{223}
+  `EJ', 158
+  `EK', 158
+  `EL', 158
+  `ElementaryAbelianGroup', 500
+  `ElementaryAbelianSeries', 360
+  `ElementaryAbelianSeriesLargeSteps', 360
+  Elementary Divisors, \indexit{223}
+  `ElementaryDivisorsMat', 224
+  `ElementaryDivisorsMatDestructive', 224
+  Elementary Operations for a Pcgs, \indexit{428}
+  Elementary Operations for a Pcgs and an Element, \indexit{428}
+  Elementary Operations for Integers, \indexit{125}
+  Elementary Operations for Rationals, \indexit{141}
+  Elementary Tietze Transformations, \indexit{482}
+  `ElementOfFpGroup', 456
+  `ElementOfFpSemigroup', 540
+  `ElementOfMagmaRing', 650
+  `ElementOrdersPowerMap', 786
+  `ElementProperty', 417
+  `Elements', 265
+  elements, definition, 109
+    \sub of a list or collection, 265
+  Elements as equivalence classes, \indexit{109}
+  `ElementsFamily', 260
+  Elements in Algebraic Extensions, \indexit{677}
+  Elements of Free Magma Rings, \indexit{649}
+  Elements of pc groups, \indexit{444}
+  `ElementsStabChain', 415
+  Elements with Prescribed Images, \indexit{392}
+  element test, for lists, 177
+  `elif', 50
+  `EliminatedWord', 328
+  `EliminationOrdering', 670
+  `else', 50
+  `EM', 158
+  `emacs', 73
+  `Embedding', 298
+    \sub example for direct products, 494
+    \sub example for semidirect products, 496
+    \sub example for wreath products, 497
+    \sub for group products, 498
+    \sub for Lie algebras, 626
+    \sub for magma rings, 650
+  embeddings, find all, 384
+  Embeddings and Projections for Group Products, \indexit{498}
+  `EmptyBinaryRelation', 307
+  `EmptyMatrix', 220
+  `EmptySCTable', 602
+  `EmptyStabChain', 416
+  `EnableAttributeValueStoring', 122
+  `End', 596
+  `end', 54
+  Enlarging Internally Represented Lists, \indexit{177}
+  `Enumerator', 261
+  `EnumeratorByBasis', 589
+  `EnumeratorByFunctions', 261
+  Enumerators, \indexit{203}
+  `EnumeratorSorted', 261
+  environment, 54
+  `EpimorphismNilpotentQuotient', 468
+  `EpimorphismPGroup', 468
+  `EpimorphismQuotientSystem', 467
+  epimorphisms, find all, 384
+  `EpimorphismSchurCover', 372
+  equality, associative words, 326
+    \sub elements of finitely presented groups, 454
+    \sub nonassociative words, 319
+    \sub of records, 257
+    \sub operation, 288
+    \sub pcwords, 444
+  Equality and Comparison of Domains, \indexit{280}
+  equality test, 46
+    \sub for permutations, 403
+  equivalence class, 310
+  Equivalence Classes, \indexit{310}
+  `EquivalenceClasses', attribute, 311
+  `EquivalenceClassOfElement', 311
+  `EquivalenceClassOfElementNC', 311
+  `EquivalenceClassRelation', 311
+  equivalence relation, 308, 309
+  `EquivalenceRelationByPairs', 310
+  `EquivalenceRelationByPairsNC', 310
+  `EquivalenceRelationByPartition', 310
+  `EquivalenceRelationByPartitionNC', 310
+  `EquivalenceRelationByProperty', 310
+  `EquivalenceRelationByRelation', 310
+  `EquivalenceRelationPartition', 310
+  Equivalence Relations, \indexit{309}
+  `ER', 158
+  `Error', 71
+  Error, \indexit{71}
+  `ErrorCount', 71
+  ErrorCount, \indexit{71}
+  `ErrorNoTraceBack', 67
+  errors, syntax, 63
+  `ES', 158
+  escaped characters, 244
+  escaping non-special characters, 244
+  `ET', 158
+  `EU', 158
+  `EuclideanDegree', 558
+  `EuclideanQuotient', 558
+  `EuclideanRemainder', 558
+  Euclidean Rings, \indexit{558}
+  Euler's totient function, 134
+  `EulerianFunction', 359
+  `EulerianFunctionByTom', 699
+  `EV', 158
+  `EvalStraightLineProgElm', 335
+  `EvalString', 251
+  evaluation, 41
+    \sub strings, 250
+  `EW', 158
+  `EX', 158
+  `ExactSizeConsiderFunction', 369
+  `Exec', 108
+  Exec, \indexit{108}
+  execution, 48
+  exit, 71
+  expanded form of monomials, 673
+  Expert Windows installation, \indexit{826}
+  `Exponent', 359
+    \sub for character tables, 720
+  exponent, of the prime residue group, 134
+  exponentiation, operation, 289
+  `ExponentOfPcElement', 428
+  `ExponentsConjugateLayer', 430
+  `ExponentsOfCommutator', 430
+  `ExponentsOfConjugate', 430
+  `ExponentsOfPcElement', 428
+  `ExponentsOfRelativePower', 430
+  Exponents of Special Products, \indexit{430}
+  `ExponentSumWord', 327
+  `ExponentSyllable', 328
+  Expressing Group Elements as Words in Generators, \indexit{345}
+  Expressions, \indexit{41}
+  `ExtendedPcgs', 432
+  `ExtendStabChain', 416
+  `Extension', 449
+  `ExtensionNC', 449
+  `ExtensionRepresentatives', 450
+  `Extensions', 449
+  Extensions of the p-adic Numbers, \indexit{680}
+  `ExteriorPowerOfAlgebraModule', 646
+  `ExternalOrbit', 400
+  `ExternalOrbits', 400
+  `ExternalOrbitsStabilizers', 400
+  External Representation for Nonassociative Words, \indexit{322}
+  external representation of polynomials, 673
+  `ExternalSet', 399
+  External Sets, \indexit{399}
+  `ExternalSubset', 400
+  `Extract', 767
+  `ExtraspecialGroup', 500
+  `ExtRepDenominatorRatFun', 674
+  `ExtRepNumeratorRatFun', 674
+  `ExtRepOfObj', external representation, for cyclotomics, 156
+  `ExtRepPolynomialRatFun', 674
+  `EY', 158
+\letter F
+  $f_N$, 157
+  `FactorCosetAction', 395
+    \sub for fp groups, 458
+  `FactorCosetOperation', 458
+  `FactorFreeSemigroupByRelations', 538
+  `FactorGroup', 362
+  `FactorGroupFpGroupByRels', 454
+  `FactorGroupNC', 362
+  `FactorGroupNormalSubgroupClasses', 748
+  Factor Groups, \indexit{362}
+  Factor Groups of Polycyclic Groups - Modulo Pcgs, \indexit{432}
+  Factor Groups of Polycyclic Groups in their Own Representation, \indexit{434}
+  `FactorGroupTom', 700
+  `Factorial', 143
+  `Factorization', 346
+  factorization, 345
+  `Factors', 558
+    \sub of univariate polynomial, 662
+  `FactorsInt', 131
+  `FactorsOfDirectProduct', 741
+  `FactorsSquarefree', 663
+  Fail, \indexit{165}
+  `fail', 165
+  `FaithfulModule', 622
+    \sub for Lie algebras, 640
+  Families, \indexit{115}
+  `FamiliesOfGeneralMappingsAndRanges', 306
+  `FamiliesOfRows', 747
+  `FamilyForOrdering', 274
+  `FamilyObj', 115
+  `FamilyPcgs', 443
+  `FamilyRange', 306
+  `FamilySource', 306
+  FAQ, 818
+  features, under UNIX, 27
+  `fi', 50
+  `Fibonacci', 151
+  Fibonacci and Lucas Sequences, \indexit{151}
+  `Field', 566
+  `FieldExtension', 568
+  field homomorphisms, Frobenius, 576
+  `FieldOfMatrixGroup', 420
+  `FieldOverItselfByGenerators', 567
+  fields, 566
+  File Access, \indexit{92}
+  `FileDescriptorOfStream', 97
+  `Filename', 91
+  Filename, \indexit{91}
+  File Operations, \indexit{93}
+  File Streams, \indexit{102}
+  `Filtered', 196
+  Filters, \indexit{116}
+  Filters Controlling the Arithmetic Behaviour of Lists, \indexit{179}
+  Finding Positions in Lists, \indexit{185}
+  Finding Submodules, \indexit{683}
+  `FindSl2', 638
+  Finish Installation and Cleanup, \indexit{817}
+  Finite Field Elements, \indexit{572}
+  Finitely Presented Lie Algebras, \indexit{638}
+  Finitely presented monoids, \indexit{540}
+  finiteness test, for a list or collection, 265
+  Finite Perfect Groups, \indexit{511}
+  `First', 197
+  `FittingSubgroup', 353
+  `Flat', 194
+  flush character, 244
+  For, \indexit{51}
+  `ForAll', 198
+  `ForAny', 198
+  `for' loop, 51
+  `FpElmComparisonMethod', 455
+  `FpGroupPresentation', 471
+  `FpGrpMonSmgOfFpGrpMonSmgElement', 538
+  `FpLieAlgebraByCartanMatrix', 639
+  frame, 772
+  `FrattiniSubgroup', 353
+    \sub for groups with pcgs, 441
+  `FreeAlgebra', 601
+  `FreeAlgebraWithOne', 601
+  `FreeAssociativeAlgebra', 601
+  `FreeAssociativeAlgebraWithOne', 601
+  `FreeGeneratorsOfFpGroup', 455
+  `FreeGeneratorsOfFpSemigroup', 539
+  `FreeGeneratorsOfWholeGroup', 455
+  `FreeGroup', 323
+  `FreeGroupOfFpGroup', 455
+  Free Groups, Monoids and Semigroups, \indexit{323}
+  `FreeLeftModule', 564
+  `FreeLieAlgebra', 627
+  `FreeMagma', 321
+  `FreeMagmaRing', 648
+  Free Magma Rings, \indexit{648}
+  Free Magmas, \indexit{321}
+  `FreeMagmaWithOne', 321
+  Free Modules, \indexit{563}
+  `FreeMonoid', 534
+    \sub with example, 324
+  `FreeMonoidOfRewritingSystem', 542
+  `FreeSemigroup', 324
+    \sub with examples, 528
+  `FreeSemigroupOfFpSemigroup', 539
+  `FreeSemigroupOfRewritingSystem', 542
+  Frobenius automorphism, 576
+  `FrobeniusAutomorphism', 576
+  FrobeniusAutomorphism, \indexit{576}
+  `FrobeniusCharacterValue', 781
+  `FullMatrixAlgebra', 604
+  `FullMatrixAlgebraCentralizer', 612
+  `FullMatrixLieAlgebra', 627
+  `FullMatrixModule', 565
+  `FullMatrixSpace', 593
+  `FullRowModule', 565
+  `FullRowSpace', 593
+  `FullTransformationSemigroup', 529
+  Function, \indexit{54}
+  `function', 54
+  `FunctionAction', 399
+  function call, 45
+    \sub with arguments, 45
+    \sub with options, 45
+  Function Calls, \indexit{45}
+  `FunctionOperation', 832
+  functions, 60, 296
+    \sub definition by arrow notation, 56
+    \sub definition of, 54
+    \sub recursive, 54
+    \sub with a variable number of arguments, 45, 55
+  `FunctionsFamily', 62
+  Functions for Coding Theory, \indexit{212}
+  Functions for GAP Packages, \indexit{829}
+  Functions that do nothing, \indexit{61}
+  Function that Modify Boolean Lists, \indexit{206}
+  Function Types, \indexit{61}
+  `FusionCharTableTom', 706
+  `FusionConjugacyClasses', 788
+  `FusionConjugacyClassesOp', 788
+  fusions, 788
+  `FusionsAllowedByRestrictions', 804
+  `FusionsTom', 695
+\letter G
+  $G$-sets, 387, 399
+  $g_N$, 157
+  `gac', 34
+  Galois Action, \indexit{568}
+  Galois Conjugacy of Cyclotomics, \indexit{159}
+  `GaloisCyc', 159
+    \sub for class functions, 756
+  `GaloisField', 575
+  `GaloisGroup', of field, 569
+    \sub of rational class of a group, 351
+  Galois Groups of Abelian Number Fields, \indexit{581}
+  `GaloisMat', 161
+  `GaloisStabilizer', 579
+  `GaloisType', 663
+  `gap.rc', 31, 33
+  GAP3, 33
+  `Gap3CatalogueIdGroup', 509
+  GAP for Macintosh OS X, \indexit{822}
+  GAP for MacOS, \indexit{823}
+  `GAPInfo', 833
+  `GAPInfo.RootPaths', 29
+  `GapInputPcGroup', 448
+  `GapInputSCTable', 602
+  `GAPKB_REW', 541
+  GAP Root Directory, \indexit{89}
+  `GasmanLimits', 85
+  `GasmanMessageStatus', 85
+  `GasmanStatistics', 85
+  Gaussian algorithm, 222
+  `GaussianIntegers', 583
+  `GaussianRationals', 578
+  Gaussians, \indexit{583}
+  `Gcd', 559
+  Gcd and Lcm, \indexit{559}
+  `Gcdex', 129
+  `GcdInt', 128
+  `GcdOp', 559
+  `GcdRepresentation', 559
+  `GcdRepresentationOp', 559
+  General Binary Relations, \indexit{307}
+  `GeneralisedEigenspaces', 223
+  `GeneralisedEigenvalues', 223
+  generalized characters, 750
+  `GeneralizedEigenspaces', 223
+  `GeneralizedEigenvalues', 223
+  `GeneralLinearGroup', 501
+  `GeneralMappingByElements', 296
+  General Mappings, \indexit{305}
+  `GeneralMappingsFamily', 306
+  `GeneralOrthogonalGroup', 503
+  `GeneralUnitaryGroup', 502
+  Generating Fields, \indexit{566}
+  Generating modules, \indexit{562}
+  Generating Rings, \indexit{550}
+  generator, of the prime residue group, 136
+  `GeneratorsOfAdditiveGroup', 548
+  `GeneratorsOfAdditiveMagma', 548
+  `GeneratorsOfAdditiveMagmaWithZero', 548
+  `GeneratorsOfAlgebra', 608
+  `GeneratorsOfAlgebraModule', 619
+  `GeneratorsOfAlgebraWithOne', 608
+  `GeneratorsOfDivisionRing', 567
+  `GeneratorsOfDomain', 284
+  `Generators\-Of\-Equivalence\-Relation\-Partition', 310
+  `GeneratorsOfField', 567
+  `GeneratorsOfGroup', 342
+  `GeneratorsOfIdeal', 553
+  `GeneratorsOfLeftIdeal', 554
+  `GeneratorsOfLeftModule', 562
+  `GeneratorsOfLeftOperatorAdditiveGroup', 562
+  `GeneratorsOfLeftVectorSpace', 585
+  `GeneratorsOfMagma', 315
+  `GeneratorsOfMagmaWithInverses', 315
+  `GeneratorsOfMagmaWithOne', 315
+  `GeneratorsOfMonoid', 534
+  `GeneratorsOfNearAdditiveGroup', 548
+  `GeneratorsOfNearAdditiveMagma', 548
+  `GeneratorsOfNearAdditiveMagmaWithZero', 548
+  `GeneratorsOfPresentation', 471
+  `GeneratorsOfRightIdeal', 554
+  `GeneratorsOfRightModule', 563
+  `GeneratorsOfRightOperatorAdditiveGroup', 562
+  `GeneratorsOfRing', 551
+  `GeneratorsOfRingWithOne', 555
+  `GeneratorsOfRws', 337
+  `GeneratorsOfSemigroup', 527
+  `GeneratorsOf<Struct>', 281
+  `GeneratorsOfTwoSidedIdeal', 553
+  `GeneratorsOfVectorSpace', 585
+  `GeneratorsPrimeResidues', 135
+  `GeneratorsSmallest', 369
+  `GeneratorsSubgroupsTom', 703
+  `GeneratorSyllable', 328
+  Generic Construction of Tables of Marks, \indexit{707}
+  `GetFusionMap', 790
+  Get the Archives, \indexit{813}
+  getting help, 22
+  `GF', 575
+  `GL', 501
+  GL and SL, \indexit{421}
+  Global Memory Information, \indexit{85}
+  `GModuleByMats', 682
+  `GO', 503
+  `GQuotients', 384
+  `Grading', 613
+  Green's Relations, \indexit{530}
+  `GreensDClasses', 531
+  `GreensDClassOfElement', 531
+  `GreensDRelation', 530
+  `GreensHClasses', 531
+  `GreensHClassOfElement', 531
+  `GreensHRelation', 530
+  `GreensJClasses', 531
+  `GreensJClassOfElement', 531
+  `GreensJRelation', 530
+  `GreensLClasses', 531
+  `GreensLClassOfElement', 531
+  `GreensLRelation', 530
+  `GreensRClasses', 531
+  `GreensRClassOfElement', 531
+  `GreensRRelation', 530
+  Groebner Bases, \indexit{671}
+  `GroebnerBasis', 671
+  `GroebnerBasisNC', 671
+  `Group', 341
+  group actions, 387, 388
+    \sub operations syntax, 387
+  Group Actions - Name Changes, \indexit{832}
+  group algebra, 648
+  Group Automorphisms, \indexit{380}
+  `GroupByRws', 446
+  `GroupByRwsNC', 446
+  group characters, 750
+  Group Elements, \indexit{341}
+  `GroupGeneralMappingByImages', 376
+  `GroupHClassOfGreensDClass', 532
+  `GroupHomomorphismByFunction', 376
+  `GroupHomomorphismByImages', 375
+  `GroupHomomorphismByImagesNC', 375
+  `GroupOfPcgs', 428
+  group operations, 388, 832
+  Group Properties, \indexit{356}
+  `GroupRing', 648
+  group ring, 648
+  Groups of Automorphisms, \indexit{382}
+  `GroupStabChain', 414
+  `GroupWithGenerators', 342
+  `GU', 502
+\letter H
+  $h_N$, 157
+  `HallSubgroup', 354
+  `HallSystem', 355
+    \sub for groups with pcgs, 441
+  Handling of Streams in the Background, \indexit{105}
+  `HasAbelianFactorGroup', 363
+  `HasElementaryAbelianFactorGroup', 363
+  `HasIndeterminateName', 655
+  `HasParent', 283
+  `HasseDiagramBinaryRelation', 309
+  `HeadPcElementByNumber', 430
+  `HenselBound', 664
+  hermite normal form, 832
+  `HermiteNormalFormIntegerMat', 235
+  `HermiteNormalFormIntegerMatTransform', 235
+  `HeuristicCancelPolynomials', 676
+  `HexStringInt', 247
+  `HighestWeightModule', 645
+  History of Character Theory Stuff in GAP, \indexit{710}
+  `HMSMSec', 252
+  `Hom', 596
+  `HomeEnumerator', 399
+  Homomorphism for very large groups, \indexit{379}
+  `HomomorphismQuotientSemigroup', 530
+  homomorphisms, find all, 383
+  homomorphisms, Frobenius, field, 576
+  Homomorphisms of Algebras, \indexit{613}
+  `HomomorphismTransformationSemigroup', 529
+  How to Implement New Kinds of Vector Spaces, \indexit{598}
+  `HumanReadableDefinition', 701
+\letter I
+  $i_N$, 158
+  `Ideal', 552
+  `IdealByGenerators', 553
+  `IdealNC', 553
+  Ideals, \indexit{606}
+  Ideals in Rings, \indexit{552}
+  Ideals of semigroups, \indexit{529}
+  `Idempotents', 316
+  `IdempotentsTom', 695
+  `IdempotentsTomInfo', 695
+  Identical Lists, \indexit{174}
+  Identical Objects, \indexit{110}
+  Identical Records, \indexit{256}
+  `IdentificationOfConjugacyClasses', 716
+  `Identifier', for character tables, 722
+    \sub for tables of marks, 695
+  Identifiers, \indexit{40}
+  `Identity', 285
+  `IdentityBinaryRelation', 307
+  `IdentityFromSCTable', 603
+  `IdentityMapping', 298
+  `IdentityMat', 219
+  `IdentityTransformation', 543
+  `IdFunc', 61
+  `IdGap3SolvableGroup', 509
+  `IdGroup', 509
+  `IdSmallGroup', 509
+  `IdsOfAllSmallGroups', 509
+  If, \indexit{50}
+  `if' statement, 50
+  If Things Go Wrong, \indexit{818}
+  `Image', 299
+    \sub for Frobenius automorphisms, 576
+  image, vector under matrix, 217
+  `ImageElm', 299
+  `ImageListOfTransformation', 543
+  `Images', 300
+  `ImagesElm', 299
+  `ImageSetOfTransformation', 544
+  `ImagesRepresentative', 299
+  `ImagesSet', 299
+  `ImagesSmallestGenerators', 379
+  `ImagesSource', 299
+  Images under Mappings, \indexit{299}
+  `ImfInvariants', 522
+  `ImfMatrixGroup', 523
+  `ImfNumberQClasses', 520
+  `ImfNumberQQClasses', 520
+  `ImfNumberZClasses', 520
+  `Immutable', 112
+  `ImmutableBasis', 591
+  `ImmutableMatrix', 229
+  `in', for collections, 268
+    \sub for lists, 177
+    \sub for strictly sorted lists, 191
+    \sub operation for, 268
+  `IndependentGeneratorsOfAbelianGroup', 370
+  `Indeterminate', 654
+  `IndeterminateName', 655
+  `Indeterminateness', 798
+  `IndeterminateNumberOfLaurentPolynomial', 665
+  `Indeterminate\-Number\-Of\-Univariate\-Rational\-Function', 655
+  `Indeterminate\-Of\-Univariate\-Rational\-Function', 655
+  Indeterminates, \indexit{654}
+  `IndeterminatesOfPolynomialRing', 665
+  `Index', 343
+  `IndexInWholeGroup', 343
+  `IndexNC', 343
+  Index numbers of primitive groups, \indexit{517}
+  `Indicator', 729
+  `IndicatorOp', 729
+  `IndicesCentralNormalSteps', 435
+  `IndicesChiefNormalSteps', 436
+  `IndicesEANormalSteps', 435
+  `IndicesInvolutaryGenerators', 460
+  `IndicesNormalSteps', 437
+  `IndicesOfAdjointBasis', 609
+  `IndicesPCentralNormalStepsPGroup', 436
+  `IndicesStabChain', 415
+  `Indirected', 794
+  Induced Actions, \indexit{684}
+  `InducedAutomorphism', 382
+  `InducedClassFunction', 764
+  `InducedClassFunctions', 764
+  `InducedCyclic', 765
+  `InducedPcgs', 431
+  `InducedPcgsByGenerators', 431
+  `InducedPcgsByGeneratorsNC', 431
+  `InducedPcgsByPcSequence', 431
+  `InducedPcgsByPcSequenceAndGenerators', 431
+  `InducedPcgsByPcSequenceNC', 431
+  `InducedPcgsWrtFamilyPcgs', 443
+  `InducedPcgsWrtSpecialPcgs', 439
+  `Inequalities', 781
+  inequality, of records, 257
+  inequality test, 46
+  `InertiaSubgroup', 761
+  Infinity, \indexit{156}
+  `infinity', 156
+  inflated class functions, 763
+  `Info', 78
+  `InfoAlgebra', 600
+  `InfoAttributes', 122
+  `InfoBckt', 417
+  `InfoCharacterTable', 714
+  `InfoCoh', 372
+  `InfoComplement', 352
+  `InfoCoset', 349
+  `InfoFpGroup', 454
+  Info Functions, \indexit{78}
+  `InfoGroebner', 672
+  `InfoGroup', 342
+  `InfoLattice', 367
+  `InfoLevel', 78
+  `InfoMatrix', 215
+  `InfoMonomial', 806
+  `InfoNumtheor', 134
+  `InfoOptions', 88
+  `InfoPcSubgroup', 369
+  Information about a function, \indexit{60}
+  Information about the version used, \indexit{82}
+  `InfoText', 723
+  `InfoTom', 693
+  `InfoWarning', 79
+  `InitFusion', 803
+  `InitPowerMap', 801
+  `InjectionZeroMagma', 314
+  `InnerAutomorphism', 381
+  `InnerAutomorphismNC', 381
+  `InnerAutomorphismsAutomorphismGroup', 382
+  inner product, of group characters, 760
+  Input-Output Streams, \indexit{103}
+  `InputLogTo', 94
+    \sub for streams, 101
+    \sub stop logging input, 94
+  `InputOutputLocalProcess', 104
+  `InputTextFile', 102
+  `InputTextNone', 105
+  `InputTextString', 103
+  `InputTextUser', 102
+  `InsertTrivialStabilizer', 416
+  `InstallAtExit', 71
+  installation, 813
+  Installation of GAP for MacOS, \indexit{824}
+  Installation Overview, \indexit{813}
+  `InstallCharReadHookFunc', 105
+  `InstalledPackageVersion', 830
+  `InstallFactorMaintenance', 291
+  `InstallHandlingByNiceBasis', 598
+  Installing a GAP Package, \indexit{828}
+  `InstallIsomorphismMaintenance', 291
+  `InstallSubsetMaintenance', 291
+  `Int', 125
+    \sub for cyclotomics, 154
+    \sub for strings, 250
+  `INT_CHAR', 249
+  integer part of a quotient, 128
+  `Integers', 125
+  Integral Bases of Abelian Number Fields, \indexit{579}
+  `IntegralizedMat', 238
+  `IntegratedStraightLineProgram', 334
+  `IntermediateGroup', 362
+  `IntermediateSubgroups', 362
+  Internally Represented Cyclotomics, \indexit{162}
+  Internally Represented Strings, \indexit{245}
+  `InterpolatedPolynomial', 561
+  `IntersectBlist', 206
+  `Intersection', 267
+    \sub for groups with pcgs, 441
+  intersection, of collections, 267
+    \sub of sets, 192
+  `Intersection2', 267
+  `IntersectionBlist', 205
+  `IntersectionsTom', 699
+  `IntersectSet', 192
+  `IntFFE', 574
+  `IntFFESymm', 574
+  `IntHexString', 250
+  `IntScalarProducts', 798, 799
+  `IntVecFFE', 574
+  `InvariantBilinearForm', 422
+  `InvariantElementaryAbelianSeries', 361
+  Invariant Forms, \indexit{422}, \indexit{685}
+  `InvariantLattice', 424
+  `InvariantQuadraticForm', 422
+  `InvariantSesquilinearForm', 422
+  `Invariant\-Subgroups\-Elementary\-Abelian\-Group', 368
+  `Inverse', 287
+  inverse, group homomorphism, 377
+    \sub matrix, 217
+    \sub of class function, 755
+  `InverseAttr', 287
+  `InverseClasses', 723
+  `InverseGeneralMapping', 297
+  `InverseImmutable', 287
+  `InverseMap', 793
+  `InverseMatMod', 231
+  `InverseMutable', 287
+  `InverseOp', 287
+  `InverseRepresentative', 415
+  `InverseSameMutability', 287
+  `InverseSM', 287
+  Invoking the Help, \indexit{22}
+  `Irr', 718
+  irrationalities, 153
+  `IrrBaumClausen', 734
+  `IrrConlon', 734
+  `IrrDixonSchneider', 734
+  Irreducibility Tests, \indexit{683}
+  irreducible character, 759
+  irreducible characters, computation, 737
+  `IrreducibleDifferences', 766
+  Irreducible Maximal Finite Integral Matrix Groups, \indexit{518}
+  `IrreducibleModules', 736
+    \sub for groups with pcgs, 441
+  `IrreducibleRepresentations', 735
+  `IrreducibleRepresentationsDixon', 736
+  `IrreducibleSolvableGroup', 518
+  `IrreducibleSolvableGroupMS', 517
+  Irreducible Solvable Matrix Groups, \indexit{517}
+  `Is16BitsFamily', 330
+  `Is32BitsFamily', 330
+  `Is8BitsFamily', 330
+  `IsAbelian', 316
+    \sub for character tables, 720
+  `IsAbelianNumberField', 578
+  `IsAbelianNumberFieldPolynomialRing', 667
+  `IsAbelianTom', 697
+  `IsAdditiveElement', 292
+  `IsAdditiveElementWithInverse', 292
+  `IsAdditiveElementWithZero', 292
+  `IsAdditiveGroup', 547
+  `IsAdditiveGroupGeneralMapping', 304
+  `IsAdditiveGroupHomomorphism', 304
+  `IsAdditivelyCommutative', 548
+  `IsAdditivelyCommutativeElement', 294
+  `IsAdditivelyCommutativeElementCollColl', 294
+  `Is\-Additively\-Commutative\-Element\-Collection', 294
+  `IsAdditivelyCommutativeElementFamily', 294
+  `IsAdditiveMagma', 546
+  `IsAdditiveMagmaWithInverses', 547
+  `IsAdditiveMagmaWithZero', 546
+  `IsAlgebra', 607
+  `IsAlgebraGeneralMapping', 305
+  `IsAlgebraHomomorphism', 305
+  `IsAlgebraicElement', 678
+  `IsAlgebraicExtension', 677
+  `IsAlgebraModuleElement', 619
+  `IsAlgebraModuleElementCollection', 619
+  `IsAlgebraModuleElementFamily', 619
+  `IsAlgebraWithOne', 607
+  `IsAlgebraWithOneGeneralMapping', 305
+  `IsAlgebraWithOneHomomorphism', 305
+  `IsAlphaChar', 246
+  `IsAlternatingGroup', 408
+  `IsAnticommutative', 556
+  `IsAntisymmetricBinaryRelation', 308
+  `IsAssociated', 556
+  `IsAssociative', 316
+  `IsAssociativeElement', 294
+  `IsAssociativeElementCollColl', 294
+  `IsAssociativeElementCollection', 294
+  `IsAssocWord', 323
+  `IsAssocWordWithInverse', 323
+  `IsAssocWordWithOne', 323
+  `IsAutomorphismGroup', 382
+  `IsBasicWreathLessThanOrEqual', 326
+  `IsBasicWreathProductOrdering', 278
+  `IsBasis', 587
+  `IsBasisByNiceBasis', 598
+  `IsBasisOfAlgebraModuleElementSpace', 620
+  `IsBergerCondition', 807
+  `IsBijective', 299
+  `IsBinaryRelation', 307
+    \sub same as `IsEndoGeneralMapping', 307
+  `IsBLetterAssocWordRep', 329
+  `IsBLetterWordsFamily', 329
+  `IsBlist', 204
+  `IsBlockMatrixRep', 231
+  `IsBool', 165
+  `IsBound', for lists, 173
+  IsBound and Unbind for Lists, \indexit{173}
+  IsBound and Unbind for Records, \indexit{258}
+  `IsBoundGlobal', 44
+  `IsBrauerTable', 713
+  `IsBravaisGroup', 424
+  `IsBuiltFromAdditiveMagmaWithInverses', 338
+  `IsBuiltFromGroup', 338
+  `IsBuiltFromMagma', 338
+  `IsBuiltFromMagmaWithInverses', 338
+  `IsBuiltFromMagmaWithOne', 338
+  `IsBuiltFromSemigroup', 338
+  `IsCanonicalBasis', 590
+  `IsCanonicalBasisFullMatrixModule', 594
+  `IsCanonicalBasisFullRowModule', 594
+  `IsCanonicalNiceMonomorphism', 380
+  `IsCanonicalPcgs', 432
+  `IsCentral', 316
+  `IsChar', 242
+  `IsCharacter', 759
+  `IsCharacteristicSubgroup', 343
+  `IsCharacterTable', 713
+  `IsCharacterTableInProgress', 713
+  `IsCharCollection', 242
+  `IsClassFunction', 750
+  `IsClassFusionOfNormalSubgroup', 729
+  `IsClosedStream', 96
+  `IsCochain', 640
+  `IsCochainCollection', 640
+  `IsCollection', 260
+  `IsCollectionFamily', 260
+  `IsCommutative', 316
+  `IsCommutativeElement', 294
+  `IsCommutativeElementCollColl', 294
+  `IsCommutativeElementCollection', 294
+  `IsCompositionMappingRep', 297
+  `IsConfluent', 336
+    \sub for pc groups, 446
+  `Is\-Conjugacy\-Class\-Subgroups\-By\-Stabilizer\-Rep', 363
+  `IsConjugacyClassSubgroupsRep', 363
+  `IsConjugate', 351
+  `IsConjugatorAutomorphism', 381
+  `IsConjugatorIsomorphism', 381
+  `IsConstantRationalFunction', 658
+  `IsConstantTimeAccessGeneralMapping', 305
+  `IsConstantTimeAccessList', 169
+  `IsContainedInSpan', 592
+  `IsCopyable', 111
+  `IsCyc', 153
+  `IsCyclic', 356
+    \sub for character tables, 720
+  `IsCyclicTom', 697
+  `IsCyclotomic', 153
+  `IsCyclotomicField', 579
+  `IsCyclotomicMatrixGroup', 423
+  `IsDenseList', 168
+  `IsDiagonalMat', 219
+  `IsDigitChar', 246
+  `IsDirectoryPath', 92
+  `IsDistributive', 556
+  `IsDivisionRing', 566
+  `IsDomain', 284
+  `IsDoneIterator', 271
+  `IsDoubleCoset', 349
+  `IsDuplicateFree', 188
+  `IsDuplicateFreeList', 188
+  `IsDxLargeGroup', 738
+  `IsElementaryAbelian', 356
+  `IsElementOfFpMonoid', 538
+  `IsElementOfFpSemigroup', 538
+  `IsElementOfFreeMagmaRing', 649
+  `IsElementOfFreeMagmaRingCollection', 649
+  `IsElementOfFreeMagmaRingFamily', 649
+  `IsElementOfMagmaRingModuloRelations', 651
+  `Is\-Element\-Of\-Magma\-Ring\-Modulo\-Relations\-Collection', 651
+  `Is\-Element\-Of\-Magma\-Ring\-Modulo\-Relations\-Family', 651
+  `Is\-Element\-Of\-Magma\-Ring\-Modulo\-Span\-Of\-Zero\-Family', 651
+  `IsEmpty', 265
+  `IsEmptyString', 245
+  `IsEndOfStream', 99
+  `IsEndoGeneralMapping', 305
+    \sub same as `IsBinaryRelation', 307
+  `IsEqualSet', 191
+  `IsEquivalenceClass', 310
+  `IsEquivalenceRelation', 308
+  `IsEuclideanRing', 558
+  `IsEvenInt', 126
+  `IsExecutableFile', 92
+  `IsExistingFile', 92
+  `IsExtAElement', 292
+  `IsExternalOrbit', 400
+  `IsExternalSet', 399
+  `IsExternalSubset', 400
+  `IsExtLElement', 292
+  `IsExtRElement', 292
+  `IsFamilyPcgs', 443
+  `IsFFE', 572
+  `IsFFECollColl', 572
+  `IsFFECollection', 572
+  `IsField', 566
+  `IsFieldControlledByGaloisGroup', 569
+  `IsFieldHomomorphism', 305
+  `IsFinite', 265
+    \sub for character tables, 720
+  `IsFiniteDimensional', 564
+    \sub for matrix algebras, 608
+  `IsFiniteFieldPolynomialRing', 667
+  `IsFinitelyGeneratedGroup', 357
+  `IsFiniteOrderElement', 294
+  `IsFiniteOrderElementCollColl', 294
+  `IsFiniteOrderElementCollection', 294
+  `IsFiniteOrdersPcgs', 428
+  `IsFixedStabilizer', 416
+  `IsFLMLOR', 607
+  `IsFLMLORWithOne', 607
+  `IsFpGroup', 454
+  `IsFpMonoid', 538
+  `IsFpSemigroup', 537
+  `IsFreeGroup', 324
+  `IsFreeLeftModule', 563
+  `IsFreeMagmaRing', 649
+  `IsFreeMagmaRingWithOne', 649
+  `IsFromFpGroupGeneralMappingByImages', 386
+  `IsFromFpGroupHomomorphismByImages', 386
+  `Is\-From\-Fp\-Group\-Std\-Gens\-General\-Mapping\-By\-Images', 386
+  `Is\-From\-Fp\-Group\-Std\-Gens\-Homomorphism\-By\-Images', 386
+  `IsFullHomModule', 597
+  `IsFullMatrixModule', 565
+  `IsFullRowModule', 565
+  `Is\-Full\-Subgroup\-GLor\-SLRespecting\-Bilinear\-Form', 422
+  `Is\-Full\-Subgroup\-GLor\-SLRespecting\-Quadratic\-Form', 423
+  `Is\-Full\-Subgroup\-GLor\-SLRespecting\-Sesquilinear\-Form', 422
+  `IsFullTransformationSemigroup', 529
+  `IsFunction', 62
+  `IsGaussianIntegers', 583
+  `IsGaussianRationals', 578
+  `IsGaussianSpace', 592
+  `IsGaussInt', 156
+  `IsGaussRat', 156
+  `IsGeneralizedDomain', 284
+  `IsGeneralizedRowVector', 179
+  `IsGeneralLinearGroup', 421
+  `IsGeneralMapping', 305
+  `IsGeneralMappingFamily', 306
+  `IsGeneratorsOf<Struct>', 281
+  `IsGL', 421
+  `IsGreensClass', 531
+  `IsGreensDClass', 531
+  `IsGreensDRelation', 530
+  `IsGreensHClass', 531
+  `IsGreensHRelation', 530
+  `IsGreensJClass', 531
+  `IsGreensJRelation', 530
+  `IsGreensLClass', 531
+  `IsGreensLessThanOrEqual', 531
+  `IsGreensLRelation', 530
+  `IsGreensRClass', 531
+  `IsGreensRelation', 530
+  `IsGreensRRelation', 530
+  `IsGroup', 342
+  `IsGroupGeneralMapping', 303
+  `Is\-Group\-General\-Mapping\-By\-As\-Group\-General\-Mapping\-By\-Images', 385
+  `IsGroupGeneralMappingByImages', 385
+  `IsGroupGeneralMappingByPcgs', 386
+  `IsGroupHClass', 532
+  `IsGroupHomomorphism', 303
+  `IsGroupOfAutomorphisms', 382
+  `IsGroupRing', 649
+  `IsHandledByNiceBasis', 565
+    \sub for vector spaces, 598
+  `IsHandledByNiceMonomorphism', 380
+  `IsHasseDiagram', 308
+  `IsHomogeneousList', 169
+  `IsIdempotent', 287
+  `IsIdenticalObj', 110
+  `IsIncomparableUnder', 274
+  `IsInducedFromNormalSubgroup', 809
+  `IsInducedPcgs', 431
+  `IsInducedPcgsWrtSpecialPcgs', 439
+  `IsInfBitsFamily', 330
+  `IsInfinity', 156
+  `IsInjective', 298
+  `IsInnerAutomorphism', 381
+  `IsInputOutputStream', 103
+  `IsInputStream', 96
+  `IsInputTextNone', 96
+  `IsInputTextStream', 96
+  `IsInt', 125
+  `IsIntegerMatrixGroup', 423
+  `IsIntegers', 125
+  `IsIntegralBasis', 590
+  `IsIntegralCyclotomic', 154
+  `IsIntegralRing', 555
+  `IsInternallyConsistent', 114
+    \sub for character tables, 728
+    \sub for tables of marks, 697
+  `IsIrreducibleCharacter', 759
+  `IsIrreducibleRingElement', 557
+  `IsIterator', 271
+  `IsJacobianElement', 294
+  `IsJacobianElementCollColl', 294
+  `IsJacobianElementCollection', 294
+  `IsJacobianRing', 556
+  `IsLaurentPolynomial', 658
+  `IsLaurentPolynomialDefaultRep', 674
+  `IsLDistributive', 555
+  `IsLeftAlgebraModuleElement', 619
+  `IsLeftAlgebraModuleElementCollection', 619
+  `IsLeftIdeal', 553
+  `IsLeftIdealInParent', 553
+  `IsLeftModule', 562
+  `IsLeftModuleGeneralMapping', 304
+  `IsLeftModuleHomomorphism', 304
+  `IsLeftOperatorAdditiveGroup', 562
+  `IsLeftSemigroupIdeal', 529
+  `IsLeftVectorSpace', 584
+  `IsLessThanOrEqualUnder', 274
+  `IsLessThanUnder', 274
+  `IsLetterAssocWordRep', 329
+  `IsLetterWordsFamily', 329
+  `IsLexicographicallyLess', 194
+  `IsLieAbelian', 630
+  `IsLieAlgebra', 607
+  `IsLieMatrix', 216
+  `IsLieNilpotent', 630
+  `IsLieObject', 625
+  `IsLieObjectCollection', 625
+  `IsLieSolvable', 630
+  `IsLinearMapping', 304
+  `IsLinearMappingsModule', 597
+  `IsList', 168
+  `IsListDefault', 179
+  `IsListOrCollection', 261
+  `IsLowerAlphaChar', 246
+  `IsLowerTriangularMat', 219
+  `IsMagma', 312
+  `IsMagmaHomomorphism', 302
+  `IsMagmaRingModuloRelations', 651
+  `IsMagmaRingModuloSpanOfZero', 651
+  `IsMagmaWithInverses', 312
+  `IsMagmaWithInversesIfNonzero', 312
+  `IsMagmaWithOne', 312
+  `IsMapping', 298
+  `IsMatchingSublist', 188
+  `IsMatrix', 215
+  `IsMatrixGroup', 420
+  `IsMatrixModule', 565
+  `IsMatrixSpace', 592
+  `IsMinimalNonmonomial', 812
+  `IsModuloPcgs', 433
+  `IsMonoid', 534
+  `IsMonomial', for characters, 809
+    \sub for character tables, 720
+    \sub for groups, 809
+    \sub for positive integers, 810
+  `IsMonomialGroup', 357
+  `IsMonomialMatrix', 219
+  `IsMonomialNumber', 810
+  `IsMonomialOrdering', 667
+  `IsMultiplicativeElement', 292
+  `IsMultiplicativeElementWithInverse', 293
+  `IsMultiplicativeElementWithOne', 292
+  `IsMultiplicativeElementWithZero', 292
+  `IsMultiplicativeGeneralizedRowVector', 179
+  `IsMultiplicativeZero', 316
+  `IsMutable', 112
+  `IsMutableBasis', 591
+  `IsNaturalAlternatingGroup', 407
+  `IsNaturalGL', 421
+  `IsNaturalGLnZ', 423
+  `IsNaturalSL', 422
+  `IsNaturalSLnZ', 424
+  `IsNaturalSymmetricGroup', 407
+  `IsNearAdditiveElement', 292
+  `IsNearAdditiveElementWithInverse', 292
+  `IsNearAdditiveElementWithZero', 292
+  `IsNearAdditiveGroup', 546
+  `IsNearAdditiveMagma', 546
+  `IsNearAdditiveMagmaWithInverses', 546
+  `IsNearAdditiveMagmaWithZero', 546
+  `IsNearlyCharacterTable', 713
+  `IsNearRingElement', 293
+  `IsNearRingElementWithInverse', 293
+  `IsNearRingElementWithOne', 293
+  `IsNegRat', 142
+  `IsNilpotent', for character tables, 720
+    \sub for groups with pcgs, 441
+  `IsNilpotentElement', 637
+  `IsNilpotentGroup', 356
+  `IsNilpotentTom', 697
+  `IsNonassocWord', 319
+  `IsNonassocWordCollection', 319
+  `IsNonassocWordWithOne', 319
+  `IsNonassocWordWithOneCollection', 319
+  `IsNonnegativeIntegers', 125
+  `IsNonSPGeneralMapping', 306
+  `IsNonTrivial', 265
+  `IsNormal', 343
+  `IsNormalBasis', 590
+  `IsNotIdenticalObj', 111
+  `IsNumberField', 578
+  `IsObject', 109
+  `IsOddInt', 126
+  isomorphic, pc group, 447
+  `IsomorphicSubgroups', 384
+  `IsomorphismFpAlgebra', 616
+  `IsomorphismFpGroup', 462
+    \sub for subgroups of fp groups, 465
+  `IsomorphismFpGroupByGenerators', 463
+  `IsomorphismFpGroupByGeneratorsNC', 463
+  `IsomorphismFpGroupByPcgs', 445
+  `IsomorphismFpSemigroup', 538
+  `IsomorphismGroups', 383
+  `IsomorphismMatrixAlgebra', 616
+  `IsomorphismPcGroup', 447
+  `IsomorphismPermGroup', 406
+    \sub for Imf matrix groups, 525
+  `IsomorphismPermGroupImfGroup', 526
+  `IsomorphismReesMatrixSemigroup', 533
+  `IsomorphismRefinedPcGroup', 447
+  `Isomorphism<Rep><Struct>', 282
+  isomorphisms, find all, 384
+  `IsomorphismSCAlgebra', 617
+  `IsomorphismSimplifiedFpGroup', 465
+  `IsomorphismSpecialPcGroup', 448
+  `IsomorphismTransformationSemigroup', 529
+  `IsomorphismTypeInfoFiniteSimpleGroup', 357
+  `IsOne', 287
+  `IsOperation', 62
+  `IsOrdering', 273
+  `IsOrderingOnFamilyOfAssocWords', 274
+  `IsOrdinaryMatrix', 215
+  `IsOrdinaryTable', 713
+  `IsOutputStream', 96
+  `IsOutputTextNone', 97
+  `IsOutputTextStream', 96
+  `IsPadicExtensionNumber', 680
+  `IsPadicExtensionNumberFamily', 680
+  `IsParentPcgsFamilyPcgs', 443
+  `IsPartialOrderBinaryRelation', 308
+  `IsPcGroup', 444
+  `IsPcGroupGeneralMappingByImages', 386
+  `IsPcGroupHomomorphismByImages', 386
+  `IsPcgs', 427
+  `IsPcgsCentralSeries', 435
+  `IsPcgsChiefSeries', 436
+  `IsPcgsElementaryAbelianSeries', 435
+  `IsPcgsPCentralSeriesPGroup', 436
+  `IsPerfect', for character tables, 720
+  `IsPerfectGroup', 356
+  `IsPerfectTom', 697
+  `IsPerm', 402
+  `IsPermCollColl', 402
+  `IsPermCollection', 402
+  `IsPermGroup', 406
+  `IsPermGroupGeneralMappingByImages', 386
+  `IsPermGroupHomomorphismByImages', 386
+  `IsPGroup', 358
+  `IsPNilpotent', 358
+  `IsPolycyclicGroup', 356
+  `IsPolynomial', 658
+  `IsPolynomialDefaultRep', 674
+  `IsPolynomialFunction', 657
+  `IsPolynomialFunctionsFamily', 672
+  `IsPolynomialRing', 666
+  `IsPosInt', 125
+  `IsPositiveIntegers', 125
+  `IsPosRat', 141
+  `Is\-Preimages\-By\-As\-Group\-General\-Mapping\-By\-Images', 386
+  `IsPreOrderBinaryRelation', 308
+  `IsPrime', 557
+  `IsPrimeField', 568
+  `IsPrimeInt', 130
+  `IsPrimeOrdersPcgs', 428
+  `IsPrimePowerInt', 131
+  `IsPrimitive', 397
+  `IsPrimitiveCharacter', 808
+  `IsPrimitivePolynomial', 659
+  `IsPrimitiveRootMod', 136
+  `IsProbablyPrimeInt', 130
+  `IsPseudoCanonicalBasisFullHomModule', 597
+  `IsPSolvable', 358
+  `IsPSolvableCharacterTable', 729
+  `IsPSolvableCharacterTableOp', 729
+  `IsPurePadicNumber', 679
+  `IsPurePadicNumberFamily', 679
+  `IsQuasiPrimitive', 808
+  `IsQuaternion', 608
+  `IsQuaternionCollColl', 608
+  `IsQuaternionCollection', 608
+  `IsQuickPositionList', 203
+  `IsQuotientSemigroup', 530
+  `IsRange', 202
+  `IsRat', 141
+  `IsRationalFunction', 657
+  `IsRationalFunctionDefaultRep', 673
+  `IsRationalFunctionsFamily', 672
+  `IsRationalMatrixGroup', 423
+  `IsRationals', 141
+  `IsRationalsPolynomialRing', 667
+  `IsRDistributive', 556
+  `IsReadableFile', 92
+  `IsReadOnlyGlobal', 43
+  `IsRecord', 254
+  `IsRecordCollColl', 254
+  `IsRecordCollection', 254
+  `IsReduced', 337
+  `IsReductionOrdering', 275
+  `IsReesCongruence', 530
+  `IsReesCongruenceSemigroup', 528
+  `IsReesMatrixSemigroup', 532
+  `IsReesMatrixSemigroupElement', 532
+  `IsReesZeroMatrixSemigroup', 532
+  `IsReesZeroMatrixSemigroupElement', 532
+  `IsReflexiveBinaryRelation', 307
+  `IsRegular', 397
+  `IsRegularDClass', 532
+  `IsRegularSemigroup', 528
+  `IsRegularSemigroupElement', 528
+  `IsRelativelySM', 811
+  `IsRestrictedLieAlgebra', 635
+  `IsRewritingSystem', 336
+  `IsRightAlgebraModuleElement', 619
+  `IsRightAlgebraModuleElementCollection', 619
+  `IsRightCoset', 347
+  `IsRightIdeal', 553
+  `IsRightIdealInParent', 553
+  `IsRightModule', 562
+  `IsRightOperatorAdditiveGroup', 562
+  `IsRightSemigroupIdeal', 529
+  `IsRing', 550
+  `IsRingElement', 293
+  `IsRingElementWithInverse', 293
+  `IsRingElementWithOne', 293
+  `IsRingGeneralMapping', 305
+  `IsRingHomomorphism', 305
+  `IsRingWithOne', 554
+  `IsRingWithOneGeneralMapping', 305
+  `IsRingWithOneHomomorphism', 305
+  `IsRootSystem', 631
+  `IsRootSystemFromLieAlgebra', 632
+  `IsRowModule', 565
+  `IsRowSpace', 592
+  `IsRowVector', 208
+  `IsScalar', 293
+  `IsSemiEchelonized', 593
+  `IsSemigroup', 527
+  `IsSemigroupCongruence', 529
+  `IsSemigroupIdeal', 529
+  `IsSemiRegular', 397
+  `IsSet', 189
+  `IsShortLexLessThanOrEqual', 326
+  `IsShortLexOrdering', 276
+  `IsSimple', for character tables, 720
+  `IsSimpleAlgebra', 607
+  `IsSimpleGroup', 357
+  `IsSimpleSemigroup', 528
+  `IsSingleValued', 298
+  `IsSL', 421
+  `IsSolvable', for character tables, 720
+  `IsSolvableGroup', 356
+  `IsSolvableTom', 697
+  `IsSortedList', 188
+  `IsSpecialLinearGroup', 421
+  `IsSpecialPcgs', 438
+  `IsSPGeneralMapping', 306
+  `IsSporadicSimple', for character tables, 720
+  `IsSSortedList', 189
+  `IsStandardGeneratorsOfGroup', 702
+  `IsStraightLineProgElm', 335
+  `IsStraightLineProgram', 331
+  `IsStream', 96
+  `IsString', 242
+  `IsStringRep', 245
+  `Is<Struct>', 282
+  `IsSubgroup', 343
+  `IsSubgroupFpGroup', 454
+  `IsSubgroupOfWholeGroupByQuotientRep', 466
+  `IsSubgroupSL', 422
+  `IsSubmonoidFpMonoid', 537
+  `IsSubnormal', 344
+  `IsSubnormallyMonomial', 811
+  `IsSubsemigroupFpSemigroup', 537
+  `IsSubset', 267
+  `IsSubsetBlist', 205
+  `IsSubsetLocallyFiniteGroup', 357
+  `IsSubsetSet', 191
+  `IsSubspacesVectorSpace', 585
+  `IsSub<struct>', 284
+  `IsSupersolvable', for character tables, 720
+    \sub for groups with pcgs, 441
+  `IsSupersolvableGroup', 356
+  `IsSurjective', 299
+  `IsSyllableAssocWordRep', 330
+  `IsSyllableWordsFamily', 330
+  `IsSymmetricBinaryRelation', 307
+  `IsSymmetricGroup', 408
+  `IsTable', 169
+  `IsTableOfMarks', 693
+  `IsTableOfMarksWithGens', 704
+  `IsToPcGroupGeneralMappingByImages', 386
+  `IsToPcGroupHomomorphismByImages', 386
+  `IsToPermGroupGeneralMappingByImages', 386
+  `IsToPermGroupHomomorphismByImages', 386
+  `IsTotal', 298
+  `IsTotalOrdering', 274
+  `IsTransformation', 543
+  `IsTransformationCollection', 543
+  `IsTransformationMonoid', 529
+  `IsTransformationSemigroup', 529
+  `IsTransitive', for characters, 762
+    \sub for class functions, 762
+    \sub for group actions, 396
+  `IsTransitiveBinaryRelation', 307
+  `IsTranslationInvariantOrdering', 274
+  `IsTrivial', 265
+  `IsTuple', 296
+  `IsTwoSidedIdeal', 553
+  `IsTwoSidedIdealInParent', 553
+  `IsUEALatticeElement', 643
+  `IsUEALatticeElementCollection', 643
+  `IsUEALatticeElementFamily', 643
+  `IsUniqueFactorizationRing', 555
+  `IsUnit', 556
+  `IsUnivariatePolynomial', 658
+  `IsUnivariatePolynomialRing', 667
+  `IsUnivariateRationalFunction', 658
+  `IsUnknown', 163
+  `IsUpperAlphaChar', 246
+  `IsUpperTriangularMat', 219
+  `IsValidIdentifier', 41
+  `IsVector', 293
+  `IsVectorSpace', 584
+  `IsVirtualCharacter', 759
+  `IsWeightLexOrdering', 277
+  `IsWeightRepElement', 644
+  `IsWeightRepElementCollection', 644
+  `IsWeightRepElementFamily', 644
+  `IsWellFoundedOrdering', 273
+  `IsWeylGroup', 633
+  `IsWholeFamily', 266
+  `IsWLetterAssocWordRep', 329
+  `IsWLetterWordsFamily', 329
+  `IsWord', 318
+  `IsWordCollection', 319
+  `IsWordWithInverse', 318
+  `IsWordWithOne', 318
+  `IsWreathProductOrdering', 278
+  `IsWritableFile', 92
+  `IsZero', 287
+  `IsZeroGroup', 528
+  `IsZeroSimpleSemigroup', 528
+  `IsZeroSquaredElement', 294
+  `IsZeroSquaredElementCollColl', 294
+  `IsZeroSquaredElementCollection', 294
+  `IsZeroSquaredRing', 556
+  `IsZmodnZObj', 133
+  `IsZmodnZObjNonprime', 133
+  `IsZmodpZObj', 133
+  `IsZmodpZObjLarge', 133
+  `IsZmodpZObjSmall', 133
+  `Iterated', 199
+  `Iterator', 270
+  `IteratorByBasis', 589
+  `IteratorByFunctions', 272
+  `IteratorList', 271
+  Iterators, \indexit{270}
+  `IteratorSorted', 271
+\letter J
+  $j_N$, 158
+  `Jacobi', 136
+  `JenningsLieAlgebra', 636
+  `JenningsSeries', 361
+  `JoinEquivalenceRelations', 310
+  `JoinStringsWithSeparator', 248
+  `JordanDecomposition', 227
+\letter K
+  $k_N$, 158
+  `KappaPerp', 637
+  `KB_REW', 541
+  `KernelOfAdditiveGeneralMapping', 304
+  `KernelOfCharacter', 761
+  `KernelOfMultiplicativeGeneralMapping', 303
+  `KernelOfTransformation', 544
+  Keywords, \indexit{40}
+  `KillingMatrix', 637
+  `KnownAttributesOfObject', 120
+  Known Problems of the Configure Process, \indexit{820}
+  `KnownPropertiesOfObject', 123
+  `KnownTruePropertiesOfObject', 123
+  `KnowsHowToDecompose', 374
+  `KnuthBendixRewritingSystem', 541
+  Krasner-Kaloujnine theorem, 498
+  `KroneckerProduct', 221
+  `KuKGenerators', 498
+\letter L
+  $l_N$, 158
+  `Lambda', 134
+  Language Overview, \indexit{38}
+  larger or equal, 46
+  larger test, 46
+  `LargestElementGroup', 370
+  `LargestElementStabChain', 415
+  `LargestMovedPoint', 403
+  `LargestUnknown', 163
+  `last', 63
+  `LastSystemError', 89
+  `LaTeXStringDecompositionMatrix', 727
+  lattice base reduction, 238, 239
+  lattice basis reduction, for virtual characters, 766
+  `LatticeByCyclicExtension', 367
+  `LatticeGeneratorsInUEA', 643
+  Lattice Reduction, \indexit{238}
+  `LatticeSubgroups', 365
+  `LatticeSubgroupsByTom', 690
+  `LaurentPolynomialByCoefficients', 664
+  `LaurentPolynomialByExtRep', 675
+  Laurent Polynomials, \indexit{664}
+  `LClassOfHClass', 531
+  `Lcm', 560
+  `LcmInt', 129
+  `LcmOp', 560
+  `LeadCoeffsIGS', 432
+  `LeadingCoefficient', 660
+  `LeadingCoefficientOfPolynomial', 668
+  `LeadingExponentOfPcElement', 429
+  `LeadingMonomial', 660
+  `LeadingMonomialOfPolynomial', 668
+  `LeadingTermOfPolynomial', 668
+  Leaving GAP, \indexit{71}
+  `LeftActingAlgebra', 620
+  `LeftActingDomain', 563
+  `LeftActingRingOfIdeal', 554
+  `LeftAlgebraModule', 618
+  `LeftAlgebraModuleByGenerators', 617
+  left cosets, 347
+  `LeftDerivations', 627
+  `LeftIdeal', 552
+  `LeftIdealByGenerators', 553
+  `LeftIdealNC', 553
+  `LeftModuleByGenerators', 563
+  `LeftModuleByHomomorphismToMatAlg', 621
+  `LeftModuleGeneralMappingByImages', 595
+  `LeftModuleHomomorphismByImages', 595
+  `LeftModuleHomomorphismByImagesNC', 595
+  `LeftModuleHomomorphismByMatrix', 596
+  `LeftQuotient', 289
+    \sub for words, 326
+  `LeftShiftRowVector', 212
+  legacy, 832
+  `Legendre', 137
+  `Length', 189
+    \sub of an associative word, 327
+  length, of a word, 327
+  `LengthsTom', 694
+  `LenstraBase', 581
+  `LessThanFunction', 274
+  `LessThanOrEqualFunction', 274
+  `LetterRepAssocWord', 330
+  `LevelsOfGenerators', 278
+  `LeviMalcevDecomposition', 613
+    \sub for Lie algebras, 631
+  Lexical Structure, \indexit{39}
+  `LexicographicOrdering', 275
+  `LGFirst', 439
+  `LGLayers', 438
+  `LGLength', 439
+  `LGWeights', 438
+  library tables, 711
+  `LieAlgebra', 626
+  `LieAlgebraByStructureConstants', 626
+  `LieBracket', 289
+  `LieCenter', 628
+  `LieCentralizer', 628
+  `LieCentre', 628
+  `LieCoboundaryOperator', 641
+  `LieDerivedSeries', 629
+  `LieDerivedSubalgebra', 628
+  `LieFamily', 625
+  `LieLowerCentralSeries', 629
+  `LieNilRadical', 629
+  `LieNormalizer', 628
+  `LieObject', 625
+  Lie objects, \indexit{625}
+  `LieSolvableRadical', 629
+  `LieUpperCentralSeries', 630
+  `LiftedInducedPcgs', 434
+  `LiftedPcElement', 434
+  `LinearAction', 440
+  `LinearActionLayer', 440
+  `LinearCharacters', 719
+  `LinearCombination', 589
+  `LinearCombinationPcgs', 429
+  Linear equations over the integers and Integral Matrices, \indexit{233}
+  `LinearIndependentColumns', 237
+  Linear Mappings, \indexit{304}
+  `LinearOperation', 440
+  `LinearOperationLayer', 440
+  Line Editing, \indexit{72}
+  `LinesOfStraightLineProgram', 332
+  `List', 196
+  list and non-list, difference, 181
+    \sub left quotient, 184
+    \sub mod, 183
+    \sub product, 182
+    \sub quotient, 183
+  List Assignment, \indexit{171}
+  list assignment, operation, 170
+  `ListBlist', 204
+  list boundedness test, operation, 170
+  List Categories, \indexit{168}
+  list element, access, 170
+    \sub assignment, 171
+    \sub operation, 170
+  List Elements, \indexit{170}
+  list equal, comparison, 177
+  `ListN', 199
+  list of available books, 23
+  `ListPerm', 404
+  Lists and Collections, \indexit{261}
+  list smaller, comparison, 178
+  `ListStabChain', 415
+  list unbind, operation, 170
+  `ListWithIdenticalEntries', 185
+  `ListX', 200
+  `LLL', 766
+  LLL algorithm, for Gram matrices, 239
+    \sub for vectors, 238
+    \sub for virtual characters, 766
+  `LLLReducedBasis', 238
+  `LLLReducedGramMat', 239
+  `LoadDynamicModule', 35
+  Loading a GAP Package, \indexit{828}
+  loading a saved workspace, 37
+  `LoadPackage', 828
+  `local', 54
+  logarithm, discrete, 135
+    \sub of a root of unity, 156
+  `LogFFE', 574
+  logical, 165
+  logical operations, 166
+  `LogInt', 127
+  `LogMod', 135
+  `LogModShanks', 135
+  `LogTo', 94
+    \sub for streams, 101
+    \sub stop logging, 94
+  `LongestWeylWordPerm', 634
+  loop, read eval print, 63
+  loop, `for', 51
+    \sub `repeat', 51
+    \sub `while', 50
+  loop over iterator, 53
+  loop over object, 53
+  loop over range, 52
+  loops, leaving, 53
+    \sub restarting, 54
+  `LowercaseString', 247
+  `LowerCentralSeriesOfGroup', 361
+  Low Index Subgroups, \indexit{461}
+  `LowIndexSubgroupsFpGroup', 461
+  Low Level Routines to Modify and Create Stabilizer Chains, \indexit{415}
+  `Lucas', 151
+\letter M
+  $m_N$, 158
+  Macintosh, 822, 823
+  MacOS, 823
+  `Magma', 312
+  `MagmaByGenerators', 313
+  `MagmaByMultiplicationTable', 314
+  Magma Categories, \indexit{312}
+  `MagmaElement', 314
+  Magma Generation, \indexit{312}
+  `MagmaHomomorphismByFunctionNC', 302
+  Magma Homomorphisms, \indexit{302}
+  `MagmaRingModuloSpanOfZero', 651
+  Magma Rings modulo Relations, \indexit{651}
+  Magma Rings modulo the Span of a Zero Element, \indexit{651}
+  Magmas Defined by Multiplication Tables, \indexit{314}
+  `MagmaWithInverses', 313
+  `MagmaWithInversesByGenerators', 313
+  `MagmaWithInversesByMultiplicationTable', 314
+  `MagmaWithOne', 312
+  `MagmaWithOneByGenerators', 313
+  `MagmaWithOneByMultiplicationTable', 314
+  Main Loop, \indexit{63}
+  `MakeConfluent', 337
+  `MakeImmutable', 112
+  `MakeReadOnlyGlobal', 43
+  `MakeReadWriteGlobal', 43
+  Making transformation semigroups, \indexit{529}
+  Manual Conventions, \indexit{20}
+  map, parametrized, 793
+  `MappedWord', 320
+  `MappingByFunction', 296
+  `MappingPermListList', 405
+  Mappings that Respect Addition, \indexit{303}
+  Mappings that Respect Multiplication, \indexit{302}
+  Mappings which are Compatible with Algebraic Structures, \indexit{302}
+  maps, 784
+  `MarksTom', 693
+  `MatAlgebra', 604
+  `MatClassMultCoeffsCharTable', 731
+  `MathieuGroup', 501
+  `MatLieAlgebra', 627
+  matrices, commutator, 217
+  Matrices as Basis of a Row Space, \indexit{225}
+  Matrices as Linear Mappings, \indexit{227}
+  Matrices over Finite Fields, \indexit{228}
+  Matrices Representing Linear Equations and the Gaussian Algorithm, \indexit{222}
+  `MatrixAlgebra', 604
+  `MatrixAutomorphisms', 745
+  matrix automorphisms, 787
+  `MatrixByBlockMatrix', 232
+  Matrix Constructions, \indexit{219}
+  Matrix Groups in Characteristic 0, \indexit{423}
+  `MatrixLieAlgebra', 627
+  `MatrixOfAction', 620
+  matrix spaces, 592
+  `MatScalarProducts', 760
+  `MatTom', 696
+  `MaximalAbelianQuotient', 363
+  `MaximalBlocks', 398
+  `MaximalNormalSubgroups', 364
+  `MaximalSubgroupClassReps', 364
+  `MaximalSubgroups', 364
+    \sub for groups with pcgs, 441
+  `MaximalSubgroupsLattice', 365
+  `MaximalSubgroupsTom', 700
+  `Maximum', 195
+  `MaximumList', 195
+  MeatAxe Modules, \indexit{682}
+  `MeetEquivalenceRelations', 310
+  `MeetMaps', 796
+  Membership Test for Collections, \indexit{268}
+  Membership Test for Lists, \indexit{177}
+  `MinimalElementCosetStabChain', 415
+  `MinimalGeneratingSet', 370
+    \sub for groups with pcgs, 441
+  `MinimalNonmonomialGroup', 812
+  Minimal Nonmonomial Groups, \indexit{812}
+  `MinimalNormalSubgroups', 365
+  `MinimalPolynomial', 662
+    \sub over a field, 569
+    \sub over a ring, 662
+  Minimal Polynomials, \indexit{662}
+  `MinimalStabChain', 413
+  `MinimalSupergroupsLattice', 366
+  `MinimalSupergroupsTom', 700
+  `MinimizedBombieriNorm', 664
+  `Minimum', 195
+  `MinimumList', 195
+  `MinusCharacter', 802
+  Miscellaneous, \indexit{139}
+  Miscellaneous Name Changes or Removed Names, \indexit{833}
+  mod, integers, 133
+    \sub laurent polynomials, 656
+    \sub lists, 183
+    \sub rationals, 47
+  `mod', 47
+    \sub arithmetic operators, 47
+    \sub for character tables, 717
+    \sub residue class rings, 132
+  modular inverse, 47
+  modular remainder, 47
+  modular roots, 138
+  `ModuleByRestriction', 622
+  Module Constructions, \indexit{682}
+  Module Homomorphisms, \indexit{684}
+  `ModuleOfExtension', 449
+  Modules over Lie Algebras and Their Cohomology, \indexit{640}
+  Modules over Semisimple Lie Algebras, \indexit{642}
+  modulo, 47
+    \sub arithmetic operators, 47
+    \sub for pcgs, 433
+    \sub residue class rings, 132
+  `ModuloPcgs', 433
+  `MoebiusMu', 139
+  `MoebiusTom', 696
+  Molien Series, \indexit{773}
+  `MolienSeries', 773
+  `MolienSeriesInfo', 774
+  `MolienSeriesWithGivenDenominator', 775
+  `Monoid', 534
+  `MonoidByGenerators', 534
+  `MonoidByMultiplicationTable', 535
+  `MonoidOfRewritingSystem', 542
+  `MonomialComparisonFunction', 668
+  `MonomialExtGrlexLess', 670
+  `MonomialExtrepComparisonFun', 669
+  `MonomialGrevlexOrdering', 669
+  `MonomialGrlexOrdering', 669
+  `MonomialLexOrdering', 669
+  Monomial Orderings, \indexit{667}
+  `MonomialTotalDegreeLess', 833
+  monomorphisms, find all, 384
+  `MorClassLoop', 384
+  More about Boolean Lists, \indexit{206}
+  More About Global Variables, \indexit{43}
+  More about Tables of Marks, \indexit{688}
+  `MostFrequentGeneratorFpGroup', 460
+  `MovedPoints', 403
+  Moved Points of Permutations, \indexit{403}
+  `MTX.BasesCompositionSeries', 684
+  `MTX.BasesMaximalSubmodules', 683
+  `MTX.BasesMinimalSubmodules', 683
+  `MTX.BasesMinimalSupermodules', 684
+  `MTX.BasesSubmodules', 683
+  `MTX.BasisInOrbit', 685
+  `MTX.BasisRadical', 683
+  `MTX.BasisSocle', 683
+  `MTX.CollectedFactors', 684
+  `MTX.CompositionFactors', 684
+  `MTX.DegreeSplittingField', 683
+  `MTX.Dimension', 683
+  `MTX.Distinguish', 685
+  `MTX.Field', 683
+  `MTX.Generators', 683
+  `MTX.Homomorphism', 685
+  `MTX.Homomorphisms', 685
+  `MTX.InducedAction', 684
+  `MTX.InducedActionFactorMatrix', 684
+  `MTX.InducedActionFactorModule', 684
+  `MTX.InducedActionMatrix', 684
+  `MTX.InducedActionMatrixNB', 684
+  `MTX.InducedActionSubmodule', 684
+  `MTX.InducedActionSubmoduleNB', 684
+  `MTX.InvariantBilinearForm', 685
+  `MTX.InvariantQuadraticForm', 685
+  `MTX.InvariantSesquilinearForm', 685
+  `MTX.IsAbsolutelyIrreducible', 683
+  `MTX.IsEquivalent', 684
+  `MTX.IsIrreducible', 683
+  `MTX.Isomorphism', 685
+  `MTX.NormedBasisAndBaseChange', 684
+  `MTX.OrthogonalSign', 685
+  `MTX.ProperSubmoduleBasis', 683
+  `MTX.SubGModule', 683
+  `MTX.SubmoduleGModule', 683
+  multiplication, 47
+    \sub matrices, 217
+    \sub matrix and matrix list, 218
+    \sub matrix and scalar, 216
+    \sub matrix and vector, 217
+    \sub operation, 289
+    \sub scalar and matrix, 216
+    \sub scalar and matrix list, 217
+    \sub scalar and vector, 209
+    \sub vector and matrix, 216
+    \sub vector and matrix list, 218
+    \sub vector and scalar, 209
+    \sub vectors, 209
+  `MultiplicationTable', 314
+  Multiplicative Arithmetic for Lists, \indexit{182}
+  Multiplicative Arithmetic Functions, \indexit{138}
+  `MultiplicativeNeutralElement', 316
+  multiplicative order of an integer, 135
+  `MultiplicativeZero', 316
+  `MultiplicativeZeroOp', 286
+  multiplicity, of constituents of a group character, 760
+  multiplier, 373
+  multisets, 190
+  Multivariate Polynomials, \indexit{661}
+  `MultRowVector', 212
+  Murnaghan components, 772, 773
+  Mutability and Copyability, \indexit{111}
+  Mutability Status and List Arithmetic, \indexit{184}
+  Mutable Bases, \indexit{590}
+  `MutableBasis', 591
+  `MutableBasisOfClosureUnderAction', 610
+  `Mutable\-Basis\-Of\-Ideal\-In\-Nonassociative\-Algebra', 611
+  `MutableBasisOfNonassociativeAlgebra', 611
+  `MutableIdentityMat', 221
+  `MutableNullMat', 221
+\letter N
+  $n_k$, 158
+  `Name', 114
+  `NameFunction', 60
+  `NameRNam', 259
+  `NamesFilter', 117
+  `NamesGVars', 44
+  `NamesOfFusionSources', 791
+  `NamesSystemGVars', 44
+  `NamesUserGVars', 44
+  `NaturalCharacter', 758
+  Natural Embeddings related to Magma Rings, \indexit{650}
+  `NaturalHomomorphismByGenerators', 302
+  `NaturalHomomorphismByIdeal', 615
+  `NaturalHomomorphismByNormalSubgroup', 362
+  `NaturalHomomorphismByNormalSubgroupNC', 362
+  `NaturalHomomorphismBySubAlgebraModule', 622
+  `NaturalHomomorphismBySubspace', 596
+  `NearAdditiveGroup', 547
+  `NearAdditiveGroupByGenerators', 547
+  `NearAdditiveMagma', 547
+  `NearAdditiveMagmaByGenerators', 547
+  `NearAdditiveMagmaWithZero', 547
+  `NearAdditiveMagmaWithZeroByGenerators', 547
+  `NearlyCharacterTablesFamily', 715
+  negative number, 47
+  `NegativeRoots', 632
+  `NegativeRootVectors', 632
+  `NestingDepthA', 180
+  `NestingDepthM', 180
+  `NewInfoClass', 78
+  newline, 39
+  newline character, 244
+  `NewmanInfinityCriterion', 470
+  New Presentations and Presentations for Subgroups, \indexit{465}
+  `NextIterator', 271
+  `NextPrimeInt', 131
+  `NF', 577
+  `NiceBasis', 598
+  `NiceBasisFiltersInfo', 599
+  `NiceFreeLeftModule', 597
+  `NiceFreeLeftModuleInfo', 598
+  `NiceMonomorphism', 380
+  `NiceMonomorphismAutomGroup', 383
+  Nice Monomorphisms, \indexit{379}
+  `NiceObject', 380
+  `NiceVector', 597
+  `NilpotencyClassOfGroup', 356
+  `NilpotentQuotientOfFpLieAlgebra', 639
+  `NK', 158
+  `NOAUTO', 829
+  `NonnegativeIntegers', 125
+  `NonnegIntScalarProducts', 798, 799
+  `NonNilpotentElement', 637
+  `Norm', 569
+    \sub of character, 760
+  `NormalBase', 570
+  `NormalClosure', 352
+  `NormalFormIntMat', 236
+  Normal Forms of Integer Matrices - Name Changes, \indexit{832}
+  Normal Forms over the Integers, \indexit{234}
+  `NormalIntersection', 352
+  `Normalized\-Element\-Of\-Magma\-Ring\-Modulo\-Relations', 651
+  `NormalizedWhitespace', 248
+  `Normalizer', 351
+  normalizer, 351
+  `NormalizerInGLnZ', 424
+  `NormalizerInGLnZBravaisGroup', 424
+  `NormalizersTom', 698
+  `NormalizerTom', 698
+  `NormalizeWhitespace', 248
+  `NormalSeriesByPcgs', 437
+  Normal Structure, \indexit{351}
+  `NormalSubgroupClasses', 748
+  `NormalSubgroupClassesInfo', 747
+  `NormalSubgroups', 364
+  `NormedRowVector', 210
+  `NormedRowVectors', 594
+  `NormedVectors', 833
+  `not', 167
+  `NrArrangements', 145
+  `NrBasisVectors', 591
+  `NrCombinations', 145
+  `NrConjugacyClasses', 350
+    \sub for character tables, 720
+  `NrConjugacyClassesGL', 505
+  `NrConjugacyClassesGU', 505
+  `NrConjugacyClassesPGL', 505
+  `NrConjugacyClassesPGU', 505
+  `NrConjugacyClassesPSL', 505
+  `NrConjugacyClassesPSU', 505
+  `NrConjugacyClassesSL', 505
+  `NrConjugacyClassesSLIsogeneous', 505
+  `NrConjugacyClassesSU', 505
+  `NrConjugacyClassesSUIsogeneous', 505
+  `NrDerangements', 148
+  `NrInputsOfStraightLineProgram', 332
+  `NrMovedPoints', 403
+  `NrOrderedPartitions', 149
+  `NrPartitions', 149
+  `NrPartitionsSet', 148
+  `NrPartitionTuples', 151
+  `NrPermutationsList', 147
+  `NrPolyhedralSubgroups', 730
+  `NrPrimitiveGroups', 516
+  `NrRestrictedPartitions', 150
+  `NrSubsTom', 694
+  `NrTransitiveGroups', 507
+  `NrTuples', 147
+  `NrUnorderedTuples', 146
+  `NullAlgebra', 604
+  `NullMat', 219
+  `NullspaceIntMat', 233
+  `NullspaceMat', 222
+  `NullspaceMatDestructive', 222
+  `NullspaceModQ', 231
+  `Number', 197
+  number, Bell, 144
+    \sub binomial, 143
+    \sub Stirling, of the first kind, 144
+    \sub Stirling, of the second kind, 145
+  `NumberArgumentsFunction', 60
+  `NumberFFVector', 211
+  number field, 578
+  number fields, Galois group, 581
+  `NumberIrreducibleSolvableGroups', 518
+  `NumberPerfectGroups', 512
+  `NumberPerfectLibraryGroups', 512
+  `NumberSmallGroups', 509
+  `NumberSyllables', 328
+  numerator, of a rational, 142
+  `NumeratorOfModuloPcgs', 433
+  `NumeratorOfRationalFunction', 657
+  `NumeratorRat', 142
+  Numerical Group Attributes, \indexit{358}
+\letter O
+  $O_p(G)$, see `PCore', 351
+  `ObjByExtRep', 644
+  Objects, \indexit{109}
+  obsolete, 832
+  `OCOneCocycles', 372
+  octal character codes, 244
+  `OctaveAlgebra', 604
+  `od', 51
+  `OldGeneratorsOfPresentation', 487
+  `Omega', 355
+  `ONanScottType', 408
+  `OnBreak', 67
+  `OnBreakMessage', 68
+  `One', 285
+  `OneAttr', 285
+  `OneCoboundaries', 371
+  `OneCocycles', 370
+  one cohomology, 370
+  `OneFactorBound', 664
+  `OneImmutable', 285
+  `OneIrreducibleSolvableGroup', 518
+  `One<Library>Group', 507
+  `OneMutable', 285
+  `OneOfPcgs', 428
+  `OneOp', 285
+  `OnePrimitiveGroup', 507
+  `OneSameMutability', 285
+  `OneSM', 285
+  `OneSmallGroup', 509
+  `OneTransitiveGroup', 507
+  `OnIndeterminates', 662
+    \sub as a permutation action, 389
+  `OnLeftInverse', 388
+  `OnLines', 389
+    \sub example, 502
+  `OnPairs', 388
+  `OnPoints', 388
+  `OnRight', 388
+  `OnSets', 388
+  `OnSetsDisjointSets', 388
+  `OnSetsSets', 388
+  `OnSetsTuples', 388
+  `OnSubspacesByCanonicalBasis', 390
+  `OnTuples', 388
+  `OnTuplesSets', 388
+  `OnTuplesTuples', 389
+  `Operation', 832
+  `OperationAlgebraHomomorphism', 616
+  Operational Structure of Domains, \indexit{279}
+  `OperationHomomorphism', 832
+  operations, for booleans, 166
+  Operations and Attributes for Vector Spaces, \indexit{585}
+  Operations applicable to All Streams, \indexit{97}
+  Operations Concerning Blocks, \indexit{725}
+  Operations for (Near-)Additive Magmas, \indexit{548}
+  Operations for Abelian Number Fields, \indexit{578}
+  operations for algebraic elements, 677
+  Operations for Associative Words, \indexit{326}
+  Operations for Associative Words by their Syllables, \indexit{328}
+  Operations for Booleans, \indexit{166}
+  Operations for Brauer Characters, \indexit{781}
+  Operations for Class Functions, \indexit{759}
+  Operations for Collections, \indexit{267}
+  Operations for Cyclotomics, \indexit{153}
+  Operations for Domains, \indexit{284}
+  Operations for Finite Field Elements, \indexit{573}
+  Operations for Finitely Presented Groups, \indexit{456}
+  Operations for Group Homomorphisms, \indexit{377}
+  Operations for Input Streams, \indexit{97}
+  Operations for Lists, \indexit{192}
+  Operations for Output Streams, \indexit{100}
+  Operations for Pc Groups, \indexit{448}
+  Operations for Rational Functions, \indexit{656}
+  Operations for Special Kinds of Bases, \indexit{590}
+  Operations for Stabilizer Chains, \indexit{414}
+  Operations for Vector Space Bases, \indexit{588}
+  Operations for Words, \indexit{320}
+  Operations on elements of the algebra, \indexit{337}
+  Operations on rewriting systems, \indexit{336}
+  Operations to Evaluate Strings, \indexit{250}
+  Operations to Produce or Manipulate Strings, \indexit{247}
+  Operations which have Special Methods for Groups with Pcgs, \indexit{441}
+  operators, 41
+    \sub arithmetic, 47
+    \sub associativity, 48
+    \sub for cyclotomics, 157
+    \sub for lists, 178
+    \sub precedence, 47, 48
+  Operators for Character Tables, \indexit{717}
+  Operators for Matrices, \indexit{216}
+  Operators for Row Vectors, \indexit{208}
+  Optimization and Compiler Options, \indexit{821}
+  options, 27, 813
+    \sub command line, filenames, 29
+    \sub command line, internal, 30
+  options, under UNIX, 27
+  `or', 166
+  `Orbit', 390
+  `OrbitFusions', 792
+  `OrbitLength', 391
+  `OrbitLengths', 391
+  `OrbitLengthsDomain', 391
+  `OrbitPerms', 406
+  `OrbitPowerMaps', 787
+  `Orbits', operation/attribute, 390
+  Orbits, \indexit{390}
+  `OrbitsDomain', 390
+  `OrbitsPerms', 406
+  `OrbitStabChain', 415
+  `OrbitStabilizer', 391
+  `OrbitStabilizerAlgorithm', 392
+  Orbit Stabilizer Methods for Polycyclic Groups, \indexit{440}
+  `Order', 288
+    \sub of a class function, 756
+  order,  of a group, 341
+    \sub of a list, collection or domain, 266
+    \sub of the prime residue group, 134
+  `OrderedPartitions', 149
+  ordering, booleans, 165
+    \sub of records, 257
+  `OrderingByLessThanFunctionNC', 273
+  `OrderingByLessThanOrEqualFunctionNC', 273
+  `OrderingOfRewritingSystem', 336
+  `OrderingOnGenerators', 275
+  `OrderingsFamily', 273
+  Orderings on families of associative words, \indexit{274}
+  `OrderMod', 135
+  `OrderOfRewritingSystem', 336
+  `OrdersClassRepresentatives', 721
+  `OrdersTom', 694
+  `Ordinal', 251
+  ordinary character, 759
+  `OrdinaryCharacterTable', 719
+  `OrthogonalComponents', 772
+  Orthogonal Embeddings, \indexit{239}
+  `OrthogonalEmbeddings', 239
+  `OrthogonalEmbeddingsSpecialDimension', 768
+  OSX, 822
+  Other Filters, \indexit{124}
+  Other Operations Applicable to any Object, \indexit{114}
+  Other Operations for Character Tables, \indexit{728}
+  Other Operations for Tables of Marks, \indexit{697}
+  output, suppressing, 63
+  `OutputLogTo', 94
+    \sub for streams, 101
+    \sub stop logging output, 94
+  `OutputTextFile', 102
+  `OutputTextNone', 105
+  `OutputTextString', 103
+  `OutputTextUser', 103
+\letter P
+  $p$-group, 358
+  package, 828
+  Package Interface - Obsolete Functions and Name Changes, \indexit{832}
+  Packages, \indexit{817}
+  `PadicCoefficients', 238
+  `PadicExtensionNumberFamily', 680
+  `PadicNumber', 680
+    \sub for pure padics, 679
+  `Pager', 25
+  `Parametrized', 795
+  Parametrized Maps, \indexit{793}
+  parametrized maps, 784
+  `Parent', 283
+  `ParentPcgs', 431
+  Parents, \indexit{283}
+  partial order, 308
+  `PartialOrderByOrderingFunction', 309
+  `PartialOrderOfHasseDiagram', 308
+  `Partitions', 149
+  partitions, improper, of an integer, 149
+    \sub ordered, of an integer, 149
+    \sub restricted, of an integer, 150
+  `PartitionsGreatestEQ', 150
+  `PartitionsGreatestLE', 150
+  `PartitionsSet', 148
+  `PartitionTuples', 151
+  `PcElementByExponents', 429
+  `PcElementByExponentsNC', 429
+  `PCentralLieAlgebra', 636
+  `PCentralNormalSeriesByPcgsPGroup', 436
+  `PCentralSeries', 361
+  `PcGroupCode', 451
+  `PcGroupCodeRec', 451
+  `PcGroupFpGroup', 445
+  Pc groups versus fp groups, \indexit{444}
+  `PcGroupWithPcgs', 447
+  `Pcgs', 427
+  `Pcgs_OrbitStabilizer', 441
+  Pcgs and Normal Series, \indexit{434}
+  `PcgsByPcSequence', 427
+  `PcgsByPcSequenceNC', 427
+  `PcgsCentralSeries', 435
+  `PcgsChiefSeries', 436
+  `PcgsElementaryAbelianSeries', 435
+  `PcgsPCentralSeriesPGroup', 436
+  `PClassPGroup', 358
+  `PCore', 351
+  `PcSeries', 428
+  `PerfectGroup', 511
+  perfect groups, 511
+  `PerfectIdentification', 512
+  `PerfectResiduum', 353
+  `Perform', 194
+  `Permanent', 152
+  Permanent of a Matrix, \indexit{152}
+  `PermBounds', 781
+  `PermCharInfo', 776
+  `PermCharInfoRelative', 777
+  `PermChars', 777
+  `PermCharsTom', 707
+  `PermComb', 781
+  `PermLeftQuoTransformation', 545
+  `PermList', 404
+  `PermListList', 194
+  `Permutation', 396
+  `PermutationCharacter', 758
+  permutation character, 803
+  permutation characters, possible, 775, 777
+  `PermutationCycle', 396
+  `PermutationMat', 220
+  `PermutationsFamily', 402
+  Permutations Induced by Elements and Cycles, \indexit{396}
+  `PermutationsList', 147
+  `PermutationTom', 692
+  `Permuted', 196
+    \sub as a permutation action, 389
+    \sub for class functions, 756
+  `PGL', 503
+  `PGU', 504
+  `Phi', 134
+  point stabilizer, 391
+  Polycyclic Generating Systems, \indexit{426}
+  `PolynomialByExtRep', 674
+  `PolynomialCoefficientsOfPolynomial', 660
+  `PolynomialDivisionAlgorithm', 670
+  Polynomial Factorization, \indexit{662}
+  `PolynomialModP', 663
+  `PolynomialReducedRemainder', 670
+  `PolynomialReduction', 670
+  `PolynomialRing', 665
+  Polynomial Rings, \indexit{665}
+  Polynomials as Univariate Polynomials in one Indeterminate, \indexit{660}
+  polynomials over abelian number fields, factors, 578
+  Polynomials over the Rationals, \indexit{663}
+  `PopOptions', 87
+  Portability, \indexit{89}
+  Porting GAP, \indexit{821}
+  `Position', 185
+  `PositionBound', 187
+  `PositionCanonical', 185
+  `PositionNonZero', 187
+  `PositionNot', 187
+  `PositionNthOccurrence', 186
+  `PositionProperty', 187
+  `PositionSet', 186
+  `PositionSorted', 186
+  `PositionStream', 99
+  `PositionSublist', 188
+  `PositionWord', 327
+  `PositiveIntegers', 125
+  positive number, 47
+  `PositiveRoots', 632
+  `PositiveRootVectors', 632
+  `PossibleClassFusions', 791
+  `PossibleFusionsCharTableTom', 706
+  Possible Permutation Characters, \indexit{775}
+  possible permutation characters, 775, 777
+  `PossiblePowerMaps', 785
+  power, 47
+    \sub matrix, 217
+    \sub meaning for class functions, 755
+    \sub of words, 326
+  `PowerMap', 785
+  `PowerMapByComposition', 787
+  `PowerMapOp', 785
+  Power Maps, \indexit{784}
+  `PowerMapsAllowedBySymmetrizations', 802
+  `PowerMod', 560
+  `PowerModCoeffs', 214
+  `PowerModInt', 130
+  `PowerPartition', 151
+  powerset, 145
+  `PowerSubalgebraSeries', 609
+  `PQuotient', 467
+  precedence, 47
+  precedence test, for permutations, 403
+  `PrefrattiniSubgroup', 353
+    \sub for groups with pcgs, 441
+  `PreImage', 301
+  `PreImageElm', 300
+  `PreImages', 301
+  `PreImagesElm', 300
+  Preimages in the Free Group, \indexit{455}
+  Preimages in the Free Semigroup, \indexit{539}
+  `PreimagesOfTransformation', 544
+  `PreImagesRange', 300
+  `PreImagesRepresentative', 301
+  `PreImagesSet', 301
+  Preimages under Homomorphisms from an FpGroup, \indexit{466}
+  Preimages under Mappings, \indexit{300}
+  preorder, 308
+  `PresentationFpGroup', 471
+  `PresentationNormalClosure', 476
+  `PresentationNormalClosureRrs', 476
+  `PresentationSubgroup', 473
+  `PresentationSubgroupMtc', 475
+  `PresentationSubgroupRrs', 474
+  `PresentationViaCosetTable', 472
+  previous result, 63
+  `PrevPrimeInt', 131
+  `PrimaryGeneratorWords', 475
+  primary subgroup generators, 489
+  `PrimeBlocks', 725
+  `PrimeBlocksOp', 725
+  `PrimeField', 568
+  Prime Integers and Factorization, \indexit{130}
+  `PrimePGroup', 358
+  `PrimePowersInt', 132
+  prime residue group, 134
+    \sub exponent, 134
+    \sub generator, 136
+    \sub order, 134
+  Prime Residues, \indexit{134}
+  `PrimeResidues', function, 134
+  `Primes', 130
+  primitive, 397
+  `PRIMITIVE_INDICES_MAGMA', 517
+  `PrimitiveElement', 568
+  `PrimitiveGroup', 516
+  Primitive Groups, \indexit{408}
+  `PrimitiveGroupsIterator', 516
+  `PrimitiveIdentification', 517
+  `PrimitiveIndexIrreducibleSolvableGroup', 518
+  Primitive Permutation Groups, \indexit{515}
+  `PrimitivePolynomial', 663
+  `PrimitiveRoot', 575
+  `PrimitiveRootMod', 136
+  primitive root modulo an integer, 136
+  Primitive Roots and Discrete Logarithms, \indexit{135}
+  Primitivity of Characters, \indexit{807}
+  `Print', 64
+  `PrintAmbiguity', 798
+  `PrintArray', 221
+  `PrintCharacterTable', 733
+  `PrintFactorsInt', 132
+  `PrintFormattingStatus', 101
+  Printing Character Tables, \indexit{731}
+  Printing Class Functions, \indexit{756}
+  Printing Presentations, \indexit{477}
+  Printing Tables of Marks, \indexit{690}
+  `PrintObj', 65
+    \sub for character tables, 731, 756
+    \sub for tables of marks, 691
+  `PrintTo', 94
+    \sub for streams, 100
+  `ProbabilityShapes', 663
+  problems, 818
+  Problems on Particular Systems, \indexit{821}
+  procedure call, 49
+  Procedure Calls, \indexit{49}
+  procedure call with arguments, 49
+  `Process', 107
+  Process, \indexit{107}
+  `PROD_GF2MAT_GF2MAT_ADVANCED', 231
+  `PROD_GF2MAT_GF2MAT_SIMPLE', 231
+  `Product', 198
+  product, of words, 326
+    \sub rational functions, 656
+  `ProductCoeffs', 213
+  `ProductSpace', 609
+  `ProductX', 201
+  `ProfileFunctions', 81
+  `ProfileGlobalFunctions', 81
+  `ProfileMethods', 81
+  `ProfileOperations', 80
+  `ProfileOperationsAndMethods', 80
+  `PROFILETHRESHOLD', 81
+  Profiling, \indexit{80}
+  `ProjectedInducedPcgs', 434
+  `ProjectedPcElement', 434
+  `Projection', 298
+    \sub example for direct products, 494
+    \sub example for semidirect products, 496
+    \sub example for subdirect products, 496
+    \sub example for wreath products, 497
+    \sub for group products, 498
+  `ProjectionMap', 794
+  projections, find all, 384
+  `ProjectiveActionHomomorphismMatrixGroup', 421
+  `ProjectiveActionOnFullSpace', 421
+  `ProjectiveGeneralLinearGroup', 503
+  `ProjectiveGeneralUnitaryGroup', 504
+  `ProjectiveOrder', 230
+  `ProjectiveSpecialLinearGroup', 504
+  `ProjectiveSpecialUnitaryGroup', 504
+  `ProjectiveSymplecticGroup', 504
+  prompt, 63
+    \sub partial, 63
+  Properties, \indexit{123}
+  Properties and Attributes for Lists, \indexit{188}
+  Properties and Attributes of (General) Mappings, \indexit{298}
+  Properties and Attributes of Binary Relations, \indexit{307}
+  Properties and Attributes of Matrices, \indexit{218}
+  Properties and Attributes of Rational Functions, \indexit{657}
+  Properties and basic functionality, \indexit{273}
+  Properties of a Lie Algebra, \indexit{630}
+  Properties of rewriting systems, \indexit{337}
+  Properties of Rings, \indexit{555}
+  Properties of Tables of Marks, \indexit{696}
+  `PRump', 354
+  `PseudoRandom', 269
+  `PSL', 504
+  `PSP', 504
+  `PSp', 504
+  `PSU', 504
+  `PthPowerImage', 636
+  `PthPowerImages', 635
+  Pure p-adic Numbers, \indexit{679}
+  `PurePadicNumberFamily', 679
+  `PushOptions', 87
+\letter Q
+  `Quadratic', 160
+  quadratic residue, 136, 137
+  `QuaternionAlgebra', 604
+  `QUIET', 833
+  `QUIT', emergency quit, 71
+  quit, in emergency, 71
+  `quit', 66
+  `QUITTING', 71
+  `QuoInt', 128
+  `Quotient', 551
+  quotient, for finitely presented groups, 454
+    \sub matrices, 217
+    \sub matrix and matrix list, 218
+    \sub matrix and scalar, 217
+    \sub of free monoid, 540
+    \sub of free semigroup, 538
+    \sub of words, 326
+    \sub rational functions, 656
+    \sub scalar and matrix, 217
+    \sub scalar and matrix list, 217
+    \sub vector and matrix, 217
+  `QuotientFromSCTable', 603
+  Quotient Methods, \indexit{467}
+  `QuotientMod', 560
+  `QuotientPolynomialsExtRep', 675
+  `QuotientRemainder', 559
+  Quotients, \indexit{530}
+  Quotients and Remainders, \indexit{128}
+  `QuotientSemigroupCongruence', 530
+  `QuotientSemigroupHomomorphism', 530
+  `QuotientSemigroupPreimage', 530
+  `QuotRemLaurpols', 665
+\letter R
+  $r_N$, 158
+  `RadicalGroup', 353
+  `RadicalOfAlgebra', 612
+  `Random', 269
+    \sub for integers, 127
+    \sub for rationals, 142
+  `RandomBinaryRelationOnPoints', 309
+  random element, of a list or collection, 269
+  Random Elements, \indexit{269}
+  `RandomInvertibleMat', 221
+  `RandomIsomorphismTest', 452
+  Random Isomorphism Testing, \indexit{452}
+  Randomized Methods for Permutation Groups, \indexit{410}
+  `RandomList', 270
+  `RandomMat', 221
+  Random Matrices, \indexit{221}
+  random seed, 270
+  `RandomTransformation', 543
+  `RandomUnimodularMat', 221
+  `Range', 299
+  range, 201
+  Ranges, \indexit{201}
+  `RankAction', 397
+  `RankFilter', 116
+  `RankMat', 222
+  `RankOfTransformation', 544
+  `RankPGroup', 358
+  `Rat', 142
+    \sub for strings, 250
+  `RationalClass', 350
+  `RationalClasses', 351
+  `RationalFunctionByExtRep', 674
+  `Rational\-Function\-By\-Ext\-Rep\-With\-Cancellation', 675
+  Rational Function Families, \indexit{672}
+  `RationalFunctionsFamily', 672
+  `RationalizedMat', 161
+  `Rationals', 141
+  `RClassOfHClass', 531
+  `Read', 93
+    \sub for streams, 97
+  `ReadAll', 99
+  `ReadAllLine', 104
+  `ReadAsFunction', 93
+    \sub for streams, 98
+  `ReadByte', 98
+  read eval print loop, 63
+  `ReadLine', 98
+  `ReadPackage', 829
+  `ReadPkg', 832
+  `ReadTest', 83
+    \sub for streams, 98
+  `RealClasses', 723
+  `RealizableBrauerCharacters', 782
+  `RecNames', 254
+  Recognizing Characters, \indexit{246}
+  record, component access, 254
+    \sub component assignment, 255
+    \sub component variable, 255
+    \sub component variable assignment, 256
+  Record Access Operations, \indexit{259}
+  Record Assignment, \indexit{255}
+  record assignment, operation, 259
+  record boundness test, operation, 259
+  record component, operation, 259
+  record unbind, operation, 259
+  Recovery from NoMethodFound-Errors, \indexit{75}
+  recursion, 54
+  redisplay a help section, 23
+  redisplay with next help viewer, 23
+  `ReduceCoeffs', 214
+  `ReduceCoeffsMod', 214
+  `ReducedAdditiveInverse', 337
+  `ReducedCharacters', 765
+  `ReducedClassFunctions', 765
+  `ReducedComm', 337
+  `ReducedConfluentRewritingSystem', 540
+  `ReducedConjugate', 337
+  `ReducedDifference', 337
+  `ReducedForm', 336
+  `ReducedGroebnerBasis', 671
+  `ReducedInverse', 337
+  `ReducedLeftQuotient', 337
+  `ReducedOne', 337
+  `ReducedPcElement', 429
+  `ReducedPower', 337
+  `ReducedProduct', 337
+  `ReducedQuotient', 337
+  `ReducedScalarProduct', 337
+  `ReducedSum', 337
+  `ReducedZero', 337
+  `ReduceRules', 337
+  `ReduceStabChain', 416
+  Reducing Virtual Characters, \indexit{765}
+  `Ree', 501
+  `ReeGroup', 501
+  `ReesCongruenceOfSemigroupIdeal', 529
+  `ReesMatrixSemigroup', 532
+  `ReesMatrixSemigroupElement', 532
+  Rees Matrix Semigroups, \indexit{532}
+  `ReesZeroMatrixSemigroup', 532
+  `ReesZeroMatrixSemigroupElement', 532
+  `ReesZeroMatrixSemigroupElementIsZero', 533
+  `RefinedPcGroup', 447
+  `ReflectionMat', 221
+  `ReflexiveClosureBinaryRelation', 309
+  reflexive relation, 307
+  regular, 397
+  regular action, 394
+  `RegularActionHomomorphism', 395
+  `RegularModule', 736
+  relations, 296
+  Relations Between Domains, \indexit{289}
+  `RelationsOfFpSemigroup', 539
+  `RelativeBasis', 588
+  `RelativeBasisNC', 588
+  relatively prime, 47
+  `RelativeOrderOfPcElement', 428
+  `RelativeOrders', of a pcgs, 428
+  Relators in a Presentation, \indexit{476}
+  `RelatorsOfFpGroup', 455
+  remainder, operation, 289
+  remainder of a quotient, 128
+  `RemInt', 128
+  remove, an element from a set, 192
+  `RemoveFile', 94
+  `RemoveOuterCoeffs', 212
+  `RemoveRelator', 479
+  `RemoveSet', 192
+  `RemoveStabChain', 416
+  Repeat, \indexit{51}
+  `repeat' loop, 51
+  `ReplacedString', 248
+  Representation, \indexit{119}
+  representation, as a sum of two squares, 139
+  Representations for Associative Words, \indexit{329}
+  Representations for Group Homomorphisms, \indexit{385}
+  Representations given by modules, \indexit{736}
+  Representations of Algebras, \indexit{617}
+  `RepresentationsOfObject', 120
+  `Representative', 266
+  representative, of a list or collection, 266
+  `RepresentativeAction', 392
+  `RepresentativeLinearOperation', 617
+  `RepresentativeOperation', 832
+  `RepresentativesContainedRightCosets', 348
+  `RepresentativesFusions', 792
+  `RepresentativeSmallest', 266
+  `RepresentativesMinimalBlocks', 398
+  `RepresentativesPerfectSubgroups', 366
+  `RepresentativesPowerMaps', 787
+  `RepresentativesSimpleSubgroups', 366
+  `RepresentativeTom', 705
+  `RepresentativeTomByGenerators', 705
+  `RepresentativeTomByGeneratorsNC', 705
+  `RequirePackage', 832
+  `Reread', 95
+  `REREADING', 95
+  `RereadPackage', 829
+  `RereadPkg', 832
+  `ResetOptionsStack', 87
+  residue, quadratic, 136, 137
+  Residue Class Rings, \indexit{132}
+  `RespectsAddition', 303
+  `RespectsAdditiveInverses', 303
+  `RespectsInverses', 303
+  `RespectsMultiplication', 302
+  `RespectsOne', 303
+  `RespectsScalarMultiplication', 304
+  `RespectsZero', 304
+  `RestoreStateRandom', 269
+  Restricted and Induced Class Functions, \indexit{763}
+  `RestrictedClassFunction', 763
+  `RestrictedClassFunctions', 764
+  Restricted Lie algebras, \indexit{635}
+  `RestrictedMapping', 298
+  `RestrictedPartitions', 150
+  `RestrictedPerm', 405
+  `RestrictedTransformation', 544
+  `Resultant', 661
+  `ResultOfStraightLineProgram', 332
+  Return, \indexit{57}
+  `return', 66
+    \sub no value, 57
+    \sub with value, 57
+  `ReturnFail', 61
+  `ReturnFalse', 61
+  return from break loop, 66
+  `ReturnTrue', 61
+  `Reversed', 194
+  `RewindStream', 99
+  `RewriteWord', 461
+  Rewriting in Groups and Monoids, \indexit{338}
+  Rewriting Systems and the Knuth-Bendix Procedure, \indexit{540}
+  `RightActingAlgebra', 620
+  `RightActingRingOfIdeal', 554
+  `RightAlgebraModule', 618
+  `RightAlgebraModuleByGenerators', 618
+  `RightCoset', 346
+  `RightCosets', 347
+  right cosets, 346
+  `RightCosetsNC', 347
+  `RightDerivations', 627
+  `RightIdeal', 552
+  `RightIdealByGenerators', 553
+  `RightIdealNC', 553
+  `RightModuleByHomomorphismToMatAlg', 621
+  `RightShiftRowVector', 212
+  `RightTransversal', 347
+  `Ring', 550
+  `RingByGenerators', 551
+  Ring Homomorphisms, \indexit{305}
+  Rings With One, \indexit{554}
+  `RingWithOne', 554
+  `RingWithOneByGenerators', 554
+  `RNamObj', 259
+  root, of 1 modulo an integer, 138
+    \sub of an integer, 127
+    \sub of an integer, smallest, 127
+    \sub of an integer modulo another, 137
+  `RootInt', 127
+  `RootMod', 137
+  `RootOfDefiningPolynomial', 568
+  `RootsMod', 137
+  Roots Modulo Integers, \indexit{136}
+  roots of unity, 153
+  `RootsOfUPol', 660
+  `RootsUnityMod', 138
+  `RootSystem', 632
+  `RoundCyc', 155
+  Row and Matrix Spaces, \indexit{592}
+  `RowIndexOfReesMatrixSemigroupElement', 533
+  `Row\-Index\-Of\-Rees\-Zero\-Matrix\-Semigroup\-Element', 533
+  row spaces, 592
+  Row Vectors over Finite Fields, \indexit{210}
+  `Rules', 336
+  Running GAP under MacOS, \indexit{30}
+  `Runtime', 80
+  `Runtimes', 79
+\letter S
+  $s_N$, 158
+  `SameBlock', 726
+  `SandwichMatrixOfReesMatrixSemigroup', 533
+  `SandwichMatrixOfReesZeroMatrixSemigroup', 533
+  save, 36
+  `SaveOnExitFile', 72
+  `SaveWorkspace', 36
+  Saving and Loading a Workspace, \indexit{36}
+  Saving a Pc Group, \indexit{448}
+  saving on exit, 71
+  `ScalarProduct', for characters, 760
+  Schreier, 473
+  Schreier-Sims, random, 410
+  `SchurCover', 372
+  Schur Covers and Multipliers, \indexit{372}
+  Schur multiplier, 373
+  scope, 41
+  `ScriptFromString', 701
+  Searching for Homomorphisms, \indexit{383}
+  `SecHMSM', 252
+  secondary subgroup generators, 489
+  `SecondsDMYhms', 252
+  `SeekPositionStream', 100
+  Selecting a Different MeatAxe, \indexit{682}
+  Selection Functions, \indexit{506}
+  `SemidirectProduct', 495
+  Semidirect Products, \indexit{494}
+  `SemiEchelonBasis', 594
+  `SemiEchelonBasisNC', 594
+  `SemiEchelonMat', 224
+  `SemiEchelonMatDestructive', 224
+  `SemiEchelonMats', 225
+  `SemiEchelonMatsDestructive', 225
+  `SemiEchelonMatTransformation', 225
+  `Semigroup', 527
+  semigroup, 527
+  `SemigroupByGenerators', 527
+  `SemigroupByMultiplicationTable', 528
+  `SemigroupIdealByGenerators', 529
+  `SemigroupOfRewritingSystem', 542
+  semiregular, 397
+  Semisimple Lie Algebras and Root Systems, \indexit{631}
+  `SemiSimpleType', 631
+  sequence, Bernoulli, 144
+    \sub Fibonacci, 151
+    \sub Lucas, 152
+  Series of Ideals, \indexit{629}
+  `Set', 263
+  `SetAssertionLevel', 79
+  `SetCommutator', 446
+  `SetConjugate', 446
+  `SetCrystGroupDefaultAction', 425
+  set difference, of collections, 268
+  `SetEntrySCTable', 602
+  `SetGasmanMessageStatus', 85
+  `SetHelpViewer', 24
+  `SetIndeterminateName', 655
+  `SetInfoLevel', 78
+  `SetName', 114
+  Set Operations via Boolean Lists, \indexit{205}
+  `SetParent', 283
+  `SetPower', 446
+  `SetPrintFormattingStatus', 101
+  `SetRecursionTrapInterval', 84
+  `SetReducedMultiplication', 455
+  Sets, \indexit{109}
+  sets, 168, 190
+  Sets of Subgroups, \indexit{363}
+  set stabilizer, 391
+  `Setter', 121
+  setter, 120
+  Setter and Tester for Attributes, \indexit{120}
+  `SetX', 200
+  `ShallowCopy', 113
+    \sub for lists, 175
+  `ShiftedCoeffs', 214
+  `ShiftedPadicNumber', 679
+  Shifting and Trimming Coefficient Lists, \indexit{212}
+  `ShortestVectors', 240
+  `ShortLexOrdering', 276
+  short vectors spanning a lattice, 238, 766
+  `ShowArgument', 75
+  `ShowArguments', 75
+  `ShowDetails', 75
+  `ShowImpliedFilters', 117
+  `ShowMethods', 75
+  `ShowOtherMethods', 76
+  `ShrinkCoeffs', 214
+  `ShrinkRowVector', 212
+  `SiftedPcElement', 429
+  `SiftedPermutation', 415
+  `SiftedVector', 595
+  `Sigma', 138
+  sign, of an integer, 126
+  Sign and Cycle Structure, \indexit{404}
+  `SignInt', 126
+  `SignPartition', 150
+  `SignPerm', 404
+  `SimpleLieAlgebra', 627
+  `SimpleSystem', 632
+  `SimplifiedFpGroup', 473
+  SimplifiedFpGroup, \indexit{473}
+  `SimplifyPresentation', 480
+  `SimsNo', 517
+  `SimultaneousEigenvalues', 230
+  `SingleCollector', 446
+  singlequote character, 244
+  singlequotes, 242
+  `SINT_CHAR', 250
+  `Size', 266
+    \sub for character tables, 720
+    \sub for groups with pcgs, 441
+  size, of a list or collection, 266
+  `SizeBlist', 205
+  `SizeConsiderFunction', 369
+  `SizeNumbersPerfectGroups', 512
+  `SizeOfFieldOfDefinition', 782
+  `SizesCentralizers', 721
+  `SizesConjugacyClasses', 721
+  `SizeScreen', 74
+  SizeScreen, \indexit{74}
+  `SizesPerfectGroups', 511
+  `SizeStabChain', 414
+  `SL', 502
+  smaller, associative words, 326
+    \sub elements of finitely presented groups, 455
+    \sub nonassociative words, 319
+    \sub pcwords, 444
+    \sub rational functions, 656
+  `SmallerDegreePermutationRepresentation', 407
+  smaller or equal, 46
+  smaller test, 46
+  `SmallestGeneratorPerm', 403
+  `SmallestMovedPoint', 403
+  `SmallestRootInt', 127
+  `SmallGeneratingSet', 370
+  `SmallGroup', 509
+  Small Groups, \indexit{508}
+  `SmallGroupsInformation', 509
+  Smash MeatAxe Flags, \indexit{686}
+  smith normal form, 832
+  `SmithNormalFormIntegerMat', 235
+  `SmithNormalFormIntegerMatTransforms', 235
+  `SMTX.AbsoluteIrreducibilityTest', 686
+  `SMTX.AlgEl', 686
+  `SMTX.AlgElCharPol', 687
+  `SMTX.AlgElCharPolFac', 687
+  `SMTX.AlgElMat', 686
+  `SMTX.AlgElNullspaceDimension', 687
+  `SMTX.AlgElNullspaceVec', 687
+  `SMTX.CentMat', 687
+  `SMTX.CentMatMinPoly', 687
+  `SMTX.CompleteBasis', 686
+  `SMTX.Getter', 686
+  `SMTX.GoodElementGModule', 686
+  `SMTX.IrreducibilityTest', 686
+  `SMTX.MatrixSum', 686
+  `SMTX.MinimalSubGModule', 686
+  `SMTX.MinimalSubGModules', 686
+  `SMTX.RandomIrreducibleSubGModule', 686
+  `SMTX.Setter', 686
+  `SMTX.SortHomGModule', 686
+  `SMTX.Subbasis', 686
+  `SO', 503
+  `Socle', 354
+  `SocleTypePrimitiveGroup', 408
+  `SolutionIntMat', 233
+  `SolutionMat', 223
+  `SolutionMatDestructive', 223
+  `SolutionNullspaceIntMat', 233
+  Some Remarks about Character Theory in GAP, \indexit{709}
+  Some Special Algebras, \indexit{604}
+  `Sort', 189
+  `SortedCharacters', 743
+  `SortedCharacterTable', 744
+  Sorted Character Tables, \indexit{743}
+  `SortedList', 263
+  sorted list, 188
+  Sorted Lists and Sets, \indexit{190}
+  sorted lists as collections, 261
+  `SortedSparseActionHomomorphism', 394
+  `SortedTom', 692
+  `Sortex', 190
+  Sorting Lists, \indexit{189}
+  `SortingPerm', 190
+  Sorting Tables of Marks, \indexit{692}
+  `SortParallel', 189
+  `Source', 299
+  `SP', 503
+  `Sp', 503
+  space, 39
+  `SparseActionHomomorphism', 394
+  `SparseCartanMatrix', 633
+  Special Characters, \indexit{244}
+  special character sequences, 244
+  Special Filenames, \indexit{91}
+  Special Generating Sets, \indexit{369}
+  `SpecialLinearGroup', 502
+  Special Multiplication Algorithms for Matrices over GF(2), \indexit{231}
+  `SpecialOrthogonalGroup', 503
+  Special Pcgs, \indexit{437}
+  `SpecialPcgs', attribute, 438
+  `SpecialUnitaryGroup', 502
+  Specific and Parametrized Subgroups, \indexit{352}
+  Specific Methods for Subgroup Lattice Computations, \indexit{367}
+  `SplitCharacters', 738
+  `SplitExtension', 449
+  `SplitExtensions', 450
+  `SplitString', 247
+  `SplittingField', 659
+  `Sqrt', 289
+  square root, of an integer, 127
+  `SquareRoots', 316
+  `SSortedList', 263
+  `StabChain', 411
+  `StabChainBaseStrongGenerators', 413
+  `StabChainImmutable', 411
+  `StabChainMutable', 411
+  `StabChainOp', 411
+  `StabChainOptions', 413
+  `Stabilizer', 391
+  Stabilizer Chain Records, \indexit{413}
+  Stabilizer Chains, \indexit{409}
+  `StabilizerOfExternalSet', 400
+  `StabilizerPcgs', 441
+  Stabilizers, \indexit{391}
+  `StandardAssociate', 557
+  `StandardGeneratorsFunctions', 702
+  `StandardGeneratorsInfo', for groups, 700
+    \sub for tables of marks, 705
+  `StandardGeneratorsOfGroup', 702
+  Standard Generators of Groups, \indexit{700}
+  Standardization of coset tables, \indexit{460}
+  `StandardizeTable', 460
+  `StarCyc', 160
+  Statements, \indexit{48}
+  `StateRandom', 269
+  `Stirling1', 144
+  `Stirling2', 144
+  Stirling number of the first kind, 144
+  Stirling number of the second kind, 145
+  `StoredGroebnerBasis', 671
+  `StoreFusion', 790
+  Storing Normal Subgroup Information, \indexit{747}
+  `StraightLineProgElm', 335
+  `StraightLineProgGens', 335
+  `StraightLineProgram', 331
+  Straight Line Program Elements, \indexit{334}
+  `StraightLineProgramNC', 331
+  Straight Line Programs, \indexit{331}
+  `StraightLineProgramsTom', 704
+  `StreamsFamily', 97
+  `StretchImportantSLPElement', 335
+  strictly sorted list, 189
+  `String', 247
+    \sub for cyclotomics, 154
+  `StringDate', 252
+  `StringOfResultOfStraightLineProgram', 333
+  `StringPP', 247
+  strings, equality of, 246
+    \sub inequality of, 246
+    \sub lexicographic ordering of, 246
+  String Streams, \indexit{103}
+  `StringTime', 252
+  `StrongGeneratorsStabChain', 414
+  `StronglyConnectedComponents', 309
+  <Struct>, 280
+  `<Struct>ByGenerators', 281
+  `StructuralCopy', 113
+    \sub for lists, 176
+  structure constant, 730, 731
+  `StructureConstantsTable', 590
+  `<Struct>WithGenerators', 281
+  `SU', 502
+  `Subalgebra', 605
+  `SubAlgebraModule', 621
+  `SubalgebraNC', 605
+  Subalgebras, \indexit{605}
+  `SubalgebraWithOne', 605
+  `SubalgebraWithOneNC', 606
+  `SubdirectProduct', 496
+  Subdirect Products, \indexit{496}
+  `SubdirectProducts', 497
+  subdomains, 284
+  `Subfield', 567
+  `SubfieldNC', 567
+  `Subfields', 568
+  Subfields of Fields, \indexit{567}
+  `Subgroup', 343
+  `SubgroupByPcgs', 432
+  `SubgroupByProperty', 344
+  subgroup fusions, 788
+  subgroup generators tree, 489
+  Subgroup Lattice, \indexit{365}
+  `SubgroupNC', 343
+  `SubgroupOfWholeGroupByCosetTable', 461
+  `SubgroupOfWholeGroupByQuotientSubgroup', 466
+  Subgroup Presentations, \indexit{473}
+  `SubgroupProperty', 417
+  Subgroups, \indexit{342}
+  subgroups, polyhedral, 730
+  Subgroups characterized by prime powers, \indexit{355}
+  Subgroup Series, \indexit{359}
+  `SubgroupShell', 344
+  Subgroups of Polycyclic Groups - Canonical Pcgs, \indexit{432}
+  Subgroups of Polycyclic Groups - Induced Pcgs, \indexit{430}
+  `SubgroupsSolvableGroup', 368
+  sublist, 170
+    \sub access, 170
+    \sub assignment, 172
+    \sub operation, 171
+  sublist assignment, operation, 173
+  `Submagma', 313
+  `SubmagmaNC', 313
+  `SubmagmaWithInverses', 313
+  `SubmagmaWithInversesNC', 313
+  `SubmagmaWithOne', 313
+  `SubmagmaWithOneNC', 313
+  `Submodule', 563
+  `SubmoduleNC', 563
+  Submodules, \indexit{563}
+  `Submonoid', 534
+  `SubmonoidNC', 534
+  `SubnearAdditiveGroup', 548
+  `SubnearAdditiveGroupNC', 548
+  `SubnearAdditiveMagma', 547
+  `SubnearAdditiveMagmaNC', 547
+  `SubnearAdditiveMagmaWithZero', 547
+  `SubnearAdditiveMagmaWithZeroNC', 547
+  `SubnormalSeries', 360
+  `Subring', 551
+  `SubringNC', 551
+  `SubringWithOne', 555
+  `SubringWithOneNC', 555
+  Subroutines for the Construction of Class Fusions, \indexit{803}
+  Subroutines for the Construction of Power Maps, \indexit{801}
+  `Subsemigroup', 527
+  `SubsemigroupNC', 527
+  subsets, 145
+  subset test, for collections, 267
+  `Subspace', 584
+  `SubspaceNC', 584
+  `Subspaces', 585
+  `SubstitutedWord', 328
+  `SubsTom', 693
+  `Sub<struct>', 284
+  `Sub<struct>NC', 284
+  `SubSyllables', 329
+  subtract, a set from another, 192
+  `SubtractBlist', 206
+  subtraction, 47
+    \sub matrices, 216
+    \sub matrix and scalar, 216
+    \sub rational functions, 656
+    \sub scalar and matrix, 216
+    \sub scalar and matrix list, 217
+    \sub scalar and vector, 209
+    \sub vector and scalar, 209
+    \sub vectors, 209
+  `SubtractSet', 192
+  `Subword', 327
+  `Successors', 308
+  Suitability for Compilation, \indexit{35}
+  `Sum', 199
+  Sum and Intersection of Pcgs, \indexit{437}
+  `SumFactorizationFunctionPcgs', 437
+  `SumIntersectionMat', 226
+  `SumX', 200
+  `SupersolvableResiduum', 354
+  `support', email address, 820
+  `SupportedCharacterTableInfo', 713
+  `SurjectiveActionHomomorphismAttr', 401
+  `SuzukiGroup', 501
+  `SylowComplement', 354
+  `SylowSubgroup', 354
+  Sylow Subgroups and Hall Subgroups, \indexit{354}
+  `SylowSystem', 355
+  Symbols, \indexit{39}
+  Symmetric and Alternating Groups, \indexit{407}
+  `SymmetricClosureBinaryRelation', 309
+  `SymmetricGroup', 501
+  symmetric group, powermap, 151
+  `SymmetricParentGroup', 408
+  `SymmetricParts', 772
+  `SymmetricPowerOfAlgebraModule', 646
+  symmetric relation, 307
+  `Symmetrizations', 771
+  symmetrizations, orthogonal, 772
+    \sub symplectic, 773
+  Symmetrizations of Class Functions, \indexit{771}
+  `SymplecticComponents', 773
+  `SymplecticGroup', 503
+  syntax errors, 63
+  system getter, 120
+  system setter, 120
+  `Sz', 501
+\letter T
+  $t_N$, 158
+  `TableAutomorphisms', 746
+  table automorphisms, 792, 804
+  table of chapters for help books, 23
+  `TableOfMarks', 689
+  `TableOfMarksByLattice', 690
+  `TableOfMarksComponents', 693
+  `TableOfMarksCyclic', 707
+  `TableOfMarksDihedral', 707
+  `TableOfMarksFamily', 693
+  `TableOfMarksFrobenius', 707
+  Table of Marks Objects in GAP, \indexit{688}
+  table of sections for help books, 23
+  tables, 709, 711
+  tabulator, 39
+  `Tau', 138
+  Technical Details about Tables of Marks, \indexit{693}
+  Technical Details about the Implementation of Magma Rings, \indexit{652}
+  Technical Matters Concerning General Mappings, \indexit{305}
+  `TemporaryGlobalVarName', 44
+  `Tensored', 763
+  `TensorProductGModule ', 682
+  `TensorProductOfAlgebraModules', 645
+  Tensor Products and Exterior and Symmetric Powers, \indexit{645}
+  test, for a primitive root, 136
+    \sub for a rational, 141
+    \sub for records, 254
+    \sub for set equality, 191
+  `TestConsistencyMaps', 797
+  `Tester', 121
+  tester, 120
+  Test Files, \indexit{83}
+  `TestHomogeneous', 807
+  `TestInducedFromNormalSubgroup', 809
+  Testing Finiteness of Finitely Presented Groups, \indexit{470}
+  Testing for the System Architecture, \indexit{34}
+  Testing Monomiality, \indexit{809}
+  `TestJacobi', 602
+  `TestMonomial', 809
+  `TestMonomialQuick', 810
+  `TestMonomialUseLattice', 810
+  Test of the installation, \indexit{816}
+  `TestPackageAvailability', 829
+  `TestPerm1', 779
+  `TestPerm2', 779
+  `TestPerm3', 779
+  `TestPerm4', 779
+  `TestPerm5', 779
+  `TestQuasiPrimitive', 808
+  `TestRelativelySM', 811
+  Tests for Actions, \indexit{396}
+  Tests for the Availability of Methods, \indexit{373}
+  `TestSubnormallyMonomial', 811
+  The .gaprc file, \indexit{33}
+  The Adjoint Representation, \indexit{636}
+  The Compiler, \indexit{34}
+  The Defining Attributes of Rational Functions, \indexit{673}
+  The Dixon-Schneider Algorithm, \indexit{736}
+  The Documentation, \indexit{818}
+  The External Representation for Associative Words, \indexit{330}
+  The family pcgs, \indexit{443}
+  The Interface between Character Tables and Groups, \indexit{715}
+  The Interface between Tables of Marks and Character Tables, \indexit{706}
+  The Library of Tables of Marks, \indexit{708}
+  `then', 50
+  The Natural Action, \indexit{406}
+  The Pager Command, \indexit{25}
+  The Permutation Image of an Action, \indexit{393}
+  The Representations of Rational Functions, \indexit{672}
+  The Smash MeatAxe, \indexit{685}
+  The Syntax in BNF, \indexit{57}
+  `ThreeGroup' library, 508
+  Tietze Options, \indexit{492}
+  Tietze Transformations, \indexit{479}
+  Tietze Transformations that introduce new Generators, \indexit{483}
+  `TietzeWordAbstractWord', 477
+  `time', 80
+  Timing, \indexit{79}
+  Todd-Coxeter Procedure, \indexit{542}
+  `Trace', 218
+    \sub for field elements, 569
+    \sub of a matrix, 218
+  `TracedCosetFpGroup', 457
+  `TraceImmediateMethods', 77
+  `TraceMat', 218
+  `TraceMethods', 77
+  `TracePolynomial', 569
+  Tracing generator images through Tietze transformations, \indexit{487}
+  Tracing Methods, \indexit{77}
+  `TransferDiagram', 797
+  `Transformation', 543
+  `TransformationData', 543
+  `TransformationFamily', 543
+  `TransformationNC', 543
+  `TransformationRelation', 545
+  `TransformationType', 543
+  `TransformingPermutations', 746
+  `TransformingPermutationsCharacterTables', 746
+  transitive, 396
+  `TransitiveClosureBinaryRelation', 309
+  `TransitiveGroup', 507
+  `TransitiveIdentification', 507
+  Transitive Permutation Groups, \indexit{507}
+  transitive relation, 307
+  `Transitivity', for characters, 762
+    \sub for class functions, 762
+    \sub for group actions, 397
+  `TranslatorSubalgebra', 623
+  transporter, 392
+  `TransposedMat', 220
+  `TransposedMatAttr', 220
+  `TransposedMatDestructive', 220
+  `TransposedMatImmutable', 220
+  `TransposedMatMutable', 220
+  `TransposedMatOp', 220
+  `TransposedMatrixGroup', 420
+  Transversals, \indexit{347}
+  Triangular Matrices, \indexit{226}
+  `TriangulizedIntegerMat', 234
+  `TriangulizedIntegerMatTransform', 234
+  `TriangulizedNullspaceMat', 222
+  `TriangulizedNullspaceMatDestructive', 222
+  `TriangulizeIntegerMat', 234
+  `TriangulizeMat', 222
+  `TrivialCharacter', 758
+  `TrivialGroup', 499
+  `TrivialIterator', 272
+  `TrivialSubalgebra', 606
+  `TrivialSubgroup', 352
+  `TrivialSubmagmaWithOne', 316
+  `TrivialSubmodule', 563
+  `TrivialSubmonoid', 534
+  `TrivialSubnearAdditiveMagmaWithZero', 548
+  `TrivialSubspace', 585
+  `Try\-Conway\-Polynomial\-For\-Frobenius\-Character\-Value', 782
+  `TryCosetTableInWholeGroup', 461
+  `TryGcdCancelExtRepPolynomials', 675
+  `Tuples', 147
+  tuple stabilizer, 391
+  `TwoClosure', 417
+  `TwoCoboundaries', 448
+  `TwoCocycles', 448
+  `TwoCohomology', 449
+  `TwoGroup' library, 508
+  `TwoSidedIdeal', 552
+  `TwoSidedIdealByGenerators', 553
+  `TwoSidedIdealNC', 553
+  `TwoSquares', 139
+  type, boolean, 165
+    \sub cyclotomic, 153
+    \sub records, 254
+    \sub strings, 242
+  `TypeObj', 124
+  `TypeOfDefaultGeneralMapping', 306
+  Types, \indexit{124}
+  `TzEliminate', 482
+  `TzFindCyclicJoins', 483
+  `TzGo', 479
+  `TzGoGo', 481
+  `TzImagesOldGens', 487
+  `TzInitGeneratorImages', 487
+  `TzNewGenerator', 479
+  `TzOptions', 492
+  `TzPreImagesNewGens', 488
+  `TzPrint', 478
+  `TzPrintGeneratorImages', 488
+  `TzPrintGenerators', 477
+  `TzPrintLengths', 478
+  `TzPrintOptions', 493
+  `TzPrintPairs', 478
+  `TzPrintPresentation', 478
+  `TzPrintRelators', 477
+  `TzPrintStatus', 478
+  `TzSearch', 482
+  `TzSearchEqual', 483
+  `TzSort', 471
+  `TzSubstitute', 484
+  `TzSubstituteCyclicJoins', 487
+\letter U
+  $u_N$, 158
+  `UglyVector', 597
+  `Unbind', 42
+    \sub for lists, 174
+  `UnbindGlobal', 44
+  `UnderlyingCharacteristic', 722
+  `UnderlyingCharacterTable', 752
+  `UnderlyingElement', fp group elements, 456
+    \sub fp semigroup elements, 539
+  `Underlying\-Element\-Of\-Rees\-Matrix\-Semigroup\-Element', 533
+  `Underlying\-Element\-Of\-Rees\-Zero\-Matrix\-Semigroup\-Element', 533
+  `UnderlyingExternalSet', 401
+  `UnderlyingFamily', 626
+  `UnderlyingGeneralMapping', 299
+  `UnderlyingGroup', for character tables, 715
+    \sub for tables of marks, 695
+  `UnderlyingLeftModule', 588
+  `UnderlyingLieAlgebra', 632
+  `UnderlyingMagma', 649
+  `UnderlyingRelation', 299
+  `UnInstallCharReadHookFunc', 105
+  `Union', 268
+  union, of collections, 268
+    \sub of sets, 192
+  `Union2', 268
+  `UnionBlist', 205
+  `Unique', 193
+  `UniteBlist', 206
+  `UniteBlistList', 206
+  `UniteSet', 192
+  `Units', 556
+  Units and Factorizations, \indexit{556}
+  `UnivariatenessTestRationalFunction', 660
+  `UnivariatePolynomial', 659
+  `UnivariatePolynomialByCoefficients', 659
+  `UnivariatePolynomialRing', 667
+  Univariate Polynomial Rings, \indexit{667}
+  Univariate Polynomials, \indexit{659}
+  `Univariate\-Rational\-Function\-By\-Coefficients', 665
+  Univariate Rational Functions, \indexit{665}
+  `UniversalEnvelopingAlgebra', 638
+  Universal Enveloping Algebras, \indexit{638}
+  UNIX, features, 27
+    \sub options, 27
+  `UNIXSelect', 97
+  `Unknown', 163
+  `UnloadSmallGroupsData', 509
+  `UnorderedTuples', 146
+  Unpacking, \indexit{814}
+  `UnprofileFunctions', 81
+  `UnprofileMethods', 81
+  `until', 51
+  `UntraceMethods', 77
+  `UpdateMap', 795
+  `UpEnv', 69
+  `UpperCentralSeriesOfGroup', 361
+  `UpperSubdiagonal', 227
+  `UseBasis', 564
+  `UseFactorRelation', 290
+  Useful Categories for all Elements of a Family, \indexit{293}
+  Useful Categories of Elements, \indexit{291}
+  `UseIsomorphismRelation', 290
+  User Streams, \indexit{102}
+  `UseSubsetRelation', 290
+  utilities for editing GAP files, 73
+\letter V
+  $v_N$, 158
+  `Valuation', 679
+  `Value', 661
+  `ValueCochain', 641
+  `ValueGlobal', 43
+  `ValueMolienSeries', 775
+  `ValueOption', 87
+  `ValuePol', 213
+  `ValuesOfClassFunction', 752
+  Variable Access in a Break Loop, \indexit{69}
+  Variables, \indexit{41}
+  Vectors as coefficients of polynomials, \indexit{213}
+  `VectorSpace', 584
+  `Vector\-Space\-By\-Pcgs\-Of\-Elementary\-Abelian\-Group', 439
+  Vector Space Homomorphisms, \indexit{595}
+  Vector Spaces Handled By Nice Bases, \indexit{597}
+  `vi', 73
+  `View', 64
+  View and Print, \indexit{64}
+  `ViewObj', 65
+    \sub for character tables, 731
+    \sub for class functions, 756
+    \sub for tables of marks, 690
+  `vim', 73
+  `VirtualCharacter', 757
+  virtual character, 759
+  virtual characters, 750
+\letter W
+  $w_N$, 158
+  `WedgeGModule ', 682
+  `WeekDay', 252
+  `WeightLexOrdering', 276
+  `WeightOfGenerators', 277
+  `WeightsTom', 696
+  `WeightVecFFE', 212
+  `WeylGroup', 633
+  `WeylOrbitIterator', 635
+  `Where', 69
+  While, \indexit{50}
+  `while' loop, 50
+  Whitespaces, \indexit{39}
+  Why Class Functions?, \indexit{750}
+  `WordAlp', 247
+  words, in generators, 345
+  Working with large degree permutation groups, \indexit{417}
+  `WreathProduct', 497
+  wreath product embedding, 498
+  `WreathProductImprimitiveAction', 497
+  `WreathProductOrdering', 278
+  `WreathProductProductAction', 498
+  Wreath Products, \indexit{497}
+  `WriteAll', 100
+  `WriteByte', 100
+  `WriteLine', 100
+\letter X
+  $x_N$, 158
+\letter Y
+  $y_N$, 158
+\letter Z
+  `Z', 572
+  `ZClassRepsQClass', 424
+  `Zero', 286
+  `ZeroAttr', 286
+  `ZeroCoefficient', 650
+  `ZeroCoefficientRatFun', 674
+  `ZeroImmutable', 286
+  `ZeroMapping', 297
+  `ZeroMutable', 286
+  `ZeroOp', 286
+  `ZeroSameMutability', 286
+  `ZeroSM', 286
+  `ZippedProduct', 675
+  `ZippedSum', 675
+  `ZmodnZ', 132
+  `ZmodnZObj', 133
+  `ZmodpZ', 132
+  `ZmodpZNC', 132
+  `ZumbroichBase', 580
+  `Zuppos', 367

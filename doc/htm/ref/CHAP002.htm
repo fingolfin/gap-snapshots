@@ -1,0 +1,337 @@
+<html><head><title>[ref] 2 The Help System</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 The Help System</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP002.htm#SECT001">Invoking the Help</a>
+<li> <A HREF="CHAP002.htm#SECT002">Browsing through the Sections</a>
+<li> <A HREF="CHAP002.htm#SECT003">Changing the Help Viewer</a>
+<li> <A HREF="CHAP002.htm#SECT004">The Pager Command</a>
+</ol><p>
+<p>
+This chapter describes the <font face="Gill Sans,Helvetica,Arial">GAP</font> help system. The help system lets you read
+the documentation interactively.
+<p>
+<p>
+<h2><a name="SECT001">2.1 Invoking the Help</a></h2>
+<p><p>
+The  basic command  to  read  <font face="Gill Sans,Helvetica,Arial">GAP</font>'s documentation  from  within a  <font face="Gill Sans,Helvetica,Arial">GAP</font>
+session is as follows.
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>?[?]</code><var>topic</var><code> [</code><var>book</var><code>:]</code>
+<p>
+For an explanation and some examples see&nbsp;<a href="../tut/CHAP002.htm#SECT008">Help</a>.
+<p>
+Note that the first question mark  must appear in the <strong>first position</strong> after
+the <code>gap&gt; </code> prompt. The search  strings <var>book</var> and <var>topic</var> are normalized in
+a  certain  way (see the end of this section for details)
+before  the  search starts.  This  makes  the  search  case
+insensitive and there can be arbitrary  white space after the first question
+mark.
+<p>
+When there are several manual sections  that match the query a numbered list
+of topics is displayed. These matches can be accessed with <code>?</code><var>number</var><code></code>.
+<p>
+There  are  some  further  specially   handled  commands  which  start  with
+a  question  mark.  They  are explained  in  section&nbsp;<a href="CHAP002.htm#SECT002">Browsing  through  the Sections</a>.
+<p>
+As default <font face="Gill Sans,Helvetica,Arial">GAP</font> shows the help  sections as text in the terminal (window),
+page by  page if the shown  text does not fit  on the screen. But  there are
+several other choices to read (other formats of) the documents: via a viewer
+for <code>dvi</code>-files (produced  by TeX) or files in  Acrobat's <code>pdf</code>-format or
+via a Web-browser. This is explained in section&nbsp;<a href="CHAP002.htm#SECT003">Changing the Help Viewer</a>.
+<p>
+<strong>Details of the string normalization process</strong>
+<p>
+Here now is precisely how  the  search strings  <var>book</var> and  <var>topic</var>  are
+normalized  before a  search
+starts: backslashes and double or single quotes are removed, parentheses and
+braces are  substituted by  blanks, non-ASCII  characters are  considered as
+ISO-latin1  characters and  the accented  letters are  substituted by  their
+non-accented counterpart. Finally white space is normalized.
+<p>
+<p>
+<h2><a name="SECT002">2.2 Browsing through the Sections</a></h2>
+<p><p>
+Help books for  <font face="Gill Sans,Helvetica,Arial">GAP</font> are organized in chapters,  sections and subsections.
+There are a few special commands starting with a question mark (in the first
+position after  the <code>gap&gt; </code> prompt)  which allow browsing a  book section or
+chapter wise.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>?&gt;</code>
+<a name = "SSEC002.1"></a>
+<li><code>?&lt;</code>
+<p>
+The two help  commands <code>?&lt;</code> and <code>?&gt;</code>  allow to browse through  a whole help
+book. <code>?&lt;</code> displays the section preceding the previously shown section, and
+<code>?&gt;</code> takes you to the section following the previously shown one.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>?&gt;&gt;</code>
+<a name = "SSEC002.2"></a>
+<li><code>?&lt;&lt;</code>
+<p>
+<code>?&lt;&lt;</code> takes  you back to the  first section of the  current chapter, which
+gives an  overview of  the sections  described in this  chapter. If  you are
+already  in this  section <code>?&lt;&lt;</code>  takes  you to  the first  section of  the
+previous chapter. <code>?&gt;&gt;</code> takes you to the first section of the next chapter.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>?-</code>
+<a name = "SSEC002.3"></a>
+<li><code>?+</code>
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> remembers the last few sections that you have read. <code>?-</code> takes you to
+the one that  you have read before  the current one, and  displays it again.
+Further applications  of <code>?-</code> take  you further  back in this  history. <code>?+</code>
+reverses this process, i.e., it takes you  back to the section that you have
+read after the  current one. It is  important to note that <code>?-</code>  and <code>?+</code> do
+not alter the history like the other help commands.
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>?books</code>
+<p>
+This command  shows a list  of books which are  currently known to  the help
+system. For each  book there is a  short name which is used  with the <var>book</var>
+part of the basic help query and  there is a long name which hopefully tells
+you what this book is about.
+<p>
+A  short  name  which ends  in  <code>(not loaded)</code>  refers to  a <font face="Gill Sans,Helvetica,Arial">GAP</font>  package
+whose documentation  is loaded  but which needs  a call  of <code>LoadPackage</code>
+(see <a href="CHAP074.htm#SSEC002.1">LoadPackage</a>) before you can use the described functions.
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>?sections [</code><var>book</var><code>:]</code>
+<a name = "SSEC002.5"></a>
+<li><code>?[chapters] [</code><var>book</var><code>:]</code>
+<p>
+These commands  show tables of  content for all available,  respectively the
+matching books.
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>?</code>
+<a name = "SSEC002.6"></a>
+<li><code>?&amp;</code>
+<p>
+These commands redisplay  the last shown help section. In the form <code>?&amp;</code> the
+next preferred help viewer is used  for the display (provided one has chosen
+several viewers), see&nbsp;<a href="CHAP002.htm#SSEC003.1">SetHelpViewer</a> below.
+<p>
+<p>
+<h2><a name="SECT003">2.3 Changing the Help Viewer</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+Books  of the  <font face="Gill Sans,Helvetica,Arial">GAP</font>  help  system can  be  available  in several  formats.
+Currently the following formats occur (not  all of them may be available for
+all books):
+<p>
+<p>
+<dl compact>
+<p>
+<dt>text <dd>
+  This is used for display in the terminal window in which <font face="Gill Sans,Helvetica,Arial">GAP</font> is
+  running. Complicated mathematical expressions may not be well readable in
+  this format.
+<p>
+<dt>dvi <dd>
+  The standard output  format of TeX. Only useful if  TeX is installed
+  on your system. Can be used for printing a help book and onscreen reading.
+  Some  books include  hyperlink information  in  this format  which can  be
+  useful for onscreen reading.
+<p>
+<dt>ps <dd>
+  Postscript format. Can be printed on most systems and also be used with an 
+  onscreen viewer.
+<p>
+<dt>pdf <dd>
+  Adobe's <code>pdf</code>-format. Can  also be used for printing  and onscreen reading
+  on most current systems (with  freely available software). Some books have
+  hyperlink information included in this format.
+<p>
+<dt>HTML <dd>
+  The format  of Web-pages. Can be  used with any Web-browser.  There may be
+  hyperlink information available which allows a convenient browsing through
+  the  book via  cross-references. This  format  also has  the problem  that
+  complicated formulae may be not well readable since there is no syntax for
+  formulae in  HTML. Some books  use special  symbol fonts for  formulae and
+  need an appropriate Web-browser for correct display.
+<p>
+</dl>
+<p>
+Depending on your operating system and available additional software you can
+use several of  these formats with <font face="Gill Sans,Helvetica,Arial">GAP</font>'s online help.  This is configured
+with the following command.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>SetHelpViewer( </code><var>viewer1</var><code>, </code><var>viewer2</var><code>, ... )</code>
+<p>
+This command  takes an arbitrary number  of arguments which must  be strings
+describing a viewer. The recognized viewer  are explained below. A call with
+no arguments shows the current setting.
+<p>
+The first  given arguments  are those  with higher priority.  So, if  a help
+section is available in the format needed by <var>viewer1</var>, this viewer is used.
+If  not, availability  of the  format for  <var>viewer2</var> is  checked and  so on.
+Recall that the  command <code>?&amp;</code> displays the last seen section again but with
+the  next  possible viewer  in  your  list,  see&nbsp;<a href="CHAP002.htm#SSEC002.6">redisplay with  next  help viewer</a>.
+<p>
+The viewer  <code>"screen"</code> (see  below) is always  silently appended  since we
+assume that each help book is available in text format.
+<p>
+If you want  to change the default  setting you will probably put  a call of
+<code>SetHelpViewer</code> into your <code>.gaprc</code> file (see&nbsp;<a href="CHAP003.htm#SECT004">The .gaprc File</a>).
+<p>
+<p>
+<dl compact>
+<p>
+<dt><code>"screen"</code> <dd>
+  This is the  default setting. The help is shown  in text-format using  the
+  <code>Pager</code>  command  explained  in  the  next  section&nbsp;<a href="CHAP002.htm#SSEC004.1">Pager</a>.  (Hint:  Some
+  formatting  procedures assume  that  your terminal  displays  at least  80
+  characters per line, if  this is not the case some  sections may look very
+  bad. Furthermore the  terminal (window) should use a fixed  width font and
+  we suggest to take one with <code>ISO-8859-1</code> (also called <code>latin1</code>) encoding.
+<p>
+<dt><code>"netscape"</code> <dd>
+  If a  book is available  in HTML-format this  is shown using  the (already
+  running) <code>netscape</code>  Web-browser. Note,  that for  some books  the browser
+  must be configured to use symbol fonts.
+<p>
+<dt><code>"lynx"</code> <dd>
+  If a book is  available in HTML-format this is shown  using the text based
+  <code>lynx</code> Web-browser inside the terminal  running <font face="Gill Sans,Helvetica,Arial">GAP</font>. Formulae which use
+  symbol fonts may be unreadable.
+<p>
+<dt><code>"internet config"</code> <dd>
+  (for Apple  Macintosh with MacOS)  If a  book is available  in HTML-format
+  this is  shown in a Web browser. The web browser used is the program
+  set to handle the <code>file</code> protocol in the program <code>Internet Config</code> (System 
+  7 and 8) resp. the <code>Internet</code> control panel (System 9 and System X). 
+  For some browsers (e.g., Internet Explorer), you may have enter the 
+  GAP command
+  <code>HELP_MAC_PROTOCOL := "file:/";</code>
+  for this to work correctly. If you wish to use the online html version of
+  the manual, you may use
+  <code>HELP_EXTERNAL_URL := "http://www.gap-system.org/";</code>. Note that
+  <code>HELP_EXTERNAL_URL := "";</code> switches back to the local html files.
+  It may be a good idea to put the relevant line in the <code>gap.rc</code>
+  file (see <a href="CHAP003.htm#SECT004">The .gaprc file</a>).
+<p>
+<dt><code>"xdvi"</code> <dd>
+  (on X-windows  systems) If a book  is available in dvi-format  it is shown
+  with the  onscreen viewer  program <code>xdvi</code>. (Of  course, <code>xdvi</code>  and TeX
+  must  be installed  on your  system.)  This program  doesn't allow  remote
+  commands, so  usually for each shown  topic a new <code>xdvi</code>  is launched. You
+  can  try to  compile the  program <code>GAPPATH/etc/xrmtcmd.c</code>  and to  put the
+  executable <code>xrmtcmd</code> into your <code>PATH</code>. Then this viewer tries to reuse one
+  running <code>xdvi</code> for each help book.
+<p>
+<dt><code>"xpdf"</code> <dd>
+  (on X-windows  systems) If a book  is available in pdf-format  it is shown
+  with the onscreen  viewer program <code>xpdf</code> (which must be  installed on your
+  system).  This is  a nice  program, once  it is  running it  is reused  by
+  <font face="Gill Sans,Helvetica,Arial">GAP</font> for  the next  displays of  help sections.  (Hint: On  many systems
+  <code>xpdf</code>  shows a  very bad  display  quality, this  is  due to  a wrong  or
+  missing  font configuration.  One needs  to set  certain X-resources;  for
+  more details follow the <code>Problems</code> link at
+  <a href="http://www.foolabs.com/xpdf/">http://www.foolabs.com/xpdf/</a>
+<p>
+<dt><code>"acroread"</code> <dd>
+  If a book is available in pdf-format  it is shown with the onscreen viewer
+  program <code>acroread</code> (which must be  available on your system). This program
+  doesn't allow remote commands or startup  with a given page. Therefore the
+  page numbers you  have to visit are  just printed on the  screen. When you
+  are looking at several sections of the same book, this viewer assumes that
+  the  acroread window  still exists.  When  you go  to another  book a  new
+  acroread window is launched.
+<p>
+<dt><code>"less"</code> or <code>"more"</code> <dd>
+  This is the same as <code>"screen"</code> but additionally the <code>PAGER</code> and
+  <code>PAGER_OPTIONS</code>  variables are set, see the next section&nbsp;<a href="CHAP002.htm#SECT004">The Pager   Command</a> for more details.
+<p>
+</dl>
+<p>
+Please,     send     ideas     for    further     viewer     commands     to
+<a href="mailto:support@gap-system.org">support@gap-system.org</a>.
+<p>
+<p>
+<h2><a name="SECT004">2.4 The Pager Command</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> contains a builtin pager which  shows a text string which doesn't fit
+on  the screen  page  by page.  Its functionality  is  very rudimentary  and
+self-explaining. This  is because (at  least under UNIX) there  are powerful
+external standard programs which do this job.
+<p>
+<a name = "SSEC004.1"></a>
+<li><code>Pager( </code><var>lines</var><code> )</code>
+<p>
+This function can be  used to display a text on screen  using a pager, i.e.,
+the text is shown page by page.
+<p>
+There is a default builtin pager  in GAP which has very limited capabilities
+but should work on any system.
+<p>
+At least  on a  UNIX system one  should use an  external pager  program like
+<code>less</code> or <code>more</code>. <font face="Gill Sans,Helvetica,Arial">GAP</font> assumes that this program has a command line option
+<code>+nr</code> which starts the display of the text with line number <code>nr</code>.
+<p>
+Which pager is  used can be controlled by setting  the variable <code>PAGER</code>. The
+default setting  is <code>PAGER  := "builtin";</code> which  means that  the internal
+pager is used.
+<p>
+On UNIX  systems you probably  want to set <code>PAGER  := "less";</code> or  <code>PAGER :=
+"more";</code>, you can  do this for example  in your <code>.gaprc</code> file.  In that case
+you can also tell <font face="Gill Sans,Helvetica,Arial">GAP</font> a list  of standard options for the external pager.
+These are specified as list of strings in the variable <code>PAGER_OPTIONS</code>.
+<p>
+Example:
+<pre>
+  PAGER := "less";
+  PAGER_OPTIONS := ["-f", "-r", "-a", "-i", "-M", "-j2"];
+</pre>
+<p>
+The argument <var>lines</var> can have one of the following forms:
+<p>
+<dl compact>
+<dt>(1)<dd>a string (i.e., lines are separated by newline characters)
+<dt>(2)<dd>a list of strings (without  newline characters) 
+which are interpreted as lines of the text to be shown
+<dt>(3)<dd>a record with component <code>.lines</code> as in (1) or (2) and 
+optional further components
+</dl>
+<p>
+In case&nbsp;(3) currently the following additional components are used:
+<p>
+<p>
+<dl compact>
+<dt><code>.formatted</code> <dd>
+  can be <code>false</code> or <code>true</code>. If set to <code>true</code> the builtin pager tries to show
+  the text exactly as it is given (avoiding <font face="Gill Sans,Helvetica,Arial">GAP</font>s automatic line breaking)
+<p>
+<dt><code>.start</code> <dd>
+  must be a positive integer. This is interpreted as the number of the first
+  line shown by  the pager (one may  see the beginning of the  text via back
+  scrolling).
+</dl>
+<p>
+The <code>Pager</code>  command is  used by  <font face="Gill Sans,Helvetica,Arial">GAP</font>'s help  system for  displaying help
+sections in text-format.  But, of course, it may be  used for other purposes
+as well.
+<p>
+<pre>
+gap&gt; s6 := SymmetricGroup(6);;
+gap&gt; words := ["This", "is", "a", "very", "stupid", "example"];;
+gap&gt; l := List(s6, p-&gt; Permuted(words, p));;
+gap&gt; Pager(List(l, a-&gt; JoinStringsWithSeparator(a," ")));;                
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,175 @@
+<html><head><title>[ref] 11 Processes</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP010.htm">Previous</a>] [<a href ="CHAP012.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>11 Processes</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP011.htm#SECT001">Process</a>
+<li> <A HREF="CHAP011.htm#SECT002">Exec</a>
+</ol><p>
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> can call other programs, such programs are called <strong>processes</strong>.
+There are two kinds of processes:
+First there are processes that are started, run and return a result,
+while <font face="Gill Sans,Helvetica,Arial">GAP</font> is suspended until the process terminates.
+Then there are processes that will run in parallel to <font face="Gill Sans,Helvetica,Arial">GAP</font> as
+subprocesses and <font face="Gill Sans,Helvetica,Arial">GAP</font> can communicate and control the processes using
+streams (see&nbsp;<a href="CHAP010.htm#SSEC008.2">InputOutputLocalProcess</a>).
+<p>
+<p>
+<h2><a name="SECT001">11.1 Process</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>Process( </code><var>dir</var><code>, </code><var>prg</var><code>, </code><var>stream-in</var><code>, </code><var>stream-out</var><code>, </code><var>options</var><code> ) O</code>
+<p>
+<code>Process</code> runs a new process and returns when the process terminates.
+It returns the return value of the process if the operating system
+supports such a concept.
+<p>
+The first argument <var>dir</var> is a directory object (see&nbsp;<a href="CHAP009.htm#SECT003">Directories</a>)
+which will be the current directory (in the usual UNIX or MSDOS sense)
+when the program is run.
+This will only matter if the program accesses files (including running
+other programs) via relative path names.
+In particular, it has nothing to do with finding the binary to run.
+<p>
+In general the directory will either be the current directory, which is
+returned by <code>DirectoryCurrent</code> (see&nbsp;<a href="CHAP009.htm#SSEC003.3">DirectoryCurrent</a>)
+--this was the behaviour of <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3--
+or a temporary directory returned by <code>DirectoryTemporary</code>
+(see&nbsp;<a href="CHAP009.htm#SSEC003.2">DirectoryTemporary</a>).
+If one expects that the process creates temporary or log files the latter
+should be used because <font face="Gill Sans,Helvetica,Arial">GAP</font> will attempt to remove these directories
+together with all the files in them when quitting.
+<p>
+If a program of a <font face="Gill Sans,Helvetica,Arial">GAP</font> package which does not only consist of <font face="Gill Sans,Helvetica,Arial">GAP</font>
+code needs to be launched in a directory relative to certain data
+libraries, then the first entry of <code>DirectoriesPackageLibrary</code> should be
+used.
+The argument of <code>DirectoriesPackageLibrary</code> should be the path to the
+data library relative to the package directory.
+<p>
+If a program calls other programs and needs to be launched in a directory
+containing the executables for such a <font face="Gill Sans,Helvetica,Arial">GAP</font> package then the first entry
+of <code>DirectoriesPackagePrograms</code> should be used.
+<p>
+The latter two alternatives should only be used if absolutely necessary
+because otherwise one risks accumulating log or core files in the package
+directory.
+<p>
+<strong>Examples</strong>
+<p>
+<pre>
+gap&gt; path := DirectoriesSystemPrograms();;
+gap&gt; ls := Filename( path, "ls" );;
+gap&gt; stdin := InputTextUser();;
+gap&gt; stdout := OutputTextUser();;
+gap&gt; Process( path[1], ls, stdin, stdout, ["-c"] );;
+awk    ls     mkdir
+</pre>
+<p>
+<pre>
+gap&gt; # current directory, here the root directory
+gap&gt; Process( DirectoryCurrent(), ls, stdin, stdout, ["-c"] );;
+bin    lib    trans  tst    CVS    grp    prim   thr    two
+src    dev    etc    tbl    doc    pkg    small  tom
+</pre>
+<p>
+<pre>
+gap&gt; # create a temporary directory
+gap&gt; tmpdir := DirectoryTemporary();;
+gap&gt; Process( tmpdir, ls, stdin, stdout, ["-c"] );;
+gap&gt; PrintTo( Filename( tmpdir, "emil" ) );
+gap&gt; Process( tmpdir, ls, stdin, stdout, ["-c"] );;
+emil
+</pre>
+<p>
+<var>prg</var> is the filename of the program to launch, for portability it should
+be the result of <code>Filename</code> (see&nbsp;<a href="CHAP009.htm#SSEC004.1">Filename</a>) and should pass
+<code>IsExecutableFile</code>.
+Note that <code>Process</code> does <strong>no</strong> searching through a list of directories,
+this is done by <code>Filename</code>.
+<p>
+<var>stream-in</var> is the input stream that delivers the characters to the
+process.
+For portability it should either be <code>InputTextNone</code> (if the process reads
+no characters), <code>InputTextUser</code>, the result of a call to <code>InputTextFile</code>
+from which no characters have been read, or the result of a call to
+<code>InputTextString</code>.
+<p>
+<code>Process</code> is free to consume <strong>all</strong> the input even if the program itself
+does not require any input at all.
+<p>
+<var>stream-out</var> is the output stream which receives the characters from the
+process.
+For portability it should either be <code>OutputTextNone</code> (if the process
+writes no characters), <code>OutputTextUser</code>, the result of a call to
+<code>OutputTextFile</code> to which no characters have been written, or the result
+of a call to <code>OutputTextString</code>.
+<p>
+<var>options</var> is a list of strings which are passed to the process as command
+line argument.
+Note that no substitutions are performed on the strings,
+i.e., they are passed immediately to the process and are not processed by
+a command interpreter (shell).
+Further note that each string is passed as one argument,
+even if it contains <var>space</var> characters.
+Note that input/output redirection commands are <strong>not</strong> allowed as
+<var>options</var>.
+<p>
+<strong>Examples</strong>
+<p>
+In order to find a system program use <code>DirectoriesSystemPrograms</code>
+together with <code>Filename</code>.
+<p>
+<pre>
+gap&gt; path := DirectoriesSystemPrograms();;
+gap&gt; date := Filename( path, "date" );
+"/bin/date"
+</pre>
+<p>
+Now execute <code>date</code> with no argument and no input, collect the output into
+a string stream.
+<p>
+<pre>
+gap&gt; str := "";; a := OutputTextString(str,true);;
+gap&gt; Process( DirectoryCurrent(), date, InputTextNone(), a, [] );
+0
+gap&gt; CloseStream(a);
+gap&gt; Print(str);
+Fri Jul 11 09:04:23 MET DST 1997
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">11.2 Exec</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>Exec( </code><var>cmd</var><code>, </code><var>option1</var><code>, ..., </code><var>optionN</var><code> ) F</code>
+<p>
+<code>Exec</code> runs a shell in the current directory to execute the command given
+by the string <var>cmd</var> with options <code></code><var>option1</var><code>, ..., </code><var>optionN</var><code></code>.
+<p>
+<pre>
+gap&gt; Exec( "date" );
+Thu Jul 24 10:04:13 BST 1997
+</pre>
+<p>
+<var>cmd</var> is interpreted by the shell and therefore we can make use of the
+various features that a shell offers as in following example.
+<p>
+<pre>
+gap&gt; Exec( "echo \"GAP is great!\" &gt; foo" );
+gap&gt; Exec( "cat foo" );
+GAP is great!
+gap&gt; Exec( "rm foo" );
+</pre>
+<p>
+<code>Exec</code> calls the more general operation <code>Process</code> (see&nbsp;<a href="CHAP011.htm#SSEC001.1">Process</a>).
+<code>Edit</code> (see&nbsp;<a href="CHAP006.htm#SSEC009.1">Edit</a>) should be used to call an editor from within <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP010.htm">Previous</a>] [<a href ="CHAP012.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

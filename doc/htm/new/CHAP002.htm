@@ -1,0 +1,288 @@
+<html><head><title>[new] 2 Dictionaries and General Hash Tables</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 Dictionaries and General Hash Tables</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP002.htm#SECT001">Dictionaries</a>
+<li> <A HREF="CHAP002.htm#SECT002">General Hash Tables</a>
+<li> <A HREF="CHAP002.htm#SECT003">General hash table definitions and operations</a>
+<li> <A HREF="CHAP002.htm#SECT004">Hash keys</a>
+<li> <A HREF="CHAP002.htm#SECT005">Dense hash tables</a>
+<li> <A HREF="CHAP002.htm#SECT006">Sparse hash tables</a>
+<li> <A HREF="CHAP002.htm#SECT007">Fast access to last hash index</a>
+</ol><p>
+<p>
+People and computers spend a large amount of time with searching.
+Dictionaries are an abstract data structure which facilitates searching for
+certain objects. An important way of implementing dictionaries is via hash
+tables.
+<p>
+<strong>The functions and operations described in this chapter have been added
+very recently and are still undergoing development. It is conceivable that
+names of variants of the functionality might change in future versions. If
+you plan to use these functions in your own code, please contact us.</strong>
+<p>
+<p>
+<h2><a name="SECT001">2.1 Dictionaries</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsDictionary( </code><var>obj</var><code> ) C</code>
+<p>
+A dictionary is a growable collection of objects that permits to add
+objects (with associated values) and to check whether an object is
+already known.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsLookupDictionary( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>lookup dictionary</strong> is a dictionary, which permits not only to check
+whether an object is contained, but also to retrieve associated values,
+using the operation <code>LookupDictionary</code>.
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>KnowsDictionary( </code><var>dict</var><code>, </code><var>key</var><code> ) O</code>
+<p>
+checks, whether <var>key</var> is known to the dictionary <var>dict</var>, and returns
+<code>true</code> or <code>false</code> accordingly. <var>key</var> <strong>must</strong> be an object of the kind for
+which the dictionary was specified, otherwise the results are
+unpredictable.
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>LookupDictionary( </code><var>dict</var><code>, </code><var>key</var><code> ) O</code>
+<p>
+looks up <var>key</var> in the lookup dictionary <var>dict</var> and returns the
+associated value. If <var>key</var> is not known to the dictionary, <code>fail</code> is
+returned.
+<p>
+There are several ways how dictionaries are implemented: As lists, as
+sorted lists, as hash tables or via binary lists. A user however will
+just have to call <code>NewDictionary</code> and obtain a ``suitable'' dictionary
+for the kind of objects she wants to create. It is possible however to
+create hash tables (see&nbsp;<a href="CHAP002.htm#SECT003">General hash table definitions and operations</a>)
+and dictionaries using binary lists (see&nbsp;<a href="CHAP002.htm#SSEC001.6">DictionaryByPosition</a>).
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>NewDictionary( </code><var>obj</var><code>, </code><var>look</var><code>[, </code><var>objcoll</var><code>] ) F</code>
+<p>
+creates a new dictionary for objects such as <var>obj</var>. If <var>objcoll</var> is
+given the dictionary will be for objects only from this collection,
+knowing this can improve the performance. If <var>objcoll</var> is given, <var>obj</var>
+may be replaced by <code>false</code>, i.e. no sample object is needed.
+<p>
+The function tries to find the right kind of dictionary for the basic
+dictionary functions to be quick.
+If <var>look</var> is <code>true</code>, the dictionary will be a lookup dictionary,
+otherwise it is an ordinary dictionary.
+<p>
+The use of two objects, <var>obj</var> and <var>objcoll</var> to parametrize the objects a
+dictionary is able to store might look confusing. However there are
+situations where either of them might be needed:
+<p>
+The first situation is that of objects, for which no formal ``collection
+object'' has been defined. A typical example here might be subspaces of
+a vector space. <font face="Gill Sans,Helvetica,Arial">GAP</font> does not formally define a ``Grassmannian'' or
+anything else to represent the multitude of all subspaces. So it is only
+possible to give the dictionary a ``sample object''.
+<p>
+The other situation is that of an object which might represent quite
+varied domains. The permutation (1,10<sup>6</sup>) might be the nontrivial
+element of a cyclic group of order 2, it might be a representative of
+<i>S</i><sub>10<sup>6</sup></sub>. In the first situation the best approach might be just to
+have two entries for the two possible objects, in the second situation a
+much more elaborate approach might be needed.
+<p>
+An algorithm that creates a dictionary will usually know a priori, from what
+domain all the objects will be, giving this domain permits to use a more
+efficient dictionary.
+<p>
+This is particularly true for vectors. From a single vector one cannot
+decide whether a calculation will take place over the smallest field
+containing all its entries or over a larger field.
+<p>
+As there are situations where the approach via binary lists is explicitly
+desired, such dictionaries can be created deliberately.
+<a name = "SSEC001.6"></a>
+<li><code>DictionaryByPosition( </code><var>list</var><code>, </code><var>lookup</var><code> ) F</code>
+<p>
+creates a new (lookup) dictionary which uses <code>PositionCanonical</code> in
+<var>list</var> for indexing. The dictionary will have an entry <code></code><var>dict</var><code>!.blist</code>
+which is a bit list corresponding to <var>list</var> indicating the known
+If <var>look</var> is <code>true</code>, the dictionary will be a lookup dictionary,
+otherwise it is an ordinary dictionary.
+<p>
+<p>
+<h2><a name="SECT002">2.2 General Hash Tables</a></h2>
+<p><p>
+This chapter describes hash tables for general objects.
+We hash by keys and also store a value.  Keys    
+cannot be removed from the table, but the corresponding value can be 
+changed.  Fast access to last hash index allows you to efficiently store 
+more than one array of values -- this facility should be used with care.
+<p>
+This code works for any kind of object, provided you have a DenseIntKey
+or KeyIntSparse method to convert the key into a positive integer.  
+These methods should ideally be implemented efficiently in the core.
+<p>
+Note that, for efficiency, it is currently impossible to create a 
+hash table with non-positive integers.
+<p>
+<p>
+<h2><a name="SECT003">2.3 General hash table definitions and operations</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>IsHash( </code><var>obj</var><code> ) C</code>
+<p>
+The category of hash tables for arbitrary objects (provided an <code>IntKey</code>
+function 
+is defined).
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>PrintHashWithNames( </code><var>hash</var><code>, </code><var>keyName</var><code>, </code><var>valueName</var><code> ) O</code>
+<p>
+Print a hash table with the given names for the keys and values.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>GetHashEntry( </code><var>hash</var><code>, </code><var>key</var><code> ) O</code>
+<p>
+If the key is in hash, return the corresponding value.  Otherwise
+return fail.  Note that it is not a good idea to use fail as a value.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>AddHashEntry( </code><var>hash</var><code>, </code><var>key</var><code>, </code><var>value</var><code> ) O</code>
+<p>
+Add the key and value to the hash table.
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>RandomHashKey( </code><var>hash</var><code> ) O</code>
+<p>
+Return a random Key from the hash table (Random returns a random value).
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>HashKeyEnumerator( </code><var>hash</var><code> ) O</code>
+<p>
+Enumerates the keys of the hash table (Enumerator enumerates values).
+<p>
+<p>
+<h2><a name="SECT004">2.4 Hash keys</a></h2>
+<p><p>
+The crucial step of hashing is to transform key objects into integers such
+that equal objects produce the same integer.
+<p>
+<a name = "SSEC004.1"></a>
+<li><code>TableHasIntKeyFun( </code><var>hash</var><code> ) P</code>
+<p>
+If this filter is set, the hash table has an <code>IntKey</code> function in its
+component <code></code><var>hash</var><code>!.intKeyFun</code>.
+<p>
+The actual function used will vary very much on the type of objects. However
+<font face="Gill Sans,Helvetica,Arial">GAP</font> provides already key functions for some commonly encountered objects.
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>DenseIntKey( </code><var>objcoll</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+returns a function that can be used as hash key function for objects
+such as <var>obj</var> in the collection <var>objcoll</var>. <var>objcoll</var> typically will be a
+large domain.  If the domain is not available, it can be given as
+<code>false</code> in which case the hash key function will be determined only
+based on <var>obj</var>. (For a further discussion of these two arguments
+see&nbsp;<code>NewDictionary</code>, section&nbsp;<a href="CHAP002.htm#SSEC001.5">NewDictionary</a>).
+<p>
+The function returned by <code>DenseIntKey</code> is guaranteed to give different
+values for different objects.
+If no suitable hash key function has been predefined, <code>fail</code> is returned.
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>SparseIntKey( </code><var>objcoll</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+returns a function that can be used as hash key function for objects
+such as <var>obj</var> in the collection <var>objcoll</var>. In contrast to <code>DenseIntKey</code>,
+the function returned may return the same key value for different
+objects.
+If no suitable hash key function has been predefined, <code>fail</code> is returned.
+<p>
+<p>
+<h2><a name="SECT005">2.5 Dense hash tables</a></h2>
+<p><p>
+Dense hash tables are used for hashing dense sets without collisions, 
+in particular integers. 
+Stores keys as an unordered list and values as an 
+array with holes.  The position of a value is given by the attribute
+<code>IntKeyFun</code> or the function returned by <code>DenseIntKey</code>,
+and so KeyIntDense must be one-to-one.  
+<a name = "SSEC005.1"></a>
+<li><code>DenseHashTable( ) F</code>
+<p>
+Construct an empty dense hash table.  This is the only correct way to
+construct such a table.
+<p>
+<p>
+<h2><a name="SECT006">2.6 Sparse hash tables</a></h2>
+<p><p>
+Sparse hash tables are used for hashing sparse sets.  
+Stores keys as an array with fail 
+denoting an empty position, stores values as an array with holes.
+Uses <code>HashFunct</code> applied to the <code>IntKeyFun</code> (respectively the result of
+calling <code>SparseIntKey</code>) of the key.  DefaultHashLength 
+is the default starting hash table length; the table is doubled 
+when it becomes half full.
+<a name = "SSEC006.1"></a>
+<li><code>SparseHashTable( [</code><var>intkeyfun</var><code>] ) F</code>
+<p>
+Construct an empty sparse hash table.  This is the only correct way to
+construct such a table.
+If the argument <var>intkeyfun</var> is given, this function will be used to
+obtain numbers for the keys passed to it.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>GetHashEntryIndex( </code><var>hash</var><code>, </code><var>key</var><code> ) F</code>
+<p>
+If the key is in hash, return its index in the hash array.
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>DoubleHashArraySize( </code><var>hash</var><code> ) F</code>
+<p>
+Double the size of the hash array and rehash all the entries.
+This will also happen automatically when the hash array is half full.
+<p>
+In sparse hash tables, the integer obtained from the hash key is then
+transformed to an index position, this transformation is done using the hash
+function <code>HashFunct</code>:
+<a name = "SSEC006.4"></a>
+<li><code>HashFunct( </code><var>key</var><code>, </code><var>i</var><code>, </code><var>size</var><code> ) F</code>
+<p>
+This will be a good double hashing function for any reasonable KeyInt 
+(see Cormen, Leiserson and Rivest, Introduction to Algorithms, 
+1e, p. 235).
+<p>
+<p>
+<h2><a name="SECT007">2.7 Fast access to last hash index</a></h2>
+<p><p>
+These functions allow you to use the index of last hash access or modification. 
+Note that this is global across all hash tables.  If you want to
+have two hash tables with identical layouts, the following works:
+GetHashEntry( hashTable1, object ); GetHashEntryAtLastIndex( hashTable2 );
+These functions should be used with extreme care, as they bypass most
+of the inbuilt error checking for hash tables.
+<p>
+<a name = "SSEC007.1"></a>
+<li><code>GetHashEntryAtLastIndex( </code><var>hash</var><code> ) O</code>
+<p>
+Returns the value of the last hash entry accessed.
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>SetHashEntryAtLastIndex( </code><var>hash</var><code>, </code><var>newValue</var><code> ) O</code>
+<p>
+Resets the value of the last hash entry accessed.
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>SetHashEntry( </code><var>hash</var><code>, </code><var>key</var><code>, </code><var>value</var><code> ) O</code>
+<p>
+Resets the value corresponding to <var>key</var>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,1688 @@
+<html><head><title>[ref] 68 Tables of Marks</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP067.htm">Previous</a>] [<a href ="CHAP069.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>68 Tables of Marks</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP068.htm#SECT001">More about Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT002">Table of Marks Objects in GAP</a>
+<li> <A HREF="CHAP068.htm#SECT003">Constructing Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT004">Printing Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT005">Sorting Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT006">Technical Details about Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT007">Attributes of Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT008">Properties of Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT009">Other Operations for Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT010">Standard Generators of Groups</a>
+<li> <A HREF="CHAP068.htm#SECT011">Accessing Subgroups via Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT012">The Interface between Tables of Marks and Character Tables</a>
+<li> <A HREF="CHAP068.htm#SECT013">Generic Construction of Tables of Marks</a>
+<li> <A HREF="CHAP068.htm#SECT014">The Library of Tables of Marks</a>
+</ol><p>
+<p>
+The concept of a <strong>table of marks</strong> was introduced by W.&nbsp;Burnside in his
+book ``Theory of Groups of Finite  Order'', see&nbsp;<a href="biblio.htm#Bur55"><cite>Bur55</cite></a>.
+Therefore a table of marks is sometimes called a <strong>Burnside matrix</strong>.
+<p>
+The table of marks of a finite group <i>G</i> is a matrix whose rows and
+columns are labelled by the conjugacy classes of subgroups of <i>G</i>
+and where for two subgroups <i>A</i> and <i>B</i> the (<i>A</i>, <i>B</i>)--entry is
+the number of fixed points of <i>B</i> in the transitive action of <i>G</i>
+on the cosets of <i>A</i> in <i>G</i>.
+So the table of marks characterizes the set of all permutation
+representations of <i>G</i>.
+<p>
+Moreover, the table of marks gives a compact description of the subgroup
+lattice of <i>G</i>, since from the numbers of fixed points the numbers of
+conjugates of a subgroup <i>B</i> contained in a subgroup <i>A</i> can be derived.
+<p>
+A table of marks of a given group <i>G</i> can be constructed from the
+subgroup lattice of <i>G</i> (see&nbsp;<a href="CHAP068.htm#SECT003">Constructing Tables of Marks</a>).
+For several groups, the table of marks can be restored from the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+library of tables of marks (see&nbsp;<a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a>).
+<p>
+Given the table of marks of <i>G</i>, one can display it
+(see&nbsp;<a href="CHAP068.htm#SECT004">Printing Tables of Marks</a>)
+and derive information about <i>G</i> and its Burnside ring from it
+(see&nbsp;<a href="CHAP068.htm#SECT007">Attributes of Tables of Marks</a>, <a href="CHAP068.htm#SECT008">Properties of Tables of Marks</a>,
+<a href="CHAP068.htm#SECT009">Other Operations for Tables of Marks</a>).
+Moreover, tables of marks in <font face="Gill Sans,Helvetica,Arial">GAP</font> provide an easy access to the classes
+of subgroups of their underlying groups
+(see&nbsp;<a href="CHAP068.htm#SECT011">Accessing Subgroups via Tables of Marks</a>).
+<p>
+<p>
+<h2><a name="SECT001">68.1 More about Tables of Marks</a></h2>
+<p><p>
+Let <i>G</i> be a finite group with <i>n</i> conjugacy classes of subgroups
+<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>C</i><sub><i>n</i></sub> and representatives <i>H</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>C</i><sub><i>i</i></sub>,
+1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i>.
+The <strong>table of marks</strong> of <i>G</i> is defined to be the <i>n</i> &times;<i>n</i> matrix
+<i>M</i> = (<i>m</i><sub><i>ij</i></sub>) where the <strong>mark</strong> <i>m</i><sub><i>ij</i></sub> is the number of fixed points
+of the subgroup <i>H</i><sub><i>j</i></sub> in the action of <i>G</i> on the right cosets of <i>H</i><sub><i>i</i></sub>
+in <i>G</i>.
+<p>
+Since <i>H</i><sub><i>j</i></sub> can only have fixed points if it is contained in a point
+stablizer the matrix <i>M</i> is lower triangular if the classes <i>C</i><sub><i>i</i></sub> are
+sorted according to the condition that if <i>H</i><sub><i>i</i></sub> is contained in a
+conjugate of <i>H</i><sub><i>j</i></sub> then <i>i</i>  <font face="symbol">&#8804;</font> <i>j</i>.
+<p>
+Moreover, the diagonal entries <i>m</i><sub><i>ii</i></sub> are nonzero since <i>m</i><sub><i>ii</i></sub> equals
+the index of <i>H</i><sub><i>i</i></sub> in its normalizer in <i>G</i>.  Hence <i>M</i> is invertible.
+Since any transitive action of <i>G</i> is equivalent to an action on the
+cosets of a subgroup of <i>G</i>, one sees that the table of marks completely
+characterizes the set of all permutation representations of <i>G</i>.
+<p>
+The marks <i>m</i><sub><i>ij</i></sub> have further meanings.
+If <i>H</i><sub>1</sub> is the trivial subgroup of <i>G</i> then each mark <i>m</i><sub><i>i</i>1</sub> in the
+first column of <i>M</i> is equal to the index of <i>H</i><sub><i>i</i></sub> in <i>G</i>
+since the trivial subgroup fixes all cosets of <i>H</i><sub><i>i</i></sub>.
+If <i>H</i><sub><i>n</i></sub> = <i>G</i> then each <i>m</i><sub><i>nj</i></sub> in the last row of <i>M</i> is equal to 1
+since there is only one coset of <i>G</i> in <i>G</i>.
+In general, <i>m</i><sub><i>ij</i></sub> equals the number of conjugates of <i>H</i><sub><i>i</i></sub> containing
+<i>H</i><sub><i>j</i></sub>, multiplied by the index of <i>H</i><sub><i>i</i></sub> in its normalizer in <i>G</i>.
+Moreover, the number <i>c</i><sub><i>ij</i></sub> of conjugates of <i>H</i><sub><i>j</i></sub> which are contained
+in <i>H</i><sub><i>i</i></sub> can be derived from the marks <i>m</i><sub><i>ij</i></sub> via the formula
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>c</i><sub><i>ij</i></sub> = </td><td nowrap="nowrap" align="center">&nbsp;<i>m</i><sub><i>ij</i></sub> <i>m</i><sub><i>j</i>1</sub><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>m</i><sub><i>i</i>1</sub> <i>m</i><sub><i>jj</i></sub><br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<p>
+Both the marks <i>m</i><sub><i>ij</i></sub>  and the numbers of subgroups <i>c</i><sub><i>ij</i></sub> are needed
+for the functions described in this chapter.
+<p>
+A brief survey of properties of tables of marks and a description of
+algorithms for the interactive construction of tables of marks using
+<font face="Gill Sans,Helvetica,Arial">GAP</font> can be found in&nbsp;<a href="biblio.htm#Pfe97"><cite>Pfe97</cite></a>.
+<p>
+<p>
+<h2><a name="SECT002">68.2 Table of Marks Objects in GAP</a></h2>
+<p><p>
+A table of marks of a group <i>G</i> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is represented by an immutable
+(see&nbsp;<a href="CHAP012.htm#SECT006">Mutability and Copyability</a>) object <var>tom</var> in the category
+<code>IsTableOfMarks</code> (see&nbsp;<a href="CHAP068.htm#SSEC006.2">IsTableOfMarks</a>), with defining attributes
+<code>SubsTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC007.1">SubsTom</a>) and <code>MarksTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC007.1">MarksTom</a>).
+These two attributes encode the matrix of marks in a compressed form.
+The <code>SubsTom</code> value of <var>tom</var> is a list where for each conjugacy class of
+subgroups the class numbers of its subgroups are stored.
+These are exactly the positions in the corresponding row of the matrix of
+marks which have nonzero entries.
+The marks themselves are stored via the <code>MarksTom</code> value of <var>tom</var>,
+which is a list that contains for each entry in <code>SubsTom( </code><var>tom</var><code> )</code> the
+corresponding nonzero value of the table of marks.
+<p>
+It is possible to create table of marks objects that do not store a
+group, moreover one can create a table of marks object from a matrix of
+marks (see&nbsp;<a href="CHAP068.htm#SSEC003.1">TableOfMarks</a>).
+So it may happen that a table of marks object in <font face="Gill Sans,Helvetica,Arial">GAP</font> is in fact <strong>not</strong>
+the table of marks of a group.
+To some extent, the consistency of a table of marks object can be checked
+(see&nbsp;<a href="CHAP068.htm#SECT009">Other Operations for Tables of Marks</a>),
+but <font face="Gill Sans,Helvetica,Arial">GAP</font> knows no general way to prove or disprove that a given matrix
+of nonnegative  integers is the matrix of marks for a group.
+Many functions for tables of marks work well without access to the group
+--this is one of the arguments why tables of marks are so useful--,
+but for example normalizers (see&nbsp;<a href="CHAP068.htm#SSEC009.4">NormalizerTom</a>)
+and derived subgroups (see&nbsp;<a href="CHAP068.htm#SSEC009.2">DerivedSubgroupTom</a>) of subgroups
+are in general not uniquely determined by the matrix of marks.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> tables of marks are assumed to be in lower triangular form,
+that is, if a subgroup from the conjugacy class corresponding to the
+<i>i</i>-th row is contained in a subgroup from the class corresponding to the
+<i>j</i>-th row j then <i>i</i>  <font face="symbol">&#8804;</font> <i>j</i>.
+<p>
+The <code>MarksTom</code> information can be computed from the values of the
+attributes <code>NrSubsTom</code>, <code>LengthsTom</code>, <code>OrdersTom</code>, and <code>SubsTom</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC007.2">NrSubsTom</a>, <a href="CHAP068.htm#SSEC007.3">LengthsTom</a>, <a href="CHAP068.htm#SSEC007.2">OrdersTom</a>).
+<code>NrSubsTom</code> stores a list containing for each entry in the <code>SubsTom</code>
+value the corresponding number of conjugates that are contained
+in a subgroup, <code>LengthsTom</code> a list containing for each conjugacy class
+of subgroups its length, and <code>OrdersTom</code> a list containing for each
+class of subgroups their order.
+So the <code>MarksTom</code> value of <var>tom</var> may be missing provided that the values
+of <code>NrSubsTom</code>, <code>LengthsTom</code>, and <code>OrdersTom</code> are stored in <var>tom</var>.
+<p>
+Additional information about a table of marks is needed by some
+functions.
+The class numbers of normalizers in <i>G</i> and the number of the derived
+subgroup of <i>G</i> can be stored via appropriate attributes
+(see&nbsp;<a href="CHAP068.htm#SSEC009.4">NormalizersTom</a>, <a href="CHAP068.htm#SSEC009.2">DerivedSubgroupTom</a>).
+<p>
+If <var>tom</var> stores its group <i>G</i> and a bijection from the rows and columns
+of the matrix of marks of <var>tom</var> to the classes of subgroups of <i>G</i> then
+clearly normalizers, derived subgroup etc.&nbsp;can be computed from this
+information.
+But in general a table of marks need not have access to <i>G</i>,
+for example <var>tom</var> might have been constructed from a generic table of
+marks (see&nbsp;<a href="CHAP068.htm#SECT013">Generic Construction of Tables of Marks</a>),
+or as table of marks of a factor group from a given table of marks
+(see&nbsp;<a href="CHAP068.htm#SSEC009.11">FactorGroupTom</a>).
+Access to the group <i>G</i> is provided by the attribute <code>UnderlyingGroup</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC007.7">UnderlyingGroup!for tables of marks</a>) if this value is set.
+Access to the relevant information about conjugacy classes of subgroups
+of <i>G</i> --compatible with the ordering of rows and columns of the marks in
+<var>tom</var>-- is signalled by the filter <code>IsTableOfMarksWithGens</code>
+(see&nbsp;<a href="CHAP068.htm#SECT011">Accessing Subgroups via Tables of Marks</a>).
+<p>
+<p>
+<h2><a name="SECT003">68.3 Constructing Tables of Marks</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>TableOfMarks( </code><var>G</var><code> ) A</code>
+<li><code>TableOfMarks( </code><var>string</var><code> ) A</code>
+<li><code>TableOfMarks( </code><var>matrix</var><code> ) A</code>
+<p>
+In the first form, <var>G</var> must be a finite group, and <code>TableOfMarks</code>
+constructs the table of marks of <var>G</var>.
+This computation requires the knowledge of the complete subgroup lattice
+of <var>G</var> (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>).
+If the lattice is not yet stored then it will be constructed.
+This may take a while if <var>G</var> is large.
+The result has the <code>IsTableOfMarksWithGens</code> value <code>true</code>
+(see&nbsp;<a href="CHAP068.htm#SECT011">Accessing Subgroups via Tables of Marks</a>).
+<p>
+In the second form, <var>string</var> must be a string, and <code>TableOfMarks</code> gets
+the table of marks with name <var>string</var> from the <font face="Gill Sans,Helvetica,Arial">GAP</font> library
+(see <a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a>).
+If no table of marks with this name is contained in the library then
+<code>fail</code> is returned.
+<p>
+In the third form, <var>matrix</var> must be a matrix or a list of rows describing
+a lower triangular matrix where the part above the diagonal is omitted.
+For such an argument <var>matrix</var>, <code>TableOfMarks</code> returns
+a table of marks object (see&nbsp;<a href="CHAP068.htm#SECT002">Table of Marks Objects in GAP</a>)
+for which <var>matrix</var> is the matrix of marks.
+Note that not every matrix
+(containing only nonnegative integers and having lower triangular shape)
+describes a table of marks of a group.
+Necessary conditions are checked with <code>IsInternallyConsistent</code>
+(see&nbsp;<a href="CHAP068.htm#SECT009">Other Operations for Tables of Marks</a>), and <code>fail</code> is returned if
+<var>matrix</var> is proved not to describe a matrix of marks;
+but if <code>TableOfMarks</code> returns a table of marks object created from a
+matrix then it may still happen that this object does not describe the
+table of marks of a group.
+<p>
+For an overview of operations for table of marks objects,
+see the introduction to the Chapter&nbsp;<a href="CHAP068.htm">Tables of Marks</a>.
+<p>
+<pre>
+gap&gt; tom:= TableOfMarks( AlternatingGroup( 5 ) );
+TableOfMarks( Alt( [ 1 .. 5 ] ) )
+gap&gt; TableOfMarks( "J5" );
+fail
+gap&gt; a5:= TableOfMarks( "A5" );
+TableOfMarks( "A5" )
+gap&gt; mat:=
+&gt; [ [ 60, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 30, 2, 0, 0, 0, 0, 0, 0, 0 ], 
+&gt;   [ 20, 0, 2, 0, 0, 0, 0, 0, 0 ], [ 15, 3, 0, 3, 0, 0, 0, 0, 0 ], 
+&gt;   [ 12, 0, 0, 0, 2, 0, 0, 0, 0 ], [ 10, 2, 1, 0, 0, 1, 0, 0, 0 ], 
+&gt;   [ 6, 2, 0, 0, 1, 0, 1, 0, 0 ], [ 5, 1, 2, 1, 0, 0, 0, 1, 0 ], 
+&gt;   [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ];;
+gap&gt; TableOfMarks( mat );
+TableOfMarks( &lt;9 classes&gt; )
+</pre>
+<p>
+The following <code>TableOfMarks</code> methods for a group are installed.
+<ul>
+<li>
+    If the group is known to be cyclic then <code>TableOfMarks</code> constructs the
+    table of marks essentially without the group, instead the knowledge
+    about the structure of cyclic groups is used.
+<li>
+    If the lattice of subgroups is already stored in the group then
+    <code>TableOfMarks</code> computes the table of marks from the lattice
+    (see&nbsp;<a href="CHAP068.htm#SSEC003.2">TableOfMarksByLattice</a>).
+<li>
+    If the group is known to be solvable then <code>TableOfMarks</code> takes the
+    lattice of subgroups (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>) of the group
+    --which means that the lattice is computed if it is not yet stored--
+    and then computes the table of marks from it.
+    This method is also accessible via the global function
+    <code>TableOfMarksByLattice</code> (see&nbsp;<a href="CHAP068.htm#SSEC003.2">TableOfMarksByLattice</a>).
+<li>
+    If the group doesn't know its lattice of subgroups or its conjugacy
+    classes of subgroups then the table of marks and the conjugacy
+    classes of subgroups are computed at the same time by the cyclic
+    extension method.
+    Only the table of marks is stored because the conjugacy classes of
+    subgroups or the lattice of subgroups can be easily read off
+    (see&nbsp;<a href="CHAP068.htm#SSEC003.3">LatticeSubgroupsByTom</a>).
+</ul>
+<p>
+Conversely, the lattice of subgroups of a group with known table of marks
+can be computed using the table of marks, via the function
+<code>LatticeSubgroupsByTom</code>.
+This is also installed as a method for <code>LatticeSubgroups</code>.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>TableOfMarksByLattice( </code><var>G</var><code> ) F</code>
+<p>
+<code>TableOfMarksByLattice</code> computes the table of marks of the group <var>G</var> from
+the lattice of subgroups of <var>G</var>.
+This lattice is computed via <code>LatticeSubgroups</code> (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>)
+if it is not yet stored in <var>G</var>.
+The function <code>TableOfMarksByLattice</code> is installed as a method for
+<code>TableOfMarks</code> for solvable groups and groups with stored subgroup
+lattice, and is available as a global variable only in order to provide
+explicit access to this method.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>LatticeSubgroupsByTom( </code><var>G</var><code> ) F</code>
+<p>
+<code>LatticeSubgroupsByTom</code> computes the lattice of subgroups of <var>G</var> from the
+table of marks of <var>G</var>, using <code>RepresentativeTom</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC011.4">RepresentativeTom</a>).
+<p>
+<p>
+<h2><a name="SECT004">68.4 Printing Tables of Marks</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+The default <code>ViewObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">ViewObj</a>) method for tables of  marks  prints
+the string <code>"TableOfMarks"</code>, followed by --if  known--  the  identifier
+(see&nbsp;<a href="CHAP068.htm#SSEC007.9">Identifier!for tables of marks</a>) or the group of the table of marks
+enclosed in brackets; if neither group nor identifier are known then just
+the number of conjugacy classes of subgroups is printed instead.
+<p>
+<a name = "I1"></a>
+
+The default <code>PrintObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">PrintObj</a>) method for tables of marks
+does the same as <code>ViewObj</code>,
+except that the group is is <code>Print</code>-ed instead of <code>View</code>-ed.
+<p>
+<a name = "I2"></a>
+
+The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.4">Display</a>) method for a table of marks <var>tom</var>
+produces a formatted output of the marks in <var>tom</var>.
+Each line of output begins with the number of the corresponding class of
+subgroups.
+This number is repeated if the output spreads over several pages.
+The number of columns printed at one time depends on the actual
+line length, which can be accessed and changed by the function
+<code>SizeScreen</code> (see&nbsp;<a href="CHAP006.htm#SSEC011.1">SizeScreen</a>).
+<p>
+The optional second argument <var>arec</var> of <code>Display</code> can be used to change
+the default style for displaying a character as shown above.
+<var>arec</var> must be a record, its relevant components are the following.
+<p>
+<p>
+<dl compact>
+<dt><code>classes</code> <dd>
+    a list of class numbers to select only the rows and columns of the
+    matrix that correspond to this list for printing,
+<p>
+<dt><code>form</code> <dd>
+    one of the strings <code>"subgroups"</code>, <code>"supergroups"</code>;
+    in the former case, at position (<i>i</i>,<i>j</i>) of the matrix the number of
+    conjugates of <i>H</i><sub><i>j</i></sub> contained in <i>H</i><sub><i>i</i></sub> is printed,
+    and in the latter case, at position (<i>i</i>,<i>j</i>) the number of conjugates
+    of <i>H</i><sub><i>i</i></sub> which contain <i>H</i><sub><i>j</i></sub> is printed.
+</dl>
+<p>
+<pre>
+gap&gt; tom:= TableOfMarks( "A5" );;
+gap&gt; Display( tom );
+1:  60
+2:  30 2
+3:  20 . 2
+4:  15 3 . 3
+5:  12 . . . 2
+6:  10 2 1 . . 1
+7:   6 2 . . 1 . 1
+8:   5 1 2 1 . . . 1
+9:   1 1 1 1 1 1 1 1 1
+
+gap&gt; Display( tom, rec( classes:= [ 1, 2, 3, 4, 8 ] ) );
+1:  60
+2:  30 2
+3:  20 . 2
+4:  15 3 . 3
+8:   5 1 2 1 1
+
+gap&gt; Display( tom, rec( form:= "subgroups" ) );
+1:  1
+2:  1  1
+3:  1  .  1
+4:  1  3  . 1
+5:  1  .  . . 1
+6:  1  3  1 . .  1
+7:  1  5  . . 1  . 1
+8:  1  3  4 1 .  . . 1
+9:  1 15 10 5 6 10 6 5 1
+
+gap&gt; Display( tom, rec( form:= "supergroups" ) );
+1:   1
+2:  15 1
+3:  10 . 1
+4:   5 1 . 1
+5:   6 . . . 1
+6:  10 2 1 . . 1
+7:   6 2 . . 1 . 1
+8:   5 1 2 1 . . . 1
+9:   1 1 1 1 1 1 1 1 1
+
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">68.5 Sorting Tables of Marks</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>SortedTom( </code><var>tom</var><code>, </code><var>perm</var><code> ) O</code>
+<p>
+<code>SortedTom</code> returns a table of marks where the rows and columns of the
+table of marks <var>tom</var> are reordered according to the permutation <var>perm</var>.
+<p>
+<strong>Note</strong> that in each table of marks in <font face="Gill Sans,Helvetica,Arial">GAP</font>,
+the matrix of marks is assumed to have lower triangular shape
+(see&nbsp;<a href="CHAP068.htm#SECT002">Table of Marks Objects in GAP</a>).
+If the permutation <var>perm</var> does <strong>not</strong> have this property then the
+functions for tables of marks might return wrong results when applied to
+the output of <code>SortedTom</code>.
+<p>
+The returned table of marks has only those attribute values stored that
+are known for <var>tom</var> and listed in <code>TableOfMarksComponents</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC006.4">TableOfMarksComponents</a>).
+<p>
+<pre>
+gap&gt; tom:= TableOfMarksCyclic( 6 );;  Display( tom );
+1:  6
+2:  3 3
+3:  2 . 2
+4:  1 1 1 1
+
+gap&gt; sorted:= SortedTom( tom, (2,3) );;  Display( sorted );
+1:  6
+2:  2 2
+3:  3 . 3
+4:  1 1 1 1
+
+gap&gt; wrong:= SortedTom( tom, (1,2) );;  Display( wrong );
+1:  3
+2:  . 6
+3:  . 2 2
+4:  1 1 1 1
+
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>PermutationTom( </code><var>tom</var><code> ) A</code>
+<p>
+For the table of marks <var>tom</var> of the group <i>G</i> stored as <code>UnderlyingGroup</code>
+value of <var>tom</var> (see&nbsp;<a href="CHAP068.htm#SSEC007.7">UnderlyingGroup!for tables of marks</a>),
+<code>PermutationTom</code> is a permutation <font face="symbol">&#960;</font> such that the <i>i</i>-th conjugacy
+class of subgroups of <i>G</i> belongs to the <i>i</i><sup><font face="symbol">&#960;</font></sup>-th column and row of
+marks in <var>tom</var>.
+<p>
+This attribute value is bound only if <var>tom</var> was obtained from another
+table of marks by permuting with <code>SortedTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC005.1">SortedTom</a>),
+and there is no default method to compute its value.
+<p>
+The attribute is necessary because the original and the sorted table of
+marks have the same identifier and the same group,
+and information computed from the group may depend on the ordering of
+marks, for example the fusion from the ordinary character table of <i>G</i>
+into <var>tom</var>.
+<p>
+<pre>
+gap&gt; MarksTom( tom )[2];
+[ 3, 3 ]
+gap&gt; MarksTom( sorted )[2];
+[ 2, 2 ]
+gap&gt; HasPermutationTom( sorted );
+true
+gap&gt; PermutationTom( sorted );
+(2,3)
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">68.6 Technical Details about Tables of Marks</a></h2>
+<p><p>
+<a name = "SSEC006.1"></a>
+<li><code>InfoTom V</code>
+<p>
+is the info class for computations concerning tables of marks.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>IsTableOfMarks( </code><var>obj</var><code> ) C</code>
+<p>
+Each table of marks belongs to this category.
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>TableOfMarksFamily V</code>
+<p>
+Each table of marks belongs to this family.
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>TableOfMarksComponents V</code>
+<p>
+The list <code>TableOfMarksComponents</code> is used when a table of marks object is
+created from a record via <code>ConvertToTableOfMarks</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC006.5">ConvertToTableOfMarks</a>).
+<code>TableOfMarksComponents</code> contains at position 2<i>i</i><font face="symbol">&#8722;</font>1 a name of an
+attribute and at position 2<i>i</i> the corresponding attribute getter
+function.
+<p>
+<a name = "SSEC006.5"></a>
+<li><code>ConvertToTableOfMarks( </code><var>record</var><code> ) F</code>
+<p>
+<code>ConvertToTableOfMarks</code> converts a record with components from
+<code>TableOfMarksComponents</code> into a table of marks object with the
+corresponding attributes.
+<p>
+<pre>
+gap&gt; record:= rec( MarksTom:= [ [ 4 ], [ 2, 2 ], [ 1, 1, 1 ] ],
+&gt;  SubsTom:= [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ] );;
+gap&gt; ConvertToTableOfMarks( record );;
+gap&gt; record;
+TableOfMarks( &lt;3 classes&gt; )
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">68.7 Attributes of Tables of Marks</a></h2>
+<p><p>
+<a name = "SSEC007.1"></a>
+<li><code>MarksTom( </code><var>tom</var><code> ) A</code>
+<a name = "SSEC007.1"></a>
+<li><code>SubsTom( </code><var>tom</var><code> ) A</code>
+<p>
+The matrix of marks (see&nbsp;<a href="CHAP068.htm#SECT001">More about Tables of Marks</a>) of the table of
+marks <var>tom</var> is stored in a compressed form where zeros are omitted,
+using the attributes <code>MarksTom</code> and <code>SubsTom</code>.
+If <i>M</i> is the square matrix of marks of <var>tom</var> (see&nbsp;<a href="CHAP068.htm#SSEC007.10">MatTom</a>) then the
+<code>SubsTom</code> value of <var>tom</var> is a list that contains at position <i>i</i> the list
+of all positions of nonzero entries of the <i>i</i>-th row of <i>M</i>, and the
+<code>MarksTom</code> value of <var>tom</var> is a list that contains at position <i>i</i> the
+list of the corresponding marks.
+<p>
+<code>MarksTom</code> and <code>SubsTom</code> are defining attributes of tables of marks
+(see&nbsp;<a href="CHAP068.htm#SECT002">Table of Marks Objects in GAP</a>).
+There is no default method for computing the <code>SubsTom</code> value,
+and the default <code>MarksTom</code> method needs the values of <code>NrSubsTom</code> and
+<code>OrdersTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC007.2">NrSubsTom</a>, <a href="CHAP068.htm#SSEC007.2">OrdersTom</a>).
+<p>
+<pre>
+gap&gt; a5:= TableOfMarks( "A5" );
+TableOfMarks( "A5" )
+gap&gt; MarksTom( a5 );
+[ [ 60 ], [ 30, 2 ], [ 20, 2 ], [ 15, 3, 3 ], [ 12, 2 ], [ 10, 2, 1, 1 ], 
+  [ 6, 2, 1, 1 ], [ 5, 1, 2, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ]
+gap&gt; SubsTom( a5 );
+[ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 2, 4 ], [ 1, 5 ], [ 1, 2, 3, 6 ], 
+  [ 1, 2, 5, 7 ], [ 1, 2, 3, 4, 8 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ]
+</pre>
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>NrSubsTom( </code><var>tom</var><code> ) A</code>
+<a name = "SSEC007.2"></a>
+<li><code>OrdersTom( </code><var>tom</var><code> ) A</code>
+<p>
+Instead of storing the marks (see&nbsp;<a href="CHAP068.htm#SSEC007.1">MarksTom</a>) of the table of marks <var>tom</var>
+one can use a matrix which contains at position (<i>i</i>,<i>j</i>) the number of
+subgroups of conjugacy class <i>j</i> that are contained in one member of the
+conjugacy class <i>i</i>.
+These values are stored in the <code>NrSubsTom</code> value in the same way as
+the marks in the <code>MarksTom</code> value.
+<p>
+<code>OrdersTom</code> returns a list that contains at position <i>i</i> the order of a
+representative of the <i>i</i>-th conjugacy class of subgroups of <var>tom</var>.
+<p>
+One can compute the <code>NrSubsTom</code> and <code>OrdersTom</code> values from the
+<code>MarksTom</code> value of <var>tom</var> and vice versa.
+<p>
+<pre>
+gap&gt; NrSubsTom( a5 );
+[ [ 1 ], [ 1, 1 ], [ 1, 1 ], [ 1, 3, 1 ], [ 1, 1 ], [ 1, 3, 1, 1 ], 
+  [ 1, 5, 1, 1 ], [ 1, 3, 4, 1, 1 ], [ 1, 15, 10, 5, 6, 10, 6, 5, 1 ] ]
+gap&gt; OrdersTom( a5 );
+[ 1, 2, 3, 4, 5, 6, 10, 12, 60 ]
+</pre>
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>LengthsTom( </code><var>tom</var><code> ) A</code>
+<p>
+For a table of marks <var>tom</var>, <code>LengthsTom</code> returns a list of the lengths of
+the conjugacy classes of subgroups.
+<p>
+<pre>
+gap&gt; LengthsTom( a5 );
+[ 1, 15, 10, 5, 6, 10, 6, 5, 1 ]
+</pre>
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>ClassTypesTom( </code><var>tom</var><code> ) A</code>
+<p>
+<code>ClassTypesTom</code> distinguishes isomorphism types of the classes of
+subgroups of the table of marks <var>tom</var> as far as this is possible
+from the <code>SubsTom</code> and <code>MarksTom</code> values of <var>tom</var>.
+<p>
+Two subgroups are clearly not isomorphic if they have different orders.
+Moreover, isomorphic subgroups must contain the same number of subgroups
+of each type.
+<p>
+Each type is represented by a positive integer.
+<code>ClassTypesTom</code> returns the list which contains for each class of
+subgroups its corresponding type.
+<p>
+<pre>
+gap&gt; a6:= TableOfMarks( "A6" );;
+gap&gt; ClassTypesTom( a6 );
+[ 1, 2, 3, 3, 4, 5, 6, 6, 7, 7, 8, 9, 10, 11, 11, 12, 13, 13, 14, 15, 15, 16 ]
+</pre>
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>ClassNamesTom( </code><var>tom</var><code> ) A</code>
+<p>
+<code>ClassNamesTom</code> constructs generic names for the conjugacy classes of
+subgroups of the table of marks <var>tom</var>.
+In general, the generic name of a class of non--cyclic subgroups consists
+of three parts and has the form <code>"(</code><var>o</var><code>)_</code><var>t</var><code></code><var>l</var><code>"</code>,
+where <var>o</var> indicates the order of the subgroup,
+<var>t</var> is a number that distinguishes different types of subgroups of the
+same order, and <var>l</var> is a letter that distinguishes classes of subgroups
+of the same type and order.
+The type of a subgroup is determined by the numbers of its subgroups of
+other types (see&nbsp;<a href="CHAP068.htm#SSEC007.4">ClassTypesTom</a>).
+This is slightly weaker than isomorphism.
+<p>
+The letter is omitted if there is only one class of subgroups of that
+order and type,
+and the type is omitted if there is only one class of that order.
+Moreover, the braces <code></code>  around the type are omitted if the type number
+has only one digit.
+<p>
+For classes of cyclic subgroups, the parentheses round the order and the
+type are omitted.
+Hence the most general form of their generic names is <code>"</code><var>o</var><code>,</code><var>l</var><code>"</code>.
+Again, the letter is omitted if there is only one class of cyclic
+subgroups of that order.
+<p>
+<pre>
+gap&gt; ClassNamesTom( a6 );
+[ "1", "2", "3a", "3b", "5", "4", "(4)_2a", "(4)_2b", "(6)a", "(6)b", "(8)", 
+  "(9)", "(10)", "(12)a", "(12)b", "(18)", "(24)a", "(24)b", "(36)", "(60)a", 
+  "(60)b", "(360)" ]
+</pre>
+<p>
+<a name = "SSEC007.6"></a>
+<li><code>FusionsTom( </code><var>tom</var><code> ) AM</code>
+<p>
+For a table of marks <var>tom</var>, <code>FusionsTom</code> is a list of fusions into  other
+tables of marks. Each fusion is a list of length  two,  the  first  entry
+being the <code>Identifier</code> (see&nbsp;<a href="CHAP068.htm#SSEC007.9">Identifier!for tables of  marks</a>)  value  of
+the image table, the second entry being the list of images of  the  class
+positions of <var>tom</var> in the image table.
+<p>
+This attribute is mainly used for tables of marks in the <font face="Gill Sans,Helvetica,Arial">GAP</font> library
+(see&nbsp;<a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a>).
+<p>
+<pre>
+gap&gt; fus:= FusionsTom( a6 );;
+gap&gt; fus[1];
+[ "L3(4)", [ 1, 2, 3, 3, 14, 5, 9, 7, 15, 15, 24, 26, 27, 32, 33, 50, 57, 55, 
+      63, 73, 77, 90 ] ]
+</pre>
+<p>
+<a name = "SSEC007.7"></a>
+<li><code>UnderlyingGroup( </code><var>tom</var><code> ) A</code>
+<p>
+<code>UnderlyingGroup</code> is used to access an underlying group that is stored on
+the table of marks <var>tom</var>.
+There is no default method to compute an underlying group if it is not
+stored.
+<p>
+<pre>
+gap&gt; UnderlyingGroup( a6 );
+Group([ (1,2)(3,4), (1,2,4,5)(3,6) ])
+</pre>
+<p>
+<a name = "SSEC007.8"></a>
+<li><code>IdempotentsTom( </code><var>tom</var><code> ) A</code>
+<a name = "SSEC007.8"></a>
+<li><code>IdempotentsTomInfo( </code><var>tom</var><code> ) A</code>
+<p>
+<code>IdempotentsTom</code> encodes the idempotents of the integral Burnside ring
+described by the table of marks <var>tom</var>.
+The return value is a list <i>l</i> of positive integers such that each row
+vector describing a primitive idempotent has value 1 at all positions
+with the same entry in <i>l</i>, and 0 at all other positions.
+<p>
+According to A.&nbsp;Dress&nbsp;<a href="biblio.htm#Dre69"><cite>Dre69</cite></a> (see also&nbsp;<a href="biblio.htm#Pfe97"><cite>Pfe97</cite></a>),
+these idempotents correspond to the classes of perfect subgroups,
+and each such idempotent is the characteristic function of all those
+subgroups that arise by cyclic extension from the corresponding perfect
+subgroup (see&nbsp;<a href="CHAP068.htm#SSEC009.7">CyclicExtensionsTom</a>).
+<p>
+<code>IdempotentsTomInfo</code> returns a record with components <code>fixpointvectors</code>
+and <code>primidems</code>, both bound to lists.
+The <i>i</i>-th entry of the <code>fixpointvectors</code> list is the 0<font face="symbol">&#8722;</font>1-vector
+describing the <i>i</i>-th primitive idempotent,
+and the <i>i</i>-th entry of <code>primidems</code> is the decomposition of this
+idempotent in the rows of <var>tom</var>.
+<p>
+<pre>
+gap&gt; IdempotentsTom( a5 );
+[ 1, 1, 1, 1, 1, 1, 1, 1, 9 ]
+gap&gt; IdempotentsTomInfo( a5 );
+rec( 
+  primidems := [ [ 1, -2, -1, 0, 0, 1, 1, 1 ], [ -1, 2, 1, 0, 0, -1, -1, -1, 
+          1 ] ], 
+  fixpointvectors := [ [ 1, 1, 1, 1, 1, 1, 1, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 
+          0, 1 ] ] )
+</pre>
+<p>
+<a name = "SSEC007.9"></a>
+<li><code>Identifier( </code><var>tom</var><code> ) A</code>
+<p>
+The identifier of a table of marks <var>tom</var> is a string.
+It is used for printing the table of marks
+(see&nbsp;<a href="CHAP068.htm#SECT004">Printing Tables of Marks</a>)
+and in fusions between tables of marks (see&nbsp;<a href="CHAP068.htm#SSEC007.6">FusionsTom</a>).
+<p>
+If <var>tom</var> is a table of marks from the <font face="Gill Sans,Helvetica,Arial">GAP</font> library of tables of marks
+(see&nbsp;<a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a>) then it has an identifier,
+and if <var>tom</var> was constructed from a group with <code>Name</code> value (see&nbsp;<a href="CHAP012.htm#SSEC008.2">Name</a>)
+then this name is chosen as <code>Identifier</code> value.
+There is no default method to compute an identifier in all other cases.
+<p>
+<pre>
+gap&gt; Identifier( a5 );
+"A5"
+</pre>
+<p>
+<a name = "SSEC007.10"></a>
+<li><code>MatTom( </code><var>tom</var><code> ) A</code>
+<p>
+<code>MatTom</code> returns the square matrix of marks
+(see&nbsp;<a href="CHAP068.htm#SECT001">More about Tables of Marks</a>) of the table of marks <var>tom</var> which is
+stored in a compressed form using the attributes <code>MarksTom</code> and <code>SubsTom</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC007.1">MarksTom</a>).
+This may need substantially more space than the values of <code>MarksTom</code> and
+<code>SubsTom</code>.
+<p>
+<pre>
+gap&gt; MatTom( a5 );
+[ [ 60, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 30, 2, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 20, 0, 2, 0, 0, 0, 0, 0, 0 ], [ 15, 3, 0, 3, 0, 0, 0, 0, 0 ], 
+  [ 12, 0, 0, 0, 2, 0, 0, 0, 0 ], [ 10, 2, 1, 0, 0, 1, 0, 0, 0 ], 
+  [ 6, 2, 0, 0, 1, 0, 1, 0, 0 ], [ 5, 1, 2, 1, 0, 0, 0, 1, 0 ], 
+  [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ]
+</pre>
+<p>
+<a name = "SSEC007.11"></a>
+<li><code>MoebiusTom( </code><var>tom</var><code> ) A</code>
+<p>
+<code>MoebiusTom</code> computes the M&ouml;bius values both of the subgroup
+lattice of the group <i>G</i> with table of marks <var>tom</var> and of the poset of
+conjugacy classes of subgroups of <i>G</i>.
+It returns a record where the component
+<code>mu</code> contains the M&ouml;bius values of the subgroup lattice,
+and the component <code>nu</code> contains the M&ouml;bius values of the
+poset.
+<p>
+Moreover, according to an observation of Isaacs et al.&nbsp;(see&nbsp;<a href="biblio.htm#HIO89"><cite>HIO89</cite></a>,
+<a href="biblio.htm#Pah93"><cite>Pah93</cite></a>), the values on the subgroup lattice often can be derived
+from those of the poset of conjugacy classes.
+These ``expected values'' are returned in the component <code>ex</code>,
+and the list of numbers of those subgroups where the expected value does
+not coincide with the actual value are returned in the component <code>hyp</code>.
+For the computation of these values, the position of the derived subgroup
+of <i>G</i> is needed (see&nbsp;<a href="CHAP068.htm#SSEC009.2">DerivedSubgroupTom</a>).
+If it is not uniquely determined then the result does not have the
+components <code>ex</code> and <code>hyp</code>.
+<p>
+<pre>
+gap&gt; MoebiusTom( a5 );
+rec( mu := [ -60, 4, 2,,, -1, -1, -1, 1 ], nu := [ -1, 2, 1,,, -1, -1, -1, 1 ]
+    , ex := [ -60, 4, 2,,, -1, -1, -1, 1 ], hyp := [  ] )
+gap&gt; tom:= TableOfMarks( "M12" );;
+gap&gt; moebius:= MoebiusTom( tom );;
+gap&gt; moebius.hyp;
+[ 1, 2, 4, 16, 39, 45, 105 ]
+gap&gt; moebius.mu[1];  moebius.ex[1];
+95040
+190080
+</pre>
+<p>
+<a name = "SSEC007.12"></a>
+<li><code>WeightsTom( </code><var>tom</var><code> ) A</code>
+<p>
+<code>WeightsTom</code> extracts the <strong>weights</strong> from the table of marks <var>tom</var>,
+i.e., the diagonal entries of the matrix of marks (see&nbsp;<a href="CHAP068.htm#SSEC007.1">MarksTom</a>),
+indicating the index of a subgroup in its normalizer.
+<p>
+<pre>
+gap&gt; wt:= WeightsTom( a5 );
+[ 60, 2, 2, 3, 2, 1, 1, 1, 1 ]
+</pre>
+This information may be used to obtain the numbers of conjugate
+supergroups from the marks.
+<pre>
+gap&gt; marks:= MarksTom( a5 );;
+gap&gt; List( [ 1 .. 9 ], x -&gt; marks[x] / wt[x] );
+[ [ 1 ], [ 15, 1 ], [ 10, 1 ], [ 5, 1, 1 ], [ 6, 1 ], [ 10, 2, 1, 1 ], 
+  [ 6, 2, 1, 1 ], [ 5, 1, 2, 1, 1 ], [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT008">68.8 Properties of Tables of Marks</a></h2>
+<p><p>
+For a table of marks <var>tom</var> of a group <i>G</i>, the following properties
+have the same meaning as the corresponding properties for <i>G</i>.
+Additionally, if a positive integer <var>sub</var> is given as the second argument
+then the value of the corresponding property for the <var>sub</var>-th class of
+subgroups of <var>tom</var> is returned.
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>IsAbelianTom( </code><var>tom</var><code>[, </code><var>sub</var><code>] )</code>
+<a name = "SSEC008.1"></a>
+<li><code>IsCyclicTom( </code><var>tom</var><code>[, </code><var>sub</var><code>] )</code>
+<a name = "SSEC008.1"></a>
+<li><code>IsNilpotentTom( </code><var>tom</var><code>[, </code><var>sub</var><code>] )</code>
+<a name = "SSEC008.1"></a>
+<li><code>IsPerfectTom( </code><var>tom</var><code>[, </code><var>sub</var><code>] )</code>
+<a name = "SSEC008.1"></a>
+<li><code>IsSolvableTom( </code><var>tom</var><code>[, </code><var>sub</var><code>] )</code>
+<p>
+<pre>
+gap&gt; tom:= TableOfMarks( "A5" );;
+gap&gt; IsAbelianTom( tom );  IsPerfectTom( tom );
+false
+true
+gap&gt; IsAbelianTom( tom, 3 );  IsNilpotentTom( tom, 7 );
+true
+false
+gap&gt; IsPerfectTom( tom, 7 );  IsSolvableTom( tom, 7 );
+false
+true
+gap&gt; for i in [ 1 .. 6 ] do
+&gt; Print( i, ": ", IsCyclicTom(a5, i), "  " );
+&gt; od;  Print( "\n" );
+1: true  2: true  3: true  4: false  5: true  6: false  
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">68.9 Other Operations for Tables of Marks</a></h2>
+<p><p>
+<a name = "SSEC009.1"></a>
+<li><code>IsInternallyConsistent( </code><var>tom</var><code> ) O</code>
+<p>
+For a table of marks <var>tom</var>, <code>IsInternallyConsistent</code>
+decomposes all tensor products of rows of <var>tom</var>.
+It returns <code>true</code> if all decomposition numbers are nonnegative integers,
+and <code>false</code> otherwise.
+This provides a strong consistency check for a table of marks.
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>DerivedSubgroupTom( </code><var>tom</var><code>, </code><var>sub</var><code> ) O</code>
+<a name = "SSEC009.2"></a>
+<li><code>DerivedSubgroupsTom( </code><var>tom</var><code> ) F</code>
+<p>
+For a table of marks <var>tom</var> and a positive integer <var>sub</var>,
+<code>DerivedSubgroupTom</code> returns either a positive integer <i>i</i> or a list <i>l</i>
+of positive integers.
+In the former case, the result means that the derived subgroups of the
+subgroups in the <var>sub</var>-th class of <var>tom</var> lie in the <i>i</i>-th class.
+In the latter case, the class of the derived subgroups could not be
+uniquely determined, and the position of the class of derived subgroups
+is an entry of <i>l</i>.
+<p>
+Values computed with <code>DerivedSubgroupTom</code> are stored using the attribute
+<code>DerivedSubgroupsTomPossible</code> (see&nbsp;<a href="CHAP068.htm#SSEC009.3">DerivedSubgroupsTomPossible</a>).
+<p>
+<code>DerivedSubgroupsTom</code> is just the list of <code>DerivedSubgroupTom</code> values for
+all values of <var>sub</var>.
+<p>
+<a name = "SSEC009.3"></a>
+<li><code>DerivedSubgroupsTomPossible( </code><var>tom</var><code> ) AM</code>
+<a name = "SSEC009.3"></a>
+<li><code>DerivedSubgroupsTomUnique( </code><var>tom</var><code> ) A</code>
+<p>
+Let <var>tom</var> be a table of marks.
+The value of the attribute <code>DerivedSubgroupsTomPossible</code> is a list
+in which the value at position <i>i</i> --if bound-- is a positive integer or
+a list; the meaning of the entry is the same as in <code>DerivedSubgroupTom</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC009.2">DerivedSubgroupTom</a>).
+<p>
+If the value of the attribute <code>DerivedSubgroupsTomUnique</code> is known for
+<var>tom</var> then it is a list of positive integers, the value at position <i>i</i>
+being the position of the class of derived subgroups of the <i>i</i>-th class
+of subgroups in <var>tom</var>.
+The derived subgroups are in general not uniquely determined by the table
+of marks if no <code>UnderlyingGroup</code> value is stored,
+so there is no default method for <code>DerivedSubgroupsTomUnique</code>.
+But in some cases the derived subgroups are explicitly set when the table
+of marks is constructed.
+The <code>DerivedSubgroupsTomUnique</code> value is automatically set when the last
+missing unique value is entered in the <code>DerivedSubgroupsTomPossible</code> list
+by <code>DerivedSubgroupTom</code>.
+<p>
+<pre>
+gap&gt; a5:= TableOfMarks( "A5" );
+TableOfMarks( "A5" )
+gap&gt; DerivedSubgroupsTomPossible( a5 );
+[ ,, 1,,,,,, 9 ]
+gap&gt; DerivedSubgroupTom( a5, 2 );
+1
+gap&gt; DerivedSubgroupsTomPossible( a5 );
+[ , 1, 1,,,,,, 9 ]
+gap&gt; DerivedSubgroupsTom( a5 );
+[ 1, 1, 1, 1, 1, 3, 5, 4, 9 ]
+</pre>
+<p>
+<a name = "SSEC009.4"></a>
+<li><code>NormalizerTom( </code><var>tom</var><code>, </code><var>sub</var><code> ) O</code>
+<a name = "SSEC009.4"></a>
+<li><code>NormalizersTom( </code><var>tom</var><code> ) A</code>
+<p>
+Let <var>tom</var> be the table of marks of a group <i>G</i>, say.
+<code>NormalizerTom</code> tries to find the conjugacy class of the normalizer <i>N</i>
+in <i>G</i> of a subgroup <i>U</i> in the <var>sub</var>-th class of <var>tom</var>.
+The return value is either the list of class numbers of those subgroups
+that have the right size and contain the subgroup and all subgroups that
+clearly contain it as a normal subgroup, or the class number of the
+normalizer if it is uniquely determined by these conditions.
+If <var>tom</var> knows the subgroup lattice of <i>G</i> (see&nbsp;<a href="CHAP068.htm#SSEC011.3">IsTableOfMarksWithGens</a>)
+then all normalizers are uniquely determined.
+<code>NormalizerTom</code> should never return an empty list.
+<p>
+<code>NormalizersTom</code> returns the list of positions of the classes of
+normalizers of subgroups in <var>tom</var>.
+In addition to the criteria for a single class of subgroup used by
+<code>NormalizerTom</code>, the approximations of normalizers for several classes
+are used and thus <code>NormalizersTom</code> may return better approximations
+than <code>NormalizerTom</code>.
+<p>
+<pre>
+gap&gt; NormalizerTom( a5, 4 );
+8
+gap&gt; NormalizersTom( a5 );
+[ 9, 4, 6, 8, 7, 6, 7, 8, 9 ]
+</pre>
+The example shows that a subgroup with class number 4 in <i>A</i><sub>5</sub>
+(which is a Kleinian four group)
+is normalized by a subgroup in class 8.
+This class contains the subgroups of <i>A</i><sub>5</sub> which are isomorphic to <i>A</i><sub>4</sub>.
+<p>
+<a name = "SSEC009.5"></a>
+<li><code>ContainedTom( </code><var>tom</var><code>, </code><var>sub1</var><code>, </code><var>sub2</var><code> ) O</code>
+<p>
+<code>ContainedTom</code> returns the number of subgroups in class <var>sub1</var> of the
+table of marks <var>tom</var> that are contained in one fixed member of the class
+<var>sub2</var>.
+<p>
+<a name = "SSEC009.6"></a>
+<li><code>ContainingTom( </code><var>tom</var><code>, </code><var>sub1</var><code>, </code><var>sub2</var><code> ) O</code>
+<p>
+<code>ContainingTom</code> returns the number of subgroups in class <var>sub2</var> of the
+table of marks <var>tom</var> that contain one fixed member of the class <var>sub1</var>.
+<p>
+<pre>
+gap&gt; ContainedTom( a5, 3, 5 );  ContainedTom( a5, 3, 8 );
+0
+4
+gap&gt; ContainingTom( a5, 3, 5 );  ContainingTom( a5, 3, 8 );
+0
+2
+</pre>
+<p>
+<a name = "SSEC009.7"></a>
+<li><code>CyclicExtensionsTom( </code><var>tom</var><code> ) A</code>
+<li><code>CyclicExtensionsTom( </code><var>tom</var><code>, </code><var>p</var><code> ) O</code>
+<li><code>CyclicExtensionsTom( </code><var>tom</var><code>, </code><var>list</var><code> ) O</code>
+<p>
+According to A.&nbsp;Dress&nbsp;<a href="biblio.htm#Dre69"><cite>Dre69</cite></a>, two columns of the table of marks
+<var>tom</var> are equal modulo the prime <var>p</var> if and only if the corresponding
+subgroups are connected by a chain of normal extensions of order <var>p</var>.
+<p>
+In the second form, <code>CyclicExtensionsTom</code> returns the classes of this
+equivalence relation.
+In the third form, <var>list</var> must be a list of primes, and the return value
+is the list of classes of the relation obtained by considering chains of
+normal extensions of prime order where all primes are in <var>list</var>.
+In the first form, the result is the same as in the third form,
+with second argument the set of prime divisors of the size of the group
+of <var>tom</var>.
+<p>
+(This information is not used by <code>NormalizerTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC009.4">NormalizerTom</a>)
+although it might give additional restrictions in the search of
+normalizers.)
+<p>
+<pre>
+gap&gt; CyclicExtensionsTom( a5, 2 );
+[ [ 1, 2, 4 ], [ 3, 6 ], [ 5, 7 ], [ 8 ], [ 9 ] ]
+</pre>
+<p>
+<a name = "SSEC009.8"></a>
+<li><code>DecomposedFixedPointVector( </code><var>tom</var><code>, </code><var>fix</var><code> ) O</code>
+<p>
+Let <var>tom</var> be the table of marks of the group <i>G</i>, say,
+and let <var>fix</var> be a vector of fixed point numbers w.r.t.&nbsp;an action of <i>G</i>,
+i.e., a vector which contains for each class of subgroups the number of
+fixed points under the given action.
+<code>DecomposedFixedPointVector</code> returns the decomposition of <var>fix</var> into rows
+of the table of marks.
+This decomposition  corresponds to a decomposition of the action into
+transitive constituents.
+Trailing zeros in <var>fix</var> may be omitted.
+<p>
+<pre>
+gap&gt; DecomposedFixedPointVector( a5, [ 16, 4, 1, 0, 1, 1, 1 ] );
+[ 0, 0, 0, 0, 0, 1, 1 ]
+</pre>
+The vector <var>fix</var> may be any vector of integers.
+The resulting decomposition, however, will not be integral, in general.
+<pre>
+gap&gt; DecomposedFixedPointVector( a5, [ 0, 0, 0, 0, 1, 1 ] );
+[ 2/5, -1, -1/2, 0, 1/2, 1 ]
+</pre>
+<p>
+<a name = "SSEC009.9"></a>
+<li><code>EulerianFunctionByTom( </code><var>tom</var><code>, </code><var>n</var><code>[, </code><var>sub</var><code>] ) O</code>
+<p>
+In the first form <code>EulerianFunctionByTom</code> computes the Eulerian
+function (see&nbsp;<a href="CHAP037.htm#SSEC015.3">EulerianFunction</a>) of the underlying group <i>G</i> of the
+table of marks <var>tom</var>,
+that is, the number of <var>n</var>-tuples of elements in <i>G</i> that generate <i>G</i>.
+In the second form <code>EulerianFunctionByTom</code> computes the Eulerian function
+of each subgroup in the <var>sub</var>-th class of subgroups of <var>tom</var>.
+<p>
+For a group <i>G</i> whose table of marks is known, <code>EulerianFunctionByTom</code>
+is installed as a method for <code>EulerianFunction</code> (see&nbsp;<a href="CHAP037.htm#SSEC015.3">EulerianFunction</a>).
+<p>
+<pre>
+gap&gt; EulerianFunctionByTom( a5, 2 );
+2280
+gap&gt; EulerianFunctionByTom( a5, 3 );
+200160
+gap&gt; EulerianFunctionByTom( a5, 2, 3 );
+8
+</pre>
+<p>
+<a name = "SSEC009.10"></a>
+<li><code>IntersectionsTom( </code><var>tom</var><code>, </code><var>sub1</var><code>, </code><var>sub2</var><code> ) O</code>
+<p>
+The intersections of the groups in the <var>sub1</var>-th conjugacy class of
+subgroups of the table of marks <var>tom</var> with the groups in the <var>sub2</var>-th
+conjugacy classes of subgroups of <var>tom</var> are determined up to conjugacy by
+the decomposition of the tensor product of their rows of marks.
+<code>IntersectionsTom</code> returns a list <i>l</i> that describes this decomposition.
+The <i>i</i>-th entry in <i>l</i> is the multiplicity of groups in the
+<i>i</i>-th conjugacy class as an intersection.
+<p>
+<pre>
+gap&gt; IntersectionsTom( a5, 8, 8 );
+[ 0, 0, 1, 0, 0, 0, 0, 1 ]
+</pre>
+Any two subgroups of class number 8 (<i>A</i><sub>4</sub>) of <i>A</i><sub>5</sub> are either equal and
+their intersection has again class number 8, or their intersection has
+class number 3, and is a cyclic subgroup of order 3.
+<p>
+<a name = "SSEC009.11"></a>
+<li><code>FactorGroupTom( </code><var>tom</var><code>, </code><var>n</var><code> ) O</code>
+<p>
+For a table of marks <var>tom</var> of the group <i>G</i>, say,
+and the normal subgroup <i>N</i> of <i>G</i> corresponding to the <var>n</var>-th class of
+subgroups of <var>tom</var>,
+<code>FactorGroupTom</code> returns the table of marks of the factor
+group <i>G</i> / <i>N</i>.
+<p>
+<pre>
+gap&gt; s4:= TableOfMarks( SymmetricGroup( 4 ) );
+TableOfMarks( Sym( [ 1 .. 4 ] ) )
+gap&gt; LengthsTom( s4 );
+[ 1, 3, 6, 4, 1, 3, 3, 4, 3, 1, 1 ]
+gap&gt; OrdersTom( s4 );
+[ 1, 2, 2, 3, 4, 4, 4, 6, 8, 12, 24 ]
+gap&gt; s3:= FactorGroupTom( s4, 5 );
+TableOfMarks( Group([ f1, f2 ]) )
+gap&gt; Display( s3 );
+1:  6
+2:  3 1
+3:  2 . 2
+4:  1 1 1 1
+
+</pre>
+<p>
+<a name = "SSEC009.12"></a>
+<li><code>MaximalSubgroupsTom( </code><var>tom</var><code> ) A</code>
+<li><code>MaximalSubgroupsTom( </code><var>tom</var><code>, </code><var>sub</var><code> ) O</code>
+<p>
+In the first form <code>MaximalSubgroupsTom</code> returns a list of length two,
+the first entry being the list of positions of the classes of maximal
+subgroups of the whole group of the table of marks <var>tom</var>,
+the second entry being the list of class lengths of these groups.
+In the second form the same information for the <var>sub</var>-th class of
+subgroups is returned.
+<p>
+<a name = "SSEC009.13"></a>
+<li><code>MinimalSupergroupsTom( </code><var>tom</var><code>, </code><var>sub</var><code> ) O</code>
+<p>
+For a table of marks <var>tom</var>, <code>MinimalSupergroupsTom</code> returns a list of
+length two, the first entry being the list of positions of the classes
+containing the minimal supergroups of the groups in the <var>sub</var>-th class
+of subgroups of <var>tom</var>,
+the second entry being the list of class lengths of these groups.
+<p>
+<pre>
+gap&gt; MaximalSubgroupsTom( s4 );
+[ [ 10, 9, 8 ], [ 1, 3, 4 ] ]
+gap&gt; MaximalSubgroupsTom( s4, 10 );
+[ [ 5, 4 ], [ 1, 4 ] ]
+gap&gt; MinimalSupergroupsTom( s4, 5 );
+[ [ 9, 10 ], [ 3, 1 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT010">68.10 Standard Generators of Groups</a></h2>
+<p><p>
+An <i>s</i>-tuple of <strong>standard generators</strong> of a given group <i>G</i> is a vector
+(<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub>) of elements <i>g</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>G</i> satisfying certain
+conditions (depending on the isomorphism type of <i>G</i>) such that
+<ol>
+<li>
+    <font face="symbol">&#9001;</font><i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub> <font face="symbol">&#9002;</font> =  <i>G</i> and
+<li>
+    the vector is unique up to automorphisms of <i>G</i>,
+    i.e., for two vectors (<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub>) and
+    (<i>h</i><sub>1</sub>, <i>h</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>h</i><sub><i>s</i></sub>) of standard generators,
+    the map <i>g</i><sub><i>i</i></sub> <font face="symbol">&#8594;</font> <i>h</i><sub><i>i</i></sub> extends to an automorphism of <i>G</i>.
+</ol>
+For details about standard generators, see&nbsp;<a href="biblio.htm#Wil96"><cite>Wil96</cite></a>.
+<p>
+<a name = "SSEC010.1"></a>
+<li><code>StandardGeneratorsInfo( </code><var>G</var><code> ) A</code>
+<p>
+When called with the group <var>G</var>,
+<code>StandardGeneratorsInfo</code> returns a list of records with at least one of
+the components <code>script</code> and <code>description</code>.
+Each such record defines <strong>standard generators</strong> of groups isomorphic
+to <var>G</var>, the <i>i</i>-th record is referred to as the <i>i</i>-th set of
+standard generators for such groups.
+The value of <code>script</code> is a dense list of lists, each encoding a command
+that has one of the following forms.
+<p>
+<dl compact>
+<dt>A <strong>definition</strong> [ <i>i</i>, <i>n</i>, <i>k</i> ] or [ <i>i</i>, <i>n</i> ] <dd>
+    means to search for an element of order <i>n</i>,
+    and to take its <i>k</i>-th power as candidate for the <i>i</i>-th standard
+    generator (the default for <i>k</i> is 1),
+<p>
+<dt>a <strong>relation</strong> [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub>, <i>n</i> ] with <i>m</i>  &gt;  1 <dd>
+    means a check whether the element
+    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup> has order <i>n</i>;
+    if <i>g</i><sub><i>j</i></sub> occurs then of course the <i>j</i>-th generator must have been
+    defined before,
+<p>
+<dt>a <strong>relation</strong> [ [ <i>i</i><sub>1</sub>, <i>i</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub> ], <i>slp</i> , <i>n</i> ] <dd>
+    means a check whether the result of the straight line program <var>slp</var>
+    (see&nbsp;<a href="CHAP035.htm#SECT008">Straight Line Programs</a>) applied to the candidates
+    <i>g</i><sub><i>i</i><sub>1</sub></sub>, <i>g</i><sub><i>i</i><sub>2</sub></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>i</i><sub><i>m</i></sub></sub> has order <i>n</i>,
+    where the candidates <i>g</i><sub><i>j</i></sub> for the <i>j</i>-th standard generators
+    must have been defined before,
+<p>
+<dt>a <strong>condition</strong> [ [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub> ], <i>f</i>, <i>v</i> ] <dd>
+    means a check whether the <font face="Gill Sans,Helvetica,Arial">GAP</font> function in the global list
+    <code>StandardGeneratorsFunctions</code> (see <a href="CHAP068.htm#SSEC010.3">StandardGeneratorsFunctions</a>)
+    that is followed by the list <i>f</i> of strings returns the value <i>v</i>
+    when it is called with <i>G</i> and
+    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup>.
+</dl>
+Optional components of the returned records are
+<p>
+<dl compact>
+<dt><code>generators</code> <dd>
+    a string of names of the standard generators,
+<p>
+<dt><code>description</code> <dd>
+    a string describing the <code>script</code> information in human readable form,
+    in terms of the <code>generators</code> value,
+<p>
+<dt><code>classnames</code> <dd>
+    a list of strings, the <i>i</i>-th entry being the name of the conjugacy
+    class containing the <i>i</i>-th standard generator,
+    according to the <font face="Gill Sans,Helvetica,Arial">ATLAS</font> character table of the group
+    (see&nbsp;<a href="CHAP069.htm#SSEC008.10">ClassNames</a>), and
+<p>
+<dt><code>ATLAS</code> <dd>
+    a boolean; <code>true</code> means that the standard generators coincide with
+    those defined in Rob Wilson's <font face="Gill Sans,Helvetica,Arial">ATLAS</font> of Group Representations
+    (see&nbsp;<a href="biblio.htm#AGR"><cite>AGR</cite></a>), and <code>false</code> means that this property is not
+    guaranteed.
+</dl>
+<p>
+There is no default method for an arbitrary isomorphism type,
+since in general the definition of standard generators is not obvious.
+<p>
+The function <code>StandardGeneratorsOfGroup</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC010.5">StandardGeneratorsOfGroup</a>)
+can be used to find standard generators of a given group isomorphic
+to <var>G</var>.
+<p>
+The <code>generators</code> and <code>description</code> values, if not known, can be computed
+by <code>HumanReadableDefinition</code> (see&nbsp;<a href="CHAP068.htm#SSEC010.2">HumanReadableDefinition</a>).
+<p>
+<pre>
+gap&gt; StandardGeneratorsInfo( TableOfMarks( "L3(3)" ) );
+[ rec( generators := "a, b", 
+      description := "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4", 
+      script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+          [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ], 
+      ATLAS := true ) ]
+</pre>
+<p>
+<a name = "SSEC010.2"></a>
+<li><code>HumanReadableDefinition( </code><var>info</var><code> ) F</code>
+<a name = "SSEC010.2"></a>
+<li><code>ScriptFromString( </code><var>string</var><code> ) F</code>
+<p>
+Let <var>info</var> be a record that is valid as value of <code>StandardGeneratorsInfo</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC010.1">StandardGeneratorsInfo!for groups</a>).
+<code>HumanReadableDefinition</code> returns a string that describes the definition
+of standard generators given by the <code>script</code> component of <var>info</var> in
+human readable form.
+The names of the generators are taken from the <code>generators</code> component
+(default names <code>"a"</code>, <code>"b"</code> etc.&nbsp;are computed if necessary),
+and the result is stored in the <code>description</code> component.
+<p>
+<code>ScriptFromString</code> does the converse of <code>HumanReadableDefinition</code>, i.e.,
+it takes a string <var>string</var> as returned by <code>HumanReadableDefinition</code>,
+and returns a corresponding <code>script</code> list.
+<p>
+If ``condition'' lines occur in the script
+(see&nbsp;<a href="CHAP068.htm#SSEC010.1">StandardGeneratorsInfo!for groups</a>)
+then the functions that occur must be contained in
+<code>StandardGeneratorsFunctions</code> (see&nbsp;<a href="CHAP068.htm#SSEC010.3">StandardGeneratorsFunctions</a>).
+<p>
+<pre>
+gap&gt; scr:= ScriptFromString( "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4" );
+[ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], [ 1, 1, 2, 1, 13 ], 
+  [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ]
+gap&gt; info:= rec( script:= scr );
+rec( script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+      [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ] )
+gap&gt; HumanReadableDefinition( info );
+"|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4"
+gap&gt; info;
+rec( script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+      [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ], 
+  generators := "a, b", 
+  description := "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4" )
+</pre>
+<p>
+<a name = "SSEC010.3"></a>
+<li><code>StandardGeneratorsFunctions V</code>
+<p>
+<code>StandardGeneratorsFunctions</code> is a list of even length.
+At position 2<i>i</i><font face="symbol">&#8722;</font>1, a function of two arguments is stored,
+which are expected to be a group and a group element.
+At position 2<i>i</i> a list of strings is stored such that first inserting a
+generator name in all holes and then forming the concatenation yields
+a string that describes the function at the previous position;
+this string must contain the generator enclosed in round brackets <code>(</code>
+and <code>)</code>.
+<p>
+This list is used by the functions <code>StandardGeneratorsInfo</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC010.1">StandardGeneratorsInfo!for groups</a>), <code>HumanReadableDefinition</code>, and
+<code>ScriptFromString</code> (see&nbsp;<a href="CHAP068.htm#SSEC010.2">HumanReadableDefinition</a>).
+Note that the lists at even positions must be pairwise different.
+<p>
+<pre>
+gap&gt; StandardGeneratorsFunctions{ [ 1, 2 ] };
+[ function( G, g ) ... end, [ "|C(",, ")|" ] ]
+</pre>
+<p>
+<a name = "SSEC010.4"></a>
+<li><code>IsStandardGeneratorsOfGroup( </code><var>info</var><code>, </code><var>G</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+Let <var>info</var> be a record that is valid as value of <code>StandardGeneratorsInfo</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC010.1">StandardGeneratorsInfo!for groups</a>), <var>G</var> a group, and <var>gens</var> a list
+of generators for <var>G</var>.
+In this case, <code>IsStandardGeneratorsOfGroup</code> returns <code>true</code> if <var>gens</var>
+satisfies the conditions of the <code>script</code> component of <var>info</var>,
+and <code>false</code> otherwise.
+<p>
+Note that the result <code>true</code> means that <var>gens</var> is a list of standard
+generators for <var>G</var> only if <var>G</var> has the isomorphism type for which <var>info</var>
+describes standard generators.
+<p>
+<a name = "SSEC010.5"></a>
+<li><code>StandardGeneratorsOfGroup( </code><var>info</var><code>, </code><var>G</var><code>[, </code><var>randfunc</var><code>] ) F</code>
+<p>
+Let <var>info</var> be a record that is valid as value of <code>StandardGeneratorsInfo</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC010.1">StandardGeneratorsInfo!for groups</a>),
+and <var>G</var> a group of the isomorphism type for which <var>info</var> describes
+standard generators.
+In this case, <code>StandardGeneratorsOfGroup</code> returns a list of standard
+generators (see&nbsp;Section&nbsp;<a href="CHAP068.htm#SECT010">Standard Generators of Groups</a>) of <var>G</var>.
+<p>
+The optional argument <var>randfunc</var> must be a function that returns an
+element of <var>G</var> when called with <var>G</var>; the default is <code>PseudoRandom</code>.
+<p>
+In each call to <code>StandardGeneratorsOfGroup</code>,
+the <code>script</code> component of <var>info</var> is scanned line by line.
+<var>randfunc</var> is used to find an element of the prescribed order
+whenever a definition line is met,
+and for the relation and condition lines in the <code>script</code> list,
+the current generator candidates are checked;
+if a condition is not fulfilled, all candidates are thrown away,
+and the procedure starts again with the first line.
+When the conditions are fulfilled after processing the last line
+of the <code>script</code> list, the standard generators are returned.
+<p>
+Note that if <var>G</var> has the wrong isomorphism type then
+<code>StandardGeneratorsOfGroup</code> returns a list of elements in <var>G</var>
+that satisfy the conditions of the <code>script</code> component of <var>info</var>
+if such elements exist, and does not terminate otherwise.
+In the former case, obviously the returned elements need not be standard
+generators of <var>G</var>.
+<p>
+<pre>
+gap&gt; a5:= AlternatingGroup( 5 );
+Alt( [ 1 .. 5 ] )
+gap&gt; info:= StandardGeneratorsInfo( TableOfMarks( "A5" ) )[1];
+rec( generators := "a, b", description := "|a|=2, |b|=3, |ab|=5", 
+  script := [ [ 1, 2 ], [ 2, 3 ], [ 1, 1, 2, 1, 5 ] ], ATLAS := true )
+gap&gt; IsStandardGeneratorsOfGroup( info, a5, [ (1,3)(2,4), (3,4,5) ] );
+true
+gap&gt; IsStandardGeneratorsOfGroup( info, a5, [ (1,3)(2,4), (1,2,3) ] );
+false
+gap&gt; s5:= SymmetricGroup( 5 );;
+gap&gt; RepresentativeAction( s5, [ (1,3)(2,4), (3,4,5) ], 
+&gt;        StandardGeneratorsOfGroup( info, a5 ), OnPairs ) &lt;&gt; fail;
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT011">68.11 Accessing Subgroups via Tables of Marks</a></h2>
+<p><p>
+Let <var>tom</var> be the table of marks of the group <i>G</i>,
+and assume that <var>tom</var> has access to <i>G</i> via the <code>UnderlyingGroup</code> value
+(see&nbsp;<a href="CHAP068.htm#SSEC007.7">UnderlyingGroup!for tables of marks</a>).
+Then it makes sense to use <var>tom</var> and its ordering of conjugacy classes of
+subgroups of <i>G</i> for storing information for constructing representatives
+of these classes.
+The group <i>G</i> is in general not sufficient for this,
+<var>tom</var> needs more information;
+this is available if and only if the <code>IsTableOfMarksWithGens</code> value of
+<var>tom</var> is <code>true</code> (see&nbsp;<a href="CHAP068.htm#SSEC011.3">IsTableOfMarksWithGens</a>).
+In this case, <code>RepresentativeTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC011.4">RepresentativeTom</a>) can be used
+to get a subgroup of the <i>i</i>-th class, for all <i>i</i>.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> provides two different possibilities to store generators of the
+representatives of classes of subgroups.
+The first is implemented by the attribute <code>GeneratorsSubgroupsTom</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC011.1">GeneratorsSubgroupsTom</a>), which uses explicit generators.
+The second, more general, possibility is implemented by the attributes
+<code>StraightLineProgramsTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC011.2">StraightLineProgramsTom</a>) and
+<code>StandardGeneratorsInfo</code> (see&nbsp;<a href="CHAP068.htm#SSEC011.5">StandardGeneratorsInfo!for tables of marks</a>).
+The <code>StraightLineProgramsTom</code> value encodes the generators as 
+straight line programs (see&nbsp;<a href="CHAP035.htm#SECT008">Straight Line Programs</a>) that evaluate to
+the generators in question when applied to standard generators of <i>G</i>.
+This means that on the one hand, standard generators of <i>G</i> must be known
+in order to use <code>StraightLineProgramsTom</code>.
+On the other hand, the straight line programs allow one to compute easily
+generators not only of a subgroup <i>U</i> of <i>G</i> but also generators of the
+image of <i>U</i> in any representation of <i>G</i>, provided that one knows
+standard generators of the image of <i>G</i> under this representation
+(see&nbsp;<a href="CHAP068.htm#SSEC011.4">RepresentativeTomByGenerators</a> for details and an example).
+<p>
+<a name = "SSEC011.1"></a>
+<li><code>GeneratorsSubgroupsTom( </code><var>tom</var><code> ) A</code>
+<p>
+Let <var>tom</var> be a table of marks with <code>IsTableOfMarksWithGens</code> value <code>true</code>.
+Then <code>GeneratorsSubgroupsTom</code> returns a list of length two,
+the first entry being a list <i>l</i> of elements of the group stored as
+<code>UnderlyingGroup</code> value of <var>tom</var>,
+the second entry being a list that contains at position <i>i</i> a list of
+positions in <i>l</i> of generators of a representative of a subgroup in class
+<i>i</i>.
+<p>
+The <code>GeneratorsSubgroupsTom</code> value is known for all tables of marks that
+have been computed with <code>TableOfMarks</code> (see&nbsp;<a href="CHAP068.htm#SSEC003.1">TableOfMarks</a>) from a group,
+and there is a method to compute the value for a table of marks that
+admits <code>RepresentativeTom</code> (see&nbsp;<a href="CHAP068.htm#SSEC011.4">RepresentativeTom</a>).
+<p>
+<a name = "SSEC011.2"></a>
+<li><code>StraightLineProgramsTom( </code><var>tom</var><code> ) A</code>
+<p>
+For a table of marks <var>tom</var> with <code>IsTableOfMarksWithGens</code> value <code>true</code>,
+<code>StraightLineProgramsTom</code> returns a list that contains at position <i>i</i>
+either a list of straight line programs or a straight line program
+(see&nbsp;<a href="CHAP035.htm#SECT008">Straight Line Programs</a>), encoding the generators of
+a representative of the <i>i</i>-th conjugacy class of subgroups of
+<code>UnderlyingGroup( </code><var>tom</var><code> )</code>;
+in the former case, each straight line program returns a generator,
+in the latter case, the program returns the list of generators.
+<p>
+There is no default method to compute the <code>StraightLineProgramsTom</code> value
+of a table of marks if they are not yet stored.
+The value is known for all tables of marks that belong to the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> library of tables of marks (see&nbsp;<a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a>).
+<p>
+<a name = "SSEC011.3"></a>
+<li><code>IsTableOfMarksWithGens( </code><var>tom</var><code> ) F</code>
+<p>
+This filter shall express the union of the filters
+<code>IsTableOfMarks and HasStraightLineProgramsTom</code> and
+<code>IsTableOfMarks and HasGeneratorsSubgroupsTom</code>.
+If a table of marks <var>tom</var> has this filter set then <var>tom</var> can be asked to
+compute information that is in general not uniquely determined by a table
+of marks,
+for example the positions of derived subgroups or normalizers of
+subgroups (see&nbsp;<a href="CHAP068.htm#SSEC009.2">DerivedSubgroupTom</a>, <a href="CHAP068.htm#SSEC009.4">NormalizerTom</a>).
+<p>
+<pre>
+gap&gt; a5:= TableOfMarks( "A5" );;  IsTableOfMarksWithGens( a5 );
+true
+gap&gt; HasGeneratorsSubgroupsTom( a5 );  HasStraightLineProgramsTom( a5 );
+false
+true
+gap&gt; alt5:= TableOfMarks( AlternatingGroup( 5 ) );;
+gap&gt; IsTableOfMarksWithGens( alt5 );
+true
+gap&gt; HasGeneratorsSubgroupsTom( alt5 );  HasStraightLineProgramsTom( alt5 );
+true
+false
+gap&gt; progs:= StraightLineProgramsTom( a5 );;
+gap&gt; OrdersTom( a5 );
+[ 1, 2, 3, 4, 5, 6, 10, 12, 60 ]
+gap&gt; IsCyclicTom( a5, 4 );
+false
+gap&gt; Length( progs[4] );
+2
+gap&gt; progs[4][1];
+&lt;straight line program&gt;
+gap&gt; Display( progs[4][1] );  # first generator of an el. ab group of order 4
+# input:
+r:= [ g1, g2 ];
+# program:
+r[3]:= r[2]*r[1];
+r[4]:= r[3]*r[2]^-1*r[1]*r[3]*r[2]^-1*r[1]*r[2];
+# return value:
+r[4]
+gap&gt; x:= [ [ Z(2)^0, 0*Z(2) ], [ Z(2^2), Z(2)^0 ] ];;
+gap&gt; y:= [ [ Z(2^2), Z(2)^0 ], [ 0*Z(2), Z(2^2)^2 ] ];;
+gap&gt; res1:= ResultOfStraightLineProgram( progs[4][1], [ x, y ] );
+[ [ Z(2)^0, 0*Z(2) ], [ Z(2^2)^2, Z(2)^0 ] ]
+gap&gt; res2:= ResultOfStraightLineProgram( progs[4][2], [ x, y ] );
+[ [ Z(2)^0, 0*Z(2) ], [ Z(2^2), Z(2)^0 ] ]
+gap&gt; w:= y*x;;
+gap&gt; res1 = w*y^-1*x*w*y^-1*x*y;
+true
+gap&gt; subgrp:= Group( res1, res2 );;  Size( subgrp );  IsCyclic( subgrp );
+4
+false
+</pre>
+<p>
+<a name = "SSEC011.4"></a>
+<li><code>RepresentativeTom( </code><var>tom</var><code>, </code><var>sub</var><code> ) O</code>
+<a name = "SSEC011.4"></a>
+<li><code>RepresentativeTomByGenerators( </code><var>tom</var><code>, </code><var>sub</var><code>, </code><var>gens</var><code> ) O</code>
+<a name = "SSEC011.4"></a>
+<li><code>RepresentativeTomByGeneratorsNC( </code><var>tom</var><code>, </code><var>sub</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+Let <var>tom</var> be a table of marks with <code>IsTableOfMarksWithGens</code> value <code>true</code>
+(see&nbsp;<a href="CHAP068.htm#SSEC011.3">IsTableOfMarksWithGens</a>), and <var>sub</var> a positive integer.
+<code>RepresentativeTom</code> returns a representative of the <var>sub</var>-th conjugacy
+class of subgroups of <var>tom</var>.
+<p>
+<code>RepresentativeTomByGenerators</code> and <code>RepresentativeTomByGeneratorsNC</code>
+return a representative of the <var>sub</var>-th conjugacy class of subgroups of
+<var>tom</var>, as a subgroup of the group generated by <var>gens</var>.
+This means that the standard generators of <var>tom</var> are replaced by <var>gens</var>.
+<p>
+<code>RepresentativeTomByGenerators</code> checks whether mapping the standard
+generators of <var>tom</var> to <var>gens</var> extends to a group isomorphism,
+and returns <code>fail</code> if not.
+<code>RepresentativeTomByGeneratorsNC</code> omits all checks.
+So <code>RepresentativeTomByGenerators</code> is thought mainly for debugging
+purposes;
+note that when several representatives are constructed, it is cheaper to
+construct (and check) the isomorphism once, and to map the groups
+returned by <code>RepresentativeTom</code> under this isomorphism.
+The idea behind <code>RepresentativeTomByGeneratorsNC</code>, however, is to avoid
+the overhead of using isomorphisms when <var>gens</var> are known to be standard
+generators.
+<p>
+<pre>
+gap&gt; RepresentativeTom( a5, 4 );
+Group([ (2,3)(4,5), (2,4)(3,5) ])
+</pre>
+<p>
+<a name = "SSEC011.5"></a>
+<li><code>StandardGeneratorsInfo( </code><var>tom</var><code> ) A</code>
+<p>
+For a table of marks <var>tom</var>, a stored  value  of  <code>StandardGeneratorsInfo</code>
+equals  the  value  of  this   attribute   for   the   underlying   group
+(see&nbsp;<a href="CHAP068.htm#SSEC007.7">UnderlyingGroup!for     tables     of     marks</a>)     of     <var>tom</var>,
+cf.&nbsp;Section&nbsp;<a href="CHAP068.htm#SECT010">Standard Generators of Groups</a>.
+<p>
+In this case, the <code>GeneratorsOfGroup</code> value of the underlying group <i>G</i>
+of <var>tom</var> is assumed to be in fact a list of standard generators for <i>G</i>;
+So one should be careful when setting the <code>StandardGeneratorsInfo</code> value
+by hand.
+<p>
+There is no default method to compute the <code>StandardGeneratorsInfo</code> value
+of a table of marks if it is not yet stored.
+<p>
+<pre>
+gap&gt; std:= StandardGeneratorsInfo( a5 );
+[ rec( generators := "a, b", description := "|a|=2, |b|=3, |ab|=5", 
+      script := [ [ 1, 2 ], [ 2, 3 ], [ 1, 1, 2, 1, 5 ] ], ATLAS := true ) ]
+gap&gt; # Now find standard generators of an isomorphic group.
+gap&gt; g:= SL(2,4);;
+gap&gt; repeat
+&gt;   x:= PseudoRandom( g );
+&gt; until Order( x ) = 2;
+gap&gt; repeat
+&gt;   y:= PseudoRandom( g );
+&gt; until Order( y ) = 3 and Order( x*y ) = 5;
+gap&gt; # Compute a representative w.r.t. these generators.
+gap&gt; RepresentativeTomByGenerators( a5, 4, [ x, y ] );
+Group([ [ [ Z(2)^0, Z(2^2)^2 ], [ 0*Z(2), Z(2)^0 ] ], 
+  [ [ Z(2)^0, Z(2^2) ], [ 0*Z(2), Z(2)^0 ] ] ])
+gap&gt; # Show that the new generators are really good.
+gap&gt; grp:= UnderlyingGroup( a5 );;
+gap&gt; iso:= GroupGeneralMappingByImages( grp, g,
+&gt;              GeneratorsOfGroup( grp ), [ x, y ] );;
+gap&gt; IsGroupHomomorphism( iso );
+true
+gap&gt; IsBijective( iso );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT012">68.12 The Interface between Tables of Marks and Character Tables</a></h2>
+<p><p>
+The following examples require the <font face="Gill Sans,Helvetica,Arial">GAP</font> Character Table Library
+to be available.
+If it is not yet loaded then we load it now.
+<p>
+<pre>
+gap&gt; LoadPackage( "ctbllib" );
+true
+</pre>
+<p>
+<a name = "SSEC012.1"></a>
+<li><code>FusionCharTableTom( </code><var>tbl</var><code>, </code><var>tom</var><code> ) O</code>
+<a name = "SSEC012.1"></a>
+<li><code>PossibleFusionsCharTableTom( </code><var>tbl</var><code>, </code><var>tom</var><code>[, </code><var>options</var><code>] ) O</code>
+<p>
+Let <var>tbl</var> be the ordinary character table of the group <i>G</i>, say,
+and <var>tom</var> the table of marks of <i>G</i>.
+<code>FusionCharTableTom</code> determines the fusion of the classes of elements
+from <var>tbl</var> to the classes of cyclic subgroups on <var>tom</var>, that is,
+a list that contains at position <i>i</i> the position of the class of cyclic
+subgroups in <var>tom</var> that are generated by elements in the <i>i</i>-th conjugacy
+class of elements in <var>tbl</var>.
+<p>
+Three cases are handled differently.
+<ol>
+<li>
+     The fusion is explicitly stored on <var>tbl</var>.
+     Then nothing has to be done.
+     This happens only if both <var>tbl</var> and <var>tom</var> are tables from the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+     library (see&nbsp;<a href="CHAP068.htm#SECT014">The Library of Tables of Marks</a> and the manual of
+     the <font face="Gill Sans,Helvetica,Arial">GAP</font> Character Table Library).
+<li>
+     The <code>UnderlyingGroup</code> values of <var>tbl</var> and <var>tom</var> are known and
+     equal.
+     Then the group is used to compute the fusion.
+<li>
+     There is neither fusion nor group information available.
+     In this case only necessary conditions can be checked,
+     and if they are not sufficient to detemine the fusion uniquely then
+     <code>fail</code> is returned by <code>FusionCharTableTom</code>.
+</ol>
+<p>
+<code>PossibleFusionsCharTableTom</code> computes the list of possible fusions from
+<var>tbl</var> to <var>tom</var>, according to the criteria that have been checked.
+So if <code>FusionCharTableTom</code> returns a unique fusion then the list returned
+by <code>PossibleFusionsCharTableTom</code> for the same arguments contains exactly
+this fusion,
+and if <code>FusionCharTableTom</code> returns <code>fail</code> then the length of this list
+is different from 1.
+<p>
+The optional argument <var>options</var> must be a record that may have the
+following components.
+<p>
+<dl compact>
+<dt><code>fusionmap</code> <dd>
+     a parametrized map which is an approximation of the desired map,
+<p>
+<dt><code>quick</code> <dd>
+     a Boolean;
+     if <code>true</code> then as soon as only one possibility remains
+     this possibility is returned immediately;
+     the default value is <code>false</code>.
+</dl>
+<p>
+<pre>
+gap&gt; a5c:= CharacterTable( "A5" );;
+gap&gt; fus:= FusionCharTableTom( a5c, a5 );
+[ 1, 2, 3, 5, 5 ]
+</pre>
+<p>
+<a name = "SSEC012.2"></a>
+<li><code>PermCharsTom( </code><var>fus</var><code>, </code><var>tom</var><code> ) O</code>
+<li><code>PermCharsTom( </code><var>tbl</var><code>, </code><var>tom</var><code> ) O</code>
+<p>
+<code>PermCharsTom</code> returns the list of transitive permutation characters
+from the table of marks <var>tom</var>.
+In the first form, <var>fus</var> must be the fusion map from the ordinary
+character table of the group of <var>tom</var> to <var>tom</var>
+(see&nbsp;<a href="CHAP068.htm#SSEC012.1">FusionCharTableTom</a>).
+In the second form, <var>tbl</var> must be the character table of the group of
+which <var>tom</var> is the table of marks.
+If the fusion map is not uniquely determined (see&nbsp;<a href="CHAP068.htm#SSEC012.1">FusionCharTableTom</a>)
+then <code>fail</code> is returned.
+<p>
+If the fusion map <var>fus</var> is given as first argument then each transitive
+permutation character is represented by its values list.
+If the character table <var>tbl</var> is given then the permutation characters are
+class function objects (see Chapter&nbsp;<a href="CHAP070.htm">Class Functions</a>).
+<p>
+<pre>
+gap&gt; PermCharsTom( a5c, a5 );
+[ Character( CharacterTable( "A5" ), [ 60, 0, 0, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 30, 2, 0, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 20, 0, 2, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 15, 3, 0, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 12, 0, 0, 2, 2 ] ), 
+  Character( CharacterTable( "A5" ), [ 10, 2, 1, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 6, 2, 0, 1, 1 ] ), 
+  Character( CharacterTable( "A5" ), [ 5, 1, 2, 0, 0 ] ), 
+  Character( CharacterTable( "A5" ), [ 1, 1, 1, 1, 1 ] ) ]
+gap&gt; PermCharsTom( fus, a5 )[1];
+[ 60, 0, 0, 0, 0 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT013">68.13 Generic Construction of Tables of Marks</a></h2>
+<p><p>
+The following three operations construct a table of marks only from the
+data given, i.e., without underlying group.
+<p>
+<a name = "SSEC013.1"></a>
+<li><code>TableOfMarksCyclic( </code><var>n</var><code> ) O</code>
+<p>
+<code>TableOfMarksCyclic</code> returns the table of marks of the cyclic group
+of order <var>n</var>.
+<p>
+A cyclic group of order <var>n</var> has as its subgroups for each divisor <i>d</i>
+of <var>n</var> a cyclic subgroup of order <i>d</i>.
+<p>
+<a name = "SSEC013.2"></a>
+<li><code>TableOfMarksDihedral( </code><var>n</var><code> ) O</code>
+<p>
+<code>TableOfMarksDihedral</code> returns the table of marks of the dihedral group
+of order <var>m</var>.
+<p>
+For each divisor <i>d</i> of <var>m</var>, a dihedral group of order <i>m</i> = 2<i>n</i> contains
+subgroups of order <i>d</i> according to the following rule.
+If <i>d</i> is odd and divides <i>n</i> then there is only one cyclic subgroup of
+order <i>d</i>.
+If <i>d</i> is even and divides <i>n</i> then there are a cyclic subgroup of order
+<i>d</i> and two classes of dihedral subgroups of order <i>d</i>
+(which are cyclic, too, in the case <i>d</i> = 2, see the example below).
+Otherwise (i.e., if <i>d</i> does not divide <i>n</i>) there is just one class of
+dihedral subgroups of order <i>d</i>.
+<p>
+<a name = "SSEC013.3"></a>
+<li><code>TableOfMarksFrobenius( </code><var>p</var><code>, </code><var>q</var><code> ) O</code>
+<p>
+<code>TableOfMarksFrobenius</code> computes the table of marks of a Frobenius group
+of order <i>p</i> <i>q</i>, where <i>p</i> is a prime and <i>q</i> divides <i>p</i><font face="symbol">&#8722;</font>1.
+<p>
+<pre>
+gap&gt; Display( TableOfMarksCyclic( 6 ) );
+1:  6
+2:  3 3
+3:  2 . 2
+4:  1 1 1 1
+
+gap&gt; Display( TableOfMarksDihedral( 12 ) );
+ 1:  12
+ 2:   6 6
+ 3:   6 . 2
+ 4:   6 . . 2
+ 5:   4 . . . 4
+ 6:   3 3 1 1 . 1
+ 7:   2 2 . . 2 . 2
+ 8:   2 . 2 . 2 . . 2
+ 9:   2 . . 2 2 . . . 2
+10:   1 1 1 1 1 1 1 1 1 1
+
+gap&gt; Display( TableOfMarksFrobenius( 5, 4 ) );
+1:  20
+2:  10 2
+3:   5 1 1
+4:   4 . . 4
+5:   2 2 . 2 2
+6:   1 1 1 1 1 1
+
+</pre>
+<p>
+<p>
+<h2><a name="SECT014">68.14 The Library of Tables of Marks</a></h2>
+<p><p>
+The <font face="Gill Sans,Helvetica,Arial">GAP</font> package <code>TomLib</code> provides access to several hundred tables of
+marks of almost simple groups and their maximal subgroups.
+If this package is installed then the tables from this database can be
+accessed via <code>TableOfMarks</code> with argument a string (see&nbsp;<a href="CHAP068.htm#SSEC003.1">TableOfMarks</a>).
+If also the <font face="Gill Sans,Helvetica,Arial">GAP</font> Character Table Library is installed and contains the
+ordinary character table of the group for which one wants to fetch the table
+of marks then one can also call <code>TableOfMarks</code> with argument the character
+table.
+<p>
+A list of all names of tables of marks in the database can be obtained via
+<code>AllLibTomNames</code>.
+<p>
+<pre>
+gap&gt; names:= AllLibTomNames();;
+gap&gt; "A5" in names;
+true
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP067.htm">Previous</a>] [<a href ="CHAP069.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

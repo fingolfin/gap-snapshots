@@ -1,0 +1,221 @@
+dnl #########################################################################
+dnl ##
+dnl ## check for a unique program in the source directory
+dnl ##
+
+AC_INIT(gap.c)
+AC_CONFIG_AUX_DIR(../cnf)
+
+if test "x$CFLAGS" = "x" ;  then
+  CFLAGS=${COPTS}
+fi
+
+dnl #########################################################################
+dnl ##
+dnl ## create a config file from "config.hin"
+dnl ##
+
+AC_CONFIG_HEADER(config.h:../cnf/config.hin)
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for compiler features
+dnl ##
+
+AC_PROG_CC
+AC_C_CONST
+AC_C_INLINE
+AC_C_BIGENDIAN
+#
+# Assume that cross-compiling is for 32 bit systems 
+# (alpha/NT will have to wait)
+#
+AC_CHECK_SIZEOF(void *, 4) # no space between 'void *' and ','
+GP_C_UNDERSCORE_SYMBOLS
+
+
+dnl #########################################################################
+dnl ##
+dnl ## find a canonical name for the system
+dnl ##
+
+AC_CANONICAL_SYSTEM
+AC_DEFINE_UNQUOTED( SYS_ARCH, "$target-$CC" )
+
+dnl This has to be left until after we know the system type
+GP_C_LONG_ALIGN
+GP_CFLAGS
+GP_LDFLAGS
+GP_PROG_CC_DYNFLAGS
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for the existence of various header files
+dnl ##
+
+AC_HEADER_STDC
+AC_CHECK_HEADERS( termios.h termio.h sgtty.h signal.h stdio.h unistd.h libc.h sys/stat.h )
+AC_CHECK_HEADERS( errno.h fcntl.h sys/types.h assert.h sys/sysmacros.h stdlib.h string.h math.h)
+
+dnl #########################################################################
+dnl ##
+dnl ## check how to get a pseudo-tty pair
+dnl ##
+
+AC_CHECK_FUNCS( getpseudotty _getpty getpt ptsname_r )
+
+dnl #########################################################################
+dnl ##
+dnl ## check whether we have setpgid to protect a background child from SIGINT
+dnl ##
+
+AC_CHECK_FUNCS( setpgid )
+
+dnl #########################################################################
+dnl ##
+dnl ## check for dynamic loading of modules
+dnl ##
+
+AC_CHECK_FUNCS( rld_load )
+
+AC_SEARCH_LIBS(dlopen, dl, AC_DEFINE(HAVE_DLOPEN,1))
+
+if test "$ac_cv_search_dlopen" != "no";  then
+  GP_PROG_CC_EXPORT_DYNAMIC
+  if test "$gp_cv_prog_cc_export_dynamic" = yes;  then
+    LDFLAGS="$LDFLAGS -export-dynamic"
+  fi
+fi
+
+case "$LIBS" in 
+
+	*-ldl* ) C_DYNLIBS="-ldl";;
+                *)  C_DYNLIBS="";;
+esac;
+
+AC_SUBST(LDFLAGS)
+AC_SUBST(C_DYNLIBS)
+
+dnl #########################################################################
+dnl ##
+dnl ## check for timing functions
+dnl ##
+
+AC_CHECK_HEADERS( sys/times.h sys/param.h )
+AC_CHECK_FUNCS( times getrusage )
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for functions dealing with virtual memory
+dnl ##
+
+AC_CHECK_FUNCS( vm_allocate sbrk )
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for fork, wait, execute functions
+dnl ##
+
+AC_HEADER_SYS_WAIT
+AC_TYPE_PID_T
+AC_FUNC_VFORK
+AC_CHECK_FUNCS( fork popen waitpid wait4 )
+
+AC_MSG_CHECKING([for old non-posix union wait])
+
+dnl AC_EGREP_HEADER( union wait, sys/wait.h,
+dnl   [AC_DEFINE( HAVE_UNION_WAIT )
+dnl   AC_MSG_RESULT(yes)],
+dnl  [AC_MSG_RESULT(no)] )
+
+GP_C_UNION_WAIT
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for signal handling
+dnl ##
+
+AC_CHECK_FUNCS( signal )
+AC_TYPE_SIGNAL
+if test "$ac_cv_type_signal" = "void"; then
+  AC_DEFINE( HAVE_SIGNAL_VOID )
+fi
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for input/output functions
+dnl ##
+
+AC_CHECK_FUNCS( ttyname strerror select )
+
+
+dnl #########################################################################
+dnl ##
+dnl ## check for file access functions
+dnl ##
+
+AC_CHECK_FUNCS( access stat unlink mkdir  mkdtemp mkstemp)
+AC_HEADER_STAT
+
+
+dnl #########################################################################
+dnl ##
+dnl ## set features on systems we know for better performance
+dnl ##
+
+case "$host" in
+
+  i386-*-* | i486-*-* | i586-*-* | i686-*-*)
+    AC_DEFINE( C_STACK_ALIGN, 2 )
+    ;;
+
+
+  *)
+    AC_DEFINE_UNQUOTED( C_STACK_ALIGN, $gp_cv_c_long_align )
+    ;;
+
+esac
+
+case "$host" in 
+
+   sparc-* )
+    AC_DEFINE( SPARC, 1)
+   ;;
+esac
+
+
+AC_CYGWIN
+if test "$CYGWIN" = "yes"; then
+  AC_DEFINE(SYS_IS_CYGWIN32, 1)
+else
+  AC_DEFINE(SYS_IS_CYGWIN32, 0)
+fi
+
+
+case "$host" in 
+	*-darwin* )
+	AC_DEFINE(SYS_IS_DARWIN, 1)
+        ;;
+	* )
+	AC_DEFINE(SYS_IS_DARWIN, 0)
+	;;
+esac
+
+
+
+
+
+dnl #########################################################################
+dnl ##
+dnl ## generate a makefile
+dnl ##
+
+AC_OUTPUT(gac:../cnf/gac.in Makefile:../cnf/Makegap.in)
+chmod a+x gac
+

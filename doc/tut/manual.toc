@@ -1,0 +1,82 @@
+\chapcontents {\tocstrut }{Copyright Notice}{9}
+\chapcontents {1}{Preface}{10}
+\seccontents {1.1}{The GAP System} {10}
+\seccontents {1.2}{Authorship and Maintenance} {12}
+\seccontents {1.3}{Acknowledgements} {12}
+\seccontents {1.4}{Changes from Earlier Versions} {13}
+\seccontents {1.5}{Further Information about GAP} {16}
+\chapcontents {2}{A First Session with GAP}{18}
+\seccontents {2.1}{Starting and Leaving GAP} {18}
+\seccontents {2.2}{Loading Source Code from a File} {19}
+\seccontents {2.3}{The Read Evaluate Print Loop} {19}
+\seccontents {2.4}{Constants and Operators} {21}
+\seccontents {2.5}{Variables versus Objects} {22}
+\seccontents {2.6}{Objects vs.\ Elements} {24}
+\seccontents {2.7}{About Functions} {25}
+\seccontents {2.8}{Help} {25}
+\seccontents {2.9}{Further Information introducing the System} {26}
+\chapcontents {3}{Lists and Records}{27}
+\seccontents {3.1}{Plain Lists} {27}
+\seccontents {3.2}{Identical Lists} {29}
+\seccontents {3.3}{Immutability} {30}
+\seccontents {3.4}{Sets} {31}
+\seccontents {3.5}{Ranges} {32}
+\seccontents {3.6}{For and While Loops} {33}
+\seccontents {3.7}{List Operations} {35}
+\seccontents {3.8}{Vectors and Matrices} {36}
+\seccontents {3.9}{Plain Records} {38}
+\seccontents {3.10}{Further Information about Lists} {39}
+\chapcontents {4}{Functions}{40}
+\seccontents {4.1}{Writing Functions} {40}
+\seccontents {4.2}{If Statements} {41}
+\seccontents {4.3}{Local Variables} {41}
+\seccontents {4.4}{Recursion} {42}
+\seccontents {4.5}{Further Information about Functions} {43}
+\chapcontents {5}{Groups and Homomorphisms}{44}
+\seccontents {5.1}{Permutation groups} {44}
+\seccontents {5.2}{Actions of Groups} {47}
+\seccontents {5.3}{Subgroups!as Stabilizers} {50}
+\seccontents {5.4}{Group Homomorphisms!by Images} {54}
+\seccontents {5.5}{Nice Monomorphisms} {56}
+\seccontents {5.6}{Further Information about Groups and Homomorphisms} {58}
+\chapcontents {6}{Vector Spaces and Algebras}{59}
+\seccontents {6.1}{Vector Spaces} {59}
+\seccontents {6.2}{Algebras} {61}
+\seccontents {6.3}{Further Information about Vector Spaces and Algebras} {67}
+\chapcontents {7}{Domains}{68}
+\seccontents {7.1}{Domains as Sets} {68}
+\seccontents {7.2}{Algebraic Structure} {69}
+\seccontents {7.3}{Notions of Generation} {69}
+\seccontents {7.4}{Domain Constructors} {70}
+\seccontents {7.5}{Forming Closures of Domains} {70}
+\seccontents {7.6}{Changing the Structure} {70}
+\seccontents {7.7}{Subdomains} {71}
+\seccontents {7.8}{Further Information about Domains} {71}
+\chapcontents {8}{Operations and Methods}{72}
+\seccontents {8.1}{Attributes} {72}
+\seccontents {8.2}{Properties and Filters} {73}
+\seccontents {8.3}{Immediate and True Methods} {74}
+\seccontents {8.4}{Operations and Method Selection} {75}
+\chapcontents {9}{Migrating to GAP 4}{77}
+\seccontents {9.1}{Changed Command Line Options} {77}
+\seccontents {9.2}{Fail} {77}
+\seccontents {9.3}{Changed Functionality} {78}
+\seccontents {9.4}{Changed Variable Names} {79}
+\seccontents {9.5}{Naming Conventions} {79}
+\seccontents {9.6}{Immutable Objects} {80}
+\seccontents {9.7}{Copy} {80}
+\seccontents {9.8}{Attributes vs. Record Components} {81}
+\seccontents {9.9}{Different Notions of Generation} {81}
+\seccontents {9.10}{Operations Records} {82}
+\seccontents {9.11}{Operations vs. Dispatcher Functions} {82}
+\seccontents {9.12}{Parents and Subgroups} {83}
+\seccontents {9.13}{Homomorphisms vs. General Mappings} {83}
+\seccontents {9.14}{Homomorphisms vs. Factor Structures} {83}
+\seccontents {9.15}{Isomorphisms vs. Isomorphic Structures} {84}
+\seccontents {9.16}{Elements of Finitely Presented Groups} {84}
+\seccontents {9.17}{Polynomials} {85}
+\seccontents {9.18}{The Info Mechanism} {85}
+\seccontents {9.19}{Debugging} {86}
+\seccontents {9.20}{Compatibility Mode} {87}
+\chapcontents {}{Bibliography}{91}
+\chapcontents {}{Index}{92}

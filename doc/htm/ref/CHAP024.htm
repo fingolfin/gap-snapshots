@@ -1,0 +1,1413 @@
+<html><head><title>[ref] 24 Matrices</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP023.htm">Previous</a>] [<a href ="CHAP025.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>24 Matrices</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP024.htm#SECT001">Categories of Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT002">Operators for Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT003">Properties and Attributes of Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT004">Matrix Constructions</a>
+<li> <A HREF="CHAP024.htm#SECT005">Random Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT006">Matrices Representing Linear Equations and the Gaussian Algorithm</a>
+<li> <A HREF="CHAP024.htm#SECT007">Eigenvectors and eigenvalues</a>
+<li> <A HREF="CHAP024.htm#SECT008">Elementary Divisors</a>
+<li> <A HREF="CHAP024.htm#SECT009">Echelonized Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT010">Matrices as Basis of a Row Space</a>
+<li> <A HREF="CHAP024.htm#SECT011">Triangular Matrices</a>
+<li> <A HREF="CHAP024.htm#SECT012">Matrices as Linear Mappings</a>
+<li> <A HREF="CHAP024.htm#SECT013">Matrices over Finite Fields</a>
+<li> <A HREF="CHAP024.htm#SECT014">Special Multiplication Algorithms for Matrices over GF(2)</a>
+<li> <A HREF="CHAP024.htm#SECT015">Block Matrices</a>
+</ol><p>
+<p>
+Matrices are represented in <font face="Gill Sans,Helvetica,Arial">GAP</font> by lists of row vectors (see <a href="CHAP023.htm">Row Vectors</a>).
+The vectors must all have the same length, and their elements must lie in
+a common ring. However, since checking rectangularness can be expensive
+functions and methods of operations for matrices often will not give an error
+message for non-rectangular lists of lists -- in such cases the result is
+undefined.
+<p>
+Because matrices are just a special case of lists, all operations and
+functions for lists are applicable to matrices also (see chapter
+<a href="CHAP021.htm">Lists</a>). This especially includes accessing elements of a matrix (see
+<a href="CHAP021.htm#SECT003">List Elements</a>), changing elements of a matrix (see <a href="CHAP021.htm#SECT004">List Assignment</a>),
+and comparing matrices (see <a href="CHAP021.htm#SECT010">Comparisons of Lists</a>).
+<p>
+Note that, since a matrix is a list of lists, the behaviour of <code>ShallowCopy</code>
+for matrices is just a special case of <code>ShallowCopy</code> for lists
+(see&nbsp;<a href="CHAP021.htm#SECT007">Duplication of Lists</a>);
+called with an immutable matrix <var>mat</var>, <code>ShallowCopy</code> returns a mutable matrix
+whose rows are identical to the rows of <var>mat</var>.
+In particular the rows are still immutable.
+To get a matrix whose rows are mutable,
+one can use <code>List( </code><var>mat</var><code>, ShallowCopy )</code>.
+<p>
+<a name = ""></a>
+<li><code>InfoMatrix V</code>
+<p>
+The info class for matrix operations is <code>InfoMatrix</code>.
+<p>
+<p>
+<h2><a name="SECT001">24.1 Categories of Matrices</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsMatrix( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>matrix</strong> is a list of lists of equal length whose entries lie in a
+common ring.
+<p>
+Note that matrices may have different multiplications,
+besides the usual matrix product there is for example the Lie product.
+So there are categories such as <code>IsOrdinaryMatrix</code> and <code>IsLieMatrix</code>
+(see&nbsp;<a href="CHAP024.htm#SSEC001.2">IsOrdinaryMatrix</a>, <a href="CHAP024.htm#SSEC001.3">IsLieMatrix</a>)
+that describe the matrix multiplication.
+One can form the product of two matrices only if they support the same
+multiplication.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];
+[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+gap&gt; IsMatrix(mat);
+true
+</pre>
+<p>
+Note also the filter <code>IsTable</code> (see section <a href="CHAP021.htm#SSEC001.4">IsTable</a>)
+which  may be more appropriate than <code>IsMatrix</code> for some purposes.
+<p>
+Note that the empty list '[ ]' and more complex ``empty'' structures
+such as <code>[[ ]]</code> are <strong>not</strong> matrices, although special
+methods allow them be used in place of matrices in some
+situations. See <a href="CHAP024.htm#SSEC004.3">EmptyMatrix</a> below.
+<p>
+<pre>
+gap&gt; [[0]]*[[]];
+[ [  ] ]
+gap&gt; IsMatrix([[]]);
+false
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsOrdinaryMatrix( </code><var>obj</var><code> ) C</code>
+<p>
+An <strong>ordinary matrix</strong> is a matrix whose multiplication is the ordinary
+matrix multiplication.
+<p>
+Each matrix in internal representation is in the category
+<code>IsOrdinaryMatrix</code>,
+and arithmetic operations with objects in <code>IsOrdinaryMatrix</code> produce
+again matrices in <code>IsOrdinaryMatrix</code>.
+<p>
+Note that we want that Lie matrices shall be matrices that behave in the
+same way as ordinary matrices, except that they have a different
+multiplication.
+So we must distinguish the different matrix multiplications,
+in order to be able to describe the applicability of multiplication,
+and also in order to form a matrix of the appropriate type as the
+sum, difference etc.&nbsp;of two matrices which have the same multiplication.
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>IsLieMatrix( </code><var>mat</var><code> ) C</code>
+<p>
+A <strong>Lie matrix</strong> is a matrix whose multiplication is given by the
+Lie bracket.
+(Note that a matrix with ordinary matrix multiplication is in the
+category <code>IsOrdinaryMatrix</code>, see&nbsp;<a href="CHAP024.htm#SSEC001.2">IsOrdinaryMatrix</a>.)
+<p>
+Each matrix created by <code>LieObject</code> is in the category <code>IsLieMatrix</code>,
+and arithmetic operations with objects in <code>IsLieMatrix</code> produce
+again matrices in <code>IsLieMatrix</code>.
+<p>
+<p>
+<h2><a name="SECT002">24.2 Operators for Matrices</a></h2>
+<p><p>
+The rules for arithmetic operations involving matrices are in fact
+special cases of those for the arithmetic of lists,
+given in Section&nbsp;<a href="CHAP021.htm#SECT011">Arithmetic for Lists</a> and the following sections,
+here we reiterate that definition, in the language of vectors and matrices.
+<p>
+Note that the additive behaviour sketched below is defined only for lists in
+the category <code>IsGeneralizedRowVector</code>,
+and the multiplicative behaviour is defined only for lists in the category
+<code>IsMultiplicativeGeneralizedRowVector</code>
+(see&nbsp;<a href="CHAP021.htm#SECT012">Filters Controlling the Arithmetic Behaviour of Lists</a>).
+<p>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>mat1</var><code> + </code><var>mat2</var><code> O</code>
+<p>
+returns the sum of the two matrices <var>mat1</var> and <var>mat2</var>,
+Probably the most usual situation is that <var>mat1</var> and <var>mat2</var> have the same
+dimensions and are defined over a common field;
+in this case the sum is a new matrix over the same field where each entry
+is the sum of the corresponding entries of the matrices.
+<p>
+In more general situations, the sum of two matrices need not be a matrix,
+for example adding an integer matrix <var>mat1</var> and a matrix <var>mat2</var> over
+a finite field yields the table of pointwise sums,
+which will be a mixture of finite field elements and integers if <var>mat1</var> has
+bigger dimensions than <var>mat2</var>.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code></code><var>scalar</var><code> + </code><var>mat</var><code> O</code>
+<a name = "SSEC002.2"></a>
+<li><code></code><var>mat</var><code> + </code><var>scalar</var><code> O</code>
+<p>
+returns the sum of the scalar <var>scalar</var> and the matrix <var>mat</var>.
+Probably the most usual situation is that the entries of <var>mat</var> lie in a
+common field with <var>scalar</var>;
+in this case the sum is a new matrix over the same field where each entry
+is the sum of the scalar and the corresponding entry of the matrix.
+<p>
+More general situations are for example the sum of an integer scalar and a
+matrix over a finite field, or the sum of a finite field element and an
+integer matrix.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code></code><var>mat1</var><code> - </code><var>mat2</var><code></code>
+<a name = "SSEC002.3"></a>
+<li><code></code><var>scalar</var><code> - </code><var>mat</var><code> O</code>
+<a name = "SSEC002.3"></a>
+<li><code></code><var>mat</var><code> - </code><var>scalar</var><code> O</code>
+<p>
+Subtracting a matrix or scalar is defined as adding its additive inverse,
+so the statements for the addition hold likewise.
+<p>
+<a name = "SSEC002.4"></a>
+<li><code></code><var>scalar</var><code> * </code><var>mat</var><code> O</code>
+<a name = "SSEC002.4"></a>
+<li><code></code><var>mat</var><code> * </code><var>scalar</var><code> O</code>
+<p>
+returns the product of the scalar <var>scalar</var> and the matrix <var>mat</var>.
+Probably the most usual situation is that the elements of <var>mat</var> lie in a
+common field with <var>scalar</var>;
+in this case the product is a new matrix over the same field where each
+entry is the product of the scalar and the corresponding entry of the matrix.
+<p>
+More general situations are for example the product of an integer scalar and
+a matrix over a finite field,
+or the product of a finite field element and an integer matrix.
+<p>
+<a name = "SSEC002.5"></a>
+<li><code></code><var>vec</var><code> * </code><var>mat</var><code> O</code>
+<p>
+returns the product of the row vector <var>vec</var> and the matrix <var>mat</var>.
+Probably the most usual situation is that <var>vec</var> and <var>mat</var> have the same
+lengths and are defined over a common field,
+and that all rows of <var>mat</var> have the same length <i>m</i>, say;
+in this case the product is a new row vector of length <i>m</i> over the same
+field which is the sum of the scalar multiples of the rows of <var>mat</var> with the
+corresponding entries of <var>vec</var>.
+<p>
+More general situations are for example the product of an integer vector and
+a matrix over a finite field,
+or the product of a vector over a finite field and an integer matrix.
+<p>
+<a name = "SSEC002.6"></a>
+<li><code></code><var>mat</var><code> * </code><var>vec</var><code> O</code>
+<p>
+returns the product of the matrix <var>mat</var> and the row vector <var>vec</var>.
+(This is the standard product of a matrix with a <strong>column</strong> vector.)
+Probably the most usual situation is that the length of <var>vec</var> and of all rows
+of <var>mat</var> are equal, and that the elements of <var>mat</var> and <var>vec</var> lie in a common
+field;
+in this case the product is a new row vector of the same length as <var>mat</var> and
+over the same field which is the sum of the scalar multiples of the columns
+of <var>mat</var> with the corresponding entries of <var>vec</var>.
+<p>
+More general situations are for example the product of an integer matrix and
+a vector over a finite field,
+or the product of a matrix over a finite field and an integer vector.
+<p>
+<a name = "SSEC002.7"></a>
+<li><code></code><var>mat1</var><code> * </code><var>mat2</var><code> O</code>
+<p>
+This form evaluates to the (Cauchy) product of the two matrices <var>mat1</var> and
+<var>mat2</var>.
+Probably the most usual situation is that the number of columns of <var>mat1</var>
+equals the number of rows of <var>mat2</var>,
+and that the elements of <var>mat</var> and <var>vec</var> lie in a common field;
+if <var>mat1</var> is a matrix with <i>m</i> rows and <i>n</i> columns, say, and <var>mat2</var> is a
+matrix with <i>n</i> rows and <i>o</i> columns, the result is a new matrix with <i>m</i>
+rows and <i>o</i> columns.
+The element in row <i>i</i> at position <i>j</i> of the product is the sum of
+<i>mat</i>1 [<i>i</i>][<i>l</i>] * <i>mat</i>2 [<i>l</i>][<i>j</i>], with <i>l</i> running from 1 to <i>n</i>.
+<p>
+<a name = "SSEC002.8"></a>
+<li><code>Inverse( </code><var>mat</var><code> ) O</code>
+<p>
+returns the inverse of the matrix <var>mat</var>,
+which must be an invertible square matrix.
+If <var>mat</var> is not invertible then <code>fail</code> is returned.
+<p>
+<a name = "SSEC002.9"></a>
+<li><code></code><var>mat1</var><code> / </code><var>mat2</var><code> O</code>
+<a name = "SSEC002.9"></a>
+<li><code></code><var>scalar</var><code> / </code><var>mat</var><code> O</code>
+<a name = "SSEC002.9"></a>
+<li><code></code><var>mat</var><code> / </code><var>scalar</var><code> O</code>
+<a name = "SSEC002.9"></a>
+<li><code></code><var>vec</var><code> / </code><var>mat</var><code> O</code>
+<p>
+In general, <code></code><var>left</var><code> / </code><var>right</var><code></code> is defined as <code></code><var>left</var><code> * </code><var>right</var><code>^-1</code>.
+Thus in the above forms the right operand must always be invertible.
+<p>
+<a name = "SSEC002.10"></a>
+<li><code></code><var>mat</var><code> ^ </code><var>int</var><code> O</code>
+<a name = "SSEC002.10"></a>
+<li><code></code><var>mat1</var><code> ^ </code><var>mat2</var><code> O</code>
+<a name = "SSEC002.10"></a>
+<li><code></code><var>vec</var><code> ^ </code><var>mat</var><code> O</code>
+<p>
+Powering a square matrix <var>mat</var> by an integer <var>int</var> yields the <var>int</var>-th power
+of <var>mat</var>; if <var>int</var> is negative then <var>mat</var> must be invertible,
+if <var>int</var> is <code>0</code> then the result is the identity matrix <code>One( </code><var>mat</var><code> )</code>,
+even if <var>mat</var> is not invertible.
+<p>
+Powering a square matrix <var>mat1</var> by an invertible square matrix <var>mat2</var> of the
+same dimensions yields the conjugate of <var>mat1</var> by <var>mat2</var>, i.e.,
+the matrix <code></code><var>mat2</var><code>^-1 * </code><var>mat1</var><code> * </code><var>mat2</var><code></code>.
+<p>
+Powering a row vector <var>vec</var> by a matrix <var>mat</var> is in every respect equivalent
+to <code></code><var>vec</var><code> * </code><var>mat</var><code></code>.
+This operations reflects the fact that matrices act naturally on row vectors
+by multiplication from the right, and that the powering operator is <font face="Gill Sans,Helvetica,Arial">GAP</font>'s
+standard for group actions.
+<p>
+<a name = "SSEC002.11"></a>
+<li><code>Comm( </code><var>mat1</var><code>, </code><var>mat2</var><code> ) O</code>
+<p>
+returns the commutator of the square invertible matrices <var>mat1</var> and <var>mat2</var>
+of the same dimensions and over a common field,
+which is the matrix <code></code><var>mat1</var><code>^-1 * </code><var>mat2</var><code>^-1 * </code><var>mat1</var><code> * </code><var>mat2</var><code></code>.
+<p>
+The following cases are still special cases of the general list arithmetic
+defined in&nbsp;<a href="CHAP021.htm#SECT011">Arithmetic for Lists</a>.
+<p>
+<a name = "SSEC002.12"></a>
+<li><code></code><var>scalar</var><code> + </code><var>matlist</var><code> O</code>
+<li><code></code><var>matlist</var><code> + </code><var>scalar</var><code> O</code>
+<a name = "SSEC002.12"></a>
+<li><code></code><var>scalar</var><code> - </code><var>matlist</var><code> O</code>
+<li><code></code><var>matlist</var><code> - </code><var>scalar</var><code> O</code>
+<a name = "SSEC002.12"></a>
+<li><code></code><var>scalar</var><code> * </code><var>matlist</var><code> O</code>
+<li><code></code><var>matlist</var><code> * </code><var>scalar</var><code> O</code>
+<a name = "SSEC002.12"></a>
+<li><code></code><var>matlist</var><code> / </code><var>scalar</var><code> O</code>
+<p>
+A scalar <var>scalar</var> may also be added, subtracted, multiplied with, or
+divided into a list <var>matlist</var> of matrices. The result is a new list
+of matrices where each matrix is the result of performing the operation
+with the corresponding matrix in <var>matlist</var>.
+<p>
+<a name = "SSEC002.13"></a>
+<li><code></code><var>mat</var><code> * </code><var>matlist</var><code> O</code>
+<li><code></code><var>matlist</var><code> * </code><var>mat</var><code> O</code>
+<p>
+A matrix <var>mat</var> may also be multiplied with a list <var>matlist</var> of matrices.
+The result is a new list of matrices, where each entry is the product of
+<var>mat</var> and the corresponding entry in <var>matlist</var>.
+<p>
+<a name = "SSEC002.14"></a>
+<li><code></code><var>matlist</var><code> / </code><var>mat</var><code> O</code>
+<p>
+Dividing a list <var>matlist</var> of matrices by an invertible matrix <var>mat</var>
+evaluates to <code></code><var>matlist</var><code> * </code><var>mat</var><code>^-1</code>.
+<p>
+<a name = "SSEC002.15"></a>
+<li><code></code><var>vec</var><code> * </code><var>matlist</var><code> O</code>
+<p>
+returns the product of the vector <var>vec</var> and the list of matrices <var>mat</var>.
+The lengths <var>l</var> of <var>vec</var> and <var>matlist</var> must be equal.
+All matrices in <var>matlist</var> must have the same dimensions. The elements of
+<var>vec</var> and the elements of the matrices in <var>matlist</var> must lie in a common
+ring. The product is the sum over <code></code><var>vec</var><code>[</code><var>i</var><code>] * </code><var>matlist</var><code>[</code><var>i</var><code>]</code> with
+<var>i</var> running from 1 to <var>l</var>.
+<p>
+For the mutability of results of arithmetic operations,
+see&nbsp;<a href="CHAP012.htm#SECT006">Mutability and Copyability</a>.
+<p>
+<p>
+<h2><a name="SECT003">24.3 Properties and Attributes of Matrices</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>DimensionsMat( </code><var>mat</var><code> ) A</code>
+<p>
+is a list of length 2, the first being the number of rows, the second
+being the number of columns of the matrix <var>mat</var>.
+<p>
+<pre>
+gap&gt; DimensionsMat([[1,2,3],[4,5,6]]);
+[ 2, 3 ]
+</pre>
+<a name = "SSEC003.2"></a>
+<li><code>DefaultFieldOfMatrix( </code><var>mat</var><code> ) A</code>
+<p>
+For a matrix <var>mat</var>, <code>DefaultFieldOfMatrix</code> returns either a field
+(not necessarily the smallest one) containing all entries of <var>mat</var>,
+or <code>fail</code>.
+<p>
+If <var>mat</var> is a matrix of finite field elements or a matrix of cyclotomics,
+<code>DefaultFieldOfMatrix</code> returns the default field generated by the matrix
+entries (see&nbsp;<a href="CHAP057.htm#SECT003">Creating Finite Fields</a> and <a href="CHAP018.htm#SECT001">Operations for Cyclotomics</a>).
+<p>
+<pre>
+gap&gt; DefaultFieldOfMatrix([[Z(4),Z(8)]]);
+GF(2^6)
+</pre>
+<p>
+<a name = "I0"></a>
+
+<a name = "SSEC003.3"></a>
+<li><code>TraceMat( </code><var>mat</var><code> ) F</code>
+<a name = "SSEC003.3"></a>
+<li><code>Trace( </code><var>mat</var><code> ) F</code>
+<p>
+The trace of a square matrix is the sum of its diagonal entries.
+<p>
+<pre>
+gap&gt; TraceMat([[1,2,3],[4,5,6],[7,8,9]]);
+15
+</pre>
+<a name = "SSEC003.4"></a>
+<li><code>DeterminantMat( </code><var>mat</var><code> ) A</code>
+<a name = "SSEC003.4"></a>
+<li><code>Determinant( </code><var>mat</var><code> ) F</code>
+<p>
+returns the determinant of the square matrix <var>mat</var>.
+<p>
+These methods assume implicitly that <var>mat</var> is defined over an
+integral domain whose quotient field is implemented in <font face="Gill Sans,Helvetica,Arial">GAP</font>. For
+matrices defined over an arbitrary commutative ring with one 
+see&nbsp;<a href="CHAP024.htm#SSEC003.6">DeterminantMatDivFree</a>.
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>DeterminantMatDestructive( </code><var>mat</var><code> ) O</code>
+<p>
+Does the same as <code>DeterminantMat</code>, with the difference that it may
+destroy its argument. The matrix <var>mat</var> must be mutable.
+<p>
+<pre>
+gap&gt; DeterminantMat([[1,2],[2,1]]);
+-3
+gap&gt; mm:= [[1,2],[2,1]];;
+gap&gt; DeterminantMatDestructive( mm );
+-3
+gap&gt; mm;
+[ [ 1, 2 ], [ 0, -3 ] ]
+</pre>
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>DeterminantMatDivFree( </code><var>mat</var><code> ) O</code>
+<p>
+returns the determinant of a square matrix <var>mat</var> over an arbitrary 
+commutative ring with one using the division free method of 
+Mahajan and Vinay <a href="biblio.htm#MV97"><cite>MV97</cite></a>.
+<p>
+<a name = "SSEC003.7"></a>
+<li><code>IsMonomialMatrix( </code><var>mat</var><code> ) P</code>
+<p>
+A matrix is monomial if  and only if it  has exactly one nonzero entry in
+every row and every column.
+<p>
+<pre>
+gap&gt; IsMonomialMatrix([[0,1],[1,0]]);
+true
+</pre>
+<p>
+<a name = "SSEC003.8"></a>
+<li><code>IsDiagonalMat( </code><var>mat</var><code> ) O</code>
+<p>
+returns true if mat has only zero entries off the main diagonal, false
+otherwise.
+<p>
+<a name = "SSEC003.9"></a>
+<li><code>IsUpperTriangularMat( </code><var>mat</var><code> ) O</code>
+<p>
+returns true if mat has only zero entries below the main diagonal, false
+otherwise.
+<p>
+<a name = "SSEC003.10"></a>
+<li><code>IsLowerTriangularMat( </code><var>mat</var><code> ) O</code>
+<p>
+returns true if mat has only zero entries below the main diagonal, false
+otherwise.
+<p>
+<p>
+<h2><a name="SECT004">24.4 Matrix Constructions</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>IdentityMat( </code><var>m</var><code> [, </code><var>F</var><code>] ) F</code>
+<p>
+returns a (mutable) <var>m</var>&times;<var>m</var> identity matrix over the field given
+by <var>F</var> (i.e. the smallest field containing the element <var>F</var> or <var>F</var> itself
+if it is a field).
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>NullMat( </code><var>m</var><code>, </code><var>n</var><code> [, </code><var>F</var><code>] ) F</code>
+<p>
+returns a (mutable) <var>m</var>&times;<var>n</var> null matrix over the field given by
+<var>F</var>.
+<p>
+<pre>
+gap&gt; IdentityMat(3,1);
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+gap&gt; NullMat(3,2,Z(3));
+[ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ]
+</pre>
+<a name = "SSEC004.3"></a>
+<li><code>EmptyMatrix( </code><var>char</var><code> ) F</code>
+<p>
+is an empty (ordinary) matrix in characteristic <var>char</var> that can be added
+to or multiplied with empty lists (representing zero-dimensional row
+vectors). It also acts (via <code>^</code>) on empty lists.
+<p>
+<pre>
+gap&gt; EmptyMatrix(5);
+EmptyMatrix( 5 )
+gap&gt; AsList(last);
+[  ]
+</pre>
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>DiagonalMat( </code><var>vector</var><code> ) F</code>
+<p>
+returns a diagonal matrix <var>mat</var> with the diagonal entries given by
+<var>vector</var>.
+<p>
+<pre>
+gap&gt; DiagonalMat([1,2,3]);
+[ [ 1, 0, 0 ], [ 0, 2, 0 ], [ 0, 0, 3 ] ]
+</pre>
+<a name = "SSEC004.5"></a>
+<li><code>PermutationMat( </code><var>perm</var><code>, </code><var>dim</var><code> [, </code><var>F</var><code> ] ) F</code>
+<p>
+returns a matrix in dimension <var>dim</var> over the field given by <var>F</var> (i.e.
+the smallest field containing the element <var>F</var> or <var>F</var> itself if it is a
+field)  that
+represents the permutation <var>perm</var> acting by permuting the basis vectors
+as it permutes points.
+<p>
+<pre>
+gap&gt; PermutationMat((1,2,3),4,1);
+[ [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ] ]
+</pre>
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>TransposedMatImmutable( </code><var>mat</var><code> ) A</code>
+<a name = "SSEC004.6"></a>
+<li><code>TransposedMatAttr( </code><var>mat</var><code> ) AM</code>
+<a name = "SSEC004.6"></a>
+<li><code>TransposedMat( </code><var>mat</var><code> ) AM</code>
+<a name = "SSEC004.6"></a>
+<li><code>TransposedMatMutable( </code><var>mat</var><code> ) O</code>
+<a name = "SSEC004.6"></a>
+<li><code>TransposedMatOp( </code><var>mat</var><code> ) O</code>
+<p>
+These functions all return the transposed of the matrix <var>mat</var>, i.e.,
+a matrix <var>trans</var> such that <code></code><var>trans</var><code>[</code><var>i</var><code>][</code><var>k</var><code>] = </code><var>mat</var><code>[</code><var>k</var><code>][</code><var>i</var><code>]</code> holds.
+<p>
+They differ only w.r.t. the mutability of the result.
+<p>
+<code>TransposedMat</code> is an attribute and hence returns an immutable result.
+<code>TransposedMatMutable</code> is guaranteed to return a new <strong>mutable</strong> matrix.
+<p>
+<code>TransposedMatImmutable</code> and <code>TransposedMatAttr</code> are synonyms of
+<code>TransposedMat</code>,
+and <code>TransposedMatOp</code> is a synonym of <code>TransposedMatMutable</code>,
+in analogy to operations such as <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>).
+<p>
+<a name = "SSEC004.7"></a>
+<li><code>TransposedMatDestructive( </code><var>mat</var><code> ) O</code>
+<p>
+If <var>mat</var> is a mutable matrix, then the transposed
+is computed by swapping the entries in <var>mat</var>. In this way <var>mat</var> gets
+changed. In all other cases the transposed is computed by <code>TransposedMat</code>.
+<p>
+<pre>
+gap&gt; TransposedMat([[1,2,3],[4,5,6],[7,8,9]]);
+[ [ 1, 4, 7 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ]
+gap&gt; mm:= [[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; TransposedMatDestructive( mm );
+[ [ 1, 4, 7 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ]
+gap&gt; mm;
+[ [ 1, 4, 7 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ]
+</pre>
+<p>
+<a name = "SSEC004.8"></a>
+<li><code>KroneckerProduct( </code><var>mat1</var><code>, </code><var>mat2</var><code> ) O</code>
+<p>
+The Kronecker product of two matrices is the matrix obtained when
+replacing each entry <var>a</var> of <var>mat1</var> by the product <code></code><var>a</var><code>*</code><var>mat2</var><code></code> in one
+matrix.
+<p>
+<pre>
+gap&gt; KroneckerProduct([[1,2]],[[5,7],[9,2]]);
+[ [ 5, 7, 10, 14 ], [ 9, 2, 18, 4 ] ]
+</pre>
+<p>
+<a name = "SSEC004.9"></a>
+<li><code>ReflectionMat( </code><var>coeffs</var><code> ) F</code>
+<li><code>ReflectionMat( </code><var>coeffs</var><code>, </code><var>root</var><code> ) F</code>
+<li><code>ReflectionMat( </code><var>coeffs</var><code>, </code><var>conj</var><code> ) F</code>
+<li><code>ReflectionMat( </code><var>coeffs</var><code>, </code><var>conj</var><code>, </code><var>root</var><code> ) F</code>
+<p>
+Let <var>coeffs</var> be a row vector.
+<code>ReflectionMat</code> returns the matrix of the reflection in this vector.
+<p>
+More precisely, if <var>coeffs</var> is the coefficients of a vector <i>v</i> w.r.t. a
+basis <i>B</i> (see&nbsp;<a href="CHAP059.htm#SSEC004.2">Basis</a>), say, then the returned matrix describes the
+reflection in <i>v</i> w.r.t. <i>B</i> as a map on a row space, with action from
+the right.
+<p>
+The optional argument <var>root</var> is a root of unity that determines the order
+of the reflection.  The default is a reflection of order 2.
+For triflections one should choose a third root of unity etc.
+(see&nbsp;<a href="../ref/CHAP018.htm#SSEC001.1">E</a>).
+<p>
+<var>conj</var> is a function of one argument that conjugates a ring element.
+The default is <code>ComplexConjugate</code>.
+<p>
+The matrix of the reflection in <i>v</i> is defined as
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>M</i> = <i>I</i><sub><i>n</i></sub> +</td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">&#183;</td><td nowrap="nowrap" align="center">&nbsp;<i>w</i><font face="symbol">&#8722;</font>1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><table border="0"><tr><td nowrap="nowrap" align="center"><i>v</i></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td></tr></table></td><td nowrap="nowrap" align="center">&#183;<i>v</i> </td></tr></table></td></tr></table>
+where <code><i>w</i> = root</code>,
+<i>n</i> is the length of the coefficient list,
+and <code>[<font face="symbol">&#63717;</font>]</code> denotes the conjugation.
+<p>
+<a name = "SSEC004.10"></a>
+<li><code>PrintArray( </code><var>array</var><code> ) F</code>
+<p>
+pretty-prints the array <var>array</var>.
+<p>
+<a name = "SSEC004.11"></a>
+<li><code>MutableIdentityMat( </code><var>m</var><code> [, </code><var>F</var><code>] ) F</code>
+<p>
+returns a (mutable) <var>m</var>&times;<var>m</var> identity matrix over the field given
+by <var>F</var>.
+This is identical to <code>IdentityMat</code> and is present in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4.1
+only for the sake of compatibility with beta-releases.
+It should <strong>not</strong> be used in new code.
+<p>
+<a name = "SSEC004.12"></a>
+<li><code>MutableNullMat( </code><var>m</var><code>, </code><var>n</var><code>  [, </code><var>F</var><code>] ) F</code>
+<p>
+returns a (mutable) <var>m</var>&times;<var>n</var> null matrix over the field given
+by <var>F</var>.
+This is identical to <code>NullMat</code> and is present in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4.1
+only for the sake of compatibility with beta-releases.
+It should <strong>not</strong> be used in new code.
+<p>
+<p>
+<h2><a name="SECT005">24.5 Random Matrices</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>RandomMat( </code><var>m</var><code>, </code><var>n</var><code> [, </code><var>R</var><code>] ) F</code>
+<p>
+<code>RandomMat</code> returns a new mutable random matrix with <var>m</var> rows and
+<var>n</var> columns with elements taken from the ring <var>R</var>, which defaults
+to <code>Integers</code>.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>RandomInvertibleMat( </code><var>m</var><code> [, </code><var>R</var><code>] ) F</code>
+<p>
+<code>RandomInvertibleMat</code> returns a new mutable invertible random
+matrix with <var>m</var> rows and columns with elements taken from the ring
+<var>R</var>, which defaults to <code>Integers</code>.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>RandomUnimodularMat( </code><var>m</var><code> ) F</code>
+<p>
+returns a new random mutable <var>m</var>&times;<var>m</var> matrix with integer
+entries that is invertible over the integers.
+<p>
+<pre>
+gap&gt; RandomMat(2,3,GF(3));
+[ [ 0*Z(3), 0*Z(3), Z(3) ], [ Z(3), Z(3)^0, Z(3) ] ]
+gap&gt; RandomInvertibleMat(4);
+[ [ 5, 1, 0, -2 ], [ 4, 3, 5, 3 ], [ 1, -2, 1, -1 ], [ -2, 4, -1, -3 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">24.6 Matrices Representing Linear Equations and the Gaussian Algorithm</a></h2>
+<p><p>
+<a name = "I1"></a>
+
+<a name = "SSEC006.1"></a>
+<li><code>RankMat( </code><var>mat</var><code> ) A</code>
+<p>
+If <var>mat</var> is a matrix whose rows span a free module over the ring
+generated by the matrix entries and their inverses
+then <code>RankMat</code> returns the dimension of this free module.
+Otherwise <code>fail</code> is returned.
+<p>
+Note that <code>RankMat</code> may perform a Gaussian elimination.
+For large rational matrices this may take very long,
+because the entries may become very large.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; RankMat(mat);
+2
+</pre>
+<a name = "SSEC006.2"></a>
+<li><code>TriangulizeMat( </code><var>mat</var><code> ) O</code>
+<p>
+applies the Gaussian Algorithm to the mutable matrix <var>mat</var> and changes
+<var>mat</var> such that it is in upper triangular
+normal form (sometimes called ``Hermite normal form'').
+<p>
+<pre>
+gap&gt; m:=TransposedMatMutable(mat);
+[ [ 1, 4, 7 ], [ 2, 5, 8 ], [ 3, 6, 9 ] ]
+gap&gt; TriangulizeMat(m);m;
+[ [ 1, 0, -1 ], [ 0, 1, 2 ], [ 0, 0, 0 ] ]
+</pre>
+<a name = "SSEC006.3"></a>
+<li><code>NullspaceMat( </code><var>mat</var><code> ) A</code>
+<a name = "SSEC006.3"></a>
+<li><code>TriangulizedNullspaceMat( </code><var>mat</var><code> ) A</code>
+<p>
+returns a list of row vectors that form a basis of the vector space of
+solutions to the equation <code></code><var>vec</var><code>*</code><var>mat</var><code>=0</code>. The result is an immutable
+matrix. This basis is not guaranteed to be in any specific form.
+<p>
+The variant <code>TriangulizedNullspaceMat</code> returns a basis of the nullspace
+in triangulized form as is often needed for algorithms.
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>NullspaceMatDestructive( </code><var>mat</var><code> ) O</code>
+<a name = "SSEC006.4"></a>
+<li><code>TriangulizedNullspaceMatDestructive( </code><var>mat</var><code> ) O</code>
+<p>
+This function does the same as <code>NullspaceMat</code>. However, the latter function
+makes a copy of <var>mat</var> to avoid having to change it. This function
+does not do that; it returns the null space and may destroy <var>mat</var>;
+this saves a lot of memory in case <var>mat</var> is big. The matrix <var>mat</var>
+must be mutable.
+<p>
+The variant <code>TriangulizedNullspaceMatDestructive</code> returns a basis of the
+nullspace in triangulized form. It may destroy the matrix <var>mat</var>.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; NullspaceMat(mat);
+[ [ 1, -2, 1 ] ]
+gap&gt; mm:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; NullspaceMatDestructive( mm );
+[ [ 1, -2, 1 ] ]
+gap&gt; mm;
+[ [ 1, 2, 3 ], [ 0, -3, -6 ], [ 0, 0, 0 ] ]
+</pre>
+<a name = "SSEC006.5"></a>
+<li><code>SolutionMat( </code><var>mat</var><code>, </code><var>vec</var><code> ) O</code>
+<p>
+returns a row vector <var>x</var> that is a solution of the equation <code></code><var>x</var><code> * </code><var>mat</var><code>
+= </code><var>vec</var><code></code>. It returns <code>fail</code> if no such vector exists.
+<p>
+<a name = "SSEC006.6"></a>
+<li><code>SolutionMatDestructive( </code><var>mat</var><code>, </code><var>vec</var><code> ) O</code>
+<p>
+Does the same as <code>SolutionMat( </code><var>mat</var><code>, </code><var>vec</var><code> )</code> except that it may
+destroy the matrix <var>mat</var>. The matrix <var>mat</var> must be mutable.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; SolutionMat(mat,[3,5,7]);
+[ 5/3, 1/3, 0 ]
+gap&gt; mm:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; SolutionMatDestructive( mm, [3,5,7] );
+[ 5/3, 1/3, 0 ]
+gap&gt; mm;
+[ [ 1, 2, 3 ], [ 0, -3, -6 ], [ 0, 0, 0 ] ]
+</pre>
+<a name = "SSEC006.7"></a>
+<li><code>BaseFixedSpace( </code><var>mats</var><code> ) F</code>
+<p>
+<code>BaseFixedSpace</code> returns a list of row vectors that form a base of the
+vector space <i>V</i> such that <i>v</i> <i>M</i> = <i>v</i> for all <i>v</i> in <i>V</i> and all matrices
+<i>M</i> in the list <var>mats</var>.  (This is the common eigenspace of all matrices
+in <var>mats</var> for the eigenvalue 1.)
+<p>
+<pre>
+gap&gt; BaseFixedSpace([[[1,2],[0,1]]]);
+[ [ 0, 1 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">24.7 Eigenvectors and eigenvalues</a></h2>
+<p><p>
+<a name = "SSEC007.1"></a>
+<li><code>GeneralisedEigenvalues( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<a name = "SSEC007.1"></a>
+<li><code>GeneralizedEigenvalues( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<p>
+The generalised eigenvalues of the matrix <var>A</var> over the field <var>F</var>.
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>GeneralisedEigenspaces( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<a name = "SSEC007.2"></a>
+<li><code>GeneralizedEigenspaces( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<p>
+The generalised eigenspaces of the matrix <var>A</var> over the field <var>F</var>.
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>Eigenvalues( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<p>
+The eigenvalues of the matrix <var>A</var> over the field <var>F</var>.
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>Eigenspaces( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<p>
+The eigenspaces of the matrix <var>A</var> over the field <var>F</var>.
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>Eigenvectors( </code><var>F</var><code>, </code><var>A</var><code> ) O</code>
+<p>
+The eigenspaces of the matrix <var>A</var> over the field <var>F</var>.
+<p>
+<p>
+<h2><a name="SECT008">24.8 Elementary Divisors</a></h2>
+<p><p>
+See also chapter <a href="CHAP025.htm">Integral Matrices and Lattices</a>.
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>ElementaryDivisorsMat( [</code><var>ring</var><code>, ] </code><var>mat</var><code> ) O</code>
+<a name = "SSEC008.1"></a>
+<li><code>ElementaryDivisorsMatDestructive( </code><var>ring</var><code>, </code><var>mat</var><code> ) F</code>
+<p>
+<code>ElementaryDivisors</code> returns a list of the elementary divisors, i.e., the
+unique <var>d</var> with <code></code><var>d</var><code>[</code><var>i</var><code>]</code> divides  <code></code><var>d</var><code>[</code><var>i</var><code>+1]</code> and <var>mat</var> is  equivalent
+to a diagonal matrix with the elements <code></code><var>d</var><code>[</code><var>i</var><code>]</code> on the diagonal.
+The operations are performed over the ring <var>ring</var>, which must contain
+all matrix entries. For compatibility reasons it can be omitted and
+defaults to <code>Integers</code>.
+<p>
+The function <code>ElementaryDivisorsMatDestructive</code> produces the same result
+but in the process destroys the contents of <var>mat</var>.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; ElementaryDivisorsMat(mat);
+[ 1, 3, 0 ]
+gap&gt; x:=X(Rationals,"x");;
+gap&gt; mat:=mat*One(x)-x*mat^0;       
+[ [ -x+1, 2, 3 ], [ 4, -x+5, 6 ], [ 7, 8, -x+9 ] ]
+gap&gt; ElementaryDivisorsMat(PolynomialRing(Rationals,1),mat);
+[ 1, 1, x^3-15*x^2-18*x ]
+gap&gt; mat:=KroneckerProduct(CompanionMat((x-1)^2),CompanionMat((x^3-1)*(x-1)));;
+gap&gt; mat:=mat*One(x)-x*mat^0;                                                 
+[ [ -x, 0, 0, 0, 0, 0, 0, 1 ], [ 0, -x, 0, 0, -1, 0, 0, -1 ], 
+  [ 0, 0, -x, 0, 0, -1, 0, 0 ], [ 0, 0, 0, -x, 0, 0, -1, -1 ], 
+  [ 0, 0, 0, -1, -x, 0, 0, -2 ], [ 1, 0, 0, 1, 2, -x, 0, 2 ], 
+  [ 0, 1, 0, 0, 0, 2, -x, 0 ], [ 0, 0, 1, 1, 0, 0, 2, -x+2 ] ]
+gap&gt; ElementaryDivisorsMat(PolynomialRing(Rationals,1),mat);
+[ 1, 1, 1, 1, 1, 1, x-1, x^7-x^6-2*x^4+2*x^3+x-1 ]
+</pre>
+<a name = "SSEC008.2"></a>
+<li><code>DiagonalizeMat( </code><var>ring</var><code>, </code><var>mat</var><code> ) O</code>
+<p>
+brings the mutable matrix <var>mat</var>, considered as a matrix over <var>ring</var>,
+into diagonal form by elementary row and column operations.
+<p>
+<pre>
+gap&gt; m:=[[1,2],[2,1]];;
+gap&gt; DiagonalizeMat(Integers,m);m;
+[ [ 1, 0 ], [ 0, 3 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">24.9 Echelonized Matrices</a></h2>
+<p><p>
+<a name = "SSEC009.1"></a>
+<li><code>SemiEchelonMat( </code><var>mat</var><code> ) A</code>
+<p>
+A matrix over a field <i>F</i> is in semi-echelon form if the first nonzero
+element in each row is the identity of <i>F</i>,
+and all values exactly below these pivots are the zero of <i>F</i>.
+<p>
+<code>SemiEchelonMat</code> returns a record that contains information about
+a semi-echelonized form of the matrix <var>mat</var>.
+<p>
+The components of this record are
+<p>
+<p>
+<dl compact>
+<dt><code>vectors</code><dd>
+      list of row vectors, each with pivot element the identity of <i>F</i>,
+<p>
+<dt><code>heads</code><dd>
+      list that contains at position <var>i</var>, if nonzero, the number of the
+      row for that the pivot element is in column <var>i</var>.
+</dl>
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>SemiEchelonMatDestructive( </code><var>mat</var><code> ) O</code>
+<p>
+This does the same as <code>SemiEchelonMat( </code><var>mat</var><code> )</code>, except that it may
+(and probably will) destroy the matrix <var>mat</var>.
+<p>
+<pre>
+gap&gt; mm:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; SemiEchelonMatDestructive( mm );
+rec( heads := [ 1, 2, 0 ], vectors := [ [ 1, 2, 3 ], [ 0, 1, 2 ] ] )
+gap&gt; mm;
+[ [ 1, 2, 3 ], [ 0, 1, 2 ], [ 0, 0, 0 ] ]
+</pre>
+<p>
+<a name = "SSEC009.3"></a>
+<li><code>SemiEchelonMatTransformation( </code><var>mat</var><code> ) A</code>
+<p>
+does the same as <code>SemiEchelonMat</code> but additionally stores the linear
+transformation <i>T</i> performed on the matrix.
+The additional components of the result are
+<p>
+<p>
+<dl compact>
+<dt><code>coeffs</code><dd>
+      a list of coefficients vectors of the <code>vectors</code> component,
+      with respect to the rows of <var>mat</var>, that is, <code>coeffs * mat</code>
+      is the <code>vectors</code> component.
+<p>
+<dt><code>relations</code><dd>
+      a list of basis vectors for the (left) null space of <var>mat</var>.
+</dl>
+<p>
+<pre>
+gap&gt; SemiEchelonMatTransformation([[1,2,3],[0,0,1]]);
+rec( heads := [ 1, 0, 2 ], vectors := [ [ 1, 2, 3 ], [ 0, 0, 1 ] ], 
+  coeffs := [ [ 1, 0 ], [ 0, 1 ] ], relations := [  ] )
+</pre>
+<a name = "SSEC009.4"></a>
+<li><code>SemiEchelonMats( </code><var>mats</var><code> ) O</code>
+<p>
+A list of matrices over a field <i>F</i> is in semi-echelon form if the
+list of row vectors obtained on concatenating the rows of each matrix
+is a semi-echelonized matrix (see <a href="CHAP024.htm#SSEC009.1">SemiEchelonMat</a>).
+<p>
+<code>SemiEchelonMats</code> returns a record that contains information about
+a semi-echelonized form of the list <var>mats</var> of matrices.
+<p>
+The components of this record are
+<p>
+<p>
+<dl compact>
+<dt><code>vectors</code><dd>
+      list of matrices, each with pivot element the identity of <i>F</i>,
+<p>
+<dt><code>heads</code><dd>
+      matrix that contains at position [<var>i</var>,<var>j</var>], if nonzero,
+      the number of the matrix that has the pivot element in
+      this position
+</dl>
+<p>
+<a name = "SSEC009.5"></a>
+<li><code>SemiEchelonMatsDestructive( </code><var>mats</var><code> ) O</code>
+<p>
+Does the same as <code>SemiEchelonmats</code>, except that it may destroy
+its argument. Therefore the argument must be a list of matrices
+that re mutable.
+<p>
+<p>
+<h2><a name="SECT010">24.10 Matrices as Basis of a Row Space</a></h2>
+<p><p>
+<a name = "SSEC010.1"></a>
+<li><code>BaseMat( </code><var>mat</var><code> ) A</code>
+<p>
+returns a basis for the row space generated by the rows of <var>mat</var> in the
+form of an immutable matrix.
+<p>
+<a name = "SSEC010.2"></a>
+<li><code>BaseMatDestructive( </code><var>mat</var><code> ) O</code>
+<p>
+Does the same as <code>BaseMat</code>, with the difference that it may destroy
+the matrix <var>mat</var>. The matrix <var>mat</var> must be mutable.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; BaseMat(mat);
+[ [ 1, 2, 3 ], [ 0, 1, 2 ] ]
+gap&gt; mm:= [[1,2,3],[4,5,6],[5,7,9]];;
+gap&gt; BaseMatDestructive( mm );
+[ [ 1, 2, 3 ], [ 0, 1, 2 ] ]
+gap&gt; mm;
+[ [ 1, 2, 3 ], [ 0, 1, 2 ], [ 0, 0, 0 ] ]
+</pre>
+<a name = "SSEC010.3"></a>
+<li><code>BaseOrthogonalSpaceMat( </code><var>mat</var><code> ) A</code>
+<p>
+Let <i>V</i> be the row space generated  by the rows of  <var>mat</var> (over any field
+that contains all  entries of <var>mat</var>).  <code>BaseOrthogonalSpaceMat( </code><var>mat</var><code>  )</code>
+computes a base of the orthogonal space of <i>V</i>.
+<p>
+The rows of <var>mat</var> need not be linearly independent.
+<p>
+<a name = "SSEC010.4"></a>
+<li><code>SumIntersectionMat( </code><var>M1</var><code>, </code><var>M2</var><code> ) O</code>
+<p>
+performs  Zassenhaus'  algorithm to compute  bases  for  the sum  and the
+intersection of spaces generated by the rows of the matrices <var>M1</var>, <var>M2</var>.
+<p>
+returns a list  of length 2,   at first position   a base of the sum,  at
+second  position a  base   of the   intersection.   Both  bases  are   in
+semi-echelon form (see&nbsp;<a href="CHAP024.htm#SECT009">Echelonized matrices</a>).
+<p>
+<pre>
+gap&gt; SumIntersectionMat(mat,[[2,7,6],[5,9,4]]);
+[ [ [ 1, 2, 3 ], [ 0, 1, 2 ], [ 0, 0, 1 ] ], [ [ 1, -3/4, -5/2 ] ] ]
+</pre>
+<p>
+<a name = "SSEC010.5"></a>
+<li><code>BaseSteinitzVectors( </code><var>bas</var><code>, </code><var>mat</var><code> ) F</code>
+<p>
+find vectors extending mat to a basis spanning the span of <var>bas</var>.
+Both <var>bas</var> and <var>mat</var> must be matrices of full (row) rank. It returns a
+record with the following components:
+<p>
+<dl compact>
+<dt><code>subspace</code><dd>is a basis of the space spanned by <var>mat</var> in upper triangular
+form with leading ones at all echelon steps and zeroes above these ones.
+<p>
+<dt><code>factorspace</code><dd> is a list of extending vectors in upper triangular form.
+<p>
+<dt><code>factorzero</code><dd> is a zero vector.
+<p>
+<dt><code>heads</code><dd> is a list of integers which can be used to decompose vectors in
+the basis vectors. The <var>i</var>th entry indicating the vector
+that gives an echelon step at position <var>i</var>.
+A negative number indicates an echelon step in the subspace, a positive
+number an echelon step in the complement, the absolute value gives the
+position of the vector in the lists <code>subspace</code> and <code>factorspace</code>.
+</dl>
+<p>
+<pre>
+gap&gt; BaseSteinitzVectors(IdentityMat(3,1),[[11,13,15]]);
+rec( factorspace := [ [ 0, 1, 15/13 ], [ 0, 0, 1 ] ], 
+  factorzero := [ 0, 0, 0 ], subspace := [ [ 1, 13/11, 15/11 ] ], 
+  heads := [ -1, 1, 2 ] )
+</pre>
+<p>
+See also chapter <a href="CHAP025.htm">Integral Matrices and Lattices</a>
+<p>
+<p>
+<h2><a name="SECT011">24.11 Triangular Matrices</a></h2>
+<p><p>
+<a name = "SSEC011.1"></a>
+<li><code>DiagonalOfMat( </code><var>mat</var><code> ) O</code>
+<p>
+returns the diagonal of <var>mat</var> as a list.
+<p>
+<pre>
+gap&gt; DiagonalOfMat([[1,2],[3,4]]);
+[ 1, 4 ]
+</pre>
+<a name = "SSEC011.2"></a>
+<li><code>UpperSubdiagonal( </code><var>mat</var><code>, </code><var>pos</var><code> ) O</code>
+<p>
+returns a mutable list containing the entries of the <var>pos</var>th upper
+subdiagonal of <var>mat</var>.
+<p>
+<pre>
+gap&gt; UpperSubdiagonal(mat,1);
+[ 2, 6 ]
+</pre>
+<a name = "SSEC011.3"></a>
+<li><code>DepthOfUpperTriangularMatrix( </code><var>mat</var><code> ) A</code>
+<p>
+If <var>mat</var> is an upper triangular matrix this attribute returns the
+index of the first nonzero diagonal.
+<p>
+<pre>
+gap&gt; DepthOfUpperTriangularMatrix([[0,1,2],[0,0,1],[0,0,0]]);
+1
+gap&gt; DepthOfUpperTriangularMatrix([[0,0,2],[0,0,0],[0,0,0]]);
+2
+</pre>
+<p>
+<p>
+<h2><a name="SECT012">24.12 Matrices as Linear Mappings</a></h2>
+<p><p>
+<a name = "SSEC012.1"></a>
+<li><code>CharacteristicPolynomial( </code><var>mat</var><code> ) A</code>
+<li><code>CharacteristicPolynomial( [</code><var>F</var><code>, ]</code><var>mat</var><code>[, </code><var>ind</var><code>] ) O</code>
+<p>
+For a square matrix <var>mat</var>, <code>CharacteristicPolynomial</code> returns the
+<strong>characteristic polynomial</strong> of <var>mat</var>, that is, the <code>StandardAssociate</code>
+of the determinant of the
+matrix <i>mat</i>  <font face="symbol">&#8722;</font> <i>X</i> &#183;<i>I</i>, where <i>X</i> is an indeterminate and <i>I</i> is the
+appropriate identity matrix.
+<p>
+If a field <var>F</var> is given as first argument then the characteristic
+polynomial of the <var>F</var>-linear mapping induced by <var>mat</var> is computed.
+If <var>F</var> contains the entries of <var>mat</var> then this is of course the same
+polynomial as the one computed by the one argument version;
+if <var>F</var> is a proper subfield of the default field
+(see&nbsp;<a href="CHAP024.htm#SSEC003.2">DefaultFieldOfMatrix</a>) of <var>mat</var> then the characteristic polynomial
+is computed using <code>BlownUpMat</code> (see&nbsp;<a href="CHAP024.htm#SSEC012.3">BlownUpMat</a>).
+<p>
+The returned polynomials are expressed in the indeterminate number <var>ind</var>.
+If <var>ind</var> is not given, it defaults to 1.
+<p>
+The characteristic polynomial is a multiple of the minimal polynomial
+(see&nbsp;<a href="CHAP064.htm#SSEC008.1">MinimalPolynomial</a>).
+<p>
+<pre>
+gap&gt; CharacteristicPolynomial( [ [ 1, 1 ], [ 0, 1 ] ] );
+x^2-2*x+1
+gap&gt; mat := [[0,1],[E(4)-1,E(4)]];;
+gap&gt; CharacteristicPolynomial( mat );
+x^2+-E(4)*x+1-E(4)
+gap&gt; CharacteristicPolynomial( Rationals, mat );
+x^4+3*x^2+2*x+2
+gap&gt; mat:= [ [ E(4), 1 ], [ 0, -E(4) ] ];;
+gap&gt; CharacteristicPolynomial( mat );
+x^2+1
+gap&gt; CharacteristicPolynomial( Rationals, mat );
+x^4+2*x^2+1
+</pre>
+<p>
+<a name = "SSEC012.2"></a>
+<li><code>JordanDecomposition( </code><var>mat</var><code> ) A</code>
+<p>
+<code>JordanDecomposition( </code><var>mat </var><code> )</code> returns a list <code>[S,N]</code> such that
+<code>S</code> is a semisimple matrix and <code>N</code> is nilpotent. Furthermore, <code>S</code>
+and <code>N</code> commute and <code></code><var>mat</var><code>=S+N</code>.
+<p>
+<pre>
+gap&gt; mat:=[[1,2,3],[4,5,6],[7,8,9]];;
+gap&gt; JordanDecomposition(mat);
+[ [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ], 
+  [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ] ]
+</pre>
+<p>
+<a name = "SSEC012.3"></a>
+<li><code>BlownUpMat( </code><var>B</var><code>, </code><var>mat</var><code> ) F</code>
+<p>
+Let <var>B</var> be a basis of a field extension <i>F</i> / <i>K</i>,
+and <var>mat</var> a matrix whose entries are all in <i>F</i>.
+(This is not checked.)
+<code>BlownUpMat</code> returns a matrix over <i>K</i> that is obtained by replacing each
+entry of <var>mat</var> by its regular representation w.r.t.&nbsp;<var>B</var>.
+<p>
+More precisely,
+regard <var>mat</var> as the matrix of a linear transformation on the row space
+<i>F</i><sup><i>n</i></sup> w.r.t.&nbsp;the <i>F</i>-basis with vectors (<i>v</i><sub>1</sub>, <i>ldots</i>, <i>v</i><sub><i>n</i></sub>), say,
+and suppose that the basis <var>B</var> consists of the vectors
+(<i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>m</i></sub>);
+then the returned matrix is the matrix of the linear transformation
+on the row space <i>K</i><sup><i>mn</i></sup> w.r.t.&nbsp;the <i>K</i>-basis whose vectors are
+(<i>b</i><sub>1</sub> <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font><i>b</i><sub><i>m</i></sub> <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>m</i></sub> <i>v</i><sub><i>n</i></sub>).
+<p>
+Note that the linear transformations act on <strong>row</strong> vectors, i.e.,
+each row of the matrix is a concatenation of vectors of <var>B</var>-coefficients.
+<p>
+<a name = "SSEC012.4"></a>
+<li><code>BlownUpVector( </code><var>B</var><code>, </code><var>vector</var><code> ) F</code>
+<p>
+Let <var>B</var> be a basis of a field extension <i>F</i> / <i>K</i>,
+and <var>vector</var> a row vector whose entries are all in <i>F</i>.
+<code>BlownUpVector</code> returns a row vector over <i>K</i> that is obtained by
+replacing each entry of <var>vector</var> by its coefficients w.r.t.&nbsp;<var>B</var>.
+<p>
+So <code>BlownUpVector</code> and <code>BlownUpMat</code> (see&nbsp;<a href="CHAP024.htm#SSEC012.3">BlownUpMat</a>) are compatible
+in the sense that for a matrix <var>mat</var> over <i>F</i>,
+<code>BlownUpVector( </code><var>B</var><code>, </code><var>mat</var><code> * </code><var>vector</var><code> )</code>
+is equal to
+<code>BlownUpMat( </code><var>B</var><code>, </code><var>mat</var><code> ) * BlownUpVector( </code><var>B</var><code>, </code><var>vector</var><code> )</code>.
+<p>
+<pre>
+gap&gt; B:= Basis( CF(4), [ 1, E(4) ] );;
+gap&gt; mat:= [ [ 1, E(4) ], [ 0, 1 ] ];;  vec:= [ 1, E(4) ];;
+gap&gt; bmat:= BlownUpMat( B, mat );;  bvec:= BlownUpVector( B, vec );;
+gap&gt; Display( bmat );  bvec;
+[ [   1,   0,   0,   1 ],
+  [   0,   1,  -1,   0 ],
+  [   0,   0,   1,   0 ],
+  [   0,   0,   0,   1 ] ]
+[ 1, 0, 0, 1 ]
+gap&gt; bvec * bmat = BlownUpVector( B, vec * mat );
+true
+</pre>
+<p>
+<a name = "SSEC012.5"></a>
+<li><code>CompanionMat( </code><var>poly</var><code> ) F</code>
+<p>
+computes a companion matrix of the polynomial <var>poly</var>. This matrix has
+<var>poly</var> as its minimal polynomial.
+<p>
+<p>
+<h2><a name="SECT013">24.13 Matrices over Finite Fields</a></h2>
+<p><p>
+Just as for row vectors, (see section <a href="CHAP023.htm#SECT002">Row Vectors over Finite Fields</a>), <font face="Gill Sans,Helvetica,Arial">GAP</font> has a special representation for matrices over small
+finite fields.
+<p>
+To be eligible to be represented in this way, each row of a matrix
+must be able to be represented as a compact row vector of the same
+length  over <strong>the same</strong> finite field.
+<p>
+<pre>
+gap&gt; v := Z(2)*[1,0,0,1,1];
+[ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ]
+gap&gt; ConvertToVectorRep(v,2);
+2
+gap&gt; v;
+&lt;a GF2 vector of length 5&gt;
+gap&gt; m := [v];; ConvertToMatrixRep(m,GF(2));; m;
+&lt;a 1x5 matrix over GF2&gt;
+gap&gt; m := [v,v];; ConvertToMatrixRep(m,GF(2));; m;
+&lt;a 2x5 matrix over GF2&gt;
+gap&gt; m := [v,v,v];; ConvertToMatrixRep(m,GF(2));; m;
+&lt;a 3x5 matrix over GF2&gt;
+gap&gt; v := Z(3)*[1..8];
+[ Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3)^0 ]
+gap&gt; ConvertToVectorRep(v);
+3
+gap&gt; m := [v];; ConvertToMatrixRep(m,GF(3));; m;
+[ [ Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3)^0 ] ]
+gap&gt; RepresentationsOfObject(m);
+[ "IsPositionalObjectRep", "Is8BitMatrixRep" ]
+gap&gt; m := [v,v,v,v];; ConvertToMatrixRep(m,GF(3));; m;
+&lt; mutable compressed matrix 4x8 over GF(3) &gt;
+</pre>
+<p>
+All compressed matrices over GF(2) are viewed as <code>&lt;a </code><var>n</var><code>x</code><var>m</var><code> matrix
+over GF2&gt;</code>, while over fields GF(q) for q between 3 and 256, matrices
+with 25 or more entries are viewed in this way, and smaller ones as
+lists of lists.
+<p>
+Matrices can be converted to this special representation via
+the following functions.
+<p>
+<a name = "SSEC013.1"></a>
+<li><code>ImmutableMatrix( </code><var>field</var><code>, </code><var>matrix</var><code>, [</code><var>change</var><code>] ) F</code>
+<p>
+returns an immutable matrix equal to <var>matrix</var> which is in the most
+compact representation possible over <var>field</var>.
+The input matrix <var>matrix</var> or
+its rows might change the representation,
+however the result of <code>ConvertedMatrix</code> is not necessarily
+<strong>identical</strong> to <var>matrix</var> if a conversion is not possible.
+If <var>change</var> is <code>true</code>, the rows of <code>matrix</code> (or <code>matrix</code> itself) may be
+changed to become immutable (otherwise they are copied first).
+<p>
+<a name = "SSEC013.2"></a>
+<li><code>ConvertToMatrixRep( </code><var>list</var><code> ) F</code>
+<li><code>ConvertToMatrixRep( </code><var>list</var><code>, </code><var>field</var><code> ) F</code>
+<li><code>ConvertToMatrixRep( </code><var>list</var><code>, </code><var>fieldsize</var><code> ) F</code>
+<a name = "SSEC013.2"></a>
+<li><code>ConvertToMatrixRepNC( </code><var>list</var><code> ) F</code>
+<li><code>ConvertToMatrixRepNC( </code><var>list</var><code>, </code><var>field</var><code> ) F</code>
+<li><code>ConvertToMatrixRepNC( </code><var>list</var><code>, </code><var>fieldsize</var><code> ) F</code>
+<p>
+<code>ConvertToMatrixRep( </code><var>list</var><code> )</code> converts <var>list</var> to an internal
+matrix representation if possible.  <code>ConvertToMatrixRep( </code><var>list</var><code> ,
+</code><var>field</var><code> )</code> converts <var>list</var> to an internal matrix representation
+appropriate for a matrix over <var>field</var>.
+<p>
+It is forbidden to call
+this function unless all elements of <var>list</var> are vectors with
+entries in  <var>field</var>.
+Violation of this condition can lead to
+unpredictable behaviour or a system crash. (Setting the assertion level
+to at least 2 might catch some violations before a crash,
+see&nbsp;<a href="CHAP007.htm#SSEC005.1">SetAssertionLevel</a>.)
+<p>
+Instead of a <var>field</var> also its size <var>fieldsize</var> may be given.
+<p>
+<var>list</var> may already be a compressed matrix. In this case, if no
+<var>field</var> or <var>fieldsize</var> is given, then nothing happens.
+<p>
+<var>list</var> itself may be mutable, but its entries must be immutable.
+<p>
+The return value is the size of the field over which the matrix
+ends up written, if it is written in a compressed representation.
+<p>
+In general, it is better to call <code>ImmutableMatrix</code>
+(see&nbsp;<a href="CHAP024.htm#SSEC013.1">ImmutableMatrix</a>) instead since this function can also deal with
+mutable rows or rows locked in a wrong representation.
+<p>
+Note that the main advantage of this special representation of
+matrices is in low dimensions, where various overheads can be
+reduced. In higher dimensions, a list of compressed vectors will be
+almost as fast. Note also that list access and assignment will be
+somewhat slower for compressed matrices than for plain lists.
+<p>
+In order to form a row of a compressed matrix a vector must accept
+certain restrictions. Specifically, it cannot change its length or
+change the field over which it is compressed. The main consequences of
+this are: that only elements of the appropriate field can be assigned
+to entries of the vector, and only to positions between 1 and the
+original length; that the vector cannot be shared between two matrices
+compressed over different fields.
+<p>
+This is enforced by the filter <code>IsLockedRepresentationVector</code>.  When a
+vector becomes part of a compressed matrix, this filter is set for it.
+Assignment, <code>Unbind</code>,  <code>ConvertToVectorRep</code> and <code>ConvertToMatrixRep</code>
+are all prevented from altering a vector with this filter.
+<p>
+<pre>
+gap&gt; v := [Z(2),Z(2)];; ConvertToVectorRep(v,GF(2));; v;
+&lt;a GF2 vector of length 2&gt;
+gap&gt; m := [v,v]; 
+[ &lt;a GF2 vector of length 2&gt;, &lt;a GF2 vector of length 2&gt; ]
+gap&gt; ConvertToMatrixRep(m,GF(2)); 
+2
+gap&gt; m2 := [m[1], [Z(4),Z(4)]]; # now try and mix in some GF(4)
+[ &lt;a GF2 vector of length 2&gt;, [ Z(2^2), Z(2^2) ] ]
+gap&gt; ConvertToMatrixRep(m2); # but m2[1] is locked
+#I  ConvertToVectorRep: locked vector not converted to different field
+fail
+gap&gt; m2 := [ShallowCopy(m[1]), [Z(4),Z(4)]]; # a fresh copy of row 1
+[ &lt;a GF2 vector of length 2&gt;, [ Z(2^2), Z(2^2) ] ]
+gap&gt; ConvertToMatrixRep(m2); # now it works
+4
+gap&gt; m2;
+[ [ Z(2)^0, Z(2)^0 ], [ Z(2^2), Z(2^2) ] ]
+gap&gt; RepresentationsOfObject(m2);
+[ "IsPositionalObjectRep", "Is8BitMatrixRep" ]
+</pre>
+<p>
+Arithmetic operations (see&nbsp;<a href="CHAP021.htm#SECT011">Arithmetic for Lists</a> and the following
+sections) preserve the compression status of matrices in the sense that
+if all arguments are compressed matrices written over the same field and
+the result is a matrix then also the result is a compressed matrix
+written over this field.
+<p>
+There are also two operations that are only available for matrices
+written over finite fields.
+<p>
+<a name = "SSEC013.3"></a>
+<li><code>ProjectiveOrder( </code><var>mat</var><code> ) A</code>
+<p>
+Returns an integer n and a finite field element e such that <var>A</var>^n = eI.
+<var>mat</var> must be a matrix defined over a finite field.
+<p>
+<pre>
+gap&gt; ProjectiveOrder([[1,4],[5,2]]*Z(11)^0);
+[ 5, Z(11)^5 ]
+</pre>
+<p>
+<a name = "SSEC013.4"></a>
+<li><code>SimultaneousEigenvalues( </code><var>matlist</var><code>, </code><var>expo</var><code> ) F</code>
+<p>
+The matrices in  <var>matlist</var>  must  be matrices over GF(<var>q</var>) for some
+prime <var>q</var>.  Together, they must  generate an  abelian p-group  of
+exponent <var>expo</var>.
+Then the eigenvalues of <var>mat</var>  in the splitting field <code>GF(</code><var>q</var><code>^</code><var>r</var><code>)</code> for
+some <var>r</var> are powers of an element <font face="symbol">&#958;</font> in the splitting field, which is
+of order  <var>expo</var>.  <code>SimultaneousEigenvalues</code> returns a matrix of
+integers  mod <var>expo</var>, say (<i>a</i><sub><i>i</i>,<i>j</i></sub>),  such that the power
+<font face="symbol">&#958;</font><sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> is an eigenvalue of the <var>i</var>-th matrix in  <var>matlist</var> and
+the eigenspaces of the different matrices to the eigenvalues
+<font face="symbol">&#958;</font><sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> for fixed <var>j</var> are equal.
+<p>
+Finally, there are two operations that deal with matrices over a ring,
+but only care about the residues of their entries modulo some ring element.
+In the case of the integers and a prime number <i>p</i>, say,
+this is effectively computation in a matrix over the prime field
+in characteristic <i>p</i>.
+<p>
+<a name = "SSEC013.5"></a>
+<li><code>InverseMatMod( </code><var>mat</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+For a square matrix <var>mat</var>, <code>InverseMatMod</code> returns a matrix <var>inv</var>
+such that <code></code><var>inv</var><code> * </code><var>mat</var><code></code> is congruent to the identity matrix modulo
+<var>obj</var>, if such a matrix exists, and <code>fail</code> otherwise.
+<p>
+<pre>
+gap&gt; mat:= [ [ 1, 2 ], [ 3, 4 ] ];;  inv:= InverseMatMod( mat, 5 );
+[ [ 3, 1 ], [ 4, 2 ] ]
+gap&gt; mat * inv;
+[ [ 11, 5 ], [ 25, 11 ] ]
+</pre>
+<p>
+<a name = "SSEC013.6"></a>
+<li><code>NullspaceModQ( </code><var>E</var><code>, </code><var>q</var><code> ) F</code>
+<p>
+<var>E</var> must be a matrix of integers and <var>q</var> a prime power.
+Then <code>NullspaceModQ</code> returns the set of all vectors of integers modulo
+<var>q</var>, which solve the homogeneous equation system given by <var>E</var> modulo <var>q</var>.
+<p>
+<pre>
+gap&gt; mat:= [ [ 1, 3 ], [ 1, 2 ], [ 1, 1 ] ];;  NullspaceModQ( mat, 5 );
+[ [ 0, 0, 0 ], [ 1, 3, 1 ], [ 2, 1, 2 ], [ 4, 2, 4 ], [ 3, 4, 3 ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT014">24.14 Special Multiplication Algorithms for Matrices over GF(2)</a></h2>
+<p><p>
+When multiplying two compressed matrices <i>M</i> and <i>N</i> over GF(2) of dimensions
+<i>a</i>&times;<i>b</i> and <i>b</i>&times;<i>c</i>, say, where <i>a</i>, <i>b</i> and <i>c</i> are all
+greater than or equal to 128, <font face="Gill Sans,Helvetica,Arial">GAP</font> by default uses a more
+sophisticated matrix multiplication algorithm, in which linear
+combinations of groups of 8 rows of <i>M</i> are remembered and re-used in
+constructing various rows of the product. This is called level 8
+grease. To optimise memory access patterns, these combinations are
+stored for (<i>b</i>+255)/256 sets of 8 rows at once. This number is called
+the blocking level.
+<p>
+These levels of grease and blocking are found experimentally to give
+good performance across a range of processors and matrix sizes, but
+other levels may do even better in some cases. You can control the
+levels exactly using the functions below:
+<p>
+<a name = "SSEC014.1"></a>
+<li><code>PROD_GF2MAT_GF2MAT_SIMPLE( </code><var>m1</var><code>, </code><var>m2</var><code> ) F</code>
+<p>
+This function performs the standard unblocked and ungreased matrix
+multiplication for matrices of any size.
+<p>
+<a name = "SSEC014.2"></a>
+<li><code>PROD_GF2MAT_GF2MAT_ADVANCED( </code><var>m1</var><code>, </code><var>m2</var><code>, </code><var>g</var><code>, </code><var>b</var><code> ) F</code>
+<p>
+This function computes the product of <var>m1</var> and <var>m2</var>, which must be
+compressed matrices over GF(2) of compatible dimensions, using level <var>g</var>
+grease and level <var>b</var> blocking.
+<p>
+We plan to include greased blocked matrix multiplication for other
+finite fields, and greased blocked algorithms for inversion and other
+matrix operations in a future release.
+<p>
+<p>
+<h2><a name="SECT015">24.15 Block Matrices</a></h2>
+<p><p>
+Block matrices are a special representation of matrices which can save a
+lot of memory if large matrices have a block structure with lots of zero
+blocks. <font face="Gill Sans,Helvetica,Arial">GAP</font> uses the representation <code>IsBlockMatrixRep</code> to store block
+matrices.
+<a name = "I2"></a>
+
+<p>
+<a name = "SSEC015.1"></a>
+<li><code>AsBlockMatrix( </code><var>m</var><code>, </code><var>nrb</var><code>, </code><var>ncb</var><code> ) F</code>
+<p>
+returns a block matrix with <var>nrb</var> row blocks and <var>ncb</var> column blocks
+which is equal to the ordinary matrix <var>m</var>.
+<p>
+<a name = "SSEC015.2"></a>
+<li><code>BlockMatrix( </code><var>blocks</var><code>, </code><var>nrb</var><code>, </code><var>ncb</var><code> ) F</code>
+<li><code>BlockMatrix( </code><var>blocks</var><code>, </code><var>nrb</var><code>, </code><var>ncb</var><code>, </code><var>rpb</var><code>, </code><var>cpb</var><code>, </code><var>zero</var><code> ) F</code>
+<p>
+<code>BlockMatrix</code> returns an immutable matrix in the sparse representation
+<code>IsBlockMatrixRep</code>.
+The nonzero blocks are described by the list <var>blocks</var> of triples,
+the matrix has <var>nrb</var> row blocks and <var>ncb</var> column blocks.
+<p>
+If <var>blocks</var> is empty (i.e., if the matrix is a zero matrix) then
+the dimensions of the blocks must be entered as <var>rpb</var> and <var>cpb</var>,
+and the zero element as <var>zero</var>.
+<p>
+Note that all blocks must be ordinary matrices (see&nbsp;<a href="CHAP024.htm#SSEC001.2">IsOrdinaryMatrix</a>),
+and also the block matrix is an ordinary matrix.
+<p>
+<a name = "SSEC015.3"></a>
+<li><code>MatrixByBlockMatrix( </code><var>blockmat</var><code> ) A</code>
+<p>
+returns a plain ordinary matrix that is equal to the block matrix
+<var>blockmat</var>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP023.htm">Previous</a>] [<a href ="CHAP025.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

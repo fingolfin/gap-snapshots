@@ -1,0 +1,406 @@
+<html><head><title>[prg] 2 Method Selection</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 Method Selection</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP002.htm#SECT001">Operations and Methods</a>
+<li> <A HREF="CHAP002.htm#SECT002">Method Installation</a>
+<li> <A HREF="CHAP002.htm#SECT003">Applicable Methods and Method Selection</a>
+<li> <A HREF="CHAP002.htm#SECT004">Partial Methods</a>
+<li> <A HREF="CHAP002.htm#SECT005">Redispatching</a>
+<li> <A HREF="CHAP002.htm#SECT006">Immediate Methods</a>
+<li> <A HREF="CHAP002.htm#SECT007">Logical Implications</a>
+<li> <A HREF="CHAP002.htm#SECT008">Operations and Mathematical Terms</a>
+</ol><p>
+<p>
+<a name = "I0"></a>
+
+<a name = "I0"></a>
+<a name = "I1"></a>
+
+This chapter explains how <font face="Gill Sans,Helvetica,Arial">GAP</font> decides which function to call for which
+types of objects.
+It assumes that you have read the chapters about objects
+(Chapter&nbsp;<a href="../ref/CHAP012.htm">Objects and Elements</a>) and types (Chapter&nbsp;<a href="../ref/CHAP013.htm">Types of Objects</a>)
+in the Reference Manual.
+<p>
+An <strong>operation</strong> is a special <font face="Gill Sans,Helvetica,Arial">GAP</font> function that bundles a set of
+functions, its <strong>methods</strong>.
+<p>
+All methods of an operation compute the same result.
+But each method is installed for specific types of arguments.
+<p>
+If an operation is called with a tuple of arguments,
+one of the applicable methods is selected and called.
+<p>
+Special cases of methods are partial methods, immediate methods,
+and logical implications.
+<p>
+<p>
+<h2><a name="SECT001">2.1 Operations and Methods</a></h2>
+<p><p>
+Operations are functions in the category <code>IsOperation</code>
+(see&nbsp;<a href="../ref/CHAP005.htm#SSEC004.2">IsOperation</a> in the Reference Manual).
+<p>
+So on the one hand, <strong>operations</strong> are <font face="Gill Sans,Helvetica,Arial">GAP</font> functions, that is,
+they can be applied to arguments and return a result or cause a
+side-effect.
+<p>
+On the other hand, operations are more.
+Namely, an operation corresponds to a set of <font face="Gill Sans,Helvetica,Arial">GAP</font> functions,
+called the <strong>methods</strong> of the operation.
+<p>
+Each call of an operation causes a suitable method to be selected
+and then called.
+The choice of which method to select is made according to the types
+of the arguments,
+the underlying mechanism is described in the following sections.
+<p>
+Examples of operations are the binary infix operators <code>=</code>, <code>+</code> etc.,
+and <code>PrintObj</code> is the operation that is called for each argument of
+<code>Print</code>.
+<p>
+Also all attributes and properties are operations.
+Each attribute has a special method which is called
+if the attribute value is already stored;
+this method of course simply returns this value.
+<p>
+The setter of an attribute is called automatically
+if an attribute value has been computed.
+Attribute setters are operations, too.
+They have a default method that ignores the request to store the value.
+Depending on the type of the object,
+there may be another method to store the value in a suitable way,
+and then set the attribute tester for the object to <code>true</code>.
+<p>
+<p>
+<h2><a name="SECT002">2.2 Method Installation</a></h2>
+<p><p>
+In order to describe what it means to select a method of an operation,
+we must describe how the methods are connected to their operations.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>InstallMethod( </code><var>opr</var><code>[,</code><var>info</var><code>][,</code><var>famp</var><code>],</code><var>args-filts</var><code>[,</code><var>val</var><code>],</code><var>method</var><code> ) F</code>
+<p>
+installs a function method <var>method</var> for the operation <var>opr</var>; 
+<var>args-filts</var> should be a list of requirements for the arguments;
+if supplied <var>info</var> should be a short but informative string that describes 
+for what situation the method is installed,
+<var>famp</var> should be a function to be applied to the families of the arguments,
+each entry being a filter,
+and <var>val</var> is an integer that measures the priority of the method.
+<p>
+The default values for <var>info</var>, <var>famp</var>, and <var>val</var> are the empty string,
+the function <code>ReturnTrue</code>, and the integer zero, respectively.
+<p>
+The exact meaning of the arguments <var>famp</var>, <var>args-filts</var>,
+and <var>val</var> is explained in Section&nbsp;<a href="CHAP002.htm#SECT003">Applicable Methods and Method Selection</a>.
+<p>
+<var>opr</var> expects its methods to require certain filters for their arguments.
+For example, the argument of a method for the operation <code>Zero</code> must be
+in the category <code>IsAdditiveElementWithZero</code>.
+It is not possible to use <code>InstallMethod</code> to install a method for which
+the entries of <var>args-filts</var> do not imply the respective requirements of
+the operation <var>opr</var>.
+If one wants to override this restriction,
+one has to use <code>InstallOtherMethod</code> instead.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>InstallOtherMethod( </code><var>opr</var><code>[,</code><var>info</var><code>][,</code><var>famp</var><code>],</code><var>args-filts</var><code>[,</code><var>val</var><code>],</code><var>method</var><code> ) F</code>
+<p>
+installs a function method <var>method</var> for the operation <var>opr</var>, in the same
+way as for <code>InstallMethod</code> (see&nbsp;<a href="CHAP002.htm#SSEC002.1">InstallMethod</a>), but without the restriction
+that the number of arguments must match the declaration of <var>opr</var> and without
+the restriction that <var>args-filts</var> imply the respective requirements of
+the operation <var>opr</var>.
+<p>
+For attributes and properties there is <code>InstallImmediateMethod</code> 
+(see&nbsp;<a href="CHAP002.htm#SSEC006.1">InstallImmediateMethod</a>).
+<p>
+For declaring that a filter is implied by other filters there is
+<code>InstallTrueMethod</code> (see&nbsp;<a href="CHAP002.htm#SSEC007.1">InstallTrueMethod</a>).
+<p>
+<p>
+<h2><a name="SECT003">2.3 Applicable Methods and Method Selection</a></h2>
+<p><p>
+A method installed as above is <strong>applicable</strong> for an arguments tuple
+if the following conditions are satisfied.
+<p>
+The number of arguments equals the length of the list <var>args-filts</var>,
+the <i>i</i>-th argument lies in the filter <code></code><var>args-filts</var><code>[<i>i</i>]</code>,
+and <var>famp</var> returns <code>true</code> when applied to the families of the arguments.
+<p>
+So <var>args-filt</var> describes conditions for each argument,
+and <var>famp</var> describes a relation between the arguments.
+<p>
+For unary operations such as attributes and properties,
+there is no such relation to postulate,
+<var>famp</var> is <code>ReturnTrue</code> for these operations,
+a function that always returns <code>true</code>.
+For binary operations, the usual value of <var>famp</var> is <code>IsIdenticalObj</code>
+(see&nbsp;<a href="../ref/CHAP012.htm#SSEC005.1">IsIdenticalObj</a> in the Reference Manual),
+which means that both arguments must lie in the same family.
+<p>
+Note that any properties which occur among the filters in the filter list
+will <strong>not</strong> be tested by the method selection if they are not yet known.
+(More exact: if <var>prop</var> is a property then the filter implicitly uses not
+<var>prop</var> but <code>Has</code><var>prop</var><code> and </code><var>prop</var><code></code>.) If this is desired you must explicitly
+enforce a test (see section&nbsp;<a href="CHAP002.htm#SECT005">Redispatching</a>) below.
+<p>
+If no method is applicable,
+the error message <code>no method found</code> is signaled.
+<p>
+Otherwise, the applicable method with highest <strong>rank</strong> is selected and then
+called.
+This rank is given by the sum of the ranks of the filters in the list
+<var>args-filt</var>,
+<strong>including involved filters</strong>,
+plus the number <var>val</var> used in the call of <code>InstallMethod</code>.
+So the argument <var>val</var> can be used to raise the priority of a method
+relative to other methods for <var>opr</var>.
+<p>
+Note that from the applicable methods,
+an efficient one shall be selected.
+This is a method that needs only little time and storage for the
+computations.
+<p>
+It seems to be impossible for <font face="Gill Sans,Helvetica,Arial">GAP</font> to select an optimal
+method in all cases.
+The present ranking of methods is based on the assumption
+that a method installed for a special situation shall be preferred
+to a method installed for a more general situation.
+<p>
+For example, a method for computing a Sylow subgroup of a nilpotent
+group is expected to be more efficient than a method for arbitrary
+groups.
+So the more specific method will be selected if <font face="Gill Sans,Helvetica,Arial">GAP</font> knows that the
+group given as argument is nilpotent.
+<p>
+Of course there is no obvious way to decide between the efficiency of
+incommensurable methods.
+For example, take an operation with one method for permutation groups,
+another method for nilpotent groups,
+but no method for nilpotent permutation groups,
+and call this operation with a permutation group known to be
+nilpotent.
+<p>
+<p>
+<h2><a name="SECT004">2.4 Partial Methods</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>TryNextMethod()</code>
+<p>
+After a method has been selected and called,
+the method may recognize that it cannot compute the desired result,
+and give up by calling <code>TryNextMethod()</code>.
+<p>
+In effect, the execution of the method is terminated,
+and the method selection calls the next method that is applicable w.r.t.
+the original arguments.
+In other words, the applicable method is called that is subsequent to the
+one that called <code>TryNextMethod</code>,
+according to decreasing rank of the methods.
+<p>
+For example, since every finite group of odd order is solvable,
+one may install a method for the property <code>IsSolvableGroup</code> that checks
+whether the size of the argument is an odd integer,
+returns <code>true</code> if so,
+and gives up otherwise.
+<p>
+Care is  needed  if a  partial  method  might  modify the  type of  one  of its
+arguments, for example by computing an attribute  or property. If this happens,
+and the type  has   really changed, then  the  method  should not  exit   using
+<code>TryNextMethod()</code> but  should call the operation again,  as the new information
+in the type may   cause  some methods  previously   judged inapplicable to   be
+applicable. For  example, if  the  above method  for <code>IsSolvableGroup</code> actually
+computes the size, (rather than  just examining  a  stored size), then it  must
+take care to check whether the type of the group has changed.
+<p>
+<p>
+<h2><a name="SECT005">2.5 Redispatching</a></h2>
+<p><p>
+As mentioned above the method selection will not test unknown properties.
+In situations, in which algorithms are only known (or implemented) under
+certain conditions, however such a test might be actually desired.
+<p>
+One way to achieve this would be to install the method under weaker
+conditions and explicitly test the properties first, exiting via
+<code>TryNextMethod</code> (see&nbsp;<a href="CHAP002.htm#SSEC004.1">TryNextMethod</a>) if some of them are not fulfilled.
+A problem of this approach however is that such methods then automatically
+are ranked lower and that the code does not look nice.
+<p>
+A much better way is to use redispatching: Before deciding that no method
+has been found one tests these properties and if they turn out to be true
+the method selection is started anew (and will then find a method).
+<p>
+This can be achieved via the following function:
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>RedispatchOnCondition( </code><var>oper</var><code>, </code><var>fampred</var><code>, </code><var>reqs</var><code>, </code><var>cond</var><code>, </code><var>val</var><code> ) F</code>
+<p>
+This function installs a method for the operation <var>oper</var> under the
+conditions <var>fampred</var> and <var>reqs</var> which has absolute value <var>val</var>;
+that is, the value of the filters <var>reqs</var> is disregarded.
+<var>cond</var> is a list of filters.                                                
+If not all the values of properties involved in these filters are already   
+known for actual arguments of the method,
+they are explicitly tested and if they are fulfilled <strong>and</strong> stored after     
+this test, the operation is dispatched again.                               
+Otherwise the method exits with <code>TryNextMethod</code> (see&nbsp;<a href="CHAP002.htm#SSEC004.1">TryNextMethod</a>).
+This can be used to enforce tests like <code>IsFinite</code> in situations when all    
+existing methods require this property.                                     
+The list <var>cond</var> may have unbound entries in which case the corresponding    
+argument is ignored for further tests.
+<p>
+<p>
+<h2><a name="SECT006">2.6 Immediate Methods</a></h2>
+<p><p>
+Usually a method is called only if its operation has been called
+and if this method has been selected.
+<p>
+For attributes and properties, one can install also <strong>immediate methods</strong>.
+An immediate method is called automatically as soon as it is applicable
+to an object, provided that the value is not yet known.
+Afterwards the attribute setter is called in order to store the value.
+<p>
+Note that in such a case <font face="Gill Sans,Helvetica,Arial">GAP</font> executes a computation for which
+it was not explicitly asked by the user.
+So one should install only those methods as immediate methods
+that are <strong>extremely cheap</strong>.
+To emphasize this, immediate methods are also called <strong>zero cost methods</strong>.
+The time for their execution should really be approximately zero.
+<p>
+An immediate method <var>method</var> for the attribute or property <var>attr</var>
+with requirement <var>req</var> is installed via
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>InstallImmediateMethod( </code><var>attr</var><code>, </code><var>req</var><code>, </code><var>val</var><code>, </code><var>method</var><code> )</code>
+<p>
+where <var>val</var> is an integer value that measures the priority of <var>method</var>
+among the immediate methods for <var>attr</var>.
+<p>
+Note the difference to <code>InstallMethod</code> (see&nbsp;<a href="CHAP002.htm#SSEC002.1">InstallMethod</a>)
+that no family predicate occurs
+because <var>attr</var> expects only one argument,
+and that <var>req</var> is not a list of requirements but the argument requirement
+itself.
+<p>
+For example, the size of a permutation group can be computed very cheaply
+if a stabilizer chain of the group is known.
+So it is reasonable to install an immediate method for <code>Size</code> with
+requirement <code>IsGroup and Tester( </code><var>stab</var><code> )</code>,
+where <var>stab</var> is the attribute corresponding to the stabilizer chain.
+<p>
+Another example would be the implementation of the conclusion that
+every finite group of prime power order is nilpotent.
+This could be done by installing an immediate method for the attribute
+<code>IsNilpotentGroup</code> with requirement <code>IsGroup and Tester( Size )</code>.
+This method would then check whether the size is a finite prime power,
+return <code>true</code> in this case and otherwise call <code>TryNextMethod()</code>
+(see&nbsp;<a href="CHAP002.htm#SSEC004.1">TryNextMethod</a>).
+But this requires factoring of an integer,
+which cannot be guaranteed to be very cheap,
+so one should not install this method as an immediate method.
+<p>
+Immediate methods are thought of as a possibility for objects to gain
+useful knowledge.
+They must not be used to force the storing of ``defining information''
+in an object.
+In other words, <font face="Gill Sans,Helvetica,Arial">GAP</font> should work even if all immediate methods are
+invalidated.
+<p>
+<p>
+<h2><a name="SECT007">2.7 Logical Implications</a></h2>
+<p><p>
+It may happen that a filter <var>newfil</var> shall be implied by another filter
+<var>filt</var>, which is usually a meet of other properties,
+or the meet of some properties and some categories.
+Such a logical implication can be installed as an immediate method for
+<var>newfil</var> that requires <var>filt</var> and that always returns <code>true</code>.
+It should be installed via
+<p>
+<a name = "SSEC007.1"></a>
+<li><code>InstallTrueMethod( </code><var>newfil</var><code>, </code><var>filt</var><code> )</code>
+<p>
+This has the effect that <var>newfil</var> becomes an implied filter of <var>filt</var>,
+see&nbsp;<a href="../ref/CHAP013.htm#SECT002">Filters</a> in the Reference Manual.
+<p>
+For example, each cyclic group is abelian,
+each finite vector space is finite dimensional,
+and each division ring is integral.
+The first of these implications is installed as follows.
+<p>
+<pre>
+InstallTrueMethod( IsCommutative, IsGroup and IsCyclic );
+</pre>
+<p>
+Contrary to other immediate methods,
+logical implications cannot be switched off.
+This means that after the above implication has been installed,
+one can rely on the fact that every object in the filter
+<code>IsGroup and IsCyclic</code> will also be in the filter <code>IsCommutative</code>.
+<p>
+<p>
+<h2><a name="SECT008">2.8 Operations and Mathematical Terms</a></h2>
+<p><p>
+<a name = "I2"></a>
+
+Usually an operation stands for a mathematical concept,
+and the name of the operation describes this uniquely.
+Examples are the property <code>IsFinite</code> and the attribute <code>Size</code>.
+But there are cases where the same mathematical term is used 
+to denote different concepts,
+for example <code>Degree</code> is defined for polynomials, group characters,
+and permutation actions,
+and <code>Rank</code> is defined for matrices, free modules, <i>p</i>-groups,
+and transitive permutation actions.
+<p>
+It is in principle possible to install methods for the operation
+<code>Rank</code> that are applicable to the different types of arguments,
+corresponding to the different contexts.
+But this is not the approach taken in the <font face="Gill Sans,Helvetica,Arial">GAP</font> library.
+Instead there are operations such as <code>RankMat</code> for matrices
+and <code>DegreeOfCharacter</code> (in fact these are attributes)
+which are installed as methods of the ``ambiguous'' operations
+<code>Rank</code> and <code>Degree</code>.
+<p>
+The idea is to distinguish between on the one hand different ways
+to compute the same thing (e.g.&nbsp;different methods for <code>\=</code>, <code>Size</code>, etc.),
+and on the other hand genuinely different things
+(such as the degree of a polynomial and a permutation action).
+<p>
+The former is the basic purpose of operations and attributes.
+The latter is provided as a user convenience where mathematical usage
+forces it on us <strong>and</strong> where no conflicts arise.
+In programming the library, we use the underlying mathematically
+precise operations or attributes, such as <code>RankMat</code> and
+<code>RankOperation</code>.
+These should be attributes if appropriate, and the only role of the
+operation <code>Rank</code> is to decide which attribute the user meant.
+That way, stored information is stored with ``full mathematical precision''
+and is less likely to be retrieved for a wrong purpose later.
+<p>
+One word about possible conflicts.
+A typical example is the mathematical term ``centre'',
+which is defined as { <i>x</i>  <font face="symbol">&#8712;</font> <i>M</i> <font face="symbol">&#124;</font> <i>a</i> * <i>x</i> = <i>x</i> * <i>a</i> <font face="symbol">&#8704;</font><i>a</i>  <font face="symbol">&#8712;</font> <i>M</i> }
+for a magma <i>M</i>, and as { <i>x</i>  <font face="symbol">&#8712;</font> <i>L</i> <font face="symbol">&#124;</font> <i>l</i> * <i>x</i> = 0 <font face="symbol">&#8704;</font><i>l</i>  <font face="symbol">&#8712;</font> <i>L</i> }
+for a Lie algebra <i>L</i>.
+Here it is <strong>not</strong> possible to introduce an operation <code>Centre</code> that
+delegates to attributes <code>CentreOfMagma</code> and <code>CentreOfLieAlgebra</code>,
+depending on the type of the argument.
+This is because any Lie algebra in <font face="Gill Sans,Helvetica,Arial">GAP</font> is also a magma,
+so both <code>CentreOfMagma</code> and <code>CentreOfLieAlgebra</code> would be defined
+for a Lie algebra, with different meaning if the characteristic is 2.
+So we cannot achieve that one operation in <font face="Gill Sans,Helvetica,Arial">GAP</font> corresponds to
+the mathematical term ``centre''.
+<p>
+``Ambiguous'' operations such as <code>Rank</code> are declared in the library file
+<code>overload.g</code>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

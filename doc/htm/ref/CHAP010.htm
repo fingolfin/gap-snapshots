@@ -1,0 +1,781 @@
+<html><head><title>[ref] 10 Streams</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP009.htm">Previous</a>] [<a href ="CHAP011.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>10 Streams</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP010.htm#SECT001">Categories for Streams and the StreamsFamily</a>
+<li> <A HREF="CHAP010.htm#SECT002">Operations applicable to All Streams</a>
+<li> <A HREF="CHAP010.htm#SECT003">Operations for Input Streams</a>
+<li> <A HREF="CHAP010.htm#SECT004">Operations for Output Streams</a>
+<li> <A HREF="CHAP010.htm#SECT005">File Streams</a>
+<li> <A HREF="CHAP010.htm#SECT006">User Streams</a>
+<li> <A HREF="CHAP010.htm#SECT007">String Streams</a>
+<li> <A HREF="CHAP010.htm#SECT008">Input-Output Streams</a>
+<li> <A HREF="CHAP010.htm#SECT009">Dummy Streams</a>
+<li> <A HREF="CHAP010.htm#SECT010">Handling of Streams in the Background</a>
+</ol><p>
+<p>
+<strong>Streams</strong> provide flexible access to <font face="Gill Sans,Helvetica,Arial">GAP</font>'s input and output
+processing. An <strong>input stream</strong> takes characters from some source and
+delivers them to <font face="Gill Sans,Helvetica,Arial">GAP</font> which <strong>reads</strong> them from the stream.  When an
+input stream has delivered all characters it is at <code>end-of-stream</code>.  An
+<strong>output stream</strong> receives characters from <font face="Gill Sans,Helvetica,Arial">GAP</font> which <strong>writes</strong> them to
+the stream, and delivers them to some destination.
+<p>
+A major use of streams is to provide efficient and flexible access to
+files.  Files can be read and written using <code>Read</code> and <code>AppendTo</code>,
+however the former only allows a complete file to be read as <font face="Gill Sans,Helvetica,Arial">GAP</font>
+input and the latter imposes a high time penalty if many small pieces of
+output are written to a large file. Streams allow input files in other
+formats to be read and processed, and files to be built up efficiently
+from small pieces of output. Streams may also be used for other purposes, 
+for example to read from and print to <font face="Gill Sans,Helvetica,Arial">GAP</font> strings, or to read input
+directly from the user.
+<p>
+Any stream is either a <strong>text stream</strong>, which translates the <code>end-of-line</code>
+character (<code>'\n'</code>) to or from the system's representation of
+<code>end-of-line</code> (e.g., <var>new-line</var> under UNIX, <var>carriage-return</var> under
+MacOS, <var>carriage-return</var>-<var>new-line</var> under DOS), or a <strong>binary stream</strong>,
+which does not translate the <code>end-of-line</code> character. The processing of
+other unprintable characters by text streams is undefined. Binary streams
+pass them unchanged.
+<p>
+Note that binary streams are <strong>@not yet implemented@</strong>.
+<p>
+Whereas it is  cheap  to append  to a  stream, streams do  consume system
+resources, and only a  limited number can  be open at any time, therefore
+it is   necessary   to close   a  stream  as   soon as   possible  using
+<code>CloseStream</code> described in Section&nbsp;<a href="CHAP010.htm#SSEC002.1">CloseStream</a>.   If creating  a stream
+failed then <code>LastSystemError</code> (see <a href="CHAP009.htm#SSEC001.1">LastSystemError</a>)  can be used to get
+information about the failure. 
+<p>
+<p>
+<h2><a name="SECT001">10.1 Categories for Streams and the StreamsFamily</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsStream( </code><var>obj</var><code> ) C</code>
+<p>
+Streams are <font face="Gill Sans,Helvetica,Arial">GAP</font> objects and all open streams, input, output, text
+and binary, lie in this category.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsClosedStream( </code><var>obj</var><code> ) C</code>
+<p>
+When a stream is closed, its type changes to lie in
+'IsClosedStream'. This category is used to install methods that trap
+accesses to closed streams.
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>IsInputStream( </code><var>obj</var><code> ) C</code>
+<p>
+All input streams lie in this category, and support input
+operations such as <code>ReadByte</code> (see <a href="CHAP010.htm#SECT003">Operations for Input Streams</a>)
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>IsInputTextStream( </code><var>obj</var><code> ) C</code>
+<p>
+All <strong>text</strong> input streams lie in this category. They translate new-line
+characters read.
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>IsInputTextNone( </code><var>obj</var><code> ) C</code>
+<p>
+It is convenient to use a category to distinguish dummy streams
+(see <a href="CHAP010.htm#SECT009">Dummy Streams</a>) from others. Other distinctions are usually
+made using representations
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>IsOutputStream( </code><var>obj</var><code> ) C</code>
+<p>
+All output streams lie in this category and support basic
+operations such as <code>WriteByte</code> (see <a href="CHAP010.htm#SECT004">Operations for Output Streams</a>)
+<p>
+<a name = "SSEC001.7"></a>
+<li><code>IsOutputTextStream( </code><var>obj</var><code> ) C</code>
+<p>
+All <strong>text</strong> output streams lie in this category and translate
+new-line characters on output.
+<p>
+<a name = "SSEC001.8"></a>
+<li><code>IsOutputTextNone( </code><var>obj</var><code> ) C</code>
+<p>
+It is convenient to use a category to distinguish dummy streams
+(see <a href="CHAP010.htm#SECT009">Dummy Streams</a>) from others. Other distinctions are usually
+made using representations
+<p>
+<a name = "SSEC001.9"></a>
+<li><code>StreamsFamily V</code>
+<p>
+All streams lie in the <code>StreamsFamily</code>
+<p>
+<p>
+<h2><a name="SECT002">10.2 Operations applicable to All Streams</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>CloseStream( </code><var>stream</var><code> ) O</code>
+<p>
+In order  to preserve system resources  and to flush output streams every
+stream should  be  closed  as soon   as  it is   no longer   used using
+<code>CloseStream</code>.
+<p>
+It is an error to  try to read  characters from or  write characters to a
+closed  stream.   Closing a  stream tells  the <font face="Gill Sans,Helvetica,Arial">GAP</font>   kernel and/or the
+operating system kernel  that the file is  no longer needed.  This may be
+necessary  because  the <font face="Gill Sans,Helvetica,Arial">GAP</font> kernel  and/or  the  operating  system may
+impose a limit on how many streams may be open simultaneously.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>FileDescriptorOfStream( </code><var>stream</var><code> ) O</code>
+<p>
+returns the UNIX file descriptor of the underlying file. This is mainly
+useful for the <code>UNIXSelect</code> function call (see&nbsp;<a href="CHAP010.htm#SSEC002.3">UNIXSelect</a>). This is
+as of now only available on UNIX-like operating systems and only for
+streams to local processes and local files.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>UNIXSelect( </code><var>inlist</var><code>, </code><var>outlist</var><code>, </code><var>exclist</var><code>, </code><var>timeoutsec</var><code>, </code><var>timeoutusec</var><code> ) F</code>
+<p>
+makes the UNIX C-library function <code>select</code> accessible from <font face="Gill Sans,Helvetica,Arial">GAP</font>
+for streams. The functionality is as described in the man page (see
+<code>man select</code>). The first three arguments must be lists containing
+UNIX file descriptors (integers) for streams. They can be obtained via
+<code>FileDescriptorOfStream</code> (see&nbsp;<a href="CHAP010.htm#SSEC002.2">FileDescriptorOfStream</a>) for streams
+to local processes and to local files. The argument <var>timeoutsec</var> is a
+timeout in seconds as in the <code>struct timeval</code> on the C level. The argument
+<var>timeoutusec</var> is
+analogously in microseconds. The total timeout is the sum of both. If
+one of those timeout arguments is not a small integer then no timeout is
+applicable (<code>fail</code> is allowed for the timeout arguments).
+<p>
+The return value is the number of streams that are ready, this may be
+0 if a timeout was specified. All file descriptors in the three lists
+that are not yet ready are replaced by <code>fail</code> in this function. So 
+the lists are changed!
+<p>
+This function is not available on the Macintosh architecture and is
+only available if your operating system has <code>select</code>, which is detected
+during compilation of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<p>
+<h2><a name="SECT003">10.3 Operations for Input Streams</a></h2>
+<p><p>
+Three operations normally used to read files: <code>Read</code>, <code>ReadAsFunction</code>
+and <code>ReadTest</code> can also be used to read <font face="Gill Sans,Helvetica,Arial">GAP</font> input from a
+stream. The input is immediately parsed and executed. When reading
+from a stream <var>str</var>, the <font face="Gill Sans,Helvetica,Arial">GAP</font> kernel generates calls to
+<code>ReadLine(</code><var>str</var><code>)</code> to supply text to the parser. 
+<p>
+Three further operations: <code>ReadByte</code>, <code>ReadLine</code> and <code>ReadAll</code>, support
+reading characters from an input stream without parsing them. This can be
+used to read data in any format and process it in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+Additional operations for input streams support detection of end of
+stream, and (for those streams for which it is appropriate) random access 
+to the data.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>Read( </code><var>input-text-stream</var><code> ) O</code>
+<p>
+reads the input-text-stream as  input  until <code>end-of-stream</code> occurs.  See
+<a href="CHAP009.htm#SECT007">File Operations</a> for details.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>ReadAsFunction( </code><var>input-text-stream</var><code> ) O</code>
+<p>
+reads the input-text-stream as function and returns this function. See
+<a href="CHAP009.htm#SECT007">File Operations</a> for details.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>ReadTest( </code><var>input-text-stream</var><code> ) O</code>
+<p>
+reads the input-text-stream as  test input until <code>end-of-stream</code> occurs.
+See <a href="CHAP009.htm#SECT007">File Operations</a> for details.
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; # a function with local `a' does not change the global one
+gap&gt; a := 1;;
+gap&gt; i := InputTextString( "local a; a := 10; return a*10;" );;
+gap&gt; ReadAsFunction(i)();
+100
+gap&gt; a;
+1
+</pre>
+<p>
+<pre>
+gap&gt; # reading it via `Read' does
+gap&gt; i := InputTextString( "a := 10;" );;
+gap&gt; Read(i);
+gap&gt; a;
+10
+</pre>
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>ReadByte( </code><var>input-stream</var><code> ) O</code>
+<p>
+<code>ReadByte</code> returns  one character (returned  as  integer) from  the input
+stream <var>stream-in</var>.  <code>ReadByte</code> returns <code>fail</code> if there is no character
+available, in particular if it is at the end of a file.
+<p>
+If <var>stream-in</var> is the input stream of  a input/output process, <code>ReadByte</code>
+may also return <code>fail</code> if no byte is currently available.
+<p>
+<code>ReadByte</code> is the basic operation for input streams. If a <code>ReadByte</code>
+method is installed for a user-defined type of stream which does
+not block, then all the other
+input stream operations will work (although possibly not at peak
+efficiency).
+<p>
+<code>ReadByte</code> will wait (block) until a byte is available. For
+instance if the stream is a connection to another process, it will
+wait for the process to output a byte.
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>ReadLine( </code><var>input-stream</var><code> ) O</code>
+<p>
+<code>ReadLine</code> returns one line (returned as string <strong>with</strong> the newline) from
+the input stream <var>input-stream</var>.  <code>ReadLine</code> reads in the input until  a
+newline is read or the end-of-stream is encountered.
+<p>
+If <var>input-stream</var> is the input stream of a input/output process, <code>ReadLine</code>
+may also return <code>fail</code> or return an incomplete line if the other
+process has not yet written any more. It will always wait (block) for at
+least one byte to be available, but will then return as much input
+as is available, up to a limit of one  line
+<p>
+A default method is supplied for <code>ReadLine</code> which simply calls <code>ReadByte</code>
+repeatedly. This is only safe for streams that cannot block. The kernel 
+uses calls to <code>ReadLine</code> to supply input to the
+parser when reading from a stream.
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>ReadAll( </code><var>input-stream</var><code> ) O</code>
+<li><code>ReadAll( </code><var>input-stream</var><code> , </code><var>limit</var><code> ) O</code>
+<p>
+<code>ReadAll</code> returns all characters as string from the input stream
+<var>stream-in</var>.  It waits (blocks) until at least one
+character is available from the stream, or until there is evidence
+that no characters will ever be available again. This last indicates
+that the stream is at end-of-stream.
+Otherwise, it reads as much input as it can from the stream without
+blocking further and returns it to the user. If the stream is
+already at end of file, so that no bytes are available, <code>fail</code> is
+ returned. In the case of a file
+stream connected to a normal file (not a pseudo-tty or named pipe
+or similar), all the bytes should be immediately available and
+this function will read the remainder of the file.
+<p>
+With a second argument, at most <var>limit</var> bytes will be
+returned. Depending on the stream a bounded number of additional bytes
+may have been read into an internal buffer.  
+<p>
+A default method is supplied for <code>ReadAll</code> which simply calls <code>ReadLine</code>
+repeatedly. This is only really safe for streams which cannot
+block. Other streams should install a method for ReadAll
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; i := InputTextString( "1Hallo\nYou\n1" );;
+gap&gt; ReadByte(i);
+49
+gap&gt; CHAR_INT(last);
+'1'
+gap&gt; ReadLine(i);
+"Hallo\n"
+gap&gt; ReadLine(i);
+"You\n"
+gap&gt; ReadLine(i);
+"1"
+gap&gt; ReadLine(i);
+fail
+gap&gt; ReadAll(i);
+""
+gap&gt; RewindStream(i);;
+gap&gt; ReadAll(i);
+"1Hallo\nYou\n1"
+</pre>
+<p>
+<a name = "SSEC003.7"></a>
+<li><code>IsEndOfStream( </code><var>input-stream</var><code> ) O</code>
+<p>
+<code>IsEndOfStream</code> returns <code>true</code> if the input stream is at <var>end-of-stream</var>,
+and <code>false</code> otherwise.  Note   that <code>IsEndOfStream</code> might  return <code>false</code>
+even if the next <code>ReadByte</code> fails.
+<p>
+<a name = "SSEC003.8"></a>
+<li><code>PositionStream( </code><var>input-stream</var><code> ) O</code>
+<p>
+Some input streams, such as string streams and file streams attached to
+disk files, support a form of random access by way of the operations
+<code>PositionStream</code>, <code>SeekPositionStream</code> and
+<code>RewindStream</code>. <code>PositionStream</code> returns a non-negative integer denoting
+the current position in the stream (usually the number of characters
+<strong>before</strong> the next one to be read.
+<p>
+If this is not possible, for example for an input stream attached to
+standard input (normally the keyboard), then <code>fail</code> is returned
+<p>
+<a name = "SSEC003.9"></a>
+<li><code>RewindStream( </code><var>input-stream</var><code> ) O</code>
+<p>
+<code>RewindStream</code> attempts to return an input stream to its starting
+condition, so that all the same characters can be read again. It returns
+<code>true</code> if the rewind succeeds and <code>fail</code> otherwise
+<p>
+A default method implements RewindStream using <code>SeekPositionStream</code>.
+<p>
+<a name = "SSEC003.10"></a>
+<li><code>SeekPositionStream( </code><var>input-stream</var><code>, </code><var>pos</var><code> ) O</code>
+<p>
+<code>SeekPositionStream</code> attempts to rewind or wind forward an input stream
+to the specified position. This is not possible for all streams. It
+returns <code>true</code> if the seek is successful and <code>fail</code> otherwise.
+<p>
+<p>
+<h2><a name="SECT004">10.4 Operations for Output Streams</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>WriteByte( </code><var>output-stream</var><code>, </code><var>byte</var><code> ) O</code>
+<p>
+writes the  next  character  (given  as <strong>integer</strong>)  to the  output stream
+<var>output-stream</var>.  The function  returns <code>true</code> if  the write succeeds and
+<code>fail</code> otherwise.
+<p>
+<code>WriteByte</code> is the basic operation for input streams. If a <code>WriteByte</code>
+method is installed for a user-defined type of stream, then all the other
+output stream operations will work (although possibly not at peak
+efficiency).
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>WriteLine( </code><var>output-stream</var><code>, </code><var>string</var><code> ) O</code>
+<p>
+appends  <var>string</var> to <var>output-stream</var>.   A  final newline is written.
+The function returns <code>true</code> if the write succeeds and <code>fail</code> otherwise.
+<p>
+A default method is installed which implements <code>WriteLine</code> by repeated
+calls to <code>WriteByte</code>.
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>WriteAll( </code><var>output-stream</var><code>, </code><var>string</var><code> ) O</code>
+<p>
+appends  <var>string</var> to <var>output-stream</var>.   No final  newline is written.
+The function returns <code>true</code> if the write succeeds and <code>fail</code> otherwise.
+It will block as long as necessary for the write operation to
+complete (for example for a child process to clear its input buffer )
+<p>
+A default method is installed which implements <code>WriteAll</code> by repeated
+calls to <code>WriteByte</code>.
+<p>
+When printing or appending to a stream (using <code>PrintTo</code>, or <code>AppendTo</code> or
+when logging to a stream), the kernel generates a call to <code>WriteAll</code> for
+each line output.
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; str := "";; a := OutputTextString(str,true);;
+gap&gt; WriteByte(a,INT_CHAR('H'));
+true
+gap&gt; WriteLine(a,"allo");
+true
+gap&gt; WriteAll(a,"You\n");
+true
+gap&gt; CloseStream(a);
+gap&gt; Print(str);
+Hallo
+You
+</pre>
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>PrintTo( </code><var>output-stream</var><code>, </code><var>arg1</var><code>, ... ) F</code>
+<a name = "SSEC004.4"></a>
+<li><code>AppendTo( </code><var>output-stream</var><code>, </code><var>arg1</var><code>, ... ) F</code>
+<p>
+These functions work like <code>Print</code>, except that the output is
+appended to the output stream <var>output-stream</var>.
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; str := "";; a := OutputTextString(str,true);;
+gap&gt; AppendTo( a, (1,2,3), ":", Z(3) );
+gap&gt; CloseStream(a);
+gap&gt; Print( str, "\n" );
+(1,2,3):Z(3)
+</pre>
+<p>
+<a name = "SSEC004.5"></a>
+<li><code>LogTo( </code><var>stream</var><code> ) O</code>
+<p>
+causes the subsequent interaction to  be  logged  to  the  output  stream
+<var>stream</var>. It works in precisely  the  same  way  as  it  does  for  files
+(see&nbsp;<a href="CHAP009.htm#SSEC007.5">LogTo</a>).
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>InputLogTo( </code><var>stream</var><code> ) O</code>
+<p>
+causes the subsequent input to be logged to the output  stream  <var>stream</var>.
+It works just like it does for files (see&nbsp;<a href="CHAP009.htm#SSEC007.7">InputLogTo</a>).
+<p>
+<a name = "SSEC004.7"></a>
+<li><code>OutputLogTo( </code><var>stream</var><code> ) O</code>
+<p>
+causes the subsequent output to be logged to the output stream  <var>stream</var>.
+It works just like it does for files (see&nbsp;<a href="CHAP009.htm#SSEC007.9">OutputLogTo</a>).
+<p>
+When  text is being  sent to an output text   stream via <code>PrintTo</code>, <code>AppendTo</code>,
+<code>LogTo</code>, etc., it  is, by default formatted just  as it would  be were it being
+printed to  the screen. Thus,  it is broken into lines  of reasonable length at
+(where possible) sensible places, lines containing elements of lists or records
+are indented, and so forth.  This is appropriate if the output is eventually to
+be viewed by a human, and harmless if it to passed  as input to <font face="Gill Sans,Helvetica,Arial">GAP</font>, but may
+be unhelpful if the output is to be  passed as input to  another program. It is
+possible    to turn      off   this behaviour     for   a   stream   using  the
+<code>SetPrintFormattingStatus</code> operation, and to test whether it is on or off using
+<code>PrintFormattingStatus</code>.
+<p>
+<a name = "SSEC004.8"></a>
+<li><code>SetPrintFormattingStatus( </code><var>stream</var><code>, </code><var>newstatus</var><code> ) O</code>
+<p>
+sets whether output sent to the output  stream  <var>stream</var>  via  <code>PrintTo</code>,
+<code>AppendTo</code>, etc. (but not <code>WriteByte</code>, <code>WriteLine</code> or <code>WriteAll</code>) will be
+formatted with line  breaks  and  indentation.  If  the  second  argument
+<var>newstatus</var> is <code>true</code> then output will be so formatted,  and  if  <code>false</code>
+then it will not.
+<p>
+<a name = "SSEC004.9"></a>
+<li><code>PrintFormattingStatus( </code><var>stream</var><code> ) O</code>
+<p>
+returns  <code>true</code>  if  output  sent  to  the  output  stream  <var>stream</var>  via
+<code>PrintTo</code>,  <code>AppendTo</code>,  etc.  (but  not  <code>WriteByte</code>,   <code>WriteLine</code>   or
+<code>WriteAll</code>) will be formatted  with  line  breaks  and  indentation,  and
+<code>false</code> otherwise (see&nbsp;<a href="CHAP010.htm#SSEC004.8">SetPrintFormattingStatus</a>).
+<p>
+<strong>Example</strong>
+<pre>
+gap&gt; s := "";; str := OutputTextString(s,false);;
+gap&gt; PrintTo(str,Primes{[1..30]});
+gap&gt; s;
+"[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,\
+ \n  73, 79, 83, 89, 97, 101, 103, 107, 109, 113 ]"
+gap&gt; Print(s,"\n");
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
+  73, 79, 83, 89, 97, 101, 103, 107, 109, 113 ]
+gap&gt; SetPrintFormattingStatus(str, false);
+gap&gt; PrintTo(str,Primes{[1..30]});
+gap&gt; s;
+"[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,\
+ \n  73, 79, 83, 89, 97, 101, 103, 107, 109, 113 ][ 2, 3, 5, 7, 11, 13, 17, 19\
+, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103\
+, 107, 109, 113 ]"
+gap&gt; Print(s,"\n");
+[ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
+  73, 79, 83, 89, 97, 101, 103, 107, 109, 113 ][ 2, 3, 5, 7, 11, 13, 17, 19, 2\
+3, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 1\
+07, 109, 113 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">10.5 File Streams</a></h2>
+<p><p>
+File streams  are  streams associated with  files.  An  input file stream
+reads  the characters  it delivers from  a  file,  an output  file stream
+prints the characters it receives to a file.  The following functions can
+be used to create such streams.  They return <code>fail</code> if an error occurred,
+in this case <code>LastSystemError</code> (see <a href="CHAP009.htm#SSEC001.1">LastSystemError</a>) can be used to get
+information about the error.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>InputTextFile( </code><var>name-file</var><code> ) O</code>
+<p>
+<code>InputTextFile( </code><var>name-file</var><code> )</code> returns an input stream in the category
+<code>IsInputTextStream</code> that delivers the characters from the file
+<var>name-file</var>.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>OutputTextFile( </code><var>name-file</var><code>, </code><var>append</var><code> ) O</code>
+<p>
+<code>OutputTextFile( </code><var>name-file</var><code>, </code><var>append</var><code> )</code> returns an output stream in the
+category <code>IsOutputTextFile</code> that writes received characters to the file
+<var>name-file</var>.  If <var>append</var> is <code>false</code>, then the file is emptied first,
+otherwise received characters are added at the end of the list.
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; # use a temporary directory
+gap&gt; name := Filename( DirectoryTemporary(), "test" );;
+gap&gt; # create an output stream, append output, and close again
+gap&gt; output := OutputTextFile( name, true );;
+gap&gt; AppendTo( output, "Hallo\n", "You\n" );
+gap&gt; CloseStream(output);
+gap&gt; # create an input, print complete contents of file, and close
+gap&gt; input := InputTextFile(name);;
+gap&gt; Print( ReadAll(input) );
+Hallo
+You
+gap&gt; CloseStream(input);
+gap&gt; # append a single line
+gap&gt; output := OutputTextFile( name, true );;
+gap&gt; AppendTo( output, "AppendLine\n" );
+gap&gt; # close output stream to flush the output
+gap&gt; CloseStream(output);
+gap&gt; # create an input, print complete contents of file, and close
+gap&gt; input := InputTextFile(name);;
+gap&gt; Print( ReadAll(input) );
+Hallo
+You
+AppendLine
+gap&gt; CloseStream(input);
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">10.6 User Streams</a></h2>
+<p><p>
+The following two commands create streams which accept characters
+from, or deliver characters to, the user, via the keyboard or the <font face="Gill Sans,Helvetica,Arial">GAP</font> session
+display.
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>InputTextUser( ) F</code>
+<p>
+returns an input text stream which delivers characters typed by the user
+(or from the standard input device if it has been redirected). In normal
+circumstances, characters are delivered one by one as they are typed,
+without waiting until the end of a line. No prompts are printed.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>OutputTextUser( ) F</code>
+<p>
+returns an output stream which delivers characters to the user's display
+(or the standard output device if it has been redirected). Each character
+is delivered immediately it is written, without waiting for a full line
+of output. Text written in this way is <strong>not</strong> written to the session log
+(see <a href="CHAP009.htm#SSEC007.5">LogTo</a>).
+<p>
+<p>
+<h2><a name="SECT007">10.7 String Streams</a></h2>
+<p><p>
+String streams   are streams associated  with   strings.  An input string
+stream reads  the characters it delivers  from a string, an output string
+stream  appends the characters  it receives  to  a string.  The following
+functions can be used to create such streams.
+<p>
+<a name = "SSEC007.1"></a>
+<li><code>InputTextString( </code><var>string</var><code> ) O</code>
+<p>
+<code>InputTextString( </code><var>string</var><code> )</code>returns an input stream that delivers the
+characters from the string <var>string</var>.  The <var>string</var> is not changed when
+reading characters from it and changing the <var>string</var> after the call to
+<code>InputTextString</code> has no influence on the input stream.
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>OutputTextString( </code><var>list</var><code>, </code><var>append</var><code> ) O</code>
+<p>
+returns an output stream that puts all received characters into the list
+<var>list</var>.  If <var>append</var> is <code>false</code>, then the list is emptied first,
+otherwise received characters are added at the end of the list. 
+<p>
+<strong>Example</strong>
+<p>
+<pre>
+gap&gt; # read input from a string
+gap&gt; input := InputTextString( "Hallo\nYou\n" );;
+gap&gt; ReadLine(input);
+"Hallo\n"
+gap&gt; ReadLine(input);
+"You\n"
+gap&gt; # print to a string
+gap&gt; str := "";;
+gap&gt; out := OutputTextString( str, true );;
+gap&gt; PrintTo( out, 1, "\n", (1,2,3,4)(5,6), "\n" );
+gap&gt; CloseStream(out);
+gap&gt; Print( str );
+1
+(1,2,3,4)(5,6)
+</pre>
+<p>
+<p>
+<h2><a name="SECT008">10.8 Input-Output Streams</a></h2>
+<p><p>
+Input-output streams capture bidirectional 
+communications between <font face="Gill Sans,Helvetica,Arial">GAP</font> and another process, either locally
+or (@as yet unimplemented@) remotely.
+<p>
+Such streams support the basic operations of both input and output 
+streams. They should provide some buffering, allowing output date to be 
+written to the stream, even when input data is waiting to be read, 
+but the amount of this buffering is operating system dependent,
+and the user should take care not to get too far ahead in writing, or 
+behind in reading, or deadlock may occur.
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>IsInputOutputStream( </code><var>obj</var><code> ) C</code>
+<p>
+<code>IsInputOutputStream</code> is the Category of Input-Output Streams; it returns
+<code>true</code> if the <var>obj</var> is an input-output stream and <code>false</code> otherwise.
+<p>
+At present the only type of Input-Output streams that are
+implemented provide communication with a local child process,
+using a pseudo-tty. They are only available on UNIX systems.
+<p>
+Like other streams, write operations are blocking, read operations
+will block to get the first character, but not thereafter. 
+<p>
+As far as possible, no translation is done on characters written
+to, or read from the stream, and no control characters have special
+effects, but the details of particular pseudo-tty implementations 
+may effect this. 
+<p>
+<a name = "SSEC008.2"></a>
+<li><code>InputOutputLocalProcess( </code><var>dir</var><code>, </code><var>executable</var><code>, </code><var>args</var><code> ) F</code>
+<p>
+starts up a slave process, whose executable file is <var>executable</var>, with
+``command line'' arguments <var>args</var> in the directory <var>dir</var>. (Suitable 
+choices for <var>dir</var> are <code>DirectoryCurrent()</code> or <code>DirectoryTemporary()</code>
+(see Section&nbsp;<a href="CHAP009.htm#SECT003">Directories</a>); <code>DirectoryTemporary()</code> may be a good choice
+when <var>executable</var> generates output files that it doesn't itself remove
+afterwards.) 
+<code>InputOutputLocalProcess</code> returns an InputOutputStream object. Bytes
+written to this stream are received by the slave process as if typed
+at a terminal on standard input. Bytes written to standard output
+by the slave process can be read from the stream. 
+<p>
+When the stream if closed, the signal SIGTERM is delivered to the child
+process, which is expected to exit.
+<p>
+<pre>
+gap&gt; d := DirectoryCurrent();
+dir("./")
+gap&gt; f := Filename(DirectoriesSystemPrograms(), "rev");
+"/usr/bin/rev"
+gap&gt; s := InputOutputLocalProcess(d,f,[]);
+&lt; input/output stream to rev &gt;
+gap&gt; WriteLine(s,"The cat sat on the mat");
+true
+gap&gt; Print(ReadLine(s));
+tam eht no tas tac ehT
+gap&gt; x := ListWithIdenticalEntries(10000,'x');;
+gap&gt; ConvertToStringRep(x);
+gap&gt; WriteLine(s,x);
+true
+gap&gt; WriteByte(s,INT_CHAR('\n'));
+true
+gap&gt; y := ReadAll(s);;
+gap&gt; Length(y);
+4095
+gap&gt; CloseStream(s);
+gap&gt; s;
+&lt; closed input/output stream to rev &gt;
+</pre>
+<p>
+<a name = "SSEC008.3"></a>
+<li><code>ReadAllLine( </code><var>iostream</var><code>[, </code><var>nofail</var><code>][, </code><var>IsAllLine</var><code>] ) O</code>
+<p>
+For an input/output stream <var>iostream</var> <code>ReadAllLine</code> reads until a newline
+character if any input is found or returns <code>fail</code> if no input  is  found,
+i.e.&nbsp;if any input is found <code>ReadAllLine</code> is non-blocking.
+<p>
+If the argument <var>nofail</var> (which must be <code>false</code> or  <code>true</code>)  is  provided
+and it is set to <code>true</code> then <code>ReadAllLine</code> will wait, if  necessary,  for
+input and never return <code>fail</code>.
+<p>
+If the argument <var>IsAllLine</var> (which must be a function that takes a string
+argument and returns either  <code>true</code>  or  <code>false</code>)  then  it  is  used  to
+determine what  constitutes  a  whole  line.  The  default  behaviour  is
+equivalent to passing the function
+<p>
+<pre>
+line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
+</pre>
+<p>
+for the <var>IsAllLine</var> argument. The purpose of the <var>IsAllLine</var> argument  is
+to cater for the case where the input being  read  is  from  an  external
+process that writes a ``prompt'' for data that does not terminate with  a
+newline.
+<p>
+If the first argument is an input stream but not an  input/output  stream
+then <code>ReadAllLine</code> behaves as if <code>ReadLine</code>  was  called  with  just  the
+first argument and any additional arguments are ignored.
+<p>
+<p>
+<h2><a name="SECT009">10.9 Dummy Streams</a></h2>
+<p><p>
+The following  two commands create  dummy streams  which will consume all
+characters and never deliver one.
+<p>
+<a name = "SSEC009.1"></a>
+<li><code>InputTextNone( ) F</code>
+<p>
+returns a dummy input text stream, which delivers no characters, i.e., it
+is always at end of stream.  Its main use is for calls to <code>Process</code> (see
+<a href="CHAP011.htm#SSEC001.1">Process</a>) when the started program does not read anything.
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>OutputTextNone( ) F</code>
+<p>
+returns a dummy output stream, which discards all received characters. 
+Its main use is for calls to <code>Process</code> (see&nbsp;<a href="CHAP011.htm#SSEC001.1">Process</a>) when the started
+program does not write anything.
+<p>
+<p>
+<h2><a name="SECT010">10.10 Handling of Streams in the Background</a></h2>
+<p><p>
+This section describes a feature of the <font face="Gill Sans,Helvetica,Arial">GAP</font> kernel that can be used
+to handle pending streams somehow ``in the background''. This is currently
+not available on the Macintosh architecture and only on operating
+systems that have <code>select</code>.
+<p>
+Right before <font face="Gill Sans,Helvetica,Arial">GAP</font> reads a keypress from the keyboard it calls a little
+subroutine that can handle streams that are ready to be read or ready to
+be written. This means that <font face="Gill Sans,Helvetica,Arial">GAP</font> can handle these streams during
+user input on the command line. Note that this does not work when <font face="Gill Sans,Helvetica,Arial">GAP</font>
+is in the middle of some calculation.
+<p>
+This feature is used in the following way. One can install handler
+functions for reading or writing streams. This is done via:
+<p>
+<a name = "SSEC010.1"></a>
+<li><code>InstallCharReadHookFunc( </code><var>stream</var><code>, </code><var>mode</var><code>, </code><var>func</var><code> ) F</code>
+<p>
+installs the function <var>func</var> as a handler function for the stream
+<var>stream</var>. The argument <var>mode</var> decides, for what operations on the
+stream this function is installed. <var>mode</var> must be a string, in which
+a letter <code>r</code> means ``read'', <code>w</code> means ``write'' and <code>x</code> means
+``exception'', according to the <code>select</code> function call in the UNIX
+C-library (see <code>man select</code> and <a href="CHAP010.htm#SSEC002.3">UNIXSelect</a>). More than one letter 
+is allowed in <var>mode</var>. As described above the function is called
+in a situation when <font face="Gill Sans,Helvetica,Arial">GAP</font> is reading a character from the keyboard.
+Handler functions should not use much time to complete.
+<p>
+This functionality does not work on the Macintosh architecture and
+only works if the operating system has a <code>select</code> function.
+<p>
+Handlers can be removed via:
+<p>
+<a name = "SSEC010.2"></a>
+<li><code>UnInstallCharReadHookFunc( </code><var>stream</var><code>, </code><var>func</var><code> ) F</code>
+<p>
+uninstalls the function <var>func</var> as a handler function for the stream
+<var>stream</var>. All instances are deinstalled, regardless of the mode
+of operation (read, write, exception).
+<p>
+This functionality does not work on the Macintosh architecture and
+only works if the operating system has a <code>select</code> function.
+<p>
+Note that handler functions must not return anything and get one integer
+argument, which refers to an index in one of the following arrays
+(according to whether the function was installed for input, output or
+exceptions on the stream). Handler functions usually should not output
+anything on the standard output because this ruins the command line
+during command line editing.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP009.htm">Previous</a>] [<a href ="CHAP011.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,4791 @@
+C about.tex 1. About the GAP Reference Manual
+S 1.1. Manual Conventions
+S 1.2. Credit
+C help.tex 2. The Help System
+S 2.1. Invoking the Help
+F 2.1. getting help
+S 2.2. Browsing through the Sections
+F 2.2. browsing forward
+F 2.2. browsing backwards
+F 2.2. browsing forward one chapter
+F 2.2. browsing backwards one chapter
+F 2.2. browsing the previous section browsed
+F 2.2. browsing the next section browsed
+F 2.2. list of available books
+F 2.2. table of sections for help books
+F 2.2. table of chapters for help books
+F 2.2. redisplay a help section
+F 2.2. redisplay with next help viewer
+S 2.3. Changing the Help Viewer
+I 2.3. document formats (text, dvi, ps, pdf, HTML)
+F 2.3. SetHelpViewer
+S 2.4. The Pager Command
+F 2.4. Pager
+C run.tex 3. Running GAP
+I 3.0. options
+S 3.1. Command Line Options
+I 3.1. features!under UNIX
+I 3.1. UNIX!features
+I 3.1. options!under UNIX
+I 3.1. UNIX!options
+I 3.1. -h
+I 3.1. -b
+I 3.1. -q
+I 3.1. -e
+I 3.1. -f
+I 3.1. -n
+I 3.1. -x
+I 3.1. -y
+I 3.1. -g
+I 3.1. -g -g
+I 3.1. -m
+I 3.1. -o
+I 3.1. -K
+I 3.1. -l
+I 3.1. GAPInfo.RootPaths
+I 3.1. -r
+I 3.1. -L
+I 3.1. -R
+I 3.1. options!command line, filenames
+S 3.2. Advanced Features of GAP
+I 3.2. -a
+I 3.2. -A
+I 3.2. -B
+I 3.2. -D
+I 3.2. -M
+I 3.2. -N
+I 3.2. -O
+I 3.2. -T
+I 3.2. -X
+I 3.2. -Y
+I 3.2. -i
+I 3.2. options!command line, internal
+I 3.2. -C
+I 3.2. -U
+I 3.2. -P
+I 3.2. -W
+I 3.2. -z
+S 3.3. Running GAP under MacOS
+I 3.3. -z!on Macintosh
+I 3.3. -P!on Macintosh
+I 3.3. -W!on Macintosh
+I 3.3. -a!on Macintosh
+I 3.3. -f!on Macintosh
+I 3.3. -n!on Macintosh
+I 3.3. -e!on Macintosh
+I 3.3. -o!on Macintosh
+I 3.3. gap.rc
+S 3.4. The .gaprc file
+I 3.4. gap.rc
+I 3.4. .gaprc
+I 3.4. GAP3
+S 3.5. Completion Files
+F 3.5. CreateCompletionFiles
+F 3.5. CreateCompletionFiles
+S 3.6. Testing for the System Architecture
+F 3.6. ARCH_IS_UNIX
+F 3.6. ARCH_IS_MAC
+F 3.6. ARCH_IS_WINDOWS
+S 3.7. The Compiler
+I 3.7. gac
+F 3.7. LoadDynamicModule
+F 3.7. LoadDynamicModule
+S 3.8. Suitability for Compilation
+S 3.9. Compiling Library Code
+S 3.10. CRC Numbers
+I 3.10. CRC
+I 3.10. CrcFile!example
+S 3.11. Saving and Loading a Workspace
+I 3.11. save
+F 3.11. SaveWorkspace
+F 3.11. loading a saved workspace
+C language.tex 4. The Programming Language
+S 4.1. Language Overview
+S 4.2. Lexical Structure
+S 4.3. Symbols
+S 4.4. Whitespaces
+I 4.4. space
+I 4.4. blank
+I 4.4. tabulator
+I 4.4. newline
+I 4.4. comments
+S 4.5. Keywords
+S 4.6. Identifiers
+F 4.6. IsValidIdentifier
+S 4.7. Expressions
+I 4.7. evaluation
+I 4.7. operators
+S 4.8. Variables
+I 4.8. scope
+I 4.8. bound
+F 4.8. Unbind
+S 4.9. More About Global Variables
+F 4.9. IsReadOnlyGlobal
+F 4.9. MakeReadOnlyGlobal
+F 4.9. MakeReadWriteGlobal
+F 4.9. ValueGlobal
+F 4.9. IsBoundGlobal
+F 4.9. UnbindGlobal
+F 4.9. BindGlobal
+F 4.9. NamesGVars
+F 4.9. NamesSystemGVars
+F 4.9. NamesUserGVars
+F 4.9. TemporaryGlobalVarName
+S 4.10. Function Calls
+F 4.10. function call
+F 4.10. function call!with arguments
+I 4.10. functions!with a variable number of arguments
+I 4.10. arg!special function argument
+F 4.10. function call!with options
+S 4.11. Comparisons
+F 4.11. equality test
+F 4.11. inequality test
+F 4.11. smaller test
+F 4.11. larger test
+F 4.11. smaller or equal
+F 4.11. larger or equal
+I 4.11. operators!precedence
+S 4.12. Arithmetic Operators
+I 4.12. precedence
+I 4.12. associativity
+I 4.12. operators!arithmetic
+I 4.12. +
+I 4.12. -
+I 4.12. \*
+I 4.12. /
+I 4.12. {\accent 94 }
+I 4.12. mod!arithmetic operators
+I 4.12. modulo
+I 4.12. modulo!arithmetic operators
+F 4.12. positive number
+F 4.12. negative number
+F 4.12. addition
+F 4.12. subtraction
+F 4.12. multiplication
+F 4.12. division
+F 4.12. mod
+F 4.12. power
+I 4.12. mod!rationals
+I 4.12. modular remainder
+I 4.12. modular inverse
+I 4.12. coprime
+I 4.12. relatively prime
+I 4.12. operators!precedence
+I 4.12. operators!associativity
+S 4.13. Statements
+I 4.13. execution
+S 4.14. Assignments
+F 4.14. assignment!variable
+S 4.15. Procedure Calls
+F 4.15. procedure call
+F 4.15. procedure call with arguments
+S 4.16. If
+I 4.16. fi
+I 4.16. then
+I 4.16. else
+I 4.16. elif
+F 4.16. if statement
+S 4.17. While
+I 4.17. loop!while
+F 4.17. while loop
+S 4.18. Repeat
+I 4.18. loop!repeat
+I 4.18. until
+F 4.18. repeat loop
+S 4.19. For
+I 4.19. loop!for
+I 4.19. do
+I 4.19. od
+F 4.19. for loop
+F 4.19. loop over range
+F 4.19. loop over iterator
+F 4.19. loop over object
+S 4.20. Break
+I 4.20. loops!leaving
+F 4.20. break statement
+S 4.21. Continue
+I 4.21. loops!restarting
+F 4.21. continue statement
+S 4.22. Function
+I 4.22. functions!definition of
+I 4.22. end
+I 4.22. local
+I 4.22. recursion
+I 4.22. functions!recursive
+I 4.22. environment
+I 4.22. body
+F 4.22. function
+I 4.22. functions!with a variable number of arguments
+I 4.22. arg!special function argument
+I 4.22. functions!definition by arrow notation
+F 4.22. arrow notation for functions
+S 4.23. Return
+F 4.23. return!no value
+F 4.23. return!with value
+S 4.24. The Syntax in BNF
+I 4.24. BNF
+C function.tex 5. Functions
+I 5.0. functions
+S 5.1. Information about a function
+F 5.1. NameFunction
+F 5.1. NumberArgumentsFunction
+S 5.2. Calling a function with a list argument that is interpreted as several arguments
+F 5.2. CallFuncList
+S 5.3. Functions that do nothing
+F 5.3. ReturnTrue
+F 5.3. ReturnFalse
+F 5.3. ReturnFail
+F 5.3. IdFunc
+S 5.4. Function Types
+F 5.4. IsFunction
+F 5.4. IsOperation
+F 5.4. FunctionsFamily
+C mloop.tex 6. Main Loop and Break Loop
+S 6.1. Main Loop
+I 6.1. read eval print loop
+I 6.1. loop!read eval print
+I 6.1. prompt
+I 6.1. prompt!partial
+I 6.1. syntax errors
+I 6.1. errors!syntax
+I 6.1. output!suppressing
+I 6.1. last
+I 6.1. previous result
+S 6.2. View and Print
+F 6.2. View
+F 6.2. Print
+F 6.2. ViewObj
+F 6.2. PrintObj
+F 6.2. Display
+S 6.3. Break Loops
+F 6.3. quit
+I 6.3. return
+F 6.3. return from break loop
+F 6.3. OnBreak
+I 6.3. ErrorNoTraceBack
+I 6.3. Break loop message
+F 6.3. OnBreakMessage
+I 6.3. Backtrace!GAP3 name for Where
+F 6.3. Where
+S 6.4. Variable Access in a Break Loop
+F 6.4. DownEnv
+F 6.4. UpEnv
+S 6.5. Error
+F 6.5. Error
+S 6.6. ErrorCount
+F 6.6. ErrorCount
+S 6.7. Leaving GAP
+I 6.7. quit!in emergency
+I 6.7. exit
+I 6.7. at exit functions
+I 6.7. saving on exit
+F 6.7. QUIT!emergency quit
+F 6.7. InstallAtExit
+F 6.7. QUITTING
+F 6.7. SaveOnExitFile
+S 6.8. Line Editing
+S 6.9. Editing Files
+F 6.9. Edit
+S 6.10. Editor Support
+I 6.10. utilities for editing GAP files
+I 6.10. vi
+I 6.10. vim
+I 6.10. emacs
+S 6.11. SizeScreen
+F 6.11. SizeScreen
+F 6.11. SizeScreen
+C debug.tex 7. Debugging and Profiling Facilities
+S 7.1. Recovery from NoMethodFound-Errors
+F 7.1. ShowArguments
+F 7.1. ShowArgument
+F 7.1. ShowDetails
+F 7.1. ShowMethods
+F 7.1. ShowMethods
+F 7.1. ShowOtherMethods
+F 7.1. ShowOtherMethods
+S 7.2. ApplicableMethod
+F 7.2. ApplicableMethod
+F 7.2. ApplicableMethod
+F 7.2. ApplicableMethod
+F 7.2. ApplicableMethodTypes
+F 7.2. ApplicableMethodTypes
+F 7.2. ApplicableMethodTypes
+S 7.3. Tracing Methods
+F 7.3. TraceMethods
+F 7.3. UntraceMethods
+F 7.3. TraceImmediateMethods
+S 7.4. Info Functions
+F 7.4. NewInfoClass
+F 7.4. DeclareInfoClass
+F 7.4. SetInfoLevel
+F 7.4. InfoLevel
+F 7.4. Info
+F 7.4. InfoWarning
+S 7.5. Assertions
+F 7.5. SetAssertionLevel
+F 7.5. AssertionLevel
+F 7.5. Assert
+F 7.5. Assert
+S 7.6. Timing
+F 7.6. Runtimes
+F 7.6. Runtime
+F 7.6. time
+S 7.7. Profiling
+F 7.7. ProfileOperations
+F 7.7. ProfileOperationsAndMethods
+F 7.7. ProfileMethods
+F 7.7. UnprofileMethods
+F 7.7. ProfileFunctions
+F 7.7. UnprofileFunctions
+F 7.7. ProfileGlobalFunctions
+F 7.7. ProfileGlobalFunctions
+F 7.7. DisplayProfile
+F 7.7. DisplayProfile
+F 7.7. PROFILETHRESHOLD
+F 7.7. ClearProfile
+F 7.7. DisplayCacheStats
+F 7.7. ClearCacheStats
+S 7.8. Information about the version used
+F 7.8. DisplayRevision
+S 7.9. Test Files
+F 7.9. ReadTest
+S 7.10. Debugging Recursion
+F 7.10. SetRecursionTrapInterval
+S 7.11. Global Memory Information
+F 7.11. GasmanStatistics
+F 7.11. GasmanMessageStatus
+F 7.11. SetGasmanMessageStatus
+F 7.11. GasmanLimits
+C options.tex 8. Options Stack
+F 8.0. PushOptions
+F 8.0. PopOptions
+F 8.0. ResetOptionsStack
+F 8.0. ValueOption
+F 8.0. DisplayOptionsStack
+F 8.0. InfoOptions
+C files.tex 9. Files and Filenames
+S 9.1. Portability
+F 9.1. LastSystemError
+S 9.2. GAP Root Directory
+S 9.3. Directories
+F 9.3. Directory
+F 9.3. DirectoryTemporary
+F 9.3. DirectoryTemporary
+F 9.3. DirectoryCurrent
+F 9.3. DirectoriesLibrary
+F 9.3. DirectoriesLibrary
+F 9.3. DirectoriesSystemPrograms
+F 9.3. DirectoryContents
+S 9.4. Filename
+F 9.4. Filename
+F 9.4. Filename
+S 9.5. Special Filenames
+S 9.6. File Access
+F 9.6. IsExistingFile
+F 9.6. IsReadableFile
+F 9.6. IsWritableFile
+F 9.6. IsExecutableFile
+F 9.6. IsDirectoryPath
+S 9.7. File Operations
+F 9.7. Read
+F 9.7. ReadAsFunction
+F 9.7. PrintTo
+F 9.7. AppendTo
+F 9.7. LogTo
+F 9.7. LogTo!stop logging
+F 9.7. InputLogTo
+F 9.7. InputLogTo!stop logging input
+F 9.7. OutputLogTo
+F 9.7. OutputLogTo!stop logging output
+F 9.7. CrcFile
+F 9.7. RemoveFile
+F 9.7. Reread
+F 9.7. REREADING
+C streams.tex 10. Streams
+S 10.1. Categories for Streams and the StreamsFamily
+F 10.1. IsStream
+F 10.1. IsClosedStream
+F 10.1. IsInputStream
+F 10.1. IsInputTextStream
+F 10.1. IsInputTextNone
+F 10.1. IsOutputStream
+F 10.1. IsOutputTextStream
+F 10.1. IsOutputTextNone
+F 10.1. StreamsFamily
+S 10.2. Operations applicable to All Streams
+F 10.2. CloseStream
+F 10.2. FileDescriptorOfStream
+F 10.2. UNIXSelect
+S 10.3. Operations for Input Streams
+F 10.3. Read!for streams
+F 10.3. ReadAsFunction!for streams
+F 10.3. ReadTest!for streams
+F 10.3. ReadByte
+F 10.3. ReadLine
+F 10.3. ReadAll
+F 10.3. ReadAll
+F 10.3. IsEndOfStream
+F 10.3. PositionStream
+F 10.3. RewindStream
+F 10.3. SeekPositionStream
+S 10.4. Operations for Output Streams
+F 10.4. WriteByte
+F 10.4. WriteLine
+F 10.4. WriteAll
+F 10.4. PrintTo!for streams
+F 10.4. AppendTo!for streams
+F 10.4. LogTo!for streams
+F 10.4. InputLogTo!for streams
+F 10.4. OutputLogTo!for streams
+F 10.4. SetPrintFormattingStatus
+F 10.4. PrintFormattingStatus
+S 10.5. File Streams
+F 10.5. InputTextFile
+F 10.5. OutputTextFile
+S 10.6. User Streams
+F 10.6. InputTextUser
+F 10.6. OutputTextUser
+S 10.7. String Streams
+F 10.7. InputTextString
+F 10.7. OutputTextString
+S 10.8. Input-Output Streams
+F 10.8. IsInputOutputStream
+F 10.8. InputOutputLocalProcess
+F 10.8. ReadAllLine
+S 10.9. Dummy Streams
+F 10.9. InputTextNone
+F 10.9. OutputTextNone
+S 10.10. Handling of Streams in the Background
+F 10.10. InstallCharReadHookFunc
+F 10.10. UnInstallCharReadHookFunc
+C process.tex 11. Processes
+S 11.1. Process
+F 11.1. Process
+S 11.2. Exec
+F 11.2. Exec
+C objects.tex 12. Objects and Elements
+S 12.1. Objects
+F 12.1. IsObject
+S 12.2. Elements as equivalence classes
+I 12.2. elements!definition
+S 12.3. Sets
+S 12.4. Domains
+S 12.5. Identical Objects
+F 12.5. IsIdenticalObj
+F 12.5. IsNotIdenticalObj
+S 12.6. Mutability and Copyability
+F 12.6. IsCopyable
+F 12.6. IsMutable
+F 12.6. Immutable
+F 12.6. MakeImmutable
+S 12.7. Duplication of Objects
+I 12.7. Copy
+I 12.7. copy!an object
+I 12.7. clone!an object
+F 12.7. ShallowCopy
+F 12.7. StructuralCopy
+S 12.8. Other Operations Applicable to any Object
+F 12.8. SetName
+F 12.8. Name
+F 12.8. IsInternallyConsistent
+C types.tex 13. Types of Objects
+S 13.1. Families
+F 13.1. FamilyObj
+S 13.2. Filters
+I 13.2. and!for filters
+F 13.2. RankFilter
+F 13.2. NamesFilter
+F 13.2. ShowImpliedFilters
+S 13.3. Categories
+F 13.3. CategoriesOfObject
+S 13.4. Representation
+F 13.4. RepresentationsOfObject
+S 13.5. Attributes
+I 13.5. system getter
+I 13.5. system setter
+F 13.5. KnownAttributesOfObject
+S 13.6. Setter and Tester for Attributes
+I 13.6. setter
+I 13.6. tester
+F 13.6. Tester
+F 13.6. Setter
+F 13.6. AttributeValueNotSet
+F 13.6. InfoAttributes
+F 13.6. DisableAttributeValueStoring
+F 13.6. EnableAttributeValueStoring
+S 13.7. Properties
+F 13.7. KnownPropertiesOfObject
+F 13.7. KnownTruePropertiesOfObject
+S 13.8. Other Filters
+S 13.9. Types
+F 13.9. TypeObj
+F 13.9. DataType
+C integers.tex 14. Integers
+F 14.0. Integers
+F 14.0. PositiveIntegers
+F 14.0. NonnegativeIntegers
+F 14.0. IsIntegers
+F 14.0. IsPositiveIntegers
+F 14.0. IsNonnegativeIntegers
+S 14.1. Elementary Operations for Integers
+F 14.1. IsInt
+F 14.1. IsPosInt
+F 14.1. Int
+F 14.1. IsEvenInt
+F 14.1. IsOddInt
+F 14.1. AbsInt
+I 14.1. absolute value of an integer
+F 14.1. SignInt
+I 14.1. sign!of an integer
+F 14.1. LogInt
+F 14.1. RootInt
+F 14.1. RootInt
+I 14.1. root!of an integer
+I 14.1. square root!of an integer
+F 14.1. SmallestRootInt
+I 14.1. root!of an integer, smallest
+F 14.1. Random!for integers
+S 14.2. Quotients and Remainders
+F 14.2. QuoInt
+I 14.2. integer part of a quotient
+F 14.2. BestQuoInt
+F 14.2. RemInt
+I 14.2. remainder of a quotient
+F 14.2. GcdInt
+F 14.2. Gcdex
+F 14.2. LcmInt
+F 14.2. CoefficientsQadic
+F 14.2. CoefficientsMultiadic
+F 14.2. ChineseRem
+I 14.2. Chinese remainder
+F 14.2. PowerModInt
+S 14.3. Prime Integers and Factorization
+F 14.3. Primes
+F 14.3. IsPrimeInt
+F 14.3. IsProbablyPrimeInt
+F 14.3. IsPrimePowerInt
+F 14.3. NextPrimeInt
+F 14.3. PrevPrimeInt
+F 14.3. FactorsInt
+F 14.3. FactorsInt
+F 14.3. PrintFactorsInt
+F 14.3. PrimePowersInt
+F 14.3. DivisorsInt
+I 14.3. divisors!of an integer
+S 14.4. Residue Class Rings
+I 14.4. mod!residue class rings
+F 14.4. modulo!residue class rings
+F 14.4. ZmodnZ
+F 14.4. ZmodpZ
+F 14.4. ZmodpZNC
+I 14.4. mod!Integers
+F 14.4. ZmodnZObj
+F 14.4. ZmodnZObj
+F 14.4. IsZmodnZObj
+F 14.4. IsZmodnZObjNonprime
+F 14.4. IsZmodpZObj
+F 14.4. IsZmodpZObjSmall
+F 14.4. IsZmodpZObjLarge
+C numtheor.tex 15. Number Theory
+I 15.0. prime residue group
+F 15.0. InfoNumtheor
+S 15.1. Prime Residues
+F 15.1. PrimeResidues!function
+I 15.1. prime residue group
+F 15.1. Phi
+I 15.1. order!of the prime residue group
+I 15.1. prime residue group!order
+I 15.1. Euler's totient function
+F 15.1. Lambda
+I 15.1. Carmichael's lambda function
+I 15.1. prime residue group!exponent
+I 15.1. exponent!of the prime residue group
+F 15.1. GeneratorsPrimeResidues
+S 15.2. Primitive Roots and Discrete Logarithms
+F 15.2. OrderMod
+I 15.2. multiplicative order of an integer
+F 15.2. LogMod
+F 15.2. LogModShanks
+I 15.2. logarithm!discrete
+F 15.2. PrimitiveRootMod
+I 15.2. primitive root modulo an integer
+I 15.2. prime residue group!generator
+I 15.2. generator!of the prime residue group
+F 15.2. IsPrimitiveRootMod
+I 15.2. test!for a primitive root
+I 15.2. prime residue group!generator
+I 15.2. generator!of the prime residue group
+S 15.3. Roots Modulo Integers
+F 15.3. Jacobi
+I 15.3. quadratic residue
+I 15.3. residue!quadratic
+F 15.3. Legendre
+I 15.3. quadratic residue
+I 15.3. residue!quadratic
+F 15.3. RootMod
+I 15.3. quadratic residue
+I 15.3. residue!quadratic
+I 15.3. root!of an integer modulo another
+F 15.3. RootsMod
+F 15.3. RootsUnityMod
+I 15.3. modular roots
+I 15.3. root!of 1 modulo an integer
+S 15.4. Multiplicative Arithmetic Functions
+F 15.4. Sigma
+F 15.4. Tau
+F 15.4. MoebiusMu
+S 15.5. Miscellaneous
+F 15.5. TwoSquares
+I 15.5. representation!as a sum of two squares
+C rational.tex 16. Rational Numbers
+F 16.0. Rationals
+F 16.0. IsRationals
+S 16.1. Elementary Operations for Rationals
+F 16.1. IsRat
+I 16.1. test!for a rational
+F 16.1. IsPosRat
+F 16.1. IsNegRat
+F 16.1. NumeratorRat
+I 16.1. numerator!of a rational
+F 16.1. DenominatorRat
+I 16.1. denominator!of a rational
+F 16.1. Rat
+F 16.1. Random!for rationals
+C combinat.tex 17. Combinatorics
+S 17.1. Combinatorial Numbers
+F 17.1. Factorial
+F 17.1. Binomial
+I 17.1. coefficient!binomial
+I 17.1. number!binomial
+F 17.1. Bell
+I 17.1. number!Bell
+F 17.1. Bernoulli
+I 17.1. sequence!Bernoulli
+F 17.1. Stirling1
+I 17.1. Stirling number of the first kind
+I 17.1. number!Stirling, of the first kind
+F 17.1. Stirling2
+I 17.1. Stirling number of the second kind
+I 17.1. number!Stirling, of the second kind
+S 17.2. Combinations, Arrangements and Tuples
+F 17.2. Combinations
+F 17.2. NrCombinations
+I 17.2. powerset
+I 17.2. subsets
+F 17.2. Arrangements
+F 17.2. NrArrangements
+F 17.2. UnorderedTuples
+F 17.2. NrUnorderedTuples
+F 17.2. Tuples
+F 17.2. NrTuples
+F 17.2. PermutationsList
+F 17.2. NrPermutationsList
+F 17.2. Derangements
+F 17.2. NrDerangements
+F 17.2. PartitionsSet
+F 17.2. NrPartitionsSet
+F 17.2. Partitions
+F 17.2. NrPartitions
+F 17.2. OrderedPartitions
+F 17.2. NrOrderedPartitions
+I 17.2. partitions!ordered, of an integer
+I 17.2. partitions!improper, of an integer
+F 17.2. PartitionsGreatestLE
+F 17.2. PartitionsGreatestEQ
+F 17.2. RestrictedPartitions
+F 17.2. NrRestrictedPartitions
+I 17.2. partitions!restricted, of an integer
+F 17.2. SignPartition
+F 17.2. AssociatedPartition
+F 17.2. PowerPartition
+I 17.2. symmetric group!powermap
+F 17.2. PartitionTuples
+F 17.2. NrPartitionTuples
+S 17.3. Fibonacci and Lucas Sequences
+F 17.3. Fibonacci
+I 17.3. sequence!Fibonacci
+F 17.3. Lucas
+I 17.3. sequence!Lucas
+S 17.4. Permanent of a Matrix
+F 17.4. Permanent
+C cyclotom.tex 18. Cyclotomic Numbers
+I 18.0. type!cyclotomic
+I 18.0. irrationalities
+I 18.0. cyclotomic field elements
+S 18.1. Operations for Cyclotomics
+I 18.1. roots of unity
+F 18.1. E
+F 18.1. Cyclotomics
+F 18.1. IsCyclotomic
+F 18.1. IsCyc
+F 18.1. IsIntegralCyclotomic
+I 18.1. Int!for cyclotomics
+I 18.1. String!for cyclotomics
+F 18.1. Conductor
+F 18.1. Conductor
+F 18.1. AbsoluteValue
+F 18.1. RoundCyc
+F 18.1. CoeffsCyc
+I 18.1. coefficients!for cyclotomics
+F 18.1. DenominatorCyc
+F 18.1. ExtRepOfObj!external representation!for cyclotomics
+F 18.1. DescriptionOfRootOfUnity
+I 18.1. logarithm!of a root of unity
+F 18.1. IsGaussInt
+F 18.1. IsGaussRat
+I 18.1. DefaultField!for cyclotomics
+S 18.2. Infinity
+F 18.2. IsInfinity
+F 18.2. infinity
+S 18.3. Comparisons of Cyclotomics
+I 18.3. operators!for cyclotomics
+S 18.4. ATLAS Irrationalities
+I 18.4. atomic irrationalities
+I 18.4. b_N
+I 18.4. c_N
+I 18.4. d_N
+I 18.4. e_N
+I 18.4. f_N
+I 18.4. g_N
+I 18.4. h_N
+F 18.4. EB
+F 18.4. EC
+F 18.4. ED
+F 18.4. EE
+F 18.4. EF
+F 18.4. EG
+F 18.4. EH
+I 18.4. i_N
+I 18.4. r_N
+F 18.4. EI
+F 18.4. ER
+I 18.4. s_N
+I 18.4. t_N
+I 18.4. u_N
+I 18.4. v_N
+I 18.4. w_N
+I 18.4. x_N
+I 18.4. y_N
+F 18.4. EY
+F 18.4. EX
+F 18.4. EW
+F 18.4. EV
+F 18.4. EU
+F 18.4. ET
+F 18.4. ES
+I 18.4. j_N
+I 18.4. k_N
+I 18.4. l_N
+I 18.4. m_N
+F 18.4. EM
+F 18.4. EL
+F 18.4. EK
+F 18.4. EJ
+I 18.4. n_k
+F 18.4. NK
+F 18.4. AtlasIrrationality
+S 18.5. Galois Conjugacy of Cyclotomics
+F 18.5. GaloisCyc
+F 18.5. GaloisCyc
+F 18.5. ComplexConjugate
+F 18.5. StarCyc
+F 18.5. Quadratic
+F 18.5. GaloisMat
+F 18.5. RationalizedMat
+S 18.6. Internally Represented Cyclotomics
+C unknown.tex 19. Unknowns
+I 19.0. data type!unknown
+F 19.0. Unknown
+F 19.0. Unknown
+F 19.0. LargestUnknown
+F 19.0. IsUnknown
+C boolean.tex 20. Booleans
+I 20.0. type!boolean
+I 20.0. logical
+F 20.0. IsBool
+S 20.1. Fail
+F 20.1. fail
+S 20.2. Comparisons of Booleans
+F 20.2. comparisons!of booleans
+F 20.2. comparisons!of booleans
+F 20.2. ordering!booleans
+S 20.3. Operations for Booleans
+I 20.3. operations!for booleans
+I 20.3. logical operations
+F 20.3. or
+F 20.3. and
+F 20.3. and!for filters
+F 20.3. not
+C lists.tex 21. Lists
+I 21.0. Sets
+S 21.1. List Categories
+F 21.1. IsList
+F 21.1. IsDenseList
+F 21.1. IsHomogeneousList
+F 21.1. IsTable
+F 21.1. IsConstantTimeAccessList
+S 21.2. Basic Operations for Lists
+F 21.2. list element!operation
+F 21.2. list boundedness test!operation
+F 21.2. list assignment!operation
+F 21.2. list unbind!operation
+S 21.3. List Elements
+I 21.3. accessing!list elements
+F 21.3. list element!access
+F 21.3. sublist!access
+I 21.3. sublist
+F 21.3. sublist!operation
+S 21.4. List Assignment
+I 21.4. assignment!to a list
+F 21.4. list element!assignment
+F 21.4. sublist!assignment
+F 21.4. sublist assignment!operation
+F 21.4. Add
+F 21.4. Append
+S 21.5. IsBound and Unbind for Lists
+F 21.5. IsBound!for lists
+F 21.5. Unbind!for lists
+S 21.6. Identical Lists
+S 21.7. Duplication of Lists
+I 21.7. ShallowCopy!for lists
+I 21.7. StructuralCopy!for lists
+S 21.8. Membership Test for Lists
+I 21.8. in!for lists
+F 21.8. element test!for lists
+S 21.9. Enlarging Internally Represented Lists
+S 21.10. Comparisons of Lists
+I 21.10. comparisons!of lists
+F 21.10. list equal!comparison
+F 21.10. list smaller!comparison
+S 21.11. Arithmetic for Lists
+I 21.11. operators!for lists
+S 21.12. Filters Controlling the Arithmetic Behaviour of Lists
+F 21.12. IsGeneralizedRowVector
+F 21.12. IsMultiplicativeGeneralizedRowVector
+F 21.12. IsListDefault
+F 21.12. NestingDepthA
+F 21.12. NestingDepthM
+S 21.13. Additive Arithmetic for Lists
+I 21.13. addition!list and non-list
+I 21.13. list and non-list!difference
+S 21.14. Multiplicative Arithmetic for Lists
+I 21.14. list and non-list!product
+I 21.14. list and non-list!quotient
+I 21.14. list and non-list!mod
+I 21.14. mod!lists
+I 21.14. list and non-list!left quotient
+S 21.15. Mutability Status and List Arithmetic
+F 21.15. ListWithIdenticalEntries
+S 21.16. Finding Positions in Lists
+F 21.16. Position
+F 21.16. PositionCanonical
+F 21.16. PositionNthOccurrence
+F 21.16. PositionSorted
+F 21.16. PositionSorted
+F 21.16. PositionSet
+F 21.16. PositionSet
+F 21.16. PositionProperty
+F 21.16. PositionBound
+F 21.16. PositionNot
+F 21.16. PositionNonZero
+F 21.16. PositionSublist
+F 21.16. PositionSublist
+S 21.17. Properties and Attributes for Lists
+F 21.17. IsMatchingSublist
+F 21.17. IsMatchingSublist
+F 21.17. IsDuplicateFree
+F 21.17. IsDuplicateFreeList
+I 21.17. duplicate free
+F 21.17. IsSortedList
+I 21.17. sorted list
+F 21.17. IsSSortedList
+F 21.17. IsSet
+I 21.17. strictly sorted list
+F 21.17. Length
+F 21.17. ConstantTimeAccessList
+S 21.18. Sorting Lists
+F 21.18. Sort
+F 21.18. Sort
+F 21.18. SortParallel
+F 21.18. SortParallel
+F 21.18. Sortex
+F 21.18. SortingPerm
+S 21.19. Sorted Lists and Sets
+I 21.19. sets
+I 21.19. multisets
+F 21.19. in!for strictly sorted lists
+F 21.19. IsEqualSet
+I 21.19. test!for set equality
+F 21.19. IsSubsetSet
+F 21.19. AddSet
+I 21.19. add!an element to a set
+F 21.19. RemoveSet
+I 21.19. remove!an element from a set
+F 21.19. UniteSet
+I 21.19. union!of sets
+F 21.19. IntersectSet
+I 21.19. intersection!of sets
+F 21.19. SubtractSet
+I 21.19. subtract!a set from another
+S 21.20. Operations for Lists
+F 21.20. Concatenation
+F 21.20. Concatenation
+I 21.20. concatenation!of lists
+F 21.20. Compacted
+F 21.20. Collected
+F 21.20. DuplicateFreeList
+F 21.20. Unique
+F 21.20. AsDuplicateFreeList
+F 21.20. Flat
+F 21.20. Reversed
+F 21.20. IsLexicographicallyLess
+F 21.20. Apply
+F 21.20. Perform
+F 21.20. PermListList
+F 21.20. Maximum
+F 21.20. Maximum
+F 21.20. Minimum
+F 21.20. Minimum
+F 21.20. MaximumList
+F 21.20. MinimumList
+F 21.20. Cartesian
+F 21.20. Cartesian
+F 21.20. Permuted
+F 21.20. List
+F 21.20. List
+F 21.20. List
+F 21.20. Filtered
+F 21.20. Filtered
+F 21.20. Number
+F 21.20. Number
+F 21.20. Number
+F 21.20. First
+F 21.20. ForAll
+F 21.20. ForAll
+F 21.20. ForAny
+F 21.20. ForAny
+F 21.20. Product
+F 21.20. Product
+F 21.20. Product
+F 21.20. Product
+F 21.20. Sum
+F 21.20. Sum
+F 21.20. Sum
+F 21.20. Sum
+F 21.20. Iterated
+F 21.20. ListN
+S 21.21. Advanced List Manipulations
+F 21.21. ListX
+F 21.21. SetX
+F 21.21. SumX
+F 21.21. ProductX
+S 21.22. Ranges
+I 21.22. range
+F 21.22. IsRange
+F 21.22. ConvertToRangeRep
+S 21.23. Enumerators
+F 21.23. IsQuickPositionList
+C blist.tex 22. Boolean Lists
+F 22.0. IsBlist
+S 22.1. Boolean Lists Representing Subsets
+F 22.1. BlistList
+F 22.1. ListBlist
+F 22.1. SizeBlist
+F 22.1. IsSubsetBlist
+S 22.2. Set Operations via Boolean Lists
+F 22.2. UnionBlist
+F 22.2. UnionBlist
+F 22.2. IntersectionBlist
+F 22.2. IntersectionBlist
+F 22.2. DifferenceBlist
+S 22.3. Function that Modify Boolean Lists
+F 22.3. UniteBlist
+F 22.3. UniteBlistList
+F 22.3. IntersectBlist
+F 22.3. SubtractBlist
+S 22.4. More about Boolean Lists
+C vector.tex 23. Row Vectors
+F 23.0. IsRowVector
+S 23.1. Operators for Row Vectors
+F 23.1. addition!vectors
+F 23.1. addition!scalar and vector
+F 23.1. addition!vector and scalar
+F 23.1. subtraction!vectors
+F 23.1. subtraction!scalar and vector
+F 23.1. subtraction!vector and scalar
+F 23.1. multiplication!scalar and vector
+F 23.1. multiplication!vector and scalar
+F 23.1. multiplication!vectors
+F 23.1. NormedRowVector
+S 23.2. Row Vectors over Finite Fields
+F 23.2. ConvertToVectorRep
+F 23.2. ConvertToVectorRep
+F 23.2. ConvertToVectorRep
+F 23.2. ConvertToVectorRepNC
+F 23.2. ConvertToVectorRepNC
+F 23.2. ConvertToVectorRepNC
+F 23.2. NumberFFVector
+S 23.3. Coefficient List Arithmetic
+F 23.3. AddRowVector
+F 23.3. AddCoeffs
+F 23.3. AddCoeffs
+F 23.3. AddCoeffs
+F 23.3. MultRowVector
+F 23.3. MultRowVector
+F 23.3. CoeffsMod
+S 23.4. Shifting and Trimming Coefficient Lists
+F 23.4. LeftShiftRowVector
+F 23.4. RightShiftRowVector
+F 23.4. ShrinkRowVector
+F 23.4. RemoveOuterCoeffs
+S 23.5. Functions for Coding Theory
+F 23.5. WeightVecFFE
+F 23.5. DistanceVecFFE
+F 23.5. DistancesDistributionVecFFEsVecFFE
+F 23.5. DistancesDistributionMatFFEVecFFE
+F 23.5. AClosestVectorCombinationsMatFFEVecFFE
+F 23.5. CosetLeadersMatFFE
+S 23.6. Vectors as coefficients of polynomials
+F 23.6. ValuePol
+F 23.6. ProductCoeffs
+F 23.6. ReduceCoeffs
+F 23.6. ReduceCoeffsMod
+F 23.6. PowerModCoeffs
+F 23.6. ShiftedCoeffs
+F 23.6. ShrinkCoeffs
+C matrix.tex 24. Matrices
+F 24.0. InfoMatrix
+S 24.1. Categories of Matrices
+F 24.1. IsMatrix
+F 24.1. IsOrdinaryMatrix
+F 24.1. IsLieMatrix
+S 24.2. Operators for Matrices
+F 24.2. addition!matrices
+F 24.2. addition!scalar and matrix
+F 24.2. addition!matrix and scalar
+F 24.2. subtraction!matrices
+F 24.2. subtraction!scalar and matrix
+F 24.2. subtraction!matrix and scalar
+F 24.2. multiplication!scalar and matrix
+F 24.2. multiplication!matrix and scalar
+F 24.2. multiplication!vector and matrix
+F 24.2. multiplication!matrix and vector
+F 24.2. multiplication!matrices
+F 24.2. inverse!matrix
+F 24.2. quotient!matrices
+F 24.2. quotient!scalar and matrix
+F 24.2. quotient!matrix and scalar
+F 24.2. quotient!vector and matrix
+F 24.2. power!matrix
+F 24.2. conjugate!matrix
+F 24.2. image!vector under matrix
+F 24.2. matrices!commutator
+F 24.2. addition!scalar and matrix list
+F 24.2. addition!scalar and matrix list
+F 24.2. subtraction!scalar and matrix list
+F 24.2. subtraction!scalar and matrix list
+F 24.2. multiplication!scalar and matrix list
+F 24.2. multiplication!scalar and matrix list
+F 24.2. quotient!scalar and matrix list
+F 24.2. multiplication!matrix and matrix list
+F 24.2. multiplication!matrix and matrix list
+F 24.2. quotient!matrix and matrix list
+F 24.2. multiplication!vector and matrix list
+S 24.3. Properties and Attributes of Matrices
+F 24.3. DimensionsMat
+F 24.3. DefaultFieldOfMatrix
+I 24.3. Trace!of a matrix
+F 24.3. TraceMat
+F 24.3. Trace
+F 24.3. DeterminantMat
+F 24.3. Determinant
+F 24.3. DeterminantMatDestructive
+F 24.3. DeterminantMatDivFree
+F 24.3. IsMonomialMatrix
+F 24.3. IsDiagonalMat
+F 24.3. IsUpperTriangularMat
+F 24.3. IsLowerTriangularMat
+S 24.4. Matrix Constructions
+F 24.4. IdentityMat
+F 24.4. NullMat
+F 24.4. EmptyMatrix
+F 24.4. DiagonalMat
+F 24.4. PermutationMat
+F 24.4. TransposedMatImmutable
+F 24.4. TransposedMatAttr
+F 24.4. TransposedMat
+F 24.4. TransposedMatMutable
+F 24.4. TransposedMatOp
+F 24.4. TransposedMatDestructive
+F 24.4. KroneckerProduct
+F 24.4. ReflectionMat
+F 24.4. ReflectionMat
+F 24.4. ReflectionMat
+F 24.4. ReflectionMat
+F 24.4. PrintArray
+F 24.4. MutableIdentityMat
+F 24.4. MutableNullMat
+S 24.5. Random Matrices
+F 24.5. RandomMat
+F 24.5. RandomInvertibleMat
+F 24.5. RandomUnimodularMat
+S 24.6. Matrices Representing Linear Equations and the Gaussian Algorithm
+I 24.6. Gaussian algorithm
+F 24.6. RankMat
+F 24.6. TriangulizeMat
+F 24.6. NullspaceMat
+F 24.6. TriangulizedNullspaceMat
+F 24.6. NullspaceMatDestructive
+F 24.6. TriangulizedNullspaceMatDestructive
+F 24.6. SolutionMat
+F 24.6. SolutionMatDestructive
+F 24.6. BaseFixedSpace
+S 24.7. Eigenvectors and eigenvalues
+F 24.7. GeneralisedEigenvalues
+F 24.7. GeneralizedEigenvalues
+F 24.7. GeneralisedEigenspaces
+F 24.7. GeneralizedEigenspaces
+F 24.7. Eigenvalues
+F 24.7. Eigenspaces
+F 24.7. Eigenvectors
+S 24.8. Elementary Divisors
+F 24.8. ElementaryDivisorsMat
+F 24.8. ElementaryDivisorsMatDestructive
+F 24.8. DiagonalizeMat
+S 24.9. Echelonized Matrices
+F 24.9. SemiEchelonMat
+F 24.9. SemiEchelonMatDestructive
+F 24.9. SemiEchelonMatTransformation
+F 24.9. SemiEchelonMats
+F 24.9. SemiEchelonMatsDestructive
+S 24.10. Matrices as Basis of a Row Space
+F 24.10. BaseMat
+F 24.10. BaseMatDestructive
+F 24.10. BaseOrthogonalSpaceMat
+F 24.10. SumIntersectionMat
+F 24.10. BaseSteinitzVectors
+S 24.11. Triangular Matrices
+F 24.11. DiagonalOfMat
+F 24.11. UpperSubdiagonal
+F 24.11. DepthOfUpperTriangularMatrix
+S 24.12. Matrices as Linear Mappings
+F 24.12. CharacteristicPolynomial
+F 24.12. CharacteristicPolynomial
+F 24.12. JordanDecomposition
+F 24.12. BlownUpMat
+F 24.12. BlownUpVector
+F 24.12. CompanionMat
+S 24.13. Matrices over Finite Fields
+F 24.13. ImmutableMatrix
+F 24.13. ConvertToMatrixRep
+F 24.13. ConvertToMatrixRep
+F 24.13. ConvertToMatrixRep
+F 24.13. ConvertToMatrixRepNC
+F 24.13. ConvertToMatrixRepNC
+F 24.13. ConvertToMatrixRepNC
+F 24.13. ProjectiveOrder
+F 24.13. SimultaneousEigenvalues
+F 24.13. InverseMatMod
+F 24.13. NullspaceModQ
+S 24.14. Special Multiplication Algorithms for Matrices over GF(2)
+F 24.14. PROD_GF2MAT_GF2MAT_SIMPLE
+F 24.14. PROD_GF2MAT_GF2MAT_ADVANCED
+S 24.15. Block Matrices
+I 24.15. IsBlockMatrixRep
+F 24.15. AsBlockMatrix
+F 24.15. BlockMatrix
+F 24.15. BlockMatrix
+F 24.15. MatrixByBlockMatrix
+C matint.tex 25. Integral matrices and lattices
+S 25.1. Linear equations over the integers and Integral Matrices
+F 25.1. NullspaceIntMat
+F 25.1. SolutionIntMat
+F 25.1. SolutionNullspaceIntMat
+F 25.1. BaseIntMat
+F 25.1. BaseIntersectionIntMats
+F 25.1. ComplementIntMat
+S 25.2. Normal Forms over the Integers
+F 25.2. TriangulizedIntegerMat
+F 25.2. TriangulizedIntegerMatTransform
+F 25.2. TriangulizeIntegerMat
+F 25.2. HermiteNormalFormIntegerMat
+F 25.2. HermiteNormalFormIntegerMatTransform
+F 25.2. SmithNormalFormIntegerMat
+F 25.2. SmithNormalFormIntegerMatTransforms
+F 25.2. DiagonalizeIntMat
+F 25.2. NormalFormIntMat
+F 25.2. AbelianInvariantsOfList
+S 25.3. Determinant of an integer matrix
+F 25.3. DeterminantIntMat
+S 25.4. Decompositions
+I 25.4. decomposition matrix
+I 25.4. DEC
+F 25.4. Decomposition
+F 25.4. Decomposition
+F 25.4. LinearIndependentColumns
+F 25.4. PadicCoefficients
+F 25.4. IntegralizedMat
+F 25.4. IntegralizedMat
+F 25.4. DecompositionInt
+S 25.5. Lattice Reduction
+I 25.5. LLL algorithm!for vectors
+I 25.5. short vectors spanning a lattice
+I 25.5. lattice base reduction
+F 25.5. LLLReducedBasis
+I 25.5. LLL algorithm!for Gram matrices
+I 25.5. lattice base reduction
+F 25.5. LLLReducedGramMat
+F 25.5. LLLReducedGramMat
+S 25.6. Orthogonal Embeddings
+F 25.6. OrthogonalEmbeddings
+F 25.6. ShortestVectors
+C string.tex 26. Strings and Characters
+I 26.0. type!strings
+I 26.0. doublequotes
+I 26.0. singlequotes
+F 26.0. IsChar
+F 26.0. IsCharCollection
+F 26.0. IsString
+S 26.1. Special Characters
+I 26.1. escaped characters
+I 26.1. special character sequences
+I 26.1. \\n
+I 26.1. newline character
+I 26.1. \\\"
+I 26.1. doublequote character
+I 26.1. \\'
+I 26.1. singlequote character
+I 26.1. \\\\
+I 26.1. backslash character
+I 26.1. \\b
+I 26.1. backspace character
+I 26.1. \\r
+I 26.1. carriage return character
+I 26.1. \\c
+I 26.1. flush character
+I 26.1. \\XYZ
+I 26.1. octal character codes
+I 26.1. escaping non-special characters
+S 26.2. Internally Represented Strings
+I 26.2. convert!to a string
+F 26.2. IsStringRep
+F 26.2. ConvertToStringRep
+F 26.2. IsEmptyString
+F 26.2. CharsFamily
+S 26.3. Recognizing Characters
+F 26.3. IsDigitChar
+F 26.3. IsLowerAlphaChar
+F 26.3. IsUpperAlphaChar
+F 26.3. IsAlphaChar
+S 26.4. Comparisons of Strings
+F 26.4. strings!equality of
+F 26.4. strings!inequality of
+F 26.4. strings!lexicographic ordering of
+S 26.5. Operations to Produce or Manipulate Strings
+F 26.5. String
+F 26.5. String
+F 26.5. HexStringInt
+F 26.5. StringPP
+F 26.5. WordAlp
+F 26.5. LowercaseString
+F 26.5. SplitString
+F 26.5. ReplacedString
+F 26.5. NormalizeWhitespace
+F 26.5. NormalizedWhitespace
+F 26.5. JoinStringsWithSeparator
+F 26.5. Chomp
+S 26.6. Character Conversion
+F 26.6. INT_CHAR
+F 26.6. CHAR_INT
+F 26.6. SINT_CHAR
+F 26.6. CHAR_SINT
+S 26.7. Operations to Evaluate Strings
+I 26.7. evaluation!strings
+F 26.7. Int!for strings
+F 26.7. Rat!for strings
+F 26.7. IntHexString
+F 26.7. Ordinal
+F 26.7. EvalString
+S 26.8. Calendar Arithmetic
+F 26.8. DaysInYear
+F 26.8. DaysInMonth
+F 26.8. DMYDay
+F 26.8. DayDMY
+F 26.8. WeekDay
+F 26.8. StringDate
+F 26.8. HMSMSec
+F 26.8. SecHMSM
+F 26.8. StringTime
+F 26.8. SecondsDMYhms
+F 26.8. DMYhmsSeconds
+C record.tex 27. Records
+I 27.0. type!records
+F 27.0. IsRecord
+F 27.0. IsRecordCollection
+F 27.0. IsRecordCollColl
+I 27.0. test!for records
+F 27.0. RecNames
+S 27.1. Accessing Record Elements
+I 27.1. accessing!record elements
+F 27.1. record!component access
+F 27.1. record!component variable
+S 27.2. Record Assignment
+I 27.2. assignment!to a record
+F 27.2. record!component assignment
+F 27.2. record!component variable assignment
+S 27.3. Identical Records
+S 27.4. Comparisons of Records
+F 27.4. equality!of records
+F 27.4. inequality!of records
+F 27.4. ordering!of records
+F 27.4. ordering!of records
+S 27.5. IsBound and Unbind for Records
+S 27.6. Record Access Operations
+F 27.6. NameRNam
+F 27.6. RNamObj
+F 27.6. RNamObj
+F 27.6. record component!operation
+F 27.6. record boundness test!operation
+F 27.6. record assignment!operation
+F 27.6. record unbind!operation
+C coll.tex 28. Collections
+F 28.0. IsCollection
+S 28.1. Collection Families
+F 28.1. CollectionsFamily
+F 28.1. IsCollectionFamily
+F 28.1. ElementsFamily
+F 28.1. CategoryCollections
+S 28.2. Lists and Collections
+I 28.2. Sorted Lists as Collections
+F 28.2. IsListOrCollection
+F 28.2. Enumerator
+F 28.2. Enumerator
+F 28.2. EnumeratorSorted
+F 28.2. EnumeratorSorted
+F 28.2. EnumeratorByFunctions
+F 28.2. EnumeratorByFunctions
+F 28.2. SortedList
+F 28.2. SortedList
+F 28.2. SSortedList
+F 28.2. SSortedList
+F 28.2. Set
+F 28.2. AsList
+F 28.2. AsList
+F 28.2. AsSortedList
+F 28.2. AsSortedList
+F 28.2. AsSSortedList
+F 28.2. AsSSortedList
+F 28.2. AsSet
+I 28.2. elements!of a list or collection
+F 28.2. Elements
+S 28.3. Attributes and Properties for Collections
+F 28.3. IsEmpty
+F 28.3. IsEmpty
+F 28.3. IsFinite
+I 28.3. finiteness test!for a list or collection
+F 28.3. IsTrivial
+F 28.3. IsNonTrivial
+F 28.3. IsWholeFamily
+F 28.3. Size
+F 28.3. Size
+I 28.3. size!of a list or collection
+I 28.3. order!of a list, collection or domain
+F 28.3. Representative
+I 28.3. representative!of a list or collection
+F 28.3. RepresentativeSmallest
+S 28.4. Operations for Collections
+F 28.4. IsSubset
+I 28.4. subset test!for collections
+F 28.4. Intersection
+F 28.4. Intersection
+F 28.4. Intersection2
+I 28.4. intersection!of collections
+F 28.4. Union
+F 28.4. Union
+F 28.4. Union2
+I 28.4. union!of collections
+F 28.4. Difference
+I 28.4. set difference!of collections
+S 28.5. Membership Test for Collections
+I 28.5. \\in!operation for testing membership
+F 28.5. in!for collections
+F 28.5. in!operation for
+S 28.6. Random Elements
+I 28.6. random element!of a list or collection
+F 28.6. Random
+F 28.6. Random
+F 28.6. StateRandom
+F 28.6. RestoreStateRandom
+F 28.6. PseudoRandom
+F 28.6. PseudoRandom
+F 28.6. RandomList
+I 28.6. random seed
+S 28.7. Iterators
+F 28.7. Iterator
+F 28.7. Iterator
+F 28.7. IteratorSorted
+F 28.7. IteratorSorted
+F 28.7. IsIterator
+F 28.7. IsDoneIterator
+F 28.7. NextIterator
+F 28.7. IteratorList
+F 28.7. TrivialIterator
+F 28.7. IteratorByFunctions
+C orders.tex 29. Orderings
+F 29.0. IsOrdering
+F 29.0. OrderingsFamily
+S 29.1. Building new orderings
+F 29.1. OrderingByLessThanFunctionNC
+F 29.1. OrderingByLessThanFunctionNC
+F 29.1. OrderingByLessThanOrEqualFunctionNC
+F 29.1. OrderingByLessThanOrEqualFunctionNC
+S 29.2. Properties and basic functionality
+F 29.2. IsWellFoundedOrdering
+F 29.2. IsTotalOrdering
+F 29.2. IsIncomparableUnder
+F 29.2. FamilyForOrdering
+F 29.2. LessThanFunction
+F 29.2. LessThanOrEqualFunction
+F 29.2. IsLessThanUnder
+F 29.2. IsLessThanOrEqualUnder
+S 29.3. Orderings on families of associative words
+F 29.3. IsOrderingOnFamilyOfAssocWords
+F 29.3. IsTranslationInvariantOrdering
+F 29.3. IsReductionOrdering
+F 29.3. OrderingOnGenerators
+F 29.3. LexicographicOrdering
+F 29.3. LexicographicOrdering
+F 29.3. LexicographicOrdering
+F 29.3. LexicographicOrdering
+F 29.3. LexicographicOrdering
+F 29.3. LexicographicOrdering
+F 29.3. ShortLexOrdering
+F 29.3. ShortLexOrdering
+F 29.3. ShortLexOrdering
+F 29.3. ShortLexOrdering
+F 29.3. ShortLexOrdering
+F 29.3. ShortLexOrdering
+F 29.3. IsShortLexOrdering
+F 29.3. WeightLexOrdering
+F 29.3. WeightLexOrdering
+F 29.3. WeightLexOrdering
+F 29.3. WeightLexOrdering
+F 29.3. IsWeightLexOrdering
+F 29.3. WeightOfGenerators
+F 29.3. BasicWreathProductOrdering
+F 29.3. BasicWreathProductOrdering
+F 29.3. BasicWreathProductOrdering
+F 29.3. BasicWreathProductOrdering
+F 29.3. BasicWreathProductOrdering
+F 29.3. BasicWreathProductOrdering
+F 29.3. IsBasicWreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. WreathProductOrdering
+F 29.3. IsWreathProductOrdering
+F 29.3. LevelsOfGenerators
+C domain.tex 30. Domains and their Elements
+S 30.1. Operational Structure of Domains
+S 30.2. Equality and Comparison of Domains
+S 30.3. Constructing Domains
+F 30.3. Struct
+F 30.3. IsGeneratorsOfStruct
+F 30.3. GeneratorsOfStruct
+F 30.3. StructByGenerators
+F 30.3. StructWithGenerators
+F 30.3. ClosureStruct
+S 30.4. Changing the Structure
+F 30.4. AsStruct
+S 30.5. Changing the Representation
+F 30.5. IsomorphismRepStruct
+S 30.6. Domain Categories
+F 30.6. IsStruct
+S 30.7. Parents
+F 30.7. Parent
+F 30.7. SetParent
+F 30.7. HasParent
+S 30.8. Constructing Subdomains
+I 30.8. Subdomains
+F 30.8. Substruct
+F 30.8. SubstructNC
+F 30.8. AsSubstruct
+F 30.8. IsSubstruct
+S 30.9. Operations for Domains
+F 30.9. IsGeneralizedDomain
+F 30.9. IsDomain
+F 30.9. GeneratorsOfDomain
+F 30.9. Domain
+F 30.9. DomainByGenerators
+S 30.10. Attributes and Properties of Elements
+F 30.10. Characteristic
+F 30.10. OneImmutable
+F 30.10. OneAttr
+F 30.10. One
+F 30.10. Identity
+F 30.10. OneMutable
+F 30.10. OneOp
+F 30.10. OneSameMutability
+F 30.10. OneSM
+F 30.10. ZeroImmutable
+F 30.10. ZeroAttr
+F 30.10. Zero
+F 30.10. ZeroMutable
+F 30.10. ZeroOp
+F 30.10. ZeroSameMutability
+F 30.10. ZeroSM
+F 30.10. MultiplicativeZeroOp
+F 30.10. IsOne
+F 30.10. IsZero
+F 30.10. IsIdempotent
+F 30.10. InverseImmutable
+F 30.10. InverseAttr
+F 30.10. Inverse
+F 30.10. InverseMutable
+F 30.10. InverseOp
+F 30.10. InverseSameMutability
+F 30.10. InverseSM
+F 30.10. AdditiveInverseImmutable
+F 30.10. AdditiveInverseAttr
+F 30.10. AdditiveInverse
+F 30.10. AdditiveInverseMutable
+F 30.10. AdditiveInverseOp
+F 30.10. AdditiveInverseSameMutability
+F 30.10. AdditiveInverseSM
+F 30.10. Order
+S 30.11. Comparison Operations for Elements
+F 30.11. equality!operation
+F 30.11. comparison!operation
+F 30.11. CanEasilyCompareElements
+F 30.11. CanEasilyCompareElementsFamily
+F 30.11. CanEasilySortElements
+F 30.11. CanEasilySortElementsFamily
+S 30.12. Arithmetic Operations for Elements
+F 30.12. addition!operation
+F 30.12. multiplication!operation
+F 30.12. division!operation
+F 30.12. exponentiation!operation
+F 30.12. remainder!operation
+F 30.12. LeftQuotient
+F 30.12. Comm
+F 30.12. LieBracket
+F 30.12. Sqrt
+S 30.13. Relations Between Domains
+F 30.13. UseSubsetRelation
+F 30.13. UseIsomorphismRelation
+F 30.13. UseFactorRelation
+F 30.13. InstallSubsetMaintenance
+F 30.13. InstallIsomorphismMaintenance
+F 30.13. InstallFactorMaintenance
+S 30.14. Useful Categories of Elements
+F 30.14. IsExtAElement
+F 30.14. IsNearAdditiveElement
+F 30.14. IsAdditiveElement
+F 30.14. IsNearAdditiveElementWithZero
+F 30.14. IsAdditiveElementWithZero
+F 30.14. IsNearAdditiveElementWithInverse
+F 30.14. IsAdditiveElementWithInverse
+F 30.14. IsExtLElement
+F 30.14. IsExtRElement
+F 30.14. IsMultiplicativeElement
+F 30.14. IsMultiplicativeElementWithOne
+F 30.14. IsMultiplicativeElementWithZero
+F 30.14. IsMultiplicativeElementWithInverse
+F 30.14. IsVector
+F 30.14. IsNearRingElement
+F 30.14. IsRingElement
+F 30.14. IsNearRingElementWithOne
+F 30.14. IsRingElementWithOne
+F 30.14. IsNearRingElementWithInverse
+F 30.14. IsRingElementWithInverse
+F 30.14. IsScalar
+S 30.15. Useful Categories for all Elements of a Family
+F 30.15. IsAssociativeElement
+F 30.15. IsAssociativeElementCollection
+F 30.15. IsAssociativeElementCollColl
+F 30.15. IsAdditivelyCommutativeElement
+F 30.15. IsAdditivelyCommutativeElementCollection
+F 30.15. IsAdditivelyCommutativeElementCollColl
+F 30.15. IsAdditivelyCommutativeElementFamily
+F 30.15. IsCommutativeElement
+F 30.15. IsCommutativeElementCollection
+F 30.15. IsCommutativeElementCollColl
+F 30.15. IsFiniteOrderElement
+F 30.15. IsFiniteOrderElementCollection
+F 30.15. IsFiniteOrderElementCollColl
+F 30.15. IsJacobianElement
+F 30.15. IsJacobianElementCollection
+F 30.15. IsJacobianElementCollColl
+F 30.15. IsZeroSquaredElement
+F 30.15. IsZeroSquaredElementCollection
+F 30.15. IsZeroSquaredElementCollColl
+C mapping.tex 31. Mappings
+I 31.0. functions
+I 31.0. relations
+F 31.0. IsTuple
+S 31.1. Creating Mappings
+F 31.1. GeneralMappingByElements
+F 31.1. MappingByFunction
+F 31.1. MappingByFunction
+F 31.1. MappingByFunction
+F 31.1. InverseGeneralMapping
+F 31.1. CompositionMapping
+F 31.1. CompositionMapping2
+F 31.1. IsCompositionMappingRep
+F 31.1. ConstituentsCompositionMapping
+F 31.1. ZeroMapping
+F 31.1. IdentityMapping
+F 31.1. Embedding
+F 31.1. Embedding
+F 31.1. Projection
+F 31.1. Projection
+F 31.1. Projection
+F 31.1. RestrictedMapping
+S 31.2. Properties and Attributes of (General) Mappings
+F 31.2. IsTotal
+F 31.2. IsSingleValued
+F 31.2. IsMapping
+F 31.2. IsInjective
+F 31.2. IsSurjective
+F 31.2. IsBijective
+F 31.2. Range
+F 31.2. Source
+F 31.2. UnderlyingRelation
+F 31.2. UnderlyingGeneralMapping
+S 31.3. Images under Mappings
+F 31.3. ImagesSource
+F 31.3. ImagesRepresentative
+F 31.3. ImagesElm
+F 31.3. ImagesSet
+F 31.3. ImageElm
+F 31.3. Image
+F 31.3. Image
+F 31.3. Image
+F 31.3. Images
+F 31.3. Images
+F 31.3. Images
+S 31.4. Preimages under Mappings
+F 31.4. PreImagesRange
+F 31.4. PreImagesElm
+F 31.4. PreImageElm
+F 31.4. PreImagesRepresentative
+F 31.4. PreImagesSet
+F 31.4. PreImage
+F 31.4. PreImage
+F 31.4. PreImage
+F 31.4. PreImages
+F 31.4. PreImages
+F 31.4. PreImages
+S 31.5. Arithmetic Operations for General Mappings
+S 31.6. Mappings which are Compatible with Algebraic Structures
+S 31.7. Magma Homomorphisms
+F 31.7. IsMagmaHomomorphism
+F 31.7. MagmaHomomorphismByFunctionNC
+F 31.7. NaturalHomomorphismByGenerators
+S 31.8. Mappings that Respect Multiplication
+F 31.8. RespectsMultiplication
+F 31.8. RespectsOne
+F 31.8. RespectsInverses
+F 31.8. IsGroupGeneralMapping
+F 31.8. IsGroupHomomorphism
+F 31.8. KernelOfMultiplicativeGeneralMapping
+F 31.8. CoKernelOfMultiplicativeGeneralMapping
+S 31.9. Mappings that Respect Addition
+F 31.9. RespectsAddition
+F 31.9. RespectsAdditiveInverses
+F 31.9. RespectsZero
+F 31.9. IsAdditiveGroupGeneralMapping
+F 31.9. IsAdditiveGroupHomomorphism
+F 31.9. KernelOfAdditiveGeneralMapping
+F 31.9. CoKernelOfAdditiveGeneralMapping
+S 31.10. Linear Mappings
+F 31.10. RespectsScalarMultiplication
+F 31.10. IsLeftModuleGeneralMapping
+F 31.10. IsLeftModuleHomomorphism
+F 31.10. IsLinearMapping
+S 31.11. Ring Homomorphisms
+F 31.11. IsRingGeneralMapping
+F 31.11. IsRingHomomorphism
+F 31.11. IsRingWithOneGeneralMapping
+F 31.11. IsRingWithOneHomomorphism
+F 31.11. IsAlgebraGeneralMapping
+F 31.11. IsAlgebraHomomorphism
+F 31.11. IsAlgebraWithOneGeneralMapping
+F 31.11. IsAlgebraWithOneHomomorphism
+F 31.11. IsFieldHomomorphism
+S 31.12. General Mappings
+F 31.12. IsGeneralMapping
+F 31.12. IsConstantTimeAccessGeneralMapping
+F 31.12. IsEndoGeneralMapping
+S 31.13. Technical Matters Concerning General Mappings
+F 31.13. IsSPGeneralMapping
+F 31.13. IsNonSPGeneralMapping
+F 31.13. IsGeneralMappingFamily
+F 31.13. FamilyRange
+F 31.13. FamilySource
+F 31.13. FamiliesOfGeneralMappingsAndRanges
+F 31.13. GeneralMappingsFamily
+F 31.13. TypeOfDefaultGeneralMapping
+C relation.tex 32. Relations
+I 32.0. binary relation
+I 32.0. IsBinaryRelation!same as IsEndoGeneralMapping
+I 32.0. IsEndoGeneralMapping!same as IsBinaryRelation
+S 32.1. General Binary Relations
+F 32.1. IsBinaryRelation
+F 32.1. BinaryRelationByElements
+F 32.1. IdentityBinaryRelation
+F 32.1. IdentityBinaryRelation
+F 32.1. EmptyBinaryRelation
+F 32.1. EmptyBinaryRelation
+S 32.2. Properties and Attributes of Binary Relations
+F 32.2. IsReflexiveBinaryRelation
+I 32.2. reflexive relation
+F 32.2. IsSymmetricBinaryRelation
+I 32.2. symmetric relation
+F 32.2. IsTransitiveBinaryRelation
+I 32.2. transitive relation
+F 32.2. IsAntisymmetricBinaryRelation
+I 32.2. antisymmetric relation
+F 32.2. IsPreOrderBinaryRelation
+I 32.2. preorder
+F 32.2. IsPartialOrderBinaryRelation
+I 32.2. partial order
+F 32.2. IsHasseDiagram
+F 32.2. IsEquivalenceRelation
+I 32.2. equivalence relation
+F 32.2. Successors
+F 32.2. DegreeOfBinaryRelation
+F 32.2. PartialOrderOfHasseDiagram
+S 32.3. Binary Relations on Points
+F 32.3. BinaryRelationOnPoints
+F 32.3. BinaryRelationOnPointsNC
+F 32.3. RandomBinaryRelationOnPoints
+F 32.3. AsBinaryRelationOnPoints
+F 32.3. AsBinaryRelationOnPoints
+F 32.3. AsBinaryRelationOnPoints
+S 32.4. Closure Operations and Other Constructors
+F 32.4. ReflexiveClosureBinaryRelation
+F 32.4. SymmetricClosureBinaryRelation
+F 32.4. TransitiveClosureBinaryRelation
+F 32.4. HasseDiagramBinaryRelation
+F 32.4. StronglyConnectedComponents
+F 32.4. PartialOrderByOrderingFunction
+S 32.5. Equivalence Relations
+I 32.5. equivalence relation
+F 32.5. EquivalenceRelationByPartition
+F 32.5. EquivalenceRelationByPartitionNC
+F 32.5. EquivalenceRelationByRelation
+F 32.5. EquivalenceRelationByPairs
+F 32.5. EquivalenceRelationByPairsNC
+F 32.5. EquivalenceRelationByProperty
+S 32.6. Attributes of and Operations on Equivalence Relations
+F 32.6. EquivalenceRelationPartition
+F 32.6. GeneratorsOfEquivalenceRelationPartition
+F 32.6. JoinEquivalenceRelations
+F 32.6. MeetEquivalenceRelations
+S 32.7. Equivalence Classes
+F 32.7. IsEquivalenceClass
+I 32.7. equivalence class
+F 32.7. EquivalenceClassRelation
+F 32.7. EquivalenceClasses!attribute
+F 32.7. EquivalenceClassOfElement
+F 32.7. EquivalenceClassOfElementNC
+C magma.tex 33. Magmas
+S 33.1. Magma Categories
+F 33.1. IsMagma
+F 33.1. IsMagmaWithOne
+F 33.1. IsMagmaWithInversesIfNonzero
+F 33.1. IsMagmaWithInverses
+S 33.2. Magma Generation
+F 33.2. Magma
+F 33.2. Magma
+F 33.2. MagmaWithOne
+F 33.2. MagmaWithOne
+F 33.2. MagmaWithInverses
+F 33.2. MagmaWithInverses
+F 33.2. MagmaByGenerators
+F 33.2. MagmaByGenerators
+F 33.2. MagmaWithOneByGenerators
+F 33.2. MagmaWithOneByGenerators
+F 33.2. MagmaWithInversesByGenerators
+F 33.2. MagmaWithInversesByGenerators
+F 33.2. Submagma
+F 33.2. SubmagmaNC
+F 33.2. SubmagmaWithOne
+F 33.2. SubmagmaWithOneNC
+F 33.2. SubmagmaWithInverses
+F 33.2. SubmagmaWithInversesNC
+F 33.2. AsMagma
+F 33.2. AsSubmagma
+F 33.2. InjectionZeroMagma
+S 33.3. Magmas Defined by Multiplication Tables
+F 33.3. MagmaByMultiplicationTable
+F 33.3. MagmaWithOneByMultiplicationTable
+F 33.3. MagmaWithInversesByMultiplicationTable
+F 33.3. MagmaElement
+F 33.3. MultiplicationTable
+S 33.4. Attributes and Properties for Magmas
+F 33.4. GeneratorsOfMagma
+F 33.4. GeneratorsOfMagmaWithOne
+F 33.4. GeneratorsOfMagmaWithInverses
+I 33.4. centraliser
+I 33.4. center
+F 33.4. Centralizer
+F 33.4. Centralizer
+F 33.4. Centralizer
+F 33.4. Centre
+F 33.4. Center
+F 33.4. Idempotents
+F 33.4. IsAssociative
+F 33.4. IsCentral
+F 33.4. IsCommutative
+F 33.4. IsAbelian
+F 33.4. MultiplicativeNeutralElement
+F 33.4. MultiplicativeZero
+F 33.4. IsMultiplicativeZero
+F 33.4. SquareRoots
+F 33.4. TrivialSubmagmaWithOne
+C word.tex 34. Words
+S 34.1. Categories of Words and Nonassociative Words
+I 34.1. abstract word
+F 34.1. IsWord
+F 34.1. IsWordWithOne
+F 34.1. IsWordWithInverse
+F 34.1. IsWordCollection
+F 34.1. IsNonassocWord
+F 34.1. IsNonassocWordWithOne
+F 34.1. IsNonassocWordCollection
+F 34.1. IsNonassocWordWithOneCollection
+S 34.2. Comparison of Words
+F 34.2. equality!nonassociative words
+F 34.2. smaller!nonassociative words
+S 34.3. Operations for Words
+F 34.3. MappedWord
+S 34.4. Free Magmas
+F 34.4. FreeMagma
+F 34.4. FreeMagma
+F 34.4. FreeMagma
+F 34.4. FreeMagma
+F 34.4. FreeMagma
+F 34.4. FreeMagmaWithOne
+F 34.4. FreeMagmaWithOne
+F 34.4. FreeMagmaWithOne
+F 34.4. FreeMagmaWithOne
+F 34.4. FreeMagmaWithOne
+S 34.5. External Representation for Nonassociative Words
+C wordass.tex 35. Associative Words
+S 35.1. Categories of Associative Words
+F 35.1. IsAssocWord
+F 35.1. IsAssocWordWithOne
+F 35.1. IsAssocWordWithInverse
+S 35.2. Free Groups, Monoids and Semigroups
+F 35.2. FreeGroup
+F 35.2. FreeGroup
+F 35.2. FreeGroup
+F 35.2. FreeGroup
+F 35.2. FreeGroup
+F 35.2. IsFreeGroup
+F 35.2. FreeMonoid!with example
+F 35.2. FreeMonoid!with example
+F 35.2. FreeMonoid!with example
+F 35.2. FreeMonoid!with example
+F 35.2. FreeMonoid!with example
+F 35.2. FreeSemigroup
+F 35.2. FreeSemigroup
+F 35.2. FreeSemigroup
+F 35.2. FreeSemigroup
+F 35.2. FreeSemigroup
+F 35.2. AssignGeneratorVariables
+S 35.3. Comparison of Associative Words
+F 35.3. equality!associative words
+F 35.3. smaller!associative words
+F 35.3. IsShortLexLessThanOrEqual
+F 35.3. IsBasicWreathLessThanOrEqual
+S 35.4. Operations for Associative Words
+I 35.4. product!of words
+I 35.4. quotient!of words
+I 35.4. power!of words
+I 35.4. conjugate!of a word
+I 35.4. Comm!for words
+I 35.4. LeftQuotient!for words
+I 35.4. length!of a word
+F 35.4. Length!of an associative word
+F 35.4. ExponentSumWord
+F 35.4. Subword
+F 35.4. PositionWord
+F 35.4. SubstitutedWord
+F 35.4. SubstitutedWord
+F 35.4. EliminatedWord
+S 35.5. Operations for Associative Words by their Syllables
+F 35.5. NumberSyllables
+F 35.5. ExponentSyllable
+F 35.5. GeneratorSyllable
+F 35.5. SubSyllables
+S 35.6. Representations for Associative Words
+F 35.6. IsLetterAssocWordRep
+F 35.6. IsLetterWordsFamily
+F 35.6. IsBLetterAssocWordRep
+F 35.6. IsWLetterAssocWordRep
+F 35.6. IsBLetterWordsFamily
+F 35.6. IsWLetterWordsFamily
+F 35.6. IsSyllableAssocWordRep
+F 35.6. IsSyllableWordsFamily
+F 35.6. Is8BitsFamily
+F 35.6. Is16BitsFamily
+F 35.6. Is32BitsFamily
+F 35.6. IsInfBitsFamily
+F 35.6. LetterRepAssocWord
+F 35.6. LetterRepAssocWord
+F 35.6. AssocWordByLetterRep
+S 35.7. The External Representation for Associative Words
+S 35.8. Straight Line Programs
+F 35.8. IsStraightLineProgram
+F 35.8. StraightLineProgram
+F 35.8. StraightLineProgram
+F 35.8. StraightLineProgramNC
+F 35.8. StraightLineProgramNC
+F 35.8. LinesOfStraightLineProgram
+F 35.8. NrInputsOfStraightLineProgram
+F 35.8. ResultOfStraightLineProgram
+F 35.8. StringOfResultOfStraightLineProgram
+F 35.8. CompositionOfStraightLinePrograms
+F 35.8. IntegratedStraightLineProgram
+S 35.9. Straight Line Program Elements
+F 35.9. IsStraightLineProgElm
+F 35.9. StraightLineProgElm
+F 35.9. StraightLineProgGens
+F 35.9. EvalStraightLineProgElm
+F 35.9. StretchImportantSLPElement
+C rws.tex 36. Rewriting Systems
+S 36.1. Operations on rewriting systems
+F 36.1. IsRewritingSystem
+F 36.1. Rules
+F 36.1. OrderOfRewritingSystem
+F 36.1. OrderingOfRewritingSystem
+F 36.1. ReducedForm
+F 36.1. IsConfluent
+F 36.1. IsConfluent
+F 36.1. ConfluentRws
+F 36.1. IsReduced
+F 36.1. ReduceRules
+F 36.1. AddRule
+F 36.1. AddRuleReduced
+F 36.1. MakeConfluent
+F 36.1. GeneratorsOfRws
+F 36.1. AddGenerators
+S 36.2. Operations on elements of the algebra
+F 36.2. ReducedProduct
+F 36.2. ReducedSum
+F 36.2. ReducedOne
+F 36.2. ReducedAdditiveInverse
+F 36.2. ReducedComm
+F 36.2. ReducedConjugate
+F 36.2. ReducedDifference
+F 36.2. ReducedInverse
+F 36.2. ReducedLeftQuotient
+F 36.2. ReducedPower
+F 36.2. ReducedQuotient
+F 36.2. ReducedScalarProduct
+F 36.2. ReducedZero
+S 36.3. Properties of rewriting systems
+F 36.3. IsBuiltFromAdditiveMagmaWithInverses
+F 36.3. IsBuiltFromMagma
+F 36.3. IsBuiltFromMagmaWithOne
+F 36.3. IsBuiltFromMagmaWithInverses
+F 36.3. IsBuiltFromSemigroup
+F 36.3. IsBuiltFromGroup
+S 36.4. Rewriting in Groups and Monoids
+S 36.5. Developing rewriting systems
+C groups.tex 37. Groups
+S 37.1. Group Elements
+I 37.1. order! of a group
+S 37.2. Creating Groups
+F 37.2. Group
+F 37.2. Group
+F 37.2. Group
+F 37.2. GroupWithGenerators
+F 37.2. GroupWithGenerators
+F 37.2. GeneratorsOfGroup
+F 37.2. AsGroup
+F 37.2. ConjugateGroup
+F 37.2. IsGroup
+F 37.2. InfoGroup
+S 37.3. Subgroups
+F 37.3. Subgroup
+F 37.3. SubgroupNC
+F 37.3. Index
+F 37.3. IndexNC
+F 37.3. IndexInWholeGroup
+F 37.3. AsSubgroup
+F 37.3. IsSubgroup
+F 37.3. IsNormal
+F 37.3. IsCharacteristicSubgroup
+F 37.3. ConjugateSubgroup
+F 37.3. ConjugateSubgroups
+F 37.3. IsSubnormal
+F 37.3. SubgroupByProperty
+F 37.3. SubgroupShell
+S 37.4. Closures of (Sub)groups
+F 37.4. ClosureGroup
+F 37.4. ClosureGroupAddElm
+F 37.4. ClosureGroupCompare
+F 37.4. ClosureGroupIntest
+F 37.4. ClosureGroupDefault
+F 37.4. ClosureSubgroup
+F 37.4. ClosureSubgroupNC
+S 37.5. Expressing Group Elements as Words in Generators
+I 37.5. factorization
+I 37.5. words!in generators
+F 37.5. Factorization
+S 37.6. Cosets
+I 37.6. right cosets
+I 37.6. coset
+F 37.6. RightCoset
+F 37.6. RightCosets
+F 37.6. RightCosetsNC
+F 37.6. CanonicalRightCosetElement
+F 37.6. IsRightCoset
+I 37.6. left cosets
+S 37.7. Transversals
+F 37.7. RightTransversal
+S 37.8. Double Cosets
+F 37.8. DoubleCoset
+F 37.8. RepresentativesContainedRightCosets
+F 37.8. DoubleCosets!operation
+F 37.8. DoubleCosetsNC!operation
+F 37.8. IsDoubleCoset
+F 37.8. DoubleCosetRepsAndSizes
+F 37.8. InfoCoset
+S 37.9. Conjugacy Classes
+F 37.9. ConjugacyClass
+F 37.9. ConjugacyClasses!attribute
+F 37.9. ConjugacyClassesByRandomSearch
+F 37.9. ConjugacyClassesByOrbits
+F 37.9. NrConjugacyClasses
+F 37.9. RationalClass
+F 37.9. RationalClasses
+F 37.9. GaloisGroup!of rational class of a group
+F 37.9. IsConjugate
+F 37.9. IsConjugate
+S 37.10. Normal Structure
+I 37.10. normalizer
+F 37.10. Normalizer
+F 37.10. Normalizer
+F 37.10. Core
+F 37.10. PCore
+I 37.10. O_p(G)!see PCore
+F 37.10. NormalClosure
+F 37.10. NormalIntersection
+F 37.10. Complementclasses
+F 37.10. InfoComplement
+S 37.11. Specific and Parametrized Subgroups
+F 37.11. TrivialSubgroup
+F 37.11. CommutatorSubgroup
+F 37.11. DerivedSubgroup
+F 37.11. CommutatorLength
+F 37.11. FittingSubgroup
+F 37.11. FrattiniSubgroup
+F 37.11. PrefrattiniSubgroup
+F 37.11. PerfectResiduum
+F 37.11. RadicalGroup
+F 37.11. Socle
+F 37.11. SupersolvableResiduum
+F 37.11. PRump
+S 37.12. Sylow Subgroups and Hall Subgroups
+F 37.12. SylowSubgroup
+F 37.12. SylowComplement
+F 37.12. HallSubgroup
+F 37.12. SylowSystem
+F 37.12. ComplementSystem
+F 37.12. HallSystem
+S 37.13. Subgroups characterized by prime powers
+F 37.13. Omega
+F 37.13. Agemo
+S 37.14. Group Properties
+F 37.14. IsCyclic
+F 37.14. IsElementaryAbelian
+F 37.14. IsNilpotentGroup
+F 37.14. NilpotencyClassOfGroup
+F 37.14. IsPerfectGroup
+F 37.14. IsSolvableGroup
+F 37.14. IsPolycyclicGroup
+F 37.14. IsSupersolvableGroup
+F 37.14. IsMonomialGroup
+F 37.14. IsSimpleGroup
+F 37.14. IsomorphismTypeInfoFiniteSimpleGroup
+F 37.14. IsFinitelyGeneratedGroup
+F 37.14. IsSubsetLocallyFiniteGroup
+I 37.14. p-group
+F 37.14. IsPGroup
+F 37.14. PrimePGroup
+F 37.14. PClassPGroup
+F 37.14. RankPGroup
+F 37.14. IsPSolvable
+F 37.14. IsPNilpotent
+S 37.15. Numerical Group Attributes
+F 37.15. AbelianInvariants!for groups
+F 37.15. Exponent
+F 37.15. EulerianFunction
+S 37.16. Subgroup Series
+F 37.16. ChiefSeries
+F 37.16. ChiefSeriesThrough
+F 37.16. ChiefSeriesUnderAction
+F 37.16. SubnormalSeries
+F 37.16. CompositionSeries
+F 37.16. DisplayCompositionSeries
+F 37.16. DerivedSeriesOfGroup
+F 37.16. DerivedLength
+F 37.16. ElementaryAbelianSeries
+F 37.16. ElementaryAbelianSeriesLargeSteps
+F 37.16. ElementaryAbelianSeries
+F 37.16. InvariantElementaryAbelianSeries
+F 37.16. LowerCentralSeriesOfGroup
+F 37.16. UpperCentralSeriesOfGroup
+F 37.16. PCentralSeries
+F 37.16. JenningsSeries
+F 37.16. DimensionsLoewyFactors
+F 37.16. AscendingChain
+F 37.16. IntermediateGroup
+F 37.16. IntermediateSubgroups
+S 37.17. Factor Groups
+F 37.17. NaturalHomomorphismByNormalSubgroup
+F 37.17. NaturalHomomorphismByNormalSubgroupNC
+F 37.17. FactorGroup
+F 37.17. FactorGroupNC
+F 37.17. CommutatorFactorGroup
+F 37.17. MaximalAbelianQuotient
+F 37.17. HasAbelianFactorGroup
+F 37.17. HasElementaryAbelianFactorGroup
+F 37.17. CentralizerModulo
+S 37.18. Sets of Subgroups
+F 37.18. ConjugacyClassSubgroups
+F 37.18. IsConjugacyClassSubgroupsRep
+F 37.18. IsConjugacyClassSubgroupsByStabilizerRep
+F 37.18. ConjugacyClassesSubgroups
+F 37.18. ConjugacyClassesMaximalSubgroups
+F 37.18. MaximalSubgroupClassReps
+F 37.18. MaximalSubgroups
+F 37.18. NormalSubgroups
+F 37.18. MaximalNormalSubgroups
+F 37.18. MinimalNormalSubgroups
+S 37.19. Subgroup Lattice
+F 37.19. LatticeSubgroups
+F 37.19. ClassElementLattice
+F 37.19. MaximalSubgroupsLattice
+F 37.19. MinimalSupergroupsLattice
+F 37.19. RepresentativesPerfectSubgroups
+F 37.19. RepresentativesSimpleSubgroups
+F 37.19. ConjugacyClassesPerfectSubgroups
+F 37.19. Zuppos
+F 37.19. InfoLattice
+S 37.20. Specific Methods for Subgroup Lattice Computations
+F 37.20. LatticeByCyclicExtension
+F 37.20. InvariantSubgroupsElementaryAbelianGroup
+F 37.20. SubgroupsSolvableGroup
+F 37.20. SizeConsiderFunction
+F 37.20. ExactSizeConsiderFunction
+F 37.20. InfoPcSubgroup
+S 37.21. Special Generating Sets
+F 37.21. GeneratorsSmallest
+F 37.21. LargestElementGroup
+F 37.21. MinimalGeneratingSet
+F 37.21. SmallGeneratingSet
+F 37.21. IndependentGeneratorsOfAbelianGroup
+S 37.22. 1-Cohomology
+I 37.22. one cohomology
+I 37.22. cohomology
+I 37.22. cocycles
+F 37.22. OneCocycles
+F 37.22. OneCocycles
+F 37.22. OneCocycles
+F 37.22. OneCocycles
+F 37.22. OneCoboundaries
+F 37.22. OCOneCocycles
+F 37.22. ComplementclassesEA
+F 37.22. InfoCoh
+S 37.23. Schur Covers and Multipliers
+I 37.23. Darstellungsgruppe!see EpimorphismSchurCover
+F 37.23. EpimorphismSchurCover
+F 37.23. SchurCover
+F 37.23. AbelianInvariantsMultiplier
+I 37.23. Multiplier
+I 37.23. Schur multiplier
+S 37.24. Tests for the Availability of Methods
+F 37.24. CanEasilyTestMembership
+F 37.24. CanComputeSize
+F 37.24. CanComputeSizeAnySubgroup
+F 37.24. CanComputeIndex
+F 37.24. CanComputeIsSubset
+F 37.24. KnowsHowToDecompose
+F 37.24. KnowsHowToDecompose
+C grphomom.tex 38. Group Homomorphisms
+S 38.1. Creating Group Homomorphisms
+F 38.1. GroupHomomorphismByImages
+F 38.1. GroupHomomorphismByImagesNC
+F 38.1. GroupGeneralMappingByImages
+F 38.1. GroupHomomorphismByFunction
+F 38.1. GroupHomomorphismByFunction
+F 38.1. GroupHomomorphismByFunction
+F 38.1. AsGroupGeneralMappingByImages
+S 38.2. Operations for Group Homomorphisms
+I 38.2. Inverse!group homomorphism
+S 38.3. Efficiency of Homomorphisms
+F 38.3. ImagesSmallestGenerators
+S 38.4. Homomorphism for very large groups
+S 38.5. Nice Monomorphisms
+F 38.5. IsHandledByNiceMonomorphism
+F 38.5. NiceMonomorphism
+F 38.5. NiceObject
+F 38.5. IsCanonicalNiceMonomorphism
+S 38.6. Group Automorphisms
+F 38.6. ConjugatorIsomorphism
+F 38.6. ConjugatorAutomorphism
+F 38.6. ConjugatorAutomorphismNC
+F 38.6. InnerAutomorphism
+F 38.6. InnerAutomorphismNC
+F 38.6. IsConjugatorIsomorphism
+F 38.6. IsConjugatorAutomorphism
+F 38.6. IsInnerAutomorphism
+F 38.6. ConjugatorOfConjugatorIsomorphism
+S 38.7. Groups of Automorphisms
+F 38.7. IsGroupOfAutomorphisms
+F 38.7. AutomorphismDomain
+F 38.7. AutomorphismGroup
+F 38.7. IsAutomorphismGroup
+F 38.7. InnerAutomorphismsAutomorphismGroup
+F 38.7. InducedAutomorphism
+S 38.8. Calculating with Group Automorphisms
+F 38.8. AssignNiceMonomorphismAutomorphismGroup
+F 38.8. NiceMonomorphismAutomGroup
+S 38.9. Searching for Homomorphisms
+I 38.9. homomorphisms!find all
+F 38.9. IsomorphismGroups
+I 38.9. isomorphisms!find all
+F 38.9. GQuotients
+I 38.9. epimorphisms!find all
+I 38.9. projections!find all
+F 38.9. IsomorphicSubgroups
+I 38.9. embeddings!find all
+I 38.9. monomorphisms!find all
+F 38.9. MorClassLoop
+S 38.10. Representations for Group Homomorphisms
+F 38.10. IsGroupGeneralMappingByImages
+F 38.10. IsGroupGeneralMappingByAsGroupGeneralMappingByImages
+F 38.10. IsPreimagesByAsGroupGeneralMappingByImages
+F 38.10. IsPermGroupGeneralMappingByImages
+F 38.10. IsPermGroupHomomorphismByImages
+F 38.10. IsToPermGroupGeneralMappingByImages
+F 38.10. IsToPermGroupHomomorphismByImages
+F 38.10. IsGroupGeneralMappingByPcgs
+F 38.10. IsPcGroupGeneralMappingByImages
+F 38.10. IsPcGroupHomomorphismByImages
+F 38.10. IsToPcGroupGeneralMappingByImages
+F 38.10. IsToPcGroupHomomorphismByImages
+F 38.10. IsFromFpGroupGeneralMappingByImages
+F 38.10. IsFromFpGroupHomomorphismByImages
+F 38.10. IsFromFpGroupStdGensGeneralMappingByImages
+F 38.10. IsFromFpGroupStdGensHomomorphismByImages
+C grpoper.tex 39. Group Actions
+I 39.0. group actions
+I 39.0. G-sets
+S 39.1. About Group Actions
+I 39.1. group actions!operations syntax
+S 39.2. Basic Actions
+I 39.2. group actions
+I 39.2. actions
+I 39.2. group operations
+F 39.2. OnPoints
+I 39.2. conjugation
+I 39.2. action!by conjugation
+F 39.2. OnRight
+F 39.2. OnLeftInverse
+F 39.2. OnSets
+I 39.2. action!on sets
+I 39.2. action!on blocks
+F 39.2. OnTuples
+F 39.2. OnPairs
+F 39.2. OnSetsSets
+F 39.2. OnSetsDisjointSets
+F 39.2. OnSetsTuples
+F 39.2. OnTuplesSets
+F 39.2. OnTuplesTuples
+F 39.2. OnLines
+F 39.2. OnIndeterminates!as a permutation action
+F 39.2. Permuted!as a permutation action
+F 39.2. OnSubspacesByCanonicalBasis
+S 39.3. Orbits
+F 39.3. Orbit
+F 39.3. Orbits!operation/attribute
+F 39.3. Orbits!operation/attribute
+F 39.3. OrbitsDomain
+F 39.3. OrbitsDomain
+F 39.3. OrbitLength
+F 39.3. OrbitLengths
+F 39.3. OrbitLengths
+F 39.3. OrbitLengthsDomain
+F 39.3. OrbitLengthsDomain
+S 39.4. Stabilizers
+I 39.4. point stabilizer
+I 39.4. set stabilizer
+I 39.4. tuple stabilizer
+F 39.4. OrbitStabilizer
+F 39.4. Stabilizer
+F 39.4. OrbitStabilizerAlgorithm
+S 39.5. Elements with Prescribed Images
+I 39.5. transporter
+F 39.5. RepresentativeAction
+S 39.6. The Permutation Image of an Action
+F 39.6. ActionHomomorphism
+F 39.6. ActionHomomorphism
+F 39.6. ActionHomomorphism
+F 39.6. Action
+F 39.6. Action
+I 39.6. regular action
+F 39.6. SparseActionHomomorphism
+F 39.6. SortedSparseActionHomomorphism
+S 39.7. Action of a group on itself
+F 39.7. FactorCosetAction
+F 39.7. RegularActionHomomorphism
+F 39.7. AbelianSubfactorAction
+S 39.8. Permutations Induced by Elements and Cycles
+F 39.8. Permutation
+F 39.8. Permutation
+F 39.8. PermutationCycle
+F 39.8. Cycle
+F 39.8. CycleLength
+F 39.8. Cycles
+F 39.8. CycleLengths
+S 39.9. Tests for Actions
+F 39.9. IsTransitive!for group actions
+F 39.9. IsTransitive!for group actions
+I 39.9. transitive
+F 39.9. Transitivity!for group actions
+F 39.9. Transitivity!for group actions
+F 39.9. RankAction
+F 39.9. RankAction
+F 39.9. IsSemiRegular
+F 39.9. IsSemiRegular
+I 39.9. semiregular
+F 39.9. IsRegular
+F 39.9. IsRegular
+I 39.9. regular
+F 39.9. Earns
+F 39.9. Earns
+F 39.9. IsPrimitive
+F 39.9. IsPrimitive
+I 39.9. primitive
+S 39.10. Block Systems
+F 39.10. Blocks
+F 39.10. Blocks
+F 39.10. MaximalBlocks
+F 39.10. MaximalBlocks
+F 39.10. RepresentativesMinimalBlocks
+F 39.10. RepresentativesMinimalBlocks
+F 39.10. AllBlocks
+S 39.11. External Sets
+I 39.11. G-sets
+F 39.11. IsExternalSet
+F 39.11. ExternalSet
+F 39.11. ActingDomain
+F 39.11. FunctionAction
+F 39.11. HomeEnumerator
+F 39.11. IsExternalSubset
+F 39.11. ExternalSubset
+F 39.11. IsExternalOrbit
+F 39.11. ExternalOrbit
+F 39.11. StabilizerOfExternalSet
+F 39.11. ExternalOrbits
+F 39.11. ExternalOrbits
+F 39.11. ExternalOrbitsStabilizers
+F 39.11. ExternalOrbitsStabilizers
+F 39.11. CanonicalRepresentativeOfExternalSet
+F 39.11. CanonicalRepresentativeDeterminatorOfExternalSet
+F 39.11. ActorOfExternalSet
+F 39.11. UnderlyingExternalSet
+F 39.11. SurjectiveActionHomomorphismAttr
+C permutat.tex 40. Permutations
+F 40.0. IsPerm
+F 40.0. IsPermCollection
+F 40.0. IsPermCollColl
+F 40.0. PermutationsFamily
+S 40.1. Comparison of Permutations
+F 40.1. equality test!for permutations
+F 40.1. precedence test!for permutations
+F 40.1. SmallestGeneratorPerm
+S 40.2. Moved Points of Permutations
+F 40.2. SmallestMovedPoint
+F 40.2. SmallestMovedPoint
+F 40.2. LargestMovedPoint
+F 40.2. LargestMovedPoint
+F 40.2. MovedPoints
+F 40.2. MovedPoints
+F 40.2. NrMovedPoints
+F 40.2. NrMovedPoints
+S 40.3. Sign and Cycle Structure
+F 40.3. SignPerm
+F 40.3. CycleStructurePerm
+S 40.4. Creating Permutations
+F 40.4. ListPerm
+F 40.4. PermList
+F 40.4. MappingPermListList
+F 40.4. RestrictedPerm
+C grpperm.tex 41. Permutation Groups
+F 41.0. IsPermGroup
+S 41.1. The Natural Action
+F 41.1. OrbitPerms
+F 41.1. OrbitsPerms
+S 41.2. Computing a Permutation Representation
+F 41.2. IsomorphismPermGroup
+F 41.2. SmallerDegreePermutationRepresentation
+S 41.3. Symmetric and Alternating Groups
+F 41.3. IsNaturalSymmetricGroup
+F 41.3. IsNaturalAlternatingGroup
+F 41.3. IsSymmetricGroup
+F 41.3. IsAlternatingGroup
+F 41.3. SymmetricParentGroup
+S 41.4. Primitive Groups
+F 41.4. ONanScottType
+F 41.4. SocleTypePrimitiveGroup
+S 41.5. Stabilizer Chains
+S 41.6. Randomized Methods for Permutation Groups
+I 41.6. Schreier-Sims!random
+S 41.7. Construction of Stabilizer Chains
+F 41.7. StabChain
+F 41.7. StabChain
+F 41.7. StabChainOp
+F 41.7. StabChainMutable
+F 41.7. StabChainMutable
+F 41.7. StabChainImmutable
+F 41.7. StabChainOptions
+F 41.7. DefaultStabChainOptions
+F 41.7. StabChainBaseStrongGenerators
+F 41.7. MinimalStabChain
+S 41.8. Stabilizer Chain Records
+S 41.9. Operations for Stabilizer Chains
+F 41.9. BaseStabChain
+F 41.9. BaseOfGroup
+F 41.9. SizeStabChain
+F 41.9. StrongGeneratorsStabChain
+F 41.9. GroupStabChain
+F 41.9. OrbitStabChain
+F 41.9. IndicesStabChain
+F 41.9. ListStabChain
+F 41.9. ElementsStabChain
+F 41.9. InverseRepresentative
+F 41.9. SiftedPermutation
+F 41.9. MinimalElementCosetStabChain
+F 41.9. LargestElementStabChain
+F 41.9. ApproximateSuborbitsStabilizerPermGroup
+S 41.10. Low Level Routines to Modify and Create Stabilizer Chains
+F 41.10. CopyStabChain
+F 41.10. CopyOptionsDefaults
+F 41.10. ChangeStabChain
+F 41.10. ExtendStabChain
+F 41.10. ReduceStabChain
+F 41.10. RemoveStabChain
+F 41.10. EmptyStabChain
+F 41.10. InsertTrivialStabilizer
+F 41.10. IsFixedStabilizer
+F 41.10. AddGeneratorsExtendSchreierTree
+S 41.11. Backtrack
+F 41.11. SubgroupProperty
+F 41.11. ElementProperty
+F 41.11. TwoClosure
+F 41.11. InfoBckt
+S 41.12. Working with large degree permutation groups
+C grpmat.tex 42. Matrix Groups
+F 42.0. IsMatrixGroup
+S 42.1. Attributes and Properties for Matrix Groups
+F 42.1. DimensionOfMatrixGroup
+F 42.1. DefaultFieldOfMatrixGroup
+F 42.1. FieldOfMatrixGroup
+F 42.1. TransposedMatrixGroup
+S 42.2. Actions of Matrix Groups
+F 42.2. ProjectiveActionOnFullSpace
+F 42.2. ProjectiveActionHomomorphismMatrixGroup
+F 42.2. BlowUpIsomorphism
+S 42.3. GL and SL
+F 42.3. IsGeneralLinearGroup
+F 42.3. IsGL
+F 42.3. IsNaturalGL
+F 42.3. IsSpecialLinearGroup
+F 42.3. IsSL
+F 42.3. IsNaturalSL
+F 42.3. IsSubgroupSL
+S 42.4. Invariant Forms
+F 42.4. InvariantBilinearForm
+F 42.4. IsFullSubgroupGLorSLRespectingBilinearForm
+F 42.4. InvariantSesquilinearForm
+F 42.4. IsFullSubgroupGLorSLRespectingSesquilinearForm
+F 42.4. InvariantQuadraticForm
+F 42.4. IsFullSubgroupGLorSLRespectingQuadraticForm
+S 42.5. Matrix Groups in Characteristic 0
+F 42.5. IsCyclotomicMatrixGroup
+F 42.5. IsRationalMatrixGroup
+F 42.5. IsIntegerMatrixGroup
+F 42.5. IsNaturalGLnZ
+F 42.5. IsNaturalSLnZ
+F 42.5. InvariantLattice
+F 42.5. NormalizerInGLnZ
+F 42.5. CentralizerInGLnZ
+F 42.5. ZClassRepsQClass
+F 42.5. IsBravaisGroup
+F 42.5. BravaisGroup
+F 42.5. BravaisSubgroups
+F 42.5. BravaisSupergroups
+F 42.5. NormalizerInGLnZBravaisGroup
+S 42.6. Acting OnRight and OnLeft
+F 42.6. CrystGroupDefaultAction
+F 42.6. SetCrystGroupDefaultAction
+C pcgs.tex 43. Polycyclic Groups
+S 43.1. Polycyclic Generating Systems
+S 43.2. Computing a Pcgs
+F 43.2. Pcgs
+F 43.2. IsPcgs
+F 43.2. CanEasilyComputePcgs
+S 43.3. Defining a Pcgs Yourself
+F 43.3. PcgsByPcSequence
+F 43.3. PcgsByPcSequenceNC
+S 43.4. Elementary Operations for a Pcgs
+F 43.4. RelativeOrders!of a pcgs
+F 43.4. IsFiniteOrdersPcgs
+F 43.4. IsPrimeOrdersPcgs
+F 43.4. PcSeries
+F 43.4. GroupOfPcgs
+F 43.4. OneOfPcgs
+S 43.5. Elementary Operations for a Pcgs and an Element
+F 43.5. RelativeOrderOfPcElement
+F 43.5. ExponentOfPcElement
+F 43.5. ExponentsOfPcElement
+F 43.5. ExponentsOfPcElement
+F 43.5. DepthOfPcElement
+F 43.5. LeadingExponentOfPcElement
+F 43.5. PcElementByExponents
+F 43.5. PcElementByExponentsNC
+F 43.5. PcElementByExponentsNC
+F 43.5. LinearCombinationPcgs
+F 43.5. SiftedPcElement
+F 43.5. CanonicalPcElement
+F 43.5. ReducedPcElement
+F 43.5. CleanedTailPcElement
+F 43.5. HeadPcElementByNumber
+S 43.6. Exponents of Special Products
+F 43.6. ExponentsConjugateLayer
+F 43.6. ExponentsOfRelativePower
+F 43.6. ExponentsOfConjugate
+F 43.6. ExponentsOfCommutator
+S 43.7. Subgroups of Polycyclic Groups - Induced Pcgs
+F 43.7. IsInducedPcgs
+F 43.7. InducedPcgsByPcSequence
+F 43.7. InducedPcgsByPcSequenceNC
+F 43.7. InducedPcgsByPcSequenceNC
+F 43.7. ParentPcgs
+F 43.7. InducedPcgs
+F 43.7. InducedPcgsByGenerators
+F 43.7. InducedPcgsByGeneratorsNC
+F 43.7. InducedPcgsByPcSequenceAndGenerators
+F 43.7. LeadCoeffsIGS
+F 43.7. ExtendedPcgs
+F 43.7. SubgroupByPcgs
+S 43.8. Subgroups of Polycyclic Groups - Canonical Pcgs
+F 43.8. IsCanonicalPcgs
+F 43.8. CanonicalPcgs
+S 43.9. Factor Groups of Polycyclic Groups - Modulo Pcgs
+F 43.9. ModuloPcgs
+F 43.9. IsModuloPcgs
+F 43.9. NumeratorOfModuloPcgs
+F 43.9. DenominatorOfModuloPcgs
+F 43.9. modulo!for pcgs
+F 43.9. CorrespondingGeneratorsByModuloPcgs
+F 43.9. CanonicalPcgsByGeneratorsWithImages
+S 43.10. Factor Groups of Polycyclic Groups in their Own Representation
+F 43.10. ProjectedPcElement
+F 43.10. ProjectedInducedPcgs
+F 43.10. LiftedPcElement
+F 43.10. LiftedInducedPcgs
+S 43.11. Pcgs and Normal Series
+F 43.11. IsPcgsElementaryAbelianSeries
+F 43.11. PcgsElementaryAbelianSeries
+F 43.11. PcgsElementaryAbelianSeries
+F 43.11. IndicesEANormalSteps
+F 43.11. EANormalSeriesByPcgs
+F 43.11. IsPcgsCentralSeries
+F 43.11. PcgsCentralSeries
+F 43.11. IndicesCentralNormalSteps
+F 43.11. CentralNormalSeriesByPcgs
+F 43.11. IsPcgsPCentralSeriesPGroup
+F 43.11. PcgsPCentralSeriesPGroup
+F 43.11. IndicesPCentralNormalStepsPGroup
+F 43.11. PCentralNormalSeriesByPcgsPGroup
+F 43.11. IsPcgsChiefSeries
+F 43.11. PcgsChiefSeries
+F 43.11. IndicesChiefNormalSteps
+F 43.11. ChiefNormalSeriesByPcgs
+F 43.11. IndicesNormalSteps
+F 43.11. NormalSeriesByPcgs
+S 43.12. Sum and Intersection of Pcgs
+F 43.12. SumFactorizationFunctionPcgs
+S 43.13. Special Pcgs
+F 43.13. IsSpecialPcgs
+F 43.13. SpecialPcgs!attribute
+F 43.13. SpecialPcgs!attribute
+F 43.13. LGWeights
+F 43.13. LGLayers
+F 43.13. LGFirst
+F 43.13. LGLength
+F 43.13. IsInducedPcgsWrtSpecialPcgs
+F 43.13. InducedPcgsWrtSpecialPcgs
+S 43.14. Action on Subfactors Defined by a Pcgs
+F 43.14. VectorSpaceByPcgsOfElementaryAbelianGroup
+F 43.14. LinearOperation
+F 43.14. LinearAction
+F 43.14. LinearOperationLayer
+F 43.14. LinearActionLayer
+F 43.14. AffineOperation
+F 43.14. AffineAction
+F 43.14. AffineOperationLayer
+F 43.14. AffineActionLayer
+S 43.15. Orbit Stabilizer Methods for Polycyclic Groups
+F 43.15. StabilizerPcgs
+F 43.15. Pcgs_OrbitStabilizer
+S 43.16. Operations which have Special Methods for Groups with Pcgs
+I 43.16. IsNilpotent!for groups with pcgs
+I 43.16. IsSupersolvable!for groups with pcgs
+I 43.16. Size!for groups with pcgs
+I 43.16. CompositionSeries!for groups with pcgs
+I 43.16. ConjugacyClasses!for groups with pcgs
+I 43.16. Centralizer!for groups with pcgs
+I 43.16. FrattiniSubgroup!for groups with pcgs
+I 43.16. PrefrattiniSubgroup!for groups with pcgs
+I 43.16. MaximalSubgroups!for groups with pcgs
+I 43.16. HallSystem!for groups with pcgs
+I 43.16. MinimalGeneratingSet!for groups with pcgs
+I 43.16. Centre!for groups with pcgs
+I 43.16. Intersection!for groups with pcgs
+I 43.16. AutomorphismGroup!for groups with pcgs
+I 43.16. IrreducibleModules!for groups with pcgs
+S 43.17. Conjugacy Classes in Solvable Groups
+F 43.17. ClassesSolvableGroup
+F 43.17. CentralizerSizeLimitConsiderFunction
+C grppc.tex 44. Pc Groups
+S 44.1. The family pcgs
+F 44.1. FamilyPcgs
+F 44.1. IsFamilyPcgs
+F 44.1. InducedPcgsWrtFamilyPcgs
+F 44.1. IsParentPcgsFamilyPcgs
+S 44.2. Elements of pc groups
+F 44.2. equality!pcwords
+F 44.2. smaller!pcwords
+S 44.3. Pc groups versus fp groups
+F 44.3. IsPcGroup
+F 44.3. IsomorphismFpGroupByPcgs
+S 44.4. Constructing Pc Groups
+F 44.4. PcGroupFpGroup
+F 44.4. SingleCollector
+F 44.4. CombinatorialCollector
+F 44.4. SetConjugate
+F 44.4. SetCommutator
+F 44.4. SetPower
+F 44.4. GroupByRws
+F 44.4. GroupByRwsNC
+F 44.4. IsConfluent!for pc groups
+F 44.4. IsomorphismRefinedPcGroup
+I 44.4. isomorphic!pc group
+F 44.4. RefinedPcGroup
+S 44.5. Computing Pc Groups
+F 44.5. PcGroupWithPcgs
+F 44.5. IsomorphismPcGroup
+I 44.5. isomorphic!pc group
+F 44.5. IsomorphismSpecialPcGroup
+S 44.6. Saving a Pc Group
+F 44.6. GapInputPcGroup
+S 44.7. Operations for Pc Groups
+S 44.8. 2-Cohomology and Extensions
+F 44.8. TwoCoboundaries
+F 44.8. TwoCocycles
+F 44.8. TwoCohomology
+F 44.8. Extensions
+F 44.8. Extension
+F 44.8. ExtensionNC
+F 44.8. SplitExtension
+F 44.8. ModuleOfExtension
+F 44.8. CompatiblePairs
+F 44.8. ExtensionRepresentatives
+F 44.8. SplitExtensions
+S 44.9. Coding a Pc Presentation
+F 44.9. CodePcgs
+F 44.9. CodePcGroup
+F 44.9. PcGroupCode
+F 44.9. PcGroupCodeRec
+S 44.10. Random Isomorphism Testing
+F 44.10. RandomIsomorphismTest
+C grpfp.tex 45. Finitely Presented Groups
+F 45.0. IsSubgroupFpGroup
+F 45.0. IsFpGroup
+F 45.0. InfoFpGroup
+S 45.1. Creating Finitely Presented Groups
+F 45.1. quotient!for finitely presented groups
+F 45.1. FactorGroupFpGroupByRels
+S 45.2. Comparison of Elements of Finitely Presented Groups
+F 45.2. equality!elements of finitely presented groups
+F 45.2. smaller!elements of finitely presented groups
+F 45.2. FpElmComparisonMethod
+F 45.2. SetReducedMultiplication
+F 45.2. SetReducedMultiplication
+F 45.2. SetReducedMultiplication
+S 45.3. Preimages in the Free Group
+F 45.3. FreeGroupOfFpGroup
+F 45.3. FreeGeneratorsOfFpGroup
+F 45.3. FreeGeneratorsOfWholeGroup
+F 45.3. RelatorsOfFpGroup
+F 45.3. UnderlyingElement!fp group elements
+F 45.3. ElementOfFpGroup
+S 45.4. Operations for Finitely Presented Groups
+S 45.5. Coset Tables and Coset Enumeration
+F 45.5. CosetTable
+F 45.5. TracedCosetFpGroup
+F 45.5. FactorCosetAction!for fp groups
+F 45.5. FactorCosetOperation
+F 45.5. CosetTableBySubgroup
+F 45.5. CosetTableFromGensAndRels
+F 45.5. CosetTableDefaultMaxLimit
+F 45.5. CosetTableDefaultLimit
+F 45.5. MostFrequentGeneratorFpGroup
+F 45.5. IndicesInvolutaryGenerators
+S 45.6. Standardization of coset tables
+F 45.6. CosetTableStandard
+F 45.6. StandardizeTable
+S 45.7. Coset tables for subgroups in the whole group
+F 45.7. CosetTableInWholeGroup
+F 45.7. TryCosetTableInWholeGroup
+F 45.7. SubgroupOfWholeGroupByCosetTable
+S 45.8. Augmented Coset Tables and Rewriting
+F 45.8. AugmentedCosetTableInWholeGroup
+F 45.8. AugmentedCosetTableMtc
+F 45.8. AugmentedCosetTableRrs
+F 45.8. RewriteWord
+S 45.9. Low Index Subgroups
+F 45.9. LowIndexSubgroupsFpGroup
+S 45.10. Converting Groups to Finitely Presented Groups
+F 45.10. IsomorphismFpGroup
+F 45.10. IsomorphismFpGroupByGenerators
+F 45.10. IsomorphismFpGroupByGeneratorsNC
+S 45.11. New Presentations and Presentations for Subgroups
+I 45.11. IsomorphismFpGroup!for subgroups of fp groups
+F 45.11. IsomorphismSimplifiedFpGroup
+S 45.12. Preimages under Homomorphisms from an FpGroup
+F 45.12. SubgroupOfWholeGroupByQuotientSubgroup
+F 45.12. IsSubgroupOfWholeGroupByQuotientRep
+F 45.12. AsSubgroupOfWholeGroupByQuotient
+F 45.12. DefiningQuotientHomomorphism
+S 45.13. Quotient Methods
+F 45.13. PQuotient
+F 45.13. EpimorphismQuotientSystem
+F 45.13. EpimorphismPGroup
+F 45.13. EpimorphismPGroup
+F 45.13. EpimorphismNilpotentQuotient
+S 45.14. Abelian Invariants for Subgroups
+F 45.14. AbelianInvariantsSubgroupFpGroup
+F 45.14. AbelianInvariantsSubgroupFpGroupMtc
+F 45.14. AbelianInvariantsSubgroupFpGroupRrs
+F 45.14. AbelianInvariantsSubgroupFpGroupRrs
+F 45.14. AbelianInvariantsNormalClosureFpGroup
+F 45.14. AbelianInvariantsNormalClosureFpGroupRrs
+S 45.15. Testing Finiteness of Finitely Presented Groups
+F 45.15. NewmanInfinityCriterion
+C pres.tex 46. Presentations and Tietze Transformations
+S 46.1. Creating Presentations
+F 46.1. PresentationFpGroup
+F 46.1. TzSort
+F 46.1. GeneratorsOfPresentation
+F 46.1. FpGroupPresentation
+F 46.1. PresentationViaCosetTable
+F 46.1. PresentationViaCosetTable
+S 46.2. SimplifiedFpGroup
+F 46.2. SimplifiedFpGroup
+S 46.3. Subgroup Presentations
+I 46.3. Schreier
+F 46.3. PresentationSubgroup
+F 46.3. PresentationSubgroupRrs
+F 46.3. PresentationSubgroupRrs
+F 46.3. PrimaryGeneratorWords
+F 46.3. PresentationSubgroupMtc
+F 46.3. PresentationNormalClosureRrs
+F 46.3. PresentationNormalClosure
+S 46.4. Relators in a Presentation
+F 46.4. TietzeWordAbstractWord
+F 46.4. AbstractWordTietzeWord
+S 46.5. Printing Presentations
+F 46.5. TzPrintGenerators
+F 46.5. TzPrintRelators
+F 46.5. TzPrintLengths
+F 46.5. TzPrintStatus
+F 46.5. TzPrintPresentation
+F 46.5. TzPrint
+F 46.5. TzPrintPairs
+S 46.6. Changing Presentations
+F 46.6. AddGenerator
+F 46.6. TzNewGenerator
+F 46.6. AddRelator
+F 46.6. RemoveRelator
+S 46.7. Tietze Transformations
+F 46.7. TzGo
+F 46.7. SimplifyPresentation
+F 46.7. TzGoGo
+S 46.8. Elementary Tietze Transformations
+F 46.8. TzEliminate
+F 46.8. TzEliminate
+F 46.8. TzEliminate
+F 46.8. TzSearch
+F 46.8. TzSearchEqual
+F 46.8. TzFindCyclicJoins
+S 46.9. Tietze Transformations that introduce new Generators
+F 46.9. TzSubstitute
+F 46.9. TzSubstitute
+F 46.9. TzSubstituteCyclicJoins
+S 46.10. Tracing generator images through Tietze transformations
+F 46.10. TzInitGeneratorImages
+F 46.10. OldGeneratorsOfPresentation
+F 46.10. TzImagesOldGens
+F 46.10. TzPreImagesNewGens
+F 46.10. TzPrintGeneratorImages
+S 46.11. DecodeTree
+F 46.11. DecodeTree
+I 46.11. secondary subgroup generators
+I 46.11. primary subgroup generators
+I 46.11. subgroup generators tree
+S 46.12. Tietze Options
+F 46.12. TzOptions
+F 46.12. TzPrintOptions
+C grpprod.tex 47. Group Products
+S 47.1. Direct Products
+F 47.1. DirectProduct
+F 47.1. DirectProductOp
+I 47.1. Embedding!example for direct products
+I 47.1. Projection!example for direct products
+S 47.2. Semidirect Products
+F 47.2. SemidirectProduct
+F 47.2. SemidirectProduct
+I 47.2. Embedding!example for semidirect products
+I 47.2. Projection!example for semidirect products
+S 47.3. Subdirect Products
+F 47.3. SubdirectProduct
+I 47.3. Projection!example for subdirect products
+F 47.3. SubdirectProducts
+S 47.4. Wreath Products
+F 47.4. WreathProduct
+F 47.4. WreathProduct
+I 47.4. Embedding!example for wreath products
+I 47.4. Projection!example for wreath products
+F 47.4. WreathProductImprimitiveAction
+F 47.4. WreathProductProductAction
+F 47.4. KuKGenerators
+I 47.4. Krasner-Kaloujnine theorem
+I 47.4. Wreath product embedding
+S 47.5. Embeddings and Projections for Group Products
+F 47.5. Embedding!for group products
+F 47.5. Projection!for group products
+C grplib.tex 48. Group Libraries
+S 48.1. Basic Groups
+F 48.1. TrivialGroup
+F 48.1. CyclicGroup
+F 48.1. AbelianGroup
+F 48.1. ElementaryAbelianGroup
+F 48.1. DihedralGroup
+F 48.1. ExtraspecialGroup
+F 48.1. AlternatingGroup
+F 48.1. AlternatingGroup
+F 48.1. SymmetricGroup
+F 48.1. SymmetricGroup
+F 48.1. MathieuGroup
+F 48.1. SuzukiGroup
+F 48.1. Sz
+F 48.1. ReeGroup
+F 48.1. Ree
+S 48.2. Classical Groups
+F 48.2. GeneralLinearGroup
+F 48.2. GL
+F 48.2. GeneralLinearGroup
+F 48.2. GL
+F 48.2. SpecialLinearGroup
+F 48.2. SL
+F 48.2. SpecialLinearGroup
+F 48.2. SL
+I 48.2. OnLines!example
+F 48.2. GeneralUnitaryGroup
+F 48.2. GU
+F 48.2. SpecialUnitaryGroup
+F 48.2. SU
+F 48.2. SymplecticGroup
+F 48.2. Sp
+F 48.2. SP
+F 48.2. GeneralOrthogonalGroup
+F 48.2. GO
+F 48.2. SpecialOrthogonalGroup
+F 48.2. SO
+F 48.2. ProjectiveGeneralLinearGroup
+F 48.2. PGL
+F 48.2. ProjectiveSpecialLinearGroup
+F 48.2. PSL
+F 48.2. ProjectiveGeneralUnitaryGroup
+F 48.2. PGU
+F 48.2. ProjectiveSpecialUnitaryGroup
+F 48.2. PSU
+F 48.2. ProjectiveSymplecticGroup
+F 48.2. PSP
+F 48.2. PSp
+S 48.3. Conjugacy Classes in Classical Groups
+I 48.3. ConjugacyClasses!for linear groups
+F 48.3. NrConjugacyClassesGL
+F 48.3. NrConjugacyClassesGU
+F 48.3. NrConjugacyClassesSL
+F 48.3. NrConjugacyClassesSU
+F 48.3. NrConjugacyClassesPGL
+F 48.3. NrConjugacyClassesPGU
+F 48.3. NrConjugacyClassesPSL
+F 48.3. NrConjugacyClassesPSU
+F 48.3. NrConjugacyClassesSLIsogeneous
+F 48.3. NrConjugacyClassesSUIsogeneous
+S 48.4. Constructors for Basic Groups
+S 48.5. Selection Functions
+I 48.5. AllPrimitiveGroups
+I 48.5. AllTransitiveGroups
+F 48.5. AllLibraryGroups
+I 48.5. OnePrimitiveGroup
+I 48.5. OneTransitiveGroup
+F 48.5. OneLibraryGroup
+S 48.6. Transitive Permutation Groups
+F 48.6. TransitiveGroup
+F 48.6. NrTransitiveGroups
+F 48.6. TransitiveIdentification
+S 48.7. Small Groups
+I 48.7. TwoGroup library
+I 48.7. ThreeGroup library
+F 48.7. SmallGroup
+F 48.7. SmallGroup
+F 48.7. AllSmallGroups
+F 48.7. OneSmallGroup
+F 48.7. NumberSmallGroups
+F 48.7. IdSmallGroup
+F 48.7. IdGroup
+F 48.7. IdsOfAllSmallGroups
+F 48.7. IdGap3SolvableGroup
+F 48.7. Gap3CatalogueIdGroup
+F 48.7. SmallGroupsInformation
+F 48.7. UnloadSmallGroupsData
+S 48.8. Finite Perfect Groups
+I 48.8. perfect groups
+F 48.8. SizesPerfectGroups
+F 48.8. PerfectGroup
+F 48.8. PerfectGroup
+F 48.8. PerfectIdentification
+F 48.8. NumberPerfectGroups
+F 48.8. NumberPerfectLibraryGroups
+F 48.8. SizeNumbersPerfectGroups
+F 48.8. DisplayInformationPerfectGroups
+F 48.8. DisplayInformationPerfectGroups
+F 48.8. DisplayInformationPerfectGroups
+S 48.9. Primitive Permutation Groups
+F 48.9. PrimitiveGroup
+F 48.9. NrPrimitiveGroups
+F 48.9. PrimitiveGroupsIterator
+F 48.9. COHORTS_PRIMITIVE_GROUPS
+S 48.10. Index numbers of primitive groups
+F 48.10. PrimitiveIdentification
+F 48.10. SimsNo
+F 48.10. PRIMITIVE_INDICES_MAGMA
+S 48.11. Irreducible Solvable Matrix Groups
+F 48.11. IrreducibleSolvableGroupMS
+F 48.11. NumberIrreducibleSolvableGroups
+F 48.11. AllIrreducibleSolvableGroups
+F 48.11. OneIrreducibleSolvableGroup
+F 48.11. PrimitiveIndexIrreducibleSolvableGroup
+F 48.11. IrreducibleSolvableGroup
+S 48.12. Irreducible Maximal Finite Integral Matrix Groups
+F 48.12. ImfNumberQQClasses
+F 48.12. ImfNumberQClasses
+F 48.12. ImfNumberZClasses
+F 48.12. DisplayImfInvariants
+F 48.12. DisplayImfInvariants
+F 48.12. ImfInvariants
+F 48.12. ImfInvariants
+F 48.12. ImfMatrixGroup
+F 48.12. ImfMatrixGroup
+F 48.12. IsomorphismPermGroup!for Imf matrix groups
+F 48.12. IsomorphismPermGroupImfGroup
+C semigrp.tex 49. Semigroups
+F 49.0. IsSemigroup
+I 49.0. semigroup
+F 49.0. Semigroup
+F 49.0. Semigroup
+F 49.0. Subsemigroup
+F 49.0. SubsemigroupNC
+F 49.0. SemigroupByGenerators
+F 49.0. AsSemigroup
+F 49.0. AsSubsemigroup
+F 49.0. GeneratorsOfSemigroup
+F 49.0. FreeSemigroup!with examples
+F 49.0. FreeSemigroup!with examples
+F 49.0. FreeSemigroup!with examples
+F 49.0. FreeSemigroup!with examples
+F 49.0. FreeSemigroup!with examples
+F 49.0. SemigroupByMultiplicationTable
+F 49.0. IsRegularSemigroup
+F 49.0. IsRegularSemigroupElement
+F 49.0. IsSimpleSemigroup
+F 49.0. IsZeroSimpleSemigroup
+F 49.0. IsZeroGroup
+F 49.0. IsReesCongruenceSemigroup
+S 49.1. Making transformation semigroups
+F 49.1. IsTransformationSemigroup
+F 49.1. IsTransformationMonoid
+F 49.1. DegreeOfTransformationSemigroup
+F 49.1. IsomorphismTransformationSemigroup
+F 49.1. HomomorphismTransformationSemigroup
+F 49.1. IsFullTransformationSemigroup
+F 49.1. FullTransformationSemigroup
+S 49.2. Ideals of semigroups
+F 49.2. SemigroupIdealByGenerators
+F 49.2. ReesCongruenceOfSemigroupIdeal
+F 49.2. IsLeftSemigroupIdeal
+F 49.2. IsRightSemigroupIdeal
+F 49.2. IsSemigroupIdeal
+S 49.3. Congruences for semigroups
+F 49.3. IsSemigroupCongruence
+F 49.3. IsReesCongruence
+S 49.4. Quotients
+F 49.4. IsQuotientSemigroup
+F 49.4. HomomorphismQuotientSemigroup
+F 49.4. QuotientSemigroupPreimage
+F 49.4. QuotientSemigroupCongruence
+F 49.4. QuotientSemigroupHomomorphism
+S 49.5. Green's Relations
+F 49.5. GreensRRelation
+F 49.5. GreensLRelation
+F 49.5. GreensJRelation
+F 49.5. GreensDRelation
+F 49.5. GreensHRelation
+F 49.5. IsGreensRelation
+F 49.5. IsGreensRRelation
+F 49.5. IsGreensLRelation
+F 49.5. IsGreensJRelation
+F 49.5. IsGreensHRelation
+F 49.5. IsGreensDRelation
+F 49.5. IsGreensClass
+F 49.5. IsGreensRClass
+F 49.5. IsGreensLClass
+F 49.5. IsGreensJClass
+F 49.5. IsGreensHClass
+F 49.5. IsGreensDClass
+F 49.5. IsGreensLessThanOrEqual
+F 49.5. RClassOfHClass
+F 49.5. LClassOfHClass
+F 49.5. EggBoxOfDClass
+F 49.5. DisplayEggBoxOfDClass
+F 49.5. GreensRClassOfElement
+F 49.5. GreensLClassOfElement
+F 49.5. GreensDClassOfElement
+F 49.5. GreensJClassOfElement
+F 49.5. GreensHClassOfElement
+F 49.5. GreensRClasses
+F 49.5. GreensLClasses
+F 49.5. GreensJClasses
+F 49.5. GreensDClasses
+F 49.5. GreensHClasses
+F 49.5. GroupHClassOfGreensDClass
+F 49.5. IsGroupHClass
+F 49.5. IsRegularDClass
+S 49.6. Rees Matrix Semigroups
+F 49.6. ReesMatrixSemigroup
+F 49.6. ReesZeroMatrixSemigroup
+F 49.6. IsReesMatrixSemigroup
+F 49.6. IsReesZeroMatrixSemigroup
+F 49.6. ReesMatrixSemigroupElement
+F 49.6. ReesZeroMatrixSemigroupElement
+F 49.6. IsReesMatrixSemigroupElement
+F 49.6. IsReesZeroMatrixSemigroupElement
+F 49.6. SandwichMatrixOfReesMatrixSemigroup
+F 49.6. SandwichMatrixOfReesZeroMatrixSemigroup
+F 49.6. RowIndexOfReesMatrixSemigroupElement
+F 49.6. RowIndexOfReesZeroMatrixSemigroupElement
+F 49.6. ColumnIndexOfReesMatrixSemigroupElement
+F 49.6. ColumnIndexOfReesZeroMatrixSemigroupElement
+F 49.6. UnderlyingElementOfReesMatrixSemigroupElement
+F 49.6. UnderlyingElementOfReesZeroMatrixSemigroupElement
+F 49.6. ReesZeroMatrixSemigroupElementIsZero
+F 49.6. AssociatedReesMatrixSemigroupOfDClass
+F 49.6. IsomorphismReesMatrixSemigroup
+C monoid.tex 50. Monoids
+F 50.0. IsMonoid
+F 50.0. Monoid
+F 50.0. Monoid
+F 50.0. Monoid
+F 50.0. Submonoid
+F 50.0. SubmonoidNC
+F 50.0. MonoidByGenerators
+F 50.0. MonoidByGenerators
+F 50.0. AsMonoid
+F 50.0. AsSubmonoid
+F 50.0. GeneratorsOfMonoid
+F 50.0. TrivialSubmonoid
+F 50.0. FreeMonoid
+F 50.0. FreeMonoid
+F 50.0. FreeMonoid
+F 50.0. FreeMonoid
+F 50.0. FreeMonoid
+F 50.0. MonoidByMultiplicationTable
+C fpsemi.tex 51. Finitely Presented Semigroups and Monoids
+F 51.0. IsSubsemigroupFpSemigroup
+F 51.0. IsSubmonoidFpMonoid
+F 51.0. IsFpSemigroup
+F 51.0. IsFpMonoid
+F 51.0. IsElementOfFpSemigroup
+F 51.0. IsElementOfFpMonoid
+F 51.0. FpGrpMonSmgOfFpGrpMonSmgElement
+S 51.1. Creating Finitely Presented Semigroups
+F 51.1. quotient!of free semigroup
+F 51.1. FactorFreeSemigroupByRelations
+F 51.1. IsomorphismFpSemigroup
+S 51.2. Comparison of Elements of Finitely Presented Semigroups
+F 51.2. comparison!fp semigroup elements
+S 51.3. Preimages in the Free Semigroup
+F 51.3. FreeSemigroupOfFpSemigroup
+F 51.3. FreeGeneratorsOfFpSemigroup
+F 51.3. RelationsOfFpSemigroup
+F 51.3. UnderlyingElement!fp semigroup elements
+F 51.3. ElementOfFpSemigroup
+S 51.4. Finitely presented monoids
+F 51.4. quotient!of free monoid
+S 51.5. Rewriting Systems and the Knuth-Bendix Procedure
+F 51.5. ReducedConfluentRewritingSystem
+F 51.5. ReducedConfluentRewritingSystem
+F 51.5. KB_REW
+F 51.5. GAPKB_REW
+F 51.5. KnuthBendixRewritingSystem
+F 51.5. KnuthBendixRewritingSystem
+F 51.5. SemigroupOfRewritingSystem
+F 51.5. MonoidOfRewritingSystem
+F 51.5. FreeSemigroupOfRewritingSystem
+F 51.5. FreeMonoidOfRewritingSystem
+S 51.6. Todd-Coxeter Procedure
+F 51.6. CosetTableOfFpSemigroup
+C trans.tex 52. Transformations
+F 52.0. IsTransformation
+F 52.0. IsTransformationCollection
+F 52.0. TransformationFamily
+F 52.0. TransformationType
+F 52.0. TransformationData
+F 52.0. Transformation
+F 52.0. TransformationNC
+F 52.0. IdentityTransformation
+F 52.0. RandomTransformation
+F 52.0. DegreeOfTransformation
+F 52.0. ImageListOfTransformation
+F 52.0. ImageSetOfTransformation
+F 52.0. RankOfTransformation
+F 52.0. KernelOfTransformation
+F 52.0. PreimagesOfTransformation
+F 52.0. RestrictedTransformation
+F 52.0. AsTransformation
+F 52.0. AsTransformation
+F 52.0. AsTransformationNC
+F 52.0. PermLeftQuoTransformation
+F 52.0. BinaryRelationTransformation
+F 52.0. TransformationRelation
+C addmagma.tex 53. Additive Magmas (preliminary)
+S 53.1. (Near-)Additive Magma Categories
+F 53.1. IsNearAdditiveMagma
+F 53.1. IsNearAdditiveMagmaWithZero
+F 53.1. IsNearAdditiveGroup
+F 53.1. IsNearAdditiveMagmaWithInverses
+F 53.1. IsAdditiveMagma
+F 53.1. IsAdditiveMagmaWithZero
+F 53.1. IsAdditiveGroup
+F 53.1. IsAdditiveMagmaWithInverses
+S 53.2. (Near-)Additive Magma Generation
+F 53.2. NearAdditiveMagma
+F 53.2. NearAdditiveMagma
+F 53.2. NearAdditiveMagmaWithZero
+F 53.2. NearAdditiveMagmaWithZero
+F 53.2. NearAdditiveGroup
+F 53.2. NearAdditiveGroup
+F 53.2. NearAdditiveMagmaByGenerators
+F 53.2. NearAdditiveMagmaByGenerators
+F 53.2. NearAdditiveMagmaWithZeroByGenerators
+F 53.2. NearAdditiveMagmaWithZeroByGenerators
+F 53.2. NearAdditiveGroupByGenerators
+F 53.2. NearAdditiveGroupByGenerators
+F 53.2. SubnearAdditiveMagma
+F 53.2. SubnearAdditiveMagmaNC
+F 53.2. SubnearAdditiveMagmaWithZero
+F 53.2. SubnearAdditiveMagmaWithZeroNC
+F 53.2. SubnearAdditiveGroup
+F 53.2. SubnearAdditiveGroupNC
+S 53.3. Attributes and Properties for (Near-)Additive Magmas
+F 53.3. IsAdditivelyCommutative
+F 53.3. GeneratorsOfNearAdditiveMagma
+F 53.3. GeneratorsOfAdditiveMagma
+F 53.3. GeneratorsOfNearAdditiveMagmaWithZero
+F 53.3. GeneratorsOfAdditiveMagmaWithZero
+F 53.3. GeneratorsOfNearAdditiveGroup
+F 53.3. GeneratorsOfAdditiveGroup
+F 53.3. AdditiveNeutralElement
+F 53.3. TrivialSubnearAdditiveMagmaWithZero
+S 53.4. Operations for (Near-)Additive Magmas
+F 53.4. ClosureNearAdditiveGroup
+F 53.4. ClosureNearAdditiveGroup
+C rings.tex 54. Rings
+S 54.1. Generating Rings
+F 54.1. IsRing
+F 54.1. Ring
+F 54.1. Ring
+F 54.1. DefaultRing
+F 54.1. DefaultRing
+F 54.1. RingByGenerators
+F 54.1. DefaultRingByGenerators
+F 54.1. GeneratorsOfRing
+F 54.1. AsRing
+F 54.1. Subring
+F 54.1. SubringNC
+F 54.1. ClosureRing
+F 54.1. ClosureRing
+F 54.1. Quotient
+F 54.1. Quotient
+S 54.2. Ideals in Rings
+F 54.2. TwoSidedIdeal
+F 54.2. Ideal
+F 54.2. LeftIdeal
+F 54.2. RightIdeal
+F 54.2. TwoSidedIdealNC
+F 54.2. IdealNC
+F 54.2. LeftIdealNC
+F 54.2. RightIdealNC
+F 54.2. IsTwoSidedIdeal
+F 54.2. IsLeftIdeal
+F 54.2. IsRightIdeal
+F 54.2. IsTwoSidedIdealInParent
+F 54.2. IsLeftIdealInParent
+F 54.2. IsRightIdealInParent
+F 54.2. TwoSidedIdealByGenerators
+F 54.2. IdealByGenerators
+F 54.2. LeftIdealByGenerators
+F 54.2. RightIdealByGenerators
+F 54.2. GeneratorsOfTwoSidedIdeal
+F 54.2. GeneratorsOfIdeal
+F 54.2. GeneratorsOfLeftIdeal
+F 54.2. GeneratorsOfRightIdeal
+F 54.2. LeftActingRingOfIdeal
+F 54.2. RightActingRingOfIdeal
+F 54.2. AsLeftIdeal
+F 54.2. AsRightIdeal
+F 54.2. AsTwoSidedIdeal
+S 54.3. Rings With One
+F 54.3. IsRingWithOne
+F 54.3. RingWithOne
+F 54.3. RingWithOne
+F 54.3. RingWithOneByGenerators
+F 54.3. GeneratorsOfRingWithOne
+F 54.3. SubringWithOne
+F 54.3. SubringWithOneNC
+S 54.4. Properties of Rings
+F 54.4. IsIntegralRing
+F 54.4. IsUniqueFactorizationRing
+F 54.4. IsLDistributive
+F 54.4. IsRDistributive
+F 54.4. IsDistributive
+F 54.4. IsAnticommutative
+F 54.4. IsZeroSquaredRing
+F 54.4. IsJacobianRing
+S 54.5. Units and Factorizations
+F 54.5. IsUnit
+F 54.5. IsUnit
+F 54.5. Units
+F 54.5. IsAssociated
+F 54.5. IsAssociated
+F 54.5. Associates
+F 54.5. Associates
+F 54.5. StandardAssociate
+F 54.5. StandardAssociate
+F 54.5. IsIrreducibleRingElement
+F 54.5. IsIrreducibleRingElement
+F 54.5. IsPrime
+F 54.5. IsPrime
+F 54.5. Factors
+F 54.5. Factors
+S 54.6. Euclidean Rings
+F 54.6. IsEuclideanRing
+F 54.6. EuclideanDegree
+F 54.6. EuclideanDegree
+F 54.6. EuclideanQuotient
+F 54.6. EuclideanQuotient
+F 54.6. EuclideanRemainder
+F 54.6. EuclideanRemainder
+F 54.6. QuotientRemainder
+F 54.6. QuotientRemainder
+S 54.7. Gcd and Lcm
+F 54.7. Gcd
+F 54.7. Gcd
+F 54.7. Gcd
+F 54.7. Gcd
+F 54.7. GcdOp
+F 54.7. GcdOp
+F 54.7. GcdRepresentation
+F 54.7. GcdRepresentation
+F 54.7. GcdRepresentation
+F 54.7. GcdRepresentation
+F 54.7. GcdRepresentationOp
+F 54.7. GcdRepresentationOp
+F 54.7. Lcm
+F 54.7. Lcm
+F 54.7. Lcm
+F 54.7. Lcm
+F 54.7. LcmOp
+F 54.7. LcmOp
+F 54.7. QuotientMod
+F 54.7. QuotientMod
+F 54.7. PowerMod
+F 54.7. PowerMod
+F 54.7. InterpolatedPolynomial
+C module.tex 55. Modules (preliminary)
+S 55.1. Generating modules
+F 55.1. IsLeftOperatorAdditiveGroup
+F 55.1. IsLeftModule
+F 55.1. GeneratorsOfLeftOperatorAdditiveGroup
+F 55.1. GeneratorsOfLeftModule
+F 55.1. AsLeftModule
+F 55.1. IsRightOperatorAdditiveGroup
+F 55.1. IsRightModule
+F 55.1. GeneratorsOfRightOperatorAdditiveGroup
+F 55.1. GeneratorsOfRightModule
+F 55.1. LeftModuleByGenerators
+F 55.1. LeftModuleByGenerators
+F 55.1. LeftActingDomain
+S 55.2. Submodules
+F 55.2. Submodule
+F 55.2. Submodule
+F 55.2. SubmoduleNC
+F 55.2. SubmoduleNC
+F 55.2. ClosureLeftModule
+F 55.2. TrivialSubmodule
+S 55.3. Free Modules
+F 55.3. IsFreeLeftModule
+F 55.3. FreeLeftModule
+F 55.3. FreeLeftModule
+F 55.3. FreeLeftModule
+F 55.3. FreeLeftModule
+F 55.3. AsFreeLeftModule
+F 55.3. Dimension
+F 55.3. IsFiniteDimensional
+F 55.3. UseBasis
+F 55.3. IsRowModule
+F 55.3. IsMatrixModule
+F 55.3. IsFullRowModule
+F 55.3. FullRowModule
+F 55.3. IsFullMatrixModule
+F 55.3. FullMatrixModule
+F 55.3. IsHandledByNiceBasis
+C fields.tex 56. Fields and Division Rings
+I 56.0. fields
+I 56.0. division rings
+S 56.1. Generating Fields
+F 56.1. IsDivisionRing
+F 56.1. IsField
+F 56.1. Field
+F 56.1. Field
+F 56.1. Field
+F 56.1. DefaultField
+F 56.1. DefaultField
+F 56.1. DefaultFieldByGenerators
+F 56.1. GeneratorsOfDivisionRing
+F 56.1. GeneratorsOfField
+F 56.1. DivisionRingByGenerators
+F 56.1. DivisionRingByGenerators
+F 56.1. AsDivisionRing
+F 56.1. AsDivisionRing
+F 56.1. AsField
+F 56.1. AsField
+S 56.2. Subfields of Fields
+F 56.2. Subfield
+F 56.2. SubfieldNC
+F 56.2. FieldOverItselfByGenerators
+F 56.2. PrimitiveElement
+F 56.2. PrimeField
+F 56.2. IsPrimeField
+F 56.2. DegreeOverPrimeField
+F 56.2. DefiningPolynomial
+F 56.2. RootOfDefiningPolynomial
+F 56.2. FieldExtension
+F 56.2. Subfields
+S 56.3. Galois Action
+I 56.3. IsFieldControlledByGaloisGroup
+F 56.3. GaloisGroup!of field
+F 56.3. MinimalPolynomial!over a field
+F 56.3. TracePolynomial
+I 56.3. characteristic polynomial!for field elements
+F 56.3. Norm
+F 56.3. Norm
+F 56.3. Norm
+F 56.3. Trace!for field elements
+F 56.3. Trace!for field elements
+F 56.3. Trace!for field elements
+F 56.3. Trace!for field elements
+F 56.3. Conjugates
+F 56.3. Conjugates
+F 56.3. Conjugates
+F 56.3. NormalBase
+F 56.3. NormalBase
+C fieldfin.tex 57. Finite Fields
+S 57.1. Finite Field Elements
+F 57.1. IsFFE
+F 57.1. IsFFECollection
+F 57.1. IsFFECollColl
+F 57.1. Z
+S 57.2. Operations for Finite Field Elements
+F 57.2. DegreeFFE
+F 57.2. DegreeFFE
+F 57.2. DegreeFFE
+F 57.2. LogFFE
+F 57.2. IntFFE
+F 57.2. IntFFESymm
+F 57.2. IntFFESymm
+F 57.2. IntVecFFE
+S 57.3. Creating Finite Fields
+I 57.3. DefaultField!for finite field elements
+I 57.3. DefaultRing!for finite field elements
+F 57.3. GaloisField
+F 57.3. GF
+F 57.3. GaloisField
+F 57.3. GF
+F 57.3. GaloisField
+F 57.3. GF
+F 57.3. GaloisField
+F 57.3. GF
+F 57.3. GaloisField
+F 57.3. GF
+F 57.3. PrimitiveRoot
+S 57.4. FrobeniusAutomorphism
+I 57.4. homomorphisms!Frobenius, field
+I 57.4. field homomorphisms!Frobenius
+I 57.4. Image!for Frobenius automorphisms
+I 57.4. CompositionMapping!for Frobenius automorphisms
+F 57.4. FrobeniusAutomorphism
+I 57.4. Frobenius automorphism
+S 57.5. Conway Polynomials
+F 57.5. ConwayPolynomial
+C fldabnum.tex 58. Abelian Number Fields
+S 58.1. Construction of Abelian Number Fields
+F 58.1. CyclotomicField
+F 58.1. CyclotomicField
+F 58.1. CyclotomicField
+F 58.1. CyclotomicField
+I 58.1. CF
+F 58.1. AbelianNumberField
+I 58.1. NF
+F 58.1. GaussianRationals
+F 58.1. IsGaussianRationals
+S 58.2. Operations for Abelian Number Fields
+I 58.2. cyclotomics!DefaultField
+I 58.2. polynomials over abelian number fields!Factors
+F 58.2. IsNumberField
+I 58.2. number field
+F 58.2. IsAbelianNumberField
+I 58.2. abelian number field
+F 58.2. IsCyclotomicField
+F 58.2. GaloisStabilizer
+S 58.3. Integral Bases of Abelian Number Fields
+I 58.3. cyclotomic fields!CanonicalBasis
+I 58.3. abelian number fields!CanonicalBasis
+F 58.3. ZumbroichBase
+F 58.3. LenstraBase
+S 58.4. Galois Groups of Abelian Number Fields
+I 58.4. abelian number fields!Galois group
+I 58.4. number fields!Galois group
+I 58.4. automorphism group!of number fields
+F 58.4. ANFAutomorphism
+S 58.5. Gaussians
+F 58.5. GaussianIntegers
+F 58.5. IsGaussianIntegers
+C vspc.tex 59. Vector Spaces
+F 59.0. IsLeftVectorSpace
+F 59.0. IsVectorSpace
+S 59.1. Constructing Vector Spaces
+F 59.1. VectorSpace
+F 59.1. Subspace
+F 59.1. SubspaceNC
+F 59.1. AsVectorSpace
+F 59.1. AsSubspace
+S 59.2. Operations and Attributes for Vector Spaces
+F 59.2. GeneratorsOfLeftVectorSpace
+F 59.2. GeneratorsOfVectorSpace
+F 59.2. TrivialSubspace
+S 59.3. Domains of Subspaces of Vector Spaces
+F 59.3. Subspaces
+F 59.3. Subspaces
+F 59.3. IsSubspacesVectorSpace
+S 59.4. Bases of Vector Spaces
+F 59.4. IsBasis
+F 59.4. Basis
+F 59.4. Basis
+F 59.4. BasisNC
+F 59.4. CanonicalBasis
+F 59.4. RelativeBasis
+F 59.4. RelativeBasisNC
+S 59.5. Operations for Vector Space Bases
+F 59.5. BasisVectors
+F 59.5. UnderlyingLeftModule
+F 59.5. Coefficients
+F 59.5. LinearCombination
+F 59.5. LinearCombination
+F 59.5. EnumeratorByBasis
+F 59.5. IteratorByBasis
+S 59.6. Operations for Special Kinds of Bases
+F 59.6. IsCanonicalBasis
+F 59.6. IsIntegralBasis
+F 59.6. IsNormalBasis
+F 59.6. StructureConstantsTable
+S 59.7. Mutable Bases
+F 59.7. IsMutableBasis
+F 59.7. MutableBasis
+F 59.7. NrBasisVectors
+F 59.7. ImmutableBasis
+F 59.7. IsContainedInSpan
+F 59.7. CloseMutableBasis
+S 59.8. Row and Matrix Spaces
+I 59.8. row spaces
+I 59.8. matrix spaces
+F 59.8. IsRowSpace
+F 59.8. IsMatrixSpace
+F 59.8. IsGaussianSpace
+F 59.8. FullRowSpace
+F 59.8. FullMatrixSpace
+F 59.8. DimensionOfVectors
+F 59.8. IsSemiEchelonized
+F 59.8. SemiEchelonBasis
+F 59.8. SemiEchelonBasis
+F 59.8. SemiEchelonBasisNC
+I 59.8. canonical basis!for row spaces
+F 59.8. IsCanonicalBasisFullRowModule
+I 59.8. canonical basis!for matrix spaces
+F 59.8. IsCanonicalBasisFullMatrixModule
+F 59.8. NormedRowVectors
+F 59.8. SiftedVector
+S 59.9. Vector Space Homomorphisms
+F 59.9. LeftModuleGeneralMappingByImages
+F 59.9. LeftModuleHomomorphismByImages
+F 59.9. LeftModuleHomomorphismByImagesNC
+F 59.9. LeftModuleHomomorphismByMatrix
+F 59.9. NaturalHomomorphismBySubspace
+F 59.9. Hom
+F 59.9. End
+F 59.9. IsFullHomModule
+F 59.9. IsPseudoCanonicalBasisFullHomModule
+F 59.9. IsLinearMappingsModule
+S 59.10. Vector Spaces Handled By Nice Bases
+F 59.10. NiceFreeLeftModule
+F 59.10. NiceVector
+F 59.10. UglyVector
+F 59.10. NiceFreeLeftModuleInfo
+F 59.10. NiceBasis
+F 59.10. IsBasisByNiceBasis
+F 59.10. IsHandledByNiceBasis!for vector spaces
+S 59.11. How to Implement New Kinds of Vector Spaces
+F 59.11. DeclareHandlingByNiceBasis
+F 59.11. InstallHandlingByNiceBasis
+F 59.11. NiceBasisFiltersInfo
+F 59.11. CheckForHandlingByNiceBasis
+C algebra.tex 60. Algebras
+F 60.0. InfoAlgebra
+S 60.1. Constructing Algebras by Generators
+F 60.1. Algebra
+F 60.1. Algebra
+F 60.1. Algebra
+F 60.1. Algebra
+F 60.1. AlgebraWithOne
+F 60.1. AlgebraWithOne
+F 60.1. AlgebraWithOne
+F 60.1. AlgebraWithOne
+S 60.2. Constructing Algebras as Free Algebras
+F 60.2. FreeAlgebra
+F 60.2. FreeAlgebra
+F 60.2. FreeAlgebra
+F 60.2. FreeAlgebraWithOne
+F 60.2. FreeAlgebraWithOne
+F 60.2. FreeAlgebraWithOne
+F 60.2. FreeAssociativeAlgebra
+F 60.2. FreeAssociativeAlgebra
+F 60.2. FreeAssociativeAlgebra
+F 60.2. FreeAssociativeAlgebraWithOne
+F 60.2. FreeAssociativeAlgebraWithOne
+F 60.2. FreeAssociativeAlgebraWithOne
+S 60.3. Constructing Algebras by Structure Constants
+F 60.3. EmptySCTable
+F 60.3. EmptySCTable
+F 60.3. EmptySCTable
+F 60.3. SetEntrySCTable
+F 60.3. GapInputSCTable
+F 60.3. TestJacobi
+F 60.3. AlgebraByStructureConstants
+F 60.3. AlgebraByStructureConstants
+F 60.3. AlgebraByStructureConstants
+F 60.3. AlgebraByStructureConstants
+F 60.3. IdentityFromSCTable
+F 60.3. QuotientFromSCTable
+S 60.4. Some Special Algebras
+F 60.4. QuaternionAlgebra
+F 60.4. QuaternionAlgebra
+F 60.4. ComplexificationQuat
+F 60.4. ComplexificationQuat
+F 60.4. OctaveAlgebra
+F 60.4. FullMatrixAlgebra
+F 60.4. MatrixAlgebra
+F 60.4. MatAlgebra
+F 60.4. NullAlgebra
+S 60.5. Subalgebras
+F 60.5. Subalgebra
+F 60.5. Subalgebra
+F 60.5. SubalgebraNC
+F 60.5. SubalgebraNC
+F 60.5. SubalgebraWithOne
+F 60.5. SubalgebraWithOne
+F 60.5. SubalgebraWithOneNC
+F 60.5. SubalgebraWithOneNC
+F 60.5. TrivialSubalgebra
+S 60.6. Ideals
+S 60.7. Categories and Properties of Algebras
+F 60.7. IsFLMLOR
+F 60.7. IsFLMLORWithOne
+F 60.7. IsAlgebra
+F 60.7. IsAlgebraWithOne
+F 60.7. IsLieAlgebra
+F 60.7. IsSimpleAlgebra
+F 60.7. IsFiniteDimensional!for matrix algebras
+F 60.7. IsQuaternion
+F 60.7. IsQuaternionCollection
+F 60.7. IsQuaternionCollColl
+S 60.8. Attributes and Operations for Algebras
+F 60.8. GeneratorsOfAlgebra
+F 60.8. GeneratorsOfAlgebraWithOne
+F 60.8. ProductSpace
+F 60.8. PowerSubalgebraSeries
+F 60.8. AdjointBasis
+F 60.8. IndicesOfAdjointBasis
+F 60.8. AsAlgebra
+F 60.8. AsAlgebraWithOne
+F 60.8. AsSubalgebra
+F 60.8. AsSubalgebraWithOne
+F 60.8. MutableBasisOfClosureUnderAction
+F 60.8. MutableBasisOfNonassociativeAlgebra
+F 60.8. MutableBasisOfIdealInNonassociativeAlgebra
+F 60.8. DirectSumOfAlgebras
+F 60.8. DirectSumOfAlgebras
+F 60.8. FullMatrixAlgebraCentralizer
+F 60.8. RadicalOfAlgebra
+F 60.8. CentralIdempotentsOfAlgebra
+F 60.8. DirectSumDecomposition
+F 60.8. LeviMalcevDecomposition
+F 60.8. Grading
+S 60.9. Homomorphisms of Algebras
+F 60.9. AlgebraGeneralMappingByImages
+F 60.9. AlgebraHomomorphismByImages
+F 60.9. AlgebraHomomorphismByImagesNC
+F 60.9. AlgebraWithOneGeneralMappingByImages
+F 60.9. AlgebraWithOneHomomorphismByImages
+F 60.9. AlgebraWithOneHomomorphismByImagesNC
+F 60.9. NaturalHomomorphismByIdeal
+F 60.9. OperationAlgebraHomomorphism
+F 60.9. OperationAlgebraHomomorphism
+F 60.9. IsomorphismFpAlgebra
+F 60.9. IsomorphismMatrixAlgebra
+F 60.9. IsomorphismSCAlgebra
+F 60.9. IsomorphismSCAlgebra
+F 60.9. RepresentativeLinearOperation
+S 60.10. Representations of Algebras
+F 60.10. LeftAlgebraModuleByGenerators
+F 60.10. RightAlgebraModuleByGenerators
+F 60.10. BiAlgebraModuleByGenerators
+F 60.10. LeftAlgebraModule
+F 60.10. RightAlgebraModule
+F 60.10. BiAlgebraModule
+F 60.10. GeneratorsOfAlgebraModule
+F 60.10. IsAlgebraModuleElement
+F 60.10. IsAlgebraModuleElementCollection
+F 60.10. IsAlgebraModuleElementFamily
+F 60.10. IsLeftAlgebraModuleElement
+F 60.10. IsLeftAlgebraModuleElementCollection
+F 60.10. IsRightAlgebraModuleElement
+F 60.10. IsRightAlgebraModuleElementCollection
+F 60.10. LeftActingAlgebra
+F 60.10. RightActingAlgebra
+F 60.10. ActingAlgebra
+F 60.10. IsBasisOfAlgebraModuleElementSpace
+F 60.10. MatrixOfAction
+F 60.10. MatrixOfAction
+F 60.10. SubAlgebraModule
+F 60.10. LeftModuleByHomomorphismToMatAlg
+F 60.10. RightModuleByHomomorphismToMatAlg
+F 60.10. AdjointModule
+F 60.10. FaithfulModule
+F 60.10. ModuleByRestriction
+F 60.10. ModuleByRestriction
+F 60.10. NaturalHomomorphismBySubAlgebraModule
+F 60.10. DirectSumOfAlgebraModules
+F 60.10. DirectSumOfAlgebraModules
+F 60.10. TranslatorSubalgebra
+C alglie.tex 61. Lie Algebras
+S 61.1. Lie objects
+F 61.1. LieObject
+F 61.1. IsLieObject
+F 61.1. IsLieObjectCollection
+F 61.1. LieFamily
+I 61.1. Embedding!for Lie algebras
+F 61.1. UnderlyingFamily
+S 61.2. Constructing Lie algebras
+F 61.2. LieAlgebraByStructureConstants
+F 61.2. LieAlgebraByStructureConstants
+F 61.2. LieAlgebraByStructureConstants
+F 61.2. LieAlgebra
+F 61.2. LieAlgebra
+F 61.2. LieAlgebra
+F 61.2. LieAlgebra
+F 61.2. LieAlgebra
+F 61.2. FreeLieAlgebra
+F 61.2. FreeLieAlgebra
+F 61.2. FreeLieAlgebra
+F 61.2. FullMatrixLieAlgebra
+F 61.2. MatrixLieAlgebra
+F 61.2. MatLieAlgebra
+F 61.2. RightDerivations
+F 61.2. LeftDerivations
+F 61.2. Derivations
+F 61.2. SimpleLieAlgebra
+S 61.3. Distinguished Subalgebras
+F 61.3. LieCentre
+F 61.3. LieCenter
+F 61.3. LieCentralizer
+F 61.3. LieNormalizer
+F 61.3. LieDerivedSubalgebra
+F 61.3. LieNilRadical
+F 61.3. LieSolvableRadical
+F 61.3. CartanSubalgebra
+S 61.4. Series of Ideals
+F 61.4. LieDerivedSeries
+F 61.4. LieLowerCentralSeries
+F 61.4. LieUpperCentralSeries
+S 61.5. Properties of a Lie Algebra
+F 61.5. IsLieAbelian
+F 61.5. IsLieNilpotent
+F 61.5. IsLieSolvable
+S 61.6. Direct Sum Decompositions
+F 61.6. LeviMalcevDecomposition!for Lie algebras
+F 61.6. DirectSumDecomposition!for Lie algebras
+S 61.7. Semisimple Lie Algebras and Root Systems
+F 61.7. SemiSimpleType
+F 61.7. ChevalleyBasis
+F 61.7. IsRootSystem
+F 61.7. IsRootSystemFromLieAlgebra
+F 61.7. RootSystem
+F 61.7. UnderlyingLieAlgebra
+F 61.7. PositiveRoots
+F 61.7. NegativeRoots
+F 61.7. PositiveRootVectors
+F 61.7. NegativeRootVectors
+F 61.7. SimpleSystem
+F 61.7. CartanMatrix
+F 61.7. BilinearFormMat
+F 61.7. CanonicalGenerators
+F 61.7. IsWeylGroup
+F 61.7. SparseCartanMatrix
+F 61.7. WeylGroup
+F 61.7. ApplySimpleReflection
+F 61.7. LongestWeylWordPerm
+F 61.7. ConjugateDominantWeight
+F 61.7. ConjugateDominantWeightWithWord
+F 61.7. WeylOrbitIterator
+S 61.8. Restricted Lie algebras
+F 61.8. IsRestrictedLieAlgebra
+F 61.8. PthPowerImages
+F 61.8. PthPowerImage
+F 61.8. JenningsLieAlgebra
+F 61.8. PCentralLieAlgebra
+S 61.9. The Adjoint Representation
+F 61.9. AdjointMatrix
+F 61.9. AdjointAssociativeAlgebra
+F 61.9. KillingMatrix
+F 61.9. KappaPerp
+F 61.9. IsNilpotentElement
+F 61.9. NonNilpotentElement
+F 61.9. FindSl2
+S 61.10. Universal Enveloping Algebras
+F 61.10. UniversalEnvelopingAlgebra
+F 61.10. UniversalEnvelopingAlgebra
+S 61.11. Finitely Presented Lie Algebras
+F 61.11. FpLieAlgebraByCartanMatrix
+F 61.11. NilpotentQuotientOfFpLieAlgebra
+F 61.11. NilpotentQuotientOfFpLieAlgebra
+S 61.12. Modules over Lie Algebras and Their Cohomology
+F 61.12. FaithfulModule!for Lie algebras
+F 61.12. IsCochain
+F 61.12. IsCochainCollection
+F 61.12. Cochain
+F 61.12. CochainSpace
+F 61.12. ValueCochain
+F 61.12. LieCoboundaryOperator
+F 61.12. Cocycles
+F 61.12. Coboundaries
+S 61.13. Modules over Semisimple Lie Algebras
+F 61.13. DominantWeights
+F 61.13. DominantCharacter
+F 61.13. DominantCharacter
+F 61.13. DecomposeTensorProduct
+F 61.13. DimensionOfHighestWeightModule
+F 61.13. IsUEALatticeElement
+F 61.13. IsUEALatticeElementCollection
+F 61.13. IsUEALatticeElementFamily
+F 61.13. LatticeGeneratorsInUEA
+F 61.13. ObjByExtRep
+F 61.13. IsWeightRepElement
+F 61.13. IsWeightRepElementCollection
+F 61.13. IsWeightRepElementFamily
+F 61.13. HighestWeightModule
+S 61.14. Tensor Products and Exterior and Symmetric Powers
+F 61.14. TensorProductOfAlgebraModules
+F 61.14. TensorProductOfAlgebraModules
+F 61.14. ExteriorPowerOfAlgebraModule
+F 61.14. SymmetricPowerOfAlgebraModule
+F 61.14. DirectSumOfAlgebraModules!for Lie algebras
+F 61.14. DirectSumOfAlgebraModules!for Lie algebras
+C algfp.tex 62. Finitely Presented Algebras
+C mgmring.tex 63. Magma Rings
+I 63.0. group algebra
+I 63.0. group ring
+S 63.1. Free Magma Rings
+F 63.1. FreeMagmaRing
+F 63.1. GroupRing
+F 63.1. IsFreeMagmaRing
+F 63.1. IsFreeMagmaRingWithOne
+F 63.1. IsGroupRing
+F 63.1. UnderlyingMagma
+F 63.1. AugmentationIdeal
+S 63.2. Elements of Free Magma Rings
+F 63.2. IsElementOfFreeMagmaRing
+F 63.2. IsElementOfFreeMagmaRingCollection
+F 63.2. IsElementOfFreeMagmaRingFamily
+F 63.2. CoefficientsAndMagmaElements
+F 63.2. ZeroCoefficient
+F 63.2. ElementOfMagmaRing
+S 63.3. Natural Embeddings related to Magma Rings
+I 63.3. Embedding!for magma rings
+S 63.4. Magma Rings modulo Relations
+F 63.4. IsElementOfMagmaRingModuloRelations
+F 63.4. IsElementOfMagmaRingModuloRelationsCollection
+F 63.4. IsElementOfMagmaRingModuloRelationsFamily
+F 63.4. NormalizedElementOfMagmaRingModuloRelations
+F 63.4. IsMagmaRingModuloRelations
+S 63.5. Magma Rings modulo the Span of a Zero Element
+F 63.5. IsElementOfMagmaRingModuloSpanOfZeroFamily
+F 63.5. IsMagmaRingModuloSpanOfZero
+F 63.5. MagmaRingModuloSpanOfZero
+S 63.6. Technical Details about the Implementation of Magma Rings
+C ratfun.tex 64. Polynomials and Rational Functions
+S 64.1. Indeterminates
+F 64.1. Indeterminate
+F 64.1. Indeterminate
+F 64.1. Indeterminate
+F 64.1. Indeterminate
+F 64.1. IndeterminateNumberOfUnivariateRationalFunction
+F 64.1. IndeterminateOfUnivariateRationalFunction
+F 64.1. IndeterminateName
+F 64.1. HasIndeterminateName
+F 64.1. SetIndeterminateName
+F 64.1. CIUnivPols
+S 64.2. Operations for Rational Functions
+F 64.2. addition!rational functions
+F 64.2. subtraction!rational functions
+F 64.2. product!rational functions
+F 64.2. quotient!rational functions
+F 64.2. mod!Laurent polynomials
+S 64.3. Comparison of Rational Functions
+F 64.3. comparison!rational functions
+F 64.3. smaller!rational functions
+S 64.4. Properties and Attributes of Rational Functions
+F 64.4. IsPolynomialFunction
+F 64.4. IsRationalFunction
+F 64.4. NumeratorOfRationalFunction
+F 64.4. DenominatorOfRationalFunction
+F 64.4. IsPolynomial
+F 64.4. AsPolynomial
+F 64.4. IsUnivariateRationalFunction
+F 64.4. CoefficientsOfUnivariateRationalFunction
+F 64.4. IsUnivariatePolynomial
+F 64.4. CoefficientsOfUnivariatePolynomial
+F 64.4. IsLaurentPolynomial
+F 64.4. IsConstantRationalFunction
+F 64.4. IsPrimitivePolynomial
+F 64.4. SplittingField
+S 64.5. Univariate Polynomials
+F 64.5. UnivariatePolynomial
+F 64.5. UnivariatePolynomialByCoefficients
+F 64.5. DegreeOfLaurentPolynomial
+F 64.5. RootsOfUPol
+F 64.5. RootsOfUPol
+F 64.5. RootsOfUPol
+F 64.5. UnivariatenessTestRationalFunction
+S 64.6. Polynomials as Univariate Polynomials in one Indeterminate
+F 64.6. DegreeIndeterminate
+F 64.6. DegreeIndeterminate
+F 64.6. PolynomialCoefficientsOfPolynomial
+F 64.6. PolynomialCoefficientsOfPolynomial
+F 64.6. LeadingCoefficient
+F 64.6. LeadingMonomial
+F 64.6. Derivative
+F 64.6. Derivative
+F 64.6. Discriminant
+F 64.6. Discriminant
+F 64.6. Resultant
+F 64.6. Resultant
+S 64.7. Multivariate Polynomials
+F 64.7. Value
+F 64.7. Value
+F 64.7. OnIndeterminates
+S 64.8. Minimal Polynomials
+I 64.8. MinimalPolynomial!over a ring
+F 64.8. MinimalPolynomial
+S 64.9. Cyclotomic Polynomials
+F 64.9. CyclotomicPolynomial
+S 64.10. Polynomial Factorization
+F 64.10. Factors!of univariate polynomial
+F 64.10. FactorsSquarefree
+S 64.11. Polynomials over the Rationals
+F 64.11. PrimitivePolynomial
+F 64.11. PolynomialModP
+F 64.11. GaloisType
+F 64.11. ProbabilityShapes
+F 64.11. BombieriNorm
+F 64.11. MinimizedBombieriNorm
+F 64.11. HenselBound
+F 64.11. OneFactorBound
+S 64.12. Laurent Polynomials
+F 64.12. LaurentPolynomialByCoefficients
+F 64.12. CoefficientsOfLaurentPolynomial
+F 64.12. IndeterminateNumberOfLaurentPolynomial
+F 64.12. QuotRemLaurpols
+S 64.13. Univariate Rational Functions
+F 64.13. UnivariateRationalFunctionByCoefficients
+S 64.14. Polynomial Rings
+F 64.14. PolynomialRing
+F 64.14. PolynomialRing
+F 64.14. PolynomialRing
+F 64.14. PolynomialRing
+F 64.14. IndeterminatesOfPolynomialRing
+F 64.14. CoefficientsRing
+F 64.14. IsPolynomialRing
+F 64.14. IsFiniteFieldPolynomialRing
+F 64.14. IsAbelianNumberFieldPolynomialRing
+F 64.14. IsRationalsPolynomialRing
+S 64.15. Univariate Polynomial Rings
+F 64.15. UnivariatePolynomialRing
+F 64.15. UnivariatePolynomialRing
+F 64.15. UnivariatePolynomialRing
+F 64.15. IsUnivariatePolynomialRing
+S 64.16. Monomial Orderings
+F 64.16. IsMonomialOrdering
+F 64.16. LeadingMonomialOfPolynomial
+F 64.16. LeadingTermOfPolynomial
+F 64.16. LeadingCoefficientOfPolynomial
+F 64.16. MonomialComparisonFunction
+F 64.16. MonomialExtrepComparisonFun
+F 64.16. MonomialLexOrdering
+F 64.16. MonomialLexOrdering
+F 64.16. MonomialGrlexOrdering
+F 64.16. MonomialGrlexOrdering
+F 64.16. MonomialGrevlexOrdering
+F 64.16. MonomialGrevlexOrdering
+F 64.16. EliminationOrdering
+F 64.16. EliminationOrdering
+F 64.16. PolynomialReduction
+F 64.16. PolynomialReducedRemainder
+F 64.16. PolynomialDivisionAlgorithm
+F 64.16. MonomialExtGrlexLess
+S 64.17. Groebner Bases
+F 64.17. GroebnerBasis
+F 64.17. GroebnerBasis
+F 64.17. GroebnerBasisNC
+F 64.17. ReducedGroebnerBasis
+F 64.17. ReducedGroebnerBasis
+F 64.17. StoredGroebnerBasis
+F 64.17. InfoGroebner
+S 64.18. Rational Function Families
+F 64.18. RationalFunctionsFamily
+F 64.18. IsPolynomialFunctionsFamily
+F 64.18. IsRationalFunctionsFamily
+F 64.18. CoefficientsFamily
+S 64.19. The Representations of Rational Functions
+S 64.20. The Defining Attributes of Rational Functions
+I 64.20. Expanded form of monomials
+I 64.20. External representation of polynomials
+F 64.20. IsRationalFunctionDefaultRep
+F 64.20. ExtRepNumeratorRatFun
+F 64.20. ExtRepDenominatorRatFun
+F 64.20. ZeroCoefficientRatFun
+F 64.20. IsPolynomialDefaultRep
+F 64.20. ExtRepPolynomialRatFun
+F 64.20. IsLaurentPolynomialDefaultRep
+S 64.21. Creation of Rational Functions
+F 64.21. RationalFunctionByExtRep
+F 64.21. PolynomialByExtRep
+F 64.21. LaurentPolynomialByExtRep
+S 64.22. Arithmetic for External Representations of Polynomials
+F 64.22. ZippedSum
+F 64.22. ZippedProduct
+F 64.22. QuotientPolynomialsExtRep
+S 64.23. Cancellation Tests for Rational Functions
+F 64.23. RationalFunctionByExtRepWithCancellation
+F 64.23. TryGcdCancelExtRepPolynomials
+F 64.23. HeuristicCancelPolynomials
+C algfld.tex 65. Algebraic extensions of fields
+S 65.1. Creation of Algebraic Extensions
+F 65.1. AlgebraicExtension
+F 65.1. IsAlgebraicExtension
+S 65.2. Elements in Algebraic Extensions
+I 65.2. Operations for algebraic elements
+F 65.2. IsAlgebraicElement
+C padics.tex 66. p-adic Numbers (preliminary)
+S 66.1. Pure p-adic Numbers
+F 66.1. PurePadicNumberFamily
+F 66.1. PadicNumber!for pure padics
+F 66.1. Valuation
+F 66.1. ShiftedPadicNumber
+F 66.1. IsPurePadicNumber
+F 66.1. IsPurePadicNumberFamily
+S 66.2. Extensions of the p-adic Numbers
+F 66.2. PadicExtensionNumberFamily
+F 66.2. PadicNumber
+F 66.2. PadicNumber
+F 66.2. PadicNumber
+F 66.2. IsPadicExtensionNumber
+F 66.2. IsPadicExtensionNumberFamily
+C meataxe.tex 67. The MeatAxe
+S 67.1. MeatAxe Modules
+F 67.1. GModuleByMats
+F 67.1. GModuleByMats
+S 67.2. Module Constructions
+F 67.2. TensorProductGModule 
+F 67.2. WedgeGModule 
+S 67.3. Selecting a Different MeatAxe
+S 67.4. Accessing a Module
+F 67.4. MTX.Generators
+F 67.4. MTX.Dimension
+F 67.4. MTX.Field
+S 67.5. Irreducibility Tests
+F 67.5. MTX.IsIrreducible
+F 67.5. MTX.IsAbsolutelyIrreducible
+F 67.5. MTX.DegreeSplittingField
+S 67.6. Finding Submodules
+F 67.6. MTX.SubmoduleGModule
+F 67.6. MTX.SubGModule
+F 67.6. MTX.ProperSubmoduleBasis
+F 67.6. MTX.BasesSubmodules
+F 67.6. MTX.BasesMinimalSubmodules
+F 67.6. MTX.BasesMaximalSubmodules
+F 67.6. MTX.BasisRadical
+F 67.6. MTX.BasisSocle
+F 67.6. MTX.BasesMinimalSupermodules
+F 67.6. MTX.BasesCompositionSeries
+F 67.6. MTX.CompositionFactors
+F 67.6. MTX.CollectedFactors
+S 67.7. Induced Actions
+F 67.7. MTX.NormedBasisAndBaseChange
+F 67.7. MTX.InducedActionSubmodule
+F 67.7. MTX.InducedActionSubmoduleNB
+F 67.7. MTX.InducedActionFactorModule
+F 67.7. MTX.InducedActionMatrix
+F 67.7. MTX.InducedActionMatrixNB
+F 67.7. MTX.InducedActionFactorMatrix
+F 67.7. MTX.InducedAction
+S 67.8. Module Homomorphisms
+F 67.8. MTX.IsEquivalent
+F 67.8. MTX.Isomorphism
+F 67.8. MTX.Homomorphism
+F 67.8. MTX.Homomorphisms
+F 67.8. MTX.Distinguish
+S 67.9. Invariant Forms
+F 67.9. MTX.InvariantBilinearForm
+F 67.9. MTX.InvariantSesquilinearForm
+F 67.9. MTX.InvariantQuadraticForm
+F 67.9. MTX.BasisInOrbit
+F 67.9. MTX.OrthogonalSign
+S 67.10. The Smash MeatAxe
+F 67.10. SMTX.RandomIrreducibleSubGModule
+F 67.10. SMTX.GoodElementGModule
+F 67.10. SMTX.SortHomGModule
+F 67.10. SMTX.MinimalSubGModules
+F 67.10. SMTX.Setter
+F 67.10. SMTX.Getter
+F 67.10. SMTX.IrreducibilityTest
+F 67.10. SMTX.AbsoluteIrreducibilityTest
+F 67.10. SMTX.MinimalSubGModule
+F 67.10. SMTX.MatrixSum
+F 67.10. SMTX.CompleteBasis
+S 67.11. Smash MeatAxe Flags
+F 67.11. SMTX.Subbasis
+F 67.11. SMTX.AlgEl
+F 67.11. SMTX.AlgElMat
+F 67.11. SMTX.AlgElCharPol
+F 67.11. SMTX.AlgElCharPolFac
+F 67.11. SMTX.AlgElNullspaceVec
+F 67.11. SMTX.AlgElNullspaceDimension
+F 67.11. SMTX.CentMat
+F 67.11. SMTX.CentMatMinPoly
+C tom.tex 68. Tables of Marks
+S 68.1. More about Tables of Marks
+S 68.2. Table of Marks Objects in GAP
+S 68.3. Constructing Tables of Marks
+F 68.3. TableOfMarks
+F 68.3. TableOfMarks
+F 68.3. TableOfMarks
+F 68.3. TableOfMarksByLattice
+F 68.3. LatticeSubgroupsByTom
+S 68.4. Printing Tables of Marks
+I 68.4. ViewObj!for tables of marks
+I 68.4. PrintObj!for tables of marks
+I 68.4. Display!for tables of marks
+S 68.5. Sorting Tables of Marks
+F 68.5. SortedTom
+F 68.5. PermutationTom
+S 68.6. Technical Details about Tables of Marks
+F 68.6. InfoTom
+F 68.6. IsTableOfMarks
+F 68.6. TableOfMarksFamily
+F 68.6. TableOfMarksComponents
+F 68.6. ConvertToTableOfMarks
+S 68.7. Attributes of Tables of Marks
+F 68.7. MarksTom
+F 68.7. SubsTom
+F 68.7. NrSubsTom
+F 68.7. OrdersTom
+F 68.7. LengthsTom
+F 68.7. ClassTypesTom
+F 68.7. ClassNamesTom
+F 68.7. FusionsTom
+F 68.7. UnderlyingGroup!for tables of marks
+F 68.7. IdempotentsTom
+F 68.7. IdempotentsTomInfo
+F 68.7. Identifier!for tables of marks
+F 68.7. MatTom
+F 68.7. MoebiusTom
+F 68.7. WeightsTom
+S 68.8. Properties of Tables of Marks
+F 68.8. IsAbelianTom
+F 68.8. IsCyclicTom
+F 68.8. IsNilpotentTom
+F 68.8. IsPerfectTom
+F 68.8. IsSolvableTom
+S 68.9. Other Operations for Tables of Marks
+F 68.9. IsInternallyConsistent!for tables of marks
+F 68.9. DerivedSubgroupTom
+F 68.9. DerivedSubgroupsTom
+F 68.9. DerivedSubgroupsTomPossible
+F 68.9. DerivedSubgroupsTomUnique
+F 68.9. NormalizerTom
+F 68.9. NormalizersTom
+F 68.9. ContainedTom
+F 68.9. ContainingTom
+F 68.9. CyclicExtensionsTom
+F 68.9. CyclicExtensionsTom
+F 68.9. CyclicExtensionsTom
+F 68.9. DecomposedFixedPointVector
+F 68.9. EulerianFunctionByTom
+F 68.9. IntersectionsTom
+F 68.9. FactorGroupTom
+F 68.9. MaximalSubgroupsTom
+F 68.9. MaximalSubgroupsTom
+F 68.9. MinimalSupergroupsTom
+S 68.10. Standard Generators of Groups
+F 68.10. StandardGeneratorsInfo!for groups
+F 68.10. HumanReadableDefinition
+F 68.10. ScriptFromString
+F 68.10. StandardGeneratorsFunctions
+F 68.10. IsStandardGeneratorsOfGroup
+F 68.10. StandardGeneratorsOfGroup
+S 68.11. Accessing Subgroups via Tables of Marks
+F 68.11. GeneratorsSubgroupsTom
+F 68.11. StraightLineProgramsTom
+F 68.11. IsTableOfMarksWithGens
+F 68.11. RepresentativeTom
+F 68.11. RepresentativeTomByGenerators
+F 68.11. RepresentativeTomByGeneratorsNC
+F 68.11. StandardGeneratorsInfo!for tables of marks
+S 68.12. The Interface between Tables of Marks and Character Tables
+F 68.12. FusionCharTableTom
+F 68.12. PossibleFusionsCharTableTom
+F 68.12. PermCharsTom
+F 68.12. PermCharsTom
+S 68.13. Generic Construction of Tables of Marks
+F 68.13. TableOfMarksCyclic
+F 68.13. TableOfMarksDihedral
+F 68.13. TableOfMarksFrobenius
+S 68.14. The Library of Tables of Marks
+C ctbl.tex 69. Character Tables
+I 69.0. tables
+S 69.1. Some Remarks about Character Theory in GAP
+S 69.2. History of Character Theory Stuff in GAP
+S 69.3. Creating Character Tables
+I 69.3. tables
+I 69.3. character tables
+I 69.3. library tables
+I 69.3. character tables!access to
+I 69.3. character tables!calculate
+I 69.3. character tables!of groups
+F 69.3. CharacterTable
+F 69.3. CharacterTable
+F 69.3. CharacterTable
+F 69.3. CharacterTable
+F 69.3. BrauerTable
+F 69.3. BrauerTable
+F 69.3. BrauerTableOp
+F 69.3. ComputedBrauerTables
+F 69.3. SupportedCharacterTableInfo
+F 69.3. ConvertToCharacterTable
+F 69.3. ConvertToCharacterTableNC
+S 69.4. Character Table Categories
+F 69.4. IsNearlyCharacterTable
+F 69.4. IsCharacterTable
+F 69.4. IsOrdinaryTable
+F 69.4. IsBrauerTable
+F 69.4. IsCharacterTableInProgress
+F 69.4. InfoCharacterTable
+F 69.4. NearlyCharacterTablesFamily
+S 69.5. Conventions for Character Tables
+S 69.6. The Interface between Character Tables and Groups
+F 69.6. UnderlyingGroup!for character tables
+F 69.6. ConjugacyClasses!for character tables
+F 69.6. IdentificationOfConjugacyClasses
+F 69.6. ConnectGroupAndCharacterTable
+F 69.6. ConnectGroupAndCharacterTable
+F 69.6. CompatibleConjugacyClasses
+F 69.6. CompatibleConjugacyClasses
+S 69.7. Operators for Character Tables
+I 69.7. \*!for character tables
+I 69.7. /!for character tables
+I 69.7. mod!for character tables
+I 69.7. character tables!infix operators
+S 69.8. Attributes and Properties of Character Tables
+F 69.8. CharacterDegrees
+F 69.8. CharacterDegrees
+F 69.8. CharacterDegrees
+F 69.8. Irr
+F 69.8. Irr
+F 69.8. Irr
+F 69.8. LinearCharacters
+F 69.8. LinearCharacters
+F 69.8. LinearCharacters
+F 69.8. OrdinaryCharacterTable
+F 69.8. OrdinaryCharacterTable
+I 69.8. AbelianInvariants!for character tables
+I 69.8. CommutatorLength!for character tables
+I 69.8. Exponent!for character tables
+I 69.8. IsAbelian!for character tables
+I 69.8. IsCyclic!for character tables
+I 69.8. IsFinite!for character tables
+I 69.8. IsMonomial!for character tables
+I 69.8. IsNilpotent!for character tables
+I 69.8. IsPerfect!for character tables
+I 69.8. IsSimple!for character tables
+I 69.8. IsSolvable!for character tables
+I 69.8. IsSporadicSimple!for character tables
+I 69.8. IsSupersolvable!for character tables
+I 69.8. NrConjugacyClasses!for character tables
+I 69.8. Size!for character tables
+F 69.8. OrdersClassRepresentatives
+F 69.8. SizesCentralizers
+F 69.8. SizesConjugacyClasses
+F 69.8. AutomorphismsOfTable
+F 69.8. UnderlyingCharacteristic
+F 69.8. UnderlyingCharacteristic
+F 69.8. ClassNames
+F 69.8. ClassNames
+F 69.8. CharacterNames
+F 69.8. Identifier!for character tables
+F 69.8. InfoText
+F 69.8. InverseClasses
+F 69.8. RealClasses
+I 69.8. classes!real
+F 69.8. ClassOrbit
+F 69.8. ClassRoots
+F 69.8. ClassPositionsOfNormalSubgroups
+F 69.8. ClassPositionsOfMaximalNormalSubgroups
+F 69.8. ClassPositionsOfAgemo
+F 69.8. ClassPositionsOfCentre!for character tables
+F 69.8. ClassPositionsOfDirectProductDecompositions
+F 69.8. ClassPositionsOfDirectProductDecompositions
+F 69.8. ClassPositionsOfDerivedSubgroup
+F 69.8. ClassPositionsOfElementaryAbelianSeries
+F 69.8. ClassPositionsOfFittingSubgroup
+F 69.8. ClassPositionsOfLowerCentralSeries
+F 69.8. ClassPositionsOfUpperCentralSeries
+F 69.8. ClassPositionsOfSupersolvableResiduum
+F 69.8. ClassPositionsOfNormalClosure
+S 69.9. Operations Concerning Blocks
+F 69.9. PrimeBlocks
+F 69.9. PrimeBlocksOp
+F 69.9. ComputedPrimeBlockss
+F 69.9. SameBlock
+F 69.9. BlocksInfo
+F 69.9. DecompositionMatrix
+F 69.9. DecompositionMatrix
+F 69.9. LaTeXStringDecompositionMatrix
+S 69.10. Other Operations for Character Tables
+F 69.10. IsInternallyConsistent!for character tables
+F 69.10. IsPSolvableCharacterTable
+F 69.10. IsPSolvableCharacterTableOp
+F 69.10. ComputedIsPSolvableCharacterTables
+F 69.10. IsClassFusionOfNormalSubgroup
+F 69.10. Indicator
+F 69.10. Indicator
+F 69.10. Indicator
+F 69.10. IndicatorOp
+F 69.10. ComputedIndicators
+F 69.10. NrPolyhedralSubgroups
+I 69.10. subgroups!polyhedral
+F 69.10. ClassMultiplicationCoefficient!for character tables
+I 69.10. class multiplication coefficient
+I 69.10. structure constant
+F 69.10. ClassStructureCharTable
+I 69.10. class multiplication coefficient
+I 69.10. structure constant
+F 69.10. MatClassMultCoeffsCharTable
+I 69.10. structure constant
+I 69.10. class multiplication coefficient
+S 69.11. Printing Character Tables
+I 69.11. ViewObj!for character tables
+I 69.11. PrintObj!for character tables
+I 69.11. Display!for character tables
+F 69.11. DisplayOptions
+F 69.11. PrintCharacterTable
+S 69.12. Computing the Irreducible Characters of a Group
+F 69.12. IrrDixonSchneider
+F 69.12. IrrConlon
+F 69.12. IrrBaumClausen
+F 69.12. IrreducibleRepresentations
+F 69.12. IrreducibleRepresentations
+F 69.12. IrreducibleRepresentationsDixon
+F 69.12. IrreducibleRepresentationsDixon
+F 69.12. IrreducibleRepresentationsDixon
+S 69.13. Representations given by modules
+F 69.13. IrreducibleModules
+F 69.13. AbsoluteIrreducibleModules
+F 69.13. AbsolutIrreducibleModules
+F 69.13. RegularModule
+S 69.14. The Dixon-Schneider Algorithm
+I 69.14. Dixon-Schneider algorithm
+S 69.15. Advanced Methods for Dixon-Schneider Calculations
+I 69.15. irreducible characters!computation
+F 69.15. DixonRecord
+F 69.15. DixonInit
+F 69.15. DixontinI
+F 69.15. DixonSplit
+F 69.15. BestSplittingMatrix
+F 69.15. DxIncludeIrreducibles
+F 69.15. SplitCharacters
+F 69.15. IsDxLargeGroup
+S 69.16. Components of a Dixon Record
+S 69.17. An Example of Advanced Dixon-Schneider Calculations
+S 69.18. Constructing Character Tables from Others
+F 69.18. CharacterTableDirectProduct
+F 69.18. FactorsOfDirectProduct
+F 69.18. CharacterTableFactorGroup
+F 69.18. CharacterTableIsoclinic
+F 69.18. CharacterTableIsoclinic
+F 69.18. CharacterTableIsoclinic
+F 69.18. CharacterTableWreathSymmetric
+S 69.19. Sorted Character Tables
+F 69.19. CharacterTableWithSortedCharacters
+F 69.19. CharacterTableWithSortedCharacters
+F 69.19. SortedCharacters
+F 69.19. SortedCharacters
+F 69.19. SortedCharacters
+F 69.19. CharacterTableWithSortedClasses
+F 69.19. CharacterTableWithSortedClasses
+F 69.19. CharacterTableWithSortedClasses
+F 69.19. CharacterTableWithSortedClasses
+F 69.19. SortedCharacterTable
+F 69.19. SortedCharacterTable
+F 69.19. SortedCharacterTable
+F 69.19. ClassPermutation
+S 69.20. Automorphisms and Equivalence of Character Tables
+F 69.20. MatrixAutomorphisms
+F 69.20. TableAutomorphisms
+F 69.20. TableAutomorphisms
+F 69.20. TableAutomorphisms
+F 69.20. TransformingPermutations
+F 69.20. TransformingPermutationsCharacterTables
+F 69.20. FamiliesOfRows
+S 69.21. Storing Normal Subgroup Information
+F 69.21. NormalSubgroupClassesInfo
+F 69.21. ClassPositionsOfNormalSubgroup
+F 69.21. NormalSubgroupClasses
+F 69.21. FactorGroupNormalSubgroupClasses
+C ctblfuns.tex 70. Class Functions
+I 70.0. characters
+I 70.0. group characters
+I 70.0. virtual characters
+I 70.0. generalized characters
+F 70.0. IsClassFunction
+I 70.0. class function
+I 70.0. class function objects
+S 70.1. Why Class Functions?
+S 70.2. Basic Operations for Class Functions
+F 70.2. UnderlyingCharacterTable
+F 70.2. ValuesOfClassFunction
+S 70.3. Comparison of Class Functions
+S 70.4. Arithmetic Operations for Class Functions
+I 70.4. class functions!as ring elements
+I 70.4. inverse!of class function
+I 70.4. character value!of group element using powering operator
+I 70.4. power!meaning for class functions
+I 70.4. {\accent 94 }!for class functions
+I 70.4. characteristic!for class functions
+I 70.4. ComplexConjugate!for class functions
+I 70.4. GaloisCyc!for class functions
+I 70.4. Permuted!for class functions
+I 70.4. Order!of a class function
+S 70.5. Printing Class Functions
+I 70.5. ViewObj!for class functions
+I 70.5. PrintObj!for character tables
+I 70.5. Display!for character tables
+S 70.6. Creating Class Functions from Values Lists
+F 70.6. ClassFunction
+F 70.6. ClassFunction
+F 70.6. VirtualCharacter
+F 70.6. VirtualCharacter
+F 70.6. Character
+F 70.6. ClassFunctionSameType
+S 70.7. Creating Class Functions using Groups
+F 70.7. TrivialCharacter
+F 70.7. TrivialCharacter
+F 70.7. NaturalCharacter
+F 70.7. NaturalCharacter
+F 70.7. PermutationCharacter
+F 70.7. PermutationCharacter
+S 70.8. Operations for Class Functions
+F 70.8. IsCharacter
+I 70.8. ordinary character
+I 70.8. Brauer character
+F 70.8. IsVirtualCharacter
+I 70.8. virtual character
+F 70.8. IsIrreducibleCharacter
+I 70.8. irreducible character
+F 70.8. DegreeOfCharacter
+I 70.8. constituent!of a group character
+I 70.8. decompose!a group character
+I 70.8. multiplicity!of constituents of a group character
+I 70.8. inner product!of group characters
+F 70.8. ScalarProduct!for characters
+F 70.8. MatScalarProducts
+F 70.8. MatScalarProducts
+F 70.8. Norm!of character
+F 70.8. ConstituentsOfCharacter
+F 70.8. KernelOfCharacter
+F 70.8. ClassPositionsOfKernel
+F 70.8. CentreOfCharacter
+I 70.8. centre!of a character
+F 70.8. ClassPositionsOfCentre!for characters
+F 70.8. InertiaSubgroup
+F 70.8. CycleStructureClass
+F 70.8. IsTransitive!for characters
+I 70.8. IsTransitive!for class functions
+F 70.8. Transitivity!for characters
+I 70.8. Transitivity!for class functions
+F 70.8. CentralCharacter
+I 70.8. central character
+F 70.8. DeterminantOfCharacter
+I 70.8. determinant character
+F 70.8. EigenvaluesChar
+F 70.8. Tensored
+S 70.9. Restricted and Induced Class Functions
+I 70.9. inflated class functions
+F 70.9. RestrictedClassFunction
+F 70.9. RestrictedClassFunction
+F 70.9. RestrictedClassFunction
+F 70.9. RestrictedClassFunctions
+F 70.9. RestrictedClassFunctions
+F 70.9. RestrictedClassFunctions
+F 70.9. InducedClassFunction
+F 70.9. InducedClassFunction
+F 70.9. InducedClassFunction
+F 70.9. InducedClassFunctions
+F 70.9. InducedClassFunctions
+F 70.9. InducedClassFunctions
+F 70.9. InducedCyclic
+F 70.9. InducedCyclic
+F 70.9. InducedCyclic
+F 70.9. InducedCyclic
+S 70.10. Reducing Virtual Characters
+F 70.10. ReducedClassFunctions
+F 70.10. ReducedClassFunctions
+F 70.10. ReducedCharacters
+F 70.10. IrreducibleDifferences
+F 70.10. IrreducibleDifferences
+F 70.10. IrreducibleDifferences
+F 70.10. IrreducibleDifferences
+F 70.10. LLL
+I 70.10. LLL algorithm!for virtual characters
+I 70.10. short vectors spanning a lattice
+I 70.10. lattice basis reduction!for virtual characters
+F 70.10. Extract
+F 70.10. OrthogonalEmbeddingsSpecialDimension
+F 70.10. Decreased
+F 70.10. DnLattice
+F 70.10. DnLatticeIterative
+S 70.11. Symmetrizations of Class Functions
+I 70.11. characters!symmetrizations of
+F 70.11. Symmetrizations
+F 70.11. Symmetrizations
+F 70.11. SymmetricParts
+F 70.11. AntiSymmetricParts
+F 70.11. OrthogonalComponents
+I 70.11. symmetrizations!orthogonal
+I 70.11. Frame
+I 70.11. Murnaghan components
+I 70.11. symmetrizations!orthogonal
+I 70.11. Frame
+I 70.11. Murnaghan components
+F 70.11. SymplecticComponents
+I 70.11. symmetrizations!symplectic
+I 70.11. Murnaghan components
+S 70.12. Molien Series
+F 70.12. MolienSeries
+F 70.12. MolienSeries
+F 70.12. MolienSeries
+F 70.12. MolienSeries
+F 70.12. MolienSeriesInfo
+F 70.12. ValueMolienSeries
+F 70.12. MolienSeriesWithGivenDenominator
+S 70.13. Possible Permutation Characters
+I 70.13. characters!permutation
+I 70.13. candidates!for permutation characters
+I 70.13. possible permutation characters
+I 70.13. permutation characters!possible
+F 70.13. PermCharInfo
+F 70.13. PermCharInfo
+F 70.13. PermCharInfoRelative
+S 70.14. Computing Possible Permutation Characters
+I 70.14. characters!permutation
+I 70.14. candidates!for permutation characters
+I 70.14. possible permutation characters
+I 70.14. permutation characters!possible
+F 70.14. PermChars
+F 70.14. PermChars
+F 70.14. PermChars
+F 70.14. TestPerm1
+F 70.14. TestPerm2
+F 70.14. TestPerm3
+F 70.14. TestPerm4
+F 70.14. TestPerm5
+F 70.14. PermBounds
+F 70.14. PermComb
+F 70.14. Inequalities
+S 70.15. Operations for Brauer Characters
+F 70.15. FrobeniusCharacterValue
+I 70.15. TryConwayPolynomialForFrobeniusCharacterValue
+F 70.15. BrauerCharacterValue
+F 70.15. SizeOfFieldOfDefinition
+F 70.15. RealizableBrauerCharacters
+S 70.16. Domains Generated by Class Functions
+C ctblmaps.tex 71. Maps Concerning Character Tables
+I 71.0. maps
+I 71.0. parametrized maps
+S 71.1. Power Maps
+F 71.1. PowerMap
+F 71.1. PowerMapOp
+F 71.1. ComputedPowerMaps
+F 71.1. PossiblePowerMaps
+F 71.1. ElementOrdersPowerMap
+F 71.1. PowerMapByComposition
+F 71.1. OrbitPowerMaps
+I 71.1. matrix automorphisms
+F 71.1. RepresentativesPowerMaps
+S 71.2. Class Fusions between Character Tables
+I 71.2. fusions
+I 71.2. subgroup fusions
+F 71.2. FusionConjugacyClasses
+F 71.2. FusionConjugacyClasses
+F 71.2. FusionConjugacyClasses
+F 71.2. FusionConjugacyClassesOp
+F 71.2. FusionConjugacyClassesOp
+F 71.2. ComputedClassFusions
+F 71.2. GetFusionMap
+F 71.2. GetFusionMap
+F 71.2. StoreFusion
+F 71.2. NamesOfFusionSources
+F 71.2. PossibleClassFusions
+F 71.2. OrbitFusions
+I 71.2. table automorphisms
+F 71.2. RepresentativesFusions
+F 71.2. RepresentativesFusions
+F 71.2. ConsiderStructureConstants
+S 71.3. Parametrized Maps
+I 71.3. map!parametrized
+I 71.3. class functions
+F 71.3. CompositionMaps
+F 71.3. InverseMap
+F 71.3. ProjectionMap
+F 71.3. Indirected
+F 71.3. Parametrized
+F 71.3. ContainedMaps
+F 71.3. UpdateMap
+F 71.3. MeetMaps
+F 71.3. CommutativeDiagram
+F 71.3. CheckFixedPoints
+F 71.3. TransferDiagram
+F 71.3. TestConsistencyMaps
+F 71.3. Indeterminateness
+F 71.3. PrintAmbiguity
+F 71.3. ContainedSpecialVectors
+F 71.3. IntScalarProducts
+F 71.3. NonnegIntScalarProducts
+F 71.3. ContainedPossibleVirtualCharacters
+F 71.3. ContainedPossibleCharacters
+I 71.3. IntScalarProducts
+I 71.3. NonnegIntScalarProducts
+I 71.3. ContainedPossibleVirtualCharacters
+I 71.3. ContainedPossibleCharacters
+I 71.3. ContainedSpecialVectors
+F 71.3. CollapsedMat
+F 71.3. ContainedDecomposables
+F 71.3. ContainedCharacters
+S 71.4. Subroutines for the Construction of Power Maps
+F 71.4. InitPowerMap
+F 71.4. Congruences!for character tables
+F 71.4. ConsiderKernels
+F 71.4. ConsiderSmallerPowerMaps
+F 71.4. MinusCharacter
+F 71.4. PowerMapsAllowedBySymmetrizations
+S 71.5. Subroutines for the Construction of Class Fusions
+F 71.5. InitFusion
+F 71.5. CheckPermChar
+I 71.5. permutation character
+F 71.5. ConsiderTableAutomorphisms
+I 71.5. table automorphisms
+F 71.5. FusionsAllowedByRestrictions
+C ctblmono.tex 72. Monomiality Questions
+F 72.0. InfoMonomial
+S 72.1. Character Degrees and Derived Length
+F 72.1. Alpha
+F 72.1. Delta
+F 72.1. IsBergerCondition
+F 72.1. IsBergerCondition
+S 72.2. Primitivity of Characters
+F 72.2. TestHomogeneous
+F 72.2. IsPrimitiveCharacter
+F 72.2. TestQuasiPrimitive
+F 72.2. IsQuasiPrimitive
+F 72.2. TestInducedFromNormalSubgroup
+F 72.2. IsInducedFromNormalSubgroup
+S 72.3. Testing Monomiality
+I 72.3. IsMonomial!for groups
+I 72.3. IsMonomial!for characters
+F 72.3. TestMonomial
+F 72.3. TestMonomial
+F 72.3. TestMonomial
+F 72.3. TestMonomial
+F 72.3. TestMonomialUseLattice
+F 72.3. IsMonomialNumber
+I 72.3. IsMonomial!for positive integers
+F 72.3. TestMonomialQuick
+F 72.3. TestMonomialQuick
+F 72.3. TestSubnormallyMonomial
+F 72.3. TestSubnormallyMonomial
+F 72.3. IsSubnormallyMonomial
+F 72.3. IsSubnormallyMonomial
+F 72.3. TestRelativelySM
+F 72.3. TestRelativelySM
+F 72.3. TestRelativelySM
+F 72.3. TestRelativelySM
+F 72.3. IsRelativelySM
+F 72.3. IsRelativelySM
+S 72.4. Minimal Nonmonomial Groups
+F 72.4. IsMinimalNonmonomial
+F 72.4. MinimalNonmonomialGroup
+C install.tex 73. Installing GAP
+I 73.0. installation
+I 73.0. options
+S 73.1. Installation Overview
+S 73.2. Get the Archives
+S 73.3. Unpacking
+S 73.4. Compilation
+S 73.5. Test of the installation
+S 73.6. Packages
+S 73.7. Finish Installation and Cleanup
+S 73.8. The Documentation
+S 73.9. If Things Go Wrong
+I 73.9. problems
+I 73.9. FAQ
+I 73.9. support!email address
+I 73.9. bug reports!see If Things Go Wrong
+S 73.10. Known Problems of the Configure Process
+S 73.11. Problems on Particular Systems
+S 73.12. Optimization and Compiler Options
+S 73.13. Porting GAP
+S 73.14. GAP for Macintosh OS X
+I 73.14. OSX
+I 73.14. Apple
+I 73.14. Macintosh
+S 73.15. GAP for MacOS
+I 73.15. MacOS
+I 73.15. Apple
+I 73.15. Macintosh
+S 73.16. Installation of GAP for MacOS
+S 73.17. Expert Windows installation
+S 73.18. Copyrights
+C gappkg.tex 74. GAP Packages
+I 74.0. package
+S 74.1. Installing a GAP Package
+S 74.2. Loading a GAP Package
+I 74.2. automatic loading of GAP packages
+I 74.2. disable automatic loading
+F 74.2. LoadPackage
+F 74.2. LoadPackage
+I 74.2. NOAUTO
+S 74.3. Functions for GAP Packages
+F 74.3. ReadPackage
+F 74.3. ReadPackage
+F 74.3. RereadPackage
+F 74.3. RereadPackage
+F 74.3. TestPackageAvailability
+F 74.3. TestPackageAvailability
+F 74.3. InstalledPackageVersion
+F 74.3. DirectoriesPackageLibrary
+F 74.3. DirectoriesPackagePrograms
+F 74.3. CompareVersionNumbers
+C obsolete.tex 75. Replaced and Removed Command Names
+I 75.0. obsolete
+I 75.0. deprecated
+I 75.0. legacy
+S 75.1. Group Actions - Name Changes
+I 75.1. group operations
+I 75.1. Operation
+I 75.1. RepresentativeOperation
+I 75.1. OperationHomomorphism
+I 75.1. FunctionOperation
+S 75.2. Package Interface - Obsolete Functions and Name Changes
+I 75.2. DeclarePackage
+I 75.2. DeclareAutoPackage
+I 75.2. DeclarePackageDocumentation
+I 75.2. DeclarePackageAutoDocumentation
+I 75.2. RequirePackage
+I 75.2. ReadPkg
+I 75.2. RereadPkg
+I 75.2. CreateCompletionFilesPkg
+S 75.3. Normal Forms of Integer Matrices - Name Changes
+I 75.3. Smith normal form
+I 75.3. Hermite normal form
+S 75.4. Miscellaneous Name Changes or Removed Names
+I 75.4. QUIET
+I 75.4. BANNER
+I 75.4. GAPInfo
+I 75.4. MonomialTotalDegreeLess
+I 75.4. NormedVectors
+C copyrigh.tex 76. Copyright

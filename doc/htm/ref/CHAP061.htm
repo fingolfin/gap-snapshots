@@ -1,0 +1,1669 @@
+<html><head><title>[ref] 61 Lie Algebras</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP060.htm">Previous</a>] [<a href ="CHAP062.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>61 Lie Algebras</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP061.htm#SECT001">Lie objects</a>
+<li> <A HREF="CHAP061.htm#SECT002">Constructing Lie algebras</a>
+<li> <A HREF="CHAP061.htm#SECT003">Distinguished Subalgebras</a>
+<li> <A HREF="CHAP061.htm#SECT004">Series of Ideals</a>
+<li> <A HREF="CHAP061.htm#SECT005">Properties of a Lie Algebra</a>
+<li> <A HREF="CHAP061.htm#SECT006">Direct Sum Decompositions</a>
+<li> <A HREF="CHAP061.htm#SECT007">Semisimple Lie Algebras and Root Systems</a>
+<li> <A HREF="CHAP061.htm#SECT008">Restricted Lie algebras</a>
+<li> <A HREF="CHAP061.htm#SECT009">The Adjoint Representation</a>
+<li> <A HREF="CHAP061.htm#SECT010">Universal Enveloping Algebras</a>
+<li> <A HREF="CHAP061.htm#SECT011">Finitely Presented Lie Algebras</a>
+<li> <A HREF="CHAP061.htm#SECT012">Modules over Lie Algebras and Their Cohomology</a>
+<li> <A HREF="CHAP061.htm#SECT013">Modules over Semisimple Lie Algebras</a>
+<li> <A HREF="CHAP061.htm#SECT014">Tensor Products and Exterior and Symmetric Powers</a>
+</ol><p>
+<p>
+A Lie algebra <i>L</i> is an algebra such that 
+<i>xx</i>=0 and <i>x</i>(<i>yz</i>)+<i>y</i>(<i>zx</i>)+<i>z</i>(<i>xy</i>)=0 for all <i>x</i>,<i>y</i>,<i>z</i> <font face="symbol">&#8712;</font> <i>L</i>. A common way of
+creating a Lie algebra is by taking an associative
+algebra together with the commutator as product. Therefore
+the product of two elements <i>x</i>,<i>y</i> of a Lie algebra is usually denoted by 
+[<i>x</i>,<i>y</i>], but in <font face="Gill Sans,Helvetica,Arial">GAP</font> this denotes the list of the elements <i>x</i> and <i>y</i>;
+hence the product of elements is made by the usual <code>*</code>.
+This gives no problems when dealing with Lie algebras given by a 
+table of structure constants. However, for matrix Lie algebras 
+the situation is not so easy as <code>*</code> denotes the ordinary (associative)
+matrix multiplication. In <font face="Gill Sans,Helvetica,Arial">GAP</font>this problem is solved by wrapping 
+elements of a matrix Lie algebra up as LieObjects, and then define 
+the <code>*</code> for LieObjects to be the commutator (see <a href="../ref/CHAP061.htm#SECT001">lie objects</a>);
+<p>
+<p>
+<h2><a name="SECT001">61.1 Lie objects</a></h2>
+<p><p>
+Let <i>x</i> be a ring element, then <code>LieObject(x)</code> wraps <i>x</i> up into an
+object that contains the same data (namely <i>x</i>). The multiplication
+<code>*</code> for Lie objects is formed by taking the commutator. More exactly,
+if <i>l</i><sub>1</sub> and <i>l</i><sub>2</sub> are the Lie objects corresponding to
+the ring elements <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub>, then <i>l</i><sub>1</sub> * <i>l</i><sub>2</sub> is equal to the
+Lie object corresponding to <i>r</i><sub>1</sub> * <i>r</i><sub>2</sub> <font face="symbol">&#8722;</font> <i>r</i><sub>2</sub> * <i>r</i><sub>2</sub>. Two rules
+for Lie objects are worth noting:
+<ul>
+<li>
+  An element is <strong>not</strong> equal to its Lie element.
+<p>
+<li>
+  If we take the Lie object of an ordinary (associative) matrix
+  then this is again a matrix;
+  it is therefore a collection (of its rows) and a list.
+  But it is <strong>not</strong> a collection of collections of its entries,
+  and its family is <strong>not</strong> a collections family.
+</ul>
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>LieObject( </code><var>obj</var><code> ) A</code>
+<p>
+Let <var>obj</var> be a ring element. Then <code>LieObject( </code><var>obj</var><code> )</code> is the
+corresponding Lie object. If <var>obj</var> lies in the family <var>F</var>,
+then <code>LieObject( </code><var>obj</var><code> )</code> lies in the family LieFamily( <var>F</var> )
+(see&nbsp;<a href="CHAP061.htm#SSEC001.3">LieFamily</a>).
+<p>
+<pre>
+gap&gt; m:= [ [ 1, 0 ], [ 0, 1 ] ];;
+gap&gt; lo:= LieObject( m );
+LieObject( [ [ 1, 0 ], [ 0, 1 ] ] )
+gap&gt; m*m;
+[ [ 1, 0 ], [ 0, 1 ] ]
+gap&gt; lo*lo;
+LieObject( [ [ 0, 0 ], [ 0, 0 ] ] )
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsLieObject( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC001.2"></a>
+<li><code>IsLieObjectCollection( </code><var>obj</var><code> ) C</code>
+<p>
+An object lies in <code>IsLieObject</code> if and only if it lies in a family
+constructed by <code>LieFamily</code>.
+<p>
+<pre>
+gap&gt; m:= [ [ 1, 0 ], [ 0, 1 ] ];;
+gap&gt; lo:= LieObject( m );
+LieObject( [ [ 1, 0 ], [ 0, 1 ] ] )
+gap&gt; IsLieObject( m );
+false
+gap&gt; IsLieObject( lo );
+true
+</pre>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>LieFamily( </code><var>Fam</var><code> ) A</code>
+<p>
+is a family <i>F</i> in bijection with the family <var>Fam</var>,
+but with the Lie bracket as infix multiplication.
+That is, for <i>x</i>, <i>y</i> in <var>Fam</var>, the product of the images in <i>F</i> will be
+the image of <i>x</i> * <i>y</i> <font face="symbol">&#8722;</font> <i>y</i> * <i>x</i>.
+<p>
+The standard type of objects in a Lie family <var>F</var> is <code></code><var>F</var><code>!.packedType</code>.
+<p>
+<a name = "I0"></a>
+
+The bijection from <var>Fam</var> to <i>F</i> is given by <code>Embedding( </code><var>Fam</var><code>, <i>F</i> )</code>;
+this bijection respects addition and additive inverses.
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>UnderlyingFamily( </code><var>Fam</var><code> ) A</code>
+<p>
+If <var>Fam</var> is a Lie family then <code>UnderlyingFamily( </code><var>Fam</var><code> )</code>
+is a family <i>F</i> such that <code></code><var>Fam</var><code> = LieFamily( <i>F</i> )</code>.
+<p>
+<p>
+<h2><a name="SECT002">61.2 Constructing Lie algebras</a></h2>
+<p><p>
+In this section we describe functions that create Lie algebras. Creating
+and working with subalgebras goes exactly in the same way as for general
+algebras; so for that we refer to Chapter <a href="../ref/CHAP060.htm">algebras</a>.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>LieAlgebraByStructureConstants( </code><var>R</var><code>, </code><var>sctable</var><code> ) F</code>
+<li><code>LieAlgebraByStructureConstants( </code><var>R</var><code>, </code><var>sctable</var><code>, </code><var>name</var><code> ) F</code>
+<li><code>LieAlgebraByStructureConstants( </code><var>R</var><code>, </code><var>sctable</var><code>, </code><var>name1</var><code>, </code><var>name2</var><code>, ... ) F</code>
+<p>
+<code>LieAlgebraByStructureConstants</code> does the same as
+<code>AlgebraByStructureConstants</code>, except that the result is assumed to be
+a Lie algebra. Note that the function does not check whether
+<var>sctable</var> satisfies the Jacobi identity. (So if one creates a Lie
+algebra this way with a table that does not satisfy the Jacobi identity,
+errors may occur later on.)
+<p>
+<pre>
+gap&gt; T:= EmptySCTable( 2, 0, "antisymmetric" );;
+gap&gt; SetEntrySCTable( T, 1, 2, [ 1/2, 1 ] );
+gap&gt; L:= LieAlgebraByStructureConstants( Rationals, T );
+&lt;Lie algebra of dimension 2 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>LieAlgebra( </code><var>L</var><code> ) F</code>
+<li><code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code> ) F</code>
+<li><code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code>, </code><var>zero</var><code> ) F</code>
+<li><code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code>, "basis" ) F</code>
+<li><code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code>, </code><var>zero</var><code>, "basis" ) F</code>
+<p>
+For an associative algebra <var>L</var>, <code>LieAlgebra( </code><var>L</var><code> )</code> is the Lie algebra
+isomorphic to <var>L</var> as a vector space but with the Lie bracket as product.
+<p>
+<code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code> )</code> is the Lie algebra over the division ring
+<var>F</var>, generated <strong>as Lie algebra</strong> by the Lie objects corresponding to the
+vectors in the list <var>gens</var>.
+<p>
+<strong>Note</strong> that the algebra returned by <code>LieAlgebra</code> does not contain the
+vectors in <var>gens</var>. The elements in <var>gens</var> are wrapped up as Lie objects
+(see <a href="../ref/CHAP061.htm#SECT001">lie objects</a>).
+This allows one to create Lie algebras from ring elements with respect to
+the Lie bracket as product.  But of course the product in the Lie
+algebra is the usual <code>*</code>.
+<p>
+If there are three arguments, a division ring <var>F</var> and a list <var>gens</var>
+and an element <var>zero</var>,
+then <code>LieAlgebra( </code><var>F</var><code>, </code><var>gens</var><code>, </code><var>zero</var><code> )</code> is the corresponding <var>F</var>-Lie
+algebra with zero element the Lie object corresponding to <var>zero</var>.
+<p>
+If the last argument is the string <code>"basis"</code> then the vectors in
+<var>gens</var> are known to form a basis of the algebra (as an <var>F</var>-vector space).
+<p>
+<strong>Note</strong> that even if each element in <var>gens</var> is already a Lie element,
+i.e., is of the form <code>LieElement( </code><var>elm</var><code> )</code> for an object <var>elm</var>,
+the elements of the result lie in the Lie family of the family that
+contains <var>gens</var> as a subset.
+<p>
+<pre>
+gap&gt; A:= FullMatrixAlgebra( GF( 7 ), 4 );;
+gap&gt; L:= LieAlgebra( A );
+&lt;Lie algebra of dimension 16 over GF(7)&gt;
+gap&gt; mats:= [ [[ 1, 0 ], [ 0, -1 ]], [[ 0, 1 ], [ 0, 0 ]], [[ 0, 0 ], [ 1, 0]] ];;
+gap&gt; L:= LieAlgebra( Rationals, mats );
+&lt;Lie algebra over Rationals, with 3 generators&gt;
+</pre>
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>FreeLieAlgebra( </code><var>R</var><code>, </code><var>rank</var><code> ) F</code>
+<li><code>FreeLieAlgebra( </code><var>R</var><code>, </code><var>rank</var><code>, </code><var>name</var><code> ) F</code>
+<li><code>FreeLieAlgebra( </code><var>R</var><code>, </code><var>name1</var><code>, </code><var>name2</var><code>, ... ) F</code>
+<p>
+Returns a free Lie algebra of rank <var>rank</var> over the ring <var>R</var>. 
+<code>FreeLieAlgebra( </code><var>R</var><code>, </code><var>name1</var><code>, </code><var>name2</var><code>,...)</code> returns a free Lie algebra
+over <var>R</var> with generators named <var>name1</var>, <var>name2</var>, and so on.
+The elements of a free Lie algebra are written on the Hall-Lyndon
+basis.
+<p>
+<pre>
+gap&gt; L:= FreeLieAlgebra( Rationals, "x", "y", "z" );
+&lt;Lie algebra over Rationals, with 3 generators&gt;
+gap&gt; g:= GeneratorsOfAlgebra( L );; x:= g[1];; y:=g[2];; z:= g[3];;
+gap&gt; z*(y*(x*(z*y)));
+(-1)*((x*(y*z))*(y*z))+(-1)*((x*((y*z)*z))*y)+(-1)*(((x*z)*(y*z))*y)
+</pre>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>FullMatrixLieAlgebra( </code><var>R</var><code>, </code><var>n</var><code> ) F</code>
+<a name = "SSEC002.4"></a>
+<li><code>MatrixLieAlgebra( </code><var>R</var><code>, </code><var>n</var><code> ) F</code>
+<a name = "SSEC002.4"></a>
+<li><code>MatLieAlgebra( </code><var>R</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+is the full matrix Lie algebra <i>R</i> <sup><i>n</i>  &times;<i>n</i> </sup>, for a ring <var>R</var> and a 
+nonnegative integer <var>n</var>.
+<p>
+<pre>
+gap&gt; FullMatrixLieAlgebra( GF(9), 10 );
+&lt;Lie algebra over GF(3^2), with 19 generators&gt;
+</pre>
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>RightDerivations( </code><var>B</var><code> ) A</code>
+<a name = "SSEC002.5"></a>
+<li><code>LeftDerivations( </code><var>B</var><code> ) A</code>
+<a name = "SSEC002.5"></a>
+<li><code>Derivations( </code><var>B</var><code> ) A</code>
+<p>
+These functions all return
+the matrix Lie algebra of derivations of the algebra <i>A</i> with basis
+<var>B</var>.
+<p>
+<code>RightDerivations( </code><var>B</var><code> )</code> returns the algebra of derivations represented
+by their right action on the algebra <i>A</i>. This means that
+with respect to the basis <i>B</i> of <i>A</i>, the derivation <i>D</i> is described
+by the matrix [ <i>d</i><sub><i>i</i>,<i>j</i></sub> ]
+which means that <i>D</i> maps the <i>i</i>-th basis element <i>b</i><sub><i>i</i></sub> to 
+<font face="symbol">&#8721;</font><sub><i>j</i>=1</sub><sup><i>n</i></sup> <i>d</i><sub><i>ij</i></sub> <i>b</i><sub><i>j</i></sub>.
+<p>
+<code>LeftDerivations( </code><var>B</var><code> )</code> returns the Lie algebra of derivations represented
+by theor left action on the algebra <i>A</i>. So the matrices contained in the
+algebra output by <code>LeftDerivations( </code><var>B</var><code> )</code> are the transposes of the 
+matrices contained in the output of <code>RightDerivations( </code><var>B</var><code> )</code>.
+<p>
+<code>Derivations</code> is just a synonym for <code>RightDerivations</code>.
+<p>
+<pre>
+gap&gt; A:= OctaveAlgebra( Rationals );
+&lt;algebra of dimension 8 over Rationals&gt;
+gap&gt; L:= Derivations( Basis( A ) );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>SimpleLieAlgebra( </code><var>type</var><code>, </code><var>n</var><code>, </code><var>F</var><code> ) F</code>
+<p>
+This function constructs the simple Lie algebra of type <var>type</var> and
+of rank <var>n</var> over the field <var>F</var>.
+<p>
+<var>type</var> must be one of A, B, C, D, E, F, G,
+H, K, S, W. For the types A to G, <var>n</var> must be a positive integer.
+The last four types only exist over fields of characteristic <i>p</i> &gt; 0.
+If the type is H, then <var>n</var> must be a list of positive integers of 
+even length.
+If the type is K, then <var>n</var> must be a list of positive integers of odd 
+length.
+For the other types, S and W, <var>n</var> must be a list of positive integers
+of any length. In some cases the Lie algebra returned by this function
+is not simple. Examples are the Lie algebras of type <i>A</i><sub><i>n</i></sub> over a field
+of characteristic <i>p</i> &gt; 0 where <i>p</i> divides <i>n</i>+1, and the Lie algebras
+of type <i>K</i><sub><i>n</i></sub> where <i>n</i> is a list of length 1.
+<p>
+If <var>type</var> is one of A, B, C, D, E, F, G, and <var>F</var> is a field of characteristic
+zero, then the basis of the returned Lie algebra is a Chevalley basis. 
+<p>
+<pre>
+gap&gt; SimpleLieAlgebra( "E", 6, Rationals );
+&lt;Lie algebra of dimension 78 over Rationals&gt;
+gap&gt; SimpleLieAlgebra( "A", 6, GF(5) );
+&lt;Lie algebra of dimension 48 over GF(5)&gt;
+gap&gt; SimpleLieAlgebra( "W", [1,2], GF(5) );
+&lt;Lie algebra of dimension 250 over GF(5)&gt;
+gap&gt; SimpleLieAlgebra( "H", [1,2], GF(5) );
+&lt;Lie algebra of dimension 123 over GF(5)&gt;
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">61.3 Distinguished Subalgebras</a></h2>
+<p><p>
+Here we describe functions that calculate well-known subalgebras
+and ideals of a Lie algebra (such as the centre, the centralizer of a
+subalgebra, etc.).
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>LieCentre( </code><var>L</var><code> ) A</code>
+<a name = "SSEC003.1"></a>
+<li><code>LieCenter( </code><var>L</var><code> ) A</code>
+<p>
+The <strong>Lie</strong> centre of the Lie algebra <var>L</var> is the kernel of the adjoint
+mapping, that is, the set { <i>a</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#8704;</font><i>x</i> <font face="symbol">&#8712;</font> <i>L</i>:<i>a</i> <i>x</i> = 0 }.
+<p>
+In characteristic 2 this may differ from the usual centre (that is
+the set of all <i>a</i> <font face="symbol">&#8712;</font> <i>L</i> such that <i>ax</i>=<i>xa</i> for all <i>x</i> <font face="symbol">&#8712;</font> <i>L</i>). 
+Therefore, this operation is named <code>LieCentre</code> and not <code>Centre</code>. 
+<p>
+<pre>
+gap&gt; L:= FullMatrixLieAlgebra( GF(3), 3 );
+&lt;Lie algebra over GF(3), with 5 generators&gt;
+gap&gt; LieCentre( L );
+&lt;two-sided ideal in &lt;Lie algebra of dimension 9 over GF(3)&gt;, (dimension 1)&gt;
+</pre>
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>LieCentralizer( </code><var>L</var><code>, </code><var>S</var><code> ) O</code>
+<p>
+is the annihilator of <var>S</var> in the Lie algebra <var>L</var>, that is, the set
+{ <i>a</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#8704;</font><i>s</i> <font face="symbol">&#8712;</font> <i>S</i>:<i>a</i>*<i>s</i> = 0}.
+Here <var>S</var> may be a subspace or a subalgebra of <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+gap&gt; b:= BasisVectors( Basis( L ) );;
+gap&gt; LieCentralizer( L, Subalgebra( L, [ b[1], b[2] ] ) );
+&lt;Lie algebra of dimension 1 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>LieNormalizer( </code><var>L</var><code>, </code><var>U</var><code> ) O</code>
+<p>
+is the normalizer of the subspace <var>U</var> in the Lie algebra <var>L</var>,
+that is, the set <i>N</i><sub><i>L</i></sub>(<i>U</i>) = { <i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>; [<i>x</i>,<i>U</i>]  <font face="symbol">&#8834;</font> <i>U</i> }.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+gap&gt; b:= BasisVectors( Basis( L ) );;
+gap&gt; LieNormalizer( L, Subalgebra( L, [ b[1], b[2] ] ) );
+&lt;Lie algebra of dimension 8 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>LieDerivedSubalgebra( </code><var>L</var><code> ) A</code>
+<p>
+is the (Lie) derived subalgebra of the Lie algebra <var>L</var>.  
+<p>
+<pre>
+gap&gt;  L:= FullMatrixLieAlgebra( GF( 3 ), 3 );
+&lt;Lie algebra over GF(3), with 5 generators&gt;
+gap&gt; LieDerivedSubalgebra( L );
+&lt;Lie algebra of dimension 8 over GF(3)&gt;
+</pre>
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>LieNilRadical( </code><var>L</var><code> ) A</code>
+<p>
+This function calculates the (Lie) nil radical of the Lie algebra
+<var>L</var>.
+<p>
+In the following two examples we temporarily increase the line length limit
+from its default value 80 to 81 in order to make the long output expressions
+fit each into one line.
+<p>
+<pre>
+gap&gt; mats:= [ [[1,0],[0,0]], [[0,1],[0,0]], [[0,0],[0,1]] ];;
+gap&gt; L:= LieAlgebra( Rationals, mats );;
+gap&gt; SizeScreen([ 81, ]);;
+gap&gt; LieNilRadical( L );
+&lt;two-sided ideal in &lt;Lie algebra of dimension 3 over Rationals&gt;, (dimension 2)&gt;
+gap&gt; SizeScreen([ 80, ]);;
+</pre>
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>LieSolvableRadical( </code><var>L</var><code> ) A</code>
+<p>
+Returns the (Lie) solvable radical of the Lie algebra <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= FullMatrixLieAlgebra( Rationals, 3 );;
+gap&gt; SizeScreen([ 81, ]);;
+gap&gt; LieSolvableRadical( L );
+&lt;two-sided ideal in &lt;Lie algebra of dimension 9 over Rationals&gt;, (dimension 1)&gt;
+gap&gt; SizeScreen([ 80, ]);;
+</pre>
+<p>
+<a name = "SSEC003.7"></a>
+<li><code>CartanSubalgebra( </code><var>L</var><code> ) A</code>
+<p>
+A Cartan subalgebra of a Lie algebra <var>L</var> is defined as a nilpotent
+subalgebra of <var>L</var> equal to its own Lie normalizer in <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; CartanSubalgebra( L );
+&lt;Lie algebra of dimension 2 over Rationals&gt;
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">61.4 Series of Ideals</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>LieDerivedSeries( </code><var>L</var><code> ) A</code>
+<p>
+is the (Lie) derived series of the Lie algebra <var>L</var>.  
+<p>
+<pre>
+gap&gt; mats:= [ [[1,0],[0,0]], [[0,1],[0,0]], [[0,0],[0,1]] ];;
+gap&gt; L:= LieAlgebra( Rationals, mats );;
+gap&gt; LieDerivedSeries( L );
+[ &lt;Lie algebra of dimension 3 over Rationals&gt;, 
+  &lt;Lie algebra of dimension 1 over Rationals&gt;, 
+  &lt;Lie algebra of dimension 0 over Rationals&gt; ]
+</pre>
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>LieLowerCentralSeries( </code><var>L</var><code> ) A</code>
+<p>
+is the (Lie) lower central series of the Lie algebra <var>L</var>.  
+<p>
+<pre>
+gap&gt; mats:= [ [[ 1, 0 ], [ 0, 0 ]], [[0,1],[0,0]], [[0,0],[0,1]] ];;
+gap&gt; L:=LieAlgebra( Rationals, mats );;
+gap&gt; LieLowerCentralSeries( L );
+[ &lt;Lie algebra of dimension 3 over Rationals&gt;, 
+  &lt;Lie algebra of dimension 1 over Rationals&gt; ]
+</pre>
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>LieUpperCentralSeries( </code><var>L</var><code> ) A</code>
+<p>
+is the (Lie) upper central series of the Lie algebra <var>L</var>.
+<p>
+<pre>
+gap&gt; mats:= [ [[ 1, 0 ], [ 0, 0 ]], [[0,1],[0,0]], [[0,0],[0,1]] ];;
+gap&gt; L:=LieAlgebra( Rationals, mats );;
+gap&gt; LieUpperCentralSeries( L );
+[ &lt;two-sided ideal in &lt;Lie algebra of dimension 3 over Rationals&gt;, 
+      (dimension 1)&gt;, &lt;Lie algebra over Rationals, with 0 generators&gt; ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">61.5 Properties of a Lie Algebra</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>IsLieAbelian( </code><var>L</var><code> ) P</code>
+<p>
+is <code>true</code> if <var>L</var> is a Lie algebra such that each product of elements in
+<var>L</var> is zero, and <code>false</code> otherwise.
+<p>
+<pre>
+gap&gt;  T:= EmptySCTable( 5, 0, "antisymmetric" );;
+gap&gt;  L:= LieAlgebraByStructureConstants( Rationals, T );
+&lt;Lie algebra of dimension 5 over Rationals&gt;
+gap&gt; IsLieAbelian( L );
+true
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>IsLieNilpotent( </code><var>L</var><code> ) P</code>
+<p>
+A Lie algebra <var>L</var> is defined to be (Lie) <em>nilpotent</em>when its
+(Lie) lower central
+series reaches the trivial subalgebra.
+<p>
+<pre>
+gap&gt; T:= EmptySCTable( 5, 0, "antisymmetric" );;
+gap&gt; L:= LieAlgebraByStructureConstants( Rationals, T );
+&lt;Lie algebra of dimension 5 over Rationals&gt;
+gap&gt; IsLieNilpotent( L );
+true
+</pre>
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>IsLieSolvable( </code><var>L</var><code> ) P</code>
+<p>
+A Lie algebra <var>L</var> is defined to be (Lie) <em>solvable</em>when its
+(Lie) derived series reaches the trivial subalgebra.
+<p>
+<pre>
+gap&gt; T:= EmptySCTable( 5, 0, "antisymmetric" );;
+gap&gt; L:= LieAlgebraByStructureConstants( Rationals, T );
+&lt;Lie algebra of dimension 5 over Rationals&gt;
+gap&gt; IsLieSolvable( L );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">61.6 Direct Sum Decompositions</a></h2>
+<p><p>
+In this section we describe two functions that calculate a direct sum
+decomposition of a Lie algebra; the so-called Levi decomposition
+and the decomposition into a direct sum of ideals. 
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>LeviMalcevDecomposition( </code><var>L</var><code> ) A</code>
+<p>
+A Levi-Malcev subalgebra of the algebra <var>L</var> is a semisimple subalgebra
+complementary to the radical of <var>L</var>. This function returns
+a list with two components. The first component is a Levi-Malcev 
+subalgebra, the second the radical. This function is implemented for 
+associative and Lie algebras. 
+<p>
+<pre>
+gap&gt; L:= FullMatrixLieAlgebra( Rationals, 5 );;
+gap&gt; LeviMalcevDecomposition( L );
+[ &lt;Lie algebra of dimension 24 over Rationals&gt;, 
+  &lt;two-sided ideal in &lt;Lie algebra of dimension 25 over Rationals&gt;, 
+      (dimension 1)&gt; ]
+</pre>
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>DirectSumDecomposition( </code><var>L</var><code> ) A</code>
+<p>
+This function calculates a list of ideals of the algebra <var>L</var> such
+that <var>L</var> is equal to their direct sum. Currently this is only implemented
+for semisimple associative algebras, and Lie algebras (semisimple or not).
+<p>
+<pre>
+gap&gt; L:= FullMatrixLieAlgebra( Rationals, 5 );;
+gap&gt; DirectSumDecomposition( L );
+[ &lt;two-sided ideal in 
+      &lt;two-sided ideal in &lt;Lie algebra of dimension 25 over Rationals&gt;, 
+          (dimension 1)&gt;, (dimension 1)&gt;, 
+  &lt;two-sided ideal in &lt;two-sided ideal in 
+          &lt;Lie algebra of dimension 25 over Rationals&gt;, (dimension 24)&gt;, 
+      (dimension 24)&gt; ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">61.7 Semisimple Lie Algebras and Root Systems</a></h2>
+<p><p>
+This section contains some functions for dealing with
+semisimple Lie algebras and their root systems.
+<p>
+<a name = "SSEC007.1"></a>
+<li><code>SemiSimpleType( </code><var>L</var><code> ) A</code>
+<p>
+Let <var>L</var> be a semisimple Lie algebra, i.e., a direct sum of simple
+Lie algebras. Then <code>SemiSimpleType</code> returns the type of <var>L</var>, i.e.,
+a string containing the types of the simple summands of <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "E", 8, Rationals );;
+gap&gt; b:= BasisVectors( Basis( L ) );;
+gap&gt; K:= LieCentralizer( L, Subalgebra( L, [ b[61]+b[79]+b[101]+b[102] ] ) );
+&lt;Lie algebra of dimension 102 over Rationals&gt;
+gap&gt; lev:= LeviMalcevDecomposition(K);;
+gap&gt; SemiSimpleType( lev[1] );
+"B3 A1"
+</pre>
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>ChevalleyBasis( </code><var>L</var><code> ) A</code>
+<p>
+Here <var>L</var> must be a semisimple Lie algebra with a split Cartan subalgebra.
+Then <code>ChevalleyBasis( </code><var>L</var><code> )</code> returns a list consisting of three sublists.
+Together these sublists form a Chevalley basis of <var>L</var>. The first
+list contains the positive root vectors, the second list contains the
+negative root vectors, and the third list the Cartan elements of the
+Chevalley basis.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+gap&gt; ChevalleyBasis( L );
+[ [ v.1, v.2, v.3, v.4, v.5, v.6 ], [ v.7, v.8, v.9, v.10, v.11, v.12 ], 
+  [ v.13, v.14 ] ]
+</pre>
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>IsRootSystem( </code><var>obj</var><code> ) C</code>
+<p>
+Category of root systems.
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>IsRootSystemFromLieAlgebra( </code><var>obj</var><code> ) C</code>
+<p>
+Category of root systems that come from (semisimple) Lie algebras.
+They often have special attributes such as <code>UnderlyingLieAlgebra</code>,
+<code>PositiveRootVectors</code>, <code>NegativeRootVectors</code>, <code>CanonicalGenerators</code>.
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>RootSystem( </code><var>L</var><code> ) A</code>
+<p>
+<code>RootSystem</code> calculates the root system of the semisimple Lie algebra
+<var>L</var> with a split Cartan subalgebra.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+gap&gt; R:= RootSystem( L );
+&lt;root system of rank 2&gt;
+gap&gt; IsRootSystem( R );
+true
+gap&gt; IsRootSystemFromLieAlgebra( R );
+true
+</pre>
+<p>
+<a name = "SSEC007.6"></a>
+<li><code>UnderlyingLieAlgebra( </code><var>R</var><code> ) A</code>
+<p>
+Here <var>R</var> is a root system coming from a semisimple Lie algebra <var>L</var>.
+This function returns <var>L</var>.
+<p>
+<a name = "SSEC007.7"></a>
+<li><code>PositiveRoots( </code><var>R</var><code> ) A</code>
+<p>
+The list of positive roots of the root system <var>R</var>.
+<p>
+<a name = "SSEC007.8"></a>
+<li><code>NegativeRoots( </code><var>R</var><code> ) A</code>
+<p>
+The list of negative roots of the root system <var>R</var>.
+<p>
+<a name = "SSEC007.9"></a>
+<li><code>PositiveRootVectors( </code><var>R</var><code> ) A</code>
+<p>
+A list of positive root vectors of the root system <var>R</var> that comes
+from a Lie algebra <var>L</var>. This is a list in bijection with the list
+<code>PositiveRoots( </code><var>L</var><code> )</code>. The root vector is a non-zero element of the
+root space (in <var>L</var>) of the corresponding root.
+<p>
+<a name = "SSEC007.10"></a>
+<li><code>NegativeRootVectors( </code><var>R</var><code> ) A</code>
+<p>
+A list of negative root vectors of the root system <var>R</var> that comes
+from a Lie algebra <var>L</var>. This is a list in bijection with the list
+<code>NegativeRoots( </code><var>L</var><code> )</code>. The root vector is a non-zero element of the
+root space (in <var>L</var>) of the corresponding root.
+<p>
+<a name = "SSEC007.11"></a>
+<li><code>SimpleSystem( </code><var>R</var><code> ) A</code>
+<p>
+A list of simple roots of the root system <var>R</var>.
+<p>
+<a name = "SSEC007.12"></a>
+<li><code>CartanMatrix( </code><var>R</var><code> ) A</code>
+<p>
+The Cartan matrix of the root system <var>R</var>, relative to the simple 
+roots in <code>SimpleSystem( </code><var>R</var><code> )</code>.
+<p>
+<a name = "SSEC007.13"></a>
+<li><code>BilinearFormMat( </code><var>R</var><code> ) A</code>
+<p>
+The matrix of the bilinear form of the root system <var>R</var>. If we denote this
+matrix by <i>B</i>, then we have <i>B</i>(<i>i</i>,<i>j</i>) = (<font face="symbol">&#945;</font><sub><i>i</i></sub>,<font face="symbol">&#945;</font><sub><i>j</i></sub>), where
+the <font face="symbol">&#945;</font><sub><i>i</i></sub> are the simple roots of <var>R</var>.
+<p>
+<a name = "SSEC007.14"></a>
+<li><code>CanonicalGenerators( </code><var>R</var><code> ) A</code>
+<p>
+Here <var>R</var> must be a root system coming from a semisimple Lie algebra <var>L</var>.
+This function returns 3<i>l</i> generators of <var>L</var>, <i>x</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>x</i><sub><i>l</i></sub>,<i>y</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>y</i><sub><i>l</i></sub>,<i>h</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>h</i><sub><i>l</i></sub>, where <i>x</i><sub><i>i</i></sub> lies in the root space 
+corresponding to the <i>i</i>-th simple root of the root system of <var>L</var>,
+<i>y</i><sub><i>i</i></sub> lies in the root space corresponding to <font face="symbol">&#8722;</font> the <i>i</i>-th simple root,
+and the <i>h</i><sub><i>i</i></sub> are elements of the Cartan subalgebra. These elements
+satisfy the relations <i>h</i><sub><i>i</i></sub>*<i>h</i><sub><i>j</i></sub>=0, <i>x</i><sub><i>i</i></sub>*<i>y</i><sub><i>j</i></sub>=<font face="symbol">&#948;</font><sub><i>ij</i></sub><i>h</i><sub><i>i</i></sub>,
+<i>h</i><sub><i>j</i></sub>*<i>x</i><sub><i>i</i></sub> = <i>c</i><sub><i>ij</i></sub> <i>x</i><sub><i>i</i></sub>,  <i>h</i><sub><i>j</i></sub>*<i>y</i><sub><i>i</i></sub> = <font face="symbol">&#8722;</font><i>c</i><sub><i>ij</i></sub> <i>y</i><sub><i>i</i></sub>, where <i>c</i><sub><i>ij</i></sub>
+is the entry of the Cartan matrix on position <i>ij</i>.
+<p>
+Also if <i>a</i> is a root of the root system <var>R</var> (so <i>a</i> is a list of 
+numbers), then we have the relation <i>h</i><sub><i>i</i></sub>*<i>x</i> = <i>a</i>[<i>i</i>] <i>x</i>, where <i>x</i> is
+a root vector corresponding to <i>a</i>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; R:= RootSystem( L );;
+gap&gt; UnderlyingLieAlgebra( R );
+&lt;Lie algebra of dimension 14 over Rationals&gt;
+gap&gt; PositiveRoots( R );
+[ [ 2, -1 ], [ -3, 2 ], [ -1, 1 ], [ 1, 0 ], [ 3, -1 ], [ 0, 1 ] ]
+gap&gt; x:= PositiveRootVectors( R );
+[ v.1, v.2, v.3, v.4, v.5, v.6 ]
+gap&gt; g:=CanonicalGenerators( R );
+[ [ v.1, v.2 ], [ v.7, v.8 ], [ v.13, v.14 ] ]
+gap&gt; g[3][1]*x[1];
+(2)*v.1
+gap&gt; g[3][2]*x[1];
+(-1)*v.1
+gap&gt; # i.e., x[1] is the root vector belonging to the root [ 2, -1 ]
+gap&gt; BilinearFormMat( R );
+[ [ 1/12, -1/8 ], [ -1/8, 1/4 ] ]
+</pre>
+<p>
+The next few sections deal with the Weyl group of a root system. 
+A Weyl group is represented by its action on the weight lattice. 
+A <strong>weight</strong> is by definition a linear function <font face="symbol">&#955;</font>: <i>H</i><font face="symbol">&#8594;</font> <i>F</i>
+(where <i>F</i> is the ground field), such that the values <font face="symbol">&#955;</font>(<i>h</i><sub><i>i</i></sub>) are
+all integers (where the <i>h</i><sub><i>i</i></sub> are the Cartan elements of the 
+<code>CanonicalGenerators</code>). On the other hand each weight is determined by
+these values. Therefore we represent a weight by a vector of integers;
+the <i>i</i>-th entry of this vector is the value <font face="symbol">&#955;</font>(<i>h</i><sub><i>i</i></sub>).
+Now the elements of the Weyl group are represented by matrices, and
+if <code>g</code> is an element of a Weyl group and <code>w</code> a weight, then <code>w*g</code>
+gives the result of applying <code>g</code> to <code>w</code>.  Another way of applying the
+<i>i</i>-th simple reflection to a weight is by using the function
+<code>ApplySimpleReflection</code> (see below).
+<p>
+A Weyl group is generated by the simple reflections. So 
+<code>GeneratorsOfGroup( W )</code> for a Weyl group <code>W</code> gives a list of matrices
+and the <i>i</i>-th entry of this list is the simple reflection corresponding
+to the <i>i</i>-th simple root of the corresponding root system.
+<p>
+<a name = "SSEC007.15"></a>
+<li><code>IsWeylGroup( </code><var>G</var><code> ) P</code>
+<p>
+A Weyl group is a group generated by reflections, with the attribute
+<code>SparseCartanMatrix</code> set.
+<p>
+<a name = "SSEC007.16"></a>
+<li><code>SparseCartanMatrix( </code><var>W</var><code> ) A</code>
+<p>
+This is a sparse form of the Cartan matrix of the
+corresponding root system. If we denote the Cartan matrix by <code>C</code>,
+then the sparse Cartan matrix of <var>W</var> is a list (of length equal to the
+length of the Cartan matrix), where the <code>i</code>-th entry is a list
+consisting of elements <code>[ j, C[i][j] ]</code>, where <code>j</code> is such that
+<code>C[i][j]</code> is non-zero.
+<p>
+<a name = "SSEC007.17"></a>
+<li><code>WeylGroup( </code><var>R</var><code> ) A</code>
+<p>
+The Weyl group of the root system <var>R</var>. It is generated by the simple
+reflections. A simple reflection is represented by a matrix, and the
+result of letting a simple reflection <code>m</code> act on a weight <code>w</code> is obtained
+by <code>w*m</code>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "F", 4, Rationals );;
+gap&gt; R:= RootSystem( L );;
+gap&gt; W:= WeylGroup( R );
+&lt;matrix group with 4 generators&gt;
+gap&gt; IsWeylGroup( W );
+true
+gap&gt; SparseCartanMatrix( W );
+[ [ [ 1, 2 ], [ 3, -1 ] ], [ [ 2, 2 ], [ 4, -1 ] ], 
+  [ [ 1, -1 ], [ 3, 2 ], [ 4, -1 ] ], [ [ 2, -1 ], [ 3, -2 ], [ 4, 2 ] ] ]
+gap&gt; g:= GeneratorsOfGroup( W );;
+gap&gt; [ 1, 1, 1, 1 ]*g[2];
+[ 1, -1, 1, 2 ]
+</pre>
+<p>
+<a name = "SSEC007.18"></a>
+<li><code>ApplySimpleReflection( </code><var>SC</var><code>, </code><var>i</var><code>, </code><var>wt</var><code> ) O</code>
+<p>
+Here <var>SC</var> is the sparse Cartan matrix of a Weyl group. This
+function applies the <var>i</var>-th simple reflection to the weight
+<var>wt</var>, thus changing <var>wt</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "F", 4, Rationals );;
+gap&gt; W:= WeylGroup( RootSystem( L ) );;
+gap&gt; C:= SparseCartanMatrix( W );;
+gap&gt; w:= [ 1, 1, 1, 1 ];;
+gap&gt; ApplySimpleReflection( C, 2, w );
+gap&gt; w;
+[ 1, -1, 1, 2 ]
+</pre>
+<p>
+<a name = "SSEC007.19"></a>
+<li><code>LongestWeylWordPerm( </code><var>W</var><code> ) A</code>
+<p>
+Let <i>g</i><sub>0</sub> be the longest element in the Weyl group <var>W</var>, and let
+{<font face="symbol">&#945;</font><sub>1</sub>,<font face="symbol">&#8230;</font>, <font face="symbol">&#945;</font><sub><i>l</i></sub>} be a simple system of the corresponding
+root system. Then <i>g</i><sub>0</sub> maps <font face="symbol">&#945;</font><sub><i>i</i></sub> to <font face="symbol">&#8722;</font><font face="symbol">&#945;</font><sub><font face="symbol">&#963;</font>(<i>i</i>)</sub>, where
+<font face="symbol">&#963;</font> is a permutation of (1,<font face="symbol">&#8230;</font>,<i>l</i>). This function returns
+that permutation.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "E", 6, Rationals );;
+gap&gt; W:= WeylGroup( RootSystem( L ) );;
+gap&gt; LongestWeylWordPerm( W );
+(1,6)(3,5)
+</pre>
+<p>
+<a name = "SSEC007.20"></a>
+<li><code>ConjugateDominantWeight( </code><var>W</var><code>, </code><var>wt</var><code> ) O</code>
+<a name = "SSEC007.20"></a>
+<li><code>ConjugateDominantWeightWithWord( </code><var>W</var><code>, </code><var>wt</var><code> ) O</code>
+<p>
+Here <var>W</var> is a Weyl group and <var>wt</var> a weight (i.e., a list of integers).
+This function returns the unique dominant weight conjugate to <var>wt</var>
+under <var>W</var>.
+<p>
+<code>ConjugateDominantWegihtWithWord( </code><var>W</var><code>, </code><var>wt</var><code> )</code> returns a list of two
+elements. The first of these is the dominant weight conjugate do <var>wt</var>.
+The second element is a list of indices of simple reflections that
+have to be applied to <var>wt</var> in order to get the dominant weight conjugate
+to it.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "E", 6, Rationals );;
+gap&gt; W:= WeylGroup( RootSystem( L ) );;
+gap&gt; C:= SparseCartanMatrix( W );;
+gap&gt; w:= [ 1, -1, 2, -2, 3, -3 ];;
+gap&gt; ConjugateDominantWeight( W, w );
+[ 2, 1, 0, 0, 0, 0 ]
+gap&gt; c:= ConjugateDominantWeightWithWord( W, w );
+[ [ 2, 1, 0, 0, 0, 0 ], [ 2, 4, 2, 3, 6, 5, 4, 2, 3, 1 ] ]
+gap&gt; for i in [1..Length(c[2])] do
+&gt; ApplySimpleReflection( C, c[2][i], w );
+&gt; od;
+gap&gt; w;
+[ 2, 1, 0, 0, 0, 0 ]
+</pre>
+<p>
+<a name = "SSEC007.21"></a>
+<li><code>WeylOrbitIterator( </code><var>W</var><code>, </code><var>wt</var><code> ) O</code>
+<p>
+Returns an iterator for the orbit of the weight <var>wt</var> under the
+action of the Weyl group <var>W</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "E", 6, Rationals );;
+gap&gt; W:= WeylGroup( RootSystem( L ) );;
+gap&gt; orb:= WeylOrbitIterator( W, [ 1, 1, 1, 1, 1, 1 ] );
+&lt;iterator&gt;
+gap&gt; NextIterator( orb );
+[ 1, 1, 1, 1, 1, 1 ]
+gap&gt; NextIterator( orb );
+[ -1, -1, -1, -1, -1, -1 ]
+gap&gt; orb:= WeylOrbitIterator( W, [ 1, 1, 1, 1, 1, 1 ] );
+&lt;iterator&gt;
+gap&gt; k:= 0;
+0
+gap&gt; while not IsDoneIterator( orb ) do
+&gt; w:= NextIterator( orb ); k:= k+1;
+&gt; od;
+gap&gt; k;  # this is the size of the Weyl group of E6
+51840
+</pre>
+<p>
+<p>
+<h2><a name="SECT008">61.8 Restricted Lie algebras</a></h2>
+<p><p>
+A Lie algebra <i>L</i> over a field of characteristic <i>p</i> &gt; 0 is called
+restricted if there is a map <i>x</i><font face="symbol">&#8594;</font> <i>x</i><sup><i>p</i></sup> from <i>L</i> into <i>L</i> 
+(called a <i>p</i>-map) such that
+<span class="roman">ad</span> <i>x</i><sup><i>p</i></sup>=(<span class="roman">ad</span> <i>x</i>)<sup><i>p</i></sup>, (<font face="symbol">&#945;</font><i>x</i>)<sup><i>p</i></sup>=<font face="symbol">&#945;</font><sup><i>p</i></sup> <i>x</i><sup><i>p</i></sup> and
+(<i>x</i>+<i>y</i>)<sup><i>p</i></sup>=<i>x</i><sup><i>p</i></sup>+<i>y</i><sup><i>p</i></sup>+<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>p</i><font face="symbol">&#8722;</font>1</sup> <i>s</i><sub><i>i</i></sub>(<i>x</i>,<i>y</i>), where <i>s</i><sub><i>i</i></sub>: <i>L</i>&times;<i>L</i><font face="symbol">&#8594;</font> <i>L</i>
+are certain Lie polynomials in two variables. Using these relations
+we can calculate <i>y</i><sup><i>p</i></sup> for all <i>y</i> <font face="symbol">&#8712;</font> <i>L</i>, once we know <i>x</i><sup><i>p</i></sup> for <i>x</i> in a
+basis of <i>L</i>. Therefore a <i>p</i>-map is represented in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp; by a list 
+containing the images of the basis vectors of a basis <i>B</i> of <i>L</i>. For this
+reason this list is an attribute of the basis <i>B</i>. 
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>IsRestrictedLieAlgebra( </code><var>L</var><code> ) P</code>
+<p>
+Test whether <var>L</var> is restricted.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "W", [2], GF(5));
+&lt;Lie algebra of dimension 25 over GF(5)&gt;
+gap&gt; IsRestrictedLieAlgebra( L );
+false
+gap&gt; L:= SimpleLieAlgebra( "W", [1], GF(5));
+&lt;Lie algebra of dimension 5 over GF(5)&gt;
+gap&gt; IsRestrictedLieAlgebra( L );
+true
+</pre>
+<p>
+<a name = "SSEC008.2"></a>
+<li><code>PthPowerImages( </code><var>B</var><code> ) A</code>
+<p>
+Here <code>B</code> is a basis of a restricted Lie algebra. This function returns
+the list of the images of the basis vectors of <code>B</code> under the <i>p</i>-map.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "W", [1], GF(11) );
+&lt;Lie algebra of dimension 11 over GF(11)&gt;
+gap&gt; B:= Basis( L );
+CanonicalBasis( &lt;Lie algebra of dimension 11 over GF(11)&gt; )
+gap&gt; PthPowerImages( B );
+[ 0*v.1, v.2, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1 ]
+</pre>
+<p>
+<a name = "SSEC008.3"></a>
+<li><code>PthPowerImage( </code><var>B</var><code>, </code><var>x</var><code> ) O</code>
+<p>
+<var>B</var> is a basis of a restricted Lie algebra <i>L</i>.
+This function calculates for an element <var>x</var> of <i>L</i> the image of <var>x</var>
+under the <i>p</i>-map.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "W", [1], GF(11) );;
+gap&gt; B:= Basis( L );;
+gap&gt; x:= B[1]+B[11];
+v.1+v.11
+gap&gt; PthPowerImage( B, x );
+v.1+v.11
+</pre>
+<p>
+<a name = "SSEC008.4"></a>
+<li><code>JenningsLieAlgebra( </code><var>G</var><code> ) A</code>
+<p>
+Let <var>G</var> be a nontrivial <i>p</i>-group,
+and let <i>G</i>  = <i>G</i><sub>1</sub> <font face="symbol">&#8835;</font> <i>G</i><sub>2</sub> <font face="symbol">&#8835;</font> <font face="symbol">&#8230;</font> <font face="symbol">&#8835;</font> <i>G</i><sub><i>m</i></sub>=1
+be its Jennings series (see&nbsp;<a href="CHAP037.htm#SSEC016.14">JenningsSeries</a>).
+Then the quotients <i>G</i><sub><i>i</i></sub>/<i>G</i><sub><i>i</i>+1</sub> are elementary abelian <i>p</i>-groups,
+i.e., they can be viewed as vector spaces over <tt>GF</tt>(<i>p</i>).
+Now the Jennings-Lie algebra <i>L</i> of <var>G</var> is the direct sum of those vector
+spaces. The Lie bracket on <i>L</i> is induced by the commutator in <var>G</var>. 
+Furthermore, the map <i>g</i><font face="symbol">&#8594;</font> <i>g</i><sup><i>p</i></sup> in <var>G</var> induces a <i>p</i>-map in <i>L</i>
+making <i>L</i> into a restricted Lie algebra. In the canonical basis of <i>L</i>
+this <i>p</i>-map is added as an attribute. A Lie algebra created by
+<code>JenningsLieAlgebra</code> is naturally graded. The attribute
+<code>Grading</code> is set.
+<p>
+<a name = "SSEC008.5"></a>
+<li><code>PCentralLieAlgebra( </code><var>G</var><code> ) A</code>
+<p>
+Here <var>G</var> is a nontrivial <i>p</i>-group. <code>PCentralLieAlgebra( </code><var>G</var><code> )</code>
+does the same as <code>JenningsLieAlgebra( </code><var>G</var><code> )</code> except that the
+<i>p</i>-central series is used instead of the Jennings series
+(see&nbsp;<a href="CHAP037.htm#SSEC016.13">PCentralSeries</a>). This function also returns a graded
+Lie algebra. However, it is not necessarily restricted.
+<p>
+<pre>
+gap&gt; G:= SmallGroup( 3^6, 123 );
+&lt;pc group of size 729 with 6 generators&gt;
+gap&gt; L:= JenningsLieAlgebra( G );
+&lt;Lie algebra of dimension 6 over GF(3)&gt;
+gap&gt; HasPthPowerImages( Basis( L ) );
+true
+gap&gt; PthPowerImages( Basis( L ) );
+[ v.6, 0*v.1, 0*v.1, 0*v.1, 0*v.1, 0*v.1 ]
+gap&gt; g:= Grading( L );
+rec( min_degree := 1, max_degree := 3, source := Integers, 
+  hom_components := function( d ) ... end )
+gap&gt; List( [1,2,3], g.hom_components );
+[ &lt;vector space over GF(3), with 3 generators&gt;, 
+  &lt;vector space over GF(3), with 2 generators&gt;, 
+  &lt;vector space over GF(3), with 1 generators&gt; ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">61.9 The Adjoint Representation</a></h2>
+<p><p>
+In this section we show functions for calculating with the adjoint
+representation of a Lie algebra (and the corresponding trace form,
+called the Killing form) (see also <a href="../ref/CHAP060.htm#SSEC008.5">adjointbasis</a> and 
+<a href="../ref/CHAP060.htm#SSEC008.6">indicesofadjointbasis</a>).
+<p>
+<a name = "SSEC009.1"></a>
+<li><code>AdjointMatrix( </code><var>B</var><code>, </code><var>x</var><code> ) O</code>
+<p>
+is the matrix of the adjoint representation of the element <var>x</var> w.r.t.
+the basis <var>B</var>. The adjoint map is the left multiplication by <var>x</var>.
+The <i>i</i>-th column of the resulting matrix represents the image of the
+the <i>i</i>-th basis vector of <var>B</var> under left multiplication by <var>x</var>. 
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; AdjointMatrix( Basis( L ), Basis( L )[1] );
+[ [ 0, 0, -2 ], [ 0, 0, 0 ], [ 0, 1, 0 ] ]
+</pre>
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>AdjointAssociativeAlgebra( </code><var>L</var><code>, </code><var>K</var><code> ) A</code>
+<p>
+is the associative matrix algebra (with 1) generated by the 
+matrices of the adjoint representation of the subalgebra <var>K</var> on the Lie 
+algebra <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; AdjointAssociativeAlgebra( L, L );
+&lt;algebra of dimension 9 over Rationals&gt;
+gap&gt; AdjointAssociativeAlgebra( L, CartanSubalgebra( L ) );
+&lt;algebra of dimension 3 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC009.3"></a>
+<li><code>KillingMatrix( </code><var>B</var><code> ) A</code>
+<p>
+is the matrix of the Killing form <font face="symbol">&#954;</font> with respect to the basis <var>B</var>,
+i.e., the matrix (<font face="symbol">&#954;</font>(<i>b</i><sub><i>i</i></sub>,<i>b</i><sub><i>j</i></sub>)) where <i>b</i><sub>1</sub>,<i>b</i><sub>2</sub><font face="symbol">&#8230;</font> are the
+basis vectors of <var>B</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; KillingMatrix( Basis( L ) );
+[ [ 0, 4, 0 ], [ 4, 0, 0 ], [ 0, 0, 8 ] ]
+</pre>
+<p>
+<a name = "SSEC009.4"></a>
+<li><code>KappaPerp( </code><var>L</var><code>, </code><var>U</var><code> ) O</code>
+<p>
+is the orthogonal complement of the subspace <var>U</var> of the Lie algebra <var>L</var>
+with respect to the Killing form <font face="symbol">&#954;</font>, that is,
+the set <i>U</i><sup><font face="symbol">&#8869;</font></sup> = { <i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#954;</font>(<i>x</i>,<i>y</i>)=0  <span class="roman">for</span> <span class="roman">all</span>  <i>y</i> <font face="symbol">&#8712;</font> <i>L</i> }.
+<p>
+<i>U</i><sup><font face="symbol">&#8869;</font></sup> is a subspace of <var>L</var>, and if <var>U</var> is an ideal of <var>L</var> then
+<i>U</i><sup><font face="symbol">&#8869;</font></sup> is a subalgebra of <var>L</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; b:= BasisVectors( Basis( L ) );;
+gap&gt; V:= VectorSpace( Rationals, [b[1],b[2]] );;
+gap&gt; KappaPerp( L, V );
+&lt;vector space of dimension 1 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC009.5"></a>
+<li><code>IsNilpotentElement( </code><var>L</var><code>, </code><var>x</var><code> ) O</code>
+<p>
+<var>x</var> is nilpotent in <var>L</var> if its adjoint matrix is a nilpotent matrix.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; IsNilpotentElement( L, Basis( L )[1] );
+true
+</pre>
+<p>
+<a name = "SSEC009.6"></a>
+<li><code>NonNilpotentElement( </code><var>L</var><code> ) A</code>
+<p>
+A non-nilpotent element of a Lie algebra <var>L</var> is an element <i>x</i> such that
+<i>ad</i> <i>x</i> is not nilpotent.
+If <var>L</var> is not nilpotent, then by Engel's theorem non nilpotent elements
+exist in <var>L</var>.
+In this case this function returns a non nilpotent element of <var>L</var>,
+otherwise (if <var>L</var> is nilpotent) <code>fail</code> is returned.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; NonNilpotentElement( L );
+v.13
+gap&gt; IsNilpotentElement( L, last );
+false
+</pre>
+<p>
+<a name = "SSEC009.7"></a>
+<li><code>FindSl2( </code><var>L</var><code>, </code><var>x</var><code> ) O</code>
+<p>
+This function tries to find a subalgebra <i>S</i> of the Lie algebra <var>L</var> with
+<i>S</i> isomorphic to <i>sl</i><sub>2</sub> and such that the nilpotent element <var>x</var> of <var>L</var>
+is contained in <i>S</i>.
+If such an algebra exists then it is returned,
+otherwise <code>fail</code> is returned.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; b:= BasisVectors( Basis( L ) );;
+gap&gt; IsNilpotentElement( L, b[1] );
+true
+gap&gt; FindSl2( L, b[1] );
+&lt;Lie algebra of dimension 3 over Rationals&gt;
+</pre>
+<p>
+<p>
+<h2><a name="SECT010">61.10 Universal Enveloping Algebras</a></h2>
+<p><p>
+<a name = "SSEC010.1"></a>
+<li><code>UniversalEnvelopingAlgebra( </code><var>L</var><code> ) A</code>
+<li><code>UniversalEnvelopingAlgebra( </code><var>L</var><code>, </code><var>B</var><code> ) O</code>
+<p>
+Returns the universal enveloping algebra of the Lie algebra <var>L</var>.
+The elements of this algebra are written on a Poincare-Birkhoff-Witt
+basis.
+<p>
+In the second form <var>B</var> must be a basis of <var>L</var>. If this second argument
+is given, then an isomorphic copy of the universal enveloping algebra
+is returned, generated by the images (in the universal enveloping
+algebra) of the elements of <var>B</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; UL:= UniversalEnvelopingAlgebra( L );
+&lt;algebra-with-one of dimension infinity over Rationals&gt;
+gap&gt; g:= GeneratorsOfAlgebraWithOne( UL );
+[ [(1)*x.1], [(1)*x.2], [(1)*x.3] ]
+gap&gt; g[3]^2*g[2]^2*g[1]^2;
+[(-4)*x.1*x.2*x.3^3+(1)*x.1^2*x.2^2*x.3^2+(2)*x.3^3+(2)*x.3^4]
+</pre>
+<p>
+<p>
+<h2><a name="SECT011">61.11 Finitely Presented Lie Algebras</a></h2>
+<p><p>
+Finitely presented Lie algebras can be constructed from free Lie algebras
+by using the <code>/</code> constructor, i.e., <code>FL/[r1...rk]</code> is the quotient of
+the free Lie algebra <code>FL</code> by the ideal generated by the elements
+<code>r1...rk</code> of <code>FL</code>. If the finitely presented Lie algebra <code>K</code> happens to be
+finite dimensional then an isomorphic structure constants Lie algebra
+can be constructed by <code>NiceAlgebraMonomorphism(K)</code>, which returns a surjective
+homomorphism. The structure constants Lie algebra can then be accessed by 
+calling <code>Range</code> for this map. Also limited computations with elements of the 
+finitely presented Lie algebra are possible.
+<p>
+<pre>
+gap&gt; L:= FreeLieAlgebra( Rationals, "s", "t" );
+&lt;Lie algebra over Rationals, with 2 generators&gt;
+gap&gt; gL:= GeneratorsOfAlgebra( L );; s:= gL[1];; t:= gL[2];;
+gap&gt; K:= L/[ s*(s*t), t*(t*(s*t)), s*(t*(s*t))-t*(s*t) ];
+&lt;Lie algebra over Rationals, with 2 generators&gt;
+gap&gt; h:= NiceAlgebraMonomorphism( K );
+[ [(1)*s], [(1)*t] ] -&gt; [ v.1, v.2 ]
+gap&gt; U:= Range( h );
+&lt;Lie algebra of dimension 3 over Rationals&gt;
+gap&gt; IsLieNilpotent( U );
+true
+gap&gt; gK:= GeneratorsOfAlgebra( K );
+[ [(1)*s], [(1)*t] ]
+gap&gt; gK[1]*(gK[2]*gK[1]) = Zero( K );
+true
+</pre>
+<p>
+<a name = "SSEC011.1"></a>
+<li><code>FpLieAlgebraByCartanMatrix( C ) F</code>
+<p>
+Here <var>C</var> must be a Cartan matrix. The function returns the 
+finitely-presented Lie algebra over the field of rational numbers 
+defined by this Cartan matrix. By Serre's theorem, this Lie algebra is a 
+semisimple Lie algebra, and its root system has Cartan matrix <var>C</var>.
+<p>
+<pre>
+gap&gt; C:= [ [ 2, -1 ], [ -3, 2 ] ];;
+gap&gt; K:= FpLieAlgebraByCartanMatrix( C );
+&lt;Lie algebra over Rationals, with 6 generators&gt;
+gap&gt; h:= NiceAlgebraMonomorphism( K );
+[ [(1)*x1], [(1)*x2], [(1)*x3], [(1)*x4], [(1)*x5], [(1)*x6] ] -&gt; 
+[ v.1, v.2, v.3, v.4, v.5, v.6 ]
+gap&gt; SemiSimpleType( Range( h ) );
+"G2"
+</pre>
+<p>
+<a name = "SSEC011.2"></a>
+<li><code>NilpotentQuotientOfFpLieAlgebra( </code><var>FpL</var><code>, </code><var>max</var><code> ) F</code>
+<li><code>NilpotentQuotientOfFpLieAlgebra( </code><var>FpL</var><code>, </code><var>max</var><code>, </code><var>weights</var><code> ) F</code>
+<p>
+Here <var>FpL</var> is a finitely presented Lie algebra. Let <i>K</i> be the
+quotient of <var>FpL</var> by the <var>max</var>+1-th term of its lower central series.
+This function calculates a surjective homomorphism of <var>FpL</var> onto <i>K</i>.
+When called with the third argument <var>weights</var>, the <i>k</i>-th generator of
+<var>FpL</var> gets assigned the <i>k</i>-th element of the list <var>weights</var>. In that
+case a quotient is calculated of <var>FpL</var> by the ideal generated by all 
+elements of weight <var>max</var>+1. If the list <var>weights</var> only consists of
+1's then the two calls are equivalent. The default value of 
+<var>weights</var> is a list (of length equal to the number of generators of
+<var>FpL</var>) consisting of 1's.
+<p>
+If the relators of <var>FpL</var> are homogeneous, then the resulting 
+algebra is naturally graded. 
+<p>
+<pre>
+gap&gt; L:= FreeLieAlgebra( Rationals, "x", "y" );;
+gap&gt; g:= GeneratorsOfAlgebra(L);; x:= g[1]; y:= g[2];
+(1)*x
+(1)*y
+gap&gt; rr:=[((y*x)*x)*x-6*(y*x)*y, 3*((((y*x)*x)*x)*x)*x-20*(((y*x)*x)*x)*y ];
+[ (-1)*(x*(x*(x*y)))+(6)*((x*y)*y), 
+  (-3)*(x*(x*(x*(x*(x*y)))))+(20)*(x*(x*((x*y)*y)))+(-20)*((x*(x*y))*(x*y)) ]
+gap&gt; K:= L/rr;
+&lt;Lie algebra over Rationals, with 2 generators&gt;
+gap&gt; h:=NilpotentQuotientOfFpLieAlgebra(K, 50, [1,2] );
+[ [(1)*x], [(1)*y] ] -&gt; [ v.1, v.2 ]
+gap&gt; L:= Range( h );
+&lt;Lie algebra of dimension 50 over Rationals&gt;
+gap&gt; Grading( L );
+rec( min_degree := 1, max_degree := 50, source := Integers, 
+  hom_components := function( d ) ... end )
+</pre>
+<p>
+<p>
+<h2><a name="SECT012">61.12 Modules over Lie Algebras and Their Cohomology</a></h2>
+<p><p>
+Representations of Lie algebras are dealt with in the same way as 
+representations of ordinary algebras (see <a href="CHAP060.htm#SECT010">Representations of Algebras</a>).
+In this section we mainly deal with modules over general Lie algebras
+and their cohomology. The next section is devoted to modules over
+semisimple Lie algebras.
+<p>
+<a name = "SSEC012.1"></a>
+<li><code>FaithfulModule( </code><var>A</var><code> ) A</code>
+<p>
+returns a faithful finite-dimensional left-module over the algebra <var>A</var>.
+This is only implemented for associative algebras, and for Lie algebras
+of characteristic 0. (It may also work for certain Lie algebras
+of characteristic <i>p</i> &gt; 0.)
+<p>
+<pre>
+gap&gt; T:= EmptySCTable( 3, 0, "antisymmetric" );;
+gap&gt; SetEntrySCTable( T, 1, 2, [ 1, 3 ]);
+gap&gt; L:= LieAlgebraByStructureConstants( Rationals, T );
+&lt;Lie algebra of dimension 3 over Rationals&gt;
+gap&gt; V:= FaithfulModule( L );
+&lt;left-module over &lt;Lie algebra of dimension 3 over Rationals&gt;&gt;
+gap&gt; vv:= BasisVectors( Basis( V ) );
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+gap&gt; x:= Basis( L )[3];
+v.3
+gap&gt; List( vv, v -&gt; x^v );
+[ [ 0, 0, 0 ], [ 1, 0, 0 ], [ 0, 0, 0 ] ]
+</pre>
+<p>
+An <i>s</i>-cochain of a module <i>V</i> over a Lie algebra <i>L</i>, is an <i>s</i>-linear
+map
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>c</i>: <i>L</i>&times;<font face="symbol">&#8230;</font>&times;<i>L</i> <font face="symbol">&#8594;</font> <i>V</i>  <span class="roman">(</span><span class="roman"><i>s</span></i> <span class="roman">factors</span> <span class="roman"><i>L</span></i><span class="roman">)</span> </td></tr></table></td></tr></table>
+that is skew-symmetric (meaning that if any of the arguments are
+interchanged, <i>c</i> changes to <font face="symbol">&#8722;</font><i>c</i>).
+<p>
+Let {<i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>x</i><sub><i>n</i></sub>} be a basis of <i>L</i>. Then any <i>s</i>-cochain is 
+determined by the values <i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ), where
+1 <font face="symbol">&#8804;</font> <i>i</i><sub>1</sub>  &lt;  <i>i</i><sub>2</sub>  &lt;  <font face="symbol">&#8230;</font> &lt;  <i>i</i><sub><i>s</i></sub>  <font face="symbol">&#8804;</font> dim<i>L</i>.
+Now this value again is a linear combination of basis elements of <i>V</i>:
+<i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ) = <font face="symbol">&#8721;</font><font face="symbol">&#955;</font><sup><i>k</i></sup><sub><i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>i</i><sub><i>s</i></sub></sub> <i>v</i><sub><i>k</i></sub>.
+Denote the dimension of <i>V</i> by <i>r</i>.
+Then we represent an <i>s</i>-cocycle by a list of <i>r</i> lists.
+The <i>j</i>-th of those lists consists of entries of the form
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> [ [<i>i</i><sub>1</sub>,<i>i</i><sub>2</sub>,<font face="symbol">&#8230;</font>,<i>i</i><sub><i>s</i></sub>], <font face="symbol">&#955;</font><sup><i>j</i></sup><sub><i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>i</i><sub><i>s</i></sub></sub> ] </td></tr></table></td></tr></table>
+where the coefficient on the second position is non-zero.
+(We only store those entries for which this coefficient is non-zero.)
+It follows that every <i>s</i>-tuple (<i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>i</i><sub><i>s</i></sub>) gives rise to <i>r</i> 
+basis elements.
+<p>
+So the zero cochain is represented by a list of the form
+[ [ ], [ ], <font face="symbol">&#8230;</font>, [ ] ]. Furthermore, if <i>V</i> is, e.g., 
+4-dimensional, then the 2-cochain represented by
+<p>
+<pre>
+[ [ [ [1,2], 2] ], [ ], [ [ [1,2], 1/2 ] ], [ ] ]
+</pre>
+<p>
+maps the pair (<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>) to 2<i>v</i><sub>1</sub>+1/2 <i>v</i><sub>3</sub> (where <i>v</i><sub>1</sub> is the first
+basis element of <i>V</i>, and <i>v</i><sub>3</sub> the third), and all other pairs to zero.
+<p>
+By definition, 0-cochains are constant maps <i>c</i>( <i>x</i> ) = <i>v</i><sub><i>c</i></sub> <font face="symbol">&#8712;</font> <i>V</i> for all
+<i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>. So 0-cochains have a different representation: they are just
+represented by the list [ <i>v</i><sub><i>c</i></sub> ].
+<p>
+Cochains are constructed using the function <code>Cochain</code> (see&nbsp;<a href="CHAP061.htm#SSEC012.3">Cochain</a>),
+if <var>c</var> is a cochain, then its corresponding list is returned by
+<code>ExtRepOfObj( </code><var>c</var><code> )</code>.
+<p>
+<a name = "SSEC012.2"></a>
+<li><code>IsCochain( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC012.2"></a>
+<li><code>IsCochainCollection( </code><var>obj</var><code> ) C</code>
+<p>
+Categories of cochains and of collections of cochains.
+<p>
+<a name = "SSEC012.3"></a>
+<li><code>Cochain( </code><var>V</var><code>, </code><var>s</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+Constructs a <var>s</var>-cochain given by the data in <var>obj</var>, with respect to
+the Lie algebra module <var>V</var>. If <var>s</var> is non-zero, then <var>obj</var> must be
+a list.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; V:= AdjointModule( L );
+&lt;3-dimensional left-module over &lt;Lie algebra of dimension 3 over Rationals&gt;&gt;
+gap&gt; c1:= Cochain( V, 2, [ [ [ [ 1, 3 ], -1 ] ], [ ], [ [ [ 2, 3 ], 1/2 ] ] ]);
+&lt;2-cochain&gt;
+gap&gt; ExtRepOfObj( c1 );
+[ [ [ [ 1, 3 ], -1 ] ], [  ], [ [ [ 2, 3 ], 1/2 ] ] ]
+gap&gt; c2:= Cochain( V, 0, Basis( V )[1] );
+&lt;0-cochain&gt;
+gap&gt; ExtRepOfObj( c2 );
+v.1
+gap&gt; IsCochain( c2 );
+true
+</pre>
+<p>
+<a name = "SSEC012.4"></a>
+<li><code>CochainSpace( </code><var>V</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+Returns the space of all <var>s</var>-cochains with respect to <var>V</var>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; V:= AdjointModule( L );;
+gap&gt; C:=CochainSpace( V, 2 );
+&lt;vector space of dimension 9 over Rationals&gt;
+gap&gt; BasisVectors( Basis( C ) );
+[ &lt;2-cochain&gt;, &lt;2-cochain&gt;, &lt;2-cochain&gt;, &lt;2-cochain&gt;, &lt;2-cochain&gt;, 
+  &lt;2-cochain&gt;, &lt;2-cochain&gt;, &lt;2-cochain&gt;, &lt;2-cochain&gt; ]
+gap&gt; ExtRepOfObj( last[1] );
+[ [ [ [ 1, 2 ], 1 ] ], [  ], [  ] ]
+</pre>
+<p>
+<a name = "SSEC012.5"></a>
+<li><code>ValueCochain( </code><var>c</var><code>, </code><var>y1</var><code>, </code><var>y2</var><code>, ..., </code><var>ys</var><code> ) F</code>
+<p>
+Here <var>c</var> is an <var>s</var>-cochain. This function returns the value of
+<var>c</var> when applied to the <var>s</var> elements <var>y1</var> to <var>ys</var> (that lie in the
+Lie algebra acting on the module corresponding to <var>c</var>). It is also
+possible to call this function with two arguments: first <var>c</var> and then
+the list containing <code></code><var>y1</var><code>,...,</code><var>ys</var><code></code>.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; V:= AdjointModule( L );;
+gap&gt; C:= CochainSpace( V, 2 );;
+gap&gt; c:= Basis( C )[1];
+&lt;2-cochain&gt;
+gap&gt;  ValueCochain( c, Basis(L)[2], Basis(L)[1] );
+(-1)*v.1
+</pre>
+<p>
+<a name = "SSEC012.6"></a>
+<li><code>LieCoboundaryOperator( </code><var>c</var><code> ) V</code>
+<p>
+This is a function that takes an <var>s</var>-cochain, and returns an <var>s+1</var>-cochain.
+The coboundary operator is applied.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
+gap&gt; V:= AdjointModule( L );;
+gap&gt; C:= CochainSpace( V, 2 );;
+gap&gt; c:= Basis( C )[1];;
+gap&gt; c1:= LieCoboundaryOperator( c );
+&lt;3-cochain&gt;
+gap&gt; c2:= LieCoboundaryOperator( c1 );
+&lt;4-cochain&gt;
+</pre>
+<p>
+<a name = "SSEC012.7"></a>
+<li><code>Cocycles( </code><var>V</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+is the space of all <var>s</var>-cocycles with respect to the Lie algebra module
+<var>V</var>. That is the kernel of the coboundary operator when  restricted to
+the space of <var>s</var>-cochains.
+<p>
+<a name = "SSEC012.8"></a>
+<li><code>Coboundaries( </code><var>V</var><code>, </code><var>s</var><code> ) O</code>
+<p>
+is the space of all <var>s</var>-coboundaries with respect to the Lie algebra
+module <var>V</var>. That is the image of the coboundary operator, when applied
+to the space of <var>s-1</var>-cochains. By definition the space of all
+0-coboundaries is zero.
+<p>
+<pre>
+gap&gt; T:= EmptySCTable( 3, 0, "antisymmetric" );;
+gap&gt; SetEntrySCTable( T, 1, 2, [ 1, 3 ] );
+gap&gt; L:= LieAlgebraByStructureConstants( Rationals, T );;
+gap&gt; V:= FaithfulModule( L );
+&lt;left-module over &lt;Lie algebra of dimension 3 over Rationals&gt;&gt;
+gap&gt; Cocycles( V, 2 );
+&lt;vector space of dimension 7 over Rationals&gt;
+gap&gt; Coboundaries( V, 2 );
+&lt;vector space over Rationals, with 9 generators&gt;
+gap&gt; Dimension( last );
+5
+</pre>
+<p>
+<p>
+<h2><a name="SECT013">61.13 Modules over Semisimple Lie Algebras</a></h2>
+<p><p>
+This section contains functions for calculating information on
+representations of semisimple Lie algebras. First we have some functions
+for calculating some combinatorial data (set of dominant weights, 
+the dominant character, the decomposition of a tensor product, the dimension
+of a highest-weight module). Then 
+there is a function for creating an admissible lattice in the universal
+enveloping algebra of a semisimple Lie algebra. Finally we have a function
+for constructing a highest-weight module over a semisimple Lie algebra.
+<p>
+<a name = "SSEC013.1"></a>
+<li><code>DominantWeights( </code><var>R</var><code>, </code><var>maxw</var><code> ) O</code>
+<p>
+Returns a list consisting of two lists. The first of these contains
+the dominant weights (written on the basis of fundamental weights)
+of the irreducible highest-weight module over the Lie algebra with
+root system <var>R</var>. The <i>i</i>-th element of the second list is the
+level of the <i>i</i>-th dominant weight. (Where level is defined as follows.
+For a weight <font face="symbol">&#956;</font> we write <font face="symbol">&#956;</font> = <font face="symbol">&#955;</font><font face="symbol">&#8722;</font><font face="symbol">&#8721;</font><sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub> <font face="symbol">&#945;</font><sub><i>i</i></sub>, where
+the <font face="symbol">&#945;</font><sub><i>i</i></sub> are the simple roots, and <font face="symbol">&#955;</font> the highest weight.
+Then the level of <font face="symbol">&#956;</font> is <font face="symbol">&#8721;</font><sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub>.
+<p>
+<a name = "SSEC013.2"></a>
+<li><code>DominantCharacter( </code><var>L</var><code>, </code><var>maxw</var><code> ) O</code>
+<li><code>DominantCharacter( </code><var>R</var><code>, </code><var>maxw</var><code> ) O</code>
+<p>
+For a highest weight <var>maxw</var> and a semisimple Lie algebra <var>L</var>, this
+returns the dominant weights of the highest-weight module over <var>L</var>,
+with highest weight <var>maxw</var>. The output is a list of two lists, the
+first list contains the dominant weights; the second list contains
+their multiplicities.
+<p>
+The first argument can also be a root system, in which case 
+the dominant character of the highest-weight module over the
+corresponding semisimple Lie algebra is returned. 
+<p>
+<a name = "SSEC013.3"></a>
+<li><code>DecomposeTensorProduct( </code><var>L</var><code>, </code><var>w1</var><code>, </code><var>w2</var><code> ) O</code>
+<p>
+Here <var>L</var> is a semisimple Lie algebra and <var>w1</var>, <var>w2</var> are dominant
+weights. Let <i>V</i><sub><i>i</i></sub> be the irreducible highest-weight module over <var>L</var>
+with highest weight <i>w</i><sub><i>i</i></sub> for <i>i</i>=1,2. Let <i>W</i>=<i>V</i><sub>1</sub><font face="symbol">&#8855;</font><i>V</i><sub>2</sub>. Then in
+general <i>W</i> is a reducible <var>L</var>-module. Now this function
+returns a list of two lists. The first of these is the list of highest
+weights of the irreducible modules occurring in the decomposition of
+<i>W</i> as a direct sum of irreducible modules. The second list contains
+the multiplicities of these weights (i.e., the number of copies of
+the irreducible module with the corresponding highest weight that occur
+in <i>W</i>). The algorithm uses Klimyk's formula (see&nbsp;<a href="biblio.htm#Klimyk68"><cite>Klimyk68</cite></a> or
+<a href="biblio.htm#Klimyk66"><cite>Klimyk66</cite></a> for the original Russian version).
+<p>
+<a name = "SSEC013.4"></a>
+<li><code>DimensionOfHighestWeightModule( </code><var>L</var><code>, </code><var>w</var><code> ) O</code>
+<p>
+Here <var>L</var> is a semisimple Lie algebra, and <var>w</var> a dominant weight.
+This function returns the dimension of the highest-weight module
+over <var>L</var> with highest weight <var>w</var>. The algorithm
+uses Weyl's dimension formula.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "F", 4, Rationals );;
+gap&gt; R:= RootSystem( L );;
+gap&gt; DominantWeights( R, [ 1, 1, 0, 0 ] );
+[ [ [ 1, 1, 0, 0 ], [ 2, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ], 
+      [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ], [ 0, 3, 4, 8, 11, 19 ] ]
+gap&gt; DominantCharacter( L, [ 1, 1, 0, 0 ] );
+[ [ [ 1, 1, 0, 0 ], [ 2, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ], 
+      [ 1, 0, 0, 0 ], [ 0, 0, 0, 0 ] ], [ 1, 1, 4, 6, 14, 21 ] ]
+gap&gt; DecomposeTensorProduct( L, [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ] );
+[ [ [ 1, 0, 1, 0 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 1, 0, 0 ], 
+      [ 2, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 1, 1, 0, 0 ] ], 
+  [ 1, 1, 1, 1, 1, 1, 1 ] ]
+gap&gt; DimensionOfHighestWeightModule( L, [ 1, 2, 3, 4 ] );
+79316832731136
+</pre>
+<p>
+Let <i>L</i> be a semisimple Lie algebra over a field of characteristic 0,
+and let <i>R</i> be its root system. For a positive root <font face="symbol">&#945;</font> we let
+<i>x</i><sub><font face="symbol">&#945;</font></sub> and <i>y</i><sub><font face="symbol">&#945;</font></sub> be positive and negative root vectors
+respectively, both from a fixed Chevalley basis of <i>L</i>. Furthermore,
+<i>h</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>h</i><sub><i>l</i></sub> are the Cartan elements from the same Chevalley
+basis. Also we set
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center">&nbsp;<i>x</i><sub><font face="symbol">&#945;</font></sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center">&nbsp;<i>y</i><sub><font face="symbol">&#945;</font></sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+Furthermore, let <font face="symbol">&#945;</font><sub>1</sub>,<font face="symbol">&#8230;</font>, <font face="symbol">&#945;</font><sub><i>s</i></sub> denote the positive roots
+of <i>R</i>. For multi-indices <i>N</i>=(<i>n</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>n</i><sub><i>s</i></sub>), <i>M</i>=(<i>m</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>m</i><sub><i>s</i></sub>)
+and <i>K</i>=(<i>k</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>k</i><sub><i>s</i></sub>) (where <i>n</i><sub><i>i</i></sub>,<i>m</i><sub><i>i</i></sub>,<i>k</i><sub><i>i</i></sub> <font face="symbol">&#8805;</font> 0) set
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>x</i><sup><i>N</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>x</i><sub><font face="symbol">&#945;</font><sub>1</sub></sub><sup>(<i>n</i><sub>1</sub>)</sup><font face="symbol">&#8230;</font><i>x</i><sub><font face="symbol">&#945;</font><sub><i>s</i></sub></sub><sup>(<i>n</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>y</i><sup><i>M</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>y</i><sub><font face="symbol">&#945;</font><sub>1</sub></sub><sup>(<i>m</i><sub>1</sub>)</sup><font face="symbol">&#8230;</font><i>y</i><sub><font face="symbol">&#945;</font><sub><i>s</i></sub></sub><sup>(<i>m</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>h</i><sup><i>K</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub>1</sub><br /><i>k</i><sub>1</sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"><font face="symbol">&#8230;</font></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>l</i></sub><br /><i>k</i><sub><i>l</i></sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table></td><td nowrap="nowrap"> </td></tr></table></td></tr></table>
+Then by a theorem of Kostant, the <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> and
+<i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> generate a subring of the universal enveloping algebra
+<i>U</i>(<i>L</i>) spanned (as a free <i>Z</i>-module) by the elements
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>y</i><sup><i>M</i></sup><i>h</i><sup><i>K</i></sup><i>x</i><sup><i>N</i></sup> </td></tr></table></td></tr></table>
+(see, e.g., <a href="biblio.htm#Hum72"><cite>Hum72</cite></a> or <a href="biblio.htm#Hum78"><cite>Hum78</cite></a>, Section 26)
+So by the Poincare-Birkhoff-Witt theorem
+this subring is a lattice in <i>U</i>(<i>L</i>). Furthermore, this lattice is
+invariant under the <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> and <i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup>.
+Therefore, it is called an admissible lattice in <i>U</i>(<i>L</i>).
+<p>
+The next functions enable us to construct the generators of such an
+admissible lattice.
+<p>
+<a name = "SSEC013.5"></a>
+<li><code>IsUEALatticeElement( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC013.5"></a>
+<li><code>IsUEALatticeElementCollection( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC013.5"></a>
+<li><code>IsUEALatticeElementFamily( </code><var>fam</var><code> ) C</code>
+<p>
+is the category of elements of an admissible lattice in the universal
+enveloping algebra of a semisimple Lie algebra <code>L</code>.
+<p>
+<a name = "SSEC013.6"></a>
+<li><code>LatticeGeneratorsInUEA( </code><var>L</var><code> ) A</code>
+<p>
+Here <var>L</var> must be a semisimple Lie algebra of characteristic 0.
+This function returns a list of generators of an admissible lattice
+in the universal enveloping algebra of <var>L</var>, relative to
+the Chevalley basis contained in <code>ChevalleyBasis( </code><var>L</var><code> )</code>.
+First are listed the negative root vectors (denoted by <i>y</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>y</i><sub><i>s</i></sub>),
+then the positive root vectors (denoted by <i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>s</i></sub>). At the
+end of the list there are the Cartan elements. They are printed as
+<code>( hi/1 )</code>, which means
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br />1<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+In general the printed form <code>( hi/ k )</code> means 
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<p>
+Also <i>y</i><sub><i>i</i></sub><sup>(<i>m</i>)</sup> is printed as <code>yi^(m)</code>, which means that entering
+<code>yi^m</code> at the <font face="Gill Sans,Helvetica,Arial">GAP</font> prompt results in the output <code>m!*yi^(m)</code>.
+<p>
+Products of lattice generators are collected using the following order:
+first come the <i>y</i><sub><i>i</i></sub><sup>(<i>m</i><sub><i>i</i></sub>)</sup> (in the same order as the positive roots),
+then
+the <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><sub><i>i</i></sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">,</td></tr></table></td></tr></table> and then the <i>x</i><sub><i>i</i></sub><sup>(<i>n</i><sub><i>i</i></sub>)</sup> (in the same order as
+the positive roots).
+<p>
+<a name = "SSEC013.7"></a>
+<li><code>ObjByExtRep( </code><var>F</var><code>, </code><var>descr</var><code> ) O</code>
+<p>
+creates an object in the family <var>F</var> which has the external
+representation <var>descr</var>.
+<p>
+  An UEALattice element is represented by a list of the form
+<p>
+      [ m1, c1, m2, c2,.....]
+<p>
+  where the c1,c2 etc. are coefficients, and the m1, m2 etc. monomials.
+  A monomial is a list of the form [ ind1, e1, ind2, e2, ....]
+  where ind1, ind2 are indices, and e1, e2 etc. are exponents. Let
+  N be the number of positive roots of the underlying Lie algebra. The
+  indices lie between 1 and dim<i>L</i>. If an index lies between 1 and N,
+  then it represents a negative root vector (corresponding to the root
+  <code>NegativeRoots( R )[ind]</code>, where R is the root system of L). This leads
+  to a factor <code>yind1^(e1)</code> in the printed form of the monomial (which equals
+  z^e1/e1!, where z is a basis element of L). If an index
+  lies between N+1 and 2N, then it represents a positive root vector.
+  Finally, if ind lies between 2N+1 and 2N+rank, then it represents
+  an element of the Cartan subalgebra. This is printed as ( h_1/ e_1 ),
+  meaning h_1 choose e_1 (h_1,...,h_rank are the canonical Cartan
+  generators).
+<p>
+  The zero element is represented by the empty list, the identity
+  element by the list [ [  ], 1 ].
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; g:=LatticeGeneratorsInUEA( L );
+[ y1, y2, y3, y4, y5, y6, x1, x2, x3, x4, x5, x6, ( h13/1 ), ( h14/1 ) ]
+gap&gt; IsUEALatticeElement( g[1] );
+true
+gap&gt; g[1]^3;
+6*y1^(3)
+gap&gt; q:= g[7]*g[1]^2;
+-2*y1+2*y1*( h13/1 )+2*y1^(2)*x1
+gap&gt; ExtRepOfObj( q );
+[ [ 1, 1 ], -2, [ 1, 1, 13, 1 ], 2, [ 1, 2, 7, 1 ], 2 ]
+</pre>
+<p>
+<a name = "SSEC013.8"></a>
+<li><code>IsWeightRepElement( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC013.8"></a>
+<li><code>IsWeightRepElementCollection( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC013.8"></a>
+<li><code>IsWeightRepElementFamily( </code><var>fam</var><code> ) C</code>
+<p>
+Is a category of vectors, that is used to construct elements of
+highest-weight modules (by <code>HighestWeightModule</code>).
+<p>
+WeightRepElements are represented by a list of the form
+<code>[ v1, c1, v2, c2, ....]</code>, where the <code>v</code><var>i</var><code></code> are basis vectors, and
+the <code>c</code><var>i</var><code></code> coefficients. Furthermore a basis vector <code>v</code> is a weight vector.
+It is represented by a list of
+form <code>[ </code><var>k</var><code>, </code><var>mon</var><code>, </code><var>wt</var><code> ]</code>, where <var>k</var> is an integer (the basis vectors
+are numbered from 1 to dim<i>V</i>, where <i>V</i> is the highest weight
+module), <var>mon</var> is an UEALatticeElement (which means that the result of
+applying <var>mon</var> to a highest weight vector is <code>v</code>) and <var>wt</var> is the weight
+of <var>v</var>. A WeightRepElement is printed as <code></code><var>mon</var><code>*v0</code>, where <code>v0</code>
+denotes a fixed highest weight vector.
+<p>
+If <var>v</var> is a WeightRepElement, then <code>ExtRepOfObj( </code><var>v</var><code> )</code> returns
+the corresponding list, and if <var>list</var> is such a list and <var>fam</var> a
+WeightRepElementFamily, then <code>ObjByExtRep( </code><var>list</var><code>, </code><var>fam</var><code> )</code> returns
+the corresponding WeightRepElement.
+<p>
+<a name = "SSEC013.9"></a>
+<li><code>HighestWeightModule( </code><var>L</var><code>, </code><var>wt</var><code> ) F</code>
+<p>
+returns the highest weight module with highest weight <var>wt</var> of the
+semisimple Lie algebra <var>L</var> of characteristic 0.
+<p>
+Note that the elements of such a module lie in the category
+<code>IsLeftAlgebraModuleElement</code> (and in particular they do not lie
+in the category <code>IsWeightRepElement</code>). However, if <code>v</code> is an element
+of such a module, then <code>ExtRepOfObj( v )</code> is a WeightRepElement.
+<p>
+Note that for the following examples of this chapter we increase the line
+length limit from its default value 80 to 81 in order to make some long
+output expressions fit into the lines.
+<p>
+<pre>
+gap&gt; SizeScreen([ 81, ]);;
+gap&gt; K1:= SimpleLieAlgebra( "G", 2, Rationals );;
+gap&gt; K2:= SimpleLieAlgebra( "B", 2, Rationals );;
+gap&gt; L:= DirectSumOfAlgebras( K1, K2 );
+&lt;Lie algebra of dimension 24 over Rationals&gt;
+gap&gt; V:= HighestWeightModule( L, [ 0, 1, 1, 1 ] );
+&lt;224-dimensional left-module over &lt;Lie algebra of dimension 24 over Rationals&gt;&gt;
+gap&gt; vv:= GeneratorsOfLeftModule( V );;
+gap&gt; vv[100];
+y5*y7*y10*v0
+gap&gt; e:= ExtRepOfObj( vv[100] );
+y5*y7*y10*v0
+gap&gt; ExtRepOfObj( e );
+[ [ 100, y5*y7*y10, [ -3, 2, -1, 1 ] ], 1 ]
+gap&gt; Basis(L)[17]^vv[100];
+-1*y5*y7*y8*v0-1*y5*y9*v0
+</pre>
+<p>
+<p>
+<h2><a name="SECT014">61.14 Tensor Products and Exterior and Symmetric Powers</a></h2>
+<p><p>
+<a name = "SSEC014.1"></a>
+<li><code>TensorProductOfAlgebraModules( </code><var>list</var><code> ) O</code>
+<li><code>TensorProductOfAlgebraModules( </code><var>V</var><code>, </code><var>W</var><code> ) O</code>
+<p>
+Here the elements of <var>list</var> must be algebra modules. 
+The tensor product is returned as an algebra module. 
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra("G",2,Rationals);;
+gap&gt; V:= HighestWeightModule( L, [ 1, 0 ] );;
+gap&gt; W:= TensorProductOfAlgebraModules( [ V, V, V ] );
+&lt;343-dimensional left-module over &lt;Lie algebra of dimension 14 over Rationals&gt;&gt;
+gap&gt; w:= Basis(W)[1];
+1*(1*v0&lt;x&gt;1*v0&lt;x&gt;1*v0)
+gap&gt; Basis(L)[1]^w;
+&lt;0-tensor&gt;
+gap&gt; Basis(L)[7]^w;
+1*(1*v0&lt;x&gt;1*v0&lt;x&gt;y1*v0)+1*(1*v0&lt;x&gt;y1*v0&lt;x&gt;1*v0)+1*(y1*v0&lt;x&gt;1*v0&lt;x&gt;1*v0)
+</pre>
+<p>
+<a name = "SSEC014.2"></a>
+<li><code>ExteriorPowerOfAlgebraModule( </code><var>V</var><code>, </code><var>k</var><code> ) O</code>
+<p>
+Here <var>V</var> must be an algebra module, defined over a Lie algebra. 
+This function returns the <var>k</var>-th exterior power of <var>V</var> as an 
+algebra module.
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra("G",2,Rationals);;
+gap&gt; V:= HighestWeightModule( L, [ 1, 0 ] );;
+gap&gt; W:= ExteriorPowerOfAlgebraModule( V, 3 );
+&lt;35-dimensional left-module over &lt;Lie algebra of dimension 14 over Rationals&gt;&gt;
+gap&gt; w:= Basis(W)[1];
+1*(1*v0/\y1*v0/\y3*v0)
+gap&gt; Basis(L)[10]^w;
+1*(1*v0/\y1*v0/\y6*v0)+1*(1*v0/\y3*v0/\y5*v0)+1*(y1*v0/\y3*v0/\y4*v0)
+</pre>
+<p>
+<a name = "SSEC014.3"></a>
+<li><code>SymmetricPowerOfAlgebraModule( </code><var>V</var><code>, </code><var>k</var><code> ) O</code>
+<p>
+Here <var>V</var> must be an algebra module. This function returns the <var>k</var>-th
+symmetric power of <var>V</var> (as an algebra module).
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra("G",2,Rationals);;
+gap&gt; V:= HighestWeightModule( L, [ 1, 0 ] );;
+gap&gt; W:= SymmetricPowerOfAlgebraModule( V, 3 );
+&lt;84-dimensional left-module over &lt;Lie algebra of dimension 14 over Rationals&gt;&gt;
+gap&gt; w:= Basis(W)[1];
+1*(1*v0.1*v0.1*v0)
+gap&gt; Basis(L)[2]^w;
+&lt;0-symmetric element&gt;
+gap&gt; Basis(L)[7]^w;
+3*(1*v0.1*v0.y1*v0)
+</pre>
+<p>
+<a name = "SSEC014.4"></a>
+<li><code>DirectSumOfAlgebraModules( </code><var>list</var><code> ) O</code>
+<li><code>DirectSumOfAlgebraModules( </code><var>V</var><code>, </code><var>W</var><code> ) O</code>
+<p>
+Here <var>list</var> must be a list of algebra modules. This function returns the
+direct sum of the elements in the list (as an algebra module).
+The modules must be defined over the same algebras.
+<p>
+In the second form is short for <code>DirectSumOfAlgebraModules( [ </code><var>V</var><code>, </code><var>W</var><code> ] )</code>
+<p>
+<pre>
+gap&gt; L:= SimpleLieAlgebra( "C", 3, Rationals );;
+gap&gt; V:= HighestWeightModule( L, [ 1, 1, 0 ] );
+&lt;64-dimensional left-module over &lt;Lie algebra of dimension 21 over Rationals&gt;&gt;
+gap&gt; W:= HighestWeightModule( L, [ 0, 0, 2 ] );
+&lt;84-dimensional left-module over &lt;Lie algebra of dimension 21 over Rationals&gt;&gt;
+gap&gt; U:= DirectSumOfAlgebraModules( V, W );
+&lt;148-dimensional left-module over &lt;Lie algebra of dimension 21 over Rationals&gt;&gt;
+gap&gt; SizeScreen([ 80, ]);;
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP060.htm">Previous</a>] [<a href ="CHAP062.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

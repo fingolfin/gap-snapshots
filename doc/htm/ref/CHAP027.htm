@@ -1,0 +1,460 @@
+<html><head><title>[ref] 27 Records</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP026.htm">Previous</a>] [<a href ="CHAP028.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>27 Records</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP027.htm#SECT001">Accessing Record Elements</a>
+<li> <A HREF="CHAP027.htm#SECT002">Record Assignment</a>
+<li> <A HREF="CHAP027.htm#SECT003">Identical Records</a>
+<li> <A HREF="CHAP027.htm#SECT004">Comparisons of Records</a>
+<li> <A HREF="CHAP027.htm#SECT005">IsBound and Unbind for Records</a>
+<li> <A HREF="CHAP027.htm#SECT006">Record Access Operations</a>
+</ol><p>
+<p>
+<a name = "I0"></a>
+
+<strong>Records</strong> are next to lists the most important way to collect objects
+together. A record is a collection of <strong>components</strong>. Each component has
+a unique <strong>name</strong>, which is an identifier that distinguishes this
+component, and a <strong>value</strong>, which is an object of arbitrary type. We often
+abbreviate <strong>value of a component</strong> to <strong>element</strong>. We also say that a
+record <strong>contains</strong> its elements. You can access and change the elements
+of a record using its name.
+<p>
+Record literals are written by writing down the components in order between
+``<code>rec(</code>'' and ``<code>)</code>'', and separating them by commas ``<code>,</code>''. Each
+component consists of the name, the assignment operator <code>:=</code>, and the value.
+The <strong>empty record</strong>, i.e., the record with no components, is written as
+<code>rec()</code>.
+<p>
+<pre>
+gap&gt; rec( a := 1, b := "2" ); # a record with two components
+rec( a := 1, b := "2" )
+gap&gt; rec( a := 1, b := rec( c := 2 ) ); # record may contain records
+rec( a := 1, b := rec( c := 2 ) )
+</pre>
+<p>
+We may use the <code>Display</code> function to illustrate the hierarchy of the record
+components.
+<p>
+<pre>
+gap&gt; Display( last );
+rec(
+  a := 1,
+  b := rec(
+      c := 2 ) )
+</pre>
+<p>
+Records usually contain elements of various types, i.e., they are usually
+not homogeneous like lists.
+<p>
+<a name = ""></a>
+<li><code>IsRecord( </code><var>obj</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsRecordCollection( </code><var>obj</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsRecordCollColl( </code><var>obj</var><code> ) C</code>
+<p>
+<a name = "I1"></a>
+
+<pre>
+gap&gt; IsRecord( rec( a := 1, b := 2 ) );
+true
+gap&gt; IsRecord( IsRecord );
+false
+</pre>
+<p>
+<a name = ""></a>
+<li><code>RecNames( </code><var>rec</var><code> ) A</code>
+<p>
+returns a list of strings corresponding to the names of the record
+components of the record <var>rec</var>.
+<p>
+<pre>
+gap&gt; r := rec( a := 1, b := 2 );;
+gap&gt; RecNames( r );
+[ "a", "b" ]
+</pre>
+<p>
+Note that you cannot use the string result in the ordinary way to access
+or change a record component. You must use the <code></code><var>rec</var><code>.(</code><var>name</var><code>)</code>
+construct (see <a href="CHAP027.htm#SECT001">Accessing Record Elements</a> and <a href="CHAP027.htm#SECT002">Record Assignment</a>).
+<p>
+<p>
+<h2><a name="SECT001">27.1 Accessing Record Elements</a></h2>
+<p><p>
+<a name = "I2"></a>
+
+<a name = "SSEC001.1"></a>
+<li><code></code><var>rec</var><code>.</code><var>name</var><code> O</code>
+<p>
+The above construct evaluates to the value of the record component with
+the name <var>name</var> in the record <var>rec</var>. Note that the <var>name</var> is not
+evaluated, i.e. it is taken literal.
+<p>
+<pre>
+gap&gt; r := rec( a := 1, b := 2 );;
+gap&gt; r.a;
+1
+gap&gt; r.b;
+2
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code></code><var>rec</var><code>.(</code><var>name</var><code>) O</code>
+<p>
+This construct is similar to the above construct. The difference is that
+the second operand <var>name</var> is evaluated. It must evaluate to a string or
+an integer otherwise an error is signalled. The construct then evaluates
+to the element of the record <var>rec</var> whose name is, as a string, equal to
+<var>name</var>.
+<p>
+<pre>
+gap&gt; old := rec( a := 1, b := 2 );;
+gap&gt; new := rec();
+rec(  )
+gap&gt; for i in RecNames( old ) do
+&gt;  new.(i) := old.(i);
+&gt; od;
+gap&gt; Display( new );
+rec(
+  a := 1,
+  b := 2 )
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">27.2 Record Assignment</a></h2>
+<p><p>
+<a name = "I3"></a>
+
+<a name = "SSEC002.1"></a>
+<li><code></code><var>rec</var><code>.</code><var>name</var><code> := </code><var>obj</var><code> O</code>
+<p>
+The record assignment assigns the object <var>obj</var>, which may be an object of
+arbitrary type, to the record component with the name <var>name</var>, which must
+be an identifier, of the record <var>rec</var>. That means that accessing the
+element with name <var>name</var> of the record <var>rec</var> will return <var>obj</var> after this
+assignment. If the record <var>rec</var> has no component with the name <var>name</var>,
+the record is automatically extended to make room for the new component.
+<p>
+<pre>
+gap&gt; r := rec( a := 1, b := 2 );;
+gap&gt; r.a := 10;;
+gap&gt; Display( r );
+rec(
+  a := 10,
+  b := 2 )
+gap&gt; r.c := 3;;
+gap&gt; Display( r );
+rec(
+  a := 10,
+  b := 2,
+  c := 3 )
+</pre>
+<p>
+Note that assigning to a record changes the record.
+<p>
+The function <code>IsBound</code> can be used to test if a record
+has a component with a certain name, the function <code>Unbind</code> (see <a href="CHAP004.htm#SSEC008.1">Unbind</a>)
+can be used to remove a component with a certain name again.
+<p>
+<pre>
+gap&gt; IsBound(r.a);
+true
+gap&gt; IsBound(r.d);
+false
+gap&gt; Unbind(r.b);
+gap&gt; Display( r );
+rec(
+  a := 10,
+  c := 3 )
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code></code><var>rec</var><code>.(</code><var>name</var><code>) := </code><var>obj</var><code> O</code>
+<p>
+This construct is similar to the above construct. The difference is that
+the second operand <var>name</var> is evaluated. It must evaluate to a string or
+an integer otherwise an error is signalled. The construct then assigns
+<var>obj</var> to the record component of the record <var>rec</var> whose name is, as a
+string, equal to <var>name</var>.
+<p>
+<p>
+<h2><a name="SECT003">27.3 Identical Records</a></h2>
+<p><p>
+With the record assignment (see <a href="CHAP027.htm#SECT002">Record Assignment</a>) it is possible to
+change a record.  This section describes the semantic consequences of this
+fact which are essentially the same as for lists (see&nbsp;<a href="CHAP021.htm#SECT006">Identical Lists</a>).
+<p>
+<pre>
+r := rec( a := 1 );
+r := rec( a := 1, b := 2 );
+</pre>
+<p>
+The second assignment does not change the first record, instead it
+assigns a new record to the variable <code>r</code>. On the other hand, in the
+following example the record is changed by the second assignment.
+<p>
+<pre>
+r := rec( a := 1 );
+r.b := 2;
+</pre>
+<p>
+To understand the difference first think of a variable as a name for an
+object. The important point is that a record can have several names at
+the same time. An assignment <code></code><var>var</var><code> := </code><var>record</var><code></code> means in this
+interpretation that <var>var</var> is a name for the object <var>record</var>. At the end
+of the following example <code>r2</code> still has the value <code>rec( a := 1 )</code> as
+this record has not been changed and nothing else has been assigned to
+<code>r2</code>.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := r1;
+r1 := rec( a := 1, b := 2 );
+</pre>
+<p>
+But after the following example the record for which <code>r2</code> is a name has
+been changed and thus the value of <code>r2</code> is now <code>rec( a := 1, b := 2 )</code>.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := r1;
+r1.b := 2;
+</pre>
+<p>
+We shall say that two records are <strong>identical</strong> if changing one of them by
+a record assignment also changes the other one. This is slightly
+incorrect, because if <strong>two</strong> records are identical, there are actually
+only two names for <strong>one</strong> record. However, the correct usage would be
+very awkward and would only add to the confusion.  Note that two
+identical records must be equal, because there is only one records with
+two different names. Thus identity is an equivalence relation that is a
+refinement of equality.
+<p>
+Let us now consider under which circumstances two records are identical.
+<p>
+If you enter a record literal then the record denoted by this literal is
+a new record that is not identical to any other record. Thus in the
+following example <code>r1</code> and <code>r2</code> are not identical, though they are equal
+of course.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := rec( a := 1 );
+</pre>
+<p>
+Also in the following example, no records in the list <code>l</code> are identical.
+<p>
+<pre>
+l := [];
+for i in [1..10] do
+  l[i] := rec( a := 1 );
+od;
+</pre>
+<p>
+If you assign a record to a variable no new record is created. Thus the
+record value of the variable on the left hand side and the record on the
+right hand side of the assignment are identical. So in the following
+example <code>r1</code> and <code>r2</code> are identical records.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := r1;
+</pre>
+<p>
+If you pass a record as argument, the old record and the argument of the
+function are identical. Also if you return a record from a function, the
+old record and the value of the function call are identical. So in the
+following example <code>r1</code> and <code>r2</code> are identical record
+<p>
+<pre>
+r1 := rec( a := 1 );
+f := function ( r ) return r; end;
+r2 := f( r1 );
+</pre>
+<p>
+The functions <code>StructuralCopy</code> and <code>ShallowCopy</code> (see <a href="CHAP012.htm#SSEC007.2">StructuralCopy</a> and
+<a href="CHAP012.htm#SSEC007.1">ShallowCopy</a>) accept a record and return a new record that is equal to the
+old record but that is <strong>not</strong> identical to the old record. The difference
+between <code>StructuralCopy</code> and <code>ShallowCopy</code> is that in the case of
+<code>ShallowCopy</code> the corresponding components of the new and the old records
+will be identical, whereas in the case of <code>StructuralCopy</code> they will only be
+equal. So in the following example <code>r1</code> and <code>r2</code> are not identical records.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := Copy( r1 );
+</pre>
+<p>
+If you change a record it keeps its identity. Thus if two records are
+identical and you change one of them, you also change the other, and they
+are still identical afterwards. On the other hand, two records that are
+not identical will never become identical if you change one of them. So
+in the following example both <code>r1</code> and <code>r2</code> are changed, and are still
+identical.
+<p>
+<pre>
+r1 := rec( a := 1 );
+r2 := r1;
+r1.b := 2;
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">27.4 Comparisons of Records</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code></code><var>rec1</var><code> = </code><var>rec2</var><code> O</code>
+<a name = "SSEC004.1"></a>
+<li><code></code><var>rec1</var><code> &lt;&gt; </code><var>rec2</var><code> O</code>
+<p>
+Two records are considered equal, if for each component of one
+record the other record has a component of the same name with an equal
+value and vice versa.
+<p>
+<pre>
+gap&gt; rec( a := 1, b := 2 ) = rec( b := 2, a := 1 );
+true
+gap&gt; rec( a := 1, b := 2 ) = rec( a := 2, b := 1 );
+false
+gap&gt; rec( a := 1 ) = rec( a := 1, b := 2 );
+false
+gap&gt; rec( a := 1 ) = 1;
+false
+</pre>
+<p>
+<a name = "SSEC004.2"></a>
+<li><code></code><var>rec1</var><code> &lt; </code><var>rec2</var><code> O</code>
+<li><code></code><var>rec1</var><code> &lt;= </code><var>rec2</var><code> O</code>
+<p>
+To compare records we imagine that the components of both records are
+sorted according to their names. Then the records are compared
+lexicographically with unbound elements considered smaller than anything
+else. Precisely one record <var>rec1</var> is considered less than another record
+<var>rec2</var> if <var>rec2</var> has a component with name <var>name2</var> and either <var>rec1</var> has
+no component with this name or <code></code><var>rec1</var><code>.</code><var>name2</var><code> &lt; </code><var>rec2</var><code>.</code><var>name2</var><code></code> and for
+each component of <var>rec1</var> with name <code></code><var>name1</var><code> &lt; </code><var>name2</var><code></code> <var>rec2</var> has a
+component with this name and <code></code><var>rec1</var><code>.</code><var>name1</var><code> = </code><var>rec2</var><code>.</code><var>name1</var><code></code>.
+<p>
+<pre>
+gap&gt; rec( a := 1, b := 2 ) &lt; rec( b := 2, a := 1 ); # they are equal
+false
+gap&gt; rec( a := 1 ) &lt; rec( a := 1, b := 2 ); # unbound is less than 2
+true
+gap&gt; # note in the following examples that the `a' elements are compared first
+gap&gt; rec( a := 1, b := 2 ) &lt; rec( a := 2, b := 0 ); # 1 is less than 2
+true
+gap&gt; rec( a := 1 ) &lt; rec( a := 0, b := 2 ); # 0 is less than 1
+false
+gap&gt; rec( b := 1 ) &lt; rec( b := 0, a := 2 ); # unbound is less than 2
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT005">27.5 IsBound and Unbind for Records</a></h2>
+<p><p>
+<code>&nbsp;`IsBound( </code><var>rec</var><code>.</code><var>name</var><code> )' O</code>
+<p>
+<code>IsBound</code> returns <code>true</code> if the record <var>rec</var> has a
+component with the name <var>name</var> (which must be an identifier) and <code>false</code>
+otherwise. <var>rec</var> must evaluate to a record, otherwise an error is
+signalled.
+<p>
+<pre>
+gap&gt; r := rec( a := 1, b := 2 );;
+gap&gt; IsBound( r.a );
+true
+gap&gt; IsBound( r.c );
+false
+</pre>
+<p>
+<code>&nbsp;`Unbind( </code><var>rec</var><code>.</code><var>name</var><code> )' O</code>
+<p>
+<code>Unbind</code> deletes the component with the name <var>name</var> in
+the record <var>rec</var>. That is, after execution of <code>Unbind</code>, <var>rec</var> no longer
+has a record component with this name. Note that it is not an error to
+unbind a nonexisting record component. <var>rec</var> must evaluate to a record,
+otherwise an error is signalled.
+<p>
+<pre>
+gap&gt; r := rec( a := 1, b := 2 );;
+gap&gt; Unbind( r.a ); r;
+rec( b := 2 )
+gap&gt; Unbind( r.c ); r;
+rec( b := 2 )
+</pre>
+<p>
+Note that <code>IsBound</code> and <code>Unbind</code> are special in that they do not evaluate
+their argument, otherwise <code>IsBound</code> would always signal an error when it is
+supposed to return <code>false</code> and there would be no way to tell <code>Unbind</code> which
+component to remove.
+<p>
+<p>
+<h2><a name="SECT006">27.6 Record Access Operations</a></h2>
+<p><p>
+Internally, record accesses are done using the operations listed in this
+section. For the records implemented in the kernel, kernel methods are
+provided for all these operations but otherwise it is possible to install
+methods for these operations for any object. This
+permits objects to simulate record behavior.
+<p>
+To save memory, records do not store a list of all component names, but only
+numbers identifying the components. There numbers are called <strong>RNams</strong>. <font face="Gill Sans,Helvetica,Arial">GAP</font>
+keeps a list of all RNams that are used and provides functions to translate
+RNams to strings that give the component names and vice versa.
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>NameRNam(</code><var>nr</var><code>) F</code>
+<p>
+returns a string representing the component name corresponding to the RNam
+<var>nr</var>.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>RNamObj(</code><var>str</var><code>) F</code>
+<li><code>RNamObj(</code><var>int</var><code>) F</code>
+<p>
+returns a number (the RNam) corresponding to the string <var>str</var>. It is also
+possible to pass a positive integer <var>int</var> in which case the decimal expansion of
+<var>int</var> is used as a string.
+<p>
+<pre>
+gap&gt; NameRNam(798);
+"BravaisSupergroups"
+gap&gt; RNamObj("blubberflutsch");
+2075
+gap&gt; NameRNam(last);
+"blubberflutsch"
+</pre>
+<p>
+The correspondence between Strings and RNams is not predetermined ab initio,
+but RNams are assigned to component names dynamically on a
+``first come, first serve'' basis. Therefore, depending on the version of
+the library you are using and on the assignments done so far, the <strong>same</strong>
+component name may be represented by <strong>different</strong> RNams in different runs of
+<font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+The following operations are called for record accesses to arbitrary
+objects. If applicable methods are installed, they are called when the
+object is accessed as a record.
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>\.(</code><var>obj</var><code>,</code><var>rnam</var><code>) O</code>
+<a name = "SSEC006.3"></a>
+<li><code>IsBound\.(</code><var>obj</var><code>,</code><var>rnam</var><code>) O</code>
+<a name = "SSEC006.3"></a>
+<li><code>\.\:\=(</code><var>obj</var><code>,</code><var>rnam</var><code>) O</code>
+<a name = "SSEC006.3"></a>
+<li><code>Unbind\.(</code><var>obj</var><code>,</code><var>rnam</var><code>) O</code>
+<p>
+These operations implement component access, test for element boundness,
+component assignment and removal of the component represented by the RNam
+<var>rnam</var>.
+<p>
+The component identifier <var>rnam</var> is always declared as <code>IsPosInt</code>.
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP026.htm">Previous</a>] [<a href ="CHAP028.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

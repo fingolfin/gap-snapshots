@@ -1,0 +1,489 @@
+<html><head><title>[ref] 29 Orderings</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP028.htm">Previous</a>] [<a href ="CHAP030.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>29 Orderings</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP029.htm#SECT001">Building new orderings</a>
+<li> <A HREF="CHAP029.htm#SECT002">Properties and basic functionality</a>
+<li> <A HREF="CHAP029.htm#SECT003">Orderings on families of associative words</a>
+</ol><p>
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font> an ordering is a relation defined on a family, which is 
+reflexive, anti-symmetric and transitive.
+<p>
+<a name = ""></a>
+<li><code>IsOrdering( </code><var>ord</var><code> ) C</code>
+<p>
+returns <code>true</code> if and only if the object <var>ord</var> is an ordering.
+<p>
+<a name = ""></a>
+<li><code>OrderingsFamily( </code><var>fam</var><code> ) A</code>
+<p>
+for a family <var>fam</var>, returns the family of all
+orderings on elements of <var>fam</var>.
+<p>
+<p>
+<h2><a name="SECT001">29.1 Building new orderings</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>OrderingByLessThanFunctionNC( </code><var>fam</var><code>, </code><var>lt</var><code> ) O</code>
+<li><code>OrderingByLessThanFunctionNC( </code><var>fam</var><code>, </code><var>lt</var><code>, </code><var>l</var><code> ) O</code>
+<p>
+In the first form, <code>OrderingByLessThanFunctionNC</code> returns the ordering on
+the elements of the  elements  of  the  family  <var>fam</var>  according  to  the
+<code>LessThanFunction</code> given by <var>lt</var>, where <var>lt</var> is a function that takes two
+arguments in <var>fam</var> and returns <code>true</code> or <code>false</code>.
+<p>
+In the second form, for a family <var>fam</var>, a function <var>lt</var> that takes 
+two arguments in <var>fam</var> and returns <code>true</code> or <code>false</code>, and a list <var>l</var>
+of properties of orderings, <code>OrderingByLessThanFunctionNC</code>
+returns the ordering on the elements of <var>fam</var> with
+<code>LessThanFunction</code> given by <var>lt</var> and with the properties
+from <var>l</var> set to <code>true</code>.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>OrderingByLessThanOrEqualFunctionNC( </code><var>fam</var><code>, </code><var>lteq</var><code> ) O</code>
+<li><code>OrderingByLessThanOrEqualFunctionNC( </code><var>fam</var><code>, </code><var>lteq</var><code>, </code><var>l</var><code> ) O</code>
+<p>
+In the  first  form,  <code>OrderingByLessThanOrEqualFunctionNC</code>  returns  the
+ordering on the elements of the elements of the family <var>fam</var> according to
+the <code>LessThanOrEqualFunction</code> given by <var>lteq</var>, where <var>lteq</var> is a function
+that takes two arguments in <var>fam</var> and returns <code>true</code> or <code>false</code>.
+<p>
+In the second form, for a family <var>fam</var>, a function <var>lteq</var> that takes 
+two arguments in <var>fam</var> and returns <code>true</code> or <code>false</code>, and a list <var>l</var>
+of properties of orderings, <code>OrderingByLessThanOrEqualFunctionNC</code>
+returns the ordering on the elements of <var>fam</var> with
+<code>LessThanOrEqualFunction</code> given by <var>lteq</var> and with the properties
+from <var>l</var> set to <code>true</code>.
+<p>
+Notice that these functions do not check whether <var>fam</var> and <var>lt</var> or <var>lteq</var>
+are compatible, and whether the properties listed in <var>l</var> are indeed
+true.
+<p>
+<pre>
+gap&gt; f := FreeSemigroup("a","b");;
+gap&gt; a := GeneratorsOfSemigroup(f)[1];;
+gap&gt; b := GeneratorsOfSemigroup(f)[2];;
+gap&gt; lt := function(x,y) return Length(x)&lt;Length(y); end;
+function( x, y ) ... end
+gap&gt; fam := FamilyObj(a);;
+gap&gt; ord := OrderingByLessThanFunctionNC(fam,lt);
+Ordering
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">29.2 Properties and basic functionality</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>IsWellFoundedOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var>,
+returns <code>true</code> if and only if the ordering is well founded.
+An ordering <var>ord</var> is well founded if it admits no infinite descending
+chains.
+Normally this property is set at the time of creation of the ordering
+and there is no general method to check whether a certain ordering
+is well founded.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>IsTotalOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var>,
+returns true if and only if the ordering is total.
+An ordering <var>ord</var> is total if any two elements of the family 
+are comparable under <var>ord</var>. 
+Normally this property is set at the time of creation of the ordering
+and there is no general method to check whether a certain ordering
+is total.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>IsIncomparableUnder( </code><var>ord</var><code>, </code><var>el1</var><code>, </code><var>el2</var><code> ) O</code>
+<p>
+for an ordering <var>ord</var> on the elements of the family of <var>el1</var> and <var>el2</var>,
+returns <code>true</code> if <i>el</i>1 <font face="symbol">&#8800;</font> <i>el</i>2 and  <code>IsLessThanUnder</code>(<var>ord</var>,<var>el1</var>,<var>el2</var>), 
+<code>IsLessThanUnder</code>(<var>ord</var>,<var>el2</var>,<var>el1</var>) are both false; and
+returns <code>false</code> otherwise.
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>FamilyForOrdering( </code><var>ord</var><code> ) A</code>
+<p>
+for an ordering <var>ord</var>,
+returns the family of elements that the ordering <var>ord</var> compares.
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>LessThanFunction( </code><var>ord</var><code> ) A</code>
+<p>
+for an ordering <var>ord</var>, 
+returns a function <var>f</var> which takes two elements <var>el1</var>, <var>el2</var> in the 
+<code>FamilyForOrdering</code>(<var>ord</var>) and returns <code>true</code> if <var>el1</var> is 
+strictly less than <var>el2</var> (with respect to <var>ord</var>) and returns <code>false</code> 
+otherwise.
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>LessThanOrEqualFunction( </code><var>ord</var><code> ) A</code>
+<p>
+for an ordering <var>ord</var>,
+returns a function that takes two elements <var>el1</var>, <var>el2</var> in the 
+<code>FamilyForOrdering</code>(<var>ord</var>) and returns <code>true</code> if <var>el1</var> is 
+less than <strong>or equal to</strong> <var>el2</var> (with respect to <var>ord</var>) and returns <code>false</code> 
+otherwise.
+<p>
+<a name = "SSEC002.7"></a>
+<li><code>IsLessThanUnder( </code><var>ord</var><code>, </code><var>el1</var><code>, </code><var>el2</var><code> ) O</code>
+<p>
+for an ordering <var>ord</var> on the elements of the family of <var>el1</var> and <var>el2</var>,
+returns <code>true</code> if <var>el1</var> is (strictly) less than <var>el2</var> with
+respect to <var>ord</var>, and <code>false</code> otherwise.
+<p>
+<a name = "SSEC002.8"></a>
+<li><code>IsLessThanOrEqualUnder( </code><var>ord</var><code>, </code><var>el1</var><code>, </code><var>el2</var><code> ) O</code>
+<p>
+for an ordering <var>ord</var> on the elements of the family of <var>el1</var> and <var>el2</var>,
+returns <code>true</code> if <var>el1</var> is less than or equal to <var>el2</var> with
+respect to <var>ord</var>, and <code>false</code> otherwise.
+<p>
+<pre>
+gap&gt; IsLessThanUnder(ord,a,a*b);
+true
+gap&gt; IsLessThanOrEqualUnder(ord,a*b,a*b);
+true
+gap&gt; IsIncomparableUnder(ord,a,b);
+true
+gap&gt; FamilyForOrdering(ord) = FamilyObj(a);
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">29.3 Orderings on families of associative words</a></h2>
+<p><p>
+We now consider orderings on families of associative words.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>IsOrderingOnFamilyOfAssocWords( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var>,
+returns true if <var>ord</var> is an ordering over a family of associative
+words.
+<p>
+Examples of families of associative words are the families of elements
+of a free semigroup or a free monoid;
+these are the two cases that we consider mostly.
+Associated with those families is
+an alphabet, which is the semigroup (resp. monoid) generating set
+of the correspondent free semigroup (resp. free monoid).
+For definitions of the orderings considered see Sims <a href="biblio.htm#Sims94"><cite>Sims94</cite></a>.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>IsTranslationInvariantOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var> on a family of associative words,
+returns <code>true</code> if and only if the ordering is translation invariant.
+This is a property of orderings on families of associative words.
+An ordering <var>ord</var> over a family <var>fam</var>, with alphabet <var>X</var> is
+translation invariant if
+<code>IsLessThanUnder(</code><var>ord</var><code>, </code><var>u</var><code>, </code><var>v</var><code>)</code> implies that for any <i>a</i>,<i>b</i> <font face="symbol">&#8712;</font> <i>X</i><sup>*</sup>
+<code>IsLessThanUnder(</code><var>ord</var><code>, <i>a</i>*<i>u</i>*<i>b</i>, <i>a</i>*<i>v</i>*<i>b</i>)</code>.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>IsReductionOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var> on a family of associative words,
+returns <code>true</code> if and only if the ordering is a reduction ordering.
+An ordering <var>ord</var> is a reduction ordering 
+if it is founded and translation invariant.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>OrderingOnGenerators( </code><var>ord</var><code> ) A</code>
+<p>
+for an ordering <var>ord</var> on a family of associative words,
+returns a list <var>alphabet</var> in which the generators are considered.
+This could be indeed the ordering of the generators in the ordering,
+but, for example, if a weight is associated to each generator
+then this is not true anymore. See the example for <code>WeightLexOrdering</code>
+(<a href="CHAP029.htm#SSEC003.8">WeightLexOrdering</a>).
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>LexicographicOrdering( </code><var>fam</var><code> ) O</code>
+<li><code>LexicographicOrdering( </code><var>fam</var><code>, </code><var>gensord</var><code> ) O</code>
+<li><code>LexicographicOrdering( </code><var>fam</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>LexicographicOrdering( </code><var>f</var><code> ) O</code>
+<li><code>LexicographicOrdering( </code><var>f</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>LexicographicOrdering( </code><var>f</var><code>, </code><var>gensord</var><code> ) O</code>
+<p>
+In the first form, for a family <var>fam</var> of associative words,
+<code>LexicographicOrdering</code>
+returns the lexicographic ordering on the elements of <var>fam</var>.
+<p>
+In the second form, for a family <var>fam</var> of associate words and
+a list <var>alphabet</var> which is the actual list of generators in the
+desired order, <code>LexicographicOrdering</code> 
+returns the lexicographic ordering on the elements of
+<var>fam</var> with the ordering on the alphabet as given.
+<p>
+In the third form, for a family <var>fam</var> of associative words and
+a list <var>gensorder</var> of the length of the alphabet,
+<code>LexicographicOrdering</code> returns the lexicographic 
+ordering on the elements of <var>fam</var> with the order on the alphabet
+given by <var>gensord</var>.
+<p>
+In the fourth form, for a free semigroup of a free monoid <var>f</var>,
+<code>LexicographicOrdering</code>
+returns the lexicographic ordering on the family of the elements of <var>f</var>
+with the order in the alphabet being the default one.
+<p>
+In the fifth form, for a free semigroup or a free monoid <var>f</var> and
+a list <var>alphabet</var> which is the actual list of generators in the
+desired order, <code>LexicographicOrdering</code>
+returns the lexicographic ordering on the elements of
+<var>f</var> with the ordering on the alphabet as given.
+<p>
+In the sixth form, for a free semigroup of a free monoid <var>f</var>,
+and a list <var>gensorder</var>, <code>LexicographicOrdering</code>
+returns the lexicographic ordering on the elements of <var>f</var> with the order
+on the alphabet given by <var>gensord</var>.
+<p>
+<pre>
+gap&gt; f := FreeSemigroup(3);
+&lt;free semigroup on the generators [ s1, s2, s3 ]&gt;
+gap&gt; lex := LexicographicOrdering(f,[2,3,1]);
+Ordering
+gap&gt; IsLessThanUnder(lex,f.2*f.3,f.3);
+true
+gap&gt; IsLessThanUnder(lex,f.3,f.2);
+false
+</pre>
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>ShortLexOrdering( </code><var>fam</var><code> ) O</code>
+<li><code>ShortLexOrdering( </code><var>fam</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>ShortLexOrdering( </code><var>fam</var><code>, </code><var>gensord</var><code> ) O</code>
+<li><code>ShortLexOrdering( </code><var>f</var><code> ) O</code>
+<li><code>ShortLexOrdering( </code><var>f</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>ShortLexOrdering( </code><var>f</var><code>, </code><var>gensord</var><code> ) O</code>
+<p>
+In the first form, for a family <var>fam</var> of associative words,
+<code>ShortLexOrdering</code>
+returns the ShortLex ordering on the elements of <var>fam</var>
+with the order in the alphabet being the default one.
+<p>
+In the second form, for a family <var>fam</var> of associate words and
+a list <var>alphabet</var> which is the actual list of generators in the 
+desired order, <code>ShortLexOrdering</code>
+returns the ShortLex ordering on the elements of
+<var>fam</var> with the ordering on the alphabet as given.
+<p>
+In the third form, for a family <var>fam</var> of associative words and
+a list <var>gensorder</var> of the length of the alphabet,
+<code>ShortLexOrdering</code> returns the ShortLex
+ordering on the elements of <var>fam</var> with the order on the alphabet
+given by <var>gensord</var>. 
+<p>
+In the fourth form, for a free semigroup of a free monoid <var>f</var>,
+<code>ShortLexOrdering</code>
+returns the ShortLex ordering on the family of the elements of <var>f</var> 
+with the order in the alphabet being the default one.
+<p>
+In the fifth form, for a free semigroup or a free monoid <var>f</var> and
+a list <var>alphabet</var> which is the actual list of generators in the 
+desired order, <code>ShortLexOrdering</code>
+returns the ShortLex ordering on the elements of
+<var>f</var> with the ordering on the alphabet as given.
+<p>
+In the sixth form, for a free semigroup of a free monoid <var>f</var>,
+and a list <var>gensorder</var>, <code>ShortLexOrdering</code> 
+returns the ShortLex ordering on the elements of <var>f</var> with the order 
+on the alphabet given by <var>gensord</var>.
+<p>
+<a name = "SSEC003.7"></a>
+<li><code>IsShortLexOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var> of a family of associative words,
+returns <code>true</code> if and only if <var>ord</var> is a ShortLex ordering.
+<p>
+<pre>
+gap&gt; f := FreeSemigroup(3);
+&lt;free semigroup on the generators [ s1, s2, s3 ]&gt;
+gap&gt; sl := ShortLexOrdering(f,[2,3,1]);
+Ordering
+gap&gt; IsLessThanUnder(sl,f.1,f.2);
+false
+gap&gt; IsLessThanUnder(sl,f.3,f.2);
+false
+gap&gt; IsLessThanUnder(sl,f.3,f.1);
+true
+</pre>
+<p>
+<a name = "SSEC003.8"></a>
+<li><code>WeightLexOrdering( </code><var>fam</var><code>, </code><var>alphabet</var><code>, </code><var>wt</var><code> ) O</code>
+<li><code>WeightLexOrdering( </code><var>fam</var><code>, </code><var>gensord</var><code>, </code><var>wt</var><code> ) O</code>
+<li><code>WeightLexOrdering( </code><var>f</var><code>, </code><var>alphabet</var><code>, </code><var>wt</var><code> ) O</code>
+<li><code>WeightLexOrdering( </code><var>f</var><code>, </code><var>gensord</var><code>, </code><var>wt</var><code> ) O</code>
+<p>
+In the first form, for a family <var>fam</var> of associative words
+and a list <var>wt</var>, <code>WeightLexOrdering</code>
+returns the WeightLex ordering on the elements of <var>fam</var>
+with the order in the alphabet being the default one
+and the weights of the letters in the alphabet being given
+by <var>wt</var>.
+<p>
+In the second form, for a family <var>fam</var> of associative words,
+a list <var>wt</var> and a list <var>gensorder</var> of the length of the alphabet, 
+<code>WeightLexOrdering</code> returns the WeightLex  
+ordering on the elements of <var>fam</var> with the order on the alphabet
+given by <var>gensord</var> and the weights of the letters in the alphabet 
+being given by <var>wt</var>. 
+<p>
+In the third form, for a free semigroup of a free monoid <var>f</var>
+and a list <var>wt</var>, <code>WeightLexOrdering</code>
+returns the WeightLex ordering on the family of the elements of <var>f</var>
+with the order in the alphabet being the default one
+and  the weights of the letters in the alphabet being given
+by <var>wt</var>.
+<p>
+In the fourth form, for a free semigroup of a free monoid <var>f</var>,
+a list <var>wt</var> and a list <var>gensorder</var> of the length of the alphabet,
+<code>WeightLexOrdering</code> returns the WeightLex  
+ordering on the elements of <var>f</var> with the order on the alphabet
+given by <var>gensord</var> and the weights of the letters in the alphabet 
+being given by <var>wt</var>. 
+<p>
+<a name = "SSEC003.9"></a>
+<li><code>IsWeightLexOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+for an ordering <var>ord</var> on a family of associative words,
+returns <code>true</code> if and only if <var>ord</var> is a WeightLex ordering.
+<p>
+<a name = "SSEC003.10"></a>
+<li><code>WeightOfGenerators( </code><var>ord</var><code> ) A</code>
+<p>
+for a WeightLex ordering <var>ord</var>,
+returns a list <var>l</var> with length the size of the alphabet of the family.
+This list gives the weight of each of the letters of the alphabet
+which are used for WeightLex orderings with respect to the
+ordering given by <code>OrderingOnGenerators</code> (see&nbsp;<a href="CHAP029.htm#SSEC003.4">OrderingOnGenerators</a>).
+<p>
+<pre>
+gap&gt; f := FreeSemigroup(3);
+&lt;free semigroup on the generators [ s1, s2, s3 ]&gt;
+gap&gt; wtlex := WeightLexOrdering(f,[f.2,f.3,f.1],[3,2,1]);
+Ordering
+gap&gt; IsLessThanUnder(wtlex,f.1,f.2);
+true
+gap&gt; IsLessThanUnder(wtlex,f.3,f.2);
+true
+gap&gt; IsLessThanUnder(wtlex,f.3,f.1);
+false
+gap&gt; OrderingOnGenerators(wtlex);
+[ s2, s3, s1 ]
+gap&gt; WeightOfGenerators(wtlex);
+[ 3, 2, 1 ]
+</pre>
+<p>
+<a name = "SSEC003.11"></a>
+<li><code>BasicWreathProductOrdering( </code><var>fam</var><code> ) O</code>
+<li><code>BasicWreathProductOrdering( </code><var>fam</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>BasicWreathProductOrdering( </code><var>fam</var><code>, </code><var>gensord</var><code> ) O</code>
+<li><code>BasicWreathProductOrdering( </code><var>f</var><code> ) O</code>
+<li><code>BasicWreathProductOrdering( </code><var>f</var><code>, </code><var>alphabet</var><code> ) O</code>
+<li><code>BasicWreathProductOrdering( </code><var>f</var><code>, </code><var>gensord</var><code> ) O</code>
+<p>
+In the first form, for a family of associative words,
+<code>BasicWreathProductOrdering</code>
+returns the basic wreath product ordering on the elements of <var>fam</var>
+with the order in the alphabet being the default one.
+<p>
+In the second form, for a family of associative words and
+a list <var>alphabet</var>, <code>BasicWreathProductOrdering</code> returns the
+basic wreath product ordering on the elements of <var>fam</var> with the order 
+on the alphabet given by <var>alphabet</var>. 
+<p>
+In the third form, for a family of associative words and
+a list <var>gensorder</var> of the length of the alphabet,
+<code>BasicWreathProductOrdering</code> returns the 
+basic wreath product ordering on the elements of <var>fam</var> with the order 
+on the alphabet given by <var>gensord</var>. 
+<p>
+In the fourth form, for a free semigroup of a free monoid <var>f</var>,
+<code>BasicWreathProductOrdering</code>
+returns the basic wreath product ordering on the family of the 
+elements of <var>f</var> with the order in the alphabet being the default one.
+<p>
+In the fifth form, for a free semigroup or a free monoid <var>f</var>,
+and a list <var>alphabet</var> of generators, <code>BasicWreathProductOrdering</code> 
+returns the basic wreath product ordering on the family of the elements 
+of <var>f</var> with the order on the alphabet given by <var>alphabet</var>. 
+<p>
+In the sixth form, for a free semigroup or a free monoid <var>f</var>,
+and a list <var>gensorder</var>, <code>BasicWreathProductOrdering</code> 
+returns the basic wreath product ordering on the family of the elements 
+of <var>f</var> with the order on the alphabet given by <var>gensord</var>. 
+<p>
+<a name = "SSEC003.12"></a>
+<li><code>IsBasicWreathProductOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+<pre>
+gap&gt; f := FreeSemigroup(3);
+&lt;free semigroup on the generators [ s1, s2, s3 ]&gt;
+gap&gt; basic := BasicWreathProductOrdering(f,[2,3,1]);
+Ordering
+gap&gt; IsLessThanUnder(basic,f.3,f.1);
+true
+gap&gt; IsLessThanUnder(basic,f.3*f.2,f.1);
+true
+gap&gt; IsLessThanUnder(basic,f.3*f.2*f.1,f.1*f.3);
+false
+</pre>
+<p>
+<a name = "SSEC003.13"></a>
+<li><code>WreathProductOrdering( </code><var>fam</var><code>, </code><var>levels</var><code> ) O</code>
+<li><code>WreathProductOrdering( </code><var>fam</var><code>, </code><var>alphabet</var><code>, </code><var>levels</var><code> ) O</code>
+<li><code>WreathProductOrdering( </code><var>fam</var><code>, </code><var>gensord</var><code>, </code><var>levels</var><code> ) O</code>
+<li><code>WreathProductOrdering( </code><var>f</var><code>, </code><var>levels</var><code> ) O</code>
+<li><code>WreathProductOrdering( </code><var>f</var><code>, </code><var>alphabet</var><code>, </code><var>levels</var><code> ) O</code>
+<li><code>WreathProductOrdering( </code><var>f</var><code>, </code><var>gensord</var><code>, </code><var>levels</var><code> ) O</code>
+<p>
+returns the wreath product ordering of the
+family <var>fam</var> of associative words or a free semigroup/monoid <var>f</var>.
+The ordering on the generators may be omitted (in which case the default
+one is considered), or may be given either by a list
+<var>alphabet</var> consisting of the alphabet of the family in the appropriate
+ordering, or by a list <var>gensord</var>  giving the permutation of the alphabet. 
+It also needs a list <var>levels</var> giving the levels of each generator.
+Notice that this list gives the levels of the generators in the new 
+ordering (not necessarily the default one),
+i.e. <code></code><var>levels</var><code>[</code><var>i</var><code>]</code> is the level of the generator that comes <var>i</var>-th
+in the ordering of generators given by <var>alphabet</var> or <var>gensord</var>.
+<p>
+<a name = "SSEC003.14"></a>
+<li><code>IsWreathProductOrdering( </code><var>ord</var><code> ) P</code>
+<p>
+<a name = "SSEC003.15"></a>
+<li><code>LevelsOfGenerators( </code><var>ord</var><code> ) A</code>
+<p>
+for a wreath product ordering <var>ord</var>, returns the levels 
+of the generators as given at creation (with
+respect to <code>OrderingOnGenerators</code>; see&nbsp;<a href="CHAP029.htm#SSEC003.4">OrderingOnGenerators</a>).
+<p>
+<pre>
+gap&gt; f := FreeSemigroup(3);
+&lt;free semigroup on the generators [ s1, s2, s3 ]&gt;
+gap&gt; wrp := WreathProductOrdering(f,[1,2,3],[1,1,2,]);
+Ordering
+gap&gt; IsLessThanUnder(wrp,f.3,f.1);
+false
+gap&gt; IsLessThanUnder(wrp,f.3,f.2);
+false
+gap&gt; IsLessThanUnder(wrp,f.1,f.2);
+true
+gap&gt; LevelsOfGenerators(wrp);
+[ 1, 1, 2 ]
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP028.htm">Previous</a>] [<a href ="CHAP030.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

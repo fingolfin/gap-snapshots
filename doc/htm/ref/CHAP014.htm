@@ -1,0 +1,767 @@
+<html><head><title>[ref] 14 Integers</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP013.htm">Previous</a>] [<a href ="CHAP015.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>14 Integers</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP014.htm#SECT001">Elementary Operations for Integers</a>
+<li> <A HREF="CHAP014.htm#SECT002">Quotients and Remainders</a>
+<li> <A HREF="CHAP014.htm#SECT003">Prime Integers and Factorization</a>
+<li> <A HREF="CHAP014.htm#SECT004">Residue Class Rings</a>
+</ol><p>
+<p>
+One of the most fundamental datatypes in every programming language is
+the integer type.  <font face="Gill Sans,Helvetica,Arial">GAP</font> is no exception.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> integers are entered as a sequence of decimal digits
+optionally preceded by a <code>+</code> sign for positive integers or a <code>-</code> sign for
+negative integers.
+The size of integers in <font face="Gill Sans,Helvetica,Arial">GAP</font> is only limited by the amount of available
+memory, so you can compute with integers having thousands of digits.
+<p>
+<pre>
+gap&gt; -1234;
+-1234
+gap&gt; 123456789012345678901234567890123456789012345678901234567890;
+123456789012345678901234567890123456789012345678901234567890
+</pre>
+<p>
+Many more functions that are mainly related to the prime residue group of
+integers modulo an integer are described in chapter&nbsp;<a href="CHAP015.htm">Number Theory</a>,
+and functions dealing with combinatorics can be found
+in chapter&nbsp;<a href="CHAP017.htm">Combinatorics</a>.
+<p>
+<a name = ""></a>
+<li><code>Integers V</code>
+<a name = ""></a>
+<li><code>PositiveIntegers V</code>
+<a name = ""></a>
+<li><code>NonnegativeIntegers V</code>
+<p>
+These global variables represent the ring of integers and the semirings
+of positive and nonnegative integers, respectively.
+<p>
+<pre>
+gap&gt; Size( Integers ); 2 in Integers;
+infinity
+true
+</pre>
+<p>
+<a name = ""></a>
+<li><code>IsIntegers( </code><var>obj</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsPositiveIntegers( </code><var>obj</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsNonnegativeIntegers( </code><var>obj</var><code> ) C</code>
+<p>
+are the defining categories for the domains <code>Integers</code>,
+<code>PositiveIntegers</code>, and <code>NonnegativeIntegers</code>.
+<p>
+<pre>
+gap&gt; IsIntegers( Integers );  IsIntegers( Rationals );  IsIntegers( 7 );
+true
+false
+false
+</pre>
+<p>
+<code>Integers</code> is a subset of <code>Rationals</code>, which is a subset of <code>Cyclotomics</code>.
+See Chapter&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a> for arithmetic operations and comparison of
+integers.
+<p>
+<p>
+<h2><a name="SECT001">14.1 Elementary Operations for Integers</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsInt( </code><var>obj</var><code> ) C</code>
+<p>
+Every rational integer lies in the category <code>IsInt</code>,
+which is a subcategory of <code>IsRat</code> (see&nbsp;<a href="CHAP016.htm">Rational Numbers</a>).
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsPosInt( </code><var>obj</var><code> ) C</code>
+<p>
+Every positive integer lies in the category <code>IsPosInt</code>.
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>Int( </code><var>elm</var><code> ) A</code>
+<p>
+<code>Int</code> returns an integer <var>int</var> whose meaning depends on the type
+of <var>elm</var>.
+<p>
+If <var>elm</var> is a rational number (see&nbsp;<a href="CHAP016.htm">Rational Numbers</a>) then <var>int</var> is the
+integer part of the quotient of numerator and denominator of <var>elm</var>
+(see&nbsp;<a href="CHAP014.htm#SSEC002.1">QuoInt</a>).
+<p>
+If <var>elm</var> is an element of a finite prime field
+(see Chapter&nbsp;<a href="CHAP057.htm">Finite Fields</a>) then <var>int</var> is the smallest
+nonnegative integer such that <code></code><var>elm</var><code> = </code><var>int</var><code> * One( </code><var>elm</var><code> )</code>.
+<p>
+If <var>elm</var> is a string (see Chapter&nbsp;<a href="CHAP026.htm">Strings and Characters</a>) consisting of
+digits <code>'0'</code>, <code>'1'</code>, <font face="symbol">&#8230;</font>, <code>'9'</code>
+and <code>'-'</code> (at the first position) then <var>int</var> is the integer
+described by this string.
+The operation <code>String</code> (see&nbsp;<a href="CHAP026.htm#SSEC005.1">String</a>) can be used to compute a string for
+rational integers, in fact for all cyclotomics.
+<p>
+<pre>
+gap&gt; Int( 4/3 );  Int( -2/3 );
+1
+0
+gap&gt; int:= Int( Z(5) );  int * One( Z(5) );
+2
+Z(5)
+gap&gt; Int( "12345" );  Int( "-27" );  Int( "-27/3" );
+12345
+-27
+fail
+</pre>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>IsEvenInt( </code><var>n</var><code> ) F</code>
+<p>
+tests if the integer <var>n</var> is divisible by 2.
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>IsOddInt( </code><var>n</var><code> ) F</code>
+<p>
+tests if the integer <var>n</var> is not divisible by 2.
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>AbsInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>AbsInt</code> returns the absolute value of the integer <var>n</var>, i.e., <var>n</var> if <var>n</var>
+is positive, -<var>n</var> if <var>n</var> is negative and 0 if <var>n</var> is 0.
+<p>
+<code>AbsInt</code> is a special case of the general operation <code>EuclideanDegree</code>
+see&nbsp;<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>).
+<p>
+<a name = "I0"></a>
+
+See also <a href="CHAP018.htm#SSEC001.6">AbsoluteValue</a>.
+<pre>
+gap&gt; AbsInt( 33 );
+33
+gap&gt; AbsInt( -214378 );
+214378
+gap&gt; AbsInt( 0 );
+0
+</pre>
+<p>
+<a name = "SSEC001.7"></a>
+<li><code>SignInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>SignInt</code> returns the sign of the integer <var>n</var>, i.e., 1 if <var>n</var> is
+positive, -1 if <var>n</var> is negative and 0 if <var>n</var> is 0.
+<p>
+<a name = "I1"></a>
+
+<pre>
+gap&gt; SignInt( 33 );
+1
+gap&gt; SignInt( -214378 );
+-1
+gap&gt; SignInt( 0 );
+0
+</pre>
+<p>
+<a name = "SSEC001.8"></a>
+<li><code>LogInt( </code><var>n</var><code>, </code><var>base</var><code> ) F</code>
+<p>
+<code>LogInt</code>   returns  the  integer part  of  the logarithm of  the positive
+integer  <var>n</var> with  respect to   the positive integer   <var>base</var>, i.e.,  the
+largest positive integer <var>exp</var> such  that <i>base</i><sup><i>exp</i></sup>  <font face="symbol">&#8804;</font> <i>n</i>.  <code>LogInt</code>
+will signal an error if either <var>n</var> or <var>base</var> is not positive.
+<p>
+For <var>base</var> 2 this is very efficient because the internal binary
+representation of the integer is used. 
+<p>
+<pre>
+gap&gt; LogInt( 1030, 2 );
+10
+gap&gt; 2^10;
+1024
+gap&gt; LogInt( 1, 10 );
+0
+</pre>
+<p>
+<a name = "SSEC001.9"></a>
+<li><code>RootInt( </code><var>n</var><code> ) F</code>
+<li><code>RootInt( </code><var>n</var><code>, </code><var>k</var><code> ) F</code>
+<p>
+<code>RootInt</code> returns the integer part of the <var>k</var>th root  of the integer <var>n</var>.
+If the optional integer argument <var>k</var> is not given it defaults to 2, i.e.,
+<code>RootInt</code> returns the integer part of the square root in this case.
+<p>
+If  <var>n</var> is positive, <code>RootInt</code> returns  the  largest positive integer <i>r</i>
+such that <i>r</i><sup><i>k</i></sup>  <font face="symbol">&#8804;</font> <i>n</i>.  If <var>n</var>  is negative and  <var>k</var>  is  odd  <code>RootInt</code>
+returns <code>-RootInt( -</code><var>n</var><code>,  </code><var>k</var><code> )</code>.  If  <var>n</var> is negative   and <var>k</var> is  even
+<code>RootInt</code> will cause an error.  <code>RootInt</code> will also cause an error if <var>k</var>
+is 0 or negative.
+<p>
+<a name = "I2"></a>
+
+<a name = "I2"></a>
+<a name = "I3"></a>
+
+<pre>
+gap&gt; RootInt( 361 );
+19
+gap&gt; RootInt( 2 * 10^12 );
+1414213
+gap&gt; RootInt( 17000, 5 );
+7
+gap&gt; 7^5;
+16807
+</pre>
+<p>
+<a name = "SSEC001.10"></a>
+<li><code>SmallestRootInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>SmallestRootInt</code> returns the smallest root of the integer <var>n</var>.
+<p>
+The  smallest  root of an  integer <i>n</i>  is  the  integer <i>r</i>  of smallest
+absolute  value for which  a  positive integer <i>k</i> exists such  that <i>n</i> = <i>r</i><sup><i>k</i></sup>.
+<p>
+<a name = "I4"></a>
+
+<pre>
+gap&gt; SmallestRootInt( 2^30 );
+2
+gap&gt; SmallestRootInt( -(2^30) );
+-4
+</pre>
+<p>
+Note that (<font face="symbol">&#8722;</font>2)<sup>30</sup> = +(2<sup>30</sup>).
+<p>
+<pre>
+gap&gt; SmallestRootInt( 279936 );
+6
+gap&gt; LogInt( 279936, 6 );
+7
+gap&gt; SmallestRootInt( 1001 );
+1001
+</pre>
+<p>
+<a name = "SSEC001.11"></a>
+<li><code>Random( Integers )</code>
+<p>
+<code>Random</code> for integers returns
+pseudo random integers between -10 and
+10 distributed according to a binomial distribution.
+To  generate  uniformly  distributed  integers from   a  range,  use the
+construct 'Random( [ <var>low</var> .. <var>high</var> ] )'. (Also see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>.)
+<p>
+<p>
+<h2><a name="SECT002">14.2 Quotients and Remainders</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>QuoInt( </code><var>n</var><code>, </code><var>m</var><code> ) F</code>
+<p>
+<code>QuoInt</code> returns the integer part of the quotient of its integer
+operands.
+<p>
+If <var>n</var> and <var>m</var> are positive <code>QuoInt( </code><var>n</var><code>, </code><var>m</var><code> )</code> is the largest
+positive integer <var>q</var> such that <i>q</i>  * <i>m</i>   <font face="symbol">&#8804;</font> <i>n</i> .
+If <var>n</var> or <var>m</var> or both are negative the absolute value of the integer part
+of the quotient is the quotient of the absolute values of <var>n</var> and <var>m</var>,
+and the sign of it is the product of the signs of <var>n</var> and <var>m</var>.
+<p>
+<code>QuoInt</code> is used in a method for the general operation
+<code>EuclideanQuotient</code> (see&nbsp;<a href="CHAP054.htm#SSEC006.3">EuclideanQuotient</a>).
+<p>
+<a name = "I5"></a>
+
+<pre>
+gap&gt; QuoInt(5,3);  QuoInt(-5,3);  QuoInt(5,-3);  QuoInt(-5,-3);
+1
+-1
+-1
+1
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>BestQuoInt( </code><var>n</var><code>, </code><var>m</var><code> ) F</code>
+<p>
+<code>BestQuoInt</code> returns the best quotient <var>q</var> of the integers <var>n</var> and <var>m</var>.
+This is the quotient such that <code></code><var>n</var><code>-</code><var>q</var><code>*</code><var>m</var><code></code> has minimal absolute value.
+If there are two quotients whose remainders have the same absolute value,
+then the quotient with the smaller absolute value is chosen.
+<p>
+<pre>
+gap&gt; BestQuoInt( 5, 3 );  BestQuoInt( -5, 3 );
+2
+-2
+</pre>
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>RemInt( </code><var>n</var><code>, </code><var>m</var><code> ) F</code>
+<p>
+<code>RemInt</code> returns the remainder of its two integer operands.
+<p>
+If <var>m</var> is not equal to zero
+<code>RemInt( </code><var>n</var><code>, </code><var>m</var><code> ) = </code><var>n</var><code> - </code><var>m</var><code> * QuoInt( </code><var>n</var><code>, </code><var>m</var><code> )</code>.
+Note that the rules given for <code>QuoInt</code> imply that <code>RemInt( </code><var>n</var><code>, </code><var>m</var><code> )</code>
+has the same sign as <var>n</var> and its absolute value is strictly less than the
+absolute value of <var>m</var>.
+Note also that <code>RemInt( </code><var>n</var><code>, </code><var>m</var><code> ) = </code><var>n</var><code> mod </code><var>m</var><code></code> when both <var>n</var> and <var>m</var>
+are nonnegative.
+Dividing by 0 signals an error.
+<p>
+<code>RemInt</code> is used in a method for the general operation
+<code>EuclideanRemainder</code> (see&nbsp;<a href="CHAP054.htm#SSEC006.4">EuclideanRemainder</a>).
+<p>
+<a name = "I6"></a>
+
+<pre>
+gap&gt; RemInt(5,3);  RemInt(-5,3);  RemInt(5,-3);  RemInt(-5,-3);
+2
+-2
+2
+-2
+</pre>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>GcdInt( </code><var>m</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+<code>GcdInt</code> returns the greatest common divisor of its two integer operands
+<var>m</var> and <var>n</var>, i.e., the greatest integer that divides both <var>m</var> and <var>n</var>.
+The greatest common divisor is never negative, even if the arguments are.
+We define <code>GcdInt( </code><var>m</var><code>, 0 ) = GcdInt( 0, </code><var>m</var><code> ) = AbsInt( </code><var>m</var><code> )</code> and
+<code>GcdInt( 0, 0 ) = 0</code>.
+<p>
+<code>GcdInt</code> is a method used by the general function <code>Gcd</code> (see&nbsp;<a href="CHAP054.htm#SSEC007.1">Gcd</a>).
+<p>
+<pre>
+gap&gt; GcdInt( 123, 66 );
+3
+</pre>
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>Gcdex( </code><var>m</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+returns a record <var>g</var> describing the extended greatest common divisor of
+<var>m</var> and <var>n</var>.
+The component <code>gcd</code> is this gcd,
+the components <code>coeff1</code> and <code>coeff2</code> are integer cofactors such that
+<code></code><var>g</var><code>.gcd =  </code><var>g</var><code>.coeff1 * </code><var>m</var><code> + </code><var>g</var><code>.coeff2 * </code><var>n</var><code></code>,
+and the components <code>coeff3</code> and <code>coeff4</code> are integer cofactors such that
+<code>0 = </code><var>g</var><code>.coeff3 * </code><var>m</var><code> + </code><var>g</var><code>.coeff4 * </code><var>n</var><code></code>.
+<p>
+If <var>m</var> and <var>n</var> both are nonzero, <code>AbsInt( </code><var>g</var><code>.coeff1 )</code> is less than or
+equal to <code>AbsInt(</code><var>n</var><code>) / (2 * </code><var>g</var><code>.gcd)</code> and <code>AbsInt( </code><var>g</var><code>.coeff2 )</code> is less
+than or equal to <code>AbsInt(</code><var>m</var><code>) / (2 * </code><var>g</var><code>.gcd)</code>.
+<p>
+If <var>m</var> or <var>n</var> or both are zero <code>coeff3</code> is <code>-</code><var>n</var><code> / </code><var>g</var><code>.gcd</code> and
+<code>coeff4</code> is <code></code><var>m</var><code> / </code><var>g</var><code>.gcd</code>.
+<p>
+The coefficients always form a unimodular matrix, i.e.,
+the determinant <code></code><var>g</var><code>.coeff1 * </code><var>g</var><code>.coeff4 - </code><var>g</var><code>.coeff3 * </code><var>g</var><code>.coeff2</code>
+is 1 or <font face="symbol">&#8722;</font>1.
+<p>
+<pre>
+gap&gt; Gcdex( 123, 66 );
+rec( gcd := 3, coeff1 := 7, coeff2 := -13, coeff3 := -22, coeff4 := 41 )
+</pre>
+<p>
+This means 3 = 7 * 123 <font face="symbol">&#8722;</font> 13 * 66, 0 = <font face="symbol">&#8722;</font>22 * 123 + 41 * 66.
+<p>
+<pre>
+gap&gt; Gcdex( 0, -3 );
+rec( gcd := 3, coeff1 := 0, coeff2 := -1, coeff3 := 1, coeff4 := 0 )
+gap&gt; Gcdex( 0, 0 );
+rec( gcd := 0, coeff1 := 1, coeff2 := 0, coeff3 := 0, coeff4 := 1 )
+</pre>
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>LcmInt( </code><var>m</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+returns the least common multiple of the integers <var>m</var> and <var>n</var>.
+<p>
+<code>LcmInt</code> is a method used by the general function <code>Lcm</code>.
+<p>
+<pre>
+gap&gt; LcmInt( 123, 66 );
+2706
+</pre>
+<p>
+<a name = "SSEC002.7"></a>
+<li><code>CoefficientsQadic( </code><var>i</var><code>, </code><var>q</var><code> ) F</code>
+<p>
+returns the <var>q</var>-adic representation of the integer <var>i</var> as a list <var>l</var> of
+coefficients where <i>i</i> = <font face="symbol">&#8721;</font><sub><i>j</i>=0</sub> <i>q</i><sup><i>j</i></sup> &#183;<i>l</i>[<i>j</i>+1].
+<p>
+<a name = "SSEC002.8"></a>
+<li><code>CoefficientsMultiadic( </code><var>ints</var><code>, </code><var>int</var><code> ) F</code>
+<p>
+returns the multiadic expansion of the integer <var>int</var> modulo the integers
+given in <var>ints</var> (in ascending order).
+It returns a list of coefficients in the <strong>reverse</strong> order to that in <var>ints</var>.
+<p>
+<a name = "SSEC002.9"></a>
+<li><code>ChineseRem( </code><var>moduli</var><code>, </code><var>residues</var><code> ) F</code>
+<p>
+<code>ChineseRem</code> returns the combination   of   the  <var>residues</var>  modulo   the
+<var>moduli</var>, i.e., the  unique integer <var>c</var>  from <code>[0..Lcm(</code><var>moduli</var><code>)-1]</code> such
+that  <code></code><var>c</var><code>  = </code><var>residues</var><code>[i]</code> modulo <code></code><var>moduli</var><code>[i]</code>   for  all  <var>i</var>, if  it
+exists.  If no such combination exists <code>ChineseRem</code> signals an error.
+<p>
+Such a combination does exist if and only if
+<code></code><var>residues</var><code>[</code><var>i</var><code>]=</code><var>residues</var><code>[</code><var>k</var><code>]</code>  mod <code>Gcd(</code><var>moduli</var><code>[</code><var>i</var><code>],</code><var>moduli</var><code>[</code><var>k</var><code>])</code>
+for every pair <var>i</var>, <var>k</var>.  Note  that this implies that such a combination
+exists if the  moduli  are pairwise relatively prime.  This is called the
+Chinese remainder theorem.
+<p>
+<a name = "I7"></a>
+
+<pre>
+gap&gt; ChineseRem( [ 2, 3, 5, 7 ], [ 1, 2, 3, 4 ] );
+53
+gap&gt; ChineseRem( [ 6, 10, 14 ], [ 1, 3, 5 ] );
+103
+</pre>
+<pre>
+gap&gt; ChineseRem( [ 6, 10, 14 ], [ 1, 2, 3 ] );
+Error, the residues must be equal modulo 2 called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; gap&gt; 
+</pre>
+<p>
+<a name = "SSEC002.10"></a>
+<li><code>PowerModInt( </code><var>r</var><code>, </code><var>e</var><code>, </code><var>m</var><code> ) F</code>
+<p>
+returns <i>r</i><sup><i>e</i></sup> mod <i>m</i> for integers <var>r</var>,<var>e</var> and <var>m</var> (<i>e</i> <font face="symbol">&#8805;</font> 0).
+Note that using <code></code><var>r</var><code> ^ </code><var>e</var><code> mod </code><var>m</var><code></code> will generally  be slower,
+because it can not reduce intermediate results the way <code>PowerModInt</code>
+does but would compute <code></code><var>r</var><code>^</code><var>e</var><code></code> first and then reduce the result
+afterwards.
+<p>
+<code>PowerModInt</code> is a method for the general operation <code>PowerMod</code>.
+<p>
+<p>
+<h2><a name="SECT003">14.3 Prime Integers and Factorization</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>Primes V</code>
+<p>
+<code>Primes</code> is a strictly sorted list of the 168 primes less than 1000.
+<p>
+This is used in <code>IsPrimeInt</code> and <code>FactorsInt</code> to cast out small primes
+quickly.
+<p>
+<pre>
+gap&gt; Primes[1];
+2
+gap&gt; Primes[100];
+541
+</pre>
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>IsPrimeInt( </code><var>n</var><code> ) F</code>
+<a name = "SSEC003.2"></a>
+<li><code>IsProbablyPrimeInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>IsPrimeInt</code> returns <code>false</code>  if it can  prove that <var>n</var>  is composite and
+<code>true</code> otherwise.
+By  convention <code>IsPrimeInt(0) = IsPrimeInt(1) = false</code>
+and we define <code>IsPrimeInt( -</code><var>n</var><code> ) = IsPrimeInt( </code><var>n</var><code> )</code>.
+<p>
+<code>IsPrimeInt</code> will return  <code>true</code> for every prime <i>n</i>.  <code>IsPrimeInt</code>  will
+return <code>false</code> for all composite <i>n</i>  &lt;  10<sup>13</sup> and for all composite <i>n</i>
+that have   a factor  <i>p</i>  &lt;  1000.   So for  integers <i>n</i>  &lt;  10<sup>13</sup>,
+<code>IsPrimeInt</code> is  a    proper primality test.    It  is  conceivable  that
+<code>IsPrimeInt</code> may  return <code>true</code> for some  composite <i>n</i>  &gt;  10<sup>13</sup>, but no
+such <i>n</i> is currently known.  So for integers <i>n</i>  &gt;  10<sup>13</sup>, <code>IsPrimeInt</code>
+is a  probable-primality test. Therefore <code>IsPrimeInt</code> will issue a
+warning when called with an argument  &gt; 10<sup>13</sup>. (The function
+<code>IsProbablyPrimeInt</code> will do the same calculations but not issue a
+warning.)
+<p>
+If composites  that fool  <code>IsPrimeInt</code> do
+exist,  they would be  extremely rare, and finding one  by  pure chance
+might be 
+less likely than finding a bug in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+We would appreciate being informed about any example of a composite
+number <var>n</var> for which <code>IsPrimeInt</code> returns <code>true</code>.
+<p>
+<code>IsPrimeInt</code> is a deterministic algorithm, i.e., the computations involve
+no random numbers, and repeated calls will always return the same result.
+<code>IsPrimeInt</code> first   does trial divisions  by the  primes less than 1000.
+Then it tests  that  <i>n</i>  is a   strong  pseudoprime w.r.t. the base   2.
+Finally it  tests whether <i>n</i> is  a Lucas pseudoprime w.r.t. the smallest
+quadratic nonresidue of  <i>n</i>.  A better  description can be found in  the
+comment in the library file <code>integer.gi</code>.
+<p>
+The time taken by <code>IsPrimeInt</code> is approximately proportional to the third
+power  of  the number  of  digits of <var>n</var>.   Testing numbers  with several
+hundreds digits is quite feasible.
+<p>
+<code>IsPrimeInt</code> is a method for the general operation <code>IsPrime</code>.
+<p>
+<pre>
+gap&gt; IsPrimeInt( 2^31 - 1 );
+true
+gap&gt; IsPrimeInt( 10^42 + 1 );
+false
+</pre>
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>IsPrimePowerInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>IsPrimePowerInt</code> returns <code>true</code> if the integer <var>n</var>  is a prime power and
+<code>false</code> otherwise.
+<p>
+<i>n</i> is a <strong>prime power</strong> if there exists a prime <i>p</i> and a positive integer
+<i>i</i> such that <i>p</i><sup><i>i</i></sup> = <i>n</i>.  If <i>n</i> is negative the  condition is that there
+must exist a negative prime <i>p</i> and an odd positive integer <i>i</i> such that
+<i>p</i><sup><i>i</i></sup> = <i>n</i>.  1 and -1 are not prime powers.
+<p>
+Note    that <code>IsPrimePowerInt</code>      uses       <code>SmallestRootInt</code>     (see
+<a href="CHAP014.htm#SSEC001.10">SmallestRootInt</a>) and a probable-primality test (see <a href="CHAP014.htm#SSEC003.2">IsPrimeInt</a>).
+<p>
+<pre>
+gap&gt; IsPrimePowerInt( 31^5 );
+true
+gap&gt; IsPrimePowerInt( 2^31-1 );  # 2^31-1 is actually a prime
+true
+gap&gt; IsPrimePowerInt( 2^63-1 );
+false
+gap&gt; Filtered( [-10..10], IsPrimePowerInt );
+[ -8, -7, -5, -3, -2, 2, 3, 4, 5, 7, 8, 9 ]
+</pre>
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>NextPrimeInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>NextPrimeInt</code> returns the smallest prime  which is strictly larger  than
+the integer <var>n</var>.
+<p>
+Note  that     <code>NextPrimeInt</code>  uses  a    probable-primality  test   (see
+<a href="CHAP014.htm#SSEC003.2">IsPrimeInt</a>).
+<p>
+<pre>
+gap&gt; NextPrimeInt( 541 ); NextPrimeInt( -1 );
+547
+2
+</pre>
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>PrevPrimeInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>PrevPrimeInt</code> returns the largest prime  which is  strictly smaller than
+the integer <var>n</var>.
+<p>
+Note  that    <code>PrevPrimeInt</code>   uses   a  probable-primality    test  (see
+<a href="CHAP014.htm#SSEC003.2">IsPrimeInt</a>).
+<p>
+<pre>
+gap&gt; PrevPrimeInt( 541 ); PrevPrimeInt( 1 );
+523
+-2
+</pre>
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>FactorsInt( </code><var>n</var><code> ) F</code>
+<li><code>FactorsInt( </code><var>n</var><code> : RhoTrials := </code><var>trials</var><code> ) F</code>
+<p>
+<code>FactorsInt</code> returns a list of prime factors of the integer <var>n</var>.
+<p>
+If the <var>i</var>th power of a prime divides <var>n</var> this prime appears <var>i</var> times.
+The list is sorted, that is the smallest prime factors come first.
+The first element has the same sign as <var>n</var>, the others are positive.
+For any integer <var>n</var> it holds that <code>Product( FactorsInt( </code><var>n</var><code> ) ) = </code><var>n</var><code></code>.
+<p>
+Note that <code>FactorsInt</code> uses a probable-primality test (see&nbsp;<a href="CHAP014.htm#SSEC003.2">IsPrimeInt</a>).
+Thus <code>FactorsInt</code> might return a list which contains composite integers.
+<p>
+The time taken by   <code>FactorsInt</code>  is approximately  proportional to   the
+square root of the second largest prime factor  of <var>n</var>, which is the last
+one that <code>FactorsInt</code>  has to find,   since the largest  factor is simply
+what remains when all others have been removed.  Thus the time is roughly
+bounded by  the fourth  root of <var>n</var>.   <code>FactorsInt</code> is guaranteed to find
+all factors   less than  10<sup>6</sup>  and will find  most    factors less than
+10<sup>10</sup>.    If <var>n</var>    contains   multiple  factors   larger  than  that
+<code>FactorsInt</code> may not be able to factor <var>n</var> and will then signal an error.
+<p>
+<code>FactorsInt</code> is used in a method for the general operation <code>Factors</code>.
+<p>
+In the second form, FactorsInt calls FactorsRho with a limit of <var>trials</var>
+on the number of trials is performs. The  default is 8192.
+<p>
+<pre>
+gap&gt; FactorsInt( -Factorial(6) );
+[ -2, 2, 2, 2, 3, 3, 5 ]
+gap&gt; Set( FactorsInt( Factorial(13)/11 ) );
+[ 2, 3, 5, 7, 13 ]
+gap&gt; FactorsInt( 2^63 - 1 );
+[ 7, 7, 73, 127, 337, 92737, 649657 ]
+gap&gt; FactorsInt( 10^42 + 1 );
+#I  beyond the guaranteed bound of the probabilistic primality test
+[ 29, 101, 281, 9901, 226549, 121499449, 4458192223320340849 ]
+</pre>
+<p>
+<a name = "SSEC003.7"></a>
+<li><code>PrintFactorsInt( </code><var>n</var><code> ) F</code>
+<p>
+prints the prime factorization of the integer <var>n</var> in human-readable
+form.
+<p>
+<pre>
+gap&gt; PrintFactorsInt( Factorial( 7 ) ); Print( "\n" );
+2^4*3^2*5*7
+</pre>
+<p>
+<a name = "SSEC003.8"></a>
+<li><code>PrimePowersInt( </code><var>n</var><code> ) F</code>
+<p>
+returns the prime factorization of the integer <var>n</var> as a list
+[ <i>p</i><sub>1</sub>, <i>e</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>p</i><sub><i>n</i></sub>, <i>e</i><sub><i>n</i></sub> ] with <i>n</i> = <font face="symbol">&#8719;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>p</i><sub><i>i</i></sub><sup><i>e</i><sub><i>i</i></sub></sup>.
+<p>
+<pre>
+gap&gt; PrimePowersInt( Factorial( 7 ) );
+[ 2, 4, 3, 2, 5, 1, 7, 1 ]
+</pre>
+<p>
+<a name = "SSEC003.9"></a>
+<li><code>DivisorsInt( </code><var>n</var><code> ) F</code>
+<p>
+<code>DivisorsInt</code> returns a list of all divisors  of  the  integer  <var>n</var>.  The
+list is sorted, so that it starts with 1 and  ends  with <var>n</var>.  We  define
+that <code>Divisors( -</code><var>n</var><code> ) = Divisors( </code><var>n</var><code> )</code>.
+<p>
+Since the  set of divisors of 0 is infinite calling <code>DivisorsInt( 0 )</code>
+causes an error.
+<p>
+<code>DivisorsInt</code> may call <code>FactorsInt</code> to obtain the prime factors.
+<code>Sigma</code> and <code>Tau</code> (see&nbsp;<a href="CHAP015.htm#SSEC004.1">Sigma</a> and <a href="CHAP015.htm#SSEC004.2">Tau</a>) compute the sum and the
+number of positive divisors, respectively.
+<p>
+<a name = "I8"></a>
+
+<pre>
+gap&gt; DivisorsInt( 1 ); DivisorsInt( 20 ); DivisorsInt( 541 );
+[ 1 ]
+[ 1, 2, 4, 5, 10, 20 ]
+[ 1, 541 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">14.4 Residue Class Rings</a></h2>
+<p><p>
+<a name = "I9"></a>
+
+<a name = "SSEC004.1"></a>
+<li><code></code><var>r</var><code> / </code><var>s</var><code> mod </code><var>n</var><code></code>
+<p>
+If <var>r</var>, <var>s</var> and <var>n</var> are integers, <code></code><var>r</var><code> / </code><var>s</var><code></code> as a  reduced  fraction  is
+<code></code><var>p</var><code> / </code><var>q</var><code></code>, and <var>q</var> and <var>n</var> are coprime, then <code></code><var>r</var><code> /  </code><var>s</var><code>  mod  </code><var>n</var><code></code>  is
+defined to be the product of <var>p</var> and the inverse of <var>q</var> modulo  <var>n</var>.  See
+Section&nbsp;<a href="CHAP004.htm#SECT012">Arithmetic Operators</a> for more details and definitions.
+<p>
+With the above definition, <code>4 / 6 mod 32</code> equals <code>2 / 3 mod 32</code> and hence
+exists (and is equal to 22), despite the  fact  that  6  has  no  inverse
+modulo 32.
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>ZmodnZ( </code><var>n</var><code> ) F</code>
+<a name = "SSEC004.2"></a>
+<li><code>ZmodpZ( </code><var>p</var><code> ) F</code>
+<a name = "SSEC004.2"></a>
+<li><code>ZmodpZNC( </code><var>p</var><code> ) F</code>
+<p>
+<code>ZmodnZ</code> returns a ring <i>R</i> isomorphic to the residue class ring of the
+integers modulo the positive integer <var>n</var>.
+The element corresponding to the residue class of the integer <i>i</i> in this
+ring can be obtained by <i>i</i> * <tt>One</tt>( <i>R</i> ), and a representative of the
+residue class corresponding to the element <i>x</i>  <font face="symbol">&#8712;</font> <i>R</i> can be computed by
+<tt>Int</tt>( <i>x</i> ).
+<p>
+<a name = "I10"></a>
+
+<code>ZmodnZ( </code><var>n</var><code> )</code> is equivalent to <code>Integers mod </code><var>n</var><code></code>.
+<p>
+<code>ZmodpZ</code> does the same if the argument <var>p</var> is a prime integer,
+additionally the result is a field.
+<code>ZmodpZNC</code> omits the check whether <var>p</var> is a prime.
+<p>
+Each ring returned by these functions contains the whole family of its
+elements
+if <i>n</i> is not a prime, and is embedded into the family of finite field
+elements of characteristic <i>n</i> if <i>n</i> is a prime.
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>ZmodnZObj( </code><var>Fam</var><code>, </code><var>r</var><code> ) O</code>
+<li><code>ZmodnZObj( </code><var>r</var><code>, </code><var>n</var><code> ) O</code>
+<p>
+If the first argument is a residue class family <var>Fam</var> then <code>ZmodnZObj</code>
+returns the element in <var>Fam</var> whose coset is represented by the integer
+<var>r</var>.
+If the two arguments are an integer <var>r</var> and a positive integer <var>n</var> then
+<code>ZmodnZObj</code> returns the element in <code>ZmodnZ( </code><var>n</var><code> )</code> (see&nbsp;<a href="CHAP014.htm#SSEC004.2">ZmodnZ</a>)
+whose coset is represented by the integer <var>r</var>.
+<p>
+<pre>
+gap&gt; r:= ZmodnZ(15);
+(Integers mod 15)
+gap&gt; fam:=ElementsFamily(FamilyObj(r));;
+gap&gt; a:= ZmodnZObj(fam,9);
+ZmodnZObj( 9, 15 )
+gap&gt; a+a;
+ZmodnZObj( 3, 15 )
+gap&gt; Int(a+a);
+3
+</pre>
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>IsZmodnZObj( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC004.4"></a>
+<li><code>IsZmodnZObjNonprime( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC004.4"></a>
+<li><code>IsZmodpZObj( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC004.4"></a>
+<li><code>IsZmodpZObjSmall( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC004.4"></a>
+<li><code>IsZmodpZObjLarge( </code><var>obj</var><code> ) C</code>
+<p>
+The elements in the rings <i>Z</i> / <i>n</i> <i>Z</i> are in the category <code>IsZmodnZObj</code>.
+If <i>n</i> is a prime then the elements are of course also in the category
+<code>IsFFE</code> (see&nbsp;<a href="CHAP057.htm#SSEC001.1">IsFFE</a>), otherwise they are in <code>IsZmodnZObjNonprime</code>.
+<code>IsZmodpZObj</code> is an abbreviation of <code>IsZmodnZObj and IsFFE</code>.  This
+category is the disjoint union of <code>IsZmodpZObjSmall</code> and
+<code>IsZmodpZObjLarge</code>, the former containing all elements with <i>n</i> at most
+<code>MAXSIZE_GF_INTERNAL</code>.
+<p>
+The reasons to distinguish the prime case from the nonprime case are
+<ul>
+<li>
+  that objects in <code>IsZmodnZObjNonprime</code> have an external representation
+  (namely the residue in the range [ 0, 1, <font face="symbol">&#8230;</font>, <i>n</i><font face="symbol">&#8722;</font>1 ]),
+<li>
+  that the comparison of elements can be defined as comparison of the
+  residues, and
+<li>
+  that the elements lie in a family of type <code>IsZmodnZObjNonprimeFamily</code>
+  (note that for prime <i>n</i>, the family must be an <code>IsFFEFamily</code>).
+</ul>
+<p>
+The reasons to distinguish the small and the large case are
+that for small <i>n</i> the elements must be compatible with the internal
+representation of finite field elements, whereas we are free to define
+comparison as comparison of residues for large <i>n</i>.
+<p>
+Note that we <strong>cannot</strong> claim that every finite field element of degree 1
+is in <code>IsZmodnZObj</code>, since finite field elements in internal
+representation may not know that they lie in the prime field.
+<p>
+The residue class rings are rings, thus all operations for rings (see
+Chapter&nbsp;<a href="CHAP054.htm">Rings</a>) apply.
+See also Chapters&nbsp;<a href="CHAP057.htm">Finite fields</a> and <a href="CHAP015.htm">Number theory</a>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP013.htm">Previous</a>] [<a href ="CHAP015.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,559 @@
+% This file was created automatically from numtheor.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  numtheor.msk                GAP documentation            Martin Schoenert
+%A                                                           Alexander Hulpke
+%%
+%A  @(#)$Id: numtheor.msk,v 1.17 2003/09/10 10:59:31 gap Exp $
+%%
+%Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+\Chapter{Number Theory}
+
+\index{prime residue group}
+
+{\GAP} provides a couple of elementary number theoretic functions.
+Most of these deal with the group of integers coprime to $m$,
+called the *prime residue group*.
+$\phi(m)$ (see~"Phi") is the order of this group,
+$\lambda(m)$ (see~"Lambda") the exponent.
+If and only if $m$ is 2, 4, an odd prime power $p^e$,
+or twice an odd prime power $2 p^e$, this group is cyclic.
+In this case the generators  of the group, i.e., elements of order
+$\phi(m)$, are called *primitive roots* (see~"PrimitiveRootMod",
+"IsPrimitiveRootMod").
+
+Note that neither the arguments nor the return values of the functions
+listed below are groups or group elements in the sense of {\GAP}.
+The arguments are simply integers.
+
+
+
+\>`InfoNumtheor' V
+
+`InfoNumtheor' is the info class (see~"Info Functions") for the
+functions in the number theory chapter.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Prime Residues}
+
+\>PrimeResidues( <m> )!{function} F
+
+`PrimeResidues' returns the set of integers from the range `0..Abs(<m>)-1'
+that are coprime to the integer <m>.
+
+`Abs(<m>)' must be less than $2^{28}$, otherwise the set would probably be
+too large anyhow.
+
+
+\index{prime residue group}
+
+\beginexample
+gap> PrimeResidues( 0 );  PrimeResidues( 1 );  PrimeResidues( 20 );
+[  ]
+[ 0 ]
+[ 1, 3, 7, 9, 11, 13, 17, 19 ]
+\endexample
+
+\>Phi( <m> ) F
+
+`Phi' returns the number $\phi(<m>)$ of positive integers less than the
+positive integer <m> that are coprime to <m>.
+
+Suppose that $m = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$.  Then  $\phi(m)$
+is $p_1^{e_1-1} (p_1-1) p_2^{e_2-1} (p_2-1) \cdots  p_k^{e_k-1} (p_k-1)$.
+
+
+\index{order!of the prime residue group}
+\index{prime residue group!order}
+\atindex{Euler's totient function}{@Euler's totient function}
+
+\beginexample
+gap> Phi( 12 );
+4
+gap> Phi( 2^13-1 );  # this proves that 2^(13)-1 is a prime
+8190
+gap> Phi( 2^15-1 );
+27000
+\endexample
+
+\>Lambda( <m> ) F
+
+`Lambda' returns the exponent $\lambda(<m>)$ of the group of prime
+residues modulo the integer <m>.
+
+$\lambda(<m>)$ is the smallest positive integer $l$ such that for every
+$a$ relatively prime to <m> we have $a^l \equiv 1 \pmod{<m>}$.
+Fermat's theorem asserts $a^{\phi(<m>)} \equiv 1 \pmod{<m>}$;
+thus $\lambda(m)$ divides $\phi(m)$ (see~"Phi").
+
+Carmichael's theorem states that $\lambda$ can be computed as follows:
+$\lambda(2) = 1$, $\lambda(4) = 2$ and $\lambda(2^e) = 2^{e-2}$
+if $3 \le e$,
+$\lambda(p^e) = (p-1) p^{e-1}$ (i.e. $\phi(m)$) if $p$ is an odd prime
+and
+$\lambda(n*m) = `Lcm'( \lambda(n), \lambda(m) )$ if $n, m$ are coprime.
+
+Composites for which $\lambda(m)$ divides $m - 1$ are called Carmichaels.
+If $6k+1$, $12k+1$ and $18k+1$ are primes their product is such a number.
+There are only  1547  Carmichaels below $10^{10}$ but  455052511  primes.
+
+
+\atindex{Carmichael's lambda function}{@Carmichael's lambda function}
+\index{prime residue group!exponent}
+\index{exponent!of the prime residue group}
+
+\beginexample
+gap> Lambda( 10 );
+4
+gap> Lambda( 30 );
+4
+gap> Lambda( 561 );  # 561 is the smallest Carmichael number
+80
+\endexample
+
+\>GeneratorsPrimeResidues( <n> ) F
+
+Let <n> be a positive integer.
+`GeneratorsPrimeResidues' returns a description of generators of the
+group of prime residues modulo <n>.
+The return value is a record with components
+\beginitems
+`primes': &
+    a list of the prime factors of <n>,
+
+`exponents': &
+    a list of the exponents of these primes in the factorization of <n>,
+    and
+
+`generators': &
+    a list describing generators of the group of prime residues;
+    for the prime factor $2$, either a primitive root or a list of two
+    generators is stored,
+    for each other prime factor of <n>, a primitive root is stored.
+\enditems
+
+
+
+\beginexample
+gap> GeneratorsPrimeResidues( 1 );
+rec( primes := [  ], exponents := [  ], generators := [  ] )
+gap> GeneratorsPrimeResidues( 4*3 );
+rec( primes := [ 2, 3 ], exponents := [ 2, 1 ], generators := [ 7, 5 ] )
+gap> GeneratorsPrimeResidues( 8*9*5 );
+rec( primes := [ 2, 3, 5 ], exponents := [ 3, 2, 1 ], 
+  generators := [ [ 271, 181 ], 281, 217 ] )
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Primitive Roots and Discrete Logarithms}
+
+\>OrderMod( <n>, <m> ) F
+
+`OrderMod' returns the multiplicative order of the integer <n> modulo the
+positive integer <m>.
+If <n> and <m> are not coprime the order of <n> is not defined
+and `OrderMod' will return 0.
+
+If <n> and <m> are relatively prime the multiplicative order of <n>
+modulo <m> is the smallest positive integer $i$ such that 
+$<n>^i \equiv 1 \pmod{<m>}$.
+If the group of prime residues modulo <m> is cyclic then each element
+of maximal order is called a primitive root modulo <m>
+(see~"IsPrimitiveRootMod").
+
+`OrderMod' usually spends most of its time factoring <m> and $\phi(<m>)$
+(see~"FactorsInt").
+
+
+\index{multiplicative order of an integer}
+
+\beginexample
+gap> OrderMod( 2, 7 );
+3
+gap> OrderMod( 3, 7 );  # 3 is a primitive root modulo 7
+6
+\endexample
+
+\>LogMod( <n>, <r>, <m> ) F
+\>LogModShanks( <n>, <r>, <m> ) F
+
+computes the discrete <r>-logarithm of the integer <n> modulo the integer
+<m>.
+It returns a number <l> such that $<r>^{<l>}\equiv <n>\pmod{<m>}$
+if such a number exists.
+Otherwise `fail' is returned.
+
+`LogModShanks' uses the Baby Step - Giant Step Method of Shanks (see for
+example section 5.4.1 in \cite{Coh93} and in general
+requires more memory than a call to `LogMod'.
+
+
+\index{logarithm!discrete}
+
+\beginexample
+gap> l:= LogMod( 2, 5, 7 );  5^l mod 7 = 2;
+4
+true
+gap> LogMod( 1, 3, 3 );  LogMod( 2, 3, 3 );
+0
+fail
+\endexample
+
+\>PrimitiveRootMod( <m>[, <start>] ) F
+
+`PrimitiveRootMod' returns the smallest primitive root modulo the
+positive integer <m> and `fail' if no such primitive root exists.
+If the optional second integer argument <start> is given
+`PrimitiveRootMod' returns the smallest primitive root that is strictly
+larger than <start>.
+
+
+\index{primitive root modulo an integer}
+\index{prime residue group!generator}
+\index{generator!of the prime residue group}
+
+\beginexample
+gap> PrimitiveRootMod( 409 );      # largest primitive root for a prime less than 2000
+21
+gap> PrimitiveRootMod( 541, 2 );
+10
+gap> PrimitiveRootMod( 337, 327 ); # 327 is the largest primitive root mod 337
+fail
+gap> PrimitiveRootMod( 30 );       # there exists no primitive root modulo 30
+fail
+\endexample
+
+\>IsPrimitiveRootMod( <r>, <m> ) F
+
+`IsPrimitiveRootMod' returns  `true' if the  integer <r>  is a  primitive
+root modulo the positive integer <m> and `false' otherwise.   If  <r>  is
+less than 0 or larger than <m> it is replaced by its remainder.
+
+
+\index{test!for a primitive root}
+\index{prime residue group!generator}
+\index{generator!of the prime residue group}
+
+\beginexample
+gap> IsPrimitiveRootMod( 2, 541 );
+true
+gap> IsPrimitiveRootMod( -539, 541 );  # same computation as above;
+true
+gap> IsPrimitiveRootMod( 4, 541 );
+false
+gap> ForAny( [1..29], r -> IsPrimitiveRootMod( r, 30 ) );
+false
+gap> # there is no a primitive root modulo 30
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Roots Modulo Integers}
+
+\>Jacobi( <n>, <m> ) F
+
+`Jacobi'  returns  the value of  the *Jacobi symbol*  of  the integer <n>
+modulo the integer <m>.
+
+Suppose that $<m> = p_1 p_2 \cdots p_k$ is a product of primes, not
+necessarily distinct.  Then for <n> coprime to <m>  the Jacobi  symbol is
+defined by $J(<n>/<m>) =  L(<n>/p_1) L(<n>/p_2) \cdots  L(<n>/p_k)$, where
+$L(<n>/p)$ is the Legendre symbol (see~"Legendre").   By convention 
+$J(<n>/1) = 1$.  If the gcd of <n> and <m> is larger than 1 we define 
+$J(<n>/<m>) = 0$.
+
+If <n> is a *quadratic residue* modulo <m>, i.e., if there exists an $r$
+such that  $r^2 \equiv <n> \pmod{<m>}$  then $J(<n>/<m>) = 1$.  However,
+$J(<n>/<m>) = 1$ implies the existence of such an $r$ only if <m> is a 
+prime.
+
+`Jacobi' is very efficient, even for large values of <n> and <m>,  it  is
+about as fast as the Euclidean algorithm (see~"Gcd").
+
+
+\index{quadratic residue}
+\index{residue!quadratic}
+
+\beginexample
+gap> Jacobi( 11, 35 );  # 9^2 = 11 mod 35
+1
+gap> Jacobi( 6, 35 );   # it is -1, thus there is no r such that r^2 = 6 mod 35
+-1
+gap> Jacobi( 3, 35 );   # it is 1 even though there is no r with r^2 = 3 mod 35
+1
+\endexample
+
+\>Legendre( <n>, <m> ) F
+
+`Legendre' returns  the value of the *Legendre symbol* of the integer <n>
+modulo the positive integer <m>.
+
+The value  of  the Legendre  symbol $L(<n>/<m>)$ is 1 if  <n> is a 
+*quadratic residue* modulo <m>, i.e., if there exists an integer $r$ such
+that $r^2 \equiv n \pmod{<m>}$ and $-1$ otherwise.
+
+If a root of <n> exists it can be found by `RootMod' (see "RootMod").
+
+While the value of the Legendre symbol usually  is only defined for <m> a
+prime, we have extended the  definition to include composite moduli  too.
+The  Jacobi  symbol  (see "Jacobi")  is    another generalization  of the
+Legendre symbol for composite moduli that is  much  cheaper  to  compute,
+because it does not need the factorization of <m> (see "FactorsInt").
+
+A description of the Jacobi symbol, the Legendre symbol, and related
+topics can be found  in \cite{Baker84}.
+
+
+\index{quadratic residue}
+\index{residue!quadratic}
+
+\beginexample
+gap> Legendre( 5, 11 );  # 4^2 = 5 mod 11
+1
+gap> Legendre( 6, 11 );  # it is -1, thus there is no r such that r^2 = 6 mod 11
+-1
+gap> Legendre( 3, 35 );  # it is -1, thus there is no r such that r^2 = 3 mod 35
+-1
+\endexample
+
+\>RootMod( <n>[, <k>], <m> ) F
+
+`RootMod' computes a <k>th root of the integer <n> modulo the positive
+integer <m>, i.e., a $r$ such that $r^{<k>} \equiv <n> \pmod{<m>}$.
+If no such root exists `RootMod' returns `fail'.
+If only the arguments <n> and <m> are given,
+the default value for <k> is $2$.
+
+In the current implementation <k> must be a prime.
+
+A square root of <n> exists only if `Legendre(<n>,<m>) = 1'
+(see~"Legendre").
+If <m> has $r$ different prime factors then  there are $2^r$  different
+roots of <n> mod  <m>.  It is  unspecified  which  one `RootMod' returns.
+You can, however, use `RootsMod' (see~"RootsMod") to compute the full set
+of roots.
+
+`RootMod' is efficient even for large values of <m>, in fact the  most
+time is usually spent factoring <m> (see "FactorsInt").
+
+
+\index{quadratic residue}
+\index{residue!quadratic}
+\index{root!of an integer modulo another}
+
+\beginexample
+gap> RootMod( 64, 1009 );  # note 'RootMod' does not return 8 in this case but -8;
+1001
+gap> RootMod( 64, 3, 1009 );
+518
+gap> RootMod( 64, 5, 1009 );
+656
+gap> List( RootMod( 64, 1009 ) * RootsUnityMod( 1009 ),
+>          x -> x mod 1009 );  # set of all square roots of 64 mod 1009
+[ 1001, 8 ]
+\endexample
+
+\>RootsMod( <n>[, <k>], <m> ) F
+
+`RootsMod' computes the set of <k>th roots of the integer <n>
+modulo the positive integer <m>, i.e., a $r$ such that 
+$r^{<k>} \equiv <n> \pmod{<m>}$.
+If only the arguments <n> and <m> are given,
+the default value for <k> is $2$.
+
+In the current implementation <k> must be a prime.
+
+
+
+\beginexample
+gap> RootsMod( 1, 7*31 );  # the same as `RootsUnityMod( 7*31 )'
+[ 1, 92, 125, 216 ]
+gap> RootsMod( 7, 7*31 );
+[ 21, 196 ]
+gap> RootsMod( 5, 7*31 );
+[  ]
+gap> RootsMod( 1, 5, 7*31 );
+[ 1, 8, 64, 78, 190 ]
+\endexample
+
+\>RootsUnityMod( [<k>, ] <m> ) F
+
+`RootsUnityMod' returns the set of <k>-th roots of unity modulo the
+positive integer <m>, i.e.,
+the list of all solutions $r$ of $r^{<k>} \equiv <n> \pmod{<m>}$.
+If only the argument <m> is given, the default value for <k> is $2$.
+
+In  general  there are  $<k>^n$ such  roots if  the  modulus <m> has  $n$
+different prime factors $p$ such that $p \equiv 1 \pmod{<k>}$. If $<k>^2$
+divides <m> then there are $<k>^{n+1}$ such roots; and especially if 
+$<k> = 2$  and 8 divides <m> there are $2^{n+2}$ such roots.
+
+In the current implementation <k> must be a prime.
+
+
+\index{modular roots}
+\index{root!of 1 modulo an integer}
+
+\beginexample
+gap> RootsUnityMod( 7*31 );  RootsUnityMod( 3, 7*31 );
+[ 1, 92, 125, 216 ]
+[ 1, 25, 32, 36, 67, 149, 156, 191, 211 ]
+gap> RootsUnityMod( 5, 7*31 );
+[ 1, 8, 64, 78, 190 ]
+gap> List( RootMod( 64, 1009 ) * RootsUnityMod( 1009 ),
+>          x -> x mod 1009 );  # set of all square roots of 64 mod 1009
+[ 1001, 8 ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Multiplicative Arithmetic Functions}
+
+\>Sigma( <n> ) F
+
+`Sigma' returns the sum of the positive divisors of the nonzero integer
+<n>.
+
+`Sigma' is a multiplicative arithmetic function, i.e., if <n> and $m$ are
+relatively prime we have $\sigma(<n> m) = \sigma(<n>) \sigma(m)$.
+
+Together with the formula $\sigma(p^e) = (p^{e+1}-1) / (p-1)$ this allows
+us to compute $\sigma(<n>)$.
+
+Integers <n> for which  $\sigma(<n>)=2  <n>$  are  called  perfect.  Even
+perfect integers are exactly of  the  form  $2^{<n>-1}(2^{<n>}-1)$  where
+$2^{<n>}-1$ is prime. Primes of the form $2^{<n>}-1$ are called *Mersenne
+primes*, the known ones are obtained for <n> $=$ 2, 3, 5, 7, 13, 17,  19,
+31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281, 3217, 4253, 4423, 9689,
+9941, 11213, 19937, 21701, 23209, 44497, 86243, 110503,  132049,  216091,
+756839, and 859433. It is not known whether odd perfect  integers  exist,
+however~\cite{BC89} show that any such integer must  have  at  least  300
+decimal digits.
+
+`Sigma' usually spends most of its time factoring <n> (see~"FactorsInt").
+
+
+
+\beginexample
+gap> Sigma( 1 );
+1
+gap> Sigma( 1009 );  # 1009 is a prime
+1010
+gap> Sigma( 8128 ) = 2*8128;  # 8128 is a perfect number
+true
+\endexample
+
+
+\>Tau( <n> ) F
+
+`Tau' returns the number of the positive divisors of the nonzero integer
+<n>.
+
+`Tau' is a multiplicative arithmetic function, i.e., if <n> and  $m$  are
+relative prime we have $\tau(<n> m) = \tau(<n>) \tau(m)$.
+Together with the formula $\tau(p^e) = e+1$ this allows us to compute
+$\tau(<n>)$.
+
+`Tau' usually spends most of its time factoring <n> (see~"FactorsInt").
+
+
+
+\beginexample
+gap> Tau( 1 );
+1
+gap> Tau( 1013 );  # thus 1013 is a prime
+2
+gap> Tau( 8128 );
+14
+gap> Tau( 36 );  # the result is odd if and only if the argument is a perfect square
+9
+\endexample
+
+\>MoebiusMu( <n> ) F
+
+`MoebiusMu'  computes the value  of  Moebius  inversion function for  the
+nonzero integer <n>.
+This is 0 for integers which are not squarefree, i.e.,
+which are divided by a square $r^2$.  Otherwise it is 1 if <n> has a even
+number and $-1$ if <n> has an odd number of prime factors.
+
+The importance of $\mu$ stems  from  the  so  called  inversion  formula.
+Suppose $f(<n>)$ is a multiplicative arithmetic function defined  on  the
+positive  integers  and  let  $g(<n>)=\sum_{d  \mid   <n>}{f(d)}$.   Then
+$f(<n>)=\sum_{d \mid <n>}{\mu(d) g(<n>/d)}$. As a special  case  we  have
+$\phi(<n>) = \sum_{d \mid <n>}{\mu(d) <n>/d}$ since 
+$<n> = \sum_{d \mid <n>}{\phi(d)}$ (see~"Phi").
+
+`MoebiusMu' usually   spends  all of   its    time   factoring <n>   (see
+"FactorsInt").
+
+
+
+\beginexample
+gap> MoebiusMu( 60 );  MoebiusMu( 61 );  MoebiusMu( 62 );
+0
+-1
+1
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Miscellaneous}
+
+\>TwoSquares( <n> ) F
+
+`TwoSquares' returns a list of two integers $x\le y$ such that the sum of
+the squares of $x$ and $y$ is equal to the nonnegative integer <n>, i.e.,
+$n = x^2+y^2$.  If no such representation exists `TwoSquares' will return
+`fail'.   `TwoSquares' will return a representation for which the  gcd of
+$x$  and   $y$ is  as  small  as  possible.    It is not  specified which
+representation `TwoSquares' returns, if there is more than one.
+
+Let $a$ be the product of all maximal powers of primes of the form $4k+3$
+dividing <n>.  A representation of <n> as a sum of two squares  exists if
+and only if $a$ is a perfect square.  Let $b$ be the maximal power of $2$
+dividing <n> or its half, whichever is a perfect square. Then the minimal
+possible gcd of $x$ and $y$ is the square root $c$ of $a b$.  The  number
+of different minimal representation with $x\le y$ is $2^{l-1}$, where $l$
+is the number of different prime factors of the form $4k+1$ of <n>.
+
+The algorithm first finds a square root $r$ of $-1$ modulo $<n> / (a b)$,
+which must exist, and applies the Euclidean algorithm to $r$ and <n>. The
+first residues in the sequence that are  smaller than  $\sqrt{<n>/(a b)}$
+times $c$ are a possible pair $x$ and $y$.
+
+Better descriptions of the algorithm and related topics can be found  in
+\cite{Wagon90} and \cite{Zagier90}.
+
+
+\index{representation!as a sum of two squares}
+
+\beginexample
+gap> TwoSquares( 5 );
+[ 1, 2 ]
+gap> TwoSquares( 11 );  # there is no representation
+fail
+gap> TwoSquares( 16 );
+[ 0, 4 ]
+gap> TwoSquares( 45 );  # 3 is the minimal possible gcd because 9 divides 45
+[ 3, 6 ]
+gap> TwoSquares( 125 );  # it is not [5,10] because their gcd is not minimal
+[ 2, 11 ]
+gap> TwoSquares( 13*17 );  # [10,11] would be the other possible representation
+[ 5, 14 ]
+gap> TwoSquares( 848654483879497562821 );  # 848654483879497562821 is prime
+#I  beyond the guaranteed bound of the probabilistic primality test
+[ 6305894639, 28440994650 ]
+\endexample
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  
+%E  numtheor.msk  . . . . . . . . . . . . . . . . . . . . . . . ends here
+

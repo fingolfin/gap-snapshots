@@ -1,0 +1,207 @@
+<html><head><title>[ref] 20 Booleans</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP019.htm">Previous</a>] [<a href ="CHAP021.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>20 Booleans</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP020.htm#SECT001">Fail</a>
+<li> <A HREF="CHAP020.htm#SECT002">Comparisons of Booleans</a>
+<li> <A HREF="CHAP020.htm#SECT003">Operations for Booleans</a>
+</ol><p>
+<p>
+<a name = "I0"></a>
+
+<a name = "I0"></a>
+<a name = "I1"></a>
+
+The two main <strong>boolean</strong> values are <code>true</code> and <code>false</code>.
+They stand for the <strong>logical</strong> values of the same name.
+They appear as values of the conditions in <code>if</code>-statements
+and <code>while</code>-loops.
+Booleans are also important as return values of <strong>filters</strong> (see&nbsp;<a href="CHAP013.htm#SECT002">Filters</a>)
+such as <code>IsFinite</code> and <code>IsBool</code>.
+Note that it is a convention that the name of a function that
+returns <code>true</code> or <code>false</code> according to the outcome, starts with <code>Is</code>.
+<p>
+For technical reasons, also the value <code>fail</code> (see&nbsp;<a href="CHAP020.htm#SSEC001.1">Fail</a>)
+is regarded as a boolean.
+<p>
+<a name = ""></a>
+<li><code>IsBool( </code><var>obj</var><code> ) C</code>
+<p>
+tests whether <var>obj</var> is <code>true</code>, <code>false</code> or <code>fail</code>.
+<p>
+<pre>
+gap&gt; IsBool( true );  IsBool( false );  IsBool( 17 );
+true
+true
+false
+</pre>
+<p>
+<p>
+<h2><a name="SECT001">20.1 Fail</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>fail V</code>
+<p>
+The value <code>fail</code> is used to indicate situations when an operation could
+not be performed for the given arguments, either because of shortcomings of
+the arguments or because of restrictions in the implementation or
+computability. So for example <code>Position</code> (see <a href="CHAP021.htm#SSEC016.1">Position</a>) will return <code>fail</code>
+if the point searched for is not in the list.
+<p>
+<code>fail</code> is simply an object that is different from every other object than
+itself.
+<p>
+For technical reasons, <code>fail</code> is a boolean value.
+But note that <code>fail</code> cannot be used to form boolean expressions with
+<code>and</code>, <code>or</code>, and <code>not</code> (see&nbsp;<a href="CHAP020.htm#SECT003">Operations for Booleans</a> below),
+and <code>fail</code> cannot appear in boolean lists (see Chapter&nbsp;<a href="CHAP022.htm">Boolean Lists</a>).
+<p>
+<p>
+<h2><a name="SECT002">20.2 Comparisons of Booleans</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>bool1</var><code> = </code><var>bool2</var><code></code>
+<li><code></code><var>bool1</var><code> &lt;&gt; </code><var>bool2</var><code></code>
+<p>
+The equality operator <code>=</code> evaluates to <code>true</code> if the two boolean values
+<var>bool1</var> and <var>bool2</var> are equal, i.e., both are <code>true</code> or both are <code>false</code> or
+both <code>fail</code>, and <code>false</code> otherwise. The inequality operator <code>&lt;&gt;</code> evaluates
+to <code>true</code> if the two boolean values <var>bool1</var> and <var>bool2</var> are different and
+<code>false</code> otherwise. This operation is also called the <strong>exclusive or</strong>, because
+its value is <code>true</code> if exactly one of <var>bool1</var> or <var>bool2</var> is <code>true</code>.
+<p>
+You can compare boolean values with objects of other types.
+Of course they are never equal.
+<p>
+<pre>
+gap&gt; true = false;
+false
+gap&gt; false = (true = fail);
+true
+gap&gt; true &lt;&gt; 17;
+true
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code></code><var>bool1</var><code> &lt; </code><var>bool2</var><code></code>
+<p>
+The ordering of boolean values is defined by <code>true &lt; false &lt; fail</code>.
+For the comparison of booleans with other <font face="Gill Sans,Helvetica,Arial">GAP</font> objects,
+see Section&nbsp;<a href="CHAP004.htm#SECT011">Comparisons</a>.
+<p>
+<pre>
+gap&gt; true &lt; false;  fail &gt;= false;
+true
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">20.3 Operations for Booleans</a></h2>
+<p><p>
+<a name = "I2"></a>
+
+<a name = "I3"></a>
+
+The following boolean operations are only applicable to <code>true</code> and <code>false</code>.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code></code><var>bool1</var><code> or </code><var>bool2</var><code></code>
+<p>
+The logical operator <code>or</code> evaluates to <code>true</code> if at least one of the two
+boolean operands <var>bool1</var> and <var>bool2</var> is <code>true</code> and to <code>false</code> otherwise.
+<p>
+<code>or</code> first evaluates <var>bool1</var>. If the value is neither <code>true</code> nor <code>false</code>
+an error is signalled. If the value is <code>true</code>, then <code>or</code> returns <code>true</code>
+<strong>without</strong> evaluating <var>bool2</var>.  If the value is <code>false</code>, then <code>or</code>
+evaluates <var>bool2</var>. Again, if the value is neither <code>true</code> nor <code>false</code> an
+error is signalled. Otherwise <code>or</code> returns the value of <var>bool2</var>. This
+<strong>short-circuited</strong> evaluation is important if  the value of <var>bool1</var> is
+<code>true</code> and evaluation of <var>bool2</var> would take much time or cause an error.
+<p>
+<code>or</code> is associative, i.e., it is allowed to write <code></code><var>b1</var><code> or </code><var>b2</var><code> or </code><var>b3</var><code></code>,
+which is interpreted as <code>(</code><var>b1</var><code> or </code><var>b2</var><code>) or </code><var>b3</var><code></code>.  <code>or</code> has the lowest
+precedence of the logical operators.  All logical operators have lower
+precedence than the comparison operators <code>=</code>, <code>&lt;</code>, <code>in</code>, etc.
+<p>
+<pre>
+gap&gt; true or false;
+true
+gap&gt; false or false;
+false
+gap&gt; i := -1;; l := [1,2,3];;
+gap&gt; if i &lt;= 0 or l[i] = false then     # this does not cause an error,
+&gt;    Print("aha\n"); fi;                # because `l[i]' is not evaluated
+aha
+</pre>
+<p>
+<a name = "SSEC003.2"></a>
+<li><code></code><var>bool1</var><code> and </code><var>bool2</var><code></code>
+<p>
+The logical operator <code>and</code> evaluates to <code>true</code> if both boolean operands
+<var>bool1</var> and <var>bool2</var> are <code>true</code> and to <code>false</code> otherwise.
+<p>
+<code>and</code> first evaluates <var>bool1</var>.  If the value  is neither <code>true</code> nor
+<code>false</code> an error is signalled.  If the value is <code>false</code>, then <code>and</code>
+returns <code>false</code> <strong>without</strong> evaluating <var>bool2</var>. If the value is <code>true</code>,
+then <code>and</code> evaluates <var>bool2</var>. Again, if the value is neither <code>true</code> nor
+<code>false</code> an error is signalled.  Otherwise  <code>and</code> returns the value of
+<var>bool2</var>. This <strong>short-circuited</strong> evaluation is important if the value of
+<var>bool1</var> is <code>false</code> and evaluation of  <var>bool2</var> would take much time or
+cause an error.
+<p>
+<code>and</code> is associative, i.e., it is allowed to write <code></code><var>b1</var><code> and </code><var>b2</var><code> and
+</code><var>b3</var><code></code>, which is interpreted as <code>(</code><var>b1</var><code> and </code><var>b2</var><code>) and </code><var>b3</var><code></code>. <code>and</code> has
+higher precedence than the logical <code>or</code> operator, but lower than the
+unary logical <code>not</code> operator.  All  logical operators have  lower
+precedence than the comparison operators <code>=</code>, <code>&lt;</code>, <code>in</code>, etc.
+<p>
+<pre>
+gap&gt; true and false;
+false
+gap&gt; true and true;
+true
+gap&gt; false and 17;  # this does not cause an error, because `17' is never looked at
+false
+</pre>
+<p>
+<a name = "SSEC003.3"></a>
+<li><code></code><var>fil1</var><code> and </code><var>fil2</var><code></code>
+<p>
+<code>and</code> can also be applied to filters. It returns a filter that when applied
+to some argument <var>x</var>, tests <code></code><var>fil1</var><code>(</code><var>x</var><code>) and </code><var>fil2</var><code>(</code><var>x</var><code>)</code>.
+<p>
+<pre>
+gap&gt; andfilt:= IsPosRat and IsInt;;
+gap&gt; andfilt( 17 );  andfilt( 1/2 );
+true
+false
+</pre>
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>not </code><var>bool</var><code></code>
+<p>
+The logical operator <code>not</code> returns <code>true</code> if the boolean value <var>bool</var> is
+<code>false</code> and <code>true</code> otherwise. An error is signalled if <var>bool</var> does not
+evaluate to <code>true</code> or <code>false</code>.
+<p>
+<code>not</code> has higher precedence than the other logical operators, <code>or</code> and
+<code>and</code>. All logical operators have lower precedence than the comparison
+operators <code>=</code>, <code>&lt;</code>, <code>in</code>, etc.
+<p>
+<pre>
+gap&gt; true and false;
+false
+gap&gt; not true;
+false
+gap&gt; not false;
+true
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP019.htm">Previous</a>] [<a href ="CHAP021.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

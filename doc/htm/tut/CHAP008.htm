@@ -1,0 +1,389 @@
+<html><head><title>[tut] 8 Operations and Methods</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP007.htm">Previous</a>] [<a href ="CHAP009.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>8 Operations and Methods</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP008.htm#SECT001">Attributes</a>
+<li> <A HREF="CHAP008.htm#SECT002">Properties and Filters</a>
+<li> <A HREF="CHAP008.htm#SECT003">Immediate and True Methods</a>
+<li> <A HREF="CHAP008.htm#SECT004">Operations and Method Selection</a>
+</ol><p>
+<p>
+<p>
+<h2><a name="SECT001">8.1 Attributes</a></h2>
+<p><p>
+In the  preceding chapters, we have  seen how to obtain information about
+mathematical objects in <font face="Gill Sans,Helvetica,Arial">GAP</font>: We have to pass the object as an argument
+to a function. For example, if <var>G</var> is a group one can call
+<code>Size( </code><var>G</var><code> )</code>, and the function will return a value,
+in our example an integer  which is the  size of <var>G</var>. Computing
+the size  of a  group generally  requires  a substantial amount  of work,
+therefore it seems desirable to store the size somewhere once it has been
+calculated. You should imagine that <font face="Gill Sans,Helvetica,Arial">GAP</font> stores  the size in some place
+associated  with the object  <var>G</var> when <code>Size( </code><var>G</var><code>  )</code>  is executed for the
+first time, and if this function  call is executed  again later, the size
+is simply looked up and returned, without further computation.
+<p>
+<a name = "I0"></a>
+
+<a name = "I0"></a>
+<a name = "I1"></a>
+
+<a name = "I2"></a>
+
+<a name = "I2"></a>
+<a name = "I3"></a>
+
+This means that the  behavior  of the  function  <code>Size</code> has to  depend on
+whether the size for the argument <var>G</var> is already known,  and if not, that
+the size  must be  stored after it  has been  calculated. These two extra
+tasks are  done  by two other   functions that accompany <code>Size(   </code><var>G</var><code> )</code>,
+namely the <strong>tester</strong> <code>HasSize( </code><var>G</var><code> )</code>
+and the <strong>setter</strong> <code>SetSize( </code><var>G</var><code>, </code><var>size</var><code> )</code>.
+The tester returns <code>true</code> or <code>false</code> according to
+whether <var>G</var> has already stored its size, and the setter puts <var>size</var> into
+a place from where <var>G</var> can directly look it up.
+The function <code>Size</code> itself is called the <strong>getter</strong>,
+and from the preceding discussion we see
+that there must really be at least two <strong>methods</strong> for the getter:
+One method is used when the tester returns <code>false</code>;
+it is the method which first does the real computation and then executes
+the setter with the computed value.
+A second method is used when the tester returns <code>true</code>;
+it simply returns the stored value.
+This second method is also called the <strong>system getter</strong>.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> functions for which several methods can be available
+are called <strong>operations</strong>, so <code>Size</code> is an example of an operation.
+<pre>
+gap&gt; G := Group( (1,2,3,4,5,6,7,8), (1,2) );;
+gap&gt; Size( G ); time;   # the time may of course vary on your machine
+40320
+30
+gap&gt; Size( G ); time;
+40320
+0
+</pre>
+The convenient thing  for the user  is that  <font face="Gill Sans,Helvetica,Arial">GAP</font> automatically chooses
+the right method  for the getter, i.e.,  it calls a real-work getter at
+most once  and the system getter  in all subsequent occurrences. <strong>At most
+once</strong> because the value of a function call like <code>Size( </code><var>G</var><code> )</code> can also be
+set for <var>G</var>  before the getter  is called at all;
+for example, one can call the setter directly if one knows the size.
+<p>
+The size of a group is an example of a class of things  which in <font face="Gill Sans,Helvetica,Arial">GAP</font>
+are called <strong>attributes</strong>.
+Every attribute in  <font face="Gill Sans,Helvetica,Arial">GAP</font> is represented by  a triple  of a getter,  a
+setter   and a  tester.  When a  new  attribute  is  declared, all  three
+functions are created together and  the getter contains references to the
+other two.  This is necessary because when  the getter is called, it must
+first  consult the tester,   and perhaps execute the  setter  in the end.
+Therefore the getter could be implemented as follows:
+<pre>
+getter := function( obj )
+local   value;
+    if tester( obj )  then
+        value := system_getter( obj );
+    else
+        value := real_work_getter( obj );
+        setter( obj, value );
+    fi;
+    return value;
+end;
+</pre>
+The  only  function which  depends on   the  mathematical  nature  of the
+attribute  is  the  real-work getter,  and this   is  of course  what the
+programmer of  an  attribute has to  install.  In both cases,  the getter
+returns  the same value, which  we also call  the  value of the attribute
+(properly: the value of the attribute for the object <code>obj</code>).
+By the way:
+The names for setter and tester of an attribute are always composed from
+the prefix <code>Set</code> resp.&nbsp;<code>Has</code> and the name of the getter.
+<p>
+As a (not typical) example, note that the <font face="Gill Sans,Helvetica,Arial">GAP</font> function <code>Random</code>,
+although it takes only one argument, is of course <strong>not</strong> an attribute,
+because otherwise the first random element of a group would be stored by
+the setter and returned over and over again by the system getter
+every time <code>Random</code> is called in the sequel.)
+<p>
+There is a general important rule about attributes: <strong>Once the value of an
+attribute for an object has been set, it cannot be reset, i.e., it cannot
+be changed any more.</strong> This is achieved by having two methods not only for
+the getter but also for the setter: If an object already has an attribute
+value stored, i.e., if the tester  returns <code>true</code>, the setter simply does
+nothing.
+<pre>
+gap&gt; G := SymmetricGroup(8);; Size(G);
+40320
+gap&gt; SetSize( G, 0 ); Size( G );
+40320
+</pre>
+<p>
+<strong>Summary.</strong> In this section  we have introduced attributes as triples
+of getter, setter   and tester and    we have explained how  these  three
+functions work together behind  the  scene to provide automatic  storage
+and look-up of  values that have once been  calculated. We have seen that
+there can be several methods for  the   same function  among which <font face="Gill Sans,Helvetica,Arial">GAP</font>
+automatically selects an appropriate one.
+<p>
+<p>
+<h2><a name="SECT002">8.2 Properties and Filters</a></h2>
+<p><p>
+<a name = "I4"></a>
+
+<a name = "I5"></a>
+
+Certain attributes, like <code>IsAbelian</code>, are boolean-valued. Such attributes
+are known to <font face="Gill Sans,Helvetica,Arial">GAP</font> as <strong>properties</strong>, because their values are stored in a
+slightly different way.   A property also  has a  getter, a  setter and a
+tester, but  in this case,  the  getter as well  as the  tester returns a
+boolean value. Therefore <font face="Gill Sans,Helvetica,Arial">GAP</font>  stores   both values  in the same   way,
+namely as bits  in a boolean  list, thereby treating property getters and
+all testers (of attributes or properties) uniformly. These boolean-valued
+functions  are called  <strong>filters</strong>.  You can imagine  a filter  as a switch
+which is  set either  to <code>true</code> or  to <code>false</code>.  For every  <font face="Gill Sans,Helvetica,Arial">GAP</font> object
+there is a boolean list which has reserved a  bit for every filter <font face="Gill Sans,Helvetica,Arial">GAP</font>
+knows  about. Strictly speaking, there   is one bit for every  <strong>simple
+filter</strong>, and these  simple filters can be  combined with <code>and</code> to form
+other filters (which are then <code>true</code> if and only if all the corresponding
+bits are set to <code>true</code>).
+For example, the filter <code>IsPermGroup and IsSolvableGroup</code> is made up from
+several simple filters.
+<p>
+Since they allow only two values, the bits which represent filters can be
+compared very quickly, and the scheme by which <font face="Gill Sans,Helvetica,Arial">GAP</font> chooses the method,
+e.g., for a getter or a setter (as we have seen in the previous section),
+is mostly based  on the examination of filters,  not on the examination
+of other  attribute   values. Details  of   this <strong>method selection</strong>   are
+described in chapter&nbsp;<a href="../prg/CHAP002.htm">Method Selection</a> of ``Programming in GAP''.
+<p>
+We  only present the following  rule  of  thumb here:
+Each installed method for an attribute, say <code>Size</code>,
+has a ``required filter'', which is made  up from certain simple filters
+which must yield <code>true</code> for the argument <var>obj</var> for this method to be
+applicable.
+To execute a call of <code>Size( </code><var>obj</var><code> )</code>, <font face="Gill Sans,Helvetica,Arial">GAP</font> selects among all applicable
+methods the one whose required filter combines the most simple filters;
+the idea behind is that the more an algorithm requires of <var>obj</var>,
+the more efficient it is expected to be.
+For example, if <var>obj</var> is a permutation group that is not (known to be)
+solvable,
+a method  with required filter <code>IsPermGroup and IsSolvableGroup</code> is not
+applicable, whereas a method with required filter <code>IsPermGroup</code> can be
+chosen.
+On the other hand, if <var>obj</var> was  known to be solvable,
+the method with required filter <code>IsPermGroup and IsSolvableGroup</code>
+would be preferred to the one with required filter <code>IsPermGroup</code>.
+<p>
+It may happen that a method is applicable for a given argument
+but cannot compute the desired value.
+In such cases, the method will execute the statement <code>TryNextMethod();</code>,
+<a name = "I6"></a>
+
+and <font face="Gill Sans,Helvetica,Arial">GAP</font> calls the next applicable method.
+For example, <a href="biblio.htm#Sims90b"><cite>Sims90b</cite></a> describes an algorithm to compute the size
+of a solvable permutation group, which can be used also to decide
+whether or not a permutation group is solvable.
+Suppose that the function <code>size_solvable</code> implements this algorithm,
+and that is returns the order of the group if it is solvable and
+<code>fail</code> otherwise.
+Then we can install the following method for <code>Size</code> with required
+filter <code>IsPermGroup</code>.
+<pre>
+function( G )
+local  value;
+    value := size_solvable( G );
+    if value &lt;&gt; fail  then  return value;
+                      else  TryNextMethod();  fi;
+end;
+</pre>
+This method can then be tried on every permutation group (whether known
+to be  solvable or  not),  and it would  include a  mandatory solvability
+test.
+<p>
+If no applicable method  (or no next applicable  method) is found, <font face="Gill Sans,Helvetica,Arial">GAP</font>
+stops with an error message of the form 
+<pre>
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `Size' on 1 arguments called from
+... lines deleted here ...
+</pre>
+<p>
+You would get an error message as above if you asked for <code>Size( 1 )</code>. 
+The message simply says that there is no method installed for calculating
+the size of <code>1</code>. Section <a href="../ref/CHAP007.htm#SECT001">Recovery from NoMethodFound-Errors</a> of
+the reference manual contains more information on how to deal with 
+these messages.
+<p>
+<strong>Summary.</strong> In this section we have introduced properties as special
+attributes, and filters as the general concept behind property getters
+and attribute testers.
+The values of the filters of an object govern how the object is treated
+in the selection of methods for operations.
+<p>
+<p>
+<h2><a name="SECT003">8.3 Immediate and True Methods</a></h2>
+<p><p>
+<a name = "I7"></a>
+
+<a name = "I7"></a>
+<a name = "I8"></a>
+
+In the example in Section&nbsp;<a href="CHAP008.htm#SECT002">Properties and Filters</a>,
+we have mentioned that the operation <code>Size</code> has a
+method  for solvable permutation  groups that is  so  far superior to the
+method for  general permutation groups that  it seems worthwhile to try it
+even if nothing  is  known about solvability   of the group of which  the
+<code>Size</code> is to   be  calculated. There are   other  examples where  certain
+methods  are even ``cheaper'' to  execute. For example,  if the size of a
+group is known  it is easy to check  whether  it is  odd, and  if so, the
+Feit-Thompson  theorem allows us to set  <code>IsSolvableGroup</code> to <code>true</code> for
+this group.   <font face="Gill Sans,Helvetica,Arial">GAP</font> utilizes   this  celebrated  theorem  by  having  an
+<strong>immediate  method</strong> for <code>IsSolvableGroup</code>  with required filter <code>HasSize</code>
+which checks parity of the size and either sets <code>IsSolvableGroup</code> or does
+nothing, i.e.,   calls <code>TryNextMethod()</code>.   These immediate  methods  are
+executed  automatically for an  object  whenever the   value of a  filter
+changes, so solvability of a group will automatically be detected when an
+odd size has been calculated for it (and therefore the value of <code>HasSize</code>
+for that group has changed to <code>true</code>).
+<p>
+Some methods are  even more immediate,   because they do not  require any
+calculation  at all: They  allow a filter to  be set if another filter is
+also set. In other words,   they  model a mathematical implication   like
+<code>IsGroup   and   IsCyclic    <font face="symbol">&#8658;</font>   IsSolvableGroup</code>  and   such
+implications  can be installed  in <font face="Gill Sans,Helvetica,Arial">GAP</font>  as  <strong>true methods</strong>. To execute
+true methods, <font face="Gill Sans,Helvetica,Arial">GAP</font> only needs to do  some bookkeeping with its filters,
+therefore true methods are much faster than immediate methods.
+<p>
+How immediate and true methods are installed is described in 
+<a href="../prg/CHAP002.htm#SECT006">Immediate Methods</a> and <a href="../prg/CHAP002.htm#SECT007">Logical Implications</a>
+in ``Programming in GAP''.
+<p>
+<p>
+<h2><a name="SECT004">8.4 Operations and Method Selection</a></h2>
+<p><p>
+<a name = "I9"></a>
+
+The method selection  is not only  used to  select  methods for attribute
+getters but also for arbitrary <strong>operations</strong>, which can have more than one
+argument.  In this case,   there is a   required filter for each argument
+(which must yield <code>true</code>  for the corresponding  arguments).
+<p>
+Additionally, a method with at least two arguments may require a certain
+relation between the arguments,
+which is expressed in terms of the <strong>families</strong> of the arguments.
+For example, the methods for  <code>ConjugateGroup( </code><var>grp</var><code>, </code><var>elm</var><code> )</code>
+require that <var>elm</var>  lies in the family   of elements from  which <var>grp</var> is
+made, i.e., that  the family of  <var>elm</var> equals the ``elements family''  of
+<var>grp</var>.
+<p>
+For permutation groups, the situation is quite easy:
+all permutations form  one family, <code>PermutationsFamily</code>,
+and each collection of permutations,
+for example each permutation group, each coset of a permutation group,
+or each dense list of permutations,
+lies in <code>CollectionsFamily( PermutationsFamily )</code>.
+<p>
+For other kinds of group elements, the situation can be different.
+Every call of <code>FreeGroup</code> constructs a new family of free group elements.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> refuses to compute <code>One( FreeGroup( 1 ) ) * One( FreeGroup( 1 ) )</code>
+because the two operands of the multiplication lie in different families
+and no method is installed for this case.
+<p>
+For further information on family relations,
+see <a href="../ref/CHAP013.htm#SECT001">Families</a> in the reference manual.
+<p>
+<a name = "I10"></a>
+
+<a name = "I10"></a>
+<a name = "I11"></a>
+
+<a name = "I12"></a>
+
+If you want to know  which properties are already known for an object
+<var>obj</var>, or which properties are known to be true, you can use the
+functions <code>KnownPropertiesOfObject(</code><var>obj</var><code>)</code> resp.
+<code>KnownTruePropertiesOfObject( </code><var>obj</var><code> )</code>. This will print a list of names
+of properties. These names are also the identifiers of the property
+getters, by which you can retrieve the value of the properties (and
+confirm that they are really <code>true</code>). Analogously, there is the function
+<code>KnownAttributesOfObject</code> which lists the names of the known attributes,
+leaving out the properties.
+<p>
+<a name = "I13"></a>
+
+Since <font face="Gill Sans,Helvetica,Arial">GAP</font> lets you know what it already  knows about an object, it is
+only natural  that   it also  lets   you know what  methods  it considers
+applicable for a certain method, and in  what order it  will try them (in
+case <code>TryNextMethod()</code>  occurs).   <code>ApplicableMethod( </code><var>opr</var><code>, [   <i>arg</i><sub>1</sub>,
+<i>arg</i><sub>2</sub>, ... ]  )</code> returns the  first  applicable method for the  call
+<code></code><var>opr</var><code>( <i>arg</i><sub>1</sub>, <i>arg</i><sub>2</sub>,  ... )</code>. More  generally, <code>ApplicableMethod(
+</code><var>opr</var><code>, [ ... ], 0, </code><var>nr</var><code> )</code> returns the <var>nr</var>th applicable method (i.e.,
+the one  that would be  chosen  after  <i>nr</i> <font face="symbol">&#8722;</font>1 <code>TryNextMethod</code>s) and  if
+<code></code><var>nr</var><code>  = "all"</code>, the sorted list  of  all applicable methods is returned.
+For  details,  see <a href="../prg/CHAP002.htm#SECT003">Applicable Methods  and  Method Selection</a> in
+``Programming in GAP''.
+<p>
+<a name = "I14"></a>
+
+If you want to see which methods  are chosen for certain operations while
+<font face="Gill Sans,Helvetica,Arial">GAP</font>  code is being executed,  you can call the function <code>TraceMethods</code>
+with a list of these operations as arguments.
+<pre>
+gap&gt; TraceMethods( [ Size ] );
+gap&gt; g:= Group( (1,2,3), (1,2) );;  Size( g );
+#I  Size: for a permutation group
+#I  Setter(Size): system setter
+#I  Size: system getter
+#I  Size: system getter
+6
+</pre>
+The system getter is called once to fetch  the freshly computed value for
+returning  to the user.  The  second  call is  triggered by  an immediate
+method. To  find out  by which,  we can trace   the immediate  methods by
+saying <code>TraceImmediateMethods( true )</code>.
+<pre>
+gap&gt; TraceImmediateMethods( true );
+gap&gt; g:= Group( (1,2,3), (1,2) );;
+#I  immediate: Size
+#I  immediate: IsCyclic
+#I  immediate: IsCommutative
+#I  immediate: IsTrivial
+#I  immediate: IsStabChainViaChainSubgroup
+#I  immediate: IsChainTypeGroup
+gap&gt; Size( g );
+#I  Size: for a permutation group
+#I  immediate: IsNonTrivial
+#I  immediate: Size
+#I  immediate: IsStabChainViaChainSubgroup
+#I  immediate: IsChainTypeGroup
+#I  immediate: IsNonTrivial
+#I  immediate: GeneralizedPcgs
+#I  Setter(Size): system setter
+#I  Size: system getter
+#I  immediate: IsPerfectGroup
+#I  Size: system getter
+#I  immediate: IsEmpty
+6
+gap&gt; TraceImmediateMethods( false );
+gap&gt; UntraceMethods( [ Size ] );
+</pre>
+The last two lines switch off tracing  again. We now  see that the system
+getter was called by the immediate method for <code>IsPerfectGroup</code>. 
+Also the above-mentioned immediate method for <code>IsSolvableGroup</code>
+was not used because the solvability of <code>g</code>  was already found out during
+the size calculation
+(cf.&nbsp;the example in Section&nbsp;<a href="CHAP008.htm#SECT002">Properties and Filters</a>).
+<p>
+<strong>Summary.</strong>  In this section  and the  last we have  looked some  more
+behind the  scenes and seen  that <font face="Gill Sans,Helvetica,Arial">GAP</font> automatically executes immediate
+and true  methods  to deduce  information about  objects  that is cheaply
+available.  We  have seen how   this  can be  supervised  by tracing  the
+methods.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP007.htm">Previous</a>] [<a href ="CHAP009.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

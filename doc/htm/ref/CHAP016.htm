@@ -1,0 +1,169 @@
+<html><head><title>[ref] 16 Rational Numbers</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP015.htm">Previous</a>] [<a href ="CHAP017.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>16 Rational Numbers</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP016.htm#SECT001">Elementary Operations for Rationals</a>
+</ol><p>
+<p>
+The <strong>rationals</strong> form a very important field.  On the one hand it is the
+quotient field of the integers (see chapter&nbsp;<a href="CHAP014.htm">Integers</a>).
+On the other hand it is the prime field of the fields of characteristic zero
+(see chapter&nbsp;<a href="CHAP058.htm">Abelian Number Fields</a>).
+<p>
+The former comment suggests the representation actually used.
+A rational is represented as a pair of integers, called  <strong>numerator</strong> and
+<strong>denominator</strong>.
+Numerator and denominator are <strong>reduced</strong>, i.e., their greatest common divisor
+is 1.
+If the denominator is 1, the rational is in fact an integer and is
+represented as such.
+The numerator holds the sign of the rational,
+thus the denominator is always positive.
+<p>
+Because the underlying integer arithmetic can compute with arbitrary size
+integers, the  rational arithmetic is always exact, even for rationals
+whose numerators and denominators have thousands of digits.
+<p>
+<pre>
+gap&gt; 2/3;
+2/3
+gap&gt; 66/123;  # numerator and denominator are made relatively prime
+22/41
+gap&gt; 17/-13;  # the numerator carries the sign;
+-17/13
+gap&gt; 121/11;  # rationals with denominator 1 (after cancelling) are integers
+11
+</pre>
+<p>
+<a name = ""></a>
+<li><code>Rationals V</code>
+<a name = ""></a>
+<li><code>IsRationals( </code><var>obj</var><code> ) P</code>
+<p>
+<code>Rationals</code> is the field <b>Q</b> of rational integers,
+as a set of cyclotomic numbers,
+see Chapter&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a> for basic operations,
+Functions for the field <code>Rationals</code> can be found in the
+chapters&nbsp;<a href="CHAP056.htm">Fields and Division Rings</a> and&nbsp;<a href="CHAP058.htm">Abelian Number Fields</a>.
+<p>
+<code>IsRationals</code> returns <code>true</code> for a prime field that consists of
+cyclotomic numbers --for example the <font face="Gill Sans,Helvetica,Arial">GAP</font> object <code>Rationals</code>--
+and <code>false</code> for all other <font face="Gill Sans,Helvetica,Arial">GAP</font> objects.
+<p>
+<pre>
+gap&gt; Size( Rationals ); 2/3 in Rationals;
+infinity
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT001">16.1 Elementary Operations for Rationals</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsRat( </code><var>obj</var><code> ) C</code>
+<p>
+Every rational number lies in the category <code>IsRat</code>,
+which is a subcategory of <code>IsCyc</code> (see&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a>).
+<p>
+<a name = "I0"></a>
+
+<pre>
+gap&gt; IsRat( 2/3 );
+true
+gap&gt; IsRat( 17/-13 );
+true
+gap&gt; IsRat( 11 );
+true
+gap&gt; IsRat( IsRat );  # `IsRat' is a function, not a rational
+false
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsPosRat( </code><var>obj</var><code> ) C</code>
+<p>
+Every positive rational number lies in the category <code>IsPosRat</code>.
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>IsNegRat( </code><var>obj</var><code> ) C</code>
+<p>
+Every negative rational number lies in the category <code>IsNegRat</code>.
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>NumeratorRat( </code><var>rat</var><code> ) F</code>
+<p>
+<code>NumeratorRat</code> returns the numerator of the rational <var>rat</var>.
+Because the numerator holds the sign of the rational it may be any
+integer.
+Integers are rationals with denominator 1, thus <code>NumeratorRat</code> is the
+identity function for integers.
+<p>
+<a name = "I1"></a>
+
+<pre>
+gap&gt; NumeratorRat( 2/3 );
+2
+gap&gt; NumeratorRat( 66/123 );  # numerator and denominator are made relatively prime
+22
+gap&gt; NumeratorRat( 17/-13 );  # the numerator holds the sign of the rational
+-17
+gap&gt; NumeratorRat( 11 );      # integers are rationals with denominator 1
+11
+</pre>
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>DenominatorRat( </code><var>rat</var><code> ) F</code>
+<p>
+<code>DenominatorRat</code> returns the denominator of the rational <var>rat</var>.
+Because the numerator holds the  sign of the rational the denominator is
+always a positive integer.
+Integers are rationals with the denominator 1, thus <code>DenominatorRat</code>
+returns 1 for integers.
+<p>
+<a name = "I2"></a>
+
+<pre>
+gap&gt; DenominatorRat( 2/3 );
+3
+gap&gt; DenominatorRat( 66/123 );  # numerator and denominator are made relatively prime
+41
+gap&gt; DenominatorRat( 17/-13 );  # the denominator holds the sign of the rational
+13
+gap&gt; DenominatorRat( 11 );      # integers are rationals with denominator 1
+1
+</pre>
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>Rat( </code><var>elm</var><code> ) A</code>
+<p>
+<code>Rat</code> returns a rational number <var>rat</var> whose meaning depends on the type
+of <var>elm</var>.
+<p>
+If <var>elm</var> is a string consisting of digits <code>'0'</code>, <code>'1'</code>, <font face="symbol">&#8230;</font>,
+<code>'9'</code> and <code>'-'</code> (at the first position), <code>'/'</code> and the decimal dot
+<code>'.'</code> then <var>rat</var> is the rational described by this string.
+The operation <code>String</code> (see&nbsp;<a href="CHAP026.htm#SSEC005.1">String</a>) can be used to compute a string for
+rational numbers, in fact for all cyclotomics.
+<p>
+<pre>
+gap&gt; Rat( "1/2" );  Rat( "35/14" );  Rat( "35/-27" );  Rat( "3.14159" );
+1/2
+5/2
+-35/27
+314159/100000
+</pre>
+<p>
+<a name = "SSEC001.7"></a>
+<li><code>Random( Rationals )</code>
+<p>
+<code>Random</code> for rationals returns pseudo random rationals which are the
+quotient of two random integers. See the description of <code>Random</code> for integers
+(<a href="CHAP014.htm#SSEC001.11">Random!for integers</a>) for details. (Also see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>.)
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP015.htm">Previous</a>] [<a href ="CHAP017.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,276 @@
+<html><head><title>[ref] 53 Additive Magmas</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP052.htm">Previous</a>] [<a href ="CHAP054.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>53 Additive Magmas</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP053.htm#SECT001">(Near-)Additive Magma Categories</a>
+<li> <A HREF="CHAP053.htm#SECT002">(Near-)Additive Magma Generation</a>
+<li> <A HREF="CHAP053.htm#SECT003">Attributes and Properties for (Near-)Additive Magmas</a>
+<li> <A HREF="CHAP053.htm#SECT004">Operations for (Near-)Additive Magmas</a>
+</ol><p>
+<p>
+This chapter deals with domains that are closed under addition <code>+</code>,
+which are called <strong>near-additive magmas</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+Together with the domains closed under multiplication <code>*</code>, (see&nbsp;<a href="CHAP033.htm">Magmas</a>),
+they are the basic algebraic structures.
+In many cases, the addition is commutative (see&nbsp;<a href="CHAP053.htm#SSEC003.1">IsAdditivelyCommutative</a>),
+the domain is called an <strong>additive magma</strong> then;
+every module (see&nbsp;<a href="CHAP055.htm">Modules</a>), vector space (see&nbsp;<a href="CHAP059.htm">Vector Spaces</a>),
+ring (see&nbsp;<a href="CHAP054.htm">Rings</a>), or field (see&nbsp;<a href="CHAP056.htm">Fields and Division Rings</a>)
+is an additive magma.
+In the cases of al <strong>(near-)additive magma-with-zero</strong> or
+<strong>(near-)additive magma-with-inverses</strong>,
+additional additive structure is present
+(see&nbsp;<a href="CHAP053.htm#SECT001">(Near-)Additive Magma Categories</a>).
+<p>
+<p>
+<h2><a name="SECT001">53.1 (Near-)Additive Magma Categories</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsNearAdditiveMagma( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>near-additive magma</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a domain <i>A</i> with an associative
+but not necessarily commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> <font face="symbol">&#8594;</font> <i>A</i>.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsNearAdditiveMagmaWithZero( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>near-additive magma-with-zero</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a near-additive magma <i>A</i>
+with an operation <code>0*</code> (or <code>Zero</code>) that yields the zero of <i>A</i>.
+<p>
+So a near-additive magma-with-zero <var>A</var> does always contain a unique
+additively neutral element <i>z</i>, i.e., <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all
+<i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
+This element <i>z</i> can be computed with the operation <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>)
+as <code>Zero( </code><var>A</var><code> )</code>, and <i>z</i> is also equal to <code>Zero( </code><var>elm</var><code> )</code> and to
+<code>0*</code><var>elm</var><code></code> for each element <var>elm</var> in <var>A</var>.
+<p>
+<strong>Note</strong> that
+a near-additive magma containing a zero may <strong>not</strong> lie in the category
+<code>IsNearAdditiveMagmaWithZero</code> (see&nbsp;<a href="CHAP030.htm#SECT006">Domain Categories</a>).
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>IsNearAdditiveGroup( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC001.3"></a>
+<li><code>IsNearAdditiveMagmaWithInverses( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>near-additive group</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a near-additive magma-with-zero <i>A</i>
+with an operation <code>-1*</code>: <i>A</i> <font face="symbol">&#8594;</font> <i>A</i> that maps each element <var>a</var> of
+<i>A</i> to its additive inverse <code>-1*</code><var>a</var><code></code> (or <code>AdditiveInverse( </code><var>a</var><code> )</code>,
+see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveInverse</a>).
+<p>
+The addition <code>+</code> of <i>A</i> is assumed to be associative,
+so a near-additive group is not more than a
+<strong>near-additive magma-with-inverses</strong>.
+<code>IsNearAdditiveMagmaWithInverses</code> is just a synonym for
+<code>IsNearAdditiveGroup</code>,
+and can be used alternatively in all function names involving
+<code>NearAdditiveGroup</code>.
+<p>
+Note that not every trivial near-additive magma is a near-additive
+magma-with-zero,
+but every trivial near-additive magma-with-zero is a near-additive group.
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>IsAdditiveMagma( </code><var>obj</var><code> ) C</code>
+<p>
+An <strong>additive magma</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a domain <i>A</i> with an associative and
+commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> <font face="symbol">&#8594;</font> <i>A</i>,
+see&nbsp;<a href="CHAP053.htm#SSEC001.1">IsNearAdditiveMagma</a> and <a href="CHAP053.htm#SSEC003.1">IsAdditivelyCommutative</a>.
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>IsAdditiveMagmaWithZero( </code><var>obj</var><code> ) C</code>
+<p>
+An <strong>additive magma-with-zero</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is an additive magma <i>A</i> with
+an operation <code>0*</code> (or <code>Zero</code>) that yields the zero of <i>A</i>.
+<p>
+So an additive magma-with-zero <var>A</var> does always contain a unique
+additively neutral element <i>z</i>, i.e., <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all
+<i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
+This element <i>z</i> can be computed with the operation <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>)
+as <code>Zero( </code><var>A</var><code> )</code>, and <i>z</i> is also equal to <code>Zero( </code><var>elm</var><code> )</code> and to
+<code>0*</code><var>elm</var><code></code> for each element <var>elm</var> in <var>A</var>.
+<p>
+<strong>Note</strong> that
+an additive magma containing a zero may <strong>not</strong> lie in the category
+<code>IsAdditiveMagmaWithZero</code> (see&nbsp;<a href="CHAP030.htm#SECT006">Domain Categories</a>).
+<p>
+<a name = "SSEC001.6"></a>
+<li><code>IsAdditiveGroup( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC001.6"></a>
+<li><code>IsAdditiveMagmaWithInverses( </code><var>obj</var><code> ) C</code>
+<p>
+An <strong>additive group</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is an additive magma-with-zero <i>A</i> with an
+operation <code>-1*</code>: <i>A</i> <font face="symbol">&#8594;</font> <i>A</i> that maps each element <var>a</var> of <i>A</i> to
+its additive inverse <code>-1*</code><var>a</var><code></code> (or <code>AdditiveInverse( </code><var>a</var><code> )</code>,
+see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveInverse</a>).
+<p>
+The addition <code>+</code> of <i>A</i> is assumed to be commutative and associative,
+so an additive group is not more than an <strong>additive magma-with-inverses</strong>.
+<code>IsAdditiveMagmaWithInverses</code> is just a synonym for <code>IsAdditiveGroup</code>,
+and can be used alternatively in all function names involving
+<code>AdditiveGroup</code>.
+<p>
+Note that not every trivial additive magma is an additive
+magma-with-zero,
+but every trivial additive magma-with-zero is an additive group.
+<p>
+<p>
+<h2><a name="SECT002">53.2 (Near-)Additive Magma Generation</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>NearAdditiveMagma( </code><var>gens</var><code> ) F</code>
+<li><code>NearAdditiveMagma( </code><var>Fam</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+returns the (near-)additive magma <i>A</i> that is generated by the elements
+in the list <var>gens</var>, that is,
+the closure of <var>gens</var> under addition <code>+</code>.
+The family <var>Fam</var> of <i>A</i> can be entered as first argument;
+this is obligatory if <var>gens</var> is empty (and hence also <i>A</i> is empty).
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>NearAdditiveMagmaWithZero( </code><var>gens</var><code> ) F</code>
+<li><code>NearAdditiveMagmaWithZero( </code><var>Fam</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+returns the (near-)additive magma-with-zero <i>A</i> that is generated by
+the elements in the list <var>gens</var>, that is,
+the closure of <var>gens</var> under addition <code>+</code> and <code>Zero</code>.
+The family <var>Fam</var> of <i>A</i> can be entered as first argument;
+this is obligatory if <var>gens</var> is empty (and hence <i>A</i> is trivial).
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>NearAdditiveGroup( </code><var>gens</var><code> ) F</code>
+<li><code>NearAdditiveGroup( </code><var>Fam</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+returns the (near-)additive group <i>A</i> that is generated by the elements
+in the list <var>gens</var>, that is,
+the closure of <var>gens</var> under addition <code>+</code>, <code>Zero</code>, and <code>AdditiveInverse</code>.
+The family <var>Fam</var> of <i>A</i> can be entered as first argument;
+this is obligatory if <var>gens</var> is empty (and hence <i>A</i> is trivial).
+<p>
+The underlying operations for which methods can be installed are the
+following.
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>NearAdditiveMagmaByGenerators( </code><var>gens</var><code> ) O</code>
+<li><code>NearAdditiveMagmaByGenerators( </code><var>Fam</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>NearAdditiveMagmaWithZeroByGenerators( </code><var>gens</var><code> ) O</code>
+<li><code>NearAdditiveMagmaWithZeroByGenerators( </code><var>Fam</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+<a name = "SSEC002.6"></a>
+<li><code>NearAdditiveGroupByGenerators( </code><var>gens</var><code> ) O</code>
+<li><code>NearAdditiveGroupByGenerators( </code><var>Fam</var><code>, </code><var>gens</var><code> ) O</code>
+<p>
+Substructures of an additive magma can be formed as follows.
+<p>
+<a name = "SSEC002.7"></a>
+<li><code>SubnearAdditiveMagma( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<a name = "SSEC002.7"></a>
+<li><code>SubnearAdditiveMagmaNC( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+<code>SubadditiveMagma</code> returns the near-additive magma generated by
+the elements in the list <var>gens</var>, with parent the domain <var>D</var>.
+<code>SubadditiveMagmaNC</code> does the same, except that it is not checked
+whether the elements of <var>gens</var> lie in <var>D</var>.
+<p>
+<a name = "SSEC002.8"></a>
+<li><code>SubnearAdditiveMagmaWithZero( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<a name = "SSEC002.8"></a>
+<li><code>SubnearAdditiveMagmaWithZeroNC( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+<code>SubadditiveMagmaWithZero</code> returns the near-additive magma-with-zero
+generated by the elements in the list <var>gens</var>, with parent the domain <var>D</var>.
+<code>SubadditiveMagmaWithZeroNC</code> does the same, except that it is not checked
+whether the elements of <var>gens</var> lie in <var>D</var>.
+<p>
+<a name = "SSEC002.9"></a>
+<li><code>SubnearAdditiveGroup( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<a name = "SSEC002.9"></a>
+<li><code>SubnearAdditiveGroupNC( </code><var>D</var><code>, </code><var>gens</var><code> ) F</code>
+<p>
+<code>SubadditiveGroup</code> returns the near-additive group generated by
+the elements in the list <var>gens</var>, with parent the domain <var>D</var>.
+<code>SubadditiveGroupNC</code> does the same, except that it is not checked
+whether the elements of <var>gens</var> lie in <var>D</var>.
+<p>
+<p>
+<h2><a name="SECT003">53.3 Attributes and Properties for (Near-)Additive Magmas</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>IsAdditivelyCommutative( </code><var>A</var><code> ) P</code>
+<p>
+A near-additive magma <var>A</var> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is <strong>additively commutative</strong> if
+for all elements <i>a</i>, <i>b</i>  <font face="symbol">&#8712;</font> <i>A</i>  the equality <i>a</i> + <i>b</i> = <i>b</i> + <i>a</i> holds.
+<p>
+Note that the commutativity of the <strong>multiplication</strong> <code>*</code> in a
+multiplicative structure can be tested with <code>IsCommutative</code>,
+(see&nbsp;<a href="CHAP033.htm#SSEC004.9">IsCommutative</a>).
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>GeneratorsOfNearAdditiveMagma( </code><var>A</var><code> ) A</code>
+<a name = "SSEC003.2"></a>
+<li><code>GeneratorsOfAdditiveMagma( </code><var>A</var><code> ) A</code>
+<p>
+is a list <var>gens</var> of elements of the near-additive magma <var>A</var>
+that generates <var>A</var> as a near-additive magma,
+that is, the closure of <var>gens</var> under addition is <var>A</var>.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>GeneratorsOfNearAdditiveMagmaWithZero( </code><var>A</var><code> ) A</code>
+<a name = "SSEC003.3"></a>
+<li><code>GeneratorsOfAdditiveMagmaWithZero( </code><var>A</var><code> ) A</code>
+<p>
+is a list <var>gens</var> of elements of the near-additive magma-with-zero <var>A</var>
+that generates <var>A</var> as a near-additive magma-with-zero,
+that is,
+the closure of <var>gens</var> under addition and <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>) is <var>A</var>.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>GeneratorsOfNearAdditiveGroup( </code><var>A</var><code> ) A</code>
+<a name = "SSEC003.4"></a>
+<li><code>GeneratorsOfAdditiveGroup( </code><var>A</var><code> ) A</code>
+<p>
+is a list <var>gens</var> of elements of the near-additive group <var>A</var>
+that generates <var>A</var> as a near-additive group,
+that is, the closure of <var>gens</var> under addition, taking the zero element,
+and taking additive inverses (see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveInverse</a>) is <var>A</var>.
+<p>
+<a name = "SSEC003.5"></a>
+<li><code>AdditiveNeutralElement( </code><var>A</var><code> ) A</code>
+<p>
+returns the element <i>z</i> in the near-additive magma <var>A</var> with the property
+that <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all <i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> ,
+if such an element exists.
+Otherwise <code>fail</code> is returned.
+<p>
+A near-additive magma that is not a near-additive magma-with-zero
+can have an additive neutral element <i>z</i>;
+in this case, <i>z</i> <strong>cannot</strong> be obtained as <code>Zero( </code><var>A</var><code> )</code> or as <code>0*</code><var>elm</var><code></code>
+for an element <var>elm</var> in <var>A</var>, see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>.
+<p>
+<a name = "SSEC003.6"></a>
+<li><code>TrivialSubnearAdditiveMagmaWithZero( </code><var>A</var><code> ) A</code>
+<p>
+is the additive magma-with-zero that has the zero of
+the near-additive magma-with-zero <var>A</var> as only element.
+<p>
+<p>
+<h2><a name="SECT004">53.4 Operations for (Near-)Additive Magmas</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>ClosureNearAdditiveGroup( </code><var>A</var><code>, </code><var>a</var><code> ) O</code>
+<li><code>ClosureNearAdditiveGroup( </code><var>A</var><code>, </code><var>B</var><code> ) O</code>
+<p>
+returns the closure of the near-additive magma <var>A</var> with the element <var>a</var>
+or the near-additive magma <var>B</var>, w.r.t.&nbsp;addition, taking the zero element,
+and taking additive inverses.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP052.htm">Previous</a>] [<a href ="CHAP054.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

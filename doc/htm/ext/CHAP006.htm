@@ -1,0 +1,391 @@
+<html><head><title>[ext] 6 Function-Operation-Attribute Triples</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href ="CHAP007.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>6 Function-Operation-Attribute Triples</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP006.htm#SECT001">Key Dependent Operations</a>
+<li> <A HREF="CHAP006.htm#SECT002">In Parent Attributes</a>
+<li> <A HREF="CHAP006.htm#SECT003">Operation Functions</a>
+</ol><p>
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font>  is eager  to maintain information  that  it has gathered about an
+object, possibly by lengthy  calculations. The most  important mechanism
+for information maintenance  is the  automatic  storage and look-up  that
+takes  place  for  <strong>attributes</strong>; and    this   was already mentioned   in
+section&nbsp;<a href="../tut/CHAP008.htm#SECT001">Attributes</a>  in the   tutorial. In   this  chapter  we  will
+describe further mechanisms that  allow storage of  results that  are not
+values of attributes.
+<p>
+<a name = "I0"></a>
+
+The  idea which is   common to all  sections  is that certain operations,
+which are  not themselves attributes, have  an attribute  associated with
+them. To automatically delegate tasks to the  attribute, <font face="Gill Sans,Helvetica,Arial">GAP</font> knows, in
+addition  to  the <strong>operation</strong>  and  the  <strong>attributes</strong>   also a
+<strong>function</strong>, which  is  ``wrapped around'' the  other  two. This ``wrapper
+function''  is called by    the user and    decides whether to  call  the
+operation    or  the    attribute     or  possibly     both.   The  whole
+<strong>f</strong>unction-<strong>o</strong>peration-<strong>a</strong>ttribute triple (or <strong>FOA triple</strong>)  is set up by
+a single   <font face="Gill Sans,Helvetica,Arial">GAP</font> command which  writes the  wrapper function and already
+installs  some methods,  e.g.,  for the attribute  to   fall back on  the
+operation. The idea  is then that subsequent  methods, which  perform the
+actual computation, are installed   only for the operation,   whereas the
+wrapper function remains unaltered, and  in general no additional methods
+for the attribute are required either.
+<p>
+<p>
+<h2><a name="SECT001">6.1 Key Dependent Operations</a></h2>
+<p><p>
+There  are several functions  that  require as first  argument a domain,
+e.g., a  group, and as second  argument  something much simpler,  e.g., a
+prime. <code>SylowSubgroup</code>  is an  example.
+Since its value depends on two arguments, it cannot be an attribute,
+yet one would like to store Sylow subgroups once they have been computed.
+<p>
+The idea is to provide an attribute of the group,
+called <code>ComputedSylowSubgroups</code>, and to store the groups in this list.
+The name implies that the value of this attribute may change in the course
+of a <font face="Gill Sans,Helvetica,Arial">GAP</font> session,
+whenever a newly-computed Sylow subgroup is put into the list.
+Therefore, this is a <strong>mutable attribute</strong>
+(see&nbsp;<a href="../prg/CHAP003.htm#SECT003">Creating Attributes and Properties</a> in ``Programming in GAP'').
+The list contains primes in each bound odd position and a corresponding
+Sylow subgroup in the following even position.
+More precisely, if <code></code><var>p</var><code> = ComputedSylowSubgroups( </code><var>G</var><code> )[ </code><var>even</var><code> - 1 ]</code>
+then <code>ComputedSylowSubgroups( </code><var>G</var><code> )[ </code><var>even</var><code> ]</code> holds the value
+of <code>SylowSubgroup( </code><var>G</var><code>, </code><var>p</var><code> )</code>.
+The pairs are sorted in increasing order of <var>p</var>,
+in particular at most one Sylow <var>p</var> subgroup of <var>G</var> is stored for each
+prime <var>p</var>.
+This attribute value is maintained by the operation <code>SylowSubgroup</code>,
+which calls the operation <code>SylowSubgroupOp( </code><var>G</var><code>, </code><var>p</var><code> )</code> to do the real
+work, if the prime <var>p</var> cannot be found in the list.
+So methods that do the real work should be installed for <code>SylowSubgroupOp</code>
+and not for <code>SylowSubgroup</code>.
+<p>
+The same mechanism works for other functions as well, e.g., for <code>PCore</code>,
+but also for <code>HallSubgroup</code>,
+where the second argument is not a prime but a set of primes.
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>KeyDependentOperation( </code><var>name</var><code>, </code><var>dom-req</var><code>, </code><var>key-req</var><code>, </code><var>key-test</var><code> )</code>
+<p>
+declares at the same time all three:  two operations with names <var>name</var>
+and <code></code><var>name</var><code>Op</code>, respectively, and an attribute with name 
+and the attribute as described above,
+with names <var>name</var>, <code></code><var>name</var><code>Op</code>, and <code>Computed</code><var>name</var><code>s</code>.
+<var>dom-req</var> and <var>key-req</var> specify the required filters for the first and
+second argument of the operation <code></code><var>name</var><code>Op</code>,
+which are needed to create this operation with <code>NewOperation</code>
+(see&nbsp;<a href="../prg/CHAP003.htm#SSEC005.1">NewOperation</a>).
+<var>dom-req</var> is also the required filter for the corresponding attribute
+<code>Computed</code><var>name</var><code>s</code>.
+The fourth argument <var>key-test</var> is in general a function to which the second
+argument <var>info</var> of <code></code><var>name</var><code>(  </code><var>D</var><code>, </code><var>info</var><code> )</code> will be passed.
+This function can perform tests on <var>info</var>,
+and raise an error if appropriate.
+<p>
+For example, to set up the three objects <code>SylowSubgroup</code>, <code>SylowSubgroupOp</code>,
+and <code>ComputedSylowSubgroups</code> together,
+the declaration file ``lib/grp.gd'' contains the following line of code.
+<pre>
+KeyDependentOperation( "SylowSubgroup", IsGroup, IsPosInt, "prime" );
+</pre>
+In this example, <var>key-test</var> has the value <code>"prime"</code>,
+which is silently replaced by a function that tests whether its argument
+is a prime.
+<p>
+<pre>
+gap&gt; s4 := Group((1,2,3,4),(1,2));;
+gap&gt; SylowSubgroup( s4, 5 );;  ComputedSylowSubgroups( s4 );
+[ 5, Group(()) ]
+gap&gt; SylowSubgroup( s4, 2 );;  ComputedSylowSubgroups( s4 );
+[ 2, Group([ (3,4), (1,4)(2,3), (1,3)(2,4) ]), 5, Group(()) ]
+</pre>
+<p>
+<pre>
+gap&gt; SylowSubgroup( s4, 6 );
+Error, SylowSubgroup: &lt;p&gt; must be a prime called from
+&lt;compiled or corrupted call value&gt;  called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+</pre>
+<p>
+Thus the prime test need not be repeated in the methods for the operation
+<code>SylowSubgroupOp</code> (which are installed to do the real work).
+Note that no methods need be installed for <code>SylowSubgroup</code> and
+<code>ComputedSylowSubgroups</code>.
+If a method is installed with <code>InstallMethod</code> for a wrapper operation
+such as <code>SylowSubgroup</code> then a warning is signalled
+provided the <code>InfoWarning</code> level is at least 1.
+(Use <code>InstallOtherMethod</code> in order to suppress the warning.)
+<p>
+<p>
+<h2><a name="SECT002">6.2 In Parent Attributes</a></h2>
+<p><p>
+This section describes how you can add  new ``in parent attributes''
+(see&nbsp;<a href="../ref/CHAP030.htm#SECT008">Constructing Subdomains</a> and <a href="../ref/CHAP030.htm#SECT007">Parents</a> in the Reference Manual).
+As an example, we describe how <code>Index</code> and its related functions
+are implemented.
+<p>
+There are two operations <code>Index</code> and <code>IndexOp</code>,
+and an attribute <code>IndexInParent</code>.
+They are created together as shown below,
+and after they have been created,
+methods need be installed only for <code>IndexOp</code>.
+In the creation process, <code>IndexInParent</code> already gets one default method
+installed
+(in addition to the usual system getter of each attribute,
+see&nbsp;<a href="../ref/CHAP013.htm#SECT005">Attributes</a> in the Reference Manual),
+namely <code>D -&gt; IndexOp( Parent( D ), D )</code>.
+<p>
+The operation <code>Index</code> proceeds as follows.
+<ul>
+<li>
+  If it is called with the two arguments <var>super</var> and <var>sub</var>, and if
+  <code>HasParent( </code><var>sub</var><code> )</code> and <code>IsIdenticalObj( </code><var>super</var><code>, Parent( </code><var>sub</var><code> ) )</code>
+  are <code>true</code>, <code>IndexInParent</code> is called with argument <var>sub</var>,
+  and the result is returned.
+<li>
+  Otherwise, <code>IndexOp</code> is called with the same arguments that <code>Index</code> was
+  called with, and the result is returned.
+</ul>
+(Note that it is in principle possible to install even <code>Index</code> and
+<code>IndexOp</code> methods for a number of arguments different from two,
+with <code>InstallOtherMethod</code>,
+see&nbsp;<a href="../prg/CHAP003.htm#SECT003">Creating Attributes and Properties</a> in ``Programming in GAP'').
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>InParentFOA( </code><var>name</var><code>, </code><var>super-req</var><code>, </code><var>sub-req</var><code>, DeclareAttribute )</code>
+<li><code>InParentFOA( </code><var>name</var><code>, </code><var>super-req</var><code>, </code><var>sub-req</var><code>, DeclareProperty )</code>
+<p>
+declares the operations and the attribute as described above,
+with names <var>name</var>, <code></code><var>name</var><code>Op</code>, and <code></code><var>name</var><code>InParent</code>.
+<var>super-req</var> and <var>sub-req</var> specify the required filters for the first and
+second argument of the operation <code></code><var>name</var><code>Op</code>,
+which are needed to create this operation with <code>NewOperation</code>
+(see&nbsp;<a href="../prg/CHAP003.htm#SSEC005.1">NewOperation</a>).
+<var>sub-req</var> is also the required filter for the corresponding attribute
+<code></code><var>name</var><code>InParent</code>;
+note that <code>HasParent</code> is <strong>not</strong> required for the argument <var>U</var> of
+<code></code><var>name</var><code>InParent</code>, because even without a parent stored,
+<code>Parent( </code><var>U</var><code> )</code> is legal, meaning <var>U</var> itself
+(see&nbsp;<a href="../ref/CHAP030.htm#SECT007">Parents</a> in the Reference Manual).
+The fourth argument is <code>DeclareProperty</code> if <code></code><var>name</var><code>InParent</code> takes only
+boolean values (for example in the case <code>IsNormalInParent</code>),
+and <code>DeclareAttribute</code> otherwise.
+<p>
+For example, to set up the three objects <code>Index</code>, <code>IndexOp</code>,
+and <code>IndexInParent</code> together,
+the declaration file ``lib/domain.gd'' contains the following line of code.
+<pre>
+InParentFOA( "Index", IsGroup, IsGroup, DeclareAttribute );
+</pre>
+<p>
+Note that no methods need be installed for <code>Index</code> and <code>IndexInParent</code>.
+<p>
+<p>
+<h2><a name="SECT003">6.3 Operation Functions</a></h2>
+<p><p>
+<a name = "I1"></a>
+
+<a name = "I1"></a>
+<a name = "I2"></a>
+
+<a name = "I1"></a>
+<a name = "I2"></a>
+<a name = "I3"></a>
+
+Chapter&nbsp;<a href="../ref/CHAP039.htm">Group Actions</a>  of  the  Reference Manual
+and, in particular, the Section&nbsp;<a href="../ref/CHAP039.htm#SECT001">About Group Actions</a>
+explain that certain operations such as <code>Orbits</code> (see&nbsp;<a href="../ref/CHAP039.htm#SECT003">Orbits</a>),
+besides their usual usage with arguments <var>G</var>, <var>D</var>, and <var>opr</var>,
+can also be applied to an external set (<i>G</i>-set),
+in which case they can be interpreted as attributes.
+Moreover, they can also be interpreted as attributes for permutation
+group, meaning the natural action on the set of its moved points.
+<p>
+The definition of <code>Orbits</code> says that a method should be a function
+with arguments <var>G</var>, <var>D</var>, <var>gens</var>, <var>oprs</var>, and <var>opr</var>,
+as in the case of the operation <code>ExternalSet</code> when specified via <var>gens</var>
+and <var>oprs</var> (see&nbsp;<a href="../ref/CHAP039.htm#SECT011">External Sets</a> in the Reference Manual).
+All other syntax variants allowed for <code>Orbits</code> (e.g., leaving
+out <var>gens</var> and <var>oprs</var>) are handled by default methods.
+<p>
+The default methods for <code>Orbits</code> support the following behaviour.
+<ol>
+  <li>
+    If the only argument is an external set <var>xset</var> and the attribute
+    tester <code>HasOrbits( </code><var>xset</var><code> )</code> returns <code>true</code>,
+    the stored value of that attribute is returned.
+  <li>
+    If the only argument is an external set <var>xset</var> and the attribute
+    value is not known,
+    the default arguments are obtained from the data of <var>xset</var>.
+  <li>
+    If <var>gens</var> and <var>oprs</var> are not specified,
+    <var>gens</var> is set to <code>Pcgs( </code><var>G</var><code> )</code> if <code>CanEasilyComputePcgs( </code><var>G</var><code> )</code>
+    is <code>true</code>, and to <code>GeneratorsOfGroup( </code><var>G</var><code> )</code> otherwise;
+    <var>oprs</var> is set to <var>gens</var>.
+  <li>
+    The default value of <var>opr</var> is <code>OnPoints</code>.
+  <li>
+    In the case of an operation of a permutation group <var>G</var>
+    on <code>MovedPoints( </code><var>G</var><code> )</code> via <code>OnPoints</code>,
+    if the attribute tester <code>HasOrbits( </code><var>G</var><code> )</code> returns <code>true</code>,
+    the stored attribute value is returned.
+  <li>
+    The operation is called as <code></code><var>result</var><code>:= Orbits( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>gens</var><code>,
+    </code><var>oprs</var><code>, </code><var>opr</var><code> )</code>.
+  <li>
+    In the case of an external set <var>xset</var> or a permutation group <var>G</var> in its
+    natural action, the attribute setter is called to store <var>result</var>.
+  <li>
+    <var>result</var> is returned.
+</ol>
+<p>
+The declaration of operations that match the above pattern is done
+as follows.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>OrbitsishOperation( </code><var>name</var><code>, </code><var>reqs</var><code>, </code><var>usetype</var><code>, NewAttribute ) F</code>
+<li><code>OrbitsishOperation( </code><var>name</var><code>, </code><var>reqs</var><code>, </code><var>usetype</var><code>, NewProperty ) F</code>
+<p>
+declares an attribute <var>op</var> as described above, with name <var>name</var>.
+The second argument <var>reqs</var> specifies the list of required filters
+for the usual (five-argument) methods that do the real work.
+<p>
+If the third argument <var>usetype</var> is <code>true</code>,
+the function call <code></code><var>op</var><code>( </code><var>xset</var><code> )</code> will
+--- if the value of <var>op</var> for <var>xset</var> is not yet known ---
+delegate to the five-argument call of <var>op</var> with second argument <var>xset</var>
+rather than with <var>D</var> (cf.&nbsp;step&nbsp;6 above).
+This allows certain methods for <var>op</var> to make use of the type of <var>xset</var>,
+in which the types of the external subsets of <var>xset</var>
+and of the external orbits in <var>xset</var> are stored.
+(This is used to avoid repeated calls of <code>NewType</code> in functions like
+<code>ExternalOrbits( </code><var>xset</var><code> )</code>,
+which call <code>ExternalOrbit( </code><var>xset</var><code>, </code><var>pnt</var><code> )</code> for several values of&nbsp;<var>pnt</var>.)
+<p>
+For property testing functions such as <code>IsTransitive</code>,
+the fourth argument is <code>NewProperty</code>,
+otherwise it is <code>NewAttribute</code>.
+<p>
+For example, to set up the operation <code>Orbits</code>,
+the declaration file ``lib/oprt.gd'' contains the following line of code:
+<pre>
+OrbitsishOperation( "Orbits", OrbitsishReq, false, NewAttribute );
+</pre>
+The variable <code>OrbitsishReq</code> contains the standard requirements
+<pre>
+OrbitsishReq := [ IsGroup, IsList,
+		  IsList,
+		  IsList,
+		  IsFunction ];
+</pre>
+which are usually entered in calls to <code>OrbitsishOperation</code>.
+<p>
+A similar mechanism is provided for operations such as <code>Orbit</code> that do
+not have an associated attribute but still need a wrapper function to
+standardize the arguments for the associated operation.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>OrbitishFO( </code><var>name</var><code>, </code><var>reqs</var><code>, </code><var>famrel</var><code>, </code><var>usetype</var><code> ) F</code>
+<p>
+declares a wrapper function and its operation,
+with names <var>name</var> and <code></code><var>name</var><code>Op</code>.
+The second argument <var>reqs</var> specifies the list of required filters for the
+operation <code></code><var>name</var><code>Op</code>.
+<p>
+The third argument <var>famrel</var>  is used to  test the family relation between
+the  second  and third  argument of <code></code><var>name</var><code>( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>elm</var><code> )</code>.
+For example, in the call <code>Orbit( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>pnt</var><code> )</code>,
+<var>pnt</var> must be an element of <var>D</var>, so <code></code><var>famrel</var><code> = IsCollsElms</code> is
+appropriate, and in the call <code>Blocks( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>seed</var><code> )</code>,
+<var>seed</var> must be a subset of <var>D</var>,
+and the family relation is <code>IsIdenticalObj</code>.
+The fourth argument <var>usetype</var> serves the  same purpose as  in the case of
+<code>OrbitsishOperation</code>.
+<p>
+For example, to setup the function <code>Orbit</code> and its operation <code>OrbitOp</code>,
+the declaration file ``lib/oprt.gd'' contains the following line of code:
+<pre>
+OrbitishFO( "Orbit", OrbitishReq, IsCollsElms, false );
+</pre>
+The variable <code>OrbitishReq</code> contains the standard requirements
+<pre>
+OrbitishReq  := [ IsGroup, IsList, IsObject,
+		  IsList,
+		  IsList,
+		  IsFunction ];
+</pre>
+which are usually entered in calls to <code>OrbitishFO</code>.
+<p>
+The relation test via <var>famrel</var> is used to provide a uniform construction
+of the wrapper functions created by <code>OrbitishFO</code>,
+in spite of the different syntax of the specific functions.
+For example, <code>Orbit</code> admits the calls <code>Orbit( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>pnt</var><code>, </code><var>opr</var><code> )</code>
+and <code>Orbit( </code><var>G</var><code>, </code><var>pnt</var><code>, </code><var>opr</var><code> )</code>, i.e., the second argument <var>D</var> may be
+omitted;
+<code>Blocks</code> admits the calls <code>Blocks( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>seed</var><code>, </code><var>opr</var><code> )</code> and
+<code>Blocks( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>opr</var><code> )</code>, i.e., the third argument may be omitted.
+The translation to the appropriate call of <code>OrbitOp</code> or <code>BlocksOp</code>,
+for either operation with five or six arguments, 
+is handled via <var>famrel</var>.
+<p>
+As a  consequence, there must not only be methods for <code>OrbitOp</code> with
+the six arguments corresponding to <code>OrbitishReq</code>,
+but also methods for only five arguments (i.e., without <var>D</var>).
+Plenty of examples are contained in the implementation file ``lib/oprt.gi''.
+<p>
+In order to handle a few special cases
+(currently <code>Blocks</code> and <code>MaximalBlocks</code>),
+also the following form is supported.
+<p>
+<code>OrbitishFO( </code><var>name</var><code>, </code><var>reqs</var><code>, </code><var>famrel</var><code>, </code><var>attr</var><code> ) F</code>
+<p>
+The functions in question depend upon an argument <var>seed</var>,
+so they cannot be regarded as attributes.
+However, they are most often called without giving <var>seed</var>,
+meaning ``choose any minimal resp. maximal block system''.
+In this case, the result can be stored as the value of the attribute
+<var>attr</var> that was entered as fourth argument of <code>OrbitishFO</code>.
+This attribute is considered by a call <code>Blocks( </code><var>G</var><code>, </code><var>D</var><code>, </code><var>opr</var><code> )</code>
+(i.e., without <var>seed</var>) in the same way as <code>Orbits</code> considers  <code>OrbitsAttr</code>.
+<p>
+To set this up, the declaration file ``lib/oprt.gd'' contains the following
+lines:
+<pre>
+DeclareAttribute( "BlocksAttr", IsExternalSet );
+OrbitishFO( "Blocks",
+    [ IsGroup, IsList, IsList,
+      IsList,
+      IsList,
+      IsFunction ], IsIdenticalObj, BlocksAttr );
+</pre>
+And this extraordinary FOA triple works as follows:
+<pre>
+gap&gt; s4 := Group((1,2,3,4),(1,2));; Blocks( s4, MovedPoints(s4), [1,2] );
+[ [ 1, 2, 3, 4 ] ]
+gap&gt; Tester( BlocksAttr )( s4 );
+false
+</pre>
+<p>
+<pre>
+gap&gt; Blocks( s4, MovedPoints(s4) );       
+[ [ 1, 2, 3, 4 ] ]
+gap&gt; Tester( BlocksAttr )( s4 );  BlocksAttr( s4 );
+true
+[ [ 1, 2, 3, 4 ] ]
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href ="CHAP007.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

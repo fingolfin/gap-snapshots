@@ -1,0 +1,1320 @@
+<html><head><title>[ref] 59 Vector Spaces</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP058.htm">Previous</a>] [<a href ="CHAP060.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>59 Vector Spaces</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP059.htm#SECT001">Constructing Vector Spaces</a>
+<li> <A HREF="CHAP059.htm#SECT002">Operations and Attributes for Vector Spaces</a>
+<li> <A HREF="CHAP059.htm#SECT003">Domains of Subspaces of Vector Spaces</a>
+<li> <A HREF="CHAP059.htm#SECT004">Bases of Vector Spaces</a>
+<li> <A HREF="CHAP059.htm#SECT005">Operations for Vector Space Bases</a>
+<li> <A HREF="CHAP059.htm#SECT006">Operations for Special Kinds of Bases</a>
+<li> <A HREF="CHAP059.htm#SECT007">Mutable Bases</a>
+<li> <A HREF="CHAP059.htm#SECT008">Row and Matrix Spaces</a>
+<li> <A HREF="CHAP059.htm#SECT009">Vector Space Homomorphisms</a>
+<li> <A HREF="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>
+<li> <A HREF="CHAP059.htm#SECT011">How to Implement New Kinds of Vector Spaces</a>
+</ol><p>
+<p>
+<a name = ""></a>
+<li><code>IsLeftVectorSpace( </code><var>V</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsVectorSpace( </code><var>V</var><code> ) C</code>
+<p>
+A <strong>vector space</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a free left module (see&nbsp;<a href="CHAP055.htm#SSEC003.1">IsFreeLeftModule</a>)
+over a division ring (see Chapter&nbsp;<a href="CHAP056.htm">Fields and Division Rings</a>).
+<p>
+Whenever we talk about an <i>F</i>-vector space <var>V</var> then <var>V</var> is an additive
+group (see&nbsp;<a href="CHAP053.htm#SSEC001.6">IsAdditiveGroup</a>) on which the division ring <i>F</i> acts via
+multiplication from the left such that this action and the addition
+in <var>V</var> are left and right distributive.
+The division ring <i>F</i> can be accessed as value of the attribute
+<code>LeftActingDomain</code> (see&nbsp;<a href="CHAP055.htm#SSEC001.11">LeftActingDomain</a>).
+<p>
+The characteristic (see&nbsp;<a href="CHAP030.htm#SSEC010.1">Characteristic</a>) of a vector space is equal to
+the characteristic of its left acting domain.
+<p>
+Vector spaces in <font face="Gill Sans,Helvetica,Arial">GAP</font> are always <strong>left</strong> vector spaces,
+<code>IsLeftVectorSpace</code> and <code>IsVectorSpace</code> are synonyms.
+<p>
+<p>
+<h2><a name="SECT001">59.1 Constructing Vector Spaces</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>VectorSpace( </code><var>F</var><code>, </code><var>gens</var><code>[, </code><var>zero</var><code>][, "basis"] ) F</code>
+<p>
+For a field <var>F</var> and a collection <var>gens</var> of vectors, <code>VectorSpace</code> returns
+the <var>F</var>-vector space spanned by the elements in <var>gens</var>.
+<p>
+The optional argument <var>zero</var> can be used to specify the zero element of
+the space; <var>zero</var> <strong>must</strong> be given if <var>gens</var> is empty.
+The optional string <code>"basis"</code> indicates that <var>gens</var> is known to be
+linearly independent over <var>F</var>, in particular the dimension of the vector
+space is immediately set;
+note that <code>Basis</code> (see&nbsp;<a href="CHAP059.htm#SSEC004.2">Basis</a>) need <strong>not</strong> return the basis formed by
+<var>gens</var> if the argument <code>"basis"</code> is given.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );
+&lt;vector space over Rationals, with 2 generators&gt;
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>Subspace( </code><var>V</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<a name = "SSEC001.2"></a>
+<li><code>SubspaceNC( </code><var>V</var><code>, </code><var>gens</var><code>[, "basis"] ) F</code>
+<p>
+For an <i>F</i>-vector space <var>V</var> and a list or collection <var>gens</var> that is a
+subset of <var>V</var>, <code>Subspace</code> returns the <i>F</i>-vector space spanned by <var>gens</var>;
+if <var>gens</var> is empty then the trivial subspace (see&nbsp;<a href="CHAP059.htm#SSEC002.2">TrivialSubspace</a>) of
+<var>V</var> is returned.
+The parent (see&nbsp;<a href="CHAP030.htm#SECT007">Parents</a>) of the returned vector space is set to <var>V</var>.
+<p>
+<code>SubspaceNC</code> does the same as <code>Subspace</code>, except that it omits the check
+whether <var>gens</var> is a subset of <var>V</var>.
+<p>
+The optional string <code>"basis"</code> indicates that <var>gens</var> is known to be
+linearly independent over <i>F</i>.
+In this case the dimension of the subspace is immediately set,
+and both <code>Subspace</code> and <code>SubspaceNC</code> do <strong>not</strong> check whether <var>gens</var> really
+is linearly independent and whether <var>gens</var> is a subset of <var>V</var>.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;
+gap&gt; W:= Subspace( V, [ [ 0, 1, 2 ] ] );
+&lt;vector space over Rationals, with 1 generators&gt;
+</pre>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>AsVectorSpace( </code><var>F</var><code>, </code><var>D</var><code> ) O</code>
+<p>
+Let <var>F</var> be a division ring and <var>D</var> a domain.
+If the elements in <var>D</var> form an <var>F</var>-vector space then <code>AsVectorSpace</code>
+returns this <var>F</var>-vector space, otherwise <code>fail</code> is returned.
+<p>
+<code>AsVectorSpace</code> can be used for example to view a given vector space as a
+vector space over a smaller or larger division ring.
+<p>
+<pre>
+gap&gt; V:= FullRowSpace( GF( 27 ), 3 );
+( GF(3^3)^3 )
+gap&gt; Dimension( V );  LeftActingDomain( V );
+3
+GF(3^3)
+gap&gt; W:= AsVectorSpace( GF( 3 ), V );
+&lt;vector space over GF(3), with 9 generators&gt;
+gap&gt; Dimension( W );  LeftActingDomain( W );
+9
+GF(3)
+gap&gt; AsVectorSpace( GF( 9 ), V );
+fail
+</pre>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>AsSubspace( </code><var>V</var><code>, </code><var>U</var><code> ) O</code>
+<p>
+Let <var>V</var> be an <i>F</i>-vector space, and <var>U</var> a collection.
+If <var>U</var> is a subset of <var>V</var> such that the elements of <var>U</var> form an
+<i>F</i>-vector space then <code>AsSubspace</code> returns this vector space, with
+parent set to <var>V</var> (see&nbsp;<a href="CHAP059.htm#SSEC001.3">AsVectorSpace</a>).
+Otherwise <code>fail</code> is returned.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;
+gap&gt; W:= VectorSpace( Rationals, [ [ 1/2, 1/2, 1/2 ] ] );;
+gap&gt; U:= AsSubspace( V, W );
+&lt;vector space over Rationals, with 1 generators&gt;
+gap&gt; Parent( U ) = V;
+true
+gap&gt; AsSubspace( V, [ [ 1, 1, 1 ] ] );
+fail
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">59.2 Operations and Attributes for Vector Spaces</a></h2>
+<p><p>
+<a name = "SSEC002.1"></a>
+<li><code>GeneratorsOfLeftVectorSpace( </code><var>V</var><code> ) A</code>
+<a name = "SSEC002.1"></a>
+<li><code>GeneratorsOfVectorSpace( </code><var>V</var><code> ) A</code>
+<p>
+For an <i>F</i>-vector space <var>V</var>, <code>GeneratorsOfLeftVectorSpace</code> returns a list
+of vectors in <var>V</var> that generate <var>V</var> as an <i>F</i>-vector space.
+<p>
+<pre>
+gap&gt; GeneratorsOfVectorSpace( FullRowSpace( Rationals, 3 ) );
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>TrivialSubspace( </code><var>V</var><code> ) A</code>
+<p>
+For a vector space <var>V</var>, <code>TrivialSubspace</code> returns the subspace of <var>V</var>
+that consists of the zero vector in <var>V</var>.
+<p>
+<pre>
+gap&gt; V:= GF(3)^3;;
+gap&gt; triv:= TrivialSubspace( V );
+&lt;vector space over GF(3), with 0 generators&gt;
+gap&gt; AsSet( triv );
+[ [ 0*Z(3), 0*Z(3), 0*Z(3) ] ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">59.3 Domains of Subspaces of Vector Spaces</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>Subspaces( </code><var>V</var><code> ) A</code>
+<li><code>Subspaces( </code><var>V</var><code>, </code><var>k</var><code> ) O</code>
+<p>
+Let <var>V</var> be a finite vector space.  In the first form, <code>Subspaces</code> returns
+the domain of all subspaces of <var>V</var>.
+In the second form, <var>k</var> must be a nonnegative integer, and <code>Subspaces</code>
+returns the domain of all <var>k</var>-dimensional subspaces of <var>V</var>.
+<p>
+Special <code>Size</code> and <code>Iterator</code> methods are provided for these domains.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>IsSubspacesVectorSpace( </code><var>D</var><code> ) C</code>
+<p>
+The domain of all subspaces of a (finite) vector space or of all
+subspaces of fixed dimension, as returned by <code>Subspaces</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC003.1">Subspaces</a>) lies in the category <code>IsSubspacesVectorSpace</code>.
+<p>
+<pre>
+gap&gt; D:= Subspaces( GF(3)^3 );
+Subspaces( ( GF(3)^3 ) )
+gap&gt; Size( D );
+28
+gap&gt; iter:= Iterator( D );;
+gap&gt; NextIterator( iter );
+&lt;vector space over GF(3), with 0 generators&gt;
+gap&gt; NextIterator( iter );
+&lt;vector space of dimension 1 over GF(3)&gt;
+gap&gt; IsSubspacesVectorSpace( D );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">59.4 Bases of Vector Spaces</a></h2>
+<p><p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>, a <strong>basis</strong> of a free left <i>F</i>-module <i>V</i> is a list of vectors
+<i>B</i> = [ <i>v</i><sub>1</sub>, <i>v</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>v</i><sub><i>n</i></sub> ] in <i>V</i> such that <i>V</i> is generated as a
+left <i>F</i>-module by these vectors and such that <i>B</i> is linearly
+independent over <i>F</i>.
+The integer <i>n</i> is the dimension of <i>V</i> (see&nbsp;<a href="CHAP055.htm#SSEC003.4">Dimension</a>).
+In particular, as each basis is a list (see Chapter&nbsp;<a href="CHAP021.htm">Lists</a>),
+it has a length (see&nbsp;<a href="CHAP021.htm#SSEC017.5">Length</a>), and the <i>i</i>-th vector of <i>B</i> can be
+accessed as <i>B</i>[<i>i</i>].
+<pre>
+gap&gt; V:= Rationals^3;
+( Rationals^3 )
+gap&gt; B:= Basis( V );
+CanonicalBasis( ( Rationals^3 ) )
+gap&gt; Length( B );
+3
+gap&gt; B[1];
+[ 1, 0, 0 ]
+</pre>
+<p>
+The operations described below make sense only for bases of <strong>finite</strong>
+dimensional vector spaces.
+(In practice this means that the vector spaces must be <strong>low</strong> dimensional,
+that is, the dimension should not exceed a few hundred.)
+<p>
+Besides the basic operations for lists
+(see&nbsp;<a href="CHAP021.htm#SECT002">Basic Operations for Lists</a>),
+the <strong>basic operations for bases</strong> are <code>BasisVectors</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.1">BasisVectors</a>),
+<code>Coefficients</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.3">Coefficients</a>),
+<code>LinearCombination</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.4">LinearCombination</a>),
+and <code>UnderlyingLeftModule</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.2">UnderlyingLeftModule</a>).
+These and other operations for arbitrary bases are described
+in&nbsp;<a href="CHAP059.htm#SECT005">Operations for Vector Space Bases</a>.
+<p>
+For special kinds of bases, further operations are defined
+(see&nbsp;<a href="CHAP059.htm#SECT006">Operations for Special Kinds of Bases</a>).
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> supports the following three kinds of bases.
+<p>
+<strong>Relative bases</strong> delegate the work to other bases of the same
+free left module, via basechange matrices (see&nbsp;<a href="CHAP059.htm#SSEC004.4">RelativeBasis</a>).
+<p>
+<strong>Bases handled by nice bases</strong> delegate the work to bases
+of isomorphic left modules over the same left acting domain
+(see&nbsp;<a href="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>).
+<p>
+Finally, of course there must be bases in <font face="Gill Sans,Helvetica,Arial">GAP</font> that really do the work.
+<p>
+For example, in the case of a Gaussian row or matrix space <var>V</var>
+(see&nbsp;<a href="CHAP059.htm#SECT008">Row and Matrix Spaces</a>),
+<code>Basis( </code><var>V</var><code> )</code> is a semi-echelonized basis (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>)
+that uses Gaussian elimination; such a basis is of the third kind.
+<code>Basis( </code><var>V</var><code>, </code><var>vectors</var><code> )</code> is either semi-echelonized or a relative basis.
+Other examples of bases of the third kind are canonical bases of finite
+fields and of abelian number fields.
+<p>
+Bases handled by nice bases are described
+in&nbsp;<a href="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>.
+Examples are non-Gaussian row and matrix spaces, and subspaces of finite
+fields and abelian number fields that are themselves not fields.
+<p>
+<a name = "SSEC004.1"></a>
+<li><code>IsBasis( </code><var>obj</var><code> ) C</code>
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>, a <strong>basis</strong> of a free left module is an object that knows how to
+compute coefficients w.r.t.&nbsp;its basis vectors (see&nbsp;<a href="CHAP059.htm#SSEC005.3">Coefficients</a>).
+Bases are constructed by <code>Basis</code> (see&nbsp;<a href="CHAP059.htm#SSEC004.2">Basis</a>).
+Each basis is an immutable list,
+the <i>i</i>-th entry being the <i>i</i>-th basis vector.
+<p>
+(See&nbsp;<a href="CHAP059.htm#SECT007">Mutable Bases</a> for mutable bases.)
+<p>
+<pre>
+gap&gt; V:= GF(2)^2;;
+gap&gt; B:= Basis( V );;
+gap&gt; IsBasis( B );
+true
+gap&gt; IsBasis( [ [ 1, 0 ], [ 0, 1 ] ] );
+false
+gap&gt; IsBasis( Basis( Rationals^2, [ [ 1, 0 ], [ 0, 1 ] ] ) );
+true
+</pre>
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>Basis( </code><var>V</var><code> ) A</code>
+<li><code>Basis( </code><var>V</var><code>, </code><var>vectors</var><code> ) O</code>
+<a name = "SSEC004.2"></a>
+<li><code>BasisNC( </code><var>V</var><code>, </code><var>vectors</var><code> ) O</code>
+<p>
+Called with a free left <i>F</i>-module <var>V</var> as the only argument,
+<code>Basis</code> returns an <i>F</i>-basis of <var>V</var> whose vectors are not further
+specified.
+<p>
+If additionally a list <var>vectors</var> of vectors in <var>V</var> is given
+that forms an <i>F</i>-basis of <var>V</var> then <code>Basis</code> returns this basis;
+if <var>vectors</var> is not linearly independent over <i>F</i> or does not generate
+<var>V</var> as a free left <i>F</i>-module then <code>fail</code> is returned.
+<p>
+<code>BasisNC</code> does the same as <code>Basis</code> for two arguments,
+except that it does not check whether <var>vectors</var> form a basis.
+<p>
+If no basis vectors are prescribed then <code>Basis</code> need not compute
+basis vectors; in this case, the vectors are computed in the first call
+to <code>BasisVectors</code>.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 7 ], [ 1/2, 1/3, 5 ] ] );;
+gap&gt; B:= Basis( V );
+SemiEchelonBasis( &lt;vector space over Rationals, with 2 generators&gt;, ... )
+gap&gt; BasisVectors( B );
+[ [ 1, 2, 7 ], [ 0, 1, -9/4 ] ]
+gap&gt; B:= Basis( V, [ [ 1, 2, 7 ], [ 3, 2, 30 ] ] );
+Basis( &lt;vector space over Rationals, with 2 generators&gt;, 
+[ [ 1, 2, 7 ], [ 3, 2, 30 ] ] )
+gap&gt; Basis( V, [ [ 1, 2, 3 ] ] );
+fail
+</pre>
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>CanonicalBasis( </code><var>V</var><code> ) A</code>
+<p>
+If the vector space <var>V</var> supports a <strong>canonical basis</strong> then
+<code>CanonicalBasis</code> returns this basis, otherwise <code>fail</code> is returned.
+<p>
+The defining property of a canonical basis is that its vectors are
+uniquely determined by the vector space.
+If canonical bases exist for two vector spaces over the same left acting
+domain (see&nbsp;<a href="CHAP055.htm#SSEC001.11">LeftActingDomain</a>) then the equality of these vector spaces
+can be decided by comparing the canonical bases.
+<p>
+The exact meaning of a canonical basis depends on the type of <var>V</var>.
+Canonical bases are defined for example for Gaussian row and matrix
+spaces (see&nbsp;<a href="CHAP059.htm#SECT008">Row and Matrix Spaces</a>).
+<p>
+If one designs a new kind of vector spaces
+(see&nbsp;<a href="CHAP059.htm#SECT011">How to Implement New Kinds of Vector Spaces</a>) and defines a
+canonical basis for these spaces then the <code>CanonicalBasis</code> method
+one installs (see&nbsp;<a href="../prg/CHAP002.htm#SSEC002.1">InstallMethod</a> in ``Programming in <font face="Gill Sans,Helvetica,Arial">GAP</font>'')
+must <strong>not</strong> call <code>Basis</code>.  On the other hand, one probably should install
+a <code>Basis</code> method that simply calls <code>CanonicalBasis</code>, the value of the
+method (see&nbsp;<a href="../prg/CHAP002.htm#SECT002">Method Installation</a>
+and&nbsp;<a href="../prg/CHAP002.htm#SECT003">Applicable Methods and Method Selection</a> in ``Programming in
+<font face="Gill Sans,Helvetica,Arial">GAP</font>'') being <code>CANONICAL_BASIS_FLAGS</code>.
+<p>
+<pre>
+gap&gt; vecs:= [ [ 1, 2, 3 ], [ 1, 1, 1 ], [ 1, 1, 1 ] ];;
+gap&gt; V:= VectorSpace( Rationals, vecs );;
+gap&gt; B:= CanonicalBasis( V );
+CanonicalBasis( &lt;vector space over Rationals, with 3 generators&gt; )
+gap&gt; BasisVectors( B );
+[ [ 1, 0, -1 ], [ 0, 1, 2 ] ]
+</pre>
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>RelativeBasis( </code><var>B</var><code>, </code><var>vectors</var><code> ) O</code>
+<a name = "SSEC004.4"></a>
+<li><code>RelativeBasisNC( </code><var>B</var><code>, </code><var>vectors</var><code> ) O</code>
+<p>
+A relative basis is a basis of the free left module <var>V</var> that delegates
+the computation of coefficients etc. to another basis of <var>V</var> via
+a basechange matrix.
+<p>
+Let <var>B</var> be a basis of the free left module <var>V</var>,
+and <var>vectors</var> a list of vectors in <var>V</var>.
+<p>
+<code>RelativeBasis</code> checks whether <var>vectors</var> form a basis of <var>V</var>,
+and in this case a basis is returned in which <var>vectors</var> are
+the basis vectors; otherwise <code>fail</code> is returned.
+<p>
+<code>RelativeBasisNC</code> does the same, except that it omits the check.
+<p>
+<p>
+<h2><a name="SECT005">59.5 Operations for Vector Space Bases</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>BasisVectors( </code><var>B</var><code> ) A</code>
+<p>
+For a vector space basis <var>B</var>, <code>BasisVectors</code> returns the list of basis
+vectors of <var>B</var>.
+The lists <var>B</var> and <code>BasisVectors( </code><var>B</var><code> )</code> are equal; the main purpose of
+<code>BasisVectors</code> is to provide access to a list of vectors that does <strong>not</strong>
+know about an underlying vector space.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 7 ], [ 1/2, 1/3, 5 ] ] );;
+gap&gt; B:= Basis( V, [ [ 1, 2, 7 ], [ 0, 1, -9/4 ] ] );;
+gap&gt; BasisVectors( B );
+[ [ 1, 2, 7 ], [ 0, 1, -9/4 ] ]
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>UnderlyingLeftModule( </code><var>B</var><code> ) A</code>
+<p>
+For a basis <var>B</var> of a free left module <i>V</i>, say,
+<code>UnderlyingLeftModule</code> returns <i>V</i>.
+<p>
+The reason why a basis stores a free left module is that otherwise one
+would have to store the basis vectors and the coefficient domain
+separately.
+Storing the module allows one for example to deal with bases whose basis
+vectors have not yet been computed yet (see&nbsp;<a href="CHAP059.htm#SSEC004.2">Basis</a>);
+furthermore, in some cases it is convenient to test membership of a
+vector in the module before computing coefficients w.r.t.&nbsp;a basis.
+<p>
+<pre>
+gap&gt; B:= Basis( GF(2)^6 );;  UnderlyingLeftModule( B );
+( GF(2)^6 )
+</pre>
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>Coefficients( </code><var>B</var><code>, </code><var>v</var><code> ) O</code>
+<p>
+Let <i>V</i> be the underlying left module of the basis <var>B</var>, and <var>v</var> a vector
+such that the family of <var>v</var> is the elements family of the family of <i>V</i>.
+Then <code>Coefficients( </code><var>B</var><code>, </code><var>v</var><code> )</code> is the list of coefficients of <var>v</var> w.r.t.
+<var>B</var> if <var>v</var> lies in <i>V</i>, and <code>fail</code> otherwise.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 7 ], [ 1/2, 1/3, 5 ] ] );;
+gap&gt; B:= Basis( V, [ [ 1, 2, 7 ], [ 0, 1, -9/4 ] ] );;
+gap&gt; Coefficients( B, [ 1/2, 1/3, 5 ] );
+[ 1/2, -2/3 ]
+gap&gt; Coefficients( B, [ 1, 0, 0 ] );
+fail
+</pre>
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>LinearCombination( </code><var>B</var><code>, </code><var>coeff</var><code> ) O</code>
+<li><code>LinearCombination( </code><var>vectors</var><code>, </code><var>coeff</var><code> ) O</code>
+<p>
+If <var>B</var> is a basis of length <i>n</i>, say, and <var>coeff</var> is a row vector of the
+same length as <var>B</var>, <code>LinearCombination</code> returns the vector
+<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>] * <i>B</i> [<i>i</i>].
+<p>
+If <var>vectors</var> and <var>coeff</var> are homogeneous lists of the same length <var>n</var>,
+say, <code>LinearCombination</code> returns the vector
+<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>]*<i>vectors</i> [<i>i</i>].
+Perhaps the most important usage is the case where <var>vectors</var> forms a 
+basis.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 7 ], [ 1/2, 1/3, 5 ] ] );;
+gap&gt; B:= Basis( V, [ [ 1, 2, 7 ], [ 0, 1, -9/4 ] ] );;
+gap&gt; LinearCombination( B, [ 1/2, -2/3 ] );
+[ 1/2, 1/3, 5 ]
+</pre>
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>EnumeratorByBasis( </code><var>B</var><code> ) A</code>
+<p>
+For a basis <var>B</var> of the free left <i>F</i>-module <i>V</i> of dimension <i>n</i>, say,
+<code>EnumeratorByBasis</code> returns an enumerator that loops over the elements of
+<i>V</i> as linear combinations of the vectors of <var>B</var> with coefficients the
+row vectors in the full row space (see&nbsp;<a href="CHAP059.htm#SSEC008.4">FullRowSpace</a>) of dimension <i>n</i>
+over <i>F</i>, in the succession given by the default enumerator of this row
+space.
+<p>
+<pre>
+gap&gt; V:= GF(2)^3;;
+gap&gt; enum:= EnumeratorByBasis( CanonicalBasis( V ) );;
+gap&gt; Print( enum{ [ 1 .. 4 ] }, "\n" );
+[ [ 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ] ]
+gap&gt; B:= Basis( V, [ [ 1, 1, 1 ], [ 1, 1, 0 ], [ 1, 0, 0 ] ] * Z(2) );;
+gap&gt; enum:= EnumeratorByBasis( B );;
+gap&gt; Print( enum{ [ 1 .. 4 ] }, "\n" );
+[ [ 0*Z(2), 0*Z(2), 0*Z(2) ], [ Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+</pre>
+<p>
+<a name = "SSEC005.6"></a>
+<li><code>IteratorByBasis( </code><var>B</var><code> ) O</code>
+<p>
+For a basis <var>B</var> of the free left <i>F</i>-module <i>V</i> of dimension <i>n</i>, say,
+<code>IteratorByBasis</code> returns an iterator that loops over the elements of <i>V</i>
+as linear combinations of the vectors of <var>B</var> with coefficients the row
+vectors in the full row space (see&nbsp;<a href="CHAP059.htm#SSEC008.4">FullRowSpace</a>) of dimension <i>n</i> over
+<i>F</i>, in the succession given by the default enumerator of this row space.
+<p>
+<pre>
+gap&gt; V:= GF(2)^3;;
+gap&gt; iter:= IteratorByBasis( CanonicalBasis( V ) );;
+gap&gt; for i in [ 1 .. 4 ] do Print( NextIterator( iter ), "\n" ); od;
+[ 0*Z(2), 0*Z(2), 0*Z(2) ]
+[ 0*Z(2), 0*Z(2), Z(2)^0 ]
+[ 0*Z(2), Z(2)^0, 0*Z(2) ]
+[ 0*Z(2), Z(2)^0, Z(2)^0 ]
+gap&gt; B:= Basis( V, [ [ 1, 1, 1 ], [ 1, 1, 0 ], [ 1, 0, 0 ] ] * Z(2) );;
+gap&gt; iter:= IteratorByBasis( B );;
+gap&gt; for i in [ 1 .. 4 ] do Print( NextIterator( iter ), "\n" ); od;
+[ 0*Z(2), 0*Z(2), 0*Z(2) ]
+[ Z(2)^0, 0*Z(2), 0*Z(2) ]
+[ Z(2)^0, Z(2)^0, 0*Z(2) ]
+[ 0*Z(2), Z(2)^0, 0*Z(2) ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">59.6 Operations for Special Kinds of Bases</a></h2>
+<p><p>
+<a name = "SSEC006.1"></a>
+<li><code>IsCanonicalBasis( </code><var>B</var><code> ) P</code>
+<p>
+If the underlying free left module <i>V</i> of the basis <var>B</var> supports a
+canonical basis (see&nbsp;<a href="CHAP059.htm#SSEC004.3">CanonicalBasis</a>) then <code>IsCanonicalBasis</code> returns
+<code>true</code> if <var>B</var> is equal to the canonical basis of <i>V</i>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>IsIntegralBasis( </code><var>B</var><code> ) P</code>
+<p>
+Let <var>B</var> be an <i>S</i>-basis of a <strong>field</strong> <i>F</i>, say, for a subfield <i>S</i> of <i>F</i>,
+and let <i>R</i> and <i>M</i> be the rings of algebraic integers in <i>S</i> and <i>F</i>,
+respectively.
+<code>IsIntegralBasis</code> returns <code>true</code> if <var>B</var> is also an <i>R</i>-basis of <i>M</i>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>IsNormalBasis( </code><var>B</var><code> ) P</code>
+<p>
+Let <var>B</var> be an <i>S</i>-basis of a <strong>field</strong> <i>F</i>, say, for a subfield <i>S</i> of <i>F</i>.
+<code>IsNormalBasis</code> returns <code>true</code> if <var>B</var> is invariant under the Galois group
+(see&nbsp;<a href="CHAP056.htm#SSEC003.1">GaloisGroup!of field</a>) of the field extension <i>F</i> / <i>S</i>,
+and <code>false</code> otherwise.
+<p>
+<pre>
+gap&gt; B:= CanonicalBasis( GaussianRationals );
+CanonicalBasis( GaussianRationals )
+gap&gt; IsIntegralBasis( B );  IsNormalBasis( B );
+true
+false
+</pre>
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>StructureConstantsTable( </code><var>B</var><code> ) A</code>
+<p>
+Let <var>B</var> be a basis of a free left module <i>R</i>, say, that is also a ring.
+In this case <code>StructureConstantsTable</code> returns a structure constants
+table <i>T</i> in sparse representation, as used for structure constants
+algebras (see Section&nbsp;<a href="../tut/CHAP006.htm#SECT002">Algebras</a> of the <font face="Gill Sans,Helvetica,Arial">GAP</font> User's Tutorial).
+<p>
+If <var>B</var> has length <i>n</i> then <i>T</i> is a list of length <i>n</i>+2.
+The first <i>n</i> entries of <i>T</i> are lists of length <i>n</i>.
+<i>T</i>[ <i>n</i>+1 ] is one of 1, <font face="symbol">&#8722;</font>1, or 0;
+in the case of 1 the table is known to be symmetric,
+in the case of <font face="symbol">&#8722;</font>1 it is known to be antisymmetric,
+and 0 occurs in all other cases.
+<i>T</i>[ <i>n</i>+2 ] is the zero element of the coefficient domain.
+<p>
+The coefficients w.r.t.&nbsp;<var>B</var> of the product of the <i>i</i>-th and <i>j</i>-th basis
+vector of <var>B</var> are stored in <i>T</i>[<i>i</i>][<i>j</i>] as a list of length 2;
+its first entry is the list of positions of nonzero coefficients,
+the second entry is the list of these coefficients themselves.
+<p>
+The multiplication in an algebra <i>A</i> with vector space basis <var>B</var>
+with basis vectors [ <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>v</i><sub><i>n</i></sub> ] is determined by the so-called
+structure matrices <i>M</i><sub><i>k</i></sub> = [ <i>m</i><sub><i>ijk</i></sub> ]<sub><i>ij</i></sub>, 1  <font face="symbol">&#8804;</font> <i>k</i>  <font face="symbol">&#8804;</font> <i>n</i>.
+The <i>M</i><sub><i>k</i></sub> are defined by <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> = <font face="symbol">&#8721;</font><sub><i>k</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> <i>v</i><sub><i>k</i></sub>.
+Let <i>a</i> = [ <i>a</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>a</i><sub><i>n</i></sub> ] and <i>b</i> = [ <i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub> ].
+Then
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> ( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>v</i><sub><i>i</i></sub> ) ( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>b</i><sub><i>j</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i>,<i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>b</i><sub><i>j</i></sub> ( <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> ) <i>b</i><sub><i>j</i></sub> ) <i>v</i><sub><i>k</i></sub> = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( <i>a</i> <i>M</i><sub><i>k</i></sub> <i>b</i><sup><i>tr</i></sup> ) <i>v</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
+<p>
+In the following example we temporarily increase the line length limit from
+its default value 80 to 83 in order to get a nicer output format.
+<p>
+<pre>
+gap&gt; A:= QuaternionAlgebra( Rationals );;
+gap&gt; SizeScreen([ 83, ]);;
+gap&gt; StructureConstantsTable( Basis( A ) );
+[ [ [ [ 1 ], [ 1 ] ], [ [ 2 ], [ 1 ] ], [ [ 3 ], [ 1 ] ], [ [ 4 ], [ 1 ] ] ], 
+  [ [ [ 2 ], [ 1 ] ], [ [ 1 ], [ -1 ] ], [ [ 4 ], [ 1 ] ], [ [ 3 ], [ -1 ] ] ], 
+  [ [ [ 3 ], [ 1 ] ], [ [ 4 ], [ -1 ] ], [ [ 1 ], [ -1 ] ], [ [ 2 ], [ 1 ] ] ], 
+  [ [ [ 4 ], [ 1 ] ], [ [ 3 ], [ 1 ] ], [ [ 2 ], [ -1 ] ], [ [ 1 ], [ -1 ] ] ], 
+  0, 0 ]
+gap&gt; SizeScreen([ 80, ]);;
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">59.7 Mutable Bases</a></h2>
+<p><p>
+It is useful to have a <strong>mutable basis</strong> of a free module when successively
+closures with new vectors are formed, since one does not want to create
+a new module and a corresponding basis for each step.
+<p>
+Note that the situation here is different from the situation with
+stabilizer chains, which are (mutable or immutable) records that do not
+need to know about the groups they describe,
+whereas each (immutable) basis stores the underlying left module
+(see&nbsp;<a href="CHAP059.htm#SSEC005.2">UnderlyingLeftModule</a>).
+<p>
+So immutable bases and mutable bases are different categories of objects.
+The only thing they have in common is that one can ask both for
+their basis vectors and for the coefficients of a given vector.
+<p>
+Since <code>Immutable</code> produces an immutable copy of any <font face="Gill Sans,Helvetica,Arial">GAP</font> object,
+it would in principle be possible to construct a mutable basis that
+is in fact immutable.
+In the sequel, we will deal only with mutable bases that are in fact
+<strong>mutable</strong> <font face="Gill Sans,Helvetica,Arial">GAP</font> objects,
+hence these objects are unable to store attribute values.
+<p>
+Basic operations for immutable bases are <code>NrBasisVectors</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC007.3">NrBasisVectors</a>), <code>IsContainedInSpan</code> (see&nbsp;<a href="CHAP059.htm#SSEC007.5">IsContainedInSpan</a>),
+<code>CloseMutableBasis</code> (see&nbsp;<a href="CHAP059.htm#SSEC007.6">CloseMutableBasis</a>),
+<code>ImmutableBasis</code> (see&nbsp;<a href="CHAP059.htm#SSEC007.4">ImmutableBasis</a>), <code>Coefficients</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC005.3">Coefficients</a>), and <code>BasisVectors</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.1">BasisVectors</a>).
+<code>ShallowCopy</code> (see&nbsp;<a href="CHAP012.htm#SSEC007.1">ShallowCopy</a>) for a mutable basis returns a mutable
+plain list containing the current basis vectors.
+<p>
+Since mutable bases do not admit arbitrary changes of their lists of
+basis vectors, a mutable basis is <strong>not</strong> a list.
+It is, however, a collection, more precisely its family (see&nbsp;<a href="CHAP013.htm#SECT001">Families</a>)
+equals the family of its collection of basis vectors.
+<p>
+Mutable bases can be constructed with <code>MutableBasis</code>.
+<p>
+Similar to the situation with bases (cf.&nbsp;<a href="CHAP059.htm#SECT004">Bases of Vector Spaces</a>),
+<font face="Gill Sans,Helvetica,Arial">GAP</font> supports the following three kinds of mutable bases.
+<p>
+The <strong>generic method</strong> of <code>MutableBasis</code> returns a mutable basis that
+simply stores an immutable basis;
+clearly one wants to avoid this whenever possible with reasonable effort.
+<p>
+There are mutable bases that store a mutable basis for a nicer module.
+Note that this is meaningful only if the mechanism of computing nice and
+ugly vectors (see&nbsp;<a href="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>) is invariant
+under closures of the basis;
+this is the case for example if the vectors are matrices, Lie objects,
+or elements of structure constants algebras. 
+<p>
+There are mutable bases that use special information to perform their
+tasks; examples are mutable bases of Gaussian row and matrix spaces.
+<p>
+<a name = "SSEC007.1"></a>
+<li><code>IsMutableBasis( </code><var>MB</var><code> ) C</code>
+<p>
+Every mutable basis lies in the category <code>IsMutableBasis</code>.
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>MutableBasis( </code><var>R</var><code>, </code><var>vectors</var><code>[, </code><var>zero</var><code>] ) O</code>
+<p>
+<code>MutableBasis</code> returns a mutable basis for the <var>R</var>-free module generated
+by the vectors in the list <var>vectors</var>.
+The optional argument <var>zero</var> is the zero vector of the module;
+it must be given if <var>vectors</var> is empty.
+<p>
+<strong>Note</strong> that <var>vectors</var> will in general <strong>not</strong> be the basis vectors of the
+mutable basis!
+<p>
+<pre>
+gap&gt; MB:= MutableBasis( Rationals, [ [ 1, 2, 3 ], [ 0, 1, 0 ] ] );
+&lt;mutable basis over Rationals, 2 vectors&gt;
+</pre>
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>NrBasisVectors( </code><var>MB</var><code> ) O</code>
+<p>
+For a mutable basis <var>MB</var>, <code>NrBasisVectors</code> returns the current number of
+basis vectors of <var>MB</var>.
+Note that this operation is <strong>not</strong> an attribute, as it makes no sense to
+store the value.
+<code>NrBasisVectors</code> is used mainly as an equivalent of <code>Dimension</code> for the
+underlying left module in the case of immutable bases.
+<p>
+<pre>
+gap&gt; MB:= MutableBasis( Rationals, [ [ 1, 1], [ 2, 2 ] ] );;
+gap&gt; NrBasisVectors( MB );
+1
+</pre>
+<p>
+<a name = "SSEC007.4"></a>
+<li><code>ImmutableBasis( </code><var>MB</var><code>[, </code><var>V</var><code>] ) O</code>
+<p>
+<code>ImmutableBasis</code> returns the immutable basis <i>B</i>, say,
+with the same basis vectors as in the mutable basis <var>MB</var>.
+<p>
+If the second argument <var>V</var> is present then <var>V</var> is the value of
+<code>UnderlyingLeftModule</code> (see&nbsp;<a href="CHAP059.htm#SSEC005.2">UnderlyingLeftModule</a>) for <i>B</i>.
+The second variant is used mainly for the case that one knows the module
+for the desired basis in advance, and if it has a nicer structure than
+the module known to <var>MB</var>, for example if it is an algebra.
+<p>
+<pre>
+gap&gt; MB:= MutableBasis( Rationals, [ [ 1, 1 ], [ 2, 2 ] ] );;
+gap&gt; B:= ImmutableBasis( MB );
+SemiEchelonBasis( &lt;vector space of dimension 1 over Rationals&gt;, [ [ 1, 1 ] ] )
+gap&gt; UnderlyingLeftModule( B );
+&lt;vector space of dimension 1 over Rationals&gt;
+</pre>
+<p>
+<a name = "SSEC007.5"></a>
+<li><code>IsContainedInSpan( </code><var>MB</var><code>, </code><var>v</var><code> ) O</code>
+<p>
+For a mutable basis <var>MB</var> over the coefficient ring <i>R</i>, say,
+and a vector <var>v</var>, <code>IsContainedInSpan</code> returns <code>true</code> is <var>v</var> lies in the
+<i>R</i>-span of the current basis vectors of <var>MB</var>,
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC007.6"></a>
+<li><code>CloseMutableBasis( </code><var>MB</var><code>, </code><var>v</var><code> ) O</code>
+<p>
+For a mutable basis <var>MB</var> over the coefficient ring <i>R</i>, say,
+and a vector <var>v</var>, <code>CloseMutableBasis</code> changes <var>MB</var> such that afterwards
+it describes the <i>R</i>-span of the former basis vectors together with <var>v</var>.
+<p>
+<strong>Note</strong> that if <var>v</var> enlarges the dimension then this does in general <strong>not</strong>
+mean that <var>v</var> is simply added to the basis vectors of <var>MB</var>.
+Usually a linear combination of <var>v</var> and the other basis vectors is added,
+and also the old basis vectors may be modified, for example in order to
+keep the list of basis vectors echelonized (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>).
+<p>
+<pre>
+gap&gt; MB:= MutableBasis( Rationals, [ [ 1, 1, 3 ], [ 2, 2, 1 ] ] );
+&lt;mutable basis over Rationals, 2 vectors&gt;
+gap&gt; IsContainedInSpan( MB, [ 1, 0, 0 ] );
+false
+gap&gt; CloseMutableBasis( MB, [ 1, 0, 0 ] );
+gap&gt; MB;
+&lt;mutable basis over Rationals, 3 vectors&gt;
+gap&gt; IsContainedInSpan( MB, [ 1, 0, 0 ] );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT008">59.8 Row and Matrix Spaces</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+<a name = "I1"></a>
+
+<a name = "SSEC008.1"></a>
+<li><code>IsRowSpace( </code><var>V</var><code> ) F</code>
+<p>
+A <strong>row space</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a vector space that consists of row vectors
+(see Chapter&nbsp;<a href="CHAP023.htm">Row Vectors</a>).
+<p>
+<a name = "SSEC008.2"></a>
+<li><code>IsMatrixSpace( </code><var>V</var><code> ) F</code>
+<p>
+A <strong>matrix space</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a vector space that consists of matrices
+(see Chapter&nbsp;<a href="CHAP024.htm">Matrices</a>).
+<p>
+<a name = "SSEC008.3"></a>
+<li><code>IsGaussianSpace( </code><var>V</var><code> ) F</code>
+<p>
+The filter <code>IsGaussianSpace</code> (see&nbsp;<a href="CHAP013.htm#SECT002">Filters</a>) for the row space
+(see&nbsp;<a href="CHAP059.htm#SSEC008.1">IsRowSpace</a>) or matrix space (see&nbsp;<a href="CHAP059.htm#SSEC008.2">IsMatrixSpace</a>) <var>V</var> over the
+field <i>F</i>, say,
+indicates that the entries of all row vectors or matrices in <var>V</var>,
+respectively, are all contained in <i>F</i>.
+In this case, <var>V</var> is called a <strong>Gaussian</strong> vector space.
+Bases for Gaussian spaces can be computed using Gaussian elimination for
+a given list of vector space generators.
+<p>
+<pre>
+gap&gt; mats:= [ [[1,1],[2,2]], [[3,4],[0,1]] ];;
+gap&gt; V:= VectorSpace( Rationals, mats );;
+gap&gt; IsGaussianSpace( V );
+true
+gap&gt; mats[1][1][1]:= E(4);;   # an element in an extension field
+gap&gt; V:= VectorSpace( Rationals, mats );;
+gap&gt; IsGaussianSpace( V );
+false
+gap&gt; V:= VectorSpace( Field( Rationals, [ E(4) ] ), mats );;
+gap&gt; IsGaussianSpace( V );
+true
+</pre>
+<p>
+<a name = "SSEC008.4"></a>
+<li><code>FullRowSpace( </code><var>F</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+For a field <var>F</var> and a nonnegative integer <var>n</var>, <code>FullRowSpace</code> returns the
+<var>F</var>-vector space that consists of all row vectors (see&nbsp;<a href="CHAP023.htm">IsRowVector</a>) of
+length <var>n</var> with entries in <var>F</var>.
+<p>
+An alternative to construct this vector space is via <code></code><var>F</var><code>^</code><var>n</var><code></code>.
+<p>
+<pre>
+gap&gt; FullRowSpace( GF( 9 ), 3 );
+( GF(3^2)^3 )
+gap&gt; GF(9)^3;           # the same as above
+( GF(3^2)^3 )
+</pre>
+<p>
+<a name = "SSEC008.5"></a>
+<li><code>FullMatrixSpace( </code><var>F</var><code>, </code><var>m</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+For a field <var>F</var> and two positive integers <var>m</var> and <var>n</var>, <code>FullMatrixSpace</code>
+returns the <var>F</var>-vector space that consists of all <var>m</var> by <var>n</var> matrices
+(see&nbsp;<a href="CHAP024.htm#SSEC001.1">IsMatrix</a>) with entries in <var>F</var>.
+<p>
+If <code></code><var>m</var><code> = </code><var>n</var><code></code> then the result is in fact an algebra
+(see&nbsp;<a href="CHAP060.htm#SSEC004.4">FullMatrixAlgebra</a>).
+<p>
+An alternative to construct this vector space is via <code></code><var>F</var><code>^[</code><var>m</var><code>,</code><var>n</var><code>]</code>.
+<p>
+<pre>
+gap&gt; FullMatrixSpace( GF(2), 4, 5 );
+( GF(2)^[ 4, 5 ] )
+gap&gt; GF(2)^[ 4, 5 ];    # the same as above
+( GF(2)^[ 4, 5 ] )
+</pre>
+<p>
+<a name = "SSEC008.6"></a>
+<li><code>DimensionOfVectors( </code><var>M</var><code> ) A</code>
+<p>
+For a left module <var>M</var> that consists of row vectors (see&nbsp;<a href="CHAP055.htm#SSEC003.7">IsRowModule</a>),
+<code>DimensionOfVectors</code> returns the common length of all row vectors in <var>M</var>.
+For a left module <var>M</var> that consists of matrices (see&nbsp;<a href="CHAP055.htm#SSEC003.8">IsMatrixModule</a>),
+<code>DimensionOfVectors</code> returns the common matrix dimensions
+(see&nbsp;<a href="CHAP024.htm#SSEC003.1">DimensionsMat</a>) of all matrices in <var>M</var>.
+<p>
+<pre>
+gap&gt; DimensionOfVectors( GF(2)^5 );
+5
+gap&gt; DimensionOfVectors( GF(2)^[2,3] );
+[ 2, 3 ]
+</pre>
+<p>
+<a name = "SSEC008.7"></a>
+<li><code>IsSemiEchelonized( </code><var>B</var><code> ) P</code>
+<p>
+Let <var>B</var> be a basis of a Gaussian row or matrix space <i>V</i>, say
+(see&nbsp;<a href="CHAP059.htm#SSEC008.3">IsGaussianSpace</a>) over the field <i>F</i>.
+<p>
+If <i>V</i> is a row space then <var>B</var> is semi-echelonized if the matrix formed
+by its basis vectors has the property that the first nonzero element in
+each row is the identity of <i>F</i>,
+and all values exactly below these pivot elements are the zero of <i>F</i>
+(cf.&nbsp;<a href="CHAP024.htm#SSEC009.1">SemiEchelonMat</a>).
+<p>
+If <i>V</i> is a matrix space then <var>B</var> is semi-echelonized if the matrix
+obtained by replacing each basis vector by the concatenation of its rows
+is semi-echelonized (see above, cf.&nbsp;<a href="CHAP024.htm#SSEC009.4">SemiEchelonMats</a>).
+<p>
+<pre>
+gap&gt; V:= GF(2)^2;;
+gap&gt; B1:= Basis( V, [ [ 0, 1 ], [ 1, 0 ] ] * Z(2) );;
+gap&gt; IsSemiEchelonized( B1 );
+true
+gap&gt; B2:= Basis( V, [ [ 0, 1 ], [ 1, 1 ] ] * Z(2) );;
+gap&gt; IsSemiEchelonized( B2 );
+false
+</pre>
+<p>
+<a name = "SSEC008.8"></a>
+<li><code>SemiEchelonBasis( </code><var>V</var><code> ) A</code>
+<li><code>SemiEchelonBasis( </code><var>V</var><code>, </code><var>vectors</var><code> ) O</code>
+<a name = "SSEC008.8"></a>
+<li><code>SemiEchelonBasisNC( </code><var>V</var><code>, </code><var>vectors</var><code> ) O</code>
+<p>
+Let <var>V</var> be a Gaussian row or matrix vector space over the field <i>F</i>
+(see&nbsp;<a href="CHAP059.htm#SSEC008.3">IsGaussianSpace</a>, <a href="CHAP059.htm#SSEC008.1">IsRowSpace</a>, <a href="CHAP059.htm#SSEC008.2">IsMatrixSpace</a>).
+<p>
+Called with <var>V</var> as the only argument,
+<code>SemiEchelonBasis</code> returns a basis of <var>V</var> that has the property
+<code>IsSemiEchelonized</code> (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>).
+<p>
+If additionally a list <var>vectors</var> of vectors in <var>V</var> is given
+that forms a semi-echelonized basis of <var>V</var> then <code>SemiEchelonBasis</code>
+returns this basis;
+if <var>vectors</var> do not form a basis of <var>V</var> then <code>fail</code> is returned.
+<p>
+<code>SemiEchelonBasisNC</code> does the same as <code>SemiEchelonBasis</code> for two
+arguments,
+except that it is not checked whether <var>vectors</var> form
+a semi-echelonized basis.
+<p>
+<pre>
+gap&gt; V:= GF(2)^2;;
+gap&gt; B:= SemiEchelonBasis( V );
+SemiEchelonBasis( ( GF(2)^2 ), ... )
+gap&gt; Print( BasisVectors( B ), "\n" );
+[ [ Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0 ] ]
+gap&gt; B:= SemiEchelonBasis( V, [ [ 1, 1 ], [ 0, 1 ] ] * Z(2) );
+SemiEchelonBasis( ( GF(2)^2 ), &lt;an immutable 2x2 matrix over GF2&gt; )
+gap&gt; Print( BasisVectors( B ), "\n" );
+[ [ Z(2)^0, Z(2)^0 ], [ 0*Z(2), Z(2)^0 ] ]
+gap&gt; Coefficients( B, [ 0, 1 ] * Z(2) );
+[ 0*Z(2), Z(2)^0 ]
+gap&gt; Coefficients( B, [ 1, 0 ] * Z(2) );
+[ Z(2)^0, Z(2)^0 ]
+gap&gt; SemiEchelonBasis( V, [ [ 0, 1 ], [ 1, 1 ] ] * Z(2) );
+fail
+</pre>
+<p>
+<a name = "I2"></a>
+
+<a name = "SSEC008.9"></a>
+<li><code>IsCanonicalBasisFullRowModule( </code><var>B</var><code> ) P</code>
+<p>
+<code>IsCanonicalBasisFullRowModule</code> returns <code>true</code> if <var>B</var> is the canonical
+basis (see&nbsp;<a href="CHAP059.htm#SSEC006.1">IsCanonicalBasis</a>) of a full row module
+(see&nbsp;<a href="CHAP055.htm#SSEC003.9">IsFullRowModule</a>), and <code>false</code> otherwise.
+<p>
+The <strong>canonical basis</strong> of a Gaussian row space is defined as the unique
+semi-echelonized (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>) basis with the additional
+property that for <i>j</i>  &gt;  <i>i</i> the position of the pivot of row <i>j</i> is bigger
+than the position of the pivot of row <i>i</i>,
+and that each pivot column contains exactly one nonzero entry.
+<p>
+<a name = "I3"></a>
+
+<a name = "SSEC008.10"></a>
+<li><code>IsCanonicalBasisFullMatrixModule( </code><var>B</var><code> ) P</code>
+<p>
+<code>IsCanonicalBasisFullMatrixModule</code> returns <code>true</code> if <var>B</var> is the canonical
+basis (see&nbsp;<a href="CHAP059.htm#SSEC006.1">IsCanonicalBasis</a>) of a full matrix module
+(see&nbsp;<a href="CHAP055.htm#SSEC003.11">IsFullMatrixModule</a>), and <code>false</code> otherwise.
+<p>
+The <strong>canonical basis</strong> of a Gaussian matrix space is defined as the unique
+semi-echelonized (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>) basis for which the list of
+concatenations of the basis vectors forms the canonical basis of the
+corresponding Gaussian row space.
+<p>
+<a name = "SSEC008.11"></a>
+<li><code>NormedRowVectors( </code><var>V</var><code> ) A</code>
+<p>
+For a finite Gaussian row space <var>V</var> (see&nbsp;<a href="CHAP059.htm#SSEC008.1">IsRowSpace</a>,
+<a href="CHAP059.htm#SSEC008.3">IsGaussianSpace</a>), <code>NormedRowVectors</code> returns a list of those nonzero
+vectors in <var>V</var> that have a one in the first nonzero component.
+<p>
+The result list can be used as action domain for the action of a matrix
+group via <code>OnLines</code> (see&nbsp;<a href="CHAP039.htm#SSEC002.12">OnLines</a>), which yields the natural action on
+one-dimensional subspaces of <var>V</var> (see also&nbsp;<a href="CHAP059.htm#SSEC003.1">Subspaces</a>).
+<p>
+<pre>
+gap&gt; vecs:= NormedRowVectors( GF(3)^2 );
+[ [ 0*Z(3), Z(3)^0 ], [ Z(3)^0, 0*Z(3) ], [ Z(3)^0, Z(3)^0 ], 
+  [ Z(3)^0, Z(3) ] ]
+gap&gt; Action( GL(2,3), vecs, OnLines );
+Group([ (3,4), (1,2,4) ])
+</pre>
+<p>
+<a name = "SSEC008.12"></a>
+<li><code>SiftedVector( </code><var>B</var><code>, </code><var>v</var><code> ) O</code>
+<p>
+Let <var>B</var> be a semi-echelonized basis (see&nbsp;<a href="CHAP059.htm#SSEC008.7">IsSemiEchelonized</a>) of a
+Gaussian row or matrix space <i>V</i> (see&nbsp;<a href="CHAP059.htm#SSEC008.3">IsGaussianSpace</a>),
+and <var>v</var> a row vector or matrix, respectively, of the same dimension as
+the elements in <i>V</i>.
+<code>SiftedVector</code> returns the <strong>residuum</strong> of <var>v</var> with respect to <var>B</var>, which
+is obtained by successively cleaning the pivot positions in <var>v</var> by
+subtracting multiples of the basis vectors in <var>B</var>.
+So the result is the zero vector in <i>V</i> if and only if <var>v</var> lies in <i>V</i>.
+<p>
+<var>B</var> may also be a mutable basis (see&nbsp;<a href="CHAP059.htm#SECT007">Mutable Bases</a>) of a Gaussian row
+or matrix space.
+<p>
+<pre>
+gap&gt; V:= VectorSpace( Rationals, [ [ 1, 2, 7 ], [ 1/2, 1/3, 5 ] ] );;
+gap&gt; B:= Basis( V );;
+gap&gt; SiftedVector( B, [ 1, 2, 8 ] );
+[ 0, 0, 1 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">59.9 Vector Space Homomorphisms</a></h2>
+<p><p>
+<strong>Vector space homomorphisms</strong> (or <strong>linear mappings</strong>) are defined in
+Section&nbsp;<a href="CHAP031.htm#SECT010">Linear Mappings</a>.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> provides special functions to construct a particular linear
+mapping from images of given elements in the source, from a matrix of
+coefficients, or as a natural epimorphism.
+<p>
+<i>F</i>-linear mappings with same source and same range can be added,
+so one can form vector spaces of linear mappings.
+<p>
+<a name = "SSEC009.1"></a>
+<li><code>LeftModuleGeneralMappingByImages( </code><var>V</var><code>, </code><var>W</var><code>, </code><var>gens</var><code>, </code><var>imgs</var><code> ) O</code>
+<p>
+Let <var>V</var> and <var>W</var> be two left modules over the same left acting domain
+<i>R</i>, say, and <var>gens</var> and <var>imgs</var> lists (of the same length)
+of elements in <var>V</var> and <var>W</var>, respectively.
+<code>LeftModuleGeneralMappingByImages</code> returns the general mapping
+with source <var>V</var> and range <var>W</var> that is defined by mapping the elements in
+<var>gens</var> to the corresponding elements in <var>imgs</var>,
+and taking the <i>R</i>-linear closure.
+<p>
+<var>gens</var> need not generate <var>V</var> as a left <i>R</i>-module, and if the
+specification does not define a linear mapping then the result will be
+multi-valued; hence in general it is not a mapping (see&nbsp;<a href="CHAP031.htm#SSEC002.3">IsMapping</a>).
+<p>
+<pre>
+gap&gt; V:= Rationals^2;;
+gap&gt; W:= VectorSpace( Rationals, [ [1,2,3], [1,0,1] ] );;
+gap&gt; f:= LeftModuleGeneralMappingByImages( V, W,
+&gt;                                [[1,0],[2,0]], [[1,0,1],[1,0,1] ] );
+[ [ 1, 0 ], [ 2, 0 ] ] -&gt; [ [ 1, 0, 1 ], [ 1, 0, 1 ] ]
+gap&gt; IsMapping( f );
+false
+</pre>
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>LeftModuleHomomorphismByImages( </code><var>V</var><code>, </code><var>W</var><code>, </code><var>gens</var><code>, </code><var>imgs</var><code> ) F</code>
+<a name = "SSEC009.2"></a>
+<li><code>LeftModuleHomomorphismByImagesNC( </code><var>V</var><code>, </code><var>W</var><code>, </code><var>gens</var><code>, </code><var>imgs</var><code> ) O</code>
+<p>
+Let <var>V</var> and <var>W</var> be two left modules over the same left acting domain
+<i>R</i>, say, and <var>gens</var> and <var>imgs</var> lists (of the same length)
+of elements in <var>V</var> and <var>W</var>, respectively.
+<code>LeftModuleHomomorphismByImages</code> returns the left <i>R</i>-module homomorphism
+with source <var>V</var> and range <var>W</var> that is defined by mapping the elements in
+<var>gens</var> to the corresponding elements in <var>imgs</var>.
+<p>
+If <var>gens</var> does not generate <var>V</var> or if the homomorphism does not exist
+(i.e., if mapping the generators describes only a multi-valued mapping)
+then <code>fail</code> is returned.
+For creating a possibly multi-valued mapping from <var>V</var> to <var>W</var> that
+respects addition, multiplication, and scalar multiplication,
+<code>LeftModuleGeneralMappingByImages</code> can be used.
+<p>
+<code>LeftModuleHomomorphismByImagesNC</code> does the same as
+<code>LeftModuleHomomorphismByImages</code>, except that it omits all checks.
+<p>
+<pre>
+gap&gt; V:=Rationals^2;;
+gap&gt; W:=VectorSpace( Rationals, [ [ 1, 0, 1 ], [ 1, 2, 3 ] ] );;
+gap&gt; f:=LeftModuleHomomorphismByImages( V, W,
+&gt; [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0, 1 ], [ 1, 2, 3 ] ] );
+[ [ 1, 0 ], [ 0, 1 ] ] -&gt; [ [ 1, 0, 1 ], [ 1, 2, 3 ] ]
+gap&gt; Image( f, [1,1] );
+[ 2, 2, 4 ]
+</pre>
+<p>
+<a name = "SSEC009.3"></a>
+<li><code>LeftModuleHomomorphismByMatrix( </code><var>BS</var><code>, </code><var>matrix</var><code>, </code><var>BR</var><code> ) O</code>
+<p>
+Let <var>BS</var> and <var>BR</var> be bases of the left <i>R</i>-modules <i>V</i> and <i>W</i>,
+respectively.
+<code>LeftModuleHomomorphismByMatrix</code> returns the <i>R</i>-linear mapping from <i>V</i>
+to <i>W</i> that is defined by the matrix <var>matrix</var> as follows.
+The image of the <i>i</i>-th basis vector of <var>BS</var> is the linear combination of
+the basis vectors of <var>BR</var> with coefficients the <i>i</i>-th row of <var>matrix</var>.
+<p>
+<pre>
+gap&gt; V:= Rationals^2;;
+gap&gt; W:= VectorSpace( Rationals, [ [ 1, 0, 1 ], [ 1, 2, 3 ] ] );;
+gap&gt; f:= LeftModuleHomomorphismByMatrix( Basis( V ),
+&gt; [ [ 1, 2 ], [ 3, 1 ] ], Basis( W ) );
+&lt;linear mapping by matrix, ( Rationals^
+2 ) -&gt; &lt;vector space over Rationals, with 2 generators&gt;&gt;
+</pre>
+<p>
+<a name = "SSEC009.4"></a>
+<li><code>NaturalHomomorphismBySubspace( </code><var>V</var><code>, </code><var>W</var><code> ) O</code>
+<p>
+For an <i>R</i>-vector space <var>V</var> and a subspace <var>W</var> of <var>V</var>,
+<code>NaturalHomomorphismBySubspace</code> returns the <i>R</i>-linear mapping that is
+the natural projection of <var>V</var> onto the factor space <code></code><var>V</var><code> / </code><var>W</var><code></code>.
+<p>
+<pre>
+gap&gt; V:= Rationals^3;;
+gap&gt; W:= VectorSpace( Rationals, [ [ 1, 1, 1 ] ] );;
+gap&gt; f:= NaturalHomomorphismBySubspace( V, W );
+&lt;linear mapping by matrix, ( Rationals^3 ) -&gt; ( Rationals^2 )&gt;
+</pre>
+<p>
+<a name = "SSEC009.5"></a>
+<li><code>Hom( </code><var>F</var><code>, </code><var>V</var><code>, </code><var>W</var><code> ) O</code>
+<p>
+For a field <var>F</var> and two vector spaces <var>V</var> and <var>W</var> that can be regarded as
+<var>F</var>-modules (see&nbsp;<a href="CHAP055.htm#SSEC001.5">AsLeftModule</a>), <code>Hom</code> returns the <var>F</var>-vector space of
+all <var>F</var>-linear mappings from <var>V</var> to <var>W</var>.
+<p>
+<pre>
+gap&gt; V:= Rationals^2;;
+gap&gt; W:= VectorSpace( Rationals, [ [ 1, 0, 1 ], [ 1, 2, 3 ] ] );;
+gap&gt; H:= Hom( Rationals, V, W );
+Hom( Rationals, ( Rationals^2 ), &lt;vector space over Rationals, with 
+2 generators&gt; )
+gap&gt; Dimension( H );
+4
+</pre>
+<p>
+<a name = "SSEC009.6"></a>
+<li><code>End( </code><var>F</var><code>, </code><var>V</var><code> ) O</code>
+<p>
+For a field <var>F</var> and a vector space <var>V</var> that can be regarded as an
+<var>F</var>-module (see&nbsp;<a href="CHAP055.htm#SSEC001.5">AsLeftModule</a>), <code>End</code> returns the <var>F</var>-algebra of
+all <var>F</var>-linear mappings from <var>V</var> to <var>V</var>.
+<p>
+<pre>
+gap&gt; A:= End( Rationals, Rationals^2 );
+End( Rationals, ( Rationals^2 ) )
+gap&gt; Dimension( A );
+4
+</pre>
+<p>
+<a name = "SSEC009.7"></a>
+<li><code>IsFullHomModule( </code><var>M</var><code> ) P</code>
+<p>
+A <strong>full hom module</strong> is a module of all <i>R</i>-linear mappings between two
+left <i>R</i>-modules.  The function <code>Hom</code> (see&nbsp;<a href="CHAP059.htm#SSEC009.5">Hom</a>) can be used to
+construct a full hom module.
+<p>
+<pre>
+gap&gt; V:= Rationals^2;;
+gap&gt; W:= VectorSpace( Rationals, [ [ 1, 0, 1 ], [ 1, 2, 3 ] ] );;
+gap&gt; H:= Hom( Rationals, V, W );;
+gap&gt; IsFullHomModule( H );
+true
+</pre>
+<p>
+<a name = "SSEC009.8"></a>
+<li><code>IsPseudoCanonicalBasisFullHomModule( </code><var>B</var><code> ) P</code>
+<p>
+A basis of a full hom module is called pseudo canonical basis
+if the matrices of its basis vectors w.r.t. the stored bases of source
+and range contain exactly one identity entry and otherwise zeros.
+<p>
+Note that this is not a canonical basis (see&nbsp;<a href="CHAP059.htm#SSEC004.3">CanonicalBasis</a>)
+because it depends on the stored bases of source and range.
+<p>
+<pre>
+gap&gt; IsPseudoCanonicalBasisFullHomModule( Basis( H ) );
+true
+</pre>
+<p>
+<a name = "SSEC009.9"></a>
+<li><code>IsLinearMappingsModule( </code><var>V</var><code> ) F</code>
+<p>
+If an <i>F</i>-vector space <var>V</var> is in the filter <code>IsLinearMappingsModule</code> then
+this expresses that <var>V</var> consists of linear mappings, and that <var>V</var> is
+handled via the mechanism of nice bases
+(see&nbsp;<a href="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>) in the following way.
+Let <i>S</i> and <i>R</i> be the source and the range, respectively, of each
+mapping in <i>V</i>.
+Then the <code>NiceFreeLeftModuleInfo</code> value of <var>V</var> is a record with the
+components <code>basissource</code> (a basis <i>B</i><sub><i>S</i></sub> of <i>S</i>)
+and <code>basisrange</code> (a basis <i>B</i><sub><i>R</i></sub> of <i>R</i>),
+and the <code>NiceVector</code> value of <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i>  is defined as the
+matrix of the <i>F</i>-linear mapping <i>v</i> w.r.t.&nbsp;the bases <i>B</i><sub><i>S</i></sub> and <i>B</i><sub><i>R</i></sub>.
+<p>
+<p>
+<h2><a name="SECT010">59.10 Vector Spaces Handled By Nice Bases</a></h2>
+<p><p>
+There are kinds of free <i>R</i>-modules for which efficient computations are
+possible because the elements are ``nice'', for example subspaces of full
+row modules or of full matrix modules.
+In other cases, a ``nice'' canonical basis is known that allows one to do
+the necessary computations in the corresponding row module,
+for example algebras given by structure constants.
+<p>
+In many other situations, one knows at least an isomorphism from the
+given module <i>V</i> to a ``nicer'' free left module <i>W</i>,
+in the sense that for each vector in <i>V</i>, the image in <i>W</i> can easily be
+computed, and analogously for each vector in <i>W</i>, one can compute the
+preimage in <i>V</i>.
+<p>
+This allows one to delegate computations w.r.t.&nbsp;a basis <i>B</i>, say, of <i>V</i>
+to the corresponding basis <i>C</i>, say, of <i>W</i>.
+We call <i>W</i> the <strong>nice free left module</strong> of <i>V</i>, and <i>C</i> the <strong>nice basis</strong>
+of <i>B</i>.
+(Note that it may happen that also <i>C</i> delegates questions to a ``nicer''
+basis.)
+The basis <i>B</i> indicates the intended behaviour by the filter
+<code>IsBasisByNiceBasis</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.5">IsBasisByNiceBasis</a>),
+and stores <i>C</i> as value of the attribute <code>NiceBasis</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.4">NiceBasis</a>).
+<i>V</i> indicates the intended behaviour by the filter <code>IsHandledByNiceBasis</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC010.6">IsHandledByNiceBasis!for vector spaces</a>), and stores <i>W</i>  as  value
+of the attribute <code>NiceFreeLeftModule</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.1">NiceFreeLeftModule</a>).
+<p>
+The bijection between <i>V</i> and <i>W</i> is implemented by the functions
+<code>NiceVector</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.2">NiceVector</a>) and <code>UglyVector</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.2">UglyVector</a>);
+additional data needed to compute images and preimages can be stored
+as value of <code>NiceFreeLeftModuleInfo</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.3">NiceFreeLeftModuleInfo</a>).
+<p>
+<a name = "SSEC010.1"></a>
+<li><code>NiceFreeLeftModule( </code><var>V</var><code> ) A</code>
+<p>
+For a free left module <var>V</var> that is handled via the mechanism of nice
+bases, this attribute stores the associated free left module to which the
+tasks are delegated.
+<p>
+<a name = "SSEC010.2"></a>
+<li><code>NiceVector( </code><var>V</var><code>, </code><var>v</var><code> ) O</code>
+<a name = "SSEC010.2"></a>
+<li><code>UglyVector( </code><var>V</var><code>, </code><var>r</var><code> ) O</code>
+<p>
+<code>NiceVector</code> and <code>UglyVector</code> provide the linear bijection between the
+free left module <var>V</var> and <code></code><var>W</var><code>:= NiceFreeLeftModule( </code><var>V</var><code> )</code>.
+<p>
+If <var>v</var> lies in the elements family of the family of <var>V</var> then
+<code>NiceVector( </code><var>v</var><code> )</code> is either <code>fail</code> or an element in the elements family
+of the family of <var>W</var>.
+<p>
+If <var>r</var> lies in the elements family of the family of <var>W</var> then
+<code>UglyVector( </code><var>r</var><code> )</code> is either <code>fail</code> or an element in the elements family
+of the family of <var>V</var>.
+<p>
+If <var>v</var> lies in <var>V</var> (which usually <strong>cannot</strong> be checked without using <var>W</var>)
+then <code>UglyVector( </code><var>V</var><code>, NiceVector( </code><var>V</var><code>, </code><var>v</var><code> ) ) = </code><var>v</var><code></code>.
+If <var>r</var> lies in <var>W</var> (which usually <strong>can</strong> be checked)
+then <code>NiceVector( </code><var>V</var><code>, UglyVector( </code><var>V</var><code>, </code><var>r</var><code> ) ) = </code><var>r</var><code></code>.
+<p>
+(This allows one to implement for example a membership test for <var>V</var>
+using the membership test in <var>W</var>.)
+<p>
+<a name = "SSEC010.3"></a>
+<li><code>NiceFreeLeftModuleInfo( </code><var>V</var><code> ) A</code>
+<p>
+For a free left module <var>V</var> that is handled via the mechanism of nice
+bases, this operation has to provide the necessary information (if any)
+for calls of <code>NiceVector</code> and <code>UglyVector</code> (see&nbsp;<a href="CHAP059.htm#SSEC010.2">NiceVector</a>).
+<p>
+<a name = "SSEC010.4"></a>
+<li><code>NiceBasis( </code><var>B</var><code> ) A</code>
+<p>
+Let <var>B</var> be a basis of a free left module <var>V</var> that is handled via
+nice bases.
+If <var>B</var> has no basis vectors stored at the time of the first call to
+<code>NiceBasis</code> then <code>NiceBasis( </code><var>B</var><code> )</code> is obtained as
+<code>Basis( NiceFreeLeftModule( </code><var>V</var><code> ) )</code>.
+If basis vectors are stored then <code>NiceBasis( </code><var>B</var><code> )</code> is the result of the
+call of <code>Basis</code> with arguments <code>NiceFreeLeftModule( </code><var>V</var><code> )</code>
+and the <code>NiceVector</code> values of the basis vectors of <var>B</var>.
+<p>
+Note that the result is <code>fail</code> if and only if the ``basis vectors''
+stored in <var>B</var> are in fact not basis vectors.
+<p>
+The attributes <code>GeneratorsOfLeftModule</code> of the underlying left modules
+of <var>B</var> and the result of <code>NiceBasis</code> correspond via <code>NiceVector</code> and
+<code>UglyVector</code>.
+<p>
+<a name = "SSEC010.5"></a>
+<li><code>IsBasisByNiceBasis( </code><var>B</var><code> ) C</code>
+<p>
+This filter indicates that the basis <var>B</var> delegates tasks such as the
+computation of coefficients (see&nbsp;<a href="CHAP059.htm#SSEC005.3">Coefficients</a>) to a basis of an
+isomorphisc ``nicer'' free left module.
+<p>
+<a name = "SSEC010.6"></a>
+<li><code>IsHandledByNiceBasis( </code><var>M</var><code> ) C</code>
+<p>
+For a free left module <var>M</var> in this category, essentially all operations
+are performed using a ``nicer'' free left module,
+which is usually a row module.
+<p>
+<p>
+<h2><a name="SECT011">59.11 How to Implement New Kinds of Vector Spaces</a></h2>
+<p><p>
+<a name = "SSEC011.1"></a>
+<li><code>DeclareHandlingByNiceBasis( </code><var>name</var><code>, </code><var>info</var><code> ) F</code>
+<a name = "SSEC011.1"></a>
+<li><code>InstallHandlingByNiceBasis( </code><var>name</var><code>, </code><var>record</var><code> ) F</code>
+<p>
+These functions are used to implement a new kind of free left modules
+that shall be handled via the mechanism of nice bases
+(see&nbsp;<a href="CHAP059.htm#SECT010">Vector Spaces Handled By Nice Bases</a>).
+<p>
+<var>name</var> must be a string, a filter <i>f</i> with this name is created, and
+a logical implication from <i>f</i> to <code>IsHandledByNiceBasis</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC010.6">IsHandledByNiceBasis!for vector spaces</a>) is installed.
+<p>
+<var>record</var> must be a record with the following components.
+<p>
+<dl compact>
+<dt><code>detect</code> <dd>
+    a function of four arguments <i>R</i>, <i>l</i>, <i>V</i>, and <i>z</i>,
+    where <i>V</i> is a free left module over the ring <i>R</i> with generators
+    the list or collection <i>l</i>, and <i>z</i> is either the zero element of
+    <i>V</i> or <code>false</code> (then <i>l</i> is nonempty);
+    the function returns <code>true</code> if <i>V</i> shall lie in the filter <i>f</i>,
+    and <code>false</code> otherwise;
+    the return value may also be <code>fail</code>, which indicates that <i>V</i> is
+    <strong>not</strong> to be handled via the mechanism of nice bases at all,
+<p>
+<dt><code>NiceFreeLeftModuleInfo</code> <dd>
+    the <code>NiceFreeLeftModuleInfo</code> method for left modules in <i>f</i>,
+<p>
+<dt><code>NiceVector</code> <dd>
+    the <code>NiceVector</code> method for left modules <i>V</i> in <i>f</i>;
+    called with <i>V</i> and a vector <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i>, this function returns the
+    nice vector <i>r</i> associated with <i>v</i>, and
+<p>
+<dt><code>UglyVector</code> <dd>
+    the <code>UglyVector</code> method for left modules <i>V</i> in <i>f</i>;
+    called with <i>V</i> and a vector <i>r</i> in the <code>NiceFreeLeftModule</code> value
+    of <i>V</i>, this function returns the vector <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i> to which <i>r</i> is
+    associated.
+</dl>
+<p>
+The idea is that all one has to do for implementing a new kind of free
+left modules handled by the mechanism of nice bases is to call
+<code>DeclareHandlingByNiceBasis</code> and <code>InstallHandlingByNiceBasis</code>,
+which causes the installation of the necessary methods and adds the pair
+[ <i>f</i>, <i>record</i> <tt>.</tt><tt>detect</tt> ] to the global list <code>NiceBasisFiltersInfo</code>.
+The <code>LeftModuleByGenerators</code> methods call <code>CheckForHandlingByNiceBasis</code>
+(see&nbsp;<a href="CHAP059.htm#SSEC011.3">CheckForHandlingByNiceBasis</a>), which sets the appropriate filter
+for the desired left module if applicable.
+<p>
+<a name = "SSEC011.2"></a>
+<li><code>NiceBasisFiltersInfo V</code>
+<p>
+An overview of all kinds of vector spaces that are currently handled by
+nice bases is given by the global list <code>NiceBasisFiltersInfo</code>.
+Examples of such vector spaces are vector spaces of field elements
+(but not the fields themselves) and non-Gaussian row and matrix spaces
+(see&nbsp;<a href="CHAP059.htm#SSEC008.3">IsGaussianSpace</a>).
+<p>
+<a name = "SSEC011.3"></a>
+<li><code>CheckForHandlingByNiceBasis( </code><var>R</var><code>, </code><var>gens</var><code>, </code><var>M</var><code>, </code><var>zero</var><code> ) F</code>
+<p>
+Whenever a free left module is constructed for which the filter
+<code>IsHandledByNiceBasis</code> may be useful,
+<code>CheckForHandlingByNiceBasis</code> should be called.
+(This is done in the methods for <code>VectorSpaceByGenerators</code>,
+<code>AlgebraByGenerators</code>, <code>IdealByGenerators</code> etc.&nbsp;in the <font face="Gill Sans,Helvetica,Arial">GAP</font> library.)
+<p>
+The arguments of this function are the coefficient ring <var>R</var>, the list
+<var>gens</var> of generators, the constructed module <var>M</var> itself, and the zero
+element <var>zero</var> of <var>M</var>;
+if <var>gens</var> is nonempty then the <var>zero</var> value may also be <code>false</code>.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP058.htm">Previous</a>] [<a href ="CHAP060.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

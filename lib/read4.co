@@ -1,0 +1,393 @@
+#I  file="lib/read4.g"
+
+#F  file="lib/profile.g" crc=-88259505
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/profile.g", -88259505 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/profile.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/profile.g");
+elif COM_RESULT = 3  then
+Revision.profile_g:="@(#)$Id: profile.g,v 4.32 2002/04/15 10:05:13 sal Exp $";
+PROFILED_FUNCTIONS:=[];
+PROFILED_FUNCTIONS_NAMES:=[];
+PREV_PROFILED_FUNCTIONS:=[];
+PREV_PROFILED_FUNCTIONS_NAMES:=[];
+BIND_GLOBAL("ClearProfile",COM_FUN(1));
+PROFILETHRESHOLD:=[10000,30];
+BIND_GLOBAL("DisplayProfile",COM_FUN(2));
+BIND_GLOBAL("ProfileFunctions",COM_FUN(3));
+BIND_GLOBAL("UnprofileFunctions",COM_FUN(4));
+PROFILED_METHODS:=[];
+BIND_GLOBAL("ProfileMethods",COM_FUN(5));
+BIND_GLOBAL("UnprofileMethods",COM_FUN(6));
+PROFILED_OPERATIONS:=[];
+BIND_GLOBAL("ProfileOperationsOn",COM_FUN(7));
+BIND_GLOBAL("ProfileOperationsAndMethodsOn",COM_FUN(8));
+BIND_GLOBAL("ProfileOperationsOff",COM_FUN(9));
+ProfileOperationsAndMethodsOff:=ProfileOperationsOff;
+BIND_GLOBAL("ProfileOperations",COM_FUN(10));
+BIND_GLOBAL("ProfileOperationsAndMethods",COM_FUN(11));
+PROFILED_GLOBAL_FUNCTIONS:=[];
+BIND_GLOBAL("ProfileGlobalFunctions",COM_FUN(12));
+PROFILED_GLOBAL_VARIABLE_FUNCTIONS:=[];
+BIND_GLOBAL("ProfileFunctionsInGlobalVariables",COM_FUN(13));
+BIND_GLOBAL("DisplayRevision",COM_FUN(14));
+BIND_GLOBAL("DisplayCacheStats",COM_FUN(15));
+BIND_GLOBAL("ClearCacheStats",COM_FUN(16));
+START_TIME:=0;
+START_NAME:="";
+START_TEST:=COM_FUN(17);
+STOP_TEST:=COM_FUN(18);
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/profile.g"
+
+#F  file="lib/methwhy.g" crc=-129751140
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/methwhy.g", -129751140 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/methwhy.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/methwhy.g");
+elif COM_RESULT = 3  then
+Revision.methwhy_g:="@(#)$Id: methwhy.g,v 4.22 2003/04/11 17:12:33 gap Exp $";
+BindGlobal("Print_Value_SFF",COM_FUN(1));
+BIND_GLOBAL("ApplicableMethodTypes",COM_FUN(2));
+BIND_GLOBAL("ApplicableMethod",COM_FUN(3));
+BIND_GLOBAL("ShowImpliedFilters",COM_FUN(4));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/methwhy.g"
+
+#F  file="lib/pager.gi" crc=-122078620
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/pager.gi", -122078620 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/pager.gi\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/pager.gi");
+elif COM_RESULT = 3  then
+Revision.pager_gi:="@(#)$Id: pager.gi,v 1.4 2002/05/10 12:56:28 gap Exp $";
+if not IsBound(ANSI_COLORS) then
+ANSI_COLORS:=false;
+fi;
+BindGlobal("PAGER_BUILTIN",COM_FUN(1));
+PAGER:="builtin";
+PAGER_OPTIONS:=[];
+BindGlobal("PAGER_EXTERNAL",COM_FUN(2));
+InstallGlobalFunction("Pager",COM_FUN(3));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/pager.gi"
+
+#F  file="lib/helpbase.gi" crc=78409229
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/helpbase.gi", 78409229 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/helpbase.gi\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/helpbase.gi");
+elif COM_RESULT = 3  then
+Revision.helpbase_gi:="@(#)$Id: helpbase.gi,v 1.15.2.2 2004/04/23 15:28:18 gap Exp $";
+InstallGlobalFunction(StringStreamInputTextFile,COM_FUN(1));
+InstallGlobalFunction(MATCH_BEGIN,COM_FUN(2));
+InstallGlobalFunction(MATCH_BEGIN_COUNT,COM_FUN(3));
+InstallGlobalFunction(FILLED_LINE,COM_FUN(4));
+InstallGlobalFunction(SIMPLE_STRING,COM_FUN(5));
+InstallValue(HELP_KNOWN_BOOKS,[[],[]]);
+InstallGlobalFunction(HELP_ADD_BOOK,COM_FUN(6));
+InstallValue(HELP_BOOK_HANDLER,rec(default:=rec()));
+InstallValue(HELP_BOOKS_INFO,rec());
+InstallGlobalFunction(HELP_BOOK_INFO,COM_FUN(7));
+InstallGlobalFunction(HELP_SHOW_BOOKS,COM_FUN(8));
+InstallGlobalFunction(HELP_SHOW_CHAPTERS,COM_FUN(9));
+InstallGlobalFunction(HELP_SHOW_SECTIONS,COM_FUN(10));
+if not IsBound(HELP_VIEWER) then
+HELP_VIEWER:=["screen"];
+fi;
+InstallGlobalFunction(HELP_PRINT_MATCH,COM_FUN(11));
+InstallGlobalFunction(HELP_SHOW_PREV_CHAPTER,COM_FUN(12));
+InstallGlobalFunction(HELP_SHOW_NEXT_CHAPTER,COM_FUN(13));
+InstallGlobalFunction(HELP_SHOW_PREV,COM_FUN(14));
+InstallGlobalFunction(HELP_SHOW_NEXT,COM_FUN(15));
+InstallGlobalFunction(HELP_SHOW_WELCOME,COM_FUN(16));
+InstallGlobalFunction(HELP_GET_MATCHES,COM_FUN(17));
+InstallGlobalFunction(HELP_SHOW_MATCHES,COM_FUN(18));
+InstallGlobalFunction(HELP_SHOW_FROM_LAST_TOPICS,COM_FUN(19));
+HELP_BOOK_HANDLER.HelpDataRef:=COM_FUN(20);
+InstallGlobalFunction(HELP_LAB_FILE,COM_FUN(21));
+HELP_RING_IDX:=0;
+HELP_RING_SIZE:=16;
+InstallValue(HELP_BOOK_RING,ListWithIdenticalEntries(HELP_RING_SIZE,["tutorial"]));
+InstallValue(HELP_TOPIC_RING,ListWithIdenticalEntries(HELP_RING_SIZE,"welcome to gap"));
+InstallValue(HELP_LAST,rec(MATCH:=0,BOOK:=0,NEXT_VIEWER:=false,TOPICS:=[]));
+NAMES_SYSTEM_GVARS:="to be defined in init.g";
+InstallGlobalFunction(HELP,COM_FUN(22));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/helpbase.gi"
+
+#F  file="lib/helpview.gi" crc=67884071
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/helpview.gi", 67884071 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/helpview.gi\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/helpview.gi");
+elif COM_RESULT = 3  then
+Revision.helpview_gi:="@(#)$Id: helpview.gi,v 1.5 2003/04/25 16:46:13 gap Exp $";
+InstallValue(HELP_VIEWER_INFO,rec());
+HELP_VIEWER_INFO.screen:=rec(type:="text",show:=Pager);
+HELP_VIEWER_INFO.netscape:=rec(type:="url",show:=COM_FUN(1));
+HELP_VIEWER_INFO.mozilla:=rec(type:="url",show:=COM_FUN(2));
+HELP_VIEWER_INFO.lynx:=rec(type:="url",show:=COM_FUN(3));
+HELP_VIEWER_INFO.("internet config"):=rec(type:="macurl",show:=COM_FUN(4));
+FWITF:=fail;
+XLSCLIENTSCMD:=false;
+InstallGlobalFunction(FindWindowId,COM_FUN(5));
+XRMTCMD:=false;
+XDVI_OPTIONS:="";
+HELP_VIEWER_INFO.xdvi:=rec(type:="dvi",show:=COM_FUN(6));
+XPDF_OPTIONS:="";
+HELP_VIEWER_INFO.xpdf:=rec(type:="pdf",show:=COM_FUN(7));
+ACROREAD_OPTIONS:="";
+ACROREAD_FILE:="";
+HELP_VIEWER_INFO.acroread:=rec(type:="pdf",show:=COM_FUN(8));
+HELP_VIEWER:=["screen"];
+InstallGlobalFunction(SetHelpViewer,COM_FUN(9));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/helpview.gi"
+
+#F  file="lib/helpt2t.gi" crc=9489855
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/helpt2t.gi", 9489855 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/helpt2t.gi\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/helpt2t.gi");
+elif COM_RESULT = 3  then
+Revision.helpt2t_gi:="@(#)$Id: helpt2t.gi,v 1.15.2.3 2004/04/23 15:28:18 gap Exp $";
+HELP_FLUSHRIGHT:=true;
+InstallGlobalFunction(HELP_PRINT_SECTION_TEXT,COM_FUN(1));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/helpt2t.gi"
+
+#F  file="lib/helpdef.gi" crc=82257159
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/helpdef.gi", 82257159 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/helpdef.gi\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/helpdef.gi");
+elif COM_RESULT = 3  then
+Revision.helpdef_gi:="@(#)$Id: helpdef.gi,v 1.8.2.1 2004/04/23 15:28:18 gap Exp $";
+HELP_TEST_EXAMPLES\?\?\?:=COM_FUN(1);
+InstallGlobalFunction(GapLibToc2Gap,COM_FUN(2));
+HELP_BOOK_HANDLER.default.ReadSix:=COM_FUN(3);
+InstallValue(HELP_CHAPTER_BEGIN,Immutable("\\Chapter"));
+InstallValue(HELP_SECTION_BEGIN,Immutable("\\Section"));
+InstallValue(HELP_FAKECHAP_BEGIN,Immutable("%\\FakeChapter"));
+InstallValue(HELP_PRELCHAPTER_BEGIN,Immutable("\\PreliminaryChapter"));
+InstallGlobalFunction(HELP_CHAPTER_INFO,COM_FUN(4));
+InstallGlobalFunction(HELP_PRINT_SECTION_URL,COM_FUN(5));
+HELP_EXTERNAL_URL:="";
+HELP_MAC_PROTOCOL:="file://";
+InstallGlobalFunction(HELP_PRINT_SECTION_MAC_IC_URL,COM_FUN(6));
+HELP_BOOK_HANDLER.default.ShowChapters:=COM_FUN(7);
+HELP_BOOK_HANDLER.default.ShowSections:=COM_FUN(8);
+HELP_BOOK_HANDLER.default.MatchPrevChap:=COM_FUN(9);
+HELP_BOOK_HANDLER.default.MatchNextChap:=COM_FUN(10);
+HELP_BOOK_HANDLER.default.MatchPrev:=COM_FUN(11);
+HELP_BOOK_HANDLER.default.MatchNext:=COM_FUN(12);
+HELP_BOOK_HANDLER.default.SearchMatches:=COM_FUN(13);
+HELP_BOOK_HANDLER.default.HelpData:=COM_FUN(14);
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/helpdef.gi"
+
+#F  file="lib/reread.g" crc=-13732096
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/reread.g", -13732096 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/reread.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/reread.g");
+elif COM_RESULT = 3  then
+Revision.reread_g:="@(#)$Id: reread.g,v 4.8 2003/02/18 17:11:10 gap Exp $";
+BindGlobal("Reread",COM_FUN(1));
+BindGlobal("RereadAndCheckFunc",COM_FUN(2));
+BIND_GLOBAL("RereadLib",RereadAndCheckFunc("lib"));
+BIND_GLOBAL("RereadGrp",RereadAndCheckFunc("grp"));
+BIND_GLOBAL("RereadSmall",RereadAndCheckFunc("small"));
+BIND_GLOBAL("RereadPrim",RereadAndCheckFunc("prim"));
+BIND_GLOBAL("RereadTrans",RereadAndCheckFunc("trans"));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/reread.g"
+
+#F  file="lib/package.g" crc=-100018536
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/package.g", -100018536 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/package.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/package.g");
+elif COM_RESULT = 3  then
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.2 2004/05/11 10:42:48 gap Exp $";
+PACKAGES_VERSIONS:=rec();
+BindGlobal("CompareVersionNumbers",COM_FUN(1));
+BindGlobal("PackageInfo",COM_FUN(2));
+BindGlobal("RECORDS_FILE",COM_FUN(3));
+BindGlobal("SetPackageInfo",COM_FUN(4));
+BindGlobal("InitializePackagesInfoRecords",COM_FUN(5));
+DeclareGlobalFunction("TestPackageAvailability");
+InstallGlobalFunction("TestPackageAvailability",COM_FUN(6));
+BindGlobal("DefaultPackageBannerString",COM_FUN(7));
+BindGlobal("LoadPackageDocumentation",COM_FUN(8));
+DeclareGlobalFunction("LoadPackage");
+RequirePackage:=LoadPackage;
+InstallGlobalFunction(LoadPackage,COM_FUN(9));
+BindGlobal("InstalledPackageVersion",COM_FUN(10));
+BIND_GLOBAL("DirectoriesPackagePrograms",COM_FUN(11));
+BIND_GLOBAL("DirectoriesPackageLibrary",COM_FUN(12));
+BindGlobal("ReadPackage",COM_FUN(13));
+BindGlobal("RereadPackage",COM_FUN(14));
+BindGlobal("CreateCompletionFilesPackage",COM_FUN(15));
+BindGlobal("AutoloadPackages",COM_FUN(16));
+BindGlobal("ExcludeFromAutoload",COM_FUN(17));
+if not IsBound(StripEscapeSequences) then
+StripEscapeSequences:=0;
+fi;
+BindGlobal("GAPDocManualLab",COM_FUN(18));
+if StripEscapeSequences=0 then
+Unbind(StripEscapeSequences);
+fi;
+BindGlobal("DeclareAutoreadableVariables",COM_FUN(19));
+BindGlobal("ValidatePackageInfo",COM_FUN(20));
+BindGlobal("CheckPackageLoading",COM_FUN(21));
+GAPInfo.PackagesRestrictions:=rec(anupq:=rec(OnInitialization:=COM_FUN(22),OnLoad:=COM_FUN(23)),autpgrp:=rec(OnInitialization:=COM_FUN(24),OnLoad:=COM_FUN(25)));
+BindGlobal("SuggestUpgrades",COM_FUN(26));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/package.g"
+

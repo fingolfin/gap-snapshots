@@ -1,0 +1,27 @@
+\chapcontents {\tocstrut }{Copyright Notice}{7}
+\chapcontents {1}{About the New Features Manual}{8}
+\chapcontents {2}{Dictionaries and General Hash Tables (preliminary)}{9}
+\seccontents {2.1}{Dictionaries} {9}
+\seccontents {2.2}{General Hash Tables} {10}
+\seccontents {2.3}{General hash table definitions and operations} {10}
+\seccontents {2.4}{Hash keys} {11}
+\seccontents {2.5}{Dense hash tables} {11}
+\seccontents {2.6}{Sparse hash tables} {11}
+\seccontents {2.7}{Fast access to last hash index} {12}
+\chapcontents {3}{Quotient groups by homomorphisms (preliminary)}{13}
+\seccontents {3.1}{Creating hom cosets and quotient groups} {14}
+\seccontents {3.2}{Operations on hom cosets} {14}
+\chapcontents {4}{Transversals of subgroups (preliminary)}{16}
+\seccontents {4.1}{General operations on transversals} {16}
+\seccontents {4.2}{Transversals by Schreier tree} {16}
+\seccontents {4.3}{Transversals by homomorphic images} {17}
+\seccontents {4.4}{Transversals by direct products} {18}
+\seccontents {4.5}{Transversals by Trivial subgroups} {18}
+\seccontents {4.6}{Transversals by sift functions} {18}
+\chapcontents {5}{Chains of subgroups (preliminary)}{19}
+\seccontents {5.1}{Stabiliser chain subgroups} {20}
+\seccontents {5.2}{Hom coset chain subgroups} {21}
+\seccontents {5.3}{Direct product chain subgroups} {21}
+\seccontents {5.4}{Trivial chain subgroups and sift function chain subgroups} {21}
+\chapcontents {}{Bibliography}{23}
+\chapcontents {}{Index}{24}

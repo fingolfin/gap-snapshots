@@ -1,0 +1,701 @@
+<html><head><title>[ref] 44 Pc Groups</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP043.htm">Previous</a>] [<a href ="CHAP045.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>44 Pc Groups</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP044.htm#SECT001">The family pcgs</a>
+<li> <A HREF="CHAP044.htm#SECT002">Elements of pc groups</a>
+<li> <A HREF="CHAP044.htm#SECT003">Pc groups versus fp groups</a>
+<li> <A HREF="CHAP044.htm#SECT004">Constructing Pc Groups</a>
+<li> <A HREF="CHAP044.htm#SECT005">Computing Pc Groups</a>
+<li> <A HREF="CHAP044.htm#SECT006">Saving a Pc Group</a>
+<li> <A HREF="CHAP044.htm#SECT007">Operations for Pc Groups</a>
+<li> <A HREF="CHAP044.htm#SECT008">2-Cohomology and Extensions</a>
+<li> <A HREF="CHAP044.htm#SECT009">Coding a Pc Presentation</a>
+<li> <A HREF="CHAP044.htm#SECT010">Random Isomorphism Testing</a>
+</ol><p>
+<p>
+PcGroups are polycyclic groups that use the polycyclic presentation for
+element arithmetic. This presentation gives them a ``natural'' pcgs, the
+<code>FamilyPcgs</code> (see&nbsp;<a href="CHAP044.htm#SSEC001.1">FamilyPcgs</a>) with respect to which pcgs operations as
+described in chapter&nbsp;<a href="CHAP043.htm">Polycyclic Groups</a> are particularly efficient.
+<p>
+Let <i>G</i> be a polycyclic group with pcgs <i>P</i> = (<i>g</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+and corresponding relative orders (<i>r</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>r</i><sub><i>n</i></sub>). Recall that the
+<i>r</i><sub><i>i</i></sub> are positive integers or infinity and let <i>I</i> be the set of indices
+<i>i</i> with <i>r</i><sub><i>i</i></sub> a positive integer. Then <i>G</i> has a finite presentation
+on the generators <i>g</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub> with relations of the following
+form.
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>g</i><sub><i>i</i></sub><sup><i>r</i><sub><i>i</i></sub></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>g</i><sub><i>i</i>+1</sub><sup><i>a</i>(<i>i</i>,<i>i</i>,<i>i</i>+1)</sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>a</i>(<i>i</i>,<i>i</i>,<i>n</i>)</sup></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"></td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"> <span class="roman">for</span>  1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i>  <span class="roman">and</span>  <i>i</i>  <font face="symbol">&#8712;</font> <i>I</i></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>g</i><sub><i>i</i></sub><sup><font face="symbol">&#8722;</font>1</sup> <i>g</i><sub><i>j</i></sub> <i>g</i><sub><i>i</i></sub> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>g</i><sub><i>i</i>+1</sub><sup><i>a</i>(<i>i</i>,<i>j</i>,<i>i</i>+1)</sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>a</i>(<i>i</i>,<i>j</i>,<i>n</i>)</sup></td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"></td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"> <span class="roman">for</span>  1  <font face="symbol">&#8804;</font> <i>i</i>  &lt;  <i>j</i>  <font face="symbol">&#8804;</font> <i>n</i></td></tr></table></td></tr></table></td><td nowrap="nowrap"> </td></tr></table></td></tr></table>
+For infinite groups we need additionally
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>g</i><sub><i>i</i></sub><sup><font face="symbol">&#8722;</font>1</sup> <i>g</i><sub><i>j</i></sub><sup><font face="symbol">&#8722;</font>1</sup> <i>g</i><sub><i>i</i></sub> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>g</i><sub><i>i</i>+1</sub><sup><i>b</i>(<i>i</i>,<i>j</i>,<i>i</i>+1)</sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>b</i>(<i>i</i>,<i>j</i>,<i>n</i>)</sup></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"></td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"> <span class="roman">for</span>  1  <font face="symbol">&#8804;</font> <i>i</i>  &lt;  <i>j</i>  <font face="symbol">&#8804;</font> <i>n</i> <span class="roman">and</span>  <i>j</i>  <font face="symbol">&#8713;</font> <i>I</i></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>g</i><sub><i>i</i></sub> <i>g</i><sub><i>j</i></sub> <i>g</i><sub><i>i</i></sub><sup><font face="symbol">&#8722;</font>1</sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>g</i><sub><i>i</i>+1</sub><sup><i>c</i>(<i>i</i>,<i>j</i>,<i>i</i>+1)</sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>c</i>(<i>i</i>,<i>j</i>,<i>n</i>)</sup></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"></td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"> <span class="roman">for</span>  1  <font face="symbol">&#8804;</font> <i>i</i>  &lt;  <i>j</i>  <font face="symbol">&#8804;</font> <i>n</i> <span class="roman">and</span>  <i>i</i>  <font face="symbol">&#8713;</font> <i>I</i></td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>g</i><sub><i>i</i></sub> <i>g</i><sub><i>j</i></sub><sup><font face="symbol">&#8722;</font>1</sup> <i>g</i><sub><i>i</i></sub><sup><font face="symbol">&#8722;</font>1</sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>g</i><sub><i>i</i>+1</sub><sup><i>d</i>(<i>i</i>,<i>j</i>,<i>i</i>+1)</sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>d</i>(<i>i</i>,<i>j</i>,<i>n</i>)</sup></td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"></td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"> <span class="roman">for</span>  1  <font face="symbol">&#8804;</font> <i>i</i>  &lt;  <i>j</i>  <font face="symbol">&#8804;</font> <i>n</i> <span class="roman">and</span>  <i>i</i>, <i>j</i>,  <font face="symbol">&#8713;</font> <i>I</i></td></tr></table></td></tr></table></td><td nowrap="nowrap"> </td></tr></table></td></tr></table>
+Here the right hand sides are assumed to be words in normal
+form; that is, for <i>k</i>  <font face="symbol">&#8712;</font> <i>I</i> we have for all exponents
+0  <font face="symbol">&#8804;</font> <i>a</i>(<i>i</i>,<i>j</i>,<i>k</i>), <i>b</i>(<i>i</i>,<i>j</i>,<i>k</i>), <i>c</i>(<i>i</i>,<i>j</i>,<i>k</i>), <i>d</i>(<i>i</i>,<i>j</i>,<i>k</i>)  &lt;  <i>r</i><sub><i>k</i></sub>.
+<p>
+A finite presentation of this type is called a <strong>power-conjugate
+presentation</strong> and a <strong>pc group</strong> is a polycyclic group defined
+by a power-conjugate presentation. Instead of conjugates we could
+just as well work with commutators and then the presentation would
+be called a <strong>power-commutator</strong> presentation. Both types of presentation
+are abbreviated as <strong>pc presentation</strong>. Note that a pc presentation is a
+rewriting system.
+<p>
+Clearly, whenever a group <i>G</i> with pcgs <i>P</i> is given, then we can
+write down the corresponding pc presentation. On the other hand,
+one may just write down a presentation on <i>n</i> abstract generators
+<i>g</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub> with relations of the above form and define a
+group <i>H</i> by this. Then the subgroups <i>C</i><sub><i>i</i></sub> = <font face="symbol">&#9001;</font><i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub> <font face="symbol">&#9002;</font> of <i>H</i> form a subnormal series whose factors are cyclic
+or trivial. In the case that all factors are non-trivial, we say
+that the pc presentation of <i>H</i> is <strong>confluent</strong>. Note that <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4
+can only work correctly with pc groups defined by a confluent pc
+presentation.
+<p>
+At the current level of implementation <font face="Gill Sans,Helvetica,Arial">GAP</font> can only deal with
+finite pc groups. This will be extended in near future.
+<p>
+Algorithms for pc groups use the methods for polycyclic groups described in
+chapter&nbsp;<a href="CHAP043.htm">Polycyclic Groups</a>.
+<p>
+<p>
+<h2><a name="SECT001">44.1 The family pcgs</a></h2>
+<p><p>
+Clearly, the generators of a power-conjugate presentation of
+a pc group <i>G</i> form a pcgs of the pc group. This pcgs is called
+the <strong>family pcgs</strong>.
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>FamilyPcgs( </code><var>grp</var><code> ) A</code>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IsFamilyPcgs( </code><var>pcgs</var><code> ) P</code>
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>InducedPcgsWrtFamilyPcgs( </code><var>grp</var><code> ) A</code>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>IsParentPcgsFamilyPcgs( </code><var>pcgs</var><code> ) P</code>
+<p>
+This property indicates that the pcgs <var>pcgs</var> is induced with respect to
+a family pcgs.
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 the family pcgs had been the only pcgs allowed for a
+pc group. Note that this has changed in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 where a pc group
+may have several independent polycyclic generating sequences.
+<p>
+However, the elementary operations for a non-family pcgs may
+not be as efficient as the elementary operations for the family
+pcgs.
+<p>
+This can have a significant influence on the performance of algorithms for
+polycyclic groups. Many algorithms require a pcgs that corresponds to an
+elementary abelian series (see&nbsp;<a href="CHAP043.htm#SSEC011.2">PcgsElementaryAbelianSeries</a>) or even a
+special pcgs (see&nbsp;<a href="CHAP043.htm#SECT013">Special Pcgs</a>). If the family pcgs has the required
+properties, it will be used for these purposes, if not <font face="Gill Sans,Helvetica,Arial">GAP</font> has to work
+with respect to a new pcgs which is <strong>not</strong> the family pcgs and thus takes
+longer for elementary calculations like <code>ExponentsOfPcElement</code>.
+<p>
+Therefore, if the family pcgs chosen for arithmetic is not of importance it
+might be worth to <strong>change</strong> to another, nicer, pcgs to speed up calculations.
+This can be achieved, for example, by using the <code>Range</code> of the isomorphism
+obtained by <code>IsomorphismSpecialPcGroup</code> (see&nbsp;<a href="CHAP044.htm#SSEC005.3">IsomorphismSpecialPcGroup</a>).
+<p>
+<p>
+<h2><a name="SECT002">44.2 Elements of pc groups</a></h2>
+<p><p>
+The elements of a pc group <i>G</i> are always represented as words
+in normal form with respect to the family pcgs of <i>G</i>.
+Thus it is straightforward to compare elements of pc group,
+since this boils down to a mere comparison of exponent vectors
+with respect to the family pcgs. In particular, the word problem
+is efficiently solvable in pc groups.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>pcword</var><code> = </code><var>pcword</var><code></code>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>pcword</var><code> &lt; </code><var>pcword</var><code></code>
+<p>
+However, multiplication and inversion of elements in pc groups
+is not as straightforward as in arbitrary finitely presented groups
+where a simple concatenation or reversion of the corresponding
+words is sufficient (but one cannot solve the word problem).
+<p>
+To multiply to elements in a pc group, we
+first concatenate the corresponding words and then use an algorithm
+called <code>collection</code> to transform the new word into a word in normal
+form.
+<p>
+<pre>
+gap&gt; g := FamilyPcgs( SmallGroup( 24, 12 ) );
+Pcgs([ f1, f2, f3, f4 ])
+gap&gt; g[4] * g[1];
+f1*f3
+gap&gt; (g[2] * g[3])^-1;
+f2^2*f3*f4
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">44.3 Pc groups versus fp groups</a></h2>
+<p><p>
+In theory pc groups are finitely presented groups.  In practice the
+arithmetic in pc groups is different from the arithmetic in fp
+groups. Thus for technical reasons the pc groups in <font face="Gill Sans,Helvetica,Arial">GAP</font> do not form
+a subcategory of the fp groups and hence the methods for fp groups
+cannot be applied to pc groups in general.
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>IsPcGroup( </code><var>G</var><code> ) C</code>
+<p>
+tests whether <var>G</var> is a pc group.
+<p>
+<pre>
+gap&gt; G := SmallGroup( 24, 12 );
+&lt;pc group of size 24 with 4 generators&gt;
+gap&gt; IsPcGroup( G );
+true
+gap&gt; IsFpGroup( G );
+false
+</pre>
+<p>
+Note that it is possible to convert a pc group to a fp group in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+The following function computes the power-commutator presentation defined
+by <var>pcgs</var>. The string <var>str</var> can be used to give a name to the generators
+of the fp group.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>IsomorphismFpGroupByPcgs( </code><var>pcgs</var><code>, </code><var>str</var><code> )</code>
+<p>
+<pre>
+gap&gt; p := FamilyPcgs( SmallGroup( 24, 12 ) );
+Pcgs([ f1, f2, f3, f4 ])
+gap&gt; iso := IsomorphismFpGroupByPcgs( p, "g" );
+[ f1, f2, f3, f4 ] -&gt; [ g1, g2, g3, g4 ]
+gap&gt; F := Image( iso );
+&lt;fp group of size 24 on the generators [ g1, g2, g3, g4 ]&gt;
+gap&gt; RelatorsOfFpGroup( F );
+[ g1^2, g2^-1*g1^-1*g2*g1*g2^-1, g3^-1*g1^-1*g3*g1*g4^-1*g3^-1, 
+  g4^-1*g1^-1*g4*g1*g4^-1*g3^-1, g2^3, g3^-1*g2^-1*g3*g2*g4^-1*g3^-1, 
+  g4^-1*g2^-1*g4*g2*g3^-1, g3^2, g4^-1*g3^-1*g4*g3, g4^2 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">44.4 Constructing Pc Groups</a></h2>
+<p><p>
+If necessary, you can supply <font face="Gill Sans,Helvetica,Arial">GAP</font> with a pc presentation
+by hand. (Although this is the most tedious way to input a pc group.)
+Note that the pc presentation has to be confluent in order to
+work with the pc group in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+(If you have already a suitable pcgs in another representation, use
+<code>PcGroupWithPcgs</code>, see below&nbsp;<a href="CHAP044.htm#SSEC005.1">PcGroupWithPcgs</a>.)
+<p>
+One way is to define a finitely presented group with a
+pc presentation in <font face="Gill Sans,Helvetica,Arial">GAP</font> and then convert this presentation
+into a pc group. Note that this does not work for arbitrary presentations
+of polycyclic groups, see Chapter <a href="CHAP045.htm#SECT013">Quotient Methods</a> for further information.
+<p>
+For performance reasons it is beneficial to enforce a ``syllable''
+representation in the free group (see&nbsp;<a href="CHAP035.htm#SECT006">Representations for Associative Words</a>).
+<p>
+<a name = "SSEC004.1"></a>
+<li><code>PcGroupFpGroup( </code><var>G</var><code> ) F</code>
+<p>
+creates a PcGroup <var>P</var> from an FpGroup (see Chapter <a href="CHAP045.htm">Finitely Presented Groups</a>) <var>G</var> whose presentation is polycyclic. The resulting group <var>P</var>
+has generators corresponding to the generators of <var>G</var>. They are printed
+in the same way as generators of <var>G</var>, but they lie in a different
+family. If the pc presentation of <var>G</var> is not confluent, an error message
+occurs.
+<p>
+<pre>
+gap&gt; F := FreeGroup(IsSyllableWordsFamily,"a","b","c","d");;
+gap&gt; a := F.1;; b := F.2;; c := F.3;; d := F.4;;
+gap&gt; rels := [a^2, b^3, c^2, d^2, Comm(b,a)/b, Comm(c,a)/d, Comm(d,a),
+&gt;             Comm(c,b)/(c*d), Comm(d,b)/c, Comm(d,c)];
+[ a^2, b^3, c^2, d^2, b^-1*a^-1*b*a*b^-1, c^-1*a^-1*c*a*d^-1, d^-1*a^-1*d*a, 
+  c^-1*b^-1*c*b*d^-1*c^-1, d^-1*b^-1*d*b*c^-1, d^-1*c^-1*d*c ]
+gap&gt; G := F / rels;
+&lt;fp group on the generators [ a, b, c, d ]&gt;
+gap&gt; H := PcGroupFpGroup( G );
+&lt;pc group of size 24 with 4 generators&gt;
+</pre>
+<p>
+Equivalently to the above method one can initiate a collector of
+a pc group by hand and use it to define a pc group. In <font face="Gill Sans,Helvetica,Arial">GAP</font> there
+are different collectors for different collecting strategies; at
+the moment, there are two collectors to choose from: the single
+collector for finite pc groups and the combinatorial collector
+for finite <i>p</i>-groups. See <a href="biblio.htm#Sims94"><cite>Sims94</cite></a> for further information
+on collecting strategies.
+<p>
+A collector is initiated by underlying free group to the pc presented
+group and the relative orders of the pc series. Then one adds the right
+hand sides of the power and the commutator or conjugate relations one by
+one. Note that omitted relators are assumed to be trivial.
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>SingleCollector( </code><var>fgrp</var><code>, </code><var>relorders</var><code> )</code>
+<a name = "SSEC004.2"></a>
+<li><code>CombinatorialCollector( </code><var>fgrp</var><code>, </code><var>relorders</var><code> )</code>
+<p>
+Then the right hand sides of the pc presentation have to be declared.
+Let <i>f</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>f</i><sub><i>n</i></sub> be the generators of the underlying free group
+<var>fgrp</var>.
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>SetConjugate( </code><var>coll</var><code>, </code><var>i</var><code>, </code><var>j</var><code>, </code><var>w</var><code> )</code>
+<p>
+set the conjugate <i>f</i><sub><i>j</i></sub><sup><i>f</i><sub><i>i</i></sub></sup> to equal <var>w</var> where <var>w</var> is a word
+in <i>f</i><sub><i>i</i>+1</sub>, <font face="symbol">&#8230;</font>, <i>f</i><sub><i>n</i></sub> and <i>i</i> &lt; <i>j</i>.
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>SetCommutator( </code><var>coll</var><code>, </code><var>i</var><code>, </code><var>j</var><code>, </code><var>w</var><code> )</code>
+<p>
+set the commutator of <i>f</i><sub><i>j</i></sub> and <i>f</i><sub><i>i</i></sub> to equal <var>w</var> where <var>w</var> is a word
+in <i>f</i><sub><i>i</i>+1</sub>, <font face="symbol">&#8230;</font>, <i>f</i><sub><i>n</i></sub> and <i>i</i> &lt; <i>j</i>.
+<p>
+<a name = "SSEC004.5"></a>
+<li><code>SetPower( </code><var>coll</var><code>, </code><var>i</var><code>, </code><var>w</var><code> )</code>
+<p>
+set the power <i>f</i><sub><i>i</i></sub><sup><i>r</i><sub><i>i</i></sub></sup> to equal <var>w</var> where <var>w</var> is a word
+in <i>f</i><sub><i>i</i>+1</sub>, <font face="symbol">&#8230;</font>, <i>f</i><sub><i>n</i></sub>.
+<p>
+Finally, the collector has to be converted to a group.
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>GroupByRws( </code><var>coll</var><code> )</code>
+<a name = "SSEC004.6"></a>
+<li><code>GroupByRwsNC( </code><var>coll</var><code> )</code>
+<p>
+creates a group from a rewriting system. In the first version it
+is checked whether the rewriting system is confluent, in the second
+version this is assumed to be true.
+<p>
+<a name = "SSEC004.7"></a>
+<li><code>IsConfluent( </code><var>G</var><code> )</code>
+<p>
+checks whether the pc group <var>G</var> has been build from a collector with
+a confluent power-commutator presentation.
+<p>
+<pre>
+gap&gt; F := FreeGroup(IsSyllableWordsFamily, 2 );;
+gap&gt; coll1 := SingleCollector( F, [2,3] );
+&lt;&lt;single collector, 8 Bits&gt;&gt;
+gap&gt; SetConjugate( coll1, 2, 1, F.2 );
+gap&gt; SetPower( coll1, 1, F.2 );
+gap&gt; G1 := GroupByRws( coll1 );
+&lt;pc group of size 6 with 2 generators&gt;
+gap&gt; IsConfluent(G1);
+true
+gap&gt; IsAbelian(G1);
+true
+</pre>
+<p>
+<pre>
+gap&gt; coll2 := SingleCollector( F, [2,3] );
+&lt;&lt;single collector, 8 Bits&gt;&gt;
+gap&gt; SetConjugate( coll2, 2, 1, F.2^2 );
+gap&gt; G2 := GroupByRws( coll2 );
+&lt;pc group of size 6 with 2 generators&gt;
+gap&gt; IsAbelian(G2);
+false
+</pre>
+<p>
+With the above methods a pc group with arbitrary defining pcgs can be
+constructed. However, for almost all applications within <font face="Gill Sans,Helvetica,Arial">GAP</font> we need
+to have a pc group whose defining pcgs is a prime order pcgs. Hence
+the following functions are useful.
+<p>
+<a name = "SSEC004.8"></a>
+<li><code>IsomorphismRefinedPcGroup( </code><var>G</var><code> ) A</code>
+<p>
+<a name = "I0"></a>
+
+returns an isomorphism from <var>G</var> onto an isomorphic PC group whose family
+pcgs is a prime order pcgs.
+<p>
+<a name = "SSEC004.9"></a>
+<li><code>RefinedPcGroup( </code><var>G</var><code> ) A</code>
+<p>
+returns the range of <code>IsomorphismRefinedPcGroup(</code><var>G</var><code>)</code>.
+<p>
+<p>
+<h2><a name="SECT005">44.5 Computing Pc Groups</a></h2>
+<p><p>
+Another possibility to get a pc group in <font face="Gill Sans,Helvetica,Arial">GAP</font> is to convert a
+polycyclic group given by some other representation to a pc group.
+For finitely presented groups there are various quotient methods
+available. For all other types of groups one can use the following
+functions.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>PcGroupWithPcgs( </code><var>mpcgs</var><code> ) A</code>
+<p>
+creates a new Pc group <var>G</var> whose family pcgs is isomorphic to the
+(modulo) pcgs <var>mpcgs</var>.
+<p>
+<pre>
+gap&gt; G := Group( (1,2,3), (3,4,1) );;
+gap&gt; PcGroupWithPcgs( Pcgs(G) );
+&lt;pc group of size 12 with 3 generators&gt;
+</pre>
+<p>
+If a pcgs is only given by a list of pc elements, <code>PcgsByPcSequence</code>
+(see&nbsp;<a href="CHAP043.htm#SSEC003.1">PcgsByPcSequence</a>) can be used:
+<pre>
+gap&gt; G:=Group((1,2,3,4),(1,2));;
+gap&gt; p:=PcgsByPcSequence(FamilyObj(One(G)),
+&gt; [ (3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ]);
+Pcgs([ (3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ])
+gap&gt; PcGroupWithPcgs(p);
+&lt;pc group of size 24 with 4 generators&gt;
+</pre>
+<p>
+<pre>
+gap&gt; G := SymmetricGroup( 5 );
+Sym( [ 1 .. 5 ] )
+gap&gt; H := Subgroup( G, [(1,2,3,4,5), (3,4,5)] );
+Group([ (1,2,3,4,5), (3,4,5) ])
+gap&gt; modu := ModuloPcgs( G, H );
+Pcgs([ (4,5) ])
+gap&gt; PcGroupWithPcgs(modu);
+&lt;pc group of size 2 with 1 generators&gt;
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>IsomorphismPcGroup( </code><var>G</var><code> ) A</code>
+<p>
+<a name = "I1"></a>
+
+returns an isomorphism from <var>G</var> onto an isomorphic PC group.
+The series chosen for this PC representation depends on
+the method chosen.
+<var>G</var> must be a polycyclic group of any kind, for example a solvable
+permutation group.
+<p>
+<pre>
+gap&gt; G := Group( (1,2,3), (3,4,1) );;
+gap&gt; iso := IsomorphismPcGroup( G );
+Pcgs([ (2,4,3), (1,2)(3,4), (1,3)(2,4) ]) -&gt; [ f1, f2, f3 ]
+gap&gt; H := Image( iso );
+Group([ f1, f2, f3 ])
+</pre>
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>IsomorphismSpecialPcGroup( </code><var>G</var><code> ) A</code>
+<p>
+returns an isomorphism from <var>G</var> onto an isomorphic PC group whose family
+pcgs is a special pcgs. (This can be beneficial to the runtime of
+calculations.)
+<var>G</var> may be a polycyclic group of any kind, for example a solvable
+permutation group.
+<p>
+<p>
+<h2><a name="SECT006">44.6 Saving a Pc Group</a></h2>
+<p><p>
+As printing a polycyclic group does not display the presentation,
+one cannot simply print a pc group to a file to save it. For this
+purpose we need the following function.
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>GapInputPcGroup( </code><var>grp</var><code>, </code><var>string</var><code> ) F</code>
+<p>
+<pre>
+gap&gt; G := SmallGroup( 24, 12 );
+&lt;pc group of size 24 with 4 generators&gt;
+gap&gt; PrintTo( "save", GapInputPcGroup( G, "H" ) );
+gap&gt; Read( "save" );
+#I A group of order 24 has been defined.
+#I It is called H
+gap&gt; H = G;
+false
+gap&gt; IdSmallGroup( H ) = IdSmallGroup( G );
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">44.7 Operations for Pc Groups</a></h2>
+<p><p>
+All the operations described in Chapters <a href="CHAP037.htm">Groups</a> and <a href="CHAP043.htm">Polycyclic Groups</a> apply to a pc group. Nearly all methods for pc groups are
+methods for groups with pcgs as described in Chapter <a href="CHAP043.htm">Polycyclic groups</a>. The only method with is special for pc groups is a method
+to compute intersections of subgroups, since here a pcgs of a parent
+group is needed and this can only by guaranteed within pc groups.
+<p>
+<p>
+<h2><a name="SECT008">44.8 2-Cohomology and Extensions</a></h2>
+<p><p>
+One of the most interesting applications of pc groups is the possibility
+to compute with extensions of these groups by elementary abelian groups;
+that is, <i>H</i> is an extension of <i>G</i> by <i>M</i>, if there exists a normal
+subgroup <i>N</i> in <i>H</i> which is isomorphic to <i>M</i> such that <i>H</i>/<i>N</i> is
+isomorphic to <i>G</i>.
+<p>
+Pc groups are particularly suited for such applications, since the
+2-cohomology can be computed efficiently for such groups and,
+moreover, extensions of pc groups by elementary abelian groups can
+be represented as pc groups again.
+<p>
+To define the elementary abelian group <i>M</i> together with an action of <i>G</i> on
+<i>M</i> we consider <i>M</i> as a meataxe module for <i>G</i> over a finite field
+(section&nbsp;<a href="CHAP069.htm#SSEC013.1">IrreducibleModules</a> describes functions that can be used to obtain
+certain modules). For further information on meataxe modules see Chapter
+<a href="CHAP067.htm">The MeatAxe</a>.  Note that the matrices defining the module must correspond
+to the pcgs of the group <var>G</var>.
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>TwoCoboundaries( </code><var>G</var><code>, </code><var>M</var><code> ) O</code>
+<p>
+returns the group of 2-coboundaries of a pc group <var>G</var> by the <var>G</var>-module 
+<var>M</var>. The generators of <var>M</var> must correspond to Pcgs(<var>G</var>). The group of 
+coboundaries is given as vector space over the field underlying <var>M</var>.
+<p>
+<a name = "SSEC008.2"></a>
+<li><code>TwoCocycles( </code><var>G</var><code>, </code><var>M</var><code> ) O</code>
+<p>
+returns the group of 2-cocycles of a pc group <var>G</var> by the <var>G</var>-module <var>M</var>. 
+The generators of <var>M</var> must correspond to Pcgs(<var>G</var>). The group of 
+cocycles is given as vector space over the field underlying <var>M</var>.
+<p>
+<a name = "SSEC008.3"></a>
+<li><code>TwoCohomology( </code><var>G</var><code>, </code><var>M</var><code> ) O</code>
+<p>
+returns a record defining the second cohomology group as factor space of 
+the space of cocycles by the space of coboundaries. <var>G</var> must be a pc group
+and the generators of <var>M</var> must correspond to the pcgs of <var>G</var>.
+<p>
+<pre>
+gap&gt; G := SmallGroup( 4, 2 );
+&lt;pc group of size 4 with 2 generators&gt;
+gap&gt; mats := List( Pcgs( G ), x -&gt; IdentityMat( 1, GF(2) ) );
+[ [ &lt;a GF2 vector of length 1&gt; ], [ &lt;a GF2 vector of length 1&gt; ] ]
+gap&gt; M := GModuleByMats( mats, GF(2) );
+rec( field := GF(2), isMTXModule := true, dimension := 1, 
+  generators := [ &lt;an immutable 1x1 matrix over GF2&gt;, 
+      &lt;an immutable 1x1 matrix over GF2&gt; ] )
+gap&gt; TwoCoboundaries( G, M );
+[  ]
+gap&gt; TwoCocycles( G, M );
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap&gt; cc := TwoCohomology( G, M );;
+gap&gt; cc.cohom;
+&lt;linear mapping by matrix, &lt;vector space of dimension 3 over GF(2)&gt; -&gt; ( GF(
+2)^3 )&gt;
+</pre>
+<p>
+<a name = "SSEC008.4"></a>
+<li><code>Extensions( </code><var>G</var><code>, </code><var>M</var><code> ) O</code>
+<p>
+returns all extensions of <var>G</var> by the <var>G</var>-module <var>M</var> up to equivalence
+as pc groups.
+<p>
+<a name = "SSEC008.5"></a>
+<li><code>Extension( </code><var>G</var><code>, </code><var>M</var><code>, </code><var>c</var><code> ) O</code>
+<a name = "SSEC008.5"></a>
+<li><code>ExtensionNC( </code><var>G</var><code>, </code><var>M</var><code>, </code><var>c</var><code> ) O</code>
+<p>
+returns the extension of <var>G</var> by the <var>G</var>-module <var>M</var> via the cocycle <var>c</var>
+as pc groups. The <code>NC</code> version does not check the resulting group for
+consistence.
+<p>
+<a name = "SSEC008.6"></a>
+<li><code>SplitExtension( </code><var>G</var><code>, </code><var>M</var><code> )</code>
+<p>
+returns the split extension of <var>G</var> by the <var>G</var>-module <var>M</var>.
+<p>
+<a name = "SSEC008.7"></a>
+<li><code>ModuleOfExtension( </code><var>E</var><code> )</code>
+<p>
+returns the module of an extension <var>E</var> of <var>G</var> by <var>M</var>. This is the normal
+subgroup of <var>E</var> which corresponds to <var>M</var>.
+<p>
+<pre>
+gap&gt; G := SmallGroup( 4, 2 );;
+gap&gt; mats := List( Pcgs( G ), x -&gt; IdentityMat( 1, GF(2) ) );;
+gap&gt; M := GModuleByMats( mats, GF(2) );;
+gap&gt; co := TwoCocycles( G, M );;
+gap&gt; Extension( G, M, co[2] );
+&lt;pc group of size 8 with 3 generators&gt;
+gap&gt; SplitExtension( G, M );
+&lt;pc group of size 8 with 3 generators&gt;
+gap&gt; Extensions( G, M );
+[ &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt; ]
+gap&gt; List(last, IdSmallGroup);
+[ [ 8, 5 ], [ 8, 2 ], [ 8, 3 ], [ 8, 3 ], [ 8, 2 ], [ 8, 2 ], [ 8, 3 ], 
+  [ 8, 4 ] ]
+</pre>
+<p>
+Note that the extensions returned by <code>Extensions</code> are computed up to
+equivalence, but not up to isomorphism.
+<p>
+There exists an action of the subgroup of <strong>compatible pairs</strong> in
+<i>Aut</i>(<i>G</i>) &times;<i>Aut</i>(<i>M</i>) which acts on the second cohomology group.
+2-cocycles which lie in the same orbit under this action define
+isomorphic extensions of <i>G</i>. However, there may be isomorphic
+extensions of <i>G</i> corresponding to cocycles in different orbits.
+<p>
+<a name = "SSEC008.8"></a>
+<li><code>CompatiblePairs( </code><var>G</var><code>, </code><var>M</var><code> [, </code><var>D</var><code>] ) F</code>
+<p>
+returns the group of compatible pairs of the group <var>G</var> with the 
+<var>G</var>-module <var>M</var> as subgroup of the direct product of <var>Aut(G)</var> x <var>Aut(M)</var>.
+Here <var>Aut(M)</var> is considered as subgroup of a general linear group. The 
+optional argument <var>D</var> should be a subgroup of <var>Aut(G)</var> x <var>Aut(M)</var>. If it
+is given, then only the compatible pairs in <var>D</var> are computed.
+<p>
+<a name = "SSEC008.9"></a>
+<li><code>ExtensionRepresentatives( </code><var>G</var><code>, </code><var>M</var><code>, </code><var>P</var><code> ) O</code>
+<p>
+returns all extensions of <var>G</var> by the <var>G</var>-module <var>M</var> up to equivalence 
+under action of <var>P</var> where <var>P</var> has to be a subgroup of the group of 
+compatible pairs of <var>G</var> with <var>M</var>.
+<p>
+<pre>
+gap&gt; G := SmallGroup( 4, 2 );;
+gap&gt; mats := List( Pcgs( G ), x -&gt; IdentityMat( 1, GF(2) ) );;
+gap&gt; M := GModuleByMats( mats, GF(2) );;
+gap&gt; A := AutomorphismGroup( G );;
+gap&gt; B := GL( 1, 2 );;
+gap&gt; D := DirectProduct( A, B );
+&lt;group with 6 generators&gt;
+gap&gt; P := CompatiblePairs( G, M, D );
+&lt;group of size 6 with 2 generators&gt;
+gap&gt; ExtensionRepresentatives( G, M, P );
+[ &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt; ]
+gap&gt; Extensions( G, M );
+[ &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt;, 
+  &lt;pc group of size 8 with 3 generators&gt; ]
+</pre>
+<p>
+See also the forthcoming <font face="Gill Sans,Helvetica,Arial">GAP</font> package on <code>Group Construction Methods</code>.
+<p>
+Finally we note that for the computation of split extensions it is not
+necessary that <var>M</var> must correspond to an elementary abelian group. Here
+it is possible to construct split extensions of arbitrary pc groups.
+<p>
+<a name = "SSEC008.10"></a>
+<li><code>SplitExtensions( </code><var>G</var><code>, </code><var>aut</var><code>, </code><var>N</var><code> )</code>
+<p>
+returns the split extensions of the pc group <var>G</var> by the pc group <var>N</var>.
+<var>aut</var> should be a homomorphism from <var>G</var> into <i>Aut</i>(<i>N</i>).
+<p>
+In the following example we construct the holomorph of <i>Q</i><sub>8</sub> as split
+extension of <i>Q</i><sub>8</sub> by <i>S</i><sub>4</sub>.
+<p>
+<pre>
+gap&gt; N := SmallGroup( 8, 4 );
+&lt;pc group of size 8 with 3 generators&gt;
+gap&gt; IsAbelian( N );
+false
+gap&gt; A := AutomorphismGroup( N );
+&lt;group of size 24 with 4 generators&gt;
+gap&gt; iso := IsomorphismPcGroup( A );
+CompositionMapping( Pcgs([ (2,6,5,3), (1,3,5)(2,4,6), (2,5)(3,6), (1,4)(3,6) 
+ ]) -&gt; [ f1, f2, f3, f4 ], &lt;action isomorphism&gt; )
+gap&gt; H := Image( iso );
+Group([ f1, f2, f3, f4 ])
+gap&gt; G := Subgroup( H, Pcgs(H){[1,2]} );
+Group([ f1, f2 ])
+gap&gt; inv := InverseGeneralMapping( iso );
+[ f1*f2, f2^2*f3, f4, f3 ] -&gt; [ Pcgs([ f1, f2, f3 ]) -&gt; [ f1*f2, f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -&gt; [ f2, f1*f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -&gt; [ f1*f3, f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -&gt; [ f1, f2*f3, f3 ] ]
+gap&gt; K := SplitExtension( G, inv, N );
+&lt;pc group of size 192 with 7 generators&gt;
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">44.9 Coding a Pc Presentation</a></h2>
+<p><p>
+If one wants to store a large number of pc groups, then it can be useful
+to store them in a compressed format, since pc presentations can be
+space consuming. Here we introduce a method to code and decode pc
+presentations by integers. To decode a given code the size of the
+underlying pc group is needed as well. For the full definition and
+the coding and decoding
+procedures see <a href="biblio.htm#BescheEick98"><cite>BescheEick98</cite></a>. This method is used with the small
+groups library, see Section <a href="CHAP048.htm#SECT007">Small Groups</a>.
+<p>
+<a name = "SSEC009.1"></a>
+<li><code>CodePcgs( </code><var>pcgs</var><code> ) F</code>
+<p>
+returns the code corresponding to <var>pcgs</var>.
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>CodePcGroup( </code><var>G</var><code> ) F</code>
+<p>
+returns the code for a pcgs of <var>G</var>.
+<p>
+<a name = "SSEC009.3"></a>
+<li><code>PcGroupCode( </code><var>code</var><code>, </code><var>size</var><code> ) F</code>
+<p>
+returns a pc group of size <var>size</var> corresponding to <var>code</var>.
+The argument <var>code</var> must be a valid code for a pcgs, otherwise anything
+may happen. Valid codes are usually obtained by one of the functions
+<code>CodePcgs</code> or <code>CodePcGroup</code>.
+<p>
+<a name = "SSEC009.4"></a>
+<li><code>PcGroupCodeRec( </code><var>rec</var><code> ) F</code>
+<p>
+Here <var>rec</var> needs to have entries .code and .order. Then PcGroupCode 
+returns a pc group of size .order corresponding to .code.
+<p>
+<pre>
+gap&gt; G := SmallGroup( 24, 12 );;
+gap&gt; p := Pcgs( G );;
+gap&gt; code := CodePcgs( p );
+5790338948
+gap&gt; H := PcGroupCode( code, 24 );
+&lt;pc group of size 24 with 4 generators&gt;
+gap&gt; map := GroupHomomorphismByImages( G, H, p, FamilyPcgs(H) );
+Pcgs([ f1, f2, f3, f4 ]) -&gt; Pcgs([ f1, f2, f3, f4 ])
+gap&gt; IsBijective(map);
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT010">44.10 Random Isomorphism Testing</a></h2>
+<p><p>
+The generic isomorphism test for groups may be applied to pc groups
+as well. However, this test is often quite time consuming. Here we
+describe another method to test isomorphism by a probabilistic approach.
+<p>
+This method takes a list of groups and a non-negative integer as
+input. The output is a sublist of the input list where only isomorphic
+copies have been removed. The integer gives a certain amount of control
+over the probability to detect all isomorphisms. If it is 0, then nothing
+will be done at all. The larger the integer is, the larger is the probability
+of finding all isomorphisms. However, due to the underlying method we can
+not guarantee that the algorithm finds all isomorphisms, no matter how
+large <i>n</i> is.
+<p>
+<a name = "SSEC010.1"></a>
+<li><code>RandomIsomorphismTest( </code><var>list</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+<var>list</var> must be a list of code records of pc groups and <var>n</var> a non-negative 
+integer. Returns a sublist of <var>list</var> where isomorphic copies detected by 
+the probabilistic test have been removed.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP043.htm">Previous</a>] [<a href ="CHAP045.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

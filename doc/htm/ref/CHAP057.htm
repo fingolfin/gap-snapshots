@@ -1,0 +1,431 @@
+<html><head><title>[ref] 57 Finite Fields</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP056.htm">Previous</a>] [<a href ="CHAP058.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>57 Finite Fields</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP057.htm#SECT001">Finite Field Elements</a>
+<li> <A HREF="CHAP057.htm#SECT002">Operations for Finite Field Elements</a>
+<li> <A HREF="CHAP057.htm#SECT003">Creating Finite Fields</a>
+<li> <A HREF="CHAP057.htm#SECT004">FrobeniusAutomorphism</a>
+<li> <A HREF="CHAP057.htm#SECT005">Conway Polynomials</a>
+</ol><p>
+<p>
+This chapter describes the special functionality which exists in <font face="Gill Sans,Helvetica,Arial">GAP</font> for
+finite fields and their elements.
+Of course the general functionality for fields
+(see Chapter&nbsp;<a href="CHAP056.htm">Fields and Division Rings</a>) also applies to finite fields.
+<p>
+In the following, the term <strong>finite field element</strong> is used to denote <font face="Gill Sans,Helvetica,Arial">GAP</font>
+objects in the category <code>IsFFE</code> (see&nbsp;<a href="CHAP057.htm#SSEC001.1">IsFFE</a>), and <strong>finite field</strong> means a
+field consisting of such elements.
+Note that in principle we must distinguish these fields from (abstract)
+finite fields.
+For example, the image of the embedding of a finite field into a field of
+rational functions in the same characteristic is of course a finite field
+but its elements are not in <code>IsFFE</code>, and in fact <font face="Gill Sans,Helvetica,Arial">GAP</font> does currently not
+support such fields.
+<p>
+Special representations exist for row vectors and matrices over small finite
+fields (see sections&nbsp;<a href="CHAP023.htm#SECT002">Row Vectors over Finite Fields</a>
+and&nbsp;<a href="CHAP024.htm#SECT013">Matrices over Finite Fields</a>).
+<p>
+<p>
+<h2><a name="SECT001">57.1 Finite Field Elements</a></h2>
+<p><p>
+<a name = "SSEC001.1"></a>
+<li><code>IsFFE( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC001.1"></a>
+<li><code>IsFFECollection( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC001.1"></a>
+<li><code>IsFFECollColl( </code><var>obj</var><code> ) C</code>
+<p>
+Objects in the category <code>IsFFE</code> are used to implement elements of finite
+fields.  In this manual, the term <strong>finite field element</strong> always means an
+object in <code>IsFFE</code>.
+All finite field elements of the same characteristic form a family in
+<font face="Gill Sans,Helvetica,Arial">GAP</font> (see&nbsp;<a href="CHAP013.htm#SECT001">Families</a>).
+Any collection of finite field elements (see&nbsp;<a href="CHAP028.htm">IsCollection</a>) lies in
+<code>IsFFECollection</code>, and a collection of such collections
+(e.g., a matrix) lies in <code>IsFFECollColl</code>.
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>Z( </code><var>p</var><code>^</code><var>d</var><code> ) F</code>
+<p>
+For creating elements of a finite field the function <code>Z</code> can be used.
+The call <code>Z( </code><var>p</var><code>^</code><var>d</var><code> )</code> returns  the designated generator of  the 
+multiplicative
+group of the finite field with <code></code><var>p</var><code>^</code><var>d</var><code></code> elements.  <var>p</var>  must be a prime
+and <code></code><var>p</var><code>^</code><var>d</var><code></code> must be less than or equal to 2<sup>16</sup> = 65536.
+<p>
+The  root returned by <code>Z</code> is  a generator of  the multiplicative group of
+the finite field with <i>p</i><sup><i>d</i></sup> elements, which  is cyclic.  The order of the
+element is  of course <i>p</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1.  The <i>p</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1  different powers of the root
+are exactly the nonzero elements of the finite field.
+<p>
+Thus  all nonzero elements of the  finite field  with <code></code><var>p</var><code>^</code><var>d</var><code></code> elements
+can  be entered  as <code>Z(</code><var>p</var><code>^</code><var>d</var><code>)^</code><var>i</var><code></code>.  Note that this is  also the form
+that <font face="Gill Sans,Helvetica,Arial">GAP</font> uses to output those elements.
+<p>
+The additive neutral element  is <code>0*Z(</code><var>p</var><code>)</code>.  It  is  different from the
+integer <code>0</code> in subtle ways.  First <code>IsInt( 0*Z(</code><var>p</var><code>)  )</code> (see <a href="CHAP014.htm#SSEC001.1">IsInt</a>) is
+<code>false</code> and <code>IsFFE( 0*Z(</code><var>p</var><code>) )</code>  (see <a href="CHAP057.htm#SSEC001.1">IsFFE</a>) is  <code>true</code>, whereas it is
+just the other way around for the integer <code>0</code>.
+<p>
+The multiplicative neutral element is <code>Z(</code><var>p</var><code>)^0</code>.   It is different from
+the integer <code>1</code> in subtle ways.  First <code>IsInt( Z(</code><var>p</var><code>)^0 )</code> (see <a href="CHAP014.htm#SSEC001.1">IsInt</a>)
+is <code>false</code> and <code>IsFFE( Z(</code><var>p</var><code>)^0 )</code> (see  <a href="CHAP057.htm#SSEC001.1">IsFFE</a>) is  <code>true</code>, whereas it
+is just the  other  way around for the  integer <code>1</code>.  Also <code>1+1</code> is <code>2</code>,
+whereas, e.g., <code>Z(2)^0 + Z(2)^0</code> is <code>0*Z(2)</code>.
+<p>
+The  various  roots  returned  by  <code>Z</code>  for  finite  fields  of the  same
+characteristic  are  compatible  in  the  following  sense.  If the field
+<i>GF</i>(<i>p</i><sup><i>n</i></sup>) is a  subfield of the  field  <i>GF</i>(<i>p</i><sup><i>m</i></sup>), i.e., <i>n</i> divides <i>m</i>,
+then <i>Z</i>(<i>p</i><sup><i>n</i></sup>) = <i>Z</i>(<i>p</i><sup><i>m</i></sup>)<sup>(<i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1)/(<i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1)</sup>.  Note that this is the simplest
+relation that may  hold  between a generator of <i>GF</i>(<i>p</i><sup><i>n</i></sup>) and  <i>GF</i>(<i>p</i><sup><i>m</i></sup>),
+since <i>Z</i>(<i>p</i><sup><i>n</i></sup>) is an element of order <i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1 and <i>Z</i>(<i>p</i><sup><i>m</i></sup>)  is an element
+of order  <i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1.  This is achieved  by choosing <i>Z</i>(<i>p</i>) as  the smallest
+primitive  root modulo <i>p</i>  and  <i>Z</i>(<i>p</i><sup><i>n</i></sup>) as a root of the <i>n</i>-th <strong>Conway
+polynomial</strong> (see&nbsp;<a href="CHAP057.htm#SSEC005.1">ConwayPolynomial</a>) of characteristic <i>p</i>.
+Those polynomials were defined by J.&nbsp;H.&nbsp;Conway, and many of them were
+computed by R.&nbsp;A.&nbsp;Parker.
+<p>
+Elements of prime fields of order larger than 2<sup>16</sup> can be handled
+using the machinery of Residue Class Rings
+(see section&nbsp;<a href="CHAP014.htm#SECT004">Residue Class Rings</a>).
+<p>
+<pre>
+gap&gt; a:= Z( 32 );
+Z(2^5)
+gap&gt; a+a;
+0*Z(2)
+gap&gt; a*a;
+Z(2^5)^2
+</pre>
+<p>
+Elements of finite fields can be compared using the operators <code>=</code> and
+<code>&lt;</code>. The call <code></code><var>a</var><code> = </code><var>b</var><code></code> returns <code>true</code> if and only if the finite
+field elements <var>a</var> and <var>b</var> are equal. Furthermore <code></code><var>a</var><code> &lt; </code><var>b</var><code></code> tests
+whether <var>a</var> is smaller than <var>b</var>. Finite field elements are ordered in
+the following way. If the two elements lie in fields of different
+characteristics the one that lies in the field with the smaller
+characteristic is smaller.  If the two elements lie in different
+fields of the same characteristic the one that lies in the smaller
+field is smaller.  If the two elements lie in the same field and one
+is the zero and the other is not, the zero element is smaller.  If the
+two elements lie in the same field and both are nonzero, and are
+represented as <i>Z</i>(<i>p</i><sup><i>d</i></sup>)<sup><i>i</i><sub>1</sub></sup> and <i>Z</i>(<i>p</i><sup><i>d</i></sup>)<sup><i>i</i><sub>2</sub></sup> respectively, then
+the one with the smaller <i>i</i> is smaller.
+<p>
+For the comparison of finite field elements with other <font face="Gill Sans,Helvetica,Arial">GAP</font> objects,
+see&nbsp;<a href="CHAP004.htm#SECT011">Comparisons</a>.
+<p>
+<pre>
+gap&gt; Z( 16 )^10 = Z( 4 )^2;  # this illustrates the embedding of GF(4) in GF(16)
+true
+gap&gt; 0 &lt; 0*Z(101);
+true
+gap&gt; Z(256) &gt; Z(101);
+false
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">57.2 Operations for Finite Field Elements</a></h2>
+<p><p>
+Since finite field elements are scalars, the operations <code>Characteristic</code>,
+<code>One</code>, <code>Zero</code>, <code>Inverse</code>, <code>AdditiveInverse</code>, <code>Order</code> can be applied to
+then (see&nbsp;<a href="CHAP030.htm#SECT010">Attributes and Properties of Elements</a>).
+Contrary to the situation with other scalars, <code>Order</code> is defined also for
+the zero element in a finite field, with value <code>0</code>.
+<p>
+<pre>
+gap&gt; Characteristic( Z( 16 )^10 );  Characteristic( Z( 9 )^2 );
+2
+3
+gap&gt; Characteristic( [ Z(4), Z(8) ] );
+2
+gap&gt; One( Z(9) );  One( 0*Z(4) );
+Z(3)^0
+Z(2)^0
+gap&gt; Inverse( Z(9) );  AdditiveInverse( Z(9) );
+Z(3^2)^7
+Z(3^2)^5
+gap&gt; Order( Z(9)^7 );
+8
+</pre>
+<p>
+<a name = "SSEC002.1"></a>
+<li><code>DegreeFFE( </code><var>z</var><code> ) O</code>
+<li><code>DegreeFFE( </code><var>vec</var><code> ) O</code>
+<li><code>DegreeFFE( </code><var>mat</var><code> ) O</code>
+<p>
+<code>DegreeFFE</code>  returns  the   degree of  the   smallest  finite field
+<var>F</var> containing the element <var>z</var>, respectively all elements of the vector
+<var>vec</var> over a finite field (see&nbsp;<a href="CHAP023.htm">Row Vectors</a>), or matrix  <var>mat</var> over a
+finite field (see&nbsp;<a href="CHAP024.htm">Matrices</a>).
+<p>
+<pre>
+gap&gt; DegreeFFE( Z( 16 )^10 );
+2
+gap&gt; DegreeFFE( Z( 16 )^11 );
+4
+gap&gt; DegreeFFE( [ Z(2^13), Z(2^10) ] );
+130
+</pre>
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>LogFFE( </code><var>z</var><code>, </code><var>r</var><code> ) O</code>
+<p>
+<code>LogFFE</code> returns the discrete  logarithm of the element <var>z</var> in  a  finite
+field with  respect  to  the  root <var>r</var>.
+An  error is signalled if <var>z</var> is zero, or if <var>z</var> is not a power of <var>r</var>.
+<p>
+The <strong>discrete logarithm</strong> of an element <i>z</i> with  respect to a root <i>r</i> is
+the smallest nonnegative integer <i>i</i> such that <i>r</i><sup><i>i</i></sup> = <i>z</i>.
+<p>
+<pre>
+gap&gt; LogFFE( Z(409)^116, Z(409) );  LogFFE( Z(409)^116, Z(409)^2 );
+116
+58
+</pre>
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>IntFFE( </code><var>z</var><code> ) O</code>
+<p>
+<code>IntFFE</code> returns the integer corresponding to the element <var>z</var>, which must
+lie in  a finite  prime field.   That is  <code>IntFFE</code> returns  the  smallest
+nonnegative integer <var>i</var> such that <code></code><var>i</var><code> * One( </code><var>z</var><code> ) = </code><var>z</var><code></code>.
+<p>
+The  correspondence between elements from a finite prime field of
+characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between 0 and <i>p</i><font face="symbol">&#8722;</font>1 is defined by
+choosing <code>Z(</code><var>p</var><code>)</code> the element corresponding to the smallest primitive
+root mod <var>p</var> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>).
+<p>
+<code>IntFFE</code> is installed as a method for the operation <code>Int</code> (see&nbsp;<a href="CHAP014.htm#SSEC001.3">Int</a>)
+with argument a finite field element.
+<p>
+<pre>
+gap&gt; IntFFE( Z(13) );  PrimitiveRootMod( 13 );
+2
+2
+gap&gt; IntFFE( Z(409) );
+21
+gap&gt; IntFFE( Z(409)^116 );  21^116 mod 409;
+311
+311
+</pre>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>IntFFESymm( </code><var>z</var><code> ) O</code>
+<li><code>IntFFESymm( </code><var>vec</var><code> ) O</code>
+<p>
+For a finite prime field element <var>z</var>, <code>IntFFESymm</code> returns the corresponding
+integer of smallest absolute value. That is <code>IntFFESymm</code> returns the integer
+<var>i</var> of smallest absolute value that <code></code><var>i</var><code> * One( </code><var>z</var><code> ) = </code><var>z</var><code></code>.
+<p>
+For a vector <var>vec</var>, the operation returns the result if applying
+<code>IntFFESymm</code> to every entry of the vector.
+<p>
+The  correspondence between elements from a finite prime field of
+characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between <font face="symbol">&#8722;</font><i>p</i>/2 and <i>p</i>/2 is defined by
+choosing <code>Z(</code><var>p</var><code>)</code> the element corresponding to the smallest positive
+primitive
+root mod <var>p</var> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>) and reducing results to the
+<font face="symbol">&#8722;</font><i>p</i>/2&#183;.<i>p</i>/2 range.
+<p>
+<pre>
+gap&gt; IntFFE(Z(13)^2);IntFFE(Z(13)^3);
+4
+8
+gap&gt; IntFFESymm(Z(13)^2);IntFFESymm(Z(13)^3);
+4
+-5
+</pre>
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>IntVecFFE( </code><var>vecffe</var><code> ) O</code>
+<p>
+is the list of integers corresponding to the vector <var>vecffe</var> of finite
+field elements in a prime field (see&nbsp;<a href="CHAP057.htm#SSEC002.3">IntFFE</a>).
+<p>
+<p>
+<h2><a name="SECT003">57.3 Creating Finite Fields</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+<a name = "I1"></a>
+
+<code>DefaultField</code> (see&nbsp;<a href="CHAP056.htm#SSEC001.4">DefaultField</a>) and <code>DefaultRing</code> (see&nbsp;<a href="CHAP054.htm#SSEC001.3">DefaultRing</a>)
+for finite field elements are defined to return the <strong>smallest</strong> field
+containing the given elements.
+<p>
+<pre>
+gap&gt; DefaultField( [ Z(4), Z(4)^2 ] );  DefaultField( [ Z(4), Z(8) ] );
+GF(2^2)
+GF(2^6)
+</pre>
+<p>
+<a name = "SSEC003.1"></a>
+<li><code>GaloisField( </code><var>p</var><code>^</code><var>d</var><code> ) F</code>
+<a name = "SSEC003.1"></a>
+<li><code>GF( </code><var>p</var><code>^</code><var>d</var><code> ) F</code>
+<li><code>GaloisField( </code><var>p</var><code>, </code><var>d</var><code> ) F</code>
+<li><code>GF( </code><var>p</var><code>, </code><var>d</var><code> ) F</code>
+<li><code>GaloisField( </code><var>subfield</var><code>, </code><var>d</var><code> ) F</code>
+<li><code>GF( </code><var>subfield</var><code>, </code><var>d</var><code> ) F</code>
+<li><code>GaloisField( </code><var>p</var><code>, </code><var>pol</var><code> ) F</code>
+<li><code>GF( </code><var>p</var><code>, </code><var>pol</var><code> ) F</code>
+<li><code>GaloisField( </code><var>subfield</var><code>, </code><var>pol</var><code> ) F</code>
+<li><code>GF( </code><var>subfield</var><code>, </code><var>pol</var><code> ) F</code>
+<p>
+<code>GaloisField</code> returns a finite field.  It takes two arguments.
+The form <code>GaloisField( </code><var>p</var><code>, </code><var>d</var><code> )</code>, where <var>p</var>, <var>d</var> are integers,
+can also be given as <code>GaloisField( </code><var>p</var><code>^</code><var>d</var><code> )</code>.
+<code>GF</code> is an abbreviation for <code>GaloisField</code>.
+<p>
+The first argument specifies the subfield <var>S</var> over which the new field
+<var>F</var> is to be taken.
+It can be a prime or a finite field.
+If it is a prime <var>p</var>, the subfield is the prime field of this
+characteristic.
+<p>
+The second argument specifies the extension.
+It can be an integer or an irreducible polynomial over the field <var>S</var>.
+If it is an integer <var>d</var>, the new field is constructed as the
+polynomial extension with the Conway polynomial (see&nbsp;<a href="CHAP057.htm#SSEC005.1">ConwayPolynomial</a>)
+of degree <var>d</var> over the subfield <var>S</var>.
+If it is an irreducible polynomial <var>pol</var> over <var>S</var>,
+the new field is constructed as polynomial extension of the subfield <var>S</var>
+with this polynomial;
+in this case, <var>pol</var> is accessible as the value of <code>DefiningPolynomial</code>
+(see&nbsp;<a href="CHAP056.htm#SSEC002.7">DefiningPolynomial</a>) for the new field,
+and a root of <var>pol</var> in the new field is accessible as the value of
+<code>RootOfDefiningPolynomial</code> (see&nbsp;<a href="CHAP056.htm#SSEC002.8">RootOfDefiningPolynomial</a>).
+<p>
+Note that the subfield over which a field was constructed determines over
+which  field  the  Galois  group,  conjugates,   norm,   trace,   minimal
+polynomial, and trace polynomial are  computed  (see&nbsp;<a href="CHAP056.htm#SSEC003.1">GaloisGroup!of field</a>,
+<a href="CHAP056.htm#SSEC003.6">Conjugates</a>, <a href="CHAP056.htm#SSEC003.4">Norm</a>, <a href="CHAP056.htm#SSEC003.5">Trace!for field elements</a>, <a href="CHAP056.htm#SSEC003.2">MinimalPolynomial!over a field</a>, <a href="CHAP056.htm#SSEC003.3">TracePolynomial</a>).
+<p>
+The field is regarded as a vector space (see&nbsp;<a href="CHAP059.htm">Vector Spaces</a>) over the
+given subfield, so this determines the dimension and the canonical basis
+of the field.
+<p>
+<pre>
+gap&gt; f1:= GF( 2^4 );
+GF(2^4)
+gap&gt; Size( GaloisGroup ( f1 ) );
+4
+gap&gt; BasisVectors( Basis( f1 ) );
+[ Z(2)^0, Z(2^4), Z(2^4)^2, Z(2^4)^3 ]
+gap&gt; f2:= GF( GF(4), 2 );
+AsField( GF(2^2), GF(2^4) )
+gap&gt; Size( GaloisGroup( f2 ) );
+2
+gap&gt; BasisVectors( Basis( f2 ) );
+[ Z(2)^0, Z(2^4) ]
+</pre>
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>PrimitiveRoot( </code><var>F</var><code> ) A</code>
+<p>
+A <strong>primitive root</strong> of a finite field is a generator of its multiplicative
+group.
+A primitive root is always a primitive element (see&nbsp;<a href="CHAP056.htm#SSEC002.3">PrimitiveElement</a>),
+the converse is in general not true.
+<p>
+<pre>
+gap&gt; f:= GF( 3^5 );
+GF(3^5)
+gap&gt; PrimitiveRoot( f );
+Z(3^5)
+</pre>
+<p>
+<p>
+<h2><a name="SECT004">57.4 FrobeniusAutomorphism</a></h2>
+<p><p>
+<a name = "I2"></a>
+
+<a name = "I3"></a>
+
+<a name = "I4"></a>
+
+<a name = "I5"></a>
+
+<a name = "SSEC004.1"></a>
+<li><code>FrobeniusAutomorphism( </code><var>F</var><code> ) A</code>
+<p>
+returns the Frobenius automorphism of the finite
+field <var>F</var> as a field homomorphism (see&nbsp;<a href="CHAP031.htm#SECT011">Ring Homomorphisms</a>).
+<p>
+<a name = "I6"></a>
+
+The <strong>Frobenius automorphism</strong> <i>f</i> of a finite field <i>F</i> of characteristic
+<i>p</i> is the function that takes each element <i>z</i> of <i>F</i> to its <i>p</i>-th
+power.
+Each automorphism of <i>F</i> is a power of <i>f</i>.
+Thus <i>f</i> is a generator for the Galois group of <i>F</i> relative to the prime
+field of <i>F</i>,
+and an appropriate power of <i>f</i> is a generator of the Galois group of <i>F</i>
+over a subfield (see&nbsp;<a href="CHAP056.htm#SSEC003.1">GaloisGroup!of field</a>).
+<p>
+<pre>
+gap&gt; f := GF(16);
+GF(2^4)
+gap&gt; x := FrobeniusAutomorphism( f );
+FrobeniusAutomorphism( GF(2^4) )
+gap&gt; Z(16) ^ x;
+Z(2^4)^2
+gap&gt; x^2;
+FrobeniusAutomorphism( GF(2^4) )^2
+</pre>
+<p>
+The image of an element <i>z</i> under the <i>i</i>-th power of <i>f</i> is computed
+as the <i>p</i><sup><i>i</i></sup>-th power of <i>z</i>.
+The product of the <i>i</i>-th power and the <i>j</i>-th power of <i>f</i> is the <i>k</i>-th
+power of <i>f</i>, where <i>k</i> is <i>i</i> <i>j</i>  mod <tt>Size</tt><tt>(</tt><i>F</i> <tt>)</tt><font face="symbol">&#8722;</font>1.
+The zeroth power of <i>f</i> is <code>IdentityMapping( </code><var>F</var><code> )</code>.
+<p>
+<p>
+<h2><a name="SECT005">57.5 Conway Polynomials</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>ConwayPolynomial( </code><var>p</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+is the Conway polynomial of the finite field <i>GF</i>(<i>p</i><sup><i>n</i></sup>) as
+polynomial over the prime field in characteristic <var>p</var>.
+<p>
+The <strong>Conway polynomial</strong> <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> of <i>GF</i>(<i>p</i><sup><i>n</i></sup>) is defined by the
+following properties.
+<p>
+First define an ordering of polynomials of degree <i>n</i> over <i>GF</i>(<i>p</i>) as
+follows.  <i>f</i> = <font face="symbol">&#8721;</font><sub><i>i</i>=0</sub><sup><i>n</i></sup> (<font face="symbol">&#8722;</font>1)<sup><i>i</i></sup> <i>f</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> is smaller than
+<i>g</i> = <font face="symbol">&#8721;</font><sub><i>i</i>=0</sub><sup><i>n</i></sup> (<font face="symbol">&#8722;</font>1)<sup><i>i</i></sup> <i>g</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> if and only if there is an index
+<i>m</i>  <font face="symbol">&#8804;</font> <i>n</i> such that <i>f</i><sub><i>i</i></sub> = <i>g</i><sub><i>i</i></sub> for all <i>i</i>  &gt;  <i>m</i>, and
+[(<i>f</i><sub><i>m</i></sub>)~]  &lt;  [(<i>g</i><sub><i>m</i></sub>)~], where [(<i>c</i>)~] denotes the integer
+value in { 0, 1, <font face="symbol">&#8230;</font>, <i>p</i><font face="symbol">&#8722;</font>1 } that is mapped to <i>c</i> <font face="symbol">&#8712;</font> <i>GF</i>(<i>p</i>) under
+the canonical epimorphism that maps the integers onto <i>GF</i>(<i>p</i>).
+<p>
+<font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> is <strong>primitive</strong> over <i>GF</i>(<i>p</i>) (see&nbsp;<a href="CHAP064.htm#SSEC004.12">IsPrimitivePolynomial</a>).
+That is, <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> is irreducible, monic,
+and is the minimal polynomial of a primitive root of <i>GF</i>(<i>p</i><sup><i>n</i></sup>).
+<p>
+For all divisors <i>d</i> of <i>n</i> the compatibility condition
+<font face="symbol">&#934;</font><sub><i>d</i>,<i>p</i></sub>( <i>x</i><sup>[(<i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1)/(<i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1)]</sup> )  <font face="symbol">&#8801;</font> 0  mod <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub>(<i>x</i>)
+holds.
+<p>
+With respect to the ordering defined above, <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> shall be
+minimal.
+<p>
+<pre>
+gap&gt; ConwayPolynomial( 2, 5 );  ConwayPolynomial( 3, 7 );
+x_1^5+x_1^2+Z(2)^0
+x_1^7-x_1^2+Z(3)^0
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP056.htm">Previous</a>] [<a href ="CHAP058.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,916 @@
+<html><head><title>[ref] 26 Strings and Characters</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP025.htm">Previous</a>] [<a href ="CHAP027.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>26 Strings and Characters</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP026.htm#SECT001">Special Characters</a>
+<li> <A HREF="CHAP026.htm#SECT002">Internally Represented Strings</a>
+<li> <A HREF="CHAP026.htm#SECT003">Recognizing Characters</a>
+<li> <A HREF="CHAP026.htm#SECT004">Comparisons of Strings</a>
+<li> <A HREF="CHAP026.htm#SECT005">Operations to Produce or Manipulate Strings</a>
+<li> <A HREF="CHAP026.htm#SECT006">Character Conversion</a>
+<li> <A HREF="CHAP026.htm#SECT007">Operations to Evaluate Strings</a>
+<li> <A HREF="CHAP026.htm#SECT008">Calendar Arithmetic</a>
+</ol><p>
+<p>
+<a name = "I0"></a>
+
+<a name = "I1"></a>
+
+<a name = "I2"></a>
+
+<a name = ""></a>
+<li><code>IsChar( </code><var>obj</var><code> ) C</code>
+<a name = ""></a>
+<li><code>IsCharCollection( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>character</strong> is simply an object in <font face="Gill Sans,Helvetica,Arial">GAP</font> that represents an arbitrary
+character from the character set of the operating system.
+Character literals can be entered in <font face="Gill Sans,Helvetica,Arial">GAP</font> by enclosing the character
+in <strong>singlequotes</strong> <code>'</code>.
+<p>
+<pre>
+gap&gt; x:= 'a';  IsChar( x );
+'a'
+true
+gap&gt; '*';
+'*'
+</pre>
+<p>
+<a name = ""></a>
+<li><code>IsString( </code><var>obj</var><code> ) C</code>
+<p>
+A <strong>string</strong> is  a dense list (see&nbsp;<a href="CHAP021.htm#SSEC001.1">IsList</a>, <a href="CHAP021.htm#SSEC001.2">IsDenseList</a>)
+of characters (see&nbsp;<a href="CHAP026.htm">IsChar</a>); thus strings are always homogeneous
+(see&nbsp;<a href="CHAP021.htm#SSEC001.3">IsHomogeneousList</a>).
+<p>
+A string literal can either be entered  as the list of characters
+or by writing the characters between <strong>doublequotes</strong> <code>"</code>.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> will always output strings in the latter format.
+However, the input via the double quote syntax enables <font face="Gill Sans,Helvetica,Arial">GAP</font> to store
+the string in an efficient compact internal representation. See
+<a href="CHAP026.htm#SSEC002.1">IsStringRep</a> below for more details.
+<p>
+Each character, in particular those which cannot be typed directly from the
+keyboard, can also be typed in three digit octal notation. And for some
+special characters (like the newline character) there is a further
+possibility to type them, see section <a href="CHAP026.htm#SECT001">Special Characters</a>.
+<p>
+<pre>
+gap&gt; s1 := ['H','e','l','l','o',' ','w','o','r','l','d','.'];
+"Hello world."
+gap&gt; IsString( s1 );
+true
+gap&gt; s2 := "Hello world.";
+"Hello world."
+gap&gt; s1 = s2;
+true
+gap&gt; s3 := "";  # the empty string
+""
+gap&gt; s3 = [];
+true
+gap&gt; IsString( [] );
+true
+gap&gt; IsString( "123" );  IsString( 123 );
+true
+false
+gap&gt; IsString( [ '1', '2', '3' ] );
+true
+gap&gt; IsString( [ '1', '2', , '4' ] );  # strings must be dense
+false
+gap&gt; IsString( [ '1', '2', 3 ] );  # strings must only contain characters
+false
+</pre>
+<p>
+<pre>
+gap&gt; s := "\007";
+"\007"
+gap&gt; Print(s); # rings bell in many terminals
+</pre>
+<p>
+Note that a string is just a special case of a list.
+So everything that is possible for lists (see&nbsp;<a href="CHAP021.htm">Lists</a>) is also possible
+for strings.
+Thus you can access the characters in such a string (see&nbsp;<a href="CHAP021.htm#SECT003">List Elements</a>),
+test for membership (see&nbsp;<a href="CHAP028.htm#SECT005">Membership Test for Collections</a>),
+ask for the length, concatenate strings (see&nbsp;<a href="CHAP021.htm#SSEC020.1">Concatenation</a>),
+form substrings etc.
+You can even assign to a mutable string (see&nbsp;<a href="CHAP021.htm#SECT004">List Assignment</a>).
+Of course unless you assign a character in such a way that the list stays
+dense,
+the resulting list will no longer be a string.
+<p>
+<pre>
+gap&gt; Length( s2 );
+12
+gap&gt; s2[2];
+'e'
+gap&gt; 'a' in s2;
+false
+gap&gt; s2[2] := 'a';;  s2;
+"Hallo world."
+gap&gt; s1{ [1..4] };
+"Hell"
+gap&gt; Concatenation( s1{ [ 1 .. 6 ] }, s1{ [ 1 .. 4 ] } );
+"Hello Hell"
+</pre>
+<p>
+If a string is  displayed by <code>View</code>, for example as  result of an evaluation
+(see&nbsp;<a href="CHAP006.htm#SECT001">Main  Loop</a>), or  by <code>ViewObj</code>  and <code>PrintObj</code>,  it is  displayed with
+enclosing doublequotes. (But  note that there is an ambiguity  for the empty
+string which is also  an empty list of arbitrary <font face="Gill Sans,Helvetica,Arial">GAP</font>  objects; it is only
+printed like  a string if  it was  input as empty  string or converted  to a
+string  with <a href="CHAP026.htm#SSEC002.2">ConvertToStringRep</a>.)  The  difference  between <code>ViewObj</code>  and
+<code>PrintObj</code>  is that  the  latter prints  <strong>all</strong>  non-printable and  non-ASCII
+characters  in  three  digit  octal  notation,  while  <code>ViewObj</code>  sends  all
+printable characters to  the output stream. The output of  <code>PrintObj</code> can be
+read back into <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+Strings  behave  differently  from  other <font face="Gill Sans,Helvetica,Arial">GAP</font>  objects  with  respect  to
+<code>Print</code>, <code>PrintTo</code>,  or <code>AppendTo</code>. These  commands <strong>interpret</strong> a  string in
+the sense that  they essentially send the characters of  the string directly
+to the output stream/file. (But depending on  the type of the stream and the
+presence of some special characters used  as hints for line breaks there may
+be sent some additional newline (or backslash and newline) characters.
+<p>
+<pre>
+gap&gt; s4:= "abc\"def\nghi";;
+gap&gt; View( s4 );  Print( "\n" );
+"abc\"def\nghi"
+gap&gt; ViewObj( s4 );  Print( "\n" );
+"abc\"def\nghi"
+gap&gt; PrintObj( s4 );  Print( "\n" );
+"abc\"def\nghi"
+gap&gt; Print( s4 );  Print( "\n" );
+abc"def
+ghi
+gap&gt; s := "German uses strange characters: \344\366\374\337\n";
+"German uses strange characters: äöüß\n"
+gap&gt; Print(s);
+German uses strange characters: äöüß
+gap&gt; PrintObj(s);
+"German uses strange characters: \344\366\374\337\n"gap&gt; 
+</pre>
+<p>
+Note that only those line breaks are printed by <code>Print</code> that are contained
+in the string (<code>\n</code> characters, see&nbsp;<a href="CHAP026.htm#SECT001">Special Characters</a>),
+as is shown in the example below.
+<p>
+<pre>
+gap&gt; s1;
+"Hello world."
+gap&gt; Print( s1 );
+Hello world.gap&gt; Print( s1, "\n" );
+Hello world.
+gap&gt; Print( s1, "\nnext line\n" );
+Hello world.
+next line
+</pre>
+<p>
+<p>
+<h2><a name="SECT001">26.1 Special Characters</a></h2>
+<p><p>
+<a name = "I3"></a>
+
+<a name = "I4"></a>
+
+There are a number of <strong>special character sequences</strong> that can be used
+between the singlequotes of a character literal or between the
+doublequotes of a string literal to specify characters. 
+They consist of two characters. The first is
+a backslash \. The second may be any character. If it is an octal
+digit (from <code>0</code> to <code>7</code>) there must be two more such digits. The meaning
+is given in the following list
+<p>
+<dl compact>
+<p>
+<a name = "I5"></a>
+
+<a name = "I5"></a>
+<a name = "I6"></a>
+
+<dt><code>\n</code><dd>
+    <strong>newline character</strong>.
+    This is the character that, at least on UNIX systems,
+    separates lines in a text file.
+    Printing of this character in a string has the effect of moving
+    the cursor down one line and back to the beginning of the line.
+<p>
+<a name = "I7"></a>
+
+<a name = "I7"></a>
+<a name = "I8"></a>
+
+<dt><code>\"</code><dd>
+    <strong>doublequote character</strong>.
+    Inside a string a doublequote must be escaped by the backslash,
+    because it is otherwise interpreted as end of the string.
+<p>
+<a name = "I9"></a>
+
+<a name = "I9"></a>
+<a name = "I10"></a>
+
+<dt><code>\'</code><dd>
+    <strong>singlequote character</strong>.
+    Inside a character a singlequote must escaped by the backslash,
+    because it is otherwise interpreted as end of the character.
+<p>
+<a name = "I11"></a>
+
+<a name = "I11"></a>
+<a name = "I12"></a>
+
+<dt><code>\\</code><dd>
+    <strong>backslash character</strong>.
+    Inside a string a backslash must be escaped by another backslash,
+    because it is otherwise interpreted as first character of
+    an escape sequence.
+<p>
+<a name = "I13"></a>
+
+<a name = "I13"></a>
+<a name = "I14"></a>
+
+<dt><code>\b</code><dd>
+    <strong>backspace character</strong>.
+    Printing this character should have the effect of moving the cursor
+    back one character.  Whether it works or not is system dependent
+    and should not be relied upon.
+<p>
+<a name = "I15"></a>
+
+<a name = "I15"></a>
+<a name = "I16"></a>
+
+<dt><code>\r</code><dd>
+    <strong>carriage return character</strong>.
+    Printing this character should have the effect of moving the cursor
+    back to the beginning of the same line.  Whether this works or not
+    is again system dependent.
+<p>
+<a name = "I17"></a>
+
+<a name = "I17"></a>
+<a name = "I18"></a>
+
+<dt><code>\c</code><dd>
+    <strong>flush character</strong>.
+    This character is not printed.
+    Its purpose is to flush the output queue.
+    Usually <font face="Gill Sans,Helvetica,Arial">GAP</font> waits until it sees a <var>newline</var> before it prints a string.
+    If you want to display a string that does not include this character
+    use <code>\c</code>.
+<p>
+<a name = "I19"></a>
+
+<a name = "I19"></a>
+<a name = "I20"></a>
+
+<dt><code>\XYZ</code><dd>
+    with X, Y, Z three octal digits. This is translated to the character
+    correponding to the number X<strong>64+Y</strong>8+Z modulo 256. This can be used to 
+    specify and store  arbitrary binary data as a string in  <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<a name = "I21"></a>
+
+<dt>other<dd>
+    For any other character the backslash is simply ignored.
+<p>
+</dl>
+<p>
+Again, if the line is displayed as result of an evaluation, those escape
+sequences are displayed in the same way that they are input. 
+<p>
+Only  <code>Print</code>, <code>PrintTo</code>, or <code>AppendTo</code> send the characters directly to the
+output stream.
+<p>
+<pre>
+gap&gt; "This is one line.\nThis is another line.\n";
+"This is one line.\nThis is another line.\n"
+gap&gt; Print( last );
+This is one line.
+This is another line.
+</pre>
+<p>
+Note in particular that it is not  allowed to enclose a <var>newline</var> inside the
+string. You can use the  special character sequence <code>\n</code> to write
+strings that include  <var>newline</var> characters. If, however, an  input string is
+too  long to  fit on  a single  line it  is possible  to <strong>continue</strong>  it over
+several lines.  In this case the  last character of each  input line, except
+the last line  must be a backslash. Both backslash  and <var>newline</var> are thrown
+away by  <font face="Gill Sans,Helvetica,Arial">GAP</font> while reading  the string.  Note that the  same continuation
+mechanism is available for identifiers and integers.
+<p>
+<pre>
+gap&gt; "This is a very long string that does not fit on a line \
+gap&gt; and is therefore continued on the next line.";
+"This is a very long string that does not fit on a line and is therefore conti\
+nued on the next line."
+</pre>
+<p>
+Note that the output is also continued, but at a different place
+that is determined by the value of <code>SizeScreen</code> (see&nbsp;<a href="CHAP006.htm#SSEC011.1">SizeScreen</a>).
+<p>
+<p>
+<h2><a name="SECT002">26.2 Internally Represented Strings</a></h2>
+<p><p>
+<a name = "I22"></a>
+
+<a name = "SSEC002.1"></a>
+<li><code>IsStringRep( </code><var>obj</var><code> ) R</code>
+<p>
+<code>IsStringRep</code> is a special (internal) representation of dense lists
+of characters.
+Dense lists of characters can be converted into this representation
+using <code>ConvertToStringRep</code>.
+Note that calling <code>IsString</code> does <strong>not</strong> change the representation.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code>ConvertToStringRep( </code><var>obj</var><code> ) F</code>
+<p>
+If <var>obj</var> is a dense internally represented list of characters then
+<code>ConvertToStringRep</code> changes the representation to <code>IsStringRep</code>.
+This is useful in particular for converting the empty list <code>[]</code>,
+which usually is in <code>IsPlistRep</code>, to <code>IsStringRep</code>.
+If <var>obj</var> is not a string then <code>ConvertToStringRep</code> signals an error.
+<p>
+<a name = "SSEC002.3"></a>
+<li><code>IsEmptyString( </code><var>str</var><code> ) F</code>
+<p>
+<code>IsEmptyString</code> returns <code>true</code> if <var>str</var> is the empty string in the
+representation <code>IsStringRep</code>, and <code>false</code> otherwise.
+Note that the empty list <code>[]</code> and the empty string <code>""</code> have the same
+type, the recommended way to distinguish them is via <code>IsEmptyString</code>.
+For formatted printing, this distinction is sometimes necessary.
+<p>
+<pre>
+gap&gt; l:= [];;  IsString( l );  IsEmptyString( l );  IsEmpty( l );
+true
+false
+true
+gap&gt; l;  ConvertToStringRep( l );  l;
+[  ]
+""
+gap&gt; IsEmptyString( l );  IsEmptyString( "" );  IsEmptyString( "abc" );
+true
+true
+false
+gap&gt; ll:= [ 'a', 'b' ];  IsStringRep( ll );  ConvertToStringRep( ll );
+"ab"
+false
+gap&gt; ll;  IsStringRep( ll );
+"ab"
+true
+</pre>
+<p>
+<a name = "SSEC002.4"></a>
+<li><code>CharsFamily V</code>
+<p>
+Each character lies in the family <code>CharFamily</code>,
+each nonempty string lies in the collections family of this family.
+Note the subtle differences between the empty list <code>[]</code> and the empty
+string <code>""</code> when both are printed.
+<p>
+<p>
+<h2><a name="SECT003">26.3 Recognizing Characters</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code>IsDigitChar( </code><var>c</var><code> ) F</code>
+<p>
+checks whether the character <var>c</var> is a digit, i.e., occurs in the string
+<code>"0123456789"</code>.
+<p>
+<a name = "SSEC003.2"></a>
+<li><code>IsLowerAlphaChar( </code><var>c</var><code> ) F</code>
+<p>
+checks whether the character <var>c</var> is a lowercase alphabet letter, i.e.,
+occurs in the string <code>"abcdefghijklmnopqrstuvwxyz"</code>.
+<p>
+<a name = "SSEC003.3"></a>
+<li><code>IsUpperAlphaChar( </code><var>c</var><code> ) F</code>
+<p>
+checks whether the character <var>c</var> is an uppercase alphabet letter, i.e.,
+occurs in the string <code>"ABCDEFGHIJKLMNOPQRSTUVWXYZ"</code>.
+<p>
+<a name = "SSEC003.4"></a>
+<li><code>IsAlphaChar( </code><var>c</var><code> ) F</code>
+<p>
+checks whether the character <var>c</var> is either a lowercase or an uppercase
+alphabet letter.
+<p>
+<p>
+<h2><a name="SECT004">26.4 Comparisons of Strings</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code></code><var>string1</var><code> = </code><var>string2</var><code></code>
+<a name = "SSEC004.1"></a>
+<li><code></code><var>string1</var><code> &lt;&gt; </code><var>string2</var><code></code>
+<p>
+The equality operator <code>=</code> returns to <code>true</code> if the two strings
+<var>string1</var> and <var>string2</var> are equal and <code>false</code> otherwise. The inequality
+operator <code>&lt;&gt;</code> returns <code>true</code> if the two strings <var>string1</var> and <var>string2</var>
+are not equal and <code>false</code> otherwise.
+<p>
+<pre>
+gap&gt; "Hello world.\n" = "Hello world.\n";
+true
+gap&gt; "Hello World.\n" = "Hello world.\n";  # string comparison is case sensitive
+false
+gap&gt; "Hello world." = "Hello world.\n";  # the first string has no &lt;newline&gt;
+false
+gap&gt; "Goodbye world.\n" = "Hello world.\n";
+false
+gap&gt; [ 'a', 'b' ] = "ab";
+true
+</pre>
+<p>
+<a name = "SSEC004.2"></a>
+<li><code></code><var>string1</var><code> &lt; </code><var>string2</var><code></code>
+<p>
+The ordering of strings is lexicographically according to the order
+implied by the underlying, system dependent, character set.
+<p>
+<pre>
+gap&gt; "Hello world.\n" &lt; "Hello world.\n";  # the strings are equal
+false
+gap&gt; "Hello World." &lt; "Hello world.";  # in ASCII capitals range before small letters
+true
+gap&gt; "Hello world." &lt; "Hello world.\n";  # prefixes are always smaller
+true
+gap&gt; "Goodbye world.\n" &lt; "Hello world.\n";  # `G' comes before `H', in ASCII at least
+true
+</pre>
+<p>
+Strings can be compared via <code>&lt;</code> with certain <font face="Gill Sans,Helvetica,Arial">GAP</font> objects that are not
+strings, see&nbsp;<a href="CHAP004.htm#SECT011">Comparisons</a> for the details.
+<p>
+<p>
+<h2><a name="SECT005">26.5 Operations to Produce or Manipulate Strings</a></h2>
+<p><p>
+<a name = "SSEC005.1"></a>
+<li><code>String( </code><var>obj</var><code> ) A</code>
+<li><code>String( </code><var>obj</var><code>, </code><var>length</var><code> ) O</code>
+<p>
+<code>String</code> returns a representation of <var>obj</var>,
+which may be an object of arbitrary type, as a string.
+This string should approximate as closely as possible the character
+sequence you see if you print <var>obj</var>.
+<p>
+If <var>length</var> is given it must be an integer.
+The absolute value gives the minimal length of the result.
+If the string representation of <var>obj</var> takes less than that many
+characters it is filled with blanks.
+If <var>length</var> is positive it is filled on the left,
+if <var>length</var> is negative it is filled on the right.
+<p>
+In the two argument case, the string returned is a new mutable
+string (in particular not a part of any other object);
+it can be modified safely,
+and <code>MakeImmutable</code> may be safely applied to it.
+<p>
+<pre>
+gap&gt; String(123);String([1,2,3]);
+"123"
+"[ 1, 2, 3 ]"
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>HexStringInt( </code><var>int</var><code> ) F</code>
+<p>
+returns a string which represents the integer <var>int</var> with hexa-decimal
+digits (using <code>A-F</code> as digits <code>10-15</code>). The inverse translation can be achieved
+with <a href="CHAP026.htm#SSEC007.1">IntHexString</a>.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>StringPP( </code><var>int</var><code> ) F</code>
+<p>
+returns a string representing the prime factor decomposition
+of the integer <var>int</var>.
+<p>
+<pre>
+gap&gt; StringPP(40320);
+"2^7*3^2*5*7"
+</pre>
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>WordAlp( </code><var>alpha</var><code>, </code><var>nr</var><code> ) F</code>
+<p>
+returns a string that is the <var>nr</var>-th word over the alphabet list
+<var>alpha</var>, w.r.t. word length and lexicographical order.
+The empty word is <code>WordAlp( </code><var>alpha</var><code>, 0 )</code>.
+<p>
+<pre>
+gap&gt; List([0..5],i-&gt;WordAlp("abc",i));
+[ "", "a", "b", "c", "aa", "ab" ]
+</pre>
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>LowercaseString( </code><var>string</var><code> ) F</code>
+<p>
+returns a lowercase version of the string <var>string</var>,
+that is, a string in which each uppercase alphabet character is replaced
+by the corresponding lowercase character.
+<p>
+<pre>
+gap&gt; LowercaseString("This Is UpperCase");
+"this is uppercase"
+</pre>
+<p>
+<a name = "SSEC005.6"></a>
+<li><code>SplitString( </code><var>string</var><code>, </code><var>seps</var><code>[, </code><var>wspace</var><code>] ) O</code>
+<p>
+This function accepts a string <var>string</var> and lists <var>seps</var> and, optionally,
+<var>wspace</var> of characters.  Now string is split into substrings at each
+occurrence of a character in <var>seps</var> or <var>wspace</var>.  The characters in
+<var>wspace</var> are interpreted as white space characters.  Substrings of
+characters in <var>wspace</var> are treated as one white space character and they
+are ignored at the beginning and end of a string.
+<p>
+Both arguments <var>seps</var> and <var>wspace</var> can be single characters.
+<p>
+Each string in the resulting list of substring does not contain any
+characters in <var>seps</var> or <var>wspace</var>.
+<p>
+A character that occurs both in <var>seps</var> and <var>wspace</var> is treated as a
+white space character.
+<p>
+A separator at the end of a string is interpreted as a terminator; in
+this case, the separator does not produce a trailing empty string.
+Also see&nbsp;<a href="CHAP026.htm#SSEC005.11">Chomp</a>.
+<p>
+<pre>
+gap&gt; SplitString( "substr1:substr2::substr4", ":" );
+[ "substr1", "substr2", "", "substr4" ]
+gap&gt; SplitString( "a;b;c;d;", ";" );
+[ "a", "b", "c", "d" ]
+gap&gt; SplitString( "/home//user//dir/", "", "/" );
+[ "home", "user", "dir" ]
+</pre>
+<p>
+<a name = "SSEC005.7"></a>
+<li><code>ReplacedString( </code><var>string</var><code>, </code><var>old</var><code>, </code><var>new</var><code> ) F</code>
+<p>
+replaces occurrences of the string <var>old</var> in <var>string</var> by  <var>new</var>,  starting
+from the left  and  always  replacing  the  first  occurrence.  To  avoid
+infinite recursion, characters which have been replaced already, are  not
+subject to renewed replacement.
+<p>
+<pre>
+gap&gt; ReplacedString("abacab","a","zl");
+"zlbzlczlb"
+gap&gt; ReplacedString("ababa", "aba","c");
+"cba"
+gap&gt; ReplacedString("abacab","a","ba");
+"babbacbab"
+</pre>
+<p>
+<a name = "SSEC005.8"></a>
+<li><code>NormalizeWhitespace( </code><var>string</var><code> ) F</code>
+<p>
+This  function changes  the string  <var>string</var> in  place. The  characters <code>  </code>
+(space), <code>\n</code>, <code>\r</code> and <code>\t</code> are considered as <strong>white space</strong>. Leading and
+trailing white space characters in  <var>string</var> are removed. Sequences of white
+space characters  between other  characters are replaced  by a  single space
+character.
+<p>
+See <a href="CHAP026.htm#SSEC005.9">NormalizedWhitespace</a> for a non-destructive version.
+<p>
+<pre>
+gap&gt; s := "   x y \n\n\t\r  z\n   \n";
+"   x y \n\n\t\r  z\n   \n"
+gap&gt; NormalizeWhitespace(s);
+gap&gt; s;
+"x y z"
+</pre>
+<p>
+<a name = "SSEC005.9"></a>
+<li><code>NormalizedWhitespace( </code><var>str</var><code> ) F</code>
+<p>
+This function returns a copy of string <var>str</var> to which
+<a href="CHAP026.htm#SSEC005.8">NormalizeWhitespace</a> was applied.
+<p>
+For the possibility to print <font face="Gill Sans,Helvetica,Arial">GAP</font> objects to strings, see&nbsp;<a href="CHAP010.htm#SECT007">String Streams</a>.
+<p>
+<a name = "SSEC005.10"></a>
+<li><code>JoinStringsWithSeparator( </code><var>list</var><code>[, </code><var>sep</var><code>] ) F</code>
+<p>
+joins <var>list</var> (a list of strings) after interpolating <var>sep</var> (or  <code>","</code>  if
+the second argument is omitted) between each adjacent  pair  of  strings;
+<var>sep</var> should be a string.
+<p>
+<strong>Examples</strong>
+<p>
+<pre>
+gap&gt; list := List([1..10], String);                                  
+[ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ]
+gap&gt; JoinStringsWithSeparator(list);
+"1,2,3,4,5,6,7,8,9,10"
+gap&gt; JoinStringsWithSeparator(["The", "quick", "brown", "fox"], " ");
+"The quick brown fox"
+gap&gt; JoinStringsWithSeparator(["a", "b", "c", "d"], ",\n    ");    
+"a,\n    b,\n    c,\n    d"
+gap&gt; Print("    ", last, "\n");
+    a,
+    b,
+    c,
+    d
+</pre>
+<p>
+Recall, <code>last</code> is the last expression output by <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
+<a name = "SSEC005.11"></a>
+<li><code>Chomp( </code><var>str</var><code> ) F</code>
+<p>
+Like the similarly  named  Perl  function,  <code>Chomp</code>  removes  a  trailing
+newline character (or carriage-return line-feed couplet)  from  a  string
+argument <var>str</var> if present and returns the  result.  If  <var>str</var>  is  not  a
+string or does  not  have  such  trailing  character(s)  it  is  returned
+unchanged. This latter property means that <code>Chomp</code>  is  safe  to  use  in
+cases where one is manipulating the  result  of  another  function  which
+might sometimes return <code>fail</code>, for example.
+<p>
+<pre>
+gap&gt; Chomp("The quick brown fox jumps over the lazy dog.\n");
+"The quick brown fox jumps over the lazy dog."
+gap&gt; Chomp("The quick brown fox jumps over the lazy dog.\r\n");
+"The quick brown fox jumps over the lazy dog."
+gap&gt; Chomp("The quick brown fox jumps over the lazy dog.");
+"The quick brown fox jumps over the lazy dog."
+gap&gt; Chomp(fail);
+fail
+gap&gt; Chomp(32);
+32
+</pre>
+<p>
+<strong>Note:</strong>
+<code>Chomp</code> only removes a trailing newline character  from  <var>str</var>.  If  your
+string contains several newline characters and you really want  to  split
+<var>str</var> into lines at the newline  characters  (and  remove  those  newline
+characters) then you should use <code>SplitString</code> (see&nbsp;<a href="CHAP026.htm#SSEC005.6">SplitString</a>), e.g.
+<p>
+<pre>
+gap&gt; str := "The quick brown fox\njumps over the lazy dog.\n";
+"The quick brown fox\njumps over the lazy dog.\n"
+gap&gt; SplitString(str, "", "\n");
+[ "The quick brown fox", "jumps over the lazy dog." ]
+gap&gt; Chomp(str);
+"The quick brown fox\njumps over the lazy dog."
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">26.6 Character Conversion</a></h2>
+<p><p>
+The following functions convert characters in their internal integer values
+and vice versa. Note that the number corresponding to a particular character
+might depend on the system used. While most systems use an extension of
+ASCII, in particular character values outside the range 32-126 might differ
+between architectures.
+<p>
+All functions in this section are internal and behaviour is undefined if
+invarid arguments are given.
+<p>
+<a name = "SSEC006.1"></a>
+<li><code>INT_CHAR(</code><var>char</var><code>) F</code>
+<p>
+returns an integer value in the range 0-255 that corresponds to <var>char</var>.
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>CHAR_INT(</code><var>int</var><code>) F</code>
+<p>
+returns a character which corresponds to the integer value <var>int</var>, which must
+be in the range 0-255.
+<p>
+<pre>
+gap&gt; c:=CHAR_INT(65);
+'A'
+gap&gt; INT_CHAR(c);
+65
+</pre>
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>SINT_CHAR(</code><var>char</var><code>) F</code>
+<p>
+returns a signed integer value in the range <font face="symbol">&#8722;</font>128--127 that corresponds to
+<var>char</var>.
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>CHAR_SINT(</code><var>int</var><code>) F</code>
+<p>
+returns a character which corresponds to the signed integer value <var>int</var>,
+which must be in the range <font face="symbol">&#8722;</font>128--127.
+<p>
+The signed and unsigned integer functions behave the same for values in the
+range from 0 to 127.
+<p>
+<pre>
+gap&gt; SINT_CHAR(c);
+65
+gap&gt; c:=CHAR_SINT(-20);;
+gap&gt; SINT_CHAR(c);
+-20
+gap&gt; INT_CHAR(c);
+236
+gap&gt; SINT_CHAR(CHAR_INT(255));
+-1
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">26.7 Operations to Evaluate Strings</a></h2>
+<p><p>
+<a name = "I23"></a>
+
+<a name = "SSEC007.1"></a>
+<li><code>Int( </code><var>str</var><code> ) A</code>
+<a name = "SSEC007.1"></a>
+<li><code>Rat( </code><var>str</var><code> ) A</code>
+<a name = "SSEC007.1"></a>
+<li><code>IntHexString( </code><var>str</var><code> ) F</code>
+<p>
+return either an integer (<code>Int</code> and <code>IntHexString</code>), or a rational (<code>Rat</code>)
+as represented by the string <var>str</var>.
+<code>Int</code> returns <code>fail</code> if non-digit characters occur in <var>str</var>.
+For <code>Rat</code>, the argument string may start with the sign character <code>'-'</code>,
+followed by either a sequence of digits or by two sequences of digits
+that are separated by one of the characters <code>'/'</code> or <code>'.'</code>,
+where the latter stands for a decimal dot.
+(The methods only evaluate numbers but do <strong>not</strong> perform arithmetic!)
+<p>
+<code>IntHexString</code> evaluates an integer written with hexa-decimal digits. Here
+the letters <var>a-f</var> or <var>A-F</var> are used as <strong>digits</strong> <var>10-15</var>. An error occurs
+when a wrong character is found in the string. This function can be used
+(together with <a href="CHAP026.htm#SSEC005.2">HexStringInt</a>) for efficiently storing and reading large
+integers from respectively into <font face="Gill Sans,Helvetica,Arial">GAP</font>. Note that the translation between
+integers and their hexa-decimal representation costs linear computation time
+in terms of the number of digits, while translation from and into decimal
+representation needs substantial computations.
+<p>
+<pre>
+gap&gt; Int("12345")+1;
+12346
+gap&gt; Int("123/45");
+fail
+gap&gt; Int("1+2");
+fail
+gap&gt; Int("-12");
+-12
+gap&gt; Rat("123/45");
+41/15
+gap&gt; Rat( "123.45" );
+2469/20
+gap&gt; IntHexString("-abcdef0123456789");
+-12379813738877118345
+gap&gt; HexStringInt(last);
+"-ABCDEF0123456789"
+</pre>
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>Ordinal( </code><var>n</var><code> ) F</code>
+<p>
+returns the ordinal of the integer <var>n</var> as a string.
+<p>
+<pre>
+gap&gt; Ordinal(2);  Ordinal(21);  Ordinal(33);  Ordinal(-33);
+"2nd"
+"21st"
+"33rd"
+"-33rd"
+</pre>
+<p>
+<a name = "SSEC007.3"></a>
+<li><code>EvalString( </code><var>expr</var><code> ) F</code>
+<p>
+passes <var>expr</var> (a string) through  an  input text stream  so  that  <font face="Gill Sans,Helvetica,Arial">GAP</font>
+interprets it, and returns the  result.  The  following  trivial  example
+demonstrates its use.
+<p>
+<pre>
+gap&gt; a:=10;
+10
+gap&gt; EvalString("a^2");
+100
+</pre>
+<p>
+<code>EvalString</code> is intended for <strong>single</strong> expressions. A sequence of commands
+may   be   interpreted   by   using   the   functions   <code>InputTextString</code>
+(see&nbsp;<a href="CHAP010.htm#SSEC007.1">InputTextString</a>)  and  <code>ReadAsFunction</code>   (see&nbsp;<a href="CHAP010.htm#SSEC003.2">ReadAsFunction!for streams</a>) together; see <a href="CHAP010.htm#SECT003">Operations for Input Streams</a> for an example.
+<p>
+<p>
+<h2><a name="SECT008">26.8 Calendar Arithmetic</a></h2>
+<p><p>
+All calendar functions use the Gregorian calendar.
+<p>
+<a name = "SSEC008.1"></a>
+<li><code>DaysInYear( </code><var>year</var><code> ) F</code>
+<p>
+returns the number of days in a year.
+<p>
+<a name = "SSEC008.2"></a>
+<li><code>DaysInMonth( </code><var>month</var><code>, </code><var>year</var><code> ) F</code>
+<p>
+returns the number of days in month number <var>month</var> of <var>year</var> (and <code>fail</code>
+if <code>month</code> is integer not in valid range.
+<p>
+<pre>
+gap&gt; DaysInYear(1998);
+365
+gap&gt; DaysInMonth(3,1998);
+31
+</pre>
+<p>
+<a name = "SSEC008.3"></a>
+<li><code>DMYDay( </code><var>day</var><code> ) F</code>
+<p>
+converts a number of days, starting 1-Jan-1970 to a list
+<code>[</code><var>day</var><code>,</code><var>month</var><code>,</code><var>year</var><code>]</code> in Gregorian calendar counting.
+<p>
+<a name = "SSEC008.4"></a>
+<li><code>DayDMY( </code><var>dmy</var><code> ) F</code>
+<p>
+returns the number of days from 01-Jan-1970 to the day given by <var>dmy</var>.
+<var>dmy</var> must be a list of the form <code>[</code><var>day</var><code>,</code><var>month</var><code>,</code><var>year</var><code>]</code> in Gregorian
+calendar counting. The result is <code>fail</code> on input outside valid ranges.
+<p>
+Note that this makes not much sense for early dates like: before 1582
+(no Gregorian calendar at all), or before 1753 in many English countries
+or before 1917 in Russia.
+<p>
+<a name = "SSEC008.5"></a>
+<li><code>WeekDay( </code><var>date</var><code> ) F</code>
+<p>
+returns the weekday of a day given by <var>date</var>. <var>date</var> can be a number of
+days since 1-Jan-1970 or a list <code>[</code><var>day</var><code>,</code><var>month</var><code>,</code><var>year</var><code>]</code>.
+<p>
+<a name = "SSEC008.6"></a>
+<li><code>StringDate( </code><var>date</var><code> ) F</code>
+<p>
+converts <var>date</var> to a readable string.  <var>date</var> can be a number of days
+since 1-Jan-1970 or a list <code>[</code><var>day</var><code>,</code><var>month</var><code>,</code><var>year</var><code>]</code>.
+<p>
+<pre>
+gap&gt; DayDMY([1,1,1970]);DayDMY([2,1,1970]);
+0
+1
+gap&gt; DMYDay(12345);
+[ 20, 10, 2003 ]
+gap&gt; WeekDay([11,3,1998]);
+"Wed"
+gap&gt; StringDate([11,3,1998]);
+"11-Mar-1998"
+</pre>
+<p>
+<a name = "SSEC008.7"></a>
+<li><code>HMSMSec( </code><var>msec</var><code> ) F</code>
+<p>
+converts a number <var>msec</var> of milliseconds into a list
+<code>[</code><var>hour</var><code>,</code><var>min</var><code>,</code><var>sec</var><code>,</code><var>milli</var><code>]</code>.
+<p>
+<a name = "SSEC008.8"></a>
+<li><code>SecHMSM( </code><var>hmsm</var><code> ) F</code>
+<p>
+is the reverse of <code>HMSMSec</code>.
+<p>
+<a name = "SSEC008.9"></a>
+<li><code>StringTime( </code><var>time</var><code> ) F</code>
+<p>
+converts <var>time</var> (given as a number of milliseconds or a list
+<code>[</code><var>hour</var><code>, </code><var>min</var><code>, </code><var>sec</var><code>, </code><var>milli</var><code>]</code>) to a readable string.
+<p>
+<pre>
+gap&gt; HMSMSec(Factorial(10));
+[ 1, 0, 28, 800 ]
+gap&gt; SecHMSM([1,10,5,13]);
+4205013
+gap&gt; StringTime([1,10,5,13]);
+" 1:10:05.013"
+</pre>
+<p>
+<a name = "SSEC008.10"></a>
+<li><code>SecondsDMYhms( </code><var>DMYhms</var><code> ) F</code>
+<p>
+returns the number of seconds from 01-Jan-1970, 00:00:00,  to the time 
+given by <var>DMYhms</var>.
+<var>DMYhms</var> must be a list of the form
+<code>[</code><var>day</var><code>,</code><var>month</var><code>,</code><var>year</var><code>,</code><var>hour</var><code>,</code><var>minute</var><code>,</code><var>second</var><code>]</code>. The remarks on the
+Gregorian calendar in the section on <a href="CHAP026.htm#SSEC008.4">DayDMY</a> apply here as well. The
+last three arguments must lie in the appropriate ranges. 
+<p>
+<a name = "SSEC008.11"></a>
+<li><code>DMYhmsSeconds( </code><var>secs</var><code> ) F</code>
+<p>
+This is the inverse function to <a href="CHAP026.htm#SSEC008.10">SecondsDMYhms</a>.
+<p>
+<pre>
+gap&gt; SecondsDMYhms([ 9, 9, 2001, 1, 46, 40 ]);
+1000000000
+gap&gt; DMYhmsSeconds(-1000000000);
+[ 24, 4, 1938, 22, 13, 20 ]
+</pre>
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP025.htm">Previous</a>] [<a href ="CHAP027.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

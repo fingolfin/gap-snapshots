@@ -1,0 +1,113 @@
+<html><head><title>[ref] 1 About the GAP Reference Manual</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>1 About the GAP Reference Manual</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP001.htm#SECT001">Manual Conventions</a>
+<li> <A HREF="CHAP001.htm#SECT002">Credit</a>
+</ol><p>
+<p>
+This is one of four parts of the <font face="Gill Sans,Helvetica,Arial">GAP</font> documentation,
+the others being the <strong><font face="Gill Sans,Helvetica,Arial">GAP</font> Tutorial</strong>, a beginner's introduction to <font face="Gill Sans,Helvetica,Arial">GAP</font>,
+<strong>Programming in <font face="Gill Sans,Helvetica,Arial">GAP</font></strong> and <strong>Extending <font face="Gill Sans,Helvetica,Arial">GAP</font></strong>,
+which provide information for those who want to write their own
+<font face="Gill Sans,Helvetica,Arial">GAP</font> extensions.
+<p>
+This manual, the <strong><font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual</strong> contains the official definitions
+of <font face="Gill Sans,Helvetica,Arial">GAP</font> functions. It should give all information to someone who wants to
+use <font face="Gill Sans,Helvetica,Arial">GAP</font> as it is. It is not intended to be read cover-to-cover.
+<p>
+This manual is divided into chapters.
+Each chapter is divided into sections
+and, within each section, important definitions are numbered.
+References are therefore triples.
+<p>
+Chapter&nbsp;<a href="CHAP002.htm">The Help System</a> describes the <strong>help system</strong>,
+which provides online access to the information of the manual.
+Chapter&nbsp;<a href="CHAP003.htm">Running GAP</a> gives technical advice for <strong>running</strong> <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+Chapter&nbsp;<a href="CHAP004.htm">The Programming Language</a> introduces the <font face="Gill Sans,Helvetica,Arial">GAP</font> language,
+while the next chapters deal with the <strong>environment</strong>
+provided by <font face="Gill Sans,Helvetica,Arial">GAP</font> for the user.
+These are followed by the main bulk of chapters
+which is devoted to various mathematical structures that <font face="Gill Sans,Helvetica,Arial">GAP</font> can handle.
+<p>
+Pages are numbered consecutively in each of the four manuals.
+<p>
+<p>
+<h2><a name="SECT001">1.1 Manual Conventions</a></h2>
+<p><p>
+The printed manual uses different text styles for several purposes.
+Note that the online help may use other symbols to express the meanings
+listed below.
+<p>
+<code>*text*</code>
+<p>
+Text printed in boldface is used to emphasize single words or phrases.
+<p>
+<code></code><var>text</var><code></code>
+<p>
+Text printed in italics is used for arguments in the descriptions
+of functions and for other place holders. It means that you should not
+actually enter this text into <font face="Gill Sans,Helvetica,Arial">GAP</font> but replace it by  appropriate
+text depending on what you want to do. For example when we write that
+you should enter <code>?</code><var>section</var><code></code> to see the section with the name <var>section</var>,
+<var>section</var> serves as a place holder, indicating that you can enter the
+name of the section that you want to see at this place.
+<p>
+<code>text</code>
+<p>
+Text printed in a monospaced (all characters have the same width)
+typewriter font is used for names of variables and functions
+and other text that you may actually enter into your computer
+and see on your screen.  Such text may contain
+place holders printed in italics as described above.  For example
+when the information for <code>IsPrime</code> says that the form of the call is
+<code>IsPrime( </code><var>n</var><code> )</code> this means that you should actually
+enter the strings ``IsPrime('' and ``)'', without the quotes,
+but replace the <code></code><var>n</var><code></code> with the number (or expression)
+that you want to test.
+<p>
+<code>Oper( </code><var>arg1</var><code>, </code><var>arg2</var><code>[, </code><var>opt</var><code>] ) F</code>
+<p>
+starts a subsection on the command <code>Oper</code> that takes two arguments <var>arg1</var>
+and <var>arg2</var> and an optional third argument <var>opt</var>.
+As in the above example, the letter <code>F</code> at the end of a line that starts
+with a little black triangle in the left margin indicates that the command
+is a simple function.
+Other possible letters at the end of such a line are
+<code>A</code>, <code>P</code>, <code>O</code>, <code>C</code>, <code>R</code>, and <code>V</code>;
+they indicate ``Attribute'', ``Property'', ``Operation'', ``Category'',
+``Representation'' (see Chapter&nbsp;<a href="CHAP013.htm">Types of Objects</a>), or ``Variable'',
+respectively.
+<p>
+In the printed manual, <strong>mathematical formulas</strong> are typeset in italics
+(actually math italics), and subscripts and superscripts are actually
+lowered and raised.
+<p>
+Longer <strong>examples</strong> are usually paragraphs of their own.
+Everything on the lines with the prompts <code>gap&gt;</code> and <code>&gt;</code>, except
+the prompts themselves of course, is the input you have to type;
+everything else is <font face="Gill Sans,Helvetica,Arial">GAP</font>'s response. In the printed manual,
+examples are printed in a monospaced typewriter font.
+<p>
+<p>
+<h2><a name="SECT002">1.2 Credit</a></h2>
+<p><p>
+The manual tries to give credit to designers and implementors of major parts
+of <font face="Gill Sans,Helvetica,Arial">GAP</font>. For many parts of  the GAP code it is  impossible to give
+detailed credit, because over the time of its  development many persons have
+contributed from first ideas, even in prerunners of GAP such as CAS or
+SOGOS, via first  implementations, improvements, and even  total
+reimplementations.  The documentation of the code gives further details, but
+again, it suffers from the same problem.  We  have attempted to give
+attributions with the different chapters of   the manual where this seemed
+to be possible, but  we  apologise for all (unavoidable) shortcomings of
+this attempt.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

@@ -1,0 +1,434 @@
+% This file was created automatically from relation.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  relation.msk                GAP documentation          Andrew Solomon      
+%%
+%A  @(#)$Id: relation.msk,v 1.13 2002/04/15 10:02:33 sal Exp $
+%%
+%Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+\Chapter{Relations}
+
+
+\index{binary relation}
+\atindex{IsBinaryRelation!same as IsEndoGeneralMapping}%
+{@\noexpand`IsBinaryRelation'!same as \noexpand`IsEndoGeneralMapping'}
+\atindex{IsEndoGeneralMapping!same as IsBinaryRelation}%
+{@\noexpand`IsEndoGeneralMapping'!same as \noexpand`IsBinaryRelation'}
+A *binary relation* <R> on a set <X> is a subset of $X \times X$. 
+A binary relation can also be thought of as a (general) mapping
+from <X> to itself or as a directed graph where each edge 
+represents a tuple of <R>. 
+
+In {\GAP}, a relation is conceptually represented as  a  general  mapping
+from <X> to itself. The category `IsBinaryRelation' is the  same  as  the
+category `IsEndoGeneralMapping' (see~"IsEndoGeneralMapping").  Attributes
+and properties of relations in {\GAP} are supported  for  relations,  via
+considering relations as a subset of $X\times X$, or as a directed graph;
+examples include finding the strongly connected components of a relation,
+via `StronglyConnectedComponents' (see~"StronglyConnectedComponents"), or
+enumerating the tuples of the relation.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{General Binary Relations}
+
+\>IsBinaryRelation( <R> ) C
+
+is   exactly   the   same   category   as   (i.e.    a    synonym    for)
+`IsEndoGeneralMapping' (see~"IsEndoGeneralMapping").
+
+
+
+We have the following general constructors.
+
+\>BinaryRelationByElements( <domain>, <elms> ) F
+
+is  the  binary  relation  on  <domain>  and  with  underlying   relation
+consisting of the tuples collection <elms>. This construction is  similar
+to `GeneralMappingByElements' (see~"GeneralMappingByElements") where  the
+source and range are the same set.
+
+
+\>IdentityBinaryRelation( <degree> ) F
+\>IdentityBinaryRelation( <domain> ) F
+
+is the binary relation which consists of diagonal tuples i.e.  tuples  of
+the form $(x,x)$. In the first form if a  positive  integer  <degree>  is
+given then the domain is  the  integers  $\{1,\dots,<degree>\}$.  In  the
+second form, the tuples are from the domain <domain>.
+
+
+\>EmptyBinaryRelation( <degree> ) F
+\>EmptyBinaryRelation( <domain> ) F
+
+is the relation with <R> empty. In the first form  of  the  command  with
+<degree> an integer, the domain is the points $\{1,\dots, <degree>\}$. In
+the second form, the domain is that given by the argument <domain>.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Properties and Attributes of Binary Relations}
+
+\>IsReflexiveBinaryRelation( <R> ) P
+
+returns `true' if the binary relation <R> is reflexive, and `false'
+otherwise.
+
+\index{reflexive relation}
+A binary relation <R> (as tuples) on a set <X> is *reflexive* if
+for all $x\in X$, $(x,x)\in R$. Alternatively, <R> as a mapping
+is reflexive if for all $x\in X$, $x$ is an element of the image set
+$R(x)$.   
+
+A reflexive binary relation is necessarily a total endomorphic 
+mapping (tested via `IsTotal'; see~"IsTotal").
+
+
+\>IsSymmetricBinaryRelation( <R> ) P
+
+returns `true' if the binary relation <R> is symmetric, and `false'
+otherwise.
+
+\index{symmetric relation}
+A binary relation <R> (as tuples) on a set <X> is *symmetric* if
+$(x,y)\in R$ then $(y,x)\in R$. Alternatively, <R> as a mapping
+is symmetric if for all $x\in X$, the preimage set of $x$ under $R$ equals
+the image set $R(x)$.
+
+
+\>IsTransitiveBinaryRelation( <R> ) P
+
+returns `true' if the binary relation <R> is transitive, and `false'
+otherwise.
+
+\index{transitive relation}
+A binary relation <R> (as tuples) on a set <X> is *transitive* if
+$(x,y), (y,z)\in R$ then $(x,z)\in R$. Alternatively, <R> as a mapping
+is transitive if for all $x\in X$, the image set $R(R(x))$ of the image 
+set $R(x)$ of $x$ is a subset of $R(x)$.
+ 
+
+\>IsAntisymmetricBinaryRelation( <rel> ) P
+
+returns `true' if the binary relation <rel> is antisymmetric, and `false'
+otherwise.
+
+\index{antisymmetric relation}
+A binary relation <R> (as tuples) on a set <X> is *antisymmetric* if
+$(x,y), (y,x)\in R$ implies $x = y$. Alternatively, <R> as a mapping
+is antisymmetric if for all $x\in X$, the intersection of the
+preimage set of $x$ under $R$ and
+the image set $R(x)$ is $\{x\}$.
+
+
+\>IsPreOrderBinaryRelation( <rel> ) P
+
+returns `true' if the binary relation <rel> is a preorder, and `false'
+otherwise.
+
+\index{preorder}
+A *preorder* is a binary relation that is both reflexive and transitive.
+
+
+\>IsPartialOrderBinaryRelation( <rel> ) P
+
+returns `true' if the binary relation  <rel>  is  a  partial  order,  and
+`false' otherwise.
+
+\index{partial order}
+A *partial order* is a preorder which is also antisymmetric.
+
+
+\>IsHasseDiagram( <rel> ) P
+
+returns `true' if the binary relation <rel>  is  a  Hasse  Diagram  of  a
+partial  order,  i.e.  was  computed   via   `HasseDiagramBinaryRelation'
+(see~"HasseDiagramBinaryRelation").
+
+
+\>IsEquivalenceRelation( <R> ) P
+
+returns `true' if the binary relation <R> is an equivalence relation, and
+`false' otherwise.
+
+\index{equivalence relation}
+Recall, that a relation <R> on the set <X> is an  *equivalence  relation*
+if it is symmetric, transitive, and reflexive.
+
+
+
+\>Successors( <R> ) A
+
+returns the list of images of a binary relation <R>.  If  the  underlying
+domain of the relation is not `[1..<n>]' for some positive  integer  <n>,
+then an error is signalled.
+
+The returned value of `Successors' is a list of lists where the lists are
+ordered as the elements according to the sorted order of  the  underlying
+set of <R>. Each list consists of the images of the element  whose  index
+is the same as the list with the underlying set in sorted order.
+
+The `Successors' of a relation is the adjacency list representation
+of the relation. 
+
+
+\>DegreeOfBinaryRelation( <R> ) A
+
+returns the size of the underlying domain of  the  binary  relation  <R>.
+This is most natural when working with a binary relation on points.
+
+
+\>PartialOrderOfHasseDiagram( <HD> ) A
+
+is the partial order associated with the Hasse Diagram <HD> 
+i.e. the partial order generated by the reflexive and 
+transitive closure of <HD>. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Binary Relations on Points}
+
+We have special construction methods when the underlying <X> of our relation
+is the set of integers $\{1,\dots, n \}$. 
+
+\>BinaryRelationOnPoints( <list> ) F
+\>BinaryRelationOnPointsNC( <list> ) F
+
+Given a list of <n> lists, each containing elements from 
+the set $\{1,\dots,n\}$,
+this function constructs a binary relation such that $1$ is related
+to <list>`[1]', $2$ to <list>`[2]' and so on.
+The first version checks whether the list supplied is valid. The
+the `NC' version skips this check.
+
+
+\>RandomBinaryRelationOnPoints( <degree> ) F
+
+creates a relation on points with degree <degree>.
+
+
+
+\>AsBinaryRelationOnPoints( <trans> ) F
+\>AsBinaryRelationOnPoints( <perm> ) F
+\>AsBinaryRelationOnPoints( <rel> ) F
+
+return the relation on points  represented  by  general  relation  <rel>,
+transformation <trans> or permutation  <perm>.  If  <rel>  is  already  a
+binary relation on points then <rel> is returned.
+
+Transformations and permutations are special general endomorphic 
+mappings and have a natural representation as a binary relation on
+points. 
+
+In the last form, an isomorphic relation on points is constructed
+where the points are indices of the elements of the underlying domain
+in sorted order.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Closure Operations and Other Constructors}
+
+\>ReflexiveClosureBinaryRelation( <R> ) O
+
+is the smallest binary relation containing the binary relation <R>  which
+is  reflexive.  This  closure  inherents  the  properties  symmetric  and
+transitive from <R>. E.g. if <R> is symmetric then its reflexive  closure
+is also.
+
+
+\>SymmetricClosureBinaryRelation( <R> ) O
+
+is the smallest binary relation containing the binary relation <R>  which
+is  symmetric.  This  closure  inherents  the  properties  reflexive  and
+transitive from <R>. E.g. if <R> is reflexive then its symmetric  closure
+is also.
+
+
+\>TransitiveClosureBinaryRelation( <rel> ) O
+
+is the smallest binary relation containing the binary relation <R>  which
+is  transitive.  This  closure  inerents  the  properties  reflexive  and
+symmetric from <R>. E.g. if <R> is symmetric then its transitive  closure
+is also.
+
+`TransitiveClosureBinaryRelation' is a modified version of the 
+Floyd-Warshall method of solving the all-pairs shortest-paths problem 
+on a directed graph. Its asymptotic runtime is $O(n^3)$ where n is 
+the size of the vertex set. It only assumes there is an arbitrary 
+(but fixed) ordering of the vertex set. 
+
+
+\>HasseDiagramBinaryRelation( <partial-order> ) O
+
+is the smallest relation contained in the partial  order  <partial-order>
+whose reflexive and transitive closure is equal to <partial-order>.
+
+
+\>StronglyConnectedComponents( <R> ) O
+
+returns an equivalence relation on the vertices of  the  binary  relation
+<R>.
+
+
+
+\>PartialOrderByOrderingFunction( <dom>, <orderfunc> ) F
+
+constructs a partial order whose elements are from the domain <dom>
+and are ordered using the ordering function <orderfunc>. The ordering
+function must be a binary function returning a boolean value. If the 
+ordering function does not describe a partial order then `fail' is
+returned.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Equivalence Relations}
+
+\index{equivalence relation}
+An *equivalence relation* <E> over the set <X> is a relation on <X> which 
+is reflexive, symmetric, and transitive. 
+of the set <X>. A *partition* <P> is a set of subsets of <X> such that
+for all $R,S\in P$ $R\cap S$ is the empty set and $\cup P=X$.  
+An equivalence relation induces a partition such that if $(x,y)\in E$ then
+$x,y$ are in the same element of <P>.
+
+Like all binary relations in {\GAP} equivalence 
+relations are regarded as general endomorphic mappings (and the operations,
+properties and attributes of general mappings are available). 
+However, partitions provide an efficient way of representing equivalence 
+relations.  Moreover, only the non-singleton classes
+or blocks are listed allowing for small equivalence relations to be
+represented on infinite sets. Hence the main attribute of equivalence 
+relations is `EquivalenceRelationPartition' which provides the partition
+induced by the given equivalence.
+
+\>EquivalenceRelationByPartition( <domain>, <list> ) F
+\>EquivalenceRelationByPartitionNC( <domain>, <list> ) F
+
+constructs the equivalence relation over the set <domain>
+which induces the partition represented by <list>. 
+This representation includes only the non-trivial blocks 
+(or equivalent classes). <list> is a list of lists,
+each of these lists contain elements of <domain> and are 
+pairwise mutually exclusive.
+
+The list of lists do not need to be in any order nor do the 
+elements in the blocks (see `EquivalenceRelationPartition').
+a list of elements of <domain>
+The partition <list> is a 
+list of lists, each of these is a list of elements of <domain>
+that makes up a block (or equivalent class). The 
+<domain> is the domain over which the relation is defined, and 
+<list> is a list of lists, each of these is a list of elements
+of <domain> which are related to each other.
+<list> need only contain the nontrivial blocks 
+and singletons will be ignored. The NC version will not check
+to see if the lists are pairwise mutually exclusive or that
+they contain only elements of the domain.
+
+
+\>EquivalenceRelationByRelation( <rel> ) F
+
+returns the smallest equivalence 
+relation containing the binary relation <rel>.
+
+
+\>EquivalenceRelationByPairs( <D>, <elms> ) F
+\>EquivalenceRelationByPairsNC( <D>, <elms> ) F
+
+return the smallest equivalence relation
+on the domain <D> such that every pair in <elms>
+is in the relation.
+
+In the second form, it is not checked that <elms> are in the domain <D>.
+
+
+\>EquivalenceRelationByProperty( <domain>, <property> ) F
+
+creates an equivalence relation on <domain> whose only defining
+datum is that of having the property <property>.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Attributes of and Operations on Equivalence Relations} 
+
+\>EquivalenceRelationPartition( <equiv> ) A
+
+returns a list of lists of elements 
+of the underlying set of the equivalence relation <equiv>.
+The lists are precisely the nonsingleton equivalence classes of the
+equivalence.
+This allows us to describe ``small'' equivalences on infinite sets.
+
+
+\>GeneratorsOfEquivalenceRelationPartition( <equiv> ) A
+
+is a set of generating pairs for the equivalence relation  <equiv>.  This
+set is not unique. The equivalence <equiv> is  the  smallest  equivalence
+relation over the underlying set <X> which contains the generating pairs.
+
+
+
+\>JoinEquivalenceRelations( <equiv1>, <equiv2> ) O
+\>MeetEquivalenceRelations( <equiv1>, <equiv2> ) O
+
+`JoinEquivalenceRelations(<equiv1>,<equiv2>)' returns the smallest
+equivalence relation containing both the equivalence relations
+<equiv1> and <equiv2>.
+
+`MeetEquivalenceRelations( <equiv1>,<equiv2> )' returns the 
+intersection of the two equivalence relations <equiv1> and <equiv2>.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Equivalence Classes}
+
+\>IsEquivalenceClass( <O> ) C
+
+returns `true' if the object <O> is an equivalence class, and `false'
+otherwise.
+
+\index{equivalence class}
+An *equivalence class* is a collection of elements which are mutually
+related to each other in the associated equivalence relation. Note,
+this is a special category of object and not just a list of elements.
+
+
+\>EquivalenceClassRelation( <C> ) A
+
+returns the equivalence relation of which <C> is a class.
+
+
+\>EquivalenceClasses( <rel> )!{attribute} A
+
+returns a list of all equivalence classes of the equivalence relation <rel>.
+Note that it is possible for different methods to yield the list
+in different orders, so that for two equivalence relations
+$c1$ and $c2$ we may have $c1 = c2$ without having
+$`EquivalenceClasses'( c1 ) = `EquivalenceClasses'( c2 )$.
+
+
+\>EquivalenceClassOfElement( <rel>, <elt> ) O
+\>EquivalenceClassOfElementNC( <rel>, <elt> ) O
+
+return the equivalence class of <elt> in the binary relation <rel>,
+where <elt> is an element (i.e. a pair) of the domain of <rel>. 
+In the second form, it is not checked that <elt> is in the domain 
+over which <rel> is defined.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E

@@ -1,0 +1,194 @@
+\letter {}
+  `.', 16
+  `\%', 24
+  `\%display', 24
+  `\%enddisplay', 24
+  `\\.', 16
+  `\\>', 16
+  `\\Appendices', 11, 13
+  `\\BeginningOfBook', 11, 12
+  `\\Bibliography', 11, 13
+  `\\C', 20
+  `\\Chapter', 14
+  `\\Chapters', 11, 12
+  `\\Colophon', 11, 12
+  `\\Day', 13
+  `\\Declaration', 27
+  `\\EndOfBook', 11, 13
+  `\\F', 20
+  `\\FileHeader', 27
+  `\\FrontMatter', 11, 12
+  `\\Index', 11, 13
+  `\\Mailto', 16
+  `\\Month', 13
+  `\\N', 20
+  `\\OneColumnTableOfContents', 11, 12
+  `\\Package', 11, 12, 16
+  `\\PseudoInput', 13
+  `\\Q', 20
+  `\\R', 20
+  `\\Section', 14
+  `\\TableOfContents', 11, 12
+  `\\TitlePage', 11, 12
+  `\\Today', 13
+  `\\URL', 16
+  `\\UseGapDocReferences', 12
+  `\\UseReferences', 11, 12
+  `\\Year', 13
+  `\\Z', 20
+  `\\accent127', 16
+  `\\atindex', 16
+  `\\beginexample', 22
+    \sub indicating unstable output, 22
+  `\\beginitems', 20
+  `\\beginlist', 20
+  `\\begintt', 22
+  `\\calR', 20
+  `\\endexample', 22
+  `\\enditems', 20
+  `\\endlist', 20
+  `\\endtt', 22
+  `\\fmark', 16
+  `\\index', 16
+  `\\indextt', 16
+  `\\item', 20
+  `\\itemitem', 20
+  `\\kernttindent', 16
+  `\\lq', 16
+  `\\matrix', 23
+  `\\nolabel', use in index and label suppression, 15
+  `\\null', use in index suppression, 15
+  `\\package', 11, 16
+  `\\pif', 16
+  `\\rq', 16
+\letter A
+  `A', Attribute mark-up, 16
+  Accessing Weak Pointer Objects as Lists, \indexit{52}
+  An Example of a GAP Package, \indexit{36}
+\letter B
+  `bibtex', 26
+  `buildman.pe', 27
+\letter C
+  `C', Category mark-up, 16
+  Calling of and Communication with External Binaries, \indexit{39}
+  Catering for Plain Text and HTML Formats, \indexit{24}
+  Chapters and Sections, \indexit{14}
+  command mark-up, 16
+  continuation, 24
+  Copying Weak Pointer Objects, \indexit{53}
+  `CreateCompletionFilesPackage', 40
+\letter D
+  Declaration and Implementation Part, \indexit{37}
+  `DeclareAutoreadableVariables', 40
+  DeclareAutoreadableVariables, \indexit{40}
+  document formats, for help books, 43
+\letter E
+  `ElmWPObj', 52
+  Examples, Lists, and Verbatim, \indexit{20}
+  `ExternalSet', 48
+\letter F
+  `F', Function mark-up, 16
+  File Structure, \indexit{32}
+  File Types, \indexit{32}
+  Finding Implementations in the Library, \indexit{33}
+  foa triples, 46
+\letter G
+  $G$-sets, 48
+  `GAPDocManualLab', 41
+  `GAPInfo.Version', 40
+  `gapmacro.tex', 11
+  Generalized Conjugation Technique, \indexit{54}
+  generalized conjugation technique, 54
+\letter H
+  `HELP_ADD_BOOK', 42
+\letter I
+  indexing commands, 16
+  `init.g', for a GAP package, 37
+  In Parent Attributes, \indexit{47}
+  `InParentFOA', 47
+  Installation of GAP Package Binaries, \indexit{38}
+  Installing a Help Book, \indexit{42}
+  Introducing new Viewer for the Online Help, \indexit{44}
+  `IsBOundElmWPObj', 52
+\letter K
+  `KeyDependentOperation', 46
+  Key Dependent Operations, \indexit{46}
+\letter L
+  Labels and References, \indexit{15}
+  `LengthWPObj', 52
+  list environment, compact description, 20
+    \sub description, 20
+    \sub ordered, 21
+    \sub unordered, 21
+  Low Level Access Functions for Weak Pointer Objects, \indexit{52}
+\letter M
+  `makeindex', 26
+  `manual.bbl', 26
+  `manual.bib', 26
+  `manual.dvi', 26
+  `manual.lab', 26
+  `manual.mst', 26
+  `manual.six', 26
+  `manual.tex', 26
+  `manualindex', 26
+  mathematics alignments, 23
+  mathematics displays, 23
+  `MeetPartitionStrat', 59
+  meet strategy, 59
+\letter O
+  `O', Operation mark-up, 16
+  Operation Functions, \indexit{48}
+  `OrbitishFO', 49
+  `Orbits', 48
+  `OrbitsishOperation', 48
+  ordered partitions, \indexit{55}
+\letter P
+  `P', Property mark-up, 16
+  Package Completion, \indexit{39}
+  Producing a Manual, \indexit{26}
+\letter R
+  `R', Representation mark-up, 16
+  `read.g', for a GAP package, 37
+  `README', for a GAP package, 35
+  reference to a label, 15
+  Requesting one GAP Package from within Another, \indexit{37}
+\letter S
+  `SetElmWPObj', 52
+  Stabilizer Chains for Automorphisms Acting on Enumerators, \indexit{61}
+  Standalone Programs in a GAP Package, \indexit{38}
+  `StratMeetPartition', 59
+  subsection mark-up, 16
+  Suppressing Indexing and Labelling of a Section and Resolving Label Clashes, \indexit{15}
+\letter T
+  tables, 23
+  Tables, Displayed Mathematics and Mathematics Alignments, \indexit{23}
+  Test for the Existence of GAP Package Binaries, \indexit{38}
+  Testing the Examples, \indexit{23}
+  TeX Macros, \indexit{16}
+  TeX Macros for Domains, \indexit{20}
+  The Files of a GAP Package, \indexit{35}
+  The GASMAN Interface for Weak Pointer Objects, \indexit{53}
+  The General Backtrack Algorithm with Ordered Partitions, \indexit{55}
+  The Help Book Handler, \indexit{43}
+  The Main File, \indexit{11}
+  The manual.six File, \indexit{42}
+  The PackageInfo.g File, \indexit{37}
+  The WWW Homepage of a Package, \indexit{36}
+\letter U
+  Umlauts, \indexit{26}
+  `UnbindElmWPObj', 52
+  Undocumented Variables, \indexit{33}
+  Usage of the Percent Symbol, \indexit{24}
+  Using buildman.pe, \indexit{27}
+\letter V
+  `V', (global) Variable mark-up, 16
+  verbatim environments, 22
+  Version Numbers, \indexit{40}
+\letter W
+  `WeakPointerObj', 51
+  WeakPointerObj, \indexit{51}
+  Weak Pointer Objects, \indexit{51}
+  Wrapping Up a GAP Package, \indexit{40}
+  Writing Documentation, \indexit{35}
+\letter Z
+  `zoo', 40

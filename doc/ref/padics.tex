@@ -1,0 +1,182 @@
+% This file was created automatically from padics.msk.
+% DO NOT EDIT!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%A  padics.msk                  GAP documentation            Alexander Hulpke
+%%
+%A  @(#)$Id: padics.msk,v 1.6 2002/04/15 10:02:31 sal Exp $
+%%
+%Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+%Y  Copyright (C) 2002 The GAP Group
+%%
+\PreliminaryChapter{p-adic Numbers}
+
+In this chapter $p$ is always a (fixed) prime.
+
+The $p$-adic numbers $Q_p$ are the completion of the rational numbers with
+respect to the valuation $\nu_p(p^v\frac{a}{b})=v$ if $p$ divides neither
+$a$ nor $b$. They form a field of characteristic 0 which nevertheless shows
+some behaviour of the finite field with $p$ elements.
+
+A $p$-adic numbers can be approximated by a ``$p$-adic expansion'' which is 
+similar to the decimal expansion used for the reals (but written from left
+to right). So for example if
+$p=2$, the numbers $1$,$2$,$3$,$4$,$\frac{1}{2}$ and $\frac{4}{5}$ are
+represented as $1(2)$, $0.1(2)$, $1.1(2)$, $0.01(2)$, $10(2)$ and
+$0.0101(2)$.  Approximation means to ignore powers of $p$, so for example
+with only 2 digits accuracy $\frac{4}{5}$ would be approximated as
+$0.01(2)$.
+The important difference to the decimal approximation is that
+$p$-adic approximation is a ring homomorphism on the subrings of $p$-adic
+numbers whose valuation is bounded from below.
+
+In {\GAP}, $p$-adic numbers are represented by approximations. A family of
+(approximated) $p$-adic numbers consists of $p$-adic numbers with a certain
+precision and arithmetic with these numbers is done with this precision.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Pure p-adic Numbers}
+
+Pure $p$-adic numbers are the $p$-adic numbers described so far.
+
+\>PurePadicNumberFamily( <p>, <precision> ) O
+
+returns the family of pure $p$-adic numbers over the
+prime <p> with  <precision>  ``digits''.
+
+
+
+\>PadicNumber(<fam>,<rat>)!{for pure padics}
+
+returns the element of the $p$-adic number family <fam> that is used to
+represent the rational number <rat>.
+
+$p$-adic numbers allow the usual operations for fields.
+
+\beginexample
+gap> fam:=PurePadicNumberFamily(2,3);;
+gap> a:=PadicNumber(fam,4/5);
+0.0101(2)
+gap> 3*a;
+0.0111(2)
+gap> a/2;
+0.101(2)
+gap> a*10;
+0.001(2)
+\endexample
+
+\>Valuation( <obj> ) O
+
+The Valuation is the $p$-part of the $p$-adic number.
+
+
+\>ShiftedPadicNumber( <padic>, <int> ) O
+
+ShiftedPadicNumber takes a $p$-adic number <padic> and an integer <shift>
+and returns the $p$-adic number $c$, that is `<padic>* p^<shift>'. The
+<shift> is just added to the $p$-part.
+
+
+
+\>IsPurePadicNumber( <obj> ) C
+
+
+\>IsPurePadicNumberFamily( <fam> ) C
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Extensions of the p-adic Numbers}
+
+The usual Kronecker construction with an irreducible polynomial can be used
+to construct extensions of the $p$-adic numbers. 
+Let $L$ be such an
+extension. Then there is a subfield $K\<L$ such that $K$ is an unramified
+extension of the $p$-adic numbers and $L/K$ is purely ramified.
+(For an explanation of ``ramification'' see for example \cite{neukirch},
+section II.7 or another book on algebraic number theory. Essentially, an
+extension $L$ of the $p$-adic numbers generated
+by a rational polynomial $f$ is unramified if $f$ remains squarefree modulo
+$p$ and is completely ramified if modulo $p$ the polynomial $f$ is a power of
+a linear factor while remaining irreducible over the $p$-adic numbers.)
+The representation of extensions of $p$-adic numbers in {\GAP} uses this
+subfield.
+
+\>PadicExtensionNumberFamily( <p>, <precision>, <unram>, <ram> ) F
+
+An extended $p$-adic field $L$ is given by two polynomials h and g with
+coeff.-lists   <unram> (for  the  unramified  part)  and <ram>  (for  the
+ramified part). Then $L$ is isomorphic to $Q_p[x,y]/(h(x),g(y))$.
+
+This function takes the prime number  <p> and the two coefficient lists
+<unram> and <ram> for the two polynomials. The polynomial given by the
+coefficients in <unram> must be a cyclotomic polynomial and the
+polynomial given by <ram> an Eisenstein-polynomial (or 1+x). *This is
+not checked by {\sf GAP}.*
+
+Every number  out   of  $L$ is  represented   as   a coeff.-list   for
+the basis $\{1,x,x^2,\ldots,y,xy,x^2y,\ldots\}$ of $L$. The integer
+<precision> is the number of ``digits'' that all the coefficients have.
+
+
+
+A general  comment: the polynomials with which
+`PadicExtensionNumberFamily'  is called define an extension of $Q_p$. It
+must be ensured that both polynomials are  really irreducible over
+$Q_p$!  For example x^2+x+1 is *not* irreducible over Q_p. Therefore the
+``extension'' PadicExtensionNumberFamily(3, 4, [1,1,1], [1,1]) contains
+non-invertible ``pseudo-$p$-adic numbers''. Conversely, if an
+``extension'' contains noninvertible elements one of the polynomials was
+not irreducible.
+
+
+
+\>PadicNumber( <fam>, <rat> ) O
+\>PadicNumber( <purefam>, <list> ) O
+\>PadicNumber( <extfam>, <list> ) O
+
+create a $p$-adic number in the $p$-adic numbers family <fam>. The
+first usage returns the $p$-adic number corresponding to the rational
+<rat>.
+
+The second usage takes a pure $p$-adic numbers family <purefam> and a
+list <list> of length 2 and returns the number `p^<list>[1]  *
+<list>[2]'.  It must be guaranteed that no entry of list[2] is 
+divisible by the prime p. (Otherwise precision will get lost.)
+
+The third usage creates a number in the family <extfam> of a $p$-adic
+extension. The second entry must be a list <L> of length 2 such that
+<list>[2] is  the list of coeff. for  the  basis
+$\{1,\ldots,x^{f-1}\cdot y^{e-1}\}$ of the extended $p$-adic field and
+<list>[1] is a common $p$-part of all the coeff.
+
+$p$-adic numbers allow the usual field operations.
+
+
+
+\beginexample
+gap> efam:=PadicExtensionNumberFamily(3, 5, [1,1,1], [1,1]);;
+gap> PadicNumber(efam,7/9);
+padic(120(3),0(3))
+\endexample
+
+A word of warning:
+Depending on the actual representation of quotients, precision may seem
+to ``vanish''.
+For example in PadicExtensionNumberFamily(3, 5, [1,1,1], [1,1]) the
+number (1.2000, 0.1210)(3) can be represented as `[ 0, [ 1.2000, 0.1210
+] ]'   or as `[-1, [ 12.000, 1.2100 ] ]' (here the coefficients have to be
+multiplied by $p^{-1}$).
+
+So there may be a number (1.2, 2.2)(3) which seems to have only two
+digits of precision instead of the declared 5. But internally the number
+is stored as `[-3, [ 0.0012, 0.0022  ] ]'  and  so has in  fact maximum
+precision.
+
+
+\>IsPadicExtensionNumber( <obj> ) C
+
+
+\>IsPadicExtensionNumberFamily( <fam> ) C
+
+

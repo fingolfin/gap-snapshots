@@ -1,0 +1,1762 @@
+<html><head><title>[ref] 64 Polynomials and Rational Functions</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP063.htm">Previous</a>] [<a href ="CHAP065.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>64 Polynomials and Rational Functions</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP064.htm#SECT001">Indeterminates</a>
+<li> <A HREF="CHAP064.htm#SECT002">Operations for Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT003">Comparison of Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT004">Properties and Attributes of Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT005">Univariate Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT006">Polynomials as Univariate Polynomials in one Indeterminate</a>
+<li> <A HREF="CHAP064.htm#SECT007">Multivariate Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT008">Minimal Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT009">Cyclotomic Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT010">Polynomial Factorization</a>
+<li> <A HREF="CHAP064.htm#SECT011">Polynomials over the Rationals</a>
+<li> <A HREF="CHAP064.htm#SECT012">Laurent Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT013">Univariate Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT014">Polynomial Rings</a>
+<li> <A HREF="CHAP064.htm#SECT015">Univariate Polynomial Rings</a>
+<li> <A HREF="CHAP064.htm#SECT016">Monomial Orderings</a>
+<li> <A HREF="CHAP064.htm#SECT017">Groebner Bases</a>
+<li> <A HREF="CHAP064.htm#SECT018">Rational Function Families</a>
+<li> <A HREF="CHAP064.htm#SECT019">The Representations of Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT020">The Defining Attributes of Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT021">Creation of Rational Functions</a>
+<li> <A HREF="CHAP064.htm#SECT022">Arithmetic for External Representations of Polynomials</a>
+<li> <A HREF="CHAP064.htm#SECT023">Cancellation Tests for Rational Functions</a>
+</ol><p>
+<p>
+Let <i>R</i> be a commutative ring-with-one. We call a free associative
+algebra <i>A</i> over <i>R</i> a <strong>polynomial ring</strong> over <i>R</i>. The free generators of
+<i>A</i> are called <strong>indeterminates</strong>, they are usually denoted by
+<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,<font face="symbol">&#8230;</font>. The number of indeterminates is called the <strong>rank</strong> of <i>A</i>.
+The elements of <i>A</i> are called <strong>polynomials</strong>. Products of
+indeterminates are called <strong>monomials</strong>, every
+polynomial can be expressed as a finite sum of products of monomials with
+ring elements in a form like
+<i>r</i><sub>1,0</sub><i>x</i><sub>1</sub>+<i>r</i><sub>1,1</sub><i>x</i><sub>1</sub><i>x</i><sub>2</sub>+<i>r</i><sub>0,1</sub><i>x</i><sub>2</sub>+<font face="symbol">&#8230;</font> with <i>r</i><sub><i>i</i>,<i>j</i></sub> <font face="symbol">&#8712;</font> <i>R</i>.
+<p>
+A polynomial ring of rank 1 is called an <strong>univariate</strong> polynomial ring, its
+elements are <strong>univariate polynomials</strong>.
+<p>
+Polynomial rings of smaller rank
+naturally embed in rings of higher rank; if <i>S</i> is a subring of <i>R</i> then a
+polynomial ring over <i>S</i> naturally embeds in a polynomial ring over <i>R</i> of
+the same rank.
+<p>
+Internally, indeterminates are represented by positive integers, but it is
+possible to give names to them to have them printed in a nicer way. Beware,
+however that there is not necessarily any relation between the way an
+indeterminate is called and the way it is printed. See section
+<a href="CHAP064.htm#SECT001">Indeterminates</a> for details.
+<p>
+If <i>R</i> is an integral domain, the polynomial ring <i>A</i> over <i>R</i> is an integral domain as well and one can
+therefore form its quotient field <i>Q</i>. This field is called a <strong>field of
+rational functions</strong>. Again <i>A</i> embeds naturally into <i>Q</i> and <font face="Gill Sans,Helvetica,Arial">GAP</font> will
+perform this embedding implicitly. (In fact it implements the ring of rational
+functions over <i>R</i>.) To avoid problems with leading
+coefficients, however, <i>R</i> must be a unique factorization domain.
+<p>
+<p>
+<h2><a name="SECT001">64.1 Indeterminates</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> implements a polynomial ring with countably many indeterminates.
+These indeterminates can be referred to by positive integers. If only a
+number <var>num</var> of indeterminates is required they default to <code>[1..</code><var>num</var><code>]</code>.
+<p>
+It is possible to assign names to indeterminates. These names only
+provide a means for printing the indeterminates in a nice way, but have
+not necessary any relations to variable names. Indeterminates that have
+not been assigned a name will be printed as ``<code>x_</code><var>nr</var><code></code>''.
+<p>
+It is possible to assign
+the <strong>same</strong> name to <strong>different</strong> indeterminates (though it is probably not
+a good idea to do so). Asking <strong>twice</strong> for an indeterminate with the name
+<var>nam</var> will produce <strong>two different</strong> indeterminates!
+<p>
+When asking for indeterminates with certain
+names, <font face="Gill Sans,Helvetica,Arial">GAP</font> usually will take the first indeterminates that are not
+yet named, name these accordingly and return them. Thus when asking for
+named indeterminates, no relation between names and indeterminate
+numbers can be guaranteed. The attribute
+<code>IndeterminateNumberOfLaurentPolynomial(</code><var>indet</var><code>)</code> will return
+the number of the indeterminate <var>indet</var>.
+<p>
+<a name = "SSEC001.1"></a>
+<li><code>Indeterminate( </code><var>R</var><code>, [</code><var>nr</var><code>] ) O</code>
+<li><code>Indeterminate( </code><var>R</var><code>, [</code><var>avoid</var><code>] ) O</code>
+<li><code>Indeterminate( </code><var>R</var><code>, </code><var>name</var><code>[, </code><var>avoid</var><code>] ) O</code>
+<li><code>Indeterminate( </code><var>fam</var><code>, </code><var>nr</var><code> ) O</code>
+<p>
+returns indeterminate number <var>nr</var> over the ring <var>R</var>. If <var>nr</var> is not
+given it defaults to 1. If the number is not specified a list <var>avoid</var> of
+indeterminates may be given. The function will return an indeterminate
+that is guaranteed to be different from all the indeterminates in
+<var>avoid</var>. The third usage returns an indeterminate called <var>name</var> (also
+avoiding the indeterminates in <var>avoid</var> if given).
+<p>
+<pre>
+gap&gt; a:=Indeterminate(GF(3));
+x_1
+gap&gt; x:=Indeterminate(GF(3),"x");
+x
+gap&gt; Indeterminate(GF(3),"x")=x;
+false
+gap&gt; y:=Indeterminate(GF(3),"y");z:=Indeterminate(GF(3),"X");
+y
+X
+gap&gt; Indeterminate(GF(3),3);
+y
+gap&gt; Indeterminate(GF(3),[y,z]);
+x
+</pre>
+<p>
+<a name = "SSEC001.2"></a>
+<li><code>IndeterminateNumberOfUnivariateRationalFunction( </code><var>rfun</var><code> ) A</code>
+<p>
+returns the number of the indeterminate in which the univariate rational
+function <var>rfun</var> is expressed. (This also provides a way to obtain the
+number of a given indeterminate.)
+<p>
+A constant rational function might not possess an indeterminate number. In
+this case <code>IndeterminateNumberOfUnivariateRationalFunction</code> will
+default to a value of 1.
+Therefore two univariate polynomials may be considered to be in the same
+univariate polynomial ring if their indeterminates have the same number
+or one if of them is constant.  (see also&nbsp;<a href="CHAP064.htm#SSEC001.5">CIUnivPols</a>
+and&nbsp;<a href="CHAP064.htm#SSEC020.7">IsLaurentPolynomialDefaultRep</a>).
+<p>
+<a name = "SSEC001.3"></a>
+<li><code>IndeterminateOfUnivariateRationalFunction( </code><var>rfun</var><code> ) A</code>
+<p>
+returns the indeterminate in which the univariate rational
+function <var>rfun</var> is expressed. (cf.
+<a href="CHAP064.htm#SSEC001.2">IndeterminateNumberOfUnivariateRationalFunction</a>.)
+<p>
+<pre>
+gap&gt; IndeterminateNumberOfUnivariateRationalFunction(z);
+4
+gap&gt; IndeterminateOfUnivariateRationalFunction(z^5+z);
+X
+</pre>
+<p>
+<a name = "SSEC001.4"></a>
+<li><code>IndeterminateName( </code><var>fam</var><code>, </code><var>nr</var><code> ) O</code>
+<a name = "SSEC001.4"></a>
+<li><code>HasIndeterminateName( </code><var>fam</var><code>, </code><var>nr</var><code> ) O</code>
+<a name = "SSEC001.4"></a>
+<li><code>SetIndeterminateName( </code><var>fam</var><code>, </code><var>nr</var><code>, </code><var>name</var><code> ) O</code>
+<p>
+<code>SetIndeterminateName</code> assigns the name <var>name</var> to indeterminate <var>nr</var>
+in the rational functions family <var>fam</var>. It issues an error if the
+indeterminate was already named.
+<p>
+<code>IndeterminateName</code> returns the name of the <var>nr</var>-th indeterminate (and
+returns <code>fail</code> if no name has been assigned).
+<p>
+<code>HasIndeterminateName</code> tests whether indeterminate <var>nr</var> has already been
+assigned a name 
+<p>
+<pre>
+gap&gt; IndeterminateName(FamilyObj(x),3);
+"y"
+gap&gt; HasIndeterminateName(FamilyObj(x),5);
+false
+gap&gt; SetIndeterminateName(FamilyObj(x),10,"bla");
+gap&gt; Indeterminate(GF(3),10);
+bla
+</pre>
+<p>
+As a convenience there is a special method installed for <code>SetName</code> that will
+assign a name to an indeterminate.
+<pre>
+gap&gt; a:=Indeterminate(GF(3),5);
+x_5
+gap&gt; SetName(a,"ah");
+gap&gt; a^5+a;
+ah^5+ah
+</pre>
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>CIUnivPols( </code><var>upol</var><code>, </code><var>upol</var><code> ) F</code>
+<p>
+This function (whose name stands for
+``CommonIndeterminateOfUnivariatePolynomials'') takes two univariate
+polynomials as arguments. If both polynomials are given in the same
+indeterminate number <var>indnum</var> (in this case they are ``compatible'' as
+univariate polynomials) it returns <var>indnum</var>. In all other cases it
+returns <code>fail</code>.
+<code>CIUnivPols</code> also accepts if either polynomial is constant but
+formally expressed in another indeterminate, in this situation the
+indeterminate of the other polynomial is selected.
+<p>
+<p>
+<h2><a name="SECT002">64.2 Operations for Rational Functions</a></h2>
+<p><p>
+The rational functions form a field,
+therefore all arithmetic operations are applicable to rational functions.
+<p>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>f</var><code> + </code><var>g</var><code></code>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>f</var><code> - </code><var>g</var><code></code>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>f</var><code> * </code><var>g</var><code></code>
+<a name = "SSEC002.1"></a>
+<li><code></code><var>f</var><code> / </code><var>g</var><code></code>
+<p>
+<pre>
+gap&gt; x:=Indeterminate(Rationals,1);;y:=Indeterminate(Rationals,2);;
+gap&gt; f:=3+x*y+x^5;;g:=5+x^2*y+x*y^2;;
+gap&gt; a:=g/f;
+(x_1^2*x_2+x_1*x_2^2+5)/(x_1^5+x_1*x_2+3)
+</pre>
+<p>
+Note that the quotient <code></code><var>f</var><code>/</code><var>g</var><code></code> of two polynomials might be represented as
+a rational function again. If <var>g</var> is known to divide <var>f</var> the call
+<code>Quotient(</code><var>f</var><code>,</code><var>g</var><code>)</code> (see&nbsp;<a href="CHAP054.htm#SSEC001.10">Quotient</a>) should be used instead.
+<p>
+<a name = "SSEC002.2"></a>
+<li><code></code><var>f</var><code> mod </code><var>g</var><code></code>
+<p>
+For two Laurent polynomials <var>f</var> and <var>g</var>, <code></code><var>f</var><code> mod </code><var>g</var><code></code> is the Euclidean
+remainder (see&nbsp;<a href="CHAP054.htm#SSEC006.4">EuclideanRemainder</a>) of <var>f</var> modulo <var>g</var>.
+<p>
+At the moment <font face="Gill Sans,Helvetica,Arial">GAP</font> does not contain a proper multivariate Gcd algorithm.
+Therefore it cannot be guaranteed that rational functions will always be
+represented as a quotient of coprime polynomials. In certain unfortunate
+situations this might lead to a degree explosion.
+<p>
+All polynomials as well as all the univariate polynomials in the same
+indeterminate form subrings of this field. If two rational functions are
+known to be in the same subring, the result will be expressed as element in
+this subring.
+<p>
+<p>
+<h2><a name="SECT003">64.3 Comparison of Rational Functions</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
+<li><code></code><var>f</var><code> = </code><var>g</var><code></code>
+<p>
+Two rational functions <var>f</var> and <var>g</var> are equal if the product
+<tt>Numerator</tt>(<i>f</i> )*<tt>Denominator</tt>(<i>g</i> ) equals
+<tt>Numerator</tt>(<i>g</i> )*<tt>Denominator</tt>(<i>f</i> ).
+<p>
+<pre>
+gap&gt; x:=Indeterminate(Rationals,"x");;y:=Indeterminate(Rationals,"y");;
+gap&gt; f:=3+x*y+x^5;;g:=5+x^2*y+x*y^2;;
+gap&gt; a:=g/f;
+(x^2*y+x*y^2+5)/(x^5+x*y+3)
+gap&gt; b:=(g*f)/(f^2);
+(x^7*y+x^6*y^2+5*x^5+x^3*y^2+x^2*y^3+3*x^2*y+3*x*y^2+5*x*y+15)/(x^10+2*x^6*y+6\
+*x^5+x^2*y^2+6*x*y+9)
+gap&gt; a=b;
+true
+</pre>
+<p>
+<a name = "SSEC003.2"></a>
+<li><code></code><var>f</var><code> &lt; </code><var>g</var><code></code>
+<p>
+The ordering of rational functions is defined in several steps. Monomials
+(products of indeterminates) are sorted first by degree, then
+lexicographically (with <i>x</i><sub>1</sub> &gt; <i>x</i><sub>2</sub>)
+(see&nbsp;<a href="CHAP064.htm#SSEC016.8">MonomialGrlexOrdering</a>). Products of monomials
+with ring elements (``terms'') are compared first by their monomials and
+then by their coefficients.
+<p>
+<pre>
+gap&gt; x&gt;y;
+true
+gap&gt; x^2*y&lt;x*y^2;
+false
+gap&gt; x*y&lt;x^2*y;
+true
+gap&gt; x^2*y &lt; 5* y*x^2;
+true
+</pre>
+Polynomials are compared by comparing the largest terms in turn until they
+differ.
+<pre>
+gap&gt; x+y&lt;y;
+false
+gap&gt; x&lt;x+1;
+true
+</pre>
+Rational functions are compared by comparing the polynomial
+<tt>Numerator</tt>(<i>f</i> )*<tt>Denominator</tt>(<i>g</i> ) with the polynomial
+<tt>Numerator</tt>(<i>g</i> )*<tt>Denominator</tt>(<i>f</i> ). (As the ordering of monomials used by
+<font face="Gill Sans,Helvetica,Arial">GAP</font> is invariant under multiplication this is independent of common
+factors in numerator and denominator.)
+<pre>
+gap&gt; f/g&lt;g/f;
+false
+gap&gt; f/g&lt;(g*g)/(f*g);
+false
+</pre>
+<p>
+For univariate polynomials this reduces to an ordering first by total degree
+and then lexicographically on the coefficients.
+<p>
+<p>
+<h2><a name="SECT004">64.4 Properties and Attributes of Rational Functions</a></h2>
+<p><p>
+<a name = "SSEC004.1"></a>
+<li><code>IsPolynomialFunction( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC004.1"></a>
+<li><code>IsRationalFunction( </code><var>obj</var><code> ) C</code>
+<p>
+A polynomial function is an element of a polynomial ring (not
+necessarily an UFD).
+<p>
+A rational function is an element of the quotient field of a polynomial
+ring over an UFD. It is represented as a quotient of two polynomials,
+its numerator (see&nbsp;<a href="CHAP064.htm#SSEC004.2">NumeratorOfRationalFunction</a>) and
+its denominator (see&nbsp;<a href="CHAP064.htm#SSEC004.3">DenominatorOfRationalFunction</a>)
+<p>
+<a name = "SSEC004.2"></a>
+<li><code>NumeratorOfRationalFunction( </code><var>ratfun</var><code> ) A</code>
+<p>
+returns the nominator of the rational function <var>ratfun</var>.
+<p>
+As no proper multivariate gcd has been implemented yet, numerators and
+denominators are not guaranteed to be reduced!
+<p>
+<a name = "SSEC004.3"></a>
+<li><code>DenominatorOfRationalFunction( </code><var>ratfun</var><code> ) A</code>
+<p>
+returns the denominator of the rational function <var>ratfun</var>.
+<p>
+As no proper multivariate gcd has been implemented yet, numerators and
+denominators are not guaranteed to be reduced!
+<p>
+<pre>
+gap&gt; x:=Indeterminate(Rationals,1);;y:=Indeterminate(Rationals,2);;
+gap&gt; DenominatorOfRationalFunction((x*y+x^2)/y);
+y
+gap&gt; NumeratorOfRationalFunction((x*y+x^2)/y);
+x^2+x*y
+</pre>
+<p>
+<a name = "SSEC004.4"></a>
+<li><code>IsPolynomial( </code><var>ratfun</var><code> ) P</code>
+<p>
+A polynomial is a rational functions whose  denominator is one. (If the
+coefficients family forms a field this is equivalent to the denominator
+being constant.)
+<p>
+If the base family is not a field, it may be impossible to represent the
+quotient of a polynomial by a ring element as a polynomial again, but it
+will have to be represented as a rational function.
+<p>
+<pre>
+gap&gt; IsPolynomial((x*y+x^2*y^3)/y);
+true
+gap&gt; IsPolynomial((x*y+x^2)/y);
+false
+</pre>
+<p>
+<a name = "SSEC004.5"></a>
+<li><code>AsPolynomial( </code><var>poly</var><code> ) A</code>
+<p>
+If <var>poly</var> is a rational function that is a polynomial this attribute
+returns an equal rational function <var>p</var> such that <var>p</var> is equal to its
+numerator and the denominator of <var>p</var> is one.
+<p>
+<pre>
+gap&gt; AsPolynomial((x*y+x^2*y^3)/y);
+x^2*y^2+x
+</pre>
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>IsUnivariateRationalFunction( </code><var>ratfun</var><code> ) P</code>
+<p>
+A rational function is univariate if its numerator and its denominator
+are both polynomials in the same one indeterminate. The attribute
+<code>IndeterminateNumberOfUnivariateRationalFunction</code> can be used to obtain
+the number of this common indeterminate.
+<p>
+<a name = "SSEC004.7"></a>
+<li><code>CoefficientsOfUnivariateRationalFunction( </code><var>rfun</var><code> ) A</code>
+<p>
+if <var>rfun</var> is a univariate rational function, this attribute
+returns a list [<var>ncof</var>,<var>dcof</var>,<var>val</var>] where <var>ncof</var> and <var>dcof</var> are
+coefficient lists of univariate polynomials <var>n</var> and <var>d</var> and a valuation
+<var>val</var> such that <i>rfun</i> =<i>x</i><sup><i>val</i> </sup>&#183;<i>n</i> /<i>d</i>  where <i>x</i> is the variable
+with the number given by
+<a href="CHAP064.htm#SSEC001.2">IndeterminateNumberOfUnivariateRationalFunction</a>. Numerator and
+Denominator are guaranteed to be cancelled.
+<p>
+<a name = "SSEC004.8"></a>
+<li><code>IsUnivariatePolynomial( </code><var>ratfun</var><code> ) P</code>
+<p>
+A univariate polynomial is a polynomial in only one indeterminate.
+<p>
+<a name = "SSEC004.9"></a>
+<li><code>CoefficientsOfUnivariatePolynomial( </code><var>pol</var><code> ) A</code>
+<p>
+<code>CoefficientsOfUnivariatePolynomial</code>  returns  the     coefficient   list
+of the polynomial <var>pol</var>, sorted in ascending order.
+<p>
+<a name = "SSEC004.10"></a>
+<li><code>IsLaurentPolynomial( </code><var>ratfun</var><code> ) P</code>
+<p>
+A Laurent polynomial is a univariate rational function whose denominator
+is a monomial. Therefore every univariate polynomial is a
+Laurent polynomial.
+<p>
+The attribute <code>CoefficientsOfLaurentPolynomial</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC012.2">CoefficientsOfLaurentPolynomial</a>) gives a compact representation as
+Laurent polynomial.
+<p>
+<a name = "SSEC004.11"></a>
+<li><code>IsConstantRationalFunction( </code><var>ratfun</var><code> ) P</code>
+<p>
+A  constant  rational   function is  a    function  whose  numerator  and
+denominator are polynomials of degree 0.
+<p>
+All these tests are applicable to <strong>every</strong> rational function. Depending on the
+internal representation of the rational function, however some of these
+tests (in particular, univariateness) might be expensive in some cases.
+<p>
+For reasons of performance within algorithms it can be useful to use other
+attributes, which give a slightly more technical representation. See
+section&nbsp;<a href="CHAP064.htm#SECT019">The Representations of Rational Functions</a> for details.
+<p>
+<a name = "SSEC004.12"></a>
+<li><code>IsPrimitivePolynomial( </code><var>F</var><code>, </code><var>pol</var><code> ) O</code>
+<p>
+For a univariate polynomial <var>pol</var> of degree <i>d</i> in the indeterminate <i>X</i>,
+with coefficients in a finite field <var>F</var> with <i>q</i> elements, say,
+<code>IsPrimitivePolynomial</code> returns <code>true</code> if
+<ol>
+<li>
+    <var>pol</var> divides <i>X</i><sup><i>q</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1</sup> <font face="symbol">&#8722;</font> 1, and
+<li>
+    for each prime divisor <i>p</i> of <i>q</i><sup><i>d</i></sup> <font face="symbol">&#8722;</font> 1, <var>pol</var> does not divide
+    <i>X</i><sup>(<i>q</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1)/<i>p</i></sup> <font face="symbol">&#8722;</font> 1,
+</ol>
+and <code>false</code> otherwise.
+<p>
+<a name = "SSEC004.13"></a>
+<li><code>SplittingField( </code><var>f</var><code> ) A</code>
+<p>
+returns the smallest field which contains the coefficients of <var>f</var> and
+the roots of <var>f</var>.
+<p>
+<p>
+<h2><a name="SECT005">64.5 Univariate Polynomials</a></h2>
+<p><p>
+Some of the operations are actually defined on the larger domain of Laurent
+polynomials (see <a href="CHAP064.htm#SECT012">Laurent Polynomials</a>). For this section you can simply
+ignore the word ``Laurent'' if it occurs in a description.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>UnivariatePolynomial( </code><var>ring</var><code>, </code><var>cofs</var><code>[, </code><var>ind</var><code>] ) O</code>
+<p>
+constructs an univariate polynomial over the ring <var>ring</var> in the
+indeterminate <var>ind</var> with the coefficients given by <var>coefs</var>.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>UnivariatePolynomialByCoefficients( </code><var>fam</var><code>, </code><var>cofs</var><code>, </code><var>ind</var><code> ) O</code>
+<p>
+constructs an univariate polynomial over the coefficients family
+<var>fam</var> and in the indeterminate <var>ind</var> with the coefficients given by
+<var>coefs</var>. This function should be used in algorithms to create
+polynomials as it avoids overhead associated with
+<code>UnivariatePolynomial</code>.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>DegreeOfLaurentPolynomial( </code><var>pol</var><code> ) A</code>
+<p>
+The degree of a univariate (Laurent) polynomial <var>pol</var> is the largest
+exponent <i>n</i> of a monomial <i>x</i><sup><i>n</i></sup> of <var>pol</var>.
+<p>
+<pre>
+gap&gt; p:=UnivariatePolynomial(Rationals,[1,2,3,4],1);
+4*x^3+3*x^2+2*x+1
+gap&gt; UnivariatePolynomialByCoefficients(FamilyObj(1),[9,2,3,4],73);
+4*x_73^3+3*x_73^2+2*x_73+9
+gap&gt; CoefficientsOfUnivariatePolynomial(p);
+[ 1, 2, 3, 4 ]
+gap&gt; DegreeOfLaurentPolynomial(p);
+3
+gap&gt; IndeterminateNumberOfLaurentPolynomial(p);
+1
+gap&gt; IndeterminateOfLaurentPolynomial(p);
+x
+</pre>
+<p>
+We remark that some functions for multivariate polynomials (which will be
+defined in the following sections) permit a different syntax for univariate
+polynomials which drops the requirement to specify the indeterminate.
+Examples are <code>Value</code>, <code>Discriminant</code>, <code>Derivative</code>, <code>LeadingCoefficient</code> and
+<code>LeadingMonomial</code>:
+<pre>
+gap&gt; Value(p,Z(5));
+Z(5)^2
+gap&gt; LeadingCoefficient(p);
+4
+gap&gt; Derivative(p);
+12*x^2+6*x+2
+</pre>
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>RootsOfUPol( </code><var>upol</var><code> ) F</code>
+<li><code>RootsOfUPol( </code><var>field</var><code>, </code><var>upol</var><code> ) F</code>
+<li><code>RootsOfUPol( "split", </code><var>upol</var><code> ) F</code>
+<p>
+This function returns a list of all roots of the univariate polynomial
+<var>upol</var> in its default domain. If <var>field</var> is given the roots over <var>field</var>
+are taken, if the first parameter is the string <code>"split"</code> the field is
+taken to be the splitting field of the polynomial.
+<p>
+<pre>
+gap&gt; RootsOfUPol(50-45*x-6*x^2+x^3);
+[ 10, 1, -5 ]
+</pre>
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>UnivariatenessTestRationalFunction( </code><var>f</var><code> ) F</code>
+<p>
+takes a rational function <var>f</var> and tests whether it is univariate or even
+a Laurent polynomial. It returns a list
+<code>[</code><var>isunivariate</var><code>, </code><var>indet</var><code>, </code><var>islaurent</var><code>, </code><var>cofs</var><code>]</code> where <var>indet</var> is the
+indeterminate number and <var>cofs</var> (if applicable) the coefficients lists.
+The list <var>cofs</var> is the <code>CoefficientsOfLaurentPolynomial</code> if <var>islaurent</var>
+is <code>true</code> and the <code>CoefficientsOfUnivariateRationalFunction</code> if
+<var>islaurent</var> is <code>false</code> and <var>isunivariate</var> <code>true</code>.
+As there is no proper multivariate gcd, it might return <code>fail</code> for
+<var>isunivariate</var>.
+<p>
+The info class for univariate polynomials is <code>InfoPoly</code>.
+<p>
+<p>
+<h2><a name="SECT006">64.6 Polynomials as Univariate Polynomials in one Indeterminate</a></h2>
+<p><p>
+<a name = "SSEC006.1"></a>
+<li><code>DegreeIndeterminate( </code><var>pol</var><code>, </code><var>ind</var><code> ) O</code>
+<li><code>DegreeIndeterminate( </code><var>pol</var><code>, </code><var>inum</var><code> ) O</code>
+<p>
+returns the degree of the polynomial <var>pol</var> in the indeterminate <var>ind</var>
+(respectively indeterminate number <var>inum</var>).
+<p>
+<pre>
+gap&gt; f:=x^5+3*x*y+9*y^7+4*y^5*x+3*y+2;
+9*y^7+4*x*y^5+x^5+3*x*y+3*y+2
+gap&gt; DegreeIndeterminate(f,1);
+5
+gap&gt; DegreeIndeterminate(f,y);
+7
+</pre>
+<p>
+<a name = "SSEC006.2"></a>
+<li><code>PolynomialCoefficientsOfPolynomial( </code><var>pol</var><code>, </code><var>ind</var><code> ) O</code>
+<li><code>PolynomialCoefficientsOfPolynomial( </code><var>pol</var><code>, </code><var>inum</var><code> ) O</code>
+<p>
+<code>PolynomialCoefficientsOfPolynomial</code> returns the coefficient list
+(whose entries are polynomials not involving the indeterminate <var>ind</var>)
+describing the polynomial <var>pol</var> viewed as a polynomial in <var>ind</var>. 
+Instead of <var>ind</var> also the indeterminate number <var>inum</var> can be given.
+<p>
+<pre>
+gap&gt; PolynomialCoefficientsOfPolynomial(f,2);
+[ x^5+2, 3*x+3, 0, 0, 0, 4*x, 0, 9 ]
+</pre>
+<p>
+<a name = "SSEC006.3"></a>
+<li><code>LeadingCoefficient( </code><var>pol</var><code> ) O</code>
+<p>
+returns the leading coefficient (that is the coefficient of the leading
+monomial, see&nbsp;<a href="CHAP064.htm#SSEC006.4">LeadingMonomial</a>) of the polynomial <var>pol</var>.
+<p>
+<a name = "SSEC006.4"></a>
+<li><code>LeadingMonomial( </code><var>pol</var><code> ) F</code>
+<p>
+returns the leading monomial (with respect to the ordering given by
+<a href="CHAP064.htm#SSEC016.14">MonomialExtGrlexLess</a> of the polynomial <var>pol</var> as a list
+containing indeterminate numbers and exponents.
+<p>
+<pre>
+gap&gt; LeadingCoefficient(f,1);
+1
+gap&gt; LeadingCoefficient(f,2);
+9
+gap&gt; LeadingMonomial(f);
+[ 2, 7 ]
+gap&gt; LeadingCoefficient(f);
+9
+</pre>
+<p>
+<a name = "SSEC006.5"></a>
+<li><code>Derivative( </code><var>ufun</var><code> ) O</code>
+<li><code>Derivative( </code><var>ratfun</var><code>, </code><var>ind</var><code> ) O</code>
+<p>
+returns the derivative <i>upoly</i> <font face="symbol">&#8242;</font> of the univariate rational function
+<var>ufun</var> by its indeterminant. The second version returns the derivative
+of <var>ratfun</var> by the indeterminate <var>ind</var> (respectively indeterminate
+number <var>ind</var>) when viewing <var>ratfun</var> as univariate in <var>ind</var>.
+<p>
+<pre>
+gap&gt; Derivative(f,2);
+63*y^6+20*x*y^4+3*x+3
+</pre>
+<a name = "SSEC006.6"></a>
+<li><code>Discriminant( </code><var>upol</var><code> ) O</code>
+<li><code>Discriminant( </code><var>pol</var><code>, </code><var>ind</var><code> ) O</code>
+<p>
+returns the discriminant disc(<i>upoly</i> ) of the univariate polynomial
+<var>upoly</var> by its indeterminant. The second version returns the
+discriminant of <var>pol</var> by the indeterminate <var>ind</var> (respectively
+indeterminate number <var>ind</var>).
+<p>
+<pre>
+gap&gt; Discriminant(f,1);
+20503125*y^28+262144*y^25+27337500*y^22+19208040*y^21+1474560*y^17+13668750*y^\
+16+18225000*y^15+6075000*y^14+1105920*y^13+3037500*y^10+6489720*y^9+4050000*y^\
+8+900000*y^7+62208*y^5+253125*y^4+675000*y^3+675000*y^2+300000*y+50000
+</pre>
+<p>
+<a name = "SSEC006.7"></a>
+<li><code>Resultant( </code><var>pol1</var><code>, </code><var>pol2</var><code>, </code><var>inum</var><code> ) O</code>
+<li><code>Resultant( </code><var>pol1</var><code>, </code><var>pol2</var><code>, </code><var>ind</var><code> ) O</code>
+<p>
+computes the resultant of the polynomials <var>pol1</var> and <var>pol2</var> with respect
+to the indeterminate <var>ind</var> or indeterminate number <var>inum</var>.
+The resultant considers <var>pol1</var> and <var>pol2</var> as univariate in <var>ind</var> and
+returns an element of the corresponding base ring (which might be a
+polynomial ring).
+<p>
+<pre>
+gap&gt; Resultant(x^4+y,y^4+x,1);
+y^16+y
+gap&gt; Resultant(x^4+y,y^4+x,2);
+x^16+x
+</pre>
+<p>
+<p>
+<h2><a name="SECT007">64.7 Multivariate Polynomials</a></h2>
+<p><p>
+<a name = "SSEC007.1"></a>
+<li><code>Value( </code><var>ratfun</var><code>, </code><var>indets</var><code>, </code><var>vals</var><code>[, </code><var>one</var><code>] ) O</code>
+<li><code>Value( </code><var>upol</var><code>, </code><var>value</var><code>[, </code><var>one</var><code>] ) O</code>
+<p>
+The first variant takes a rational function <var>ratfun</var> and specializes the
+indeterminates given in <var>indets</var> to the values given in <var>vals</var>,
+replacing the <i>i</i>-th indeterminate <i>indets</i> <sub><i>i</i></sub> by <i>vals</i> <sub><i>i</i></sub>. If this
+specialization results in a constant polynomial, an element of the
+coefficient ring is returned. If the specialization would specialize
+the denominator of <var>ratfun</var> to zero, an error is raised.
+<p>
+A variation is the evaluation at elements of another ring <i>R</i>, for which
+a multiplication with elements of the coefficient ring of <var>ratfun</var> are
+defined. In this situation the identity element of <i>R</i> may be given by a
+further argument <var>one</var> which will be used for <i>x</i><sup>0</sup> for any specialized
+indeterminate <i>x</i>.
+<p>
+The second version takes an univariate rational function and specializes
+the value of its indeterminate to <var>val</var>. Again, an optional argument
+<var>one</var> may be given.
+<p>
+<pre>
+gap&gt; Value(x*y+y+x^7,[x,y],[5,7]);
+78167
+</pre>
+Note that the default values for <code>one</code> can lead to different results than
+one would expect: For example for a matrix <i>M</i>, the values <i>M</i>+<i>M</i><sup>0</sup> and <i>M</i>+1
+are <strong>different</strong>. As <code>Value</code> defaults to the one of the coefficient ring,
+when evaluating Matrices in polynomials always the correct <code>one</code> should be
+given!
+<p>
+<a name = "SSEC007.2"></a>
+<li><code>OnIndeterminates( </code><var>poly</var><code>, </code><var>perm</var><code> ) F</code>
+<p>
+A permutation <var>perm</var> acts on the multivariate polynomial <var>poly</var> by
+permuting the indeterminates as it permutes points.
+<p>
+<pre>
+gap&gt; OnIndeterminates(x^7*y+x*y^4,(1,17)(2,28));
+x_17^7*x_28+x_17*x_28^4
+gap&gt; Stabilizer(Group((1,2,3,4),(1,2)),x*y,OnIndeterminates);
+Group([ (1,2), (3,4) ])
+</pre>
+<p>
+<p>
+<h2><a name="SECT008">64.8 Minimal Polynomials</a></h2>
+<p><p>
+<a name = "I0"></a>
+
+<a name = "SSEC008.1"></a>
+<li><code>MinimalPolynomial( </code><var>R</var><code>, </code><var>elm</var><code>[ , </code><var>ind</var><code>] ) O</code>
+<p>
+returns the <strong>minimal polynomial</strong> of <var>elm</var> over the ring <var>R</var>,
+expressed in the indeterminate number <var>ind</var>.
+If <var>ind</var> is not given, it defaults to 1.
+<p>
+The minimal polynomial is the monic polynomial of smallest degree with
+coefficients in <var>R</var> that has value zero at <var>elm</var>.
+<p>
+<pre>
+gap&gt; MinimalPolynomial(Rationals,[[2,0],[0,2]]);
+x-2
+</pre>
+<p>
+<p>
+<h2><a name="SECT009">64.9 Cyclotomic Polynomials</a></h2>
+<p><p>
+<a name = "SSEC009.1"></a>
+<li><code>CyclotomicPolynomial( </code><var>F</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+is the <var>n</var>-th cyclotomic polynomial over the ring <var>F</var>.
+<p>
+<pre>
+gap&gt; CyclotomicPolynomial(Rationals,5);
+x^4+x^3+x^2+x+1
+</pre>
+<p>
+<p>
+<h2><a name="SECT010">64.10 Polynomial Factorization</a></h2>
+<p><p>
+At the moment <font face="Gill Sans,Helvetica,Arial">GAP</font> provides only methods to factorize univariate
+polynomials over finite fields (see Chapter&nbsp;<a href="CHAP057.htm">Finite Fields</a>) and
+over subfields of cyclotomic fields (see Chapter&nbsp;<a href="CHAP058.htm">Abelian Number Fields</a>).
+<p>
+<a name = "SSEC010.1"></a>
+<li><code>Factors([</code><var>R</var><code>,]</code><var>upoly</var><code>[,</code><var>opt</var><code>])</code>
+<p>
+returns a list of the irreducible factors of the univariate polynomial
+<var>upoly</var> in the polynomial ring <var>R</var>. (That is factors over the
+<code>CoefficientsRing</code> of <var>R</var>.)
+<p>
+It is possible to pass a record <var>opt</var> as a third
+argument. This record can contain the following components:
+<p>
+<dl compact>
+<dt><code>onlydegs</code><dd>is a set of positive integers. The factorization assumes
+that all irreducible factors have a degree in this set.
+<p>
+<dt><code>stopdegs</code><dd>is a set of positive integers. The factorization will stop once a
+factor of degree in <code>stopdegs</code> has been found and will return the
+factorization found so far.
+</dl>
+<p>
+<pre>
+gap&gt; f:= CyclotomicPolynomial( GF(2), 7 );
+x_1^6+x_1^5+x_1^4+x_1^3+x_1^2+x_1+Z(2)^0
+gap&gt; Factors( f );
+[ x_1^3+x_1+Z(2)^0, x_1^3+x_1^2+Z(2)^0 ]
+gap&gt; Factors( PolynomialRing( GF(8) ), f );
+[ x_1+Z(2^3), x_1+Z(2^3)^2, x_1+Z(2^3)^3, x_1+Z(2^3)^4, x_1+Z(2^3)^5, 
+  x_1+Z(2^3)^6 ]
+gap&gt; f:= MinimalPolynomial( Rationals, E(4) );
+x^2+1
+gap&gt; Factors( f );
+[ x^2+1 ]
+gap&gt; Factors( PolynomialRing( Rationals ), f );
+[ x^2+1 ]
+gap&gt; Factors( PolynomialRing( CF(4) ), f );
+[ x+-E(4), x+E(4) ]
+</pre>
+<p>
+<a name = "SSEC010.2"></a>
+<li><code>FactorsSquarefree( </code><var>pring</var><code>, </code><var>upol</var><code>, </code><var>opt</var><code> ) O</code>
+<p>
+returns a factorization of the squarefree, monic, univariate polynomial
+<var>upoly</var> in the polynomial ring <var>pring</var>;
+<var>opt</var> must be a (possibly empty) record of options.
+<var>upol</var> must not have zero as a root.
+This function is used by the factoring algorithms.
+<p>
+<p>
+<h2><a name="SECT011">64.11 Polynomials over the Rationals</a></h2>
+<p><p>
+The following functions are only available to polynomials with rational
+coefficients:
+<p>
+<a name = "SSEC011.1"></a>
+<li><code>PrimitivePolynomial( </code><var>f</var><code> ) F</code>
+<p>
+takes a polynomial <var>f</var> with rational coefficients and computes a new
+polynomial with integral coefficients, obtained by multiplying with the
+Lcm of the denominators of the coefficients and casting out the content
+(the Gcd of the coefficients). The operation returns a list
+[<var>newpol</var>,<var>coeff</var>] with rational <var>coeff</var> such that
+<code></code><var>coeff</var><code>*</code><var>newpol</var><code>=</code><var>f</var><code></code>.
+<p>
+<a name = "SSEC011.2"></a>
+<li><code>PolynomialModP( </code><var>pol</var><code>, </code><var>p</var><code> ) F</code>
+<p>
+for a rational polynomial <var>pol</var> this function returns a polynomial over
+the field with <var>p</var> elements, obtained by reducing the coefficients modulo
+<var>p</var>.
+<p>
+<a name = "SSEC011.3"></a>
+<li><code>GaloisType( </code><var>f</var><code>[, </code><var>cand</var><code>] ) F</code>
+<p>
+Let <var>f</var> be an irreducible polynomial with rational coefficients. This
+function returns the type of Gal(<var>f</var>) 
+(considered as a transitive permutation group of the roots of <var>f</var>). It
+returns a number <var>i</var> if Gal(<var>f</var>) is permutation isomorphic to
+<code>TransitiveGroup(</code><var>n</var><code>,</code><var>i</var><code>)</code> where <var>n</var> is the degree of <var>f</var>.
+<p>
+Identification is performed by factoring
+appropriate Galois resolvents as proposed in <a href="biblio.htm#MS85"><cite>MS85</cite></a>.  This function
+is provided for rational polynomials of degree up to 15.  However, in some
+cases the required calculations become unfeasibly large.
+<p>
+For a few polynomials of degree 14, a complete discrimination is not yet
+possible, as it would require computations, that are not feasible with
+current factoring methods.
+<p>
+This function requires the transitive groups library to be installed (see
+<a href="CHAP048.htm#SECT006">Transitive Permutation Groups</a>).
+<p>
+<a name = "SSEC011.4"></a>
+<li><code>ProbabilityShapes( </code><var>f</var><code> ) F</code>
+<p>
+Let <var>f</var> be an irreducible polynomial with rational coefficients. This
+function returns a list of the most likely type(s) of Gal(<var>f</var>)
+(see&nbsp;<code>GaloisType</code> -- <a href="CHAP064.htm#SSEC011.3">GaloisType</a>), based
+on factorization modulo a set of primes.
+It is very fast, but the result is only probabilistic.
+<p>
+This function requires the transitive groups library to be installed (see
+<a href="CHAP048.htm#SECT006">Transitive Permutation Groups</a>).
+<p>
+<pre>
+gap&gt; f:=x^9-9*x^7+27*x^5-39*x^3+36*x-8;;
+gap&gt; GaloisType(f);
+25
+gap&gt; TransitiveGroup(9,25);
+[1/2.S(3)^3]3
+gap&gt; ProbabilityShapes(f);
+[ 25 ]
+</pre>
+<p>
+The following operations are used by <font face="Gill Sans,Helvetica,Arial">GAP</font> inside the factorization algorithm
+but might be of interest also in other contexts.
+<a name = "SSEC011.5"></a>
+<li><code>BombieriNorm( </code><var>pol</var><code> ) F</code>
+<p>
+computes weighted Norm [pol]_2 of <var>pol</var> which is a good measure for
+factor coeffietients (see <a href="biblio.htm#BTW93"><cite>BTW93</cite></a>).
+<p>
+<a name = "SSEC011.6"></a>
+<li><code>MinimizedBombieriNorm( </code><var>f</var><code> ) A</code>
+<p>
+This function applies linear Tschirnhaus transformations 
+(<i>x</i> <font face="symbol">&#8594;</font> <i>x</i> + <i>i</i>) to the
+polynomial <var>f</var>, trying to get the Bombieri norm of <var>f</var> small. It returns a
+list <code>[</code><var>new_polynomial</var><code>, </code><var>i_of_transformation</var><code>]</code>.
+<p>
+<a name = "SSEC011.7"></a>
+<li><code>HenselBound( </code><var>pol</var><code>, [</code><var>minpol</var><code>, </code><var>den</var><code>] ) F</code>
+<p>
+returns the Hensel bound of the polynomial <var>pol</var>.
+If the computation takes place over an algebraic extension, then
+the minimal polynomial <var>minpol</var> and denominator <var>den</var> must be given.
+<p>
+<a name = "SSEC011.8"></a>
+<li><code>OneFactorBound( </code><var>pol</var><code> ) F</code>
+<p>
+returns the coefficient bound for a single factor of the rational 
+polynomial <var>pol</var>.
+<p>
+<p>
+<h2><a name="SECT012">64.12 Laurent Polynomials</a></h2>
+<p><p>
+A univariate polynomial can be written in the form <i>r</i><sub>0</sub>+<i>r</i><sub>1</sub><i>x</i>+<font face="symbol">&#8230;</font>+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>
+with <i>r</i><sub><i>i</i></sub> <font face="symbol">&#8712;</font> <i>R</i>.  Formally, there is no reason to start with 0, if <i>m</i> is an
+integer, we can consider objects of the form
+<i>r</i><sub><i>m</i></sub><i>x</i><sup><i>m</i></sup>+<i>r</i><sub><i>m</i>+1</sub><i>x</i><sup><i>m</i>+1</sup>+<font face="symbol">&#8230;</font>+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>. We call these <strong>Laurent polynomials</strong>.
+Laurent polynomials also can be considered as quotients of a univariate
+polynomial by a power of the indeterminate.  The addition and multiplication
+of univariate polynomials extends to Laurent polynomials (though it might be
+impossible to interpret a Laurent polynomial as a function) and many
+functions for univariate polynomials extend to Laurent polynomials (or
+extended versions for Laurent polynomials exist).
+<p>
+<a name = "SSEC012.1"></a>
+<li><code>LaurentPolynomialByCoefficients( </code><var>fam</var><code>, </code><var>cofs</var><code>, </code><var>val</var><code> [, </code><var>ind</var><code>] ) O</code>
+<p>
+constructs a Laurent polynomial over the coefficients
+family <var>fam</var> and in the indeterminate <var>ind</var> (defaulting to 1) with
+the coefficients given by <var>coefs</var> and valuation <var>val</var>.
+<p>
+<a name = "SSEC012.2"></a>
+<li><code>CoefficientsOfLaurentPolynomial( </code><var>laurent</var><code> ) A</code>
+<p>
+For a Laurent polynomial this function returns a pair <code>[</code><var>cof</var><code>, </code><var>val</var><code>]</code>,
+consisting of the coefficient list (in ascending order) <var>cof</var> and the
+valuation <var>val</var> of the Laurent polynomial <var>laurent</var>.
+<p>
+<pre>
+gap&gt; p:=LaurentPolynomialByCoefficients(FamilyObj(1),
+&gt; [1,2,3,4,5],-2);
+5*x^2+4*x+3+2*x^-1+x^-2
+gap&gt; NumeratorOfRationalFunction(p);DenominatorOfRationalFunction(p);
+5*x^4+4*x^3+3*x^2+2*x+1
+x^2
+gap&gt; CoefficientsOfLaurentPolynomial(p*p);
+[ [ 1, 4, 10, 20, 35, 44, 46, 40, 25 ], -4 ]
+</pre>
+<p>
+<a name = "SSEC012.3"></a>
+<li><code>IndeterminateNumberOfLaurentPolynomial( </code><var>pol</var><code> ) F</code>
+<p>
+Is a synonym for <code>IndeterminateNumberOfUnivariateRationalFunction</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC001.2">IndeterminateNumberOfUnivariateRationalFunction</a>).
+<p>
+<a name = "SSEC012.4"></a>
+<li><code>QuotRemLaurpols( </code><var>left</var><code>, </code><var>right</var><code>, </code><var>mode</var><code> ) F</code>
+<p>
+takes two Laurent polynomials <var>left</var> and <var>right</var> and computes their
+quotient. Depending on the integer variable <var>mode</var> it returns:
+<ol>
+<li>
+the quotient (there might be some remainder),
+<p>
+<li>
+the remainder,
+<p>
+<li>
+a list [<var>q</var>,<var>r</var>] of quotient and remainder,
+<p>
+<li>
+the quotient if there is no remainder and <code>fail</code> otherwise.
+</ol>
+<p>
+<p>
+<h2><a name="SECT013">64.13 Univariate Rational Functions</a></h2>
+<p><p>
+<a name = "SSEC013.1"></a>
+<li><code>UnivariateRationalFunctionByCoefficients( </code><var>fam</var><code>, </code><var>ncof</var><code>, </code><var>dcof</var><code>, </code><var>val</var><code>[, </code><var>ind</var><code>] ) O</code>
+<p>
+constructs a univariate rational function over the coefficients
+family <var>fam</var> and in the indeterminate <var>ind</var> (defaulting to 1) with
+numerator and denominator coefficients given by <var>ncof</var> and <var>dcof</var> and
+valuation <var>val</var>.
+<p>
+<p>
+<h2><a name="SECT014">64.14 Polynomial Rings</a></h2>
+<p><p>
+While polynomials depend only on the family of the coefficients, polynomial
+rings <i>A</i> are defined over a base ring <i>R</i>. A polynomial is an element of
+<i>A</i> if and only if all its coefficients are contained in <i>R</i>. Besides
+providing domains and an easy way to create polynomials, polynomial rings
+can affect the behavior of operations like factorization into irreducibles.
+<p>
+<a name = "SSEC014.1"></a>
+<li><code>PolynomialRing( </code><var>ring</var><code>, </code><var>rank</var><code>, [</code><var>avoid</var><code>] ) O</code>
+<li><code>PolynomialRing( </code><var>ring</var><code>, </code><var>names</var><code>, [</code><var>avoid</var><code>] ) O</code>
+<li><code>PolynomialRing( </code><var>ring</var><code>, </code><var>indets</var><code> ) O</code>
+<li><code>PolynomialRing( </code><var>ring</var><code>, </code><var>indetnums</var><code> ) O</code>
+<p>
+creates a polynomial ring over <var>ring</var>. If a positive integer <var>rank</var> is
+given, this creates the polynomial ring in <var>rank</var> indeterminates.  These
+indeterminates will have the internal index numbers 1 to <var>rank</var>.  The
+second usage takes a list <var>names</var> of strings and returns a polynomial
+ring in indeterminates labelled by <var>names</var>.  These indeterminates have
+``new'' internal index numbers as if they had been created by calls to
+<code>Indeterminate</code>.  (If the argument <var>avoid</var> is given it contains
+indeterminates that should be avoided, in this case internal index
+numbers are incremented to skip these variables).
+In the third version, a
+list of indeterminates <var>indets</var> is given. This creates the polynomial
+ring in the indeterminates <var>indets</var>. Finally, the fourth version
+specifies indeterminates by their index number.
+<p>
+To get the indeterminates of a polynomial ring use
+<code>IndeterminatesOfPolynomialRing</code>. (Indeterminates created independently
+with <code>Indeterminate</code> will usually differ, though they might be given the
+same name and display identically -- see section&nbsp;<a href="CHAP064.htm#SECT001">Indeterminates</a>). 
+<p>
+<a name = "SSEC014.2"></a>
+<li><code>IndeterminatesOfPolynomialRing( </code><var>pring</var><code> ) A</code>
+<p>
+returns a list of the indeterminates of the polynomial ring <var>pring</var>
+<p>
+<a name = "SSEC014.3"></a>
+<li><code>CoefficientsRing( </code><var>pring</var><code> ) A</code>
+<p>
+returns the ring of coefficients of the polynomial ring <var>pring</var>, that is
+the ring over which <var>pring</var> was defined.
+<p>
+<pre>
+gap&gt; r:=PolynomialRing(GF(7));
+PolynomialRing(..., [ x_1 ])
+gap&gt;  r:=PolynomialRing(GF(7),3);
+PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap&gt; IndeterminatesOfPolynomialRing(r);
+[ x_1, x_2, x_3 ]
+gap&gt; r2:=PolynomialRing(GF(7),[5,7,12]);
+PolynomialRing(..., [ x_5, x_7, x_12 ])
+gap&gt; CoefficientsRing(r);
+GF(7)
+gap&gt; r:=PolynomialRing(GF(7),3);
+PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap&gt; r2:=PolynomialRing(GF(7),3,IndeterminatesOfPolynomialRing(r));
+PolynomialRing(..., [ x_4, x_5, x_6 ])
+gap&gt; r:=PolynomialRing(GF(7),["x","y","z","z2"]);
+PolynomialRing(..., [ x, y, z, z2 ])
+</pre>
+<p>
+If you need to work with a polynomial ring and its indeterminates the
+following two approaches will produce a ring that contains given variables
+(see section&nbsp;<a href="CHAP064.htm#SECT001">Indeterminates</a> for details about the internal numbering):
+Either, first create the ring and then get the indeterminates as
+<code>IndeterminatesOfPolynomialRing</code>. 
+<p>
+<pre>
+gap&gt; r := PolynomialRing(Rationals,["x","y"]);;
+gap&gt; indets := IndeterminatesOfPolynomialRing(r);;
+gap&gt; x := indets[1]; y := indets[2];
+x
+y
+</pre>
+<p>
+Alternatively, first create the
+indeterminates and then create the ring including these indeterminates.
+<pre>
+gap&gt; x:=X(Rationals,"x");;y:=X(Rationals,"y");;
+gap&gt; PolynomialRing(Rationals,[x,y]);;
+</pre>
+<p>
+As a convenient shortcut, intended mainly for interactive working, the
+indeterminates of a polynomial ring 'r' can be accessed as 'r.<var>i</var>',
+which corresponds exactly to <code>IndeterminatesOfPolynomialRing(r)[</code><var>i</var><code>]</code>
+or, if they have names, as 'r.<var>name</var>'. <strong>Note</strong> that the number <var>i</var> is
+<strong>not</strong> an indeterminate number, but simply an index into the
+indeterminates list of <code>r</code>;
+<p>
+<pre>
+gap&gt; r := PolynomialRing(Rationals, ["x", "y"] );;
+gap&gt; r.1; r.2; r.x; r.y;
+x
+y
+x
+y
+gap&gt; IndeterminateNumberOfLaurentPolynomial(r.1);
+7
+</pre>
+<p>
+As <font face="Gill Sans,Helvetica,Arial">GAP</font> objects polynomials can exist without a polynomial ring being
+defined and polynomials cannot be associated to a particular polynomial
+ring. (For example dividing a polynomial which is in a polynomial ring over
+the integers by another integer will result in a polynomial over the
+rationals, not in a rational function over the integers.)
+<p>
+<a name = "SSEC014.4"></a>
+<li><code>IsPolynomialRing( </code><var>pring</var><code> ) C</code>
+<p>
+is the category of polynomial rings
+<p>
+<a name = "SSEC014.5"></a>
+<li><code>IsFiniteFieldPolynomialRing( </code><var>pring</var><code> ) C</code>
+<p>
+is the category of polynomial rings over a finite field
+(see Chapter&nbsp;<a href="CHAP057.htm">Finite Fields</a>).
+<p>
+<a name = "SSEC014.6"></a>
+<li><code>IsAbelianNumberFieldPolynomialRing( </code><var>pring</var><code> ) C</code>
+<p>
+is the category of polynomial rings over a field of cyclotomics
+(see the chapters&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a> and <a href="CHAP058.htm">Abelian Number Fields</a>).
+<p>
+<a name = "SSEC014.7"></a>
+<li><code>IsRationalsPolynomialRing( </code><var>pring</var><code> ) C</code>
+<p>
+is the category of polynomial rings over the rationals
+(see Chapter&nbsp;<a href="CHAP016.htm">Rational Numbers</a>).
+<p>
+<pre>
+gap&gt; IsPolynomialRing(r);
+true
+gap&gt; IsFiniteFieldPolynomialRing(r);
+false
+gap&gt; IsRationalsPolynomialRing(r);
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT015">64.15 Univariate Polynomial Rings</a></h2>
+<p><p>
+<a name = "SSEC015.1"></a>
+<li><code>UnivariatePolynomialRing( </code><var>R</var><code> [, </code><var>nr</var><code>] ) O</code>
+<li><code>UnivariatePolynomialRing( </code><var>R</var><code> [, </code><var>avoid</var><code>] ) O</code>
+<li><code>UnivariatePolynomialRing( </code><var>R</var><code>, </code><var>name</var><code> [, </code><var>avoid</var><code>] ) O</code>
+<p>
+returns a univariate polynomial ring in the indeterminate <var>nr</var> over the
+base ring <var>R</var>. if <var>nr</var> is not given it defaults to 1.  If the number is
+not specified a list <var>avoid</var> of indeterminates may be given. The
+function will return a ring in an indeterminate that is guaranteed to be
+different from all the indeterminates in <var>avoid</var>. The third usage
+returns a ring in an indeterminate called <var>name</var> (also avoiding the
+indeterminates in <var>avoid</var> if given).
+<p>
+<a name = "SSEC015.2"></a>
+<li><code>IsUnivariatePolynomialRing( </code><var>pring</var><code> ) C</code>
+<p>
+is the category of polynomial rings with one indeterminate.
+<p>
+<pre>
+gap&gt; r:=UnivariatePolynomialRing(Rationals,"x");
+PolynomialRing(..., [ x ])
+gap&gt; r2:=PolynomialRing(Rationals,["q"]);
+PolynomialRing(..., [ q ])
+gap&gt; IsUnivariatePolynomialRing(r);
+true
+gap&gt; IsUnivariatePolynomialRing(r2);
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT016">64.16 Monomial Orderings</a></h2>
+<p><p>
+It is often desirable to consider the monomials within a polynomial to be
+arranged with respect to a certain ordering. Such an ordering is called a
+<strong>monomial ordering</strong> if it is total, invariant under multiplication with
+other monomials and admits no infinite descending chains. For details on
+monomial orderings see <a href="biblio.htm#coxlittleoshea"><cite>coxlittleoshea</cite></a>.
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>, monomial orderings are represented by objects that provide a way
+to compare monomials (as polynomials as well as -- for efficiency purposes
+within algorithms -- in the internal representation as lists). 
+<p>
+Normally the ordering chosen should be <strong>admissible</strong>, i.e. it
+must be compatible with products: If <i>a</i> &lt; <i>b</i> then <i>ca</i> &lt; <i>cb</i> for all monomials
+<i>a</i>,<i>b</i> and <i>c</i>.
+<p>
+<a name = "SSEC016.1"></a>
+<li><code>IsMonomialOrdering( </code><var>obj</var><code> ) C</code>
+<p>
+A monomial ordering is an object representing a monomial ordering. Its 
+attributes <code>MonomialComparisonFunction</code> and
+<code>MonomialExtrepComparisonFun</code> are actual comparison functions.
+<p>
+<a name = "SSEC016.2"></a>
+<li><code>LeadingMonomialOfPolynomial( </code><var>pol</var><code>, </code><var>ord</var><code> ) F</code>
+<p>
+returns the leading monomial (with respect to the ordering <var>ord</var>)
+of the polynomial <var>pol</var>.
+<p>
+<pre>
+gap&gt; x:=X(Rationals,"x");;y:=X(Rationals,"y");;z:=X(Rationals,"z");;
+gap&gt; lexord:=MonomialLexOrdering();grlexord:=MonomialGrlexOrdering();
+MonomialLexOrdering()
+MonomialGrlexOrdering()
+gap&gt; f:=2*x+3*y+4*z+5*x^2-6*z^2+7*y^3;          
+7*y^3+5*x^2-6*z^2+2*x+3*y+4*z
+gap&gt; LeadingMonomialOfPolynomial(f,lexord);
+x^2
+gap&gt; LeadingMonomialOfPolynomial(f,grlexord);
+y^3
+</pre>
+<p>
+<a name = "SSEC016.3"></a>
+<li><code>LeadingTermOfPolynomial( </code><var>pol</var><code>, </code><var>ord</var><code> ) F</code>
+<p>
+returns the leading term (with respect to the ordering <var>ord</var>)
+of the polynomial <var>pol</var>, i.e. the product of leading coefficient and
+leading monomial.
+<p>
+<a name = "SSEC016.4"></a>
+<li><code>LeadingCoefficientOfPolynomial( </code><var>pol</var><code>, </code><var>ord</var><code> ) O</code>
+<p>
+returns the leading coefficient (that is the coefficient of the leading
+monomial, see&nbsp;<a href="CHAP064.htm#SSEC016.2">LeadingMonomialOfPolynomial</a>) of the polynomial <var>pol</var>.
+<p>
+<pre>
+gap&gt; LeadingTermOfPolynomial(f,lexord);
+5*x^2
+gap&gt; LeadingTermOfPolynomial(f,grlexord);
+7*y^3
+gap&gt; LeadingCoefficientOfPolynomial(f,lexord);
+5
+</pre>
+<p>
+Each monomial ordering provides two functions to compare monomials. These
+functions work as ``is less than'', i.e. they return <code>true</code> if and only if
+the left argument is smaller.
+<p>
+<a name = "SSEC016.5"></a>
+<li><code>MonomialComparisonFunction( </code><var>O</var><code> ) A</code>
+<p>
+If <var>O</var> is an object representing a monomial ordering, this attribute
+returns a <strong>function</strong> that can be used to compare or sort monomials (and
+polynomials which will be compared by their monomials in decreasing
+order) in this order.
+<p>
+<pre>
+gap&gt; MonomialComparisonFunction(lexord);
+function( a, b ) ... end
+gap&gt; l:=[f,Derivative(f,x),Derivative(f,y),Derivative(f,z)];;
+gap&gt; Sort(l,MonomialComparisonFunction(lexord));l;
+[ -12*z+4, 21*y^2+3, 10*x+2, 7*y^3+5*x^2-6*z^2+2*x+3*y+4*z ]
+</pre>
+<p>
+<a name = "SSEC016.6"></a>
+<li><code>MonomialExtrepComparisonFun( </code><var>O</var><code> ) A</code>
+<p>
+If <var>O</var> is an object representing a monomial ordering, this attribute
+returns a <strong>function</strong> that can be used to compare or sort monomials <strong>in
+their external representation</strong> (as lists). This comparison variant is
+used inside algorithms that manipulate the external representation.
+<p>
+The following monomial orderings are predefined in <font face="Gill Sans,Helvetica,Arial">GAP</font>:
+<p>
+<a name = "SSEC016.7"></a>
+<li><code>MonomialLexOrdering( ) F</code>
+<li><code>MonomialLexOrdering( </code><var>vari</var><code> ) F</code>
+<p>
+This function creates a lexicographic ordering for monomials. Monomials
+are compared first by the exponents of the largest variable, then the
+exponents of the second larhgest variable and so on.
+<p>
+The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+is larger than <i>x</i><sub>2</sub> and so on.
+If <var>vari</var> is given, and is a list of variables or variable indices,
+instead this arrangement of variables (in descending order; i.e. the
+first variable is larger than the second) is 
+used as the underlying order of variables.
+<p>
+<pre>
+gap&gt; l:=List(Tuples([1..3],3),i-&gt;x^(i[1]-1)*y^(i[2]-1)*z^(i[3]-1));
+[ 1, z, z^2, y, y*z, y*z^2, y^2, y^2*z, y^2*z^2, x, x*z, x*z^2, x*y, x*y*z, 
+  x*y*z^2, x*y^2, x*y^2*z, x*y^2*z^2, x^2, x^2*z, x^2*z^2, x^2*y, x^2*y*z, 
+  x^2*y*z^2, x^2*y^2, x^2*y^2*z, x^2*y^2*z^2 ]
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialLexOrdering()));l;
+[ 1, z, z^2, y, y*z, y*z^2, y^2, y^2*z, y^2*z^2, x, x*z, x*z^2, x*y, x*y*z, 
+  x*y*z^2, x*y^2, x*y^2*z, x*y^2*z^2, x^2, x^2*z, x^2*z^2, x^2*y, x^2*y*z, 
+  x^2*y*z^2, x^2*y^2, x^2*y^2*z, x^2*y^2*z^2 ]
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialLexOrdering([y,z,x])));l;
+[ 1, x, x^2, z, x*z, x^2*z, z^2, x*z^2, x^2*z^2, y, x*y, x^2*y, y*z, x*y*z, 
+  x^2*y*z, y*z^2, x*y*z^2, x^2*y*z^2, y^2, x*y^2, x^2*y^2, y^2*z, x*y^2*z, 
+  x^2*y^2*z, y^2*z^2, x*y^2*z^2, x^2*y^2*z^2 ]
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialLexOrdering([z,x,y])));l;
+[ 1, y, y^2, x, x*y, x*y^2, x^2, x^2*y, x^2*y^2, z, y*z, y^2*z, x*z, x*y*z, 
+  x*y^2*z, x^2*z, x^2*y*z, x^2*y^2*z, z^2, y*z^2, y^2*z^2, x*z^2, x*y*z^2, 
+  x*y^2*z^2, x^2*z^2, x^2*y*z^2, x^2*y^2*z^2 ]
+</pre>
+<p>
+<a name = "SSEC016.8"></a>
+<li><code>MonomialGrlexOrdering( ) F</code>
+<li><code>MonomialGrlexOrdering( </code><var>vari</var><code> ) F</code>
+<p>
+This function creates a degree/lexicographic ordering. In this oredring
+monomials are compared first by their total degree, then lexicographically
+(see <code>MonomialLexOrdering</code>).
+<p>
+The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+is larger than <i>x</i><sub>2</sub> and so on.
+If <var>vari</var> is given, and is a list of variables or variable indices,
+instead this arrangement of variables (in descending order; i.e. the
+first variable is larger than the second) is 
+used as the underlying order of variables.
+<p>
+<a name = "SSEC016.9"></a>
+<li><code>MonomialGrevlexOrdering( ) F</code>
+<li><code>MonomialGrevlexOrdering( </code><var>vari</var><code> ) F</code>
+<p>
+This function creates a ``grevlex'' ordering. In this ordering monomials
+are compared first by total degree and then backwards lexicographically.
+(This is different than ``grlex'' ordering with variables reversed.) 
+<p>
+The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+is larger than <i>x</i><sub>2</sub> and so on.
+If <var>vari</var> is given, and is a list of variables or variable indices,
+instead this arrangement of variables (in descending order; i.e. the
+first variable is larger than the second) is 
+used as the underlying order of variables.
+<p>
+<pre>
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialGrlexOrdering()));l;
+[ 1, z, y, x, z^2, y*z, y^2, x*z, x*y, x^2, y*z^2, y^2*z, x*z^2, x*y*z, 
+  x*y^2, x^2*z, x^2*y, y^2*z^2, x*y*z^2, x*y^2*z, x^2*z^2, x^2*y*z, x^2*y^2, 
+  x*y^2*z^2, x^2*y*z^2, x^2*y^2*z, x^2*y^2*z^2 ]
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialGrevlexOrdering()));l;
+[ 1, z, y, x, z^2, y*z, x*z, y^2, x*y, x^2, y*z^2, x*z^2, y^2*z, x*y*z, 
+  x^2*z, x*y^2, x^2*y, y^2*z^2, x*y*z^2, x^2*z^2, x*y^2*z, x^2*y*z, x^2*y^2, 
+  x*y^2*z^2, x^2*y*z^2, x^2*y^2*z, x^2*y^2*z^2 ]
+gap&gt; Sort(l,MonomialComparisonFunction(MonomialGrlexOrdering([z,y,x])));l;
+[ 1, x, y, z, x^2, x*y, y^2, x*z, y*z, z^2, x^2*y, x*y^2, x^2*z, x*y*z, 
+  y^2*z, x*z^2, y*z^2, x^2*y^2, x^2*y*z, x*y^2*z, x^2*z^2, x*y*z^2, y^2*z^2, 
+  x^2*y^2*z, x^2*y*z^2, x*y^2*z^2, x^2*y^2*z^2 ]
+</pre>
+<p>
+<a name = "SSEC016.10"></a>
+<li><code>EliminationOrdering( </code><var>elim</var><code> ) F</code>
+<li><code>EliminationOrdering( </code><var>elim</var><code>, </code><var>rest</var><code> ) F</code>
+<p>
+This function creates an elimination ordering for eliminating the
+variables in <var>elim</var>. Two monomials are compared first by the exponent
+vectors for the variables listed in <var>elim</var> (a lexicographic comparison
+with respect to the ordering indicated in <var>elim</var>).
+If these submonomial are equal, the submonomials given by the other
+variables are compared by a graded lexicographic ordering (with respect
+to the variable order given in <var>rest</var>, if called with two parameters).
+<p>
+Both <var>elim</var> and <var>rest</var> may be a list of variables of a list of variable
+indices.
+<p>
+<a name = "SSEC016.11"></a>
+<li><code>PolynomialReduction( </code><var>poly</var><code>, </code><var>gens</var><code>, </code><var>order</var><code> ) F</code>
+<p>
+reduces the polynomial <var>poly</var> by the ideal generated by the polynomials
+in <var>gens</var>, using the order <var>order</var> of monomials.  Unless <var>gens</var> is a
+Gr&ouml;bner basis the result is not guaranteed to be unique.
+<p>
+The operation returns a list of length two, the first entry is the
+remainder after the reduction. The second entry is a list of quotients
+corresponding to <var>gens</var>.
+<p>
+Note that the strategy used by <code>PolynomialReduction</code> differs from the 
+standard textbook reduction algorithm, which is provided by
+<code>PolynomialDivisionAlgorithm</code>.
+<p>
+<a name = "SSEC016.12"></a>
+<li><code>PolynomialReducedRemainder( </code><var>poly</var><code>, </code><var>gens</var><code>, </code><var>order</var><code> ) F</code>
+<p>
+thios operation does the same way as <code>PolynomialReduction</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC016.11">PolynomialReduction</a>) but does not keep track of the actual quotients
+and returns only the remainder (it is therfore slightly faster).
+<p>
+<a name = "SSEC016.13"></a>
+<li><code>PolynomialDivisionAlgorithm( </code><var>poly</var><code>, </code><var>gens</var><code>, </code><var>order</var><code> ) F</code>
+<p>
+This function implements the division algorithm for multivariate
+polynomials as given in theorem&nbsp;3 in chapter&nbsp;2 of <a href="biblio.htm#coxlittleoshea"><cite>coxlittleoshea</cite></a>.
+(It might be slower than <code>PolynomialReduction</code> but the remainders are
+guaranteed to agree with the textbook.)
+<p>
+The operation returns a list of length two, the first entry is the
+remainder after the reduction. The second entry is a list of quotients
+corresponding to <var>gens</var>.
+<p>
+<pre>
+gap&gt; bas:=[x^3*y*z,x*y^2*z,z*y*z^3+x];;
+gap&gt; pol:=x^7*z*bas[1]+y^5*bas[3]+x*z;;                                        
+gap&gt; PolynomialReduction(pol,bas,MonomialLexOrdering()); 
+[ -y*z^5, [ x^7*z, 0, y^5+z ] ]
+gap&gt; PolynomialReducedRemainder(pol,bas,MonomialLexOrdering());
+-y*z^5
+gap&gt; PolynomialDivisionAlgorithm(pol,bas,MonomialLexOrdering());
+[ -y*z^5, [ x^7*z, 0, y^5+z ] ]
+</pre>
+<p>
+<a name = "SSEC016.14"></a>
+<li><code>MonomialExtGrlexLess( </code><var>a</var><code>, </code><var>b</var><code> ) F</code>
+<p>
+implements comparison of monomial in their external representation by a 
+``grlex'' order with <i>x</i><sub>1</sub> &gt; <i>x</i><sub>2</sub>
+(This is exactly the same as the ordering by
+<code>MonomialGrlexOrdering()</code>, see&nbsp; <a href="CHAP064.htm#SECT016">Monomial Orderings</a>).
+The function takes two
+monomials <var>a</var> and <var>b</var> in expanded form and returns whether the first is
+smaller than the second. (This ordering is also used by <font face="Gill Sans,Helvetica,Arial">GAP</font>
+internally for representing polynomials as a linear combination of
+monomials.)
+<p>
+See section&nbsp;<a href="CHAP064.htm#SECT020">The Defining Attributes of Rational Functions</a> for details
+on the expanded form of monomials.
+<p>
+<p>
+<h2><a name="SECT017">64.17 Groebner Bases</a></h2>
+<p><p>
+A <strong>Groebner Basis</strong> of an ideal <i>I</i>i, in a polynomial ring <i>R</i>, with
+respect to a monomial ordering, is a set of ideal generators <var>G</var> such that
+the ideal generated by the leading monomials of all polynomials in <var>G</var> is
+equal to the ideal generated by the leading monomials of all polynomials
+in <var>I</var>.
+<p>
+For more details on Groebner bases see <a href="biblio.htm#coxlittleoshea"><cite>coxlittleoshea</cite></a>.
+<p>
+<a name = "SSEC017.1"></a>
+<li><code>GroebnerBasis( </code><var>L</var><code>, </code><var>O</var><code> ) O</code>
+<li><code>GroebnerBasis( </code><var>I</var><code>, </code><var>O</var><code> ) O</code>
+<a name = "SSEC017.1"></a>
+<li><code>GroebnerBasisNC( </code><var>L</var><code>, </code><var>O</var><code> ) O</code>
+<p>
+Let <var>O</var> be a monomial ordering and <var>L</var> be a list of polynomials that
+generate an ideal <var>I</var>. This operation returns a Groebner basis of
+<var>I</var> with respect to the ordering <var>O</var>.\
+<p>
+<code>GroebnerBasisNC</code> works like <code>GroebnerBasis</code> with the only distinction
+that the first argument has to be a list of polynomials and that no test is
+performed to check whether the ordering is defined for all occuring
+variables.
+<p>
+Note that <font face="Gill Sans,Helvetica,Arial">GAP</font> at the moment only includes
+a na"ive implementation of Buchberger's algorithm (which is mainly
+intended as a teaching tool). It might not be
+sufficient for serious problems.
+<p>
+<pre>
+gap&gt; l:=[x^2+y^2+z^2-1,x^2+z^2-y,x-y];;
+gap&gt; GroebnerBasis(l,MonomialLexOrdering());
+[ x^2+y^2+z^2-1, x^2+z^2-y, x-y, -y^2-y+1, -z^2+2*y-1, 1/2*z^4+2*z^2-1/2 ]
+gap&gt; GroebnerBasis(l,MonomialLexOrdering([z,x,y]));
+[ x^2+y^2+z^2-1, x^2+z^2-y, x-y, -y^2-y+1 ]
+gap&gt; GroebnerBasis(l,MonomialGrlexOrdering());
+[ x^2+y^2+z^2-1, x^2+z^2-y, x-y, -y^2-y+1, -z^2+2*y-1 ]
+</pre>
+<p>
+<a name = "SSEC017.2"></a>
+<li><code>ReducedGroebnerBasis( </code><var>L</var><code>, </code><var>O</var><code> ) O</code>
+<li><code>ReducedGroebnerBasis( </code><var>I</var><code>, </code><var>O</var><code> ) O</code>
+<p>
+a Groebner basis <var>B</var> (see&nbsp;<a href="CHAP064.htm#SSEC017.1">GroebnerBasis</a>) is <strong>reduced</strong> if no monomial
+in a polynomial in <var>B</var> is divisible by the leading monomial of another
+polynomial in <var>B</var>. This operation computes a Groebner basis with respect
+to <var>O</var> and then reduces it.
+<p>
+<pre>
+gap&gt; ReducedGroebnerBasis(l,MonomialGrlexOrdering());
+[ x-y, z^2-2*y+1, y^2+y-1 ]
+gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering());    
+[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/2*z^2+x-1/2 ]
+gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering([y,z,x]));
+[ x^2+x-1, z^2-2*x+1, -x+y ]
+</pre>
+<p>
+<a name = "SSEC017.3"></a>
+<li><code>StoredGroebnerBasis( </code><var>I</var><code> ) A</code>
+<p>
+For an ideal <var>I</var> in a polynomial ring, this attribute holds a list
+[<var>B</var>,<var>O</var>] where <var>B</var> is a Groebner basis for the monomial ordering <var>O</var>.
+this can be used to test membership or canonical coset representatives.
+<p>
+<a name = "SSEC017.4"></a>
+<li><code>InfoGroebner V</code>
+<p>
+This info class gives information about Groebner basis calculations.
+<p>
+<p>
+<h2><a name="SECT018">64.18 Rational Function Families</a></h2>
+<p><p>
+All rational functions defined over a ring lie in the same family, the
+rational functions family over this ring.
+<p>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font> therefore the family of a polynomial depends only on the family of
+the coefficients, all polynomials whose coefficients lie in the same family
+are ``compatible''.
+<p>
+<a name = "SSEC018.1"></a>
+<li><code>RationalFunctionsFamily( </code><var>fam</var><code> ) A</code>
+<p>
+creates a   family  containing rational functions  with   coefficients
+in <var>fam</var>. 
+All elements of the <code>RationalFunctionsFamily</code> are rational functions
+(see&nbsp;<a href="CHAP064.htm#SSEC004.1">IsRationalFunction</a>).
+<p>
+<a name = "SSEC018.2"></a>
+<li><code>IsPolynomialFunctionsFamily( </code><var>obj</var><code> ) C</code>
+<a name = "SSEC018.2"></a>
+<li><code>IsRationalFunctionsFamily( </code><var>obj</var><code> ) C</code>
+<p>
+<code>IsPolynomialFunctionsFamily</code> is the category of a family of polynomials.
+For families over an UFD, the category becomes
+<code>IsRationalFunctionsFamily</code> (as rational functions and quotients are only
+provided for families over an UFD.)
+<p>
+<pre>
+gap&gt; fam:=RationalFunctionsFamily(FamilyObj(1));
+NewFamily( "RationalFunctionsFamily(...)", [ 618, 620 ],
+[ 82, 85, 89, 93, 97, 100, 103, 107, 111, 618, 620 ] )
+</pre>
+<p>
+<a name = "SSEC018.3"></a>
+<li><code>CoefficientsFamily( </code><var>rffam</var><code> ) A</code>
+<p>
+If <var>rffam</var> has been created as <code>RationalFunctionsFamily(</code><var>cfam</var><code>)</code> this
+attribute holds the coefficients family <var>cfam</var>.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> does <strong>not</strong> embed the base ring in the polynomial ring. While
+multiplication and addition of base ring elements to rational functions
+return the expected results, polynomials and rational functions are not
+equal.
+<pre>
+gap&gt; 1=Indeterminate(Rationals)^0;
+false
+</pre>
+<p>
+<p>
+<h2><a name="SECT019">64.19 The Representations of Rational Functions</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> uses four representations of rational functions: Rational
+functions given by numerator and denominator, polynomials, univariate
+rational functions (given by coefficient lists for numerator and denominator
+and valuation) and
+Laurent polynomials (given by coefficient list and valuation).
+<p>
+These representations do not necessarily reflect mathematical properties:
+While an object in the Laurent polynomials representation must be a
+Laurent polynomial it might turn out that a rational function given by
+numerator and denominator is actually a Laurent polynomial and the property
+tests in section&nbsp;<a href="CHAP064.htm#SECT004">Properties and Attributes of Rational Functions</a> will find
+this out.
+<p>
+Each representation is associated one or several ``defining attributes''
+that give an ``external'' representation
+(see&nbsp;<a href="CHAP064.htm#SECT020">The Defining Attributes of Rational Functions</a>)
+of the representation in the form of lists and are the defining information
+that tells a rational function what it is.
+<p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> also implements methods to compute these attributes for rational
+functions in <strong>other</strong> representations, provided it would be possible to
+express an <strong>mathematically equal</strong> rational function in the representation
+associated with the attribute. (That is one can always get a
+numerator/denominator representation of a polynomial while an arbitrary
+function of course can compute a polynomial representation only if it is a
+polynomial.)
+<p>
+Therefore these attributes can be thought of as ``conceptual''
+representations that allow us -- as far as possible --
+to consider an object as a rational function, a polynomial or a Laurent
+polynomial, regardless of the way it is represented in the computer.
+<p>
+Functions thus usually do not need to care about the representation of
+a rational function. Depending on its (known in the context or determined)
+properties, they can access the attribute representing the rational function
+in the desired way.
+<p>
+Consequentially, methods for rational functions are installed for properties
+and not for representations.
+<p>
+When <strong>creating</strong> new rational functions however they must be created in one
+of the three representations. In most cases this will be the representation
+for which the ``conceptual'' representation in which the calculation was done
+is the defining attribute.
+<p>
+Iterated operations (like forming the product over a list) therefore will
+tend to stay in the most suitable representation and the calculation of
+another conceptual representation (which may be comparatively expensive in
+certain circumstances) is not necessary.
+<p>
+<p>
+<h2><a name="SECT020">64.20 The Defining Attributes of Rational Functions</a></h2>
+<p><p>
+In general, rational functions are given in terms of monomials. They are
+represented by lists, using numbers (see&nbsp;<a href="CHAP064.htm#SECT001">Indeterminates</a>) for the
+indeterminates.
+<p>
+<a name = "I1"></a>
+
+A monomial is a product of powers of indeterminates. A monomial is
+stored as a list (we call this the <strong>expanded form</strong> of the monomial)
+of the form <code>[</code><var>inum</var><code>,</code><var>exp</var><code>,</code><var>inum</var><code>,</code><var>exp</var><code>,...]</code> where each <var>inum</var>
+is the number of an indeterminate and <var>exp</var> the corresponding exponent.
+The list must be sorted according to the numbers of the indeterminates.
+Thus for example, if <i>x</i>, <i>y</i> and <i>z</i> are the first three indeterminates,
+the expanded form of the monomial <i>x</i><sup>5</sup><i>z</i><sup>8</sup>=<i>z</i><sup>8</sup><i>x</i><sup>5</sup> is <code>[1,5,3,8]</code>.
+<p>
+<a name = "I2"></a>
+
+The representation of a polynomials is a list of the form
+<code>[</code><var>mon</var><code>,</code><var>coeff</var><code>,</code><var>mon</var><code>,</code><var>coeff</var><code>,...]</code> where <var>mon</var> is a monomial in
+expanded form (that is given as list) and <var>coeff</var> its coefficient. The
+monomials must be sorted according to the total degree/lexicographic
+order (This is the same as given by the ``grlex'' monomial ordering,
+see&nbsp;<a href="CHAP064.htm#SSEC016.8">MonomialGrlexOrdering</a>). We call
+this the <strong>external representation</strong> of a polynomial. (The
+reason for ordering is that addition of polynomials becomes linear in
+the number of monomials instead of quadratic; the reason for the
+particular ordering chose is that it is compatible with multiplication
+and thus gives acceptable performance for quotient calculations.)
+<p>
+<a name = "SSEC020.1"></a>
+<li><code>IsRationalFunctionDefaultRep( </code><var>obj</var><code> ) R</code>
+<p>
+is the default representation of rational functions. A rational function
+in this representation is defined by the attributes
+<code>ExtRepNumeratorRatFun</code> and <code>ExtRepDenominatorRatFun</code> where
+<code>ExtRepNumeratorRatFun</code> and <code>ExtRepDenominatorRatFun</code> are
+both external representations of a polynomial.
+<p>
+<a name = "SSEC020.2"></a>
+<li><code>ExtRepNumeratorRatFun( </code><var>ratfun</var><code> ) A</code>
+<p>
+returns the external representation of the numerator polynomial of the
+rational function <var>ratfun</var>. Numerator and Denominator are not guaranteed
+to be cancelled against each other.
+<p>
+<a name = "SSEC020.3"></a>
+<li><code>ExtRepDenominatorRatFun( </code><var>ratfun</var><code> ) A</code>
+<p>
+returns the external representation of the denominator polynomial of the
+rational function <var>ratfun</var>. Numerator and Denominator are not guaranteed
+to be cancelled against each other.
+<p>
+<a name = "SSEC020.4"></a>
+<li><code>ZeroCoefficientRatFun( </code><var>ratfun</var><code> ) O</code>
+<p>
+returns the zero of the coefficient ring. This might be needed to
+represent the zero polynomial for which the external representation of
+the numerator is the empty list.
+<p>
+<a name = "SSEC020.5"></a>
+<li><code>IsPolynomialDefaultRep( </code><var>obj</var><code> ) R</code>
+<p>
+is the default representation of polynomials. A polynomial
+in this representation is defined by the components
+and <code>ExtRepNumeratorRatFun</code> where <code>ExtRepNumeratorRatFun</code> is the
+external representation of the polynomial.
+<p>
+<a name = "SSEC020.6"></a>
+<li><code>ExtRepPolynomialRatFun( </code><var>polynomial</var><code> ) A</code>
+<p>
+returns the external representation of a polynomial. The difference to
+<code>ExtRepNumeratorRatFun</code> is that rational functions might know to be a
+polynomial but can still have a non-vanishing denominator. In this case
+<code>ExtRepPolynomialRatFun</code> has to call a quotient routine.
+<p>
+<a name = "SSEC020.7"></a>
+<li><code>IsLaurentPolynomialDefaultRep( </code><var>obj</var><code> ) R</code>
+<p>
+This representation is used for Laurent polynomials and univariate
+polynomials. It represents a Laurent polynomial via the attributes
+<code>CoefficientsOfLaurentPolynomial</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC012.2">CoefficientsOfLaurentPolynomial</a>) and
+<code>IndeterminateNumberOfLaurentPolynomial</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC012.3">IndeterminateNumberOfLaurentPolynomial</a>).
+<p>
+The attributes that give a representation of a a rational function as a Laurent polynomial are
+<code>CoefficientsOfLaurentPolynomial</code> (see&nbsp;<a href="CHAP064.htm#SSEC012.2">CoefficientsOfLaurentPolynomial</a>)
+and <code>IndeterminateNumberOfUnivariateRationalFunction</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC001.2">IndeterminateNumberOfUnivariateRationalFunction</a>).
+<p>
+Algorithms should use only the attributes <code>ExtRepNumeratorRatFun</code>,
+<code>ExtRepDenominatorRatFun</code>,
+<code>ExtRepPolynomialRatFun</code>, <code>CoefficientsOfLaurentPolynomial</code> and -- if
+the univariate function is not constant --
+<code>IndeterminateNumberOfUnivariateRationalFunction</code> as the low-level
+interface to work with a polynomial. They should not refer to the actual
+representation used.
+<p>
+<p>
+<h2><a name="SECT021">64.21 Creation of Rational Functions</a></h2>
+<p><p>
+The operations <code>LaurentPolynomialByCoefficients</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC012.1">LaurentPolynomialByCoefficients</a>),
+<code>PolynomialByExtRep</code> and <code>RationalFunctionByExtRep</code> are used to
+construct objects in the three basic representations for rational
+functions.
+<p>
+<a name = "SSEC021.1"></a>
+<li><code>RationalFunctionByExtRep( </code><var>rfam</var><code>, </code><var>num</var><code>, </code><var>den</var><code> ) F</code>
+<p>
+constructs a rational function (in the representation
+<code>IsRationalFunctionDefaultRep</code>) in the rational function family <var>rfam</var>,
+the rational function itself is given by the external representations
+<var>num</var> and <var>den</var> for numerator and denominator.
+No test for validity of the arguments is performed and no cancellation
+takes place.
+<p>
+<a name = "SSEC021.2"></a>
+<li><code>PolynomialByExtRep( </code><var>rfam</var><code>, </code><var>extrep</var><code> ) F</code>
+<p>
+constructs a polynomial (in the representation <code>IsPolynomialDefaultRep</code>)
+in the rational function family <var>rfam</var>, the polynomial itself is given
+by the external representation <var>extrep</var>.
+No test for validity of the arguments is performed.
+<p>
+<pre>
+gap&gt; fam:=RationalFunctionsFamily(FamilyObj(1));;
+gap&gt; p:=PolynomialByExtRep(fam,[[1,2],1,[2,1,15,7],3]);
+3*y*x_15^7+x^2
+gap&gt; q:=p/(p+1);
+(3*y*x_15^7+x^2)/(3*y*x_15^7+x^2+1)
+gap&gt; ExtRepNumeratorRatFun(q);
+[ [ 1, 2 ], 1, [ 2, 1, 15, 7 ], 3 ]
+gap&gt; ExtRepDenominatorRatFun(q);
+[ [  ], 1, [ 1, 2 ], 1, [ 2, 1, 15, 7 ], 3 ]
+</pre>
+<a name = "SSEC021.3"></a>
+<li><code>LaurentPolynomialByExtRep( </code><var>fam</var><code>, </code><var>cofs</var><code>, </code><var>val</var><code> , </code><var>ind</var><code> ) F</code>
+<p>
+creates a Laurent polynomial in the family <var>fam</var> with [<var>cofs</var>,<var>val</var>] as
+value of <code>CoefficientsOfLaurentPolynomial</code>. No coefficient shifting is
+performed.  This is the lowest level function to create a Laurent
+polynomial but will rely on the coefficients being shifted properly and
+will not perform any tests. Unless this is guaranteed for the
+parameters, <code>LaurentPolynomialByCoefficients</code>
+(see&nbsp;<a href="CHAP064.htm#SSEC012.1">LaurentPolynomialByCoefficients</a>) should be used.
+<p>
+<p>
+<h2><a name="SECT022">64.22 Arithmetic for External Representations of Polynomials</a></h2>
+<p><p>
+The following operations are used internally to perform the arithmetic for
+polynomials in their ``external'' representation
+(see&nbsp;<a href="CHAP064.htm#SECT020">The Defining Attributes of Rational Functions</a>)
+as lists.
+<a name = "SSEC022.1"></a>
+<li><code>ZippedSum( </code><var>z1</var><code>, </code><var>z2</var><code>, </code><var>czero</var><code>, </code><var>funcs</var><code> ) O</code>
+<p>
+computes the sum of two external representations of polynomials <var>z1</var> and
+<var>z2</var>. <var>czero</var> is the appropriate coefficient zero and <var>funcs</var> a list 
+[ <var>monomial less</var>, <var>coefficient sum</var> ] containing a monomial comparison
+and a coefficient addition function. This list can be found in the
+component <code></code><var>fam</var><code>!.zippedSum</code> of the rational functions family.
+<p>
+Note that <var>coefficient sum</var> must be a proper ``summation'' function, not
+a function computing differences.
+<p>
+<a name = "SSEC022.2"></a>
+<li><code>ZippedProduct( </code><var>z1</var><code>, </code><var>z2</var><code>, </code><var>czero</var><code>, </code><var>funcs</var><code> ) O</code>
+<p>
+computes the product of two external representations of polynomials <var>z1</var>
+and <var>z2</var>. <var>czero</var> is the appropriate coefficient zero and <var>funcs</var> a list
+<code>[</code><var>monomial_prod</var><code>, </code><var>monomial_less</var><code>, </code><var>coefficient_sum</var><code>, </code><var>coefficient_prod</var><code>]</code>
+containing functions to multiply and compare monomials, to add and to
+multiply coefficients.  This list can be found in the component
+<code></code><var>fam</var><code>!.zippedProduct</code> of the rational functions family.
+<p>
+<a name = "SSEC022.3"></a>
+<li><code>QuotientPolynomialsExtRep( </code><var>fam</var><code>, </code><var>a</var><code>, </code><var>b</var><code> ) F</code>
+<p>
+Let <var>a</var> and <var>b</var> the external representations of two polynomials in the
+rational functions family <var>fam</var>. This function computes the external
+representation of the quotient of both polynomials, it returns <code>fail</code> if
+<var>b</var> does not divide <var>a</var>.
+<p>
+Functions to perform arithmetic with the coefficient lists of Laurent
+polynomials are described in section&nbsp;<a href="CHAP023.htm#SECT003">Coefficient List Arithmetic</a>.
+<p>
+<p>
+<h2><a name="SECT023">64.23 Cancellation Tests for Rational Functions</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> does not contain a multivariate GCD algorithm. The following
+operations are used internally to try to keep the denominators as small as
+possible
+<p>
+<a name = "SSEC023.1"></a>
+<li><code>RationalFunctionByExtRepWithCancellation( </code><var>rfam</var><code>, </code><var>num</var><code>, </code><var>den</var><code> ) F</code>
+<p>
+constructs a rational function as <code>RationalFunctionByExtRep</code> does but
+tries to cancel out common factors of numerator and denominator, calling
+<code>TryGcdCancelExtRepPolynomials</code>.
+<p>
+<a name = "SSEC023.2"></a>
+<li><code>TryGcdCancelExtRepPolynomials( </code><var>fam</var><code>, </code><var>a</var><code>, </code><var>b</var><code> ) F</code>
+<p>
+Let <var>f</var> and <var>g</var> be two polynomials given by the ext reps <var>a</var> and <var>b</var>.
+This function tries to cancel common factors between <var>a</var> and <var>b</var> and
+returns a list [<var>ac</var>,<var>bc</var>] of cancelled numerator and denominator ext
+rep. As there is no proper multivariate GCD cancellation is not
+guaranteed to be optimal.
+<p>
+<a name = "SSEC023.3"></a>
+<li><code>HeuristicCancelPolynomials( </code><var>fam</var><code>, </code><var>ext1</var><code>, </code><var>ext2</var><code> ) O</code>
+<p>
+is called by <code>TryGcdCancelExtRepPol</code> to perform the actual work. It will
+return either <code>fail</code> or a new list [<var>num</var>,<var>den</var>] of cancelled numerator
+and denominator. The cancellation performed is not necessarily optimal.
+<p>
+<p>
+[<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP063.htm">Previous</a>] [<a href ="CHAP065.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+</font></body></html>

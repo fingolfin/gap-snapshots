@@ -1,0 +1,140 @@
+\letter A
+  `AddHashEntry', 10
+\letter B
+  `BaseOfGroup', 20
+  `BasePointOfSchreierTransversal', 16
+\letter C
+  `CanonicalElt', 14
+  `ChainHomomorphicImage', 20
+  `ChainStatistics', 20
+  `ChainSubgroup', 19
+  `ChainSubgroupByDirectProduct', 21
+  `ChainSubgroupByHomomorphism', 20
+  `ChainSubgroupByProjectionFunction', 20
+  `ChainSubgroupByPSubgroupOfAbelian', 21
+  `ChainSubgroupBySiftFunction', 21
+  `ChainSubgroupByStabiliser', 20
+  `ChainSubgroupByTrivialSubgroup', 21
+  `ChainSubgroupQuotient', 21
+  `ChangedBaseGroup', 20
+  `CompleteSchreierTransversal', 17
+  Creating hom cosets and quotient groups, \indexit{14}
+\letter D
+  `DenseHashTable', 11
+  Dense hash tables, \indexit{11}
+  `DenseIntKey', 11
+  Dictionaries, \indexit{9}
+  `DictionaryByPosition', 10
+  Direct product chain subgroups, \indexit{21}
+  `DoubleHashArraySize', 11
+\letter E
+  `ExtendedGroup', 20
+  `ExtendSchreierTransversal', 17
+  `ExtendSchreierTransversalShortCube', 17
+  `ExtendSchreierTransversalShortTree', 17
+\letter F
+  Fast access to last hash index, \indexit{11}
+\letter G
+  General hash table definitions and operations, \indexit{10}
+  General Hash Tables, \indexit{10}
+  General operations on transversals, \indexit{16}
+  `GeneratingSetIsComplete', 19
+  `GetHashEntry', 10
+  `GetHashEntryAtLastIndex', 12
+  `GetHashEntryIndex', 11
+\letter H
+  `HasChainHomomorphicImage', 20
+  `HashFunct', 11
+  `HashKeyEnumerator', 10
+  Hash keys, \indexit{10}
+  `HomCoset', 14
+  Hom coset chain subgroups, \indexit{20}
+  `HomCosetWithImage', 14
+  `Homomorphism', for quotient groups by homomorphisms, 14
+    \sub for subgroup transversals, 17
+  `HomTransversal', 17
+\letter I
+  `ImageElt', 14
+  `ImageGroup', 17
+  `ImagesSource', 14
+  `Injection', 18
+  `IsChainTypeGroup', 19
+  `IsDictionary', 9
+  `IsHash', 10
+  `IsHomCoset', 13
+  `IsHomCosetOfAdditiveElt', 13
+  `IsHomCosetOfFp', 13
+  `IsHomCosetOfMatrix', 13
+  `IsHomCosetOfPerm', 13
+  `IsHomCosetOfTuple', 13
+  `IsHomCosetToAdditiveElt', 13
+  `IsHomCosetToAdditiveEltRep', 13
+  `IsHomCosetToFp', 13
+  `IsHomCosetToFpRep', 13
+  `IsHomCosetToMatrix', 13
+  `IsHomCosetToMatrixRep', 13
+  `IsHomCosetToObjectRep', 13
+  `IsHomCosetToPerm', 13
+  `IsHomCosetToPermRep', 13
+  `IsHomCosetToTuple', 13
+  `IsHomCosetToTupleRep', 13
+  `IsInChain', 19
+  `IsLookupDictionary', 9
+\letter K
+  `KnowsDictionary', 9
+\letter L
+  `LookupDictionary', 9
+\letter M
+  `MakeHomChain', 21
+\letter N
+  `NewDictionary', 9
+\letter O
+  `One', 17
+  Operations on hom cosets, \indexit{14}
+  `OrbitGenerators', 16
+  `OrbitGeneratorsInv', 16
+  `OrbitGeneratorsOfGroup', 20
+\letter P
+  `PreferredGenerators', 17
+  `PrintHashWithNames', 10
+  `Projection', 18
+\letter Q
+  `QuotientGroup', 17
+  `QuotientGroupByChainHomomorphicImage', 20
+  `QuotientGroupByHomomorphism', 14
+  `QuotientGroupByImages', 14
+  `QuotientGroupByImagesNC', 14
+  `QuotientGroupHom', 14
+\letter R
+  `RandomHashKey', 10
+  `RandomSchreierSims', 20
+  `Range', 14
+\letter S
+  `SchreierTransversal', 16
+  `SchreierTreeDepth', 17
+  `SetHashEntry', 12
+  `SetHashEntryAtLastIndex', 12
+  `Sift', for chains of subgroups, 19
+  `SiftOneLevel', for chains of subgroups, 19
+    \sub for subgroup transversals, 16
+  `SizeOfChainOfGroup', 19
+  `Source', 14
+  `SourceElt', 14
+  `SparseHashTable', 11
+  Sparse hash tables, \indexit{11}
+  `SparseIntKey', 11
+  Stabiliser chain subgroups, \indexit{20}
+  `StrongGens', 20
+\letter T
+  `TableHasIntKeyFun', 11
+  `Transversal', 19
+  `TransversalBySiftFunction', 18
+  `TransversalByTrivial', 18
+  `TransversalElt', 16
+  `TransversalOfChainSubgroup', 20
+  Transversals by direct products, \indexit{18}
+  Transversals by homomorphic images, \indexit{17}
+  Transversals by Schreier tree, \indexit{16}
+  Transversals by sift functions, \indexit{18}
+  Transversals by Trivial subgroups, \indexit{18}
+  Trivial chain subgroups and sift function chain subgroups, \indexit{21}

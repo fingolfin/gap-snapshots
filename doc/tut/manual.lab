@@ -1,0 +1,92 @@
+\makelabel{tut:Copyright Notice}{{\setbox 0=\hbox {1}\vrule width 0pt height\ht 0}}
+\makelabel{tut:Preface}{1}
+\makelabel{tut:The GAP System}{1.1}
+\makelabel{tut:Authorship and Maintenance}{1.2}
+\makelabel{tut:Acknowledgements}{1.3}
+\makelabel{tut:Changes from Earlier Versions}{1.4}
+\makelabel{tut:Further Information about GAP}{1.5}
+\makelabel{tut:A First Session with GAP}{2}
+\makelabel{tut:Starting and Leaving GAP}{2.1}
+\makelabel{tut:Loading Source Code from a File}{2.2}
+\makelabel{tut:The Read Evaluate Print Loop}{2.3}
+\makelabel{tut:Constants and Operators}{2.4}
+\makelabel{tut:Variables versus Objects}{2.5}
+\makelabel{tut:Objects vs. Elements}{2.6}
+\makelabel{tut:About Functions}{2.7}
+\makelabel{tut:Help}{2.8}
+\makelabel{tut:Further Information introducing the System}{2.9}
+\makelabel{tut:Lists and Records}{3}
+\makelabel{tut:Plain Lists}{3.1}
+\makelabel{tut:Identical Lists}{3.2}
+\makelabel{tut:Immutability}{3.3}
+\makelabel{tut:Sets}{3.4}
+\makelabel{tut:Ranges}{3.5}
+\makelabel{tut:For and While Loops}{3.6}
+\makelabel{tut:List Operations}{3.7}
+\makelabel{tut:Vectors and Matrices}{3.8}
+\makelabel{tut:Plain Records}{3.9}
+\makelabel{tut:Further Information about Lists}{3.10}
+\makelabel{tut:Functions}{4}
+\makelabel{tut:Writing Functions}{4.1}
+\makelabel{tut:If Statements}{4.2}
+\makelabel{tut:Local Variables}{4.3}
+\makelabel{tut:Recursion}{4.4}
+\makelabel{tut:Further Information about Functions}{4.5}
+\makelabel{tut:Groups and Homomorphisms}{5}
+\makelabel{tut:Permutation groups}{5.1}
+\makelabel{tut:Actions of Groups}{5.2}
+\makelabel{tut:Subgroups!as Stabilizers}{5.3}
+\makelabel{tut:Group Homomorphisms!by Images}{5.4}
+\makelabel{tut:Nice Monomorphisms}{5.5}
+\makelabel{tut:Further Information about Groups and Homomorphisms}{5.6}
+\makelabel{tut:Vector Spaces and Algebras}{6}
+\makelabel{tut:Vector Spaces}{6.1}
+\makelabel{tut:Algebras}{6.2}
+\makelabel{tut:Further Information about Vector Spaces and Algebras}{6.3}
+\makelabel{tut:Domains}{7}
+\makelabel{tut:Domains as Sets}{7.1}
+\makelabel{tut:Algebraic Structure}{7.2}
+\makelabel{tut:Notions of Generation}{7.3}
+\makelabel{tut:Domain Constructors}{7.4}
+\makelabel{tut:Forming Closures of Domains}{7.5}
+\makelabel{tut:Changing the Structure}{7.6}
+\makelabel{tut:Subdomains}{7.7}
+\makelabel{tut:Further Information about Domains}{7.8}
+\makelabel{tut:Operations and Methods}{8}
+\makelabel{tut:Attributes}{8.1}
+\makelabel{tut:Properties and Filters}{8.2}
+\makelabel{tut:Immediate and True Methods}{8.3}
+\makelabel{tut:Operations and Method Selection}{8.4}
+\makelabel{tut:Migrating to GAP 4}{9}
+\makelabel{tut:Changed Command Line Options}{9.1}
+\makelabel{tut:Fail}{9.2}
+\makelabel{tut:fail instead of false}{9.2.1}
+\makelabel{tut:Changed Functionality}{9.3}
+\makelabel{tut:Orbit}{9.3.1}
+\makelabel{tut:Order}{9.3.2}
+\makelabel{tut:Position}{9.3.3}
+\makelabel{tut:PermGroupOps.ElementProperty}{9.3.4}
+\makelabel{tut:Print}{9.3.5}
+\makelabel{tut:PrintTo}{9.3.6}
+\makelabel{tut:Changed Variable Names}{9.4}
+\makelabel{tut:Naming Conventions}{9.5}
+\makelabel{tut:Immutable Objects}{9.6}
+\makelabel{tut:Copy}{9.7}
+\makelabel{tut:Attributes vs. Record Components}{9.8}
+\makelabel{tut:Different Notions of Generation}{9.9}
+\makelabel{tut:Operations Records}{9.10}
+\makelabel{tut:Operations vs. Dispatcher Functions}{9.11}
+\makelabel{tut:Parents and Subgroups}{9.12}
+\makelabel{tut:Homomorphisms vs. General Mappings}{9.13}
+\makelabel{tut:Homomorphisms vs. Factor Structures}{9.14}
+\makelabel{tut:Isomorphisms vs. Isomorphic Structures}{9.15}
+\makelabel{tut:Elements of Finitely Presented Groups}{9.16}
+\makelabel{tut:Polynomials}{9.17}
+\makelabel{tut:The Info Mechanism}{9.18}
+\makelabel{tut:Debugging}{9.19}
+\makelabel{tut:Compatibility Mode}{9.20}
+\makelabel{tut:Authors}{10}
+\makelabel{tut:Acknowledgement}{10}
+\makelabel{tut:Bibliography}{}
+\setcitlab {Sims90b}{Sim90}
+\makelabel{tut:Index}{}
