@@ -4,7 +4,7 @@
 ##                                               Bettina Eick, Eamonn O'Brien
 ##
 Revision.readsml_g :=
-    "@(#)$Id: readsml.g,v 4.7 2000/01/05 15:07:07 gap Exp $";
+    "@(#)$Id: readsml.g,v 4.7.10.1 2005/05/03 14:21:26 gap Exp $";
 
 #############################################################################
 ##
@@ -55,17 +55,12 @@ READ_SMALL_LIB := function()
                            Concatenation( "small groups #", String( s ) ) );
     until not IsBound( SMALL_AVAILABLE_FUNCS[ s ] );
 
-    i := 1;
-    repeat
-        i := i + 1;
-        if i = s then
-            return;
-        fi;
+    for i in [ 2 .. Length( SMALL_AVAILABLE_FUNCS ) ] do
         READ_IDLIB_FUNCS[ i ] := ReadAndCheckFunc(
                                Concatenation( "small/id", String( i ) ) );
         READ_IDLIB_FUNCS[ i ]( Concatenation( "idgrp", String( i ), ".g" ),
                            Concatenation( "ids of groups #", String( i ) ) );
-    until not IsBound( ID_AVAILABLE_FUNCS[ i ] );
+    od;
 end;
 
 READ_SMALL_LIB();

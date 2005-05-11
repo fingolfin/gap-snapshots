@@ -2,13 +2,15 @@
 ##
 #W  grpconst.tst              GAP Library                  Hans Ulrich Besche
 ##
-#H  @(#)$Id: grpconst.tst,v 4.6 2002/12/02 06:47:05 gap Exp $
+#H  @(#)$Id: grpconst.tst,v 4.6.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  Exclude from testall.g: why?
+##
 
-gap> START_TEST("$Id: grpconst.tst,v 4.6 2002/12/02 06:47:05 gap Exp $");
-gap> if RequirePackage( "grpconst" )=fail then
+gap> START_TEST("$Id: grpconst.tst,v 4.6.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> if LoadPackage( "grpconst" )=fail then
 #I ------ The AutPGrp package version: 1.1 ------- 
 #I -- Computing automorphism groups of p-groups -- 
     ----------------------------------------------- 
@@ -40,12 +42,9 @@ gap> ConstructAndTestAllGroups( 1560 );;
 gap> ConstructAndTestAllGroups( 1800 );;
 gap> UnloadSmallGroupsData();
 
-gap> STOP_TEST( "grpconst.tst", 130921000000 );
+gap> STOP_TEST( "grpconst.tst", 124922000000 );
 
 #############################################################################
 ##
-#E  grpconst.tst. . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
-
-
+#E
 

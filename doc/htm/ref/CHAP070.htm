@@ -114,11 +114,11 @@ this is particularly inconvenient in cases where infix operations cannot
 be used because of the additional argument, as for tensor products and
 induced class functions.
 <p>
-Second, when one says that ``<font face="symbol">&#967;</font> is a character of a group <i>G</i>''
-then this object <font face="symbol">&#967;</font> carries a lot of information.
-<font face="symbol">&#967;</font> has certain properties such as being irreducible or not.
-Several subgroups of <i>G</i> are related to <font face="symbol">&#967;</font>,
-such as the kernel and the centre of <font face="symbol">&#967;</font>.
+Second, when one says that ``&#967; is a character of a group <i>G</i>''
+then this object &#967; carries a lot of information.
+&#967; has certain properties such as being irreducible or not.
+Several subgroups of <i>G</i> are related to &#967;,
+such as the kernel and the centre of &#967;.
 Other attributes of characters are the determinant and the central
 character.
 This knowledge cannot be stored in a plain list.
@@ -254,7 +254,7 @@ refers to the ordering of conjugacy classes in this character table.
 If <var>psi</var> is an ordinary class function then the underlying character
 table is the ordinary character table of <i>G</i>
 (see&nbsp;<a href="CHAP069.htm#SSEC008.4">OrdinaryCharacterTable</a>),
-if <var>psi</var> is a class function in characteristic <i>p</i>  <font face="symbol">&#8800;</font> 0 then the
+if <var>psi</var> is a class function in characteristic <i>p</i>  &#8800; 0 then the
 underlying character table is the <i>p</i>-modular Brauer table of <i>G</i>
 (see&nbsp;<a href="CHAP069.htm#SSEC003.2">BrauerTable</a>).
 So the underlying characteristic of <var>psi</var> can be read off from the
@@ -659,11 +659,11 @@ Character( D8, [ 8, 0, 0, 0, 0 ] )
 Let <var>tbl</var> be a character table, <var>chi</var> a class function object
 (<strong>not</strong> necessarily a class function of <var>tbl</var>),
 and <var>values</var> a list of cyclotomics.
-<code>ClassFunctionSameType</code> returns the class function <font face="symbol">&#968;</font> of <var>tbl</var> with
+<code>ClassFunctionSameType</code> returns the class function &#968; of <var>tbl</var> with
 values list <var>values</var>, constructed with <code>ClassFunction</code>
 (see&nbsp;<a href="CHAP070.htm#SSEC006.1">ClassFunction</a>).
 <p>
-If <var>chi</var> is known to be a (virtual) character then <font face="symbol">&#968;</font> is also known
+If <var>chi</var> is known to be a (virtual) character then &#968; is also known
 to be a (virtual) character.
 <p>
 <pre>
@@ -852,8 +852,8 @@ For two class functions <var>chi</var> and <var>psi</var> of the same ordinary c
 table <var>tbl</var>, <code>ScalarProduct</code> returns the scalar product.
 <p>
 If <i>G</i> is the underlying group of <var>tbl</var> and the two class functions are
-<font face="symbol">&#967;</font> and <font face="symbol">&#968;</font> then this is defined as
-[&nbsp;1/(<font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>)] <font face="symbol">&#8721;</font><sub><i>g</i>  <font face="symbol">&#8712;</font> <i>G</i></sub> <font face="symbol">&#967;</font>(<i>g</i>) <font face="symbol">&#968;</font>(<i>g</i><sup><font face="symbol">&#8722;</font>1</sup>).
+&#967; and &#968; then this is defined as
+[1/(&#124;<i>G</i>&#124;)] &#8721;<sub><i>g</i>  &#8712; <i>G</i></sub> &#967;(<i>g</i>) &#968;(<i>g</i><sup>&#8722;1</sup>).
 <p>
 <a name = "SSEC008.6"></a>
 <li><code>MatScalarProducts( [</code><var>tbl</var><code>, ]</code><var>list1</var><code>, </code><var>list2</var><code> ) O</code>
@@ -866,17 +866,17 @@ More precisely, the matrix contains in the <i>i</i>-th row the list of scalar
 products of <i>list</i>2 [<i>i</i>] with the entries of <var>list1</var>.
 <p>
 The second form returns a lower triangular matrix of scalar products,
-containing for (<i>j</i>  <font face="symbol">&#8804;</font> <i>i</i>) in the <i>i</i>-th row in column <i>j</i> the value
+containing for (<i>j</i>  &#8804; <i>i</i>) in the <i>i</i>-th row in column <i>j</i> the value
 <tt>ScalarProduct</tt>( <i>tbl</i> , <i>list</i> [<i>j</i>], <i>list</i> [<i>i</i>] ).
 <p>
 <a name = "SSEC008.7"></a>
 <li><code>Norm( [</code><var>tbl</var><code>, ]</code><var>chi</var><code> ) A</code>
 <p>
 For an ordinary class function <var>chi</var> of the group <i>G</i>, say, we have
-<i>chi</i>  = <font face="symbol">&#8721;</font><sub><font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i>)</sub> <i>a</i><sub><font face="symbol">&#967;</font></sub> <font face="symbol">&#967;</font>,
-with complex coefficients <i>a</i><sub><font face="symbol">&#967;</font></sub>.
+<i>chi</i>  = &#8721;<sub>&#967; &#8712; <i>Irr</i>(<i>G</i>)</sub> <i>a</i><sub>&#967;</sub> &#967;,
+with complex coefficients <i>a</i><sub>&#967;</sub>.
 The <strong>norm</strong> of <var>chi</var> is defined as
-<font face="symbol">&#8721;</font><sub><font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i>)</sub> <i>a</i><sub><font face="symbol">&#967;</font></sub>[<font face="symbol">&#63717;</font>(<i>a</i><sub><font face="symbol">&#967;</font></sub>)].
+&#8721;<sub>&#967; &#8712; <i>Irr</i>(<i>G</i>)</sub> <i>a</i><sub>&#967;</sub>[&#63717;(<i>a</i><sub>&#967;</sub>)].
 <p>
 <pre>
 gap&gt; tbl:= CharacterTable( "A5" );;
@@ -983,7 +983,7 @@ Furthermore, let <var>G</var> be a group that contains <i>H</i> as a normal subg
 <code>InertiaSubgroup</code> returns the stabilizer in <var>G</var> of <var>chi</var>,
 w.r.t.&nbsp;the action of <var>G</var> on the classes of <i>H</i> via conjugation.
 In other words, <code>InertiaSubgroup</code> returns the group of all those elements
-<i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>  that satisfy <i>chi</i> <sup><i>g</i></sup> = <i>chi</i> .
+<i>g</i>  &#8712; <i>G</i>  that satisfy <i>chi</i> <sup><i>g</i></sup> = <i>chi</i> .
 <p>
 <pre>
 gap&gt; der:= DerivedSubgroup( S4 );
@@ -1015,8 +1015,8 @@ gap&gt; List( [ 1 .. 5 ], i -&gt; CycleStructureClass( nat, i ) );
 <a name = "I28"></a>
 
 For a permutation character <var>chi</var> of the group <i>G</i> that corresponds
-to an action on the <i>G</i>-set <font face="symbol">&#8486;</font> (see&nbsp;<a href="CHAP070.htm#SSEC007.3">PermutationCharacter</a>),
-<code>IsTransitive</code> returns <code>true</code> if the action of <i>G</i> on <font face="symbol">&#8486;</font> is
+to an action on the <i>G</i>-set &#8486; (see&nbsp;<a href="CHAP070.htm#SSEC007.3">PermutationCharacter</a>),
+<code>IsTransitive</code> returns <code>true</code> if the action of <i>G</i> on &#8486; is
 transitive, and <code>false</code> otherwise.
 <p>
 <a name = "SSEC008.16"></a>
@@ -1025,9 +1025,9 @@ transitive, and <code>false</code> otherwise.
 <a name = "I29"></a>
 
 For a permutation character <var>chi</var> of the group <i>G</i> that corresponds
-to an action on the <i>G</i>-set <font face="symbol">&#8486;</font> (see&nbsp;<a href="CHAP070.htm#SSEC007.3">PermutationCharacter</a>),
+to an action on the <i>G</i>-set &#8486; (see&nbsp;<a href="CHAP070.htm#SSEC007.3">PermutationCharacter</a>),
 <code>Transitivity</code> returns the maximal nonnegative integer <i>k</i> such that
-the action of <i>G</i> on <font face="symbol">&#8486;</font> is <i>k</i>-transitive.
+the action of <i>G</i> on &#8486; is <i>k</i>-transitive.
 <p>
 <pre>
 gap&gt; IsTransitive( nat );  Transitivity( nat );
@@ -1045,9 +1045,9 @@ gap&gt; Transitivity( 2 * TrivialCharacter( S4 ) );
 For a character <var>chi</var> of the group <i>G</i>, say, <code>CentralCharacter</code> returns
 the <strong>central character</strong> of <var>chi</var>.
 <p>
-The central character of <font face="symbol">&#967;</font> is the class function <font face="symbol">&#969;</font><sub><font face="symbol">&#967;</font></sub>
-defined by <font face="symbol">&#969;</font><sub><font face="symbol">&#967;</font></sub>(<i>g</i>) = <font face="symbol">&#124;</font><i>g</i><sup><i>G</i></sup><font face="symbol">&#124;</font> &#183;<font face="symbol">&#967;</font>(<i>g</i>)/<font face="symbol">&#967;</font>(1) for each
-<i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>.
+The central character of &#967; is the class function &#969;<sub>&#967;</sub>
+defined by &#969;<sub>&#967;</sub>(<i>g</i>) = &#124;<i>g</i><sup><i>G</i></sup>&#124; &#183;&#967;(<i>g</i>)/&#967;(1) for each
+<i>g</i>  &#8712; <i>G</i>.
 <p>
 <a name = "SSEC008.18"></a>
 <li><code>DeterminantOfCharacter( [</code><var>tbl</var><code>, ]</code><var>chi</var><code> ) A</code>
@@ -1078,12 +1078,12 @@ Character( CharacterTable( S4 ), [ 1, -1, 1, 1, -1 ] )
 <li><code>EigenvaluesChar( [</code><var>tbl</var><code>, ]</code><var>chi</var><code>, </code><var>class</var><code> ) O</code>
 <p>
 Let <var>chi</var> be a character of the group <i>G</i>, say.
-For an element <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> in the <var>class</var>-th conjugacy class, of order <i>n</i>,
+For an element <i>g</i>  &#8712; <i>G</i> in the <var>class</var>-th conjugacy class, of order <i>n</i>,
 let <i>M</i> be a matrix of a representation affording <var>chi</var>.
 <p>
 <code>EigenvaluesChar( </code><var>tbl</var><code>, </code><var>chi</var><code>, </code><var>class</var><code> )</code> is the list of length <i>n</i>
 where at position <i>k</i> the multiplicity
-of <tt>E</tt><tt>(</tt><i>n</i> <tt>)</tt><sup><i>k</i> </sup> = exp([(2<font face="symbol">&#960;</font><i>i</i> <i>k</i>)/(<i>n</i>)]) as an eigenvalue of <i>M</i>
+of <tt>E</tt><tt>(</tt><i>n</i> <tt>)</tt><sup><i>k</i> </sup> = exp([(2&#960;<i>i</i> <i>k</i>)/(<i>n</i>)]) as an eigenvalue of <i>M</i>
 is stored.
 <p>
 We have <code></code><var>chi</var><code>[ </code><var>class</var><code> ] = List( [ 1 .. </code><var>n</var><code> ], k -&gt; E(n)^k )
@@ -1287,9 +1287,9 @@ These virtual characters are computed as follows.
 <p>
 Let <code>rems</code> be the set of nonzero class functions obtained by subtraction
 of
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><font face="symbol">&#967;</font></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center">&nbsp;[<i>reducibles</i> [<i>i</i>], <font face="symbol">&#967;</font>]<div class="hrcomp"><hr noshade="noshade" size="1"/></div>[<font face="symbol">&#967;</font>,<font face="symbol">&#967;</font>]<br /></td><td nowrap="nowrap" align="center">&#183;<font face="symbol">&#967;</font></td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small>&#967;</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center">[<i>reducibles</i> [<i>i</i>], &#967;]<div class="hrcomp"><hr noshade="noshade" size="1"/></div>[&#967;,&#967;]<br /></td><td nowrap="nowrap" align="center">&#183;&#967;</td></tr></table></td></tr></table>
 from <i>reducibles</i> [<i>i</i>],
-where the summation runs over <var>constituents</var> and [<font face="symbol">&#967;</font>,<font face="symbol">&#968;</font>] denotes
+where the summation runs over <var>constituents</var> and [&#967;,&#968;] denotes
 the scalar product of <i>G</i>-class functions.
 Let <code>irrs</code> be the list of irreducible characters in <code>rems</code>.
 <p>
@@ -1424,7 +1424,7 @@ characters that occur as constituents of <var>reducibles</var>.
 Specification of <var>missing</var> may accelerate <code>Extract</code>.
 <p>
 <code>Extract</code> returns a record <var>ext</var> with components <code>solution</code> and <code>choice</code>,
-where the value of <code>solution</code> is a list [ <i>M</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>M</i><sub><i>n</i></sub> ] of
+where the value of <code>solution</code> is a list [ <i>M</i><sub>1</sub>, &#8230;, <i>M</i><sub><i>n</i></sub> ] of
 decomposition matrices <i>M</i><sub><i>i</i></sub> (up to permutations of rows)
 with the property that <i>M</i><sub><i>i</i></sub><sup><i>tr</i></sup> &#183;<i>X</i> is equal to
 the sublist at the positions <code></code><var>ext</var><code>.choice[i]</code> of <var>reducibles</var>,
@@ -1622,7 +1622,7 @@ Let <var>tbl</var> be an ordinary character table,
 and <var>reducibles</var> a list of virtual characters of <var>tbl</var>.
 <p>
 <code>DnLattice</code> searches for sublattices isomorphic to root lattices of type
-<i>D</i><sub><i>n</i></sub>, for <i>n</i>  <font face="symbol">&#8805;</font> 4, in the lattice that is generated by <var>reducibles</var>;
+<i>D</i><sub><i>n</i></sub>, for <i>n</i>  &#8805; 4, in the lattice that is generated by <var>reducibles</var>;
 each vector in <var>reducibles</var> must have norm 2, and the matrix of scalar
 products (see&nbsp;<a href="CHAP070.htm#SSEC008.6">MatScalarProducts</a>) of <var>reducibles</var> must be entered as
 argument <var>grammat</var>.
@@ -1716,11 +1716,11 @@ irreducible characters of the symmetric group of degree <var>n</var>;
 instead of the integer <var>n</var>, the table of the symmetric group can be
 entered as <var>Sn</var>.
 <p>
-The symmetrization <font face="symbol">&#967;</font><sup>[<font face="symbol">&#955;</font>]</sup> of the character <font face="symbol">&#967;</font> of <var>tbl</var>
-with the character <font face="symbol">&#955;</font> of the symmetric group <i>S</i><sub><i>n</i></sub> of degree <i>n</i>
+The symmetrization &#967;<sup>[&#955;]</sup> of the character &#967; of <var>tbl</var>
+with the character &#955; of the symmetric group <i>S</i><sub><i>n</i></sub> of degree <i>n</i>
 is defined by
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <font face="symbol">&#967;</font><sup>[<font face="symbol">&#955;</font>]</sup>(<i>g</i>) = </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><font face="symbol">&#961;</font> <font face="symbol">&#8712;</font> <i>S</i><sub><i>n</i></sub></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><font face="symbol">&#955;</font>(<font face="symbol">&#961;</font>) </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8719;<br /></font></font><font size="-1"><i>k</i>=1</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><font face="symbol">&#967;</font>(<i>g</i><sup><i>k</i></sup>)<sup><i>a</i><sub><i>k</i></sub>(<font face="symbol">&#961;</font>)</sup>, </td></tr></table></td></tr></table>
-where <i>a</i><sub><i>k</i></sub>(<font face="symbol">&#961;</font>) is the number of cycles of length <i>k</i> in <font face="symbol">&#961;</font>.
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> &#967;<sup>[&#955;]</sup>(<i>g</i>) = </td><td nowrap="nowrap" align="center">1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small>&#961; &#8712; <i>S</i><sub><i>n</i></sub></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">&#955;(&#961;) </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8719;<br /></font><small><i>k</i>=1</small>&nbsp;<br /></td><td nowrap="nowrap" align="center">&#967;(<i>g</i><sup><i>k</i></sup>)<sup><i>a</i><sub><i>k</i></sub>(&#961;)</sup>, </td></tr></table></td></tr></table>
+where <i>a</i><sub><i>k</i></sub>(&#961;) is the number of cycles of length <i>k</i> in &#961;.
 <p>
 For special kinds of symmetrizations, see&nbsp;<a href="CHAP070.htm#SSEC011.2">SymmetricParts</a>,
 <a href="CHAP070.htm#SSEC011.3">AntiSymmetricParts</a>, <a href="CHAP071.htm#SSEC004.5">MinusCharacter</a> and <a href="CHAP070.htm#SSEC011.4">OrthogonalComponents</a>,
@@ -1787,8 +1787,8 @@ gap&gt; AntiSymmetricParts( tbl, Irr( tbl ), 3 );
 <a name = "I38"></a>
 <a name = "I39"></a>
 
-If <font face="symbol">&#967;</font> is a nonlinear character with indicator +1,
-a splitting of the tensor power <font face="symbol">&#967;</font><sup><i>m</i></sup> is given by the so-called
+If &#967; is a nonlinear character with indicator +1,
+a splitting of the tensor power &#967;<sup><i>m</i></sup> is given by the so-called
 Murnaghan functions (see&nbsp;<a href="biblio.htm#Mur58"><cite>Mur58</cite></a>).
 These components in general have fewer irreducible constituents
 than the symmetrizations with the symmetric group of degree <var>m</var>
@@ -1804,7 +1804,7 @@ The Murnaghan functions are implemented as in&nbsp;<a href="biblio.htm#Fra82"><c
 If <var>chars</var> is a list of character objects (see&nbsp;<a href="CHAP070.htm#SSEC008.1">IsCharacter</a>) then also
 the result consists of class function objects.
 It is not checked whether all characters in <var>chars</var> do really have
-indicator +1; if there are characters with indicator 0 or <font face="symbol">&#8722;</font>1,
+indicator +1; if there are characters with indicator 0 or &#8722;1,
 the result might contain virtual characters
 (see also&nbsp;<a href="CHAP070.htm#SSEC011.5">SymplecticComponents</a>),
 therefore the entries of the result do in general not know that they are
@@ -1831,8 +1831,8 @@ gap&gt; OrthogonalComponents( tbl, [ chi ], 3 );
 <a name = "SSEC011.5"></a>
 <li><code>SymplecticComponents( </code><var>tbl</var><code>, </code><var>chars</var><code>, </code><var>m</var><code> ) F</code>
 <p>
-If <font face="symbol">&#967;</font> is a (nonlinear) character with indicator <font face="symbol">&#8722;</font>1,
-a splitting of the tensor power <font face="symbol">&#967;</font><sup><i>m</i></sup> is given in terms of the
+If &#967; is a (nonlinear) character with indicator &#8722;1,
+a splitting of the tensor power &#967;<sup><i>m</i></sup> is given in terms of the
 so-called Murnaghan functions (see&nbsp;<a href="biblio.htm#Mur58"><cite>Mur58</cite></a>).
 These components in general have fewer irreducible constituents
 than the symmetrizations with the symmetric group of degree <var>m</var>
@@ -1846,7 +1846,7 @@ up to the power <var>m</var>, where <var>m</var> is an integer between 2 and 5.
 If <var>chars</var> is a list of character objects (see&nbsp;<a href="CHAP070.htm#SSEC008.1">IsCharacter</a>) then also
 the result consists of class function objects.
 It is not checked whether all characters in <var>chars</var> do really have
-indicator <font face="symbol">&#8722;</font>1; if there are characters with indicator 0 or +1,
+indicator &#8722;1; if there are characters with indicator 0 or +1,
 the result might contain virtual characters
 (see also&nbsp;<a href="CHAP070.htm#SSEC011.4">OrthogonalComponents</a>),
 therefore the entries of the result do in general not know that they are
@@ -1880,10 +1880,10 @@ gap&gt; SymplecticComponents( tbl, [ chi ], 3 );
 <li><code>MolienSeries( </code><var>tbl</var><code>, </code><var>psi</var><code> ) F</code>
 <li><code>MolienSeries( </code><var>tbl</var><code>, </code><var>psi</var><code>, </code><var>chi</var><code> ) F</code>
 <p>
-The <strong>Molien series</strong> of the character <font face="symbol">&#968;</font>, relative to the character
-<font face="symbol">&#967;</font>, is the rational function given by the series
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>M</i><sub><font face="symbol">&#968;</font>,<font face="symbol">&#967;</font></sub>(<i>z</i>) = </td><td nowrap="nowrap" align="center"><font size="-1"><font face="symbol">&#8734;</font></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>d</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center">[<font face="symbol">&#967;</font>,<font face="symbol">&#968;</font><sup>[<i>d</i>]</sup>] <i>z</i><sup><i>d</i></sup> </td></tr></table></td></tr></table>
-where <font face="symbol">&#968;</font><sup>[<i>d</i>]</sup> denotes the symmetrization of <font face="symbol">&#968;</font> with the trivial
+The <strong>Molien series</strong> of the character &#968;, relative to the character
+&#967;, is the rational function given by the series
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>M</i><sub>&#968;,&#967;</sub>(<i>z</i>) = </td><td nowrap="nowrap" align="center"><small>&#8734;</small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>d</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center">[&#967;,&#968;<sup>[<i>d</i>]</sup>] <i>z</i><sup><i>d</i></sup> </td></tr></table></td></tr></table>
+where &#968;<sup>[<i>d</i>]</sup> denotes the symmetrization of &#968; with the trivial
 character of the symmetric group <i>S</i><sub><i>d</i></sub> (see&nbsp;<a href="CHAP070.htm#SSEC011.2">SymmetricParts</a>).
 <p>
 <code>MolienSeries</code> returns the Molien series of <var>psi</var>, relative to <var>chi</var>,
@@ -1899,7 +1899,7 @@ This admits the computation of coefficients of the series with
 Furthermore, this attribute gives access to numerator and denominator
 of the Molien series viewed as rational function,
 where the denominator is a product of polynomials of the form
-(1<font face="symbol">&#8722;</font><i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>; the Molien series is also displayed in this form.
+(1&#8722;<i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>; the Molien series is also displayed in this form.
 Note that such a representation is not unique, one can use
 <code>MolienSeriesWithGivenDenominator</code>
 (see&nbsp;<a href="CHAP070.htm#SSEC012.4">MolienSeriesWithGivenDenominator</a>)
@@ -1920,7 +1920,7 @@ gap&gt; mol:= MolienSeries( psi );
 If the rational function <var>ratfun</var> was constructed by <code>MolienSeries</code>
 (see&nbsp;<a href="CHAP070.htm#SSEC012.1">MolienSeries</a>),
 a representation as quotient of polynomials is known such that the
-denominator is a product of terms of the form (1<font face="symbol">&#8722;</font><i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>.
+denominator is a product of terms of the form (1&#8722;<i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>.
 This information is encoded as value of <code>MolienSeriesInfo</code>.
 Additionally, there is a special <code>PrintObj</code> method for Molien series
 based on this.
@@ -1950,12 +1950,12 @@ The components of this record are
      expressed in terms of <code>z</code>,
 <p>
 <dt><code>denominfo</code> <dd>
-     a list of the form [ [ <i>r</i><sub>1</sub>, <i>k</i><sub>1</sub> ], <font face="symbol">&#8230;</font>, [ <i>r</i><sub><i>n</i></sub>, <i>k</i><sub><i>n</i></sub> ] ]
-     such that <code>denom</code> is <font face="symbol">&#8719;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> (1<font face="symbol">&#8722;</font><i>z</i><sup><i>r</i><sub><i>i</i></sub></sup>)<sup><i>k</i><sub><i>i</i></sub></sup>.
+     a list of the form [ [ <i>r</i><sub>1</sub>, <i>k</i><sub>1</sub> ], &#8230;, [ <i>r</i><sub><i>n</i></sub>, <i>k</i><sub><i>n</i></sub> ] ]
+     such that <code>denom</code> is &#8719;<sub><i>i</i>=1</sub><sup><i>n</i></sup> (1&#8722;<i>z</i><sup><i>r</i><sub><i>i</i></sub></sup>)<sup><i>k</i><sub><i>i</i></sub></sup>.
 <p>
 <dt><code>summands</code> <dd>
      a list of records, each with the components <code>numer</code>, <code>r</code>, and <code>k</code>,
-     describing the summand <tt>numer</tt> / (1<font face="symbol">&#8722;</font><i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>,
+     describing the summand <tt>numer</tt> / (1&#8722;<i>z</i><sup><i>r</i></sup>)<sup><i>k</i></sup>,
 <p>
 <dt><code>size</code> <dd>
      the order of the underlying matrix group,
@@ -1996,7 +1996,7 @@ gap&gt; List( [ 0 .. 20 ], i -&gt; ValueMolienSeries( mol, i ) );
 <p>
 is a Molien series equal to <var>molser</var> as rational function,
 but viewed as quotient with denominator
-<font face="symbol">&#8719;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> (1<font face="symbol">&#8722;</font><i>z</i><sup><i>r</i><sub><i>i</i></sub></sup>), where <i>list</i>  = [ <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>r</i><sub><i>n</i></sub> ].
+&#8719;<sub><i>i</i>=1</sub><sup><i>n</i></sup> (1&#8722;<i>z</i><sup><i>r</i><sub><i>i</i></sub></sup>), where <i>list</i>  = [ <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230;, <i>r</i><sub><i>n</i></sub> ].
 If <var>molser</var> cannot be represented this way, <code>fail</code> is returned.
 <p>
 <pre>
@@ -2021,43 +2021,43 @@ gap&gt; MolienSeriesWithGivenDenominator( mol, [ 2, 6, 10 ] );
 <a name = "I43"></a>
 <a name = "I44"></a>
 
-For groups <i>H</i> and <i>G</i> with <i>H</i>  <font face="symbol">&#8804;</font> <i>G</i>,
+For groups <i>H</i> and <i>G</i> with <i>H</i>  &#8804; <i>G</i>,
 the induced character (1<sub><i>G</i></sub>)<sup><i>H</i></sup> is called the <strong>permutation character</strong>
 of the operation of <i>G</i> on the right cosets of <i>H</i>.
 If only the character table of <i>G</i> is available and not the group <i>G</i>
 itself, one can try to get information about possible subgroups of <i>G</i>
 by inspection of those <i>G</i>-class functions that might be
-permutation characters, using that such a class function <font face="symbol">&#960;</font> must have
+permutation characters, using that such a class function &#960; must have
 at least the following properties.
 (For details, see&nbsp;<a href="biblio.htm#Isa76"><cite>Isa76</cite></a>, Theorem&nbsp;5.18.)
 <ol type=a>
 <li>
-    <font face="symbol">&#960;</font> is a character of <i>G</i>,
+    &#960; is a character of <i>G</i>,
 <li>
-    <font face="symbol">&#960;</font>(<i>g</i>) is a nonnegative integer for all <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>,
+    &#960;(<i>g</i>) is a nonnegative integer for all <i>g</i>  &#8712; <i>G</i>,
 <li>
-    <font face="symbol">&#960;</font>(1) divides <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>,
+    &#960;(1) divides &#124;<i>G</i>&#124;,
 <li>
-    <font face="symbol">&#960;</font>(<i>g</i><sup><i>n</i></sup>)  <font face="symbol">&#8805;</font> <font face="symbol">&#960;</font>(<i>g</i>) for <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> and integers <i>n</i>,
+    &#960;(<i>g</i><sup><i>n</i></sup>)  &#8805; &#960;(<i>g</i>) for <i>g</i>  &#8712; <i>G</i> and integers <i>n</i>,
 <li>
-    [<font face="symbol">&#960;</font>,1<sub><i>G</i></sub>] = 1,
+    [&#960;,1<sub><i>G</i></sub>] = 1,
 <li>
-    the multiplicity of any rational irreducible <i>G</i>-character <font face="symbol">&#968;</font>
-    as a constituent of <font face="symbol">&#960;</font> is at most <font face="symbol">&#968;</font>(1)/[<font face="symbol">&#968;</font>,<font face="symbol">&#968;</font>],
+    the multiplicity of any rational irreducible <i>G</i>-character &#968;
+    as a constituent of &#960; is at most &#968;(1)/[&#968;,&#968;],
 <li>
-    <font face="symbol">&#960;</font>(<i>g</i>) = 0 if the order of <i>g</i> does not divide <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>/<font face="symbol">&#960;</font>(1),
+    &#960;(<i>g</i>) = 0 if the order of <i>g</i> does not divide &#124;<i>G</i>&#124;/&#960;(1),
 <li>
-    <font face="symbol">&#960;</font>(1) <font face="symbol">&#124;</font><i>N</i><sub><i>G</i></sub>(<i>g</i>)<font face="symbol">&#124;</font> divides <font face="symbol">&#960;</font>(<i>g</i>) <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font> for all <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>,
+    &#960;(1) &#124;<i>N</i><sub><i>G</i></sub>(<i>g</i>)&#124; divides &#960;(<i>g</i>) &#124;<i>G</i>&#124; for all <i>g</i>  &#8712; <i>G</i>,
 <li>
-    <font face="symbol">&#960;</font>(<i>g</i>)  <font face="symbol">&#8804;</font> (<font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font> <font face="symbol">&#8722;</font> <font face="symbol">&#960;</font>(1)) / (<font face="symbol">&#124;</font><i>g</i><sup><i>G</i></sup><font face="symbol">&#124;</font> <font face="symbol">&#124;</font><i>Gal</i><sub><i>G</i></sub>(<i>g</i>)<font face="symbol">&#124;</font>) for all nonidentity
-    <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>, where <font face="symbol">&#124;</font><i>Gal</i><sub><i>G</i></sub>(<i>g</i>)<font face="symbol">&#124;</font> denotes the number of conjugacy classes
-    of <i>G</i> that contain generators of the group <font face="symbol">&#9001;</font><i>g</i> <font face="symbol">&#9002;</font>,
+    &#960;(<i>g</i>)  &#8804; (&#124;<i>G</i>&#124; &#8722; &#960;(1)) / (&#124;<i>g</i><sup><i>G</i></sup>&#124; &#124;<i>Gal</i><sub><i>G</i></sub>(<i>g</i>)&#124;) for all nonidentity
+    <i>g</i>  &#8712; <i>G</i>, where &#124;<i>Gal</i><sub><i>G</i></sub>(<i>g</i>)&#124; denotes the number of conjugacy classes
+    of <i>G</i> that contain generators of the group &#9001;<i>g</i> &#9002;,
 <li>
-    if <i>p</i> is a prime that divides <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>/<font face="symbol">&#960;</font>(1) only once then <i>s</i>/(<i>p</i><font face="symbol">&#8722;</font>1)
-    divides <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>/<font face="symbol">&#960;</font>(1) and is congruent to 1 modulo <i>p</i>,
+    if <i>p</i> is a prime that divides &#124;<i>G</i>&#124;/&#960;(1) only once then <i>s</i>/(<i>p</i>&#8722;1)
+    divides &#124;<i>G</i>&#124;/&#960;(1) and is congruent to 1 modulo <i>p</i>,
     where <i>s</i> is the number of elements of order <i>p</i> in the
-    (hypothetical) subgroup <i>H</i> for which <font face="symbol">&#960;</font> =  (1<sub><i>H</i></sub>)<sup><i>G</i></sup> holds.
-    (Note that <i>s</i>/(<i>p</i><font face="symbol">&#8722;</font>1) equals the number of Sylow <i>p</i> subgroups in
+    (hypothetical) subgroup <i>H</i> for which &#960; =  (1<sub><i>H</i></sub>)<sup><i>G</i></sup> holds.
+    (Note that <i>s</i>/(<i>p</i>&#8722;1) equals the number of Sylow <i>p</i> subgroups in
     <i>H</i>.)
 </ol>
 Any <i>G</i>-class function with these properties is called a
@@ -2066,7 +2066,7 @@ Any <i>G</i>-class function with these properties is called a
 (Condition (d) is checked only for those power maps that are stored in
 the character table of <i>G</i>;
 clearly (d) holds for all integers if it holds for all prime divisors of
-the group order <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>.)
+the group order &#124;<i>G</i>&#124;.)
 <p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> provides some algorithms to compute
 possible permutation characters (see&nbsp;<a href="CHAP070.htm#SSEC014.1">PermChars</a>),
@@ -2089,16 +2089,16 @@ for a subgroup <i>U</i> of <i>G</i>, or a list of such permutation characters.
 <p>
 <dl compact>
 <dt><code>contained</code>: <dd>
-  a list containing, for each character <font face="symbol">&#968;</font> =  (1<sub><i>U</i></sub>)<sup><i>G</i></sup> in <var>permchars</var>,
+  a list containing, for each character &#968; =  (1<sub><i>U</i></sub>)<sup><i>G</i></sup> in <var>permchars</var>,
   a list containing at position <i>i</i> the number
-  <font face="symbol">&#968;</font>[<i>i</i>] <font face="symbol">&#124;</font><i>U</i><font face="symbol">&#124;</font> / <tt>SizesCentralizers</tt><tt>(</tt> <i>tbl</i>  <tt>)</tt>[<i>i</i>],
+  &#968;[<i>i</i>] &#124;<i>U</i>&#124; / <tt>SizesCentralizers</tt><tt>(</tt> <i>tbl</i>  <tt>)</tt>[<i>i</i>],
   which equals the number of those elements of <i>U</i>
   that are contained in class <i>i</i> of <var>tbl</var>,
 <p>
 <dt><code>bound</code>: <dd>
-  a list containing, for each character <font face="symbol">&#968;</font> =  (1<sub><i>U</i></sub>)<sup><i>G</i></sup> in <var>permchars</var>,
+  a list containing, for each character &#968; =  (1<sub><i>U</i></sub>)<sup><i>G</i></sup> in <var>permchars</var>,
   a list containing at position <i>i</i> the number
-  <font face="symbol">&#124;</font><i>U</i><font face="symbol">&#124;</font> / gcd( <font face="symbol">&#124;</font><i>U</i><font face="symbol">&#124;</font>, <tt>SizesCentralizers</tt><tt>(</tt> <i>tbl</i>  <tt>)</tt>[<i>i</i>] ),
+  &#124;<i>U</i>&#124; / gcd( &#124;<i>U</i>&#124;, <tt>SizesCentralizers</tt><tt>(</tt> <i>tbl</i>  <tt>)</tt>[<i>i</i>] ),
   which divides the class length in <i>U</i> of an element in class <i>i</i>
   of <var>tbl</var>,
 <p>
@@ -2114,7 +2114,7 @@ for a subgroup <i>U</i> of <i>G</i>, or a list of such permutation characters.
   characters in <var>permchars</var> into the irreducible characters of <var>tbl</var>,
   given in an <font face="Gill Sans,Helvetica,Arial">ATLAS</font>-like notation.
   This means that the irreducible constituents are indicated by their
-  degrees followed by lower case letters <code>a</code>, <code>b</code>, <code>c</code>, <font face="symbol">&#8230;</font>,
+  degrees followed by lower case letters <code>a</code>, <code>b</code>, <code>c</code>, &#8230;,
   which indicate the successive irreducible characters of <var>tbl</var>
   of that degree, in the order in which they appear in <code>Irr( </code><var>tbl</var><code> )</code>.
   A sequence of small letters (not necessarily distinct) after a single
@@ -2179,7 +2179,7 @@ The degrees and distinguishing letters of the constituents refer to
 the irreducibles of <var>tbl</var>, as follows.
 The two irreducible characters of <var>tbl2</var> of degree <i>N</i>, say, that extend
 the irreducible character <i>N</i> <tt>a</tt> of <var>tbl</var> are denoted by <i>N</i> <tt>a</tt><sup>+</sup> and
-<i>N</i> <tt>a</tt><sup><font face="symbol">&#8722;</font></sup>.
+<i>N</i> <tt>a</tt><sup>&#8722;</sup>.
 The irreducible character of <var>tbl2</var> of degree 2<i>N</i>, say, whose
 restriction to <var>tbl</var> is the sum of the irreducible characters <i>N</i> <tt>a</tt> and
 <i>N</i> <tt>b</tt> is denoted as <i>N</i> <tt>ab</tt>.
@@ -2250,7 +2250,7 @@ This list might be rather long for big groups,
 and its computation might take much time.
 The algorithm is described in Section&nbsp;3.2 in&nbsp;<a href="biblio.htm#BP98"><cite>BP98</cite></a>;
 it depends on a preprocessing step, where the inequalities
-arising from the condition <font face="symbol">&#960;</font>(<i>g</i>)  <font face="symbol">&#8805;</font> 0 are transformed into
+arising from the condition &#960;(<i>g</i>)  &#8805; 0 are transformed into
 a system of inequalities that guides the search (see&nbsp;<a href="CHAP070.htm#SSEC014.5">Inequalities</a>).
 So the following commands compute the list of 39 possible permutation
 characters of the Mathieu group <i>M</i><sub>11</sub>.
@@ -2336,18 +2336,18 @@ An additional restriction on the possible permutation characters computed
 can be forced if <var>arec</var> contains, in addition to <code>torso</code>,
 the components <code>normalsubgroup</code> and <code>nonfaithful</code>,
 with values a list of class positions of a normal subgroup <i>N</i> of the
-group <i>G</i> of <var>tbl</var> and a possible permutation character <font face="symbol">&#960;</font> of <i>G</i>,
-respectively, such that <i>N</i> is contained in the kernel of <font face="symbol">&#960;</font>.
+group <i>G</i> of <var>tbl</var> and a possible permutation character &#960; of <i>G</i>,
+respectively, such that <i>N</i> is contained in the kernel of &#960;.
 In this case, <code>PermChars</code> returns the list of those possible permutation
-characters <font face="symbol">&#968;</font> of <var>tbl</var> coinciding with <code>torso</code> wherever its values
+characters &#968; of <var>tbl</var> coinciding with <code>torso</code> wherever its values
 are bound
-and having the property that no irreducible constituent of <font face="symbol">&#968;</font><font face="symbol">&#8722;</font><font face="symbol">&#960;</font>
+and having the property that no irreducible constituent of &#968;&#8722;&#960;
 has <i>N</i> in its kernel.
 If the component <code>chars</code> is bound in <var>arec</var> then the above statements
 apply.
 An interpretation of the computed characters is the following.
-Suppose there exists a subgroup <i>V</i> of <i>G</i> such that <font face="symbol">&#960;</font> =  (1<sub><i>V</i></sub>)<sup><i>G</i></sup>;
-Then <i>N</i>  <font face="symbol">&#8804;</font> <i>V</i>, and if a computed character is of the form (1<sub><i>U</i></sub>)<sup><i>G</i></sup>
+Suppose there exists a subgroup <i>V</i> of <i>G</i> such that &#960; =  (1<sub><i>V</i></sub>)<sup><i>G</i></sup>;
+Then <i>N</i>  &#8804; <i>V</i>, and if a computed character is of the form (1<sub><i>U</i></sub>)<sup><i>G</i></sup>
 for a subgroup <i>U</i> of <i>G</i> then <i>V</i> = <i>UN</i>.
 <pre>
 gap&gt; s4:= CharacterTable( "Symmetric", 4 );;
@@ -2417,17 +2417,17 @@ these tests use modular representation theory but do not require the
 knowledge of decomposition matrices (cf.&nbsp;<code>TestPerm5</code> below).
 <p>
 (T8) implements the test of the fact that in the case that <i>p</i> divides
-<font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font> and the degree of a transitive permutation character <font face="symbol">&#960;</font> exactly
+&#124;<i>G</i>&#124; and the degree of a transitive permutation character &#960; exactly
 once,
-the projective cover of the trivial character is a summand of <font face="symbol">&#960;</font>.
+the projective cover of the trivial character is a summand of &#960;.
 (This test is omitted if the projective cover cannot be identified.)
 <p>
-Given a permutation character <font face="symbol">&#960;</font> of a group <i>G</i> and a prime integer
-<i>p</i>, the restriction <font face="symbol">&#960;</font><sub><i>B</i></sub> to a <i>p</i>-block <i>B</i> of <i>G</i> has the following
+Given a permutation character &#960; of a group <i>G</i> and a prime integer
+<i>p</i>, the restriction &#960;<sub><i>B</i></sub> to a <i>p</i>-block <i>B</i> of <i>G</i> has the following
 property, which is checked by (T9).
-For each <i>g</i> <font face="symbol">&#8712;</font> <i>G</i> such that <i>g</i><sup><i>n</i></sup> is a <i>p</i>-element of <i>G</i>,
-<font face="symbol">&#960;</font><sub><i>B</i></sub>(<i>g</i><sup><i>n</i></sup>) is a nonnegative integer that satisfies
-<font face="symbol">&#124;</font><font face="symbol">&#960;</font><sub><i>B</i></sub>(<i>g</i>)<font face="symbol">&#124;</font>  <font face="symbol">&#8804;</font> <font face="symbol">&#960;</font><sub><i>B</i></sub>(<i>g</i><sup><i>n</i></sup>)  <font face="symbol">&#8804;</font> <font face="symbol">&#960;</font>(<i>g</i><sup><i>n</i></sup>).
+For each <i>g</i> &#8712; <i>G</i> such that <i>g</i><sup><i>n</i></sup> is a <i>p</i>-element of <i>G</i>,
+&#960;<sub><i>B</i></sub>(<i>g</i><sup><i>n</i></sup>) is a nonnegative integer that satisfies
+&#124;&#960;<sub><i>B</i></sub>(<i>g</i>)&#124;  &#8804; &#960;<sub><i>B</i></sub>(<i>g</i><sup><i>n</i></sup>)  &#8804; &#960;(<i>g</i><sup><i>n</i></sup>).
 (This is Corollary&nbsp;A on p.&nbsp;113 of&nbsp;<a href="biblio.htm#Sco73"><cite>Sco73</cite></a>.)
 <p>
 <code>TestPerm5</code> requires the <i>p</i>-modular Brauer table <var>modtbl</var> of <i>G</i>,
@@ -2475,7 +2475,7 @@ gap&gt; TestPerm5( tbl, perms, tbl mod 5 );
 <li><code>PermBounds( </code><var>tbl</var><code>, </code><var>d</var><code> ) F</code>
 <p>
 Let <var>tbl</var> be the ordinary character table of the group <i>G</i>.
-All <i>G</i>-characters <font face="symbol">&#960;</font> satisfying <font face="symbol">&#960;</font>(<i>g</i>)  &gt;  0 and <font face="symbol">&#960;</font>(1) = <i>d</i> ,
+All <i>G</i>-characters &#960; satisfying &#960;(<i>g</i>)  &gt;  0 and &#960;(1) = <i>d</i> ,
 for a given degree <var>d</var>, lie in a simplex described by these conditions.
 <code>PermBounds</code> computes the boundary points of this simplex for  <i>d</i> = 0,
 from which the boundary points for any other <var>d</var> are easily derived.
@@ -2507,14 +2507,14 @@ characters can be explicitly prescribed as a <code>maxmult</code> component in
 <var>arec</var>.
 <p>
 <a name = "SSEC014.5"></a>
-<li><code>Inequalities( </code><var>tbl</var><code>, </code><var>chars</var><code>[, </code><var>option</var><code>] ) F</code>
+<li><code>Inequalities( </code><var>tbl</var><code>, </code><var>chars</var><code>[, </code><var>option</var><code>] ) O</code>
 <p>
 Let <var>tbl</var> be the ordinary character table of a group <i>G</i>.
-The condition <font face="symbol">&#960;</font>(<i>g</i>)  <font face="symbol">&#8805;</font> 0 for every possible permutation character
-<font face="symbol">&#960;</font> of <i>G</i> places restrictions on the multiplicities <i>a</i><sub><i>i</i></sub>
-of the irreducible constituents <font face="symbol">&#967;</font><sub><i>i</i></sub>
-of <font face="symbol">&#960;</font> =  <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>r</i></sup> <i>a</i><sub><i>i</i></sub> <font face="symbol">&#967;</font><sub><i>i</i></sub>.
-For every element <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>, we have <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>r</i></sup> <i>a</i><sub><i>i</i></sub> <font face="symbol">&#967;</font><sub><i>i</i></sub>(<i>g</i>)  <font face="symbol">&#8805;</font> 0.
+The condition &#960;(<i>g</i>)  &#8805; 0 for every possible permutation character
+&#960; of <i>G</i> places restrictions on the multiplicities <i>a</i><sub><i>i</i></sub>
+of the irreducible constituents &#967;<sub><i>i</i></sub>
+of &#960; =  &#8721;<sub><i>i</i>=1</sub><sup><i>r</i></sup> <i>a</i><sub><i>i</i></sub> &#967;<sub><i>i</i></sub>.
+For every element <i>g</i>  &#8712; <i>G</i>, we have &#8721;<sub><i>i</i>=1</sub><sup><i>r</i></sup> <i>a</i><sub><i>i</i></sub> &#967;<sub><i>i</i></sub>(<i>g</i>)  &#8805; 0.
 The power maps provide even stronger conditions.
 <p>
 This system of inequalities is kind of diagonalized,
@@ -2534,8 +2534,8 @@ is the straight approach which takes the rational irreducible
 characters in their original order and by this guarantees the character
 with the smallest degree to be considered first.
 The other way, which is chosen if the string <code>"small"</code> is entered as
-third argument, tries to keep the number of intermediate inequalities
-small by eventually changing the order of characters.
+third argument <var>option</var>, tries to keep the number of intermediate
+inequalities small by eventually changing the order of characters.
 <p>
 <pre>
 gap&gt; tbl:= CharacterTable( "M11" );;
@@ -2558,10 +2558,10 @@ gap&gt; PermComb( tbl, rec( degree:= 110, maxmult:= bounds ) );
 Let <var>value</var> be a cyclotomic whose coefficients over the rationals are
 in the ring <b>Z</b><sub><i>p</i> </sub> of <var>p</var>-local numbers,
 where <var>p</var> is a prime integer.
-Assume that <var>value</var> lies in <b>Z</b><sub><i>p</i> </sub>[<font face="symbol">&#950;</font>] for <font face="symbol">&#950;</font> =  <tt>E</tt>(<i>p</i> <sup><i>n</i></sup>).
+Assume that <var>value</var> lies in <b>Z</b><sub><i>p</i> </sub>[&#950;] for &#950; =  <tt>E</tt>(<i>p</i> <sup><i>n</i></sup>).
 <p>
 <code>FrobeniusCharacterValue</code> returns the image of <var>value</var> under the ring
-homomorphism from <b>Z</b><sub><i>p</i> </sub>[<font face="symbol">&#950;</font>] to the field with <i>p</i> <sup><i>n</i></sup> elements
+homomorphism from <b>Z</b><sub><i>p</i> </sub>[&#950;] to the field with <i>p</i> <sup><i>n</i></sup> elements
 that is defined with the help of Conway polynomials
 (see&nbsp;<a href="CHAP057.htm#SSEC005.1">ConwayPolynomial</a>), more information can be found in Sections&nbsp;2--5
 of&nbsp;<a href="biblio.htm#JLPW95"><cite>JLPW95</cite></a>.
@@ -2575,12 +2575,10 @@ If the result of <code>FrobeniusCharacterValue</code> cannot be expressed as an
 element of a finite field in <font face="Gill Sans,Helvetica,Arial">GAP</font> (see Chapter&nbsp;<a href="CHAP057.htm">Finite Fields</a>)
 then <code>FrobeniusCharacterValue</code> returns <code>fail</code>.
 <p>
-<a name = "I49"></a>
-
 If the Conway polynomial of degree <i>n</i> is required for the computation
-but not yet stored in the global list of <font face="Gill Sans,Helvetica,Arial">GAP</font> then it is computed only
-if the global function <code>TryConwayPolynomialForFrobeniusCharacterValue</code>
-returns <code>true</code> when it is called with <var>p</var> and <i>n</i>.
+then it is computed only if <code>IsCheapConwayPolynomial</code> returns <code>true</code>
+when it is called with <var>p</var> and <i>n</i>,
+otherwise <code>fail</code> is returned.
 <p>
 <a name = "SSEC015.2"></a>
 <li><code>BrauerCharacterValue( </code><var>mat</var><code> ) A</code>
@@ -2615,7 +2613,7 @@ For a cyclotomic or a list of cyclotomics <var>val</var>, and a prime integer <v
 in characteristic <var>p</var> that contains the <var>p</var>-modular reduction of <var>val</var>.
 <p>
 The reduction map is defined as in&nbsp;<a href="biblio.htm#JLPW95"><cite>JLPW95</cite></a>,
-that is, the complex (<i>p</i> <sup><i>d</i></sup><font face="symbol">&#8722;</font>1)-th root of unity <code>E</code>(<i>q</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1) is mapped
+that is, the complex (<i>p</i> <sup><i>d</i></sup>&#8722;1)-th root of unity <code>E</code>(<i>q</i><sup><i>d</i></sup>&#8722;1) is mapped
 to the residue class of the indeterminate, modulo the ideal spanned by
 the Conway polynomial (see&nbsp;<a href="CHAP057.htm#SSEC005.1">ConwayPolynomial</a>) of degree <i>d</i> over the
 field with <i>p</i> elements.
@@ -2656,5 +2654,5 @@ functions.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP069.htm">Previous</a>] [<a href ="CHAP071.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

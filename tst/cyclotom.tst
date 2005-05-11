@@ -2,7 +2,7 @@
 ##
 #W  cyclotom.tst                GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: cyclotom.tst,v 4.11 2003/11/15 16:58:59 gap Exp $
+#H  @(#)$Id: cyclotom.tst,v 4.11.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -11,8 +11,10 @@
 ##  (This holds also for minor changes such as the removal of whitespace or
 ##  the correction of typos.)
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: cyclotom.tst,v 4.11 2003/11/15 16:58:59 gap Exp $");
+gap> START_TEST("$Id: cyclotom.tst,v 4.11.2.3 2005/05/11 14:53:02 gap Exp $");
 
 # Check basic arithmetic operations.
 gap> cyc:= E(5) + E(7);
@@ -231,7 +233,7 @@ gap> Print(RationalizedMat( gm.mat ),"\n");
 [ [ 2666, -1, -2, 0, 0 ], [ 519550080, 0, 0, 0, 0 ], 
   [ 1770515712, 0, -2, 0, 0 ], [ 4337827830, 0, 0, 0, -1 ] ]
 
-gap> STOP_TEST( "cyclotom.tst",5832500);
+gap> STOP_TEST( "cyclotom.tst", 5700000 );
 
 
 #############################################################################

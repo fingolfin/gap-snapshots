@@ -59,7 +59,7 @@ b*c^-1*b^-1*c*b^-1*a^-1
 </pre>
 <p>
 Words are displayed as products of letters.
-The letters are usually printed like <code>f1</code>, <code>f2</code>, <font face="symbol">&#8230;</font>,
+The letters are usually printed like <code>f1</code>, <code>f2</code>, &#8230;,
 but it is possible to give user defined names to them,
 which can be arbitrary strings.
 These names do not necessarily identify a unique letter (generator),
@@ -493,9 +493,9 @@ b^-11
 <p>
 <h2><a name="SECT005">35.5 Operations for Associative Words by their Syllables</a></h2>
 <p><p>
-For an associative word <i>w</i>  = <i>x</i><sub>1</sub><sup><i>n</i><sub>1</sub></sup> <i>x</i><sub>2</sub><sup><i>n</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>x</i><sub><i>k</i></sub><sup><i>n</i><sub><i>k</i></sub></sup>
-over an alphabet containing <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>x</i><sub><i>k</i></sub>,
-such that <i>x</i><sub><i>i</i></sub>  <font face="symbol">&#8800;</font> <i>x</i><sub><i>i</i>+1</sub><sup><font face="symbol">&#177;</font>1</sup> for 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>k</i><font face="symbol">&#8722;</font>1,
+For an associative word <i>w</i>  = <i>x</i><sub>1</sub><sup><i>n</i><sub>1</sub></sup> <i>x</i><sub>2</sub><sup><i>n</i><sub>2</sub></sup> &#8230;<i>x</i><sub><i>k</i></sub><sup><i>n</i><sub><i>k</i></sub></sup>
+over an alphabet containing <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, &#8230;, <i>x</i><sub><i>k</i></sub>,
+such that <i>x</i><sub><i>i</i></sub>  &#8800; <i>x</i><sub><i>i</i>+1</sub><sup>&#177;1</sup> for 1  &#8804; <i>i</i>  &#8804; <i>k</i>&#8722;1,
 the subwords <i>x</i><sub><i>i</i></sub><sup><i>e</i><sub><i>i</i></sub></sup> are uniquely determined;
 these powers of generators are called the <strong>syllables</strong> of <i>w</i>.
 <p>
@@ -670,16 +670,16 @@ The external representation (see section&nbsp;<a href="CHAP035.htm#SECT007">The 
 <p><p>
 The external representation of the associative word <i>w</i> is defined as
 follows.
-If <i>w</i> = <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>e</i><sub>1</sub></sup> * <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>e</i><sub>2</sub></sup> * <font face="symbol">&#8230;</font>* <i>g</i><sub><i>i</i><sub><i>k</i></sub></sub><sup><i>e</i><sub><i>k</i></sub></sup>
-is a word over the alphabet <i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>,
+If <i>w</i> = <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>e</i><sub>1</sub></sup> * <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>e</i><sub>2</sub></sup> * &#8230;* <i>g</i><sub><i>i</i><sub><i>k</i></sub></sub><sup><i>e</i><sub><i>k</i></sub></sup>
+is a word over the alphabet <i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, &#8230;,
 i.e., <i>g</i><sub><i>i</i></sub> denotes the <i>i</i>-th generator of the family of <i>w</i>,
 then <i>w</i> has external representation
-[ <i>i</i><sub>1</sub>, <i>e</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>e</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>k</i></sub>, <i>e</i><sub><i>k</i></sub> ].
+[ <i>i</i><sub>1</sub>, <i>e</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>e</i><sub>2</sub>, &#8230;, <i>i</i><sub><i>k</i></sub>, <i>e</i><sub><i>k</i></sub> ].
 The empty list describes the identity element (if exists) of the family.
 Exponents may be negative if the family allows inverses.
 The external representation of an associative word is guaranteed to be
 freely reduced;
-for example, <i>g</i><sub>1</sub> * <i>g</i><sub>2</sub> * <i>g</i><sub>2</sub><sup><font face="symbol">&#8722;</font>1</sup> * <i>g</i><sub>1</sub> has the external representation
+for example, <i>g</i><sub>1</sub> * <i>g</i><sub>2</sub> * <i>g</i><sub>2</sub><sup>&#8722;1</sup> * <i>g</i><sub>1</sub> has the external representation
 <code>[ 1, 2 ]</code>.
 <p>
 Regardless of the family preference for letter or syllable
@@ -718,7 +718,7 @@ each of which has one of the following three forms.
     a pair [ <i>l</i>, <i>i</i> ]
     where <i>l</i> is a list of form 1. and <i>i</i> is a positive integer,
 <li>
-    a list [ <i>l</i><sub>1</sub>, <i>l</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>l</i><sub><i>k</i></sub> ]
+    a list [ <i>l</i><sub>1</sub>, <i>l</i><sub>2</sub>, &#8230;, <i>l</i><sub><i>k</i></sub> ]
     where each <i>l</i><sub><i>i</i></sub> is a list of form 1.;
     this may occur only for the last line of the program.
 </ol>
@@ -726,8 +726,8 @@ each of which has one of the following three forms.
 The lists of integers that occur are interpreted as external
 representations of associative words
 (see&nbsp;<a href="CHAP035.htm#SECT007">The External Representation for Associative Words</a>);
-for example, the list [ 1, 3, 2, <font face="symbol">&#8722;</font>1 ] represents the word
-<i>g</i><sub>1</sub><sup>3</sup> <i>g</i><sub>2</sub><sup><font face="symbol">&#8722;</font>1</sup>, with <i>g</i><sub>1</sub> and <i>g</i><sub>2</sub> the first and second abstract
+for example, the list [ 1, 3, 2, &#8722;1 ] represents the word
+<i>g</i><sub>1</sub><sup>3</sup> <i>g</i><sub>2</sub><sup>&#8722;1</sup>, with <i>g</i><sub>1</sub> and <i>g</i><sub>2</sub> the first and second abstract
 generator, respectively.
 <p>
 Straight line programs can be constructed using
@@ -749,7 +749,7 @@ words;
 a record with components <code>gensnames</code> (with value a list of strings)
 and <code>listname</code> (a string) may be entered as second argument of <code>Display</code>,
 in this case these names are used, the default for <code>gensnames</code> is
-[ <tt>g</tt><tt>1</tt>, <tt>g</tt><tt>2</tt>, <font face="symbol">&#8230;</font>], the default for <code>listname</code> is <i>r</i>.
+[ <tt>g</tt><tt>1</tt>, <tt>g</tt><tt>2</tt>, &#8230;], the default for <code>listname</code> is <i>r</i>.
 <p>
 <a name = "SSEC008.1"></a>
 <li><code>IsStraightLineProgram( </code><var>obj</var><code> ) C</code>
@@ -819,7 +819,7 @@ then <code>NrInputsOfStraightLineProgram</code> signals an error.
 <var>gens</var>.
 <p>
 The <strong>result</strong> of a straight line program with lines
-<i>p</i><sub>1</sub>, <i>p</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>p</i><sub><i>k</i></sub>
+<i>p</i><sub>1</sub>, <i>p</i><sub>2</sub>, &#8230;, <i>p</i><sub><i>k</i></sub>
 when applied to <var>gens</var> is defined as follows.
 <ol type=a>
 <li>
@@ -840,7 +840,7 @@ when applied to <var>gens</var> is defined as follows.
     of the program,
     if <i>p</i><sub><i>k</i></sub> is a pair [ <i>l</i>, <i>j</i> ], for a list <i>l</i>, then the result is
     the element described by <i>l</i>,
-    and if <i>p</i><sub><i>k</i></sub> is a list [ <i>l</i><sub>1</sub>, <i>l</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>l</i><sub><i>k</i></sub> ] of lists
+    and if <i>p</i><sub><i>k</i></sub> is a list [ <i>l</i><sub>1</sub>, <i>l</i><sub>2</sub>, &#8230;, <i>l</i><sub><i>k</i></sub> ] of lists
     then the result is a list of group elements, where each <i>l</i><sub><i>i</i></sub> is
     treated as in (b).
 </ol>
@@ -1071,5 +1071,5 @@ See also Section&nbsp;<a href="CHAP041.htm#SECT012">Working with large degree pe
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP034.htm">Previous</a>] [<a href ="CHAP036.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

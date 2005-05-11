@@ -4,7 +4,7 @@
 **                                                           & Alice Niemeyer
 **                                                           & Werner  Nickel
 **
-*H  @(#)$Id: integer.c,v 4.59 2003/04/01 02:09:05 gap Exp $
+*H  @(#)$Id: integer.c,v 4.59.2.1 2005/04/12 22:35:34 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -86,7 +86,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_integer_c =
-   "@(#)$Id: integer.c,v 4.59 2003/04/01 02:09:05 gap Exp $";
+   "@(#)$Id: integer.c,v 4.59.2.1 2005/04/12 22:35:34 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -335,7 +335,7 @@ Obj  FuncIntHexString( Obj self,  Obj str )
     UInt1 *p, a;
     TypDigit d;
     
-    if (! IS_STRING(str))
+    if (! IsStringConv(str))
         ErrorReturnObj("IntHexString: argument must be string (not a %s)",
           (Int)TNAM_OBJ(str), 0L,
           "");

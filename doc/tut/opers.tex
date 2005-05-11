@@ -2,7 +2,7 @@
 %%
 %W  opers.tex                 GAP documentation            Heiko Theissen
 %%
-%H  @(#)$Id: opers.tex,v 4.22 2003/11/03 16:16:14 gap Exp $
+%H  @(#)$Id: opers.tex,v 4.22.2.1 2005/05/09 07:07:17 gap Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %%
@@ -52,9 +52,9 @@ This second method is also called the *system getter*.
 are called *operations*, so `Size' is an example of an operation.
 \beginexample
 gap> G := Group( (1,2,3,4,5,6,7,8), (1,2) );;
-gap> Size( G ); time;   # the time may of course vary on your machine
+gap> Size( G ); time > 0;   # the time may of course vary on your machine
 40320
-30
+true
 gap> Size( G ); time;
 40320
 0

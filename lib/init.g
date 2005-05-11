@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.2 2004/04/27 16:16:12 gap Exp $
+#H  @(#)$Id: init.g,v 4.212.2.6 2005/05/12 15:59:31 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file initializes GAP.
 ##
 Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.2 2004/04/27 16:16:12 gap Exp $";
+    "@(#)$Id: init.g,v 4.212.2.6 2005/05/12 15:59:31 gap Exp $";
 
 #############################################################################
 ##
@@ -169,46 +169,25 @@ RankFilter               := Error;      # defined in "filter.g"
 #############################################################################
 ##
 #F  ReadOrComplete( <name> )  . . . . . . . . . . . . read file or completion
-#F  ReadOrComplete( <pkgname>, <name>, <list> ) . . . read file or completion
-##
-##  The three argument version is used for reading/completing package files.
-##  Note that we must use `ReadPackage' instead of `READ_GAP_ROOT' in this
-##  case.
 ##
 COMPLETABLE_FILES := [];
 COMPLETED_FILES   := [];
-ReadPackage:= Error; # will be defined in `package.g'
 
-ReadOrComplete := function( arg )
-    local pkgname, name, list, check, comp, res;
-
-    if 1 < LEN_LIST( arg ) then
-      pkgname:= arg[1];
-      name:= arg[2];
-      list:= arg[3];
-    else
-      name:= arg[1];
-      list:= COMPLETABLE_FILES;
-    fi;
+ReadOrComplete := function( name )
+    local check;
 
     READED_FILES := [];
     check        := CHECK_INSTALL_METHOD;
 
     # use completion files
     if not GAPInfo.CommandLineOptions.N then
-        comp := ReplacedString( name, ".g", ".co" );
 
         # do not check installation and use cached ranks
         CHECK_INSTALL_METHOD := false;
         RankFilter           := RANK_FILTER_COMPLETION;
 
         # check for the completion file
-        if 1 < LEN_LIST( arg ) then
-          res:= ReadPackage( pkgname, comp );
-        else
-          res:= READ_GAP_ROOT( comp );
-        fi;
-        if not res then
+        if not READ_GAP_ROOT( ReplacedString( name, ".g", ".co" ) ) then
 
             # set filter functions to store
             IS_READ_OR_COMPLETE  := true;
@@ -218,15 +197,10 @@ ReadOrComplete := function( arg )
 
             # read the original file
             InfoRead1( "#I  reading ", name, "\n" );
-            if 1 < LEN_LIST( arg ) then
-              res:= ReadPackage( pkgname, name );
-            else
-              res:= READ_GAP_ROOT( name );
-            fi;
-            if not res then
+            if not READ_GAP_ROOT( name ) then
                 Error( "cannot read or complete file ", name );
             fi;
-            ADD_LIST( list, [ name, READED_FILES, RANK_FILTER_LIST ] );
+            ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
 
         # file completed
         else
@@ -242,15 +216,10 @@ ReadOrComplete := function( arg )
         RANK_FILTER_LIST    := [];
 
         # read the file
-        if 1 < LEN_LIST( arg ) then
-          res:= ReadPackage( pkgname, name );
-        else
-          res:= READ_GAP_ROOT( name );
-        fi;
-        if not res then
+        if not READ_GAP_ROOT( name ) then
             Error( "cannot read file ", name );
         fi;
-        ADD_LIST( list, [ name, READED_FILES, RANK_FILTER_LIST ] );
+        ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
     fi;
 
     # reset rank and filter functions
@@ -260,8 +229,6 @@ ReadOrComplete := function( arg )
     Unbind(RANK_FILTER_LIST);
     Unbind(READED_FILES);
 end;
-
-Unbind( ReadPackage );
 
 
 #############################################################################
@@ -542,6 +509,9 @@ end );
 
 # help system, profiling
 ReadOrComplete( "lib/read4.g" );
+#  moved here from read4.g, because completion doesn't work with if-statements
+#  around function definitions!
+ReadLib( "helpview.gi"  );
 
 #T  1996/09/01 M.Schoenert this helps performance
 IMPLICATIONS:=IMPLICATIONS{[Length(IMPLICATIONS),Length(IMPLICATIONS)-1..1]};
@@ -573,6 +543,7 @@ ReadOrComplete( "lib/read7.g" );
 
 # overloaded operations and compiler interface
 ReadOrComplete( "lib/read8.g" );
+ReadLib( "colorprompt.g"  );
 
 
 #############################################################################
@@ -659,8 +630,12 @@ RereadLib( "obsolete.g" );
 #T have disappeared and are not getting unbound in `system.g'.
     end );
 Add(POST_RESTORE_FUNCS, function() 
-      # recheck in case user has given additional directories 
-      if not GAPInfo.CommandLineOptionsRestore.A then
+    local A;
+      # recheck in case user has given additional directories
+      A:= GAPInfo.CommandLineOptionsRestore.A;
+      if A = false or ( IsList( A ) and ( Length( A ) mod 2 = 0 ) ) then
+#T This is just a hack, GAPInfo.CommandLineOptionsRestore should be
+#T translated in the same way as GAPInfo.CommandLineOptions.
         GAPInfo.PackagesInfoInitialized := false;
         InitializePackagesInfoRecords(false);
       fi;
@@ -670,14 +645,14 @@ end);
 ##
 ##  Display version, loaded components and packages
 ##
-GAPInfo.SystemInformation := function()
+GAPInfo.SystemInformation := function( basic, extended )
     local linelen, PL, comma, name, info, N;
 
     linelen:= SizeScreen()[1] - 2;
-  if not GAPInfo.CommandLineOptions.q then
+    if basic then
     Print( "GAP4, Version: ", GAPInfo.Version, " of ", GAPInfo.Date, ", ",
            GAPInfo.Architecture, "\n" );
-    if not GAPInfo.CommandLineOptions.b then
+      if extended then
 
       # For each loaded component, print name and version number.
       if GAPInfo.LoadedComponents <> rec() then
@@ -733,7 +708,10 @@ GAPInfo.SystemInformation := function()
     fi;
   fi;
 end;
-Add( POST_RESTORE_FUNCS, GAPInfo.SystemInformation );
+Add( POST_RESTORE_FUNCS, function()
+     GAPInfo.SystemInformation( not GAPInfo.CommandLineOptions.q,
+                                not GAPInfo.CommandLineOptions.b );
+     end );
 
 
 #############################################################################
@@ -812,7 +790,8 @@ fi;
 ##
 ##  Display version, loaded components and packages
 ##
-GAPInfo.SystemInformation();
+GAPInfo.SystemInformation( not GAPInfo.CommandLineOptions.q,
+                           not GAPInfo.CommandLineOptions.b );
 
 
 #############################################################################

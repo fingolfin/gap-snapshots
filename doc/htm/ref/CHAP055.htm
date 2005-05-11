@@ -18,16 +18,16 @@
 <p>
 A domain <var>D</var> lies in <code>IsLeftOperatorAdditiveGroup</code> if it is an additive
 group that is closed under scalar multplication from the
-left, and such that <font face="symbol">&#955;</font>*(<i>x</i>+<i>y</i>)=<font face="symbol">&#955;</font>*<i>x</i>+<font face="symbol">&#955;</font>*<i>y</i> for all
-scalars <font face="symbol">&#955;</font> and elements <i>x</i>,<i>y</i> <font face="symbol">&#8712;</font> <i>D</i>.
+left, and such that &#955;*(<i>x</i>+<i>y</i>)=&#955;*<i>x</i>+&#955;*<i>y</i> for all
+scalars &#955; and elements <i>x</i>,<i>y</i> &#8712; <i>D</i>.
 <p>
 <a name = "SSEC001.2"></a>
 <li><code>IsLeftModule( </code><var>M</var><code> ) C</code>
 <p>
 A domain <var>M</var> lies in <code>IsLeftModule</code> if it lies in
 <code>IsLeftOperatorAdditiveGroup</code>, <em>and</em>the set of scalars forms a ring,
-<em>and</em>(<font face="symbol">&#955;</font>+<font face="symbol">&#956;</font>)*<i>x</i>=<font face="symbol">&#955;</font>*<i>x</i>+<font face="symbol">&#956;</font>*<i>x</i> for scalars <font face="symbol">&#955;</font>,<font face="symbol">&#956;</font>
-and <i>x</i> <font face="symbol">&#8712;</font> <i>M</i>, <em>and</em>scalar multiplication satisfies <font face="symbol">&#955;</font>*(<font face="symbol">&#956;</font>*<i>x</i>) = (<font face="symbol">&#955;</font>*<font face="symbol">&#956;</font>)*<i>x</i> for scalars <font face="symbol">&#955;</font>,<font face="symbol">&#956;</font> and <i>x</i> <font face="symbol">&#8712;</font> <i>M</i>.
+<em>and</em>(&#955;+&#956;)*<i>x</i>=&#955;*<i>x</i>+&#956;*<i>x</i> for scalars &#955;,&#956;
+and <i>x</i> &#8712; <i>M</i>, <em>and</em>scalar multiplication satisfies &#955;*(&#956;*<i>x</i>) = (&#955;*&#956;)*<i>x</i> for scalars &#955;,&#956; and <i>x</i> &#8712; <i>M</i>.
 <p>
 <pre>
 gap&gt; V:= FullRowSpace( Rationals, 3 );
@@ -73,16 +73,16 @@ gap&gt; AsLeftModule( GF(2), coll );
 <p>
 A domain <var>D</var> lies in <code>IsRightOperatorAdditiveGroup</code> if it is an additive
 group that is closed under scalar multplication from the
-right, and such that (<i>x</i>+<i>y</i>)*<font face="symbol">&#955;</font> = <i>x</i>*<font face="symbol">&#955;</font>+<i>y</i>*<font face="symbol">&#955;</font> for all
-scalars <font face="symbol">&#955;</font> and elements <i>x</i>,<i>y</i> <font face="symbol">&#8712;</font> <i>D</i>.
+right, and such that (<i>x</i>+<i>y</i>)*&#955; = <i>x</i>*&#955;+<i>y</i>*&#955; for all
+scalars &#955; and elements <i>x</i>,<i>y</i> &#8712; <i>D</i>.
 <p>
 <a name = "SSEC001.7"></a>
 <li><code>IsRightModule( </code><var>M</var><code> ) C</code>
 <p>
 A domain <var>M</var> lies in <code>IsRightModule</code> if it lies in
 <code>IsRightOperatorAdditiveGroup</code>, <em>and</em>the set of scalars forms a ring,
-<em>and</em><i>x</i>*(<font face="symbol">&#955;</font>+<font face="symbol">&#956;</font>) = <i>x</i>*<font face="symbol">&#955;</font>+<i>x</i>*<font face="symbol">&#956;</font> for scalars <font face="symbol">&#955;</font>,<font face="symbol">&#956;</font>
-and <i>x</i> <font face="symbol">&#8712;</font> <i>M</i>, <em>and</em>scalar multiplication satisfies (<i>x</i>*<font face="symbol">&#956;</font>)*<font face="symbol">&#955;</font> =  <i>x</i>*(<font face="symbol">&#956;</font>*<font face="symbol">&#955;</font>) for scalars <font face="symbol">&#955;</font>,<font face="symbol">&#956;</font> and <i>x</i> <font face="symbol">&#8712;</font> <i>M</i>.
+<em>and</em><i>x</i>*(&#955;+&#956;) = <i>x</i>*&#955;+<i>x</i>*&#956; for scalars &#955;,&#956;
+and <i>x</i> &#8712; <i>M</i>, <em>and</em>scalar multiplication satisfies (<i>x</i>*&#956;)*&#955; =  <i>x</i>*(&#956;*&#955;) for scalars &#955;,&#956; and <i>x</i> &#8712; <i>M</i>.
 <p>
 <a name = "SSEC001.8"></a>
 <li><code>GeneratorsOfRightOperatorAdditiveGroup( </code><var>D</var><code> ) A</code>
@@ -345,5 +345,5 @@ which is usually a row module.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP054.htm">Previous</a>] [<a href ="CHAP056.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

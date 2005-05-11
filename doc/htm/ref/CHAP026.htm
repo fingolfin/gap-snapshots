@@ -693,14 +693,14 @@ gap&gt; INT_CHAR(c);
 <a name = "SSEC006.3"></a>
 <li><code>SINT_CHAR(</code><var>char</var><code>) F</code>
 <p>
-returns a signed integer value in the range <font face="symbol">&#8722;</font>128--127 that corresponds to
+returns a signed integer value in the range &#8722;128--127 that corresponds to
 <var>char</var>.
 <p>
 <a name = "SSEC006.4"></a>
 <li><code>CHAR_SINT(</code><var>int</var><code>) F</code>
 <p>
 returns a character which corresponds to the signed integer value <var>int</var>,
-which must be in the range <font face="symbol">&#8722;</font>128--127.
+which must be in the range &#8722;128--127.
 <p>
 The signed and unsigned integer functions behave the same for values in the
 range from 0 to 127.
@@ -745,7 +745,9 @@ when a wrong character is found in the string. This function can be used
 integers from respectively into <font face="Gill Sans,Helvetica,Arial">GAP</font>. Note that the translation between
 integers and their hexa-decimal representation costs linear computation time
 in terms of the number of digits, while translation from and into decimal
-representation needs substantial computations.
+representation needs substantial computations. If <var>str</var> is not in compact
+string representation then <a href="CHAP026.htm#SSEC002.2">ConvertToStringRep</a> is applied to it as side
+effect.
 <p>
 <pre>
 gap&gt; Int("12345")+1;
@@ -912,5 +914,5 @@ gap&gt; DMYhmsSeconds(-1000000000);
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP025.htm">Previous</a>] [<a href ="CHAP027.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

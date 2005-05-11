@@ -3,7 +3,7 @@
 *W  string.c                    GAP source                       Frank Celler
 *W                                                         & Martin Schoenert
 **
-*H  @(#)$Id: string.c,v 4.72 2003/12/10 22:26:04 gap Exp $
+*H  @(#)$Id: string.c,v 4.72.2.1 2005/04/12 21:46:57 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -54,7 +54,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_string_c =
-   "@(#)$Id: string.c,v 4.72 2003/12/10 22:26:04 gap Exp $";
+   "@(#)$Id: string.c,v 4.72.2.1 2005/04/12 21:46:57 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -786,7 +786,7 @@ void PrintString1 (
     }
     PrStrBuf[scanout] = '\0';
     Pr( "%s", (Int)PrStrBuf, 0L );
-    for (p = CHARS_STRING(list); off<len && p[off]==0; off++) {
+    for (; off<len && CHARS_STRING(list)[off]==0; off++) {
       Pr("%c", 0L, 0L);
     }
   }

@@ -46,17 +46,17 @@ conjugation is a special case  of  this,  with   <i>map</i>(<i>pnt</i>) = <i>pnt
 In  the  generalized  case,  the  ``conjugated''  chain  need  not  be  a
 stabilizer chain for the image of <var>hom</var>, since the  ``preimage''  of  the
 stabilizer of <i>map</i>(<i>b</i>) (where <var>b</var> is a base point) need not fix <var>b</var>,  but
-only fixes the preimage <i>map</i><sup><font face="symbol">&#8722;</font>1</sup>(<i>map</i>(<i>b</i>)) setwise. Therefore the  method
+only fixes the preimage <i>map</i><sup>&#8722;1</sup>(<i>map</i>(<i>b</i>)) setwise. Therefore the  method
 can be applied only to one level and the next stabilizer must be computed
-explicitly. But if <var>map</var> is injective, we have <i>map</i>(<i>b</i>)&#183;<i>hom</i>(<i>g</i>)=<i>map</i>(<i>b</i>) <font face="symbol">&#8660;</font> <i>b</i>&#183;<i>g</i>=<i>b</i>, and if this holds, then <i>g</i>=<i>w</i>(<i>g</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>g</i><sub><i>n</i></sub>) is a  word  in  the
-generators <i>g</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>g</i><sub><i>n</i></sub> of the stabilizer of&nbsp;<var>b</var> and
-<i>hom</i>(<i>g</i>) = <sup>*</sup> <i>w</i>(<i>hom</i>(<i>g</i><sub>1</sub>),<font face="symbol">&#8230;</font>,<i>hom</i>(<i>g</i><sub><i>n</i></sub>))    is    in    the
+explicitly. But if <var>map</var> is injective, we have <i>map</i>(<i>b</i>)&#183;<i>hom</i>(<i>g</i>)=<i>map</i>(<i>b</i>) &#8660; <i>b</i>&#183;<i>g</i>=<i>b</i>, and if this holds, then <i>g</i>=<i>w</i>(<i>g</i><sub>1</sub>,&#8230;,<i>g</i><sub><i>n</i></sub>) is a  word  in  the
+generators <i>g</i><sub>1</sub>,&#8230;,<i>g</i><sub><i>n</i></sub> of the stabilizer of&nbsp;<var>b</var> and
+<i>hom</i>(<i>g</i>) = <sup>*</sup> <i>w</i>(<i>hom</i>(<i>g</i><sub>1</sub>),&#8230;,<i>hom</i>(<i>g</i><sub><i>n</i></sub>))    is    in    the
 ``conjugated'' stabilizer. If, more generally, <var>hom</var> is a  right  inverse
-to  a  homomorphism&nbsp;<font face="symbol">&#981;</font>  (i.e.,  <font face="symbol">&#981;</font>(<i>hom</i>(<i>g</i>))=<i>g</i>&nbsp;<font face="symbol">&#8704;</font><i>g</i>),
-equality * holds modulo <span class="roman">Ker</span>&nbsp;<font face="symbol">&#981;</font>; in this  case  the
+to  a  homomorphism&nbsp;&#981;  (i.e.,  &#981;(<i>hom</i>(<i>g</i>))=<i>g</i>&nbsp;&#8704;<i>g</i>),
+equality * holds modulo <span class="roman">Ker</span>&nbsp;&#981;; in this  case  the
 ``conjugated'' chain  can  be  made  into  a  real  stabilizer  chain  by
-extending  each  level  with  the  generators  <span class="roman">Ker</span>&nbsp;<font face="symbol">&#981;</font>  and
-appending a proper stabilizer chain of&nbsp;<span class="roman">Ker</span>&nbsp;<font face="symbol">&#981;</font> at  the  end.
+extending  each  level  with  the  generators  <span class="roman">Ker</span>&nbsp;&#981;  and
+appending a proper stabilizer chain of&nbsp;<span class="roman">Ker</span>&nbsp;&#981; at  the  end.
 These special cases will occur in the algorithms  for  permutation  group
 homomorphisms (see&nbsp;<a href="../ref/CHAP038.htm">Group Homomorphisms</a> in the reference manual).
 <p>
@@ -65,8 +65,8 @@ To ``conjugate'' the  points  (i.e.,  <code>orbit</code>)  and  permutations  (i
 constructed during the orbit algorithm, and  for  each  vertex  <var>b</var>  with
 unique edge <i>a</i>(<i>l</i>)<i>b</i> ending at <var>b</var>, the label <var>l</var> is mapped with <var>hom</var> and
 <var>b</var> with <var>map</var>. We assume  that  the  <code>orbit</code>  list  was  built  w.r.t.&nbsp;a
-certain ordering of the labels, where <i>l</i><font face="symbol">&#8242;</font> &lt; <i>l</i> means that every  point  in
-the orbit was mapped with <i>l</i><font face="symbol">&#8242;</font> before it was mapped with <var>l</var>. This  shape
+certain ordering of the labels, where <i>l</i>&#8242; &lt; <i>l</i> means that every  point  in
+the orbit was mapped with <i>l</i>&#8242; before it was mapped with <var>l</var>. This  shape
 of the <code>orbit</code> list is guaranteed if the Schreier tree is  extended  only
 by <code>AddGeneratorsExtendSchreierTree</code>, and it is then also guaranteed  for
 the ``conjugated'' Schreier tree. (The ordering of the labels  cannot  be
@@ -74,11 +74,11 @@ read from the Schreier tree, however.)
 <p>
 In the generalized case, it can happen that  the  edge  <i>a</i>(<i>l</i>)<i>b</i>  bears  a
 label <var>l</var> whose image is ``old'', i.e., equal to the image of an  earlier
-label <i>l</i><font face="symbol">&#8242;</font> &lt; <i>l</i>. Because of the compatibility of the actions we  then  have
-<i>map</i>(<i>b</i>) = <i>map</i>(<i>a</i>)&#183;<i>hom</i>(<i>l</i>)<sup><font face="symbol">&#8722;</font>1</sup> = <i>map</i>(<i>a</i>)&#183;<i>hom</i>(<i>l</i><font face="symbol">&#8242;</font>)<sup><font face="symbol">&#8722;</font>1</sup> = <i>map</i>(<i>a</i><i>l</i><font face="symbol">&#8242;</font><sup><font face="symbol">&#8722;</font>1</sup>),
-so <i>map</i>(<i>b</i>) is already equal to the image  of  the  vertex  <i>a</i><i>l</i><font face="symbol">&#8242;</font><sup><font face="symbol">&#8722;</font>1</sup>.
-This vertex must have been  encountered  before  <i>b</i> = <i>al</i><sup><font face="symbol">&#8722;</font>1</sup>  because
-<i>l</i><font face="symbol">&#8242;</font> &lt; <i>l</i>. We conclude that the image of a label can be ``old'' only if the
+label <i>l</i>&#8242; &lt; <i>l</i>. Because of the compatibility of the actions we  then  have
+<i>map</i>(<i>b</i>) = <i>map</i>(<i>a</i>)&#183;<i>hom</i>(<i>l</i>)<sup>&#8722;1</sup> = <i>map</i>(<i>a</i>)&#183;<i>hom</i>(<i>l</i>&#8242;)<sup>&#8722;1</sup> = <i>map</i>(<i>a</i><i>l</i>&#8242;<sup>&#8722;1</sup>),
+so <i>map</i>(<i>b</i>) is already equal to the image  of  the  vertex  <i>a</i><i>l</i>&#8242;<sup>&#8722;1</sup>.
+This vertex must have been  encountered  before  <i>b</i> = <i>al</i><sup>&#8722;1</sup>  because
+<i>l</i>&#8242; &lt; <i>l</i>. We conclude that the image of a label can be ``old'' only if the
 vertex at the end of the corresponding edge has an  ``old''  image,  too,
 but then it need not be ``conjugated'' at all. A similar  remark  applies
 to labels which map under <var>hom</var> to the identity.
@@ -160,7 +160,7 @@ some  <font face="Gill Sans,Helvetica,Arial">GAP</font>  functions   which   are
 groups. They are mentioned here because you might find them helpful  when
 you want  to  implement  you  own  backtracking  function  based  on  the
 partition concept. An important argument to most of the functions is  the
-R-base <font face="symbol">&#8476;</font>, which you should regard as a black box. We will tell you how
+R-base &#8476;, which you should regard as a black box. We will tell you how
 to set it up, how to maintain it and where to pass it as argument, but it
 is not necessary for you to know its internal representation. However, if
 you insist to learn the whole story: Here are the record components  from
@@ -169,21 +169,21 @@ which an R-base is made up:
 <p>
 <dl compact>
 <dt><code>domain</code> <dd>
-    the set <font face="symbol">&#8486;</font> on which the group <i>G</i> operates
+    the set &#8486; on which the group <i>G</i> operates
 <p>
 <dt><code>base</code> <dd>
-    the sequence (<i>a</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>a</i><sub><i>r</i></sub>) of base points
+    the sequence (<i>a</i><sub>1</sub>,&#8230;,<i>a</i><sub><i>r</i></sub>) of base points
 <p>
 <dt><code>partition</code> <dd>
-    an  ordered  partition, initially  <font face="symbol">&#928;</font><sub>0</sub>, this  will be  refined to
-    <font face="symbol">&#928;</font><sub>1</sub>,<font face="symbol">&#8230;</font>,<font face="symbol">&#928;</font><sub><i>r</i></sub> during the backtrack algorithm
+    an  ordered  partition, initially  &#928;<sub>0</sub>, this  will be  refined to
+    &#928;<sub>1</sub>,&#8230;,&#928;<sub><i>r</i></sub> during the backtrack algorithm
 <p>
 <dt><code>where</code> <dd>
-    a list such that <i>a</i><sub><i>i</i></sub> lies in cell number <code>where[ <i>i</i> ]</code> of <font face="symbol">&#928;</font><sub><i>i</i></sub>
+    a list such that <i>a</i><sub><i>i</i></sub> lies in cell number <code>where[ <i>i</i> ]</code> of &#928;<sub><i>i</i></sub>
 <p>
 <dt><code>rfm</code> <dd>
     a    list whose <i>i</i>th entry  is   a  list of   refinements which take
-    <font face="symbol">&#931;</font><sub><i>i</i></sub>  to <font face="symbol">&#931;</font><sub><i>i</i>+1</sub>;  the    structure of a  refinement  is
+    &#931;<sub><i>i</i></sub>  to &#931;<sub><i>i</i>+1</sub>;  the    structure of a  refinement  is
     described below
 <p>
 <dt><code>chain</code> <dd>
@@ -192,23 +192,23 @@ which an R-base is made up:
 <p>
 <dt><code>fix</code> <dd>
     only if  <i>G</i> is a  symmetric group:  a list whose  <i>i</i> entry contains
-    <code>Fixcells( <font face="symbol">&#928;</font><sub><i>i</i></sub> )</code>
+    <code>Fixcells( &#928;<sub><i>i</i></sub> )</code>
 <p>
 <dt><code>level</code> <dd>
     initially equal to <code>chain</code>,  this will be changed  to chains  for the
-    stabilizers  <i>G</i><sub><i>a</i><sub>1</sub>... <i>a</i><sub><i>i</i></sub></sub>    for  <i>i</i>=1,<font face="symbol">&#8230;</font>,<i>r</i>  during   the
+    stabilizers  <i>G</i><sub><i>a</i><sub>1</sub>... <i>a</i><sub><i>i</i></sub></sub>    for  <i>i</i>=1,&#8230;,<i>r</i>  during   the
     backtrack algorithm; if <i>G</i> is a  symmetric group, only the number of
     moved points is stored for each stabilizer
 <p>
 <dt><code>lev</code> <dd>
     a  list   whose  <i>i</i>th  entry   remembers   the  <code>level</code> entry    for
-    <i>G</i><sub><i>a</i><sub>1</sub><font face="symbol">&#8230;</font><i>a</i><sub><i>i</i><font face="symbol">&#8722;</font>1</sub></sub>
+    <i>G</i><sub><i>a</i><sub>1</sub>&#8230;<i>a</i><sub><i>i</i>&#8722;1</sub></sub>
 <p>
 <dt><code>level2</code>, <code>lev2</code> <dd>
     a similar  construction   for a second  group  (used  in intersection
     calculations), <code>false</code> otherwise.  This second group <i>H</i> activated if
-    the R-base  is constructed as  <code>EmptyRBase(  [ <i>G</i>, <i>H</i>  ], <font face="symbol">&#8486;</font>,
-    <font face="symbol">&#928;</font><sub>0</sub> )</code> (if <code><i>G</i> = <i>H</i></code>, <font face="Gill Sans,Helvetica,Arial">GAP</font> sets <code>level2 = true</code> instead).
+    the R-base  is constructed as  <code>EmptyRBase(  [ <i>G</i>, <i>H</i>  ], &#8486;,
+    &#928;<sub>0</sub> )</code> (if <code><i>G</i> = <i>H</i></code>, <font face="Gill Sans,Helvetica,Arial">GAP</font> sets <code>level2 = true</code> instead).
 <p>
 <dt><code>nextLevel</code> <dd>
     this is described below
@@ -218,23 +218,23 @@ As  our guiding example, we  present  code for the function <code>Centralizer</c
 which calculates the centralizer of an element <i>g</i> in the group <i>G</i>. (The
 real code is more general and has a few more subtleties.)
 <p>
-<code>1 <font face="symbol">&#928;</font><sub>0</sub> := TrivialPartition( <font face="symbol">&#8486;</font> );</code>
-<br><code>2 <font face="symbol">&#8476;</font> := EmptyRBase( <i>G</i>, <font face="symbol">&#8486;</font>, <font face="symbol">&#928;</font><sub>0</sub> );</code>
-<br><code>3 <font face="symbol">&#8476;</font>.nextLevel := function( <font face="symbol">&#928;</font>, </code><var>rbase</var><code> )</code>
+<code>1 &#928;<sub>0</sub> := TrivialPartition( &#8486; );</code>
+<br><code>2 &#8476; := EmptyRBase( <i>G</i>, &#8486;, &#928;<sub>0</sub> );</code>
+<br><code>3 &#8476;.nextLevel := function( &#928;, </code><var>rbase</var><code> )</code>
 <br><code>4 local  <i>fix</i>,  <i>p</i>,  <i>q</i>,  <i>where</i>;</code>
-<br><code>5 &nbsp;NextRBasePoint( <font face="symbol">&#928;</font>, </code><var>rbase</var><code> );</code>
-<br><code>6 &nbsp;<i>fix</i> := Fixcells( <font face="symbol">&#928;</font> );</code>
+<br><code>5 &nbsp;NextRBasePoint( &#928;, </code><var>rbase</var><code> );</code>
+<br><code>6 &nbsp;<i>fix</i> := Fixcells( &#928; );</code>
 <br><code>7 &nbsp;for <i>p</i>  in <i>fix</i>  do</code>
 <br><code>8 &nbsp;&nbsp;<i>q</i> := <i>p</i> ^ <i>g</i>;</code>
-<br><code>9 &nbsp;&nbsp;<i>where</i> := IsolatePoint( <font face="symbol">&#928;</font>, <i>q</i> );</code>
+<br><code>9 &nbsp;&nbsp;<i>where</i> := IsolatePoint( &#928;, <i>q</i> );</code>
 <br><code>10 &nbsp;&nbsp;if <i>where</i> &lt;&gt; false  then</code>
 <br><code>12 &nbsp;&nbsp;&nbsp;Add( <i>fix</i>, <i>q</i> );</code>
-<br><code>13 &nbsp;&nbsp;&nbsp;ProcessFixpoint( <font face="symbol">&#8476;</font>, <i>q</i> );</code>
-<br><code>14 &nbsp;&nbsp;&nbsp;AddRefinement( <font face="symbol">&#8476;</font>, "Centralizer", [ <font face="symbol">&#928;</font>.cellno[ <i>p</i> ], <i>q</i>, <i>where</i> ] );</code>
-<br><code>15 &nbsp;&nbsp;&nbsp;if <font face="symbol">&#928;</font>.lengths[ <i>where</i> ] = 1  then</code>
-<br><code>16 &nbsp;&nbsp;&nbsp;&nbsp;<i>p</i> := FixpointCellNo( <font face="symbol">&#928;</font>, <i>where</i> );</code>
-<br><code>17 &nbsp;&nbsp;&nbsp;&nbsp;ProcessFixpoint( <font face="symbol">&#8476;</font>, <i>p</i> );</code>
-<br><code>18 &nbsp;&nbsp;&nbsp;&nbsp;AddRefinement( <font face="symbol">&#8476;</font>, "ProcessFixpoint", [ <i>p</i>, <i>where</i> ] );</code>
+<br><code>13 &nbsp;&nbsp;&nbsp;ProcessFixpoint( &#8476;, <i>q</i> );</code>
+<br><code>14 &nbsp;&nbsp;&nbsp;AddRefinement( &#8476;, "Centralizer", [ &#928;.cellno[ <i>p</i> ], <i>q</i>, <i>where</i> ] );</code>
+<br><code>15 &nbsp;&nbsp;&nbsp;if &#928;.lengths[ <i>where</i> ] = 1  then</code>
+<br><code>16 &nbsp;&nbsp;&nbsp;&nbsp;<i>p</i> := FixpointCellNo( &#928;, <i>where</i> );</code>
+<br><code>17 &nbsp;&nbsp;&nbsp;&nbsp;ProcessFixpoint( &#8476;, <i>p</i> );</code>
+<br><code>18 &nbsp;&nbsp;&nbsp;&nbsp;AddRefinement( &#8476;, "ProcessFixpoint", [ <i>p</i>, <i>where</i> ] );</code>
 <br><code>19 &nbsp;&nbsp;&nbsp;fi;</code>
 <br><code>20 &nbsp;&nbsp;fi;</code>
 <br><code>21 &nbsp;od;</code>
@@ -243,8 +243,8 @@ real code is more general and has a few more subtleties.)
 <br><code>24 &nbsp;&nbsp;<i>G</i>,</code>
 <br><code>25 &nbsp;&nbsp;<i>c</i> -&gt; <i>g</i> ^ <i>c</i> = <i>g</i>,</code>
 <br><code>26 &nbsp;&nbsp;false,</code>
-<br><code>27 &nbsp;&nbsp;<font face="symbol">&#8476;</font>,</code>
-<br><code>28 &nbsp;&nbsp;[ <font face="symbol">&#928;</font><sub>0</sub>, <i>g</i> ],</code>
+<br><code>27 &nbsp;&nbsp;&#8476;,</code>
+<br><code>28 &nbsp;&nbsp;[ &#928;<sub>0</sub>, <i>g</i> ],</code>
 <br><code>29 &nbsp;&nbsp;<i>L</i>, <i>R</i> );</code>
 <p>
 The list numbers below refer to the line numbers of the code above.
@@ -252,49 +252,49 @@ The list numbers below refer to the line numbers of the code above.
 <ol>
 <p>
 <li>
-<font face="symbol">&#8486;</font> is the set on which <i>G</i> acts and <font face="symbol">&#928;</font><sub>0</sub> is the first member  of
+&#8486; is the set on which <i>G</i> acts and &#928;<sub>0</sub> is the first member  of
 the decreasing sequence of partitions mentioned in <a href="../ref/CHAP041.htm#SECT011">Backtrack</a> in the
-reference manual.  We  set  <font face="symbol">&#928;</font><sub>0</sub>=(<font face="symbol">&#8486;</font>),  which  is  constructed  as
-<code>TrivialPartition( <font face="symbol">&#8486;</font> )</code>), but we could have started with  a  finer
+reference manual.  We  set  &#928;<sub>0</sub>=(&#8486;),  which  is  constructed  as
+<code>TrivialPartition( &#8486; )</code>), but we could have started with  a  finer
 partition, e.g., into unions of <i>g</i>-cycles of the same length.
 <p>
 <li>
-This statement sets up the R-base in the variable <font face="symbol">&#8476;</font>.
+This statement sets up the R-base in the variable &#8476;.
 <p>
 <li> -- 21.
-&nbsp;These lines define a function <code><font face="symbol">&#8476;</font>.nextLevel</code> which  is  called
-whenever an additional member in the sequence <font face="symbol">&#928;</font><sub>0</sub>  <font face="symbol">&#8805;</font> <font face="symbol">&#928;</font><sub>1</sub>  <font face="symbol">&#8805;</font> <font face="symbol">&#8230;</font>
-of partitions is needed. If <font face="symbol">&#928;</font><sub><i>i</i></sub> does  not  yet  contain  enough  base
-points in one-point cells, <font face="Gill Sans,Helvetica,Arial">GAP</font>  will  call  <code><font face="symbol">&#8476;</font>.nextLevel(  <font face="symbol">&#928;</font><sub><i>i</i></sub>,
-<font face="symbol">&#8476;</font> )</code>, and this function will choose a new base point <i>a</i><sub><i>i</i>+1</sub>, refine
-<font face="symbol">&#928;</font><sub><i>i</i></sub> to <font face="symbol">&#928;</font><sub><i>i</i>+1</sub> (thereby <strong>changing</strong> the first argument) and  store
-all necessary information in&nbsp;<font face="symbol">&#8476;</font>.
+&nbsp;These lines define a function <code>&#8476;.nextLevel</code> which  is  called
+whenever an additional member in the sequence &#928;<sub>0</sub>  &#8805; &#928;<sub>1</sub>  &#8805; &#8230;
+of partitions is needed. If &#928;<sub><i>i</i></sub> does  not  yet  contain  enough  base
+points in one-point cells, <font face="Gill Sans,Helvetica,Arial">GAP</font>  will  call  <code>&#8476;.nextLevel(  &#928;<sub><i>i</i></sub>,
+&#8476; )</code>, and this function will choose a new base point <i>a</i><sub><i>i</i>+1</sub>, refine
+&#928;<sub><i>i</i></sub> to &#928;<sub><i>i</i>+1</sub> (thereby <strong>changing</strong> the first argument) and  store
+all necessary information in&nbsp;&#8476;.
 <p>
 </ol>
 <ol type=1 start=5>
 <p>
 <li>
 This statement selects a new base point <i>a</i><sub><i>i</i>+1</sub>, which is not yet in  a
-one-point cell of <font face="symbol">&#928;</font> and still moved by the  stabilizer  <i>G</i><sub><i>a</i><sub>1</sub><font face="symbol">&#8230;</font><i>a</i><sub><i>i</i></sub></sub> of the earlier base points. If certain points  of  <font face="symbol">&#8486;</font>  should
+one-point cell of &#928; and still moved by the  stabilizer  <i>G</i><sub><i>a</i><sub>1</sub>&#8230;<i>a</i><sub><i>i</i></sub></sub> of the earlier base points. If certain points  of  &#8486;  should
 are preferred as base point (e.g., because they belong to long cycles  of
 <i>g</i>), a list of points starting with the most wanted ones, can  be  given
 as an optional third argument to <code>NextRBasePoint</code> (actually, this is done
 in the real code for <code>Centralizer</code>).
 <p>
 <li>
-<code>Fixcells( <font face="symbol">&#928;</font> )</code> returns the list of  points  in  one-point  cells  of
-<font face="symbol">&#928;</font> (ordered as the cells are ordered in <font face="symbol">&#928;</font>).
+<code>Fixcells( &#928; )</code> returns the list of  points  in  one-point  cells  of
+&#928; (ordered as the cells are ordered in &#928;).
 <p>
 <li>
-For every point <i>p</i> <font face="symbol">&#8712;</font> <i>fix</i>, if we know the image <code><i>p</i> ^ <i>g</i></code> under  <i>c</i> <font face="symbol">&#8712;</font> <i>C</i><sub><i>G</i></sub>(<i>e</i>), we also know <code>( <i>p</i> ^ <i>g</i> ) ^ <i>c</i> = ( <i>p</i> ^ <i>c</i>  )  ^  <i>g</i></code>.  We
-therefore want to isolate these extra points in <font face="symbol">&#928;</font>.
+For every point <i>p</i> &#8712; <i>fix</i>, if we know the image <code><i>p</i> ^ <i>g</i></code> under  <i>c</i> &#8712; <i>C</i><sub><i>G</i></sub>(<i>e</i>), we also know <code>( <i>p</i> ^ <i>g</i> ) ^ <i>c</i> = ( <i>p</i> ^ <i>c</i>  )  ^  <i>g</i></code>.  We
+therefore want to isolate these extra points in &#928;.
 <p>
 </ol>
 <ol type=1 start=9>
 <p>
 <li>
 This statement puts point <i>q</i> in a cell of its own, returning in  <i>where</i>
-the number of the cell of <font face="symbol">&#928;</font> from which <i>q</i>  was  taken.  If  <i>q</i>  was
+the number of the cell of &#928; from which <i>q</i>  was  taken.  If  <i>q</i>  was
 already the only point in its cell, <code><i>where</i> = false</code> instead.
 <p>
 </ol>
@@ -313,17 +313,17 @@ must be called explicitly for&nbsp;<i>q</i>.
 <li>
 This statement registers the function  which  will  be  used  during  the
 backtrack search to perform the corresponding refinements on the  ``image
-partition'' <font face="symbol">&#931;</font><sub><i>i</i></sub>  (to  yield  the  refined  <font face="symbol">&#931;</font><sub><i>i</i>+1</sub>).  After
+partition'' &#931;<sub><i>i</i></sub>  (to  yield  the  refined  &#931;<sub><i>i</i>+1</sub>).  After
 choosing an image <i>b</i><sub><i>i</i>+1</sub> for the base  point  <i>a</i><sub><i>i</i>+1</sub>,  <font face="Gill Sans,Helvetica,Arial">GAP</font>  will
-compute <font face="symbol">&#931;</font><sub><i>i</i></sub> <font face="symbol">&#8743;</font>({<i>b</i><sub><i>i</i>+1</sub>},<font face="symbol">&#8486;</font><font face="symbol">&#8722;</font>{<i>b</i><sub><i>i</i>+1</sub>}) and store this
-partition in <code><font face="symbol">&#8465;</font>.partition</code>, where <font face="symbol">&#8465;</font> is a black box similar to <font face="symbol">&#8476;</font>,
+compute &#931;<sub><i>i</i></sub> &#8743;({<i>b</i><sub><i>i</i>+1</sub>},&#8486;&#8722;{<i>b</i><sub><i>i</i>+1</sub>}) and store this
+partition in <code>&#8465;.partition</code>, where &#8465; is a black box similar to &#8476;,
 but corresponding to the current ``image  partition''  (hence  it  is  an
 ``R-image'' in analogy to the R-base). Then <font face="Gill Sans,Helvetica,Arial">GAP</font> will call the function
-<code>Refinements.Centralizer( <font face="symbol">&#8476;</font>, <font face="symbol">&#8465;</font>, <font face="symbol">&#928;</font>.cellno[ <i>p</i> ],  <i>p</i>,  <i>where</i>
-)</code>,  with  the  then  current  values  of  <font face="symbol">&#8476;</font>  and  <font face="symbol">&#8465;</font>,   but   where
-<code><font face="symbol">&#928;</font>.cellno[ <i>p</i> ]</code>, <i>p</i>, <i>where</i> still have the values  they  have  at
+<code>Refinements.Centralizer( &#8476;, &#8465;, &#928;.cellno[ <i>p</i> ],  <i>p</i>,  <i>where</i>
+)</code>,  with  the  then  current  values  of  &#8476;  and  &#8465;,   but   where
+<code>&#928;.cellno[ <i>p</i> ]</code>, <i>p</i>, <i>where</i> still have the values  they  have  at
 the time of this <code>AddRefinement</code> command. This function call will further
-refine <code><font face="symbol">&#8465;</font>.partition</code> to yield <font face="symbol">&#931;</font><sub><i>i</i>+1</sub> as it  is  programmed  in
+refine <code>&#8465;.partition</code> to yield &#931;<sub><i>i</i>+1</sub> as it  is  programmed  in
 the function <code>Refinements.Centralizer</code>, which is  described  below.  (The
 global variable <code>Refinements</code> is a record which contains  all  refinement
 functions for all backtracking procedures.)
@@ -333,7 +333,7 @@ If the cell from which <i>q</i> was taken out had only two points, we now have
 an additional one-point cell. This condition is checked in line&nbsp;13 and if
 it is true, this extra fixpoint <i>p</i> is taken  (line&nbsp;15),  processed  like
 <i>q</i> before (line&nbsp;16) and is then (line&nbsp;17) passed to  another  refinement
-function <code>Refinements.ProcessFixpoint( <font face="symbol">&#8476;</font>, <font face="symbol">&#8465;</font>, <i>p</i>, <i>where</i> )</code>, which
+function <code>Refinements.ProcessFixpoint( &#8476;, &#8465;, <i>p</i>, <i>where</i> )</code>, which
 is also described below.
 <p>
 </ol>
@@ -351,30 +351,30 @@ centralizer as a subgroup of <i>G</i>. Its arguments are
     of   a  representative  search    (when  the result   would    be one
     representative),
   <li> the R-base,
-  <li> a list  of data, to be stored  in <code><font face="symbol">&#8465;</font>.data</code>, which has
-    in position&nbsp;1 the first member <font face="symbol">&#931;</font><sub>0</sub>  of the decreasing sequence
+  <li> a list  of data, to be stored  in <code>&#8465;.data</code>, which has
+    in position&nbsp;1 the first member &#931;<sub>0</sub>  of the decreasing sequence
     of ``image partitions'' mentioned in <a href="../ref/CHAP041.htm#SECT011">Backtrack</a> in the
     reference manual. In the centralizer example, position&nbsp;2 contains the
     element that is  to be centralized. In the  case of  a representative
     search,  i.e.,  a conjugacy test  <code><i>g</i>  ^ <i>c</i> ?= <i>h</i></code>, we
-    would  have <i>h</i>   instead of  <i>g</i>   here, and   possibly a <font face="symbol">&#931;</font><sub>0</sub>
-    different from <font face="symbol">&#928;</font><sub>0</sub> (e.g., a  partition into unions of  <i>h</i>-cycles
+    would  have <i>h</i>   instead of  <i>g</i>   here, and   possibly a &#931;<sub>0</sub>
+    different from &#928;<sub>0</sub> (e.g., a  partition into unions of  <i>h</i>-cycles
     of same length).
-  <li> two subgroups  <i>L</i> <font face="symbol">&#8804;</font> <i>C</i><sub><i>G</i></sub>(<i>g</i>)  and  <i>R</i> <font face="symbol">&#8804;</font> <i>C</i><sub><i>G</i></sub>(<i>h</i>) known  in
+  <li> two subgroups  <i>L</i> &#8804; <i>C</i><sub><i>G</i></sub>(<i>g</i>)  and  <i>R</i> &#8804; <i>C</i><sub><i>G</i></sub>(<i>h</i>) known  in
     advance (we have <i>L</i>=<i>R</i> in the centralizer case).
 </ol>
 <p>
 <p>
 <hr>Refinement  functions   for the  backtrack  search.&nbsp;The last
-subsection showed   how the refinement   process leading from  <font face="symbol">&#928;</font><sub><i>i</i></sub> to
-<font face="symbol">&#928;</font><sub><i>i</i>+1</sub>  is coded in the  function  <code><font face="symbol">&#8476;</font>.nextLevel</code>, this  has to be
+subsection showed   how the refinement   process leading from  &#928;<sub><i>i</i></sub> to
+&#928;<sub><i>i</i>+1</sub>  is coded in the  function  <code>&#8476;.nextLevel</code>, this  has to be
 executed once the  base point  <i>a</i><sub><i>i</i>+1</sub>.  The analogous refinement  step
-from <font face="symbol">&#931;</font><sub><i>i</i></sub> to <font face="symbol">&#931;</font><sub><i>i</i>+1</sub> must be performed for each choice of an
+from &#931;<sub><i>i</i></sub> to &#931;<sub><i>i</i>+1</sub> must be performed for each choice of an
 image <i>b</i><sub><i>i</i>+1</sub> for  <i>a</i><sub><i>i</i>+1</sub>, and it will  depend  on the corresponding
-value of <font face="symbol">&#931;</font><sub><i>i</i></sub><font face="symbol">&#8743;</font>({<i>b</i><sub><i>i</i>+1</sub>}, <font face="symbol">&#8486;</font><font face="symbol">&#8722;</font>{<i>b</i><sub><i>i</i>+1</sub>}). But  before
+value of &#931;<sub><i>i</i></sub>&#8743;({<i>b</i><sub><i>i</i>+1</sub>}, &#8486;&#8722;{<i>b</i><sub><i>i</i>+1</sub>}). But  before
 we  can continue  our centralizer example,  we  must,  for the interested
-reader, document the record components of the other black box <font face="symbol">&#8465;</font>, as we
-did above for the R-base black box <font face="symbol">&#8476;</font>. Most of the components change as
+reader, document the record components of the other black box &#8465;, as we
+did above for the R-base black box &#8476;. Most of the components change as
 <font face="Gill Sans,Helvetica,Arial">GAP</font> walks up and down the levels of the search tree.
 <p>
 <dl compact>
@@ -382,43 +382,43 @@ did above for the R-base black box <font face="symbol">&#8476;</font>. Most of t
     this will be mentioned below
 <p>
 <dt><code>depth</code> <dd>
-    the level <i>i</i> in the search tree of the current node <font face="symbol">&#931;</font><sub><i>i</i></sub>
+    the level <i>i</i> in the search tree of the current node &#931;<sub><i>i</i></sub>
 <p>
 <dt><code>bimg</code> <dd>
-    a list of images of the points in <code><font face="symbol">&#8476;</font>.base</code>
+    a list of images of the points in <code>&#8476;.base</code>
 <p>
 <dt><code>partition</code> <dd>
-    the partition <font face="symbol">&#931;</font><sub><i>i</i></sub> of the current node
+    the partition &#931;<sub><i>i</i></sub> of the current node
 <p>
 <dt><code>level</code> <dd>
-    the stabilizer chain <code><font face="symbol">&#8476;</font>.lev[ <i>i</i> ]</code> at the current level
+    the stabilizer chain <code>&#8476;.lev[ <i>i</i> ]</code> at the current level
 <p>
 <dt><code>perm</code> <dd>
-    a permutation mapping <code>Fixcells(  <font face="symbol">&#928;</font><sub><i>i</i></sub> )</code> to <code>Fixcells( <font face="symbol">&#931;</font><sub><i>i</i></sub>
-    )</code> (this implies mapping (<i>a</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>a</i><sub><i>i</i></sub>) to (<i>b</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>b</i><sub><i>i</i></sub>))
+    a permutation mapping <code>Fixcells(  &#928;<sub><i>i</i></sub> )</code> to <code>Fixcells( &#931;<sub><i>i</i></sub>
+    )</code> (this implies mapping (<i>a</i><sub>1</sub>,&#8230;,<i>a</i><sub><i>i</i></sub>) to (<i>b</i><sub>1</sub>,&#8230;,<i>b</i><sub><i>i</i></sub>))
 <p>
 <dt><code>level2</code>, <code>perm2</code> <dd>
     a  similar construction for    the second stabilizer chain,   <code>false</code>
-    otherwise (and <code>true</code> if <code><font face="symbol">&#8476;</font>.level2 = true</code>)
+    otherwise (and <code>true</code> if <code>&#8476;.level2 = true</code>)
 </dl>
 <p>
 As declared in    the above code  for  <code>Centralizer</code>,  the refinement  is
-performed   by   the function     <code>Refinement.Centralizer(   <font face="symbol">&#8476;</font>,  <font face="symbol">&#8465;</font>,
-<font face="symbol">&#928;</font>.cellno[  <i>p</i>  ],  <i>p</i>,  <i>where</i> )</code>.   The  functions in the  record
+performed   by   the function     <code>Refinement.Centralizer(   &#8476;,  &#8465;,
+&#928;.cellno[  <i>p</i>  ],  <i>p</i>,  <i>where</i> )</code>.   The  functions in the  record
 <code>Refinement</code> always   take two  additional   arguments  before  the  ones
 specified  in  the <code>AddRefinement</code>  call (in  line&nbsp;13 above),  namely the
-R-base  <font face="symbol">&#8476;</font> and  the  current  value  <font face="symbol">&#8465;</font>  of the ``R-image''.   In our
-example,  <i>p</i>   is a   fixpoint  of   <font face="symbol">&#928;</font> =  <font face="symbol">&#928;</font><sub><i>i</i></sub> <font face="symbol">&#8743;</font>({<i>a</i><sub><i>i</i>+1</sub>}, <font face="symbol">&#8486;</font><font face="symbol">&#8722;</font>{<i>a</i><sub><i>i</i>+1</sub>}) such that <code><i>where</i> = <font face="symbol">&#928;</font>.cellno[ <i>p</i> ^ <i>g</i> ]</code>. The
+R-base  &#8476; and  the  current  value  &#8465;  of the ``R-image''.   In our
+example,  <i>p</i>   is a   fixpoint  of   &#928; =  &#928;<sub><i>i</i></sub> &#8743;({<i>a</i><sub><i>i</i>+1</sub>}, &#8486;&#8722;{<i>a</i><sub><i>i</i>+1</sub>}) such that <code><i>where</i> = &#928;.cellno[ <i>p</i> ^ <i>g</i> ]</code>. The
 <code>Refinement</code>   functions   must  return <code>false</code>    if   the refinement is
-unsuccessful (e.g., because it  leads to <font face="symbol">&#931;</font><sub><i>i</i>+1</sub> having  different
-cell   sizes from  <font face="symbol">&#928;</font><sub><i>i</i>+1</sub>)  and  <code>true</code>  otherwise.   Our particular
+unsuccessful (e.g., because it  leads to &#931;<sub><i>i</i>+1</sub> having  different
+cell   sizes from  &#928;<sub><i>i</i>+1</sub>)  and  <code>true</code>  otherwise.   Our particular
 function looks like this.
 <p>
-<code>1 Refinements.Centralizer := function( <font face="symbol">&#8476;</font>, <font face="symbol">&#8465;</font>, <i>cellno</i>, <i>p</i>, <i>where</i> )</code>
-<br><code>2 local  <font face="symbol">&#931;</font>,  <i>q</i>;</code>
-<br><code>3 &nbsp;<font face="symbol">&#931;</font> := <font face="symbol">&#8465;</font>.partition;</code>
-<br><code>4 &nbsp;<i>q</i> := FixpointCellNo( <font face="symbol">&#931;</font>, <i>cellno</i> ) ^ <font face="symbol">&#8465;</font>.data[ 2 ];</code>
-<br><code>5 &nbsp;return IsolatePoint( <font face="symbol">&#931;</font>, <i>q</i> ) = <i>where</i> and ProcessFixpoint( <font face="symbol">&#8465;</font>, <i>p</i>, <i>q</i> );</code>
+<code>1 Refinements.Centralizer := function( &#8476;, &#8465;, <i>cellno</i>, <i>p</i>, <i>where</i> )</code>
+<br><code>2 local  &#931;,  <i>q</i>;</code>
+<br><code>3 &nbsp;&#931; := &#8465;.partition;</code>
+<br><code>4 &nbsp;<i>q</i> := FixpointCellNo( &#931;, <i>cellno</i> ) ^ &#8465;.data[ 2 ];</code>
+<br><code>5 &nbsp;return IsolatePoint( &#931;, <i>q</i> ) = <i>where</i> and ProcessFixpoint( &#8465;, <i>p</i>, <i>q</i> );</code>
 <br><code>6 end;</code>
 <p>
 The list numbers below refer to the line numbers of the code immediately
@@ -427,37 +427,37 @@ above.
 <ol type=1 start=3>
 <p>
 <li>
-The current value of <font face="symbol">&#931;</font><sub><i>i</i></sub><font face="symbol">&#8743;</font>({<i>b</i><sub><i>i</i>+1</sub>}, <font face="symbol">&#8486;</font><font face="symbol">&#8722;</font>{<i>b</i><sub><i>i</i>+1</sub>})
-is always found in <code><font face="symbol">&#8465;</font>.partition</code>.
+The current value of &#931;<sub><i>i</i></sub>&#8743;({<i>b</i><sub><i>i</i>+1</sub>}, &#8486;&#8722;{<i>b</i><sub><i>i</i>+1</sub>})
+is always found in <code>&#8465;.partition</code>.
 <p>
 <li>
-The image of the only point in cell number  <code><i>cellno</i>  =  <font face="symbol">&#928;</font><sub><i>i</i></sub>.cellno[
-<i>p</i> ]</code> in <font face="symbol">&#931;</font> under <code><i>g</i> = <font face="symbol">&#8465;</font>.data[ 2 ]</code> is calculated.
+The image of the only point in cell number  <code><i>cellno</i>  =  &#928;<sub><i>i</i></sub>.cellno[
+<i>p</i> ]</code> in &#931; under <code><i>g</i> = &#8465;.data[ 2 ]</code> is calculated.
 <p>
 <li>
 The function returns <code>true</code> only if the  image  <i>q</i>  has  the  same  cell
-number in <font face="symbol">&#931;</font> as <i>p</i> had in <font face="symbol">&#928;</font> (i.e., <i>where</i>) and if <i>q</i> can  be
+number in &#931; as <i>p</i> had in &#928; (i.e., <i>where</i>) and if <i>q</i> can  be
 prescribed as an  image  for  <i>p</i>  under  the  coset  of  the  stabilizer
-<i>G</i><sub><i>a</i><sub>1</sub><font face="symbol">&#8230;</font><i>a</i><sub><i>i</i>+1</sub></sub>&#183;<i>c</i> where <i>c</i> <font face="symbol">&#8712;</font> <i>G</i>  is  an  (already  constructed)
-element mapping the  earlier  base  points  <i>a</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>a</i><sub><i>i</i>+1</sub>  to  the
-already chosen images  <i>b</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>b</i><sub><i>i</i>+1</sub>.  This  latter  condition  is
-tested by <code>ProcessFixpoint( <font face="symbol">&#8465;</font>, <i>p</i>, <i>q</i> )</code> which, if successful,  also
-does the necessary bookkeeping in <font face="symbol">&#8465;</font>. In analogy to  the  remark  about
+<i>G</i><sub><i>a</i><sub>1</sub>&#8230;<i>a</i><sub><i>i</i>+1</sub></sub>&#183;<i>c</i> where <i>c</i> &#8712; <i>G</i>  is  an  (already  constructed)
+element mapping the  earlier  base  points  <i>a</i><sub>1</sub>,&#8230;,<i>a</i><sub><i>i</i>+1</sub>  to  the
+already chosen images  <i>b</i><sub>1</sub>,&#8230;,<i>b</i><sub><i>i</i>+1</sub>.  This  latter  condition  is
+tested by <code>ProcessFixpoint( &#8465;, <i>p</i>, <i>q</i> )</code> which, if successful,  also
+does the necessary bookkeeping in &#8465;. In analogy to  the  remark  about
 line&nbsp;12 in the program above, the chosen image  <i>b</i><sub><i>i</i>+1</sub>  for  the  base
 point <i>a</i><sub><i>i</i>+1</sub> has already been processed  implicitly  by  the  function
 <code>PartitionBacktrack</code>, and this processing includes the construction of an
-element  <i>c</i> <font face="symbol">&#8712;</font> <i>G</i>  which  maps  <code>Fixcells(  <font face="symbol">&#928;</font><sub><i>i</i></sub>  )</code>  to   <code>Fixcells(
-<font face="symbol">&#931;</font><sub><i>i</i></sub>  )</code>  and  <i>a</i><sub><i>i</i>+1</sub>  to  <i>b</i><sub><i>i</i>+1</sub>.  By  contrast,  the  extra
-fixpoints <i>p</i> and <i>q</i> in <font face="symbol">&#928;</font><sub><i>i</i>+1</sub> and <font face="symbol">&#931;</font><sub><i>i</i>+1</sub> were  not  chosen
+element  <i>c</i> &#8712; <i>G</i>  which  maps  <code>Fixcells(  &#928;<sub><i>i</i></sub>  )</code>  to   <code>Fixcells(
+&#931;<sub><i>i</i></sub>  )</code>  and  <i>a</i><sub><i>i</i>+1</sub>  to  <i>b</i><sub><i>i</i>+1</sub>.  By  contrast,  the  extra
+fixpoints <i>p</i> and <i>q</i> in &#928;<sub><i>i</i>+1</sub> and &#931;<sub><i>i</i>+1</sub> were  not  chosen
 automatically, so they require an  explicit  call  of  <code>ProcessFixpoint</code>,
-which replaces the element <i>c</i> by some <i>c</i><font face="symbol">&#8242;</font>&#183;<i>c</i> (with  <i>c</i><font face="symbol">&#8242;</font> <font face="symbol">&#8712;</font> <i>G</i><sub><i>a</i><sub>1</sub><font face="symbol">&#8230;</font><i>a</i><sub><i>i</i>+1</sub></sub>) which in addition maps <i>p</i> to <i>q</i>, or returns <code>false</code> if  this
+which replaces the element <i>c</i> by some <i>c</i>&#8242;&#183;<i>c</i> (with  <i>c</i>&#8242; &#8712; <i>G</i><sub><i>a</i><sub>1</sub>&#8230;<i>a</i><sub><i>i</i>+1</sub></sub>) which in addition maps <i>p</i> to <i>q</i>, or returns <code>false</code> if  this
 is impossible.
 <p>
 </ol>
 <p>
-You should now be able to  guess what <code>Refinements.ProcessFixpoint( <font face="symbol">&#8476;</font>,
-<font face="symbol">&#8465;</font>, <i>p</i>, <i>where</i>   )</code> does: it  simply returns  <code>ProcessFixpoint( <font face="symbol">&#8465;</font>,
-<i>p</i>, FixpointCellNo( <font face="symbol">&#8465;</font>.partition, <i>where</i> ) )</code>.
+You should now be able to  guess what <code>Refinements.ProcessFixpoint( &#8476;,
+&#8465;, <i>p</i>, <i>where</i>   )</code> does: it  simply returns  <code>ProcessFixpoint( &#8465;,
+<i>p</i>, FixpointCellNo( &#8465;.partition, <i>where</i> ) )</code>.
 <p>
 <p>
 <hr>Summary.&nbsp;When you write  your  own backtrack functions using
@@ -470,37 +470,37 @@ and the additional data (for the  <code>data</code> component of the ``R-image''
 <p>
 <hr>Functions  for  meeting    ordered  partitions.&nbsp;A   kind  of
 refinement that   occurs  in particular  in   the  normalizer calculation
-involves computing  the  meet of <font face="symbol">&#928;</font>  (cf. lines&nbsp;6ff.  above) with an
-arbitrary other partition  <font face="symbol">&#923;</font>, not just  with one point. To do this
+involves computing  the  meet of &#928;  (cf. lines&nbsp;6ff.  above) with an
+arbitrary other partition  &#923;, not just  with one point. To do this
 efficiently, <font face="Gill Sans,Helvetica,Arial">GAP</font> uses the following two functions.
 <p>
 <a name = "SSEC002.1"></a>
-<li><code>StratMeetPartition( <font face="symbol">&#8476;</font>, <font face="symbol">&#928;</font>, <font face="symbol">&#923;</font> [, <i>g</i> ] )</code>
+<li><code>StratMeetPartition( &#8476;, &#928;, &#923; [, <i>g</i> ] )</code>
 <a name = "SSEC002.1"></a>
-<li><code>MeetPartitionStrat( <font face="symbol">&#8476;</font>, <font face="symbol">&#8465;</font>, <font face="symbol">&#923;</font><font face="symbol">&#8242;</font> [, <i>g</i><font face="symbol">&#8242;</font> ], <i>strat</i> )</code>
+<li><code>MeetPartitionStrat( &#8476;, &#8465;, &#923;&#8242; [, <i>g</i>&#8242; ], <i>strat</i> )</code>
 <p>
 <a name = "I2"></a>
 
 Such a  <code>StratMeetPartition</code>   command would   typically appear in    the
-function call <code><font face="symbol">&#8476;</font>.nextLevel(  <font face="symbol">&#928;</font>, <font face="symbol">&#8476;</font> )</code>  (during the refinement of
-<font face="symbol">&#928;</font><sub><i>i</i></sub>  to  <font face="symbol">&#928;</font><sub><i>i</i>+1</sub>). This   command  replaces  <font face="symbol">&#928;</font>  by <font face="symbol">&#928;</font><font face="symbol">&#8743;</font><font face="symbol">&#923;</font> (thereby  <strong>changing</strong> the  second  argument) and returns a ``meet
+function call <code>&#8476;.nextLevel(  &#928;, &#8476; )</code>  (during the refinement of
+&#928;<sub><i>i</i></sub>  to  &#928;<sub><i>i</i>+1</sub>). This   command  replaces  &#928;  by &#928;&#8743;&#923; (thereby  <strong>changing</strong> the  second  argument) and returns a ``meet
 strategy''  <i>strat</i>. This  is  (for  us) a  black   box which  serves two
 purposes:  First, it allows <font face="Gill Sans,Helvetica,Arial">GAP</font> to  calculate faster the corresponding
-meet <font face="symbol">&#931;</font><font face="symbol">&#8743;</font><font face="symbol">&#923;</font><font face="symbol">&#8242;</font>,  which must then  appear in a <code>Refinements</code>
-function  (during the refinement of  <font face="symbol">&#931;</font><sub><i>i</i></sub> to <font face="symbol">&#931;</font><sub><i>i</i>+1</sub>). It is
-faster  to compute <font face="symbol">&#931;</font><font face="symbol">&#8743;</font><font face="symbol">&#923;</font><font face="symbol">&#8242;</font> with  the ``meet strategy'' of
-<font face="symbol">&#928;</font><font face="symbol">&#8743;</font><font face="symbol">&#923;</font> because  if the refinement  of <font face="symbol">&#931;</font> is successful
+meet &#931;&#8743;&#923;&#8242;,  which must then  appear in a <code>Refinements</code>
+function  (during the refinement of  &#931;<sub><i>i</i></sub> to &#931;<sub><i>i</i>+1</sub>). It is
+faster  to compute &#931;&#8743;&#923;&#8242; with  the ``meet strategy'' of
+&#928;&#8743;&#923; because  if the refinement  of &#931; is successful
 at  all, the  intersection  of a  cell from   the left hand  side of  the
-<font face="symbol">&#8743;</font> sign  with a cell  from the right hand side  must  have the same
+&#8743; sign  with a cell  from the right hand side  must  have the same
 size   in both cases  (and  <i>strat</i>  records these   sizes, so  that only
-non-empty intersections must  be calculated for <font face="symbol">&#931;</font><font face="symbol">&#8743;</font><font face="symbol">&#923;</font><font face="symbol">&#8242;</font>).
+non-empty intersections must  be calculated for &#931;&#8743;&#923;&#8242;).
 Second, if  there  is a discrepancy  between  the behaviour prescribed by
-<i>strat</i> and the behaviour observed when refining <font face="symbol">&#931;</font>, the refinement
+<i>strat</i> and the behaviour observed when refining &#931;, the refinement
 can immediately be abandoned.
 <p>
-On  the  other hand, if you  only  want to meet   a  partition <font face="symbol">&#928;</font> with
-<font face="symbol">&#923;</font>  for  a one-time  use, without recording   a strategy,  you can
-simply type <code>StratMeetPartition( <font face="symbol">&#928;</font>, <font face="symbol">&#923;</font> )</code>  as in the following
+On  the  other hand, if you  only  want to meet   a  partition &#928; with
+&#923;  for  a one-time  use, without recording   a strategy,  you can
+simply type <code>StratMeetPartition( &#928;, &#923; )</code>  as in the following
 example, which also demonstrates some other partition-related commands.
 <p>
 <pre>
@@ -515,21 +515,21 @@ gap&gt; Cells( P );
 [ [ 1 ], [ 5, 4 ], [ 6 ], [ 2 ], [ 3 ] ]
 </pre>
 <p>
-You can even say  <code>StratMeetPartition( <font face="symbol">&#928;</font>, <font face="symbol">&#8710;</font> )</code>  where <font face="symbol">&#8710;</font>
-is simple  a subset  of  <font face="symbol">&#8486;</font>, it   will then  be interpreted as  the
-partition (<font face="symbol">&#8710;</font>,<font face="symbol">&#8486;</font><font face="symbol">&#8722;</font><font face="symbol">&#8710;</font>).
+You can even say  <code>StratMeetPartition( &#928;, &#8710; )</code>  where &#8710;
+is simple  a subset  of  &#8486;, it   will then  be interpreted as  the
+partition (&#8710;,&#8486;&#8722;&#8710;).
 <p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> makes use   of  the advantages  of   a ``meet  strategy''  if  the
 refinement   function  in <code>Refinements</code>  contains  a <code>MeetPartitionStrat</code>
 command where   <i>strat</i>  is   the    ``meet  strategy''  calculated    by
-<code>StratMeetPartition</code> before.  Such a command replaces <code><font face="symbol">&#8465;</font>.partition</code> by
-its meet with <font face="symbol">&#923;</font><font face="symbol">&#8242;</font>, again changing the argument <font face="symbol">&#8465;</font>. The necessary
+<code>StratMeetPartition</code> before.  Such a command replaces <code>&#8465;.partition</code> by
+its meet with &#923;&#8242;, again changing the argument &#8465;. The necessary
 reversal of these changes when backtracking from  a node (and prescribing
 the next possible image  for a base point) is  automatically done by  the
 function <code>PartitionBacktrack</code>.
 <p>
 In  all cases, an additional  argument <i>g</i> means that the   meet is to be
-taken  not with <font face="symbol">&#923;</font>,   but  instead with <font face="symbol">&#923;</font>&#183;<i>g</i><sup><font face="symbol">&#8722;</font>1</sup>,  where
+taken  not with &#923;,   but  instead with &#923;&#183;<i>g</i><sup>&#8722;1</sup>,  where
 operation  on ordered partitions is  meant cellwise  (and setwise on each
 cell). (Analogously for the primed arguments.)
 <p>
@@ -542,7 +542,7 @@ Note that <i>P</i>&#183;(1,3,6) = <i>Q</i>.
 <p>
 <hr>Avoiding multiplication  of permutations.&nbsp;In the  description
 of  the last subsections, the  backtrack  algorithm constructs an element
-<i>c</i> <font face="symbol">&#8712;</font> <i>G</i> mapping  the base points   to the prescribed images  and finally
+<i>c</i> &#8712; <i>G</i> mapping  the base points   to the prescribed images  and finally
 tests the property in question for that element. During the construction,
 <i>c</i> is obtained as a product  of transversal elements from the stabilizer
 chain for <i>G</i>,  and so multiplications  of permutations are required  for
@@ -556,15 +556,15 @@ this.
 <p>
 For this purpose, <font face="Gill Sans,Helvetica,Arial">GAP</font> does  not actually multiply the permutations but
 rather stores  all the factors of the   product in a  list. Specifically,
-instead of carrying out  the multiplication in <i>c</i><font face="symbol">&#8594;</font> <i>c</i><font face="symbol">&#8242;</font>&#183;<i>c</i>  mentioned
-in  the   comment  to  line&nbsp;5 of  the   above  program   --- where <i>c</i><font face="symbol">&#8242;</font> <font face="symbol">&#8712;</font> <i>G</i><sub><i>a</i><sub>1</sub><font face="symbol">&#8230;</font><i>a</i><sub><i>i</i>+1</sub></sub> is a  product  of factorized inverse  transversal
+instead of carrying out  the multiplication in <i>c</i>&#8594; <i>c</i>&#8242;&#183;<i>c</i>  mentioned
+in  the   comment  to  line&nbsp;5 of  the   above  program   --- where <i>c</i>&#8242; &#8712; <i>G</i><sub><i>a</i><sub>1</sub>&#8230;<i>a</i><sub><i>i</i>+1</sub></sub> is a  product  of factorized inverse  transversal
 elements, see <a href="../ref/CHAP041.htm#SECT008">Stabilizer chain records</a> in the reference manual  ---
 <font face="Gill Sans,Helvetica,Arial">GAP</font> appends the list of these factorized inverse transversal  elements
-(giving <i>c</i><font face="symbol">&#8242;</font>) to the list of factors already collected for <i>c</i>. Here <i>c</i><font face="symbol">&#8242;</font>
+(giving <i>c</i>&#8242;) to the list of factors already collected for <i>c</i>. Here <i>c</i>&#8242;
 is multiplied from the left and is itself  a  product  of  <strong>inverses</strong>  of
 strong generators of <i>G</i>, but <font face="Gill Sans,Helvetica,Arial">GAP</font> simply spares itself all the work of
 inverting permutations and stores only  a  ``list  of  inverses'',  whose
-product is then (<i>c</i><font face="symbol">&#8242;</font>&#183;<i>c</i>)<sup><font face="symbol">&#8722;</font>1</sup> (which is the new value of  <i>c</i><sup><font face="symbol">&#8722;</font>1</sup>).  The
+product is then (<i>c</i>&#8242;&#183;<i>c</i>)<sup>&#8722;1</sup> (which is the new value of  <i>c</i><sup>&#8722;1</sup>).  The
 ``list of inverses'' is extended this way whenever  <code>ProcessFixpoint</code>  is
 called to improve&nbsp;<i>c</i>.
 <p>
@@ -582,7 +582,7 @@ alternative excerpt from the code for <code>Centralizer</code>.
 <br><code>2 &nbsp;[ <i>g</i>, <i>g</i>,</code>
 <br><code>3 &nbsp;&nbsp;OnPoints,</code>
 <br><code>4 &nbsp;&nbsp;<i>c</i> -&gt; <i>c</i>!.lftObj = <i>c</i>!.rgtObj ],</code>
-<br><code>5 &nbsp;false, <font face="symbol">&#8476;</font>, [ <font face="symbol">&#928;</font><sub>0</sub>, <i>g</i> ], <i>L</i>, <i>R</i> );</code>
+<br><code>5 &nbsp;false, &#8476;, [ &#928;<sub>0</sub>, <i>g</i> ], <i>L</i>, <i>R</i> );</code>
 <p>
 The test for <i>c</i> to have the property in question  is of the form <code><i>opr</i>(
 <i>left</i>,  <i>c</i>  )  =  <i>right</i></code> where  <i>opr</i>   is an  operation  function as
@@ -607,7 +607,7 @@ The fourth entry is the test to be performed upon the mapped left  object
 <font face="Gill Sans,Helvetica,Arial">GAP</font> operates with the inverse of <i>c</i> because this is  the  product  of
 the permutations stored in the ``list  of  inverses''.  The  preimage  of
 <i>right</i> under <i>c</i> is then calculated by mapping <i>right</i> with the  factors
-of <i>c</i><sup><font face="symbol">&#8722;</font>1</sup> one by one, without the need to multiply these factors.  This
+of <i>c</i><sup>&#8722;1</sup> one by one, without the need to multiply these factors.  This
 mapping  of  <i>right</i>  is  automatically  done  by  the  <code>ProcessFixpoint</code>
 function whenever <i>c</i> is extended, the current value of <i>right</i> is always
 stored in <code><i>c</i>!.rgtObj</code>. When the test  given  by  the  fourth  entry  is
@@ -646,23 +646,23 @@ below:
 <code>StabChainStrong := function( <i>S</i>, <i>newgens</i> )</code>
 <br><code>&nbsp;Extend the Schreier tree of <i>S</i> with <i>newgens</i>.</code>
 <br><code>&nbsp;for <i>sch</i>  in Schreier generators  do</code>
-<br><code>&nbsp;&nbsp;if <i>sch</i>  <font face="symbol">&#8713;</font> <i>S</i>.stabilizer  then</code>
+<br><code>&nbsp;&nbsp;if <i>sch</i>  &#8713; <i>S</i>.stabilizer  then</code>
 <br><code>&nbsp;&nbsp;&nbsp;StabChainStrong( <i>S</i>.stabilizer, [ <i>sch</i> ] );</code>
 <br><code>&nbsp;&nbsp;fi;</code>
 <br><code>&nbsp;od;</code>
 <br><code>end;</code>
 <p>
-The membership test <code><i>sch</i>  <font face="symbol">&#8713;</font> <i>S</i>.stabilizer</code> can be performed because
+The membership test <code><i>sch</i>  &#8713; <i>S</i>.stabilizer</code> can be performed because
 the  stabilizer chain  of <code><i>S</i>.stabilizer</code>  is   already correct at  that
 moment. We  even know a base  in advance, namely  any  generating set for
-<i>G</i>. Fix such  a generating set  (<i>g</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>g</i><sub><i>d</i></sub>) and observe that this
-base  is  generally very   short compared  to   the degree <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>  of  the
+<i>G</i>. Fix such  a generating set  (<i>g</i><sub>1</sub>,&#8230;,<i>g</i><sub><i>d</i></sub>) and observe that this
+base  is  generally very   short compared  to   the degree &#124;<i>G</i>&#124;  of  the
 operation. The problem with the Schreier-Sims algorithm, however, is then
 that the length of the first  basic orbit <i>g</i><sub>1</sub>&#183;<i>A</i>  would already have the
-magnitude of <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>,  and the basic orbits at  deeper levels would  not be
+magnitude of &#124;<i>G</i>&#124;,  and the basic orbits at  deeper levels would  not be
 much shorter. For the advantage of a short base  we pay the high price of
 long basic  orbits, since the  product of  the  (few) basic orbit lengths
-must  equal <font face="symbol">&#124;</font><i>A</i><font face="symbol">&#124;</font>.  Such  long  orbits  make the Schreier-Sims  algorithm
+must  equal &#124;<i>A</i>&#124;.  Such  long  orbits  make the Schreier-Sims  algorithm
 infeasible,   so we have to   look for a  longer base  with shorter basic
 orbits.
 <p>
@@ -672,32 +672,32 @@ abelian factor group <i>G</i>/<i>N</i>. Since <i>N</i> is characteristic, <i>A</
 a group of automorphisms  on the factor  group <i>G</i>/<i>N</i>,  but of course  not
 necessarily  faithfully. To retain  a faithful action,  we let <i>A</i> act on
 the   disjoint   union   <i>G</i>/<i>N</i>   with   <i>G</i>,   and   choose    as    base
-(<i>g</i><sub>1</sub><i>N</i>,<font face="symbol">&#8230;</font>,<i>g</i><sub><i>d</i></sub><i>N</i>,<i>g</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>g</i><sub><i>d</i></sub>). Now the first <i>d</i> basic  orbits  lie
+(<i>g</i><sub>1</sub><i>N</i>,&#8230;,<i>g</i><sub><i>d</i></sub><i>N</i>,<i>g</i><sub>1</sub>,&#8230;,<i>g</i><sub><i>d</i></sub>). Now the first <i>d</i> basic  orbits  lie
 inside <i>G</i>/<i>N</i> and can have length at most [<i>G</i>:<i>N</i>]. Since the  base
-points <i>g</i><sub>1</sub><i>N</i>,<font face="symbol">&#8230;</font>, <i>g</i><sub><i>d</i></sub><i>N</i>  form  a  generating  set  for  <i>G</i>/<i>N</i>,  their
+points <i>g</i><sub>1</sub><i>N</i>,&#8230;, <i>g</i><sub><i>d</i></sub><i>N</i>  form  a  generating  set  for  <i>G</i>/<i>N</i>,  their
 iterated stabilizer <i>A</i><sup>(<i>d</i>+1)</sup> acts trivially on the factor group <i>G</i>/<i>N</i>,
 i.e., it leaves the cosets <i>g</i><sub><i>i</i></sub><i>N</i> invariant. Accordingly,  the  next  <i>d</i>
-basic orbits lie inside <i>g</i><sub><i>i</i></sub><i>N</i> (for <i>i</i>=1,<font face="symbol">&#8230;</font>,<i>d</i>) and can  have  length
-at most&nbsp;<font face="symbol">&#124;</font><i>N</i><font face="symbol">&#124;</font>.
+basic orbits lie inside <i>g</i><sub><i>i</i></sub><i>N</i> (for <i>i</i>=1,&#8230;,<i>d</i>) and can  have  length
+at most&nbsp;&#124;<i>N</i>&#124;.
 <p>
-Generalizing this method to a characteristic series <i>G</i>=<i>N</i><sub>0</sub>  &gt;  <i>N</i><sub>1</sub>  &gt;  <font face="symbol">&#8230;</font> &gt;  <i>N</i><sub><i>l</i></sub>={1} of length <i>l</i> &gt; 2, we  can always find  a base of length <i>l</i>&#183;<i>d</i>
+Generalizing this method to a characteristic series <i>G</i>=<i>N</i><sub>0</sub>  &gt;  <i>N</i><sub>1</sub>  &gt;  &#8230; &gt;  <i>N</i><sub><i>l</i></sub>={1} of length <i>l</i> &gt; 2, we  can always find  a base of length <i>l</i>&#183;<i>d</i>
 such that each  basic orbit is  contained in a  coset of a characteristic
-factor, i.e. in a set of the form <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i><font face="symbol">&#8722;</font>1</sub>/<i>N</i><sub><i>j</i></sub> (where <i>g</i><sub><i>i</i></sub> is one of
-the generators  of <i>G</i> and 1 <font face="symbol">&#8804;</font> <i>j</i> <font face="symbol">&#8804;</font> <i>l</i>). In particular, the  length of
+factor, i.e. in a set of the form <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i>&#8722;1</sub>/<i>N</i><sub><i>j</i></sub> (where <i>g</i><sub><i>i</i></sub> is one of
+the generators  of <i>G</i> and 1 &#8804; <i>j</i> &#8804; <i>l</i>). In particular, the  length of
 the basic  orbits   is  bounded   by  the  size  of    the  corresponding
 characteristic factors. To implement a Schreier-Sims algorithm for such a
 base, we  must  be   able  to  let   automorphisms  act  on   cosets   of
-characteristic  factors <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i><font face="symbol">&#8722;</font>1</sub>/<i>N</i><sub><i>j</i></sub>, for  varying  <i>i</i>  and <i>j</i>.  We
+characteristic  factors <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i>&#8722;1</sub>/<i>N</i><sub><i>j</i></sub>, for  varying  <i>i</i>  and <i>j</i>.  We
 would    like to    translate each such     action  into  an  action   on
-{1,<font face="symbol">&#8230;</font>,[<i>N</i><sub><i>j</i><font face="symbol">&#8722;</font>1</sub>: <i>N</i><sub><i>j</i></sub>]}, because then we need not enumerate
+{1,&#8230;,[<i>N</i><sub><i>j</i>&#8722;1</sub>: <i>N</i><sub><i>j</i></sub>]}, because then we need not enumerate
 the operation domain
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>G</i>/<i>N</i><sub>1</sub> </td><td nowrap="nowrap" align="center"><div class="comp"><font face="symbol">&#8901;</font><br /></div><div class="norm"><font face="symbol">&#8746;</font><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center"><i>G</i>/<i>N</i><sub>2</sub> </td><td nowrap="nowrap" align="center"><div class="comp"><font face="symbol">&#8901;</font><br /></div><div class="norm"><font face="symbol">&#8746;</font><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center"><font face="symbol">&#8230;</font></td><td nowrap="nowrap" align="center"><div class="comp"><font face="symbol">&#8901;</font><br /></div><div class="norm"><font face="symbol">&#8746;</font><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center"><i>G</i>/<i>N</i><sub><i>l</i></sub> </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>G</i>/<i>N</i><sub>1</sub> </td><td nowrap="nowrap" align="center"><div class="comp">&#8901;<br /></div><div class="norm">&#8746;<br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center"><i>G</i>/<i>N</i><sub>2</sub> </td><td nowrap="nowrap" align="center"><div class="comp">&#8901;<br /></div><div class="norm">&#8746;<br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">&#8230;</td><td nowrap="nowrap" align="center"><div class="comp">&#8901;<br /></div><div class="norm">&#8746;<br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center"><i>G</i>/<i>N</i><sub><i>l</i></sub> </td></tr></table></td></tr></table>
 as a whole. Enumerating it  as a whole would result  in basic orbits like
-<tt>orbit</tt> <font face="symbol">&#8838;</font> {1001,<font face="symbol">&#8230;</font>,1100}  with a  <code>transversal</code> list whose
+<tt>orbit</tt> &#8838; {1001,&#8230;,1100}  with a  <code>transversal</code> list whose
 first 1000 entries would be unbound, but  still require 4&nbsp;bytes of memory
 each (see&nbsp;<a href="../ref/CHAP041.htm#SECT008">Stabilizer chain records</a> in the reference manual).
 <p>
-Identifying   each  coset   <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i><font face="symbol">&#8722;</font>1</sub>/<i>N</i><sub><i>j</i></sub> into   {1,<font face="symbol">&#8230;</font>, [<i>N</i><sub><i>j</i><font face="symbol">&#8722;</font>1</sub> : <i>N</i><sub><i>j</i></sub>]} of  course means that we have  to change the action  of
+Identifying   each  coset   <i>g</i><sub><i>i</i></sub><i>N</i><sub><i>j</i>&#8722;1</sub>/<i>N</i><sub><i>j</i></sub> into   {1,&#8230;, [<i>N</i><sub><i>j</i>&#8722;1</sub> : <i>N</i><sub><i>j</i></sub>]} of  course means that we have  to change the action  of
 the automorphisms on     every  level of   the  stabilizer   chain.  Such
 flexibility is not   possible with permutations  because their  effect on
 positive  integers  is ``hardwired''  into them,  but  we can install new
@@ -715,7 +715,7 @@ We assume that such a coset <i>gN</i>/<i>M</i> is given by
 <li>  a pcgs for  the group  <i>G</i> (see  <a href="../ref/CHAP043.htm#SSEC002.1">Pcgs</a> in the  reference
   manual), let <code><i>n</i> = Length( <i>pcgs</i> )</code>;
 <p>
-<li> a range <code><i>range</i> = [ <i>start</i>  .. <i>stop</i> ]</code> indicating that <code><i>N</i> = <font face="symbol">&#9001;</font><i>pcgs</i>{ [ <i>start</i>  .. <i>n</i> ] } <font face="symbol">&#9002;</font></code>  and <code><i>M</i> = <font face="symbol">&#9001;</font><i>pcgs</i>{  [  <i>stop</i> + 1   .. <i>n</i> ]  } <font face="symbol">&#9002;</font></code>,  i.e.,  the cosets of
+<li> a range <code><i>range</i> = [ <i>start</i>  .. <i>stop</i> ]</code> indicating that <code><i>N</i> = &#9001;<i>pcgs</i>{ [ <i>start</i>  .. <i>n</i> ] } &#9002;</code>  and <code><i>M</i> = &#9001;<i>pcgs</i>{  [  <i>stop</i> + 1   .. <i>n</i> ]  } &#9002;</code>,  i.e.,  the cosets of
   <code><i>pcgs</i>{ <i>range</i> }</code> form a base for the vector space <i>N</i>/<i>M</i>;
 <p>
 <li> the representative <i>g</i>.
@@ -868,7 +868,7 @@ corresponding to that level.
 <br><code>&nbsp;od;</code>
 <br><code>&nbsp;Extend the Schreier tree of <i>S</i> with <i>newgens</i>.</code>
 <br><code>&nbsp;for <i>sch</i>  in Schreier generators  do</code>
-<br><code>&nbsp;&nbsp;if <i>sch</i>  <font face="symbol">&#8713;</font> <i>S</i>.stabilizer  then</code>
+<br><code>&nbsp;&nbsp;if <i>sch</i>  &#8713; <i>S</i>.stabilizer  then</code>
 <br><code>&nbsp;&nbsp;&nbsp;StabChainStrong( <i>S</i>.stabilizer, [ <i>sch</i> ] );</code>
 <br><code>&nbsp;&nbsp;fi;</code>
 <br><code>&nbsp;od;</code>
@@ -877,5 +877,5 @@ corresponding to that level.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP007.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

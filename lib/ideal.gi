@@ -2,7 +2,7 @@
 ##
 #W  ideal.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ideal.gi,v 4.8 2002/04/15 10:04:53 sal Exp $
+#H  @(#)$Id: ideal.gi,v 4.8.4.1 2005/03/31 13:23:24 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -10,7 +10,7 @@
 ##
 ##
 Revision.ideal_gi :=
-    "@(#)$Id: ideal.gi,v 4.8 2002/04/15 10:04:53 sal Exp $";
+    "@(#)$Id: ideal.gi,v 4.8.4.1 2005/03/31 13:23:24 gap Exp $";
 
 
 #############################################################################
@@ -657,7 +657,7 @@ InstallMethod( \+,
     else
       return LeftIdealByGenerators( LeftActingRingOfIdeal( I1 ),
                  Concatenation( GeneratorsOfLeftIdeal( I1 ),
-                                GeneratorsOfLeftIdeal( I1 ) ) );
+                                GeneratorsOfLeftIdeal( I2 ) ) );
     fi;
     end );
 
@@ -672,7 +672,7 @@ InstallMethod( \+,
     else
       return RightIdealByGenerators( RightActingRingOfIdeal( I1 ),
                  Concatenation( GeneratorsOfRightIdeal( I1 ),
-                                GeneratorsOfRightIdeal( I1 ) ) );
+                                GeneratorsOfRightIdeal( I2 ) ) );
     fi;
     end );
 
@@ -687,7 +687,7 @@ InstallMethod( \+,
     else
       return TwoSidedIdealByGenerators( RightActingRingOfIdeal( I1 ),
                  Concatenation( GeneratorsOfTwoSidedIdeal( I1 ),
-                                GeneratorsOfTwoSidedIdeal( I1 ) ) );
+                                GeneratorsOfTwoSidedIdeal( I2 ) ) );
     fi;
     end );
 
@@ -847,6 +847,5 @@ InstallMethod( AsTwoSidedIdeal,
 
 #############################################################################
 ##
-#E  ideal.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
+#E
 

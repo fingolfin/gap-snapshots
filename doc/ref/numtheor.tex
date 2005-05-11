@@ -5,7 +5,7 @@
 %A  numtheor.msk                GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: numtheor.msk,v 1.17 2003/09/10 10:59:31 gap Exp $
+%A  @(#)$Id: numtheor.msk,v 1.17.2.2 2005/05/10 08:55:31 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -502,6 +502,55 @@ gap> MoebiusMu( 60 );  MoebiusMu( 61 );  MoebiusMu( 62 );
 1
 \endexample
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Continued Fractions}
+
+\>ContinuedFractionExpansionOfRoot( <P>, <n> ) F
+
+The first <n> terms of the continued fraction expansion of the only
+positive real root of the polynomial <P> with integer coefficients.
+The leading coefficient of <P> must be positive and the value of <P> at 0
+must be negative. If the degree of <P> is 2 and <n> = 0, the function
+computes one period of the continued fraction expansion of the root in
+question. Anything may happen if <P> has three or more positive real
+roots.
+
+
+
+\beginexample
+gap> x := Indeterminate(Integers);;
+gap> ContinuedFractionExpansionOfRoot(x^2-7,20);
+[ 2, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1 ]
+gap> ContinuedFractionExpansionOfRoot(x^2-7,0);
+[ 2, 1, 1, 1, 4 ]
+gap> ContinuedFractionExpansionOfRoot(x^3-2,20);
+[ 1, 3, 1, 5, 1, 1, 4, 1, 1, 8, 1, 14, 1, 10, 2, 1, 4, 12, 2, 3 ]
+gap> ContinuedFractionExpansionOfRoot(x^5-x-1,50);
+[ 1, 5, 1, 42, 1, 3, 24, 2, 2, 1, 16, 1, 11, 1, 1, 2, 31, 1, 12, 5, 1, 7, 11, 
+  1, 4, 1, 4, 2, 2, 3, 4, 2, 1, 1, 11, 1, 41, 12, 1, 8, 1, 1, 1, 1, 1, 9, 2, 
+  1, 5, 4 ]
+\endexample
+
+\>ContinuedFractionApproximationOfRoot( <P>, <n> ) F
+
+The <n>th continued fraction approximation of the only positive real root
+of the polynomial <P> with integer coefficients. The leading coefficient
+of <P> must be positive and the value of <P> at 0 must be negative.
+Anything may happen if <P> has three or more positive real roots.
+
+
+
+\beginexample
+gap> ContinuedFractionApproximationOfRoot(x^2-2,10);
+3363/2378
+gap> 3363^2-2*2378^2;
+1
+gap> z := ContinuedFractionApproximationOfRoot(x^5-x-1,20);
+499898783527/428250732317
+gap> z^5-z-1;
+486192462527432755459620441970617283/
+14404247382319842421697357558805709031116987826242631261357
+\endexample
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{Miscellaneous}
@@ -548,7 +597,9 @@ gap> TwoSquares( 125 );  # it is not [5,10] because their gcd is not minimal
 gap> TwoSquares( 13*17 );  # [10,11] would be the other possible representation
 [ 5, 14 ]
 gap> TwoSquares( 848654483879497562821 );  # 848654483879497562821 is prime
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 848654483879497562821
+#I  FactorsInt: used the following factor(s) which are probably primes:
+#I        848654483879497562821
 [ 6305894639, 28440994650 ]
 \endexample
 

@@ -2,15 +2,21 @@
 ##
 #W  bugfix.tst
 ##
-#H  $Id: bugfix.tst,v 1.42.2.2 2004/11/29 12:15:50 sal Exp $
+#H  $Id: bugfix.tst,v 1.42.2.11 2005/05/12 14:57:07 gap Exp $
 ##
+##  Exclude from testall.g: why?
+##
+
 gap> START_TEST("bugfixes test");
 
 ##  Bug 18 for fix 4
 ##
-gap> Irr(CharacterTable("WeylD",4))[1];
-Character( CharacterTable( "W(D4)" ), [ 3, -1, 3, -1, 1, -1, 3, -1, -1, 0, 0, 
-  -1, 1 ] )
+gap> if LoadPackage( "ctbllib" ) <> fail then
+>      if Irr( CharacterTable( "WeylD", 4 ) )[1] <>
+>           [ 3, -1, 3, -1, 1, -1, 3, -1, -1, 0, 0, -1, 1 ] then
+>        Print( "problem with Irr( CharacterTable( \"WeylD\", 4 ) )[1]\n" );
+>      fi;
+>    fi;
 
 ##  Check to see if the strongly connected component (Error 3) fix has been 
 ##     installed  
@@ -334,9 +340,9 @@ gap> IrrBaumClausen( Group(()));;
 
 ##  bug 17 for fix 5 (example taken from `vspcmat.tst')
 gap> w:= LeftModuleByGenerators( GF(9),
->         [ [ [ Z(27), Z(3) ], [ Z(3), Z(3) ] ],
->           [ [ Z(27), Z(3) ], [ Z(3), Z(3) ] ],
->           [ [ 0*Z(3), Z(3) ], [ Z(3), Z(3) ] ] ] );;
+> [ [ [ Z(27), Z(3) ], [ Z(3), Z(3) ] ],
+> [ [ Z(27), Z(3) ], [ Z(3), Z(3) ] ],
+> [ [ 0*Z(3), Z(3) ], [ Z(3), Z(3) ] ] ] );;
 gap> w = AsVectorSpace( GF(3), w );
 true
 
@@ -344,7 +350,9 @@ true
 gap> List( Irr( AlternatingGroup( 5 ) ), TestMonomial );;
 
 ##  bug 2 for fix 6
-gap> DerivedSubgroupsTom( TableOfMarks( "A10" ) );;
+gap> if LoadPackage( "tomlib" ) <> fail then
+>      DerivedSubgroupsTom( TableOfMarks( "A10" ) );
+>    fi;
 
 ##  bug 3 for fix 6
 gap> Order( ZmodnZObj( 2, 7 ) );;  Inverse( ZmodnZObj( 2, 7 ) );;
@@ -369,6 +377,8 @@ gap> q:= QuaternionAlgebra( Rationals );;
 gap> t:= TrivialSubspace( q );;
 gap> tt:= Subspace( q, [] );;
 gap> Intersection2( t, tt );;
+
+
 gap> g:=SmallGroup(6,2);;
 gap> f:=FreeGroup(3);;
 gap> f:=f/[f.2*f.3];;
@@ -378,7 +388,39 @@ gap> k:=Intersection(k);;
 gap> hom:=IsomorphismFpGroup(TrivialSubgroup(g));;
 gap> IsFpGroup(Range(hom));
 true
-gap> AbelianInvariantsMultiplier(SL(3,2));
+
+## bug 3 for fix 2
+gap> Order([[-E(7),0,0,0],[0,-E(7)^6,0,0],[0,0,E(21),0],[0,0,0,E(21)^20]]);
+42
+gap> Order(-E(7)*IdentityMat(14));
+14
+
+## bug 5 for fix 2
+gap> t:= CharacterTable( SymmetricGroup( 4 ) );;
+gap> PowerMap( t, -1 );;  PowerMap( t, -1, 2 );;
+gap> m:= t mod 2;;
+gap> PowerMap( m, -1 );;  PowerMap( m, -1, 2 );;
+
+## bug 9 for fix 2
+gap> IsSimple(Ree(3));
+false
+
+## bug 10 for fix 2
+gap> g:= GU(3,4);;  g.1 in g;
+true
+gap> ForAll( GeneratorsOfGroup( Sp(4,4) ), x -> x in SP(4,2) );
+false
+
+## bug 12 for fix 2
+gap> IsMatrix( Basis( VectorSpace( GF(2), Basis( GF(2)^2 ) ) ) );
+true
+
+## bug 13 for fix 2
+gap> -1 in [1..2];
+false
+
+## bug 16-18 for fix 4
+gap> AbelianInvariantsMultiplier(SL(3,2));            
 [ 2 ]
 gap> AllPrimitiveGroups(Size,60);
 #W  AllPrimitiveGroups: Degree restricted to [ 1 .. 999 ]
@@ -387,10 +429,363 @@ gap> ix18:=X(GF(5),1);;f:=ix18^5-1;;
 gap> Discriminant(f);
 0*Z(5)
 
+## bug 3 for fix 5
+gap> One( DirectProduct( Group( [], () ), Group( [], () ) ) );;
 
-gap> STOP_TEST( "bugfix.tst", 3964000000 );
+## bug 4 for fix 5
+gap> emb:= Embedding( DirectProduct( Group( (1,2) ), Group( (1,2) ) ), 1 );;
+gap> PreImagesRepresentative( emb, (1,2)(3,4) );
+fail
+
+## bug 6 for fix 5
+gap> v:= VectorSpace( Rationals, [ [ 1 ] ] );;
+gap> x:= LeftModuleHomomorphismByImages( v, v, Basis( v ), Basis( v ) );;
+gap> x + 0*x;;
+
+## bug 7 for fix 5
+gap> a:= GroupRing( GF(2), Group( (1,2) ) );;
+gap> 1/3 * a.1;;  a.1 * (1/3);;
+
+## bug 10 for fix 5
+gap> R:= Integers mod 6;;
+gap> Size( Ideal( R, [ Zero( R ) ] ) + Ideal( R, [ 2 * One( R ) ] ) );
+3
+
+## for changes 4.4.4 -> 4.4.5  (extracted from corresponding dev/Update)
+
+
+# For fixes:
+
+
+# 2005/01/06 (TB)
+gap> One( DirectProduct( Group( [], () ), Group( [], () ) ) );;
+
+
+# 2005/01/06 (TB)
+gap> emb:= Embedding( DirectProduct( Group( (1,2) ), Group( (1,2) ) ), 1 );;
+gap> PreImagesRepresentative( emb, (1,2)(3,4) );
+fail
+
+
+# 2005/02/21 (TB)
+gap> v:= VectorSpace( Rationals, [ [ 1 ] ] );;
+gap> x:= LeftModuleHomomorphismByImages( v, v, Basis( v ), Basis( v ) );;
+gap> x + 0*x;;
+
+
+# 2005/02/21 (TB)
+gap> a:= GroupRing( GF(2), Group( (1,2) ) );;
+gap> 1/3 * a.1;;  a.1 * (1/3);;
+
+
+# 2005/02/26 (AH)
+gap> Random(GF(26831423036065352611));;
+
+
+# 2005/03/05 (AH)
+gap> x:=X(Rationals);;
+gap> PowerMod(x,3,x^2);
+0
+gap> PowerMod(x,1,x);
+0
+
+
+# 2005/03/08 (AH)
+gap> p:=[0,1];
+[ 0, 1 ]
+gap> UnivariatePolynomial(Rationals,p);
+x_1
+gap> p;
+[ 0, 1 ]
+
+
+# 2005/03/31 (TB)
+gap> R:= Integers mod 6;;
+gap> Size( Ideal( R, [ Zero( R ) ] ) + Ideal( R, [ 2 * One( R ) ] ) );
+3
+
+
+# 2005/04/12 (FL (includes a fix in dev-version by Burkhard))
+## the less memory GAP has, the earlier the following crashed GAP  
+#out := OutputTextFile("/dev/null",false);
+#g := SymmetricGroup(1000000);
+#for i in [1..100] do  
+#    Print(i, " \c");
+#    r := PseudoRandom(g);
+#    PrintTo(out, "Coset representative is ", r, "\n");
+#od;
+
+
+# 2005/04/12 (FL)
+gap> IntHexString(['a','1']);
+161
+
+
+# 2005/04/12 (AH)
+gap> f:=FreeGroup(IsSyllableWordsFamily,8);;
+gap> g:=GeneratorsOfGroup(f);;
+gap> g1:=g[1];;
+gap> g2:=g[2];;
+gap> g3:=g[3];;
+gap> g4:=g[4];;
+gap> g5:=g[5];;
+gap> g6:=g[6];;
+gap> g7:=g[7];;
+gap> g8:=g[8];;
+gap> rws:=SingleCollector(f,[ 2, 3, 2, 3, 2, 3, 2, 3 ]);;
+gap> r:=[
+gap>   [1,g4*g6],
+gap>   [3,g4],
+gap>   [5,g6*g8^2],
+gap>   [7,g8],
+gap> ];;
+gap> for x in r do SetPower(rws,x[1],x[2]);od;
+gap> G:= GroupByRwsNC(rws);;
+gap> f1:=G.1;;
+gap> f2:=G.2;;
+gap> f3:=G.3;;
+gap> f4:=G.4;;
+gap> f5:=G.5;;
+gap> f6:=G.6;;
+gap> f7:=G.7;;
+gap> f8:=G.8;;
+gap> a:=Subgroup(G,[f3*f6*f8^2, f5*f6*f8^2, f7*f8, f4*f6^2*f8 ]);;
+gap> b:=Subgroup(G,[f2^2*f4^2*f6*f7*f8^2, f2*f4*f6^2*f8^2, f5*f6^2*f8,
+>                   f2^2*f6^2*f8, f2*f3*f4, f2^2]);;
+gap> Size(Intersection(a,b))=Number(a,i->i in b);
+true
+
+
+# 2005/04/15 (TB)
+gap> CompareVersionNumbers( "1.0", ">=9.9" );
+false
+
+
+# 2005/04/26 (SL)
+
+# too complicated to construct
+
+
+
+# 2005/04/27 (TB)
+gap> Iterator( Subspaces( VectorSpace( GF(2), [ X( GF(2) ) ] ) ) );;
+
+
+# 2005/04/27 (TB)
+gap> String( [ [ '1' ] ] );  String( rec( a:= [ '1' ] ) );
+"[ \"1\" ]"
+"rec( a := \"1\" )"
+
+
+# 2005/05/03 (BH)
+gap> if LoadPackage ("crisp") <> fail then
+>      F:=FreeGroup("a","b","c");;
+>      a:=F.1;;b:=F.2;;c:=F.3;;
+>      G:=F/[a^12,b^2*a^6,c^2*a^6,b^-1*a*b*a,c^-1*a*c*a^-7,c^-1*b*c*a^-9*b^-1];;
+>      pcgs := PcgsElementaryAbelianSeries (G);;
+>      ser := ChiefSeries (G);;
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgs (pcgs, H))
+>                           <> ParentPcgs (pcgs)) then
+>        Print( "problem with crisp (1)\n" );
+>      fi;
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgsWrtHomePcgs (H))
+>                           <>  ParentPcgs(HomePcgs (H))) then
+>        Print( "problem with crisp (2)\n" );
+>      fi;
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgsWrtHomePcgs (H))
+>                           <> HomePcgs (H)) then
+>        Print( "problem with crisp (3)\n" );
+>      fi;
+>      G2:=Image(IsomorphismPermGroup(G));
+>      pcgs := PcgsElementaryAbelianSeries (G2);
+>      ser := ChiefSeries (G2);
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgs (pcgs, H))
+>                           <> pcgs) then
+>        Print( "problem with crisp (4)\n" );
+>      fi;
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgsWrtHomePcgs (H)) 
+>                           <> ParentPcgs(HomePcgs (H))) then
+>        Print( "problem with crisp (5)\n" );
+>      fi;
+>      if ForAny (ser, H -> ParentPcgs (InducedPcgsWrtHomePcgs (H))
+>                           <> HomePcgs (H)) then
+>        Print( "problem with crisp (6)\n" );
+>      fi;
+>    fi;
+
+
+# 2005/05/03 (BE)
+gap> SmallGroupsInformation(512);
+
+  There are 10494213 groups of order 512.
+     1 is cyclic. 
+     2 - 10 have rank 2 and p-class 3.
+     11 - 386 have rank 2 and p-class 4.
+     387 - 1698 have rank 2 and p-class 5.
+     1699 - 2008 have rank 2 and p-class 6.
+     2009 - 2039 have rank 2 and p-class 7.
+     2040 - 2044 have rank 2 and p-class 8.
+     2045 has rank 3 and p-class 2.
+     2046 - 29398 have rank 3 and p-class 3.
+     29399 - 30617 have rank 3 and p-class 4.
+     30618 - 31239 have rank 3 and p-class 3.
+     31240 - 56685 have rank 3 and p-class 4.
+     56686 - 60615 have rank 3 and p-class 5.
+     60616 - 60894 have rank 3 and p-class 6.
+     60895 - 60903 have rank 3 and p-class 7.
+     60904 - 67612 have rank 4 and p-class 2.
+     67613 - 387088 have rank 4 and p-class 3.
+     387089 - 419734 have rank 4 and p-class 4.
+     419735 - 420500 have rank 4 and p-class 5.
+     420501 - 420514 have rank 4 and p-class 6.
+     420515 - 6249623 have rank 5 and p-class 2.
+     6249624 - 7529606 have rank 5 and p-class 3.
+     7529607 - 7532374 have rank 5 and p-class 4.
+     7532375 - 7532392 have rank 5 and p-class 5.
+     7532393 - 10481221 have rank 6 and p-class 2.
+     10481222 - 10493038 have rank 6 and p-class 3.
+     10493039 - 10493061 have rank 6 and p-class 4.
+     10493062 - 10494173 have rank 7 and p-class 2.
+     10494174 - 10494200 have rank 7 and p-class 3.
+     10494201 - 10494212 have rank 8 and p-class 2.
+     10494213 is elementary abelian.
+
+  This size belongs to layer 7 of the SmallGroups library. 
+  IdSmallGroup is not available for this size. 
+ 
+
+
+# 2005/05/04 (SL)
+gap> c := [1,1,0,1]*Z(2);
+[ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ]
+gap> m := [1,1]*Z(2);
+[ Z(2)^0, Z(2)^0 ]
+gap> PowerModCoeffs(c, 1, m);
+[ Z(2)^0 ]
+gap> ConvertToVectorRep(c, 2);
+2
+gap> ConvertToVectorRep(m, 2);
+2
+gap> Print(PowerModCoeffs(c, 1, m), "\n");
+[ Z(2)^0 ]
+
+
+
+# 2005/05/06 (SL)
+gap> A:=[[Z(2)]];; ConvertToMatrixRep(A,2);;
+gap> Sort(A); A;
+<a 1x1 matrix over GF2>
+
+
+# 2005/05/09 (TB)
+# call: gap -A
+# gap> SaveWorkspace( "wsp" );;
+# call: gap -A -L wsp
+
+
+# 2005/05/09 (FL)
+gap> NextPrimeInt(23482648263482364926498249);
+#I  IsPrimeInt: probably prime, but not proven: 23482648263482364926498251
+23482648263482364926498251
+
+
+# 2005/05/09 (Colva, FL (for 4R4))
+gap> L:=AllPrimitiveGroups(NrMovedPoints,26,Size,[1..2^28-1]);
+[ PSL(2,25), PGL(2,25), PZL(2,25), PSL(2,25).2, PYL(2,25) ]
+# For new features:
+
+
+# 2005/04/13 (FL)
+gap> IsCheapConwayPolynomial(5,96);
+false
+
+
+# 2005/04/21 (FL)
+gap> NormalBase( GF(3^6) );
+[ Z(3^6)^2, Z(3^6)^6, Z(3^6)^18, Z(3^6)^54, Z(3^6)^162, Z(3^6)^486 ]
+gap>  NormalBase( GF( GF(8), 2 ) );
+[ Z(2^6), Z(2^6)^8 ]
+
+
+# 2005/04/21 (FL)
+gap> IsBound(HELP_VIEWER_INFO.firefox);
+true
+
+
+# 2005/04/26 (SL, FL)
+gap> AClosestVectorCombinationsMatFFEVecFFECoords;
+<Operation "AClosestVectorCombinationsMatFFEVecFFECoords">
+gap> ConstituentsPolynomial;
+function( p ) ... end
+
+
+# 2005/04/27 (TB)
+gap> IsBound( CYC_LIST );
+true
+
+
+# 2005/05/03 (SK)
+gap> x := Indeterminate(Integers);;
+gap> ContinuedFractionExpansionOfRoot(x^2-7,20);
+[ 2, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1 ]
+gap> ContinuedFractionExpansionOfRoot(x^2-7,0);
+[ 2, 1, 1, 1, 4 ]
+gap> ContinuedFractionExpansionOfRoot(x^3-2,20);
+[ 1, 3, 1, 5, 1, 1, 4, 1, 1, 8, 1, 14, 1, 10, 2, 1, 4, 12, 2, 3 ]
+gap> ContinuedFractionExpansionOfRoot(x^5-x-1,50);
+[ 1, 5, 1, 42, 1, 3, 24, 2, 2, 1, 16, 1, 11, 1, 1, 2, 31, 1, 12, 5, 1, 7, 11, 
+  1, 4, 1, 4, 2, 2, 3, 4, 2, 1, 1, 11, 1, 41, 12, 1, 8, 1, 1, 1, 1, 1, 9, 2, 
+  1, 5, 4 ]
+gap> ContinuedFractionApproximationOfRoot(x^2-2,10);
+3363/2378
+gap> 3363^2-2*2378^2;
+1
+gap> z := ContinuedFractionApproximationOfRoot(x^5-x-1,20);
+499898783527/428250732317
+gap> z^5-z-1;
+486192462527432755459620441970617283/
+14404247382319842421697357558805709031116987826242631261357
+
+
+# 2005/05/03 (SK)
+gap> l := AllSmallGroups(12);;
+gap> List(l,StructureDescription);; l;
+[ C3 : C4, C12, A4, D12, C6 x C2 ]
+gap> List(AllSmallGroups(40),G->StructureDescription(G:short));
+[ "5:8", "40", "5:8", "5:Q8", "4xD10", "D40", "2x(5:4)", "(10x2):2", "20x2",
+  "5xD8", "5xQ8", "2x(5:4)", "2^2xD10", "10x2^2" ]
+gap> List(AllTransitiveGroups(DegreeAction,6),G->StructureDescription(G:short));
+[ "6", "S3", "D12", "A4", "3xS3", "2xA4", "S4", "S4", "S3xS3", "(3^2):4",
+  "2xS4", "A5", "(S3xS3):2", "S5", "A6", "S6" ]
+gap> StructureDescription(PSL(4,2));
+"A8"
+
+
+# 2005/05/03 (BE)
+gap> NumberSmallGroups(5^6);
+684
+gap> NumberSmallGroups(5*7*9*11*13);
+22
+
+
+# 2005/05/05 (TB)
+gap> IsBound( ShowPackageVariables );
+true
+
+
+# 2005/05/05 (TB)
+gap> IsReadableFile( Filename( DirectoriesLibrary( "tst" ), "testutil.g" ) );
+true
+
+
+# 2005/05/06 (TB)
+gap> IsBound( HasMultiplicationTable );
+true
+
+gap> STOP_TEST( "bugfix.tst", 5416900000 );
+
 
 #############################################################################
 ##
-#E  bugfix.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

@@ -4,7 +4,7 @@
 #W                                                             Andrew Solomon
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfunul.gi,v 4.81 2003/04/28 18:49:13 gap Exp $
+#H  @(#)$Id: ratfunul.gi,v 4.81.2.2 2005/03/08 02:19:48 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  are univariate.
 ##
 Revision.ratfunul_gi :=
-    "@(#)$Id: ratfunul.gi,v 4.81 2003/04/28 18:49:13 gap Exp $";
+    "@(#)$Id: ratfunul.gi,v 4.81.2.2 2005/03/08 02:19:48 gap Exp $";
 
 #############################################################################
 ##
@@ -39,9 +39,7 @@ local lc;
   fi;
   fam:=RationalFunctionsFamily(fam);
   if lc>0 and (IsZero(cofs[1]) or IsZero(cofs[lc])) then
-      if not IsMutable(cofs) then
-          cofs:=ShallowCopy(cofs);
-      fi;
+      cofs:=ShallowCopy(cofs); # always copy to avoid destroying list
       val:=val+RemoveOuterCoeffs(cofs,fam!.zeroCoefficient);
   fi;
 
@@ -681,8 +679,8 @@ local val,brci,fam;
     m:=ShiftedCoeffs(m[1],m[2]);
   fi;
   g:=PowerModCoeffs(g,Length(g),e,m,Length(m));
-  if Length(g)>0 and g[1]=fam!.zeroCoefficient or
-    g[Length(g)]=fam!.zeroCoefficient then
+  if Length(g)>0 and (g[1]=fam!.zeroCoefficient or
+    g[Length(g)]=fam!.zeroCoefficient) then
     g:=ShallowCopy(g);
     val:=val+RemoveOuterCoeffs(g,fam!.zeroCoefficient);
   fi;

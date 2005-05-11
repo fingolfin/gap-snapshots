@@ -1,11 +1,11 @@
 #I  file="lib/read4.g"
 
-#F  file="lib/profile.g" crc=-88259505
+#F  file="lib/profile.g" crc=-127296407
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/profile.g", -88259505 );
+COM_RESULT := COM_FILE( "lib/profile.g", -127296407 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/profile.g\"");
 elif COM_RESULT = 1  then
@@ -15,7 +15,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/profile.g");
 elif COM_RESULT = 3  then
-Revision.profile_g:="@(#)$Id: profile.g,v 4.32 2002/04/15 10:05:13 sal Exp $";
+Revision.profile_g:="@(#)$Id: profile.g,v 4.32.4.2 2005/05/10 08:31:50 gap Exp $";
 PROFILED_FUNCTIONS:=[];
 PROFILED_FUNCTIONS_NAMES:=[];
 PREV_PROFILED_FUNCTIONS:=[];
@@ -42,8 +42,6 @@ BIND_GLOBAL("ProfileFunctionsInGlobalVariables",COM_FUN(13));
 BIND_GLOBAL("DisplayRevision",COM_FUN(14));
 BIND_GLOBAL("DisplayCacheStats",COM_FUN(15));
 BIND_GLOBAL("ClearCacheStats",COM_FUN(16));
-START_TIME:=0;
-START_NAME:="";
 START_TEST:=COM_FUN(17);
 STOP_TEST:=COM_FUN(18);
 else
@@ -120,12 +118,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/pager.gi"
 
-#F  file="lib/helpbase.gi" crc=78409229
+#F  file="lib/helpbase.gi" crc=81259865
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/helpbase.gi", 78409229 );
+COM_RESULT := COM_FILE( "lib/helpbase.gi", 81259865 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/helpbase.gi\"");
 elif COM_RESULT = 1  then
@@ -135,41 +133,42 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/helpbase.gi");
 elif COM_RESULT = 3  then
-Revision.helpbase_gi:="@(#)$Id: helpbase.gi,v 1.15.2.2 2004/04/23 15:28:18 gap Exp $";
+Revision.helpbase_gi:="@(#)$Id: helpbase.gi,v 1.15.2.3 2005/05/05 09:26:12 gap Exp $";
 InstallGlobalFunction(StringStreamInputTextFile,COM_FUN(1));
-InstallGlobalFunction(MATCH_BEGIN,COM_FUN(2));
-InstallGlobalFunction(MATCH_BEGIN_COUNT,COM_FUN(3));
-InstallGlobalFunction(FILLED_LINE,COM_FUN(4));
-InstallGlobalFunction(SIMPLE_STRING,COM_FUN(5));
+BindGlobal("IsDocumentedVariable",COM_FUN(2));
+InstallGlobalFunction(MATCH_BEGIN,COM_FUN(3));
+InstallGlobalFunction(MATCH_BEGIN_COUNT,COM_FUN(4));
+InstallGlobalFunction(FILLED_LINE,COM_FUN(5));
+InstallGlobalFunction(SIMPLE_STRING,COM_FUN(6));
 InstallValue(HELP_KNOWN_BOOKS,[[],[]]);
-InstallGlobalFunction(HELP_ADD_BOOK,COM_FUN(6));
+InstallGlobalFunction(HELP_ADD_BOOK,COM_FUN(7));
 InstallValue(HELP_BOOK_HANDLER,rec(default:=rec()));
 InstallValue(HELP_BOOKS_INFO,rec());
-InstallGlobalFunction(HELP_BOOK_INFO,COM_FUN(7));
-InstallGlobalFunction(HELP_SHOW_BOOKS,COM_FUN(8));
-InstallGlobalFunction(HELP_SHOW_CHAPTERS,COM_FUN(9));
-InstallGlobalFunction(HELP_SHOW_SECTIONS,COM_FUN(10));
+InstallGlobalFunction(HELP_BOOK_INFO,COM_FUN(8));
+InstallGlobalFunction(HELP_SHOW_BOOKS,COM_FUN(9));
+InstallGlobalFunction(HELP_SHOW_CHAPTERS,COM_FUN(10));
+InstallGlobalFunction(HELP_SHOW_SECTIONS,COM_FUN(11));
 if not IsBound(HELP_VIEWER) then
 HELP_VIEWER:=["screen"];
 fi;
-InstallGlobalFunction(HELP_PRINT_MATCH,COM_FUN(11));
-InstallGlobalFunction(HELP_SHOW_PREV_CHAPTER,COM_FUN(12));
-InstallGlobalFunction(HELP_SHOW_NEXT_CHAPTER,COM_FUN(13));
-InstallGlobalFunction(HELP_SHOW_PREV,COM_FUN(14));
-InstallGlobalFunction(HELP_SHOW_NEXT,COM_FUN(15));
-InstallGlobalFunction(HELP_SHOW_WELCOME,COM_FUN(16));
-InstallGlobalFunction(HELP_GET_MATCHES,COM_FUN(17));
-InstallGlobalFunction(HELP_SHOW_MATCHES,COM_FUN(18));
-InstallGlobalFunction(HELP_SHOW_FROM_LAST_TOPICS,COM_FUN(19));
-HELP_BOOK_HANDLER.HelpDataRef:=COM_FUN(20);
-InstallGlobalFunction(HELP_LAB_FILE,COM_FUN(21));
+InstallGlobalFunction(HELP_PRINT_MATCH,COM_FUN(12));
+InstallGlobalFunction(HELP_SHOW_PREV_CHAPTER,COM_FUN(13));
+InstallGlobalFunction(HELP_SHOW_NEXT_CHAPTER,COM_FUN(14));
+InstallGlobalFunction(HELP_SHOW_PREV,COM_FUN(15));
+InstallGlobalFunction(HELP_SHOW_NEXT,COM_FUN(16));
+InstallGlobalFunction(HELP_SHOW_WELCOME,COM_FUN(17));
+InstallGlobalFunction(HELP_GET_MATCHES,COM_FUN(18));
+InstallGlobalFunction(HELP_SHOW_MATCHES,COM_FUN(19));
+InstallGlobalFunction(HELP_SHOW_FROM_LAST_TOPICS,COM_FUN(20));
+HELP_BOOK_HANDLER.HelpDataRef:=COM_FUN(21);
+InstallGlobalFunction(HELP_LAB_FILE,COM_FUN(22));
 HELP_RING_IDX:=0;
 HELP_RING_SIZE:=16;
 InstallValue(HELP_BOOK_RING,ListWithIdenticalEntries(HELP_RING_SIZE,["tutorial"]));
 InstallValue(HELP_TOPIC_RING,ListWithIdenticalEntries(HELP_RING_SIZE,"welcome to gap"));
 InstallValue(HELP_LAST,rec(MATCH:=0,BOOK:=0,NEXT_VIEWER:=false,TOPICS:=[]));
 NAMES_SYSTEM_GVARS:="to be defined in init.g";
-InstallGlobalFunction(HELP,COM_FUN(22));
+InstallGlobalFunction(HELP,COM_FUN(23));
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -179,51 +178,6 @@ Unbind(RANK_FILTER_LIST);
 Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/helpbase.gi"
-
-#F  file="lib/helpview.gi" crc=67884071
-RANK_FILTER_LIST  := [  ];
-RANK_FILTER_COUNT := 1;
-
-#C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/helpview.gi", 67884071 );
-if COM_RESULT = fail  then
-Error("cannot locate file \"lib/helpview.gi\"");
-elif COM_RESULT = 1  then
-;
-elif COM_RESULT = 2  then
-;
-elif COM_RESULT = 4  then
-READ_CHANGED_GAP_ROOT("lib/helpview.gi");
-elif COM_RESULT = 3  then
-Revision.helpview_gi:="@(#)$Id: helpview.gi,v 1.5 2003/04/25 16:46:13 gap Exp $";
-InstallValue(HELP_VIEWER_INFO,rec());
-HELP_VIEWER_INFO.screen:=rec(type:="text",show:=Pager);
-HELP_VIEWER_INFO.netscape:=rec(type:="url",show:=COM_FUN(1));
-HELP_VIEWER_INFO.mozilla:=rec(type:="url",show:=COM_FUN(2));
-HELP_VIEWER_INFO.lynx:=rec(type:="url",show:=COM_FUN(3));
-HELP_VIEWER_INFO.("internet config"):=rec(type:="macurl",show:=COM_FUN(4));
-FWITF:=fail;
-XLSCLIENTSCMD:=false;
-InstallGlobalFunction(FindWindowId,COM_FUN(5));
-XRMTCMD:=false;
-XDVI_OPTIONS:="";
-HELP_VIEWER_INFO.xdvi:=rec(type:="dvi",show:=COM_FUN(6));
-XPDF_OPTIONS:="";
-HELP_VIEWER_INFO.xpdf:=rec(type:="pdf",show:=COM_FUN(7));
-ACROREAD_OPTIONS:="";
-ACROREAD_FILE:="";
-HELP_VIEWER_INFO.acroread:=rec(type:="pdf",show:=COM_FUN(8));
-HELP_VIEWER:=["screen"];
-InstallGlobalFunction(SetHelpViewer,COM_FUN(9));
-else
-Error("unknown result code ", COM_RESULT );
-fi;
-
-#U  unbind temporary variables
-Unbind(RANK_FILTER_LIST);
-Unbind(RANK_FILTER_COUNT);
-Unbind(COM_RESULT);
-#E  file="lib/helpview.gi"
 
 #F  file="lib/helpt2t.gi" crc=9489855
 RANK_FILTER_LIST  := [  ];
@@ -332,12 +286,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/reread.g"
 
-#F  file="lib/package.g" crc=-100018536
+#F  file="lib/package.g" crc=133366700
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/package.g", -100018536 );
+COM_RESULT := COM_FILE( "lib/package.g", 133366700 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/package.g\"");
 elif COM_RESULT = 1  then
@@ -347,7 +301,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/package.g");
 elif COM_RESULT = 3  then
-Revision.package_g:="@(#)$Id: package.g,v 4.73.2.2 2004/05/11 10:42:48 gap Exp $";
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $";
 PACKAGES_VERSIONS:=rec();
 BindGlobal("CompareVersionNumbers",COM_FUN(1));
 BindGlobal("PackageInfo",COM_FUN(2));
@@ -357,16 +311,16 @@ BindGlobal("InitializePackagesInfoRecords",COM_FUN(5));
 DeclareGlobalFunction("TestPackageAvailability");
 InstallGlobalFunction("TestPackageAvailability",COM_FUN(6));
 BindGlobal("DefaultPackageBannerString",COM_FUN(7));
-BindGlobal("LoadPackageDocumentation",COM_FUN(8));
+BindGlobal("ReadPackage",COM_FUN(8));
+BindGlobal("RereadPackage",COM_FUN(9));
+BindGlobal("LoadPackageDocumentation",COM_FUN(10));
 DeclareGlobalFunction("LoadPackage");
 RequirePackage:=LoadPackage;
-InstallGlobalFunction(LoadPackage,COM_FUN(9));
-BindGlobal("InstalledPackageVersion",COM_FUN(10));
-BIND_GLOBAL("DirectoriesPackagePrograms",COM_FUN(11));
-BIND_GLOBAL("DirectoriesPackageLibrary",COM_FUN(12));
-BindGlobal("ReadPackage",COM_FUN(13));
-BindGlobal("RereadPackage",COM_FUN(14));
-BindGlobal("CreateCompletionFilesPackage",COM_FUN(15));
+InstallGlobalFunction(LoadPackage,COM_FUN(11));
+BindGlobal("LoadAllPackages",COM_FUN(12));
+BindGlobal("InstalledPackageVersion",COM_FUN(13));
+BIND_GLOBAL("DirectoriesPackagePrograms",COM_FUN(14));
+BIND_GLOBAL("DirectoriesPackageLibrary",COM_FUN(15));
 BindGlobal("AutoloadPackages",COM_FUN(16));
 BindGlobal("ExcludeFromAutoload",COM_FUN(17));
 if not IsBound(StripEscapeSequences) then
@@ -379,8 +333,14 @@ fi;
 BindGlobal("DeclareAutoreadableVariables",COM_FUN(19));
 BindGlobal("ValidatePackageInfo",COM_FUN(20));
 BindGlobal("CheckPackageLoading",COM_FUN(21));
-GAPInfo.PackagesRestrictions:=rec(anupq:=rec(OnInitialization:=COM_FUN(22),OnLoad:=COM_FUN(23)),autpgrp:=rec(OnInitialization:=COM_FUN(24),OnLoad:=COM_FUN(25)));
-BindGlobal("SuggestUpgrades",COM_FUN(26));
+GAPInfo.PackagesRestrictions:=rec(anupq:=rec(OnInitialization:=COM_FUN(22),OnLoad:=COM_FUN(23)),autpgrp:=rec(OnInitialization:=COM_FUN(24),OnLoad:=COM_FUN(25)),guava:=rec(OnInitialization:=COM_FUN(26),OnLoad:=COM_FUN(27)),);
+BindGlobal("SuggestUpgrades",COM_FUN(28));
+NamesSystemGVars:="dummy";
+NamesUserGVars:="dummy";
+BindGlobal("PackageVariablesInfo",COM_FUN(29));
+Unbind(NamesSystemGVars);
+Unbind(NamesUserGVars);
+BindGlobal("ShowPackageVariables",COM_FUN(30));
 else
 Error("unknown result code ", COM_RESULT );
 fi;

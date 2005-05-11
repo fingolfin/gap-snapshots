@@ -69,8 +69,8 @@ gap&gt; IsVectorSpace( Rationals );
 true
 </pre>
 <p>
-If <font face="symbol">&#934;</font> is an algebraic extension of <i>F</i>, then <font face="symbol">&#934;</font> is
-also a vector space over <i>F</i> (and indeed over any subfield of <font face="symbol">&#934;</font>
+If &#934; is an algebraic extension of <i>F</i>, then &#934; is
+also a vector space over <i>F</i> (and indeed over any subfield of &#934;
 that contains <i>F</i>). This field <i>F</i> is stored in the attribute
 <code>LeftActingDomain</code>.
 In <font face="Gill Sans,Helvetica,Arial">GAP</font>, the default is to view fields as vector spaces
@@ -116,7 +116,7 @@ GF(3)
 <p>
 One of the most important attributes is a <strong>basis</strong>. For a given basis <i>B</i> of 
 <i>V</i>, every vector <i>v</i> in <i>V</i> can be expressed uniquely as 
-<i>v</i> = <font face="symbol">&#8721;</font><sub><i>b</i>  <font face="symbol">&#8712;</font> <i>B</i></sub> <i>c</i><sub><i>b</i></sub> <i>b</i>, with coefficients <i>c</i><sub><i>b</i></sub>  <font face="symbol">&#8712;</font> <i>F</i>.
+<i>v</i> = &#8721;<sub><i>b</i>  &#8712; <i>B</i></sub> <i>c</i><sub><i>b</i></sub> <i>b</i>, with coefficients <i>c</i><sub><i>b</i></sub>  &#8712; <i>F</i>.
 <p>
 In <font face="Gill Sans,Helvetica,Arial">GAP</font>, bases are special lists of vectors.
 They are used mainly for the computation of coefficients and linear
@@ -235,7 +235,7 @@ gap&gt; A:= Algebra( Rationals, [ m1, m2 ] );
 An interesting class of algebras for which many special algorithms
 are implemented is the class of <strong>Lie algebras</strong>.
 They arise for example as algebras of matrices whose product is defined
-by the Lie bracket [ <i>A</i>, <i>B</i> ] = <i>A</i> * <i>B</i> <font face="symbol">&#8722;</font> <i>B</i> * <i>A</i>,
+by the Lie bracket [ <i>A</i>, <i>B</i> ] = <i>A</i> * <i>B</i> &#8722; <i>B</i> * <i>A</i>,
 where * denotes the ordinary matrix product.
 <p>
 Since the multiplication of objects in <font face="Gill Sans,Helvetica,Arial">GAP</font> is always assumed to be
@@ -280,10 +280,10 @@ false
 <p>
 A second way of creating an algebra is by specifying a multiplication 
 table. Let <i>A</i> be a finite dimensional algebra with basis 
-{<i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>x</i><sub><i>n</i></sub>}, then for 1 <font face="symbol">&#8804;</font> <i>i</i>,<i>j</i> <font face="symbol">&#8804;</font> <i>n</i> the product <i>x</i><sub><i>i</i></sub><i>x</i><sub><i>j</i></sub> is
+{<i>x</i><sub>1</sub>,&#8230;,<i>x</i><sub><i>n</i></sub>}, then for 1 &#8804; <i>i</i>,<i>j</i> &#8804; <i>n</i> the product <i>x</i><sub><i>i</i></sub><i>x</i><sub><i>j</i></sub> is
 a linear combination of basis elements, i.e., there are <i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup> in the
 ground field such that
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><i>i</i></sub> <i>x</i><sub><i>j</i></sub> = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=1</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup> <i>x</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><i>i</i></sub> <i>x</i><sub><i>j</i></sub> = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=1</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup> <i>x</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
 It is not difficult to show that the constants <i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup>
 determine the multiplication completely. Therefore, the <i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup> are
 called <strong>structure constants</strong>. In <font face="Gill Sans,Helvetica,Arial">GAP</font> we can create a finite dimensional
@@ -304,10 +304,10 @@ The first of these is a list of
 indices <i>k</i> such that <i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup> is nonzero. The second list contains the
 corresponding constants <i>c</i><sub><i>ij</i></sub><sup><i>k</i></sup>. Suppose, for example,  that <code>S</code> 
 is the table 
-of an algebra with basis {<i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>x</i><sub>8</sub>} and that <code>S[3][7]</code> 
+of an algebra with basis {<i>x</i><sub>1</sub>,&#8230;,<i>x</i><sub>8</sub>} and that <code>S[3][7]</code> 
 equals <code>[ [ 2, 4, 6 ], [ 1/2, 2, 2/3 ] ]</code>. Then in the algebra we 
 have the relation 
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub>3</sub> <i>x</i><sub>7</sub> = (1/2) <i>x</i><sub>2</sub> + 2 <i>x</i><sub>4</sub> + (2/3) <i>x</i><sub>6</sub>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub>3</sub> <i>x</i><sub>7</sub> = (1/2) <i>x</i><sub>2</sub> + 2 <i>x</i><sub>4</sub> + (2/3) <i>x</i><sub>6</sub>. </td></tr></table></td></tr></table>
 Furthermore, if <code>S[6][1] = [ [  ], [  ] ]</code> then the product of the
 sixth and first basis elements is zero.
 <p>
@@ -331,7 +331,7 @@ It takes four arguments, namely <i>T</i>, two indices <i>i</i> and <i>j</i>,
 and a list of the form <code>[<i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>1</sub></sup>,<i>k</i><sub>1</sub>,<i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>2</sub></sup>,<i>k</i><sub>2</sub>,...]</code>.
 In this call to <code>SetEntrySCTable</code>,
 the product of the <i>i</i>-th and the <i>j</i>-th basis vector
-in any algebra described by <i>T</i> is set to <font face="symbol">&#8721;</font><sub><i>l</i></sub> <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub><i>l</i></sub></sup> <i>x</i><sub><i>k</i><sub><i>l</i></sub></sub>.
+in any algebra described by <i>T</i> is set to &#8721;<sub><i>l</i></sub> <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub><i>l</i></sub></sup> <i>x</i><sub><i>k</i><sub><i>l</i></sub></sub>.
 (Note that in the empty table, this product was zero.)
 If <i>T</i> knows that it is (anti)symmetric, then at the same time also
 the product of the <i>j</i>-th and the <i>i</i>-th basis vector is set appropriately.
@@ -470,8 +470,8 @@ gap&gt; CartanMatrix( R );
 <p>
 Another example of algebras is provided by <strong>quaternion algebras</strong>.
 We define a quaternion algebra over an extension field of the
-rationals, namely the field generated by <font face="symbol">&#8730;</font>5.
-(The number <code>EB(5)</code> is equal to 1/2 (<font face="symbol">&#8722;</font>1+<font face="symbol">&#8730;</font>5).
+rationals, namely the field generated by &#8730;5.
+(The number <code>EB(5)</code> is equal to 1/2 (&#8722;1+&#8730;5).
 The field is printed as <code>NF(5,[ 1, 4 ])</code>.)
 <p>
 <pre>
@@ -580,5 +580,5 @@ there is Chapter&nbsp;<a href="../ref/CHAP061.htm">Lie Algebras</a>.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href ="CHAP007.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

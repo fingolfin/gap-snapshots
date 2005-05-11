@@ -165,29 +165,29 @@ value of <var>tbl</var> is known, see&nbsp;<a href="CHAP069.htm#SSEC008.5">Order
      otherwise the images have order <i>n</i>.
      These criteria are checked in <code>InitPowerMap</code> (see&nbsp;<a href="CHAP071.htm#SSEC004.1">InitPowerMap</a>).
 <li>
-     For each character <font face="symbol">&#967;</font> of <i>G</i> and each element <i>g</i> in <i>G</i>,
-     the values <font face="symbol">&#967;</font>(<i>g</i><sup><i>p</i></sup>) and <tt>GaloisCyc</tt>( <font face="symbol">&#967;</font>(<i>g</i>), <i>p</i> ) are
+     For each character &#967; of <i>G</i> and each element <i>g</i> in <i>G</i>,
+     the values &#967;(<i>g</i><sup><i>p</i></sup>) and <tt>GaloisCyc</tt>( &#967;(<i>g</i>), <i>p</i> ) are
      algebraic integers that are congruent modulo <i>p</i>;
      if <i>p</i> does not divide the element order of <i>g</i> then the two values
      are equal.
      This congruence is checked for the characters specified below in
      the discussion of the <var>options</var> argument;
-     For linear characters <font face="symbol">&#955;</font> among these characters,
-     the condition <font face="symbol">&#967;</font>(<i>g</i>)<sup><i>p</i></sup> = <font face="symbol">&#967;</font>(<i>g</i><sup><i>p</i></sup>) is checked.
+     For linear characters &#955; among these characters,
+     the condition &#967;(<i>g</i>)<sup><i>p</i></sup> = &#967;(<i>g</i><sup><i>p</i></sup>) is checked.
      The corresponding function is <code>Congruences</code> 
      (see&nbsp;<a href="CHAP071.htm#SSEC004.2">Congruences!for character tables</a>).
 <li>
-     For each character <font face="symbol">&#967;</font> of <i>G</i>, the kernel is a normal subgroup
-     <i>N</i>, and <i>g</i><sup><i>p</i></sup>  <font face="symbol">&#8712;</font> <i>N</i> for all <i>g</i>  <font face="symbol">&#8712;</font> <i>N</i>;
-     moreover, if <i>N</i> has index <i>p</i> in <i>G</i> then <i>g</i><sup><i>p</i></sup>  <font face="symbol">&#8712;</font> <i>N</i> for all
-     <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>, and if the index of <i>N</i> in <i>G</i> is coprime to <i>p</i> then
-     <i>g</i><sup><i>p</i></sup>  <font face="symbol">&#8713;</font> <i>N</i> for each <i>g</i>  <font face="symbol">&#8713;</font> <i>N</i>.
+     For each character &#967; of <i>G</i>, the kernel is a normal subgroup
+     <i>N</i>, and <i>g</i><sup><i>p</i></sup>  &#8712; <i>N</i> for all <i>g</i>  &#8712; <i>N</i>;
+     moreover, if <i>N</i> has index <i>p</i> in <i>G</i> then <i>g</i><sup><i>p</i></sup>  &#8712; <i>N</i> for all
+     <i>g</i>  &#8712; <i>G</i>, and if the index of <i>N</i> in <i>G</i> is coprime to <i>p</i> then
+     <i>g</i><sup><i>p</i></sup>  &#8713; <i>N</i> for each <i>g</i>  &#8713; <i>N</i>.
      These conditions are checked for the kernels of all characters
-     <font face="symbol">&#967;</font> specified below,
+     &#967; specified below,
      the corresponding function is <code>ConsiderKernels</code>
      (see&nbsp;<a href="CHAP071.htm#SSEC004.3">ConsiderKernels</a>).
 <li>
-     If <i>p</i> is larger than the order <i>m</i> of an element <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> then
+     If <i>p</i> is larger than the order <i>m</i> of an element <i>g</i>  &#8712; <i>G</i> then
      the class of <i>g</i><sup><i>p</i></sup> is determined by the power maps for primes
      dividing the residue of <i>p</i> modulo <i>m</i>.
      If these power maps are stored in the <code>ComputedPowerMaps</code> value
@@ -195,10 +195,10 @@ value of <var>tbl</var> is known, see&nbsp;<a href="CHAP069.htm#SSEC008.5">Order
      This criterion is checked in <code>ConsiderSmallerPowerMaps</code>
      (see&nbsp;<a href="CHAP071.htm#SSEC004.4">ConsiderSmallerPowerMaps</a>).
 <li>
-     For each character <font face="symbol">&#967;</font> of <i>G</i>, the symmetrization <font face="symbol">&#968;</font>
-     defined by <font face="symbol">&#968;</font>(<i>g</i>) = (<font face="symbol">&#967;</font>(<i>g</i>)<sup><i>p</i></sup> <font face="symbol">&#8722;</font> <font face="symbol">&#967;</font>(<i>g</i><sup><i>p</i></sup>))/<i>p</i> is a character.
+     For each character &#967; of <i>G</i>, the symmetrization &#968;
+     defined by &#968;(<i>g</i>) = (&#967;(<i>g</i>)<sup><i>p</i></sup> &#8722; &#967;(<i>g</i><sup><i>p</i></sup>))/<i>p</i> is a character.
      This condition is checked for the kernels of all characters
-     <font face="symbol">&#967;</font> specified below,
+     &#967; specified below,
      the corresponding function is <code>PowerMapsAllowedBySymmetrizations</code>
      (see&nbsp;<a href="CHAP071.htm#SSEC004.6">PowerMapsAllowedBySymmetrizations</a>).
 </ol>
@@ -613,8 +613,8 @@ gap&gt; NamesOfFusionSources( tbls5 );
 [ "2.A5.2", "Isoclinic(2.A5.2)", "A5", "S3x2", "(A5x3):2", "2^4:s5", 
   "2.M22M5", "4.M22M5", "M22.2M4", "2.M12M8", "2.2.2^4+6:S5", "2.2^4+6:S5", 
   "4.2^4.S5", "2.HSM10", "3^1+4:2^1+4.s5", "2^(1+4).S5", "(2^2xA5):2", 
-  "2^10:(2^5:s5)", "M24C2B", "gl25", "mo62", "s2wrs5", "s4", "twd5a", 
-  "w(d5)", "5:4", "CT1" ]
+  "2^10:(2^5:s5)", "3^4:S5", "M24C2B", "gl25", "mo62", "s2wrs5", "s4", 
+  "twd5a", "w(d5)", "5:4", "CT1" ]
 </pre>
 <p>
 <a name = "SSEC002.6"></a>
@@ -647,7 +647,7 @@ following properties of class fusions from <var>subtbl</var> to <var>tbl</var>.
     (But note that the list returned by <code>PossibleClassFusions</code> contains
     the full orbits.)
 <li>
-    For each character <font face="symbol">&#967;</font> of <i>G</i>, the restriction to <i>H</i> via the
+    For each character &#967; of <i>G</i>, the restriction to <i>H</i> via the
     class fusion is a character of <i>H</i>.
     This condition is checked for all characters specified below,
     the corresponding function is <code>FusionsAllowedByRestrictions</code>
@@ -785,10 +785,10 @@ gap&gt; rep:= RepresentativesFusions( AutomorphismsOfTable( subtbl ), orb,
 <p>
 Let <var>subtbl</var> and <var>tbl</var> be ordinary character tables and <var>fusions</var> be a
 list of possible class fusions from <var>subtbl</var> to <var>tbl</var>.
-<code>ConsiderStructureConstants</code> returns the list of those maps <font face="symbol">&#963;</font> in
+<code>ConsiderStructureConstants</code> returns the list of those maps &#963; in
 <var>fusions</var> with the property that for all triples (<i>i</i>,<i>j</i>,<i>k</i>) of class
 positions, <tt>ClassMultiplicationCoefficient</tt>( <i>subtbl</i> , <i>i</i>, <i>j</i>, <i>k</i> ) is not
-bigger than <tt>ClassMultiplicationCoefficient</tt>( <i>tbl</i> , <font face="symbol">&#963;</font>[<i>i</i>], <font face="symbol">&#963;</font>[<i>j</i>], <font face="symbol">&#963;</font>[<i>k</i>] );
+bigger than <tt>ClassMultiplicationCoefficient</tt>( <i>tbl</i> , &#963;[<i>i</i>], &#963;[<i>j</i>], &#963;[<i>k</i>] );
 see&nbsp;<a href="CHAP069.htm#SSEC010.6">ClassMultiplicationCoefficient!for character tables</a> for the
 definition of class multiplication coefficients/structure constants.
 <p>
@@ -829,11 +829,11 @@ are not allowed in maps.
 <p>
 The composition of two parametrized maps <var>paramap1</var>, <var>paramap2</var> is
 defined as the parametrized map <var>comp</var> that contains
-all compositions <i>f</i><sub>2</sub> <font face="symbol">&#176;</font><i>f</i><sub>1</sub> of elements <i>f</i><sub>1</sub> of <var>paramap1</var> and
+all compositions <i>f</i><sub>2</sub> &#176;<i>f</i><sub>1</sub> of elements <i>f</i><sub>1</sub> of <var>paramap1</var> and
 <i>f</i><sub>2</sub> of <var>paramap2</var>.
-For example, the composition of a character <font face="symbol">&#967;</font> of a group <i>G</i> by a
+For example, the composition of a character &#967; of a group <i>G</i> by a
 parametrized class fusion map from a subgroup <i>H</i> to <i>G</i> is the
-parametrized map that contains all restrictions of <font face="symbol">&#967;</font> by elements of
+parametrized map that contains all restrictions of &#967; by elements of
 the parametrized fusion map.
 <p>
 <code>CompositionMaps(</code><var>paramap2</var><code>, </code><var>paramap1</var><code>)</code> is a parametrized map with
@@ -907,7 +907,7 @@ gap&gt; ProjectionMap( [ 1, 1, 1, 2, 2, 2, 3, 4, 5, 5, 5, 6, 6, 6 ] );
 </pre>
 <p>
 <a name = "SSEC003.4"></a>
-<li><code>Indirected( </code><var>character</var><code>, </code><var>paramap</var><code> ) F</code>
+<li><code>Indirected( </code><var>character</var><code>, </code><var>paramap</var><code> ) O</code>
 <p>
 For a map <var>character</var> and a parametrized map <var>paramap</var>, <code>Indirected</code>
 returns a parametrized map whose entry at position <i>i</i> is
@@ -1046,7 +1046,7 @@ parametrized map.
 <p>
 When an inconsistency is detected,
 <code>CommutativeDiagram</code> immediately returns <code>fail</code>.
-Otherwise a record is returned that contains four lists <code>imp1</code>, <font face="symbol">&#8230;</font>,
+Otherwise a record is returned that contains four lists <code>imp1</code>, &#8230;,
 <code>imp4</code>:
 <code>imp</code><var>i</var><code></code> is the list of classes where <var>paramap_i</var> was changed.
 <p>
@@ -1333,13 +1333,13 @@ let <var>constituents</var> be a list of <strong>rational</strong> class functio
 with (a values list of) a class function,
 and <var>tbl</var> a character table.
 <p>
-<code>ContainedDecomposables</code> returns the set of all elements <font face="symbol">&#967;</font> of
-<var>parachar</var> that satisfy <i>func</i> ( <font face="symbol">&#967;</font>) = <tt>true</tt>
+<code>ContainedDecomposables</code> returns the set of all elements &#967; of
+<var>parachar</var> that satisfy <i>func</i> ( &#967;) = <tt>true</tt>
 and that lie in the <b>Z</b>-lattice spanned by <var>constituents</var>,
 modulo <var>moduls</var>.
 The latter means they lie in the <b>Z</b>-lattice spanned by <var>constituents</var>
 and the set
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> { <i>moduls</i> [<i>i</i>] &#183;<i>e</i><sub><i>i</i></sub>; 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i> }, </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> { <i>moduls</i> [<i>i</i>] &#183;<i>e</i><sub><i>i</i></sub>; 1  &#8804; <i>i</i>  &#8804; <i>n</i> }, </td></tr></table></td></tr></table>
 where <i>n</i> is the length of <var>parachar</var> and  <i>e</i><sub><i>i</i></sub> is the <i>i</i>-th standard
 basis vector.
 <p>
@@ -1497,12 +1497,12 @@ gap&gt; Indeterminateness( init );
 <a name = "SSEC004.5"></a>
 <li><code>MinusCharacter( </code><var>character</var><code>, </code><var>prime_powermap</var><code>, </code><var>prime</var><code> ) F</code>
 <p>
-Let <var>character</var> be (the list of values of) a class function <font face="symbol">&#967;</font>,
+Let <var>character</var> be (the list of values of) a class function &#967;,
 <var>prime</var> a prime integer <i>p</i>, and <var>prime_powermap</var> a parametrized map
 that is an approximation of the <i>p</i>-th power map for the character table
-of <font face="symbol">&#967;</font>.
-<code>MinusCharacter</code> returns the parametrized map of values of <font face="symbol">&#967;</font><sup><i>p</i><font face="symbol">&#8722;</font></sup>,
-which is defined by <font face="symbol">&#967;</font><sup><i>p</i><font face="symbol">&#8722;</font></sup>(<i>g</i>) = ( <font face="symbol">&#967;</font>(<i>g</i>)<sup><i>p</i></sup> <font face="symbol">&#8722;</font> <font face="symbol">&#967;</font>(<i>g</i><sup><i>p</i></sup>) ) / <i>p</i>.
+of &#967;.
+<code>MinusCharacter</code> returns the parametrized map of values of &#967;<sup><i>p</i>&#8722;</sup>,
+which is defined by &#967;<sup><i>p</i>&#8722;</sup>(<i>g</i>) = ( &#967;(<i>g</i>)<sup><i>p</i></sup> &#8722; &#967;(<i>g</i><sup><i>p</i></sup>) ) / <i>p</i>.
 <p>
 <pre>
 gap&gt; tbl:= CharacterTable( "S7" );;  pow:= InitPowerMap( tbl, 2 );;
@@ -1543,8 +1543,8 @@ according to condition 6.&nbsp;listed in the description of
 <p>
 More precisely, the strategy used is as follows.
 <p>
-First, for each <font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>chars</i> ,
-let <code>minus:= MinusCharacter(<font face="symbol">&#967;</font>, </code><var>approxmap</var><code>, </code><var>prime</var><code>)</code>.
+First, for each &#967; &#8712; <i>chars</i> ,
+let <code>minus:= MinusCharacter(&#967;, </code><var>approxmap</var><code>, </code><var>prime</var><code>)</code>.
 <ul>
 <li>
     If <tt>Indeterminateness</tt><tt>(</tt> <tt>minus</tt> <tt>)</tt> = 1 and
@@ -1552,13 +1552,13 @@ let <code>minus:= MinusCharacter(<font face="symbol">&#967;</font>, </code><var>
     <var>subchars</var> are checked;
     if not all scalar products are nonnegative integers then
     an empty list is returned,
-    otherwise <font face="symbol">&#967;</font> is deleted from the list of characters to inspect.
+    otherwise &#967; is deleted from the list of characters to inspect.
 <li>
     Otherwise if <code>Indeterminateness( minus )</code> is smaller than
-    <code></code><var>parameters</var><code>.minamb</code> then <font face="symbol">&#967;</font> is deleted from the list of
+    <code></code><var>parameters</var><code>.minamb</code> then &#967; is deleted from the list of
     characters.
 <li>
-    If <code></code><var>parameters</var><code>.minamb</code>  <font face="symbol">&#8804;</font>  <code>Indeterminateness( minus )</code>  <font face="symbol">&#8804;</font> 
+    If <code></code><var>parameters</var><code>.minamb</code>  &#8804;  <code>Indeterminateness( minus )</code>  &#8804; 
     <code></code><var>parameters</var><code>.maxamb</code> then
     construct the list of contained class functions
     <code>poss:= </code><var>parameters</var><code>.contained(</code><var>tbl</var><code>, </code><var>subchars</var><code>, minus)</code>
@@ -1686,8 +1686,8 @@ according to condition 5.&nbsp;listed in the description of
 <p>
 More precisely, the strategy used is as follows.
 <p>
-First, for each <font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>chars</i> ,
-let <code>restricted:= CompositionMaps( <font face="symbol">&#967;</font>, </code><var>approxmap</var><code> )</code>.
+First, for each &#967; &#8712; <i>chars</i> ,
+let <code>restricted:= CompositionMaps( &#967;, </code><var>approxmap</var><code> )</code>.
 <ul>
 <li>
     If <tt>Indeterminateness</tt><tt>(</tt> <tt>restricted</tt> <tt>)</tt> = 1 and
@@ -1695,14 +1695,14 @@ let <code>restricted:= CompositionMaps( <font face="symbol">&#967;</font>, </cod
     with <var>subchars</var> are checked;
     if not all scalar products are nonnegative integers then
     an empty list is returned,
-    otherwise <font face="symbol">&#967;</font> is deleted from the list of characters to inspect.
+    otherwise &#967; is deleted from the list of characters to inspect.
 <li>
     Otherwise if <code>Indeterminateness( minus )</code> is smaller than
-    <code></code><var>parameters</var><code>.minamb</code> then <font face="symbol">&#967;</font> is deleted from the list of
+    <code></code><var>parameters</var><code>.minamb</code> then &#967; is deleted from the list of
     characters.
 <li>
-    If <code></code><var>parameters</var><code>.minamb</code>  <font face="symbol">&#8804;</font>  <code>Indeterminateness( restricted )</code>
-     <font face="symbol">&#8804;</font>  <code></code><var>parameters</var><code>.maxamb</code> then construct
+    If <code></code><var>parameters</var><code>.minamb</code>  &#8804;  <code>Indeterminateness( restricted )</code>
+     &#8804;  <code></code><var>parameters</var><code>.maxamb</code> then construct
     <code>poss:= </code><var>parameters</var><code>.contained( </code><var>subtbl</var><code>, </code><var>subchars</var><code>, restricted )</code>
     and <code>Parametrized( poss )</code>,
     and improve the approximation of the fusion map using <code>UpdateMap</code>.
@@ -1744,5 +1744,5 @@ gap&gt; FusionsAllowedByRestrictions( subtbl, tbl, Irr( subtbl ),
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP070.htm">Previous</a>] [<a href ="CHAP072.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

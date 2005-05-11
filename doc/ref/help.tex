@@ -2,7 +2,7 @@
 %%
 %A  help.tex               GAP documentation                    Frank LŸbeck
 %%
-%A  @(#)$Id: help.tex,v 4.19.2.1 2004/01/27 11:39:26 stefan Exp $
+%A  @(#)$Id: help.tex,v 4.19.2.2 2005/04/21 10:38:03 gap Exp $
 %%
 %Y  Copyright 1990-2001, Lehrstuhl D fuer Mathematik, RWTH Aachen, Germany
 %%
@@ -333,30 +333,31 @@ If you want  to change the default  setting you will probably put  a call of
   bad. Furthermore the  terminal (window) should use a fixed  width font and
   we suggest to take one with `ISO-8859-1' (also called `latin1') encoding.
 
-`\"netscape\"' &
-  If a  book is available  in HTML-format this  is shown using  the (already
-  running) `netscape'  Web-browser. Note,  that for  some books  the browser
-  must be configured to use symbol fonts.
+`\"firefox\"', `\"mozilla\"', `\"netscape\"', `\"konqueror\"' &
+  If  a  book   is  available  in  HTML-format  this  is   shown  using  the
+  corresponding web-browser.  How well  this works, for  example by  using a
+  running instance of this browser,  depends on your particular start script
+  of this browser. Note, that for  some books the browser must be configured
+  to use symbol fonts.
 
-`\"lynx\"' &
+`\"w3m\"', `\"lynx\"' &
   If a book is  available in HTML-format this is shown  using the text based
-  `lynx' Web-browser inside the terminal  running {\GAP}. Formulae which use
-  symbol fonts may be unreadable.
+  `w3m' or `lynx' web-browser inside the terminal  running {\GAP}.  Formulae 
+  which use symbol fonts may be unreadable.
 
-`\"internet config\"' &
-  (for Apple  Macintosh with MacOS)  If a  book is available  in HTML-format
-  this is  shown in a Web browser. The web browser used is the program
-  set to handle the `file' protocol in the program `Internet Config' (System 
-  7 and 8) resp. the `Internet' control panel (System 9 and System X). 
-  For some browsers (e.g., Internet Explorer), you may have enter the 
-  GAP command
+`\"mac default browser\"', `\"safari\"' &
+  (for Apple Macintosh) If a book  is available in HTML-format this is shown
+  in a web-browser.  The web browser used  is the program set  to handle the
+  `file' protocol in  the `Internet' control panel (System 9  and System X).
+  For some browsers (e.g., Internet Explorer), you may have to enter the GAP
+  command
   `HELP_MAC_PROTOCOL := \"file:/\";'
-  for this to work correctly. If you wish to use the online html version of
+  for this to work correctly.  If you wish to use the online html version of
   the manual, you may use
   `HELP_EXTERNAL_URL := \"http://www.gap-system.org/\";'. Note that
   `HELP_EXTERNAL_URL := \"\";' switches back to the local html files.
-  It may be a good idea to put the relevant line in the `gap.rc'
-  file (see "The .gaprc file").
+  It may be a  good idea to put the relevant line in  the `gap.rc' file (see
+  "The .gaprc file").
   
 `\"xdvi\"' &
   (on X-windows  systems) If a book  is available in dvi-format  it is shown

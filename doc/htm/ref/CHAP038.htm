@@ -152,7 +152,7 @@ gap&gt; Image(hom,(1,2,3,4));
 <strong>The third</strong> class are epimorphisms from a group onto its factor
 group. Such homomorphisms can be constructed by
 <code>NaturalHomomorphismByNormalSubgroup</code>
-(see&nbsp;<a href="CHAP037.htm#SSEC017.1">NaturalHomomorphismByNormalSubgroup</a>).
+(see&nbsp;<a href="CHAP037.htm#SSEC018.1">NaturalHomomorphismByNormalSubgroup</a>).
 <p>
 <strong>The fourth</strong> class is homomorphisms in a permutation group that are induced by
 an action on a set. Such homomorphisms are described in the context of group
@@ -228,7 +228,7 @@ gap&gt; List(GeneratorsOfGroup(up),TraceMat);
 <a name = "I1"></a>
 
 For an automorphism <var>aut</var>, <code>Inverse</code> returns the inverse automorphism
-<i>aut</i> <sup><font face="symbol">&#8722;</font>1</sup>. However if <var>hom</var> is a bijective homomorphism between
+<i>aut</i> <sup>&#8722;1</sup>. However if <var>hom</var> is a bijective homomorphism between
 different groups, or if <var>hom</var> is injective and considered to be a bijection
 to its image, the operation <code>InverseGeneralMapping</code> should be used instead.
 (See&nbsp;<a href="CHAP030.htm#SSEC010.8">Inverse</a> for a further discussion of this problem.)
@@ -268,7 +268,7 @@ will differ depending on the type of the mapping.
 <p>
 Computing images requires to express an element of the source as word in the
 generators. If it cannot be done effectively (this is determined by
-<code>KnowsHowToDecompose</code>, see&nbsp;<a href="CHAP037.htm#SSEC024.6">KnowsHowToDecompose</a> which returns <code>true</code> for
+<code>KnowsHowToDecompose</code>, see&nbsp;<a href="CHAP037.htm#SSEC025.6">KnowsHowToDecompose</a> which returns <code>true</code> for
 example for arbitrary permutation groups, for Pc groups or for finitely
 presented groups with the images of the free generators) the span of the
 generators has to be computed elementwise which can be very expensive and
@@ -452,7 +452,7 @@ the group itself or a supergroup.
 Let <var>G</var> be a group, and <var>g</var> an element in the same family as the elements
 of <var>G</var>.
 <code>ConjugatorIsomorphism</code> returns the isomorphism from <var>G</var> to <code></code><var>G</var><code>^</code><var>g</var><code></code>
-defined by <i>h</i>  <font face="symbol">&#8594;</font> <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   <font face="symbol">&#8712;</font> <i>G</i> .
+defined by <i>h</i>  &#8594; <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   &#8712; <i>G</i> .
 <p>
 If <var>g</var> normalizes <var>G</var> then <code>ConjugatorIsomorphism</code> does the same as
 <code>ConjugatorAutomorphismNC</code> (see&nbsp;<a href="CHAP038.htm#SSEC006.2">ConjugatorAutomorphism</a>).
@@ -465,7 +465,7 @@ If <var>g</var> normalizes <var>G</var> then <code>ConjugatorIsomorphism</code> 
 Let <var>G</var> be a group, and <var>g</var> an element in the same family as the elements
 of <var>G</var> such that <var>g</var> normalizes <var>G</var>.
 <code>ConjugatorAutomorphism</code> returns the automorphism of <var>G</var>
-defined by <i>h</i>  <font face="symbol">&#8594;</font> <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   <font face="symbol">&#8712;</font> <i>G</i> .
+defined by <i>h</i>  &#8594; <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   &#8712; <i>G</i> .
 <p>
 If conjugation by <var>g</var> does <strong>not</strong> leave <var>G</var> invariant,
 <code>ConjugatorAutomorphism</code> returns <code>fail</code>;
@@ -482,9 +482,9 @@ except that the check is omitted whether <var>g</var> normalizes <var>G</var>.
 <a name = "SSEC006.3"></a>
 <li><code>InnerAutomorphismNC( </code><var>G</var><code>, </code><var>g</var><code> ) O</code>
 <p>
-Let <var>G</var> be a group, and <i>g</i>   <font face="symbol">&#8712;</font> <i>G</i> .
+Let <var>G</var> be a group, and <i>g</i>   &#8712; <i>G</i> .
 <code>InnerAutomorphism</code> returns the automorphism of <var>G</var>
-defined by <i>h</i>  <font face="symbol">&#8594;</font> <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   <font face="symbol">&#8712;</font> <i>G</i> .
+defined by <i>h</i>  &#8594; <i>h</i> <sup><i>g</i> </sup> for all <i>h</i>   &#8712; <i>G</i> .
 <p>
 If <var>g</var> is <strong>not</strong> an element of <var>G</var>,
 <code>InnerAutomorphism</code> returns <code>fail</code>;
@@ -495,7 +495,7 @@ with <code>ConjugatorIsomorphism</code> (see&nbsp;<a href="CHAP038.htm#SSEC006.1
 or with <code>ConjugatorAutomorphism</code> (see&nbsp;<a href="CHAP038.htm#SSEC006.2">ConjugatorAutomorphism</a>).
 <p>
 <code>InnerAutomorphismNC</code> does the same as <code>InnerAutomorphism</code>,
-except that the check is omitted whether <i>g</i>   <font face="symbol">&#8712;</font> <i>G</i> .
+except that the check is omitted whether <i>g</i>   &#8712; <i>G</i> .
 <p>
 <a name = "SSEC006.4"></a>
 <li><code>IsConjugatorIsomorphism( </code><var>hom</var><code> ) P</code>
@@ -622,7 +622,7 @@ Let <var>aut</var> be an automorphism of a group <var>G</var> and <code></code><
 homomorphism such that <code>ker </code><var>epi</var><code></code> is fixed under <var>aut</var>.
 Let <var>U</var> be the image of <var>epi</var>. This command returns the automorphism of
 <var>U</var> induced by <var>aut</var> via <var>epi</var>, that is the automorphism of <var>U</var> which maps
-<code></code><var>g</var><code>^</code><var>epi</var><code></code> to <code>(</code><var>g</var><code>^</code><var>aut</var><code>)^</code><var>epi</var><code></code>, for <var>g</var>  <font face="symbol">&#8712;</font>  <var>G</var>.
+<code></code><var>g</var><code>^</code><var>epi</var><code></code> to <code>(</code><var>g</var><code>^</code><var>aut</var><code>)^</code><var>epi</var><code></code>, for <var>g</var>  &#8712;  <var>G</var>.
 <p>
 <pre>
 gap&gt; g:=Group((1,2,3,4),(1,2));
@@ -651,6 +651,16 @@ by testing or setting the property <code>IsGroupOfAutomorphisms</code>
 (see&nbsp;<a href="CHAP038.htm#SSEC007.1">IsGroupOfAutomorphisms</a>),
 <font face="Gill Sans,Helvetica,Arial">GAP</font> will try itself to find such a nice monomorphism once calculations in
 the automorphism group are done.
+<p>
+Note that nice homomorphisms inherit down to subgroups, but cannot
+necessarily be extended from a subgroup to the whole group. Thus when
+working with a group of automorphisms, it can be beneficial to 
+enforce calculation of the nice monomorphism for the whole
+group (for example by explicitly calling <code>Random(G)</code> and ignoring
+the result -- it will be stored internally) at the start of the calculation.
+Otherwise <font face="Gill Sans,Helvetica,Arial">GAP</font> might first calculate a nice monomorphism for the subgroup,
+only to be forced to calculate a new nice monomorphism for the whole group
+later on.
 <p>
 <a name = "SSEC008.1"></a>
 <li><code>AssignNiceMonomorphismAutomorphismGroup( </code><var>autgrp</var><code>, </code><var>group</var><code> ) F</code>
@@ -920,5 +930,5 @@ the standard generators.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP037.htm">Previous</a>] [<a href ="CHAP039.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

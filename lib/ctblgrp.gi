@@ -2,7 +2,7 @@
 ##
 #W  ctblgrp.gi                   GAP library                 Alexander Hulpke
 ##
-#H  @(#)$Id: ctblgrp.gi,v 4.47.2.1 2004/05/24 15:37:22 gap Exp $
+#H  @(#)$Id: ctblgrp.gi,v 4.47.2.2 2005/01/06 03:42:20 gap Exp $
 ##
 #Y  Copyright (C) 1993, 1997
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
 Revision.ctblgrp_gi :=
-    "@(#)$Id: ctblgrp.gi,v 4.47.2.1 2004/05/24 15:37:22 gap Exp $";
+    "@(#)$Id: ctblgrp.gi,v 4.47.2.2 2005/01/06 03:42:20 gap Exp $";
 
 
 #############################################################################
@@ -1952,7 +1952,8 @@ local G,     # group
   exp:=Exponent(G);
   prime:=exp+1;
 
-  while prime<Maximum(100,5*k) do
+  while prime<Maximum(100,5*k) 
+    or ForAny([prime-1,prime,prime+1],x->IsInt(Size(G)/x)) do
     prime:=prime+exp;
   od;
 

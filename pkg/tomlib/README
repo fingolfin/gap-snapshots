@@ -55,19 +55,19 @@ the archive.
 
 On UNIX systems the zoo archive may be unpacked by
 
-    zoo x tomlib1r1p1.zoo
+    zoo x tomlib1r1p2.zoo
 
 which will unpack the archive into a directory `tomlib' in the
 current directory. 
 
 On UNIX systems the compressed tar archive may be unpacked by
 
-    tar xzf tomlib1r1p1.tar.gz
+    tar xzf tomlib1r1p2.tar.gz
 
 or, if tar on your system does not understand the option z, by
 
-    gunzip tomlib1r1p1.tar.gz
-    tar xf tomlib1r1p1.tar
+    gunzip tomlib1r1p2.tar.gz
+    tar xf tomlib1r1p2.tar
 
 which will in each case unpack the code into a directory `tomlib'
 in the current directory.
@@ -77,7 +77,7 @@ C-code for unzoo from the GAP web page and compile it on your system.
 For this your system needs to have a C-compiler.
 unzoo can be used to unpack the zoo archive, as follows:
 
-    unzoo -x tomlib1r1p1.zoo
+    unzoo -x tomlib1r1p2.zoo
 
 unpacks the archive into a directory `tomlib' in the current directory.
 
@@ -97,7 +97,7 @@ it is usually loaded automatically when GAP is started;
 if not then it can be loaded explicitly by typing
 
 gap> LoadPackage( "tomlib" );
-true;
+true
 gap>
 
 at the GAP prompt.

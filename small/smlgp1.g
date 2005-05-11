@@ -7,7 +7,7 @@
 ##  maximal 3 primes. 
 ##
 Revision.smlgp1_g :=
-    "@(#)$Id: smlgp1.g,v 4.10 2001/05/07 12:08:52 gap Exp $";
+    "@(#)$Id: smlgp1.g,v 4.10.4.1 2005/05/03 14:21:26 gap Exp $";
 
 #############################################################################
 ##
@@ -405,17 +405,22 @@ end;
 
 #############################################################################
 ##
-#F SELECT_SMALL_GROUPS_FUNCS[ 1 .. 7 ]( funcs, vals, inforec, all, id )
+#F SELECT_SMALL_GROUPS_FUNCS[ 1..7 ]( funcs, vals, inforec, all, id, idList )
 ##
-SELECT_SMALL_GROUPS_FUNCS[ 1 ] := function( size, funcs,vals,inforec,all,id )
-    local result, i, g, ok, j;
+SELECT_SMALL_GROUPS_FUNCS[ 1 ]:=function( size, funcs, vals, inforec, all,
+                                          id, idList )
+    local result, i, g, ok, j, range;
 
     if not IsBound( inforec.number ) then
         inforec := NUMBER_SMALL_GROUPS_FUNCS[ inforec.func ]( size, inforec);
     fi;
 
     result := [ ];
-    for i in [ 1 .. inforec.number ] do
+    range := [ 1 .. inforec.number ];
+    if idList <> fail then
+        range := idList;
+    fi;
+    for i in range do
         g := SMALL_GROUP_FUNCS[ inforec.func ]( size, i, inforec );
         SetIdGroup( g, [ size, i ] );
         ok := true;

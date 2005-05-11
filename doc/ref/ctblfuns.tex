@@ -2469,7 +2469,7 @@ characters can be explicitly prescribed as a `maxmult' component in
 <arec>.
 
 
-\>Inequalities( <tbl>, <chars>[, <option>] ) F
+\>Inequalities( <tbl>, <chars>[, <option>] ) O
 
 Let <tbl> be the ordinary character table of a group $G$.
 The condition $\pi(g) \geq 0$ for every possible permutation character
@@ -2496,8 +2496,8 @@ is the straight approach which takes the rational irreducible
 characters in their original order and by this guarantees the character
 with the smallest degree to be considered first.
 The other way, which is chosen if the string `\"small\"' is entered as
-third argument, tries to keep the number of intermediate inequalities
-small by eventually changing the order of characters.
+third argument <option>, tries to keep the number of intermediate
+inequalities small by eventually changing the order of characters.
 
 
 
@@ -2539,11 +2539,10 @@ If the result of `FrobeniusCharacterValue' cannot be expressed as an
 element of a finite field in {\GAP} (see Chapter~"Finite Fields")
 then `FrobeniusCharacterValue' returns `fail'.
 
-\indextt{TryConwayPolynomialForFrobeniusCharacterValue}
 If the Conway polynomial of degree $n$ is required for the computation
-but not yet stored in the global list of {\GAP} then it is computed only
-if the global function `TryConwayPolynomialForFrobeniusCharacterValue'
-returns `true' when it is called with <p> and $n$.
+then it is computed only if `IsCheapConwayPolynomial' returns `true'
+when it is called with <p> and $n$,
+otherwise `fail' is returned.
 
 
 \>BrauerCharacterValue( <mat> ) A

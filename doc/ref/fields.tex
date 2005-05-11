@@ -4,7 +4,7 @@
 %%
 %A  fields.msk                   GAP documentation              Thomas Breuer
 %%
-%A  @(#)$Id: fields.msk,v 1.17 2002/06/24 18:39:03 gap Exp $
+%A  @(#)$Id: fields.msk,v 1.17.2.1 2005/04/21 09:43:25 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -460,6 +460,10 @@ gap> NormalBase( CF(5) );
 [ -E(5), -E(5)^2, -E(5)^3, -E(5)^4 ]
 gap> NormalBase( CF(4) );
 [ 1/2-1/2*E(4), 1/2+1/2*E(4) ]
+gap> NormalBase( GF(3^6) );
+[ Z(3^6)^2, Z(3^6)^6, Z(3^6)^18, Z(3^6)^54, Z(3^6)^162, Z(3^6)^486 ]
+gap> NormalBase( GF( GF(8), 2 ) );
+[ Z(2^6), Z(2^6)^8 ]
 \endexample
 
 

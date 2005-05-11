@@ -2,7 +2,7 @@
 ##
 #W  vspc.gi                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspc.gi,v 4.43.2.2 2004/04/23 17:03:44 gap Exp $
+#H  @(#)$Id: vspc.gi,v 4.43.2.3 2005/04/27 13:16:19 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for vector spaces.
 ##
 Revision.vspc_gi :=
-    "@(#)$Id: vspc.gi,v 4.43.2.2 2004/04/23 17:03:44 gap Exp $";
+    "@(#)$Id: vspc.gi,v 4.43.2.3 2005/04/27 13:16:19 gap Exp $";
 
 
 #############################################################################
@@ -545,6 +545,9 @@ InstallMethod( Iterator,
 
     V:= D!.structure;
     return IteratorByFunctions( rec(
+               IsDoneIterator     := IsDoneIterator_Subspaces,
+               NextIterator       := NextIterator_Subspaces,
+               ShallowCopy        := ShallowCopy_Subspaces,
                structure          := V,
                basis              := Basis( V ),
                associatedIterator := Iterator(

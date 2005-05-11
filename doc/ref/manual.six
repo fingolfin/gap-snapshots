@@ -99,6 +99,8 @@ S 3.11. Saving and Loading a Workspace
 I 3.11. save
 F 3.11. SaveWorkspace
 F 3.11. loading a saved workspace
+S 3.12. Coloring the Prompt and Input
+F 3.12. ColorPrompt
 C language.tex 4. The Programming Language
 S 4.1. Language Overview
 S 4.2. Lexical Structure
@@ -229,6 +231,7 @@ I 5.0. functions
 S 5.1. Information about a function
 F 5.1. NameFunction
 F 5.1. NumberArgumentsFunction
+F 5.1. NamesLocalVariablesFunction
 S 5.2. Calling a function with a list argument that is interpreted as several arguments
 F 5.2. CallFuncList
 S 5.3. Functions that do nothing
@@ -634,9 +637,12 @@ S 15.4. Multiplicative Arithmetic Functions
 F 15.4. Sigma
 F 15.4. Tau
 F 15.4. MoebiusMu
-S 15.5. Miscellaneous
-F 15.5. TwoSquares
-I 15.5. representation!as a sum of two squares
+S 15.5. Continued Fractions
+F 15.5. ContinuedFractionExpansionOfRoot
+F 15.5. ContinuedFractionApproximationOfRoot
+S 15.6. Miscellaneous
+F 15.6. TwoSquares
+I 15.6. representation!as a sum of two squares
 C rational.tex 16. Rational Numbers
 F 16.0. Rationals
 F 16.0. IsRationals
@@ -1044,6 +1050,7 @@ F 23.5. DistanceVecFFE
 F 23.5. DistancesDistributionVecFFEsVecFFE
 F 23.5. DistancesDistributionMatFFEVecFFE
 F 23.5. AClosestVectorCombinationsMatFFEVecFFE
+F 23.5. AClosestVectorCombinationsMatFFEVecFFECoords
 F 23.5. CosetLeadersMatFFE
 S 23.6. Vectors as coefficients of polynomials
 F 23.6. ValuePol
@@ -1826,6 +1833,7 @@ F 33.3. MagmaWithOneByMultiplicationTable
 F 33.3. MagmaWithInversesByMultiplicationTable
 F 33.3. MagmaElement
 F 33.3. MultiplicationTable
+F 33.3. MultiplicationTable
 S 33.4. Attributes and Properties for Magmas
 F 33.4. GeneratorsOfMagma
 F 33.4. GeneratorsOfMagmaWithOne
@@ -2039,187 +2047,189 @@ S 37.5. Expressing Group Elements as Words in Generators
 I 37.5. factorization
 I 37.5. words!in generators
 F 37.5. Factorization
-S 37.6. Cosets
-I 37.6. right cosets
-I 37.6. coset
-F 37.6. RightCoset
-F 37.6. RightCosets
-F 37.6. RightCosetsNC
-F 37.6. CanonicalRightCosetElement
-F 37.6. IsRightCoset
-I 37.6. left cosets
-S 37.7. Transversals
-F 37.7. RightTransversal
-S 37.8. Double Cosets
-F 37.8. DoubleCoset
-F 37.8. RepresentativesContainedRightCosets
-F 37.8. DoubleCosets!operation
-F 37.8. DoubleCosetsNC!operation
-F 37.8. IsDoubleCoset
-F 37.8. DoubleCosetRepsAndSizes
-F 37.8. InfoCoset
-S 37.9. Conjugacy Classes
-F 37.9. ConjugacyClass
-F 37.9. ConjugacyClasses!attribute
-F 37.9. ConjugacyClassesByRandomSearch
-F 37.9. ConjugacyClassesByOrbits
-F 37.9. NrConjugacyClasses
-F 37.9. RationalClass
-F 37.9. RationalClasses
-F 37.9. GaloisGroup!of rational class of a group
-F 37.9. IsConjugate
-F 37.9. IsConjugate
-S 37.10. Normal Structure
-I 37.10. normalizer
-F 37.10. Normalizer
-F 37.10. Normalizer
-F 37.10. Core
-F 37.10. PCore
-I 37.10. O_p(G)!see PCore
-F 37.10. NormalClosure
-F 37.10. NormalIntersection
-F 37.10. Complementclasses
-F 37.10. InfoComplement
-S 37.11. Specific and Parametrized Subgroups
-F 37.11. TrivialSubgroup
-F 37.11. CommutatorSubgroup
-F 37.11. DerivedSubgroup
-F 37.11. CommutatorLength
-F 37.11. FittingSubgroup
-F 37.11. FrattiniSubgroup
-F 37.11. PrefrattiniSubgroup
-F 37.11. PerfectResiduum
-F 37.11. RadicalGroup
-F 37.11. Socle
-F 37.11. SupersolvableResiduum
-F 37.11. PRump
-S 37.12. Sylow Subgroups and Hall Subgroups
-F 37.12. SylowSubgroup
-F 37.12. SylowComplement
-F 37.12. HallSubgroup
-F 37.12. SylowSystem
-F 37.12. ComplementSystem
-F 37.12. HallSystem
-S 37.13. Subgroups characterized by prime powers
-F 37.13. Omega
-F 37.13. Agemo
-S 37.14. Group Properties
-F 37.14. IsCyclic
-F 37.14. IsElementaryAbelian
-F 37.14. IsNilpotentGroup
-F 37.14. NilpotencyClassOfGroup
-F 37.14. IsPerfectGroup
-F 37.14. IsSolvableGroup
-F 37.14. IsPolycyclicGroup
-F 37.14. IsSupersolvableGroup
-F 37.14. IsMonomialGroup
-F 37.14. IsSimpleGroup
-F 37.14. IsomorphismTypeInfoFiniteSimpleGroup
-F 37.14. IsFinitelyGeneratedGroup
-F 37.14. IsSubsetLocallyFiniteGroup
-I 37.14. p-group
-F 37.14. IsPGroup
-F 37.14. PrimePGroup
-F 37.14. PClassPGroup
-F 37.14. RankPGroup
-F 37.14. IsPSolvable
-F 37.14. IsPNilpotent
-S 37.15. Numerical Group Attributes
-F 37.15. AbelianInvariants!for groups
-F 37.15. Exponent
-F 37.15. EulerianFunction
-S 37.16. Subgroup Series
-F 37.16. ChiefSeries
-F 37.16. ChiefSeriesThrough
-F 37.16. ChiefSeriesUnderAction
-F 37.16. SubnormalSeries
-F 37.16. CompositionSeries
-F 37.16. DisplayCompositionSeries
-F 37.16. DerivedSeriesOfGroup
-F 37.16. DerivedLength
-F 37.16. ElementaryAbelianSeries
-F 37.16. ElementaryAbelianSeriesLargeSteps
-F 37.16. ElementaryAbelianSeries
-F 37.16. InvariantElementaryAbelianSeries
-F 37.16. LowerCentralSeriesOfGroup
-F 37.16. UpperCentralSeriesOfGroup
-F 37.16. PCentralSeries
-F 37.16. JenningsSeries
-F 37.16. DimensionsLoewyFactors
-F 37.16. AscendingChain
-F 37.16. IntermediateGroup
-F 37.16. IntermediateSubgroups
-S 37.17. Factor Groups
-F 37.17. NaturalHomomorphismByNormalSubgroup
-F 37.17. NaturalHomomorphismByNormalSubgroupNC
-F 37.17. FactorGroup
-F 37.17. FactorGroupNC
-F 37.17. CommutatorFactorGroup
-F 37.17. MaximalAbelianQuotient
-F 37.17. HasAbelianFactorGroup
-F 37.17. HasElementaryAbelianFactorGroup
-F 37.17. CentralizerModulo
-S 37.18. Sets of Subgroups
-F 37.18. ConjugacyClassSubgroups
-F 37.18. IsConjugacyClassSubgroupsRep
-F 37.18. IsConjugacyClassSubgroupsByStabilizerRep
-F 37.18. ConjugacyClassesSubgroups
-F 37.18. ConjugacyClassesMaximalSubgroups
-F 37.18. MaximalSubgroupClassReps
-F 37.18. MaximalSubgroups
-F 37.18. NormalSubgroups
-F 37.18. MaximalNormalSubgroups
-F 37.18. MinimalNormalSubgroups
-S 37.19. Subgroup Lattice
-F 37.19. LatticeSubgroups
-F 37.19. ClassElementLattice
-F 37.19. MaximalSubgroupsLattice
-F 37.19. MinimalSupergroupsLattice
-F 37.19. RepresentativesPerfectSubgroups
-F 37.19. RepresentativesSimpleSubgroups
-F 37.19. ConjugacyClassesPerfectSubgroups
-F 37.19. Zuppos
-F 37.19. InfoLattice
-S 37.20. Specific Methods for Subgroup Lattice Computations
-F 37.20. LatticeByCyclicExtension
-F 37.20. InvariantSubgroupsElementaryAbelianGroup
-F 37.20. SubgroupsSolvableGroup
-F 37.20. SizeConsiderFunction
-F 37.20. ExactSizeConsiderFunction
-F 37.20. InfoPcSubgroup
-S 37.21. Special Generating Sets
-F 37.21. GeneratorsSmallest
-F 37.21. LargestElementGroup
-F 37.21. MinimalGeneratingSet
-F 37.21. SmallGeneratingSet
-F 37.21. IndependentGeneratorsOfAbelianGroup
-S 37.22. 1-Cohomology
-I 37.22. one cohomology
-I 37.22. cohomology
-I 37.22. cocycles
-F 37.22. OneCocycles
-F 37.22. OneCocycles
-F 37.22. OneCocycles
-F 37.22. OneCocycles
-F 37.22. OneCoboundaries
-F 37.22. OCOneCocycles
-F 37.22. ComplementclassesEA
-F 37.22. InfoCoh
-S 37.23. Schur Covers and Multipliers
-I 37.23. Darstellungsgruppe!see EpimorphismSchurCover
-F 37.23. EpimorphismSchurCover
-F 37.23. SchurCover
-F 37.23. AbelianInvariantsMultiplier
-I 37.23. Multiplier
-I 37.23. Schur multiplier
-S 37.24. Tests for the Availability of Methods
-F 37.24. CanEasilyTestMembership
-F 37.24. CanComputeSize
-F 37.24. CanComputeSizeAnySubgroup
-F 37.24. CanComputeIndex
-F 37.24. CanComputeIsSubset
-F 37.24. KnowsHowToDecompose
-F 37.24. KnowsHowToDecompose
+S 37.6. Structure Descriptions
+F 37.6. StructureDescription
+S 37.7. Cosets
+I 37.7. right cosets
+I 37.7. coset
+F 37.7. RightCoset
+F 37.7. RightCosets
+F 37.7. RightCosetsNC
+F 37.7. CanonicalRightCosetElement
+F 37.7. IsRightCoset
+I 37.7. left cosets
+S 37.8. Transversals
+F 37.8. RightTransversal
+S 37.9. Double Cosets
+F 37.9. DoubleCoset
+F 37.9. RepresentativesContainedRightCosets
+F 37.9. DoubleCosets!operation
+F 37.9. DoubleCosetsNC!operation
+F 37.9. IsDoubleCoset
+F 37.9. DoubleCosetRepsAndSizes
+F 37.9. InfoCoset
+S 37.10. Conjugacy Classes
+F 37.10. ConjugacyClass
+F 37.10. ConjugacyClasses!attribute
+F 37.10. ConjugacyClassesByRandomSearch
+F 37.10. ConjugacyClassesByOrbits
+F 37.10. NrConjugacyClasses
+F 37.10. RationalClass
+F 37.10. RationalClasses
+F 37.10. GaloisGroup!of rational class of a group
+F 37.10. IsConjugate
+F 37.10. IsConjugate
+S 37.11. Normal Structure
+I 37.11. normalizer
+F 37.11. Normalizer
+F 37.11. Normalizer
+F 37.11. Core
+F 37.11. PCore
+I 37.11. O_p(G)!see PCore
+F 37.11. NormalClosure
+F 37.11. NormalIntersection
+F 37.11. Complementclasses
+F 37.11. InfoComplement
+S 37.12. Specific and Parametrized Subgroups
+F 37.12. TrivialSubgroup
+F 37.12. CommutatorSubgroup
+F 37.12. DerivedSubgroup
+F 37.12. CommutatorLength
+F 37.12. FittingSubgroup
+F 37.12. FrattiniSubgroup
+F 37.12. PrefrattiniSubgroup
+F 37.12. PerfectResiduum
+F 37.12. RadicalGroup
+F 37.12. Socle
+F 37.12. SupersolvableResiduum
+F 37.12. PRump
+S 37.13. Sylow Subgroups and Hall Subgroups
+F 37.13. SylowSubgroup
+F 37.13. SylowComplement
+F 37.13. HallSubgroup
+F 37.13. SylowSystem
+F 37.13. ComplementSystem
+F 37.13. HallSystem
+S 37.14. Subgroups characterized by prime powers
+F 37.14. Omega
+F 37.14. Agemo
+S 37.15. Group Properties
+F 37.15. IsCyclic
+F 37.15. IsElementaryAbelian
+F 37.15. IsNilpotentGroup
+F 37.15. NilpotencyClassOfGroup
+F 37.15. IsPerfectGroup
+F 37.15. IsSolvableGroup
+F 37.15. IsPolycyclicGroup
+F 37.15. IsSupersolvableGroup
+F 37.15. IsMonomialGroup
+F 37.15. IsSimpleGroup
+F 37.15. IsomorphismTypeInfoFiniteSimpleGroup
+F 37.15. IsFinitelyGeneratedGroup
+F 37.15. IsSubsetLocallyFiniteGroup
+I 37.15. p-group
+F 37.15. IsPGroup
+F 37.15. PrimePGroup
+F 37.15. PClassPGroup
+F 37.15. RankPGroup
+F 37.15. IsPSolvable
+F 37.15. IsPNilpotent
+S 37.16. Numerical Group Attributes
+F 37.16. AbelianInvariants!for groups
+F 37.16. Exponent
+F 37.16. EulerianFunction
+S 37.17. Subgroup Series
+F 37.17. ChiefSeries
+F 37.17. ChiefSeriesThrough
+F 37.17. ChiefSeriesUnderAction
+F 37.17. SubnormalSeries
+F 37.17. CompositionSeries
+F 37.17. DisplayCompositionSeries
+F 37.17. DerivedSeriesOfGroup
+F 37.17. DerivedLength
+F 37.17. ElementaryAbelianSeries
+F 37.17. ElementaryAbelianSeriesLargeSteps
+F 37.17. ElementaryAbelianSeries
+F 37.17. InvariantElementaryAbelianSeries
+F 37.17. LowerCentralSeriesOfGroup
+F 37.17. UpperCentralSeriesOfGroup
+F 37.17. PCentralSeries
+F 37.17. JenningsSeries
+F 37.17. DimensionsLoewyFactors
+F 37.17. AscendingChain
+F 37.17. IntermediateGroup
+F 37.17. IntermediateSubgroups
+S 37.18. Factor Groups
+F 37.18. NaturalHomomorphismByNormalSubgroup
+F 37.18. NaturalHomomorphismByNormalSubgroupNC
+F 37.18. FactorGroup
+F 37.18. FactorGroupNC
+F 37.18. CommutatorFactorGroup
+F 37.18. MaximalAbelianQuotient
+F 37.18. HasAbelianFactorGroup
+F 37.18. HasElementaryAbelianFactorGroup
+F 37.18. CentralizerModulo
+S 37.19. Sets of Subgroups
+F 37.19. ConjugacyClassSubgroups
+F 37.19. IsConjugacyClassSubgroupsRep
+F 37.19. IsConjugacyClassSubgroupsByStabilizerRep
+F 37.19. ConjugacyClassesSubgroups
+F 37.19. ConjugacyClassesMaximalSubgroups
+F 37.19. MaximalSubgroupClassReps
+F 37.19. MaximalSubgroups
+F 37.19. NormalSubgroups
+F 37.19. MaximalNormalSubgroups
+F 37.19. MinimalNormalSubgroups
+S 37.20. Subgroup Lattice
+F 37.20. LatticeSubgroups
+F 37.20. ClassElementLattice
+F 37.20. MaximalSubgroupsLattice
+F 37.20. MinimalSupergroupsLattice
+F 37.20. RepresentativesPerfectSubgroups
+F 37.20. RepresentativesSimpleSubgroups
+F 37.20. ConjugacyClassesPerfectSubgroups
+F 37.20. Zuppos
+F 37.20. InfoLattice
+S 37.21. Specific Methods for Subgroup Lattice Computations
+F 37.21. LatticeByCyclicExtension
+F 37.21. InvariantSubgroupsElementaryAbelianGroup
+F 37.21. SubgroupsSolvableGroup
+F 37.21. SizeConsiderFunction
+F 37.21. ExactSizeConsiderFunction
+F 37.21. InfoPcSubgroup
+S 37.22. Special Generating Sets
+F 37.22. GeneratorsSmallest
+F 37.22. LargestElementGroup
+F 37.22. MinimalGeneratingSet
+F 37.22. SmallGeneratingSet
+F 37.22. IndependentGeneratorsOfAbelianGroup
+S 37.23. 1-Cohomology
+I 37.23. one cohomology
+I 37.23. cohomology
+I 37.23. cocycles
+F 37.23. OneCocycles
+F 37.23. OneCocycles
+F 37.23. OneCocycles
+F 37.23. OneCocycles
+F 37.23. OneCoboundaries
+F 37.23. OCOneCocycles
+F 37.23. ComplementclassesEA
+F 37.23. InfoCoh
+S 37.24. Schur Covers and Multipliers
+I 37.24. Darstellungsgruppe!see EpimorphismSchurCover
+F 37.24. EpimorphismSchurCover
+F 37.24. SchurCover
+F 37.24. AbelianInvariantsMultiplier
+I 37.24. Multiplier
+I 37.24. Schur multiplier
+S 37.25. Tests for the Availability of Methods
+F 37.25. CanEasilyTestMembership
+F 37.25. CanComputeSize
+F 37.25. CanComputeSizeAnySubgroup
+F 37.25. CanComputeIndex
+F 37.25. CanComputeIsSubset
+F 37.25. KnowsHowToDecompose
+F 37.25. KnowsHowToDecompose
 C grphomom.tex 38. Group Homomorphisms
 S 38.1. Creating Group Homomorphisms
 F 38.1. GroupHomomorphismByImages
@@ -3474,6 +3484,8 @@ F 57.4. FrobeniusAutomorphism
 I 57.4. Frobenius automorphism
 S 57.5. Conway Polynomials
 F 57.5. ConwayPolynomial
+F 57.5. IsCheapConwayPolynomial
+F 57.5. RandomPrimitivePolynomial
 C fldabnum.tex 58. Abelian Number Fields
 S 58.1. Construction of Abelian Number Fields
 F 58.1. CyclotomicField
@@ -4589,7 +4601,6 @@ F 70.14. PermComb
 F 70.14. Inequalities
 S 70.15. Operations for Brauer Characters
 F 70.15. FrobeniusCharacterValue
-I 70.15. TryConwayPolynomialForFrobeniusCharacterValue
 F 70.15. BrauerCharacterValue
 F 70.15. SizeOfFieldOfDefinition
 F 70.15. RealizableBrauerCharacters
@@ -4759,6 +4770,7 @@ F 74.3. TestPackageAvailability
 F 74.3. InstalledPackageVersion
 F 74.3. DirectoriesPackageLibrary
 F 74.3. DirectoriesPackagePrograms
+F 74.3. CompareVersionNumbers
 F 74.3. CompareVersionNumbers
 C obsolete.tex 75. Replaced and Removed Command Names
 I 75.0. obsolete

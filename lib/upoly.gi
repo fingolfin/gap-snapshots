@@ -3,7 +3,7 @@
 ##
 #W  upoly.gi                     GAP Library                 Alexander Hulpke
 ##
-#H  @(#)$Id: upoly.gi,v 4.48.2.1 2004/01/25 02:09:37 gap Exp $
+#H  @(#)$Id: upoly.gi,v 4.48.2.2 2005/04/13 11:45:39 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains methods for univariate polynomials
 ##
 Revision.upoly_gi:=
-  "@(#)$Id: upoly.gi,v 4.48.2.1 2004/01/25 02:09:37 gap Exp $";
+  "@(#)$Id: upoly.gi,v 4.48.2.2 2005/04/13 11:45:39 gap Exp $";
 
 #############################################################################
 ##
@@ -215,7 +215,9 @@ InstallMethod( IsPrimitivePolynomial,
     fi;
 
     size:= Size( F ) ^ ( Length( coeffs ) - 1 ) - 1;
-    x:= [ Zero( F ), one ];
+    # make sure that compressed coeffs are used if input is compressed
+    x:=  ShallowCopy(Zero( F ) * coeffs{[1,1]});
+    x[2] :=  one;
 
     # Primitive polynomials divide the polynomial $x^{q^d-1} - 1$ \ldots
     pmc:= PowerModCoeffs( x, size, coeffs );

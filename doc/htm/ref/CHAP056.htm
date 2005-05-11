@@ -77,7 +77,7 @@ false
 <li><code>Field( </code><var>F</var><code>, </code><var>list</var><code> ) F</code>
 <p>
 <code>Field</code> returns the smallest field <i>K</i> that contains all the elements
-<i>z</i> , <font face="symbol">&#8230;</font>,
+<i>z</i> , &#8230;,
 or the smallest field <i>K</i> that contains all elements in the list <var>list</var>.
 If no subfield <var>F</var> is given, <i>K</i> is constructed as a field over itself,
 i.e. the left acting domain of <i>K</i> is <i>K</i>.
@@ -90,7 +90,7 @@ as a vector space over <var>F</var>.
 <li><code>DefaultField( </code><var>list</var><code> ) F</code>
 <p>
 <code>DefaultField</code> returns a field <i>K</i> that contains all the elements
-<i>z</i> , <font face="symbol">&#8230;</font>,
+<i>z</i> , &#8230;,
 or a field <i>K</i> that contains all elements in the list <var>list</var>.
 <p>
 This field need not be the smallest field in which the elements lie,
@@ -118,7 +118,7 @@ true
 <a name = "SSEC001.5"></a>
 <li><code>DefaultFieldByGenerators( [ </code><var>z</var><code>, ... ] ) O</code>
 <p>
-returns the default field containing the elements <var>z</var>,<font face="symbol">&#8230;</font>.
+returns the default field containing the elements <var>z</var>,&#8230;.
 This field may be bigger than the smallest field containing these
 elements.
 <p>
@@ -233,28 +233,28 @@ is the set of all subfields of the field <var>F</var>.
 <h2><a name="SECT003">56.3 Galois Action</a></h2>
 <p><p>
 Let <i>L</i>  &gt;  <i>K</i> be a field extension of finite degree.
-Then to each element <font face="symbol">&#945;</font> <font face="symbol">&#8712;</font> <i>L</i>, we can associate a <i>K</i>-linear
-mapping <font face="symbol">&#981;</font><sub><font face="symbol">&#945;</font></sub> on <i>L</i>, and for a fixed <i>K</i>-basis of <i>L</i>,
-we can associate to <font face="symbol">&#945;</font> the matrix <i>M</i><sub><font face="symbol">&#945;</font></sub> (over <i>K</i>)
+Then to each element &#945; &#8712; <i>L</i>, we can associate a <i>K</i>-linear
+mapping &#981;<sub>&#945;</sub> on <i>L</i>, and for a fixed <i>K</i>-basis of <i>L</i>,
+we can associate to &#945; the matrix <i>M</i><sub>&#945;</sub> (over <i>K</i>)
 of this mapping.
 <p>
-The <strong>norm</strong> of <font face="symbol">&#945;</font> is defined as the determinant of <i>M</i><sub><font face="symbol">&#945;</font></sub>,
-the <strong>trace</strong> of <font face="symbol">&#945;</font> is defined as the trace of <i>M</i><sub><font face="symbol">&#945;</font></sub>,
-the <strong>minimal polynomial</strong> <font face="symbol">&#956;</font><sub><font face="symbol">&#945;</font></sub> and the
-<strong>trace polynomial</strong> <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub> of <font face="symbol">&#945;</font>
+The <strong>norm</strong> of &#945; is defined as the determinant of <i>M</i><sub>&#945;</sub>,
+the <strong>trace</strong> of &#945; is defined as the trace of <i>M</i><sub>&#945;</sub>,
+the <strong>minimal polynomial</strong> &#956;<sub>&#945;</sub> and the
+<strong>trace polynomial</strong> &#967;<sub>&#945;</sub> of &#945;
 are defined as the minimal polynomial (see&nbsp;<a href="CHAP056.htm#SSEC003.2">MinimalPolynomial!over a field</a>)
 and the characteristic polynomial (see&nbsp;<a href="CHAP024.htm#SSEC012.1">CharacteristicPolynomial</a> and
-<a href="CHAP056.htm#SSEC003.3">TracePolynomial</a>) of <i>M</i><sub><font face="symbol">&#945;</font></sub>.
-(Note that <font face="symbol">&#956;</font><sub><font face="symbol">&#945;</font></sub> depends only on <i>K</i> whereas <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub>
+<a href="CHAP056.htm#SSEC003.3">TracePolynomial</a>) of <i>M</i><sub>&#945;</sub>.
+(Note that &#956;<sub>&#945;</sub> depends only on <i>K</i> whereas &#967;<sub>&#945;</sub>
 depends on both <i>L</i> and <i>K</i>.)
 <p>
-Thus norm and trace of <font face="symbol">&#945;</font> are elements of <i>K</i>,
-and <font face="symbol">&#956;</font><sub><font face="symbol">&#945;</font></sub> and <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub> are polynomials over <i>K</i>,
-<font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub> being a power of <font face="symbol">&#956;</font><sub><font face="symbol">&#945;</font></sub>,
-and the degree of <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub> equals the degree of the field
+Thus norm and trace of &#945; are elements of <i>K</i>,
+and &#956;<sub>&#945;</sub> and &#967;<sub>&#945;</sub> are polynomials over <i>K</i>,
+&#967;<sub>&#945;</sub> being a power of &#956;<sub>&#945;</sub>,
+and the degree of &#967;<sub>&#945;</sub> equals the degree of the field
 extension <i>L</i>  &gt;  <i>K</i>.
 <p>
-The <strong>conjugates</strong> of <font face="symbol">&#945;</font> in <i>L</i> are those roots of <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub>
+The <strong>conjugates</strong> of &#945; in <i>L</i> are those roots of &#967;<sub>&#945;</sub>
 (with multiplicity) that lie in <i>L</i>;
 note that if only <i>L</i> is given, there is in general no way to access
 the roots outside <i>L</i>.
@@ -263,11 +263,11 @@ Analogously, the <strong>Galois group</strong> of the extension <i>L</i>  &gt;  
 the group of all those field automorphisms of <i>L</i> that fix <i>K</i>
 pointwise.
 <p>
-If <i>L</i>  &gt;  <i>K</i> is a Galois extension then the conjugates of <font face="symbol">&#945;</font> are
-all roots of <font face="symbol">&#967;</font><sub><font face="symbol">&#945;</font></sub> (with multiplicity),
-the set of conjugates equals the roots of <font face="symbol">&#956;</font><sub><font face="symbol">&#945;</font></sub>,
-the norm of <font face="symbol">&#945;</font> equals the product and the trace of <font face="symbol">&#945;</font>
-equals the sum of the conjugates of <font face="symbol">&#945;</font>,
+If <i>L</i>  &gt;  <i>K</i> is a Galois extension then the conjugates of &#945; are
+all roots of &#967;<sub>&#945;</sub> (with multiplicity),
+the set of conjugates equals the roots of &#956;<sub>&#945;</sub>,
+the norm of &#945; equals the product and the trace of &#945;
+equals the sum of the conjugates of &#945;,
 and the Galois group in the sense of the above definition equals
 the usual Galois group,
 <p>
@@ -317,7 +317,7 @@ x_1+-E(8)
 <a name = "SSEC003.3"></a>
 <li><code>TracePolynomial( </code><var>L</var><code>, </code><var>K</var><code>, </code><var>z</var><code>[, </code><var>inum</var><code>] ) O</code>
 <p>
-returns the polynomial that is the product of (<i>X</i> <font face="symbol">&#8722;</font> <i>c</i>) where <i>c</i> runs
+returns the polynomial that is the product of (<i>X</i> &#8722; <i>c</i>) where <i>c</i> runs
 over the conjugates of <var>z</var> in the field extension <var>L</var> over <var>K</var>.
 The polynomial is returned as a univariate polynomial over <var>K</var> in the
 indeterminate number <var>inum</var> (defaulting to 1).
@@ -426,7 +426,7 @@ element under the Galois group,
 <code>Norm</code> computes the product of the conjugates,
 <code>Trace</code> computes the sum of the conjugates,
 <code>TracePolynomial</code> and <code>MinimalPolynomial</code> compute the product of
-linear factors <i>x</i> <font face="symbol">&#8722;</font> <i>c</i> with <i>c</i> ranging over the conjugates and the set
+linear factors <i>x</i> &#8722; <i>c</i> with <i>c</i> ranging over the conjugates and the set
 of conjugates, respectively.
 <p>
 <a name = "SSEC003.7"></a>
@@ -448,10 +448,14 @@ gap&gt; NormalBase( CF(5) );
 [ -E(5), -E(5)^2, -E(5)^3, -E(5)^4 ]
 gap&gt; NormalBase( CF(4) );
 [ 1/2-1/2*E(4), 1/2+1/2*E(4) ]
+gap&gt; NormalBase( GF(3^6) );
+[ Z(3^6)^2, Z(3^6)^6, Z(3^6)^18, Z(3^6)^54, Z(3^6)^162, Z(3^6)^486 ]
+gap&gt; NormalBase( GF( GF(8), 2 ) );
+[ Z(2^6), Z(2^6)^8 ]
 </pre>
 <p>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP055.htm">Previous</a>] [<a href ="CHAP057.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

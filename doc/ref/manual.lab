@@ -42,6 +42,8 @@
 \makelabel{ref:Saving and Loading a Workspace}{3.11}
 \makelabel{ref:SaveWorkspace}{3.11.1}
 \makelabel{ref:loading a saved workspace}{3.11.2}
+\makelabel{ref:Coloring the Prompt and Input}{3.12}
+\makelabel{ref:ColorPrompt}{3.12.1}
 \makelabel{ref:The Programming Language}{4}
 \makelabel{ref:Language Overview}{4.1}
 \makelabel{ref:Lexical Structure}{4.2}
@@ -116,6 +118,7 @@
 \makelabel{ref:Information about a function}{5.1}
 \makelabel{ref:NameFunction}{5.1.1}
 \makelabel{ref:NumberArgumentsFunction}{5.1.2}
+\makelabel{ref:NamesLocalVariablesFunction}{5.1.3}
 \makelabel{ref:Calling a function with a list argument that is interpreted as several arguments}{5.2}
 \makelabel{ref:CallFuncList}{5.2.1}
 \makelabel{ref:Functions that do nothing}{5.3}
@@ -446,8 +449,11 @@
 \makelabel{ref:Sigma}{15.4.1}
 \makelabel{ref:Tau}{15.4.2}
 \makelabel{ref:MoebiusMu}{15.4.3}
-\makelabel{ref:Miscellaneous}{15.5}
-\makelabel{ref:TwoSquares}{15.5.1}
+\makelabel{ref:Continued Fractions}{15.5}
+\makelabel{ref:ContinuedFractionExpansionOfRoot}{15.5.1}
+\makelabel{ref:ContinuedFractionApproximationOfRoot}{15.5.2}
+\makelabel{ref:Miscellaneous}{15.6}
+\makelabel{ref:TwoSquares}{15.6.1}
 \makelabel{ref:Rational Numbers}{16}
 \makelabel{ref:Rationals}{16}
 \makelabel{ref:IsRationals}{16}
@@ -768,6 +774,7 @@
 \makelabel{ref:DistancesDistributionVecFFEsVecFFE}{23.5.3}
 \makelabel{ref:DistancesDistributionMatFFEVecFFE}{23.5.4}
 \makelabel{ref:AClosestVectorCombinationsMatFFEVecFFE}{23.5.5}
+\makelabel{ref:AClosestVectorCombinationsMatFFEVecFFECoords}{23.5.5}
 \makelabel{ref:CosetLeadersMatFFE}{23.5.6}
 \makelabel{ref:Vectors as coefficients of polynomials}{23.6}
 \makelabel{ref:ValuePol}{23.6.1}
@@ -1483,6 +1490,7 @@
 \makelabel{ref:MagmaWithInversesByMultiplicationTable}{33.3.3}
 \makelabel{ref:MagmaElement}{33.3.4}
 \makelabel{ref:MultiplicationTable}{33.3.5}
+\makelabel{ref:MultiplicationTable}{33.3.5}
 \makelabel{ref:Attributes and Properties for Magmas}{33.4}
 \makelabel{ref:GeneratorsOfMagma}{33.4.1}
 \makelabel{ref:GeneratorsOfMagmaWithOne}{33.4.2}
@@ -1683,175 +1691,177 @@
 \makelabel{ref:ClosureSubgroupNC}{37.4.4}
 \makelabel{ref:Expressing Group Elements as Words in Generators}{37.5}
 \makelabel{ref:Factorization}{37.5.1}
-\makelabel{ref:Cosets}{37.6}
-\makelabel{ref:RightCoset}{37.6.1}
-\makelabel{ref:RightCosets}{37.6.2}
-\makelabel{ref:RightCosetsNC}{37.6.2}
-\makelabel{ref:CanonicalRightCosetElement}{37.6.3}
-\makelabel{ref:IsRightCoset}{37.6.4}
-\makelabel{ref:Transversals}{37.7}
-\makelabel{ref:RightTransversal}{37.7.1}
-\makelabel{ref:Double Cosets}{37.8}
-\makelabel{ref:DoubleCoset}{37.8.1}
-\makelabel{ref:RepresentativesContainedRightCosets}{37.8.2}
-\makelabel{ref:DoubleCosets!operation}{37.8.3}
-\makelabel{ref:DoubleCosetsNC!operation}{37.8.3}
-\makelabel{ref:IsDoubleCoset}{37.8.4}
-\makelabel{ref:DoubleCosetRepsAndSizes}{37.8.5}
-\makelabel{ref:InfoCoset}{37.8.6}
-\makelabel{ref:Conjugacy Classes}{37.9}
-\makelabel{ref:ConjugacyClass}{37.9.1}
-\makelabel{ref:ConjugacyClasses!attribute}{37.9.2}
-\makelabel{ref:ConjugacyClassesByRandomSearch}{37.9.3}
-\makelabel{ref:ConjugacyClassesByOrbits}{37.9.4}
-\makelabel{ref:NrConjugacyClasses}{37.9.5}
-\makelabel{ref:RationalClass}{37.9.6}
-\makelabel{ref:RationalClasses}{37.9.7}
-\makelabel{ref:GaloisGroup!of rational class of a group}{37.9.8}
-\makelabel{ref:IsConjugate}{37.9.9}
-\makelabel{ref:IsConjugate}{37.9.9}
-\makelabel{ref:Normal Structure}{37.10}
-\makelabel{ref:Normalizer}{37.10.1}
-\makelabel{ref:Normalizer}{37.10.1}
-\makelabel{ref:Core}{37.10.2}
-\makelabel{ref:PCore}{37.10.3}
-\makelabel{ref:NormalClosure}{37.10.4}
-\makelabel{ref:NormalIntersection}{37.10.5}
-\makelabel{ref:Complementclasses}{37.10.6}
-\makelabel{ref:InfoComplement}{37.10.7}
-\makelabel{ref:Specific and Parametrized Subgroups}{37.11}
-\makelabel{ref:TrivialSubgroup}{37.11.1}
-\makelabel{ref:CommutatorSubgroup}{37.11.2}
-\makelabel{ref:DerivedSubgroup}{37.11.3}
-\makelabel{ref:CommutatorLength}{37.11.4}
-\makelabel{ref:FittingSubgroup}{37.11.5}
-\makelabel{ref:FrattiniSubgroup}{37.11.6}
-\makelabel{ref:PrefrattiniSubgroup}{37.11.7}
-\makelabel{ref:PerfectResiduum}{37.11.8}
-\makelabel{ref:RadicalGroup}{37.11.9}
-\makelabel{ref:Socle}{37.11.10}
-\makelabel{ref:SupersolvableResiduum}{37.11.11}
-\makelabel{ref:PRump}{37.11.12}
-\makelabel{ref:Sylow Subgroups and Hall Subgroups}{37.12}
-\makelabel{ref:SylowSubgroup}{37.12.1}
-\makelabel{ref:SylowComplement}{37.12.2}
-\makelabel{ref:HallSubgroup}{37.12.3}
-\makelabel{ref:SylowSystem}{37.12.4}
-\makelabel{ref:ComplementSystem}{37.12.5}
-\makelabel{ref:HallSystem}{37.12.6}
-\makelabel{ref:Subgroups characterized by prime powers}{37.13}
-\makelabel{ref:Omega}{37.13.1}
-\makelabel{ref:Agemo}{37.13.2}
-\makelabel{ref:Group Properties}{37.14}
-\makelabel{ref:IsCyclic}{37.14.1}
-\makelabel{ref:IsElementaryAbelian}{37.14.2}
-\makelabel{ref:IsNilpotentGroup}{37.14.3}
-\makelabel{ref:NilpotencyClassOfGroup}{37.14.4}
-\makelabel{ref:IsPerfectGroup}{37.14.5}
-\makelabel{ref:IsSolvableGroup}{37.14.6}
-\makelabel{ref:IsPolycyclicGroup}{37.14.7}
-\makelabel{ref:IsSupersolvableGroup}{37.14.8}
-\makelabel{ref:IsMonomialGroup}{37.14.9}
-\makelabel{ref:IsSimpleGroup}{37.14.10}
-\makelabel{ref:IsomorphismTypeInfoFiniteSimpleGroup}{37.14.11}
-\makelabel{ref:IsFinitelyGeneratedGroup}{37.14.12}
-\makelabel{ref:IsSubsetLocallyFiniteGroup}{37.14.13}
-\makelabel{ref:IsPGroup}{37.14.14}
-\makelabel{ref:PrimePGroup}{37.14.15}
-\makelabel{ref:PClassPGroup}{37.14.16}
-\makelabel{ref:RankPGroup}{37.14.17}
-\makelabel{ref:IsPSolvable}{37.14.18}
-\makelabel{ref:IsPNilpotent}{37.14.19}
-\makelabel{ref:Numerical Group Attributes}{37.15}
-\makelabel{ref:AbelianInvariants!for groups}{37.15.1}
-\makelabel{ref:Exponent}{37.15.2}
-\makelabel{ref:EulerianFunction}{37.15.3}
-\makelabel{ref:Subgroup Series}{37.16}
-\makelabel{ref:ChiefSeries}{37.16.1}
-\makelabel{ref:ChiefSeriesThrough}{37.16.2}
-\makelabel{ref:ChiefSeriesUnderAction}{37.16.3}
-\makelabel{ref:SubnormalSeries}{37.16.4}
-\makelabel{ref:CompositionSeries}{37.16.5}
-\makelabel{ref:DisplayCompositionSeries}{37.16.6}
-\makelabel{ref:DerivedSeriesOfGroup}{37.16.7}
-\makelabel{ref:DerivedLength}{37.16.8}
-\makelabel{ref:ElementaryAbelianSeries}{37.16.9}
-\makelabel{ref:ElementaryAbelianSeriesLargeSteps}{37.16.9}
-\makelabel{ref:ElementaryAbelianSeries}{37.16.9}
-\makelabel{ref:InvariantElementaryAbelianSeries}{37.16.10}
-\makelabel{ref:LowerCentralSeriesOfGroup}{37.16.11}
-\makelabel{ref:UpperCentralSeriesOfGroup}{37.16.12}
-\makelabel{ref:PCentralSeries}{37.16.13}
-\makelabel{ref:JenningsSeries}{37.16.14}
-\makelabel{ref:DimensionsLoewyFactors}{37.16.15}
-\makelabel{ref:AscendingChain}{37.16.16}
-\makelabel{ref:IntermediateGroup}{37.16.17}
-\makelabel{ref:IntermediateSubgroups}{37.16.18}
-\makelabel{ref:Factor Groups}{37.17}
-\makelabel{ref:NaturalHomomorphismByNormalSubgroup}{37.17.1}
-\makelabel{ref:NaturalHomomorphismByNormalSubgroupNC}{37.17.1}
-\makelabel{ref:FactorGroup}{37.17.2}
-\makelabel{ref:FactorGroupNC}{37.17.2}
-\makelabel{ref:CommutatorFactorGroup}{37.17.3}
-\makelabel{ref:MaximalAbelianQuotient}{37.17.4}
-\makelabel{ref:HasAbelianFactorGroup}{37.17.5}
-\makelabel{ref:HasElementaryAbelianFactorGroup}{37.17.6}
-\makelabel{ref:CentralizerModulo}{37.17.7}
-\makelabel{ref:Sets of Subgroups}{37.18}
-\makelabel{ref:ConjugacyClassSubgroups}{37.18.1}
-\makelabel{ref:IsConjugacyClassSubgroupsRep}{37.18.2}
-\makelabel{ref:IsConjugacyClassSubgroupsByStabilizerRep}{37.18.2}
-\makelabel{ref:ConjugacyClassesSubgroups}{37.18.3}
-\makelabel{ref:ConjugacyClassesMaximalSubgroups}{37.18.4}
-\makelabel{ref:MaximalSubgroupClassReps}{37.18.5}
-\makelabel{ref:MaximalSubgroups}{37.18.6}
-\makelabel{ref:NormalSubgroups}{37.18.7}
-\makelabel{ref:MaximalNormalSubgroups}{37.18.8}
-\makelabel{ref:MinimalNormalSubgroups}{37.18.9}
-\makelabel{ref:Subgroup Lattice}{37.19}
-\makelabel{ref:LatticeSubgroups}{37.19.1}
-\makelabel{ref:ClassElementLattice}{37.19.2}
-\makelabel{ref:MaximalSubgroupsLattice}{37.19.3}
-\makelabel{ref:MinimalSupergroupsLattice}{37.19.4}
-\makelabel{ref:RepresentativesPerfectSubgroups}{37.19.5}
-\makelabel{ref:RepresentativesSimpleSubgroups}{37.19.5}
-\makelabel{ref:ConjugacyClassesPerfectSubgroups}{37.19.6}
-\makelabel{ref:Zuppos}{37.19.7}
-\makelabel{ref:InfoLattice}{37.19.8}
-\makelabel{ref:Specific Methods for Subgroup Lattice Computations}{37.20}
-\makelabel{ref:LatticeByCyclicExtension}{37.20.1}
-\makelabel{ref:InvariantSubgroupsElementaryAbelianGroup}{37.20.2}
-\makelabel{ref:SubgroupsSolvableGroup}{37.20.3}
-\makelabel{ref:SizeConsiderFunction}{37.20.4}
-\makelabel{ref:ExactSizeConsiderFunction}{37.20.5}
-\makelabel{ref:InfoPcSubgroup}{37.20.6}
-\makelabel{ref:Special Generating Sets}{37.21}
-\makelabel{ref:GeneratorsSmallest}{37.21.1}
-\makelabel{ref:LargestElementGroup}{37.21.2}
-\makelabel{ref:MinimalGeneratingSet}{37.21.3}
-\makelabel{ref:SmallGeneratingSet}{37.21.4}
-\makelabel{ref:IndependentGeneratorsOfAbelianGroup}{37.21.5}
-\makelabel{ref:1-Cohomology}{37.22}
-\makelabel{ref:OneCocycles}{37.22.1}
-\makelabel{ref:OneCocycles}{37.22.1}
-\makelabel{ref:OneCocycles}{37.22.1}
-\makelabel{ref:OneCocycles}{37.22.1}
-\makelabel{ref:OneCoboundaries}{37.22.2}
-\makelabel{ref:OCOneCocycles}{37.22.3}
-\makelabel{ref:ComplementclassesEA}{37.22.4}
-\makelabel{ref:InfoCoh}{37.22.5}
-\makelabel{ref:Schur Covers and Multipliers}{37.23}
-\makelabel{ref:EpimorphismSchurCover}{37.23.1}
-\makelabel{ref:SchurCover}{37.23.2}
-\makelabel{ref:AbelianInvariantsMultiplier}{37.23.3}
-\makelabel{ref:Tests for the Availability of Methods}{37.24}
-\makelabel{ref:CanEasilyTestMembership}{37.24.1}
-\makelabel{ref:CanComputeSize}{37.24.2}
-\makelabel{ref:CanComputeSizeAnySubgroup}{37.24.3}
-\makelabel{ref:CanComputeIndex}{37.24.4}
-\makelabel{ref:CanComputeIsSubset}{37.24.5}
-\makelabel{ref:KnowsHowToDecompose}{37.24.6}
-\makelabel{ref:KnowsHowToDecompose}{37.24.6}
+\makelabel{ref:Structure Descriptions}{37.6}
+\makelabel{ref:StructureDescription}{37.6.1}
+\makelabel{ref:Cosets}{37.7}
+\makelabel{ref:RightCoset}{37.7.1}
+\makelabel{ref:RightCosets}{37.7.2}
+\makelabel{ref:RightCosetsNC}{37.7.2}
+\makelabel{ref:CanonicalRightCosetElement}{37.7.3}
+\makelabel{ref:IsRightCoset}{37.7.4}
+\makelabel{ref:Transversals}{37.8}
+\makelabel{ref:RightTransversal}{37.8.1}
+\makelabel{ref:Double Cosets}{37.9}
+\makelabel{ref:DoubleCoset}{37.9.1}
+\makelabel{ref:RepresentativesContainedRightCosets}{37.9.2}
+\makelabel{ref:DoubleCosets!operation}{37.9.3}
+\makelabel{ref:DoubleCosetsNC!operation}{37.9.3}
+\makelabel{ref:IsDoubleCoset}{37.9.4}
+\makelabel{ref:DoubleCosetRepsAndSizes}{37.9.5}
+\makelabel{ref:InfoCoset}{37.9.6}
+\makelabel{ref:Conjugacy Classes}{37.10}
+\makelabel{ref:ConjugacyClass}{37.10.1}
+\makelabel{ref:ConjugacyClasses!attribute}{37.10.2}
+\makelabel{ref:ConjugacyClassesByRandomSearch}{37.10.3}
+\makelabel{ref:ConjugacyClassesByOrbits}{37.10.4}
+\makelabel{ref:NrConjugacyClasses}{37.10.5}
+\makelabel{ref:RationalClass}{37.10.6}
+\makelabel{ref:RationalClasses}{37.10.7}
+\makelabel{ref:GaloisGroup!of rational class of a group}{37.10.8}
+\makelabel{ref:IsConjugate}{37.10.9}
+\makelabel{ref:IsConjugate}{37.10.9}
+\makelabel{ref:Normal Structure}{37.11}
+\makelabel{ref:Normalizer}{37.11.1}
+\makelabel{ref:Normalizer}{37.11.1}
+\makelabel{ref:Core}{37.11.2}
+\makelabel{ref:PCore}{37.11.3}
+\makelabel{ref:NormalClosure}{37.11.4}
+\makelabel{ref:NormalIntersection}{37.11.5}
+\makelabel{ref:Complementclasses}{37.11.6}
+\makelabel{ref:InfoComplement}{37.11.7}
+\makelabel{ref:Specific and Parametrized Subgroups}{37.12}
+\makelabel{ref:TrivialSubgroup}{37.12.1}
+\makelabel{ref:CommutatorSubgroup}{37.12.2}
+\makelabel{ref:DerivedSubgroup}{37.12.3}
+\makelabel{ref:CommutatorLength}{37.12.4}
+\makelabel{ref:FittingSubgroup}{37.12.5}
+\makelabel{ref:FrattiniSubgroup}{37.12.6}
+\makelabel{ref:PrefrattiniSubgroup}{37.12.7}
+\makelabel{ref:PerfectResiduum}{37.12.8}
+\makelabel{ref:RadicalGroup}{37.12.9}
+\makelabel{ref:Socle}{37.12.10}
+\makelabel{ref:SupersolvableResiduum}{37.12.11}
+\makelabel{ref:PRump}{37.12.12}
+\makelabel{ref:Sylow Subgroups and Hall Subgroups}{37.13}
+\makelabel{ref:SylowSubgroup}{37.13.1}
+\makelabel{ref:SylowComplement}{37.13.2}
+\makelabel{ref:HallSubgroup}{37.13.3}
+\makelabel{ref:SylowSystem}{37.13.4}
+\makelabel{ref:ComplementSystem}{37.13.5}
+\makelabel{ref:HallSystem}{37.13.6}
+\makelabel{ref:Subgroups characterized by prime powers}{37.14}
+\makelabel{ref:Omega}{37.14.1}
+\makelabel{ref:Agemo}{37.14.2}
+\makelabel{ref:Group Properties}{37.15}
+\makelabel{ref:IsCyclic}{37.15.1}
+\makelabel{ref:IsElementaryAbelian}{37.15.2}
+\makelabel{ref:IsNilpotentGroup}{37.15.3}
+\makelabel{ref:NilpotencyClassOfGroup}{37.15.4}
+\makelabel{ref:IsPerfectGroup}{37.15.5}
+\makelabel{ref:IsSolvableGroup}{37.15.6}
+\makelabel{ref:IsPolycyclicGroup}{37.15.7}
+\makelabel{ref:IsSupersolvableGroup}{37.15.8}
+\makelabel{ref:IsMonomialGroup}{37.15.9}
+\makelabel{ref:IsSimpleGroup}{37.15.10}
+\makelabel{ref:IsomorphismTypeInfoFiniteSimpleGroup}{37.15.11}
+\makelabel{ref:IsFinitelyGeneratedGroup}{37.15.12}
+\makelabel{ref:IsSubsetLocallyFiniteGroup}{37.15.13}
+\makelabel{ref:IsPGroup}{37.15.14}
+\makelabel{ref:PrimePGroup}{37.15.15}
+\makelabel{ref:PClassPGroup}{37.15.16}
+\makelabel{ref:RankPGroup}{37.15.17}
+\makelabel{ref:IsPSolvable}{37.15.18}
+\makelabel{ref:IsPNilpotent}{37.15.19}
+\makelabel{ref:Numerical Group Attributes}{37.16}
+\makelabel{ref:AbelianInvariants!for groups}{37.16.1}
+\makelabel{ref:Exponent}{37.16.2}
+\makelabel{ref:EulerianFunction}{37.16.3}
+\makelabel{ref:Subgroup Series}{37.17}
+\makelabel{ref:ChiefSeries}{37.17.1}
+\makelabel{ref:ChiefSeriesThrough}{37.17.2}
+\makelabel{ref:ChiefSeriesUnderAction}{37.17.3}
+\makelabel{ref:SubnormalSeries}{37.17.4}
+\makelabel{ref:CompositionSeries}{37.17.5}
+\makelabel{ref:DisplayCompositionSeries}{37.17.6}
+\makelabel{ref:DerivedSeriesOfGroup}{37.17.7}
+\makelabel{ref:DerivedLength}{37.17.8}
+\makelabel{ref:ElementaryAbelianSeries}{37.17.9}
+\makelabel{ref:ElementaryAbelianSeriesLargeSteps}{37.17.9}
+\makelabel{ref:ElementaryAbelianSeries}{37.17.9}
+\makelabel{ref:InvariantElementaryAbelianSeries}{37.17.10}
+\makelabel{ref:LowerCentralSeriesOfGroup}{37.17.11}
+\makelabel{ref:UpperCentralSeriesOfGroup}{37.17.12}
+\makelabel{ref:PCentralSeries}{37.17.13}
+\makelabel{ref:JenningsSeries}{37.17.14}
+\makelabel{ref:DimensionsLoewyFactors}{37.17.15}
+\makelabel{ref:AscendingChain}{37.17.16}
+\makelabel{ref:IntermediateGroup}{37.17.17}
+\makelabel{ref:IntermediateSubgroups}{37.17.18}
+\makelabel{ref:Factor Groups}{37.18}
+\makelabel{ref:NaturalHomomorphismByNormalSubgroup}{37.18.1}
+\makelabel{ref:NaturalHomomorphismByNormalSubgroupNC}{37.18.1}
+\makelabel{ref:FactorGroup}{37.18.2}
+\makelabel{ref:FactorGroupNC}{37.18.2}
+\makelabel{ref:CommutatorFactorGroup}{37.18.3}
+\makelabel{ref:MaximalAbelianQuotient}{37.18.4}
+\makelabel{ref:HasAbelianFactorGroup}{37.18.5}
+\makelabel{ref:HasElementaryAbelianFactorGroup}{37.18.6}
+\makelabel{ref:CentralizerModulo}{37.18.7}
+\makelabel{ref:Sets of Subgroups}{37.19}
+\makelabel{ref:ConjugacyClassSubgroups}{37.19.1}
+\makelabel{ref:IsConjugacyClassSubgroupsRep}{37.19.2}
+\makelabel{ref:IsConjugacyClassSubgroupsByStabilizerRep}{37.19.2}
+\makelabel{ref:ConjugacyClassesSubgroups}{37.19.3}
+\makelabel{ref:ConjugacyClassesMaximalSubgroups}{37.19.4}
+\makelabel{ref:MaximalSubgroupClassReps}{37.19.5}
+\makelabel{ref:MaximalSubgroups}{37.19.6}
+\makelabel{ref:NormalSubgroups}{37.19.7}
+\makelabel{ref:MaximalNormalSubgroups}{37.19.8}
+\makelabel{ref:MinimalNormalSubgroups}{37.19.9}
+\makelabel{ref:Subgroup Lattice}{37.20}
+\makelabel{ref:LatticeSubgroups}{37.20.1}
+\makelabel{ref:ClassElementLattice}{37.20.2}
+\makelabel{ref:MaximalSubgroupsLattice}{37.20.3}
+\makelabel{ref:MinimalSupergroupsLattice}{37.20.4}
+\makelabel{ref:RepresentativesPerfectSubgroups}{37.20.5}
+\makelabel{ref:RepresentativesSimpleSubgroups}{37.20.5}
+\makelabel{ref:ConjugacyClassesPerfectSubgroups}{37.20.6}
+\makelabel{ref:Zuppos}{37.20.7}
+\makelabel{ref:InfoLattice}{37.20.8}
+\makelabel{ref:Specific Methods for Subgroup Lattice Computations}{37.21}
+\makelabel{ref:LatticeByCyclicExtension}{37.21.1}
+\makelabel{ref:InvariantSubgroupsElementaryAbelianGroup}{37.21.2}
+\makelabel{ref:SubgroupsSolvableGroup}{37.21.3}
+\makelabel{ref:SizeConsiderFunction}{37.21.4}
+\makelabel{ref:ExactSizeConsiderFunction}{37.21.5}
+\makelabel{ref:InfoPcSubgroup}{37.21.6}
+\makelabel{ref:Special Generating Sets}{37.22}
+\makelabel{ref:GeneratorsSmallest}{37.22.1}
+\makelabel{ref:LargestElementGroup}{37.22.2}
+\makelabel{ref:MinimalGeneratingSet}{37.22.3}
+\makelabel{ref:SmallGeneratingSet}{37.22.4}
+\makelabel{ref:IndependentGeneratorsOfAbelianGroup}{37.22.5}
+\makelabel{ref:1-Cohomology}{37.23}
+\makelabel{ref:OneCocycles}{37.23.1}
+\makelabel{ref:OneCocycles}{37.23.1}
+\makelabel{ref:OneCocycles}{37.23.1}
+\makelabel{ref:OneCocycles}{37.23.1}
+\makelabel{ref:OneCoboundaries}{37.23.2}
+\makelabel{ref:OCOneCocycles}{37.23.3}
+\makelabel{ref:ComplementclassesEA}{37.23.4}
+\makelabel{ref:InfoCoh}{37.23.5}
+\makelabel{ref:Schur Covers and Multipliers}{37.24}
+\makelabel{ref:EpimorphismSchurCover}{37.24.1}
+\makelabel{ref:SchurCover}{37.24.2}
+\makelabel{ref:AbelianInvariantsMultiplier}{37.24.3}
+\makelabel{ref:Tests for the Availability of Methods}{37.25}
+\makelabel{ref:CanEasilyTestMembership}{37.25.1}
+\makelabel{ref:CanComputeSize}{37.25.2}
+\makelabel{ref:CanComputeSizeAnySubgroup}{37.25.3}
+\makelabel{ref:CanComputeIndex}{37.25.4}
+\makelabel{ref:CanComputeIsSubset}{37.25.5}
+\makelabel{ref:KnowsHowToDecompose}{37.25.6}
+\makelabel{ref:KnowsHowToDecompose}{37.25.6}
 \makelabel{ref:Group Homomorphisms}{38}
 \makelabel{ref:Creating Group Homomorphisms}{38.1}
 \makelabel{ref:GroupHomomorphismByImages}{38.1.1}
@@ -3023,6 +3033,8 @@
 \makelabel{ref:FrobeniusAutomorphism}{57.4.1}
 \makelabel{ref:Conway Polynomials}{57.5}
 \makelabel{ref:ConwayPolynomial}{57.5.1}
+\makelabel{ref:IsCheapConwayPolynomial}{57.5.2}
+\makelabel{ref:RandomPrimitivePolynomial}{57.5.3}
 \makelabel{ref:Abelian Number Fields}{58}
 \makelabel{ref:Construction of Abelian Number Fields}{58.1}
 \makelabel{ref:CyclotomicField}{58.1.1}
@@ -4155,6 +4167,7 @@
 \makelabel{ref:DirectoriesPackageLibrary}{74.3.4}
 \makelabel{ref:DirectoriesPackagePrograms}{74.3.5}
 \makelabel{ref:CompareVersionNumbers}{74.3.6}
+\makelabel{ref:CompareVersionNumbers}{74.3.6}
 \makelabel{ref:Replaced and Removed Command Names}{75}
 \makelabel{ref:Group Actions - Name Changes}{75.1}
 \makelabel{ref:Package Interface - Obsolete Functions and Name Changes}{75.2}
@@ -4238,6 +4251,7 @@
 \setcitlab {Klimyk68}{Kli68}
 \setcitlab {KLM01}{KLM01}
 \setcitlab {TACP2}{Knu98}
+\setcitlab {L03}{L{\accent 127u}b}
 \setcitlab {Leon91}{Leo91}
 \setcitlab {LLL82}{LLL82}
 \setcitlab {SOGOS}{LNS84}

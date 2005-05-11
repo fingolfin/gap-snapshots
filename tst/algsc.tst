@@ -2,12 +2,14 @@
 ##
 #W  algsc.tst                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: algsc.tst,v 4.27 2003/11/15 16:58:59 gap Exp $
+#H  @(#)$Id: algsc.tst,v 4.27.2.3 2005/05/11 14:53:01 gap Exp $
 ##
 #Y  Copyright 1997,    Lehrstuhl D fuer Mathematik,   RWTH Aachen,    Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: algsc.tst,v 4.27 2003/11/15 16:58:59 gap Exp $");
+gap> START_TEST("$Id: algsc.tst,v 4.27.2.3 2005/05/11 14:53:01 gap Exp $");
 
 
 #############################################################################
@@ -731,13 +733,11 @@ true
 
 
 #############################################################################
-gap> STOP_TEST( "algsc.tst",296002170);
-
-
+gap> STOP_TEST( "algsc.tst", 265600000 );
 
 
 #############################################################################
 ##
-#E  algsc.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+
 

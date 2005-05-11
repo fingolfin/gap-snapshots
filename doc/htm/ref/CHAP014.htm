@@ -98,7 +98,7 @@ If <var>elm</var> is an element of a finite prime field
 nonnegative integer such that <code></code><var>elm</var><code> = </code><var>int</var><code> * One( </code><var>elm</var><code> )</code>.
 <p>
 If <var>elm</var> is a string (see Chapter&nbsp;<a href="CHAP026.htm">Strings and Characters</a>) consisting of
-digits <code>'0'</code>, <code>'1'</code>, <font face="symbol">&#8230;</font>, <code>'9'</code>
+digits <code>'0'</code>, <code>'1'</code>, &#8230;, <code>'9'</code>
 and <code>'-'</code> (at the first position) then <var>int</var> is the integer
 described by this string.
 The operation <code>String</code> (see&nbsp;<a href="CHAP026.htm#SSEC005.1">String</a>) can be used to compute a string for
@@ -170,7 +170,7 @@ gap&gt; SignInt( 0 );
 <p>
 <code>LogInt</code>   returns  the  integer part  of  the logarithm of  the positive
 integer  <var>n</var> with  respect to   the positive integer   <var>base</var>, i.e.,  the
-largest positive integer <var>exp</var> such  that <i>base</i><sup><i>exp</i></sup>  <font face="symbol">&#8804;</font> <i>n</i>.  <code>LogInt</code>
+largest positive integer <var>exp</var> such  that <i>base</i><sup><i>exp</i></sup>  &#8804; <i>n</i>.  <code>LogInt</code>
 will signal an error if either <var>n</var> or <var>base</var> is not positive.
 <p>
 For <var>base</var> 2 this is very efficient because the internal binary
@@ -194,7 +194,7 @@ If the optional integer argument <var>k</var> is not given it defaults to 2, i.e
 <code>RootInt</code> returns the integer part of the square root in this case.
 <p>
 If  <var>n</var> is positive, <code>RootInt</code> returns  the  largest positive integer <i>r</i>
-such that <i>r</i><sup><i>k</i></sup>  <font face="symbol">&#8804;</font> <i>n</i>.  If <var>n</var>  is negative and  <var>k</var>  is  odd  <code>RootInt</code>
+such that <i>r</i><sup><i>k</i></sup>  &#8804; <i>n</i>.  If <var>n</var>  is negative and  <var>k</var>  is  odd  <code>RootInt</code>
 returns <code>-RootInt( -</code><var>n</var><code>,  </code><var>k</var><code> )</code>.  If  <var>n</var> is negative   and <var>k</var> is  even
 <code>RootInt</code> will cause an error.  <code>RootInt</code> will also cause an error if <var>k</var>
 is 0 or negative.
@@ -232,7 +232,7 @@ gap&gt; SmallestRootInt( -(2^30) );
 -4
 </pre>
 <p>
-Note that (<font face="symbol">&#8722;</font>2)<sup>30</sup> = +(2<sup>30</sup>).
+Note that (&#8722;2)<sup>30</sup> = +(2<sup>30</sup>).
 <p>
 <pre>
 gap&gt; SmallestRootInt( 279936 );
@@ -262,7 +262,7 @@ construct 'Random( [ <var>low</var> .. <var>high</var> ] )'. (Also see&nbsp;<a h
 operands.
 <p>
 If <var>n</var> and <var>m</var> are positive <code>QuoInt( </code><var>n</var><code>, </code><var>m</var><code> )</code> is the largest
-positive integer <var>q</var> such that <i>q</i>  * <i>m</i>   <font face="symbol">&#8804;</font> <i>n</i> .
+positive integer <var>q</var> such that <i>q</i>  * <i>m</i>   &#8804; <i>n</i> .
 If <var>n</var> or <var>m</var> or both are negative the absolute value of the integer part
 of the quotient is the quotient of the absolute values of <var>n</var> and <var>m</var>,
 and the sign of it is the product of the signs of <var>n</var> and <var>m</var>.
@@ -357,14 +357,14 @@ If <var>m</var> or <var>n</var> or both are zero <code>coeff3</code> is <code>-<
 <p>
 The coefficients always form a unimodular matrix, i.e.,
 the determinant <code></code><var>g</var><code>.coeff1 * </code><var>g</var><code>.coeff4 - </code><var>g</var><code>.coeff3 * </code><var>g</var><code>.coeff2</code>
-is 1 or <font face="symbol">&#8722;</font>1.
+is 1 or &#8722;1.
 <p>
 <pre>
 gap&gt; Gcdex( 123, 66 );
 rec( gcd := 3, coeff1 := 7, coeff2 := -13, coeff3 := -22, coeff4 := 41 )
 </pre>
 <p>
-This means 3 = 7 * 123 <font face="symbol">&#8722;</font> 13 * 66, 0 = <font face="symbol">&#8722;</font>22 * 123 + 41 * 66.
+This means 3 = 7 * 123 &#8722; 13 * 66, 0 = &#8722;22 * 123 + 41 * 66.
 <p>
 <pre>
 gap&gt; Gcdex( 0, -3 );
@@ -389,7 +389,7 @@ gap&gt; LcmInt( 123, 66 );
 <li><code>CoefficientsQadic( </code><var>i</var><code>, </code><var>q</var><code> ) F</code>
 <p>
 returns the <var>q</var>-adic representation of the integer <var>i</var> as a list <var>l</var> of
-coefficients where <i>i</i> = <font face="symbol">&#8721;</font><sub><i>j</i>=0</sub> <i>q</i><sup><i>j</i></sup> &#183;<i>l</i>[<i>j</i>+1].
+coefficients where <i>i</i> = &#8721;<sub><i>j</i>=0</sub> <i>q</i><sup><i>j</i></sup> &#183;<i>l</i>[<i>j</i>+1].
 <p>
 <a name = "SSEC002.8"></a>
 <li><code>CoefficientsMultiadic( </code><var>ints</var><code>, </code><var>int</var><code> ) F</code>
@@ -433,7 +433,7 @@ brk&gt; gap&gt;
 <a name = "SSEC002.10"></a>
 <li><code>PowerModInt( </code><var>r</var><code>, </code><var>e</var><code>, </code><var>m</var><code> ) F</code>
 <p>
-returns <i>r</i><sup><i>e</i></sup> mod <i>m</i> for integers <var>r</var>,<var>e</var> and <var>m</var> (<i>e</i> <font face="symbol">&#8805;</font> 0).
+returns <i>r</i><sup><i>e</i></sup> mod <i>m</i> for integers <var>r</var>,<var>e</var> and <var>m</var> (<i>e</i> &#8805; 0).
 Note that using <code></code><var>r</var><code> ^ </code><var>e</var><code> mod </code><var>m</var><code></code> will generally  be slower,
 because it can not reduce intermediate results the way <code>PowerModInt</code>
 does but would compute <code></code><var>r</var><code>^</code><var>e</var><code></code> first and then reduce the result
@@ -475,17 +475,16 @@ that have   a factor  <i>p</i>  &lt;  1000.   So for  integers <i>n</i>  &lt;  1
 <code>IsPrimeInt</code> is  a    proper primality test.    It  is  conceivable  that
 <code>IsPrimeInt</code> may  return <code>true</code> for some  composite <i>n</i>  &gt;  10<sup>13</sup>, but no
 such <i>n</i> is currently known.  So for integers <i>n</i>  &gt;  10<sup>13</sup>, <code>IsPrimeInt</code>
-is a  probable-primality test. Therefore <code>IsPrimeInt</code> will issue a
-warning when called with an argument  &gt; 10<sup>13</sup>. (The function
-<code>IsProbablyPrimeInt</code> will do the same calculations but not issue a
-warning.)
+is a  probable-primality test. <code>IsPrimeInt</code> will issue a
+warning when its argument is probably prime but not a proven prime.
+(The function <code>IsProbablyPrimeInt</code> will do the same calculations but not 
+issue a warning.) The warning can be switched off by 
+<code>SetInfoLevel( InfoPrimeInt, 0 );</code>, the default level is 1.
 <p>
-If composites  that fool  <code>IsPrimeInt</code> do
-exist,  they would be  extremely rare, and finding one  by  pure chance
-might be 
-less likely than finding a bug in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
-We would appreciate being informed about any example of a composite
-number <var>n</var> for which <code>IsPrimeInt</code> returns <code>true</code>.
+If composites that  fool <code>IsPrimeInt</code> do exist, they  would be extremely
+rare, and finding one by pure chance might be less likely than finding a
+bug in <font face="Gill Sans,Helvetica,Arial">GAP</font>. We would appreciate being informed about any example of a
+composite number <var>n</var> for which <code>IsPrimeInt</code> returns <code>true</code>.
 <p>
 <code>IsPrimeInt</code> is a deterministic algorithm, i.e., the computations involve
 no random numbers, and repeated calls will always return the same result.
@@ -500,6 +499,12 @@ power  of  the number  of  digits of <var>n</var>.   Testing numbers  with sever
 hundreds digits is quite feasible.
 <p>
 <code>IsPrimeInt</code> is a method for the general operation <code>IsPrime</code>.
+<p>
+Remark: In future versions of <font face="Gill Sans,Helvetica,Arial">GAP</font> we hope to change the definition of 
+<code>IsPrimeInt</code> to return <code>true</code> only for proven primes (currently, we lack
+a sufficiently good primality proving function). In applications, use
+explicitly <code>IsPrimeInt</code> or <code>IsProbablePrimeInt</code> with this change in
+mind.
 <p>
 <pre>
 gap&gt; IsPrimeInt( 2^31 - 1 );
@@ -576,6 +581,8 @@ For any integer <var>n</var> it holds that <code>Product( FactorsInt( </code><va
 <p>
 Note that <code>FactorsInt</code> uses a probable-primality test (see&nbsp;<a href="CHAP014.htm#SSEC003.2">IsPrimeInt</a>).
 Thus <code>FactorsInt</code> might return a list which contains composite integers.
+In such a case you will get a warning about the use of a probable prime.
+You can switch off these warnings by <code>SetInfoLevel(InfoPrimeInt, 0);</code>.
 <p>
 The time taken by   <code>FactorsInt</code>  is approximately  proportional to   the
 square root of the second largest prime factor  of <var>n</var>, which is the last
@@ -599,7 +606,7 @@ gap&gt; Set( FactorsInt( Factorial(13)/11 ) );
 gap&gt; FactorsInt( 2^63 - 1 );
 [ 7, 7, 73, 127, 337, 92737, 649657 ]
 gap&gt; FactorsInt( 10^42 + 1 );
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 4458192223320340849
 [ 29, 101, 281, 9901, 226549, 121499449, 4458192223320340849 ]
 </pre>
 <p>
@@ -618,7 +625,7 @@ gap&gt; PrintFactorsInt( Factorial( 7 ) ); Print( "\n" );
 <li><code>PrimePowersInt( </code><var>n</var><code> ) F</code>
 <p>
 returns the prime factorization of the integer <var>n</var> as a list
-[ <i>p</i><sub>1</sub>, <i>e</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>p</i><sub><i>n</i></sub>, <i>e</i><sub><i>n</i></sub> ] with <i>n</i> = <font face="symbol">&#8719;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>p</i><sub><i>i</i></sub><sup><i>e</i><sub><i>i</i></sub></sup>.
+[ <i>p</i><sub>1</sub>, <i>e</i><sub>1</sub>, &#8230;, <i>p</i><sub><i>n</i></sub>, <i>e</i><sub><i>n</i></sub> ] with <i>n</i> = &#8719;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>p</i><sub><i>i</i></sub><sup><i>e</i><sub><i>i</i></sub></sup>.
 <p>
 <pre>
 gap&gt; PrimePowersInt( Factorial( 7 ) );
@@ -676,7 +683,7 @@ modulo 32.
 integers modulo the positive integer <var>n</var>.
 The element corresponding to the residue class of the integer <i>i</i> in this
 ring can be obtained by <i>i</i> * <tt>One</tt>( <i>R</i> ), and a representative of the
-residue class corresponding to the element <i>x</i>  <font face="symbol">&#8712;</font> <i>R</i> can be computed by
+residue class corresponding to the element <i>x</i>  &#8712; <i>R</i> can be computed by
 <tt>Int</tt>( <i>x</i> ).
 <p>
 <a name = "I10"></a>
@@ -738,7 +745,7 @@ The reasons to distinguish the prime case from the nonprime case are
 <ul>
 <li>
   that objects in <code>IsZmodnZObjNonprime</code> have an external representation
-  (namely the residue in the range [ 0, 1, <font face="symbol">&#8230;</font>, <i>n</i><font face="symbol">&#8722;</font>1 ]),
+  (namely the residue in the range [ 0, 1, &#8230;, <i>n</i>&#8722;1 ]),
 <li>
   that the comparison of elements can be defined as comparison of the
   residues, and
@@ -763,5 +770,5 @@ See also Chapters&nbsp;<a href="CHAP057.htm">Finite fields</a> and <a href="CHAP
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP013.htm">Previous</a>] [<a href ="CHAP015.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

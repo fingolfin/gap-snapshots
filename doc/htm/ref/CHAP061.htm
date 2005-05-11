@@ -22,7 +22,7 @@
 </ol><p>
 <p>
 A Lie algebra <i>L</i> is an algebra such that 
-<i>xx</i>=0 and <i>x</i>(<i>yz</i>)+<i>y</i>(<i>zx</i>)+<i>z</i>(<i>xy</i>)=0 for all <i>x</i>,<i>y</i>,<i>z</i> <font face="symbol">&#8712;</font> <i>L</i>. A common way of
+<i>xx</i>=0 and <i>x</i>(<i>yz</i>)+<i>y</i>(<i>zx</i>)+<i>z</i>(<i>xy</i>)=0 for all <i>x</i>,<i>y</i>,<i>z</i> &#8712; <i>L</i>. A common way of
 creating a Lie algebra is by taking an associative
 algebra together with the commutator as product. Therefore
 the product of two elements <i>x</i>,<i>y</i> of a Lie algebra is usually denoted by 
@@ -43,7 +43,7 @@ object that contains the same data (namely <i>x</i>). The multiplication
 <code>*</code> for Lie objects is formed by taking the commutator. More exactly,
 if <i>l</i><sub>1</sub> and <i>l</i><sub>2</sub> are the Lie objects corresponding to
 the ring elements <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub>, then <i>l</i><sub>1</sub> * <i>l</i><sub>2</sub> is equal to the
-Lie object corresponding to <i>r</i><sub>1</sub> * <i>r</i><sub>2</sub> <font face="symbol">&#8722;</font> <i>r</i><sub>2</sub> * <i>r</i><sub>2</sub>. Two rules
+Lie object corresponding to <i>r</i><sub>1</sub> * <i>r</i><sub>2</sub> &#8722; <i>r</i><sub>2</sub> * <i>r</i><sub>2</sub>. Two rules
 for Lie objects are worth noting:
 <ul>
 <li>
@@ -99,7 +99,7 @@ true
 is a family <i>F</i> in bijection with the family <var>Fam</var>,
 but with the Lie bracket as infix multiplication.
 That is, for <i>x</i>, <i>y</i> in <var>Fam</var>, the product of the images in <i>F</i> will be
-the image of <i>x</i> * <i>y</i> <font face="symbol">&#8722;</font> <i>y</i> * <i>x</i>.
+the image of <i>x</i> * <i>y</i> &#8722; <i>y</i> * <i>x</i>.
 <p>
 The standard type of objects in a Lie family <var>F</var> is <code></code><var>F</var><code>!.packedType</code>.
 <p>
@@ -233,7 +233,7 @@ by their right action on the algebra <i>A</i>. This means that
 with respect to the basis <i>B</i> of <i>A</i>, the derivation <i>D</i> is described
 by the matrix [ <i>d</i><sub><i>i</i>,<i>j</i></sub> ]
 which means that <i>D</i> maps the <i>i</i>-th basis element <i>b</i><sub><i>i</i></sub> to 
-<font face="symbol">&#8721;</font><sub><i>j</i>=1</sub><sup><i>n</i></sup> <i>d</i><sub><i>ij</i></sub> <i>b</i><sub><i>j</i></sub>.
+&#8721;<sub><i>j</i>=1</sub><sup><i>n</i></sup> <i>d</i><sub><i>ij</i></sub> <i>b</i><sub><i>j</i></sub>.
 <p>
 <code>LeftDerivations( </code><var>B</var><code> )</code> returns the Lie algebra of derivations represented
 by theor left action on the algebra <i>A</i>. So the matrices contained in the
@@ -295,10 +295,10 @@ subalgebra, etc.).
 <li><code>LieCenter( </code><var>L</var><code> ) A</code>
 <p>
 The <strong>Lie</strong> centre of the Lie algebra <var>L</var> is the kernel of the adjoint
-mapping, that is, the set { <i>a</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#8704;</font><i>x</i> <font face="symbol">&#8712;</font> <i>L</i>:<i>a</i> <i>x</i> = 0 }.
+mapping, that is, the set { <i>a</i>  &#8712; <i>L</i>; &#8704;<i>x</i> &#8712; <i>L</i>:<i>a</i> <i>x</i> = 0 }.
 <p>
 In characteristic 2 this may differ from the usual centre (that is
-the set of all <i>a</i> <font face="symbol">&#8712;</font> <i>L</i> such that <i>ax</i>=<i>xa</i> for all <i>x</i> <font face="symbol">&#8712;</font> <i>L</i>). 
+the set of all <i>a</i> &#8712; <i>L</i> such that <i>ax</i>=<i>xa</i> for all <i>x</i> &#8712; <i>L</i>). 
 Therefore, this operation is named <code>LieCentre</code> and not <code>Centre</code>. 
 <p>
 <pre>
@@ -312,7 +312,7 @@ gap&gt; LieCentre( L );
 <li><code>LieCentralizer( </code><var>L</var><code>, </code><var>S</var><code> ) O</code>
 <p>
 is the annihilator of <var>S</var> in the Lie algebra <var>L</var>, that is, the set
-{ <i>a</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#8704;</font><i>s</i> <font face="symbol">&#8712;</font> <i>S</i>:<i>a</i>*<i>s</i> = 0}.
+{ <i>a</i>  &#8712; <i>L</i>; &#8704;<i>s</i> &#8712; <i>S</i>:<i>a</i>*<i>s</i> = 0}.
 Here <var>S</var> may be a subspace or a subalgebra of <var>L</var>.
 <p>
 <pre>
@@ -327,7 +327,7 @@ gap&gt; LieCentralizer( L, Subalgebra( L, [ b[1], b[2] ] ) );
 <li><code>LieNormalizer( </code><var>L</var><code>, </code><var>U</var><code> ) O</code>
 <p>
 is the normalizer of the subspace <var>U</var> in the Lie algebra <var>L</var>,
-that is, the set <i>N</i><sub><i>L</i></sub>(<i>U</i>) = { <i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>; [<i>x</i>,<i>U</i>]  <font face="symbol">&#8834;</font> <i>U</i> }.
+that is, the set <i>N</i><sub><i>L</i></sub>(<i>U</i>) = { <i>x</i>  &#8712; <i>L</i>; [<i>x</i>,<i>U</i>]  &#8834; <i>U</i> }.
 <p>
 <pre>
 gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
@@ -641,19 +641,19 @@ roots in <code>SimpleSystem( </code><var>R</var><code> )</code>.
 <li><code>BilinearFormMat( </code><var>R</var><code> ) A</code>
 <p>
 The matrix of the bilinear form of the root system <var>R</var>. If we denote this
-matrix by <i>B</i>, then we have <i>B</i>(<i>i</i>,<i>j</i>) = (<font face="symbol">&#945;</font><sub><i>i</i></sub>,<font face="symbol">&#945;</font><sub><i>j</i></sub>), where
-the <font face="symbol">&#945;</font><sub><i>i</i></sub> are the simple roots of <var>R</var>.
+matrix by <i>B</i>, then we have <i>B</i>(<i>i</i>,<i>j</i>) = (&#945;<sub><i>i</i></sub>,&#945;<sub><i>j</i></sub>), where
+the &#945;<sub><i>i</i></sub> are the simple roots of <var>R</var>.
 <p>
 <a name = "SSEC007.14"></a>
 <li><code>CanonicalGenerators( </code><var>R</var><code> ) A</code>
 <p>
 Here <var>R</var> must be a root system coming from a semisimple Lie algebra <var>L</var>.
-This function returns 3<i>l</i> generators of <var>L</var>, <i>x</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>x</i><sub><i>l</i></sub>,<i>y</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>y</i><sub><i>l</i></sub>,<i>h</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>h</i><sub><i>l</i></sub>, where <i>x</i><sub><i>i</i></sub> lies in the root space 
+This function returns 3<i>l</i> generators of <var>L</var>, <i>x</i><sub>1</sub>, &#8230;, <i>x</i><sub><i>l</i></sub>,<i>y</i><sub>1</sub>, &#8230;, <i>y</i><sub><i>l</i></sub>,<i>h</i><sub>1</sub>,&#8230;, <i>h</i><sub><i>l</i></sub>, where <i>x</i><sub><i>i</i></sub> lies in the root space 
 corresponding to the <i>i</i>-th simple root of the root system of <var>L</var>,
-<i>y</i><sub><i>i</i></sub> lies in the root space corresponding to <font face="symbol">&#8722;</font> the <i>i</i>-th simple root,
+<i>y</i><sub><i>i</i></sub> lies in the root space corresponding to &#8722; the <i>i</i>-th simple root,
 and the <i>h</i><sub><i>i</i></sub> are elements of the Cartan subalgebra. These elements
-satisfy the relations <i>h</i><sub><i>i</i></sub>*<i>h</i><sub><i>j</i></sub>=0, <i>x</i><sub><i>i</i></sub>*<i>y</i><sub><i>j</i></sub>=<font face="symbol">&#948;</font><sub><i>ij</i></sub><i>h</i><sub><i>i</i></sub>,
-<i>h</i><sub><i>j</i></sub>*<i>x</i><sub><i>i</i></sub> = <i>c</i><sub><i>ij</i></sub> <i>x</i><sub><i>i</i></sub>,  <i>h</i><sub><i>j</i></sub>*<i>y</i><sub><i>i</i></sub> = <font face="symbol">&#8722;</font><i>c</i><sub><i>ij</i></sub> <i>y</i><sub><i>i</i></sub>, where <i>c</i><sub><i>ij</i></sub>
+satisfy the relations <i>h</i><sub><i>i</i></sub>*<i>h</i><sub><i>j</i></sub>=0, <i>x</i><sub><i>i</i></sub>*<i>y</i><sub><i>j</i></sub>=&#948;<sub><i>ij</i></sub><i>h</i><sub><i>i</i></sub>,
+<i>h</i><sub><i>j</i></sub>*<i>x</i><sub><i>i</i></sub> = <i>c</i><sub><i>ij</i></sub> <i>x</i><sub><i>i</i></sub>,  <i>h</i><sub><i>j</i></sub>*<i>y</i><sub><i>i</i></sub> = &#8722;<i>c</i><sub><i>ij</i></sub> <i>y</i><sub><i>i</i></sub>, where <i>c</i><sub><i>ij</i></sub>
 is the entry of the Cartan matrix on position <i>ij</i>.
 <p>
 Also if <i>a</i> is a root of the root system <var>R</var> (so <i>a</i> is a list of 
@@ -682,12 +682,12 @@ gap&gt; BilinearFormMat( R );
 <p>
 The next few sections deal with the Weyl group of a root system. 
 A Weyl group is represented by its action on the weight lattice. 
-A <strong>weight</strong> is by definition a linear function <font face="symbol">&#955;</font>: <i>H</i><font face="symbol">&#8594;</font> <i>F</i>
-(where <i>F</i> is the ground field), such that the values <font face="symbol">&#955;</font>(<i>h</i><sub><i>i</i></sub>) are
+A <strong>weight</strong> is by definition a linear function &#955;: <i>H</i>&#8594; <i>F</i>
+(where <i>F</i> is the ground field), such that the values &#955;(<i>h</i><sub><i>i</i></sub>) are
 all integers (where the <i>h</i><sub><i>i</i></sub> are the Cartan elements of the 
 <code>CanonicalGenerators</code>). On the other hand each weight is determined by
 these values. Therefore we represent a weight by a vector of integers;
-the <i>i</i>-th entry of this vector is the value <font face="symbol">&#955;</font>(<i>h</i><sub><i>i</i></sub>).
+the <i>i</i>-th entry of this vector is the value &#955;(<i>h</i><sub><i>i</i></sub>).
 Now the elements of the Weyl group are represented by matrices, and
 if <code>g</code> is an element of a Weyl group and <code>w</code> a weight, then <code>w*g</code>
 gives the result of applying <code>g</code> to <code>w</code>.  Another way of applying the
@@ -759,9 +759,9 @@ gap&gt; w;
 <li><code>LongestWeylWordPerm( </code><var>W</var><code> ) A</code>
 <p>
 Let <i>g</i><sub>0</sub> be the longest element in the Weyl group <var>W</var>, and let
-{<font face="symbol">&#945;</font><sub>1</sub>,<font face="symbol">&#8230;</font>, <font face="symbol">&#945;</font><sub><i>l</i></sub>} be a simple system of the corresponding
-root system. Then <i>g</i><sub>0</sub> maps <font face="symbol">&#945;</font><sub><i>i</i></sub> to <font face="symbol">&#8722;</font><font face="symbol">&#945;</font><sub><font face="symbol">&#963;</font>(<i>i</i>)</sub>, where
-<font face="symbol">&#963;</font> is a permutation of (1,<font face="symbol">&#8230;</font>,<i>l</i>). This function returns
+{&#945;<sub>1</sub>,&#8230;, &#945;<sub><i>l</i></sub>} be a simple system of the corresponding
+root system. Then <i>g</i><sub>0</sub> maps &#945;<sub><i>i</i></sub> to &#8722;&#945;<sub>&#963;(<i>i</i>)</sub>, where
+&#963; is a permutation of (1,&#8230;,<i>l</i>). This function returns
 that permutation.
 <p>
 <pre>
@@ -832,12 +832,12 @@ gap&gt; k;  # this is the size of the Weyl group of E6
 <h2><a name="SECT008">61.8 Restricted Lie algebras</a></h2>
 <p><p>
 A Lie algebra <i>L</i> over a field of characteristic <i>p</i> &gt; 0 is called
-restricted if there is a map <i>x</i><font face="symbol">&#8594;</font> <i>x</i><sup><i>p</i></sup> from <i>L</i> into <i>L</i> 
+restricted if there is a map <i>x</i>&#8594; <i>x</i><sup><i>p</i></sup> from <i>L</i> into <i>L</i> 
 (called a <i>p</i>-map) such that
-<span class="roman">ad</span> <i>x</i><sup><i>p</i></sup>=(<span class="roman">ad</span> <i>x</i>)<sup><i>p</i></sup>, (<font face="symbol">&#945;</font><i>x</i>)<sup><i>p</i></sup>=<font face="symbol">&#945;</font><sup><i>p</i></sup> <i>x</i><sup><i>p</i></sup> and
-(<i>x</i>+<i>y</i>)<sup><i>p</i></sup>=<i>x</i><sup><i>p</i></sup>+<i>y</i><sup><i>p</i></sup>+<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>p</i><font face="symbol">&#8722;</font>1</sup> <i>s</i><sub><i>i</i></sub>(<i>x</i>,<i>y</i>), where <i>s</i><sub><i>i</i></sub>: <i>L</i>&times;<i>L</i><font face="symbol">&#8594;</font> <i>L</i>
+<span class="roman">ad</span> <i>x</i><sup><i>p</i></sup>=(<span class="roman">ad</span> <i>x</i>)<sup><i>p</i></sup>, (&#945;<i>x</i>)<sup><i>p</i></sup>=&#945;<sup><i>p</i></sup> <i>x</i><sup><i>p</i></sup> and
+(<i>x</i>+<i>y</i>)<sup><i>p</i></sup>=<i>x</i><sup><i>p</i></sup>+<i>y</i><sup><i>p</i></sup>+&#8721;<sub><i>i</i>=1</sub><sup><i>p</i>&#8722;1</sup> <i>s</i><sub><i>i</i></sub>(<i>x</i>,<i>y</i>), where <i>s</i><sub><i>i</i></sub>: <i>L</i>&times;<i>L</i>&#8594; <i>L</i>
 are certain Lie polynomials in two variables. Using these relations
-we can calculate <i>y</i><sup><i>p</i></sup> for all <i>y</i> <font face="symbol">&#8712;</font> <i>L</i>, once we know <i>x</i><sup><i>p</i></sup> for <i>x</i> in a
+we can calculate <i>y</i><sup><i>p</i></sup> for all <i>y</i> &#8712; <i>L</i>, once we know <i>x</i><sup><i>p</i></sup> for <i>x</i> in a
 basis of <i>L</i>. Therefore a <i>p</i>-map is represented in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp; by a list 
 containing the images of the basis vectors of a basis <i>B</i> of <i>L</i>. For this
 reason this list is an attribute of the basis <i>B</i>. 
@@ -893,13 +893,13 @@ v.1+v.11
 <li><code>JenningsLieAlgebra( </code><var>G</var><code> ) A</code>
 <p>
 Let <var>G</var> be a nontrivial <i>p</i>-group,
-and let <i>G</i>  = <i>G</i><sub>1</sub> <font face="symbol">&#8835;</font> <i>G</i><sub>2</sub> <font face="symbol">&#8835;</font> <font face="symbol">&#8230;</font> <font face="symbol">&#8835;</font> <i>G</i><sub><i>m</i></sub>=1
-be its Jennings series (see&nbsp;<a href="CHAP037.htm#SSEC016.14">JenningsSeries</a>).
+and let <i>G</i>  = <i>G</i><sub>1</sub> &#8835; <i>G</i><sub>2</sub> &#8835; &#8230; &#8835; <i>G</i><sub><i>m</i></sub>=1
+be its Jennings series (see&nbsp;<a href="CHAP037.htm#SSEC017.14">JenningsSeries</a>).
 Then the quotients <i>G</i><sub><i>i</i></sub>/<i>G</i><sub><i>i</i>+1</sub> are elementary abelian <i>p</i>-groups,
 i.e., they can be viewed as vector spaces over <tt>GF</tt>(<i>p</i>).
 Now the Jennings-Lie algebra <i>L</i> of <var>G</var> is the direct sum of those vector
 spaces. The Lie bracket on <i>L</i> is induced by the commutator in <var>G</var>. 
-Furthermore, the map <i>g</i><font face="symbol">&#8594;</font> <i>g</i><sup><i>p</i></sup> in <var>G</var> induces a <i>p</i>-map in <i>L</i>
+Furthermore, the map <i>g</i>&#8594; <i>g</i><sup><i>p</i></sup> in <var>G</var> induces a <i>p</i>-map in <i>L</i>
 making <i>L</i> into a restricted Lie algebra. In the canonical basis of <i>L</i>
 this <i>p</i>-map is added as an attribute. A Lie algebra created by
 <code>JenningsLieAlgebra</code> is naturally graded. The attribute
@@ -911,7 +911,7 @@ this <i>p</i>-map is added as an attribute. A Lie algebra created by
 Here <var>G</var> is a nontrivial <i>p</i>-group. <code>PCentralLieAlgebra( </code><var>G</var><code> )</code>
 does the same as <code>JenningsLieAlgebra( </code><var>G</var><code> )</code> except that the
 <i>p</i>-central series is used instead of the Jennings series
-(see&nbsp;<a href="CHAP037.htm#SSEC016.13">PCentralSeries</a>). This function also returns a graded
+(see&nbsp;<a href="CHAP037.htm#SSEC017.13">PCentralSeries</a>). This function also returns a graded
 Lie algebra. However, it is not necessarily restricted.
 <p>
 <pre>
@@ -972,8 +972,8 @@ gap&gt; AdjointAssociativeAlgebra( L, CartanSubalgebra( L ) );
 <a name = "SSEC009.3"></a>
 <li><code>KillingMatrix( </code><var>B</var><code> ) A</code>
 <p>
-is the matrix of the Killing form <font face="symbol">&#954;</font> with respect to the basis <var>B</var>,
-i.e., the matrix (<font face="symbol">&#954;</font>(<i>b</i><sub><i>i</i></sub>,<i>b</i><sub><i>j</i></sub>)) where <i>b</i><sub>1</sub>,<i>b</i><sub>2</sub><font face="symbol">&#8230;</font> are the
+is the matrix of the Killing form &#954; with respect to the basis <var>B</var>,
+i.e., the matrix (&#954;(<i>b</i><sub><i>i</i></sub>,<i>b</i><sub><i>j</i></sub>)) where <i>b</i><sub>1</sub>,<i>b</i><sub>2</sub>&#8230; are the
 basis vectors of <var>B</var>.
 <p>
 <pre>
@@ -986,11 +986,11 @@ gap&gt; KillingMatrix( Basis( L ) );
 <li><code>KappaPerp( </code><var>L</var><code>, </code><var>U</var><code> ) O</code>
 <p>
 is the orthogonal complement of the subspace <var>U</var> of the Lie algebra <var>L</var>
-with respect to the Killing form <font face="symbol">&#954;</font>, that is,
-the set <i>U</i><sup><font face="symbol">&#8869;</font></sup> = { <i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>; <font face="symbol">&#954;</font>(<i>x</i>,<i>y</i>)=0  <span class="roman">for</span> <span class="roman">all</span>  <i>y</i> <font face="symbol">&#8712;</font> <i>L</i> }.
+with respect to the Killing form &#954;, that is,
+the set <i>U</i><sup>&#8869;</sup> = { <i>x</i>  &#8712; <i>L</i>; &#954;(<i>x</i>,<i>y</i>)=0  for all  <i>y</i> &#8712; <i>L</i> }.
 <p>
-<i>U</i><sup><font face="symbol">&#8869;</font></sup> is a subspace of <var>L</var>, and if <var>U</var> is an ideal of <var>L</var> then
-<i>U</i><sup><font face="symbol">&#8869;</font></sup> is a subalgebra of <var>L</var>.
+<i>U</i><sup>&#8869;</sup> is a subspace of <var>L</var>, and if <var>U</var> is an ideal of <var>L</var> then
+<i>U</i><sup>&#8869;</sup> is a subalgebra of <var>L</var>.
 <p>
 <pre>
 gap&gt; L:= SimpleLieAlgebra( "A", 1, Rationals );;
@@ -1194,26 +1194,26 @@ gap&gt; List( vv, v -&gt; x^v );
 <p>
 An <i>s</i>-cochain of a module <i>V</i> over a Lie algebra <i>L</i>, is an <i>s</i>-linear
 map
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>c</i>: <i>L</i>&times;<font face="symbol">&#8230;</font>&times;<i>L</i> <font face="symbol">&#8594;</font> <i>V</i>  <span class="roman">(</span><span class="roman"><i>s</span></i> <span class="roman">factors</span> <span class="roman"><i>L</span></i><span class="roman">)</span> </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>c</i>: <i>L</i>&times;&#8230;&times;<i>L</i> &#8594; <i>V</i>  <span class="roman">(</span><span class="roman"><i>s</span></i> <span class="roman">factors</span> <span class="roman"><i>L</span></i><span class="roman">)</span> </td></tr></table></td></tr></table>
 that is skew-symmetric (meaning that if any of the arguments are
-interchanged, <i>c</i> changes to <font face="symbol">&#8722;</font><i>c</i>).
+interchanged, <i>c</i> changes to &#8722;<i>c</i>).
 <p>
-Let {<i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>x</i><sub><i>n</i></sub>} be a basis of <i>L</i>. Then any <i>s</i>-cochain is 
-determined by the values <i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ), where
-1 <font face="symbol">&#8804;</font> <i>i</i><sub>1</sub>  &lt;  <i>i</i><sub>2</sub>  &lt;  <font face="symbol">&#8230;</font> &lt;  <i>i</i><sub><i>s</i></sub>  <font face="symbol">&#8804;</font> dim<i>L</i>.
+Let {<i>x</i><sub>1</sub>,&#8230;,<i>x</i><sub><i>n</i></sub>} be a basis of <i>L</i>. Then any <i>s</i>-cochain is 
+determined by the values <i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,&#8230;, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ), where
+1 &#8804; <i>i</i><sub>1</sub>  &lt;  <i>i</i><sub>2</sub>  &lt;  &#8230; &lt;  <i>i</i><sub><i>s</i></sub>  &#8804; dim<i>L</i>.
 Now this value again is a linear combination of basis elements of <i>V</i>:
-<i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ) = <font face="symbol">&#8721;</font><font face="symbol">&#955;</font><sup><i>k</i></sup><sub><i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>i</i><sub><i>s</i></sub></sub> <i>v</i><sub><i>k</i></sub>.
+<i>c</i>( <i>x</i><sub><i>i</i><sub>1</sub></sub>,&#8230;, <i>x</i><sub><i>i</i><sub><i>s</i></sub></sub> ) = &#8721;&#955;<sup><i>k</i></sup><sub><i>i</i><sub>1</sub>,&#8230;, <i>i</i><sub><i>s</i></sub></sub> <i>v</i><sub><i>k</i></sub>.
 Denote the dimension of <i>V</i> by <i>r</i>.
 Then we represent an <i>s</i>-cocycle by a list of <i>r</i> lists.
 The <i>j</i>-th of those lists consists of entries of the form
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> [ [<i>i</i><sub>1</sub>,<i>i</i><sub>2</sub>,<font face="symbol">&#8230;</font>,<i>i</i><sub><i>s</i></sub>], <font face="symbol">&#955;</font><sup><i>j</i></sup><sub><i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>i</i><sub><i>s</i></sub></sub> ] </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> [ [<i>i</i><sub>1</sub>,<i>i</i><sub>2</sub>,&#8230;,<i>i</i><sub><i>s</i></sub>], &#955;<sup><i>j</i></sup><sub><i>i</i><sub>1</sub>,&#8230;, <i>i</i><sub><i>s</i></sub></sub> ] </td></tr></table></td></tr></table>
 where the coefficient on the second position is non-zero.
 (We only store those entries for which this coefficient is non-zero.)
-It follows that every <i>s</i>-tuple (<i>i</i><sub>1</sub>,<font face="symbol">&#8230;</font>,<i>i</i><sub><i>s</i></sub>) gives rise to <i>r</i> 
+It follows that every <i>s</i>-tuple (<i>i</i><sub>1</sub>,&#8230;,<i>i</i><sub><i>s</i></sub>) gives rise to <i>r</i> 
 basis elements.
 <p>
 So the zero cochain is represented by a list of the form
-[ [ ], [ ], <font face="symbol">&#8230;</font>, [ ] ]. Furthermore, if <i>V</i> is, e.g., 
+[ [ ], [ ], &#8230;, [ ] ]. Furthermore, if <i>V</i> is, e.g., 
 4-dimensional, then the 2-cochain represented by
 <p>
 <pre>
@@ -1223,8 +1223,8 @@ So the zero cochain is represented by a list of the form
 maps the pair (<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>) to 2<i>v</i><sub>1</sub>+1/2 <i>v</i><sub>3</sub> (where <i>v</i><sub>1</sub> is the first
 basis element of <i>V</i>, and <i>v</i><sub>3</sub> the third), and all other pairs to zero.
 <p>
-By definition, 0-cochains are constant maps <i>c</i>( <i>x</i> ) = <i>v</i><sub><i>c</i></sub> <font face="symbol">&#8712;</font> <i>V</i> for all
-<i>x</i>  <font face="symbol">&#8712;</font> <i>L</i>. So 0-cochains have a different representation: they are just
+By definition, 0-cochains are constant maps <i>c</i>( <i>x</i> ) = <i>v</i><sub><i>c</i></sub> &#8712; <i>V</i> for all
+<i>x</i>  &#8712; <i>L</i>. So 0-cochains have a different representation: they are just
 represented by the list [ <i>v</i><sub><i>c</i></sub> ].
 <p>
 Cochains are constructed using the function <code>Cochain</code> (see&nbsp;<a href="CHAP061.htm#SSEC012.3">Cochain</a>),
@@ -1363,9 +1363,9 @@ the dominant weights (written on the basis of fundamental weights)
 of the irreducible highest-weight module over the Lie algebra with
 root system <var>R</var>. The <i>i</i>-th element of the second list is the
 level of the <i>i</i>-th dominant weight. (Where level is defined as follows.
-For a weight <font face="symbol">&#956;</font> we write <font face="symbol">&#956;</font> = <font face="symbol">&#955;</font><font face="symbol">&#8722;</font><font face="symbol">&#8721;</font><sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub> <font face="symbol">&#945;</font><sub><i>i</i></sub>, where
-the <font face="symbol">&#945;</font><sub><i>i</i></sub> are the simple roots, and <font face="symbol">&#955;</font> the highest weight.
-Then the level of <font face="symbol">&#956;</font> is <font face="symbol">&#8721;</font><sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub>.
+For a weight &#956; we write &#956; = &#955;&#8722;&#8721;<sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub> &#945;<sub><i>i</i></sub>, where
+the &#945;<sub><i>i</i></sub> are the simple roots, and &#955; the highest weight.
+Then the level of &#956; is &#8721;<sub><i>i</i></sub> <i>k</i><sub><i>i</i></sub>.
 <p>
 <a name = "SSEC013.2"></a>
 <li><code>DominantCharacter( </code><var>L</var><code>, </code><var>maxw</var><code> ) O</code>
@@ -1386,7 +1386,7 @@ corresponding semisimple Lie algebra is returned.
 <p>
 Here <var>L</var> is a semisimple Lie algebra and <var>w1</var>, <var>w2</var> are dominant
 weights. Let <i>V</i><sub><i>i</i></sub> be the irreducible highest-weight module over <var>L</var>
-with highest weight <i>w</i><sub><i>i</i></sub> for <i>i</i>=1,2. Let <i>W</i>=<i>V</i><sub>1</sub><font face="symbol">&#8855;</font><i>V</i><sub>2</sub>. Then in
+with highest weight <i>w</i><sub><i>i</i></sub> for <i>i</i>=1,2. Let <i>W</i>=<i>V</i><sub>1</sub>&#8855;<i>V</i><sub>2</sub>. Then in
 general <i>W</i> is a reducible <var>L</var>-module. Now this function
 returns a list of two lists. The first of these is the list of highest
 weights of the irreducible modules occurring in the decomposition of
@@ -1422,24 +1422,24 @@ gap&gt; DimensionOfHighestWeightModule( L, [ 1, 2, 3, 4 ] );
 </pre>
 <p>
 Let <i>L</i> be a semisimple Lie algebra over a field of characteristic 0,
-and let <i>R</i> be its root system. For a positive root <font face="symbol">&#945;</font> we let
-<i>x</i><sub><font face="symbol">&#945;</font></sub> and <i>y</i><sub><font face="symbol">&#945;</font></sub> be positive and negative root vectors
+and let <i>R</i> be its root system. For a positive root &#945; we let
+<i>x</i><sub>&#945;</sub> and <i>y</i><sub>&#945;</sub> be positive and negative root vectors
 respectively, both from a fixed Chevalley basis of <i>L</i>. Furthermore,
-<i>h</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>h</i><sub><i>l</i></sub> are the Cartan elements from the same Chevalley
+<i>h</i><sub>1</sub>,&#8230;, <i>h</i><sub><i>l</i></sub> are the Cartan elements from the same Chevalley
 basis. Also we set
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center">&nbsp;<i>x</i><sub><font face="symbol">&#945;</font></sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center">&nbsp;<i>y</i><sub><font face="symbol">&#945;</font></sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
-Furthermore, let <font face="symbol">&#945;</font><sub>1</sub>,<font face="symbol">&#8230;</font>, <font face="symbol">&#945;</font><sub><i>s</i></sub> denote the positive roots
-of <i>R</i>. For multi-indices <i>N</i>=(<i>n</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>n</i><sub><i>s</i></sub>), <i>M</i>=(<i>m</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>m</i><sub><i>s</i></sub>)
-and <i>K</i>=(<i>k</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>k</i><sub><i>s</i></sub>) (where <i>n</i><sub><i>i</i></sub>,<i>m</i><sub><i>i</i></sub>,<i>k</i><sub><i>i</i></sub> <font face="symbol">&#8805;</font> 0) set
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>x</i><sup><i>N</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>x</i><sub><font face="symbol">&#945;</font><sub>1</sub></sub><sup>(<i>n</i><sub>1</sub>)</sup><font face="symbol">&#8230;</font><i>x</i><sub><font face="symbol">&#945;</font><sub><i>s</i></sub></sub><sup>(<i>n</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>y</i><sup><i>M</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>y</i><sub><font face="symbol">&#945;</font><sub>1</sub></sub><sup>(<i>m</i><sub>1</sub>)</sup><font face="symbol">&#8230;</font><i>y</i><sub><font face="symbol">&#945;</font><sub><i>s</i></sub></sub><sup>(<i>m</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> <i>h</i><sup><i>K</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub>1</sub><br /><i>k</i><sub>1</sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"><font face="symbol">&#8230;</font></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>l</i></sub><br /><i>k</i><sub><i>l</i></sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table></td><td nowrap="nowrap"> </td></tr></table></td></tr></table>
-Then by a theorem of Kostant, the <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> and
-<i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> generate a subring of the universal enveloping algebra
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub>&#945;</sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center"><i>x</i><sub>&#945;</sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>y</i><sub>&#945;</sub><sup>(<i>n</i>)</sup> = </td><td nowrap="nowrap" align="center"><i>y</i><sub>&#945;</sub><sup><i>n</i></sup><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>n</i>!<br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+Furthermore, let &#945;<sub>1</sub>,&#8230;, &#945;<sub><i>s</i></sub> denote the positive roots
+of <i>R</i>. For multi-indices <i>N</i>=(<i>n</i><sub>1</sub>,&#8230;, <i>n</i><sub><i>s</i></sub>), <i>M</i>=(<i>m</i><sub>1</sub>,&#8230;, <i>m</i><sub><i>s</i></sub>)
+and <i>K</i>=(<i>k</i><sub>1</sub>,&#8230;, <i>k</i><sub><i>s</i></sub>) (where <i>n</i><sub><i>i</i></sub>,<i>m</i><sub><i>i</i></sub>,<i>k</i><sub><i>i</i></sub> &#8805; 0) set
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap"><table border="0" align="left" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>x</i><sup><i>N</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>x</i><sub>&#945;<sub>1</sub></sub><sup>(<i>n</i><sub>1</sub>)</sup>&#8230;<i>x</i><sub>&#945;<sub><i>s</i></sub></sub><sup>(<i>n</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>y</i><sup><i>M</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>y</i><sub>&#945;<sub>1</sub></sub><sup>(<i>m</i><sub>1</sub>)</sup>&#8230;<i>y</i><sub>&#945;<sub><i>s</i></sub></sub><sup>(<i>m</i><sub><i>s</i></sub>)</sup>,</td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>h</i><sup><i>K</i></sup> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">=</td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>h</i><sub>1</sub><br /><i>k</i><sub>1</sub><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">&#8230;</td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>h</i><sub><i>l</i></sub><br /><i>k</i><sub><i>l</i></sub><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table></td><td nowrap="nowrap"> </td></tr></table></td></tr></table>
+Then by a theorem of Kostant, the <i>x</i><sub>&#945;</sub><sup>(<i>n</i>)</sup> and
+<i>y</i><sub>&#945;</sub><sup>(<i>n</i>)</sup> generate a subring of the universal enveloping algebra
 <i>U</i>(<i>L</i>) spanned (as a free <i>Z</i>-module) by the elements
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>y</i><sup><i>M</i></sup><i>h</i><sup><i>K</i></sup><i>x</i><sup><i>N</i></sup> </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>y</i><sup><i>M</i></sup><i>h</i><sup><i>K</i></sup><i>x</i><sup><i>N</i></sup> </td></tr></table></td></tr></table>
 (see, e.g., <a href="biblio.htm#Hum72"><cite>Hum72</cite></a> or <a href="biblio.htm#Hum78"><cite>Hum78</cite></a>, Section 26)
 So by the Poincare-Birkhoff-Witt theorem
 this subring is a lattice in <i>U</i>(<i>L</i>). Furthermore, this lattice is
-invariant under the <i>x</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup> and <i>y</i><sub><font face="symbol">&#945;</font></sub><sup>(<i>n</i>)</sup>.
+invariant under the <i>x</i><sub>&#945;</sub><sup>(<i>n</i>)</sup> and <i>y</i><sub>&#945;</sub><sup>(<i>n</i>)</sup>.
 Therefore, it is called an admissible lattice in <i>U</i>(<i>L</i>).
 <p>
 The next functions enable us to construct the generators of such an
@@ -1462,13 +1462,13 @@ Here <var>L</var> must be a semisimple Lie algebra of characteristic 0.
 This function returns a list of generators of an admissible lattice
 in the universal enveloping algebra of <var>L</var>, relative to
 the Chevalley basis contained in <code>ChevalleyBasis( </code><var>L</var><code> )</code>.
-First are listed the negative root vectors (denoted by <i>y</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>y</i><sub><i>s</i></sub>),
-then the positive root vectors (denoted by <i>x</i><sub>1</sub>,<font face="symbol">&#8230;</font>, <i>x</i><sub><i>s</i></sub>). At the
+First are listed the negative root vectors (denoted by <i>y</i><sub>1</sub>,&#8230;, <i>y</i><sub><i>s</i></sub>),
+then the positive root vectors (denoted by <i>x</i><sub>1</sub>,&#8230;, <i>x</i><sub><i>s</i></sub>). At the
 end of the list there are the Cartan elements. They are printed as
 <code>( hi/1 )</code>, which means
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br />1<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br />1<br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
 In general the printed form <code>( hi/ k )</code> means 
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
 <p>
 Also <i>y</i><sub><i>i</i></sub><sup>(<i>m</i>)</sup> is printed as <code>yi^(m)</code>, which means that entering
 <code>yi^m</code> at the <font face="Gill Sans,Helvetica,Arial">GAP</font> prompt results in the output <code>m!*yi^(m)</code>.
@@ -1476,7 +1476,7 @@ Also <i>y</i><sub><i>i</i></sub><sup>(<i>m</i>)</sup> is printed as <code>yi^(m)
 Products of lattice generators are collected using the following order:
 first come the <i>y</i><sub><i>i</i></sub><sup>(<i>m</i><sub><i>i</i></sub>)</sup> (in the same order as the positive roots),
 then
-the <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><sub><i>i</i></sub><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">,</td></tr></table></td></tr></table> and then the <i>x</i><sub><i>i</i></sub><sup>(<i>n</i><sub><i>i</i></sub>)</sup> (in the same order as
+the <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>h</i><sub><i>i</i></sub><br /><i>k</i><sub><i>i</i></sub><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">,</td></tr></table></td></tr></table> and then the <i>x</i><sub><i>i</i></sub><sup>(<i>n</i><sub><i>i</i></sub>)</sup> (in the same order as
 the positive roots).
 <p>
 <a name = "SSEC013.7"></a>
@@ -1665,5 +1665,5 @@ gap&gt; SizeScreen([ 80, ]);;
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP060.htm">Previous</a>] [<a href ="CHAP062.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

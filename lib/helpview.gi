@@ -2,7 +2,7 @@
 ##  
 #W  helpview.gi                 GAP Library                      Frank Lübeck
 ##  
-#H  @(#)$Id: helpview.gi,v 1.5 2003/04/25 16:46:13 gap Exp $
+#H  @(#)$Id: helpview.gi,v 1.5.2.2 2005/04/21 10:38:03 gap Exp $
 ##  
 #Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  different help viewer.
 ##  
 Revision.helpview_gi := 
-  "@(#)$Id: helpview.gi,v 1.5 2003/04/25 16:46:13 gap Exp $";
+  "@(#)$Id: helpview.gi,v 1.5.2.2 2005/04/21 10:38:03 gap Exp $";
 
 #############################################################################
 ##  
@@ -49,41 +49,89 @@ type := "text",
 show := Pager
 );
 
-# html version with netscape
-HELP_VIEWER_INFO.netscape := rec(
-type := "url",
-show := function(url)
-  Exec(Concatenation("netscape -remote \"openURL(file:", url, ")\""));
-end
-);
+if ARCH_IS_MAC() then
+  # html version on MAC
+  HELP_VIEWER_INFO.("mac default browser") := rec(
+  type := "macurl",
+  show := function(data)
+    if IsBound (data.path) then
+       ExecuteProcess ("./", "Internet Config", 1, 0, [data.protocol, data.path, data.section]);
+    else
+       ExecuteProcess ("", "Internet Config", 1, 0, [data.url, "", data.section]);
+    fi;
+  end
+  );
+  
+  # old name for for backward compatibility
+  HELP_VIEWER_INFO.("internet config") :=
+  	HELP_VIEWER_INFO.("mac default browser"); 
+else
+  # html version with netscape
+  HELP_VIEWER_INFO.netscape := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("netscape -remote \"openURL(file:", url, ")\""));
+  end
+  );
 
-# html version with mozilla
-HELP_VIEWER_INFO.mozilla := rec(
-type := "url",
-show := function(url)
-  Exec(Concatenation("mozilla -remote \"openURL(file:", url, ")\""));
-end
-);
+  # html version with mozilla
+  HELP_VIEWER_INFO.mozilla := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("mozilla -remote \"openURL(file:", url, ")\""));
+  end
+  );
 
-# html version with lynx
-HELP_VIEWER_INFO.lynx := rec(
-type := "url",
-show := function(url)
-  Exec(Concatenation("lynx \"", url, "\""));
-end
-);
+  # html version with firefox
+  HELP_VIEWER_INFO.firefox := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("firefox -remote \"openURL(file:", url, ")\""));
+  end
+  );
 
-# html version on MAC
-HELP_VIEWER_INFO.("internet config") := rec(
-type := "macurl",
-show := function(data)
-  if IsBound (data.path) then
-     ExecuteProcess ("./", "Internet Config", 1, 0, [data.protocol, data.path, data.section]);
-  else
-     ExecuteProcess ("", "Internet Config", 1, 0, [data.url, "", data.section]);
-  fi;
-end
-);
+  # html version with konqueror  - doesn't work with 'file://...#...' URLs
+  HELP_VIEWER_INFO.konqueror := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("konqueror \"file://", url,"\" >/dev/null 2>1 &"));
+  end
+  );
+
+  # html version with lynx
+  HELP_VIEWER_INFO.lynx := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("lynx \"", url, "\""));
+  end
+  );
+
+  # html version with w3m
+  HELP_VIEWER_INFO.w3m := rec(
+  type := "url",
+  show := function(url)
+    Exec(Concatenation("w3m \"", url, "\""));
+  end
+  );
+
+  # html version using Mac OS X default browser
+  HELP_VIEWER_INFO.("mac default browser") := rec (
+    type := "url", 
+    show := function (url)
+            Exec (Concatenation ("open \"file://", url,"\""));
+            return;
+        end
+  );
+
+  # html version using Mac OS X browser Safari
+  HELP_VIEWER_INFO.safari := rec (
+    type := "url", 
+    show := function (url)
+            Exec (Concatenation ("open -a Safari \"file://", url,"\""));
+            return;
+        end);
+
+fi;
 
 # Function to find the X-windows window ID of a program accessing file
 # <bookf>. Used for a hack below: xdvi doesn't provide a -remote control.

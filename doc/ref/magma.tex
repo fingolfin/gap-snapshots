@@ -243,7 +243,8 @@ For a magma <M> and a positive integer <i>, `MagmaElement' returns the
 If <M> has less than <i> elements then `fail' is returned.
 
 
-\>MultiplicationTable( <elms> ) F
+\>MultiplicationTable( <elms> ) A
+\>MultiplicationTable( <M> ) A
 
 For a list <elms> of elements that form a magma $M$,
 `MultiplicationTable' returns a square matrix $A$ of positive integers
@@ -251,6 +252,9 @@ such that $A[i][j] = k$ holds if and only if
 `<elms>[i] \* <elms>[j] = <elms>[k]'.
 This matrix can be used to construct a magma isomorphic to $M$,
 using `MagmaByMultiplicationTable'.
+
+For a magma <M>, `MultiplicationTable' returns the multiplication table
+w.r.t.~the sorted list of elements of <M>.
 
 
 \beginexample

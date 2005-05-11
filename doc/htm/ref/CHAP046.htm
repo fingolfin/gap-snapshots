@@ -136,8 +136,8 @@ gap&gt; TzPrintRelators( P );
 </pre>
 <p>
 The two stage algorithm saves an essential amount of space by
-constructing two coset tables of lengths <font face="symbol">&#124;</font><i>H</i><font face="symbol">&#124;</font> and <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>/<font face="symbol">&#124;</font><i>H</i><font face="symbol">&#124;</font> instead of
-just one coset table of length <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>. The next example shows an application
+constructing two coset tables of lengths &#124;<i>H</i>&#124; and &#124;<i>G</i>&#124;/&#124;<i>H</i>&#124; instead of
+just one coset table of length &#124;<i>G</i>&#124;. The next example shows an application
 of this option in the case of a subgroup of size 7920 and index 12 in a
 permutation group of size 95040.
 <p>
@@ -901,7 +901,7 @@ of shorter length and which occur in other relators, too, and uses them
 to reduce these other relators.
 <p>
 The idea is to find pairs of relators <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub> of length <i>l</i><sub>1</sub>
-and <i>l</i><sub>2</sub>, respectively, such that <i>l</i><sub>1</sub>  <font face="symbol">&#8804;</font> <i>l</i><sub>2</sub> and <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub>
+and <i>l</i><sub>2</sub>, respectively, such that <i>l</i><sub>1</sub>  &#8804; <i>l</i><sub>2</sub> and <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub>
 coincide (possibly after inverting or conjugating one of them) in some
 maximal subword <i>w</i>, say, of length greater than <i>l</i><sub>1</sub>/2, and then to
 substitute each copy of <i>w</i> in <i>r</i><sub>2</sub> by the inverse complement of <i>w</i>
@@ -936,7 +936,7 @@ implemented as a C routine in the <font face="Gill Sans,Helvetica,Arial">GAP</fo
 <i>r</i><sub>1</sub> of length <i>l</i><sub>1</sub>, say, it first determines the <strong>minimal match
 length</strong> <i>l</i> which is <i>l</i><sub>1</sub>/2+1, if <i>l</i><sub>1</sub> is even, or (<i>l</i><sub>1</sub>+1)/2,
 otherwise. Then it builds up a hash list for all subwords of length <i>l</i>
-occurring in the conjugates of <i>r</i><sub>1</sub> or <i>r</i><sub>1</sub><sup><font face="symbol">&#8722;</font>1</sup>, and finally it loops
+occurring in the conjugates of <i>r</i><sub>1</sub> or <i>r</i><sub>1</sub><sup>&#8722;1</sup>, and finally it loops
 over all long relators <i>r</i><sub>2</sub> and compares the hash values of their
 subwords of length <i>l</i> against this list. A comparison of subwords which
 is much more expensive is only done if a hash match has been found.
@@ -944,7 +944,7 @@ is much more expensive is only done if a hash match has been found.
 To improve the efficiency of this process we allow the subroutine to
 handle several short relators simultaneously provided that they have the
 same minimal match length.  If, for example, it handles <i>n</i> short
-relators simultaneously, then you save <i>n</i> <font face="symbol">&#8722;</font> 1 loops over the long
+relators simultaneously, then you save <i>n</i> &#8722; 1 loops over the long
 relators <i>r</i><sub>2</sub>, but you pay for it by additional fruitless subword
 comparisons. In general, you will not get the best performance by always
 choosing the maximal possible number of short relators to be handled
@@ -963,7 +963,7 @@ complement of equal length and which occur in other relators, too, and
 uses them to modify these other relators.
 <p>
 The idea is to find pairs of relators <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub> of length <i>l</i><sub>1</sub>
-and <i>l</i><sub>2</sub>, respectively, such that <i>l</i><sub>1</sub> is even, <i>l</i><sub>1</sub>  <font face="symbol">&#8804;</font> <i>l</i><sub>2</sub>, and
+and <i>l</i><sub>2</sub>, respectively, such that <i>l</i><sub>1</sub> is even, <i>l</i><sub>1</sub>  &#8804; <i>l</i><sub>2</sub>, and
 <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub> coincide (possibly after inverting or conjugating one of
 them) in some maximal subword <i>w</i>, say, of length at least <i>l</i><sub>1</sub>/2. Let
 <i>l</i> be the length of <i>w</i>. Then, if <i>l</i>  &gt;  <i>l</i><sub>1</sub>/2, the pair is handled as
@@ -1012,7 +1012,7 @@ In the first form <code>TzSubstitute</code> expects <var>P</var> to be a present
 of <var>P</var>. It substitutes the given word as a new generator of <var>P</var>. This is
 done as follows: First, <code>TzSubstitute</code> creates a new abstract generator,
 <i>g</i> say, and adds it to the presentation, then it adds a new relator
-<i>g</i><sup><font face="symbol">&#8722;</font>1</sup>&#183;<i>word</i> .
+<i>g</i><sup>&#8722;1</sup>&#183;<i>word</i> .
 <p>
 In its second form, <code>TzSubstitute</code> substitutes a squarefree word of
 length 2 as a new generator and then eliminates a generator from the
@@ -1033,7 +1033,7 @@ Let <i>a</i> <i>b</i> be the last word in that list, and let <var>i</var> be the
 positive integer which has not yet been used as a generator number in
 the presentation <var>P</var> so far. <code>TzSubstitute</code> defines a new abstract
 generator <i>x</i><sub><i>i</i></sub> named <code>"_x</code><var>i</var><code>"</code> and adds it to <var>P</var> (see <code>AddGenerator</code>).
-Then it adds the word <i>x</i><sub><i>i</i></sub><sup><font face="symbol">&#8722;</font>1</sup> <i>a</i> <i>b</i> as a new relator to <var>P</var> and
+Then it adds the word <i>x</i><sub><i>i</i></sub><sup>&#8722;1</sup> <i>a</i> <i>b</i> as a new relator to <var>P</var> and
 replaces all occurrences of <i>a</i> <i>b</i> in the relators by <i>x</i><sub><i>i</i></sub>. Finally,
 it eliminates some suitable generator from <var>P</var>.
 <p>
@@ -1235,10 +1235,10 @@ generator, and <i>a</i> and <i>b</i> are eliminated.
 <p><p>
 Any sequence of Tietze transformations applied to a presentation, starting
 from some presentation <i>P</i><sub>1</sub> and ending up with some presentation <i>P</i><sub>2</sub>,
-defines an  isomorphism, <font face="symbol">&#981;</font> say, between the groups defined by <i>P</i><sub>1</sub>
+defines an  isomorphism, &#981; say, between the groups defined by <i>P</i><sub>1</sub>
 and <i>P</i><sub>2</sub>, respectively. Sometimes it is desirable to know the images of the
 (old) generators of <i>P</i><sub>1</sub> or the preimages of the (new) generators of <i>P</i><sub>2</sub>
-under <font face="symbol">&#981;</font>. The <font face="Gill Sans,Helvetica,Arial">GAP</font> Tietze transformation functions are able to trace
+under &#981;. The <font face="Gill Sans,Helvetica,Arial">GAP</font> Tietze transformation functions are able to trace
 these images. This is not automatically done because the involved words may
 grow to tremendous length, but it will be done if you  explicitly  request
 for it by calling the function <code>TzInitGeneratorImages</code>.
@@ -1638,7 +1638,7 @@ The following Tietze options are recognized by <font face="Gill Sans,Helvetica,A
 <dt><code>generatorsLimit</code>:<dd>
   Whenever the elimination phase of the <code>TzGo</code> command is entered
   for a presentation <var>P</var> with <i>n</i> generators, then it will
-  eliminate at most <i>n</i> <font face="symbol">&#8722;</font> <code>generatorsLimit</code> generators (except
+  eliminate at most <i>n</i> &#8722; <code>generatorsLimit</code> generators (except
   for generators which turn out to be trivial). Hence you may use
   the <code>generatorsLimit</code> parameter as a break criterion for the
   <code>TzGo</code> command. The default value of <code>generatorsLimit</code> is 0.
@@ -1647,9 +1647,9 @@ The following Tietze options are recognized by <font face="Gill Sans,Helvetica,A
   The Tietze transformation commands will never eliminate  a
   generator of a presentation <var>P</var>, if they cannot exclude the
   possibility that the resulting total length of the relators
-  exceeds the maximal <font face="Gill Sans,Helvetica,Arial">GAP</font> list length of 2<sup>31</sup><font face="symbol">&#8722;</font>1 or the value
+  exceeds the maximal <font face="Gill Sans,Helvetica,Arial">GAP</font> list length of 2<sup>31</sup>&#8722;1 or the value
   of the option <code>lengthLimit</code>. The default value of <code>lengthLimit</code>
-  is 2<sup>31</sup><font face="symbol">&#8722;</font>1.
+  is 2<sup>31</sup>&#8722;1.
 <p>
 <dt><code>loopLimit</code>:<dd>
   Whenever the <code>TzGo</code> command is called for a presentation <var>P</var>,
@@ -1711,5 +1711,5 @@ gap&gt; TzPrintOptions( P );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP045.htm">Previous</a>] [<a href ="CHAP047.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

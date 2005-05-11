@@ -2,12 +2,14 @@
 ##
 #W  rwspcsng.tst                GAP library                      Frank Celler
 ##
-#H  @(#)$Id: rwspcsng.tst,v 4.15 2003/11/15 17:05:31 gap Exp $
+#H  @(#)$Id: rwspcsng.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  Exclude from testall.g: why?
+##
 
-gap> START_TEST("$Id: rwspcsng.tst,v 4.15 2003/11/15 17:05:31 gap Exp $");
+gap> START_TEST("$Id: rwspcsng.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $");
 
 
 #############################################################################
@@ -1042,10 +1044,10 @@ gap> Print(ExtRepOfObj( ReducedQuotient( rws, w, l[1] ) ),"\n");
 
 #############################################################################
 
-gap> STOP_TEST( "rwspcsng.tst",346001450);
+gap> STOP_TEST( "rwspcsng.tst", 337100000 );
 
 
 #############################################################################
 ##
-#E  rwspcsng.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

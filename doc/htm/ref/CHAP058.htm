@@ -114,7 +114,7 @@ true
 <a name = "SSEC001.3"></a>
 <li><code>IsGaussianRationals( </code><var>obj</var><code> ) C</code>
 <p>
-<code>GaussianRationals</code> is the field <b>Q</b><sub>4</sub> = <b>Q</b>(<font face="symbol">&#8730;</font>{<font face="symbol">&#8722;</font>1})
+<code>GaussianRationals</code> is the field <b>Q</b><sub>4</sub> = <b>Q</b>(&#8730;{&#8722;1})
 of Gaussian rationals, as a set of cyclotomic numbers,
 see Chapter&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a> for basic operations.
 This field can also be obtained as <code>CF(4)</code> (see&nbsp;<a href="CHAP058.htm#SSEC001.1">CyclotomicField</a>).
@@ -309,13 +309,13 @@ belongs to the (generalized) Zumbroich basis of the cyclotomic field
 <p>
 This basis is defined as follows.
 Let <i>P</i> denote the set of prime divisors of <var>n</var>,
-<i>n</i>  = <font face="symbol">&#8719;</font><sub><i>p</i> <font face="symbol">&#8712;</font> <i>P</i></sub> <i>p</i><sup><font face="symbol">&#957;</font><sub><i>p</i></sub></sup>, and
-<i>m</i>  = <font face="symbol">&#8719;</font><sub><i>p</i> <font face="symbol">&#8712;</font> <i>P</i></sub> <i>p</i><sup><font face="symbol">&#956;</font><sub><i>p</i></sub></sup> with <font face="symbol">&#956;</font><sub><i>p</i></sub>  <font face="symbol">&#8804;</font> <font face="symbol">&#957;</font><sub><i>p</i></sub>.
+<i>n</i>  = &#8719;<sub><i>p</i> &#8712; <i>P</i></sub> <i>p</i><sup>&#957;<sub><i>p</i></sub></sup>, and
+<i>m</i>  = &#8719;<sub><i>p</i> &#8712; <i>P</i></sub> <i>p</i><sup>&#956;<sub><i>p</i></sub></sup> with &#956;<sub><i>p</i></sub>  &#8804; &#957;<sub><i>p</i></sub>.
 Let <i>e</i><sub><i>n</i></sub> = <tt>E</tt><tt>(</tt><i>n</i> <tt>)</tt>,
-and { <i>e</i><sub><i>n</i><sub>1</sub></sub><sup><i>j</i></sup>}<sub><i>j</i> <font face="symbol">&#8712;</font> <i>J</i></sub> <font face="symbol">&#8855;</font>{ <i>e</i><sub><i>n</i><sub>2</sub></sub><sup><i>k</i></sup>}<sub><i>k</i> <font face="symbol">&#8712;</font> <i>K</i></sub> = { <i>e</i><sub><i>n</i><sub>1</sub></sub><sup><i>j</i></sup> &#183;<i>e</i><sub><i>n</i><sub>2</sub></sub><sup><i>k</i></sup>}<sub><i>j</i> <font face="symbol">&#8712;</font> <i>J</i>, <i>k</i> <font face="symbol">&#8712;</font> <i>K</i></sub>.
+and { <i>e</i><sub><i>n</i><sub>1</sub></sub><sup><i>j</i></sup>}<sub><i>j</i> &#8712; <i>J</i></sub> &#8855;{ <i>e</i><sub><i>n</i><sub>2</sub></sub><sup><i>k</i></sup>}<sub><i>k</i> &#8712; <i>K</i></sub> = { <i>e</i><sub><i>n</i><sub>1</sub></sub><sup><i>j</i></sup> &#183;<i>e</i><sub><i>n</i><sub>2</sub></sub><sup><i>k</i></sup>}<sub><i>j</i> &#8712; <i>J</i>, <i>k</i> &#8712; <i>K</i></sub>.
 <p>
 Then the basis is
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>B</i><sub><i>n</i>,<i>m</i></sub> = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8855;<br /></font></font><font size="-1"><i>p</i> <font face="symbol">&#8712;</font> <i>P</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><font size="-1"><font face="symbol">&#957;</font><sub><i>p</i></sub><font face="symbol">&#8722;</font>1</font><!--sup--><br /><font size="+3"><font face="symbol">&#8855;<br /></font></font><font size="-1"><i>k</i>=<font face="symbol">&#956;</font><sub><i>p</i></sub></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">{ <i>e</i><sub><i>p</i><sup><i>k</i>+1</sup></sub><sup><i>j</i></sup>}<sub><i>j</i> <font face="symbol">&#8712;</font> <i>J</i><sub><i>k</i>,<i>p</i></sub></sub> &nbsp;&nbsp;<span class="roman">where</span>&nbsp;&nbsp; <i>J</i><sub><i>k</i>,<i>p</i></sub> = </td><td align="left" class="cl"><font face="symbol">&#63729;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63730;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63731;</font> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> { 0 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>k</i>=0, <i>p</i>=2 </td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> { 0, 1 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>k</i>  &gt;  0, <i>p</i>=2 </td></tr></table></td></tr><tr><td nowrap="nowrap" align="right" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> { 1, <font face="symbol">&#8230;</font>, <i>p</i><font face="symbol">&#8722;</font>1 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"><i>k</i> = 0, <i>p</i> <font face="symbol">&#8800;</font> 2 </td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> { <font face="symbol">&#8722;</font></td><td nowrap="nowrap" align="center">&nbsp;<i>p</i><font face="symbol">&#8722;</font>1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">, <font face="symbol">&#8230;</font>, </td><td nowrap="nowrap" align="center">&nbsp;<i>p</i><font face="symbol">&#8722;</font>1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">} </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"><i>k</i>  &gt;  0, <i>p</i> <font face="symbol">&#8800;</font> 2 </td></tr></table></td></tr></table></td><td nowrap="nowrap">  </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>B</i><sub><i>n</i>,<i>m</i></sub> = </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8855;<br /></font><small><i>p</i> &#8712; <i>P</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><small>&#957;<sub><i>p</i></sub>&#8722;1</small><!--sup--><br /><font size="+3">&#8855;<br /></font><small><i>k</i>=&#956;<sub><i>p</i></sub></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">{ <i>e</i><sub><i>p</i><sup><i>k</i>+1</sup></sub><sup><i>j</i></sup>}<sub><i>j</i> &#8712; <i>J</i><sub><i>k</i>,<i>p</i></sub></sub> &nbsp;&nbsp;<span class="roman">where</span>&nbsp;&nbsp; <i>J</i><sub><i>k</i>,<i>p</i></sub> = </td><td align="left" class="cl">&#63729;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63730;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63731; </td><td nowrap="nowrap"><table border="0" align="left" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> { 0 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>k</i>=0, <i>p</i>=2 </td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> { 0, 1 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>k</i>  &gt;  0, <i>p</i>=2 </td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> { 1, &#8230;, <i>p</i>&#8722;1 } </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>k</i> = 0, <i>p</i> &#8800; 2 </td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> { &#8722;</td><td nowrap="nowrap" align="center"><i>p</i>&#8722;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">, &#8230;, </td><td nowrap="nowrap" align="center"><i>p</i>&#8722;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">} </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center">; </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"><i>k</i>  &gt;  0, <i>p</i> &#8800; 2 </td></tr></table></td></tr></table></td><td nowrap="nowrap">  </td></tr></table></td></tr></table>
 <p>
 <i>B</i><sub><i>n</i>,1</sub> is equal to the basis of <b>Q</b><sub><i>n</i></sub> over the rationals which is
 introduced in&nbsp;<a href="biblio.htm#Zum89"><cite>Zum89</cite></a>.
@@ -331,7 +331,7 @@ it is a normal basis for squarefree <i>n</i>
 and closed under complex conjugation for odd <i>n</i>.
 <p>
 <strong>Note:</strong>
-For <i>n</i>   <font face="symbol">&#8801;</font> 2  mod  4, we have
+For <i>n</i>   &#8801; 2  mod  4, we have
 <code>ZumbroichBase(</code><var>n</var><code>, 1) = 2 * ZumbroichBase(</code><var>n</var><code>/2, 1)</code> and
 <code>List( ZumbroichBase(</code><var>n</var><code>, 1), x -&gt; E(</code><var>n</var><code>)^x ) =
  List( ZumbroichBase(</code><var>n</var><code>/2, 1), x -&gt; E(</code><var>n</var><code>/2)^x )</code>.
@@ -354,9 +354,9 @@ a subfield of the <var>n</var>-th cyclotomic field (see&nbsp;<a href="CHAP058.ht
 and <var>super</var> be a list representing a supergroup of the group given by
 <var>stabilizer</var>.
 <p>
-<code>LenstraBase</code> returns a list [ <i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>k</i></sub> ] of lists,
+<code>LenstraBase</code> returns a list [ <i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, &#8230;, <i>b</i><sub><i>k</i></sub> ] of lists,
 each <i>b</i><sub><i>i</i></sub> consisting of integers such that the elements
-<font face="symbol">&#8721;</font><sub><i>j</i> <font face="symbol">&#8712;</font> <i>b</i><sub><i>i</i></sub></sub> <tt>E</tt><tt>(</tt><tt>n</tt><tt>)</tt><sup><i>j</i></sup> form a basis of the abelian number field
+&#8721;<sub><i>j</i> &#8712; <i>b</i><sub><i>i</i></sub></sub> <tt>E</tt><tt>(</tt><tt>n</tt><tt>)</tt><sup><i>j</i></sup> form a basis of the abelian number field
 <code>NF( </code><var>n</var><code>, </code><var>stabilizer</var><code> )</code>, as a vector space over the <var>m</var>-th
 cyclotomic field (see&nbsp;<a href="CHAP058.htm#SSEC001.2">AbelianNumberField</a>).
 <p>
@@ -390,8 +390,8 @@ gap&gt; LenstraBase( 15, [ 1, 4 ], PrimeResidues( 15 ), 1 );
 [ [ 1, 4 ], [ 2, 8 ], [ 7, 13 ], [ 11, 14 ] ]
 </pre>
 <p>
-The first two results describe two bases of the field <b>Q</b><sub>3</sub>(<font face="symbol">&#8730;</font>6),
-the third result describes a normal basis of <b>Q</b><sub>3</sub>(<font face="symbol">&#8730;</font>5).
+The first two results describe two bases of the field <b>Q</b><sub>3</sub>(&#8730;6),
+the third result describes a normal basis of <b>Q</b><sub>3</sub>(&#8730;5).
 <p>
 <p>
 <h2><a name="SECT004">58.4 Galois Groups of Abelian Number Fields</a></h2>
@@ -403,13 +403,13 @@ the third result describes a normal basis of <b>Q</b><sub>3</sub>(<font face="sy
 <a name = "I10"></a>
 
 The field automorphisms of the cyclotomic field <b>Q</b><sub><i>n</i></sub>
-(see Chapter&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a>) are given by the linear maps <font face="symbol">&#8727;</font><i>k</i>
-on <b>Q</b><sub><i>n</i></sub> that are defined by <tt>E</tt>(<i>n</i>)<sup><font face="symbol">&#8727;</font><i>k</i></sup> = <tt>E</tt>(<i>n</i>)<sup><i>k</i></sup>,
-where 1  <font face="symbol">&#8804;</font> <i>k</i>  &lt;  <i>n</i> and <tt>Gcd</tt>( <i>n</i>, <i>k</i> ) = 1 hold (see&nbsp;<a href="CHAP018.htm#SSEC005.1">GaloisCyc</a>).
+(see Chapter&nbsp;<a href="CHAP018.htm">Cyclotomic Numbers</a>) are given by the linear maps &#8727;<i>k</i>
+on <b>Q</b><sub><i>n</i></sub> that are defined by <tt>E</tt>(<i>n</i>)<sup>&#8727;<i>k</i></sup> = <tt>E</tt>(<i>n</i>)<sup><i>k</i></sup>,
+where 1  &#8804; <i>k</i>  &lt;  <i>n</i> and <tt>Gcd</tt>( <i>n</i>, <i>k</i> ) = 1 hold (see&nbsp;<a href="CHAP018.htm#SSEC005.1">GaloisCyc</a>).
 Note that this action is <strong>not</strong> equal to exponentiation of cyclotomics,
-i.e., for general cyclotomics <i>z</i>, <i>z</i><sup><font face="symbol">&#8727;</font><i>k</i></sup> is different from <i>z</i><sup><i>k</i></sup>.
+i.e., for general cyclotomics <i>z</i>, <i>z</i><sup>&#8727;<i>k</i></sup> is different from <i>z</i><sup><i>k</i></sup>.
 <p>
-(In <font face="Gill Sans,Helvetica,Arial">GAP</font>, the image of a cyclotomic <i>z</i> under <font face="symbol">&#8727;</font><i>k</i> can be computed
+(In <font face="Gill Sans,Helvetica,Arial">GAP</font>, the image of a cyclotomic <i>z</i> under &#8727;<i>k</i> can be computed
 as <tt>GaloisCyc</tt>( <i>z</i>, <i>k</i> ).)
 <p>
 <pre>
@@ -418,7 +418,7 @@ gap&gt; ( E(5) + E(5)^4 )^2; GaloisCyc( E(5) + E(5)^4, 2 );
 E(5)^2+E(5)^3
 </pre>
 <p>
-For <tt>Gcd</tt>( <i>n</i>, <i>k</i> )  <font face="symbol">&#8800;</font> 1, the map <tt>E</tt>(<i>n</i>) <font face="symbol">&#8594;</font> <tt>E</tt>(<i>n</i>)<sup><i>k</i></sup> does <strong>not</strong>
+For <tt>Gcd</tt>( <i>n</i>, <i>k</i> )  &#8800; 1, the map <tt>E</tt>(<i>n</i>) &#8594; <tt>E</tt>(<i>n</i>)<sup><i>k</i></sup> does <strong>not</strong>
 define a field automorphism of <b>Q</b><sub><i>n</i></sub> but only a <b>Q</b>-linear map.
 <p>
 <pre>
@@ -450,23 +450,23 @@ E(5)^2
 </pre>
 <p>
 The Galois group <i>Gal</i>( <b>Q</b><sub><i>n</i></sub>, <b>Q</b>) of the field extension
-<b>Q</b><sub><i>n</i></sub> / <b>Q</b> is isomorphic to the group (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup><font face="symbol">&#8727;</font></sup>
+<b>Q</b><sub><i>n</i></sub> / <b>Q</b> is isomorphic to the group (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup>&#8727;</sup>
 of prime residues modulo <i>n</i>, via the isomorphism
-(<b>Z</b>/ <i>n</i> <b>Z</b>)<sup><font face="symbol">&#8727;</font></sup> <font face="symbol">&#8594;</font> <i>Gal</i>( <b>Q</b><sub><i>n</i></sub>, <b>Q</b>) that is defined by
-<i>k</i> + <i>n</i> <b>Z</b><font face="symbol">&#8594;</font> ( <i>z</i> <font face="symbol">&#8594;</font> <i>z</i><sup><font face="symbol">&#8727;</font><i>k</i></sup> ).
+(<b>Z</b>/ <i>n</i> <b>Z</b>)<sup>&#8727;</sup> &#8594; <i>Gal</i>( <b>Q</b><sub><i>n</i></sub>, <b>Q</b>) that is defined by
+<i>k</i> + <i>n</i> <b>Z</b>&#8594; ( <i>z</i> &#8594; <i>z</i><sup>&#8727;<i>k</i></sup> ).
 <p>
 The Galois group of the field extension <b>Q</b><sub><i>n</i></sub> / <i>L</i> with
-any abelian number field <i>L</i>  <font face="symbol">&#8838;</font> <b>Q</b><sub><i>n</i></sub> is simply the
+any abelian number field <i>L</i>  &#8838; <b>Q</b><sub><i>n</i></sub> is simply the
 factor group of <i>Gal</i>( <b>Q</b><sub><i>n</i></sub>, <b>Q</b>) modulo the stabilizer of <i>L</i>,
-and the Galois group of <i>L</i> / <i>L</i><sup><font face="symbol">&#8242;</font></sup>, with <i>L</i><sup><font face="symbol">&#8242;</font></sup> an abelian
+and the Galois group of <i>L</i> / <i>L</i><sup>&#8242;</sup>, with <i>L</i><sup>&#8242;</sup> an abelian
 number field contained in <i>L</i>, is the subgroup in this group that stabilizes
-<i>L</i><sup><font face="symbol">&#8242;</font></sup>.
-These groups are easily described in terms of (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup><font face="symbol">&#8727;</font></sup>.
-Generators of (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup><font face="symbol">&#8727;</font></sup> can be computed using
+<i>L</i><sup>&#8242;</sup>.
+These groups are easily described in terms of (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup>&#8727;</sup>.
+Generators of (<b>Z</b>/ <i>n</i> <b>Z</b>)<sup>&#8727;</sup> can be computed using
 <code>GeneratorsPrimeResidues</code> (see&nbsp;<a href="CHAP015.htm#SSEC001.4">GeneratorsPrimeResidues</a>).
 <p>
-In <font face="Gill Sans,Helvetica,Arial">GAP</font>, a field extension <i>L</i> / <i>L</i><sup><font face="symbol">&#8242;</font></sup> is given by the field
-object <i>L</i> with <code>LeftActingDomain</code> value <i>L</i><sup><font face="symbol">&#8242;</font></sup>
+In <font face="Gill Sans,Helvetica,Arial">GAP</font>, a field extension <i>L</i> / <i>L</i><sup>&#8242;</sup> is given by the field
+object <i>L</i> with <code>LeftActingDomain</code> value <i>L</i><sup>&#8242;</sup>
 (see&nbsp;<a href="CHAP058.htm#SECT003">Integral Bases of Abelian Number Fields</a>).
 <p>
 <pre>
@@ -515,7 +515,7 @@ IdentityMapping( AsField( NF(5,[ 1, 4 ]), CF(5) ) )
 <a name = "SSEC005.1"></a>
 <li><code>GaussianIntegers V</code>
 <p>
-<code>GaussianIntegers</code> is the ring <b>Z</b>[<font face="symbol">&#8730;</font>{<font face="symbol">&#8722;</font>1}] of Gaussian integers.
+<code>GaussianIntegers</code> is the ring <b>Z</b>[&#8730;{&#8722;1}] of Gaussian integers.
 This is a subring of the cyclotomic field <code>GaussianRationals</code>,
 see&nbsp;<a href="CHAP058.htm#SSEC001.3">GaussianRationals</a>.
 <p>
@@ -527,5 +527,5 @@ is the defining category for the domain <code>GaussianIntegers</code>.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP057.htm">Previous</a>] [<a href ="CHAP059.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

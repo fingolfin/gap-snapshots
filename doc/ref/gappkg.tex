@@ -76,7 +76,8 @@ others must in each case be separately loaded by a call to `LoadPackage'.
 
 loads the {\GAP} package with name <name>.
 If the optional version string <version> is given, the package will only
-be loaded in a version number at least as large as <version>
+be loaded in a version number at least as large as <version>,
+or equal to <version> if its first character is `='
 (see~"ext:Version Numbers" in ``Extending GAP'').
 The argument <name> is case insensitive.
 
@@ -87,8 +88,8 @@ binaries have not been compiled, or if the version number of the
 available version is too small.
 
 If the package <name> has already been loaded in a version number
-at least <version>, `LoadPackage' returns `true' without doing
-anything else.
+at least or equal to <version>, respectively,
+`LoadPackage' returns `true' without doing anything else.
 
 If the optional third argument <banner> is `false' then no package banner
 is printed.
@@ -178,8 +179,13 @@ read-only global variables are overwritten
 \>TestPackageAvailability( <name>, <version> ) F
 \>TestPackageAvailability( <name>, <version>, <intest> ) F
 
-tests whether the  {\GAP} package <name> is available for loading in a
-version that is at least <version>.
+For strings <name> and <version>, `TestPackageAvailability' tests
+whether the  {\GAP} package <name> is available for loading in a
+version that is at least <version>, or equal to <version> if the first
+character of <version> is `=',
+see Section "ext:Version Numbers" of ``Extending GAP'' for details about
+version numbers.
+
 The result is `true' if the package is already loaded,
 `fail' if it is not available,
 and the string denoting the {\GAP} root path where the package resides
@@ -273,9 +279,10 @@ gap> DirectoriesPackagePrograms( "nq" );
 \endexample
 
 \>CompareVersionNumbers( <supplied>, <required> ) F
+\>CompareVersionNumbers( <supplied>, <required>, \"equal\" ) F
 
 compares two version numbers, given as strings. They are split at
-non-number characters, the resulting integer lists are compared
+non-digit characters, the resulting integer lists are compared
 lexicographically.
 The routine tests whether <supplied> is at least as large as <required>,
 and returns `true' or `false' accordingly.

@@ -5,7 +5,7 @@
 %A  grppc.msk                   GAP documentation            Alexander Hulpke
 %A                                                               Bettina Eick
 %%
-%A  @(#)$Id: grppc.msk,v 1.40 2003/01/08 19:16:19 gap Exp $
+%A  @(#)$Id: grppc.msk,v 1.40.2.1 2005/05/09 07:33:04 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -263,12 +263,15 @@ Then the right hand sides of the pc presentation have to be declared.
 Let $f_1, \ldots, f_n$ be the generators of the underlying free group
 <fgrp>.
 
+A combinatorial collector can only be set up for a finite $p$-group.
+Here, the relative orders <relorders> must all be equal and a prime.
+
 \> SetConjugate( <coll>, <i>, <j>, <w> )
 
 set the conjugate $f_j^{f_i}$ to equal <w> where <w> is a word
 in $f_{i+1}, \ldots, f_n$ and $i\<j$.
 
-\> SetCommutator( <coll>, <i>, <j>, <w> )
+\> SetCommutator( <coll>, <j>, <i>, <w> )
 
 set the commutator of $f_j$ and $f_i$ to equal <w> where <w> is a word
 in $f_{i+1}, \ldots, f_n$ and $i\<j$.

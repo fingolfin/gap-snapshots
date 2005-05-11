@@ -1,7 +1,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_vec8bit_c =
-   "@(#)$Id: vec8bit.c,v 4.88.2.1 2004/03/09 22:30:26 gap Exp $";
+   "@(#)$Id: vec8bit.c,v 4.88.2.2 2005/04/26 13:59:17 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -2364,9 +2364,12 @@ UInt AClosVec8Bit(
 		  UInt		cnt,	/* numbr of vectors used already */
 		  UInt		stop,	/* stop value */
 		  UInt		bd,	/* best distance so far */
-		  Obj		bv)	/* best vector so far */
+		  Obj		bv,	/* best vector so far */
+		  Obj           coords,
+		  Obj           bcoords
+		  )
 {
-  UInt 		i;
+  UInt 		i,j;
   UInt		di;
   Obj		vp;
 /*Obj           one; */
@@ -2377,7 +2380,7 @@ UInt AClosVec8Bit(
   /* This is the case where we do not add any multiple of
      the current basis vector */
   if ( pos+cnt<l ) {
-    bd = AClosVec8Bit(veclis,vec,sum,pos+1,l,cnt,stop,bd,bv);
+    bd = AClosVec8Bit(veclis,vec,sum,pos+1,l,cnt,stop,bd,bv,coords,bcoords);
     if (bd<=stop) {
       return bd;
     }
@@ -2389,6 +2392,8 @@ UInt AClosVec8Bit(
   /* we need to add each scalar multiple and recurse */
   for (i=1; i <  q ; i++) {
     AddVec8BitVec8BitInner(sum,sum,ELM_PLIST(vp,i),1,len);
+    if (coords)
+      SET_ELM_PLIST(coords,pos,INTOBJ_INT(i));
     if (cnt == 0)
       {
 	/* do we have a new best case */
@@ -2396,13 +2401,20 @@ UInt AClosVec8Bit(
 	if (di < bd) {
 	  bd=di;
 	  OverwriteVec8Bit(bv, sum);
+	  if (coords)
+	    for (j = 1; j <= l; j++)
+	      {
+		Obj x;
+		x = ELM_PLIST(coords,j);
+		SET_ELM_PLIST(bcoords,j,x);
+	      }
 	  if (bd <= stop)
 	    return bd;
 	}
       }
     else if (pos < l)
       {
-	bd = AClosVec8Bit(veclis,vec,sum,pos+1,l,cnt-1,stop,bd,bv);
+	bd = AClosVec8Bit(veclis,vec,sum,pos+1,l,cnt-1,stop,bd,bv,coords,bcoords);
 	if (bd<=stop) {
 	  return bd;
 	}
@@ -2410,6 +2422,8 @@ UInt AClosVec8Bit(
   }
   /* reset component */
   AddVec8BitVec8BitInner(sum,sum,ELM_PLIST(vp,q),1,len);
+  if (coords)
+    SET_ELM_PLIST(coords,pos,INTOBJ_INT(0));
   
 
   return bd;
@@ -2451,9 +2465,68 @@ Obj FuncAClosVec8Bits(
   /* do the recursive work */
   AClosVec8Bit(veclis,vec,sum,1, LEN_PLIST(veclis),
 	       INT_INTOBJ(cnt),INT_INTOBJ(stop),len+1, /* maximal value +1 */
-	       best);
+	       best, (Obj)0, (Obj)0);
   
   return best;
+}
+
+/****************************************************************************
+**
+*F  
+*/
+
+Obj FuncAClosVec8BitsCoords( 
+		      Obj		self,
+		      Obj		veclis, /* pointers to matrix vectors and their multiples */
+		      Obj		vec,    /* vector we compute distance to */
+		      Obj		cnt,	/* distances list */
+		      Obj		stop)	/* distances list */
+     
+{
+  Obj		sum; /* sum vector */
+  Obj		best; /* best vector */
+/*UInt *	ptr; */
+/*UInt *        end; */
+  UInt 		len, len2,i;
+  UInt q;
+  Obj coords;
+  Obj bcoords;
+  Obj res;
+
+  if (!ARE_INTOBJS(cnt,stop))
+    ErrorQuit("A_CLOSEST_VEC8BIT: cnt and stop must be smal integers, not a %s and a %s",
+	      (Int)TNAM_OBJ(cnt), (Int)TNAM_OBJ(stop));
+  
+
+  q = FIELD_VEC8BIT(vec);
+  len = LEN_VEC8BIT(vec);
+
+  /* get space for sum vector and zero out */
+
+  sum = ZeroVec8Bit(q, len, 1);
+  best = ZeroVec8Bit(q, len, 1);
+  len2 = LEN_PLIST(veclis);
+  coords = NEW_PLIST(T_PLIST_CYC, len2);
+  bcoords = NEW_PLIST(T_PLIST_CYC, len2);
+  SET_LEN_PLIST(coords,len2);
+  SET_LEN_PLIST(bcoords,len2);
+  for (i = 1; i <= len2; i++)
+    {
+      SET_ELM_PLIST(coords,i,INTOBJ_INT(0));
+      SET_ELM_PLIST(bcoords,i,INTOBJ_INT(0));
+    }
+
+  /* do the recursive work */
+  AClosVec8Bit(veclis,vec,sum,1, LEN_PLIST(veclis),
+	       INT_INTOBJ(cnt),INT_INTOBJ(stop),len+1, /* maximal value +1 */
+	       best, coords, bcoords);
+
+  res = NEW_PLIST(T_PLIST_DENSE_NHOM,2);
+  SET_LEN_PLIST(res,2);
+  SET_ELM_PLIST(res,1,best);
+  SET_ELM_PLIST(res,2,bcoords);
+  CHANGED_BAG(res);
+  return res;
 }
 
 
@@ -5819,6 +5892,9 @@ static StructGVarFunc GVarFuncs [] = {
     
     {"A_CLOSEST_VEC8BIT", 4, " veclis, vec, k, stop",
        FuncAClosVec8Bits, "src/vec8bit.c:A_CLOSEST_VEC8BIT" },
+
+    {"A_CLOSEST_VEC8BIT_COORDS", 4, " veclis, vec, k, stop",
+       FuncAClosVec8BitsCoords, "src/vec8bit.c:A_CLOSEST_VEC8BIT_COORDS" },
     
     {"COSET_LEADERS_INNER_8BITS", 5, " veclis, weight, tofind, leaders, felts",
        FuncCOSET_LEADERS_INNER_8BITS, "src/vec8bit.c:COSET_LEADERS_INNER_8BITS" },

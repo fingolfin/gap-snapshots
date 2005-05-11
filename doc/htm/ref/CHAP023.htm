@@ -436,15 +436,24 @@ that have distance <code></code><var>i</var><code>+1</code> to <var>vec</var>.
 <p>
 <a name = "SSEC005.5"></a>
 <li><code>AClosestVectorCombinationsMatFFEVecFFE( </code><var>mat</var><code>, </code><var>f</var><code>, </code><var>vec</var><code>, </code><var>l</var><code>, </code><var>stop</var><code> ) O</code>
+<a name = "SSEC005.5"></a>
+<li><code>AClosestVectorCombinationsMatFFEVecFFECoords( </code><var>mat</var><code>, </code><var>f</var><code>, </code><var>vec</var><code>, </code><var>l</var><code>, </code><var>stop</var><code> ) O</code>
 <p>
-runs through the <var>f</var>-linear combinations of the vectors in the rows of
-the matrix <var>mat</var> that can be written as linear combinations of exactly
-<var>l</var> rows (that is without using zero as a coefficient) and returns a
-vector from these that is closest to the vector <var>vec</var>. The length of the
-rows of <var>mat</var> and the length of <var>vec</var> must be equal, and all elements
-must lie in <var>f</var>. The rows of <var>mat</var> must be linearly independent. If it
-finds a vector of distance at most <var>stop</var>, which must be a nonnegative
+These functions run through the <var>f</var>-linear combinations of the
+vectors in the rows of the matrix <var>mat</var> that can be written as
+linear combinations of exactly <var>l</var> rows (that is without using
+zero as a coefficient). The length of the rows of <var>mat</var> and the
+length of <var>vec</var> must be equal, and all elements must lie in
+<var>f</var>. The rows of <var>mat</var> must be linearly
+independent. <code>AClosestVectorCombinationsMatFFEVecFFE</code> returns a
+vector from these that is closest to the vector <var>vec</var>. If it finds
+a vector of distance at most <var>stop</var>, which must be a nonnegative
 integer, then it stops immediately and returns this vector.
+<p>
+<code>AClosestVectorCombinationsMatFFEVecFFECoords</code> returns a length 2
+list
+containing the same closest vector and also a vector <var>v</var> with exactly <var>l</var> non-zero
+entries, such that <var>v</var> times <var>mat</var> is the closest vector.
 <p>
 <a name = "SSEC005.6"></a>
 <li><code>CosetLeadersMatFFE( </code><var>mat</var><code>, </code><var>f</var><code> ) O</code>
@@ -552,8 +561,11 @@ The coefficients are reduced already while powers are computed,
 therefore avoiding an explosion in list length.
 <p>
 <pre>
-gap&gt; l:=[1,2,3,4];;m:=[5,6,7];;PowerModCoeffs(l,5,m);
-[ -839462813696/678223072849, -7807439437824/678223072849, 0 ]
+gap&gt; l:= [1,2,3,4];; m:= [5,6,7];; PowerModCoeffs(l,5,m);
+[ -839462813696/678223072849, -7807439437824/678223072849 ]
+gap&gt; EuclideanRemainder( UnivariatePolynomial( Rationals, l )^5,
+&gt;        UnivariatePolynomial( Rationals, m ) );
+-7807439437824/678223072849*x_1-839462813696/678223072849
 </pre>
 <p>
 <a name = "SSEC006.6"></a>
@@ -584,5 +596,5 @@ gap&gt; l:=[1,0,0];;ShrinkCoeffs(l);l;
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP022.htm">Previous</a>] [<a href ="CHAP024.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

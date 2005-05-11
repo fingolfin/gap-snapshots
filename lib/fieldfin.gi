@@ -3,7 +3,7 @@
 #W  fieldfin.gi                 GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: fieldfin.gi,v 4.41 2002/04/15 10:04:40 sal Exp $
+#H  @(#)$Id: fieldfin.gi,v 4.41.4.3 2005/04/21 09:43:25 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 ##  4. Automorphisms of Finite Fields
 ##
 Revision.fieldfin_gi :=
-    "@(#)$Id: fieldfin.gi,v 4.41 2002/04/15 10:04:40 sal Exp $";
+    "@(#)$Id: fieldfin.gi,v 4.41.4.3 2005/04/21 09:43:25 gap Exp $";
 
 
 #############################################################################
@@ -58,14 +58,14 @@ InstallMethod( GeneratorsOfLeftModule,
 InstallMethod( Random,
     "for a finite prime field",
     [ IsField and IsPrimeField and IsFinite ],
-    F -> Random( [ 1 .. Size( F ) ] ) * One( F ) );
+    F -> Random(1,Size(F)) * One( F ) );
 
 InstallMethod( Random,
     "for a finite field with known primitive root",
     [ IsField and IsFinite and HasPrimitiveRoot ],
     function ( F )
     local   rnd;
-    rnd := Random( [ 0 .. Size( F ) - 1 ] );
+    rnd := Random( 0, Size( F )-1 );
     if rnd = 0  then
       rnd := Zero( F );
     else
@@ -478,6 +478,35 @@ InstallMethod( CanonicalBasis,
     # Return the basis object.
     return B;
     end );
+
+
+#############################################################################
+##  
+#M  NormalBase( <F> )
+##  
+##  For finite fields just search.
+##  
+InstallMethod( NormalBase,
+"for a finite field and scalar",
+    [ IsField and IsFinite, IsScalar ],
+function(F, b)
+    local q, d, z, l, bas, i;
+    if b=0*b then
+        b := One(F);
+    fi;
+    q := Size(LeftActingDomain(F));
+    d := Dimension(F);
+    z := PrimitiveRoot(F);
+    repeat
+        l := [b];
+        for i in [1..d-1] do
+          Add(l, l[i]^q);
+        od;
+        bas := Basis(F, l);
+        b := b*z;
+    until bas <> fail;
+    return l;
+end);
 
 
 #############################################################################

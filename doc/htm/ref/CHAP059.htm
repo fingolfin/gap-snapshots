@@ -201,7 +201,7 @@ true
 <h2><a name="SECT004">59.4 Bases of Vector Spaces</a></h2>
 <p><p>
 In <font face="Gill Sans,Helvetica,Arial">GAP</font>, a <strong>basis</strong> of a free left <i>F</i>-module <i>V</i> is a list of vectors
-<i>B</i> = [ <i>v</i><sub>1</sub>, <i>v</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>v</i><sub><i>n</i></sub> ] in <i>V</i> such that <i>V</i> is generated as a
+<i>B</i> = [ <i>v</i><sub>1</sub>, <i>v</i><sub>2</sub>, &#8230;, <i>v</i><sub><i>n</i></sub> ] in <i>V</i> such that <i>V</i> is generated as a
 left <i>F</i>-module by these vectors and such that <i>B</i> is linearly
 independent over <i>F</i>.
 The integer <i>n</i> is the dimension of <i>V</i> (see&nbsp;<a href="CHAP055.htm#SSEC003.4">Dimension</a>).
@@ -431,11 +431,11 @@ fail
 <p>
 If <var>B</var> is a basis of length <i>n</i>, say, and <var>coeff</var> is a row vector of the
 same length as <var>B</var>, <code>LinearCombination</code> returns the vector
-<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>] * <i>B</i> [<i>i</i>].
+&#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>] * <i>B</i> [<i>i</i>].
 <p>
 If <var>vectors</var> and <var>coeff</var> are homogeneous lists of the same length <var>n</var>,
 say, <code>LinearCombination</code> returns the vector
-<font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>]*<i>vectors</i> [<i>i</i>].
+&#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>coeff</i> [<i>i</i>]*<i>vectors</i> [<i>i</i>].
 Perhaps the most important usage is the case where <var>vectors</var> forms a 
 basis.
 <p>
@@ -541,9 +541,9 @@ algebras (see Section&nbsp;<a href="../tut/CHAP006.htm#SECT002">Algebras</a> of 
 <p>
 If <var>B</var> has length <i>n</i> then <i>T</i> is a list of length <i>n</i>+2.
 The first <i>n</i> entries of <i>T</i> are lists of length <i>n</i>.
-<i>T</i>[ <i>n</i>+1 ] is one of 1, <font face="symbol">&#8722;</font>1, or 0;
+<i>T</i>[ <i>n</i>+1 ] is one of 1, &#8722;1, or 0;
 in the case of 1 the table is known to be symmetric,
-in the case of <font face="symbol">&#8722;</font>1 it is known to be antisymmetric,
+in the case of &#8722;1 it is known to be antisymmetric,
 and 0 occurs in all other cases.
 <i>T</i>[ <i>n</i>+2 ] is the zero element of the coefficient domain.
 <p>
@@ -553,12 +553,12 @@ its first entry is the list of positions of nonzero coefficients,
 the second entry is the list of these coefficients themselves.
 <p>
 The multiplication in an algebra <i>A</i> with vector space basis <var>B</var>
-with basis vectors [ <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>v</i><sub><i>n</i></sub> ] is determined by the so-called
-structure matrices <i>M</i><sub><i>k</i></sub> = [ <i>m</i><sub><i>ijk</i></sub> ]<sub><i>ij</i></sub>, 1  <font face="symbol">&#8804;</font> <i>k</i>  <font face="symbol">&#8804;</font> <i>n</i>.
-The <i>M</i><sub><i>k</i></sub> are defined by <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> = <font face="symbol">&#8721;</font><sub><i>k</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> <i>v</i><sub><i>k</i></sub>.
-Let <i>a</i> = [ <i>a</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>a</i><sub><i>n</i></sub> ] and <i>b</i> = [ <i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub> ].
+with basis vectors [ <i>v</i><sub>1</sub>, &#8230;, <i>v</i><sub><i>n</i></sub> ] is determined by the so-called
+structure matrices <i>M</i><sub><i>k</i></sub> = [ <i>m</i><sub><i>ijk</i></sub> ]<sub><i>ij</i></sub>, 1  &#8804; <i>k</i>  &#8804; <i>n</i>.
+The <i>M</i><sub><i>k</i></sub> are defined by <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> = &#8721;<sub><i>k</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> <i>v</i><sub><i>k</i></sub>.
+Let <i>a</i> = [ <i>a</i><sub>1</sub>, &#8230;, <i>a</i><sub><i>n</i></sub> ] and <i>b</i> = [ <i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>n</i></sub> ].
 Then
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> ( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>v</i><sub><i>i</i></sub> ) ( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>b</i><sub><i>j</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i>,<i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>b</i><sub><i>j</i></sub> ( <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>j</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>i</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> ) <i>b</i><sub><i>j</i></sub> ) <i>v</i><sub><i>k</i></sub> = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">( <i>a</i> <i>M</i><sub><i>k</i></sub> <i>b</i><sup><i>tr</i></sup> ) <i>v</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> ( </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>i</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>v</i><sub><i>i</i></sub> ) ( </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>j</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>b</i><sub><i>j</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>i</i>,<i>j</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>b</i><sub><i>j</i></sub> ( <i>v</i><sub><i>i</i></sub> <i>v</i><sub><i>j</i></sub> ) = </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>j</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">( </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>i</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>a</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> ) <i>b</i><sub><i>j</i></sub> ) <i>v</i><sub><i>k</i></sub> = </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">( <i>a</i> <i>M</i><sub><i>k</i></sub> <i>b</i><sup><i>tr</i></sup> ) <i>v</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
 <p>
 In the following example we temporarily increase the line length limit from
 its default value 80 to 83 in order to get a nicer output format.
@@ -1129,7 +1129,7 @@ mapping in <i>V</i>.
 Then the <code>NiceFreeLeftModuleInfo</code> value of <var>V</var> is a record with the
 components <code>basissource</code> (a basis <i>B</i><sub><i>S</i></sub> of <i>S</i>)
 and <code>basisrange</code> (a basis <i>B</i><sub><i>R</i></sub> of <i>R</i>),
-and the <code>NiceVector</code> value of <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i>  is defined as the
+and the <code>NiceVector</code> value of <i>v</i>  &#8712; <i>V</i>  is defined as the
 matrix of the <i>F</i>-linear mapping <i>v</i> w.r.t.&nbsp;the bases <i>B</i><sub><i>S</i></sub> and <i>B</i><sub><i>R</i></sub>.
 <p>
 <p>
@@ -1271,13 +1271,13 @@ a logical implication from <i>f</i> to <code>IsHandledByNiceBasis</code>
 <p>
 <dt><code>NiceVector</code> <dd>
     the <code>NiceVector</code> method for left modules <i>V</i> in <i>f</i>;
-    called with <i>V</i> and a vector <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i>, this function returns the
+    called with <i>V</i> and a vector <i>v</i>  &#8712; <i>V</i>, this function returns the
     nice vector <i>r</i> associated with <i>v</i>, and
 <p>
 <dt><code>UglyVector</code> <dd>
     the <code>UglyVector</code> method for left modules <i>V</i> in <i>f</i>;
     called with <i>V</i> and a vector <i>r</i> in the <code>NiceFreeLeftModule</code> value
-    of <i>V</i>, this function returns the vector <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i> to which <i>r</i> is
+    of <i>V</i>, this function returns the vector <i>v</i>  &#8712; <i>V</i> to which <i>r</i> is
     associated.
 </dl>
 <p>
@@ -1316,5 +1316,5 @@ if <var>gens</var> is nonempty then the <var>zero</var> value may also be <code>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP058.htm">Previous</a>] [<a href ="CHAP060.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

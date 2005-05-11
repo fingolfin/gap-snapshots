@@ -570,10 +570,10 @@ For triflections one should choose a third root of unity etc.
 The default is <code>ComplexConjugate</code>.
 <p>
 The matrix of the reflection in <i>v</i> is defined as
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>M</i> = <i>I</i><sub><i>n</i></sub> +</td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">&#183;</td><td nowrap="nowrap" align="center">&nbsp;<i>w</i><font face="symbol">&#8722;</font>1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><table border="0"><tr><td nowrap="nowrap" align="center"><i>v</i></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td></tr></table></td><td nowrap="nowrap" align="center">&#183;<i>v</i> </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>M</i> = <i>I</i><sub><i>n</i></sub> +</td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">&#183;</td><td nowrap="nowrap" align="center"><i>w</i>&#8722;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><i>v</i></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>v</i><sup><i>tr</i></sup><br /></div><div class="comb">&nbsp;</div></td></tr></table></td><td nowrap="nowrap" align="center">&#183;<i>v</i> </td></tr></table></td></tr></table>
 where <code><i>w</i> = root</code>,
 <i>n</i> is the length of the coefficient list,
-and <code>[<font face="symbol">&#63717;</font>]</code> denotes the conjugation.
+and <code>[&#63717;]</code> denotes the conjugation.
 <p>
 <a name = "SSEC004.10"></a>
 <li><code>PrintArray( </code><var>array</var><code> ) F</code>
@@ -623,9 +623,9 @@ entries that is invertible over the integers.
 <p>
 <pre>
 gap&gt; RandomMat(2,3,GF(3));
-[ [ 0*Z(3), 0*Z(3), Z(3) ], [ Z(3), Z(3)^0, Z(3) ] ]
+[ [ 0*Z(3), Z(3), Z(3)^0 ], [ Z(3), 0*Z(3), Z(3)^0 ] ]
 gap&gt; RandomInvertibleMat(4);
-[ [ 5, 1, 0, -2 ], [ 4, 3, 5, 3 ], [ 1, -2, 1, -1 ], [ -2, 4, -1, -3 ] ]
+[ [ 4, 3, 5, 3 ], [ 1, -2, 1, -1 ], [ -2, 4, -1, -3 ], [ -1, 1, 2, 0 ] ]
 </pre>
 <p>
 <p>
@@ -1034,7 +1034,7 @@ gap&gt; DepthOfUpperTriangularMatrix([[0,0,2],[0,0,0],[0,0,0]]);
 For a square matrix <var>mat</var>, <code>CharacteristicPolynomial</code> returns the
 <strong>characteristic polynomial</strong> of <var>mat</var>, that is, the <code>StandardAssociate</code>
 of the determinant of the
-matrix <i>mat</i>  <font face="symbol">&#8722;</font> <i>X</i> &#183;<i>I</i>, where <i>X</i> is an indeterminate and <i>I</i> is the
+matrix <i>mat</i>  &#8722; <i>X</i> &#183;<i>I</i>, where <i>X</i> is an indeterminate and <i>I</i> is the
 appropriate identity matrix.
 <p>
 If a field <var>F</var> is given as first argument then the characteristic
@@ -1093,10 +1093,10 @@ More precisely,
 regard <var>mat</var> as the matrix of a linear transformation on the row space
 <i>F</i><sup><i>n</i></sup> w.r.t.&nbsp;the <i>F</i>-basis with vectors (<i>v</i><sub>1</sub>, <i>ldots</i>, <i>v</i><sub><i>n</i></sub>), say,
 and suppose that the basis <var>B</var> consists of the vectors
-(<i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>m</i></sub>);
+(<i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>m</i></sub>);
 then the returned matrix is the matrix of the linear transformation
 on the row space <i>K</i><sup><i>mn</i></sup> w.r.t.&nbsp;the <i>K</i>-basis whose vectors are
-(<i>b</i><sub>1</sub> <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font><i>b</i><sub><i>m</i></sub> <i>v</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>m</i></sub> <i>v</i><sub><i>n</i></sub>).
+(<i>b</i><sub>1</sub> <i>v</i><sub>1</sub>, &#8230;<i>b</i><sub><i>m</i></sub> <i>v</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>m</i></sub> <i>v</i><sub><i>n</i></sub>).
 <p>
 Note that the linear transformations act on <strong>row</strong> vectors, i.e.,
 each row of the matrix is a concatenation of vectors of <var>B</var>-coefficients.
@@ -1294,12 +1294,12 @@ The matrices in  <var>matlist</var>  must  be matrices over GF(<var>q</var>) for
 prime <var>q</var>.  Together, they must  generate an  abelian p-group  of
 exponent <var>expo</var>.
 Then the eigenvalues of <var>mat</var>  in the splitting field <code>GF(</code><var>q</var><code>^</code><var>r</var><code>)</code> for
-some <var>r</var> are powers of an element <font face="symbol">&#958;</font> in the splitting field, which is
+some <var>r</var> are powers of an element &#958; in the splitting field, which is
 of order  <var>expo</var>.  <code>SimultaneousEigenvalues</code> returns a matrix of
 integers  mod <var>expo</var>, say (<i>a</i><sub><i>i</i>,<i>j</i></sub>),  such that the power
-<font face="symbol">&#958;</font><sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> is an eigenvalue of the <var>i</var>-th matrix in  <var>matlist</var> and
+&#958;<sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> is an eigenvalue of the <var>i</var>-th matrix in  <var>matlist</var> and
 the eigenspaces of the different matrices to the eigenvalues
-<font face="symbol">&#958;</font><sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> for fixed <var>j</var> are equal.
+&#958;<sup><i>a</i><sub><i>i</i>,<i>j</i></sub></sup> for fixed <var>j</var> are equal.
 <p>
 Finally, there are two operations that deal with matrices over a ring,
 but only care about the residues of their entries modulo some ring element.
@@ -1400,6 +1400,18 @@ and the zero element as <var>zero</var>.
 Note that all blocks must be ordinary matrices (see&nbsp;<a href="CHAP024.htm#SSEC001.2">IsOrdinaryMatrix</a>),
 and also the block matrix is an ordinary matrix.
 <p>
+<pre>
+gap&gt; M := BlockMatrix([[1,1,[[1, 2],[ 3, 4]]],
+&gt;                      [1,2,[[9,10],[11,12]]],
+&gt;                      [2,2,[[5, 6],[ 7, 8]]]],2,2);
+&lt;block matrix of dimensions (2*2)x(2*2)&gt;
+gap&gt; Display(M);
+[ [   1,   2,   9,  10 ],
+  [   3,   4,  11,  12 ],
+  [   0,   0,   5,   6 ],
+  [   0,   0,   7,   8 ] ]
+</pre>
+<p>
 <a name = "SSEC015.3"></a>
 <li><code>MatrixByBlockMatrix( </code><var>blockmat</var><code> ) A</code>
 <p>
@@ -1409,5 +1421,5 @@ returns a plain ordinary matrix that is equal to the block matrix
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP023.htm">Previous</a>] [<a href ="CHAP025.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

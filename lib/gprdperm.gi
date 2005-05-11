@@ -2,14 +2,14 @@
 ##
 #W  gprdperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: gprdperm.gi,v 4.37 2003/05/23 16:17:59 gap Exp $
+#H  @(#)$Id: gprdperm.gi,v 4.37.2.2 2005/01/06 08:22:04 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.gprdperm_gi :=
-    "@(#)$Id: gprdperm.gi,v 4.37 2003/05/23 16:17:59 gap Exp $";
+    "@(#)$Id: gprdperm.gi,v 4.37.2.2 2005/01/06 08:22:04 gap Exp $";
 
 
 #############################################################################
@@ -55,7 +55,7 @@ InstallMethod( DirectProductOp,
         od;
 
     od;
-    D := GroupWithGenerators( gens );
+    D:= GroupWithGenerators( gens, One( grps[1] ) );
     info := rec( groups := oldgrps,
                  olds   := olds,
                  news   := news,
@@ -164,12 +164,21 @@ end );
 InstallMethod( PreImagesRepresentative, "perm direct product embedding",
   FamRangeEqFamElm,
         [ IsEmbeddingDirectProductPermGroup,
-          IsMultiplicativeElementWithInverse ], 0,
+          IsMultiplicativeElementWithInverse ],
     function( emb, g )
     local info;
     info := DirectProductInfo( Range( emb ) );
-    return RestrictedPerm( g, info.news[ emb!.component ] )
-           ^ (info.perms[ emb!.component ] ^ -1);
+#T Make this more efficient:
+#T Creating the restricted permutation could be avoided
+#T if there would be an efficient (kernel) function that tests whether
+#T a permutation moves points outside a given set.
+#T Inverting the mapping permutation in each call could be avoided
+#T by storing also the inverse, and the conjugation could be improved.
+    if g = RestrictedPerm( g, info.news[ emb!.component ] ) then
+      return g ^ (info.perms[ emb!.component ] ^ -1);
+    else
+      return fail;
+    fi;
 end );
 
 #############################################################################
@@ -737,7 +746,7 @@ InstallMethod( PreImagesRepresentative,
     if not g in info.base then
       return fail;
     fi;
-    return RestrictedPerm( g, info.news[ emb!.component ] )
+    return RestrictedPerm( g, info.components[ emb!.component ] )
            ^ (info.perms[ emb!.component ] ^ -1);
 end );
 

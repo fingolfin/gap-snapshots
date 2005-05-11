@@ -2,7 +2,7 @@
 ##
 #W  ctblmaps.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblmaps.gd,v 4.32 2003/05/13 15:27:28 gap Exp $
+#H  @(#)$Id: ctblmaps.gd,v 4.32.2.1 2005/05/09 08:49:08 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 ##  6. Subroutines for the Construction of Class Fusions
 ##
 Revision.ctblmaps_gd :=
-    "@(#)$Id: ctblmaps.gd,v 4.32 2003/05/13 15:27:28 gap Exp $";
+    "@(#)$Id: ctblmaps.gd,v 4.32.2.1 2005/05/09 08:49:08 gap Exp $";
 
 
 #############################################################################
@@ -798,14 +798,14 @@ DeclareGlobalFunction( "ProjectionMap" );
 
 #############################################################################
 ##
-#F  Indirected( <character>, <paramap> )
+#O  Indirected( <character>, <paramap> )
 ##
 ##  For a map <character> and a parametrized map <paramap>, `Indirected'
 ##  returns a parametrized map whose entry at position $i$ is
 ##  `<character>[ <paramap>[<i>] ]' if `<paramap>[<i>]' is an integer,
 ##  and an unknown (see Chapter~"Unknowns") otherwise.
 ##
-DeclareGlobalFunction( "Indirected" );
+DeclareOperation( "Indirected", [ IsList, IsList ] );
 
 
 #############################################################################

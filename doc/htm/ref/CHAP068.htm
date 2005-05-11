@@ -55,8 +55,8 @@ of subgroups of their underlying groups
 <h2><a name="SECT001">68.1 More about Tables of Marks</a></h2>
 <p><p>
 Let <i>G</i> be a finite group with <i>n</i> conjugacy classes of subgroups
-<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>C</i><sub><i>n</i></sub> and representatives <i>H</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>C</i><sub><i>i</i></sub>,
-1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i>.
+<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, &#8230;, <i>C</i><sub><i>n</i></sub> and representatives <i>H</i><sub><i>i</i></sub>  &#8712; <i>C</i><sub><i>i</i></sub>,
+1  &#8804; <i>i</i>  &#8804; <i>n</i>.
 The <strong>table of marks</strong> of <i>G</i> is defined to be the <i>n</i> &times;<i>n</i> matrix
 <i>M</i> = (<i>m</i><sub><i>ij</i></sub>) where the <strong>mark</strong> <i>m</i><sub><i>ij</i></sub> is the number of fixed points
 of the subgroup <i>H</i><sub><i>j</i></sub> in the action of <i>G</i> on the right cosets of <i>H</i><sub><i>i</i></sub>
@@ -65,7 +65,7 @@ in <i>G</i>.
 Since <i>H</i><sub><i>j</i></sub> can only have fixed points if it is contained in a point
 stablizer the matrix <i>M</i> is lower triangular if the classes <i>C</i><sub><i>i</i></sub> are
 sorted according to the condition that if <i>H</i><sub><i>i</i></sub> is contained in a
-conjugate of <i>H</i><sub><i>j</i></sub> then <i>i</i>  <font face="symbol">&#8804;</font> <i>j</i>.
+conjugate of <i>H</i><sub><i>j</i></sub> then <i>i</i>  &#8804; <i>j</i>.
 <p>
 Moreover, the diagonal entries <i>m</i><sub><i>ii</i></sub> are nonzero since <i>m</i><sub><i>ii</i></sub> equals
 the index of <i>H</i><sub><i>i</i></sub> in its normalizer in <i>G</i>.  Hence <i>M</i> is invertible.
@@ -83,7 +83,7 @@ In general, <i>m</i><sub><i>ij</i></sub> equals the number of conjugates of <i>H
 <i>H</i><sub><i>j</i></sub>, multiplied by the index of <i>H</i><sub><i>i</i></sub> in its normalizer in <i>G</i>.
 Moreover, the number <i>c</i><sub><i>ij</i></sub> of conjugates of <i>H</i><sub><i>j</i></sub> which are contained
 in <i>H</i><sub><i>i</i></sub> can be derived from the marks <i>m</i><sub><i>ij</i></sub> via the formula
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>c</i><sub><i>ij</i></sub> = </td><td nowrap="nowrap" align="center">&nbsp;<i>m</i><sub><i>ij</i></sub> <i>m</i><sub><i>j</i>1</sub><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>m</i><sub><i>i</i>1</sub> <i>m</i><sub><i>jj</i></sub><br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>c</i><sub><i>ij</i></sub> = </td><td nowrap="nowrap" align="center"><i>m</i><sub><i>ij</i></sub> <i>m</i><sub><i>j</i>1</sub><div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>m</i><sub><i>i</i>1</sub> <i>m</i><sub><i>jj</i></sub><br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
 <p>
 Both the marks <i>m</i><sub><i>ij</i></sub>  and the numbers of subgroups <i>c</i><sub><i>ij</i></sub> are needed
 for the functions described in this chapter.
@@ -126,7 +126,7 @@ are in general not uniquely determined by the matrix of marks.
 <font face="Gill Sans,Helvetica,Arial">GAP</font> tables of marks are assumed to be in lower triangular form,
 that is, if a subgroup from the conjugacy class corresponding to the
 <i>i</i>-th row is contained in a subgroup from the class corresponding to the
-<i>j</i>-th row j then <i>i</i>  <font face="symbol">&#8804;</font> <i>j</i>.
+<i>j</i>-th row j then <i>i</i>  &#8804; <i>j</i>.
 <p>
 The <code>MarksTom</code> information can be computed from the values of the
 attributes <code>NrSubsTom</code>, <code>LengthsTom</code>, <code>OrdersTom</code>, and <code>SubsTom</code>
@@ -161,6 +161,15 @@ of <i>G</i> --compatible with the ordering of rows and columns of the marks in
 <var>tom</var>-- is signalled by the filter <code>IsTableOfMarksWithGens</code>
 (see&nbsp;<a href="CHAP068.htm#SECT011">Accessing Subgroups via Tables of Marks</a>).
 <p>
+Several examples in this chapter require
+the <font face="Gill Sans,Helvetica,Arial">GAP</font> Library of Tables of Marks to be available.
+If it is not yet loaded then we load it now.
+<p>
+<pre>
+gap&gt; LoadPackage( "tomlib" );
+true
+</pre>
+<p>
 <p>
 <h2><a name="SECT003">68.3 Constructing Tables of Marks</a></h2>
 <p><p>
@@ -172,7 +181,7 @@ of <i>G</i> --compatible with the ordering of rows and columns of the marks in
 In the first form, <var>G</var> must be a finite group, and <code>TableOfMarks</code>
 constructs the table of marks of <var>G</var>.
 This computation requires the knowledge of the complete subgroup lattice
-of <var>G</var> (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>).
+of <var>G</var> (see&nbsp;<a href="CHAP037.htm#SSEC020.1">LatticeSubgroups</a>).
 If the lattice is not yet stored then it will be constructed.
 This may take a while if <var>G</var> is large.
 The result has the <code>IsTableOfMarksWithGens</code> value <code>true</code>
@@ -231,7 +240,7 @@ The following <code>TableOfMarks</code> methods for a group are installed.
     (see&nbsp;<a href="CHAP068.htm#SSEC003.2">TableOfMarksByLattice</a>).
 <li>
     If the group is known to be solvable then <code>TableOfMarks</code> takes the
-    lattice of subgroups (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>) of the group
+    lattice of subgroups (see&nbsp;<a href="CHAP037.htm#SSEC020.1">LatticeSubgroups</a>) of the group
     --which means that the lattice is computed if it is not yet stored--
     and then computes the table of marks from it.
     This method is also accessible via the global function
@@ -256,7 +265,7 @@ This is also installed as a method for <code>LatticeSubgroups</code>.
 <p>
 <code>TableOfMarksByLattice</code> computes the table of marks of the group <var>G</var> from
 the lattice of subgroups of <var>G</var>.
-This lattice is computed via <code>LatticeSubgroups</code> (see&nbsp;<a href="CHAP037.htm#SSEC019.1">LatticeSubgroups</a>)
+This lattice is computed via <code>LatticeSubgroups</code> (see&nbsp;<a href="CHAP037.htm#SSEC020.1">LatticeSubgroups</a>)
 if it is not yet stored in <var>G</var>.
 The function <code>TableOfMarksByLattice</code> is installed as a method for
 <code>TableOfMarks</code> for solvable groups and groups with stored subgroup
@@ -406,8 +415,8 @@ gap&gt; wrong:= SortedTom( tom, (1,2) );;  Display( wrong );
 <p>
 For the table of marks <var>tom</var> of the group <i>G</i> stored as <code>UnderlyingGroup</code>
 value of <var>tom</var> (see&nbsp;<a href="CHAP068.htm#SSEC007.7">UnderlyingGroup!for tables of marks</a>),
-<code>PermutationTom</code> is a permutation <font face="symbol">&#960;</font> such that the <i>i</i>-th conjugacy
-class of subgroups of <i>G</i> belongs to the <i>i</i><sup><font face="symbol">&#960;</font></sup>-th column and row of
+<code>PermutationTom</code> is a permutation &#960; such that the <i>i</i>-th conjugacy
+class of subgroups of <i>G</i> belongs to the <i>i</i><sup>&#960;</sup>-th column and row of
 marks in <var>tom</var>.
 <p>
 This attribute value is bound only if <var>tom</var> was obtained from another
@@ -455,7 +464,7 @@ Each table of marks belongs to this family.
 The list <code>TableOfMarksComponents</code> is used when a table of marks object is
 created from a record via <code>ConvertToTableOfMarks</code>
 (see&nbsp;<a href="CHAP068.htm#SSEC006.5">ConvertToTableOfMarks</a>).
-<code>TableOfMarksComponents</code> contains at position 2<i>i</i><font face="symbol">&#8722;</font>1 a name of an
+<code>TableOfMarksComponents</code> contains at position 2<i>i</i>&#8722;1 a name of an
 attribute and at position 2<i>i</i> the corresponding attribute getter
 function.
 <p>
@@ -651,7 +660,7 @@ subgroup (see&nbsp;<a href="CHAP068.htm#SSEC009.7">CyclicExtensionsTom</a>).
 <p>
 <code>IdempotentsTomInfo</code> returns a record with components <code>fixpointvectors</code>
 and <code>primidems</code>, both bound to lists.
-The <i>i</i>-th entry of the <code>fixpointvectors</code> list is the 0<font face="symbol">&#8722;</font>1-vector
+The <i>i</i>-th entry of the <code>fixpointvectors</code> list is the 0&#8722;1-vector
 describing the <i>i</i>-th primitive idempotent,
 and the <i>i</i>-th entry of <code>primidems</code> is the decomposition of this
 idempotent in the rows of <var>tom</var>.
@@ -856,12 +865,8 @@ by <code>DerivedSubgroupTom</code>.
 <pre>
 gap&gt; a5:= TableOfMarks( "A5" );
 TableOfMarks( "A5" )
-gap&gt; DerivedSubgroupsTomPossible( a5 );
-[ ,, 1,,,,,, 9 ]
 gap&gt; DerivedSubgroupTom( a5, 2 );
 1
-gap&gt; DerivedSubgroupsTomPossible( a5 );
-[ , 1, 1,,,,,, 9 ]
 gap&gt; DerivedSubgroupsTom( a5 );
 [ 1, 1, 1, 1, 1, 3, 5, 4, 9 ]
 </pre>
@@ -977,14 +982,14 @@ gap&gt; DecomposedFixedPointVector( a5, [ 0, 0, 0, 0, 1, 1 ] );
 <li><code>EulerianFunctionByTom( </code><var>tom</var><code>, </code><var>n</var><code>[, </code><var>sub</var><code>] ) O</code>
 <p>
 In the first form <code>EulerianFunctionByTom</code> computes the Eulerian
-function (see&nbsp;<a href="CHAP037.htm#SSEC015.3">EulerianFunction</a>) of the underlying group <i>G</i> of the
+function (see&nbsp;<a href="CHAP037.htm#SSEC016.3">EulerianFunction</a>) of the underlying group <i>G</i> of the
 table of marks <var>tom</var>,
 that is, the number of <var>n</var>-tuples of elements in <i>G</i> that generate <i>G</i>.
 In the second form <code>EulerianFunctionByTom</code> computes the Eulerian function
 of each subgroup in the <var>sub</var>-th class of subgroups of <var>tom</var>.
 <p>
 For a group <i>G</i> whose table of marks is known, <code>EulerianFunctionByTom</code>
-is installed as a method for <code>EulerianFunction</code> (see&nbsp;<a href="CHAP037.htm#SSEC015.3">EulerianFunction</a>).
+is installed as a method for <code>EulerianFunction</code> (see&nbsp;<a href="CHAP037.htm#SSEC016.3">EulerianFunction</a>).
 <p>
 <pre>
 gap&gt; EulerianFunctionByTom( a5, 2 );
@@ -1073,16 +1078,16 @@ gap&gt; MinimalSupergroupsTom( s4, 5 );
 <h2><a name="SECT010">68.10 Standard Generators of Groups</a></h2>
 <p><p>
 An <i>s</i>-tuple of <strong>standard generators</strong> of a given group <i>G</i> is a vector
-(<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub>) of elements <i>g</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>G</i> satisfying certain
+(<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, &#8230;, <i>g</i><sub><i>s</i></sub>) of elements <i>g</i><sub><i>i</i></sub>  &#8712; <i>G</i> satisfying certain
 conditions (depending on the isomorphism type of <i>G</i>) such that
 <ol>
 <li>
-    <font face="symbol">&#9001;</font><i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub> <font face="symbol">&#9002;</font> =  <i>G</i> and
+    &#9001;<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, &#8230;, <i>g</i><sub><i>s</i></sub> &#9002; =  <i>G</i> and
 <li>
     the vector is unique up to automorphisms of <i>G</i>,
-    i.e., for two vectors (<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>s</i></sub>) and
-    (<i>h</i><sub>1</sub>, <i>h</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>h</i><sub><i>s</i></sub>) of standard generators,
-    the map <i>g</i><sub><i>i</i></sub> <font face="symbol">&#8594;</font> <i>h</i><sub><i>i</i></sub> extends to an automorphism of <i>G</i>.
+    i.e., for two vectors (<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, &#8230;, <i>g</i><sub><i>s</i></sub>) and
+    (<i>h</i><sub>1</sub>, <i>h</i><sub>2</sub>, &#8230;, <i>h</i><sub><i>s</i></sub>) of standard generators,
+    the map <i>g</i><sub><i>i</i></sub> &#8594; <i>h</i><sub><i>i</i></sub> extends to an automorphism of <i>G</i>.
 </ol>
 For details about standard generators, see&nbsp;<a href="biblio.htm#Wil96"><cite>Wil96</cite></a>.
 <p>
@@ -1104,25 +1109,25 @@ that has one of the following forms.
     and to take its <i>k</i>-th power as candidate for the <i>i</i>-th standard
     generator (the default for <i>k</i> is 1),
 <p>
-<dt>a <strong>relation</strong> [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub>, <i>n</i> ] with <i>m</i>  &gt;  1 <dd>
+<dt>a <strong>relation</strong> [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, &#8230;, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub>, <i>n</i> ] with <i>m</i>  &gt;  1 <dd>
     means a check whether the element
-    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup> has order <i>n</i>;
+    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> &#8230;<i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup> has order <i>n</i>;
     if <i>g</i><sub><i>j</i></sub> occurs then of course the <i>j</i>-th generator must have been
     defined before,
 <p>
-<dt>a <strong>relation</strong> [ [ <i>i</i><sub>1</sub>, <i>i</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub> ], <i>slp</i> , <i>n</i> ] <dd>
+<dt>a <strong>relation</strong> [ [ <i>i</i><sub>1</sub>, <i>i</i><sub>2</sub>, &#8230;, <i>i</i><sub><i>m</i></sub> ], <i>slp</i> , <i>n</i> ] <dd>
     means a check whether the result of the straight line program <var>slp</var>
     (see&nbsp;<a href="CHAP035.htm#SECT008">Straight Line Programs</a>) applied to the candidates
-    <i>g</i><sub><i>i</i><sub>1</sub></sub>, <i>g</i><sub><i>i</i><sub>2</sub></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>i</i><sub><i>m</i></sub></sub> has order <i>n</i>,
+    <i>g</i><sub><i>i</i><sub>1</sub></sub>, <i>g</i><sub><i>i</i><sub>2</sub></sub>, &#8230;, <i>g</i><sub><i>i</i><sub><i>m</i></sub></sub> has order <i>n</i>,
     where the candidates <i>g</i><sub><i>j</i></sub> for the <i>j</i>-th standard generators
     must have been defined before,
 <p>
-<dt>a <strong>condition</strong> [ [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub> ], <i>f</i>, <i>v</i> ] <dd>
+<dt>a <strong>condition</strong> [ [ <i>i</i><sub>1</sub>, <i>k</i><sub>1</sub>, <i>i</i><sub>2</sub>, <i>k</i><sub>2</sub>, &#8230;, <i>i</i><sub><i>m</i></sub>, <i>k</i><sub><i>m</i></sub> ], <i>f</i>, <i>v</i> ] <dd>
     means a check whether the <font face="Gill Sans,Helvetica,Arial">GAP</font> function in the global list
     <code>StandardGeneratorsFunctions</code> (see <a href="CHAP068.htm#SSEC010.3">StandardGeneratorsFunctions</a>)
     that is followed by the list <i>f</i> of strings returns the value <i>v</i>
     when it is called with <i>G</i> and
-    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup>.
+    <i>g</i><sub><i>i</i><sub>1</sub></sub><sup><i>k</i><sub>1</sub></sup> <i>g</i><sub><i>i</i><sub>2</sub></sub><sup><i>k</i><sub>2</sub></sup> &#8230;<i>g</i><sub><i>i</i><sub><i>m</i></sub></sub><sup><i>k</i><sub><i>m</i></sub></sup>.
 </dl>
 Optional components of the returned records are
 <p>
@@ -1210,7 +1215,7 @@ rec( script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ],
 <li><code>StandardGeneratorsFunctions V</code>
 <p>
 <code>StandardGeneratorsFunctions</code> is a list of even length.
-At position 2<i>i</i><font face="symbol">&#8722;</font>1, a function of two arguments is stored,
+At position 2<i>i</i>&#8722;1, a function of two arguments is stored,
 which are expected to be a group and a group element.
 At position 2<i>i</i> a list of strings is stored such that first inserting a
 generator name in all holes and then forming the concatenation yields
@@ -1629,7 +1634,7 @@ dihedral subgroups of order <i>d</i>.
 <li><code>TableOfMarksFrobenius( </code><var>p</var><code>, </code><var>q</var><code> ) O</code>
 <p>
 <code>TableOfMarksFrobenius</code> computes the table of marks of a Frobenius group
-of order <i>p</i> <i>q</i>, where <i>p</i> is a prime and <i>q</i> divides <i>p</i><font face="symbol">&#8722;</font>1.
+of order <i>p</i> <i>q</i>, where <i>p</i> is a prime and <i>q</i> divides <i>p</i>&#8722;1.
 <p>
 <pre>
 gap&gt; Display( TableOfMarksCyclic( 6 ) );
@@ -1684,5 +1689,5 @@ true
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP067.htm">Previous</a>] [<a href ="CHAP069.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

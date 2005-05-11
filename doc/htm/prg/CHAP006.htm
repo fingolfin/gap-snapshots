@@ -80,7 +80,7 @@ The goal of this section is to implement objects with a prescribed
 multiplication.
 Let us assume that we are given a field <i>F</i>,
 and that we want to define a new multiplication <code>*</code> on <i>F</i>
-that is given by <i>a</i> * <i>b</i> = <i>a</i> <i>b</i> <font face="symbol">&#8722;</font> <i>a</i> <font face="symbol">&#8722;</font> <i>b</i> + 2;
+that is given by <i>a</i> * <i>b</i> = <i>a</i> <i>b</i> &#8722; <i>a</i> &#8722; <i>b</i> + 2;
 here <i>a</i> <i>b</i> denotes the ordinary product in <i>F</i>.
 <p>
 By the discussion in Section&nbsp;<a href="CHAP006.htm#SECT001">New Arithmetic Operations vs. New Objects</a>,
@@ -239,8 +239,8 @@ gap&gt; a*b;  a^27;
 <p>
 Powering the new objects by negative integers is not possible yet,
 because <font face="Gill Sans,Helvetica,Arial">GAP</font> does not know how to compute the inverse of an element <i>a</i>,
-say, which is defined as the unique element <i>a</i><sup><font face="symbol">&#8242;</font></sup> such that both
-<i>a</i> <i>a</i><sup><font face="symbol">&#8242;</font></sup> and <i>a</i><sup><font face="symbol">&#8242;</font></sup> <i>a</i> are ``the unique multiplicative neutral
+say, which is defined as the unique element <i>a</i><sup>&#8242;</sup> such that both
+<i>a</i> <i>a</i><sup>&#8242;</sup> and <i>a</i><sup>&#8242;</sup> <i>a</i> are ``the unique multiplicative neutral
 element that belongs to <i>a</i>''.
 <p>
 And also this neutral element, if it exists,
@@ -463,5 +463,5 @@ there is only one multiplication <code>\*</code> in <font face="Gill Sans,Helvet
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -24,7 +24,7 @@ pairwise disjoint subsets.
 <li><code>Factorial( </code><var>n</var><code> ) F</code>
 <p>
 returns the <strong>factorial</strong>  <i>n</i>!  of the positive  integer <var>n</var>, which is
-defined as the product 1 &#183;2 &#183;3 <font face="symbol">&#8230;</font><i>n</i>.
+defined as the product 1 &#183;2 &#183;3 &#8230;<i>n</i>.
 <p>
 <i>n</i>! is the  number of permutations of a set of <i>n</i> elements.  1/<i>n</i>!
 is the coefficient  of  <i>x</i><sup><i>n</i></sup>  in  the  formal series  <i>e</i><sup><i>x</i></sup>, which  is
@@ -43,17 +43,17 @@ permutations of a list.
 <a name = "SSEC001.2"></a>
 <li><code>Binomial( </code><var>n</var><code>, </code><var>k</var><code> ) F</code>
 <p>
-returns the <strong>binomial coefficient</strong> <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> of integers <var>n</var> and
-<var>k</var>, which  is defined as <i>n</i>! / (<i>k</i>! (<i>n</i><font face="symbol">&#8722;</font><i>k</i>)!) (see <a href="CHAP017.htm#SSEC001.1">Factorial</a>).  We
-define <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center">0<br />0<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = 1, </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = 0</td></tr></table></td></tr></table>  if <i>k</i> &lt; 0 or <i>n</i> &lt; <i>k</i>,
-and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = (<font face="symbol">&#8722;</font>1)<sup><i>k</i></sup> </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><font face="symbol">&#8722;</font><i>n</i>+<i>k</i><font face="symbol">&#8722;</font>1<br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> if  <i>n</i>  &lt;  0, which
+returns the <strong>binomial coefficient</strong> <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> of integers <var>n</var> and
+<var>k</var>, which  is defined as <i>n</i>! / (<i>k</i>! (<i>n</i>&#8722;<i>k</i>)!) (see <a href="CHAP017.htm#SSEC001.1">Factorial</a>).  We
+define <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center">0<br />0<br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = 1, </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = 0</td></tr></table></td></tr></table>  if <i>k</i> &lt; 0 or <i>n</i> &lt; <i>k</i>,
+and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = (&#8722;1)<sup><i>k</i></sup> </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center">&#8722;<i>n</i>+<i>k</i>&#8722;1<br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> if  <i>n</i>  &lt;  0, which
 is consistent with the equivalent definition 
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><font face="symbol">&#8722;</font>1<br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">+ </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><font face="symbol">&#8722;</font>1<br /><i>k</i><font face="symbol">&#8722;</font>1<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">&#183;</td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i>&#8722;1<br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">+ </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i>&#8722;1<br /><i>k</i>&#8722;1<br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">&#183;</td></tr></table></td></tr></table>
 <p>
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> is the number of combinations with  <i>k</i>  elements,  i.e.,
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> is the number of combinations with  <i>k</i>  elements,  i.e.,
 the number of subsets with <i>k</i> elements, of  a  set  with  <i>n</i>  elements.
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>  is the coefficient of the  term <i>x</i><sup><i>k</i></sup> of the  polynomial
-(<i>x</i> + 1)<sup><i>n</i></sup>, which is the generating function for <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br />&#183;<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center">,</td></tr></table></td></tr></table> hence
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>  is the coefficient of the  term <i>x</i><sup><i>k</i></sup> of the  polynomial
+(<i>x</i> + 1)<sup><i>n</i></sup>, which is the generating function for <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br />&#183;<br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center">,</td></tr></table></td></tr></table> hence
 the name.
 <p>
 <a name = "I0"></a>
@@ -85,13 +85,13 @@ all combinations of a multiset.
 <li><code>Bell( </code><var>n</var><code> ) F</code>
 <p>
 returns the <strong>Bell number</strong> <i>B</i>(<i>n</i>).  The Bell numbers are defined by
-<i>B</i>(0)=1 and the recurrence <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>B</i>(<i>n</i>+1) = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"><i>B</i>(<i>k</i>)</td></tr></table></td></tr></table>.
+<i>B</i>(0)=1 and the recurrence <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>B</i>(<i>n</i>+1) = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"><i>B</i>(<i>k</i>)</td></tr></table></td></tr></table>.
 <p>
 <i>B</i>(<i>n</i>) is the  number of ways to  partition a  set of <var>n</var> elements
 into pairwise disjoint  nonempty subsets  (see <a href="CHAP017.htm#SSEC002.13">PartitionsSet</a>).  This
-implies of  course that <i>B</i>(<i>n</i>) = <font face="symbol">&#8721;</font><sub><i>k</i>=0</sub><sup><i>n</i></sup><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>)  (see
+implies of  course that <i>B</i>(<i>n</i>) = &#8721;<sub><i>k</i>=0</sub><sup><i>n</i></sup><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>)  (see
 <a href="CHAP017.htm#SSEC001.6">Stirling2</a>).  <i>B</i>(<i>n</i>)/<i>n</i>! is the coefficient of  <i>x</i><sup><i>n</i></sup> in the formal
-series  <i>e</i><sup><i>e</i><sup><i>x</i></sup><font face="symbol">&#8722;</font>1</sup>, which is the generating function for <i>B</i>(<i>n</i>).
+series  <i>e</i><sup><i>e</i><sup><i>x</i></sup>&#8722;1</sup>, which is the generating function for <i>B</i>(<i>n</i>).
 <p>
 <a name = "I2"></a>
 
@@ -105,10 +105,10 @@ gap&gt; Bell( 14 );
 <a name = "SSEC001.4"></a>
 <li><code>Bernoulli( </code><var>n</var><code> ) F</code>
 <p>
-returns the <var>n</var>-th <strong>Bernoulli number</strong> <i>B</i><sub><i>n</i></sub>, which is defined by <i>B</i><sub>0</sub> = 1 and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>B</i><sub><i>n</i></sub> = <font face="symbol">&#8722;</font></td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i><font face="symbol">&#8722;</font>1</font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i>+1<br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"><i>B</i><sub><i>k</i></sub>/(<i>n</i>+1)</td></tr></table></td></tr></table>.
+returns the <var>n</var>-th <strong>Bernoulli number</strong> <i>B</i><sub><i>n</i></sub>, which is defined by <i>B</i><sub>0</sub> = 1 and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>B</i><sub><i>n</i></sub> = &#8722;</td><td nowrap="nowrap" align="center"><small><i>n</i>&#8722;1</small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i>+1<br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"><i>B</i><sub><i>k</i></sub>/(<i>n</i>+1)</td></tr></table></td></tr></table>.
 <p>
 <i>B</i><sub><i>n</i></sub>/<i>n</i>! is the coefficient of <i>x</i><sup><i>n</i></sup>  in the power series of
-<i>x</i>/<i>e</i><sup><i>x</i></sup><font face="symbol">&#8722;</font>1.  Except for <i>B</i><sub>1</sub>=<font face="symbol">&#8722;</font>1/2 the Bernoulli numbers for odd
+<i>x</i>/<i>e</i><sup><i>x</i></sup>&#8722;1.  Except for <i>B</i><sub>1</sub>=&#8722;1/2 the Bernoulli numbers for odd
 indices are zero.
 <p>
 <a name = "I3"></a>
@@ -129,15 +129,15 @@ gap&gt; Bernoulli( 50 );  # and they grow fairly fast
 <p>
 returns the <strong>Stirling number of the first kind</strong> <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) of the
 integers <var>n</var> and <var>k</var>.  Stirling numbers of the first kind are defined by
-<i>S</i><sub>1</sub>(0,0) = 1, <i>S</i><sub>1</sub>(<i>n</i>,0) = <i>S</i><sub>1</sub>(0,<i>k</i>) = 0  if  <i>n</i>, <i>k</i>  <font face="symbol">&#8800;</font> 0  and the
-recurrence <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) = (<i>n</i><font face="symbol">&#8722;</font>1) <i>S</i><sub>1</sub>(<i>n</i><font face="symbol">&#8722;</font>1,<i>k</i>) + <i>S</i><sub>1</sub>(<i>n</i><font face="symbol">&#8722;</font>1,<i>k</i><font face="symbol">&#8722;</font>1).
+<i>S</i><sub>1</sub>(0,0) = 1, <i>S</i><sub>1</sub>(<i>n</i>,0) = <i>S</i><sub>1</sub>(0,<i>k</i>) = 0  if  <i>n</i>, <i>k</i>  &#8800; 0  and the
+recurrence <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) = (<i>n</i>&#8722;1) <i>S</i><sub>1</sub>(<i>n</i>&#8722;1,<i>k</i>) + <i>S</i><sub>1</sub>(<i>n</i>&#8722;1,<i>k</i>&#8722;1).
 <p>
 <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) is the number  of permutations of  <var>n</var> points with <var>k</var>
 cycles.  Stirling numbers of  the first kind  appear as coefficients in
-the series <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>n</i>! </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>x</i><br /><i>n</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) <i>x</i><sup><i>k</i></sup></td></tr></table></td></tr></table> which is
+the series <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>n</i>! </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>x</i><br /><i>n</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) <i>x</i><sup><i>k</i></sup></td></tr></table></td></tr></table> which is
 the generating function for Stirling numbers of the first kind.  Note
-the similarity to <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>x</i><sup><i>n</i></sup> = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) <i>k</i>! </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>x</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>
-(see  <a href="CHAP017.htm#SSEC001.6">Stirling2</a>).  Also the definition of <i>S</i><sub>1</sub> implies <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) = <i>S</i><sub>2</sub>(<font face="symbol">&#8722;</font><i>k</i>,<font face="symbol">&#8722;</font><i>n</i>) if <i>n</i>,<i>k</i> &lt; 0.  There are  many  formulae relating Stirling
+the similarity to <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>x</i><sup><i>n</i></sup> = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) <i>k</i>! </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>x</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>
+(see  <a href="CHAP017.htm#SSEC001.6">Stirling2</a>).  Also the definition of <i>S</i><sub>1</sub> implies <i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) = <i>S</i><sub>2</sub>(&#8722;<i>k</i>,&#8722;<i>n</i>) if <i>n</i>,<i>k</i> &lt; 0.  There are  many  formulae relating Stirling
 numbers of  the first kind to Stirling numbers of the second kind, Bell
 numbers, and Binomial coefficients.
 <p>
@@ -167,15 +167,15 @@ gap&gt; Stirling1(50,10);
 <p>
 returns the <strong>Stirling number of  the  second kind</strong> <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) of the
 integers <var>n</var>  and <var>k</var>.  Stirling  numbers  of the second  kind are
-defined by <i>S</i><sub>2</sub>(0,0) = 1, <i>S</i><sub>2</sub>(<i>n</i>,0) = <i>S</i><sub>2</sub>(0,<i>k</i>) = 0 if <i>n</i>, <i>k</i>  <font face="symbol">&#8800;</font> 0
-and the recurrence <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) = <i>k</i> <i>S</i><sub>2</sub>(<i>n</i><font face="symbol">&#8722;</font>1,<i>k</i>) + <i>S</i><sub>2</sub>(<i>n</i><font face="symbol">&#8722;</font>1,<i>k</i><font face="symbol">&#8722;</font>1).
+defined by <i>S</i><sub>2</sub>(0,0) = 1, <i>S</i><sub>2</sub>(<i>n</i>,0) = <i>S</i><sub>2</sub>(0,<i>k</i>) = 0 if <i>n</i>, <i>k</i>  &#8800; 0
+and the recurrence <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) = <i>k</i> <i>S</i><sub>2</sub>(<i>n</i>&#8722;1,<i>k</i>) + <i>S</i><sub>2</sub>(<i>n</i>&#8722;1,<i>k</i>&#8722;1).
 <p>
 <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) is the number of ways to partition a set of <var>n</var>  elements
 into <var>k</var> pairwise disjoint nonempty  subsets  (see <a href="CHAP017.htm#SSEC002.13">PartitionsSet</a>).
 Stirling numbers of the second kind  appear as  coefficients  in the
-expansion of <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>x</i><sup><i>n</i></sup> = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) <i>k</i>! </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>x</i><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>.  Note
-the similarity to <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"><i>n</i>! </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>x</i><br /><i>n</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"> = </td><td nowrap="nowrap" align="center"><font size="-1"><i>n</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) <i>x</i><sup><i>k</i></sup></td></tr></table></td></tr></table>
-(see  <a href="CHAP017.htm#SSEC001.5">Stirling1</a>).  Also the definition of <i>S</i><sub>2</sub> implies <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) = <i>S</i><sub>1</sub>(<font face="symbol">&#8722;</font><i>k</i>,<font face="symbol">&#8722;</font><i>n</i>) if <i>n</i>,<i>k</i> &lt; 0.  There are many formulae relating  Stirling
+expansion of <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>x</i><sup><i>n</i></sup> = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) <i>k</i>! </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>x</i><br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>.  Note
+the similarity to <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>n</i>! </td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>x</i><br /><i>n</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"> = </td><td nowrap="nowrap" align="center"><small><i>n</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>S</i><sub>1</sub>(<i>n</i>,<i>k</i>) <i>x</i><sup><i>k</i></sup></td></tr></table></td></tr></table>
+(see  <a href="CHAP017.htm#SSEC001.5">Stirling1</a>).  Also the definition of <i>S</i><sub>2</sub> implies <i>S</i><sub>2</sub>(<i>n</i>,<i>k</i>) = <i>S</i><sub>1</sub>(&#8722;<i>k</i>,&#8722;<i>n</i>) if <i>n</i>,<i>k</i> &lt; 0.  There are many formulae relating  Stirling
 numbers of  the second kind to Stirling numbers of the first kind, Bell
 numbers, and Binomial coefficients.
 <p>
@@ -212,10 +212,10 @@ elements; if <var>k</var> is not given it returns all combinations of <var>mset<
 <p>
 A <strong>combination</strong> of  <var>mset</var> is an  unordered selection without
 repetitions and is represented by a sorted sublist of <var>mset</var>. If
-<var>mset</var> is a proper set, there  are  <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font><br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>  (see
+<var>mset</var> is a proper set, there  are  <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center">&#124;<i>mset</i>&#124;<br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>  (see
 <a href="CHAP017.htm#SSEC001.2">Binomial</a>)  combinations with <var>k</var> elements, and the set of all
 combinations is just the <strong>powerset</strong> of <var>mset</var>, which contains all
-<strong>subsets</strong> of <var>mset</var>  and has  cardinality 2<sup><font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font></sup>.
+<strong>subsets</strong> of <var>mset</var>  and has  cardinality 2<sup>&#124;<i>mset</i>&#124;</sup>.
 <p>
 <a name = "SSEC002.2"></a>
 <li><code>NrCombinations( </code><var>mset</var><code> [, </code><var>k</var><code>] ) F</code>
@@ -249,7 +249,7 @@ elements. If <var>k</var> is not given it returns all arrangements of <var>mset<
 An  <strong>arrangement</strong> of <var>mset</var>  is an ordered selection  without
 repetitions and is represented by a list that contains only elements
 from <var>mset</var>, but maybe  in a different  order. If <var>mset</var>  is  a proper
-set there  are <font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font>! / (<font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font><font face="symbol">&#8722;</font><i>k</i>)! (see  <a href="CHAP017.htm#SSEC001.1">Factorial</a>)
+set there  are &#124;<i>mset</i>&#124;! / (&#124;<i>mset</i>&#124;&#8722;<i>k</i>)! (see  <a href="CHAP017.htm#SSEC001.1">Factorial</a>)
 arrangements  with  <var>k</var> elements.
 <p>
 <a name = "SSEC002.4"></a>
@@ -291,7 +291,7 @@ returns the  set of all  unordered tuples of length <var>k</var> of the set <var
 <p>
 An <strong>unordered tuple</strong> of length <var>k</var> of <var>set</var> is a unordered selection
 with repetitions  of <var>set</var> and  is represented by a sorted  list of
-length <var>k</var> containing  elements  from  <var>set</var>. There  are <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><font face="symbol">&#124;</font><i>set</i><font face="symbol">&#124;</font>+<i>k</i><font face="symbol">&#8722;</font>1<br /><i>k</i><br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> (see <a href="CHAP017.htm#SSEC001.2">Binomial</a>) such unordered tuples.
+length <var>k</var> containing  elements  from  <var>set</var>. There  are <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center">&#124;<i>set</i>&#124;+<i>k</i>&#8722;1<br /><i>k</i><br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table> (see <a href="CHAP017.htm#SSEC001.2">Binomial</a>) such unordered tuples.
 <p>
 Note that the fact that <code>UnorderedTuples</code> returns a set  implies that
 the last  index runs fastest. That means the first  tuple
@@ -335,7 +335,7 @@ returns the set of all ordered tuples  of length <var>k</var> of  the set <var>s
 <p>
 An <strong>ordered tuple</strong> of  length <var>k</var> of <var>set</var> is  an ordered selection
 with repetition and is represented by a list of length <var>k</var> containing
-elements of <var>set</var>.  There are <font face="symbol">&#124;</font><i>set</i><font face="symbol">&#124;</font><sup><i>k</i></sup> such ordered tuples.
+elements of <var>set</var>.  There are &#124;<i>set</i>&#124;<sup><i>k</i></sup> such ordered tuples.
 <p>
 Note that the fact  that <code>Tuples</code> returns  a  set implies that the
 last index runs  fastest.  That means  the first tuple contains the
@@ -374,10 +374,10 @@ multiset <var>mset</var>.
 <p>
 A <strong>permutation</strong> is represented by a  list  that contains exactly the
 same elements as  <var>mset</var>,  but possibly in different order.  If <var>mset</var>
-is a proper  set there are <font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font> ! (see <a href="CHAP017.htm#SSEC001.1">Factorial</a>)  such
+is a proper  set there are &#124;<i>mset</i>&#124; ! (see <a href="CHAP017.htm#SSEC001.1">Factorial</a>)  such
 permutations.  Otherwise if the  first elements appears <i>k</i><sub>1</sub>  times,
 the second element appears  <i>k</i><sub>2</sub>  times and so  on,  the  number
-of permutations is <font face="symbol">&#124;</font><i>mset</i><font face="symbol">&#124;</font>! / (<i>k</i><sub>1</sub>! <i>k</i><sub>2</sub>! <font face="symbol">&#8230;</font>),  which  is
+of permutations is &#124;<i>mset</i>&#124;! / (<i>k</i><sub>1</sub>! <i>k</i><sub>2</sub>! &#8230;),  which  is
 sometimes  called  multinomial coefficient.
 <p>
 <a name = "SSEC002.10"></a>
@@ -411,13 +411,13 @@ is represented by a list that contains exactly the  same elements as
 <var>list</var>, but in such  an order  that the  derangement has at  no position
 the same element as <var>list</var>.
 If the list <var>list</var> contains no element twice there are exactly
-<font face="symbol">&#124;</font><i>list</i><font face="symbol">&#124;</font>! (1/2! <font face="symbol">&#8722;</font> 1/3! + 1/4! <font face="symbol">&#8722;</font> <font face="symbol">&#8230;</font>+ (<font face="symbol">&#8722;</font>1)<sup><i>n</i></sup>/<i>n</i>!) derangements.
+&#124;<i>list</i>&#124;! (1/2! &#8722; 1/3! + 1/4! &#8722; &#8230;+ (&#8722;1)<sup><i>n</i></sup>/<i>n</i>!) derangements.
 <p>
 Note that the ratio
 <code>NrPermutationsList([1..n])/NrDerangements([1..n])</code>,
-which is <i>n</i>! / (<i>n</i>! (1/2! <font face="symbol">&#8722;</font> 1/3! + 1/4! <font face="symbol">&#8722;</font> <font face="symbol">&#8230;</font>+ (<font face="symbol">&#8722;</font>1)<sup><i>n</i></sup>/<i>n</i>!))
+which is <i>n</i>! / (<i>n</i>! (1/2! &#8722; 1/3! + 1/4! &#8722; &#8230;+ (&#8722;1)<sup><i>n</i></sup>/<i>n</i>!))
 is an approximation for the base of the natural logarithm
-<i>e</i> = 2.7182818285<font face="symbol">&#8230;</font>, which is correct to about <i>n</i> digits.
+<i>e</i> = 2.7182818285&#8230;, which is correct to about <i>n</i> digits.
 <p>
 <a name = "SSEC002.12"></a>
 <li><code>NrDerangements( </code><var>list</var><code> ) F</code>
@@ -460,8 +460,8 @@ If <var>k</var> is not given it returns all unordered partitions of <var>set</va
 <p>
 An <strong>unordered partition</strong> of <var>set</var> is  a set of pairwise disjoint
 nonempty sets with union <var>set</var>  and is represented by  a sorted list of
-such sets.  There are <i>B</i>( <font face="symbol">&#124;</font><i>set</i><font face="symbol">&#124;</font> ) (see <a href="CHAP017.htm#SSEC001.3">Bell</a>) partitions of  the
-set  <var>set</var>  and <i>S</i><sub>2</sub>( <font face="symbol">&#124;</font><i>set</i><font face="symbol">&#124;</font>, <i>k</i> ) (see <a href="CHAP017.htm#SSEC001.6">Stirling2</a>) partitions with
+such sets.  There are <i>B</i>( &#124;<i>set</i>&#124; ) (see <a href="CHAP017.htm#SSEC001.3">Bell</a>) partitions of  the
+set  <var>set</var>  and <i>S</i><sub>2</sub>( &#124;<i>set</i>&#124;, <i>k</i> ) (see <a href="CHAP017.htm#SSEC001.6">Stirling2</a>) partitions with
 <var>k</var> elements.
 <p>
 <a name = "SSEC002.14"></a>
@@ -493,11 +493,11 @@ returns the  set  of  all (unordered) partitions of the positive integer
 <var>n</var> into sums with <var>k</var> summands.  If <var>k</var> is not given it returns
 all unordered partitions of <var>set</var> for all <var>k</var>.
 <p>
-An <strong>unordered partition</strong> is an  unordered sum <i>n</i> = <i>p</i><sub>1</sub>+<i>p</i><sub>2</sub> +<font face="symbol">&#8230;</font>+ <i>p</i><sub><i>k</i></sub>
+An <strong>unordered partition</strong> is an  unordered sum <i>n</i> = <i>p</i><sub>1</sub>+<i>p</i><sub>2</sub> +&#8230;+ <i>p</i><sub><i>k</i></sub>
 of positive integers and is represented by the list 
-<i>p</i> = [<i>p</i><sub>1</sub>,<i>p</i><sub>2</sub>,<font face="symbol">&#8230;</font>,<i>p</i><sub><i>k</i></sub>], in nonincreasing order, i.e., 
-<i>p</i><sub>1</sub> &gt; =<i>p</i><sub>2</sub> &gt;  = <font face="symbol">&#8230;</font> &gt; =<i>p</i><sub><i>k</i></sub>.
-We write <i>p</i> |-  <i>n</i>.  There are approximately <i>e</i><sup><font face="symbol">&#960;</font><font face="symbol">&#8730;</font>{2/3 <i>n</i>}</sup> / 4 <font face="symbol">&#8730;</font>3 <i>n</i> such partitions.
+<i>p</i> = [<i>p</i><sub>1</sub>,<i>p</i><sub>2</sub>,&#8230;,<i>p</i><sub><i>k</i></sub>], in nonincreasing order, i.e., 
+<i>p</i><sub>1</sub> &gt; =<i>p</i><sub>2</sub> &gt;  = &#8230; &gt; =<i>p</i><sub><i>k</i></sub>.
+We write <i>p</i> |-  <i>n</i>.  There are approximately <i>e</i><sup>&#960;&#8730;{2/3 <i>n</i>}</sup> / 4 &#8730;3 <i>n</i> such partitions.
 <p>
 It  is possible to  associate with every partition  of the integer  <var>n</var>
 a conjugacy class of permutations in the symmetric group on <var>n</var>  points
@@ -541,9 +541,9 @@ returns the  set  of  all ordered partitions of the positive integer <var>n</var
 into sums with <var>k</var> summands.  If <var>k</var> is not given it returns all
 ordered partitions of <var>set</var> for all <var>k</var>.
 <p>
-An <strong>ordered partition</strong> is an ordered sum <i>n</i> = <i>p</i><sub>1</sub> + <i>p</i><sub>2</sub> +<font face="symbol">&#8230;</font>+ <i>p</i><sub><i>k</i></sub> of
-positive integers and is represented by the list [ <i>p</i><sub>1</sub>, <i>p</i><sub>2</sub>,<font face="symbol">&#8230;</font>, <i>p</i><sub><i>k</i></sub> ].
-There are  totally 2<sup><i>n</i><font face="symbol">&#8722;</font>1</sup> ordered  partitions  and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font></td><td nowrap="nowrap" align="center"><i>n</i><font face="symbol">&#8722;</font>1<br /><i>k</i><font face="symbol">&#8722;</font>1<br /></td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>
+An <strong>ordered partition</strong> is an ordered sum <i>n</i> = <i>p</i><sub>1</sub> + <i>p</i><sub>2</sub> +&#8230;+ <i>p</i><sub><i>k</i></sub> of
+positive integers and is represented by the list [ <i>p</i><sub>1</sub>, <i>p</i><sub>2</sub>,&#8230;, <i>p</i><sub><i>k</i></sub> ].
+There are  totally 2<sup><i>n</i>&#8722;1</sup> ordered  partitions  and <br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"></td><td align="left" class="cl">&#63723;<br />&#63725;</td><td nowrap="nowrap" align="center"><i>n</i>&#8722;1<br /><i>k</i>&#8722;1<br /></td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"></td></tr></table></td></tr></table>
 (see <a href="CHAP017.htm#SSEC001.2">Binomial</a>) ordered partitions with <var>k</var> summands.
 <p>
 Do not call <code>OrderedPartitions</code> with an <var>n</var> much larger  than  15,  the
@@ -595,8 +595,8 @@ summands with the summands of the partition  coming  from the  set
 returned.
 <p>
 A <strong>restricted partition</strong> is like an ordinary partition (see
-<a href="CHAP017.htm#SSEC002.15">Partitions</a>) an  unordered  sum <i>n</i> = <i>p</i><sub>1</sub>+<i>p</i><sub>2</sub>+<font face="symbol">&#8230;</font>+<i>p</i><sub><i>k</i></sub> of  positive
-integers and is represented by the list  <i>p</i> = [<i>p</i><sub>1</sub>,<i>p</i><sub>2</sub>,<font face="symbol">&#8230;</font>,<i>p</i><sub><i>k</i></sub>], in
+<a href="CHAP017.htm#SSEC002.15">Partitions</a>) an  unordered  sum <i>n</i> = <i>p</i><sub>1</sub>+<i>p</i><sub>2</sub>+&#8230;+<i>p</i><sub><i>k</i></sub> of  positive
+integers and is represented by the list  <i>p</i> = [<i>p</i><sub>1</sub>,<i>p</i><sub>2</sub>,&#8230;,<i>p</i><sub><i>k</i></sub>], in
 nonincreasing order.  The difference is that  here  the <i>p</i><sub><i>i</i></sub> must be
 elements from the set <var>set</var>, while for ordinary partitions they may be
 elements from <code>[1..n]</code>.
@@ -627,7 +627,7 @@ returns the sign of a permutation with cycle structure <var>pi</var>.
 This function actually describes  a homomorphism from  the  symmetric
 group <i>S</i><sub><i>n</i></sub> into  the  cyclic group of order  2,  whose  kernel  is
 exactly the alternating  group <i>A</i><sub><i>n</i></sub>  (see <a href="CHAP040.htm#SSEC003.1">SignPerm</a>).  Partitions  of
-sign  1  are called <strong>even</strong> partitions while partitions of sign <font face="symbol">&#8722;</font>1 are
+sign  1  are called <strong>even</strong> partitions while partitions of sign &#8722;1 are
 called <strong>odd</strong>.
 <p>
 <pre>
@@ -696,10 +696,10 @@ gap&gt; PartitionTuples(3, 2);
 returns  the <var>n</var>th number  of the <strong>Fibonacci sequence</strong>.  The Fibonacci
 sequence <i>F</i><sub><i>n</i></sub> is defined by the initial conditions <i>F</i><sub>1</sub>=<i>F</i><sub>2</sub>=1 and  the
 recurrence relation  <i>F</i><sub><i>n</i>+2</sub> = <i>F</i><sub><i>n</i>+1</sub> + <i>F</i><sub><i>n</i></sub>.  For negative <i>n</i>  we
-define <i>F</i><sub><i>n</i></sub> = (<font face="symbol">&#8722;</font>1)<sup><i>n</i>+1</sup> <i>F</i><sub><font face="symbol">&#8722;</font><i>n</i></sub>, which  is consistent with the
+define <i>F</i><sub><i>n</i></sub> = (&#8722;1)<sup><i>n</i>+1</sup> <i>F</i><sub>&#8722;<i>n</i></sub>, which  is consistent with the
 recurrence relation.
 <p>
-Using generating functions one can prove that <i>F</i><sub><i>n</i></sub> = <font face="symbol">&#966;</font><sup><i>n</i></sup> <font face="symbol">&#8722;</font> 1/<font face="symbol">&#966;</font><sup><i>n</i></sup>, where  <font face="symbol">&#966;</font> is (<font face="symbol">&#8730;</font>5 + 1)/2, i.e., one root of <i>x</i><sup>2</sup> <font face="symbol">&#8722;</font> <i>x</i> <font face="symbol">&#8722;</font> 1 = 0.  Fibonacci  numbers have  the  property <i>Gcd</i>( <i>F</i><sub><i>m</i></sub>, <i>F</i><sub><i>n</i></sub> ) = <i>F</i><sub><i>Gcd</i>(<i>m</i>,<i>n</i>)</sub>.  But a pair of Fibonacci numbers requires more division
+Using generating functions one can prove that <i>F</i><sub><i>n</i></sub> = &#966;<sup><i>n</i></sup> &#8722; 1/&#966;<sup><i>n</i></sup>, where  &#966; is (&#8730;5 + 1)/2, i.e., one root of <i>x</i><sup>2</sup> &#8722; <i>x</i> &#8722; 1 = 0.  Fibonacci  numbers have  the  property <i>Gcd</i>( <i>F</i><sub><i>m</i></sub>, <i>F</i><sub><i>n</i></sub> ) = <i>F</i><sub><i>Gcd</i>(<i>m</i>,<i>n</i>)</sub>.  But a pair of Fibonacci numbers requires more division
 steps in Euclid's algorithm (see&nbsp;<a href="CHAP054.htm#SSEC007.1">Gcd</a>) than any  other  pair of
 integers of the same size.  <code>Fibonacci(</code><var>k</var><code>)</code> is the special case
 <code>Lucas(1,-1,</code><var>k</var><code>)[1]</code> (see <a href="CHAP017.htm#SSEC003.2">Lucas</a>).
@@ -721,16 +721,16 @@ gap&gt; Fibonacci( -10 );
 returns the <var>k</var>-th values of the <strong>Lucas sequence</strong> with parameters <var>P</var>
 and <var>Q</var>, which must be integers, as a list of three integers.
 <p>
-Let <font face="symbol">&#945;</font>, <font face="symbol">&#946;</font> be the two roots of  <i>x</i><sup>2</sup> <font face="symbol">&#8722;</font> <i>P</i> <i>x</i> + <i>Q</i>  then we
-define <i>Lucas</i>( <i>P</i>, <i>Q</i>, <i>k</i> )[1] = <i>U</i><sub><i>k</i></sub> = (<font face="symbol">&#945;</font><sup><i>k</i></sup> <font face="symbol">&#8722;</font> <font face="symbol">&#946;</font><sup><i>k</i></sup>) / (<font face="symbol">&#945;</font><font face="symbol">&#8722;</font> <font face="symbol">&#946;</font>) and <i>Lucas</i>( <i>P</i>, <i>Q</i>, <i>k</i> )[2] = <i>V</i><sub><i>k</i></sub> = (<font face="symbol">&#945;</font><sup><i>k</i></sup> + <font face="symbol">&#946;</font><sup><i>k</i></sup>)  and as
+Let &#945;, &#946; be the two roots of  <i>x</i><sup>2</sup> &#8722; <i>P</i> <i>x</i> + <i>Q</i>  then we
+define <i>Lucas</i>( <i>P</i>, <i>Q</i>, <i>k</i> )[1] = <i>U</i><sub><i>k</i></sub> = (&#945;<sup><i>k</i></sup> &#8722; &#946;<sup><i>k</i></sup>) / (&#945;&#8722; &#946;) and <i>Lucas</i>( <i>P</i>, <i>Q</i>, <i>k</i> )[2] = <i>V</i><sub><i>k</i></sub> = (&#945;<sup><i>k</i></sup> + &#946;<sup><i>k</i></sup>)  and as
 a convenience <i>Lucas</i>( <i>P</i>, <i>Q</i>, <i>k</i> )[3] = <i>Q</i><sup><i>k</i></sup>.
 <p>
 The following recurrence relations are easily derived from the
-definition <i>U</i><sub>0</sub> = 0, <i>U</i><sub>1</sub> = 1, <i>U</i><sub><i>k</i></sub> = <i>P</i> <i>U</i><sub><i>k</i><font face="symbol">&#8722;</font>1</sub> <font face="symbol">&#8722;</font> <i>Q</i> <i>U</i><sub><i>k</i><font face="symbol">&#8722;</font>2</sub> and <i>V</i><sub>0</sub> = 2, <i>V</i><sub>1</sub> = <i>P</i>, <i>V</i><sub><i>k</i></sub> = <i>P</i> <i>V</i><sub><i>k</i><font face="symbol">&#8722;</font>1</sub> <font face="symbol">&#8722;</font> <i>Q</i> <i>V</i><sub><i>k</i><font face="symbol">&#8722;</font>2</sub>. Those relations are actually used
-to define <code>Lucas</code> if <font face="symbol">&#945;</font> =  <font face="symbol">&#946;</font>.
+definition <i>U</i><sub>0</sub> = 0, <i>U</i><sub>1</sub> = 1, <i>U</i><sub><i>k</i></sub> = <i>P</i> <i>U</i><sub><i>k</i>&#8722;1</sub> &#8722; <i>Q</i> <i>U</i><sub><i>k</i>&#8722;2</sub> and <i>V</i><sub>0</sub> = 2, <i>V</i><sub>1</sub> = <i>P</i>, <i>V</i><sub><i>k</i></sub> = <i>P</i> <i>V</i><sub><i>k</i>&#8722;1</sub> &#8722; <i>Q</i> <i>V</i><sub><i>k</i>&#8722;2</sub>. Those relations are actually used
+to define <code>Lucas</code> if &#945; =  &#946;.
 <p>
 Also the more complex relations used in <code>Lucas</code> can be easily derived
-<i>U</i><sub>2<i>k</i></sub> = <i>U</i><sub><i>k</i></sub> <i>V</i><sub><i>k</i></sub>, <i>U</i><sub>2<i>k</i>+1</sub> = (<i>P</i> <i>U</i><sub>2<i>k</i></sub> + <i>V</i><sub>2<i>k</i></sub>) / 2 and <i>V</i><sub>2<i>k</i></sub> = <i>V</i><sub><i>k</i></sub><sup>2</sup> <font face="symbol">&#8722;</font> 2 <i>Q</i><sup><i>k</i></sup>, <i>V</i><sub>2<i>k</i>+1</sub> = ((<i>P</i><sup>2</sup><font face="symbol">&#8722;</font>4<i>Q</i>) <i>U</i><sub>2<i>k</i></sub> + <i>P</i> <i>V</i><sub>2<i>k</i></sub>) / 2.
+<i>U</i><sub>2<i>k</i></sub> = <i>U</i><sub><i>k</i></sub> <i>V</i><sub><i>k</i></sub>, <i>U</i><sub>2<i>k</i>+1</sub> = (<i>P</i> <i>U</i><sub>2<i>k</i></sub> + <i>V</i><sub>2<i>k</i></sub>) / 2 and <i>V</i><sub>2<i>k</i></sub> = <i>V</i><sub><i>k</i></sub><sup>2</sup> &#8722; 2 <i>Q</i><sup><i>k</i></sup>, <i>V</i><sub>2<i>k</i>+1</sub> = ((<i>P</i><sup>2</sup>&#8722;4<i>Q</i>) <i>U</i><sub>2<i>k</i></sub> + <i>P</i> <i>V</i><sub>2<i>k</i></sub>) / 2.
 <p>
 <code>Fibonacci(</code><var>k</var><code>)</code> (see <a href="CHAP017.htm#SSEC003.1">Fibonacci</a>) is simply <code>Lucas(1,-1,</code><var>k</var><code>)[1]</code>.  In
 an abuse of notation, the sequence  <code>Lucas(1,-1,</code><var>k</var><code>)[2]</code> is sometimes
@@ -756,7 +756,7 @@ gap&gt; List( [0..10], i -&gt; Lucas(2,1,i)[1] );      # the roots are equal
 <li><code>Permanent( </code><var>mat</var><code> ) F</code>
 <p>
 returns the <strong>permanent</strong> of the matrix  <var>mat</var>.  The  permanent is defined
-by <font face="symbol">&#8721;</font><sub><i>p</i>  <font face="symbol">&#8712;</font> <i>Symm</i>(<i>n</i>)</sub><font face="symbol">&#8719;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup><i>mat</i>[<i>i</i>][<i>i</i><sup><i>p</i></sup>].
+by &#8721;<sub><i>p</i>  &#8712; <i>Symm</i>(<i>n</i>)</sub>&#8719;<sub><i>i</i>=1</sub><sup><i>n</i></sup><i>mat</i>[<i>i</i>][<i>i</i><sup><i>p</i></sup>].
 <p>
 Note the similarity of the definition of the permanent to the
 definition of the determinant (see&nbsp;<a href="CHAP024.htm#SSEC003.4">DeterminantMat</a>).
@@ -784,5 +784,5 @@ gap&gt; Permanent( [[1,1,0,1,0,0,0],
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP016.htm">Previous</a>] [<a href ="CHAP018.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -2,7 +2,7 @@
 ##
 #W  mgmring.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: mgmring.gi,v 4.58 2003/03/10 07:58:56 gap Exp $
+#H  @(#)$Id: mgmring.gi,v 4.58.2.1 2005/02/21 09:47:50 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  5. methods for groups of free magma ring elements
 ##
 Revision.mgmring_gi :=
-    "@(#)$Id: mgmring.gi,v 4.58 2003/03/10 07:58:56 gap Exp $";
+    "@(#)$Id: mgmring.gi,v 4.58.2.1 2005/02/21 09:47:50 gap Exp $";
 
 
 #T > Dear Craig,
@@ -361,8 +361,8 @@ InstallMethod( \*,
     ElmTimesRingElm );
 
 InstallMethod( \*,
-    "for magma ring element, and integer",
-    [ IsElementOfMagmaRingModuloRelations, IsInt ],
+    "for magma ring element, and rational",
+    [ IsElementOfMagmaRingModuloRelations, IsRat ],
     ElmTimesRingElm );
 
 
@@ -387,12 +387,12 @@ end;
 InstallMethod( \*,
     "for ring element, and magma ring element",
     IsRingsMagmaRings,
-    [ IsRingElement, IsElementOfMagmaRingModuloRelations ],0,
+    [ IsRingElement, IsElementOfMagmaRingModuloRelations ],
     RingElmTimesElm );
 
 InstallMethod( \*,
-    "for integer, and magma ring element",
-    [ IsInt, IsElementOfMagmaRingModuloRelations ],0,
+    "for rational, and magma ring element",
+    [ IsRat, IsElementOfMagmaRingModuloRelations ],
     RingElmTimesElm );
 
 

@@ -32,7 +32,7 @@ additional additive structure is present
 <li><code>IsNearAdditiveMagma( </code><var>obj</var><code> ) C</code>
 <p>
 A <strong>near-additive magma</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a domain <i>A</i> with an associative
-but not necessarily commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> <font face="symbol">&#8594;</font> <i>A</i>.
+but not necessarily commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> &#8594; <i>A</i>.
 <p>
 <a name = "SSEC001.2"></a>
 <li><code>IsNearAdditiveMagmaWithZero( </code><var>obj</var><code> ) C</code>
@@ -42,7 +42,7 @@ with an operation <code>0*</code> (or <code>Zero</code>) that yields the zero of
 <p>
 So a near-additive magma-with-zero <var>A</var> does always contain a unique
 additively neutral element <i>z</i>, i.e., <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all
-<i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
+<i>a</i>  &#8712; <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
 This element <i>z</i> can be computed with the operation <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>)
 as <code>Zero( </code><var>A</var><code> )</code>, and <i>z</i> is also equal to <code>Zero( </code><var>elm</var><code> )</code> and to
 <code>0*</code><var>elm</var><code></code> for each element <var>elm</var> in <var>A</var>.
@@ -57,7 +57,7 @@ a near-additive magma containing a zero may <strong>not</strong> lie in the cate
 <li><code>IsNearAdditiveMagmaWithInverses( </code><var>obj</var><code> ) C</code>
 <p>
 A <strong>near-additive group</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a near-additive magma-with-zero <i>A</i>
-with an operation <code>-1*</code>: <i>A</i> <font face="symbol">&#8594;</font> <i>A</i> that maps each element <var>a</var> of
+with an operation <code>-1*</code>: <i>A</i> &#8594; <i>A</i> that maps each element <var>a</var> of
 <i>A</i> to its additive inverse <code>-1*</code><var>a</var><code></code> (or <code>AdditiveInverse( </code><var>a</var><code> )</code>,
 see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveInverse</a>).
 <p>
@@ -77,7 +77,7 @@ but every trivial near-additive magma-with-zero is a near-additive group.
 <li><code>IsAdditiveMagma( </code><var>obj</var><code> ) C</code>
 <p>
 An <strong>additive magma</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a domain <i>A</i> with an associative and
-commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> <font face="symbol">&#8594;</font> <i>A</i>,
+commutative addition <code>+</code>: <i>A</i> &times;<i>A</i> &#8594; <i>A</i>,
 see&nbsp;<a href="CHAP053.htm#SSEC001.1">IsNearAdditiveMagma</a> and <a href="CHAP053.htm#SSEC003.1">IsAdditivelyCommutative</a>.
 <p>
 <a name = "SSEC001.5"></a>
@@ -88,7 +88,7 @@ an operation <code>0*</code> (or <code>Zero</code>) that yields the zero of <i>A
 <p>
 So an additive magma-with-zero <var>A</var> does always contain a unique
 additively neutral element <i>z</i>, i.e., <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all
-<i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
+<i>a</i>  &#8712; <i>A</i> (see&nbsp;<a href="CHAP053.htm#SSEC003.5">AdditiveNeutralElement</a>).
 This element <i>z</i> can be computed with the operation <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>)
 as <code>Zero( </code><var>A</var><code> )</code>, and <i>z</i> is also equal to <code>Zero( </code><var>elm</var><code> )</code> and to
 <code>0*</code><var>elm</var><code></code> for each element <var>elm</var> in <var>A</var>.
@@ -103,7 +103,7 @@ an additive magma containing a zero may <strong>not</strong> lie in the category
 <li><code>IsAdditiveMagmaWithInverses( </code><var>obj</var><code> ) C</code>
 <p>
 An <strong>additive group</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is an additive magma-with-zero <i>A</i> with an
-operation <code>-1*</code>: <i>A</i> <font face="symbol">&#8594;</font> <i>A</i> that maps each element <var>a</var> of <i>A</i> to
+operation <code>-1*</code>: <i>A</i> &#8594; <i>A</i> that maps each element <var>a</var> of <i>A</i> to
 its additive inverse <code>-1*</code><var>a</var><code></code> (or <code>AdditiveInverse( </code><var>a</var><code> )</code>,
 see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveInverse</a>).
 <p>
@@ -204,7 +204,7 @@ whether the elements of <var>gens</var> lie in <var>D</var>.
 <li><code>IsAdditivelyCommutative( </code><var>A</var><code> ) P</code>
 <p>
 A near-additive magma <var>A</var> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is <strong>additively commutative</strong> if
-for all elements <i>a</i>, <i>b</i>  <font face="symbol">&#8712;</font> <i>A</i>  the equality <i>a</i> + <i>b</i> = <i>b</i> + <i>a</i> holds.
+for all elements <i>a</i>, <i>b</i>  &#8712; <i>A</i>  the equality <i>a</i> + <i>b</i> = <i>b</i> + <i>a</i> holds.
 <p>
 Note that the commutativity of the <strong>multiplication</strong> <code>*</code> in a
 multiplicative structure can be tested with <code>IsCommutative</code>,
@@ -243,7 +243,7 @@ and taking additive inverses (see&nbsp;<a href="CHAP030.htm#SSEC010.9">AdditiveI
 <li><code>AdditiveNeutralElement( </code><var>A</var><code> ) A</code>
 <p>
 returns the element <i>z</i> in the near-additive magma <var>A</var> with the property
-that <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all <i>a</i>  <font face="symbol">&#8712;</font> <i>A</i> ,
+that <i>z</i> + <i>a</i> = <i>a</i> = <i>a</i> + <i>z</i> holds for all <i>a</i>  &#8712; <i>A</i> ,
 if such an element exists.
 Otherwise <code>fail</code> is returned.
 <p>
@@ -272,5 +272,5 @@ and taking additive inverses.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP052.htm">Previous</a>] [<a href ="CHAP054.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

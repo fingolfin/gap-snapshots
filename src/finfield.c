@@ -3,7 +3,7 @@
 *W  finfield.c                  GAP source                      Werner Nickel
 *W                                                         & Martin Schoenert
 **
-*H  @(#)$Id: finfield.c,v 4.45 2002/04/15 10:03:47 sal Exp $
+*H  @(#)$Id: finfield.c,v 4.45.6.1 2005/04/12 21:46:57 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -53,7 +53,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_finfield_c =
-   "@(#)$Id: finfield.c,v 4.45 2002/04/15 10:03:47 sal Exp $";
+   "@(#)$Id: finfield.c,v 4.45.6.1 2005/04/12 21:46:57 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -872,9 +872,6 @@ Int             LtFFE (
 **
 **  'PrFFV' prints the value <val> from the finite field <fld>.
 **
-**  This procedure is called by the 'PrVector' printing procedure, which  can
-**  not call 'PrFFE' because it would have to create  finite  field  elements
-**  to do so and calling 'NewBag' from a printing procedure is forbidden.
 */
 void            PrFFV (
     FF                  fld,

@@ -1,7 +1,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_vecgf2_c =
-   "@(#)$Id: vecgf2.c,v 4.101.2.3 2004/07/20 08:02:10 gap Exp $";
+   "@(#)$Id: vecgf2.c,v 4.101.2.4 2005/04/26 13:55:30 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -3189,7 +3189,10 @@ UInt AClosVec(
   UInt		cnt,	/* numbr of vectors used */
   UInt		stop,	/* stop value */
   UInt		bd,	/* best distance so far */
-  Obj		obv)	/* best vector so far */
+  Obj		obv,    /* best vector so far */
+  Obj           coords,  /* coefficients to get current vector */
+  Obj           bcoords  /* coefficients to get best vector */
+  )	
 {
   UInt		di;
   Obj		vp;
@@ -3200,9 +3203,10 @@ UInt AClosVec(
   UInt *w;
 
 
+
   /* maybe we don't add this basis vector -- if this leaves us enough possibilitiies */
   if ( pos+cnt<l ) {
-      bd = AClosVec(veclis,ovec,osum,pos+1,l,len,cnt,stop,bd,obv);
+    bd = AClosVec(veclis,ovec,osum,pos+1,l,len,cnt,stop,bd,obv,coords,bcoords);
       if (bd<=stop) {
         return bd;
       }
@@ -3217,6 +3221,11 @@ UInt AClosVec(
   w = BLOCKS_GF2VEC(ELM_PLIST(vp,1));
   AddGF2VecToGF2Vec(sum,w,len);
 
+  if (coords != (Obj) 0)
+    {
+      SET_ELM_PLIST(coords,pos,INTOBJ_INT(1));
+    }
+
   
   if (cnt == 0) /* this is a candidate */
     {
@@ -3230,11 +3239,21 @@ UInt AClosVec(
 	while (bv<=end) 
 	  *bv++=*sum++;
 	sum = BLOCKS_GF2VEC(osum);
+	if (coords != (Obj) 0)
+	  {
+	    UInt i;
+	    for (i=1; i <= l; i++)
+	      {
+		Obj x;
+		x = ELM_PLIST(coords,i);
+		SET_ELM_PLIST(bcoords,i,x);
+	      }
+	  }
       }
     }
   else /* need to add in some more */
     {
-      bd=AClosVec(veclis,ovec,osum,pos+1,l,len,cnt-1,stop,bd,obv);
+      bd=AClosVec(veclis,ovec,osum,pos+1,l,len,cnt-1,stop,bd,obv,coords,bcoords);
       if (bd<=stop) {
 	return bd;
       }
@@ -3242,9 +3261,18 @@ UInt AClosVec(
     
   /* reset component  */
   AddGF2VecToGF2Vec(sum,w,len);
+  if (coords != (Obj) 0)
+    {
+      SET_ELM_PLIST(coords,pos,INTOBJ_INT(0));
+    }
+  
 
   return bd;
 }
+
+
+
+
 
 Obj FuncAClosVec(
   Obj		self,
@@ -3276,9 +3304,64 @@ Obj FuncAClosVec(
   /* do the recursive work */
   AClosVec(veclis,vec,sum,1, LEN_PLIST(veclis),len,
     INT_INTOBJ(cnt),INT_INTOBJ(stop),len+1, /* maximal value +1 */
-    best);
+	   best, (Obj) 0, (Obj) 0);
 
   return best;
+}
+
+Obj FuncAClosVecCoords(
+  Obj		self,
+  Obj		veclis, /* pointers to matrix vectors and their multiples */
+  Obj		vec,    /* vector we compute distance to */
+  Obj		cnt,	/* distances list */
+  Obj		stop)	/* distances list */
+
+{
+  Obj		sum; /* sum vector */
+  Obj		best; /* best vector */
+  Obj         coords; /* coefficients of mat to get current */
+  Obj         bcoords; /* coefficients of mat to get best */
+  Obj           res; /* length 2 plist for results */
+  UInt 		len, len2,i;
+
+  len = LEN_GF2VEC(vec);
+  len2 = LEN_PLIST(veclis);
+
+  if (!ARE_INTOBJS(cnt,stop))
+    ErrorMayQuit("AClosVec: cnt and stop must be small integers, not a %s and a %s",
+	      (Int)TNAM_OBJ(cnt), (Int)TNAM_OBJ(stop));
+  
+
+  /* get space for sum vector and zero out */
+  NEW_GF2VEC( sum, TYPE_LIST_GF2VEC, len );
+  SET_LEN_GF2VEC( sum, len );
+
+  NEW_GF2VEC( best, TYPE_LIST_GF2VEC, len );
+  SET_LEN_GF2VEC( best, len );
+
+  coords = NEW_PLIST(  T_PLIST_CYC, len2 );
+  SET_LEN_PLIST( coords, len2 );
+
+  bcoords = NEW_PLIST(  T_PLIST_CYC, len2 );
+  SET_LEN_PLIST( bcoords, len2 );
+  
+  for (i=1; i <= len2; i++)
+    {
+      SET_ELM_PLIST(coords,i,INTOBJ_INT(0));
+      SET_ELM_PLIST(bcoords,i,INTOBJ_INT(0));
+    }
+
+  /* do the recursive work */
+  AClosVec(veclis,vec,sum,1, len2 ,len,
+    INT_INTOBJ(cnt),INT_INTOBJ(stop),len+1, /* maximal value +1 */
+	   best,coords,bcoords);
+
+  res = NEW_PLIST(T_PLIST_DENSE_NHOM,2);
+  SET_LEN_PLIST(res,2);
+  SET_ELM_PLIST(res,1,best);
+  SET_ELM_PLIST(res,2,bcoords);
+  CHANGED_BAG(res);
+  return res;
 }
 
 /****************************************************************************
@@ -4191,6 +4274,9 @@ static StructGVarFunc GVarFuncs [] = {
 
     { "A_CLOS_VEC", 4, "list, gf2vec, int, int",
       FuncAClosVec, "src/vecgf2.c:A_CLOS_VEC" },
+
+    { "A_CLOS_VEC_COORDS", 4, "list, gf2vec, int, int",
+      FuncAClosVecCoords, "src/vecgf2.c:A_CLOS_VEC_COORDS" },
 
     { "COSET_LEADERS_INNER_GF2", 4, "veclis, weight, tofind, leaders",
       FuncCOSET_LEADERS_INNER_GF2, "src/vecgf2.c:COSET_LEADERS_INNER_GF2" },

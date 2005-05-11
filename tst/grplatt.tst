@@ -2,14 +2,16 @@
 ##
 #W  grplatt.tst                GAP tests                     Alexander Hulpke
 ##
-#H  @(#)$Id: grplatt.tst,v 4.12 2003/11/15 17:05:31 gap Exp $
+#H  @(#)$Id: grplatt.tst,v 4.12.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This  file  tests the subgroup lattice program
 ##
+##  Exclude from testall.g: why?
+##
 
-gap> START_TEST("$Id: grplatt.tst,v 4.12 2003/11/15 17:05:31 gap Exp $");
+gap> START_TEST("$Id: grplatt.tst,v 4.12.2.3 2005/05/11 14:53:02 gap Exp $");
 
 gap> g:=PerfectGroup(IsPermGroup,95040);;
 gap> l:=ConjugacyClassesSubgroups(g);;
@@ -56,10 +58,10 @@ gap> AsSortedList(List(NormalSubgroups(g),Size));
 [ 1, 2, 4, 4, 4, 8 ]
 
 # thats all, folks
-gap> STOP_TEST( "grplatt.tst",4630000839);
+gap> STOP_TEST( "grplatt.tst", 4747200000 );
 
 
 #############################################################################
 ##
-#E  grplatt.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

@@ -12,17 +12,17 @@
 In this chapter <i>p</i> is always a (fixed) prime.
 <p>
 The <i>p</i>-adic numbers <i>Q</i><sub><i>p</i></sub> are the completion of the rational numbers with
-respect to the valuation <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>p</i><sup><i>v</i></sup>[(<i>a</i>)/(<i>b</i>)])=<i>v</i> if <i>p</i> divides neither
+respect to the valuation &#957;<sub><i>p</i></sub>(<i>p</i><sup><i>v</i></sup>[(<i>a</i>)/(<i>b</i>)])=<i>v</i> if <i>p</i> divides neither
 <i>a</i> nor <i>b</i>. They form a field of characteristic 0 which nevertheless shows
 some behaviour of the finite field with <i>p</i> elements.
 <p>
 A <i>p</i>-adic numbers can be approximated by a ``<i>p</i>-adic expansion'' which is 
 similar to the decimal expansion used for the reals (but written from left
 to right). So for example if
-<i>p</i>=2, the numbers 1,2,3,4,[&nbsp;1/2] and [&nbsp;4/5] are
+<i>p</i>=2, the numbers 1,2,3,4,[1/2] and [4/5] are
 represented as 1(2), 0&#183;1(2), 1&#183;1(2), 0&#183;01(2), 10(2) and
 0&#183;0101(2).  Approximation means to ignore powers of <i>p</i>, so for example
-with only 2 digits accuracy [&nbsp;4/5] would be approximated as
+with only 2 digits accuracy [4/5] would be approximated as
 0&#183;01(2).
 The important difference to the decimal approximation is that
 <i>p</i>-adic approximation is a ring homomorphism on the subrings of <i>p</i>-adic
@@ -112,7 +112,7 @@ polynomial given by <var>ram</var> an Eisenstein-polynomial (or 1+x). <strong>Th
 not checked by <font face="Gill Sans,Helvetica,Arial">GAP</font>.</strong>
 <p>
 Every number  out   of  <i>L</i> is  represented   as   a coeff.-list   for
-the basis {1,<i>x</i>,<i>x</i><sup>2</sup>,<font face="symbol">&#8230;</font>,<i>y</i>,<i>xy</i>,<i>x</i><sup>2</sup><i>y</i>,<font face="symbol">&#8230;</font>} of <i>L</i>. The integer
+the basis {1,<i>x</i>,<i>x</i><sup>2</sup>,&#8230;,<i>y</i>,<i>xy</i>,<i>x</i><sup>2</sup><i>y</i>,&#8230;} of <i>L</i>. The integer
 <var>precision</var> is the number of ``digits'' that all the coefficients have.
 <p>
 A general  comment: the polynomials with which
@@ -141,7 +141,7 @@ divisible by the prime p. (Otherwise precision will get lost.)
 The third usage creates a number in the family <var>extfam</var> of a <i>p</i>-adic
 extension. The second entry must be a list <var>L</var> of length 2 such that
 <var>list</var>[2] is  the list of coeff. for  the  basis
-{1,<font face="symbol">&#8230;</font>,<i>x</i><sup><i>f</i><font face="symbol">&#8722;</font>1</sup>&#183;<i>y</i><sup><i>e</i><font face="symbol">&#8722;</font>1</sup>} of the extended <i>p</i>-adic field and
+{1,&#8230;,<i>x</i><sup><i>f</i>&#8722;1</sup>&#183;<i>y</i><sup><i>e</i>&#8722;1</sup>} of the extended <i>p</i>-adic field and
 <var>list</var>[1] is a common <i>p</i>-part of all the coeff.
 <p>
 <i>p</i>-adic numbers allow the usual field operations.
@@ -158,7 +158,7 @@ to ``vanish''.
 For example in PadicExtensionNumberFamily(3, 5, [1,1,1], [1,1]) the
 number (1.2000, 0.1210)(3) can be represented as <code>[ 0, [ 1.2000, 0.1210
 ] ]</code>   or as <code>[-1, [ 12.000, 1.2100 ] ]</code> (here the coefficients have to be
-multiplied by <i>p</i><sup><font face="symbol">&#8722;</font>1</sup>).
+multiplied by <i>p</i><sup>&#8722;1</sup>).
 <p>
 So there may be a number (1.2, 2.2)(3) which seems to have only two
 digits of precision instead of the declared 5. But internally the number
@@ -174,5 +174,5 @@ precision.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP065.htm">Previous</a>] [<a href ="CHAP067.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -100,16 +100,16 @@ and so on, but we do not get the group itself.
 <p>
 So typical calculations with characters involve loops over lists of
 character values.
-For  example, the scalar product of two characters <font face="symbol">&#967;</font>, <font face="symbol">&#968;</font> of <i>G</i>
+For  example, the scalar product of two characters &#967;, &#968; of <i>G</i>
 given by
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> [<font face="symbol">&#967;</font>,<font face="symbol">&#968;</font>] = </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font><br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>g</i> <font face="symbol">&#8712;</font> <i>G</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><font face="symbol">&#967;</font>(<i>g</i>) <font face="symbol">&#968;</font>(<i>g</i><sup><font face="symbol">&#8722;</font>1</sup>) </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> [&#967;,&#968;] = </td><td nowrap="nowrap" align="center">1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>&#124;<i>G</i>&#124;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>g</i> &#8712; <i>G</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center">&#967;(<i>g</i>) &#968;(<i>g</i><sup>&#8722;1</sup>) </td></tr></table></td></tr></table>
 can be written as
 <pre>
 Sum( [ 1 .. n ], i -&gt; SizesConjugacyClasses( t )[i] * chi[i]
                           * ComplexConjugate( psi[i] ) );
 </pre>
 where <code>t</code> is the character table of <i>G</i>, and <code>chi</code>, <code>psi</code> are the lists
-of values of <font face="symbol">&#967;</font>, <font face="symbol">&#968;</font>, respectively.
+of values of &#967;, &#968;, respectively.
 <p>
 It is one of the advantages of character theory that after one has
 translated a problem concerning groups into a problem concerning
@@ -419,8 +419,8 @@ gap&gt; ComputedBrauerTables( tbl );
 <a name = "SSEC003.3"></a>
 <li><code>SupportedCharacterTableInfo V</code>
 <p>
-<code>SupportedCharacterTableInfo</code> is a list that contains at position 3<i>i</i><font face="symbol">&#8722;</font>2
-an attribute getter function, at position 3<i>i</i><font face="symbol">&#8722;</font>1 the name of this
+<code>SupportedCharacterTableInfo</code> is a list that contains at position 3<i>i</i>&#8722;2
+an attribute getter function, at position 3<i>i</i>&#8722;1 the name of this
 attribute, and at position 3<i>i</i> a list containing one or two of the
 strings <code>"class"</code>, <code>"character"</code>,
 depending on whether the attribute value relies on the ordering of
@@ -889,7 +889,7 @@ If a group has both ordinary irreducible characters in <code>Irr</code> and
 irreducible representations in <code>IrreducibleRepresentations</code> these are
 <strong>not</strong> guaranteed to be ordered in the same way.
 <p>
-(If <var>G</var> is <var>p</var>-solvable (see&nbsp;<a href="CHAP037.htm#SSEC014.18">IsPSolvable</a>) then the <var>p</var>-modular
+(If <var>G</var> is <var>p</var>-solvable (see&nbsp;<a href="CHAP037.htm#SSEC015.18">IsPSolvable</a>) then the <var>p</var>-modular
 irreducible characters can be computed by the Fong-Swan Theorem;
 in all other cases, there may be no method.)
 <p>
@@ -1239,7 +1239,7 @@ origin: ATLAS of finite groups, tests: 1.o.r., pow[2,3,5]
 <p>
 For a character table <var>tbl</var>, <code>InverseClasses</code> returns the list mapping
 each conjugacy class to its inverse class.
-This list can be regarded as (<font face="symbol">&#8722;</font>1)-st power map of <var>tbl</var>
+This list can be regarded as (&#8722;1)-st power map of <var>tbl</var>
 (see&nbsp;<a href="CHAP071.htm#SSEC001.1">PowerMap</a>).
 <p>
 <a name = "SSEC008.14"></a>
@@ -1251,7 +1251,7 @@ For a character table <var>tbl</var>, <code>RealClasses</code> returns the stric
 list of positions of classes in <var>tbl</var> that consist of real elements.
 <p>
 An element <i>x</i> is <strong>real</strong> iff it is conjugate to its inverse
-<i>x</i><sup><font face="symbol">&#8722;</font>1</sup> = <i>x</i><sup><i>o</i>(<i>x</i>)<font face="symbol">&#8722;</font>1</sup>.
+<i>x</i><sup>&#8722;1</sup> = <i>x</i><sup><i>o</i>(<i>x</i>)&#8722;1</sup>.
 <p>
 <pre>
 gap&gt; InverseClasses( CharacterTable( "A5" ) );
@@ -1310,7 +1310,7 @@ of those classes forming the normal subgroup in question.
 <p>
 correspond to <code>NormalSubgroups</code> and <code>MaximalNormalSubgroups</code>
 for the group of the ordinary character table <var>ordtbl</var>
-(see&nbsp;<a href="CHAP037.htm#SSEC018.7">NormalSubgroups</a>, <a href="CHAP037.htm#SSEC018.8">MaximalNormalSubgroups</a>).
+(see&nbsp;<a href="CHAP037.htm#SSEC019.7">NormalSubgroups</a>, <a href="CHAP037.htm#SSEC019.8">MaximalNormalSubgroups</a>).
 <p>
 The entries of the result lists are sorted according to increasing
 length.
@@ -1320,7 +1320,7 @@ given by inclusion.)
 <a name = "SSEC008.18"></a>
 <li><code>ClassPositionsOfAgemo( </code><var>ordtbl</var><code>, </code><var>p</var><code> ) O</code>
 <p>
-corresponds to <code>Agemo</code> (see&nbsp;<a href="CHAP037.htm#SSEC013.2">Agemo</a>)
+corresponds to <code>Agemo</code> (see&nbsp;<a href="CHAP037.htm#SSEC014.2">Agemo</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.19"></a>
@@ -1338,7 +1338,7 @@ Called with the only argument <var>tbl</var>,
 <code>ClassPositionsOfDirectProductDecompositions</code> returns the list of all
 those pairs [ <i>l</i><sub>1</sub>, <i>l</i><sub>2</sub> ] where <i>l</i><sub>1</sub> and <i>l</i><sub>2</sub> are lists of
 class positions of normal subgroups <i>N</i><sub>1</sub>, <i>N</i><sub>2</sub> of <i>G</i>
-such that <i>G</i> is their direct product and <font face="symbol">&#124;</font><i>N</i><sub>1</sub><font face="symbol">&#124;</font>  <font face="symbol">&#8804;</font> <font face="symbol">&#124;</font><i>N</i><sub>2</sub><font face="symbol">&#124;</font> holds.
+such that <i>G</i> is their direct product and &#124;<i>N</i><sub>1</sub>&#124;  &#8804; &#124;<i>N</i><sub>2</sub>&#124; holds.
 Called with second argument a list <var>nclasses</var> of class positions of a
 normal subgroup <i>N</i> of <i>G</i>,
 <code>ClassPositionsOfDirectProductDecompositions</code> returns the list of pairs
@@ -1348,37 +1348,37 @@ normal subgroups of <i>G</i>.
 <a name = "SSEC008.21"></a>
 <li><code>ClassPositionsOfDerivedSubgroup( </code><var>ordtbl</var><code> ) A</code>
 <p>
-corresponds to <code>DerivedSubgroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC011.3">DerivedSubgroup</a>)
+corresponds to <code>DerivedSubgroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC012.3">DerivedSubgroup</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.22"></a>
 <li><code>ClassPositionsOfElementaryAbelianSeries( </code><var>ordtbl</var><code> ) A</code>
 <p>
-corresponds to <code>ElementaryAbelianSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC016.9">ElementaryAbelianSeries</a>)
+corresponds to <code>ElementaryAbelianSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC017.9">ElementaryAbelianSeries</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.23"></a>
 <li><code>ClassPositionsOfFittingSubgroup( </code><var>ordtbl</var><code> ) A</code>
 <p>
-corresponds to <code>FittingSubgroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC011.5">FittingSubgroup</a>)
+corresponds to <code>FittingSubgroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC012.5">FittingSubgroup</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.24"></a>
 <li><code>ClassPositionsOfLowerCentralSeries( </code><var>tbl</var><code> ) A</code>
 <p>
-corresponds to <code>LowerCentralSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC016.11">LowerCentralSeriesOfGroup</a>)
+corresponds to <code>LowerCentralSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC017.11">LowerCentralSeriesOfGroup</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.25"></a>
 <li><code>ClassPositionsOfUpperCentralSeries( </code><var>ordtbl</var><code> ) A</code>
 <p>
-corresponds to <code>UpperCentralSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC016.12">UpperCentralSeriesOfGroup</a>)
+corresponds to <code>UpperCentralSeries</code> (see&nbsp;<a href="CHAP037.htm#SSEC017.12">UpperCentralSeriesOfGroup</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.26"></a>
 <li><code>ClassPositionsOfSupersolvableResiduum( </code><var>ordtbl</var><code> ) A</code>
 <p>
-corresponds to <code>SupersolvableResiduum</code> (see&nbsp;<a href="CHAP037.htm#SSEC011.11">SupersolvableResiduum</a>)
+corresponds to <code>SupersolvableResiduum</code> (see&nbsp;<a href="CHAP037.htm#SSEC012.11">SupersolvableResiduum</a>)
 for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 <a name = "SSEC008.27"></a>
@@ -1386,7 +1386,7 @@ for the group of the ordinary character table <var>ordtbl</var>.
 <p>
 is the sorted list of the positions of all conjugacy classes of the
 ordinary character table <var>ordtbl</var> that form the normal closure
-(see&nbsp;<a href="CHAP037.htm#SSEC010.4">NormalClosure</a>) of the conjugacy classes at positions in the
+(see&nbsp;<a href="CHAP037.htm#SSEC011.4">NormalClosure</a>) of the conjugacy classes at positions in the
 list <var>classes</var>.
 <p>
 <pre>
@@ -1469,21 +1469,21 @@ The default method uses the attribute
 position <var>p</var>, and calls the operation <code>PrimeBlocksOp</code> for
 computing values that are not yet known.
 <p>
-Two ordinary irreducible characters <font face="symbol">&#967;</font>, <font face="symbol">&#968;</font> of a group <i>G</i> are said
+Two ordinary irreducible characters &#967;, &#968; of a group <i>G</i> are said
 to lie in the same <i>p</i>-<strong>block</strong> if the images of their central characters
-<font face="symbol">&#969;</font><sub><font face="symbol">&#967;</font></sub>, <font face="symbol">&#969;</font><sub><font face="symbol">&#968;</font></sub> (see&nbsp;<a href="CHAP070.htm#SSEC008.17">CentralCharacter</a>) under the
-ring homomorphism <font face="symbol">&#8727;</font>:<i>R</i> <font face="symbol">&#8594;</font> <i>R</i> / <i>M</i> are equal,
+&#969;<sub>&#967;</sub>, &#969;<sub>&#968;</sub> (see&nbsp;<a href="CHAP070.htm#SSEC008.17">CentralCharacter</a>) under the
+ring homomorphism &#8727;:<i>R</i> &#8594; <i>R</i> / <i>M</i> are equal,
 where <i>R</i> denotes the ring of algebraic integers in the complex number
-field, and <i>M</i> is a maximal ideal in <i>R</i> with <i>pR</i>  <font face="symbol">&#8838;</font> <i>M</i>.
+field, and <i>M</i> is a maximal ideal in <i>R</i> with <i>pR</i>  &#8838; <i>M</i>.
 (The distribution to <i>p</i>-blocks is in fact independent of the choice of
 <i>M</i>, see&nbsp;<a href="biblio.htm#Isa76"><cite>Isa76</cite></a>.)
 <p>
-For <font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font> = <i>p</i><sup><i>a</i></sup> <i>m</i> where <i>p</i> does not divide <i>m</i>, the <strong>defect</strong> of a block
-is the integer <i>d</i> such that <i>p</i><sup><i>a</i><font face="symbol">&#8722;</font><i>d</i></sup> is the largest power of <i>p</i> that
+For &#124;<i>G</i>&#124; = <i>p</i><sup><i>a</i></sup> <i>m</i> where <i>p</i> does not divide <i>m</i>, the <strong>defect</strong> of a block
+is the integer <i>d</i> such that <i>p</i><sup><i>a</i>&#8722;<i>d</i></sup> is the largest power of <i>p</i> that
 divides the degrees of all characters in the block.
 <p>
-The <strong>height</strong> of a character <font face="symbol">&#967;</font> in the block is defined as the largest
-exponent <i>h</i> for which <i>p</i><sup><i>h</i></sup> divides <font face="symbol">&#967;</font>(1) / <i>p</i><sup><i>a</i><font face="symbol">&#8722;</font><i>d</i></sup>.
+The <strong>height</strong> of a character &#967; in the block is defined as the largest
+exponent <i>h</i> for which <i>p</i><sup><i>h</i></sup> divides &#967;(1) / <i>p</i><sup><i>a</i>&#8722;<i>d</i></sup>.
 <p>
 <pre>
 gap&gt; tbl:= CharacterTable( "L3(2)" );;
@@ -1583,7 +1583,7 @@ the matrix is stored as value of the <code>decmat</code> component of the
 <var>modtbl</var>.
 <p>
 An ordinary irreducible character is in block <i>i</i> if and only if all
-characters before the first character of the same block lie in <i>i</i><font face="symbol">&#8722;</font>1
+characters before the first character of the same block lie in <i>i</i>&#8722;1
 different blocks.
 An irreducible Brauer character is in block <i>i</i> if it has nonzero scalar
 product with an ordinary irreducible character in block <i>i</i>.
@@ -1719,7 +1719,7 @@ and <code>false</code> is returned at the end.
 <li><code>ComputedIsPSolvableCharacterTables( </code><var>tbl</var><code> ) A</code>
 <p>
 <code>IsPSolvableCharacterTable</code> for the ordinary character table <var>tbl</var>
-corresponds to <code>IsPSolvable</code> for the group of <var>tbl</var> (see&nbsp;<a href="CHAP037.htm#SSEC014.18">IsPSolvable</a>).
+corresponds to <code>IsPSolvable</code> for the group of <var>tbl</var> (see&nbsp;<a href="CHAP037.htm#SSEC015.18">IsPSolvable</a>).
 <var>p</var> must be either a prime integer or <code>0</code>.
 <p>
 The default method uses the attribute
@@ -1767,11 +1767,11 @@ If <var>tbl</var> is an ordinary character table then <code>Indicator</code> ret
 list of <var>n</var>-th Frobenius-Schur indicators of the characters in the list
 <var>characters</var>; the default of <var>characters</var> is <code>Irr( </code><var>tbl</var><code> )</code>.
 <p>
-The <i>n</i>-th Frobenius-Schur indicator <font face="symbol">&#957;</font><sub><i>n</i></sub>(<font face="symbol">&#967;</font>) of an ordinary
-character <font face="symbol">&#967;</font> of the group <i>G</i> is given by
-<font face="symbol">&#957;</font><sub><i>n</i></sub>(<font face="symbol">&#967;</font>) = [&nbsp;1/(<font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>)] <font face="symbol">&#8721;</font><sub><i>g</i>  <font face="symbol">&#8712;</font> <i>G</i></sub> <font face="symbol">&#967;</font>(<i>g</i><sup><i>n</i></sup>).
+The <i>n</i>-th Frobenius-Schur indicator &#957;<sub><i>n</i></sub>(&#967;) of an ordinary
+character &#967; of the group <i>G</i> is given by
+&#957;<sub><i>n</i></sub>(&#967;) = [1/(&#124;<i>G</i>&#124;)] &#8721;<sub><i>g</i>  &#8712; <i>G</i></sub> &#967;(<i>g</i><sup><i>n</i></sup>).
 <p>
-If <var>tbl</var> is a Brauer table in characteristic  <font face="symbol">&#8800;</font> 2 and <i>n</i>  = 2
+If <var>tbl</var> is a Brauer table in characteristic  &#8800; 2 and <i>n</i>  = 2
 then <code>Indicator</code> returns the second indicator.
 <p>
 The default method uses the attribute
@@ -1821,19 +1821,19 @@ returns the class multiplication coefficient of the classes <var>i</var>, <var>j
 and <var>k</var> of the group <i>G</i> with ordinary character table <var>tbl</var>.
 <p>
 The class multiplication coefficient <i>c</i><sub><i>i</i>,<i>j</i>,<i>k</i></sub> of the classes <var>i</var>,
-<var>j</var>, <var>k</var> equals the number of pairs (<i>x</i>,<i>y</i>) of elements <i>x</i>, <i>y</i>  <font face="symbol">&#8712;</font> <i>G</i>
+<var>j</var>, <var>k</var> equals the number of pairs (<i>x</i>,<i>y</i>) of elements <i>x</i>, <i>y</i>  &#8712; <i>G</i>
 such that <i>x</i> lies in class <var>i</var>, <i>y</i> lies in class <var>j</var>,
 and their product <i>xy</i> is a fixed element of class <var>k</var>.
 <p>
 In the center of the group algebra of <i>G</i>, these numbers are found as
 coefficients of the decomposition of the product of two class sums <i>K</i><sub><i>i</i></sub>
 and <i>K</i><sub><i>j</i></sub> into class sums,
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>K</i><sub><i>i</i></sub> <i>K</i><sub><i>j</i></sub> = </td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>k</i></font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>c</i><sub><i>ijk</i></sub> <i>K</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>K</i><sub><i>i</i></sub> <i>K</i><sub><i>j</i></sub> = </td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>k</i></small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>c</i><sub><i>ijk</i></sub> <i>K</i><sub><i>k</i></sub>. </td></tr></table></td></tr></table>
 Given the character table of a finite group <i>G</i>,
-whose classes  are <i>C</i><sub>1</sub>, ..., <i>C</i><sub><i>r</i></sub> with representatives <i>g</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>C</i><sub><i>i</i></sub>,
+whose classes  are <i>C</i><sub>1</sub>, ..., <i>C</i><sub><i>r</i></sub> with representatives <i>g</i><sub><i>i</i></sub>  &#8712; <i>C</i><sub><i>i</i></sub>,
 the class multiplication coefficient <i>c</i><sub><i>ijk</i></sub> can be computed
 by the following formula.
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>c</i><sub><i>ijk</i></sub> = </td><td nowrap="nowrap" align="center">&nbsp;<font face="symbol">&#124;&#124;</font><i>C</i><sub><i>i</i></sub><font face="symbol">&#124;&#124;</font><font face="symbol">&#124;&#124;</font><i>C</i><sub><i>j</i></sub><font face="symbol">&#124;&#124;</font><div class="hrcomp"><hr noshade="noshade" size="1"/></div><font face="symbol">&#124;&#124;</font><i>G</i><font face="symbol">&#124;&#124;</font><br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i>)</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="center"><font face="symbol">&#967;</font>(<i>g</i><sub><i>i</i></sub>) <font face="symbol">&#967;</font>(<i>g</i><sub><i>j</i></sub>)</td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><font face="symbol">&#967;</font>(<i>g</i><sub><i>k</i></sub>)<br /></div><div class="comb">&nbsp;</div></td></tr></table><div class="hrcomp"><hr noshade="noshade" size="1"/></div><font face="symbol">&#967;</font>(1)<br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>c</i><sub><i>ijk</i></sub> = </td><td nowrap="nowrap" align="center">&#124;&#124;<i>C</i><sub><i>i</i></sub>&#124;&#124;&#124;&#124;<i>C</i><sub><i>j</i></sub>&#124;&#124;<div class="hrcomp"><hr noshade="noshade" size="1"/></div>&#124;&#124;<i>G</i>&#124;&#124;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small>&#967; &#8712; <i>Irr</i>(<i>G</i>)</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center">&#967;(<i>g</i><sub><i>i</i></sub>) &#967;(<i>g</i><sub><i>j</i></sub>)</td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm">&#967;(<i>g</i><sub><i>k</i></sub>)<br /></div><div class="comb">&nbsp;</div></td></tr></table><div class="hrcomp"><hr noshade="noshade" size="1"/></div>&#967;(1)<br /></td><td nowrap="nowrap" align="center">. </td></tr></table></td></tr></table>
 On the other hand the knowledge of the class multiplication coefficients
 admits the computation of the irreducible characters of <i>G</i>.
 (see&nbsp;<a href="CHAP069.htm#SSEC012.1">IrrDixonSchneider</a>).
@@ -1850,14 +1850,14 @@ The length of <var>classes</var> must be at least 2.
 Let <i>C</i> = (<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, ..., <i>C</i><sub><i>n</i></sub>) denote the <i>n</i>-tuple of conjugacy
 classes of <i>G</i> that are indexed by <var>classes</var>.
 The class structure <i>n</i>(<i>C</i>) equals
-the number of <i>n</i>-tuples (<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>) of elements
-<i>g</i><sub><i>i</i></sub> <font face="symbol">&#8712;</font> <i>C</i><sub><i>i</i></sub> with <i>g</i><sub>1</sub> <i>g</i><sub>2</sub> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub> = 1.
+the number of <i>n</i>-tuples (<i>g</i><sub>1</sub>, <i>g</i><sub>2</sub>, &#8230;, <i>g</i><sub><i>n</i></sub>) of elements
+<i>g</i><sub><i>i</i></sub> &#8712; <i>C</i><sub><i>i</i></sub> with <i>g</i><sub>1</sub> <i>g</i><sub>2</sub> &#8230;<i>g</i><sub><i>n</i></sub> = 1.
 Note the difference to the definition of the class multiplication
 coefficients in <code>ClassMultiplicationCoefficient</code>
 (see&nbsp;<a href="CHAP069.htm#SSEC010.6">ClassMultiplicationCoefficient!for character tables</a>).
 <p>
-<i>n</i>(<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>C</i><sub><i>n</i></sub>) is computed using the formula
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>n</i>(<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>C</i><sub><i>n</i></sub>) = </td><td nowrap="nowrap" align="center">&nbsp;<font face="symbol">&#124;&#124;</font><i>C</i><sub>1</sub><font face="symbol">&#124;&#124;</font><font face="symbol">&#124;&#124;</font><i>C</i><sub>2</sub><font face="symbol">&#124;&#124;</font><font face="symbol">&#8230;</font><font face="symbol">&#124;&#124;</font><i>C</i><sub><i>n</i></sub><font face="symbol">&#124;&#124;</font><div class="hrcomp"><hr noshade="noshade" size="1"/></div><font face="symbol">&#124;&#124;</font><i>G</i><font face="symbol">&#124;&#124;</font><br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><font size="-1"></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i>)</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center">&nbsp;<font face="symbol">&#967;</font>(<i>g</i><sub>1</sub>)<font face="symbol">&#967;</font>(<i>g</i><sub>2</sub>)<font face="symbol">&#8230;</font><font face="symbol">&#967;</font>(<i>g</i><sub><i>n</i></sub>)<div class="hrcomp"><hr noshade="noshade" size="1"/></div><font face="symbol">&#967;</font>(1)<sup><i>n</i><font face="symbol">&#8722;</font>2</sup><br /></td><td nowrap="nowrap" align="center">&#183;</td></tr></table></td></tr></table>
+<i>n</i>(<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, &#8230;, <i>C</i><sub><i>n</i></sub>) is computed using the formula
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>n</i>(<i>C</i><sub>1</sub>, <i>C</i><sub>2</sub>, &#8230;, <i>C</i><sub><i>n</i></sub>) = </td><td nowrap="nowrap" align="center">&#124;&#124;<i>C</i><sub>1</sub>&#124;&#124;&#124;&#124;<i>C</i><sub>2</sub>&#124;&#124;&#8230;&#124;&#124;<i>C</i><sub><i>n</i></sub>&#124;&#124;<div class="hrcomp"><hr noshade="noshade" size="1"/></div>&#124;&#124;<i>G</i>&#124;&#124;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center"><small></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small>&#967; &#8712; <i>Irr</i>(<i>G</i>)</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"></td><td nowrap="nowrap" align="center">&#967;(<i>g</i><sub>1</sub>)&#967;(<i>g</i><sub>2</sub>)&#8230;&#967;(<i>g</i><sub><i>n</i></sub>)<div class="hrcomp"><hr noshade="noshade" size="1"/></div>&#967;(1)<sup><i>n</i>&#8722;2</sup><br /></td><td nowrap="nowrap" align="center">&#183;</td></tr></table></td></tr></table>
 <p>
 <a name = "SSEC010.8"></a>
 <li><code>MatClassMultCoeffsCharTable( </code><var>tbl</var><code>, </code><var>i</var><code> ) F</code>
@@ -2336,8 +2336,8 @@ it is controlled by the global function <code>IsDxLargeGroup</code>
 (see&nbsp;<a href="CHAP069.htm#SSEC015.8">IsDxLargeGroup</a>).
 <p>
 The routines compute in a prime field of size <i>p</i>,
-such that the exponent of the group divides (<i>p</i><font face="symbol">&#8722;</font>1) and such that
-2 <font face="symbol">&#8730;</font>{<font face="symbol">&#124;</font><i>G</i><font face="symbol">&#124;</font>}  &lt;  <i>p</i>.
+such that the exponent of the group divides (<i>p</i>&#8722;1) and such that
+2 &#8730;{&#124;<i>G</i>&#124;}  &lt;  <i>p</i>.
 Currently prime fields of size smaller than 65&nbsp;536 are handled more
 efficiently than larger prime fields,
 so the runtime of the character calculation depends on how large the
@@ -2517,12 +2517,12 @@ After the initialisation, one structure matrix is evaluated,
 yielding smaller spaces and several irreducible characters.
 <pre>
 gap&gt; DixonSplit( d );
-#I  Matrix 20,Representative of Order 3,Centralizer: 5832
+#I  Matrix 4,Representative of Order 3,Centralizer: 5832
 #I  Dimensions: [ 1, 12, 2, 2, 4, 2, 1, 1, 1, 1, 1 ]
 #I  Two-dim space split
 #I  Two-dim space split
 #I  Two-dim space split
-20
+4
 </pre>
 In this case spaces of the listed dimensions are a result of the
 splitting process.
@@ -2549,7 +2549,7 @@ gap&gt; ro:= ReducedOrdinary( c, d.irreducibles, t );;  ro.irreducibles;
 [  ]
 gap&gt; List( ro.remainders, i -&gt; ScalarProduct( c, i, i) );
 [ 2, 2, 4, 4, 4, 4, 13, 13, 18, 18, 19, 21, 21, 36, 36, 29, 34, 34, 42, 34, 
-  48, 54, 62, 68, 68, 78, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 
+  48, 54, 62, 68, 68, 78, 84, 84, 90, 88, 159, 169, 169, 172, 172, 266, 271, 
   271, 268, 274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 
   768, 768, 890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 
   2058, 2379, 2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 
@@ -2558,8 +2558,8 @@ gap&gt; List( ro.remainders, i -&gt; ScalarProduct( c, i, i) );
   38942, 44950, 78778 ]
 gap&gt; t:= SplitCharacters( d, ro.remainders );;
 gap&gt; List( t, i -&gt; ScalarProduct( c, i, i ) );
-[ 2, 2, 4, 2, 2, 4, 4, 3, 6, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
-  16, 42, 36, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
+[ 2, 2, 4, 2, 2, 4, 4, 6, 3, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
+  16, 42, 36, 84, 84, 90, 88, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
   274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 768, 768, 
   890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 2058, 2379, 
   2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 4760, 5112, 
@@ -2584,10 +2584,10 @@ So we convert them to a list of values
 before feeding them in the machinery of the Dixon-algorithm.
 <pre>
 gap&gt; l.irreducibles[1];
-Character( CharacterTable( PSL(4,3) ), [ 640, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  -8, 0, 0, -8, 0, 0, 0, 1, -8, 0, 1, 0, 0, E(13)^7+E(13)^8+E(13)^11, 
-  E(13)+E(13)^3+E(13)^9, E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 
-  1 ] )
+Character( CharacterTable( PSL(4,3) ),
+[ 640, 0, 0, -8, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)+E(13)^3+E(13)^9, 
+  E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, -8, -8, 0, 0, 0, 0, 0, 1, 1, 1 ] )
 gap&gt; l:=List(l.irreducibles,ValuesOfClassFunction);;
 gap&gt; DxIncludeIrreducibles( d, l );
 gap&gt; Length( d.irreducibles );
@@ -2601,7 +2601,7 @@ group.
 This makes them available also to the character table.
 <pre>
 gap&gt; irrs:= DixontinI( d );;
-#I  Total:1 matrices,[ 20 ]
+#I  Total:1 matrices,[ 4 ]
 gap&gt; SetIrr(g,irrs);
 gap&gt; Length(Irr(c));
 29
@@ -2884,8 +2884,8 @@ The first form sorts the classes at positions contained in the list
 <var>kernel</var> in their kernel.
 <p>
 The second form does the same successively for all kernels <i>k</i><sub><i>i</i></sub> in
-the list <i>normalseries</i>  = [ <i>k</i><sub>1</sub>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>k</i><sub><i>n</i></sub> ] where
-<i>k</i><sub><i>i</i></sub> must be a sublist of <i>k</i><sub><i>i</i>+1</sub> for 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i><font face="symbol">&#8722;</font>1.
+the list <i>normalseries</i>  = [ <i>k</i><sub>1</sub>, <i>k</i><sub>2</sub>, &#8230;, <i>k</i><sub><i>n</i></sub> ] where
+<i>k</i><sub><i>i</i></sub> must be a sublist of <i>k</i><sub><i>i</i>+1</sub> for 1  &#8804; <i>i</i>  &#8804; <i>n</i>&#8722;1.
 <p>
 The third form computes the table <i>F</i> of the factor group of <var>tbl</var>
 modulo the normal subgroup formed by the classes whose positions are
@@ -2921,9 +2921,9 @@ see&nbsp;<a href="CHAP069.htm#SECT005">Conventions for Character Tables</a>.
 <a name = "SSEC019.5"></a>
 <li><code>ClassPermutation( </code><var>tbl</var><code> ) A</code>
 <p>
-is a permutation <font face="symbol">&#960;</font> of classes of the character table <var>tbl</var>.
+is a permutation &#960; of classes of the character table <var>tbl</var>.
 If it is stored then class fusions into <var>tbl</var> that are stored on other
-tables must be followed by <font face="symbol">&#960;</font> in order to describe the correct
+tables must be followed by &#960; in order to describe the correct
 fusion.
 <p>
 This attribute value is bound only if <var>tbl</var> was obtained from another
@@ -3059,14 +3059,14 @@ Group([ (4,5) ])
 <p>
 Let <var>mat1</var> and <var>mat2</var> be matrices.
 <code>TransformingPermutations</code> tries to construct
-a permutation <font face="symbol">&#960;</font> that transforms the set of rows of the matrix
+a permutation &#960; that transforms the set of rows of the matrix
 <var>mat1</var> to the set of rows of the matrix <var>mat2</var>
 by permuting the columns.
 <p>
 If such a permutation exists,
 a record with components <code>columns</code>, <code>rows</code>, and <code>group</code> is returned,
 otherwise <code>fail</code>.
-For <tt>TransformingPermutations</tt><tt>(</tt> <i>mat</i>1 <tt>,</tt> <i>mat</i>2  <tt>)</tt><tt> = </tt><i>r</i>   <font face="symbol">&#8800;</font> <tt>fail</tt>,
+For <tt>TransformingPermutations</tt><tt>(</tt> <i>mat</i>1 <tt>,</tt> <i>mat</i>2  <tt>)</tt><tt> = </tt><i>r</i>   &#8800; <tt>fail</tt>,
 we have <code></code><var>mat2</var><code> =
  Permuted( List( </code><var>mat1</var><code>, x -&gt; Permuted( x, </code><var>r</var><code>.columns ) ),</code><var>r</var><code>.rows )</code>.
 <p>
@@ -3081,14 +3081,14 @@ preserves the set of rows of <var>mat2</var>.
 <p>
 Let <var>tbl1</var> and <var>tbl2</var> be character tables.
 <code>TransformingPermutationsCharacterTables</code> tries to construct
-a permutation <font face="symbol">&#960;</font> that transforms the set of rows of the matrix
+a permutation &#960; that transforms the set of rows of the matrix
 <code>Irr( </code><var>tbl1</var><code> )</code> to the set of rows of the matrix <code>Irr( </code><var>tbl2</var><code> )</code>
 by permuting the columns (see&nbsp;<a href="CHAP069.htm#SSEC020.3">TransformingPermutations</a>),
-such that <font face="symbol">&#960;</font> transforms also the power maps and the element orders.
+such that &#960; transforms also the power maps and the element orders.
 <p>
-If such a permutation <font face="symbol">&#960;</font> exists then a record with the components
-<code>columns</code> (<font face="symbol">&#960;</font>),
-<code>rows</code> (the permutation of <code>Irr( </code><var>tbl1</var><code> )</code> corresponding to <font face="symbol">&#960;</font>), and
+If such a permutation &#960; exists then a record with the components
+<code>columns</code> (&#960;),
+<code>rows</code> (the permutation of <code>Irr( </code><var>tbl1</var><code> )</code> corresponding to &#960;), and
 <code>group</code> (the permutation group of table automorphisms of <var>tbl2</var>,
 see&nbsp;<a href="CHAP069.htm#SSEC008.8">AutomorphismsOfTable</a>) is returned.
 If no such permutation exists, <code>fail</code> is returned.
@@ -3231,23 +3231,23 @@ gap&gt; irr:= Irr( g );
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 gap&gt; kernel:= KernelOfCharacter( irr[3] );
-Group([ (1,2)(3,4), (1,4)(2,3) ])
+Group([ (1,2)(3,4), (1,3)(2,4) ])
 gap&gt; HasNormalSubgroupClassesInfo( tbl );
 true
 gap&gt; NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [  ] )
 gap&gt; ClassPositionsOfNormalSubgroup( tbl, kernel );
 [ 1, 3 ]
 gap&gt; FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
 Group([ f1, f2 ])
 gap&gt; NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [ Group([ f1, f2 ]) ] )
 </pre>
 <p>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP068.htm">Previous</a>] [<a href ="CHAP070.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

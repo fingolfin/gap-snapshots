@@ -2,12 +2,14 @@
 ##
 #W  relation.tst                 GAP library                Robert F. Morse
 ##
-#H  @(#)$Id: relation.tst,v 4.5 2002/04/15 10:08:41 sal Exp $
+#H  @(#)$Id: relation.tst,v 4.5.4.4 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: relation.tst,v 4.5 2002/04/15 10:08:41 sal Exp $");
+gap> START_TEST("$Id: relation.tst,v 4.5.4.4 2005/05/11 14:53:02 gap Exp $");
 
 gap> ##################################################
 gap> ##
@@ -192,4 +194,9 @@ gap> Size(UnderlyingRelation(rel));
 45
 gap> Size(GeneratorsOfEquivalenceRelationPartition(EquivalenceRelationByPairs(dom,el)));
 9 
-gap> STOP_TEST( "relation.tst", 48010000 );
+gap> STOP_TEST( "relation.tst", 38100000 );
+
+#############################################################################
+##
+#E
+

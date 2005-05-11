@@ -1199,10 +1199,12 @@ gap&gt; 1+2;
 <p>
 <a name = "I74"></a>
 
-Examples whose output may vary should use the macro <code>|unstableoutput</code>, e.g.
+Examples whose output may vary should be introduced with <code>%</code><code>notest</code>,
+e.g.
 <p>
 <pre>
-\beginexample|unstableoutput
+%notest
+\beginexample
 gap&gt; Exec("date");
 Sun Oct  7 16:23:45 CEST 2001
 \endexample
@@ -1215,9 +1217,7 @@ gap&gt; Exec("date");
 Sun Oct  7 16:23:45 CEST 2001
 </pre>
 <p>
-but the <code>testexample</code> routine knows to treat the example differently
-(namely, it ensures there is output but does not insist on it being
-the same).
+but the automatic manual checker knows to treat the example differently.
 <p>
 Non-<font face="Gill Sans,Helvetica,Arial">GAP</font> examples are typeset in typewriter style
 using the <code>\begintt</code>, <code>\endtt</code> environment.
@@ -1306,7 +1306,7 @@ $$
 The example produces ...
 <p>
 From a theorem of Gauss we know that
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>b</i><sub><i>N</i></sub> = </td><td align="left" class="cl"><font face="symbol">&#63729;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63730;<br />&#63732;<br />&#63732;<br />&#63732;<br />&#63731;</font> </td><td nowrap="nowrap"><table border="0" align="left"><tr><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(<font face="symbol">&#8722;</font>1+<font face="symbol">&#8730;</font><i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><i>N</i>  <font face="symbol">&#8801;</font> 1 </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" align="left"> mod  4</td></tr></table></td></tr><tr><td nowrap="nowrap" align="center" colspan="1"><table border="0"><tr><td nowrap="nowrap" Align="center"> </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(<font face="symbol">&#8722;</font>1+<i>i</i> <font face="symbol">&#8730;</font><i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0"><tr><td nowrap="nowrap" Align="center"><i>N</i>  <font face="symbol">&#8801;</font> <font face="symbol">&#8722;</font>1 </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"> mod  4</td></tr></table></td></tr></table></td><td nowrap="nowrap">  </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>b</i><sub><i>N</i></sub> = </td><td align="left" class="cl">&#63729;<br />&#63732;<br />&#63732;<br />&#63730;<br />&#63732;<br />&#63732;<br />&#63731; </td><td nowrap="nowrap"><table border="0" align="left" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap" align="center">1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(&#8722;1+&#8730;<i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>N</i>  &#8801; 1 </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"> mod  4</td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> </td><td nowrap="nowrap" align="center">1<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">(&#8722;1+<i>i</i> &#8730;<i>N</i>) </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"><span class="roman">if</span> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"><i>N</i>  &#8801; &#8722;1 </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1"> mod  4</td></tr></table></td></tr></table></td><td nowrap="nowrap">  </td></tr></table></td></tr></table>
 <p>
 <p>
 <h2><a name="SECT009">2.9 Testing the Examples</a></h2>
@@ -1836,7 +1836,7 @@ representation, operation, property or variable.
 <ul>
 <p>
 <li>
-<i>X</i> , <i>Y</i> , ..., <i>Z</i>   <font face="symbol">&#8712;</font> { <tt>A</tt>, <tt>C</tt>, <tt>F</tt>, <tt>M</tt>, <tt>R</tt>, <tt>O</tt>, <tt>P</tt>, <tt>V</tt> }.
+<i>X</i> , <i>Y</i> , ..., <i>Z</i>   &#8712; { <tt>A</tt>, <tt>C</tt>, <tt>F</tt>, <tt>M</tt>, <tt>R</tt>, <tt>O</tt>, <tt>P</tt>, <tt>V</tt> }.
 If the letter is <code>V</code> then no parentheses or arguments should  follow  the
 ``function name'' <var>funci</var>.
 <p>
@@ -1993,5 +1993,5 @@ currency.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

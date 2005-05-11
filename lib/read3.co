@@ -2890,12 +2890,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/lierep.gd"
 
-#F  file="lib/integer.gd" crc=-62431512
+#F  file="lib/integer.gd" crc=131462904
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/integer.gd", -62431512 );
+COM_RESULT := COM_FILE( "lib/integer.gd", 131462904 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/integer.gd\"");
 elif COM_RESULT = 1  then
@@ -2905,7 +2905,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/integer.gd");
 elif COM_RESULT = 3  then
-Revision.integer_gd:="@(#)$Id: integer.gd,v 4.31 2003/09/10 09:47:07 gap Exp $";
+Revision.integer_gd:="@(#)$Id: integer.gd,v 4.31.2.1 2005/05/09 07:08:04 gap Exp $";
 DeclareCategory("IsIntegers",IsEuclideanRing and IsFLMLOR);
 DeclareCategory("IsPositiveIntegers",IsSemiringWithOne);
 DeclareCategory("IsNonnegativeIntegers",IsSemiringWithOneAndZero);
@@ -2916,6 +2916,9 @@ DeclareCategory("IsGaussianIntegers",IsEuclideanRing and IsFLMLOR and IsFiniteDi
 DeclareGlobalVariable("GaussianIntegers","ring of Gaussian integers");
 DeclareGlobalVariable("Primes","list of the 168 primes less than 1000");
 DeclareGlobalVariable("Primes2","sorted list of large primes");
+DeclareGlobalVariable("ProbablePrimes2","sorted list of probable primes");
+DeclareInfoClass("InfoPrimeInt");
+SetInfoLevel(InfoPrimeInt,1);
 DeclareGlobalFunction("AbsInt");
 DeclareGlobalFunction("BestQuoInt");
 DeclareGlobalFunction("ChineseRem");
@@ -2997,6 +3000,34 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/numtheor.gd"
 
+#F  file="lib/contfrac.gd" crc=17036164
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/contfrac.gd", 17036164 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/contfrac.gd\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/contfrac.gd");
+elif COM_RESULT = 3  then
+Revision.contfrac_gd:="@(#)$Id: contfrac.gd,v 4.5.2.1 2005/05/03 13:44:09 stefan Exp $";
+DeclareGlobalFunction("ContinuedFractionExpansionOfRoot");
+DeclareGlobalFunction("ContinuedFractionApproximationOfRoot");
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/contfrac.gd"
+
 #F  file="lib/string.gd" crc=19354956
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
@@ -3052,7 +3083,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/string.gd"
 
-#F  file="lib/ratfun.gd" crc=-64581849
+#F  file="lib/ratfun.gd" crc=-105074994
 RANK_FILTER_LIST  := [ 1985, 1, 1, 0, 1, 0, 78, 4, 993, 2, 1, 0, 1985, 1, 1, 
   0, 1, 0, 123, 4, 993, 2, 1, 0, 41549180, 12, 1, 0, 1, 0, 65914919, 15, 993, 
   2, 1, 0, 15990440, 13, 1, 0, 1, 0, 63526753, 16, 993, 2, 1, 0, 41549180, 
@@ -3070,7 +3101,7 @@ RANK_FILTER_LIST  := [ 1985, 1, 1, 0, 1, 0, 78, 4, 993, 2, 1, 0, 1985, 1, 1,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ratfun.gd", -64581849 );
+COM_RESULT := COM_FILE( "lib/ratfun.gd", -105074994 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ratfun.gd\"");
 elif COM_RESULT = 1  then
@@ -3080,7 +3111,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ratfun.gd");
 elif COM_RESULT = 3  then
-Revision.ratfun_gd:="@(#)$Id: ratfun.gd,v 4.64 2003/06/25 15:51:51 gap Exp $";
+Revision.ratfun_gd:="@(#)$Id: ratfun.gd,v 4.64.2.2 2005/05/12 09:10:55 gap Exp $";
 DeclareInfoClass("InfoPoly");
 DeclareCategory("IsPolynomialFunction",IsRingElementWithInverse and IsZDFRE);
 DeclareCategory("IsRationalFunction",IsPolynomialFunction);
@@ -3125,6 +3156,7 @@ DeclareOperation("LaurentPolynomialByCoefficients",[IsFamily,IsList,IsInt,IsInt]
 DeclareSynonym("UnivariateLaurentPolynomialByCoefficients",LaurentPolynomialByCoefficients);
 DeclareGlobalFunction("LaurentPolynomialByExtRep");
 DeclareGlobalFunction("PolynomialByExtRep");
+DeclareSynonym("PolynomialByExtRepNC",PolynomialByExtRep);
 DeclareGlobalFunction("RationalFunctionByExtRep");
 DeclareGlobalFunction("UnivariateRationalFunctionByExtRep");
 DeclareGlobalFunction("RationalFunctionByExtRepWithCancellation");
@@ -3144,6 +3176,7 @@ DeclareAttribute("CoefficientsOfUnivariateRationalFunction",IsUnivariateRational
 DeclareOperation("UnivariateRationalFunctionByCoefficients",[IsFamily,IsList,IsList,IsInt,IsInt]);
 DeclareOperation("Value",[IsPolynomialFunction,IsList,IsList]);
 DeclareGlobalFunction("OnIndeterminates");
+DeclareGlobalFunction("ConstituentsPolynomial");
 DeclareGlobalFunction("MonomialExtGrlexLess");
 DeclareOperation("LeadingMonomial",[IsPolynomialFunction]);
 DeclareOperation("LeadingCoefficient",[IsPolynomialFunction]);
@@ -3665,12 +3698,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/polyrat.gd"
 
-#F  file="lib/polyconw.gd" crc=-72639242
+#F  file="lib/polyconw.gd" crc=97844447
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/polyconw.gd", -72639242 );
+COM_RESULT := COM_FILE( "lib/polyconw.gd", 97844447 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/polyconw.gd\"");
 elif COM_RESULT = 1  then
@@ -3680,11 +3713,12 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/polyconw.gd");
 elif COM_RESULT = 3  then
-Revision.polyconw_gd:="@(#)$Id: polyconw.gd,v 4.8 2002/04/15 10:05:13 sal Exp $";
+Revision.polyconw_gd:="@(#)$Id: polyconw.gd,v 4.8.4.1 2005/04/13 11:45:39 gap Exp $";
 DeclareGlobalFunction("PowerModEvalPol");
-DeclareGlobalVariable("CONWAYPOLYNOMIALS");
 DeclareGlobalFunction("ConwayPol");
 DeclareGlobalFunction("ConwayPolynomial");
+DeclareGlobalFunction("IsCheapConwayPolynomial");
+DeclareGlobalFunction("RandomPrimitivePolynomial");
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -4604,12 +4638,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/grppcnrm.gd"
 
-#F  file="lib/grptbl.gd" crc=-116466940
-RANK_FILTER_LIST  := [  ];
+#F  file="lib/grptbl.gd" crc=-68749142
+RANK_FILTER_LIST  := [ 32769, 4, 1, 0, 1, 0, 55294649, 7, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/grptbl.gd", -116466940 );
+COM_RESULT := COM_FILE( "lib/grptbl.gd", -68749142 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/grptbl.gd\"");
 elif COM_RESULT = 1  then
@@ -4619,8 +4653,8 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/grptbl.gd");
 elif COM_RESULT = 3  then
-Revision.grptbl_gd:="@(#)$Id: grptbl.gd,v 4.11 2002/04/15 10:04:53 sal Exp $";
-DeclareRepresentation("IsMagmaByMultiplicationTableObj",IsPositionalObjectRep and IsMultiplicativeElementWithInverse,[1]);
+Revision.grptbl_gd:="@(#)$Id: grptbl.gd,v 4.11.4.1 2005/05/06 08:46:30 gap Exp $";
+DeclareGlobalFunction("MagmaByMultiplicationTableCreator");
 DeclareGlobalFunction("MagmaByMultiplicationTable");
 DeclareGlobalFunction("MagmaWithOneByMultiplicationTable");
 DeclareGlobalFunction("MagmaWithInversesByMultiplicationTable");
@@ -4628,7 +4662,8 @@ DeclareGlobalFunction("MagmaElement");
 DeclareGlobalFunction("SemigroupByMultiplicationTable");
 DeclareGlobalFunction("MonoidByMultiplicationTable");
 DeclareGlobalFunction("GroupByMultiplicationTable");
-DeclareGlobalFunction("MultiplicationTable");
+DeclareAttribute("MultiplicationTable",IsHomogeneousList);
+DeclareAttribute("MultiplicationTable",IsMagma);
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -5078,9 +5113,111 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/addgphom.gd"
 
+#F  file="lib/grpnames.g" crc=-70941810
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/grpnames.g", -70941810 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/grpnames.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/grpnames.g");
+elif COM_RESULT = 3  then
+Revision.grpnames_g:="@(#)$Id: grpnames.g,v 4.4.2.2 2005/05/03 13:53:45 stefan Exp $";
+NAMES_OF_SMALL_GROUPS:=[["1"],["C2"],["C3"],["C4","C2 x C2"],["C5"],["S3","C6"],["C7"],["C8","C4 x C2","D8","Q8","C2 x C2 x C2"],["C9","C3 x C3"],["D10","C10"],["C11"],["C3 : C4","C12","A4","D12","C6 x C2"],["C13"],["D14","C14"],["C15"],["C16","C4 x C4","(C4 x C2) : C2","C4 : C4","C8 x C2","C8 : C2","D16","QD16","Q16","C4 x C2 x C2","C2 x D8","C2 x Q8","(C4 x C2) : C2","C2 x C2 x C2 x C2"],["C17"],["D18","C18","C3 x S3","(C3 x C3) : C2","C6 x C3"],["C19"],["C5 : C4","C20","C5 : C4","D20","C10 x C2"],["C7 : C3","C21"],["D22","C22"],["C23"],["C3 : C8","C24","SL(2,3)","C3 : Q8","C4 x S3","D24","C2 x (C3 : C4)","(C6 x C2) : C2","C12 x C2","C3 x D8","C3 x Q8","S4","C2 x A4","C2 x C2 x S3","C6 x C2 x C2"],["C25","C5 x C5"],["D26","C26"],["C27","C9 x C3","(C3 x C3) : C3","C9 : C3","C3 x C3 x C3"],["C7 : C4","C28","D28","C14 x C2"],["C29"],["C5 x S3","C3 x D10","D30","C30"],["C31"],["C32","(C4 x C2) : C4","C8 x C4","C8 : C4","(C8 x C2) : C2","((C4 x C2) : C2) : C2","(C8 : C2) : C2","C2 . ((C4 x C2) : C2) = (C2 x C2) . (C4 x C2)","(C8 x C2) : C2","Q8 : C4","(C4 x C4) : C2","C4 : C8","C8 : C4","C8 : C4","C4 . D8 = C4 . (C4 x C2)","C16 x C2","C16 : C2","D32","QD32","Q32","C4 x C4 x C2","C2 x ((C4 x C2) : C2)","C2 x (C4 : C4)","(C4 x C4) : C2","C4 x D8","C4 x Q8","(C2 x C2 x C2 x C2) : C2","(C4 x C2 x C2) : C2","(C2 x Q8) : C2","(C4 x C2 x C2) : C2","(C4 x C4) : C2","(C2 x C2) . (C2 x C2 x C2)","(C4 x C4) : C2","(C4 x C4) : C2","C4 : Q8","C8 x C2 x C2","C2 x (C8 : C2)","(C8 x C2) : C2","C2 x D16","C2 x QD16","C2 x Q16","(C8 x C2) : C2","(C2 x D8) : C2","(C2 x Q8) : C2","C4 x C2 x C2 x C2","C2 x C2 x D8","C2 x C2 x Q8","C2 x ((C4 x C2) : C2)","(C2 x D8) : C2","(C2 x Q8) : C2","C2 x C2 x C2 x C2 x C2"],["C33"],["D34","C34"],["C35"],["C9 : C4","C36","(C2 x C2) : C9","D36","C18 x C2","C3 x (C3 : C4)","(C3 x C3) : C4","C12 x C3","(C3 x C3) : C4","S3 x S3","C3 x A4","C6 x S3","C2 x ((C3 x C3) : C2)","C6 x C6"],["C37"],["D38","C38"],["C13 : C3","C39"],["C5 : C8","C40","C5 : C8","C5 : Q8","C4 x D10","D40","C2 x (C5 : C4)","(C10 x C2) : C2","C20 x C2","C5 x D8","C5 x Q8","C2 x (C5 : C4)","C2 x C2 x D10","C10 x C2 x C2"],["C41"],["(C7 : C3) : C2","C2 x (C7 : C3)","C7 x S3","C3 x D14","D42","C42"],["C43"],["C11 : C4","C44","D44","C22 x C2"],["C45","C15 x C3"],["D46","C46"],["C47"],["C3 : C16","C48","(C4 x C4) : C3","C8 x S3","C24 : C2","C24 : C2","D48","C3 : Q16","C2 x (C3 : C8)","(C3 : C8) : C2","C4 x (C3 : C4)","(C3 : C4) : C4","C12 : C4","(C12 x C2) : C2","(C3 x D8) : C2","(C3 : C8) : C2","(C3 x Q8) : C2","C3 : Q16","(C2 x (C3 : C4)) : C2","C12 x C4","C3 x ((C4 x C2) : C2)","C3 x (C4 : C4)","C24 x C2","C3 x (C8 : C2)","C3 x D16","C3 x QD16","C3 x Q16","C2 . S4 = SL(2,3) . C2","GL(2,3)","A4 : C4","C4 x A4","C2 x SL(2,3)","SL(2,3) : C2","C2 x (C3 : Q8)","C2 x C4 x S3","C2 x D24","(C12 x C2) : C2","D8 x S3","(C2 x (C3 : C4)) : C2","Q8 x S3","(C4 x S3) : C2","C2 x C2 x (C3 : C4)","C2 x ((C6 x C2) : C2)","C12 x C2 x C2","C6 x D8","C6 x Q8","C3 x ((C4 x C2) : C2)","C2 x S4","C2 x C2 x A4","(C2 x C2 x C2 x C2) : C3","C2 x C2 x C2 x S3","C6 x C2 x C2 x C2"],["C49","C7 x C7"],["D50","C50","C5 x D10","(C5 x C5) : C2","C10 x C5"],["C51"],["C13 : C4","C52","C13 : C4","D52","C26 x C2"],["C53"],["D54","C54","C3 x D18","C9 x S3","((C3 x C3) : C3) : C2","(C9 : C3) : C2","(C9 x C3) : C2","((C3 x C3) : C3) : C2","C18 x C3","C2 x ((C3 x C3) : C3)","C2 x (C9 : C3)","C3 x C3 x S3","C3 x ((C3 x C3) : C2)","(C3 x C3 x C3) : C2","C6 x C3 x C3"],["C11 : C5","C55"],["C7 : C8","C56","C7 : Q8","C4 x D14","D56","C2 x (C7 : C4)","(C14 x C2) : C2","C28 x C2","C7 x D8","C7 x Q8","(C2 x C2 x C2) : C7","C2 x C2 x D14","C14 x C2 x C2"],["C19 : C3","C57"],["D58","C58"],["C59"],["C5 x (C3 : C4)","C3 x (C5 : C4)","C15 : C4","C60","A5","C3 x (C5 : C4)","C15 : C4","S3 x D10","C5 x A4","C6 x D10","C10 x S3","D60","C30 x C2"],["C61"],["D62","C62"],["C7 : C9","C63","C3 x (C7 : C3)","C21 x C3"],,["C65"],["C11 x S3","C3 x D22","D66","C66"],["C67"],["C17 : C4","C68","C17 : C4","D68","C34 x C2"],["C69"],["C7 x D10","C5 x D14","D70","C70"],["C71"],["C9 : C8","C72","Q8 : C9","C9 : Q8","C4 x D18","D72","C2 x (C9 : C4)","(C18 x C2) : C2","C36 x C2","C9 x D8","C9 x Q8","C3 x (C3 : C8)","(C3 x C3) : C8","C24 x C3","((C2 x C2) : C9) : C2","C2 x ((C2 x C2) : C9)","C2 x C2 x D18","C18 x C2 x C2","(C3 x C3) : C8","(C3 : C4) x S3","(C3 x (C3 : C4)) : C2","(C6 x S3) : C2","(C6 x S3) : C2","(C3 x C3) : Q8","C3 x SL(2,3)","C3 x (C3 : Q8)","C12 x S3","C3 x D24","C6 x (C3 : C4)","C3 x ((C6 x C2) : C2)","(C3 x C3) : Q8","C4 x ((C3 x C3) : C2)","(C12 x C3) : C2","C2 x ((C3 x C3) : C4)","(C6 x C6) : C2","C12 x C6","C3 x C3 x D8","C3 x C3 x Q8","(C3 x C3) : C8","(S3 x S3) : C2","(C3 x C3) : Q8","C3 x S4","(C3 x A4) : C2","A4 x S3","C2 x ((C3 x C3) : C4)","C2 x S3 x S3","C6 x A4","C2 x C6 x S3","C2 x C2 x ((C3 x C3) : C2)","C6 x C6 x C2"],["C73"],["D74","C74"],["C75","(C5 x C5) : C3","C15 x C5"],["C19 : C4","C76","D76","C38 x C2"],["C77"],["(C13 : C3) : C2","C2 x (C13 : C3)","C13 x S3","C3 x D26","D78","C78"],["C79"],["C5 : C16","C80","C5 : C16","C8 x D10","C40 : C2","C40 : C2","D80","C5 : Q16","C2 x (C5 : C8)","(C5 : C8) : C2","C4 x (C5 : C4)","(C5 : C4) : C4","C20 : C4","(C20 x C2) : C2","(C5 x D8) : C2","(C5 : C8) : C2","(C5 x Q8) : C2","C5 : Q16","(C2 x (C5 : C4)) : C2","C20 x C4","C5 x ((C4 x C2) : C2)","C5 x (C4 : C4)","C40 x C2","C5 x (C8 : C2)","C5 x D16","C5 x QD16","C5 x Q16","(C5 : C8) : C2","(C5 : C8) : C2","C4 x (C5 : C4)","C20 : C4","C2 x (C5 : C8)","(C5 : C8) : C2","(C2 x (C5 : C4)) : C2","C2 x (C5 : Q8)","C2 x C4 x D10","C2 x D40","(C20 x C2) : C2","D8 x D10","(C2 x (C5 : C4)) : C2","Q8 x D10","(C4 x D10) : C2","C2 x C2 x (C5 : C4)","C2 x ((C10 x C2) : C2)","C20 x C2 x C2","C10 x D8","C10 x Q8","C5 x ((C4 x C2) : C2)","(C2 x C2 x C2 x C2) : C5","C2 x C2 x (C5 : C4)","C2 x C2 x C2 x D10","C10 x C2 x C2 x C2"],["C81","C9 x C9","(C9 x C3) : C3","C9 : C9","C27 x C3","C27 : C3","(C3 x C3 x C3) : C3","(C9 x C3) : C3","(C9 x C3) : C3","C3 . ((C3 x C3) : C3) = (C3 x C3) . (C3 x C3)","C9 x C3 x C3","C3 x ((C3 x C3) : C3)","C3 x (C9 : C3)","(C9 x C3) : C3","C3 x C3 x C3 x C3"],["D82","C82"],["C83"],["(C7 : C4) : C3","C4 x (C7 : C3)","C7 x (C3 : C4)","C3 x (C7 : C4)","C21 : C4","C84","C2 x ((C7 : C3) : C2)","S3 x D14","C2 x C2 x (C7 : C3)","C7 x A4","(C14 x C2) : C3","C6 x D14","C14 x S3","D84","C42 x C2"],["C85"],["D86","C86"],["C87"],["C11 : C8","C88","C11 : Q8","C4 x D22","D88","C2 x (C11 : C4)","(C22 x C2) : C2","C44 x C2","C11 x D8","C11 x Q8","C2 x C2 x D22","C22 x C2 x C2"],["C89"],["C5 x D18","C9 x D10","D90","C90","C3 x C3 x D10","C15 x S3","C3 x D30","C5 x ((C3 x C3) : C2)","(C15 x C3) : C2","C30 x C3"],["C91"],["C23 : C4","C92","D92","C46 x C2"],["C31 : C3","C93"],["D94","C94"],["C95"],,["C97"],["D98","C98","C7 x D14","(C7 x C7) : C2","C14 x C7"],["C99","C33 x C3"],["C25 : C4","C100","C25 : C4","D100","C50 x C2","C5 x (C5 : C4)","(C5 x C5) : C4","C20 x C5","C5 x (C5 : C4)","(C5 x C5) : C4","(C5 x C5) : C4","(C5 x C5) : C4","D10 x D10","C10 x D10","C2 x ((C5 x C5) : C2)","C10 x C10"]];
+MakeReadOnlyGlobal("NAMES_OF_SMALL_GROUPS");
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/grpnames.g"
+
+#F  file="lib/grpnames.gd" crc=115395428
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 17432758, 21, 
+  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 34865483, 21, 993, 2, 
+  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 2621094, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 10482357, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 20963721, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 16744946, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 33489859, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 66847578, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 66585284, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 65012480, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 62915088, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 58720304, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 50331696, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 33554480, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 48, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 54815340, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 30228166, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 48162697, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 16922880, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 21551165, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 34355590, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 1601308, 21, 993, 2, 1, 0 ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/grpnames.gd", 115395428 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/grpnames.gd\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/grpnames.gd");
+elif COM_RESULT = 3  then
+Revision.grpnames_gd:="@(#)$Id: grpnames.gd,v 4.5.2.2 2005/05/03 13:53:45 stefan Exp $";
+DeclareAttribute("DirectFactorsOfGroup",IsGroup);
+DeclareAttribute("SemidirectFactorsOfGroup",IsGroup);
+DeclareAttribute("DecompositionTypesOfGroup",IsGroup);
+DeclareSynonym("DecompositionTypes",DecompositionTypesOfGroup);
+DeclareProperty("IsDihedralGroup",IsGroup);
+DeclareAttribute("DihedralGenerators",IsGroup);
+DeclareProperty("IsQuaternionGroup",IsGroup);
+DeclareAttribute("QuaternionGenerators",IsGroup);
+DeclareProperty("IsQuasiDihedralGroup",IsGroup);
+DeclareAttribute("QuasiDihedralGenerators",IsGroup);
+DeclareProperty("IsPSL",IsGroup);
+DeclareAttribute("npePSL",IsGroup);
+DeclareAttribute("npeSL",IsGroup);
+DeclareAttribute("npeGL",IsGroup);
+DeclareAttribute("AlternatingDegree",IsGroup);
+DeclareAttribute("SymmetricDegree",IsGroup);
+DeclareAttribute("PSLDegree",IsGroup);
+DeclareAttribute("PSLUnderlyingField",IsGroup);
+DeclareAttribute("SLDegree",IsGroup);
+DeclareAttribute("SLUnderlyingField",IsGroup);
+DeclareAttribute("GLDegree",IsGroup);
+DeclareAttribute("GLUnderlyingField",IsGroup);
+DeclareGlobalFunction("SizeGL");
+DeclareGlobalFunction("SizeSL");
+DeclareGlobalFunction("SizePSL");
+DeclareGlobalFunction("LinearGroupParameters");
+DeclareAttribute("StructureDescription",IsGroup);
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/grpnames.gd"
+
 #F  file="lib/quotsys.gd" crc=114923980
-RANK_FILTER_LIST  := [ 17431766, 1, 1, 0, 1, 0, 2621094, 4, 993, 2, 1, 0, 
-  17431766, 1, 1, 0, 1, 0, 10482357, 4, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 3200631, 1, 1, 0, 1, 0, 12803513, 4, 993, 2, 1, 0, 
+  3200631, 1, 1, 0, 1, 0, 51211073, 4, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -5249,70 +5386,70 @@ Unbind(COM_RESULT);
 #E  file="lib/fampred.g"
 
 #F  file="lib/oprt.gd" crc=-119360266
-RANK_FILTER_LIST  := [ 20962729, 6, 1, 0, 1, 0, 66585284, 9, 993, 2, 1, 0, 
-  20962729, 6, 1, 0, 1, 0, 66060696, 9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 
-  0, 50331696, 9, 993, 2, 1, 0, 30227174, 23, 1, 0, 1, 0, 48162697, 24, 993, 
-  2, 1, 0, 20962729, 6, 1, 0, 1, 0, 16922880, 9, 993, 2, 1, 0, 20962729, 6, 
-  1, 0, 1, 0, 21551165, 9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 0, 34355590, 
-  9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 0, 1601308, 9, 993, 2, 1, 0, 
-  20962729, 6, 1, 0, 1, 0, 3201623, 9, 993, 2, 1, 0, 53660808, 18, 20962729, 
-  6, 1, 0, 1, 0, 6402253, 9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 0, 12803513, 
-  9, 993, 2, 1, 0, 65011488, 22, 1, 0, 1, 0, 25606033, 23, 993, 2, 1, 0, 
-  20962729, 6, 1, 0, 1, 0, 51211073, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 
-  27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 
-  45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 
-  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 
-  35313234, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 
-  45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 
-  1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 
-  8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 3516596, 9, 993, 2, 1, 0, 
-  20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
+RANK_FILTER_LIST  := [ 35312242, 6, 1, 0, 1, 0, 45392370, 9, 993, 2, 1, 0, 
+  35312242, 6, 1, 0, 1, 0, 23675828, 9, 993, 2, 1, 0, 35312242, 6, 1, 0, 1, 
+  0, 43253958, 9, 993, 2, 1, 0, 20971131, 23, 1, 0, 1, 0, 41943253, 24, 993, 
+  2, 1, 0, 35312242, 6, 1, 0, 1, 0, 16777594, 9, 993, 2, 1, 0, 35312242, 6, 
+  1, 0, 1, 0, 33555155, 9, 993, 2, 1, 0, 35312242, 6, 1, 0, 1, 0, 438, 9, 
+  993, 2, 1, 0, 35312242, 6, 1, 0, 1, 0, 21552515, 9, 993, 2, 1, 0, 35312242, 
+  6, 1, 0, 1, 0, 64656669, 9, 993, 2, 1, 0, 53660808, 18, 35312242, 6, 1, 0, 
+  1, 0, 16646259, 9, 993, 2, 1, 0, 35312242, 6, 1, 0, 1, 0, 54844157, 9, 993, 
+  2, 1, 0, 47349671, 22, 1, 0, 1, 0, 64131074, 23, 993, 2, 1, 0, 35312242, 6, 
+  1, 0, 1, 0, 58360315, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 
+  18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 
+  4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 
+  9017489, 5, 8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 49610758, 9, 
+  993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 
+  4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 
+  53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 
+  8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 32111644, 9, 993, 2, 1, 0, 
+  35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
   53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 
   0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 
-  20962729, 6, 1, 0, 1, 0, 7032199, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 
+  35312242, 6, 1, 0, 1, 0, 64222295, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 
   27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 
   45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 
-  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 
-  14063405, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 
+  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 
+  61334718, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 
   45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 
   1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 
-  8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 28125817, 9, 993, 2, 1, 0, 
-  20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
+  8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 55559564, 9, 993, 2, 1, 0, 
+  35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
   53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 
   0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 
-  20962729, 6, 1, 0, 1, 0, 56250641, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 
+  35312242, 6, 1, 0, 1, 0, 44009256, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 
   27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 
   45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 
-  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 
-  45392370, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 
+  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 
+  20909600, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 
   45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 
   1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 
-  8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 23675828, 9, 993, 2, 1, 0, 
-  20962729, 6, 1, 0, 1, 0, 47350663, 9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 
-  0, 27591454, 9, 993, 2, 1, 0, 20962729, 6, 1, 0, 1, 0, 55181915, 9, 993, 2, 
-  1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 
+  8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 41819167, 9, 993, 2, 1, 0, 
+  35312242, 6, 1, 0, 1, 0, 16528462, 9, 993, 2, 1, 0, 35312242, 6, 1, 0, 1, 
+  0, 33056891, 9, 993, 2, 1, 0, 35312242, 6, 1, 0, 1, 0, 66113749, 9, 993, 2, 
+  1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 
   1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 
   1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 
-  20962729, 6, 1, 0, 1, 0, 19399004, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 
+  35312242, 6, 1, 0, 1, 0, 63128260, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 
   27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 
   45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 
-  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 
-  10486078, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 
+  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 
+  51184384, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 
   45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 
   1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 
-  8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 41943253, 9, 993, 2, 1, 0, 
-  20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
+  8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 3407920, 9, 993, 2, 1, 0, 
+  35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
   53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 
   0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 
-  20962729, 6, 1, 0, 1, 0, 33555155, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 
+  35312242, 6, 1, 0, 1, 0, 13631581, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 
   27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 
   45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 
-  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 
-  21552515, 9, 993, 2, 1, 0, 20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 
+  53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 
+  54526225, 9, 993, 2, 1, 0, 35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 
   45271600, 27, 4063233, 1, 53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 
   1, 5, 1, 53660808, 18, 1, 0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 
-  8193, 2, 8193, 2, 5, 1, 20962729, 6, 1, 0, 1, 0, 64656669, 9, 993, 2, 1, 0, 
-  20962729, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
+  8193, 2, 8193, 2, 5, 1, 35312242, 6, 1, 0, 1, 0, 41943538, 9, 993, 2, 1, 0, 
+  35312242, 6, 45271600, 27, 53660808, 18, 1, 0, 45271600, 27, 4063233, 1, 
   53660808, 18, 1, 0, 5, 1, 45271600, 27, 4063233, 1, 5, 1, 53660808, 18, 1, 
   0, 8193, 2, 8193, 2, 53660808, 18, 9017489, 5, 8193, 2, 8193, 2, 5, 1 ];
 RANK_FILTER_COUNT := 1;
@@ -5491,11 +5628,11 @@ Unbind(COM_RESULT);
 #E  file="lib/partitio.gd"
 
 #F  file="lib/stbc.gd" crc=-88454344
-RANK_FILTER_LIST  := [ 1, 0, 1, 0, 16646259, 3, 993, 2, 1, 0, 1, 0, 1, 0, 
-  54844157, 3, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 33553488, 27, 1, 0, 
-  1, 0, 64131074, 30, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 33553488, 27, 
-  1, 0, 1, 0, 58360315, 30, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 
-  33553488, 27, 1, 0, 1, 0, 49610758, 30, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 1, 0, 1, 0, 16778164, 3, 993, 2, 1, 0, 1, 0, 1, 0, 
+  33555335, 3, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 33553488, 27, 1, 0, 
+  1, 0, 798, 30, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 33553488, 27, 1, 
+  0, 1, 0, 603, 30, 993, 2, 1, 0, 58719672, 27, 41942696, 16, 33553488, 27, 
+  1, 0, 1, 0, 64135079, 30, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -5678,10 +5815,10 @@ Unbind(COM_RESULT);
 #E  file="lib/clashom.gd"
 
 #F  file="lib/csetgrp.gd" crc=93493516
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 41819167, 21, 
-  993, 2, 1, 0, 16527470, 8, 1, 0, 1, 0, 33056891, 11, 993, 2, 1, 0, 
-  16527470, 8, 1, 0, 1, 0, 66113749, 11, 993, 2, 1, 0, 16527470, 8, 1, 0, 1, 
-  0, 65118586, 11, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 55906868, 21, 
+  993, 2, 1, 0, 44702872, 8, 1, 0, 1, 0, 22297856, 11, 993, 2, 1, 0, 
+  44702872, 8, 1, 0, 1, 0, 44594719, 11, 993, 2, 1, 0, 44702872, 8, 1, 0, 1, 
+  0, 22079566, 11, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -5726,7 +5863,7 @@ Unbind(COM_RESULT);
 #E  file="lib/csetgrp.gd"
 
 #F  file="lib/factgrp.gd" crc=58386548
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 59146648, 21, 
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 21209286, 21, 
   993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -5961,9 +6098,9 @@ Unbind(COM_RESULT);
 #E  file="lib/twocohom.gd"
 
 #F  file="lib/grppcext.gd" crc=-5556980
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 51184384, 21, 
-  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 35258896, 21, 993, 2, 
-  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 3407920, 21, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 42418539, 21, 
+  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 17728166, 21, 993, 2, 
+  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 35455339, 21, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6043,7 +6180,7 @@ Unbind(COM_RESULT);
 #E  file="lib/grppcfp.gd"
 
 #F  file="lib/randiso.gd" crc=119698
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 6815807, 21, 
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 3801766, 21, 
   993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -6112,9 +6249,9 @@ Unbind(COM_RESULT);
 #E  file="lib/schur.gd"
 
 #F  file="lib/grplatt.gd" crc=-39958705
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 41943538, 21, 
-  993, 2, 1, 0, 54525233, 3, 1, 0, 1, 0, 16778164, 4, 993, 2, 1, 0, 54525233, 
-  3, 1, 0, 1, 0, 33555335, 4, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 60818161, 21, 
+  993, 2, 1, 0, 30408105, 3, 1, 0, 1, 0, 54526450, 4, 993, 2, 1, 0, 30408105, 
+  3, 1, 0, 1, 0, 41943988, 4, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6213,8 +6350,8 @@ Unbind(COM_RESULT);
 #E  file="lib/grppclat.gd"
 
 #F  file="lib/grppcaut.gd" crc=26819044
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 603, 21, 993, 
-  2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 33555215, 21, 
+  993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6247,9 +6384,9 @@ Unbind(COM_RESULT);
 #E  file="lib/grppcaut.gd"
 
 #F  file="lib/straight.gd" crc=-55166823
-RANK_FILTER_LIST  := [ 64134087, 1, 1, 0, 1, 0, 58185313, 4, 993, 2, 1, 0, 
-  64134087, 1, 1, 0, 1, 0, 46286741, 4, 993, 2, 1, 0, 1985, 1, 1, 0, 1, 0, 
-  64309121, 4, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 67108445, 1, 1, 0, 1, 0, 123, 4, 993, 2, 1, 0, 
+  67108445, 1, 1, 0, 1, 0, 213, 4, 993, 2, 1, 0, 1985, 1, 1, 0, 1, 0, 513, 4, 
+  993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6293,15 +6430,15 @@ Unbind(COM_RESULT);
 #E  file="lib/straight.gd"
 
 #F  file="lib/grpfp.gd" crc=-38801491
-RANK_FILTER_LIST  := [ 44593727, 2, 1, 0, 1, 0, 22079566, 5, 993, 2, 1, 0, 
-  44593727, 2, 1, 0, 1, 0, 44159099, 5, 993, 2, 1, 0, 44593727, 2, 1, 0, 1, 
-  0, 21209286, 5, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
-  42418539, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
-  17728166, 21, 993, 2, 1, 0, 55905876, 20, 1, 0, 1, 0, 3801766, 23, 993, 2, 
-  1, 0, 55905876, 20, 1, 0, 1, 0, 7602539, 24, 993, 2, 1, 0, 55905876, 20, 1, 
-  0, 1, 0, 15205045, 24, 993, 2, 1, 0, 55905876, 20, 1, 0, 1, 0, 30409097, 
-  24, 993, 2, 1, 0, 55905876, 20, 1, 0, 1, 0, 60818161, 24, 993, 2, 1, 0, 
-  55905876, 20, 1, 0, 1, 0, 54526450, 23, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 27273315, 2, 1, 0, 1, 0, 47395470, 5, 993, 2, 1, 0, 
+  27273315, 2, 1, 0, 1, 0, 27681068, 5, 993, 2, 1, 0, 27273315, 2, 1, 0, 1, 
+  0, 55361143, 5, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
+  43612414, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
+  20114956, 21, 993, 2, 1, 0, 58923477, 20, 1, 0, 1, 0, 13347966, 23, 993, 2, 
+  1, 0, 58923477, 20, 1, 0, 1, 0, 26695899, 24, 993, 2, 1, 0, 58923477, 20, 
+  1, 0, 1, 0, 53390805, 24, 993, 2, 1, 0, 58923477, 20, 1, 0, 1, 0, 39672698, 
+  24, 993, 2, 1, 0, 58923477, 20, 1, 0, 1, 0, 12236484, 24, 993, 2, 1, 0, 
+  58923477, 20, 1, 0, 1, 0, 24471975, 23, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6407,10 +6544,10 @@ Unbind(COM_RESULT);
 #E  file="lib/grpfree.gd"
 
 #F  file="lib/sgpres.gd" crc=110193413
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 41943988, 21, 
-  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 16778104, 21, 993, 2, 
-  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 33555215, 21, 993, 2, 1, 0, 
-  67108445, 2, 1, 0, 1, 0, 123, 5, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 48943917, 21, 
+  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 30777962, 21, 993, 2, 
+  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 61554931, 21, 993, 2, 1, 0, 
+  55999958, 2, 1, 0, 1, 0, 44892988, 5, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6478,8 +6615,8 @@ Unbind(COM_RESULT);
 #E  file="lib/sgpres.gd"
 
 #F  file="lib/tietze.gd" crc=-85536741
-RANK_FILTER_LIST  := [ 55905876, 20, 1, 0, 1, 0, 213, 23, 993, 2, 1, 0, 
-  67108445, 2, 1, 0, 1, 0, 393, 5, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 58923477, 20, 1, 0, 1, 0, 22676104, 23, 993, 2, 1, 0, 
+  55999958, 2, 1, 0, 1, 0, 45351215, 5, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6579,8 +6716,8 @@ Unbind(COM_RESULT);
 #E  file="lib/tietze.gd"
 
 #F  file="lib/ghomfp.gd" crc=99904981
-RANK_FILTER_LIST  := [ 49346896, 7, 1, 0, 1, 0, 26186697, 10, 993, 2, 1, 0, 
-  55905876, 20, 1, 0, 1, 0, 27274307, 23, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 49346896, 7, 1, 0, 1, 0, 16777564, 10, 993, 2, 1, 0, 
+  58923477, 20, 1, 0, 1, 0, 33555095, 23, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -6700,8 +6837,8 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/dt.g"
 
-#F  file="lib/integer.gi" crc=-52453376
-RANK_FILTER_LIST  := [ 48733699, 39, 48733699, 39, 12931006, 12, 65, 16, 33, 
+#F  file="lib/integer.gi" crc=45625043
+RANK_FILTER_LIST  := [ 48733699, 39, 48733699, 39, 39411723, 12, 65, 16, 33, 
   17, 40085428, 20, 40085428, 20, 48733699, 39, 48733699, 39, 17, 18, 
   48733699, 39, 17, 18, 17, 18, 48733699, 39, 17, 18, 17, 18, 48733699, 39, 
   17, 18, 48733699, 39, 17, 18, 17, 18, 48733699, 39, 17, 18, 48733699, 39, 
@@ -6714,7 +6851,7 @@ RANK_FILTER_LIST  := [ 48733699, 39, 48733699, 39, 12931006, 12, 65, 16, 33,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/integer.gi", -52453376 );
+COM_RESULT := COM_FILE( "lib/integer.gi", 45625043 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/integer.gi\"");
 elif COM_RESULT = 1  then
@@ -6724,7 +6861,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/integer.gi");
 elif COM_RESULT = 3  then
-Revision.integer_gi:="@(#)$Id: integer.gi,v 4.67 2003/04/16 07:47:56 gap Exp $";
+Revision.integer_gi:="@(#)$Id: integer.gi,v 4.67.2.2 2005/05/09 07:08:04 gap Exp $";
 InstallValue(Integers,Objectify(NewType(CollectionsFamily(CyclotomicsFamily),IsIntegers and IsAttributeStoringRep),rec()));
 SetName(Integers,"Integers");
 SetIsLeftActedOnByDivisionRing(Integers,false);
@@ -6763,6 +6900,13 @@ InstallValue(Primes,[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,
 MakeImmutable(Primes);
 InstallFlushableValue(Primes2,[10047871,10567201,10746341,12112549,12128131,12207031,12323587,12553493,12865927,13097927,13264529,13473433,13821503,13960201,14092193,14597959,15216601,15790321,16018507,18837001,20381027,20394401,20515111,20515909,21207101,21523361,22253377,22366891,22996651,23850061,25781083,26295457,28325071,28878847,29010221,29247661,29423041,29866451,32234893,32508061,36855109,41540861,42521761,43249589,44975113,47392381,47763361,48544121,48912491,49105547,49892851,51457561,55527473,56409643,56737873,59302051,59361349,59583967,60816001,62020897,63512437,65628751,69566521,75068993,76066181,85280581,93507247,96656723,97685839,106431697,107367629,109688713,110211473,112901153,119782433,127540261,134818753,134927809,136151713,147300841,155072369,160465489,164511353,177237331,183794551,184481113,190295821,190771747,193707721,195019441,202029703,206244761,212601841,212885833,228511817,231769777,234750601,272010961,280314943,283763713,297315901,305175781,308761441,319020217,359390389,407865361,420778751,424256201,432853009,457315063,466344409,510810301,515717329,527093491,529510939,536903681,540701761,550413361,603926681,616318177,632133361,715827883,724487149,745988807,763539787,815702161,834019001,852133201,857643277,879399649,909139159,1001523179,1036745531,1065264019,1106131489,1169382127,1390636259,1503418321,1527007411,1636258751,1644512641,1743831169,1824179209,1824726041,1826934301,1866013003,1990415149,2127357527,2127431041,2147483647,2238236249,2316281689,2413941289,2481791513,2550183799,2576743207,2664097031,2767631689,2903110321,2931542417,3021012311,3158528101,3173389601,3357897971,3652120847,4011586307,4058036683,4278255361,4375578271,4562284561,4649919401,4698932281,4795973261,4885168129,5960555749,6622733113,6630274723,6809710909,6860024417,7068569257,7151459701,7484047069,7685542369,7830118297,7866608083,8209475377,8831418697,9598959833,10879733611,11368765063,11898664849,12447002677,13455809771,13564461457,13841169553,13971969971,14425532687,15085812853,15768033143,15888756269,16055056483,16148168401,17056050293,17154094481,17189128703,19707683773,22434744889,23140471537,23535794707,24127552321,25194773531,25480398173,25829691707,25994736109,27669118297,27989941729,28086211607,30327152671,32952799801,33057806959,35532364099,39940132241,43872038849,45076044553,47072139617,50150933101,54410972897,56625998353,56770350869,60726444167,61070817601,62983048367,65247271367,69238518539,70845409351,76831835389,77158673929,77192844961,78009515593,83960385389,86950696619,87423871753,88959882481,99810171997,115868130379,125096112091,127522693159,128011456717,128653413121,129924628343,131105292137,152587500001,158822951431,159248456569,164504919713,165768537521,168749965921,213657222007,229890275929,241931001601,269089806001,282429005041,301077652751,332207361361,368592716837,374857981681,386478495679,392038110671,402011881627,441019876741,447600088289,461587317509,487824887233,531968664833,555915824341,593554036769,598761682261,641625222857,654652168021,761838257287,810221830361,840139875599,918585913061,1030330938209,1047623475541,1113491139767,1133836730401,1273880539247,1284297400723,1408429185797,1534179947851,1628744948329,1654058017289,1759217765581,1856458657451,2098303812601,2454335007529,2481357870461,2549755542947,2663568851051,2738039191709,2879347902817,2932031007403,3138426605161,3203431780337,3421169496361,3740221981231,4363953127297,4432676798593,4446437759531,4534166740403,4981857697937,5625767248687,6090817323763,6493405343627,6713103182899,6740339310641,7432339208719,8090594434231,8157179360521,8737481256739,8868050880709,9361973132609,9468940004449,9857737155463,10052678938039,10979607179423,13952598148481,15798461357509,15919793462773,17175865789597,18158209813151,22125996444329,22542470482159,22735632934561,23161037562937,23792163643711,24517014940753,24587411156281,28059810762433,29078814248401,31280679788951,31479823396757,32688470798197,33232924804801,42272797713043,44479210368001,45920153384867,49971617830801,57583418699431,62911130477521,67280421310721,70601370627701,71316922984999,83181652304609,89620825374601,94404837727799,95052547721497,110133112994711,140737471578113,145295143558111,150224123975857,160026187716961,204064664440913,205367807127911,242099935645987,270547105429567,303567967057423,332584516519201,434502978835771,475384700124973,500805747488153,520518327319589,560088668384411,608459012088799,637265428480297,643170158708221,707179356161321,866802946161469,926510094425921,990643452963163,1034150930241911,1066818132868207,1120648576818041,1357105535093947,1416258521793067,1587855697992791,1611479891519807,1628413557556843,1900857799450121,1958423494433591,2134387368610417,2646507710984041,2649263870814793,2752135920929651,2864226125209369,3208002856867129,4557772677741827,4889988840047743,5420506947192709,6957533874046531,9460375336977361,9472026608675509,11264087821629961,12557612956332313,13722816749522711,14436295738510501,18584774046020617,18624275418445601,20986207825565581,21180247636732981,22666879066355177,27145365052629449,32233368385529653,39392783590192547,46329453543600481,50544702849929377,59509429687890001,60081451169922001,70084436712553223,76394148218203559,77001139434480073,79787519018560501,96076791871613611,133088039373662309,144542918285300809,145171177264407947,153560376376050799,166003607842448777,177722253954175633,196915704073465747,316825425410373433,341117531003194129,380808546861411923,489769993189671059,538953023961943033,581283643249112959,617886851384381281,625552508473588471,645654335737185721,646675035253258729,658812288653553079,768614336404564651,862970652262943171,909456847814334401,1100876018364883721,1195857367853217109,1245576402371959291,1795918038741070627,2192537062271178641,2305843009213693951,2312581841562813841,2461243576713869557,2615418118891695851,2691614274040036601,3011347479614249131,3358335487319458201,3421093417510114543,3602372010909260861,3747607031112307667,3999088279399464409,4710883168879506001,5079304643216687969,5559917315850179173,5782172113400990737,6106505825833677713,6115909044841454629,9213624084535989031,9520972806333758431,10527743181888260981,14808607715315782481,18446744069414584321,26831423036065352611,32032215596496435569,34563155350221618511,36230454570129675721,58523123221688392679,60912916512835721519,82064241848634269407,86656268566282183151,87274497124602996457,105668621839502584913,157571957584602258799,162715052426691233701,172827552198815888791,195489390796456327201,240031591394168814433,266834785363181152127,344120456368919234899,358475907408445923469,846041103974872866961,2519545342349331183143,3658524738455131951223,3793685967117002179453,3976656429941438590393,5439042183600204290159,8198241112969626815581,11600321878916922053491,12812432238302009985937,17551032119981679046729,18489605314740987765913,27665283091695977275201,42437717969530394595211,57912614113275649087721,61654440233248340616559,63681511996418550459487,105293313660391861035901,155285743288572277679887,201487636602438195784363,231669654363683130095909,235169662395069356312233,402488219476647465854701,535347624791488552837151,604088623657497125653141,870035986098720987332873,950996059627210897943351,1412900479108654932024439,1431185706701868962383741,2047572230657338751575051,2048568835297380486760231,2741672362528725535068727,3042645634792541312037847,3745603812007166116831643,4362139336229068656094783,4805345109492315767981401,5042939439565996049162197,7289088383388253664437433,8235109336690846723986161,9680647790568589086355559,9768997162071483134919121,9842332430037465033595921,11053036065049294753459639,11735415506748076408140121,13842607235828485645766393,17499733663152976533452519,26273701844015319144827917,75582488424179347083438319,88040095945103834627376781,100641220283951395639601683,140194179307171898833699259,207617485544258392970753527,291280009243618888211558641,303309617049998388989376043,354639323684545612988577649,618970019642690137449562111,913242407367610843676812931,7222605228105536202757606969,7248808599285760001152755641,8170509011431363408568150369,8206973609150536446402438593,9080418348371887359375390001,14732265321145317331353282383,15403468930064931175264655869,15572244900182528777225808449,18806327041824690595747113889,21283620033217629539178799361,37201708625305146303973352041,42534656091583268045915654719,48845962828028421155731228333,123876132205208335762278423601,134304196845099262572814573351,172974812463239310024750410929,217648180992721729506406538251,227376585863531112677002031251,1786393878363164227858270210279,2598696228942460402343442913969,2643999917660728787808396988849,3340762283952395329506327023033,5465713352000770660547109750601,28870194250662203210437116612769,70722308812401674174993533367023,78958087694609321439660131899631,88262612316754526107621113329689,162259276829213363391578010288127,163537220852725398851434325720959,177635683940025046467781066894531,2679895157783862814690027494144991,3754733257489862401973357979128773,5283012903770196631383821046101707,5457586804596062091175455674392801,10052011757370829033540932021825161,11419697846380955982026777206637491,38904276017035188056372051839841219,1914662449813727660680530326064591907,7923871097285295625344647665764672671,9519524151770349914726200576714027279,10350794431055162386718619237468234569,170141183460469231731687303715884105727,1056836588644853738704557482552056406147,6918082374901313855125397665325977135579,235335702141939072378977155172505285655211,360426336941693434048414944508078750920763,1032670816743843860998850056278950666491537,1461808298382111034194027645506019619578037,79638304766856507377778616296087448490695649,169002145064468556765676975247413756542145739,8166146875847876762859119015147004762656450569,18607929421228039083223253529869111644362732899,33083146850190391025301565142735000331370209599,138497973518827432485604572537024087153816681041,673267426712748387612994804392183645147042355211,1489459109360039866456940197095433721664951999121,4884164093883941177660049098586324302977543600799,466345922275629775763320748688970211803553256223529,26828803997912886929710867041891989490486893845712448833,153159805660301568024613754993807288151489686913246436306439,1051153199500053598403188407217590190707671147285551702341089650185945215953]);
 IsSSortedList(Primes2);
+ADD_SET(Primes2,5926187589691497537793497756719);
+ADD_SET(Primes2,4330075309599657322634371042967428373533799534566765522517);
+ADD_SET(Primes2,549180361199324724418373466271912931710271534073773);
+ADD_SET(Primes2,85411410016592864938535742262164288660754818699519364051241927\
+961077872028620787589587608357877);
+InstallFlushableValue(ProbablePrimes2,[]);
+IsSSortedList(ProbablePrimes2);
 InstallGlobalFunction(BestQuoInt,COM_FUN(3));
 InstallGlobalFunction(ChineseRem,COM_FUN(4));
 InstallGlobalFunction(CoefficientsQadic,COM_FUN(5));
@@ -6777,51 +6921,52 @@ InstallGlobalFunction(IsEvenInt,COM_FUN(11));
 InstallGlobalFunction(IsOddInt,COM_FUN(12));
 TraceModQF:=COM_FUN(13);
 MakeReadOnlyGlobal("TraceModQF");
-InstallGlobalFunction(IsProbablyPrimeInt,COM_FUN(14));
-InstallGlobalFunction(IsPrimeInt,COM_FUN(15));
-InstallGlobalFunction(IsPrimePowerInt,COM_FUN(16));
-InstallGlobalFunction(LcmInt,COM_FUN(17));
-InstallGlobalFunction(LogInt,COM_FUN(18));
-InstallGlobalFunction(NextPrimeInt,COM_FUN(19));
-InstallGlobalFunction(PowerModInt,COM_FUN(20));
-InstallGlobalFunction(PrevPrimeInt,COM_FUN(21));
-InstallGlobalFunction(PrimePowersInt,COM_FUN(22));
-InstallGlobalFunction(RootInt,COM_FUN(23));
-InstallGlobalFunction(AbsInt,COM_FUN(24));
+BindGlobal("IsProbablyPrimeIntWithFail",COM_FUN(14));
+InstallGlobalFunction(IsProbablyPrimeInt,COM_FUN(15));
+InstallGlobalFunction(IsPrimeInt,COM_FUN(16));
+InstallGlobalFunction(IsPrimePowerInt,COM_FUN(17));
+InstallGlobalFunction(LcmInt,COM_FUN(18));
+InstallGlobalFunction(LogInt,COM_FUN(19));
+InstallGlobalFunction(NextPrimeInt,COM_FUN(20));
+InstallGlobalFunction(PowerModInt,COM_FUN(21));
+InstallGlobalFunction(PrevPrimeInt,COM_FUN(22));
+InstallGlobalFunction(PrimePowersInt,COM_FUN(23));
+InstallGlobalFunction(RootInt,COM_FUN(24));
+InstallGlobalFunction(AbsInt,COM_FUN(25));
 InstallMethod(AbsoluteValue,"rationals",true,[IsRat],0,AbsInt);
-InstallGlobalFunction(SignInt,COM_FUN(25));
-InstallGlobalFunction(SmallestRootInt,COM_FUN(26));
-InstallMethod(RingByGenerators,"method that catches the cases of `Integers'",[IsCyclotomicCollection],SUM_FLAGS,COM_FUN(27));
-InstallMethod(DefaultRingByGenerators,"method that catches the cases of `(Gaussian)Integers' and cycl. fields",[IsCyclotomicCollection],SUM_FLAGS,COM_FUN(28));
-InstallMethod(Enumerator,"for integers",[IsIntegers],COM_FUN(29));
-InstallMethod(EuclideanDegree,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(30));
-InstallMethod(EuclideanQuotient,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(31));
-InstallMethod(EuclideanRemainder,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(32));
-InstallMethod(Factors,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(33));
-InstallMethod(GcdOp,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(34));
-InstallMethod(IsIrreducibleRingElement,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(35));
-InstallMethod(IsPrime,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(36));
-InstallMethod(Iterator,"for `Integers'",[IsIntegers],COM_FUN(37));
-InstallMethod(LcmOp,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(38));
+InstallGlobalFunction(SignInt,COM_FUN(26));
+InstallGlobalFunction(SmallestRootInt,COM_FUN(27));
+InstallMethod(RingByGenerators,"method that catches the cases of `Integers'",[IsCyclotomicCollection],SUM_FLAGS,COM_FUN(28));
+InstallMethod(DefaultRingByGenerators,"method that catches the cases of `(Gaussian)Integers' and cycl. fields",[IsCyclotomicCollection],SUM_FLAGS,COM_FUN(29));
+InstallMethod(Enumerator,"for integers",[IsIntegers],COM_FUN(30));
+InstallMethod(EuclideanDegree,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(31));
+InstallMethod(EuclideanQuotient,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(32));
+InstallMethod(EuclideanRemainder,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(33));
+InstallMethod(Factors,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(34));
+InstallMethod(GcdOp,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(35));
+InstallMethod(IsIrreducibleRingElement,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(36));
+InstallMethod(IsPrime,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(37));
+InstallMethod(Iterator,"for `Integers'",[IsIntegers],COM_FUN(38));
+InstallMethod(LcmOp,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(39));
 InstallMethod(Log,"for two integers",true,[IsInt,IsInt],0,LogInt);
-InstallMethod(PowerMod,"for integers",true,[IsIntegers,IsInt,IsInt,IsInt],0,COM_FUN(39));
-InstallMethod(Quotient,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(40));
-InstallMethod(QuotientMod,"for integers",true,[IsIntegers,IsInt,IsInt,IsInt],0,COM_FUN(41));
-InstallMethod(QuotientRemainder,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(42));
-NrBitsInt:=COM_FUN(43);
-InstallMethod(Random,"for `Integers'",true,[IsIntegers],0,COM_FUN(44));
-InstallOtherMethod(Random,"for two integers",IsIdenticalObj,[IsInt,IsInt],0,COM_FUN(45));
+InstallMethod(PowerMod,"for integers",true,[IsIntegers,IsInt,IsInt,IsInt],0,COM_FUN(40));
+InstallMethod(Quotient,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(41));
+InstallMethod(QuotientMod,"for integers",true,[IsIntegers,IsInt,IsInt,IsInt],0,COM_FUN(42));
+InstallMethod(QuotientRemainder,"for integers",true,[IsIntegers,IsInt,IsInt],0,COM_FUN(43));
+NrBitsInt:=COM_FUN(44);
+InstallMethod(Random,"for `Integers'",true,[IsIntegers],0,COM_FUN(45));
+InstallOtherMethod(Random,"for two integers",IsIdenticalObj,[IsInt,IsInt],0,COM_FUN(46));
 InstallMethod(Root,"for two integers",true,[IsInt,IsInt],0,RootInt);
-InstallMethod(RoundCyc,"Integer",true,[IsInt],0,COM_FUN(46));
-InstallMethod(RoundCycDown,"Integer",true,[IsInt],0,COM_FUN(47));
-InstallMethod(StandardAssociate,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(48));
-InstallOtherMethod(Valuation,"for two integers",IsIdenticalObj,[IsInt,IsInt],0,COM_FUN(49));
-InstallMethod(\in,"for integers",IsElmsColls,[IsCyclotomic,IsIntegers],0,COM_FUN(50));
-InstallMethod(\in,"for positive integers",IsElmsColls,[IsCyclotomic,IsPositiveIntegers],0,COM_FUN(51));
-InstallMethod(\in,"for nonnegative integers",IsElmsColls,[IsCyclotomic,IsNonnegativeIntegers],0,COM_FUN(52));
-InstallGlobalFunction(PrintFactorsInt,COM_FUN(53));
-InstallOtherMethod(Iterator,"more helpful error for integers",true,[IsPosInt],0,COM_FUN(54));
-InstallGlobalFunction(PowerDecompositions,COM_FUN(55));
+InstallMethod(RoundCyc,"Integer",true,[IsInt],0,COM_FUN(47));
+InstallMethod(RoundCycDown,"Integer",true,[IsInt],0,COM_FUN(48));
+InstallMethod(StandardAssociate,"for integers",true,[IsIntegers,IsInt],0,COM_FUN(49));
+InstallOtherMethod(Valuation,"for two integers",IsIdenticalObj,[IsInt,IsInt],0,COM_FUN(50));
+InstallMethod(\in,"for integers",IsElmsColls,[IsCyclotomic,IsIntegers],0,COM_FUN(51));
+InstallMethod(\in,"for positive integers",IsElmsColls,[IsCyclotomic,IsPositiveIntegers],0,COM_FUN(52));
+InstallMethod(\in,"for nonnegative integers",IsElmsColls,[IsCyclotomic,IsNonnegativeIntegers],0,COM_FUN(53));
+InstallGlobalFunction(PrintFactorsInt,COM_FUN(54));
+InstallOtherMethod(Iterator,"more helpful error for integers",true,[IsPosInt],0,COM_FUN(55));
+InstallGlobalFunction(PowerDecompositions,COM_FUN(56));
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -6832,7 +6977,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/integer.gi"
 
-#F  file="lib/list.gi" crc=5376917
+#F  file="lib/list.gi" crc=36375103
 RANK_FILTER_LIST  := [ 43779512, 28, 47473596, 29, 3693620, 28, 7387704, 29, 
   16756060, 27, 45094936, 43, 44018508, 27, 5248505, 43, 42344374, 9, 
   42344374, 9, 67105912, 7, 67105912, 7, 41951068, 17, 8193, 2, 8193, 2, 
@@ -6879,7 +7024,7 @@ RANK_FILTER_LIST  := [ 43779512, 28, 47473596, 29, 3693620, 28, 7387704, 29,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/list.gi", 5376917 );
+COM_RESULT := COM_FILE( "lib/list.gi", 36375103 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/list.gi\"");
 elif COM_RESULT = 1  then
@@ -6889,7 +7034,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/list.gi");
 elif COM_RESULT = 3  then
-Revision.list_gi:="@(#)$Id: list.gi,v 4.202.2.2 2004/09/27 16:19:34 gap Exp $";
+Revision.list_gi:="@(#)$Id: list.gi,v 4.202.2.3 2005/04/27 16:31:22 gap Exp $";
 InstallMethod(NestingDepthA,[IsCyclotomicCollection and IsGeneralizedRowVector\
 ],COM_FUN(1));
 InstallMethod(NestingDepthM,[IsCyclotomicCollection and IsMultiplicativeGenera\
@@ -7219,10 +7364,10 @@ Unbind(COM_RESULT);
 #E  file="lib/wpobj.gi"
 
 #F  file="lib/grpnice.gd" crc=-77213568
-RANK_FILTER_LIST  := [ 1, 0, 1, 0, 43612414, 3, 993, 2, 1, 0, 49346896, 7, 
-  49346896, 7, 1, 0, 1, 0, 13347966, 16, 993, 2, 1, 0, 1, 0, 1, 0, 26695899, 
-  3, 993, 2, 1, 0, 1, 0, 1, 0, 53390805, 3, 993, 2, 1, 0, 1, 0, 1, 0, 
-  12236484, 3, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 1, 0, 1, 0, 56745198, 3, 993, 2, 1, 0, 49346896, 7, 
+  49346896, 7, 1, 0, 1, 0, 59943321, 16, 993, 2, 1, 0, 1, 0, 1, 0, 52776770, 
+  3, 993, 2, 1, 0, 1, 0, 1, 0, 38443668, 3, 993, 2, 1, 0, 1, 0, 1, 0, 
+  19553935, 3, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7280,11 +7425,11 @@ Unbind(COM_RESULT);
 #E  file="lib/grpnice.gd"
 
 #F  file="lib/morpheus.gd" crc=133799281
-RANK_FILTER_LIST  := [ 8126465, 2, 891025, 1, 1, 0, 1, 0, 24471975, 8, 993, 
-  2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 30777962, 21, 993, 2, 1, 
-  0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 56000950, 21, 993, 2, 1, 0, 1, 
-  0, 1, 0, 1, 0, 44892988, 23, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 45351215, 23, 
-  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 23593518, 21, 993, 2, 
+RANK_FILTER_LIST  := [ 8126465, 2, 891025, 1, 1, 0, 1, 0, 39106877, 8, 993, 
+  2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 22207731, 21, 993, 2, 1, 
+  0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 21721946, 21, 993, 2, 1, 0, 1, 
+  0, 1, 0, 1, 0, 43442899, 23, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 39551819, 23, 
+  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 11993766, 21, 993, 2, 
   1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -7338,27 +7483,27 @@ Unbind(COM_RESULT);
 
 #F  file="lib/grpmat.gd" crc=35519492
 RANK_FILTER_LIST  := [ 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 47186043, 31, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 27263174, 
+  24419256, 26, 1, 0, 1, 0, 23986539, 31, 993, 2, 1, 0, 15252993, 8, 
+  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 47973045, 
   31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 54526315, 31, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 41943718, 
-  31, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 33555095, 21, 
+  24419256, 26, 1, 0, 1, 0, 28836218, 31, 993, 2, 1, 0, 15252993, 8, 
+  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 57672403, 
+  31, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 29360956, 21, 
   993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 27280832, 31, 993, 2, 1, 0, 41942696, 16, 
-  41942696, 16, 1, 0, 1, 0, 56745198, 21, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 40384904, 
-  31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 52776770, 31, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 38443668, 
-  31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 19553935, 31, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 39106877, 
-  31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 22207731, 31, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 44415429, 
-  31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 
-  24419256, 26, 1, 0, 1, 0, 43442899, 31, 993, 2, 1, 0 ];
+  24419256, 26, 1, 0, 1, 0, 50331966, 31, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 168, 21, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 
+  58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 0, 573, 31, 993, 2, 1, 0, 
+  15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 
+  0, 40389539, 31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  41942696, 16, 24419256, 26, 1, 0, 1, 0, 54059432, 31, 993, 2, 1, 0, 
+  15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 
+  0, 1858152, 31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  41942696, 16, 24419256, 26, 1, 0, 1, 0, 44105537, 31, 993, 2, 1, 0, 
+  15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 
+  0, 25436984, 31, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  41942696, 16, 24419256, 26, 1, 0, 1, 0, 50872975, 31, 993, 2, 1, 0, 
+  15252993, 8, 42721236, 7, 58720092, 9, 41942696, 16, 24419256, 26, 1, 0, 1, 
+  0, 2162284, 31, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7456,24 +7601,24 @@ Unbind(COM_RESULT);
 
 #F  file="lib/grpramat.gd" crc=29789225
 RANK_FILTER_LIST  := [ 15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 
-  41942696, 16, 50543206, 29, 1, 0, 1, 0, 39551819, 34, 993, 2, 1, 0, 
+  41942696, 16, 50543206, 29, 1, 0, 1, 0, 8646157, 34, 993, 2, 1, 0, 
   15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 
-  50543206, 29, 1, 0, 1, 0, 23986539, 34, 993, 2, 1, 0, 15252993, 8, 
+  50543206, 29, 1, 0, 1, 0, 34583569, 34, 993, 2, 1, 0, 15252993, 8, 
   42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 
-  1, 0, 47973045, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
-  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 28836218, 34, 993, 2, 
+  1, 0, 2058226, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 4116419, 34, 993, 2, 
   1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 
-  50543206, 29, 1, 0, 1, 0, 57672403, 34, 993, 2, 1, 0, 15252993, 8, 
-  42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 
-  1, 0, 29360956, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
-  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 58720919, 34, 993, 2, 
+  50543206, 29, 1, 0, 1, 0, 8231845, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 
+  7, 58720092, 9, 26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 
+  32924401, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 65847809, 34, 993, 2, 
   1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 
-  50543206, 29, 1, 0, 1, 0, 50331966, 34, 993, 2, 1, 0, 15252993, 8, 
+  50543206, 29, 1, 0, 1, 0, 64586706, 34, 993, 2, 1, 0, 15252993, 8, 
   42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 
-  1, 0, 33555020, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
-  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 168, 34, 993, 2, 1, 
-  0, 15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 
-  50543206, 29, 1, 0, 1, 0, 303, 34, 993, 2, 1, 0 ];
+  1, 0, 62063540, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  26123951, 19, 41942696, 16, 50543206, 29, 1, 0, 1, 0, 57017208, 34, 993, 2, 
+  1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 26123951, 19, 41942696, 16, 
+  50543206, 29, 1, 0, 1, 0, 46924544, 34, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7617,8 +7762,8 @@ Unbind(COM_RESULT);
 #E  file="grp/classic.gd"
 
 #F  file="grp/perf.gd" crc=108009259
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 153, 21, 993, 
-  2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 53477439, 21, 
+  993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7717,7 +7862,7 @@ Unbind(COM_RESULT);
 #E  file="grp/ree.gd"
 
 #F  file="grp/imf.gd" crc=116883545
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 54059432, 21, 
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 12583020, 21, 
   993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -7786,19 +7931,19 @@ Unbind(COM_RESULT);
 #E  file="grp/glzmodmz.gd"
 
 #F  file="lib/orders.gd" crc=129576079
-RANK_FILTER_LIST  := [ 1985, 1, 1, 0, 1, 0, 1858152, 4, 993, 2, 1, 0, 
-  14288387, 1, 1, 0, 1, 0, 46273428, 4, 993, 2, 1, 0, 14288387, 1, 1, 0, 1, 
-  0, 50872975, 4, 993, 2, 1, 0, 14288387, 1, 1, 0, 1, 0, 34636078, 4, 993, 2, 
-  1, 0, 14288387, 1, 1, 0, 1, 0, 2162284, 4, 993, 2, 1, 0, 14288387, 1, 1, 0, 
-  1, 0, 4323575, 4, 993, 2, 1, 0, 14288387, 1, 1, 0, 1, 0, 17292281, 4, 993, 
-  2, 1, 0, 1, 0, 1, 0, 1, 0, 34583569, 6, 993, 2, 1, 0, 14288387, 1, 
-  14288387, 1, 1, 0, 1, 0, 4116419, 6, 993, 2, 1, 0, 14288387, 1, 14288387, 
-  1, 1, 0, 1, 0, 8231845, 6, 993, 2, 1, 0, 14288387, 1, 14288387, 1, 1, 0, 1, 
-  0, 32924401, 6, 993, 2, 1, 0, 14288387, 1, 14288387, 1, 1, 0, 1, 0, 
-  65847809, 6, 993, 2, 1, 0, 14288387, 1, 14288387, 1, 1, 0, 1, 0, 62063540, 
-  6, 993, 2, 1, 0, 14288387, 1, 1, 0, 1, 0, 46924544, 4, 993, 2, 1, 0, 
-  14288387, 1, 1, 0, 1, 0, 53477439, 4, 993, 2, 1, 0, 14288387, 1, 14288387, 
-  1, 1, 0, 1, 0, 39845966, 6, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 1985, 1, 1, 0, 1, 0, 50331981, 4, 993, 2, 1, 0, 
+  25165015, 1, 1, 0, 1, 0, 228, 4, 993, 2, 1, 0, 25165015, 1, 1, 0, 1, 0, 
+  65224781, 4, 993, 2, 1, 0, 25165015, 1, 1, 0, 1, 0, 40341760, 4, 993, 2, 1, 
+  0, 25165015, 1, 1, 0, 1, 0, 57685557, 4, 993, 2, 1, 0, 25165015, 1, 1, 0, 
+  1, 0, 25263312, 4, 993, 2, 1, 0, 25165015, 1, 1, 0, 1, 0, 50319045, 4, 993, 
+  2, 1, 0, 1, 0, 1, 0, 1, 0, 33528218, 6, 993, 2, 1, 0, 25165015, 1, 
+  25165015, 1, 1, 0, 1, 0, 67001014, 6, 993, 2, 1, 0, 25165015, 1, 25165015, 
+  1, 1, 0, 1, 0, 66892156, 6, 993, 2, 1, 0, 25165015, 1, 25165015, 1, 1, 0, 
+  1, 0, 66239008, 6, 993, 2, 1, 0, 25165015, 1, 25165015, 1, 1, 0, 1, 0, 
+  65369104, 6, 993, 2, 1, 0, 25165015, 1, 25165015, 1, 1, 0, 1, 0, 60147760, 
+  6, 993, 2, 1, 0, 25165015, 1, 1, 0, 1, 0, 39264304, 4, 993, 2, 1, 0, 
+  25165015, 1, 1, 0, 1, 0, 22839359, 4, 993, 2, 1, 0, 25165015, 1, 25165015, 
+  1, 1, 0, 1, 0, 45678685, 6, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7854,10 +7999,10 @@ Unbind(COM_RESULT);
 #E  file="lib/orders.gd"
 
 #F  file="lib/trans.gd" crc=-24067477
-RANK_FILTER_LIST  := [ 12582028, 6, 1, 0, 1, 0, 33555050, 9, 993, 2, 1, 0, 
-  12582028, 6, 1, 0, 1, 0, 228, 9, 993, 2, 1, 0, 12582028, 6, 1, 0, 1, 0, 
-  44111372, 9, 993, 2, 1, 0, 12582028, 6, 1, 0, 1, 0, 65224781, 9, 993, 2, 1, 
-  0, 12582028, 6, 1, 0, 1, 0, 40341760, 9, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 24247466, 6, 1, 0, 1, 0, 59769675, 9, 993, 2, 1, 0, 
+  24247466, 6, 1, 0, 1, 0, 52429478, 9, 993, 2, 1, 0, 24247466, 6, 1, 0, 1, 
+  0, 37749084, 9, 993, 2, 1, 0, 24247466, 6, 1, 0, 1, 0, 8389256, 9, 993, 2, 
+  1, 0, 24247466, 6, 1, 0, 1, 0, 16777519, 9, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7907,7 +8052,7 @@ Unbind(COM_RESULT);
 #E  file="lib/trans.gd"
 
 #F  file="lib/fastendo.gd" crc=-45012668
-RANK_FILTER_LIST  := [ 49346896, 7, 49346896, 7, 1, 0, 1, 0, 57685557, 16, 
+RANK_FILTER_LIST  := [ 49346896, 7, 49346896, 7, 1, 0, 1, 0, 33555005, 16, 
   993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -7935,11 +8080,11 @@ Unbind(COM_RESULT);
 #E  file="lib/fastendo.gd"
 
 #F  file="lib/fpsemi.gd" crc=68140826
-RANK_FILTER_LIST  := [ 63962867, 11, 25159027, 9, 22013014, 15, 1, 0, 1, 0, 
-  33528218, 20, 993, 2, 1, 0, 63962867, 11, 25159027, 9, 22013014, 15, 1, 0, 
-  1, 0, 67055443, 20, 993, 2, 1, 0, 63962867, 11, 25159027, 9, 22013014, 15, 
-  1, 0, 1, 0, 67001014, 20, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 
-  1, 0, 66892156, 16, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 63962867, 11, 67108130, 9, 63962117, 15, 1, 0, 1, 0, 
+  8695016, 20, 993, 2, 1, 0, 63962867, 11, 67108130, 9, 63962117, 15, 1, 0, 
+  1, 0, 42657673, 20, 993, 2, 1, 0, 63962867, 11, 67108130, 9, 63962117, 15, 
+  1, 0, 1, 0, 43473148, 20, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 
+  1, 0, 45105058, 16, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -7978,11 +8123,11 @@ Unbind(COM_RESULT);
 #E  file="lib/fpsemi.gd"
 
 #F  file="lib/fpmon.gd" crc=-94871220
-RANK_FILTER_LIST  := [ 60816854, 13, 66238016, 10, 59945990, 17, 1, 0, 1, 0, 
-  63628336, 22, 993, 2, 1, 0, 60816854, 13, 66238016, 10, 59945990, 17, 1, 0, 
-  1, 0, 60147760, 22, 993, 2, 1, 0, 60816854, 13, 66238016, 10, 59945990, 17, 
-  1, 0, 1, 0, 53186608, 22, 993, 2, 1, 0, 60816854, 13, 60816854, 13, 1, 0, 
-  1, 0, 39264304, 18, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 60816854, 13, 16355396, 10, 10063370, 17, 1, 0, 1, 0, 
+  65422573, 22, 993, 2, 1, 0, 60816854, 13, 16355396, 10, 10063370, 17, 1, 0, 
+  1, 0, 63735274, 22, 993, 2, 1, 0, 60816854, 13, 16355396, 10, 10063370, 17, 
+  1, 0, 1, 0, 60360676, 22, 993, 2, 1, 0, 60816854, 13, 60816854, 13, 1, 0, 
+  1, 0, 53611480, 18, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8020,10 +8165,10 @@ Unbind(COM_RESULT);
 #E  file="lib/fpmon.gd"
 
 #F  file="lib/rwssmg.gd" crc=-70259428
-RANK_FILTER_LIST  := [ 63962867, 11, 63962867, 11, 1, 0, 1, 0, 11419696, 16, 
-  993, 2, 1, 0, 67108850, 2, 1, 0, 1, 0, 22839359, 5, 993, 2, 1, 0, 67108850, 
-  2, 1, 0, 1, 0, 45678685, 5, 993, 2, 1, 0, 67108850, 2, 1, 0, 1, 0, 
-  24248458, 5, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 63962867, 11, 63962867, 11, 1, 0, 1, 0, 40114048, 16, 
+  993, 2, 1, 0, 67108850, 2, 1, 0, 1, 0, 13118224, 5, 993, 2, 1, 0, 67108850, 
+  2, 1, 0, 1, 0, 26235455, 5, 993, 2, 1, 0, 67108850, 2, 1, 0, 1, 0, 
+  52470877, 5, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8054,7 +8199,7 @@ Unbind(COM_RESULT);
 #E  file="lib/rwssmg.gd"
 
 #F  file="lib/kbsemi.gd" crc=45245806
-RANK_FILTER_LIST  := [ 48495891, 3, 1, 0, 1, 0, 29884854, 6, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 37831850, 3, 1, 0, 1, 0, 8556772, 6, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8089,7 +8234,7 @@ Unbind(COM_RESULT);
 #E  file="lib/kbsemi.gd"
 
 #F  file="lib/tcsemi.gd" crc=37787445
-RANK_FILTER_LIST  := [ 43515245, 22, 1, 0, 1, 0, 59769675, 25, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 43515245, 22, 1, 0, 1, 0, 17113511, 25, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8117,24 +8262,24 @@ Unbind(COM_RESULT);
 #E  file="lib/tcsemi.gd"
 
 #F  file="lib/semirel.gd" crc=-120171873
-RANK_FILTER_LIST  := [ 1, 0, 1, 0, 1, 0, 37749084, 24, 993, 2, 1, 0, 1, 0, 1, 
-  0, 1, 0, 16777519, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 138, 24, 993, 2, 1, 
-  0, 1, 0, 1, 0, 1, 0, 25268127, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 
-  42657673, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 45105058, 24, 993, 2, 1, 0, 
-  1, 0, 1, 0, 1, 0, 41733130, 24, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 
-  32711783, 9, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 63735274, 9, 993, 2, 1, 
-  0, 24771859, 6, 1, 0, 1, 0, 53611480, 9, 993, 2, 1, 0, 24771859, 6, 1, 0, 
-  1, 0, 13118224, 9, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 52470877, 9, 993, 
-  2, 1, 0, 24771859, 6, 1, 0, 1, 0, 8556772, 9, 993, 2, 1, 0, 1, 0, 1, 0, 1, 
-  0, 17113511, 11, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 
-  34226989, 16, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 
-  1344106, 16, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 2687219, 
-  16, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 5374405, 16, 993, 
-  2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 10748777, 16, 993, 2, 1, 
-  0, 1, 0, 1, 0, 1, 0, 21496561, 11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 
-  42992129, 11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 18875346, 11, 993, 2, 1, 0, 
-  1, 0, 1, 0, 1, 0, 8389526, 11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 33555125, 
-  11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 378, 11, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 1, 0, 1, 0, 1, 0, 1344106, 24, 993, 2, 1, 0, 1, 0, 1, 
+  0, 1, 0, 5374405, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 21496561, 24, 993, 2, 
+  1, 0, 1, 0, 1, 0, 1, 0, 18875346, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 
+  8389526, 24, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 33555125, 24, 993, 2, 1, 0, 1, 
+  0, 1, 0, 1, 0, 378, 24, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 1102825, 9, 
+  993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 5510693, 9, 993, 2, 1, 0, 24771859, 
+  6, 1, 0, 1, 0, 18628539, 9, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 7402298, 
+  9, 993, 2, 1, 0, 24771859, 6, 1, 0, 1, 0, 29606213, 9, 993, 2, 1, 0, 
+  24771859, 6, 1, 0, 1, 0, 51312994, 9, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 
+  35516116, 11, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 
+  3923320, 16, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 7845647, 
+  16, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 15690301, 16, 
+  993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 31379609, 16, 993, 2, 
+  1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 62759185, 16, 993, 2, 1, 0, 
+  1, 0, 1, 0, 1, 0, 58409458, 11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 49710004, 
+  11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 32310136, 11, 993, 2, 1, 0, 1, 0, 1, 0, 
+  1, 0, 62128686, 11, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 47186088, 11, 993, 2, 
+  1, 0, 1, 0, 1, 0, 1, 0, 27263264, 11, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8199,11 +8344,11 @@ Unbind(COM_RESULT);
 #E  file="lib/semirel.gd"
 
 #F  file="lib/semitran.gd" crc=-67559905
-RANK_FILTER_LIST  := [ 63962867, 11, 25165015, 10, 22019002, 16, 1, 0, 1, 0, 
-  1102825, 19, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 5510693, 
-  16, 993, 2, 1, 0, 63962867, 11, 25165015, 10, 22019002, 16, 1, 0, 1, 0, 
-  56127743, 19, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 
-  18628539, 16, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 63962867, 11, 48495891, 10, 45349878, 16, 1, 0, 1, 0, 
+  41943118, 19, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 
+  33554615, 16, 993, 2, 1, 0, 63962867, 11, 48495891, 10, 45349878, 16, 1, 0, 
+  1, 0, 318, 19, 993, 2, 1, 0, 63962867, 11, 63962867, 11, 1, 0, 1, 0, 603, 
+  16, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8236,22 +8381,22 @@ Unbind(COM_RESULT);
 #E  file="lib/semitran.gd"
 
 #F  file="lib/reesmat.gd" crc=-60133833
-RANK_FILTER_LIST  := [ 63962867, 11, 63962867, 11, 1, 0, 1, 0, 37256085, 16, 
-  993, 2, 1, 0, 63962867, 11, 29605221, 9, 26459208, 15, 1, 0, 1, 0, 
-  51312994, 18, 993, 2, 1, 0, 63962867, 11, 59210441, 8, 56064428, 12, 1, 0, 
-  1, 0, 35516116, 17, 993, 2, 1, 0, 63962867, 11, 29605221, 9, 26459208, 15, 
-  1, 0, 1, 0, 3923320, 18, 993, 2, 1, 0, 63962867, 11, 59210441, 8, 56064428, 
-  12, 1, 0, 1, 0, 7845647, 17, 993, 2, 1, 0, 63962867, 11, 29605221, 9, 
-  26459208, 15, 1, 0, 1, 0, 15690301, 18, 993, 2, 1, 0, 63962867, 11, 
-  59210441, 8, 56064428, 12, 1, 0, 1, 0, 31379609, 17, 993, 2, 1, 0, 
-  63962867, 11, 29605221, 9, 26459208, 15, 1, 0, 1, 0, 62759185, 18, 993, 2, 
-  1, 0, 63962867, 11, 59210441, 8, 56064428, 12, 1, 0, 1, 0, 58409458, 17, 
-  993, 2, 1, 0, 7401306, 5, 1, 0, 1, 0, 49710004, 8, 993, 2, 1, 0, 14802611, 
-  4, 1, 0, 1, 0, 32310136, 7, 993, 2, 1, 0, 7401306, 5, 1, 0, 1, 0, 64619279, 
-  8, 993, 2, 1, 0, 14802611, 4, 1, 0, 1, 0, 62128686, 7, 993, 2, 1, 0, 
-  7401306, 5, 1, 0, 1, 0, 57147500, 8, 993, 2, 1, 0, 14802611, 4, 1, 0, 1, 0, 
-  47186088, 7, 993, 2, 1, 0, 14802611, 4, 1, 0, 1, 0, 54526495, 7, 993, 2, 1, 
-  0, 1, 0, 1, 0, 1, 0, 41943118, 11, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 63962867, 11, 63962867, 11, 1, 0, 1, 0, 56131808, 16, 
+  993, 2, 1, 0, 63962867, 11, 36660178, 9, 33514165, 15, 1, 0, 1, 0, 
+  40583887, 18, 993, 2, 1, 0, 63962867, 11, 62343071, 8, 59197058, 12, 1, 0, 
+  1, 0, 14057902, 17, 993, 2, 1, 0, 63962867, 11, 36660178, 9, 33514165, 15, 
+  1, 0, 1, 0, 28114811, 18, 993, 2, 1, 0, 63962867, 11, 62343071, 8, 
+  59197058, 12, 1, 0, 1, 0, 56228629, 17, 993, 2, 1, 0, 63962867, 11, 
+  36660178, 9, 33514165, 15, 1, 0, 1, 0, 45347386, 18, 993, 2, 1, 0, 
+  63962867, 11, 62343071, 8, 59197058, 12, 1, 0, 1, 0, 23584900, 17, 993, 2, 
+  1, 0, 63962867, 11, 36660178, 9, 33514165, 15, 1, 0, 1, 0, 47168807, 18, 
+  993, 2, 1, 0, 63962867, 11, 62343071, 8, 59197058, 12, 1, 0, 1, 0, 
+  27228702, 17, 993, 2, 1, 0, 34175468, 5, 1, 0, 1, 0, 54456411, 8, 993, 2, 
+  1, 0, 57372691, 4, 1, 0, 1, 0, 41802950, 7, 993, 2, 1, 0, 34175468, 5, 1, 
+  0, 1, 0, 16496988, 8, 993, 2, 1, 0, 57372691, 4, 1, 0, 1, 0, 32993943, 7, 
+  993, 2, 1, 0, 34175468, 5, 1, 0, 1, 0, 65986893, 8, 993, 2, 1, 0, 57372691, 
+  4, 1, 0, 1, 0, 64864874, 7, 993, 2, 1, 0, 57372691, 4, 1, 0, 1, 0, 
+  58130840, 7, 993, 2, 1, 0, 1, 0, 1, 0, 1, 0, 49152768, 11, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8312,9 +8457,9 @@ Unbind(COM_RESULT);
 #E  file="lib/reesmat.gd"
 
 #F  file="lib/semiquo.gd" crc=-73638338
-RANK_FILTER_LIST  := [ 16776332, 14, 1, 0, 1, 0, 33554615, 17, 993, 2, 1, 0, 
-  16776332, 14, 1, 0, 1, 0, 318, 17, 993, 2, 1, 0, 16776332, 14, 1, 0, 1, 0, 
-  603, 17, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 31194672, 14, 1, 0, 1, 0, 62390335, 17, 993, 2, 1, 0, 
+  31194672, 14, 1, 0, 1, 0, 57671758, 17, 993, 2, 1, 0, 31194672, 14, 1, 0, 
+  1, 0, 48234604, 17, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8515,42 +8660,42 @@ Unbind(COM_RESULT);
 #E  file="lib/helpdef.gd"
 
 #F  file="lib/ctbl.gd" crc=117147351
-RANK_FILTER_LIST  := [ 57372691, 3, 1, 0, 1, 0, 40583887, 6, 993, 2, 1, 0, 
-  57372691, 3, 1, 0, 1, 0, 14057902, 6, 993, 2, 1, 0, 41942696, 16, 41942696, 
-  16, 1, 0, 1, 0, 28114811, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 
-  0, 1, 0, 56228629, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 
-  0, 45347386, 21, 993, 2, 1, 0, 36660178, 3, 1, 0, 1, 0, 23584900, 6, 993, 
-  2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 47168807, 21, 993, 2, 1, 
-  0, 56130816, 1, 1, 0, 1, 0, 54456411, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 
-  1, 0, 16496988, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 65986893, 4, 993, 
-  2, 1, 0, 56130816, 1, 1, 0, 1, 0, 62619876, 4, 993, 2, 1, 0, 56130816, 1, 
-  1, 0, 1, 0, 49152768, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 62390335, 
-  4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 48234604, 4, 993, 2, 1, 0, 
-  56130816, 1, 1, 0, 1, 0, 29360296, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 
-  0, 58720559, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 50332206, 4, 993, 2, 
-  1, 0, 56130816, 1, 1, 0, 1, 0, 33554540, 4, 993, 2, 1, 0, 56130816, 1, 1, 
-  0, 1, 0, 168, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 303, 4, 993, 2, 1, 
-  0, 56130816, 1, 1, 0, 1, 0, 62345683, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 
-  1, 0, 52818685, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 33763729, 4, 993, 
-  2, 1, 0, 56130816, 1, 1, 0, 1, 0, 62763656, 4, 993, 2, 1, 0, 56130816, 1, 
-  1, 0, 1, 0, 53654631, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 50110885, 
-  4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 33111898, 4, 993, 2, 1, 0, 
-  34175468, 2, 1, 0, 1, 0, 66222803, 5, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 
-  0, 65335734, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 63561596, 6, 993, 2, 
-  1, 0, 57372691, 3, 1, 0, 1, 0, 60013320, 6, 993, 2, 1, 0, 57372691, 3, 1, 
-  0, 1, 0, 52916768, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 38724624, 6, 
-  993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 10339376, 6, 993, 2, 1, 0, 57372691, 
-  3, 1, 0, 1, 0, 20678719, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 
-  41357405, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 15605898, 6, 993, 2, 1, 
-  0, 57372691, 3, 1, 0, 1, 0, 31211763, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 
-  1, 0, 62423493, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 57738074, 6, 993, 
-  2, 1, 0, 56130816, 1, 1, 0, 1, 0, 48366276, 4, 993, 2, 1, 0, 36660178, 3, 
-  1, 0, 1, 0, 29622680, 6, 993, 2, 1, 0, 57372691, 3, 1, 0, 1, 0, 59245327, 
-  6, 993, 2, 1, 0, 34175468, 2, 1, 0, 1, 0, 51380782, 5, 993, 2, 1, 0, 
-  57372691, 3, 1, 0, 1, 0, 35651692, 6, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 
-  0, 4194472, 4, 993, 2, 1, 0, 56130816, 1, 1, 0, 1, 0, 8388911, 4, 993, 2, 
-  1, 0, 56130816, 1, 1, 0, 1, 0, 16777789, 4, 993, 2, 1, 0, 57372691, 3, 1, 
-  0, 1, 0, 33554585, 6, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 50331214, 3, 1, 0, 1, 0, 303, 6, 993, 2, 1, 0, 
+  50331214, 3, 1, 0, 1, 0, 62345683, 6, 993, 2, 1, 0, 41942696, 16, 41942696, 
+  16, 1, 0, 1, 0, 52818685, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 
+  0, 1, 0, 33763729, 21, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 
+  0, 62763656, 21, 993, 2, 1, 0, 33553548, 3, 1, 0, 1, 0, 53654631, 6, 993, 
+  2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 50110885, 21, 993, 2, 1, 
+  0, 29359304, 1, 1, 0, 1, 0, 66222803, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 
+  1, 0, 63561596, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 52916768, 4, 993, 
+  2, 1, 0, 29359304, 1, 1, 0, 1, 0, 10339376, 4, 993, 2, 1, 0, 29359304, 1, 
+  1, 0, 1, 0, 41357405, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 31211763, 
+  4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 57738074, 4, 993, 2, 1, 0, 
+  29359304, 1, 1, 0, 1, 0, 48366276, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 
+  0, 29622680, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 59245327, 4, 993, 2, 
+  1, 0, 29359304, 1, 1, 0, 1, 0, 51380782, 4, 993, 2, 1, 0, 29359304, 1, 1, 
+  0, 1, 0, 35651692, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 4194472, 4, 
+  993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 8388911, 4, 993, 2, 1, 0, 29359304, 
+  1, 1, 0, 1, 0, 16777789, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 
+  33554585, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 258, 4, 993, 2, 1, 0, 
+  29359304, 1, 1, 0, 1, 0, 483, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 
+  933, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 53658141, 4, 993, 2, 1, 0, 
+  58719567, 2, 1, 0, 1, 0, 26756719, 5, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 
+  0, 40061794, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 66672904, 6, 993, 2, 
+  1, 0, 50331214, 3, 1, 0, 1, 0, 52785285, 6, 993, 2, 1, 0, 50331214, 3, 1, 
+  0, 1, 0, 9903428, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 19805863, 6, 
+  993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 39610733, 6, 993, 2, 1, 0, 50331214, 
+  3, 1, 0, 1, 0, 12111594, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 
+  24222195, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 48443397, 6, 993, 2, 1, 
+  0, 50331214, 3, 1, 0, 1, 0, 29776922, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 
+  1, 0, 59552851, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 51995830, 6, 993, 
+  2, 1, 0, 29359304, 1, 1, 0, 1, 0, 36882748, 4, 993, 2, 1, 0, 33553548, 3, 
+  1, 0, 1, 0, 6655624, 6, 993, 2, 1, 0, 50331214, 3, 1, 0, 1, 0, 13310255, 6, 
+  993, 2, 1, 0, 58719567, 2, 1, 0, 1, 0, 26620477, 5, 993, 2, 1, 0, 50331214, 
+  3, 1, 0, 1, 0, 53239961, 6, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 
+  39371010, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 11633108, 4, 993, 2, 1, 
+  0, 29359304, 1, 1, 0, 1, 0, 23266183, 4, 993, 2, 1, 0, 50331214, 3, 1, 0, 
+  1, 0, 46531373, 6, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8816,20 +8961,20 @@ Unbind(COM_RESULT);
 #F  file="lib/utils.gd" crc=65814714
 RANK_FILTER_LIST  := [ 3197603, 6, 12790409, 7, 51161633, 7, 3321812, 7, 
   6643623, 7, 26574489, 7, 14869633, 9, 59478529, 13, 43820926, 19, 1, 0, 1, 
-  0, 933, 28, 993, 2, 1, 0, 3197603, 6, 6395205, 7, 12790409, 7, 51161633, 7, 
-  3321812, 7, 6643623, 7, 26574489, 7, 63962867, 11, 14869633, 9, 59478529, 
-  13, 47070117, 26, 1, 0, 1, 0, 53658141, 39, 993, 2, 1, 0, 3197603, 6, 
-  6395205, 7, 12790409, 7, 51161633, 7, 3321812, 7, 6643623, 7, 26574489, 7, 
-  63962867, 11, 14869633, 9, 59478529, 13, 47070117, 26, 1, 0, 1, 0, 
-  26756719, 39, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
-  53865321, 19, 41942696, 16, 11175697, 29, 1, 0, 1, 0, 66672904, 34, 993, 2, 
-  1, 0, 1, 0, 1, 0, 1, 0, 52785285, 12, 993, 2, 1, 0, 15252993, 8, 42721236, 
+  0, 36700598, 28, 993, 2, 1, 0, 3197603, 6, 6395205, 7, 12790409, 7, 
+  51161633, 7, 3321812, 7, 6643623, 7, 26574489, 7, 63962867, 11, 14869633, 
+  9, 59478529, 13, 47070117, 26, 1, 0, 1, 0, 6292284, 39, 993, 2, 1, 0, 
+  3197603, 6, 6395205, 7, 12790409, 7, 51161633, 7, 3321812, 7, 6643623, 7, 
+  26574489, 7, 63962867, 11, 14869633, 9, 59478529, 13, 47070117, 26, 1, 0, 
+  1, 0, 12583575, 39, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  53865321, 19, 41942696, 16, 11175697, 29, 1, 0, 1, 0, 50332281, 34, 993, 2, 
+  1, 0, 1, 0, 1, 0, 1, 0, 33554690, 12, 993, 2, 1, 0, 15252993, 8, 42721236, 
   7, 58720092, 9, 53865321, 19, 41942696, 16, 11175697, 29, 1, 0, 1, 0, 
-  19805863, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
-  53865321, 19, 41942696, 16, 11175697, 29, 1, 0, 1, 0, 12111594, 34, 993, 2, 
-  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 24222195, 31, 993, 2, 1, 0, 
+  52790580, 34, 993, 2, 1, 0, 15252993, 8, 42721236, 7, 58720092, 9, 
+  53865321, 19, 41942696, 16, 11175697, 29, 1, 0, 1, 0, 33986857, 34, 993, 2, 
+  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 53654479, 31, 993, 2, 1, 0, 
   15252993, 8, 42721236, 7, 58720092, 9, 53865321, 19, 41942696, 16, 
-  11175697, 29, 1, 0, 1, 0, 48443397, 42, 993, 2, 1, 0 ];
+  11175697, 29, 1, 0, 1, 0, 25879884, 42, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -8897,13 +9042,13 @@ Unbind(COM_RESULT);
 #E  file="lib/utils.gd"
 
 #F  file="lib/quogphom.gd" crc=-90809246
-RANK_FILTER_LIST  := [ 49346896, 7, 49346896, 7, 1, 0, 1, 0, 51995830, 20, 
-  993, 2, 1, 0, 29775930, 18, 1, 0, 1, 0, 468, 19, 993, 2, 1, 0, 29775930, 
-  18, 1, 0, 1, 0, 24153046, 19, 993, 2, 1, 0, 29775930, 18, 1, 0, 1, 0, 
-  53654479, 19, 993, 2, 1, 0, 29775930, 18, 1, 0, 1, 0, 38540962, 19, 993, 2, 
-  1, 0, 29775930, 18, 1, 0, 1, 0, 19943111, 19, 993, 2, 1, 0, 49346896, 7, 
-  49346896, 7, 1, 0, 1, 0, 39885229, 20, 993, 2, 1, 0, 29775930, 18, 1, 0, 1, 
-  0, 12660586, 19, 993, 2, 1, 0, 29775930, 18, 1, 0, 1, 0, 25320179, 19, 993, 
+RANK_FILTER_LIST  := [ 49346896, 7, 49346896, 7, 1, 0, 1, 0, 19943111, 20, 
+  993, 2, 1, 0, 38539970, 18, 1, 0, 1, 0, 1049404, 19, 993, 2, 1, 0, 
+  38539970, 18, 1, 0, 1, 0, 4194637, 19, 993, 2, 1, 0, 38539970, 18, 1, 0, 1, 
+  0, 16777489, 19, 993, 2, 1, 0, 38539970, 18, 1, 0, 1, 0, 978, 19, 993, 2, 
+  1, 0, 38539970, 18, 1, 0, 1, 0, 10532267, 19, 993, 2, 1, 0, 49346896, 7, 
+  49346896, 7, 1, 0, 1, 0, 46944892, 20, 993, 2, 1, 0, 38539970, 18, 1, 0, 1, 
+  0, 52659343, 19, 993, 2, 1, 0, 38539970, 18, 1, 0, 1, 0, 64090165, 19, 993, 
   2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -8980,8 +9125,8 @@ Unbind(COM_RESULT);
 #E  file="lib/quogphom.gd"
 
 #F  file="lib/gptransv.gd" crc=-116176698
-RANK_FILTER_LIST  := [ 50638373, 5, 1, 0, 1, 0, 1229764, 7, 993, 2, 1, 0, 
-  2457543, 6, 1, 0, 1, 0, 9833081, 7, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 53888097, 5, 1, 0, 1, 0, 14226740, 7, 993, 2, 1, 0, 
+  28451495, 6, 1, 0, 1, 0, 46698090, 7, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -9047,15 +9192,15 @@ Unbind(COM_RESULT);
 #E  file="lib/gptransv.gd"
 
 #F  file="lib/grpchain.gd" crc=70664498
-RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 50594515, 21, 
-  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 34079158, 21, 993, 2, 
-  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 4194637, 21, 993, 2, 1, 0, 
-  37573393, 33, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 16777489, 21, 993, 2, 
-  1, 0, 45271600, 27, 6291427, 20, 53660808, 18, 58719672, 27, 41942696, 16, 
-  33553488, 27, 1, 0, 1, 0, 978, 30, 993, 2, 1, 0, 45271600, 27, 41942696, 
-  16, 41942696, 16, 1, 0, 1, 0, 10532267, 21, 993, 2, 1, 0, 41942696, 16, 
-  41942696, 16, 1, 0, 1, 0, 46944892, 21, 993, 2, 1, 0, 41942696, 16, 
-  41942696, 16, 1, 0, 1, 0, 52659343, 21, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 41942696, 16, 1, 0, 1, 0, 4588138, 21, 
+  993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 9175283, 21, 993, 2, 
+  1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 6292194, 21, 993, 2, 1, 0, 
+  32592207, 33, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 25166757, 21, 993, 2, 
+  1, 0, 45271600, 27, 42991242, 20, 53660808, 18, 58719672, 27, 41942696, 16, 
+  33553488, 27, 1, 0, 1, 0, 33555170, 30, 993, 2, 1, 0, 45271600, 27, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 903, 21, 993, 2, 1, 0, 41942696, 
+  16, 41942696, 16, 1, 0, 1, 0, 813, 21, 993, 2, 1, 0, 41942696, 16, 
+  41942696, 16, 1, 0, 1, 0, 633, 21, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -9161,13 +9306,13 @@ Unbind(COM_RESULT);
 #E  file="lib/rss.gd"
 
 #F  file="lib/basicim.gd" crc=79608556
-RANK_FILTER_LIST  := [ 41942696, 16, 53888097, 9, 28721913, 20, 1, 0, 1, 0, 
-  40668306, 23, 993, 2, 1, 0, 41942696, 16, 53888097, 9, 28721913, 20, 1, 0, 
-  1, 0, 14226740, 23, 993, 2, 1, 0, 41942696, 16, 53888097, 9, 28721913, 20, 
-  1, 0, 1, 0, 28452487, 23, 993, 2, 1, 0, 41942696, 16, 53888097, 9, 
-  28721913, 20, 1, 0, 1, 0, 56903981, 23, 993, 2, 1, 0, 64089173, 5, 1, 0, 1, 
-  0, 46698090, 8, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
-  26286308, 21, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 67108400, 9, 41942216, 20, 1, 0, 1, 0, 
+  64094500, 23, 993, 2, 1, 0, 41942696, 16, 67108400, 9, 41942216, 20, 1, 0, 
+  1, 0, 58063756, 23, 993, 2, 1, 0, 41942696, 16, 67108400, 9, 41942216, 20, 
+  1, 0, 1, 0, 46004188, 23, 993, 2, 1, 0, 41942696, 16, 67108400, 9, 
+  41942216, 20, 1, 0, 1, 0, 21883132, 23, 993, 2, 1, 0, 67108160, 5, 1, 0, 1, 
+  0, 40750859, 8, 993, 2, 1, 0, 41942696, 16, 41942696, 16, 1, 0, 1, 0, 
+  59918873, 21, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -9224,11 +9369,11 @@ Unbind(COM_RESULT);
 #E  file="lib/basicim.gd"
 
 #F  file="lib/solmxgrp.gd" crc=-124727970
-RANK_FILTER_LIST  := [ 41942696, 16, 12582583, 33, 54525278, 45, 1, 0, 1, 0, 
-  52572583, 48, 993, 2, 1, 0, 41942696, 16, 14869633, 9, 59478529, 13, 
-  49181977, 24, 1, 0, 1, 0, 38036254, 32, 993, 2, 1, 0, 24221203, 29, 
-  41942696, 16, 41942696, 16, 1, 0, 1, 0, 17924279, 21, 993, 2, 1, 0, 
-  41942696, 16, 41942696, 16, 1, 0, 1, 0, 35848525, 21, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 41942696, 16, 46202821, 33, 21036637, 45, 1, 0, 1, 0, 
+  52727874, 48, 993, 2, 1, 0, 41942696, 16, 14869633, 9, 59478529, 13, 
+  49181977, 24, 1, 0, 1, 0, 38345876, 32, 993, 2, 1, 0, 53653487, 29, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 19162767, 21, 993, 2, 1, 0, 
+  41942696, 16, 41942696, 16, 1, 0, 1, 0, 38324541, 21, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete

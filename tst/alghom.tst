@@ -2,12 +2,14 @@
 ##
 #W  alghom.tst                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: alghom.tst,v 1.12 2003/11/15 21:35:27 gap Exp $
+#H  @(#)$Id: alghom.tst,v 1.12.2.3 2005/05/11 14:53:01 gap Exp $
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: alghom.tst,v 1.12 2003/11/15 21:35:27 gap Exp $");
+gap> START_TEST("$Id: alghom.tst,v 1.12.2.3 2005/05/11 14:53:01 gap Exp $");
 
 
 # An example of a non-homomorphism.
@@ -48,9 +50,7 @@ gap> IsBijective( f );
 true
 
 
-gap> STOP_TEST( "alghom.tst",63000568);
-
-
+gap> STOP_TEST( "alghom.tst", 50500000 );
 
 
 #############################################################################

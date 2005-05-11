@@ -5,7 +5,7 @@
 %A  ratfun.msk                  GAP documentation            Alexander Hulpke
 %A                                                           Frank Celler
 %%
-%A  @(#)$Id: ratfun.msk,v 1.57 2003/09/03 15:09:52 gap Exp $
+%A  @(#)$Id: ratfun.msk,v 1.57.2.1 2005/05/09 07:11:15 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -25,10 +25,12 @@ $r_{1,0}x_1+r_{1,1}x_1x_2+r_{0,1}x_2+\cdots$ with $r_{i,j}\in R$.
 A polynomial ring of rank 1 is called an *univariate* polynomial ring, its
 elements are *univariate polynomials*.
 
-Polynomial rings of smaller rank
-naturally embed in rings of higher rank; if $S$ is a subring of $R$ then a
-polynomial ring over $S$ naturally embeds in a polynomial ring over $R$ of
-the same rank.
+Polynomial rings of smaller rank naturally embed in rings of higher rank; if
+$S$ is a subring of $R$ then a polynomial ring over $S$ naturally embeds in
+a polynomial ring over $R$ of the same rank. Note however that {\GAP} does
+not consider $R$ as a subset of a polynomial ring over $R$; for example the
+zero of $R$ ($0$) and the zero of the polynomial ring ($0x^0$) are different
+objects.
 
 Internally, indeterminates are represented by positive integers, but it is
 possible to give names to them to have them printed in a nicer way. Beware,
@@ -1376,9 +1378,9 @@ to <O> and then reduces it.
 gap> ReducedGroebnerBasis(l,MonomialGrlexOrdering());
 [ x-y, z^2-2*y+1, y^2+y-1 ]
 gap> ReducedGroebnerBasis(l,MonomialLexOrdering());    
-[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/2*z^2+x-1/2 ]
+[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/4*z^2+x-1/4 ]
 gap> ReducedGroebnerBasis(l,MonomialLexOrdering([y,z,x]));
-[ x^2+x-1, z^2-2*x+1, -x+y ]
+[ 1, x^2+x-1, z^2-x+1/2, -x+y ]
 \endexample
 
 \>StoredGroebnerBasis( <I> ) A

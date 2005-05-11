@@ -60,6 +60,8 @@ ReadLib( "algrep.gi"   );
 ReadLib( "lierep.gi"   );
 
 ReadLib( "numtheor.gi" );
+ReadLib( "contfrac.gi" );
+
 ReadLib( "string.gi"   );
 
 ReadLib( "ratfun.gi"   );
@@ -163,6 +165,8 @@ ReadLib( "factgrp.gi"  );
 ReadLib( "grpreps.gi" );
 ReadLib( "grppcrep.gi" );
 ReadLib( "grpprmcs.gi" );
+
+ReadLib( "grpnames.gi" );
 
 ReadLib( "onecohom.gi" );
 ReadLib( "grppccom.gi" );

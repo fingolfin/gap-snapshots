@@ -4,13 +4,13 @@
 ##                                               Bettina Eick, Eamonn O'Brien
 ##
 Revision.small_gd :=
-    "@(#)$Id: small.gd,v 4.27 2002/11/23 19:06:16 gap Exp $";
+    "@(#)$Id: small.gd,v 4.27.2.1 2005/05/03 14:21:26 gap Exp $";
 
 #############################################################################
 ##
 ## tell GAP about the component
 ##
-DeclareComponent("small","2.0");
+DeclareComponent("small","2.1");
 
 InfoIdgroup := NewInfoClass( "InfoIdgroup" );
 

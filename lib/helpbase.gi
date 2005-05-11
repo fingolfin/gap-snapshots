@@ -2,7 +2,7 @@
 ##  
 #W  helpbase.gi                 GAP Library                      Frank Lübeck
 ##  
-#H  @(#)$Id: helpbase.gi,v 1.15.2.2 2004/04/23 15:28:18 gap Exp $
+#H  @(#)$Id: helpbase.gi,v 1.15.2.3 2005/05/05 09:26:12 gap Exp $
 ##  
 #Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ## and the actual help books.
 ##  
 Revision.helpbase_gi := 
-  "@(#)$Id: helpbase.gi,v 1.15.2.2 2004/04/23 15:28:18 gap Exp $";
+  "@(#)$Id: helpbase.gi,v 1.15.2.3 2005/05/05 09:26:12 gap Exp $";
 
 #############################################################################
 ##  
@@ -39,6 +39,23 @@ InstallGlobalFunction(StringStreamInputTextFile, function(fname)
   return InputTextString(s);
 end);
 
+#############################################################################
+##  
+#F  IsDocumentedVariable( <varname> ) . . . . . . .  check documentation for
+#F  name of global variable
+##  
+##  Returns `true' if <varname> is a string which is the name of a bound global
+##  variable and if there exists a help section with this name as index entry
+##  (up to case).
+##  
+##  This utility will first be used in some debug tools showing what is newly
+##  installed by loading a package. Can be documented if desired.
+##  
+BindGlobal("IsDocumentedVariable",  varname -> 
+      IsBoundGlobal( varname ) and 
+      not IsEmpty( HELP_GET_MATCHES( 
+                 HELP_KNOWN_BOOKS[1], SIMPLE_STRING( varname ), true )[1] )
+);
 
 #############################################################################
 ##  
@@ -333,7 +350,7 @@ InstallValue(HELP_BOOKS_INFO, rec());
 ##  known book.
 ##  
 InstallGlobalFunction(HELP_BOOK_INFO, function( book )
-  local pos, bnam, path, dirs, six, stream, line, handler;
+  local pos, bnam, nnam, path, dirs, six, stream, line, handler;
 
   # if this is already a record return it
   if IsRecord(book)  then
@@ -396,7 +413,8 @@ InstallGlobalFunction(HELP_BOOK_INFO, function( book )
   fi;
   # give up if handler functions are not (yet) loaded
   if not IsBound(HELP_BOOK_HANDLER.(handler)) then
-    Print("\n#W WARNING: No handler for help book `", bnam,
+    Print("\n#W WARNING: No handler for help book `",
+          HELP_KNOWN_BOOKS[2][pos][1],
           "' available,\n#W removing this book.\n");
     if handler = "GapDocGAP" then
       Print("#W HINT: Install and load the GAPDoc package, see\n",

@@ -21,7 +21,7 @@
 ##  different lengths, the returned result will have trailing zeros removed.
 ##
 Revision.listcoef_gi :=
-    "@(#)$Id: listcoef.gi,v 4.54 2002/06/10 19:39:38 gap Exp $";
+    "@(#)$Id: listcoef.gi,v 4.54.2.2 2005/05/12 09:10:54 gap Exp $";
 
 
 #############################################################################
@@ -836,7 +836,7 @@ function( l1, n1, exp, l2, n2 )
             n1 := ReduceCoeffs( l1, Length(l1), l2, n2 );
         fi;
     od;
-    return c;
+    return c{[1..n3]};
 end );
 
 
@@ -1167,12 +1167,12 @@ end);
 #M  AClosestVectorCombinationsMatFFEVecFFE( <mat>,<f>,<vec>,<l>,<stop> )
 ##
 
-AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv)
+AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv,coords,bcoords)
     local i,di,vp;
     if    # if this vector has coeff 0 there must be at least cnt+1 free positions
         # to come up with the right number of vectors 
       (l>cnt+pos) then
-        bd:=AClosVecLib(veclis,vec,sum,pos+1,l,m,cnt,stop,bd,bv);
+        bd:=AClosVecLib(veclis,vec,sum,pos+1,l,m,cnt,stop,bd,bv,coords,bcoords);
         
         if bd<=stop then
             return bd;
@@ -1182,6 +1182,9 @@ AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv)
     vp:=veclis[pos];
     for i in [1..m] do
         AddRowVector(sum,vp[i]);
+        if coords <> false then
+            coords[pos] := i;
+        fi;
         if cnt = 0 then
             # test this vector
             di:=DistanceVecFFE(sum,vec);
@@ -1189,13 +1192,16 @@ AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv)
                 # store new optimum
                 bd:=di;
                 bv{[1..Length(sum)]}:=sum;
+                if coords <> false then
+                    bcoords{[1..Length(veclis)]} := coords;
+                fi;
                 if bd <= stop then
                     return bd;
                 fi;
             fi;
         else
             if pos<l then
-                bd:=AClosVecLib(veclis,vec,sum,pos+1,l,m,cnt-1,stop,bd,bv);
+                bd:=AClosVecLib(veclis,vec,sum,pos+1,l,m,cnt-1,stop,bd,bv,coords,bcoords);
                 if bd<=stop then
                     return bd;
                 fi;
@@ -1204,22 +1210,21 @@ AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv)
     od;
     # reset component to 0
     AddRowVector(sum,vp[m+1]);
+    coords[pos] := 0;
     return bd;
 end;
 
-
-InstallMethod(AClosestVectorCombinationsMatFFEVecFFE,"generic",
-        function(a,b,c,d,e)
-    return HasElementsFamily(a) and IsIdenticalObj(b,c)
-           and IsIdenticalObj(ElementsFamily(a),b);
-end,
-  [IsMatrix,IsFFECollection and IsField, IsList, IsInt,IsInt],0,
-  function(mat,f,vec,cnt,stop)
-    local b,fdi,i,j,veclis,mult,mults,fdip, q, ok8;
+AClosestVectorDriver :=
+  function(mat,f,vec,cnt,stop,coords)
+    local b,fdi,i,j,veclis,mult,mults,fdip, q, ok8,c,bc;
 
     # special case: combination of 0 vectors
     if cnt=0 then
-      return Zero(vec);
+        if coords then
+            return [Zero(vec),ListWithIdenticalEntries(Length(mat),Zero(f))];
+        else
+            return Zero(vec);
+        fi;
     fi;
    
     if cnt > Length(mat) then
@@ -1271,8 +1276,14 @@ end,
                 DIST_GF2VEC_GF2VEC(j,j);
             od;
         od;
-        b:=A_CLOS_VEC(veclis,vec,cnt-1,stop);
-	ConvertToVectorRepNC(b,2);
+        if coords then
+            b := A_CLOS_VEC_COORDS(veclis,vec,cnt-1,stop);
+            ConvertToVectorRepNC(b[1],2);
+            b[2] := f{1+b[2]};
+        else
+            b:=A_CLOS_VEC(veclis,vec,cnt-1,stop);
+            ConvertToVectorRepNC(b,2);
+        fi;
 	return b;
     elif q <= 256 then
         #
@@ -1300,20 +1311,58 @@ end,
         fi;
         
         if ok8 then
-            return A_CLOSEST_VEC8BIT(veclis, vec, cnt-1, stop);
+            if coords then
+                b := A_CLOSEST_VEC8BIT_COORDS(veclis,vec,cnt-1,stop);
+                b[2] := f{1+b[2]};
+            else
+                return A_CLOSEST_VEC8BIT(veclis, vec, cnt-1, stop);
+            fi;
         fi;
     fi;
     # no kernel method available, use library recursion
     b:=ListWithIdenticalEntries(Length(vec),0);
-    AClosVecLib(veclis,vec,ZeroOp(vec),1,Length(veclis),
-            Length(f)-1, 
-            cnt-1,        # the routine uses 0 offset
-            stop,
-            Length(b)+1,  # value 1 larger than worst
-            b);
-    ConvertToVectorRepNC(b);
+    if coords then
+        c := ListWithIdenticalEntries(Length(mat),0);
+        bc:= ListWithIdenticalEntries(Length(mat),0);
+        AClosVecLib(veclis,vec,ZeroOp(vec),1,Length(veclis),
+                Length(f)-1, 
+                cnt-1,        # the routine uses 0 offset
+                stop,
+                Length(b)+1,  # value 1 larger than worst
+                b, c, bc);
+        ConvertToVectorRepNC(b);
+        return [b,f{1+bc}];
+    else
+        AClosVecLib(veclis,vec,ZeroOp(vec),1,Length(veclis),
+                Length(f)-1, 
+                cnt-1,        # the routine uses 0 offset
+                stop,
+                Length(b)+1,  # value 1 larger than worst
+                b, false,false);
+        ConvertToVectorRepNC(b);
+        return b;
+    fi;
+end;        
 
-  return b;
+
+InstallMethod(AClosestVectorCombinationsMatFFEVecFFE,"generic",
+        function(a,b,c,d,e)
+    return HasElementsFamily(a) and IsIdenticalObj(b,c)
+           and IsIdenticalObj(ElementsFamily(a),b);
+end,
+  [IsMatrix,IsFFECollection and IsField, IsList, IsInt,IsInt],0,
+  function(mat,f,vec,cnt,stop)
+    return AClosestVectorDriver(mat,f,vec,cnt,stop,false);
+end);
+
+InstallMethod(AClosestVectorCombinationsMatFFEVecFFECoords,"generic",
+        function(a,b,c,d,e)
+    return HasElementsFamily(a) and IsIdenticalObj(b,c)
+           and IsIdenticalObj(ElementsFamily(a),b);
+end,
+  [IsMatrix,IsFFECollection and IsField, IsList, IsInt,IsInt],0,
+  function(mat,f,vec,cnt,stop)
+    return AClosestVectorDriver(mat,f,vec,cnt,stop,true);
 end);
 
 #############################################################################

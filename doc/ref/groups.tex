@@ -4,7 +4,7 @@
 %%
 %A  groups.msk                  GAP documentation            Alexander Hulpke
 %%
-%A  @(#)$Id: groups.msk,v 1.99.2.1 2004/01/24 02:29:13 gap Exp $
+%A  @(#)$Id: groups.msk,v 1.99.2.3 2005/05/09 07:38:35 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -465,6 +465,135 @@ gap> MappingGeneratorsImages(H!.factFreeMap);
 [ [ (3,4), (1,2,3,4,5,6) ], [ x1, x2 ] ]
 \endexample
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Structure Descriptions}
+
+\>StructureDescription( <G> ) A
+
+The method for `StructureDescription' exhibits the structure of the
+given group to some extend using the strategy outlined below. The idea
+is to return a possibly short string which gives some insight in the
+structure of the considered group and can be computed reasonably quickly.
+
+Note that non-isomorphic groups can have the same `StructureDescription',
+since the structure description might not exhibit the structure of the
+considered group in all detail. However, isomorphic groups in different
+representation will always obtain the same structure description.
+
+The `StructureDescription' is a string of the following form:
+
+\begintt
+  StructureDescription(<G>) ::=
+     1                                 ; trivial group 
+   || C<size>                           ; cyclic group
+   || A<degree>                         ; alternating group
+   || S<degree>                         ; symmetric group
+   || D<size>                           ; dihedral group
+   || Q<size>                           ; quaternion group
+   || QD<size>                          ; quasidihedral group
+   || PSL(<n>,<q>)                      ; projective special linear group
+   || SL(<n>,<q>)                       ; special linear group
+   || GL(<n>,<q>)                       ; general linear group
+   || PSU(<n>,<q>)                      ; proj. special unitary group
+   || O(2<n>+1,<q>)                     ; orthogonal group, type B
+   || O+(2<n>,<q>)                      ; orthogonal group, type D
+   || O-(2<n>,<q>)                      ; orthogonal group, type 2D
+   || PSp(2<n>,<q>)                     ; proj. special symplectic group
+   || Sz(<q>)                           ; Suzuki group
+   || Ree(<q>)                          ; Ree group (type 2F or 2G)
+   || E(6,<q>) || E(7,<q>) || E(8,<q>)    ; Lie group of exceptional type
+   || 2E(6,<q>) || F(4,<q>) || G(2,<q>)
+   || 3D(4,<q>)                         ; Steinberg triality group
+   || M11 || M12 || M22 || M23 || M24
+   || J1 || J2 || J3 || J4 || Co1 || Co2
+   || Co3 || Fi22 || Fi23 || Fi24' || Suz
+   || HS || McL || He || HN || Th || B
+   || M || ON || Ly || Ru                  ; sporadic simple group
+   || 2F(4,2)'                          ; Tits group
+   || PerfectGroup(<size>,<id>)         ; the indicated group from the
+                                       ; library of perfect groups
+   || A x B                             ; direct product
+   || N : H                             ; semidirect product
+   || C(G) . G/C(G) = G' . G/G'         ; non-split extension
+                                       ; (equal alternatives and
+                                       ; trivial extensions omitted)
+   || Phi(G) . G/Phi(G)                 ; non-split extension:
+                                       ; Frattini subgroup and
+                                       ; Frattini factor group
+\endtt
+
+Note that the method chooses *one* possible way of building up
+the given group from smaller pieces (others are possible too).
+
+The option ``short'' is recognized -- if this option is set, an
+abbreviated output format is used (e.g. `"6x3"' instead of `"C6 x C3"').
+
+If the `Name' attribute is not bound, but `StructureDescription' is,
+`View' prints the value of the attribute `StructureDescription'.
+The `Print'ed representation of a group is not affected by computing
+a `StructureDescription'.
+
+The strategy is
+
+\beginlist
+  \item{1.} Lookup in precomputed list, if the order of <G> is not
+            larger than 100 and not equal to 64.
+
+  \item{2.} If <G> is abelian: decompose it into cyclic factors
+            in ``elementary divisors style'',
+            e.g. `"C2 x C3 x C3"' is `"C6 x C3"'.
+
+  \item{3.} Recognize alternating groups, symmetric groups,
+            dihedral groups, quasidihedral groups, quaternion groups,
+            PSL's, SL's, GL's and simple groups not listed so far
+            as basic building blocks.
+
+  \item{4.} Decompose into a direct product of irreducible factors.
+
+  \item{5.} Recognize semidirect products ($N$:$H$), where $N$ is normal.
+            Select a pair $N$, $H$ with the following preferences: 
+            \beginlist
+              \item{1.}  $H$ is abelian
+
+              \item{2.}  $N$ is abelian
+
+              \item{2a.} $N$ has many abelian invariants
+
+              \item{3.}  $N$ is a direct product
+
+              \item{3a.} $N$ has many direct factors
+
+              \item{4.}  $\phi: H \rightarrow$ Aut($N$), 
+                         $h \mapsto (n \mapsto n^h)$ is injective.
+            \endlist
+
+  \item{6.} Fall back to non-splitting extensions:
+            If the centre or the commutator factor group is non-trivial,
+            write <G> as Z(<G>).<G>/Z(<G>) resp. <G>'.<G>/<G>'.
+            Otherwise if the Frattini subgroup is non-trivial,
+            write <G> as $\Phi$(<G>).<G>/$\Phi$(<G>).
+
+  \item{7.} If no decomposition is found (maybe this is not the case for
+            any finite group) try to identify <G> in the perfect groups
+            library.
+            If also this fails return a string describing this situation.
+\endlist
+
+
+
+\beginexample
+gap> l := AllSmallGroups(12);;
+gap> List(l,StructureDescription);; l;
+[ C3 : C4, C12, A4, D12, C6 x C2 ]
+gap> List(AllSmallGroups(40),G->StructureDescription(G:short));
+[ "5:8", "40", "5:8", "5:Q8", "4xD10", "D40", "2x(5:4)", "(10x2):2", "20x2",
+  "5xD8", "5xQ8", "2x(5:4)", "2^2xD10", "10x2^2" ]
+gap> List(AllTransitiveGroups(DegreeAction,6),G->StructureDescription(G:short));
+[ "6", "S3", "D12", "A4", "3xS3", "2xA4", "S4", "S4", "S3xS3", "(3^2):4",
+  "2xS4", "A5", "(S3xS3):2", "S5", "A6", "S6" ]
+gap> StructureDescription(PSL(4,2));
+"A8"
+\endexample
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{Cosets}
@@ -987,7 +1116,7 @@ factor group $G/G'$ is the largest abelian factor group of $G$.
 
 \beginexample
 gap> DerivedSubgroup(g);
-Group([ (1,3,2), (2,4,3) ])
+Group([ (1,3,2), (1,4,3) ])
 \endexample
 
 \>CommutatorLength( <G> ) A
@@ -1058,7 +1187,7 @@ is the smallest normal subgroup of <G> that has a solvable factor group.
 
 \beginexample
 gap> PerfectResiduum(Group((1,2,3,4,5),(1,2)));
-Group([ (1,3,2), (2,4,3), (3,5,4) ])
+Group([ (1,3,2), (2,4,3), (2,3)(4,5) ])
 \endexample
 
 \>RadicalGroup( <G> ) A
@@ -1976,8 +2105,8 @@ gap> g:=SymmetricGroup(4);;NormalSubgroups(g);
 [ Group(()), Group([ (1,4)(2,3), (1,3)(2,4) ]), 
   Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), Sym( [ 1 .. 4 ] ) ]
 \endexample
-The algorithm for the computation of normal subgroups is described in
-\cite{Hulpke98}.
+The algorithm used for the computation of normal subgroups of permutation
+groups and pc groups is described in \cite{Hulpke98}.
 
 \>MaximalNormalSubgroups( <G> ) A
 
@@ -2126,10 +2255,11 @@ perfect subgroups.
 gap> m11:=TransitiveGroup(11,6);
 M(11)
 gap> r:=RepresentativesPerfectSubgroups(m11);
-[ Group([ (3,6,7)(4,5,9)(8,10,11), (1,7)(3,5)(6,10)(8,9) ]), 
-  Group([ (2,4,10)(5,7,11)(6,8,9), (1,7)(3,5)(6,10)(8,9) ]), 
-  Group([ (2,7)(3,6)(4,10)(5,11), (1,11,5,7,3)(2,6,10,4,9) ]), 
-  Group([ (2,3,4)(5,6,8)(7,11,9), (1,7)(3,5)(6,10)(8,9) ]), M(11), Group(()) ]
+[ Group([ (3,4,10)(5,11,6)(7,9,8), (1,9)(2,7)(3,10)(4,6) ]), 
+  Group([ (2,3,5)(4,10,9)(6,7,11), (1,9)(2,7)(3,10)(4,6) ]), 
+  Group([ (3,6)(4,11)(5,10)(8,9), (1,6,5,9)(2,11,3,10) ]), 
+  Group([ (3,5,8)(4,11,7)(6,9,10), (1,9)(2,7)(3,10)(4,6) ]), M(11), Group(())
+ ]
 gap> List(r,Size);
 [ 60, 60, 360, 660, 7920, 1 ]
 \endexample
@@ -2142,11 +2272,10 @@ returns a list of the conjugacy classes of perfect subgroups of <G>.
 
 \beginexample
 gap> ConjugacyClassesPerfectSubgroups(m11);
-[ Group( [ ( 3, 6, 7)( 4, 5, 9)( 8,10,11), ( 1, 7)( 3, 5)( 6,10)( 8, 9) ] )^G,
-  Group( [ ( 2, 4,10)( 5, 7,11)( 6, 8, 9), ( 1, 7)( 3, 5)( 6,10)( 8, 9) ] )^G,
-  Group( [ ( 2, 7)( 3, 6)( 4,10)( 5,11), ( 1,11, 5, 7, 3)( 2, 6,10, 4, 9) 
-     ] )^G, 
-  Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), ( 1, 7)( 3, 5)( 6,10)( 8, 9) ] )^G,
+[ Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
+  Group( [ ( 2, 3, 5)( 4,10, 9)( 6, 7,11), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
+  Group( [ ( 3, 6)( 4,11)( 5,10)( 8, 9), ( 1, 6, 5, 9)( 2,11, 3,10) ] )^G, 
+  Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
   M(11)^G, Group( () )^G ]
 \endexample
 

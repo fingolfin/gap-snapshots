@@ -3,7 +3,7 @@
 #W  grpfp.gi                    GAP library                    Volkmar Felsch
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: grpfp.gi,v 4.203.2.4 2004/04/27 16:35:12 gap Exp $
+#H  @(#)$Id: grpfp.gi,v 4.203.2.6 2005/02/21 20:31:17 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  2. methods for f.p. groups
 ##
 Revision.grpfp_gi :=
-    "@(#)$Id: grpfp.gi,v 4.203.2.4 2004/04/27 16:35:12 gap Exp $";
+    "@(#)$Id: grpfp.gi,v 4.203.2.6 2005/02/21 20:31:17 gap Exp $";
 
 
 #############################################################################
@@ -425,9 +425,13 @@ local S;
     IsSubgroupOfWholeGroupByQuotientRep and IsAttributeStoringRep ),
         rec(quot:=Q,sub:=U) ); 
   SetParent(S,fam!.wholeGroup);
-  if CanComputeIndex(Q,U) then
-    SetIndexInWholeGroup(S,Index(Q,U));
-#T better IndexNC?
+  if CanComputeIndex(Q,U) and HasSize(Q) then
+    SetIndexInWholeGroup(S,IndexNC(Q,U));
+    if IndexNC(Q,U)<infinity then
+      SetIsFinitelyGeneratedGroup(S,true);
+    fi;
+  elif HasIsFinite(Q) and IsFinite(Q) then
+    SetIsFinitelyGeneratedGroup(S,true);
   fi;
   # transfer normality information
   if (HasIsNormalInParent(U) and Q=Parent(U)) or
@@ -584,6 +588,26 @@ function(G,H)
   return IsNormal(H!.quot,H!.sub);
 end);
 
+InstallMethod(IsFinitelyGeneratedGroup,"subgroups of fp group",true,
+  [IsSubgroupFpGroup],0,
+function(U)
+local G;
+  G:=FamilyObj(U)!.wholeGroup;
+  if not IsFinitelyGeneratedGroup(G) then
+    TryNextMethod();
+  fi;
+  if CanComputeIndex(G,U) and Index(G,U)<infinity  then
+    return true;
+  fi;
+  Info(InfoWarning,1,
+    "Forcing index computation to test whether subgroup is finitely generated"
+    );
+ if Index(G,U)<infinity then
+   return true;
+ fi;
+ TryNextMethod(); # give up
+end);
+
 #############################################################################
 ##
 #M  GeneratorsOfGroup( <F> )  . . . . . . . . . . . . . . .  for a f.p. group
@@ -669,16 +693,16 @@ end );
 InstallMethod( AbelianInvariants,
   "for a subgroup of a finitely presented group", true,
   [ IsSubgroupFpGroup ], 0,
-function( H )
+function(H)
 
     local G,inv;
 
-    if IsGroupOfFamily( H ) then
+    if IsGroupOfFamily(H) then
       TryNextMethod();
     fi;
 
     # Get the whole group `G' of `H'.
-    G:= FamilyObj( H )!.wholeGroup;
+    G:= FamilyObj(H)!.wholeGroup;
 
     # Call the global function for subgroups of f.p. groups.
     inv:=AbelianInvariantsSubgroupFpGroup( G, H );
@@ -749,10 +773,10 @@ InstallMethod( CosetTable,
     0,
 function( G, H );
 
-    if G <> FamilyObj( H )!.wholeGroup then
+    if G <> FamilyObj(H)!.wholeGroup then
         Error( "<H> must be a subgroup of <G>" );
     fi;
-    return CosetTableInWholeGroup( H );
+    return CosetTableInWholeGroup(H);
 
 end );
 
@@ -2750,6 +2774,7 @@ BindGlobal( "DoLowIndexSubgroupsFpGroup", function ( arg )
                     perms[g]:=PermList(table[2*g-1]{[1..nrcos]});
 		  od;
 		  Q:=Group(perms);
+		  Size(Q); # force size -- we anyhow need stabchain
 	          sub:=SubgroupOfWholeGroupByQuotientSubgroup(FamilyObj(G),
 			 Q,Stabilizer(Q,1));
 

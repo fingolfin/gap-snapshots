@@ -23,8 +23,8 @@
 <a name = "I0"></a>
 <a name = "I1"></a>
 
-A <strong>group action</strong> is a triple (<i>G</i>,<i>Omega</i> ,<font face="symbol">&#956;</font>), where <i>G</i> is a group,
-<var>Omega</var> a set and <font face="symbol">&#956;</font>:<i>Omega</i> &times;<i>G</i><font face="symbol">&#8594;</font><i>Omega</i>  a function (whose
+A <strong>group action</strong> is a triple (<i>G</i>,<i>Omega</i> ,&#956;), where <i>G</i> is a group,
+<var>Omega</var> a set and &#956;:<i>Omega</i> &times;<i>G</i>&#8594;<i>Omega</i>  a function (whose
 action is compatible with the group arithmetic). We call <var>Omega</var> the
 <strong>domain</strong> of the action.
 <p>
@@ -32,15 +32,15 @@ In <font face="Gill Sans,Helvetica,Arial">GAP</font>, <var>Omega</var> can be a 
 permits access to its elements via the <var>Omega</var>[<var>n</var>] operation, for example a
 list), it does not need to be sorted (see&nbsp;<a href="CHAP021.htm#SSEC017.4">IsSet</a>).
 <p>
-The acting function <font face="symbol">&#956;</font> is a <font face="Gill Sans,Helvetica,Arial">GAP</font> function of the form
+The acting function &#956; is a <font face="Gill Sans,Helvetica,Arial">GAP</font> function of the form
 <p>
 <code>actfun(</code><var>pnt</var><code>,</code><var>g</var><code>)</code>
 <p>
-that returns the image <font face="symbol">&#956;</font>(<i>pnt</i> ,<i>g</i> ) for a point <i>pnt</i>  <font face="symbol">&#8712;</font> <i>Omega</i>  and a
-group element <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> .
+that returns the image &#956;(<i>pnt</i> ,<i>g</i> ) for a point <i>pnt</i>  &#8712; <i>Omega</i>  and a
+group element <i>g</i>  &#8712; <i>G</i> .
 <p>
 Groups always acts from the right, that is
-<font face="symbol">&#956;</font>(<font face="symbol">&#956;</font>(<i>pnt</i> ,<i>g</i> ),<i>h</i> )=<font face="symbol">&#956;</font>(<i>pnt</i> ,<i>gh</i> ).
+&#956;(&#956;(<i>pnt</i> ,<i>g</i> ),<i>h</i> )=&#956;(<i>pnt</i> ,<i>gh</i> ).
 <p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> does not test whether an acting function <code>actfun</code> satisfies the
 conditions for a group operation but silently assumes that is does.
@@ -82,23 +82,23 @@ used as a default.
 <p>
 This second version (of <code>OrbitsDomain</code>) permits one to implement an action 
 induced by a homomorphism:
-If <var>H</var> acts on <var>Omega</var> via <font face="symbol">&#956;</font> and <font face="symbol">&#981;</font>:<i>G</i><font face="symbol">&#8594;</font> <i>H</i> is a
+If <var>H</var> acts on <var>Omega</var> via &#956; and &#981;:<i>G</i>&#8594; <i>H</i> is a
 homomorphism, <var>G</var> acts on <var>Omega</var> via
-<font face="symbol">&#956;</font><font face="symbol">&#8242;</font>(<font face="symbol">&#969;</font>,<i>g</i>)=<font face="symbol">&#956;</font>(<font face="symbol">&#969;</font>,<i>g</i><sup><font face="symbol">&#981;</font></sup>):
+&#956;&#8242;(&#969;,<i>g</i>)=&#956;(&#969;,<i>g</i><sup>&#981;</sup>):
 <p>
 Here <var>gens</var> must be a set of generators of <var>G</var> and <var>acts</var> the images of
-<var>gens</var> under a homomorphism <font face="symbol">&#981;</font>:<i>G</i><font face="symbol">&#8594;</font> <i>H</i>.
+<var>gens</var> under a homomorphism &#981;:<i>G</i>&#8594; <i>H</i>.
 <var>actfun</var> is the acting function for <var>H</var>, the call
 to <code>ExampleActionFunction</code> implements the induced action of <var>G</var>.
 Again, the acting function <var>actfun</var> is optional and <code>OnPoints</code> is used as a
 default.
 <p>
 The advantage of this notation is that <font face="Gill Sans,Helvetica,Arial">GAP</font> does not need to construct
-this homomorphism <font face="symbol">&#981;</font> and the range group <var>H</var> as <font face="Gill Sans,Helvetica,Arial">GAP</font> objects. (If a
+this homomorphism &#981; and the range group <var>H</var> as <font face="Gill Sans,Helvetica,Arial">GAP</font> objects. (If a
 small group <var>G</var> acts via complicated objects <var>acts</var> this otherwise could
 lead to performance problems.)
 <p>
-<font face="Gill Sans,Helvetica,Arial">GAP</font> does not test whether the mapping <i>gens</i> <font face="symbol">&#8594;</font><i>acts</i> 
+<font face="Gill Sans,Helvetica,Arial">GAP</font> does not test whether the mapping <i>gens</i> &#8594;<i>acts</i> 
 actually induces a homomorphism and the results are unpredictable if this is
 not the case.
 <p>
@@ -154,7 +154,7 @@ both <code>OnPoints</code> (see&nbsp;<a href="CHAP039.htm#SSEC002.1">OnPoints</a
 <a name = "SSEC002.3"></a>
 <li><code>OnLeftInverse( </code><var>pnt</var><code>, </code><var>g</var><code> ) F</code>
 <p>
-returns <i>g</i> <sup><font face="symbol">&#8722;</font>1</sup> <code>* </code><var>pnt</var><code></code>.
+returns <i>g</i> <sup>&#8722;1</sup> <code>* </code><var>pnt</var><code></code>.
 Forming the inverse is necessary to make this a proper action,
 as in <font face="Gill Sans,Helvetica,Arial">GAP</font> groups always act from the right.
 <p>
@@ -324,9 +324,26 @@ not verified by <font face="Gill Sans,Helvetica,Arial">GAP</font> and results ar
 <p>
 <h2><a name="SECT003">39.3 Orbits</a></h2>
 <p><p>
-If <var>G</var> acts on <var>Omega</var> the set of all images of <font face="symbol">&#969;</font> <font face="symbol">&#8712;</font> <i>Omega</i>  under
-elements of <var>G</var> is called the <strong>orbit</strong> of <font face="symbol">&#969;</font>. The set of orbits of <var>G</var>
+If <var>G</var> acts on <var>Omega</var> the set of all images of &#969; &#8712; <i>Omega</i>  under
+elements of <var>G</var> is called the <strong>orbit</strong> of &#969;. The set of orbits of <var>G</var>
 is a partition of <var>Omega</var>.
+<p>
+Note that currently <font face="Gill Sans,Helvetica,Arial">GAP</font> does <strong>not</strong> check whether a given point really
+belongs to &#8486;.
+For example, consider the following example where the projective action
+of a matrix group on a finite vector space shall be computed.
+<p>
+<pre>
+gap&gt; Orbit( GL(2,3), [ -1, 0 ] * Z(3)^0, OnLines );
+[ [ Z(3), 0*Z(3) ], [ Z(3)^0, 0*Z(3) ], [ Z(3)^0, Z(3) ], [ Z(3)^0, Z(3)^0 ], 
+  [ 0*Z(3), Z(3)^0 ] ]
+gap&gt; Size( GL(2,3) ) / Length( last );
+48/5
+</pre>
+<p>
+The error is that <code>OnLines</code> (see&nbsp;<a href="CHAP039.htm#SSEC002.12">OnLines</a>) acts on the set of normed row
+vectors (see&nbsp;<a href="CHAP059.htm#SSEC008.11">NormedRowVectors</a>) of the vector space in question,
+but that the seed vector is itself not such a vector.
 <p>
 <a name = "SSEC003.1"></a>
 <li><code>Orbit( </code><var>G</var><code>[, </code><var>Omega</var><code>], </code><var>pnt</var><code>, [</code><var>gens</var><code>, </code><var>acts</var><code>, ] </code><var>act</var><code> ) O</code>
@@ -435,8 +452,8 @@ gap&gt; OrbitLengths(g,Arrangements([1..4],4),OnTuples);
 <a name = "I11"></a>
 <a name = "I12"></a>
 
-The <strong>Stabilizer</strong> of an element <font face="symbol">&#969;</font> is the set of all those <i>g</i> <font face="symbol">&#8712;</font> <i>G</i>
-which fix <font face="symbol">&#969;</font>.
+The <strong>Stabilizer</strong> of an element &#969; is the set of all those <i>g</i> &#8712; <i>G</i>
+which fix &#969;.
 <p>
 <a name = "SSEC004.1"></a>
 <li><code>OrbitStabilizer( </code><var>G</var><code>, [</code><var>Omega</var><code>, ] </code><var>pnt</var><code>, [</code><var>gens</var><code>, </code><var>acts</var><code>, ] </code><var>act</var><code> ) O</code>
@@ -546,7 +563,7 @@ is used.
 <h2><a name="SECT006">39.6 The Permutation Image of an Action</a></h2>
 <p><p>
 If <i>G</i> acts on a domain <var>Omega</var>, an enumeration of <var>Omega</var> yields a
-homomorphism of <i>G</i> into the symmetric group on {1,<font face="symbol">&#8230;</font>,<font face="symbol">&#124;</font><i>Omega</i> <font face="symbol">&#124;</font>}. In
+homomorphism of <i>G</i> into the symmetric group on {1,&#8230;,&#124;<i>Omega</i> &#124;}. In
 <font face="Gill Sans,Helvetica,Arial">GAP</font>, the enumeration of the domain <var>Omega</var> is provided by the
 <code>Enumerator</code> of <var>Omega</var> (see&nbsp;<a href="CHAP028.htm#SSEC002.2">Enumerator</a>) which of course is <var>Omega</var> itself
 if it is a list.
@@ -556,7 +573,7 @@ if it is a list.
 <li><code>ActionHomomorphism( </code><var>xset</var><code> [, "surjective"] ) A</code>
 <li><code>ActionHomomorphism( </code><var>action</var><code> ) A</code>
 <p>
-computes a homomorphism from <var>G</var> into the symmetric group on <font face="symbol">&#124;</font><i>Omega</i> <font face="symbol">&#124;</font>
+computes a homomorphism from <var>G</var> into the symmetric group on &#124;<i>Omega</i> &#124;
 points that gives the permutation action of <var>G</var> on <var>Omega</var>.
 <p>
 By default the homomorphism returned by <code>ActionHomomorphism</code> is not
@@ -589,7 +606,7 @@ gap&gt; Size(Range(hom));
 When acting on a domain, the operation <code>PositionCanonical</code> is used to
 determine the position of elements in the domain.  This can be used to act
 on a domain given by a list of representatives for which <code>PositionCanonical</code>
-is implemented, for example a <code>RightTransversal</code> (see <a href="CHAP037.htm#SSEC007.1">RightTransversal</a>).
+is implemented, for example a <code>RightTransversal</code> (see <a href="CHAP037.htm#SSEC008.1">RightTransversal</a>).
 <p>
 <a name = "SSEC006.2"></a>
 <li><code>Action( </code><var>G</var><code>, </code><var>Omega</var><code> [</code><var>gens</var><code>, </code><var>acts</var><code>] [, </code><var>act</var><code>] ) O</code>
@@ -687,7 +704,7 @@ representation of <var>G</var>.
 <a name = "SSEC007.3"></a>
 <li><code>AbelianSubfactorAction( </code><var>G</var><code>, </code><var>M</var><code>, </code><var>N</var><code> ) O</code>
 <p>
-Let <var>G</var> be a group and <i>M</i>  <font face="symbol">&#8805;</font> <i>N</i>  be subgroups of a common parent that
+Let <var>G</var> be a group and <i>M</i>  &#8805; <i>N</i>  be subgroups of a common parent that
 are normal under <var>G</var>, such that
 the subfactor <i>M</i> /<i>N</i>  is elementary abelian. The operation
 <code>AbelianSubfactorAction</code> returns a list <code>[</code><var>phi</var><code>,</code><var>alpha</var><code>,</code><var>bas</var><code>]</code> where
@@ -835,7 +852,7 @@ gap&gt; Transitivity(g,[1..4]);
 <p>
 <strong>Note:</strong> For permutation groups, the syntax <code>IsTransitive(</code><var>g</var><code>)</code> is also
 permitted and tests whether the group is transitive on the points moved by
-it, that is the group <font face="symbol">&#9001;</font>(2,3,4),(2,3)<font face="symbol">&#9002;</font> is transitive (on 3
+it, that is the group &#9001;(2,3,4),(2,3)&#9002; is transitive (on 3
 points).
 <p>
 <a name = "SSEC009.3"></a>
@@ -1008,7 +1025,7 @@ This concept is implemented in <font face="Gill Sans,Helvetica,Arial">GAP</font>
 <a name = "SSEC011.1"></a>
 <li><code>IsExternalSet( </code><var>obj</var><code> ) C</code>
 <p>
-An <strong>external set</strong>  specifies an action <var>act</var>:  <i>Omega</i>  &times;<i>G</i>  <font face="symbol">&#8594;</font> <i>Omega</i>   of a group <var>G</var> on a domain <var>Omega</var>. The external set knows the group,
+An <strong>external set</strong>  specifies an action <var>act</var>:  <i>Omega</i>  &times;<i>G</i>  &#8594; <i>Omega</i>   of a group <var>G</var> on a domain <var>Omega</var>. The external set knows the group,
 the domain and the actual acting function.
 Mathematically,  an external set  is the set&nbsp;<var>Omega</var>, which is endowed with
 the action of a group <var>G</var> via the group action <var>act</var>. For this reason
@@ -1097,7 +1114,7 @@ gap&gt; e:=ExternalOrbit(g,g,(1,2,3));
 </pre>
 <p>
 Many subsets of a group, such as conjugacy classes or cosets
-(see&nbsp;<a href="CHAP037.htm#SSEC009.1">ConjugacyClass</a> and <a href="CHAP037.htm#SSEC006.1">RightCoset</a>) are implemented as external orbits.
+(see&nbsp;<a href="CHAP037.htm#SSEC010.1">ConjugacyClass</a> and <a href="CHAP037.htm#SSEC007.1">RightCoset</a>) are implemented as external orbits.
 <p>
 <a name = "SSEC011.10"></a>
 <li><code>StabilizerOfExternalSet( </code><var>xset</var><code> ) A</code>
@@ -1214,5 +1231,5 @@ than <code>ActionHomomorphism</code>.)
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP038.htm">Previous</a>] [<a href ="CHAP040.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

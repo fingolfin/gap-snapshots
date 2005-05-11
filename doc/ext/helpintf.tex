@@ -2,7 +2,7 @@
 %%
 %W  helpintf.tex              GAP documentation              Frank Lübeck
 %%
-%H  @(#)$Id: helpintf.tex,v 4.8 2003/02/19 09:03:52 gap Exp $
+%H  @(#)$Id: helpintf.tex,v 4.8.2.1 2005/05/09 06:47:24 gap Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %%
@@ -129,9 +129,9 @@ be anything, but it should be in some way meaningful.
   typically generated using `InputTextFile' (see~"ref:InputTextFile"), e.g.
 
 \beginexample
-gap> dirs := DirectoriesPackageLibrary("gapdoc", "doc");;
-gap> file := Filename(dirs, "manual.six");;
-gap> stream := InputTextFile(file);;
+gap> dirs := DirectoriesLibrary( "doc/ref" );;
+gap> file := Filename( dirs, "manual.six" );;
+gap> stream := InputTextFile( file );;
 \endexample
 
 `ShowChapters( <info> )' &

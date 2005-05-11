@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gi,v 4.75 2003/11/05 17:41:05 gap Exp $
+#H  @(#)$Id: ctblfuns.gi,v 4.75.2.2 2005/04/13 11:45:38 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -25,7 +25,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gi :=
-    "@(#)$Id: ctblfuns.gi,v 4.75 2003/11/05 17:41:05 gap Exp $";
+    "@(#)$Id: ctblfuns.gi,v 4.75.2.2 2005/04/13 11:45:38 gap Exp $";
 
 
 #############################################################################
@@ -4156,14 +4156,11 @@ InstallGlobalFunction( FrobeniusCharacterValue, function( value, p )
       zero:= Zero( primefield );
 
       # Give up if the required Conway polynomial is hard to compute.
-      if    not IsBound( CONWAYPOLYNOMIALS[p] )
-         or not IsBound( CONWAYPOLYNOMIALS[p][k] ) then
-        if not TryConwayPolynomialForFrobeniusCharacterValue( p, k ) then
-          Info( InfoWarning, 1,
-                "the Conway polynomial of degree ", k, " for p = ", p,
-                " is not known" );
-          return fail;
-        fi;
+      if not IsCheapConwayPolynomial( p, k ) then
+        Info( InfoWarning, 1,
+              "the Conway polynomial of degree ", k, " for p = ", p,
+              " is not known" );
+        return fail;
       fi;
       conwaypol:= ConwayPolynomial( p, k );
 
@@ -4198,21 +4195,6 @@ InstallGlobalFunction( FrobeniusCharacterValue, function( value, p )
     # Return the Frobenius character value.
     return value;
 end );
-
-
-#############################################################################
-##
-#F  TryConwayPolynomialForFrobeniusCharacterValue( <p>, <n> )
-##
-##  We hope to have a fair chance to find an unknown Conway polynomial if
-##  the degree is a prime or $4$;
-##  note that in this range, we may get an additional problem because of the
-##  probabilistic primality test of {\GAP}.
-##
-InstallGlobalFunction( TryConwayPolynomialForFrobeniusCharacterValue,
-    function( p, n )
-    return IsPrimeInt( n ) or n < 6;
-    end );
 
 
 #############################################################################
@@ -4549,7 +4531,7 @@ InstallOtherMethod( GroupWithGenerators,
     local filter, G;
 
     # Check that the list consists of invertible class functions.
-    if not ForAll( gens, IsClassFunction ) then
+    if IsEmpty( gens ) or not ForAll( gens, IsClassFunction ) then
       TryNextMethod();
     elif ForAny( gens, psi -> Inverse( psi ) = fail ) then
       Error( "class functions in <gens> must be invertible" );

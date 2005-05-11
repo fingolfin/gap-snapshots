@@ -3,7 +3,7 @@
 #W  ratfun.gd                   GAP Library                      Frank Celler
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun.gd,v 4.64 2003/06/25 15:51:51 gap Exp $
+#H  @(#)$Id: ratfun.gd,v 4.64.2.2 2005/05/12 09:10:55 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci.,  University of St  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  for  rational functions, Laurent polynomials   and polynomials and  their
 ##  families.
 Revision.ratfun_gd :=
-    "@(#)$Id: ratfun.gd,v 4.64 2003/06/25 15:51:51 gap Exp $";
+    "@(#)$Id: ratfun.gd,v 4.64.2.2 2005/05/12 09:10:55 gap Exp $";
 
 ##  Warning:
 ##  If the mechanism for storing attributes is changed,
@@ -391,6 +391,7 @@ DeclareGlobalFunction( "LaurentPolynomialByExtRep");
 ##  by the external representation <extrep>.
 ##  No test for validity of the arguments is performed.
 DeclareGlobalFunction( "PolynomialByExtRep" );
+DeclareSynonym( "PolynomialByExtRepNC",PolynomialByExtRep);
 
 #############################################################################
 ##
@@ -574,6 +575,15 @@ DeclareOperation("Value",[IsPolynomialFunction,IsList,IsList]);
 ##  permuting the indeterminates as it permutes points.
 DeclareGlobalFunction("OnIndeterminates");
 
+#############################################################################
+##
+#F ConstituentsPolynomial(<pol>)
+##                               
+##  Given a polynomial <pol> this function returns a record with components
+##  `variables': A list of the variables occuring in <pol>, `monomials': A
+##  listr of the monomials in <pol>, and `coefficients': A (corresponding)
+##  list of coefficients. 
+DeclareGlobalFunction("ConstituentsPolynomial");
 
 #4
 ##  \index{Expanded form of monomials}

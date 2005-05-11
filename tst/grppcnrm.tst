@@ -2,12 +2,14 @@
 ##
 #W  grppcnrm.tst                GAP library                      Frank Celler
 ##
-#H  @(#)$Id: grppcnrm.tst,v 4.11 2003/11/15 16:58:59 gap Exp $
+#H  @(#)$Id: grppcnrm.tst,v 4.11.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: grppcnrm.tst,v 4.11 2003/11/15 16:58:59 gap Exp $");
+gap> START_TEST("$Id: grppcnrm.tst,v 4.11.2.3 2005/05/11 14:53:02 gap Exp $");
 
 
 #############################################################################
@@ -628,10 +630,10 @@ gap> Size(Normalizer(G,Subgroup(G,[G.1,G.2])));
 
 #############################################################################
 
-gap> STOP_TEST( "grppcnrm.tst",1532002851);
+gap> STOP_TEST( "grppcnrm.tst", 1385300000 );
 
 
 #############################################################################
 ##
-#E  grppcnrm.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

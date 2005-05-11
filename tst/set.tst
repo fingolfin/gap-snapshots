@@ -2,12 +2,14 @@
 ##
 #W  set.tst                   GAP Library                    Alexander Hulpke
 ##
-#H  @(#)$Id: set.tst,v 4.6 2002/04/15 10:08:41 sal Exp $
+#H  @(#)$Id: set.tst,v 4.6.4.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  Exclude from testall.g: why?
+##
 
-gap> START_TEST("$Id: set.tst,v 4.6 2002/04/15 10:08:41 sal Exp $");
+gap> START_TEST("$Id: set.tst,v 4.6.4.3 2005/05/11 14:53:02 gap Exp $");
 gap> a:=Set([(1,3,2),(4,5)]);;
 gap> b:=[(1,2),(5,9,7)];;
 gap> UniteSet(a,b);
@@ -51,12 +53,9 @@ gap> c:=Difference(l,a);;
 gap> c=l;
 true
 
-gap> STOP_TEST( "set.tst", 21000000 );
+gap> STOP_TEST( "set.tst", 19900000 );
 
 #############################################################################
 ##
-#E  set.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
-
-
+#E
 

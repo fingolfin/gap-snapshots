@@ -2,7 +2,7 @@
 ##
 #W  pcgsperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: pcgsperm.gi,v 4.120 2003/01/30 18:38:06 gap Exp $
+#H  @(#)$Id: pcgsperm.gi,v 4.120.2.1 2005/05/03 09:22:10 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  systems of solvable permutation groups.
 ##
 Revision.pcgsperm_gi :=
-    "@(#)$Id: pcgsperm.gi,v 4.120 2003/01/30 18:38:06 gap Exp $";
+    "@(#)$Id: pcgsperm.gi,v 4.120.2.1 2005/05/03 09:22:10 gap Exp $";
 
 #############################################################################
 ##
@@ -467,14 +467,15 @@ function(filter,G,series,oldlen,iselab)
 end );
 
 BindGlobal("NorSerPermPcgs",function(pcgs)
-local series,G,i;
+local ppcgs,series,G,i;
+  ppcgs := ParentPcgs (pcgs);
   G:=GroupOfPcgs(pcgs);
   series:=pcgs!.generatingSeries;
   for i  in [ 1 .. Length( series ) ]  do
         Unbind( series[ i ].relativeOrders );
         Unbind( series[ i ].base           );
         series[ i ] := GroupStabChain( G, series[ i ], true );
-        SetHomePcgs ( series[ i ], pcgs );
+        SetHomePcgs ( series[ i ], ppcgs );
         SetFilterObj( series[ i ], IsMemberPcSeriesPermGroup );
         series[ i ]!.noInSeries := i;
   od;

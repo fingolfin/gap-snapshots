@@ -3,7 +3,7 @@
 #W  grppc.gi                    GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppc.gi,v 4.143 2003/03/10 08:47:31 gap Exp $
+#H  @(#)$Id: grppc.gi,v 4.143.2.2 2005/05/03 09:19:34 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains the methods for groups with a polycyclic collector.
 ##
 Revision.grppc_gi :=
-    "@(#)$Id: grppc.gi,v 4.143 2003/03/10 08:47:31 gap Exp $";
+    "@(#)$Id: grppc.gi,v 4.143.2.2 2005/05/03 09:19:34 gap Exp $";
 
 #############################################################################
 ##
@@ -117,7 +117,7 @@ end );
 
 #############################################################################
 ##
-#M  SetInducedPcgs( <home>,<G>,<pcgs> )
+#F  SetInducedPcgs( <home>,<G>,<pcgs> )
 ##
 InstallGlobalFunction(SetInducedPcgs,function(home,G,pcgs)
   if not HasHomePcgs(G) then
@@ -188,7 +188,9 @@ InstallImmediateMethod( GeneralizedPcgs, IsGroup and HasPcgs, 0, Pcgs );
 ##
 #M  HomePcgs( <G> )
 ##
-InstallMethod( HomePcgs, true, [ IsGroup ], 0, Pcgs );
+##  BH: changed Pcgs to G -> ParentPcgs (Pcgs(G))
+##
+InstallMethod( HomePcgs, true, [ IsGroup ], 0, G -> ParentPcgs( Pcgs( G ) ) );
 
 #############################################################################
 ##
@@ -1419,7 +1421,7 @@ local G,	   # common parent
     od;
     for i in eas do
       if not HasHomePcgs(i) then
-	SetHomePcgs(i,home);
+	SetHomePcgs(i,ParentPcgs(home));
       fi;
     od;
 

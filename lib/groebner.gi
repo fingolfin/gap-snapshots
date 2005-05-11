@@ -2,14 +2,14 @@
 ##
 #W  groebner.gi                   GAP Library               Alexander Hulpke   
 ##
-#H  @(#)$Id: groebner.gi,v 4.1 2002/06/24 19:02:03 gap Exp $
+#H  @(#)$Id: groebner.gi,v 4.1.2.1 2005/01/18 22:35:33 gap Exp $
 ##
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementations for monomial orderings and Groebner
 ##  bases.
 Revision.groebner_gi :=
-    "@(#)$Id: groebner.gi,v 4.1 2002/06/24 19:02:03 gap Exp $";
+    "@(#)$Id: groebner.gi,v 4.1.2.1 2005/01/18 22:35:33 gap Exp $";
 
 BindGlobal("MakeMonomialOrdering",function(name,ercomp)
 local obj;
@@ -613,7 +613,7 @@ end);
 ##
 InstallGlobalFunction( PolynomialReduction, function(poly,plist,order)
 local fam,quot,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
-      ep,pos,di,opoly;
+      ep,pos,di,opoly,rem;
   if IsMonomialOrdering(order) then
     order:=MonomialExtrepComparisonFun(order);
   fi;
@@ -625,54 +625,56 @@ local fam,quot,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
   lmo:=List([1..Length(lmp)],i->elist[i][lmp[i]]);
   lmc:=List([1..Length(lmp)],i->elist[i][lmp[i]+1]);
 
-  repeat
-    ep:=ExtRepPolynomialRatFun(poly);
-    # now try whether we can reduce anywhere.
+  ep:=ExtRepPolynomialRatFun(poly);
+  rem:=Zero(poly);
+  while Length(ep)>0 do
+    # now try whether we can reduce at x
 
-    x:=Length(ep)-1;
     noreduce:=true;
-    while x>0 and noreduce do
-      mon:=ep[x];
-      y:=1;
-      while y<=Length(plist) and noreduce do
-	mon2:=lmo[y];
-	#check whether the monomial at position x is a multiple of the
-	#y-th leading monomial
-        z:=1;
-	pos:=1;
-	qmon:=[]; # potential quotient
-	noreduce:=false;
-	while noreduce=false and z<=Length(mon2) and pos<=Length(mon) do
-	  if mon[pos]>mon2[z] then
-	    noreduce:=true; # indet in mon2 does not occur in mon -> does not
-	                   # divide
-	  elif mon[pos]<mon2[z] then
-	    Append(qmon,mon{[pos,pos+1]}); # indet only in mon
-	    pos:=pos+2;
-	  else
-	    # the indets are the same
-	    di:=mon[pos+1]-mon2[z+1];
-	    if di>0 then
-	      #divides and there is remainder
-	      Append(qmon,[mon[pos],di]);
-	    elif di<0 then
-	      noreduce:=true; # exponent to small
-	    fi;
-	    pos:=pos+2;
-	    z:=z+2;
+    x:=LeadingMonomialPosExtRep(fam,ep,order);
+    mon:=ep[x];
+    y:=1;
+    while y<=Length(plist) and noreduce do
+      mon2:=lmo[y];
+      #check whether the monomial at position x is a multiple of the
+      #y-th leading monomial
+      z:=1;
+      pos:=1;
+      qmon:=[]; # potential quotient
+      noreduce:=false;
+      while noreduce=false and z<=Length(mon2) and pos<=Length(mon) do
+	if mon[pos]>mon2[z] then
+	  noreduce:=true; # indet in mon2 does not occur in mon -> does not
+			  # divide
+	elif mon[pos]<mon2[z] then
+	  Append(qmon,mon{[pos,pos+1]}); # indet only in mon
+	  pos:=pos+2;
+	else
+	  # the indets are the same
+	  di:=mon[pos+1]-mon2[z+1];
+	  if di>0 then
+	    #divides and there is remainder
+	    Append(qmon,[mon[pos],di]);
+	  elif di<0 then
+	    noreduce:=true; # exponent to small
 	  fi;
-	od;
-
-	# if there is a tail in mon2 left, cannot divide
-	if z<=Length(mon2) then
-	  noreduce:=true;
+	  pos:=pos+2;
+	  z:=z+2;
 	fi;
-        y:=y+1;
       od;
-      x:=x-2;
+
+      # if there is a tail in mon2 left, cannot divide
+      if z<=Length(mon2) then
+	noreduce:=true;
+      fi;
+      y:=y+1;
     od;
-    if noreduce=false then
-      x:=x+2;y:=y-1; # re-correct incremented numbers
+    if noreduce then
+      mon:=PolynomialByExtRepNC(fam,[ep[x],ep[x+1]]);
+      rem:=rem+mon;
+      ep:=ep{Difference([1..Length(ep)],[x,x+1])};
+    else
+      y:=y-1; # re-correct incremented numbers
 
       # is there a tail in mon? if yes we need to append it
       if pos<Length(mon) then
@@ -681,12 +683,12 @@ local fam,quot,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
 
       # reduce!
       qmon:=PolynomialByExtRep(fam,[qmon,ep[x+1]/lmc[y]]); #quotient monomial
-
       quot[y]:=quot[y]+qmon;
       poly:=poly-qmon*plist[y]; # reduce
+      ep:=ExtRepPolynomialRatFun(poly);
     fi;
-  until noreduce;
-  return [poly,quot];
+  od;
+  return [rem,quot];
 end);
 
 
@@ -697,8 +699,8 @@ end);
 #F  PolynomialReducedRemainder(poly,plist,order)
 ##
 InstallGlobalFunction(PolynomialReducedRemainder,function(poly,plist,order)
-local fam,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
-      ep,pos,di,opoly;
+local opoly, fam, elist, lmp, lmo, lmc, ep, rem, noreduce, x, mon, y, mon2,
+  z, pos, qmon, di;
   if IsMonomialOrdering(order) then
     order:=MonomialExtrepComparisonFun(order);
   fi;
@@ -709,54 +711,56 @@ local fam,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
   lmo:=List([1..Length(lmp)],i->elist[i][lmp[i]]);
   lmc:=List([1..Length(lmp)],i->elist[i][lmp[i]+1]);
 
-  repeat
-    ep:=ExtRepPolynomialRatFun(poly);
-    # now try whether we can reduce anywhere.
+  ep:=ExtRepPolynomialRatFun(poly);
+  rem:=Zero(poly);
+  while Length(ep)>0 do
+    # now try whether we can reduce at x
 
-    x:=Length(ep)-1;
     noreduce:=true;
-    while x>0 and noreduce do
-      mon:=ep[x];
-      y:=1;
-      while y<=Length(plist) and noreduce do
-	mon2:=lmo[y];
-	#check whether the monomial at position x is a multiple of the
-	#y-th leading monomial
-        z:=1;
-	pos:=1;
-	qmon:=[]; # potential quotient
-	noreduce:=false;
-	while noreduce=false and z<=Length(mon2) and pos<=Length(mon) do
-	  if mon[pos]>mon2[z] then
-	    noreduce:=true; # indet in mon2 does not occur in mon -> does not
-	                   # divide
-	  elif mon[pos]<mon2[z] then
-	    Append(qmon,mon{[pos,pos+1]}); # indet only in mon
-	    pos:=pos+2;
-	  else
-	    # the indets are the same
-	    di:=mon[pos+1]-mon2[z+1];
-	    if di>0 then
-	      #divides and there is remainder
-	      Append(qmon,[mon[pos],di]);
-	    elif di<0 then
-	      noreduce:=true; # exponent to small
-	    fi;
-	    pos:=pos+2;
-	    z:=z+2;
+    x:=LeadingMonomialPosExtRep(fam,ep,order);
+    mon:=ep[x];
+    y:=1;
+    while y<=Length(plist) and noreduce do
+      mon2:=lmo[y];
+      #check whether the monomial at position x is a multiple of the
+      #y-th leading monomial
+      z:=1;
+      pos:=1;
+      qmon:=[]; # potential quotient
+      noreduce:=false;
+      while noreduce=false and z<=Length(mon2) and pos<=Length(mon) do
+	if mon[pos]>mon2[z] then
+	  noreduce:=true; # indet in mon2 does not occur in mon -> does not
+			  # divide
+	elif mon[pos]<mon2[z] then
+	  Append(qmon,mon{[pos,pos+1]}); # indet only in mon
+	  pos:=pos+2;
+	else
+	  # the indets are the same
+	  di:=mon[pos+1]-mon2[z+1];
+	  if di>0 then
+	    #divides and there is remainder
+	    Append(qmon,[mon[pos],di]);
+	  elif di<0 then
+	    noreduce:=true; # exponent to small
 	  fi;
-	od;
-
-	# if there is a tail in mon2 left, cannot divide
-	if z<=Length(mon2) then
-	  noreduce:=true;
+	  pos:=pos+2;
+	  z:=z+2;
 	fi;
-        y:=y+1;
       od;
-      x:=x-2;
+
+      # if there is a tail in mon2 left, cannot divide
+      if z<=Length(mon2) then
+	noreduce:=true;
+      fi;
+      y:=y+1;
     od;
-    if noreduce=false then
-      x:=x+2;y:=y-1; # re-correct incremented numbers
+    if noreduce then
+      mon:=PolynomialByExtRepNC(fam,[ep[x],ep[x+1]]);
+      rem:=rem+mon;
+      ep:=ep{Difference([1..Length(ep)],[x,x+1])};
+    else
+      y:=y-1; # re-correct incremented numbers
 
       # is there a tail in mon? if yes we need to append it
       if pos<Length(mon) then
@@ -766,9 +770,10 @@ local fam,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
       # reduce!
       qmon:=PolynomialByExtRep(fam,[qmon,ep[x+1]/lmc[y]]); #quotient monomial
       poly:=poly-qmon*plist[y]; # reduce
+      ep:=ExtRepPolynomialRatFun(poly);
     fi;
-  until noreduce;
-  return poly;
+  od;
+  return rem;
 end);
 
 #############################################################################
@@ -1064,7 +1069,7 @@ local orderext, bas, i, l, nomod, pol;
     nomod:=true;
     while i<=l do
       pol:=PolynomialReducedRemainder(bas[i],
-             bas{Difference([1..Length(bas)],[i])},orderext);
+             bas{Difference([1..l],[i])},orderext);
       if pol<>bas[i] then nomod:=false;fi;
       if IsZero(pol) then
 	bas[i]:=bas[l];

@@ -2,14 +2,16 @@
 ##
 #W  combinat.tst                GAP tests                    Martin Schoenert
 ##
-#H  @(#)$Id: combinat.tst,v 4.9 2002/04/15 10:08:39 sal Exp $
+#H  @(#)$Id: combinat.tst,v 4.9.4.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This  file  tests  the functions that  mainly  deal  with  combinatorics.
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: combinat.tst,v 4.9 2002/04/15 10:08:39 sal Exp $");
+gap> START_TEST("$Id: combinat.tst,v 4.9.4.3 2005/05/11 14:53:02 gap Exp $");
 
 #F  Factorial( <n> )  . . . . . . . . . . . . . . . . factorial of an integer
 gap> Print(List( [0..10], Factorial ),"\n");
@@ -456,10 +458,10 @@ gap> Bernoulli( 80 );
 -4603784299479457646935574969019046849794257872751288919656867/230010
 
 # thats it for the combinatorical package  ##################################
-gap> STOP_TEST( "combinat.tst", 270000000 );
+gap> STOP_TEST( "combinat.tst", 24000000 );
 
 
 #############################################################################
 ##
-#E  combinat.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

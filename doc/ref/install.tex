@@ -7,7 +7,7 @@
 %W                                                     & Alexander Hulpke
 %W                                                    & Burkhard Hoefling
 %%
-%H  @(#)$Id: install.msk,v 1.123.2.6 2004/03/17 20:44:31 gap Exp $
+%H  @(#)$Id: install.msk,v 1.123.2.11 2005/05/09 08:19:58 gap Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %Y  (C) 1998 School Math and Comp. Sci., University of St  Andrews, Scotland
@@ -107,10 +107,10 @@ Use the `-win.zip' or the `.zoo' archives.
 Now get the installation archives of the right kind, according to your
 operating system. You want to get the archives:
 \beginitems
-`gap4r4p2'&
+`gap4r4p5'&
 which contains the main {\GAP} installation
 
-`packages4r4p2'&
+`packages4r4p5'&
 which contains {\GAP} packages that provide further functionality
 
 `unzoo'&
@@ -118,14 +118,14 @@ Only if you use the `.zoo' archives: Unix and OS X users get the source code
 `unzoo.c', MacOS users get the `.sit' archive and Windows users
 the `.exe' binary.
 
-`htmie4r4p2'&
+`htmie4r4p5'&
 An alternative version of the HTML manual which uses a nonstandard
 ``symbol'' font instead of Unicode characters. If you use a webbrowser such
 as `Internet Explorer' that has difficulties with rendering Unicode
 correctly, you might want to replace the HTML documentation with this
 version. (See section~"The Documentation".)
 
-`xtom4r4p2'&
+`xtom4r4p5'&
 Contains about 80MB of further tables of marks. (You can always install this
 later if the need arises.)
 \enditems
@@ -142,12 +142,12 @@ system and the type of archive used.
 
 \beginitems
 Unix, OS X&
-Under Unix or OS X unpack the archive `gap4r4p2' in whatever
+Under Unix or OS X unpack the archive `gap4r4p5' in whatever
 place you want {\GAP} to reside. If you use the `.zoo' archive, you will
 have to compile the `unzoo' program first
 \begintt
 cc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p2.zoo
+./unzoo -x gap4r4p5.zoo
 \endtt
 
 (If you unpack the archive as `root' user under UNIX, make sure that you
@@ -158,9 +158,9 @@ MacOS&
 if the `.sit' archive did not extract autmatically, click it to force
 extraction. You will end up with an applications,
 `unzoo 4.4 PPC'. 
-Now move this applications, as well as the `gap4r4p2.zoo'
+Now move this applications, as well as the `gap4r4p5.zoo'
 archive to the Folder in which you want to install {\GAP}. Drag the archive
-`gap4r4p2.zoo onto the icon of `unzoo 4.4 PPC'. You will get a
+`gap4r4p5.zoo onto the icon of `unzoo 4.4 PPC'. You will get a
 window with many lines of text output.
 This process will create a folder `gap4r4' in the current folder.
 
@@ -168,13 +168,13 @@ Windows&
 The archive must be extracted to the *main* directory of the `C:' drive. (If
 you do not have permissions or sufficient free space to create directories
 there, see section~"Expert Windows installation".) If you use the `.zoo'
-archives we provide move `unzoo.exe' and  `gap4r4p2.zoo' in the
+archives we provide move `unzoo.exe' and  `gap4r4p5.zoo' in the
 `C:' directory, open the `MS-DOS' (or `Command Prompt') window. (You can
 find this under ``Start/Programs/Accessories''.)
 In this window issue the commands
 \begintt
 cd c:\
-unzoo -x gap4r4p2.zoo
+unzoo -x gap4r4p5.zoo
 \endtt
 (It might be necessary to use upper case letters instead)
 
@@ -269,7 +269,7 @@ gap> Size( m11 );
 gap> Length( ConjugacyClasses( m11 ) );
 10 
 gap> Factors( 10^42 + 1 );
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 4458192223320340849
 [ 29, 101, 281, 9901, 226549, 121499449, 4458192223320340849 ]
 \endtt
 
@@ -290,13 +290,13 @@ command, that <ctr>-`E' moves the cursor to the end of the line, that
 single characters. So, after entering the above commands, typing
 
 <ctr>-`P' <ctr>-`E' <ctr>-`B'
-<ctr>-`B' <ctr>-`B' <ctr>-`B' <ctr>-`D' `1' <return>
+<ctr>-`B' <ctr>-`B' <ctr>-`B' <ctr>-`D' `2' <return>
 
 should give the following lines:
 
 \beginexample
 gap> Factors( 10^42 + 2 );
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 3145594690908701990242740067
 [ 2, 3, 433, 953, 128400049, 3145594690908701990242740067 ]
 \endexample
 
@@ -304,14 +304,16 @@ If you want to run a more thorough test (this is not required), you
 can read in a test script that exercises more of {\GAP}s capabilities.
 
 \begintt
-gap> Filename( DirectoriesLibrary("tst"), "testall.g" );
-"/usr/local/lib/gap4r4/tst/testall.g"
-gap> Read(last);
+gap> Read( Filename( DirectoriesLibrary( "tst" ), "testall.g" ) );
 \endtt
 
 The test requires about 60-70MB of memory and runs about 2 minutes on a
-PentiumIII/1GHz machine.  You will get a large number of lines with output
-about the progress of the tests.
+Pentium III/1 GHz machine.
+You will get a large number of lines with output about the progress
+of the tests.
+
+
+
 \begintt
 test file         GAP4stones     time(msec)
 -------------------------------------------
@@ -330,7 +332,7 @@ this.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{Packages}
 
-To extract the packages, extract the `package4r4p2' archive *in*
+To extract the packages, extract the `package4r4p5' archive *in*
 the ``gap4r4/pkg' directory by the same method used to extracted
 the main archive. (If you use `unzoo' or under MacOS move both the `unzoo'
 binary and the archive in the `pkg' directory and extract there.)
@@ -403,13 +405,13 @@ There also  is (if  installed) an  HTML version  of some  books that  can be
 viewed with an  HTML browser, see~"Changing the Help Viewer".  Some of these
 use  *unicode  characters*  for  mathematical  formulae.  If your browser
 is not able to display these (older versions of `Internet Explorer' do not),
-get the `htmie4r4p2' archive which provides math symbols in a
+get the `htmie4r4p5' archive which provides math symbols in a
 different encoding. (`Mozilla', `Konqueror' and `Safari' all support unicode
 characters.)
 
 The manual is also available in `pdf' format.
 In the full UNIX
-distribution (`gap4r4p2.zoo') these files are included in the
+distribution (`gap4r4p5.zoo') these files are included in the
 directory
 `gap4r4/doc'  in the
 subdirectories  `tut' (a  beginner{\pif}s  tutorial),  `ref' (the  reference
@@ -469,7 +471,7 @@ online help which provides useful search features.
 
 This section lists a few common problems when installing or running {\GAP}
 and their remedies. Also see the FAQ list on the {\GAP} web pages at
-\URL{http://www.gap-system.org/Info/faq.html}
+\URL{http://www.gap-system.org/Info/Faq/faq.html}
 
 \beginitems
 {\GAP} starts with a warning ``{`hmm, I cannot find {'}lib/init.g{'}'}''.&
@@ -573,7 +575,7 @@ memory. See~"Expert Windows Installation".
 
 Cut and Paste does not work&
 You might want to start {\GAP} under `rxvt' -- see~"Expert Windows Installation".
-Also \URL{http://www.gap-system.org/Info4/windows.html} might give
+Also \URL{http://www.gap-system.org/Faq/Hardware-OS/hardware-os.html} might give
 a remedy.
 
 You get an error message about the `cygwin1.dll'&
@@ -595,7 +597,7 @@ session containing both input and output that illustrates your problem
 
 \item{$\bullet$} state the type of machine, operating system,
 (compiler used, if UNIX/Linux) and version of {\GAP} (for example
-``gap4r4p2, fix1'') you are using
+``gap4r4p5, fix1'') you are using
 (the line after the {\GAP}~4 banner starting:
 \begintt
 GAP4, Version: 4...
@@ -832,12 +834,12 @@ you want to install {\GAP}, and copy the archives (and the unzoo program if
 you want to use `zoo') in this directory. Then extract the archive by
 the command
 \begintt
-tar zxvf gap4r4p2.tar.gz
+tar zxvf gap4r4p5.tar.gz
 \endtt
 (respectively -- if you prefer `zoo' -- 
 \begintt
 gcc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p2.zoo
+./unzoo -x gap4r4p5.zoo
 \endtt
 )
 
@@ -871,7 +873,7 @@ for an overview over the features of {\GAP} for MacOS.
 \Section{Installation of GAP for MacOS}
 
 Installing {\GAP} under MacOS is fairly easy. First, decide into which 
-folder you want to install {\GAP} 4.4.2.
+folder you want to install {\GAP} 4.4.5.
 {\GAP} will be installed in a subfolder `gap4r4' of this folder.
 You can later move {\GAP} to a different location.
 
@@ -883,7 +885,7 @@ If you encounter problems please also see section~"If Things Go Wrong" of
 this document.
 
 Get the Mac-specific files described  in  "Get the  Archives",  that  is,  the
-distribution   `gap4r4p2.zoo' and the    binary    archive
+distribution   `gap4r4p5.zoo' and the    binary    archive
 `unzoo4r4-PPC.sit',
 
 How you can get those
@@ -908,13 +910,13 @@ The following installation example assumes that you are installing {\GAP}
 in the folder `Applications' on a PowerPC Macintosh. (For a 68k Macintosh 
 you should replace all references to `PPC' to ones referring to `68K'
 
-Move the file `gap4r4p2.zoo' into the folder `Applications'
+Move the file `gap4r4p5.zoo' into the folder `Applications'
 and drag it onto the icon of `unzoo 4.4 PPC'. You will get many lines of 
 output in this window. 
 
 This should have created a folder `gap4r4' in the current folder.
 
-(You will not need the file `gap4r4p2.zoo' any
+(You will not need the file `gap4r4p5.zoo' any
 longer. If you are short of disk space you can remove it now.)
 
 If you got not the full distribution file but several small files, extract

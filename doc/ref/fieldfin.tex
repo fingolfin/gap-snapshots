@@ -4,7 +4,7 @@
 %%
 %A  fieldfin.msk                  GAP documentation             Thomas Breuer
 %%
-%A  @(#)$Id: fieldfin.msk,v 1.24 2003/07/21 19:49:06 gap Exp $
+%A  @(#)$Id: fieldfin.msk,v 1.24.2.1 2005/04/13 11:45:38 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -418,10 +418,36 @@ and is the minimal polynomial of a primitive root of $GF(p^n)$.
 
 For all divisors $d$ of $n$ the compatibility condition
 $\Phi_{d,p}( x^{\frac{p^n-1}{p^m-1}} ) \equiv 0 \pmod{\Phi_{n,p}(x)}$
-holds.
+holds. (That is, the appropriate power of a zero of $\Phi_{n,p}$ is a
+zero of the Conway polynomial $\Phi_{d,p}$.)
 
 With respect to the ordering defined above, $\Phi_{n,p}$ shall be
 minimal.
+
+The computation of Conway polynomials can be time consuming. Therefore,
+{\GAP} comes with a list of precomputed polynomials. If a requested
+polynomial is not stored then {\GAP} prints a warning and computes it by
+checking all polynomials in the order defined above for the defining
+conditions. If $n$ is not a prime this is probably a very long computation.
+(Some previously known polynomials with prime $n$ are not stored in
+{\GAP} because they are quickly recomputed.) Use the function 
+"IsCheapConwayPolynomial" to check in advance if `ConwayPolynomial' will
+give a result after a short time.
+
+Note that primitivity of a polynomial can only be checked if {\GAP} can
+factorize $p^n-1$. A sufficiently new version of the \package{FactInt}
+package contains many precomputed factors of such numbers from various
+factorization projects.
+
+See~\cite{L03} for further information on known Conway polynomials.
+
+If <pol> is a result returned by `ConwayPolynomial' the command
+`Print( InfoText( <pol> ) );' will print some info on the origin of that
+particular polynomial.
+
+For some purposes it may be enough to have any primitive polynomial for
+an extension of a finite field instead of the Conway polynomial, 
+see~"ref:RandomPrimitivePolynomial" below.
 
 
 \beginexample
@@ -429,6 +455,31 @@ gap> ConwayPolynomial( 2, 5 );  ConwayPolynomial( 3, 7 );
 x_1^5+x_1^2+Z(2)^0
 x_1^7-x_1^2+Z(3)^0
 \endexample
+
+\>IsCheapConwayPolynomial( <p>, <n> ) F
+
+Returns `true' if `ConwayPolynomial( <p>, <n> )' will give a result in
+*reasonable* time. This is either the case when this polynomial is
+pre-computed, or if <n> is a not too big prime.
+
+
+
+\>RandomPrimitivePolynomial( <F>, <n>[, <i> ] ) F
+
+For a finite field <F> and a positive integer <n> this function
+returns a primitive polynomial of degree <n> over <F>, that is a zero of 
+this polynomial has maximal multiplicative order $|<F>|^n-1$. 
+If <i> is given then the polynomial is written in variable number <i>
+over <F> (see~"ref:Indeterminate"), the default for <i> is 1.
+
+Alternatively, <F> can be a prime power q, then <F> = GF(q) is assumed.
+And <i> can be a univariate polynomial over <F>, then the result is a
+polynomial in the same variable.
+
+This function can work for much larger fields than those for which
+Conway polynomials are available, of course {\GAP} must be able to
+factorize $|<F>|^n-1$.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

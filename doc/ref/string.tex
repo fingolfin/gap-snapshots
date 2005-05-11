@@ -5,7 +5,7 @@
 %A  string.msk                  GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: string.msk,v 1.32 2002/10/01 15:03:08 gap Exp $
+%A  @(#)$Id: string.msk,v 1.32.2.1 2005/04/12 22:35:34 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -706,7 +706,9 @@ when a wrong character is found in the string. This function can be used
 integers from respectively into {\GAP}. Note that the translation between
 integers and their hexa-decimal representation costs linear computation time
 in terms of the number of digits, while translation from and into decimal
-representation needs substantial computations.
+representation needs substantial computations. If <str> is not in compact
+string representation then "ConvertToStringRep" is applied to it as side
+effect.
 
 \beginexample
 gap> Int("12345")+1;

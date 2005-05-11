@@ -3,7 +3,7 @@
 #W  package.g                   GAP Library                      Frank Celler
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: package.g,v 4.73.2.2 2004/05/11 10:42:48 gap Exp $
+#H  @(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,11 +23,10 @@
 ##  `GAPInfo.PackageInfoCurrent'.
 ##
 #T TODO:
-#T - implement exact version number handling if wanted
 #T - change `ReadAndCheckFunc' such that `ReadPackage' can use it
 ##
 Revision.package_g :=
-    "@(#)$Id: package.g,v 4.73.2.2 2004/05/11 10:42:48 gap Exp $";
+    "@(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $";
 
 #T remove this as soon as possible (currently used in several packages)
 PACKAGES_VERSIONS:= rec();
@@ -36,9 +35,10 @@ PACKAGES_VERSIONS:= rec();
 #############################################################################
 ##
 #F  CompareVersionNumbers( <supplied>, <required> )
+#F  CompareVersionNumbers( <supplied>, <required>, \"equal\" )
 ##
 ##  compares two version numbers, given as strings. They are split at
-##  non-number characters, the resulting integer lists are compared
+##  non-digit characters, the resulting integer lists are compared
 ##  lexicographically.
 ##  The routine tests whether <supplied> is at least as large as <required>,
 ##  and returns `true' or `false' accordingly.
@@ -46,52 +46,67 @@ PACKAGES_VERSIONS:= rec();
 ##  See Section~"ext:Version Numbers" of ``Extending GAP'' for details
 ##  about version numbers.
 ##
-BindGlobal("CompareVersionNumbers",function(s,r)
-local i,j,a,b;
-  # special treatment of a ".dev" version
-  if Length(s)>4 and s{[Length(s)-2..Length(s)]}="dev" then
+BindGlobal( "CompareVersionNumbers", function( arg )
+    local s, r, inequal, i, j, a, b;
+
+    s:= arg[1];
+    r:= arg[2];
+    inequal:= not ( Length( arg ) = 3 and arg[3] = "equal" );
+
+    # Deal with the case of a `dev' version.
+    if   2 < Length( s )
+       and s{ [ Length( s ) - 2 .. Length( s ) ] } = "dev" then
+      return inequal or ( Length(r)>2 and r{[Length(r)-2..Length(r)]}="dev" );
+    elif 2 < Length( r )
+       and r{ [ Length( r ) - 2 .. Length( r ) ] } = "dev" then
+      return false;
+    fi;
+
+    while 0 < Length( s ) or 0 < Length( r ) do
+
+      # Remove leading non-digit characters.
+      i:= 1;
+      while i <= Length( s ) and not IsDigitChar( s[i] ) do
+        i:= i+1;
+      od;
+      s:= s{ [ i .. Length( s ) ] };
+      j:= 1;
+      while j <= Length( r ) and not IsDigitChar( r[j] ) do
+        j:= j+1;
+      od;
+      r:= r{ [ j .. Length( r ) ] };
+
+      # If one of the two strings is empty then we are done.
+      if   Length( s ) = 0 then
+        return Length( r ) = 0;
+      elif Length( r ) = 0 then
+        return inequal;
+      fi;
+
+      # Compare the next portion of digit characters.
+      i:= 1;
+      while i <= Length( s ) and IsDigitChar( s[i] ) do
+        i:= i+1;
+      od;
+      a:= Int( s{ [ 1 .. i-1 ] } );
+      j:= 1;
+      while j <= Length( r ) and IsDigitChar( r[j] ) do
+        j:= j+1;
+      od;
+      b:= Int( r{ [ 1 .. j-1 ] } );
+      if   a < b then
+        return false;
+      elif b < a then
+        return inequal;
+      fi;
+      s:= s{ [ i .. Length( s ) ] };
+      r:= r{ [ j .. Length( r ) ] };
+
+    od;
+
+    # The two remaining strings are empty.
     return true;
-  elif Length(r)>4 and r{[Length(r)-2..Length(r)]}="dev" then
-    return false;
-  fi;
-
-  i:=1;
-  j:=1;
-  while Length(s)>=i or Length(r)>=j do
-    if Length(s)=0 then
-      return false;
-    elif Length(r)=0 then
-      return true;
-    fi;
-
-    # read the next numbers
-    while i<=Length(s) and IsDigitChar(s[i]) do
-      i:=i+1;
-    od;
-    while j<=Length(r) and IsDigitChar(r[j]) do
-      j:=j+1;
-    od;
-    a:=Int(s{[1..i-1]});
-    b:=Int(r{[1..j-1]});
-    if a<b then
-      return false;
-    elif a>b then
-      return true;
-    fi;
-    # read the next nonnumbers
-    while i<=Length(s) and not IsDigitChar(s[i]) do
-      i:=i+1;
-    od;
-    s:=s{[i..Length(s)]};
-    i:=1;
-    while j<=Length(r) and not IsDigitChar(r[j]) do
-      j:=j+1;
-    od;
-    r:=r{[j..Length(r)]};
-    j:=1;
-  od;
-  return true;
-end);
+end );
 
 
 #############################################################################
@@ -337,8 +352,13 @@ od;
 #F  TestPackageAvailability( <name>, <version> )
 #F  TestPackageAvailability( <name>, <version>, <intest> )
 ##
-##  tests whether the  {\GAP} package <name> is available for loading in a
-##  version that is at least <version>.
+##  For strings <name> and <version>, `TestPackageAvailability' tests
+##  whether the  {\GAP} package <name> is available for loading in a
+##  version that is at least <version>, or equal to <version> if the first
+##  character of <version> is `=',
+##  see Section "ext:Version Numbers" of ``Extending GAP'' for details about
+##  version numbers.
+##
 ##  The result is `true' if the package is already loaded,
 ##  `fail' if it is not available,
 ##  and the string denoting the {\GAP} root path where the package resides
@@ -358,18 +378,17 @@ od;
 DeclareGlobalFunction( "TestPackageAvailability" );
 
 InstallGlobalFunction( "TestPackageAvailability", function( arg )
-    local name, version, intest, pair, inforec, dep, init;
+    local name, version, intest, equal, pair, inforec, dep, init;
 
     # 0. Get the arguments.
+    name:= LowercaseString( arg[1] );
+    version:= arg[2];
     if Length( arg ) = 2 then
-      name:= LowercaseString( arg[1] );
-      version:= arg[2];
       intest:= [];
     else
-      name:= LowercaseString( arg[1] );
-      version:= arg[2];
       intest:= arg[3];
     fi;
+    equal:= 0 < Length( version ) and version[1] = '=';
 
     # Initialize if this was not yet done.
     InitializePackagesInfoRecords( false );
@@ -379,7 +398,7 @@ InstallGlobalFunction( "TestPackageAvailability", function( arg )
     #    (Note that at most one version of a package can be available.)
     if IsBound( GAPInfo.PackagesLoaded.( name ) ) then
       if CompareVersionNumbers( GAPInfo.PackagesLoaded.( name )[2],
-                                version ) then
+                                version, equal ) then
         return true;
       else
         return fail;
@@ -393,7 +412,8 @@ InstallGlobalFunction( "TestPackageAvailability", function( arg )
     #    (Note that the availability for that package will be decided
     #    on an outer level.)
     for pair in intest do
-      if name = pair[1] and CompareVersionNumbers( pair[2], version ) then
+      if name = pair[1]
+         and CompareVersionNumbers( pair[2], version, equal ) then
         return true;
       fi;
     od;
@@ -405,7 +425,7 @@ InstallGlobalFunction( "TestPackageAvailability", function( arg )
 
       dep:= inforec.Dependencies;
 
-      if     CompareVersionNumbers( inforec.Version, version )
+      if     CompareVersionNumbers( inforec.Version, version, equal )
          and inforec.AvailabilityTest() = true
          and ( not IsBound( dep.GAP )
                or CompareVersionNumbers( GAPInfo.Version, dep.GAP ) )
@@ -540,307 +560,6 @@ BindGlobal( "DefaultPackageBannerString", function( inforec )
 
 #############################################################################
 ##
-#F  LoadPackageDocumentation( <info>, <all> )
-##
-##  Let <info> be a record as defined in the `PackageInfo.g' file of a
-##  package.
-##  `LoadPackageDocumentation' loads books of the documentation for this
-##  package.
-##  If <all> is `true' then *all* books are loaded, otherwise only the
-##  *autoloadable* books are loaded.
-##
-##  Note that this function might run twice for a package, first in the
-##  autoloading process (where the package itself is not necessarily loaded)
-##  and later when the package is loaded.
-##  In this situation, the names used by the help viewer differ before and
-##  after the true loading.
-##
-BindGlobal( "LoadPackageDocumentation", function( info, all )
-    local short, pkgdoc, long, sixfile;
-
-    # Depending on `all', load all books for the package or only the ones
-    # that are marked as autoloadable.
-    for pkgdoc in info.PackageDoc do
-      if all or ( IsBound( pkgdoc.Autoload ) and pkgdoc.Autoload = true ) then
-
-        # Fetch the names.
-        if IsBound( pkgdoc.LongTitle ) then
-          long:= pkgdoc.LongTitle;
-        else
-          long:= Concatenation( "GAP Package `", info.PackageName, "'" );
-        fi;
-        short:= pkgdoc.BookName;
-        if not IsBound( GAPInfo.PackagesLoaded.( LowercaseString(
-                            info.PackageName ) ) ) then
-          short:= Concatenation( short, " (not loaded)" );
-        fi;
-
-        # Check that the `manual.six' file is available.
-        sixfile:= Filename( [ Directory( info.InstallationPath ) ],
-                            pkgdoc.SixFile );
-        if sixfile = fail then
-          Info( InfoWarning, 2,
-                "book `", pkgdoc.BookName, "' for package `",
-                info.PackageName, "': no manual index file `",
-                pkgdoc.SixFile, "', ignored" );
-        else
-          # Finally notify the book via its directory.
-#T Here we assume that this is the directory that contains also `manual.six'!
-          HELP_ADD_BOOK( short, long,
-              Directory( sixfile{ [ 1 .. Length( sixfile )-10 ] } ) );
-        fi;
-
-      fi;
-    od;
-    end );
-
-
-#############################################################################
-##
-#F  LoadPackage( <name>[, <version>] )
-#F  LoadPackage( <name>[, <version>, <banner>[, <outercalls>]] )
-##
-##  loads the {\GAP} package with name <name>.
-##  If the optional version string <version> is given, the package will only
-##  be loaded in a version number at least as large as <version>
-##  (see~"ext:Version Numbers" in ``Extending GAP'').
-##  The argument <name> is case insensitive.
-##
-##  `LoadPackage' will return `true' if the package has been successfully
-##  loaded and will return `fail' if the package could not be loaded.
-##  The latter may be the case if the package is not installed, if necessary
-##  binaries have not been compiled, or if the version number of the
-##  available version is too small.
-##
-##  If the package <name> has already been loaded in a version number
-##  at least <version>, `LoadPackage' returns `true' without doing
-##  anything else.
-##
-##  If the optional third argument <banner> is `false' then no package banner
-##  is printed.
-##  The fourth argument <outercalls> is used only for recursive calls of
-##  `LoadPackage', when the loading process for a package triggers the
-##  loading of other packages.
-##
-DeclareGlobalFunction( "LoadPackage" );
-
-RequirePackage:= LoadPackage;
-#T to be removed as soon as `init.g' files in old format have disappeared
-
-InstallGlobalFunction( LoadPackage, function( arg )
-    local name, version, banner, path, outercalls, info, filename, dep, pair,
-          pkg;
-
-    # Get the arguments.
-    name:= LowercaseString( arg[1] );
-    version:= "";
-    if 1 < Length( arg ) then
-      version:= arg[2];
-    fi;
-    banner:= not GAPInfo.CommandLineOptions.q and
-             not GAPInfo.CommandLineOptions.b and
-             not ( 2 < Length( arg ) and arg[3] = false );
-    outercalls:= [];
-    if Length( arg ) = 4 then
-      outercalls:= arg[4];
-    fi;
-    if name in outercalls then
-      return true;
-    fi;
-
-    # Test whether the package is available.
-    path:= TestPackageAvailability( name, version );
-    if not IsString( path ) then
-      # either `true' or `fail'
-      return path;
-    fi;
-
-    # First mark the package as loaded,
-    # so `TestPackageAvailability' will return `true' or `fail' if the
-    # package `name' is required from a needed or suggested package,
-    # depending on the version number.
-    info:= First( PackageInfo( name ), r -> r.InstallationPath = path );
-    GAPInfo.PackagesLoaded.( name ):=
-        [ path, info.Version, info.PackageName ];
-#T remove this as soon as possible ...
-PACKAGES_VERSIONS.( name ):= info.Version;
-
-    # Notify the documentation (for the available version).
-    LoadPackageDocumentation( info, true );
-
-    # Whenever a package requires another package,
-    # the inner call is performed with four arguments.
-    # Thus we delay reading the implementation part until all
-    # declaration parts have been read.
-    if Filename( [ Directory( path ) ], "read.g" ) <> fail then
-      Add( outercalls, name );
-    fi;
-
-    # Load the needed other packages.
-    # (This is expected to work because of `TestPackageAvailability' above.)
-    dep:= info.Dependencies;
-    if IsBound( dep.NeededOtherPackages ) then
-      for pair in dep.NeededOtherPackages do
-        if LoadPackage( pair[1], pair[2], banner, outercalls ) <> true then
-          # The package was classified as available, but we cannot load it?
-          Error( "this should not happen" );
-        fi;
-      od;
-    fi;
-
-    # Try to load the suggested other packages,
-    # and issue a warning for each such package where this is not possible.
-    if IsBound( dep.SuggestedOtherPackages ) then
-      for pair in dep.SuggestedOtherPackages do
-        if LoadPackage( pair[1], pair[2], banner, outercalls ) <> true then
-          Info( InfoWarning, 2,
-                "suggested package `", pair[1], "' cannot be loaded" );
-        fi;
-      od;
-    fi;
-
-    # If wanted then show a package banner.
-    if banner then
-      # If the component `BannerString' is bound in `info' then we print
-      # this string, otherwise we print the default banner string.
-      if IsBound( info.BannerString ) then
-        Print( info.BannerString );
-      else
-        Print( DefaultPackageBannerString( info ) );
-      fi;
-    fi;
-
-    # Read the `init.g' file.
-#T Perhaps a package in ``old'' format is read from `.gaprc',
-#T so the obsolete function names are not yet known.
-if GAPInfo.ReadObsolete <> false and not IsBoundGlobal( "ReadPkg" ) then
-  RereadLib( "obsolete.g" );
-fi;
-#T Ignore possible `RequirePackage' calls in `init.g' files.
-#T (Remove this as soon as `RequirePackage' is removed.)
-RequirePackage:= ReturnTrue;
-    Read( Filename( Directory( path ), "init.g" ) );
-RequirePackage:= LoadPackage;
-
-    # If the function was called on the outermost level
-    # then we read the implementation part of all those packages
-    # that have been loaded in the meantime;
-    # it is contained either in `read.co' or (if this is not available)
-    # in `read.g'.
-    if Length( arg ) <> 4 then
-      for pkg in Reversed( outercalls ) do
-        ReadOrComplete( pkg, "read.g", GAPInfo.PackagesLoaded.( pkg ) );
-      od;
-    fi;
-
-    return true;
-    end );
-
-
-#############################################################################
-##
-#F  InstalledPackageVersion( <name> )
-##
-##  If the {\GAP} package with name <name> has already been loaded then
-##  `InstalledPackageVersion' returns the string denoting the version number
-##  of this version of the package.
-##  If the package is available but has not yet been loaded then the version
-##  number string for that version of the package that currently would be
-##  loaded.
-##  (Note that loading *another* package might force loading another version
-##  of the package <name>, so the result of `InstalledPackageVersion' will be
-##  different afterwards.)
-##  If the package is not available then `fail' is returned.
-##
-##  The argument <name> is case insensitive.
-##
-BindGlobal( "InstalledPackageVersion", function( name )
-    local avail, info;
-
-    avail:= TestPackageAvailability( name, "" );
-    if   avail = fail then
-      return fail;
-    elif avail = true then
-      return GAPInfo.PackagesLoaded.( LowercaseString( name ) )[2];
-    fi;
-    info:= First( PackageInfo( name ), r -> r.InstallationPath = avail );
-    return info.Version;
-    end );
-
-
-#############################################################################
-##
-#F  DirectoriesPackagePrograms( <name> )
-##
-##  returns a list of the `bin/<architecture>' subdirectories of all
-##  packages <name> where <architecture> is the architecture on which {\GAP}
-##  has been compiled.
-##  The directories returned by `DirectoriesPackagePrograms' are the place
-##  where external binaries for the {\GAP} package <name> and the current
-##  architecture should be located.
-##
-BIND_GLOBAL( "DirectoriesPackagePrograms", function( name )
-    local arch, dirs, r, path;
-
-    arch := GAPInfo.Architecture;
-    dirs := [];
-    InitializePackagesInfoRecords( false );
-    for r in PackageInfo( LowercaseString( name ) ) do
-      path:= Concatenation( r.InstallationPath, "/bin/", arch, "/" );
-      Add( dirs, Directory( path ) );
-    od;
-    return dirs;
-end );
-
-
-#############################################################################
-##
-#F  DirectoriesPackageLibrary( <name>[, <path>] )
-##
-##  takes the string <name>, a name of a {\GAP} package and returns a list of
-##  directory objects for the sub-directory/ies containing the library
-##  functions of this {\GAP} package,
-##  up to one for each `pkg' sub-directory of a path in `GAPInfo.RootPaths'.
-##  The default is that the library functions are in the subdirectory `lib'
-##  of the {\GAP} package's home directory.
-##  If this is not the case, then the second argument <path> needs to be
-##  present and must be a string that is a path name relative to the home
-##  directory  of the {\GAP} package with name <name>.
-##
-BIND_GLOBAL( "DirectoriesPackageLibrary", function( arg )
-    local name, path, dirs, r, tmp;
-
-    if IsEmpty(arg) or 2 < Length(arg) then
-        Error( "usage: DirectoriesPackageLibrary( <name>[, <path>] )\n" );
-    elif not ForAll(arg, IsString) then
-        Error( "string argument(s) expected\n" );
-    fi;
-
-    name:= LowercaseString( arg[1] );
-    if '\\' in name or ':' in name  then
-        Error( "<name> must not contain '\\' or ':'" );
-    fi;
-
-    if 1 = Length(arg)  then
-        path := "lib";
-    else
-        path := arg[2];
-    fi;
-
-    dirs := [];
-    InitializePackagesInfoRecords( false );
-    for r in PackageInfo( LowercaseString( name ) ) do
-        tmp := Concatenation( r.InstallationPath, "/", path );
-        if IsDirectoryPath(tmp) = true  then
-            Add( dirs, Directory(tmp) );
-        fi;
-    od;
-    return dirs;
-end );
-
-
-#############################################################################
-##
 #F  ReadPackage( <name>, <file> )
 #F  ReadPackage( <pkg-file> )
 #F  RereadPackage( <name>, <file> )
@@ -954,34 +673,331 @@ BindGlobal( "RereadPackage", function( arg )
 
 #############################################################################
 ##
-#F  CreateCompletionFilesPackage( <name> )  . . . create "pkg/<name>/read.co"
+#F  LoadPackageDocumentation( <info>, <all> )
 ##
-BindGlobal( "CreateCompletionFilesPackage", function( name )
-    local info;
+##  Let <info> be a record as defined in the `PackageInfo.g' file of a
+##  package.
+##  `LoadPackageDocumentation' loads books of the documentation for this
+##  package.
+##  If <all> is `true' then *all* books are loaded, otherwise only the
+##  *autoloadable* books are loaded.
+##
+##  Note that this function might run twice for a package, first in the
+##  autoloading process (where the package itself is not necessarily loaded)
+##  and later when the package is loaded.
+##  In this situation, the names used by the help viewer differ before and
+##  after the true loading.
+##
+BindGlobal( "LoadPackageDocumentation", function( info, all )
+    local short, pkgdoc, long, sixfile;
 
-    # normalize `name' to lower case
-    name:= LowercaseString( name );
-    if not IsBound( GAPInfo.PackagesLoaded.( name ) ) then
-      Error( "Can't create read.co for package `", name,
-             "', package not loaded." );
-      return false;
-    fi;
-    info:= GAPInfo.PackagesLoaded.( name );
-    if not IsBound( info[4] ) then
-      if Filename( [ Directory( info[1] ) ], "read.g" ) = fail then
-        Error( "the package `", name, "' has no `read.g' file,\n",
-               "so completion makes no sense." );
-      else
-        Error( "completion file for package `", name, "' was loaded;\n",
-               "delete `read.co' and try again." );
+    # Depending on `all', load all books for the package or only the ones
+    # that are marked as autoloadable.
+    for pkgdoc in info.PackageDoc do
+      if all or ( IsBound( pkgdoc.Autoload ) and pkgdoc.Autoload = true ) then
+
+        # Fetch the names.
+        if IsBound( pkgdoc.LongTitle ) then
+          long:= pkgdoc.LongTitle;
+        else
+          long:= Concatenation( "GAP Package `", info.PackageName, "'" );
+        fi;
+        short:= pkgdoc.BookName;
+        if not IsBound( GAPInfo.PackagesLoaded.( LowercaseString(
+                            info.PackageName ) ) ) then
+          short:= Concatenation( short, " (not loaded)" );
+        fi;
+
+        # Check that the `manual.six' file is available.
+        sixfile:= Filename( [ Directory( info.InstallationPath ) ],
+                            pkgdoc.SixFile );
+        if sixfile = fail then
+          Info( InfoWarning, 2,
+                "book `", pkgdoc.BookName, "' for package `",
+                info.PackageName, "': no manual index file `",
+                pkgdoc.SixFile, "', ignored" );
+        else
+          # Finally notify the book via its directory.
+#T Here we assume that this is the directory that contains also `manual.six'!
+          HELP_ADD_BOOK( short, long,
+              Directory( sixfile{ [ 1 .. Length( sixfile )-10 ] } ) );
+        fi;
+
       fi;
-      return false;
+    od;
+    end );
+
+
+#############################################################################
+##
+#F  LoadPackage( <name>[, <version>] )
+#F  LoadPackage( <name>[, <version>, <banner>[, <outercalls>]] )
+##
+##  loads the {\GAP} package with name <name>.
+##  If the optional version string <version> is given, the package will only
+##  be loaded in a version number at least as large as <version>,
+##  or equal to <version> if its first character is `='
+##  (see~"ext:Version Numbers" in ``Extending GAP'').
+##  The argument <name> is case insensitive.
+##
+##  `LoadPackage' will return `true' if the package has been successfully
+##  loaded and will return `fail' if the package could not be loaded.
+##  The latter may be the case if the package is not installed, if necessary
+##  binaries have not been compiled, or if the version number of the
+##  available version is too small.
+##
+##  If the package <name> has already been loaded in a version number
+##  at least or equal to <version>, respectively,
+##  `LoadPackage' returns `true' without doing anything else.
+##
+##  If the optional third argument <banner> is `false' then no package banner
+##  is printed.
+##  The fourth argument <outercalls> is used only for recursive calls of
+##  `LoadPackage', when the loading process for a package triggers the
+##  loading of other packages.
+##
+DeclareGlobalFunction( "LoadPackage" );
+
+RequirePackage:= LoadPackage;
+#T to be removed as soon as `init.g' files in old format have disappeared
+
+InstallGlobalFunction( LoadPackage, function( arg )
+    local name, version, banner, outercalls, path, info, filename, read,
+          dep, pair, pkg;
+
+    # Get the arguments.
+    name:= LowercaseString( arg[1] );
+    version:= "";
+    if 1 < Length( arg ) then
+      version:= arg[2];
+    fi;
+    banner:= not GAPInfo.CommandLineOptions.q and
+             not GAPInfo.CommandLineOptions.b and
+             not ( 2 < Length( arg ) and arg[3] = false );
+    outercalls:= [];
+    if Length( arg ) = 4 then
+      outercalls:= arg[4];
+    fi;
+    if name in outercalls then
+      return true;
     fi;
 
-    # get the path to the output
-    CreateCompletionFiles( info[1], [ info[4] ] );
+    # Test whether the package is available.
+    path:= TestPackageAvailability( name, version );
+    if not IsString( path ) then
+      # either `true' or `fail'
+      return path;
+    fi;
+
+    # First mark the package as loaded,
+    # so `TestPackageAvailability' will return `true' or `fail' if the
+    # package `name' is required from a needed or suggested package,
+    # depending on the version number.
+    info:= First( PackageInfo( name ), r -> r.InstallationPath = path );
+    GAPInfo.PackagesLoaded.( name ):=
+        [ path, info.Version, info.PackageName ];
+#T remove this as soon as possible ...
+PACKAGES_VERSIONS.( name ):= info.Version;
+
+    # This is the first attempt to read stuff for this package.
+    # So we handle the case of a `PreloadFile' entry.
+    if IsBound( info.PreloadFile ) then
+      filename:= USER_HOME_EXPAND( info.PreloadFile );
+      if filename[1] = '/' then
+        read:= READ( filename );
+      else
+        read:= ReadPackage( name, filename );
+      fi;
+      if not read then
+        Info( InfoWarning, 2,
+              "file `", filename, "' cannot be read" );
+      fi;
+    fi;
+
+    # Notify the documentation (for the available version).
+    LoadPackageDocumentation( info, true );
+
+    # Whenever a package requires another package,
+    # the inner call is performed with four arguments.
+    # Thus we delay reading the implementation part until all
+    # declaration parts have been read.
+    if Filename( [ Directory( path ) ], "read.g" ) <> fail then
+      Add( outercalls, name );
+    fi;
+
+    # Load the needed other packages.
+    # (This is expected to work because of `TestPackageAvailability' above.)
+    dep:= info.Dependencies;
+    if IsBound( dep.NeededOtherPackages ) then
+      for pair in dep.NeededOtherPackages do
+        if LoadPackage( pair[1], pair[2], banner, outercalls ) <> true then
+          # The package was classified as available, but we cannot load it?
+          Error( "this should not happen" );
+        fi;
+      od;
+    fi;
+
+    # Try to load the suggested other packages,
+    # and issue a warning for each such package where this is not possible.
+    if IsBound( dep.SuggestedOtherPackages ) then
+      for pair in dep.SuggestedOtherPackages do
+        if LoadPackage( pair[1], pair[2], banner, outercalls ) <> true then
+          Info( InfoWarning, 2,
+                "suggested package `", pair[1], "' cannot be loaded" );
+        fi;
+      od;
+    fi;
+
+    # If wanted then show a package banner.
+    if banner then
+      # If the component `BannerString' is bound in `info' then we print
+      # this string, otherwise we print the default banner string.
+      if IsBound( info.BannerString ) then
+        Print( info.BannerString );
+      else
+        Print( DefaultPackageBannerString( info ) );
+      fi;
+    fi;
+
+    # Read the `init.g' file.
+#T Perhaps a package in ``old'' format is read from `.gaprc',
+#T so the obsolete function names are not yet known.
+if GAPInfo.ReadObsolete <> false and not IsBoundGlobal( "ReadPkg" ) then
+  RereadLib( "obsolete.g" );
+fi;
+#T Ignore possible `RequirePackage' calls in `init.g' files.
+#T (Remove this as soon as `RequirePackage' is removed.)
+RequirePackage:= ReturnTrue;
+    Read( Filename( Directory( path ), "init.g" ) );
+RequirePackage:= LoadPackage;
+
+    # If the function was called on the outermost level
+    # then we read the implementation part of all those packages
+    # that have been loaded in the meantime;
+    # it is contained in the file `read.g' in each package home directory.
+    if Length( arg ) <> 4 then
+      for pkg in Reversed( outercalls ) do
+        ReadPackage( pkg, "read.g" );
+      od;
+    fi;
+
     return true;
     end );
+
+
+#############################################################################
+##
+#F  LoadAllPackages()
+##
+##  loads all installed packages that can be loaded, in alphabetical order.
+##  This admittedly trivial function is used for example in automatic tests.
+##
+BindGlobal( "LoadAllPackages", function()
+    InitializePackagesInfoRecords( false );
+    List( RecNames( GAPInfo.PackagesInfo ), LoadPackage );
+    end );
+
+
+#############################################################################
+##
+#F  InstalledPackageVersion( <name> )
+##
+##  If the {\GAP} package with name <name> has already been loaded then
+##  `InstalledPackageVersion' returns the string denoting the version number
+##  of this version of the package.
+##  If the package is available but has not yet been loaded then the version
+##  number string for that version of the package that currently would be
+##  loaded.
+##  (Note that loading *another* package might force loading another version
+##  of the package <name>, so the result of `InstalledPackageVersion' will be
+##  different afterwards.)
+##  If the package is not available then `fail' is returned.
+##
+##  The argument <name> is case insensitive.
+##
+BindGlobal( "InstalledPackageVersion", function( name )
+    local avail, info;
+
+    avail:= TestPackageAvailability( name, "" );
+    if   avail = fail then
+      return fail;
+    elif avail = true then
+      return GAPInfo.PackagesLoaded.( LowercaseString( name ) )[2];
+    fi;
+    info:= First( PackageInfo( name ), r -> r.InstallationPath = avail );
+    return info.Version;
+    end );
+
+
+#############################################################################
+##
+#F  DirectoriesPackagePrograms( <name> )
+##
+##  returns a list of the `bin/<architecture>' subdirectories of all
+##  packages <name> where <architecture> is the architecture on which {\GAP}
+##  has been compiled.
+##  The directories returned by `DirectoriesPackagePrograms' are the place
+##  where external binaries for the {\GAP} package <name> and the current
+##  architecture should be located.
+##
+BIND_GLOBAL( "DirectoriesPackagePrograms", function( name )
+    local arch, dirs, r, path;
+
+    arch := GAPInfo.Architecture;
+    dirs := [];
+    InitializePackagesInfoRecords( false );
+    for r in PackageInfo( LowercaseString( name ) ) do
+      path:= Concatenation( r.InstallationPath, "/bin/", arch, "/" );
+      Add( dirs, Directory( path ) );
+    od;
+    return dirs;
+end );
+
+
+#############################################################################
+##
+#F  DirectoriesPackageLibrary( <name>[, <path>] )
+##
+##  takes the string <name>, a name of a {\GAP} package and returns a list of
+##  directory objects for the sub-directory/ies containing the library
+##  functions of this {\GAP} package,
+##  up to one for each `pkg' sub-directory of a path in `GAPInfo.RootPaths'.
+##  The default is that the library functions are in the subdirectory `lib'
+##  of the {\GAP} package's home directory.
+##  If this is not the case, then the second argument <path> needs to be
+##  present and must be a string that is a path name relative to the home
+##  directory  of the {\GAP} package with name <name>.
+##
+BIND_GLOBAL( "DirectoriesPackageLibrary", function( arg )
+    local name, path, dirs, r, tmp;
+
+    if IsEmpty(arg) or 2 < Length(arg) then
+        Error( "usage: DirectoriesPackageLibrary( <name>[, <path>] )\n" );
+    elif not ForAll(arg, IsString) then
+        Error( "string argument(s) expected\n" );
+    fi;
+
+    name:= LowercaseString( arg[1] );
+    if '\\' in name or ':' in name  then
+        Error( "<name> must not contain '\\' or ':'" );
+    fi;
+
+    if 1 = Length(arg)  then
+        path := "lib";
+    else
+        path := arg[2];
+    fi;
+
+    dirs := [];
+    InitializePackagesInfoRecords( false );
+    for r in PackageInfo( LowercaseString( name ) ) do
+        tmp := Concatenation( r.InstallationPath, "/", path );
+        if IsDirectoryPath(tmp) = true  then
+            Add( dirs, Directory(tmp) );
+        fi;
+    od;
+    return dirs;
+end );
 
 
 #############################################################################
@@ -1062,7 +1078,7 @@ BindGlobal( "GAPDocManualLab", function(pkgname)
   if LoadPackage("GAPDoc") <> true then
     Error("package `GAPDoc' not installed. Please install `GAPDoc'\n" );
   fi;
-  
+
   pinf := GAPInfo.PackagesInfo.(pkgname)[1];
   for book in pinf.PackageDoc do
     file := Filename([Directory(pinf.InstallationPath)], book.SixFile);
@@ -1199,9 +1215,13 @@ BindGlobal( "ValidatePackageInfo", function( record )
     return true;
     end;
 
-    TestMandat( record, "PackageName", IsString, "a string" );
+    TestMandat( record, "PackageName",
+        x -> IsString(x) and 0 < Length(x),
+        "a nonempty string" );
     TestMandat( record, "Subtitle", IsString, "a string" );
-    TestMandat( record, "Version", IsString, "a string" );
+    TestMandat( record, "Version",
+        x -> IsString(x) and 0 < Length(x) and x[1] <> '=',
+        "a nonempty string that does not start with `='" );
     TestMandat( record, "Date",
         x -> IsString(x) and Length(x) = 10 and x{ [3,6] } = "//"
                  and ForAll( x{ [1,2,4,5,7,8,9,10] }, IsDigitChar ),
@@ -1273,7 +1293,7 @@ BindGlobal( "ValidatePackageInfo", function( record )
           result := false;
         fi;
         TestOption( subrec, "Archive", IsString, "a string" );
-        TestOption( subrec, "ArchiveURLSubset", IsStringList, 
+        TestOption( subrec, "ArchiveURLSubset", IsStringList,
                     "a list of strings" );
         TestMandat( subrec, "HTMLStart", IsString, "a string" );
         TestMandat( subrec, "PDFFile", IsString, "a string" );
@@ -1305,6 +1325,7 @@ BindGlobal( "ValidatePackageInfo", function( record )
     TestOption( record, "TestFile",
         x -> IsString( x ) and IsBound( x[1] ) and x[1] <> '/',
         "a string denoting a relative path" );
+    TestOption( record, "PreloadFile", IsString, "a string" );
     TestOption( record, "Keywords", IsStringList, "a list of strings" );
 
     return result;
@@ -1339,12 +1360,12 @@ BindGlobal( "CheckPackageLoading", function( pkgname )
 
     # Check the contents of the `PackageInfo.g' file of the package.
     Unbind( GAPInfo.PackageInfoCurrent );
-    ReadPackage( pkgname, "PackageInfo.g" );
 if ReadPackage( pkgname, "PackageInfo.g" ) = false
 and ReadPackage( pkgname, "PkgInfo.g" ) then
 Print( "#E  rename `PkgInfo.g' to `PackageInfo.g'\n" );
 fi;
 #T remove this as soon as it no longer necessary
+    ReadPackage( pkgname, "PackageInfo.g" );
     if IsBound( GAPInfo.PackageInfoCurrent ) then
       result:= ValidatePackageInfo( GAPInfo.PackageInfoCurrent ) and result;
     else
@@ -1427,25 +1448,48 @@ GAPInfo.PackagesRestrictions := rec(
               "most recent version, see URL\n",
               "      http://www-public.tu-bs.de:8080/~beick/so.html\n" );
         fi;
-        end ) );
+        end ),
+
+  guava := rec(
+    OnInitialization := function( pkginfo )
+        if CompareVersionNumbers( pkginfo.Version, "2.002" ) = false then
+          pkginfo.Autoload:= false;
+          return false;
+        fi;
+        return true;
+        end,
+    OnLoad := function( pkginfo )
+        if CompareVersionNumbers( pkginfo.Version, "2.002" ) = false then
+          Print( "  The package `guava'",
+              " should be upgraded at least to version 2.002,\n",
+              "  the given version (", pkginfo.Version,
+              ") is known to be incompatible\n",
+              "  with the current version of GAP.\n",
+              "  It is strongly recommended to update to the ",
+              "most recent version, see URL\n",
+              "      http://cadigweb.ew.usna.edu/~wdj/gap/GUAVA\n" );
+        fi;
+        end ), 
+
+    );
 
 
 #############################################################################
 ##
 #F  SuggestUpgrades( versions ) . . compare installed with distributed versions
-##  
+##
 ##  versions: a list of pairs like
-##     [  [ "GAPKernel", "4.4.0" ], [ "GAPLibrary", "4.4.0" ], 
+##     [  [ "GAPKernel", "4.4.0" ], [ "GAPLibrary", "4.4.0" ],
 ##        [ "AtlasRep", "1.2" ], ...
 ##     ]
 ##  where the second arguments are version numbers from the current official
-##  distribution. 
+##  distribution.
 ##  The function compares this with the available Kernel, Library, and
 ##  Package versions and print some text summarizing the result.
-##  
+##
 ##  For 4.4 not yet documented, we should think about improvements first.
 ##  (e.g., how to download the necessary information in the background)
-##  
+##
 BindGlobal( "SuggestUpgrades", function( suggestedversions )
     local ok, outstr, out, entry, inform, info;
 
@@ -1473,7 +1517,7 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
     elif not CompareVersionNumbers( entry[2], GAPInfo.Version ) then
       PrintTo(out,  "#E  You are using version ", GAPInfo.Version,
              " of the GAP library.\n",
-             "#E  This is newer than the distributed version ", 
+             "#E  This is newer than the distributed version ",
              entry[2], ".\n\n" );
       ok:= false;
     fi;
@@ -1491,12 +1535,12 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
     elif not CompareVersionNumbers( entry[2], GAPInfo.KernelVersion ) then
       PrintTo(out,  "#E  You are using version ", GAPInfo.KernelVersion,
              " of the GAP kernel.\n",
-             "#E  This is newer than the distributed version ", 
+             "#E  This is newer than the distributed version ",
              entry[2], ".\n\n" );
       ok:= false;
     fi;
     RemoveSet( suggestedversions, entry );
-    
+
     # Deal with present packages which are not distributed.
     LoadPackage("blubberblaxyz");
     inform := Difference(NamesOfComponents(GAPInfo.PackagesInfo),
@@ -1512,7 +1556,7 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
       ok:= false;
     fi;
 
-    
+
     # Deal with packages that are not installed.
     inform := Filtered( suggestedversions, entry -> not IsBound(
                    GAPInfo.PackagesInfo.( LowercaseString( entry[1] ) ) )
@@ -1546,12 +1590,12 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
       PrintTo(out,  "#I  The following GAP packages are present ",
              "but cannot be used.\n" );
       for entry in inform do
-        PrintTo(out,  "#I    ", entry[1], " ", 
+        PrintTo(out,  "#I    ", entry[1], " ",
              GAPInfo.PackagesInfo.( LowercaseString( entry[1] ) )[1].Version,
              "\n" );
         if not ForAny( GAPInfo.PackagesInfo.( LowercaseString( entry[1] ) ),
                    r -> CompareVersionNumbers( r.Version, entry[2] ) ) then
-          PrintTo(out,  "#I         (distributed version is newer:   ", 
+          PrintTo(out,  "#I         (distributed version is newer:   ",
                    entry[2], ")\n" );
         fi;
       od;
@@ -1562,10 +1606,10 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
 
     # Deal with packages in *newer* (say, dev-) versions than the
     # distributed ones.
-    inform:= Filtered( suggestedversions, entry -> not CompareVersionNumbers( 
+    inform:= Filtered( suggestedversions, entry -> not CompareVersionNumbers(
                  entry[2], entry[3] ) );
     if not IsEmpty( inform ) then
-      PrintTo(out, 
+      PrintTo(out,
              "#I  Your following GAP packages are *newer* than the ",
              "distributed version.\n" );
       for entry in inform do
@@ -1576,10 +1620,10 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
       ok:= false;
     fi;
     # Deal with packages whose installed versions are not up to date.
-    inform:= Filtered( suggestedversions, entry -> not CompareVersionNumbers( 
+    inform:= Filtered( suggestedversions, entry -> not CompareVersionNumbers(
                  entry[3], entry[2] ) );
     if not IsEmpty( inform ) then
-      PrintTo(out, 
+      PrintTo(out,
              "#I  The following GAP packages are available but outdated.\n" );
       for entry in inform do
         PrintTo(out,  "#I    ", entry[1], " ", entry[3],
@@ -1596,6 +1640,309 @@ BindGlobal( "SuggestUpgrades", function( suggestedversions )
     CloseStream(out);
     Print( outstr );
     end );
+
+
+NamesSystemGVars := "dummy";   # is not yet defined when the file is read
+NamesUserGVars   := "dummy";
+
+#############################################################################
+##
+#F  PackageVariablesInfo( <pkgname>[, <version>] )
+##
+##  This is currently the function that does the work for
+##  `ShowPackageVariables'.
+##  In the future, better interfaces for such overviews are desirable,
+##  so it makes sense to separate the computation of the data from the
+##  actual rendering.
+##
+BindGlobal( "PackageVariablesInfo", function( arg )
+    local pkgname, version, test, info, banner, outercalls, pair,
+          user_vars_orig, new, redeclared, newmethod, rules, data, rule,
+          loaded, pkg, args, docmark, done, result, subrule, added,
+          subresult, entry, isrelevantvarname, globals, protected;
+
+    # Get and check the arguments.
+    if   Length( arg ) = 1 and IsString( arg[1] ) then
+      pkgname:= LowercaseString( arg[1] );
+      version:= "";
+    elif Length( arg ) = 2 and IsString( arg[1] ) and IsString( arg[2] ) then
+      pkgname:= LowercaseString( arg[1] );
+      version:= arg[2];
+    else
+      Error( "usage: ShowPackageVariables( <pkgname>[ <version>] )" );
+    fi;
+
+    # Check that the package is available but not yet loaded.
+    test:= TestPackageAvailability( pkgname, version );
+    if test = true then
+      Print( "#E  the package `", pkgname, "' is already loaded\n" );
+      return [];
+    elif test = fail then
+      Print( "#E  the package `", pkgname, "' cannot be loaded" );
+      if version <> "" then
+        Print( " in version `", version, "'" );
+      fi;
+      Print( "\n" );
+      return [];
+    fi;
+
+    # Note that we want to list only variables defined in the package
+    # `pkgname' but not in the required or suggested packages.
+    # So we first load these packages but *not* `pkgname'.
+    # Actually only the declaration part of these packages is loaded,
+    # since the implementation part may rely on variables that are declared
+    # in the declaration part of `pkgname'.
+    info:= First( GAPInfo.PackagesInfo.( pkgname ),
+        r -> IsBound( r.InstallationPath ) and r.InstallationPath = test );
+    banner:= not GAPInfo.CommandLineOptions.q and
+             not GAPInfo.CommandLineOptions.b;
+    outercalls:= [ pkgname ];
+    for pair in Concatenation( info.Dependencies.NeededOtherPackages,
+                               info.Dependencies.SuggestedOtherPackages ) do
+      LoadPackage( pair[1], pair[2], banner, outercalls );
+    od;
+
+    # Store the current list of global variables.
+    user_vars_orig:= Union( NamesSystemGVars(), NamesUserGVars() );
+    new:= function( entry )
+        if entry[1] in user_vars_orig then
+          return fail;
+        else
+          return [ entry[1], ValueGlobal( entry[1] ) ];
+        fi;
+      end;
+
+    redeclared:= function( entry )
+        if entry[1] in user_vars_orig then
+          return [ entry[1], ValueGlobal( entry[1] ) ];
+        else
+          return fail;
+        fi;
+      end;
+
+    newmethod:= function( entry )
+      local setter;
+
+      if IsString( entry[2] ) and entry[2] in
+             [ "system setter", "default method, does nothing" ] then
+        setter:= entry[1];
+        if ForAny( ATTRIBUTES, entry -> IsIdenticalObj( setter,
+                                            Setter( entry[3] ) ) ) then
+          return fail;
+        fi;
+      fi;
+      return [ NameFunction( entry[1] ), entry[ Length( entry ) ] ];
+      end;
+
+    # List the cases to be dealt with.
+    rules:= [
+      [ "DeclareGlobalFunction",
+        [ "new global functions",
+          entry -> [ entry[1], ValueGlobal( entry[1] ) ] ] ],
+      [ "DeclareGlobalVariable",
+        [ "new global variables",
+          entry -> [ entry[1], ValueGlobal( entry[1] ) ] ] ],
+      [ "DeclareOperation",
+        [ "new operations", new ],
+        [ "redeclared operations", redeclared ] ],
+      [ "DeclareAttribute",
+        [ "new attributes", new ],
+        [ "redeclared attributes", redeclared ] ],
+      [ "DeclareProperty",
+        [ "new properties", new ],
+        [ "redeclared properties", redeclared ] ],
+      [ "DeclareCategory",
+        [ "new categories", new ],
+        [ "redeclared categories", redeclared ] ],
+      [ "DeclareRepresentation",
+        [ "new representations", new ],
+        [ "redeclared representations", redeclared ] ],
+      [ "DeclareFilter",
+        [ "new plain filters", new ],
+        [ "redeclared plain filters", redeclared ] ],
+      [ "InstallMethod",
+        [ "new methods", newmethod ] ],
+      [ "InstallOtherMethod",
+        [ "new other methods", newmethod ] ],
+      [ "DeclareSynonymAttr",
+        [ "new synonyms of attributes", new ] ],
+      [ "DeclareSynonym",
+        [ "new synonyms", new ] ],
+      ];
+
+    # Save the relevant global variables, and replace them.
+    GAPInfo.data:= rec();
+    for rule in rules do
+      GAPInfo.data.( rule[1] ):= [ ValueGlobal( rule[1] ), [] ];
+      MakeReadWriteGlobal( rule[1] );
+      UnbindGlobal( rule[1] );
+      BindGlobal( rule[1], EvalString( Concatenation(
+          "function( arg ) Add( GAPInfo.data.( \"", rule[1],
+          "\" )[2], arg ); CallFuncList( GAPInfo.data.( \"", rule[1],
+          "\" )[1], arg ); end" ) ) );
+    od;
+
+    # Load the package `pkgname', under the assumption that the
+    # needed/suggested packages are already loaded).
+    loaded:= LoadPackage( pkgname );
+
+    # Put the original global variables back.
+    for rule in rules do
+      MakeReadWriteGlobal( rule[1] );
+      UnbindGlobal( rule[1] );
+      BindGlobal( rule[1], GAPInfo.data.( rule[1] )[1] );
+    od;
+
+    if not loaded then
+      Print( "#E  the package `", pkgname, "' could not be loaded\n" );
+      return [];
+    fi;
+
+    # Store the list of globals available before the implementation part
+    # of the needed/suggested packages is read.
+    globals:= Difference( NamesUserGVars(), user_vars_orig );
+
+    # Read the implementation part of the needed/suggested packages.
+    outercalls:= Reversed( outercalls );
+    Unbind( outercalls[ Length( outercalls ) ] );
+    for pkg in outercalls do
+      ReadPackage( pkg, "read.g" );
+    od;
+
+    # Functions are printed via their lists of arguments.
+    args:= function( func )
+      local num, nam, str;
+
+      if not IsFunction( func ) then
+        return "";
+      fi;
+      num:= NumberArgumentsFunction( func );
+      nam:= NamesLocalVariablesFunction( func );
+      if num = -1 then
+        str:= "arg";
+      elif nam = fail then
+        str:= "...";
+      else
+        str:= JoinStringsWithSeparator( nam{ [ 1 .. num ] }, ", " );
+      fi;
+      return Concatenation( "( ", str, " )" );
+    end;
+
+    # Mark undocumented globals with an asterisk.
+    docmark:= function( varname )
+      if not IsDocumentedVariable( varname ) then
+        return "*";
+      else
+        return "";
+      fi;
+    end;
+
+    # Prepare the output.
+    done:= [];
+    result:= [];
+    for rule in rules do
+      for subrule in rule{ [ 2 .. Length( rule ) ] } do
+        added:= Filtered( List( GAPInfo.data.( rule[1] )[2], subrule[2] ),
+                          x -> x <> fail );
+        if IsEmpty( added ) then
+          subresult:= [ Concatenation( "no ", subrule[1] ), [] ];
+        else
+          subresult:= [ Concatenation( subrule[1], ":" ), [] ];
+          Sort( added, function( a, b ) return a[1] < b[1]; end );
+          for entry in added do
+            Add( subresult[2], [ "  ", entry[1], args( entry[2] ),
+                                 docmark( entry[1] ) ] );
+            AddSet( done, entry[1] );
+          od;
+        fi;
+        Add( result, subresult );
+      # Print( "\n" );
+      od;
+    od;
+    Unbind( GAPInfo.data );
+
+    # Mention the remaining new globals.
+    # (Omit `Set<attr>' and `Has<attr>' type variables.)
+    isrelevantvarname:= function( name )
+      local attr;
+
+      if Length( name ) <= 3
+         or not ( name{ [ 1 .. 3 ] } in [ "Has", "Set" ] ) then
+        return true;
+      fi;
+      name:= name{ [ 4 .. Length( name ) ] };
+      if not IsBoundGlobal( name ) then
+        return true;
+      fi;
+      attr:= ValueGlobal( name );
+      if ForAny( ATTRIBUTES, entry -> IsIdenticalObj( attr, entry[3] ) ) then
+        return false;
+      fi;
+      return true;
+    end;
+
+    added:= Filtered( Difference( globals, done ), isrelevantvarname );
+    protected:= Filtered( added, IsReadOnlyGVar );
+    if not IsEmpty( protected ) then
+      subresult:= [ "other new globals (write protected):", [] ];
+      for entry in SortedList( protected ) do
+        Add( subresult[2], [ "  ", entry, args( ValueGlobal( entry ) ),
+                             docmark( entry ) ] );
+      od;
+      Add( result, subresult );
+    fi;
+    added:= Difference( added, protected );
+    if not IsEmpty( added ) then
+      subresult:= [ "other new globals (not write protected):", [] ];
+      for entry in SortedList( added ) do
+        Add( subresult[2], [ "  ", entry, args( ValueGlobal( entry ) ),
+                             docmark( entry ) ] );
+      od;
+      Add( result, subresult );
+    fi;
+
+    return result;
+    end );
+
+Unbind( NamesSystemGVars );
+Unbind( NamesUserGVars );
+
+
+#############################################################################
+##
+#F  ShowPackageVariables( <pkgname>[, <version>] )
+##
+##  Let <pkgname> be the name of a {\GAP} package.
+##  If the package <pkgname> is available but not yet loaded then
+##  `ShowPackageVariables' prints a list of global variables that become
+##  bound and of methods that become installed when the package is loaded.
+##  (For that, the package is actually loaded, so `ShowPackageVariables' can
+##  be called only once for the same package and in the same {\GAP} session.)
+##
+##  If a version number <version> is given (see Section~"ext:Version Numbers"
+##  of ``Extending GAP'') then this version of the package is considered.
+##
+##  An error message is printed if (the given version of) the package
+##  is not available or already loaded.
+##
+##  The following entries are omitted from the list:
+##  Default setter methods for attributes and properties that are declared in
+##  the package,
+##  and `Set<attr>' and `Has<attr>' type variables where <attr> is an
+##  attribute or property.
+##
+BindGlobal( "ShowPackageVariables", function( arg )
+    local data, entry, subentry;
+
+    for entry in CallFuncList( PackageVariablesInfo, arg ) do
+      Print( entry[1], "\n" );
+      for subentry in entry[2] do
+        Print( Concatenation( subentry ), "\n" );
+      od;
+      Print( "\n" );
+    od;
+    end );
+
 
 #############################################################################
 ##

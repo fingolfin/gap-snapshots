@@ -2,7 +2,7 @@
 **
 *W  listfunc.c                  GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: listfunc.c,v 4.58 2003/06/29 06:56:28 gap Exp $
+*H  @(#)$Id: listfunc.c,v 4.58.2.1 2005/05/06 14:22:58 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_listfunc_c =
-   "@(#)$Id: listfunc.c,v 4.58 2003/06/29 06:56:28 gap Exp $";
+   "@(#)$Id: listfunc.c,v 4.58.2.1 2005/05/06 14:22:58 sal Exp $";
 
 
 #include        "gasman.h"              /* garbage collector               */
@@ -498,7 +498,9 @@ void SORT_LIST (
         }
         h = h / 3;
     }
-    RESET_FILT_LIST(list, FN_IS_NSORT);
+    if (FIRST_PLIST_TNUM <= TNUM_OBJ(list) &&
+	TNUM_OBJ(list) <= LAST_PLIST_TNUM)
+      RESET_FILT_LIST(list, FN_IS_NSORT);
 }
 
 void SortDensePlist (

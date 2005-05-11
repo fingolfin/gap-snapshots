@@ -126,7 +126,7 @@ expression and  can therefore not be assigned to a variable.  Furthermore
 an <code>if</code> statement does not return a value.
 <p>
 Fibonacci numbers are defined recursively by <i>f</i>(1) = <i>f</i>(2) = 1 and
-<i>f</i>(<i>n</i>) = <i>f</i>(<i>n</i><font face="symbol">&#8722;</font>1) + <i>f</i>(<i>n</i><font face="symbol">&#8722;</font>2) for <i>n</i>  <font face="symbol">&#8805;</font> 3.
+<i>f</i>(<i>n</i>) = <i>f</i>(<i>n</i>&#8722;1) + <i>f</i>(<i>n</i>&#8722;2) for <i>n</i>  &#8805; 3.
 Since functions in <font face="Gill Sans,Helvetica,Arial">GAP</font> may call themselves,
 a function <code>fib</code> that computes Fibonacci numbers can be implemented
 basically by typing the above equations. (Note however that this is a very
@@ -216,10 +216,10 @@ list  of numbers   whose sum   is the   given   integer.  For  example
 of 0, namely [&nbsp;]. The complete set of all  partitions of an integer
 <i>n</i> may be divided  into subsets with respect  to the largest element.
 The number  of  partitions of   <i>n</i> therefore  equals  the  sum of the
-numbers of partitions of <i>n</i><font face="symbol">&#8722;</font><i>i</i> with elements less than or equal to <i>i</i>
+numbers of partitions of <i>n</i>&#8722;<i>i</i> with elements less than or equal to <i>i</i>
 for all possible <i>i</i>.  More generally the  number of partitions of <i>n</i>
 with elements less than <i>m</i> is the sum of the numbers of partitions of
-<i>n</i><font face="symbol">&#8722;</font><i>i</i> with elements less than <i>i</i> for <i>i</i> less than <i>m</i> and <i>n</i>.  This
+<i>n</i>&#8722;<i>i</i> with elements less than <i>i</i> for <i>i</i> less than <i>m</i> and <i>n</i>.  This
 description yields the following function.
 <p>
 <pre>
@@ -283,5 +283,5 @@ partitions in Section <a href="../ref/CHAP017.htm#SSEC002.15">Partitions</a>.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

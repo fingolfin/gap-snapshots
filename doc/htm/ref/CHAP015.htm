@@ -9,7 +9,8 @@
 <li> <A HREF="CHAP015.htm#SECT002">Primitive Roots and Discrete Logarithms</a>
 <li> <A HREF="CHAP015.htm#SECT003">Roots Modulo Integers</a>
 <li> <A HREF="CHAP015.htm#SECT004">Multiplicative Arithmetic Functions</a>
-<li> <A HREF="CHAP015.htm#SECT005">Miscellaneous</a>
+<li> <A HREF="CHAP015.htm#SECT005">Continued Fractions</a>
+<li> <A HREF="CHAP015.htm#SECT006">Miscellaneous</a>
 </ol><p>
 <p>
 <a name = "I0"></a>
@@ -17,12 +18,12 @@
 <font face="Gill Sans,Helvetica,Arial">GAP</font> provides a couple of elementary number theoretic functions.
 Most of these deal with the group of integers coprime to <i>m</i>,
 called the <strong>prime residue group</strong>.
-<font face="symbol">&#966;</font>(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>) is the order of this group,
-<font face="symbol">&#955;</font>(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.3">Lambda</a>) the exponent.
+&#966;(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>) is the order of this group,
+&#955;(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.3">Lambda</a>) the exponent.
 If and only if <i>m</i> is 2, 4, an odd prime power <i>p</i><sup><i>e</i></sup>,
 or twice an odd prime power 2 <i>p</i><sup><i>e</i></sup>, this group is cyclic.
 In this case the generators  of the group, i.e., elements of order
-<font face="symbol">&#966;</font>(<i>m</i>), are called <strong>primitive roots</strong> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>,
+&#966;(<i>m</i>), are called <strong>primitive roots</strong> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>,
 <a href="CHAP015.htm#SSEC002.4">IsPrimitiveRootMod</a>).
 <p>
 Note that neither the arguments nor the return values of the functions
@@ -59,11 +60,11 @@ gap&gt; PrimeResidues( 0 );  PrimeResidues( 1 );  PrimeResidues( 20 );
 <a name = "SSEC001.2"></a>
 <li><code>Phi( </code><var>m</var><code> ) F</code>
 <p>
-<code>Phi</code> returns the number <font face="symbol">&#966;</font>(<i>m</i> ) of positive integers less than the
+<code>Phi</code> returns the number &#966;(<i>m</i> ) of positive integers less than the
 positive integer <var>m</var> that are coprime to <var>m</var>.
 <p>
-Suppose that <i>m</i> = <i>p</i><sub>1</sub><sup><i>e</i><sub>1</sub></sup> <i>p</i><sub>2</sub><sup><i>e</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>p</i><sub><i>k</i></sub><sup><i>e</i><sub><i>k</i></sub></sup>.  Then  <font face="symbol">&#966;</font>(<i>m</i>)
-is <i>p</i><sub>1</sub><sup><i>e</i><sub>1</sub><font face="symbol">&#8722;</font>1</sup> (<i>p</i><sub>1</sub><font face="symbol">&#8722;</font>1) <i>p</i><sub>2</sub><sup><i>e</i><sub>2</sub><font face="symbol">&#8722;</font>1</sup> (<i>p</i><sub>2</sub><font face="symbol">&#8722;</font>1) <font face="symbol">&#8230;</font><i>p</i><sub><i>k</i></sub><sup><i>e</i><sub><i>k</i></sub><font face="symbol">&#8722;</font>1</sup> (<i>p</i><sub><i>k</i></sub><font face="symbol">&#8722;</font>1).
+Suppose that <i>m</i> = <i>p</i><sub>1</sub><sup><i>e</i><sub>1</sub></sup> <i>p</i><sub>2</sub><sup><i>e</i><sub>2</sub></sup> &#8230;<i>p</i><sub><i>k</i></sub><sup><i>e</i><sub><i>k</i></sub></sup>.  Then  &#966;(<i>m</i>)
+is <i>p</i><sub>1</sub><sup><i>e</i><sub>1</sub>&#8722;1</sup> (<i>p</i><sub>1</sub>&#8722;1) <i>p</i><sub>2</sub><sup><i>e</i><sub>2</sub>&#8722;1</sup> (<i>p</i><sub>2</sub>&#8722;1) &#8230;<i>p</i><sub><i>k</i></sub><sup><i>e</i><sub><i>k</i></sub>&#8722;1</sup> (<i>p</i><sub><i>k</i></sub>&#8722;1).
 <p>
 <a name = "I2"></a>
 
@@ -83,22 +84,22 @@ gap&gt; Phi( 2^15-1 );
 <a name = "SSEC001.3"></a>
 <li><code>Lambda( </code><var>m</var><code> ) F</code>
 <p>
-<code>Lambda</code> returns the exponent <font face="symbol">&#955;</font>(<i>m</i> ) of the group of prime
+<code>Lambda</code> returns the exponent &#955;(<i>m</i> ) of the group of prime
 residues modulo the integer <var>m</var>.
 <p>
-<font face="symbol">&#955;</font>(<i>m</i> ) is the smallest positive integer <i>l</i> such that for every
-<i>a</i> relatively prime to <var>m</var> we have <i>a</i><sup><i>l</i></sup>  <font face="symbol">&#8801;</font> 1  mod <i>m</i> .
-Fermat's theorem asserts <i>a</i><sup><font face="symbol">&#966;</font>(<i>m</i> )</sup>  <font face="symbol">&#8801;</font> 1  mod <i>m</i> ;
-thus <font face="symbol">&#955;</font>(<i>m</i>) divides <font face="symbol">&#966;</font>(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>).
+&#955;(<i>m</i> ) is the smallest positive integer <i>l</i> such that for every
+<i>a</i> relatively prime to <var>m</var> we have <i>a</i><sup><i>l</i></sup>  &#8801; 1  mod <i>m</i> .
+Fermat's theorem asserts <i>a</i><sup>&#966;(<i>m</i> )</sup>  &#8801; 1  mod <i>m</i> ;
+thus &#955;(<i>m</i>) divides &#966;(<i>m</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>).
 <p>
-Carmichael's theorem states that <font face="symbol">&#955;</font> can be computed as follows:
-<font face="symbol">&#955;</font>(2) = 1, <font face="symbol">&#955;</font>(4) = 2 and <font face="symbol">&#955;</font>(2<sup><i>e</i></sup>) = 2<sup><i>e</i><font face="symbol">&#8722;</font>2</sup>
-if 3  <font face="symbol">&#8804;</font> <i>e</i>,
-<font face="symbol">&#955;</font>(<i>p</i><sup><i>e</i></sup>) = (<i>p</i><font face="symbol">&#8722;</font>1) <i>p</i><sup><i>e</i><font face="symbol">&#8722;</font>1</sup> (i.e. <font face="symbol">&#966;</font>(<i>m</i>)) if <i>p</i> is an odd prime
+Carmichael's theorem states that &#955; can be computed as follows:
+&#955;(2) = 1, &#955;(4) = 2 and &#955;(2<sup><i>e</i></sup>) = 2<sup><i>e</i>&#8722;2</sup>
+if 3  &#8804; <i>e</i>,
+&#955;(<i>p</i><sup><i>e</i></sup>) = (<i>p</i>&#8722;1) <i>p</i><sup><i>e</i>&#8722;1</sup> (i.e. &#966;(<i>m</i>)) if <i>p</i> is an odd prime
 and
-<font face="symbol">&#955;</font>(<i>n</i>*<i>m</i>) = <tt>Lcm</tt>( <font face="symbol">&#955;</font>(<i>n</i>), <font face="symbol">&#955;</font>(<i>m</i>) ) if <i>n</i>, <i>m</i> are coprime.
+&#955;(<i>n</i>*<i>m</i>) = <tt>Lcm</tt>( &#955;(<i>n</i>), &#955;(<i>m</i>) ) if <i>n</i>, <i>m</i> are coprime.
 <p>
-Composites for which <font face="symbol">&#955;</font>(<i>m</i>) divides <i>m</i> <font face="symbol">&#8722;</font> 1 are called Carmichaels.
+Composites for which &#955;(<i>m</i>) divides <i>m</i> &#8722; 1 are called Carmichaels.
 If 6<i>k</i>+1, 12<i>k</i>+1 and 18<i>k</i>+1 are primes their product is such a number.
 There are only  1547  Carmichaels below 10<sup>10</sup> but  455052511  primes.
 <p>
@@ -163,12 +164,12 @@ and <code>OrderMod</code> will return 0.
 <p>
 If <var>n</var> and <var>m</var> are relatively prime the multiplicative order of <var>n</var>
 modulo <var>m</var> is the smallest positive integer <i>i</i> such that 
-<i>n</i> <sup><i>i</i></sup>  <font face="symbol">&#8801;</font> 1  mod <i>m</i> .
+<i>n</i> <sup><i>i</i></sup>  &#8801; 1  mod <i>m</i> .
 If the group of prime residues modulo <var>m</var> is cyclic then each element
 of maximal order is called a primitive root modulo <var>m</var>
 (see&nbsp;<a href="CHAP015.htm#SSEC002.4">IsPrimitiveRootMod</a>).
 <p>
-<code>OrderMod</code> usually spends most of its time factoring <var>m</var> and <font face="symbol">&#966;</font>(<i>m</i> )
+<code>OrderMod</code> usually spends most of its time factoring <var>m</var> and &#966;(<i>m</i> )
 (see&nbsp;<a href="CHAP014.htm#SSEC003.6">FactorsInt</a>).
 <p>
 <a name = "I8"></a>
@@ -187,7 +188,7 @@ gap&gt; OrderMod( 3, 7 );  # 3 is a primitive root modulo 7
 <p>
 computes the discrete <var>r</var>-logarithm of the integer <var>n</var> modulo the integer
 <var>m</var>.
-It returns a number <var>l</var> such that <i>r</i> <sup><i>l</i> </sup> <font face="symbol">&#8801;</font> <i>n</i>  mod <i>m</i> 
+It returns a number <var>l</var> such that <i>r</i> <sup><i>l</i> </sup> &#8801; <i>n</i>  mod <i>m</i> 
 if such a number exists.
 Otherwise <code>fail</code> is returned.
 <p>
@@ -264,15 +265,15 @@ gap&gt; # there is no a primitive root modulo 30
 <code>Jacobi</code>  returns  the value of  the <strong>Jacobi symbol</strong>  of  the integer <var>n</var>
 modulo the integer <var>m</var>.
 <p>
-Suppose that <i>m</i>  = <i>p</i><sub>1</sub> <i>p</i><sub>2</sub> <font face="symbol">&#8230;</font><i>p</i><sub><i>k</i></sub> is a product of primes, not
+Suppose that <i>m</i>  = <i>p</i><sub>1</sub> <i>p</i><sub>2</sub> &#8230;<i>p</i><sub><i>k</i></sub> is a product of primes, not
 necessarily distinct.  Then for <var>n</var> coprime to <var>m</var>  the Jacobi  symbol is
-defined by <i>J</i>(<i>n</i> /<i>m</i> ) = <i>L</i>(<i>n</i> /<i>p</i><sub>1</sub>) <i>L</i>(<i>n</i> /<i>p</i><sub>2</sub>) <font face="symbol">&#8230;</font><i>L</i>(<i>n</i> /<i>p</i><sub><i>k</i></sub>), where
+defined by <i>J</i>(<i>n</i> /<i>m</i> ) = <i>L</i>(<i>n</i> /<i>p</i><sub>1</sub>) <i>L</i>(<i>n</i> /<i>p</i><sub>2</sub>) &#8230;<i>L</i>(<i>n</i> /<i>p</i><sub><i>k</i></sub>), where
 <i>L</i>(<i>n</i> /<i>p</i>) is the Legendre symbol (see&nbsp;<a href="CHAP015.htm#SSEC003.2">Legendre</a>).   By convention 
 <i>J</i>(<i>n</i> /1) = 1.  If the gcd of <var>n</var> and <var>m</var> is larger than 1 we define 
 <i>J</i>(<i>n</i> /<i>m</i> ) = 0.
 <p>
 If <var>n</var> is a <strong>quadratic residue</strong> modulo <var>m</var>, i.e., if there exists an <i>r</i>
-such that  <i>r</i><sup>2</sup>  <font face="symbol">&#8801;</font> <i>n</i>   mod <i>m</i>   then <i>J</i>(<i>n</i> /<i>m</i> ) = 1.  However,
+such that  <i>r</i><sup>2</sup>  &#8801; <i>n</i>   mod <i>m</i>   then <i>J</i>(<i>n</i> /<i>m</i> ) = 1.  However,
 <i>J</i>(<i>n</i> /<i>m</i> ) = 1 implies the existence of such an <i>r</i> only if <var>m</var> is a 
 prime.
 <p>
@@ -300,7 +301,7 @@ modulo the positive integer <var>m</var>.
 <p>
 The value  of  the Legendre  symbol <i>L</i>(<i>n</i> /<i>m</i> ) is 1 if  <var>n</var> is a 
 <strong>quadratic residue</strong> modulo <var>m</var>, i.e., if there exists an integer <i>r</i> such
-that <i>r</i><sup>2</sup>  <font face="symbol">&#8801;</font> <i>n</i>  mod <i>m</i>  and <font face="symbol">&#8722;</font>1 otherwise.
+that <i>r</i><sup>2</sup>  &#8801; <i>n</i>  mod <i>m</i>  and &#8722;1 otherwise.
 <p>
 If a root of <var>n</var> exists it can be found by <code>RootMod</code> (see <a href="CHAP015.htm#SSEC003.3">RootMod</a>).
 <p>
@@ -328,7 +329,7 @@ gap&gt; Legendre( 3, 35 );  # it is -1, thus there is no r such that r^2 = 3 mod
 <li><code>RootMod( </code><var>n</var><code>[, </code><var>k</var><code>], </code><var>m</var><code> ) F</code>
 <p>
 <code>RootMod</code> computes a <var>k</var>th root of the integer <var>n</var> modulo the positive
-integer <var>m</var>, i.e., a <i>r</i> such that <i>r</i><sup><i>k</i> </sup>  <font face="symbol">&#8801;</font> <i>n</i>   mod <i>m</i> .
+integer <var>m</var>, i.e., a <i>r</i> such that <i>r</i><sup><i>k</i> </sup>  &#8801; <i>n</i>   mod <i>m</i> .
 If no such root exists <code>RootMod</code> returns <code>fail</code>.
 If only the arguments <var>n</var> and <var>m</var> are given,
 the default value for <var>k</var> is 2.
@@ -366,7 +367,7 @@ gap&gt; List( RootMod( 64, 1009 ) * RootsUnityMod( 1009 ),
 <p>
 <code>RootsMod</code> computes the set of <var>k</var>th roots of the integer <var>n</var>
 modulo the positive integer <var>m</var>, i.e., a <i>r</i> such that 
-<i>r</i><sup><i>k</i> </sup>  <font face="symbol">&#8801;</font> <i>n</i>   mod <i>m</i> .
+<i>r</i><sup><i>k</i> </sup>  &#8801; <i>n</i>   mod <i>m</i> .
 If only the arguments <var>n</var> and <var>m</var> are given,
 the default value for <var>k</var> is 2.
 <p>
@@ -388,11 +389,11 @@ gap&gt; RootsMod( 1, 5, 7*31 );
 <p>
 <code>RootsUnityMod</code> returns the set of <var>k</var>-th roots of unity modulo the
 positive integer <var>m</var>, i.e.,
-the list of all solutions <i>r</i> of <i>r</i><sup><i>k</i> </sup>  <font face="symbol">&#8801;</font> <i>n</i>   mod <i>m</i> .
+the list of all solutions <i>r</i> of <i>r</i><sup><i>k</i> </sup>  &#8801; <i>n</i>   mod <i>m</i> .
 If only the argument <var>m</var> is given, the default value for <var>k</var> is 2.
 <p>
 In  general  there are  <i>k</i> <sup><i>n</i></sup> such  roots if  the  modulus <var>m</var> has  <i>n</i>
-different prime factors <i>p</i> such that <i>p</i>  <font face="symbol">&#8801;</font> 1  mod <i>k</i> . If <i>k</i> <sup>2</sup>
+different prime factors <i>p</i> such that <i>p</i>  &#8801; 1  mod <i>k</i> . If <i>k</i> <sup>2</sup>
 divides <var>m</var> then there are <i>k</i> <sup><i>n</i>+1</sup> such roots; and especially if 
 <i>k</i>  = 2  and 8 divides <var>m</var> there are 2<sup><i>n</i>+2</sup> such roots.
 <p>
@@ -423,14 +424,14 @@ gap&gt; List( RootMod( 64, 1009 ) * RootsUnityMod( 1009 ),
 <var>n</var>.
 <p>
 <code>Sigma</code> is a multiplicative arithmetic function, i.e., if <var>n</var> and <i>m</i> are
-relatively prime we have <font face="symbol">&#963;</font>(<i>n</i>  <i>m</i>) = <font face="symbol">&#963;</font>(<i>n</i> ) <font face="symbol">&#963;</font>(<i>m</i>).
+relatively prime we have &#963;(<i>n</i>  <i>m</i>) = &#963;(<i>n</i> ) &#963;(<i>m</i>).
 <p>
-Together with the formula <font face="symbol">&#963;</font>(<i>p</i><sup><i>e</i></sup>) = (<i>p</i><sup><i>e</i>+1</sup><font face="symbol">&#8722;</font>1) / (<i>p</i><font face="symbol">&#8722;</font>1) this allows
-us to compute <font face="symbol">&#963;</font>(<i>n</i> ).
+Together with the formula &#963;(<i>p</i><sup><i>e</i></sup>) = (<i>p</i><sup><i>e</i>+1</sup>&#8722;1) / (<i>p</i>&#8722;1) this allows
+us to compute &#963;(<i>n</i> ).
 <p>
-Integers <var>n</var> for which  <font face="symbol">&#963;</font>(<i>n</i> )=2 <i>n</i>   are  called  perfect.  Even
-perfect integers are exactly of  the  form  2<sup><i>n</i> <font face="symbol">&#8722;</font>1</sup>(2<sup><i>n</i> </sup><font face="symbol">&#8722;</font>1)  where
-2<sup><i>n</i> </sup><font face="symbol">&#8722;</font>1 is prime. Primes of the form 2<sup><i>n</i> </sup><font face="symbol">&#8722;</font>1 are called <strong>Mersenne
+Integers <var>n</var> for which  &#963;(<i>n</i> )=2 <i>n</i>   are  called  perfect.  Even
+perfect integers are exactly of  the  form  2<sup><i>n</i> &#8722;1</sup>(2<sup><i>n</i> </sup>&#8722;1)  where
+2<sup><i>n</i> </sup>&#8722;1 is prime. Primes of the form 2<sup><i>n</i> </sup>&#8722;1 are called <strong>Mersenne
 primes</strong>, the known ones are obtained for <var>n</var> = 2, 3, 5, 7, 13, 17,  19,
 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281, 3217, 4253, 4423, 9689,
 9941, 11213, 19937, 21701, 23209, 44497, 86243, 110503,  132049,  216091,
@@ -456,9 +457,9 @@ true
 <var>n</var>.
 <p>
 <code>Tau</code> is a multiplicative arithmetic function, i.e., if <var>n</var> and  <i>m</i>  are
-relative prime we have <font face="symbol">&#964;</font>(<i>n</i>  <i>m</i>) = <font face="symbol">&#964;</font>(<i>n</i> ) <font face="symbol">&#964;</font>(<i>m</i>).
-Together with the formula <font face="symbol">&#964;</font>(<i>p</i><sup><i>e</i></sup>) = <i>e</i>+1 this allows us to compute
-<font face="symbol">&#964;</font>(<i>n</i> ).
+relative prime we have &#964;(<i>n</i>  <i>m</i>) = &#964;(<i>n</i> ) &#964;(<i>m</i>).
+Together with the formula &#964;(<i>p</i><sup><i>e</i></sup>) = <i>e</i>+1 this allows us to compute
+&#964;(<i>n</i> ).
 <p>
 <code>Tau</code> usually spends most of its time factoring <var>n</var> (see&nbsp;<a href="CHAP014.htm#SSEC003.6">FactorsInt</a>).
 <p>
@@ -480,14 +481,14 @@ gap&gt; Tau( 36 );  # the result is odd if and only if the argument is a perfect
 nonzero integer <var>n</var>.
 This is 0 for integers which are not squarefree, i.e.,
 which are divided by a square <i>r</i><sup>2</sup>.  Otherwise it is 1 if <var>n</var> has a even
-number and <font face="symbol">&#8722;</font>1 if <var>n</var> has an odd number of prime factors.
+number and &#8722;1 if <var>n</var> has an odd number of prime factors.
 <p>
-The importance of <font face="symbol">&#956;</font> stems  from  the  so  called  inversion  formula.
+The importance of &#956; stems  from  the  so  called  inversion  formula.
 Suppose <i>f</i>(<i>n</i> ) is a multiplicative arithmetic function defined  on  the
-positive  integers  and  let  <i>g</i>(<i>n</i> )=<font face="symbol">&#8721;</font><sub><i>d</i>  | <i>n</i> </sub><i>f</i>(<i>d</i>).   Then
-<i>f</i>(<i>n</i> )=<font face="symbol">&#8721;</font><sub><i>d</i>  | <i>n</i> </sub><font face="symbol">&#956;</font>(<i>d</i>) <i>g</i>(<i>n</i> /<i>d</i>). As a special  case  we  have
-<font face="symbol">&#966;</font>(<i>n</i> ) = <font face="symbol">&#8721;</font><sub><i>d</i>  | <i>n</i> </sub><font face="symbol">&#956;</font>(<i>d</i>) <i>n</i> /<i>d</i> since 
-<i>n</i>  = <font face="symbol">&#8721;</font><sub><i>d</i>  | <i>n</i> </sub><font face="symbol">&#966;</font>(<i>d</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>).
+positive  integers  and  let  <i>g</i>(<i>n</i> )=&#8721;<sub><i>d</i>  | <i>n</i> </sub><i>f</i>(<i>d</i>).   Then
+<i>f</i>(<i>n</i> )=&#8721;<sub><i>d</i>  | <i>n</i> </sub>&#956;(<i>d</i>) <i>g</i>(<i>n</i> /<i>d</i>). As a special  case  we  have
+&#966;(<i>n</i> ) = &#8721;<sub><i>d</i>  | <i>n</i> </sub>&#956;(<i>d</i>) <i>n</i> /<i>d</i> since 
+<i>n</i>  = &#8721;<sub><i>d</i>  | <i>n</i> </sub>&#966;(<i>d</i>) (see&nbsp;<a href="CHAP015.htm#SSEC001.2">Phi</a>).
 <p>
 <code>MoebiusMu</code> usually   spends  all of   its    time   factoring <var>n</var>   (see
 <a href="CHAP014.htm#SSEC003.6">FactorsInt</a>).
@@ -500,12 +501,60 @@ gap&gt; MoebiusMu( 60 );  MoebiusMu( 61 );  MoebiusMu( 62 );
 </pre>
 <p>
 <p>
-<h2><a name="SECT005">15.5 Miscellaneous</a></h2>
+<h2><a name="SECT005">15.5 Continued Fractions</a></h2>
 <p><p>
 <a name = "SSEC005.1"></a>
+<li><code>ContinuedFractionExpansionOfRoot( </code><var>P</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+The first <var>n</var> terms of the continued fraction expansion of the only
+positive real root of the polynomial <var>P</var> with integer coefficients.
+The leading coefficient of <var>P</var> must be positive and the value of <var>P</var> at 0
+must be negative. If the degree of <var>P</var> is 2 and <var>n</var> = 0, the function
+computes one period of the continued fraction expansion of the root in
+question. Anything may happen if <var>P</var> has three or more positive real
+roots.
+<p>
+<pre>
+gap&gt; x := Indeterminate(Integers);;
+gap&gt; ContinuedFractionExpansionOfRoot(x^2-7,20);
+[ 2, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1, 4, 1, 1, 1 ]
+gap&gt; ContinuedFractionExpansionOfRoot(x^2-7,0);
+[ 2, 1, 1, 1, 4 ]
+gap&gt; ContinuedFractionExpansionOfRoot(x^3-2,20);
+[ 1, 3, 1, 5, 1, 1, 4, 1, 1, 8, 1, 14, 1, 10, 2, 1, 4, 12, 2, 3 ]
+gap&gt; ContinuedFractionExpansionOfRoot(x^5-x-1,50);
+[ 1, 5, 1, 42, 1, 3, 24, 2, 2, 1, 16, 1, 11, 1, 1, 2, 31, 1, 12, 5, 1, 7, 11, 
+  1, 4, 1, 4, 2, 2, 3, 4, 2, 1, 1, 11, 1, 41, 12, 1, 8, 1, 1, 1, 1, 1, 9, 2, 
+  1, 5, 4 ]
+</pre>
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>ContinuedFractionApproximationOfRoot( </code><var>P</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+The <var>n</var>th continued fraction approximation of the only positive real root
+of the polynomial <var>P</var> with integer coefficients. The leading coefficient
+of <var>P</var> must be positive and the value of <var>P</var> at 0 must be negative.
+Anything may happen if <var>P</var> has three or more positive real roots.
+<p>
+<pre>
+gap&gt; ContinuedFractionApproximationOfRoot(x^2-2,10);
+3363/2378
+gap&gt; 3363^2-2*2378^2;
+1
+gap&gt; z := ContinuedFractionApproximationOfRoot(x^5-x-1,20);
+499898783527/428250732317
+gap&gt; z^5-z-1;
+486192462527432755459620441970617283/
+14404247382319842421697357558805709031116987826242631261357
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">15.6 Miscellaneous</a></h2>
+<p><p>
+<a name = "SSEC006.1"></a>
 <li><code>TwoSquares( </code><var>n</var><code> ) F</code>
 <p>
-<code>TwoSquares</code> returns a list of two integers <i>x</i> <font face="symbol">&#8804;</font> <i>y</i> such that the sum of
+<code>TwoSquares</code> returns a list of two integers <i>x</i> &#8804; <i>y</i> such that the sum of
 the squares of <i>x</i> and <i>y</i> is equal to the nonnegative integer <var>n</var>, i.e.,
 <i>n</i> = <i>x</i><sup>2</sup>+<i>y</i><sup>2</sup>.  If no such representation exists <code>TwoSquares</code> will return
 <code>fail</code>.   <code>TwoSquares</code> will return a representation for which the  gcd of
@@ -517,12 +566,12 @@ dividing <var>n</var>.  A representation of <var>n</var> as a sum of two squares
 and only if <i>a</i> is a perfect square.  Let <i>b</i> be the maximal power of 2
 dividing <var>n</var> or its half, whichever is a perfect square. Then the minimal
 possible gcd of <i>x</i> and <i>y</i> is the square root <i>c</i> of <i>a</i> <i>b</i>.  The  number
-of different minimal representation with <i>x</i> <font face="symbol">&#8804;</font> <i>y</i> is 2<sup><i>l</i><font face="symbol">&#8722;</font>1</sup>, where <i>l</i>
+of different minimal representation with <i>x</i> &#8804; <i>y</i> is 2<sup><i>l</i>&#8722;1</sup>, where <i>l</i>
 is the number of different prime factors of the form 4<i>k</i>+1 of <var>n</var>.
 <p>
-The algorithm first finds a square root <i>r</i> of <font face="symbol">&#8722;</font>1 modulo <i>n</i>  / (<i>a</i> <i>b</i>),
+The algorithm first finds a square root <i>r</i> of &#8722;1 modulo <i>n</i>  / (<i>a</i> <i>b</i>),
 which must exist, and applies the Euclidean algorithm to <i>r</i> and <var>n</var>. The
-first residues in the sequence that are  smaller than  <font face="symbol">&#8730;</font>{<i>n</i> /(<i>a</i> <i>b</i>)}
+first residues in the sequence that are  smaller than  &#8730;{<i>n</i> /(<i>a</i> <i>b</i>)}
 times <i>c</i> are a possible pair <i>x</i> and <i>y</i>.
 <p>
 Better descriptions of the algorithm and related topics can be found  in
@@ -544,12 +593,14 @@ gap&gt; TwoSquares( 125 );  # it is not [5,10] because their gcd is not minimal
 gap&gt; TwoSquares( 13*17 );  # [10,11] would be the other possible representation
 [ 5, 14 ]
 gap&gt; TwoSquares( 848654483879497562821 );  # 848654483879497562821 is prime
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 848654483879497562821
+#I  FactorsInt: used the following factor(s) which are probably primes:
+#I        848654483879497562821
 [ 6305894639, 28440994650 ]
 </pre>
 <p>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP014.htm">Previous</a>] [<a href ="CHAP016.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

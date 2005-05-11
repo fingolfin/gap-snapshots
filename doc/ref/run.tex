@@ -7,7 +7,7 @@
 %W                                                     & Alexander Hulpke
 %W                                                    & Burkhard Hoefling
 %%
-%H  @(#)$Id: run.msk,v 1.37.2.1 2004/01/26 10:12:22 gap Exp $
+%H  @(#)$Id: run.msk,v 1.37.2.2 2005/04/21 15:23:37 gap Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %%
@@ -939,7 +939,7 @@ because the garbage collector may not always collect all dead objects,
 and dead objects may contain data that `SaveWorkspace' does not know how 
 to process). 
 
-{\GAP} Packages which had been loaded before the workspace was saved
+{\GAP} packages which had been loaded before the workspace was saved
 are loaded also when the workspace is loaded.
 Packages which had been available but not loaded before the workspace
 was saved are available also when the workspace is loaded,
@@ -947,6 +947,40 @@ provided these packages have not been upgraded.
 Packages which have been newly installed *after* the workspace was saved
 are *not* available when the workspace is loaded.
 %T Is this acceptable?
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Coloring the Prompt and Input}
+
+{\GAP} provides hooks for functions which are called when the prompt is 
+to be printed and when an input line is finished. 
+
+An example of using this feature is the following function. 
+
+\>ColorPrompt( <bool> ) F
+
+With  `ColorPrompt(true);' {\GAP}  changes its  user interface:  The
+prompts and  the user  input are displayed  in different  colors. It
+also sets the  variable `ANSI_COLORS' to `true' (which  has the side
+effect that  some help pages  are also displayed with  color markup.
+Switch the colored prompts off with `ColorPrompt(false);'.
+
+Note that  this will only work  if your terminal emulation  in which
+you run {\GAP} understands the so called ANSI color escape sequences
+-  almost all  terminal emulations  on current  UNIX/Linux (`xterm',
+`rxvt', `konsole', ...) systems do so.
+
+The colors shown depend on  the terminal configuration and cannot be
+forced  from  an application.  If  your  terminal follows  the  ANSI
+conventions you see  the standard prompt in bold blue  and the break
+loop prompt in bold red, as well as your input in red.
+
+If   it  works   for   you   and  you   like   it,   put  the   line
+`ColorPrompt(true);' in your `.gaprc' file (see~"The .gaprc file").
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

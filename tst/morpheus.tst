@@ -2,14 +2,16 @@
 ##
 #W  morpheus.tst                GAP tests                    Alexander Hulpke
 ##
-#H  @(#)$Id: morpheus.tst,v 4.18 2003/11/15 16:58:59 gap Exp $
+#H  @(#)$Id: morpheus.tst,v 4.18.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This  file  tests the automorphism routines
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: morpheus.tst,v 4.18 2003/11/15 16:58:59 gap Exp $");
+gap> START_TEST("$Id: morpheus.tst,v 4.18.2.3 2005/05/11 14:53:02 gap Exp $");
 
 gap> g:=Group((1,2,3,4),(1,3));;
 gap> a:=AutomorphismGroup(g);;
@@ -22,7 +24,8 @@ gap> iso2=fail;
 false
 gap> iso3:=iso2*iso1;;
 gap> if not iso3 in inn then iso3:=iso3*iso3;fi;
-gap> r:=RepresentativeAction(g,GeneratorsOfGroup(g),List(GeneratorsOfGroup(g),i->Image(iso3,i)),OnTuples);;
+gap> r:=RepresentativeAction(g,GeneratorsOfGroup(g),
+>           List(GeneratorsOfGroup(g),i->Image(iso3,i)),OnTuples);;
 gap> r=fail;
 false
 gap> iso4:=iso3*InnerAutomorphism(g,r^-1);;
@@ -66,10 +69,10 @@ S (1 gens, size 3)
 1 (size 1)
 
 # that's all, folks
-gap> STOP_TEST( "morpheus.tst",634003277);
+gap> STOP_TEST( "morpheus.tst", 524900000 );
 
 
 #############################################################################
 ##
-#E  morpheus.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
+

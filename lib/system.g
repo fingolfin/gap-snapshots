@@ -2,7 +2,7 @@
 ##
 #W  system.g                   GAP Library                   Alexander Hulpke
 ##
-#H  @(#)$Id: system.g,v 4.12.2.5 2004/11/29 12:21:00 sal Exp $
+#H  @(#)$Id: system.g,v 4.12.2.7 2005/05/05 09:48:33 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  internally.
 ##
 Revision.system_g :=
-    "@(#)$Id: system.g,v 4.12.2.5 2004/11/29 12:21:00 sal Exp $";
+    "@(#)$Id: system.g,v 4.12.2.7 2005/05/05 09:48:33 gap Exp $";
 
 
 BIND_GLOBAL( "GAPInfo", rec(
@@ -21,12 +21,12 @@ BIND_GLOBAL( "GAPInfo", rec(
 # do not edit the following two lines. They get replaced by string matching
 # in the distribution wrapper scripts. (Occurrences of `4.dev' and `today'
 # get replaced.)
-    Version := "4.4.4",
-    Date := "29-November-04",
+    Version := "4.4.5",
+    Date := "13-May-05",
 
     # The kernel version numbers are expected in the format `<v>.<r>.<p>'.
     KernelVersion := KERNEL_VERSION,
-    NeedKernelVersion := "4.4.4",
+    NeedKernelVersion := "4.4.5",
 
     Architecture := GAP_ARCHITECTURE,
 
@@ -151,15 +151,10 @@ GAPInfo.ScanCommandLineOption( "z", "string", "20" );
 ##
 ##  This is a mutable record, the component names are the names of those
 ##  packages that are already loaded.
-##  The component for each package is a list of length three or four,
-##  the first three entries being the path to the {\GAP} root directory that
-##  contains the package, the package version, and the package name,
-##  and the fourth entry being a list used by `CreateCompletionFilesPackage'.
-##
+##  The component for each package is a list of length three, the entries
+##  being the path to the {\GAP} root directory that contains the package,
+##  the package version, and the package name.
 ##  For each package, the value gets bound in the `LoadPackage' call.
-##  The fourth entry is bound if and only if the package has a `read.g' file
-##  and if no `read.co' file was used when the package was loaded;
-##  in this case, the entry has been computed by `ReadOrComplete'.
 ##
 GAPInfo.PackagesLoaded := rec();
 
@@ -173,6 +168,18 @@ GAPInfo.PackagesLoaded := rec();
 ##  (These packages are not necessarily loaded.)
 ##
 GAPInfo.PackagesInfo := rec();
+
+
+#############################################################################
+##
+#V  GAPInfo.TestData
+##
+##  This is a mutable record used in files that are read via `ReadTest'.
+##  These files contain the commands `START_TEST' and `STOP_TEST',
+##  which set, read, and unbind the components `START_TIME' and `START_NAME'.
+##  The function `RunStandardTests' also uses a component `results'.
+##
+GAPInfo.TestData:= rec();
 
 
 #############################################################################
@@ -221,7 +228,7 @@ end);
 BIND_GLOBAL("ARCH_IS_WINDOWS",function()
 local l;
   l:=LEN_LIST( GAPInfo.Architecture );
-  if l<9 then return false;fi; # trap some unixes with increadibly short
+  if l<9 then return false;fi; # trap some unixes with incredibly short
                                # string name
   return GAPInfo.Architecture{[l-6..l-4]} = WINDOWS_ARCHITECTURE;
 end);

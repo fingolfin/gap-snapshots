@@ -2,7 +2,7 @@
 ##
 #W  list.gi                     GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: list.gi,v 4.202.2.2 2004/09/27 16:19:34 gap Exp $
+#H  @(#)$Id: list.gi,v 4.202.2.3 2005/04/27 16:31:22 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods for lists in general.
 ##
 Revision.list_gi :=
-    "@(#)$Id: list.gi,v 4.202.2.2 2004/09/27 16:19:34 gap Exp $";
+    "@(#)$Id: list.gi,v 4.202.2.3 2005/04/27 16:31:22 gap Exp $";
 
 
 #############################################################################
@@ -312,7 +312,8 @@ InstallMethod( String,
     str := "[ ";
     for i in [ 1 .. Length( list ) ]  do
         if IsBound( list[ i ] )  then
-          if IsStringRep( list[i] ) then
+          if IsStringRep( list[i] )
+             or ( IsString( list[i] ) and not IsEmpty( list[i] ) ) then
             Append( str, "\"" );
             Append( str, String( list[i] ) );
             Append( str, "\"" );

@@ -237,14 +237,14 @@ For a matrix group <var>matgrp</var>, <code>InvariantQuadraticForm</code> return
 containing at least the component <code>matrix</code> whose value is a matrix <i>Q</i>.
 The quadratic form <i>q</i> on the natural vector space <i>V</i> on which <var>matgrp</var>
 acts is given by <i>q</i>(<i>v</i>) = <i>v</i> <i>Q</i> <i>v</i><sup><i>tr</i></sup>, and the invariance under <var>matgrp</var>
-is given by the equation <i>q</i>(<i>v</i>) = <i>q</i>(<i>v</i> <i>M</i>) for all <i>v</i> <font face="symbol">&#8712;</font> <i>V</i> and <i>M</i> in
+is given by the equation <i>q</i>(<i>v</i>) = <i>q</i>(<i>v</i> <i>M</i>) for all <i>v</i> &#8712; <i>V</i> and <i>M</i> in
 <var>matgrp</var>.
 (Note that the invariance of <i>q</i> does <strong>not</strong> imply that the matrix <i>Q</i>
 is invariant under <var>matgrp</var>.)
 <p>
 <i>q</i> is defined relative to an invariant symmetric bilinear form <i>f</i>
 (see&nbsp;<a href="CHAP042.htm#SSEC004.1">InvariantBilinearForm</a>), via the equation
-<i>q</i>(<font face="symbol">&#955;</font><i>x</i> + <font face="symbol">&#956;</font><i>y</i>) = <font face="symbol">&#955;</font><sup>2</sup> <i>q</i>(<i>x</i>) + <font face="symbol">&#955;</font><font face="symbol">&#956;</font><i>f</i>(<i>x</i>,<i>y</i>) + <font face="symbol">&#956;</font><sup>2</sup> <i>q</i>(<i>y</i>)
+<i>q</i>(&#955;<i>x</i> + &#956;<i>y</i>) = &#955;<sup>2</sup> <i>q</i>(<i>x</i>) + &#955;&#956;<i>f</i>(<i>x</i>,<i>y</i>) + &#956;<sup>2</sup> <i>q</i>(<i>y</i>)
 (see Chapter&nbsp;3.4 in&nbsp;<a href="biblio.htm#CCN85"><cite>CCN85</cite></a>).
 If <i>f</i> is represented by the matrix <i>F</i> then this implies
 <i>F</i> = <i>Q</i> + <i>Q</i><sup><i>tr</i></sup>.
@@ -379,10 +379,10 @@ test whether <var>G</var> coincides with its Bravais group (see <a href="CHAP042
 <p>
 returns the Bravais group of a finite integer matrix group <var>G</var>. 
 If <var>C</var> is the cone of positive definite quadratic forms <var>Q</var> invariant 
-under <i>g</i> <font face="symbol">&#8594;</font> <i>g</i>*<i>Q</i>*<i>g</i><sup><i>tr</i></sup> for all <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i>, then the Bravais group 
+under <i>g</i> &#8594; <i>g</i>*<i>Q</i>*<i>g</i><sup><i>tr</i></sup> for all <i>g</i>  &#8712; <i>G</i>, then the Bravais group 
 of <var>G</var> is the maximal subgroup of <i>GL</i><sub><i>n</i></sub>(<b>Z</b>) leaving the forms in
 that same cone invariant. Alternatively, the Bravais group of <var>G</var> 
-can also be defined with respect to the action <i>g</i> <font face="symbol">&#8594;</font> <i>g</i><sup><i>tr</i></sup>*<i>Q</i>*<i>g</i>
+can also be defined with respect to the action <i>g</i> &#8594; <i>g</i><sup><i>tr</i></sup>*<i>Q</i>*<i>g</i>
 on positive definite quadratic forms <var>Q</var>. This latter definition 
 is appropriate for groups <var>G</var> acting from the right on row vectors, 
 whereas the former definition is appropriate for groups acting from 
@@ -453,5 +453,5 @@ Initially, the value of <code>CrystGroupDefaultAction</code> is <code>RightActio
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP041.htm">Previous</a>] [<a href ="CHAP043.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

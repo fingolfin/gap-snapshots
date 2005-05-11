@@ -98,7 +98,7 @@ Let <var>full</var> be a list of integer vectors generating an Integral
 module <var>M</var> and <var>sub</var> a list of vectors defining a submodule <var>S</var>. 
 This function computes a free basis for <var>M</var> that extends <var>S</var>. 
 I.e., if the dimension of <var>S</var> is <var>n</var> it
-determines a basis <i>B</i>={<i><u>b</i></u><sub>1</sub>,<font face="symbol">&#8230;</font>,<i><u>b</i></u><sub><i>m</i></sub>} for <var>M</var>,
+determines a basis <i>B</i>={<i><u>b</i></u><sub>1</sub>,&#8230;,<i><u>b</i></u><sub><i>m</i></sub>} for <var>M</var>,
 as well as <var>n</var> integers <i>x</i><sub><i>i</i></sub> such that the <var>n</var> vectors
 <i><u>s</i></u><sub><i>i</i></sub>:=<i>x</i><sub><i>i</i></sub>&#183;<i><u>b</i></u><sub><i>i</i></sub>} form a basis for <var>S</var>.
 <p>
@@ -343,20 +343,20 @@ a matrix of integers, with integral coefficients,
 one can use <i>p</i>-adic approximations, as follows.
 <p>
 Let <i>A</i> be a square integral matrix, and <i>p</i> an odd prime.
-The reduction of <i>A</i> modulo <i>p</i> is [<font face="symbol">&#63717;</font>(<i>A</i>)],
+The reduction of <i>A</i> modulo <i>p</i> is [&#63717;(<i>A</i>)],
 its entries are  chosen in the interval
-[<font face="symbol">&#8722;</font>[(<i>p</i><font face="symbol">&#8722;</font>1)/2], [(<i>p</i><font face="symbol">&#8722;</font>1)/2]].
-If [<font face="symbol">&#63717;</font>(<i>A</i>)] is regular over the field with <i>p</i> elements,
-we can form <i>A</i><sup><font face="symbol">&#8242;</font></sup> = [<font face="symbol">&#63717;</font>(<i>A</i>)]<sup><font face="symbol">&#8722;</font>1</sup>.
+[&#8722;[(<i>p</i>&#8722;1)/2], [(<i>p</i>&#8722;1)/2]].
+If [&#63717;(<i>A</i>)] is regular over the field with <i>p</i> elements,
+we can form <i>A</i><sup>&#8242;</sup> = [&#63717;(<i>A</i>)]<sup>&#8722;1</sup>.
 Now we consider the integral linear equation system <i>x</i> <i>A</i> = <i>b</i>,
 i.e., we look for an integral solution <i>x</i>.
 Define <i>b</i><sub>0</sub> = <i>b</i>, and then iteratively compute
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><i>i</i></sub> = (<i>b</i><sub><i>i</i></sub> <i>A</i><sup><font face="symbol">&#8242;</font></sup>)  mod <i>p</i>,&nbsp;&nbsp;<i>b</i><sub><i>i</i>+1</sub> = </td><td nowrap="nowrap" align="center">&nbsp;1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>p</i><br /></td><td nowrap="nowrap" align="center">(<i>b</i><sub><i>i</i></sub> <font face="symbol">&#8722;</font> <i>x</i><sub><i>i</i></sub> <i>A</i>), <i>i</i> = 0, 1, 2, <font face="symbol">&#8230;</font>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>x</i><sub><i>i</i></sub> = (<i>b</i><sub><i>i</i></sub> <i>A</i><sup>&#8242;</sup>)  mod <i>p</i>,&nbsp;&nbsp;<i>b</i><sub><i>i</i>+1</sub> = </td><td nowrap="nowrap" align="center">1<div class="hrcomp"><hr noshade="noshade" size="1"/></div><i>p</i><br /></td><td nowrap="nowrap" align="center">(<i>b</i><sub><i>i</i></sub> &#8722; <i>x</i><sub><i>i</i></sub> <i>A</i>), <i>i</i> = 0, 1, 2, &#8230;. </td></tr></table></td></tr></table>
 By induction, we get                                                     
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>p</i><sup><i>i</i>+1</sup> <i>b</i><sub><i>i</i>+1</sub> + </td><td align="left" class="cl"><font face="symbol">&#63723;<br />&#63725;</font> </td><td nowrap="nowrap" align="center"><font size="-1"><i>i</i></font><!--sup--><br /><font size="+3"><font face="symbol">&#8721;<br /></font></font><font size="-1"><i>j</i>=0</font>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>p</i><sup><i>j</i></sup> <i>x</i><sub><i>j</i></sub> </td><td align="left" class="cl"><font face="symbol">&#63734;<br />&#63736;</font></td><td nowrap="nowrap" align="center"><i>A</i> = <i>b</i>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>p</i><sup><i>i</i>+1</sup> <i>b</i><sub><i>i</i>+1</sub> + </td><td align="left" class="cl">&#63723;<br />&#63725; </td><td nowrap="nowrap" align="center"><small><i>i</i></small><!--sup--><br /><font size="+3">&#8721;<br /></font><small><i>j</i>=0</small>&nbsp;<br /></td><td nowrap="nowrap" align="center"><i>p</i><sup><i>j</i></sup> <i>x</i><sub><i>j</i></sub> </td><td align="left" class="cl">&#63734;<br />&#63736;</td><td nowrap="nowrap" align="center"><i>A</i> = <i>b</i>. </td></tr></table></td></tr></table>
 If there is an integral solution <i>x</i> then it is unique,
 and there is an index <i>l</i> such that <i>b</i><sub><i>l</i>+1</sub> is zero
-and <i>x</i> = <font face="symbol">&#8721;</font><sub><i>j</i>=0</sub><sup><i>l</i></sup> <i>p</i><sup><i>j</i></sup> <i>x</i><sub><i>j</i></sub>.               
+and <i>x</i> = &#8721;<sub><i>j</i>=0</sub><sup><i>l</i></sup> <i>p</i><sup><i>j</i></sup> <i>x</i><sub><i>j</i></sub>.               
 <p>
 There are two useful generalizations of this idea.
 First, <i>A</i> need not be square; it is only necessary that there is
@@ -375,7 +375,7 @@ Note that this preprocessing must be performed compatibly for
 <li><code>Decomposition( </code><var>A</var><code>, </code><var>B</var><code>, </code><var>depth</var><code> ) F</code>
 <li><code>Decomposition( </code><var>A</var><code>, </code><var>B</var><code>, "nonnegative" ) F</code>
 <p>
-For a <i>m</i> &times;<i>n</i> matrix <var>A</var> of cyclotomics that has rank <i>m</i>  <font face="symbol">&#8804;</font> <i>n</i>,
+For a <i>m</i> &times;<i>n</i> matrix <var>A</var> of cyclotomics that has rank <i>m</i>  &#8804; <i>n</i>,
 and a list <var>B</var> of cyclotomic vectors, each of length <i>n</i>,
 <code>Decomposition</code> tries to find integral solutions of the linear equation
 systems <code></code><var>x</var><code> * </code><var>A</var><code> = </code><var>B</var><code>[i]</code>,
@@ -383,9 +383,9 @@ by computing the <i>p</i>-adic series of hypothetical solutions.
 <p>
 <code>Decomposition( </code><var>A</var><code>, </code><var>B</var><code>, </code><var>depth</var><code> )</code>, where <var>depth</var> is a nonnegative
 integer, computes for each vector <code></code><var>B</var><code>[i]</code> the initial part
-<font face="symbol">&#8721;</font><sub><i>k</i>=0</sub><sup><i>depth</i> </sup> <i>x</i><sub><i>k</i></sub> <i>p</i><sup><i>k</i></sup>,
+&#8721;<sub><i>k</i>=0</sub><sup><i>depth</i> </sup> <i>x</i><sub><i>k</i></sub> <i>p</i><sup><i>k</i></sup>,
 with all <i>x</i><sub><i>k</i></sub> vectors of integers with entries bounded by
-<font face="symbol">&#177;</font>[(<i>p</i><font face="symbol">&#8722;</font>1)/2].
+&#177;[(<i>p</i>&#8722;1)/2].
 The prime <i>p</i> is 83 first; if the reduction of <var>A</var>
 modulo <i>p</i> is singular, the next prime is chosen automatically.
 <p>
@@ -422,7 +422,7 @@ Let <var>A</var> be an integral matrix,
 <var>Amodpinv</var> an inverse of <var>A</var> modulo <var>prime</var>,
 <var>b</var> an integral vector,
 and <var>depth</var> a nonnegative integer.
-<code>PadicCoefficients</code> returns the list [ <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>x</i><sub><i>l</i></sub>, <i>b</i><sub><i>l</i>+1</sub> ]
+<code>PadicCoefficients</code> returns the list [ <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, &#8230;, <i>x</i><sub><i>l</i></sub>, <i>b</i><sub><i>l</i>+1</sub> ]
 describing the <var>prime</var>-adic approximation of <var>b</var> (see above),
 where <i>l</i> = <i>depth</i> 
 or <i>l</i> is minimal with the property that <i>b</i><sub><i>l</i>+1</sub> = 0.
@@ -486,8 +486,8 @@ terms of the old, i.e.,
 <code>transformation * </code><var>vectors</var><code></code> equals the <code>basis</code> component of the result.
 <p>
 Another optional argument is <var>y</var>, the ``sensitivity'' of the algorithm,
-a rational number between [&nbsp;1/4] and 1 (the default value is
-[&nbsp;3/4]).
+a rational number between [1/4] and 1 (the default value is
+[3/4]).
 <p>
 The optional argument <var>lllout</var> is a record with the components <code>mue</code>
 and <code>B</code>, both lists of length <i>k</i>, with the meaning that
@@ -528,28 +528,28 @@ rec(
 Lenstra, Lenstra and Lov&aacute;sz (see&nbsp;<a href="biblio.htm#LLL82"><cite>LLL82</cite></a>,&nbsp;<a href="biblio.htm#Poh87"><cite>Poh87</cite></a>).
 The implementation follows the description on pages 94f. in&nbsp;<a href="biblio.htm#Coh93"><cite>Coh93</cite></a>.
 <p>
-Let <var>G</var> the Gram matrix of the vectors (<i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub>);
+Let <var>G</var> the Gram matrix of the vectors (<i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, &#8230;, <i>b</i><sub><i>n</i></sub>);
 this means <var>G</var> is either a square symmetric matrix or lower triangular
 matrix (only the entries in the lower triangular half are used by the
 program).
 <p>
 <code>LLLReducedGramMat</code> returns a record whose component <code>remainder</code> is the
-Gram matrix of the LLL reduced basis corresponding to (<i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub>).
+Gram matrix of the LLL reduced basis corresponding to (<i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, &#8230;, <i>b</i><sub><i>n</i></sub>).
 If <var>G</var> is a lower triangular matrix then also the <code>remainder</code> component
 of the result record is a lower triangular matrix.
 <p>
 The result record contains also the components <code>relations</code> and
 <code>transformation</code>, which have the following meaning.
 <p>
-<code>relations</code> is a basis of the space of vectors (<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,<font face="symbol">&#8230;</font>,<i>x</i><sub><i>n</i></sub>)
-such that <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>x</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub> is zero,
+<code>relations</code> is a basis of the space of vectors (<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,&#8230;,<i>x</i><sub><i>n</i></sub>)
+such that &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>x</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub> is zero,
 and <code>transformation</code> gives the expression of the new lattice basis in
 terms of the old, i.e., <code>transformation</code> is the matrix <i>T</i> such that
 <i>T</i> &#183;<i>G</i>  &#183;<i>T</i><sup><i>tr</i></sup> is the <code>remainder</code> component of the result.
 <p>
 The optional argument <var>y</var> denotes the ``sensitivity'' of the algorithm,
-it must be a rational number between [&nbsp;1/4] and 1; the default
-value is <i>y</i>  = [&nbsp;3/4].
+it must be a rational number between [1/4] and 1; the default
+value is <i>y</i>  = [3/4].
 <p>
 The function <code>LLLReducedBasis</code> (see&nbsp;<a href="CHAP025.htm#SSEC005.1">LLLReducedBasis</a>)
 computes an LLL reduced basis.
@@ -579,7 +579,7 @@ rec(
 computes all possible orthogonal embeddings of a lattice given by its
 Gram matrix <var>gram</var>, which must be a regular matrix.
 In other words, all solutions <i>X</i> of the problem
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>X</i><sup><i>tr</i></sup> &#183;<i>X</i> = <i>gram</i>  </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>X</i><sup><i>tr</i></sup> &#183;<i>X</i> = <i>gram</i>  </td></tr></table></td></tr></table>
 are calculated (see&nbsp;<a href="biblio.htm#Ple90"><cite>Ple90</cite></a>).
 Usually there are many solutions <i>X</i>
 but all their rows are chosen from a small set of vectors,
@@ -588,15 +588,15 @@ namely as a record with components
 <p>
 <dl compact>
 <dt><code>vectors</code> <dd>
-     the list <i>L</i> = [ <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>x</i><sub><i>n</i></sub> ] of vectors
+     the list <i>L</i> = [ <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, &#8230;, <i>x</i><sub><i>n</i></sub> ] of vectors
      that may be rows of a solution;
      these are exactly those vectors that fulfill the condition
-     <i>x</i><sub><i>i</i></sub> &#183;<i>gram</i> <sup><font face="symbol">&#8722;</font>1</sup> &#183;<i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup>  <font face="symbol">&#8804;</font> 1
+     <i>x</i><sub><i>i</i></sub> &#183;<i>gram</i> <sup>&#8722;1</sup> &#183;<i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup>  &#8804; 1
      (see&nbsp;<a href="CHAP025.htm#SSEC006.2">ShortestVectors</a>),
-     and we have <i>gram</i>  = <font face="symbol">&#8721;</font><sup><i>n</i></sup><sub><i>i</i>=1</sub> <i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup> &#183;<i>x</i><sub><i>i</i></sub>,
+     and we have <i>gram</i>  = &#8721;<sup><i>n</i></sup><sub><i>i</i>=1</sub> <i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup> &#183;<i>x</i><sub><i>i</i></sub>,
 <p>
 <dt><code>norms</code> <dd>
-     the list of values <i>x</i><sub><i>i</i></sub> &#183;<i>gram</i> <sup><font face="symbol">&#8722;</font>1</sup> &#183;<i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup>, and
+     the list of values <i>x</i><sub><i>i</i></sub> &#183;<i>gram</i> <sup>&#8722;1</sup> &#183;<i>x</i><sub><i>i</i></sub><sup><i>tr</i></sup>, and
 <p>
 <dt><code>solutions</code> <dd>
      a list <var>S</var> of lists; the <var>i</var>-th solution matrix is
@@ -638,13 +638,13 @@ see&nbsp;<a href="CHAP070.htm#SECT010">Reducing Virtual Characters</a>.
 Let <var>G</var> be a regular matrix of a symmetric bilinear form,
 and <var>m</var> a nonnegative integer.
 <code>ShortestVectors</code> computes the vectors <i>x</i> that satisfy
-<i>x</i> &#183;<i>G</i>  &#183;<i>x</i><sup><i>tr</i></sup>  <font face="symbol">&#8804;</font> <i>m</i> ,
+<i>x</i> &#183;<i>G</i>  &#183;<i>x</i><sup><i>tr</i></sup>  &#8804; <i>m</i> ,
 and returns a record describing these vectors.
 The result record has the components
 <p>
 <dl compact>
 <dt><code>vectors</code> <dd>
-     list of the nonzero vectors <i>x</i>, but only one of each pair (<i>x</i>,<font face="symbol">&#8722;</font><i>x</i>),
+     list of the nonzero vectors <i>x</i>, but only one of each pair (<i>x</i>,&#8722;<i>x</i>),
 <p>
 <dt><code>norms</code> <dd>
      list of norms of the vectors according to the Gram matrix <var>G</var>.
@@ -663,5 +663,5 @@ rec(
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP024.htm">Previous</a>] [<a href ="CHAP026.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -8,7 +8,7 @@
 *W                                                  & Burkhard Hoefling (MAC)
 *W                                                    & Steve Linton (MS/DOS)
 **
-*H  @(#)$Id: system.c,v 4.118.2.4 2004/10/01 12:00:23 sal Exp $
+*H  @(#)$Id: system.c,v 4.118.2.5 2005/05/03 13:30:43 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -36,7 +36,7 @@
 #undef  INCLUDE_DECLARATION_PART
 
 const char * Revision_system_c =
-   "@(#)$Id: system.c,v 4.118.2.4 2004/10/01 12:00:23 sal Exp $";
+   "@(#)$Id: system.c,v 4.118.2.5 2005/05/03 13:30:43 gap Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 #include        <fcntl.h>
@@ -99,7 +99,7 @@ extern int    fputs ( const char *, FILE * );
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . .  name of the architecture
 */
-const Char * SyKernelVersion = "4.4.4";
+const Char * SyKernelVersion = "4.4.5";
 
 /****************************************************************************
 *V  SyWindowsPath  . . . . . . . . . . . . . . . . . default path for Windows

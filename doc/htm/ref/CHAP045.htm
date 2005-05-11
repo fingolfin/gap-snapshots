@@ -39,7 +39,7 @@ Then a list of relators is constructed as words in the generators of the
 free group and is factored out to obtain the finitely presented group. Its
 generators <strong>are</strong> the images of the free generators. So for example to create
 the group
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <font face="symbol">&#9001;</font><i>a</i>, <i>b</i>  | <i>a</i><sup>2</sup>, <i>b</i><sup>3</sup>, (<i>a</i>&#183;<i>b</i>)<sup>5</sup> <font face="symbol">&#9002;</font></td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> &#9001;<i>a</i>, <i>b</i>  | <i>a</i><sup>2</sup>, <i>b</i><sup>3</sup>, (<i>a</i>&#183;<i>b</i>)<sup>5</sup> &#9002;</td></tr></table></td></tr></table>
 you can use the following commands:
 <pre>
 gap&gt; f := FreeGroup( "a", "b" );;
@@ -139,7 +139,7 @@ The info class for functions dealing with finitely presented groups is
 <li><code></code><var>F</var><code>/</code><var>rels</var><code></code>
 <p>
 creates a finitely presented group given by the presentation
-<font face="symbol">&#9001;</font><i>gens</i>  | <i>rels</i> <font face="symbol">&#9002;</font> where <var>gens</var> are the generators of the free
+&#9001;<i>gens</i>  | <i>rels</i> &#9002; where <var>gens</var> are the generators of the free
 group <var>F</var>.
 Note that relations are entered as <strong>relators</strong>, i.e.,  as words in the
 generators of  the free group.   To  enter an  equation  use the quotient
@@ -382,7 +382,7 @@ gap&gt; PrintArray( TransposedMat( tab ) );
 The last printout in the preceding example provides the coset table in the
 form in which it is usually used in hand calculations: The rows correspond to
 the cosets, the columns correspond to the generators and their inverses in
-the ordering <i>g</i><sub>1</sub>, <i>g</i><sub>1</sub><sup><font face="symbol">&#8722;</font>1</sup>, <i>g</i><sub>2</sub>, <i>g</i><sub>2</sub><sup><font face="symbol">&#8722;</font>1</sup>. (See section&nbsp;<a href="CHAP045.htm#SECT006">Standardization of coset tables</a> for a description on the way the numbers are assigned.)
+the ordering <i>g</i><sub>1</sub>, <i>g</i><sub>1</sub><sup>&#8722;1</sup>, <i>g</i><sub>2</sub>, <i>g</i><sub>2</sub><sup>&#8722;1</sup>. (See section&nbsp;<a href="CHAP045.htm#SECT006">Standardization of coset tables</a> for a description on the way the numbers are assigned.)
 <p>
 <a name = "SSEC005.2"></a>
 <li><code>TracedCosetFpGroup( </code><var>tab</var><code>, </code><var>word</var><code>, </code><var>pt</var><code> ) F</code>
@@ -751,7 +751,7 @@ gap&gt; GeneratorsOfGroup(li[2]);
 <p>
 As an example for an application of the optional parameter <var>excluded</var>, we
 compute all conjugacy classes of torsion free subgroups of index at most
-24 in the group <i>G</i> = <font face="symbol">&#9001;</font><i>x</i>,<i>y</i>,<i>z</i>  | <i>x</i><sup>2</sup>, <i>y</i><sup>4</sup>, <i>z</i><sup>3</sup>, (<i>xy</i>)<sup>3</sup>, (<i>yz</i>)<sup>2</sup>, (<i>xz</i>)<sup>3</sup> <font face="symbol">&#9002;</font>. It is know from theory that each torsion element of this
+24 in the group <i>G</i> = &#9001;<i>x</i>,<i>y</i>,<i>z</i>  | <i>x</i><sup>2</sup>, <i>y</i><sup>4</sup>, <i>z</i><sup>3</sup>, (<i>xy</i>)<sup>3</sup>, (<i>yz</i>)<sup>2</sup>, (<i>xz</i>)<sup>3</sup> &#9002;. It is know from theory that each torsion element of this
 group is conjugate to a power of <i>x</i>, <i>y</i>, <i>z</i>, <i>xy</i>, <i>xz</i>, or <i>yz</i>.
 (Note that this includes conjugates of <i>y</i><sup>2</sup>.)
 <p>
@@ -793,9 +793,8 @@ gap&gt; iso := IsomorphismFpGroup( g );
 gap&gt; fp := Image( iso );
 &lt;fp group of size 120 on the generators [ F1, F2, F3 ]&gt;
 gap&gt; RelatorsOfFpGroup( fp );
-[ F1^2*F2^2*F3*F2^-1, F2^-1*F1^-1*F2*F1*F2^-1*F3^2*F2^2*F3^2*F2^2*F3*F2^-1, 
-  F3^-1*F1^-1*F3*F1*F3^-1, F2^5*F3^-5, F2^5*F3^-1*F2^-1*F3^-1*F2^-1, 
-  F2^-2*F3^2*F2^-2*F3^2 ]
+[ F1^2*F2^2*F3*F2^-1, F2^-1*F1^-1*F2*F1*F2^-2*F3, F3^-1*F1^-1*F3*F1*F3^-1, 
+  F2^5*F3^-5, F2^5*F3^-1*F2^-1*F3^-1*F2^-1, F2^-2*F3^2*F2^-2*F3^2 ]
 </pre>
 <p>
 <a name = "SSEC010.2"></a>
@@ -814,13 +813,14 @@ generate <var>G</var>.
 <pre>
 gap&gt; SetInfoLevel( InfoFpGroup, 1 );
 gap&gt; iso := IsomorphismFpGroupByGenerators( g, [ (1,2), (1,2,3,4,5) ] );
-#I  the image group has 2 gens and 4 rels of total length 37
+#I  the image group has 2 gens and 5 rels of total length 39
 [ (1,2), (1,2,3,4,5) ] -&gt; [ F1, F2 ]
 gap&gt; fp := Image( iso );
 &lt;fp group of size 120 on the generators [ F1, F2 ]&gt;
 gap&gt; RelatorsOfFpGroup( fp );
-[ F1^2, F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1, F2^2*F1*F2^-2*F1*F2^2*F1*F2^-2*F1
-    , F2^-1*F1*F2^2*F1*F2^-1*F1*F2^-2*F1*F2*F1*F2^-2*F1 ]
+[ F1^2, F2^5, F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1, 
+  F2^-1*F1*F2*F1*F2^-1*F1*F2*F1*F2^-1*F1*F2*F1, 
+  F2^2*F1*F2^-2*F1*F2^2*F1*F2^-2*F1 ]
 </pre>
 <p>
 The main task of the function <code>IsomorphismFpGroupByGenerators</code> is to find a
@@ -844,9 +844,9 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
   (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 gap&gt; gens := GeneratorsOfGroup( M12 );;
 gap&gt; iso := IsomorphismFpGroupByGenerators( M12, gens );;
-#I  the image group has 3 gens and 23 rels of total length 515
+#I  the image group has 3 gens and 21 rels of total length 541
 gap&gt; iso := IsomorphismFpGroupByGenerators( M12, gens );;
-#I  the image group has 3 gens and 17 rels of total length 524
+#I  the image group has 3 gens and 26 rels of total length 766
 </pre>
 <p>
 Also in the case of a permutation group <var>G</var>, the function
@@ -887,7 +887,7 @@ values.
 gap&gt; iso := IsomorphismFpGroupByGenerators( M12, gens : method := "regular" );;
 #I  the image group has 3 gens and 11 rels of total length 92
 gap&gt; iso := IsomorphismFpGroupByGenerators( M12, gens : method := "fast" );;
-#I  the image group has 3 gens and 160 rels of total length 3485
+#I  the image group has 3 gens and 181 rels of total length 4169
 </pre>
 <p>
 Though the option <code>method := "regular"</code> is only checked in the case of a
@@ -907,7 +907,7 @@ gap&gt; gens := GeneratorsOfGroup( G );
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
       [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 gap&gt; iso := IsomorphismFpGroupByGenerators( G, gens );;
-#I  the image group has 2 gens and 7 rels of total length 74
+#I  the image group has 2 gens and 7 rels of total length 68
 gap&gt; iso := IsomorphismFpGroupByGenerators( G, gens : method := "regular" );;
 #I  the image group has 2 gens and 6 rels of total length 56
 gap&gt; SetInfoLevel( InfoFpGroup, 0 );
@@ -1063,7 +1063,7 @@ See also&nbsp;<code>SubgroupOfWholeGroupByCosetTable</code>
 (<a href="CHAP045.htm#SSEC005.4">CosetTableBySubgroup</a>).
 <p>
 This technique is used by <font face="Gill Sans,Helvetica,Arial">GAP</font> for example to represent the derived
-subgroup, which is obtained from the quotient <i>G</i>/<i>G</i><font face="symbol">&#8242;</font>.
+subgroup, which is obtained from the quotient <i>G</i>/<i>G</i>&#8242;.
 <pre>
 gap&gt; f:=FreeGroup(2);;g:=f/[f.1^6,f.2^6,(f.1*f.2)^6];;
 gap&gt; d:=DerivedSubgroup(g);
@@ -1110,7 +1110,7 @@ epimorphism from <var>F</var> onto the <var>p</var>-group computed by the functi
 For a group <i>G</i> define the exponent-<i>p</i> central series of <i>G</i> inductively
 by <font face="helvetica"><i>P</i></font><sub>1</sub>(<i>G</i>) = <i>G</i> and <font face="helvetica"><i>P</i></font><sub><i>i</i>+1</sub>(<i>G</i>) = [<font face="helvetica"><i>P</i></font><sub><i>i</i></sub>(<i>G</i>),<i>G</i>]<font face="helvetica"><i>P</i></font><sub><i>i</i>+1</sub>(<i>G</i>)<sup><i>p</i></sup>&#183;  The factor groups modulo the terms of the lower
 exponent-<i>p</i> central series are <i>p</i>-groups.  The group <i>G</i> has <i>p</i>-class
-<i>c</i> if <font face="helvetica"><i>P</i></font><sub><i>c</i></sub>(<i>G</i>) <font face="symbol">&#8800;</font> <font face="helvetica"><i>P</i></font><sub><i>c</i>+1</sub>(<i>G</i>)=1&#183; 
+<i>c</i> if <font face="helvetica"><i>P</i></font><sub><i>c</i></sub>(<i>G</i>) &#8800; <font face="helvetica"><i>P</i></font><sub><i>c</i>+1</sub>(<i>G</i>)=1&#183; 
 <p>
 The algorithm computes successive quotients modulo the terms of the
 exponent-<i>p</i> central series of <var>F</var>.  If the parameter <var>c</var> is present,
@@ -1139,7 +1139,7 @@ used.
 <li><code>EpimorphismQuotientSystem( </code><var>quotsys</var><code> ) O</code>
 <p>
 For a quotient system <var>quotsys</var> obtained from the function <a href="CHAP045.htm#SSEC013.1">PQuotient</a>,
-this operation returns an epimorphism <i>F</i> <font face="symbol">&#8594;</font><i>P</i>  where <i>F</i>  is the
+this operation returns an epimorphism <i>F</i> &#8594;<i>P</i>  where <i>F</i>  is the
 finitely presented group of which <var>quotsys</var> is a quotient system and
 <i>P</i>  is a <code>PcGroup</code> isomorphic to the quotient of <var>F</var> determined by
 <var>quotsys</var>.
@@ -1245,7 +1245,7 @@ See <a href="CHAP046.htm#SECT003">Subgroup Presentations</a> for details on the 
 <p>
 The following example shows a calculation for the Coxeter group <i>B</i><sub>1</sub>.
 This calculation and a similar one for <i>B</i><sub>0</sub> have been used to prove that
-<i>B</i><sub>1</sub><font face="symbol">&#8242;</font>/ <i>B</i><sub>1</sub><sup><font face="symbol">&#8242;</font><font face="symbol">&#8242;</font></sup>  <font face="symbol">&#8773;</font> <i>Z</i><sub>2</sub><sup>9</sup> &times;<i>Z</i><sup>3</sup> and <i>B</i><sub>0</sub><font face="symbol">&#8242;</font>/ <i>B</i><sub>0</sub><sup><font face="symbol">&#8242;</font><font face="symbol">&#8242;</font></sup>  <font face="symbol">&#8773;</font> <i>Z</i><sub>2</sub><sup>91</sup> &times;<i>Z</i><sup>27</sup> as stated in Proposition 5
+<i>B</i><sub>1</sub>&#8242;/ <i>B</i><sub>1</sub><sup>&#8242;&#8242;</sup>  &#8773; <i>Z</i><sub>2</sub><sup>9</sup> &times;<i>Z</i><sup>3</sup> and <i>B</i><sub>0</sub>&#8242;/ <i>B</i><sub>0</sub><sup>&#8242;&#8242;</sup>  &#8773; <i>Z</i><sub>2</sub><sup>91</sup> &times;<i>Z</i><sup>27</sup> as stated in Proposition 5
 in <a href="biblio.htm#FJNT95"><cite>FJNT95</cite></a>.
 <p>
 <pre>
@@ -1309,7 +1309,7 @@ On the other hand, a couple of methods exist, that might prove that a group
 is infinite. Again, none is guaranteed to work in every case:
 <p>
 The first method is to find (for example via the low index algorithm,
-see&nbsp;<code>LowIndexSubgroupsFpGroup</code>) a subgroup <i>U</i> such that [<i>U</i>:<i>U</i><font face="symbol">&#8242;</font>] is
+see&nbsp;<code>LowIndexSubgroupsFpGroup</code>) a subgroup <i>U</i> such that [<i>U</i>:<i>U</i>&#8242;] is
 infinite. If <i>U</i> has finite index, this can be checked by the operation
 <code>AbelianInvariants</code> (see section&nbsp;<a href="CHAP045.htm#SECT014">Abelian Invariants for Subgroups</a> for an
 example).
@@ -1319,7 +1319,7 @@ Another method is based on <i>p</i>-group quotients:
 <li><code>NewmanInfinityCriterion( </code><var>G</var><code>, </code><var>p</var><code> ) F</code>
 <p>
 Let <var>G</var> be a finitely presented group and <var>p</var> a prime that divides the
-order of <i>G</i> /<i>G</i> <font face="symbol">&#8242;</font>. This function applies an infinity
+order of <i>G</i> /<i>G</i> &#8242;. This function applies an infinity
 criterion due to M.F.&nbsp;Newman <a href="biblio.htm#New90"><cite>New90</cite></a> to <var>G</var>. (See chapter&nbsp;16 
 of&nbsp;<a href="biblio.htm#Joh97"><cite>Joh97</cite></a> for a more explicit description.)
 It returns <code>true</code>
@@ -1350,5 +1350,5 @@ infinite. (This is the original example from&nbsp;<a href="biblio.htm#New90"><ci
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP044.htm">Previous</a>] [<a href ="CHAP046.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

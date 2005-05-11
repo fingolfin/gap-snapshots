@@ -5,7 +5,7 @@
 #W                                                         & Martin Schoenert
 #W                                                              & Alex Wegner
 ##
-#H  @(#)$Id: integer.gd,v 4.31 2003/09/10 09:47:07 gap Exp $
+#H  @(#)$Id: integer.gd,v 4.31.2.1 2005/05/09 07:08:04 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  This file declares the operations for integers.
 ##
 Revision.integer_gd :=
-    "@(#)$Id: integer.gd,v 4.31 2003/09/10 09:47:07 gap Exp $";
+    "@(#)$Id: integer.gd,v 4.31.2.1 2005/05/09 07:08:04 gap Exp $";
 
 
 #############################################################################
@@ -86,10 +86,17 @@ DeclareGlobalVariable( "Primes", "list of the 168 primes less than 1000" );
 #############################################################################
 ##
 #V  Primes2 . . . . . . . . . . . . . . . . . . . . . . additional prime list
+#V  ProbablePrimes2 . . . . . . . . . . .  additional list of probable primes
+#V  InfoPrimeInt  . . . . . info class for usage of probable primes as primes
 ##
 ##  `Primes2' contains those primes found by `IsPrimeInt' that are not in
 ##  `Primes'.  `Primes2' is kept sorted, but may contain holes.
 ##
+##  Similarly, `ProbablePrimes2' is used to store found probable primes,
+##  which are not strictly proven to be prime. When numbers from this list
+##  are used (e.g., to factor numbers), a sensible warning should be printed
+##  with `InfoPrimeInt' in its standard level 1.
+##  
 ##  `IsPrimeInt' and `FactorsInt' use this list to  cast out already found
 ##  primes quickly.
 ##  If `IsPrimeInt' is called only for random integers this list would be
@@ -105,6 +112,9 @@ DeclareGlobalVariable( "Primes", "list of the 168 primes less than 1000" );
 ##  and $13^n-1$ with $n \< 37$ that are larger than $10^7$.
 ##
 DeclareGlobalVariable( "Primes2", "sorted list of large primes" );
+DeclareGlobalVariable( "ProbablePrimes2", "sorted list of probable primes" );
+DeclareInfoClass( "InfoPrimeInt" );
+SetInfoLevel( InfoPrimeInt, 1 );
 
 
 #############################################################################
@@ -205,6 +215,8 @@ DeclareGlobalFunction( "DivisorsInt");
 ##
 ##  Note that `FactorsInt' uses a probable-primality test (see~"IsPrimeInt").
 ##  Thus `FactorsInt' might return a list which contains composite integers.
+##  In such a case you will get a warning about the use of a probable prime.
+##  You can switch off these warnings by `SetInfoLevel(InfoPrimeInt, 0);'.
 ##
 ##  The time taken by   `FactorsInt'  is approximately  proportional to   the
 ##  square root of the second largest prime factor  of <n>, which is the last
@@ -285,17 +297,16 @@ DeclareGlobalFunction( "IsOddInt" );
 ##  `IsPrimeInt' is  a    proper primality test.    It  is  conceivable  that
 ##  `IsPrimeInt' may  return `true' for some  composite $n > 10^{13}$, but no
 ##  such $n$ is currently known.  So for integers $n > 10^{13}$, `IsPrimeInt'
-##  is a  probable-primality test. Therefore `IsPrimeInt' will issue a
-##  warning when called with an argument $>10^{13}$. (The function
-##  `IsProbablyPrimeInt' will do the same calculations but not issue a
-##  warning.)
+##  is a  probable-primality test. `IsPrimeInt' will issue a
+##  warning when its argument is probably prime but not a proven prime.
+##  (The function `IsProbablyPrimeInt' will do the same calculations but not 
+##  issue a warning.) The warning can be switched off by 
+##  `SetInfoLevel( InfoPrimeInt, 0 );', the default level is $1$.
 ##
-##  If composites  that fool  `IsPrimeInt' do
-##  exist,  they would be  extremely rare, and finding one  by  pure chance
-##  might be 
-##  less likely than finding a bug in {\GAP}.
-##  We would appreciate being informed about any example of a composite
-##  number <n> for which `IsPrimeInt' returns `true'.
+##  If composites that  fool `IsPrimeInt' do exist, they  would be extremely
+##  rare, and finding one by pure chance might be less likely than finding a
+##  bug in {\GAP}. We would appreciate being informed about any example of a
+##  composite number <n> for which `IsPrimeInt' returns `true'.
 ##
 ##  `IsPrimeInt' is a deterministic algorithm, i.e., the computations involve
 ##  no random numbers, and repeated calls will always return the same result.
@@ -311,6 +322,12 @@ DeclareGlobalFunction( "IsOddInt" );
 ##
 ##  `IsPrimeInt' is a method for the general operation `IsPrime'.
 ##
+##  Remark: In future versions of {\GAP} we hope to change the definition of 
+##  `IsPrimeInt' to return `true' only for proven primes (currently, we lack
+##  a sufficiently good primality proving function). In applications, use
+##  explicitly `IsPrimeInt' or `IsProbablePrimeInt' with this change in
+##  mind.
+##  
 UnbindGlobal( "IsPrimeInt" );
 DeclareGlobalFunction( "IsPrimeInt" );
 DeclareGlobalFunction( "IsProbablyPrimeInt" );

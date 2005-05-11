@@ -528,7 +528,7 @@ since the factorization of an element needs not exist in a subring.
 As an example, consider the subring 4 <b>N</b>+ 1 of the ring 4 <b>Z</b>+ 1;
 in the subring, the element 3 &#183;3 &#183;11 &#183;7 has the two
 factorizations 33 &#183;21 = 9 &#183;77, but in the large ring there
-is the unique factorization (<font face="symbol">&#8722;</font>3) &#183;(<font face="symbol">&#8722;</font>3) &#183;(<font face="symbol">&#8722;</font>11) &#183;(<font face="symbol">&#8722;</font>7),
+is the unique factorization (&#8722;3) &#183;(&#8722;3) &#183;(&#8722;11) &#183;(&#8722;7),
 and it is easy to see that every element in 4 <b>Z</b>+ 1 has a unique
 factorization.)
 <p>
@@ -565,7 +565,7 @@ true
 <a name = "SSEC004.6"></a>
 <li><code>IsAnticommutative( </code><var>R</var><code> ) P</code>
 <p>
-is <code>true</code> if the relation <i>a</i> * <i>b</i> = <font face="symbol">&#8722;</font> <i>b</i> * <i>a</i>
+is <code>true</code> if the relation <i>a</i> * <i>b</i> = &#8722; <i>b</i> * <i>a</i>
 holds for all elements <i>a</i>, <i>b</i> in the ring <var>R</var>,
 and <code>false</code> otherwise.
 <p>
@@ -744,10 +744,10 @@ gap&gt; Factors( PolynomialRing( GF(4) ), pol );
 <li><code>IsEuclideanRing( </code><var>R</var><code> ) C</code>
 <p>
 A ring <i>R</i> is called a Euclidean ring if it is an integral ring and
-there exists a function <font face="symbol">&#948;</font>, called the Euclidean degree, from
-<i>R</i><font face="symbol">&#8722;</font>{0<sub><i>R</i></sub>} to the nonnegative integers, such that for every pair <i>r</i>  <font face="symbol">&#8712;</font> <i>R</i> and <i>s</i>  <font face="symbol">&#8712;</font> <i>R</i><font face="symbol">&#8722;</font>{0<sub><i>R</i></sub>} there exists an element <i>q</i> such that either
-<i>r</i> <font face="symbol">&#8722;</font> <i>q</i> <i>s</i> = 0<sub><i>R</i></sub> or <font face="symbol">&#948;</font>(<i>r</i> <font face="symbol">&#8722;</font> <i>q</i> <i>s</i>)  &lt;  <font face="symbol">&#948;</font>( <i>s</i> ). In <font face="Gill Sans,Helvetica,Arial">GAP</font> the
-Euclidean degree <font face="symbol">&#948;</font> is implicitly built into an ring and cannot be
+there exists a function &#948;, called the Euclidean degree, from
+<i>R</i>&#8722;{0<sub><i>R</i></sub>} to the nonnegative integers, such that for every pair <i>r</i>  &#8712; <i>R</i> and <i>s</i>  &#8712; <i>R</i>&#8722;{0<sub><i>R</i></sub>} there exists an element <i>q</i> such that either
+<i>r</i> &#8722; <i>q</i> <i>s</i> = 0<sub><i>R</i></sub> or &#948;(<i>r</i> &#8722; <i>q</i> <i>s</i>)  &lt;  &#948;( <i>s</i> ). In <font face="Gill Sans,Helvetica,Arial">GAP</font> the
+Euclidean degree &#948; is implicitly built into an ring and cannot be
 changed.  The existence of this division with remainder implies that the
 Euclidean algorithm can be applied to compute a greatest common divisor
 of two elements, which in turn implies that <i>R</i> is a unique
@@ -844,9 +844,9 @@ elements.
 <code>Gcd</code> returns the standard associate (see <a href="CHAP054.htm#SSEC005.5">StandardAssociate</a>) of the
 greatest common divisors.
 <p>
-A greatest common divisor of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> of the
+A greatest common divisor of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230; of the
 ring <i>R</i> is an element of largest Euclidean degree (see
-<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a divisor of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> .
+<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a divisor of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230; .
 <p>
 We define 
 <code>Gcd( </code><var>r</var><code>, 0<sub><i>R</i> </sub> ) = Gcd( 0<sub><i>R</i> </sub>, </code><var>r</var><code> ) = StandardAssociate( </code><var>r</var><code> )</code>
@@ -880,9 +880,9 @@ of the ring elements in the list <var>list</var> in their default ring
 <var>R</var> must be a Euclidean ring (see <a href="CHAP054.htm#SSEC006.1">IsEuclideanRing</a>) so that
 <code>Gcd</code> (see <a href="CHAP054.htm#SSEC007.1">Gcd</a>) can be applied to its elements.
 <p>
-The representation of the gcd  <i>g</i> of  the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font>
-of a ring <i>R</i> is a list of ring elements <i>s</i><sub>1</sub>, <i>s</i><sub>2</sub>, <font face="symbol">&#8230;</font> of <i>R</i>,
-such that <i>g</i> = <i>s</i><sub>1</sub> <i>r</i><sub>1</sub> + <i>s</i><sub>2</sub> <i>r</i><sub>2</sub> + <font face="symbol">&#8230;</font>.
+The representation of the gcd  <i>g</i> of  the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230;
+of a ring <i>R</i> is a list of ring elements <i>s</i><sub>1</sub>, <i>s</i><sub>2</sub>, &#8230; of <i>R</i>,
+such that <i>g</i> = <i>s</i><sub>1</sub> <i>r</i><sub>1</sub> + <i>s</i><sub>2</sub> <i>r</i><sub>2</sub> + &#8230;.
 That this representation exists can be shown using the Euclidean
 algorithm, which in fact can compute those coefficients.
 <p>
@@ -918,9 +918,9 @@ ring elements <code></code><var>r1</var><code>, </code><var>r2</var><code>, ...<
 <code>Lcm</code> returns the standard associate (see&nbsp;<a href="CHAP054.htm#SSEC005.5">StandardAssociate</a>) of the
 least common multiples.
 <p>
-A least common multiple of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> of the
+A least common multiple of the elements <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230; of the
 ring <i>R</i> is an element of smallest Euclidean degree
-(see&nbsp;<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a multiple of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, <font face="symbol">&#8230;</font> .
+(see&nbsp;<a href="CHAP054.htm#SSEC006.2">EuclideanDegree</a>) that is a multiple of <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub>, &#8230; .
 <p>
 We define 
 <code>Lcm( </code><var>r</var><code>, 0<sub><i>R</i> </sub> ) = Lcm( 0<sub><i>R</i> </sub>, </code><var>r</var><code> ) = StandardAssociate( </code><var>r</var><code> )</code>
@@ -950,7 +950,7 @@ In the second form <code>QuotientMod</code> returns the quotient of the ring ele
 If the modular quotient does not exist, <code>fail</code> is returned.
 <p>
 The quotient <i>q</i> of <i>r</i> and <i>s</i> modulo <i>m</i> is an element of <i>R</i> such that
-<i>q</i> <i>s</i> = <i>r</i> modulo <i>m</i>, i.e., such that <i>q</i> <i>s</i> <font face="symbol">&#8722;</font> <i>r</i> is divisible by <i>m</i> in
+<i>q</i> <i>s</i> = <i>r</i> modulo <i>m</i>, i.e., such that <i>q</i> <i>s</i> &#8722; <i>r</i> is divisible by <i>m</i> in
 <i>R</i> and that <i>q</i> is either 0 (if <i>r</i> is divisible by <i>m</i>) or the
 Euclidean degree of <i>q</i> is strictly smaller than the Euclidean degree of
 <i>m</i>.
@@ -995,7 +995,7 @@ gap&gt; PowerMod( 12, 100000, 7 );
 <code>InterpolatedPolynomial</code> returns, for given lists <var>x</var>, <var>y</var> of elements in
 a ring <var>R</var> of the same length <i>n</i>, say, the unique  polynomial of  degree
 less than <i>n</i> which has value <var>y</var>[<i>i</i>] at <var>x</var>[<i>i</i>], 
-for all <i>i</i> <font face="symbol">&#8712;</font> {1,<font face="symbol">&#8230;</font>,<i>n</i>}. 
+for all <i>i</i> &#8712; {1,&#8230;,<i>n</i>}. 
 Note that the elements in <var>x</var> must be distinct.
 <p>
 <pre>
@@ -1006,5 +1006,5 @@ gap&gt;  InterpolatedPolynomial( Integers, [ 1, 2, 3 ], [ 5, 7, 0 ] );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP053.htm">Previous</a>] [<a href ="CHAP055.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

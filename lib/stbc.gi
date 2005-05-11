@@ -3,14 +3,14 @@
 #W  stbc.gi                     GAP library                    Heiko Thei"sen
 #W                                                               'Akos Seress
 ##
-#H  @(#)$Id: stbc.gi,v 4.72 2003/10/09 22:14:10 gap Exp $
+#H  @(#)$Id: stbc.gi,v 4.72.2.1 2005/04/26 14:19:39 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.stbc_gi :=
-    "@(#)$Id: stbc.gi,v 4.72 2003/10/09 22:14:10 gap Exp $";
+    "@(#)$Id: stbc.gi,v 4.72.2.1 2005/04/26 14:19:39 gap Exp $";
 
 #############################################################################
 ##
@@ -360,7 +360,7 @@ local   base,sgs,one,S,  T,  pnt;
     if Length(arg)=3 then
       one:=arg[3];
     else
-      one:= ();   # in library code, this should not occur
+      one:= One(arg[2][1]);
     fi;
     S := EmptyStabChain( [  ], one );
     T := S;

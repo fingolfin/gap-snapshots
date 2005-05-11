@@ -78,7 +78,8 @@ others must in each case be separately loaded by a call to <code>LoadPackage</co
 <p>
 loads the <font face="Gill Sans,Helvetica,Arial">GAP</font> package with name <var>name</var>.
 If the optional version string <var>version</var> is given, the package will only
-be loaded in a version number at least as large as <var>version</var>
+be loaded in a version number at least as large as <var>version</var>,
+or equal to <var>version</var> if its first character is <code>=</code>
 (see&nbsp;<a href="../ext/CHAP004.htm#SECT014">Version Numbers</a> in ``Extending GAP'').
 The argument <var>name</var> is case insensitive.
 <p>
@@ -89,8 +90,8 @@ binaries have not been compiled, or if the version number of the
 available version is too small.
 <p>
 If the package <var>name</var> has already been loaded in a version number
-at least <var>version</var>, <code>LoadPackage</code> returns <code>true</code> without doing
-anything else.
+at least or equal to <var>version</var>, respectively,
+<code>LoadPackage</code> returns <code>true</code> without doing anything else.
 <p>
 If the optional third argument <var>banner</var> is <code>false</code> then no package banner
 is printed.
@@ -179,8 +180,13 @@ read-only global variables are overwritten
 <li><code>TestPackageAvailability( </code><var>name</var><code>, </code><var>version</var><code> ) F</code>
 <li><code>TestPackageAvailability( </code><var>name</var><code>, </code><var>version</var><code>, </code><var>intest</var><code> ) F</code>
 <p>
-tests whether the  <font face="Gill Sans,Helvetica,Arial">GAP</font> package <var>name</var> is available for loading in a
-version that is at least <var>version</var>.
+For strings <var>name</var> and <var>version</var>, <code>TestPackageAvailability</code> tests
+whether the  <font face="Gill Sans,Helvetica,Arial">GAP</font> package <var>name</var> is available for loading in a
+version that is at least <var>version</var>, or equal to <var>version</var> if the first
+character of <var>version</var> is <code>=</code>,
+see Section <a href="../ext/CHAP004.htm#SECT014">Version Numbers</a> of ``Extending GAP'' for details about
+version numbers.
+<p>
 The result is <code>true</code> if the package is already loaded,
 <code>fail</code> if it is not available,
 and the string denoting the <font face="Gill Sans,Helvetica,Arial">GAP</font> root path where the package resides
@@ -267,9 +273,10 @@ gap&gt; DirectoriesPackagePrograms( "nq" );
 <p>
 <a name = "SSEC003.6"></a>
 <li><code>CompareVersionNumbers( </code><var>supplied</var><code>, </code><var>required</var><code> ) F</code>
+<li><code>CompareVersionNumbers( </code><var>supplied</var><code>, </code><var>required</var><code>, "equal" ) F</code>
 <p>
 compares two version numbers, given as strings. They are split at
-non-number characters, the resulting integer lists are compared
+non-digit characters, the resulting integer lists are compared
 lexicographically.
 The routine tests whether <var>supplied</var> is at least as large as <var>required</var>,
 and returns <code>true</code> or <code>false</code> accordingly.
@@ -280,5 +287,5 @@ about version numbers.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP073.htm">Previous</a>] [<a href ="CHAP075.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

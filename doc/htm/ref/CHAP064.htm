@@ -33,20 +33,22 @@
 Let <i>R</i> be a commutative ring-with-one. We call a free associative
 algebra <i>A</i> over <i>R</i> a <strong>polynomial ring</strong> over <i>R</i>. The free generators of
 <i>A</i> are called <strong>indeterminates</strong>, they are usually denoted by
-<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,<font face="symbol">&#8230;</font>. The number of indeterminates is called the <strong>rank</strong> of <i>A</i>.
+<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>,&#8230;. The number of indeterminates is called the <strong>rank</strong> of <i>A</i>.
 The elements of <i>A</i> are called <strong>polynomials</strong>. Products of
 indeterminates are called <strong>monomials</strong>, every
 polynomial can be expressed as a finite sum of products of monomials with
 ring elements in a form like
-<i>r</i><sub>1,0</sub><i>x</i><sub>1</sub>+<i>r</i><sub>1,1</sub><i>x</i><sub>1</sub><i>x</i><sub>2</sub>+<i>r</i><sub>0,1</sub><i>x</i><sub>2</sub>+<font face="symbol">&#8230;</font> with <i>r</i><sub><i>i</i>,<i>j</i></sub> <font face="symbol">&#8712;</font> <i>R</i>.
+<i>r</i><sub>1,0</sub><i>x</i><sub>1</sub>+<i>r</i><sub>1,1</sub><i>x</i><sub>1</sub><i>x</i><sub>2</sub>+<i>r</i><sub>0,1</sub><i>x</i><sub>2</sub>+&#8230; with <i>r</i><sub><i>i</i>,<i>j</i></sub> &#8712; <i>R</i>.
 <p>
 A polynomial ring of rank 1 is called an <strong>univariate</strong> polynomial ring, its
 elements are <strong>univariate polynomials</strong>.
 <p>
-Polynomial rings of smaller rank
-naturally embed in rings of higher rank; if <i>S</i> is a subring of <i>R</i> then a
-polynomial ring over <i>S</i> naturally embeds in a polynomial ring over <i>R</i> of
-the same rank.
+Polynomial rings of smaller rank naturally embed in rings of higher rank; if
+<i>S</i> is a subring of <i>R</i> then a polynomial ring over <i>S</i> naturally embeds in
+a polynomial ring over <i>R</i> of the same rank. Note however that <font face="Gill Sans,Helvetica,Arial">GAP</font> does
+not consider <i>R</i> as a subset of a polynomial ring over <i>R</i>; for example the
+zero of <i>R</i> (0) and the zero of the polynomial ring (0<i>x</i><sup>0</sup>) are different
+objects.
 <p>
 Internally, indeterminates are represented by positive integers, but it is
 possible to give names to them to have them printed in a nicer way. Beware,
@@ -434,10 +436,10 @@ with coefficients in a finite field <var>F</var> with <i>q</i> elements, say,
 <code>IsPrimitivePolynomial</code> returns <code>true</code> if
 <ol>
 <li>
-    <var>pol</var> divides <i>X</i><sup><i>q</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1</sup> <font face="symbol">&#8722;</font> 1, and
+    <var>pol</var> divides <i>X</i><sup><i>q</i><sup><i>d</i></sup>&#8722;1</sup> &#8722; 1, and
 <li>
-    for each prime divisor <i>p</i> of <i>q</i><sup><i>d</i></sup> <font face="symbol">&#8722;</font> 1, <var>pol</var> does not divide
-    <i>X</i><sup>(<i>q</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1)/<i>p</i></sup> <font face="symbol">&#8722;</font> 1,
+    for each prime divisor <i>p</i> of <i>q</i><sup><i>d</i></sup> &#8722; 1, <var>pol</var> does not divide
+    <i>X</i><sup>(<i>q</i><sup><i>d</i></sup>&#8722;1)/<i>p</i></sup> &#8722; 1,
 </ol>
 and <code>false</code> otherwise.
 <p>
@@ -595,7 +597,7 @@ gap&gt; LeadingCoefficient(f);
 <li><code>Derivative( </code><var>ufun</var><code> ) O</code>
 <li><code>Derivative( </code><var>ratfun</var><code>, </code><var>ind</var><code> ) O</code>
 <p>
-returns the derivative <i>upoly</i> <font face="symbol">&#8242;</font> of the univariate rational function
+returns the derivative <i>upoly</i> &#8242; of the univariate rational function
 <var>ufun</var> by its indeterminant. The second version returns the derivative
 of <var>ratfun</var> by the indeterminate <var>ind</var> (respectively indeterminate
 number <var>ind</var>) when viewing <var>ratfun</var> as univariate in <var>ind</var>.
@@ -848,7 +850,7 @@ factor coeffietients (see <a href="biblio.htm#BTW93"><cite>BTW93</cite></a>).
 <li><code>MinimizedBombieriNorm( </code><var>f</var><code> ) A</code>
 <p>
 This function applies linear Tschirnhaus transformations 
-(<i>x</i> <font face="symbol">&#8594;</font> <i>x</i> + <i>i</i>) to the
+(<i>x</i> &#8594; <i>x</i> + <i>i</i>) to the
 polynomial <var>f</var>, trying to get the Bombieri norm of <var>f</var> small. It returns a
 list <code>[</code><var>new_polynomial</var><code>, </code><var>i_of_transformation</var><code>]</code>.
 <p>
@@ -868,10 +870,10 @@ polynomial <var>pol</var>.
 <p>
 <h2><a name="SECT012">64.12 Laurent Polynomials</a></h2>
 <p><p>
-A univariate polynomial can be written in the form <i>r</i><sub>0</sub>+<i>r</i><sub>1</sub><i>x</i>+<font face="symbol">&#8230;</font>+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>
-with <i>r</i><sub><i>i</i></sub> <font face="symbol">&#8712;</font> <i>R</i>.  Formally, there is no reason to start with 0, if <i>m</i> is an
+A univariate polynomial can be written in the form <i>r</i><sub>0</sub>+<i>r</i><sub>1</sub><i>x</i>+&#8230;+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>
+with <i>r</i><sub><i>i</i></sub> &#8712; <i>R</i>.  Formally, there is no reason to start with 0, if <i>m</i> is an
 integer, we can consider objects of the form
-<i>r</i><sub><i>m</i></sub><i>x</i><sup><i>m</i></sup>+<i>r</i><sub><i>m</i>+1</sub><i>x</i><sup><i>m</i>+1</sup>+<font face="symbol">&#8230;</font>+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>. We call these <strong>Laurent polynomials</strong>.
+<i>r</i><sub><i>m</i></sub><i>x</i><sup><i>m</i></sup>+<i>r</i><sub><i>m</i>+1</sub><i>x</i><sup><i>m</i>+1</sup>+&#8230;+<i>r</i><sub><i>n</i></sub><i>x</i><sup><i>n</i></sup>. We call these <strong>Laurent polynomials</strong>.
 Laurent polynomials also can be considered as quotients of a univariate
 polynomial by a power of the indeterminate.  The addition and multiplication
 of univariate polynomials extends to Laurent polynomials (though it might be
@@ -1417,9 +1419,9 @@ to <var>O</var> and then reduces it.
 gap&gt; ReducedGroebnerBasis(l,MonomialGrlexOrdering());
 [ x-y, z^2-2*y+1, y^2+y-1 ]
 gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering());    
-[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/2*z^2+x-1/2 ]
+[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/4*z^2+x-1/4 ]
 gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering([y,z,x]));
-[ x^2+x-1, z^2-2*x+1, -x+y ]
+[ 1, x^2+x-1, z^2-x+1/2, -x+y ]
 </pre>
 <p>
 <a name = "SSEC017.3"></a>
@@ -1758,5 +1760,5 @@ and denominator. The cancellation performed is not necessarily optimal.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP063.htm">Previous</a>] [<a href ="CHAP065.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -2,7 +2,7 @@
 ##
 #W  compat3a.g                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: compat3a.g,v 4.41 2002/09/04 15:45:28 gap Exp $
+#H  @(#)$Id: compat3a.g,v 4.41.2.2 2005/05/11 14:47:03 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -22,7 +22,7 @@
 ##  This file is *not* read as part of the {\GAP}~4 library.
 ##
 Revision.compat3a_g :=
-    "@(#)$Id: compat3a.g,v 4.41 2002/09/04 15:45:28 gap Exp $";
+    "@(#)$Id: compat3a.g,v 4.41.2.2 2005/05/11 14:47:03 gap Exp $";
 
 
 #############################################################################
@@ -117,6 +117,13 @@ DeclareSynonym( "CharDegAgGroup", CharacterDegrees );
 #F  CharFFE( <ffe> )  . . . . . . . . . . . . . . . . . characteristic of FFE
 ##
 DeclareSynonym( "CharFFE", Characteristic );
+
+
+#############################################################################
+##
+##  Some functions are declared in the character table library.
+##
+LoadPackage( "ctbllib" );
 
 
 #############################################################################
@@ -307,7 +314,11 @@ DeclareSynonym( "Denominator", DenominatorRat );
 ##
 #F  DepthVector( <vec> )
 ##
-DeclareSynonym( "DepthVector", PositionNonZero );
+##  This variable is also defined in the `autpgrp' package.
+##
+if not IsBound( DepthVector ) then
+  DeclareSynonym( "DepthVector", PositionNonZero );
+fi;
 
 
 #############################################################################
@@ -696,13 +707,6 @@ InstallOtherMethod( Order,
     function( D, elm )
     return Order( elm );
     end );
-
-
-#############################################################################
-##
-#F  OrderCyc( <cyc> ) . . . . . . . . . . . . . . . . . order of a cyclotomic
-##
-DeclareSynonym( "OrderCyc", Order );
 
 
 #############################################################################

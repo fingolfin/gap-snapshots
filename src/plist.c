@@ -2,7 +2,7 @@
 **
 *W  plist.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: plist.c,v 4.78 2003/12/10 22:26:04 gap Exp $
+*H  @(#)$Id: plist.c,v 4.78.2.1 2005/04/26 14:44:12 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -38,7 +38,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_plist_c =
-   "@(#)$Id: plist.c,v 4.78 2003/12/10 22:26:04 gap Exp $";
+   "@(#)$Id: plist.c,v 4.78.2.1 2005/04/26 14:44:12 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1374,7 +1374,10 @@ Obj             ElmsPlistDense (
         /* make the result list                                            */
         /* try to assert as many properties as possible                    */
 	if (HAS_FILT_LIST(list, FN_IS_SSORT) && HAS_FILT_LIST(poss, FN_IS_SSORT))
-	  elms = NEW_PLIST( MUTABLE_TNUM(TNUM_OBJ(list)), lenPoss);
+	  {
+	    elms = NEW_PLIST( MUTABLE_TNUM(TNUM_OBJ(list)), lenPoss);
+	    RESET_FILT_LIST( elms, FN_IS_NHOMOG); /* can't deduce this one */
+	  }
 	else if (HAS_FILT_LIST(list, FN_IS_TABLE))
 	  elms = NEW_PLIST( T_PLIST_TAB, lenPoss );
 	else if (T_PLIST_CYC <= TNUM_OBJ(list) && TNUM_OBJ(list) <= 

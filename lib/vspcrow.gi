@@ -2,7 +2,7 @@
 ##
 #W  vspcrow.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspcrow.gi,v 4.91.2.1 2004/08/31 15:12:41 gap Exp $
+#H  @(#)$Id: vspcrow.gi,v 4.91.2.2 2005/04/27 13:43:36 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -31,7 +31,7 @@
 ##  8. Methods installed by somebody else without documenting this ...
 ##
 Revision.vspcrow_gi :=
-    "@(#)$Id: vspcrow.gi,v 4.91.2.1 2004/08/31 15:12:41 gap Exp $";
+    "@(#)$Id: vspcrow.gi,v 4.91.2.2 2005/04/27 13:43:36 gap Exp $";
 
 
 #############################################################################
@@ -276,7 +276,6 @@ InstallMethod( Coefficients,
     IsCollsElms,
     [ IsBasis and IsSemiEchelonBasisOfGaussianRowSpaceRep, IsRowVector ],
     function( B, v )
-
     local vectors,   # basis vectors of `B'
           heads,     # heads info of `B'
           len,       # length of `v'
@@ -377,7 +376,6 @@ InstallMethod( SiftedVector,
 #T into `matrix.gi' ?
 ##
 HeadsInfoOfSemiEchelonizedMat := function( mat, dim )
-
     local zero,     # zero of the field
           one,      # one of the field
           nrows,    # number of rows
@@ -674,7 +672,6 @@ InstallMethod( SemiEchelonBasisNC,
     IsIdenticalObj,
     [ IsGaussianRowSpace, IsMatrix ],
     function( V, gens )
-
     local B,  # the basis, result
           gensi; # immutable copy
     B:= Objectify( NewType( FamilyObj( gens ),
@@ -773,7 +770,6 @@ InstallMethod( AsLeftModule,
     IsElmsColls,
     [ IsDivisionRing, IsMatrix ],
     function( F, vectors )
-
     local m;
 
     if not IsPrimePowerInt( Length( vectors ) ) then
@@ -816,7 +812,6 @@ InstallOtherMethod( \+,
     IsIdenticalObj,
     [ IsGaussianRowSpace, IsGaussianRowSpace ],
     function( V, W )
-
     local S,          # sum of <V> and <W>, result
           mat;        # basis vectors of the sum
 
@@ -853,7 +848,6 @@ InstallMethod( Intersection2,
     IsIdenticalObj,
     [ IsGaussianRowSpace, IsGaussianRowSpace ],
     function( V, W )
-
     local S,          # intersection of `V' and `W', result
           mat;        # basis vectors of the intersection
     
@@ -893,20 +887,21 @@ InstallMethod( Intersection2,
 InstallMethod( NormedRowVectors,
     "for Gaussian row space",
     [ IsGaussianRowSpace ],
-    function ( V )
-
+    function( V )
     local base,       # basis vectors
           elms,       # element list, result
-          j,          # loop over `base'
           elms2,      # intermediate element list
-          fieldelms,  # elements of `LeftActingDomain(V)' (other succession)
+          F,          # `LeftActingDomain( V )'
+          q,          # `Size( F )'
+          fieldelms,  # elements of `F' (in other succession)
+          j,          # loop over `base'
           new,        # intermediate element list
           pos,        # position in `new' to store the next element
           len,        # actual length of `elms2'
-          range,      # range to loop over
           i,          # loop over field elements
+          toadd,      # vector to add to known vectors
           k,          # loop over `elms2'
-          toadd;      # vector to add to known vectors
+          v;          # one normed row vector
 
     if not IsFinite( V ) then
       Error( "sorry, cannot compute normed vectors of infinite domain <V>" );
@@ -919,7 +914,9 @@ InstallMethod( NormedRowVectors,
 
     elms      := [ base[1] ];
     elms2     := [ base[1] ];
-    fieldelms := List( AsSSortedList( LeftActingDomain( V ) ), x -> x - 1 );
+    F         := LeftActingDomain( V );
+    q         := Size( F );
+    fieldelms := List( AsSSortedList( F ), x -> x - 1 );
 
     for j in [ 1 .. Length( base ) - 1 ] do
 
@@ -929,11 +926,12 @@ InstallMethod( NormedRowVectors,
       new:= [];
       pos:= 0;
       len:= Length( elms2 );
-      range:= [ 1 .. len ];
       for i in fieldelms do
         toadd:= base[j+1] + i * base[j];
-        for k in range do
-          new[ pos + k ]:= elms2[k] + toadd;
+        for k in [ 1 .. len ] do
+          v:= elms2[k] + toadd;
+          ConvertToVectorRep( v, q );
+          new[ pos + k ]:= v;
         od;
         pos:= pos + len;
       od;
@@ -946,6 +944,7 @@ InstallMethod( NormedRowVectors,
 
     # The list is strictly sorted, so we store this.
     MakeImmutable( elms );
+    Assert( 1, IsSSortedList( elms ) );
     SetIsSSortedList( elms, true );
 
     # Return the result.
@@ -964,7 +963,6 @@ InstallMethod( CanonicalBasis,
     "for Gaussian row space with known semi-ech. basis",
     [ IsGaussianRowSpace and HasSemiEchelonBasis ],
     function( V )
-
     local base,    # list of base vectors
           heads,   # list of numbers of leading columns
           ech,     # echelonized basis, if known

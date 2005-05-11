@@ -197,30 +197,31 @@ If you want  to change the default  setting you will probably put  a call of
   bad. Furthermore the  terminal (window) should use a fixed  width font and
   we suggest to take one with <code>ISO-8859-1</code> (also called <code>latin1</code>) encoding.
 <p>
-<dt><code>"netscape"</code> <dd>
-  If a  book is available  in HTML-format this  is shown using  the (already
-  running) <code>netscape</code>  Web-browser. Note,  that for  some books  the browser
-  must be configured to use symbol fonts.
+<dt><code>"firefox"</code>, <code>"mozilla"</code>, <code>"netscape"</code>, <code>"konqueror"</code> <dd>
+  If  a  book   is  available  in  HTML-format  this  is   shown  using  the
+  corresponding web-browser.  How well  this works, for  example by  using a
+  running instance of this browser,  depends on your particular start script
+  of this browser. Note, that for  some books the browser must be configured
+  to use symbol fonts.
 <p>
-<dt><code>"lynx"</code> <dd>
+<dt><code>"w3m"</code>, <code>"lynx"</code> <dd>
   If a book is  available in HTML-format this is shown  using the text based
-  <code>lynx</code> Web-browser inside the terminal  running <font face="Gill Sans,Helvetica,Arial">GAP</font>. Formulae which use
-  symbol fonts may be unreadable.
+  <code>w3m</code> or <code>lynx</code> web-browser inside the terminal  running <font face="Gill Sans,Helvetica,Arial">GAP</font>.  Formulae 
+  which use symbol fonts may be unreadable.
 <p>
-<dt><code>"internet config"</code> <dd>
-  (for Apple  Macintosh with MacOS)  If a  book is available  in HTML-format
-  this is  shown in a Web browser. The web browser used is the program
-  set to handle the <code>file</code> protocol in the program <code>Internet Config</code> (System 
-  7 and 8) resp. the <code>Internet</code> control panel (System 9 and System X). 
-  For some browsers (e.g., Internet Explorer), you may have enter the 
-  GAP command
+<dt><code>"mac default browser"</code>, <code>"safari"</code> <dd>
+  (for Apple Macintosh) If a book  is available in HTML-format this is shown
+  in a web-browser.  The web browser used  is the program set  to handle the
+  <code>file</code> protocol in  the <code>Internet</code> control panel (System 9  and System X).
+  For some browsers (e.g., Internet Explorer), you may have to enter the GAP
+  command
   <code>HELP_MAC_PROTOCOL := "file:/";</code>
-  for this to work correctly. If you wish to use the online html version of
+  for this to work correctly.  If you wish to use the online html version of
   the manual, you may use
   <code>HELP_EXTERNAL_URL := "http://www.gap-system.org/";</code>. Note that
   <code>HELP_EXTERNAL_URL := "";</code> switches back to the local html files.
-  It may be a good idea to put the relevant line in the <code>gap.rc</code>
-  file (see <a href="CHAP003.htm#SECT004">The .gaprc file</a>).
+  It may be a  good idea to put the relevant line in  the <code>gap.rc</code> file (see
+  <a href="CHAP003.htm#SECT004">The .gaprc file</a>).
 <p>
 <dt><code>"xdvi"</code> <dd>
   (on X-windows  systems) If a book  is available in dvi-format  it is shown
@@ -333,5 +334,5 @@ gap&gt; Pager(List(l, a-&gt; JoinStringsWithSeparator(a," ")));;
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

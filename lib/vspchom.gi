@@ -2,7 +2,7 @@
 ##
 #W  vspchom.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspchom.gi,v 4.38 2002/04/15 10:05:29 sal Exp $
+#H  @(#)$Id: vspchom.gi,v 4.38.4.1 2005/02/21 08:36:32 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -33,7 +33,7 @@
 ##  5. methods for full hom spaces
 ##
 Revision.vspchom_gi :=
-    "@(#)$Id: vspchom.gi,v 4.38 2002/04/15 10:05:29 sal Exp $";
+    "@(#)$Id: vspchom.gi,v 4.38.4.1 2005/02/21 08:36:32 gap Exp $";
 
 #T TODO:
 #T
@@ -875,9 +875,8 @@ InstallOtherMethod( \+,
     if    Source( map1 ) <> Source( map2 )
        or Range( map1 ) <> Range( map2 ) then
       Error( "<map1> and <map2> must have same source and range" );
-    elif  PreImagesRange( map1 ) <> PreImagesRange( map2 )
-       or ImagesSource( map1 ) <> ImagesSource( map2 ) then
-      Error( "<map1> and <map2> must have same (pre)image" );
+    elif  PreImagesRange( map1 ) <> PreImagesRange( map2 ) then
+      Error( "<map1> and <map2> must have same preimage" );
     fi;
 
     if     IsBound( map1!.basispreimage ) then
@@ -947,9 +946,8 @@ InstallOtherMethod( \+,
     if    Source( map1 ) <> Source( map2 )
        or Range( map1 ) <> Range( map2 ) then
       Error( "<map1> and <map2> must have same source and range" );
-    elif  PreImagesRange( map1 ) <> PreImagesRange( map2 )
-       or ImagesSource( map1 ) <> ImagesSource( map2 ) then
-      Error( "<map1> and <map2> must have same (pre)image" );
+    elif  PreImagesRange( map1 ) <> PreImagesRange( map2 ) then
+      Error( "<map1> and <map2> must have same preimage" );
     fi;
 
     if     IsBound( map2!.basispreimage ) then

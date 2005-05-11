@@ -23,8 +23,8 @@
 <li><code>IsPermGroup( </code><var>obj</var><code> ) C</code>
 <p>
 A permutation group is a  group of permutations on  a finite set
-<font face="symbol">&#8486;</font> of  positive integers. <font face="Gill Sans,Helvetica,Arial">GAP</font> does <strong>not</strong>  require the user to
-specify the operation domain  <font face="symbol">&#8486;</font> when a permutation  group is
+&#8486; of  positive integers. <font face="Gill Sans,Helvetica,Arial">GAP</font> does <strong>not</strong>  require the user to
+specify the operation domain  &#8486; when a permutation  group is
 defined.
 <p>
 <pre>
@@ -95,7 +95,7 @@ rather than permutation groups themselves, for example <code>BaseStabChain</code
 <a name = "SSEC002.1"></a>
 <li><code>IsomorphismPermGroup( </code><var>G</var><code> ) A</code>
 <p>
-returns an isomorphism <font face="symbol">&#981;</font> from the group <var>G</var> onto
+returns an isomorphism &#981; from the group <var>G</var> onto
 a permutation group <var>P</var> which is isomorphic to <var>G</var>.
 The method will select a suitable permutation representation.
 <p>
@@ -238,7 +238,7 @@ primitive group is the direct product of isomorphic simple groups,
 therefore the type is indicated by a record with components <code>series</code>,
 <code>parameter</code> (both as described under
 <code>IsomorphismTypeInfoFiniteSimpleGroup</code>,
-see&nbsp;<a href="CHAP037.htm#SSEC014.11">IsomorphismTypeInfoFiniteSimpleGroup</a>) and <code>width</code> for the number of
+see&nbsp;<a href="CHAP037.htm#SSEC015.11">IsomorphismTypeInfoFiniteSimpleGroup</a>) and <code>width</code> for the number of
 direct factors.
 <p>
 If <var>G</var> does not have a faithful primitive action, the result is undefined.
@@ -272,16 +272,16 @@ introduced by Charles Sims in&nbsp;<a href="biblio.htm#Sim70"><cite>Sim70</cite>
 A further discussion of base change is given in
 section&nbsp;<a href="../ext/CHAP008.htm#SECT001">Generalized Conjugation Technique</a> in ``Extending <font face="Gill Sans,Helvetica,Arial">GAP</font>''.
 <p>
-Let <i>B</i>=[<i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub>] be a list of points, <i>G</i><sup>(1)</sup> = <i>G</i> and <i>G</i><sup>(<i>i</i>+1)</sup> = <i>Stab</i><sub><i>G</i><sup>(<i>i</i>)</sup></sub>(<i>b</i><sub><i>i</i></sub>), such that <i>G</i><sup>(<i>n</i>+1)</sup> = { () }.
-Then the list [<i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub>] is called a <strong>base</strong> of <i>G</i>,
+Let <i>B</i>=[<i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>n</i></sub>] be a list of points, <i>G</i><sup>(1)</sup> = <i>G</i> and <i>G</i><sup>(<i>i</i>+1)</sup> = <i>Stab</i><sub><i>G</i><sup>(<i>i</i>)</sup></sub>(<i>b</i><sub><i>i</i></sub>), such that <i>G</i><sup>(<i>n</i>+1)</sup> = { () }.
+Then the list [<i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>n</i></sub>] is called a <strong>base</strong> of <i>G</i>,
 the points <i>b</i><sub><i>i</i></sub> are called <strong>base
-points</strong>.  A set <i>S</i> of generators for <i>G</i> satisfying the condition  &lt;  <i>S</i> <font face="symbol">&#8745;</font><i>G</i><sup>(<i>i</i>)</sup>  &gt;  = <i>G</i><sup>(<i>i</i>)</sup> for each 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i>, is called a <strong>strong
+points</strong>.  A set <i>S</i> of generators for <i>G</i> satisfying the condition  &lt;  <i>S</i> &#8745;<i>G</i><sup>(<i>i</i>)</sup>  &gt;  = <i>G</i><sup>(<i>i</i>)</sup> for each 1  &#8804; <i>i</i>  &#8804; <i>n</i>, is called a <strong>strong
 generating set</strong> (SGS) of <i>G</i>. (More precisely we ought to say that it is a
 SGS of <i>G</i> <strong>relative</strong> to <i>B</i>).
 The chain of subgroups <i>G</i><sup>(<i>i</i>)</sup> of <i>G</i> itself is
 called the <strong>stabilizer chain</strong> of <i>G</i> relative to <i>B</i>.
 <p>
-Since [<i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub>], where <i>n</i> is the degree of <i>G</i> and <i>b</i><sub><i>i</i></sub> are the
+Since [<i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>n</i></sub>], where <i>n</i> is the degree of <i>G</i> and <i>b</i><sub><i>i</i></sub> are the
 moved points of <i>G</i>, certainly is a base for <i>G</i> there exists a base for
 each permutation group. The number of points in a base is called the
 <strong>length</strong> of the base. A base <i>B</i> is called <strong>reduced</strong> if there exists no <i>i</i>
@@ -294,11 +294,11 @@ of the Chevalley Group <i>G</i><sub>2</sub>(4) possesses reduced bases of length
 <p>
 Let <i>R</i><sup>(<i>i</i>)</sup> be a right transversal of <i>G</i><sup>(<i>i</i>+1)</sup> in <i>G</i><sup>(<i>i</i>)</sup>, i.e. a set
 of right coset representatives of the cosets of <i>G</i><sup>(<i>i</i>+1)</sup> in <i>G</i><sup>(<i>i</i>)</sup>.
-Then each element <i>g</i> of <i>G</i> has a unique representation of the form <i>g</i> = <i>r</i><sub><i>n</i></sub> <font face="symbol">&#8230;</font><i>r</i><sub>1</sub> with <i>r</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>R</i><sup>(<i>i</i>)</sup>.
+Then each element <i>g</i> of <i>G</i> has a unique representation of the form <i>g</i> = <i>r</i><sub><i>n</i></sub> &#8230;<i>r</i><sub>1</sub> with <i>r</i><sub><i>i</i></sub>  &#8712; <i>R</i><sup>(<i>i</i>)</sup>.
 The cosets of <i>G</i><sup>(<i>i</i>+1)</sup> in <i>G</i><sup>(<i>i</i>)</sup> are in bijective correspondence with
 the points in <i>O</i><sup>(<i>i</i>)</sup> : = <i>b</i><sub><i>i</i></sub><sup><i>G</i><sup>(<i>i</i>)</sup></sup>.
 So we could represent a transversal as a list <i>T</i> such that <i>T</i>[<i>p</i>] is a
-representative of the coset corresponding to the point <i>p</i>  <font face="symbol">&#8712;</font> <i>O</i><sup>(<i>i</i>)</sup>,
+representative of the coset corresponding to the point <i>p</i>  &#8712; <i>O</i><sup>(<i>i</i>)</sup>,
 i.e., an element of <i>G</i><sup>(<i>i</i>)</sup> that takes <i>b</i><sub><i>i</i></sub> to <i>p</i>.
 (Note that such a list has holes in all positions corresponding to points
 not contained in <i>O</i><sup>(<i>i</i>)</sup>.)
@@ -310,7 +310,7 @@ that we can still reconstruct each representative in <i>R</i><sup>(<i>i</i>)</su
 them the elements in <i>G</i>. A <strong>factorized inverse transversal</strong> <i>T</i> is a list
 where <i>T</i>[<i>p</i>] is a generator of <i>G</i><sup>(<i>i</i>)</sup> such that <i>p</i><sup><i>T</i>[<i>p</i>]</sup> is a point
 that lies earlier in <i>O</i><sup>(<i>i</i>)</sup> than <i>p</i> (note that we consider <i>O</i><sup>(<i>i</i>)</sup> as
-a list, not as a set). If we assume inductively that we know an element <i>r</i>  <font face="symbol">&#8712;</font> <i>G</i><sup>(<i>i</i>)</sup> that takes <i>b</i><sub><i>i</i></sub> to <i>p</i><sup><i>T</i>[<i>p</i>]</sup>, then <i>r</i> <i>T</i>[<i>p</i>]<sup><font face="symbol">&#8722;</font>1</sup> is an
+a list, not as a set). If we assume inductively that we know an element <i>r</i>  &#8712; <i>G</i><sup>(<i>i</i>)</sup> that takes <i>b</i><sub><i>i</i></sub> to <i>p</i><sup><i>T</i>[<i>p</i>]</sup>, then <i>r</i> <i>T</i>[<i>p</i>]<sup>&#8722;1</sup> is an
 element in <i>G</i><sup>(<i>i</i>)</sup> that takes <i>b</i><sub><i>i</i></sub> to <i>p</i>. <font face="Gill Sans,Helvetica,Arial">GAP</font> uses such factorized
 inverse transversals.
 <p>
@@ -318,7 +318,7 @@ Another name for a factorized inverse transversal is a
 <strong>Schreier tree</strong>. The vertices of the tree are the points in <i>O</i><sup>(<i>i</i>)</sup>,
 and the root of the tree is <i>b</i><sub><i>i</i></sub>.
 The edges are defined as the ordered pairs (<i>p</i>, <i>p</i><sup><i>T</i>[<i>p</i>]</sup>),
-for <i>p</i>  <font face="symbol">&#8712;</font> <i>O</i><sup>(<i>i</i>)</sup> \{ <i>b</i><sub><i>i</i></sub>}. The edge (<i>p</i>, <i>p</i><sup><i>T</i>[<i>p</i>]</sup>)
+for <i>p</i>  &#8712; <i>O</i><sup>(<i>i</i>)</sup> \{ <i>b</i><sub><i>i</i></sub>}. The edge (<i>p</i>, <i>p</i><sup><i>T</i>[<i>p</i>]</sup>)
 is labelled with the generator <i>T</i>[<i>p</i>], and the product of edge labels
 along the unique path from <i>p</i> to <i>b</i><sub><i>i</i></sub> is the inverse of the
 transversal element carrying <i>b</i><sub><i>i</i></sub> to <i>p</i>.
@@ -345,9 +345,9 @@ For most computations with permutation groups,
 it is crucial to construct stabilizer chains efficiently. Sims's
 original construction <a href="biblio.htm#Sim70"><cite>Sim70</cite></a> is deterministic, and is called
 the Schreier-Sims algorithm, because it is based
-on Schreier's Lemma (p. 96 in <a href="biblio.htm#Hall"><cite>Hall</cite></a>): given <i>K</i>=<font face="symbol">&#9001;</font><i>S</i> <font face="symbol">&#9002;</font>
+on Schreier's Lemma (p. 96 in <a href="biblio.htm#Hall"><cite>Hall</cite></a>): given <i>K</i>=&#9001;<i>S</i> &#9002;
 and a transversal <i>T</i> for <i>K</i> mod <i>L</i>, one can obtain
-<font face="symbol">&#124;</font><i>S</i><font face="symbol">&#124;</font><font face="symbol">&#124;</font><i>T</i><font face="symbol">&#124;</font> generators for <i>L</i>. This lemma is applied recursively,
+&#124;<i>S</i>&#124;&#124;<i>T</i>&#124; generators for <i>L</i>. This lemma is applied recursively,
 with consecutive point stabilizers <i>G</i><sup>(<i>i</i>)</sup> and <i>G</i><sup>(<i>i</i>+1)</sup>
 playing the role of <i>K</i> and <i>L</i>.
 <p>
@@ -370,7 +370,7 @@ the value of the record component <code>random</code>
 <p>
 If <code>random</code> =1000 then a slight extension of an unpublished method of
 Sims is used. The outcome of this verification process is always
-correct. The user also can prescribe any integer 1  <font face="symbol">&#8804;</font> <i>x</i>  <font face="symbol">&#8804;</font> 999
+correct. The user also can prescribe any integer 1  &#8804; <i>x</i>  &#8804; 999
 as the value of <code>random</code>. In this case, a randomized verification
 process from <a href="biblio.htm#BCFS91"><cite>BCFS91</cite></a> is applied, and the result of the
 stabilizer chain construction is guaranteed to be correct with probability
@@ -378,7 +378,7 @@ at least <i>x</i>/1000. The practical performance of the algorithm is
 much better than the theoretical guarantee.
 <p>
 If the stabilizer chain is not correct then the elements in the
-product of transversals <i>R</i><sup>(<i>m</i>)</sup><i>R</i><sup>(<i>m</i><font face="symbol">&#8722;</font>1)</sup><font face="symbol">&#8230;</font><i>R</i><sup>(1)</sup> constitute a
+product of transversals <i>R</i><sup>(<i>m</i>)</sup><i>R</i><sup>(<i>m</i>&#8722;1)</sup>&#8230;<i>R</i><sup>(1)</sup> constitute a
 proper subset of the group <i>G</i> in question.
 This means that a membership test with this stabilizer chain
 returns <code>false</code> for
@@ -643,7 +643,7 @@ so this is much faster than the other algorithms.
 <li><code>MinimalStabChain( </code><var>G</var><code> ) A</code>
 <p>
 returns the reduced stabilizer chain corresponding to the base
-[1,2,3,4,<font face="symbol">&#8230;</font>].
+[1,2,3,4,&#8230;].
 <p>
 <p>
 <h2><a name="SECT008">41.8 Stabilizer Chain Records</a></h2>
@@ -782,7 +782,7 @@ chain <var>S</var>.
 <li><code>ListStabChain( </code><var>S</var><code> ) F</code>
 <p>
 returns a list that contains at position <i>i</i> the stabilizer of the first
-<i>i</i><font face="symbol">&#8722;</font>1 base points in the stabilizer chain <var>S</var>.
+<i>i</i>&#8722;1 base points in the stabilizer chain <var>S</var>.
 <p>
 <a name = "SSEC009.9"></a>
 <li><code>ElementsStabChain( </code><var>S</var><code> ) F</code>
@@ -817,7 +817,7 @@ the original&nbsp;<var>S</var>.
 <p>
 Let <i>G</i> be the group described by the stabilizer chain <var>S</var>.
 This function returns a permutation <i>h</i> such that <i>G</i> <i>g</i>  = <i>G</i> <i>h</i>
-(that is, <i>g</i>  / <i>h</i>  <font face="symbol">&#8712;</font> <i>G</i>) and with the additional property that
+(that is, <i>g</i>  / <i>h</i>  &#8712; <i>G</i>) and with the additional property that
 the list of images under <i>h</i> of the base belonging to <var>S</var> is minimal
 w.r.t.&nbsp;lexicographical ordering.
 <p>
@@ -825,7 +825,7 @@ w.r.t.&nbsp;lexicographical ordering.
 <li><code>LargestElementStabChain( </code><var>S</var><code>, </code><var>id</var><code> ) F</code>
 <p>
 Let <i>G</i> be the group described by the stabilizer chain <var>S</var>.
-This function returns the element <i>h</i>  <font face="symbol">&#8712;</font> <i>G</i> with the property that
+This function returns the element <i>h</i>  &#8712; <i>G</i> with the property that
 the list of images under <i>h</i> of the base belonging to <var>S</var> is maximal
 w.r.t.&nbsp;lexicographical ordering.
 The second argument must be an identity element (used to start the
@@ -908,7 +908,7 @@ remove trailing trivial steps.
 <li><code>EmptyStabChain( </code><var>labels</var><code>, </code><var>id</var><code>[, </code><var>pnt</var><code>] ) F</code>
 <p>
 constructs  a   stabilizer  chain  for   the trivial   group with
-<code>identity=</code><var>id</var><code></code> and <code>labels={<i>id</i>}<font face="symbol">&#8746;</font><i>labels</i></code>  (but of course with
+<code>identity=</code><var>id</var><code></code> and <code>labels={<i>id</i>}&#8746;<i>labels</i></code>  (but of course with
 <code>genlabels=[ ]</code> and <code>generators=[ ]</code>). If the optional third argument
 <var>pnt</var>  is present, the only stabilizer   of the chain is initialized
 with the  one-point basic orbit  <code>[ </code><var>pnt</var><code> ]</code> and with <code>translabels</code> and
@@ -962,8 +962,8 @@ in order to speed up the calculation.
 <a name = "SSEC011.2"></a>
 <li><code>ElementProperty( </code><var>G</var><code>, </code><var>Pr</var><code>[, </code><var>L</var><code>[, </code><var>R</var><code>]] ) F</code>
 <p>
-<code>ElementProperty</code> returns an element <font face="symbol">&#960;</font> of the permutation group <var>G</var>
-such that the one-argument function <var>Pr</var> returns <code>true</code> for <font face="symbol">&#960;</font>.
+<code>ElementProperty</code> returns an element &#960; of the permutation group <var>G</var>
+such that the one-argument function <var>Pr</var> returns <code>true</code> for &#960;.
 It returns <code>fail</code> if no such element exists in <var>G</var>.
 The optional arguments <var>L</var> and <var>R</var> are subgroups of <var>G</var> such that the
 property <var>Pr</var> has the same value for all elements in the cosets <var>L</var><var>g</var>
@@ -1097,5 +1097,5 @@ is much faster than the first one and takes less memory.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP040.htm">Previous</a>] [<a href ="CHAP042.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

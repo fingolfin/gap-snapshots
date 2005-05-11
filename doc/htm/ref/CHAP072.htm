@@ -20,15 +20,15 @@ lists of character <strong>values</strong> are not allowed.
 <p>
 The usual <strong>property tests</strong> of <font face="Gill Sans,Helvetica,Arial">GAP</font> that return either <code>true</code>
 or <code>false</code> are not sufficient for us.
-When we ask whether a group character <font face="symbol">&#967;</font> has a certain property,
+When we ask whether a group character &#967; has a certain property,
 such as quasiprimitivity,
 we usually want more information than just yes or no.
-Often we are interested in the reason <strong>why</strong> a group character <font face="symbol">&#967;</font> was
+Often we are interested in the reason <strong>why</strong> a group character &#967; was
 proved to have a certain property,
-e.g., whether monomiality of <font face="symbol">&#967;</font> was proved by the observation
+e.g., whether monomiality of &#967; was proved by the observation
 that the underlying group is nilpotent,
 or whether it was necessary to construct a linear character of a subgroup
-from which <font face="symbol">&#967;</font> can be induced.
+from which &#967; can be induced.
 In the latter case we also may be interested in this linear character.
 Therefore we need test functions that return a record containing such
 useful information.
@@ -38,10 +38,10 @@ For example, the record returned by the function <code>TestQuasiPrimitive</code>
 and additionally the component <code>comment</code>,
 a string telling the reason for the value of the <code>isQuasiPrimitive</code>
 component,
-and in the case that the argument <font face="symbol">&#967;</font> was <strong>not</strong> quasiprimitive
+and in the case that the argument &#967; was <strong>not</strong> quasiprimitive
 also the component <code>character</code>,
 which is an irreducible constituent of a nonhomogeneous restriction
-of <font face="symbol">&#967;</font> to a normal subgroup.
+of &#967; to a normal subgroup.
 Besides these test functions there are also the known properties,
 e.g., the property <code>IsQuasiPrimitive</code> which will call the attribute
 <code>TestQuasiPrimitive</code>,
@@ -101,8 +101,8 @@ Most of the functions described in this chapter print some
 <li><code>Alpha( </code><var>G</var><code> ) A</code>
 <p>
 For a group <var>G</var>, <code>Alpha</code> returns a list whose <var>i</var>-th entry is the maximal
-derived length of groups <i>G</i>  / ker(<font face="symbol">&#967;</font>) for <font face="symbol">&#967;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i> ) with
-<font face="symbol">&#967;</font>(1) at most the <var>i</var>-th irreducible degree of <var>G</var>.
+derived length of groups <i>G</i>  / ker(&#967;) for &#967; &#8712; <i>Irr</i>(<i>G</i> ) with
+&#967;(1) at most the <var>i</var>-th irreducible degree of <var>G</var>.
 <p>
 <a name = "SSEC001.2"></a>
 <li><code>Delta( </code><var>G</var><code> ) A</code>
@@ -117,9 +117,9 @@ where <code>alp = Alpha( </code><var>G</var><code> )</code> (see&nbsp;<a href="C
 <p>
 Called with an irreducible character <var>chi</var> of the group <i>G</i>,
 <code>IsBergerCondition</code> returns <code>true</code> if <var>chi</var> satisfies
-<i>M</i><sup><font face="symbol">&#8242;</font></sup>  <font face="symbol">&#8804;</font> ker(<font face="symbol">&#967;</font>) for every normal subgroup <i>M</i> of <i>G</i>
-with the property that <i>M</i>  <font face="symbol">&#8804;</font> ker(<font face="symbol">&#968;</font>) for all <font face="symbol">&#968;</font> <font face="symbol">&#8712;</font> <i>Irr</i>(<i>G</i>) with
-<font face="symbol">&#968;</font>(1)  &lt;  <font face="symbol">&#967;</font>(1),
+<i>M</i><sup>&#8242;</sup>  &#8804; ker(&#967;) for every normal subgroup <i>M</i> of <i>G</i>
+with the property that <i>M</i>  &#8804; ker(&#968;) for all &#968; &#8712; <i>Irr</i>(<i>G</i>) with
+&#968;(1)  &lt;  &#967;(1),
 and <code>false</code> otherwise.
 <p>
 Called with a group <var>G</var>, <code>IsBergerCondition</code> returns <code>true</code> if
@@ -292,12 +292,12 @@ gap&gt; List( Irr( S4 ){ [ 1, 3, 4 ] },
 <p>
 <h2><a name="SECT003">72.3 Testing Monomiality</a></h2>
 <p><p>
-A character <font face="symbol">&#967;</font> of a finite group <i>G</i> is called <strong>monomial</strong> if <font face="symbol">&#967;</font>
+A character &#967; of a finite group <i>G</i> is called <strong>monomial</strong> if &#967;
 is induced from a linear character of a subgroup of <i>G</i>.
 A finite group <i>G</i> is called <strong>monomial</strong> (or <strong><i>M</i>-group</strong>) if each
 ordinary irreducible character of <i>G</i> is monomial.
 <p>
-There are <font face="Gill Sans,Helvetica,Arial">GAP</font> properties <code>IsMonomialGroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC014.9">IsMonomialGroup</a>)
+There are <font face="Gill Sans,Helvetica,Arial">GAP</font> properties <code>IsMonomialGroup</code> (see&nbsp;<a href="CHAP037.htm#SSEC015.9">IsMonomialGroup</a>)
 and <code>IsMonomialCharacter</code>, but one can use <code>IsMonomial</code> instead.
 <a name = "I0"></a>
 
@@ -368,7 +368,7 @@ One can also use <code>IsMonomial</code> instead.
 <a name = "I2"></a>
 
 <p>
-Let <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>) denote the multiplicity of the prime <i>p</i> as
+Let &#957;<sub><i>p</i></sub>(<i>n</i>) denote the multiplicity of the prime <i>p</i> as
 factor of <i>n</i>, and <i>ord</i>(<i>p</i>,<i>q</i>) the multiplicative order of <i>p</i>  mod <i>q</i>.
 <p>
 Then there exists a solvable nonmonomial group of order <i>n</i>
@@ -376,28 +376,28 @@ if and only if one of the following conditions is satisfied.
 <p>
 <dl compact>
 <dt>1.<dd>
-     <font face="symbol">&#957;</font><sub>2</sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 2 and there is a <i>p</i> such that
-     <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 3 and <i>p</i>  <font face="symbol">&#8801;</font> <font face="symbol">&#8722;</font>1  mod 4,
+     &#957;<sub>2</sub>(<i>n</i>)  &#8805; 2 and there is a <i>p</i> such that
+     &#957;<sub><i>p</i></sub>(<i>n</i>)  &#8805; 3 and <i>p</i>  &#8801; &#8722;1  mod 4,
 <p>
 <dt>2.<dd>
-     <font face="symbol">&#957;</font><sub>2</sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 3 and there is a <i>p</i> such that
-     <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 3 and <i>p</i>  <font face="symbol">&#8801;</font> 1  mod 4,
+     &#957;<sub>2</sub>(<i>n</i>)  &#8805; 3 and there is a <i>p</i> such that
+     &#957;<sub><i>p</i></sub>(<i>n</i>)  &#8805; 3 and <i>p</i>  &#8801; 1  mod 4,
 <p>
 <dt>3.<dd>
      there are odd prime divisors <i>p</i> and <i>q</i> of <i>n</i> such that
-     <i>ord</i>(<i>p</i>,<i>q</i>) is even and <i>ord</i>(<i>p</i>,<i>q</i>)  &lt;  <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)
-     (especially <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 3),
+     <i>ord</i>(<i>p</i>,<i>q</i>) is even and <i>ord</i>(<i>p</i>,<i>q</i>)  &lt;  &#957;<sub><i>p</i></sub>(<i>n</i>)
+     (especially &#957;<sub><i>p</i></sub>(<i>n</i>)  &#8805; 3),
 <p>
 <dt>4.<dd>
      there is a prime divisor <i>q</i> of <i>n</i> such that
-     <font face="symbol">&#957;</font><sub>2</sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 2 <i>ord</i>(2,<i>q</i>) + 2
-     (especially <font face="symbol">&#957;</font><sub>2</sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 4),
+     &#957;<sub>2</sub>(<i>n</i>)  &#8805; 2 <i>ord</i>(2,<i>q</i>) + 2
+     (especially &#957;<sub>2</sub>(<i>n</i>)  &#8805; 4),
 <p>
 <dt>5.<dd>
-     <font face="symbol">&#957;</font><sub>2</sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 2 and there is a <i>p</i> such that
-     <i>p</i>  <font face="symbol">&#8801;</font> 1  mod 4, <i>ord</i>(<i>p</i>,<i>q</i>) is odd,
-     and 2 <i>ord</i>(<i>p</i>,<i>q</i>)  &lt;  <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)
-     (especially <font face="symbol">&#957;</font><sub><i>p</i></sub>(<i>n</i>)  <font face="symbol">&#8805;</font> 3).
+     &#957;<sub>2</sub>(<i>n</i>)  &#8805; 2 and there is a <i>p</i> such that
+     <i>p</i>  &#8801; 1  mod 4, <i>ord</i>(<i>p</i>,<i>q</i>) is odd,
+     and 2 <i>ord</i>(<i>p</i>,<i>q</i>)  &lt;  &#957;<sub><i>p</i></sub>(<i>n</i>)
+     (especially &#957;<sub><i>p</i></sub>(<i>n</i>)  &#8805; 3).
 </dl>
 <p>
 These five possibilities correspond to the five types of solvable minimal
@@ -506,8 +506,8 @@ Here <code>TestRelativelySM</code> returns a record with information whether the
 first argument is relatively SM with respect to <var>N</var>,
 i.e, whether there is a subnormal subgroup <i>H</i> of <i>G</i> that contains <var>N</var>
 such that the character <var>chi</var> resp.&nbsp;every irreducible character of <i>G</i>
-is induced from a character <font face="symbol">&#968;</font> of <i>H</i> such that the restriction of
-<font face="symbol">&#968;</font> to <var>N</var> is irreducible.
+is induced from a character &#968; of <i>H</i> such that the restriction of
+&#968; to <var>N</var> is irreducible.
 <p>
 The result record has the components
 <code>isRelativelySM</code> (with value either <code>true</code> or <code>false</code>) and
@@ -581,5 +581,5 @@ gap&gt; MinimalNonmonomialGroup(  2, 14 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP071.htm">Previous</a>] [<a href ="CHAP073.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

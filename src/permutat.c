@@ -3,7 +3,7 @@
 *W  permutat.c                  GAP source                   Martin Schoenert
 **                                                           & Alice Niemeyer
 **
-*H  @(#)$Id: permutat.c,v 4.47 2003/09/23 15:41:10 gap Exp $
+*H  @(#)$Id: permutat.c,v 4.47.2.2 2005/04/12 21:46:57 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -41,7 +41,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_permutat_c =
-   "@(#)$Id: permutat.c,v 4.47 2003/09/23 15:41:10 gap Exp $";
+   "@(#)$Id: permutat.c,v 4.47.2.2 2005/04/12 21:46:57 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -178,7 +178,6 @@ Obj             TypePerm4 (
 **  printing a cycle twice each is printed with the smallest  element  first.
 **  This may in the worst case, for (1,2,..,n), take n^2/2 steps, but is fast
 **  enough to keep a terminal at 9600 baud busy for all but the extrem cases.
-**  This is done, because it is forbidden to create new bags during printing.
 */
 void            PrintPermP (
     Obj                 perm )
@@ -211,9 +210,12 @@ void            PrintPermP (
         if ( p == q && ptPerm[p] != p ) {
             isId = 0;
             Pr(fmt1,(Int)(p+1),0L);
-            for ( q = ptPerm[p]; q != p; q = ptPerm[q] )
+            for ( q = ADDR_PERM2(perm)[p]; q != p; q = ADDR_PERM2(perm)[q] ) {
                 Pr(fmt2,(Int)(q+1),0L);
+            }
             Pr("%<)",0L,0L);
+            /* restore pointer, in case Pr caused a garbage collection */
+            ptPerm = ADDR_PERM2(perm);  
         }
 
     }
@@ -253,9 +255,11 @@ void            PrintPermQ (
         if ( p == q && ptPerm[p] != p ) {
             isId = 0;
             Pr(fmt1,(Int)(p+1),0L);
-            for ( q = ptPerm[p]; q != p; q = ptPerm[q] )
+            for ( q = ADDR_PERM4(perm)[p]; q != p; q = ADDR_PERM4(perm)[q] )
                 Pr(fmt2,(Int)(q+1),0L);
             Pr("%<)",0L,0L);
+            /* restore pointer, in case Pr caused a garbage collection */
+            ptPerm = ADDR_PERM4(perm);
         }
 
     }

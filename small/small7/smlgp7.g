@@ -7,7 +7,7 @@
 ##  of size 512.
 ##
 Revision.smlgp7_g :=
-    "@(#)$Id: smlgp7.g,v 1.5 2001/05/07 12:08:52 gap Exp $";
+    "@(#)$Id: smlgp7.g,v 1.5.4.1 2005/05/03 14:24:19 gap Exp $";
 
 #############################################################################
 ##
@@ -165,10 +165,7 @@ end;
 ##                          
 #F SELECT_SMALL_GROUPS_FUNCS[ 18 ]( funcs, vals, inforec, all, id )
 ##                  
-SELECT_SMALL_GROUPS_FUNCS[ 18 ] := function( arg )
-
-   Error( "nothing implemented for selection of groups of size 512" );
-end;
+SELECT_SMALL_GROUPS_FUNCS[ 18 ] := SELECT_SMALL_GROUPS_FUNCS[ 11 ];
 
 #############################################################################
 ##

@@ -7,7 +7,7 @@
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.listcoef_gd :=
-    "@(#)$Id: listcoef.gd,v 4.27 2002/04/15 10:04:55 sal Exp $";
+    "@(#)$Id: listcoef.gd,v 4.27.4.1 2005/05/12 09:10:54 gap Exp $";
 
 
 #1
@@ -337,16 +337,29 @@ DeclareOperation("DistancesDistributionMatFFEVecFFE",
 #############################################################################
 ##
 #O  AClosestVectorCombinationsMatFFEVecFFE(<mat>,<f>,<vec>,<l>,<stop>)
+#O  AClosestVectorCombinationsMatFFEVecFFECoords(<mat>,<f>,<vec>,<l>,<stop>)
 ##
-##  runs through the <f>-linear combinations of the vectors in the rows of
-##  the matrix <mat> that can be written as linear combinations of exactly
-##  <l> rows (that is without using zero as a coefficient) and returns a
-##  vector from these that is closest to the vector <vec>. The length of the
-##  rows of <mat> and the length of <vec> must be equal, and all elements
-##  must lie in <f>. The rows of <mat> must be linearly independent. If it
-##  finds a vector of distance at most <stop>, which must be a nonnegative
+##  These functions run through the <f>-linear combinations of the
+##  vectors in the rows of the matrix <mat> that can be written as
+##  linear combinations of exactly <l> rows (that is without using
+##  zero as a coefficient). The length of the rows of <mat> and the
+##  length of <vec> must be equal, and all elements must lie in
+##  <f>. The rows of <mat> must be linearly
+##  independent. `AClosestVectorCombinationsMatFFEVecFFE' returns a
+##  vector from these that is closest to the vector <vec>. If it finds
+##  a vector of distance at most <stop>, which must be a nonnegative
 ##  integer, then it stops immediately and returns this vector.
+##
+## `AClosestVectorCombinationsMatFFEVecFFECoords' returns a length 2
+## list
+##  containing the same closest vector and also a vector <v> with exactly <l> non-zero
+##  entries, such that <v> times <mat> is the closest vector.
+##
+
 DeclareOperation("AClosestVectorCombinationsMatFFEVecFFE",
+  [IsMatrix,IsFFECollection, IsList, IsInt,IsInt]);
+
+DeclareOperation("AClosestVectorCombinationsMatFFEVecFFECoords",
   [IsMatrix,IsFFECollection, IsList, IsInt,IsInt]);
 
 #############################################################################

@@ -2,12 +2,14 @@
 ##
 #W  compat3.tst                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: compat3.tst,v 1.4 2000/02/11 13:46:26 gap Exp $
+#H  @(#)$Id: compat3.tst,v 1.4.8.2 2005/05/10 08:48:44 gap Exp $
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  Exclude from testall.g: not expected to be of interest for users
+##
 
-gap> START_TEST("$Id: compat3.tst,v 1.4 2000/02/11 13:46:26 gap Exp $");
+gap> START_TEST("$Id: compat3.tst,v 1.4.8.2 2005/05/10 08:48:44 gap Exp $");
 
 # Read the library files `compat3a.g', `compat3b.g', `compat3c.g'.
 gap> ReadLib( "compat3c.g" );
@@ -182,23 +184,23 @@ gap> e:= Comp( 1, 0 );
 C( 1 + 0*I )
 gap> i:= Comp( 0, 1 );
 C( 0 + 1*I )
-gap> z:= 0 * e;
+gap> z:= Comp( 0, 0 );
 C( 0 + 0*I )
 
 gap> 7*e + 5*i = 5*i + 7*e;
 true
-gap> m1:= [ [ i, z ], [ z, -i ] ];
-[ [ C( 0 + 1*I ), C( 0 + 0*I ) ], [ C( 0 + 0*I ), C( 0 + -1*I ) ] ]
+gap> m1:= [ [ i, z ], [ z, i ] ];
+[ [ C( 0 + 1*I ), C( 0 + 0*I ) ], [ C( 0 + 0*I ), C( 0 + 1*I ) ] ]
 gap> m2:= [ [ z, e ], [ e, z ] ];
 [ [ C( 0 + 0*I ), C( 1 + 0*I ) ], [ C( 1 + 0*I ), C( 0 + 0*I ) ] ]
 gap> m1 * m2;
-[ [ C( 0 + 0*I ), C( 0 + 1*I ) ], [ C( 0 + -1*I ), C( 0 + 0*I ) ] ]
+[ [ C( 0 + 0*I ), C( 0 + 1*I ) ], [ C( 0 + 1*I ), C( 0 + 0*I ) ] ]
 gap> m1 + m2;
-[ [ C( 0 + 1*I ), C( 1 + 0*I ) ], [ C( 1 + 0*I ), C( 0 + -1*I ) ] ]
+[ [ C( 0 + 1*I ), C( 1 + 0*I ) ], [ C( 1 + 0*I ), C( 0 + 1*I ) ] ]
 gap> m1^4 = m2^2;
 true
 gap> ( m1 + m2 )^2;
-[ [ C( 0 + 0*I ), C( 0 + 0*I ) ], [ C( 0 + 0*I ), C( 0 + 0*I ) ] ]
+[ [ C( 0 + 0*I ), C( 0 + 2*I ) ], [ C( 0 + 2*I ), C( 0 + 0*I ) ] ]
 
 
 #T The following would *not* work, for various reasons.
@@ -313,7 +315,7 @@ gap> g.operations.SylowSubgroup( g, 2 );
 my method for `SylowSubgroup':
 Group([ (3,4), (1,4)(2,3), (1,3)(2,4) ])
 
-gap> STOP_TEST( "compat3.tst", 10000 );
+gap> STOP_TEST( "compat3.tst", infinity );
 
 
 #############################################################################

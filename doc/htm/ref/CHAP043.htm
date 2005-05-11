@@ -25,7 +25,7 @@
 </ol><p>
 <p>
 A group <var>G</var> is <strong>polycyclic</strong> if there exists a subnormal series
-<i>G</i> = <i>C</i><sub>1</sub>  &gt;  <i>C</i><sub>2</sub>  &gt;  <font face="symbol">&#8230;</font> &gt;  <i>C</i><sub><i>n</i></sub>  &gt;  <i>C</i><sub><i>n</i>+1</sub> = {1}
+<i>G</i> = <i>C</i><sub>1</sub>  &gt;  <i>C</i><sub>2</sub>  &gt;  &#8230; &gt;  <i>C</i><sub><i>n</i></sub>  &gt;  <i>C</i><sub><i>n</i>+1</sub> = {1}
 with cyclic factors. Such a series is called <strong>pc series</strong> of <var>G</var>.
 <p>
 Every polycyclic group is solvable and every finite solvable group
@@ -55,12 +55,12 @@ implementation is planned.
 <p><p>
 Let <var>G</var> be a polycyclic group with a pc series as above.  A
 <strong>polycyclic generating sequence</strong> (<strong>pcgs</strong> for short) of <var>G</var> is a
-sequence <i>P</i> : = (<i>g</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>) of elements of <var>G</var> such that
-<i>C</i><sub><i>i</i></sub> = <font face="symbol">&#9001;</font><i>C</i><sub><i>i</i>+1</sub>, <i>g</i><sub><i>i</i></sub> <font face="symbol">&#9002;</font> for 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>n</i>.
+sequence <i>P</i> : = (<i>g</i><sub>1</sub>, &#8230;, <i>g</i><sub><i>n</i></sub>) of elements of <var>G</var> such that
+<i>C</i><sub><i>i</i></sub> = &#9001;<i>C</i><sub><i>i</i>+1</sub>, <i>g</i><sub><i>i</i></sub> &#9002; for 1  &#8804; <i>i</i>  &#8804; <i>n</i>.
 Note that each polycyclic group has a pcgs, but except for very
 small groups, a pcgs is not unique.
 <p>
-For each index <i>i</i> the subsequence of elements (<i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+For each index <i>i</i> the subsequence of elements (<i>g</i><sub><i>i</i></sub>, &#8230;, <i>g</i><sub><i>n</i></sub>)
 forms a pcgs of the subgroup <i>C</i><sub><i>i</i></sub>. In particular, these <strong>tails</strong>
 generate the subgroups of the pc series and hence we say that
 the pc series is <strong>determined</strong> by <i>P</i>.
@@ -70,15 +70,15 @@ a finite positive number or infinity. Then <i>r</i><sub><i>i</i></sub> is the or
 <i>g</i><sub><i>i</i></sub> <i>C</i><sub><i>i</i>+1</sub> and we call the resulting list of indices the
 <strong>relative orders</strong> of the pcgs <var>P</var>.
 <p>
-Moreover, with respect to a given pcgs (<i>g</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>) each
+Moreover, with respect to a given pcgs (<i>g</i><sub>1</sub>, &#8230;, <i>g</i><sub><i>n</i></sub>) each
 element <var>g</var> of <var>G</var> can be represented in a unique
-way as a product <i>g</i> = <i>g</i><sub>1</sub><sup><i>e</i><sub>1</sub></sup> &#183;<i>g</i><sub>2</sub><sup><i>e</i><sub>2</sub></sup> <font face="symbol">&#8230;</font><i>g</i><sub><i>n</i></sub><sup><i>e</i><sub><i>n</i></sub></sup>
-with exponents <i>e</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> {0, <font face="symbol">&#8230;</font>, <i>r</i><sub><i>i</i></sub><font face="symbol">&#8722;</font>1}, if <i>r</i><sub><i>i</i></sub> is finite,
-and <i>e</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <b>Z</b> otherwise.
+way as a product <i>g</i> = <i>g</i><sub>1</sub><sup><i>e</i><sub>1</sub></sup> &#183;<i>g</i><sub>2</sub><sup><i>e</i><sub>2</sub></sup> &#8230;<i>g</i><sub><i>n</i></sub><sup><i>e</i><sub><i>n</i></sub></sup>
+with exponents <i>e</i><sub><i>i</i></sub>  &#8712; {0, &#8230;, <i>r</i><sub><i>i</i></sub>&#8722;1}, if <i>r</i><sub><i>i</i></sub> is finite,
+and <i>e</i><sub><i>i</i></sub>  &#8712; <b>Z</b> otherwise.
 Words of this form are called <strong>normal words</strong> or <strong>words in normal form</strong>.
-Then the integer vector [<i>e</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>e</i><sub><i>n</i></sub>] is called the
+Then the integer vector [<i>e</i><sub>1</sub>, &#8230;, <i>e</i><sub><i>n</i></sub>] is called the
 <strong>exponent vector</strong> of the element <i>g</i>. Furthermore, the smallest
-index <i>k</i> such that <i>e</i><sub><i>k</i></sub>  <font face="symbol">&#8800;</font> 0 is called the <strong>depth</strong> of <var>g</var> and
+index <i>k</i> such that <i>e</i><sub><i>k</i></sub>  &#8800; 0 is called the <strong>depth</strong> of <var>g</var> and
 <i>e</i><sub><i>k</i></sub> is the <strong>leading exponent</strong> of <var>g</var>.
 <p>
 For many applications we have to assume that each of the relative orders
@@ -285,7 +285,7 @@ indexed by <var>basisind</var>.
 <a name = "SSEC005.7"></a>
 <li><code>LinearCombinationPcgs( </code><var>pcgs</var><code>, </code><var>list</var><code> [, </code><var>one</var><code>] ) O</code>
 <p>
-returns the product <font face="symbol">&#8719;</font><sub><i>i</i></sub><i>pcgs</i> [<i>i</i>]<sup><i>list</i> [<i>i</i>]</sup>. In contrast to
+returns the product &#8719;<sub><i>i</i></sub><i>pcgs</i> [<i>i</i>]<sup><i>list</i> [<i>i</i>]</sup>. In contrast to
 <code>PcElementByExponents</code> this permits negative exponents.
 <var>pcgs</var> might be an list of group elements, in this case, an appropriate
 <var>one</var> must be given. if <var>list</var> can be empty.
@@ -327,7 +327,7 @@ depth.
 <li><code>CleanedTailPcElement( </code><var>pcgs</var><code>, </code><var>elm</var><code>, </code><var>dep</var><code> ) O</code>
 <p>
 returns an element in the span of <var>pcgs</var> whose exponents for indices 1
-to <i>dep</i> <font face="symbol">&#8722;</font>1 with respect to <var>pcgs</var> are the same as those of <var>elm</var>, the
+to <i>dep</i> &#8722;1 with respect to <var>pcgs</var> are the same as those of <var>elm</var>, the
 remaining exponents are undefined. This can be used to obtain more
 ``simple'' elements if only representatives in a factor are required,
 see&nbsp;<a href="CHAP043.htm#SECT009">Factor Groups of Polycyclic Groups - Modulo Pcgs</a>.
@@ -341,7 +341,7 @@ done cheaply.
 <li><code>HeadPcElementByNumber( </code><var>pcgs</var><code>, </code><var>elm</var><code>, </code><var>dep</var><code> ) O</code>
 <p>
 returns an element in the span of <var>pcgs</var> whose exponents for indices 1
-to <i>dep</i> <font face="symbol">&#8722;</font>1 with respect to <var>pcgs</var> are the same as those of <var>elm</var>, the
+to <i>dep</i> &#8722;1 with respect to <var>pcgs</var> are the same as those of <var>elm</var>, the
 remaining exponents are zero.
 This can be used to obtain more
 ``simple'' elements if only representatives in a factor are required.
@@ -401,10 +401,10 @@ vector.
 <h2><a name="SECT007">43.7 Subgroups of Polycyclic Groups - Induced Pcgs</a></h2>
 <p><p>
 Let <var>U</var> be a subgroup of <var>G</var> and let <var>P</var> be a pcgs of <var>G</var> as above such
-that <var>P</var> determines the subnormal series <i>G</i> = <i>C</i><sub>1</sub>  &gt;  <font face="symbol">&#8230;</font> &gt;  <i>C</i><sub><i>n</i>+1</sub> = {1}. Then the series of subgroups <i>U</i> <font face="symbol">&#8745;</font><i>C</i><sub><i>i</i></sub> is a subnormal series
+that <var>P</var> determines the subnormal series <i>G</i> = <i>C</i><sub>1</sub>  &gt;  &#8230; &gt;  <i>C</i><sub><i>n</i>+1</sub> = {1}. Then the series of subgroups <i>U</i> &#8745;<i>C</i><sub><i>i</i></sub> is a subnormal series
 of <var>U</var> with cyclic or trivial factors. Hence, if we choose an element
-<i>u</i><sub><i>i</i><sub><i>j</i></sub></sub>  <font face="symbol">&#8712;</font> (<i>U</i> <font face="symbol">&#8745;</font><i>C</i><sub><i>i</i><sub><i>j</i></sub></sub>) \(<i>U</i> <font face="symbol">&#8745;</font><i>C</i><sub><i>i</i><sub><i>j</i></sub>+1</sub>) whenever
-this factor is non-trivial, then we obtain a pcgs <i>Q</i> = (<i>u</i><sub><i>i</i><sub>1</sub></sub>, <font face="symbol">&#8230;</font>, <i>u</i><sub><i>i</i><sub><i>m</i></sub></sub>) of <i>U</i>. We say that <i>Q</i> is an <strong>induced pcgs</strong> with respect to
+<i>u</i><sub><i>i</i><sub><i>j</i></sub></sub>  &#8712; (<i>U</i> &#8745;<i>C</i><sub><i>i</i><sub><i>j</i></sub></sub>) \(<i>U</i> &#8745;<i>C</i><sub><i>i</i><sub><i>j</i></sub>+1</sub>) whenever
+this factor is non-trivial, then we obtain a pcgs <i>Q</i> = (<i>u</i><sub><i>i</i><sub>1</sub></sub>, &#8230;, <i>u</i><sub><i>i</i><sub><i>m</i></sub></sub>) of <i>U</i>. We say that <i>Q</i> is an <strong>induced pcgs</strong> with respect to
 <var>P</var>. The pcgs <var>P</var> is the <strong>parent pcgs</strong> to the induced pcgs <var>Q</var>.
 <p>
 Note that the pcgs <i>Q</i> is induced with respect to <var>P</var> if and only
@@ -556,8 +556,8 @@ Pcgs([ (5,6,7), (1,3)(2,4) ])
 <h2><a name="SECT009">43.9 Factor Groups of Polycyclic Groups - Modulo Pcgs</a></h2>
 <p><p>
 Let <var>N</var> be a normal subgroup of <var>G</var> such that <var>G/N</var> is polycyclic
-with pcgs (<i>h</i><sub>1</sub> <i>N</i>, <font face="symbol">&#8230;</font>, <i>h</i><sub><i>r</i></sub> <i>N</i>). Then we call the sequence of
-preimages (<i>h</i><sub>1</sub>, <font face="symbol">&#8230;</font><i>h</i><sub><i>r</i></sub>) a <strong>modulo pcgs</strong> of <var>G/N</var>.
+with pcgs (<i>h</i><sub>1</sub> <i>N</i>, &#8230;, <i>h</i><sub><i>r</i></sub> <i>N</i>). Then we call the sequence of
+preimages (<i>h</i><sub>1</sub>, &#8230;<i>h</i><sub><i>r</i></sub>) a <strong>modulo pcgs</strong> of <var>G/N</var>.
 <var>G</var> is called the <strong>numerator</strong> of the modulo pcgs and <var>N</var> is the
 <strong>denominator</strong> of the modulo pcgs.
 <p>
@@ -743,7 +743,7 @@ subgroups with elementary abelian factors (for example from calling
 <code>PcgsElementaryAbelianSeries</code>)
 Then <code>IndicesEANormalSteps</code> returns a sorted list of
 integers, indicating the tails of <var>pcgs</var> which generate these normal
-subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, &#8230;, <i>g</i><sub><i>n</i></sub>)
 is a normal subgroup of <var>G</var>.  The list always starts with 1 and ends
 with n+1. (These indices form <strong>one</strong> series with elementary abelian
 subfactors, not necessarily the most refined one.)
@@ -788,7 +788,7 @@ subgroups with central elementary abelian factors (for example from calling
 <code>PcgsCentralSeries</code>)
 Then <code>IndicesCentralNormalSteps</code> returns a sorted list of
 integers, indicating the tails of <var>pcgs</var> which generate these normal
-subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, &#8230;, <i>g</i><sub><i>n</i></sub>)
 is a normal subgroup of <var>G</var>.  The list always starts with 1 and ends
 with n+1. (These indices form <strong>one</strong> series with central elementary abelian
 subfactors, not necessarily the most refined one.)
@@ -834,7 +834,7 @@ subgroups with <i>p</i>-central elementary abelian factors (for example from
 calling <code>PcgsPCentralSeriesPGroup</code>).
 Then <code>IndicesPCentralNormalStepsPGroup</code> returns a sorted list of
 integers, indicating the tails of <var>pcgs</var> which generate these normal
-subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, &#8230;, <i>g</i><sub><i>n</i></sub>)
 is a normal subgroup of <var>G</var>.  The list always starts with 1 and ends
 with n+1. (These indices form <strong>one</strong> series with central elementary abelian
 subfactors, not necessarily the most refined one.)
@@ -880,7 +880,7 @@ Let <var>pcgs</var> be a pcgs obtained as corresponding to a chief series
 for example from calling <code>PcgsChiefSeries</code>).
 Then <code>IndicesChiefNormalSteps</code> returns a sorted list of
 integers, indicating the tails of <var>pcgs</var> which generate these normal
-subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, <font face="symbol">&#8230;</font>, <i>g</i><sub><i>n</i></sub>)
+subgroup of <var>G</var>. If <i>i</i> is an element of this list, (<i>g</i><sub><i>i</i></sub>, &#8230;, <i>g</i><sub><i>n</i></sub>)
 is a normal subgroup of <var>G</var>.  The list always starts with 1 and ends
 with n+1. (These indices form <strong>one</strong> series with elementary abelian
 subfactors, not necessarily the most refined one.)
@@ -987,11 +987,11 @@ their definition the reader is referred to <a href="biblio.htm#Eick97"><cite>Eic
 <p>
 To introduce the definition of special pcgs we first need to define
 the <strong>LG-series</strong> and <strong>head complements</strong> of a finite polycyclic group <var>G</var>.
-Let <i>G</i> = <i>G</i><sub>1</sub>  &gt;  <i>G</i><sub>2</sub>  &gt;  <font face="symbol">&#8230;</font><i>G</i><sub><i>m</i></sub>  &gt;  <i>G</i><sub><i>m</i>+1</sub> = {1} be the lower
+Let <i>G</i> = <i>G</i><sub>1</sub>  &gt;  <i>G</i><sub>2</sub>  &gt;  &#8230;<i>G</i><sub><i>m</i></sub>  &gt;  <i>G</i><sub><i>m</i>+1</sub> = {1} be the lower
 nilpotent series of <i>G</i>; that is, <i>G</i><sub><i>i</i></sub> is the smallest normal
-subgroup of <i>G</i><sub><i>i</i><font face="symbol">&#8722;</font>1</sub> with nilpotent factor. To obtain the LG-series
+subgroup of <i>G</i><sub><i>i</i>&#8722;1</sub> with nilpotent factor. To obtain the LG-series
 of <var>G</var> we need to refine this series. Thus consider a factor <i>F</i><sub><i>i</i></sub> : = <i>G</i><sub><i>i</i></sub> / <i>G</i><sub><i>i</i>+1</sub>. Since <i>F</i><sub><i>i</i></sub> is finite nilpotent, it is a direct
-product of its Sylow subgroups, say <i>F</i><sub><i>i</i></sub> = <i>P</i><sub><i>i</i>,1</sub> <font face="symbol">&#8230;</font><i>P</i><sub><i>i</i>,<i>r</i><sub><i>i</i></sub></sub>.
+product of its Sylow subgroups, say <i>F</i><sub><i>i</i></sub> = <i>P</i><sub><i>i</i>,1</sub> &#8230;<i>P</i><sub><i>i</i>,<i>r</i><sub><i>i</i></sub></sub>.
 For each Sylow <i>p</i><sub><i>j</i></sub>-subgroup <i>P</i><sub><i>i</i>, <i>j</i></sub> we can consider its
 lower <i>p</i><sub><i>j</i></sub>-central series. To obtain a characteristic central series
 with elementary abelian factors of <i>F</i><sub><i>i</i></sub> we loop over its Sylow subgroups.
@@ -1012,8 +1012,8 @@ Now we are able to define a special pcgs of <var>G</var>. It is a pcgs of <var>G
 with three additional properties. First, the pc series determined
 by the pcgs refines the LG-series of <var>G</var>. Second, a special pcgs
 <strong>exhibits</strong> a Hall system of the group <var>G</var>; that is, for each set of
-primes <font face="symbol">&#960;</font> the elements of the pcgs with relative order in <font face="symbol">&#960;</font>
-form a pcgs of a Hall <font face="symbol">&#960;</font>-subgroup in a Hall system of <var>G</var>.
+primes &#960; the elements of the pcgs with relative order in &#960;
+form a pcgs of a Hall &#960;-subgroup in a Hall system of <var>G</var>.
 Third, a special pcgs exhibits a head complement for each head
 of <var>G</var>.
 <p>
@@ -1106,7 +1106,7 @@ and the second subgroup in this series is generated by <i>f</i>6.
 The second group, <code>SmallGroup(96, 120)</code>, has a lower nilpotent series of length
 2 and hence is not nilpotent. The second subgroup in this series
 is just the Sylow 3-subgroup and it is generated by <i>f</i>6. The subgroup
-generated by <i>f</i>1, <font face="symbol">&#8230;</font>, <i>f</i>5 is a Sylow 2-subgroup of the group and
+generated by <i>f</i>1, &#8230;, <i>f</i>5 is a Sylow 2-subgroup of the group and
 also a head complement to the second head of the group. Its lower
 2-central series has length 2.
 <p>
@@ -1343,9 +1343,9 @@ returns a function  (of the form func(<var>fhome</var>,<var>rep</var>,<var>cen</
 of the options record. It will restrict the lifting to those classes,
 for which the size of the centralizer (in the factor) is at most <var>sz</var>.
 <p>
-See also <code>SubgroupsSolvableGroup</code> (<a href="CHAP037.htm#SSEC020.3">SubgroupsSolvableGroup</a>).
+See also <code>SubgroupsSolvableGroup</code> (<a href="CHAP037.htm#SSEC021.3">SubgroupsSolvableGroup</a>).
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP042.htm">Previous</a>] [<a href ="CHAP044.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

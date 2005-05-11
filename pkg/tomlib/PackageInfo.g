@@ -6,7 +6,7 @@ SetPackageInfo( rec(
 PackageName :=
   "TomLib",
 MyVersion :=
-  "1r1p1",
+  "1r1p2",
 MyWWWHome :=
   "http://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
@@ -17,7 +17,8 @@ Autoload :=
   true,
 Date :=
   # "06/05/2002" // Version 1.0  # the release date of GAP 4.3
-  "06/05/2002",
+  # "18/12/2003" // Version 1.1.1
+  "26/02/2004",
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
@@ -96,11 +97,11 @@ PackageDoc := rec(
   ),
 Dependencies := rec(
   GAP :=
-    ">= 4.3",
+    ">= 4.4",
   NeededOtherPackages :=
     [],
   SuggestedOtherPackages :=
-    [ ["ctbllib", ">= 1.0"] ], # [["gpisotyp", ">= 1.0"]],
+    [ ["ctbllib", ">= 1.1"] ], # [["gpisotyp", ">= 1.0"]],
   ExternalConditions :=
     []
   ),

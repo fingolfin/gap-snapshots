@@ -2,11 +2,13 @@
 ##
 #W  weakptr.tst                GAP Library                       Steve Linton
 ##
-#H  @(#)$Id: weakptr.tst,v 4.12 2000/02/24 18:15:26 wdg Exp $
+#H  @(#)$Id: weakptr.tst,v 4.12.8.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1997, 
 ##
-gap> START_TEST("$Id: weakptr.tst,v 4.12 2000/02/24 18:15:26 wdg Exp $");
+##  Exclude from testall.g: too sensitive to compiler idiosyncracies SL
+##
+gap> START_TEST("$Id: weakptr.tst,v 4.12.8.3 2005/05/11 14:53:02 gap Exp $");
 #
 # Low level access functions
 #
@@ -60,4 +62,4 @@ false
 gap> Unbind(w[2]);
 gap> Print(w,"\n");
 WeakPointerObj( [ 1, , E(5), 311, , fail ] )
-gap> STOP_TEST( "weakptr.tst", 24477500 );
+gap> STOP_TEST( "weakptr.tst", 45400000 );

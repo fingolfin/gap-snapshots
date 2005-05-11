@@ -5,7 +5,7 @@
 %A  ctbl.msk                    GAP documentation               Thomas Breuer
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: ctbl.msk,v 1.47 2003/10/06 07:27:57 gap Exp $
+%A  @(#)$Id: ctbl.msk,v 1.47.2.1 2005/05/09 07:39:28 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -211,7 +211,7 @@ The major contributions can be listed as follows.
     but was not efficient enough;
     later Martin Sch{\accent127 o}nert replaced the implementation
     by a better one.
-    % and since then, there have been more than 30 local improvements ...
+% and since then, there have been more than 30 local improvements ...
 
 \item{$\bullet$}
     The basic routines for characters and character tables were written
@@ -2515,12 +2515,12 @@ After the initialisation, one structure matrix is evaluated,
 yielding smaller spaces and several irreducible characters.
 \beginexample
 gap> DixonSplit( d );
-#I  Matrix 20,Representative of Order 3,Centralizer: 5832
+#I  Matrix 4,Representative of Order 3,Centralizer: 5832
 #I  Dimensions: [ 1, 12, 2, 2, 4, 2, 1, 1, 1, 1, 1 ]
 #I  Two-dim space split
 #I  Two-dim space split
 #I  Two-dim space split
-20
+4
 \endexample
 In this case spaces of the listed dimensions are a result of the
 splitting process.
@@ -2547,7 +2547,7 @@ gap> ro:= ReducedOrdinary( c, d.irreducibles, t );;  ro.irreducibles;
 [  ]
 gap> List( ro.remainders, i -> ScalarProduct( c, i, i) );
 [ 2, 2, 4, 4, 4, 4, 13, 13, 18, 18, 19, 21, 21, 36, 36, 29, 34, 34, 42, 34, 
-  48, 54, 62, 68, 68, 78, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 
+  48, 54, 62, 68, 68, 78, 84, 84, 90, 88, 159, 169, 169, 172, 172, 266, 271, 
   271, 268, 274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 
   768, 768, 890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 
   2058, 2379, 2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 
@@ -2556,8 +2556,8 @@ gap> List( ro.remainders, i -> ScalarProduct( c, i, i) );
   38942, 44950, 78778 ]
 gap> t:= SplitCharacters( d, ro.remainders );;
 gap> List( t, i -> ScalarProduct( c, i, i ) );
-[ 2, 2, 4, 2, 2, 4, 4, 3, 6, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
-  16, 42, 36, 84, 84, 88, 90, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
+[ 2, 2, 4, 2, 2, 4, 4, 6, 3, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
+  16, 42, 36, 84, 84, 90, 88, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
   274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 768, 768, 
   890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 2058, 2379, 
   2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 4760, 5112, 
@@ -2582,10 +2582,10 @@ So we convert them to a list of values
 before feeding them in the machinery of the Dixon-algorithm.
 \beginexample
 gap> l.irreducibles[1];
-Character( CharacterTable( PSL(4,3) ), [ 640, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  -8, 0, 0, -8, 0, 0, 0, 1, -8, 0, 1, 0, 0, E(13)^7+E(13)^8+E(13)^11, 
-  E(13)+E(13)^3+E(13)^9, E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 
-  1 ] )
+Character( CharacterTable( PSL(4,3) ),
+[ 640, 0, 0, -8, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)+E(13)^3+E(13)^9, 
+  E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, -8, -8, 0, 0, 0, 0, 0, 1, 1, 1 ] )
 gap> l:=List(l.irreducibles,ValuesOfClassFunction);;
 gap> DxIncludeIrreducibles( d, l );
 gap> Length( d.irreducibles );
@@ -2599,7 +2599,7 @@ group.
 This makes them available also to the character table.
 \beginexample
 gap> irrs:= DixontinI( d );;
-#I  Total:1 matrices,[ 20 ]
+#I  Total:1 matrices,[ 4 ]
 gap> SetIrr(g,irrs);
 gap> Length(Irr(c));
 29
@@ -3241,18 +3241,18 @@ gap> irr:= Irr( g );
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 gap> kernel:= KernelOfCharacter( irr[3] );
-Group([ (1,2)(3,4), (1,4)(2,3) ])
+Group([ (1,2)(3,4), (1,3)(2,4) ])
 gap> HasNormalSubgroupClassesInfo( tbl );
 true
 gap> NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [  ] )
 gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
 [ 1, 3 ]
 gap> FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
 Group([ f1, f2 ])
 gap> NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [ Group([ f1, f2 ]) ] )
 \endexample
 

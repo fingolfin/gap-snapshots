@@ -19,7 +19,7 @@
 
 Given a magma <i>M</i> then the <strong>free magma ring</strong> (or <strong>magma ring</strong> for short)
 <i>RM</i> of <i>M</i> over a ring-with-one <i>R</i> is the set of finite sums
-<font face="symbol">&#8721;</font><sub><i>i</i> <font face="symbol">&#8712;</font> <i>I</i></sub> <i>r</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i></sub> with <i>r</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>R</i>, and <i>m</i><sub><i>i</i></sub>  <font face="symbol">&#8712;</font> <i>M</i>.
+&#8721;<sub><i>i</i> &#8712; <i>I</i></sub> <i>r</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i></sub> with <i>r</i><sub><i>i</i></sub>  &#8712; <i>R</i>, and <i>m</i><sub><i>i</i></sub>  &#8712; <i>M</i>.
 With the obvious addition and <i>R</i>-action from the left, <i>RM</i> is a free
 <i>R</i>-module with <i>R</i>-basis <i>M</i>,
 and with the usual convolution product, <i>RM</i> is a ring.
@@ -187,10 +187,10 @@ For an element <var>elm</var> of a magma ring (modulo relations) <i>RM</i>,
 <a name = "SSEC002.5"></a>
 <li><code>ElementOfMagmaRing( </code><var>Fam</var><code>, </code><var>zerocoeff</var><code>, </code><var>coeffs</var><code>, </code><var>mgmelms</var><code> ) O</code>
 <p>
-<code>ElementOfMagmaRing</code> returns the element <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i></sub><sup><font face="symbol">&#8242;</font></sup>,
-where <i>coeffs</i>  = [ <i>c</i><sub>1</sub>, <i>c</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>c</i><sub><i>n</i></sub> ] is a list of coefficients,
-<i>mgmelms</i>  = [ <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>m</i><sub><i>n</i></sub> ] is a list of magma elements,
-and <i>m</i><sub><i>i</i></sub><sup><font face="symbol">&#8242;</font></sup> is the image of <i>m</i><sub><i>i</i></sub> under an embedding
+<code>ElementOfMagmaRing</code> returns the element &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>i</i></sub> <i>m</i><sub><i>i</i></sub><sup>&#8242;</sup>,
+where <i>coeffs</i>  = [ <i>c</i><sub>1</sub>, <i>c</i><sub>2</sub>, &#8230;, <i>c</i><sub><i>n</i></sub> ] is a list of coefficients,
+<i>mgmelms</i>  = [ <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, &#8230;, <i>m</i><sub><i>n</i></sub> ] is a list of magma elements,
+and <i>m</i><sub><i>i</i></sub><sup>&#8242;</sup> is the image of <i>m</i><sub><i>i</i></sub> under an embedding
 of a magma containing <i>m</i><sub><i>i</i></sub> into a magma ring
 whose elements lie in the family <var>Fam</var>.
 <var>zerocoeff</var> must be the zero of the coefficient ring
@@ -315,10 +315,10 @@ argument.
 <li><code>MagmaRingModuloSpanOfZero( </code><var>R</var><code>, </code><var>M</var><code>, </code><var>z</var><code> ) F</code>
 <p>
 Let <var>R</var> be a ring, <var>M</var> a magma, and <var>z</var> an element of <var>M</var> with the
-property that <i>z</i>  * <i>m</i> = <i>z</i>  for all <i>m</i>  <font face="symbol">&#8712;</font> <i>M</i>.
+property that <i>z</i>  * <i>m</i> = <i>z</i>  for all <i>m</i>  &#8712; <i>M</i>.
 The element <var>z</var> could be called a ``zero element'' of <var>M</var>,
 but note that in general <var>z</var> cannot be obtained as <code>Zero( <i>m</i> )</code>
-for each <i>m</i>  <font face="symbol">&#8712;</font> <i>M</i>, so this situation does not match the definition of
+for each <i>m</i>  &#8712; <i>M</i>, so this situation does not match the definition of
 <code>Zero</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.3">Zero</a>).
 <p>
 <code>MagmaRingModuloSpanOfZero</code> returns the magma ring <i>R</i> <i>M</i>  modulo
@@ -393,5 +393,5 @@ via <code>/</code>.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP062.htm">Previous</a>] [<a href ="CHAP064.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

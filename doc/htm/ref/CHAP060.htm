@@ -194,7 +194,7 @@ If <var>T</var> is known to be antisymmetric or symmetric then also the value
 <code></code><var>T</var><code>[</code><var>j</var><code>][</code><var>i</var><code>]</code> is set.
 <p>
 <var>list</var> must be of the form
-[ <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>1</sub></sup>, <i>k</i><sub>1</sub>, <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>2</sub></sup>, <i>k</i><sub>2</sub>, <font face="symbol">&#8230;</font>].
+[ <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>1</sub></sup>, <i>k</i><sub>1</sub>, <i>c</i><sub><i>ij</i></sub><sup><i>k</i><sub>2</sub></sup>, <i>k</i><sub>2</sub>, &#8230;].
 <p>
 The entries at the odd positions of <var>list</var> must be compatible with the
 zero element stored in <var>T</var>.
@@ -233,7 +233,7 @@ tests whether the structure constants table <var>T</var> satisfies the Jacobi
 identity
 <i>v</i><sub><i>i</i></sub>*(<i>v</i><sub><i>j</i></sub>*<i>v</i><sub><i>k</i></sub>)+<i>v</i><sub><i>j</i></sub>*(<i>v</i><sub><i>k</i></sub>*<i>v</i><sub><i>i</i></sub>)+<i>v</i><sub><i>k</i></sub>*(<i>v</i><sub><i>i</i></sub>*<i>v</i><sub><i>j</i></sub>)=0
 for all basis vectors <i>v</i><sub><i>i</i></sub> of the underlying algebra,
-where <i>i</i>  <font face="symbol">&#8804;</font> <i>j</i>  <font face="symbol">&#8804;</font> <i>k</i>.
+where <i>i</i>  &#8804; <i>j</i>  &#8804; <i>k</i>.
 (Thus antisymmetry is assumed.)
 <p>
 The function returns <code>true</code> if the Jacobi identity is satisfied,
@@ -305,14 +305,14 @@ with respect to the basis that belongs to <var>T</var>.
 We solve the equation system <i>num</i>  = <i>x</i> <i>den</i> .
 If no solution exists, <code>fail</code> is returned.
 <p>
-In terms of the basis <i>B</i> with vectors <i>b</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>b</i><sub><i>n</i></sub> this means
-for <i>num</i>  = <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>a</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub>,
-    <i>den</i>  = <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub>,
-    <i>x</i> = <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>x</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub> that
-<i>a</i><sub><i>k</i></sub> = <font face="symbol">&#8721;</font><sub><i>i</i>,<i>j</i></sub> <i>c</i><sub><i>i</i></sub> <i>x</i><sub><i>j</i></sub> <i>c</i><sub><i>ijk</i></sub> for all <i>k</i>.
+In terms of the basis <i>B</i> with vectors <i>b</i><sub>1</sub>, &#8230;, <i>b</i><sub><i>n</i></sub> this means
+for <i>num</i>  = &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>a</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub>,
+    <i>den</i>  = &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub>,
+    <i>x</i> = &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>x</i><sub><i>i</i></sub> <i>b</i><sub><i>i</i></sub> that
+<i>a</i><sub><i>k</i></sub> = &#8721;<sub><i>i</i>,<i>j</i></sub> <i>c</i><sub><i>i</i></sub> <i>x</i><sub><i>j</i></sub> <i>c</i><sub><i>ijk</i></sub> for all <i>k</i>.
 Here <i>c</i><sub><i>ijk</i></sub> denotes the structure constants with respect to <i>B</i>.
 This means that (as a vector) <i>a</i>=<i>xM</i> with
-<i>M</i><sub><i>jk</i></sub> = <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>ijk</i></sub> <i>c</i><sub><i>i</i></sub>.
+<i>M</i><sub><i>jk</i></sub> = &#8721;<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>c</i><sub><i>ijk</i></sub> <i>c</i><sub><i>i</i></sub>.
 <p>
 <pre>
 gap&gt; T:= EmptySCTable( 2, 0 );;
@@ -334,10 +334,10 @@ is a quaternion algebra over the field <var>F</var> with parameters <var>a</var>
 <var>F</var>, i.e., a four-dimensional associative <var>F</var>-algebra with basis
 (<i>e</i>,<i>i</i>,<i>j</i>,<i>k</i>) and multiplication defined by
 <i>e</i> <i>e</i> = <i>e</i>, <i>e</i> <i>i</i> = <i>i</i> <i>e</i> = <i>i</i>, <i>e</i> <i>j</i> = <i>j</i> <i>e</i> = <i>j</i>, <i>e</i> <i>k</i> = <i>k</i> <i>e</i> = <i>k</i>,
-<i>i</i> <i>i</i> = <i>a</i>  <i>e</i>, <i>i</i> <i>j</i> = <font face="symbol">&#8722;</font> <i>j</i> <i>i</i> = <i>k</i>, <i>i</i> <i>k</i> = <font face="symbol">&#8722;</font> <i>k</i> <i>i</i> = <i>a</i>  <i>j</i>,
-<i>j</i> <i>j</i> = <i>b</i>  <i>e</i>, <i>j</i> <i>k</i> = <font face="symbol">&#8722;</font> <i>k</i> <i>j</i> = <i>b</i>  <i>i</i>,
-<i>k</i> <i>k</i> = <font face="symbol">&#8722;</font> <i>a</i>  <i>b</i>  <i>e</i>.
-The default value for both <var>a</var> and <var>b</var> is <font face="symbol">&#8722;</font>1  <font face="symbol">&#8712;</font> <i>F</i> .
+<i>i</i> <i>i</i> = <i>a</i>  <i>e</i>, <i>i</i> <i>j</i> = &#8722; <i>j</i> <i>i</i> = <i>k</i>, <i>i</i> <i>k</i> = &#8722; <i>k</i> <i>i</i> = <i>a</i>  <i>j</i>,
+<i>j</i> <i>j</i> = <i>b</i>  <i>e</i>, <i>j</i> <i>k</i> = &#8722; <i>k</i> <i>j</i> = <i>b</i>  <i>i</i>,
+<i>k</i> <i>k</i> = &#8722; <i>a</i>  <i>b</i>  <i>e</i>.
+The default value for both <var>a</var> and <var>b</var> is &#8722;1  &#8712; <i>F</i> .
 <p>
 The <code>GeneratorsOfAlgebra</code> (see&nbsp;<a href="CHAP060.htm#SSEC008.1">GeneratorsOfAlgebra</a>) and
 <code>CanonicalBasis</code> (see&nbsp;<a href="CHAP059.htm#SSEC004.3">CanonicalBasis</a>) value of an algebra constructed
@@ -357,7 +357,7 @@ gap&gt; QuaternionAlgebra( Rationals );
 <li><code>ComplexificationQuat( </code><var>vector</var><code> ) F</code>
 <li><code>ComplexificationQuat( </code><var>matrix</var><code> ) F</code>
 <p>
-Let <i>A</i> = <i>e</i> <i>F</i> <font face="symbol">&#8853;</font><i>i</i> <i>F</i> <font face="symbol">&#8853;</font><i>j</i> <i>F</i> <font face="symbol">&#8853;</font><i>k</i> <i>F</i> be a quaternion algebra
+Let <i>A</i> = <i>e</i> <i>F</i> &#8853;<i>i</i> <i>F</i> &#8853;<i>j</i> <i>F</i> &#8853;<i>k</i> <i>F</i> be a quaternion algebra
 over the field <i>F</i> of cyclotomics, with basis (<i>e</i>,<i>i</i>,<i>j</i>,<i>k</i>).
 <p>
 If <i>v</i> = <i>v</i><sub>1</sub> + <i>v</i><sub>2</sub> <i>j</i> is a row vector over <i>A</i> with <i>v</i><sub>1</sub> = <i>e</i> <i>w</i><sub>1</sub> + <i>i</i> <i>w</i><sub>2</sub>
@@ -366,12 +366,12 @@ concatenation of <i>w</i><sub>1</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt>
 <p>
 If <i>M</i> = <i>M</i><sub>1</sub> + <i>M</i><sub>2</sub> <i>j</i> is a matrix over <i>A</i> with <i>M</i><sub>1</sub> = <i>e</i> <i>N</i><sub>1</sub> + <i>i</i> <i>N</i><sub>2</sub>
 and <i>M</i><sub>2</sub> = <i>e</i> <i>N</i><sub>3</sub> + <i>i</i> <i>N</i><sub>4</sub> then <code>ComplexificationQuat( </code><var>M</var><code> )</code> is the
-block matrix <i>A</i> over <i>e</i> <i>F</i> <font face="symbol">&#8853;</font><i>i</i> <i>F</i> such that <i>A</i>(1,1)=<i>N</i><sub>1</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>2</sub>,
-<i>A</i>(2,2)=<i>N</i><sub>1</sub> <font face="symbol">&#8722;</font> <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>2</sub>, <i>A</i>(1,2)=<i>N</i><sub>3</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>4</sub> and <i>A</i>(2,1) = <font face="symbol">&#8722;</font> <i>N</i><sub>3</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>4</sub>.
+block matrix <i>A</i> over <i>e</i> <i>F</i> &#8853;<i>i</i> <i>F</i> such that <i>A</i>(1,1)=<i>N</i><sub>1</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>2</sub>,
+<i>A</i>(2,2)=<i>N</i><sub>1</sub> &#8722; <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>2</sub>, <i>A</i>(1,2)=<i>N</i><sub>3</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>4</sub> and <i>A</i>(2,1) = &#8722; <i>N</i><sub>3</sub> + <tt>E</tt><tt>(</tt><tt>4</tt><tt>)</tt> <i>N</i><sub>4</sub>.
 <p>
 Then <code>ComplexificationQuat(</code><var>v</var><code>)*ComplexificationQuat(</code><var>M</var><code>)=
       ComplexificationQuat(</code><var>v</var><code>*</code><var>M</var><code>)</code>, since
-<br clear="all" /><table border="0" width="100%"><tr><td><table align="center"><tr><td nowrap="nowrap" align="center"> <i>v</i> <i>M</i> = <i>v</i><sub>1</sub> <i>M</i><sub>1</sub> + <i>v</i><sub>2</sub> <i>j</i> <i>M</i><sub>1</sub> + <i>v</i><sub>1</sub> <i>M</i><sub>2</sub> <i>j</i> + <i>v</i><sub>2</sub> <i>j</i> <i>M</i><sub>2</sub> <i>j</i> = ( <i>v</i><sub>1</sub> <i>M</i><sub>1</sub> <font face="symbol">&#8722;</font> <i>v</i><sub>2</sub></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>M</i><sub>2</sub><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">) + ( <i>v</i><sub>1</sub> <i>M</i><sub>2</sub> + <i>v</i><sub>2</sub></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>M</i><sub>1</sub><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">) <i>j</i>. </td></tr></table></td></tr></table>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>v</i> <i>M</i> = <i>v</i><sub>1</sub> <i>M</i><sub>1</sub> + <i>v</i><sub>2</sub> <i>j</i> <i>M</i><sub>1</sub> + <i>v</i><sub>1</sub> <i>M</i><sub>2</sub> <i>j</i> + <i>v</i><sub>2</sub> <i>j</i> <i>M</i><sub>2</sub> <i>j</i> = ( <i>v</i><sub>1</sub> <i>M</i><sub>1</sub> &#8722; <i>v</i><sub>2</sub></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>M</i><sub>2</sub><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">) + ( <i>v</i><sub>1</sub> <i>M</i><sub>2</sub> + <i>v</i><sub>2</sub></td><td nowrap="nowrap" align="center"><div class="hrcomp"><hr noshade="noshade" size="1"/></div><div class="norm"><i>M</i><sub>1</sub><br /></div><div class="comb">&nbsp;</div></td><td nowrap="nowrap" align="center">) <i>j</i>. </td></tr></table></td></tr></table>
 <p>
 <a name = "SSEC004.3"></a>
 <li><code>OctaveAlgebra( </code><var>F</var><code> ) F</code>
@@ -714,7 +714,7 @@ gap&gt; GeneratorsOfAlgebraWithOne( A );
 <a name = "SSEC008.3"></a>
 <li><code>ProductSpace( </code><var>U</var><code>, </code><var>V</var><code> ) O</code>
 <p>
-is the vector space <font face="symbol">&#9001;</font><i>u</i> * <i>v</i> ; <i>u</i>  <font face="symbol">&#8712;</font> <i>U</i>, <i>v</i>  <font face="symbol">&#8712;</font> <i>V</i> <font face="symbol">&#9002;</font>,
+is the vector space &#9001;<i>u</i> * <i>v</i> ; <i>u</i>  &#8712; <i>U</i>, <i>v</i>  &#8712; <i>V</i> &#9002;,
 where <i>U</i> and <i>V</i> are subspaces of the same algebra.
 <p>
 If <i>U</i>  = <i>V</i>  is known to be an algebra then the product space is also
@@ -1060,8 +1060,8 @@ gap&gt; LeviMalcevDecomposition( A );
 <li><code>Grading( </code><var>A</var><code> ) A</code>
 <p>
 Let <i>G</i> be an Abelian group and <i>A</i> an algebra. Then <i>A</i> is said to 
-be graded over <i>G</i> if for every <i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> there is a subspace <i>A</i><sub><i>g</i></sub>
-of <i>A</i> such that <i>A</i><sub><i>g</i></sub> &#183;<i>A</i><sub><i>h</i></sub>  <font face="symbol">&#8834;</font> <i>A</i><sub><i>g</i>+<i>h</i></sub> for <i>g</i>, <i>h</i>  <font face="symbol">&#8712;</font> <i>G</i>. 
+be graded over <i>G</i> if for every <i>g</i>  &#8712; <i>G</i> there is a subspace <i>A</i><sub><i>g</i></sub>
+of <i>A</i> such that <i>A</i><sub><i>g</i></sub> &#183;<i>A</i><sub><i>h</i></sub>  &#8834; <i>A</i><sub><i>g</i>+<i>h</i></sub> for <i>g</i>, <i>h</i>  &#8712; <i>G</i>. 
 In <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 a <strong>grading</strong> of an algebra is a record containing the following
 components: 
 <p>
@@ -1899,5 +1899,5 @@ gap&gt; T:=TranslatorSubalgebra( M, U, W );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP059.htm">Previous</a>] [<a href ="CHAP061.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

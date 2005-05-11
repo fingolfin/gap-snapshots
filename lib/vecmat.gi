@@ -2,7 +2,7 @@
 ##
 #W  vecmat.gi                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: vecmat.gi,v 4.93 2003/06/02 17:36:23 gap Exp $
+#H  @(#)$Id: vecmat.gi,v 4.93.2.2 2005/05/03 21:16:52 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with GF2 vectors and matrices.
 ##
 Revision.vecmat_gi :=
-    "@(#)$Id: vecmat.gi,v 4.93 2003/06/02 17:36:23 gap Exp $";
+    "@(#)$Id: vecmat.gi,v 4.93.2.2 2005/05/03 21:16:52 sal Exp $";
 
 #############################################################################
 ##
@@ -957,9 +957,9 @@ function( mat )
 
     new := [ Length(mat) ];
     if 0 < new[1]   then
-        zero := ZeroOp(mat[1]);
-        SetFilterObj(zero, IsLockedRepresentationVector);
         for i in [ 1 .. new[1] ]  do
+	        zero := ZeroOp(mat[1]);
+        	SetFilterObj(zero, IsLockedRepresentationVector);
             Add( new, zero );
         od;
     fi;
@@ -1772,6 +1772,11 @@ InstallMethod( PowerModCoeffs, "for gf2vectors", IsFamXYFamZ,
         function( v, lv, exp, w, lw)
     
     local pow, lpow, bits, i;
+    if exp = 1 then
+        pow := ShallowCopy(v);
+        ReduceCoeffs(pow,lv,w,lw);
+        return pow;
+    fi;
     pow := v;
     lpow := lv;
     bits := [];

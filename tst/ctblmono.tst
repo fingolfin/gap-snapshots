@@ -3,12 +3,14 @@
 #W  ctblmono.tst               GAP Library                      Thomas Breuer
 #W                                                         & Erzsebet Horvath
 ##
-#H  @(#)$Id: ctblmono.tst,v 4.13 2003/11/15 16:58:59 gap Exp $
+#H  @(#)$Id: ctblmono.tst,v 4.13.2.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: ctblmono.tst,v 4.13 2003/11/15 16:58:59 gap Exp $");
+gap> START_TEST("$Id: ctblmono.tst,v 4.13.2.3 2005/05/11 14:53:02 gap Exp $");
 
 gap> S4:= SymmetricGroup( 4 );;  SetName( S4, "S4");
 gap> Sl23:= SL( 2, 3 );;
@@ -111,11 +113,10 @@ gap> MinimalNonmonomialGroup(  1, 14 );
 gap> MinimalNonmonomialGroup(  2, 14 );
 (2^(1+6)Y4):D14
 
-gap> STOP_TEST( "ctblmono.tst",274001908);
+gap> STOP_TEST( "ctblmono.tst", 259000000 );
 
 
 #############################################################################
 ##
 #E
-##
 

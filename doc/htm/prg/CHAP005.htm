@@ -41,19 +41,19 @@ where <i>n</i> is a positive integer.
 <p>
 First we have to decide how to represent the element <i>k</i> + <i>n</i><b>Z</b> in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
 If the modulus <i>n</i> is fixed then we can use the integer <i>k</i>.
-More precisely, we can use any integer <i>k</i><sup><font face="symbol">&#8242;</font></sup>
-such that <i>k</i> <font face="symbol">&#8722;</font> <i>k</i><sup><font face="symbol">&#8242;</font></sup> is a multiple of <i>n</i>.
+More precisely, we can use any integer <i>k</i><sup>&#8242;</sup>
+such that <i>k</i> &#8722; <i>k</i><sup>&#8242;</sup> is a multiple of <i>n</i>.
 If different moduli are likely to occur then using a list of the form
 [ <i>k</i>, <i>n</i> ], or a record of the form <code>rec( residue := </code><var>k</var><code>, modulus := </code><var>n</var><code> )</code>
 is more appropriate.
 In the following, let us assume the list representation [ <i>k</i>, <i>n</i> ] is
 chosen.
 Moreover, we decide that the residue <i>k</i> in all such lists satisfies
-0  <font face="symbol">&#8804;</font> <i>k</i>  &lt;  <i>n</i>,
+0  &#8804; <i>k</i>  &lt;  <i>n</i>,
 i.e., the result of adding two residue classes represented by
 [ <i>k</i><sub>1</sub>, <i>n</i> ] and [ <i>k</i><sub>2</sub>, <i>n</i> ] (of course with same modulus <i>n</i>)
 will be [ <i>k</i>, <i>n</i> ] with <i>k</i><sub>1</sub> + <i>k</i><sub>2</sub> congruent to <i>k</i> modulo <i>n</i>
-and 0  <font face="symbol">&#8804;</font> <i>k</i>  &lt;  <i>n</i>.
+and 0  &#8804; <i>k</i>  &lt;  <i>n</i>.
 <p>
 Now we can implement the arithmetic operations for residue classes.
 Note that the result of the <code>mod</code> operator is normalized as required.
@@ -1355,5 +1355,5 @@ in these categories.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP004.htm">Previous</a>] [<a href ="CHAP006.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

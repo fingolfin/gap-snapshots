@@ -2,12 +2,14 @@
 ##
 #W  ratfun.tst                  GAP Tests                    Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun.tst,v 4.4 2002/04/15 10:08:41 sal Exp $
+#H  @(#)$Id: ratfun.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  (C) 1998 School Math. and Comp. Sci., University of St Andrews, Scotland
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: ratfun.tst,v 4.4 2002/04/15 10:08:41 sal Exp $");
+gap> START_TEST("$Id: ratfun.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $");
 gap> t:=Indeterminate(Rationals,100);;
 gap> SetName(t,"t");;
 gap> p0:=0*t^0;;
@@ -40,10 +42,10 @@ gap> 1/( y1*y2 );
 1/(x_1*x_2)
 
 
-gap> STOP_TEST( "ratfun.tst", 9000000 );
+gap> STOP_TEST( "ratfun.tst", 5800000 );
+
 
 #############################################################################
 ##
-#E  ratfun.tst  . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
+#E
 

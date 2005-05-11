@@ -37,8 +37,8 @@ Unbind(COM_RESULT);
 
 #F  file="grp/basicprm.gi" crc=128818259
 RANK_FILTER_LIST  := [ 45260440, 39, 45260440, 39, 45260440, 39, 45260440, 
-  39, 45260440, 39, 21255160, 46, 21255160, 46, 21255160, 46, 45271600, 33, 
-  45260440, 39, 45260440, 39, 45260440, 39, 21255160, 46, 21255160, 46 ];
+  39, 45260440, 39, 59939889, 46, 59939889, 46, 59939889, 46, 45271600, 33, 
+  45260440, 39, 45260440, 39, 45260440, 39, 59939889, 46, 59939889, 46 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -109,8 +109,8 @@ Unbind(COM_RESULT);
 #E  file="grp/basicmat.gi"
 
 #F  file="grp/perf.grp" crc=-59610847
-RANK_FILTER_LIST  := [ 55905876, 23, 45271600, 33, 53660808, 21, 67108460, 
-  22, 67108460, 22 ];
+RANK_FILTER_LIST  := [ 58923477, 23, 45271600, 33, 53660808, 21, 26738224, 
+  22, 26738224, 22 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -558,7 +558,7 @@ Unbind(COM_RESULT);
 #E  file="grp/imf.grp"
 
 #F  file="grp/imf.gi" crc=-18134037
-RANK_FILTER_LIST  := [ 9405875, 240 ];
+RANK_FILTER_LIST  := [ 8862302, 240 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete

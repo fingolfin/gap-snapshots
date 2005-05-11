@@ -5,7 +5,7 @@
 %A  grpfp.msk                   GAP documentation            Alexander Hulpke
 %%                                                             Volkmar Felsch
 %%
-%A  @(#)$Id: grpfp.msk,v 1.73.2.1 2004/01/24 02:29:13 gap Exp $
+%A  @(#)$Id: grpfp.msk,v 1.73.2.2 2005/05/09 07:38:13 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -798,9 +798,8 @@ gap> iso := IsomorphismFpGroup( g );
 gap> fp := Image( iso );
 <fp group of size 120 on the generators [ F1, F2, F3 ]>
 gap> RelatorsOfFpGroup( fp );
-[ F1^2*F2^2*F3*F2^-1, F2^-1*F1^-1*F2*F1*F2^-1*F3^2*F2^2*F3^2*F2^2*F3*F2^-1, 
-  F3^-1*F1^-1*F3*F1*F3^-1, F2^5*F3^-5, F2^5*F3^-1*F2^-1*F3^-1*F2^-1, 
-  F2^-2*F3^2*F2^-2*F3^2 ]
+[ F1^2*F2^2*F3*F2^-1, F2^-1*F1^-1*F2*F1*F2^-2*F3, F3^-1*F1^-1*F3*F1*F3^-1, 
+  F2^5*F3^-5, F2^5*F3^-1*F2^-1*F3^-1*F2^-1, F2^-2*F3^2*F2^-2*F3^2 ]
 \endexample
 
 \>IsomorphismFpGroupByGenerators( <G>, <gens>[, <string>] ) A
@@ -819,13 +818,14 @@ generate <G>.
 \beginexample
 gap> SetInfoLevel( InfoFpGroup, 1 );
 gap> iso := IsomorphismFpGroupByGenerators( g, [ (1,2), (1,2,3,4,5) ] );
-#I  the image group has 2 gens and 4 rels of total length 37
+#I  the image group has 2 gens and 5 rels of total length 39
 [ (1,2), (1,2,3,4,5) ] -> [ F1, F2 ]
 gap> fp := Image( iso );
 <fp group of size 120 on the generators [ F1, F2 ]>
 gap> RelatorsOfFpGroup( fp );
-[ F1^2, F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1, F2^2*F1*F2^-2*F1*F2^2*F1*F2^-2*F1
-    , F2^-1*F1*F2^2*F1*F2^-1*F1*F2^-2*F1*F2*F1*F2^-2*F1 ]
+[ F1^2, F2^5, F2^-1*F1*F2^-1*F1*F2^-1*F1*F2^-1*F1, 
+  F2^-1*F1*F2*F1*F2^-1*F1*F2*F1*F2^-1*F1*F2*F1, 
+  F2^2*F1*F2^-2*F1*F2^2*F1*F2^-2*F1 ]
 \endexample
 
 The main task of the function `IsomorphismFpGroupByGenerators' is to find a
@@ -849,9 +849,9 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
   (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 gap> gens := GeneratorsOfGroup( M12 );;
 gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-#I  the image group has 3 gens and 23 rels of total length 515
+#I  the image group has 3 gens and 21 rels of total length 541
 gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-#I  the image group has 3 gens and 17 rels of total length 524
+#I  the image group has 3 gens and 26 rels of total length 766
 \endexample
 
 Also in the case of a permutation group <G>, the function
@@ -891,7 +891,7 @@ values.
 gap> iso := IsomorphismFpGroupByGenerators( M12, gens : method := "regular" );;
 #I  the image group has 3 gens and 11 rels of total length 92
 gap> iso := IsomorphismFpGroupByGenerators( M12, gens : method := "fast" );;
-#I  the image group has 3 gens and 160 rels of total length 3485
+#I  the image group has 3 gens and 181 rels of total length 4169
 \endexample
 
 Though the option `method := "regular"' is only checked in the case of a
@@ -911,7 +911,7 @@ gap> gens := GeneratorsOfGroup( G );
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
       [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 gap> iso := IsomorphismFpGroupByGenerators( G, gens );;
-#I  the image group has 2 gens and 7 rels of total length 74
+#I  the image group has 2 gens and 7 rels of total length 68
 gap> iso := IsomorphismFpGroupByGenerators( G, gens : method := "regular" );;
 #I  the image group has 2 gens and 6 rels of total length 56
 gap> SetInfoLevel( InfoFpGroup, 0 );

@@ -5,7 +5,7 @@
 %A  integers.msk                GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: integers.msk,v 1.20 2003/08/05 15:55:49 gap Exp $
+%A  @(#)$Id: integers.msk,v 1.20.2.1 2005/05/09 08:19:58 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -471,17 +471,16 @@ that have   a factor  $p \<  1000$.   So for  integers $n    \< 10^{13}$,
 `IsPrimeInt' is  a    proper primality test.    It  is  conceivable  that
 `IsPrimeInt' may  return `true' for some  composite $n > 10^{13}$, but no
 such $n$ is currently known.  So for integers $n > 10^{13}$, `IsPrimeInt'
-is a  probable-primality test. Therefore `IsPrimeInt' will issue a
-warning when called with an argument $>10^{13}$. (The function
-`IsProbablyPrimeInt' will do the same calculations but not issue a
-warning.)
+is a  probable-primality test. `IsPrimeInt' will issue a
+warning when its argument is probably prime but not a proven prime.
+(The function `IsProbablyPrimeInt' will do the same calculations but not 
+issue a warning.) The warning can be switched off by 
+`SetInfoLevel( InfoPrimeInt, 0 );', the default level is $1$.
 
-If composites  that fool  `IsPrimeInt' do
-exist,  they would be  extremely rare, and finding one  by  pure chance
-might be 
-less likely than finding a bug in {\GAP}.
-We would appreciate being informed about any example of a composite
-number <n> for which `IsPrimeInt' returns `true'.
+If composites that  fool `IsPrimeInt' do exist, they  would be extremely
+rare, and finding one by pure chance might be less likely than finding a
+bug in {\GAP}. We would appreciate being informed about any example of a
+composite number <n> for which `IsPrimeInt' returns `true'.
 
 `IsPrimeInt' is a deterministic algorithm, i.e., the computations involve
 no random numbers, and repeated calls will always return the same result.
@@ -496,6 +495,12 @@ power  of  the number  of  digits of <n>.   Testing numbers  with several
 hundreds digits is quite feasible.
 
 `IsPrimeInt' is a method for the general operation `IsPrime'.
+
+Remark: In future versions of {\GAP} we hope to change the definition of 
+`IsPrimeInt' to return `true' only for proven primes (currently, we lack
+a sufficiently good primality proving function). In applications, use
+explicitly `IsPrimeInt' or `IsProbablePrimeInt' with this change in
+mind.
 
 
 \beginexample
@@ -572,6 +577,8 @@ For any integer <n> it holds that `Product( FactorsInt( <n> ) ) = <n>'.
 
 Note that `FactorsInt' uses a probable-primality test (see~"IsPrimeInt").
 Thus `FactorsInt' might return a list which contains composite integers.
+In such a case you will get a warning about the use of a probable prime.
+You can switch off these warnings by `SetInfoLevel(InfoPrimeInt, 0);'.
 
 The time taken by   `FactorsInt'  is approximately  proportional to   the
 square root of the second largest prime factor  of <n>, which is the last
@@ -596,7 +603,7 @@ gap> Set( FactorsInt( Factorial(13)/11 ) );
 gap> FactorsInt( 2^63 - 1 );
 [ 7, 7, 73, 127, 337, 92737, 649657 ]
 gap> FactorsInt( 10^42 + 1 );
-#I  beyond the guaranteed bound of the probabilistic primality test
+#I  IsPrimeInt: probably prime, but not proven: 4458192223320340849
 [ 29, 101, 281, 9901, 226549, 121499449, 4458192223320340849 ]
 \endexample
 

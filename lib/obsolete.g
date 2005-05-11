@@ -2,7 +2,7 @@
 ##
 #W  obsolete.g                  GAP library                     Steve Linton
 ##
-#H  @(#)$Id: obsolete.g,v 4.13 2003/07/23 15:44:30 gap Exp $
+#H  @(#)$Id: obsolete.g,v 4.13.2.2 2005/05/05 09:22:09 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,7 +26,7 @@
 ##  is regarded as ``obsolescent'' in {\GAP}~4.5.
 ##
 Revision.obsolete_g :=
-    "@(#)$Id: obsolete.g,v 4.13 2003/07/23 15:44:30 gap Exp $";
+    "@(#)$Id: obsolete.g,v 4.13.2.2 2005/05/05 09:22:09 gap Exp $";
 
 
 # monomial ordering: the function was badly defined, name is now obsolete
@@ -372,7 +372,6 @@ end );
 #F  RereadPkg( ... )
 #F  DoReadPkg( ... )
 #F  DoRereadPkg( ... )
-#F  CreateCompletionFilesPackage( <name> )
 ##
 ##  Up to {\GAP}~4.3, these functions were needed inside the `init.g' files
 ##  of {\GAP} packages, whereas from {\GAP}~4.4 on, the `PackageInfo.g' files
@@ -396,7 +395,6 @@ BindGlobal( "DoRereadPkg", function( arg )
     RereadPackage( arg[1] );
     return true;
     end );
-BindGlobal( "CreateCompletionFilesPkg", CreateCompletionFilesPackage );
 
 
 #############################################################################
@@ -491,6 +489,17 @@ DeclareSynonymAttr( "NormedVectors", NormedRowVectors );
 ##  no longer have a component `exponents'.)
 ##  From {\GAP}~4.5 on, only the four argument version will be supported.
 ##  
+
+
+#############################################################################
+##
+#F  TryConwayPolynomialForFrobeniusCharacterValue( <p>, <n> )
+##
+##  This name is needed just for backwards compatibility with {\GAP}~4.4.
+##  Now one should better use `IsCheapConwayPolynomial' directly.
+##
+DeclareSynonym( "TryConwayPolynomialForFrobeniusCharacterValue",
+    IsCheapConwayPolynomial );
 
 
 #############################################################################

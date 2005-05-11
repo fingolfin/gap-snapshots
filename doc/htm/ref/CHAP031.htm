@@ -53,9 +53,9 @@ both should not apply to domains.
 Each element of an underlying relation of a general mapping lies in the
 category of tuples (see&nbsp;<a href="CHAP031.htm">IsTuple</a>).
 <p>
-For each <i>s</i>  <font face="symbol">&#8712;</font> <i>S</i>, the set { <i>r</i>  <font face="symbol">&#8712;</font> <i>R</i> <font face="symbol">&#124;</font> (<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>Rel</i> }
+For each <i>s</i>  &#8712; <i>S</i>, the set { <i>r</i>  &#8712; <i>R</i> &#124; (<i>s</i>,<i>r</i>)  &#8712; <i>Rel</i> }
 is called the set of <strong>images</strong> of <i>s</i>.
-Analogously, for <i>r</i>  <font face="symbol">&#8712;</font> <i>R</i>, the set { <i>s</i>  <font face="symbol">&#8712;</font> <i>S</i> <font face="symbol">&#124;</font> (<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>Rel</i> }
+Analogously, for <i>r</i>  &#8712; <i>R</i>, the set { <i>s</i>  &#8712; <i>S</i> &#124; (<i>s</i>,<i>r</i>)  &#8712; <i>Rel</i> }
 is called the set of <strong>preimages</strong> of <i>r</i>.
 <p>
 The <strong>ordering</strong> of general mappings via <code>&lt;</code> is defined by the ordering
@@ -231,7 +231,7 @@ this operation returns the restriction of <var>map</var> to <var>subdom</var>.
 <p>
 is <code>true</code> if each element in the source <i>S</i> of the general mapping <var>map</var>
 has images, i.e.,
-<i>s</i><sup><i>map</i> </sup>  <font face="symbol">&#8800;</font> <font face="symbol">&#8709;</font> for all <i>s</i> <font face="symbol">&#8712;</font> <i>S</i>,
+<i>s</i><sup><i>map</i> </sup>  &#8800; &#8709; for all <i>s</i> &#8712; <i>S</i>,
 and <code>false</code> otherwise.
 <p>
 <a name = "SSEC002.2"></a>
@@ -239,7 +239,7 @@ and <code>false</code> otherwise.
 <p>
 is <code>true</code> if each element in the source <i>S</i> of the general mapping <var>map</var>
 has at most one image, i.e.,
-<font face="symbol">&#124;</font><i>s</i><sup><i>map</i> </sup><font face="symbol">&#124;</font>  <font face="symbol">&#8804;</font> 1 for all <i>s</i> <font face="symbol">&#8712;</font> <i>S</i>,
+&#124;<i>s</i><sup><i>map</i> </sup>&#124;  &#8804; 1 for all <i>s</i> &#8712; <i>S</i>,
 and <code>false</code> otherwise.
 <p>
 Equivalently, <code>IsSingleValued( </code><var>map</var><code> )</code> is <code>true</code> if and only if
@@ -259,7 +259,7 @@ total and single-valued (see&nbsp;<a href="CHAP031.htm#SSEC002.1">IsTotal</a>, <
 <p>
 is <code>true</code> if the images of different elements in the source <i>S</i> of the
 general mapping <var>map</var> are disjoint, i.e.,
-<i>x</i><sup><i>map</i> </sup> <font face="symbol">&#8745;</font><i>y</i><sup><i>map</i> </sup> = <font face="symbol">&#8709;</font> for <i>x</i> <font face="symbol">&#8800;</font> <i>y</i> <font face="symbol">&#8712;</font> <i>S</i>,
+<i>x</i><sup><i>map</i> </sup> &#8745;<i>y</i><sup><i>map</i> </sup> = &#8709; for <i>x</i> &#8800; <i>y</i> &#8712; <i>S</i>,
 and <code>false</code> otherwise.
 <p>
 Equivalently, <code>IsInjective( </code><var>map</var><code> )</code> is <code>true</code> if and only if each
@@ -270,7 +270,7 @@ element in the range of <var>map</var> has at most one preimage in <i>S</i>.
 <p>
 is <code>true</code> if each element in the range <i>R</i> of the general mapping <var>map</var>
 has preimages in the source <i>S</i> of <var>map</var>, i.e.,
-{ <i>s</i> <font face="symbol">&#8712;</font> <i>S</i>  | <i>x</i> <font face="symbol">&#8712;</font> <i>s</i><sup><i>map</i> </sup> }  <font face="symbol">&#8800;</font> <font face="symbol">&#8709;</font> for all <i>x</i> <font face="symbol">&#8712;</font> <i>R</i>,
+{ <i>s</i> &#8712; <i>S</i>  | <i>x</i> &#8712; <i>s</i><sup><i>map</i> </sup> }  &#8800; &#8709; for all <i>x</i> &#8712; <i>R</i>,
 and <code>false</code> otherwise.
 <p>
 <a name = "SSEC002.6"></a>
@@ -290,7 +290,7 @@ and surjective mapping (see&nbsp;<a href="CHAP031.htm#SSEC002.3">IsMapping</a>, 
 <p>
 The <strong>underlying relation</strong> of a general mapping <var>map</var> is the domain
 of pairs (<i>s</i>,<i>r</i>), with <i>s</i> in the source and <i>r</i> in the range of <var>map</var>
-(see&nbsp;<a href="CHAP031.htm#SSEC002.8">Source</a>, <a href="CHAP031.htm#SSEC002.7">Range</a>), and <i>r</i> <font face="symbol">&#8712;</font> <code>ImagesElm( </code><var>map</var><code>, <i>s</i> )</code>.
+(see&nbsp;<a href="CHAP031.htm#SSEC002.8">Source</a>, <a href="CHAP031.htm#SSEC002.7">Range</a>), and <i>r</i> &#8712; <code>ImagesElm( </code><var>map</var><code>, <i>s</i> )</code>.
 <p>
 Each element of the underlying relation is a tuple (see&nbsp;<a href="CHAP031.htm">IsTuple</a>).
 <p>
@@ -548,7 +548,7 @@ Besides the usual inverse of multiplicative elements, which means that
 for general mappings we have the attribute <code>InverseGeneralMapping</code>.
 If <var>F</var> is a general mapping with source <i>S</i>, range <i>R</i>, and underlying
 relation <i>Rel</i> then <code>InverseGeneralMapping( </code><var>F</var><code> )</code> has source <i>R</i>,
-range <i>S</i>, and underlying relation { (<i>r</i>,<i>s</i>)  | (<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>Rel</i> }.
+range <i>S</i>, and underlying relation { (<i>r</i>,<i>s</i>)  | (<i>s</i>,<i>r</i>)  &#8712; <i>Rel</i> }.
 For a general mapping that has an inverse in the usual sense,
 i.e., for a bijection of the source, of course both concepts coincide.
 <p>
@@ -610,11 +610,11 @@ ith generator of <var>s</var>.
 <li><code>RespectsMultiplication( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i> &times;<i>R</i>,
+<i>F</i>  &#8838; <i>S</i> &times;<i>R</i>,
 where <i>S</i> and <i>R</i> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsMultiplication</code> returns <code>true</code> if
 <i>S</i> and <i>R</i> are magmas such that
-(<i>s</i><sub>1</sub>,<i>r</i><sub>1</sub>), (<i>s</i><sub>2</sub>,<i>r</i><sub>2</sub>)  <font face="symbol">&#8712;</font> <i>F</i> implies (<i>s</i><sub>1</sub> * <i>s</i><sub>2</sub>,<i>r</i><sub>1</sub> * <i>r</i><sub>2</sub>)  <font face="symbol">&#8712;</font> <i>F</i>,
+(<i>s</i><sub>1</sub>,<i>r</i><sub>1</sub>), (<i>s</i><sub>2</sub>,<i>r</i><sub>2</sub>)  &#8712; <i>F</i> implies (<i>s</i><sub>1</sub> * <i>s</i><sub>2</sub>,<i>r</i><sub>1</sub> * <i>r</i><sub>2</sub>)  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsMultiplication</code> returns <code>true</code>
@@ -626,11 +626,11 @@ holds for all <var>s1</var>, <var>s2</var> in <i>S</i>.
 <li><code>RespectsOne( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i>  &times;<i>R</i> ,
+<i>F</i>  &#8838; <i>S</i>  &times;<i>R</i> ,
 where <var>S</var> and <var>R</var> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsOne</code> returns <code>true</code> if
 <var>S</var> and <var>R</var> are magmas-with-one such that
-( <tt>One</tt><tt>(</tt><i>S</i> <tt>)</tt>, <tt>One</tt><tt>(</tt><i>R</i> <tt>)</tt> )  <font face="symbol">&#8712;</font> <i>F</i>,
+( <tt>One</tt><tt>(</tt><i>S</i> <tt>)</tt>, <tt>One</tt><tt>(</tt><i>R</i> <tt>)</tt> )  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsOne</code> returns <code>true</code>
@@ -642,12 +642,12 @@ holds.
 <li><code>RespectsInverses( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i>  &times;<i>R</i> ,
+<i>F</i>  &#8838; <i>S</i>  &times;<i>R</i> ,
 where <var>S</var> and <var>R</var> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsInverses</code> returns <code>true</code> if
 <var>S</var> and <var>R</var> are magmas-with-inverses such that,
-for <i>s</i>  <font face="symbol">&#8712;</font> <i>S</i>  and <i>r</i>  <font face="symbol">&#8712;</font> <i>R</i> , 
-(<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>F</i> implies (<i>s</i><sup><font face="symbol">&#8722;</font>1</sup>,<i>r</i><sup><font face="symbol">&#8722;</font>1</sup>)  <font face="symbol">&#8712;</font> <i>F</i>,
+for <i>s</i>  &#8712; <i>S</i>  and <i>r</i>  &#8712; <i>R</i> , 
+(<i>s</i>,<i>r</i>)  &#8712; <i>F</i> implies (<i>s</i><sup>&#8722;1</sup>,<i>r</i><sup>&#8722;1</sup>)  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsInverses</code> returns <code>true</code>
@@ -697,11 +697,11 @@ and if the range of <var>mapp</var> is associative.)
 <li><code>RespectsAddition( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i> &times;<i>R</i>,
+<i>F</i>  &#8838; <i>S</i> &times;<i>R</i>,
 where <i>S</i> and <i>R</i> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsAddition</code> returns <code>true</code> if
 <i>S</i> and <i>R</i> are additive magmas such that
-(<i>s</i><sub>1</sub>,<i>r</i><sub>1</sub>), (<i>s</i><sub>2</sub>,<i>r</i><sub>2</sub>)  <font face="symbol">&#8712;</font> <i>F</i> implies (<i>s</i><sub>1</sub> + <i>s</i><sub>2</sub>,<i>r</i><sub>1</sub> + <i>r</i><sub>2</sub>)  <font face="symbol">&#8712;</font> <i>F</i>,
+(<i>s</i><sub>1</sub>,<i>r</i><sub>1</sub>), (<i>s</i><sub>2</sub>,<i>r</i><sub>2</sub>)  &#8712; <i>F</i> implies (<i>s</i><sub>1</sub> + <i>s</i><sub>2</sub>,<i>r</i><sub>1</sub> + <i>r</i><sub>2</sub>)  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsAddition</code> returns <code>true</code>
@@ -713,11 +713,11 @@ holds for all <var>s1</var>, <var>s2</var> in <i>S</i>.
 <li><code>RespectsAdditiveInverses( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i> &times;<i>R</i>,
+<i>F</i>  &#8838; <i>S</i> &times;<i>R</i>,
 where <i>S</i> and <i>R</i> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsAdditiveInverses</code> returns <code>true</code> if
 <i>S</i> and <i>R</i> are additive-magmas-with-inverses such that
-(<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>F</i> implies (<font face="symbol">&#8722;</font><i>s</i>,<font face="symbol">&#8722;</font><i>r</i>)  <font face="symbol">&#8712;</font> <i>F</i>,
+(<i>s</i>,<i>r</i>)  &#8712; <i>F</i> implies (&#8722;<i>s</i>,&#8722;<i>r</i>)  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsAdditiveInverses</code> returns <code>true</code>
@@ -729,11 +729,11 @@ holds for all <var>s</var> in <i>S</i>.
 <li><code>RespectsZero( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i>  &times;<i>R</i> ,
+<i>F</i>  &#8838; <i>S</i>  &times;<i>R</i> ,
 where <var>S</var> and <var>R</var> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsZero</code> returns <code>true</code> if
 <var>S</var> and <var>R</var> are additive-magmas-with-zero such that
-( <tt>Zero</tt><tt>(</tt><i>S</i> <tt>)</tt>, <tt>Zero</tt><tt>(</tt><i>R</i> <tt>)</tt> )  <font face="symbol">&#8712;</font> <i>F</i>,
+( <tt>Zero</tt><tt>(</tt><i>S</i> <tt>)</tt>, <tt>Zero</tt><tt>(</tt><i>R</i> <tt>)</tt> )  &#8712; <i>F</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsZero</code> returns <code>true</code>
@@ -771,12 +771,12 @@ Also see Sections&nbsp;<a href="CHAP031.htm#SECT008">Mappings that Respect Multi
 <li><code>RespectsScalarMultiplication( </code><var>mapp</var><code> ) P</code>
 <p>
 Let <var>mapp</var> be a general mapping, with underlying relation
-<i>F</i>  <font face="symbol">&#8838;</font> <i>S</i> &times;<i>R</i>,
+<i>F</i>  &#8838; <i>S</i> &times;<i>R</i>,
 where <i>S</i> and <i>R</i> are the source and the range of <var>mapp</var>, respectively.
 Then <code>RespectsScalarMultiplication</code> returns <code>true</code> if
 <i>S</i> and <i>R</i> are left modules with the left acting domain <i>D</i> of <i>S</i>
 contained in the left acting domain of <i>R</i> and such that
-(<i>s</i>,<i>r</i>)  <font face="symbol">&#8712;</font> <i>F</i> implies (<i>c</i> * <i>s</i>,<i>c</i> * <i>r</i>)  <font face="symbol">&#8712;</font> <i>F</i> for all <i>c</i>  <font face="symbol">&#8712;</font> <i>D</i>,
+(<i>s</i>,<i>r</i>)  &#8712; <i>F</i> implies (<i>c</i> * <i>s</i>,<i>c</i> * <i>r</i>)  &#8712; <i>F</i> for all <i>c</i>  &#8712; <i>D</i>,
 and <code>false</code> otherwise.
 <p>
 If <var>mapp</var> is single-valued then <code>RespectsScalarMultiplication</code> returns
@@ -798,7 +798,7 @@ For a field <var>F</var> and a general mapping <var>mapp</var>, <code>IsLinearMa
 A mapping <i>f</i> is a linear mapping (or vector space homomorphism) if
 the source and range are vector spaces over the same division ring <i>D</i>,
 and if <i>f</i>( <i>a</i> + <i>b</i> ) = <i>f</i>(<i>a</i>) + <i>f</i>(<i>b</i>) and <i>f</i>( <i>s</i> * <i>a</i> ) = <i>s</i> * <i>f</i>(<i>a</i>) hold
-for all elements <i>a</i>, <i>b</i> in the source of <i>f</i> and <i>s</i>  <font face="symbol">&#8712;</font> <i>D</i>.
+for all elements <i>a</i>, <i>b</i> in the source of <i>f</i> and <i>s</i>  &#8712; <i>D</i>.
 <p>
 See also <code>KernelOfMultiplicativeGeneralMapping</code>
 (<a href="CHAP031.htm#SSEC008.5">KernelOfMultiplicativeGeneralMapping</a>) and
@@ -970,5 +970,5 @@ above.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP030.htm">Previous</a>] [<a href ="CHAP032.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

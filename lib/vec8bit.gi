@@ -2,7 +2,7 @@
 ##
 #W  vec8bit.gi                   GAP Library                     Steve Linton
 ##
-#H  @(#)$Id: vec8bit.gi,v 4.46 2002/06/10 19:39:39 gap Exp $
+#H  @(#)$Id: vec8bit.gi,v 4.46.2.1 2005/05/03 21:18:37 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file mainly installs the kernel methods for 8 bit vectors
 ##
 Revision.vec8bit_gi :=
-    "@(#)$Id: vec8bit.gi,v 4.46 2002/06/10 19:39:39 gap Exp $";
+    "@(#)$Id: vec8bit.gi,v 4.46.2.1 2005/05/03 21:18:37 sal Exp $";
 
 #############################################################################
 ##
@@ -889,6 +889,11 @@ InstallMethod( PowerModCoeffs,
         TryNextMethod();
     fi;
     
+    if exp = 1 then
+        pow := ShallowCopy(v);
+        ReduceCoeffs(pow,lv,w,lw);
+        return pow;
+    fi;
     wshifted := MAKE_SHIFTED_COEFFS_VEC8BIT(w, lw);
     pow := v;
     lpow := lv;

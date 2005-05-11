@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gd,v 4.54.2.1 2004/01/19 10:03:29 gap Exp $
+#H  @(#)$Id: ctblfuns.gd,v 4.54.2.2 2005/04/13 11:45:38 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gd :=
-    "@(#)$Id: ctblfuns.gd,v 4.54.2.1 2004/01/19 10:03:29 gap Exp $";
+    "@(#)$Id: ctblfuns.gd,v 4.54.2.2 2005/04/13 11:45:38 gap Exp $";
 
 
 #############################################################################
@@ -1566,20 +1566,12 @@ DeclareGlobalFunction( "SymplecticComponents" );
 ##  element of a finite field in {\GAP} (see Chapter~"Finite Fields")
 ##  then `FrobeniusCharacterValue' returns `fail'.
 ##
-##  \indextt{TryConwayPolynomialForFrobeniusCharacterValue}
 ##  If the Conway polynomial of degree $n$ is required for the computation
-##  but not yet stored in the global list of {\GAP} then it is computed only
-##  if the global function `TryConwayPolynomialForFrobeniusCharacterValue'
-##  returns `true' when it is called with <p> and $n$.
+##  then it is computed only if `IsCheapConwayPolynomial' returns `true'
+##  when it is called with <p> and $n$,
+##  otherwise `fail' is returned.
 ##
 DeclareGlobalFunction( "FrobeniusCharacterValue" );
-
-
-#############################################################################
-##
-#F  TryConwayPolynomialForFrobeniusCharacterValue( <p>, <n> )
-##
-DeclareGlobalFunction( "TryConwayPolynomialForFrobeniusCharacterValue" );
 
 
 #############################################################################

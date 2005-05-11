@@ -1132,7 +1132,7 @@ gap&gt; l1 + [];
 
 For two <font face="Gill Sans,Helvetica,Arial">GAP</font> objects <i>x</i> and <i>y</i> of which one is in
 <code>IsGeneralizedRowVector</code> and the other is also in <code>IsGeneralizedRowVector</code>
-or is neither a list nor a domain, <i>x</i> <font face="symbol">&#8722;</font> <i>y</i> is defined as <i>x</i> + (<font face="symbol">&#8722;</font><i>y</i>).
+or is neither a list nor a domain, <i>x</i> &#8722; <i>y</i> is defined as <i>x</i> + (&#8722;<i>y</i>).
 <p>
 <pre>
 gap&gt; l1 - l2;
@@ -1203,7 +1203,7 @@ multiplication involving a list in <code>IsMultiplicativeGeneralizedRowVector</c
 Namely, <i>x</i> * <i>y</i> might be
 <dl compact>
 <dt>(I)<dd>
-    the inner product <i>x</i>[1] * <i>y</i>[1] + <i>x</i>[2] * <i>y</i>[2] + <font face="symbol">&#8230;</font>+ <i>x</i>[<i>n</i>] * <i>y</i>[<i>n</i>],
+    the inner product <i>x</i>[1] * <i>y</i>[1] + <i>x</i>[2] * <i>y</i>[2] + &#8230;+ <i>x</i>[<i>n</i>] * <i>y</i>[<i>n</i>],
     where summands are omitted for which the entry in <i>x</i> or <i>y</i> is unbound
     (if this leaves no summand then the multiplication is an error),
     or
@@ -1283,7 +1283,7 @@ true
 For two <font face="Gill Sans,Helvetica,Arial">GAP</font> objects <i>x</i> and <i>y</i> of which one is in
 <code>IsMultiplicativeGeneralizedRowVector</code> and the other is also in
 <code>IsMultiplicativeGeneralizedRowVector</code> or is neither a list nor a domain,
-<i>x</i> / <i>y</i> is defined as <i>x</i> * <i>y</i><sup><font face="symbol">&#8722;</font>1</sup>.
+<i>x</i> / <i>y</i> is defined as <i>x</i> * <i>y</i><sup>&#8722;1</sup>.
 <p>
 <pre>
 gap&gt; [ 1, 2, 3 ] / 2;  [ 1, 2 ] / [ [ 1, 2 ], [ 3, 4 ] ];
@@ -1330,7 +1330,7 @@ gap&gt; [ 10, 12, 14, 16 ] mod [ 3, 5, 7 ];
 For two <font face="Gill Sans,Helvetica,Arial">GAP</font> objects <i>x</i> and <i>y</i> of which one is in
 <code>IsMultiplicativeGeneralizedRowVector</code> and the other is also in
 <code>IsMultiplicativeGeneralizedRowVector</code> or is neither a list nor a domain,
-<tt>LeftQuotient</tt>( <i>x</i>, <i>y</i> ) is defined as <i>x</i><sup><font face="symbol">&#8722;</font>1</sup> * <i>y</i>.
+<tt>LeftQuotient</tt>( <i>x</i>, <i>y</i> ) is defined as <i>x</i><sup>&#8722;1</sup> * <i>y</i>.
 <p>
 <pre>
 gap&gt; LeftQuotient( [ [ 1, 2 ], [ 3, 4 ] ], [ 1, 2 ] );
@@ -1354,7 +1354,7 @@ but since the methods used are in general not recursive,
 in particular for efficient multiplication of compressed matrices,
 such a general definition would be a burden in these cases.)
 Instead we consider, for a list <i>x</i> in <code>IsGeneralizedRowVector</code>,
-the sequence <i>x</i> = <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <font face="symbol">&#8230;</font><i>x</i><sub><i>n</i></sub> where <i>x</i><sub><i>i</i>+1</sub> is the first bound
+the sequence <i>x</i> = <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, &#8230;<i>x</i><sub><i>n</i></sub> where <i>x</i><sub><i>i</i>+1</sub> is the first bound
 entry in <i>x</i><sub><i>i</i></sub> if exists (that is, if <i>x</i><sub><i>i</i></sub> is a nonempty list),
 and <i>n</i> is the largest <i>i</i> such that <i>x</i><sub><i>i</i></sub> lies in <code>IsGeneralizedRowVector</code>.
 The <strong>immutability level</strong> of <i>x</i> is defined as infinity if <i>x</i> is immutable,
@@ -1507,8 +1507,8 @@ In the second form <code>PositionSorted</code> returns the position of the eleme
 <var>func</var> must be a function of two arguments that returns <code>true</code> if the
 first argument is less than the second argument and <code>false</code> otherwise.
 <p>
-<code>PositionSorted</code> returns <var>pos</var> such that <i>list</i> [<i>pos</i> <font face="symbol">&#8722;</font>1]  &lt;  <i>elm</i>  and
-<i>elm</i>   <font face="symbol">&#8804;</font> <i>list</i> [<i>pos</i> ].
+<code>PositionSorted</code> returns <var>pos</var> such that <i>list</i> [<i>pos</i> &#8722;1]  &lt;  <i>elm</i>  and
+<i>elm</i>   &#8804; <i>list</i> [<i>pos</i> ].
 That means, if <var>elm</var> appears once in <var>list</var>, its position is returned.
 If <var>elm</var> appears several times in <var>list</var>, the position of the first
 occurrence is returned.
@@ -1695,7 +1695,7 @@ returns <code>true</code> if <var>obj</var> is a list and it is sorted, or <code
 <a name = "I16"></a>
 
 A list <var>list</var> is <strong>sorted</strong> if it is dense (see&nbsp;<a href="CHAP021.htm#SSEC001.2">IsDenseList</a>)
-and satisfies the relation <i>list</i> [<i>i</i>]  <font face="symbol">&#8804;</font> <i>list</i> [<i>j</i>] whenever <i>i</i>  &lt;  <i>j</i>.
+and satisfies the relation <i>list</i> [<i>i</i>]  &#8804; <i>list</i> [<i>j</i>] whenever <i>i</i>  &lt;  <i>j</i>.
 Note that a sorted list is not necessarily duplicate free
 (see&nbsp;<a href="CHAP021.htm#SSEC017.2">IsDuplicateFree</a> and <a href="CHAP021.htm#SSEC017.4">IsSSortedList</a>).
 <p>
@@ -2244,7 +2244,7 @@ gap&gt; Permuted( list2, perm );
 <li><code>Maximum( </code><var>list</var><code> ) F</code>
 <p>
 In the first form <code>Maximum</code> returns the <strong>maximum</strong> of its arguments,
-i.e., one argument <var>obj</var> for which <i>obj</i>   <font face="symbol">&#8805;</font> <i>obj</i>1 , <i>obj</i>   <font face="symbol">&#8805;</font> <i>obj</i>2 
+i.e., one argument <var>obj</var> for which <i>obj</i>   &#8805; <i>obj</i>1 , <i>obj</i>   &#8805; <i>obj</i>2 
 etc.
 In the second form <code>Maximum</code> takes a homogeneous list <var>list</var> and returns
 the maximum of the elements in this list.
@@ -2263,7 +2263,7 @@ gap&gt; Maximum( [1,2], [0,15], [1,5], [2,-11] );  # lists are compared elementw
 <li><code>Minimum( </code><var>list</var><code> ) F</code>
 <p>
 In the first form <code>Minimum</code> returns the <strong>minimum</strong> of its arguments,
-i.e., one argument <var>obj</var> for which <i>obj</i>   <font face="symbol">&#8804;</font> <i>obj</i>1 , <i>obj</i>   <font face="symbol">&#8804;</font> <i>obj</i>2 
+i.e., one argument <var>obj</var> for which <i>obj</i>   &#8804; <i>obj</i>1 , <i>obj</i>   &#8804; <i>obj</i>2 
 etc.
 In the second form <code>Minimum</code> takes a homogeneous list <var>list</var> and returns
 the minimum of the elements in this list.
@@ -2609,7 +2609,7 @@ returns the result of the iterated application of the function <var>func</var>,
 which must take two arguments, to the elements of the list <var>list</var>.
 More precisely <code>Iterated</code> returns the result of the following
 application,
-<i>f</i> (<font face="symbol">&#8230;</font><i>f</i> ( <i>f</i> ( <i>list</i> [1], <i>list</i> [2] ), <i>list</i> [3] ), <font face="symbol">&#8230;</font>, <i>list</i> [<i>n</i> ] ).
+<i>f</i> (&#8230;<i>f</i> ( <i>f</i> ( <i>list</i> [1], <i>list</i> [2] ), <i>list</i> [3] ), &#8230;, <i>list</i> [<i>n</i> ] ).
 <p>
 <pre>
 gap&gt; Iterated( [ 126, 66, 105 ], Gcd );
@@ -2621,7 +2621,7 @@ gap&gt; Iterated( [ 126, 66, 105 ], Gcd );
 <p>
 Applies the <var>n</var>-argument function <var>func</var> to the lists.
 That is, <code>ListN</code> returns the list whose <var>i</var>th entry is
-<i>f</i> (<i>list</i>1 [<i>i</i> ], <i>list</i>2 [<i>i</i> ], <font face="symbol">&#8230;</font>, <i>listn</i> [<i>i</i> ]).
+<i>f</i> (<i>list</i>1 [<i>i</i> ], <i>list</i>2 [<i>i</i> ], &#8230;, <i>listn</i> [<i>i</i> ]).
 <p>
 <pre>
 gap&gt; ListN( [1,2], [3,4], \+ );
@@ -2916,5 +2916,5 @@ see&nbsp;<a href="../prg/CHAP003.htm#SECT012">Example -- Constructing Enumerator
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP020.htm">Previous</a>] [<a href ="CHAP022.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

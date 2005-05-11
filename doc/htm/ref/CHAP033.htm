@@ -30,7 +30,7 @@ For functions to create free magmas, see&nbsp;<a href="CHAP034.htm#SECT004">Free
 <li><code>IsMagma( </code><var>obj</var><code> ) C</code>
 <p>
 A <strong>magma</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a domain <i>M</i> with (not necessarily associative)
-multiplication <code>*</code>: <i>M</i> &times;<i>M</i> <font face="symbol">&#8594;</font> <i>M</i>.
+multiplication <code>*</code>: <i>M</i> &times;<i>M</i> &#8594; <i>M</i>.
 <p>
 <a name = "SSEC001.2"></a>
 <li><code>IsMagmaWithOne( </code><var>obj</var><code> ) C</code>
@@ -40,7 +40,7 @@ A <strong>magma-with-one</strong> in <font face="Gill Sans,Helvetica,Arial">GAP<
 <p>
 So a magma-with-one <var>M</var> does always contain a unique multiplicatively
 neutral element <var>e</var>, i.e., <code></code><var>e</var><code> * </code><var>m</var><code> = </code><var>m</var><code> = </code><var>m</var><code> * </code><var>e</var><code></code> holds for all 
-<code></code><var>m</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code>
+<code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code>
 (see&nbsp;<a href="CHAP033.htm#SSEC004.10">MultiplicativeNeutralElement</a>).
 This element <var>e</var> can be computed with the operation <code>One</code> (see&nbsp;<a href="CHAP030.htm#SSEC010.2">One</a>)
 as <code>One( </code><var>M</var><code> )</code>, and <var>e</var> is also equal to <code>One( </code><var>elm</var><code> )</code> and to
@@ -56,7 +56,7 @@ and a magma containing an identity may <strong>not</strong> lie in the category
 <p>
 An object in this <font face="Gill Sans,Helvetica,Arial">GAP</font> category is a magma-with-one <i>M</i>
 with an operation
-<code>^-1</code>: <i>M</i>\<i>Z</i> <font face="symbol">&#8594;</font> <i>M</i> \<i>Z</i>
+<code>^-1</code>: <i>M</i>\<i>Z</i> &#8594; <i>M</i> \<i>Z</i>
 that maps each element <var>m</var> of <i>M</i>\<i>Z</i> to its inverse <code></code><var>m</var><code>^-1</code>
 (or <code>Inverse( </code><var>m</var><code> )</code>, see&nbsp;<a href="CHAP030.htm#SSEC010.8">Inverse</a>),
 where <i>Z</i> is either empty or consists exactly of one element of <i>M</i>.
@@ -72,7 +72,7 @@ and the set <i>Z</i>, if it is nonempty, contains exactly the zero element
 <li><code>IsMagmaWithInverses( </code><var>obj</var><code> ) C</code>
 <p>
 A <strong>magma-with-inverses</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is a magma-with-one <i>M</i> with an
-operation <code>^-1</code>: <i>M</i> <font face="symbol">&#8594;</font> <i>M</i> that maps each element <var>m</var> of <i>M</i> to
+operation <code>^-1</code>: <i>M</i> &#8594; <i>M</i> that maps each element <var>m</var> of <i>M</i> to
 its inverse <code></code><var>m</var><code>^-1</code> (or <code>Inverse( </code><var>m</var><code> )</code>, see&nbsp;<a href="CHAP030.htm#SSEC010.8">Inverse</a>).
 <p>
 Note that not every trivial magma is a magma-with-one,
@@ -204,10 +204,10 @@ a magma with only few elements is via a multiplication table.
 For a square matrix <var>A</var> with <i>n</i> rows such that all entries of <var>A</var> are
 in the range [ 1 .. <i>n</i> ], <code>MagmaByMultiplicationTable</code> returns a magma
 <i>M</i> with multiplication <code>*</code> defined by <i>A</i>.
-That is, <i>M</i> consists of the elements <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, <font face="symbol">&#8230;</font>, <i>m</i><sub><i>n</i></sub>,
+That is, <i>M</i> consists of the elements <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, &#8230;, <i>m</i><sub><i>n</i></sub>,
 and <i>m</i><sub><i>i</i></sub> * <i>m</i><sub><i>j</i></sub> = <i>m</i><sub><i>A</i>[<i>i</i>][<i>j</i>]</sub>.
 <p>
-The ordering of elements is defined by <i>m</i><sub>1</sub>  &lt;  <i>m</i><sub>2</sub>  &lt;  <font face="symbol">&#8230;</font> &lt;  <i>m</i><sub><i>n</i></sub>,
+The ordering of elements is defined by <i>m</i><sub>1</sub>  &lt;  <i>m</i><sub>2</sub>  &lt;  &#8230; &lt;  <i>m</i><sub><i>n</i></sub>,
 so <i>m</i><sub><i>i</i></sub> can be accessed as <code>MagmaElement( </code><var>M</var><code>, </code><var>i</var><code> )</code>,
 see&nbsp;<a href="CHAP033.htm#SSEC003.4">MagmaElement</a>.
 <p>
@@ -237,7 +237,8 @@ For a magma <var>M</var> and a positive integer <var>i</var>, <code>MagmaElement
 If <var>M</var> has less than <var>i</var> elements then <code>fail</code> is returned.
 <p>
 <a name = "SSEC003.5"></a>
-<li><code>MultiplicationTable( </code><var>elms</var><code> ) F</code>
+<li><code>MultiplicationTable( </code><var>elms</var><code> ) A</code>
+<li><code>MultiplicationTable( </code><var>M</var><code> ) A</code>
 <p>
 For a list <var>elms</var> of elements that form a magma <i>M</i>,
 <code>MultiplicationTable</code> returns a square matrix <i>A</i> of positive integers
@@ -245,6 +246,9 @@ such that <i>A</i>[<i>i</i>][<i>j</i>] = <i>k</i> holds if and only if
 <code></code><var>elms</var><code>[i] * </code><var>elms</var><code>[j] = </code><var>elms</var><code>[k]</code>.
 This matrix can be used to construct a magma isomorphic to <i>M</i>,
 using <code>MagmaByMultiplicationTable</code>.
+<p>
+For a magma <var>M</var>, <code>MultiplicationTable</code> returns the multiplication table
+w.r.t.&nbsp;the sorted list of elements of <var>M</var>.
 <p>
 <pre>
 gap&gt; l:= [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ];;
@@ -308,7 +312,7 @@ that is, the closure of <var>gens</var> under multiplication and taking inverses
 <p>
 For an element <var>elm</var> of the magma <var>M</var> this operation returns the 
 <strong>centralizer</strong> of <var>elm</var>.
-This is the domain of those elements <code></code><var>m</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code> that commute 
+This is the domain of those elements <code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code> that commute 
 with <var>elm</var>.
 <p>
 For a submagma <var>S</var> it returns the domain of those elements that commute
@@ -316,7 +320,7 @@ with <strong>all</strong> elements <var>s</var> of <var>S</var>.
 <p>
 If <var>class</var> is a class of objects of a magma (this magma then is stored
 as the <code>ActingDomain</code> of <var>class</var>)
-such as given by <code>ConjugacyClass</code> (see&nbsp;<a href="CHAP037.htm#SSEC009.1">ConjugacyClass</a>),
+such as given by <code>ConjugacyClass</code> (see&nbsp;<a href="CHAP037.htm#SSEC010.1">ConjugacyClass</a>),
 <code>Centralizer</code> returns the centralizer of
 <code>Representative(</code><var>class</var><code>)</code> (which is a slight abuse of the notation).
 <p>
@@ -336,7 +340,7 @@ Group(())
 <li><code>Center( </code><var>M</var><code> ) A</code>
 <p>
 <code>Centre</code> returns the <strong>centre</strong> of the magma <var>M</var>, i.e., the domain
-of those elements <code></code><var>m</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code> that commute with all elements of <var>M</var>.
+of those elements <code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code> that commute with all elements of <var>M</var>.
 <code>Center</code> is just a synonym for <code>Centre</code>.
 <p>
 We have <code>Centre( </code><var>M</var><code> ) = Centralizer( </code><var>M</var><code>, </code><var>M</var><code> )</code>, see&nbsp;<a href="CHAP033.htm#SSEC004.4">Centralizer</a>.
@@ -354,7 +358,7 @@ The set of elements of <var>M</var> which are their own squares.
 <a name = "SSEC004.7"></a>
 <li><code>IsAssociative( </code><var>M</var><code> ) P</code>
 <p>
-A magma <var>M</var> is <strong>associative</strong> if for all elements <code></code><var>a</var><code>, </code><var>b</var><code>, </code><var>c</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code>
+A magma <var>M</var> is <strong>associative</strong> if for all elements <code></code><var>a</var><code>, </code><var>b</var><code>, </code><var>c</var><code>  &#8712;  </code><var>M</var><code></code>
 the equality <code>(</code><var>a</var><code> * </code><var>b</var><code>) * </code><var>c</var><code> = </code><var>a</var><code> * (</code><var>b</var><code> * </code><var>c</var><code>)</code> holds.
 <p>
 An associative magma is called a <strong>semigroup</strong> (see&nbsp;<a href="CHAP049.htm">Semigroups</a>),
@@ -373,7 +377,7 @@ element or a magma, commutes with all elements in the magma <var>M</var>.
 <a name = "SSEC004.9"></a>
 <li><code>IsAbelian( </code><var>M</var><code> ) P</code>
 <p>
-A magma <var>M</var> is <strong>commutative</strong> if for all elements <code></code><var>a</var><code>, </code><var>b</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code> the
+A magma <var>M</var> is <strong>commutative</strong> if for all elements <code></code><var>a</var><code>, </code><var>b</var><code>  &#8712;  </code><var>M</var><code></code> the
 equality <code></code><var>a</var><code> * </code><var>b</var><code> = </code><var>b</var><code> * </code><var>a</var><code></code> holds.
 <code>IsAbelian</code> is a synonym of <code>IsCommutative</code>.
 <p>
@@ -385,7 +389,7 @@ see&nbsp;<a href="CHAP053.htm#SSEC003.1">IsAdditivelyCommutative</a>.
 <li><code>MultiplicativeNeutralElement( </code><var>M</var><code> ) A</code>
 <p>
 returns the element <var>e</var> in the magma <var>M</var> with the property that
-<code></code><var>e</var><code> * </code><var>m</var><code> = </code><var>m</var><code> = </code><var>m</var><code> * </code><var>e</var><code></code> holds for all <code></code><var>m</var><code>  <font face="symbol">&#8712;</font>  </code><var>M</var><code></code>,
+<code></code><var>e</var><code> * </code><var>m</var><code> = </code><var>m</var><code> = </code><var>m</var><code> * </code><var>e</var><code></code> holds for all <code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code>,
 if such an element exists.
 Otherwise <code>fail</code> is returned.
 <p>
@@ -425,5 +429,5 @@ commutative, see&nbsp;<a href="CHAP030.htm#SECT012">Arithmetic Operations for El
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP032.htm">Previous</a>] [<a href ="CHAP034.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

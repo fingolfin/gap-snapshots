@@ -2,181 +2,80 @@
 ##
 #W  testall.g                   GAP library                      Frank Celler
 ##
-#H  @(#)$Id: testall.g,v 4.50 2003/11/15 16:58:31 gap Exp $
+#H  @(#)$Id: testall.g,v 4.50.2.4 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
-
-#############################################################################
+##  This file lists those files in the directory `tst' of the {\GAP}
+##  distribution that are recommended to be read after a {\GAP} installation.
 ##
-#F  START_TEST( <id> )  . . . . . . . . . . . . . . . . . . . start test file
+##  Each entry in the argument list of `RunStandardTests' is a pair that
+##  consists of the filename (relative to the `tst' directory) and the
+##  scaling factor that occurs in the `STOP_TEST' call at the end of the
+##  test file.
 ##
-start_TEST := START_TEST;
-
-START_TIME := 0;
-STONE_NAME := "";
-
-
-
-START_TEST := function( name )
-    FlushCaches();
-    RANDOM_SEED(1);
-    GASMAN("collect");
-    START_TIME := Runtime();
-    STONE_NAME := name;
-end;
-
-
-#############################################################################
+##  The documentation (file `doc/build/install.msk') states the following:
+#1
+##  If you want to run a more thorough test (this is not required), you
+##  can read in a test script that exercises more of {\GAP}s capabilities.
 ##
-#F  STOP_TEST( <file>, <fac> )  . . . . . . . . . . . . . . .  stop test file
+##  \begintt
+##  gap> Read( Filename( DirectoriesLibrary( "tst" ), "testall.g" ) );
+##  \endtt
 ##
-stop_TEST := STOP_TEST;
-
-TEST_RESULTS:=[];
-
-STONE_RTIME := 0;
-STONE_STONE := 0;
-STONE_FILE  := 0;
-STONE_SUM   := 0;
-STONE_FSUM  := 0;
-STONE_PROD  := 1;
-STONE_COUNT := 0;
-
-STOP_TEST := function( file, fac )
-    local   time;
-
-    STONE_FILE  := file;
-    STONE_RTIME := Runtime() - START_TIME;
-    if STONE_RTIME > 500  then
-        STONE_STONE := QuoInt( fac, STONE_RTIME );
-        STONE_SUM   := STONE_SUM + STONE_RTIME;
-        STONE_FSUM  := STONE_FSUM + fac;
-        STONE_PROD  := STONE_PROD*STONE_STONE;
-        STONE_COUNT := STONE_COUNT + 1;
-    else
-        STONE_STONE := 0;
-    fi;
-    Add(TEST_RESULTS,[STONE_FILE,fac,STONE_STONE]);
-end;
-
-
-#############################################################################
+##  The test requires about 60-70MB of memory and runs about 2 minutes on a
+##  Pentium III/1 GHz machine.
+##  You will get a large number of lines with output about the progress
+##  of the tests.
 ##
-#F  SHOW_STONES( <next> ) . . . . . . . . . . . . . . . . .  show GAP4 stones
-##
-STONE_ALL := [];
 
-SHOW_STONES := function( next )
-    Print( FormattedString(STONE_FILE,-16), "    ",
-           FormattedString(STONE_STONE,8), "       ",
-           FormattedString(STONE_RTIME,8) );
-    Add( STONE_ALL, STONE_STONE );
-    if 0 < next and STONE_FSUM <> 0  then
-        Print( "    (next ~ ", Int(STONE_SUM*next*10/STONE_FSUM),
-               " sec)\n" );
-    else
-        Print("\n");
-    fi;
-end;
+Print( "You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'.\n",
+       "The more GAP4stones you get, the faster your system is.\n",
+       "The runtime of the following tests (in general) increases.\n",
+       "You should expect about 100000 GAP4stones on a Pentium III/1 GHz.\n",
+       "The `next' time is an approximation of the running time ",
+       "for the next file.\n\n" );
+
+Reread( Filename( DirectoriesLibrary( "tst" ), "testutil.g" ) );
+
+RunStandardTests( [
+  [ "alghom.tst", 50500000 ],
+  [ "algmat.tst", 1355800000 ],
+  [ "algsc.tst", 265600000 ],
+  [ "combinat.tst", 24000000 ],
+  [ "ctblfuns.tst", 25200000 ],
+  [ "ctblmoli.tst", 512400000 ],
+  [ "ctblmono.tst", 259000000 ],
+  [ "ctblsolv.tst", 300000000 ],
+  [ "cyclotom.tst", 5700000 ],
+  [ "ffe.tst", 15800000 ],
+  [ "gaussian.tst", 1100000 ],
+  [ "grpfree.tst", 4200000 ],
+  [ "grpmat.tst", 1331700000 ],
+  [ "grppc.tst", 99500000 ],
+  [ "grppcnrm.tst", 1385300000 ],
+  [ "listgen.tst", 6400000 ],
+  [ "mapping.tst", 23200000 ],
+  [ "mgmring.tst", 15000000 ],
+  [ "modfree.tst", 34400000 ],
+  [ "morpheus.tst", 524900000 ],
+  [ "onecohom.tst", 303400000 ],
+  [ "oprt.tst", 19600000 ],
+  [ "ratfun.tst", 5800000 ],
+  [ "relation.tst", 38100000 ],
+  [ "rwspcgrp.tst", 239900000 ],
+  [ "semicong.tst", 39500000 ],
+  [ "semigrp.tst", 102900000 ],
+  [ "semirel.tst", 337100000 ],
+  [ "vspchom.tst", 55100000 ],
+  [ "vspcmat.tst", 51800000 ],
+  [ "vspcrow.tst", 190400000 ],
+  [ "xgap.tst", 533900000 ],
+  [ "zlattice.tst", 800000 ],
+] );
 
 
 #############################################################################
 ##
-#F  TEST_FILES  . . . . . . . . . . . . . . . . . . . . .  list of test files
-##
-##  the following list contains the filename and  the scaling factor given to
-##  `STOP_TEST' at the end of the test file.  The file  names are relative to
-##  the test directory.
-##
-##  The list can be produced using:
-##
-##  grep -h "STOP_TEST" *.tst | sed -e 's:^gap> STOP_TEST( ":[ ":' | \
-##  sed -e 's: );: ],:'
-##
-TEST_FILES := [
-  [ "alghom.tst", 55000084 ],
-  [ "algmat.tst", 1399012122 ], 
-  [ "algsc.tst", 290001260 ],
-  [ "combinat.tst", 27000000 ], 
-  [ "ctblfuns.tst", 31000000 ],
-  [ "ctblmoli.tst", 458004509 ], 
-  [ "ctblmono.tst", 276000397 ],
-  [ "ctblsolv.tst", 373001595 ], 
-  [ "cyclotom.tst", 5832500 ],
-  [ "ffe.tst", 18000000 ], 
-  [ "gaussian.tst", 640000 ],
-  [ "grpfree.tst", 5000000 ], 
-  [ "grpmat.tst", 1552001004 ],
-  [ "grppc.tst", 109000000 ], 
-  [ "grppcnrm.tst", 1468011635 ],
-  [ "listgen.tst", 1440000 ], 
-  [ "mapping.tst", 31000000 ],
-  [ "mgmring.tst", 19000000 ], 
-  [ "modfree.tst", 36000000 ],
-  [ "morpheus.tst", 639005411 ], 
-  [ "onecohom.tst", 333000997 ],
-  [ "oprt.tst", 23823519 ], 
-  [ "ratfun.tst", 9000000 ],
-  [ "rwspcgrp.tst", 250000000 ], 
-  [ "semigrp.tst", 122000331 ],
-  [ "semirel.tst", 360004330 ], 
-  [ "vspchom.tst", 59318227 ],
-  [ "vspcmat.tst", 64000142 ], 
-  [ "vspcrow.tst", 194000056 ],
-  [ "xgap.tst", 559003658 ], 
-  [ "zlattice.tst", 136000 ],
-  [ "zmodnz.tst", 21000000 ] ];
+#E
 
-Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
-
-#############################################################################
-##
-#X  read all test files
-##
-Print("You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'. The more\n");
-Print("GAP4stones you get, the faster your  system is.  The runtime of\n");
-Print("the following tests (in general)  increases.  You should expect\n");
-Print("about 100000 GAP4stones on a Pentium 3, 1GHz.\n");
-Print("The `next' time is an approximation of the running time for the next test.\n");
-Print("\n");
-Print("Architecture: ", GAP_ARCHITECTURE, "\n");
-Print("\n");
-Print("test file         GAP4stones     time(msec)\n");
-Print("-------------------------------------------\n");
-
-infoRead1 := InfoRead1;  InfoRead1 := Ignore;
-infoRead2 := InfoRead2;  InfoRead2 := Ignore;
-
-TestDir := DirectoriesLibrary("tst");
-
-for i  in [ 1 .. Length(TEST_FILES) ]  do
-    name := Filename( TestDir, TEST_FILES[i][1] );
-    if i < Length(TEST_FILES)  then
-        next := TEST_FILES[i+1][2] / 10^4;
-    else
-        next := 0;
-    fi;
-    Print("testing: ",name,"\n");
-    ReadTest(name);
-    SHOW_STONES(next);
-od;
-
-Print("-------------------------------------------\n");
-if STONE_COUNT=0 then
-  STONE_COUNT:=1;
-fi;
-Print( FormattedString("total",-16), "    ",
-       FormattedString(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
-       FormattedString(STONE_SUM,8), "\n" );
-Print("\n");
-
-InfoRead1  := infoRead1;
-InfoRead2  := infoRead2;
-START_TEST := start_TEST;
-STOP_TEST  := stop_TEST;
-
-
-#############################################################################
-##
-#E  testall.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -105,7 +105,7 @@ GF(2)
 <li><code>AbelianGroup( [</code><var>filt</var><code>, ]</code><var>ints</var><code> ) F</code>
 <p>
 constructs an abelian group in the category given by the filter <var>filt</var>
-which is of isomorphism type <i>C</i><sub><i>ints</i>[1]</sub> * <i>C</i><sub><i>ints</i>[2]</sub> * <font face="symbol">&#8230;</font>* <i>C</i><sub><i>ints</i>[<i>n</i>]</sub>.  <var>ints</var> must be a list of positive integers.  If <var>filt</var> is
+which is of isomorphism type <i>C</i><sub><i>ints</i>[1]</sub> * <i>C</i><sub><i>ints</i>[2]</sub> * &#8230;* <i>C</i><sub><i>ints</i>[<i>n</i>]</sub>.  <var>ints</var> must be a list of positive integers.  If <var>filt</var> is
 not given it defaults to <code>IsPcGroup</code>.  The generators of the group
 returned are the elements corresponding to the integers in <var>ints</var>.
 <p>
@@ -232,7 +232,7 @@ Sz(32)
 <li><code>Ree( [</code><var>filt</var><code>, ] </code><var>q</var><code> ) F</code>
 <p>
 Constructs a group isomorphic to the Ree group 2<i>G</i>2(<i>q</i>) where
-<i>q</i>=3<sup>1+2<i>m</i></sup> for <i>m</i> &gt; 0.
+<i>q</i>=3<sup>1+2<i>m</i></sup> for <i>m</i> a non-negative integer.
 <p>
 If <var>filt</var> is not given it defaults to <code>IsMatrixGroup</code> and
 the generating matrices are based on&nbsp;<a href="biblio.htm#KLM01"><cite>KLM01</cite></a>.
@@ -409,13 +409,13 @@ quadratic form (see&nbsp;<a href="CHAP042.htm#SSEC004.5">InvariantQuadraticForm<
 in the category given by the filter <var>filt</var>.
 <p>
 The value of <var>e</var> must be 0 for odd <var>d</var> (and can optionally be 
-omitted in this case), respectively  one of  1 or <font face="symbol">&#8722;</font>1 for even <var>d</var>.
+omitted in this case), respectively  one of  1 or &#8722;1 for even <var>d</var>.
 If <var>filt</var> is not given it defaults to <code>IsMatrixGroup</code>,
 and the returned group is the general orthogonal group itself.
 <p>
 Note that in&nbsp;<a href="biblio.htm#KleidmanLiebeck90"><cite>KleidmanLiebeck90</cite></a>, GO is defined as the stabilizer
-<font face="symbol">&#8710;</font>(<i>V</i>,<i>F</i>,<font face="symbol">&#954;</font>) of the quadratic form, up to scalars,
-whereas our GO is called <i>I</i>(<i>V</i>,<i>F</i>,<font face="symbol">&#954;</font>) there.
+&#8710;(<i>V</i>,<i>F</i>,&#954;) of the quadratic form, up to scalars,
+whereas our GO is called <i>I</i>(<i>V</i>,<i>F</i>,&#954;) there.
 <p>
 <a name = "SSEC002.7"></a>
 <li><code>SpecialOrthogonalGroup( [</code><var>filt</var><code>, ][</code><var>e</var><code>, ]</code><var>d</var><code>, </code><var>q</var><code> ) F</code>
@@ -557,9 +557,9 @@ gap&gt; Length(cl);
 <a name = "SSEC003.1"></a>
 <li><code>NrConjugacyClassesSUIsogeneous( </code><var>n</var><code>, </code><var>q</var><code>, </code><var>f</var><code> ) F</code>
 <p>
-The first of  these functions compute for given <i>n</i>   <font face="symbol">&#8712;</font> <i>N</i> and prime
+The first of  these functions compute for given <i>n</i>   &#8712; <i>N</i> and prime
 power <i>q</i>   the number of  conjugacy classes in the  classical groups
-<i>GL</i>( <i>n</i> , <i>q</i>  ), <i>GU</i>( <i>n</i> , <i>q</i>  ), <i>SL</i>( <i>n</i> , <i>q</i>  ),  <i>SU</i>( <i>n</i> , <i>q</i>  ), <i>PGL</i>( <i>n</i> , <i>q</i>  ),  <i>PGU</i>( <i>n</i> , <i>q</i>  ),  <i>PSL</i>( <i>n</i> , <i>q</i>  ), <i>PSL</i>( <i>n</i> , <i>q</i>  ), respectively. (See also <a href="CHAP037.htm#SSEC009.2">ConjugacyClasses!attribute</a>  and
+<i>GL</i>( <i>n</i> , <i>q</i>  ), <i>GU</i>( <i>n</i> , <i>q</i>  ), <i>SL</i>( <i>n</i> , <i>q</i>  ),  <i>SU</i>( <i>n</i> , <i>q</i>  ), <i>PGL</i>( <i>n</i> , <i>q</i>  ),  <i>PGU</i>( <i>n</i> , <i>q</i>  ),  <i>PSL</i>( <i>n</i> , <i>q</i>  ), <i>PSL</i>( <i>n</i> , <i>q</i>  ), respectively. (See also <a href="CHAP037.htm#SSEC010.2">ConjugacyClasses!attribute</a>  and
 Section&nbsp;<a href="CHAP048.htm#SECT002">Classical Groups</a>.)
 <p>
 For  each  divisor  <i>f</i>  of  <i>n</i>   there  is  a  group of  Lie  type
@@ -775,7 +775,7 @@ group in the transitive  groups library.  This means,  if <var>G</var> acts on
 permutation isomorphic to the group <code>TransitiveGroup(m,n)</code>.
 <p>
 Note: The points moved do <strong>not</strong> need to be [1..<var>n</var>], the group
-<font face="symbol">&#9001;</font>(2,3,4),(2,3)<font face="symbol">&#9002;</font> is considered to be transitive on 3
+&#9001;(2,3,4),(2,3)&#9002; is considered to be transitive on 3
 points. If the group has several orbits on the points moved by it the
 result of <code>TransitiveIdentification</code> is undefined.
 <p>
@@ -799,7 +799,7 @@ Currently, the library contains the following groups:
                    &nbsp;&nbsp;(92 groups);
   <li> those of order <i>q</i><sup><i>n</i></sup> &#183;<i>p</i> where <i>q</i><sup><i>n</i></sup> divides
                    2<sup>8</sup>, 3<sup>6</sup>, 5<sup>5</sup> or 7<sup>4</sup> and <i>p</i> is an
-                   arbitrary prime with <i>p</i>  <font face="symbol">&#8800;</font> <i>q</i>;
+                   arbitrary prime with <i>p</i>  &#8800; <i>q</i>;
   <li> those whose order factorises into at most 3 primes.
 </ul>
 The first two items in this list cover an explicit range of orders; the 
@@ -814,18 +814,18 @@ library except 512 and 1536.
 The library is organised in 8 layers. Each layer contains the groups of
 certain orders and their corresponding group identification routines. It
 is possible to install the first <i>n</i> layers of the group library and the
-first <i>m</i> layers of the group identification for each 1  <font face="symbol">&#8804;</font> <i>m</i>  <font face="symbol">&#8804;</font> <i>n</i>  <font face="symbol">&#8804;</font> 8. This might be useful to save disk space. There is an extensive
+first <i>m</i> layers of the group identification for each 1  &#8804; <i>m</i>  &#8804; <i>n</i>  &#8804; 8. This might be useful to save disk space. There is an extensive
 <code>README</code> file for the Small Groups library available in the <code>small</code> directory
 of the <font face="Gill Sans,Helvetica,Arial">GAP</font> distribution containing detailed information on the layers.
 In summary, the layers are:
 <ol>
    <li> the groups whose order factorises into at most 3 primes.
    <li> the remaining groups of order at most 1000 except 512 and 768.
-   <li> the remaining groups of order 2<sup><i>n</i></sup> * <i>p</i> with <i>n</i>  <font face="symbol">&#8804;</font> 8 and
+   <li> the remaining groups of order 2<sup><i>n</i></sup> * <i>p</i> with <i>n</i>  &#8804; 8 and
               <i>p</i> an odd prime.
    <li> the groups of order 5<sup>5</sup> and 7<sup>4</sup> and the remaining groups
               of order <i>q</i><sup><i>n</i></sup> * <i>p</i> where <i>q</i><sup><i>n</i></sup> divides 3<sup>6</sup>, 5<sup>5</sup> or 7<sup>4</sup>
-              and <i>p</i> is a prime with <i>p</i>  <font face="symbol">&#8800;</font> <i>q</i>.
+              and <i>p</i> is a prime with <i>p</i>  &#8800; <i>q</i>.
    <li> the remaining groups of order at most 2000 except 1024,
               1152, 1536 and 1920.
    <li> the groups of orders 1152 and 1920.
@@ -1129,9 +1129,9 @@ by their product.)
 The following text strings are accepted as simple group names.
 <ul>
   <li> <code>A</code><var>n</var><code></code> or  <code>A(</code><var>n</var><code>)</code> for the  alternating groups <i>A</i><sub><i>n</i></sub>,
-    5 <font face="symbol">&#8804;</font> <i>n</i> <font face="symbol">&#8804;</font> 9, for example <code>A5</code> or <code>A(6)</code>.
+    5 &#8804; <i>n</i> &#8804; 9, for example <code>A5</code> or <code>A(6)</code>.
   <li>  <code>L</code><var>n</var><code>(</code><var>q</var><code>)</code>   or  <code>L(</code><var>n</var><code>,</code><var>q</var><code>)</code> for  <i>PSL</i>(<i>n</i>,<i>q</i>), where
-    <i>n</i> <font face="symbol">&#8712;</font> {2,3} and <i>q</i> a prime power, ranging
+    <i>n</i> &#8712; {2,3} and <i>q</i> a prime power, ranging
     <ul>
 <li>
                        for <i>n</i>=2 from 4 to 125
@@ -1139,7 +1139,7 @@ The following text strings are accepted as simple group names.
   
 </ul>
 <li> <code>U</code><var>n</var><code>(</code><var>q</var><code>)</code>  or  <code>U(</code><var>n</var><code>,</code><var>q</var><code>)</code> for   <i>PSU</i>(<i>n</i>,<i>q</i>),  where
-    <i>n</i> <font face="symbol">&#8712;</font> {3,4} and <i>q</i> a prime power, ranging
+    <i>n</i> &#8712; {3,4} and <i>q</i> a prime power, ranging
     <ul>
 <li>
                        for <i>n</i>=3 from 3 to 5
@@ -1231,8 +1231,8 @@ gap&gt; DisplayInformationPerfectGroups( Factorial( 8 ) / 2 );
 </pre>
 <p>
 For any library  group  <i>G</i>, the library    files do not  only provide  a
-presentation, but, in  addition, a list  of  one or more subgroups  <i>S</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>S</i><sub><i>r</i></sub>  of   <i>G</i> such   that   there is  a   faithful  permutation
-representation  of <i>G</i> of degree  <font face="symbol">&#8721;</font><sub><i>i</i>=1</sub><sup><i>r</i></sup> [<i>G</i>:<i>S</i><sub><i>i</i></sub>] on the set { <i>S</i><sub><i>i</i></sub> <i>g</i>  | 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>r</i>, &nbsp;<i>g</i>  <font face="symbol">&#8712;</font> <i>G</i> } of  the cosets of the <i>S</i><sub><i>i</i></sub>.
+presentation, but, in  addition, a list  of  one or more subgroups  <i>S</i><sub>1</sub>, &#8230;, <i>S</i><sub><i>r</i></sub>  of   <i>G</i> such   that   there is  a   faithful  permutation
+representation  of <i>G</i> of degree  &#8721;<sub><i>i</i>=1</sub><sup><i>r</i></sup> [<i>G</i>:<i>S</i><sub><i>i</i></sub>] on the set { <i>S</i><sub><i>i</i></sub> <i>g</i>  | 1  &#8804; <i>i</i>  &#8804; <i>r</i>, &nbsp;<i>g</i>  &#8712; <i>G</i> } of  the cosets of the <i>S</i><sub><i>i</i></sub>.
 This allows one to construct the groups as permutation groups. The
 <code>DisplayInformationPerfectGroups</code>  function  displays  only the available
 degree. The message
@@ -1252,20 +1252,20 @@ The  notation used in  the ``description''  of  a  group is explained  in
 section 5.1.2 of <a href="biblio.htm#HP89"><cite>HP89</cite></a>. We quote the respective page from there:
 <p>
 Within a class <i>Q</i>&nbsp;#&nbsp;<i>p</i>, an isomorphism type of groups will be  denoted
-by an ordered pair of integers (<i>r</i>,<i>n</i>), where <i>r</i>  <font face="symbol">&#8805;</font> 0  and  <i>n</i>  &gt;  0.
-More precisely, the isomorphism types in <i>Q</i> # <i>p</i> of order <i>p</i><sup><i>r</i></sup> <font face="symbol">&#124;</font><i>Q</i><font face="symbol">&#124;</font> will
-be denoted by (<i>r</i>,1), (<i>r</i>,2), (<i>r</i>,3), <font face="symbol">&#8230;</font>&nbsp;. Thus <i>Q</i> will  always  get
+by an ordered pair of integers (<i>r</i>,<i>n</i>), where <i>r</i>  &#8805; 0  and  <i>n</i>  &gt;  0.
+More precisely, the isomorphism types in <i>Q</i> # <i>p</i> of order <i>p</i><sup><i>r</i></sup> &#124;<i>Q</i>&#124; will
+be denoted by (<i>r</i>,1), (<i>r</i>,2), (<i>r</i>,3), &#8230;&nbsp;. Thus <i>Q</i> will  always  get
 the size number (0,1).
 <p>
 In addition to the symbol (<i>r</i>,<i>n</i>), the groups in <i>Q</i>&nbsp;#&nbsp;<i>p</i> will also  be
 given a more descriptive name. The purpose of this is to provide  a  very
 rough idea of the structure of the group. The names are  derived  in  the
 following manner. First of all, the isomorphism  classes  of  irreducible
-<i>F</i><sub><i>p</i></sub><i>Q</i>-modules <i>M</i> with <font face="symbol">&#124;</font><i>Q</i><font face="symbol">&#124;</font>&#183;<font face="symbol">&#124;</font><i>M</i><font face="symbol">&#124;</font>  <font face="symbol">&#8804;</font> 10<sup>6</sup>, where <i>F</i><sub><i>p</i></sub> is the field  of
+<i>F</i><sub><i>p</i></sub><i>Q</i>-modules <i>M</i> with &#124;<i>Q</i>&#124;&#183;&#124;<i>M</i>&#124;  &#8804; 10<sup>6</sup>, where <i>F</i><sub><i>p</i></sub> is the field  of
 order <i>p</i>, are assigned symbols. These will either be simply <i>p</i><sup><i>x</i></sup>, where
 <i>x</i> is the dimension of the  module,  or,  if  there  is  more  than  one
 isomorphism class of irreducible modules having the same dimension,  they
-will be denoted by <i>p</i><sup><i>x</i></sup>, <i>p</i><sup><i>x</i><font face="symbol">&#8242;</font></sup>, etc. The  one-dimensional  module
+will be denoted by <i>p</i><sup><i>x</i></sup>, <i>p</i><sup><i>x</i>&#8242;</sup>, etc. The  one-dimensional  module
 with trivial <i>Q</i>-action will therefore be denoted by <i>p</i><sup>1</sup>. These symbols
 will be listed under the description of  <i>Q</i>.  The  group  name  consists
 essentially of a list of the composition factors working from the top  of
@@ -1334,11 +1334,11 @@ Here are some examples.
       indicates that <i>G</i> has a  central cyclic subgroup 2<sup>1</sup> <i>A</i> 2<sup>1</sup>
       of order 4.
 <p>
-<li>     <i>L</i><sub>3</sub>(2) ((2<sup>1</sup> <i>E</i>)  &times; (<i>N</i> 2<sup>3</sup> <i>E</i> 2<sup>3<font face="symbol">&#8242;</font></sup> <i>A</i>) <i>C</i>) 2<sup>3<font face="symbol">&#8242;</font></sup>    means   that    the
-      2<sup>3<font face="symbol">&#8242;</font></sup> factor at the bottom lies in the commutator subgroup
-      of the pair 2<sup>3</sup> <i>E</i> 2<sup>3<font face="symbol">&#8242;</font></sup> in the middle, but the lower
-      pair 2<sup>3<font face="symbol">&#8242;</font></sup> <i>A</i> 2<sup>3<font face="symbol">&#8242;</font></sup>  is abelian of exponent 4.
-      There  is  also  a submodule  2<sup>1</sup> <i>E</i> 2<sup>3<font face="symbol">&#8242;</font></sup>,  and  the
+<li>     <i>L</i><sub>3</sub>(2) ((2<sup>1</sup> <i>E</i>)  &times; (<i>N</i> 2<sup>3</sup> <i>E</i> 2<sup>3&#8242;</sup> <i>A</i>) <i>C</i>) 2<sup>3&#8242;</sup>    means   that    the
+      2<sup>3&#8242;</sup> factor at the bottom lies in the commutator subgroup
+      of the pair 2<sup>3</sup> <i>E</i> 2<sup>3&#8242;</sup> in the middle, but the lower
+      pair 2<sup>3&#8242;</sup> <i>A</i> 2<sup>3&#8242;</sup>  is abelian of exponent 4.
+      There  is  also  a submodule  2<sup>1</sup> <i>E</i> 2<sup>3&#8242;</sup>,  and  the
       covering group  <i>L</i><sub>3</sub>(2) 2<sup>1</sup>  of  <i>L</i><sub>3</sub>(2)  does not split over the
       2<sup>3</sup>  factor.  (Since <i>G</i> is perfect,  it goes without saying that
       the extension <i>L</i><sub>3</sub>(2) 2<sup>1</sup> cannot split itself.)
@@ -1364,7 +1364,7 @@ the following permutation groups up to permutation isomorphism (i.e., up
 to conjugacy  in the corresponding symmetric group)
 <ul>
   <li> the  non-affine primitive permutation groups of degree
-     <font face="symbol">&#8804;</font> 999,   described    in  <a href="biblio.htm#DixonMortimer88"><cite>DixonMortimer88</cite></a>,  with generators
+     &#8804; 999,   described    in  <a href="biblio.htm#DixonMortimer88"><cite>DixonMortimer88</cite></a>,  with generators
     calculated in <a href="biblio.htm#Theissen97"><cite>Theissen97</cite></a>,
   <li> all  primitive  permutation groups of  degree  &lt; 256,
     in particular,
@@ -1593,7 +1593,7 @@ irreducible solvable subgroup of
 <p>
 This function returns a list  of conjugacy class representatives <var>G</var> of
 matrix groups over a prime field such that <i>func</i><sub><i>i</i></sub> (<i>G</i>) = <i>val</i><sub><i>i</i></sub>  or
-<i>func</i><sub><i>i</i></sub> (<i>G</i>)  <font face="symbol">&#8712;</font> <i>val</i><sub><i>i</i></sub> . The following possibilities for <var>func_i</var> 
+<i>func</i><sub><i>i</i></sub> (<i>G</i>)  &#8712; <i>val</i><sub><i>i</i></sub> . The following possibilities for <var>func_i</var> 
 are particularly efficient, because the values can be read off the
 information in the data base: <code>DegreeOfMatrixGroup</code> (or
 <code>Dimension</code> or <code>DimensionOfMatrixGroup</code>) for the linear  degree,
@@ -1606,7 +1606,7 @@ information in the data base: <code>DegreeOfMatrixGroup</code> (or
 <p>
 This function returns one solvable subgroup <var>G</var> of a
 matrix group over a prime field such that <i>func</i><sub><i>i</i></sub> (<i>G</i>) = <i>val</i><sub><i>i</i></sub>  or
-<i>func</i><sub><i>i</i></sub> (<i>G</i>)  <font face="symbol">&#8712;</font> <i>val</i><sub><i>i</i></sub>  for all <var>i</var>. The following possibilities
+<i>func</i><sub><i>i</i></sub> (<i>G</i>)  &#8712; <i>val</i><sub><i>i</i></sub>  for all <var>i</var>. The following possibilities
 for <var>func_i</var>
 are particularly efficient, because the values can be read off the
 information in the data base: <code>DegreeOfMatrixGroup</code> (or
@@ -1700,8 +1700,8 @@ just consists of the <b>Q</b>-classes of i.m.f.&nbsp;subgroups of <i>GL</i><sub>
 Secondly, there is the set <i>Q</i><sub>2</sub>(<i>n</i>) of the  <b>Q</b>-classes of the remaining
 i.m.f.&nbsp;subgroups of <i>GL</i><sub><i>n</i></sub>(<b>Z</b>), i.e.,  of   those which are  not  maximal
 finite subgroups of <i>GL</i><sub><i>n</i></sub>(<b>Q</b>). For any such group  <i>G</i>, say, there is at
-least one class <i>C</i>  <font face="symbol">&#8712;</font> <i>Q</i><sub>1</sub>(<i>n</i>) such that <i>G</i> is conjugate under <b>Q</b> to a
-proper subgroup of some   group <i>H</i>  <font face="symbol">&#8712;</font> <i>C</i>.   In  fact, the class <i>C</i>   is
+least one class <i>C</i>  &#8712; <i>Q</i><sub>1</sub>(<i>n</i>) such that <i>G</i> is conjugate under <b>Q</b> to a
+proper subgroup of some   group <i>H</i>  &#8712; <i>C</i>.   In  fact, the class <i>C</i>   is
 uniquely determined for any group   <i>G</i> occurring in the library  (though
 there seems to be no  reason to assume that  this property should hold in
 general).  Hence   we may   call   <i>C</i>  the <strong>rational   i.m.f.&nbsp;class</strong>  of
@@ -1709,27 +1709,27 @@ general).  Hence   we may   call   <i>C</i>  the <strong>rational   i.m.f.&nbsp;
 <i>Q</i><sub>2</sub>(<i>n</i>) by <i>q</i><sub>1</sub>(<i>n</i>) and <i>q</i><sub>2</sub>(<i>n</i>), respectively.
 <p>
 As an example, let us consider the case <i>n</i> = 4. There are 6 <b>Z</b>-classes
-of i.m.f.&nbsp;subgroups  of <i>GL</i><sub>4</sub>(<b>Z</b>)   with representative subgroups  <i>G</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>G</i><sub>6</sub> of isomorphism types  <i>G</i><sub>1</sub>  <font face="symbol">&#8773;</font> <i>W</i>(<i>F</i><sub>4</sub>), <i>G</i><sub>2</sub>  <font face="symbol">&#8773;</font> <i>D</i><sub>12</sub>  wr  <i>C</i><sub>2</sub>, <i>G</i><sub>3</sub>  <font face="symbol">&#8773;</font> <i>G</i><sub>4</sub>  <font face="symbol">&#8773;</font> <i>C</i><sub>2</sub> &times;<i>S</i><sub>5</sub>, <i>G</i><sub>5</sub>  <font face="symbol">&#8773;</font> <i>W</i>(<i>B</i><sub>4</sub>), and
-<i>G</i><sub>6</sub>  <font face="symbol">&#8773;</font> (<i>D</i><sub>12</sub> <tt>Y</tt>  <i>D</i><sub>12</sub>) : <i>C</i><sub>2</sub>.  The    corresponding
-<b>Q</b>-classes, <i>R</i><sub>1</sub>, <font face="symbol">&#8230;</font>, <i>R</i><sub>6</sub>, say, are pairwise different except that
+of i.m.f.&nbsp;subgroups  of <i>GL</i><sub>4</sub>(<b>Z</b>)   with representative subgroups  <i>G</i><sub>1</sub>, &#8230;, <i>G</i><sub>6</sub> of isomorphism types  <i>G</i><sub>1</sub>  &#8773; <i>W</i>(<i>F</i><sub>4</sub>), <i>G</i><sub>2</sub>  &#8773; <i>D</i><sub>12</sub>  wr  <i>C</i><sub>2</sub>, <i>G</i><sub>3</sub>  &#8773; <i>G</i><sub>4</sub>  &#8773; <i>C</i><sub>2</sub> &times;<i>S</i><sub>5</sub>, <i>G</i><sub>5</sub>  &#8773; <i>W</i>(<i>B</i><sub>4</sub>), and
+<i>G</i><sub>6</sub>  &#8773; (<i>D</i><sub>12</sub> <tt>Y</tt>  <i>D</i><sub>12</sub>) : <i>C</i><sub>2</sub>.  The    corresponding
+<b>Q</b>-classes, <i>R</i><sub>1</sub>, &#8230;, <i>R</i><sub>6</sub>, say, are pairwise different except that
 <i>R</i><sub>3</sub> coincides  with <i>R</i><sub>4</sub>.   The  groups <i>G</i><sub>1</sub>,  <i>G</i><sub>2</sub>, and  <i>G</i><sub>3</sub>  are
 i.m.f.&nbsp;subgroups of <i>GL</i><sub>4</sub>(<b>Q</b>), but <i>G</i><sub>5</sub>  and <i>G</i><sub>6</sub> are not because they
 are  conjugate under <i>GL</i><sub>4</sub>(<b>Q</b>) to proper  subgroups  of <i>G</i><sub>1</sub> and <i>G</i><sub>2</sub>,
 respectively.  So we  have <i>Q</i><sub>1</sub>(4) = { <i>R</i><sub>1</sub>, <i>R</i><sub>2</sub>, <i>R</i><sub>3</sub> },  <i>Q</i><sub>2</sub>(4) = { <i>R</i><sub>5</sub>, <i>R</i><sub>6</sub> }, <i>q</i><sub>1</sub>(4) = 3, and <i>q</i><sub>2</sub>(4) = 2.
 <p>
 The <i>q</i><sub>1</sub>(<i>n</i>) <b>Q</b>-classes   of i.m.f.&nbsp;subgroups of  <i>GL</i><sub><i>n</i></sub>(<b>Q</b>)  have been
-determined  for each dimension  <i>n</i>  <font face="symbol">&#8804;</font> 31.   The current <font face="Gill Sans,Helvetica,Arial">GAP</font> library
+determined  for each dimension  <i>n</i>  &#8804; 31.   The current <font face="Gill Sans,Helvetica,Arial">GAP</font> library
 provides integral representative groups for all these classes.  Moreover,
-all <b>Z</b>-classes of i.m.f.&nbsp;subgroups of <i>GL</i><sub><i>n</i></sub>(<b>Z</b>)  are known for <i>n</i>  <font face="symbol">&#8804;</font> 11 and  for <i>n</i>  <font face="symbol">&#8712;</font> {13,17,19,23}. For   these dimensions, the library
+all <b>Z</b>-classes of i.m.f.&nbsp;subgroups of <i>GL</i><sub><i>n</i></sub>(<b>Z</b>)  are known for <i>n</i>  &#8804; 11 and  for <i>n</i>  &#8712; {13,17,19,23}. For   these dimensions, the library
 offers integral  representative  groups for all <b>Q</b>-classes  in <i>Q</i><sub>1</sub>(<i>n</i>)
 and <i>Q</i><sub>2</sub>(<i>n</i>) as  well as  for   all <b>Z</b>-classes  of i.m.f.&nbsp;subgroups  of
 <i>GL</i><sub><i>n</i></sub>(<b>Z</b>).
 <p>
 Any group <i>G</i> of dimension <i>n</i> given in the library is represented as the
-automorphism group <i>G</i> = <span class="roman">Aut</span>(<i>F</i>,<i>L</i>) = { <i>g</i>  <font face="symbol">&#8712;</font> <i>GL</i><sub><i>n</i></sub>(<b>Z</b>)  | <i>Lg</i> = <i>L</i> &nbsp;&nbsp;<span class="roman">and</span> &nbsp;&nbsp;<i>g</i> <i>F</i> <i>g</i><sup><span class="roman">tr</span></sup> = <i>F</i> } of  a positive definite symmetric <i>n</i> &times;<i>n</i> matrix <i>F</i>  <font face="symbol">&#8712;</font> <b>Z</b><sup><i>n</i> &times;<i>n</i></sup> on an <i>n</i>-dimensional lattice <i>L</i>  <font face="symbol">&#8773;</font> <b>Z</b><sup>1 &times;<i>n</i></sup>    (for details see  e.g.   <a href="biblio.htm#PN95"><cite>PN95</cite></a>).  <font face="Gill Sans,Helvetica,Arial">GAP</font>
+automorphism group <i>G</i> = <span class="roman">Aut</span>(<i>F</i>,<i>L</i>) = { <i>g</i>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>Z</b>)  | <i>Lg</i> = <i>L</i> &nbsp;&nbsp;<span class="roman">and</span> &nbsp;&nbsp;<i>g</i> <i>F</i> <i>g</i><sup><span class="roman">tr</span></sup> = <i>F</i> } of  a positive definite symmetric <i>n</i> &times;<i>n</i> matrix <i>F</i>  &#8712; <b>Z</b><sup><i>n</i> &times;<i>n</i></sup> on an <i>n</i>-dimensional lattice <i>L</i>  &#8773; <b>Z</b><sup>1 &times;<i>n</i></sup>    (for details see  e.g.   <a href="biblio.htm#PN95"><cite>PN95</cite></a>).  <font face="Gill Sans,Helvetica,Arial">GAP</font>
 provides for <i>G</i> a list of matrix generators and the <strong>Gram matrix</strong> <i>F</i>.
 <p>
-The positive definite quadratic form defined by <i>F</i> defines a <strong>norm</strong> <i>v</i> <i>F</i> <i>v</i><sup><span class="roman">tr</span></sup> for each vector <i>v</i>  <font face="symbol">&#8712;</font> <i>L</i>, and there is only  a finite set of
+The positive definite quadratic form defined by <i>F</i> defines a <strong>norm</strong> <i>v</i> <i>F</i> <i>v</i><sup><span class="roman">tr</span></sup> for each vector <i>v</i>  &#8712; <i>L</i>, and there is only  a finite set of
 vectors of  minimal   norm.  These vectors are  often   simply called the
 <strong>short  vectors</strong>.  Their set splits into  orbits under <i>G</i>, and <i>G</i> being
 irreducible  acts faithfully on  each  of these orbits by  multiplication
@@ -1772,12 +1772,12 @@ are all positive integers up to 31.
 Note: In order  to enable you to loop  just over the classes belonging to
 <i>Q</i><sub>1</sub>(<var>dim</var>), we have  arranged  the list of <b>Q</b>-classes  of dimension
 <var>dim</var>  for any dimension  <var>dim</var>  in the  library such that,  whenever the
-classes of <i>Q</i><sub>2</sub>(<var>dim</var>)  are known, too, i.e.,  in the cases  <i>dim</i>  <font face="symbol">&#8804;</font> 11 or  <i>dim</i>  <font face="symbol">&#8712;</font> {13,17,19,23}, the  classes of <i>Q</i><sub>1</sub>(<var>dim</var>) precede
+classes of <i>Q</i><sub>2</sub>(<var>dim</var>)  are known, too, i.e.,  in the cases  <i>dim</i>  &#8804; 11 or  <i>dim</i>  &#8712; {13,17,19,23}, the  classes of <i>Q</i><sub>1</sub>(<var>dim</var>) precede
 those of <i>Q</i><sub>2</sub>(<var>dim</var>) and hence are numbered from 1 to <i>q</i><sub>1</sub>(<var>dim</var>).
 <p>
 <code>ImfNumberQClasses</code>  returns  the  number of <b>Q</b>-classes    of groups of
-dimension <var>dim</var>  which are available in the  library. If <i>dim</i>  <font face="symbol">&#8804;</font> 11 or
-<i>dim</i>  <font face="symbol">&#8712;</font> {13,17,19,23},  this  is     the  number <i>q</i><sub>1</sub>(<var>dim</var>) + <i>q</i><sub>2</sub>(<var>dim</var>) of  <b>Q</b>-classes  of  i.m.f.&nbsp;subgroups of   <i>GL</i><sub><i>dim</i></sub>(<b>Z</b>).
+dimension <var>dim</var>  which are available in the  library. If <i>dim</i>  &#8804; 11 or
+<i>dim</i>  &#8712; {13,17,19,23},  this  is     the  number <i>q</i><sub>1</sub>(<var>dim</var>) + <i>q</i><sub>2</sub>(<var>dim</var>) of  <b>Q</b>-classes  of  i.m.f.&nbsp;subgroups of   <i>GL</i><sub><i>dim</i></sub>(<b>Z</b>).
 Otherwise, it is   just  the number  <i>q</i><sub>1</sub>(<var>dim</var>) of   <b>Q</b>-classes  of
 i.m.f.&nbsp;subgroups of <i>GL</i><sub><i>dim</i></sub>(<b>Q</b>).    Valid  values of <var>dim</var>     are all
 positive integers up to 31.
@@ -1824,8 +1824,8 @@ If you specify the value 0 for any of the parameters  <var>dim</var>, <var>q</va
 the   command will loop over all   available  dimensions, <b>Q</b>-classes of
 given  dimension,     or  <b>Z</b>-classes  within    the   given <b>Q</b>-class,
 respectively. Otherwise, the values of the arguments must be in range.  A
-value <var>z</var>  <font face="symbol">&#8800;</font> 1 must  not be specified  if  the <b>Z</b>-classes are  not
-known  for the given  dimension,  i.e., if <i>dim</i>  &gt;  11 and <i>dim</i>  <font face="symbol">&#8713;</font> {13,17,19,23}. The  default value of <var>z</var> is&nbsp;1.  This value of <var>z</var> will
+value <var>z</var>  &#8800; 1 must  not be specified  if  the <b>Z</b>-classes are  not
+known  for the given  dimension,  i.e., if <i>dim</i>  &gt;  11 and <i>dim</i>  &#8713; {13,17,19,23}. The  default value of <var>z</var> is&nbsp;1.  This value of <var>z</var> will
 be accepted even if the <b>Z</b>-classes are not known. Then it specifies the
 only  representative group  which  is  available for  the <var>q</var><sup><span class="roman">th</span></sup>
 <b>Q</b>-class. The greatest legal value of <var>dim</var> is 31.
@@ -1932,8 +1932,8 @@ get proper access to these cheap data instead of just displaying them.
 <code>ImfInvariants</code>   returns   a  record  which  provides   some  <b>Z</b>-class
 invariants of the groups   in   the <var>z</var><sup><span class="roman">th</span></sup> <b>Z</b>-class  in   the
 <var>q</var><sup><span class="roman">th</span></sup> <b>Q</b>-class  of i.m.f.&nbsp;integral matrix groups  of dimension
-<var>dim</var>.  A value  <var>z</var>  <font face="symbol">&#8800;</font> 1 must not  be specified if  the <b>Z</b>-classes
-are not known for the given dimension, i.e., if  <i>dim</i>  &gt;  11 and <i>dim</i>  <font face="symbol">&#8713;</font> {13,17,19,23}. The  default value of <var>z</var> is&nbsp;1.   This value of <var>z</var>
+<var>dim</var>.  A value  <var>z</var>  &#8800; 1 must not  be specified if  the <b>Z</b>-classes
+are not known for the given dimension, i.e., if  <i>dim</i>  &gt;  11 and <i>dim</i>  &#8713; {13,17,19,23}. The  default value of <var>z</var> is&nbsp;1.   This value of <var>z</var>
 will   be  accepted even if  the  <b>Z</b>-classes   are  not known.  Then it
 specifies the   only  representative group   which  is available  for the
 <var>q</var><sup><span class="roman">th</span></sup> <b>Q</b>-class.  The greatest legal value of <var>dim</var> is 31.
@@ -2012,9 +2012,9 @@ C2 x PGL(2,23)
 (note  that its name has  been changed from  <code>ImfMatGroup</code> in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 to
 <code>ImfMatrixGroup</code> in <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4).   It returns  a representative group,  <var>G</var>
 say, of the <var>z</var><sup><span class="roman">th</span></sup> <b>Z</b>-class in the <var>q</var><sup><span class="roman">th</span></sup> <b>Q</b>-class of
-i.m.f.&nbsp;integral  matrix groups of dimension <var>dim</var>.  A  value <var>z</var>  <font face="symbol">&#8800;</font> 1
+i.m.f.&nbsp;integral  matrix groups of dimension <var>dim</var>.  A  value <var>z</var>  &#8800; 1
 must  not be specified  if the <b>Z</b>-classes are not   known for the given
-dimension,  i.e., if <i>dim</i>  &gt;  11 and <i>dim</i>  <font face="symbol">&#8713;</font> {13,17,19,23}. The
+dimension,  i.e., if <i>dim</i>  &gt;  11 and <i>dim</i>  &#8713; {13,17,19,23}. The
 default value  of <var>z</var> is&nbsp;1.   This value of  <var>z</var> will be accepted even if
 the <b>Z</b>-classes are not known. Then it specifies the only representative
 group which is available for the <var>q</var><sup><span class="roman">th</span></sup> <b>Q</b>-class. The greatest
@@ -2093,26 +2093,26 @@ functions   have   replaced   the   <font face="Gill Sans,Helvetica,Arial">GAP</
 <a name = "SSEC012.5"></a>
 <li><code>IsomorphismPermGroup( </code><var>G</var><code> ) M</code>
 <p>
-returns an isomorphism, <font face="symbol">&#981;</font> say,  from  the  given  i.m.f.&nbsp;integral
-matrix group <var>G</var> to a permutation group <i>P</i>  : = <font face="symbol">&#981;</font>(<i>G</i> ) acting on a
+returns an isomorphism, &#981; say,  from  the  given  i.m.f.&nbsp;integral
+matrix group <var>G</var> to a permutation group <i>P</i>  : = &#981;(<i>G</i> ) acting on a
 minimal orbit, <i>S</i> say, of short vectors of <var>G</var>  such  that  each  matrix
-<i>m</i>   <font face="symbol">&#8712;</font> <i>G</i>  is mapped to the permutation induced by its action on <i>S</i>.
+<i>m</i>   &#8712; <i>G</i>  is mapped to the permutation induced by its action on <i>S</i>.
 <p>
-Note that in case of  a large orbit the  construction of <font face="symbol">&#981;</font> may be
+Note that in case of  a large orbit the  construction of &#981; may be
 space and  time consuming. Fortunately,  there are only six  <b>Q</b>-classes
 in the library for which the  smallest orbit of  short vectors is of size
 greater than 20000, the worst case being the orbit of size 196560 for the
 Leech lattice (<i>dim</i> = 24, <i>q</i> = 3).
 <p>
-The inverse isomorphism <font face="symbol">&#981;</font><sup><font face="symbol">&#8722;</font>1</sup> from <var>P</var> to  <var>G</var> is constructed by
-determining a <b>Q</b>-base <i>B</i>  <font face="symbol">&#8834;</font> <i>S</i> of  <b>Q</b><sup>1 &times;<i>dim</i></sup> in <i>S</i> and,
+The inverse isomorphism &#981;<sup>&#8722;1</sup> from <var>P</var> to  <var>G</var> is constructed by
+determining a <b>Q</b>-base <i>B</i>  &#8834; <i>S</i> of  <b>Q</b><sup>1 &times;<i>dim</i></sup> in <i>S</i> and,
 in addition,  the associated base change matrix  <i>M</i> which transforms <i>B</i>
 into  the standard base  of  <b>Z</b><sup>1 &times;<i>dim</i></sup>.    This allows a simple
-computation of  the preimage <font face="symbol">&#981;</font><sup><font face="symbol">&#8722;</font>1</sup>(<i>p</i>)  of any permutation <i>p</i>  <font face="symbol">&#8712;</font> <i>P</i> as follows.  If, for 1  <font face="symbol">&#8804;</font> <i>i</i>  <font face="symbol">&#8804;</font> <i>dim</i>, <i>b</i><sub><i>i</i></sub> is the position number
+computation of  the preimage &#981;<sup>&#8722;1</sup>(<i>p</i>)  of any permutation <i>p</i>  &#8712; <i>P</i> as follows.  If, for 1  &#8804; <i>i</i>  &#8804; <i>dim</i>, <i>b</i><sub><i>i</i></sub> is the position number
 in <i>S</i> of the <i>i</i><sup><span class="roman">th</span></sup> base vector in <i>B</i>, it suffices to look up the
 vector whose position number in  <i>S</i> is the image of  <i>b</i><sub><i>i</i></sub> under <i>p</i> and
 to   multiply this vector  by    <i>M</i> to get   the  <i>i</i><sup><span class="roman">th</span></sup> row   of
-<font face="symbol">&#981;</font><sup><font face="symbol">&#8722;</font>1</sup>(<i>p</i>).
+&#981;<sup>&#8722;1</sup>(<i>p</i>).
 <p>
 You may use     the functions <code>Image</code>  and   <code>PreImage</code>  (see&nbsp;<a href="CHAP031.htm#SSEC003.6">Image</a> and
 <a href="CHAP031.htm#SSEC004.6">PreImage</a>) to switch from <var>G</var> to <var>P</var> and back from <var>P</var> to <var>G</var>.
@@ -2157,10 +2157,10 @@ gap&gt; for m in GeneratorsOfGroup( R ) do PrintArray( m ); od;
 <a name = "SSEC012.6"></a>
 <li><code>IsomorphismPermGroupImfGroup( </code><var>G</var><code>, </code><var>n</var><code> ) F</code>
 <p>
-<code>IsomorphismPermGroupImfGroup</code>    returns an  isomorphism, <font face="symbol">&#981;</font> say,
+<code>IsomorphismPermGroupImfGroup</code>    returns an  isomorphism, &#981; say,
 from  the given i.m.f.&nbsp;integral  matrix group <var>G</var>  to a permutation group
 <var>P</var> acting on the <i>n</i> <sup><span class="roman">th</span></sup> orbit, <i>S</i> say,  of short vectors of <var>G</var>
-such that each matrix <var>m</var>  <font face="symbol">&#8712;</font>  <var>G</var> is  mapped to the permutation induced
+such that each matrix <var>m</var>  &#8712;  <var>G</var> is  mapped to the permutation induced
 by its action on <i>S</i>.
 <p>
 The only difference to the  above function <code>IsomorphismPermGroup</code> is that
@@ -2189,5 +2189,5 @@ gap&gt; LargestMovedPoint( P2 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP047.htm">Previous</a>] [<a href ="CHAP049.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

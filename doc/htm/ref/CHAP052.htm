@@ -7,16 +7,16 @@ This chapter describes functions for transformations.
 <p>
 A <strong>transformation</strong> in <font face="Gill Sans,Helvetica,Arial">GAP</font> is an endomorphism of a set of integers
 of the form {1,..., <i>n</i>}.  Transformations are taken to act on the 
-right, which defines the composition <i>i</i><sup>(<font face="symbol">&#945;</font><font face="symbol">&#946;</font>)</sup> = (<i>i</i><sup><font face="symbol">&#945;</font></sup>)<sup><font face="symbol">&#946;</font></sup>
+right, which defines the composition <i>i</i><sup>(&#945;&#946;)</sup> = (<i>i</i><sup>&#945;</sup>)<sup>&#946;</sup>
 for <i>i</i> in {1, ..., <i>n</i>}.
 <p>
-For a transformation <font face="symbol">&#945;</font> on the set {1, <font face="symbol">&#8230;</font>, <i>n</i>}, we define
+For a transformation &#945; on the set {1, &#8230;, <i>n</i>}, we define
 its <strong>degree</strong> to be <i>n</i>, its <strong>image list</strong> to be the list,
-[1<font face="symbol">&#945;</font>, <font face="symbol">&#8230;</font>, <i>n</i><font face="symbol">&#945;</font>], its <strong>image</strong> to be the image 
+[1&#945;, &#8230;, <i>n</i>&#945;], its <strong>image</strong> to be the image 
 list considered as a set,
 and its <strong>rank</strong> to be the size of the image.
-We also define the <strong>kernel</strong> of <font face="symbol">&#945;</font> to be the equivalence relation
-containing the pair (<i>i</i>, <i>j</i>) if and only if <i>i</i><sup><font face="symbol">&#945;</font></sup> = <i>j</i><sup><font face="symbol">&#945;</font></sup>.
+We also define the <strong>kernel</strong> of &#945; to be the equivalence relation
+containing the pair (<i>i</i>, <i>j</i>) if and only if <i>i</i><sup>&#945;</sup> = <i>j</i><sup>&#945;</sup>.
 <p>
 Note that unlike permutations, we do not consider
 unspecified points to be fixed by a transformation.
@@ -29,7 +29,7 @@ degree.
 <li><code>IsTransformationCollection( </code><var>obj</var><code> ) C</code>
 <p>
 We declare it as <code>IsMultiplicativeElementWithOne</code> since
-the identity automorphism of  {1,<font face="symbol">&#8230;</font>,<i>n</i>} is a multiplicative
+the identity automorphism of  {1,&#8230;,<i>n</i>} is a multiplicative
 two sided identity for any transformation on the same set.
 <p>
 <a name = ""></a>
@@ -166,7 +166,7 @@ brk&gt; quit;
 <li><code>PermLeftQuoTransformation( </code><var>tr1</var><code>, </code><var>tr2</var><code> ) O</code>
 <p>
 Given transformations <var>tr1</var> and <var>tr2</var> with equal kernel and image, 
-we compute the permutation induced by (<var>tr1</var>)<sup><font face="symbol">&#8722;</font>1</sup>*<var>tr2</var> on the set of 
+we compute the permutation induced by (<var>tr1</var>)<sup>&#8722;1</sup>*<var>tr2</var> on the set of 
 images of <var>tr1</var>. If the kernels and images are not equal, an error 
 is signaled.
 <p>
@@ -186,5 +186,5 @@ injective.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP051.htm">Previous</a>] [<a href ="CHAP053.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

@@ -7,7 +7,7 @@
 ##  of size 1536.
 ##
 Revision.smlgp8_g :=
-    "@(#)$Id: smlgp8.g,v 1.3 2000/07/30 14:39:03 gap Exp $";
+    "@(#)$Id: smlgp8.g,v 1.3.4.1 2005/05/03 14:24:19 gap Exp $";
 
 #############################################################################
 ##
@@ -316,10 +316,6 @@ end;
 
 #############################################################################
 ##                          
-#F SELECT_SMALL_GROUPS_FUNCS[ 14 ]( funcs, vals, inforec, all, id )
+#F SELECT_SMALL_GROUPS_FUNCS[ 14 ]( funcs, vals, inforec, all, id, idList )
 ##                  
-SELECT_SMALL_GROUPS_FUNCS[ 14 ] := function( size, funcs,vals,inforec,all,id)
-    local result, i, g, ok, j;
-
-    Error( "no selection function available for groups of size 1536" );
-end;      
+SELECT_SMALL_GROUPS_FUNCS[ 14 ] := SELECT_SMALL_GROUPS_FUNCS[ 11 ];

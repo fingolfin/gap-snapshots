@@ -3,7 +3,7 @@
 #W  ctblpope.gd                 GAP library                     Thomas Breuer
 #W                                                           & Goetz Pfeiffer
 ##
-#H  @(#)$Id: ctblpope.gd,v 4.27 2002/04/15 10:04:35 sal Exp $
+#H  @(#)$Id: ctblpope.gd,v 4.27.4.1 2005/05/09 08:40:59 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -83,7 +83,7 @@
 ##  (see~"PermCharInfo").
 ##
 Revision.ctblpope_gd :=
-    "@(#)$Id: ctblpope.gd,v 4.27 2002/04/15 10:04:35 sal Exp $";
+    "@(#)$Id: ctblpope.gd,v 4.27.4.1 2005/05/09 08:40:59 gap Exp $";
 
 
 #############################################################################
@@ -401,7 +401,7 @@ DeclareGlobalFunction( "PermChars" );
 
 #############################################################################
 ##
-#F  Inequalities( <tbl>, <chars>[, <option>] )
+#O  Inequalities( <tbl>, <chars>[, <option>] )
 ##
 ##  Let <tbl> be the ordinary character table of a group $G$.
 ##  The condition $\pi(g) \geq 0$ for every possible permutation character
@@ -428,10 +428,11 @@ DeclareGlobalFunction( "PermChars" );
 ##  characters in their original order and by this guarantees the character
 ##  with the smallest degree to be considered first.
 ##  The other way, which is chosen if the string `\"small\"' is entered as
-##  third argument, tries to keep the number of intermediate inequalities
-##  small by eventually changing the order of characters.
+##  third argument <option>, tries to keep the number of intermediate
+##  inequalities small by eventually changing the order of characters.
 ##
-DeclareGlobalFunction( "Inequalities" );
+DeclareOperation( "Inequalities", [ IsOrdinaryTable, IsList ] );
+DeclareOperation( "Inequalities", [ IsOrdinaryTable, IsList, IsObject ] );
 
 
 #############################################################################
@@ -546,6 +547,7 @@ DeclareGlobalFunction( "PermCandidates" );
 ##  \item{3.}
 ##     have the character <nonfaithful> as maximal constituent with kernel
 ##     <norm_subgrp>.
+##  \endlist
 ##
 ##  Known values of the candidates must be nonnegative integers in <torso>,
 ##  the other positions of <torso> are unbound;

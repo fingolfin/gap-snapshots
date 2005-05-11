@@ -5,7 +5,7 @@
 #W                                                            Juergen Mueller
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun.gi,v 4.108.2.1 2004/10/31 23:19:42 gap Exp $
+#H  @(#)$Id: ratfun.gi,v 4.108.2.2 2005/05/12 09:10:55 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 ##  polynomials and polynomials and their families.
 ##
 Revision.ratfun_gi :=
-    "@(#)$Id: ratfun.gi,v 4.108.2.1 2004/10/31 23:19:42 gap Exp $";
+    "@(#)$Id: ratfun.gi,v 4.108.2.2 2005/05/12 09:10:55 gap Exp $";
 
 #############################################################################
 ##
@@ -1696,6 +1696,30 @@ local bp,p;
   od;
   return bp;
 end );
+
+#############################################################################
+##
+#F  ConstituentsPolynomial
+##
+InstallGlobalFunction(ConstituentsPolynomial,
+function(p)
+  local fam, e, c, m, v, i;
+  fam:=FamilyObj(p);
+  e:=ExtRepPolynomialRatFun(p);
+  c:=[];
+  m:=[];
+  v:=[];
+  for i in [2,4..Length(e)] do
+    Add(c,e[i]);
+    Add(m,PolynomialByExtRepNC(fam,[ShallowCopy(e[i-1]),fam!.oneCoefficient]));
+    UniteSet(v,e[i-1]{[1,3..Length(e[i-1])-1]});
+  od;
+  v:=List(v,i->PolynomialByExtRepNC(fam,[[i,1],fam!.oneCoefficient]));
+  List(v,IsUnivariatePolynomial);
+  return rec(coefficients:=c,
+             monomials:=m,
+             variables:=v);
+end);
 
 #############################################################################
 ##

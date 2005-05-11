@@ -58,9 +58,9 @@ This second method is also called the <strong>system getter</strong>.
 are called <strong>operations</strong>, so <code>Size</code> is an example of an operation.
 <pre>
 gap&gt; G := Group( (1,2,3,4,5,6,7,8), (1,2) );;
-gap&gt; Size( G ); time;   # the time may of course vary on your machine
+gap&gt; Size( G ); time &gt; 0;   # the time may of course vary on your machine
 40320
-30
+true
 gap&gt; Size( G ); time;
 40320
 0
@@ -251,7 +251,7 @@ for that group has changed to <code>true</code>).
 Some methods are  even more immediate,   because they do not  require any
 calculation  at all: They  allow a filter to  be set if another filter is
 also set. In other words,   they  model a mathematical implication   like
-<code>IsGroup   and   IsCyclic    <font face="symbol">&#8658;</font>   IsSolvableGroup</code>  and   such
+<code>IsGroup   and   IsCyclic    &#8658;   IsSolvableGroup</code>  and   such
 implications  can be installed  in <font face="Gill Sans,Helvetica,Arial">GAP</font>  as  <strong>true methods</strong>. To execute
 true methods, <font face="Gill Sans,Helvetica,Arial">GAP</font> only needs to do  some bookkeeping with its filters,
 therefore true methods are much faster than immediate methods.
@@ -320,7 +320,7 @@ case <code>TryNextMethod()</code>  occurs).   <code>ApplicableMethod( </code><va
 <i>arg</i><sub>2</sub>, ... ]  )</code> returns the  first  applicable method for the  call
 <code></code><var>opr</var><code>( <i>arg</i><sub>1</sub>, <i>arg</i><sub>2</sub>,  ... )</code>. More  generally, <code>ApplicableMethod(
 </code><var>opr</var><code>, [ ... ], 0, </code><var>nr</var><code> )</code> returns the <var>nr</var>th applicable method (i.e.,
-the one  that would be  chosen  after  <i>nr</i> <font face="symbol">&#8722;</font>1 <code>TryNextMethod</code>s) and  if
+the one  that would be  chosen  after  <i>nr</i> &#8722;1 <code>TryNextMethod</code>s) and  if
 <code></code><var>nr</var><code>  = "all"</code>, the sorted list  of  all applicable methods is returned.
 For  details,  see <a href="../prg/CHAP002.htm#SECT003">Applicable Methods  and  Method Selection</a> in
 ``Programming in GAP''.
@@ -385,5 +385,5 @@ methods.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP007.htm">Previous</a>] [<a href ="CHAP009.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>

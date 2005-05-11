@@ -2,7 +2,7 @@
 %%
 %W  document.tex              GAP documentation              Frank Celler
 %%
-%H  @(#)$Id: document.tex,v 4.39.2.1 2004/01/27 11:37:59 stefan Exp $
+%H  @(#)$Id: document.tex,v 4.39.2.3 2005/05/09 06:48:20 gap Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %%
@@ -1012,10 +1012,13 @@ gap> 1+2;
 \endexample
 
 \indextt{\\beginexample!indicating unstable output}
-Examples whose output may vary should use the macro `|unstableoutput', e.g.
+Examples whose output may vary should be introduced with `\%'`notest',
+% The strange format is chosen in order not to mix up `doc/test/mktest.sh'.
+e.g.
 
 \begintt
-\beginexample||unstableoutput
+%notest
+\beginexample
 gap> Exec("date");
 Sun Oct  7 16:23:45 CEST 2001
 \endexample
@@ -1023,14 +1026,13 @@ Sun Oct  7 16:23:45 CEST 2001
 
 typesets in all manual versions in the same way:
 
-\beginexample|unstableoutput
+%notest
+\beginexample
 gap> Exec("date");
 Sun Oct  7 16:23:45 CEST 2001
 \endexample
 
-but the `testexample' routine knows to treat the example differently
-(namely, it ensures there is output but does not insist on it being
-the same).
+but the automatic manual checker knows to treat the example differently.
 
 Non-{\GAP} examples are typeset in typewriter style
 using the `\\begintt', `\\endtt' environment.

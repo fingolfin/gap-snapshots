@@ -3,12 +3,14 @@
 #W  hash2.tst                   GAP library		       Gene Cooperman
 #W							     and Scott Murray
 ##
-#H  @(#)$Id: hash2.tst,v 4.4 2002/04/15 10:08:40 sal Exp $
+#H  @(#)$Id: hash2.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  Exclude from testall.g: why?
+##
 
-gap> START_TEST("$Id: hash2.tst,v 4.4 2002/04/15 10:08:40 sal Exp $");
+gap> START_TEST("$Id: hash2.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $");
 
 ##  Dense integer hash table
 
@@ -589,10 +591,10 @@ gap> GetHashEntry( hash, r );
 #gap> GetHashEntry( hash, Zero(V) );
 #fail
 
-gap> STOP_TEST( "hash2.tst", 20000000 );
+gap> STOP_TEST( "hash2.tst", 23100000 );
 
 
 #############################################################################
 ##
 #E  
-##
+

@@ -3,7 +3,7 @@
 #W  record.g                    GAP library                     Thomas Breuer
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: record.g,v 4.17 2003/09/17 09:03:48 gap Exp $
+#H  @(#)$Id: record.g,v 4.17.2.1 2005/04/27 16:31:22 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 ##  families, one can load the file `compat3c.g'.
 ##
 Revision.record_g :=
-    "@(#)$Id: record.g,v 4.17 2003/09/17 09:03:48 gap Exp $";
+    "@(#)$Id: record.g,v 4.17.2.1 2005/04/27 16:31:22 gap Exp $";
 
 
 #############################################################################
@@ -167,7 +167,9 @@ InstallMethod( String,
       fi;
       Append( str, nam );
       Append( str, " := " );
-      if IsStringRep( record.( nam ) ) then
+      if IsStringRep( record.( nam ) )
+         or ( IsString( record.( nam ) )
+              and not IsEmpty( record.( nam ) ) ) then
         Append( str, "\"" );
         Append( str, String( record.(nam) ) );
         Append( str, "\"" );

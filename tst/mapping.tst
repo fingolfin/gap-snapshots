@@ -2,12 +2,14 @@
 ##
 #W  mapping.tst                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: mapping.tst,v 4.13 2002/04/15 10:08:40 sal Exp $
+#H  @(#)$Id: mapping.tst,v 4.13.4.3 2005/05/11 14:53:02 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
+##  To be listed in testall.g
+##
 
-gap> START_TEST("$Id: mapping.tst,v 4.13 2002/04/15 10:08:40 sal Exp $");
+gap> START_TEST("$Id: mapping.tst,v 4.13.4.3 2005/05/11 14:53:02 gap Exp $");
 
 gap> M:= GF(3);
 GF(3)
@@ -294,9 +296,10 @@ gap> j:=GroupGeneralMappingByImages(g,g,AsSSortedList(g),AsSSortedList(g));;
 gap> i2 = j;
 true
 
-gap> STOP_TEST( "mapping.tst", 31000000 );
+gap> STOP_TEST( "mapping.tst", 23200000 );
 
 
 #############################################################################
 ##
-#E  mapping.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E
+

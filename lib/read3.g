@@ -52,6 +52,8 @@ ReadLib( "algrep.gd"   );
 ReadLib( "lierep.gd"   );
 ReadLib( "integer.gd"  );
 ReadLib( "numtheor.gd" );
+ReadLib( "contfrac.gd" );
+
 ReadLib( "string.gd"   );
 
 ReadLib( "ratfun.gd"   );
@@ -108,6 +110,9 @@ ReadLib( "ghomperm.gd" );
 ReadLib( "gpprmsya.gd" );
 
 ReadLib( "addgphom.gd" );
+
+ReadLib( "grpnames.g"  );
+ReadLib( "grpnames.gd" );
 
 # files dealing with quotient computations
 ReadLib( "quotsys.gd" );

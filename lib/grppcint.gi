@@ -3,7 +3,7 @@
 #W  grppcint.gi                 GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppcint.gi,v 4.27 2002/04/15 10:04:51 sal Exp $
+#H  @(#)$Id: grppcint.gi,v 4.27.4.1 2005/04/12 19:07:15 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains the methods for the intersection of polycylic groups.
 ##
 Revision.grppcint_gi :=
-    "@(#)$Id: grppcint.gi,v 4.27 2002/04/15 10:04:51 sal Exp $";
+    "@(#)$Id: grppcint.gi,v 4.27.4.1 2005/04/12 19:07:15 gap Exp $";
 
 
 #############################################################################
@@ -317,12 +317,14 @@ function( U, V )
     pcgsU := InducedPcgs(pcgs, U );
     pcgsV := InducedPcgs(pcgs, V );
 
-    # test if one the groups is known to be normal
-    if IsNormal( G, U ) then
-        return ZassenhausIntersection( pcgs, pcgsU, pcgsV );
-    elif IsNormal( G, V ) then
-        return ZassenhausIntersection( pcgs, pcgsV, pcgsU );
-    fi;
+  # disabled calls to `ZassenhausIntersection' that seems to be not
+  # applicable. AH, 4/12/05
+  #  # test if one the groups is known to be normal
+  #  if IsNormal( G, U ) then
+  #      return ZassenhausIntersection( pcgs, pcgsU, pcgsV );
+  #  elif IsNormal( G, V ) then
+  #      return ZassenhausIntersection( pcgs, pcgsV, pcgsU );
+  #  fi;
 
     return GlasbyIntersection( pcgs, pcgsU, pcgsV );
 

@@ -2,7 +2,7 @@
 **
 *W  lists.h                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: lists.h,v 4.36 2003/12/01 12:54:14 sal Exp $
+*H  @(#)$Id: lists.h,v 4.36.2.1 2005/04/26 14:43:43 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_lists_h =
-   "@(#)$Id: lists.h,v 4.36 2003/12/01 12:54:14 sal Exp $";
+   "@(#)$Id: lists.h,v 4.36.2.1 2005/04/26 14:43:43 sal Exp $";
 #endif
 
 
@@ -848,9 +848,9 @@ extern UInt SetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
   do { \
     UInt     new; \
     new = SetFiltListTNums[TNUM_OBJ(list)][fn]; \
-    if ( new > 0 ) \
+    if ( new != (UInt)-1 ) \
       RetypeBag( list, new ); \
-     else if ( new == -1 ) { \
+     else { \
       Pr( "#E  SET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
       Pr( "%s line %d\n", (Int)__FILE__, (Int)__LINE__); \
       }  \
@@ -885,12 +885,12 @@ extern UInt ResetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
   do { \
     UInt     new; \
     new = ResetFiltListTNums[TNUM_OBJ(list)][fn]; \
-    if ( new > 0 ) \
+    if ( new != (UInt) -1 ) \
       RetypeBag( list, new ); \
-/*    else if ( new < 0 ) { \
+    else  { \
       Pr( "#E  RESET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
       Pr( "%s line %d\n", (Int)__FILE__, (Int)__LINE__); \
-      } */ \
+      }  \
   } while (0)
 
 

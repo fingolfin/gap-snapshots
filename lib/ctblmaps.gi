@@ -2,7 +2,7 @@
 ##
 #W  ctblmaps.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblmaps.gi,v 4.42.2.1 2004/06/01 12:47:36 gap Exp $
+#H  @(#)$Id: ctblmaps.gi,v 4.42.2.2 2005/05/09 08:49:08 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 ##  6. Subroutines for the Construction of Class Fusions
 ##
 Revision.ctblmaps_gi :=
-    "@(#)$Id: ctblmaps.gi,v 4.42.2.1 2004/06/01 12:47:36 gap Exp $";
+    "@(#)$Id: ctblmaps.gi,v 4.42.2.2 2005/05/09 08:49:08 gap Exp $";
 
 
 #T UpdateMap: assertions for returned `true' in the library occurrences
@@ -1778,11 +1778,14 @@ end );
 
 
 #############################################################################
+## 
+#M  Indirected( <character>, <paramap> )
 ##
-#F  Indirected( <character>, <paramap> )
-##
-InstallGlobalFunction( Indirected, function( character, paramap )
+InstallMethod( Indirected,
+    [ IsList, IsList ],
+    function( character, paramap )
     local i, imagelist, indirected;
+
     indirected:= [];
     for i in [ 1 .. Length( paramap ) ] do
       if IsInt( paramap[i] ) then
@@ -1797,7 +1800,7 @@ InstallGlobalFunction( Indirected, function( character, paramap )
       fi;
     od;
     return indirected;
-end );
+    end );
 
 
 #############################################################################

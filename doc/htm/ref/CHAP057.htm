@@ -61,7 +61,7 @@ and <code></code><var>p</var><code>^</code><var>d</var><code></code> must be les
 <p>
 The  root returned by <code>Z</code> is  a generator of  the multiplicative group of
 the finite field with <i>p</i><sup><i>d</i></sup> elements, which  is cyclic.  The order of the
-element is  of course <i>p</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1.  The <i>p</i><sup><i>d</i></sup><font face="symbol">&#8722;</font>1  different powers of the root
+element is  of course <i>p</i><sup><i>d</i></sup>&#8722;1.  The <i>p</i><sup><i>d</i></sup>&#8722;1  different powers of the root
 are exactly the nonzero elements of the finite field.
 <p>
 Thus  all nonzero elements of the  finite field  with <code></code><var>p</var><code>^</code><var>d</var><code></code> elements
@@ -82,10 +82,10 @@ whereas, e.g., <code>Z(2)^0 + Z(2)^0</code> is <code>0*Z(2)</code>.
 The  various  roots  returned  by  <code>Z</code>  for  finite  fields  of the  same
 characteristic  are  compatible  in  the  following  sense.  If the field
 <i>GF</i>(<i>p</i><sup><i>n</i></sup>) is a  subfield of the  field  <i>GF</i>(<i>p</i><sup><i>m</i></sup>), i.e., <i>n</i> divides <i>m</i>,
-then <i>Z</i>(<i>p</i><sup><i>n</i></sup>) = <i>Z</i>(<i>p</i><sup><i>m</i></sup>)<sup>(<i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1)/(<i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1)</sup>.  Note that this is the simplest
+then <i>Z</i>(<i>p</i><sup><i>n</i></sup>) = <i>Z</i>(<i>p</i><sup><i>m</i></sup>)<sup>(<i>p</i><sup><i>m</i></sup>&#8722;1)/(<i>p</i><sup><i>n</i></sup>&#8722;1)</sup>.  Note that this is the simplest
 relation that may  hold  between a generator of <i>GF</i>(<i>p</i><sup><i>n</i></sup>) and  <i>GF</i>(<i>p</i><sup><i>m</i></sup>),
-since <i>Z</i>(<i>p</i><sup><i>n</i></sup>) is an element of order <i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1 and <i>Z</i>(<i>p</i><sup><i>m</i></sup>)  is an element
-of order  <i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1.  This is achieved  by choosing <i>Z</i>(<i>p</i>) as  the smallest
+since <i>Z</i>(<i>p</i><sup><i>n</i></sup>) is an element of order <i>p</i><sup><i>m</i></sup>&#8722;1 and <i>Z</i>(<i>p</i><sup><i>m</i></sup>)  is an element
+of order  <i>p</i><sup><i>n</i></sup>&#8722;1.  This is achieved  by choosing <i>Z</i>(<i>p</i>) as  the smallest
 primitive  root modulo <i>p</i>  and  <i>Z</i>(<i>p</i><sup><i>n</i></sup>) as a root of the <i>n</i>-th <strong>Conway
 polynomial</strong> (see&nbsp;<a href="CHAP057.htm#SSEC005.1">ConwayPolynomial</a>) of characteristic <i>p</i>.
 Those polynomials were defined by J.&nbsp;H.&nbsp;Conway, and many of them were
@@ -198,7 +198,7 @@ lie in  a finite  prime field.   That is  <code>IntFFE</code> returns  the  smal
 nonnegative integer <var>i</var> such that <code></code><var>i</var><code> * One( </code><var>z</var><code> ) = </code><var>z</var><code></code>.
 <p>
 The  correspondence between elements from a finite prime field of
-characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between 0 and <i>p</i><font face="symbol">&#8722;</font>1 is defined by
+characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between 0 and <i>p</i>&#8722;1 is defined by
 choosing <code>Z(</code><var>p</var><code>)</code> the element corresponding to the smallest primitive
 root mod <var>p</var> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>).
 <p>
@@ -228,11 +228,11 @@ For a vector <var>vec</var>, the operation returns the result if applying
 <code>IntFFESymm</code> to every entry of the vector.
 <p>
 The  correspondence between elements from a finite prime field of
-characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between <font face="symbol">&#8722;</font><i>p</i>/2 and <i>p</i>/2 is defined by
+characteristic <var>p</var> (for <i>p</i> &lt;  2<sup>16</sup>) and the integers between &#8722;<i>p</i>/2 and <i>p</i>/2 is defined by
 choosing <code>Z(</code><var>p</var><code>)</code> the element corresponding to the smallest positive
 primitive
 root mod <var>p</var> (see&nbsp;<a href="CHAP015.htm#SSEC002.3">PrimitiveRootMod</a>) and reducing results to the
-<font face="symbol">&#8722;</font><i>p</i>/2&#183;.<i>p</i>/2 range.
+&#8722;<i>p</i>/2&#183;.<i>p</i>/2 range.
 <p>
 <pre>
 gap&gt; IntFFE(Z(13)^2);IntFFE(Z(13)^3);
@@ -384,7 +384,7 @@ FrobeniusAutomorphism( GF(2^4) )^2
 The image of an element <i>z</i> under the <i>i</i>-th power of <i>f</i> is computed
 as the <i>p</i><sup><i>i</i></sup>-th power of <i>z</i>.
 The product of the <i>i</i>-th power and the <i>j</i>-th power of <i>f</i> is the <i>k</i>-th
-power of <i>f</i>, where <i>k</i> is <i>i</i> <i>j</i>  mod <tt>Size</tt><tt>(</tt><i>F</i> <tt>)</tt><font face="symbol">&#8722;</font>1.
+power of <i>f</i>, where <i>k</i> is <i>i</i> <i>j</i>  mod <tt>Size</tt><tt>(</tt><i>F</i> <tt>)</tt>&#8722;1.
 The zeroth power of <i>f</i> is <code>IdentityMapping( </code><var>F</var><code> )</code>.
 <p>
 <p>
@@ -396,27 +396,53 @@ The zeroth power of <i>f</i> is <code>IdentityMapping( </code><var>F</var><code>
 is the Conway polynomial of the finite field <i>GF</i>(<i>p</i><sup><i>n</i></sup>) as
 polynomial over the prime field in characteristic <var>p</var>.
 <p>
-The <strong>Conway polynomial</strong> <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> of <i>GF</i>(<i>p</i><sup><i>n</i></sup>) is defined by the
+The <strong>Conway polynomial</strong> &#934;<sub><i>n</i>,<i>p</i></sub> of <i>GF</i>(<i>p</i><sup><i>n</i></sup>) is defined by the
 following properties.
 <p>
 First define an ordering of polynomials of degree <i>n</i> over <i>GF</i>(<i>p</i>) as
-follows.  <i>f</i> = <font face="symbol">&#8721;</font><sub><i>i</i>=0</sub><sup><i>n</i></sup> (<font face="symbol">&#8722;</font>1)<sup><i>i</i></sup> <i>f</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> is smaller than
-<i>g</i> = <font face="symbol">&#8721;</font><sub><i>i</i>=0</sub><sup><i>n</i></sup> (<font face="symbol">&#8722;</font>1)<sup><i>i</i></sup> <i>g</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> if and only if there is an index
-<i>m</i>  <font face="symbol">&#8804;</font> <i>n</i> such that <i>f</i><sub><i>i</i></sub> = <i>g</i><sub><i>i</i></sub> for all <i>i</i>  &gt;  <i>m</i>, and
+follows.  <i>f</i> = &#8721;<sub><i>i</i>=0</sub><sup><i>n</i></sup> (&#8722;1)<sup><i>i</i></sup> <i>f</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> is smaller than
+<i>g</i> = &#8721;<sub><i>i</i>=0</sub><sup><i>n</i></sup> (&#8722;1)<sup><i>i</i></sup> <i>g</i><sub><i>i</i></sub> <i>x</i><sup><i>i</i></sup> if and only if there is an index
+<i>m</i>  &#8804; <i>n</i> such that <i>f</i><sub><i>i</i></sub> = <i>g</i><sub><i>i</i></sub> for all <i>i</i>  &gt;  <i>m</i>, and
 [(<i>f</i><sub><i>m</i></sub>)~]  &lt;  [(<i>g</i><sub><i>m</i></sub>)~], where [(<i>c</i>)~] denotes the integer
-value in { 0, 1, <font face="symbol">&#8230;</font>, <i>p</i><font face="symbol">&#8722;</font>1 } that is mapped to <i>c</i> <font face="symbol">&#8712;</font> <i>GF</i>(<i>p</i>) under
+value in { 0, 1, &#8230;, <i>p</i>&#8722;1 } that is mapped to <i>c</i> &#8712; <i>GF</i>(<i>p</i>) under
 the canonical epimorphism that maps the integers onto <i>GF</i>(<i>p</i>).
 <p>
-<font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> is <strong>primitive</strong> over <i>GF</i>(<i>p</i>) (see&nbsp;<a href="CHAP064.htm#SSEC004.12">IsPrimitivePolynomial</a>).
-That is, <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> is irreducible, monic,
+&#934;<sub><i>n</i>,<i>p</i></sub> is <strong>primitive</strong> over <i>GF</i>(<i>p</i>) (see&nbsp;<a href="CHAP064.htm#SSEC004.12">IsPrimitivePolynomial</a>).
+That is, &#934;<sub><i>n</i>,<i>p</i></sub> is irreducible, monic,
 and is the minimal polynomial of a primitive root of <i>GF</i>(<i>p</i><sup><i>n</i></sup>).
 <p>
 For all divisors <i>d</i> of <i>n</i> the compatibility condition
-<font face="symbol">&#934;</font><sub><i>d</i>,<i>p</i></sub>( <i>x</i><sup>[(<i>p</i><sup><i>n</i></sup><font face="symbol">&#8722;</font>1)/(<i>p</i><sup><i>m</i></sup><font face="symbol">&#8722;</font>1)]</sup> )  <font face="symbol">&#8801;</font> 0  mod <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub>(<i>x</i>)
-holds.
+&#934;<sub><i>d</i>,<i>p</i></sub>( <i>x</i><sup>[(<i>p</i><sup><i>n</i></sup>&#8722;1)/(<i>p</i><sup><i>m</i></sup>&#8722;1)]</sup> )  &#8801; 0  mod &#934;<sub><i>n</i>,<i>p</i></sub>(<i>x</i>)
+holds. (That is, the appropriate power of a zero of &#934;<sub><i>n</i>,<i>p</i></sub> is a
+zero of the Conway polynomial &#934;<sub><i>d</i>,<i>p</i></sub>.)
 <p>
-With respect to the ordering defined above, <font face="symbol">&#934;</font><sub><i>n</i>,<i>p</i></sub> shall be
+With respect to the ordering defined above, &#934;<sub><i>n</i>,<i>p</i></sub> shall be
 minimal.
+<p>
+The computation of Conway polynomials can be time consuming. Therefore,
+<font face="Gill Sans,Helvetica,Arial">GAP</font> comes with a list of precomputed polynomials. If a requested
+polynomial is not stored then <font face="Gill Sans,Helvetica,Arial">GAP</font> prints a warning and computes it by
+checking all polynomials in the order defined above for the defining
+conditions. If <i>n</i> is not a prime this is probably a very long computation.
+(Some previously known polynomials with prime <i>n</i> are not stored in
+<font face="Gill Sans,Helvetica,Arial">GAP</font> because they are quickly recomputed.) Use the function 
+<a href="CHAP057.htm#SSEC005.2">IsCheapConwayPolynomial</a> to check in advance if <code>ConwayPolynomial</code> will
+give a result after a short time.
+<p>
+Note that primitivity of a polynomial can only be checked if <font face="Gill Sans,Helvetica,Arial">GAP</font> can
+factorize <i>p</i><sup><i>n</i></sup>&#8722;1. A sufficiently new version of the <font face="Gill Sans,Helvetica,Arial">FactInt</font>
+package contains many precomputed factors of such numbers from various
+factorization projects.
+<p>
+See&nbsp;<a href="biblio.htm#L03"><cite>L03</cite></a> for further information on known Conway polynomials.
+<p>
+If <var>pol</var> is a result returned by <code>ConwayPolynomial</code> the command
+<code>Print( InfoText( </code><var>pol</var><code> ) );</code> will print some info on the origin of that
+particular polynomial.
+<p>
+For some purposes it may be enough to have any primitive polynomial for
+an extension of a finite field instead of the Conway polynomial, 
+see&nbsp;<a href="../ref/CHAP057.htm#SSEC005.3">RandomPrimitivePolynomial</a> below.
 <p>
 <pre>
 gap&gt; ConwayPolynomial( 2, 5 );  ConwayPolynomial( 3, 7 );
@@ -424,8 +450,32 @@ x_1^5+x_1^2+Z(2)^0
 x_1^7-x_1^2+Z(3)^0
 </pre>
 <p>
+<a name = "SSEC005.2"></a>
+<li><code>IsCheapConwayPolynomial( </code><var>p</var><code>, </code><var>n</var><code> ) F</code>
+<p>
+Returns <code>true</code> if <code>ConwayPolynomial( </code><var>p</var><code>, </code><var>n</var><code> )</code> will give a result in
+<strong>reasonable</strong> time. This is either the case when this polynomial is
+pre-computed, or if <var>n</var> is a not too big prime.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>RandomPrimitivePolynomial( </code><var>F</var><code>, </code><var>n</var><code>[, </code><var>i</var><code> ] ) F</code>
+<p>
+For a finite field <var>F</var> and a positive integer <var>n</var> this function
+returns a primitive polynomial of degree <var>n</var> over <var>F</var>, that is a zero of 
+this polynomial has maximal multiplicative order &#124;<i>F</i> &#124;<sup><i>n</i></sup>&#8722;1. 
+If <var>i</var> is given then the polynomial is written in variable number <var>i</var>
+over <var>F</var> (see&nbsp;<a href="../ref/CHAP064.htm#SSEC001.1">Indeterminate</a>), the default for <var>i</var> is 1.
+<p>
+Alternatively, <var>F</var> can be a prime power q, then <var>F</var> = GF(q) is assumed.
+And <var>i</var> can be a univariate polynomial over <var>F</var>, then the result is a
+polynomial in the same variable.
+<p>
+This function can work for much larger fields than those for which
+Conway polynomials are available, of course <font face="Gill Sans,Helvetica,Arial">GAP</font> must be able to
+factorize &#124;<i>F</i> &#124;<sup><i>n</i></sup>&#8722;1.
+<p>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP056.htm">Previous</a>] [<a href ="CHAP058.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2004
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
 </font></body></html>
