@@ -1,7 +1,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_vecgf2_c =
-   "@(#)$Id: vecgf2.c,v 4.101.2.4 2005/04/26 13:55:30 sal Exp $";
+   "@(#)$Id: vecgf2.c,v 4.101.2.5 2005/06/22 13:42:05 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1133,17 +1133,20 @@ Obj SemiEchelonListGF2Vecs( Obj mat, UInt TransformationsNeeded )
       if (j <= ncols)
 	{
 	  SET_ELM_PLIST(vectors, ++nvecs, row);
+          CHANGED_BAG(vectors);    /* Could be an old bag by now. Max. */
 	  SET_LEN_PLIST(vectors, nvecs);
 	  SET_ELM_PLIST( heads, j, INTOBJ_INT(nvecs));
 	  if (TransformationsNeeded)
 	    {
 	      SET_ELM_PLIST(coeffs, nvecs, coeffrow);
+              CHANGED_BAG(coeffs);    /* Could be an old bag by now. Max. */
 	      SET_LEN_PLIST(coeffs, nvecs);
 	    }
 	}
       else if (TransformationsNeeded)
 	{
 	  SET_ELM_PLIST(relns, ++nrels, coeffrow);
+          CHANGED_BAG(relns);    /* Could be an old bag by now. Max. */
 	  SET_LEN_PLIST(relns, nrels);
 	}
     }

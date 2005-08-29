@@ -1,43 +1,43 @@
 \letter A
-  About Functions, \indexit{24}
+  About Functions, \indexit{25}
   Acknowledgements, \indexit{12}
   Actions of Groups, \indexit{47}
-  `AgGroup', 78
-  Algebraic Structure, \indexit{68}
+  `AgGroup', 79
+  Algebraic Structure, \indexit{69}
   Algebras, \indexit{61}
   `ApplicableMethod', 75
-  `ApplyFunc', 78
+  `ApplyFunc', 79
   assignment, 22
   `AsSomething', 70
   Attributes, \indexit{72}
-  Attributes vs. Record Components, \indexit{80}
-  Authorship and Maintenance, \indexit{11}
+  Attributes vs. Record Components, \indexit{81}
+  Authorship and Maintenance, \indexit{12}
 \letter B
-  `Backtrace', 78, 85
+  `Backtrace', 79, 86
   break loops, 20
 \letter C
   Changed Command Line Options, \indexit{77}
-  Changed Functionality, \indexit{77}
-  Changed Variable Names, \indexit{78}
+  Changed Functionality, \indexit{78}
+  Changed Variable Names, \indexit{79}
   Changes from Earlier Versions, \indexit{13}
   Changing the Structure, \indexit{70}
-  `CharTable', 78
+  `CharTable', 79
   `ClosureSomething', 70
   cokernel, 55
   comments, 19
-  Compatibility Mode, \indexit{86}
-  constants, 20
+  Compatibility Mode, \indexit{87}
+  constants, 21
   Copy, \indexit{80}
 \letter D
-  Debugging, \indexit{85}
-  `Denominator', 78
-  `DepthVector', 78
+  Debugging, \indexit{86}
+  `Denominator', 79
+  `DepthVector', 79
   Different Notions of Generation, \indexit{81}
-  Domain Constructors, \indexit{69}
+  Domain Constructors, \indexit{70}
   Domains as Sets, \indexit{68}
-  `DownEnv', 85
+  `DownEnv', 86
 \letter E
-  `Elements', 78
+  `Elements', 79
   elements, 24
   Elements of Finitely Presented Groups, \indexit{84}
   email addresses, 16
@@ -53,8 +53,8 @@
   Further Information about Domains, \indexit{71}
   Further Information about Functions, \indexit{43}
   Further Information about GAP, \indexit{16}
-  Further Information about Groups and Homomorphisms, \indexit{57}
-  Further Information about Lists, \indexit{38}
+  Further Information about Groups and Homomorphisms, \indexit{58}
+  Further Information about Lists, \indexit{39}
   Further Information about Vector Spaces and Algebras, \indexit{67}
   Further Information introducing the System, \indexit{26}
 \letter G
@@ -75,30 +75,30 @@
 \letter I
   Identical Lists, \indexit{29}
   identifier, 22
-  If Statements, \indexit{40}
+  If Statements, \indexit{41}
   Immutability, \indexit{30}
   Immutable Objects, \indexit{80}
-  `IsBijection', 78
-  `IsFunc', 78
+  `IsBijection', 79
+  `IsFunc', 79
   `IsIdenticalObj', 24
-  `IsMat', 78
+  `IsMat', 79
   Isomorphisms vs. Isomorphic Structures, \indexit{84}
-  `IsRec', 78
-  `IsSet', 78
+  `IsRec', 79
+  `IsSet', 79
 \letter K
   kernel, 55
   `KnownAttributesOfObject', 75
   `KnownPropertiesOfObject', 75
   `KnownTruePropertiesOfObject', 75
 \letter L
-  `last', 23
-  `last2', 23
-  `last3', 23
+  `last', 24
+  `last2', 24
+  `last3', 24
   leaving {{\sf GAP}}, 18
-  `LengthWord', 78
+  `LengthWord', 79
   line editing, 20
   List Operations, \indexit{35}
-  lists, dense, 28
+  lists, dense, 29
     \sub strictly sorted, 31
   lists, identical, \indexit{29}
     \sub plain, \indexit{27}
@@ -116,26 +116,26 @@
 \letter N
   Naming Conventions, \indexit{79}
   Nice Monomorphisms, \indexit{56}
-  `NOfCyc', 78
+  `NOfCyc', 79
   Notions of Generation, \indexit{69}
-  `Numerator', 78
+  `Numerator', 79
 \letter O
   objects, 22
   objects, vs.\ elements, \indexit{24}
     \sub vs.\ variables, \indexit{22}
   operations, 75
-  Operations Records, \indexit{81}
+  Operations Records, \indexit{82}
   Operations vs. Dispatcher Functions, \indexit{82}
-  operators, 20
-  `Orbit', 77
+  operators, 21
+  `Orbit', 78
   `Order', 78
 \letter P
-  Parents and Subgroups, \indexit{82}
+  Parents and Subgroups, \indexit{83}
   `PermGroupOps.ElementProperty', 78
   Permutation groups, \indexit{44}
   Plain Lists, \indexit{27}
   Plain Records, \indexit{38}
-  Polynomials, \indexit{84}
+  Polynomials, \indexit{85}
   `Position', 78
   `Position' vs.\ `PositionCanonical', 49
   `Print', 78
@@ -144,27 +144,27 @@
 \letter Q
   `quit', 18
 \letter R
-  `RandomInvertableMat', 78
+  `RandomInvertableMat', 79
   Ranges, \indexit{32}
   `Read', 19
   read evaluate print loop, \indexit{19}
   reading source code from a file, 19
-  `RecFields', 78
+  `RecFields', 79
   Recursion, \indexit{42}
   right transversal, 48
 \letter S
   Sets, \indexit{31}
   setter, of an attribute, 72
   `ShallowCopy', 80
-  `Something', 69
+  `Something', 70
   Starting and Leaving GAP, \indexit{18}
   starting {{\sf GAP}}, 18
-  strings, 28
+  strings, 29
   `StructuralCopy', 80
-  Subdomains, \indexit{70}
+  Subdomains, \indexit{71}
   Subgroups, Subgroups, as Stabilizers, \indexit{50}
-  `Subsomething', 70
-  `SubsomethingNC', 70
+  `Subsomething', 71
+  `SubsomethingNC', 71
   `support', email address, 16
 \letter T
   tester, of an attribute, 72
@@ -179,8 +179,8 @@
   Vector Spaces, \indexit{59}
 \letter W
   web sites, for GAP, 16
-  `Where', 85
+  `Where', 86
   whitespace, 19
   Writing Functions, \indexit{40}
 \letter X
-  `X', 78
+  `X', 79

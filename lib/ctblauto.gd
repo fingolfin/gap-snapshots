@@ -2,7 +2,7 @@
 ##
 #W  ctblauto.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblauto.gd,v 4.8 2003/01/27 08:18:03 gap Exp $
+#H  @(#)$Id: ctblauto.gd,v 4.8.2.1 2005/08/24 14:47:56 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -14,7 +14,7 @@
 ##  to the rows of another matrix.
 ##
 Revision.ctblauto_gd :=
-    "@(#)$Id: ctblauto.gd,v 4.8 2003/01/27 08:18:03 gap Exp $";
+    "@(#)$Id: ctblauto.gd,v 4.8.2.1 2005/08/24 14:47:56 gap Exp $";
 
 
 #############################################################################
@@ -37,8 +37,8 @@ Revision.ctblauto_gd :=
 ##       to that representative,
 ##
 ##  `families' &
-##       the list that contains at position <i> the list of positions
-##       of members of the family of representative `famreps[<i>]';
+##       the list that contains at position `i' the list of positions
+##       of members of the family of representative `famreps[i]';
 ##       (for the element `<maps>[i]' the only member of the family
 ##       will get the number `Length( <mat> ) + i').
 ##  \enditems
@@ -79,7 +79,7 @@ DeclareOperation( "MatrixAutomorphisms", [ IsMatrix, IsList, IsPermGroup ] );
 ##  automorphisms (see~"MatrixAutomorphisms") of the list <characters>
 ##  that leave the element orders (see~"OrdersClassRepresentatives")
 ##  and all stored power maps (see~"ComputedPowerMaps") of the character
-##  table <tbl>.
+##  table <tbl> invariant.
 ##
 ##  If <characters> is closed under Galois conjugacy --this is always
 ##  fulfilled for ordinary character tables--
@@ -97,6 +97,9 @@ DeclareOperation( "TableAutomorphisms",
     [ IsNearlyCharacterTable, IsList, IsString ] );
 DeclareOperation( "TableAutomorphisms",
     [ IsNearlyCharacterTable, IsList, IsPermGroup ] );
+#T use `AutomorphismsOfTable' for that
+#T (the distinction stems from the times where attributes were not allowed
+#T to have non-unary methods!)
 
 
 #############################################################################

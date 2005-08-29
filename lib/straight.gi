@@ -3,7 +3,7 @@
 #W  straight.gi              GAP library                        Thomas Breuer
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: straight.gi,v 4.28.2.1 2004/08/28 02:50:37 gap Exp $
+#H  @(#)$Id: straight.gi,v 4.28.2.2 2005/06/23 22:39:17 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  2. Functions for elements represented by straight line programs
 ##
 Revision.straight_gi :=
-    "@(#)$Id: straight.gi,v 4.28.2.1 2004/08/28 02:50:37 gap Exp $";
+    "@(#)$Id: straight.gi,v 4.28.2.2 2005/06/23 22:39:17 gap Exp $";
 
 
 #############################################################################
@@ -1999,7 +1999,7 @@ end);
 InstallMethod(ExponentSyllable,"for a straight line program word",true,
   [IsAssocWord and IsStraightLineProgElm,IsPosInt],0,
 function(slp,pos)
-  return GeneratorSyllable(EvalStraightLineProgElm(slp),pos);
+  return ExponentSyllable(EvalStraightLineProgElm(slp),pos);
 end);
 
 #############################################################################

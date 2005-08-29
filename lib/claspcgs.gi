@@ -2,7 +2,7 @@
 ##
 #W  claspcgs.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: claspcgs.gi,v 4.70 2003/05/19 16:02:37 gap Exp $
+#H  @(#)$Id: claspcgs.gi,v 4.70.2.1 2005/08/24 14:16:10 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 ##  representation of the groups.
 ##
 Revision.claspcgs_gi:=
-    "@(#)$Id: claspcgs.gi,v 4.70 2003/05/19 16:02:37 gap Exp $";
+    "@(#)$Id: claspcgs.gi,v 4.70.2.1 2005/08/24 14:16:10 sal Exp $";
 
 #############################################################################
 ##
@@ -839,8 +839,8 @@ Error("This case disabled -- code not yet corrected");
             i:=PositionSorted(cl.candidates, c);
             if  i > Length(cl.candidates)
                or cl.candidates[i]<>c then
-              AddSet(cl.candidates, c);
-              InsertElmList(team, i, [q]);
+              Add(cl.candidates, c,i);
+              Add(team, [q], i);
             else
               Add(team[i], q);
             fi;
@@ -1234,9 +1234,9 @@ local  G,  home,  # the group and the home pcgs
             fi;
             i:=PositionSorted(cl.candidates, c);
             if  i > Length(cl.candidates)
-               or cl.candidates[i]<>c then
-              AddSet(cl.candidates, c);
-              InsertElmList(team, i, [q]);
+                or cl.candidates[i]<>c then
+                Add( cl.candidates,c,i);
+                Add(team, [q], i);
             else
               Add(team[i], q);
             fi;

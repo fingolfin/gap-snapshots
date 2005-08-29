@@ -3,7 +3,7 @@
 #W  grppcatr.gi                 GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppcatr.gi,v 4.56 2003/04/25 07:45:22 gap Exp $
+#H  @(#)$Id: grppcatr.gi,v 4.56.2.1 2005/08/25 12:43:49 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains the methods for attributes of polycylic groups.
 ##
 Revision.grppcatr_gi :=
-    "@(#)$Id: grppcatr.gi,v 4.56 2003/04/25 07:45:22 gap Exp $";
+    "@(#)$Id: grppcatr.gi,v 4.56.2.1 2005/08/25 12:43:49 gap Exp $";
 
 
 #############################################################################
@@ -306,6 +306,10 @@ function( G, p )
     od;
     gens := InducedPcgsByPcSequenceNC( spec, gens );
     S := SubgroupByPcgs( G, gens );
+    if Size(S) > 1 then
+        SetIsPGroup( S, true );
+        SetPrimePGroup( S, p );
+    fi;
     return S;
 end );
 

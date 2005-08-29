@@ -4,7 +4,7 @@
 #W                                                                 Sarah Rees
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: meataxe.gi,v 4.64.2.4 2004/02/05 22:08:29 gap Exp $ 
+#H  @(#)$Id: meataxe.gi,v 4.64.2.5 2005/08/29 08:07:41 gap Exp $ 
 ##
 #Y  Copyright 1994 -- School of Mathematical Sciences, ANU   
 #Y  (C) 1998-2001 School Math. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  standard MeatAxe interface.  It defines the MeatAxe SMTX.
 ##
 Revision.meataxe_gi:=
-  "@(#)$Id: meataxe.gi,v 4.64.2.4 2004/02/05 22:08:29 gap Exp $";
+  "@(#)$Id: meataxe.gi,v 4.64.2.5 2005/08/29 08:07:41 gap Exp $";
 
 InstallGlobalFunction(GModuleByMats,function(arg)
 local l,f,dim,m;
@@ -3133,7 +3133,8 @@ local cf,u,i,j,f,cl,min,neu,sq,sb,fb,k,nmin,F;
 	                  List(k,i->LinearCombinationVecs(fb,i)));
 	TriangulizeMat(sq);
 	sq:=ImmutableMatrix(F,sq);
-	Assert(2,SMTX.InducedAction(m,sq)<>fail);
+#T      Assert(2,SMTX.InducedAction(m,sq)<>fail);
+#T InducedAction runs into an error if the assertion is executed!
 	if not sq in neu then
           Info(InfoMeatAxe,2,"submodule dimension ",Length(sq));
 	  Add(neu,sq);

@@ -1,23 +1,23 @@
 #I  file="lib/read7.g"
 
-#F  file="lib/ctblfuns.gd" crc=-52725326
-RANK_FILTER_LIST  := [ 17876080, 31, 1, 0, 1, 0, 67069299, 34, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 31235035, 34, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 
-  0, 56079354, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 45048836, 4, 993, 2, 
-  1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 22987800, 24, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 24839342, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 
-  1, 0, 32245510, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 61873062, 34, 
-  993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 56636252, 34, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 46163592, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 
-  1, 0, 25217312, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 50434591, 34, 
-  993, 2, 1, 0, 32769, 4, 1, 0, 1, 0, 33759310, 7, 993, 2, 1, 0, 17876080, 
-  31, 1, 0, 1, 0, 409708, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 819383, 
-  34, 993, 2, 1, 0, 65537, 6, 7626497, 8, 54915058, 7, 62914486, 9, 1, 0, 1, 
-  0, 1638733, 33, 993, 2, 1, 0 ];
+#F  file="lib/ctblfuns.gd" crc=9678611
+RANK_FILTER_LIST  := [ 45047844, 31, 1, 0, 1, 0, 22987800, 34, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 45974607, 34, 993, 2, 1, 0, 58719567, 1, 1, 0, 1, 
+  0, 24839342, 4, 993, 2, 1, 0, 58719567, 1, 1, 0, 1, 0, 49677691, 4, 993, 2, 
+  1, 0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 32245510, 24, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 61873062, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 
+  1, 0, 46163592, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 50434591, 34, 
+  993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 33759310, 34, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 409708, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 
+  0, 819383, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 1638733, 34, 993, 2, 
+  1, 0, 32769, 4, 1, 0, 1, 0, 3277433, 7, 993, 2, 1, 0, 45047844, 31, 1, 0, 
+  1, 0, 6553873, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 13107713, 34, 
+  993, 2, 1, 0, 65537, 6, 7626497, 8, 54915058, 7, 62914486, 9, 1, 0, 1, 0, 
+  26215393, 33, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblfuns.gd", -52725326 );
+COM_RESULT := COM_FILE( "lib/ctblfuns.gd", 9678611 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblfuns.gd\"");
 elif COM_RESULT = 1  then
@@ -27,7 +27,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblfuns.gd");
 elif COM_RESULT = 3  then
-Revision.ctblfuns_gd:="@(#)$Id: ctblfuns.gd,v 4.54.2.2 2005/04/13 11:45:38 gap Exp $";
+Revision.ctblfuns_gd:="@(#)$Id: ctblfuns.gd,v 4.54.2.3 2005/08/29 08:06:35 gap Exp $";
 DeclareCategory("IsClassFunction",IsScalar and IsCommutativeElement and IsAssociativeElement and IsHomogeneousList and IsScalarCollection and IsFinite and IsGeneralizedRowVector);
 DeclareGlobalFunction("CharacterString");
 DeclareAttribute("UnderlyingCharacterTable",IsClassFunction);
@@ -165,9 +165,9 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblfuns.gd"
 
 #F  file="lib/ctblmaps.gd" crc=-84150385
-RANK_FILTER_LIST  := [ 29359304, 1, 1, 0, 1, 0, 6553873, 4, 993, 2, 1, 0, 
-  49346896, 7, 1, 0, 1, 0, 13107713, 10, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 
-  0, 26215393, 4, 993, 2, 1, 0, 29359304, 1, 1, 0, 1, 0, 52429793, 4, 993, 2, 
+RANK_FILTER_LIST  := [ 58719567, 1, 1, 0, 1, 0, 37749714, 4, 993, 2, 1, 0, 
+  48034737, 7, 1, 0, 1, 0, 8389556, 10, 993, 2, 1, 0, 58719567, 1, 1, 0, 1, 
+  0, 16778119, 4, 993, 2, 1, 0, 58719567, 1, 1, 0, 1, 0, 33555245, 4, 993, 2, 
   1, 0 ];
 RANK_FILTER_COUNT := 1;
 
@@ -254,12 +254,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/ctblmaps.gd"
 
-#F  file="lib/ctblauto.gd" crc=-18317259
+#F  file="lib/ctblauto.gd" crc=-25172905
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblauto.gd", -18317259 );
+COM_RESULT := COM_FILE( "lib/ctblauto.gd", -25172905 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblauto.gd\"");
 elif COM_RESULT = 1  then
@@ -269,7 +269,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblauto.gd");
 elif COM_RESULT = 3  then
-Revision.ctblauto_gd:="@(#)$Id: ctblauto.gd,v 4.8 2003/01/27 08:18:03 gap Exp $";
+Revision.ctblauto_gd:="@(#)$Id: ctblauto.gd,v 4.8.2.1 2005/08/24 14:47:56 gap Exp $";
 DeclareGlobalFunction("FamiliesOfRows");
 DeclareOperation("MatrixAutomorphisms",[IsMatrix]);
 DeclareOperation("MatrixAutomorphisms",[IsMatrix,IsList,IsPermGroup]);
@@ -362,10 +362,10 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblsymm.gd"
 
 #F  file="lib/ctblsolv.gd" crc=45651183
-RANK_FILTER_LIST  := [ 41942696, 17, 41942696, 17, 1, 0, 1, 0, 37749714, 24, 
-  993, 2, 1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 8389556, 29, 993, 2, 
-  1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 16778119, 24, 993, 2, 1, 0, 
-  41942696, 17, 41942696, 17, 1, 0, 1, 0, 33555245, 24, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 16776512, 17, 16776512, 17, 1, 0, 1, 0, 618, 24, 993, 
+  2, 1, 0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 31240630, 29, 993, 2, 1, 
+  0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 26610815, 24, 993, 2, 1, 0, 
+  16776512, 17, 16776512, 17, 1, 0, 1, 0, 17353105, 24, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -442,7 +442,7 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblpope.gd"
 
 #F  file="lib/ctblmoli.gd" crc=55808565
-RANK_FILTER_LIST  := [ 15990440, 13, 1, 0, 1, 0, 618, 16, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 31980879, 13, 1, 0, 1, 0, 65944644, 16, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -474,20 +474,20 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblmoli.gd"
 
 #F  file="lib/ctblmono.gd" crc=-10121205
-RANK_FILTER_LIST  := [ 41942696, 17, 41942696, 17, 1, 0, 1, 0, 31240630, 24, 
-  993, 2, 1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 26610815, 24, 993, 2, 
-  1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 65944644, 24, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 60708209, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 
-  1, 0, 54306546, 34, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 15896568, 34, 
-  993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 63583293, 34, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 53004516, 34, 993, 2, 1, 0, 17, 18, 52247901, 18, 
-  1, 0, 1, 0, 10691328, 22, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 21381663, 
-  34, 993, 2, 1, 0, 17876080, 31, 1, 0, 1, 0, 42762333, 34, 993, 2, 1, 0, 
-  41942696, 17, 41942696, 17, 1, 0, 1, 0, 18415754, 24, 993, 2, 1, 0, 
-  41942696, 17, 41942696, 17, 1, 0, 1, 0, 6554038, 24, 993, 2, 1, 0, 
-  41942696, 17, 41942696, 17, 1, 0, 1, 0, 13108043, 24, 993, 2, 1, 0, 
-  17876080, 31, 1, 0, 1, 0, 52429193, 34, 993, 2, 1, 0, 41942696, 17, 
-  41942696, 17, 1, 0, 1, 0, 8389076, 24, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 16776512, 17, 16776512, 17, 1, 0, 1, 0, 28910924, 24, 
+  993, 2, 1, 0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 60708209, 24, 993, 2, 
+  1, 0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 41503220, 24, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 31792143, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 
+  1, 0, 63583293, 34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 53004516, 34, 
+  993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 10691328, 34, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 42762333, 34, 993, 2, 1, 0, 17, 18, 52247901, 18, 
+  1, 0, 1, 0, 36831475, 22, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 6554038, 
+  34, 993, 2, 1, 0, 45047844, 31, 1, 0, 1, 0, 13108043, 34, 993, 2, 1, 0, 
+  16776512, 17, 16776512, 17, 1, 0, 1, 0, 26215093, 24, 993, 2, 1, 0, 
+  16776512, 17, 16776512, 17, 1, 0, 1, 0, 37749474, 24, 993, 2, 1, 0, 
+  16776512, 17, 16776512, 17, 1, 0, 1, 0, 8389076, 24, 993, 2, 1, 0, 
+  45047844, 31, 1, 0, 1, 0, 33555245, 34, 993, 2, 1, 0, 16776512, 17, 
+  16776512, 17, 1, 0, 1, 0, 243, 24, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -545,9 +545,8 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblmono.gd"
 
 #F  file="lib/ctblgrp.gd" crc=-124368809
-RANK_FILTER_LIST  := [ 41942696, 17, 41942696, 17, 1, 0, 1, 0, 16778119, 24, 
-  993, 2, 1, 0, 41942696, 17, 41942696, 17, 1, 0, 1, 0, 33555245, 24, 993, 2, 
-  1, 0 ];
+RANK_FILTER_LIST  := [ 16776512, 17, 16776512, 17, 1, 0, 1, 0, 453, 24, 993, 
+  2, 1, 0, 16776512, 17, 16776512, 17, 1, 0, 1, 0, 873, 24, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -591,27 +590,27 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblgrp.gd"
 
 #F  file="lib/tom.gd" crc=-6823469
-RANK_FILTER_LIST  := [ 41942696, 17, 41942696, 17, 1, 0, 1, 0, 618, 24, 993, 
-  2, 1, 0, 67108130, 1, 1, 0, 1, 0, 453, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 
-  1, 0, 873, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 753, 4, 993, 2, 1, 0, 
-  67108130, 1, 1, 0, 1, 0, 28916819, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 
-  0, 19639112, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 1084658, 4, 993, 2, 
-  1, 0, 67108130, 1, 1, 0, 1, 0, 31085589, 4, 993, 2, 1, 0, 67108130, 1, 1, 
-  0, 1, 0, 23976652, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 2876077, 4, 
-  993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 5751161, 4, 993, 2, 1, 0, 67108130, 
-  1, 1, 0, 1, 0, 11501329, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 
-  23001665, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 46002337, 4, 993, 2, 1, 
-  0, 67108130, 1, 1, 0, 1, 0, 24894802, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 
-  1, 0, 49788611, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 32467350, 4, 993, 
-  2, 1, 0, 67108130, 1, 1, 0, 1, 0, 64933707, 4, 993, 2, 1, 0, 67108130, 1, 
-  1, 0, 1, 0, 62757542, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 58405212, 
-  4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 49701512, 4, 993, 2, 1, 0, 
-  67108130, 1, 1, 0, 1, 0, 32293152, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 
-  0, 64586271, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 62062670, 4, 993, 2, 
-  1, 0, 67108130, 1, 1, 0, 1, 0, 57016428, 4, 993, 2, 1, 0, 67108130, 1, 1, 
-  0, 1, 0, 46923944, 4, 993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 26738976, 4, 
-  993, 2, 1, 0, 67108130, 1, 1, 0, 1, 0, 53477919, 4, 993, 2, 1, 0, 67108130, 
-  1, 1, 0, 1, 0, 39845966, 4, 993, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 16776512, 17, 16776512, 17, 1, 0, 1, 0, 753, 24, 993, 
+  2, 1, 0, 28915827, 1, 1, 0, 1, 0, 19639112, 4, 993, 2, 1, 0, 28915827, 1, 
+  1, 0, 1, 0, 1084658, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 31085589, 4, 
+  993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 23976652, 4, 993, 2, 1, 0, 28915827, 
+  1, 1, 0, 1, 0, 2876077, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 5751161, 
+  4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 11501329, 4, 993, 2, 1, 0, 
+  28915827, 1, 1, 0, 1, 0, 23001665, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 
+  0, 46002337, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 24894802, 4, 993, 2, 
+  1, 0, 28915827, 1, 1, 0, 1, 0, 49788611, 4, 993, 2, 1, 0, 28915827, 1, 1, 
+  0, 1, 0, 32467350, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 64933707, 4, 
+  993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 62757542, 4, 993, 2, 1, 0, 28915827, 
+  1, 1, 0, 1, 0, 58405212, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 
+  49701512, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 32293152, 4, 993, 2, 1, 
+  0, 28915827, 1, 1, 0, 1, 0, 64586271, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 
+  1, 0, 62062670, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 57016428, 4, 993, 
+  2, 1, 0, 28915827, 1, 1, 0, 1, 0, 46923944, 4, 993, 2, 1, 0, 28915827, 1, 
+  1, 0, 1, 0, 26738976, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 53477919, 
+  4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 39845966, 4, 993, 2, 1, 0, 
+  28915827, 1, 1, 0, 1, 0, 12583020, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 
+  0, 25166007, 4, 993, 2, 1, 0, 28915827, 1, 1, 0, 1, 0, 50331981, 4, 993, 2, 
+  1, 0, 28915827, 1, 1, 0, 1, 0, 33555050, 4, 993, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -712,49 +711,50 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/tom.gd"
 
-#F  file="lib/ctbl.gi" crc=29620619
-RANK_FILTER_LIST  := [ 53660808, 21, 8193, 2, 50331214, 3, 53660808, 21, 
-  8193, 2, 50331214, 3, 4097, 1, 50331214, 3, 50331214, 3, 4097, 1, 50331214, 
-  3, 52247917, 19, 29359304, 1, 29359304, 1, 29359304, 1, 40093620, 27, 
-  53660808, 21, 53660808, 21, 7665924, 21, 53660808, 21, 52247917, 19, 
-  58719567, 2, 15881342, 223, 58719567, 2, 53660808, 21, 53660808, 21, 
-  53660808, 21, 7665924, 21, 53660808, 21, 52247917, 19, 33553548, 3, 
-  45567715, 4, 33553548, 3, 53660808, 21, 52247917, 19, 53660808, 21, 
-  53660808, 21, 7665924, 21, 36661821, 22, 7665924, 21, 53660808, 21, 
-  52247917, 19, 50331214, 3, 33553548, 3, 53660808, 21, 50331214, 3, 
-  50331214, 3, 50331214, 3, 50331214, 3, 50331214, 3, 45567715, 4, 50331214, 
-  3, 50331214, 3, 50331214, 3, 50331214, 3, 50331214, 3, 50331214, 3, 
-  45567715, 4, 33553548, 3, 58980991, 2, 21494759, 2, 36661821, 22, 53956068, 
-  4, 58980991, 2, 36661821, 22, 33553548, 3, 24595805, 4, 29359304, 1, 
-  33553548, 3, 67108190, 4, 21494759, 2, 24595805, 4, 33553548, 3, 67108190, 
-  4, 58980991, 2, 24595805, 4, 58719567, 2, 33553548, 3, 29359304, 1, 
-  29359304, 1, 67108760, 5, 29359304, 1, 29359304, 1, 17, 18, 33553548, 3, 
-  50331214, 3, 50331214, 3, 50331214, 3, 52247917, 19, 50331214, 3, 50331214, 
-  3, 50331214, 3, 40093620, 27, 50331214, 3, 50331214, 3, 50331214, 3, 
-  50331214, 3, 50331214, 3, 50331214, 3, 50331214, 3, 50331214, 3, 40118196, 
-  27, 50331214, 3, 33553548, 3, 20610615, 24, 58719567, 2, 58719567, 2, 
-  58719567, 2, 52247917, 19, 58719567, 2, 50331214, 3, 52247917, 19, 
-  50331214, 3, 52247917, 19, 50331214, 3, 33553548, 3, 33553548, 3, 33553548, 
-  3, 52247917, 19, 50331214, 3, 33553548, 3, 50331214, 3, 7665924, 21, 
-  24578747, 4, 7665924, 21, 50331214, 3, 52247917, 19, 50331214, 3, 17, 18, 
-  50331214, 3, 58719567, 2, 52247917, 19, 58719567, 2, 32769, 4, 52247917, 
-  19, 50331214, 3, 32769, 4, 52247917, 19, 33553548, 3, 32769, 4, 52247917, 
-  19, 58719567, 2, 50331214, 3, 52247917, 19, 52247917, 19, 52247917, 19, 
-  53660808, 21, 53660808, 21, 17, 18, 50331214, 3, 52247917, 19, 67108760, 5, 
-  67108760, 5, 1, 0, 67108760, 5, 1, 0, 1, 0, 53660808, 21, 52247917, 19, 
-  50331214, 3, 52247917, 19, 50331214, 3, 52247917, 19, 50331214, 3, 
-  50331214, 3, 33553548, 3, 50331214, 3, 33553548, 3, 29359304, 1, 1620442, 
-  2, 29359304, 1, 8193, 2, 29359304, 1, 4097, 1, 50331214, 3, 50331214, 3, 
-  33553548, 3, 50331214, 3, 50331214, 3, 33553548, 3, 33553548, 3, 33553548, 
-  3, 50331214, 3, 40093620, 27, 50331214, 3, 50331214, 3, 40093620, 27, 
-  50331214, 3, 40093620, 27, 52247917, 19, 33553548, 3, 58719567, 2, 
-  50331214, 3, 513, 8, 29359304, 1, 32769, 4, 29359304, 1, 32769, 4, 
-  67108760, 5, 58719567, 2, 58719567, 2, 67108760, 5, 50331214, 3, 513, 8, 
-  50331214, 3 ];
+#F  file="lib/ctbl.gi" crc=38517603
+RANK_FILTER_LIST  := [ 27202794, 21, 8193, 2, 33553548, 3, 27202794, 21, 
+  8193, 2, 33553548, 3, 4097, 1, 33553548, 3, 33553548, 3, 4097, 1, 33553548, 
+  3, 52247917, 19, 58719567, 1, 58719567, 1, 58719567, 1, 40093620, 27, 
+  27202794, 21, 27202794, 21, 7665924, 21, 27202794, 21, 52247917, 19, 
+  50331214, 2, 18752741, 223, 50331214, 2, 27202794, 21, 27202794, 21, 
+  27202794, 21, 7665924, 21, 27202794, 21, 52247917, 19, 67108055, 3, 
+  24026550, 4, 67108055, 3, 27202794, 21, 52247917, 19, 27202794, 21, 
+  27202794, 21, 7665924, 21, 60313699, 22, 7665924, 21, 27202794, 21, 
+  52247917, 19, 33553548, 3, 67108055, 3, 27202794, 21, 33553548, 3, 
+  33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 24026550, 
+  4, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 
+  33553548, 3, 24026550, 4, 67108055, 3, 50855022, 2, 42990477, 2, 60313699, 
+  22, 40804216, 4, 50855022, 2, 60313699, 22, 67108055, 3, 49192569, 4, 
+  58719567, 1, 67108055, 3, 62344691, 4, 42990477, 2, 49192569, 4, 67108055, 
+  3, 62344691, 4, 50855022, 2, 49192569, 4, 50331214, 2, 67108055, 3, 
+  58719567, 1, 58719567, 1, 67108760, 5, 58719567, 1, 58719567, 1, 17, 18, 
+  67108055, 3, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 52247917, 
+  19, 33553548, 3, 33553548, 3, 33553548, 3, 40093620, 27, 33553548, 3, 
+  33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 3, 33553548, 
+  3, 33553548, 3, 40118196, 27, 33553548, 3, 67108055, 3, 41222189, 24, 
+  50331214, 2, 50331214, 2, 50331214, 2, 52247917, 19, 50331214, 2, 33553548, 
+  3, 52247917, 19, 33553548, 3, 52247917, 19, 33553548, 3, 67108055, 3, 
+  67108055, 3, 67108055, 3, 52247917, 19, 33553548, 3, 67108055, 3, 33553548, 
+  3, 7665924, 21, 49158453, 4, 7665924, 21, 33553548, 3, 52247917, 19, 
+  33553548, 3, 17, 18, 33553548, 3, 50331214, 2, 52247917, 19, 50331214, 2, 
+  32769, 4, 52247917, 19, 33553548, 3, 32769, 4, 52247917, 19, 67108055, 3, 
+  32769, 4, 52247917, 19, 50331214, 2, 33553548, 3, 52247917, 19, 52247917, 
+  19, 52247917, 19, 27202794, 21, 27202794, 21, 17, 18, 33553548, 3, 
+  52247917, 19, 67108760, 5, 67108760, 5, 1, 0, 67108760, 5, 1, 0, 1, 0, 
+  27202794, 21, 52247917, 19, 33553548, 3, 52247917, 19, 33553548, 3, 
+  52247917, 19, 33553548, 3, 33553548, 3, 67108055, 3, 33553548, 3, 67108055, 
+  3, 58719567, 1, 14875878, 2, 58719567, 1, 8193, 2, 58719567, 1, 4097, 1, 
+  33553548, 3, 33553548, 3, 67108055, 3, 33553548, 3, 33553548, 3, 67108055, 
+  3, 67108055, 3, 67108055, 3, 33553548, 3, 40093620, 27, 33553548, 3, 
+  33553548, 3, 40093620, 27, 33553548, 3, 40093620, 27, 52247917, 19, 
+  67108055, 3, 67108055, 3, 40093620, 27, 52247917, 19, 67108055, 3, 
+  40093620, 27, 52247917, 19, 33553548, 3, 50331214, 2, 33553548, 3, 513, 8, 
+  58719567, 1, 32769, 4, 58719567, 1, 32769, 4, 67108760, 5, 50331214, 2, 
+  50331214, 2, 67108760, 5, 33553548, 3, 513, 8, 33553548, 3 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctbl.gi", 29620619 );
+COM_RESULT := COM_FILE( "lib/ctbl.gi", 38517603 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctbl.gi\"");
 elif COM_RESULT = 1  then
@@ -764,8 +764,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctbl.gi");
 elif COM_RESULT = 3  then
-Revision.ctbl_gi:="@(#)$Id: ctbl.gi,v 4.100.2.1 2004/06/01 12:47:36 gap Exp $";
-InstallValue(NearlyCharacterTablesFamily,NewFamily("NearlyCharacterTablesFamily",IsNearlyCharacterTable));
+Revision.ctbl_gi:="@(#)$Id: ctbl.gi,v 4.100.2.3 2005/08/23 08:47:37 gap Exp $";
 InstallGlobalFunction(ConnectGroupAndCharacterTable,COM_FUN(1));
 InstallMethod(CompatibleConjugacyClasses,"three argument version, call `CompatibleConjugacyClassesDefault'",[IsGroup,IsList,IsOrdinaryTable],COM_FUN(2));
 InstallMethod(CompatibleConjugacyClasses,"four argument version, call `CompatibleConjugacyClassesDefault'",[IsGroup,IsList,IsOrdinaryTable,IsRecord],CompatibleConjugacyClassesDefault);
@@ -800,140 +799,144 @@ InstallMethod(AbelianInvariants,"for an ordinary character table",[IsOrdinaryTab
 InstallMethod(Exponent,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(26));
 InstallMethod(IsAbelian,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(27));
 InstallMethod(IsCyclic,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(28));
-InstallMethod(IsFinite,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(29));
-InstallMethod(IsMonomialCharacterTable,"for an ordinary character table with underlying group",[IsOrdinaryTable and HasUnderlyingGroup],COM_FUN(30));
-InstallGlobalFunction(CharacterTable_IsNilpotentFactor,COM_FUN(31));
-InstallGlobalFunction(CharacterTable_IsNilpotentNormalSubgroup,COM_FUN(32));
-InstallMethod(IsNilpotentCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(33));
-InstallMethod(IsPerfectCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(34));
-InstallMethod(IsSimpleCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(35));
-InstallMethod(IsSolvableCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(36));
-InstallMethod(IsSporadicSimpleCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(37));
-InstallMethod(IsSupersolvableCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(38));
-InstallMethod(NrConjugacyClasses,"for an ordinary character table with underlying group",[IsOrdinaryTable and HasUnderlyingGroup],COM_FUN(39));
-InstallMethod(NrConjugacyClasses,"for a Brauer character table",[IsBrauerTable],COM_FUN(40));
-InstallMethod(NrConjugacyClasses,"for a character table with known centralizer orders",[IsNearlyCharacterTable and HasSizesCentralizers],COM_FUN(41));
-InstallMethod(NrConjugacyClasses,"for a character table with known class lengths",[IsNearlyCharacterTable and HasSizesConjugacyClasses],COM_FUN(42));
-InstallMethod(NrConjugacyClasses,"for a group with known ordinary character table",[IsGroup and HasOrdinaryCharacterTable],COM_FUN(43));
-InstallMethod(Size,"for a character table with underlying group",[IsCharacterTable and HasUnderlyingGroup],COM_FUN(44));
-InstallMethod(Size,"for a character table with known centralizer orders",[IsNearlyCharacterTable and HasSizesCentralizers],COM_FUN(45));
-InstallMethod(Size,"for a group with known ordinary character table",[IsGroup and HasOrdinaryCharacterTable],COM_FUN(46));
-InstallMethod(OrdersClassRepresentatives,"for a Brauer character table (delegate to the ordinary table)",[IsBrauerTable],COM_FUN(47));
-InstallMethod(OrdersClassRepresentatives,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(48));
-InstallMethod(OrdersClassRepresentatives,"for a character table, use known power maps",[IsNearlyCharacterTable],COM_FUN(49));
-InstallMethod(SizesCentralizers,"for a Brauer character table",[IsBrauerTable],COM_FUN(50));
-InstallMethod(SizesCentralizers,"for a character table with known class lengths",[IsNearlyCharacterTable and HasSizesConjugacyClasses],RankFilter(HasUnderlyingGroup),COM_FUN(51));
-InstallMethod(SizesCentralizers,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(52));
-InstallMethod(SizesConjugacyClasses,"for a Brauer character table",[IsBrauerTable],COM_FUN(53));
-InstallMethod(SizesConjugacyClasses,"for a character table with known centralizer sizes",[IsNearlyCharacterTable and HasSizesCentralizers],RankFilter(HasUnderlyingGroup),COM_FUN(54));
-InstallMethod(SizesConjugacyClasses,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(55));
-InstallMethod(AutomorphismsOfTable,"for a character table",[IsCharacterTable],COM_FUN(56));
-InstallMethod(AutomorphismsOfTable,"for a Brauer table in the case of good reduction",[IsBrauerTable],COM_FUN(57));
-InstallMethod(ClassNames,[IsNearlyCharacterTable],COM_FUN(58));
-InstallMethod(ClassNames,[IsNearlyCharacterTable,IsString],COM_FUN(59));
-InstallMethod(CharacterNames,[IsNearlyCharacterTable],COM_FUN(60));
-InstallMethod(\.,"for class names of a nearly character table",[IsNearlyCharacterTable,IsInt],COM_FUN(61));
-InstallMethod(ClassParameters,"for a Brauer table (if the ordinary table knows class parameters)",[IsBrauerTable],COM_FUN(62));
-InstallMethod(ClassPositionsOfNormalSubgroups,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(63));
-InstallMethod(ClassPositionsOfMaximalNormalSubgroups,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(64));
-InstallMethod(ClassPositionsOfAgemo,"for an ordinary table",[IsOrdinaryTable,IsPosInt],COM_FUN(65));
-InstallMethod(ClassPositionsOfCentre,"for an ordinary table",[IsOrdinaryTable],COM_FUN(66));
-BindGlobal("DirectProductDecompositionsLocal",COM_FUN(67));
-InstallMethod(ClassPositionsOfDirectProductDecompositions,"for an ordinary table",[IsOrdinaryTable],COM_FUN(68));
-InstallMethod(ClassPositionsOfDirectProductDecompositions,"for an ordinary table, and a list of positive integers",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(69));
-InstallMethod(ClassPositionsOfDerivedSubgroup,"for an ordinary table",[IsOrdinaryTable],COM_FUN(70));
-InstallMethod(ClassPositionsOfElementaryAbelianSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(71));
-InstallMethod(ClassPositionsOfFittingSubgroup,"for an ordinary table",[IsOrdinaryTable],COM_FUN(72));
-InstallMethod(ClassPositionsOfLowerCentralSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(73));
-InstallGlobalFunction(CharacterTable_UpperCentralSeriesFactor,COM_FUN(74));
-InstallMethod(ClassPositionsOfUpperCentralSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(75));
-InstallMethod(ClassPositionsOfSolvableResiduum,"for an ordinary table",[IsOrdinaryTable],COM_FUN(76));
-InstallMethod(ClassPositionsOfSupersolvableResiduum,"for an ordinary table",[IsOrdinaryTable],COM_FUN(77));
-InstallMethod(ClassPositionsOfNormalClosure,"for an ordinary table",[IsOrdinaryTable,IsHomogeneousList and IsCyclotomicCollection],COM_FUN(78));
-InstallMethod(Identifier,"for an ordinary table",[IsOrdinaryTable],COM_FUN(79));
-InstallMethod(Identifier,"for a Brauer table",[IsBrauerTable],COM_FUN(80));
-InstallMethod(InverseClasses,"for a character table with known irreducibles",[IsCharacterTable and HasIrr],COM_FUN(81));
-InstallMethod(InverseClasses,"for a character table",[IsCharacterTable],COM_FUN(82));
-InstallMethod(RealClasses,"for a character table",[IsCharacterTable],COM_FUN(83));
-InstallMethod(ClassOrbit,"for a character table, and a positive integer",[IsCharacterTable,IsPosInt],COM_FUN(84));
-InstallMethod(ClassRoots,"for a character table",[IsCharacterTable],COM_FUN(85));
-InstallGlobalFunction(SameBlock,COM_FUN(86));
-InstallMethod(PrimeBlocks,"for an ordinary table, and a positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(87));
-InstallMethod(PrimeBlocksOp,"for an ordinary table, and a positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(88));
-InstallMethod(ComputedPrimeBlockss,"for an ordinary table",[IsOrdinaryTable],COM_FUN(89));
-InstallMethod(BlocksInfo,"generic method for a Brauer character table",[IsBrauerTable],COM_FUN(90));
-InstallMethod(DecompositionMatrix,"for a Brauer table",[IsBrauerTable],COM_FUN(91));
-InstallMethod(DecompositionMatrix,"for a Brauer table, and a positive integer",[IsBrauerTable,IsPosInt],COM_FUN(92));
-InstallGlobalFunction(LaTeXStringDecompositionMatrix,COM_FUN(93));
-InstallMethod(IsInternallyConsistent,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(94));
-InstallMethod(IsInternallyConsistent,"for a Brauer table",[IsBrauerTable],COM_FUN(95));
+InstallMethod(IsElementaryAbelian,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(29));
+InstallMethod(IsFinite,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(30));
+InstallMethod(IsMonomialCharacterTable,"for an ordinary character table with underlying group",[IsOrdinaryTable and HasUnderlyingGroup],COM_FUN(31));
+InstallGlobalFunction(CharacterTable_IsNilpotentFactor,COM_FUN(32));
+InstallGlobalFunction(CharacterTable_IsNilpotentNormalSubgroup,COM_FUN(33));
+InstallMethod(IsNilpotentCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(34));
+InstallMethod(IsPerfectCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(35));
+InstallMethod(IsSimpleCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(36));
+InstallMethod(IsSolvableCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(37));
+InstallMethod(IsSporadicSimpleCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(38));
+InstallMethod(IsSupersolvableCharacterTable,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(39));
+InstallMethod(NrConjugacyClasses,"for an ordinary character table with underlying group",[IsOrdinaryTable and HasUnderlyingGroup],COM_FUN(40));
+InstallMethod(NrConjugacyClasses,"for a Brauer character table",[IsBrauerTable],COM_FUN(41));
+InstallMethod(NrConjugacyClasses,"for a character table with known centralizer orders",[IsNearlyCharacterTable and HasSizesCentralizers],COM_FUN(42));
+InstallMethod(NrConjugacyClasses,"for a character table with known class lengths",[IsNearlyCharacterTable and HasSizesConjugacyClasses],COM_FUN(43));
+InstallMethod(NrConjugacyClasses,"for a group with known ordinary character table",[IsGroup and HasOrdinaryCharacterTable],COM_FUN(44));
+InstallMethod(Size,"for a character table with underlying group",[IsCharacterTable and HasUnderlyingGroup],COM_FUN(45));
+InstallMethod(Size,"for a character table with known centralizer orders",[IsNearlyCharacterTable and HasSizesCentralizers],COM_FUN(46));
+InstallMethod(Size,"for a group with known ordinary character table",[IsGroup and HasOrdinaryCharacterTable],COM_FUN(47));
+InstallMethod(OrdersClassRepresentatives,"for a Brauer character table (delegate to the ordinary table)",[IsBrauerTable],COM_FUN(48));
+InstallMethod(OrdersClassRepresentatives,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(49));
+InstallMethod(OrdersClassRepresentatives,"for a character table, use known power maps",[IsNearlyCharacterTable],COM_FUN(50));
+InstallMethod(SizesCentralizers,"for a Brauer character table",[IsBrauerTable],COM_FUN(51));
+InstallMethod(SizesCentralizers,"for a character table with known class lengths",[IsNearlyCharacterTable and HasSizesConjugacyClasses],RankFilter(HasUnderlyingGroup),COM_FUN(52));
+InstallMethod(SizesCentralizers,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(53));
+InstallMethod(SizesConjugacyClasses,"for a Brauer character table",[IsBrauerTable],COM_FUN(54));
+InstallMethod(SizesConjugacyClasses,"for a character table with known centralizer sizes",[IsNearlyCharacterTable and HasSizesCentralizers],RankFilter(HasUnderlyingGroup),COM_FUN(55));
+InstallMethod(SizesConjugacyClasses,"for a character table with known group",[IsNearlyCharacterTable and HasUnderlyingGroup],COM_FUN(56));
+InstallMethod(AutomorphismsOfTable,"for a character table",[IsCharacterTable],COM_FUN(57));
+InstallMethod(AutomorphismsOfTable,"for a Brauer table in the case of good reduction",[IsBrauerTable],COM_FUN(58));
+InstallMethod(ClassNames,[IsNearlyCharacterTable],COM_FUN(59));
+InstallMethod(ClassNames,[IsNearlyCharacterTable,IsString],COM_FUN(60));
+InstallMethod(CharacterNames,[IsNearlyCharacterTable],COM_FUN(61));
+InstallMethod(\.,"for class names of a nearly character table",[IsNearlyCharacterTable,IsInt],COM_FUN(62));
+InstallMethod(ClassParameters,"for a Brauer table (if the ordinary table knows class parameters)",[IsBrauerTable],COM_FUN(63));
+InstallMethod(ClassPositionsOfNormalSubgroups,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(64));
+InstallMethod(ClassPositionsOfMaximalNormalSubgroups,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(65));
+InstallMethod(ClassPositionsOfMinimalNormalSubgroups,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(66));
+InstallMethod(ClassPositionsOfAgemo,"for an ordinary table",[IsOrdinaryTable,IsPosInt],COM_FUN(67));
+InstallMethod(ClassPositionsOfCentre,"for an ordinary table",[IsOrdinaryTable],COM_FUN(68));
+BindGlobal("DirectProductDecompositionsLocal",COM_FUN(69));
+InstallMethod(ClassPositionsOfDirectProductDecompositions,"for an ordinary table",[IsOrdinaryTable],COM_FUN(70));
+InstallMethod(ClassPositionsOfDirectProductDecompositions,"for an ordinary table, and a list of positive integers",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(71));
+InstallMethod(ClassPositionsOfDerivedSubgroup,"for an ordinary table",[IsOrdinaryTable],COM_FUN(72));
+InstallMethod(ClassPositionsOfElementaryAbelianSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(73));
+InstallMethod(ClassPositionsOfFittingSubgroup,"for an ordinary table",[IsOrdinaryTable],COM_FUN(74));
+InstallMethod(ClassPositionsOfLowerCentralSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(75));
+InstallGlobalFunction(CharacterTable_UpperCentralSeriesFactor,COM_FUN(76));
+InstallMethod(ClassPositionsOfUpperCentralSeries,"for an ordinary table",[IsOrdinaryTable],COM_FUN(77));
+InstallMethod(ClassPositionsOfSolvableResiduum,"for an ordinary table",[IsOrdinaryTable],COM_FUN(78));
+InstallMethod(ClassPositionsOfSupersolvableResiduum,"for an ordinary table",[IsOrdinaryTable],COM_FUN(79));
+InstallMethod(ClassPositionsOfNormalClosure,"for an ordinary table",[IsOrdinaryTable,IsHomogeneousList and IsCyclotomicCollection],COM_FUN(80));
+InstallMethod(Identifier,"for an ordinary table",[IsOrdinaryTable],COM_FUN(81));
+InstallMethod(Identifier,"for a Brauer table",[IsBrauerTable],COM_FUN(82));
+InstallMethod(InverseClasses,"for a character table with known irreducibles",[IsCharacterTable and HasIrr],COM_FUN(83));
+InstallMethod(InverseClasses,"for a character table",[IsCharacterTable],COM_FUN(84));
+InstallMethod(RealClasses,"for a character table",[IsCharacterTable],COM_FUN(85));
+InstallMethod(ClassOrbit,"for a character table, and a positive integer",[IsCharacterTable,IsPosInt],COM_FUN(86));
+InstallMethod(ClassRoots,"for a character table",[IsCharacterTable],COM_FUN(87));
+InstallGlobalFunction(SameBlock,COM_FUN(88));
+InstallMethod(PrimeBlocks,"for an ordinary table, and a positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(89));
+InstallMethod(PrimeBlocksOp,"for an ordinary table, and a positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(90));
+InstallMethod(ComputedPrimeBlockss,"for an ordinary table",[IsOrdinaryTable],COM_FUN(91));
+InstallMethod(BlocksInfo,"generic method for a Brauer character table",[IsBrauerTable],COM_FUN(92));
+InstallMethod(DecompositionMatrix,"for a Brauer table",[IsBrauerTable],COM_FUN(93));
+InstallMethod(DecompositionMatrix,"for a Brauer table, and a positive integer",[IsBrauerTable,IsPosInt],COM_FUN(94));
+InstallGlobalFunction(LaTeXStringDecompositionMatrix,COM_FUN(95));
+InstallMethod(IsInternallyConsistent,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(96));
+InstallMethod(IsInternallyConsistent,"for a Brauer table",[IsBrauerTable],COM_FUN(97));
 InstallMethod(IsPSolvableCharacterTable,"for ord. char. table, and zero (call `IsPSolvableCharacterTableOp')",[IsOrdinaryTable,IsZeroCyc],IsPSolvableCharacterTableOp);
-InstallMethod(IsPSolvableCharacterTable,"for ord. char. table knowing `IsSolvableCharacterTable', and zero",[IsOrdinaryTable and HasIsSolvableCharacterTable,IsZeroCyc],COM_FUN(96));
-InstallMethod(IsPSolvableCharacterTable,"for ord.char.table, and pos.int. (call `IsPSolvableCharacterTableOp')",[IsOrdinaryTable,IsPosInt],COM_FUN(97));
-InstallMethod(IsPSolvableCharacterTableOp,"for an ordinary character table, an an integer",[IsOrdinaryTable,IsInt],COM_FUN(98));
-InstallMethod(ComputedIsPSolvableCharacterTables,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(99));
-InstallGlobalFunction(IsClassFusionOfNormalSubgroup,COM_FUN(100));
-InstallMethod(Indicator,"for a character table, and a positive integer",[IsCharacterTable,IsPosInt],COM_FUN(101));
+InstallMethod(IsPSolvableCharacterTable,"for ord. char. table knowing `IsSolvableCharacterTable', and zero",[IsOrdinaryTable and HasIsSolvableCharacterTable,IsZeroCyc],COM_FUN(98));
+InstallMethod(IsPSolvableCharacterTable,"for ord.char.table, and pos.int. (call `IsPSolvableCharacterTableOp')",[IsOrdinaryTable,IsPosInt],COM_FUN(99));
+InstallMethod(IsPSolvableCharacterTableOp,"for an ordinary character table, an an integer",[IsOrdinaryTable,IsInt],COM_FUN(100));
+InstallMethod(ComputedIsPSolvableCharacterTables,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(101));
+InstallGlobalFunction(IsClassFusionOfNormalSubgroup,COM_FUN(102));
+InstallMethod(Indicator,"for a character table, and a positive integer",[IsCharacterTable,IsPosInt],COM_FUN(103));
 InstallMethod(Indicator,"for a character table, a homogeneous list, and a positive integer",[IsCharacterTable,IsHomogeneousList,IsPosInt],IndicatorOp);
-InstallMethod(IndicatorOp,"for an ord. character table, a hom. list, and a pos. integer",[IsOrdinaryTable,IsHomogeneousList,IsPosInt],COM_FUN(102));
-InstallMethod(IndicatorOp,"for a Brauer character table and <n> = 2",[IsBrauerTable,IsHomogeneousList,IsPosInt],COM_FUN(103));
-InstallMethod(ComputedIndicators,"for a character table",[IsCharacterTable],COM_FUN(104));
-InstallGlobalFunction(NrPolyhedralSubgroups,COM_FUN(105));
-InstallMethod(ClassMultiplicationCoefficient,"for an ord. table, and three pos. integers",[IsOrdinaryTable,IsPosInt,IsPosInt,IsPosInt],10,COM_FUN(106));
-InstallGlobalFunction(MatClassMultCoeffsCharTable,COM_FUN(107));
-InstallGlobalFunction(ClassStructureCharTable,COM_FUN(108));
+InstallMethod(IndicatorOp,"for an ord. character table, a hom. list, and a pos. integer",[IsOrdinaryTable,IsHomogeneousList,IsPosInt],COM_FUN(104));
+InstallMethod(IndicatorOp,"for a Brauer character table and <n> = 2",[IsBrauerTable,IsHomogeneousList,IsPosInt],COM_FUN(105));
+InstallMethod(ComputedIndicators,"for a character table",[IsCharacterTable],COM_FUN(106));
+InstallGlobalFunction(NrPolyhedralSubgroups,COM_FUN(107));
+InstallMethod(ClassMultiplicationCoefficient,"for an ord. table, and three pos. integers",[IsOrdinaryTable,IsPosInt,IsPosInt,IsPosInt],10,COM_FUN(108));
+InstallGlobalFunction(MatClassMultCoeffsCharTable,COM_FUN(109));
+InstallGlobalFunction(ClassStructureCharTable,COM_FUN(110));
 InstallMethod(CharacterTable,"for a group (delegate to `OrdinaryCharacterTable')",[IsGroup],OrdinaryCharacterTable);
-InstallMethod(CharacterTable,"for a group, and a prime integer",[IsGroup,IsInt],COM_FUN(109));
+InstallMethod(CharacterTable,"for a group, and a prime integer",[IsGroup,IsInt],COM_FUN(111));
 InstallMethod(CharacterTable,"for an ordinary table, and a prime integer",[IsOrdinaryTable,IsPosInt],BrauerTable);
-BindGlobal("CharacterTableFromLibrary",COM_FUN(110));
-InstallMethod(CharacterTable,"for a string",[IsString],COM_FUN(111));
-InstallOtherMethod(CharacterTable,"for a string and an object",[IsString,IsObject],COM_FUN(112));
-InstallOtherMethod(CharacterTable,"for a string and two objects",[IsString,IsObject,IsObject],COM_FUN(113));
-InstallMethod(BrauerTable,"for a group, and a prime (delegate to the ord. table of the group)",[IsGroup,IsPosInt],COM_FUN(114));
-InstallMethod(BrauerTable,"for an ordinary table, and a prime",[IsOrdinaryTable,IsPosInt],COM_FUN(115));
-InstallMethod(BrauerTableOp,"for ordinary character table, and positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(116));
-InstallMethod(ComputedBrauerTables,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(117));
-InstallGlobalFunction(CharacterTableRegular,COM_FUN(118));
-InstallGlobalFunction(ConvertToCharacterTableNC,COM_FUN(119));
-InstallGlobalFunction(ConvertToCharacterTable,COM_FUN(120));
-InstallGlobalFunction(ConvertToLibraryCharacterTableNC,COM_FUN(121));
-InstallMethod(ViewObj,"for an ordinary table",[IsOrdinaryTable],COM_FUN(122));
-InstallMethod(ViewObj,"for a Brauer table",[IsBrauerTable],COM_FUN(123));
-InstallMethod(PrintObj,"for an ordinary table",[IsOrdinaryTable],COM_FUN(124));
-InstallMethod(PrintObj,"for a Brauer table",[IsBrauerTable],COM_FUN(125));
-InstallGlobalFunction(CharacterTableDisplayStringEntryDefault,COM_FUN(126));
-InstallGlobalFunction(CharacterTableDisplayStringEntryDataDefault,COM_FUN(127));
-InstallGlobalFunction(CharacterTableDisplayPrintLegendDefault,COM_FUN(128));
-InstallMethod(Display,"for a nearly character table",[IsNearlyCharacterTable],COM_FUN(129));
-InstallMethod(Display,"for a nearly character table with display options",[IsNearlyCharacterTable and HasDisplayOptions],COM_FUN(130));
-InstallOtherMethod(Display,"for a nearly character table, and a list",[IsNearlyCharacterTable,IsList],COM_FUN(131));
-InstallOtherMethod(Display,"for a nearly character table, and a record",[IsNearlyCharacterTable,IsRecord],COM_FUN(132));
-InstallGlobalFunction(PrintCharacterTable,COM_FUN(133));
-InstallMethod(CharacterTableDirectProduct,"for two ordinary character tables",IsIdenticalObj,[IsOrdinaryTable,IsOrdinaryTable],COM_FUN(134));
-InstallMethod(CharacterTableDirectProduct,"for one Brauer table, and one ordinary character table",IsIdenticalObj,[IsBrauerTable,IsOrdinaryTable],COM_FUN(135));
-InstallMethod(CharacterTableDirectProduct,"for one ordinary and one Brauer character table",IsIdenticalObj,[IsOrdinaryTable,IsBrauerTable],COM_FUN(136));
-InstallMethod(CharacterTableDirectProduct,"for two Brauer character tables",IsIdenticalObj,[IsBrauerTable,IsBrauerTable],COM_FUN(137));
-InstallGlobalFunction(CharacterTableHeadOfFactorGroupByFusion,COM_FUN(138));
-InstallMethod(CharacterTableFactorGroup,"for an ordinary table, and a list of class positions",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(139));
-InstallMethod(CharacterTableIsoclinic,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(140));
-InstallMethod(CharacterTableIsoclinic,"for an ordinary character table, and a list of classes",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(141));
-InstallMethod(CharacterTableIsoclinic,"for an ordinary character table, a list of classes, and a class pos.",[IsOrdinaryTable,IsList and IsCyclotomicCollection,IsPosInt],COM_FUN(142));
-InstallMethod(CharacterTableIsoclinic,"for a Brauer table",[IsBrauerTable],COM_FUN(143));
-InstallGlobalFunction(CharacterTableOfNormalSubgroup,COM_FUN(144));
-InstallGlobalFunction(PermutationToSortCharacters,COM_FUN(145));
-InstallMethod(CharacterTableWithSortedCharacters,"for a character table",[IsCharacterTable],COM_FUN(146));
-InstallMethod(CharacterTableWithSortedCharacters,"for an ordinary character table, and a permutation",[IsOrdinaryTable,IsPerm],COM_FUN(147));
-InstallMethod(SortedCharacters,"for a character table, and a homogeneous list",[IsNearlyCharacterTable,IsHomogeneousList],COM_FUN(148));
-InstallMethod(SortedCharacters,"for a character table, a homogeneous list, and a string",[IsNearlyCharacterTable,IsHomogeneousList,IsString],COM_FUN(149));
-InstallGlobalFunction(PermutationToSortClasses,COM_FUN(150));
-InstallMethod(CharacterTableWithSortedClasses,"for a character table",[IsCharacterTable],COM_FUN(151));
-InstallMethod(CharacterTableWithSortedClasses,"for a character table, and string",[IsCharacterTable,IsString],COM_FUN(152));
-InstallMethod(CharacterTableWithSortedClasses,"for an ordinary character table, and a permutation",[IsOrdinaryTable,IsPerm],COM_FUN(153));
-InstallGlobalFunction(SortedCharacterTable,COM_FUN(154));
-InstallMethod(NormalSubgroupClassesInfo,"default method, initialization",[IsOrdinaryTable],COM_FUN(155));
-InstallGlobalFunction(ClassPositionsOfNormalSubgroup,COM_FUN(156));
-InstallGlobalFunction(NormalSubgroupClasses,COM_FUN(157));
-InstallGlobalFunction(FactorGroupNormalSubgroupClasses,COM_FUN(158));
+BindGlobal("CharacterTableFromLibrary",COM_FUN(112));
+InstallMethod(CharacterTable,"for a string",[IsString],COM_FUN(113));
+InstallOtherMethod(CharacterTable,"for a string and an object",[IsString,IsObject],COM_FUN(114));
+InstallOtherMethod(CharacterTable,"for a string and two objects",[IsString,IsObject,IsObject],COM_FUN(115));
+InstallMethod(BrauerTable,"for a group, and a prime (delegate to the ord. table of the group)",[IsGroup,IsPosInt],COM_FUN(116));
+InstallMethod(BrauerTable,"for an ordinary table, and a prime",[IsOrdinaryTable,IsPosInt],COM_FUN(117));
+InstallMethod(BrauerTableOp,"for ordinary character table, and positive integer",[IsOrdinaryTable,IsPosInt],COM_FUN(118));
+InstallMethod(ComputedBrauerTables,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(119));
+InstallGlobalFunction(CharacterTableRegular,COM_FUN(120));
+InstallGlobalFunction(ConvertToCharacterTableNC,COM_FUN(121));
+InstallGlobalFunction(ConvertToCharacterTable,COM_FUN(122));
+InstallGlobalFunction(ConvertToLibraryCharacterTableNC,COM_FUN(123));
+InstallMethod(ViewObj,"for an ordinary table",[IsOrdinaryTable],COM_FUN(124));
+InstallMethod(ViewObj,"for a Brauer table",[IsBrauerTable],COM_FUN(125));
+InstallMethod(PrintObj,"for an ordinary table",[IsOrdinaryTable],COM_FUN(126));
+InstallMethod(PrintObj,"for a Brauer table",[IsBrauerTable],COM_FUN(127));
+InstallGlobalFunction(CharacterTableDisplayStringEntryDefault,COM_FUN(128));
+InstallGlobalFunction(CharacterTableDisplayStringEntryDataDefault,COM_FUN(129));
+InstallGlobalFunction(CharacterTableDisplayPrintLegendDefault,COM_FUN(130));
+InstallMethod(Display,"for a nearly character table",[IsNearlyCharacterTable],COM_FUN(131));
+InstallMethod(Display,"for a nearly character table with display options",[IsNearlyCharacterTable and HasDisplayOptions],COM_FUN(132));
+InstallOtherMethod(Display,"for a nearly character table, and a list",[IsNearlyCharacterTable,IsList],COM_FUN(133));
+InstallOtherMethod(Display,"for a nearly character table, and a record",[IsNearlyCharacterTable,IsRecord],COM_FUN(134));
+InstallGlobalFunction(PrintCharacterTable,COM_FUN(135));
+InstallMethod(CharacterTableDirectProduct,"for two ordinary character tables",IsIdenticalObj,[IsOrdinaryTable,IsOrdinaryTable],COM_FUN(136));
+InstallMethod(CharacterTableDirectProduct,"for one Brauer table, and one ordinary character table",IsIdenticalObj,[IsBrauerTable,IsOrdinaryTable],COM_FUN(137));
+InstallMethod(CharacterTableDirectProduct,"for one ordinary and one Brauer character table",IsIdenticalObj,[IsOrdinaryTable,IsBrauerTable],COM_FUN(138));
+InstallMethod(CharacterTableDirectProduct,"for two Brauer character tables",IsIdenticalObj,[IsBrauerTable,IsBrauerTable],COM_FUN(139));
+InstallGlobalFunction(CharacterTableHeadOfFactorGroupByFusion,COM_FUN(140));
+InstallMethod(CharacterTableFactorGroup,"for an ordinary table, and a list of class positions",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(141));
+InstallMethod(CharacterTableIsoclinic,"for an ordinary character table",[IsOrdinaryTable],COM_FUN(142));
+InstallMethod(CharacterTableIsoclinic,"for an ordinary character table, and a list of classes",[IsOrdinaryTable,IsList and IsCyclotomicCollection],COM_FUN(143));
+InstallMethod(CharacterTableIsoclinic,"for an ordinary character table, a list of classes, and a class pos.",[IsOrdinaryTable,IsList and IsCyclotomicCollection,IsPosInt],COM_FUN(144));
+InstallMethod(CharacterTableIsoclinic,"for a Brauer table",[IsBrauerTable],COM_FUN(145));
+InstallMethod(CharacterTableIsoclinic,"for a Brauer table, a list of classes, and a class pos.",[IsBrauerTable,IsList and IsCyclotomicCollection,IsPosInt],COM_FUN(146));
+InstallOtherMethod(CharacterTableIsoclinic,"for a Brauer table, a list of classes, a class pos., an ord. table",[IsBrauerTable,IsList and IsCyclotomicCollection,IsPosInt,IsOrdinaryTable],COM_FUN(147));
+InstallGlobalFunction(CharacterTableOfNormalSubgroup,COM_FUN(148));
+InstallGlobalFunction(PermutationToSortCharacters,COM_FUN(149));
+InstallMethod(CharacterTableWithSortedCharacters,"for a character table",[IsCharacterTable],COM_FUN(150));
+InstallMethod(CharacterTableWithSortedCharacters,"for an ordinary character table, and a permutation",[IsOrdinaryTable,IsPerm],COM_FUN(151));
+InstallMethod(SortedCharacters,"for a character table, and a homogeneous list",[IsNearlyCharacterTable,IsHomogeneousList],COM_FUN(152));
+InstallMethod(SortedCharacters,"for a character table, a homogeneous list, and a string",[IsNearlyCharacterTable,IsHomogeneousList,IsString],COM_FUN(153));
+InstallGlobalFunction(PermutationToSortClasses,COM_FUN(154));
+InstallMethod(CharacterTableWithSortedClasses,"for a character table",[IsCharacterTable],COM_FUN(155));
+InstallMethod(CharacterTableWithSortedClasses,"for a character table, and string",[IsCharacterTable,IsString],COM_FUN(156));
+InstallMethod(CharacterTableWithSortedClasses,"for an ordinary character table, and a permutation",[IsOrdinaryTable,IsPerm],COM_FUN(157));
+InstallGlobalFunction(SortedCharacterTable,COM_FUN(158));
+InstallMethod(NormalSubgroupClassesInfo,"default method, initialization",[IsOrdinaryTable],COM_FUN(159));
+InstallGlobalFunction(ClassPositionsOfNormalSubgroup,COM_FUN(160));
+InstallGlobalFunction(NormalSubgroupClasses,COM_FUN(161));
+InstallGlobalFunction(FactorGroupNormalSubgroupClasses,COM_FUN(162));
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -944,74 +947,74 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/ctbl.gi"
 
-#F  file="lib/ctblfuns.gi" crc=-48322763
-RANK_FILTER_LIST  := [ 16385, 3, 17876080, 31, 52247917, 19, 17876080, 31, 
-  17876080, 31, 52247917, 19, 17876080, 31, 65, 16, 17, 18, 17876080, 31, 
-  17876080, 31, 17876080, 31, 17876080, 31, 17876080, 31, 8193, 2, 8193, 2, 
-  17876080, 31, 17876080, 31, 17876080, 31, 17876080, 31, 8193, 2, 17876080, 
-  31, 8193, 2, 17876080, 31, 1, 0, 1, 0, 17876080, 31, 32689376, 33, 
-  32689376, 33, 21579164, 35, 21579164, 35, 17876080, 31, 32689376, 33, 
-  17876080, 31, 65, 16, 17876080, 31, 17, 18, 14813297, 33, 52247917, 19, 
-  3703085, 35, 17876080, 31, 65, 16, 14813297, 33, 17, 18, 3703085, 35, 
-  52247917, 19, 17876080, 31, 17876080, 31, 17876080, 31, 14813297, 33, 
-  14813297, 33, 3703085, 35, 3703085, 35, 17876080, 31, 66059509, 5, 
-  66059509, 5, 17876080, 31, 17876080, 31, 17876080, 31, 3703085, 35, 
-  17876080, 31, 52247917, 19, 17876080, 31, 65767820, 5, 17876080, 31, 
-  52675892, 10, 17876080, 31, 53660808, 21, 17876080, 31, 29359304, 1, 
-  65767820, 5, 17876080, 31, 17876080, 31, 17876080, 31, 50331214, 3, 
-  50331214, 3, 32769, 4, 50331214, 3, 32769, 4, 32769, 4, 57961507, 36, 
-  57961507, 36, 17, 18, 17876080, 31, 513, 8, 17876080, 31, 32689376, 33, 
-  21579164, 35, 17876080, 31, 32689376, 33, 21579164, 35, 17876080, 31, 
-  17876080, 31, 4097, 1, 29359304, 1, 16385, 3, 53660808, 21, 16385, 3, 
-  29359304, 1, 16385, 3, 53660808, 21, 16385, 3, 29359304, 1, 16385, 3, 
-  53660808, 21, 16385, 3, 29359304, 1, 53660808, 21, 45271600, 33, 36137368, 
-  31, 49346896, 7, 53660808, 21, 8126465, 2, 5, 1, 53660808, 21, 53660808, 
-  21, 32689376, 33, 17876080, 31, 50331214, 3, 32769, 4, 33553548, 3, 32769, 
-  4, 17876080, 31, 50331214, 3, 32769, 4, 17876080, 31, 50331214, 3, 32769, 
-  4, 33553548, 3, 32769, 4, 17876080, 31, 17876080, 31, 50331214, 3, 
-  65077940, 12, 65077940, 12, 32769, 4, 32769, 4, 32769, 4, 50331214, 3, 
-  32769, 4, 32769, 4, 50331214, 3, 32769, 4, 17876080, 31, 50331214, 3, 
-  32769, 4, 17876080, 31, 50331214, 3, 32769, 4, 32769, 4, 17876080, 31, 
-  21579164, 35, 50331214, 3, 32769, 4, 33553548, 3, 32769, 4, 17876080, 31, 
-  53660808, 21, 17876080, 31, 50331214, 3, 53660808, 21, 32769, 4, 17876080, 
-  31, 50331214, 3, 32769, 4, 32769, 4, 17876080, 31, 52247917, 19, 50331214, 
-  3, 32769, 4, 52247917, 19, 17876080, 31, 50331214, 3, 32769, 4, 17876080, 
-  31, 50331214, 3, 32769, 4, 17876080, 31, 50331214, 3, 32769, 4, 17876080, 
-  31, 58719567, 2, 32769, 4, 17876080, 31, 52247917, 19, 58719567, 2, 32769, 
-  4, 52247917, 19, 32769, 4, 32769, 4, 17876080, 31, 53660808, 21, 29359304, 
-  1, 32769, 4, 53660808, 21, 17876080, 31, 49346896, 7, 29359304, 1, 32769, 
-  4, 49346896, 7, 17876080, 31, 29359304, 1, 29359304, 1, 32769, 4, 29359304, 
-  1, 8193, 2, 53660808, 21, 8193, 2, 49346896, 7, 8193, 2, 58719567, 2, 
-  58719567, 2, 8193, 2, 53660808, 21, 58719567, 2, 8193, 2, 49346896, 7, 
-  58719567, 2, 8193, 2, 58719567, 2, 29359304, 1, 29359304, 1, 32769, 4, 
-  29359304, 1, 29359304, 1, 58412696, 30, 1, 0, 8193, 2, 40093620, 27, 
-  17876080, 31, 53660808, 21, 58719567, 2, 32769, 4, 53660808, 21, 17876080, 
-  31, 1829479, 17, 58719567, 2, 17876080, 31, 1829479, 17, 17876080, 31, 
-  29359304, 1, 58719567, 2, 17876080, 31, 29359304, 1, 32769, 4, 53660808, 
-  21, 32769, 4, 1829479, 17, 32769, 4, 29359304, 1, 17876080, 31, 53660808, 
-  21, 58719567, 2, 32769, 4, 53660808, 21, 17876080, 31, 29359304, 1, 
-  58719567, 2, 32769, 4, 29359304, 1, 17876080, 31, 49346896, 7, 58719567, 2, 
-  32769, 4, 49346896, 7, 8193, 2, 53660808, 21, 8193, 2, 49346896, 7, 8193, 
-  2, 58719567, 2, 58719567, 2, 32769, 4, 53660808, 21, 58719567, 2, 32769, 4, 
-  29359304, 1, 58719567, 2, 32769, 4, 49346896, 7, 17876080, 31, 53660808, 
-  21, 58719567, 2, 32769, 4, 53660808, 21, 17876080, 31, 1829479, 17, 
-  58719567, 2, 32769, 4, 1829479, 17, 17876080, 31, 29359304, 1, 58719567, 2, 
-  32769, 4, 29359304, 1, 32769, 4, 53660808, 21, 32769, 4, 49346896, 7, 
-  32769, 4, 58719567, 2, 29359304, 1, 29359304, 1, 32769, 4, 29359304, 1, 
-  29359304, 1, 32769, 4, 67108760, 5, 29359304, 1, 29359304, 1, 32769, 4, 
-  40118196, 27, 50331214, 3, 50331214, 3, 67108760, 5, 50331214, 3, 32769, 4, 
-  50331214, 3, 32769, 4, 67108760, 5, 32769, 4, 32769, 4, 32769, 4, 50331214, 
-  3, 32769, 4, 32769, 4, 50331214, 3, 32769, 4, 32769, 4, 32769, 4, 50331214, 
-  3, 32769, 4, 32769, 4, 32769, 4, 52247917, 19, 32769, 4, 50331214, 3, 
-  58719567, 2, 32769, 4, 52247917, 19, 58719567, 2, 32769, 4, 50331214, 3, 
-  58719567, 2, 32769, 4, 4097, 1, 58412696, 30, 32769, 4, 32769, 4, 17876080, 
-  31, 41951068, 17, 17876080, 31, 32799584, 27, 32799584, 27, 1, 0, 32799584, 
-  27, 1, 0, 29523144, 23, 17876080, 31, 17876080, 31, 32799584, 27, 32769, 4, 
+#F  file="lib/ctblfuns.gi" crc=-41936090
+RANK_FILTER_LIST  := [ 16385, 3, 45047844, 31, 52247917, 19, 45047844, 31, 
+  45047844, 31, 52247917, 19, 45047844, 31, 65, 16, 17, 18, 45047844, 31, 
+  45047844, 31, 45047844, 31, 45047844, 31, 45047844, 31, 8193, 2, 8193, 2, 
+  45047844, 31, 45047844, 31, 45047844, 31, 45047844, 31, 8193, 2, 45047844, 
+  31, 8193, 2, 45047844, 31, 1, 0, 1, 0, 45047844, 31, 13628904, 33, 
+  13628904, 33, 37193109, 35, 37193109, 35, 45047844, 31, 13628904, 33, 
+  45047844, 31, 65, 16, 45047844, 31, 17, 18, 35689940, 33, 52247917, 19, 
+  59254145, 35, 45047844, 31, 65, 16, 35689940, 33, 17, 18, 59254145, 35, 
+  52247917, 19, 45047844, 31, 45047844, 31, 45047844, 31, 35689940, 33, 
+  35689940, 33, 59254145, 35, 59254145, 35, 45047844, 31, 66059509, 5, 
+  66059509, 5, 45047844, 31, 45047844, 31, 45047844, 31, 59254145, 35, 
+  45047844, 31, 52247917, 19, 45047844, 31, 65767820, 5, 45047844, 31, 
+  34189794, 10, 45047844, 31, 27202794, 21, 45047844, 31, 58719567, 1, 
+  65767820, 5, 45047844, 31, 45047844, 31, 45047844, 31, 33553548, 3, 
+  33553548, 3, 32769, 4, 33553548, 3, 32769, 4, 32769, 4, 18024392, 36, 
+  18024392, 36, 17, 18, 45047844, 31, 513, 8, 45047844, 31, 13628904, 33, 
+  37193109, 35, 45047844, 31, 13628904, 33, 37193109, 35, 45047844, 31, 
+  45047844, 31, 4097, 1, 58719567, 1, 16385, 3, 27202794, 21, 16385, 3, 
+  58719567, 1, 16385, 3, 27202794, 21, 16385, 3, 58719567, 1, 16385, 3, 
+  27202794, 21, 16385, 3, 58719567, 1, 27202794, 21, 18813586, 33, 9679354, 
+  31, 48034737, 7, 27202794, 21, 8126465, 2, 5, 1, 27202794, 21, 27202794, 
+  21, 13628904, 33, 45047844, 31, 33553548, 3, 32769, 4, 67108055, 3, 32769, 
+  4, 45047844, 31, 33553548, 3, 32769, 4, 45047844, 31, 33553548, 3, 32769, 
+  4, 67108055, 3, 32769, 4, 45047844, 31, 45047844, 31, 33553548, 3, 
+  65077940, 12, 65077940, 12, 32769, 4, 32769, 4, 32769, 4, 33553548, 3, 
+  32769, 4, 32769, 4, 33553548, 3, 32769, 4, 45047844, 31, 33553548, 3, 
+  32769, 4, 45047844, 31, 33553548, 3, 32769, 4, 32769, 4, 45047844, 31, 
+  37193109, 35, 33553548, 3, 32769, 4, 67108055, 3, 32769, 4, 45047844, 31, 
+  27202794, 21, 45047844, 31, 33553548, 3, 27202794, 21, 32769, 4, 45047844, 
+  31, 33553548, 3, 32769, 4, 32769, 4, 45047844, 31, 52247917, 19, 33553548, 
+  3, 32769, 4, 52247917, 19, 45047844, 31, 33553548, 3, 32769, 4, 45047844, 
+  31, 33553548, 3, 32769, 4, 45047844, 31, 33553548, 3, 32769, 4, 45047844, 
+  31, 50331214, 2, 32769, 4, 45047844, 31, 52247917, 19, 50331214, 2, 32769, 
+  4, 52247917, 19, 32769, 4, 32769, 4, 45047844, 31, 27202794, 21, 58719567, 
+  1, 32769, 4, 27202794, 21, 45047844, 31, 48034737, 7, 58719567, 1, 32769, 
+  4, 48034737, 7, 45047844, 31, 58719567, 1, 58719567, 1, 32769, 4, 58719567, 
+  1, 8193, 2, 27202794, 21, 8193, 2, 48034737, 7, 8193, 2, 50331214, 2, 
+  50331214, 2, 8193, 2, 27202794, 21, 50331214, 2, 8193, 2, 48034737, 7, 
+  50331214, 2, 8193, 2, 50331214, 2, 58719567, 1, 58719567, 1, 32769, 4, 
+  58719567, 1, 58719567, 1, 58412696, 30, 1, 0, 8193, 2, 40093620, 27, 
+  45047844, 31, 27202794, 21, 50331214, 2, 32769, 4, 27202794, 21, 45047844, 
+  31, 19264932, 17, 50331214, 2, 45047844, 31, 19264932, 17, 45047844, 31, 
+  58719567, 1, 50331214, 2, 45047844, 31, 58719567, 1, 32769, 4, 27202794, 
+  21, 32769, 4, 19264932, 17, 32769, 4, 58719567, 1, 45047844, 31, 27202794, 
+  21, 50331214, 2, 32769, 4, 27202794, 21, 45047844, 31, 58719567, 1, 
+  50331214, 2, 32769, 4, 58719567, 1, 45047844, 31, 48034737, 7, 50331214, 2, 
+  32769, 4, 48034737, 7, 8193, 2, 27202794, 21, 8193, 2, 48034737, 7, 8193, 
+  2, 50331214, 2, 50331214, 2, 32769, 4, 27202794, 21, 50331214, 2, 32769, 4, 
+  58719567, 1, 50331214, 2, 32769, 4, 48034737, 7, 45047844, 31, 27202794, 
+  21, 50331214, 2, 32769, 4, 27202794, 21, 45047844, 31, 19264932, 17, 
+  50331214, 2, 32769, 4, 19264932, 17, 45047844, 31, 58719567, 1, 50331214, 
+  2, 32769, 4, 58719567, 1, 32769, 4, 27202794, 21, 32769, 4, 48034737, 7, 
+  32769, 4, 50331214, 2, 58719567, 1, 58719567, 1, 32769, 4, 58719567, 1, 
+  58719567, 1, 32769, 4, 67108760, 5, 58719567, 1, 58719567, 1, 32769, 4, 
+  40118196, 27, 33553548, 3, 33553548, 3, 67108760, 5, 33553548, 3, 32769, 4, 
+  33553548, 3, 32769, 4, 67108760, 5, 32769, 4, 32769, 4, 32769, 4, 33553548, 
+  3, 32769, 4, 32769, 4, 33553548, 3, 32769, 4, 32769, 4, 32769, 4, 33553548, 
+  3, 32769, 4, 32769, 4, 32769, 4, 52247917, 19, 32769, 4, 33553548, 3, 
+  50331214, 2, 32769, 4, 52247917, 19, 50331214, 2, 32769, 4, 33553548, 3, 
+  50331214, 2, 32769, 4, 4097, 1, 58412696, 30, 32769, 4, 32769, 4, 45047844, 
+  31, 41951068, 17, 45047844, 31, 44367168, 27, 44367168, 27, 1, 0, 44367168, 
+  27, 1, 0, 59047247, 23, 45047844, 31, 45047844, 31, 44367168, 27, 32769, 4, 
   32769, 4 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblfuns.gi", -48322763 );
+COM_RESULT := COM_FILE( "lib/ctblfuns.gi", -41936090 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblfuns.gi\"");
 elif COM_RESULT = 1  then
@@ -1021,7 +1024,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblfuns.gi");
 elif COM_RESULT = 3  then
-Revision.ctblfuns_gi:="@(#)$Id: ctblfuns.gi,v 4.75.2.2 2005/04/13 11:45:38 gap Exp $";
+Revision.ctblfuns_gi:="@(#)$Id: ctblfuns.gi,v 4.75.2.3 2005/08/25 07:58:23 gap Exp $";
 InstallGlobalFunction(CharacterString,COM_FUN(1));
 InstallOtherMethod(ValuesOfClassFunction,"for a dense list",[IsDenseList],COM_FUN(2));
 InstallMethod(\[\],"for class function and positive integer",[IsClassFunction,IsPosInt],COM_FUN(3));
@@ -1235,17 +1238,17 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblfuns.gi"
 
 #F  file="lib/ctblmaps.gi" crc=-51116945
-RANK_FILTER_LIST  := [ 29359304, 1, 17, 18, 29359304, 1, 17, 18, 17, 18, 
-  45567715, 4, 52247917, 19, 50331214, 3, 52247917, 19, 50331214, 3, 17, 18, 
-  52247917, 19, 58719567, 2, 37386938, 19, 58719567, 2, 7665924, 21, 
-  33553548, 3, 17, 18, 33553548, 3, 17, 18, 52247917, 19, 29359304, 1, 
-  50331214, 3, 52247917, 19, 50331214, 3, 52247917, 19, 4097, 1, 33553548, 3, 
-  52247917, 19, 33553548, 3, 52247917, 19, 4097, 1, 53660808, 21, 53660808, 
-  21, 49346896, 7, 49346896, 7, 29359304, 1, 29359304, 1, 29359304, 1, 
-  29359304, 1, 49346896, 7, 49346896, 7, 50331214, 3, 50331214, 3, 45567715, 
-  4, 45567715, 4, 50331214, 3, 50331214, 3, 33553548, 3, 33553548, 3, 
-  29359304, 1, 29359304, 1, 29359304, 1, 29359304, 1, 29359304, 1, 29359304, 
-  1, 4097, 1, 33553548, 3, 33553548, 3, 8193, 2, 8193, 2 ];
+RANK_FILTER_LIST  := [ 58719567, 1, 17, 18, 58719567, 1, 17, 18, 17, 18, 
+  24026550, 4, 52247917, 19, 33553548, 3, 52247917, 19, 33553548, 3, 17, 18, 
+  52247917, 19, 50331214, 2, 37386938, 19, 50331214, 2, 7665924, 21, 
+  67108055, 3, 17, 18, 67108055, 3, 17, 18, 52247917, 19, 58719567, 1, 
+  33553548, 3, 52247917, 19, 33553548, 3, 52247917, 19, 4097, 1, 67108055, 3, 
+  52247917, 19, 67108055, 3, 52247917, 19, 4097, 1, 27202794, 21, 27202794, 
+  21, 48034737, 7, 48034737, 7, 58719567, 1, 58719567, 1, 58719567, 1, 
+  58719567, 1, 48034737, 7, 48034737, 7, 33553548, 3, 33553548, 3, 24026550, 
+  4, 24026550, 4, 33553548, 3, 33553548, 3, 67108055, 3, 67108055, 3, 
+  58719567, 1, 58719567, 1, 58719567, 1, 58719567, 1, 58719567, 1, 58719567, 
+  1, 4097, 1, 67108055, 3, 67108055, 3, 8193, 2, 8193, 2 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1343,9 +1346,9 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblmaps.gi"
 
 #F  file="lib/ctblauto.gi" crc=28897248
-RANK_FILTER_LIST  := [ 58412696, 30, 58412696, 30, 8193, 2, 45271600, 33, 
-  58719567, 2, 8193, 2, 58719567, 2, 8193, 2, 67108760, 5, 58719567, 2, 8193, 
-  2, 45271600, 33, 58412696, 30, 58412696, 30, 58719567, 2, 58719567, 2 ];
+RANK_FILTER_LIST  := [ 58412696, 30, 58412696, 30, 8193, 2, 18813586, 33, 
+  50331214, 2, 8193, 2, 50331214, 2, 8193, 2, 67108760, 5, 50331214, 2, 8193, 
+  2, 18813586, 33, 58412696, 30, 58412696, 30, 50331214, 2, 50331214, 2 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1465,16 +1468,16 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/ctblsymm.gi"
 
-#F  file="lib/ctblsolv.gi" crc=88816043
-RANK_FILTER_LIST  := [ 7665924, 21, 7404493, 29, 17, 18, 7665924, 21, 
-  3066431, 23, 17, 18, 53660808, 21, 12749015, 25, 7665924, 21, 46303267, 26, 
-  7665924, 21, 12749015, 25, 7665924, 21, 29526141, 26, 7665924, 21, 
-  53660808, 21, 53650608, 26, 53650608, 26, 65355703, 54, 53650608, 26, 
-  25259116, 53, 53660808, 21, 1829479, 17, 53660808, 21 ];
+#F  file="lib/ctblsolv.gi" crc=-110937568
+RANK_FILTER_LIST  := [ 7665924, 21, 1799043, 29, 17, 18, 7665924, 21, 
+  60232758, 23, 17, 18, 27202794, 21, 12489047, 25, 7665924, 21, 29841159, 
+  26, 7665924, 21, 12489047, 25, 7665924, 21, 39098869, 26, 7665924, 21, 
+  27202794, 21, 27191634, 26, 27191634, 26, 10510907, 54, 27191634, 26, 
+  37523199, 53, 27202794, 21, 19264932, 17, 27202794, 21 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblsolv.gi", 88816043 );
+COM_RESULT := COM_FILE( "lib/ctblsolv.gi", -110937568 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblsolv.gi\"");
 elif COM_RESULT = 1  then
@@ -1484,28 +1487,29 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblsolv.gi");
 elif COM_RESULT = 3  then
-Revision.ctblsolv_gi:="@(#)$Id: ctblsolv.gi,v 4.45 2003/10/27 17:29:54 gap Exp $";
+Revision.ctblsolv_gi:="@(#)$Id: ctblsolv.gi,v 4.45.2.1 2005/08/23 08:47:37 gap Exp $";
 InstallMethod(CharacterDegrees,"for an abelian group, and an integer p (just strip off the p-part)",[IsGroup and IsAbelian,IsInt],RankFilter(IsZeroCyc),COM_FUN(1));
 BindGlobal("AppendCollectedList",COM_FUN(2));
 BindGlobal("KernelUnderDualAction",COM_FUN(3));
 InstallGlobalFunction(ProjectiveCharDeg,COM_FUN(4));
-InstallMethod(CharacterDegrees,"for a solvable group and an integer (Conlon's algorithm)",[IsGroup and IsSolvableGroup,IsInt],RankFilter(IsZeroCyc),COM_FUN(5));
-InstallGlobalFunction(CoveringTriplesCharacters,COM_FUN(6));
-InstallMethod(IrrConlon,"for a group",[IsGroup],COM_FUN(7));
-InstallMethod(Irr,"for a supersolvable group (Conlon's algorithm)",[IsGroup and IsSupersolvableGroup,IsZeroCyc],COM_FUN(8));
-InstallMethod(Irr,"for a supersolvable group with known `IrrConlon'",[IsGroup and IsSupersolvableGroup and HasIrrConlon,IsZeroCyc],COM_FUN(9));
-InstallMethod(Irr,"for a supersolvable group (Baum-Clausen algorithm)",[IsGroup and IsSupersolvableGroup,IsZeroCyc],COM_FUN(10));
-InstallMethod(Irr,"for a supersolvable group with known `IrrBaumClausen'",[IsGroup and IsSupersolvableGroup and HasIrrBaumClausen,IsZeroCyc],COM_FUN(11));
-InstallValue(BaumClausenInfoDebug,rec(makemat:=COM_FUN(12),testrep:=COM_FUN(13),checkconj:=COM_FUN(14)));
-InstallMethod(BaumClausenInfo,"for a (solvable) group",[IsGroup],COM_FUN(15));
-BindGlobal("IrreducibleRepresentationsByBaumClausen",COM_FUN(16));
-InstallMethod(IrreducibleRepresentations,"(abelian by supersolvable) finite group",[IsGroup and IsFinite],1,COM_FUN(17));
-InstallMethod(IrreducibleRepresentations,"finite group, Cyclotomics",[IsGroup and IsFinite,IsCyclotomicCollection and IsField],COM_FUN(18));
-InstallMethod(IrreducibleRepresentations,"for a finite group over a finite field",[IsGroup and IsFinite,IsField and IsFinite],COM_FUN(19));
-InstallMethod(IrrBaumClausen,"for a (solvable) group",[IsGroup],COM_FUN(20));
-InstallGlobalFunction(InducedRepresentationImagesRepresentative,COM_FUN(21));
-InstallGlobalFunction(InducedRepresentation,COM_FUN(22));
-InstallOtherMethod(\^,"for group homomorphism and group (induction)",[IsGroupHomomorphism,IsGroup],COM_FUN(23));
+BindGlobal("CharacterDegreesConlon",COM_FUN(5));
+InstallMethod(CharacterDegrees,"for a solvable group and an integer (Conlon's algorithm)",[IsGroup and IsSolvableGroup,IsInt],RankFilter(IsZeroCyc),COM_FUN(6));
+InstallGlobalFunction(CoveringTriplesCharacters,COM_FUN(7));
+InstallMethod(IrrConlon,"for a group",[IsGroup],COM_FUN(8));
+InstallMethod(Irr,"for a supersolvable group (Conlon's algorithm)",[IsGroup and IsSupersolvableGroup,IsZeroCyc],COM_FUN(9));
+InstallMethod(Irr,"for a supersolvable group with known `IrrConlon'",[IsGroup and IsSupersolvableGroup and HasIrrConlon,IsZeroCyc],COM_FUN(10));
+InstallMethod(Irr,"for a supersolvable group (Baum-Clausen algorithm)",[IsGroup and IsSupersolvableGroup,IsZeroCyc],COM_FUN(11));
+InstallMethod(Irr,"for a supersolvable group with known `IrrBaumClausen'",[IsGroup and IsSupersolvableGroup and HasIrrBaumClausen,IsZeroCyc],COM_FUN(12));
+InstallValue(BaumClausenInfoDebug,rec(makemat:=COM_FUN(13),testrep:=COM_FUN(14),checkconj:=COM_FUN(15)));
+InstallMethod(BaumClausenInfo,"for a (solvable) group",[IsGroup],COM_FUN(16));
+BindGlobal("IrreducibleRepresentationsByBaumClausen",COM_FUN(17));
+InstallMethod(IrreducibleRepresentations,"(abelian by supersolvable) finite group",[IsGroup and IsFinite],1,COM_FUN(18));
+InstallMethod(IrreducibleRepresentations,"finite group, Cyclotomics",[IsGroup and IsFinite,IsCyclotomicCollection and IsField],COM_FUN(19));
+InstallMethod(IrreducibleRepresentations,"for a finite group over a finite field",[IsGroup and IsFinite,IsField and IsFinite],COM_FUN(20));
+InstallMethod(IrrBaumClausen,"for a (solvable) group",[IsGroup],COM_FUN(21));
+InstallGlobalFunction(InducedRepresentationImagesRepresentative,COM_FUN(22));
+InstallGlobalFunction(InducedRepresentation,COM_FUN(23));
+InstallOtherMethod(\^,"for group homomorphism and group (induction)",[IsGroupHomomorphism,IsGroup],COM_FUN(24));
 else
 Error("unknown result code ", COM_RESULT );
 fi;
@@ -1517,7 +1521,7 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblsolv.gi"
 
 #F  file="lib/ctblpope.gi" crc=33485759
-RANK_FILTER_LIST  := [ 50331214, 3, 8193, 2, 50331214, 3, 8193, 2, 1, 0 ];
+RANK_FILTER_LIST  := [ 33553548, 3, 8193, 2, 33553548, 3, 8193, 2, 1, 0 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1558,7 +1562,7 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblpope.gi"
 
 #F  file="lib/ctblmoli.gi" crc=81081795
-RANK_FILTER_LIST  := [ 63658707, 16, 63658707, 16 ];
+RANK_FILTER_LIST  := [ 59044056, 16, 59044056, 16 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1593,13 +1597,13 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblmoli.gi"
 
 #F  file="lib/ctblmono.gi" crc=-112855783
-RANK_FILTER_LIST  := [ 53660808, 21, 53660808, 21, 17876080, 31, 53660808, 
-  21, 3703085, 35, 3703085, 35, 17876080, 31, 17876080, 31, 3703085, 35, 
-  53660808, 21, 17876080, 31, 53660808, 21, 17876080, 31, 52247917, 19, 
-  17876080, 31, 53660808, 21, 17876080, 31, 17876080, 31, 1025, 1, 53660808, 
-  21, 53660808, 21, 1025, 1, 53660808, 21, 17876080, 31, 17876080, 31, 
-  53660808, 21, 17876080, 31, 1, 0, 53660808, 21, 1, 0, 17876080, 31, 
-  53660808, 21, 53660808, 21 ];
+RANK_FILTER_LIST  := [ 27202794, 21, 27202794, 21, 45047844, 31, 27202794, 
+  21, 59254145, 35, 59254145, 35, 45047844, 31, 45047844, 31, 59254145, 35, 
+  27202794, 21, 45047844, 31, 27202794, 21, 45047844, 31, 52247917, 19, 
+  45047844, 31, 27202794, 21, 45047844, 31, 45047844, 31, 1025, 1, 27202794, 
+  21, 27202794, 21, 1025, 1, 27202794, 21, 45047844, 31, 45047844, 31, 
+  27202794, 21, 45047844, 31, 1, 0, 27202794, 21, 1, 0, 45047844, 31, 
+  27202794, 21, 27202794, 21 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1658,14 +1662,14 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/ctblmono.gi"
 
-#F  file="lib/ctblgrp.gi" crc=-24907617
-RANK_FILTER_LIST  := [ 53660808, 21, 7404493, 29, 4097, 1, 53660808, 21, 
-  4097, 1, 53660808, 21, 53660808, 21, 4097, 1, 53660808, 21, 7665924, 21, 
-  15881342, 223, 7665924, 21, 53650608, 26 ];
+#F  file="lib/ctblgrp.gi" crc=-121008479
+RANK_FILTER_LIST  := [ 27202794, 21, 1799043, 29, 4097, 1, 27202794, 21, 
+  4097, 1, 27202794, 21, 27202794, 21, 4097, 1, 27202794, 21, 7665924, 21, 
+  18752741, 223, 7665924, 21, 27191634, 26 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblgrp.gi", -24907617 );
+COM_RESULT := COM_FILE( "lib/ctblgrp.gi", -121008479 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblgrp.gi\"");
 elif COM_RESULT = 1  then
@@ -1675,7 +1679,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblgrp.gi");
 elif COM_RESULT = 3  then
-Revision.ctblgrp_gi:="@(#)$Id: ctblgrp.gi,v 4.47.2.2 2005/01/06 03:42:20 gap Exp $";
+Revision.ctblgrp_gi:="@(#)$Id: ctblgrp.gi,v 4.47.2.4 2005/06/10 00:42:13 gap Exp $";
 USECTPGROUP:=false;
 if not IsBound(DXLARGEGROUPORDER) then
 DXLARGEGROUPORDER:=10000;
@@ -1741,7 +1745,7 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblgrp.gi"
 
 #F  file="lib/ctblperm.gi" crc=-55319518
-RANK_FILTER_LIST  := [ 45271600, 33, 4097, 1 ];
+RANK_FILTER_LIST  := [ 18813586, 33, 4097, 1 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1771,7 +1775,7 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblperm.gi"
 
 #F  file="lib/ctblpc.gi" crc=-18339540
-RANK_FILTER_LIST  := [ 12585763, 33, 4097, 1 ];
+RANK_FILTER_LIST  := [ 53236628, 33, 4097, 1 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -1800,28 +1804,28 @@ Unbind(COM_RESULT);
 #E  file="lib/ctblpc.gi"
 
 #F  file="lib/tom.gi" crc=60682210
-RANK_FILTER_LIST  := [ 13814110, 31, 42782436, 22, 16514503, 23, 53660808, 
-  21, 65537, 6, 67108760, 5, 53660433, 22, 13814110, 31, 67108130, 1, 
-  67108130, 1, 67108130, 1, 67108130, 1, 4097, 1, 67108130, 1, 513, 8, 
-  39276929, 3, 67108130, 1, 67108130, 1, 67108130, 1, 67108130, 1, 67108130, 
-  1, 67108130, 1, 67108130, 1, 67108130, 1, 67108130, 1, 67108130, 1, 
-  67108130, 1, 67108130, 1, 67108130, 1, 52247917, 19, 32291410, 2, 52247917, 
-  19, 12581278, 2, 52247917, 19, 67108130, 1, 67108130, 1, 52247917, 19, 
-  67108130, 1, 67108130, 1, 52247917, 19, 67108130, 1, 32291410, 2, 52247917, 
-  19, 67108130, 1, 52247917, 19, 67108130, 1, 67108130, 1, 52247917, 19, 
-  67108130, 1, 67108130, 1, 52247917, 19, 67108130, 1, 67108130, 1, 52247917, 
-  19, 67108130, 1, 67108130, 1, 52247917, 19, 52247917, 19, 67108130, 1, 
-  52247917, 19, 52247917, 19, 67108130, 1, 67108130, 1, 52247917, 19, 
-  67108130, 1, 8193, 2, 67108130, 1, 67108130, 1, 52247917, 19, 67108130, 1, 
-  8193, 2, 67108130, 1, 8193, 2, 67108130, 1, 52247917, 19, 67108130, 1, 
-  52247917, 19, 52247917, 19, 53660433, 22, 52247917, 19, 53660808, 21, 
-  52247917, 19, 53660808, 21, 52247917, 19, 67108130, 1, 52247917, 19, 
-  52247917, 19, 67108130, 1, 52247917, 19, 67108130, 1, 67108130, 1, 
-  52247917, 19, 67108130, 1, 52247917, 19, 67108130, 1, 26737234, 3, 
-  52247917, 19, 53476177, 3, 52247917, 19, 53476177, 3, 52247917, 19, 32769, 
-  4, 53476177, 3, 52247917, 19, 32769, 4, 50331214, 3, 67108130, 1, 50331214, 
-  3, 67108130, 1, 4097, 1, 50331214, 3, 67108130, 1, 8193, 2, 67108130, 1, 
-  50331214, 3, 67108130, 1, 52247917, 19, 52247917, 19, 52247917, 19, 
+RANK_FILTER_LIST  := [ 14619237, 31, 5446050, 22, 33029965, 23, 27202794, 21, 
+  65537, 6, 67108760, 5, 27202554, 22, 14619237, 31, 28915827, 1, 28915827, 
+  1, 28915827, 1, 28915827, 1, 4097, 1, 28915827, 1, 513, 8, 17573997, 3, 
+  28915827, 1, 28915827, 1, 28915827, 1, 28915827, 1, 28915827, 1, 28915827, 
+  1, 28915827, 1, 28915827, 1, 28915827, 1, 28915827, 1, 28915827, 1, 
+  28915827, 1, 28915827, 1, 52247917, 19, 8729899, 2, 52247917, 19, 28915062, 
+  2, 52247917, 19, 28915827, 1, 28915827, 1, 52247917, 19, 28915827, 1, 
+  28915827, 1, 52247917, 19, 28915827, 1, 8729899, 2, 52247917, 19, 28915827, 
+  1, 52247917, 19, 28915827, 1, 28915827, 1, 52247917, 19, 28915827, 1, 
+  28915827, 1, 52247917, 19, 28915827, 1, 28915827, 1, 52247917, 19, 
+  28915827, 1, 28915827, 1, 52247917, 19, 52247917, 19, 28915827, 1, 
+  52247917, 19, 52247917, 19, 28915827, 1, 28915827, 1, 52247917, 19, 
+  28915827, 1, 8193, 2, 28915827, 1, 28915827, 1, 52247917, 19, 28915827, 1, 
+  8193, 2, 28915827, 1, 8193, 2, 28915827, 1, 52247917, 19, 28915827, 1, 
+  52247917, 19, 52247917, 19, 27202554, 22, 52247917, 19, 27202794, 21, 
+  52247917, 19, 27202794, 21, 52247917, 19, 28915827, 1, 52247917, 19, 
+  52247917, 19, 28915827, 1, 52247917, 19, 28915827, 1, 28915827, 1, 
+  52247917, 19, 28915827, 1, 52247917, 19, 28915827, 1, 54080841, 3, 
+  52247917, 19, 12137936, 3, 52247917, 19, 12137936, 3, 52247917, 19, 32769, 
+  4, 12137936, 3, 52247917, 19, 32769, 4, 33553548, 3, 28915827, 1, 33553548, 
+  3, 28915827, 1, 4097, 1, 33553548, 3, 28915827, 1, 8193, 2, 28915827, 1, 
+  33553548, 3, 28915827, 1, 52247917, 19, 52247917, 19, 52247917, 19, 
   52247917, 19 ];
 RANK_FILTER_COUNT := 1;
 
@@ -1928,7 +1932,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/tom.gi"
 
-#F  file="lib/straight.gi" crc=75776888
+#F  file="lib/straight.gi" crc=-124228980
 RANK_FILTER_LIST  := [ 67108445, 1, 67108445, 1, 32769, 4, 67108445, 1, 
   67108445, 1, 4097, 1, 67108445, 1, 67108445, 1, 67108445, 1, 1985, 1, 
   67108640, 107, 67108640, 107, 67108640, 107, 67108640, 107, 67108640, 107, 
@@ -1944,7 +1948,7 @@ RANK_FILTER_LIST  := [ 67108445, 1, 67108445, 1, 32769, 4, 67108445, 1,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/straight.gi", 75776888 );
+COM_RESULT := COM_FILE( "lib/straight.gi", -124228980 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/straight.gi\"");
 elif COM_RESULT = 1  then
@@ -1954,7 +1958,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/straight.gi");
 elif COM_RESULT = 3  then
-Revision.straight_gi:="@(#)$Id: straight.gi,v 4.28.2.1 2004/08/28 02:50:37 gap Exp $";
+Revision.straight_gi:="@(#)$Id: straight.gi,v 4.28.2.2 2005/06/23 22:39:17 gap Exp $";
 BindGlobal("StraightLineProgramsFamily",NewFamily("StraightLineProgramsFamily",IsStraightLineProgram));
 BindGlobal("StraightLineProgramsDefaultType",NewType(StraightLineProgramsFamily,IsStraightLineProgram and IsAttributeStoringRep and HasLinesOfStraightLineProgram));
 InstallGlobalFunction(StraightLineProgram,COM_FUN(1));

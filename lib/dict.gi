@@ -4,7 +4,7 @@
 #W							         Scott Murray
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: dict.gi,v 4.25 2003/04/16 20:44:28 gap Exp $
+#H  @(#)$Id: dict.gi,v 4.25.2.1 2005/08/21 16:57:15 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,13 +13,13 @@
 ##  This file contains the implementations for dictionaries.
 ##
 Revision.dict_gi :=
-    "@(#)$Id: dict.gi,v 4.25 2003/04/16 20:44:28 gap Exp $";
+    "@(#)$Id: dict.gi,v 4.25.2.1 2005/08/21 16:57:15 gap Exp $";
 
 ##
 ## List and Sort dictionaries
 ##
 
-InstallMethod( PositionFirstComponent,"for dense list", true,
+InstallMethod( PositionFirstComponentDict,"for dense list", true,
     [ IsDenseList, IsObject ], 0,
 function ( list, obj )
 local i;
@@ -33,7 +33,7 @@ local i;
   return fail;
 end);
 
-InstallMethod( PositionFirstComponent,"for sorted list", true,
+InstallMethod( PositionFirstComponentDict,"for sorted list", true,
     [ IsSSortedList, IsObject ], 0,
 function ( list, obj )
 local lo,up,s;
@@ -130,7 +130,7 @@ InstallMethod(KnowsDictionary,"for list lookup dictionaries",true,
   [IsListLookupDictionary,IsObject],0,
 function(d,x)
 local p;
-  p:=PositionFirstComponent(d!.entries,x);
+  p:=PositionFirstComponentDict(d!.entries,x);
   return p<>fail;
 end);
 
@@ -149,7 +149,7 @@ InstallMethod(LookupDictionary,"for list dictionaries",true,
   [IsListLookupDictionary,IsObject],0,
 function(d,x)
 local p;
-  p:=PositionFirstComponent(d!.entries,x);
+  p:=PositionFirstComponentDict(d!.entries,x);
   if p=fail then
     return p;
   else

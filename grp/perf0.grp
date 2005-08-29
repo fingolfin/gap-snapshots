@@ -3,7 +3,7 @@
 #W  perf0.grp              GAP Groups Library                 Volkmar Felsch
 ##                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: perf0.grp,v 4.1 1997/01/20 15:45:54 ahulpke Exp $
+#H  @(#)$Id: perf0.grp,v 4.1.14.1 2005/08/27 19:56:52 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -11,7 +11,7 @@
 ##  All data is based on Holt/Plesken: Perfect Groups, OUP 1989
 ##
 Revision.perf0_grp :=
-    "@(#)$Id: perf0.grp,v 4.1 1997/01/20 15:45:54 ahulpke Exp $";
+    "@(#)$Id: perf0.grp,v 4.1.14.1 2005/08/27 19:56:52 gap Exp $";
 
 ##  The  1096  perfect groups of the library  have been ordered by increasing
 ##  size,  and each library group  G  is charcterized by the pair  [size, n],
@@ -142,7 +142,7 @@ PERFRec := rec(length:=330);
  IsSSortedList( PERFRec.covered );
 
  PERFRec.notKnown := [
- 61440,122880,172032,245760,344064,491520,688128,983040];
+ 61440,122880,172032,245760,344064,491520,688128,962280,983040];
 
  IsSSortedList( PERFRec.notKnown );
 

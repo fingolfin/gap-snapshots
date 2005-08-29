@@ -3,7 +3,7 @@
 #W  perf11.grp              GAP Groups Library                 Volkmar Felsch
 ##                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: perf11.grp,v 4.1 1997/01/20 15:45:59 ahulpke Exp $
+#H  @(#)$Id: perf11.grp,v 4.1.14.1 2005/07/21 16:03:32 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -11,7 +11,7 @@
 ##  All data is based on Holt/Plesken: Perfect Groups, OUP 1989
 ##
 Revision.perf11_grp :=
-    "@(#)$Id: perf11.grp,v 4.1 1997/01/20 15:45:59 ahulpke Exp $";
+    "@(#)$Id: perf11.grp,v 4.1.14.1 2005/07/21 16:03:32 gap Exp $";
 
   PERFGRP[250]:=[# 524880.1
   [[1,"abcuvwxyz",
@@ -1422,7 +1422,7 @@ Revision.perf11_grp :=
   [[1,"abtuvwxyz",
   function(a,b,t,u,v,w,x,y,z)
   return
-  [[a^4,b^3,(a*b)^7,(a^-1*b^-1*a*b)^4*a^2,a^2*b
+  [[a^4,b^3/(t*u*v*z^-1),(a*b)^7,(a^-1*b^-1*a*b)^4*a^2,a^2*b
   *a^2*b^-1,t^3,u^3,v^3,w^3,x^3,y^3,z^3,
   t^-1*u^-1*t*u,t^-1*v^-1*t*v,
   t^-1*w^-1*t*w,t^-1*x^-1*t*x,

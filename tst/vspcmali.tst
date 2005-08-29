@@ -2,7 +2,7 @@
 ##
 #W  vspcmali.tst                GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspcmali.tst,v 4.16.2.4 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: vspcmali.tst,v 4.16.2.5 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -14,7 +14,7 @@
 ##  Exclude from testall.g: why?
 ##
 
-gap> START_TEST("$Id: vspcmali.tst,v 4.16.2.4 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: vspcmali.tst,v 4.16.2.5 2005/08/29 14:50:35 gap Exp $");
 
 
 #############################################################################
@@ -425,7 +425,7 @@ SemiEchelonBasis( <vector space of dimension 2 over Rationals>,
 [ LieObject( [ [ 1, 2 ], [ 3, 4 ] ] ), LieObject( [ [ 0, 0 ], [ 0, 1 ] ] ) ] )
 
 
-gap> STOP_TEST( "vspcmali.tst", 43600000 );
+gap> STOP_TEST( "vspcmali.tst", 54400000 );
 
 
 #############################################################################

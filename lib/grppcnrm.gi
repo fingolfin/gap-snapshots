@@ -2,7 +2,7 @@
 ##
 #W  grppcnrm.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: grppcnrm.gi,v 4.26 2002/04/15 10:04:52 sal Exp $
+#H  @(#)$Id: grppcnrm.gi,v 4.26.4.1 2005/06/30 17:39:24 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for normalizers of polycylic groups.
 ##
 Revision.grppcnrm_gi :=
-    "@(#)$Id: grppcnrm.gi,v 4.26 2002/04/15 10:04:52 sal Exp $";
+    "@(#)$Id: grppcnrm.gi,v 4.26.4.1 2005/06/30 17:39:24 gap Exp $";
 
 
 #############################################################################
@@ -877,7 +877,8 @@ PcGroup_NormalizerWrtHomePcgs := function( u, f1, f2, f3, f4 )
             fi;
 
             # check the stabilizer
-            Assert( 2, Stabilizer( GroupOfPcgs(st), GroupOfPcgs(ui_1) )
+            Assert( 3, Stabilizer( GroupOfPcgs(st), GroupOfPcgs(ui_1),
+	               function(U,g) return U^g;end)
                      = GroupOfPcgs(s) );
 
             # now <ui_1> must be stabilized by <s>
@@ -954,7 +955,8 @@ PcGroup_NormalizerWrtHomePcgs := function( u, f1, f2, f3, f4 )
                 fi;
 
                 # check the stabilizer
-                Assert( 2, Stabilizer( GroupOfPcgs(st), GroupOfPcgs(uj) )
+                Assert( 3, Stabilizer( GroupOfPcgs(st), GroupOfPcgs(uj),
+			 function(U,g) return U^g;end)
                          = GroupOfPcgs(s) );
 
                 # now <uj> must be stabilized by <s>

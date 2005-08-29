@@ -2,14 +2,14 @@
 ##
 #W  oprt.gd                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gd,v 4.89 2003/11/20 20:34:33 gap Exp $
+#H  @(#)$Id: oprt.gd,v 4.89.2.1 2005/08/25 15:05:25 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gd :=
-    "@(#)$Id: oprt.gd,v 4.89 2003/11/20 20:34:33 gap Exp $";
+    "@(#)$Id: oprt.gd,v 4.89.2.1 2005/08/25 15:05:25 gap Exp $";
 
 DeclareInfoClass( "InfoAction" );
 DeclareSynonym( "InfoOperation",InfoAction );
@@ -1044,7 +1044,8 @@ DeclareOperation( "PermutationOp", [ IsObject, IsList, IsFunction ] );
 
 #############################################################################
 ##
-#O  PermutationCycle( <g>, <Omega>, <pnt> [,<act>] )
+#F  PermutationCycle( <g>, <Omega>, <pnt> [,<act>] )
+#O  PermutationCycleOp( <g>, <Omega>, <pnt>, <act> )
 ##
 ##  computes the permutation that represents the cycle of <pnt> under the
 ##  action of the element <g>.

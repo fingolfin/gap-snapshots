@@ -2,7 +2,7 @@
 ##
 #W  stbcbckt.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: stbcbckt.gi,v 4.83.2.1 2004/06/21 19:38:19 gap Exp $
+#H  @(#)$Id: stbcbckt.gi,v 4.83.2.2 2005/05/17 18:42:58 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  intersections.
 ##
 Revision.stbcbckt_gi :=
-    "@(#)$Id: stbcbckt.gi,v 4.83.2.1 2004/06/21 19:38:19 gap Exp $";
+    "@(#)$Id: stbcbckt.gi,v 4.83.2.2 2005/05/17 18:42:58 gap Exp $";
 
 if not IsBound( LARGE_TASK )  then  LARGE_TASK := false;   fi;
 
@@ -2421,6 +2421,20 @@ InstallGlobalFunction( IsomorphismPermGroups, function( arg )
     if Collected(List(OrbitsDomain(E,Omega),Length))<>
        Collected(List(OrbitsDomain(F,Omega),Length)) then
       return fail;
+    fi;
+
+    # The test uses special condition if primitive, thus rule out different
+    # transitivity/primitivity first.
+    if not IsIdenticalObj(E,F) then
+      if IsTransitive(E,Omega) then
+	if not IsTransitive(F,Omega) then
+	  return fail;
+	elif IsPrimitive(E,Omega) then
+	  if not IsPrimitive(F,Omega) then
+	    return fail;
+	  fi;
+	fi;
+      fi;
     fi;
 
     Pr := gen -> ForAll( GeneratorsOfGroup( E ), g -> g ^ gen in F );

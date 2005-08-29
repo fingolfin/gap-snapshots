@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.6 2005/05/12 15:59:31 gap Exp $
+#H  @(#)$Id: init.g,v 4.212.2.7 2005/07/18 10:02:10 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file initializes GAP.
 ##
 Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.6 2005/05/12 15:59:31 gap Exp $";
+    "@(#)$Id: init.g,v 4.212.2.7 2005/07/18 10:02:10 gap Exp $";
 
 #############################################################################
 ##
@@ -515,6 +515,8 @@ ReadLib( "helpview.gi"  );
 
 #T  1996/09/01 M.Schoenert this helps performance
 IMPLICATIONS:=IMPLICATIONS{[Length(IMPLICATIONS),Length(IMPLICATIONS)-1..1]};
+# allow type determination of IMPLICATIONS without using it
+TypeObj(IMPLICATIONS[1]);
 HIDDEN_IMPS:=HIDDEN_IMPS{[Length(HIDDEN_IMPS),Length(HIDDEN_IMPS)-1..1]};
 
 # we cannot complete the following command because printing may mess up the

@@ -3,7 +3,7 @@
 #W  testutil.g                  GAP Library                     Thomas Breuer
 #W                                                               Frank Celler
 ##
-#H  @(#)$Id: testutil.g,v 4.1.2.4 2005/05/10 12:09:45 gap Exp $
+#H  @(#)$Id: testutil.g,v 4.1.2.5 2005/08/23 09:22:07 gap Exp $
 ##
 #Y  Copyright (C) 2005 The GAP Group
 ##
@@ -11,7 +11,7 @@
 ##  It is not read with the library when {\GAP} is started.
 ##
 Revision.( "tst/testutil_g" ) :=
-    "@(#)$Id: testutil.g,v 4.1.2.4 2005/05/10 12:09:45 gap Exp $";
+    "@(#)$Id: testutil.g,v 4.1.2.5 2005/08/23 09:22:07 gap Exp $";
 
 
 #############################################################################
@@ -37,9 +37,9 @@ Revision.( "tst/testutil_g" ) :=
 ##  `doc/ref/install.tex'.
 ##
 BindGlobal( "RunStandardTests", function( arg )
-    local testfiles, renormalize, assertionlevel, sizescreen, stop_TEST,
-          infoRead1, infoRead2, count, totaltime, totalprev, prod, dir, i,
-          name, info, time, stone, new, oldcontents, pos, newcontents;
+    local testfiles, renormalize, sizescreen, stop_TEST, infoRead1,
+          infoRead2, count, totaltime, totalprev, prod, dir, i, name, info,
+          time, stone, new, oldcontents, pos, newcontents;
 
     # Get and check the arguments.
     if Length( arg ) = 0 or Length( arg ) > 2 or not IsList( arg[1] ) then
@@ -50,12 +50,6 @@ BindGlobal( "RunStandardTests", function( arg )
 
     # Initialize variables that must be global.
     GAPInfo.TestData:= rec( results:= [] );
-    assertionlevel:= AssertionLevel();
-#T Eventually all tests should be executed with the maximal assertion level,
-#T but currently this does not work.
-#T (Also the ordinary `ReadTest' should do this,
-#T so `START_TEST' and `STOP_TEST' are the right place!
-#   SetAssertionLevel( 2 );
     sizescreen:= SizeScreen();
 
     # Replace the `STOP_TEST' function by one that collects statistical data.
@@ -162,7 +156,6 @@ BindGlobal( "RunStandardTests", function( arg )
     InfoRead2 := infoRead2;
     STOP_TEST := stop_TEST;
     GAPInfo.TestData:= rec();
-    SetAssertionLevel( assertionlevel );
     end );
 
 
@@ -255,7 +248,7 @@ BindGlobal( "CreateTestallFile", function()
 ##
 #F  CreatePackageTestsInput( <scriptfile>, <outfiles>, <gap> )
 ##
-##  writes the file <scriptfile> that starts a new {\GAP} for each testfile
+##  writes the file <scriptfile> that starts a new {\GAP} for each test file
 ##  of a package (given by the component `TestFile' in the record stored in
 ##  its `PackageInfo.g' file) and reads this file;
 ##  the output of all tests is collected in the files <outfiles>

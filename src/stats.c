@@ -2,7 +2,7 @@
 **
 *W  stats.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: stats.c,v 4.41 2002/04/15 10:03:58 sal Exp $
+*H  @(#)$Id: stats.c,v 4.41.6.1 2005/08/19 22:29:31 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_stats_c =
-   "@(#)$Id: stats.c,v 4.41 2002/04/15 10:03:58 sal Exp $";
+   "@(#)$Id: stats.c,v 4.41.6.1 2005/08/19 22:29:31 gap Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 
@@ -1438,6 +1438,7 @@ UInt ExecAssert2Args (
           "you may 'return true;' or 'return false;'");
         }
         if ( decision == False ) {
+            SET_BRK_CURR_STAT( stat );
             ErrorReturnVoid( "Assertion failure", 0L, 0L, "you may 'return;'");
         }
 

@@ -2,7 +2,7 @@
 ##
 #W  morpheus.gi                GAP library                   Alexander Hulpke
 ##
-#H  @(#)$Id: morpheus.gi,v 4.105.2.2 2004/04/30 01:48:42 gap Exp $
+#H  @(#)$Id: morpheus.gi,v 4.105.2.3 2005/06/06 21:47:04 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This  file  contains declarations for Morpheus
 ##
 Revision.morpheus_gi:=
-  "@(#)$Id: morpheus.gi,v 4.105.2.2 2004/04/30 01:48:42 gap Exp $";
+  "@(#)$Id: morpheus.gi,v 4.105.2.3 2005/06/06 21:47:04 gap Exp $";
 
 #############################################################################
 ##
@@ -747,6 +747,10 @@ local id,result,rig,dom,tall,tsur,tinj,thom,gens,free,rels,len,ind,cla,m,
 	  Info(InfoMorph,3,"testing");
 	  imgs:=GroupGeneralMappingByImages(params.from,range,gens,imgs);
 	  SetIsTotal(imgs,true);
+	  if tsur then
+	    SetIsSurjective(imgs,true);
+	  fi;
+
 	  ok:=IsSingleValued(imgs);
 	  if ok and tinj then
 	    ok:=IsInjective(imgs);

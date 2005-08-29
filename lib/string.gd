@@ -2,7 +2,7 @@
 ##
 #W  string.gd                   GAP library                      Frank Celler
 ##
-#H  @(#)$Id: string.gd,v 4.20 2003/01/23 16:46:01 gap Exp $
+#H  @(#)$Id: string.gd,v 4.20.2.2 2005/08/23 10:38:29 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the declarations for functions for strings.
 ##
 Revision.string_gd :=
-    "@(#)$Id: string.gd,v 4.20 2003/01/23 16:46:01 gap Exp $";
+    "@(#)$Id: string.gd,v 4.20.2.2 2005/08/23 10:38:29 gap Exp $";
 
 
 #############################################################################
@@ -298,7 +298,8 @@ MakeReadOnlyGlobal("ReplacedString"); # function defined in `init.g'.
 ##  (see~"InputTextString")  and  `ReadAsFunction'   (see~"ReadAsFunction!for
 ##  streams") together; see "Operations for Input Streams" for an example.
 ##
-DeclareGlobalFunction( "EvalString" );
+
+# DeclareGlobalFunction("EvalString");
 
 #############################################################################
 ##

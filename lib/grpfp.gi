@@ -3,7 +3,7 @@
 #W  grpfp.gi                    GAP library                    Volkmar Felsch
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: grpfp.gi,v 4.203.2.6 2005/02/21 20:31:17 gap Exp $
+#H  @(#)$Id: grpfp.gi,v 4.203.2.7 2005/07/13 01:08:03 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  2. methods for f.p. groups
 ##
 Revision.grpfp_gi :=
-    "@(#)$Id: grpfp.gi,v 4.203.2.6 2005/02/21 20:31:17 gap Exp $";
+    "@(#)$Id: grpfp.gi,v 4.203.2.7 2005/07/13 01:08:03 gap Exp $";
 
 
 #############################################################################
@@ -1478,6 +1478,13 @@ local T,i;
     fi;
     return i;
 end );
+
+
+InstallMethod(IndexInWholeGroup,"subgroup fp by quotient",true,
+  [IsSubgroupFpGroup and IsSubgroupOfWholeGroupByQuotientRep],0,
+function(U)
+  return Index(U!.quot,U!.sub);
+end);
 
 InstallMethod( IndexInWholeGroup, "for full fp group",
     [ IsSubgroupFpGroup and IsWholeFamily ], a->1);

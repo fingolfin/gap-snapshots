@@ -8,7 +8,7 @@
 *W                                                  & Burkhard Hoefling (MAC)
 *W                                                    & Steve Linton (MS/DOS)
 **
-*H  @(#)$Id: system.c,v 4.118.2.5 2005/05/03 13:30:43 gap Exp $
+*H  @(#)$Id: system.c,v 4.118.2.7 2005/08/24 15:27:48 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -36,7 +36,7 @@
 #undef  INCLUDE_DECLARATION_PART
 
 const char * Revision_system_c =
-   "@(#)$Id: system.c,v 4.118.2.5 2005/05/03 13:30:43 gap Exp $";
+   "@(#)$Id: system.c,v 4.118.2.7 2005/08/24 15:27:48 gap Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 #include        <fcntl.h>
@@ -99,7 +99,7 @@ extern int    fputs ( const char *, FILE * );
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . .  name of the architecture
 */
-const Char * SyKernelVersion = "4.4.5";
+const Char * SyKernelVersion = "4.4.6";
 
 /****************************************************************************
 *V  SyWindowsPath  . . . . . . . . . . . . . . . . . default path for Windows
@@ -2013,7 +2013,7 @@ struct optInfo options[] = {
   { 'f',  forceLineEditing, (void *)2, 0 },
   { 'g',  rotateGasManVerbosity, 0, 0 },
   { 'h',  returnVal, (void *) -2, 0},
-  { 'i',  storeString, &SySystemInitFile, 1},
+  { 'i',  storeString, SySystemInitFile, 1},
   { 'l',  setGapRootPath, 0, 1},
   { 'm',  storeMemory2, &SyStorMin, 1 },
   { 'n',  forceLineEditing, 0, 0},
@@ -2023,9 +2023,9 @@ struct optInfo options[] = {
   { 'r',  toggle, &gaprc, 0 },
   { 'x',  setScreenWidth, 0, 1 },
   { 'y',  setScreenDepth, 0, 1 },
- #if SYS_MSDOS_DJGPP || SYS_TOS_GCC2 || SYS_MAC_MPW || SYS_MAC_MWC
+#if SYS_MSDOS_DJGPP || SYS_TOS_GCC2 || SYS_MAC_MPW || SYS_MAC_MWC
   { 'z',  storeInteger, &syIsIntrFreq, 0},
-  #endif
+#endif
   { '\0',0,0}};
 
 

@@ -4,7 +4,7 @@
 #W							         Scott Murray
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: dict.gd,v 4.10 2002/04/15 10:04:38 sal Exp $
+#H  @(#)$Id: dict.gd,v 4.10.4.1 2005/08/21 16:57:15 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -36,7 +36,7 @@
 ##	Variables MaxViewSize, LastHashIndex.
 ##
 Revision.dict_gd :=
-    "@(#)$Id: dict.gd,v 4.10 2002/04/15 10:04:38 sal Exp $";
+    "@(#)$Id: dict.gd,v 4.10.4.1 2005/08/21 16:57:15 gap Exp $";
 
 #############################################################################
 ##
@@ -46,11 +46,11 @@ DeclareInfoClass( "InfoHash" );
 
 #############################################################################
 ##
-#O  PositionFirstComponent(<list>,<obj>)
+#O  PositionFirstComponentDict(<list>,<obj>)
 ##
 ##  returns the index <i> in <list> such that $<list>[<i>][1]=<obj>$ and
 ##  `fail' if no such entry exists.
-DeclareOperation("PositionFirstComponent",[IsList,IsObject]);
+DeclareOperation("PositionFirstComponentDict",[IsList,IsObject]);
 
 #############################################################################
 ##

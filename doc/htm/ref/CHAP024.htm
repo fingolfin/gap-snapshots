@@ -598,6 +598,14 @@ This is identical to <code>NullMat</code> and is present in <font face="Gill San
 only for the sake of compatibility with beta-releases.
 It should <strong>not</strong> be used in new code.
 <p>
+<a name = "SSEC004.13"></a>
+<li><code>MutableCopyMat( </code><var>mat</var><code> ) O</code>
+<p>
+<code>MutableCopyMat</code>  returns a fully mutable copy  of  the  matrix <var>mat</var>.
+<p>
+The default method does <code>List(</code><var>mat</var><code>,ShallowCopy)</code> and thus may also
+be called for the empty list, returning a new empty list.
+<p>
 <p>
 <h2><a name="SECT005">24.5 Random Matrices</a></h2>
 <p><p>
@@ -1421,5 +1429,5 @@ returns a plain ordinary matrix that is equal to the block matrix
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP023.htm">Previous</a>] [<a href ="CHAP025.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

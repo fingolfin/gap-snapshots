@@ -2,7 +2,7 @@
 ##
 #W  algsc.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: algsc.gi,v 4.29 2002/06/18 15:58:56 gap Exp $
+#H  @(#)$Id: algsc.gi,v 4.29.2.2 2005/07/20 15:22:59 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  then it has the component `coefficientsDomain'.
 ##
 Revision.algsc_gi :=
-    "@(#)$Id: algsc.gi,v 4.29 2002/06/18 15:58:56 gap Exp $";
+    "@(#)$Id: algsc.gi,v 4.29.2.2 2005/07/20 15:22:59 gap Exp $";
 
 
 #T need for the norm of a quaternion?
@@ -457,7 +457,6 @@ InstallMethod( \in,
 ##  and `<sctable>[i][j][2][i_k] = k'.
 ##
 BindGlobal( "AlgebraByStructureConstantsArg", function( arglist, filter )
-
     local T,      # structure constants table
           n,      # dimensions of structure matrices
           R,      # coefficients ring
@@ -503,7 +502,7 @@ BindGlobal( "AlgebraByStructureConstantsArg", function( arglist, filter )
       MakeImmutable( names );
     elif Length( arglist ) = 3 and IsString( arglist[3] ) then
       names:= List( [ 1 .. n ],
-                    x -> Concatenation( "v.", arglist[3] ) );
+                    x -> Concatenation( arglist[3], String(x) ) );
       MakeImmutable( names );
     elif Length( arglist ) = 3 and IsHomogeneousList( arglist[3] )
                                and Length( arglist[3] ) = n
@@ -580,6 +579,15 @@ InstallGlobalFunction( LieAlgebraByStructureConstants, function( arg )
     SetIsLieAlgebra( A, true );
     return A;
 end );
+
+
+#############################################################################
+##
+#M  \.( <A>, <n> )  . . . . . . . access to generators of a full s.c. algebra
+##
+InstallAccessToGenerators( IsSCAlgebraObjCollection and IsFullSCAlgebra,
+    "s.c. algebra containing the whole family",
+    GeneratorsOfAlgebra );
 
 
 #############################################################################

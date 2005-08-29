@@ -2,14 +2,14 @@
 ##
 #W  grpperm.tst                 GAP tests                    Alexander Hulpke
 ##
-#H  @(#)$Id: grpperm.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: grpperm.tst,v 4.15.2.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1997
 ##
 ##  Exclude from testall.g: why?
 ##
 
-gap> START_TEST("$Id: grpperm.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: grpperm.tst,v 4.15.2.4 2005/08/29 14:50:35 gap Exp $");
 gap> G1 := TrivialSubgroup (Group ((1,2)));;
 gap> G2 := SymmetricGroup ([]);;
 gap> G3:=Intersection (G1, G2);;
@@ -73,7 +73,7 @@ gap> List(perf,Size);
 [ 60, 960, 30720, 1 ]
 
 # that's all, folks
-gap> STOP_TEST( "grpperm.tst", 1805200000 );
+gap> STOP_TEST( "grpperm.tst", 2562000000 );
 
 
 #############################################################################

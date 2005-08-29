@@ -5,7 +5,7 @@
 %A  matrix.msk                  GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: matrix.msk,v 1.40.2.1 2005/05/09 07:11:51 gap Exp $
+%A  @(#)$Id: matrix.msk,v 1.40.2.2 2005/08/26 10:43:21 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -586,6 +586,14 @@ This is identical to `NullMat' and is present in {\GAP}~4.1
 only for the sake of compatibility with beta-releases.
 It should *not* be used in new code.
 
+
+
+\>MutableCopyMat( <mat> ) O
+
+`MutableCopyMat'  returns a fully mutable copy  of  the  matrix <mat>.
+
+The default method does `List(<mat>,ShallowCopy)' and thus may also
+be called for the empty list, returning a new empty list.
 
 
 

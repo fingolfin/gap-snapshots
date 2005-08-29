@@ -2,7 +2,7 @@
 ##
 #W  ctblgrp.gi                   GAP library                 Alexander Hulpke
 ##
-#H  @(#)$Id: ctblgrp.gi,v 4.47.2.2 2005/01/06 03:42:20 gap Exp $
+#H  @(#)$Id: ctblgrp.gi,v 4.47.2.4 2005/06/10 00:42:13 gap Exp $
 ##
 #Y  Copyright (C) 1993, 1997
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,8 +11,7 @@
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
 Revision.ctblgrp_gi :=
-    "@(#)$Id: ctblgrp.gi,v 4.47.2.2 2005/01/06 03:42:20 gap Exp $";
-
+    "@(#)$Id: ctblgrp.gi,v 4.47.2.4 2005/06/10 00:42:13 gap Exp $";
 
 #############################################################################
 ##
@@ -1950,10 +1949,9 @@ local G,     # group
 
   # estimate the irrationality of the table
   exp:=Exponent(G);
-  prime:=exp+1;
+  prime:=10*exp+1;
 
-  while prime<Maximum(100,5*k) 
-    or ForAny([prime-1,prime,prime+1],x->IsInt(Size(G)/x)) do
+  while prime<Maximum(100,5*k) do
     prime:=prime+exp;
   od;
 
@@ -1968,9 +1966,10 @@ local G,     # group
   while prime<z do
     prime:=prime+exp;
   od;
-  while not IsPrime(prime) do
+  while not IsPrimeInt(prime) do
     prime:=prime+exp;
   od;
+  
   f:=GF(prime);
   Info(InfoCharacterTable,1,"choosing prime ",prime);
 

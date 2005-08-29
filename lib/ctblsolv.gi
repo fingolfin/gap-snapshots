@@ -3,7 +3,7 @@
 #W  ctblsolv.gi                 GAP library                Hans Ulrich Besche
 #W                                                              Thomas Breuer
 ##
-#H  @(#)$Id: ctblsolv.gi,v 4.45 2003/10/27 17:29:54 gap Exp $
+#H  @(#)$Id: ctblsolv.gi,v 4.45.2.1 2005/08/23 08:47:37 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains character table methods for solvable groups.
 ##
 Revision.ctblsolv_gi :=
-    "@(#)$Id: ctblsolv.gi,v 4.45 2003/10/27 17:29:54 gap Exp $";
+    "@(#)$Id: ctblsolv.gi,v 4.45.2.1 2005/08/23 08:47:37 gap Exp $";
 
 
 #############################################################################
@@ -377,12 +377,7 @@ end );
 ##      $(S/K,zK,q)$.
 ##  \endlist
 ##
-InstallMethod( CharacterDegrees,
-    "for a solvable group and an integer (Conlon's algorithm)",
-    [ IsGroup and IsSolvableGroup, IsInt ],
-    RankFilter(IsZeroCyc), # There is a method for groups for
-                           # the integer zero which is worse
-    function( G, q )
+BindGlobal( "CharacterDegreesConlon", function( G, q )
     local r,      # list of degrees, result
           N,      # elementary abelian normal subgroup of `G'
           p,      # prime divisor of the order of `N'
@@ -395,7 +390,7 @@ InstallMethod( CharacterDegrees,
           orbs,   # orbits of the action
           orb,    # loop over `orbs'
           rep,    # canonical representative of `orb'
-          stab,   # stabilkizer of `rep'
+          stab,   # stabilizer of `rep'
           h,      # nat. hom. by the kernel of a character
           img,    # image of `h'
           c,
@@ -485,6 +480,20 @@ InstallMethod( CharacterDegrees,
     Info( InfoCharacterTable, 1,
           "CharacterDegrees: returns ", r );
     return r;
+    end );
+
+InstallMethod( CharacterDegrees,
+    "for a solvable group and an integer (Conlon's algorithm)",
+    [ IsGroup and IsSolvableGroup, IsInt ],
+    RankFilter(IsZeroCyc), # There is a method for groups for
+                           # the integer zero which is worse
+    function( G, q )
+    if HasIrr( G ) then
+      # Use the known irreducibles.
+      TryNextMethod();
+    else
+      return CharacterDegreesConlon( G, q );
+    fi;
     end );
 
 

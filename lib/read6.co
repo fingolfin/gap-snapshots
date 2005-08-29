@@ -1,12 +1,12 @@
 #I  file="lib/read6.g"
 
-#F  file="grp/basicpcg.gi" crc=95692966
-RANK_FILTER_LIST  := [ 12575563, 44, 12575563, 44, 12575563, 44, 12575563, 
-  44, 12575563, 44, 12575563, 44, 12575563, 44, 12575563, 44 ];
+#F  file="grp/basicpcg.gi" crc=60216682
+RANK_FILTER_LIST  := [ 53225468, 44, 53225468, 44, 53225468, 44, 53225468, 
+  44, 53225468, 44, 53225468, 44, 53225468, 44, 53225468, 44 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "grp/basicpcg.gi", 95692966 );
+COM_RESULT := COM_FILE( "grp/basicpcg.gi", 60216682 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"grp/basicpcg.gi\"");
 elif COM_RESULT = 1  then
@@ -16,7 +16,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("grp/basicpcg.gi");
 elif COM_RESULT = 3  then
-Revision.basicpcg_gi:="@(#)$Id: basicpcg.gi,v 4.14 2000/02/01 13:34:11 gap Exp $";
+Revision.basicpcg_gi:="@(#)$Id: basicpcg.gi,v 4.14.10.1 2005/08/25 12:43:48 gap Exp $";
 InstallMethod(TrivialGroupCons,"pc group",[IsPcGroup and IsFinite],COM_FUN(1));
 InstallMethod(AbelianGroupCons,"pc group",true,[IsPcGroup and IsFinite,IsList],0,COM_FUN(2));
 InstallMethod(AlternatingGroupCons,"pc group with degree",true,[IsPcGroup and IsFinite,IsInt and IsPosRat],0,COM_FUN(3));
@@ -35,14 +35,14 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="grp/basicpcg.gi"
 
-#F  file="grp/basicprm.gi" crc=128818259
-RANK_FILTER_LIST  := [ 45260440, 39, 45260440, 39, 45260440, 39, 45260440, 
-  39, 45260440, 39, 59939889, 46, 59939889, 46, 59939889, 46, 45271600, 33, 
-  45260440, 39, 45260440, 39, 45260440, 39, 59939889, 46, 59939889, 46 ];
+#F  file="grp/basicprm.gi" crc=-23328962
+RANK_FILTER_LIST  := [ 18802426, 39, 18802426, 39, 18802426, 39, 18802426, 
+  39, 18802426, 39, 33481875, 46, 33481875, 46, 33481875, 46, 18813586, 33, 
+  18802426, 39, 18802426, 39, 18802426, 39, 33481875, 46, 33481875, 46 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "grp/basicprm.gi", 128818259 );
+COM_RESULT := COM_FILE( "grp/basicprm.gi", -23328962 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"grp/basicprm.gi\"");
 elif COM_RESULT = 1  then
@@ -52,7 +52,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("grp/basicprm.gi");
 elif COM_RESULT = 3  then
-Revision.basicprm_gi:="@(#)$Id: basicprm.gi,v 4.28 2000/04/02 20:06:35 ahulpke Exp $";
+Revision.basicprm_gi:="@(#)$Id: basicprm.gi,v 4.28.4.1 2005/06/14 15:53:46 gap Exp $";
 InstallMethod(TrivialGroupCons,"perm group",[IsPermGroup and IsFinite],COM_FUN(1));
 InstallMethod(AbelianGroupCons,"perm group",true,[IsPermGroup and IsFinite,IsList],0,COM_FUN(2));
 InstallMethod(ElementaryAbelianGroupCons,"perm group",true,[IsPermGroup and IsFinite,IsPosInt],0,COM_FUN(3));
@@ -78,8 +78,8 @@ Unbind(COM_RESULT);
 #E  file="grp/basicprm.gi"
 
 #F  file="grp/basicmat.gi" crc=106346291
-RANK_FILTER_LIST  := [ 36126208, 239, 36126208, 239, 36126208, 239, 36126208, 
-  239 ];
+RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239, 9668194, 239, 9668194, 239 
+ ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -108,13 +108,13 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="grp/basicmat.gi"
 
-#F  file="grp/perf.grp" crc=-59610847
-RANK_FILTER_LIST  := [ 58923477, 23, 45271600, 33, 53660808, 21, 26738224, 
-  22, 26738224, 22 ];
+#F  file="grp/perf.grp" crc=22249196
+RANK_FILTER_LIST  := [ 58923477, 23, 18813586, 33, 27202794, 21, 53476447, 
+  22, 53476447, 22 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "grp/perf.grp", -59610847 );
+COM_RESULT := COM_FILE( "grp/perf.grp", 22249196 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"grp/perf.grp\"");
 elif COM_RESULT = 1  then
@@ -124,7 +124,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("grp/perf.grp");
 elif COM_RESULT = 3  then
-Revision.perf_grp:="@(#)$Id: perf.grp,v 4.17 2002/01/21 19:07:19 gap Exp $";
+Revision.perf_grp:="@(#)$Id: perf.grp,v 4.17.4.2 2005/07/13 21:08:22 gap Exp $";
 InstallGlobalFunction(PerfGrpLoad,COM_FUN(1));
 InstallGlobalFunction(SizesPerfectGroups,COM_FUN(2));
 InstallGlobalFunction(NumberPerfectGroups,COM_FUN(3));
@@ -150,8 +150,8 @@ Unbind(COM_RESULT);
 #E  file="grp/perf.grp"
 
 #F  file="grp/classic.gi" crc=-127999338
-RANK_FILTER_LIST  := [ 36126208, 239, 36126208, 239, 36126208, 239, 36126208, 
-  239, 36126208, 239 ];
+RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239, 9668194, 239, 9668194, 
+  239, 9668194, 239 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -200,7 +200,7 @@ Unbind(COM_RESULT);
 #E  file="grp/classic.gi"
 
 #F  file="grp/suzuki.gi" crc=126565656
-RANK_FILTER_LIST  := [ 36126208, 239, 45260440, 39 ];
+RANK_FILTER_LIST  := [ 9668194, 239, 18802426, 39 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -228,7 +228,7 @@ Unbind(COM_RESULT);
 #E  file="grp/suzuki.gi"
 
 #F  file="grp/ree.gi" crc=48101649
-RANK_FILTER_LIST  := [ 36137368, 31 ];
+RANK_FILTER_LIST  := [ 9679354, 31 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -558,7 +558,7 @@ Unbind(COM_RESULT);
 #E  file="grp/imf.grp"
 
 #F  file="grp/imf.gi" crc=-18134037
-RANK_FILTER_LIST  := [ 8862302, 240 ];
+RANK_FILTER_LIST  := [ 22250221, 240 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -597,7 +597,7 @@ Unbind(COM_RESULT);
 #E  file="grp/imf.gi"
 
 #F  file="grp/glzmodmz.gi" crc=83282023
-RANK_FILTER_LIST  := [ 36126208, 239, 36126208, 239 ];
+RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete

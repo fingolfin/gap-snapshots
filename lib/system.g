@@ -2,7 +2,7 @@
 ##
 #W  system.g                   GAP Library                   Alexander Hulpke
 ##
-#H  @(#)$Id: system.g,v 4.12.2.7 2005/05/05 09:48:33 gap Exp $
+#H  @(#)$Id: system.g,v 4.12.2.9 2005/08/30 13:09:52 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  internally.
 ##
 Revision.system_g :=
-    "@(#)$Id: system.g,v 4.12.2.7 2005/05/05 09:48:33 gap Exp $";
+    "@(#)$Id: system.g,v 4.12.2.9 2005/08/30 13:09:52 gap Exp $";
 
 
 BIND_GLOBAL( "GAPInfo", rec(
@@ -21,12 +21,12 @@ BIND_GLOBAL( "GAPInfo", rec(
 # do not edit the following two lines. They get replaced by string matching
 # in the distribution wrapper scripts. (Occurrences of `4.dev' and `today'
 # get replaced.)
-    Version := "4.4.5",
-    Date := "13-May-05",
+    Version := "4.4.6",
+    Date := "02-Sep-2005",
 
     # The kernel version numbers are expected in the format `<v>.<r>.<p>'.
     KernelVersion := KERNEL_VERSION,
-    NeedKernelVersion := "4.4.5",
+    NeedKernelVersion := "4.4.6",
 
     Architecture := GAP_ARCHITECTURE,
 

@@ -3,7 +3,7 @@
 #W  ffe.gd                      GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: ffe.gd,v 4.34 2003/03/03 21:56:09 gap Exp $
+#H  @(#)$Id: ffe.gd,v 4.34.2.1 2005/08/11 07:59:41 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -71,7 +71,7 @@
 ##  containing the given elements.
 ##
 Revision.ffe_gd :=
-    "@(#)$Id: ffe.gd,v 4.34 2003/03/03 21:56:09 gap Exp $";
+    "@(#)$Id: ffe.gd,v 4.34.2.1 2005/08/11 07:59:41 gap Exp $";
 
 
 #############################################################################
@@ -140,7 +140,6 @@ BIND_GLOBAL( "FAMS_FFE_LARGE", [ [], [] ] );
 ##
 DeclareGlobalVariable( "GALOIS_FIELDS",
     "list of lists, GALOIS_FIELDS[p][n] = GF(p^n) if bound" );
-InstallFlushableValue( GALOIS_FIELDS, [] );
 
 
 #############################################################################

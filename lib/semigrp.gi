@@ -2,7 +2,7 @@
 ##
 #W  semigrp.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: semigrp.gi,v 4.45 2003/06/04 20:06:35 gap Exp $
+#H  @(#)$Id: semigrp.gi,v 4.45.2.1 2005/05/19 07:11:00 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for semigroups.
 ##
 Revision.semigrp_gi :=
-    "@(#)$Id: semigrp.gi,v 4.45 2003/06/04 20:06:35 gap Exp $";
+    "@(#)$Id: semigrp.gi,v 4.45.2.1 2005/05/19 07:11:00 gap Exp $";
 
 
 #############################################################################
@@ -303,17 +303,13 @@ InstallMethod( Enumerator, "for a generic semigroup",
     function( s )
      
     if ValueOption( "Side" ) = "left" then
-      return EnumeratorOfSemigroupIdeal(
-                 LeftMagmaIdealByGenerators(s,GeneratorsOfMagma(s)), 
-                 LeftActingDomain,
+      return EnumeratorOfSemigroupIdeal( s, s,
                  IsBound_LeftSemigroupIdealEnumerator,
-                 GeneratorsOfSemigroup );
+                 GeneratorsOfSemigroup( s ) );
     else
-      return EnumeratorOfSemigroupIdeal( 
-                 RightMagmaIdealByGenerators(s,GeneratorsOfMagma(s)), 
-                 RightActingDomain,
+      return EnumeratorOfSemigroupIdeal( s, s,
                  IsBound_RightSemigroupIdealEnumerator,
-                 GeneratorsOfSemigroup );
+                 GeneratorsOfSemigroup( s ) );
     fi;
     end );
 

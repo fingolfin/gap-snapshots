@@ -1,7 +1,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_vec8bit_c =
-   "@(#)$Id: vec8bit.c,v 4.88.2.2 2005/04/26 13:59:17 sal Exp $";
+   "@(#)$Id: vec8bit.c,v 4.88.2.3 2005/08/17 09:32:42 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -3334,7 +3334,8 @@ Obj FuncAPPEND_VEC8BIT (
 		byter = *++ptrr;
 	      }
 	  }
-	*ptrl = bytel;
+	/* Write last byte only if not already written: */
+	if (posl % elts != 0) *ptrl = bytel;
       }
     SET_LEN_VEC8BIT(vecl, lenl + lenr);
     return (Obj) 0;

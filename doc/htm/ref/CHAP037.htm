@@ -420,17 +420,25 @@ express group elements as words in given generators: Create a free group
 (see&nbsp;<a href="CHAP035.htm#SSEC002.1">FreeGroup</a>) on the correct number of generators and create a
 homomorphism from this free group onto the group <var>G</var> in whose generators you
 want to factorize. Then the preimage of an element of <var>G</var> is a word in the
-free generators, that will map on this element again. The following example
-shows how to decompose elements of <i>S</i><sub>4</sub> in the generators <code>(1,2,3,4)</code> and
-<code>(1,2)</code>:
+free generators, that will map on this element again.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>EpimorphismFromFreeGroup( </code><var>G</var><code> ) A</code>
+<p>
+For a  group <var>G</var> with a known generating set, this attribute returns a
+homomorphism from a free group that maps the free generators to the
+groups generators.
+<p>
+The option ``names'' can be used to prescribe a (print) name
+for the free generators.
+<p>
+The following example shows how to decompose elements of <i>S</i><sub>4</sub> in the
+generators <code>(1,2,3,4)</code> and <code>(1,2)</code>:
 <p>
 <pre>
 gap&gt; g:=Group((1,2,3,4),(1,2));
 Group([ (1,2,3,4), (1,2) ])
-gap&gt; f:=FreeGroup("x","y");
-&lt;free group on the generators [ x, y ]&gt;
-gap&gt; hom:=GroupHomomorphismByImagesNC(f,g,GeneratorsOfGroup(f),
-&gt; GeneratorsOfGroup(g));
+gap&gt; hom:=EpimorphismFromFreeGroup(g:names:=["x","y"]);
 [ x, y ] -&gt; [ (1,2,3,4), (1,2) ]
 gap&gt; PreImagesRepresentative(hom,(1,4));
 y^-1*x^-2*y^-1*x^-1*y^-1*x
@@ -444,18 +452,16 @@ of the symmetric group <i>S</i><sub>16</sub>.
 <pre>
 gap&gt; perms := [ (1,2,3,7,11,10,9,5), (2,3,4,8,12,11,10,6),
 &gt;   (5,6,7,11,15,14,13,9), (6,7,8,12,16,15,14,10) ];;
-gap&gt; puzzle := Group( perms );;
-gap&gt; Size( puzzle );
+gap&gt; puzzle := Group( perms );;Size( puzzle );
 20922789888000
-gap&gt; F := FreeGroup( "a", "b", "c", "d" );;
-gap&gt; gens := GeneratorsOfGroup( F );;
-gap&gt; hom := GroupHomomorphismByImages( F, puzzle, gens, perms );;
-gap&gt; word := PreImagesRepresentative( hom, (1,2) );;
+gap&gt; hom:=EpimorphismFromFreeGroup(puzzle:names:=["a", "b", "c", "d"]);;
+gap&gt; word := PreImagesRepresentative( hom, (1,2) );
+a^-1*c*b*c^-1*a*b^-1*a^-2*c^-1*a*b^-1*c*b
 gap&gt; Length( word );
 13
 </pre>
 <p>
-<a name = "SSEC005.1"></a>
+<a name = "SSEC005.2"></a>
 <li><code>Factorization( </code><var>G</var><code>, </code><var>elm</var><code> ) F</code>
 <p>
 returns a factorization of <var>elm</var> as word in the generators of <var>G</var> given in
@@ -480,8 +486,8 @@ gap&gt; Factorization( H, (1,2,3) );
 x2*x1*x2*x1*x2^-2
 gap&gt; s*r*s*r*s^-2;
 (1,2,3)
-gap&gt; MappingGeneratorsImages(H!.factFreeMap);
-[ [ (3,4), (1,2,3,4,5,6) ], [ x1, x2 ] ]
+gap&gt; MappingGeneratorsImages(EpimorphismFromFreeGroup(H));
+[ [ x1, x2 ], [ (3,4), (1,2,3,4,5,6) ] ]
 </pre>
 <p>
 <p>
@@ -1070,7 +1076,7 @@ which contains <var>U</var>.
 <p>
 <pre>
 gap&gt; NormalClosure(g,Subgroup(g,[(1,2,3)]));
-Group([ (1,2,3), (2,3,4) ])
+Group([ (1,2,3), (1,3,4) ])
 </pre>
 <p>
 <a name = "SSEC011.5"></a>
@@ -1748,7 +1754,7 @@ subnormal, <var>V</var>=<var>U</var>.
 <p>
 <pre>
 gap&gt; s:=SubnormalSeries(g,Group((1,2)(3,4)));
-[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]), 
   Group([ (1,2)(3,4) ]) ]
 </pre>
 <p>
@@ -2265,11 +2271,11 @@ perfect subgroups.
 gap&gt; m11:=TransitiveGroup(11,6);
 M(11)
 gap&gt; r:=RepresentativesPerfectSubgroups(m11);
-[ Group([ (3,4,10)(5,11,6)(7,9,8), (1,9)(2,7)(3,10)(4,6) ]), 
-  Group([ (2,3,5)(4,10,9)(6,7,11), (1,9)(2,7)(3,10)(4,6) ]), 
-  Group([ (3,6)(4,11)(5,10)(8,9), (1,6,5,9)(2,11,3,10) ]), 
-  Group([ (3,5,8)(4,11,7)(6,9,10), (1,9)(2,7)(3,10)(4,6) ]), M(11), Group(())
- ]
+[ Group([ (3,5,8)(4,11,7)(6,9,10), (1,10)(2,9)(3,7)(4,11) ]), 
+  Group([ (2,3,5)(4,10,9)(6,7,11), (1,10)(2,9)(3,7)(4,11) ]), 
+  Group([ (3,4,8,9)(6,7,11,10), (1,10)(2,9)(3,7)(4,11) ]), 
+  Group([ (3,4,10)(5,11,6)(7,9,8), (1,10)(2,9)(3,7)(4,11) ]), M(11), 
+  Group(()) ]
 gap&gt; List(r,Size);
 [ 60, 60, 360, 660, 7920, 1 ]
 </pre>
@@ -2282,10 +2288,10 @@ returns a list of the conjugacy classes of perfect subgroups of <var>G</var>.
 <p>
 <pre>
 gap&gt; ConjugacyClassesPerfectSubgroups(m11);
-[ Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
-  Group( [ ( 2, 3, 5)( 4,10, 9)( 6, 7,11), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
-  Group( [ ( 3, 6)( 4,11)( 5,10)( 8, 9), ( 1, 6, 5, 9)( 2,11, 3,10) ] )^G, 
-  Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), ( 1, 9)( 2, 7)( 3,10)( 4, 6) ] )^G,
+[ Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), ( 1,10)( 2, 9)( 3, 7)( 4,11) ] )^G, 
+  Group( [ ( 2, 3, 5)( 4,10, 9)( 6, 7,11), ( 1,10)( 2, 9)( 3, 7)( 4,11) ] )^G, 
+  Group( [ ( 3, 4, 8, 9)( 6, 7,11,10), ( 1,10)( 2, 9)( 3, 7)( 4,11) ] )^G, 
+  Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1,10)( 2, 9)( 3, 7)( 4,11) ] )^G, 
   M(11)^G, Group( () )^G ]
 </pre>
 <p>
@@ -2746,8 +2752,7 @@ If the group becomes bigger, Schur Cover calculations might become
 unfeasible.
 <p>
 There is another operation
-which only returns the structure of the Multiplier, and which should work
-for larger groups as well.
+which only returns the structure of the Multiplier.
 <p>
 <a name = "SSEC024.3"></a>
 <li><code>AbelianInvariantsMultiplier( </code><var>G</var><code> ) O</code>
@@ -2762,8 +2767,6 @@ returns a list of the abelian invariants of the Schur multiplier of <var>G</var>
 <pre>
 gap&gt; AbelianInvariantsMultiplier(g);
 [ 2 ]
-gap&gt; AbelianInvariantsMultiplier(MathieuGroup(22));
-[ 4, 3 ]
 </pre>
 <p>
 Note that the following example will take some time.
@@ -2845,5 +2848,5 @@ This property can be used for example to check whether a
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP036.htm">Previous</a>] [<a href ="CHAP038.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gi,v 4.75.2.2 2005/04/13 11:45:38 gap Exp $
+#H  @(#)$Id: ctblfuns.gi,v 4.75.2.3 2005/08/25 07:58:23 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -25,7 +25,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gi :=
-    "@(#)$Id: ctblfuns.gi,v 4.75.2.2 2005/04/13 11:45:38 gap Exp $";
+    "@(#)$Id: ctblfuns.gi,v 4.75.2.3 2005/08/25 07:58:23 gap Exp $";
 
 
 #############################################################################
@@ -2538,7 +2538,8 @@ InstallMethod( RestrictedClassFunctions,
     if fus = fail then
       Error( "no fusion from <subtbl> to <tbl>" );
     fi;
-    return List( chars, chi -> ClassFunction( subtbl, chi{ fus } ) );
+    return List( chars, chi -> ClassFunctionSameType( subtbl, chi,
+                                   ValuesOfClassFunction( chi ){ fus } ) );
     end );
 
 InstallMethod( RestrictedClassFunctions,
@@ -2555,7 +2556,8 @@ InstallMethod( RestrictedClassFunctions,
     if fus = fail then
       Error( "class fusion not available" );
     fi;
-    return List( chars, chi -> ClassFunction( subtbl, chi{ fus } ) );
+    return List( chars, chi -> ClassFunctionSameType( subtbl, chi,
+                                   ValuesOfClassFunction( chi ){ fus } ) );
     end );
 
 InstallMethod( RestrictedClassFunctions,
@@ -2568,7 +2570,8 @@ InstallMethod( RestrictedClassFunctions,
     if fus = fail then
       Error( "class fusion not available" );
     fi;
-    return List( chars, chi -> ClassFunction( subtbl, chi{ fus } ) );
+    return List( chars, chi -> ClassFunctionSameType( subtbl, chi,
+                                   ValuesOfClassFunction( chi ){ fus } ) );
     end );
 
 

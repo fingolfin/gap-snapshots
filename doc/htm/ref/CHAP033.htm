@@ -340,10 +340,13 @@ Group(())
 <li><code>Center( </code><var>M</var><code> ) A</code>
 <p>
 <code>Centre</code> returns the <strong>centre</strong> of the magma <var>M</var>, i.e., the domain
-of those elements <code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code> that commute with all elements of <var>M</var>.
+of those elements <code></code><var>m</var><code>  &#8712;  </code><var>M</var><code></code> that commute and associate with all
+elements of <var>M</var>. That is, the set {<i>m</i> &#8712; <i>M</i>;&#8704;<i>a</i>,<i>b</i> &#8712; <i>M</i>: <i>ma</i>=<i>am</i>, (<i>ma</i>)<i>b</i>=<i>m</i>(<i>ab</i>), (<i>am</i>)<i>b</i>=<i>a</i>(<i>mb</i>), (<i>ab</i>)<i>m</i>=<i>a</i>(<i>bm</i>)}.
+<p>
 <code>Center</code> is just a synonym for <code>Centre</code>.
 <p>
-We have <code>Centre( </code><var>M</var><code> ) = Centralizer( </code><var>M</var><code>, </code><var>M</var><code> )</code>, see&nbsp;<a href="CHAP033.htm#SSEC004.4">Centralizer</a>.
+For associative magmas we have that 
+<code>Centre( </code><var>M</var><code> ) = Centralizer( </code><var>M</var><code>, </code><var>M</var><code> )</code>, see&nbsp;<a href="CHAP033.htm#SSEC004.4">Centralizer</a>.
 <p>
 The centre of a magma is always commutative (see&nbsp;<a href="CHAP033.htm#SSEC004.9">IsCommutative</a>).
 (When one installs a new method for <code>Centre</code>, one should set the
@@ -429,5 +432,5 @@ commutative, see&nbsp;<a href="CHAP030.htm#SECT012">Arithmetic Operations for El
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP032.htm">Previous</a>] [<a href ="CHAP034.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

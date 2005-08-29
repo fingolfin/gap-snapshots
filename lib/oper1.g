@@ -2,7 +2,7 @@
 ##
 #W  oper1.g                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: oper1.g,v 4.13 2002/04/15 10:05:05 sal Exp $
+#H  @(#)$Id: oper1.g,v 4.13.4.1 2005/08/11 08:13:14 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  Functions moved from oper.g, so as to be compiled in the default kernel
 ##
 Revision.oper1_g :=
-    "@(#)$Id: oper1.g,v 4.13 2002/04/15 10:05:05 sal Exp $";
+    "@(#)$Id: oper1.g,v 4.13.4.1 2005/08/11 08:13:14 gap Exp $";
 
 
 #############################################################################
@@ -242,6 +242,7 @@ end );
 ##
 BIND_GLOBAL( "INFO_INSTALL", function( arg )
     CALL_FUNC_LIST( Print, arg{ [ 2 .. LEN_LIST( arg ) ] } );
+    Print( "\n" );
 end );
 
 
@@ -271,6 +272,8 @@ BIND_GLOBAL( "InstallOtherMethod",
 ##
 #F  INSTALL_METHOD( <arglist>, <check> )  . . . . . . . . .  install a method
 ##
+DeclareGlobalFunction( "EvalString" );
+
 Unbind(INSTALL_METHOD);
 BIND_GLOBAL( "INSTALL_METHOD",
     function( arglist, check )
@@ -280,6 +283,8 @@ BIND_GLOBAL( "INSTALL_METHOD",
           pos,
           rel,
           filters,
+          info1,
+          isstr,
           flags,
           i,
           rank,
@@ -298,8 +303,9 @@ BIND_GLOBAL( "INSTALL_METHOD",
       Error( "<opr> is not an operation" );
     fi;
 
-    # Check whether an info string is given.
-    if IS_STRING( arglist[2] ) then
+    # Check whether an info string is given,
+    # or whether the list of argument filters is given by a list of strings.
+    if IS_STRING_REP( arglist[2] ) then
       info:= arglist[2];
       pos:= 3;
     else
@@ -320,6 +326,31 @@ BIND_GLOBAL( "INSTALL_METHOD",
       Error( "<arglist>[", pos, "] must be a list of filters" );
     fi;
     filters:= arglist[ pos ];
+
+    # If the filters list is given by a list of strings then evaluate them
+    # and set `info' if this is not set.
+    if 0 < LEN_LIST( filters ) then
+      info1:= "[ ";
+      isstr:= true;
+      for i in [ 1 .. LEN_LIST( filters ) ] do
+        if IS_STRING_REP( filters[i] ) then
+          APPEND_LIST_INTR( info1, filters[i] );
+          APPEND_LIST_INTR( info1, ", " );
+          filters[i]:= EvalString( filters[i] );
+          if not IS_FUNCTION( filters[i] ) then
+            Error( "string does not evaluate to a function" );
+          fi;
+        else
+          isstr:= false;
+          break;
+        fi;
+      od;
+      if isstr and info = false then
+        info1[ LEN_LIST( info1 ) - 1 ]:= ' ';
+        info1[ LEN_LIST( info1 ) ]:= ']';
+        info:= info1;
+      fi;
+    fi;
     pos:= pos + 1;
 
     # Compute the flags lists for the filters.

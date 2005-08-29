@@ -2,14 +2,14 @@
 ##
 #W  grpperm.gd                  GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: grpperm.gd,v 4.46.4.1 2004/01/22 16:33:10 gap Exp $
+#H  @(#)$Id: grpperm.gd,v 4.46.4.2 2005/08/21 20:03:34 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.grpperm_gd :=
-    "@(#)$Id: grpperm.gd,v 4.46.4.1 2004/01/22 16:33:10 gap Exp $";
+    "@(#)$Id: grpperm.gd,v 4.46.4.2 2005/08/21 20:03:34 gap Exp $";
 
 
 #############################################################################
@@ -177,7 +177,7 @@ DeclareAttribute( "TransitiveIdentification", IsPermGroup );
 ##  the library of primitive permutation groups (see~"Primitive Permutation
 ##  Groups"), this attribute returns the index position. That is <G> is
 ##  conjugate to
-##  `PrimitiveGroup(NrMovedPoints(<G>),PrimitiveIdentification(<G>)'.
+##  `PrimitiveGroup(NrMovedPoints(<G>),PrimitiveIdentification(<G>))'.
 ##
 ##  Methods only exist if the primitive groups library is installed.
 ##

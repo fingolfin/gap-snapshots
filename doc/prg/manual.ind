@@ -1,22 +1,22 @@
 \letter A
   Adding a new Attribute, \indexit{37}
   Adding a new Operation, \indexit{36}
-  Adding a new Representation, \indexit{37}
+  Adding a new Representation, \indexit{38}
   Adding new Concepts, \indexit{39}
   Addition of a Method, \indexit{34}
   A First Attempt to Implement Elements of Residue Class Rings, \indexit{44}
   Applicable Methods and Method Selection, \indexit{12}
-  `ArithmeticElementCreator', 41
+  `ArithmeticElementCreator', 42
   Arithmetic Issues in the Implementation of New Kinds of Lists, \indexit{27}
-  A Second Attempt to Implement Elements of Residue Class Rings, \indexit{45}
+  A Second Attempt to Implement Elements of Residue Class Rings, \indexit{46}
 \letter B
   `BindGlobal', 31
 \letter C
   `CategoryCollections', 16
   `CategoryFamily', 16
-  `CollectionsFamily', 19
-  Compatibility of Residue Class Rings with Prime Fields, \indexit{55}
-  Component Objects, \indexit{20}
+  `CollectionsFamily', 20
+  Compatibility of Residue Class Rings with Prime Fields, \indexit{56}
+  Component Objects, \indexit{21}
   Components versus Attributes, \indexit{39}
   Creating Attributes and Properties, \indexit{17}
   Creating Categories, \indexit{16}
@@ -25,7 +25,7 @@
   Creating Operations, \indexit{18}
   Creating Other Filters, \indexit{18}
   Creating Own Arithmetic Objects, \indexit{41}
-  Creating Representations, \indexit{16}
+  Creating Representations, \indexit{17}
   Creating Types, \indexit{20}
 \letter D
   Declaration and Implementation Part, \indexit{33}
@@ -39,17 +39,17 @@
   `DeclareProperty', 31
   `DeclareRepresentation', 31
     \sub belongs to implementation part, 33
-    \sub example, 37
+    \sub example, 38
   `DeclareSynonym', 32
   `DeclareSynonymAttr', 32
-  Designing new Multiplicative Objects, \indexit{63}
+  Designing new Multiplicative Objects, \indexit{64}
 \letter E
   `ElementsFamily', 20
-  Enforcing Property Tests, \indexit{35}
+  Enforcing Property Tests, \indexit{36}
   Example -- Constructing Enumerators, \indexit{24}
   Example -- Constructing Iterators, \indexit{26}
   Example: Groups with a decomposition as semidirect product, \indexit{41}
-  Example: Groups with a word length, \indexit{40}
+  Example: Groups with a word length, \indexit{41}
   Example: M-groups, \indexit{40}
   Extending the Range of Definition of an Existing Operation, \indexit{35}
   External Representation, \indexit{28}
@@ -63,14 +63,14 @@
   Immediate Methods, \indexit{13}
   Implementing New List Objects, \indexit{23}
   `InstallFlushableValue', 32
-  `InstallGlobalFunction', 31
-  `InstallImmediateMethod', 13
+  `InstallGlobalFunction', 32
+  `InstallImmediateMethod', 14
   `InstallMethod', 11
   `InstallOtherMethod', 12
   `InstallTrueMethod', 14
   `InstallValue', 32
-  `IsAttributeStoringRep', 37
-  `IsComponentObjectRep', 37
+  `IsAttributeStoringRep', 37, 38
+  `IsComponentObjectRep', 38
 \letter L
   Logical Implications, \indexit{14}
 \letter M
@@ -88,8 +88,8 @@
   `NewFilter', 18
   `NewOperation', 18
   `NewProperty', 17
-  `NewRepresentation', 16
-    \sub example, 37
+  `NewRepresentation', 17
+    \sub example, 38
   `NewType', 20
 \letter O
   `ObjByExtRep', 29
@@ -100,7 +100,7 @@
   Operations and Methods, \indexit{11}
   overload, 14
 \letter P
-  Partial Methods, \indexit{12}
+  Partial Methods, \indexit{13}
   Positional Objects, \indexit{22}
 \letter R
   Redispatching, \indexit{13}
@@ -109,6 +109,6 @@
 \letter S
   `SetFilterObj', 18
 \letter T
-  `TryNextMethod', 12
+  `TryNextMethod', 13
 \letter W
   Why Proceed in a Different Way?, \indexit{45}

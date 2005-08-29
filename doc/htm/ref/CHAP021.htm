@@ -462,19 +462,67 @@ For any list, the default method is to loop over the entries in the list
 <p>
 <a name = "SSEC004.4"></a>
 <li><code>Add( </code><var>list</var><code>, </code><var>obj</var><code> ) O</code>
+<li><code>Add( </code><var>list</var><code>, </code><var>obj</var><code>, </code><var>pos</var><code> ) O</code>
 <p>
-adds the element <var>obj</var> to the end of the mutable list <var>list</var>,
+adds the element <var>obj</var> to the mutable list <var>list</var>. The two argument version 
+adds <var>obj</var> at the end of <var>list</var>,
 i.e., it is equivalent to the assignment
 <code></code><var>list</var><code>[ Length(</code><var>list</var><code>) + 1 ] := </code><var>obj</var><code></code>, see&nbsp;<a href="CHAP021.htm#SSEC004.1">list element!assignment</a>.
+<p>
+The three argument version adds <var>obj</var> in position <var>pos</var>, moving all later
+elements of the list (if any) up by one position. Any holes at or after
+position <var>pos</var> are also moved up by one position, and new holes are created
+before <var>pos</var> if they are needed.
+<p>
 Nothing is returned by <code>Add</code>, the function is only called for its side
 effect.
+<p>
+<a name = "SSEC004.5"></a>
+<li><code>Remove( </code><var>list</var><code> ) O</code>
+<li><code>Remove( </code><var>list</var><code>, </code><var>pos</var><code> ) O</code>
+<p>
+removes an element from <var>list</var>. The one argument form removes the last 
+element. The two argument form removes the element in position <var>pos</var>,
+moving all subsequent elements down one position. Any holes  after
+position <var>pos</var> are also moved down by one position.
+<p>
+Remove( <var>list</var> ) always returns the removed element. In this case <var>list</var>
+must be non-empty. Remove( <var>list</var>, <var>pos</var> )
+returns the old value of <var>list</var>[<var>pos</var>] if it was bound, and nothing if it
+was not. Note that accessing or assigning the return value of this form of
+the Remove operation is only safe when you <strong>know</strong> that there will be a 
+value, otherwise it will cause an error.
 <p>
 <pre>
 gap&gt; l := [ 2, 3, 5 ];; Add( l, 7 ); l;
 [ 2, 3, 5, 7 ]
+gap&gt; Add(l,4,2); l;
+[ 2, 4, 3, 5, 7]
+gap&gt; Remove(l,2); l;
+4
+[ 2, 3, 5, 7]
+gap&gt; Remove(l); l;
+7
+[ 2, 3, 5]
+gap&gt; Remove(l,5); l;
+[ 2, 3, 5]
 </pre>
 <p>
-<a name = "SSEC004.5"></a>
+These two operations are implemented with the aid of a 
+more general kernel function
+<p>
+<a name = "SSEC004.6"></a>
+<li><code>COPY_LIST_ENTRIES( </code><var>from-list</var><code>, </code><var>from-index</var><code>, </code><var>from-step</var><code>, </code><var>to-list</var><code>, </code><var>to-index</var><code>, </code><var>to-step</var><code>, </code><var>number</var><code> ) F</code>
+<p>
+This function copies <var>number</var> elements from <var>from-list</var>,
+starting at position <var>from-index</var> and incrementing the position by
+<var>from-step</var> each time, into <var>to-list</var> starting at position <var>to-index</var>
+and incrementing the position by <var>to-step</var> each time. <var>from-list</var> and
+<var>to-list</var> must be plain lists.  <var>from-step</var> and/or <var>to-step</var> can be
+negative. Unbound positions of <var>from-list</var> are simply copied to
+<var>to-list</var>.
+<p>
+<a name = "SSEC004.7"></a>
 <li><code>Append( </code><var>list1</var><code>, </code><var>list2</var><code> ) O</code>
 <p>
 adds the elements of the list <var>list2</var> to the end of the mutable list
@@ -1631,6 +1679,12 @@ The second version starts searching <strong>after</strong> position <var>from</v
 To determine whether <var>sub</var> matches <var>list</var> at a  particular position, use 
 <code>IsMatchingSublist</code> instead (see <a href="CHAP021.htm#SSEC017.1">IsMatchingSublist</a>).
 <p>
+<a name = "SSEC016.11"></a>
+<li><code>PositionFirstComponent( </code><var>list</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+returns the index <var>i</var> in <var>list</var> such that <i>list</i> [<i>i</i> ][1]=<i>obj</i>  or the 
+place where such an entry should be added (cf PositionSorted).
+<p>
 <p>
 <h2><a name="SECT017">21.17 Properties and Attributes for Lists</a></h2>
 <p><p>
@@ -2068,7 +2122,7 @@ The elements of that list however are identical to the corresponding
 elements of <var>list1</var>, <var>list2</var>, etc. (see&nbsp;<a href="CHAP021.htm#SECT006">Identical Lists</a>).
 <p>
 Note that <code>Concatenation</code> creates a new list and leaves its arguments
-unchanged, while <code>Append</code> (see&nbsp;<a href="CHAP021.htm#SSEC004.5">Append</a>) changes its first argument.
+unchanged, while <code>Append</code> (see&nbsp;<a href="CHAP021.htm#SSEC004.7">Append</a>) changes its first argument.
 For computing the union of proper sets, <code>Union</code> can be used,
 see&nbsp;<a href="CHAP028.htm#SSEC004.3">Union</a> and <a href="CHAP021.htm#SECT019">Sorted Lists and Sets</a>.
 <p>
@@ -2740,6 +2794,10 @@ singleton list, which is a range, too. Note that <code></code><var>last</var><co
 be divisible by the increment <code></code><var>second</var><code> - </code><var>first</var><code></code>, otherwise an error is
 signalled.
 <p>
+Currently, the integers <var>first</var>, <var>second</var> and <var>last</var> and the length of a
+range must be small integers, that is at least &#8722;2<sup><i>d</i></sup> and at most 2<sup><i>d</i></sup>&#8722;1 
+with <i>d</i>=28 on 32-bit architectures and <i>d</i>=60 on 64-bit architectures.
+<p>
 Note also that a range is just a special case of a list.
 Thus you can access elements in a range (see <a href="CHAP021.htm#SECT003">List Elements</a>), test for
 membership etc.
@@ -2916,5 +2974,5 @@ see&nbsp;<a href="../prg/CHAP003.htm#SECT012">Example -- Constructing Enumerator
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP020.htm">Previous</a>] [<a href ="CHAP022.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

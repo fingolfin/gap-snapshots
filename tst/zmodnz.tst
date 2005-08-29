@@ -2,12 +2,12 @@
 ##
 #W  zmodnz.tst                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zmodnz.tst,v 4.13.4.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: zmodnz.tst,v 4.13.4.4 2005/08/29 14:50:36 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 
-gap> START_TEST("$Id: zmodnz.tst,v 4.13.4.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: zmodnz.tst,v 4.13.4.4 2005/08/29 14:50:36 gap Exp $");
 
 
 # small prime field
@@ -276,7 +276,7 @@ gap> ForAll( [ 1 .. len ], i -> i = Position( enum, enum[i], 0 ) );
 true
 
 
-gap> STOP_TEST( "zmodnz.tst", 16300000 );
+gap> STOP_TEST( "zmodnz.tst", 11200000 );
 
 
 #############################################################################

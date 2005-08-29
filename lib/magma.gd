@@ -2,7 +2,7 @@
 ##
 #W  magma.gd                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: magma.gd,v 4.49 2002/04/15 10:04:55 sal Exp $
+#H  @(#)$Id: magma.gd,v 4.49.4.1 2005/08/15 19:31:16 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  different.
 ##
 Revision.magma_gd:=
-    "@(#)$Id: magma.gd,v 4.49 2002/04/15 10:04:55 sal Exp $";
+    "@(#)$Id: magma.gd,v 4.49.4.1 2005/08/15 19:31:16 gap Exp $";
 
 
 #############################################################################
@@ -374,10 +374,14 @@ DeclareAttribute( "MultiplicativeNeutralElement", IsMagma );
 #A  Center( <M> ) . . . . . . . . . . . . . . . . . . . . . centre of a magma
 ##
 ##  `Centre' returns the *centre* of the magma <M>, i.e., the domain
-##  of those elements `<m> $\in$ <M>' that commute with all elements of <M>.
+##  of those elements `<m> $\in$ <M>' that commute and associate with all
+##  elements of <M>. That is, the set $\{m\in M;\forall a,b\in M: ma=am,
+##  (ma)b=m(ab), (am)b=a(mb), (ab)m=a(bm)\}$.
+##
 ##  `Center' is just a synonym for `Centre'.
 ##
-##  We have `Centre( <M> ) = Centralizer( <M>, <M> )', see~"Centralizer".
+##  For associative magmas we have that 
+##  `Centre( <M> ) = Centralizer( <M>, <M> )', see~"Centralizer".
 ##
 ##  The centre of a magma is always commutative (see~"IsCommutative").
 ##  (When one installs a new method for `Centre', one should set the

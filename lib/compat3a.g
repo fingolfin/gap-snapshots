@@ -2,7 +2,7 @@
 ##
 #W  compat3a.g                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: compat3a.g,v 4.41.2.2 2005/05/11 14:47:03 gap Exp $
+#H  @(#)$Id: compat3a.g,v 4.41.2.3 2005/08/29 08:33:23 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -22,7 +22,7 @@
 ##  This file is *not* read as part of the {\GAP}~4 library.
 ##
 Revision.compat3a_g :=
-    "@(#)$Id: compat3a.g,v 4.41.2.2 2005/05/11 14:47:03 gap Exp $";
+    "@(#)$Id: compat3a.g,v 4.41.2.3 2005/08/29 08:33:23 gap Exp $";
 
 
 #############################################################################
@@ -636,8 +636,11 @@ InstallMethod( MinPol,
 #F  Mod( <R>, <r>, <s> )
 ##
 ##  (was already obsolete in {\GAP}~3)
+##  This variable is also defined in the `resclasses' package.
 ##
-DeclareSynonym( "Mod", EuclideanRemainder );
+if not IsBound( Mod ) then
+  DeclareSynonym( "Mod", EuclideanRemainder );
+fi;
 
 
 #############################################################################

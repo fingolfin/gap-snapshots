@@ -2,7 +2,7 @@
 ##
 #W  vspcmat.tst                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspcmat.tst,v 4.17.2.4 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: vspcmat.tst,v 4.17.2.5 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -11,7 +11,7 @@
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: vspcmat.tst,v 4.17.2.4 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: vspcmat.tst,v 4.17.2.5 2005/08/29 14:50:35 gap Exp $");
 
 
 #############################################################################
@@ -386,7 +386,7 @@ gap> CloseMutableBasis( mb, [ [ 0, 1 ], [ 1, 0 ] ] );
 gap> IsContainedInSpan( mb, [ [ 1, 1 ], [ 1, 1 ] ] );
 true
 
-gap> STOP_TEST( "vspcmat.tst", 51800000 );
+gap> STOP_TEST( "vspcmat.tst", 43400000 );
 
 
 #############################################################################

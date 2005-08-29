@@ -2,14 +2,14 @@
 ##
 #W  semirel.tst                 GAP library                Robert F. Morse
 ##
-#H  $Id: semirel.tst,v 1.4.2.3 2005/05/11 14:53:02 gap Exp $
+#H  $Id: semirel.tst,v 1.4.2.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: semirel.tst,v 1.4.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: semirel.tst,v 1.4.2.4 2005/08/29 14:50:35 gap Exp $");
 ##
 ##  Three non-commutative finite semigroups
 ##
@@ -118,7 +118,7 @@ gap> ForAll(GreensHClasses(t4),
 > ));
 true
 
-gap> STOP_TEST( "semirel.tst", 337100000 );
+gap> STOP_TEST( "semirel.tst", 120100000 );
 
 
 #############################################################################

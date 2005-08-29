@@ -2,7 +2,7 @@
 ##
 #W  numtheor.gd                 GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: numtheor.gd,v 4.23 2003/09/10 10:59:31 gap Exp $
+#H  @(#)$Id: numtheor.gd,v 4.23.2.1 2005/07/22 11:26:27 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  The arguments are simply integers.
 ##
 Revision.numtheor_gd:=
-    "@(#)$Id: numtheor.gd,v 4.23 2003/09/10 10:59:31 gap Exp $";
+    "@(#)$Id: numtheor.gd,v 4.23.2.1 2005/07/22 11:26:27 stefan Exp $";
 
 
 ##########################################################################
@@ -55,7 +55,7 @@ DeclareGlobalFunction( "PrimeResidues" );
 
 #############################################################################
 ##
-#F  Phi( <m> )  . . . . . . . . . . . . . . . . . .  Euler's totient function
+#O  Phi( <m> )  . . . . . . . . . . . . . . . . . .  Euler's totient function
 ##
 ##  `Phi' returns the number $\phi(<m>)$ of positive integers less than the
 ##  positive integer <m> that are coprime to <m>.
@@ -63,12 +63,12 @@ DeclareGlobalFunction( "PrimeResidues" );
 ##  Suppose that $m = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$.  Then  $\phi(m)$
 ##  is $p_1^{e_1-1} (p_1-1) p_2^{e_2-1} (p_2-1) \cdots  p_k^{e_k-1} (p_k-1)$.
 ##
-DeclareGlobalFunction( "Phi" );
+DeclareOperation( "Phi", [ IsObject ] );
 
 
 #############################################################################
 ##
-#F  Lambda( <m> ) . . . . . . . . . . . . . . . . . . .  Carmichaels function
+#O  Lambda( <m> ) . . . . . . . . . . . . . . . . . . .  Carmichaels function
 ##
 ##  `Lambda' returns the exponent $\lambda(<m>)$ of the group of prime
 ##  residues modulo the integer <m>.
@@ -89,7 +89,7 @@ DeclareGlobalFunction( "Phi" );
 ##  If $6k+1$, $12k+1$ and $18k+1$ are primes their product is such a number.
 ##  There are only  1547  Carmichaels below $10^{10}$ but  455052511  primes.
 ##
-DeclareGlobalFunction( "Lambda" );
+DeclareOperation( "Lambda", [ IsObject ] );
 
 
 #############################################################################
@@ -296,7 +296,7 @@ DeclareGlobalFunction( "DoLogModRho" );
 
 #############################################################################
 ##
-#F  Sigma( <n> )  . . . . . . . . . . . . . . . sum of divisors of an integer
+#O  Sigma( <n> )  . . . . . . . . . . . . . . . sum of divisors of an integer
 ##
 ##  `Sigma' returns the sum of the positive divisors of the nonzero integer
 ##  <n>.
@@ -319,12 +319,12 @@ DeclareGlobalFunction( "DoLogModRho" );
 ##
 ##  `Sigma' usually spends most of its time factoring <n> (see~"FactorsInt").
 ##
-DeclareGlobalFunction( "Sigma" );
+DeclareOperation( "Sigma", [ IsObject ] );
 
 
 #############################################################################
 ##
-#F  Tau( <n> )  . . . . . . . . . . . . . .  number of divisors of an integer
+#O  Tau( <n> )  . . . . . . . . . . . . . .  number of divisors of an integer
 ##
 ##  `Tau' returns the number of the positive divisors of the nonzero integer
 ##  <n>.
@@ -336,7 +336,7 @@ DeclareGlobalFunction( "Sigma" );
 ##
 ##  `Tau' usually spends most of its time factoring <n> (see~"FactorsInt").
 ##
-DeclareGlobalFunction( "Tau" );
+DeclareOperation( "Tau", [ IsObject ] );
 
 
 #############################################################################

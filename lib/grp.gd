@@ -5,7 +5,7 @@
 #W                                                             & Bettina Eick
 #W                                                           & Heiko Theissen
 ##
-#H  @(#)$Id: grp.gd,v 4.188 2003/11/14 17:48:47 gap Exp $
+#H  @(#)$Id: grp.gd,v 4.188.2.2 2005/08/25 12:43:49 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,7 +26,7 @@
 ##  operations (such as `Normalizer') with the parent as an attribute.
 
 Revision.grp_gd :=
-    "@(#)$Id: grp.gd,v 4.188 2003/11/14 17:48:47 gap Exp $";
+    "@(#)$Id: grp.gd,v 4.188.2.2 2005/08/25 12:43:49 gap Exp $";
 
 
 #############################################################################
@@ -265,6 +265,7 @@ InstallFactorMaintenance( IsPGroup,
     IsGroup and IsPGroup, IsObject, IsGroup );
 
 InstallTrueMethod( IsPGroup, IsGroup and IsTrivial );
+InstallTrueMethod( IsPGroup, IsGroup and IsElementaryAbelian );
 
 
 #############################################################################
@@ -277,12 +278,6 @@ InstallTrueMethod( IsPGroup, IsGroup and IsTrivial );
 ##  Otherwise an error is issued.
 ##
 DeclareAttribute( "PrimePGroup", IsPGroup );
-
-InstallSubsetMaintenance( PrimePGroup,
-    IsGroup and HasPrimePGroup, IsGroup );
-
-InstallFactorMaintenance( PrimePGroup,
-    IsGroup and HasPrimePGroup, IsObject, IsGroup );
 
 
 #############################################################################

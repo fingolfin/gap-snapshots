@@ -5,7 +5,7 @@
 %A  ctbl.msk                    GAP documentation               Thomas Breuer
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: ctbl.msk,v 1.47.2.1 2005/05/09 07:39:28 gap Exp $
+%A  @(#)$Id: ctbl.msk,v 1.47.2.4 2005/08/29 08:05:54 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -882,10 +882,6 @@ For a character table <tbl> with underlying group,
 For a group <G>, `Irr' may delegate to its character table only if the
 irreducibles are already stored there.
 
-If a group has both ordinary irreducible characters in `Irr' and
-irreducible representations in `IrreducibleRepresentations' these are
-*not* guaranteed to be ordered in the same way.
-
 (If <G> is <p>-solvable (see~"IsPSolvable") then the <p>-modular
 irreducible characters can be computed by the Fong-Swan Theorem;
 in all other cases, there may be no method.)
@@ -901,6 +897,10 @@ classes (see~"Sorted Character Tables"),
 so the irreducibles of such a table will in general not coincide with
 the irreducibles stored as `Irr( <G> )' although also the sorted table
 stores the group <G>.
+
+The ordering of the entries in the attribute `Irr' of a group need *not*
+coincide with the ordering of its `IrreducibleRepresentations'
+(see~"IrreducibleRepresentations") value.
 
 
 
@@ -991,6 +991,8 @@ see the chapter about groups for the definition.
 `IsAbelian'&
 \indextt{IsCyclic!for character tables}
 `IsCyclic'&
+\indextt{IsElementaryAbelian!for character tables}
+`IsElementaryAbelian'&
 \indextt{IsFinite!for character tables}
 `IsFinite'&
 \indextt{IsMonomial!for character tables}
@@ -1160,6 +1162,9 @@ The position of the class with name <name> in <tbl> can be accessed as
 When `ClassNames' is called with two arguments, the second being the
 string `\"ATLAS\"', the class names returned obey the convention used in
 Chapter~7, Section~5 of the {\ATLAS} of Finite Groups~\cite{CCN85}.
+If one is interested in ``relative'' class names of almost simple
+{\ATLAS} groups, one can use the function `AtlasClassNames' of the {\GAP}
+package AtlasRep.
 
 
 \beginexample
@@ -1294,10 +1299,13 @@ of those classes forming the normal subgroup in question.
 
 \>ClassPositionsOfNormalSubgroups( <ordtbl> ) A
 \>ClassPositionsOfMaximalNormalSubgroups( <ordtbl> ) A
+\>ClassPositionsOfMinimalNormalSubgroups( <ordtbl> ) A
 
-correspond to `NormalSubgroups' and `MaximalNormalSubgroups'
+correspond to `NormalSubgroups', `MaximalNormalSubgroups', and
+`MinimalNormalSubgroups'
 for the group of the ordinary character table <ordtbl>
-(see~"NormalSubgroups", "MaximalNormalSubgroups").
+(see~"NormalSubgroups", "MaximalNormalSubgroups",
+"MinimalNormalSubgroups").
 
 The entries of the result lists are sorted according to increasing
 length.
@@ -1484,8 +1492,7 @@ rec( block := [ 1, 1, 1, 1, 1, 2 ], defect := [ 3, 0 ],
 Let <p> be a prime integer, <omega1> and <omega2> be two central
 characters (or their values lists) of a character table,
 and <relevant> be a list of positions as is stored in the component
-`relevantclasses' of a record returned by `PrimeBlocks'
-(see~"PrimeBlocks").
+`relevant' of a record returned by `PrimeBlocks' (see~"PrimeBlocks").
 
 `SameBlock' returns `true' if <omega1> and <omega2> are equal modulo any
 maximal ideal in the ring of complex algebraic integers containing the
@@ -2046,6 +2053,7 @@ X.4    +   1 -1
 \endexample
 
 \>PrintCharacterTable( <tbl>, <varname> ) F
+\>CharacterTableString( <tbl>, <varname> ) F
 
 Let <tbl> be a nearly character table, and <varname> a string.
 `PrintCharacterTable' prints those values of the supported attributes
@@ -2058,6 +2066,9 @@ printed components.
 
 This is used mainly for saving character tables to files.
 A more human readable form is produced by `Display'.
+
+`CharacterTableString' returns a string that consists of the output of
+`PrintCharacterTable'.
 
 
 
@@ -2160,8 +2171,8 @@ gap> irr1:= IrrDixonSchneider( g );
   Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
   Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
   Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3), E(3)^2, -E(3)^2, -E(3), 0 ] ),
   Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3)^2, E(3), -E(3), -E(3)^2, 0 ] ),
+  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3), E(3)^2, -E(3)^2, -E(3), 0 ] ),
   Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
 gap> irr2:= IrrConlon( g );
 [ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
@@ -2508,19 +2519,19 @@ gap> Size(g);
 6065280
 gap> d:= DixonInit( g );;
 #I  29 classes
-#I  choosing prime 28081
+#I  choosing prime 51481
 gap> c:= d.characterTable;;
 \endexample
 After the initialisation, one structure matrix is evaluated,
 yielding smaller spaces and several irreducible characters.
 \beginexample
 gap> DixonSplit( d );
-#I  Matrix 4,Representative of Order 3,Centralizer: 5832
-#I  Dimensions: [ 1, 12, 2, 2, 4, 2, 1, 1, 1, 1, 1 ]
+#I  Matrix 7,Representative of Order 3,Centralizer: 5832
+#I  Dimensions: [ 1, 1, 2, 12, 1, 4, 1, 2, 1, 2, 1 ]
 #I  Two-dim space split
 #I  Two-dim space split
 #I  Two-dim space split
-4
+7
 \endexample
 In this case spaces of the listed dimensions are a result of the
 splitting process.
@@ -2556,14 +2567,14 @@ gap> List( ro.remainders, i -> ScalarProduct( c, i, i) );
   38942, 44950, 78778 ]
 gap> t:= SplitCharacters( d, ro.remainders );;
 gap> List( t, i -> ScalarProduct( c, i, i ) );
-[ 2, 2, 4, 2, 2, 4, 4, 6, 3, 5, 5, 9, 9, 4, 12, 13, 18, 18, 18, 26, 32, 32, 
-  16, 42, 36, 84, 84, 90, 88, 159, 169, 169, 172, 172, 266, 271, 271, 268, 
-  274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 768, 768, 
-  890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 2058, 2379, 
-  2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 4760, 5112, 
-  5115, 5115, 5414, 6080, 6318, 7100, 7369, 7369, 7798, 8644, 10392, 12373, 
-  12922, 14122, 14122, 18948, 21886, 24641, 24641, 25056, 38942, 44950, 78778 
- ]
+[ 2, 2, 4, 2, 2, 4, 4, 6, 3, 5, 5, 9, 9, 4, 12, 13, 18, 18, 20, 18, 20, 26, 
+  24, 32, 32, 16, 42, 59, 69, 69, 72, 72, 36, 72, 122, 127, 127, 64, 100, 
+  144, 196, 274, 274, 280, 328, 373, 373, 456, 532, 576, 679, 683, 683, 754, 
+  768, 768, 890, 912, 962, 1453, 1453, 1601, 1601, 1728, 1739, 1739, 1802, 
+  2058, 2379, 2414, 2543, 2744, 2744, 2920, 3078, 3078, 4275, 4275, 4494, 
+  4760, 5112, 5115, 5115, 5414, 6080, 6318, 7100, 7369, 7369, 7798, 8644, 
+  10392, 12373, 12922, 14122, 14122, 18948, 21886, 24641, 24641, 25056, 
+  38942, 44950, 78778 ]
 \endexample
 Finally we calculate the characters induced from all cyclic subgroups and
 obtain the missing irreducibles by applying the LLL-algorithm to them.
@@ -2582,10 +2593,9 @@ So we convert them to a list of values
 before feeding them in the machinery of the Dixon-algorithm.
 \beginexample
 gap> l.irreducibles[1];
-Character( CharacterTable( PSL(4,3) ),
-[ 640, 0, 0, -8, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)+E(13)^3+E(13)^9, 
-  E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, -8, -8, 0, 0, 0, 0, 0, 1, 1, 1 ] )
+Character( CharacterTable( PSL(4, 3) ), [ 640, 0, 0, 0, 0, -8, -8, 0, 0, 0, 
+  0, -8, 0, 0, 0, 0, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)+E(13)^3+E(13)^9, 
+  E(13)^2+E(13)^5+E(13)^6, E(13)^4+E(13)^10+E(13)^12, 0, 0, 0, 1, 0, 1, 1 ] )
 gap> l:=List(l.irreducibles,ValuesOfClassFunction);;
 gap> DxIncludeIrreducibles( d, l );
 gap> Length( d.irreducibles );
@@ -2599,7 +2609,7 @@ group.
 This makes them available also to the character table.
 \beginexample
 gap> irrs:= DixontinI( d );;
-#I  Total:1 matrices,[ 4 ]
+#I  Total:1 matrices,[ 7 ]
 gap> SetIrr(g,irrs);
 gap> Length(Irr(c));
 29
@@ -2728,27 +2738,31 @@ X.2     2  . -1
 X.3     1  1  1
 \endexample
 
-\>CharacterTableIsoclinic( <tbl> ) O
+\>CharacterTableIsoclinic( <tbl> ) A
 \>CharacterTableIsoclinic( <tbl>, <classes> ) O
 \>CharacterTableIsoclinic( <tbl>, <classes>, <centre> ) O
 
-If <tbl> is the character table of a group with structure $2\.G\.2$
-with a central subgroup $Z$ of order $2$ and a normal subgroup $N$ of
-index $2$ that contains $Z$ then `CharacterTableIsoclinic' returns
-the character table of the isoclinic group in the sense of the {\ATLAS}
-of Finite Groups~\cite{CCN85}, Chapter~6, Section~7.
+If <tbl> is the (ordinary or modular) character table of a group with the
+structure $2\.G\.2$ with a central subgroup $Z$ of order $2$ and a normal
+subgroup $N$ of index $2$ that contains $Z$
+then `CharacterTableIsoclinic' returns the table of the isoclinic group
+in the sense of the {\ATLAS} of Finite Groups~\cite{CCN85}, Chapter~6,
+Section~7.
 If $N$ is not uniquely determined then the positions of the classes
 forming $N$ must be entered as list <classes>.
 If $Z$ is not unique in $N$ then the position of the class consisting
 of the involution in $Z$ must be entered as <centre>.
 
+Note that also if <tbl> is a Brauer table then <classes> and <centre>
+denote class numbers w.r.t.~the *ordinary* character table.
 
 
 \beginexample
 gap> d8:= CharacterTable( "Dihedral", 8 );;
 gap> nsg:= ClassPositionsOfNormalSubgroups( d8 );
 [ [ 1 ], [ 1, 3 ], [ 1 .. 3 ], [ 1, 3, 4 ], [ 1, 3 .. 5 ], [ 1 .. 5 ] ]
-gap> Display( CharacterTableIsoclinic( d8, nsg[3] ) );
+gap> q8:= CharacterTableIsoclinic( d8, nsg[3] );;
+gap> Display( q8 );
 Isoclinic(Dihedral(8))
 
      2  3  2  3  2  2
@@ -2761,6 +2775,22 @@ X.2     1  1  1 -1 -1
 X.3     1 -1  1  1 -1
 X.4     1 -1  1 -1  1
 X.5     2  . -2  .  .
+\endexample
+
+\>SourceOfIsoclinicTable( <tbl> ) A
+
+For an ordinary character table that has been constructed via
+`CharacterTableIsoclinic' (see~"CharacterTableIsoclinic"),
+the value of `SourceOfIsoclinicTable' is the list of three arguments in
+the `CharacterTableIsoclinic' call.
+
+Note that there is no default method for *computing* the value of
+`SourceOfIsoclinicTable'.
+
+
+\beginexample
+gap> SourceOfIsoclinicTable( q8 );
+[ CharacterTable( "Dihedral(8)" ), [ 1, 2, 3 ], 3 ]
 \endexample
 
 %Declaration{CharacterTableOfNormalSubgroup}
@@ -3033,7 +3063,7 @@ then the list of element orders of the conjugacy classes
 automorphisms (see~"MatrixAutomorphisms") of the list <characters>
 that leave the element orders (see~"OrdersClassRepresentatives")
 and all stored power maps (see~"ComputedPowerMaps") of the character
-table <tbl>.
+table <tbl> invariant.
 
 If <characters> is closed under Galois conjugacy --this is always
 fulfilled for ordinary character tables--
@@ -3141,8 +3171,8 @@ Each entry in the list <maps> is regarded to form a family of length 1.
      to that representative,
 
 `families' &
-     the list that contains at position <i> the list of positions
-     of members of the family of representative `famreps[<i>]';
+     the list that contains at position `i' the list of positions
+     of members of the family of representative `famreps[i]';
      (for the element `<maps>[i]' the only member of the family
      will get the number `Length( <mat> ) + i').
 \enditems
@@ -3241,18 +3271,18 @@ gap> irr:= Irr( g );
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 gap> kernel:= KernelOfCharacter( irr[3] );
-Group([ (1,2)(3,4), (1,3)(2,4) ])
+Group([ (1,2)(3,4), (1,4)(2,3) ])
 gap> HasNormalSubgroupClassesInfo( tbl );
 true
 gap> NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [  ] )
 gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
 [ 1, 3 ]
 gap> FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
 Group([ f1, f2 ])
 gap> NormalSubgroupClassesInfo( tbl );
-rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], nsgclasses := [ [ 1, 3 ] ],
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
   nsgfactors := [ Group([ f1, f2 ]) ] )
 \endexample
 

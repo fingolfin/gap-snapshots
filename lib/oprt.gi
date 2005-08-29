@@ -2,14 +2,14 @@
 ##
 #W  oprt.gi                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gi,v 4.179 2003/11/20 20:34:33 gap Exp $
+#H  @(#)$Id: oprt.gi,v 4.179.2.1 2005/08/19 17:16:28 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gi :=
-    "@(#)$Id: oprt.gi,v 4.179 2003/11/20 20:34:33 gap Exp $";
+    "@(#)$Id: oprt.gi,v 4.179.2.1 2005/08/19 17:16:28 gap Exp $";
 
 
 #############################################################################
@@ -1725,7 +1725,7 @@ InstallMethod( PermutationCycleOp,"of object in list", true,
     function( g, D, pnt, act )
     local   list,  old,  new,  fst;
     
-    list := [  ];
+    list := [ 1 .. Size(D) ];
     fst := PositionCanonical( D, pnt );
     if fst = fail  then
         return ();

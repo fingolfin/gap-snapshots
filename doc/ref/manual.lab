@@ -411,9 +411,11 @@
 \makelabel{ref:PrevPrimeInt}{14.3.5}
 \makelabel{ref:FactorsInt}{14.3.6}
 \makelabel{ref:FactorsInt}{14.3.6}
-\makelabel{ref:PrintFactorsInt}{14.3.7}
-\makelabel{ref:PrimePowersInt}{14.3.8}
-\makelabel{ref:DivisorsInt}{14.3.9}
+\makelabel{ref:PartialFactorization}{14.3.7}
+\makelabel{ref:PartialFactorization}{14.3.7}
+\makelabel{ref:PrintFactorsInt}{14.3.8}
+\makelabel{ref:PrimePowersInt}{14.3.9}
+\makelabel{ref:DivisorsInt}{14.3.10}
 \makelabel{ref:Residue Class Rings}{14.4}
 \makelabel{ref:modulo!residue class rings}{14.4.1}
 \makelabel{ref:ZmodnZ}{14.4.2}
@@ -596,7 +598,11 @@
 \makelabel{ref:sublist!assignment}{21.4.2}
 \makelabel{ref:sublist assignment!operation}{21.4.3}
 \makelabel{ref:Add}{21.4.4}
-\makelabel{ref:Append}{21.4.5}
+\makelabel{ref:Add}{21.4.4}
+\makelabel{ref:Remove}{21.4.5}
+\makelabel{ref:Remove}{21.4.5}
+\makelabel{ref:COPY_LIST_ENTRIES}{21.4.6}
+\makelabel{ref:Append}{21.4.7}
 \makelabel{ref:IsBound and Unbind for Lists}{21.5}
 \makelabel{ref:IsBound!for lists}{21.5.1}
 \makelabel{ref:Unbind!for lists}{21.5.2}
@@ -633,6 +639,7 @@
 \makelabel{ref:PositionNonZero}{21.16.9}
 \makelabel{ref:PositionSublist}{21.16.10}
 \makelabel{ref:PositionSublist}{21.16.10}
+\makelabel{ref:PositionFirstComponent}{21.16.11}
 \makelabel{ref:Properties and Attributes for Lists}{21.17}
 \makelabel{ref:IsMatchingSublist}{21.17.1}
 \makelabel{ref:IsMatchingSublist}{21.17.1}
@@ -855,6 +862,7 @@
 \makelabel{ref:PrintArray}{24.4.10}
 \makelabel{ref:MutableIdentityMat}{24.4.11}
 \makelabel{ref:MutableNullMat}{24.4.12}
+\makelabel{ref:MutableCopyMat}{24.4.13}
 \makelabel{ref:Random Matrices}{24.5}
 \makelabel{ref:RandomMat}{24.5.1}
 \makelabel{ref:RandomInvertibleMat}{24.5.2}
@@ -1690,7 +1698,8 @@
 \makelabel{ref:ClosureSubgroup}{37.4.4}
 \makelabel{ref:ClosureSubgroupNC}{37.4.4}
 \makelabel{ref:Expressing Group Elements as Words in Generators}{37.5}
-\makelabel{ref:Factorization}{37.5.1}
+\makelabel{ref:EpimorphismFromFreeGroup}{37.5.1}
+\makelabel{ref:Factorization}{37.5.2}
 \makelabel{ref:Structure Descriptions}{37.6}
 \makelabel{ref:StructureDescription}{37.6.1}
 \makelabel{ref:Cosets}{37.7}
@@ -1973,6 +1982,7 @@
 \makelabel{ref:Permutation}{39.8.1}
 \makelabel{ref:Permutation}{39.8.1}
 \makelabel{ref:PermutationCycle}{39.8.2}
+\makelabel{ref:PermutationCycleOp}{39.8.2}
 \makelabel{ref:Cycle}{39.8.3}
 \makelabel{ref:CycleLength}{39.8.4}
 \makelabel{ref:Cycles}{39.8.5}
@@ -2885,6 +2895,7 @@
 \makelabel{ref:IsPrime}{54.5.7}
 \makelabel{ref:Factors}{54.5.8}
 \makelabel{ref:Factors}{54.5.8}
+\makelabel{ref:PadicValuation}{54.5.9}
 \makelabel{ref:Euclidean Rings}{54.6}
 \makelabel{ref:IsEuclideanRing}{54.6.1}
 \makelabel{ref:EuclideanDegree}{54.6.2}
@@ -3824,6 +3835,7 @@
 \makelabel{ref:ClassRoots}{69.8.16}
 \makelabel{ref:ClassPositionsOfNormalSubgroups}{69.8.17}
 \makelabel{ref:ClassPositionsOfMaximalNormalSubgroups}{69.8.17}
+\makelabel{ref:ClassPositionsOfMinimalNormalSubgroups}{69.8.17}
 \makelabel{ref:ClassPositionsOfAgemo}{69.8.18}
 \makelabel{ref:ClassPositionsOfCentre!for character tables}{69.8.19}
 \makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.20}
@@ -3862,6 +3874,7 @@
 \makelabel{ref:Printing Character Tables}{69.11}
 \makelabel{ref:DisplayOptions}{69.11.1}
 \makelabel{ref:PrintCharacterTable}{69.11.2}
+\makelabel{ref:CharacterTableString}{69.11.2}
 \makelabel{ref:Computing the Irreducible Characters of a Group}{69.12}
 \makelabel{ref:IrrDixonSchneider}{69.12.1}
 \makelabel{ref:IrrConlon}{69.12.2}
@@ -3895,7 +3908,8 @@
 \makelabel{ref:CharacterTableIsoclinic}{69.18.4}
 \makelabel{ref:CharacterTableIsoclinic}{69.18.4}
 \makelabel{ref:CharacterTableIsoclinic}{69.18.4}
-\makelabel{ref:CharacterTableWreathSymmetric}{69.18.5}
+\makelabel{ref:SourceOfIsoclinicTable}{69.18.5}
+\makelabel{ref:CharacterTableWreathSymmetric}{69.18.6}
 \makelabel{ref:Sorted Character Tables}{69.19}
 \makelabel{ref:CharacterTableWithSortedCharacters}{69.19.1}
 \makelabel{ref:CharacterTableWithSortedCharacters}{69.19.1}
@@ -4188,10 +4202,10 @@
 \setcitlab {BescheEick98}{BE99a}
 \setcitlab {BescheEick1000}{BE99b}
 \setcitlab {BescheEick768}{BE01}
-\setcitlab {BEO01}{BEOon}
+\setcitlab {BEO00}{BEO01}
+\setcitlab {BEO01}{BEO02}
 \setcitlab {Ber76}{Ber76}
 \setcitlab {Besche92}{Bes92}
-\setcitlab {BuekenhoutLeemans96}{BL96}
 \setcitlab {BreuerLinton98}{BL98}
 \setcitlab {BM83}{BM83}
 \setcitlab {Bourbaki70}{Bou70}
@@ -4211,15 +4225,19 @@
 \setcitlab {Con90a}{Con90a}
 \setcitlab {Con90b}{Con90b}
 \setcitlab {GrpsStAndrews81}{CR82}
+\setcitlab {DEi05}{DE05}
 \setcitlab {Dix67}{Dix67}
 \setcitlab {Dix93}{Dix93}
 \setcitlab {DixonMortimer88}{DM88}
 \setcitlab {Dre69}{Dre69}
 \setcitlab {EickHoefling02}{EH02}
 \setcitlab {Eick97}{Eic97}
+\setcitlab {EOB98}{EO98}
+\setcitlab {EOB99}{EO99}
 \setcitlab {FJNT95}{FJNT95}
 \setcitlab {FelschNeubueser79}{FN79}
 \setcitlab {Fra82}{Fra82}
+\setcitlab {Gir03}{Gir03}
 \setcitlab {ISSAC98}{Glo98}
 \setcitlab {Hall}{Hal59}
 \setcitlab {Hav69}{Hav69}
@@ -4237,7 +4255,7 @@
 \setcitlab {Hulpke99}{Hul99}
 \setcitlab {HulpkeClasses}{Hul00}
 \setcitlab {HulpkeQuot}{Hul01}
-\setcitlab {HulpkeTG}{Hular}
+\setcitlab {HulpkeTG}{Hul05}
 \setcitlab {Hum72}{Hum72}
 \setcitlab {Hum78}{Hum78}
 \setcitlab {Hup67}{Hup67}
@@ -4258,6 +4276,7 @@
 \setcitlab {LP91}{LP91}
 \setcitlab {Mac81}{Mac81}
 \setcitlab {MeckyNeubueser89}{MN89}
+\setcitlab {NOV04}{MNVL03}
 \setcitlab {MS85}{MS85}
 \setcitlab {Mur58}{Mur58}
 \setcitlab {MV97}{MV97}
@@ -4282,7 +4301,8 @@
 \setcitlab {Poh87}{Poh87}
 \setcitlab {PP77}{PP77}
 \setcitlab {PP80}{PP80}
-\setcitlab {RoneyDougal02}{RDU02}
+\setcitlab {RoneyDougal05}{RD05}
+\setcitlab {RoneyDougal02}{RDU03}
 \setcitlab {Rin93}{Rin93}
 \setcitlab {Rob88}{Rob88}
 \setcitlab {Roy87}{Roy87}

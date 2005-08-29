@@ -3,14 +3,14 @@
 #W  stbc.gi                     GAP library                    Heiko Thei"sen
 #W                                                               'Akos Seress
 ##
-#H  @(#)$Id: stbc.gi,v 4.72.2.1 2005/04/26 14:19:39 gap Exp $
+#H  @(#)$Id: stbc.gi,v 4.72.2.3 2005/08/24 23:22:47 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.stbc_gi :=
-    "@(#)$Id: stbc.gi,v 4.72.2.1 2005/04/26 14:19:39 gap Exp $";
+    "@(#)$Id: stbc.gi,v 4.72.2.3 2005/08/24 23:22:47 gap Exp $";
 
 #############################################################################
 ##
@@ -799,25 +799,34 @@ end );
 #F  InsertElmList( <list>, <pos>, <elm> ) . . . insert an element into a list
 ##
 ##  Perhaps this should be an internal function?
+##  OBSOLETE: only kept for compatibility.
 ##
+#InstallGlobalFunction( InsertElmList, function( list, pos, elm )
+#    local   len;
+#    
+#    len := Length( list );
+#    list{ [ pos + 1 .. len + 1 ] } := list{ [ pos .. len ] };
+#    list[ pos ] := elm;
+#end );
 InstallGlobalFunction( InsertElmList, function( list, pos, elm )
-    local   len;
-    
-    len := Length( list );
-    list{ [ pos + 1 .. len + 1 ] } := list{ [ pos .. len ] };
-    list[ pos ] := elm;
+    Add(list, elm, pos);
 end );
 
 #############################################################################
 ##
 #F  RemoveElmList( <list>, <pos> )  . . . . . . . .  remove element from list
 ##
-InstallGlobalFunction( RemoveElmList, function( list, pos )
-    local   len;
-    
-    len := Length( list );
-    list{ [ pos .. len - 1 ] } := list{ [ pos + 1 .. len ] };
-    Unbind( list[ len ] );
+##  OBSOLETE: only kept for compatibility
+##  
+#InstallGlobalFunction( RemoveElmList, function( list, pos )
+#    local   len;
+#    
+#    len := Length( list );
+#    list{ [ pos .. len - 1 ] } := list{ [ pos + 1 .. len ] };
+#    Unbind( list[ len ] );
+#end );
+InstallGlobalFunction( RemoveElmList, function( list, pos ) 
+    Remove(list, pos); 
 end );
 
 #############################################################################

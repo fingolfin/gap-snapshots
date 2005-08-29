@@ -2,7 +2,7 @@
 ##
 #W  numtheor.gi                 GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: numtheor.gi,v 4.19.2.1 2004/01/30 22:48:46 gap Exp $
+#H  @(#)$Id: numtheor.gi,v 4.19.2.2 2005/07/22 11:26:27 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods mainly for integer primes.
 ##
 Revision.numtheor_gi :=
-    "@(#)$Id: numtheor.gi,v 4.19.2.1 2004/01/30 22:48:46 gap Exp $";
+    "@(#)$Id: numtheor.gi,v 4.19.2.2 2005/07/22 11:26:27 stefan Exp $";
 
 
 #############################################################################
@@ -45,9 +45,14 @@ end );
 
 #############################################################################
 ##
-#F  Phi( <m> )  . . . . . . . . . . . . . . . . . . . Eulers totient function
+#M  Phi( <m> )  . . . . . . . . . . . . . . . . . . . Eulers totient function
 ##
-InstallGlobalFunction( Phi, function ( m )
+InstallMethod( Phi,
+               "value of Eulers totient function of an integer",
+               true, [ IsInt ], 0,
+
+  function ( m )
+
     local  phi, p;
 
     # make <m> it nonnegative, handle trivial cases
@@ -64,14 +69,19 @@ InstallGlobalFunction( Phi, function ( m )
 
     # return the result
     return phi;
-end );
+  end );
 
 
 #############################################################################
 ##
-#F  Lambda( <m> ) . . . . . . . . . . . . . . . . . . .  Carmichaels function
+#M  Lambda( <m> ) . . . . . . . . . . . . . . . . . . .  Carmichaels function
 ##
-InstallGlobalFunction( Lambda, function ( m )
+InstallMethod( Lambda,
+               "exponent of the group of prime residues modulo an integer",
+               true, [ IsInt ], 0,
+
+  function ( m )
+
     local  lambda, p, q, k;
 
     # make <m> it nonnegative, handle trivial cases
@@ -96,7 +106,7 @@ InstallGlobalFunction( Lambda, function ( m )
     od;
 
     return lambda;
-end );
+  end );
 
 
 #############################################################################
@@ -1193,9 +1203,14 @@ end);
 
 #############################################################################
 ##                                         
-#F  Sigma( <n> )  . . . . . . . . . . . . . . . sum of divisors of an integer
+#M  Sigma( <n> )  . . . . . . . . . . . . . . . sum of divisors of an integer
 ##            
-InstallGlobalFunction( Sigma, function( n )
+InstallMethod( Sigma,
+               "sum of divisors of an integer",
+               true, [ IsInt ], 0,
+
+  function( n )
+
     local  sigma, p, q, k;
 
     # make <n> it nonnegative, handle trivial cases
@@ -1218,14 +1233,19 @@ InstallGlobalFunction( Sigma, function( n )
     od;
 
     return sigma;
-end );
+  end );
 
 
 #############################################################################
 ##                                         
-#F  Tau( <n> )  . . . . . . . . . . . . . .  number of divisors of an integer
-##            
-InstallGlobalFunction( Tau,function( n )
+#M  Tau( <n> )  . . . . . . . . . . . . . .  number of divisors of an integer
+##
+InstallMethod( Tau,
+               "number of divisors of an integer",
+               true, [ IsInt ], 0,
+
+  function( n )
+
     local  tau, p, q, k;
 
     # make <n> it nonnegative, handle trivial cases
@@ -1248,7 +1268,7 @@ InstallGlobalFunction( Tau,function( n )
     od;
 
     return tau;
-end );
+  end );
 
 
 #############################################################################

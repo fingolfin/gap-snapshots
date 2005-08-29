@@ -6,7 +6,7 @@
 #W                                                           & Heiko Theissen
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: matrix.gd,v 4.81 2003/05/12 20:01:23 gap Exp $
+#H  @(#)$Id: matrix.gd,v 4.81.2.2 2005/08/26 10:43:41 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 ##  This file contains those functions that mainly deal with matrices.
 ##
 Revision.matrix_gd :=
-    "@(#)$Id: matrix.gd,v 4.81 2003/05/12 20:01:23 gap Exp $";
+    "@(#)$Id: matrix.gd,v 4.81.2.2 2005/08/26 10:43:41 gap Exp $";
 
 
 #############################################################################
@@ -709,11 +709,14 @@ DeclareGlobalFunction( "IdentityMat" );
 
 #############################################################################
 ##
-#F  MutableCopyMat( <mat> ) . . . . . . . . . .  Copies  a matrix
+#O  MutableCopyMat( <mat> ) . . . . . . . . . .  Copies  a matrix
 ##
 ##  `MutableCopyMat'  returns a fully mutable copy  of  the  matrix <mat>.
 ##
-DeclareGlobalFunction( "MutableCopyMat" );
+##  The default method does `List(<mat>,ShallowCopy)' and thus may also
+##  be called for the empty list, returning a new empty list.
+##
+DeclareOperation( "MutableCopyMat", [IsList] );
 
 
 #############################################################################

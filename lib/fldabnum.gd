@@ -2,7 +2,7 @@
 ##
 #W  fldabnum.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: fldabnum.gd,v 4.24 2003/10/06 07:55:58 gap Exp $
+#H  @(#)$Id: fldabnum.gd,v 4.24.2.1 2005/08/10 16:38:44 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -18,7 +18,7 @@
 ##  by their family.)
 ##
 Revision.fldabnum_gd :=
-    "@(#)$Id: fldabnum.gd,v 4.24 2003/10/06 07:55:58 gap Exp $";
+    "@(#)$Id: fldabnum.gd,v 4.24.2.1 2005/08/10 16:38:44 gap Exp $";
 
 
 #T add rings of integers in abelian number fields!
@@ -171,6 +171,8 @@ DeclareGlobalVariable( "Rationals", "field of rationals" );
 
 DeclareSynonym( "IsRationals",
     IsCyclotomicCollection and IsField and IsPrimeField );
+
+InstallTrueMethod( IsCyclotomicField, IsRationals );
 
 
 #############################################################################

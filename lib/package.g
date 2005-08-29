@@ -3,7 +3,7 @@
 #W  package.g                   GAP Library                      Frank Celler
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $
+#H  @(#)$Id: package.g,v 4.73.2.5 2005/08/29 09:18:30 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,7 +26,7 @@
 #T - change `ReadAndCheckFunc' such that `ReadPackage' can use it
 ##
 Revision.package_g :=
-    "@(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $";
+    "@(#)$Id: package.g,v 4.73.2.5 2005/08/29 09:18:30 gap Exp $";
 
 #T remove this as soon as possible (currently used in several packages)
 PACKAGES_VERSIONS:= rec();
@@ -388,7 +388,10 @@ InstallGlobalFunction( "TestPackageAvailability", function( arg )
     else
       intest:= arg[3];
     fi;
-    equal:= 0 < Length( version ) and version[1] = '=';
+    equal:= "";
+    if 0 < Length( version ) and version[1] = '=' then
+      equal:= "equal";
+    fi;
 
     # Initialize if this was not yet done.
     InitializePackagesInfoRecords( false );

@@ -2,7 +2,7 @@
 ##
 #W  basicpcg.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: basicpcg.gi,v 4.14 2000/02/01 13:34:11 gap Exp $
+#H  @(#)$Id: basicpcg.gi,v 4.14.10.1 2005/08/25 12:43:48 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -10,7 +10,7 @@
 ##  types.
 ##
 Revision.basicpcg_gi :=
-    "@(#)$Id: basicpcg.gi,v 4.14 2000/02/01 13:34:11 gap Exp $";
+    "@(#)$Id: basicpcg.gi,v 4.14.10.1 2005/08/25 12:43:48 gap Exp $";
 
 
 #############################################################################
@@ -58,7 +58,7 @@ local   pis,  f,  g,  r,  k,  pi,  i,  geni,  j,  name,  ps;
       if pi[1]=1 then
         Add(geni,0);
       else
-	Add(geni,k);
+        Add(geni,k);
         for i  in [ 1 .. Length(pi)-1 ]  do
             Add( r, g[k]^pi[i] / g[k+1] );
             k := k + 1;
@@ -83,6 +83,10 @@ local   pis,  f,  g,  r,  k,  pi,  i,  geni,  j,  name,  ps;
     k:=GroupWithGenerators(k,One(f));
     SetSize(k,Size(f));
     SetIsAbelian( k, true );
+    if Size(Set(Filtered(Flat(pis),p->p<>1))) = 1 then
+        SetIsPGroup( k, true );
+        SetPrimePGroup( k, First(Flat(pis),p -> p<>1) );
+    fi;
 
     pis := [ ];
     ps := [ ];
@@ -169,6 +173,10 @@ function( filter, n )
         od;
         Add( r, g[Length(g)] ^ pi[Length(g)] );
         f := PolycyclicFactorGroup( f, r );
+        if Size(Set(pi)) = 1 then
+            SetIsPGroup( f, true );
+            SetPrimePGroup( f, pi[1] );
+        fi;
     fi;
 
     SetSize( f, n );
@@ -211,6 +219,10 @@ function( filter, n )
     od;
     f := PolycyclicFactorGroup( f, r );
     SetSize( f, n );
+    if n = 2^LogInt(n,2) then
+        SetIsPGroup( f, true );
+        SetPrimePGroup( f, 2 );
+    fi;
     return f;
 end );
 
@@ -329,7 +341,10 @@ function( filters, order, exp )
     od;
 
     # return the pc group
-    return PolycyclicFactorGroup( f, r );
+    f := PolycyclicFactorGroup( f, r );
+    SetIsPGroup( f, true );
+    SetPrimePGroup( f, p );
+    return f;
 
 end );
 

@@ -161,19 +161,19 @@ Chapter, first with class function objects.
 gap&gt; irrS4:= Irr( S4 );;
 gap&gt; irrD8:= Irr( D8 );;
 gap&gt; chi:= irrD8[4];
-Character( CharacterTable( D8 ), [ 1, 1, 1, -1, -1 ] )
+Character( CharacterTable( D8 ), [ 1, -1, 1, -1, 1 ] )
 gap&gt; chi * chi;
 Character( CharacterTable( D8 ), [ 1, 1, 1, 1, 1 ] )
 gap&gt; ind:= chi ^ S4;
-Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] )
+Character( CharacterTable( S4 ), [ 3, -1, -1, 0, 1 ] )
 gap&gt; List( irrS4, x -&gt; ScalarProduct( x, ind ) );
-[ 0, 0, 0, 1, 0 ]
+[ 0, 1, 0, 0, 0 ]
 gap&gt; det:= Determinant( ind );
-Character( CharacterTable( S4 ), [ 1, -1, 1, 1, -1 ] )
+Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] )
 gap&gt; cent:= CentralCharacter( ind );
-ClassFunction( CharacterTable( S4 ), [ 1, 2, -1, 0, -2 ] )
+ClassFunction( CharacterTable( S4 ), [ 1, -2, -1, 0, 2 ] )
 gap&gt; rest:= Restricted( cent, D8 );
-ClassFunction( CharacterTable( D8 ), [ 1, 2, -1, -1, -2 ] )
+ClassFunction( CharacterTable( D8 ), [ 1, -2, -1, -1, 2 ] )
 </pre>
 <p>
 Now we repeat these calculations with plain lists of character values.
@@ -183,19 +183,19 @@ Here we need the character tables in some places.
 gap&gt; tS4:= CharacterTable( S4 );;
 gap&gt; tD8:= CharacterTable( D8 );;
 gap&gt; chi:= ValuesOfClassFunction( irrD8[4] );
-[ 1, 1, 1, -1, -1 ]
+[ 1, -1, 1, -1, 1 ]
 gap&gt; Tensored( [ chi ], [ chi ] )[1];
 [ 1, 1, 1, 1, 1 ]
 gap&gt; ind:= InducedClassFunction( tD8, chi, tS4 );
-ClassFunction( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] )
+ClassFunction( CharacterTable( S4 ), [ 3, -1, -1, 0, 1 ] )
 gap&gt; List( Irr( tS4 ), x -&gt; ScalarProduct( tS4, x, ind ) );
-[ 0, 0, 0, 1, 0 ]
+[ 0, 1, 0, 0, 0 ]
 gap&gt; det:= DeterminantOfCharacter( tS4, ind );
-ClassFunction( CharacterTable( S4 ), [ 1, -1, 1, 1, -1 ] )
+ClassFunction( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] )
 gap&gt; cent:= CentralCharacter( tS4, ind );
-ClassFunction( CharacterTable( S4 ), [ 1, 2, -1, 0, -2 ] )
+ClassFunction( CharacterTable( S4 ), [ 1, -2, -1, 0, 2 ] )
 gap&gt; rest:= Restricted( tS4, cent, tD8 );
-ClassFunction( CharacterTable( D8 ), [ 1, 2, -1, -1, -2 ] )
+ClassFunction( CharacterTable( D8 ), [ 1, -2, -1, -1, 2 ] )
 </pre>
 <p>
 If one deals with character tables from the <font face="Gill Sans,Helvetica,Arial">GAP</font> table library then
@@ -646,7 +646,7 @@ gap&gt; phi:= ClassFunction( g, [ 1, -1, 0, 2, -2 ] );
 ClassFunction( D8, [ 1, -1, 0, 2, -2 ] )
 gap&gt; psi:= ClassFunction( tbl,
 &gt;              List( Irr( g ), chi -&gt; ScalarProduct( chi, phi ) ) );
-ClassFunction( D8, [ -3/8, 1/8, 9/8, 5/8, -1/4 ] )
+ClassFunction( D8, [ -3/8, 9/8, 5/8, 1/8, -1/4 ] )
 gap&gt; chi:= VirtualCharacter( g, [ 0, 0, 8, 0, 0 ] );
 VirtualCharacter( D8, [ 0, 0, 8, 0, 0 ] )
 gap&gt; reg:= Character( tbl, [ 8, 0, 0, 0, 0 ] );
@@ -935,7 +935,7 @@ equal to the character degree.
 <pre>
 gap&gt; List( Irr( S4 ), KernelOfCharacter );
 [ Group([ (), (1,2)(3,4), (1,2,3) ]), Group(()), 
-  Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), 
+  Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
   Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 gap&gt; List( Irr( S4 ), ClassPositionsOfKernel );
 [ [ 1, 3, 4 ], [ 1 ], [ 1, 3 ], [ 1 ], [ 1, 2, 3, 4, 5 ] ]
@@ -965,7 +965,7 @@ is the list of positions of classes forming the centre of the character
 <pre>
 gap&gt; List( Irr( S4 ), CentreOfCharacter );
 [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
-  Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), 
+  Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
   Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 gap&gt; List( Irr( S4 ), ClassPositionsOfCentre );
 [ [ 1, 2, 3, 4, 5 ], [ 1 ], [ 1, 3 ], [ 1 ], [ 1, 2, 3, 4, 5 ] ]
@@ -2654,5 +2654,5 @@ functions.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP069.htm">Previous</a>] [<a href ="CHAP071.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

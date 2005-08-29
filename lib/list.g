@@ -2,7 +2,7 @@
 ##
 #W  list.g                        GAP library                Martin Schoenert
 ##
-#H  @(#)$Id: list.g,v 4.35 2002/04/15 10:04:54 sal Exp $
+#H  @(#)$Id: list.g,v 4.35.4.1 2005/08/11 07:55:30 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  very early in the bootstrap stage (therefore they are not in list.gi)
 ##
 Revision.list_g :=
-    "@(#)$Id: list.g,v 4.35 2002/04/15 10:04:54 sal Exp $";
+    "@(#)$Id: list.g,v 4.35.4.1 2005/08/11 07:55:30 gap Exp $";
 
 
 #############################################################################
@@ -62,13 +62,6 @@ InstallTrueMethod( IsListDefault, IsInternalRep and IsList );
 DeclareProperty( "IsRectangularTable", IsList );
 
 InstallTrueMethod( IsTable, IsRectangularTable );
-
-
-#############################################################################
-##
-#v  ListsFamily	. . . . . . . . . . . . . . . . . . . . . . . family of lists
-##
-InstallValue( ListsFamily, NewFamily( "ListsFamily", IsList ) );
 
 
 #############################################################################

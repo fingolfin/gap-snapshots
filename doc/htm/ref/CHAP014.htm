@@ -611,6 +611,64 @@ gap&gt; FactorsInt( 10^42 + 1 );
 </pre>
 <p>
 <a name = "SSEC003.7"></a>
+<li><code>PartialFactorization( </code><var>n</var><code> ) O</code>
+<li><code>PartialFactorization( </code><var>n</var><code>, </code><var>effort</var><code> ) O</code>
+<p>
+<code>PartialFactorization</code> returns a partial factorization of the integer <var>n</var>.
+No assertions are made about the primality of the factors, except of
+those mentioned below.
+<p>
+The argument <var>effort</var>, if given, specifies how intensively the function
+should try to determine factors of <var>n</var>. The default is <var>effort</var>&nbsp;=&nbsp;5.
+<p>
+<dl compact>
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;0, trial division by the primes below 100 is
+           done. Returned factors below 10<sup>4</sup> are guaranteed to be
+           prime.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;1, trial division by the primes below 1000 is
+           done. Returned factors below 10<sup>6</sup> are guaranteed to be
+           prime.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;2, additionally trial division by the numbers
+           in the lists <code>Primes2</code> and <code>ProbablePrimes2</code> is done, and
+           perfect powers are detected. Returned factors below 10<sup>6</sup>
+           are guaranteed to be prime.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;3, additionally <code>FactorsRho</code> (Pollard's Rho)
+           with <var>RhoTrials</var> = 256 is used.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;4, as above, but <var>RhoTrials</var> = 2048.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;5, as above, but <var>RhoTrials</var> = 8192.
+           Returned factors below 10<sup>12</sup> are guaranteed to be prime,
+           and all prime factors below 10<sup>6</sup> are guaranteed to be found.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;6 and <font face="Gill Sans,Helvetica,Arial">FactInt</font> is loaded, in addition to
+           the above quite a number of special cases are handled.
+  <dt>-<dd>If <var>effort</var>&nbsp;=&nbsp;7 and <font face="Gill Sans,Helvetica,Arial">FactInt</font> is loaded, the only thing
+           which is not attempted to obtain a full factorization into
+           Baillie-Pomerance-Selfridge-Wagstaff pseudoprimes is the
+           application of the MPQS to a remaining composite with more
+           than 50 decimal digits.
+</dl>
+Increasing the value of the argument <var>effort</var> by one usually results
+in an increase of the runtime requirements by a factor of (very roughly!)
+3 to&nbsp;10.
+<p>
+<a name = "I8"></a>
+
+<pre>
+gap&gt; List([0..5],i-&gt;PartialFactorization(7^64-1,i));
+[ [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 
+      1868505648951954197516197706132003401892793036353 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 353, 
+      5293217135841230021292344776577913319809612001 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 353, 134818753, 47072139617, 
+      531968664833, 1567903802863297 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 353, 1201, 169553, 7699649, 
+      134818753, 47072139617, 531968664833 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 353, 1201, 169553, 7699649, 
+      134818753, 47072139617, 531968664833 ], 
+  [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 5, 5, 17, 353, 1201, 169553, 7699649, 
+      134818753, 47072139617, 531968664833 ] ]
+</pre>
+<p>
+<a name = "SSEC003.8"></a>
 <li><code>PrintFactorsInt( </code><var>n</var><code> ) F</code>
 <p>
 prints the prime factorization of the integer <var>n</var> in human-readable
@@ -621,7 +679,7 @@ gap&gt; PrintFactorsInt( Factorial( 7 ) ); Print( "\n" );
 2^4*3^2*5*7
 </pre>
 <p>
-<a name = "SSEC003.8"></a>
+<a name = "SSEC003.9"></a>
 <li><code>PrimePowersInt( </code><var>n</var><code> ) F</code>
 <p>
 returns the prime factorization of the integer <var>n</var> as a list
@@ -632,7 +690,7 @@ gap&gt; PrimePowersInt( Factorial( 7 ) );
 [ 2, 4, 3, 2, 5, 1, 7, 1 ]
 </pre>
 <p>
-<a name = "SSEC003.9"></a>
+<a name = "SSEC003.10"></a>
 <li><code>DivisorsInt( </code><var>n</var><code> ) F</code>
 <p>
 <code>DivisorsInt</code> returns a list of all divisors  of  the  integer  <var>n</var>.  The
@@ -646,7 +704,7 @@ causes an error.
 <code>Sigma</code> and <code>Tau</code> (see&nbsp;<a href="CHAP015.htm#SSEC004.1">Sigma</a> and <a href="CHAP015.htm#SSEC004.2">Tau</a>) compute the sum and the
 number of positive divisors, respectively.
 <p>
-<a name = "I8"></a>
+<a name = "I9"></a>
 
 <pre>
 gap&gt; DivisorsInt( 1 ); DivisorsInt( 20 ); DivisorsInt( 541 );
@@ -658,7 +716,7 @@ gap&gt; DivisorsInt( 1 ); DivisorsInt( 20 ); DivisorsInt( 541 );
 <p>
 <h2><a name="SECT004">14.4 Residue Class Rings</a></h2>
 <p><p>
-<a name = "I9"></a>
+<a name = "I10"></a>
 
 <a name = "SSEC004.1"></a>
 <li><code></code><var>r</var><code> / </code><var>s</var><code> mod </code><var>n</var><code></code>
@@ -686,7 +744,7 @@ ring can be obtained by <i>i</i> * <tt>One</tt>( <i>R</i> ), and a representativ
 residue class corresponding to the element <i>x</i>  &#8712; <i>R</i> can be computed by
 <tt>Int</tt>( <i>x</i> ).
 <p>
-<a name = "I10"></a>
+<a name = "I11"></a>
 
 <code>ZmodnZ( </code><var>n</var><code> )</code> is equivalent to <code>Integers mod </code><var>n</var><code></code>.
 <p>
@@ -770,5 +828,5 @@ See also Chapters&nbsp;<a href="CHAP057.htm">Finite fields</a> and <a href="CHAP
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP013.htm">Previous</a>] [<a href ="CHAP015.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>May 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
 </font></body></html>

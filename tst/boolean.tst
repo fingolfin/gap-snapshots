@@ -2,14 +2,14 @@
 ##
 #W  boolean.tst                GAP Library                      Thomas Breuer
 ##
-#H  @(#)$Id: boolean.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: boolean.tst,v 4.4.4.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  Exclude from testall.g: too trivial?
 ##
 
-gap> START_TEST("$Id: boolean.tst,v 4.4.4.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: boolean.tst,v 4.4.4.4 2005/08/29 14:50:35 gap Exp $");
 
 gap> not true;
 false
@@ -52,7 +52,7 @@ false
 gap> false and false;
 false
 
-gap> STOP_TEST( "boolean.tst", 0 );
+gap> STOP_TEST( "boolean.tst", 100000 );
 
 #############################################################################
 ##

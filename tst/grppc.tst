@@ -2,14 +2,14 @@
 ##
 #W  grppc.tst                 GAP tests                     Alexander Hulpke
 ##
-#H  @(#)$Id: grppc.tst,v 1.14.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: grppc.tst,v 1.14.2.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1997
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: grppc.tst,v 1.14.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: grppc.tst,v 1.14.2.4 2005/08/29 14:50:35 gap Exp $");
 gap> h:=Group((1,2,3,4),(1,2));;
 gap> m:=IsomorphismPcGroup(h);;
 gap> hh:=Image(m,h);;
@@ -66,7 +66,7 @@ gap> Length(Complementclasses( G, S ));
 1
 
 # that's all, folks
-gap> STOP_TEST( "grppc.tst", 99500000 );
+gap> STOP_TEST( "grppc.tst", 206100000 );
 
 
 #############################################################################

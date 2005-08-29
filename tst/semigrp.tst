@@ -2,14 +2,14 @@
 ##
 #W  semigrp.tst                 GAP library                    Andrew Solomon
 ##
-#H  @(#)$Id: semigrp.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: semigrp.tst,v 4.15.2.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: semigrp.tst,v 4.15.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: semigrp.tst,v 4.15.2.4 2005/08/29 14:50:35 gap Exp $");
 gap> ###############################################
 gap> ##
 gap> ##  AsTransformation - changing representation
@@ -286,7 +286,7 @@ gap> CategoryCollections(IsMultiplicativeElementWithZero)(m);
 true
 gap> 
 gap> 
-gap> STOP_TEST( "semigrp.tst", 102900000 );
+gap> STOP_TEST( "semigrp.tst", 86300000 );
 
 
 #############################################################################

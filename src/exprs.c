@@ -2,7 +2,7 @@
 **
 *W  exprs.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: exprs.c,v 4.40 2002/04/15 10:03:47 sal Exp $
+*H  @(#)$Id: exprs.c,v 4.40.6.2 2005/08/30 12:49:47 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_exprs_c =
-   "@(#)$Id: exprs.c,v 4.40 2002/04/15 10:03:47 sal Exp $";
+   "@(#)$Id: exprs.c,v 4.40.6.2 2005/08/30 12:49:47 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -31,6 +31,7 @@ const char * Revision_exprs_c =
 #include        "lists.h"               /* generic lists                   */
 
 #include        "bool.h"                /* booleans                        */
+#include        "integer.h"             /* integers                        */
 
 #include        "permutat.h"            /* permutations                    */
 
@@ -1210,8 +1211,8 @@ Obj             EvalRangeExpr (
     val = EVAL_EXPR( ADDR_EXPR(expr)[0] );
     while ( ! IS_INTOBJ(val) ) {
         val = ErrorReturnObj(
-            "Range: <first> must be an integer less than 2^28 (not a %s)",
-            (Int)TNAM_OBJ(val), 0L,
+            "Range: <first> must be an integer less than 2^%d (not a %s)",
+            NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val),
             "you can replace <first> via 'return <first>;'" );
     }
     low = INT_INTOBJ( val );
@@ -1222,8 +1223,8 @@ Obj             EvalRangeExpr (
         while ( ! IS_INTOBJ(val) || INT_INTOBJ(val) == low ) {
             if ( ! IS_INTOBJ(val) ) {
                 val = ErrorReturnObj(
-                    "Range: <second> must be an integer less than 2^28 (not a %s)",
-                    (Int)TNAM_OBJ(val), 0L,
+                    "Range: <second> must be an integer less than 2^%d (not a %s)",
+                    NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val),
                     "you can replace <second> via 'return <second>;'" );
             }
             else {
@@ -1244,8 +1245,8 @@ Obj             EvalRangeExpr (
     while ( ! IS_INTOBJ(val) || (INT_INTOBJ(val) - low) % inc != 0 ) {
         if ( ! IS_INTOBJ(val) ) {
             val = ErrorReturnObj(
-                "Range: <last> must be an integer less than 2^28 (not a %s)",
-                (Int)TNAM_OBJ(val), 0L,
+                "Range: <last> must be an integer less than 2^%d (not a %s)",
+                NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val),
                 "you can replace <last> via 'return <last>;'" );
         }
         else {
@@ -1272,6 +1273,11 @@ Obj             EvalRangeExpr (
 
     /* else make the range                                                 */
     else {
+        /* the length must be a small integer as well */
+        if ((high-low) / inc + 1 >= (1L<<NR_SMALL_INT_BITS)) {
+             ErrorQuit("Range: the length of a range must be less than 2^%d.",
+                        NR_SMALL_INT_BITS, 0L);
+        }
         if ( 0 < inc )
             range = NEW_RANGE_SSORT();
         else

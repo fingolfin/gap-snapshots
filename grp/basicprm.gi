@@ -2,7 +2,7 @@
 ##
 #W  basicprm.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: basicprm.gi,v 4.28 2000/04/02 20:06:35 ahulpke Exp $
+#H  @(#)$Id: basicprm.gi,v 4.28.4.1 2005/06/14 15:53:46 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -10,7 +10,7 @@
 ##  group types.
 ##
 Revision.basicprm_gi :=
-    "@(#)$Id: basicprm.gi,v 4.28 2000/04/02 20:06:35 ahulpke Exp $";
+    "@(#)$Id: basicprm.gi,v 4.28.4.1 2005/06/14 15:53:46 gap Exp $";
 
 
 #############################################################################
@@ -139,7 +139,6 @@ function( filter, dom )
             SetIsSimpleGroup(  alt, true );
             SetIsPerfectGroup( alt, true );
         elif 2 < Length(dom)  then
-            SetIsSimpleGroup(  alt, false );
             SetIsPerfectGroup( alt, false );
         fi;
         SetIsPrimitiveAffine( alt, Length( dom ) < 5 );

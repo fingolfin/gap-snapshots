@@ -2,14 +2,14 @@
 ##
 #W  ffe.tst                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ffe.tst,v 4.20.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: ffe.tst,v 4.20.2.4 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: ffe.tst,v 4.20.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: ffe.tst,v 4.20.2.4 2005/08/29 14:50:35 gap Exp $");
 
 gap> GaloisField( 13 );
 GF(13)
@@ -141,7 +141,7 @@ gap> Subfields( GF(2^6) );
 [ GF(2), GF(2^2), GF(2^3), GF(2^6) ]
 
 
-gap> STOP_TEST( "ffe.tst", 15800000 );
+gap> STOP_TEST( "ffe.tst", 19500000 );
 
 
 #############################################################################

@@ -5,7 +5,7 @@
 #W                                                         & Martin Schoenert
 #W                                                              & Alex Wegner
 ##
-#H  @(#)$Id: integer.gd,v 4.31.2.1 2005/05/09 07:08:04 gap Exp $
+#H  @(#)$Id: integer.gd,v 4.31.2.2 2005/08/15 11:49:29 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  This file declares the operations for integers.
 ##
 Revision.integer_gd :=
-    "@(#)$Id: integer.gd,v 4.31.2.1 2005/05/09 07:08:04 gap Exp $";
+    "@(#)$Id: integer.gd,v 4.31.2.2 2005/08/15 11:49:29 stefan Exp $";
 
 
 #############################################################################
@@ -233,6 +233,51 @@ DeclareGlobalFunction( "DivisorsInt");
 ##  on the number of trials is performs. The  default is 8192.
 ##
 DeclareGlobalFunction( "FactorsInt" );
+
+
+#############################################################################
+##
+#O  PartialFactorization( <n> ) . . . . . partial factorization of an integer
+#O  PartialFactorization( <n>, <effort> )
+##
+##  `PartialFactorization' returns a partial factorization of the integer <n>.
+##  No assertions are made about the primality of the factors, except of
+##  those mentioned below.
+##
+##  The argument <effort>, if given, specifies how intensively the function
+##  should try to determine factors of <n>. The default is <effort>~=~5.
+##
+##  \beginlist
+##    \item{-} If <effort>~=~0, trial division by the primes below 100 is
+##             done. Returned factors below $10^4$ are guaranteed to be
+##             prime.
+##    \item{-} If <effort>~=~1, trial division by the primes below 1000 is
+##             done. Returned factors below $10^6$ are guaranteed to be
+##             prime.
+##    \item{-} If <effort>~=~2, additionally trial division by the numbers
+##             in the lists `Primes2' and `ProbablePrimes2' is done, and
+##             perfect powers are detected. Returned factors below $10^6$
+##             are guaranteed to be prime.
+##    \item{-} If <effort>~=~3, additionally `FactorsRho' (Pollard's Rho)
+##             with <RhoTrials> = 256 is used.
+##    \item{-} If <effort>~=~4, as above, but <RhoTrials> = 2048.
+##    \item{-} If <effort>~=~5, as above, but <RhoTrials> = 8192.
+##             Returned factors below $10^{12}$ are guaranteed to be prime,
+##             and all prime factors below $10^6$ are guaranteed to be found.
+##    \item{-} If <effort>~=~6 and {\sf FactInt} is loaded, in addition to
+##             the above quite a number of special cases are handled.
+##    \item{-} If <effort>~=~7 and {\sf FactInt} is loaded, the only thing
+##             which is not attempted to obtain a full factorization into
+##             Baillie-Pomerance-Selfridge-Wagstaff pseudoprimes is the
+##             application of the MPQS to a remaining composite with more
+##             than 50 decimal digits.
+##  \endlist
+##  Increasing the value of the argument <effort> by one usually results
+##  in an increase of the runtime requirements by a factor of (very roughly!)
+##  3 to~10.
+##
+DeclareOperation( "PartialFactorization",
+                  [ IsMultiplicativeElement, IsInt ] );
 
 
 #############################################################################

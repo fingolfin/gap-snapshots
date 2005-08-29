@@ -3,7 +3,7 @@
 *W  finfield.c                  GAP source                      Werner Nickel
 *W                                                         & Martin Schoenert
 **
-*H  @(#)$Id: finfield.c,v 4.45.6.1 2005/04/12 21:46:57 gap Exp $
+*H  @(#)$Id: finfield.c,v 4.45.6.2 2005/08/19 14:17:04 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -53,7 +53,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_finfield_c =
-   "@(#)$Id: finfield.c,v 4.45.6.1 2005/04/12 21:46:57 gap Exp $";
+   "@(#)$Id: finfield.c,v 4.45.6.2 2005/08/19 14:17:04 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1390,11 +1390,11 @@ Obj             InvFFE (
     /* get the operand                                                     */
     v = VAL_FFE( op );
     if ( v == 0 ) {
-        op = ErrorReturnObj(
+      /*        op = ErrorReturnObj(
             "FFE operations: <divisor> must not be zero",
             0L, 0L,
-            "you can replace <divisor> via 'return <divisor>;'" );
-        return INV( op );
+            "you can replace <divisor> via 'return <divisor>;'" ); */
+        return Fail;
     }
 
     /* compute and return the result                                       */

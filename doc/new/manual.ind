@@ -2,15 +2,15 @@
   `AddHashEntry', 10
 \letter B
   `BaseOfGroup', 20
-  `BasePointOfSchreierTransversal', 16
+  `BasePointOfSchreierTransversal', 17
 \letter C
   `CanonicalElt', 14
   `ChainHomomorphicImage', 20
   `ChainStatistics', 20
   `ChainSubgroup', 19
   `ChainSubgroupByDirectProduct', 21
-  `ChainSubgroupByHomomorphism', 20
-  `ChainSubgroupByProjectionFunction', 20
+  `ChainSubgroupByHomomorphism', 21
+  `ChainSubgroupByProjectionFunction', 21
   `ChainSubgroupByPSubgroupOfAbelian', 21
   `ChainSubgroupBySiftFunction', 21
   `ChainSubgroupByStabiliser', 20
@@ -33,7 +33,7 @@
   `ExtendSchreierTransversalShortCube', 17
   `ExtendSchreierTransversalShortTree', 17
 \letter F
-  Fast access to last hash index, \indexit{11}
+  Fast access to last hash index, \indexit{12}
 \letter G
   General hash table definitions and operations, \indexit{10}
   General Hash Tables, \indexit{10}
@@ -46,27 +46,27 @@
   `HasChainHomomorphicImage', 20
   `HashFunct', 11
   `HashKeyEnumerator', 10
-  Hash keys, \indexit{10}
+  Hash keys, \indexit{11}
   `HomCoset', 14
-  Hom coset chain subgroups, \indexit{20}
+  Hom coset chain subgroups, \indexit{21}
   `HomCosetWithImage', 14
   `Homomorphism', for quotient groups by homomorphisms, 14
     \sub for subgroup transversals, 17
   `HomTransversal', 17
 \letter I
   `ImageElt', 14
-  `ImageGroup', 17
-  `ImagesSource', 14
+  `ImageGroup', 18
+  `ImagesSource', 15
   `Injection', 18
   `IsChainTypeGroup', 19
   `IsDictionary', 9
   `IsHash', 10
   `IsHomCoset', 13
-  `IsHomCosetOfAdditiveElt', 13
-  `IsHomCosetOfFp', 13
-  `IsHomCosetOfMatrix', 13
-  `IsHomCosetOfPerm', 13
-  `IsHomCosetOfTuple', 13
+  `IsHomCosetOfAdditiveElt', 14
+  `IsHomCosetOfFp', 14
+  `IsHomCosetOfMatrix', 14
+  `IsHomCosetOfPerm', 14
+  `IsHomCosetOfTuple', 14
   `IsHomCosetToAdditiveElt', 13
   `IsHomCosetToAdditiveEltRep', 13
   `IsHomCosetToFp', 13
@@ -92,15 +92,15 @@
   `One', 17
   Operations on hom cosets, \indexit{14}
   `OrbitGenerators', 16
-  `OrbitGeneratorsInv', 16
+  `OrbitGeneratorsInv', 17
   `OrbitGeneratorsOfGroup', 20
 \letter P
   `PreferredGenerators', 17
   `PrintHashWithNames', 10
   `Projection', 18
 \letter Q
-  `QuotientGroup', 17
-  `QuotientGroupByChainHomomorphicImage', 20
+  `QuotientGroup', 18
+  `QuotientGroupByChainHomomorphicImage', 21
   `QuotientGroupByHomomorphism', 14
   `QuotientGroupByImages', 14
   `QuotientGroupByImagesNC', 14
@@ -108,7 +108,7 @@
 \letter R
   `RandomHashKey', 10
   `RandomSchreierSims', 20
-  `Range', 14
+  `Range', 15
 \letter S
   `SchreierTransversal', 16
   `SchreierTreeDepth', 17
@@ -117,8 +117,8 @@
   `Sift', for chains of subgroups, 19
   `SiftOneLevel', for chains of subgroups, 19
     \sub for subgroup transversals, 16
-  `SizeOfChainOfGroup', 19
-  `Source', 14
+  `SizeOfChainOfGroup', 20
+  `Source', 15
   `SourceElt', 14
   `SparseHashTable', 11
   Sparse hash tables, \indexit{11}

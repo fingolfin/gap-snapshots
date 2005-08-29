@@ -5,7 +5,7 @@
 #W                                                               Bettina Eick
 #W                                                             Heiko Theissen
 ##
-#H  @(#)$Id: grp.gi,v 4.204.2.2 2004/03/04 21:51:40 gap Exp $
+#H  @(#)$Id: grp.gi,v 4.204.2.3 2005/08/25 12:43:49 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  This file contains generic methods for groups.
 ##
 Revision.grp_gi :=
-    "@(#)$Id: grp.gi,v 4.204.2.2 2004/03/04 21:51:40 gap Exp $";
+    "@(#)$Id: grp.gi,v 4.204.2.3 2005/08/25 12:43:49 gap Exp $";
 
 
 #############################################################################
@@ -2482,6 +2482,10 @@ InstallMethod( SylowSubgroupOp,
     od;
 
     # return the Sylow <p> subgroup
+    if Size(S) > 1 then
+        SetIsPGroup( S, true );
+        SetPrimePGroup( S, p );
+    fi;
     return S;
     end );
 
@@ -2494,7 +2498,7 @@ InstallMethod( SylowSubgroupOp,
     "method for a nilpotent group, and a prime",
     [ IsGroup and IsNilpotentGroup, IsPosInt ],
     function( G, p )
-    local gens, g, ord;
+    local gens, g, ord, S;
 
     gens:= [];
     for g in GeneratorsOfGroup( G ) do
@@ -2507,7 +2511,12 @@ InstallMethod( SylowSubgroupOp,
       fi;
     od;
 
-    return SubgroupNC( G, gens );
+    S := SubgroupNC( G, gens );
+    if Size(S) > 1 then
+        SetIsPGroup( S, true );
+        SetPrimePGroup( S, p );
+    fi;
+    return S;
     end );
 
 

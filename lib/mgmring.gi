@@ -2,7 +2,7 @@
 ##
 #W  mgmring.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: mgmring.gi,v 4.58.2.1 2005/02/21 09:47:50 gap Exp $
+#H  @(#)$Id: mgmring.gi,v 4.58.2.2 2005/07/20 15:53:43 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  5. methods for groups of free magma ring elements
 ##
 Revision.mgmring_gi :=
-    "@(#)$Id: mgmring.gi,v 4.58.2.1 2005/02/21 09:47:50 gap Exp $";
+    "@(#)$Id: mgmring.gi,v 4.58.2.2 2005/07/20 15:53:43 gap Exp $";
 
 
 #T > Dear Craig,
@@ -653,13 +653,13 @@ InstallMethod( PrintObj,
 #F  FreeMagmaRing( <R>, <M> )
 ##
 InstallGlobalFunction( FreeMagmaRing, function( R, M )
-
-    local F,     # family of magma ring elements
-          one,   # identity of `R'
-          zero,  # zero of `R'
-          m,     # one element of `M'
-          RM,    # free magma ring, result
-          gens;  # generators of the magma ring
+    local filter,  # implied filter of all elements in the new domain
+          F,       # family of magma ring elements
+          one,     # identity of `R'
+          zero,    # zero of `R'
+          m,       # one element of `M'
+          RM,      # free magma ring, result
+          gens;    # generators of the magma ring
 
     # Check the arguments.
     if not IsRing( R ) or One( R ) = fail then
@@ -668,18 +668,20 @@ InstallGlobalFunction( FreeMagmaRing, function( R, M )
 
     # Construct the family of elements of our ring.
     if   IsMultiplicativeElementWithInverseCollection( M ) then
-      F:= NewFamily( "FreeMagmaRingObjFamily",
-                     IsElementOfFreeMagmaRing,
-                     IsMultiplicativeElementWithInverse );
+      filter:= IsMultiplicativeElementWithInverse;
     elif IsMultiplicativeElementWithOneCollection( M ) then
-      F:= NewFamily( "FreeMagmaRingObjFamily",
-                     IsElementOfFreeMagmaRing,
-                     IsMultiplicativeElementWithOne );
+      filter:= IsMultiplicativeElementWithOne;
     else
-      F:= NewFamily( "FreeMagmaRingObjFamily",
-                     IsElementOfFreeMagmaRing,
-                     IsMultiplicativeElement );
+      filter:= IsMultiplicativeElement;
     fi;
+    if IsAssociativeElementCollection( M ) and
+       IsAssociativeElementCollection( R ) then
+      filter:= filter and IsAssociativeElement;
+    fi;
+
+    F:= NewFamily( "FreeMagmaRingObjFamily",
+                   IsElementOfFreeMagmaRing,
+                   filter );
 
     one:= One( R );
     zero:= Zero( R );

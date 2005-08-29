@@ -3,7 +3,7 @@
 #W  ffe.gi                      GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: ffe.gi,v 4.67 2003/04/16 20:41:41 gap Exp $
+#H  @(#)$Id: ffe.gi,v 4.67.2.1 2005/08/11 07:59:41 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,17 @@
 ##  in the file `zmodnz.gi'.
 ##
 Revision.ffe_gi :=
-    "@(#)$Id: ffe.gi,v 4.67 2003/04/16 20:41:41 gap Exp $";
+    "@(#)$Id: ffe.gi,v 4.67.2.1 2005/08/11 07:59:41 gap Exp $";
+
+
+#############################################################################
+##
+#V  GALOIS_FIELDS
+##
+##  global list of finite fields `GF( <p>^<d> )',
+##  the field of size $p^d$ is stored in `GALOIS_FIELDS[<p>][<d>]'.
+##
+InstallFlushableValue( GALOIS_FIELDS, [] );
 
 
 #############################################################################

@@ -1,11 +1,11 @@
 #I  file="lib/read4.g"
 
-#F  file="lib/profile.g" crc=-127296407
+#F  file="lib/profile.g" crc=100569551
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/profile.g", -127296407 );
+COM_RESULT := COM_FILE( "lib/profile.g", 100569551 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/profile.g\"");
 elif COM_RESULT = 1  then
@@ -15,7 +15,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/profile.g");
 elif COM_RESULT = 3  then
-Revision.profile_g:="@(#)$Id: profile.g,v 4.32.4.2 2005/05/10 08:31:50 gap Exp $";
+Revision.profile_g:="@(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $";
 PROFILED_FUNCTIONS:=[];
 PROFILED_FUNCTIONS_NAMES:=[];
 PREV_PROFILED_FUNCTIONS:=[];
@@ -286,12 +286,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/reread.g"
 
-#F  file="lib/package.g" crc=133366700
+#F  file="lib/package.g" crc=-96630568
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/package.g", 133366700 );
+COM_RESULT := COM_FILE( "lib/package.g", -96630568 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/package.g\"");
 elif COM_RESULT = 1  then
@@ -301,7 +301,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/package.g");
 elif COM_RESULT = 3  then
-Revision.package_g:="@(#)$Id: package.g,v 4.73.2.4 2005/05/12 09:10:55 gap Exp $";
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.5 2005/08/29 09:18:30 gap Exp $";
 PACKAGES_VERSIONS:=rec();
 BindGlobal("CompareVersionNumbers",COM_FUN(1));
 BindGlobal("PackageInfo",COM_FUN(2));

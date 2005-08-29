@@ -2,7 +2,7 @@
 ##
 #W  ring.gd                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ring.gd,v 4.54 2003/05/16 07:18:17 gap Exp $
+#H  @(#)$Id: ring.gd,v 4.54.2.1 2005/07/20 09:40:48 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for rings.
 ##
 Revision.ring_gd :=
-    "@(#)$Id: ring.gd,v 4.54 2003/05/16 07:18:17 gap Exp $";
+    "@(#)$Id: ring.gd,v 4.54.2.1 2005/07/20 09:40:48 stefan Exp $";
 
 
 #############################################################################
@@ -838,5 +838,13 @@ DeclareOperation( "LcmOp",
 
 #############################################################################
 ##
-#E
+#O  PadicValuation( <r>, <p> )
+##
+##  `PadicValuation' is the operation to compute the <p>-adic valuation of
+##  a ring element <r>.
+##
+DeclareOperation( "PadicValuation", [ IsRingElement, IsPosInt ] );
 
+#############################################################################
+##
+#E

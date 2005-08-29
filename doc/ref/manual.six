@@ -571,6 +571,9 @@ F 14.3. NextPrimeInt
 F 14.3. PrevPrimeInt
 F 14.3. FactorsInt
 F 14.3. FactorsInt
+F 14.3. PartialFactorization
+F 14.3. PartialFactorization
+I 14.3. CheapFactorsInt
 F 14.3. PrintFactorsInt
 F 14.3. PrimePowersInt
 F 14.3. DivisorsInt
@@ -847,6 +850,10 @@ F 21.4. list element!assignment
 F 21.4. sublist!assignment
 F 21.4. sublist assignment!operation
 F 21.4. Add
+F 21.4. Add
+F 21.4. Remove
+F 21.4. Remove
+F 21.4. COPY_LIST_ENTRIES
 F 21.4. Append
 S 21.5. IsBound and Unbind for Lists
 F 21.5. IsBound!for lists
@@ -896,6 +903,7 @@ F 21.16. PositionNot
 F 21.16. PositionNonZero
 F 21.16. PositionSublist
 F 21.16. PositionSublist
+F 21.16. PositionFirstComponent
 S 21.17. Properties and Attributes for Lists
 F 21.17. IsMatchingSublist
 F 21.17. IsMatchingSublist
@@ -1132,6 +1140,7 @@ F 24.4. ReflectionMat
 F 24.4. PrintArray
 F 24.4. MutableIdentityMat
 F 24.4. MutableNullMat
+F 24.4. MutableCopyMat
 S 24.5. Random Matrices
 F 24.5. RandomMat
 F 24.5. RandomInvertibleMat
@@ -2046,6 +2055,7 @@ F 37.4. ClosureSubgroupNC
 S 37.5. Expressing Group Elements as Words in Generators
 I 37.5. factorization
 I 37.5. words!in generators
+F 37.5. EpimorphismFromFreeGroup
 F 37.5. Factorization
 S 37.6. Structure Descriptions
 F 37.6. StructureDescription
@@ -2363,6 +2373,7 @@ S 39.8. Permutations Induced by Elements and Cycles
 F 39.8. Permutation
 F 39.8. Permutation
 F 39.8. PermutationCycle
+F 39.8. PermutationCycleOp
 F 39.8. Cycle
 F 39.8. CycleLength
 F 39.8. Cycles
@@ -3324,6 +3335,7 @@ F 54.5. IsPrime
 F 54.5. IsPrime
 F 54.5. Factors
 F 54.5. Factors
+F 54.5. PadicValuation
 S 54.6. Euclidean Rings
 F 54.6. IsEuclideanRing
 F 54.6. EuclideanDegree
@@ -4300,6 +4312,7 @@ I 69.8. CommutatorLength!for character tables
 I 69.8. Exponent!for character tables
 I 69.8. IsAbelian!for character tables
 I 69.8. IsCyclic!for character tables
+I 69.8. IsElementaryAbelian!for character tables
 I 69.8. IsFinite!for character tables
 I 69.8. IsMonomial!for character tables
 I 69.8. IsNilpotent!for character tables
@@ -4328,6 +4341,7 @@ F 69.8. ClassOrbit
 F 69.8. ClassRoots
 F 69.8. ClassPositionsOfNormalSubgroups
 F 69.8. ClassPositionsOfMaximalNormalSubgroups
+F 69.8. ClassPositionsOfMinimalNormalSubgroups
 F 69.8. ClassPositionsOfAgemo
 F 69.8. ClassPositionsOfCentre!for character tables
 F 69.8. ClassPositionsOfDirectProductDecompositions
@@ -4376,6 +4390,7 @@ I 69.11. PrintObj!for character tables
 I 69.11. Display!for character tables
 F 69.11. DisplayOptions
 F 69.11. PrintCharacterTable
+F 69.11. CharacterTableString
 S 69.12. Computing the Irreducible Characters of a Group
 F 69.12. IrrDixonSchneider
 F 69.12. IrrConlon
@@ -4411,6 +4426,7 @@ F 69.18. CharacterTableFactorGroup
 F 69.18. CharacterTableIsoclinic
 F 69.18. CharacterTableIsoclinic
 F 69.18. CharacterTableIsoclinic
+F 69.18. SourceOfIsoclinicTable
 F 69.18. CharacterTableWreathSymmetric
 S 69.19. Sorted Character Tables
 F 69.19. CharacterTableWithSortedCharacters

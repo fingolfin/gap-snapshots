@@ -2,14 +2,14 @@
 ##
 #W  grpprmcs.gi                 GAP library                       Akos Seress
 ##
-#H  @(#)$Id: grpprmcs.gi,v 4.48 2003/05/28 19:17:02 gap Exp $
+#H  @(#)$Id: grpprmcs.gi,v 4.48.2.2 2005/08/25 12:43:49 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.grpprmcs_gi :=
-    "@(#)$Id: grpprmcs.gi,v 4.48 2003/05/28 19:17:02 gap Exp $";
+    "@(#)$Id: grpprmcs.gi,v 4.48.2.2 2005/08/25 12:43:49 gap Exp $";
 
 
 #############################################################################
@@ -407,7 +407,9 @@ InstallGlobalFunction( PerfectCSPG,
                prime := FactorsInt(whichcase[2])[1];
 	       repeat
 	         kerelement:=Random(K);
-	       until (not IsOne(kerelement)) and IsOne(kerelement^prime);
+	       #until (not IsOne(kerelement)) and IsOne(kerelement^prime);
+	       until NrMovedPoints(kerelement)=LargestMovedPoint(K) and
+		     IsOne(kerelement^prime);
 
                N := NormalClosure(K, SubgroupNC(K,[kerelement]));
             else
@@ -1388,7 +1390,12 @@ InstallMethod( PCoreOp,
            for g in StabChainMutable( workgroup ).generators do
                Add( pgenlist, g^( Size(workgroup)/( ppart ) ) );
            od;
-           return SubgroupNC( workgroup, pgenlist );
+           D := SubgroupNC( workgroup, pgenlist );
+           if ppart > 1 then
+               SetIsPGroup( D, true );
+               SetPrimePGroup( D, p );
+           fi;
+           return D;
     fi;
 
     n := LargestMovedPoint(workgroup);
@@ -1498,7 +1505,12 @@ InstallMethod( PCoreOp,
             od;
         od;
     fi;
-    return SubgroupNC(workgroup,pgenlist);
+    D := SubgroupNC(workgroup,pgenlist);
+    if not ForAll(pgenlist,IsOne) then
+        SetIsPGroup( D, true );
+        SetPrimePGroup( D, p );
+    fi;
+    return D;
 end );
 
 

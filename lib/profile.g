@@ -2,7 +2,7 @@
 ##
 #W  profile.g                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: profile.g,v 4.32.4.2 2005/05/10 08:31:50 gap Exp $
+#H  @(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the profiling functions.
 ##
 Revision.profile_g :=
-    "@(#)$Id: profile.g,v 4.32.4.2 2005/05/10 08:31:50 gap Exp $";
+    "@(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $";
 
 
 #############################################################################
@@ -740,6 +740,9 @@ end);
 ##  `ReadTest'.
 ##  We reinitialize the caches and the global random number generator,
 ##  in order to be independent of the reading order of several test files.
+##  Furthermore, the assertion level (see~"Assert") is set to $2$ by
+##  `START_TEST' and set back to the previous value in the subsequent
+##  `STOP_TEST' call.
 ##
 ##  Note that the functions in `tst/testutil.g' temporarily replace
 ##  `STOP_TEST' before they call `ReadTest'.
@@ -750,6 +753,8 @@ START_TEST := function( name )
     GASMAN( "collect" );
     GAPInfo.TestData.START_TIME := Runtime();
     GAPInfo.TestData.START_NAME := name;
+    GAPInfo.TestData.AssertionLevel:= AssertionLevel();
+    SetAssertionLevel( 2 );
 end;
 
 STOP_TEST := function( file, fac )
@@ -766,6 +771,8 @@ STOP_TEST := function( file, fac )
     else
       Print( "GAP4stones: infinity\n" );
     fi;
+    SetAssertionLevel( GAPInfo.TestData.AssertionLevel );
+    Unbind( GAPInfo.TestData.AssertionLevel );
     Unbind( GAPInfo.TestData.START_TIME );
     Unbind( GAPInfo.TestData.START_NAME );
 end;

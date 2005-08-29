@@ -2,14 +2,14 @@
 ##
 #W  gaussian.tst                GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: gaussian.tst,v 4.9.4.2 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: gaussian.tst,v 4.9.4.3 2005/08/29 14:50:35 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: gaussian.tst,v 4.9.4.2 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: gaussian.tst,v 4.9.4.3 2005/08/29 14:50:35 gap Exp $");
 
 gap> 257 in GaussianIntegers;
 true
@@ -109,7 +109,7 @@ gap> Factors( GaussianIntegers, 1+2*E(4) );
 gap> Factors( GaussianIntegers, 5-E(4) );
 [ 1-E(4), 3+2*E(4) ]
 
-gap> STOP_TEST( "gaussian.tst", 1100000 );
+gap> STOP_TEST( "gaussian.tst", 600000 );
 
 
 #############################################################################

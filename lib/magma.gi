@@ -2,7 +2,7 @@
 ##
 #W  magma.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: magma.gi,v 4.59 2002/09/02 16:10:11 gap Exp $
+#H  @(#)$Id: magma.gi,v 4.59.2.2 2005/08/24 14:13:19 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for magmas.
 ##
 Revision.magma_gi :=
-    "@(#)$Id: magma.gi,v 4.59 2002/09/02 16:10:11 gap Exp $";
+    "@(#)$Id: magma.gi,v 4.59.2.2 2005/08/24 14:13:19 gap Exp $";
 
 
 #############################################################################
@@ -283,19 +283,37 @@ InstallOtherMethod( CentralizerOp,
 #M  Centre( <M> ) . . . . . . . . . . . . . . . . . . . . . centre of a magma
 ##
 InstallMethod( Centre,
-    "for a magma",
+    "generic method for a magma",
     [ IsMagma ],
     function( M )
-    M:= Centralizer( M, M );
-    Assert( 1, IsAbelian( M ) );
-    SetIsAbelian( M, true );
+    local T;
+    T:= Tuples( M, 2 );
+    M:= Filtered( M, x -> ForAll( M, y -> x * y = y * x ) and
+                          ForAll( T, p -> (p[1]*p[2])*x = p[1]*(p[2]*x) and
+                                          (p[1]*x)*p[2] = p[1]*(x*p[2]) and
+                                          (x*p[1])*p[2] = x*(p[1]*p[2]) ) );
+    if IsDomain( M ) then
+      Assert( 1, IsAbelian( M ) );
+      SetIsAbelian( M, true );
+    fi;
     return M;
     end );
 
 InstallMethod( Centre,
-    "for a commutative magma",
-    true,
-    [ IsMagma and IsCommutative ],
+    "for an associative magma",
+    [ IsMagma and IsAssociative ],
+    function( M )
+    M:= Centralizer( M, M );
+    if IsDomain( M ) then
+      Assert( 1, IsAbelian( M ) );
+      SetIsAbelian( M, true );
+    fi;
+    return M;
+    end );
+
+InstallMethod( Centre,
+    "for an associative and commutative magma",
+    [ IsMagma and IsAssociative and IsCommutative ],
     SUM_FLAGS, # for commutative magmas this is best possible
     IdFunc );
 
