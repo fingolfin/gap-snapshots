@@ -4,7 +4,7 @@
 %%
 %A  grphomom.msk                GAP documentation            Alexander Hulpke
 %%
-%A  @(#)$Id: grphomom.msk,v 1.43.2.1 2005/05/03 14:50:38 gap Exp $
+%A  @(#)$Id: grphomom.msk,v 1.43.2.2 2006/01/10 23:24:15 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -572,6 +572,12 @@ The automorphism group often stores a ``NiceMonomorphism'' (see
 "NiceMonomorphism") to a permutation group, obtained by the action on a
 subset of <obj>.
 
+
+
+Note that current methods for the calculation of the automorphism group of a
+group $G$ require $G$ to be a permutation group or a pc group to be
+efficient. For groups in other representations the calculation is likely
+very slow.
 
 \>IsAutomorphismGroup( <G> ) P
 

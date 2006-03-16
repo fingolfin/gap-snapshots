@@ -2,7 +2,7 @@
 ##
 #W  tuples.gi                   GAP library                      Steve Linton
 ##
-#H  @(#)$Id: tuples.gi,v 4.29 2002/04/15 10:05:25 sal Exp $
+#H  @(#)$Id: tuples.gi,v 4.29.4.1 2005/10/14 08:45:40 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for tuples.
 ##
 Revision.tuples_gi :=
-  "@(#)$Id: tuples.gi,v 4.29 2002/04/15 10:05:25 sal Exp $";
+  "@(#)$Id: tuples.gi,v 4.29.4.1 2005/10/14 08:45:40 gap Exp $";
 
 
 #############################################################################
@@ -321,6 +321,25 @@ InstallMethod( \*,
     return Tuple( List( [1..n], x -> elm1[x]*elm2[x] ) );
     end );
 
+
+#############################################################################
+##
+#M  IsGeneratorsOfMagmaWithInverses( <list> )
+##
+InstallMethod( IsGeneratorsOfMagmaWithInverses,
+    "for list of tuples",
+    [ CategoryCollections (IsTuple) ],
+    function( l )
+        local n;
+        if IsEmpty (l) then
+            return true;
+        fi;
+        n := Length (l[1]);
+        if ForAny (l, x -> Length (x) <> n) then
+            return false;
+        fi;
+        return ForAll ([1..n], i -> IsGeneratorsOfMagmaWithInverses (l{[1..Length(l)]}[i]));
+    end );
 
 #############################################################################
 ##

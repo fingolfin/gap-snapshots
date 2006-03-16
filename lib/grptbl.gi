@@ -2,7 +2,7 @@
 ##
 #W  grptbl.gi                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: grptbl.gi,v 4.22.4.1 2005/05/06 08:46:30 gap Exp $
+#H  @(#)$Id: grptbl.gi,v 4.22.4.2 2006/03/07 15:33:53 sal Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  tables.
 ##
 Revision.grptbl_gi :=
-    "@(#)$Id: grptbl.gi,v 4.22.4.1 2005/05/06 08:46:30 gap Exp $";
+    "@(#)$Id: grptbl.gi,v 4.22.4.2 2006/03/07 15:33:53 sal Exp $";
 
 
 #############################################################################
@@ -97,8 +97,25 @@ InstallMethod( OneOp,
     SetOne( F, one );
 
     return one;
-    end );
+end );
 
+#############################################################################
+##
+#M  IsGeneratorsOfMagmaWithInverses( <elms> ) a collection of magma by 
+##   multiplication table elements will always be acceptable
+##   as generators, provided each one individually has an inverse.    
+##    
+
+InstallMethod( IsGeneratorsOfMagmaWithInverses, 
+        "for a collection of magma by mult table elements",
+        [IsCollection],
+        function(c)
+    if ForAll(c, x-> IsMagmaByMultiplicationTableObj(x) and IsMultiplicativeElementWithInverse(x)) then
+        return true;
+    fi;
+    TryNextMethod();
+end);
+    
 
 #############################################################################
 ##

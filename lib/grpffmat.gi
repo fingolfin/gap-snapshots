@@ -4,7 +4,7 @@
 #W                                                               Frank Lübeck
 #W                                                                Stefan Kohl
 ##
-#H  @(#)$Id: grpffmat.gi,v 4.45 2003/05/30 08:26:14 gap Exp $
+#H  @(#)$Id: grpffmat.gi,v 4.45.2.1 2005/11/28 14:46:46 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file contains the operations for matrix groups over finite field.
 ##
 Revision.grpffmat_gi :=
-    "@(#)$Id: grpffmat.gi,v 4.45 2003/05/30 08:26:14 gap Exp $";
+    "@(#)$Id: grpffmat.gi,v 4.45.2.1 2005/11/28 14:46:46 gap Exp $";
 
 
 #############################################################################
@@ -422,6 +422,13 @@ function( G, flag )
       Add(cl, new );
     fi;
   od;
+  # obey general rule in GAP to put class of identity first
+  i := First([1..Length(cl)], c-> Representative(cl[c]) = One(G));
+  if i <> 1 then
+    a := cl[i];
+    cl[i] := cl[1];
+    cl[1] := a;
+  fi;
   return cl;
 end );
 

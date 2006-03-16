@@ -3,7 +3,7 @@
 #W  grppcatr.gi                 GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppcatr.gi,v 4.56.2.1 2005/08/25 12:43:49 gap Exp $
+#H  @(#)$Id: grppcatr.gi,v 4.56.2.2 2005/12/15 21:20:59 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains the methods for attributes of polycylic groups.
 ##
 Revision.grppcatr_gi :=
-    "@(#)$Id: grppcatr.gi,v 4.56.2.1 2005/08/25 12:43:49 gap Exp $";
+    "@(#)$Id: grppcatr.gi,v 4.56.2.2 2005/12/15 21:20:59 gap Exp $";
 
 
 #############################################################################
@@ -574,7 +574,6 @@ function( G )
     return Set(mingens);
 end );
 
-
 #############################################################################
 ##
 #M  SmallGeneratingSet(<G>) 
@@ -586,21 +585,6 @@ function (G)
     TryNextMethod();
   fi;
   return MinimalGeneratingSet(G);
-end);
-
-InstallOtherMethod( GeneratorOfCyclicGroup,"pc groups",true,
-    [ IsPcGroup and IsFinite ],0,
-function ( G )
-local g;
-  g:=MinimalGeneratingSet(G);
-  if Length(g)=1 then
-    return g[1];
-  elif IsTrivial(G) then
-    # trivial group
-    return One(G);
-  else
-    Error("not cyclic");
-  fi;
 end);
 
 #############################################################################

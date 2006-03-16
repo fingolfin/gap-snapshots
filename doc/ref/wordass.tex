@@ -4,7 +4,7 @@
 %%
 %A  wordass.msk                 GAP documentation            Alexander Hulpke
 %%
-%A  @(#)$Id: wordass.msk,v 1.27 2003/10/09 16:05:35 gap Exp $
+%A  @(#)$Id: wordass.msk,v 1.27.2.1 2006/02/26 14:38:41 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -990,6 +990,59 @@ gap> prg:= IntegratedStraightLineProgram( [ prg3, prg1, prg2 ] );;
 gap> ResultOfStraightLineProgram( prg, gens );
 [ x^3*y^4, x^4*y^-1, x^3*y^4 ]
 \endexample
+
+\>RestrictOutputsOfSLP( <slp>, <k> ) F
+
+Returns a new slp that calculates only those outputs specified by
+<k>. <k> may be an integer or a list of integers. If <k> is an integer,
+the resulting slp calculates only the result with that number. 
+If <k> is a list of integers, the resulting slp calculates those
+results with numbers in <k>. In both cases the resulting slp
+does only what is necessary. The slp must have a line with at least
+<k> expressions (lists) as its last line (if <k> is an integer).
+<slp> is either an slp or a pair where the first entry are the lines
+of the slp and the second is the number of inputs.
+
+
+\>IntermediateResultOfSLP( <slp>, <k> ) F
+
+Returns a new slp that calculates only the value of slot <k>
+at the end of <slp> doing only what is necessary. 
+slp is either an slp or a pair where the first entry are the lines
+of the slp and the second is the number of inputs.
+Note that this assumes a general SLP with possible overwriting.
+If you know that your SLP does not overwrite slots, please use
+"IntermediateResultOfSLPWithoutOverwrite", which is much faster in this
+case.
+
+
+\>IntermediateResultOfSLPWithoutOverwrite( <slp>, <k> ) F
+
+Returns a new slp that calculates only the value of slot <k>, which
+must be an integer.
+Note that <slp> must not overwrite slots but only append!!!
+Use "IntermediateResultOfSLP" in the other case!
+<slp> is either an slp or a pair where the first entry is the lines
+of the slp and the second is the number of inputs.
+
+
+\>IntermediateResultsOfSLPWithoutOverwrite( <slp>, <k> ) F
+
+Returns a new slp that calculates only the value of slots contained
+in the list k.
+Note that <slp> must not overwrite slots but only append!!!
+Use "IntermediateResultOfSLP" in the other case!
+<slp> is either a slp or a pair where the first entry is the lines
+of the slp and the second is the number of inputs.
+
+
+\>ProductOfStraightLinePrograms( <s1>, <s2> ) F
+
+<s1> and <s2> must be two slps that return a single element with the same
+number of inputs. This function contructs an slp that returns the product
+of the two results the slps <s1> and <s2> would produce with the same
+input.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

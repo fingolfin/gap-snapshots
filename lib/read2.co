@@ -29,14 +29,14 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/process.gd"
 
-#F  file="lib/files.gi" crc=106213251
-RANK_FILTER_LIST  := [ 67108760, 5, 50898648, 1, 50898648, 1, 41942756, 2, 
-  41942756, 2, 50898648, 1, 67108760, 5, 8193, 2, 67108760, 5, 67108760, 5, 
+#F  file="lib/files.gi" crc=21124270
+RANK_FILTER_LIST  := [ 67108760, 5, 2267952, 1, 2267952, 1, 33554223, 2, 
+  33554223, 2, 2267952, 1, 67108760, 5, 8193, 2, 67108760, 5, 67108760, 5, 
   67108760, 5, 67108760, 5 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/files.gi", 106213251 );
+COM_RESULT := COM_FILE( "lib/files.gi", 21124270 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/files.gi\"");
 elif COM_RESULT = 1  then
@@ -46,7 +46,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/files.gi");
 elif COM_RESULT = 3  then
-Revision.files_gi:="@(#)$Id: files.gi,v 4.26 2003/11/06 09:57:08 gap Exp $";
+Revision.files_gi:="@(#)$Id: files.gi,v 4.26.2.1 2006/02/20 17:12:22 gap Exp $";
 DeclareRepresentation("IsDirectoryRep",IsPositionalObjectRep,[]);
 BindGlobal("DirectoryType",NewType(DirectoriesFamily,IsDirectory and IsDirectoryRep));
 InstallGlobalFunction(USER_HOME_EXPAND,COM_FUN(1));
@@ -74,30 +74,31 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/files.gi"
 
-#F  file="lib/streams.gi" crc=-69614702
-RANK_FILTER_LIST  := [ 4536151, 2, 4536027, 2, 2267952, 1, 9072765, 2, 
-  9072765, 2, 17, 18, 9072765, 2, 43843465, 4, 1025, 1, 5, 1, 43843465, 4, 
-  1025, 1, 43843465, 4, 5, 1, 43843465, 4, 9072765, 2, 1025, 1, 5, 1, 
-  9072765, 2, 1025, 1, 9072765, 2, 5, 1, 9072765, 2, 9072765, 2, 9072765, 2, 
-  9072765, 2, 18146489, 3, 10960867, 3, 67108760, 5, 10960867, 3, 67108760, 
-  5, 10960867, 3, 67108760, 5, 5479954, 2, 8193, 2, 5479954, 2, 8193, 2, 
-  67108760, 5, 52835864, 5, 52835864, 5, 34688416, 2, 52835864, 5, 52835864, 
-  5, 17, 18, 52835864, 5, 52835864, 5, 52835864, 5, 52835864, 5, 17, 18, 
-  67108760, 5, 25850356, 4, 25850356, 4, 34924080, 5, 16776632, 2, 34924080, 
-  5, 34924080, 5, 34924080, 5, 34924080, 5, 17, 18, 34924080, 5, 17, 18, 
-  2739280, 6, 2739280, 6, 33554223, 2, 2739280, 6, 2739280, 6, 17, 18, 
-  2739280, 6, 2739280, 6, 2739280, 6, 2739280, 6, 17, 18, 8193, 2, 1025, 1, 
-  67108445, 2, 10960432, 5, 8193, 2, 10960432, 5, 17, 18, 10960432, 5, 
-  10960432, 5, 1025, 1, 8193, 2, 1025, 1, 8193, 2, 5480044, 4, 67108010, 2, 
-  10959997, 5, 17, 18, 10959997, 5, 67108760, 5, 10959997, 5, 10959997, 5, 
-  1025, 1, 67108100, 2, 21920953, 6, 8193, 2, 21920953, 6, 17, 18, 21920953, 
-  6, 21920953, 6, 1025, 1, 7127811, 6, 7127811, 6, 7127811, 6, 7127811, 6, 
-  7127811, 6, 7127811, 6, 17, 18, 7127811, 6, 17, 18, 7127811, 6, 67108760, 
-  5, 7127811, 6, 7127811, 6, 34924080, 5, 10959997, 5, 7127811, 6 ];
+#F  file="lib/streams.gi" crc=-94558304
+RANK_FILTER_LIST  := [ 18146737, 2, 18146613, 2, 9072765, 1, 36293937, 2, 
+  36293937, 2, 17, 18, 36293937, 2, 41156099, 4, 1025, 1, 5, 1, 41156099, 4, 
+  1025, 1, 41156099, 4, 5, 1, 41156099, 4, 36293937, 2, 1025, 1, 5, 1, 
+  36293937, 2, 1025, 1, 36293937, 2, 5, 1, 36293937, 2, 36293937, 2, 
+  36293937, 2, 36293937, 2, 5479954, 3, 43843465, 3, 67108760, 5, 43843465, 
+  3, 67108760, 5, 43843465, 3, 67108760, 5, 21921733, 2, 8193, 2, 21921733, 
+  2, 8193, 2, 67108760, 5, 10016816, 5, 10016816, 5, 4535903, 2, 10016816, 5, 
+  10016816, 5, 17, 18, 10016816, 5, 10016816, 5, 10016816, 5, 10016816, 5, 
+  17, 18, 67108760, 5, 36294462, 4, 36294462, 4, 5479519, 5, 67108445, 2, 
+  5479519, 5, 5479519, 5, 5479519, 5, 5479519, 5, 17, 18, 5479519, 5, 17, 18, 
+  10959997, 6, 10959997, 6, 67108010, 2, 10959997, 6, 10959997, 6, 17, 18, 
+  10959997, 6, 10959997, 6, 10959997, 6, 10959997, 6, 17, 18, 8193, 2, 1025, 
+  1, 67108100, 2, 43842685, 5, 8193, 2, 43842685, 5, 17, 18, 43842685, 5, 
+  43842685, 5, 1025, 1, 8193, 2, 1025, 1, 8193, 2, 52314958, 4, 67108280, 2, 
+  7127811, 5, 17, 18, 7127811, 5, 67108760, 5, 7127811, 5, 7127811, 5, 1025, 
+  1, 30393586, 2, 14256581, 6, 8193, 2, 14256581, 6, 17, 18, 14256581, 6, 
+  14256581, 6, 1025, 1, 28514121, 6, 28514121, 6, 28514121, 6, 28514121, 6, 
+  28514121, 6, 28514121, 6, 17, 18, 28514121, 6, 17, 18, 28514121, 6, 
+  67108760, 5, 28514121, 6, 28514121, 6, 21921733, 2, 21921733, 2, 1025, 1, 
+  5479519, 5, 7127811, 5, 28514121, 6 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/streams.gi", -69614702 );
+COM_RESULT := COM_FILE( "lib/streams.gi", -94558304 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/streams.gi\"");
 elif COM_RESULT = 1  then
@@ -107,13 +108,13 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/streams.gi");
 elif COM_RESULT = 3  then
-Revision.streams_gi:="@(#)$Id: streams.gi,v 4.43 2002/04/15 10:05:24 sal Exp $";
+Revision.streams_gi:="@(#)$Id: streams.gi,v 4.43.4.2 2006/03/03 11:57:56 gap Exp $";
 ClosedStreamType:=NewType(StreamsFamily,IsClosedStream);
-InstallMethod(CloseStream,"non-process streams",true,[IsStream and IsComponentObjectRep],0,COM_FUN(1));
-InstallMethod(CloseStream,"non-process streams",true,[IsStream and IsPositionalObjectRep],0,COM_FUN(2));
-InstallMethod(PrintObj,"closed stream",true,[IsClosedStream],0,COM_FUN(3));
-InstallMethod(ReadAll,"input stream",true,[IsInputStream],0,COM_FUN(4));
-InstallMethod(ReadAll,"input stream, length limit",true,[IsInputStream,IsInt],0,COM_FUN(5));
+InstallMethod(CloseStream,"non-process streams",[IsStream and IsComponentObjectRep],COM_FUN(1));
+InstallMethod(CloseStream,"non-process streams",[IsStream and IsPositionalObjectRep],COM_FUN(2));
+InstallMethod(PrintObj,"closed stream",[IsClosedStream],COM_FUN(3));
+InstallMethod(ReadAll,"input stream",[IsInputStream],COM_FUN(4));
+InstallMethod(ReadAll,"input stream, length limit",[IsInputStream,IsInt],COM_FUN(5));
 InstallMethod(ReadLine,"generic, call ReadByte",[IsInputStream],COM_FUN(6));
 InstallMethod(ReadAllLine,"iostream,boolean,function",[IsInputOutputStream,IsBool,IsFunction],COM_FUN(7));
 InstallOtherMethod(ReadAllLine,"iostream,boolean",[IsInputOutputStream,IsBool],COM_FUN(8));
@@ -123,107 +124,109 @@ InstallMethod(ReadAllLine,"stream,boolean,function",[IsInputStream,IsBool,IsFunc
 InstallOtherMethod(ReadAllLine,"stream,boolean",[IsInputStream,IsBool],COM_FUN(12));
 InstallOtherMethod(ReadAllLine,"stream,function",[IsInputStream,IsFunction],COM_FUN(13));
 InstallOtherMethod(ReadAllLine,"stream",[IsInputStream],ReadLine);
-InstallOtherMethod(Read,"input stream",true,[IsInputStream],0,COM_FUN(14));
-InstallOtherMethod(ReadTest,"input stream",true,[IsInputStream],0,READ_TEST_STREAM);
-InstallOtherMethod(ReadAsFunction,"input stream",true,[IsInputStream],0,READ_AS_FUNC_STREAM);
-InstallMethod(RewindStream,"input text stream",true,[IsInputTextStream],0,COM_FUN(15));
+InstallOtherMethod(Read,"input stream",[IsInputStream],COM_FUN(14));
+InstallOtherMethod(ReadTest,"input stream",[IsInputStream],COM_FUN(15));
+InstallOtherMethod(ReadAsFunction,"input stream",[IsInputStream],READ_AS_FUNC_STREAM);
+InstallMethod(RewindStream,"input text stream",[IsInputTextStream],COM_FUN(16));
 IN_LOGGING_MODE:=false;
-Add(POST_RESTORE_FUNCS,COM_FUN(16));
-InstallMethod(LogTo,"for output stream",true,[IsOutputTextStream],0,COM_FUN(17));
-InstallOtherMethod(LogTo,"for output file",true,[IsString],0,COM_FUN(18));
-InstallOtherMethod(LogTo,"close log",true,[],0,COM_FUN(19));
-InstallMethod(InputLogTo,"for output stream",true,[IsOutputTextStream],0,COM_FUN(20));
-InstallOtherMethod(InputLogTo,"for output file",true,[IsString],0,COM_FUN(21));
-InstallOtherMethod(InputLogTo,"close log",true,[],0,COM_FUN(22));
-InstallMethod(OutputLogTo,"for output stream",true,[IsOutputTextStream],0,COM_FUN(23));
-InstallOtherMethod(OutputLogTo,"for output file",true,[IsString],0,COM_FUN(24));
-InstallOtherMethod(OutputLogTo,"close log",true,[],0,COM_FUN(25));
-InstallMethod(WriteAll,"output stream",true,[IsOutputStream,IsList],0,COM_FUN(26));
-InstallMethod(WriteLine,"output stream",true,[IsOutputStream,IsList],0,COM_FUN(27));
+Add(POST_RESTORE_FUNCS,COM_FUN(17));
+InstallMethod(LogTo,"for output stream",[IsOutputTextStream],COM_FUN(18));
+InstallOtherMethod(LogTo,"for output file",[IsString],COM_FUN(19));
+InstallOtherMethod(LogTo,"close log",[],COM_FUN(20));
+InstallMethod(InputLogTo,"for output stream",[IsOutputTextStream],COM_FUN(21));
+InstallOtherMethod(InputLogTo,"for output file",[IsString],COM_FUN(22));
+InstallOtherMethod(InputLogTo,"close log",[],COM_FUN(23));
+InstallMethod(OutputLogTo,"for output stream",[IsOutputTextStream],COM_FUN(24));
+InstallOtherMethod(OutputLogTo,"for output file",[IsString],COM_FUN(25));
+InstallOtherMethod(OutputLogTo,"close log",[],COM_FUN(26));
+InstallMethod(WriteAll,"output stream",[IsOutputStream,IsList],COM_FUN(27));
+InstallMethod(WriteLine,"output stream",[IsOutputStream,IsList],COM_FUN(28));
 InputTextStringType:=NewType(StreamsFamily,IsInputTextStream and IsInputTextStringRep);
-InstallMethod(InputTextString,"input text stream from string",true,[IsString],0,COM_FUN(28));
-InstallMethod(IsEndOfStream,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(29));
-InstallMethod(PositionStream,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(30));
-InstallMethod(PrintObj,"input text string",true,[IsInputTextStringRep],0,COM_FUN(31));
-InstallMethod(ReadAll,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(32));
-InstallMethod(ReadAll,"input text string and limit",true,[IsInputTextStream and IsInputTextStringRep,IsInt],0,COM_FUN(33));
-InstallMethod(ReadByte,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(34));
-InstallMethod(ReadLine,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(35));
-InstallMethod(RewindStream,"input text string",true,[IsInputTextStream and IsInputTextStringRep],0,COM_FUN(36));
-InstallMethod(SeekPositionStream,"input text string",true,[IsInputTextStream and IsInputTextStringRep,IsInt],0,COM_FUN(37));
+InstallMethod(InputTextString,"input text stream from string",[IsString],COM_FUN(29));
+InstallMethod(IsEndOfStream,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(30));
+InstallMethod(PositionStream,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(31));
+InstallMethod(PrintObj,"input text string",[IsInputTextStringRep],COM_FUN(32));
+InstallMethod(ReadAll,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(33));
+InstallMethod(ReadAll,"input text string and limit",[IsInputTextStream and IsInputTextStringRep,IsInt],COM_FUN(34));
+InstallMethod(ReadByte,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(35));
+InstallMethod(ReadLine,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(36));
+InstallMethod(RewindStream,"input text string",[IsInputTextStream and IsInputTextStringRep],COM_FUN(37));
+InstallMethod(SeekPositionStream,"input text string",[IsInputTextStream and IsInputTextStringRep,IsInt],COM_FUN(38));
 DeclareRepresentation("IsInputTextFileRep",IsPositionalObjectRep,[]);
 InputTextFileType:=NewType(StreamsFamily,IsInputTextStream and IsInputTextFileRep);
 InputTextFileStillOpen:=[];
-InstallMethod(InputTextFile,"input text stream from file",true,[IsString],0,COM_FUN(38));
-InstallMethod(CloseStream,"input text file",true,[IsInputStream and IsInputTextFileRep],0,COM_FUN(39));
-InstallAtExit(COM_FUN(40));
-InstallMethod(IsEndOfStream,"input text file",true,[IsInputStream and IsInputTextFileRep],0,COM_FUN(41));
-InstallMethod(PositionStream,"input text file",true,[IsInputTextStream and IsInputTextFileRep],0,COM_FUN(42));
-InstallMethod(PrintObj,"input text file",true,[IsInputTextFileRep],0,COM_FUN(43));
-InstallMethod(ReadByte,"input text file",true,[IsInputTextStream and IsInputTextFileRep],0,COM_FUN(44));
-InstallMethod(ReadLine,"input text file",true,[IsInputTextStream and IsInputTextFileRep],0,COM_FUN(45));
-InstallMethod(ReadAll,"input text file",true,[IsInputTextStream and IsInputTextFileRep],0,COM_FUN(46));
-InstallMethod(ReadAll,"input text file and limit",true,[IsInputTextStream and IsInputTextFileRep,IsInt],0,COM_FUN(47));
-InstallMethod(SeekPositionStream,"input text file",true,[IsInputTextStream and IsInputTextFileRep,IsInt],0,COM_FUN(48));
+InstallMethod(InputTextFile,"input text stream from file",[IsString],COM_FUN(39));
+InstallMethod(CloseStream,"input text file",[IsInputStream and IsInputTextFileRep],COM_FUN(40));
+InstallAtExit(COM_FUN(41));
+InstallMethod(IsEndOfStream,"input text file",[IsInputStream and IsInputTextFileRep],COM_FUN(42));
+InstallMethod(PositionStream,"input text file",[IsInputTextStream and IsInputTextFileRep],COM_FUN(43));
+InstallMethod(PrintObj,"input text file",[IsInputTextFileRep],COM_FUN(44));
+InstallMethod(ReadByte,"input text file",[IsInputTextStream and IsInputTextFileRep],COM_FUN(45));
+InstallMethod(ReadLine,"input text file",[IsInputTextStream and IsInputTextFileRep],COM_FUN(46));
+InstallMethod(ReadAll,"input text file",true,[IsInputTextStream and IsInputTextFileRep],COM_FUN(47));
+InstallMethod(ReadAll,"input text file and limit",[IsInputTextStream and IsInputTextFileRep,IsInt],COM_FUN(48));
+InstallMethod(SeekPositionStream,"input text file",[IsInputTextStream and IsInputTextFileRep,IsInt],COM_FUN(49));
 DeclareRepresentation("IsInputTextNoneRep",IsPositionalObjectRep,[]);
 InputTextNoneType:=NewType(StreamsFamily,IsInputTextNone and IsInputTextNoneRep);
-InstallGlobalFunction(InputTextNone,COM_FUN(49));
-InstallMethod(IsEndOfStream,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,COM_FUN(50));
-InstallMethod(PositionStream,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,COM_FUN(51));
-InstallMethod(PrintObj,"input text none",true,[IsInputTextNoneRep],0,COM_FUN(52));
-InstallMethod(ReadAll,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,COM_FUN(53));
-InstallMethod(ReadAll,"input text none and limit",true,[IsInputTextNone and IsInputTextNoneRep,IsInt],0,COM_FUN(54));
-InstallMethod(ReadByte,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,ReturnFail);
-InstallMethod(ReadLine,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,ReturnFail);
-InstallMethod(RewindStream,"input text none",true,[IsInputTextNone and IsInputTextNoneRep],0,RETURN_TRUE);
-InstallMethod(SeekPositionStream,"input text none",true,[IsInputTextNone and IsInputTextNoneRep,IsInt],0,RETURN_TRUE);
+InstallGlobalFunction(InputTextNone,COM_FUN(50));
+InstallMethod(IsEndOfStream,"input text none",[IsInputTextNone and IsInputTextNoneRep],COM_FUN(51));
+InstallMethod(PositionStream,"input text none",[IsInputTextNone and IsInputTextNoneRep],COM_FUN(52));
+InstallMethod(PrintObj,"input text none",[IsInputTextNoneRep],COM_FUN(53));
+InstallMethod(ReadAll,"input text none",[IsInputTextNone and IsInputTextNoneRep],COM_FUN(54));
+InstallMethod(ReadAll,"input text none and limit",[IsInputTextNone and IsInputTextNoneRep,IsInt],COM_FUN(55));
+InstallMethod(ReadByte,"input text none",[IsInputTextNone and IsInputTextNoneRep],ReturnFail);
+InstallMethod(ReadLine,"input text none",[IsInputTextNone and IsInputTextNoneRep],ReturnFail);
+InstallMethod(RewindStream,"input text none",[IsInputTextNone and IsInputTextNoneRep],RETURN_TRUE);
+InstallMethod(SeekPositionStream,"input text none",[IsInputTextNone and IsInputTextNoneRep,IsInt],RETURN_TRUE);
 DeclareRepresentation("IsOutputTextStringRep",IsPositionalObjectRep,["string","format"]);
 OutputTextStringType:=NewType(StreamsFamily,IsOutputTextStream and IsOutputTextStringRep);
-InstallMethod(OutputTextString,"output text stream from string",true,[IsList,IsBool],0,COM_FUN(55));
-InstallMethod(PrintObj,"output text string",true,[IsOutputTextStringRep],0,COM_FUN(56));
-InstallMethod(WriteAll,"output text string",true,[IsOutputTextStream and IsOutputTextStringRep,IsList],0,COM_FUN(57));
-InstallMethod(WriteByte,"output text string",true,[IsOutputTextStream and IsOutputTextStringRep,IsInt],0,COM_FUN(58));
-InstallMethod(PrintFormattingStatus,"output text string",true,[IsOutputTextStringRep and IsOutputTextStream],0,COM_FUN(59));
-InstallMethod(SetPrintFormattingStatus,"output text string",true,[IsOutputTextStringRep and IsOutputTextStream,IsBool],0,COM_FUN(60));
+InstallMethod(OutputTextString,"output text stream from string",[IsList,IsBool],COM_FUN(56));
+InstallMethod(PrintObj,"output text string",[IsOutputTextStringRep],COM_FUN(57));
+InstallMethod(WriteAll,"output text string",[IsOutputTextStream and IsOutputTextStringRep,IsList],COM_FUN(58));
+InstallMethod(WriteByte,"output text string",[IsOutputTextStream and IsOutputTextStringRep,IsInt],COM_FUN(59));
+InstallMethod(PrintFormattingStatus,"output text string",[IsOutputTextStringRep and IsOutputTextStream],COM_FUN(60));
+InstallMethod(SetPrintFormattingStatus,"output text string",[IsOutputTextStringRep and IsOutputTextStream,IsBool],COM_FUN(61));
 DeclareRepresentation("IsOutputTextFileRep",IsPositionalObjectRep,["fid","fname","format"]);
 OutputTextFileType:=NewType(StreamsFamily,IsOutputTextStream and IsOutputTextFileRep);
 OutputTextFileStillOpen:=[];
-InstallMethod(OutputTextFile,"output text stream from file",true,[IsList,IsBool],0,COM_FUN(61));
-InstallOtherMethod(OutputTextFile,"error catching method, append not given",true,[IsList],-SUM_FLAGS,COM_FUN(62));
-InstallMethod(CloseStream,"output text file",true,[IsOutputStream and IsOutputTextFileRep],0,COM_FUN(63));
-InstallAtExit(COM_FUN(64));
-InstallMethod(PrintObj,"output text file",true,[IsOutputTextFileRep],0,COM_FUN(65));
-InstallMethod(WriteByte,"output text file",true,[IsOutputTextStream and IsOutputTextFileRep,IsInt],0,COM_FUN(66));
-InstallMethod(WriteAll,"output text file",true,[IsOutputTextStream and IsOutputTextFileRep,IsString],0,COM_FUN(67));
-InstallMethod(PrintFormattingStatus,"output text file",true,[IsOutputTextFileRep and IsOutputTextStream],0,COM_FUN(68));
-InstallMethod(SetPrintFormattingStatus,"output text file",true,[IsOutputTextFileRep and IsOutputTextStream,IsBool],0,COM_FUN(69));
+InstallMethod(OutputTextFile,"output text stream from file",[IsList,IsBool],COM_FUN(62));
+InstallOtherMethod(OutputTextFile,"error catching method, append not given",[IsList],-SUM_FLAGS,COM_FUN(63));
+InstallMethod(CloseStream,"output text file",[IsOutputStream and IsOutputTextFileRep],COM_FUN(64));
+InstallAtExit(COM_FUN(65));
+InstallMethod(PrintObj,"output text file",[IsOutputTextFileRep],COM_FUN(66));
+InstallMethod(WriteByte,"output text file",[IsOutputTextStream and IsOutputTextFileRep,IsInt],COM_FUN(67));
+InstallMethod(WriteAll,"output text file",[IsOutputTextStream and IsOutputTextFileRep,IsString],COM_FUN(68));
+InstallMethod(PrintFormattingStatus,"output text file",[IsOutputTextFileRep and IsOutputTextStream],COM_FUN(69));
+InstallMethod(SetPrintFormattingStatus,"output text file",[IsOutputTextFileRep and IsOutputTextStream,IsBool],COM_FUN(70));
 DeclareRepresentation("IsOutputTextNoneRep",IsPositionalObjectRep,[]);
 OutputTextNoneType:=NewType(StreamsFamily,IsOutputTextNone and IsOutputTextNoneRep);
-InstallGlobalFunction(OutputTextNone,COM_FUN(70));
-InstallMethod(PrintObj,"output text none",true,[IsOutputTextNoneRep],0,COM_FUN(71));
-InstallMethod(WriteAll,"output text none",true,[IsOutputTextNone and IsOutputTextNoneRep,IsList],0,COM_FUN(72));
-InstallMethod(WriteByte,"output text none",true,[IsOutputTextNone and IsOutputTextNoneRep,IsInt],0,COM_FUN(73));
-InstallMethod(PrintFormattingStatus,"output text none",true,[IsOutputTextNoneRep and IsOutputTextNone],0,ReturnFalse);
-InstallMethod(SetPrintFormattingStatus,"output text none",true,[IsOutputTextNoneRep and IsOutputTextNone,IsBool],0,COM_FUN(74));
-InstallGlobalFunction(InputTextUser,COM_FUN(75));
-InstallGlobalFunction(OutputTextUser,COM_FUN(76));
+InstallGlobalFunction(OutputTextNone,COM_FUN(71));
+InstallMethod(PrintObj,"output text none",[IsOutputTextNoneRep],COM_FUN(72));
+InstallMethod(WriteAll,"output text none",[IsOutputTextNone and IsOutputTextNoneRep,IsList],COM_FUN(73));
+InstallMethod(WriteByte,"output text none",[IsOutputTextNone and IsOutputTextNoneRep,IsInt],COM_FUN(74));
+InstallMethod(PrintFormattingStatus,"output text none",[IsOutputTextNoneRep and IsOutputTextNone],ReturnFalse);
+InstallMethod(SetPrintFormattingStatus,"output text none",[IsOutputTextNoneRep and IsOutputTextNone,IsBool],COM_FUN(75));
+InstallGlobalFunction(InputTextUser,COM_FUN(76));
+InstallGlobalFunction(OutputTextUser,COM_FUN(77));
 DeclareRepresentation("IsInputOutputStreamByPtyRep",IsPositionalObjectRep,[]);
 InputOutputStreamByPtyDefaultType:=NewType(StreamsFamily,IsInputOutputStreamByPtyRep and IsInputOutputStream);
-InstallGlobalFunction(InputOutputLocalProcess,COM_FUN(77));
-InstallMethod(ViewObj,[IsInputOutputStreamByPtyRep and IsInputOutputStream,],COM_FUN(78));
-InstallMethod(PrintObj,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(79));
-InstallMethod(ReadByte,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(80));
-InstallMethod(ReadLine,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(81));
-BindGlobal("ReadAllIoStreamByPty",COM_FUN(82));
-InstallMethod(ReadAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(83));
-InstallMethod(ReadAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsInt],COM_FUN(84));
-InstallMethod(WriteByte,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsInt],COM_FUN(85));
-InstallMethod(WriteAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsString],COM_FUN(86));
-InstallMethod(IsEndOfStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(87));
-InstallMethod(CloseStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(88));
-InstallMethod(FileDescriptorOfStream,[IsInputTextStream and IsInputTextFileRep],COM_FUN(89));
-InstallMethod(FileDescriptorOfStream,[IsOutputTextStream and IsOutputTextFileRep],COM_FUN(90));
-InstallMethod(FileDescriptorOfStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(91));
+InstallGlobalFunction(InputOutputLocalProcess,COM_FUN(78));
+InstallMethod(ViewObj,[IsInputOutputStreamByPtyRep and IsInputOutputStream,],COM_FUN(79));
+InstallMethod(PrintObj,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(80));
+InstallMethod(ReadByte,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(81));
+InstallMethod(ReadLine,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(82));
+BindGlobal("ReadAllIoStreamByPty",COM_FUN(83));
+InstallMethod(ReadAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(84));
+InstallMethod(ReadAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsInt],COM_FUN(85));
+InstallMethod(WriteByte,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsInt],COM_FUN(86));
+InstallMethod(WriteAll,[IsInputOutputStreamByPtyRep and IsInputOutputStream,IsString],COM_FUN(87));
+InstallMethod(IsEndOfStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(88));
+InstallMethod(CloseStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(89));
+InstallMethod(PrintFormattingStatus,"for non-text output stream",[IsOutputStream],COM_FUN(90));
+InstallMethod(SetPrintFormattingStatus,"for non-text output stream",[IsOutputStream,IsBool],COM_FUN(91));
+InstallMethod(FileDescriptorOfStream,[IsInputTextStream and IsInputTextFileRep],COM_FUN(92));
+InstallMethod(FileDescriptorOfStream,[IsOutputTextStream and IsOutputTextFileRep],COM_FUN(93));
+InstallMethod(FileDescriptorOfStream,[IsInputOutputStreamByPtyRep and IsInputOutputStream],COM_FUN(94));
 InstallValue(OnCharReadHookInFuncs,[]);
 InstallValue(OnCharReadHookInFds,[]);
 InstallValue(OnCharReadHookInStreams,[]);
@@ -234,8 +237,8 @@ InstallValue(OnCharReadHookExcFuncs,[]);
 InstallValue(OnCharReadHookExcFds,[]);
 InstallValue(OnCharReadHookExcStreams,[]);
 OnCharReadHookActive:=false;
-InstallGlobalFunction("InstallCharReadHookFunc",COM_FUN(92));
-InstallGlobalFunction("UnInstallCharReadHookFunc",COM_FUN(93));
+InstallGlobalFunction("InstallCharReadHookFunc",COM_FUN(95));
+InstallGlobalFunction("UnInstallCharReadHookFunc",COM_FUN(96));
 Unbind(OnCharReadHookActive);
 else
 Error("unknown result code ", COM_RESULT );
@@ -248,11 +251,11 @@ Unbind(COM_RESULT);
 #E  file="lib/streams.gi"
 
 #F  file="lib/process.gi" crc=-114688533
-RANK_FILTER_LIST  := [ 25732524, 3, 67108760, 5, 36293937, 4, 21921733, 4, 
-  8193, 2, 25732524, 3, 67108760, 5, 34924080, 5, 21921733, 4, 8193, 2, 
-  25732524, 3, 67108760, 5, 36293937, 4, 10959997, 5, 8193, 2, 25732524, 3, 
-  67108760, 5, 34924080, 5, 10959997, 5, 8193, 2, 25732524, 3, 67108760, 5, 
-  18146489, 3, 10960867, 3, 8193, 2 ];
+RANK_FILTER_LIST  := [ 35822174, 3, 67108760, 5, 10960867, 4, 20578050, 4, 
+  8193, 2, 35822174, 3, 67108760, 5, 5479519, 5, 20578050, 4, 8193, 2, 
+  35822174, 3, 67108760, 5, 10960867, 4, 7127811, 5, 8193, 2, 35822174, 3, 
+  67108760, 5, 5479519, 5, 7127811, 5, 8193, 2, 35822174, 3, 67108760, 5, 
+  5479954, 3, 43843465, 3, 8193, 2 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete

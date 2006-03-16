@@ -2,7 +2,7 @@
 ##
 #W  pcgscomp.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: pcgscomp.gi,v 4.27 2002/04/15 10:05:12 sal Exp $
+#H  @(#)$Id: pcgscomp.gi,v 4.27.4.1 2005/10/14 08:45:40 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with or defined by a pc series.
 ##
 Revision.pcgscomp_gi :=
-    "@(#)$Id: pcgscomp.gi,v 4.27 2002/04/15 10:05:12 sal Exp $";
+    "@(#)$Id: pcgscomp.gi,v 4.27.4.1 2005/10/14 08:45:40 gap Exp $";
 
 
 #############################################################################
@@ -131,7 +131,7 @@ function( grp )
     SetPcSeries(       pcgs, series   );
     SetOneOfPcgs(      pcgs, One(grp) );
     SetRelativeOrders( pcgs, orders   );
-
+    SetGroupOfPcgs (pcgs, grp);
     return pcgs;
 end );
 

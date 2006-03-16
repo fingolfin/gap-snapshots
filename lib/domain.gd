@@ -2,7 +2,7 @@
 ##
 #W  domain.gd                   GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: domain.gd,v 4.46 2003/02/25 18:05:20 gap Exp $
+#H  @(#)$Id: domain.gd,v 4.46.2.1 2005/11/26 06:58:59 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -84,7 +84,7 @@
 ##  subset relation, which can be decided with `IsSubset'.)
 ##
 Revision.domain_gd :=
-    "@(#)$Id: domain.gd,v 4.46 2003/02/25 18:05:20 gap Exp $";
+    "@(#)$Id: domain.gd,v 4.46.2.1 2005/11/26 06:58:59 gap Exp $";
 
 
 #############################################################################
@@ -182,7 +182,7 @@ DeclareOperation( "DomainByGenerators", [ IsFamily, IsList ] );
 ##
 ##  A stored parent can be accessed using `Parent'.
 ##  If <D> has no parent then `Parent' returns <D> itself,
-##  and `HasParent' will returns `false' also after a call to `Parent'.
+##  and `HasParent' will return `false' also after a call to `Parent'.
 ##  So `Parent' is *not* an attribute,
 ##  the underlying attribute to store the parent is `ParentAttr'.
 ##

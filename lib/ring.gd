@@ -2,7 +2,7 @@
 ##
 #W  ring.gd                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ring.gd,v 4.54.2.1 2005/07/20 09:40:48 stefan Exp $
+#H  @(#)$Id: ring.gd,v 4.54.2.2 2005/11/26 14:02:14 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for rings.
 ##
 Revision.ring_gd :=
-    "@(#)$Id: ring.gd,v 4.54.2.1 2005/07/20 09:40:48 stefan Exp $";
+    "@(#)$Id: ring.gd,v 4.54.2.2 2005/11/26 14:02:14 gap Exp $";
 
 
 #############################################################################
@@ -639,8 +639,8 @@ DeclareOperation( "EuclideanQuotient",
 
 #############################################################################
 ##
-#O  QuotientRemainder( <R>, <r>, <s> )
-#O  QuotientRemainder( <r>, <s> )
+#O  QuotientRemainder( <R>, <r>, <m> )
+#O  QuotientRemainder( <r>, <m> )
 ##
 ##  In the first form `QuotientRemainder' returns the Euclidean quotient
 ##  and the Euclidean remainder of the ring elements <r> and <m> in the ring

@@ -4,7 +4,7 @@
 #W                                                             Andrew Solomon
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfunul.gi,v 4.81.2.2 2005/03/08 02:19:48 gap Exp $
+#H  @(#)$Id: ratfunul.gi,v 4.81.2.3 2006/03/06 02:32:30 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  are univariate.
 ##
 Revision.ratfunul_gi :=
-    "@(#)$Id: ratfunul.gi,v 4.81.2.2 2005/03/08 02:19:48 gap Exp $";
+    "@(#)$Id: ratfunul.gi,v 4.81.2.3 2006/03/06 02:32:30 gap Exp $";
 
 #############################################################################
 ##
@@ -102,6 +102,14 @@ end );
 #############################################################################
 InstallOtherMethod( UnivariatePolynomial, "ring,cof",true,
     [ IsRing, IsRingElementCollection ], 0,
+function( ring, cofs )
+    return LaurentPolynomialByCoefficients( ElementsFamily(FamilyObj(ring)),
+                                            cofs, 0, 1 );
+end );
+
+#############################################################################
+InstallOtherMethod( UnivariatePolynomial, "ring,empty cof",true,
+    [ IsRing, IsEmpty ], 0,
 function( ring, cofs )
     return LaurentPolynomialByCoefficients( ElementsFamily(FamilyObj(ring)),
                                             cofs, 0, 1 );

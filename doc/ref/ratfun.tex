@@ -5,7 +5,7 @@
 %A  ratfun.msk                  GAP documentation            Alexander Hulpke
 %A                                                           Frank Celler
 %%
-%A  @(#)$Id: ratfun.msk,v 1.57.2.1 2005/05/09 07:11:15 gap Exp $
+%A  @(#)$Id: ratfun.msk,v 1.57.2.4 2006/03/09 15:59:56 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -570,11 +570,12 @@ gap> LeadingCoefficient(f);
 
 \>Derivative( <ufun> ) O
 \>Derivative( <ratfun>, <ind> ) O
+\>Derivative( <ratfun>, <inum> ) O
 
 returns the derivative $<upoly>'$ of the univariate rational function
 <ufun> by its indeterminant. The second version returns the derivative
 of <ratfun> by the indeterminate <ind> (respectively indeterminate
-number <ind>) when viewing <ratfun> as univariate in <ind>.
+number <inum>) when viewing <ratfun> as univariate in <ind>.
 
 
 \beginexample
@@ -583,11 +584,12 @@ gap> Derivative(f,2);
 \endexample
 \>Discriminant( <upol> ) O
 \>Discriminant( <pol>, <ind> ) O
+\>Discriminant( <pol>, <inum> ) O
 
 returns the discriminant disc($<upoly>$) of the univariate polynomial
 <upoly> by its indeterminant. The second version returns the
 discriminant of <pol> by the indeterminate <ind> (respectively
-indeterminate number <ind>).
+indeterminate number <inum>).
 
 
 \beginexample
@@ -1378,9 +1380,20 @@ to <O> and then reduces it.
 gap> ReducedGroebnerBasis(l,MonomialGrlexOrdering());
 [ x-y, z^2-2*y+1, y^2+y-1 ]
 gap> ReducedGroebnerBasis(l,MonomialLexOrdering());    
-[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/4*z^2+x-1/4 ]
+[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/2*z^2+x-1/2 ]
 gap> ReducedGroebnerBasis(l,MonomialLexOrdering([y,z,x]));
-[ 1, x^2+x-1, z^2-x+1/2, -x+y ]
+[ x^2+x-1, z^2-2*x+1, -x+y ]
+\endexample
+
+For performance reasons it can be advantageous to define monomial orderings
+once and then to reuse them:
+
+\beginexample
+gap> ord:=MonomialGrlexOrdering();;
+gap> GroebnerBasis(l,ord);
+[ x^2+y^2+z^2-1, x^2+z^2-y, x-y, -y^2-y+1, -z^2+2*y-1 ]
+gap> ReducedGroebnerBasis(l,ord);
+[ x-y, z^2-2*y+1, y^2+y-1 ]
 \endexample
 
 \>StoredGroebnerBasis( <I> ) A
@@ -1603,20 +1616,30 @@ functions.
 
 
 \>RationalFunctionByExtRep( <rfam>, <num>, <den> ) F
+\>RationalFunctionByExtRepNC( <rfam>, <num>, <den> ) F
 
 constructs a rational function (in the representation
 `IsRationalFunctionDefaultRep') in the rational function family <rfam>,
 the rational function itself is given by the external representations
 <num> and <den> for numerator and denominator.
-No test for validity of the arguments is performed and no cancellation
-takes place.
+No cancellation takes place.
+
+The variant `RationalFunctionByExtRepNC' does not perform any test of
+the arguments and thus potentially can create illegal objects. It only
+should be used if speed is required and the arguments are known to be
+in correct form.
 
 \>PolynomialByExtRep( <rfam>, <extrep> ) F
+\>PolynomialByExtRepNC( <rfam>, <extrep> ) F
 
 constructs a polynomial (in the representation `IsPolynomialDefaultRep')
 in the rational function family <rfam>, the polynomial itself is given
 by the external representation <extrep>.
-No test for validity of the arguments is performed.
+
+The variant `PolynomialByExtRepNC' does not perform any test of
+the arguments and thus potentially can create illegal objects. It only
+should be used if speed is required and the arguments are known to be
+in correct form.
 
 \beginexample
 gap> fam:=RationalFunctionsFamily(FamilyObj(1));;
@@ -1630,6 +1653,7 @@ gap> ExtRepDenominatorRatFun(q);
 [ [  ], 1, [ 1, 2 ], 1, [ 2, 1, 15, 7 ], 3 ]
 \endexample
 \>LaurentPolynomialByExtRep( <fam>, <cofs>, <val> , <ind> ) F
+\>LaurentPolynomialByExtRepNC( <fam>, <cofs>, <val> , <ind> ) F
 
 creates a Laurent polynomial in the family <fam> with [<cofs>,<val>] as
 value of `CoefficientsOfLaurentPolynomial'. No coefficient shifting is

@@ -368,7 +368,7 @@ The Green's relations (which are equivalence relations)
 are attributes of the semigroup <var>semigroup</var>.
 <p>
 <a name = "SSEC005.2"></a>
-<li><code>IsGreensRelation( </code><var>equiv-relation</var><code> ) P</code>
+<li><code>IsGreensRelation( </code><var>bin-relation</var><code> ) P</code>
 <a name = "SSEC005.2"></a>
 <li><code>IsGreensRRelation( </code><var>equiv-relation</var><code> ) P</code>
 <a name = "SSEC005.2"></a>
@@ -379,10 +379,6 @@ are attributes of the semigroup <var>semigroup</var>.
 <li><code>IsGreensHRelation( </code><var>equiv-relation</var><code> ) P</code>
 <a name = "SSEC005.2"></a>
 <li><code>IsGreensDRelation( </code><var>equiv-relation</var><code> ) P</code>
-<p>
-return <code>true</code> if the equivalence relation <var>equiv-relation</var> is
-a Green's relation of any type, or of <var>R</var>, <var>L</var>, <var>J</var>, <var>H</var>, <var>D</var> type,
-respectively, or <code>false</code> otherwise.
 <p>
 <a name = "SSEC005.3"></a>
 <li><code>IsGreensClass( </code><var>equiv-class</var><code> ) P</code>
@@ -441,22 +437,23 @@ A 1 represents a group H class.
 <a name = "SSEC005.8"></a>
 <li><code>GreensHClassOfElement( </code><var>S</var><code>, </code><var>a</var><code> ) O</code>
 <p>
-Creates the <var>X</var> class of the element <var>a</var> in the semigroup <var>S</var>
-where <var>X</var> is one of L, R, D, J or H.
+Creates the <var></var> class of the element <var>a</var> in the semigroup <var>S</var>
+where <var></var> is one of L, R, D, J or H.
 <p>
 <a name = "SSEC005.9"></a>
-<li><code>GreensRClasses( </code><var>semigroup</var><code> ) O</code>
+<li><code>GreensRClasses( </code><var>semigroup</var><code> ) A</code>
 <a name = "SSEC005.9"></a>
-<li><code>GreensLClasses( </code><var>semigroup</var><code> ) O</code>
+<li><code>GreensLClasses( </code><var>semigroup</var><code> ) A</code>
 <a name = "SSEC005.9"></a>
-<li><code>GreensJClasses( </code><var>semigroup</var><code> ) O</code>
+<li><code>GreensJClasses( </code><var>semigroup</var><code> ) A</code>
 <a name = "SSEC005.9"></a>
-<li><code>GreensDClasses( </code><var>semigroup</var><code> ) O</code>
+<li><code>GreensDClasses( </code><var>semigroup</var><code> ) A</code>
 <a name = "SSEC005.9"></a>
-<li><code>GreensHClasses( </code><var>semigroup</var><code> ) O</code>
+<li><code>GreensHClasses( </code><var>semigroup</var><code> ) A</code>
 <p>
 return the <var>R</var>, <var>L</var>, <var>J</var>, <var>H</var>, or <var>D</var> Green's classes, respectively for
-semigroup <var>semigroup</var>. 
+semigroup <var>semigroup</var>. EquivlanceClasses for a Green's relation lead to one of 
+these functions.
 <p>
 <a name = "SSEC005.10"></a>
 <li><code>GroupHClassOfGreensDClass( </code><var>Dclass</var><code> ) A</code>
@@ -606,5 +603,5 @@ group).
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP048.htm">Previous</a>] [<a href ="CHAP050.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

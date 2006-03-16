@@ -2,7 +2,7 @@
 ##
 #W  vspc.gd                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspc.gd,v 4.43 2003/05/19 16:02:37 gap Exp $
+#H  @(#)$Id: vspc.gd,v 4.43.2.1 2005/11/29 15:44:32 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  `basis.g'.
 ##
 Revision.vspc_gd :=
-    "@(#)$Id: vspc.gd,v 4.43 2003/05/19 16:02:37 gap Exp $";
+    "@(#)$Id: vspc.gd,v 4.43.2.1 2005/11/29 15:44:32 gap Exp $";
 
 
 #############################################################################
@@ -292,7 +292,7 @@ DeclareSynonymAttr( "TrivialSubspace", TrivialSubmodule );
 ##  <gens> if the argument `\"basis\"' is given.
 #T crossref. to `FreeLeftModule' as soon as the modules chapter is reliable!
 ##
-DeclareSynonym( "VectorSpace", FreeLeftModule );
+DeclareGlobalFunction( "VectorSpace" );
 
 
 #############################################################################

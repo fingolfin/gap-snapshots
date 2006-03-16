@@ -2,7 +2,7 @@
 ##
 #W  pcgs.gi                     GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: pcgs.gi,v 4.103 2003/03/03 17:51:12 gap Exp $
+#H  @(#)$Id: pcgs.gi,v 4.103.2.1 2005/10/14 08:45:40 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for polycylic generating systems.
 ##
 Revision.pcgs_gi :=
-    "@(#)$Id: pcgs.gi,v 4.103 2003/03/03 17:51:12 gap Exp $";
+    "@(#)$Id: pcgs.gi,v 4.103.2.1 2005/10/14 08:45:40 gap Exp $";
 
 #############################################################################
 ##
@@ -1371,18 +1371,18 @@ function( enum, elm, zero )
     local   pcgs,  exp,  pos,  i;
 
     pcgs := enum!.pcgs;
+    if not elm in GroupOfPcgs (pcgs) then
+       return fail;
+    fi;
     exp  := ExponentsOfPcElement( pcgs, elm );
     pos  := 0;
-    if exp=fail or ForAny( enum!.complementList, x -> 0 <> exp[x] )  then
+    if ForAny( enum!.complementList, x -> 0 <> exp[x] )  then
       return fail;
     fi;
     for i  in enum!.sublist  do
       pos := pos * enum!.relativeOrders[i] + exp[i];
     od;
-    # the element is not necessarily contained. So we must check
-    if elm<>enum[pos+1] then
-      return fail;
-    fi;
+    Assert (1, elm = enum[pos+1], "enum-by-pcgs: wrong element found");
     return pos + 1;
 end );
 
@@ -1400,16 +1400,16 @@ InstallMethod( PositionCanonical,"enum-by-pcgs",
 function( enum, elm )
     local   pcgs,  exp,  pos,  i;
 
+    
     pcgs := enum!.pcgs;
+    if not elm in GroupOfPcgs (pcgs) then
+       return fail;
+    fi;
     exp  := ExponentsOfPcElement( pcgs, elm );
     pos  := 0;
     for i  in enum!.sublist  do
       pos := pos * enum!.relativeOrders[i] + exp[i];
     od;
-    # the element is not necessarily contained. So we must check
-    if elm<>enum[pos+1] then
-      return fail;
-    fi;
     return pos + 1;
 end );
 
@@ -1473,6 +1473,7 @@ InstallPcgsSeriesFromIndices:=function(series,indices)
     for i in [2..Length(l)-1] do
       ipcgs:=pcgs{[l[i]..Length(pcgs)]};
       h:=SubgroupNC(p,ipcgs);
+      SetGroupOfPcgs (ipcgs, h);
       Add(g,h);
     od;
     Add(g,TrivialSubgroup(p));

@@ -3,7 +3,7 @@
 #W  fieldfin.gi                 GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: fieldfin.gi,v 4.41.4.3 2005/04/21 09:43:25 gap Exp $
+#H  @(#)$Id: fieldfin.gi,v 4.41.4.5 2005/11/30 02:51:40 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 ##  4. Automorphisms of Finite Fields
 ##
 Revision.fieldfin_gi :=
-    "@(#)$Id: fieldfin.gi,v 4.41.4.3 2005/04/21 09:43:25 gap Exp $";
+    "@(#)$Id: fieldfin.gi,v 4.41.4.5 2005/11/30 02:51:40 gap Exp $";
 
 
 #############################################################################
@@ -204,16 +204,16 @@ InstallTrueMethod( IsCyclic, IsGroup and IsFFECollection );
 #M  <elm> in <G>  . . . . . . . . . . . . . . . . . . . . via `PrimitiveRoot'
 ##
 InstallMethod( \in,
-    "for groups of FFE, Z/pZ, p<>2",
+    "for groups of FFE",
     IsElmsColls,
     [ IsFFE, IsGroup and IsFFECollection ],
     function( elm, G )
-    local   F;
+    local F;
 
-    F := Field( Concatenation( GeneratorsOfGroup( G ), [ One( G ) ] ) );
-    return LogFFE( elm, PrimitiveRoot( F ) ) mod
+    F:= Field( Concatenation( GeneratorsOfGroup( G ), [ One( G ) ] ) );
+    return elm in F and LogFFE( elm, PrimitiveRoot( F ) ) mod
            ( ( Size( F ) - 1 ) / Size( G ) ) = 0;
-end );
+    end );
 
 
 #############################################################################
@@ -300,7 +300,7 @@ InstallMethod( Basis,
           q,     # size of the subfield
           d,     # dimension of the extension
           mat,
-          b,
+          b,b1,
           cnjs,
           k;
 
@@ -326,11 +326,14 @@ InstallMethod( Basis,
     # Build the matrix `M[i][k] = vectors[i]^(q^k)'.
     mat:= [];
     for b in gens do
-      cnjs := [];
-      for k in [ 0 .. d-1 ] do
-        Add( cnjs, b^(q^k) );
-      od;
-      Add( mat, cnjs );
+        cnjs := [];
+        b1 := b;
+        cnjs := [b];
+        for k in [ 1 .. d-1 ] do
+            b1 := b1^q;
+            Add( cnjs, b1 );
+        od;
+        Add( mat, cnjs );
     od;
 
     # We have a basis if and only if `mat' is invertible.
@@ -362,7 +365,7 @@ InstallMethod( BasisNC,
           q,     # size of the subfield
           d,     # dimension of the extension
           mat,
-          b,
+          b,b1,
           cnjs,
           k;
 
@@ -382,11 +385,13 @@ InstallMethod( BasisNC,
     # Build the matrix `M[i][k] = vectors[i]^(q^k)'.
     mat:= [];
     for b in gens do
-      cnjs := [];
-      for k in [ 0 .. d-1 ] do
-        Add( cnjs, b^(q^k) );
-      od;
-      Add( mat, cnjs );
+        cnjs := [b];
+        b1 := b;
+        for k in [ 1 .. d-1 ] do
+            b1 := b1^q;
+            Add( cnjs, b1 );
+        od;
+        Add( mat, cnjs );
     od;
 
     # Add the coefficients information.

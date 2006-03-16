@@ -2,7 +2,7 @@
 ##
 #W  vecmat.gd                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: vecmat.gd,v 4.36 2003/08/05 15:53:15 gap Exp $
+#H  @(#)$Id: vecmat.gd,v 4.36.2.1 2005/11/26 06:59:01 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with vectors.
 ##
 Revision.vecmat_gd :=
-    "@(#)$Id: vecmat.gd,v 4.36 2003/08/05 15:53:15 gap Exp $";
+    "@(#)$Id: vecmat.gd,v 4.36.2.1 2005/11/26 06:59:01 gap Exp $";
 
 
 #############################################################################
@@ -261,7 +261,7 @@ end );
 ##  compact representation possible over <field>.
 ##  The input matrix <matrix> or
 ##  its rows might change the representation,
-##  however the result of `ConvertedMatrix' is not necessarily
+##  however the result of `ImmutableMatrix' is not necessarily
 ##  *identical* to <matrix> if a conversion is not possible.
 ##  If <change> is `true', the rows of `matrix' (or `matrix' itself) may be
 ##  changed to become immutable (otherwise they are copied first).

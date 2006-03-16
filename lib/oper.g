@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: oper.g,v 4.95 2003/03/10 08:47:31 gap Exp $
+#H  @(#)$Id: oper.g,v 4.95.2.1 2006/02/22 12:26:40 sal Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  to oper1.g so as to be compiled in the default kernel
 ##
 Revision.oper_g :=
-    "@(#)$Id: oper.g,v 4.95 2003/03/10 08:47:31 gap Exp $";
+    "@(#)$Id: oper.g,v 4.95.2.1 2006/02/22 12:26:40 sal Exp $";
 
 
 INSTALL_METHOD := false;
@@ -995,7 +995,14 @@ end );
 
 DeclareOperationKernel( "ViewObj", [ IS_OBJECT ], VIEW_OBJ );
 
-
+#############################################################################
+##
+#O  ViewString( <obj> )  . . . . . . . . . . . . . . . . . . . view an object
+##
+##  'ViewString' returns a string which would be displayed by ViewObj for an
+##  object.
+##
+DeclareOperation( "ViewString", [ IS_OBJECT ]);
 
 
 #############################################################################

@@ -2,7 +2,7 @@
 ##
 #W  grpmat.gi                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: grpmat.gi,v 4.60.2.3 2004/10/25 16:09:07 gap Exp $
+#H  @(#)$Id: grpmat.gi,v 4.60.2.4 2006/02/15 10:11:34 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for matrix groups.
 ##
 Revision.grpmat_gi :=
-    "@(#)$Id: grpmat.gi,v 4.60.2.3 2004/10/25 16:09:07 gap Exp $";
+    "@(#)$Id: grpmat.gi,v 4.60.2.4 2006/02/15 10:11:34 stefan Exp $";
 
 
 #############################################################################
@@ -600,7 +600,7 @@ end);
 ##
 InstallMethod(IsGeneralLinearGroup,"try natural",[IsMatrixGroup],
 function(G)
-  if IsNaturalGL(G) then
+  if HasIsNaturalGL(G) and IsNaturalGL(G) then
     return true;
   else
     TryNextMethod();

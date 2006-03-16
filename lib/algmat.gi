@@ -3,7 +3,7 @@
 #W  algmat.gi                   GAP library                     Thomas Breuer
 #W                                                            Willem de Graaf
 ##
-#H  @(#)$Id: algmat.gi,v 4.32 2002/04/15 10:04:25 sal Exp $
+#H  @(#)$Id: algmat.gi,v 4.32.4.1 2005/12/21 08:30:03 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  that is, associative matrix algebras and matrix Lie algebras.
 ##
 Revision.algmat_gi :=
-    "@(#)$Id: algmat.gi,v 4.32 2002/04/15 10:04:25 sal Exp $";
+    "@(#)$Id: algmat.gi,v 4.32.4.1 2005/12/21 08:30:03 gap Exp $";
 
 
 #############################################################################
@@ -953,7 +953,7 @@ InstallMethod( RadicalOfAlgebra,
               for i in [1..r] do
                   for j in [1..r_prime] do
                       charPoly[i][j] :=
-                          CoefficientsOfUnivariatePolynomial( CharacteristicPolynomial( F, I[i]*I_prime[j] ) );
+                          CoefficientsOfUnivariatePolynomial( CharacteristicPolynomial( F, F, I[i]*I_prime[j] ) );
                   od;
               od;
               changed := false;

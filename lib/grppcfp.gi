@@ -10,7 +10,7 @@
 ##  fp group and vice versa.
 ##
 Revision.grppcfp_gi :=
-    "@(#)$Id: grppcfp.gi,v 4.44.2.2 2004/04/27 16:39:43 gap Exp $";
+    "@(#)$Id: grppcfp.gi,v 4.44.2.3 2005/11/30 03:05:31 gap Exp $";
 
 #############################################################################
 ##
@@ -768,10 +768,13 @@ end );
 #F  SQ( <F>, <...> ) / SolvableQuotient( <F>, <...> )
 ##
 InstallGlobalFunction( SolvableQuotient, function ( F, primes )
-    local G, epi, tup, lift, i, found, fac, j, p;
+    local G, epi, tup, lift, i, found, fac, j, p, iso;
 
     # initialise epimorphism
     epi := InitEpimorphismSQ(F);
+    iso := IsomorphismSpecialPcGroup( epi.image );
+    epi.image := Image( iso );
+    epi.imgs := List( epi.imgs, x -> Image( iso, x ) );
     G   := epi.image;
     Info(InfoSQ,1,"init done, quotient has size ",Size(G));
 
@@ -789,6 +792,9 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
                 return epi;
             else
                 epi := ShallowCopy( lift );
+                iso := IsomorphismSpecialPcGroup( epi.image );
+                epi.image := Image( iso );
+                epi.imgs := List( epi.imgs, x -> Image( iso, x ) );
                 G   := epi.image;
             fi;
             Info(InfoSQ,1,"found quotient of size ", Size(G));
@@ -806,6 +812,9 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
             lift := TryLayerSQ( epi, tup );
             if not IsBool( lift ) then
                 epi := ShallowCopy( lift );
+                iso := IsomorphismSpecialPcGroup( epi.image );
+                epi.image := Image( iso );
+                epi.imgs := List( epi.imgs, x -> Image( iso, x ) );
                 G := epi.image;
                 found := true;
                 i := 1; 
@@ -830,6 +839,9 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
                 lift := TryLayerSQ( epi, fac[j] );
                 if not IsBool( lift ) then
                     epi := ShallowCopy( lift );
+                    iso := IsomorphismSpecialPcGroup( epi.image );
+                    epi.image := Image( iso );
+                    epi.imgs := List( epi.imgs, x -> Image( iso, x ) );
                     G := epi.image;
                     found := true;
                     i := primes / Size( G );
@@ -845,5 +857,12 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
     return epi;
 end );
 
-#InstallGlobalFunction( SQ, SolvableQuotient );
+InstallGlobalFunction(EpimorphismSolvableQuotient,function(arg)
+local g, sq, hom;
+  g:=arg[1];
+  sq:=CallFuncList(SQ,arg);
+  hom:=GroupHomomorphismByImages(g,sq.image,GeneratorsOfGroup(g),sq.imgs);
+  return hom;
+end);
+
 

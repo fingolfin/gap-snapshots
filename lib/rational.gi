@@ -2,7 +2,7 @@
 ##
 #W  rational.gi                 GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: rational.gi,v 4.36.2.2 2005/08/10 16:39:11 gap Exp $
+#H  @(#)$Id: rational.gi,v 4.36.2.3 2006/01/25 10:13:51 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods for rationals.
 ##
 Revision.rational_gi :=
-    "@(#)$Id: rational.gi,v 4.36.2.2 2005/08/10 16:39:11 gap Exp $";
+    "@(#)$Id: rational.gi,v 4.36.2.3 2006/01/25 10:13:51 gap Exp $";
 
 
 #############################################################################
@@ -114,6 +114,7 @@ InstallMethod( CanonicalBasis,
                    rec() );
     SetUnderlyingLeftModule( B, Rationals );
     SetBasisVectors( B, [ 1 ] );
+    return B;
     end );
 
 InstallMethod( Coefficients,

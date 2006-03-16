@@ -2,7 +2,7 @@
 ##
 #W  pcgsperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: pcgsperm.gi,v 4.120.2.1 2005/05/03 09:22:10 gap Exp $
+#H  @(#)$Id: pcgsperm.gi,v 4.120.2.3 2005/12/05 20:42:46 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  systems of solvable permutation groups.
 ##
 Revision.pcgsperm_gi :=
-    "@(#)$Id: pcgsperm.gi,v 4.120.2.1 2005/05/03 09:22:10 gap Exp $";
+    "@(#)$Id: pcgsperm.gi,v 4.120.2.3 2005/12/05 20:42:46 gap Exp $";
 
 #############################################################################
 ##
@@ -413,6 +413,7 @@ InstallGlobalFunction(TryPcgsPermGroup,function( G, cent, desc, elab )
     if whole  then
         SetIsSolvableGroup( grp, true );
         SetPcgs( grp, pcgs );
+        SetGroupOfPcgs (pcgs, grp);
         if cent  then
             SetIsNilpotentGroup( grp, true );
         fi;
@@ -475,9 +476,13 @@ local ppcgs,series,G,i;
         Unbind( series[ i ].relativeOrders );
         Unbind( series[ i ].base           );
         series[ i ] := GroupStabChain( G, series[ i ], true );
-        SetHomePcgs ( series[ i ], ppcgs );
-        SetFilterObj( series[ i ], IsMemberPcSeriesPermGroup );
-        series[ i ]!.noInSeries := i;
+	if (not HasHomePcgs(series[i]) ) or
+	  HomePcgs(series[i])!.permpcgsNormalSteps=
+	  ppcgs!.permpcgsNormalSteps then
+	  SetHomePcgs ( series[ i ], ppcgs );
+	  SetFilterObj( series[ i ], IsMemberPcSeriesPermGroup );
+	  series[ i ]!.noInSeries := i;
+	fi;
   od;
   return series;
 end);
@@ -1088,7 +1093,7 @@ local pcgs;
   fi;
   pcgs:=TryPcgsPermGroup( G, false, false, true );
   if IsPcgs(pcgs) and not HasPcgs(G) then
-    SetPcgs(G,pcgs);
+       SetPcgs(G,pcgs);
   fi;
   return pcgs;
 end);

@@ -223,14 +223,21 @@ The argument <var>name</var> is case insensitive.
 <li><code>DirectoriesPackageLibrary( </code><var>name</var><code>[, </code><var>path</var><code>] ) F</code>
 <p>
 takes the string <var>name</var>, a name of a <font face="Gill Sans,Helvetica,Arial">GAP</font> package and returns a list of
-directory objects for the sub-directory/ies containing the library
-functions of this <font face="Gill Sans,Helvetica,Arial">GAP</font> package,
-up to one for each <code>pkg</code> sub-directory of a path in <code>GAPInfo.RootPaths</code>.
+directory objects for those sub-directory/ies containing the library
+functions of this <font face="Gill Sans,Helvetica,Arial">GAP</font> package, for the version that is already loaded
+or would be loaded if no other version is explicitly prescribed,
+up to one directory for each <code>pkg</code> sub-directory of a path in
+<code>GAPInfo.RootPaths</code>.
 The default is that the library functions are in the subdirectory <code>lib</code>
 of the <font face="Gill Sans,Helvetica,Arial">GAP</font> package's home directory.
 If this is not the case, then the second argument <var>path</var> needs to be
 present and must be a string that is a path name relative to the home
 directory  of the <font face="Gill Sans,Helvetica,Arial">GAP</font> package with name <var>name</var>.
+<p>
+Note that <code>DirectoriesPackageLibrary</code> may be called in the
+<code>AvailabilityTest</code> function in the package's <code>PackageInfo.g</code> file,
+so we cannot guarantee that the returned directories belong to a version
+that really can be loaded.
 <p>
 As an example, the following returns a directory object for the library
 functions of the <font face="Gill Sans,Helvetica,Arial">GAP</font> package <code>Example</code>:
@@ -261,10 +268,19 @@ gap&gt; DirectoriesPackageLibrary( "somepackage", "data/m11" );
 <p>
 returns a list of the <code>bin/</code><var>architecture</var><code></code> subdirectories of all
 packages <var>name</var> where <var>architecture</var> is the architecture on which <font face="Gill Sans,Helvetica,Arial">GAP</font>
-has been compiled.
+has been compiled and the version of the installed package coincides with
+the version of the package <var>name</var> that either is already loaded or that
+would be the first version <font face="Gill Sans,Helvetica,Arial">GAP</font> would try to load (if no other version
+is explicitly prescribed).
+<p>
+Note that <code>DirectoriesPackagePrograms</code> is likely to be called in the
+<code>AvailabilityTest</code> function in the package's <code>PackageInfo.g</code> file,
+so we cannot guarantee that the returned directories belong to a version
+that really can be loaded.
+<p>
 The directories returned by <code>DirectoriesPackagePrograms</code> are the place
-where external binaries for the <font face="Gill Sans,Helvetica,Arial">GAP</font> package <var>name</var> and the current
-architecture should be located.
+where external binaries of the <font face="Gill Sans,Helvetica,Arial">GAP</font> package <var>name</var> for the current
+package version and the current architecture should be located.
 <p>
 <pre>
 gap&gt; DirectoriesPackagePrograms( "nq" );
@@ -287,5 +303,5 @@ about version numbers.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP073.htm">Previous</a>] [<a href ="CHAP075.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

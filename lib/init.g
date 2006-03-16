@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.7 2005/07/18 10:02:10 gap Exp $
+#H  @(#)$Id: init.g,v 4.212.2.8 2006/03/07 10:08:20 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file initializes GAP.
 ##
 Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.7 2005/07/18 10:02:10 gap Exp $";
+    "@(#)$Id: init.g,v 4.212.2.8 2006/03/07 10:08:20 sal Exp $";
 
 #############################################################################
 ##
@@ -598,7 +598,7 @@ PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "cohorts.grp","irreducible solvable
 ##  version of GAP library
 ##
 Add( POST_RESTORE_FUNCS, function()
-    local wsp_version, name;
+    local wsp_version, name, iw;
 
     wsp_version := GAPInfo;
     RereadLib( "system.g" );
@@ -626,8 +626,15 @@ Add( POST_RESTORE_FUNCS, function()
       for name in NamesOfComponents(SY_RESTORE_OPTIONS) do
         GAPInfo.CommandLineOptionsRestore.(name) := SY_RESTORE_OPTIONS.(name);
       od;
-    od;
-RereadLib( "obsolete.g" );
+  od;
+  #
+  # Workaround for warning message from reread of obsolete.g
+  # SL
+  #
+  iw := InfoLevel(InfoWarning);
+  SetInfoLevel(InfoWarning,0);
+  RereadLib( "obsolete.g" );
+  SetInfoLevel(InfoWarning,iw);
 #T Remove this as soon as the globals corresponding to command line options
 #T have disappeared and are not getting unbound in `system.g'.
     end );

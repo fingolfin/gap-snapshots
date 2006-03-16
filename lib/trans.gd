@@ -2,7 +2,7 @@
 ##
 #W  trans.gd                 GAP library                       Andrew Solomon
 ##
-#H  @(#)$Id: trans.gd,v 4.18 2003/09/10 10:16:22 gap Exp $
+#H  @(#)$Id: trans.gd,v 4.18.2.1 2006/02/27 12:08:28 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -34,7 +34,7 @@
 ##  degree.
 
 Revision.trans_gd :=
-    "@(#)$Id: trans.gd,v 4.18 2003/09/10 10:16:22 gap Exp $";
+    "@(#)$Id: trans.gd,v 4.18.2.1 2006/02/27 12:08:28 sal Exp $";
 
 ############################################################################
 ##
@@ -87,8 +87,9 @@ DeclareGlobalFunction("IdentityTransformation");
 #F  RandomTransformation(<n>)
 ##
 ##  returns a random transformation of degree <n>
-##
-DeclareGlobalFunction("RandomTransformation");
+##  JDM 
+DeclareOperation("RandomTransformation", 
+    [IsPosInt]);
 
 ############################################################################
 ##

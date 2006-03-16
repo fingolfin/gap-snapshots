@@ -9,7 +9,8 @@
 <li> <A HREF="CHAP047.htm#SECT002">Semidirect Products</a>
 <li> <A HREF="CHAP047.htm#SECT003">Subdirect Products</a>
 <li> <A HREF="CHAP047.htm#SECT004">Wreath Products</a>
-<li> <A HREF="CHAP047.htm#SECT005">Embeddings and Projections for Group Products</a>
+<li> <A HREF="CHAP047.htm#SECT005">Free Products</a>
+<li> <A HREF="CHAP047.htm#SECT006">Embeddings and Projections for Group Products</a>
 </ol><p>
 <p>
 This chapter describes the various group product constructions that are
@@ -30,7 +31,7 @@ of permutation groups or pc groups often will be represented as a group of
 the same kind again.
 <p>
 Therefore the only guaranteed way to relate a product to its factors is via
-the embedding and projection homomorphisms (see&nbsp;<a href="CHAP047.htm#SECT005">Embeddings and Projections for Group Products</a>);
+the embedding and projection homomorphisms (see&nbsp;<a href="CHAP047.htm#SECT006">Embeddings and Projections for Group Products</a>);
 <p>
 <p>
 <h2><a name="SECT001">47.1 Direct Products</a></h2>
@@ -57,6 +58,11 @@ product. For example the direct product of permutation groups will be a
 permutation group again and the direct product of pc groups will be a pc
 group.
 <p>
+If the groups are in different representations a generic direct product will
+be formed which may not be particularly efficient for many calculations.
+Instead it may be worth to convert all factors to a common representation
+first, before forming the product.
+<p>
 <a name = "I0"></a>
 
 <a name = "I1"></a>
@@ -64,7 +70,7 @@ group.
 For a product <var>P</var> the operation <code>Embedding(</code><var>P</var><code>,</code><var>nr</var><code>)</code> returns the
 homomorphism embedding the <var>nr</var>-th factor into <var>P</var>. The operation 
 <code>Projection(</code><var>P</var><code>,</code><var>nr</var><code>)</code> gives the projection of <var>P</var> onto the <var>nr</var>-th factor
-(see&nbsp;<a href="CHAP047.htm#SECT005">Embeddings and Projections for Group Products</a>).
+(see&nbsp;<a href="CHAP047.htm#SECT006">Embeddings and Projections for Group Products</a>).
 <p>
 <pre>
 gap&gt; g:=Group((1,2,3),(1,2));;
@@ -118,7 +124,7 @@ gap&gt; au:=DerivedSubgroup(AutomorphismGroup(n));;
 gap&gt; Size(au);
 120
 gap&gt; p:=SemidirectProduct(au,n);
-&lt;permutation group with 4 generators&gt;
+&lt;permutation group with 5 generators&gt;
 gap&gt; Size(p);
 3000
 </pre>
@@ -142,22 +148,21 @@ gap&gt; SemidirectProduct(au,n);
 gap&gt; n:=AbelianGroup(IsPcGroup,[2,2]);
 &lt;pc group of size 4 with 2 generators&gt;
 gap&gt; au:=AutomorphismGroup(n);
-&lt;group with 4 generators&gt;
+&lt;group of size 6 with 2 generators&gt;
 gap&gt; apc:=IsomorphismPcGroup(au);
-CompositionMapping( Pcgs([ (2,3), (1,3,2) ]) -&gt; 
+CompositionMapping( Pcgs([ (2,3), (1,2,3) ]) -&gt; 
 [ f1, f2 ], &lt;action isomorphism&gt; )
 gap&gt; g:=Image(apc);
 Group([ f1, f2 ])
 gap&gt; apci:=InverseGeneralMapping(apc);
-[ f1*f2^2, f1*f2^2, f1*f2, &lt;identity&gt; of ... ] -&gt; 
-[ [ f1, f2 ] -&gt; [ f2, f1 ], [ f1, f2 ] -&gt; [ f2, f1 ], 
-  [ f1, f2 ] -&gt; [ f1*f2, f2 ], [ f1, f2 ] -&gt; [ f1, f2 ] ]
+ [ f1*f2^2, f1*f2 ] -&gt; [ Pcgs([ f1, f2 ]) -&gt; [ f1*f2, f2 ], 
+   Pcgs([ f1, f2 ]) -&gt; [ f2, f1 ] ]
 gap&gt; IsGroupHomomorphism(apci);
 true
 gap&gt; p:=SemidirectProduct(g,apci,n);
 &lt;pc group of size 24 with 4 generators&gt;
 gap&gt; IsomorphismGroups(p,Group((1,2,3,4),(1,2)));
-[ f1, f2, f3, f4 ] -&gt; [ (1,2), (1,2,4), (1,2)(3,4), (1,4)(2,3) ]
+[ f1, f2, f3, f4 ] -&gt; [ (1,4), (1,4,3), (1,4)(2,3), (1,2)(3,4) ]
 </pre>
 <p>
 <pre>
@@ -185,7 +190,7 @@ gap&gt; SemidirectProduct(g,hom,GF(16)^2);
 For the semidirect product <var>P</var> of <var>G</var> with <var>N</var>, <code>Embedding(</code><var>P</var><code>,1)</code> embeds
 <var>G</var>, <code>Embedding(</code><var>P</var><code>,2)</code> embeds <var>N</var>. The operation <code>Projection(</code><var>P</var><code>)</code> returns
 the projection of <var>P</var> onto <var>G</var>
-(see&nbsp;<a href="CHAP047.htm#SECT005">Embeddings and Projections for Group Products</a>).
+(see&nbsp;<a href="CHAP047.htm#SECT006">Embeddings and Projections for Group Products</a>).
 <pre>
 gap&gt; Size(Image(Embedding(p,1)));
 6
@@ -276,7 +281,7 @@ embedding of <var>G</var> in the <var>nr</var>-th component of the direct produc
 group <i>G</i> <sup><i>n</i></sup> of <var>W</var>.
 <code>Embedding(</code><var>W</var><code>,</code><var>n</var><code>+1)</code> is the embedding of <var>P</var> into <var>W</var>. The operation
 <code>Projection(</code><var>W</var><code>)</code> provides the projection onto the acting group <var>P</var>
-(see&nbsp;<a href="CHAP047.htm#SECT005">Embeddings and Projections for Group Products</a>).
+(see&nbsp;<a href="CHAP047.htm#SECT006">Embeddings and Projections for Group Products</a>).
 <pre>
 gap&gt; g:=Group((1,2,3),(1,2));
 Group([ (1,2,3), (1,2) ])
@@ -359,19 +364,48 @@ gap&gt; KuKGenerators(g,hom,hom2);
 </pre>
 <p>
 <p>
-<h2><a name="SECT005">47.5 Embeddings and Projections for Group Products</a></h2>
+<h2><a name="SECT005">47.5 Free Products</a></h2>
+<p><p>
+Let <i>G</i> and <i>H</i> be groups with presentations &#9001;<i>X</i> | <i>R</i>&#9002; and
+&#9001;<i>Y</i> | <i>S</i>&#9002; respectively. Then the free product <i>G</i>*<i>H</i> is
+the group with presentation &#9001;<i>X</i>&#8746;<i>Y</i> | <i>R</i>&#8746;<i>S</i>&#9002;. This
+construction can be generalized to an arbitrary number of groups.
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>FreeProduct( </code><var>G</var><code> {, </code><var>H</var><code>} ) F</code>
+<li><code>FreeProduct( list ) F</code>
+<p>
+constructs a finitely presented group which is the free product of 
+the groups given as arguments. If the group arguments are not finitely
+presented groups, then <code>IsomorphismFpGroup</code> must be defined for them.
+<p>
+The operation <code>Embedding</code> operates on this product.
+<p>
+<pre>
+gap&gt; g := DihedralGroup(8);;
+gap&gt; h := CyclicGroup(5);;
+gap&gt; fp := FreeProduct(g,h,h);
+&lt;fp group on the generators [ f1, f2, f3, f4, f5 ]&gt;
+gap&gt; fp := FreeProduct([g,h,h]);
+&lt;fp group on the generators [ f1, f2, f3, f4, f5 ]&gt;
+gap&gt; Embedding(fp,2);
+[ f1 ] -&gt; [ f4 ]
+</pre>
+<p>
+<p>
+<h2><a name="SECT006">47.6 Embeddings and Projections for Group Products</a></h2>
 <p><p>
 The relation between a group product and its factors is provided via
 homomorphisms, the embeddings in the product and the projections from the
 product. Depending on the kind of product only some of these are defined.
 <p>
-<a name = "SSEC005.1"></a>
+<a name = "SSEC006.1"></a>
 <li><code>Embedding(</code><var>P</var><code>,</code><var>nr</var><code>) O</code>
 <p>
 returns the <var>nr</var>-th embedding in the group product <var>P</var>. The actual meaning
 of this embedding is described in the section for the appropriate product.
 <p>
-<a name = "SSEC005.2"></a>
+<a name = "SSEC006.2"></a>
 <li><code>Projection(</code><var>P</var><code>[,</code><var>nr</var><code>]) O</code>
 <p>
 returns the (<var>nr</var>-th) projection of the group product <var>P</var>. The actual meaning
@@ -381,5 +415,5 @@ product.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP046.htm">Previous</a>] [<a href ="CHAP048.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

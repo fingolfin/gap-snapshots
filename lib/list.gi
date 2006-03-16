@@ -2,7 +2,7 @@
 ##
 #W  list.gi                     GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: list.gi,v 4.202.2.4 2005/08/19 21:01:01 sal Exp $
+#H  @(#)$Id: list.gi,v 4.202.2.6 2005/09/30 06:36:00 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods for lists in general.
 ##
 Revision.list_gi :=
-    "@(#)$Id: list.gi,v 4.202.2.4 2005/08/19 21:01:01 sal Exp $";
+    "@(#)$Id: list.gi,v 4.202.2.6 2005/09/30 06:36:00 sal Exp $";
 
 
 #############################################################################

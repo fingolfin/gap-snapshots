@@ -2,7 +2,7 @@
 ##
 #W  rwspccoc.gi                 GAP Library                     Werner Nickel
 ##
-#H  $Id: rwspccoc.gi,v 4.3 2002/04/15 10:05:16 sal Exp $
+#H  $Id: rwspccoc.gi,v 4.3.4.1 2005/12/03 16:28:29 gap Exp $
 ##
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
@@ -11,7 +11,7 @@
 ##  representation of a single collector as defined in rwspcsng.gi.
 ##
 Revision.rwspccoc_gi :=
-    "@(#)$Id: rwspccoc.gi,v 4.3 2002/04/15 10:05:16 sal Exp $";
+    "@(#)$Id: rwspccoc.gi,v 4.3.4.1 2005/12/03 16:28:29 gap Exp $";
 
 
 #############################################################################
@@ -26,9 +26,9 @@ DeclareRepresentation(
 
 #############################################################################
 ##
-#M  SetConjugate( <cc>, <i>, <j>, <rhs> ) . . . . combinatorial collector rep
+#M  SetConjugate( <cc>, <j>, <i>, <rhs> ) . . . . combinatorial collector rep
 ##
-##  required: <i> > <j>
+##  required: <j> > <i>
 ##
 InstallMethod( SetConjugate,
     "combinatorial collector rep",
@@ -291,7 +291,12 @@ InstallMethod( CombinatorialCollectorByGenerators,
     0,
 
 function( efam, gens, orders )
-    local   cc;
+    local   co,  cc;
+
+    co := Collected( orders );
+    if Length( co ) <> 1 or not IsPrime( co[1][1] ) then
+        Error( "only prime orders allowed in combinatorial collector" );
+    fi;
 
     # create a single collector first
     cc := SingleCollectorByGenerators( efam, gens, orders );

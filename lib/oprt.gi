@@ -2,14 +2,14 @@
 ##
 #W  oprt.gi                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gi,v 4.179.2.1 2005/08/19 17:16:28 gap Exp $
+#H  @(#)$Id: oprt.gi,v 4.179.2.3 2005/12/15 21:20:59 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gi :=
-    "@(#)$Id: oprt.gi,v 4.179.2.1 2005/08/19 17:16:28 gap Exp $";
+    "@(#)$Id: oprt.gi,v 4.179.2.3 2005/12/15 21:20:59 gap Exp $";
 
 
 #############################################################################
@@ -652,10 +652,10 @@ local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
 
         # if MappingPermListList took a family/group as an
         # argument then we could patch it instead
-        if IsHomCosetToPerm(One(G)) then
-            hom.conperm := HomCosetWithImage( Homomorphism(G.1), 
-                           One(Source(G)), hom.conperm );
-        fi;
+        #if IsHomCosetToPerm(One(G)) then
+        #    hom.conperm := HomCosetWithImage( Homomorphism(G.1), 
+        #                   One(Source(G)), hom.conperm );
+        #fi;
 
 
     # test for action on disjoint sets of numbers-> blocks homomorphism
@@ -2816,7 +2816,7 @@ InstallMethod( ImagesRepresentative,"restricted perm", FamSourceEqFamElm,
     local   xset;
     
     xset := UnderlyingExternalSet( hom );
-    return RestrictedPerm( Permutation( elm, HomeEnumerator( xset ),
+    return RestrictedPermNC( Permutation( elm, HomeEnumerator( xset ),
         FunctionAction( xset ) ),
         MovedPoints( ImagesSource( AsGroupGeneralMappingByImages( hom ) ) ) );
 end );

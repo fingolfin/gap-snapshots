@@ -2,12 +2,12 @@
 ##  
 #W  pquot.gi                    GAP Library                     Werner Nickel
 ##
-#H  $Id: pquot.gi,v 4.42 2002/10/29 18:48:47 werner Exp $
+#H  $Id: pquot.gi,v 4.42.2.1 2005/10/17 00:13:11 gap Exp $
 ##
 #Y  Copyright (C) 1998  . . . . . . . . .  University of St Andrews, Scotland
 ##
 Revision.pquot_gi :=
-    "$Id: pquot.gi,v 4.42 2002/10/29 18:48:47 werner Exp $";
+    "$Id: pquot.gi,v 4.42.2.1 2005/10/17 00:13:11 gap Exp $";
 
 CHECK := false;
 NumberOfCommutators := function( ranks )
@@ -1763,6 +1763,7 @@ InstallMethod(EpimorphismQuotientSystem,
     local   H,  l,  hom;
 
     H := GroupByQuotientSystem( qs );
+    SetIsPGroup( H, true );
 
     # now we write the images of the generators of G in H from qs:
     l := List(qs!.images,x->ObjByExtRep(FamilyObj(One(H)),ExtRepOfObj(x)));

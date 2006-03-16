@@ -224,14 +224,21 @@ The argument <name> is case insensitive.
 \>DirectoriesPackageLibrary( <name>[, <path>] ) F
 
 takes the string <name>, a name of a {\GAP} package and returns a list of
-directory objects for the sub-directory/ies containing the library
-functions of this {\GAP} package,
-up to one for each `pkg' sub-directory of a path in `GAPInfo.RootPaths'.
+directory objects for those sub-directory/ies containing the library
+functions of this {\GAP} package, for the version that is already loaded
+or would be loaded if no other version is explicitly prescribed,
+up to one directory for each `pkg' sub-directory of a path in
+`GAPInfo.RootPaths'.
 The default is that the library functions are in the subdirectory `lib'
 of the {\GAP} package's home directory.
 If this is not the case, then the second argument <path> needs to be
 present and must be a string that is a path name relative to the home
 directory  of the {\GAP} package with name <name>.
+
+Note that `DirectoriesPackageLibrary' may be called in the
+`AvailabilityTest' function in the package's `PackageInfo.g' file,
+so we cannot guarantee that the returned directories belong to a version
+that really can be loaded.
 
 
 
@@ -265,10 +272,19 @@ gap> DirectoriesPackageLibrary( "somepackage", "data/m11" );
 
 returns a list of the `bin/<architecture>' subdirectories of all
 packages <name> where <architecture> is the architecture on which {\GAP}
-has been compiled.
+has been compiled and the version of the installed package coincides with
+the version of the package <name> that either is already loaded or that
+would be the first version {\GAP} would try to load (if no other version
+is explicitly prescribed).
+
+Note that `DirectoriesPackagePrograms' is likely to be called in the
+`AvailabilityTest' function in the package's `PackageInfo.g' file,
+so we cannot guarantee that the returned directories belong to a version
+that really can be loaded.
+
 The directories returned by `DirectoriesPackagePrograms' are the place
-where external binaries for the {\GAP} package <name> and the current
-architecture should be located.
+where external binaries of the {\GAP} package <name> for the current
+package version and the current architecture should be located.
 
 
 

@@ -2,7 +2,7 @@
 ##
 #W  object.gd                   GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: object.gd,v 4.50 2002/07/09 09:53:59 gap Exp $
+#H  @(#)$Id: object.gd,v 4.50.2.1 2006/02/22 12:26:40 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for all objects.
 ##
 Revision.object_gd :=
-    "@(#)$Id: object.gd,v 4.50 2002/07/09 09:53:59 gap Exp $";
+    "@(#)$Id: object.gd,v 4.50.2.1 2006/02/22 12:26:40 sal Exp $";
 
 
 #T Shall we add a check that no  object ever lies in both
@@ -258,6 +258,19 @@ end);
 ##  newline character as last character.
 ##
 DeclareOperation( "Display", [ IsObject ] );
+
+#############################################################################
+##
+#O  DisplayString( <obj> )  . . . . . . . . . . . . . . . . display an object
+##
+##
+##  Returns a string which could be used to 
+##  display the object <obj> in a nice, formatted way which is easy to read
+##  (but might be difficult for machines to understand). The actual format
+##  used for this depends on the type of <obj>. Each method should include a
+##  newline character as last character.
+##
+DeclareOperation( "DisplayString", [ IsObject ] );
 
 
 #############################################################################

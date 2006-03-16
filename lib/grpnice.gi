@@ -2,7 +2,7 @@
 ##
 #W  grpnice.gi                  GAP library                      Frank Celler
 ##
-#H  @(#)$Id: grpnice.gi,v 4.71.2.1 2004/10/27 17:23:52 gap Exp $
+#H  @(#)$Id: grpnice.gi,v 4.71.2.2 2005/11/17 16:47:05 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  monomorphisms..
 ##
 Revision.grpnice_gi :=
-    "@(#)$Id: grpnice.gi,v 4.71.2.1 2004/10/27 17:23:52 gap Exp $";
+    "@(#)$Id: grpnice.gi,v 4.71.2.2 2005/11/17 16:47:05 gap Exp $";
 
 #############################################################################
 ##
@@ -583,8 +583,8 @@ local mon,iso;
     return fail;
   else
     iso:=mon*iso;
-    SetIsInjective(mon,true);
-    SetIsSurjective(mon,true);
+    SetIsInjective(iso,true);
+    SetIsSurjective(iso,true);
     mon:=MappingGeneratorsImages(iso);
     SetName(iso,Concatenation("<composed isomorphism:",
       String(mon[1]),"->",String(mon[2]),">"));

@@ -185,18 +185,18 @@ The components of the result are
 <pre>
 gap&gt; n:= DerivedSubgroup( Sl23 );;
 gap&gt; chi:= Irr( Sl23 )[7];
-Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] )
+Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] )
 gap&gt; TestHomogeneous( chi, n );
 rec( isHomogeneous := false, comment := "restriction checked", 
   character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ), [ 1, -1, 1, -1, 1 ] ), 
+      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] ), 
   multiplicity := 1 )
 gap&gt; chi:= Irr( Sl23 )[4];
-Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] )
+Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )
 gap&gt; cln:= ClassPositionsOfNormalSubgroup( CharacterTable( Sl23 ), n );
-[ 1, 2, 7 ]
+[ 1, 4, 7 ]
 gap&gt; TestHomogeneous( chi, cln );
 rec( isHomogeneous := true, comment := "restricts irreducibly" )
 </pre>
@@ -240,17 +240,17 @@ primitivity (see&nbsp;<a href="CHAP072.htm#SSEC002.2">IsPrimitiveCharacter</a>).
 <p>
 <pre>
 gap&gt; chi:= Irr( Sl23 )[4];
-Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] )
+Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )
 gap&gt; TestQuasiPrimitive( chi );
 rec( isQuasiPrimitive := true, comment := "all restrictions checked" )
 gap&gt; chi:= Irr( Sl23 )[7];
-Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] )
+Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] )
 gap&gt; TestQuasiPrimitive( chi );
 rec( isQuasiPrimitive := false, comment := "restriction checked", 
   character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ), [ 1, -1, 1, -1, 1 ] ) )
+      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] ) )
 </pre>
 <p>
 <a name = "SSEC002.4"></a>
@@ -581,5 +581,5 @@ gap&gt; MinimalNonmonomialGroup(  2, 14 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP071.htm">Previous</a>] [<a href ="CHAP073.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

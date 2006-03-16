@@ -2,7 +2,7 @@
 ##
 #W  kbsemi.gi           GAP library         Isabel Araujo and Andrew Solomon
 ##
-#H  @(#)$Id: kbsemi.gi,v 4.36 2002/09/24 21:57:31 gap Exp $
+#H  @(#)$Id: kbsemi.gi,v 4.36.2.1 2005/11/26 06:58:59 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  and monoids.
 ##  
 Revision.kbsemi_gi :=
-    "@(#)$Id: kbsemi.gi,v 4.36 2002/09/24 21:57:31 gap Exp $";
+    "@(#)$Id: kbsemi.gi,v 4.36.2.1 2005/11/26 06:58:59 gap Exp $";
 
 ############################################################################
 ##
@@ -386,7 +386,7 @@ local u,v,m,k,a,c,lsu,lsv,lu,eq,i,j;
 
       #we change rws, if necessary, so a=c is verified
       if a <> c then
-	# `AddRuleReduced' might affect the pairs. So firsth throw away the
+	# `AddRuleReduced' might affect the pairs. So first throw away the
 	# `old' pairs
 	kbrws!.pairs2check:=
 	  kbrws!.pairs2check{[p+1..Length(kbrws!.pairs2check)]};

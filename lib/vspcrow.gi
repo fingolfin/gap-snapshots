@@ -2,7 +2,7 @@
 ##
 #W  vspcrow.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspcrow.gi,v 4.91.2.2 2005/04/27 13:43:36 gap Exp $
+#H  @(#)$Id: vspcrow.gi,v 4.91.2.3 2005/11/26 06:59:01 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -31,7 +31,7 @@
 ##  8. Methods installed by somebody else without documenting this ...
 ##
 Revision.vspcrow_gi :=
-    "@(#)$Id: vspcrow.gi,v 4.91.2.2 2005/04/27 13:43:36 gap Exp $";
+    "@(#)$Id: vspcrow.gi,v 4.91.2.3 2005/11/26 06:59:01 gap Exp $";
 
 
 #############################################################################
@@ -1794,7 +1794,7 @@ end );
 ##
 ##  This had been called `OneDimSubspacesTransversal' in {\GAP}~4.3,
 ##  and special code in `ActionHomomorphismConstructor' relied on the fact
-##  that on argument was *not* an object returned by
+##  that one of its arguments was *not* an object returned by
 ##  `OneDimSubspacesTransversal'.
 ##  Now the result is just the ``sparse equivalent'' of `NormedRowVectors',
 ##  it does not carry any nasty `PositionCanonical' magic.

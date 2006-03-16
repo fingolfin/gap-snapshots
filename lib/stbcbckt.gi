@@ -2,7 +2,7 @@
 ##
 #W  stbcbckt.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: stbcbckt.gi,v 4.83.2.2 2005/05/17 18:42:58 gap Exp $
+#H  @(#)$Id: stbcbckt.gi,v 4.83.2.4 2006/02/20 15:54:06 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  intersections.
 ##
 Revision.stbcbckt_gi :=
-    "@(#)$Id: stbcbckt.gi,v 4.83.2.2 2005/05/17 18:42:58 gap Exp $";
+    "@(#)$Id: stbcbckt.gi,v 4.83.2.4 2006/02/20 15:54:06 gap Exp $";
 
 if not IsBound( LARGE_TASK )  then  LARGE_TASK := false;   fi;
 
@@ -2395,7 +2395,7 @@ end );
 ##
 InstallGlobalFunction( IsomorphismPermGroups, function( arg )
     local   G,  E,  F,  Pr,  L,  R,  Omega,  rbase,  data,
-            Q,  BF;
+            Q,  BF,P;
     
     G := arg[ 1 ];
     E := arg[ 2 ];
@@ -2456,7 +2456,12 @@ InstallGlobalFunction( IsomorphismPermGroups, function( arg )
     Q := CollectedPartition( BF, 1 );
     data := [ Q, F, [  ], BF, [  ] ];
     if IsBound( rbase.reggrp )  then
-        Add( data, rbase.reggrp( F, Omega ) );
+      P:=rbase.reggrp( F, Omega );
+      if P=fail then
+	# the first group has an EARNS, the second not.
+        return fail;
+      fi;
+      Add( data, P );
     fi;
 
 

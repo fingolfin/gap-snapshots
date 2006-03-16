@@ -50,7 +50,9 @@ options  start with a  hyphen <code>-</code>, followed by a  single letter.  Opt
 must not be   grouped, e.g.,  <code>gap  -gq</code> is   illegal, use   <code>gap -g  -q</code>
 instead.  Some options  require an argument, this  must follow the option
 and  must be separated   by a <var>space</var>, e.g.,  <code>gap   -m 256k</code>, it is  not
-correct to say <code>gap -m256k</code> instead.
+correct to say <code>gap -m256k</code> instead. Certain Boolean options (b, q, e, r, 
+A, D, M, N, T, X, Y) toggle the current value so that <code>gap -b -b</code> is
+equivalent to <code>gap</code> and to <code>gap -b -q -b -q</code> etc.
 <p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> for UNIX will distinguish between upper and lower case options.
 <p>
@@ -76,7 +78,8 @@ are ignored.
 <dt><code>-b</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to suppress the banner. That means that  <font face="Gill Sans,Helvetica,Arial">GAP</font>  immediately
 prints the prompt. This is useful when, after a while, you get  tired  of
-the banner.
+the banner. This option can be repeated to enable the banner; each <code>-b</code>
+toggles the state of banner display.
 <p>
 <a name = "I7"></a>
 
@@ -84,14 +87,16 @@ the banner.
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to be quiet. This means that  <font face="Gill Sans,Helvetica,Arial">GAP</font>  displays  neither  the
 banner nor the prompt <code>gap&gt;</code>. This is useful if you want to run <font face="Gill Sans,Helvetica,Arial">GAP</font> as
 a filter with input and output redirection and want to avoid  the  banner
-and the prompts appearing in the output file.
+and the prompts appearing in the output file. This option may be repeated
+to disable quiet mode; each <code>-q</code> toggles quiet mode.
 <p>
 <a name = "I8"></a>
 
 <dt><code>-e</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> not to quit when receiving a <code></code><var>ctr</var><code>-D</code>  on  an  empty  input
 line (see&nbsp;<a href="CHAP006.htm#SSEC003.1">quit</a>). This option should not be used when  the  input  is  a
-file or pipe.
+file or pipe.  This option may be repeated to toggle this behavior on and
+off.
 <p>
 <a name = "I9"></a>
 
@@ -102,7 +107,8 @@ tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to enable the line editi
 In general  line editing will  be enabled if the input  is connected to a
 terminal.  There are rare circumstances, for  example when using a remote
 session with a corrupted telnet implementation, when this detection fails.
-Try using <code>-f</code> in this case to enable line editing.
+Try using <code>-f</code> in this case to enable line editing. This option does not
+toggle; you must use <code>-n</code> to disable line editing.
 <p>
 <a name = "I10"></a>
 
@@ -114,6 +120,7 @@ You may want to do this if the command line  editing is incompatible with
 another program that is used to run <font face="Gill Sans,Helvetica,Arial">GAP</font>.  For example if <font face="Gill Sans,Helvetica,Arial">GAP</font> is run
 from inside a GNU Emacs shell window, <code>-n</code> should be used since otherwise
 every input line will be echoed twice, once by Emacs and once by <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+This option does not toggle; you must use <code>-f</code> to enable line editing.
 <p>
 <a name = "I11"></a>
 
@@ -258,7 +265,8 @@ specifying the correct root path using the <code>-l</code> option.
 
 <dt><code>-r</code> <dd>
 The option <code>-r</code>  tells <font face="Gill Sans,Helvetica,Arial">GAP</font>  not to  read the user  supplied <code>&nbsp;/.gaprc</code>
-files.
+files. This option may be repeated to enable reading again; each use of
+<code>-r</code> toggles whether to read the file.
 <p>
 <a name = "I21"></a>
 
@@ -270,7 +278,7 @@ section&nbsp;<a href="CHAP003.htm#SECT011">Saving and Loading a Workspace</a>.
 
 <dt><code>-R</code> <dd>
 The option <code>-R</code> tells <font face="Gill Sans,Helvetica,Arial">GAP</font> not to load a saved workspace previously 
-specified via the <code>-L</code> option. 
+specified via the <code>-L</code> option. This option does not toggle.
 <p>
 <a name = "I23"></a>
 
@@ -335,7 +343,8 @@ override this name, and this can be done using the <code>-B</code> option.
 
 <dt><code>-D</code> <dd>
 The <code>-D</code> option tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to print short messages when it  is  reading
-or completing files or loading modules. The message,
+or completing files or loading modules. This option may be repeated to
+toggle this behavior on and off. The message,
 <p>
 <pre>
 #I  READ_GAP_ROOT: loading 'lib/kernel.g' as GAP file
@@ -375,13 +384,14 @@ tells you  that  <font face="Gill Sans,Helvetica,Arial">GAP</font>  has  complet
 
 <dt><code>-M</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> not to check for, nor to use, compiled versions  of  library
-files.
+files. This option may be repeated to toggle this behavior on and off.
 <p>
 <a name = "I29"></a>
 
 <dt><code>-N</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> not  to  check  for,  nor  to  use,  completion  files,  see
-<a href="CHAP003.htm#SECT005">Completion Files</a>.
+<a href="CHAP003.htm#SECT005">Completion Files</a>.  This option may be repeated to toggle  this behavior 
+on and off.
 <p>
 <a name = "I30"></a>
 
@@ -389,26 +399,31 @@ tells <font face="Gill Sans,Helvetica,Arial">GAP</font> not  to  check  for,  no
 enables a <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 compatibility mode, in which (for instance) the values
 <code>false</code> and <code>fail</code> are identified. Use of this mode  is  not  recommended
 other than as a transitional step in porting <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 code  to  <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4,
-because the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 library may not work reliably in this mode.
+because the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 library may not work reliably in this mode.  Without
+the <code>-A</code> option, some packages may give errors on startup. The <code>-O</code> option
+may be repeated to toggle this behavior on and off.
 <p>
 <a name = "I31"></a>
 
 <dt><code>-T</code> <dd>
 suppresses the usual break loop behaviour of  <font face="Gill Sans,Helvetica,Arial">GAP</font>.  With  this  option
 <font face="Gill Sans,Helvetica,Arial">GAP</font> behaves as if the user <code>quit</code> immediately from every  break  loop.
-This is intended for automated testing of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+This is intended for automated testing of <font face="Gill Sans,Helvetica,Arial">GAP</font>. This option may be 
+repeated to toggle this behavior on and off.
 <p>
 <a name = "I32"></a>
 
 <dt><code>-X</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to do a consistency  check  of  the  library  file  and  the
-corresponding completion file when reading the completion file.
+corresponding completion file when reading the completion file. This
+option may be repeated to toggle this behavior on and off.
 <p>
 <a name = "I33"></a>
 
 <dt><code>-Y</code> <dd>
 tells <font face="Gill Sans,Helvetica,Arial">GAP</font> to do a consistency  check  of  the  library  file  and  the
-corresponding completion file when completing the library file.
+corresponding completion file when completing the library file. This
+option may be repeated to toggle this behavior on and off.
 <p>
 <a name = "I34"></a>
 
@@ -440,8 +455,15 @@ changes  the  name  of  the  init  file  from  the  default  <code>init.g</code>
 <a name = "I39"></a>
 <a name = "I40"></a>
 
-Additional options, <code>-C</code>, <code>-U</code>, <code>-P</code>, <code>-W</code> and <code>-z</code> are  used  internally
-in the <font face="Gill Sans,Helvetica,Arial">GAP</font> compiler and/or on specific operating systems.
+<a name = "I36"></a>
+<a name = "I37"></a>
+<a name = "I38"></a>
+<a name = "I39"></a>
+<a name = "I40"></a>
+<a name = "I41"></a>
+
+Additional options, <code>-C</code>, <code>-U</code>, <code>-P</code>, <code>-W</code>, <code>-p</code> and <code>-z</code> are  used  
+internally in the <font face="Gill Sans,Helvetica,Arial">GAP</font> compiler and/or on specific operating systems.
 <p>
 <p>
 <h2><a name="SECT003">3.3 Running GAP under MacOS</a></h2>
@@ -481,7 +503,7 @@ There are three additional command line option on the Mac.
 <p>
 <dl compact>
 <p>
-<a name = "I41"></a>
+<a name = "I42"></a>
 
 <dt><code>-z </code><var>n</var><code></code> <dd>
 sets the time between checks for events (keystrokes, mouse  clicks  etc.)
@@ -489,7 +511,7 @@ to <i>n</i>/60 second. Lower values make <font face="Gill Sans,Helvetica,Arial">
 are somewhat slower. A value greater than  60  is  not  recommended,  the
 default value for <i>n</i> is 6.
 <p>
-<a name = "I42"></a>
+<a name = "I43"></a>
 
 <dt><code>-P </code><var>m</var><code></code> <dd>
 sets the amount of memory required  for  printing.  The  reason  is  that
@@ -499,7 +521,7 @@ least the specified amount of memory is available. The default  value  is
 64 Kilobytes, which is enough for the Apple LaserWriter  printer  driver.
 Setting the printing memory to 0 disables printing altogether.
 <p>
-<a name = "I43"></a>
+<a name = "I44"></a>
 
 <dt><code>-W </code><var>m</var><code></code> <dd>
 sets the size of the log window to <var>m</var> bytes. This means that if the text
@@ -513,7 +535,7 @@ The following command line options work differently on the Mac.
 <p>
 <dl compact>
 <p>
-<a name = "I44"></a>
+<a name = "I45"></a>
 
 <dt><code>-a</code> <dd>
 On the Mac, the  <code>-a</code>  option  has  a  different  meaning  from  the  one
@@ -521,20 +543,20 @@ described in <a href="CHAP003.htm#SECT002">Advanced Features of GAP</a>. On the 
 reserve memory for  loading  dynamic  libraries  into  <font face="Gill Sans,Helvetica,Arial">GAP</font>.  See  <a href="CHAP003.htm#SECT007">The Compiler</a> for details about dynamic libraries  (and  note  that  the  PPC
 version of <font face="Gill Sans,Helvetica,Arial">GAP</font> for MacOS <strong>can</strong> use dynamic libraries).
 <p>
-<a name = "I45"></a>
-
-<a name = "I45"></a>
 <a name = "I46"></a>
+
+<a name = "I46"></a>
+<a name = "I47"></a>
 
 <dt><code>-f</code>, <code>-n</code> <dd>
 The <code>-f</code> and <code>-n</code> command line options do not have any effect on the Mac.
 <p>
-<a name = "I47"></a>
+<a name = "I48"></a>
 
 <dt><code>-e</code> <dd>
 The <code>-e</code> command line option enables <code></code><var>ctr</var><code>-D</code>.
 <p>
-<a name = "I48"></a>
+<a name = "I49"></a>
 
 <dt><code>-o</code> <dd>
 The <code>-o</code> command line option should not normally be used on the Mac.  The
@@ -543,7 +565,7 @@ the workspace that would normally be available for <font face="Gill Sans,Helveti
 <p>
 </dl>
 <p>
-<a name = "I49"></a>
+<a name = "I50"></a>
 
 The file called <code>.gaprc</code> on UNIX systems (see <a href="CHAP003.htm#SECT004">The .gaprc file</a>) is called 
 <code>gap.rc</code> on the Mac; it must be in the same folder as the <font face="Gill Sans,Helvetica,Arial">GAP</font> application.
@@ -665,10 +687,10 @@ files.
 <p>
 <h2><a name="SECT004">3.4 The .gaprc file</a></h2>
 <p><p>
-<a name = "I50"></a>
-
-<a name = "I50"></a>
 <a name = "I51"></a>
+
+<a name = "I51"></a>
+<a name = "I52"></a>
 
 When you start <font face="Gill Sans,Helvetica,Arial">GAP</font>, it looks for the file with the name <code>.gaprc</code> in your
 home directory (on UNIX systems). On a Macintosh or a Windows system the
@@ -694,7 +716,7 @@ AcHom := ActionHomomorphism;
 RepAc := RepresentativeAction;
 </pre>
 <p>
-<a name = "I52"></a>
+<a name = "I53"></a>
 
 If you have already a <code>.gaprc</code> file for <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3, its settings might not be
 compatible with <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4. In this case it has to be removed.  On UNIX Systems
@@ -785,7 +807,7 @@ tests whether <font face="Gill Sans,Helvetica,Arial">GAP</font> is running on a 
 <p>
 <h2><a name="SECT007">3.7 The Compiler</a></h2>
 <p><p>
-<a name = "I53"></a>
+<a name = "I54"></a>
 
 The <font face="Gill Sans,Helvetica,Arial">GAP</font> compiler <font face="Gill Sans,Helvetica,Arial">GAC</font> creates C code from <font face="Gill Sans,Helvetica,Arial">GAP</font> code and
 then calls the system's C compiler to produce machine code from it. This can
@@ -888,7 +910,7 @@ to compile the <code>combinat.gi</code> file on a Linux machine.  Suppose we are
 the home directory of the gap distribution.
 <p>
 <pre>
-bin/gac -d lib/combinat.gi
+bin/i386-ibm-linux-gcc2/gac -d lib/combinat.gi
 </pre>
 <p>
 creates a file <code>combinat.so</code>. We now put it in the right place, creating
@@ -916,10 +938,10 @@ always reads code from the library.
 <p>
 <h2><a name="SECT010">3.10 CRC Numbers</a></h2>
 <p><p>
-<a name = "I54"></a>
-
-<a name = "I54"></a>
 <a name = "I55"></a>
+
+<a name = "I55"></a>
+<a name = "I56"></a>
 
 CRC (cyclic redundancy check) numbers provide a certain method of doing
 checksums. They are used by <font face="Gill Sans,Helvetica,Arial">GAP</font> to check whether
@@ -941,7 +963,7 @@ gap&gt; CrcFile("lib/morpheus.gi");
 <p>
 <h2><a name="SECT011">3.11 Saving and Loading a Workspace</a></h2>
 <p><p>
-<a name = "I56"></a>
+<a name = "I57"></a>
 
 <a name = "SSEC011.1"></a>
 <li><code>SaveWorkspace( </code><var>filename</var><code> ) F</code>
@@ -1052,5 +1074,5 @@ If   it  works   for   you   and  you   like   it,   put  the   line
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

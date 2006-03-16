@@ -2,7 +2,7 @@
 ##
 #W  algfld.gd                   GAP Library                  Alexander Hulpke
 ##
-#H  @(#)$Id: algfld.gd,v 4.20 2003/09/04 23:19:49 gap Exp $
+#H  @(#)$Id: algfld.gd,v 4.20.2.1 2005/11/26 03:47:07 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the categories,  attributes, properties and operations
 ##  for algebraic extensions of fields and their elements
 Revision.algfld_gd:=
-  "@(#)$Id: algfld.gd,v 4.20 2003/09/04 23:19:49 gap Exp $";
+  "@(#)$Id: algfld.gd,v 4.20.2.1 2005/11/26 03:47:07 gap Exp $";
 
 #############################################################################
 ##
@@ -58,7 +58,7 @@ DeclareOperation( "AlgebraicElementsFamily",
 ##
 ##  constructs an extension <L> of the field <K> by one root of the irreducible
 ##  polynomial <f>, using Kronecker{\pif}s construction. <L> is a
-##  field whose `LeftActingDomain' is <K>. The  polynomial <p> is the
+##  field whose `LeftActingDomain' is <K>. The  polynomial <f> is the
 ##  `DefiningPolynomial' of <L> and the attribute `RootOfDefiningPolynomial'
 ##  of <L> holds a root of <f> in <L> (see~"RootOfDefiningPolynomial").
 DeclareOperation( "AlgebraicExtension",

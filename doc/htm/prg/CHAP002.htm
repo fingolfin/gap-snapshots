@@ -85,12 +85,12 @@ we must describe how the methods are connected to their operations.
 <li><code>InstallMethod( </code><var>opr</var><code>[,</code><var>info</var><code>][,</code><var>famp</var><code>],</code><var>args-filts</var><code>[,</code><var>val</var><code>],</code><var>method</var><code> ) F</code>
 <p>
 installs a function method <var>method</var> for the operation <var>opr</var>; 
-<var>args-filts</var> should be a list of requirements for the arguments;
+<var>args-filts</var> should be a list of requirements for the arguments,
+each entry being a filter;
 if supplied <var>info</var> should be a short but informative string that describes 
 for what situation the method is installed,
 <var>famp</var> should be a function to be applied to the families of the arguments,
-each entry being a filter,
-and <var>val</var> is an integer that measures the priority of the method.
+and <var>val</var> should be an integer that measures the priority of the method.
 <p>
 The default values for <var>info</var>, <var>famp</var>, and <var>val</var> are the empty string,
 the function <code>ReturnTrue</code>, and the integer zero, respectively.
@@ -402,5 +402,5 @@ the mathematical term ``centre''.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

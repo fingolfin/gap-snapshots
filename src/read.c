@@ -2,7 +2,7 @@
 **
 *W  read.c                      GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: read.c,v 4.57.2.1 2004/01/07 00:23:51 gap Exp $
+*H  @(#)$Id: read.c,v 4.57.2.2 2005/12/01 02:15:28 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_read_c =
-   "@(#)$Id: read.c,v 4.57.2.1 2004/01/07 00:23:51 gap Exp $";
+   "@(#)$Id: read.c,v 4.57.2.2 2005/12/01 02:15:28 gap Exp $";
 
 
 #include        "gasman.h"              /* garbage collector               */
@@ -958,6 +958,8 @@ void ReadFuncExpr (
         ASS_LIST( nams, narg+nloc, name );
         Match( S_IDENT, "identifier", STATBEGIN|S_END|follow );
         while ( Symbol == S_COMMA ) {
+            /* init to avoid strange message in case of empty string */
+            Value[0] = '\0';
             Match( S_COMMA, ",", follow );
             for ( i = 1; i <= narg; i++ ) {
                 if ( SyStrcmp(CSTR_STRING(ELM_LIST(nams,i)),Value) == 0 ) {
@@ -2298,6 +2300,7 @@ UInt ReadEvalFile ( void )
         ASS_LIST( nams, nloc, name );
         Match( S_IDENT, "identifier", STATBEGIN|S_END );
         while ( Symbol == S_COMMA ) {
+            Value[0] = '\0';
             Match( S_COMMA, ",", 0L );
             for ( i = 1; i <= nloc; i++ ) {
                 if ( SyStrcmp(CSTR_STRING(ELM_LIST(nams,i)),Value) == 0 ) {

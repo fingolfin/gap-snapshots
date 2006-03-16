@@ -345,7 +345,7 @@ writes the  next  character  (given  as <strong>integer</strong>)  to the  outpu
 <var>output-stream</var>.  The function  returns <code>true</code> if  the write succeeds and
 <code>fail</code> otherwise.
 <p>
-<code>WriteByte</code> is the basic operation for input streams. If a <code>WriteByte</code>
+<code>WriteByte</code> is the basic operation for output streams. If a <code>WriteByte</code>
 method is installed for a user-defined type of stream, then all the other
 output stream operations will work (although possibly not at peak
 efficiency).
@@ -445,15 +445,17 @@ sets whether output sent to the output  stream  <var>stream</var>  via  <code>Pr
 <code>AppendTo</code>, etc. (but not <code>WriteByte</code>, <code>WriteLine</code> or <code>WriteAll</code>) will be
 formatted with line  breaks  and  indentation.  If  the  second  argument
 <var>newstatus</var> is <code>true</code> then output will be so formatted,  and  if  <code>false</code>
-then it will not.
+then it will not. If the stream is not a text stream, only <code>false</code>
+is allowed.
 <p>
 <a name = "SSEC004.9"></a>
 <li><code>PrintFormattingStatus( </code><var>stream</var><code> ) O</code>
 <p>
-returns  <code>true</code>  if  output  sent  to  the  output  stream  <var>stream</var>  via
-<code>PrintTo</code>,  <code>AppendTo</code>,  etc.  (but  not  <code>WriteByte</code>,   <code>WriteLine</code>   or
-<code>WriteAll</code>) will be formatted  with  line  breaks  and  indentation,  and
-<code>false</code> otherwise (see&nbsp;<a href="CHAP010.htm#SSEC004.8">SetPrintFormattingStatus</a>).
+returns <code>true</code> if output sent to the output text stream <var>stream</var> via
+<code>PrintTo</code>, <code>AppendTo</code>, etc.  (but not <code>WriteByte</code>, <code>WriteLine</code> or
+<code>WriteAll</code>) will be formatted with line breaks and indentation, and
+<code>false</code> otherwise (see&nbsp;<a href="CHAP010.htm#SSEC004.8">SetPrintFormattingStatus</a>). For non-text
+streams, it returns <code>false</code>.
 <p>
 <strong>Example</strong>
 <pre>
@@ -607,8 +609,8 @@ communications between <font face="Gill Sans,Helvetica,Arial">GAP</font> and ano
 or (@as yet unimplemented@) remotely.
 <p>
 Such streams support the basic operations of both input and output 
-streams. They should provide some buffering, allowing output date to be 
-written to the stream, even when input data is waiting to be read, 
+streams. They should provide some buffering, allowing output data to be
+written to the stream, even when input data is waiting to be read,
 but the amount of this buffering is operating system dependent,
 and the user should take care not to get too far ahead in writing, or 
 behind in reading, or deadlock may occur.
@@ -621,7 +623,7 @@ behind in reading, or deadlock may occur.
 <p>
 At present the only type of Input-Output streams that are
 implemented provide communication with a local child process,
-using a pseudo-tty. They are only available on UNIX systems.
+using a pseudo-tty.
 <p>
 Like other streams, write operations are blocking, read operations
 will block to get the first character, but not thereafter. 
@@ -645,7 +647,7 @@ written to this stream are received by the slave process as if typed
 at a terminal on standard input. Bytes written to standard output
 by the slave process can be read from the stream. 
 <p>
-When the stream if closed, the signal SIGTERM is delivered to the child
+When the stream is closed, the signal SIGTERM is delivered to the child
 process, which is expected to exit.
 <p>
 <pre>
@@ -777,5 +779,5 @@ during command line editing.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP009.htm">Previous</a>] [<a href ="CHAP011.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

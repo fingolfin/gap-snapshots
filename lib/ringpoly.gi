@@ -2,7 +2,7 @@
 ##
 #W  ringpoly.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: ringpoly.gi,v 4.41 2003/04/16 20:43:56 gap Exp $
+#H  @(#)$Id: ringpoly.gi,v 4.41.2.2 2006/02/26 18:41:47 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  for polynomial rings.
 ##
 Revision.ringpoly_gi :=
-    "@(#)$Id: ringpoly.gi,v 4.41 2003/04/16 20:43:56 gap Exp $";
+    "@(#)$Id: ringpoly.gi,v 4.41.2.2 2006/02/26 18:41:47 gap Exp $";
 
 
 #############################################################################
@@ -56,7 +56,7 @@ InstallMethod( PolynomialRing,"indetlist", true, [ IsRing, IsList ],
 function( r, n )
     local   efam,  rfun,  zero,  one,  ind,  i,  type,  prng;
 
-    if IsRationalFunctionCollection(n) and ForAll(n,IsLaurentPolynomial) then
+    if IsPolynomialFunctionCollection(n) and ForAll(n,IsLaurentPolynomial) then
       n:=List(n,IndeterminateNumberOfLaurentPolynomial);
     fi;
     if IsEmpty(n) or not IsInt(n[1]) then
@@ -110,6 +110,11 @@ function( r, n )
     # Polynomial rings over commutative rings are themselves commutative.
     if HasIsCommutative( r ) and IsCommutative( r ) then
       type:= type and IsCommutative;
+    fi;
+
+    # Polynomial rings over commutative rings are themselves commutative.
+    if HasIsAssociative( r ) and IsAssociative( r ) then
+      type:= type and IsAssociative;
     fi;
 
     # set categories to allow method selection according to base ring
@@ -377,7 +382,7 @@ end);
 InstallMethod( \in,
     "polynomial in polynomial ring",
     IsElmsColls,
-    [ IsRationalFunction,
+    [ IsPolynomialFunction,
       IsPolynomialRing ],
     0,
 

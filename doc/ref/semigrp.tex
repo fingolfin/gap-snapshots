@@ -371,17 +371,13 @@ the natural way.
 The Green's relations (which are equivalence relations)
 are attributes of the semigroup <semigroup>.
 
-
-\>IsGreensRelation( <equiv-relation> ) P
+\>IsGreensRelation( <bin-relation> ) P
 \>IsGreensRRelation( <equiv-relation> ) P
 \>IsGreensLRelation( <equiv-relation> ) P
 \>IsGreensJRelation( <equiv-relation> ) P
 \>IsGreensHRelation( <equiv-relation> ) P
 \>IsGreensDRelation( <equiv-relation> ) P
 
-return `true' if the equivalence relation <equiv-relation> is
-a Green's relation of any type, or of <R>, <L>, <J>, <H>, <D> type,
-respectively, or `false' otherwise.
 
 
 \>IsGreensClass( <equiv-class> ) P
@@ -431,18 +427,18 @@ A 1 represents a group H class.
 \>GreensJClassOfElement( <S>, <a> ) O
 \>GreensHClassOfElement( <S>, <a> ) O
 
-Creates the <X> class of the element <a> in the semigroup <S>
-where <X> is one of L, R, D, J or H.
+Creates the <> class of the element <a> in the semigroup <S>
+where <> is one of L, R, D, J or H.
 
-
-\>GreensRClasses( <semigroup> ) O
-\>GreensLClasses( <semigroup> ) O
-\>GreensJClasses( <semigroup> ) O
-\>GreensDClasses( <semigroup> ) O
-\>GreensHClasses( <semigroup> ) O
+\>GreensRClasses( <semigroup> ) A
+\>GreensLClasses( <semigroup> ) A
+\>GreensJClasses( <semigroup> ) A
+\>GreensDClasses( <semigroup> ) A
+\>GreensHClasses( <semigroup> ) A
 
 return the <R>, <L>, <J>, <H>, or <D> Green's classes, respectively for
-semigroup <semigroup>. 
+semigroup <semigroup>. EquivlanceClasses for a Green's relation lead to one of 
+these functions.
 
 
 \>GroupHClassOfGreensDClass( <Dclass> ) A

@@ -4,7 +4,7 @@
 ##                                                             Markus Püschel
 ##                                                            Sebastian Egner
 ##
-#H  @(#)$Id: grpnames.gi,v 4.9.2.2 2005/05/03 13:53:45 stefan Exp $
+#H  @(#)$Id: grpnames.gi,v 4.9.2.5 2006/02/15 10:11:34 stefan Exp $
 ##
 #Y  Copyright (C) 2004 The GAP Group
 ##
@@ -21,7 +21,7 @@
 ##  from GAP3 code written by Markus Püschel and Sebastian Egner.
 ##
 Revision.grpnames_gi :=
-  "@(#)$Id: grpnames.gi,v 4.9.2.2 2005/05/03 13:53:45 stefan Exp $";
+  "@(#)$Id: grpnames.gi,v 4.9.2.5 2006/02/15 10:11:34 stefan Exp $";
 
 #############################################################################
 ##
@@ -35,8 +35,7 @@ InstallMethod( DirectFactorsOfGroup,
     local  N, facts;
 
     if not IsFinite(G) then TryNextMethod(); fi;
-    N := NormalSubgroups(G);
-    N := N{[2..Length(N)-1]};
+    N := Difference(NormalSubgroups(G),[TrivialSubgroup(G),G]);
     facts := First(Combinations(N,2),
                    norms -> Product(List(norms,Size)) = Size(G)
                             and IsTrivial(Intersection(norms)));

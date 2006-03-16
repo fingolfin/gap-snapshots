@@ -2,7 +2,7 @@
 ##
 #W  pcgs.gd                     GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: pcgs.gd,v 4.78 2003/01/30 18:38:05 gap Exp $
+#H  @(#)$Id: pcgs.gd,v 4.78.2.1 2005/10/14 08:45:40 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the operations for polycylic generating systems.
 ##
 Revision.pcgs_gd :=
-    "@(#)$Id: pcgs.gd,v 4.78 2003/01/30 18:38:05 gap Exp $";
+    "@(#)$Id: pcgs.gd,v 4.78.2.1 2005/10/14 08:45:40 gap Exp $";
 
 #############################################################################
 ##
@@ -191,7 +191,7 @@ DeclareProperty("IsPcgsCentralSeries", IsPcgs );
 ##  computes a pcgs for <G> that refines a central elementary abelian series.
 ##  `IndicesCentralNormalSteps' gives the indices in the Pcgs, at which the
 ##  normal subgroups of this series start.
-DeclareAttribute( "PcgsCentralSeries", IsPcgs);
+DeclareAttribute( "PcgsCentralSeries", IsGroup);
 
 #############################################################################
 ##
@@ -245,7 +245,7 @@ DeclareProperty("IsPcgsPCentralSeriesPGroup", IsPcgs );
 ##  computes a pcgs for the $p$-group <G> that refines a $p$-central
 ##  elementary abelian series.  `IndicesPCentralNormalStepsPGroup' gives the
 ##  indices in the Pcgs, at which the normal subgroups of this series start.
-DeclareAttribute( "PcgsPCentralSeriesPGroup", IsPcgs);
+DeclareAttribute( "PcgsPCentralSeriesPGroup", IsGroup);
 
 #############################################################################
 ##

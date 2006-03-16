@@ -1,8 +1,8 @@
 #I  file="lib/read6.g"
 
 #F  file="grp/basicpcg.gi" crc=60216682
-RANK_FILTER_LIST  := [ 53225468, 44, 53225468, 44, 53225468, 44, 53225468, 
-  44, 53225468, 44, 53225468, 44, 53225468, 44, 53225468, 44 ];
+RANK_FILTER_LIST  := [ 2430296, 44, 2430296, 44, 2430296, 44, 2430296, 44, 
+  2430296, 44, 2430296, 44, 2430296, 44, 2430296, 44 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -36,9 +36,9 @@ Unbind(COM_RESULT);
 #E  file="grp/basicpcg.gi"
 
 #F  file="grp/basicprm.gi" crc=-23328962
-RANK_FILTER_LIST  := [ 18802426, 39, 18802426, 39, 18802426, 39, 18802426, 
-  39, 18802426, 39, 33481875, 46, 33481875, 46, 33481875, 46, 18813586, 33, 
-  18802426, 39, 18802426, 39, 18802426, 39, 33481875, 46, 33481875, 46 ];
+RANK_FILTER_LIST  := [ 8138142, 39, 8138142, 39, 8138142, 39, 8138142, 39, 
+  8138142, 39, 41692289, 46, 41692289, 46, 41692289, 46, 8149302, 33, 
+  8138142, 39, 8138142, 39, 8138142, 39, 41692289, 46, 41692289, 46 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -78,8 +78,8 @@ Unbind(COM_RESULT);
 #E  file="grp/basicprm.gi"
 
 #F  file="grp/basicmat.gi" crc=106346291
-RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239, 9668194, 239, 9668194, 239 
- ];
+RANK_FILTER_LIST  := [ 24169614, 239, 24169614, 239, 24169614, 239, 24169614, 
+  239 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -109,8 +109,8 @@ Unbind(COM_RESULT);
 #E  file="grp/basicmat.gi"
 
 #F  file="grp/perf.grp" crc=22249196
-RANK_FILTER_LIST  := [ 58923477, 23, 18813586, 33, 27202794, 21, 53476447, 
-  22, 53476447, 22 ];
+RANK_FILTER_LIST  := [ 43611422, 23, 8149302, 33, 41704214, 21, 44110380, 22, 
+  44110380, 22 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -149,13 +149,13 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="grp/perf.grp"
 
-#F  file="grp/classic.gi" crc=-127999338
-RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239, 9668194, 239, 9668194, 
-  239, 9668194, 239 ];
+#F  file="grp/classic.gi" crc=64739555
+RANK_FILTER_LIST  := [ 24169614, 239, 24169614, 239, 24169614, 239, 24169614, 
+  239, 24169614, 239 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "grp/classic.gi", -127999338 );
+COM_RESULT := COM_FILE( "grp/classic.gi", 64739555 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"grp/classic.gi\"");
 elif COM_RESULT = 1  then
@@ -165,7 +165,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("grp/classic.gi");
 elif COM_RESULT = 3  then
-Revision.classic_gi:="@(#)$Id: classic.gi,v 4.22 2002/02/14 15:50:14 gap Exp $";
+Revision.classic_gi:="@(#)$Id: classic.gi,v 4.22.4.1 2005/09/07 12:30:51 gap Exp $";
 InstallMethod(SymplecticGroupCons,"matrix group for dimension and finite field size",[IsMatrixGroup and IsFinite,IsPosInt,IsPosInt],COM_FUN(1));
 InstallMethod(GeneralUnitaryGroupCons,"matrix group for dimension and finite field size",[IsMatrixGroup and IsFinite,IsPosInt,IsPosInt],COM_FUN(2));
 InstallMethod(SpecialUnitaryGroupCons,"matrix group for dimension and finite field size",[IsMatrixGroup and IsFinite,IsPosInt,IsPosInt],COM_FUN(3));
@@ -200,7 +200,7 @@ Unbind(COM_RESULT);
 #E  file="grp/classic.gi"
 
 #F  file="grp/suzuki.gi" crc=126565656
-RANK_FILTER_LIST  := [ 9668194, 239, 18802426, 39 ];
+RANK_FILTER_LIST  := [ 24169614, 239, 8138142, 39 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -228,7 +228,7 @@ Unbind(COM_RESULT);
 #E  file="grp/suzuki.gi"
 
 #F  file="grp/ree.gi" crc=48101649
-RANK_FILTER_LIST  := [ 9679354, 31 ];
+RANK_FILTER_LIST  := [ 24180774, 31 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -558,7 +558,7 @@ Unbind(COM_RESULT);
 #E  file="grp/imf.grp"
 
 #F  file="grp/imf.gi" crc=-18134037
-RANK_FILTER_LIST  := [ 22250221, 240 ];
+RANK_FILTER_LIST  := [ 64510381, 240 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -597,7 +597,7 @@ Unbind(COM_RESULT);
 #E  file="grp/imf.gi"
 
 #F  file="grp/glzmodmz.gi" crc=83282023
-RANK_FILTER_LIST  := [ 9668194, 239, 9668194, 239 ];
+RANK_FILTER_LIST  := [ 24169614, 239, 24169614, 239 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete

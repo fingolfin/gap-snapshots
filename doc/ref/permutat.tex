@@ -265,6 +265,7 @@ If there are several such permutations, it is not specified which of them
 
 
 \>RestrictedPerm( <perm>, <list> ) O
+\>RestrictedPermNC( <perm>, <list> ) O
 
 `RestrictedPerm' returns  the new permutation <new>  that acts on the
 points in the list <list> in the same  way as the permutation <perm>,
@@ -272,6 +273,8 @@ and that fixes those points that are not in <list>.
 <list> must be a list of positive integers such that for each <i> in
 <list> the image `<i>^<perm>' is also in <list>,
 i.e., <list> must be the union of cycles of <perm>.
+
+`RestrictedPermNC' does not check whether <list> is a union of cycles.
 
 
 

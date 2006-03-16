@@ -3,7 +3,7 @@
 #W  tom.gi                   GAP library                       Goetz Pfeiffer
 #W                                                          & Thomas Merkwitz
 ##
-#H  @(#)$Id: tom.gi,v 4.50 2003/10/08 15:16:41 gap Exp $
+#H  @(#)$Id: tom.gi,v 4.50.2.2 2006/02/23 16:25:40 jjm Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,7 +26,7 @@
 ##  13. Generic Construction of Tables of Marks
 ##
 Revision.tom_gi :=
-    "@(#)$Id: tom.gi,v 4.50 2003/10/08 15:16:41 gap Exp $";
+    "@(#)$Id: tom.gi,v 4.50.2.2 2006/02/23 16:25:40 jjm Exp $";
 
 
 #############################################################################
@@ -79,17 +79,15 @@ InstallMethod( TableOfMarks,
     classNames:=[];
 
     # Compute generators for each subgroup.
-    #gens:= GeneratorsOfGroup( G );
-    #if 1 < Length( gens ) then
-    #  gens:= MinimalGeneratingSet( G );
-    #fi;
-    #if Length(gens)>0 then
-    #  gen:= gens[1];
-    #else
-    #  gen:=One(G);
-    #fi;
-    gen:=GeneratorOfCyclicGroup(G);
-
+    gens:= GeneratorsOfGroup( G );
+    if 1 < Length( gens ) then
+      gens:= MinimalGeneratingSet( G );
+    fi;
+    if 0 < Length( gens ) then
+      gen:= gens[1];
+    else
+      gen:= One( G );
+    fi;
     gens:= [ List( divs, d -> gen^(n/d) ),
              List( [ 1 .. Length( divs ) ], i -> [ i ] ) ];
 

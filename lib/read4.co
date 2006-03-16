@@ -286,12 +286,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/reread.g"
 
-#F  file="lib/package.g" crc=-96630568
+#F  file="lib/package.g" crc=120383661
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/package.g", -96630568 );
+COM_RESULT := COM_FILE( "lib/package.g", 120383661 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/package.g\"");
 elif COM_RESULT = 1  then
@@ -301,7 +301,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/package.g");
 elif COM_RESULT = 3  then
-Revision.package_g:="@(#)$Id: package.g,v 4.73.2.5 2005/08/29 09:18:30 gap Exp $";
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.6 2005/12/06 17:29:51 gap Exp $";
 PACKAGES_VERSIONS:=rec();
 BindGlobal("CompareVersionNumbers",COM_FUN(1));
 BindGlobal("PackageInfo",COM_FUN(2));
@@ -311,16 +311,16 @@ BindGlobal("InitializePackagesInfoRecords",COM_FUN(5));
 DeclareGlobalFunction("TestPackageAvailability");
 InstallGlobalFunction("TestPackageAvailability",COM_FUN(6));
 BindGlobal("DefaultPackageBannerString",COM_FUN(7));
-BindGlobal("ReadPackage",COM_FUN(8));
-BindGlobal("RereadPackage",COM_FUN(9));
-BindGlobal("LoadPackageDocumentation",COM_FUN(10));
+BIND_GLOBAL("DirectoriesPackagePrograms",COM_FUN(8));
+BIND_GLOBAL("DirectoriesPackageLibrary",COM_FUN(9));
+BindGlobal("ReadPackage",COM_FUN(10));
+BindGlobal("RereadPackage",COM_FUN(11));
+BindGlobal("LoadPackageDocumentation",COM_FUN(12));
 DeclareGlobalFunction("LoadPackage");
 RequirePackage:=LoadPackage;
-InstallGlobalFunction(LoadPackage,COM_FUN(11));
-BindGlobal("LoadAllPackages",COM_FUN(12));
-BindGlobal("InstalledPackageVersion",COM_FUN(13));
-BIND_GLOBAL("DirectoriesPackagePrograms",COM_FUN(14));
-BIND_GLOBAL("DirectoriesPackageLibrary",COM_FUN(15));
+InstallGlobalFunction(LoadPackage,COM_FUN(13));
+BindGlobal("LoadAllPackages",COM_FUN(14));
+BindGlobal("InstalledPackageVersion",COM_FUN(15));
 BindGlobal("AutoloadPackages",COM_FUN(16));
 BindGlobal("ExcludeFromAutoload",COM_FUN(17));
 if not IsBound(StripEscapeSequences) then

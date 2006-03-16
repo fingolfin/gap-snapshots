@@ -2,7 +2,7 @@
 ##
 #W  zmodnz.gi                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zmodnz.gi,v 4.53 2003/11/20 14:20:43 gap Exp $
+#H  @(#)$Id: zmodnz.gi,v 4.53.2.1 2006/02/22 13:52:08 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  again the ordering of representatives is chosen.
 ##
 Revision.zmodnz_gi :=
-    "@(#)$Id: zmodnz.gi,v 4.53 2003/11/20 14:20:43 gap Exp $";
+    "@(#)$Id: zmodnz.gi,v 4.53.2.1 2006/02/22 13:52:08 sal Exp $";
 
 #T for small residue class rings, avoid constructing new objects by
 #T keeping an elements list, and change the constructor such that the
@@ -612,6 +612,17 @@ InstallMethod( Int,
 
 #############################################################################
 ##
+#M IntFFE( <obj> )  . .  . . . . . . . . . . . . . . . . . for `IsZmodnZObj'
+##
+
+InstallMethod(IntFFE,
+        [IsZmodpZObj and IsModulusRep],
+        x->x![1]);
+        
+
+
+#############################################################################
+##
 #M  IntFFESymm( <obj> )  . . . . . . . . . . . . . . . . . . . for `IsZmodnZObj'
 ##
 InstallOtherMethod(IntFFESymm,"Z/nZ (ModulusRep)",
@@ -625,6 +636,30 @@ local p;
     return z![1];
   fi;
 end);
+
+#############################################################################
+##
+#M  Z(p) ... return a primitive root
+##
+
+InstallMethod(ZOp,
+        [IsPosInt],
+        function(p)
+    local   f;
+    if p <= MAXSIZE_GF_INTERNAL then
+        TryNextMethod(); # should never happen
+    fi;
+    if not IsProbablyPrimeInt(p) then
+        TryNextMethod();
+    fi;
+    f := FFEFamily(p);
+    if not IsBound(f!.primitiveRootModP) then
+        f!.primitiveRootModP := PrimitiveRootMod(p);
+    fi;
+    return ZmodnZObj(f!.primitiveRootModP,p);
+end);
+
+        
 
 
 #############################################################################

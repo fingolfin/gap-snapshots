@@ -264,6 +264,8 @@ If there are several such permutations, it is not specified which of them
 <p>
 <a name = "SSEC004.4"></a>
 <li><code>RestrictedPerm( </code><var>perm</var><code>, </code><var>list</var><code> ) O</code>
+<a name = "SSEC004.4"></a>
+<li><code>RestrictedPermNC( </code><var>perm</var><code>, </code><var>list</var><code> ) O</code>
 <p>
 <code>RestrictedPerm</code> returns  the new permutation <var>new</var>  that acts on the
 points in the list <var>list</var> in the same  way as the permutation <var>perm</var>,
@@ -271,6 +273,8 @@ and that fixes those points that are not in <var>list</var>.
 <var>list</var> must be a list of positive integers such that for each <var>i</var> in
 <var>list</var> the image <code></code><var>i</var><code>^</code><var>perm</var><code></code> is also in <var>list</var>,
 i.e., <var>list</var> must be the union of cycles of <var>perm</var>.
+<p>
+<code>RestrictedPermNC</code> does not check whether <var>list</var> is a union of cycles.
 <p>
 <pre>
 gap&gt; ListPerm((3,4,5));
@@ -286,5 +290,5 @@ gap&gt; RestrictedPerm((1,2)(3,4),[3..5]);
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP039.htm">Previous</a>] [<a href ="CHAP041.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

@@ -2,7 +2,7 @@
 ##
 #W  stbcrand.gi                 GAP library                       Akos Seress
 ##
-#H  @(#)$Id: stbcrand.gi,v 4.28.2.4 2005/05/10 14:13:39 gap Exp $
+#H  @(#)$Id: stbcrand.gi,v 4.28.2.5 2005/12/03 04:08:11 gap Exp $
 ##
 #Y  Copyright (C)  1994,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with verification.
 ##
 Revision.stbcrand_gi :=
-    "@(#)$Id: stbcrand.gi,v 4.28.2.4 2005/05/10 14:13:39 gap Exp $";
+    "@(#)$Id: stbcrand.gi,v 4.28.2.5 2005/12/03 04:08:11 gap Exp $";
 
 #############################################################################
 ##
@@ -1427,7 +1427,7 @@ InstallGlobalFunction( VerifySGS, function(S,missing,correct)
                    AddGeneratorsExtendSchreierTree(temp2, [newgen]); 
                    result := VerifyStabilizer(temp2,newgen,missing,correct);
                    if leader > n then 
-                      AddGeneratorsExtendSchreierTree(temp,[RestrictedPerm
+                      AddGeneratorsExtendSchreierTree(temp,[RestrictedPermNC
                           (newgen, [1..n])]); 
                    else 
                       temp := temp2;
@@ -1440,7 +1440,7 @@ InstallGlobalFunction( VerifySGS, function(S,missing,correct)
                    fi; 
                 fi; 
                 if result <> S.identity and temp2.orbit[1] > n then
-                     result := RestrictedPerm(result, [1..n]);
+                     result := RestrictedPermNC(result, [1..n]);
                 fi; 
                                 
             fi; 

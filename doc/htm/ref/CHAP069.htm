@@ -1911,8 +1911,13 @@ except that the group is is <code>Print</code>-ed instead of <code>View</code>-e
 <p>
 <a name = "I33"></a>
 
-The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.4">Display</a>) method for a character table <var>tbl</var>
-prepares the data contained in <var>tbl</var> for a pretty columnwise output.
+There are various ways to customize the <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.4">Display</a>) output
+for character tables.
+First we describe the default behaviour,
+alternatives are then described below.
+<p>
+The default <code>Display</code> method prepares the data in <var>tbl</var> for a columnwise
+output.
 The number of columns printed at one time depends on the actual
 line length, which can be accessed and changed by the function
 <code>SizeScreen</code> (see&nbsp;<a href="CHAP006.htm#SSEC011.1">SizeScreen</a>).
@@ -1920,7 +1925,7 @@ line length, which can be accessed and changed by the function
 <code>Display</code> shows certain characters (by default all irreducible
 characters) of <var>tbl</var>, together with the orders of the centralizers in
 factorized form and the available power maps (see&nbsp;<a href="CHAP071.htm#SSEC001.1">ComputedPowerMaps</a>).
-Each displayed character is given a name <code>X.</code><var>n</var><code></code>.
+The <var>n</var>-th displayed character is given the name <code>X.</code><var>n</var><code></code>.
 <p>
 The first lines of the output describe the order of the centralizer
 of an element of the class factorized into its prime divisors.
@@ -1949,15 +1954,36 @@ that very name preceded by a <code>/</code> and a <code>*</code>, respectively.
 The printed character table is then followed by a legend,
 a list identifying the occurring symbols with their actual values.
 Occasionally this identification is supplemented by a quadratic
-representation of the irrationality together with the corresponding
-<font face="Gill Sans,Helvetica,Arial">ATLAS</font>-notation (see&nbsp;<a href="biblio.htm#CCN85"><cite>CCN85</cite></a>).
+representation of the irrationality (see&nbsp;<a href="CHAP018.htm#SSEC005.4">Quadratic</a>) together with
+the corresponding <font face="Gill Sans,Helvetica,Arial">ATLAS</font> notation (see&nbsp;<a href="biblio.htm#CCN85"><cite>CCN85</cite></a>).
 <p>
-The optional second argument <var>arec</var> of <code>Display</code> can be used to change
-the default style (mentioned above) for displaying a character.
-<var>arec</var> must be a record, its relevant components are the following.
+This default style can be changed by prescribing a record <var>arec</var> of
+options, which can be given
+<ul>
+<li>
+    as an optional argument in the call to <code>Display</code>,
+<li>
+    as the value of the attribute <code>DisplayOptions</code> (see&nbsp;<a href="CHAP069.htm#SSEC011.1">DisplayOptions</a>)
+    if this value is stored in the table,
+<li>
+    as the value of the global variable
+    <code>CharacterTableDisplayDefaults.User</code>, or
+<li>
+    as the value of the global variable
+    <code>CharacterTableDisplayDefaults.Global</code>
+</ul>
+(in this order of precedence).
+<p>
+The following components of <var>arec</var> are supported.
 <p>
 <p>
 <dl compact>
+<dt><code>centralizers</code> <dd>
+    <code>false</code> to suppress the printing of the orders of the centralizers,
+    or the string <code>"ATLAS"</code> to force the printing of non-factorized
+    centralizer orders in a style similar to that used in the
+    <font face="Gill Sans,Helvetica,Arial">ATLAS</font> of Finite Groups&nbsp;<a href="biblio.htm#CCN85"><cite>CCN85</cite></a>,
+<p>
 <dt><code>chars</code> <dd>
     an integer or a list of integers to select a sublist of the
     irreducible characters of <var>tbl</var>,
@@ -1968,50 +1994,48 @@ the default style (mentioned above) for displaying a character.
     an integer or a list of integers to select a sublist of the
     classes of <var>tbl</var>,
 <p>
-<dt><code>centralizers</code> <dd>
-    suppresses the printing of the orders of the centralizers
-    if <code>false</code>,
-<p>
-<dt><code>powermap</code> <dd>
-    an integer or a list of integers to select a subset of the
-    available power maps, or <code>false</code> to suppress the printing of
-    power maps,
-<p>
-<dt><code>letter</code> <dd>
-    a single capital letter (e.&nbsp;g.&nbsp;<code>"P"</code> for permutation characters)
-    to replace <code>"X"</code>,
-<p>
 <dt><code>indicator</code> <dd>
     <code>true</code> enables the printing of the second Frobenius Schur indicator,
     a list of integers enables the printing of the corresponding
     indicators (see&nbsp;<a href="CHAP069.htm#SSEC010.4">Indicator</a>),
+<p>
+<dt><code>letter</code> <dd>
+    a single capital letter (e.&nbsp;g.&nbsp;<code>"P"</code> for permutation characters)
+    to replace the default <code>"X"</code> in character names,
+<p>
+<dt><code>powermap</code> <dd>
+    an integer or a list of integers to select a subset of the
+    available power maps,
+    <code>false</code> to suppress the printing of power maps,
+    or the string <code>"ATLAS"</code> to force a printing of class names and
+    power maps in a style similar to that used in the
+    <font face="Gill Sans,Helvetica,Arial">ATLAS</font> of Finite Groups&nbsp;<a href="biblio.htm#CCN85"><cite>CCN85</cite></a>,
+<p>
+<dt><code>Display</code> <dd>
+    the function that is actually called in order to display the table;
+    the arguments are the table and the optional record, whose components
+    can be used inside the <code>Display</code> function,
 <p>
 <dt><code>StringEntry</code> <dd>
     a function that takes either a character value or a character value
     and the return value of <code>StringEntryData</code> (see below),
     and returns the string that is actually displayed;
     it is called for all character values to be displayed,
-    and also for the displayed indicator values (see above);
-    the default <code>StringEntry</code> function is 
-    <code>CharacterTableDisplayStringEntryDefault</code>,
+    and also for the displayed indicator values (see above),
 <p>
 <dt><code>StringEntryData</code> <dd>
     a unary function that is called once with argument <var>tbl</var> before the
     character values are displayed;
     it returns an object that is used as second argument of the function
-    <code>StringEntry</code>;
-    the default <code>StringEntryData</code> function is
-    <code>CharacterTableDisplayStringEntryDataDefault</code>,
+    <code>StringEntry</code>,
 <p>
-<dt><code>PrintLegend</code> <dd>
-    a function that is called with the result of the <code>StringEntryData</code>
-    call after the character table has been displayed;
-    the default <code>PrintLegend</code> function is
-    <code>CharacterTableDisplayPrintLegendDefault</code>.
+<dt><code>Legend</code> <dd>
+    a function that takes the result of the <code>StringEntryData</code> call as its
+    only argument, after the character table has been displayed;
+    the return value is a string that describes the symbols used in the
+    displayed table in a formatted way,
+    it is printed below the displayed table.
 </dl>
-If the value of <code>DisplayOptions</code> (see&nbsp;<a href="CHAP069.htm#SSEC011.1">DisplayOptions</a>) is stored on
-<var>tbl</var>, it is used as default value for <var>arec</var> in the one argument call of
-<code>Display</code>.
 <p>
 <a name = "SSEC011.1"></a>
 <li><code>DisplayOptions( </code><var>tbl</var><code> ) A</code>
@@ -2041,10 +2065,20 @@ X.5     5  1 -1  .  .
 
 A = -E(5)-E(5)^4
   = (1-ER(5))/2 = -b5
+gap&gt; CharacterTableDisplayDefaults.User:= rec(
+&gt;        powermap:= "ATLAS", centralizers:= "ATLAS", chars:= false );;
+gap&gt; Display( CharacterTable( "A5" ) );
+A5
+
+    60  4  3  5  5
+
+ p      A  A  A  A
+ p'     A  A  A  A
+    1A 2A 3A 5A B*
+
 gap&gt; options:= rec( chars:= 4, classes:= [ tbl.3a .. tbl.5a ],
 &gt;                   centralizers:= false, indicator:= true,
 &gt;                   powermap:= [ 2 ] );;
-gap&gt; Indicator( tbl, 2 );;
 gap&gt; Display( tbl, options );
 A5
 
@@ -2059,12 +2093,11 @@ A5
        2P 3a 5b
        2
 X.4    +   1 -1
+gap&gt; Unbind( CharacterTableDisplayDefaults.User );
 </pre>
 <p>
 <a name = "SSEC011.2"></a>
 <li><code>PrintCharacterTable( </code><var>tbl</var><code>, </code><var>varname</var><code> ) F</code>
-<a name = "SSEC011.2"></a>
-<li><code>CharacterTableString( </code><var>tbl</var><code>, </code><var>varname</var><code> ) F</code>
 <p>
 Let <var>tbl</var> be a nearly character table, and <var>varname</var> a string.
 <code>PrintCharacterTable</code> prints those values of the supported attributes
@@ -2077,9 +2110,6 @@ printed components.
 <p>
 This is used mainly for saving character tables to files.
 A more human readable form is produced by <code>Display</code>.
-<p>
-<code>CharacterTableString</code> returns a string that consists of the output of
-<code>PrintCharacterTable</code>.
 <p>
 <pre>
 gap&gt; PrintCharacterTable( CharacterTable( "Cyclic", 2 ), "tbl" );
@@ -2174,22 +2204,22 @@ gap&gt; g:= SL(2,3);;
 gap&gt; SizeScreen([ 87, ]);;
 gap&gt; irr1:= IrrDixonSchneider( g );
 [ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3)^2, E(3), -E(3), -E(3)^2, 0 ] ),
-  Character( CharacterTable( SL(2,3) ), [ 2, -2, E(3), E(3)^2, -E(3)^2, -E(3), 0 ] ),
-  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3)^2, E(3), 1, E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3), E(3)^2, 1, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 2, E(3)^2, E(3), -2, -E(3), -E(3)^2, 0 ] ),
+  Character( CharacterTable( SL(2,3) ), [ 2, E(3), E(3)^2, -2, -E(3)^2, -E(3), 0 ] ),
+  Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] ) ]
 gap&gt; irr2:= IrrConlon( g );
 [ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3), E(3)^2, 1, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3)^2, E(3), 1, E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] ) ]
 gap&gt; irr3:= IrrBaumClausen( g );
 [ Character( CharacterTable( SL(2,3) ), [ 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3), E(3)^2, E(3)^2, E(3), 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 1, 1, E(3)^2, E(3), E(3), E(3)^2, 1 ] ), 
-  Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] ) ]
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3), E(3)^2, 1, E(3)^2, E(3), 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 1, E(3)^2, E(3), 1, E(3), E(3)^2, 1 ] ), 
+  Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] ) ]
 gap&gt; SizeScreen([ 80, ]);;
 gap&gt; chi:= irr2[4];;  HasTestMonomial( chi );
 true
@@ -3283,5 +3313,5 @@ rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], nsgclasses := [ [ 1, 3 ] ],
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP068.htm">Previous</a>] [<a href ="CHAP070.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

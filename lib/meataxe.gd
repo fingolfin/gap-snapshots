@@ -4,7 +4,7 @@
 #W                                                                 Sarah Rees
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: meataxe.gd,v 4.3 2003/01/06 10:05:29 sal Exp $ 
+#H  @(#)$Id: meataxe.gd,v 4.3.2.1 2005/11/26 06:59:00 gap Exp $ 
 ##
 #Y  (C) 1998-2001 School Math. Sci., University of St.  Andrews, Scotland
 ##
@@ -13,7 +13,7 @@
 ##  SMTX.
 ##
 Revision.meataxe_gd:=
-  "@(#)$Id: meataxe.gd,v 4.3 2003/01/06 10:05:29 sal Exp $";
+  "@(#)$Id: meataxe.gd,v 4.3.2.1 2005/11/26 06:59:00 gap Exp $";
 
 #############################################################################
 ##
@@ -67,7 +67,7 @@ DeclareGlobalFunction("WedgeGModule");
 
 ###############################################################################
 ##
-#F  DualGModule ( module ) . . . . . wedge product of a G-module
+#F  DualGModule ( module ) . . . . . dual of a G-module
 ##
 ## DualGModule calculates the dual of a G-module.
 ## The matrices of the module are inverted and transposed.

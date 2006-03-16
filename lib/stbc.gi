@@ -3,14 +3,14 @@
 #W  stbc.gi                     GAP library                    Heiko Thei"sen
 #W                                                               'Akos Seress
 ##
-#H  @(#)$Id: stbc.gi,v 4.72.2.3 2005/08/24 23:22:47 gap Exp $
+#H  @(#)$Id: stbc.gi,v 4.72.2.4 2005/09/08 02:10:22 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.stbc_gi :=
-    "@(#)$Id: stbc.gi,v 4.72.2.3 2005/08/24 23:22:47 gap Exp $";
+    "@(#)$Id: stbc.gi,v 4.72.2.4 2005/09/08 02:10:22 gap Exp $";
 
 #############################################################################
 ##
@@ -359,8 +359,12 @@ local   base,sgs,one,S,  T,  pnt;
     sgs:=arg[2];
     if Length(arg)=3 then
       one:=arg[3];
+    elif Length(arg[2])>0 then
+      one:=One(arg[2][1]);
     else
-      one:= One(arg[2][1]);
+      # specific workaround for GRAPE in the 4.4 branch -- this will not be
+      # in 4.5
+      one:=();
     fi;
     S := EmptyStabChain( [  ], one );
     T := S;

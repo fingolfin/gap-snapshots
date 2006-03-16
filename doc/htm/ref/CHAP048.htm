@@ -30,8 +30,8 @@ initially knows the following groups:
   <li> a library of groups of small order (see&nbsp;<a href="CHAP048.htm#SECT007">Small Groups</a>),
   <li>  the  finite perfect  groups of   size  at most 10<sup>6</sup>
     (excluding 11 sizes) (see&nbsp;<a href="CHAP048.htm#SECT008">Finite perfect groups</a>).
-  <li>  a library of  primitive  permutation groups of degree
-     &lt; 1000, complete  for degrees   &lt; 256 (see&nbsp;<a href="CHAP048.htm#SECT009">Primitive  permutation     groups</a>),
+  <li>  the  primitive  permutation groups of degree
+     &lt; 2499 (see&nbsp;<a href="CHAP048.htm#SECT009">Primitive  permutation     groups</a>),
   <li>  the  irreducible solvable subgroups of  <i>GL</i>(<i>n</i>,<i>p</i>) for
     <i>n</i> &gt; 1 and <i>p</i><sup><i>n</i></sup>  &lt;  256 (see <a href="CHAP048.htm#SECT011">Irreducible Solvable Matrix Groups</a>),
   <li> the irreducible maximal finite integral matrix groups
@@ -1045,14 +1045,16 @@ the following sizes:
       numbers which are 52, 46, and 54, respectively.
 </ul>
 <p>
-Except for these eleven sizes, the list of altogether 1096 perfect groups
-in the  library is complete. It  relies  on results  of Derek&nbsp;F. Holt and
+Except for these eleven sizes, the list of altogether 1097 perfect groups
+in the  library is complete.  It relies  on results of  Derek&nbsp;F. Holt and
 Wilhelm Plesken which  are published in their  book    ``Perfect Groups''
 <a href="biblio.htm#HP89"><cite>HP89</cite></a>. Moreover,   they     have  supplied us    with    files with
 presentations of 488 of the groups. In terms of  these, the remaining 607
 nontrivial groups in the library can be described as 276 direct products,
 107  central   products, and 224  subdirect  products.  They are computed
-automatically by suitable <font face="Gill Sans,Helvetica,Arial">GAP</font> functions whenever they are needed.
+automatically by suitable <font face="Gill Sans,Helvetica,Arial">GAP</font> functions whenever they are needed.  Two
+additional groups omitted from the book ``Perfect Groups'' have also been
+included.
 <p>
 We are grateful to Derek Holt and Wilhelm Plesken for making their groups
 available to the <font face="Gill Sans,Helvetica,Arial">GAP</font> community  by contributing their files. It should
@@ -1088,10 +1090,10 @@ is obtained by coset enumeration. Note that some of the library groups do
 not have a   faithful   permutation  representation  of small     degree.
 Computations in these groups may be rather time consuming.
 <pre>
-gap&gt; G:=PerfectGroup(IsPermGroup,129024,2);
-L2(8) N ( 2^6 E 2^1 A ) C 2^1
+gap&gt; G:=PerfectGroup(IsPermGroup,823080,2);
+A5 2^1 19^2 C 19^1
 gap&gt; NrMovedPoints(G);
-14336
+6859
 </pre>
 <p>
 <a name = "SSEC008.3"></a>
@@ -1436,9 +1438,9 @@ gap&gt; NrPrimitiveGroups(25);
 gap&gt; PrimitiveGroup(25,19);
 5^2:((Q(8):3)'4)
 gap&gt; PrimitiveGroup(25,20);
-ASL(2,5)
+ASL(2, 5)
 gap&gt; PrimitiveGroup(25,22);
-AGL(2,5)
+AGL(2, 5)
 gap&gt; PrimitiveGroup(25,23);
 (A(5) x A(5)):2
 </pre>
@@ -1533,7 +1535,8 @@ in the <font face="Gill Sans,Helvetica,Arial">GAP</font> library.
 <p>
 The system <code>Magma</code> also provides a list of primitive groups
 (see <a href="biblio.htm#RoneyDougal02"><cite>RoneyDougal02</cite></a>). For historical
-reasons, its indexing however differs from the one used by <font face="Gill Sans,Helvetica,Arial">GAP</font>. The
+reasons, its indexing up to degree 999 
+differs from the one used by <font face="Gill Sans,Helvetica,Arial">GAP</font>. The
 variable
 <p>
 <a name = "SSEC010.3"></a>
@@ -1541,7 +1544,7 @@ variable
 <p>
 can be used to obtain this correspondence. The magma index number of
 the <font face="Gill Sans,Helvetica,Arial">GAP</font> group <code>PrimitiveGroup(</code><var>deg</var><code>,</code><var>nr</var><code>)</code> is stored in the entry
-<code>PRIMITIVE_INDICES_MAGMA[</code><var>deg</var><code>][</code><var>nr</var><code>]</code>.
+<code>PRIMITIVE_INDICES_MAGMA[</code><var>deg</var><code>][</code><var>nr</var><code>]</code>, for degree at most 999.
 <p>
 Vice versa, the group of degree <var>deg</var> with <code>Magma</code> index number <var>nr</var> has the
 <font face="Gill Sans,Helvetica,Arial">GAP</font> index 
@@ -2182,5 +2185,5 @@ gap&gt; LargestMovedPoint( P2 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP047.htm">Previous</a>] [<a href ="CHAP049.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

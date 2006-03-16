@@ -596,11 +596,12 @@ gap&gt; LeadingCoefficient(f);
 <a name = "SSEC006.5"></a>
 <li><code>Derivative( </code><var>ufun</var><code> ) O</code>
 <li><code>Derivative( </code><var>ratfun</var><code>, </code><var>ind</var><code> ) O</code>
+<li><code>Derivative( </code><var>ratfun</var><code>, </code><var>inum</var><code> ) O</code>
 <p>
 returns the derivative <i>upoly</i> &#8242; of the univariate rational function
 <var>ufun</var> by its indeterminant. The second version returns the derivative
 of <var>ratfun</var> by the indeterminate <var>ind</var> (respectively indeterminate
-number <var>ind</var>) when viewing <var>ratfun</var> as univariate in <var>ind</var>.
+number <var>inum</var>) when viewing <var>ratfun</var> as univariate in <var>ind</var>.
 <p>
 <pre>
 gap&gt; Derivative(f,2);
@@ -609,11 +610,12 @@ gap&gt; Derivative(f,2);
 <a name = "SSEC006.6"></a>
 <li><code>Discriminant( </code><var>upol</var><code> ) O</code>
 <li><code>Discriminant( </code><var>pol</var><code>, </code><var>ind</var><code> ) O</code>
+<li><code>Discriminant( </code><var>pol</var><code>, </code><var>inum</var><code> ) O</code>
 <p>
 returns the discriminant disc(<i>upoly</i> ) of the univariate polynomial
 <var>upoly</var> by its indeterminant. The second version returns the
 discriminant of <var>pol</var> by the indeterminate <var>ind</var> (respectively
-indeterminate number <var>ind</var>).
+indeterminate number <var>inum</var>).
 <p>
 <pre>
 gap&gt; Discriminant(f,1);
@@ -1419,9 +1421,20 @@ to <var>O</var> and then reduces it.
 gap&gt; ReducedGroebnerBasis(l,MonomialGrlexOrdering());
 [ x-y, z^2-2*y+1, y^2+y-1 ]
 gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering());    
-[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/4*z^2+x-1/4 ]
+[ z^4+4*z^2-1, -1/2*z^2+y-1/2, -1/2*z^2+x-1/2 ]
 gap&gt; ReducedGroebnerBasis(l,MonomialLexOrdering([y,z,x]));
-[ 1, x^2+x-1, z^2-x+1/2, -x+y ]
+[ x^2+x-1, z^2-2*x+1, -x+y ]
+</pre>
+<p>
+For performance reasons it can be advantageous to define monomial orderings
+once and then to reuse them:
+<p>
+<pre>
+gap&gt; ord:=MonomialGrlexOrdering();;
+gap&gt; GroebnerBasis(l,ord);
+[ x^2+y^2+z^2-1, x^2+z^2-y, x-y, -y^2-y+1, -z^2+2*y-1 ]
+gap&gt; ReducedGroebnerBasis(l,ord);
+[ x-y, z^2-2*y+1, y^2+y-1 ]
 </pre>
 <p>
 <a name = "SSEC017.3"></a>
@@ -1649,21 +1662,33 @@ functions.
 <p>
 <a name = "SSEC021.1"></a>
 <li><code>RationalFunctionByExtRep( </code><var>rfam</var><code>, </code><var>num</var><code>, </code><var>den</var><code> ) F</code>
+<a name = "SSEC021.1"></a>
+<li><code>RationalFunctionByExtRepNC( </code><var>rfam</var><code>, </code><var>num</var><code>, </code><var>den</var><code> ) F</code>
 <p>
 constructs a rational function (in the representation
 <code>IsRationalFunctionDefaultRep</code>) in the rational function family <var>rfam</var>,
 the rational function itself is given by the external representations
 <var>num</var> and <var>den</var> for numerator and denominator.
-No test for validity of the arguments is performed and no cancellation
-takes place.
+No cancellation takes place.
+<p>
+The variant <code>RationalFunctionByExtRepNC</code> does not perform any test of
+the arguments and thus potentially can create illegal objects. It only
+should be used if speed is required and the arguments are known to be
+in correct form.
 <p>
 <a name = "SSEC021.2"></a>
 <li><code>PolynomialByExtRep( </code><var>rfam</var><code>, </code><var>extrep</var><code> ) F</code>
+<a name = "SSEC021.2"></a>
+<li><code>PolynomialByExtRepNC( </code><var>rfam</var><code>, </code><var>extrep</var><code> ) F</code>
 <p>
 constructs a polynomial (in the representation <code>IsPolynomialDefaultRep</code>)
 in the rational function family <var>rfam</var>, the polynomial itself is given
 by the external representation <var>extrep</var>.
-No test for validity of the arguments is performed.
+<p>
+The variant <code>PolynomialByExtRepNC</code> does not perform any test of
+the arguments and thus potentially can create illegal objects. It only
+should be used if speed is required and the arguments are known to be
+in correct form.
 <p>
 <pre>
 gap&gt; fam:=RationalFunctionsFamily(FamilyObj(1));;
@@ -1678,6 +1703,8 @@ gap&gt; ExtRepDenominatorRatFun(q);
 </pre>
 <a name = "SSEC021.3"></a>
 <li><code>LaurentPolynomialByExtRep( </code><var>fam</var><code>, </code><var>cofs</var><code>, </code><var>val</var><code> , </code><var>ind</var><code> ) F</code>
+<a name = "SSEC021.3"></a>
+<li><code>LaurentPolynomialByExtRepNC( </code><var>fam</var><code>, </code><var>cofs</var><code>, </code><var>val</var><code> , </code><var>ind</var><code> ) F</code>
 <p>
 creates a Laurent polynomial in the family <var>fam</var> with [<var>cofs</var>,<var>val</var>] as
 value of <code>CoefficientsOfLaurentPolynomial</code>. No coefficient shifting is
@@ -1760,5 +1787,5 @@ and denominator. The cancellation performed is not necessarily optimal.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP063.htm">Previous</a>] [<a href ="CHAP065.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

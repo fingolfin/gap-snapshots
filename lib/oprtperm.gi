@@ -2,14 +2,14 @@
 ##
 #W  oprtperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprtperm.gi,v 4.73 2003/07/28 16:27:09 gap Exp $
+#H  @(#)$Id: oprtperm.gi,v 4.73.2.1 2006/02/27 19:00:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprtperm_gi :=
-    "@(#)$Id: oprtperm.gi,v 4.73 2003/07/28 16:27:09 gap Exp $";
+    "@(#)$Id: oprtperm.gi,v 4.73.2.1 2006/02/27 19:00:02 gap Exp $";
 
 
 #############################################################################
@@ -1329,7 +1329,7 @@ InstallOtherMethod( RepresentativeActionOp, "permgrp",true, [ IsPermGroup,
 	return fail;
       fi;
       if Length(d)=1 then
-	rep:=RepresentativeActionOp(G,d[1],e[1]);
+	rep:=RepresentativeActionOp(G,d[1],e[1],OnPoints);
       else
         rep := RepOpSetsPermGroup( G, d, e );
       fi;

@@ -67,6 +67,7 @@ return the identity transformation of degree <var>n</var>
 <li><code>RandomTransformation( </code><var>n</var><code> ) F</code>
 <p>
 returns a random transformation of degree <var>n</var>
+JDM 
 <p>
 <a name = ""></a>
 <li><code>DegreeOfTransformation( </code><var>trans</var><code> ) A</code>
@@ -113,10 +114,8 @@ Returns the kernel of <var>trans</var> as an equivalence relation (See
 <a href="CHAP032.htm#SECT001">General Binary Relations</a>).
 <p>
 <pre>
-gap&gt; KernelOfTransformation(t);
-&lt;equivalence relation on &lt;object&gt; &gt;
-gap&gt; EquivalenceRelationPartition(last);
-[ [ 1, 4 ], [ 3, 5 ] ]
+gap&gt; KernelOfTransformation(t);         
+[ [ 1, 4 ], [ 2 ], [ 3, 5 ] ]
 </pre>
 <a name = ""></a>
 <li><code>PreimagesOfTransformation( </code><var>trans</var><code>, </code><var>i</var><code> ) O</code>
@@ -186,5 +185,5 @@ injective.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP051.htm">Previous</a>] [<a href ="CHAP053.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

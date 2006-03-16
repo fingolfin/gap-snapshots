@@ -3,14 +3,14 @@
 #W  ctblmono.tst               GAP Library                      Thomas Breuer
 #W                                                         & Erzsebet Horvath
 ##
-#H  @(#)$Id: ctblmono.tst,v 4.13.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: ctblmono.tst,v 4.13.2.4 2005/12/15 10:53:30 jjm Exp $
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: ctblmono.tst,v 4.13.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: ctblmono.tst,v 4.13.2.4 2005/12/15 10:53:30 jjm Exp $");
 
 gap> S4:= SymmetricGroup( 4 );;  SetName( S4, "S4");
 gap> Sl23:= SL( 2, 3 );;
@@ -34,16 +34,16 @@ gap> List( Irr( Sl23 ), Degree );
 
 gap> n:= DerivedSubgroup( Sl23 );;      
 gap> chi:= Irr( Sl23 )[7];
-Character( CharacterTable( SL(2,3) ), [ 3, 3, 0, 0, 0, 0, -1 ] )
+Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] )
 gap> test:= TestHomogeneous( chi, n );;
 gap> test.isHomogeneous;  test.comment;  test.multiplicity;
 false
 "restriction checked"
 1
 gap> chi:= Irr( Sl23 )[4];
-Character( CharacterTable( SL(2,3) ), [ 2, -2, 1, 1, -1, -1, 0 ] )
+Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )
 gap> cln:= ClassPositionsOfNormalSubgroup( CharacterTable( Sl23 ), n );
-[ 1, 2, 7 ]
+[ 1, 4, 7 ]
 gap> TestHomogeneous( chi, cln );
 rec( isHomogeneous := true, comment := "restricts irreducibly" )
 gap> chi:= Irr( Sl23 )[4];;

@@ -983,6 +983,59 @@ gap&gt; ResultOfStraightLineProgram( prg, gens );
 [ x^3*y^4, x^4*y^-1, x^3*y^4 ]
 </pre>
 <p>
+<a name = "SSEC008.9"></a>
+<li><code>RestrictOutputsOfSLP( </code><var>slp</var><code>, </code><var>k</var><code> ) F</code>
+<p>
+Returns a new slp that calculates only those outputs specified by
+<var>k</var>. <var>k</var> may be an integer or a list of integers. If <var>k</var> is an integer,
+the resulting slp calculates only the result with that number. 
+If <var>k</var> is a list of integers, the resulting slp calculates those
+results with numbers in <var>k</var>. In both cases the resulting slp
+does only what is necessary. The slp must have a line with at least
+<var>k</var> expressions (lists) as its last line (if <var>k</var> is an integer).
+<var>slp</var> is either an slp or a pair where the first entry are the lines
+of the slp and the second is the number of inputs.
+<p>
+<a name = "SSEC008.10"></a>
+<li><code>IntermediateResultOfSLP( </code><var>slp</var><code>, </code><var>k</var><code> ) F</code>
+<p>
+Returns a new slp that calculates only the value of slot <var>k</var>
+at the end of <var>slp</var> doing only what is necessary. 
+slp is either an slp or a pair where the first entry are the lines
+of the slp and the second is the number of inputs.
+Note that this assumes a general SLP with possible overwriting.
+If you know that your SLP does not overwrite slots, please use
+<a href="CHAP035.htm#SSEC008.11">IntermediateResultOfSLPWithoutOverwrite</a>, which is much faster in this
+case.
+<p>
+<a name = "SSEC008.11"></a>
+<li><code>IntermediateResultOfSLPWithoutOverwrite( </code><var>slp</var><code>, </code><var>k</var><code> ) F</code>
+<p>
+Returns a new slp that calculates only the value of slot <var>k</var>, which
+must be an integer.
+Note that <var>slp</var> must not overwrite slots but only append!!!
+Use <a href="CHAP035.htm#SSEC008.10">IntermediateResultOfSLP</a> in the other case!
+<var>slp</var> is either an slp or a pair where the first entry is the lines
+of the slp and the second is the number of inputs.
+<p>
+<a name = "SSEC008.12"></a>
+<li><code>IntermediateResultsOfSLPWithoutOverwrite( </code><var>slp</var><code>, </code><var>k</var><code> ) F</code>
+<p>
+Returns a new slp that calculates only the value of slots contained
+in the list k.
+Note that <var>slp</var> must not overwrite slots but only append!!!
+Use <a href="CHAP035.htm#SSEC008.10">IntermediateResultOfSLP</a> in the other case!
+<var>slp</var> is either a slp or a pair where the first entry is the lines
+of the slp and the second is the number of inputs.
+<p>
+<a name = "SSEC008.13"></a>
+<li><code>ProductOfStraightLinePrograms( </code><var>s1</var><code>, </code><var>s2</var><code> ) F</code>
+<p>
+<var>s1</var> and <var>s2</var> must be two slps that return a single element with the same
+number of inputs. This function contructs an slp that returns the product
+of the two results the slps <var>s1</var> and <var>s2</var> would produce with the same
+input.
+<p>
 <p>
 <h2><a name="SECT009">35.9 Straight Line Program Elements</a></h2>
 <p><p>
@@ -1071,5 +1124,5 @@ See also Section&nbsp;<a href="CHAP041.htm#SECT012">Working with large degree pe
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP034.htm">Previous</a>] [<a href ="CHAP036.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

@@ -4,7 +4,7 @@
 *W                                                         & Martin Schoenert
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: sysfiles.c,v 4.117.2.1 2004/02/20 08:30:21 gap Exp $
+*H  @(#)$Id: sysfiles.c,v 4.117.2.2 2005/12/16 02:15:06 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_sysfiles_c =
-   "@(#)$Id: sysfiles.c,v 4.117.2.1 2004/02/20 08:30:21 gap Exp $";
+   "@(#)$Id: sysfiles.c,v 4.117.2.2 2005/12/16 02:15:06 gap Exp $";
 
 #define INCLUDE_DECLARATION_PART
 #include        "sysfiles.h"            /* file input/output               */
@@ -293,7 +293,7 @@ Int SyFindOrLinkGapRootFile (
         module[0] = '\0';
         SyStrncat( module, "bin/", 4 );
         SyStrncat( module, SyArchitecture, SyStrlen(SyArchitecture) );
-        SyStrncat( module, "/compiled/", 1 );
+        SyStrncat( module, "/compiled/", 10 );
         SyStrncat( module, filename, SyStrlen(filename) );
 #if SYS_MAC_MWC
         SyStrncat( module, ".shlb", 5 );

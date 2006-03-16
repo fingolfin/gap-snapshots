@@ -5,7 +5,7 @@
 %A  grpfp.msk                   GAP documentation            Alexander Hulpke
 %%                                                             Volkmar Felsch
 %%
-%A  @(#)$Id: grpfp.msk,v 1.73.2.2 2005/05/09 07:38:13 gap Exp $
+%A  @(#)$Id: grpfp.msk,v 1.73.2.5 2006/03/08 17:24:15 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -714,11 +714,20 @@ If <word> is not contained in the subgroup, `fail' is returned.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{Low Index Subgroups}
 
-\>LowIndexSubgroupsFpGroup( <G>, [<H>, ]<index>[, <excluded>] ) O
+\index{iterator!for low index subgroups}
 
-returns a list of representatives of the conjugacy classes of subgroups
-of the finitely presented group <G> that contain the subgroup <H> of <G>
-and that have index less than or equal to <index>.
+\>LowIndexSubgroupsFpGroupIterator( <G>[, <H>], <index>[, <excluded>] ) O
+\>LowIndexSubgroupsFpGroup( <G>[, <H>], <index>[, <excluded>] ) O
+
+These functions compute representatives of the conjugacy classes of
+subgroups of the finitely presented group <G> that contain the subgroup
+<H> of <G> and that have index less than or equal to <index>.
+
+`LowIndexSubgroupsFpGroupIterator' returns an iterator (see~"Iterators")
+that can be used to run over these subgroups,
+and `LowIndexSubgroupsFpGroup' returns the list of these subgroups.
+If one is interested only in one or a few subgroups up to a given index
+then preferably the iterator should be used.
 
 If the optional argument <excluded> has been specified, then it is
 expected to be a list of words in the free generators of the underlying
@@ -728,7 +737,7 @@ any conjugate of any of the group elements defined by these words.
 
 If not given, <H> defaults to the trivial subgroup.
 
-The function `LowIndexSubgroupsFpGroup' finds the requested subgroups
+The algorithm used finds the requested subgroups
 by systematically running through a tree of all potential coset tables
 of <G> of length at most <index> (where it skips all branches of that
 tree for which it knows in advance that they cannot provide new classes
@@ -746,10 +755,26 @@ gap> li:=LowIndexSubgroupsFpGroup( g, TrivialSubgroup( g ), 10 );
 \endexample
 
 By default, the algorithm computes no generating sets for the subgroups.
-This can be enforced with `GeneratorsOfGroup':
+This can be enforcd with `GeneratorsOfGroup':
 \beginexample
 gap> GeneratorsOfGroup(li[2]);
 [ a, b*a*b^-1 ]
+\endexample
+
+If we are interested just in one (proper) subgroup of index at most $10$,
+we can use the function that returns an iterator.
+The first subgroup found is the group itself,
+except if a list of excluded elements is entered (see below),
+so we look at the second subgroup.
+
+\beginexample
+gap> iter:= LowIndexSubgroupsFpGroupIterator( g, 10 );;
+gap> s1:= NextIterator( iter );;  Index( g, s1 );
+1
+gap> IsDoneIterator( iter );
+false
+gap> s2:= NextIterator( iter );;  s2 = li[2];
+true
 \endexample
 
 As an example for an application of the optional parameter <excluded>, we
@@ -772,7 +797,7 @@ gap> lis := LowIndexSubgroupsFpGroup( G, TrivialSubgroup( G ), 24, torsion );;
 #I   class 3 of index 24 and length 24
 #I   class 4 of index 24 and length 24
 #I   class 5 of index 24 and length 24
-#I  LowIndexSubgroupsFpGroup returns 5 classes
+#I  LowIndexSubgroupsFpGroup done. Found 5 classes
 gap> SetInfoLevel( InfoFpGroup, 0 );
 \endexample
 

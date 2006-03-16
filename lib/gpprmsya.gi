@@ -4,7 +4,7 @@
 #W                                                           Alexander Hulpke
 #W                                                           Martin Schoenert
 ##
-#H  @(#)$Id: gpprmsya.gi,v 4.38.2.6 2005/08/25 14:38:49 gap Exp $
+#H  @(#)$Id: gpprmsya.gi,v 4.38.2.7 2005/11/26 03:28:58 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file contains the methods for symmetric and alternating groups
 ##
 Revision.gpprmsya_gi :=
-    "@(#)$Id: gpprmsya.gi,v 4.38.2.6 2005/08/25 14:38:49 gap Exp $";
+    "@(#)$Id: gpprmsya.gi,v 4.38.2.7 2005/11/26 03:28:58 gap Exp $";
 
 # xref to transgrp library
 if not IsBound(TRANSDEGREES) then
@@ -1273,7 +1273,7 @@ function ( G )
     return classes;
 end);
 
-InstallMethod( IsomorphismFpGroup, "alternating group", true,
+InstallMethod( IsomorphismFpGroup, "symmetric group", true,
     [ IsNaturalSymmetricGroup ], 0,
 function(G)
   return IsomorphismFpGroup(G,

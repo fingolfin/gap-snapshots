@@ -2,7 +2,7 @@
 ##
 #W  semigrp.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: semigrp.gi,v 4.45.2.1 2005/05/19 07:11:00 gap Exp $
+#H  @(#)$Id: semigrp.gi,v 4.45.2.2 2006/02/27 12:08:28 sal Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for semigroups.
 ##
 Revision.semigrp_gi :=
-    "@(#)$Id: semigrp.gi,v 4.45.2.1 2005/05/19 07:11:00 gap Exp $";
+    "@(#)$Id: semigrp.gi,v 4.45.2.2 2006/02/27 12:08:28 sal Exp $";
 
 
 #############################################################################
@@ -36,43 +36,19 @@ Revision.semigrp_gi :=
 InstallMethod(CayleyGraphSemigroup, "for generic finite semigroups",
         [IsSemigroup and IsFinite],
     function(s)
-        local gens, cg, elms, i;
+    
+    FroidurePinExtendedAlg(s); 
+    return CayleyGraphSemigroup(s);
 
-        gens := GeneratorsOfMagma(s);
-        elms := EnumeratorSorted(s);
-        cg   := [];
-
-        for i in [1..Size(s)] do
-            cg[i] := (List(elms[i]*gens,x->Position(elms,x)));
-        od;
-
-        ## This list of lists can be used to generate a relation
-        ##     on points. It is not done here because repeats
-        ##     would be lost and the actual structure of the
-        ##     labeled graph would be lost i.e. its labeling.
-        ##
-        return cg;
     end);
 
 InstallMethod(CayleyGraphDualSemigroup, "for generic finite semigroups",
         [IsSemigroup and IsFinite],
     function(s)
-        local gens, cg, elms, i;
 
-        gens := GeneratorsOfMagma(s);
-        elms := EnumeratorSorted(s);
-        cg   := [];
+    FroidurePinExtendedAlg(s); 
+    return CayleyGraphDualSemigroup(s);
 
-        for i in [1..Size(s)] do
-            cg[i] := List(gens*elms[i],x->Position(elms,x));
-        od;
-
-        ## This list of lists can be used to generate a relation
-        ##     on points. It is not done here because repeats
-        ##     would be lost and the actual structure of the
-        ##     labeled graph would be lost i.e. its labeling.
-        ##
-        return cg;
     end);
 
 #############################################################################

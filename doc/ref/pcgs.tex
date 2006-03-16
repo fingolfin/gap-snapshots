@@ -444,6 +444,11 @@ computes a pcgs for <grp> which is induced by <pcgs>. If <pcgs> has
 a parent pcgs, then the result is induced with respect to this parent
 pcgs.
 
+`InducedPcgs' is a wrapper function only. Therefore, methods for computing 
+computing an induced pcgs should be installed for the
+operation `InducedPcgsOp'.
+
+
 \>InducedPcgsByGenerators( <pcgs>, <gens> ) O
 \>InducedPcgsByGeneratorsNC( <pcgs>, <gens> ) O
 

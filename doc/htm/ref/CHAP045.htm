@@ -712,12 +712,22 @@ If <var>word</var> is not contained in the subgroup, <code>fail</code> is return
 <p>
 <h2><a name="SECT009">45.9 Low Index Subgroups</a></h2>
 <p><p>
+<a name = "I0"></a>
+
 <a name = "SSEC009.1"></a>
-<li><code>LowIndexSubgroupsFpGroup( </code><var>G</var><code>, [</code><var>H</var><code>, ]</code><var>index</var><code>[, </code><var>excluded</var><code>] ) O</code>
+<li><code>LowIndexSubgroupsFpGroupIterator( </code><var>G</var><code>[, </code><var>H</var><code>], </code><var>index</var><code>[, </code><var>excluded</var><code>] ) O</code>
+<a name = "SSEC009.1"></a>
+<li><code>LowIndexSubgroupsFpGroup( </code><var>G</var><code>[, </code><var>H</var><code>], </code><var>index</var><code>[, </code><var>excluded</var><code>] ) O</code>
 <p>
-returns a list of representatives of the conjugacy classes of subgroups
-of the finitely presented group <var>G</var> that contain the subgroup <var>H</var> of <var>G</var>
-and that have index less than or equal to <var>index</var>.
+These functions compute representatives of the conjugacy classes of
+subgroups of the finitely presented group <var>G</var> that contain the subgroup
+<var>H</var> of <var>G</var> and that have index less than or equal to <var>index</var>.
+<p>
+<code>LowIndexSubgroupsFpGroupIterator</code> returns an iterator (see&nbsp;<a href="CHAP028.htm#SECT007">Iterators</a>)
+that can be used to run over these subgroups,
+and <code>LowIndexSubgroupsFpGroup</code> returns the list of these subgroups.
+If one is interested only in one or a few subgroups up to a given index
+then preferably the iterator should be used.
 <p>
 If the optional argument <var>excluded</var> has been specified, then it is
 expected to be a list of words in the free generators of the underlying
@@ -727,7 +737,7 @@ any conjugate of any of the group elements defined by these words.
 <p>
 If not given, <var>H</var> defaults to the trivial subgroup.
 <p>
-The function <code>LowIndexSubgroupsFpGroup</code> finds the requested subgroups
+The algorithm used finds the requested subgroups
 by systematically running through a tree of all potential coset tables
 of <var>G</var> of length at most <var>index</var> (where it skips all branches of that
 tree for which it knows in advance that they cannot provide new classes
@@ -743,10 +753,26 @@ gap&gt; li:=LowIndexSubgroupsFpGroup( g, TrivialSubgroup( g ), 10 );
 </pre>
 <p>
 By default, the algorithm computes no generating sets for the subgroups.
-This can be enforced with <code>GeneratorsOfGroup</code>:
+This can be enforcd with <code>GeneratorsOfGroup</code>:
 <pre>
 gap&gt; GeneratorsOfGroup(li[2]);
 [ a, b*a*b^-1 ]
+</pre>
+<p>
+If we are interested just in one (proper) subgroup of index at most 10,
+we can use the function that returns an iterator.
+The first subgroup found is the group itself,
+except if a list of excluded elements is entered (see below),
+so we look at the second subgroup.
+<p>
+<pre>
+gap&gt; iter:= LowIndexSubgroupsFpGroupIterator( g, 10 );;
+gap&gt; s1:= NextIterator( iter );;  Index( g, s1 );
+1
+gap&gt; IsDoneIterator( iter );
+false
+gap&gt; s2:= NextIterator( iter );;  s2 = li[2];
+true
 </pre>
 <p>
 As an example for an application of the optional parameter <var>excluded</var>, we
@@ -768,7 +794,7 @@ gap&gt; lis := LowIndexSubgroupsFpGroup( G, TrivialSubgroup( G ), 24, torsion );
 #I   class 3 of index 24 and length 24
 #I   class 4 of index 24 and length 24
 #I   class 5 of index 24 and length 24
-#I  LowIndexSubgroupsFpGroup returns 5 classes
+#I  LowIndexSubgroupsFpGroup done. Found 5 classes
 gap&gt; SetInfoLevel( InfoFpGroup, 0 );
 </pre>
 <p>
@@ -938,7 +964,7 @@ separate <font face="Gill Sans,Helvetica,Arial">GAP</font> objects.
 <p>
 <h2><a name="SECT011">45.11 New Presentations and Presentations for Subgroups</a></h2>
 <p><p>
-<a name = "I0"></a>
+<a name = "I1"></a>
 
 <code>IsomorphismFpGroup</code> is also used to compute a new finitely presented group
 that is isomorphic to the subgroup of a given finitely presented group.
@@ -1350,5 +1376,5 @@ infinite. (This is the original example from&nbsp;<a href="biblio.htm#New90"><ci
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP044.htm">Previous</a>] [<a href ="CHAP046.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

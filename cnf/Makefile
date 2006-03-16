@@ -2,7 +2,7 @@
 ##
 #W  Makefile			GAP source			 Frank Celler
 ##
-#H  @(#)$Id: Makefile,v 4.15 2001/07/26 10:39:57 sal Exp $
+#H  @(#)$Id: Makefile,v 4.15.4.1 2006/03/06 13:37:07 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,	RWTH Aachen,  Germany
 ##
@@ -28,7 +28,7 @@ float
 
 default: configure.out ../configure
 
-configure.out: configure.in aclocal.m4
+configure.out: configure.in aclocal.m4 config.hin
 	autoconf
 	sed -e 's%^srcdir=$$%srcdir=../../src%' < configure > configure.out
 	chmod 755 configure.out

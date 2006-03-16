@@ -7,51 +7,39 @@
          the trivial group, so the trivial group must be handled
          specially. PerfectGroup and NrPerfectLibraryGroups were changed
          to indicate that the trivial group is not part of the library.
-         NumberPerfectGroups(1) still returns 1 (contrary to its return
-         value in gap 4.dev for the past year).
-      2. The library of perfect groups had a small typo in its data
-         files. The very similar groups PerfectGroup(734832,2) was listed
-         twice, which caused PerfectGroup(734832,3) to return a wrong
-         result without warning. This is fixed by amending the relation b
-         ^3 = 1 (split) to b^3 = tuvz^-1 (nonsplit) as on page 196 of
-         Holt/Plesken. The resulting groups were verified to be 3
-         pairwise nonisomorphic perfect groups of order 734832.
-      3. The library of perfect groups had a small typo in its data
-         files. The central elements used to form PerfectGroup(864000,3)
-         were listed incorrectly as d1 and a2*a2. The correct elements
-         are d1, a2^2, and c2^2. The correct names were calculated in GAP
-         based on the description on page 258 of Holt/Plesken.
-      4. The functions EpimorphismSchurCover and
+      2. The descriptions of PerfectGroup(734832,3) and PerfectGroup
+         (864000,3) were corrected in the library of perfect groups.
+      3. The functions EpimorphismSchurCover and
          AbelianInvariantsMultiplier may have produced wrong results
          without warning. These problems are fixed. However, the methods
          currently used can be expected to be slower than the ones used
          before; we hope to fix this for the next version of GAP.
-      5. DerivedSubgroup and CommutatorSubgroup for permutation groups
+      4. DerivedSubgroup and CommutatorSubgroup for permutation groups
          sometimes returned groups with an incorrect stabilizer chain due
          to a missing verification step after a random Schreier Sims.
-      6. NaturalHomomorphismByNormalSubgroup for FpGroups did unnecessary
+      5. NaturalHomomorphismByNormalSubgroup for FpGroups did unnecessary
          rewrites.
-      7. The alternating group A3 incorrectly claimed to be not simple.
-      8. ExponentSyllable for straight line program elements gave a wrong
+      6. The alternating group A3 incorrectly claimed to be not simple.
+      7. ExponentSyllable for straight line program elements gave a wrong
          result.
-      9. PrimePGroup is defined to return fail for trivial groups, but if
+      8. PrimePGroup is defined to return fail for trivial groups, but if
          the group was constructed as a factor or subgroup of a known
          p-group, the value of p was retained.
-     10. The functions TestPackageAvailability and LoadPackage did not
+      9. The functions TestPackageAvailability and LoadPackage did not
          work correctly when one asked for a particular version of the
          package, via a version number starting with the character =, in
          the sense that a version with a larger version number was loaded
          if it was available. [Reported by Burkhard Höfling]
-     11. The generator names constructed by AlgebraByStructureConstants
+     10. The generator names constructed by AlgebraByStructureConstants
          were nonsense.
-     12. The undocumented function (but recently advertised on gap-dev)
+     11. The undocumented function (but recently advertised on gap-dev)
          COPY_LIST_ENTRIES did not handle overlapping source and
          destination areas correctly in some cases.
-     13. The elements in a free magma ring have the filter
+     12. The elements in a free magma ring have the filter
          IsAssociativeElement set whenever the elements in the underlying
          magma and in the coefficients ring have this filter set.
          [Reported by Randy Cone]
-     14. The function InstallValue must not be used for objects in the
+     13. The function InstallValue must not be used for objects in the
          filter IsFamily because these objects are compared via
          IsIdenticalObj. [Reported by Max Neunhöffer]
 
@@ -156,12 +144,12 @@
 
      New or improved functionality
 
-      1. New operation Remove and extended functionality of Add with an
+      1. The primitive groups library has been extended to degree 2499.
+      2. New operation Remove and extended functionality of Add with an
          optional argument giving the position of the insertion. They are
          based on an efficient kernel function COPY_LIST_ENTRIES.
-      2. Added fast kernel implementation of Tarjan's algorithm for
+      3. Added fast kernel implementation of Tarjan's algorithm for
          strongly connected components of a directed graph.
-      3. The primitive groups library has been extended to degree 2499.
       4. Now IsProbablyPrimeInt can be used with larger numbers. (Made
          internal function TraceModQF non-recursive.)
       5. A new operation PadicValuation and a corresponding method for
@@ -195,4 +183,4 @@
          more time in GAP 4.4.6 than in GAP 4.4.5.
      14. Some very basic functionality for floats.
 
-    The GAP Group, September 2005 
+    The GAP Group, September 2005

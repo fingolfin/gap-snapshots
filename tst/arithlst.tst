@@ -2,14 +2,14 @@
 ##
 #W  arithlst.tst                GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: arithlst.tst,v 1.15.4.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: arithlst.tst,v 1.15.4.4 2006/03/06 12:34:24 sal Exp $
 ##
 #Y  Copyright (C)  2000,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  Exclude from testall.g because it runs too long.
 ##
 
-gap> START_TEST("$Id: arithlst.tst,v 1.15.4.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: arithlst.tst,v 1.15.4.4 2006/03/06 12:34:24 sal Exp $");
 
 
 #############################################################################
@@ -25,6 +25,10 @@ gap> error:= Print;;
 ##
 ##  Define auxiliary functions.
 ##
+
+gap> RandomSquareArray := function( dim, D )
+>   return List( [ 1 .. dim ], i -> List( [ 1 .. dim ], j -> Random( D ) ) );
+> end;;
 
 gap> NestingDepthATest := function( obj )
 >   if not IsGeneralizedRowVector( obj ) then
@@ -596,8 +600,8 @@ gap> TestOfAdditiveListArithmetic := function( R, dim )
 >     Unbind( vec1[ Random( [ 1 .. dim ] ) ] );
 >     RunTest( AdditionTest, vec1, vec2 );
 > 
->     mat1:= RandomMat( dim, dim, R );
->     mat2:= RandomMat( dim, dim, R );
+>     mat1:= RandomSquareArray( dim, R );
+>     mat2:= RandomSquareArray( dim, R );
 > 
 >     RunTest( ZeroTest, mat1 );
 >     RunTest( AdditiveInverseTest, mat1 );
@@ -702,8 +706,8 @@ gap> TestOfMultiplicativeListArithmetic := function( R, dim )
 >     Unbind( vec1[ Random( [ 1 .. dim ] ) ] );
 >     RunTest( MultiplicationTest, vec1, vec2 );
 > 
->     mat1:= RandomMat( dim, dim, R );
->     mat2:= RandomMat( dim, dim, R );
+>     mat1:= RandomSquareArray( dim, R );
+>     mat2:= RandomSquareArray( dim, R );
 > 
 >     RunTest( OneTest, mat1 );
 >     RunTest( InverseTest, mat1 );

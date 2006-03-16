@@ -2,7 +2,7 @@
 \chapcontents {1}{About: Extending GAP}{10}
 \chapcontents {2}{The gapmacro.tex Manual Format}{11}
 \seccontents {2.1}{The Main File} {11}
-\seccontents {2.2}{Chapters and Sections} {14}
+\seccontents {2.2}{Chapters and Sections} {15}
 \seccontents {2.3}{Suppressing Indexing and Labelling of a Section and Resolving Label Clashes} {15}
 \seccontents {2.4}{Labels and References} {15}
 \seccontents {2.5}{TeX Macros} {16}

@@ -2,7 +2,7 @@
 **
 *W  lists.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: lists.c,v 4.60 2003/12/01 12:54:14 sal Exp $
+*H  @(#)$Id: lists.c,v 4.60.2.1 2005/11/30 22:49:09 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_lists_c =
-   "@(#)$Id: lists.c,v 4.60 2003/12/01 12:54:14 sal Exp $";
+   "@(#)$Id: lists.c,v 4.60.2.1 2005/11/30 22:49:09 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1898,6 +1898,7 @@ void            ElmListLevel (
             CHANGED_BAG( lists );
 
         }
+	RetypeBag(lists, T_PLIST_DENSE);
 
     }
 

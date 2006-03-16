@@ -2,16 +2,16 @@
 ##
 #W  rwssmg.gi           GAP library                             Isabel Araujo
 ##
-#H  @(#)$Id: rwssmg.gi,v 4.19.2.1 2004/10/31 22:55:42 gap Exp $
+#H  @(#)$Id: rwssmg.gi,v 4.19.2.2 2006/02/27 12:08:28 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the declarations for semigroups defined by rws.
-##
+## JDM
 Revision.rwssmg_gi :=
-    "@(#)$Id: rwssmg.gi,v 4.19.2.1 2004/10/31 22:55:42 gap Exp $";
+    "@(#)$Id: rwssmg.gi,v 4.19.2.2 2006/02/27 12:08:28 sal Exp $";
 
 ############################################################################
 ##
@@ -339,6 +339,32 @@ InstallMethod(FreeMonoidOfRewritingSystem,
 function(rws)
   return FreeMonoidOfFpMonoid(
     MonoidOfRewritingSystem(rws));
+end);
+
+#############################################################################
+##
+#M  GeneratorsOfRws(<RWS>)
+##
+
+InstallOtherMethod(GeneratorsOfRws, 
+"for a monoid rewriting system", true, 
+[IsRewritingSystem and IsBuiltFromSemigroup], 0, 
+function(rws) 
+return GeneratorsOfSemigroup(FreeSemigroupOfRewritingSystem(rws));
+
+end);
+
+#############################################################################
+##
+#M  GeneratorsOfRws(<RWS>)
+##
+
+InstallOtherMethod(GeneratorsOfRws, 
+"for a monoid rewriting system", true, 
+[IsRewritingSystem and IsBuiltFromMonoid], 0, 
+function(rws) 
+return GeneratorsOfMonoid(FreeMonoidOfRewritingSystem(rws));
+
 end);
 
 #############################################################################

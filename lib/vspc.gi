@@ -2,7 +2,7 @@
 ##
 #W  vspc.gi                     GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspc.gi,v 4.43.2.3 2005/04/27 13:16:19 gap Exp $
+#H  @(#)$Id: vspc.gi,v 4.43.2.4 2005/11/29 15:44:32 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for vector spaces.
 ##
 Revision.vspc_gi :=
-    "@(#)$Id: vspc.gi,v 4.43.2.3 2005/04/27 13:16:19 gap Exp $";
+    "@(#)$Id: vspc.gi,v 4.43.2.4 2005/11/29 15:44:32 gap Exp $";
 
 
 #############################################################################
@@ -47,6 +47,21 @@ InstallMethod( IsLeftActedOnByDivisionRing,
     else
       return IsDivisionRing( LeftActingDomain( M ) );
     fi;
+    end );
+
+
+#############################################################################
+##
+#F  VectorSpace( <F>, <gens>[, <zero>][, "basis"] )
+##
+##  The only difference between `VectorSpace' and `FreeLeftModule' shall be
+##  that the left acting domain of a vector space must be a division ring.
+##
+InstallGlobalFunction( VectorSpace, function( arg )
+    if Length( arg ) = 0 or not IsDivisionRing( arg[1] ) then
+      Error( "usage: VectorSpace( <F>, <gens>[, <zero>][, \"basis\"] )" );
+    fi;
+    return CallFuncList( FreeLeftModule, arg );
     end );
 
 

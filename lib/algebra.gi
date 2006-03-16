@@ -3,7 +3,7 @@
 #W  algebra.gi                  GAP library                     Thomas Breuer
 #W                                                        and Willem de Graaf
 ##
-#H  @(#)$Id: algebra.gi,v 4.80 2003/10/19 09:54:43 gap Exp $
+#H  @(#)$Id: algebra.gi,v 4.80.2.1 2005/11/26 06:58:57 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains generic methods for algebras and algebras-with-one.
 ##
 Revision.algebra_gi :=
-    "@(#)$Id: algebra.gi,v 4.80 2003/10/19 09:54:43 gap Exp $";
+    "@(#)$Id: algebra.gi,v 4.80.2.1 2005/11/26 06:58:57 gap Exp $";
 
 
 #############################################################################
@@ -3039,7 +3039,7 @@ InstallOtherMethod( DirectSumOfAlgebras,
           ll,    # A list of structure constants.
           L,     # result.
           sym,   # if both products are (anti)symmetric, then the result
-                 # will have the sam property.
+                 # will have the same property.
           R1,R2, # Root systems of A1,A2.
           f1,f2, # Embeddings of A1,A2 in L.
           R,     # Root system of L.
@@ -3066,8 +3066,6 @@ InstallOtherMethod( DirectSumOfAlgebras,
 
     scT:= StructureConstantsTable( Basis( A2 ) );
 
-    if scT[n2+1] = sym then T[ n+1 ]:= sym; fi;
-
     for i in [1..n2] do
       for j in [1..n2] do
         ll:= ShallowCopy( scT[i][j] );
@@ -3075,6 +3073,17 @@ InstallOtherMethod( DirectSumOfAlgebras,
         T[n1+i][n1+j]:= ll;
       od;
     od;
+
+
+    # Set the (anti)symmetric flag
+    if scT[n2 + 1] = sym  then
+        T[n + 1] := sym;
+    fi;
+    if Characteristic( LeftActingDomain( A1 ) ) = 2 and sym in [ 1, -1 ]
+        and scT[n2 + 1] in [ 1, -1 ]  then
+        T[n + 1] := 1;
+    fi;
+
 
     L:= AlgebraByStructureConstants( LeftActingDomain( A1 ), T );
 

@@ -2,14 +2,14 @@
 ##
 #W  groebner.gd                   GAP Library               Alexander Hulpke   
 ##
-#H  @(#)$Id: groebner.gd,v 4.1 2002/06/24 19:02:03 gap Exp $
+#H  @(#)$Id: groebner.gd,v 4.1.2.1 2005/09/08 02:05:34 gap Exp $
 ##
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the declarations for monomial orderings and Groebner
 ##  bases.
 Revision.groebner_gd :=
-    "@(#)$Id: groebner.gd,v 4.1 2002/06/24 19:02:03 gap Exp $";
+    "@(#)$Id: groebner.gd,v 4.1.2.1 2005/09/08 02:05:34 gap Exp $";
 
 #############################################################################
 ##
@@ -89,7 +89,7 @@ DeclareAttribute("OccuringVariableIndices",IsMonomialOrdering);
 ##  of the polynomial <pol>.
 ##
 DeclareOperation("LeadingMonomialOfPolynomial",
-  [IsRationalFunction,IsMonomialOrdering]);
+  [IsPolynomialFunction,IsMonomialOrdering]);
 
 #############################################################################
 ##
@@ -99,7 +99,7 @@ DeclareOperation("LeadingMonomialOfPolynomial",
 ##  monomial, see~"LeadingMonomialOfPolynomial") of the polynomial <pol>.
 ##
 DeclareOperation("LeadingCoefficientOfPolynomial",
-  [IsRationalFunction,IsMonomialOrdering]);
+  [IsPolynomialFunction,IsMonomialOrdering]);
 
 #############################################################################
 ##
@@ -110,7 +110,7 @@ DeclareOperation("LeadingCoefficientOfPolynomial",
 ##  leading monomial.
 ##
 DeclareOperation("LeadingTermOfPolynomial",
-  [IsRationalFunction,IsMonomialOrdering]);
+  [IsPolynomialFunction,IsMonomialOrdering]);
 
 
 #############################################################################

@@ -65,6 +65,7 @@ I 3.2. -U
 I 3.2. -P
 I 3.2. -W
 I 3.2. -z
+I 3.2. -p
 S 3.3. Running GAP under MacOS
 I 3.3. -z!on Macintosh
 I 3.3. -P!on Macintosh
@@ -1969,6 +1970,11 @@ F 35.8. ResultOfStraightLineProgram
 F 35.8. StringOfResultOfStraightLineProgram
 F 35.8. CompositionOfStraightLinePrograms
 F 35.8. IntegratedStraightLineProgram
+F 35.8. RestrictOutputsOfSLP
+F 35.8. IntermediateResultOfSLP
+F 35.8. IntermediateResultOfSLPWithoutOverwrite
+F 35.8. IntermediateResultsOfSLPWithoutOverwrite
+F 35.8. ProductOfStraightLinePrograms
 S 35.9. Straight Line Program Elements
 F 35.9. IsStraightLineProgElm
 F 35.9. StraightLineProgElm
@@ -2452,6 +2458,7 @@ F 40.4. ListPerm
 F 40.4. PermList
 F 40.4. MappingPermListList
 F 40.4. RestrictedPerm
+F 40.4. RestrictedPermNC
 C grpperm.tex 41. Permutation Groups
 F 41.0. IsPermGroup
 S 41.1. The Natural Action
@@ -2788,6 +2795,8 @@ F 45.8. AugmentedCosetTableMtc
 F 45.8. AugmentedCosetTableRrs
 F 45.8. RewriteWord
 S 45.9. Low Index Subgroups
+I 45.9. iterator!for low index subgroups
+F 45.9. LowIndexSubgroupsFpGroupIterator
 F 45.9. LowIndexSubgroupsFpGroup
 S 45.10. Converting Groups to Finitely Presented Groups
 F 45.10. IsomorphismFpGroup
@@ -2905,9 +2914,12 @@ F 47.4. WreathProductProductAction
 F 47.4. KuKGenerators
 I 47.4. Krasner-Kaloujnine theorem
 I 47.4. Wreath product embedding
-S 47.5. Embeddings and Projections for Group Products
-F 47.5. Embedding!for group products
-F 47.5. Projection!for group products
+S 47.5. Free Products
+F 47.5. FreeProduct
+F 47.5. FreeProduct
+S 47.6. Embeddings and Projections for Group Products
+F 47.6. Embedding!for group products
+F 47.6. Projection!for group products
 C grplib.tex 48. Group Libraries
 S 48.1. Basic Groups
 F 48.1. TrivialGroup
@@ -3464,6 +3476,9 @@ F 57.1. IsFFE
 F 57.1. IsFFECollection
 F 57.1. IsFFECollColl
 F 57.1. Z
+F 57.1. Z
+F 57.1. IsLexOrderedFFE
+F 57.1. IsLogOrderedFFE
 S 57.2. Operations for Finite Field Elements
 F 57.2. DegreeFFE
 F 57.2. DegreeFFE
@@ -3498,6 +3513,7 @@ S 57.5. Conway Polynomials
 F 57.5. ConwayPolynomial
 F 57.5. IsCheapConwayPolynomial
 F 57.5. RandomPrimitivePolynomial
+S 57.6. Printing, Viewing and Displaying Finite Field Elements
 C fldabnum.tex 58. Abelian Number Fields
 S 58.1. Construction of Abelian Number Fields
 F 58.1. CyclotomicField
@@ -3965,6 +3981,8 @@ F 64.6. LeadingCoefficient
 F 64.6. LeadingMonomial
 F 64.6. Derivative
 F 64.6. Derivative
+F 64.6. Derivative
+F 64.6. Discriminant
 F 64.6. Discriminant
 F 64.6. Discriminant
 F 64.6. Resultant
@@ -4058,8 +4076,11 @@ F 64.20. ExtRepPolynomialRatFun
 F 64.20. IsLaurentPolynomialDefaultRep
 S 64.21. Creation of Rational Functions
 F 64.21. RationalFunctionByExtRep
+F 64.21. RationalFunctionByExtRepNC
 F 64.21. PolynomialByExtRep
+F 64.21. PolynomialByExtRepNC
 F 64.21. LaurentPolynomialByExtRep
+F 64.21. LaurentPolynomialByExtRepNC
 S 64.22. Arithmetic for External Representations of Polynomials
 F 64.22. ZippedSum
 F 64.22. ZippedProduct
@@ -4390,7 +4411,6 @@ I 69.11. PrintObj!for character tables
 I 69.11. Display!for character tables
 F 69.11. DisplayOptions
 F 69.11. PrintCharacterTable
-F 69.11. CharacterTableString
 S 69.12. Computing the Irreducible Characters of a Group
 F 69.12. IrrDixonSchneider
 F 69.12. IrrConlon

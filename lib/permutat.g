@@ -3,7 +3,7 @@
 #W  permutat.g                   GAP library                    Thomas Breuer
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: permutat.g,v 4.35 2003/08/05 15:50:37 gap Exp $
+#H  @(#)$Id: permutat.g,v 4.35.2.1 2005/12/03 04:08:11 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file deals with permutations.
 ##
 Revision.permutat_g :=
-    "@(#)$Id: permutat.g,v 4.35 2003/08/05 15:50:37 gap Exp $";
+    "@(#)$Id: permutat.g,v 4.35.2.1 2005/12/03 04:08:11 gap Exp $";
 
 #1
 ##  Internally, {\GAP}  stores a permutation as a  list of the  <d> images of
@@ -270,6 +270,7 @@ end );
 #############################################################################
 ##
 #O  RestrictedPerm(<perm>,<list>)  restriction of a perm. to an invariant set
+#O  RestrictedPermNC(<perm>,<list>)  restriction of a perm. to an invariant set
 ##
 ##  `RestrictedPerm' returns  the new permutation <new>  that acts on the
 ##  points in the list <list> in the same  way as the permutation <perm>,
@@ -278,39 +279,34 @@ end );
 ##  <list> the image `<i>^<perm>' is also in <list>,
 ##  i.e., <list> must be the union of cycles of <perm>.
 ##
+##  `RestrictedPermNC' does not check whether <list> is a union of cycles.
+##
 DeclareOperation( "RestrictedPerm", [ IsPerm, IsList ] );
+DeclareOperation( "RestrictedPermNC", [ IsPerm, IsList ] );
 
-InstallMethod( RestrictedPerm,
-    "for internally represented permutation, and list",
-    [ IsPerm and IsInternalRep, IsList ],
-    function( g, D )
-    local   res, d, e, max;
+InstallMethod(RestrictedPermNC,"kernel method",true,
+  [IsPerm and IsInternalRep, IsList],0,
+function(g,D)
+local p;
+  p:=RESTRICTED_PERM(g,D,false);
+  if p=fail then
+    Error("<g> must be a permutation and <D> a plain list or range,\n",
+	  "   consisting of a union of cycles of <g>");
+  fi;
+  return p;
+end);
 
-    # special case for the identity
-    if IsOne( g )  then return ();  fi;
-
-    # compute the largest point that we must consider
-    max := 1;
-    for d  in D  do
-        e := d ^ g;
-        if d <> e  and max < d  then
-            max := d;
-        fi;
-    od;
-
-    # compute the restricted permutation <res>
-    res := [ 1 .. max ];
-    for d  in D  do
-        e := d ^ g;
-        if d <= max  then
-            res[d] := e;
-        fi;
-    od;
-
-    # return the restricted permutation <res>
-    return PermList( res );
-    end );
-
+InstallMethod( RestrictedPerm,"use kernel method, test",true,
+  [IsPerm and IsInternalRep, IsList],0,
+function(g,D)
+  local p;
+  p:=RESTRICTED_PERM(g,D,true);
+  if p=fail then
+    Error("<g> must be a permutation and <D> a plain list or range,\n",
+	  "   consisting of a union of cycles of <g>");
+  fi;
+  return p;
+end);
 
 #############################################################################
 ##

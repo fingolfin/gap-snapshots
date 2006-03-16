@@ -2,7 +2,7 @@
 ##
 #W  algfld.gi                   GAP Library                  Alexander Hulpke
 ##
-#H  @(#)$Id: algfld.gi,v 4.51.2.1 2004/01/25 02:09:37 gap Exp $
+#H  @(#)$Id: algfld.gi,v 4.51.2.2 2005/12/21 08:30:03 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for algebraic elements and their families
 ##
 Revision.algfld_gi:=
-  "@(#)$Id: algfld.gi,v 4.51.2.1 2004/01/25 02:09:37 gap Exp $";
+  "@(#)$Id: algfld.gi,v 4.51.2.2 2005/12/21 08:30:03 gap Exp $";
 
 #############################################################################
 ##
@@ -809,7 +809,7 @@ end);
 #   [IsAlgebraicExtension,IsScalar],0,
 # function(f,e)
 # local   p;
-#   p:=CharacteristicPolynomial(f,e);
+#   p:=CharacteristicPolynomial(f,f,e);
 #   p:=CoefficientsOfUnivariatePolynomial(p);
 #   return -p[Length(p)-1];
 # end);
@@ -822,7 +822,7 @@ end);
 #   [IsAlgebraicExtension,IsScalar],0,
 # function(f,e)
 # local   p;
-#   p:=CharacteristicPolynomial(f,e);
+#   p:=CharacteristicPolynomial(f,f,e);
 #   p:=CoefficientsOfUnivariatePolynomial(p);
 #   return p[1]*(-1)^(Length(p)-1);
 # end);

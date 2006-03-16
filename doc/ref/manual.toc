@@ -9,15 +9,15 @@
 \seccontents {2.4}{The Pager Command} {25}
 \chapcontents {3}{Running GAP}{27}
 \seccontents {3.1}{Command Line Options} {27}
-\seccontents {3.2}{Advanced Features of GAP} {29}
+\seccontents {3.2}{Advanced Features of GAP} {30}
 \seccontents {3.3}{Running GAP under MacOS} {31}
 \seccontents {3.4}{The .gaprc file} {33}
 \seccontents {3.5}{Completion Files} {34}
-\seccontents {3.6}{Testing for the System Architecture} {34}
+\seccontents {3.6}{Testing for the System Architecture} {35}
 \seccontents {3.7}{The Compiler} {35}
-\seccontents {3.8}{Suitability for Compilation} {35}
+\seccontents {3.8}{Suitability for Compilation} {36}
 \seccontents {3.9}{Compiling Library Code} {36}
-\seccontents {3.10}{CRC Numbers} {36}
+\seccontents {3.10}{CRC Numbers} {37}
 \seccontents {3.11}{Saving and Loading a Workspace} {37}
 \seccontents {3.12}{Coloring the Prompt and Input} {38}
 \chapcontents {4}{The Programming Language}{39}
@@ -68,231 +68,231 @@
 \seccontents {7.3}{Tracing Methods} {78}
 \seccontents {7.4}{Info Functions} {79}
 \seccontents {7.5}{Assertions} {80}
-\seccontents {7.6}{Timing} {81}
+\seccontents {7.6}{Timing} {80}
 \seccontents {7.7}{Profiling} {81}
-\seccontents {7.8}{Information about the version used} {84}
-\seccontents {7.9}{Test Files} {84}
+\seccontents {7.8}{Information about the version used} {83}
+\seccontents {7.9}{Test Files} {83}
 \seccontents {7.10}{Debugging Recursion} {84}
 \seccontents {7.11}{Global Memory Information} {86}
-\chapcontents {8}{Options Stack}{88}
-\chapcontents {9}{Files and Filenames}{90}
-\seccontents {9.1}{Portability} {90}
-\seccontents {9.2}{GAP Root Directory} {90}
-\seccontents {9.3}{Directories} {91}
-\seccontents {9.4}{Filename} {92}
-\seccontents {9.5}{Special Filenames} {93}
-\seccontents {9.6}{File Access} {93}
-\seccontents {9.7}{File Operations} {94}
-\chapcontents {10}{Streams}{97}
-\seccontents {10.1}{Categories for Streams and the StreamsFamily} {97}
-\seccontents {10.2}{Operations applicable to All Streams} {98}
-\seccontents {10.3}{Operations for Input Streams} {99}
-\seccontents {10.4}{Operations for Output Streams} {101}
-\seccontents {10.5}{File Streams} {103}
-\seccontents {10.6}{User Streams} {104}
-\seccontents {10.7}{String Streams} {104}
-\seccontents {10.8}{Input-Output Streams} {105}
-\seccontents {10.9}{Dummy Streams} {106}
-\seccontents {10.10}{Handling of Streams in the Background} {106}
-\chapcontents {11}{Processes}{108}
-\seccontents {11.1}{Process} {108}
-\seccontents {11.2}{Exec} {109}
-\chapcontents {12}{Objects and Elements}{110}
-\seccontents {12.1}{Objects} {110}
-\seccontents {12.2}{Elements as equivalence classes} {110}
-\seccontents {12.3}{Sets} {111}
-\seccontents {12.4}{Domains} {111}
-\seccontents {12.5}{Identical Objects} {111}
-\seccontents {12.6}{Mutability and Copyability} {112}
-\seccontents {12.7}{Duplication of Objects} {114}
-\seccontents {12.8}{Other Operations Applicable to any Object} {115}
-\chapcontents {13}{Types of Objects}{116}
-\seccontents {13.1}{Families} {116}
-\seccontents {13.2}{Filters} {117}
-\seccontents {13.3}{Categories} {118}
-\seccontents {13.4}{Representation} {120}
-\seccontents {13.5}{Attributes} {121}
-\seccontents {13.6}{Setter and Tester for Attributes} {122}
-\seccontents {13.7}{Properties} {124}
-\seccontents {13.8}{Other Filters} {125}
-\seccontents {13.9}{Types} {125}
-\chapcontents {14}{Integers}{126}
-\seccontents {14.1}{Elementary Operations for Integers} {127}
-\seccontents {14.2}{Quotients and Remainders} {129}
-\seccontents {14.3}{Prime Integers and Factorization} {131}
-\seccontents {14.4}{Residue Class Rings} {134}
-\chapcontents {15}{Number Theory}{136}
-\seccontents {15.1}{Prime Residues} {136}
-\seccontents {15.2}{Primitive Roots and Discrete Logarithms} {137}
-\seccontents {15.3}{Roots Modulo Integers} {138}
-\seccontents {15.4}{Multiplicative Arithmetic Functions} {140}
-\seccontents {15.5}{Continued Fractions} {141}
-\seccontents {15.6}{Miscellaneous} {142}
-\chapcontents {16}{Rational Numbers}{143}
-\seccontents {16.1}{Elementary Operations for Rationals} {143}
-\chapcontents {17}{Combinatorics}{145}
-\seccontents {17.1}{Combinatorial Numbers} {145}
-\seccontents {17.2}{Combinations, Arrangements and Tuples} {147}
-\seccontents {17.3}{Fibonacci and Lucas Sequences} {153}
-\seccontents {17.4}{Permanent of a Matrix} {154}
-\chapcontents {18}{Cyclotomic Numbers}{155}
-\seccontents {18.1}{Operations for Cyclotomics} {155}
-\seccontents {18.2}{Infinity} {158}
-\seccontents {18.3}{Comparisons of Cyclotomics} {159}
-\seccontents {18.4}{ATLAS Irrationalities} {159}
-\seccontents {18.5}{Galois Conjugacy of Cyclotomics} {162}
-\seccontents {18.6}{Internally Represented Cyclotomics} {164}
-\chapcontents {19}{Unknowns}{165}
-\chapcontents {20}{Booleans}{167}
-\seccontents {20.1}{Fail} {167}
-\seccontents {20.2}{Comparisons of Booleans} {167}
-\seccontents {20.3}{Operations for Booleans} {168}
-\chapcontents {21}{Lists}{170}
-\seccontents {21.1}{List Categories} {170}
-\seccontents {21.2}{Basic Operations for Lists} {172}
-\seccontents {21.3}{List Elements} {172}
-\seccontents {21.4}{List Assignment} {174}
-\seccontents {21.5}{IsBound and Unbind for Lists} {176}
-\seccontents {21.6}{Identical Lists} {177}
-\seccontents {21.7}{Duplication of Lists} {178}
-\seccontents {21.8}{Membership Test for Lists} {180}
-\seccontents {21.9}{Enlarging Internally Represented Lists} {180}
-\seccontents {21.10}{Comparisons of Lists} {180}
-\seccontents {21.11}{Arithmetic for Lists} {181}
-\seccontents {21.12}{Filters Controlling the Arithmetic Behaviour of Lists} {182}
-\seccontents {21.13}{Additive Arithmetic for Lists} {183}
-\seccontents {21.14}{Multiplicative Arithmetic for Lists} {184}
-\seccontents {21.15}{Mutability Status and List Arithmetic} {187}
-\seccontents {21.16}{Finding Positions in Lists} {188}
-\seccontents {21.17}{Properties and Attributes for Lists} {190}
-\seccontents {21.18}{Sorting Lists} {192}
-\seccontents {21.19}{Sorted Lists and Sets} {193}
-\seccontents {21.20}{Operations for Lists} {195}
-\seccontents {21.21}{Advanced List Manipulations} {202}
-\seccontents {21.22}{Ranges} {203}
-\seccontents {21.23}{Enumerators} {205}
-\chapcontents {22}{Boolean Lists}{207}
-\seccontents {22.1}{Boolean Lists Representing Subsets} {207}
-\seccontents {22.2}{Set Operations via Boolean Lists} {208}
-\seccontents {22.3}{Function that Modify Boolean Lists} {209}
-\seccontents {22.4}{More about Boolean Lists} {210}
-\chapcontents {23}{Row Vectors}{211}
-\seccontents {23.1}{Operators for Row Vectors} {211}
-\seccontents {23.2}{Row Vectors over Finite Fields} {213}
-\seccontents {23.3}{Coefficient List Arithmetic} {214}
-\seccontents {23.4}{Shifting and Trimming Coefficient Lists} {215}
-\seccontents {23.5}{Functions for Coding Theory} {216}
-\seccontents {23.6}{Vectors as coefficients of polynomials} {216}
-\chapcontents {24}{Matrices}{219}
-\seccontents {24.1}{Categories of Matrices} {219}
-\seccontents {24.2}{Operators for Matrices} {220}
-\seccontents {24.3}{Properties and Attributes of Matrices} {222}
-\seccontents {24.4}{Matrix Constructions} {224}
-\seccontents {24.5}{Random Matrices} {226}
-\seccontents {24.6}{Matrices Representing Linear Equations and the Gaussian Algorithm} {226}
-\seccontents {24.7}{Eigenvectors and eigenvalues} {227}
-\seccontents {24.8}{Elementary Divisors} {228}
-\seccontents {24.9}{Echelonized Matrices} {228}
-\seccontents {24.10}{Matrices as Basis of a Row Space} {230}
-\seccontents {24.11}{Triangular Matrices} {231}
-\seccontents {24.12}{Matrices as Linear Mappings} {231}
+\chapcontents {8}{Options Stack}{87}
+\chapcontents {9}{Files and Filenames}{89}
+\seccontents {9.1}{Portability} {89}
+\seccontents {9.2}{GAP Root Directory} {89}
+\seccontents {9.3}{Directories} {90}
+\seccontents {9.4}{Filename} {91}
+\seccontents {9.5}{Special Filenames} {92}
+\seccontents {9.6}{File Access} {92}
+\seccontents {9.7}{File Operations} {93}
+\chapcontents {10}{Streams}{96}
+\seccontents {10.1}{Categories for Streams and the StreamsFamily} {96}
+\seccontents {10.2}{Operations applicable to All Streams} {97}
+\seccontents {10.3}{Operations for Input Streams} {98}
+\seccontents {10.4}{Operations for Output Streams} {100}
+\seccontents {10.5}{File Streams} {102}
+\seccontents {10.6}{User Streams} {103}
+\seccontents {10.7}{String Streams} {103}
+\seccontents {10.8}{Input-Output Streams} {104}
+\seccontents {10.9}{Dummy Streams} {105}
+\seccontents {10.10}{Handling of Streams in the Background} {105}
+\chapcontents {11}{Processes}{107}
+\seccontents {11.1}{Process} {107}
+\seccontents {11.2}{Exec} {108}
+\chapcontents {12}{Objects and Elements}{109}
+\seccontents {12.1}{Objects} {109}
+\seccontents {12.2}{Elements as equivalence classes} {109}
+\seccontents {12.3}{Sets} {110}
+\seccontents {12.4}{Domains} {110}
+\seccontents {12.5}{Identical Objects} {110}
+\seccontents {12.6}{Mutability and Copyability} {111}
+\seccontents {12.7}{Duplication of Objects} {113}
+\seccontents {12.8}{Other Operations Applicable to any Object} {114}
+\chapcontents {13}{Types of Objects}{115}
+\seccontents {13.1}{Families} {115}
+\seccontents {13.2}{Filters} {116}
+\seccontents {13.3}{Categories} {117}
+\seccontents {13.4}{Representation} {119}
+\seccontents {13.5}{Attributes} {120}
+\seccontents {13.6}{Setter and Tester for Attributes} {121}
+\seccontents {13.7}{Properties} {123}
+\seccontents {13.8}{Other Filters} {124}
+\seccontents {13.9}{Types} {124}
+\chapcontents {14}{Integers}{125}
+\seccontents {14.1}{Elementary Operations for Integers} {126}
+\seccontents {14.2}{Quotients and Remainders} {128}
+\seccontents {14.3}{Prime Integers and Factorization} {130}
+\seccontents {14.4}{Residue Class Rings} {133}
+\chapcontents {15}{Number Theory}{135}
+\seccontents {15.1}{Prime Residues} {135}
+\seccontents {15.2}{Primitive Roots and Discrete Logarithms} {136}
+\seccontents {15.3}{Roots Modulo Integers} {137}
+\seccontents {15.4}{Multiplicative Arithmetic Functions} {139}
+\seccontents {15.5}{Continued Fractions} {140}
+\seccontents {15.6}{Miscellaneous} {141}
+\chapcontents {16}{Rational Numbers}{142}
+\seccontents {16.1}{Elementary Operations for Rationals} {142}
+\chapcontents {17}{Combinatorics}{144}
+\seccontents {17.1}{Combinatorial Numbers} {144}
+\seccontents {17.2}{Combinations, Arrangements and Tuples} {146}
+\seccontents {17.3}{Fibonacci and Lucas Sequences} {152}
+\seccontents {17.4}{Permanent of a Matrix} {153}
+\chapcontents {18}{Cyclotomic Numbers}{154}
+\seccontents {18.1}{Operations for Cyclotomics} {154}
+\seccontents {18.2}{Infinity} {157}
+\seccontents {18.3}{Comparisons of Cyclotomics} {158}
+\seccontents {18.4}{ATLAS Irrationalities} {158}
+\seccontents {18.5}{Galois Conjugacy of Cyclotomics} {161}
+\seccontents {18.6}{Internally Represented Cyclotomics} {163}
+\chapcontents {19}{Unknowns}{164}
+\chapcontents {20}{Booleans}{166}
+\seccontents {20.1}{Fail} {166}
+\seccontents {20.2}{Comparisons of Booleans} {166}
+\seccontents {20.3}{Operations for Booleans} {167}
+\chapcontents {21}{Lists}{169}
+\seccontents {21.1}{List Categories} {169}
+\seccontents {21.2}{Basic Operations for Lists} {171}
+\seccontents {21.3}{List Elements} {171}
+\seccontents {21.4}{List Assignment} {173}
+\seccontents {21.5}{IsBound and Unbind for Lists} {175}
+\seccontents {21.6}{Identical Lists} {176}
+\seccontents {21.7}{Duplication of Lists} {177}
+\seccontents {21.8}{Membership Test for Lists} {179}
+\seccontents {21.9}{Enlarging Internally Represented Lists} {179}
+\seccontents {21.10}{Comparisons of Lists} {179}
+\seccontents {21.11}{Arithmetic for Lists} {180}
+\seccontents {21.12}{Filters Controlling the Arithmetic Behaviour of Lists} {181}
+\seccontents {21.13}{Additive Arithmetic for Lists} {182}
+\seccontents {21.14}{Multiplicative Arithmetic for Lists} {183}
+\seccontents {21.15}{Mutability Status and List Arithmetic} {186}
+\seccontents {21.16}{Finding Positions in Lists} {187}
+\seccontents {21.17}{Properties and Attributes for Lists} {189}
+\seccontents {21.18}{Sorting Lists} {191}
+\seccontents {21.19}{Sorted Lists and Sets} {192}
+\seccontents {21.20}{Operations for Lists} {194}
+\seccontents {21.21}{Advanced List Manipulations} {201}
+\seccontents {21.22}{Ranges} {202}
+\seccontents {21.23}{Enumerators} {204}
+\chapcontents {22}{Boolean Lists}{206}
+\seccontents {22.1}{Boolean Lists Representing Subsets} {206}
+\seccontents {22.2}{Set Operations via Boolean Lists} {207}
+\seccontents {22.3}{Function that Modify Boolean Lists} {208}
+\seccontents {22.4}{More about Boolean Lists} {209}
+\chapcontents {23}{Row Vectors}{210}
+\seccontents {23.1}{Operators for Row Vectors} {210}
+\seccontents {23.2}{Row Vectors over Finite Fields} {212}
+\seccontents {23.3}{Coefficient List Arithmetic} {213}
+\seccontents {23.4}{Shifting and Trimming Coefficient Lists} {214}
+\seccontents {23.5}{Functions for Coding Theory} {215}
+\seccontents {23.6}{Vectors as coefficients of polynomials} {215}
+\chapcontents {24}{Matrices}{218}
+\seccontents {24.1}{Categories of Matrices} {218}
+\seccontents {24.2}{Operators for Matrices} {219}
+\seccontents {24.3}{Properties and Attributes of Matrices} {221}
+\seccontents {24.4}{Matrix Constructions} {223}
+\seccontents {24.5}{Random Matrices} {225}
+\seccontents {24.6}{Matrices Representing Linear Equations and the Gaussian Algorithm} {225}
+\seccontents {24.7}{Eigenvectors and eigenvalues} {226}
+\seccontents {24.8}{Elementary Divisors} {227}
+\seccontents {24.9}{Echelonized Matrices} {227}
+\seccontents {24.10}{Matrices as Basis of a Row Space} {229}
+\seccontents {24.11}{Triangular Matrices} {230}
+\seccontents {24.12}{Matrices as Linear Mappings} {230}
 \seccontents {24.13}{Matrices over Finite Fields} {232}
-\seccontents {24.14}{Special Multiplication Algorithms for Matrices over GF(2)} {235}
-\seccontents {24.15}{Block Matrices} {236}
-\chapcontents {25}{Integral matrices and lattices}{237}
-\seccontents {25.1}{Linear equations over the integers and Integral Matrices} {237}
-\seccontents {25.2}{Normal Forms over the Integers} {238}
-\seccontents {25.3}{Determinant of an integer matrix} {241}
-\seccontents {25.4}{Decompositions} {241}
-\seccontents {25.5}{Lattice Reduction} {242}
-\seccontents {25.6}{Orthogonal Embeddings} {244}
-\chapcontents {26}{Strings and Characters}{246}
-\seccontents {26.1}{Special Characters} {248}
-\seccontents {26.2}{Internally Represented Strings} {249}
-\seccontents {26.3}{Recognizing Characters} {250}
-\seccontents {26.4}{Comparisons of Strings} {250}
-\seccontents {26.5}{Operations to Produce or Manipulate Strings} {251}
-\seccontents {26.6}{Character Conversion} {253}
-\seccontents {26.7}{Operations to Evaluate Strings} {254}
-\seccontents {26.8}{Calendar Arithmetic} {255}
-\chapcontents {27}{Records}{258}
-\seccontents {27.1}{Accessing Record Elements} {259}
-\seccontents {27.2}{Record Assignment} {259}
-\seccontents {27.3}{Identical Records} {260}
-\seccontents {27.4}{Comparisons of Records} {261}
-\seccontents {27.5}{IsBound and Unbind for Records} {262}
-\seccontents {27.6}{Record Access Operations} {263}
-\chapcontents {28}{Collections}{264}
-\seccontents {28.1}{Collection Families} {264}
-\seccontents {28.2}{Lists and Collections} {265}
-\seccontents {28.3}{Attributes and Properties for Collections} {269}
-\seccontents {28.4}{Operations for Collections} {271}
-\seccontents {28.5}{Membership Test for Collections} {273}
-\seccontents {28.6}{Random Elements} {273}
-\seccontents {28.7}{Iterators} {274}
-\chapcontents {29}{Orderings}{277}
-\seccontents {29.1}{Building new orderings} {277}
-\seccontents {29.2}{Properties and basic functionality} {278}
-\seccontents {29.3}{Orderings on families of associative words} {279}
-\chapcontents {30}{Domains and their Elements}{283}
-\seccontents {30.1}{Operational Structure of Domains} {283}
-\seccontents {30.2}{Equality and Comparison of Domains} {284}
-\seccontents {30.3}{Constructing Domains} {284}
-\seccontents {30.4}{Changing the Structure} {285}
-\seccontents {30.5}{Changing the Representation} {286}
-\seccontents {30.6}{Domain Categories} {286}
-\seccontents {30.7}{Parents} {287}
-\seccontents {30.8}{Constructing Subdomains} {288}
-\seccontents {30.9}{Operations for Domains} {288}
-\seccontents {30.10}{Attributes and Properties of Elements} {289}
-\seccontents {30.11}{Comparison Operations for Elements} {292}
-\seccontents {30.12}{Arithmetic Operations for Elements} {293}
-\seccontents {30.13}{Relations Between Domains} {294}
-\seccontents {30.14}{Useful Categories of Elements} {296}
-\seccontents {30.15}{Useful Categories for all Elements of a Family} {298}
-\chapcontents {31}{Mappings}{300}
-\seccontents {31.1}{Creating Mappings} {301}
-\seccontents {31.2}{Properties and Attributes of (General) Mappings} {302}
-\seccontents {31.3}{Images under Mappings} {303}
-\seccontents {31.4}{Preimages under Mappings} {304}
-\seccontents {31.5}{Arithmetic Operations for General Mappings} {306}
-\seccontents {31.6}{Mappings which are Compatible with Algebraic Structures} {306}
-\seccontents {31.7}{Magma Homomorphisms} {306}
-\seccontents {31.8}{Mappings that Respect Multiplication} {307}
-\seccontents {31.9}{Mappings that Respect Addition} {308}
-\seccontents {31.10}{Linear Mappings} {308}
-\seccontents {31.11}{Ring Homomorphisms} {309}
-\seccontents {31.12}{General Mappings} {309}
-\seccontents {31.13}{Technical Matters Concerning General Mappings} {309}
-\chapcontents {32}{Relations}{311}
-\seccontents {32.1}{General Binary Relations} {311}
-\seccontents {32.2}{Properties and Attributes of Binary Relations} {311}
-\seccontents {32.3}{Binary Relations on Points} {313}
-\seccontents {32.4}{Closure Operations and Other Constructors} {313}
-\seccontents {32.5}{Equivalence Relations} {314}
-\seccontents {32.6}{Attributes of and Operations on Equivalence Relations} {314}
-\seccontents {32.7}{Equivalence Classes} {315}
-\chapcontents {33}{Magmas}{316}
-\seccontents {33.1}{Magma Categories} {316}
-\seccontents {33.2}{Magma Generation} {317}
-\seccontents {33.3}{Magmas Defined by Multiplication Tables} {318}
-\seccontents {33.4}{Attributes and Properties for Magmas} {319}
-\chapcontents {34}{Words}{322}
-\seccontents {34.1}{Categories of Words and Nonassociative Words} {322}
-\seccontents {34.2}{Comparison of Words} {324}
-\seccontents {34.3}{Operations for Words} {324}
-\seccontents {34.4}{Free Magmas} {325}
-\seccontents {34.5}{External Representation for Nonassociative Words} {326}
-\chapcontents {35}{Associative Words}{327}
-\seccontents {35.1}{Categories of Associative Words} {327}
-\seccontents {35.2}{Free Groups, Monoids and Semigroups} {328}
-\seccontents {35.3}{Comparison of Associative Words} {330}
-\seccontents {35.4}{Operations for Associative Words} {331}
-\seccontents {35.5}{Operations for Associative Words by their Syllables} {332}
-\seccontents {35.6}{Representations for Associative Words} {333}
-\seccontents {35.7}{The External Representation for Associative Words} {335}
-\seccontents {35.8}{Straight Line Programs} {335}
-\seccontents {35.9}{Straight Line Program Elements} {339}
+\seccontents {24.14}{Special Multiplication Algorithms for Matrices over GF(2)} {234}
+\seccontents {24.15}{Block Matrices} {235}
+\chapcontents {25}{Integral matrices and lattices}{236}
+\seccontents {25.1}{Linear equations over the integers and Integral Matrices} {236}
+\seccontents {25.2}{Normal Forms over the Integers} {237}
+\seccontents {25.3}{Determinant of an integer matrix} {240}
+\seccontents {25.4}{Decompositions} {240}
+\seccontents {25.5}{Lattice Reduction} {241}
+\seccontents {25.6}{Orthogonal Embeddings} {243}
+\chapcontents {26}{Strings and Characters}{245}
+\seccontents {26.1}{Special Characters} {247}
+\seccontents {26.2}{Internally Represented Strings} {248}
+\seccontents {26.3}{Recognizing Characters} {249}
+\seccontents {26.4}{Comparisons of Strings} {249}
+\seccontents {26.5}{Operations to Produce or Manipulate Strings} {250}
+\seccontents {26.6}{Character Conversion} {252}
+\seccontents {26.7}{Operations to Evaluate Strings} {253}
+\seccontents {26.8}{Calendar Arithmetic} {254}
+\chapcontents {27}{Records}{257}
+\seccontents {27.1}{Accessing Record Elements} {258}
+\seccontents {27.2}{Record Assignment} {258}
+\seccontents {27.3}{Identical Records} {259}
+\seccontents {27.4}{Comparisons of Records} {260}
+\seccontents {27.5}{IsBound and Unbind for Records} {261}
+\seccontents {27.6}{Record Access Operations} {262}
+\chapcontents {28}{Collections}{263}
+\seccontents {28.1}{Collection Families} {263}
+\seccontents {28.2}{Lists and Collections} {264}
+\seccontents {28.3}{Attributes and Properties for Collections} {268}
+\seccontents {28.4}{Operations for Collections} {270}
+\seccontents {28.5}{Membership Test for Collections} {272}
+\seccontents {28.6}{Random Elements} {272}
+\seccontents {28.7}{Iterators} {273}
+\chapcontents {29}{Orderings}{276}
+\seccontents {29.1}{Building new orderings} {276}
+\seccontents {29.2}{Properties and basic functionality} {277}
+\seccontents {29.3}{Orderings on families of associative words} {278}
+\chapcontents {30}{Domains and their Elements}{282}
+\seccontents {30.1}{Operational Structure of Domains} {282}
+\seccontents {30.2}{Equality and Comparison of Domains} {283}
+\seccontents {30.3}{Constructing Domains} {283}
+\seccontents {30.4}{Changing the Structure} {284}
+\seccontents {30.5}{Changing the Representation} {285}
+\seccontents {30.6}{Domain Categories} {285}
+\seccontents {30.7}{Parents} {286}
+\seccontents {30.8}{Constructing Subdomains} {287}
+\seccontents {30.9}{Operations for Domains} {287}
+\seccontents {30.10}{Attributes and Properties of Elements} {288}
+\seccontents {30.11}{Comparison Operations for Elements} {291}
+\seccontents {30.12}{Arithmetic Operations for Elements} {292}
+\seccontents {30.13}{Relations Between Domains} {293}
+\seccontents {30.14}{Useful Categories of Elements} {295}
+\seccontents {30.15}{Useful Categories for all Elements of a Family} {297}
+\chapcontents {31}{Mappings}{299}
+\seccontents {31.1}{Creating Mappings} {300}
+\seccontents {31.2}{Properties and Attributes of (General) Mappings} {301}
+\seccontents {31.3}{Images under Mappings} {302}
+\seccontents {31.4}{Preimages under Mappings} {303}
+\seccontents {31.5}{Arithmetic Operations for General Mappings} {305}
+\seccontents {31.6}{Mappings which are Compatible with Algebraic Structures} {305}
+\seccontents {31.7}{Magma Homomorphisms} {305}
+\seccontents {31.8}{Mappings that Respect Multiplication} {306}
+\seccontents {31.9}{Mappings that Respect Addition} {307}
+\seccontents {31.10}{Linear Mappings} {307}
+\seccontents {31.11}{Ring Homomorphisms} {308}
+\seccontents {31.12}{General Mappings} {308}
+\seccontents {31.13}{Technical Matters Concerning General Mappings} {308}
+\chapcontents {32}{Relations}{310}
+\seccontents {32.1}{General Binary Relations} {310}
+\seccontents {32.2}{Properties and Attributes of Binary Relations} {310}
+\seccontents {32.3}{Binary Relations on Points} {312}
+\seccontents {32.4}{Closure Operations and Other Constructors} {312}
+\seccontents {32.5}{Equivalence Relations} {313}
+\seccontents {32.6}{Attributes of and Operations on Equivalence Relations} {313}
+\seccontents {32.7}{Equivalence Classes} {314}
+\chapcontents {33}{Magmas}{315}
+\seccontents {33.1}{Magma Categories} {315}
+\seccontents {33.2}{Magma Generation} {316}
+\seccontents {33.3}{Magmas Defined by Multiplication Tables} {317}
+\seccontents {33.4}{Attributes and Properties for Magmas} {318}
+\chapcontents {34}{Words}{321}
+\seccontents {34.1}{Categories of Words and Nonassociative Words} {321}
+\seccontents {34.2}{Comparison of Words} {323}
+\seccontents {34.3}{Operations for Words} {323}
+\seccontents {34.4}{Free Magmas} {324}
+\seccontents {34.5}{External Representation for Nonassociative Words} {325}
+\chapcontents {35}{Associative Words}{326}
+\seccontents {35.1}{Categories of Associative Words} {326}
+\seccontents {35.2}{Free Groups, Monoids and Semigroups} {327}
+\seccontents {35.3}{Comparison of Associative Words} {329}
+\seccontents {35.4}{Operations for Associative Words} {330}
+\seccontents {35.5}{Operations for Associative Words by their Syllables} {331}
+\seccontents {35.6}{Representations for Associative Words} {332}
+\seccontents {35.7}{The External Representation for Associative Words} {334}
+\seccontents {35.8}{Straight Line Programs} {334}
+\seccontents {35.9}{Straight Line Program Elements} {338}
 \chapcontents {36}{Rewriting Systems}{340}
 \seccontents {36.1}{Operations on rewriting systems} {340}
 \seccontents {36.2}{Operations on elements of the algebra} {341}
@@ -416,269 +416,271 @@
 \seccontents {45.11}{New Presentations and Presentations for Subgroups} {470}
 \seccontents {45.12}{Preimages under Homomorphisms from an FpGroup} {471}
 \seccontents {45.13}{Quotient Methods} {472}
-\seccontents {45.14}{Abelian Invariants for Subgroups} {473}
-\seccontents {45.15}{Testing Finiteness of Finitely Presented Groups} {474}
-\chapcontents {46}{Presentations and Tietze Transformations}{476}
-\seccontents {46.1}{Creating Presentations} {476}
-\seccontents {46.2}{SimplifiedFpGroup} {478}
-\seccontents {46.3}{Subgroup Presentations} {479}
-\seccontents {46.4}{Relators in a Presentation} {482}
-\seccontents {46.5}{Printing Presentations} {482}
-\seccontents {46.6}{Changing Presentations} {484}
-\seccontents {46.7}{Tietze Transformations} {484}
-\seccontents {46.8}{Elementary Tietze Transformations} {487}
-\seccontents {46.9}{Tietze Transformations that introduce new Generators} {489}
-\seccontents {46.10}{Tracing generator images through Tietze transformations} {492}
-\seccontents {46.11}{DecodeTree} {494}
-\seccontents {46.12}{Tietze Options} {497}
-\chapcontents {47}{Group Products}{499}
-\seccontents {47.1}{Direct Products} {499}
-\seccontents {47.2}{Semidirect Products} {500}
-\seccontents {47.3}{Subdirect Products} {501}
-\seccontents {47.4}{Wreath Products} {502}
-\seccontents {47.5}{Embeddings and Projections for Group Products} {503}
-\chapcontents {48}{Group Libraries}{504}
-\seccontents {48.1}{Basic Groups} {504}
-\seccontents {48.2}{Classical Groups} {506}
-\seccontents {48.3}{Conjugacy Classes in Classical Groups} {510}
-\seccontents {48.4}{Constructors for Basic Groups} {510}
-\seccontents {48.5}{Selection Functions} {511}
-\seccontents {48.6}{Transitive Permutation Groups} {512}
-\seccontents {48.7}{Small Groups} {513}
-\seccontents {48.8}{Finite Perfect Groups} {516}
-\seccontents {48.9}{Primitive Permutation Groups} {520}
-\seccontents {48.10}{Index numbers of primitive groups} {522}
-\seccontents {48.11}{Irreducible Solvable Matrix Groups} {523}
-\seccontents {48.12}{Irreducible Maximal Finite Integral Matrix Groups} {524}
-\chapcontents {49}{Semigroups}{532}
-\seccontents {49.1}{Making transformation semigroups} {534}
-\seccontents {49.2}{Ideals of semigroups} {534}
-\seccontents {49.3}{Congruences for semigroups} {535}
-\seccontents {49.4}{Quotients} {535}
-\seccontents {49.5}{Green's Relations} {535}
-\seccontents {49.6}{Rees Matrix Semigroups} {537}
-\chapcontents {50}{Monoids}{539}
-\chapcontents {51}{Finitely Presented Semigroups and Monoids}{541}
-\seccontents {51.1}{Creating Finitely Presented Semigroups} {543}
-\seccontents {51.2}{Comparison of Elements of Finitely Presented Semigroups} {544}
-\seccontents {51.3}{Preimages in the Free Semigroup} {544}
-\seccontents {51.4}{Finitely presented monoids} {545}
-\seccontents {51.5}{Rewriting Systems and the Knuth-Bendix Procedure} {546}
-\seccontents {51.6}{Todd-Coxeter Procedure} {547}
-\chapcontents {52}{Transformations}{548}
-\chapcontents {53}{Additive Magmas (preliminary)}{551}
-\seccontents {53.1}{(Near-)Additive Magma Categories} {551}
-\seccontents {53.2}{(Near-)Additive Magma Generation} {552}
-\seccontents {53.3}{Attributes and Properties for (Near-)Additive Magmas} {553}
-\seccontents {53.4}{Operations for (Near-)Additive Magmas} {554}
-\chapcontents {54}{Rings}{555}
-\seccontents {54.1}{Generating Rings} {555}
-\seccontents {54.2}{Ideals in Rings} {557}
-\seccontents {54.3}{Rings With One} {559}
-\seccontents {54.4}{Properties of Rings} {560}
-\seccontents {54.5}{Units and Factorizations} {561}
-\seccontents {54.6}{Euclidean Rings} {563}
-\seccontents {54.7}{Gcd and Lcm} {564}
-\chapcontents {55}{Modules (preliminary)}{567}
-\seccontents {55.1}{Generating modules} {567}
-\seccontents {55.2}{Submodules} {568}
-\seccontents {55.3}{Free Modules} {569}
-\chapcontents {56}{Fields and Division Rings}{571}
-\seccontents {56.1}{Generating Fields} {571}
-\seccontents {56.2}{Subfields of Fields} {573}
-\seccontents {56.3}{Galois Action} {573}
-\chapcontents {57}{Finite Fields}{577}
-\seccontents {57.1}{Finite Field Elements} {577}
-\seccontents {57.2}{Operations for Finite Field Elements} {578}
-\seccontents {57.3}{Creating Finite Fields} {580}
-\seccontents {57.4}{FrobeniusAutomorphism} {581}
-\seccontents {57.5}{Conway Polynomials} {581}
-\chapcontents {58}{Abelian Number Fields}{583}
-\seccontents {58.1}{Construction of Abelian Number Fields} {583}
-\seccontents {58.2}{Operations for Abelian Number Fields} {584}
-\seccontents {58.3}{Integral Bases of Abelian Number Fields} {586}
-\seccontents {58.4}{Galois Groups of Abelian Number Fields} {588}
-\seccontents {58.5}{Gaussians} {589}
-\chapcontents {59}{Vector Spaces}{590}
-\seccontents {59.1}{Constructing Vector Spaces} {590}
-\seccontents {59.2}{Operations and Attributes for Vector Spaces} {591}
-\seccontents {59.3}{Domains of Subspaces of Vector Spaces} {592}
-\seccontents {59.4}{Bases of Vector Spaces} {592}
-\seccontents {59.5}{Operations for Vector Space Bases} {594}
-\seccontents {59.6}{Operations for Special Kinds of Bases} {596}
-\seccontents {59.7}{Mutable Bases} {597}
-\seccontents {59.8}{Row and Matrix Spaces} {598}
-\seccontents {59.9}{Vector Space Homomorphisms} {601}
-\seccontents {59.10}{Vector Spaces Handled By Nice Bases} {603}
-\seccontents {59.11}{How to Implement New Kinds of Vector Spaces} {604}
-\chapcontents {60}{Algebras}{606}
-\seccontents {60.1}{Constructing Algebras by Generators} {606}
-\seccontents {60.2}{Constructing Algebras as Free Algebras} {607}
-\seccontents {60.3}{Constructing Algebras by Structure Constants} {608}
-\seccontents {60.4}{Some Special Algebras} {610}
-\seccontents {60.5}{Subalgebras} {611}
-\seccontents {60.6}{Ideals} {612}
-\seccontents {60.7}{Categories and Properties of Algebras} {613}
-\seccontents {60.8}{Attributes and Operations for Algebras} {614}
-\seccontents {60.9}{Homomorphisms of Algebras} {620}
-\seccontents {60.10}{Representations of Algebras} {623}
-\chapcontents {61}{Lie Algebras}{631}
-\seccontents {61.1}{Lie objects} {631}
-\seccontents {61.2}{Constructing Lie algebras} {632}
-\seccontents {61.3}{Distinguished Subalgebras} {634}
-\seccontents {61.4}{Series of Ideals} {635}
-\seccontents {61.5}{Properties of a Lie Algebra} {636}
-\seccontents {61.6}{Direct Sum Decompositions} {637}
-\seccontents {61.7}{Semisimple Lie Algebras and Root Systems} {637}
-\seccontents {61.8}{Restricted Lie algebras} {641}
-\seccontents {61.9}{The Adjoint Representation} {643}
-\seccontents {61.10}{Universal Enveloping Algebras} {644}
-\seccontents {61.11}{Finitely Presented Lie Algebras} {644}
-\seccontents {61.12}{Modules over Lie Algebras and Their Cohomology} {646}
-\seccontents {61.13}{Modules over Semisimple Lie Algebras} {648}
-\seccontents {61.14}{Tensor Products and Exterior and Symmetric Powers} {651}
-\chapcontents {62}{Finitely Presented Algebras}{653}
-\chapcontents {63}{Magma Rings}{654}
-\seccontents {63.1}{Free Magma Rings} {655}
-\seccontents {63.2}{Elements of Free Magma Rings} {656}
-\seccontents {63.3}{Natural Embeddings related to Magma Rings} {656}
-\seccontents {63.4}{Magma Rings modulo Relations} {657}
-\seccontents {63.5}{Magma Rings modulo the Span of a Zero Element} {658}
-\seccontents {63.6}{Technical Details about the Implementation of Magma Rings} {658}
-\chapcontents {64}{Polynomials and Rational Functions}{660}
-\seccontents {64.1}{Indeterminates} {660}
-\seccontents {64.2}{Operations for Rational Functions} {662}
-\seccontents {64.3}{Comparison of Rational Functions} {662}
-\seccontents {64.4}{Properties and Attributes of Rational Functions} {663}
-\seccontents {64.5}{Univariate Polynomials} {665}
-\seccontents {64.6}{Polynomials as Univariate Polynomials in one Indeterminate} {666}
-\seccontents {64.7}{Multivariate Polynomials} {667}
-\seccontents {64.8}{Minimal Polynomials} {668}
-\seccontents {64.9}{Cyclotomic Polynomials} {668}
-\seccontents {64.10}{Polynomial Factorization} {668}
-\seccontents {64.11}{Polynomials over the Rationals} {669}
-\seccontents {64.12}{Laurent Polynomials} {670}
-\seccontents {64.13}{Univariate Rational Functions} {671}
-\seccontents {64.14}{Polynomial Rings} {671}
-\seccontents {64.15}{Univariate Polynomial Rings} {673}
-\seccontents {64.16}{Monomial Orderings} {674}
-\seccontents {64.17}{Groebner Bases} {677}
-\seccontents {64.18}{Rational Function Families} {678}
-\seccontents {64.19}{The Representations of Rational Functions} {679}
-\seccontents {64.20}{The Defining Attributes of Rational Functions} {679}
-\seccontents {64.21}{Creation of Rational Functions} {680}
-\seccontents {64.22}{Arithmetic for External Representations of Polynomials} {681}
-\seccontents {64.23}{Cancellation Tests for Rational Functions} {682}
-\chapcontents {65}{Algebraic extensions of fields}{683}
-\seccontents {65.1}{Creation of Algebraic Extensions} {683}
-\seccontents {65.2}{Elements in Algebraic Extensions} {683}
-\chapcontents {66}{p-adic Numbers (preliminary)}{685}
-\seccontents {66.1}{Pure p-adic Numbers} {685}
-\seccontents {66.2}{Extensions of the p-adic Numbers} {686}
-\chapcontents {67}{The MeatAxe}{688}
-\seccontents {67.1}{MeatAxe Modules} {688}
-\seccontents {67.2}{Module Constructions} {688}
-\seccontents {67.3}{Selecting a Different MeatAxe} {689}
-\seccontents {67.4}{Accessing a Module} {689}
-\seccontents {67.5}{Irreducibility Tests} {689}
-\seccontents {67.6}{Finding Submodules} {689}
-\seccontents {67.7}{Induced Actions} {690}
-\seccontents {67.8}{Module Homomorphisms} {691}
-\seccontents {67.9}{Invariant Forms} {691}
-\seccontents {67.10}{The Smash MeatAxe} {692}
-\seccontents {67.11}{Smash MeatAxe Flags} {693}
-\chapcontents {68}{Tables of Marks}{694}
-\seccontents {68.1}{More about Tables of Marks} {694}
-\seccontents {68.2}{Table of Marks Objects in GAP} {695}
-\seccontents {68.3}{Constructing Tables of Marks} {695}
-\seccontents {68.4}{Printing Tables of Marks} {697}
-\seccontents {68.5}{Sorting Tables of Marks} {698}
-\seccontents {68.6}{Technical Details about Tables of Marks} {699}
-\seccontents {68.7}{Attributes of Tables of Marks} {700}
-\seccontents {68.8}{Properties of Tables of Marks} {703}
-\seccontents {68.9}{Other Operations for Tables of Marks} {704}
-\seccontents {68.10}{Standard Generators of Groups} {707}
-\seccontents {68.11}{Accessing Subgroups via Tables of Marks} {710}
-\seccontents {68.12}{The Interface between Tables of Marks and Character Tables} {712}
-\seccontents {68.13}{Generic Construction of Tables of Marks} {714}
-\seccontents {68.14}{The Library of Tables of Marks} {715}
-\chapcontents {69}{Character Tables}{716}
-\seccontents {69.1}{Some Remarks about Character Theory in GAP} {716}
-\seccontents {69.2}{History of Character Theory Stuff in GAP} {717}
-\seccontents {69.3}{Creating Character Tables} {718}
-\seccontents {69.4}{Character Table Categories} {721}
-\seccontents {69.5}{Conventions for Character Tables} {722}
-\seccontents {69.6}{The Interface between Character Tables and Groups} {722}
-\seccontents {69.7}{Operators for Character Tables} {725}
-\seccontents {69.8}{Attributes and Properties of Character Tables} {725}
-\seccontents {69.9}{Operations Concerning Blocks} {732}
-\seccontents {69.10}{Other Operations for Character Tables} {736}
-\seccontents {69.11}{Printing Character Tables} {738}
-\seccontents {69.12}{Computing the Irreducible Characters of a Group} {741}
-\seccontents {69.13}{Representations given by modules} {744}
-\seccontents {69.14}{The Dixon-Schneider Algorithm} {744}
-\seccontents {69.15}{Advanced Methods for Dixon-Schneider Calculations} {745}
-\seccontents {69.16}{Components of a Dixon Record} {746}
-\seccontents {69.17}{An Example of Advanced Dixon-Schneider Calculations} {746}
-\seccontents {69.18}{Constructing Character Tables from Others} {748}
-\seccontents {69.19}{Sorted Character Tables} {751}
-\seccontents {69.20}{Automorphisms and Equivalence of Character Tables} {754}
-\seccontents {69.21}{Storing Normal Subgroup Information} {756}
-\chapcontents {70}{Class Functions}{758}
-\seccontents {70.1}{Why Class Functions?} {758}
-\seccontents {70.2}{Basic Operations for Class Functions} {760}
-\seccontents {70.3}{Comparison of Class Functions} {761}
-\seccontents {70.4}{Arithmetic Operations for Class Functions} {762}
-\seccontents {70.5}{Printing Class Functions} {764}
-\seccontents {70.6}{Creating Class Functions from Values Lists} {765}
-\seccontents {70.7}{Creating Class Functions using Groups} {766}
-\seccontents {70.8}{Operations for Class Functions} {767}
-\seccontents {70.9}{Restricted and Induced Class Functions} {771}
-\seccontents {70.10}{Reducing Virtual Characters} {773}
-\seccontents {70.11}{Symmetrizations of Class Functions} {779}
-\seccontents {70.12}{Molien Series} {781}
-\seccontents {70.13}{Possible Permutation Characters} {783}
-\seccontents {70.14}{Computing Possible Permutation Characters} {786}
-\seccontents {70.15}{Operations for Brauer Characters} {790}
-\seccontents {70.16}{Domains Generated by Class Functions} {791}
-\chapcontents {71}{Maps Concerning Character Tables}{792}
-\seccontents {71.1}{Power Maps} {792}
-\seccontents {71.2}{Class Fusions between Character Tables} {796}
-\seccontents {71.3}{Parametrized Maps} {801}
-\seccontents {71.4}{Subroutines for the Construction of Power Maps} {809}
-\seccontents {71.5}{Subroutines for the Construction of Class Fusions} {811}
-\chapcontents {72}{Monomiality Questions}{814}
-\seccontents {72.1}{Character Degrees and Derived Length} {815}
-\seccontents {72.2}{Primitivity of Characters} {815}
-\seccontents {72.3}{Testing Monomiality} {817}
-\seccontents {72.4}{Minimal Nonmonomial Groups} {820}
-\chapcontents {73}{Installing GAP}{821}
-\seccontents {73.1}{Installation Overview} {821}
-\seccontents {73.2}{Get the Archives} {822}
-\seccontents {73.3}{Unpacking} {822}
-\seccontents {73.4}{Compilation} {823}
-\seccontents {73.5}{Test of the installation} {824}
-\seccontents {73.6}{Packages} {825}
-\seccontents {73.7}{Finish Installation and Cleanup} {825}
-\seccontents {73.8}{The Documentation} {826}
-\seccontents {73.9}{If Things Go Wrong} {827}
-\seccontents {73.10}{Known Problems of the Configure Process} {828}
-\seccontents {73.11}{Problems on Particular Systems} {829}
-\seccontents {73.12}{Optimization and Compiler Options} {829}
-\seccontents {73.13}{Porting GAP} {830}
-\seccontents {73.14}{GAP for Macintosh OS X} {831}
-\seccontents {73.15}{GAP for MacOS} {832}
-\seccontents {73.16}{Installation of GAP for MacOS} {832}
-\seccontents {73.17}{Expert Windows installation} {834}
-\seccontents {73.18}{Copyrights} {835}
-\chapcontents {74}{GAP Packages}{836}
-\seccontents {74.1}{Installing a GAP Package} {836}
-\seccontents {74.2}{Loading a GAP Package} {836}
-\seccontents {74.3}{Functions for GAP Packages} {837}
-\chapcontents {75}{Replaced and Removed Command Names}{840}
-\seccontents {75.1}{Group Actions - Name Changes} {840}
-\seccontents {75.2}{Package Interface - Obsolete Functions and Name Changes} {840}
-\seccontents {75.3}{Normal Forms of Integer Matrices - Name Changes} {841}
-\seccontents {75.4}{Miscellaneous Name Changes or Removed Names} {841}
-\chapcontents {}{Bibliography}{843}
-\chapcontents {}{Index}{850}
+\seccontents {45.14}{Abelian Invariants for Subgroups} {474}
+\seccontents {45.15}{Testing Finiteness of Finitely Presented Groups} {475}
+\chapcontents {46}{Presentations and Tietze Transformations}{477}
+\seccontents {46.1}{Creating Presentations} {477}
+\seccontents {46.2}{SimplifiedFpGroup} {479}
+\seccontents {46.3}{Subgroup Presentations} {480}
+\seccontents {46.4}{Relators in a Presentation} {483}
+\seccontents {46.5}{Printing Presentations} {483}
+\seccontents {46.6}{Changing Presentations} {485}
+\seccontents {46.7}{Tietze Transformations} {485}
+\seccontents {46.8}{Elementary Tietze Transformations} {488}
+\seccontents {46.9}{Tietze Transformations that introduce new Generators} {490}
+\seccontents {46.10}{Tracing generator images through Tietze transformations} {493}
+\seccontents {46.11}{DecodeTree} {495}
+\seccontents {46.12}{Tietze Options} {498}
+\chapcontents {47}{Group Products}{500}
+\seccontents {47.1}{Direct Products} {500}
+\seccontents {47.2}{Semidirect Products} {501}
+\seccontents {47.3}{Subdirect Products} {503}
+\seccontents {47.4}{Wreath Products} {503}
+\seccontents {47.5}{Free Products} {505}
+\seccontents {47.6}{Embeddings and Projections for Group Products} {505}
+\chapcontents {48}{Group Libraries}{506}
+\seccontents {48.1}{Basic Groups} {506}
+\seccontents {48.2}{Classical Groups} {508}
+\seccontents {48.3}{Conjugacy Classes in Classical Groups} {512}
+\seccontents {48.4}{Constructors for Basic Groups} {512}
+\seccontents {48.5}{Selection Functions} {513}
+\seccontents {48.6}{Transitive Permutation Groups} {514}
+\seccontents {48.7}{Small Groups} {515}
+\seccontents {48.8}{Finite Perfect Groups} {518}
+\seccontents {48.9}{Primitive Permutation Groups} {522}
+\seccontents {48.10}{Index numbers of primitive groups} {524}
+\seccontents {48.11}{Irreducible Solvable Matrix Groups} {525}
+\seccontents {48.12}{Irreducible Maximal Finite Integral Matrix Groups} {526}
+\chapcontents {49}{Semigroups}{534}
+\seccontents {49.1}{Making transformation semigroups} {536}
+\seccontents {49.2}{Ideals of semigroups} {536}
+\seccontents {49.3}{Congruences for semigroups} {537}
+\seccontents {49.4}{Quotients} {537}
+\seccontents {49.5}{Green's Relations} {537}
+\seccontents {49.6}{Rees Matrix Semigroups} {539}
+\chapcontents {50}{Monoids}{541}
+\chapcontents {51}{Finitely Presented Semigroups and Monoids}{543}
+\seccontents {51.1}{Creating Finitely Presented Semigroups} {545}
+\seccontents {51.2}{Comparison of Elements of Finitely Presented Semigroups} {546}
+\seccontents {51.3}{Preimages in the Free Semigroup} {546}
+\seccontents {51.4}{Finitely presented monoids} {547}
+\seccontents {51.5}{Rewriting Systems and the Knuth-Bendix Procedure} {548}
+\seccontents {51.6}{Todd-Coxeter Procedure} {549}
+\chapcontents {52}{Transformations}{550}
+\chapcontents {53}{Additive Magmas (preliminary)}{553}
+\seccontents {53.1}{(Near-)Additive Magma Categories} {553}
+\seccontents {53.2}{(Near-)Additive Magma Generation} {554}
+\seccontents {53.3}{Attributes and Properties for (Near-)Additive Magmas} {555}
+\seccontents {53.4}{Operations for (Near-)Additive Magmas} {556}
+\chapcontents {54}{Rings}{557}
+\seccontents {54.1}{Generating Rings} {557}
+\seccontents {54.2}{Ideals in Rings} {559}
+\seccontents {54.3}{Rings With One} {561}
+\seccontents {54.4}{Properties of Rings} {562}
+\seccontents {54.5}{Units and Factorizations} {563}
+\seccontents {54.6}{Euclidean Rings} {565}
+\seccontents {54.7}{Gcd and Lcm} {566}
+\chapcontents {55}{Modules (preliminary)}{569}
+\seccontents {55.1}{Generating modules} {569}
+\seccontents {55.2}{Submodules} {570}
+\seccontents {55.3}{Free Modules} {571}
+\chapcontents {56}{Fields and Division Rings}{573}
+\seccontents {56.1}{Generating Fields} {573}
+\seccontents {56.2}{Subfields of Fields} {575}
+\seccontents {56.3}{Galois Action} {575}
+\chapcontents {57}{Finite Fields}{579}
+\seccontents {57.1}{Finite Field Elements} {579}
+\seccontents {57.2}{Operations for Finite Field Elements} {581}
+\seccontents {57.3}{Creating Finite Fields} {582}
+\seccontents {57.4}{FrobeniusAutomorphism} {584}
+\seccontents {57.5}{Conway Polynomials} {584}
+\seccontents {57.6}{Printing, Viewing and Displaying Finite Field Elements} {585}
+\chapcontents {58}{Abelian Number Fields}{587}
+\seccontents {58.1}{Construction of Abelian Number Fields} {587}
+\seccontents {58.2}{Operations for Abelian Number Fields} {588}
+\seccontents {58.3}{Integral Bases of Abelian Number Fields} {590}
+\seccontents {58.4}{Galois Groups of Abelian Number Fields} {592}
+\seccontents {58.5}{Gaussians} {593}
+\chapcontents {59}{Vector Spaces}{594}
+\seccontents {59.1}{Constructing Vector Spaces} {594}
+\seccontents {59.2}{Operations and Attributes for Vector Spaces} {595}
+\seccontents {59.3}{Domains of Subspaces of Vector Spaces} {596}
+\seccontents {59.4}{Bases of Vector Spaces} {596}
+\seccontents {59.5}{Operations for Vector Space Bases} {598}
+\seccontents {59.6}{Operations for Special Kinds of Bases} {600}
+\seccontents {59.7}{Mutable Bases} {601}
+\seccontents {59.8}{Row and Matrix Spaces} {602}
+\seccontents {59.9}{Vector Space Homomorphisms} {605}
+\seccontents {59.10}{Vector Spaces Handled By Nice Bases} {607}
+\seccontents {59.11}{How to Implement New Kinds of Vector Spaces} {608}
+\chapcontents {60}{Algebras}{610}
+\seccontents {60.1}{Constructing Algebras by Generators} {610}
+\seccontents {60.2}{Constructing Algebras as Free Algebras} {611}
+\seccontents {60.3}{Constructing Algebras by Structure Constants} {612}
+\seccontents {60.4}{Some Special Algebras} {614}
+\seccontents {60.5}{Subalgebras} {615}
+\seccontents {60.6}{Ideals} {616}
+\seccontents {60.7}{Categories and Properties of Algebras} {617}
+\seccontents {60.8}{Attributes and Operations for Algebras} {618}
+\seccontents {60.9}{Homomorphisms of Algebras} {624}
+\seccontents {60.10}{Representations of Algebras} {627}
+\chapcontents {61}{Lie Algebras}{635}
+\seccontents {61.1}{Lie objects} {635}
+\seccontents {61.2}{Constructing Lie algebras} {636}
+\seccontents {61.3}{Distinguished Subalgebras} {638}
+\seccontents {61.4}{Series of Ideals} {639}
+\seccontents {61.5}{Properties of a Lie Algebra} {640}
+\seccontents {61.6}{Direct Sum Decompositions} {641}
+\seccontents {61.7}{Semisimple Lie Algebras and Root Systems} {641}
+\seccontents {61.8}{Restricted Lie algebras} {645}
+\seccontents {61.9}{The Adjoint Representation} {647}
+\seccontents {61.10}{Universal Enveloping Algebras} {648}
+\seccontents {61.11}{Finitely Presented Lie Algebras} {648}
+\seccontents {61.12}{Modules over Lie Algebras and Their Cohomology} {650}
+\seccontents {61.13}{Modules over Semisimple Lie Algebras} {652}
+\seccontents {61.14}{Tensor Products and Exterior and Symmetric Powers} {655}
+\chapcontents {62}{Finitely Presented Algebras}{657}
+\chapcontents {63}{Magma Rings}{658}
+\seccontents {63.1}{Free Magma Rings} {659}
+\seccontents {63.2}{Elements of Free Magma Rings} {660}
+\seccontents {63.3}{Natural Embeddings related to Magma Rings} {660}
+\seccontents {63.4}{Magma Rings modulo Relations} {661}
+\seccontents {63.5}{Magma Rings modulo the Span of a Zero Element} {662}
+\seccontents {63.6}{Technical Details about the Implementation of Magma Rings} {662}
+\chapcontents {64}{Polynomials and Rational Functions}{664}
+\seccontents {64.1}{Indeterminates} {664}
+\seccontents {64.2}{Operations for Rational Functions} {666}
+\seccontents {64.3}{Comparison of Rational Functions} {666}
+\seccontents {64.4}{Properties and Attributes of Rational Functions} {667}
+\seccontents {64.5}{Univariate Polynomials} {669}
+\seccontents {64.6}{Polynomials as Univariate Polynomials in one Indeterminate} {670}
+\seccontents {64.7}{Multivariate Polynomials} {672}
+\seccontents {64.8}{Minimal Polynomials} {672}
+\seccontents {64.9}{Cyclotomic Polynomials} {672}
+\seccontents {64.10}{Polynomial Factorization} {673}
+\seccontents {64.11}{Polynomials over the Rationals} {673}
+\seccontents {64.12}{Laurent Polynomials} {675}
+\seccontents {64.13}{Univariate Rational Functions} {675}
+\seccontents {64.14}{Polynomial Rings} {676}
+\seccontents {64.15}{Univariate Polynomial Rings} {678}
+\seccontents {64.16}{Monomial Orderings} {678}
+\seccontents {64.17}{Groebner Bases} {681}
+\seccontents {64.18}{Rational Function Families} {682}
+\seccontents {64.19}{The Representations of Rational Functions} {683}
+\seccontents {64.20}{The Defining Attributes of Rational Functions} {684}
+\seccontents {64.21}{Creation of Rational Functions} {685}
+\seccontents {64.22}{Arithmetic for External Representations of Polynomials} {686}
+\seccontents {64.23}{Cancellation Tests for Rational Functions} {686}
+\chapcontents {65}{Algebraic extensions of fields}{687}
+\seccontents {65.1}{Creation of Algebraic Extensions} {687}
+\seccontents {65.2}{Elements in Algebraic Extensions} {687}
+\chapcontents {66}{p-adic Numbers (preliminary)}{689}
+\seccontents {66.1}{Pure p-adic Numbers} {689}
+\seccontents {66.2}{Extensions of the p-adic Numbers} {690}
+\chapcontents {67}{The MeatAxe}{692}
+\seccontents {67.1}{MeatAxe Modules} {692}
+\seccontents {67.2}{Module Constructions} {692}
+\seccontents {67.3}{Selecting a Different MeatAxe} {693}
+\seccontents {67.4}{Accessing a Module} {693}
+\seccontents {67.5}{Irreducibility Tests} {693}
+\seccontents {67.6}{Finding Submodules} {693}
+\seccontents {67.7}{Induced Actions} {694}
+\seccontents {67.8}{Module Homomorphisms} {695}
+\seccontents {67.9}{Invariant Forms} {695}
+\seccontents {67.10}{The Smash MeatAxe} {696}
+\seccontents {67.11}{Smash MeatAxe Flags} {697}
+\chapcontents {68}{Tables of Marks}{698}
+\seccontents {68.1}{More about Tables of Marks} {698}
+\seccontents {68.2}{Table of Marks Objects in GAP} {699}
+\seccontents {68.3}{Constructing Tables of Marks} {699}
+\seccontents {68.4}{Printing Tables of Marks} {701}
+\seccontents {68.5}{Sorting Tables of Marks} {702}
+\seccontents {68.6}{Technical Details about Tables of Marks} {703}
+\seccontents {68.7}{Attributes of Tables of Marks} {704}
+\seccontents {68.8}{Properties of Tables of Marks} {707}
+\seccontents {68.9}{Other Operations for Tables of Marks} {708}
+\seccontents {68.10}{Standard Generators of Groups} {711}
+\seccontents {68.11}{Accessing Subgroups via Tables of Marks} {714}
+\seccontents {68.12}{The Interface between Tables of Marks and Character Tables} {716}
+\seccontents {68.13}{Generic Construction of Tables of Marks} {718}
+\seccontents {68.14}{The Library of Tables of Marks} {719}
+\chapcontents {69}{Character Tables}{720}
+\seccontents {69.1}{Some Remarks about Character Theory in GAP} {720}
+\seccontents {69.2}{History of Character Theory Stuff in GAP} {721}
+\seccontents {69.3}{Creating Character Tables} {722}
+\seccontents {69.4}{Character Table Categories} {725}
+\seccontents {69.5}{Conventions for Character Tables} {726}
+\seccontents {69.6}{The Interface between Character Tables and Groups} {726}
+\seccontents {69.7}{Operators for Character Tables} {729}
+\seccontents {69.8}{Attributes and Properties of Character Tables} {729}
+\seccontents {69.9}{Operations Concerning Blocks} {736}
+\seccontents {69.10}{Other Operations for Character Tables} {740}
+\seccontents {69.11}{Printing Character Tables} {742}
+\seccontents {69.12}{Computing the Irreducible Characters of a Group} {746}
+\seccontents {69.13}{Representations given by modules} {748}
+\seccontents {69.14}{The Dixon-Schneider Algorithm} {749}
+\seccontents {69.15}{Advanced Methods for Dixon-Schneider Calculations} {749}
+\seccontents {69.16}{Components of a Dixon Record} {750}
+\seccontents {69.17}{An Example of Advanced Dixon-Schneider Calculations} {751}
+\seccontents {69.18}{Constructing Character Tables from Others} {752}
+\seccontents {69.19}{Sorted Character Tables} {755}
+\seccontents {69.20}{Automorphisms and Equivalence of Character Tables} {758}
+\seccontents {69.21}{Storing Normal Subgroup Information} {760}
+\chapcontents {70}{Class Functions}{762}
+\seccontents {70.1}{Why Class Functions?} {762}
+\seccontents {70.2}{Basic Operations for Class Functions} {764}
+\seccontents {70.3}{Comparison of Class Functions} {765}
+\seccontents {70.4}{Arithmetic Operations for Class Functions} {766}
+\seccontents {70.5}{Printing Class Functions} {768}
+\seccontents {70.6}{Creating Class Functions from Values Lists} {769}
+\seccontents {70.7}{Creating Class Functions using Groups} {770}
+\seccontents {70.8}{Operations for Class Functions} {771}
+\seccontents {70.9}{Restricted and Induced Class Functions} {775}
+\seccontents {70.10}{Reducing Virtual Characters} {777}
+\seccontents {70.11}{Symmetrizations of Class Functions} {783}
+\seccontents {70.12}{Molien Series} {785}
+\seccontents {70.13}{Possible Permutation Characters} {787}
+\seccontents {70.14}{Computing Possible Permutation Characters} {790}
+\seccontents {70.15}{Operations for Brauer Characters} {794}
+\seccontents {70.16}{Domains Generated by Class Functions} {795}
+\chapcontents {71}{Maps Concerning Character Tables}{796}
+\seccontents {71.1}{Power Maps} {796}
+\seccontents {71.2}{Class Fusions between Character Tables} {800}
+\seccontents {71.3}{Parametrized Maps} {805}
+\seccontents {71.4}{Subroutines for the Construction of Power Maps} {813}
+\seccontents {71.5}{Subroutines for the Construction of Class Fusions} {815}
+\chapcontents {72}{Monomiality Questions}{818}
+\seccontents {72.1}{Character Degrees and Derived Length} {819}
+\seccontents {72.2}{Primitivity of Characters} {819}
+\seccontents {72.3}{Testing Monomiality} {821}
+\seccontents {72.4}{Minimal Nonmonomial Groups} {824}
+\chapcontents {73}{Installing GAP}{825}
+\seccontents {73.1}{Installation Overview} {825}
+\seccontents {73.2}{Get the Archives} {826}
+\seccontents {73.3}{Unpacking} {826}
+\seccontents {73.4}{Compilation} {827}
+\seccontents {73.5}{Test of the installation} {828}
+\seccontents {73.6}{Packages} {829}
+\seccontents {73.7}{Finish Installation and Cleanup} {829}
+\seccontents {73.8}{The Documentation} {830}
+\seccontents {73.9}{If Things Go Wrong} {831}
+\seccontents {73.10}{Known Problems of the Configure Process} {832}
+\seccontents {73.11}{Problems on Particular Systems} {833}
+\seccontents {73.12}{Optimization and Compiler Options} {833}
+\seccontents {73.13}{Porting GAP} {834}
+\seccontents {73.14}{GAP for Macintosh OS X} {835}
+\seccontents {73.15}{GAP for MacOS} {836}
+\seccontents {73.16}{Installation of GAP for MacOS} {836}
+\seccontents {73.17}{Expert Windows installation} {838}
+\seccontents {73.18}{Copyrights} {839}
+\chapcontents {74}{GAP Packages}{840}
+\seccontents {74.1}{Installing a GAP Package} {840}
+\seccontents {74.2}{Loading a GAP Package} {840}
+\seccontents {74.3}{Functions for GAP Packages} {841}
+\chapcontents {75}{Replaced and Removed Command Names}{844}
+\seccontents {75.1}{Group Actions - Name Changes} {844}
+\seccontents {75.2}{Package Interface - Obsolete Functions and Name Changes} {844}
+\seccontents {75.3}{Normal Forms of Integer Matrices - Name Changes} {845}
+\seccontents {75.4}{Miscellaneous Name Changes or Removed Names} {845}
+\chapcontents {}{Bibliography}{847}
+\chapcontents {}{Index}{854}

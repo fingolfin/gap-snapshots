@@ -2,7 +2,7 @@
 ##
 #W  testall.g                   GAP library                      Frank Celler
 ##
-#H  @(#)$Id: testall.g,v 4.50.2.5 2005/08/29 14:50:35 gap Exp $
+#H  @(#)$Id: testall.g,v 4.50.2.6 2006/02/24 16:53:46 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -49,7 +49,8 @@ RunStandardTests( [
   [ "ctblsolv.tst", 324300000 ],
   [ "cyclotom.tst", 5700000 ],
   [ "ffe.tst", 19500000 ],
-  [ "gaussian.tst", 600000 ],
+        [ "ffeconway.tst", 270000000 ],
+        [ "gaussian.tst", 600000 ],
   [ "grpfree.tst", 4200000 ],
   [ "grpmat.tst", 1952300000 ],
   [ "grppc.tst", 206100000 ],

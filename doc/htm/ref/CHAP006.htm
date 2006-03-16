@@ -753,16 +753,21 @@ Below we denote control keys by <var>ctrl</var>-<var>key</var> and escape keys b
 <var>esc</var>-<var>key</var>. The case of <var>key</var> does not matter, i.e., <var>ctrl</var>-<code>A</code> and
 <var>ctrl</var>-<code>a</code> are equivalent.
 <p>
+Normally, line editing will be enabled if the input is connected to a
+terminal. Line editing can be enabled or disabled using the command line
+options <code>-f</code> and <code>-n</code> respectively (see&nbsp;<a href="CHAP003.htm#SECT001">Command Line Options</a>), however
+this is a machine dependent feature of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+<p>
 Typing <var>ctrl</var>-<var>key</var> or <var>esc</var>-<var>key</var> for characters not mentioned below
 always inserts <var>ctrl</var>-<var>key</var> resp.&nbsp;<var>esc</var>-<var>key</var> at the current cursor position.
 <p>
 The first few commands allow you to move the cursor on the current line.
 <p>
-<var>ctrl</var>-<code>A</code> move the cursor to the beginning of the line. 
+<var>ctrl</var>-<code>A</code> move the cursor to the beginning of the line.
 <p>
-<var>esc</var>-<code>B</code> move the cursor to the beginning of the previous word. 
+<var>esc</var>-<code>B</code> move the cursor to the beginning of the previous word.
 <p>
-<var>ctrl</var>-<code>B</code> move the cursor backward one character. 
+<var>ctrl</var>-<code>B</code> move the cursor backward one character.
 <p>
 <var>ctrl</var>-<code>F</code> move the cursor forward one character. 
 <p>
@@ -942,5 +947,5 @@ adjusted to the nearest endpoint of the range.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href ="CHAP007.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>August 2005
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
 </font></body></html>

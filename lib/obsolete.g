@@ -2,7 +2,7 @@
 ##
 #W  obsolete.g                  GAP library                     Steve Linton
 ##
-#H  @(#)$Id: obsolete.g,v 4.13.2.2 2005/05/05 09:22:09 gap Exp $
+#H  @(#)$Id: obsolete.g,v 4.13.2.3 2005/12/20 12:10:11 jjm Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,8 +26,25 @@
 ##  is regarded as ``obsolescent'' in {\GAP}~4.5.
 ##
 Revision.obsolete_g :=
-    "@(#)$Id: obsolete.g,v 4.13.2.2 2005/05/05 09:22:09 gap Exp $";
+    "@(#)$Id: obsolete.g,v 4.13.2.3 2005/12/20 12:10:11 jjm Exp $";
 
+
+##### Declarations from `utils.gd' which unfortuynately are used in packages
+
+DeclareSynonym( "PrimeOfPGroup", PrimePGroup );
+
+##  Underlying field of a vector space or algebra.
+DeclareAttribute( "UnderlyingField", IsVectorSpace );
+InstallMethod(UnderlyingField,"vector space",true,[IsVectorSpace],0,
+  LeftActingDomain);
+DeclareAttribute( "UnderlyingField", IsFFEMatrixGroup );
+InstallMethod(UnderlyingField,"generic",true,[IsVectorSpace],0,
+  FieldOfMatrixGroup);
+
+##  Dimension of matrices in an algebra.
+DeclareSynonym( "MatrixDimension", DimensionOfMatrixGroup);
+
+#####
 
 # monomial ordering: the function was badly defined, name is now obsolete
 DeclareSynonym( "MonomialTotalDegreeLess", MonomialExtGrlexLess );

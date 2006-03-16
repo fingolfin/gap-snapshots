@@ -2,14 +2,14 @@
 ##
 #W  gprd.gd                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: gprd.gd,v 4.29 2002/10/23 08:58:40 gap Exp $
+#H  @(#)$Id: gprd.gd,v 4.29.2.4 2005/12/23 14:28:01 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.gprd_gd :=
-    "@(#)$Id: gprd.gd,v 4.29 2002/10/23 08:58:40 gap Exp $";
+    "@(#)$Id: gprd.gd,v 4.29.2.4 2005/12/23 14:28:01 gap Exp $";
 
 
 #############################################################################
@@ -29,6 +29,15 @@ Revision.gprd_gd :=
 DeclareGlobalFunction( "DirectProduct" );
 DeclareOperation( "DirectProductOp", [ IsList, IsGroup ] );
 
+#############################################################################
+##
+#F  PcgsDirectProduct( ( <D>, <pcgsop>, <indsop>, <filter> )
+##
+##  constructs a new pcgs from pcgses of the components of D, setting 
+##  the necessary indices for the new pcgs and sets the property
+##  specified by filter.
+##
+DeclareGlobalFunction( "PcgsDirectProduct" );
 
 #############################################################################
 ##
@@ -131,6 +140,20 @@ DeclareGlobalFunction( "SubdirectProducts" );
 
 #############################################################################
 ##
+#F  FreeProduct( <G> \{, <H>\} )
+#F  FreeProduct( list )
+##
+##  constructs a finitely presented group which is the free product of 
+##  the groups given as arguments. If the group arguments are not finitely
+##  presented groups, then `IsomorphismFpGroup' must be defined for them.
+##  
+##  The operation `Embedding' operates on this product.
+##
+DeclareGlobalFunction("FreeProduct");
+DeclareOperation( "FreeProductOp", [ IsList, IsGroup ] );
+
+#############################################################################
+##
 #A  DirectProductInfo( <G> )
 ##
 DeclareAttribute( "DirectProductInfo", IsGroup, "mutable" );
@@ -152,6 +175,12 @@ DeclareAttribute( "SemidirectProductInfo", IsGroup, "mutable" );
 #A  WreathProductInfo( <G> )
 ##
 DeclareAttribute( "WreathProductInfo", IsGroup, "mutable" );
+
+#############################################################################
+##
+#A  FreeProductInfo( <G> )
+##
+DeclareAttribute( "FreeProductInfo", IsGroup, "mutable" );
 
 #############################################################################
 ##
