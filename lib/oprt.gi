@@ -2,14 +2,14 @@
 ##
 #W  oprt.gi                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gi,v 4.179.2.3 2005/12/15 21:20:59 gap Exp $
+#H  @(#)$Id: oprt.gi,v 4.179.2.5 2006/08/29 13:25:16 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gi :=
-    "@(#)$Id: oprt.gi,v 4.179.2.3 2005/12/15 21:20:59 gap Exp $";
+    "@(#)$Id: oprt.gi,v 4.179.2.5 2006/08/29 13:25:16 gap Exp $";
 
 
 #############################################################################
@@ -1260,23 +1260,39 @@ InstallMethod( OrbitsDomain, "for quick position domains", true,
 InstallMethod( OrbitsDomain, "for arbitrary domains", true,
     OrbitsishReq, 0,
 function( G, D, gens, acts, act )
-local   orbs, orb,sort;
+local   orbs, orb,sort,plist,pos,use,o;
   
   if Length(D)>0 and not IsMutable(D) and IsSSortedList(D) 
     and CanEasilySortElements(D[1]) then
     return OrbitsByPosOp( G, D, gens, acts, act );
   fi;
   sort:=Length(D)>0 and CanEasilySortElements(D[1]);
+  plist:=IsPlistRep(D);
+  if not plist then
+    use:=BlistList([1..Length(D)],[]);
+  fi;
   orbs := [  ];
-  while Length(D)>0  do
-      orb := OrbitOp( G,D, D[1], gens, acts, act );
-      Add( orbs, orb );
+  pos:=1;
+  while Length(D)>0  and pos<=Length(D) do
+    orb := OrbitOp( G,D, D[pos], gens, acts, act );
+    Add( orbs, orb );
+    if plist then
       if sort then
 	D:=Difference(D,orb);
 	MakeImmutable(D); # to remember sortedness
       else
 	D:=Filtered(D,i-> not i in orb);
       fi;
+    else
+      for o in orb do
+        use[PositionCanonical(D,o)]:=true;
+      od;
+      # not plist -- do not take difference as there may be special
+      # `PositionCanonical' method.
+      while pos<=Length(D) and use[pos] do 
+	pos:=pos+1;
+      od;
+    fi;
   od;
   return Immutable( orbs );
 end );
@@ -1294,19 +1310,40 @@ end );
 
 InstallMethod( Orbits, "for arbitrary domains", true, OrbitsishReq, 0,
 function( G, D, gens, acts, act )
-local   orbs, orb,sort;
+local   orbs, orb,sort,plist,pos,use,o;
     
   sort:=Length(D)>0 and CanEasilySortElements(D[1]);
+  plist:=IsPlistRep(D);
+  if not plist then
+    use:=BlistList([1..Length(D)],[]);
+  fi;
+  if Length(D)>10000 then
+    Info(InfoPerformance,1,
+    "You are calculating `Orbits' with a large set of seeds.\n",
+                    "#I  Consider `OrbitsDomain' instead.");
+  fi;
   orbs := [  ];
-  while Length(D)>0  do
-      orb := OrbitOp( G,D[1], gens, acts, act );
-      Add( orbs, orb );
+  pos:=1;
+  while Length(D)>0  and pos<=Length(D) do
+    orb := OrbitOp( G,D,D[pos], gens, acts, act );
+    Add( orbs, orb );
+    if plist then
       if sort then
 	D:=Difference(D,orb);
 	MakeImmutable(D); # to remember sortedness
       else
 	D:=Filtered(D,i-> not i in orb);
       fi;
+    else
+      for o in orb do
+        use[PositionCanonical(D,o)]:=true;
+      od;
+      # not plist -- do not take difference as there may be special
+      # `PositionCanonical' method.
+      while pos<=Length(D) and use[pos] do 
+	pos:=pos+1;
+      od;
+    fi;
   od;
   return Immutable( orbs );
 end );
@@ -2945,6 +2982,27 @@ local p,n,f,o,v,ran,exp,H,phi,alpha;
   end);
   return [phi,alpha,p];
 end);
+
+
+#############################################################################
+##
+#M  IsInjective( <acthom> )
+##
+##  This is triggered by a fallback method of PreImageElm if it is not
+##  yet known whether the action homomorphism is injective or not.
+##  If there exists a LinearActionBasis, then the hom is injective
+##  and the better method for PreImageElm is taken.
+##
+InstallMethod( IsInjective, "for a linear action homomorphism",
+  [IsLinearActionHomomorphism],
+  function( a )
+    local b;   
+    b := LinearActionBasis(a);
+    if b = fail then          
+        TryNextMethod();
+    fi;                 
+    return true;
+  end );
 
 
 #############################################################################

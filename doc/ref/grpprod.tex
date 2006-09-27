@@ -4,7 +4,7 @@
 %%
 %A  grpprod.msk                 GAP documentation            Alexander Hulpke
 %%
-%A  @(#)$Id: grpprod.msk,v 1.29.2.5 2006/03/13 11:38:53 sal Exp $
+%A  @(#)$Id: grpprod.msk,v 1.29.2.6 2006/09/16 19:02:49 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -161,7 +161,7 @@ true
 gap> p:=SemidirectProduct(g,apci,n);
 <pc group of size 24 with 4 generators>
 gap> IsomorphismGroups(p,Group((1,2,3,4),(1,2)));
-[ f1, f2, f3, f4 ] -> [ (1,4), (1,4,3), (1,4)(2,3), (1,2)(3,4) ]
+[ f1, f2, f3, f4 ] -> [ (2,3), (2,3,4), (1,4)(2,3), (1,2)(3,4) ]
 \endexample
 
 \beginexample

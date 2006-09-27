@@ -9,6 +9,7 @@
 <li> <A HREF="CHAP014.htm#SECT002">Quotients and Remainders</a>
 <li> <A HREF="CHAP014.htm#SECT003">Prime Integers and Factorization</a>
 <li> <A HREF="CHAP014.htm#SECT004">Residue Class Rings</a>
+<li> <A HREF="CHAP014.htm#SECT005">Random Sources</a>
 </ol><p>
 <p>
 One of the most fundamental datatypes in every programming language is
@@ -250,7 +251,7 @@ gap&gt; SmallestRootInt( 1001 );
 pseudo random integers between -10 and
 10 distributed according to a binomial distribution.
 To  generate  uniformly  distributed  integers from   a  range,  use the
-construct 'Random( [ <var>low</var> .. <var>high</var> ] )'. (Also see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>.)
+construct 'Random( [ <var>low</var> .. <var>high</var> ] )'. (Also see&nbsp;<a href="CHAP014.htm#SSEC005.2">Random</a>.)
 <p>
 <p>
 <h2><a name="SECT002">14.2 Quotients and Remainders</a></h2>
@@ -826,7 +827,135 @@ Chapter&nbsp;<a href="CHAP054.htm">Rings</a>) apply.
 See also Chapters&nbsp;<a href="CHAP057.htm">Finite fields</a> and <a href="CHAP015.htm">Number theory</a>.
 <p>
 <p>
+<h2><a name="SECT005">14.5 Random Sources</a></h2>
+<p><p>
+<font face="Gill Sans,Helvetica,Arial">GAP</font> provides <code>Random</code> methods (see&nbsp;<a href="CHAP014.htm#SSEC005.2">Random</a>) for many collections of 
+objects. 
+On a lower level these methods use <strong>random sources</strong> which provide 
+random integers and random choices from lists. 
+<p>
+<a name = "SSEC005.1"></a>
+<li><code>IsRandomSource( </code><var>rs</var><code> ) C</code>
+<p>
+This is the category of random source objects <var>rs</var> which are defined to
+have methods available for the following operations which are explained 
+in more detail below: <code>Random( </code><var>rs</var><code>, </code><var>list</var><code> )</code> giving a random element 
+of a list, <code>Random( </code><var>rs</var><code>, </code><var>low</var><code>, </code><var>high</var><code> )</code> giving a random integer between
+<var>low</var> and <var>high</var> (inclusive), <code>Init</code>, <code>State</code> and <code>Reset</code>.
+<p>
+Use <code>RandomSource</code> (see <a href="CHAP014.htm#SSEC005.5">RandomSource</a>) to construct new random sources.
+<p>
+One idea behind providing several independent (pseudo) random sources is
+to make algorithms which use some sort of random choices deterministic.
+They can use their own new random source created with a fixed seed and 
+so do exactly the same in different calls.
+<p>
+Random source objects lie in the family <code>RandomSourcesFamily</code>.
+<p>
+<a name = "SSEC005.2"></a>
+<li><code>Random( </code><var>rs</var><code>, </code><var>list</var><code> ) O</code>
+<li><code>Random( </code><var>rs</var><code>, </code><var>low</var><code>, </code><var>high</var><code> ) O</code>
+<p>
+This operation returns a random element from list <var>list</var>, or an integer 
+in the range from the given (possibly large) integers <var>low</var> to <var>high</var>,
+respectively. 
+The choice should only depend on the random source <var>rs</var> and have no 
+effect on other random sources.
+<p>
+<a name = "SSEC005.3"></a>
+<li><code>State( </code><var>rs</var><code> ) O</code>
+<a name = "SSEC005.3"></a>
+<li><code>Reset( </code><var>rs</var><code> ) O</code>
+<li><code>Reset( </code><var>rs</var><code>, </code><var>seed</var><code> ) O</code>
+<a name = "SSEC005.3"></a>
+<li><code>Init( </code><var>rs</var><code> ) O</code>
+<li><code>Init( </code><var>prers</var><code>, </code><var>seed</var><code> ) O</code>
+<p>
+These are the basic operations for which random sources (see
+<a href="CHAP014.htm#SSEC005.1">IsRandomSource</a>) must have methods. 
+<p>
+<code>State</code> should return a data structure which allows to recover the state
+of the random source such that a sequence of random calls using this 
+random source can be reproduced. If a random source cannot be reset 
+(say, it uses truely random physical data) then <code>State</code> should return 
+<code>fail</code>.
+<p>
+<code>Reset( </code><var>rs</var><code>, </code><var>seed</var><code> )</code> resets the random source <var>rs</var> to a state described
+by <var>seed</var>, if the random source can be reset (otherwise it should do
+nothing). Here <var>seed</var> can be an output of <code>State</code> and then should reset
+to that state. Also, the methods should always allow integers as <var>seed</var>.
+Without the <var>seed</var> argument the default <i>seed</i>  = 1 is used.
+<p>
+<code>Init</code> is the constructor of a random source, it gets an empty component 
+object which has already the correct type and should fill in the actual 
+data which are needed. Optionally, it should allow one to specify a 
+<var>seed</var> for the initial state, as explained for <code>Reset</code>.
+<p>
+<a name = "SSEC005.4"></a>
+<li><code>IsGlobalRandomSource( </code><var>rs</var><code> ) C</code>
+<a name = "SSEC005.4"></a>
+<li><code>IsGAPRandomSource( </code><var>rs</var><code> ) C</code>
+<a name = "SSEC005.4"></a>
+<li><code>IsMersenneTwister( </code><var>rs</var><code> ) C</code>
+<a name = "SSEC005.4"></a>
+<li><code>GlobalRandomSource V</code>
+<a name = "SSEC005.4"></a>
+<li><code>GlobalMersenneTwister V</code>
+<p>
+Currently, the <font face="Gill Sans,Helvetica,Arial">GAP</font> library provides three types of random sources,
+distinguished by the three listed categories.
+<p>
+<code>IsGlobalRandomSource</code> gives access to the <strong>classical</strong> global 
+random generator which was used by <font face="Gill Sans,Helvetica,Arial">GAP</font> in previous releases. 
+You do not need to construct new random sources of this kind which would
+all use the same global data structure. Just use the existing random
+source <code>GlobalRandomSource</code>. This uses the additive random number 
+generator described in  <a href="biblio.htm#TACP2"><cite>TACP2</cite></a> (Algorithm A in&nbsp;3.2.2 with lag 30).
+<p>
+<code>IsGAPRandomSource</code> uses the same number generator as 
+<code>IsGlobalRandomSource</code>, but you can create several of these random sources 
+which generate their random numbers independently of all other random
+sources. 
+<p>
+<code>IsMersenneTwister</code> are random sources which use a fast random generator of
+32 bit numbers, called the Mersenne twister. The pseudo random sequence has 
+a period of 2<sup>19937</sup>&#8722;1 and the numbers have a 623-dimensional 
+equidistribution. For more details and the origin of the code used in the
+<font face="Gill Sans,Helvetica,Arial">GAP</font> kernel, see:
+<p>
+<code>http://www.math.sci.hiroshima-u.ac.jp/&nbsp;m-mat/MT/emt.html</code>
+<p>
+Use the Mersenne twister if possible, in particular for generating many 
+large random integers. 
+<p>
+There is also a predefined global random source <code>GlobalMersenneTwister</code>.
+<p>
+<a name = "SSEC005.5"></a>
+<li><code>RandomSource( </code><var>cat</var><code> ) O</code>
+<li><code>RandomSource( </code><var>cat</var><code>, </code><var>seed</var><code> ) O</code>
+<p>
+This operation is used to create new random sources. The first argument is 
+the category describing the type of the random generator, an optional
+<var>seed</var> which can be an integer or a type specific data structure can be
+given to specify the initial state.
+<p>
+<pre>
+gap&gt; rs1 := RandomSource(IsMersenneTwister);
+&lt;RandomSource in IsMersenneTwister&gt;
+gap&gt; state1 := State(rs1);;
+gap&gt; l1 := List([1..10000], i-&gt; Random(rs1, [1..6]));;  
+gap&gt; rs2 := RandomSource(IsMersenneTwister);;
+gap&gt; l2 := List([1..10000], i-&gt; Random(rs2, [1..6]));;
+gap&gt; l1 = l2;
+true
+gap&gt; l1 = List([1..10000], i-&gt; Random(rs1, [1..6])); 
+false
+gap&gt; n := Random(rs1, 1, 2^220);
+1598617776705343302477918831699169150767442847525442557699717518961
+</pre>
+<p>
+<p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP013.htm">Previous</a>] [<a href ="CHAP015.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

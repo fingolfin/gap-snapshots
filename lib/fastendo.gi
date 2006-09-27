@@ -2,7 +2,7 @@
 ##
 #W  fastendo.gi           GAP library                    Andrew Solomon
 ##
-#H  @(#)$Id: fastendo.gi,v 4.3 2002/04/15 10:04:39 sal Exp $
+#H  @(#)$Id: fastendo.gi,v 4.3.4.1 2006/04/07 09:04:29 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##
 
 Revision.fastendo_gi :=
-    "@(#)$Id: fastendo.gi,v 4.3 2002/04/15 10:04:39 sal Exp $";
+    "@(#)$Id: fastendo.gi,v 4.3.4.1 2006/04/07 09:04:29 gap Exp $";
 
 
 ############################################################################
@@ -110,38 +110,35 @@ function(n, m)
 end);
 
 
-InstallMethod(CompositionMapping2, 
-	"IsEndoMapping, IsTransformationRepOfEndo", IsIdenticalObj,
-  [IsEndoMapping, 
-	IsTransformationRepOfEndo and IsEndoMapping], 0,
-function(n, m)
-  local mntrans;
+InstallMethod( CompositionMapping2,
+    "IsEndoMapping, IsTransformationRepOfEndo", IsIdenticalObj,
+    [ IsEndoMapping, IsTransformationRepOfEndo and IsEndoMapping ],
+    function( n, m )
+    if Source(n) <> Source(m) then
+#T Is this really necessary?
+      TryNextMethod();
+    fi;
 
-  if Source(n) <> Source(m) then
-		TryNextMethod();
-  fi;
-
-  mntrans := TransformationRepresentation(m)!.transformation* n!.transformation;
-
-	return EndoMappingByTransformation(Source(m),FamilyObj(m), mntrans);
-end);
+    return EndoMappingByTransformation( Source(m), FamilyObj(m),
+               m!.transformation
+               * TransformationRepresentation( n )!.transformation );
+    end );
 
 
-InstallMethod(CompositionMapping2, 
-	"IsTransformationRepOfEndo, IsEndoMapping", IsIdenticalObj,
-  [IsTransformationRepOfEndo and IsEndoMapping, 
-	IsEndoMapping], 0,
-function(n, m)
-  local mntrans;
+InstallMethod( CompositionMapping2,
+    "IsTransformationRepOfEndo, IsEndoMapping", IsIdenticalObj,
+    [ IsTransformationRepOfEndo and IsEndoMapping, IsEndoMapping ],
+    function( n, m )
+    if Source(n) <> Source(m) then
+#T Is this really necessary?
+      TryNextMethod();
+    fi;
 
-  if Source(n) <> Source(m) then
-		TryNextMethod();
-  fi;
+    return EndoMappingByTransformation( Source(m), FamilyObj(m),
+               TransformationRepresentation( m )!.transformation
+               * n!.transformation );
+    end );
 
-  mntrans := m!.transformation* TransformationRepresentation(n)!.transformation;
-
-	return EndoMappingByTransformation(Source(m),FamilyObj(m), mntrans);
-end);
 
 #############################################################################
 ##

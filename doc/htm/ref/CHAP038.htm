@@ -475,7 +475,8 @@ can be constructed
 with <code>ConjugatorIsomorphism</code> (see&nbsp;<a href="CHAP038.htm#SSEC006.1">ConjugatorIsomorphism</a>).
 <p>
 <code>ConjugatorAutomorphismNC</code> does the same as <code>ConjugatorAutomorphism</code>,
-except that the check is omitted whether <var>g</var> normalizes <var>G</var>.
+except that the check is omitted whether <var>g</var> normalizes <var>G</var> and it is
+assumed that <var>g</var> is chosen to be in <var>G</var> if possible.
 <p>
 <a name = "SSEC006.3"></a>
 <li><code>InnerAutomorphism( </code><var>G</var><code>, </code><var>g</var><code> ) F</code>
@@ -603,9 +604,9 @@ Group([ (1,2,3,4), (1,3) ])
 gap&gt; au:=AutomorphismGroup(g);
 &lt;group of size 8 with 3 generators&gt;
 gap&gt; GeneratorsOfGroup(au);
-[ ^(1,2,3,4), ^(1,3), [ (1,2,3,4), (2,4) ] -&gt; [ (1,2,3,4), (1,2)(3,4) ] ]
+[ ^(1,2,3,4), ^(1,3), [ (1,4,3,2), (1,2)(3,4) ] -&gt; [ (1,2,3,4), (2,4) ] ]
 gap&gt; NiceObject(au);
-Group([ (1,4)(2,6), (2,6)(3,5), (1,2,4,6) ])
+Group([ (1,4)(2,6), (2,6)(3,5), (1,2)(3,5)(4,6) ])
 </pre>
 <p>
 <a name = "SSEC007.5"></a>
@@ -755,7 +756,7 @@ Group([ (1,2,3,4), (1,2) ])
 gap&gt; h:=Group((1,2,3),(1,2));
 Group([ (1,2,3), (1,2) ])
 gap&gt; quo:=GQuotients(g,h);
-[ [ (1,4,2,3), (1,2,4) ] -&gt; [ (2,3), (1,2,3) ] ]
+[ [ (1,3,2,4), (2,4,3) ] -&gt; [ (2,3), (1,2,3) ] ]
 </pre>
 <p>
 <a name = "SSEC009.3"></a>
@@ -935,5 +936,5 @@ the standard generators.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP037.htm">Previous</a>] [<a href ="CHAP039.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

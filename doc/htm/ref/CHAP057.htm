@@ -224,7 +224,8 @@ gap&gt; DegreeFFE( [ Z(2^13), Z(2^10) ] );
 <p>
 <code>LogFFE</code> returns the discrete  logarithm of the element <var>z</var> in  a  finite
 field with  respect  to  the  root <var>r</var>.
-An  error is signalled if <var>z</var> is zero, or if <var>z</var> is not a power of <var>r</var>.
+An  error is signalled if <var>z</var> is zero. <code>fail</code> is returned 
+if <var>z</var> is not a power of <var>r</var>.
 <p>
 The <strong>discrete logarithm</strong> of an element <i>z</i> with  respect to a root <i>r</i> is
 the smallest nonnegative integer <i>i</i> such that <i>r</i><sup><i>i</i></sup> = <i>z</i>.
@@ -523,7 +524,7 @@ factorize &#124;<i>F</i> &#124;<sup><i>n</i></sup>&#8722;1.
 <h2><a name="SECT006">57.6 Printing, Viewing and Displaying Finite Field Elements</a></h2>
 <p><p>
 Internal finite field elements are Viewed, Printed and Displayed (see
-section <a href="CHAP006.htm#SECT002">View and Print</a> for the distinctions between these
+section <a href="CHAP006.htm#SECT003">View and Print</a> for the distinctions between these
 operations) as powers of the primitive root (except for the zero
 element, which is displayed as 0 times the primitive root). Thus:
 <p>
@@ -602,5 +603,5 @@ ZmodpZObj( 3, 65537 )
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP056.htm">Previous</a>] [<a href ="CHAP058.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

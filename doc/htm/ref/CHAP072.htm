@@ -191,7 +191,7 @@ rec( isHomogeneous := false, comment := "restriction checked",
   character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] ), 
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ), [ 1, -1, 1, -1, 1 ] ),
   multiplicity := 1 )
 gap&gt; chi:= Irr( Sl23 )[4];
 Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )
@@ -250,7 +250,7 @@ rec( isQuasiPrimitive := false, comment := "restriction checked",
   character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] ) )
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ), [ 1, -1, 1, -1, 1 ] ) )
 </pre>
 <p>
 <a name = "SSEC002.4"></a>
@@ -581,5 +581,5 @@ gap&gt; MinimalNonmonomialGroup(  2, 14 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP071.htm">Previous</a>] [<a href ="CHAP073.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

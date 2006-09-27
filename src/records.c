@@ -2,7 +2,7 @@
 **
 *W  records.c                   GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: records.c,v 4.20 2002/04/15 10:03:56 sal Exp $
+*H  @(#)$Id: records.c,v 4.20.6.1 2006/08/28 08:10:31 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_records_c =
-   "@(#)$Id: records.c,v 4.20 2002/04/15 10:03:56 sal Exp $";
+   "@(#)$Id: records.c,v 4.20.6.1 2006/08/28 08:10:31 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -541,6 +541,22 @@ UInt            completion_rnam (
     return next != 0;
 }
 
+Obj FuncALL_RNAMES (
+    Obj                 self )
+{
+    Obj                 copy, s;
+    UInt                i;
+    Char*               name;
+
+    copy = NEW_PLIST( T_PLIST+IMMUTABLE, CountRNam );
+    for ( i = 1;  i <= CountRNam;  i++ ) {
+        name = NAME_RNAM( i );
+        C_NEW_STRING(s, strlen(name), name);
+        SET_ELM_PLIST( copy, i, s );
+    }
+    SET_LEN_PLIST( copy, CountRNam );
+    return copy;
+}
 
 /****************************************************************************
 **
@@ -597,6 +613,9 @@ static StructGVarFunc GVarFuncs [] = {
 
     { "NameRNam", 1, "rnam",
       NameRNamHandler, "src/records.c:NameRNam" },
+
+    { "ALL_RNAMES", 0, "",
+      FuncALL_RNAMES, "src/records.c:ALL_RNAMES" },
 
     { 0 }
 

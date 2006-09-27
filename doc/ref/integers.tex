@@ -5,7 +5,7 @@
 %A  integers.msk                GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: integers.msk,v 1.20.2.3 2005/08/25 08:16:14 gap Exp $
+%A  @(#)$Id: integers.msk,v 1.20.2.4 2006/08/28 15:29:13 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -813,6 +813,133 @@ representation may not know that they lie in the prime field.
 The residue class rings are rings, thus all operations for rings (see
 Chapter~"Rings") apply.
 See also Chapters~"Finite fields" and "Number theory".
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{Random Sources}
+
+{\GAP} provides `Random' methods (see~"Random") for many collections of 
+objects. 
+On a lower level these methods use *random sources* which provide 
+random integers and random choices from lists. 
+
+\>IsRandomSource( <rs> ) C
+
+This is the category of random source objects <rs> which are defined to
+have methods available for the following operations which are explained 
+in more detail below: `Random( <rs>, <list> )' giving a random element 
+of a list, `Random( <rs>, <low>, <high> )' giving a random integer between
+<low> and <high> (inclusive), `Init', `State' and `Reset'.
+
+Use `RandomSource' (see "RandomSource") to construct new random sources.
+
+One idea behind providing several independent (pseudo) random sources is
+to make algorithms which use some sort of random choices deterministic.
+They can use their own new random source created with a fixed seed and 
+so do exactly the same in different calls.
+
+Random source objects lie in the family `RandomSourcesFamily'.
+
+
+
+\>Random( <rs>, <list> ) O
+\>Random( <rs>, <low>, <high> ) O
+
+This operation returns a random element from list <list>, or an integer 
+in the range from the given (possibly large) integers <low> to <high>,
+respectively. 
+The choice should only depend on the random source <rs> and have no 
+effect on other random sources.
+
+
+
+\>State( <rs> ) O
+\>Reset( <rs> ) O
+\>Reset( <rs>, <seed> ) O
+\>Init( <rs> ) O
+\>Init( <prers>, <seed> ) O
+
+These are the basic operations for which random sources (see
+"IsRandomSource") must have methods. 
+
+`State' should return a data structure which allows to recover the state
+of the random source such that a sequence of random calls using this 
+random source can be reproduced. If a random source cannot be reset 
+(say, it uses truely random physical data) then `State' should return 
+`fail'.
+
+`Reset( <rs>, <seed> )' resets the random source <rs> to a state described
+by <seed>, if the random source can be reset (otherwise it should do
+nothing). Here <seed> can be an output of `State' and then should reset
+to that state. Also, the methods should always allow integers as <seed>.
+Without the <seed> argument the default $<seed> = 1$ is used.
+
+`Init' is the constructor of a random source, it gets an empty component 
+object which has already the correct type and should fill in the actual 
+data which are needed. Optionally, it should allow one to specify a 
+<seed> for the initial state, as explained for `Reset'.
+
+
+
+\>IsGlobalRandomSource( <rs> ) C
+\>IsGAPRandomSource( <rs> ) C
+\>IsMersenneTwister( <rs> ) C
+\>`GlobalRandomSource' V
+\>`GlobalMersenneTwister' V
+
+Currently, the {\GAP} library provides three types of random sources,
+distinguished by the three listed categories.
+
+`IsGlobalRandomSource' gives access to the *classical* global 
+random generator which was used by {\GAP} in previous releases. 
+You do not need to construct new random sources of this kind which would
+all use the same global data structure. Just use the existing random
+source `GlobalRandomSource'. This uses the additive random number 
+generator described in  \cite{TACP2} (Algorithm A in~3.2.2 with lag $30$).
+
+`IsGAPRandomSource' uses the same number generator as 
+`IsGlobalRandomSource', but you can create several of these random sources 
+which generate their random numbers independently of all other random
+sources. 
+
+`IsMersenneTwister' are random sources which use a fast random generator of
+32 bit numbers, called the Mersenne twister. The pseudo random sequence has 
+a period of $2^{19937}-1$ and the numbers have a $623$-dimensional 
+equidistribution. For more details and the origin of the code used in the
+{\GAP} kernel, see:
+
+`http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html'
+
+Use the Mersenne twister if possible, in particular for generating many 
+large random integers. 
+
+There is also a predefined global random source `GlobalMersenneTwister'.
+
+
+
+\>RandomSource( <cat> ) O
+\>RandomSource( <cat>, <seed> ) O
+
+This operation is used to create new random sources. The first argument is 
+the category describing the type of the random generator, an optional
+<seed> which can be an integer or a type specific data structure can be
+given to specify the initial state.
+
+\beginexample
+gap> rs1 := RandomSource(IsMersenneTwister);
+<RandomSource in IsMersenneTwister>
+gap> state1 := State(rs1);;
+gap> l1 := List([1..10000], i-> Random(rs1, [1..6]));;  
+gap> rs2 := RandomSource(IsMersenneTwister);;
+gap> l2 := List([1..10000], i-> Random(rs2, [1..6]));;
+gap> l1 = l2;
+true
+gap> l1 = List([1..10000], i-> Random(rs1, [1..6])); 
+false
+gap> n := Random(rs1, 1, 2^220);
+1598617776705343302477918831699169150767442847525442557699717518961
+\endexample
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

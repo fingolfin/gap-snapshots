@@ -4,7 +4,7 @@
 *W                                                         & Martin Schoenert
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: sysfiles.c,v 4.117.2.2 2005/12/16 02:15:06 gap Exp $
+*H  @(#)$Id: sysfiles.c,v 4.117.2.3 2006/08/29 13:41:46 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_sysfiles_c =
-   "@(#)$Id: sysfiles.c,v 4.117.2.2 2005/12/16 02:15:06 gap Exp $";
+   "@(#)$Id: sysfiles.c,v 4.117.2.3 2006/08/29 13:41:46 gap Exp $";
 
 #define INCLUDE_DECLARATION_PART
 #include        "sysfiles.h"            /* file input/output               */
@@ -4829,6 +4829,28 @@ Char * syFgets (
 
         }
 
+        /* strip away prompts in beginning (useful for pasting old stuff)  */
+        if (line[0]=='g'&&line[1]=='a'&&line[2]=='p'&&
+                          line[3]=='>'&&line[4]==' '){
+            for ( r = line, q = line+5; q[-1] != '\0'; r++, q++ )  *r = *q;
+            p-=5; if (p<line) p = line;
+        }
+        if (line[0]=='b'&&line[1]=='r'&&line[2]=='k'&&
+                          line[3]=='>'&&line[4]==' '){
+            for ( r = line, q = line+5; q[-1] != '\0'; r++, q++ )  *r = *q;
+            p-=5; if (p<line) p = line;
+        }
+        if (line[0]=='>'&&line[1]==' '){
+            for ( r = line, q = line+2; q[-1] != '\0'; r++, q++ )  *r = *q;
+            p-=2; if (p<line) p = line;
+        }
+
+        if ( ch==EOF || ch=='\n' || ch=='\r' || ch==CTR('O') ) {
+            /* if there is a hook for line ends, call it before echoing */
+            if ( EndLineHook ) CALL_0ARGS( EndLineHook );
+            syEchoch('\r',fid);  syEchoch('\n',fid);  break;
+        }
+
         if ( ch==EOF || ch=='\n' || ch=='\r' || ch==CTR('O') ) {
             /* if there is a hook for line ends, call it before echoing */
             if ( EndLineHook ) CALL_0ARGS( EndLineHook );
@@ -4888,14 +4910,6 @@ Char * syFgets (
 
     /* send the whole line (unclipped) to the window handler               */
     syWinPut( fid, (*line != '\0' ? "@r" : "@x"), line );
-
-    /* strip away prompts (useful for pasting old stuff)                  */
-    if (line[0]=='g'&&line[1]=='a'&&line[2]=='p'&&line[3]=='>'&&line[4]==' ')
-        for ( p = line, q = line+5; q[-1] != '\0'; p++, q++ )  *p = *q;
-    if (line[0]=='b'&&line[1]=='r'&&line[2]=='k'&&line[3]=='>'&&line[4]==' ')
-        for ( p = line, q = line+5; q[-1] != '\0'; p++, q++ )  *p = *q;
-    if (line[0]=='>'&&line[1]==' ')
-        for ( p = line, q = line+2; q[-1] != '\0'; p++, q++ )  *p = *q;
 
     /* switch back to cooked mode                                          */
     if ( SyLineEdit == 1 )

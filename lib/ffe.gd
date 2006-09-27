@@ -3,7 +3,7 @@
 #W  ffe.gd                      GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: ffe.gd,v 4.34.2.2 2006/02/22 12:26:39 sal Exp $
+#H  @(#)$Id: ffe.gd,v 4.34.2.3 2006/07/06 11:57:02 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -84,7 +84,7 @@
 ##
 
 Revision.ffe_gd :=
-    "@(#)$Id: ffe.gd,v 4.34.2.2 2006/02/22 12:26:39 sal Exp $";
+    "@(#)$Id: ffe.gd,v 4.34.2.3 2006/07/06 11:57:02 sal Exp $";
 
 #############################################################################
 ##
@@ -266,7 +266,8 @@ DeclareOperation( "DegreeFFE", [ IsFFE ] );
 ##  
 ##  `LogFFE' returns the discrete  logarithm of the element <z> in  a  finite
 ##  field with  respect  to  the  root <r>.
-##  An  error is signalled if <z> is zero, or if <z> is not a power of <r>.
+##  An  error is signalled if <z> is zero. `fail' is returned 
+##  if <z> is not a power of <r>.
 ##  
 ##  The *discrete logarithm* of an element $z$ with  respect to a root $r$ is
 ##  the smallest nonnegative integer $i$ such that $r^i = z$.

@@ -5,7 +5,7 @@
 %A  ratfun.msk                  GAP documentation            Alexander Hulpke
 %A                                                           Frank Celler
 %%
-%A  @(#)$Id: ratfun.msk,v 1.57.2.4 2006/03/09 15:59:56 jjm Exp $
+%A  @(#)$Id: ratfun.msk,v 1.57.2.5 2006/09/16 19:02:49 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -731,7 +731,7 @@ gap> Factors( f );
 gap> Factors( PolynomialRing( Rationals ), f );
 [ x^2+1 ]
 gap> Factors( PolynomialRing( CF(4) ), f );
-[ x+-E(4), x+E(4) ]
+[ x+(-E(4)), x+E(4) ]
 \endexample
 
 \>FactorsSquarefree( <pring>, <upol>, <opt> ) O
@@ -959,21 +959,21 @@ the ring over which <pring> was defined.
 
 \beginexample
 gap> r:=PolynomialRing(GF(7));
-PolynomialRing(..., [ x_1 ])
+GF(7)[x_1]
 gap>  r:=PolynomialRing(GF(7),3);
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+GF(7)[x_1,x_2,x_3]
 gap> IndeterminatesOfPolynomialRing(r);
 [ x_1, x_2, x_3 ]
 gap> r2:=PolynomialRing(GF(7),[5,7,12]);
-PolynomialRing(..., [ x_5, x_7, x_12 ])
+GF(7)[x_5,x_7,x_12]
 gap> CoefficientsRing(r);
 GF(7)
 gap> r:=PolynomialRing(GF(7),3);
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+GF(7)[x_1,x_2,x_3]
 gap> r2:=PolynomialRing(GF(7),3,IndeterminatesOfPolynomialRing(r));
-PolynomialRing(..., [ x_4, x_5, x_6 ])
+GF(7)[x_4,x_5,x_6]
 gap> r:=PolynomialRing(GF(7),["x","y","z","z2"]);
-PolynomialRing(..., [ x, y, z, z2 ])
+GF(7)[x,y,z,z2]
 \endexample
 
 If you need to work with a polynomial ring and its indeterminates the
@@ -1076,9 +1076,9 @@ is the category of polynomial rings with one indeterminate.
 
 \beginexample
 gap> r:=UnivariatePolynomialRing(Rationals,"x");
-PolynomialRing(..., [ x ])
+Rationals[x]
 gap> r2:=PolynomialRing(Rationals,["q"]);
-PolynomialRing(..., [ q ])
+Rationals[q]
 gap> IsUnivariatePolynomialRing(r);
 true
 gap> IsUnivariatePolynomialRing(r2);
@@ -1183,9 +1183,9 @@ The following monomial orderings are predefined in {\GAP}:
 
 This function creates a lexicographic ordering for monomials. Monomials
 are compared first by the exponents of the largest variable, then the
-exponents of the second larhgest variable and so on.
+exponents of the second largest variable and so on.
 
-The variables are ordered accoring to their (internal) index, i.e. $x_1$
+The variables are ordered according to their (internal) index, i.e. $x_1$
 is larger than $x_2$ and so on.
 If <vari> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the
@@ -1219,7 +1219,7 @@ This function creates a degree/lexicographic ordering. In this oredring
 monomials are compared first by their total degree, then lexicographically
 (see `MonomialLexOrdering').
 
-The variables are ordered accoring to their (internal) index, i.e. $x_1$
+The variables are ordered according to their (internal) index, i.e. $x_1$
 is larger than $x_2$ and so on.
 If <vari> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the
@@ -1233,7 +1233,7 @@ This function creates a ``grevlex'' ordering. In this ordering monomials
 are compared first by total degree and then backwards lexicographically.
 (This is different than ``grlex'' ordering with variables reversed.) 
 
-The variables are ordered accoring to their (internal) index, i.e. $x_1$
+The variables are ordered according to their (internal) index, i.e. $x_1$
 is larger than $x_2$ and so on.
 If <vari> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the

@@ -6,12 +6,12 @@
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-#H  @(#)$Id: word.gi,v 4.30 2002/04/15 10:05:29 sal Exp $
+#H  @(#)$Id: word.gi,v 4.30.4.1 2006/07/27 20:32:27 gap Exp $
 ##
 ##  This file contains generic methods for nonassociative words.
 ##
 Revision.word_gi :=
-    "@(#)$Id: word.gi,v 4.30 2002/04/15 10:05:29 sal Exp $";
+    "@(#)$Id: word.gi,v 4.30.4.1 2006/07/27 20:32:27 gap Exp $";
 
 
 #############################################################################
@@ -149,7 +149,7 @@ InstallMethod( MappedWord,
 #M  MappedWord( <x>, <empty>, <empty> )
 ##
 InstallOtherMethod( MappedWord, "empty generators list", true,
-    [ IsWord, IsEmpty, IsList ], 0,
+    [ IsObject, IsEmpty, IsList ], 0,
 function( x, gens1, gens2 )
   return x;
 end);

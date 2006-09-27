@@ -2,7 +2,7 @@
 ##
 #W  sgpres.gi                  GAP library                     Volkmar Felsch
 ##
-#H  @(#)$Id: sgpres.gi,v 4.61.2.1 2003/12/31 02:21:12 gap Exp $
+#H  @(#)$Id: sgpres.gi,v 4.61.2.3 2006/07/27 20:32:27 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,8 +12,7 @@
 ##  presented groups (fp groups).
 ##
 Revision.sgpres_gi :=
-    "@(#)$Id: sgpres.gi,v 4.61.2.1 2003/12/31 02:21:12 gap Exp $";
-
+    "@(#)$Id: sgpres.gi,v 4.61.2.3 2006/07/27 20:32:27 gap Exp $";
 
 #############################################################################
 ##
@@ -2660,7 +2659,7 @@ local cft, ct, w,l,c,i,j,g,e,ind;
   l:=LetterRepAssocWord(word);
   for i in l do
     g:=AbsInt(i);
-    if g<0 then
+    if i<0 then
       ind:=2*aug.transtab[g];
     else
       ind:=2*aug.transtab[g]-1;
@@ -2716,7 +2715,7 @@ end);
 ## decode the secondary generators as words in the primary generators, using
 ## the `.subgroupGenerators' and their subset `.primarySubgroupGenerators'.
 InstallGlobalFunction(GeneratorTranslationAugmentedCosetTable,function(aug)
-local tt,i,t1,t2;
+local tt,i,t1,t2,tn;
   if not IsBound(aug.translationTable) then
     if not IsBound(aug.primarySubgroupGenerators) then
       aug.primarySubgroupGenerators:=
@@ -2727,10 +2726,13 @@ local tt,i,t1,t2;
     tt:=ShallowCopy(aug.primarySubgroupGenerators);
     t1:=aug.tree[1];
     t2:=aug.tree[2];
-    for i in [Length(tt)+1..Maximum(aug.treeNumbers)] do
-      tt[i]:=tt[AbsInt(t1[i])]^SignInt(t1[i])
-            *tt[AbsInt(t2[i])]^SignInt(t2[i]);
-    od;
+    tn:=aug.treeNumbers;
+    if Length(tn)>0 then
+      for i in [Length(tt)+1..Maximum(tn)] do
+	tt[i]:=tt[AbsInt(t1[i])]^SignInt(t1[i])
+	      *tt[AbsInt(t2[i])]^SignInt(t2[i]);
+      od;
+    fi;
     aug.translationTable:=Immutable(tt);
   fi;
   return aug.translationTable;

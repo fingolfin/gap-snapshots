@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gd,v 4.54.2.3 2005/08/29 08:06:35 gap Exp $
+#H  @(#)$Id: ctblfuns.gd,v 4.54.2.4 2006/04/11 12:09:40 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gd :=
-    "@(#)$Id: ctblfuns.gd,v 4.54.2.3 2005/08/29 08:06:35 gap Exp $";
+    "@(#)$Id: ctblfuns.gd,v 4.54.2.4 2006/04/11 12:09:40 gap Exp $";
 
 
 #############################################################################
@@ -1549,7 +1549,8 @@ DeclareGlobalFunction( "SymplecticComponents" );
 ##  Let <value> be a cyclotomic whose coefficients over the rationals are
 ##  in the ring $\Z_{<p>}$ of <p>-local numbers,
 ##  where <p> is a prime integer.
-##  Assume that <value> lies in $\Z_{<p>}[\zeta]$ for $\zeta = `E'(<p>^n)$.
+##  Assume that <value> lies in $\Z_{<p>}[\zeta]$ for $\zeta = `E'(<p>^n-1)$,
+##  for some positive integer $n$.
 ##
 ##  `FrobeniusCharacterValue' returns the image of <value> under the ring
 ##  homomorphism from $\Z_{<p>}[\zeta]$ to the field with $<p>^n$ elements

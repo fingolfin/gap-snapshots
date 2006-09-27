@@ -3,7 +3,7 @@
 #W  alglie.gd                   GAP library                     Thomas Breuer
 #W                                                        and Willem de Graaf
 ##
-#H  @(#)$Id: alglie.gd,v 4.44 2002/11/22 15:35:27 gap Exp $
+#H  @(#)$Id: alglie.gd,v 4.44.2.1 2006/03/28 16:34:44 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  operations for Lie algebras.
 ##
 Revision.alglie_gd :=
-    "@(#)$Id: alglie.gd,v 4.44 2002/11/22 15:35:27 gap Exp $";
+    "@(#)$Id: alglie.gd,v 4.44.2.1 2006/03/28 16:34:44 gap Exp $";
 
 #1 
 ##  A Lie algebra $L$ is an algebra such that 
@@ -149,7 +149,7 @@ DeclareSynonymAttr( "LieCenter", LieCentre );
 ##  $\sum_{j=1}^n d_{ij} b_j$.
 ##
 ##  `LeftDerivations( <B> )' returns the Lie algebra of derivations represented
-##  by theor left action on the algebra $A$. So the matrices contained in the
+##  by their left action on the algebra $A$. So the matrices contained in the
 ##  algebra output by `LeftDerivations( <B> )' are the transposes of the 
 ##  matrices contained in the output of `RightDerivations( <B> )'.
 ##

@@ -3,7 +3,7 @@
 #W  list.gd                     GAP library                  Martin Schoenert
 #W                                                            & Werner Nickel
 ##
-#H  @(#)$Id: list.gd,v 4.89.2.4 2005/08/24 19:18:12 gap Exp $
+#H  @(#)$Id: list.gd,v 4.89.2.7 2006/08/28 08:56:36 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains the definition of operations and functions for lists.
 ##
 Revision.list_gd :=
-    "@(#)$Id: list.gd,v 4.89.2.4 2005/08/24 19:18:12 gap Exp $";
+    "@(#)$Id: list.gd,v 4.89.2.7 2006/08/28 08:56:36 gap Exp $";
 
 
 #############################################################################
@@ -379,6 +379,17 @@ DeclareOperation( "Position", [ IsList, IsObject, IS_INT ] );
 
 #############################################################################
 ##
+#F  Positions( <list>, <obj> ) . . . . . . . positions of an object in a list
+#O  PositionsOp( <list>, <obj> ) . . . . . . . . . . . . underlying operation
+##
+##  returns the positions of *all* occurrences of <obj> in <list>.
+##
+DeclareGlobalFunction( "Positions" );
+DeclareOperation( "PositionsOp", [ IsList, IsObject ] );
+
+
+#############################################################################
+##
 #O  PositionCanonical( <list>, <obj> )  . . . position of canonical associate
 ##
 ##  returns the position of the canonical associate of <obj> in <list>.
@@ -407,8 +418,8 @@ DeclareOperation( "PositionNthOccurrence", [ IsList, IsObject, IS_INT ] );
 
 #############################################################################
 ##
-#O  PositionSorted( <list>, <elm> ) . .  position of an object in sorted list
-#O  PositionSorted( <list>, <elm>, <func> )
+#F  PositionSorted( <list>, <elm> ) . .  position of an object in sorted list
+#F  PositionSorted( <list>, <elm>, <func> )
 ##
 ##  In the first form `PositionSorted' returns the position of the element
 ##  <elm> in the sorted list <list>.
@@ -433,7 +444,13 @@ DeclareOperation( "PositionNthOccurrence", [ IsList, IsObject, IS_INT ] );
 ##  for testing whether a list is sorted, see~"IsSortedList" and
 ##  "IsSSortedList".
 ##
-DeclareOperation( "PositionSorted", [ IsList, IsObject ] );
+##  Specialized functions for certain kinds of lists must be installed 
+##  as methods for the operation `PositionSortedOp'.
+##  
+# we catch plain lists by a function to avoid method selection
+DeclareGlobalFunction( "PositionSorted" );
+DeclareOperation( "PositionSortedOp", [ IsList, IsObject ] );
+DeclareOperation( "PositionSortedOp", [ IsList, IsObject, IsFunction ] );
 #T originally was
 #T DeclareOperation( "PositionSorted", [ IsHomogeneousList, IsObject ] );
 #T note the problem with inhomogeneous lists that may be sorted

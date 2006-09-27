@@ -551,7 +551,7 @@ gap&gt; Order( det );
 <p><p>
 <a name = "I16"></a>
 
-The default <code>ViewObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">ViewObj</a>) methods for class functions
+The default <code>ViewObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">ViewObj</a>) methods for class functions
 print one of the strings <code>"ClassFunction"</code>, <code>"VirtualCharacter"</code>,
 <code>"Character"</code> (depending on whether the class function is known to be a
 character or virtual character, see&nbsp;<a href="CHAP070.htm#SSEC008.1">IsCharacter</a>, <a href="CHAP070.htm#SSEC008.2">IsVirtualCharacter</a>),
@@ -563,7 +563,7 @@ functions of different underlying characteristic
 <p>
 <a name = "I17"></a>
 
-The default <code>PrintObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">PrintObj</a>) method for class functions
+The default <code>PrintObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">PrintObj</a>) method for class functions
 does the same as <code>ViewObj</code>,
 except that the character table is is <code>Print</code>-ed instead of <code>View</code>-ed.
 <p>
@@ -578,7 +578,7 @@ table.
 <p>
 <a name = "I18"></a>
 
-The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.4">Display</a>) method for a class function <var>chi</var>
+The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.4">Display</a>) method for a class function <var>chi</var>
 calls <code>Display</code> for its underlying character table
 (see&nbsp;<a href="CHAP069.htm#SECT011">Printing Character Tables</a>), with <var>chi</var> as the only entry in the
 <code>chars</code> list of the options record.
@@ -2558,7 +2558,8 @@ gap&gt; PermComb( tbl, rec( degree:= 110, maxmult:= bounds ) );
 Let <var>value</var> be a cyclotomic whose coefficients over the rationals are
 in the ring <b>Z</b><sub><i>p</i> </sub> of <var>p</var>-local numbers,
 where <var>p</var> is a prime integer.
-Assume that <var>value</var> lies in <b>Z</b><sub><i>p</i> </sub>[&#950;] for &#950; =  <tt>E</tt>(<i>p</i> <sup><i>n</i></sup>).
+Assume that <var>value</var> lies in <b>Z</b><sub><i>p</i> </sub>[&#950;] for &#950; =  <tt>E</tt>(<i>p</i> <sup><i>n</i></sup>&#8722;1),
+for some positive integer <i>n</i>.
 <p>
 <code>FrobeniusCharacterValue</code> returns the image of <var>value</var> under the ring
 homomorphism from <b>Z</b><sub><i>p</i> </sub>[&#950;] to the field with <i>p</i> <sup><i>n</i></sup> elements
@@ -2654,5 +2655,5 @@ functions.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP069.htm">Previous</a>] [<a href ="CHAP071.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

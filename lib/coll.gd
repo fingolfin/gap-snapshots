@@ -3,7 +3,7 @@
 #W  coll.gd                     GAP library                  Martin Schoenert
 #W                                                            & Thomas Breuer
 ##
-#H  @(#)$Id: coll.gd,v 4.108 2003/07/28 15:11:57 gap Exp $
+#H  @(#)$Id: coll.gd,v 4.108.2.2 2006/08/28 15:29:14 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file declares the operations for collections.
 ##
 Revision.coll_gd :=
-    "@(#)$Id: coll.gd,v 4.108 2003/07/28 15:11:57 gap Exp $";
+    "@(#)$Id: coll.gd,v 4.108.2.2 2006/08/28 15:29:14 gap Exp $";
 
 #T change the installation of isomorphism and factor maintained methods
 #T in the same way as that of subset maintained methods!
@@ -1078,6 +1078,7 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  Note that `Random' is of course *not* an attribute.
 ##
 DeclareOperation( "Random", [ IsListOrCollection ] );
+DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 
 ##
 #2
@@ -1117,31 +1118,6 @@ DeclareOperation( "Random", [ IsListOrCollection ] );
 ##
 DeclareSynonym( "RandomList", RANDOM_LIST);
 
-#############################################################################
-##
-#F  StateRandom()
-#F  RestoreStateRandom(<obj>)
-##
-##  For debugging purposes, it can be desirable to reset the random number
-##  generator to a state it had before. `StateRandom' returns a {\GAP}
-##  object that represents the current state of the random number generator
-##  used by `RandomList'.
-##
-##  By calling `RestoreStateRandom' with this object as argument, the
-##  random number is reset to this same state.
-##
-##  (The same result can be obtained by accessing the two global variables
-##  `R_N' and `R_X'.)
-##
-##  (The format of the object used to represent the random generator seed
-##  is not guaranteed to be stable betweed different machines or versions
-##  of {\GAP}.
-##
-DeclareGlobalFunction( "StateRandom" );
-DeclareGlobalFunction( "RestoreStateRandom" );
-
-# older documentation referred to `StatusRandom'. 
-DeclareSynonym("StatusRandom",StateRandom);
 
 #############################################################################
 ##
@@ -2034,7 +2010,6 @@ DeclareOperation( "CanComputeIsSubset", [IsObject,IsObject] );
 DeclareFilter( "CanComputeSize" );
 
 InstallTrueMethod( CanComputeSize, HasSize );
-
 
 #############################################################################
 ##

@@ -1,6 +1,6 @@
-                  README for GAP 4.4.7
+                  README for GAP 4.4.8
 
-These archives contain the current release of GAP. It is version 4.4.7
+These archives contain the current release of GAP. It is version 4.4.8
 
 All files are available in the following formats:
 
@@ -38,7 +38,7 @@ support@gap-system.org to inform us of the installation.
 
 For a complete installation fetch the files
 
-   gap4r4p7    ....   The main GAP system
+   gap4r4p8    ....   The main GAP system
    packages....  ....   Contributed packages
 
 (with the extensions of your choice, see above).
@@ -47,7 +47,7 @@ Macintosh systems, see the package infos on our Web pages for details.
    
 and  (optional additional tables of marks, need about 80 MB on disc)
 
-   xtom4r4p7 ....
+   xtom4r4p8 ....
 
 (In contrast to older versions, the installation archives provided will
 always contain the most recent bugfix -- if you install GAP afresh you do not
@@ -55,7 +55,7 @@ need to fetch any bugfix.)
 
 INSTALLATION UNDER UNIX AND OS X
 
-While the `gap4r4p7' archive must be unpacked *in* the directory
+While the `gap4r4p8' archive must be unpacked *in* the directory
 in which you want GAP's root directory to sit (say, '/usr/local/lib/', a
 subdirectory 'gap4r4' is created), the
 `packages...' archive must be extracted into the
@@ -80,16 +80,16 @@ README.* files in the 'pkg' subdirectory.
 
 INSTALLATION UNDER WINDOWS
 
-Decompress  'gap4r4p7-win.zip'   on  the  top-level  directory   of  drive  C:\.
+Decompress  'gap4r4p8-win.zip'   on  the  top-level  directory   of  drive  C:\.
 This  creates  a  directory  C:\GAP4R4,   the  'GAP  root  directory'.  Then
 extract  'packages...-win.zip' into  C:\GAP4R4\pkg\.   
-Click  on C:\gap4r4p7\bin\gapw95.exe to start GAP.
+Click  on C:\gap4r4p8\bin\gapw95.exe to start GAP.
 (It is possible that using the rxvt shell via
 C:\GAP4R4\bin\gaprxvt.bat will give a nicer user interface. 
 However, please note that we cannot provide support for this shell.)
 
 To make  GAP accessible  from the  start menu,  create a  link 'GAP
-4.4.7' to
+4.4.8' to
 C:\GAP4R4\bin\gapw95.exe in a submenu of the start menu of your choice.
 
 (If you want to install GAP in  another directory, you will have to create a
@@ -107,11 +107,11 @@ INSTALLATION ON MAC OS
 Decompress  'unzoo4r4-...sit' (using,  e. g.  , Stuffit
 Expander). You should now have an application 'unzoo'.
 
-Move this application and gap4r4p7.zoo  into the  folder in
+Move this application and gap4r4p8.zoo  into the  folder in
 which you want  to install  GAP and decompress  it by dragging it onto the
 'unzoo' application icon.
 
-.  This  should  have  created  a  folder  'gap4r4p7' with a 
+.  This  should  have  created  a  folder  'gap4r4p8' with a 
 'GAP 4 ...' application in this directory.
 
 To install the GAP packages,  move 'packages....zoo' into the  

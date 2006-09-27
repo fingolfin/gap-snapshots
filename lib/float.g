@@ -3,7 +3,7 @@
 #W  float.g                        GAP library                   Steve Linton
 ##                                                                Stefan Kohl
 ##
-#H  @(#)$Id: float.g,v 4.2.4.1 2005/07/20 09:25:41 stefan Exp $
+#H  @(#)$Id: float.g,v 4.2.4.2 2006/07/21 13:38:33 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file deals with floats
 ##
 Revision.float_g :=
-  "@(#)$Id: float.g,v 4.2.4.1 2005/07/20 09:25:41 stefan Exp $";
+  "@(#)$Id: float.g,v 4.2.4.2 2006/07/21 13:38:33 gap Exp $";
 
 BIND_GLOBAL( "FloatsFamily", 
         NewFamily( "FloatsFamily", IS_FLOAT ));
@@ -77,7 +77,7 @@ InstallMethod( Float,
 ##
 InstallMethod( Float,
                "for rationals", true, [ IsRat ], 0,
-               x -> FLOAT_INT(NumeratorRat(x))/FLOAT_INT(DenominatorRat(x)));
+               x -> Float(NumeratorRat(x))/Float(DenominatorRat(x)));
 
 #############################################################################
 ##
@@ -86,6 +86,30 @@ InstallMethod( Float,
 InstallMethod( Float,
                "for matrices", true, [ IsMatrix ], 0,
                M -> List( M, l -> List( l, Float ) ) );
+
+#############################################################################
+##
+#M  Float( x ) . . . . . . . . . . . . . . . . . . . . . . . .  for floats
+##
+InstallMethod( Float, "for floats", true, [ IsFloat ], 0,
+    IdFunc );
+
+
+#############################################################################
+##
+#M  Float( x ) . . . . . . . . . . . . . . . . . . . . . . . .  for strings
+##
+InstallMethod( Float, "for strings", true, [ IsString ], 0,
+    FLOAT_STRING );
+
+
+#############################################################################
+##
+#M  String( x ) . . . . . . . . . . . . . . . . . . . . . . . .  for floats
+##
+InstallMethod( String, "for floats", true, [ IsFloat ], 0,
+    STRING_FLOAT );
+
 
 #############################################################################
 ##

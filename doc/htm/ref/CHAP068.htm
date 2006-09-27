@@ -284,7 +284,7 @@ table of marks of <var>G</var>, using <code>RepresentativeTom</code>
 <p><p>
 <a name = "I0"></a>
 
-The default <code>ViewObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">ViewObj</a>) method for tables of  marks  prints
+The default <code>ViewObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">ViewObj</a>) method for tables of  marks  prints
 the string <code>"TableOfMarks"</code>, followed by --if  known--  the  identifier
 (see&nbsp;<a href="CHAP068.htm#SSEC007.9">Identifier!for tables of marks</a>) or the group of the table of marks
 enclosed in brackets; if neither group nor identifier are known then just
@@ -292,20 +292,20 @@ the number of conjugacy classes of subgroups is printed instead.
 <p>
 <a name = "I1"></a>
 
-The default <code>PrintObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.3">PrintObj</a>) method for tables of marks
+The default <code>PrintObj</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">PrintObj</a>) method for tables of marks
 does the same as <code>ViewObj</code>,
 except that the group is is <code>Print</code>-ed instead of <code>View</code>-ed.
 <p>
 <a name = "I2"></a>
 
-The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.4">Display</a>) method for a table of marks <var>tom</var>
+The default <code>Display</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.4">Display</a>) method for a table of marks <var>tom</var>
 produces a formatted output of the marks in <var>tom</var>.
 Each line of output begins with the number of the corresponding class of
 subgroups.
 This number is repeated if the output spreads over several pages.
 The number of columns printed at one time depends on the actual
 line length, which can be accessed and changed by the function
-<code>SizeScreen</code> (see&nbsp;<a href="CHAP006.htm#SSEC011.1">SizeScreen</a>).
+<code>SizeScreen</code> (see&nbsp;<a href="CHAP006.htm#SSEC012.1">SizeScreen</a>).
 <p>
 The optional second argument <var>arec</var> of <code>Display</code> can be used to change
 the default style for displaying a character as shown above.
@@ -1481,8 +1481,8 @@ gap&gt; repeat
 &gt; until Order( y ) = 3 and Order( x*y ) = 5;
 gap&gt; # Compute a representative w.r.t. these generators.
 gap&gt; RepresentativeTomByGenerators( a5, 4, [ x, y ] );
-Group([ [ [ Z(2)^0, Z(2^2)^2 ], [ 0*Z(2), Z(2)^0 ] ], 
-  [ [ Z(2)^0, Z(2^2) ], [ 0*Z(2), Z(2)^0 ] ] ])
+Group([ [ [ Z(2)^0, Z(2^2) ], [ 0*Z(2), Z(2)^0 ] ],
+  [ [ Z(2)^0, Z(2^2)^2 ], [ 0*Z(2), Z(2)^0 ] ] ])
 gap&gt; # Show that the new generators are really good.
 gap&gt; grp:= UnderlyingGroup( a5 );;
 gap&gt; iso:= GroupGeneralMappingByImages( grp, g,
@@ -1689,5 +1689,5 @@ true
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP067.htm">Previous</a>] [<a href ="CHAP069.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

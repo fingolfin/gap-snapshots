@@ -3,7 +3,7 @@
 #W  coll.gi                     GAP library                  Martin Schoenert
 #W                                                            & Thomas Breuer
 ##
-#H  @(#)$Id: coll.gi,v 4.99 2003/05/08 16:18:17 gap Exp $
+#H  @(#)$Id: coll.gi,v 4.99.2.1 2006/08/28 15:52:58 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains methods for collections in general.
 ##
 Revision.coll_gi :=
-    "@(#)$Id: coll.gi,v 4.99 2003/05/08 16:18:17 gap Exp $";
+    "@(#)$Id: coll.gi,v 4.99.2.1 2006/08/28 15:52:58 gap Exp $";
 
 
 #############################################################################
@@ -245,11 +245,6 @@ InstallMethod( RepresentativeSmallest,
 ##  an enumerator of <C> and selects a random element of this list using the
 ##  function `RANDOM_LIST', which is a pseudo random number generator.
 ##
-InstallMethod( Random, "for an internal list",
-    [ IsList and IsInternalRep ], 100,
-#T ?
-    RANDOM_LIST );
-
 InstallMethod( Random, "for a (finite) collection",
     [ IsCollection and IsFinite ],
     C -> RANDOM_LIST( Enumerator( C ) ) );

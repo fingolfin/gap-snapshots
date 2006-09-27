@@ -2,14 +2,14 @@
 ##
 #W  oprt.tst                GAP-4 library                    ALexander Hulpke
 ##
-#H  @(#)$Id: oprt.tst,v 4.2.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: oprt.tst,v 4.2.2.5 2006/09/16 19:04:23 jjm Exp $
 ##
 #Y  Copyright 1997,    Lehrstuhl D fuer Mathematik,   RWTH Aachen,    Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: oprt.tst,v 4.2.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: oprt.tst,v 4.2.2.5 2006/09/16 19:04:23 jjm Exp $");
 gap> c5:=CyclicGroup(IsPermGroup,5);;
 gap> d:=Combinations([1..5],2);;
 gap> eo:=ExternalOrbit(c5,d,[1,2],OnSets);

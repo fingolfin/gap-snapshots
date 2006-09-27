@@ -496,7 +496,7 @@ where <var>s</var> is an element of the underlying semigroup <var>S</var> and
 This can be thought of as a matrix with zero everywhere
 except for an occurrence of <var>s</var> at row <var>i</var> and column <var>lambda</var>.
 The multiplication is defined by 
-(<i>s</i>, <i>i</i>, &#955;)*(<i>t</i>, <i>j</i> , &#956;) = (<i>s</i> <i>P</i><sub>&#955;<i>j</i></sub> <i>t</i>, <i>i</i>, &#956;) where
+(<i>i</i>, <i>s</i>, &#955;)*(<i>j</i>, <i>t</i>, &#956;) = (<i>i</i>, <i>s</i> <i>P</i><sub>&#955;<i>j</i></sub> <i>t</i>, &#956;) where
 <i>P</i> is the defining matrix of the semigroup.
 In the case that the underlying semigroup has a zero we can make the
 ReesZeroMatrixSemigroup, wherein all elements whose <var>s</var> entry is the
@@ -569,7 +569,7 @@ each return the defining matrix of the Rees (0-) matrix semigroup.
 <li><code>UnderlyingElementOfReesZeroMatrixSemigroupElement( </code><var>x</var><code> ) A</code>
 <p>
 For an element <var>x</var> of a Rees Matrix semigroup, of the form
-<code>(</code><var>s</var><code>, </code><var>i</var><code>, </code><var>lambda</var><code>)</code>,
+<code>(</code><var>i</var><code>, </code><var>s</var><code>, </code><var>lambda</var><code>)</code>,
 the row index is <var>i</var>, the column index is <var>lambda</var> and the 
 underlying element is <var>s</var>.
 If we think of an element as a matrix then this corresponds to
@@ -603,5 +603,5 @@ group).
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP048.htm">Previous</a>] [<a href ="CHAP050.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

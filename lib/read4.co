@@ -1,11 +1,11 @@
 #I  file="lib/read4.g"
 
-#F  file="lib/profile.g" crc=100569551
+#F  file="lib/profile.g" crc=-34731888
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/profile.g", 100569551 );
+COM_RESULT := COM_FILE( "lib/profile.g", -34731888 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/profile.g\"");
 elif COM_RESULT = 1  then
@@ -15,7 +15,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/profile.g");
 elif COM_RESULT = 3  then
-Revision.profile_g:="@(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $";
+Revision.profile_g:="@(#)$Id: profile.g,v 4.32.4.4 2006/08/29 14:41:59 gap Exp $";
 PROFILED_FUNCTIONS:=[];
 PROFILED_FUNCTIONS_NAMES:=[];
 PREV_PROFILED_FUNCTIONS:=[];

@@ -116,7 +116,7 @@ immediately after the underlying category has been created.
 <p>
 Several functions are defined for both lists and collections,
 for example <code>Intersection</code> (see&nbsp;<a href="CHAP028.htm#SSEC004.2">Intersection</a>), <code>Iterator</code>
-(see&nbsp;<a href="CHAP028.htm#SSEC007.1">Iterator</a>), and <code>Random</code> (see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>).
+(see&nbsp;<a href="CHAP028.htm#SSEC007.1">Iterator</a>), and <code>Random</code> (see&nbsp;<a href="CHAP014.htm#SSEC005.2">Random</a>).
 <code>IsListOrCollection</code> is a supercategory of <code>IsList</code> and <code>IsCollection</code>
 (that is, all lists and collections lie in this category),
 which is used to describe the arguments of functions such as the ones
@@ -257,7 +257,7 @@ but default methods are installed for the case that they are missing.
 <dt><code>ViewObj</code> and <code>PrintObj</code> <dd>
     two functions that print what one wants to be printed when
     <code>View( </code><var>enum</var><code> )</code> or <code>Print( </code><var>enum</var><code> )</code> is called
-    (see&nbsp;<a href="CHAP006.htm#SECT002">View and Print</a>),
+    (see&nbsp;<a href="CHAP006.htm#SECT003">View and Print</a>),
     if the <code>ViewObj</code> component is missing then the <code>PrintObj</code> method is
     used as a default.
 </dl>
@@ -578,7 +578,7 @@ there are several elements in <var>C</var>.
 It is not even guaranteed that <code>Representative</code> returns the same
 representative if it is called several times for one collection.
 The main difference between <code>Representative</code> and <code>Random</code>
-(see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>) is that <code>Representative</code> is free to choose a value that is
+(see&nbsp;<a href="CHAP014.htm#SSEC005.2">Random</a>) is that <code>Representative</code> is free to choose a value that is
 cheap to compute,
 while <code>Random</code> must make an effort to randomly distribute its answers.
 <p>
@@ -807,16 +807,20 @@ Note that <code>Random</code> is of course <strong>not</strong> an attribute.
 <p>
 <pre>
 gap&gt; Random(Rationals);
--4
+4
 gap&gt; g:= Group( (1,2,3) );;  Random( g );  Random( g );
 (1,3,2)
-(1,3,2)
+()
 </pre>
 <p>
 <a name = "SSEC006.2"></a>
 <li><code>StateRandom( ) F</code>
 <a name = "SSEC006.2"></a>
 <li><code>RestoreStateRandom( </code><var>obj</var><code> ) F</code>
+<p>
+[This interface to the global random generator is kept for compatibility 
+with older versions of <font face="Gill Sans,Helvetica,Arial">GAP</font>. Use now <code>State(GlobalRandomSource)</code>
+and <code>Reset(GlobalRandomSource, </code><var>obj</var><code>)</code> instead.]
 <p>
 For debugging purposes, it can be desirable to reset the random number
 generator to a state it had before. <code>StateRandom</code> returns a <font face="Gill Sans,Helvetica,Arial">GAP</font>
@@ -830,18 +834,18 @@ random number is reset to this same state.
 <code>R_N</code> and <code>R_X</code>.)
 <p>
 (The format of the object used to represent the random generator seed
-is not guaranteed to be stable betweed different machines or versions
+is not guaranteed to be stable between different machines or versions
 of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
 <p>
 <pre>
 gap&gt; seed:=StateRandom();;
 gap&gt; List([1..10],i-&gt;Random(Integers));
-[ -3, 2, 5, 1, 0, -2, 4, 3, 5, 3 ]
+[ -2, 1, -2, -1, 0, 1, 0, 1, -1, 0 ]
 gap&gt; List([1..10],i-&gt;Random(Integers));
-[ 1, -2, 1, -1, -2, 4, -1, -3, -1, 1 ]
+[ 2, 0, 4, -1, -3, 1, -4, -1, 5, -2 ]
 gap&gt; RestoreStateRandom(seed);
 gap&gt; List([1..10],i-&gt;Random(Integers));
-[ -3, 2, 5, 1, 0, -2, 4, 3, 5, 3 ]
+[ -5, -2, 0, 1, -2, -1, -3, -2, 0, 0 ]
 </pre>
 <p>
 <a name = "SSEC006.3"></a>
@@ -854,7 +858,7 @@ For a list <var>list</var>, <code>PseudoRandom</code> returns the same as <code>
 For collections <var>C</var> that are not lists,
 the elements returned by <code>PseudoRandom</code> are <strong>not</strong> necessarily equally
 distributed, even for finite collections <var>C</var>;
-the idea is that <code>Random</code> (see&nbsp;<a href="CHAP028.htm#SSEC006.1">Random</a>) returns elements according to
+the idea is that <code>Random</code> (see&nbsp;<a href="CHAP014.htm#SSEC005.2">Random</a>) returns elements according to
 a reasonable distribution, <code>PseudoRandom</code> returns elements that are
 cheap to compute but need not satisfy this strong condition, and
 <code>Representative</code> (see&nbsp;<a href="CHAP028.htm#SSEC003.7">Representative</a>) returns arbitrary elements,
@@ -1089,5 +1093,5 @@ this record is changed in place
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP027.htm">Previous</a>] [<a href ="CHAP029.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

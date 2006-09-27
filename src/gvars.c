@@ -2,7 +2,7 @@
 **
 *W  gvars.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: gvars.c,v 4.49 2002/06/25 11:10:16 sal Exp $
+*H  @(#)$Id: gvars.c,v 4.49.2.1 2006/08/22 16:28:25 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -30,7 +30,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_gvars_c =
-   "@(#)$Id: gvars.c,v 4.49 2002/06/25 11:10:16 sal Exp $";
+   "@(#)$Id: gvars.c,v 4.49.2.1 2006/08/22 16:28:25 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -670,6 +670,23 @@ Obj FuncIDENTS_GVAR (
     return copy;
 }
 
+Obj FuncIDENTS_BOUND_GVARS (
+    Obj                 self )
+{
+    /*QQ extern Obj          NameGVars;   */
+    Obj                 copy;
+    UInt                i, j;
+
+    copy = NEW_PLIST( T_PLIST+IMMUTABLE, LEN_PLIST(NameGVars) );
+    for ( i = 1, j = 1;  i <= LEN_PLIST(NameGVars);  i++ ) {
+        if ( VAL_GVAR( i ) || ELM_PLIST( ExprGVars, i )) {
+           SET_ELM_PLIST( copy, j, ELM_PLIST( NameGVars, i ) );
+           j++;
+        }
+    }
+    SET_LEN_PLIST( copy, j - 1 );
+    return copy;
+}
 
 /****************************************************************************
 **
@@ -988,6 +1005,9 @@ static StructGVarFunc GVarFuncs [] = {
                
     { "IDENTS_GVAR", 0L, "",
       FuncIDENTS_GVAR, "src/gap.c:IDENTS_GVAR" },
+
+    { "IDENTS_BOUND_GVARS", 0L, "",
+      FuncIDENTS_BOUND_GVARS, "src/gap.c:IDENTS_BOUND_GVARS" },
 
     { "ISB_GVAR", 1L, "gvar",
       FuncISB_GVAR, "src/gap.c:ISB_GVAR" },

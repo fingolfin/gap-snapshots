@@ -3,7 +3,7 @@
 *W  finfield.c                  GAP source                      Werner Nickel
 *W                                                         & Martin Schoenert
 **
-*H  @(#)$Id: finfield.c,v 4.45.6.4 2006/02/22 12:26:40 sal Exp $
+*H  @(#)$Id: finfield.c,v 4.45.6.5 2006/07/06 11:58:17 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -53,7 +53,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_finfield_c =
-   "@(#)$Id: finfield.c,v 4.45.6.4 2006/02/22 12:26:40 sal Exp $";
+   "@(#)$Id: finfield.c,v 4.45.6.5 2006/07/06 11:58:17 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1734,11 +1734,7 @@ Obj FuncLOG_FFE_DEFAULT (
         t = d;  d = c - (c/d) * d;  c = t;
     }
     if ( (vZ-1) % c != 0 ) {
-        opZ = ErrorReturnObj(
-            "LogFFE: <z> must be a power of <r>",
-             0L, 0L,
-             "you can replace <z> via 'return <z>;'" );
-        return FuncLOG_FFE_DEFAULT( self, opZ, opR );
+      return Fail;
     }
 
     /* return the logarithm                                                */

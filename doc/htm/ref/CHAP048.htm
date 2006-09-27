@@ -2122,8 +2122,8 @@ gap&gt; phi := IsomorphismPermGroup( G );;
 gap&gt; P := Image( phi );
 Group([ (1,7,6)(2,9)(4,5,10), (2,3,4,5)(6,9,8,7) ])
 gap&gt; D := DerivedSubgroup( P );
-Group([ (1,2,10,9)(3,8)(4,5)(6,7), (1,9)(2,10)(3,6,8,5)(4,7), 
-  (1,7,10,4)(2,9)(3,6)(5,8) ])
+Group([ (1,2,10,9)(3,8)(4,5)(6,7), (1,3,10,8)(2,5)(4,7)(6,9),
+  (1,2,8,7,5)(3,4,6,10,9) ])
 gap&gt; Size( D );
 960
 gap&gt; IsPerfectGroup( D );
@@ -2138,15 +2138,15 @@ gap&gt; for m in GeneratorsOfGroup( R ) do PrintArray( m ); od;
   [   0,   0,   0,   1,   0 ],
   [   0,   0,   1,   0,   0 ],
   [  -1,  -1,   0,   0,   1 ] ]
-[ [  -1,  -1,  -1,  -1,   2 ],
-  [   0,   0,   0,  -1,   0 ],
+[ [   0,   0,   0,   1,   0 ],
+  [  -1,  -1,  -1,  -1,   2 ],
   [   0,   0,  -1,   0,   0 ],
-  [   0,   1,   0,   0,   0 ],
-  [   0,   0,  -1,  -1,   1 ] ]
-[ [  -1,   0,   0,   0,   0 ],
+  [   1,   0,   0,   0,   0 ],
+  [   0,  -1,  -1,   0,   1 ] ]
+[ [   0,  -1,   0,   0,   0 ],
+  [   0,   0,   1,   0,   0 ],
   [   0,   0,   0,  -1,   0 ],
   [   1,   1,   1,   1,  -2 ],
-  [   0,  -1,   0,   0,   0 ],
   [   0,   0,   1,   0,  -1 ] ]
 </pre>
 <p>
@@ -2185,5 +2185,5 @@ gap&gt; LargestMovedPoint( P2 );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP047.htm">Previous</a>] [<a href ="CHAP049.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

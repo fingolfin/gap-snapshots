@@ -255,49 +255,50 @@ I 6.1. errors!syntax
 I 6.1. output!suppressing
 I 6.1. last
 I 6.1. previous result
-S 6.2. View and Print
-F 6.2. View
-F 6.2. Print
-F 6.2. ViewObj
-F 6.2. PrintObj
-F 6.2. Display
-S 6.3. Break Loops
-F 6.3. quit
-I 6.3. return
-F 6.3. return from break loop
-F 6.3. OnBreak
-I 6.3. ErrorNoTraceBack
-I 6.3. Break loop message
-F 6.3. OnBreakMessage
-I 6.3. Backtrace!GAP3 name for Where
-F 6.3. Where
-S 6.4. Variable Access in a Break Loop
-F 6.4. DownEnv
-F 6.4. UpEnv
-S 6.5. Error
-F 6.5. Error
-S 6.6. ErrorCount
-F 6.6. ErrorCount
-S 6.7. Leaving GAP
-I 6.7. quit!in emergency
-I 6.7. exit
-I 6.7. at exit functions
-I 6.7. saving on exit
-F 6.7. QUIT!emergency quit
-F 6.7. InstallAtExit
-F 6.7. QUITTING
-F 6.7. SaveOnExitFile
-S 6.8. Line Editing
-S 6.9. Editing Files
-F 6.9. Edit
-S 6.10. Editor Support
-I 6.10. utilities for editing GAP files
-I 6.10. vi
-I 6.10. vim
-I 6.10. emacs
-S 6.11. SizeScreen
-F 6.11. SizeScreen
-F 6.11. SizeScreen
+S 6.2. Special Rules for Input Lines
+S 6.3. View and Print
+F 6.3. View
+F 6.3. Print
+F 6.3. ViewObj
+F 6.3. PrintObj
+F 6.3. Display
+S 6.4. Break Loops
+F 6.4. quit
+I 6.4. return
+F 6.4. return from break loop
+F 6.4. OnBreak
+I 6.4. ErrorNoTraceBack
+I 6.4. Break loop message
+F 6.4. OnBreakMessage
+I 6.4. Backtrace!GAP3 name for Where
+F 6.4. Where
+S 6.5. Variable Access in a Break Loop
+F 6.5. DownEnv
+F 6.5. UpEnv
+S 6.6. Error
+F 6.6. Error
+S 6.7. ErrorCount
+F 6.7. ErrorCount
+S 6.8. Leaving GAP
+I 6.8. quit!in emergency
+I 6.8. exit
+I 6.8. at exit functions
+I 6.8. saving on exit
+F 6.8. QUIT!emergency quit
+F 6.8. InstallAtExit
+F 6.8. QUITTING
+F 6.8. SaveOnExitFile
+S 6.9. Line Editing
+S 6.10. Editing Files
+F 6.10. Edit
+S 6.11. Editor Support
+I 6.11. utilities for editing GAP files
+I 6.11. vi
+I 6.11. vim
+I 6.11. emacs
+S 6.12. SizeScreen
+F 6.12. SizeScreen
+F 6.12. SizeScreen
 C debug.tex 7. Debugging and Profiling Facilities
 S 7.1. Recovery from NoMethodFound-Errors
 F 7.1. ShowArguments
@@ -593,6 +594,22 @@ F 14.4. IsZmodnZObjNonprime
 F 14.4. IsZmodpZObj
 F 14.4. IsZmodpZObjSmall
 F 14.4. IsZmodpZObjLarge
+S 14.5. Random Sources
+F 14.5. IsRandomSource
+F 14.5. Random
+F 14.5. Random
+F 14.5. State
+F 14.5. Reset
+F 14.5. Reset
+F 14.5. Init
+F 14.5. Init
+F 14.5. IsGlobalRandomSource
+F 14.5. IsGAPRandomSource
+F 14.5. IsMersenneTwister
+F 14.5. GlobalRandomSource
+F 14.5. GlobalMersenneTwister
+F 14.5. RandomSource
+F 14.5. RandomSource
 C numtheor.tex 15. Number Theory
 I 15.0. prime residue group
 F 15.0. InfoNumtheor
@@ -892,6 +909,8 @@ S 21.15. Mutability Status and List Arithmetic
 F 21.15. ListWithIdenticalEntries
 S 21.16. Finding Positions in Lists
 F 21.16. Position
+F 21.16. Positions
+F 21.16. PositionsOp
 F 21.16. PositionCanonical
 F 21.16. PositionNthOccurrence
 F 21.16. PositionSorted
@@ -1429,8 +1448,8 @@ F 28.5. in!for collections
 F 28.5. in!operation for
 S 28.6. Random Elements
 I 28.6. random element!of a list or collection
-F 28.6. Random
-F 28.6. Random
+F 28.6. Random![coll]
+F 28.6. Random![coll]
 F 28.6. StateRandom
 F 28.6. RestoreStateRandom
 F 28.6. PseudoRandom
@@ -2238,6 +2257,11 @@ F 37.24. SchurCover
 F 37.24. AbelianInvariantsMultiplier
 I 37.24. Multiplier
 I 37.24. Schur multiplier
+F 37.24. Epicentre
+F 37.24. ExteriorCentre
+F 37.24. NonabelianExteriorSquare
+F 37.24. EpimorphismNonabelianExteriorSquare
+F 37.24. IsCentralFactor
 S 37.25. Tests for the Availability of Methods
 F 37.25. CanEasilyTestMembership
 F 37.25. CanComputeSize

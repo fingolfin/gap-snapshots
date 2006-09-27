@@ -2,7 +2,7 @@
 ##
 #W  profile.g                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $
+#H  @(#)$Id: profile.g,v 4.32.4.4 2006/08/29 14:41:59 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the profiling functions.
 ##
 Revision.profile_g :=
-    "@(#)$Id: profile.g,v 4.32.4.3 2005/08/23 09:20:17 gap Exp $";
+    "@(#)$Id: profile.g,v 4.32.4.4 2006/08/29 14:41:59 gap Exp $";
 
 
 #############################################################################
@@ -750,6 +750,7 @@ end);
 START_TEST := function( name )
     FlushCaches();
     RANDOM_SEED(1);
+    Reset(GlobalMersenneTwister, 1);
     GASMAN( "collect" );
     GAPInfo.TestData.START_TIME := Runtime();
     GAPInfo.TestData.START_NAME := name;

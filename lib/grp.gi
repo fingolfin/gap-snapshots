@@ -5,7 +5,7 @@
 #W                                                               Bettina Eick
 #W                                                             Heiko Theissen
 ##
-#H  @(#)$Id: grp.gi,v 4.204.2.8 2005/12/15 21:20:59 gap Exp $
+#H  @(#)$Id: grp.gi,v 4.204.2.10 2006/08/22 11:09:07 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  This file contains generic methods for groups.
 ##
 Revision.grp_gi :=
-    "@(#)$Id: grp.gi,v 4.204.2.8 2005/12/15 21:20:59 gap Exp $";
+    "@(#)$Id: grp.gi,v 4.204.2.10 2006/08/22 11:09:07 gap Exp $";
 
 
 #############################################################################
@@ -406,6 +406,25 @@ InstallMethod( IsSupersolvableGroup,
     fi;
     return IsTrivial( SupersolvableResiduum( G ) );
     end );
+
+
+#############################################################################
+##
+#M  IsPolycyclicGroup( <G> )  . . . . . . . . . test if a group is polycyclic
+##
+InstallMethod( IsPolycyclicGroup,
+               "generic method for groups", true, [ IsGroup ], 0,
+
+  function ( G )
+
+    local  d;
+
+    if IsFinite(G) then return IsSolvableGroup(G); fi;
+    if not IsSolvableGroup(G) then return false; fi;
+    d := DerivedSeriesOfGroup(G);
+    return ForAll([1..Length(d)-1],i->Index(d[i],d[i+1]) < infinity
+                                   or IsFinitelyGeneratedGroup(d[i]/d[i+1]));
+  end );
 
 
 #############################################################################
@@ -4118,7 +4137,13 @@ BindGlobal("Group_InitPseudoRandom",function( grp, len, scramble )
     local   gens,  seed,  i;
 
     # we need at least as many seeds as generators
-    gens := GeneratorsOfGroup(grp);
+    if CanEasilySortElements(One(grp)) then
+        gens := Set(GeneratorsOfGroup(grp));
+    elif CanEasilyCompareElements(One(grp)) then
+        gens := DuplicateFreeList(GeneratorsOfGroup);
+    else
+        gens := GeneratorsOfGroup(grp);
+    fi;
     if 0 = Length(gens)  then
         SetPseudoRandomSeed( grp, [[]] );
         return;

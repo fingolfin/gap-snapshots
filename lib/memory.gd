@@ -10,7 +10,7 @@
 #############################################################################
 
 Revision.memory_gd :=
-  "@(#)$Id: memory.gd,v 1.1.2.1 2006/02/26 14:49:32 gap Exp $";
+  "@(#)$Id: memory.gd,v 1.1.2.2 2006/08/19 13:09:13 gap Exp $";
 
 DeclareFilter("IsObjWithMemoryRankFilter",100); 
 
@@ -21,7 +21,8 @@ DeclareRepresentation("IsObjWithMemory",
 DeclareAttribute("TypeOfObjWithMemory",IsFamily);
 
 DeclareGlobalFunction( "GeneratorsWithMemory" );
-DeclareGlobalFunction( "StripMemory" );
+DeclareOperation( "StripMemory", [IsObject] );
+DeclareOperation( "ForgetMemory", [IsObject] );
 DeclareGlobalFunction( "StripStabChain" );
 DeclareGlobalFunction( "CopyMemory" );
 DeclareGlobalFunction( "GroupWithMemory" );

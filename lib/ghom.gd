@@ -4,7 +4,7 @@
 #W                                                           Alexander Hulpke
 #W                                                             Heiko Thei"sen
 ##
-#H  @(#)$Id: ghom.gd,v 4.55 2002/04/15 10:04:40 sal Exp $
+#H  @(#)$Id: ghom.gd,v 4.55.4.1 2006/07/25 19:23:20 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  4. Functions for ...
 ##
 Revision.ghom_gd :=
-    "@(#)$Id: ghom.gd,v 4.55 2002/04/15 10:04:40 sal Exp $";
+    "@(#)$Id: ghom.gd,v 4.55.4.1 2006/07/25 19:23:20 gap Exp $";
 
 
 #############################################################################
@@ -248,7 +248,8 @@ DeclareOperation( "ConjugatorIsomorphism",
 ##  with `ConjugatorIsomorphism' (see~"ConjugatorIsomorphism").
 ##
 ##  `ConjugatorAutomorphismNC' does the same as `ConjugatorAutomorphism',
-##  except that the check is omitted whether <g> normalizes <G>.
+##  except that the check is omitted whether <g> normalizes <G> and it is
+##  assumed that <g> is chosen to be in <G> if possible.
 ##
 DeclareGlobalFunction( "ConjugatorAutomorphism" );
 

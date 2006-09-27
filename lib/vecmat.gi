@@ -2,7 +2,7 @@
 ##
 #W  vecmat.gi                   GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: vecmat.gi,v 4.93.2.3 2006/02/22 12:26:40 sal Exp $
+#H  @(#)$Id: vecmat.gi,v 4.93.2.4 2006/08/22 10:35:54 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with GF2 vectors and matrices.
 ##
 Revision.vecmat_gi :=
-    "@(#)$Id: vecmat.gi,v 4.93.2.3 2006/02/22 12:26:40 sal Exp $";
+    "@(#)$Id: vecmat.gi,v 4.93.2.4 2006/08/22 10:35:54 gap Exp $";
 
 #############################################################################
 ##
@@ -2021,6 +2021,20 @@ InstallMethod(PostMakeImmutable, [IsGF2MatrixRep],
         MakeImmutable(m![i]);
     od;
 end);
+
+#############################################################################
+##
+#M  ZeroVector( <vector>, len )
+##
+InstallMethod( ZeroVector, "for an int and a gf2 vector",
+  [IsInt, IsGF2VectorRep],
+  function( len, v )
+    local w;
+    w := ZeroMutable(v);
+    RESIZE_GF2VEC(w,len);
+    return w;
+  end );
+
 
 #############################################################################
 ##

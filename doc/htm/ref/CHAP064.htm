@@ -762,7 +762,7 @@ gap&gt; Factors( f );
 gap&gt; Factors( PolynomialRing( Rationals ), f );
 [ x^2+1 ]
 gap&gt; Factors( PolynomialRing( CF(4) ), f );
-[ x+-E(4), x+E(4) ]
+[ x+(-E(4)), x+E(4) ]
 </pre>
 <p>
 <a name = "SSEC010.2"></a>
@@ -991,21 +991,21 @@ the ring over which <var>pring</var> was defined.
 <p>
 <pre>
 gap&gt; r:=PolynomialRing(GF(7));
-PolynomialRing(..., [ x_1 ])
+GF(7)[x_1]
 gap&gt;  r:=PolynomialRing(GF(7),3);
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+GF(7)[x_1,x_2,x_3]
 gap&gt; IndeterminatesOfPolynomialRing(r);
 [ x_1, x_2, x_3 ]
 gap&gt; r2:=PolynomialRing(GF(7),[5,7,12]);
-PolynomialRing(..., [ x_5, x_7, x_12 ])
+GF(7)[x_5,x_7,x_12]
 gap&gt; CoefficientsRing(r);
 GF(7)
 gap&gt; r:=PolynomialRing(GF(7),3);
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+GF(7)[x_1,x_2,x_3]
 gap&gt; r2:=PolynomialRing(GF(7),3,IndeterminatesOfPolynomialRing(r));
-PolynomialRing(..., [ x_4, x_5, x_6 ])
+GF(7)[x_4,x_5,x_6]
 gap&gt; r:=PolynomialRing(GF(7),["x","y","z","z2"]);
-PolynomialRing(..., [ x, y, z, z2 ])
+GF(7)[x,y,z,z2]
 </pre>
 <p>
 If you need to work with a polynomial ring and its indeterminates the
@@ -1108,9 +1108,9 @@ is the category of polynomial rings with one indeterminate.
 <p>
 <pre>
 gap&gt; r:=UnivariatePolynomialRing(Rationals,"x");
-PolynomialRing(..., [ x ])
+Rationals[x]
 gap&gt; r2:=PolynomialRing(Rationals,["q"]);
-PolynomialRing(..., [ q ])
+Rationals[q]
 gap&gt; IsUnivariatePolynomialRing(r);
 true
 gap&gt; IsUnivariatePolynomialRing(r2);
@@ -1218,9 +1218,9 @@ The following monomial orderings are predefined in <font face="Gill Sans,Helveti
 <p>
 This function creates a lexicographic ordering for monomials. Monomials
 are compared first by the exponents of the largest variable, then the
-exponents of the second larhgest variable and so on.
+exponents of the second largest variable and so on.
 <p>
-The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+The variables are ordered according to their (internal) index, i.e. <i>x</i><sub>1</sub>
 is larger than <i>x</i><sub>2</sub> and so on.
 If <var>vari</var> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the
@@ -1254,7 +1254,7 @@ This function creates a degree/lexicographic ordering. In this oredring
 monomials are compared first by their total degree, then lexicographically
 (see <code>MonomialLexOrdering</code>).
 <p>
-The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+The variables are ordered according to their (internal) index, i.e. <i>x</i><sub>1</sub>
 is larger than <i>x</i><sub>2</sub> and so on.
 If <var>vari</var> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the
@@ -1269,7 +1269,7 @@ This function creates a ``grevlex'' ordering. In this ordering monomials
 are compared first by total degree and then backwards lexicographically.
 (This is different than ``grlex'' ordering with variables reversed.) 
 <p>
-The variables are ordered accoring to their (internal) index, i.e. <i>x</i><sub>1</sub>
+The variables are ordered according to their (internal) index, i.e. <i>x</i><sub>1</sub>
 is larger than <i>x</i><sub>2</sub> and so on.
 If <var>vari</var> is given, and is a list of variables or variable indices,
 instead this arrangement of variables (in descending order; i.e. the
@@ -1787,5 +1787,5 @@ and denominator. The cancellation performed is not necessarily optimal.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP063.htm">Previous</a>] [<a href ="CHAP065.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

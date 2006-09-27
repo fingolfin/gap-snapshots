@@ -631,9 +631,9 @@ entries that is invertible over the integers.
 <p>
 <pre>
 gap&gt; RandomMat(2,3,GF(3));
-[ [ 0*Z(3), Z(3), Z(3)^0 ], [ Z(3), 0*Z(3), Z(3)^0 ] ]
+[ [ Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0, Z(3) ] ]
 gap&gt; RandomInvertibleMat(4);
-[ [ 4, 3, 5, 3 ], [ 1, -2, 1, -1 ], [ -2, 4, -1, -3 ], [ -1, 1, 2, 0 ] ]
+[ [ 1, -2, -1, 0 ], [ 1, 0, 1, -1 ], [ 0, 2, 0, 4 ], [ -1, -3, 1, -4 ] ]
 </pre>
 <p>
 <p>
@@ -1073,7 +1073,7 @@ gap&gt; CharacteristicPolynomial( [ [ 1, 1 ], [ 0, 1 ] ] );
 x^2-2*x+1
 gap&gt; mat := [[0,1],[E(4)-1,E(4)]];;
 gap&gt; CharacteristicPolynomial( mat );
-x^2+-E(4)*x+1-E(4)
+x^2+(-E(4))*x+(1-E(4))
 gap&gt; CharacteristicPolynomial( Rationals, CF(4), mat );
 x^4+3*x^2+2*x+2
 gap&gt; mat:= [ [ E(4), 1 ], [ 0, -E(4) ] ];;
@@ -1438,5 +1438,5 @@ returns a plain ordinary matrix that is equal to the block matrix
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP023.htm">Previous</a>] [<a href ="CHAP025.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

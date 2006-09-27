@@ -355,14 +355,14 @@ not printed.  The reading and evaluations happens exactly as described
 for the main loop (see <a href="CHAP006.htm#SECT001">Main Loop</a>).
 <p>
 If a statement in the file causes an error a break loop is entered
-(see&nbsp;<a href="CHAP006.htm#SECT003">Break Loops</a>).
+(see&nbsp;<a href="CHAP006.htm#SECT004">Break Loops</a>).
 The input for this break loop is not taken from the file, but from the
 input connected to the <code>stderr</code> output of <font face="Gill Sans,Helvetica,Arial">GAP</font>.
 If <code>stderr</code> is not connected to a terminal, no break loop is entered.
 If this break loop is left with <code>quit</code> (or <code></code><var>ctr</var><code>-D</code>), <font face="Gill Sans,Helvetica,Arial">GAP</font> exits from
 the <code>Read</code> command, and from all enclosing <code>Read</code> commands,
 so that control is normally returned to an interactive prompt.
-The <code>QUIT</code> statement (see&nbsp;<a href="CHAP006.htm#SECT007">Leaving GAP</a>) can also be used in the break
+The <code>QUIT</code> statement (see&nbsp;<a href="CHAP006.htm#SECT008">Leaving GAP</a>) can also be used in the break
 loop to exit <font face="Gill Sans,Helvetica,Arial">GAP</font> immediately.
 <p>
 Note that a statement must not begin in one file and end in another.
@@ -405,7 +405,7 @@ gap&gt; a;
 <a name = "SSEC007.3"></a>
 <li><code>PrintTo( </code><var>name-file</var><code>[, </code><var>obj1</var><code>, ...] ) F</code>
 <p>
-works like <code>Print</code>  (see&nbsp;<a href="CHAP006.htm#SSEC002.2">Print</a>),  except  that  the  arguments  <var>obj1</var>,
+works like <code>Print</code>  (see&nbsp;<a href="CHAP006.htm#SSEC003.2">Print</a>),  except  that  the  arguments  <var>obj1</var>,
 ... (if present) are printed to the file with  the  name  <var>name-file</var>
 instead of the standard output. This file must of course be  writable  by
 <font face="Gill Sans,Helvetica,Arial">GAP</font>. Otherwise  an  error  is  signalled.  Note  that  <code>PrintTo</code>  will
@@ -525,5 +525,5 @@ file for which the <font face="Gill Sans,Helvetica,Arial">GAP</font> language ve
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP008.htm">Previous</a>] [<a href ="CHAP010.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

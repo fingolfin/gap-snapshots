@@ -2,7 +2,7 @@
 ##
 #W  csetgrp.gi                      GAP library              Alexander Hulpke
 ##
-#H  @(#)$Id: csetgrp.gi,v 4.54 2003/04/14 16:07:16 gap Exp $
+#H  @(#)$Id: csetgrp.gi,v 4.54.2.1 2006/05/18 19:37:44 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the generic operations for cosets.
 ##
 Revision.csetgrp_gi:=
-  "@(#)$Id: csetgrp.gi,v 4.54 2003/04/14 16:07:16 gap Exp $";
+  "@(#)$Id: csetgrp.gi,v 4.54.2.1 2006/05/18 19:37:44 gap Exp $";
 
 
 #############################################################################
@@ -715,11 +715,12 @@ local c,a1,a2,r,s,t,rg,st,i,j,nr,o,oi,nu,step,p,pinv,img,rep,
     for i in dcs do
       bsz:=bsz-i[2];
       r:=CanonicalRightCosetElement(a,i[1]);
-      if ForAny(t,j->r in RepresentativesContainedRightCosets(j)) then
+      if AssertionLevel()>0 and 
+	ForAny(t,j->r in RepresentativesContainedRightCosets(j)) then
 	Error("duplicate!");
       fi;
       r:=DoubleCoset(a,i[1],b);
-      if Size(r)<>i[2] then
+      if AssertionLevel()>0 and Size(r)<>i[2] then
 	Error("single size!");
       fi;
       Add(t,r);

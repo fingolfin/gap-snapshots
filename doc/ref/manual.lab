@@ -132,32 +132,33 @@
 \makelabel{ref:FunctionsFamily}{5.4.3}
 \makelabel{ref:Main Loop and Break Loop}{6}
 \makelabel{ref:Main Loop}{6.1}
-\makelabel{ref:View and Print}{6.2}
-\makelabel{ref:View}{6.2.1}
-\makelabel{ref:Print}{6.2.2}
-\makelabel{ref:ViewObj}{6.2.3}
-\makelabel{ref:PrintObj}{6.2.3}
-\makelabel{ref:Display}{6.2.4}
-\makelabel{ref:Break Loops}{6.3}
-\makelabel{ref:quit}{6.3.1}
-\makelabel{ref:return from break loop}{6.3.2}
-\makelabel{ref:OnBreak}{6.3.3}
-\makelabel{ref:OnBreakMessage}{6.3.4}
-\makelabel{ref:Where}{6.3.5}
-\makelabel{ref:Variable Access in a Break Loop}{6.4}
-\makelabel{ref:DownEnv}{6.4.1}
-\makelabel{ref:UpEnv}{6.4.1}
-\makelabel{ref:Error}{6.5.1}
-\makelabel{ref:ErrorCount}{6.6.1}
-\makelabel{ref:Leaving GAP}{6.7}
-\makelabel{ref:QUIT!emergency quit}{6.7.1}
-\makelabel{ref:InstallAtExit}{6.7.2}
-\makelabel{ref:QUITTING}{6.7.2}
-\makelabel{ref:SaveOnExitFile}{6.7.3}
-\makelabel{ref:Line Editing}{6.8}
-\makelabel{ref:Edit}{6.9.1}
-\makelabel{ref:SizeScreen}{6.11.1}
-\makelabel{ref:SizeScreen}{6.11.1}
+\makelabel{ref:Special Rules for Input Lines}{6.2}
+\makelabel{ref:View and Print}{6.3}
+\makelabel{ref:View}{6.3.1}
+\makelabel{ref:Print}{6.3.2}
+\makelabel{ref:ViewObj}{6.3.3}
+\makelabel{ref:PrintObj}{6.3.3}
+\makelabel{ref:Display}{6.3.4}
+\makelabel{ref:Break Loops}{6.4}
+\makelabel{ref:quit}{6.4.1}
+\makelabel{ref:return from break loop}{6.4.2}
+\makelabel{ref:OnBreak}{6.4.3}
+\makelabel{ref:OnBreakMessage}{6.4.4}
+\makelabel{ref:Where}{6.4.5}
+\makelabel{ref:Variable Access in a Break Loop}{6.5}
+\makelabel{ref:DownEnv}{6.5.1}
+\makelabel{ref:UpEnv}{6.5.1}
+\makelabel{ref:Error}{6.6.1}
+\makelabel{ref:ErrorCount}{6.7.1}
+\makelabel{ref:Leaving GAP}{6.8}
+\makelabel{ref:QUIT!emergency quit}{6.8.1}
+\makelabel{ref:InstallAtExit}{6.8.2}
+\makelabel{ref:QUITTING}{6.8.2}
+\makelabel{ref:SaveOnExitFile}{6.8.3}
+\makelabel{ref:Line Editing}{6.9}
+\makelabel{ref:Edit}{6.10.1}
+\makelabel{ref:SizeScreen}{6.12.1}
+\makelabel{ref:SizeScreen}{6.12.1}
 \makelabel{ref:Debugging and Profiling Facilities}{7}
 \makelabel{ref:Recovery from NoMethodFound-Errors}{7.1}
 \makelabel{ref:ShowArguments}{7.1.1}
@@ -428,6 +429,22 @@
 \makelabel{ref:IsZmodpZObj}{14.4.4}
 \makelabel{ref:IsZmodpZObjSmall}{14.4.4}
 \makelabel{ref:IsZmodpZObjLarge}{14.4.4}
+\makelabel{ref:Random Sources}{14.5}
+\makelabel{ref:IsRandomSource}{14.5.1}
+\makelabel{ref:Random}{14.5.2}
+\makelabel{ref:Random}{14.5.2}
+\makelabel{ref:State}{14.5.3}
+\makelabel{ref:Reset}{14.5.3}
+\makelabel{ref:Reset}{14.5.3}
+\makelabel{ref:Init}{14.5.3}
+\makelabel{ref:Init}{14.5.3}
+\makelabel{ref:IsGlobalRandomSource}{14.5.4}
+\makelabel{ref:IsGAPRandomSource}{14.5.4}
+\makelabel{ref:IsMersenneTwister}{14.5.4}
+\makelabel{ref:GlobalRandomSource}{14.5.4}
+\makelabel{ref:GlobalMersenneTwister}{14.5.4}
+\makelabel{ref:RandomSource}{14.5.5}
+\makelabel{ref:RandomSource}{14.5.5}
 \makelabel{ref:Number Theory}{15}
 \makelabel{ref:InfoNumtheor}{15}
 \makelabel{ref:Prime Residues}{15.1}
@@ -627,19 +644,21 @@
 \makelabel{ref:ListWithIdenticalEntries}{21.15.1}
 \makelabel{ref:Finding Positions in Lists}{21.16}
 \makelabel{ref:Position}{21.16.1}
-\makelabel{ref:PositionCanonical}{21.16.2}
-\makelabel{ref:PositionNthOccurrence}{21.16.3}
-\makelabel{ref:PositionSorted}{21.16.4}
-\makelabel{ref:PositionSorted}{21.16.4}
-\makelabel{ref:PositionSet}{21.16.5}
-\makelabel{ref:PositionSet}{21.16.5}
-\makelabel{ref:PositionProperty}{21.16.6}
-\makelabel{ref:PositionBound}{21.16.7}
-\makelabel{ref:PositionNot}{21.16.8}
-\makelabel{ref:PositionNonZero}{21.16.9}
-\makelabel{ref:PositionSublist}{21.16.10}
-\makelabel{ref:PositionSublist}{21.16.10}
-\makelabel{ref:PositionFirstComponent}{21.16.11}
+\makelabel{ref:Positions}{21.16.2}
+\makelabel{ref:PositionsOp}{21.16.2}
+\makelabel{ref:PositionCanonical}{21.16.3}
+\makelabel{ref:PositionNthOccurrence}{21.16.4}
+\makelabel{ref:PositionSorted}{21.16.5}
+\makelabel{ref:PositionSorted}{21.16.5}
+\makelabel{ref:PositionSet}{21.16.6}
+\makelabel{ref:PositionSet}{21.16.6}
+\makelabel{ref:PositionProperty}{21.16.7}
+\makelabel{ref:PositionBound}{21.16.8}
+\makelabel{ref:PositionNot}{21.16.9}
+\makelabel{ref:PositionNonZero}{21.16.10}
+\makelabel{ref:PositionSublist}{21.16.11}
+\makelabel{ref:PositionSublist}{21.16.11}
+\makelabel{ref:PositionFirstComponent}{21.16.12}
 \makelabel{ref:Properties and Attributes for Lists}{21.17}
 \makelabel{ref:IsMatchingSublist}{21.17.1}
 \makelabel{ref:IsMatchingSublist}{21.17.1}
@@ -1100,8 +1119,8 @@
 \makelabel{ref:in!for collections}{28.5.1}
 \makelabel{ref:in!operation for}{28.5.1}
 \makelabel{ref:Random Elements}{28.6}
-\makelabel{ref:Random}{28.6.1}
-\makelabel{ref:Random}{28.6.1}
+\makelabel{ref:Random![coll]}{28.6.1}
+\makelabel{ref:Random![coll]}{28.6.1}
 \makelabel{ref:StateRandom}{28.6.2}
 \makelabel{ref:RestoreStateRandom}{28.6.2}
 \makelabel{ref:PseudoRandom}{28.6.3}
@@ -1868,6 +1887,11 @@
 \makelabel{ref:EpimorphismSchurCover}{37.24.1}
 \makelabel{ref:SchurCover}{37.24.2}
 \makelabel{ref:AbelianInvariantsMultiplier}{37.24.3}
+\makelabel{ref:Epicentre}{37.24.4}
+\makelabel{ref:ExteriorCentre}{37.24.4}
+\makelabel{ref:NonabelianExteriorSquare}{37.24.5}
+\makelabel{ref:EpimorphismNonabelianExteriorSquare}{37.24.6}
+\makelabel{ref:IsCentralFactor}{37.24.7}
 \makelabel{ref:Tests for the Availability of Methods}{37.25}
 \makelabel{ref:CanEasilyTestMembership}{37.25.1}
 \makelabel{ref:CanComputeSize}{37.25.2}
@@ -4224,6 +4248,8 @@
 \setcitlab {BEO01}{BEO02}
 \setcitlab {Ber76}{Ber76}
 \setcitlab {Besche92}{Bes92}
+\setcitlab {BFS79}{BFS79}
+\setcitlab {BJR87}{BJR87}
 \setcitlab {BreuerLinton98}{BL98}
 \setcitlab {BM83}{BM83}
 \setcitlab {Bourbaki70}{Bou70}
@@ -4250,6 +4276,7 @@
 \setcitlab {Dre69}{Dre69}
 \setcitlab {EickHoefling02}{EH02}
 \setcitlab {Eick97}{Eic97}
+\setcitlab {Ellis98}{Ell98}
 \setcitlab {EOB98}{EO98}
 \setcitlab {EOB99}{EO99}
 \setcitlab {FJNT95}{FJNT95}

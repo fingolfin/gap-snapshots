@@ -4,7 +4,7 @@
 %%
 %A  groups.msk                  GAP documentation            Alexander Hulpke
 %%
-%A  @(#)$Id: groups.msk,v 1.99.2.11 2006/03/09 15:08:12 jjm Exp $
+%A  @(#)$Id: groups.msk,v 1.99.2.14 2006/09/16 19:02:49 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -985,7 +985,7 @@ attribute `GaloisGroup(<rcl>)' as a subgroup of this group.
 tests whether the elements <x> and <y> or the subgroups <U> and <V> are
 conjugate under the action of <G>. (They do not need to be contained in
 <G>.) This command is only a shortcut to
-`RepresentativeOperation'.
+`RepresentativeAction'.
 
 
 \beginexample
@@ -1126,7 +1126,7 @@ factor group $G/G'$ is the largest abelian factor group of $G$.
 
 \beginexample
 gap> DerivedSubgroup(g);
-Group([ (1,3,2), (1,4,3) ])
+Group([ (1,3,2), (2,4,3) ])
 \endexample
 
 \>CommutatorLength( <G> ) A
@@ -1232,7 +1232,7 @@ supersolvable.
 
 \beginexample
 gap> SupersolvableResiduum(g);
-Group([ (1,2)(3,4), (1,4)(2,3) ])
+Group([ (1,3)(2,4), (1,4)(2,3) ])
 \endexample
 
 \>PRump( <G>, <p> ) F
@@ -1745,7 +1745,7 @@ subnormal, <V>=<U>.
 
 \beginexample
 gap> s:=SubnormalSeries(g,Group((1,2)(3,4)));
-[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]), 
   Group([ (1,2)(3,4) ]) ]
 \endexample
 
@@ -2141,7 +2141,7 @@ that are minimal among the nontrivial normal subgroups.
 
 \beginexample
 gap> MinimalNormalSubgroups( g );
-[ Group([ (1,4)(2,3), (1,3)(2,4) ]) ]
+[ Group([ (1,2)(3,4), (1,3)(2,4) ]) ]
 \endexample
 
 %%  Bettina Eick designed and wrote the code for maximal subgroups of a solvable
@@ -2269,11 +2269,11 @@ perfect subgroups.
 gap> m11:=TransitiveGroup(11,6);
 M(11)
 gap> r:=RepresentativesPerfectSubgroups(m11);
-[ Group([ (3,6,7)(4,5,9)(8,10,11), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (2,3,7)(4,11,9)(5,8,10), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (4,9,10,11)(5,6,8,7), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (3,4,10)(5,11,6)(7,9,8), (1,10)(2,8)(4,7)(5,9) ]), M(11), Group(()) 
- ]
+[ Group([ (3,5,8)(4,11,7)(6,9,10), (2,3)(4,10)(5,9)(8,11) ]),
+  Group([ (1,2,4)(5,11,8)(6,9,7), (2,3)(4,10)(5,9)(8,11) ]),
+  Group([ (3,4,10)(5,11,6)(7,9,8), (1,4,9)(3,6,10)(7,11,8) ]),
+  Group([ (1,2,5)(3,11,10)(6,7,8), (2,3)(4,10)(5,9)(8,11) ]), M(11),
+  Group(()) ]
 gap> List(r,Size);
 [ 60, 60, 360, 660, 7920, 1 ]
 \endexample
@@ -2286,10 +2286,11 @@ returns a list of the conjugacy classes of perfect subgroups of <G>.
 
 \beginexample
 gap> ConjugacyClassesPerfectSubgroups(m11);
-[ Group( [ ( 3, 6, 7)( 4, 5, 9)( 8,10,11), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 2, 3, 7)( 4,11, 9)( 5, 8,10), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 4, 9,10,11)( 5, 6, 8, 7), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
+[ Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
+  Group( [ ( 1, 2, 4)( 5,11, 8)( 6, 9, 7), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
+  Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1, 4, 9)( 3, 6,10)( 7,11, 8)
+     ] )^G,
+  Group( [ ( 1, 2, 5)( 3,11,10)( 6, 7, 8), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
   M(11)^G, Group( () )^G ]
 \endexample
 
@@ -2770,7 +2771,7 @@ which only returns the structure of the Multiplier.
 % , and which should work
 % for larger groups as well.
 
-\>AbelianInvariantsMultiplier( <G> ) O
+\>AbelianInvariantsMultiplier( <G> ) A
 
 \index{Multiplier}\atindex{Schur multiplier}{@Schur multiplier}
 returns a list of the abelian invariants of the Schur multiplier of <G>.
@@ -2796,6 +2797,44 @@ gap> AbelianInvariantsMultiplier(PSU(6,2));
 
 At the moment, this operation will not give any information about how to
 extend the multiplier to a Schur Cover.
+
+Additional attributes and properties of a group can be derived
+from computing its Schur Cover. For example, if $G$ is a
+finitely presented group, the
+derived subgroup a Schur Cover of $G$ is invariant and isomorphic to
+the NonabelianExteriorSquare of $G$ \cite{BJR87}.
+
+\>Epicentre( <G> ) A
+\>ExteriorCentre( <G> ) A
+
+There are various ways of describing the epicentre of a group. It is
+the smallest normal subgroup $N$ of $G$ such that $G/N$ is a central
+quotient of a group. It is also equal to the Exterior Center of $G$
+\cite{Ellis98}.
+
+
+\>NonabelianExteriorSquare( <G> ) O
+
+Computes the Nonabelian Exterior Square $G\wedge G$ of a group $G$ 
+which for a finitely presented group is the derived subgroup of 
+any Schur Cover of $G$ \cite{BJR87}.
+
+
+\>EpimorphismNonabelianExteriorSquare( <G> ) O
+
+Computes the mapping $G\wedge G \to G$. The kernel of this
+mapping is equal to the Schur Multiplicator of $G$.
+
+
+\>IsCentralFactor( <G> ) P
+
+This method 
+determines if there exists a group $H$ such that <G> is isomormorphic 
+to the quotient $H/Z(H)$. A group with this property is called in 
+literature *capable*.
+A group being capable is 
+equivalent to the Epicentre of $G$ being trivial \cite{BFS79}.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

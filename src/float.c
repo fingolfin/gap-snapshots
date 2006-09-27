@@ -2,7 +2,7 @@
 **
 *W  float.c                      GAP source                      Steve Linton
 **
-*H  @(#)$Id: float.c,v 4.12.6.1 2004/11/01 13:57:18 sal Exp $
+*H  @(#)$Id: float.c,v 4.12.6.3 2006/09/19 20:09:28 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_float_c =
-   "@(#)$Id: float.c,v 4.12.6.1 2004/11/01 13:57:18 sal Exp $";
+   "@(#)$Id: float.c,v 4.12.6.3 2006/09/19 20:09:28 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -104,6 +104,8 @@ void PrintFloat (
   Pr("%s",(Int)buf, 0);
 }
 #endif
+
+
 
 /****************************************************************************
 **
@@ -393,6 +395,18 @@ Obj FuncFLOOR_FLOAT( Obj self, Obj f)
   return NEW_FLOAT(floor(VAL_FLOAT(f)));
 }
 
+Obj FuncSTRING_FLOAT( Obj self, Obj f)
+{
+  Char buf[32];
+  Obj str;
+  UInt len;
+  sprintf(buf, "%g",VAL_FLOAT(f));
+  len = SyStrlen(buf);
+  str = NEW_STRING(len);
+  SyStrncat(CSTR_STRING(str),buf,len);
+  return str;
+}
+
 /****************************************************************************
 **
 
@@ -439,6 +453,11 @@ static StructGVarFunc GVarFuncs [] = {
 
   { "FLOOR_FLOAT", 1, "float",
     FuncFLOOR_FLOAT, "src/float.c:FLOOR_FLOAT" },
+
+  { "STRING_FLOAT", 1, "float",
+    FuncSTRING_FLOAT, "src/float.c:STRING_FLOAT" },
+
+
 
   {0}
 };

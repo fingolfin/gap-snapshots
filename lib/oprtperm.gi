@@ -2,14 +2,14 @@
 ##
 #W  oprtperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprtperm.gi,v 4.73.2.1 2006/02/27 19:00:02 gap Exp $
+#H  @(#)$Id: oprtperm.gi,v 4.73.2.3 2006/08/16 21:34:30 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprtperm_gi :=
-    "@(#)$Id: oprtperm.gi,v 4.73.2.1 2006/02/27 19:00:02 gap Exp $";
+    "@(#)$Id: oprtperm.gi,v 4.73.2.3 2006/08/16 21:34:30 gap Exp $";
 
 
 #############################################################################

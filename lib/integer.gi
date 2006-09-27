@@ -7,14 +7,14 @@
 #W                                                         & Martin Schoenert
 #W                                                              & Alex Wegner
 ##
-#H  @(#)$Id: integer.gi,v 4.67.2.5 2005/08/15 11:49:29 stefan Exp $
+#H  @(#)$Id: integer.gi,v 4.67.2.6 2006/08/28 15:52:58 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.integer_gi :=
-    "@(#)$Id: integer.gi,v 4.67.2.5 2005/08/15 11:49:29 stefan Exp $";
+    "@(#)$Id: integer.gi,v 4.67.2.6 2006/08/28 15:52:58 gap Exp $";
 
 
 #############################################################################
@@ -1605,42 +1605,6 @@ InstallMethod( Random,
     function( Integers )
     return NrBitsInt( Random( [0..2^20-1] ) ) - 10;
     end );
-
-
-#############################################################################
-##
-#M  Random( <low>, <high> )
-##
-InstallOtherMethod( Random,
-    "for two integers",
-    IsIdenticalObj,
-    [ IsInt,
-      IsInt ],
-    0,
-
-function( a, b )
-    local   d,  x,  r,  y;
-
-    d := b-a;
-    if d < 0  then
-        return fail;
-    elif a = b  then
-        return a;
-    else
-        x := LogInt( d, 2 ) + 1;
-        r := 0;
-        while 0 < x  do
-            y := Minimum( 10, x );
-            x := x - y;
-            r := r*2^y + Random([0..2^y-1]);
-        od;
-        if d < r  then
-            return Random( a, b );
-        else
-            return a+r;
-        fi;
-    fi;
-end );
 
 
 #############################################################################

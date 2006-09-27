@@ -115,7 +115,7 @@ gap&gt;
 </pre>
 <p>
 Observe that requesting the value of <code>l[4]</code>, which was not
-assigned, caused the entry of a <code>break</code>-loop (see Section&nbsp;<a href="CHAP006.htm#SECT003">Break Loops</a>).
+assigned, caused the entry of a <code>break</code>-loop (see Section&nbsp;<a href="CHAP006.htm#SECT004">Break Loops</a>).
 After assigning a value and typing <code>return;</code>, <font face="Gill Sans,Helvetica,Arial">GAP</font> is finally
 able to comply with our request (by responding with <code>16</code>).
 <p>
@@ -1503,6 +1503,20 @@ fail
 </pre>
 <p>
 <a name = "SSEC016.2"></a>
+<li><code>Positions( </code><var>list</var><code>, </code><var>obj</var><code> ) F</code>
+<a name = "SSEC016.2"></a>
+<li><code>PositionsOp( </code><var>list</var><code>, </code><var>obj</var><code> ) O</code>
+<p>
+returns the positions of <strong>all</strong> occurrences of <var>obj</var> in <var>list</var>.
+<p>
+<pre>
+gap&gt; Positions([1,2,1,2,3,2,2],2);
+[ 2, 4, 6, 7 ]
+gap&gt; Positions([1,2,1,2,3,2,2],4);
+[  ]
+</pre>
+<p>
+<a name = "SSEC016.3"></a>
 <li><code>PositionCanonical( </code><var>list</var><code>, </code><var>obj</var><code> ) O</code>
 <p>
 returns the position of the canonical associate of <var>obj</var> in <var>list</var>.
@@ -1526,7 +1540,7 @@ gap&gt; PositionCanonical(rt,(1,2));
 2
 </pre>
 <p>
-<a name = "SSEC016.3"></a>
+<a name = "SSEC016.4"></a>
 <li><code>PositionNthOccurrence( </code><var>list</var><code>, </code><var>obj</var><code>, </code><var>n</var><code> ) O</code>
 <p>
 returns the position of the <var>n</var>-th occurrence of <var>obj</var> in <var>list</var> and
@@ -1543,9 +1557,9 @@ gap&gt; PositionNthOccurrence([1,2,3,2,4,2,1],2,4);
 fail
 </pre>
 <p>
-<a name = "SSEC016.4"></a>
-<li><code>PositionSorted( </code><var>list</var><code>, </code><var>elm</var><code> ) O</code>
-<li><code>PositionSorted( </code><var>list</var><code>, </code><var>elm</var><code>, </code><var>func</var><code> ) O</code>
+<a name = "SSEC016.5"></a>
+<li><code>PositionSorted( </code><var>list</var><code>, </code><var>elm</var><code> ) F</code>
+<li><code>PositionSorted( </code><var>list</var><code>, </code><var>elm</var><code>, </code><var>func</var><code> ) F</code>
 <p>
 In the first form <code>PositionSorted</code> returns the position of the element
 <var>elm</var> in the sorted list <var>list</var>.
@@ -1570,6 +1584,11 @@ For sorting lists, see&nbsp;<a href="CHAP021.htm#SECT018">Sorting Lists</a>,
 for testing whether a list is sorted, see&nbsp;<a href="CHAP021.htm#SSEC017.3">IsSortedList</a> and
 <a href="CHAP021.htm#SSEC017.4">IsSSortedList</a>.
 <p>
+Specialized functions for certain kinds of lists must be installed 
+as methods for the operation <code>PositionSortedOp</code>.
+<p>
+we catch plain lists by a function to avoid method selection
+<p>
 <pre>
 gap&gt; PositionSorted( [1,4,5,5,6,7], 0 );
 1
@@ -1583,7 +1602,7 @@ gap&gt; PositionSorted( [1,4,5,5,6,7], 8 );
 7
 </pre>
 <p>
-<a name = "SSEC016.5"></a>
+<a name = "SSEC016.6"></a>
 <li><code>PositionSet( </code><var>list</var><code>, </code><var>obj</var><code> ) F</code>
 <li><code>PositionSet( </code><var>list</var><code>, </code><var>obj</var><code>, </code><var>func</var><code> ) F</code>
 <p>
@@ -1604,7 +1623,7 @@ gap&gt; PositionSet( [1,4,5,5,6,7], 8 );
 fail
 </pre>
 <p>
-<a name = "SSEC016.6"></a>
+<a name = "SSEC016.7"></a>
 <li><code>PositionProperty( </code><var>list</var><code>, </code><var>func</var><code> ) O</code>
 <p>
 returns the first position of an element in the list <var>list</var> for which the
@@ -1620,7 +1639,7 @@ gap&gt; PositionProperty( [10^5..10^6],
 <code>First</code> (see&nbsp;<a href="CHAP021.htm#SSEC020.20">First</a>) allows you to extract the first element of a list
 that satisfies a certain property.
 <p>
-<a name = "SSEC016.7"></a>
+<a name = "SSEC016.8"></a>
 <li><code>PositionBound( </code><var>list</var><code> ) O</code>
 <p>
 returns the first index for which an element is bound in the list <var>list</var>.
@@ -1633,7 +1652,7 @@ gap&gt; PositionBound([,1,2,3]);
 2
 </pre>
 <p>
-<a name = "SSEC016.8"></a>
+<a name = "SSEC016.9"></a>
 <li><code>PositionNot( </code><var>list</var><code>, </code><var>val</var><code>[, </code><var>from-minus-one</var><code>] ) O</code>
 <p>
 For a list <var>list</var> and an object <var>val</var>, <code>PositionNot</code> returns the smallest
@@ -1643,7 +1662,7 @@ If a nonnegative integer is given as optional argument <var>from-minus-one</var>
 then the first position larger than <var>from-minus-one</var> with this property
 is returned.
 <p>
-<a name = "SSEC016.9"></a>
+<a name = "SSEC016.10"></a>
 <li><code>PositionNonZero( </code><var>vec</var><code> ) O</code>
 <p>
 For a row vector <var>vec</var>, <code>PositionNonZero</code> returns the position of the
@@ -1651,7 +1670,7 @@ first non-zero element of <var>vec</var>, or <code>Length(</code><var>vec</var><
 <var>vec</var> are zero.
 <p>
 <code>PositionNonZero</code> implements a special case of <code>PositionNot</code>
-(see&nbsp;<a href="CHAP021.htm#SSEC016.8">PositionNot</a>).
+(see&nbsp;<a href="CHAP021.htm#SSEC016.9">PositionNot</a>).
 Namely, the element to be avoided is the zero element,
 and the list must be (at least) homogeneous
 because otherwise the zero element cannot be specified implicitly.
@@ -1667,7 +1686,7 @@ gap&gt; PositionNonZero( l );  PositionNonZero( [ 2, 3, 4, 5 ] * Z(2) );
 2
 </pre>
 <p>
-<a name = "SSEC016.10"></a>
+<a name = "SSEC016.11"></a>
 <li><code>PositionSublist( </code><var>list</var><code>, </code><var>sub</var><code> ) O</code>
 <li><code>PositionSublist( </code><var>list</var><code>, </code><var>sub</var><code>, </code><var>from</var><code> ) O</code>
 <p>
@@ -1679,7 +1698,7 @@ The second version starts searching <strong>after</strong> position <var>from</v
 To determine whether <var>sub</var> matches <var>list</var> at a  particular position, use 
 <code>IsMatchingSublist</code> instead (see <a href="CHAP021.htm#SSEC017.1">IsMatchingSublist</a>).
 <p>
-<a name = "SSEC016.11"></a>
+<a name = "SSEC016.12"></a>
 <li><code>PositionFirstComponent( </code><var>list</var><code>, </code><var>obj</var><code> ) O</code>
 <p>
 returns the index <var>i</var> in <var>list</var> such that <i>list</i> [<i>i</i> ][1]=<i>obj</i>  or the 
@@ -1700,7 +1719,7 @@ non-empty <code>false</code> is returned.
 If you actually want to know whether there is an <var>at</var> for which
 <code>IsMatchingSublist( </code><var>list</var><code>, </code><var>sub</var><code>, </code><var>at</var><code> )</code> is true, use a construction
 like <code>PositionSublist( </code><var>list</var><code>, </code><var>sub</var><code> ) </code><var></var><code> fail</code> instead 
-(see <a href="CHAP021.htm#SSEC016.10">PositionSublist</a>); it's more efficient.
+(see <a href="CHAP021.htm#SSEC016.11">PositionSublist</a>); it's more efficient.
 <p>
 <strong>Note:</strong> A list that contains mutable objects (like lists or records)
 <strong>cannot</strong> store attribute values that depend on the values of its entries,
@@ -1722,7 +1741,7 @@ each time the property is asked for.
 For example, if <var>list</var> is a list of mutable row vectors then the call of
 <code>Position</code> (see&nbsp;<a href="CHAP021.htm#SSEC016.1">Position</a>) with <var>list</var> as first argument
 cannot take advantage of the fact that <var>list</var> is in fact sorted.
-One solution is to call explicitly <code>PositionSorted</code> (see&nbsp;<a href="CHAP021.htm#SSEC016.4">PositionSorted</a>)
+One solution is to call explicitly <code>PositionSorted</code> (see&nbsp;<a href="CHAP021.htm#SSEC016.5">PositionSorted</a>)
 in such a situation, another solution is to replace <var>list</var> by an immutable
 copy using <code>Immutable</code> (see&nbsp;<a href="CHAP012.htm#SECT006">Mutability and Copyability</a>).
 <p>
@@ -1945,7 +1964,7 @@ Set theoretic functions for general collections, such as <code>Intersection</cod
 and <code>Union</code>, are described in Chapter&nbsp;<a href="CHAP028.htm">Collections</a>.
 In particular, for the construction of proper sets, see&nbsp;<a href="CHAP028.htm#SSEC002.6">SSortedList</a>
 and <a href="CHAP028.htm#SSEC002.9">AsSSortedList</a>.
-For finding positions in sorted lists, see&nbsp;<a href="CHAP021.htm#SSEC016.4">PositionSorted</a>.
+For finding positions in sorted lists, see&nbsp;<a href="CHAP021.htm#SSEC016.5">PositionSorted</a>.
 <p>
 <a name = "SSEC019.1"></a>
 <li><code></code><var>obj</var><code> in </code><var>list</var><code></code>
@@ -2524,7 +2543,7 @@ otherwise an error is signalled.
 If <var>func</var> returns <code>false</code> for all elements of <var>list</var> then <code>First</code>
 returns <code>fail</code>.
 <p>
-<code>PositionProperty</code> (see&nbsp;<a href="CHAP021.htm#SSEC016.6">PositionProperty</a>) allows you to find the
+<code>PositionProperty</code> (see&nbsp;<a href="CHAP021.htm#SSEC016.7">PositionProperty</a>) allows you to find the
 position of the first element in a list that satisfies a certain
 property.
 <p>
@@ -2974,5 +2993,5 @@ see&nbsp;<a href="../prg/CHAP003.htm#SECT012">Example -- Constructing Enumerator
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP020.htm">Previous</a>] [<a href ="CHAP022.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

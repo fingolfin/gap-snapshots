@@ -2,7 +2,7 @@
 ##
 #W  list.gi                     GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: list.gi,v 4.202.2.6 2005/09/30 06:36:00 sal Exp $
+#H  @(#)$Id: list.gi,v 4.202.2.10 2006/08/28 15:29:14 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods for lists in general.
 ##
 Revision.list_gi :=
-    "@(#)$Id: list.gi,v 4.202.2.6 2005/09/30 06:36:00 sal Exp $";
+    "@(#)$Id: list.gi,v 4.202.2.10 2006/08/28 15:29:14 gap Exp $";
 
 
 #############################################################################
@@ -1316,6 +1316,34 @@ InstallMethod( Position,
 
 #############################################################################
 ##
+#F  Positions( <list>, <obj> )
+##
+InstallGlobalFunction( Positions,
+
+  function( list, obj )
+
+    local res, p;
+
+    if IsPlistRep(list) then
+      res := [];
+      p   := 0;
+      while true do
+        p := Position(list,obj,p);
+        if p <> fail then
+          Add(res,p);
+        else
+          break;
+        fi;
+      od;
+      return res;
+    else
+      return PositionsOp(list,obj);
+    fi;
+  end );
+
+
+#############################################################################
+##
 #M  PositionCanonical( <list>, <obj> )  . .  for internally represented lists
 ##
 InstallMethod( PositionCanonical,
@@ -1375,15 +1403,28 @@ InstallMethod( PositionNthOccurrence,
 
 #############################################################################
 ##
-#M  PositionSorted( <list>, <obj> )
-#M  PositionSorted( <list>, <obj>, <func> )
+#F  PositionSorted( <list>, <obj>[, <func> ] )
+#M  PositionSortedOp( <list>, <obj> )
+#M  PositionSortedOp( <list>, <obj>, <func> )
 ##
-InstallMethod( PositionSorted,
+InstallGlobalFunction( PositionSorted, function(arg)
+  if IsPlistRep(arg[1]) then
+    if Length(arg) = 3 then
+      return CallFuncList(POSITION_SORTED_LIST_COMP, arg);
+    else
+      return CallFuncList(POSITION_SORTED_LIST, arg);
+    fi;
+  else
+    return CallFuncList(PositionSortedOp, arg);
+  fi;
+end);
+
+InstallMethod( PositionSortedOp,
     "for small list, and object",
     [ IsList and IsSmallList, IsObject ],
     POSITION_SORTED_LIST );
 
-InstallMethod( PositionSorted,
+InstallMethod( PositionSortedOp,
     [ IsList, IsObject ],
     function( list, elm )
     if IsSmallList( list ) then
@@ -1393,12 +1434,12 @@ InstallMethod( PositionSorted,
     fi;
     end );
 
-InstallOtherMethod( PositionSorted,
+InstallMethod( PositionSortedOp,
     "for small list, object, and function",
     [ IsList and IsSmallList, IsObject, IsFunction ],
     POSITION_SORTED_LIST_COMP );
 
-InstallOtherMethod( PositionSorted,
+InstallMethod( PositionSortedOp,
     "for list, object, and function",
     [ IsList, IsObject, IsFunction ],
     function( list, elm, func )
@@ -3614,15 +3655,6 @@ local s,b,i,j,zero,l;
   fi;
   IsBlist(b);
   return b;
-end);
-
-InstallGlobalFunction(StateRandom,function()
-  return [R_N,SHALLOW_COPY_OBJ(R_X)];
-end);
-
-InstallGlobalFunction(RestoreStateRandom,function(l)
-  R_N:=l[1];
-  R_X:=ShallowCopy(l[2]);
 end);
 
 InstallMethod(IntersectSet,

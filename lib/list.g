@@ -2,7 +2,7 @@
 ##
 #W  list.g                        GAP library                Martin Schoenert
 ##
-#H  @(#)$Id: list.g,v 4.35.4.1 2005/08/11 07:55:30 gap Exp $
+#H  @(#)$Id: list.g,v 4.35.4.2 2006/08/22 09:56:12 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  very early in the bootstrap stage (therefore they are not in list.gi)
 ##
 Revision.list_g :=
-    "@(#)$Id: list.g,v 4.35.4.1 2005/08/11 07:55:30 gap Exp $";
+    "@(#)$Id: list.g,v 4.35.4.2 2006/08/22 09:56:12 gap Exp $";
 
 
 #############################################################################
@@ -145,6 +145,43 @@ BIND_GLOBAL( "TYPE_LIST_EMPTY_IMMUTABLE", NewType( ListsFamily,
     IsList and IsDenseList and IsHomogeneousList
     and IsEmpty and IsString and IsPlistRep ) );
 
+
+#############################################################################
+##
+#V  TYPE_BLIST_*
+##
+BIND_GLOBAL( "TYPE_BLIST_MUT", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsMutable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP ) );
+BIND_GLOBAL( "TYPE_BLIST_IMM", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsCopyable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP ) );
+BIND_GLOBAL( "TYPE_BLIST_NSORT_MUT", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsMutable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and Tester(IsSSortedList) ) );
+BIND_GLOBAL( "TYPE_BLIST_NSORT_IMM", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsCopyable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and Tester(IsSSortedList) ) );
+BIND_GLOBAL( "TYPE_BLIST_SSORT_MUT", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsMutable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and Tester(IsSSortedList) and IsSSortedList ) );
+BIND_GLOBAL( "TYPE_BLIST_SSORT_IMM", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsCopyable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and Tester(IsSSortedList) and IsSSortedList ) );
+BIND_GLOBAL( "TYPE_BLIST_EMPTY_MUT",
+  NewType( CollectionsFamily(BooleanFamily),
+    IsMutable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and IsEmpty and Tester(IsEmpty) ) );
+BIND_GLOBAL( "TYPE_BLIST_EMPTY_IMM", 
+  NewType( CollectionsFamily(BooleanFamily),
+    IsCopyable and IsInternalRep and IsDenseList and IsHomogeneousList and 
+    IS_BLIST_REP and IsEmpty and Tester(IsEmpty) ) );
 
 #############################################################################
 ##

@@ -5,7 +5,7 @@
 #W                                                             & Bettina Eick
 #W                                                           & Heiko Theissen
 ##
-#H  @(#)$Id: grp.gd,v 4.188.2.4 2006/03/07 23:53:55 gap Exp $
+#H  @(#)$Id: grp.gd,v 4.188.2.5 2006/03/28 17:33:31 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -26,7 +26,7 @@
 ##  operations (such as `Normalizer') with the parent as an attribute.
 
 Revision.grp_gd :=
-    "@(#)$Id: grp.gd,v 4.188.2.4 2006/03/07 23:53:55 gap Exp $";
+    "@(#)$Id: grp.gd,v 4.188.2.5 2006/03/28 17:33:31 gap Exp $";
 
 
 #############################################################################
@@ -1357,7 +1357,7 @@ DeclareAttribute( "IndependentGeneratorsOfAbelianGroup",
 ##  tests whether the elements <x> and <y> or the subgroups <U> and <V> are
 ##  conjugate under the action of <G>. (They do not need to be contained in
 ##  <G>.) This command is only a shortcut to
-##  `RepresentativeOperation'.
+##  `RepresentativeAction'.
 ##
 DeclareOperation( "IsConjugate", [ IsGroup, IsObject, IsObject ] );
 

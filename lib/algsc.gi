@@ -2,7 +2,7 @@
 ##
 #W  algsc.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: algsc.gi,v 4.29.2.2 2005/07/20 15:22:59 gap Exp $
+#H  @(#)$Id: algsc.gi,v 4.29.2.3 2006/05/12 16:25:10 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  then it has the component `coefficientsDomain'.
 ##
 Revision.algsc_gi :=
-    "@(#)$Id: algsc.gi,v 4.29.2.2 2005/07/20 15:22:59 gap Exp $";
+    "@(#)$Id: algsc.gi,v 4.29.2.3 2006/05/12 16:25:10 gap Exp $";
 
 
 #T need for the norm of a quaternion?
@@ -789,7 +789,7 @@ InstallGlobalFunction( OctaveAlgebra, F -> AlgebraByStructureConstants(
         [[2],[-1]] ],
       [ [[],[]],[[8],[1]],[[6],[-1]],[[],[]],[[4],[1]],[[],[]],[[1],[-1]],
         [[],[]] ],
-      0, Zero(F) ],
+      0, 0 ],
     "s1", "t1", "s2", "t2", "s3", "t3", "s4", "t4" ) );
 
 

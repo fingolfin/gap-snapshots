@@ -6,16 +6,17 @@
 <H3>Sections</H3>
 <oL>
 <li> <A HREF="CHAP006.htm#SECT001">Main Loop</a>
-<li> <A HREF="CHAP006.htm#SECT002">View and Print</a>
-<li> <A HREF="CHAP006.htm#SECT003">Break Loops</a>
-<li> <A HREF="CHAP006.htm#SECT004">Variable Access in a Break Loop</a>
-<li> <A HREF="CHAP006.htm#SECT005">Error</a>
-<li> <A HREF="CHAP006.htm#SECT006">ErrorCount</a>
-<li> <A HREF="CHAP006.htm#SECT007">Leaving GAP</a>
-<li> <A HREF="CHAP006.htm#SECT008">Line Editing</a>
-<li> <A HREF="CHAP006.htm#SECT009">Editing Files</a>
-<li> <A HREF="CHAP006.htm#SECT010">Editor Support</a>
-<li> <A HREF="CHAP006.htm#SECT011">SizeScreen</a>
+<li> <A HREF="CHAP006.htm#SECT002">Special Rules for Input Lines</a>
+<li> <A HREF="CHAP006.htm#SECT003">View and Print</a>
+<li> <A HREF="CHAP006.htm#SECT004">Break Loops</a>
+<li> <A HREF="CHAP006.htm#SECT005">Variable Access in a Break Loop</a>
+<li> <A HREF="CHAP006.htm#SECT006">Error</a>
+<li> <A HREF="CHAP006.htm#SECT007">ErrorCount</a>
+<li> <A HREF="CHAP006.htm#SECT008">Leaving GAP</a>
+<li> <A HREF="CHAP006.htm#SECT009">Line Editing</a>
+<li> <A HREF="CHAP006.htm#SECT010">Editing Files</a>
+<li> <A HREF="CHAP006.htm#SECT011">Editor Support</a>
+<li> <A HREF="CHAP006.htm#SECT012">SizeScreen</a>
 </ol><p>
 <p>
 This chapter is a first of a series of chapters that describe the
@@ -51,7 +52,7 @@ The normal interaction with <font face="Gill Sans,Helvetica,Arial">GAP</font> ha
 This means that you type an input, <font face="Gill Sans,Helvetica,Arial">GAP</font> first reads it,
 evaluates it, and then shows the result.
 Note that the term <strong>print</strong> may be confusing since there is a <font face="Gill Sans,Helvetica,Arial">GAP</font>
-function called <code>Print</code> (see&nbsp;<a href="CHAP006.htm#SECT002">View and Print</a>) which is in fact <strong>not</strong>
+function called <code>Print</code> (see&nbsp;<a href="CHAP006.htm#SECT003">View and Print</a>) which is in fact <strong>not</strong>
 used in the read-eval-print loop, but traditions are hard to break.
 In the following, whenever we want to express that <font face="Gill Sans,Helvetica,Arial">GAP</font> places some
 characters on the standard output, we will say that <font face="Gill Sans,Helvetica,Arial">GAP</font> <strong>shows</strong>
@@ -70,7 +71,7 @@ before <font face="Gill Sans,Helvetica,Arial">GAP</font> starts to read and eval
 returning arrow on your terminal.)
 Because <font face="Gill Sans,Helvetica,Arial">GAP</font> does not do anything until you enter <var>return</var>, you can
 edit your input to fix typos and only when everything is correct enter
-<var>return</var> and have <font face="Gill Sans,Helvetica,Arial">GAP</font> take a look at it (see&nbsp;<a href="CHAP006.htm#SECT008">Line Editing</a>). It is
+<var>return</var> and have <font face="Gill Sans,Helvetica,Arial">GAP</font> take a look at it (see&nbsp;<a href="CHAP006.htm#SECT009">Line Editing</a>). It is
 also possible to enter several statements as input on a single line. Of
 course each statement must be terminated by a semicolon.
 <p>
@@ -166,9 +167,40 @@ produced a value or not, is available in the variable <code>time</code>. This is
 integer that holds the number of milliseconds.
 <p>
 <p>
-<h2><a name="SECT002">6.2 View and Print</a></h2>
+<h2><a name="SECT002">6.2 Special Rules for Input Lines</a></h2>
 <p><p>
-<a name = "SSEC002.1"></a>
+The input for some <font face="Gill Sans,Helvetica,Arial">GAP</font> objects may not fit on one line, in particular 
+big integers, long strings or long identifiers. In these cases you can still
+type or paste them in long single lines, but on screen you will only
+see the last part (with a <code>$</code> character in front). For nicer display you
+can also specify  the input on several lines. This is achieved by ending a
+line  by a backslash or by a backslash and a carriage return character, then
+continue the input on the beginning of the next line. When reading this 
+<font face="Gill Sans,Helvetica,Arial">GAP</font> will ignore such continuation backslashes, carriage return characters 
+and newline characters. <font face="Gill Sans,Helvetica,Arial">GAP</font> also prints long strings and integers this way.
+<p>
+<pre>
+gap&gt; n := 1234\
+&gt; 567890;
+1234567890
+gap&gt; "This is a very long string that does not fit on a line \
+gap&gt; and is therefore continued on the next line.";
+"This is a very long string that does not fit on a line and is therefore conti\
+nued on the next line."
+gap&gt; bla\
+gap&gt; bla := 5;; blabla;
+5
+</pre>
+<p>
+There is a special rule about <font face="Gill Sans,Helvetica,Arial">GAP</font> prompts in input lines: In line editing 
+mode (usual user input and <font face="Gill Sans,Helvetica,Arial">GAP</font> started without <code>-n</code>)  in lines starting 
+with <code>gap&gt; </code>, <code>&gt; </code> or <code>brk&gt; </code> this beginning part is removed. This rule is very convenient because it allows to cut and paste input from other <font face="Gill Sans,Helvetica,Arial">GAP</font> sessions
+or manual examples easily into your current session.
+<p>
+<p>
+<h2><a name="SECT003">6.3 View and Print</a></h2>
+<p><p>
+<a name = "SSEC003.1"></a>
 <li><code>View( </code><var>obj1</var><code>, </code><var>obj2</var><code>... ) F</code>
 <p>
 <code>View</code> shows the objects <var>obj1</var>, <var>obj2</var>... etc. <strong>in a short form</strong>
@@ -178,7 +210,7 @@ thus the output looks exactly like the representation of the
 objects shown by the main loop.
 Note that no space or newline is printed between the objects.
 <p>
-<a name = "SSEC002.2"></a>
+<a name = "SSEC003.2"></a>
 <li><code>Print( </code><var>obj1</var><code>, </code><var>obj2</var><code>... ) F</code>
 <p>
 Also <code>Print</code> shows the objects <var>obj1</var>, <var>obj2</var>... etc.
@@ -225,9 +257,9 @@ gap&gt; View( g );
 &lt;pc group of size 12 with 3 generators&gt;gap&gt; 
 </pre>
 <p>
-<a name = "SSEC002.3"></a>
+<a name = "SSEC003.3"></a>
 <li><code>ViewObj( </code><var>obj</var><code> ) O</code>
-<a name = "SSEC002.3"></a>
+<a name = "SSEC003.3"></a>
 <li><code>PrintObj( </code><var>obj</var><code> ) O</code>
 <p>
 The functions <code>View</code> and <code>Print</code> actually call the operations
@@ -246,7 +278,7 @@ to <code>View</code> it.
 If one wants to supply a ``short form'' for <code>View</code>,
 one can install additionally a method for <code>ViewObj</code>.
 <p>
-<a name = "SSEC002.4"></a>
+<a name = "SSEC003.4"></a>
 <li><code>Display( </code><var>obj</var><code> ) O</code>
 <p>
 Displays the object <var>obj</var> in a nice, formatted way which is easy to read
@@ -276,7 +308,7 @@ gap&gt; Name( g );
 </pre>
 <p>
 <p>
-<h2><a name="SECT003">6.3 Break Loops</a></h2>
+<h2><a name="SECT004">6.4 Break Loops</a></h2>
 <p><p>
 When an error has occurred or when you interrupt <font face="Gill Sans,Helvetica,Arial">GAP</font> (usually by
 hitting <var>ctrl</var>-<code>C</code>) <font face="Gill Sans,Helvetica,Arial">GAP</font> enters a break loop, that is in most respects
@@ -312,7 +344,7 @@ brk_02&gt;
 <p>
 There are two ways to leave a break loop.
 <p>
-<a name = "SSEC003.1"></a>
+<a name = "SSEC004.1"></a>
 <li><code>quit</code>
 <p>
 The first is to <strong>quit</strong> the break loop.
@@ -331,7 +363,7 @@ In this case control returns to the break loop one level above or
 to the main loop, respectively.
 So iterated break loops must be left iteratively.
 Note also that if you type <code>quit;</code> from a <code>gap&gt;</code> prompt, <font face="Gill Sans,Helvetica,Arial">GAP</font> will exit
-(see&nbsp;<a href="CHAP006.htm#SECT007">Leaving GAP</a>).
+(see&nbsp;<a href="CHAP006.htm#SECT008">Leaving GAP</a>).
 <p>
 <strong>Note:</strong>
 If you leave a break loop with <code>quit</code> without completing a command
@@ -346,7 +378,7 @@ purpose of this function.
 <p>
 <a name = "I9"></a>
 
-<a name = "SSEC003.2"></a>
+<a name = "SSEC004.2"></a>
 <li><code>return [</code><var>obj</var><code>];</code>
 <p>
 The other way is to <strong>return</strong> from a break loop. To do this you type
@@ -369,7 +401,7 @@ brk&gt; return 9;  # we had tried to enter the divisor 9 but typed 0 ...
 gap&gt; 
 </pre>
 <p>
-<a name = "SSEC003.3"></a>
+<a name = "SSEC004.3"></a>
 <li><code>OnBreak V</code>
 <p>
 By default, when a break loop is entered, <font face="Gill Sans,Helvetica,Arial">GAP</font> prints a trace of the 
@@ -377,7 +409,7 @@ innermost 5 commands currently being executed. This behaviour can be
 configured by changing the value of the global variable
 <code>OnBreak</code>. When a break loop is entered, the value of <code>OnBreak</code> is
 checked. If it is a function, then it is called with no arguments. By
-default, the value of <code>OnBreak</code> is <code>Where</code> (see <a href="CHAP006.htm#SSEC003.5">Where</a>).
+default, the value of <code>OnBreak</code> is <code>Where</code> (see <a href="CHAP006.htm#SSEC004.5">Where</a>).
 <p>
 <pre>
 gap&gt; OnBreak := function() Print("Hello\n"); end;
@@ -402,13 +434,13 @@ emitted at <code>InfoWarning</code> level 1 (see Chapter&nbsp;<a href="CHAP007.h
 Note that for break loops entered by a call to <code>Error</code>,
 the lines after ``<code>Entering break read-eval-print loop ...</code>'' and before
 the <code>brk&gt;</code> prompt can also be customised, namely by redefining
-<code>OnBreakMessage</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.4">OnBreakMessage</a>).
+<code>OnBreakMessage</code> (see&nbsp;<a href="CHAP006.htm#SSEC004.4">OnBreakMessage</a>).
 <p>
 <a name = "I10"></a>
 
 Also, note that one can achieve the effect of changing <code>OnBreak</code> <strong>locally</strong>.
 As mentioned above, the default value of <code>OnBreak</code> is <code>Where</code>. Thus,
-a call to <code>Error</code> (see&nbsp;<a href="CHAP006.htm#SSEC005.1">Error</a>) generally gives a trace back up to
+a call to <code>Error</code> (see&nbsp;<a href="CHAP006.htm#SSEC006.1">Error</a>) generally gives a trace back up to
 five levels of calling functions. Conceivably, we might like to have
 a function like <code>Error</code> that does not trace back without globally
 changing <code>OnBreak</code>. Such a function we might call <code>ErrorNoTraceBack</code>
@@ -468,13 +500,13 @@ gap&gt; OnBreak := Where;;
 <p>
 <a name = "I11"></a>
 
-<a name = "SSEC003.4"></a>
+<a name = "SSEC004.4"></a>
 <li><code>OnBreakMessage V</code>
 <p>
-When a break loop is entered by a call to <code>Error</code> (see&nbsp;<a href="CHAP006.htm#SSEC005.1">Error</a>) the
+When a break loop is entered by a call to <code>Error</code> (see&nbsp;<a href="CHAP006.htm#SSEC006.1">Error</a>) the
 message after the ``<code>Entering break read-eval-print loop ...</code>'' line is 
 produced by the function <code>OnBreakMessage</code>, which just like
-<code>OnBreak</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">OnBreak</a>) is a user-configurable global variable that is a
+<code>OnBreak</code> (see&nbsp;<a href="CHAP006.htm#SSEC004.3">OnBreak</a>) is a user-configurable global variable that is a
 <strong>function</strong> with <strong>no arguments</strong>.
 <p>
 <pre>
@@ -509,18 +541,18 @@ However, suppose you are writing a function which detects an error
 condition and <code>OnBreakMessage</code> needs to be changed only <strong>locally</strong>,
 i.e., the instructions on how to recover from the break loop need
 to be specific to that function. The same idea used to define 
-<code>ErrorNoTraceBack</code> (see <a href="CHAP006.htm#SSEC003.3">OnBreak</a>) can be adapted to achieve 
+<code>ErrorNoTraceBack</code> (see <a href="CHAP006.htm#SSEC004.3">OnBreak</a>) can be adapted to achieve 
 this. The function <code>CosetTableFromGensAndRels</code> (see&nbsp;<a href="CHAP045.htm#SSEC005.5">CosetTableFromGensAndRels</a>)
 is an example in the <font face="Gill Sans,Helvetica,Arial">GAP</font> code where the idea is actually used.
 <p>
 <a name = "I12"></a>
 
-<a name = "SSEC003.5"></a>
+<a name = "SSEC004.5"></a>
 <li><code>Where( [</code><var>nr</var><code>] ) F</code>
 <p>
 shows the last <var>nr</var> commands on the execution stack during whose execution
 the error occurred. If not given, <var>nr</var> defaults to 5. (Assume, for the
-following example, that after the last example <code>OnBreak</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.3">OnBreak</a>) 
+following example, that after the last example <code>OnBreak</code> (see&nbsp;<a href="CHAP006.htm#SSEC004.3">OnBreak</a>) 
 has been set back to its default value.)
 <p>
 <pre>
@@ -547,7 +579,7 @@ StabChainStrong( S.stabilizer, [ sch ], options ); called from
 <p>
 Note that the variables displayed even in the first line of the <code>Where</code> list
 (after the <code>called from</code> line) may be already one environment level higher 
-and <code>DownEnv</code> (see&nbsp;<a href="CHAP006.htm#SSEC004.1">DownEnv</a>) may be necessary to access them.
+and <code>DownEnv</code> (see&nbsp;<a href="CHAP006.htm#SSEC005.1">DownEnv</a>) may be necessary to access them.
 <p>
 At the moment this backtrace does not work from within compiled code (this
 includes the method selection which by default is compiled into the kernel).
@@ -565,16 +597,16 @@ applications. If this option is given then errors simply cause <font face="Gill 
 to return to the main loop.
 <p>
 <p>
-<h2><a name="SECT004">6.4 Variable Access in a Break Loop</a></h2>
+<h2><a name="SECT005">6.5 Variable Access in a Break Loop</a></h2>
 <p><p>
 In a break loop access to variables of the current break level and higher
 levels is possible, but if the same variable name is used for different
 objects or if a function calls itself recursively, of course only the
 variable at the lowest level can be accessed.
 <p>
-<a name = "SSEC004.1"></a>
+<a name = "SSEC005.1"></a>
 <li><code>DownEnv( [</code><var>nr</var><code>] ) F</code>
-<a name = "SSEC004.1"></a>
+<a name = "SSEC005.1"></a>
 <li><code>UpEnv( [</code><var>nr</var><code>] ) F</code>
 <p>
 <code>DownEnv</code> moves up <var>nr</var> steps in the environment and allows one to inspect
@@ -663,23 +695,23 @@ before that of <code>fun</code> which caused its execution. Using <code>DownEnv<
 can access the <code>x</code> from <code>fun</code>.
 <p>
 <p>
-<h2><a name="SECT005">6.5 Error</a></h2>
+<h2><a name="SECT006">6.6 Error</a></h2>
 <p><p>
-<a name = "SSEC005.1"></a>
+<a name = "SSEC006.1"></a>
 <li><code>Error( </code><var>messages</var><code>... ) F</code>
 <p>
 <code>Error</code> signals an error from within a function. First the messages
 <var>messages</var> are printed, this is done exactly as if <code>Print</code>
-(see&nbsp;<a href="CHAP006.htm#SECT002">View and Print</a>)
-were called with these arguments. Then a break loop (see&nbsp;<a href="CHAP006.htm#SECT003">Break Loops</a>) is
+(see&nbsp;<a href="CHAP006.htm#SECT003">View and Print</a>)
+were called with these arguments. Then a break loop (see&nbsp;<a href="CHAP006.htm#SECT004">Break Loops</a>) is
 entered, unless the standard error output is not connected to a terminal.
 You can leave this break loop with <code>return;</code> to continue execution with the
 statement following the call to <code>Error</code>.
 <p>
 <p>
-<h2><a name="SECT006">6.6 ErrorCount</a></h2>
+<h2><a name="SECT007">6.7 ErrorCount</a></h2>
 <p><p>
-<a name = "SSEC006.1"></a>
+<a name = "SSEC007.1"></a>
 <li><code>ErrorCount() F</code>
 <p>
 <code>ErrorCount</code> returns a count of the number of errors (including user
@@ -690,7 +722,7 @@ The count is incremented by each error, even if <font face="Gill Sans,Helvetica,
 started with the <code>-T</code> option to disable the break loop.
 <p>
 <p>
-<h2><a name="SECT007">6.7 Leaving GAP</a></h2>
+<h2><a name="SECT008">6.8 Leaving GAP</a></h2>
 <p><p>
 <a name = "I13"></a>
 
@@ -705,15 +737,15 @@ The normal way to terminate a <font face="Gill Sans,Helvetica,Arial">GAP</font> 
 ctrl-D) at the <code>gap&gt;</code> prompt in the main read eval print loop. 
 <p>
 An emergency way to leave <font face="Gill Sans,Helvetica,Arial">GAP</font> is to enter 
-<a name = "SSEC007.1"></a>
+<a name = "SSEC008.1"></a>
 <li><code>QUIT</code>
 <p>
 at any <code>gap&gt;</code>
 or <code>brk&gt;</code> or <code>brk_</code><var>nn</var><code>&gt;</code> prompt. 
 <p>
-<a name = "SSEC007.2"></a>
+<a name = "SSEC008.2"></a>
 <li><code>InstallAtExit( </code><var>func</var><code> ) F</code>
-<a name = "SSEC007.2"></a>
+<a name = "SSEC008.2"></a>
 <li><code>QUITTING V</code>
 <p>
 Before actually terminating, <font face="Gill Sans,Helvetica,Arial">GAP</font> will call (with no arguments) all
@@ -734,7 +766,7 @@ will be set to <code>true</code> if <font face="Gill Sans,Helvetica,Arial">GAP</
 <code>QUIT</code> and <code>false</code> otherwise. Since <code>QUIT</code> is considered as an emergency
 measure, different action may be appropriate.
 <p>
-<a name = "SSEC007.3"></a>
+<a name = "SSEC008.3"></a>
 <li><code>SaveOnExitFile V</code>
 <p>
 If, when <font face="Gill Sans,Helvetica,Arial">GAP</font> is exiting due to a <code>quit</code> or end-of-file (ie not due
@@ -742,7 +774,7 @@ to a <code>QUIT</code>) the variable <code>SaveOnExitFile</code> is bound to a s
 then the system will try to save the workspace to that file.
 <p>
 <p>
-<h2><a name="SECT008">6.8 Line Editing</a></h2>
+<h2><a name="SECT009">6.9 Line Editing</a></h2>
 <p><p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> allows one you to edit the current input line with a number of editing
 commands. Those commands are accessible either as <strong>control keys</strong> or as
@@ -847,7 +879,7 @@ The four arrow keys (cursor keys) can be used instead of <var>ctrl</var>-<code>B
 <var>ctrl</var>-<code>F</code>, <var>ctrl</var>-<code>P</code>, and <var>ctrl</var>-<code>N</code>, respectively.
 <p>
 <p>
-<h2><a name="SECT009">6.9 Editing Files</a></h2>
+<h2><a name="SECT010">6.10 Editing Files</a></h2>
 <p><p>
 In most cases, it is preferable to create longer input (in particular <font face="Gill Sans,Helvetica,Arial">GAP</font>
 programs) separately in an editor, and to read in the result via <code>Read</code>.
@@ -857,7 +889,7 @@ binary), so you might hav eto give an absolute path to the file.
 <p>
 If you cannot create several windows, the <code>Edit</code> command may be used to
 leave <font face="Gill Sans,Helvetica,Arial">GAP</font>, start an editor, and read in the edited file automatically.
-<a name = "SSEC009.1"></a>
+<a name = "SSEC010.1"></a>
 <li><code>Edit( </code><var>filename</var><code> ) F</code>
 <p>
 <code>Edit</code> starts an editor with the file whose filename is given by the
@@ -869,7 +901,7 @@ This can for example be done in your <code>.gaprc</code> file (see the sections 
 operating system dependent features in Chapter&nbsp;<a href="CHAP073.htm">Installing GAP</a>).
 <p>
 <p>
-<h2><a name="SECT010">6.10 Editor Support</a></h2>
+<h2><a name="SECT011">6.11 Editor Support</a></h2>
 <p><p>
 <a name = "I17"></a>
 
@@ -920,9 +952,9 @@ Adjust details according to  your personal taste.
 Setup files for <code>(x)emacs</code> are contained in the <code>etc/emacs</code> subdirectory.
 <p>
 <p>
-<h2><a name="SECT011">6.11 SizeScreen</a></h2>
+<h2><a name="SECT012">6.12 SizeScreen</a></h2>
 <p><p>
-<a name = "SSEC011.1"></a>
+<a name = "SSEC012.1"></a>
 <li><code>SizeScreen() F</code>
 <li><code>SizeScreen( [ </code><var>x</var><code>, </code><var>y</var><code> ] ) F</code>
 <p>
@@ -947,5 +979,5 @@ adjusted to the nearest endpoint of the range.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP005.htm">Previous</a>] [<a href ="CHAP007.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

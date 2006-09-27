@@ -2,7 +2,7 @@
 ##
 #W  grpcompl.gi                  GAP Library                 Alexander Hulpke
 ##
-#H  @(#)$Id: grpcompl.gi,v 4.13 2002/04/15 10:04:44 sal Exp $
+#H  @(#)$Id: grpcompl.gi,v 4.13.4.3 2006/08/16 09:13:10 gap Exp $
 ##
 #Y  Copyright (C)  1997
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,11 +12,12 @@
 ##  'white box groups'
 ##
 Revision.grpcompl_gi :=
-    "@(#)$Id: grpcompl.gi,v 4.13 2002/04/15 10:04:44 sal Exp $";
+    "@(#)$Id: grpcompl.gi,v 4.13.4.3 2006/08/16 09:13:10 gap Exp $";
 
 ComplementclassesSolvableWBG:=function(G,N)
-local s,h,q,fpi,factorpres,com,ncom,nlcom,comgens,ncomgens,nlcomgens,cen,
-      ncen,nlcen,i,j,k,fpcgs,ocr,l,opfun,v,dimran,ocrels;
+local s, h, q, fpi, factorpres, com, comgens, cen, ocrels, fpcgs, ncom,
+      ncomgens, ncen, nlcom, nlcomgens, nlcen, ocr, generators, 
+      modulePcgs, l, v, dimran, opfun, k, afu, i, j, jj;
 
   # compute a series through N
   s:=ChiefSeriesUnderAction(G,N);
@@ -131,12 +132,23 @@ local s,h,q,fpi,factorpres,com,ncom,nlcom,comgens,ncomgens,nlcomgens,cen,
       fi;
 
       for k in l do
-	v:=StabilizerOfExternalSet(k);
+	q:=StabilizerOfExternalSet(k);
 	k:=ocr.cocycleToComplement(Representative(k));
 	Assert(3,Length(GeneratorsOfGroup(k))
 	          =Length(MappingGeneratorsImages(fpi)[2]));
 	# correct stabilizer to obtain centralizer
-	v:=Normalizer(v,ClosureGroup(s[i],k));
+
+	v:=Normalizer(q,ClosureGroup(s[i],k));
+	afu:=function(x,g) return CanonicalRightCosetElement(s[i],x^g);end;
+	for jj in GeneratorsOfGroup(k) do
+	  if ForAny(GeneratorsOfGroup(v),x->not Comm(x,jj) in s[i]) then
+	    # we are likely very close as we centralized in the higher level
+	    # and stabilize the cohomology. Thus a plain stabilizer
+	    # calculation ought to work.
+	    v:=Stabilizer(v,CanonicalRightCosetElement(s[i],jj),afu);
+	  fi;
+	od;
+
 
 	Add(ncen,v);
         Add(nlcom,k);

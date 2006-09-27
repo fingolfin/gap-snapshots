@@ -2,7 +2,7 @@
 ##
 #W  ffeconway.gi               GAP library                       Steve Linton
 ##
-#H  @(#)$Id: ffeconway.gi,v 4.10.2.1 2006/02/22 12:26:39 sal Exp $
+#H  @(#)$Id: ffeconway.gi,v 4.10.2.2 2006/07/06 11:57:35 sal Exp $
 ##
 #Y  Copyright (C) 2005 The GAP Group
 ##
@@ -10,7 +10,7 @@
 ##  coefficients of polynomials modulo the Conway polynomial.
 ##
 Revision.ffeconway_gi :=
-    "@(#)$Id: ffeconway.gi,v 4.10.2.1 2006/02/22 12:26:39 sal Exp $";
+    "@(#)$Id: ffeconway.gi,v 4.10.2.2 2006/07/06 11:57:35 sal Exp $";
 
 #############################################################################
 ##
@@ -1299,20 +1299,17 @@ InstallMethod( LogFFE,
         IsIdenticalObj,
         [IsFFE and IsCoeffsModConwayPolRep, IsFFE and IsCoeffsModConwayPolRep],
         function(y,z)
-    local   d,  p,  q,  f,  l;
+    local   d,  p,  q,  f;
     d := DegreeFFE(z);
     p := Characteristic(z);
     q := p^d;
     if IsZero(z) or d mod DegreeFFE(y) <> 0  then
+        
         Error("LogFFE: element is not a power of base");
     fi;
     # use rho method
     f:=FactorsInt(q-1:quiet); # Quick factorization, don't stop if its too hard
-    l:=FFECONWAY.DoLogFFERho(y,z,q-1,f,q);
-    if l<>fail then
-        return l;
-    fi;
-    Error("LogFFE: element is not a power of base");
+     return FFECONWAY.DoLogFFERho(y,z,q-1,f,q);
 end);
 
 # Handle possibly easier case in the naive manner
@@ -1320,7 +1317,7 @@ InstallMethod( LogFFE,
         IsIdenticalObj,
         [IsFFE and IsInternalRep, IsFFE and IsCoeffsModConwayPolRep],
         function(y,z)
-    local   d,  p,  q,  f,  l;
+    local   d,  p,  q,  f;
     d := DegreeFFE(z);
     p := Characteristic(z);
     q := p^d;
@@ -1329,11 +1326,7 @@ InstallMethod( LogFFE,
     fi;
     # use rho method
     f:=FactorsInt(q-1:quiet); # Quick factorization, don't stop if its too hard
-    l:=FFECONWAY.DoLogFFERho(y,z,q-1,f,q);
-    if l<>fail then
-        return l;
-    fi;
-    Error("LogFFE: element is not a power of base");
+     return FFECONWAY.DoLogFFERho(y,z,q-1,f,q);
 end);
 
 

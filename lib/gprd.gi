@@ -3,14 +3,14 @@
 #W  gprd.gi                     GAP library                      Bettina Eick
 ##                                                             Heiko Thei"sen
 ##
-#H  @(#)$Id: gprd.gi,v 4.46.2.4 2006/01/18 16:44:02 gap Exp $
+#H  @(#)$Id: gprd.gi,v 4.46.2.5 2006/04/18 10:59:01 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.gprd_gi :=
-    "@(#)$Id: gprd.gi,v 4.46.2.4 2006/01/18 16:44:02 gap Exp $";
+    "@(#)$Id: gprd.gi,v 4.46.2.5 2006/04/18 10:59:01 stefan Exp $";
 
 
 #############################################################################
@@ -29,7 +29,9 @@ local d;
   fi;
   d:=DirectProductOp( arg, arg[1] );
   if ForAll(arg,HasSize) then
-    SetSize(d,Product(List(arg,Size)));
+    if   ForAll(arg,IsFinite)
+    then SetSize(d,Product(List(arg,Size)));
+    else SetSize(d,infinity); fi;
   fi;
   return d;
 end );

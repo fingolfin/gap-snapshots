@@ -4,7 +4,7 @@
 #W                                                           Alexander Hulpke
 #W                                                             Heiko Thei"sen
 ##
-#H  @(#)$Id: ghom.gi,v 4.108 2003/08/23 18:59:19 gap Exp $
+#H  @(#)$Id: ghom.gi,v 4.108.2.1 2006/07/25 19:23:20 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  4. Functions for ...
 ##
 Revision.ghom_gi :=
-    "@(#)$Id: ghom.gi,v 4.108 2003/08/23 18:59:19 gap Exp $";
+    "@(#)$Id: ghom.gi,v 4.108.2.1 2006/07/25 19:23:20 gap Exp $";
 
 
 #############################################################################
@@ -821,8 +821,18 @@ InstallMethod( ConjugatorAutomorphismNC,
 #F  ConjugatorAutomorphism( <G>, <g> )
 ##
 InstallGlobalFunction( ConjugatorAutomorphism, function( G, g )
+local rep;
     if     IsCollsElms( FamilyObj( G ), FamilyObj( g ) )
        and IsNormal( Group( g ), G ) then
+      # ensure that g is chosen in G if possible
+      if not g in G then
+	rep:=RepresentativeAction(G,GeneratorsOfGroup(G),
+               List(GeneratorsOfGroup(G),x->x^g),OnTuples);
+        if rep<>fail then
+	  Info(InfoPerformance,2,"changed conjugator to make it inner");
+	  g:=rep;
+	fi;
+      fi;
       return ConjugatorAutomorphismNC( G, g );
     else
       return fail;
@@ -1125,13 +1135,18 @@ InstallMethod( IsInnerAutomorphism,
     fi;
     s:= Source( hom );
     gens:= GeneratorsOfGroup( s );
-    rep:= RepresentativeAction( s, gens, 
-              List( gens, i -> ImagesRepresentative( hom, i ) ), OnTuples );
-    if rep <> fail then
-      SetConjugatorOfConjugatorIsomorphism( hom, rep );
-      return true;
+    if HasConjugatorOfConjugatorIsomorphism(hom) then
+      rep:=ConjugatorOfConjugatorIsomorphism(hom);
+      return rep in s;
     else
-      return false;
+      rep:= RepresentativeAction( s, gens, 
+		List( gens, i -> ImagesRepresentative( hom, i ) ), OnTuples );
+      if rep <> fail then
+	SetConjugatorOfConjugatorIsomorphism( hom, rep );
+	return true;
+      else
+	return false;
+      fi;
     fi;
     end );
 

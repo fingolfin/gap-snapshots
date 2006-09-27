@@ -138,7 +138,7 @@ gap&gt; GeneratorsOfGroup(g);
 </pre>
 While in this example <font face="Gill Sans,Helvetica,Arial">GAP</font> displays the group via the generating set
 stored in the attribute <code>GeneratorsOfGroup</code>, the methods installed for
-<code>View</code> (see&nbsp;<a href="CHAP006.htm#SSEC002.1">View</a>) will in general display only some information about the
+<code>View</code> (see&nbsp;<a href="CHAP006.htm#SSEC003.1">View</a>) will in general display only some information about the
 group which may even be just the fact that it is a group.
 <p>
 <a name = "SSEC002.4"></a>
@@ -748,7 +748,7 @@ gap&gt; List(RightTransversal(g,u),i-&gt;CanonicalRightCosetElement(u,i));
 </pre>
 <p>
 The operation <code>PositionCanonical</code> is described in
-section&nbsp;<a href="CHAP021.htm#SSEC016.2">PositionCanonical</a>.
+section&nbsp;<a href="CHAP021.htm#SSEC016.3">PositionCanonical</a>.
 <p>
 <pre>
 gap&gt; PositionCanonical(rt,(1,2,3));
@@ -1011,7 +1011,7 @@ attribute <code>GaloisGroup(</code><var>rcl</var><code>)</code> as a subgroup of
 tests whether the elements <var>x</var> and <var>y</var> or the subgroups <var>U</var> and <var>V</var> are
 conjugate under the action of <var>G</var>. (They do not need to be contained in
 <var>G</var>.) This command is only a shortcut to
-<code>RepresentativeOperation</code>.
+<code>RepresentativeAction</code>.
 <p>
 <pre>
 gap&gt; IsConjugate(g,Group((1,2,3,4),(1,3)),Group((1,3,2,4),(1,2)));
@@ -1154,7 +1154,7 @@ factor group <i>G</i>/<i>G</i>&#8242; is the largest abelian factor group of <i>
 <p>
 <pre>
 gap&gt; DerivedSubgroup(g);
-Group([ (1,3,2), (1,4,3) ])
+Group([ (1,3,2), (2,4,3) ])
 </pre>
 <p>
 <a name = "SSEC012.4"></a>
@@ -1259,7 +1259,7 @@ supersolvable.
 <p>
 <pre>
 gap&gt; SupersolvableResiduum(g);
-Group([ (1,2)(3,4), (1,4)(2,3) ])
+Group([ (1,3)(2,4), (1,4)(2,3) ])
 </pre>
 <p>
 <a name = "SSEC012.12"></a>
@@ -1761,7 +1761,7 @@ subnormal, <var>V</var>=<var>U</var>.
 <p>
 <pre>
 gap&gt; s:=SubnormalSeries(g,Group((1,2)(3,4)));
-[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]), 
   Group([ (1,2)(3,4) ]) ]
 </pre>
 <p>
@@ -2151,7 +2151,7 @@ that are minimal among the nontrivial normal subgroups.
 <p>
 <pre>
 gap&gt; MinimalNormalSubgroups( g );
-[ Group([ (1,4)(2,3), (1,3)(2,4) ]) ]
+[ Group([ (1,2)(3,4), (1,3)(2,4) ]) ]
 </pre>
 <p>
 <p>
@@ -2278,11 +2278,11 @@ perfect subgroups.
 gap&gt; m11:=TransitiveGroup(11,6);
 M(11)
 gap&gt; r:=RepresentativesPerfectSubgroups(m11);
-[ Group([ (3,6,7)(4,5,9)(8,10,11), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (2,3,7)(4,11,9)(5,8,10), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (4,9,10,11)(5,6,8,7), (1,10)(2,8)(4,7)(5,9) ]),
-  Group([ (3,4,10)(5,11,6)(7,9,8), (1,10)(2,8)(4,7)(5,9) ]), M(11), Group(()) 
- ]
+[ Group([ (3,5,8)(4,11,7)(6,9,10), (2,3)(4,10)(5,9)(8,11) ]),
+  Group([ (1,2,4)(5,11,8)(6,9,7), (2,3)(4,10)(5,9)(8,11) ]),
+  Group([ (3,4,10)(5,11,6)(7,9,8), (1,4,9)(3,6,10)(7,11,8) ]),
+  Group([ (1,2,5)(3,11,10)(6,7,8), (2,3)(4,10)(5,9)(8,11) ]), M(11),
+  Group(()) ]
 gap&gt; List(r,Size);
 [ 60, 60, 360, 660, 7920, 1 ]
 </pre>
@@ -2295,10 +2295,11 @@ returns a list of the conjugacy classes of perfect subgroups of <var>G</var>.
 <p>
 <pre>
 gap&gt; ConjugacyClassesPerfectSubgroups(m11);
-[ Group( [ ( 3, 6, 7)( 4, 5, 9)( 8,10,11), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 2, 3, 7)( 4,11, 9)( 5, 8,10), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 4, 9,10,11)( 5, 6, 8, 7), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
-  Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1,10)( 2, 8)( 4, 7)( 5, 9) ] )^G,
+[ Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
+  Group( [ ( 1, 2, 4)( 5,11, 8)( 6, 9, 7), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
+  Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), ( 1, 4, 9)( 3, 6,10)( 7,11, 8)
+     ] )^G,
+  Group( [ ( 1, 2, 5)( 3,11,10)( 6, 7, 8), ( 2, 3)( 4,10)( 5, 9)( 8,11) ] )^G,
   M(11)^G, Group( () )^G ]
 </pre>
 <p>
@@ -2762,7 +2763,7 @@ There is another operation
 which only returns the structure of the Multiplier.
 <p>
 <a name = "SSEC024.3"></a>
-<li><code>AbelianInvariantsMultiplier( </code><var>G</var><code> ) O</code>
+<li><code>AbelianInvariantsMultiplier( </code><var>G</var><code> ) A</code>
 <p>
 <a name = "I13"></a>
 
@@ -2785,6 +2786,45 @@ gap&gt; AbelianInvariantsMultiplier(PSU(6,2));
 <p>
 At the moment, this operation will not give any information about how to
 extend the multiplier to a Schur Cover.
+<p>
+Additional attributes and properties of a group can be derived
+from computing its Schur Cover. For example, if <i>G</i> is a
+finitely presented group, the
+derived subgroup a Schur Cover of <i>G</i> is invariant and isomorphic to
+the NonabelianExteriorSquare of <i>G</i> <a href="biblio.htm#BJR87"><cite>BJR87</cite></a>.
+<p>
+<a name = "SSEC024.4"></a>
+<li><code>Epicentre( </code><var>G</var><code> ) A</code>
+<a name = "SSEC024.4"></a>
+<li><code>ExteriorCentre( </code><var>G</var><code> ) A</code>
+<p>
+There are various ways of describing the epicentre of a group. It is
+the smallest normal subgroup <i>N</i> of <i>G</i> such that <i>G</i>/<i>N</i> is a central
+quotient of a group. It is also equal to the Exterior Center of <i>G</i>
+<a href="biblio.htm#Ellis98"><cite>Ellis98</cite></a>.
+<p>
+<a name = "SSEC024.5"></a>
+<li><code>NonabelianExteriorSquare( </code><var>G</var><code> ) O</code>
+<p>
+Computes the Nonabelian Exterior Square <i>G</i>&#8743;<i>G</i> of a group <i>G</i> 
+which for a finitely presented group is the derived subgroup of 
+any Schur Cover of <i>G</i> <a href="biblio.htm#BJR87"><cite>BJR87</cite></a>.
+<p>
+<a name = "SSEC024.6"></a>
+<li><code>EpimorphismNonabelianExteriorSquare( </code><var>G</var><code> ) O</code>
+<p>
+Computes the mapping <i>G</i>&#8743;<i>G</i> &#8594; <i>G</i>. The kernel of this
+mapping is equal to the Schur Multiplicator of <i>G</i>.
+<p>
+<a name = "SSEC024.7"></a>
+<li><code>IsCentralFactor( </code><var>G</var><code> ) P</code>
+<p>
+This method 
+determines if there exists a group <i>H</i> such that <var>G</var> is isomormorphic 
+to the quotient <i>H</i>/<i>Z</i>(<i>H</i>). A group with this property is called in 
+literature <strong>capable</strong>.
+A group being capable is 
+equivalent to the Epicentre of <i>G</i> being trivial <a href="biblio.htm#BFS79"><cite>BFS79</cite></a>.
 <p>
 <p>
 <h2><a name="SECT025">37.25 Tests for the Availability of Methods</a></h2>
@@ -2855,5 +2895,5 @@ This property can be used for example to check whether a
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP036.htm">Previous</a>] [<a href ="CHAP038.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

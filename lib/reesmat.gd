@@ -2,7 +2,7 @@
 ##
 #W  reesmat.gd                  GAP library                    Andrew Solomon
 ##
-#H  @(#)$Id: reesmat.gd,v 4.12 2002/04/15 10:05:14 sal Exp $
+#H  @(#)$Id: reesmat.gd,v 4.12.4.1 2006/08/22 13:28:59 jamesm Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the declarations for Rees Matrix semigroups
 
 Revision.reesmat_gd :=
-    "@(#)$Id: reesmat.gd,v 4.12 2002/04/15 10:05:14 sal Exp $";
+    "@(#)$Id: reesmat.gd,v 4.12.4.1 2006/08/22 13:28:59 jamesm Exp $";
 
 #1
 ##  In this section we describe {\GAP} functions for Rees matrix semigroups
@@ -29,7 +29,7 @@ Revision.reesmat_gd :=
 ##  This can be thought of as a matrix with zero everywhere
 ##  except for an occurrence of <s> at row <i> and column <lambda>.
 ##  The multiplication is defined by 
-##  $(s, i, \lambda)*(t, j , \mu) =   (s P_{\lambda j} t, i, \mu)$ where
+##  $(i, s, \lambda)*(j, t, \mu) =   (i, s P_{\lambda j} t, \mu)$ where
 ##  $P$ is the defining matrix of the semigroup.
 ##  In the case that the underlying semigroup has a zero we can make the
 ##  ReesZeroMatrixSemigroup, wherein all elements whose <s> entry is the
@@ -185,7 +185,7 @@ DeclareAttribute("UnderlyingSemigroupOfReesZeroMatrixSemigroup",
 #A  UnderlyingElementOfReesZeroMatrixSemigroupElement( <x> )
 ##
 ##  For an element <x> of a Rees Matrix semigroup, of the form
-##  `(<s>, <i>, <lambda>)',
+##  `(<i>, <s>, <lambda>)',
 ##  the row index is <i>, the column index is <lambda> and the 
 ##  underlying element is <s>.
 ##  If we think of an element as a matrix then this corresponds to

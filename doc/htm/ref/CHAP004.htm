@@ -128,18 +128,20 @@ the individual data types.
 <p>
 <h2><a name="SECT002">4.2 Lexical Structure</a></h2>
 <p><p>
-The input of <font face="Gill Sans,Helvetica,Arial">GAP</font> consists of sequences of the following characters.
+Most input of <font face="Gill Sans,Helvetica,Arial">GAP</font> consists of sequences of the following characters.
 <p>
-Digits, uppercase and lowercase letters, <var>space</var>, <var>tab</var>, <var>newline</var>, and
-the special characters
+Digits, uppercase and lowercase letters, <var>space</var>, <var>tab</var>, <var>newline</var>, <var>return</var>
+and the special characters
 <p>
 <pre>
-"    `    (    )    *    +    ,    _    #
-.    /    :    ;    &lt;    =    &gt;    ~    &amp;
+"    `    (    )    *    +    ,    -    #
+.    /    :    ;    &lt;    =    &gt;    ~    
 [    \    ]    ^    _    {    }    ! 
 </pre>
 <p>
-Other characters will be signalled as illegal.  Inside strings
+It is possible to use other characters in identifiers by escaping
+them with backslashes, but we do not recommend to use this feature.
+Inside strings
 (see section&nbsp;<a href="CHAP004.htm#SECT003">Symbols</a> and chapter&nbsp;<a href="CHAP026.htm">Strings and Characters</a>) and
 comments (see&nbsp;<a href="CHAP004.htm#SECT004">Whitespaces</a>) the full character set supported by
 the computer is allowed.
@@ -153,10 +155,12 @@ symbols.  A <strong>symbol</strong> is a sequence of characters that form a lexi
 unit. The set of symbols consists of keywords, identifiers, strings,
 integers, and operator and delimiter symbols.
 <p>
-A <strong>keyword</strong> is a reserved word consisting entirely of lowercase letters
-(see <a href="CHAP004.htm#SECT005">Keywords</a>). An <strong>identifier</strong> is a sequence of letters and digits that
-contains at least one letter and is not a keyword (see <a href="CHAP004.htm#SECT006">Identifiers</a>).
-An integer is a sequence of digits (see <a href="CHAP014.htm">Integers</a>).  A <strong>string</strong> is a
+A <strong>keyword</strong> is a reserved word (see <a href="CHAP004.htm#SECT005">Keywords</a>). An <strong>identifier</strong> is 
+a sequence of letters, digits and underscores (or other characters
+escaped by backslashes) that
+contains at least one non-digit and is not a keyword (see <a href="CHAP004.htm#SECT006">Identifiers</a>).
+An integer is a sequence of digits (see <a href="CHAP014.htm">Integers</a>), possibly prepended 
+by <code>-</code> and <code>+</code> sign characters.  A <strong>string</strong> is a
 sequence of  arbitrary characters  enclosed in double quotes (see
 <a href="CHAP026.htm">Strings and Characters</a>).
 <p>
@@ -273,8 +277,8 @@ Info	Assert	SaveWorkspace   fail
 <h2><a name="SECT006">4.6 Identifiers</a></h2>
 <p><p>
 An <strong>identifier</strong> is used to refer to  a variable (see <a href="CHAP004.htm#SECT008">Variables</a>).  An
-identifier consists of letters, digits, and underscores <code>_</code>, and must
-contain at least one letter or underscore.  An identifier is terminated
+identifier usually consists of letters, digits, and underscores <code>_</code>, and must
+contain at least one non-digit.  An identifier is terminated
 by the first character not in this class. Examples of valid identifiers
 are
 <p>
@@ -1043,7 +1047,7 @@ rec( numbers := [ 1, 4, 3 ], string := "string" )
 <p>
 If the expression <var>expr</var> is a function call then this function must
 return a value.  If the function does not return a value an error is
-signalled and you enter a break loop (see <a href="CHAP006.htm#SECT003">Break Loops</a>).  As usual you
+signalled and you enter a break loop (see <a href="CHAP006.htm#SECT004">Break Loops</a>).  As usual you
 can leave the break  loop  with <code>quit;</code>.  If you enter  <code>return
 </code><var>return-expr</var><code>;</code> the value of the expression <var>return-expr</var> is assigned to
 the variable, and execution continues after the assignment.
@@ -1170,7 +1174,7 @@ statement does not produce a value that could be assigned to <code>abs</code>.
 <p>
 If one of the expressions <var>bool-expr1</var>, <var>bool-expr2</var> is evaluated
 and its value is neither <code>true</code> nor <code>false</code> an error is signalled
-and a break loop (see <a href="CHAP006.htm#SECT003">Break Loops</a>) is entered. As usual you
+and a break loop (see <a href="CHAP006.htm#SECT004">Break Loops</a>) is entered. As usual you
 can leave  the break loop with <code>quit;</code>.  If you enter <code>return true;</code>,
 execution of the <code>if</code> statement continues as if the expression whose
 evaluation  failed had evaluated to <code>true</code>.   Likewise, if you enter
@@ -1212,7 +1216,7 @@ executed at least once, while the <var>statements</var> in the <code>while</code
 not executed at all if <var>bool-expr</var> is <code>false</code> at the first iteration.
 <p>
 If <var>bool-expr</var> does not evaluate to <code>true</code> or <code>false</code> an error is
-signalled and a break loop (see <a href="CHAP006.htm#SECT003">Break Loops</a>) is entered. As usual you
+signalled and a break loop (see <a href="CHAP006.htm#SECT004">Break Loops</a>) is entered. As usual you
 can leave the break loop with <code>quit;</code>.  If you enter <code>return false;</code>,
 execution continues with the next statement immediately following the
 <code>while</code> loop.  If you enter <code>return true;</code>, execution continues at
@@ -1259,7 +1263,7 @@ executed at least once, while the <var>statements</var> in the <code>while</code
 not executed at all if <var>bool-expr</var> is <code>false</code> at the first iteration.
 <p>
 If <var>bool-expr</var> does not evaluate to <code>true</code>  or <code>false</code> an error is
-signalled and a break loop (see <a href="CHAP006.htm#SECT003">Break Loops</a>) is entered. As usual you
+signalled and a break loop (see <a href="CHAP006.htm#SECT004">Break Loops</a>) is entered. As usual you
 can leave the break loop with <code>quit;</code>.  If you enter <code>return true;</code>,
 execution continues with the next statement  immediately following the
 <code>repeat</code> loop.  If you enter <code>return  false;</code>, execution continues at
@@ -1716,7 +1720,7 @@ is currently executing, and returns the value of the expression <var>expr</var>.
 Control returns to the calling function. An error is signalled if no
 function is currently executing.
 <p>
-Both statements can also be used in break loops (see <a href="CHAP006.htm#SECT003">Break Loops</a>).
+Both statements can also be used in break loops (see <a href="CHAP006.htm#SECT004">Break Loops</a>).
 <code>return;</code> has the effect that the computation continues where it was
 interrupted by an error or the user hitting <var>ctr</var>-<code>C</code>.  <code>return </code><var>expr</var><code>;</code>
 can be used to continue execution after an error. What happens with the
@@ -2126,5 +2130,5 @@ the part may occur arbitrarily often, or possibly be missing.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>March 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
 </font></body></html>

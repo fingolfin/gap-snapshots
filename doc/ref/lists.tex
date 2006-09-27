@@ -5,7 +5,7 @@
 %A  lists.msk                   GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: lists.msk,v 1.52.2.5 2005/10/11 13:52:26 gap Exp $
+%A  @(#)$Id: lists.msk,v 1.52.2.6 2006/06/19 10:57:49 stefan Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -1511,6 +1511,19 @@ gap> Position( [ 2, 1, 1, 3 ], 1, 3 );
 fail
 \endexample
 
+\>Positions( <list>, <obj> ) F
+\>PositionsOp( <list>, <obj> ) O
+
+returns the positions of *all* occurrences of <obj> in <list>.
+
+
+\beginexample
+gap> Positions([1,2,1,2,3,2,2],2);
+[ 2, 4, 6, 7 ]
+gap> Positions([1,2,1,2,3,2,2],4);
+[  ]
+\endexample
+
 \>PositionCanonical( <list>, <obj> ) O
 
 returns the position of the canonical associate of <obj> in <list>.
@@ -1553,8 +1566,8 @@ gap> PositionNthOccurrence([1,2,3,2,4,2,1],2,4);
 fail
 \endexample
 
-\>PositionSorted( <list>, <elm> ) O
-\>PositionSorted( <list>, <elm>, <func> ) O
+\>PositionSorted( <list>, <elm> ) F
+\>PositionSorted( <list>, <elm>, <func> ) F
 
 In the first form `PositionSorted' returns the position of the element
 <elm> in the sorted list <list>.
@@ -1579,6 +1592,10 @@ For sorting lists, see~"Sorting Lists",
 for testing whether a list is sorted, see~"IsSortedList" and
 "IsSSortedList".
 
+Specialized functions for certain kinds of lists must be installed 
+as methods for the operation `PositionSortedOp'.
+
+we catch plain lists by a function to avoid method selection
 
 \beginexample
 gap> PositionSorted( [1,4,5,5,6,7], 0 );

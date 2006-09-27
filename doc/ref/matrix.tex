@@ -5,7 +5,7 @@
 %A  matrix.msk                  GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: matrix.msk,v 1.40.2.4 2006/03/10 12:09:56 jjm Exp $
+%A  @(#)$Id: matrix.msk,v 1.40.2.5 2006/09/16 19:02:49 jjm Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -622,9 +622,9 @@ entries that is invertible over the integers.
 
 \beginexample
 gap> RandomMat(2,3,GF(3));
-[ [ 0*Z(3), Z(3), Z(3)^0 ], [ Z(3), 0*Z(3), Z(3)^0 ] ]
+[ [ Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0, Z(3) ] ]
 gap> RandomInvertibleMat(4);
-[ [ 4, 3, 5, 3 ], [ 1, -2, 1, -1 ], [ -2, 4, -1, -3 ], [ -1, 1, 2, 0 ] ]
+[ [ 1, -2, -1, 0 ], [ 1, 0, 1, -1 ], [ 0, 2, 0, 4 ], [ -1, -3, 1, -4 ] ]
 \endexample
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1059,7 +1059,7 @@ gap> CharacteristicPolynomial( [ [ 1, 1 ], [ 0, 1 ] ] );
 x^2-2*x+1
 gap> mat := [[0,1],[E(4)-1,E(4)]];;
 gap> CharacteristicPolynomial( mat );
-x^2+-E(4)*x+1-E(4)
+x^2+(-E(4))*x+(1-E(4))
 gap> CharacteristicPolynomial( Rationals, CF(4), mat );
 x^4+3*x^2+2*x+2
 gap> mat:= [ [ E(4), 1 ], [ 0, -E(4) ] ];;

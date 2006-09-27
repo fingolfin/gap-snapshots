@@ -2,7 +2,7 @@
 **
 *W  exprs.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: exprs.c,v 4.40.6.2 2005/08/30 12:49:47 gap Exp $
+*H  @(#)$Id: exprs.c,v 4.40.6.3 2006/08/19 13:02:10 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_exprs_c =
-   "@(#)$Id: exprs.c,v 4.40.6.2 2005/08/30 12:49:47 gap Exp $";
+   "@(#)$Id: exprs.c,v 4.40.6.3 2006/08/19 13:02:10 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -43,6 +43,7 @@ const char * Revision_exprs_c =
 
 #include        "code.h"                /* coder                           */
 #include        "vars.h"                /* variables                       */
+#include        "stats.h"
 
 #define INCLUDE_DECLARATION_PART
 #include        "exprs.h"               /* expressions                     */
@@ -361,6 +362,7 @@ Obj             EvalEq (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (EQ( opL, opR ) ? True : False);
 
     /* return the value                                                    */
@@ -394,6 +396,7 @@ Obj             EvalNe (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (EQ( opL, opR ) ? False : True);
 
     /* return the value                                                    */
@@ -427,6 +430,7 @@ Obj             EvalLt (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (LT( opL, opR ) ? True : False);
 
     /* return the value                                                    */
@@ -460,6 +464,7 @@ Obj             EvalGe (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (LT( opL, opR ) ? False : True);
 
     /* return the value                                                    */
@@ -493,6 +498,7 @@ Obj             EvalGt (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (LT( opR, opL ) ? True : False);
 
     /* return the value                                                    */
@@ -526,6 +532,7 @@ Obj             EvalLe (
     opR = EVAL_EXPR( tmp );
 
     /* compare the operands                                                */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (LT( opR, opL ) ? False : True);
 
     /* return the value                                                    */
@@ -559,6 +566,7 @@ Obj             EvalIn (
     opR = EVAL_EXPR( tmp );
 
     /* perform the test                                                    */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = (IN( opL, opR ) ? True : False);
 
     /* return the value                                                    */
@@ -595,6 +603,7 @@ Obj             EvalSum (
     if ( ! ARE_INTOBJS( opL, opR ) || ! SUM_INTOBJS( val, opL, opR ) ) {
 
         /* if that doesn't work, dispatch to the addition function         */
+        SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
         val = SUM( opL, opR );
 
     }
@@ -626,6 +635,7 @@ Obj             EvalAInv (
     opL = EVAL_EXPR( tmp );
 
     /* compute the additive inverse                                        */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = AINV( opL );
 
     /* return the value                                                    */
@@ -662,6 +672,7 @@ Obj             EvalDiff (
     if ( ! ARE_INTOBJS( opL, opR ) || ! DIFF_INTOBJS( val, opL, opR ) ) {
 
         /* if that doesn't work, dispatch to the subtraction function      */
+        SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
         val = DIFF( opL, opR );
 
     }
@@ -700,6 +711,7 @@ Obj             EvalProd (
     if ( ! ARE_INTOBJS( opL, opR ) || ! PROD_INTOBJS( val, opL, opR ) ) {
 
         /* if that doesn't work, dispatch to the multiplication function   */
+        SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
         val = PROD( opL, opR );
 
     }
@@ -731,6 +743,7 @@ Obj             EvalInv (
     opL = EVAL_EXPR( tmp );
 
     /* compute the multiplicative inverse                                  */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = INV_MUT( opL );
 
     /* return the value                                                    */
@@ -764,6 +777,7 @@ Obj             EvalQuo (
     opR = EVAL_EXPR( tmp );
 
     /* dispatch to the division function                                   */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = QUO( opL, opR );
 
     /* return the value                                                    */
@@ -797,6 +811,7 @@ Obj             EvalMod (
     opR = EVAL_EXPR( tmp );
 
     /* dispatch to the remainder function                                  */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = MOD( opL, opR );
 
     /* return the value                                                    */
@@ -830,6 +845,7 @@ Obj             EvalPow (
     opR = EVAL_EXPR( tmp );
 
     /* dispatch to the powering function                                   */
+    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
     val = POW( opL, opR );
 
     /* return the value                                                    */
