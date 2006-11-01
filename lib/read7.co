@@ -1664,14 +1664,14 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/ctblmono.gi"
 
-#F  file="lib/ctblgrp.gi" crc=33382766
+#F  file="lib/ctblgrp.gi" crc=95234915
 RANK_FILTER_LIST  := [ 29419057, 21, 14199769, 29, 4097, 1, 29419057, 21, 
   4097, 1, 29419057, 21, 29419057, 21, 4097, 1, 29419057, 21, 30666573, 21, 
   46196138, 223, 30666573, 21, 29407897, 26 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/ctblgrp.gi", 33382766 );
+COM_RESULT := COM_FILE( "lib/ctblgrp.gi", 95234915 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/ctblgrp.gi\"");
 elif COM_RESULT = 1  then
@@ -1681,7 +1681,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/ctblgrp.gi");
 elif COM_RESULT = 3  then
-Revision.ctblgrp_gi:="@(#)$Id: ctblgrp.gi,v 4.47.2.5 2005/09/27 23:13:19 gap Exp $";
+Revision.ctblgrp_gi:="@(#)$Id: ctblgrp.gi,v 4.47.2.6 2006/10/04 15:52:55 gap Exp $";
 USECTPGROUP:=false;
 if not IsBound(DXLARGEGROUPORDER) then
 DXLARGEGROUPORDER:=10000;

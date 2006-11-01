@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.8 2006/03/07 10:08:20 sal Exp $
+#H  @(#)$Id: init.g,v 4.212.2.11 2006/11/02 13:33:08 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file initializes GAP.
 ##
 Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.8 2006/03/07 10:08:20 sal Exp $";
+    "@(#)$Id: init.g,v 4.212.2.11 2006/11/02 13:33:08 sal Exp $";
 
 #############################################################################
 ##
@@ -255,8 +255,9 @@ end;
 ##
 GAPInfo.CompareKernelVersions := function()
     local nondigits, digits, i, char, have, need, haveint, needint;
-
-    if GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion then
+    
+    if (not IS_STRING(GAPInfo.NeedKernelVersion) and not GAPInfo.KernelVersion in GAPInfo.NeedKernelVersion) or
+      (IS_STRING(GAPInfo.NeedKernelVersion) and  GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion) then
       Print( "\n\n",
         "You are running a GAP kernel which does not fit with the library.\n",
         "Probably you forgot to apply the kernel part or the library part\n",

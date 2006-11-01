@@ -2,6 +2,7 @@
 ##
 #W  ctblgrp.gi                   GAP library                 Alexander Hulpke
 ##
+#H  @(#)$Id: ctblgrp.gi,v 4.47.2.6 2006/10/04 15:52:55 gap Exp $
 ##
 #Y  Copyright (C) 1993, 1997
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -10,7 +11,7 @@
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
 Revision.ctblgrp_gi :=
-    "@(#)$Id: ctblgrp.gi,v 4.47.2.5 2005/09/27 23:13:19 gap Exp $";
+    "@(#)$Id: ctblgrp.gi,v 4.47.2.6 2006/10/04 15:52:55 gap Exp $";
 
 #############################################################################
 ##
@@ -1938,7 +1939,7 @@ end;
 InstallGlobalFunction( DixonInit, function(arg)
 local G,     # group
       D,     # Dixon record,result
-      k,z,exp,prime,M,m,f,r,ga,i;
+      k,z,exp,prime,M,m,f,r,ga,i,fk;
 
   G:=arg[1];
 
@@ -1953,13 +1954,18 @@ local G,     # group
 
   # estimate the irrationality of the table
   exp:=Exponent(G);
-  prime:=10*exp+1;
+  z:=RootInt(Size(G));
+  prime:=12*exp+1;
 
-  while prime<Maximum(100,5*k) do
+  fk:=ValueOption("prime");
+  if not IsPosInt(fk) or fk<5*k then
+    fk:=5*k;
+  fi;
+
+  while prime<Maximum(100,fk) do
     prime:=prime+exp;
   od;
 
-  z:=RootInt(Size(G));
   # try to calculate approximate degrees
   D.degreePool:=CharacterDegreePool(G);
   z:=2*Maximum(List(D.degreePool,i->i[1]));

@@ -2,14 +2,14 @@
 ##
 #W  oprt.gi                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gi,v 4.179.2.5 2006/08/29 13:25:16 gap Exp $
+#H  @(#)$Id: oprt.gi,v 4.179.2.6 2006/10/10 23:02:11 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gi :=
-    "@(#)$Id: oprt.gi,v 4.179.2.5 2006/08/29 13:25:16 gap Exp $";
+    "@(#)$Id: oprt.gi,v 4.179.2.6 2006/10/10 23:02:11 gap Exp $";
 
 
 #############################################################################
@@ -1325,7 +1325,7 @@ local   orbs, orb,sort,plist,pos,use,o;
   orbs := [  ];
   pos:=1;
   while Length(D)>0  and pos<=Length(D) do
-    orb := OrbitOp( G,D,D[pos], gens, acts, act );
+    orb := OrbitOp( G,D[pos], gens, acts, act );
     Add( orbs, orb );
     if plist then
       if sort then

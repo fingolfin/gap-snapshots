@@ -7065,7 +7065,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/integer.gi"
 
-#F  file="lib/list.gi" crc=-90005790
+#F  file="lib/list.gi" crc=-34579731
 RANK_FILTER_LIST  := [ 29818035, 28, 33512119, 29, 3693620, 28, 7387704, 29, 
   55941985, 27, 17171982, 43, 44018508, 27, 5248505, 43, 42344374, 9, 
   42344374, 9, 67105912, 7, 67105912, 7, 41951068, 17, 8193, 2, 8193, 2, 
@@ -7085,25 +7085,25 @@ RANK_FILTER_LIST  := [ 29818035, 28, 33512119, 29, 3693620, 28, 7387704, 29,
   42368950, 9, 32769, 4, 67105912, 7, 8193, 2, 1, 0, 8193, 2, 32769, 4, 
   32769, 4, 42368950, 9, 32769, 4, 1, 0, 42344374, 9, 1, 0, 17, 18, 8193, 2, 
   1, 0, 17, 18, 32769, 4, 1, 0, 17, 18, 43122614, 15, 1, 0, 17, 18, 786433, 
-  8, 1, 0, 17, 18, 12590325, 4, 1, 0, 7665940, 19, 8255, 14, 1, 0, 43130868, 
-  20, 1, 0, 8193, 2, 1, 0, 17, 18, 33554433, 5, 1025, 1, 17, 18, 42344374, 9, 
-  1, 0, 8193, 2, 1, 0, 42344374, 9, 1, 0, 5, 1, 8193, 2, 1, 0, 5, 1, 16385, 
-  3, 5, 1, 8193, 2, 8193, 2, 8193, 2, 17, 18, 1, 0, 1, 0, 41942876, 3, 8193, 
-  2, 17, 18, 8193, 2, 41942876, 3, 17, 18, 8193, 2, 8193, 2, 17, 18, 1, 0, 1, 
-  0, 41942876, 3, 8193, 2, 17, 18, 8193, 2, 41942876, 3, 17, 18, 8194, 4, 1, 
-  0, 16785410, 17, 1, 0, 7665940, 19, 8194, 4, 1, 0, 7665940, 19, 8194, 4, 
-  16785410, 17, 7665940, 19, 8194, 4, 7665940, 19, 8194, 4, 8193, 2, 
-  16785410, 17, 42344374, 9, 8193, 2, 8193, 2, 8193, 2, 8193, 2, 8193, 2, 
-  16385, 3, 67108850, 28, 42344375, 11, 8194, 4, 3153247, 6, 42344375, 11, 5, 
-  1, 8194, 4, 5, 1, 8193, 2, 8193, 2, 5, 1, 8194, 4, 3161439, 7, 8193, 2, 
-  16385, 3, 3161438, 5, 16386, 5, 16386, 5, 3161439, 7, 16386, 5, 16386, 5, 
-  16386, 5, 5, 1, 8193, 2, 8193, 2, 8193, 2, 8193, 2, 5, 1, 8193, 2, 
-  67108850, 28, 786433, 8, 8193, 2, 67108850, 28, 786433, 8, 8193, 2, 513, 8, 
-  4063233, 1, 5, 1, 8193, 2, 5, 1, 16385, 3, 7665940, 19, 38141578, 12, 
-  38141578, 12, 38141578, 12, 38141578, 12, 38141578, 12, 1, 0, 1, 0, 
-  38141578, 12, 38141578, 12, 38141578, 12, 3694085, 3, 3694085, 3, 3694085, 
-  3, 1, 0, 1, 0, 3694085, 3, 38141578, 12, 38141578, 12, 62914276, 5, 
-  62914276, 5, 27433636, 42, 1966595, 25, 27433636, 42, 1966595, 25, 
+  8, 1, 0, 17, 18, 12590325, 4, 1, 0, 7665940, 19, 8193, 2, 1, 0, 8255, 14, 
+  1, 0, 43130868, 20, 1, 0, 8193, 2, 1, 0, 17, 18, 33554433, 5, 1025, 1, 17, 
+  18, 42344374, 9, 1, 0, 8193, 2, 1, 0, 42344374, 9, 1, 0, 5, 1, 8193, 2, 1, 
+  0, 5, 1, 16385, 3, 5, 1, 8193, 2, 8193, 2, 8193, 2, 17, 18, 1, 0, 1, 0, 
+  41942876, 3, 8193, 2, 17, 18, 8193, 2, 41942876, 3, 17, 18, 8193, 2, 8193, 
+  2, 17, 18, 1, 0, 1, 0, 41942876, 3, 8193, 2, 17, 18, 8193, 2, 41942876, 3, 
+  17, 18, 8194, 4, 1, 0, 16785410, 17, 1, 0, 7665940, 19, 8194, 4, 1, 0, 
+  7665940, 19, 8194, 4, 16785410, 17, 7665940, 19, 8194, 4, 7665940, 19, 
+  8194, 4, 8193, 2, 16785410, 17, 42344374, 9, 8193, 2, 8193, 2, 8193, 2, 
+  8193, 2, 8193, 2, 16385, 3, 67108850, 28, 42344375, 11, 8194, 4, 3153247, 
+  6, 42344375, 11, 5, 1, 8194, 4, 5, 1, 8193, 2, 8193, 2, 5, 1, 8194, 4, 
+  3161439, 7, 8193, 2, 16385, 3, 3161438, 5, 16386, 5, 16386, 5, 3161439, 7, 
+  16386, 5, 16386, 5, 16386, 5, 5, 1, 8193, 2, 8193, 2, 8193, 2, 8193, 2, 5, 
+  1, 8193, 2, 67108850, 28, 786433, 8, 8193, 2, 67108850, 28, 786433, 8, 
+  8193, 2, 513, 8, 4063233, 1, 5, 1, 8193, 2, 5, 1, 16385, 3, 7665940, 19, 
+  38141578, 12, 38141578, 12, 38141578, 12, 38141578, 12, 38141578, 12, 1, 0, 
+  1, 0, 38141578, 12, 38141578, 12, 38141578, 12, 3694085, 3, 3694085, 3, 
+  3694085, 3, 1, 0, 1, 0, 3694085, 3, 38141578, 12, 38141578, 12, 62914276, 
+  5, 62914276, 5, 27433636, 42, 1966595, 25, 27433636, 42, 1966595, 25, 
   62735732, 20, 58412696, 30, 38141578, 12, 1, 0, 1, 0, 38141578, 12, 
   38141578, 12, 38141578, 12, 13933865, 37, 14892111, 53, 23280599, 33, 
   14892111, 53, 38141578, 12, 1, 0, 1, 0, 38141578, 12, 38141578, 12, 
@@ -7115,7 +7115,7 @@ RANK_FILTER_LIST  := [ 29818035, 28, 33512119, 29, 3693620, 28, 7387704, 29,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/list.gi", -90005790 );
+COM_RESULT := COM_FILE( "lib/list.gi", -34579731 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/list.gi\"");
 elif COM_RESULT = 1  then
@@ -7125,7 +7125,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/list.gi");
 elif COM_RESULT = 3  then
-Revision.list_gi:="@(#)$Id: list.gi,v 4.202.2.10 2006/08/28 15:29:14 gap Exp $";
+Revision.list_gi:="@(#)$Id: list.gi,v 4.202.2.11 2006/10/31 15:50:10 gap Exp $";
 InstallMethod(NestingDepthA,[IsCyclotomicCollection and IsGeneralizedRowVector\
 ],COM_FUN(1));
 InstallMethod(NestingDepthM,[IsCyclotomicCollection and IsMultiplicativeGenera\
@@ -7228,151 +7228,152 @@ InstallMethod(Position,"for a small sorted list, an object, and an integer",[IsS
 InstallMethod(Position,"for a sorted list, an object, and an integer",[IsSSortedList,IsObject,IsInt],COM_FUN(72));
 InstallMethod(Position,"for duplicate free list, object, and positive integer",[IsDuplicateFreeList,IsObject,IsPosInt],COM_FUN(73));
 InstallGlobalFunction(Positions,COM_FUN(74));
-InstallMethod(PositionCanonical,"for internally represented lists, fall back on `Position'",[IsList and IsInternalRep,IsObject],COM_FUN(75));
-InstallMethod(PositionCanonical,"internal small sorted lists, use `POSITION_SORTED_LIST'",[IsList and IsInternalRep and IsSSortedList and IsSmallList,IsObject],COM_FUN(76));
-InstallMethod(PositionNthOccurrence,"for list, object, integer",[IsList,IsObject,IsInt],COM_FUN(77));
-InstallMethod(PositionNthOccurrence,"for boolean list, boolean, integer",[IsBlist,IsBool,IsInt],COM_FUN(78));
-InstallGlobalFunction(PositionSorted,COM_FUN(79));
+InstallMethod(PositionsOp,[IsList,IsObject],COM_FUN(75));
+InstallMethod(PositionCanonical,"for internally represented lists, fall back on `Position'",[IsList and IsInternalRep,IsObject],COM_FUN(76));
+InstallMethod(PositionCanonical,"internal small sorted lists, use `POSITION_SORTED_LIST'",[IsList and IsInternalRep and IsSSortedList and IsSmallList,IsObject],COM_FUN(77));
+InstallMethod(PositionNthOccurrence,"for list, object, integer",[IsList,IsObject,IsInt],COM_FUN(78));
+InstallMethod(PositionNthOccurrence,"for boolean list, boolean, integer",[IsBlist,IsBool,IsInt],COM_FUN(79));
+InstallGlobalFunction(PositionSorted,COM_FUN(80));
 InstallMethod(PositionSortedOp,"for small list, and object",[IsList and IsSmallList,IsObject],POSITION_SORTED_LIST);
-InstallMethod(PositionSortedOp,[IsList,IsObject],COM_FUN(80));
+InstallMethod(PositionSortedOp,[IsList,IsObject],COM_FUN(81));
 InstallMethod(PositionSortedOp,"for small list, object, and function",[IsList and IsSmallList,IsObject,IsFunction],POSITION_SORTED_LIST_COMP);
-InstallMethod(PositionSortedOp,"for list, object, and function",[IsList,IsObject,IsFunction],COM_FUN(81));
-InstallGlobalFunction(PositionSet,COM_FUN(82));
-InstallMethod(PositionProperty,"for dense list and function",[IsDenseList,IsFunction],COM_FUN(83));
-InstallMethod(PositionBound,"for a list",[IsList],COM_FUN(84));
-InstallMethod(PositionSublist,"list,sub,pos",[IsList,IsList,IS_INT],COM_FUN(85));
-InstallOtherMethod(PositionSublist,"list, sub",[IsObject,IsObject],COM_FUN(86));
+InstallMethod(PositionSortedOp,"for list, object, and function",[IsList,IsObject,IsFunction],COM_FUN(82));
+InstallGlobalFunction(PositionSet,COM_FUN(83));
+InstallMethod(PositionProperty,"for dense list and function",[IsDenseList,IsFunction],COM_FUN(84));
+InstallMethod(PositionBound,"for a list",[IsList],COM_FUN(85));
+InstallMethod(PositionSublist,"list,sub,pos",[IsList,IsList,IS_INT],COM_FUN(86));
+InstallOtherMethod(PositionSublist,"list, sub",[IsObject,IsObject],COM_FUN(87));
 InstallOtherMethod(PositionSublist,"empty list,sub,pos",[IsEmpty,IsList,IS_INT],ReturnFail);
-InstallOtherMethod(PositionSublist,"list,empty,pos",[IsList,IsEmpty,IS_INT],COM_FUN(87));
-InstallMethod(IsMatchingSublist,"list,sub,pos",IsFamFamX,[IsList,IsList,IS_INT],COM_FUN(88));
-InstallOtherMethod(IsMatchingSublist,"list, sub",[IsObject,IsObject],COM_FUN(89));
-InstallOtherMethod(IsMatchingSublist,"empty list,sub,pos",[IsEmpty,IsList,IS_INT],COM_FUN(90));
+InstallOtherMethod(PositionSublist,"list,empty,pos",[IsList,IsEmpty,IS_INT],COM_FUN(88));
+InstallMethod(IsMatchingSublist,"list,sub,pos",IsFamFamX,[IsList,IsList,IS_INT],COM_FUN(89));
+InstallOtherMethod(IsMatchingSublist,"list, sub",[IsObject,IsObject],COM_FUN(90));
+InstallOtherMethod(IsMatchingSublist,"empty list,sub,pos",[IsEmpty,IsList,IS_INT],COM_FUN(91));
 InstallOtherMethod(IsMatchingSublist,"list,empty,pos",[IsList,IsEmpty,IS_INT],ReturnTrue);
 InstallMethod(Add,"for mutable list and list",[IsList and IsMutable,IsObject],ADD_LIST_DEFAULT);
-InstallMethod(Add,"three arguments fast version",[IsPlistRep and IsList and IsMutable,IsObject,IsPosInt],COM_FUN(91));
-InstallMethod(Add,"three arguments general version",[IsList and IsMutable,IsObject,IsPosInt],COM_FUN(92));
-InstallMethod(Remove,"one argument",[IsList and IsMutable],COM_FUN(93));
+InstallMethod(Add,"three arguments fast version",[IsPlistRep and IsList and IsMutable,IsObject,IsPosInt],COM_FUN(92));
+InstallMethod(Add,"three arguments general version",[IsList and IsMutable,IsObject,IsPosInt],COM_FUN(93));
+InstallMethod(Remove,"one argument",[IsList and IsMutable],COM_FUN(94));
 InstallMethod(Remove,"two arguments, fast",[IsList and IsPlistRep and IsMutabl\
-e,IsPosInt],COM_FUN(94));
-InstallMethod(Remove,"two arguments, general",[IsList and IsMutable,IsPosInt],COM_FUN(95));
-APPEND_LIST_DEFAULT:=COM_FUN(96);
+e,IsPosInt],COM_FUN(95));
+InstallMethod(Remove,"two arguments, general",[IsList and IsMutable,IsPosInt],COM_FUN(96));
+APPEND_LIST_DEFAULT:=COM_FUN(97);
 InstallMethod(Append,"for mutable list and list",[IsList and IsMutable,IsList],APPEND_LIST_DEFAULT);
 InstallMethod(Append,"for mutable list in plist representation, and small list",[IsList and IsPlistRep and IsMutable,IsList and IsSmallList],APPEND_LIST_INTR);
-InstallGlobalFunction(Apply,COM_FUN(97));
-InstallGlobalFunction(Concatenation,COM_FUN(98));
-InstallMethod(Compacted,"for a list",[IsList],COM_FUN(99));
-InstallMethod(Collected,"for a list",[IsList],COM_FUN(100));
-InstallMethod(DuplicateFreeList,"for a list",[IsList],COM_FUN(101));
+InstallGlobalFunction(Apply,COM_FUN(98));
+InstallGlobalFunction(Concatenation,COM_FUN(99));
+InstallMethod(Compacted,"for a list",[IsList],COM_FUN(100));
+InstallMethod(Collected,"for a list",[IsList],COM_FUN(101));
+InstallMethod(DuplicateFreeList,"for a list",[IsList],COM_FUN(102));
 InstallMethod(AsDuplicateFreeList,"for a list",[IsList],DuplicateFreeList);
-InstallMethod(Flat,"for a list",[IsList],COM_FUN(102));
-InstallGlobalFunction(Reversed,COM_FUN(103));
-InstallMethod(ReversedOp,"for a dense list",[IsDenseList],COM_FUN(104));
-InstallMethod(ReversedOp,"for a range",[IsRange],COM_FUN(105));
+InstallMethod(Flat,"for a list",[IsList],COM_FUN(103));
+InstallGlobalFunction(Reversed,COM_FUN(104));
+InstallMethod(ReversedOp,"for a dense list",[IsDenseList],COM_FUN(105));
+InstallMethod(ReversedOp,"for a range",[IsRange],COM_FUN(106));
 InstallMethod(Sort,"for a mutable small list",[IsList and IsMutable and IsSmallList],SORT_LIST);
-InstallMethod(Sort,"for a mutable list",[IsList and IsMutable],COM_FUN(106));
+InstallMethod(Sort,"for a mutable list",[IsList and IsMutable],COM_FUN(107));
 InstallMethod(Sort,"for a mutable set",[IsList and IsMutable and IsSortedList],SUM_FLAGS,Ignore);
 InstallMethod(Sort,"for a mutable small list and a function",[IsList and IsMutable and IsSmallList,IsFunction],SORT_LIST_COMP);
-InstallMethod(Sort,"for a mutable list and a function",[IsList and IsMutable,IsFunction],COM_FUN(107));
-BindGlobal("SORT_MUTABILITY_ERROR_HANDLER",COM_FUN(108));
+InstallMethod(Sort,"for a mutable list and a function",[IsList and IsMutable,IsFunction],COM_FUN(108));
+BindGlobal("SORT_MUTABILITY_ERROR_HANDLER",COM_FUN(109));
 InstallOtherMethod(Sort,"for an immutable list",[IsList],SORT_MUTABILITY_ERROR_HANDLER);
 InstallOtherMethod(Sort,"for an immutable list and a function",[IsList,IsFunction],SORT_MUTABILITY_ERROR_HANDLER);
-InstallGlobalFunction(IsLexicographicallyLess,COM_FUN(109));
-InstallMethod(Sortex,"for a mutable list",[IsList and IsMutable],COM_FUN(110));
-InstallMethod(Sortex,"for a mutable sorted list",[IsDenseList and IsSortedList and IsMutable],SUM_FLAGS,COM_FUN(111));
+InstallGlobalFunction(IsLexicographicallyLess,COM_FUN(110));
+InstallMethod(Sortex,"for a mutable list",[IsList and IsMutable],COM_FUN(111));
+InstallMethod(Sortex,"for a mutable sorted list",[IsDenseList and IsSortedList and IsMutable],SUM_FLAGS,COM_FUN(112));
 InstallOtherMethod(Sortex,"for an immutable list",[IsList],SORT_MUTABILITY_ERROR_HANDLER);
-InstallGlobalFunction(PermListList,COM_FUN(112));
-InstallMethod(SortingPerm,[IsDenseList],COM_FUN(113));
-InstallMethod(SortingPerm,"for a dense and sorted list",[IsDenseList and IsSortedList],SUM_FLAGS,COM_FUN(114));
+InstallGlobalFunction(PermListList,COM_FUN(113));
+InstallMethod(SortingPerm,[IsDenseList],COM_FUN(114));
+InstallMethod(SortingPerm,"for a dense and sorted list",[IsDenseList and IsSortedList],SUM_FLAGS,COM_FUN(115));
 InstallMethod(SortParallel,"for two dense and mutable lists",[IsDenseList and IsMutable,IsDenseList and IsMutable],SORT_PARA_LIST);
 InstallMethod(SortParallel,"for a mutable set and a dense mutable list",[IsDenseList and IsSortedList and IsMutable,IsDenseList and IsMutable],SUM_FLAGS,Ignore);
 InstallMethod(SortParallel,"for two dense and mutable lists, and function",[IsDenseList and IsMutable,IsDenseList and IsMutable,IsFunction],SORT_PARA_LIST_COMP);
 InstallOtherMethod(SortParallel,"for two immutable lists",[IsList,IsList],SORT_MUTABILITY_ERROR_HANDLER);
 InstallOtherMethod(SortParallel,"for two immutable lists and function",[IsList,IsList,IsFunction],SORT_MUTABILITY_ERROR_HANDLER);
-InstallGlobalFunction(Maximum,COM_FUN(115));
-InstallMethod(MaximumList,"for a list",[IsList],COM_FUN(116));
-InstallMethod(MaximumList,"for a range",[IsRange],COM_FUN(117));
-InstallMethod(MaximumList,"for a sorted list",[IsSSortedList],COM_FUN(118));
-InstallGlobalFunction(Minimum,COM_FUN(119));
-InstallMethod(MinimumList,"for a list",[IsList],COM_FUN(120));
-InstallMethod(MinimumList,"for a range",[IsRange],COM_FUN(121));
-InstallMethod(MinimumList,"for a sorted list",[IsSSortedList],COM_FUN(122));
-Cartesian2:=COM_FUN(123);
+InstallGlobalFunction(Maximum,COM_FUN(116));
+InstallMethod(MaximumList,"for a list",[IsList],COM_FUN(117));
+InstallMethod(MaximumList,"for a range",[IsRange],COM_FUN(118));
+InstallMethod(MaximumList,"for a sorted list",[IsSSortedList],COM_FUN(119));
+InstallGlobalFunction(Minimum,COM_FUN(120));
+InstallMethod(MinimumList,"for a list",[IsList],COM_FUN(121));
+InstallMethod(MinimumList,"for a range",[IsRange],COM_FUN(122));
+InstallMethod(MinimumList,"for a sorted list",[IsSSortedList],COM_FUN(123));
+Cartesian2:=COM_FUN(124);
 MakeReadOnlyGlobal("Cartesian2");
-InstallGlobalFunction(Cartesian,COM_FUN(124));
-InstallMethod(Permuted,"for a list and a permutation",[IsList,IS_PERM],COM_FUN(125));
-InstallGlobalFunction(First,COM_FUN(126));
-InstallMethod(FirstOp,"for a list or collection and a function",[IsListOrCollection,IsFunction],COM_FUN(127));
-InstallMethod(Iterated,"for a list and a function",[IsList,IsFunction],COM_FUN(128));
-InstallGlobalFunction(ListN,COM_FUN(129));
-InstallMethod(IsBound\[\],"for a dense list and positive integer",[IsDenseList,IsPosInt],COM_FUN(130));
+InstallGlobalFunction(Cartesian,COM_FUN(125));
+InstallMethod(Permuted,"for a list and a permutation",[IsList,IS_PERM],COM_FUN(126));
+InstallGlobalFunction(First,COM_FUN(127));
+InstallMethod(FirstOp,"for a list or collection and a function",[IsListOrCollection,IsFunction],COM_FUN(128));
+InstallMethod(Iterated,"for a list and a function",[IsList,IsFunction],COM_FUN(129));
+InstallGlobalFunction(ListN,COM_FUN(130));
+InstallMethod(IsBound\[\],"for a dense list and positive integer",[IsDenseList,IsPosInt],COM_FUN(131));
 InstallOtherMethod(ZeroMutable,[IsListDefault and IsSmallList],ZERO_MUT_LIST_DEFAULT);
 InstallOtherMethod(ZeroSameMutability,[IsListDefault and IsSmallList],ZERO_LIST_DEFAULT);
 InstallOtherMethod(AdditiveInverseMutable,[IsListDefault and IsSmallList],AINV_MUT_LIST_DEFAULT);
 InstallOtherMethod(AdditiveInverseSameMutability,[IsListDefault and IsSmallList],AINV_LIST_DEFAULT);
-InstallOtherMethod(\+,[IsListDefault and IsSmallList,IsObject],COM_FUN(131));
-InstallOtherMethod(\+,[IsObject,IsListDefault and IsSmallList],COM_FUN(132));
+InstallOtherMethod(\+,[IsListDefault and IsSmallList,IsObject],COM_FUN(132));
+InstallOtherMethod(\+,[IsObject,IsListDefault and IsSmallList],COM_FUN(133));
 DeclareGlobalFunction("LIST_WITH_HOMOGENEOUS_MUTABILITY_LEVEL");
-InstallGlobalFunction(LIST_WITH_HOMOGENEOUS_MUTABILITY_LEVEL,COM_FUN(133));
+InstallGlobalFunction(LIST_WITH_HOMOGENEOUS_MUTABILITY_LEVEL,COM_FUN(134));
 DeclareGlobalFunction("IMMUTABILITY_LEVEL2");
-InstallGlobalFunction(IMMUTABILITY_LEVEL2,COM_FUN(134));
-BindGlobal("IMMUTABILITY_LEVEL",COM_FUN(135));
-BindGlobal("SUM_LISTS_SPECIAL",COM_FUN(136));
-InstallOtherMethod(\+,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(137));
-InstallOtherMethod(\-,[IsGeneralizedRowVector,IsGeneralizedRowVector],COM_FUN(138));
-InstallOtherMethod(\-,[IsGeneralizedRowVector,IsObject],COM_FUN(139));
-InstallOtherMethod(\-,[IsObject,IsGeneralizedRowVector],COM_FUN(140));
-InstallOtherMethod(\-,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(141));
-InstallOtherMethod(OneOp,[IsListDefault],COM_FUN(142));
-InstallOtherMethod(OneSameMutability,[IsListDefault],COM_FUN(143));
-InstallOtherMethod(InverseOp,"for default list whose rows are vectors of FFEs",[IsListDefault and IsRingElementTable and IsFFECollColl],COM_FUN(144));
-InstallOtherMethod(InverseOp,"for default list over a ring without zero divisors",[IsListDefault and IsZDFRECollColl],COM_FUN(145));
-InstallOtherMethod(InverseSameMutability,"for default list whose rows are vectors of FFEs",[IsListDefault and IsRingElementTable and IsFFECollColl],COM_FUN(146));
-InstallOtherMethod(InverseSameMutability,"for default list over a ring without zero divisors",[IsListDefault and IsZDFRECollColl],COM_FUN(147));
+InstallGlobalFunction(IMMUTABILITY_LEVEL2,COM_FUN(135));
+BindGlobal("IMMUTABILITY_LEVEL",COM_FUN(136));
+BindGlobal("SUM_LISTS_SPECIAL",COM_FUN(137));
+InstallOtherMethod(\+,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(138));
+InstallOtherMethod(\-,[IsGeneralizedRowVector,IsGeneralizedRowVector],COM_FUN(139));
+InstallOtherMethod(\-,[IsGeneralizedRowVector,IsObject],COM_FUN(140));
+InstallOtherMethod(\-,[IsObject,IsGeneralizedRowVector],COM_FUN(141));
+InstallOtherMethod(\-,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(142));
+InstallOtherMethod(OneOp,[IsListDefault],COM_FUN(143));
+InstallOtherMethod(OneSameMutability,[IsListDefault],COM_FUN(144));
+InstallOtherMethod(InverseOp,"for default list whose rows are vectors of FFEs",[IsListDefault and IsRingElementTable and IsFFECollColl],COM_FUN(145));
+InstallOtherMethod(InverseOp,"for default list over a ring without zero divisors",[IsListDefault and IsZDFRECollColl],COM_FUN(146));
+InstallOtherMethod(InverseSameMutability,"for default list whose rows are vectors of FFEs",[IsListDefault and IsRingElementTable and IsFFECollColl],COM_FUN(147));
+InstallOtherMethod(InverseSameMutability,"for default list over a ring without zero divisors",[IsListDefault and IsZDFRECollColl],COM_FUN(148));
 InstallOtherMethod(\^,"using `PROD' for ring element list and ring element table",IsElmsColls,[IsRingElementList,IsRingElementTable],PROD);
-InstallOtherMethod(\*,[IsListDefault and IsSmallList,IsObject],COM_FUN(148));
-InstallOtherMethod(\*,[IsObject,IsListDefault and IsSmallList],COM_FUN(149));
-BindGlobal("LIST_WITH_HOLES",COM_FUN(150));
-BindGlobal("PROD_LISTS_SPECIAL",COM_FUN(151));
-InstallOtherMethod(\*,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(152));
-InstallMethod(\*,"More efficient non-recursive kernel method for vector*matrix of cyclotomics",[IsListDefault and IsSmallList and IsCyclotomicCollection and IsPlistRep,IsListDefault and IsSmallList and IsCyclotomicCollColl and IsPlistRep and IsRectangularTable],COM_FUN(153));
-InstallMethod(\*,"More efficient non-recursive method for matrix*matrix of cyclotomics",[IsListDefault and IsSmallList and IsCyclotomicCollColl,IsListDefault and IsSmallList and IsCyclotomicCollColl and IsPlistRep and IsRectangularTable],COM_FUN(154));
-BindGlobal("MOD_LIST_SCL_DEFAULT",COM_FUN(155));
-BindGlobal("MOD_SCL_LIST_DEFAULT",COM_FUN(156));
-BindGlobal("MOD_LIST_LIST_DEFAULT",COM_FUN(157));
-InstallOtherMethod(\mod,[IsListDefault and IsSmallList,IsObject],COM_FUN(158));
-InstallOtherMethod(\mod,[IsObject,IsListDefault and IsSmallList],COM_FUN(159));
-InstallOtherMethod(\mod,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(160));
-InstallOtherMethod(LeftQuotient,[IsMultiplicativeGeneralizedRowVector,IsMultiplicativeGeneralizedRowVector],COM_FUN(161));
-InstallOtherMethod(LeftQuotient,[IsMultiplicativeGeneralizedRowVector,IsObject],COM_FUN(162));
-InstallOtherMethod(LeftQuotient,[IsObject,IsMultiplicativeGeneralizedRowVector],COM_FUN(163));
-InstallGlobalFunction(DifferenceBlist,COM_FUN(164));
-InstallGlobalFunction(UnionBlist,COM_FUN(165));
-InstallGlobalFunction(IntersectionBlist,COM_FUN(166));
-InstallGlobalFunction(ListWithIdenticalEntries,COM_FUN(167));
-InstallMethod(ViewObj,"for finite lists",[IsList and IsFinite],COM_FUN(168));
-InstallMethod(ViewObj,"for ranges",[IsList and IsFinite and IsRange],COM_FUN(169));
-InstallMethod(SetIsSSortedList,"method for an internal list and a Boolean",[IsList and IsInternalRep,IsBool],COM_FUN(170));
-InstallGlobalFunction(PlainListCopy,COM_FUN(171));
+InstallOtherMethod(\*,[IsListDefault and IsSmallList,IsObject],COM_FUN(149));
+InstallOtherMethod(\*,[IsObject,IsListDefault and IsSmallList],COM_FUN(150));
+BindGlobal("LIST_WITH_HOLES",COM_FUN(151));
+BindGlobal("PROD_LISTS_SPECIAL",COM_FUN(152));
+InstallOtherMethod(\*,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(153));
+InstallMethod(\*,"More efficient non-recursive kernel method for vector*matrix of cyclotomics",[IsListDefault and IsSmallList and IsCyclotomicCollection and IsPlistRep,IsListDefault and IsSmallList and IsCyclotomicCollColl and IsPlistRep and IsRectangularTable],COM_FUN(154));
+InstallMethod(\*,"More efficient non-recursive method for matrix*matrix of cyclotomics",[IsListDefault and IsSmallList and IsCyclotomicCollColl,IsListDefault and IsSmallList and IsCyclotomicCollColl and IsPlistRep and IsRectangularTable],COM_FUN(155));
+BindGlobal("MOD_LIST_SCL_DEFAULT",COM_FUN(156));
+BindGlobal("MOD_SCL_LIST_DEFAULT",COM_FUN(157));
+BindGlobal("MOD_LIST_LIST_DEFAULT",COM_FUN(158));
+InstallOtherMethod(\mod,[IsListDefault and IsSmallList,IsObject],COM_FUN(159));
+InstallOtherMethod(\mod,[IsObject,IsListDefault and IsSmallList],COM_FUN(160));
+InstallOtherMethod(\mod,[IsListDefault and IsSmallList,IsListDefault and IsSmallList],COM_FUN(161));
+InstallOtherMethod(LeftQuotient,[IsMultiplicativeGeneralizedRowVector,IsMultiplicativeGeneralizedRowVector],COM_FUN(162));
+InstallOtherMethod(LeftQuotient,[IsMultiplicativeGeneralizedRowVector,IsObject],COM_FUN(163));
+InstallOtherMethod(LeftQuotient,[IsObject,IsMultiplicativeGeneralizedRowVector],COM_FUN(164));
+InstallGlobalFunction(DifferenceBlist,COM_FUN(165));
+InstallGlobalFunction(UnionBlist,COM_FUN(166));
+InstallGlobalFunction(IntersectionBlist,COM_FUN(167));
+InstallGlobalFunction(ListWithIdenticalEntries,COM_FUN(168));
+InstallMethod(ViewObj,"for finite lists",[IsList and IsFinite],COM_FUN(169));
+InstallMethod(ViewObj,"for ranges",[IsList and IsFinite and IsRange],COM_FUN(170));
+InstallMethod(SetIsSSortedList,"method for an internal list and a Boolean",[IsList and IsInternalRep,IsBool],COM_FUN(171));
+InstallGlobalFunction(PlainListCopy,COM_FUN(172));
 InstallMethod(PositionNot,"default method ",[IsList,IsObject,IsInt],POSITION_NOT);
-InstallOtherMethod(PositionNot,"default value of third argument ",[IsList,IsObject],COM_FUN(172));
+InstallOtherMethod(PositionNot,"default value of third argument ",[IsList,IsObject],COM_FUN(173));
 InstallMethod(PositionFirstComponent,"for dense plain list",true,[IsDenseList and IsPlistRep,IsObject],0,POSITION_FIRST_COMPONENT_SORTED);
-InstallMethod(PositionFirstComponent,"for dense list",true,[IsDenseList,IsObject],0,COM_FUN(173));
-InstallMethod(PositionFirstComponent,"for sorted list",true,[IsSSortedList,IsObject],0,COM_FUN(174));
-InstallMethod(CanEasilyCompareElements,"homogeneous list",[IsHomogeneousList],COM_FUN(175));
-InstallMethod(CanEasilyCompareElements,"empty homogeneous list",[IsHomogeneousList and IsEmpty],COM_FUN(176));
-InstallMethod(CanEasilySortElements,"homogeneous list",[IsHomogeneousList],COM_FUN(177));
-InstallMethod(CanEasilySortElements,"empty homogeneous list",[IsHomogeneousList and IsEmpty],COM_FUN(178));
-InstallGlobalFunction(Elements,COM_FUN(179));
+InstallMethod(PositionFirstComponent,"for dense list",true,[IsDenseList,IsObject],0,COM_FUN(174));
+InstallMethod(PositionFirstComponent,"for sorted list",true,[IsSSortedList,IsObject],0,COM_FUN(175));
+InstallMethod(CanEasilyCompareElements,"homogeneous list",[IsHomogeneousList],COM_FUN(176));
+InstallMethod(CanEasilyCompareElements,"empty homogeneous list",[IsHomogeneousList and IsEmpty],COM_FUN(177));
+InstallMethod(CanEasilySortElements,"homogeneous list",[IsHomogeneousList],COM_FUN(178));
+InstallMethod(CanEasilySortElements,"empty homogeneous list",[IsHomogeneousList and IsEmpty],COM_FUN(179));
+InstallGlobalFunction(Elements,COM_FUN(180));
 InstallMethod(IsRectangularTable,"kernel method for a plain list",[IsTable and IsPlistRep],IsRectangularTablePlist);
-InstallMethod(IsRectangularTable,"generic",[IsList],COM_FUN(180));
+InstallMethod(IsRectangularTable,"generic",[IsList],COM_FUN(181));
 BLISTBYTES:=[];
 HEXBYTES:=[];
 BLISTBYTES1:=[];
 HEXBYTES1:=[];
-BindGlobal("HexBlistSetup",COM_FUN(181));
-InstallGlobalFunction(HexStringBlist,COM_FUN(182));
-InstallGlobalFunction(HexStringBlistEncode,COM_FUN(183));
-InstallGlobalFunction(BlistStringDecode,COM_FUN(184));
+BindGlobal("HexBlistSetup",COM_FUN(182));
+InstallGlobalFunction(HexStringBlist,COM_FUN(183));
+InstallGlobalFunction(HexStringBlistEncode,COM_FUN(184));
+InstallGlobalFunction(BlistStringDecode,COM_FUN(185));
 InstallMethod(IntersectSet,"for two ranges",[IsRange and IsRangeRep and IsMutable,IsRange and IsRangeRep],INTER_RANGE);
 else
 Error("unknown result code ", COM_RESULT );

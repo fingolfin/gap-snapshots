@@ -1557,7 +1557,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/monoid.gi"
 
-#F  file="lib/grp.gi" crc=107521891
+#F  file="lib/grp.gi" crc=99256519
 RANK_FILTER_LIST  := [ 20951140, 22, 20951140, 22, 29419057, 21, 29419057, 
   21, 29419057, 21, 29419057, 21, 42517600, 27, 65420487, 29, 29419057, 21, 
   62974946, 25, 29407897, 26, 29419057, 21, 29419057, 21, 29419057, 21, 
@@ -1604,7 +1604,7 @@ RANK_FILTER_LIST  := [ 20951140, 22, 20951140, 22, 29419057, 21, 29419057,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/grp.gi", 107521891 );
+COM_RESULT := COM_FILE( "lib/grp.gi", 99256519 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/grp.gi\"");
 elif COM_RESULT = 1  then
@@ -1614,7 +1614,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/grp.gi");
 elif COM_RESULT = 3  then
-Revision.grp_gi:="@(#)$Id: grp.gi,v 4.204.2.10 2006/08/22 11:09:07 gap Exp $";
+Revision.grp_gi:="@(#)$Id: grp.gi,v 4.204.2.11 2006/10/04 16:06:24 gap Exp $";
 InstallImmediateMethod(IsFinitelyGeneratedGroup,IsGroup and HasGeneratorsOfGroup,0,COM_FUN(1));
 InstallImmediateMethod(IsCyclic,IsGroup and HasGeneratorsOfGroup,0,COM_FUN(2));
 InstallMethod(IsCyclic,"generic method for groups",[IsGroup],COM_FUN(3));
@@ -9559,7 +9559,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/gprdpc.gi"
 
-#F  file="lib/oprt.gi" crc=15861233
+#F  file="lib/oprt.gi" crc=124916608
 RANK_FILTER_LIST  := [ 29419057, 21, 4063233, 1, 8193, 2, 8193, 2, 5, 1, 
   47349671, 6, 29419057, 21, 47349671, 6, 38796983, 9, 47349671, 6, 47349671, 
   6, 47349671, 6, 29419057, 21, 8193, 2, 8193, 2, 8193, 2, 8193, 2, 5, 1, 
@@ -9616,7 +9616,7 @@ RANK_FILTER_LIST  := [ 29419057, 21, 4063233, 1, 8193, 2, 8193, 2, 5, 1,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/oprt.gi", 15861233 );
+COM_RESULT := COM_FILE( "lib/oprt.gi", 124916608 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/oprt.gi\"");
 elif COM_RESULT = 1  then
@@ -9626,7 +9626,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/oprt.gi");
 elif COM_RESULT = 3  then
-Revision.oprt_gi:="@(#)$Id: oprt.gi,v 4.179.2.5 2006/08/29 13:25:16 gap Exp $";
+Revision.oprt_gi:="@(#)$Id: oprt.gi,v 4.179.2.6 2006/10/10 23:02:11 gap Exp $";
 InstallMethod(ExternalSet,"G, D, gens, acts, act",true,OrbitsishReq,0,COM_FUN(1));
 InstallGlobalFunction(ExternalSetByFilterConstructor,COM_FUN(2));
 InstallGlobalFunction(ExternalSetByTypeConstructor,COM_FUN(3));
@@ -11709,7 +11709,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/grpramat.gi"
 
-#F  file="lib/grpfp.gi" crc=80472961
+#F  file="lib/grpfp.gi" crc=-18201413
 RANK_FILTER_LIST  := [ 44891996, 2, 24234057, 7, 62569747, 9, 62569747, 9, 
   62569747, 9, 62569747, 9, 62569747, 9, 62569747, 9, 62569747, 9, 61553939, 
   7, 44891996, 2, 61553939, 7, 61553939, 7, 61553939, 7, 61553939, 7, 
@@ -11754,7 +11754,7 @@ RANK_FILTER_LIST  := [ 44891996, 2, 24234057, 7, 62569747, 9, 62569747, 9,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/grpfp.gi", 80472961 );
+COM_RESULT := COM_FILE( "lib/grpfp.gi", -18201413 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/grpfp.gi\"");
 elif COM_RESULT = 1  then
@@ -11764,7 +11764,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/grpfp.gi");
 elif COM_RESULT = 3  then
-Revision.grpfp_gi:="@(#)$Id: grpfp.gi,v 4.203.2.12 2006/04/02 20:30:09 gap Exp $";
+Revision.grpfp_gi:="@(#)$Id: grpfp.gi,v 4.203.2.13 2006/10/04 16:03:08 gap Exp $";
 InstallMethod(ElementOfFpGroup,"for a family of f.p. group elements, and an assoc. word",true,[IsElementOfFpGroupFamily,IsAssocWordWithInverse],0,COM_FUN(1));
 InstallMethod(PrintObj,"for an element of an f.p. group (default repres.)",true,[IsElementOfFpGroup and IsPackedElementDefaultRep],0,COM_FUN(2));
 InstallMethod(ViewObj,"for an element of an f.p. group (default repres.)",true,[IsElementOfFpGroup and IsPackedElementDefaultRep],0,COM_FUN(3));

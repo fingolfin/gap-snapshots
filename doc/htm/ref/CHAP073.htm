@@ -118,10 +118,10 @@ Now get the installation archives of the right kind, according to your
 operating system. You want to get the archives:
 <p>
 <dl compact>
-<dt><code>gap4r4p8</code><dd>
+<dt><code>gap4r4p9</code><dd>
 which contains the main <font face="Gill Sans,Helvetica,Arial">GAP</font> installation
 <p>
-<dt><code>packages4r4p8</code><dd>
+<dt><code>packages4r4p9</code><dd>
 which contains <font face="Gill Sans,Helvetica,Arial">GAP</font> packages that provide further functionality
 <p>
 <dt><code>unzoo</code><dd>
@@ -129,14 +129,14 @@ Only if you use the <code>.zoo</code> archives: Unix and OS X users get the sour
 <code>unzoo.c</code>, MacOS users get the <code>.sit</code> archive and Windows users
 the <code>.exe</code> binary.
 <p>
-<dt><code>htmie4r4p8</code><dd>
+<dt><code>htmie4r4p9</code><dd>
 An alternative version of the HTML manual which uses a nonstandard
 ``symbol'' font instead of Unicode characters. If you use a webbrowser such
 as <code>Internet Explorer</code> that has difficulties with rendering Unicode
 correctly, you might want to replace the HTML documentation with this
 version. (See section&nbsp;<a href="CHAP073.htm#SECT008">The Documentation</a>.)
 <p>
-<dt><code>xtom4r4p8</code><dd>
+<dt><code>xtom4r4p9</code><dd>
 Contains about 80MB of further tables of marks. (You can always install this
 later if the need arises.)
 </dl>
@@ -154,12 +154,12 @@ system and the type of archive used.
 <p>
 <dl compact>
 <dt>Unix, OS X<dd>
-Under Unix or OS X unpack the archive <code>gap4r4p8</code> in whatever
+Under Unix or OS X unpack the archive <code>gap4r4p9</code> in whatever
 place you want <font face="Gill Sans,Helvetica,Arial">GAP</font> to reside. If you use the <code>.zoo</code> archive, you will
 have to compile the <code>unzoo</code> program first
 <pre>
 cc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p8.zoo
+./unzoo -x gap4r4p9.zoo
 </pre>
 <p>
 (If you unpack the archive as <code>root</code> user under UNIX, make sure that you
@@ -170,9 +170,9 @@ permissions to read the files.)
 if the <code>.sit</code> archive did not extract autmatically, click it to force
 extraction. You will end up with an applications,
 <code>unzoo 4.4 PPC</code>. 
-Now move this applications, as well as the <code>gap4r4p8.zoo</code>
+Now move this applications, as well as the <code>gap4r4p9.zoo</code>
 archive to the Folder in which you want to install <font face="Gill Sans,Helvetica,Arial">GAP</font>. Drag the archive
-<code>gap4r4p8.zoo onto the icon of `unzoo 4.4 PPC</code>. You will get a
+<code>gap4r4p9.zoo onto the icon of `unzoo 4.4 PPC</code>. You will get a
 window with many lines of text output.
 This process will create a folder <code>gap4r4</code> in the current folder.
 <p>
@@ -180,13 +180,13 @@ This process will create a folder <code>gap4r4</code> in the current folder.
 The archive must be extracted to the <strong>main</strong> directory of the <code>C:</code> drive. (If
 you do not have permissions or sufficient free space to create directories
 there, see section&nbsp;<a href="CHAP073.htm#SECT017">Expert Windows installation</a>.) If you use the <code>.zoo</code>
-archives we provide move <code>unzoo.exe</code> and  <code>gap4r4p8.zoo</code> in the
+archives we provide move <code>unzoo.exe</code> and  <code>gap4r4p9.zoo</code> in the
 <code>C:</code> directory, open the <code>MS-DOS</code> (or <code>Command Prompt</code>) window. (You can
 find this under ``Start/Programs/Accessories''.)
 In this window issue the commands
 <pre>
 cd c:\
-unzoo -x gap4r4p8.zoo
+unzoo -x gap4r4p9.zoo
 </pre>
 (It might be necessary to use upper case letters instead)
 <p>
@@ -342,7 +342,7 @@ this.
 <p>
 <h2><a name="SECT006">73.6 Packages</a></h2>
 <p><p>
-To extract the packages, extract the <code>package4r4p8</code> archive <strong>in</strong>
+To extract the packages, extract the <code>package4r4p9</code> archive <strong>in</strong>
 the ``gap4r4/pkg' directory by the same method used to extracted
 the main archive. (If you use <code>unzoo</code> or under MacOS move both the <code>unzoo</code>
 binary and the archive in the <code>pkg</code> directory and extract there.)
@@ -415,13 +415,13 @@ There also  is (if  installed) an  HTML version  of some  books that  can be
 viewed with an  HTML browser, see&nbsp;<a href="CHAP002.htm#SECT003">Changing the Help Viewer</a>.  Some of these
 use  <strong>unicode  characters</strong>  for  mathematical  formulae.  If your browser
 is not able to display these (older versions of <code>Internet Explorer</code> do not),
-get the <code>htmie4r4p8</code> archive which provides math symbols in a
+get the <code>htmie4r4p9</code> archive which provides math symbols in a
 different encoding. (<code>Mozilla</code>, <code>Konqueror</code> and <code>Safari</code> all support unicode
 characters.)
 <p>
 The manual is also available in <code>pdf</code> format.
 In the full UNIX
-distribution (<code>gap4r4p8.zoo</code>) these files are included in the
+distribution (<code>gap4r4p9.zoo</code>) these files are included in the
 directory
 <code>gap4r4/doc</code>  in the
 subdirectories  <code>tut</code> (a  beginner's  tutorial),  <code>ref</code> (the  reference
@@ -611,7 +611,7 @@ session containing both input and output that illustrates your problem
 <p>
 <li> state the type of machine, operating system,
 (compiler used, if UNIX/Linux) and version of <font face="Gill Sans,Helvetica,Arial">GAP</font> (for example
-``gap4r4p8, fix1'') you are using
+``gap4r4p9, fix1'') you are using
 (the line after the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 banner starting:
 <pre>
 GAP4, Version: 4...
@@ -855,12 +855,12 @@ you want to install <font face="Gill Sans,Helvetica,Arial">GAP</font>, and copy 
 you want to use <code>zoo</code>) in this directory. Then extract the archive by
 the command
 <pre>
-tar zxvf gap4r4p8.tar.gz
+tar zxvf gap4r4p9.tar.gz
 </pre>
 (respectively -- if you prefer <code>zoo</code> -- 
 <pre>
 gcc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p8.zoo
+./unzoo -x gap4r4p9.zoo
 </pre>
 )
 <p>
@@ -902,7 +902,7 @@ for an overview over the features of <font face="Gill Sans,Helvetica,Arial">GAP<
 <h2><a name="SECT016">73.16 Installation of GAP for MacOS</a></h2>
 <p><p>
 Installing <font face="Gill Sans,Helvetica,Arial">GAP</font> under MacOS is fairly easy. First, decide into which 
-folder you want to install <font face="Gill Sans,Helvetica,Arial">GAP</font> 4.4.8.
+folder you want to install <font face="Gill Sans,Helvetica,Arial">GAP</font> 4.4.9.
 <font face="Gill Sans,Helvetica,Arial">GAP</font> will be installed in a subfolder <code>gap4r4</code> of this folder.
 You can later move <font face="Gill Sans,Helvetica,Arial">GAP</font> to a different location.
 <p>
@@ -914,7 +914,7 @@ If you encounter problems please also see section&nbsp;<a href="CHAP073.htm#SECT
 this document.
 <p>
 Get the Mac-specific files described  in  <a href="CHAP073.htm#SECT002">Get the  Archives</a>,  that  is,  the
-distribution   <code>gap4r4p8.zoo</code> and the    binary    archive
+distribution   <code>gap4r4p9.zoo</code> and the    binary    archive
 <code>unzoo4r4-PPC.sit</code>,
 <p>
 How you can get those
@@ -939,13 +939,13 @@ The following installation example assumes that you are installing <font face="G
 in the folder <code>Applications</code> on a PowerPC Macintosh. (For a 68k Macintosh 
 you should replace all references to <code>PPC</code> to ones referring to <code>68K</code>
 <p>
-Move the file <code>gap4r4p8.zoo</code> into the folder <code>Applications</code>
+Move the file <code>gap4r4p9.zoo</code> into the folder <code>Applications</code>
 and drag it onto the icon of <code>unzoo 4.4 PPC</code>. You will get many lines of 
 output in this window. 
 <p>
 This should have created a folder <code>gap4r4</code> in the current folder.
 <p>
-(You will not need the file <code>gap4r4p8.zoo</code> any
+(You will not need the file <code>gap4r4p9.zoo</code> any
 longer. If you are short of disk space you can remove it now.)
 <p>
 If you got not the full distribution file but several small files, extract
@@ -1212,5 +1212,5 @@ or <a href="mailto:support@gap-system.org">support@gap-system.org</a> if you nee
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP072.htm">Previous</a>] [<a href ="CHAP074.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>September 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
 </font></body></html>

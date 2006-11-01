@@ -5,7 +5,7 @@
 #W                                                               Bettina Eick
 #W                                                             Heiko Theissen
 ##
-#H  @(#)$Id: grp.gi,v 4.204.2.10 2006/08/22 11:09:07 gap Exp $
+#H  @(#)$Id: grp.gi,v 4.204.2.11 2006/10/04 16:06:24 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  This file contains generic methods for groups.
 ##
 Revision.grp_gi :=
-    "@(#)$Id: grp.gi,v 4.204.2.10 2006/08/22 11:09:07 gap Exp $";
+    "@(#)$Id: grp.gi,v 4.204.2.11 2006/10/04 16:06:24 gap Exp $";
 
 
 #############################################################################
@@ -4140,7 +4140,7 @@ BindGlobal("Group_InitPseudoRandom",function( grp, len, scramble )
     if CanEasilySortElements(One(grp)) then
         gens := Set(GeneratorsOfGroup(grp));
     elif CanEasilyCompareElements(One(grp)) then
-        gens := DuplicateFreeList(GeneratorsOfGroup);
+        gens := DuplicateFreeList(GeneratorsOfGroup( grp ));
     else
         gens := GeneratorsOfGroup(grp);
     fi;

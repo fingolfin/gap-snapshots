@@ -2,7 +2,7 @@
 ##
 #W  list.gi                     GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: list.gi,v 4.202.2.10 2006/08/28 15:29:14 gap Exp $
+#H  @(#)$Id: list.gi,v 4.202.2.11 2006/10/31 15:50:10 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,8 +11,7 @@
 ##  This file contains methods for lists in general.
 ##
 Revision.list_gi :=
-    "@(#)$Id: list.gi,v 4.202.2.10 2006/08/28 15:29:14 gap Exp $";
-
+    "@(#)$Id: list.gi,v 4.202.2.11 2006/10/31 15:50:10 gap Exp $";
 
 #############################################################################
 ##
@@ -1340,7 +1339,17 @@ InstallGlobalFunction( Positions,
       return PositionsOp(list,obj);
     fi;
   end );
-
+# generic method for non-plain lists
+InstallMethod(PositionsOp, [IsList, IsObject], function(list, obj)
+  local res, p;
+  res := [];
+  p := Position(list, obj);
+  while p <> fail do
+    Add(res, p);
+    p := Position(list, obj, p);
+  od;
+  return res;
+end);
 
 #############################################################################
 ##

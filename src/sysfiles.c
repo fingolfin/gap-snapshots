@@ -4,7 +4,7 @@
 *W                                                         & Martin Schoenert
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: sysfiles.c,v 4.117.2.3 2006/08/29 13:41:46 gap Exp $
+*H  @(#)$Id: sysfiles.c,v 4.117.2.4 2006/10/23 22:20:55 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_sysfiles_c =
-   "@(#)$Id: sysfiles.c,v 4.117.2.3 2006/08/29 13:41:46 gap Exp $";
+   "@(#)$Id: sysfiles.c,v 4.117.2.4 2006/10/23 22:20:55 gap Exp $";
 
 #define INCLUDE_DECLARATION_PART
 #include        "sysfiles.h"            /* file input/output               */
@@ -3497,7 +3497,7 @@ Int SyFseek (
 Int syGetchTerm (
     Int                 fid )
 {
-    Char                ch;
+    UChar                ch;
     Char                str[2];
     Int ret;
 
@@ -3559,7 +3559,7 @@ Int syGetchTerm (
 Int syGetchNonTerm (
     Int                 fid )
 {
-    Char                ch;
+    UChar                ch;
     UInt                bufno;
     int                 ret;
 
