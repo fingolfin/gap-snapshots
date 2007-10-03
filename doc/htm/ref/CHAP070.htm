@@ -848,12 +848,22 @@ gap&gt; nat[1];
 <a name = "SSEC008.5"></a>
 <li><code>ScalarProduct( [</code><var>tbl</var><code>, ]</code><var>chi</var><code>, </code><var>psi</var><code> ) O</code>
 <p>
-For two class functions <var>chi</var> and <var>psi</var> of the same ordinary character
-table <var>tbl</var>, <code>ScalarProduct</code> returns the scalar product.
+For two class functions <var>chi</var> and <var>psi</var> which belong to the same
+character table <var>tbl</var>, <code>ScalarProduct</code> returns their scalar product.
 <p>
-If <i>G</i> is the underlying group of <var>tbl</var> and the two class functions are
-&#967; and &#968; then this is defined as
+If <var>chi</var> and <var>psi</var> are class function objects,
+the argument <var>tbl</var> is not needed,
+but <var>tbl</var> is necessary if at least one of <var>chi</var>, <var>psi</var>
+is just a plain list.
+<p>
+The scalar product of two <strong>ordinary</strong> class functions &#967;, 
+&#968; of a group <i>G</i> is defined as
 [1/(&#124;<i>G</i>&#124;)] &#8721;<sub><i>g</i>  &#8712; <i>G</i></sub> &#967;(<i>g</i>) &#968;(<i>g</i><sup>&#8722;1</sup>).
+<p>
+For two <strong><i>p</i>-modular</strong> class functions,
+the scalar product is defined as
+[1/(&#124;<i>G</i>&#124;)] &#8721;<sub><i>g</i>  &#8712; <i>S</i></sub> &#967;(<i>g</i>) &#968;(<i>g</i><sup>&#8722;1</sup>).
+where <i>S</i> is the set of <i>p</i>-regular elements in <i>G</i>.
 <p>
 <a name = "SSEC008.6"></a>
 <li><code>MatScalarProducts( [</code><var>tbl</var><code>, ]</code><var>list1</var><code>, </code><var>list2</var><code> ) O</code>
@@ -884,6 +894,14 @@ gap&gt; ScalarProduct( TrivialCharacter( tbl ), Sum( Irr( tbl ) ) );
 1
 gap&gt; ScalarProduct( tbl, [ 1, 1, 1, 1, 1 ], Sum( Irr( tbl ) ) );
 1
+gap&gt; tbl2:= tbl mod 2;
+BrauerTable( "A5", 2 )
+gap&gt; chi:= Irr( tbl2 )[1];
+Character( BrauerTable( "A5", 2 ), [ 1, 1, 1, 1 ] )
+gap&gt; ScalarProduct( chi, chi );
+3/4
+gap&gt; ScalarProduct( tbl2, [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] );
+3/4
 gap&gt; chars:= Irr( tbl ){ [ 2 .. 4 ] };;
 gap&gt; chars:= Set( Tensored( chars, chars ) );;
 gap&gt; MatScalarProducts( Irr( tbl ), chars );
@@ -2655,5 +2673,5 @@ functions.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP069.htm">Previous</a>] [<a href ="CHAP071.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

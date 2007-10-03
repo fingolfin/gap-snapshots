@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gi,v 4.75.2.4 2005/10/28 09:18:57 gap Exp $
+#H  @(#)$Id: ctblfuns.gi,v 4.75.2.5 2007/08/29 11:29:44 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -25,7 +25,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gi :=
-    "@(#)$Id: ctblfuns.gi,v 4.75.2.4 2005/10/28 09:18:57 gap Exp $";
+    "@(#)$Id: ctblfuns.gi,v 4.75.2.5 2007/08/29 11:29:44 gap Exp $";
 
 
 #############################################################################
@@ -1617,22 +1617,21 @@ InstallMethod( ScalarProduct,
 ##
 InstallMethod( ScalarProduct,
     "for ordinary table and two homogeneous lists",
-    [ IsOrdinaryTable, IsRowVector, IsRowVector ],
+    [ IsCharacterTable, IsRowVector, IsRowVector ],
     function( tbl, x1, x2 )
+    local i,       # loop variable
+          scpr,    # scalar product, result
+          weight;  # lengths of conjugacy classes
 
-     local i,       # loop variable
-           scpr,    # scalar product, result
-           weight;  # lengths of conjugacy classes
-
-     weight:= SizesConjugacyClasses( tbl );
-     x1:= ValuesOfClassFunction( x1 );
-     x2:= ValuesOfClassFunction( x2 );
-     scpr:= 0;
-     for i in [ 1 .. Length( x1 ) ] do
-       scpr:= scpr + x1[i] * GaloisCyc( x2[i], -1 ) * weight[i];
-     od;
-     return scpr / Size( tbl );
-     end );
+    weight:= SizesConjugacyClasses( tbl );
+    x1:= ValuesOfClassFunction( x1 );
+    x2:= ValuesOfClassFunction( x2 );
+    scpr:= 0;
+    for i in [ 1 .. Length( x1 ) ] do
+      scpr:= scpr + x1[i] * GaloisCyc( x2[i], -1 ) * weight[i];
+    od;
+    return scpr / Size( tbl );
+    end );
 
 
 #############################################################################

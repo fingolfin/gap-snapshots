@@ -2,7 +2,7 @@
 **
 *W  string.h                    GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: string.h,v 4.17 2002/04/15 10:03:58 sal Exp $
+*H  @(#)$Id: string.h,v 4.17.6.1 2007/08/31 10:54:17 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -24,7 +24,7 @@
 **  installed in the appropriate tables by 'InitString'.  */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_string_h =
-   "@(#)$Id: string.h,v 4.17 2002/04/15 10:03:58 sal Exp $";
+   "@(#)$Id: string.h,v 4.17.6.1 2007/08/31 10:54:17 gap Exp $";
 #endif
 
 #include <string.h>  /* for memcpy */
@@ -124,6 +124,17 @@ extern  Int             GrowString (
             Obj                 list,
             UInt                need );
 
+/****************************************************************************
+**
+*F  SHRINK_STRING(<list>) . . . . . . . . .  shrink a string to minimal size
+**
+**  'SHRINK_STRING' gives back not needed memory allocated by string.
+**
+**  Note that 'SHRINK_STRING' is a macro, so do not call it with arguments that
+**  have sideeffects.
+*/
+#define SHRINK_STRING(list)   ResizeBag((list),\
+                            (SIZEBAG_STRINGLEN(GET_LEN_STRING((list)))));
 
 /****************************************************************************
 **

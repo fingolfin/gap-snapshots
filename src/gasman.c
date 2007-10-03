@@ -2,7 +2,7 @@
 **
 *W  gasman.c                    GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: gasman.c,v 4.60.2.1 2004/01/08 17:08:02 gap Exp $
+*H  @(#)$Id: gasman.c,v 4.60.2.2 2007/07/07 21:34:56 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -114,7 +114,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_gasman_c =
-   "@(#)$Id: gasman.c,v 4.60.2.1 2004/01/08 17:08:02 gap Exp $";
+   "@(#)$Id: gasman.c,v 4.60.2.2 2007/07/07 21:34:56 gap Exp $";
 
 
 #define INCLUDE_DECLARATION_PART
@@ -1610,8 +1610,8 @@ void GenStackFuncBags ()
     }
 
     /* mark from registers, dirty dirty hack                               */
-    for ( p = (Bag*)RegsBags;
-          p < (Bag*)RegsBags+sizeof(RegsBags)/sizeof(Bag);
+    for ( p = (Bag*)((void*)RegsBags);
+          p < (Bag*)((void*)RegsBags)+sizeof(RegsBags)/sizeof(Bag);
           p++ )
         MARK_BAG( *p );
 

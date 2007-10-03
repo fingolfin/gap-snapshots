@@ -2,7 +2,7 @@
 ##
 #W  algfld.gi                   GAP Library                  Alexander Hulpke
 ##
-#H  @(#)$Id: algfld.gi,v 4.51.2.2 2005/12/21 08:30:03 gap Exp $
+#H  @(#)$Id: algfld.gi,v 4.51.2.3 2007/08/22 11:45:09 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for algebraic elements and their families
 ##
 Revision.algfld_gi:=
-  "@(#)$Id: algfld.gi,v 4.51.2.2 2005/12/21 08:30:03 gap Exp $";
+  "@(#)$Id: algfld.gi,v 4.51.2.3 2007/08/22 11:45:09 gap Exp $";
 
 #############################################################################
 ##
@@ -184,6 +184,7 @@ local f,p,nam,e,fam,colf;
 	SetSize(e,Size(f)^fam!.deg);
       fi;
     else
+      SetIsNumberField(e,true);
       SetIsFinite(e,false);
       SetSize(e,infinity);
     fi;
@@ -211,6 +212,25 @@ InstallOtherMethod(AlgebraicExtension,"with name",true,
 ##
 InstallMethod(FieldExtension,"generic",true,
   [IsField,IsUnivariatePolynomial],0,AlgebraicExtension);
+
+#############################################################################
+##
+#M  PrintObj
+#M  ViewObj
+##
+InstallMethod( PrintObj, "for algebraic extension", true,
+[IsNumberField and IsAlgebraicExtension], 0,
+function( F )
+    Print( "<algebraic extension over the Rationals of degree ",
+           DegreeOverPrimeField( F ), ">" );
+end );
+
+InstallMethod( ViewObj, "for algebraic extension", true,
+[IsNumberField and IsAlgebraicExtension], 0,
+function( F )
+    Print("<algebraic extension over the Rationals of degree ",
+          DegreeOverPrimeField( F ), ">" );
+end );
 
 #############################################################################
 ##

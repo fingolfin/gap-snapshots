@@ -2,7 +2,7 @@
 **
 *W  plist.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: plist.c,v 4.78.2.1 2005/04/26 14:44:12 sal Exp $
+*H  @(#)$Id: plist.c,v 4.78.2.2 2007/08/31 10:54:17 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -38,7 +38,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_plist_c =
-   "@(#)$Id: plist.c,v 4.78.2.1 2005/04/26 14:44:12 sal Exp $";
+   "@(#)$Id: plist.c,v 4.78.2.2 2007/08/31 10:54:17 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -789,6 +789,46 @@ Obj             ShallowCopyPlist (
     return new;
 }
 
+/****************************************************************************
+**
+*F  FuncEmptyPlist( <self>, <len> ) . . . . . . . empty plist with space
+*
+* Returns an empty plain list, but with space for len entries preallocated.
+*
+*/
+Obj    FuncEmptyPlist( Obj self, Obj len )
+{
+    Obj                 new;
+    while ( ! IS_INTOBJ(len) ) {
+        len = ErrorReturnObj(
+            "<len> must be an integer (not a %s)",
+            (Int)TNAM_OBJ(len), 0L,
+            "you can replace <len> via 'return <len>;'" );
+    }
+
+    new = NEW_PLIST(T_PLIST_EMPTY, INT_INTOBJ(len));
+    SET_LEN_PLIST(new, 0);
+    return new;
+}
+
+/****************************************************************************
+**
+*F  FuncShrinkAllocationPlist( <self>, <list> ) . . . give back unneeded memory
+*
+*  Shrinks the bag of <list> to minimal possible size.
+*
+*/
+Obj   FuncShrinkAllocationPlist( Obj self, Obj plist )
+{
+    while ( ! IS_PLIST(plist) ) {
+        plist = ErrorReturnObj(
+            "<plist> must be a plain list (not a %s)",
+            (Int)TNAM_OBJ(plist), 0,
+            "you can replace <plist> via 'return <plist>;'" );
+    }
+    SHRINK_PLIST(plist, LEN_PLIST(plist));
+    return (Obj)0;
+}
 
 /****************************************************************************
 **
@@ -4342,6 +4382,12 @@ static StructGVarFunc GVarFuncs [] = {
     
     { "IsRectangularTablePlist", 1, "plist",
       FuncIsRectangularTablePlist, "src/lists.c:IsRectangularTablePlist" },
+    
+    { "EmptyPlist", 1, "len",
+      FuncEmptyPlist, "src/lists.c:FuncEmptyPlist" },
+    
+    { "ShrinkAllocationPlist", 1, "plist",
+      FuncShrinkAllocationPlist, "src/lists.c:FuncShrinkAllocationPlist" },
     
     { 0 }
 

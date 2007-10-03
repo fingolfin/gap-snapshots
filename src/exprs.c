@@ -2,7 +2,7 @@
 **
 *W  exprs.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: exprs.c,v 4.40.6.3 2006/08/19 13:02:10 gap Exp $
+*H  @(#)$Id: exprs.c,v 4.40.6.4 2007/04/05 10:43:43 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_exprs_c =
-   "@(#)$Id: exprs.c,v 4.40.6.3 2006/08/19 13:02:10 gap Exp $";
+   "@(#)$Id: exprs.c,v 4.40.6.4 2007/04/05 10:43:43 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1681,7 +1681,7 @@ void            PrintIntExpr (
         Pr( "%d", INT_INTEXPR(expr), 0L );
     }
     else {
-        Pr( "<<not yet implemented>>", 0L, 0L );
+        PrintInt(EvalIntExpr(expr));
     }
 }
 

@@ -2,7 +2,7 @@
 ##
 #W  ffeconway.gi               GAP library                       Steve Linton
 ##
-#H  @(#)$Id: ffeconway.gi,v 4.10.2.2 2006/07/06 11:57:35 sal Exp $
+#H  @(#)$Id: ffeconway.gi,v 4.10.2.6 2007/03/20 15:06:06 sal Exp $
 ##
 #Y  Copyright (C) 2005 The GAP Group
 ##
@@ -10,7 +10,7 @@
 ##  coefficients of polynomials modulo the Conway polynomial.
 ##
 Revision.ffeconway_gi :=
-    "@(#)$Id: ffeconway.gi,v 4.10.2.2 2006/07/06 11:57:35 sal Exp $";
+    "@(#)$Id: ffeconway.gi,v 4.10.2.6 2007/03/20 15:06:06 sal Exp $";
 
 #############################################################################
 ##
@@ -392,6 +392,9 @@ FFECONWAY.WriteOverLargerField := function(x,d2)
     local   fam,  p,  d1,  v,  f, y;
     fam := FamilyObj(x);
     p := fam!.Characteristic;
+    if p^d2 <= MAXSIZE_GF_INTERNAL then
+        return x;
+    fi;
     if not IsCoeffsModConwayPolRep(x) then
         d1 := DegreeFFE(x);
         if d1 = d2 then
@@ -1412,9 +1415,16 @@ end);
 #M Coefficients of an element wrt the canonical basis -- are stored in the 
 ##                                                       element
 InstallMethod(Coefficients,
+        "For a FFE in Conway polynomial represntation wrt the canonical basis of its natural field",
         IsCollsElms,
         [IsCanonicalBasis and IsBasisFiniteFieldRep, IsFFE and IsCoeffsModConwayPolRep],
         function(cb,x)
+    if not IsPrimeField(LeftActingDomain(UnderlyingLeftModule(cb))) then
+        TryNextMethod();
+    fi;
+    if DegreeOverPrimeField(UnderlyingLeftModule(cb)) <> x![2] then
+        TryNextMethod();
+    fi;
     PadCoeffs(x![1],x![2]);
     return Immutable(x![1]);
 end);
@@ -1435,6 +1445,7 @@ InstallMethod(Enumerator,
     p := Characteristic(f);
     fam := FFEFamily(p);
     d := DegreeOverPrimeField(f);
+    if d = 1 then TryNextMethod(); fi;
     e := Enumerator(RowSpace(GF(p,1),d));
     return EnumeratorByFunctions(f, rec(
                    ElementNumber := function(en,n)
@@ -1608,9 +1619,9 @@ FFECONWAY.WriteOverSmallestCommonField := function(v)
     d := Lcm(Set(degs));
     for i in [1..Length(v)] do
         if IsCoeffsModConwayPolRep(v[i]) then
-            if d < degs[i] then
+            if d < v[i]![2] then
                 v[i] := FFECONWAY.TryToWriteInSmallerField(v[i],d);
-            elif d > degs[i] then
+            elif d > v[i]![2] then
                 v[i] := FFECONWAY.WriteOverLargerField(v[i],d);
             fi;
         fi;

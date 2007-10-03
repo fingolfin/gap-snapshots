@@ -493,6 +493,7 @@ S 12.8. Other Operations Applicable to any Object
 F 12.8. SetName
 F 12.8. Name
 F 12.8. IsInternallyConsistent
+F 12.8. MemoryUsage
 C types.tex 13. Types of Objects
 S 13.1. Families
 F 13.1. FamilyObj
@@ -884,6 +885,8 @@ S 21.8. Membership Test for Lists
 I 21.8. in!for lists
 F 21.8. element test!for lists
 S 21.9. Enlarging Internally Represented Lists
+F 21.9. EmptyPlist
+F 21.9. ShrinkAllocationPlist
 S 21.10. Comparisons of Lists
 I 21.10. comparisons!of lists
 F 21.10. list equal!comparison
@@ -1307,6 +1310,8 @@ I 26.2. convert!to a string
 F 26.2. IsStringRep
 F 26.2. ConvertToStringRep
 F 26.2. IsEmptyString
+F 26.2. EmptyString
+F 26.2. ShrinkAllocationString
 F 26.2. CharsFamily
 S 26.3. Recognizing Characters
 F 26.3. IsDigitChar
@@ -1328,6 +1333,7 @@ F 26.5. SplitString
 F 26.5. ReplacedString
 F 26.5. NormalizeWhitespace
 F 26.5. NormalizedWhitespace
+F 26.5. RemoveCharacters
 F 26.5. JoinStringsWithSeparator
 F 26.5. Chomp
 S 26.6. Character Conversion
@@ -3698,7 +3704,6 @@ F 60.3. IdentityFromSCTable
 F 60.3. QuotientFromSCTable
 S 60.4. Some Special Algebras
 F 60.4. QuaternionAlgebra
-F 60.4. QuaternionAlgebra
 F 60.4. ComplexificationQuat
 F 60.4. ComplexificationQuat
 F 60.4. OctaveAlgebra
@@ -4140,6 +4145,7 @@ S 67.1. MeatAxe Modules
 F 67.1. GModuleByMats
 F 67.1. GModuleByMats
 S 67.2. Module Constructions
+F 67.2. PermutationGModule
 F 67.2. TensorProductGModule 
 F 67.2. WedgeGModule 
 S 67.3. Selecting a Different MeatAxe
@@ -4315,6 +4321,7 @@ F 69.3. BrauerTable
 F 69.3. BrauerTable
 F 69.3. BrauerTableOp
 F 69.3. ComputedBrauerTables
+F 69.3. CharacterTableRegular
 F 69.3. SupportedCharacterTableInfo
 F 69.3. ConvertToCharacterTable
 F 69.3. ConvertToCharacterTableNC
@@ -4377,6 +4384,8 @@ F 69.8. UnderlyingCharacteristic
 F 69.8. ClassNames
 F 69.8. ClassNames
 F 69.8. CharacterNames
+F 69.8. ClassParameters
+F 69.8. CharacterParameters
 F 69.8. Identifier!for character tables
 F 69.8. InfoText
 F 69.8. InverseClasses

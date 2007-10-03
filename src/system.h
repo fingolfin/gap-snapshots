@@ -9,7 +9,7 @@
 *W                                                  & Burkhard Hoefling (MAC)
 *W                                                    & Steve Linton (MS/DOS)
 **
-*H  @(#)$Id: system.h,v 4.60.2.2 2004/04/29 22:08:41 gap Exp $
+*H  @(#)$Id: system.h,v 4.60.2.3 2007/08/20 22:47:33 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -53,8 +53,13 @@
 #endif
 
 /* some compiles define symbols beginning with an underscore               */
+/* but Mac OSX's dlopen adds one in for free!                              */
 #if C_UNDERSCORE_SYMBOLS
+#if defined(SYS_IS_DARWIN) && SYS_IS_DARWIN
+# define SYS_INIT_DYNAMIC       "Init__Dynamic"
+#else
 # define SYS_INIT_DYNAMIC       "_Init__Dynamic"
+#endif
 #else
 # define SYS_INIT_DYNAMIC       "Init__Dynamic"
 #endif
@@ -226,7 +231,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_system_h =
-   "@(#)$Id: system.h,v 4.60.2.2 2004/04/29 22:08:41 gap Exp $";
+   "@(#)$Id: system.h,v 4.60.2.3 2007/08/20 22:47:33 gap Exp $";
 #endif
 extern const char * Revision_system_c;  /* gap.c uses this */
 extern const char * Revision_system_h;

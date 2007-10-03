@@ -2,7 +2,7 @@
 ##
 #W  zmodnz.gd                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zmodnz.gd,v 4.31 2003/04/11 18:05:30 gap Exp $
+#H  @(#)$Id: zmodnz.gd,v 4.31.2.1 2007/08/15 16:45:10 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  again the ordering of representatives is chosen.
 ##
 Revision.zmodnz_gd :=
-    "@(#)$Id: zmodnz.gd,v 4.31 2003/04/11 18:05:30 gap Exp $";
+    "@(#)$Id: zmodnz.gd,v 4.31.2.1 2007/08/15 16:45:10 gap Exp $";
 
 
 #############################################################################
@@ -148,6 +148,7 @@ DeclareGlobalFunction( "ZmodpZNC" );
 ##
 DeclareOperation( "ZmodnZObj", [ IsZmodnZObjNonprimeFamily, IsInt ] );
 DeclareOperation( "ZmodnZObj", [ IsInt, IsPosInt ] );
+DeclareSynonym( "ZmodpZObj", ZmodnZObj );
 
 
 #############################################################################

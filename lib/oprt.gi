@@ -2,14 +2,14 @@
 ##
 #W  oprt.gi                     GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprt.gi,v 4.179.2.6 2006/10/10 23:02:11 gap Exp $
+#H  @(#)$Id: oprt.gi,v 4.179.2.7 2007/04/24 15:32:17 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprt_gi :=
-    "@(#)$Id: oprt.gi,v 4.179.2.6 2006/10/10 23:02:11 gap Exp $";
+    "@(#)$Id: oprt.gi,v 4.179.2.7 2007/04/24 15:32:17 gap Exp $";
 
 
 #############################################################################
@@ -1094,7 +1094,7 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 	    if incstb=false then
 
 	      # must the orbit contain the whole domain => extend?
-	      if ind=doml and D<>false and Length(orb)<doml then
+	      if ind=doml and (not IsBool(D)) and Length(orb)<doml then
 		if blist=false then
 		  orb:=D;
 		else

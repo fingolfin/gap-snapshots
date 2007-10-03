@@ -7,7 +7,7 @@
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.twocohom_gi :=
-    "@(#)$Id: twocohom.gi,v 4.18 2002/04/15 10:05:25 sal Exp $";
+    "@(#)$Id: twocohom.gi,v 4.18.4.1 2007/07/27 19:15:53 gap Exp $";
 
 #############################################################################
 ##
@@ -273,7 +273,9 @@ InstallGlobalFunction( CollectorSQ, function( G, M, isSplit )
         k := Characteristic( M.field );
         for i  in [ 1 .. Length(r.orders) ]  do
             for j  in [ 1 .. i ]  do
-                if r.orders[i] <> k and r.orders[j] <> k  then
+		# we can avoid
+		if Order(pcgs[i]) mod k <>0 and Order(pcgs[j]) mod k <>0 then
+		# was: r.orders[i] <> k and r.orders[j] <> k  then
                     AddSet( r.avoid, (i^2-i)/2 + j );
                 fi;
             od;

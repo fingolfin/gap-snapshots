@@ -2,7 +2,7 @@
 **
 *W  weakptr.c                   GAP source                       Steve Linton
 **
-*H  @(#)$Id: weakptr.c,v 4.19 2002/04/15 10:04:03 sal Exp $
+*H  @(#)$Id: weakptr.c,v 4.19.6.1 2007/09/13 14:50:54 gap Exp $
 **
 *Y  Copyright (C)  1997,  School of Mathematical and Computational Sciences,
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_weakptr_c =
-   "@(#)$Id: weakptr.c,v 4.19 2002/04/15 10:04:03 sal Exp $";
+   "@(#)$Id: weakptr.c,v 4.19.6.1 2007/09/13 14:50:54 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -519,7 +519,7 @@ void SaveWPObj( Obj wpobj )
   UInt len, i;
   Obj *ptr;
   Obj x;
-  ptr = ADDR_OBJ(wpobj);
+  ptr = ADDR_OBJ(wpobj)+1;
   len = STORED_LEN_WPOBJ(wpobj);
   SaveUInt(len);
   for (i = 1; i <= len; i++)
@@ -545,7 +545,7 @@ void LoadWPObj( Obj wpobj )
 {
   UInt len, i;
   Obj *ptr;
-  ptr = ADDR_OBJ(wpobj);
+  ptr = ADDR_OBJ(wpobj)+1;
   len =   LoadUInt();
   STORE_LEN_WPOBJ(wpobj, len);
   for (i = 1; i <= len; i++)

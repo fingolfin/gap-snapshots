@@ -6,7 +6,7 @@
 %W                                                       Martin Schoenert
 %W                                                         & Steve Linton
 %%
-%H  @(#)$Id: streams.msk,v 1.16 2002/06/24 14:03:16 gap Exp $
+%H  @(#)$Id: streams.msk,v 1.16.2.1 2007/09/14 13:37:45 gapchron Exp $
 %%
 %Y  Copyright 1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,   Germany
 %Y  Copyright 2000,  St Andrews
@@ -42,8 +42,6 @@ MacOS, <carriage-return>-<new-line> under DOS), or a *binary stream*,
 which does not translate the `end-of-line' character. The processing of
 other unprintable characters by text streams is undefined. Binary streams
 pass them unchanged.
-
-Note that binary streams are *@not yet implemented@*.
 
 Whereas it is  cheap  to append  to a  stream, streams do  consume system
 resources, and only a  limited number can  be open at any time, therefore
@@ -700,7 +698,7 @@ gap> WriteByte(s,INT_CHAR('\n'));
 true
 gap> y := ReadAll(s);;
 gap> Length(y);
-4095
+4096
 gap> CloseStream(s);
 gap> s;
 < closed input/output stream to rev >

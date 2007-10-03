@@ -3,14 +3,14 @@
 #W  stbc.gd                     GAP library                    Heiko Thei"sen
 #W                                                               'Akos Seress
 ##
-#H  @(#)$Id: stbc.gd,v 4.45 2002/04/15 10:05:23 sal Exp $
+#H  @(#)$Id: stbc.gd,v 4.45.4.1 2007/08/29 12:37:19 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.stbc_gd :=
-    "@(#)$Id: stbc.gd,v 4.45 2002/04/15 10:05:23 sal Exp $";
+    "@(#)$Id: stbc.gd,v 4.45.4.1 2007/08/29 12:37:19 gap Exp $";
 
 
 #############################################################################
@@ -26,6 +26,11 @@ Revision.stbc_gd :=
 ##  additionally, `StabChainMutable' is also an attribute for the group
 ##  homomorphism <permhomom> whose source is a permutation group.
 ##  
+##  (The mathematical background of stabilizer chains is sketched
+##  in~"Stabilizer Chains",
+##  more information about the objects representing stabilizer chains
+##  in {\GAP} can be found in~"Stabilizer Chain Records".)
+##
 ##  `StabChainOp' is an operation with two arguments <G> and <options>,
 ##  the latter being a record which controls some aspects of the computation
 ##  of a stabilizer chain (see below);

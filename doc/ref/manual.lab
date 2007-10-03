@@ -345,6 +345,7 @@
 \makelabel{ref:SetName}{12.8.1}
 \makelabel{ref:Name}{12.8.2}
 \makelabel{ref:IsInternallyConsistent}{12.8.3}
+\makelabel{ref:MemoryUsage}{12.8.4}
 \makelabel{ref:Types of Objects}{13}
 \makelabel{ref:Families}{13.1}
 \makelabel{ref:FamilyObj}{13.1.1}
@@ -628,6 +629,8 @@
 \makelabel{ref:Membership Test for Lists}{21.8}
 \makelabel{ref:element test!for lists}{21.8.1}
 \makelabel{ref:Enlarging Internally Represented Lists}{21.9}
+\makelabel{ref:EmptyPlist}{21.9.1}
+\makelabel{ref:ShrinkAllocationPlist}{21.9.2}
 \makelabel{ref:Comparisons of Lists}{21.10}
 \makelabel{ref:list equal!comparison}{21.10.1}
 \makelabel{ref:list smaller!comparison}{21.10.2}
@@ -995,7 +998,9 @@
 \makelabel{ref:IsStringRep}{26.2.1}
 \makelabel{ref:ConvertToStringRep}{26.2.2}
 \makelabel{ref:IsEmptyString}{26.2.3}
-\makelabel{ref:CharsFamily}{26.2.4}
+\makelabel{ref:EmptyString}{26.2.4}
+\makelabel{ref:ShrinkAllocationString}{26.2.5}
+\makelabel{ref:CharsFamily}{26.2.6}
 \makelabel{ref:Recognizing Characters}{26.3}
 \makelabel{ref:IsDigitChar}{26.3.1}
 \makelabel{ref:IsLowerAlphaChar}{26.3.2}
@@ -1016,8 +1021,9 @@
 \makelabel{ref:ReplacedString}{26.5.7}
 \makelabel{ref:NormalizeWhitespace}{26.5.8}
 \makelabel{ref:NormalizedWhitespace}{26.5.9}
-\makelabel{ref:JoinStringsWithSeparator}{26.5.10}
-\makelabel{ref:Chomp}{26.5.11}
+\makelabel{ref:RemoveCharacters}{26.5.10}
+\makelabel{ref:JoinStringsWithSeparator}{26.5.11}
+\makelabel{ref:Chomp}{26.5.12}
 \makelabel{ref:Character Conversion}{26.6}
 \makelabel{ref:INT_CHAR}{26.6.1}
 \makelabel{ref:CHAR_INT}{26.6.2}
@@ -3229,7 +3235,6 @@
 \makelabel{ref:QuotientFromSCTable}{60.3.7}
 \makelabel{ref:Some Special Algebras}{60.4}
 \makelabel{ref:QuaternionAlgebra}{60.4.1}
-\makelabel{ref:QuaternionAlgebra}{60.4.1}
 \makelabel{ref:ComplexificationQuat}{60.4.2}
 \makelabel{ref:ComplexificationQuat}{60.4.2}
 \makelabel{ref:OctaveAlgebra}{60.4.3}
@@ -3663,8 +3668,9 @@
 \makelabel{ref:GModuleByMats}{67.1.1}
 \makelabel{ref:GModuleByMats}{67.1.1}
 \makelabel{ref:Module Constructions}{67.2}
-\makelabel{ref:TensorProductGModule }{67.2.1}
-\makelabel{ref:WedgeGModule }{67.2.2}
+\makelabel{ref:PermutationGModule}{67.2.1}
+\makelabel{ref:TensorProductGModule }{67.2.2}
+\makelabel{ref:WedgeGModule }{67.2.3}
 \makelabel{ref:Selecting a Different MeatAxe}{67.3}
 \makelabel{ref:Accessing a Module}{67.4}
 \makelabel{ref:MTX.Generators}{67.4.1}
@@ -3828,9 +3834,10 @@
 \makelabel{ref:BrauerTable}{69.3.2}
 \makelabel{ref:BrauerTableOp}{69.3.2}
 \makelabel{ref:ComputedBrauerTables}{69.3.2}
-\makelabel{ref:SupportedCharacterTableInfo}{69.3.3}
-\makelabel{ref:ConvertToCharacterTable}{69.3.4}
-\makelabel{ref:ConvertToCharacterTableNC}{69.3.4}
+\makelabel{ref:CharacterTableRegular}{69.3.3}
+\makelabel{ref:SupportedCharacterTableInfo}{69.3.4}
+\makelabel{ref:ConvertToCharacterTable}{69.3.5}
+\makelabel{ref:ConvertToCharacterTableNC}{69.3.5}
 \makelabel{ref:Character Table Categories}{69.4}
 \makelabel{ref:IsNearlyCharacterTable}{69.4.1}
 \makelabel{ref:IsCharacterTable}{69.4.1}
@@ -3870,26 +3877,28 @@
 \makelabel{ref:ClassNames}{69.8.10}
 \makelabel{ref:ClassNames}{69.8.10}
 \makelabel{ref:CharacterNames}{69.8.10}
-\makelabel{ref:Identifier!for character tables}{69.8.11}
-\makelabel{ref:InfoText}{69.8.12}
-\makelabel{ref:InverseClasses}{69.8.13}
-\makelabel{ref:RealClasses}{69.8.14}
-\makelabel{ref:ClassOrbit}{69.8.15}
-\makelabel{ref:ClassRoots}{69.8.16}
-\makelabel{ref:ClassPositionsOfNormalSubgroups}{69.8.17}
-\makelabel{ref:ClassPositionsOfMaximalNormalSubgroups}{69.8.17}
-\makelabel{ref:ClassPositionsOfMinimalNormalSubgroups}{69.8.17}
-\makelabel{ref:ClassPositionsOfAgemo}{69.8.18}
-\makelabel{ref:ClassPositionsOfCentre!for character tables}{69.8.19}
-\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.20}
-\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.20}
-\makelabel{ref:ClassPositionsOfDerivedSubgroup}{69.8.21}
-\makelabel{ref:ClassPositionsOfElementaryAbelianSeries}{69.8.22}
-\makelabel{ref:ClassPositionsOfFittingSubgroup}{69.8.23}
-\makelabel{ref:ClassPositionsOfLowerCentralSeries}{69.8.24}
-\makelabel{ref:ClassPositionsOfUpperCentralSeries}{69.8.25}
-\makelabel{ref:ClassPositionsOfSupersolvableResiduum}{69.8.26}
-\makelabel{ref:ClassPositionsOfNormalClosure}{69.8.27}
+\makelabel{ref:ClassParameters}{69.8.11}
+\makelabel{ref:CharacterParameters}{69.8.11}
+\makelabel{ref:Identifier!for character tables}{69.8.12}
+\makelabel{ref:InfoText}{69.8.13}
+\makelabel{ref:InverseClasses}{69.8.14}
+\makelabel{ref:RealClasses}{69.8.15}
+\makelabel{ref:ClassOrbit}{69.8.16}
+\makelabel{ref:ClassRoots}{69.8.17}
+\makelabel{ref:ClassPositionsOfNormalSubgroups}{69.8.18}
+\makelabel{ref:ClassPositionsOfMaximalNormalSubgroups}{69.8.18}
+\makelabel{ref:ClassPositionsOfMinimalNormalSubgroups}{69.8.18}
+\makelabel{ref:ClassPositionsOfAgemo}{69.8.19}
+\makelabel{ref:ClassPositionsOfCentre!for character tables}{69.8.20}
+\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.21}
+\makelabel{ref:ClassPositionsOfDirectProductDecompositions}{69.8.21}
+\makelabel{ref:ClassPositionsOfDerivedSubgroup}{69.8.22}
+\makelabel{ref:ClassPositionsOfElementaryAbelianSeries}{69.8.23}
+\makelabel{ref:ClassPositionsOfFittingSubgroup}{69.8.24}
+\makelabel{ref:ClassPositionsOfLowerCentralSeries}{69.8.25}
+\makelabel{ref:ClassPositionsOfUpperCentralSeries}{69.8.26}
+\makelabel{ref:ClassPositionsOfSupersolvableResiduum}{69.8.27}
+\makelabel{ref:ClassPositionsOfNormalClosure}{69.8.28}
 \makelabel{ref:Operations Concerning Blocks}{69.9}
 \makelabel{ref:PrimeBlocks}{69.9.1}
 \makelabel{ref:PrimeBlocksOp}{69.9.1}

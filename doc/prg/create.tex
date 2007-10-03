@@ -3,7 +3,7 @@
 %A  create.tex                GAP manual                    Thomas Breuer
 %A                                                       Martin Schoenert
 %%
-%H  @(#)$Id: create.tex,v 4.46 2003/11/03 16:17:26 gap Exp $
+%H  @(#)$Id: create.tex,v 4.46.2.1 2007/09/02 19:30:22 gapchron Exp $
 %%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1143,6 +1143,7 @@ you from changing them. Thus
 gap> l := [1,2,4];
 [ 1, 2, 4 ]
 gap> MakeImmutable(l);
+[ 1, 2, 4 ]
 gap> l[3] := 5;
 Lists Assignment: <list> must be a mutable list
 \endexample

@@ -286,12 +286,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/reread.g"
 
-#F  file="lib/package.g" crc=120383661
+#F  file="lib/package.g" crc=-92751274
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/package.g", 120383661 );
+COM_RESULT := COM_FILE( "lib/package.g", -92751274 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/package.g\"");
 elif COM_RESULT = 1  then
@@ -301,7 +301,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/package.g");
 elif COM_RESULT = 3  then
-Revision.package_g:="@(#)$Id: package.g,v 4.73.2.6 2005/12/06 17:29:51 gap Exp $";
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.7 2006/12/01 10:41:23 gap Exp $";
 PACKAGES_VERSIONS:=rec();
 BindGlobal("CompareVersionNumbers",COM_FUN(1));
 BindGlobal("PackageInfo",COM_FUN(2));

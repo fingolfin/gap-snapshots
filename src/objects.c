@@ -2,7 +2,7 @@
 **
 *W  objects.c                   GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: objects.c,v 4.56.2.1 2006/03/28 16:34:44 gap Exp $
+*H  @(#)$Id: objects.c,v 4.56.2.2 2007/08/15 15:08:14 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 #include        "system.h"              /* Ints, UInts, SyIsIntr           */
 
 const char * Revision_objects_c =
-   "@(#)$Id: objects.c,v 4.56.2.1 2006/03/28 16:34:44 gap Exp $";
+   "@(#)$Id: objects.c,v 4.56.2.2 2007/08/15 15:08:14 gap Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 
@@ -767,7 +767,7 @@ void MakeImmutableDatObj( Obj obj)
 Obj FuncMakeImmutable( Obj self, Obj obj)
 {
   MakeImmutable(obj);
-  return (Obj) 0;
+  return obj;
 }
 
 

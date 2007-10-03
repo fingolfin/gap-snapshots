@@ -3,7 +3,7 @@
 #W  grplatt.gi                GAP library                   Martin Sch"onert,
 #W                                                          Alexander Hulpke
 ##
-#H  @(#)$Id: grplatt.gi,v 4.70 2003/02/18 04:59:13 gap Exp $
+#H  @(#)$Id: grplatt.gi,v 4.70.2.1 2006/11/13 16:52:31 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This  file  contains declarations for subgroup latices
 ##
 Revision.grplatt_gi:=
-  "@(#)$Id: grplatt.gi,v 4.70 2003/02/18 04:59:13 gap Exp $";
+  "@(#)$Id: grplatt.gi,v 4.70.2.1 2006/11/13 16:52:31 gap Exp $";
 
 #############################################################################
 ##
@@ -1410,6 +1410,7 @@ InstallMethod(NormalSubgroups,"homomorphism principle perm groups",true,
 InstallMethod(Socle,"from normal subgroups",true,[IsGroup],0,
 function(G)
 local n,i,s;
+  if Size(G)=1 then return G;fi;
   # this could be a bit shorter, but the groups in question have few normal
   # subgroups
   n:=NormalSubgroups(G);

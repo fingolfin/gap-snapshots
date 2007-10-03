@@ -62,6 +62,15 @@ bases used are needed as well.
 <h2><a name="SECT002">67.2 Module Constructions</a></h2>
 <p><p>
 <a name = "SSEC002.1"></a>
+<li><code>PermutationGModule( </code><var>G</var><code>, </code><var>F</var><code> ) F</code>
+<p>
+Called with a permutation group <var>G</var> and a finite field <var>F</var>,
+<code>PermutationGModule</code> returns the natural permutation module <i>M</i> over <var>F</var>
+for the group of permutation matrices that acts on the canonical basis of <i>M</i>
+in the same way as <var>G</var> acts on the points up to its largest moved point
+(see&nbsp;<a href="CHAP040.htm#SSEC002.2">LargestMovedPoint</a>).
+<p>
+<a name = "SSEC002.2"></a>
 <li><code>TensorProductGModule (</code><var>m1</var><code>,</code><var>m2</var><code>) F</code>
 <p>
 TensorProductGModule calculates the tensor product of the modules
@@ -69,7 +78,7 @@ TensorProductGModule calculates the tensor product of the modules
 They are assumed to be modules over the same algebra so, in particular,
 they  should have the same number of generators.
 <p>
-<a name = "SSEC002.2"></a>
+<a name = "SSEC002.3"></a>
 <li><code>WedgeGModule (</code><var>module</var><code>)</code>
 <p>
 WedgeGModule calculates the wedge product of a <var>G</var>-module.
@@ -461,5 +470,5 @@ dimension of the nullspace.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP066.htm">Previous</a>] [<a href ="CHAP068.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

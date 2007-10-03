@@ -6,7 +6,7 @@
 %A                                                           Heiko Theissen
 %A                                                           Akos Seress
 %%
-%A  @(#)$Id: grpperm.msk,v 1.39 2003/10/28 04:55:03 gap Exp $
+%A  @(#)$Id: grpperm.msk,v 1.39.2.1 2007/08/28 12:58:51 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -535,6 +535,11 @@ guaranteed correct output.
 These commands compute a stabilizer chain for the permutation group <G>;
 additionally, `StabChainMutable' is also an attribute for the group
 homomorphism <permhomom> whose source is a permutation group.
+
+(The mathematical background of stabilizer chains is sketched
+in~"Stabilizer Chains",
+more information about the objects representing stabilizer chains
+in {\GAP} can be found in~"Stabilizer Chain Records".)
 
 `StabChainOp' is an operation with two arguments <G> and <options>,
 the latter being a record which controls some aspects of the computation
@@ -1067,7 +1072,7 @@ to be solvable, that it is, using `SetIsSolvableGroup(<G>,true)'.
 
 The second aspect concerns memory usage. A permutation on more than 65536
 points requires 4 byte per point for storing. So permutations on 256000
-poitns require roughly 1MB of storage per permutation. Just storing the
+points require roughly 1MB of storage per permutation. Just storing the
 permutations required for a stabilizer chain might already go beyond the
 available memory, in particular if the base is not very short. In such a
 situation it can be useful, to replace the permutations by straight line

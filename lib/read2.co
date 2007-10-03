@@ -29,14 +29,14 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/process.gd"
 
-#F  file="lib/files.gi" crc=21124270
+#F  file="lib/files.gi" crc=-95492229
 RANK_FILTER_LIST  := [ 67108760, 5, 2267952, 1, 2267952, 1, 67108280, 2, 
   67108280, 2, 2267952, 1, 67108760, 5, 8193, 2, 67108760, 5, 67108760, 5, 
   67108760, 5, 67108760, 5 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/files.gi", 21124270 );
+COM_RESULT := COM_FILE( "lib/files.gi", -95492229 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/files.gi\"");
 elif COM_RESULT = 1  then
@@ -46,7 +46,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/files.gi");
 elif COM_RESULT = 3  then
-Revision.files_gi:="@(#)$Id: files.gi,v 4.26.2.1 2006/02/20 17:12:22 gap Exp $";
+Revision.files_gi:="@(#)$Id: files.gi,v 4.26.2.2 2006/11/13 23:22:25 gap Exp $";
 DeclareRepresentation("IsDirectoryRep",IsPositionalObjectRep,[]);
 BindGlobal("DirectoryType",NewType(DirectoriesFamily,IsDirectory and IsDirectoryRep));
 InstallGlobalFunction(USER_HOME_EXPAND,COM_FUN(1));

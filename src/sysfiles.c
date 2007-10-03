@@ -4,7 +4,7 @@
 *W                                                         & Martin Schoenert
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: sysfiles.c,v 4.117.2.4 2006/10/23 22:20:55 gap Exp $
+*H  @(#)$Id: sysfiles.c,v 4.117.2.5 2006/11/15 08:25:21 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -19,7 +19,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_sysfiles_c =
-   "@(#)$Id: sysfiles.c,v 4.117.2.4 2006/10/23 22:20:55 gap Exp $";
+   "@(#)$Id: sysfiles.c,v 4.117.2.5 2006/11/15 08:25:21 gap Exp $";
 
 #define INCLUDE_DECLARATION_PART
 #include        "sysfiles.h"            /* file input/output               */
@@ -6358,7 +6358,7 @@ static Int postRestore (
 #if SYS_BSD || SYS_MACH || SYS_USG || SYS_OS2_EMX || HAVE_PATH_ENV
     list = NEW_PLIST( T_PLIST, 0 );
     SET_LEN_PLIST( list, 0 );
-    for ( p = getenv("PATH"), i = 0, q = p;  ;  p++, i++ ) {
+    for ( p = getenv("PATH"), i = 0, q = p; p != NULL;  p++, i++ ) {
         if ( *p == ':' || *p == '\0' ) {
             if ( i == 0 ) {
                 tmp = NEW_STRING(2);

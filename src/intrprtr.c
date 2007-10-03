@@ -2,7 +2,7 @@
 **
 *W  intrprtr.c                  GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: intrprtr.c,v 4.66.2.2 2005/08/30 12:49:47 gap Exp $
+*H  @(#)$Id: intrprtr.c,v 4.66.2.3 2007/08/31 10:54:17 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -20,7 +20,7 @@
 #include        "system.h"              /* Ints, UInts                     */
 
 const char * Revision_intrprtr_c =
-   "@(#)$Id: intrprtr.c,v 4.66.2.2 2005/08/30 12:49:47 gap Exp $";
+   "@(#)$Id: intrprtr.c,v 4.66.2.3 2007/08/31 10:54:17 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -2278,6 +2278,11 @@ void            IntrListExprEnd (
         }
 
         /* push the list again                                             */
+        PushObj( list );
+    }
+    else {
+        list = PopObj( );
+        SHRINK_PLIST( list, LEN_PLIST(list) );
         PushObj( list );
     }
 }

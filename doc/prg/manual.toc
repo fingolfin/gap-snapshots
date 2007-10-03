@@ -28,27 +28,27 @@
 \seccontents {3.16}{Mutability and Copying} {29}
 \seccontents {3.17}{Global Variables in the Library} {31}
 \seccontents {3.18}{Declaration and Implementation Part} {33}
-\chapcontents {4}{Examples of Extending the System}{34}
-\seccontents {4.1}{Addition of a Method} {34}
-\seccontents {4.2}{Extending the Range of Definition of an Existing Operation} {35}
-\seccontents {4.3}{Enforcing Property Tests} {36}
-\seccontents {4.4}{Adding a new Operation} {36}
-\seccontents {4.5}{Adding a new Attribute} {37}
-\seccontents {4.6}{Adding a new Representation} {38}
-\seccontents {4.7}{Components versus Attributes} {39}
-\seccontents {4.8}{Adding new Concepts} {39}
-\seccontents {4.9}{Example: M-groups} {40}
-\seccontents {4.10}{Example: Groups with a word length} {41}
-\seccontents {4.11}{Example: Groups with a decomposition as semidirect product} {41}
-\seccontents {4.12}{Creating Own Arithmetic Objects} {41}
-\chapcontents {5}{An Example -- Residue Class Rings}{44}
-\seccontents {5.1}{A First Attempt to Implement Elements of Residue Class Rings} {44}
-\seccontents {5.2}{Why Proceed in a Different Way?} {45}
-\seccontents {5.3}{A Second Attempt to Implement Elements of Residue Class Rings} {46}
-\seccontents {5.4}{Compatibility of Residue Class Rings with Prime Fields} {56}
-\seccontents {5.5}{Further Improvements in Implementing Residue Class Rings} {61}
-\chapcontents {6}{An Example -- Designing Arithmetic Operations}{63}
-\seccontents {6.1}{New Arithmetic Operations vs. New Objects} {63}
-\seccontents {6.2}{Designing new Multiplicative Objects} {64}
-\chapcontents {}{Bibliography}{70}
-\chapcontents {}{Index}{71}
+\chapcontents {4}{Examples of Extending the System}{35}
+\seccontents {4.1}{Addition of a Method} {35}
+\seccontents {4.2}{Extending the Range of Definition of an Existing Operation} {36}
+\seccontents {4.3}{Enforcing Property Tests} {37}
+\seccontents {4.4}{Adding a new Operation} {37}
+\seccontents {4.5}{Adding a new Attribute} {38}
+\seccontents {4.6}{Adding a new Representation} {39}
+\seccontents {4.7}{Components versus Attributes} {40}
+\seccontents {4.8}{Adding new Concepts} {40}
+\seccontents {4.9}{Example: M-groups} {41}
+\seccontents {4.10}{Example: Groups with a word length} {42}
+\seccontents {4.11}{Example: Groups with a decomposition as semidirect product} {42}
+\seccontents {4.12}{Creating Own Arithmetic Objects} {42}
+\chapcontents {5}{An Example -- Residue Class Rings}{45}
+\seccontents {5.1}{A First Attempt to Implement Elements of Residue Class Rings} {45}
+\seccontents {5.2}{Why Proceed in a Different Way?} {46}
+\seccontents {5.3}{A Second Attempt to Implement Elements of Residue Class Rings} {47}
+\seccontents {5.4}{Compatibility of Residue Class Rings with Prime Fields} {57}
+\seccontents {5.5}{Further Improvements in Implementing Residue Class Rings} {62}
+\chapcontents {6}{An Example -- Designing Arithmetic Operations}{64}
+\seccontents {6.1}{New Arithmetic Operations vs. New Objects} {64}
+\seccontents {6.2}{Designing new Multiplicative Objects} {65}
+\chapcontents {}{Bibliography}{71}
+\chapcontents {}{Index}{72}

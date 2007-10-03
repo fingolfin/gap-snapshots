@@ -2,14 +2,14 @@
 ##
 #W  ghomperm.gi                 GAP library       Akos Seress, Heiko Thei"sen
 ##
-#H  @(#)$Id: ghomperm.gi,v 4.94.2.4 2005/12/21 19:59:48 gap Exp $
+#H  @(#)$Id: ghomperm.gi,v 4.94.2.5 2006/11/15 17:20:09 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.ghomperm_gi :=
-    "@(#)$Id: ghomperm.gi,v 4.94.2.4 2005/12/21 19:59:48 gap Exp $";
+    "@(#)$Id: ghomperm.gi,v 4.94.2.5 2006/11/15 17:20:09 gap Exp $";
 
 #############################################################################
 ##
@@ -1166,9 +1166,10 @@ InstallGlobalFunction( StabChainPermGroupToPermGroupGeneralMappingByImages,
            [ 1 .. n ], One( Source( hom ) ), conperminv, hom,
            CoKernelOfMultiplicativeGeneralMapping );
     
-    if    not HasInverseGeneralMapping( hom )
+    if  NrMovedPoints(longgroup)<=10000 and
+	(not HasInverseGeneralMapping( hom )
        or not HasStabChainMutable( InverseGeneralMapping( hom ) )
-       or not HasKernelOfMultiplicativeGeneralMapping( hom )  then
+       or not HasKernelOfMultiplicativeGeneralMapping( hom ))  then
         MakeStabChainLong( InverseGeneralMapping( hom ),
                 StabChainOp( longgroup, [ n + 1 .. n + k ] ),
                 [ n + 1 .. n + k ], conperminv, One( Source( hom ) ), hom,

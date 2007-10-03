@@ -4,7 +4,6 @@
 #W							         Scott Murray
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: dict.gi,v 4.25.2.1 2005/08/21 16:57:15 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +12,7 @@
 ##  This file contains the implementations for dictionaries.
 ##
 Revision.dict_gi :=
-    "@(#)$Id: dict.gi,v 4.25.2.1 2005/08/21 16:57:15 gap Exp $";
+    "@(#)$Id: dict.gi,v 4.25.2.2 2006/11/16 17:52:21 gap Exp $";
 
 ##
 ## List and Sort dictionaries
@@ -915,6 +914,17 @@ local f,n;
 	    return sy;
            end;
   fi;
+end);
+
+InstallMethod(DenseIntKey,"for lists of vectors",true,
+    [ IsFFECollColl,IsObject ], 0,
+function(m,v)
+local f,n;
+  if not IsList(m) and ForAll(m,i->IsRowVector(i)) then
+    TryNextMethod();
+  fi;
+  f:=DefaultFieldOfMatrix(m);
+  return DenseIntKey(f^Length(v),v);
 end);
 
 InstallMethod(DenseIntKey,

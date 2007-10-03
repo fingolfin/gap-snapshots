@@ -42,8 +42,6 @@ which does not translate the <code>end-of-line</code> character. The processing 
 other unprintable characters by text streams is undefined. Binary streams
 pass them unchanged.
 <p>
-Note that binary streams are <strong>@not yet implemented@</strong>.
-<p>
 Whereas it is  cheap  to append  to a  stream, streams do  consume system
 resources, and only a  limited number can  be open at any time, therefore
 it is   necessary   to close   a  stream  as   soon as   possible  using
@@ -669,7 +667,7 @@ gap&gt; WriteByte(s,INT_CHAR('\n'));
 true
 gap&gt; y := ReadAll(s);;
 gap&gt; Length(y);
-4095
+4096
 gap&gt; CloseStream(s);
 gap&gt; s;
 &lt; closed input/output stream to rev &gt;
@@ -779,5 +777,5 @@ during command line editing.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP009.htm">Previous</a>] [<a href ="CHAP011.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

@@ -2,14 +2,14 @@
 ##
 #W  vspchom.tst                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspchom.tst,v 4.23.2.3 2005/05/11 14:53:02 gap Exp $
+#H  @(#)$Id: vspchom.tst,v 4.23.2.4 2007/02/21 12:46:17 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: vspchom.tst,v 4.23.2.3 2005/05/11 14:53:02 gap Exp $");
+gap> START_TEST("$Id: vspchom.tst,v 4.23.2.4 2007/02/21 12:46:17 gap Exp $");
 
 
 #############################################################################
@@ -163,10 +163,40 @@ gap> IdentityMapping( v ) + map4;
 CanonicalBasis( GF(3^3) ) -> [ Z(3^3)^15, Z(3^3)^3, Z(3^3)^10 ]
 
 
+# some tests involving zero mappings
+gap> m:= GroupRing( GF(3), CyclicGroup( 2 ) );;
+gap> t:= TrivialSubspace( m );;
+gap> bm:= BasisVectors( Basis( m ) );;
+gap> bt:= BasisVectors( Basis( t ) );;
+gap> funs:= [ IsInjective, IsSurjective, IsTotal, IsSingleValued ];;
+gap> map:= LeftModuleGeneralMappingByImages( m, m, bm, 0 * bm );;
+gap> List( funs, f -> f( map ) );
+[ false, false, true, true ]
+gap> map:= LeftModuleGeneralMappingByImages( m, t, bm, 0 * bm );;
+gap> List( funs, f -> f( map ) );
+[ false, true, true, true ]
+gap> map:= LeftModuleGeneralMappingByImages( t, t, bt, 0 * bt );;
+gap> List( funs, f -> f( map ) );
+[ true, true, true, true ]
+gap> map:= LeftModuleGeneralMappingByImages( t, m, bt, 0 * bt );;
+gap> List( funs, f -> f( map ) );
+[ true, false, true, true ]
+gap> map:= LeftModuleGeneralMappingByImages( m, m, 0 * bm, bm );;
+gap> List( funs, f -> f( map ) );
+[ true, true, false, false ]
+gap> map:= LeftModuleGeneralMappingByImages( m, t, bt, 0 * bt );;
+gap> List( funs, f -> f( map ) );
+[ true, true, false, true ]
+gap> map:= LeftModuleGeneralMappingByImages( t, m, 0 * bm, bm );;
+gap> List( funs, f -> f( map ) );
+[ true, true, true, false ]
+
+
 #############################################################################
 ##
 ##  tests for linear mappings given by matrices
-##  (same tests as above)
+##  (same tests as above,
+##  except those that would involve matrices with zero rows or columns)
 ##
 
 gap> bf:= CanonicalBasis( GF(3) );

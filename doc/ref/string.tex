@@ -5,7 +5,7 @@
 %A  string.msk                  GAP documentation            Martin Schoenert
 %A                                                           Alexander Hulpke
 %%
-%A  @(#)$Id: string.msk,v 1.32.2.2 2006/08/16 10:28:15 gap Exp $
+%A  @(#)$Id: string.msk,v 1.32.2.4 2007/08/31 10:54:17 gap Exp $
 %%
 %Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -323,6 +323,26 @@ gap> ll;  IsStringRep( ll );
 true
 \endexample
 
+\>EmptyString( <len> ) F
+
+\>ShrinkAllocationString( <str> )
+
+The function `EmptyString' returns an empty string in
+internal representation which
+has enough memory allocated for <len> characters. This can be useful
+for creating and filling a string with a known number of entries.
+
+The function `ShrinkAllocationString' gives back to {\GAP}s
+memory manager the physical memory which is allocated for the string
+<str> in internal representation but not needed by its current
+number of characters.
+
+These functions are intended for saving some of {\GAP}s memory in certain
+situations, see the explanations and the example for the analogeous
+functions `EmptyPlist' and `ShrinkAllocationPlist'
+for plain lists.
+
+
 \>`CharsFamily' V
 
 Each character lies in the family `CharFamily',
@@ -550,6 +570,19 @@ This function returns a copy of string <str> to which
 "NormalizeWhitespace" was applied.
 
 
+
+\>RemoveCharacters( <string>, <chars> )
+
+Both arguments must be strings. This function efficiently removes all 
+characters given in <chars> from <string>.
+
+\beginexample
+gap> s := "ab c\ndef\n\ng    h i .\n";
+"ab c\ndef\n\ng    h i .\n"
+gap> RemoveCharacters(s, WHITESPACE);
+gap> s;
+"abcdefghi."
+\endexample
 
 For the possibility to print {\GAP} objects to strings, see~"String Streams".
 

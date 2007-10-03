@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gd,v 4.54.2.4 2006/04/11 12:09:40 gap Exp $
+#H  @(#)$Id: ctblfuns.gd,v 4.54.2.5 2007/08/29 11:29:44 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gd :=
-    "@(#)$Id: ctblfuns.gd,v 4.54.2.4 2006/04/11 12:09:40 gap Exp $";
+    "@(#)$Id: ctblfuns.gd,v 4.54.2.5 2007/08/29 11:29:44 gap Exp $";
 
 
 #############################################################################
@@ -824,15 +824,25 @@ DeclareOperation( "IsIrreducibleCharacter",
 ##
 #O  ScalarProduct( [<tbl>, ]<chi>, <psi> )
 ##
-##  For two class functions <chi> and <psi> of the same ordinary character
-##  table <tbl>, `ScalarProduct' returns the scalar product.
+##  For two class functions <chi> and <psi> which belong to the same
+##  character table <tbl>, `ScalarProduct' returns their scalar product.
 ##
-##  If $G$ is the underlying group of <tbl> and the two class functions are
-##  $\chi$ and $\psi$ then this is defined as
+##  If <chi> and <psi> are class function objects,
+##  the argument <tbl> is not needed,
+##  but <tbl> is necessary if at least one of <chi>, <psi>
+##  is just a plain list.
+##
+##  The scalar product of two *ordinary* class functions $\chi$, 
+##  $\psi$ of a group $G$ is defined as
 ##  $\frac{1}{|G|} \sum_{g \in G} \chi(g) \psi(g^{-1})$.
 ##
+##  For two *$p$-modular* class functions,
+##  the scalar product is defined as
+##  $\frac{1}{|G|} \sum_{g \in S} \chi(g) \psi(g^{-1})$.
+##  where $S$ is the set of $p$-regular elements in $G$.
+##
 DeclareOperation( "ScalarProduct",
-    [ IsOrdinaryTable, IsRowVector, IsRowVector ] );
+    [ IsCharacterTable, IsRowVector, IsRowVector ] );
 
 
 #############################################################################

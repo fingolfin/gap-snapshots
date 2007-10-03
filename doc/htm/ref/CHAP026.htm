@@ -358,6 +358,27 @@ true
 </pre>
 <p>
 <a name = "SSEC002.4"></a>
+<li><code>EmptyString( </code><var>len</var><code> ) F</code>
+<p>
+<a name = "SSEC002.5"></a>
+<li><code>ShrinkAllocationString( </code><var>str</var><code> )</code>
+<p>
+The function <code>EmptyString</code> returns an empty string in
+internal representation which
+has enough memory allocated for <var>len</var> characters. This can be useful
+for creating and filling a string with a known number of entries.
+<p>
+The function <code>ShrinkAllocationString</code> gives back to <font face="Gill Sans,Helvetica,Arial">GAP</font>s
+memory manager the physical memory which is allocated for the string
+<var>str</var> in internal representation but not needed by its current
+number of characters.
+<p>
+These functions are intended for saving some of <font face="Gill Sans,Helvetica,Arial">GAP</font>s memory in certain
+situations, see the explanations and the example for the analogeous
+functions <code>EmptyPlist</code> and <code>ShrinkAllocationPlist</code>
+for plain lists.
+<p>
+<a name = "SSEC002.6"></a>
 <li><code>CharsFamily V</code>
 <p>
 Each character lies in the family <code>CharFamily</code>,
@@ -530,7 +551,7 @@ white space character.
 <p>
 A separator at the end of a string is interpreted as a terminator; in
 this case, the separator does not produce a trailing empty string.
-Also see&nbsp;<a href="CHAP026.htm#SSEC005.11">Chomp</a>.
+Also see&nbsp;<a href="CHAP026.htm#SSEC005.12">Chomp</a>.
 <p>
 <pre>
 gap&gt; SplitString( "substr1:substr2::substr4", ":" );
@@ -583,9 +604,23 @@ gap&gt; s;
 This function returns a copy of string <var>str</var> to which
 <a href="CHAP026.htm#SSEC005.8">NormalizeWhitespace</a> was applied.
 <p>
+<a name = "SSEC005.10"></a>
+<li><code>RemoveCharacters( </code><var>string</var><code>, </code><var>chars</var><code> )</code>
+<p>
+Both arguments must be strings. This function efficiently removes all 
+characters given in <var>chars</var> from <var>string</var>.
+<p>
+<pre>
+gap&gt; s := "ab c\ndef\n\ng    h i .\n";
+"ab c\ndef\n\ng    h i .\n"
+gap&gt; RemoveCharacters(s, WHITESPACE);
+gap&gt; s;
+"abcdefghi."
+</pre>
+<p>
 For the possibility to print <font face="Gill Sans,Helvetica,Arial">GAP</font> objects to strings, see&nbsp;<a href="CHAP010.htm#SECT007">String Streams</a>.
 <p>
-<a name = "SSEC005.10"></a>
+<a name = "SSEC005.11"></a>
 <li><code>JoinStringsWithSeparator( </code><var>list</var><code>[, </code><var>sep</var><code>] ) F</code>
 <p>
 joins <var>list</var> (a list of strings) after interpolating <var>sep</var> (or  <code>","</code>  if
@@ -612,7 +647,7 @@ gap&gt; Print("    ", last, "\n");
 <p>
 Recall, <code>last</code> is the last expression output by <font face="Gill Sans,Helvetica,Arial">GAP</font>.
 <p>
-<a name = "SSEC005.11"></a>
+<a name = "SSEC005.12"></a>
 <li><code>Chomp( </code><var>str</var><code> ) F</code>
 <p>
 Like the similarly  named  Perl  function,  <code>Chomp</code>  removes  a  trailing
@@ -905,5 +940,5 @@ gap&gt; DMYhmsSeconds(-1000000000);
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP025.htm">Previous</a>] [<a href ="CHAP027.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

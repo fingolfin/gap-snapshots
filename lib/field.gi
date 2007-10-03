@@ -2,7 +2,7 @@
 ##
 #W  field.gi                    GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: field.gi,v 4.65 2003/04/11 18:05:30 gap Exp $
+#H  @(#)$Id: field.gi,v 4.65.2.1 2007/07/02 13:00:30 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains generic methods for division rings.
 ##
 Revision.field_gi :=
-    "@(#)$Id: field.gi,v 4.65 2003/04/11 18:05:30 gap Exp $";
+    "@(#)$Id: field.gi,v 4.65.2.1 2007/07/02 13:00:30 stefan Exp $";
 
 
 #############################################################################
@@ -483,29 +483,6 @@ InstallMethod( Representative,
     "for a division ring with known generators",
     [ IsDivisionRing and HasGeneratorsOfDivisionRing ],
     RepresentativeFromGenerators( GeneratorsOfDivisionRing ) );
-
-
-#############################################################################
-##
-#M  GeneratorsOfRing( <F> ) . . . . . . .  ring generators of a division ring
-##
-InstallMethod( GeneratorsOfRing,
-    "for a division ring with known generators",
-    [ IsDivisionRing and HasGeneratorsOfDivisionRing ],
-    F -> Concatenation( GeneratorsOfDivisionRing( F ),
-                        [ One( F ) ],
-                        List( GeneratorsOfDivisionRing( F ), Inverse ) ) );
-
-
-#############################################################################
-##
-#M  GeneratorsOfRingWithOne( <F> )  . . . . . . . . . . . for a division ring
-##
-InstallMethod( GeneratorsOfRingWithOne,
-    "for a division ring with known generators",
-    [ IsDivisionRing and HasGeneratorsOfDivisionRing ],
-    F -> Concatenation( GeneratorsOfDivisionRing( F ),
-                        List( GeneratorsOfDivisionRing( F ), Inverse ) ) );
 
 
 #############################################################################

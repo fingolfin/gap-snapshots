@@ -3,7 +3,7 @@
 #W  ffe.gi                      GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: ffe.gi,v 4.67.2.2 2006/02/22 12:26:39 sal Exp $
+#H  @(#)$Id: ffe.gi,v 4.67.2.4 2007/03/19 10:33:22 sal Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 ##  in the file `zmodnz.gi'.
 ##
 Revision.ffe_gi :=
-    "@(#)$Id: ffe.gi,v 4.67.2.2 2006/02/22 12:26:39 sal Exp $";
+    "@(#)$Id: ffe.gi,v 4.67.2.4 2007/03/19 10:33:22 sal Exp $";
 
 
 #############################################################################
@@ -195,7 +195,9 @@ InstallGlobalFunction( FFEFamily, function( p )
 
       else
 
-        F:= NewFamily( "FFEFamily", IsFFE );
+        F:= NewFamily( "FFEFamily", IsFFE, 
+                       CanEasilySortElements,
+                       CanEasilySortElements  );
         SetCharacteristic( F, p );
 
         # Store the type for the representation of prime field elements
@@ -332,6 +334,8 @@ InstallGlobalFunction( GaloisField, function ( arg )
     local F,         # the field, result
           p,         # characteristic
           d,         # degree over the prime field
+          d1,        # degree of subfield over prime field
+          q,         # size of field to be constructed
           subfield,  # left acting domain of the field under construction
           B;         # basis of the extension
 
@@ -412,13 +416,18 @@ InstallGlobalFunction( GaloisField, function ( arg )
 
       subfield:= p;
       p:= Characteristic( subfield );
-
+      
+      d1 := DegreeOverPrimeField(subfield);
       # if the degree of the extension is given
       if   IsInt( d )  then
-
-        if MAXSIZE_GF_INTERNAL < p^d then
-          return LargeGaloisField( p, d );
-        fi;
+          q := p^(d*d1);
+          if MAXSIZE_GF_INTERNAL < q then
+              if d1 = 1 then
+                  return LargeGaloisField( p, d );
+              else
+                  return FieldByGenerators(subfield, [Z(p,d*d1)]);
+              fi;
+          fi;
 
         d:= d * DegreeOverPrimeField( subfield );
 

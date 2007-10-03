@@ -2,7 +2,7 @@
 ##
 #W  semigrp.gd                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: semigrp.gd,v 4.36 2002/10/14 11:55:23 gap Exp $
+#H  @(#)$Id: semigrp.gd,v 4.36.2.1 2007/08/28 10:56:05 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the declaration of operations for semigroups.
 ##
 Revision.semigrp_gd :=
-    "@(#)$Id: semigrp.gd,v 4.36 2002/10/14 11:55:23 gap Exp $";
+    "@(#)$Id: semigrp.gd,v 4.36.2.1 2007/08/28 10:56:05 gap Exp $";
 
 
 #############################################################################
@@ -244,6 +244,22 @@ DeclareOperation("IsRegularSemigroupElement", [IsSemigroup,
 ##  returns `true' if <S> is regular---i.e. if every D class of <S> is regular.
 ##
 DeclareProperty("IsRegularSemigroup", IsSemigroup);
+
+#############################################################################
+##
+#M  IsInverseSemigroup( <S> );
+##  <#GAPDoc Label="IsInverseSemigroup">
+##  <ManSection>
+##  <Prop Name="IsInverseSemigroup" Arg='S'/>
+##
+##  <Description>
+##  returns <K>true</K> if <A>S</A> is an inverse semigroup---i.e. if every element of <A>S</A> has a unique (semigroup) inverse.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+
+DeclareProperty("IsInverseSemigroup", IsSemigroup);
 
 #############################################################################
 ##

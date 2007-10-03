@@ -2,7 +2,7 @@
 **
 *W  precord.c                   GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: precord.c,v 4.38 2002/04/15 10:03:55 sal Exp $
+*H  @(#)$Id: precord.c,v 4.38.6.1 2007/04/18 22:41:53 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_precord_c =
-   "@(#)$Id: precord.c,v 4.38 2002/04/15 10:03:55 sal Exp $";
+   "@(#)$Id: precord.c,v 4.38.6.1 2007/04/18 22:41:53 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -574,13 +574,14 @@ Obj FuncPRINT_PREC_DEFAULT (
     Obj                 self,
     Obj                 rec )
 {
+    Int ind;
     /* print the record                                                    */
     Pr( "%2>rec(\n%2>", 0L, 0L );
-    for ( PrintObjIndex=1; PrintObjIndex<=LEN_PREC(rec); PrintObjIndex++ ) {
-        Pr( "%I", (Int)NAME_RNAM(GET_RNAM_PREC(rec,PrintObjIndex)), 0L );
+    for ( ind=1; ind<=LEN_PREC(rec); ind++ ) {
+        Pr( "%I", (Int)NAME_RNAM(GET_RNAM_PREC(rec,ind)), 0L );
         Pr( "%< := %>", 0L, 0L );
-        PrintObj( GET_ELM_PREC( rec, PrintObjIndex ) );
-        if ( PrintObjIndex < LEN_PREC(rec) ) {
+        PrintObj( GET_ELM_PREC( rec, ind ) );
+        if ( ind < LEN_PREC(rec) ) {
             Pr( "%2<,\n%2>", 0L, 0L );
         }
     }

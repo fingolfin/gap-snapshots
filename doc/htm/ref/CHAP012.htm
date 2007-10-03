@@ -489,8 +489,23 @@ subobjects of <var>obj</var> recursively by <code>IsInternallyConsistent</code>.
 <p>
 (Note that <code>IsInternallyConsistent</code> is not an attribute.)
 <p>
+<a name = "SSEC008.4"></a>
+<li><code>MemoryUsage( </code><var>obj</var><code> ) O</code>
+<p>
+returns the amount of memory in bytes used by the object <var>obj</var> and its
+subobjects. Note that in general, objects can reference each other
+in very difficult ways such that determining the memory usage is
+a recursive procedure. In particular, computing the memory usage
+of a complicated structure itself uses some additional memory,
+which is however no longer used after completion of this operation.
+This procedure descents into lists and records, positional and
+component objects, however it does not take into account the type
+and family objects! For functions, it only takes the memory usage
+of the function body, not of the local context the function was
+created in, although the function keeps a reference to that as well!
+<p>
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP011.htm">Previous</a>] [<a href ="CHAP013.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

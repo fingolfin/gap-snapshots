@@ -1079,7 +1079,7 @@ which contains <var>U</var>.
 <p>
 <pre>
 gap&gt; NormalClosure(g,Subgroup(g,[(1,2,3)]));
-Group([ (1,2,3), (2,3,4) ])
+Group([ (1,2,3), (1,3,4) ])
 </pre>
 <p>
 <a name = "SSEC011.5"></a>
@@ -1154,7 +1154,7 @@ factor group <i>G</i>/<i>G</i>&#8242; is the largest abelian factor group of <i>
 <p>
 <pre>
 gap&gt; DerivedSubgroup(g);
-Group([ (1,3,2), (2,4,3) ])
+Group([ (1,3,2), (1,4,3) ])
 </pre>
 <p>
 <a name = "SSEC012.4"></a>
@@ -1224,7 +1224,7 @@ is the smallest normal subgroup of <var>G</var> that has a solvable factor group
 <p>
 <pre>
 gap&gt; PerfectResiduum(Group((1,2,3,4,5),(1,2)));
-Group([ (1,3,2), (2,4,3), (3,5,4) ])
+Group([ (1,3,2), (1,4,3), (1,5,4) ])
 </pre>
 <p>
 <a name = "SSEC012.9"></a>
@@ -1259,7 +1259,7 @@ supersolvable.
 <p>
 <pre>
 gap&gt; SupersolvableResiduum(g);
-Group([ (1,3)(2,4), (1,4)(2,3) ])
+Group([ (1,2)(3,4), (1,4)(2,3) ])
 </pre>
 <p>
 <a name = "SSEC012.12"></a>
@@ -2151,7 +2151,7 @@ that are minimal among the nontrivial normal subgroups.
 <p>
 <pre>
 gap&gt; MinimalNormalSubgroups( g );
-[ Group([ (1,2)(3,4), (1,3)(2,4) ]) ]
+[ Group([ (1,4)(2,3), (1,3)(2,4) ]) ]
 </pre>
 <p>
 <p>
@@ -2895,5 +2895,5 @@ This property can be used for example to check whether a
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP036.htm">Previous</a>] [<a href ="CHAP038.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>

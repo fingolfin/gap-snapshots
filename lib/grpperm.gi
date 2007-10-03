@@ -2,14 +2,14 @@
 ##
 #W  grpperm.gi                  GAP library                   Heiko Thei"sen
 ##
-#H  @(#)$Id: grpperm.gi,v 4.155.2.5 2005/08/25 12:43:49 gap Exp $
+#H  @(#)$Id: grpperm.gi,v 4.155.2.6 2007/03/27 03:36:31 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.grpperm_gi :=
-    "@(#)$Id: grpperm.gi,v 4.155.2.5 2005/08/25 12:43:49 gap Exp $";
+    "@(#)$Id: grpperm.gi,v 4.155.2.6 2007/03/27 03:36:31 gap Exp $";
 
 
 #############################################################################
@@ -1210,32 +1210,35 @@ local pcgs;
   return pcgs;
 end);
 
-#############################################################################
-##
-#M  DerivedSeriesOfGroup( <G> ) . . . . . . . . . . . . . . .  derived series
-##
-InstallMethod( DerivedSeriesOfGroup,"for permgrp", true, [ IsPermGroup ], 0,
-    function( G )
-    local  pcgs,  series;
-
-    if   (not DefaultStabChainOptions.tryPcgs
-       or ( HasIsSolvableGroup( G )  and  not IsSolvableGroup( G ) ))
-       and not (HasIsSolvableGroup(G) and IsSolvableGroup(G)) then
-        TryNextMethod();
-    fi;
-    
-    pcgs := TryPcgsPermGroup( G, false, true, false );
-    if not IsPcgs( pcgs )  then
-        TryNextMethod();
-    fi;
-    SetIndicesEANormalSteps(pcgs,pcgs!.permpcgsNormalSteps);
-    series := EANormalSeriesByPcgs( pcgs );
-    if not HasDerivedSubgroup( G )  then
-        if Length( series ) > 1  then  SetDerivedSubgroup( G, series[ 2 ] );
-                                 else  SetDerivedSubgroup( G, G );  fi;
-    fi;
-    return series;
-end );
+#T AH, 3/26/07: This method triggers a bug with indices. It is not clear
+#T form the description why TryPcgs... should also give a drived series. Thus
+#T disabled.
+# #############################################################################
+# ##
+# #M  DerivedSeriesOfGroup( <G> ) . . . . . . . . . . . . . . .  derived series
+# ##
+# InstallMethod( DerivedSeriesOfGroup,"for permgrp", true, [ IsPermGroup ], 0,
+#     function( G )
+#     local  pcgs,  series;
+# 
+#     if   (not DefaultStabChainOptions.tryPcgs
+#        or ( HasIsSolvableGroup( G )  and  not IsSolvableGroup( G ) ))
+#        and not (HasIsSolvableGroup(G) and IsSolvableGroup(G)) then
+#         TryNextMethod();
+#     fi;
+#     
+#     pcgs := TryPcgsPermGroup( G, false, true, false );
+#     if not IsPcgs( pcgs )  then
+#         TryNextMethod();
+#     fi;
+#     SetIndicesEANormalSteps(pcgs,pcgs!.permpcgsNormalSteps);
+#     series := EANormalSeriesByPcgs( pcgs );
+#     if not HasDerivedSubgroup( G )  then
+#         if Length( series ) > 1  then  SetDerivedSubgroup( G, series[ 2 ] );
+#                                  else  SetDerivedSubgroup( G, G );  fi;
+#     fi;
+#     return series;
+# end );
 
 #############################################################################
 ##

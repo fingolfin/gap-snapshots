@@ -2,7 +2,7 @@
 ##
 #W  basis.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: basis.gi,v 4.67 2003/05/15 15:18:03 gap Exp $
+#H  @(#)$Id: basis.gi,v 4.67.2.1 2007/08/30 08:17:03 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,40 @@
 ##  This file contains generic methods for bases.
 ##
 Revision.basis_gi :=
-    "@(#)$Id: basis.gi,v 4.67 2003/05/15 15:18:03 gap Exp $";
+    "@(#)$Id: basis.gi,v 4.67.2.1 2007/08/30 08:17:03 gap Exp $";
+
+
+#############################################################################
+##
+#M  IsSmallList( <B> )  . . . . . . . . . . . . . . . . . . . . for any basis
+##
+#T  preliminary fix:
+#T  Set `IsSmallList' whenever a `BasisVectors' value is entered that knows
+#T  whether it is in `IsSmallList', and whenever a `UnderlyingLeftModule' is
+#T  entered that knows its dimension.
+#T  (This is not sufficient, since immediate methods may be switched off,
+#T  but I do not like the idea to add this kind of code in each method that
+#T  creates a basis object.)
+##
+InstallImmediateMethod( IsSmallList,
+    IsBasis and HasBasisVectors and IsAttributeStoringRep, 0,
+    function( B )
+    B:= BasisVectors( B );
+    if HasIsSmallList( B ) then
+      return IsSmallList( B );
+    fi;
+    TryNextMethod();
+    end );
+
+InstallImmediateMethod( IsSmallList,
+    IsBasis and HasUnderlyingLeftModule and IsAttributeStoringRep, 0,
+    function( B )
+    B:= UnderlyingLeftModule( B );
+    if HasDimension( B ) then
+      return Dimension( B ) <= MAX_SIZE_LIST_INTERNAL;
+    fi;
+    TryNextMethod();
+    end );
 
 
 #############################################################################

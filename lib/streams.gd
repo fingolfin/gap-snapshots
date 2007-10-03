@@ -2,7 +2,7 @@
 ##
 #W  streams.gd                  GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: streams.gd,v 4.32.4.3 2006/03/03 11:57:56 gap Exp $
+#H  @(#)$Id: streams.gd,v 4.32.4.4 2007/09/06 13:50:05 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the operations for streams.
 ##
 Revision.streams_gd :=
-    "@(#)$Id: streams.gd,v 4.32.4.3 2006/03/03 11:57:56 gap Exp $";
+    "@(#)$Id: streams.gd,v 4.32.4.4 2007/09/06 13:50:05 stefan Exp $";
 
 #1
 ##  *Streams* provide flexible access to {\GAP}'s input and output
@@ -38,8 +38,6 @@ Revision.streams_gd :=
 ##  which does not translate the `end-of-line' character. The processing of
 ##  other unprintable characters by text streams is undefined. Binary streams
 ##  pass them unchanged.
-## 
-##  Note that binary streams are *@not yet implemented@*.
 ## 
 ##  Whereas it is  cheap  to append  to a  stream, streams do  consume system
 ##  resources, and only a  limited number can  be open at any time, therefore

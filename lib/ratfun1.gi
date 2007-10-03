@@ -5,7 +5,7 @@
 #W                                                            Juergen Mueller
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun1.gi,v 4.17.2.1 2005/10/26 16:18:04 gap Exp $
+#H  @(#)$Id: ratfun1.gi,v 4.17.2.2 2007/07/24 17:07:02 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  and will benefit from compilation.
 ##
 Revision.ratfun1_gi :=
-    "@(#)$Id: ratfun1.gi,v 4.17.2.1 2005/10/26 16:18:04 gap Exp $";
+    "@(#)$Id: ratfun1.gi,v 4.17.2.2 2007/07/24 17:07:02 gap Exp $";
 
 # Functions to create objects 
 
@@ -549,20 +549,46 @@ ADDITIVE_INV_POLYNOMIAL:=function( obj )
 end;
 
 SMALLER_RATFUN:=function(left,right)
-local a,b,fam,i, j;
+local a,b,fam,i, j,ln,ld,rn,rd;
   if HasIsPolynomial(left) and IsPolynomial(left)
      and HasIsPolynomial(right) and IsPolynomial(right) then
     a:=ExtRepPolynomialRatFun(left);
     b:=ExtRepPolynomialRatFun(right);
   else
     fam:=FamilyObj(left);
-    a := ZippedProduct(ExtRepNumeratorRatFun(left),
-			ExtRepDenominatorRatFun(right),
-			fam!.zeroCoefficient,fam!.zippedProduct);
+    ln:=ExtRepNumeratorRatFun(left);
+    ld:=ExtRepDenominatorRatFun(left);
+    # avoid negative leading coefficients in the denominator
+    i:=Length(ld);
+    if ld[i]<0*ld[i] then
+      ld:=ShallowCopy(ld);
+      for i in [2,4..Length(ld)] do
+	ld[i]:=-ld[i];
+      od;
+      ln:=ShallowCopy(ln);
+      for i in [2,4..Length(ln)] do
+	ln[i]:=-ln[i];
+      od;
+    fi;
 
-    b := ZippedProduct(ExtRepNumeratorRatFun(right),
-			ExtRepDenominatorRatFun(left),
-			fam!.zeroCoefficient,fam!.zippedProduct);
+    rn:=ExtRepNumeratorRatFun(right);
+    rd:=ExtRepDenominatorRatFun(right);
+    # avoid negative leading coefficients in the denominator
+    i:=Length(rd);
+    if rd[i]<0*rd[i] then
+      rd:=ShallowCopy(rd);
+      for i in [2,4..Length(rd)] do
+	rd[i]:=-rd[i];
+      od;
+      rn:=ShallowCopy(rn);
+      for i in [2,4..Length(rn)] do
+	rn[i]:=-rn[i];
+      od;
+    fi;
+
+    a := ZippedProduct(ln,rd,fam!.zeroCoefficient,fam!.zippedProduct);
+
+    b := ZippedProduct(rn,ld,fam!.zeroCoefficient,fam!.zippedProduct);
   fi;
 
   i:=Length(a)-1;

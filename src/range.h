@@ -2,7 +2,7 @@
 **
 *W  range.h                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: range.h,v 4.9 2003/12/01 12:54:14 sal Exp $
+*H  @(#)$Id: range.h,v 4.9.2.1 2007/06/14 09:40:34 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -24,7 +24,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_range_h =
-   "@(#)$Id: range.h,v 4.9 2003/12/01 12:54:14 sal Exp $";
+   "@(#)$Id: range.h,v 4.9.2.1 2007/06/14 09:40:34 gap Exp $";
 #endif
 
 
@@ -151,8 +151,10 @@ const char * Revision_range_h =
 *F  PosRange(<list>,<val>,<start>)  . . . . position of an element in a range
 **
 **  'PosRange' returns the position  of the value <val>  in the range  <list>
-**  after the first position <start> as a C integer.   0 is returned if <val>
+**  after the first position <start> as a GAP integer. Fail is returned if <val>
 **  is not in the list.
+**
+**  'PosRange' is the function in 'PosListFuncs' for ranges.
 */
 extern  Obj             PosRange (
             Obj                 list,

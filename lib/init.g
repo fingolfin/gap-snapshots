@@ -4,7 +4,7 @@
 #W                                                             & Frank Celler
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.11 2006/11/02 13:33:08 sal Exp $
+#H  @(#)$Id: init.g,v 4.212.2.12 2007/09/05 11:08:13 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  This file initializes GAP.
 ##
 Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.11 2006/11/02 13:33:08 sal Exp $";
+    "@(#)$Id: init.g,v 4.212.2.12 2007/09/05 11:08:13 gap Exp $";
 
 #############################################################################
 ##
@@ -789,7 +789,11 @@ BANNER_ORIG:= BANNER;
 MakeReadWriteGlobal("BANNER");
 UnbindGlobal("BANNER");
 BANNER:= false;
+GAPInfo.InfoWarningLevel:= InfoLevel( InfoWarning );
+SetInfoLevel( InfoWarning, 0 );
   AutoloadPackages();
+SetInfoLevel( InfoWarning, GAPInfo.InfoWarningLevel );
+Unbind( GAPInfo.InfoWarningLevel );
 BANNER:= BANNER_ORIG;
 MakeReadOnlyGlobal("BANNER");
 Unbind( BANNER_ORIG );

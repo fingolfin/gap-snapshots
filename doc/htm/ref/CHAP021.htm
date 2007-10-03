@@ -860,6 +860,36 @@ logical length of the list. That would take too much time. In order to
 make <code>Length</code>, and other functions that need to know the logical length,
 more efficient, the length of a list is stored along with the list.
 <p>
+For fine tuning code dealing with plain lists we provide the following
+two functions.
+<p>
+<a name = "SSEC009.1"></a>
+<li><code>EmptyPlist( </code><var>len</var><code> ) F</code>
+<p>
+<a name = "SSEC009.2"></a>
+<li><code>ShrinkAllocationPlist( </code><var>l</var><code> ) F</code>
+<p>
+The function <code>EmptyPlist</code> returns an empty plain list which
+has enough memory allocated for <var>len</var> entries. This can be useful
+for creating and filling a plain list with a known number of entries.
+<p>
+The function <code>ShrinkAllocationPlist</code> gives back to <font face="Gill Sans,Helvetica,Arial">GAP</font>s
+memory manager the physical memory which is allocated for the plain list
+<var>l</var> but not needed by the current number of entries.
+<p>
+Note that there are similar functions <code>EmptyString</code> and
+<code>ShrinkAllocationString</code> for strings instead of plain lists.
+<p>
+<pre>
+gap&gt; l:=[]; for i in [1..160] do Add(l, i^2); od;
+[  ]
+gap&gt; m:=EmptyPlist(160); for i in [1..160] do Add(m, i^2); od;
+[  ]
+gap&gt; # now l uses about 25% more memory than the equal list m
+gap&gt; ShrinkAllocationPlist(l);
+gap&gt; # now l and m use the same amount of memory
+</pre>
+<p>
 <p>
 <h2><a name="SECT010">21.10 Comparisons of Lists</a></h2>
 <p><p>
@@ -2993,5 +3023,5 @@ see&nbsp;<a href="../prg/CHAP003.htm#SECT012">Example -- Constructing Enumerator
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP020.htm">Previous</a>] [<a href ="CHAP022.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>November 2006
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
 </font></body></html>
