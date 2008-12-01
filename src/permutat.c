@@ -3,7 +3,7 @@
 *W  permutat.c                  GAP source                   Martin Schoenert
 **                                                           & Alice Niemeyer
 **
-*H  @(#)$Id: permutat.c,v 4.47.2.7 2007/07/07 21:37:19 gap Exp $
+*H  @(#)$Id: permutat.c,v 4.47.2.8 2008/09/16 17:53:57 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -41,7 +41,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_permutat_c =
-   "@(#)$Id: permutat.c,v 4.47.2.7 2007/07/07 21:37:19 gap Exp $";
+   "@(#)$Id: permutat.c,v 4.47.2.8 2008/09/16 17:53:57 gap Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -2747,7 +2747,7 @@ Obj             FuncCyclePermInt (
 **
 **  `CycleStructPerm( <perm> )'
 **
-**  'CycleStructPerm' returns a list of teh form as described under
+**  'CycleStructPerm' returns a list of the form as described under
 **  `CycleStructure'.
 **  integer, under the permutation <perm> as a list.
 */
@@ -2845,7 +2845,7 @@ Obj             FuncCycleStructurePerm (
 	list=NEW_PLIST(T_PLIST,max-1);
 	SET_LEN_PLIST(list,max-1);
         ptList = ADDR_OBJ(list);
-	for (pnt=1;pnt<=max;pnt++) { ptList[pnt]=0; } /* clean out */
+	for (pnt=1;pnt<=max-1;pnt++) { ptList[pnt]=0; } /* clean out */
 
 	for (cnt=0; cnt<ende;cnt++) {
 	  pnt=(UInt)offset2[cnt];

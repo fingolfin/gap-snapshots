@@ -613,7 +613,7 @@ characters given in <var>chars</var> from <var>string</var>.
 <pre>
 gap&gt; s := "ab c\ndef\n\ng    h i .\n";
 "ab c\ndef\n\ng    h i .\n"
-gap&gt; RemoveCharacters(s, WHITESPACE);
+gap&gt; RemoveCharacters(s, " \n\t\r"); # remove all whitespace characters
 gap&gt; s;
 "abcdefghi."
 </pre>
@@ -940,5 +940,5 @@ gap&gt; DMYhmsSeconds(-1000000000);
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP025.htm">Previous</a>] [<a href ="CHAP027.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

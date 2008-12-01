@@ -2,7 +2,7 @@
 ##  
 #W  helpdef.gi                  GAP Library       Frank Celler / Frank Lübeck
 ##  
-#H  @(#)$Id: helpdef.gi,v 1.8.2.1 2004/04/23 15:28:18 gap Exp $
+#H  @(#)$Id: helpdef.gi,v 1.8.2.2 2008/06/24 09:12:20 gap Exp $
 ##  
 #Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  viewer is outsourced into `helpt2t.g{d,i}'.
 ##  
 Revision.helpdef_gi := 
-  "@(#)$Id: helpdef.gi,v 1.8.2.1 2004/04/23 15:28:18 gap Exp $";
+  "@(#)$Id: helpdef.gi,v 1.8.2.2 2008/06/24 09:12:20 gap Exp $";
   
 ################ ???????????????????????????? ###############################
 
@@ -213,6 +213,8 @@ HELP_BOOK_HANDLER.default.ReadSix := function(stream)
         fi;
       else
         Print( "#W  corrupted 'manual.six': ", line );
+        Print( "#W (in stream: ", stream, ")\n");
+        break;
       fi;
     fi;
   until IsEndOfStream(stream);

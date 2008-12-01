@@ -2,7 +2,7 @@
 ##
 #W  global.gi                   GAP library                      Steve Linton
 ##
-#H  @(#)$Id: global.gi,v 4.13 2002/04/15 10:04:42 sal Exp $
+#H  @(#)$Id: global.gi,v 4.13.4.1 2008/10/15 14:20:28 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -32,7 +32,7 @@
 ##
 
 Revision.global_gi :=
-    "@(#)$Id: global.gi,v 4.13 2002/04/15 10:04:42 sal Exp $";
+    "@(#)$Id: global.gi,v 4.13.4.1 2008/10/15 14:20:28 gap Exp $";
 
 #############################################################################
 ##
@@ -204,7 +204,7 @@ InstallGlobalFunction( MakeReadWriteGlobal,
     CheckGlobalName( name );
     if not IS_READ_ONLY_GLOBAL( name ) then
         Info( InfoWarning + InfoGlobal, 1, 
-              "MakeReadWriteGlobal: ", name, "already read-write");
+              "MakeReadWriteGlobal: ", name, " already read-write");
     fi;
     Info( InfoGlobal, 2, "MakeReadWriteGlobal: called for ", name);
     MAKE_READ_WRITE_GLOBAL( name );

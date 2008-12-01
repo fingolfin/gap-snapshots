@@ -4,7 +4,7 @@
 %%
 %A  ctblfuns.msk                GAP documentation               Thomas Breuer
 %%
-%A  @(#)$Id: ctblfuns.msk,v 1.28.2.4 2007/08/29 11:29:45 gap Exp $
+%A  @(#)$Id: ctblfuns.msk,v 1.28.2.5 2008/08/13 08:12:28 gap Exp $
 %%
 %Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
 %Y  Copyright (C) 2002 The GAP Group
@@ -1227,6 +1227,31 @@ gap> InducedClassFunctions( Irr( a5 ), s5 );
   Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ), 
   Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ), 
   Character( CharacterTable( "A5.2" ), [ 8, 0, 2, -2, 0, 0, 0 ] ), 
+  Character( CharacterTable( "A5.2" ), [ 10, 2, -2, 0, 0, 0, 0 ] ) ]
+\endexample
+
+\>InducedClassFunctionsByFusionMap( <subtbl>, <tbl>, <chars>, <fusionmap> ) F
+
+Let <subtbl> and <tbl> be two character tables of groups
+$H$ and $G$, such that $H$ is a subgroup of $G$,
+let <chars> be a list of class functions of <subtbl>, and
+let <fusionmap> be a fusion map from <subtbl> to <tbl>.
+The function returns the list of induced class functions of <tbl>
+that correspond to <chars>, w.r.t. the given fusion map.
+
+`InducedClassFunctionsByFusionMap' is the function that does
+the work for `InducedClassFunction' and `InducedClassFunctions',
+see "InducedClassFunction" and "InducedClassFunctions".
+
+
+\beginexample
+gap> fus:= PossibleClassFusions( a5, s5 );
+[ [ 1, 2, 3, 4, 4 ] ]
+gap> InducedClassFunctionsByFusionMap( a5, s5, Irr( a5 ), fus[1] );
+[ Character( CharacterTable( "A5.2" ), [ 2, 2, 2, 2, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 8, 0, 2, -2, 0, 0, 0 ] ),
   Character( CharacterTable( "A5.2" ), [ 10, 2, -2, 0, 0, 0, 0 ] ) ]
 \endexample
 

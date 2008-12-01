@@ -2,14 +2,14 @@
 ##
 #W  oprtpcgs.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: oprtpcgs.gi,v 4.47 2002/04/15 10:05:06 sal Exp $
+#H  @(#)$Id: oprtpcgs.gi,v 4.47.4.1 2008/08/29 16:08:14 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.oprtpcgs_gi :=
-    "@(#)$Id: oprtpcgs.gi,v 4.47 2002/04/15 10:05:06 sal Exp $";
+    "@(#)$Id: oprtpcgs.gi,v 4.47.4.1 2008/08/29 16:08:14 gap Exp $";
 
 InstallGlobalFunction(Pcs_OrbitStabilizer,function(pcgs,D,pnt,acts,act)
 local   orb,             # orbit
@@ -422,21 +422,21 @@ function( G, pt, U, V, act )
   return DoPcgsOrbitOp(G,false,pt,U,V,act);
 end);
 
-#############################################################################
-##
-#M  RepresentativeActionOp( <G>, <D>, <d>, <e>, <pcgs>, <acts>, <act> )  .
-##
-InstallOtherMethod( RepresentativeActionOp, true,
-        [ IsGroup, IsList, IsObject, IsObject, IsPrimeOrdersPcgs,
-          IsList, IsFunction ], 0,
-    function( G, D, d, e, pcgs, acts, act )
-    local   dset,  eset;
-    
-    dset := ExternalOrbit( G, D, d, pcgs, acts, act );
-    eset := ExternalOrbit( G, D, e, pcgs, acts, act );
-    return ActorOfExternalSet( dset ) /
-           ActorOfExternalSet( eset );
-end );
+# #############################################################################
+# ##
+# #M  RepresentativeActionOp( <G>, <D>, <d>, <e>, <pcgs>, <acts>, <act> )  .
+# ##
+# InstallOtherMethod( RepresentativeActionOp, true,
+#         [ IsGroup, IsList, IsObject, IsObject, IsPrimeOrdersPcgs,
+#           IsList, IsFunction ], 0,
+#     function( G, D, d, e, pcgs, acts, act )
+#     local   dset,  eset;
+#     
+#     dset := ExternalOrbit( G, D, d, pcgs, acts, act );
+#     eset := ExternalOrbit( G, D, e, pcgs, acts, act );
+#     return ActorOfExternalSet( dset ) /
+#            ActorOfExternalSet( eset );
+# end );
 
 #############################################################################
 ##

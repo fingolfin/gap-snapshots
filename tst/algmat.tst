@@ -2,14 +2,14 @@
 ##
 #W  algmat.tst                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: algmat.tst,v 4.23.2.4 2005/08/29 14:50:35 gap Exp $
+#H  @(#)$Id: algmat.tst,v 4.23.2.5 2008/09/26 06:14:19 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  To be listed in testall.g
 ##
 
-gap> START_TEST("$Id: algmat.tst,v 4.23.2.4 2005/08/29 14:50:35 gap Exp $");
+gap> START_TEST("$Id: algmat.tst,v 4.23.2.5 2008/09/26 06:14:19 gap Exp $");
 
 #############################################################################
 
@@ -206,9 +206,9 @@ gap> fullcen:= FullMatrixAlgebraCentralizer( CF(5),
 gap> Dimension( fullcen );
 2
 
-gap> fullcen:= FullMatrixAlgebraCentralizer( GF(9),
+gap> fullcen:= FullMatrixAlgebraCentralizer( GF(3^6),
 >                  GeneratorsOfAlgebra( a ) );
-<algebra-with-one of dimension 1 over GF(3^2)>
+<algebra-with-one of dimension 1 over GF(3^6)>
 gap> Dimension( fullcen );
 1
 

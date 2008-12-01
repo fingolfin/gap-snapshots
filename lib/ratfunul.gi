@@ -4,7 +4,7 @@
 #W                                                             Andrew Solomon
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfunul.gi,v 4.81.2.8 2006/09/13 08:48:37 sal Exp $
+#H  @(#)$Id: ratfunul.gi,v 4.81.2.10 2008/11/23 10:32:54 alexk Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -14,7 +14,7 @@
 ##  are univariate.
 ##
 Revision.ratfunul_gi :=
-    "@(#)$Id: ratfunul.gi,v 4.81.2.8 2006/09/13 08:48:37 sal Exp $";
+    "@(#)$Id: ratfunul.gi,v 4.81.2.10 2008/11/23 10:32:54 alexk Exp $";
 
 #############################################################################
 ##
@@ -54,7 +54,9 @@ InstallMethod( LaurentPolynomialByCoefficients,
     [ IsFamily and HasCoefficientsFamily, IsList, IsInt, IsInt ], 0,
 function( fam, cofs, val, ind )
   # catch algebraic extensions
-  if ITER_POLY_WARN=true and not IsBound(fam!.primitiveElm) then
+  if ITER_POLY_WARN=true and not IsBound(fam!.primitiveElm) 
+    # also sc rings are fine.
+    and not IsBound(fam!.moduli) then
     Info(InfoWarning,1,
       "You are creating a polynomial *over* a polynomial ring (i.e. in an");
     Info(InfoWarning,1,
@@ -1100,6 +1102,12 @@ local str,zero,one,mone,i,c,lc,s;
     return String(zero);
   fi;
   lc:=Length(cofs);
+  if cofs[lc] = zero then
+    # assume that there is at least one non-zero coefficient
+    repeat 
+      lc:=lc-1;
+    until cofs[lc]<>zero;  
+  fi;  
   for i  in [ lc,lc-1..1 ]  do
     if cofs[i] <> zero  then
 

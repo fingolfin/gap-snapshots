@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gd,v 4.54.2.5 2007/08/29 11:29:44 gap Exp $
+#H  @(#)$Id: ctblfuns.gd,v 4.54.2.6 2008/08/13 08:12:28 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gd :=
-    "@(#)$Id: ctblfuns.gd,v 4.54.2.5 2007/08/29 11:29:44 gap Exp $";
+    "@(#)$Id: ctblfuns.gd,v 4.54.2.6 2008/08/13 08:12:28 gap Exp $";
 
 
 #############################################################################
@@ -1264,6 +1264,24 @@ DeclareOperation( "InducedClassFunctions",
     [ IsList, IsNearlyCharacterTable ] );
 DeclareOperation( "InducedClassFunctions",
     [ IsNearlyCharacterTable, IsList, IsNearlyCharacterTable ] );
+
+
+#############################################################################
+##
+#F  InducedClassFunctionsByFusionMap( <subtbl>, <tbl>, <chars>, <fusionmap> )
+##
+##  Let <subtbl> and <tbl> be two character tables of groups
+##  $H$ and $G$, such that $H$ is a subgroup of $G$,
+##  let <chars> be a list of class functions of <subtbl>, and
+##  let <fusionmap> be a fusion map from <subtbl> to <tbl>.
+##  The function returns the list of induced class functions of <tbl>
+##  that correspond to <chars>, w.r.t. the given fusion map.
+##  
+##  `InducedClassFunctionsByFusionMap' is the function that does
+##  the work for `InducedClassFunction' and `InducedClassFunctions',
+##  see "InducedClassFunction" and "InducedClassFunctions".
+##
+DeclareGlobalFunction( "InducedClassFunctionsByFusionMap" );
 
 
 #############################################################################

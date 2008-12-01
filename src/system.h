@@ -9,7 +9,7 @@
 *W                                                  & Burkhard Hoefling (MAC)
 *W                                                    & Steve Linton (MS/DOS)
 **
-*H  @(#)$Id: system.h,v 4.60.2.3 2007/08/20 22:47:33 gap Exp $
+*H  @(#)$Id: system.h,v 4.60.2.4 2007/10/07 21:53:21 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -58,7 +58,11 @@
 #if defined(SYS_IS_DARWIN) && SYS_IS_DARWIN
 # define SYS_INIT_DYNAMIC       "Init__Dynamic"
 #else
+#if defined(SYS_IS_CYGWIN32) && SYS_IS_CYGWIN32
+# define SYS_INIT_DYNAMIC       "Init__Dynamic"
+#else
 # define SYS_INIT_DYNAMIC       "_Init__Dynamic"
+#endif
 #endif
 #else
 # define SYS_INIT_DYNAMIC       "Init__Dynamic"
@@ -231,7 +235,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_system_h =
-   "@(#)$Id: system.h,v 4.60.2.3 2007/08/20 22:47:33 gap Exp $";
+   "@(#)$Id: system.h,v 4.60.2.4 2007/10/07 21:53:21 gap Exp $";
 #endif
 extern const char * Revision_system_c;  /* gap.c uses this */
 extern const char * Revision_system_h;

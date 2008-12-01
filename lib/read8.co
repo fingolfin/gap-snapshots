@@ -1,14 +1,14 @@
 #I  file="lib/read8.g"
 
 #F  file="lib/overload.g" crc=-100213183
-RANK_FILTER_LIST  := [ 63580652, 7, 52428456, 31, 67108010, 13, 57526177, 36, 
-  29419057, 21, 58412696, 30, 52428456, 31, 52428456, 31, 7665940, 19, 
-  52428456, 31, 64918210, 8, 52428456, 31, 29419057, 21, 58412696, 30, 
-  7665940, 19, 40060802, 3, 57526177, 36, 29419057, 21, 40060802, 3, 
-  57526177, 36, 29419057, 21, 40060802, 3, 57526177, 36, 29419057, 21, 
-  40060802, 3, 29419057, 21, 40060802, 3, 29419057, 21, 40060802, 3, 
-  29419057, 21, 40060802, 3, 63580652, 7, 52428456, 31, 57526177, 36, 
-  29419057, 21, 58412696, 30, 29419057, 21, 57526177, 36, 29419057, 21 ];
+RANK_FILTER_LIST  := [ 63580652, 7, 8388144, 31, 67108010, 13, 57526177, 36, 
+  29419057, 21, 58412696, 30, 8388144, 31, 8388144, 31, 7665940, 19, 8388144, 
+  31, 64918210, 8, 8388144, 31, 29419057, 21, 58412696, 30, 7665940, 19, 
+  52784293, 3, 57526177, 36, 29419057, 21, 52784293, 3, 57526177, 36, 
+  29419057, 21, 52784293, 3, 57526177, 36, 29419057, 21, 52784293, 3, 
+  29419057, 21, 52784293, 3, 29419057, 21, 52784293, 3, 29419057, 21, 
+  52784293, 3, 63580652, 7, 8388144, 31, 57526177, 36, 29419057, 21, 
+  58412696, 30, 29419057, 21, 57526177, 36, 29419057, 21 ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
@@ -118,4 +118,32 @@ Unbind(RANK_FILTER_LIST);
 Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/compiler.g"
+
+#F  file="lib/teachm2.g" crc=-26173380
+RANK_FILTER_LIST  := [  ];
+RANK_FILTER_COUNT := 1;
+
+#C  load module, file, or complete
+COM_RESULT := COM_FILE( "lib/teachm2.g", -26173380 );
+if COM_RESULT = fail  then
+Error("cannot locate file \"lib/teachm2.g\"");
+elif COM_RESULT = 1  then
+;
+elif COM_RESULT = 2  then
+;
+elif COM_RESULT = 4  then
+READ_CHANGED_GAP_ROOT("lib/teachm2.g");
+elif COM_RESULT = 3  then
+Revision.teachm2_g:="@(#)$Id: teachm2.g,v 4.1.2.2 2008/10/14 20:57:58 gap Exp $";
+TEACHMODE:=fail;
+BindGlobal("TeachingMode",COM_FUN(1));
+else
+Error("unknown result code ", COM_RESULT );
+fi;
+
+#U  unbind temporary variables
+Unbind(RANK_FILTER_LIST);
+Unbind(RANK_FILTER_COUNT);
+Unbind(COM_RESULT);
+#E  file="lib/teachm2.g"
 

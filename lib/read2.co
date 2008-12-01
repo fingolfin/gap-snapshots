@@ -74,7 +74,7 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/files.gi"
 
-#F  file="lib/streams.gi" crc=-94558304
+#F  file="lib/streams.gi" crc=3052197
 RANK_FILTER_LIST  := [ 18146737, 2, 18146613, 2, 9072765, 1, 36293937, 2, 
   36293937, 2, 17, 18, 36293937, 2, 41156099, 4, 1025, 1, 5, 1, 41156099, 4, 
   1025, 1, 41156099, 4, 5, 1, 41156099, 4, 36293937, 2, 1025, 1, 5, 1, 
@@ -98,7 +98,7 @@ RANK_FILTER_LIST  := [ 18146737, 2, 18146613, 2, 9072765, 1, 36293937, 2,
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/streams.gi", -94558304 );
+COM_RESULT := COM_FILE( "lib/streams.gi", 3052197 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/streams.gi\"");
 elif COM_RESULT = 1  then
@@ -108,7 +108,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/streams.gi");
 elif COM_RESULT = 3  then
-Revision.streams_gi:="@(#)$Id: streams.gi,v 4.43.4.2 2006/03/03 11:57:56 gap Exp $";
+Revision.streams_gi:="@(#)$Id: streams.gi,v 4.43.4.3 2008/10/29 21:08:37 alexk Exp $";
 ClosedStreamType:=NewType(StreamsFamily,IsClosedStream);
 InstallMethod(CloseStream,"non-process streams",[IsStream and IsComponentObjectRep],COM_FUN(1));
 InstallMethod(CloseStream,"non-process streams",[IsStream and IsPositionalObjectRep],COM_FUN(2));
@@ -353,12 +353,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/combinat.gd"
 
-#F  file="lib/combinat.gi" crc=119544282
+#F  file="lib/combinat.gi" crc=78326528
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/combinat.gi", 119544282 );
+COM_RESULT := COM_FILE( "lib/combinat.gi", 78326528 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/combinat.gi\"");
 elif COM_RESULT = 1  then
@@ -368,7 +368,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/combinat.gi");
 elif COM_RESULT = 3  then
-Revision.combinat_gi:="@(#)$Id: combinat.gi,v 4.19.2.1 2004/05/05 14:57:20 gap Exp $";
+Revision.combinat_gi:="@(#)$Id: combinat.gi,v 4.19.2.2 2008/06/05 14:24:33 gap Exp $";
 InstallGlobalFunction(Factorial,COM_FUN(1));
 InstallGlobalFunction(Binomial,COM_FUN(2));
 InstallGlobalFunction(Bell,COM_FUN(3));

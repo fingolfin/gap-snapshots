@@ -3,7 +3,7 @@
 #W  grpfree.gi                  GAP library                     Thomas Breuer
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: grpfree.gi,v 4.51 2003/04/16 07:47:56 gap Exp $
+#H  @(#)$Id: grpfree.gi,v 4.51.2.1 2008/11/25 09:35:27 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  equalitity test.
 ##
 Revision.grpfree_gi :=
-    "@(#)$Id: grpfree.gi,v 4.51 2003/04/16 07:47:56 gap Exp $";
+    "@(#)$Id: grpfree.gi,v 4.51.2.1 2008/11/25 09:35:27 gap Exp $";
 
 
 #############################################################################
@@ -366,6 +366,15 @@ InstallMethod( MagmaGeneratorsOfFamily,
     return gens;
     end );
 
+# the following method returns a lex-minimal generating set for a free group
+# it relies on the (unguaranteed) ordering of free group elements, that
+# inverses of generators come before the generators, and generators of low
+# number come before those of higher number.
+    
+InstallMethod( GeneratorsSmallest,
+        "for a free group",
+        [ IsFreeGroup ],
+        x->List(GeneratorsOfGroup(x),Inverse));
 
 #############################################################################
 ##

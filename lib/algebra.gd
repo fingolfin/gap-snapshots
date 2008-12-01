@@ -2,7 +2,7 @@
 ##
 #W  algebra.gd                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: algebra.gd,v 4.76.2.3 2007/08/29 15:35:21 gap Exp $
+#H  @(#)$Id: algebra.gd,v 4.76.2.4 2008/02/13 17:06:30 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for `FLMLOR's and algebras.
 ##
 Revision.algebra_gd :=
-    "@(#)$Id: algebra.gd,v 4.76.2.3 2007/08/29 15:35:21 gap Exp $";
+    "@(#)$Id: algebra.gd,v 4.76.2.4 2008/02/13 17:06:30 gap Exp $";
 
 
 #1 
@@ -277,8 +277,11 @@ DeclareOperation( "DirectSumOfAlgebras", [ IsDenseList ] );
 ##
 #F  FullMatrixAlgebraCentralizer( <F>, <lst> )
 ##
-##  Compute the centralizer of the list of matrices in the list <lst> in the 
-##  full matrix algebra over the ring <F>. 
+##  Let <lst>  be a nonempty list of square matrices of the same
+##  dimension $n$, say, with entries in the field <F>.
+##  `FullMatrixAlgebraCentralizer' returns
+##  the centralizer of all matrices in <lst>, inside
+##  the full matrix algebra of $n \times n$ matrices over <F>.
 ##
 DeclareGlobalFunction( "FullMatrixAlgebraCentralizer" );
 

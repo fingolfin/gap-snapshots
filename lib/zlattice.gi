@@ -2,7 +2,7 @@
 ##
 #W  zlattice.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zlattice.gi,v 4.16.4.1 2006/04/18 09:07:27 gap Exp $
+#H  @(#)$Id: zlattice.gi,v 4.16.4.2 2008/09/23 15:29:07 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains methods for lattices.
 ##
 Revision.zlattice_gi :=
-    "@(#)$Id: zlattice.gi,v 4.16.4.1 2006/04/18 09:07:27 gap Exp $";
+    "@(#)$Id: zlattice.gi,v 4.16.4.2 2008/09/23 15:29:07 gap Exp $";
 
 
 #############################################################################
@@ -505,7 +505,9 @@ end );
 ##  even if there might be a unique integral solution for some equation
 ##  system.
 ##
-InstallGlobalFunction( Decomposition, function( A, B, depth_or_nonnegative )
+InstallMethod( Decomposition, "for a matrix of cyclotomics, a vector and a depth",
+	[IsMatrix,IsList,IsObject],
+        function( A, B, depth_or_nonnegative )
     local i, intA, intB, newintA, newintB, result, choice, inforec;
 
     # Check the input parameters.

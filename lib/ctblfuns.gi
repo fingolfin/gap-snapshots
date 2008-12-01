@@ -2,7 +2,7 @@
 ##
 #W  ctblfuns.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblfuns.gi,v 4.75.2.5 2007/08/29 11:29:44 gap Exp $
+#H  @(#)$Id: ctblfuns.gi,v 4.75.2.8 2008/09/23 15:35:29 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -25,7 +25,7 @@
 ##  14. Auxiliary operations
 ##
 Revision.ctblfuns_gi :=
-    "@(#)$Id: ctblfuns.gi,v 4.75.2.5 2007/08/29 11:29:44 gap Exp $";
+    "@(#)$Id: ctblfuns.gi,v 4.75.2.8 2008/09/23 15:35:29 gap Exp $";
 
 
 #############################################################################
@@ -1027,7 +1027,7 @@ InstallOtherMethod( CorrespondingPermutations,
 ##
 #M  ComplexConjugate( <chi> )
 ##
-InstallMethod( ComplexConjugate,
+InstallOtherMethod( ComplexConjugate,
     "for a class function",
     [ IsClassFunction and IsCyclotomicCollection ],
     chi -> GaloisCyc( chi, -1 ) );
@@ -2694,9 +2694,7 @@ InstallMethod( Restricted,
 ##
 #F  InducedClassFunctionsByFusionMap( <subtbl>, <tbl>, <chars>, <fusionmap> )
 ##
-##  is the list of class function values lists
-##
-BindGlobal( "InducedClassFunctionsByFusionMap",
+InstallGlobalFunction( InducedClassFunctionsByFusionMap,
     function( subtbl, tbl, chars, fusion )
     local j, im,          # loop variables
           centralizers,   # centralizer orders in hte supergroup
@@ -4137,13 +4135,6 @@ InstallGlobalFunction( FrobeniusCharacterValue, function( value, p )
         image:= GaloisCyc( image, p );
       od;
 
-      if p^m > MAXSIZE_GF_INTERNAL then
-        Info( InfoWarning, 1,
-              value,
-              " cannot be expressed using GAP's internal finite fields" );
-        return fail;
-      fi;
-
       # Compute the representation of the Frobenius character value
       # in the field $GF( p^k )$.
       primefield:= GF(p);
@@ -4468,8 +4459,11 @@ InstallGlobalFunction( SizeOfFieldOfDefinition, function( val, p )
       return p;
     fi;
 
-    val:= DegreeFFE( List( val, x -> FrobeniusCharacterValue( x, p ) ) );
-    return p ^ val;
+    val:= List( val, x -> FrobeniusCharacterValue( x, p ) );
+    if fail in val then
+      return fail;
+    fi;
+    return p ^ DegreeFFE( val );
 end );
 
 
@@ -4487,7 +4481,11 @@ InstallGlobalFunction( RealizableBrauerCharacters, function( matrix, q )
 
     for row in matrix do
 
-      d:= Length( Factors( SizeOfFieldOfDefinition( row, p ) ) );
+      d:= SizeOfFieldOfDefinition( row, p );
+      if d = fail then
+        return fail;
+      fi;
+      d:= Length( Factors( d ) );
       g:= Gcd( d, m );
       qq:= p^g;
       image:= row;

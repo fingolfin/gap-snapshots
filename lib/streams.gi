@@ -2,7 +2,7 @@
 ##
 #W  streams.gi                  GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: streams.gi,v 4.43.4.2 2006/03/03 11:57:56 gap Exp $
+#H  @(#)$Id: streams.gi,v 4.43.4.3 2008/10/29 21:08:37 alexk Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the methods for streams.
 ##
 Revision.streams_gi :=
-    "@(#)$Id: streams.gi,v 4.43.4.2 2006/03/03 11:57:56 gap Exp $";
+    "@(#)$Id: streams.gi,v 4.43.4.3 2008/10/29 21:08:37 alexk Exp $";
 
 
 #############################################################################
@@ -310,13 +310,14 @@ end );
 ##
 InstallOtherMethod( LogTo, "for output file", [ IsString ],
 function(name)
+  local expandname;
   if IN_LOGGING_MODE<>false then
     Print("#I  Already logging to ",IN_LOGGING_MODE,"\n");
     return;
   fi;
-  IN_LOGGING_MODE:=name;
-  name := USER_HOME_EXPAND(name);
-  LOG_TO(name);
+  expandname := USER_HOME_EXPAND( name );
+  LOG_TO( expandname );
+  IN_LOGGING_MODE := name;
 end ); # ignore return value
 
 

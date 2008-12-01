@@ -4,7 +4,7 @@
 *W                                                         & Martin Schoenert
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: sysfiles.h,v 4.34 2002/04/15 10:04:00 sal Exp $
+*H  @(#)$Id: sysfiles.h,v 4.34.6.1 2008/09/03 15:50:39 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_sysfiles_h =
-   "@(#)$Id: sysfiles.h,v 4.34 2002/04/15 10:04:00 sal Exp $";
+   "@(#)$Id: sysfiles.h,v 4.34.6.1 2008/09/03 15:50:39 sal Exp $";
 #endif
 
 
@@ -677,6 +677,23 @@ extern Char *SyFgetsSemiBlock (
     Char *              line,
     UInt                length,
     Int                 fid);
+
+/***************************************************************************
+**
+*F SyWinPut( <fid>, <cmd>, <str> ) . . . . send a line to the window handler
+**
+**  'syWinPut'  send the command   <cmd> and the  string  <str> to the window
+**  handler associated with the  file identifier <fid>.   In the string <str>
+**  '@'  characters are duplicated, and   control characters are converted to
+**  '@<chr>', e.g., <newline> is converted to '@J'.
+*/
+
+extern void syWinPut (
+    Int                 fid,
+    const Char *        cmd,
+    const Char *        str );
+
+
      
 /****************************************************************************
 **

@@ -2,7 +2,7 @@
 ##
 #W  ctblgrp.gi                   GAP library                 Alexander Hulpke
 ##
-#H  @(#)$Id: ctblgrp.gi,v 4.47.2.7 2007/07/31 16:54:12 gap Exp $
+#H  @(#)$Id: ctblgrp.gi,v 4.47.2.8 2008/01/02 18:18:10 gap Exp $
 ##
 #Y  Copyright (C) 1993, 1997
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
 Revision.ctblgrp_gi :=
-    "@(#)$Id: ctblgrp.gi,v 4.47.2.7 2007/07/31 16:54:12 gap Exp $";
+    "@(#)$Id: ctblgrp.gi,v 4.47.2.8 2008/01/02 18:18:10 gap Exp $";
 
 #############################################################################
 ##
@@ -1059,7 +1059,7 @@ local i,newRaeume,raum,neuer,j,ch,irrs,mods,incirrs,incmods,nb,rt,neuc;
   incmods:=[];
   for i in [1..Length(D.raeume)] do
     raum:=D.raeume[i];
-    if false and raum.dim=2 and not IsBound(raum.twofail) then
+    if raum.dim=2 and not IsBound(raum.twofail) then
       neuer:=SplitTwoSpace(D,raum);
     else
       neuer:=[];

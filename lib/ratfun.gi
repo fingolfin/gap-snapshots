@@ -5,7 +5,7 @@
 #W                                                            Juergen Mueller
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun.gi,v 4.108.2.6 2006/06/07 19:42:42 gap Exp $
+#H  @(#)$Id: ratfun.gi,v 4.108.2.7 2008/07/17 14:43:37 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -15,7 +15,7 @@
 ##  polynomials and polynomials and their families.
 ##
 Revision.ratfun_gi :=
-    "@(#)$Id: ratfun.gi,v 4.108.2.6 2006/06/07 19:42:42 gap Exp $";
+    "@(#)$Id: ratfun.gi,v 4.108.2.7 2008/07/17 14:43:37 gap Exp $";
 
 #############################################################################
 ##
@@ -833,6 +833,9 @@ function( efam )
   # set the one and zero coefficient
   fam!.zeroCoefficient := Zero(efam);
   fam!.oneCoefficient  := One(efam);
+  if fam!.oneCoefficient=fail then
+    Info(InfoWarning,1,"The polynomial is created over a ring without one.");
+  fi;
   fam!.oneCoefflist  := Immutable([fam!.oneCoefficient]);
 
   # set the coefficients

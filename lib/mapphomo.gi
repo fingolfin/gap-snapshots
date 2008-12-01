@@ -3,7 +3,7 @@
 #W  mapphomo.gi                 GAP library                     Thomas Breuer
 #W                                                         and Heiko Thei"sen
 ##
-#H  @(#)$Id: mapphomo.gi,v 4.30 2003/08/23 18:59:19 gap Exp $
+#H  @(#)$Id: mapphomo.gi,v 4.30.2.1 2008/09/10 11:08:33 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -20,7 +20,7 @@
 ##  5. default equality tests for structure preserving mappings
 ##
 Revision.mapphomo_gi :=
-    "@(#)$Id: mapphomo.gi,v 4.30 2003/08/23 18:59:19 gap Exp $";
+    "@(#)$Id: mapphomo.gi,v 4.30.2.1 2008/09/10 11:08:33 gap Exp $";
 
 
 #############################################################################
@@ -1175,7 +1175,15 @@ InstallEqMethodForMappingsFromGenerators( IsLeftOperatorRingWithOne,
     RespectsMultiplication and RespectsOne and RespectsScalarMultiplication,
     " that respect add.,add.inv.,mult.,one,scal. mult." );
 
-#T no methods that use 'GeneratorsOfDivisionRing' ?
+
+#############################################################################
+##
+#M  \=( <map1>, <map2> )   s.v.g.m. resp. add.,add.inv.,mult.,one,scal. mult.
+##
+InstallEqMethodForMappingsFromGenerators( IsField,
+    GeneratorsOfField,
+    IsFieldHomomorphism,
+    " that is a field homomorphism" );
 
 
 #############################################################################

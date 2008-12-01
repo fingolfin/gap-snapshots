@@ -450,25 +450,27 @@ describes the options <code>-D</code> and <code>-N</code>.)
 <p>
 <h2><a name="SECT013">4.13 DeclareAutoreadableVariables</a></h2>
 <p><p>
-The completion mechanism is designed for delaying reading function bodies
-whose headers has to be read when the package is loaded;
-this is necessary for example for the installation of methods.
+Package files containing method installations must be read
+when the package is loaded.
+Note that the completion mechanism used in the main <font face="Gill Sans,Helvetica,Arial">GAP</font> library
+(see Section&nbsp;<a href="badlink:ext:Completion Files">Completion Files</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual)
+cannot be used for packages.
 <p>
-For files <strong>not</strong> containing functions --this applies to many data files--
-completion does not help.
-However, another mechanism allows one to delay reading such files
+For package files <strong>not</strong> containing method installations
+--this applies to many data files--
+another mechanism allows one to delay reading such files
 until the data are actually accessed.
 <p>
 <a name = "SSEC013.1"></a>
 <li><code>DeclareAutoreadableVariables( </code><var>pkgname</var><code>, </code><var>filename</var><code>, </code><var>varlist</var><code> )</code>
 <p>
-Let <var>pkgname</var> be the name of a package,let <var>filename</var> be the name of
+Let <var>pkgname</var> be the name of a package, let <var>filename</var> be the name of
 a file relative to the home directory of this package,
 and let <var>varlist</var> be a list of strings that are the names of global
 variables which get bound when the file is read.
-<code>DeclareAutoreadableVariables</code> notifies the names in <var>varlist</var> such that
-the first attempt to access one of the variables causes the file to be
-read.
+<code>DeclareAutoreadableVariables</code> notifies the names in <var>varlist</var>
+such that the first attempt to access one of the variables
+causes the file <var>filename</var> to be read.
 <p>
 <p>
 <h2><a name="SECT014">4.14 Version Numbers</a></h2>
@@ -492,15 +494,23 @@ versions. In this case, all versions,  whose number is equal or larger
 than  the requested  number  are acceptable.  It is  the  task of  the
 package author to provide upwards compatibility.
 <p>
+Loading a specific version of a package (that is, <strong>not</strong> one with a larger
+version number) can be achieved by prepending <code>=</code> to the desired
+version number.
+For example, <code>LoadPackage( "example", "=1.0" )</code> will load version <code>"1.0"</code>
+of the package <a href="badlink:ext:example">example</a>, even if version <code>"1.1"</code> is avaiable.
+As a consequence, version numbers must not start with <code>=</code>,
+so <code>"=1.0"</code> is not a valid version number.
+<p>
 The global  variable <code>GAPInfo.Version</code> contains the  version number of
 the  version  of  <font face="Gill Sans,Helvetica,Arial">GAP</font>  and  also  can  be  checked  against  (using
 <code>CompareVersionNumbers</code>, see&nbsp;<a href="../ref/CHAP074.htm#SSEC003.6">CompareVersionNumbers</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
 Reference Manual).
 <p>
-Package authors should choose a version numbering scheme that allows a
+Package authors should choose a version numbering scheme that admits a
 new  version  number even  after  tiny  changes  to the  package.  The
 automatic update of  package archives in the  <font face="Gill Sans,Helvetica,Arial">GAP</font> distribution will
-only work if a package becomes a new version number.
+only work if a package has a new version number.
 <p>
 <p>
 <h2><a name="SECT015">4.15 Wrapping Up a GAP Package</a></h2>
@@ -528,9 +538,6 @@ needed if  the main  manual is  referring to your  package. Use  the command
 <code>GAPDocManualLab( packagename );</code> to create this file for your help books if
 you use <font face="Gill Sans,Helvetica,Arial">GAPDoc</font>.)
 <p>
-If the  package provides a substantial  amount of code, especially  if it is
-intended to be loaded automatically,  create a completion file (see&nbsp;<a href="CHAP004.htm#SECT012">Package Completion</a>) and include it with the package.
-<p>
 Currently, the <font face="Gill Sans,Helvetica,Arial">GAP</font> distribution provides archives in four different
 formats.
 <dl compact>
@@ -553,5 +560,5 @@ others.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

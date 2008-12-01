@@ -2,7 +2,7 @@
 ##
 #W  tmprimar.tom         GAP table of marks library           Thomas Merkwitz
 ##
-#H  @(#)$Id: tmprimar.tom,v 4.14 2003/02/26 17:39:56 gap Exp $
+#H  @(#)$Id: tmprimar.tom,v 4.15 2005/12/10 12:43:27 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,6 +13,10 @@
 #H  tomlib history
 #H  --------------
 #H  $Log: tmprimar.tom,v $
+#H  Revision 4.15  2005/12/10 12:43:27  gap
+#H  added the tables of marks of S12 and A13 (computed by G"otz Pfeiffer)
+#H      TB
+#H
 #H  Revision 4.14  2003/02/26 17:39:56  gap
 #H  fixed data format for two tables (will be changed again ...)
 #H      TB
@@ -115,7 +119,7 @@
 #H  ==========================================================================
 ##
 Revision.tmprimar_tom :=
-    "@(#)$Id: tmprimar.tom,v 4.14 2003/02/26 17:39:56 gap Exp $";
+    "@(#)$Id: tmprimar.tom,v 4.15 2005/12/10 12:43:27 gap Exp $";
 
 
 #############################################################################
@@ -670,7 +674,12 @@ LIBTOMLIST.namelist:=[
 [ "(3xU4(2)):2", "o8+(2)m10", "o8+(2)m11", "o8+(2)m12", "(3xu4(2)):2" ],
 [ "3^4:2^3.S4(a)", "o8+(2)m14", "3^4:2^3.s4(a)" ]],
 # file "tmo8p2m4.tom"
-[[ "2^6:A8", "o8+(2)m4", "o8+(2)m5", "o8+(2)m6", "2^6:a8" ]]];
+[[ "2^6:A8", "o8+(2)m4", "o8+(2)m5", "o8+(2)m6", "2^6:a8" ]],
+# file "tms12.tom"
+[[ "S12", "s12", "a12.2" ]],
+# file "tma13.tom"
+[[ "A13", "a13" ]],
+];
 
 LIBTOMLIST.files:=
 [ "tmalt1", "tmjank", "tmlin2", "tmjankmx", "tmunit", "tmlin2a", "tmsym1", 
@@ -684,7 +693,8 @@ LIBTOMLIST.files:=
   "tmunitmx", "tmunitam", "tmutw", "tmutwmx", "tmutwa", "tmutwam", 
   "tmunitcm", "tm4l34", "tm4l34mx", "tmu43v4", "tmu43v4m", "tma12mx", 
   "tma12m4", "tma12m5", "tma12m9", "tma12", "tmg24", "tm3d42", "tm3d42m1", 
-  "tmco3", "tmco3mx", "tmo8m2", "tmo8p2", "tmo8m2m1", "tmo82mx", "tmo8p2m4" ];
+  "tmco3", "tmco3mx", "tmo8m2", "tmo8p2", "tmo8m2m1", "tmo82mx", "tmo8p2m4",
+  "tms12", "tma13" ];
 
 LIBTOMLIST.fusions:=[
 # file "tmalt1.tom"
@@ -1793,7 +1803,16 @@ LIBTOMLIST.fusions:=[
 
 # file "tmo8p2m4.tom"
 [# fusions to '2^6:A8'
-[  ]]];
+[  ]],
+
+# file "tms12.tom"
+[# fusions to 'S12'
+[  ]],
+
+# file "tma13.tom"
+[# fusions to 'A13'
+[  ]],
+];
 
 MakeLIBTOMLIST();
 

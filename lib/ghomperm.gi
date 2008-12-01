@@ -2,14 +2,14 @@
 ##
 #W  ghomperm.gi                 GAP library       Akos Seress, Heiko Thei"sen
 ##
-#H  @(#)$Id: ghomperm.gi,v 4.94.2.5 2006/11/15 17:20:09 gap Exp $
+#H  @(#)$Id: ghomperm.gi,v 4.94.2.6 2008/04/03 17:57:43 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.ghomperm_gi :=
-    "@(#)$Id: ghomperm.gi,v 4.94.2.5 2006/11/15 17:20:09 gap Exp $";
+    "@(#)$Id: ghomperm.gi,v 4.94.2.6 2008/04/03 17:57:43 gap Exp $";
 
 #############################################################################
 ##
@@ -1261,11 +1261,13 @@ InstallMethod( StabChainMutable, "perm to perm mapping by images",true,
 ##
 #M  KernelOfMultiplicativeGeneralMapping(<hom>) . for perm to perm group homs
 ##
-InstallMethod( KernelOfMultiplicativeGeneralMapping, true,
+InstallMethod( KernelOfMultiplicativeGeneralMapping, 
+	"for perm to perm group homs, compute stab chain, try again",
         [ IsPermGroupGeneralMappingByImages and
           IsToPermGroupGeneralMappingByImages ], 0,
 function( hom )
 local ker;
+  if HasStabChainMutable( hom ) then TryNextMethod(); fi;
   StabChainPermGroupToPermGroupGeneralMappingByImages( hom );
   ker:=KernelOfMultiplicativeGeneralMapping( hom );
   if Size(ker)=1 then

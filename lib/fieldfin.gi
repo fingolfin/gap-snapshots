@@ -3,7 +3,7 @@
 #W  fieldfin.gi                 GAP library                     Werner Nickel
 #W                                                         & Martin Schoenert
 ##
-#H  @(#)$Id: fieldfin.gi,v 4.41.4.5 2005/11/30 02:51:40 gap Exp $
+#H  @(#)$Id: fieldfin.gi,v 4.41.4.7 2008/03/04 17:17:01 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -23,7 +23,7 @@
 ##  4. Automorphisms of Finite Fields
 ##
 Revision.fieldfin_gi :=
-    "@(#)$Id: fieldfin.gi,v 4.41.4.5 2005/11/30 02:51:40 gap Exp $";
+    "@(#)$Id: fieldfin.gi,v 4.41.4.7 2008/03/04 17:17:01 gap Exp $";
 
 
 #############################################################################
@@ -41,7 +41,7 @@ InstallMethod( GeneratorsOfLeftModule,
     [ IsField and IsFinite ],
     function( F )
     local z;
-    z:= PrimitiveRoot( F );
+    z:= RootOfDefiningPolynomial( F );
     return List( [ 0 .. Dimension( F ) - 1 ], i -> z^i );
 #T call of `UseBasis' ?
     end );
@@ -472,11 +472,10 @@ InstallMethod( CanonicalBasis,
     "for a finite field",
     [ IsField and IsFinite ],
     function( F )
-
     local z,         # primitive root
           B;         # basis record, result
 
-    z:= PrimitiveRoot( F );
+    z:= RootOfDefiningPolynomial( F );
     B:= BasisNC( F, List( [ 0 .. Dimension( F ) - 1 ], i -> z ^ i ) );
     SetIsCanonicalBasis( B, true );
 
@@ -487,7 +486,7 @@ InstallMethod( CanonicalBasis,
 
 #############################################################################
 ##  
-#M  NormalBase( <F> )
+#M  NormalBase( <F>, <elm> )
 ##  
 ##  For finite fields just search.
 ##  

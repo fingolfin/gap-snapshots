@@ -2,7 +2,7 @@
 ##
 #W  oper1.g                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: oper1.g,v 4.13.4.1 2005/08/11 08:13:14 gap Exp $
+#H  @(#)$Id: oper1.g,v 4.13.4.2 2008/08/29 16:08:14 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  Functions moved from oper.g, so as to be compiled in the default kernel
 ##
 Revision.oper1_g :=
-    "@(#)$Id: oper1.g,v 4.13.4.1 2005/08/11 08:13:14 gap Exp $";
+    "@(#)$Id: oper1.g,v 4.13.4.2 2008/08/29 16:08:14 gap Exp $";
 
 
 #############################################################################
@@ -326,6 +326,10 @@ BIND_GLOBAL( "INSTALL_METHOD",
       Error( "<arglist>[", pos, "] must be a list of filters" );
     fi;
     filters:= arglist[ pos ];
+    if GAPInfo.MaxNrArgsMethod < LEN_LIST( filters ) then
+      Error( "methods can have at most ", GAPInfo.MaxNrArgsMethod,
+             " arguments" );
+    fi;
 
     # If the filters list is given by a list of strings then evaluate them
     # and set `info' if this is not set.

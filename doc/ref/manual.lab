@@ -573,6 +573,8 @@
 \makelabel{ref:GaloisCyc}{18.5.1}
 \makelabel{ref:GaloisCyc}{18.5.1}
 \makelabel{ref:ComplexConjugate}{18.5.2}
+\makelabel{ref:RealPart}{18.5.2}
+\makelabel{ref:ImaginaryPart}{18.5.2}
 \makelabel{ref:StarCyc}{18.5.3}
 \makelabel{ref:Quadratic}{18.5.4}
 \makelabel{ref:GaloisMat}{18.5.5}
@@ -4046,10 +4048,11 @@
 \makelabel{ref:InducedClassFunctions}{70.9.4}
 \makelabel{ref:InducedClassFunctions}{70.9.4}
 \makelabel{ref:InducedClassFunctions}{70.9.4}
-\makelabel{ref:InducedCyclic}{70.9.5}
-\makelabel{ref:InducedCyclic}{70.9.5}
-\makelabel{ref:InducedCyclic}{70.9.5}
-\makelabel{ref:InducedCyclic}{70.9.5}
+\makelabel{ref:InducedClassFunctionsByFusionMap}{70.9.5}
+\makelabel{ref:InducedCyclic}{70.9.6}
+\makelabel{ref:InducedCyclic}{70.9.6}
+\makelabel{ref:InducedCyclic}{70.9.6}
+\makelabel{ref:InducedCyclic}{70.9.6}
 \makelabel{ref:Reducing Virtual Characters}{70.10}
 \makelabel{ref:ReducedClassFunctions}{70.10.1}
 \makelabel{ref:ReducedClassFunctions}{70.10.1}

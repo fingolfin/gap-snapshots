@@ -3,14 +3,14 @@
 #W  gprd.gi                     GAP library                      Bettina Eick
 ##                                                             Heiko Thei"sen
 ##
-#H  @(#)$Id: gprd.gi,v 4.46.2.6 2007/01/17 16:45:21 gap Exp $
+#H  @(#)$Id: gprd.gi,v 4.46.2.7 2007/10/08 22:12:26 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.gprd_gi :=
-    "@(#)$Id: gprd.gi,v 4.46.2.6 2007/01/17 16:45:21 gap Exp $";
+    "@(#)$Id: gprd.gi,v 4.46.2.7 2007/10/08 22:12:26 gap Exp $";
 
 
 #############################################################################
@@ -738,8 +738,16 @@ end);
 InstallOtherMethod( WreathProduct,"generic groups with permhom", true,
  [ IsGroup, IsGroup, IsSPGeneralMapping ], 0,
 function(G,H,alpha)
-local I,n,fam,typ,gens,hgens,id,i,e,info,W,p;
+local I,n,fam,typ,gens,hgens,id,i,e,info,W,p,dom;
   I:=Image(alpha,H);
+
+  # avoid sparse points.
+  dom:=MovedPoints(I);
+  if Maximum(dom)>Length(dom) then
+    alpha:=alpha*ActionHomomorphism(I,dom);
+    I:=Image(alpha,H);
+  fi;
+
   n:=LargestMovedPoint(I);
   fam:=NewFamily("WreathProductElemFamily",IsWreathProductElement);
   typ:=NewType(fam,IsWreathProductElementDefaultRep);

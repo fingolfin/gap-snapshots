@@ -2,12 +2,12 @@
 ##  
 #W  pquot.gd                    GAP Library                     Werner Nickel
 ##
-#H  $Id: pquot.gd,v 4.13 2001/10/15 19:45:44 werner Exp $
+#H  $Id: pquot.gd,v 4.13.4.1 2008/10/29 16:08:14 gap Exp $
 ##
 #Y  Copyright (C) 1998, . . . . . . . . .  University of St Andrews, Scotland
 ##
 Revision.pquot_gd :=
-    "$Id: pquot.gd,v 4.13 2001/10/15 19:45:44 werner Exp $";
+    "$Id: pquot.gd,v 4.13.4.1 2008/10/29 16:08:14 gap Exp $";
 
 #############################################################################
 ##  
@@ -91,6 +91,12 @@ DeclareOperation( "EpimorphismQuotientSystem", [IsQuotientSystem] );
 ##
 DeclareOperation("EpimorphismNilpotentQuotientOp",[IsGroup,IsObject]);
 DeclareGlobalFunction("EpimorphismNilpotentQuotient");
+
+#############################################################################
+##
+#F  Nucleus . . . . . . . . . . . . . . . . . . . .  the nucleus of a p-cover
+##
+DeclareOperation("Nucleus",[IsPQuotientSystem,IsGroup]);
 
 #############################################################################
 ##

@@ -2,7 +2,7 @@
 ##
 #W  system.g                   GAP Library                   Alexander Hulpke
 ##
-#H  @(#)$Id: system.g,v 4.12.2.20 2007/10/01 20:09:34 gapchron Exp $
+#H  @(#)$Id: system.g,v 4.12.2.25 2008/11/27 11:06:36 gapchron Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  internally.
 ##
 Revision.system_g :=
-    "@(#)$Id: system.g,v 4.12.2.20 2007/10/01 20:09:34 gapchron Exp $";
+    "@(#)$Id: system.g,v 4.12.2.25 2008/11/27 11:06:36 gapchron Exp $";
 
 
 BIND_GLOBAL( "GAPInfo", rec(
@@ -21,12 +21,12 @@ BIND_GLOBAL( "GAPInfo", rec(
 # do not edit the following two lines. They get replaced by string matching
 # in the distribution wrapper scripts. (Occurrences of `4.dev' and `today'
 # get replaced.)
-    Version := "4.4.10",
-    Date := "02-Oct-2007",
+    Version := "4.4.11",
+    Date := "01-Dec-2008",
 
     # The kernel version numbers are expected in the format `<v>.<r>.<p>'.
     KernelVersion := KERNEL_VERSION,
-    NeedKernelVersion := ["4.4.10"],
+    NeedKernelVersion := ["4.4.11"],
 
     Architecture := GAP_ARCHITECTURE,
 
@@ -85,8 +85,10 @@ BIND_GLOBAL( "GAPInfo", rec(
 #T The value can be changed using the function `ViewLength' that is defined
 #T in `lib/oper.g' but currently is undocumented.
 #T Should it become documented or is it sufficient to document this variable?
-    ViewLength := 3
+    ViewLength := 3,
 
+    # the maximal number of arguments a method can have
+    MaxNrArgsMethod:= 6,
  ) );
 
 GAPInfo.ScanCommandLineOption := function( name, type, default )

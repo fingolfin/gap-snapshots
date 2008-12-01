@@ -2,7 +2,7 @@
 ##
 #W  pcgsperm.gi                 GAP library                    Heiko Thei"sen
 ##
-#H  @(#)$Id: pcgsperm.gi,v 4.120.2.3 2005/12/05 20:42:46 gap Exp $
+#H  @(#)$Id: pcgsperm.gi,v 4.120.2.4 2008/09/18 19:55:11 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  systems of solvable permutation groups.
 ##
 Revision.pcgsperm_gi :=
-    "@(#)$Id: pcgsperm.gi,v 4.120.2.3 2005/12/05 20:42:46 gap Exp $";
+    "@(#)$Id: pcgsperm.gi,v 4.120.2.4 2008/09/18 19:55:11 gap Exp $";
 
 #############################################################################
 ##
@@ -359,7 +359,7 @@ InstallGlobalFunction(TryPcgsPermGroup,function( G, cent, desc, elab )
         deg := NrMovedPoints( grp );
         if cent  then
             bound := Maximum( List( Collected( FactorsInt( deg ) ), p ->
-                             p[ 1 ] ^ ( LogInt( deg, p[ 1 ] ) - 1 ) ) );
+                             p[ 1 ] ^ ( LogInt( deg, p[ 1 ] ) ) ) );
         else
             bound := Int( LogInt( deg ^ 5, 3 ) / 2 );
         fi;

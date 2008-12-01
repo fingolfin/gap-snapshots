@@ -2,7 +2,7 @@
 ##
 #W  grpramat.gi                 GAP Library                     Franz G"ahler
 ##
-#H  @(#)$Id: grpramat.gi,v 4.25 2003/07/31 17:17:17 gap Exp $
+#H  @(#)$Id: grpramat.gi,v 4.25.2.1 2008/04/14 09:13:56 stefan Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains operations for matrix groups over the rationals
 ##
 Revision.grpramat_gi :=
-    "@(#)$Id: grpramat.gi,v 4.25 2003/07/31 17:17:17 gap Exp $";
+    "@(#)$Id: grpramat.gi,v 4.25.2.1 2008/04/14 09:13:56 stefan Exp $";
 
 #############################################################################
 ##
@@ -102,6 +102,32 @@ local gens,mat,G;
   fi;
   return G;
 end);
+
+#############################################################################
+##
+#M  \in( <g>, GL( <n>, Integers ) )
+##
+InstallMethod( \in,
+               "for matrix and GL(n,Z)", IsElmsColls,
+               [ IsMatrix, IsNaturalGLnZ ],
+
+  function ( g, GLnZ )
+    return DimensionsMat(g) = DimensionsMat(One(GLnZ))
+       and ForAll(Flat(g),IsInt) and DeterminantMat(g) in [-1,1];
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, SL( <n>, Integers ) )
+##
+InstallMethod( \in,
+               "for matrix and SL(n,Z)", IsElmsColls,
+               [ IsMatrix, IsNaturalSLnZ ],
+
+  function ( g, SLnZ )
+    return DimensionsMat(g) = DimensionsMat(One(SLnZ))
+       and ForAll(Flat(g),IsInt) and DeterminantMat(g) = 1;
+  end );
 
 #############################################################################
 ##

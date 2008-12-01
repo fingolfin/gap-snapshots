@@ -3,7 +3,7 @@
 **
 *W  vecffe.c                    GAP source                      Werner Nickel
 **
-*H  @(#)$Id: vecffe.c,v 4.19.6.2 2006/02/22 12:26:40 sal Exp $
+*H  @(#)$Id: vecffe.c,v 4.19.6.3 2008/01/11 15:54:33 sal Exp $
 **
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 *Y  Copyright (C) 2002 The GAP Group
@@ -12,7 +12,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_vecffe_c =
-   "@(#)$Id: vecffe.c,v 4.19.6.2 2006/02/22 12:26:40 sal Exp $";
+   "@(#)$Id: vecffe.c,v 4.19.6.3 2008/01/11 15:54:33 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -1083,7 +1083,8 @@ UInt IsVecFFE(Obj vec)
     return 1;
   if (!IS_PLIST(vec))  
     return 0;
-  tn = KTNumPlist(vec, (Obj *)0);
+  TYPE_OBJ(vec); /* force a full inspection of the list */
+  tn = TNUM_OBJ(vec);
   return tn >= T_PLIST_FFE && tn <= T_PLIST_FFE+IMMUTABLE;
 }
 
@@ -1106,15 +1107,21 @@ Obj FuncSMALLEST_FIELD_VECFFE( Obj self, Obj vec)
 {
   Obj elm;
   UInt deg,deg1,deg2,i,len,p,q;
-  if (!IsVecFFE(vec))
+  UInt isVecFFE =IsVecFFE(vec);
+  len  = LEN_PLIST(vec);
+  if (len == 0)
     return Fail;
   elm = ELM_PLIST(vec,1);
+  if (!isVecFFE && !IS_FFE(elm))
+    return Fail;
   deg = DegreeFFE(elm);
   p = CharFFE(elm);
-  len  = LEN_PLIST(vec);
   for (i = 2; i <= len; i++)
     {
-      deg2 =  DegreeFFE(ELM_PLIST(vec,i));
+      elm =ELM_PLIST(vec,i);
+      if (!isVecFFE && (!IS_FFE(elm)|| CharFFE(elm) != p))
+	return Fail;
+      deg2 =  DegreeFFE(elm);
       deg1 = deg;
       while (deg % deg2 != 0)
 	deg += deg1;

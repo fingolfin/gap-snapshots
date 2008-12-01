@@ -3,7 +3,7 @@
 #W  algmat.gi                   GAP library                     Thomas Breuer
 #W                                                            Willem de Graaf
 ##
-#H  @(#)$Id: algmat.gi,v 4.32.4.1 2005/12/21 08:30:03 gap Exp $
+#H  @(#)$Id: algmat.gi,v 4.32.4.2 2008/02/13 17:06:30 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 ##  that is, associative matrix algebras and matrix Lie algebras.
 ##
 Revision.algmat_gi :=
-    "@(#)$Id: algmat.gi,v 4.32.4.1 2005/12/21 08:30:03 gap Exp $";
+    "@(#)$Id: algmat.gi,v 4.32.4.2 2008/02/13 17:06:30 gap Exp $";
 
 
 #############################################################################
@@ -1107,7 +1107,6 @@ InstallMethod( CentralizerOp,
 ##  matrix algebra over <F>.
 ##
 InstallGlobalFunction( FullMatrixAlgebraCentralizer, function( F, lst )
-
     local len,      # length of `lst'
           dims,     # dimensions of the matrices
           n,        # number of rows/columns
@@ -1121,6 +1120,8 @@ InstallGlobalFunction( FullMatrixAlgebraCentralizer, function( F, lst )
     len:= Length( lst );
     if len = 0 then
       Error( "cannot compute the centralizer of an empty set" );
+    elif not IsSubset( F, FieldOfMatrixList( lst ) ) then
+      Error( "not all entries of the matrices in <lst> lie in <F>" );
     fi;
 
     dims:= DimensionsMat( lst[1] );
@@ -1130,7 +1131,6 @@ InstallGlobalFunction( FullMatrixAlgebraCentralizer, function( F, lst )
     # In the equations matrices are viewed as vectors of length `n*n'.
     # Position `(i,j)' in the matrix corresponds with position `(i-1)*n+j'
     # in the vector.
-
     eq:= NullMat( n2, n2 * len, F );
     for u in [ 1 .. len ] do
       for i in [1..n] do
@@ -1157,7 +1157,6 @@ InstallGlobalFunction( FullMatrixAlgebraCentralizer, function( F, lst )
     od;
 
     return AlgebraWithOne( F, Bcen, "basis" );
-
 end );
 
 

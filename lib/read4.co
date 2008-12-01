@@ -207,12 +207,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/helpt2t.gi"
 
-#F  file="lib/helpdef.gi" crc=82257159
+#F  file="lib/helpdef.gi" crc=92366536
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/helpdef.gi", 82257159 );
+COM_RESULT := COM_FILE( "lib/helpdef.gi", 92366536 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/helpdef.gi\"");
 elif COM_RESULT = 1  then
@@ -222,7 +222,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/helpdef.gi");
 elif COM_RESULT = 3  then
-Revision.helpdef_gi:="@(#)$Id: helpdef.gi,v 1.8.2.1 2004/04/23 15:28:18 gap Exp $";
+Revision.helpdef_gi:="@(#)$Id: helpdef.gi,v 1.8.2.2 2008/06/24 09:12:20 gap Exp $";
 HELP_TEST_EXAMPLES\?\?\?:=COM_FUN(1);
 InstallGlobalFunction(GapLibToc2Gap,COM_FUN(2));
 HELP_BOOK_HANDLER.default.ReadSix:=COM_FUN(3);
@@ -286,12 +286,12 @@ Unbind(RANK_FILTER_COUNT);
 Unbind(COM_RESULT);
 #E  file="lib/reread.g"
 
-#F  file="lib/package.g" crc=-92751274
+#F  file="lib/package.g" crc=45947384
 RANK_FILTER_LIST  := [  ];
 RANK_FILTER_COUNT := 1;
 
 #C  load module, file, or complete
-COM_RESULT := COM_FILE( "lib/package.g", -92751274 );
+COM_RESULT := COM_FILE( "lib/package.g", 45947384 );
 if COM_RESULT = fail  then
 Error("cannot locate file \"lib/package.g\"");
 elif COM_RESULT = 1  then
@@ -301,7 +301,7 @@ elif COM_RESULT = 2  then
 elif COM_RESULT = 4  then
 READ_CHANGED_GAP_ROOT("lib/package.g");
 elif COM_RESULT = 3  then
-Revision.package_g:="@(#)$Id: package.g,v 4.73.2.7 2006/12/01 10:41:23 gap Exp $";
+Revision.package_g:="@(#)$Id: package.g,v 4.73.2.9 2008/09/10 12:00:33 gap Exp $";
 PACKAGES_VERSIONS:=rec();
 BindGlobal("CompareVersionNumbers",COM_FUN(1));
 BindGlobal("PackageInfo",COM_FUN(2));

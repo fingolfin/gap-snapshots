@@ -2,7 +2,7 @@
 ##
 #W  zlattice.gd                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zlattice.gd,v 4.17 2002/04/15 10:05:30 sal Exp $
+#H  @(#)$Id: zlattice.gd,v 4.17.4.1 2008/09/23 15:29:06 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  with lattices.
 ##
 Revision.zlattice_gd :=
-    "@(#)$Id: zlattice.gd,v 4.17 2002/04/15 10:05:30 sal Exp $";
+    "@(#)$Id: zlattice.gd,v 4.17.4.1 2008/09/23 15:29:06 gap Exp $";
 
 
 #############################################################################
@@ -130,7 +130,7 @@ DeclareGlobalFunction( "StandardScalarProduct" );
 ##  even if there might be a unique integral solution for some equation
 ##  system.
 ##
-DeclareGlobalFunction( "Decomposition" );
+DeclareOperation( "Decomposition", [IsMatrix,IsList,IsObject] );
 
 
 #############################################################################

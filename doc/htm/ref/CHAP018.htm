@@ -599,11 +599,25 @@ obtained by applying <code>GaloisCyc</code> to the entries of <var>list</var>.
 <p>
 <a name = "SSEC005.2"></a>
 <li><code>ComplexConjugate( </code><var>z</var><code> ) A</code>
+<a name = "SSEC005.2"></a>
+<li><code>RealPart( </code><var>z</var><code> ) A</code>
+<a name = "SSEC005.2"></a>
+<li><code>ImaginaryPart( </code><var>z</var><code> ) A</code>
 <p>
 For a cyclotomic number <var>z</var>, <code>ComplexConjugate</code> returns
-<code>GaloisCyc( </code><var>z</var><code>, -1 )</code>.
+<code>GaloisCyc( </code><var>z</var><code>, -1 )</code>, see&nbsp;<a href="CHAP018.htm#SSEC005.1">GaloisCyc</a>.
 For a quaternion <i>z</i>  = <i>c</i><sub>1</sub> <i>e</i> + <i>c</i><sub>2</sub> <i>i</i> + <i>c</i><sub>3</sub> <i>j</i> + <i>c</i><sub>4</sub> <i>k</i>,
-<code>ComplexConjugate</code> returns <i>c</i><sub>1</sub> <i>e</i> &#8722; <i>c</i><sub>2</sub> <i>i</i> &#8722; <i>c</i><sub>3</sub> <i>j</i> &#8722; <i>c</i><sub>4</sub> <i>k</i>.
+<code>ComplexConjugate</code> returns <i>c</i><sub>1</sub> <i>e</i> &#8722; <i>c</i><sub>2</sub> <i>i</i> &#8722; <i>c</i><sub>3</sub> <i>j</i> &#8722; <i>c</i><sub>4</sub> <i>k</i>,
+see&nbsp;<a href="CHAP060.htm#SSEC007.8">IsQuaternion</a>.
+<p>
+When <code>ComplexConjugate</code> is called with a list then the result is the list
+of return values of <code>ComplexConjugate</code> for the list entries in the
+corresponding positions.
+<p>
+When <code>ComplexConjugate</code> is defined for an object <var>z</var> then <code>RealPart</code>
+and <code>ImaginaryPart</code> return (<i>z</i>  + <tt>ComplexConjugate</tt><tt>(</tt> <i>z</i>  <tt>)</tt>) / 2 and
+(<i>z</i>  &#8722; <tt>ComplexConjugate</tt><tt>(</tt> <i>z</i>  <tt>)</tt>) / 2 <i>i</i>, respectively,
+where <i>i</i> denotes the corresponding imaginary unit.
 <p>
 <pre>
 gap&gt; GaloisCyc( E(5) + E(5)^4, 2 );
@@ -840,5 +854,5 @@ of cyclotomic fields are not needed.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP017.htm">Previous</a>] [<a href ="CHAP019.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

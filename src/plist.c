@@ -2,7 +2,7 @@
 **
 *W  plist.c                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: plist.c,v 4.78.2.2 2007/08/31 10:54:17 gap Exp $
+*H  @(#)$Id: plist.c,v 4.78.2.3 2007/12/05 20:27:51 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -38,7 +38,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_plist_c =
-   "@(#)$Id: plist.c,v 4.78.2.2 2007/08/31 10:54:17 gap Exp $";
+   "@(#)$Id: plist.c,v 4.78.2.3 2007/12/05 20:27:51 sal Exp $";
 
 #include        "gasman.h"              /* garbage collector               */
 #include        "objects.h"             /* objects                         */
@@ -4560,8 +4560,8 @@ static Int InitKernel (
 
 
     /* install the comparison methods                                      */
-    for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM+IMMUTABLE; t1++ ) {
-        for ( t2 = T_PLIST; t2 <= LAST_PLIST_TNUM+IMMUTABLE; t2++ ) {
+    for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM; t1++ ) {
+        for ( t2 = T_PLIST; t2 <= LAST_PLIST_TNUM; t2++ ) {
             EqFuncs[ t1 ][ t2 ] = EqPlist;
             LtFuncs[ t1 ][ t2 ] = LtPlist;
         }

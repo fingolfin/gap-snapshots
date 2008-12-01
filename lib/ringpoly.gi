@@ -10,7 +10,7 @@
 ##  for polynomial rings.
 ##
 Revision.ringpoly_gi :=
-    "@(#)$Id: ringpoly.gi,v 4.41.2.3 2007/02/16 15:51:19 gap Exp $";
+    "@(#)$Id: ringpoly.gi,v 4.41.2.5 2008/04/15 10:02:11 stefan Exp $";
 
 
 #############################################################################
@@ -252,23 +252,41 @@ function( r,n,a )
 	    RationalFunctionsFamily(ElementsFamily(FamilyObj(r))),1,[n],a));
 end);
 
+#############################################################################
+##
+#M  ViewString( <pring> ) . . . . . . . . . . . . . . . for a polynomial ring
+##
+InstallMethod( ViewString,
+               "for a polynomial ring", true,  [ IsPolynomialRing ], 0,
+
+  R -> Concatenation(String(LeftActingDomain(R)),
+                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
+                              ch -> ch <> ' ')) );
 
 #############################################################################
 ##
-#M  ViewObj( <pring> )
+#M  ViewObj( <pring> ) . . . . . . . . . . . . . . . .  for a polynomial ring
 ##
 InstallMethod( ViewObj,
-    "for a polynomial ring",
-    true,
-    [ IsPolynomialRing ],
-    # override the higher ranking FLMLOR method
-    RankFilter(IsFLMLOR),
+              "for a polynomial ring", true, [ IsPolynomialRing ],
+              # override the higher ranking FLMLOR method
+              RankFilter(IsFLMLOR),
 
-function( obj )
-    Print( "PolynomialRing(..., ",
-        IndeterminatesOfPolynomialRing(obj), ")" );
-end );
+  function( R )
+    Print(ViewString(R));
+  end );
 
+#############################################################################
+##
+#M  String( <pring> ) . . . . . . . . . . . . . . . . . for a polynomial ring
+##
+InstallMethod( String,
+               "for a polynomial ring", true, [ IsPolynomialRing ],
+               RankFilter(IsFLMLOR),
+               R -> Concatenation("PolynomialRing( ",
+                                   String(LeftActingDomain(R)),", ",
+                                   String(IndeterminatesOfPolynomialRing(R)),
+                                  " )") );
 
 #############################################################################
 ##

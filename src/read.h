@@ -2,9 +2,7 @@
 **
 *W  read.h                      GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: read.h,v 4.16 2002/09/24 16:34:52 sal Exp $
-**
-*Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+*H  @(#)$Id: read.h,v 4.16.2.1 2008/04/22 10:53:05 sal Exp $
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 *Y  Copyright (C) 2002 The GAP Group
 **
@@ -12,7 +10,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_read_h =
-   "@(#)$Id: read.h,v 4.16 2002/09/24 16:34:52 sal Exp $";
+   "@(#)$Id: read.h,v 4.16.2.1 2008/04/22 10:53:05 sal Exp $";
 #endif
 
 
@@ -116,7 +114,7 @@ extern UInt GlobalComesFromEnclosingForLoop (UInt var);
 **
 **  The current reader context is saved and a new one is started.
 */
-void Call0ArgsInNewReader(Obj f);
+Obj Call0ArgsInNewReader(Obj f);
 
 /****************************************************************************
 **
@@ -124,7 +122,7 @@ void Call0ArgsInNewReader(Obj f);
 **
 **  The current reader context is saved and a new one is started.
 */
-void Call1ArgsInNewReader(Obj f,Obj a);
+Obj Call1ArgsInNewReader(Obj f,Obj a);
 
 
 /****************************************************************************

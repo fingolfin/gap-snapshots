@@ -2,7 +2,7 @@
 **
 *W  opers.h                     GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: opers.h,v 4.25 2002/04/15 10:03:54 sal Exp $
+*H  @(#)$Id: opers.h,v 4.25.6.1 2007/10/16 17:36:23 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -13,7 +13,7 @@
 */
 #ifdef  INCLUDE_DECLARATION_PART
 const char * Revision_opers_h =
-   "@(#)$Id: opers.h,v 4.25 2002/04/15 10:03:54 sal Exp $";
+   "@(#)$Id: opers.h,v 4.25.6.1 2007/10/16 17:36:23 gap Exp $";
 #endif
 
 
@@ -184,7 +184,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 *F  SET_AND_CACHE_FLAGS( <flags>, <len> ) set the `and' cache of a flags list
 */
-#define SET_AND_CACHE_FLAGS(flags,and)  (ADDR_OBJ(flags)[3]=(and))
+#define SET_AND_CACHE_FLAGS(flags,andc)  (ADDR_OBJ(flags)[3]=(andc))
 
 
 /****************************************************************************

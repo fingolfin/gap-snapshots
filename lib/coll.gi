@@ -3,7 +3,7 @@
 #W  coll.gi                     GAP library                  Martin Schoenert
 #W                                                            & Thomas Breuer
 ##
-#H  @(#)$Id: coll.gi,v 4.99.2.5 2007/08/31 10:54:17 gap Exp $
+#H  @(#)$Id: coll.gi,v 4.99.2.6 2008/04/10 10:52:15 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  This file contains methods for collections in general.
 ##
 Revision.coll_gi :=
-    "@(#)$Id: coll.gi,v 4.99.2.5 2007/08/31 10:54:17 gap Exp $";
+    "@(#)$Id: coll.gi,v 4.99.2.6 2008/04/10 10:52:15 stefan Exp $";
 
 
 #############################################################################
@@ -2278,7 +2278,7 @@ InstallMethod( Intersection2,
     [ IsCollection, IsCollection and IsList ],
     function ( C1, C2 )
     local   I, elm;
-    if IsFinite( C1 ) then
+    if ( HasIsFinite( C1 ) or CanComputeSize( C1 ) ) and IsFinite( C1 ) then
         I := ShallowCopy( AsSSortedList( C1 ) );
         IntersectSet( I, C2 );
     else
@@ -2298,7 +2298,7 @@ InstallMethod( Intersection2,
     [ IsCollection and IsList, IsCollection ],
     function ( C1, C2 )
     local   I, elm;
-    if IsFinite( C2 ) then
+    if ( HasIsFinite( C2 ) or CanComputeSize( C2 ) ) and IsFinite( C2 ) then
         I := ShallowCopy( AsSSortedList( C2 ) );
         IntersectSet( I, C1 );
     else

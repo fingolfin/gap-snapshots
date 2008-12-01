@@ -4,7 +4,7 @@
 #W                                                         & Martin Schoenert
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: mapping.gi,v 4.67 2003/03/20 12:07:33 gap Exp $
+#H  @(#)$Id: mapping.gi,v 4.67.2.1 2008/09/10 08:53:22 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  3. generic methods for underlying relations of general mappings
 ##
 Revision.mapping_gi :=
-    "@(#)$Id: mapping.gi,v 4.67 2003/03/20 12:07:33 gap Exp $";
+    "@(#)$Id: mapping.gi,v 4.67.2.1 2008/09/10 08:53:22 gap Exp $";
 
 
 #############################################################################
@@ -116,17 +116,17 @@ InstallMethod( PrintObj,
 #T these are `ViewObj' methods. How could real `PrintObj' methods look like?
 
 
-#############################################################################
-##
-#M  IsOne( <map> )  . . . . . . . . . . . . . . . . . . . for general mapping
-##
-InstallOtherMethod( IsOne,
-    "for general mapping",
-    true,
-    [ IsGeneralMapping ], 0,
-    map ->     Source( map ) = Range( map )
-           and IsBijective( map )
-           and ForAll( Source( map ), elm -> ImageElm( map, elm ) = elm ) );
+# #############################################################################
+# ##
+# #M  IsOne( <map> )  . . . . . . . . . . . . . . . . . . . for general mapping
+# ##
+# InstallOtherMethod( IsOne,
+#     "for general mapping",
+#     true,
+#     [ IsGeneralMapping ], 0,
+#     map ->     Source( map ) = Range( map )
+#            and IsBijective( map )
+#            and ForAll( Source( map ), elm -> ImageElm( map, elm ) = elm ) );
 
 
 #############################################################################

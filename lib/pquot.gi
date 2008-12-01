@@ -2,12 +2,12 @@
 ##  
 #W  pquot.gi                    GAP Library                     Werner Nickel
 ##
-#H  $Id: pquot.gi,v 4.42.2.1 2005/10/17 00:13:11 gap Exp $
+#H  $Id: pquot.gi,v 4.42.2.2 2008/10/29 16:08:14 gap Exp $
 ##
 #Y  Copyright (C) 1998  . . . . . . . . .  University of St Andrews, Scotland
 ##
 Revision.pquot_gi :=
-    "$Id: pquot.gi,v 4.42.2.1 2005/10/17 00:13:11 gap Exp $";
+    "$Id: pquot.gi,v 4.42.2.2 2008/10/29 16:08:14 gap Exp $";
 
 CHECK := false;
 NumberOfCommutators := function( ranks )
@@ -1667,7 +1667,9 @@ end;
 ##
 #F  Nucleus . . . . . . . . . . . . . . . . . . . .  the nucleus of a p-cover
 ##
-Nucleus := function( qs, G )
+InstallMethod(Nucleus, "for a p-quotient system and a group",
+    [IsPQuotientSystem,IsGroup],
+    function( qs, G )
     local   n,  gens,  m;
 
     n    := GeneratorNumberOfQuotient( qs );
@@ -1680,7 +1682,7 @@ Nucleus := function( qs, G )
 
     return Subgroup( G, gens{[n+1..n+m]} );
     
-end;
+end);
 
 #############################################################################
 ##

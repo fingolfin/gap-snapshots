@@ -4,7 +4,7 @@
 #W                                                           Alexander Hulpke
 #W                                                            Max Neunhoeffer
 ##
-#H  @(#)$Id: straight.gi,v 4.28.2.3 2006/02/26 14:36:27 gap Exp $
+#H  @(#)$Id: straight.gi,v 4.28.2.4 2008/09/10 09:24:53 gap Exp $
 ##
 #Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -17,7 +17,7 @@
 ##  2. Functions for elements represented by straight line programs
 ##
 Revision.straight_gi :=
-    "@(#)$Id: straight.gi,v 4.28.2.3 2006/02/26 14:36:27 gap Exp $";
+    "@(#)$Id: straight.gi,v 4.28.2.4 2008/09/10 09:24:53 gap Exp $";
 
 
 #############################################################################
@@ -95,7 +95,6 @@ end );
 ##
 InstallGlobalFunction( StringToStraightLineProgram,
     function( string, gens, script )
-
     local pos,
           extrep,
           len,
@@ -162,7 +161,9 @@ InstallGlobalFunction( StringToStraightLineProgram,
         return false;
       fi;
       slen:= Length( script ) + Length( gens );
-      Add( script, [ [ j, 1, slen, 1 ], slen + 1 ] );
+      if j < slen then
+        Add( script, [ [ j, 1, slen, 1 ], slen + 1 ] );
+      fi;
       return true;
 
     else
@@ -219,8 +220,9 @@ InstallGlobalFunction( StringToStraightLineProgram,
                 return false;
               fi;
               slen:= Length( script ) + Length( gens );
-              Add( script, [ [ j, 1, slen, 1 ], slen + 1 ] );
-
+              if j < slen then
+                Add( script, [ [ j, 1, slen, 1 ], slen + 1 ] );
+              fi;
             fi;
             return true;
 

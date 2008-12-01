@@ -2,7 +2,7 @@
 ##
 #W  combinat.gi                 GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: combinat.gi,v 4.19.2.1 2004/05/05 14:57:20 gap Exp $
+#H  @(#)$Id: combinat.gi,v 4.19.2.2 2008/06/05 14:24:33 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains method for combinatorics.
 ##
 Revision.combinat_gi :=
-    "@(#)$Id: combinat.gi,v 4.19.2.1 2004/05/05 14:57:20 gap Exp $";
+    "@(#)$Id: combinat.gi,v 4.19.2.2 2008/06/05 14:24:33 gap Exp $";
 
 
 #############################################################################
@@ -47,8 +47,8 @@ InstallGlobalFunction(Binomial,function ( n, k )
         # note that all intermediate results are binomial coefficients itself
         # hence integers!
         # slight improvement by Frank and Max.
-        for i  in [n,n-1..n-k+1]  do
-            bin := bin * i / j;
+        for i  in [0..k-1]  do
+            bin := bin * (n-i) / j;
             j := j + 1;
         od;
     fi;

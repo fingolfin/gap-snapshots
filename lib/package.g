@@ -3,7 +3,7 @@
 #W  package.g                   GAP Library                      Frank Celler
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: package.g,v 4.73.2.7 2006/12/01 10:41:23 gap Exp $
+#H  @(#)$Id: package.g,v 4.73.2.9 2008/09/10 12:00:33 gap Exp $
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -27,7 +27,7 @@
 #T   `ShowPackageVariables', `LoadAllPackages', `ValidatePackageInfo'.
 ##
 Revision.package_g :=
-    "@(#)$Id: package.g,v 4.73.2.7 2006/12/01 10:41:23 gap Exp $";
+    "@(#)$Id: package.g,v 4.73.2.9 2008/09/10 12:00:33 gap Exp $";
 
 #T remove this as soon as possible (currently used in several packages)
 PACKAGES_VERSIONS:= rec();
@@ -1036,6 +1036,7 @@ BindGlobal( "AutoloadPackages", function()
     local name, record;
 
     # Load the autoloadable packages (suppressing banners).
+    InitializePackagesInfoRecords( false );
     for name in GAPInfo.PackagesNames do
       Info( InfoWarning, 2, "considering for autoloading: ", name );
       LoadPackage( name, "", false );
@@ -1146,9 +1147,16 @@ fi;
 ##
 BindGlobal( "DeclareAutoreadableVariables",
     function( pkgname, filename, varlist )
-    CallFuncList( AUTO,
-        Concatenation( [ function( x ) RereadPackage( pkgname, filename ); end,
-                         filename ], varlist ) );
+    CallFuncList( AUTO, Concatenation( [
+      function( x )
+        # Avoid nested calls to `RereadPackage',
+        # which could cause that `REREADING' is set to `false' too early.
+        if REREADING then
+          ReadPackage( pkgname, filename );
+        else
+          RereadPackage( pkgname, filename );
+        fi;
+      end, filename ], varlist ) );
     end );
 
 

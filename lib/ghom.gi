@@ -4,7 +4,7 @@
 #W                                                           Alexander Hulpke
 #W                                                             Heiko Thei"sen
 ##
-#H  @(#)$Id: ghom.gi,v 4.108.2.1 2006/07/25 19:23:20 gap Exp $
+#H  @(#)$Id: ghom.gi,v 4.108.2.2 2008/11/19 14:21:01 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  4. Functions for ...
 ##
 Revision.ghom_gi :=
-    "@(#)$Id: ghom.gi,v 4.108.2.1 2006/07/25 19:23:20 gap Exp $";
+    "@(#)$Id: ghom.gi,v 4.108.2.2 2008/11/19 14:21:01 gap Exp $";
 
 
 #############################################################################
@@ -324,6 +324,11 @@ local   hom;
   return hom;
 end );
 
+InstallOtherMethod( GroupHomomorphismByImagesNC, "for group with no generators",
+    [IsGroup,IsGroup,IsEmpty,IsEmpty], SUM_FLAGS,
+        function(g,h,gg,gh)
+    return GroupHomomorphismByFunction(g,h,x->One(h),x->One(g));
+end);
 
 #############################################################################
 ##

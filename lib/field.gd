@@ -2,7 +2,7 @@
 ##
 #W  field.gd                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: field.gd,v 4.53 2002/08/23 15:01:47 gap Exp $
+#H  @(#)$Id: field.gd,v 4.53.2.1 2008/09/10 12:00:33 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file declares the operations for division rings.
 ##
 Revision.field_gd :=
-    "@(#)$Id: field.gd,v 4.53 2002/08/23 15:01:47 gap Exp $";
+    "@(#)$Id: field.gd,v 4.53.2.1 2008/09/10 12:00:33 gap Exp $";
 
 
 #############################################################################
@@ -440,13 +440,30 @@ DeclareAttribute( "GaloisGroup", IsField );
 #############################################################################
 ##
 #A  ComplexConjugate( <z> )
+#A  RealPart( <z> )
+#A  ImaginaryPart( <z> )
 ##
 ##  For a cyclotomic number <z>, `ComplexConjugate' returns
-##  `GaloisCyc( <z>, -1 )'.
+##  `GaloisCyc( <z>, -1 )', see~"GaloisCyc".
 ##  For a quaternion $<z> = c_1 e + c_2 i + c_3 j + c_4 k$,
-##  `ComplexConjugate' returns $c_1 e - c_2 i - c_3 j - c_4 k$.
+##  `ComplexConjugate' returns $c_1 e - c_2 i - c_3 j - c_4 k$,
+##  see~"IsQuaternion".
+##
+##  When `ComplexConjugate' is called with a list then the result is the list
+##  of return values of `ComplexConjugate' for the list entries in the
+##  corresponding positions.
+##
+##  When `ComplexConjugate' is defined for an object <z> then `RealPart'
+##  and `ImaginaryPart' return $(<z> + `ComplexConjugate( <z> )') / 2$ and
+##  $(<z> - `ComplexConjugate( <z> )') / 2 i$, respectively,
+##  where $i$ denotes the corresponding imaginary unit.
 ##
 DeclareAttribute( "ComplexConjugate", IsScalar );
+DeclareAttribute( "ComplexConjugate", IsList );
+DeclareAttribute( "RealPart", IsScalar );
+DeclareAttribute( "RealPart", IsList );
+DeclareAttribute( "ImaginaryPart", IsScalar );
+DeclareAttribute( "ImaginaryPart", IsList );
 
 
 #############################################################################

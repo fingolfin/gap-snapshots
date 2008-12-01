@@ -3,7 +3,7 @@
 *W  gap.c                       GAP source                       Frank Celler
 *W                                                         & Martin Schoenert
 **
-*H  @(#)$Id: gap.c,v 4.185.2.6 2007/09/05 15:06:47 gap Exp $
+*H  @(#)$Id: gap.c,v 4.185.2.7 2007/10/05 14:05:17 gap Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -18,7 +18,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_gap_c =
-"@(#)$Id: gap.c,v 4.185.2.6 2007/09/05 15:06:47 gap Exp $";
+"@(#)$Id: gap.c,v 4.185.2.7 2007/10/05 14:05:17 gap Exp $";
 
 extern char * In;
 
@@ -214,7 +214,11 @@ Obj OnGapPromptHook = 0;
 static char **sysargv;
 static char **sysenviron;
 
+#ifdef COMPILECYGWINDLL
+int realmain (
+#else
 int main (
+#endif
 	  int                 argc,
           char *              argv [],
           char *              environ [] )

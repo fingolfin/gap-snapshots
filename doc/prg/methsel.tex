@@ -3,7 +3,7 @@
 %W  methsel.tex               GAP manual                    Thomas Breuer
 %W                                                       Martin Schoenert
 %%
-%H  @(#)$Id: methsel.tex,v 4.24.4.1 2005/10/26 15:56:11 gap Exp $
+%H  @(#)$Id: methsel.tex,v 4.24.4.2 2008/09/10 12:24:57 gap Exp $
 %%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,6 +120,9 @@ if the following conditions are satisfied.
 The number of arguments equals the length of the list <args-filts>,
 the $i$-th argument lies in the filter `<args-filts>[$i$]',
 and <famp> returns `true' when applied to the families of the arguments.
+The maximal number of arguments supported for methods is six,
+one gets an error message if one tries to install a method with at least
+seven arguments.
 
 So <args-filt> describes conditions for each argument,
 and <famp> describes a relation between the arguments.

@@ -1250,6 +1250,31 @@ gap&gt; InducedClassFunctions( Irr( a5 ), s5 );
 </pre>
 <p>
 <a name = "SSEC009.5"></a>
+<li><code>InducedClassFunctionsByFusionMap( </code><var>subtbl</var><code>, </code><var>tbl</var><code>, </code><var>chars</var><code>, </code><var>fusionmap</var><code> ) F</code>
+<p>
+Let <var>subtbl</var> and <var>tbl</var> be two character tables of groups
+<i>H</i> and <i>G</i>, such that <i>H</i> is a subgroup of <i>G</i>,
+let <var>chars</var> be a list of class functions of <var>subtbl</var>, and
+let <var>fusionmap</var> be a fusion map from <var>subtbl</var> to <var>tbl</var>.
+The function returns the list of induced class functions of <var>tbl</var>
+that correspond to <var>chars</var>, w.r.t. the given fusion map.
+<p>
+<code>InducedClassFunctionsByFusionMap</code> is the function that does
+the work for <code>InducedClassFunction</code> and <code>InducedClassFunctions</code>,
+see <a href="CHAP070.htm#SSEC009.3">InducedClassFunction</a> and <a href="CHAP070.htm#SSEC009.4">InducedClassFunctions</a>.
+<p>
+<pre>
+gap&gt; fus:= PossibleClassFusions( a5, s5 );
+[ [ 1, 2, 3, 4, 4 ] ]
+gap&gt; InducedClassFunctionsByFusionMap( a5, s5, Irr( a5 ), fus[1] );
+[ Character( CharacterTable( "A5.2" ), [ 2, 2, 2, 2, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 6, -2, 0, 1, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 8, 0, 2, -2, 0, 0, 0 ] ),
+  Character( CharacterTable( "A5.2" ), [ 10, 2, -2, 0, 0, 0, 0 ] ) ]
+</pre>
+<p>
+<a name = "SSEC009.6"></a>
 <li><code>InducedCyclic( </code><var>tbl</var><code> ) O</code>
 <li><code>InducedCyclic( </code><var>tbl</var><code>, "all" ) O</code>
 <li><code>InducedCyclic( </code><var>tbl</var><code>, </code><var>classes</var><code> ) O</code>
@@ -2673,5 +2698,5 @@ functions.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP069.htm">Previous</a>] [<a href ="CHAP071.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

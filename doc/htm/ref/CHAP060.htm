@@ -981,8 +981,11 @@ gap&gt; DirectSumOfAlgebras( [A, A, A] );
 <a name = "SSEC008.15"></a>
 <li><code>FullMatrixAlgebraCentralizer( </code><var>F</var><code>, </code><var>lst</var><code> ) F</code>
 <p>
-Compute the centralizer of the list of matrices in the list <var>lst</var> in the 
-full matrix algebra over the ring <var>F</var>. 
+Let <var>lst</var>  be a nonempty list of square matrices of the same
+dimension <i>n</i>, say, with entries in the field <var>F</var>.
+<code>FullMatrixAlgebraCentralizer</code> returns
+the centralizer of all matrices in <var>lst</var>, inside
+the full matrix algebra of <i>n</i> &times;<i>n</i> matrices over <var>F</var>.
 <p>
 <pre>
 gap&gt; A:= QuaternionAlgebra( Rationals );;
@@ -1909,5 +1912,5 @@ gap&gt; T:=TranslatorSubalgebra( M, U, W );
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP059.htm">Previous</a>] [<a href ="CHAP061.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

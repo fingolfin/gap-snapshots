@@ -2,7 +2,7 @@
 ##
 #W  modulrow.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: modulrow.gi,v 4.38 2003/06/04 17:45:08 gap Exp $
+#H  @(#)$Id: modulrow.gi,v 4.38.2.2 2008/04/14 16:36:58 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -16,7 +16,7 @@
 ##  (See the file `modulmat.gi' for the methods for matrix modules.)
 ##
 Revision.modulrow_gi :=
-    "@(#)$Id: modulrow.gi,v 4.38 2003/06/04 17:45:08 gap Exp $";
+    "@(#)$Id: modulrow.gi,v 4.38.2.2 2008/04/14 16:36:58 stefan Exp $";
 
 
 #############################################################################
@@ -59,6 +59,20 @@ InstallOtherMethod( \^,
     "for ring and integer (delegate to `FullRowModule')",
     [ IsRing, IsInt ],
     FullRowModule );
+
+
+#############################################################################
+##
+#M  IsRowModule .  return `false' for objects which are not free left modules 
+##
+InstallOtherMethod( IsRowModule,
+                    Concatenation("return `false' for objects which are ",
+                                  "not free left modules"),
+                    true, [ IsObject ], 0,
+
+  function ( obj )
+    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  end );
 
 
 #############################################################################
@@ -149,6 +163,14 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  ViewString( <M> ) . . . . . . . . . . . . . . . . .  for full row modules
+##
+InstallMethod( ViewString, "for full row modules", true,
+               [ IsFreeLeftModule and IsFullRowModule ], 0, String );
+
+
+#############################################################################
+##
 #M  PrintObj( <M> )
 ##
 InstallMethod( PrintObj,
@@ -157,6 +179,16 @@ InstallMethod( PrintObj,
     function( M )
     Print( "( ", LeftActingDomain( M ), "^", DimensionOfVectors( M ), " )" );
     end );
+
+
+#############################################################################
+##
+#M  String( <M> ) . . . . . . . . . . . . . . . . . . .  for full row modules
+##
+InstallMethod( String, "for full row modules", true,
+               [ IsFreeLeftModule and IsFullRowModule ], 0,
+  M -> Concatenation(List(["( ",LeftActingDomain(M),"^",
+                                DimensionOfVectors(M)," )"], String)) );
 
 
 #############################################################################

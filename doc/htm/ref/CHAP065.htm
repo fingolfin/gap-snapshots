@@ -44,7 +44,7 @@ gap&gt; e:=AlgebraicExtension(Rationals,p);
 gap&gt; IsField(e);
 true
 gap&gt; a:=RootOfDefiningPolynomial(e);
-(a)
+a
 </pre>
 <p>
 <a name = "SSEC001.2"></a>
@@ -77,7 +77,7 @@ The usual field operations are applicable to algebraic elements.
 <p>
 <pre>
 gap&gt; a^3/(a^2+a+1);
-(-1/2*a+1/2*a^2-1/2*a^3)
+-1/2*a^3+1/2*a^2-1/2*a
 gap&gt; a*(1/a);
 !1
 </pre>
@@ -92,7 +92,7 @@ gap&gt; ExtRepOfObj(One(a));
 gap&gt; ExtRepOfObj(a^3+2*a-9);
 [ -9, 2, 0, 1 ]
 gap&gt; ObjByExtRep(FamilyObj(a),[3,19,-27,433]);
-(3+19*a-27*a^2+433*a^3)
+433*a^3-27*a^2+19*a+3
 </pre>
 <p>
 <font face="Gill Sans,Helvetica,Arial">GAP</font> does <strong>not</strong> embed the base field in its algebraic extensions and
@@ -103,15 +103,15 @@ list(s) with the <code>One</code> of the extension which will embed all entries 
 extension.
 <pre>
 gap&gt; m:=[[1,a],[0,1]];
-[ [ 1, (a) ], [ 0, 1 ] ]
+[ [ 1, a ], [ 0, 1 ] ]
 gap&gt; IsMatrix(m);
 false
 gap&gt; m:=m*One(e);
-[ [ !1, (a) ], [ !0, !1 ] ]
+[ [ !1, a ], [ !0, !1 ] ]
 gap&gt; IsMatrix(m);
 true
 gap&gt; m^2;
-[ [ !1, (2*a) ], [ !0, !1 ] ]
+[ [ !1, 2*a ], [ !0, !1 ] ]
 </pre>
 <p>
 <a name = "SSEC002.1"></a>
@@ -122,5 +122,5 @@ is the category for elements of an algebraic extension.
 <p>
 [<a href="../index.htm">Top</a>] [<a href = "chapters.htm">Up</a>] [<a href ="CHAP064.htm">Previous</a>] [<a href ="CHAP066.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>October 2007
+<font face="Gill Sans,Helvetica,Arial">GAP 4 manual<br>December 2008
 </font></body></html>

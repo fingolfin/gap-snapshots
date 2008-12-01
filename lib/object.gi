@@ -2,7 +2,7 @@
 ##
 #W  object.gi                   GAP library                  Martin Schoenert
 ##
-#H  @(#)$Id: object.gi,v 4.28.2.1 2007/09/05 15:06:47 gap Exp $
+#H  @(#)$Id: object.gi,v 4.28.2.5 2008/04/14 16:37:37 stefan Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -11,7 +11,7 @@
 ##  This file contains some methods applicable to objects in general.
 ##
 Revision.object_gi :=
-    "@(#)$Id: object.gi,v 4.28.2.1 2007/09/05 15:06:47 gap Exp $";
+    "@(#)$Id: object.gi,v 4.28.2.5 2008/04/14 16:37:37 stefan Exp $";
 
 
 #############################################################################
@@ -232,7 +232,6 @@ function( str, zero )
     return ShallowCopy(String( str )); 
 end );
 
-
 #############################################################################
 ##
 #M  PrintObj( <obj> )
@@ -263,6 +262,14 @@ InstallMethod( ViewObj,
     [ HasName ],
     SUM_FLAGS, # override anything specific
     function ( obj )  Print( Name( obj ) ); end );
+
+
+#############################################################################
+##
+#M  ViewString( <obj> ) . . . . . . . . . . . . . . . for an object with name
+##
+InstallMethod( ViewString, "for an object with name", true,
+               [ HasName ], 0 , Name );
 
 
 #############################################################################
@@ -522,12 +529,17 @@ InstallMethod( MemoryUsage, "fallback method for objs without subobjs",
         # a proper object, thus we have to add it to the database
         # to not count it again!
         if not(MU_AddToCache(o)) then
-            return mem + MU_MemBagHeader + MU_MemPointer;
+            mem := mem + MU_MemBagHeader + MU_MemPointer;
             # This is for the bag, the header, and the master pointer
         else 
-            return 0;   # already counted
+            mem := 0;   # already counted
+        fi;
+        if MEMUSAGECACHE.depth = 0 then   
+            # we were the first to be called, thus we have to do the cleanup
+            MEMUSAGECACHE.ids := [];
         fi;
     fi;
+    return mem;
   end );
 
 InstallMethod( MemoryUsage, "for a plist",

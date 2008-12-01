@@ -6,7 +6,7 @@ SetPackageInfo( rec(
 PackageName :=
   "TomLib",
 MyVersion :=
-  "1r1p2",
+  "1r1p4",
 MyWWWHome :=
   "http://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
@@ -18,7 +18,9 @@ Autoload :=
 Date :=
   # "06/05/2002" // Version 1.0  # the release date of GAP 4.3
   # "18/12/2003" // Version 1.1.1
-  "26/02/2004",
+  # "26/02/2004" // Version 1.1.2
+  # "28/09/2007" // Version 1.1.3
+  "20/11/2008",
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
@@ -110,7 +112,8 @@ AvailabilityTest :=
 TestFile :=
   "tst/testall.g",
 Keywords :=
-  ["table of marks", "Burnside matrix", "finite simple groups"]
+  [ "table of marks", "Burnside matrix", "subgroup lattice",
+    "finite simple groups", "Moebius function", "Euler function" ],
 ) );
 
 #############################################################################

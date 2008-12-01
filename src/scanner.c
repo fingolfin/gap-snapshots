@@ -2,7 +2,7 @@
 **
 *W  scanner.c                   GAP source                   Martin Schoenert
 **
-*H  @(#)$Id: scanner.c,v 4.62.2.1 2006/08/16 10:28:15 gap Exp $
+*H  @(#)$Id: scanner.c,v 4.62.2.3 2008/11/11 12:14:55 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -36,7 +36,7 @@
 #include        "system.h"              /* system dependent part           */
 
 const char * Revision_scanner_c =
-   "@(#)$Id: scanner.c,v 4.62.2.1 2006/08/16 10:28:15 gap Exp $";
+   "@(#)$Id: scanner.c,v 4.62.2.3 2008/11/11 12:14:55 sal Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 
@@ -61,7 +61,9 @@ const char * Revision_scanner_c =
 #include        "string.h"              /* strings                         */
 
 #include        "opers.h"               /* DoFilter...                     */
+#include        "read.h"               /* Call0ArgsInNewReader             */
 
+#include <assert.h>
 
 /****************************************************************************
 **
@@ -434,6 +436,7 @@ void            SyntaxError (
 
     /* open error output                                                   */
     OpenOutput( "*errout*" );
+    assert(Output);
 
     /* one more error                                                      */
     NrError++;
@@ -460,7 +463,9 @@ void            SyntaxError (
 	Pr( "^\n", 0L, 0L );
       }
     /* close error output                                                  */
+    assert(Output);
     CloseOutput();
+    assert(Output);
 }
 
 
@@ -1266,6 +1271,7 @@ UInt OpenOutputStream (
 */
 UInt CloseOutput ( void )
 {
+
     /* refuse to close the initial output file '*stdout*'                  */
     if ( Output == OutputFiles )
         return 0;
@@ -1490,14 +1496,14 @@ Char GetLine ( void )
         if ( Input->file == 0 ) {
             if ( ! SyQuiet ) 
                 if ( PrintPromptHook ) 
-                     CALL_0ARGS( PrintPromptHook );
+                     Call0ArgsInNewReader( PrintPromptHook );
                 else
                      Pr( "%s%c", (Int)Prompt, (Int)'\03' );
             else             Pr( "%c", (Int)'\03', 0L );
         }
         else if ( Input->file == 2 ) {
             if ( PrintPromptHook ) 
-                 CALL_0ARGS( PrintPromptHook );
+                 Call0ArgsInNewReader( PrintPromptHook );
             else
                  Pr( "%s%c", (Int)Prompt, (Int)'\03' );
         }
@@ -2014,10 +2020,12 @@ void GetSymbol ( void )
         GetStr();
         return;
     }
-    
+
     /* if no character is available then get one                           */
     if ( *In == '\0' )
+      { In--;
         GET_CHAR();
+      }
 
     /* skip over <spaces>, <tabs>, <newlines> and comments                 */
     while (*In==' '||*In=='\t'||*In=='\n'||*In=='\r'||*In=='\f'||*In=='#') {
@@ -2246,6 +2254,8 @@ void PutChrTo (
 {
     Int                 i;
     Char                str [256];
+    
+
 
     /* '\01', increment indentation level                                  */
     if ( ch == '\01' ) {

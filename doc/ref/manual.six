@@ -816,6 +816,8 @@ S 18.5. Galois Conjugacy of Cyclotomics
 F 18.5. GaloisCyc
 F 18.5. GaloisCyc
 F 18.5. ComplexConjugate
+F 18.5. RealPart
+F 18.5. ImaginaryPart
 F 18.5. StarCyc
 F 18.5. Quadratic
 F 18.5. GaloisMat
@@ -4599,6 +4601,7 @@ F 70.9. InducedClassFunction
 F 70.9. InducedClassFunctions
 F 70.9. InducedClassFunctions
 F 70.9. InducedClassFunctions
+F 70.9. InducedClassFunctionsByFusionMap
 F 70.9. InducedCyclic
 F 70.9. InducedCyclic
 F 70.9. InducedCyclic

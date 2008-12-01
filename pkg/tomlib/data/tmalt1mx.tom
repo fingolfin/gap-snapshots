@@ -2,7 +2,7 @@
 ##
 #W  tmalt1mx.tom         GAP table of marks library           Thomas Merkwitz
 ##
-#H  @(#)$Id: tmalt1mx.tom,v 4.6 2004/02/26 08:32:38 gap Exp $
+#H  @(#)$Id: tmalt1mx.tom,v 4.7 2005/12/10 12:41:15 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -12,6 +12,10 @@
 #H  tomlib history
 #H  --------------
 #H  $Log: tmalt1mx.tom,v $
+#H  Revision 4.7  2005/12/10 12:41:15  gap
+#H  typo (that made it impossible to read the file)
+#H      TB
+#H
 #H  Revision 4.6  2004/02/26 08:32:38  gap
 #H  ***&O_8^-(2)&:&The fusion from the table of marks of the maximal subgroup
 #H  $(A_8 \times 3):2$ was corrected.
@@ -73,7 +77,7 @@
 #H  ==========================================================================
 #H
 Revision.tmalt1mx_tom :=
-    "@(#)$Id: tmalt1mx.tom,v 4.6 2004/02/26 08:32:38 gap Exp $";
+    "@(#)$Id: tmalt1mx.tom,v 4.7 2005/12/10 12:41:15 gap Exp $";
 
 SetActualLibFileName("tmalt1mx");
 LIBTOM( "(A7x3):2",
@@ -12315,7 +12319,7 @@ AFLT( "(A5x3):2","A8",[1,3,3,4,4,5,6,10,13,14,16,16,17,17,16,19,34,36,37,40,
 AFLT( "3^2:2A4","3D4(2)", [1,3,5,5,4,18,21,23,50,89,88,89,448,443,462,474,
 1251,1293,1993,2515]);
 
-"AFLT("(A8x3):2","O8-(2)",[1,3,2,3,4,5,5,6,6,7,10,8,12,13,26,27,13,11,27,20,
+AFLT("(A8x3):2","O8-(2)",[1,3,2,3,4,5,5,6,6,7,10,8,12,13,26,27,13,11,27,20,
 27,22,24,23,9,29,30,37,30,38,32,33,30,31,38,39,39,38,41,34,32,33,36,40,35,42,
 35,36,43,44,45,47,79,88,53,136,119,109,94,120,62,71,137,69,136,106,59,107,65,
 132,137,139,142,142,147,75,132,142,141,150,93,92,151,151,153,152,153,155,157,

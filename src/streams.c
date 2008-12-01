@@ -3,7 +3,7 @@
 *W  streams.c                   GAP source                       Frank Celler
 *W                                                  & Burkhard Hoefling (MAC)
 **
-*H  @(#)$Id: streams.c,v 4.91 2003/06/27 08:57:36 gap Exp $
+*H  @(#)$Id: streams.c,v 4.91.2.1 2008/09/03 15:52:35 sal Exp $
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -32,7 +32,7 @@
 
 
 const char * Revision_streams_c =
-   "@(#)$Id: streams.c,v 4.91 2003/06/27 08:57:36 gap Exp $";
+   "@(#)$Id: streams.c,v 4.91.2.1 2008/09/03 15:52:35 sal Exp $";
 
 #include        "sysfiles.h"            /* file input/output               */
 
@@ -173,7 +173,7 @@ Int READ ( void )
         }
 
         /* handle quit command or <end-of-file>                            */
-        else if ( status  == STATUS_EOF) 
+        else if ( status  & (STATUS_ERROR | STATUS_EOF)) 
 	  break;
 	else if (status == STATUS_QUIT) {
 	  UserHasQuit = 1;
@@ -2397,6 +2397,8 @@ Obj FuncExecuteProcess (
     for ( i--;  0 < i;  i-- ) {
         ExecCArgs[i] = CSTR_STRING(ExecArgs[i]);
     }
+    if (SyWindow && out == INTOBJ_INT(1)) /* standard output */
+      syWinPut( INT_INTOBJ(out), "@z","");
 
     /* execute the process                                                 */
     res = SyExecuteProcess( CSTR_STRING(dir),
@@ -2405,6 +2407,8 @@ Obj FuncExecuteProcess (
                             INT_INTOBJ(out),
                             ExecCArgs );
 
+    if (SyWindow && out == INTOBJ_INT(1)) /* standard output */
+      syWinPut( INT_INTOBJ(out), "@mAgIc","");
     return res == 255 ? Fail : INTOBJ_INT(res);
 }
 

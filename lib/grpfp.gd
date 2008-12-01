@@ -2,7 +2,7 @@
 ##
 #W  grpfp.gd                    GAP library                    Volkmar Felsch
 ##
-#H  @(#)$Id: grpfp.gd,v 4.66.2.1 2005/12/08 18:15:28 gap Exp $
+#H  @(#)$Id: grpfp.gd,v 4.66.2.2 2008/10/15 15:43:13 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  (fp groups).
 ##
 Revision.grpfp_gd :=
-    "@(#)$Id: grpfp.gd,v 4.66.2.1 2005/12/08 18:15:28 gap Exp $";
+    "@(#)$Id: grpfp.gd,v 4.66.2.2 2008/10/15 15:43:13 gap Exp $";
 
 
 #############################################################################
@@ -615,6 +615,42 @@ DeclareGlobalFunction("NewmanInfinityCriterion");
 ##
 ##  If <r> is ommitted, it defaults to 2.
 DeclareGlobalFunction("FibonacciGroup");
+
+
+#############################################################################
+##
+#F  ParseRelators(<gens>,<rels>)
+##
+##  <#GAPDoc Label="ParseRelators">
+##  <ManSection>
+##  <Func Name="ParseRelators" Arg='gens, rels'/>
+##
+##  <Description>
+##  Will translate a list of relations as given in print, e.g.
+##  <M>x y^2 = (x y^3 x)^2 xy = yzx</M> into relators.
+##  <A>gens</A> must be a list of generators of a free group,
+##  each being displayed by a single letter.
+##  <A>rels</A> is a string that lists a sequence of equalities.
+##  These must be written in the letters which are the names of
+##  the generators in <A>gens</A>.
+##  Change of upper/lower case is interpreted to indicate inverses.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> g:=FreeGroup("x","y","z");;
+##  gap> AssignGeneratorVariables(f);
+##  #I  Assigned the global variables [ x, y, z ]
+##  gap> r:=ParseRelators([x,y,z],
+##  > "x^2 = y^5 = z^3 = (xyxyxy^4)^2 = (xz)^2 = (y^2z)^2 = 1");
+##  [ x^2, y^5, z^3, x*z*x*z, y^2*z*y^2*z, x*y*x*y*x*y^4*x*y*x*y*x*y^4 ]
+##  gap> g:=f/r;
+##  <fp group on the generators [ x, y, z ]>
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("ParseRelators");
+
 
 #############################################################################
 ##

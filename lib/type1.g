@@ -2,7 +2,7 @@
 ##
 #W  type1.g                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: type1.g,v 4.9.2.1 2004/01/08 23:12:57 gap Exp $
+#H  @(#)$Id: type1.g,v 4.9.2.2 2008/11/20 14:20:54 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
@@ -12,7 +12,7 @@
 ##  where they will be compiled by default
 ##
 Revision.type1_g :=
-    "@(#)$Id: type1.g,v 4.9.2.1 2004/01/08 23:12:57 gap Exp $";
+    "@(#)$Id: type1.g,v 4.9.2.2 2008/11/20 14:20:54 gap Exp $";
 
 #############################################################################
 ##
@@ -527,20 +527,31 @@ BIND_GLOBAL( "ReObjectify", ChangeTypeObj );
 ##
 Unbind( SetFilterObj );
 BIND_GLOBAL( "SetFilterObj", function ( obj, filter )
+local type, newtype;
+
     if IS_POSOBJ( obj ) then
-      SET_TYPE_POSOBJ( obj, Subtype2( TYPE_OBJ(obj), filter ) );
-      if not IsNoImmediateMethodsObject(obj) then
-	RunImmediateMethods( obj, FLAGS_FILTER( filter ) );
+      type:= TYPE_OBJ( obj );
+      newtype:= Subtype2( type, filter );
+      SET_TYPE_POSOBJ( obj, newtype );
+      if not ( IGNORE_IMMEDIATE_METHODS
+               or IsNoImmediateMethodsObject(obj) ) then
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
       fi;
     elif IS_COMOBJ( obj ) then
-      SET_TYPE_COMOBJ( obj, Subtype2( TYPE_OBJ(obj), filter ) );
-      if not IsNoImmediateMethodsObject(obj) then
-	RunImmediateMethods( obj, FLAGS_FILTER( filter ) );
+      type:= TYPE_OBJ( obj );
+      newtype:= Subtype2( type, filter );
+      SET_TYPE_COMOBJ( obj, newtype );
+      if not ( IGNORE_IMMEDIATE_METHODS
+               or IsNoImmediateMethodsObject(obj) ) then
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
       fi;
     elif IS_DATOBJ( obj ) then
-      SET_TYPE_DATOBJ( obj, Subtype2( TYPE_OBJ(obj), filter ) );
-      if not IsNoImmediateMethodsObject(obj) then
-	RunImmediateMethods( obj, FLAGS_FILTER( filter ) );
+      type:= TYPE_OBJ( obj );
+      newtype:= Subtype2( type, filter );
+      SET_TYPE_DATOBJ( obj, newtype );
+      if not ( IGNORE_IMMEDIATE_METHODS
+               or IsNoImmediateMethodsObject(obj) ) then
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
       fi;
     elif IS_PLIST_REP( obj )  then
         SET_FILTER_LIST( obj, filter );

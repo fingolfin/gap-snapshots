@@ -7,14 +7,14 @@
 #W                                                         & Martin Schoenert
 #W                                                              & Alex Wegner
 ##
-#H  @(#)$Id: integer.gi,v 4.67.2.6 2006/08/28 15:52:58 gap Exp $
+#H  @(#)$Id: integer.gi,v 4.67.2.7 2008/11/21 08:01:28 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 Revision.integer_gi :=
-    "@(#)$Id: integer.gi,v 4.67.2.6 2006/08/28 15:52:58 gap Exp $";
+    "@(#)$Id: integer.gi,v 4.67.2.7 2008/11/21 08:01:28 gap Exp $";
 
 
 #############################################################################
@@ -27,6 +27,7 @@ InstallValue( Integers, Objectify( NewType(
     rec() ) );
 
 SetName( Integers, "Integers" );
+SetString( Integers, "Integers" );
 SetIsLeftActedOnByDivisionRing( Integers, false );
 SetSize( Integers, infinity );
 SetLeftActingDomain( Integers, Integers );
@@ -46,6 +47,7 @@ InstallValue( NonnegativeIntegers, Objectify( NewType(
     rec() ) );
 
 SetName( NonnegativeIntegers, "NonnegativeIntegers" );
+SetString( NonnegativeIntegers, "NonnegativeIntegers" );
 SetSize( NonnegativeIntegers, infinity );
 SetGeneratorsOfSemiringWithZero( NonnegativeIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagmaWithZero( NonnegativeIntegers, [ 1 ] );
@@ -62,6 +64,7 @@ InstallValue( PositiveIntegers, Objectify( NewType(
     rec() ) );
 
 SetName( PositiveIntegers, "PositiveIntegers" );
+SetString( PositiveIntegers, "PositiveIntegers" );
 SetSize( PositiveIntegers, infinity );
 SetGeneratorsOfSemiring( PositiveIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagma( PositiveIntegers, [ 1 ] );
@@ -79,6 +82,7 @@ InstallValue( GaussianIntegers, Objectify( NewType(
 
 SetLeftActingDomain( GaussianIntegers, Integers );
 SetName( GaussianIntegers, "GaussianIntegers" );
+SetString( GaussianIntegers, "GaussianIntegers" );
 SetIsLeftActedOnByDivisionRing( GaussianIntegers, false );
 SetSize( GaussianIntegers, infinity );
 SetGeneratorsOfRing( GaussianIntegers, [ E(4) ] );
