@@ -107,10 +107,10 @@ Use the `-win.zip' or the `.zoo' archives.
 Now get the installation archives of the right kind, according to your
 operating system. You want to get the archives:
 \beginitems
-`gap4r4p11'&
+`gap4r4p12'&
 which contains the main {\GAP} installation
 
-`packages4r4p11'&
+`packages4r4p12'&
 which contains {\GAP} packages that provide further functionality
 
 `unzoo'&
@@ -118,14 +118,14 @@ Only if you use the `.zoo' archives: Unix and OS X users get the source code
 `unzoo.c', MacOS users get the `.sit' archive and Windows users
 the `.exe' binary.
 
-`htmie4r4p11'&
+`htmie4r4p12'&
 An alternative version of the HTML manual which uses a nonstandard
 ``symbol'' font instead of Unicode characters. If you use a webbrowser such
 as `Internet Explorer' that has difficulties with rendering Unicode
 correctly, you might want to replace the HTML documentation with this
 version. (See section~"The Documentation".)
 
-`xtom4r4p11'&
+`xtom4r4p12'&
 Contains about 80MB of further tables of marks. (You can always install this
 later if the need arises.)
 \enditems
@@ -142,12 +142,12 @@ system and the type of archive used.
 
 \beginitems
 Unix, OS X&
-Under Unix or OS X unpack the archive `gap4r4p11' in whatever
+Under Unix or OS X unpack the archive `gap4r4p12' in whatever
 place you want {\GAP} to reside. If you use the `.zoo' archive, you will
 have to compile the `unzoo' program first
 \begintt
 cc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p11.zoo
+./unzoo -x gap4r4p12.zoo
 \endtt
 
 (If you unpack the archive as `root' user under UNIX, make sure that you
@@ -158,9 +158,9 @@ MacOS&
 if the `.sit' archive did not extract autmatically, click it to force
 extraction. You will end up with an applications,
 `unzoo 4.4 PPC'. 
-Now move this applications, as well as the `gap4r4p11.zoo'
+Now move this applications, as well as the `gap4r4p12.zoo'
 archive to the Folder in which you want to install {\GAP}. Drag the archive
-`gap4r4p11.zoo onto the icon of `unzoo 4.4 PPC'. You will get a
+`gap4r4p12.zoo onto the icon of `unzoo 4.4 PPC'. You will get a
 window with many lines of text output.
 This process will create a folder `gap4r4' in the current folder.
 
@@ -168,13 +168,13 @@ Windows&
 The archive must be extracted to the *main* directory of the `C:' drive. (If
 you do not have permissions or sufficient free space to create directories
 there, see section~"Expert Windows installation".) If you use the `.zoo'
-archives we provide move `unzoo.exe' and  `gap4r4p11.zoo' in the
+archives we provide move `unzoo.exe' and  `gap4r4p12.zoo' in the
 `C:' directory, open the `MS-DOS' (or `Command Prompt') window. (You can
 find this under ``Start/Programs/Accessories''.)
 In this window issue the commands
 \begintt
 cd c:\
-unzoo -x gap4r4p11.zoo
+unzoo -x gap4r4p12.zoo
 \endtt
 (It might be necessary to use upper case letters instead)
 
@@ -332,7 +332,7 @@ this.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{Packages}
 
-To extract the packages, extract the `package4r4p11' archive *in*
+To extract the packages, extract the `package4r4p12' archive *in*
 the ``gap4r4/pkg' directory by the same method used to extracted
 the main archive. (If you use `unzoo' or under MacOS move both the `unzoo'
 binary and the archive in the `pkg' directory and extract there.)
@@ -405,13 +405,13 @@ There also  is (if  installed) an  HTML version  of some  books that  can be
 viewed with an  HTML browser, see~"Changing the Help Viewer".  Some of these
 use  *unicode  characters*  for  mathematical  formulae.  If your browser
 is not able to display these (older versions of `Internet Explorer' do not),
-get the `htmie4r4p11' archive which provides math symbols in a
+get the `htmie4r4p12' archive which provides math symbols in a
 different encoding. (`Mozilla', `Konqueror' and `Safari' all support unicode
 characters.)
 
 The manual is also available in `pdf' format.
 In the full UNIX
-distribution (`gap4r4p11.zoo') these files are included in the
+distribution (`gap4r4p12.zoo') these files are included in the
 directory
 `gap4r4/doc'  in the
 subdirectories  `tut' (a  beginner{\pif}s  tutorial),  `ref' (the  reference
@@ -597,7 +597,7 @@ session containing both input and output that illustrates your problem
 
 \item{$\bullet$} state the type of machine, operating system,
 (compiler used, if UNIX/Linux) and version of {\GAP} (for example
-``gap4r4p11, fix1'') you are using
+``gap4r4p12, fix1'') you are using
 (the line after the {\GAP}~4 banner starting:
 \begintt
 GAP4, Version: 4...
@@ -834,12 +834,12 @@ you want to install {\GAP}, and copy the archives (and the unzoo program if
 you want to use `zoo') in this directory. Then extract the archive by
 the command
 \begintt
-tar zxvf gap4r4p11.tar.gz
+tar zxvf gap4r4p12.tar.gz
 \endtt
 (respectively -- if you prefer `zoo' -- 
 \begintt
 gcc -o unzoo -DSYS_IS_UNIX -O unzoo.c
-./unzoo -x gap4r4p11.zoo
+./unzoo -x gap4r4p12.zoo
 \endtt
 )
 
@@ -873,7 +873,7 @@ for an overview over the features of {\GAP} for MacOS.
 \Section{Installation of GAP for MacOS}
 
 Installing {\GAP} under MacOS is fairly easy. First, decide into which 
-folder you want to install {\GAP} 4.4.11.
+folder you want to install {\GAP} 4.4.12.
 {\GAP} will be installed in a subfolder `gap4r4' of this folder.
 You can later move {\GAP} to a different location.
 
@@ -885,7 +885,7 @@ If you encounter problems please also see section~"If Things Go Wrong" of
 this document.
 
 Get the Mac-specific files described  in  "Get the  Archives",  that  is,  the
-distribution   `gap4r4p11.zoo' and the    binary    archive
+distribution   `gap4r4p12.zoo' and the    binary    archive
 `unzoo4r4-PPC.sit',
 
 How you can get those
@@ -910,13 +910,13 @@ The following installation example assumes that you are installing {\GAP}
 in the folder `Applications' on a PowerPC Macintosh. (For a 68k Macintosh 
 you should replace all references to `PPC' to ones referring to `68K'
 
-Move the file `gap4r4p11.zoo' into the folder `Applications'
+Move the file `gap4r4p12.zoo' into the folder `Applications'
 and drag it onto the icon of `unzoo 4.4 PPC'. You will get many lines of 
 output in this window. 
 
 This should have created a folder `gap4r4' in the current folder.
 
-(You will not need the file `gap4r4p11.zoo' any
+(You will not need the file `gap4r4p12.zoo' any
 longer. If you are short of disk space you can remove it now.)
 
 If you got not the full distribution file but several small files, extract
