@@ -1,0 +1,79 @@
+  
+  [1XC Overview of the [5XModules[1X Package Source Code[0X
+  
+  
+  [1XC.1 Relations and Generators[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m | Content                         
+      ----------------------------------------------------
+        [11XHomalgRingMap[0m    | operations and methods ring maps
+                         |                                 
+        [11XHomalgRelations[0m  | a set of relations              
+        [11XSetsOfRelations[0m  | several sets of relations       
+        [11XHomalgGenerators[0m | a set of generators             
+        [11XSetsOfGenerators[0m | several sets of generators      
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files[0m
+  
+  
+  
+  [1XC.2 The Basic Objects[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m       | Content                                       
+      ------------------------------------------------------------------------
+        [11XHomalgModule[0m           | modules allowing several presentations        
+                               | linked with transition matrices               
+                               |                                               
+        [11XHomalgSubmodule[0m        | submodules allowing several sets of generators
+                               |                                               
+        [11XHomalgMap[0m              | maps allowing several presentations           
+                               | of their source and target                    
+                               |                                               
+        [11XHomalgFiltration[0m       | filtration of a module                        
+                               |                                               
+        [11XHomalgComplex[0m          | (co)complexes of modules or of (co)complexes  
+                               |                                               
+        [11XHomalgChainMap[0m         | chain maps of (co)complexes                   
+                               | consisting of maps or chain maps              
+                               |                                               
+        [11XHomalgBicomplex[0m        | bicomplexes of modules or of (co)complexes    
+                               |                                               
+        [11XHomalgBigradedObject[0m   | (differential) bigraded modules               
+                               |                                               
+        [11XHomalgSpectralSequence[0m | homological and cohomological                 
+                               | spectral sequences                            
+                               |                                               
+        [11XHomalgDiagram[0m          | Betti diagrams                                
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  
+  
+  [1XC.3 The High Level Homological Algorithms[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m | Content                                         
+      --------------------------------------------------------------------
+        [11XModules[0m          | subfactors, resolutions,                        
+                         | parameterizations, intersections, annihilators  
+        [11XToolFunctors[0m     | zero map, composition, addition, substraction,  
+                         | stacking, augmentation, and post dividing maps  
+        [11XBasicFunctors[0m    | cokernel, image, kernel, tensor product, Hom,   
+                         | Ext, Tor, RHom, LTensorProduct, HomHom, LHomHom,
+                         | BaseChange (preliminary)                        
+        [11XOtherFunctors[0m    | direct sum                                      
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  
+  
+  [1XC.4 Logical Implications for [5Xhomalg[1X Objects[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m | Content                                      
+      -----------------------------------------------------------------
+        [11XLIMOD[0m            | logical implications for modules             
+                         |                                              
+        [11XLIHOM[0m            | logical implications for module homomorphisms
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  

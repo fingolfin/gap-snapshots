@@ -1,0 +1,38 @@
+\begin{thebibliography}{Sim94}
+
+\bibitem[AE05]{AEi05}
+B.~Assmann and B.~Eick.
+\newblock Computing polycyclic presentations for polycyclic rational matrix
+  groups.
+\newblock {\em J. Symbolic Comput.}, 40(6):1269--1284, 2005.
+
+\bibitem[Ass03]{Assmann}
+B.~Assmann.
+\newblock Polycyclic presentations for matrix groups.
+\newblock Diplomarbeit, TU Braunschweig, 2003.
+\newblock \href {http://www.icm.tu-bs.de/ag_algebra/software/assmann}
+  {\texttt{http://www.icm.tu-bs.de/}\discretionary
+  {}{}{}\texttt{ag{\textunderscore}algebra/}\discretionary
+  {}{}{}\texttt{software/}\discretionary {}{}{}\texttt{assmann}}.
+
+\bibitem[Eic01]{Eick}
+B.~Eick.
+\newblock Algorithms for polycyclic groups.
+\newblock Habilitationsschrift, Gesamthochschule Kassel, 2001.
+
+\bibitem[EN00]{Polycyclic}
+B.~Eick and W.~Nickel.
+\newblock {\em Polycyclic}, 2000.
+\newblock GAP package.
+
+\bibitem[Ost96]{Ostheimer}
+G.~Ostheimer.
+\newblock {\em Algorithms for Polycyclic-by-finite groups}.
+\newblock PhD thesis, Rutgers University, 1996.
+
+\bibitem[Sim94]{Sims}
+C.~C. Sims.
+\newblock {\em Computation with finitely presented groups}.
+\newblock Cambridge University Press, 1994.
+
+\end{thebibliography}

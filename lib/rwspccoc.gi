@@ -2,16 +2,13 @@
 ##
 #W  rwspccoc.gi                 GAP Library                     Werner Nickel
 ##
-#H  $Id: rwspccoc.gi,v 4.3.4.1 2005/12/03 16:28:29 gap Exp $
 ##
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This files implements a combinatorial collector as an extension of the
 ##  representation of a single collector as defined in rwspcsng.gi.
 ##
-Revision.rwspccoc_gi :=
-    "@(#)$Id: rwspccoc.gi,v 4.3.4.1 2005/12/03 16:28:29 gap Exp $";
 
 
 #############################################################################

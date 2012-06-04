@@ -1,0 +1,77 @@
+  
+  [1X9 Module Elements[0X
+  
+  An  element of a module M is internally represented by a module map from the
+  (distinguished)  rank 1 free module to the module M. In particular, the data
+  structure  for  module  elements  automatically  profits  from the intrinsic
+  realization of morphisms in the [5Xhomalg[0m project.
+  
+  
+  [1X9.1 Module Elements: Category and Representations[0X
+  
+  [1X9.1-1 IsHomalgElement[0m
+  
+  [2X> IsHomalgElement( [0X[3XM[0X[2X ) _____________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of module elements.
+  
+  [1X9.1-2 IsElementOfAModuleGivenByAMorphismRep[0m
+  
+  [2X> IsElementOfAModuleGivenByAMorphismRep( [0X[3XM[0X[2X ) _________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of elements of modules.
+  
+  (It   is   a   subrepresentation  of  [2XIsElementOfAnObjectGivenByAMorphismRep[0m
+  ([14Xhomalg: IsElementOfAnObjectGivenByAMorphismRep[0m).)
+  
+  
+  [1X9.2 Module Elements: Constructors[0X
+  
+  
+  [1X9.3 Module Elements: Properties[0X
+  
+  [1X9.3-1 IsElementOfIntegers[0m
+  
+  [2X> IsElementOfIntegers( [0X[3Xm[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [3Xm[0m is an element of the integers viewed as a module over itself.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> a := HomalgElement( HomalgMap( "[[2]]", 1 * ZZ, 1 * ZZ ) );[0X
+    [4X2[0X
+    [4Xgap> IsElementOfIntegers( a );[0X
+    [4Xtrue[0X
+    [4Xgap> Z4 := ZZ / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> b := HomalgElement( HomalgMap( "[[-1]]", 1 * Z4, 1 * Z4 ) );[0X
+    [4X|[ 3 ]|[0X
+    [4Xgap> IsElementOfIntegers( b );[0X
+    [4Xfalse[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X9.4 Module Elements: Attributes[0X
+  
+  
+  [1X9.5 Module Elements: Operations and Functions[0X
+  
+  [1X9.5-1 HomalgRing[0m
+  
+  [2X> HomalgRing( [0X[3Xm[0X[2X ) _________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The [5Xhomalg[0m ring of the [5Xhomalg[0m module element [3Xm[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> a := HomalgElement( HomalgMap( "[[2]]", 1 * ZZ, 1 * ZZ ) );[0X
+    [4X2[0X
+    [4XIsIdenticalObj( ZZ, HomalgRing( a ) );[0X
+  [4X------------------------------------------------------------------[0X
+  

@@ -2,10 +2,9 @@
 ##
 #W  sparsevectorsorted.gi       GAP library                      Steve Linton
 ##
-#H  @(#)$Id: sparsevectorsorted.gi,v 4.2 2002/04/15 10:05:23 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains a constructor specifically for sparse vectors
@@ -13,8 +12,6 @@
 ##  
 ##
 
-Revision.sparsevectorsorted_gi :=
-  "@(#)$Id: sparsevectorsorted.gi,v 4.2 2002/04/15 10:05:23 sal Exp $";
 
 
 #############################################################################
@@ -87,14 +84,35 @@ end);
 #M  ZeroOp                 
 ##
 
-InstallMethod(ZeroOp, [IsSparseRowVector and IsSparseListBySortedListRep and IsAdditiveElement], 
+InstallMethod(ZeroMutable, [IsSparseRowVector and IsSparseListBySortedListRep and IsAdditiveElement], 
         s-> SparseVectorBySortedListNC([],[],s![SL_LENGTH], s![SL_DEFAULT]));
+
+InstallMethod(ZeroSameMutability, [IsSparseRowVector and IsSparseListBySortedListRep and IsAdditiveElement], 
+        function(s)
+    local v;
+    v := SparseVectorBySortedListNC([],[],s![SL_LENGTH], s![SL_DEFAULT]);
+    if not IsMutable(s) then
+        MakeImmutable(v);
+    fi;
+    return v;
+end);
 
 
     
 InstallMethod(AdditiveInverseOp, [IsSparseRowVector and IsSparseListBySortedListRep],
         s-> SparseVectorBySortedListNC(s![SL_POSS], AdditiveInverseOp(s![SL_VALS]),
                 s![SL_LENGTH], s![SL_DEFAULT]));
+
+InstallMethod(AdditiveInverseSameMutability, [IsSparseRowVector and IsSparseListBySortedListRep and IsAdditiveElement], 
+        function(s)
+    local v;
+    v := SparseVectorBySortedListNC(s![SL_POSS], AdditiveInverseOp(s![SL_VALS]),
+                s![SL_LENGTH], s![SL_DEFAULT]);
+    if not IsMutable(s) then
+        MakeImmutable(v);
+    fi;
+    return v;
+end);
 
 InstallMethod(\+, IsIdenticalObj, [IsSparseRowVector and IsSparseListBySortedListRep, IsSparseRowVector and IsSparseListBySortedListRep], 
         function(s1,s2)
@@ -259,6 +277,9 @@ InstallMethod( \*, [IsSparseRowVector and IsSparseListBySortedListRep, IsMultipl
     if IsList(x) then 
         TryNextMethod();
     fi;
+    if x = v![SL_DEFAULT] then
+        return ZeroSameMutability(v);
+    fi;
     return SparseVectorBySortedListNC( v![SL_POSS], v![SL_VALS]*x,
                    v![SL_LENGTH], v![SL_DEFAULT]);
 end);
@@ -267,6 +288,9 @@ InstallMethod( \*, [IsMultiplicativeElement, IsSparseRowVector and IsSparseListB
         function(x,v)
     if IsList(x) then 
         TryNextMethod();
+    fi;
+    if x = v![SL_DEFAULT] then
+        return ZeroSameMutability(v);
     fi;
     return SparseVectorBySortedListNC( v![SL_POSS], x*v![SL_VALS],
                    v![SL_LENGTH], v![SL_DEFAULT]);
@@ -391,6 +415,9 @@ InstallOtherMethod( AddCoeffs, IsFamFamX, [IsSparseListBySortedListRep and
         IsSparseRowVector, IsMultiplicativeElement],
                 function(s1,s2, x)
     local i1,i2, rposs, rvals,poss1,poss2,vals1,vals2, len1,len2,s,llen;
+    if IsZero(x) then
+        return;
+    fi;
     i1 := 1;
     i2 := 1;
     rposs := [];

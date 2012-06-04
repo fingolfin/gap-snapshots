@@ -1,0 +1,111 @@
+  
+  
+                                  [1X[5XHomalgToCAS[0m[1X[0m
+  
+  
+                          [1XA window to the outer world[0m
+  
+  
+                               Version 2012.05.24
+  
+  
+                                    May 2012
+  
+  
+                                Mohamed Barakat
+  
+                                 Thomas Breuer
+  
+                                 Simon Görtzen
+  
+                                  Frank Lübeck
+  
+  
+  
+            ([13Xthis manual is still under construction[0m)
+            This  manual  is  best  viewed  as an [12XHTML[0m document. The
+            latest version is available [12Xonline[0m at:
+            [7Xhttp://homalg.math.rwth-aachen.de/~barakat/homalg-project/HomalgToCAS/chap0.html[0m
+            An   [12Xoffline[0m   version   should   be   included  in  the
+            documentation subfolder of the package.
+            This package is part of the [5Xhomalg[0m-project:
+            [7Xhttp://homalg.math.rwth-aachen.de/index.php/core-packages/homalgtocas[0m
+  
+  
+  
+  Mohamed Barakat
+      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[0m
+      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[0m
+      Address:  Department of Mathematics,
+                University of Kaiserslautern,
+                67653 Kaiserslautern,
+                Germany
+  
+  
+  Thomas Breuer
+      Email:    [7Xmailto:sam@math.rwth-aachen.de[0m
+      Homepage: [7Xhttp://www.math.rwth-aachen.de/~Thomas.Breuer/[0m
+      Address:  Lehrstuhl D für Mathematik, RWTH-Aachen,
+                Templergraben 64
+                52062 Aachen
+                Germany
+  
+  
+  Simon Görtzen
+      Email:    [7Xmailto:simon.goertzen@rwth-aachen.de[0m
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/goertzen/[0m
+      Address:  Lehrstuhl B für Mathematik, RWTH-Aachen,
+                Templergraben 64
+                52062 Aachen
+                Germany
+  
+  
+  Frank Lübeck
+      Email:    [7Xmailto:frank.luebeck@math.rwth-aachen.de[0m
+      Homepage: [7Xhttp://www.math.rwth-aachen.de/~Frank.Luebeck/[0m
+      Address:  Lehrstuhl D für Mathematik, RWTH-Aachen,
+                Templergraben 64
+                52062 Aachen
+                Germany
+  
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[0m
+  ©  2007-2012  by  Mohamed  Barakat,  Thomas Breuer, Simon Görtzen, and Frank
+  Lübeck.
+  
+  This  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[0m
+  We  are very much indebted to Max Neunhöffer who provided the first piece of
+  code   around   which  the  package  [5XIO_ForHomalg[0m  was  built.  The  package
+  [5XHomalgToCAS[0m   provides   a   further   abstraction   layer   preparing   the
+  communication.
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (HomalgToCAS)[0X
+  
+  1 Introduction
+    1.1 [5XHomalgToCAS[0m provides ...
+  2 Installation of the [5XHomalgToCAS[0m Package
+  3 Watch and Influence the Communication
+    3.1 Functions
+      3.1-1 homalgIOMode
+    3.2 The Pictograms
+      3.2-1 HOMALG_IO.Pictograms
+  4 External Rings
+    4.1 External Rings: Representation
+      4.1-1 IsHomalgExternalRingRep
+    4.2 Rings: Constructors
+    4.3 External Rings: Operations and Functions
+  A Overview of the [5Xhomalg[0m Package Source Code
+  
+  
+  -------------------------------------------------------

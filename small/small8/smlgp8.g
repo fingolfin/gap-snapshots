@@ -6,8 +6,6 @@
 ##  This file contains the reading and constrution functions for the groups
 ##  of size 1536.
 ##
-Revision.smlgp8_g :=
-    "@(#)$Id: smlgp8.g,v 1.3.4.1 2005/05/03 14:24:19 gap Exp $";
 
 #############################################################################
 ##
@@ -36,7 +34,7 @@ end;
 ##
 SMALL_GROUP_FUNCS[ 14 ] := function( size, i, inforec )
     local j, k, n1, t, pos, ind, g, file, c, DATA, p, nrs, sid, rank,
-          aut, op1, op2, S, exp, F, gens, rel, rels, id, rrf, rrs,
+          aut, op, op1, op2, S, exp, F, gens, rel, rels, id, rrf, rrs,
           zs, z2s, zf, z2f, ff, lf, llf, sf, ucs, ucf, cf, cs, ss, indf;
 
     if i > 408641062 then 

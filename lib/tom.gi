@@ -1,12 +1,11 @@
 #############################################################################
 ##
-#W  tom.gi                   GAP library                       Goetz Pfeiffer
+#W  tom.gi                   GAP library                        Götz Pfeiffer
 #W                                                          & Thomas Merkwitz
 ##
-#H  @(#)$Id: tom.gi,v 4.50.2.2 2006/02/23 16:25:40 jjm Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for tables of marks.
@@ -25,8 +24,6 @@
 ##  12. The Interface between Tables of Marks and Character Tables
 ##  13. Generic Construction of Tables of Marks
 ##
-Revision.tom_gi :=
-    "@(#)$Id: tom.gi,v 4.50.2.2 2006/02/23 16:25:40 jjm Exp $";
 
 
 #############################################################################
@@ -65,7 +62,7 @@ InstallMethod( TableOfMarks,
     "for a cyclic group",
     [ IsGroup and IsCyclic ],
     function( G )
-    local n, tom, gens, gen, subs, marks, classNames,
+    local n, c, tom, gens, gen, subs, marks, classNames,
           name, i, j, divs, index;
 
     n:= Size( G );
@@ -74,6 +71,7 @@ InstallMethod( TableOfMarks,
 
     # initialize
     divs:= DivisorsInt( n );
+    c:= Length( divs );
     subs:= [];
     marks:= [];
     classNames:=[];
@@ -89,10 +87,10 @@ InstallMethod( TableOfMarks,
       gen:= One( G );
     fi;
     gens:= [ List( divs, d -> gen^(n/d) ),
-             List( [ 1 .. Length( divs ) ], i -> [ i ] ) ];
+             List( [ 1 .. c ], i -> [ i ] ) ];
 
     # construct each subgroup (each divisor)
-    for i in [ 1 .. Length( divs ) ] do
+    for i in [ 1 .. c ] do
 
       classNames[i]:= String( divs[i] );
       ConvertToStringRep( classNames[i] );
@@ -120,8 +118,8 @@ InstallMethod( TableOfMarks,
     tom:= rec( Identifier                := name,
                SubsTom                   := subs,
                MarksTom                  := marks,
-               NormalizersTom            := List( [ 1 .. n ], x -> n ),
-               DerivedSubgroupsTomUnique := List( [ 1 .. n ], x -> 1 ),
+               NormalizersTom            := List( [ 1 .. c ], x -> c ),
+               DerivedSubgroupsTomUnique := List( [ 1 .. c ], x -> 1 ),
                UnderlyingGroup           := G,
                GeneratorsSubgroupsTom    := gens );
 
@@ -924,11 +922,14 @@ InstallMethod( TableOfMarks,
 #F  TableOfMarksFromLibrary( <name> )
 ##
 ##  The `TableOfMarks' method for a string calls `TableOfMarksFromLibrary'.
-##  We bind this to a dummy function that signals an error.
+##  If the library of tables of marks is not available then we bind this
+##  to a dummy function that signals an error.
 ##
-BindGlobal( "TableOfMarksFromLibrary", function( arg )
-    Error( "sorry, the GAP Tables Of Marks Library is not installed" );
-    end );
+#if not IsBoundGlobal( "TableOfMarksFromLibrary" ) then
+#  BindGlobal( "TableOfMarksFromLibrary", function( arg )
+#      Error( "sorry, the GAP Tables Of Marks Library is not installed" );
+#      end );
+#fi;
 
 
 #############################################################################
@@ -1952,9 +1953,17 @@ InstallMethod( IsInternallyConsistent,
     "for a table of marks, decomposition test",
     [ IsTableOfMarks ],
     function( tom )
-    local i, test;
+    local test, g, i;
 
     test:= true;
+
+    # Check that the underlying group has the right order.
+    if HasUnderlyingGroup( tom ) then
+      g:= UnderlyingGroup( tom );
+      if Size( g ) <> Size( Group( GeneratorsOfGroup( g ), One( g ) ) ) then
+        return false;
+      fi;
+    fi;
 
     for i in [ 1 .. Length( SubsTom( tom ) ) ] do
       if not TestRow( tom, i ) then
@@ -1984,9 +1993,8 @@ InstallMethod( DerivedSubgroupTom,
       return DerivedSubgroupsTomUnique( tom )[ sub ];
     fi;
 
-    poss:= DerivedSubgroupsTomPossible( tom );
-
     # Perhaps this is not the first time one has asked for this value.
+    poss:= DerivedSubgroupsTomPossible( tom );
     if IsBound( poss[ sub ] ) then
       return poss[ sub ];
     fi;
@@ -2807,7 +2815,7 @@ InstallMethod( FactorGroupTom,
 
     if IsTableOfMarksWithGens( tom ) then
 
-      hom:= NaturalHomomorphismByNormalSubgroup( UnderlyingGroup( tom ),
+      hom:= NaturalHomomorphismByNormalSubgroupNC( UnderlyingGroup( tom ),
                 RepresentativeTom( tom, nor ) );
       facgroup:= ImagesSource( hom );
 
@@ -2843,6 +2851,8 @@ InstallMethod( FactorGroupTom,
 ##
 #M  MaximalSubgroupsTom( <tom> )
 #M  MaximalSubgroupsTom( <tom>, <sub>)
+##
+##  Note that we assume that the table of marks has lower triangular shape.
 ##
 InstallMethod( MaximalSubgroupsTom,
     "for a table of marks",

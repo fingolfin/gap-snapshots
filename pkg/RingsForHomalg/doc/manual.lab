@@ -1,0 +1,46 @@
+\makelabel{ringsforhomalg:Title page}{}
+\makelabel{ringsforhomalg:Copyright}{}
+\makelabel{ringsforhomalg:Table of Contents}{}
+\makelabel{ringsforhomalg:Introduction}{1}
+\makelabel{ringsforhomalg:Ring Constructions for Supported External Computer Algebra Systems}{1.1}
+\makelabel{ringsforhomalg:external GAP}{1.1.1}
+\makelabel{ringsforhomalg:Singular}{1.1.2}
+\makelabel{ringsforhomalg:MAGMA}{1.1.3}
+\makelabel{ringsforhomalg:Macaulay2}{1.1.4}
+\makelabel{ringsforhomalg:Sage}{1.1.5}
+\makelabel{ringsforhomalg:Maple}{1.1.6}
+\makelabel{ringsforhomalg:Installation of the RingsForHomalg Package}{2}
+\makelabel{ringsforhomalg:The Ring Table}{3}
+\makelabel{ringsforhomalg:An Example for a Ring Table - Singular}{3.1}
+\makelabel{ringsforhomalg:Bibliography}{Bib}
+\makelabel{ringsforhomalg:References}{Bib}
+\makelabel{ringsforhomalg:Index}{Ind}
+\makelabel{ringsforhomalg:RingsForHomalg}{}
+\makelabel{ringsforhomalg:BasisOfRowModule (in the homalg table for Singular)}{3.1.1}
+\makelabel{ringsforhomalg:BasisOfRowModule (Singular macro)}{3.1.2}
+\makelabel{ringsforhomalg:BasisOfColumnModule (in the homalg table for Singular)}{3.1.3}
+\makelabel{ringsforhomalg:BasisOfColumnModule (Singular macro)}{3.1.4}
+\makelabel{ringsforhomalg:DecideZeroRows (in the homalg table for Singular)}{3.1.5}
+\makelabel{ringsforhomalg:DecideZeroRows (Singular macro)}{3.1.6}
+\makelabel{ringsforhomalg:DecideZeroColumns (in the homalg table for Singular)}{3.1.7}
+\makelabel{ringsforhomalg:DecideZeroColumns (Singular macro)}{3.1.8}
+\makelabel{ringsforhomalg:SyzygiesGeneratorsOfRows (in the homalg table for Singular)}{3.1.9}
+\makelabel{ringsforhomalg:SyzygiesGeneratorsOfRows (Singular macro)}{3.1.10}
+\makelabel{ringsforhomalg:SyzygiesGeneratorsOfColumns (in the homalg table for Singular)}{3.1.11}
+\makelabel{ringsforhomalg:SyzygiesGeneratorsOfColumns (Singular macro)}{3.1.12}
+\makelabel{ringsforhomalg:BasisOfRowsCoeff (in the homalg table for Singular)}{3.1.13}
+\makelabel{ringsforhomalg:BasisOfRowsCoeff (Singular macro)}{3.1.14}
+\makelabel{ringsforhomalg:BasisOfColumnsCoeff (in the homalg table for Singular)}{3.1.15}
+\makelabel{ringsforhomalg:BasisOfColumnsCoeff (Singular macro)}{3.1.16}
+\makelabel{ringsforhomalg:DecideZeroRowsEffectively (in the homalg table for Singular)}{3.1.17}
+\makelabel{ringsforhomalg:DecideZeroRowsEffectively (Singular macro)}{3.1.18}
+\makelabel{ringsforhomalg:DecideZeroColumnsEffectively (in the homalg table for Singular)}{3.1.19}
+\makelabel{ringsforhomalg:DecideZeroColumnsEffectively (Singular macro)}{3.1.20}
+\makelabel{ringsforhomalg:RelativeSyzygiesGeneratorsOfRows (in the homalg table for Singular)}{3.1.21}
+\makelabel{ringsforhomalg:RelativeSyzygiesGeneratorsOfRows (Singular macro)}{3.1.22}
+\makelabel{ringsforhomalg:RelativeSyzygiesGeneratorsOfColumns (in the homalg table for Singular)}{3.1.23}
+\makelabel{ringsforhomalg:RelativeSyzygiesGeneratorsOfColumns (Singular macro)}{3.1.24}
+\makelabel{ringsforhomalg:ReducedSyzygiesGeneratorsOfRows (in the homalg table for Singular)}{3.1.25}
+\makelabel{ringsforhomalg:ReducedSyzygiesGeneratorsOfRows (Singular macro)}{3.1.26}
+\makelabel{ringsforhomalg:ReducedSyzygiesGeneratorsOfColumns (in the homalg table for Singular)}{3.1.27}
+\makelabel{ringsforhomalg:ReducedSyzygiesGeneratorsOfColumns (Singular macro)}{3.1.28}

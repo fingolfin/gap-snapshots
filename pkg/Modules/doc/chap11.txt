@@ -1,0 +1,112 @@
+  
+  [1X11 Exterior Algebra and Koszul Complex[0X
+  
+  What  follows  are  several  operations related to the exterior algebra of a
+  free module:
+  
+  --    A  constructor for the graded parts of the exterior algebra ("exterior
+        powers")
+  
+  --    Several Operations on elements of these exterior powers
+  
+  --    A constructor for the "Koszul complex"
+  
+  --    An  implementation  of  the "Cayley determinant" as defined in [CQ11],
+        which  allows  calculating  greatest  common divisors from finite free
+        resolutions.
+  
+  
+  [1X11.1 Exterior Algebra: Constructor[0X
+  
+  [1X11.1-1 ExteriorPower[0m
+  
+  [2X> ExteriorPower( [0X[3Xk, M[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  Construct the [3Xk[0m-th exterior power of the free module [3XM[0m.
+  
+  
+  [1X11.2 Exterior Algebra: Properties and Attributes[0X
+  
+  [1X11.2-1 IsExteriorPower[0m
+  
+  [2X> IsExteriorPower( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Marks a module as an exterior power of another module.
+  
+  [1X11.2-2 ExteriorPowerExponent[0m
+  
+  [2X> ExteriorPowerExponent( [0X[3XM[0X[2X ) ______________________________________[0Xattribute
+  [6XReturns:[0X  an integer
+  
+  The exponent of the exterior power.
+  
+  [1X11.2-3 ExteriorPowerBaseModule[0m
+  
+  [2X> ExteriorPowerBaseModule( [0X[3XM[0X[2X ) ____________________________________[0Xattribute
+  [6XReturns:[0X  a homalg module
+  
+  The module that [3XM[0m is an exterior power of.
+  
+  
+  [1X11.3 Exterior Algebra: Element Properties[0X
+  
+  [1X11.3-1 IsExteriorPowerElement[0m
+  
+  [2X> IsExteriorPowerElement( [0X[3Xx[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Checks if the element [3Xx[0m is from an exterior power.
+  
+  
+  [1X11.4 Exterior Algebra: Element Operations[0X
+  
+  [1X11.4-1 Wedge[0m
+  
+  [2X> Wedge( [0X[3Xx, y[0X[2X ) ___________________________________________________[0Xoperation
+  [6XReturns:[0X  an element of an exterior power
+  
+  Calculate [3Xx[0m wedge [3Xy[0m.
+  
+  [1X11.4-2 ExteriorPowerElementDual[0m
+  
+  [2X> ExteriorPowerElementDual( [0X[3Xx[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  an element of an exterior power
+  
+  For  [3Xx[0m in a q-th exterior power of a free module of rank n, return [3Xx[0m* in the
+  (n-q)-th exterior power, as defined in [CQ11].
+  
+  [1X11.4-3 SingleValueOfExteriorPowerElement[0m
+  
+  [2X> SingleValueOfExteriorPowerElement( [0X[3Xx[0X[2X ) __________________________[0Xoperation
+  [6XReturns:[0X  a ring element
+  
+  For  [3Xx[0m  in  a  highest  exterior power, returns its single coordinate in the
+  canonical basis; i.e. [[3Xx[0m] as defined in [CQ11].
+  
+  
+  [1X11.5 Koszul complex and Cayley determinant[0X
+  
+  [1X11.5-1 KoszulCocomplex[0m
+  
+  [2X> KoszulCocomplex( [0X[3Xa, E[0X[2X ) _________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m cocomplex
+  
+  Calculate the [3XE[0m-valued Koszul complex of [3Xa[0m.
+  
+  [1X11.5-2 CayleyDeterminant[0m
+  
+  [2X> CayleyDeterminant( [0X[3XC[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a ring element
+  
+  Calculate the Cayley determinant of the complex [3XC[0m, as defined in [CQ11].
+  
+  [1X11.5-3 Gcd_UsingCayleyDeterminant[0m
+  
+  [2X> Gcd_UsingCayleyDeterminant( [0X[3Xx, y[, ...][0X[2X ) ________________________[0Xfunction
+  [6XReturns:[0X  a ring element
+  
+  Returns  the  greatest common divisor of the given ring elements, calculated
+  using the Cayley determinant.
+  

@@ -1,0 +1,108 @@
+\begin{thebibliography}{99}
+
+\bibitem[1]{Ar} 
+R.~Artzy, 
+\newblock {\it On automorphic-inverse properties in loops}. 
+Proc. Amer. Math. Soc. {10} (1959), 588--591.
+
+\bibitem[2]{Br} 
+R.~Hubert~Bruck. 
+\newblock A Survey of Binary Systems, third printing, corrected. {\it Ergebnisse der
+Mathematik und ihrer Grenzgebiete}, {\it Neue Folge} {20},
+Springer-Verlag, 1971.
+
+\bibitem[3]{ChPfSm} 
+O.~Chein, H.~O.~Pflugfelder, J.~D.~H.~Smith (editors).
+\newblock Quasigroups and Loops: Theory and Applications, {\it Sigma Series in Pure
+Mathematics} {8}, Heldermann Verlag Berlin, 1990.
+
+\bibitem[4]{CoRo}
+Charles J.~Colbourn and Alexander Rosa.
+\newblock Triple systems, {\it Oxford Mathematical Monographs}, The Clarendon Press,
+Oxford University Press, New York, 1999.
+
+\bibitem[5]{CsDr} 
+Piroska Cs\accent127org\H{o} and Ale\v{s} Dr\'apal.
+\newblock {\it Left conjugacy closed loops of nilpotency class two}, 
+Results Math. {47} (2005), no. {3}--{4}, 242--265.
+
+\bibitem[6]{DaVo}
+Daniel Daly and Petr Vojt\v{e}chovsk\'y, 
+\newblock {\it Enumeration of nilpotent loops via cohomology},
+submitted.
+
+\bibitem[7]{DrVo} 
+Ale\v{s} Dr\'apal and Petr Vojt\v{e}chovsk\'y.
+\newblock {\it Moufang loops that share associator and three quarters of their 
+multiplication tables}, 
+Rocky Mountain Journal of Mathematics {36} (2006), no. {2}, 425--455.
+
+\bibitem[8]{Fe}
+Ferenc Fenyves.
+\newblock {\it Extra loops II, On loops with identities of Bol-Moufang type},
+Publ. Math. Debrecen {16}(1969), 187--192.
+
+\bibitem[9]{Go}
+Edgar G. Goodaire, Sean May and Maitreyi Raman. 
+\newblock The Moufang loops of order less than $64$, Commack, NY: Nova Science
+Publishers, 1999.
+
+\bibitem[10]{JaMa}
+Mark T. Jacobson and Peter Matthews.
+\newblock {\it Generating uniformly distributed random latin squares},
+J. Combinatorial Designs {4}(1998), no. {6}, 405--437.
+
+\bibitem[11]{KiKuPh} 
+Michael K. Kinyon, Kenneth Kunen, and J. D. Phillips,
+\newblock {\it Every diassociative A-loop is Moufang},
+Proc. Amer. Math. Soc. {130} (2002), 619--624.
+
+\bibitem[12]{Ku}
+Kenneth Kunen.
+\newblock {\it The structure of conjugacy closed loops},
+Trans. Amer. Math. Soc. {352} (2000), 2889--2911. 
+
+\bibitem[13]{Li}
+M.~Liebeck. 
+\newblock {\it The classification of finite simple Moufang loops},
+Math. Proc. Cambridge Philos. Soc. {102} (1987), 33--47.
+
+\bibitem[14]{Mo}
+G.~Eric Moorhouse.
+\newblock {\it Bol loops of small order},
+http://www.uwyo.edu/moorhouse/pub/bol/
+
+\bibitem[15]{Na}
+G\'abor~P.~Nagy, 
+\newblock {\it A class of simple proper Bol loops}, preprint.
+
+\bibitem[16]{NaVo2003} 
+G\'abor~P.~Nagy and Petr Vojt\v{e}chovsk\'y. 
+\newblock {\it Octonions, simple Moufang loops and triality}, Quasigroups and Related
+Systems {10} (2003), 65--94. 
+
+\bibitem[17]{NaVo2007}
+G\'abor~P.~Nagy and Petr Vojt\v{e}chovsk\'y. 
+\newblock {\it The Moufang loops of order $64$ and $81$}, to appear in Journal of Symbolic Computation.
+
+\bibitem[18]{Pf}
+Hala~O.~Pflugfelder.
+\newblock Quasigroups and Loops: Introduction, {\it Sigma Series in Pure Mathematics}
+{7}, Heldermann Verlag Berlin, 1990.
+
+\bibitem[19]{PhVo}
+J.~D.~Phillips and Petr Vojt\v{e}chovsk\'y. 
+\newblock {\it Varieties of loops of Bol-Moufang type}, 
+Algebra Universalis {54} (2005), no. {3}, 259--271.
+
+\bibitem[20]{Vo} 
+Petr Vojt\v{e}chovsk\'y. 
+\newblock {\it Toward the classification of Moufang loops of order $64$}, 
+European Journal of Combinatorics {27}, issue {3}  (April 2006), 444-460.
+
+\bibitem[21]{Wi} 
+R.~L.~Wilson,~Jr.
+\newblock {\it Quasidirect products of quasigroups}, Comm. Algebra {3} (1975),
+835--850. 
+
+\end{thebibliography}

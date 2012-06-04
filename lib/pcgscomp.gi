@@ -2,17 +2,14 @@
 ##
 #W  pcgscomp.gi                 GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: pcgscomp.gi,v 4.27.4.1 2005/10/14 08:45:40 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file  contains the methods  for polycylic generating systems dealing
 ##  with or defined by a pc series.
 ##
-Revision.pcgscomp_gi :=
-    "@(#)$Id: pcgscomp.gi,v 4.27.4.1 2005/10/14 08:45:40 gap Exp $";
 
 
 #############################################################################

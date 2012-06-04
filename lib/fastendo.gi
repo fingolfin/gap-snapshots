@@ -2,18 +2,15 @@
 ##
 #W  fastendo.gi           GAP library                    Andrew Solomon
 ##
-#H  @(#)$Id: fastendo.gi,v 4.3.4.1 2006/04/07 09:04:29 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  Conversion to, and fast methods for, transformation representation
 ##  of EndoMappings.
 ##
 
-Revision.fastendo_gi :=
-    "@(#)$Id: fastendo.gi,v 4.3.4.1 2006/04/07 09:04:29 gap Exp $";
 
 
 ############################################################################

@@ -1,11 +1,10 @@
 #############################################################################
 ##  
-#W  helpdef.gi                  GAP Library       Frank Celler / Frank L�beck
+#W  helpdef.gi                  GAP Library       Frank Celler / Frank Lübeck
 ##  
-#H  @(#)$Id: helpdef.gi,v 1.8.2.2 2008/06/24 09:12:20 gap Exp $
 ##  
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  2001,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 2001 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##  
 ##  The  files  helpdef.g{d,i}  contain  the  `default'  help  book  handler
@@ -16,8 +15,6 @@
 ##  The function  which converts the  TeX sources  to text for  the "screen"
 ##  viewer is outsourced into `helpt2t.g{d,i}'.
 ##  
-Revision.helpdef_gi := 
-  "@(#)$Id: helpdef.gi,v 1.8.2.2 2008/06/24 09:12:20 gap Exp $";
   
 ################ ???????????????????????????? ###############################
 

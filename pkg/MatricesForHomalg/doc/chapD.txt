@@ -1,0 +1,750 @@
+  
+  [1XD The subpackage [5XResidueClassRingForHomalg[1X as a sample ring package[0X
+  
+  
+  [1XD.1 The Mandatory Basic Operations[0X
+  
+  [1XD.1-1 BasisOfRowModule[0m
+  
+  [2X> BasisOfRowModule( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XBasisOfRowModule :=[0X
+    [4X  function( M )[0X
+    [4X    local Mrel;[0X
+    [4X    [0X
+    [4X    Mrel := UnionOfRows( M );[0X
+    [4X    [0X
+    [4X    Mrel := HomalgResidueClassMatrix([0X
+    [4X                    BasisOfRowModule( Mrel ), HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    return GetRidOfObsoleteRows( Mrel );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-2 BasisOfColumnModule[0m
+  
+  [2X> BasisOfColumnModule( [0X[3XM[0X[2X ) _________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XBasisOfColumnModule :=[0X
+    [4X  function( M )[0X
+    [4X    local Mrel;[0X
+    [4X    [0X
+    [4X    Mrel := UnionOfColumns( M );[0X
+    [4X    [0X
+    [4X    Mrel := HomalgResidueClassMatrix([0X
+    [4X                    BasisOfColumnModule( Mrel ), HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    return GetRidOfObsoleteColumns( Mrel );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-3 DecideZeroRows[0m
+  
+  [2X> DecideZeroRows( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDecideZeroRows :=[0X
+    [4X  function( A, B )[0X
+    [4X    local Brel;[0X
+    [4X    [0X
+    [4X    Brel := UnionOfRows( B );[0X
+    [4X    [0X
+    [4X    Brel := BasisOfRowModule( Brel );[0X
+    [4X    [0X
+    [4X    return HomalgResidueClassMatrix([0X
+    [4X                   DecideZeroRows( Eval( A ), Brel ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-4 DecideZeroColumns[0m
+  
+  [2X> DecideZeroColumns( [0X[3XA, B[0X[2X ) ________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDecideZeroColumns :=[0X
+    [4X  function( A, B )[0X
+    [4X    local Brel;[0X
+    [4X    [0X
+    [4X    Brel := UnionOfColumns( B );[0X
+    [4X    [0X
+    [4X    Brel := BasisOfColumnModule( Brel );[0X
+    [4X    [0X
+    [4X    return HomalgResidueClassMatrix([0X
+    [4X                   DecideZeroColumns( Eval( A ), Brel ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-5 SyzygiesGeneratorsOfRows[0m
+  
+  [2X> SyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ____________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XSyzygiesGeneratorsOfRows :=[0X
+    [4X  function( M )[0X
+    [4X    local R, ring_rel, rel, S;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    ring_rel := RingRelations( R );[0X
+    [4X    [0X
+    [4X    rel := MatrixOfRelations( ring_rel );[0X
+    [4X    [0X
+    [4X    if IsHomalgRingRelationsAsGeneratorsOfRightIdeal( ring_rel ) then[0X
+    [4X        rel := Involution( rel );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    rel := DiagMat( ListWithIdenticalEntries( NrColumns( M ), rel ) );[0X
+    [4X    [0X
+    [4X    S := SyzygiesGeneratorsOfRows( Eval( M ), rel );[0X
+    [4X    [0X
+    [4X    S := HomalgResidueClassMatrix( S, R );[0X
+    [4X    [0X
+    [4X    S := GetRidOfObsoleteRows( S );[0X
+    [4X    [0X
+    [4X    if IsZero( S ) then[0X
+    [4X        [0X
+    [4X        SetIsLeftRegular( M, true );[0X
+    [4X        [0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return S;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-6 SyzygiesGeneratorsOfColumns[0m
+  
+  [2X> SyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) _________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XSyzygiesGeneratorsOfColumns :=[0X
+    [4X  function( M )[0X
+    [4X    local R, ring_rel, rel, S;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    ring_rel := RingRelations( R );[0X
+    [4X    [0X
+    [4X    rel := MatrixOfRelations( ring_rel );[0X
+    [4X    [0X
+    [4X    if IsHomalgRingRelationsAsGeneratorsOfLeftIdeal( ring_rel ) then[0X
+    [4X        rel := Involution( rel );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    rel := DiagMat( ListWithIdenticalEntries( NrRows( M ), rel ) );[0X
+    [4X    [0X
+    [4X    S := SyzygiesGeneratorsOfColumns( Eval( M ), rel );[0X
+    [4X    [0X
+    [4X    S := HomalgResidueClassMatrix( S, R );[0X
+    [4X    [0X
+    [4X    S := GetRidOfObsoleteColumns( S );[0X
+    [4X    [0X
+    [4X    if IsZero( S ) then[0X
+    [4X        [0X
+    [4X        SetIsRightRegular( M, true );[0X
+    [4X        [0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return S;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-7 BasisOfRowsCoeff[0m
+  
+  [2X> BasisOfRowsCoeff( [0X[3XM, T[0X[2X ) _________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XBasisOfRowsCoeff :=[0X
+    [4X  function( M, T )[0X
+    [4X    local Mrel, TT, bas, nz;[0X
+    [4X    [0X
+    [4X    Mrel := UnionOfRows( M );[0X
+    [4X    [0X
+    [4X    TT := HomalgVoidMatrix( HomalgRing( Mrel ) );[0X
+    [4X    [0X
+    [4X    bas := BasisOfRowsCoeff( Mrel, TT );[0X
+    [4X    [0X
+    [4X    bas := HomalgResidueClassMatrix( bas, HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    nz := NonZeroRows( bas );[0X
+    [4X    [0X
+    [4X    SetEval( T, CertainRows( CertainColumns( TT, [ 1 .. NrRows( M ) ] ), nz ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( T, IsVoidMatrix );[0X
+    [4X    [0X
+    [4X    ## the generic BasisOfRowsCoeff will assume that[0X
+    [4X    ## ( NrRows( B ) = 0 ) = IsZero( B )[0X
+    [4X    return CertainRows( bas, nz );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-8 BasisOfColumnsCoeff[0m
+  
+  [2X> BasisOfColumnsCoeff( [0X[3XM, T[0X[2X ) ______________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XBasisOfColumnsCoeff :=[0X
+    [4X  function( M, T )[0X
+    [4X    local Mrel, TT, bas, nz;[0X
+    [4X    [0X
+    [4X    Mrel := UnionOfColumns( M );[0X
+    [4X    [0X
+    [4X    TT := HomalgVoidMatrix( HomalgRing( Mrel ) );[0X
+    [4X    [0X
+    [4X    bas := BasisOfColumnsCoeff( Mrel, TT );[0X
+    [4X    [0X
+    [4X    bas := HomalgResidueClassMatrix( bas, HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    nz := NonZeroColumns( bas );[0X
+    [4X    [0X
+    [4X    SetEval( T, CertainColumns( CertainRows( TT, [ 1 .. NrColumns( M ) ] ), nz ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( T, IsVoidMatrix );[0X
+    [4X    [0X
+    [4X    ## the generic BasisOfColumnsCoeff will assume that[0X
+    [4X    ## ( NrColumns( B ) = 0 ) = IsZero( B )[0X
+    [4X    return CertainColumns( bas, nz );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-9 DecideZeroRowsEffectively[0m
+  
+  [2X> DecideZeroRowsEffectively( [0X[3XA, B, T[0X[2X ) _____________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDecideZeroRowsEffectively :=[0X
+    [4X  function( A, B, T )[0X
+    [4X    local Brel, TT, red;[0X
+    [4X    [0X
+    [4X    Brel := UnionOfRows( B );[0X
+    [4X    [0X
+    [4X    TT := HomalgVoidMatrix( HomalgRing( Brel ) );[0X
+    [4X    [0X
+    [4X    red := DecideZeroRowsEffectively( Eval( A ), Brel, TT );[0X
+    [4X    [0X
+    [4X    SetEval( T, CertainColumns( TT, [ 1 .. NrRows( B ) ] ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( T, IsVoidMatrix );[0X
+    [4X    [0X
+    [4X    return HomalgResidueClassMatrix( red, HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-10 DecideZeroColumnsEffectively[0m
+  
+  [2X> DecideZeroColumnsEffectively( [0X[3XA, B, T[0X[2X ) __________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDecideZeroColumnsEffectively :=[0X
+    [4X  function( A, B, T )[0X
+    [4X    local Brel, TT, red;[0X
+    [4X    [0X
+    [4X    Brel := UnionOfColumns( B );[0X
+    [4X    [0X
+    [4X    TT := HomalgVoidMatrix( HomalgRing( Brel ) );[0X
+    [4X    [0X
+    [4X    red := DecideZeroColumnsEffectively( Eval( A ), Brel, TT );[0X
+    [4X    [0X
+    [4X    SetEval( T, CertainRows( TT, [ 1 .. NrColumns( B ) ] ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( T, IsVoidMatrix );[0X
+    [4X    [0X
+    [4X    return HomalgResidueClassMatrix( red, HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-11 RelativeSyzygiesGeneratorsOfRows[0m
+  
+  [2X> RelativeSyzygiesGeneratorsOfRows( [0X[3XM, M2[0X[2X ) ________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XRelativeSyzygiesGeneratorsOfRows :=[0X
+    [4X  function( M, M2 )[0X
+    [4X    local M2rel, S;[0X
+    [4X    [0X
+    [4X    M2rel := UnionOfRows( M2 );[0X
+    [4X    [0X
+    [4X    S := SyzygiesGeneratorsOfRows( Eval( M ), M2rel );[0X
+    [4X    [0X
+    [4X    S := HomalgResidueClassMatrix( S, HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    S := GetRidOfObsoleteRows( S );[0X
+    [4X    [0X
+    [4X    if IsZero( S ) then[0X
+    [4X        [0X
+    [4X        SetIsLeftRegular( M, true );[0X
+    [4X        [0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return S;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.1-12 RelativeSyzygiesGeneratorsOfColumns[0m
+  
+  [2X> RelativeSyzygiesGeneratorsOfColumns( [0X[3XM, M2[0X[2X ) _____________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XRelativeSyzygiesGeneratorsOfColumns :=[0X
+    [4X  function( M, M2 )[0X
+    [4X    local M2rel, S;[0X
+    [4X    [0X
+    [4X    M2rel := UnionOfColumns( M2 );[0X
+    [4X    [0X
+    [4X    S := SyzygiesGeneratorsOfColumns( Eval( M ), M2rel );[0X
+    [4X    [0X
+    [4X    S := HomalgResidueClassMatrix( S, HomalgRing( M ) );[0X
+    [4X    [0X
+    [4X    S := GetRidOfObsoleteColumns( S );[0X
+    [4X    [0X
+    [4X    if IsZero( S ) then[0X
+    [4X        [0X
+    [4X        SetIsRightRegular( M, true );[0X
+    [4X        [0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return S;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1XD.2 The Mandatory Tool Operations[0X
+  
+  Here  we  list those matrix operations for which [5Xhomalg[0m provides no fallback
+  method.
+  
+  [1XD.2-1 InitialMatrix[0m
+  
+  [2X> InitialMatrix( [0X[3X[0X[2X ) ________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XInitialMatrix[0m ([14XB.1-1[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInitialMatrix := C -> HomalgInitialMatrix([0X
+    [4X                      NrRows( C ), NrColumns( C ), AmbientRing( HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-2 InitialIdentityMatrix[0m
+  
+  [2X> InitialIdentityMatrix( [0X[3X[0X[2X ) ________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XInitialIdentityMatrix[0m ([14XB.1-2[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInitialIdentityMatrix := C -> HomalgInitialIdentityMatrix([0X
+    [4X        NrRows( C ), AmbientRing( HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-3 ZeroMatrix[0m
+  
+  [2X> ZeroMatrix( [0X[3X[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XZeroMatrix[0m ([14XB.1-3[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XZeroMatrix := C -> HomalgZeroMatrix([0X
+    [4X                      NrRows( C ), NrColumns( C ), AmbientRing( HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-4 IdentityMatrix[0m
+  
+  [2X> IdentityMatrix( [0X[3X[0X[2X ) _______________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XIdentityMatrix[0m ([14XB.1-4[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XIdentityMatrix := C -> HomalgIdentityMatrix([0X
+    [4X        NrRows( C ), AmbientRing( HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-5 Involution[0m
+  
+  [2X> Involution( [0X[3X[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XInvolution[0m ([14XB.1-5[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInvolution :=[0X
+    [4X  function( M )[0X
+    [4X    local N, R;[0X
+    [4X    [0X
+    [4X    N := Involution( Eval( M ) );[0X
+    [4X    [0X
+    [4X    R := HomalgRing( N );[0X
+    [4X    [0X
+    [4X    if not ( HasIsCommutative( R ) and IsCommutative( R ) and[0X
+    [4X             HasIsReducedModuloRingRelations( M ) and[0X
+    [4X             IsReducedModuloRingRelations( M ) ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( M ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-6 CertainRows[0m
+  
+  [2X> CertainRows( [0X[3X[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XCertainRows[0m ([14XB.1-6[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XCertainRows :=[0X
+    [4X  function( M, plist )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := CertainRows( Eval( M ), plist );[0X
+    [4X    [0X
+    [4X    if not ( HasIsReducedModuloRingRelations( M ) and[0X
+    [4X             IsReducedModuloRingRelations( M ) ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( M ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-7 CertainColumns[0m
+  
+  [2X> CertainColumns( [0X[3X[0X[2X ) _______________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XCertainColumns[0m ([14XB.1-7[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XCertainColumns :=[0X
+    [4X  function( M, plist )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := CertainColumns( Eval( M ), plist );[0X
+    [4X    [0X
+    [4X    if not ( HasIsReducedModuloRingRelations( M ) and[0X
+    [4X             IsReducedModuloRingRelations( M ) ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( M ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-8 UnionOfRows[0m
+  
+  [2X> UnionOfRows( [0X[3X[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XUnionOfRows[0m ([14XB.1-8[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XUnionOfRows :=[0X
+    [4X  function( A, B )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := UnionOfRows( Eval( A ), Eval( B ) );[0X
+    [4X    [0X
+    [4X    if not ForAll( [ A, B ], HasIsReducedModuloRingRelations and[0X
+    [4X               IsReducedModuloRingRelations ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( A ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-9 UnionOfColumns[0m
+  
+  [2X> UnionOfColumns( [0X[3X[0X[2X ) _______________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XUnionOfColumns[0m ([14XB.1-9[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XUnionOfColumns :=[0X
+    [4X  function( A, B )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := UnionOfColumns( Eval( A ), Eval( B ) );[0X
+    [4X    [0X
+    [4X    if not ForAll( [ A, B ], HasIsReducedModuloRingRelations and[0X
+    [4X               IsReducedModuloRingRelations ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( A ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-10 DiagMat[0m
+  
+  [2X> DiagMat( [0X[3X[0X[2X ) ______________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XDiagMat[0m ([14XB.1-10[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDiagMat :=[0X
+    [4X  function( e )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := DiagMat( List( e, Eval ) );[0X
+    [4X    [0X
+    [4X    if not ForAll( e, HasIsReducedModuloRingRelations and[0X
+    [4X               IsReducedModuloRingRelations ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( e[1] ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-11 KroneckerMat[0m
+  
+  [2X> KroneckerMat( [0X[3X[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XKroneckerMat[0m ([14XB.1-11[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XKroneckerMat :=[0X
+    [4X  function( A, B )[0X
+    [4X    local N;[0X
+    [4X    [0X
+    [4X    N := KroneckerMat( Eval( A ), Eval( B ) );[0X
+    [4X    [0X
+    [4X    if not ForAll( [ A, B ], HasIsReducedModuloRingRelations and[0X
+    [4X               IsReducedModuloRingRelations ) then[0X
+    [4X        [0X
+    [4X        ## reduce the matrix N w.r.t. the ring relations[0X
+    [4X        N := DecideZero( N, HomalgRing( A ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return N;[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-12 MulMat[0m
+  
+  [2X> MulMat( [0X[3X[0X[2X ) _______________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XMulMat[0m ([14XB.1-12[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XMulMat :=[0X
+    [4X  function( a, A )[0X
+    [4X    [0X
+    [4X    return DecideZero( EvalRingElement( a ) * Eval( A ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-13 AddMat[0m
+  
+  [2X> AddMat( [0X[3X[0X[2X ) _______________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XAddMat[0m ([14XB.1-13[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XAddMat :=[0X
+    [4X  function( A, B )[0X
+    [4X    [0X
+    [4X    return DecideZero( Eval( A ) + Eval( B ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-14 SubMat[0m
+  
+  [2X> SubMat( [0X[3X[0X[2X ) _______________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XSubMat[0m ([14XB.1-14[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XSubMat :=[0X
+    [4X  function( A, B )[0X
+    [4X    [0X
+    [4X    return DecideZero( Eval( A ) - Eval( B ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-15 Compose[0m
+  
+  [2X> Compose( [0X[3X[0X[2X ) ______________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XCompose[0m ([14XB.1-15[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XCompose :=[0X
+    [4X  function( A, B )[0X
+    [4X    [0X
+    [4X    return DecideZero( Eval( A ) * Eval( B ), HomalgRing( A ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-16 IsZeroMatrix[0m
+  
+  [2X> IsZeroMatrix( [0X[3XM[0X[2X ) ________________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  (--> [2XIsZeroMatrix[0m ([14XB.1-16[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XIsZeroMatrix := M -> IsZero( DecideZero( Eval( M ), HomalgRing( M ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-17 NrRows[0m
+  
+  [2X> NrRows( [0X[3XC[0X[2X ) ______________________________________________________[0Xfunction
+  [6XReturns:[0X  a nonnegative integer
+  
+  (--> [2XNrRows[0m ([14XB.1-17[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XNrRows := C -> NrRows( Eval( C ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-18 NrColumns[0m
+  
+  [2X> NrColumns( [0X[3XC[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  a nonnegative integer
+  
+  (--> [2XNrColumns[0m ([14XB.1-18[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XNrColumns := C -> NrColumns( Eval( C ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.2-19 Determinant[0m
+  
+  [2X> Determinant( [0X[3XC[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  an element of ambient [5Xhomalg[0m ring
+  
+  (--> [2XDeterminant[0m ([14XB.1-19[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeterminant := C -> DecideZero( Determinant( Eval( C ) ), HomalgRing( C ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1XD.3 Some of the Recommended Tool Operations[0X
+  
+  Here  we  list  those  matrix  operations  for  which  [5Xhomalg[0m does provide a
+  fallback  method.  But  specifying the below [10XhomalgTable[0m functions increases
+  the performance by replacing the fallback method.
+  
+  [1XD.3-1 AreEqualMatrices[0m
+  
+  [2X> AreEqualMatrices( [0X[3XA, B[0X[2X ) _________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  (--> [2XAreEqualMatrices[0m ([14XB.2-1[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XAreEqualMatrices :=[0X
+    [4X  function( A, B )[0X
+    [4X    [0X
+    [4X    return IsZero( DecideZero( Eval( A ) - Eval( B ), HomalgRing( A ) ) );[0X
+    [4X    [0X
+    [4X  end,[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.3-2 IsOne[0m
+  
+  [2X> IsOne( [0X[3XM[0X[2X ) _______________________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  (--> [2XIsIdentityMatrix[0m ([14XB.2-2[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XIsIdentityMatrix := M ->[0X
+    [4X          IsOne( DecideZero( Eval( M ), HomalgRing( M ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.3-3 IsDiagonalMatrix[0m
+  
+  [2X> IsDiagonalMatrix( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  (--> [2XIsDiagonalMatrix[0m ([14XB.2-3[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XIsDiagonalMatrix := M ->[0X
+    [4X          IsDiagonalMatrix( DecideZero( Eval( M ), HomalgRing( M ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.3-4 ZeroRows[0m
+  
+  [2X> ZeroRows( [0X[3XC[0X[2X ) ____________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XZeroRows[0m ([14XB.2-4[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XZeroRows := C -> ZeroRows( DecideZero( Eval( C ), HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XD.3-5 ZeroColumns[0m
+  
+  [2X> ZeroColumns( [0X[3XC[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix over the ambient ring
+  
+  (--> [2XZeroColumns[0m ([14XB.2-5[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XZeroColumns := C -> ZeroColumns( DecideZero( Eval( C ), HomalgRing( C ) ) ),[0X
+  [4X------------------------------------------------------------------[0X
+  

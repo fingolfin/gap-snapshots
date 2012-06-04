@@ -1,0 +1,25 @@
+  
+  
+  [1XIndex[0X
+  
+  [2XBoundaryOperator[0X  4.3-1
+  [2XCohomology[0X  4.3-5
+  [2XComputeNextDimension[0X  4.2-3
+  [2XCreateBoundaryMatrices[0X  4.3-2
+  [2XCreateCoboundaryMatrices[0X  4.3-4
+  [2XExtend[0X  4.2-4
+  [2XHomology[0X  4.3-3
+  [2XInfoString[0X  4.1-7
+  [2XIsotropy[0X  4.1-4
+  [2XMu[0X  4.1-5
+  [2XMuData[0X  4.1-6
+  [2XOrbifoldTriangulation[0X  4.1-1
+  [5XSCO[0m  .-4
+  [2XSCO_Examples[0X  4.3-6
+  [2XSimplices[0X  4.1-3
+  [2XSimplicialSet[0X (constructor)  4.2-1
+  [2XSimplicialSet[0X (data access)  4.2-2
+  [2XVertices[0X  4.1-2
+  
+  
+  -------------------------------------------------------

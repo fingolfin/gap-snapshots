@@ -3,16 +3,12 @@
 #W  testutil.g                  GAP Library                     Thomas Breuer
 #W                                                               Frank Celler
 ##
-#H  @(#)$Id: testutil.g,v 4.1.2.7 2008/09/23 22:56:30 alexk Exp $
 ##
 #Y  Copyright (C) 2005 The GAP Group
 ##
 ##  This file contains utilities for running tests.
 ##  It is not read with the library when {\GAP} is started.
 ##
-Revision.( "tst/testutil_g" ) :=
-    "@(#)$Id: testutil.g,v 4.1.2.7 2008/09/23 22:56:30 alexk Exp $";
-
 
 #############################################################################
 ##
@@ -21,8 +17,8 @@ Revision.( "tst/testutil_g" ) :=
 ##  Let <testfiles> be a list of pairs consisting of a file name, relative to
 ##  the `tst' directory of the {\GAP} distribution, and a scaling factor
 ##  that is proportional to the expected runtime when the file is read with
-##  `ReadTest'.
-##  `RunStandardTests' applies `ReadTest' to the files listed in <testfiles>,
+##  `Test'.
+##  `RunStandardTests' applies `Test' to the files listed in <testfiles>,
 ##  in increasing order of the expected runtime,
 ##  such that the differences between the actual output and the one that is
 ##  prescribed in the test files are printed.
@@ -33,8 +29,8 @@ Revision.( "tst/testutil_g" ) :=
 ##  processed files are replaced by $10^5$ times the runtime in milliseconds.
 ##  Of course this runtime depends on the hardware, so this renormalization
 ##  should be executed on a ``typical'' machine, which should fit to the
-##  information in the file `tst/testall.g' and in the documentation file
-##  `doc/ref/install.tex'.
+##  information in the files `tst/testall.g' and `tst/testinstall.g' and 
+##  in the documentation file `doc/ref/install.xml'.
 ##
 BindGlobal( "RunStandardTests", function( arg )
     local testfiles, renormalize, sizescreen, stop_TEST, infoRead1,
@@ -79,7 +75,7 @@ BindGlobal( "RunStandardTests", function( arg )
     for i in [ 1 .. Length( testfiles ) ]  do
       name:= Filename( dir, testfiles[i][1] );
       Print( "testing: ", name, "\n" );
-      ReadTest( name );
+      Test( name );
       if Length( GAPInfo.TestData.results ) < i then
         Print( "#E  Add a `STOP_TEST' command to the file `", name, "'!\n" );
         GAPInfo.TestData.results[i]:= "dummy";
@@ -90,7 +86,7 @@ BindGlobal( "RunStandardTests", function( arg )
                  "' in the `STOP_TEST' command of `", name, "'!\n" );
         fi;
         time:= info[3];
-        if 500 < time then
+        if 500 < time and IsPosRat(info[2]) then
           count:= count + 1;
           totaltime:= totaltime + time;
           totalprev:= totalprev + info[2];
@@ -129,7 +125,7 @@ BindGlobal( "RunStandardTests", function( arg )
             pos:= PositionSublist( oldcontents, ";", pos );
             Append( newcontents,
                     oldcontents{ [ pos + 1 .. Length( oldcontents ) ] } );
-            
+
             # Save the old file, and print a new file.
             Exec( Concatenation( "mv ", name, " ", name, "~" ) );
             SizeScreen( [ 1000 ] );
@@ -161,27 +157,79 @@ BindGlobal( "RunStandardTests", function( arg )
 
 #############################################################################
 ##
-#F  CreateTestallFile()
+#F  ExtractManualExamples( <bookname> )
 ##
-##  replaces the file `tst/testall.g' by a file that reflects the current
+##  <bookname> is either ref or tut. 
+##  The function should be called EXACTLY from the GAP root directory.
+## 
+LoadPackage("gapdoc");
+ExtractManualExamples:=function( bookname )
+local path, main, files, tst, i, s, name, output;
+if bookname="tut" then
+  files:=[];
+elif bookname="ref" then
+  Read( "doc/ref/makedocreldata.g" );
+  files:= GAPInfo.ManualDataRef.files;
+else
+  Error( "RunManualsTest : the argument bust be \"ref\" or \"tut\"" );
+fi;
+path:=Directory( Concatenation( GAPInfo.RootPaths[1], "doc/", bookname ) );
+main:="main.xml";
+Print("===============================================================\n");
+Print("Extracting manual examples from the book '", bookname, "'\n" );
+Print("===============================================================\n");
+tst:=ManualExamples( path, main, files, "Chapter" );
+for i in [ 1 .. Length(tst) ] do 
+  Print("Processing '", bookname, "' chapter number ", i, " of ", Length(tst), "\c" );
+  if Length( tst[i] ) > 0 then
+    s := String(i);
+    if Length(s)=1 then 
+      # works for <100 chapters
+      s:=Concatenation("0",s); 
+    fi;
+    name := Filename( Directory( Concatenation( "doc/test/", bookname ) ), Concatenation( bookname, s, ".tst" ) );
+    output := OutputTextFile( name, false ); # to empty the file first
+    SetPrintFormattingStatus( output, false ); # to avoid line breaks
+    PrintTo( output, tst[i] );
+    CloseStream(output);
+    # one superfluous check
+    if tst[i] <> StringFile( name ) then
+      Error("Saved file does not match original examples string!!!\n");  
+    else
+      Print(" - OK! \n" );
+    fi;
+  else
+    Print(" - no examples to save! \n" );    
+  fi;  
+od;
+Print("===============================================================\n");
+end;
+
+
+#############################################################################
+##
+#F  CreateTestinstallFile( )
+##
+##  replaces the file `tst/testinstall.g' by a file that reflects the current
 ##  contents of the `tst' directory, that is, all those files in `tst/*.tst'
-##  are listed that contain the substring `To be listed in testall.g';
+##  are listed that contain the substring `To be listed in testinstall.g';
 ##  the scaling factors in the `STOP_TEST' calls in the files are inserted
 ##  in the list entries.
 ##
-BindGlobal( "CreateTestallFile", function()
+##
+BindGlobal( "CreateTestinstallFile", function( )
     local dir, oldfile, oldcontents, pos, newcontents, error, name, file,
           filecontents, stoppos, stonepos;
 
     dir:= DirectoriesLibrary( "tst" );
-    oldfile:= Filename( dir, "testall.g" );
+    oldfile:= Filename( dir, "testinstall.g" );
     if oldfile = fail then
-      Error( "no file `testall.g' found" );
+      Error( "no file `testinstall.g' found" );
     fi;
     oldcontents:= StringFile( oldfile );
     pos:= PositionSublist( oldcontents, "RunStandardTests( [" );
     if pos = fail then
-      Print( "#E  no substring `RunStandardTests( [' in `testall.g'\n" );
+      Print( "#E  no substring `RunStandardTests( [' in `testinstall.g'\n" );
       return false;
     fi;
 
@@ -193,7 +241,7 @@ BindGlobal( "CreateTestallFile", function()
          and name{ [ Length( name ) - 3 .. Length( name ) ] } = ".tst" then
         file:= Filename( dir, name );
         filecontents:= StringFile( file );
-        if PositionSublist( filecontents, "To be listed in testall.g" )
+        if PositionSublist( filecontents, "To be listed in testinstall.g" )
            <> fail then
           if PositionSublist( filecontents, "START_TEST" ) = fail then
             error:= true;
@@ -226,18 +274,18 @@ BindGlobal( "CreateTestallFile", function()
     # Append the part behind the list.
     pos:= Position( oldcontents, ';', pos );
     if pos = fail then
-      Print( "#E  no semicolon behind the list in `testall.g'\n" );
+      Print( "#E  no semicolon behind the list in `testinstall.g'\n" );
       return false;
     fi;
     Append( newcontents, oldcontents{ [ pos .. Length( oldcontents ) ] } );
 
     if oldcontents = newcontents then
-      Print( "#I  `testall.g' unchanged\n" );
+      Print( "#I  `testinstall.g' unchanged\n" );
     else
-      # Save the old file as `testall.g~', and print a new `testall.g'.
+      # Save the old file as `testinstall.g~', and print a new `testinstall.g'.
       Exec( Concatenation( "mv ", oldfile, " ", oldfile, "~" ) );
       PrintTo( oldfile, newcontents );
-      Print( "#I  `testall.g' replaced:\n" );
+      Print( "#I  `testinstall.g' replaced:\n" );
       Exec( Concatenation( "diff ", oldfile, "~ ", oldfile ) );
     fi;
     return true;
@@ -246,43 +294,54 @@ BindGlobal( "CreateTestallFile", function()
 
 #############################################################################
 ##
-#F  CreatePackageTestsInput( <scriptfile>, <outfiles>, <gap> )
+#F  CreatePackageTestsInput( <scriptfile>, <outfile>, <gap>, <other> )
 ##
-##  writes the file <scriptfile> that starts a new {\GAP} for each test file
+##  writes the file <scriptfile> that starts a new GAP session using the
+##  command <gap> (including all command line options) for each test file
 ##  of a package (given by the component `TestFile' in the record stored in
-##  its `PackageInfo.g' file) and reads this file;
-##  the output of all tests is collected in the files <outfiles>
-##  (which is a pair of two filenames),
-##  and {\GAP} is started as <gap> (including all command line options).
-##  Each file is actually run twice, once with no other package loaded
-##  and once with all available packages loaded.
+##  its `PackageInfo.g' file) and reads this file. The output of all tests 
+##  is collected in the files <outfile>.<packagename>
+##  GAP} is started as <gap> (including all command line options).
+##  <other> may be true, false or "auto" to specify whether all available
+##  packages are loaded, not loaded or only autoloaded packages. This mode
+##  is actually managed in the Makefile, and is passed to this function 
+##  just to be printed in the information messages.
 ##
-BindGlobal( "CreatePackageTestsInput", function( scriptfile, outfiles, gap )
-    local result, name, entry, pair;
+BindGlobal( "CreatePackageTestsInput", function( scriptfile, outfile, gap, other )
+    local result, name, entry, pair, testfile;
 
     SizeScreen( [ 1000 ] );
     InitializePackagesInfoRecords( false );
     result:= "";
+    
+    Append( result, "TIMESTAMP=`date -u +_%Y-%m-%d-%H-%M`\n" );
 
-    for name in GAPInfo.PackagesNames do
-      if LoadPackage( name ) <> fail then
-        for entry in GAPInfo.PackagesInfo.( name ) do
-          if IsBound( entry.InstallationPath )
-             and IsBound( entry.TestFile ) then
-            for pair in TransposedMat( [ outfiles, [ "false", "true" ] ] ) do
-              Append( result, Concatenation(
-                  "echo 'Testing ", name, " ", entry.Version, ", test=", 
-		          Filename( DirectoriesPackageLibrary( name, "" )[1], entry.TestFile ), 
-		          ", all packages=", pair[2], "'\n" ) );
-              Append( result, Concatenation(
-                  "echo 'RunPackageTests( \"", name,
-                  "\", \"", entry.Version, "\", \"", entry.TestFile,
-                  "\", ", pair[2], " );' | ", gap, " > ",
-                  pair[1], ".", name, "\n" ) );
-            od;
-          fi;
-        od;
-      fi;
+    for name in SortedList(ShallowCopy(RecNames(GAPInfo.PackagesInfo))) do 
+      for entry in GAPInfo.PackagesInfo.( name ) do
+        if IsBound( entry.InstallationPath ) and IsBound( entry.TestFile ) then
+          testfile := Filename( DirectoriesPackageLibrary( name, "" ), entry.TestFile );
+          if testfile <> fail then
+            Append( result, Concatenation(
+                    "echo 'Testing ", name, " ", entry.Version, ", test=", 
+		            testfile, ", all packages=", other, "'\n" ) );
+            Append( result, Concatenation( "echo ",
+                    "'============================OUTPUT START=============================='",
+                    " > ", outfile, "$TIMESTAMP.", name, "\n" ) );
+            Append( result, Concatenation(
+                    "echo 'SetUserPreference(\"UseColorsInTerminal\",false); ",
+                    "RunPackageTests( \"", name,
+                    "\", \"", entry.Version, "\", \"", entry.TestFile,
+                    "\", \"", other, "\" );' | ", gap, 
+                    " >> ", outfile, "$TIMESTAMP.", name, "\n" ) );
+            Append( result, Concatenation( "echo ",
+                    "'============================OUTPUT END================================'",
+                    " >> ", outfile, "$TIMESTAMP.", name, "\n" ) );
+          else
+            Append( result, Concatenation(
+                    "echo 'failed to find test files for the ", name, " package'\n") );
+          fi;            
+        fi;
+      od;
     od;
 
     PrintTo( scriptfile, result );
@@ -298,25 +357,26 @@ BindGlobal( "CreatePackageTestsInput", function( scriptfile, outfiles, gap )
 ##  If <other> is `true' then all other available packages are also loaded.
 ##
 ##  The file <testfile> can either be a file that contains `ReadTest'
-##  statements and therefore must be read with `Read',
-##  or it can be a file that itself must be read with `ReadTest';
+##  or `Test' statements and therefore must be read with `Read',
+##  or it can be a file that itself must be read with `Test';
 ##  the latter is detected from the occurrence of a substring
 ##  `"START_TEST"' in the file.
 ##
 BindGlobal( "RunPackageTests", function( pkgname, version, testfile, other )
-    local file, str;
+    local file, PKGTSTHDR, str;
 
     if LoadPackage( pkgname, Concatenation( "=", version ) ) = fail then
       Print( "#E  RunPackageTests: package `",
              pkgname, "' (version ", version, ") not loadable\n" );
       return;
     fi;
-    if other = true then
+    if other = "true" then
       LoadAllPackages();
     fi;
-    Print( "#I  RunPackageTests( \"", pkgname, "\", \"", version, "\", \"",
-           testfile, "\", ", other, " ):\n" );
-    GAPInfo.SystemInformation( true, true );
+    PKGTSTHDR := Concatenation( "\"", pkgname, "\", \"", version, "\", \"",
+           testfile, "\", ", other );
+    Print( "#I  RunPackageTests(", PKGTSTHDR, ");\n" );
+    ShowSystemInformation();
     file:= Filename( DirectoriesPackageLibrary( pkgname, "" ), testfile );
     str:= StringFile( file );
     if not IsString( str ) then
@@ -324,21 +384,171 @@ BindGlobal( "RunPackageTests", function( pkgname, version, testfile, other )
              pkgname, "' (version ", version, ") not readable\n" );
       return;
     fi;
-    if PositionSublist( str, "START_TEST" ) = fail then
+    if PositionSublist( str, "gap> START_TEST(" ) = fail then
       if not READ( file ) then
         Print( "#E  RunPackageTests: file `", testfile, "' for package `",
-               pkgname, "' (version ", version, ") not read\n" );
+               pkgname, "' (version ", version, ") not readable\n" );
       fi;
     else
-      if not ReadTest( file ) then
-        Print( "#E  RunPackageTests: file `", testfile, "' for package `",
-               pkgname, "' (version ", version, ") not read\n" );
+      if not Test( file, rec(compareFunction := "uptowhitespace") ) then
+        Print( "#E  RunPackageTests reports errors for package ", pkgname, " ", version, "\n",
+              "in the test file `", testfile, "'\n");
       fi;
     fi;
 
-    Print( "#I  RunPackageTests( ... ): runtime ", Runtime(), "\n" );
+    Print( "#I  RunPackageTests(", PKGTSTHDR, "): runtime ", Runtime(), "\n" );
     end );
 
+
+#############################################################################
+##
+#F  CreatePackageLoadTestsInput( <scriptfile>, <outfileprefix>, <gap>, 
+##                               <autoload>, <onlyneeded> )
+##
+##  Writes the file <scriptfile> that tests loading each package
+##
+BindGlobal( "CreatePackageLoadTestsInput", 
+
+	function( scriptfile, outfileprefix, gap, autoload, onlyneeded )
+
+    local mode, smode, PKGLOADTSTOPT, result, name, entry, packagenames;
+
+    SizeScreen( [ 1000 ] );
+    InitializePackagesInfoRecords( false );
+    result:= "";
+    
+    mode:="";
+    PKGLOADTSTOPT:="";
+    if autoload then 
+		Append( mode, " with autoloaded" );
+	else	
+		Append( mode, "                " );
+	fi;	
+    if onlyneeded then 
+		Append( mode, ", only needed" );
+		PKGLOADTSTOPT:=":OnlyNeeded";
+	fi;	
+	smode := NormalizedWhitespace(mode);
+	if Length(smode) > 0 and smode[1] <> ' ' then
+	  smode:=Concatenation( " ", smode );
+    fi;
+    
+    packagenames := ShallowCopy( RecNames( GAPInfo.PackagesInfo ) );
+    Sort( packagenames );
+    
+    Append( result, "TIMESTAMP=`date -u +_%Y-%m-%d-%H-%M`\n" );
+    
+    for name in packagenames do
+        for entry in GAPInfo.PackagesInfo.( name ) do
+            Append( result, "echo '==========================================='\n" );
+            Append( result, 
+              Concatenation( "echo '%%% Loading ", name, " ", entry.Version, smode, "'\n" ) );
+            Append( result, 
+              Concatenation( 
+                "echo 'SetUserPreference(\"UseColorsInTerminal\",false); ",
+                "PKGLOADTSTRES:=LoadPackage(\"", name, "\"", PKGLOADTSTOPT, ");;",
+                "Filtered(NamesUserGVars(),x->IsLowerAlphaChar(x[1]) or Length(x)<=3);",
+                "if PKGLOADTSTRES=true then PKGLOADTSTRES:=\"### Loaded\"; ",
+                "else PKGLOADTSTRES:=\"### Not loaded\"; fi;",
+                "Print( PKGLOADTSTRES, \" \",\"", name, "\",\" \",\"", 
+                 entry.Version, smode, "\");", 
+                "Print([CHAR_INT(10)]);' | ", 
+                gap, " > ", outfileprefix, "$TIMESTAMP.", name, " 2>&1 \n" ) );
+            Append( result, 
+                Concatenation( "cat ", outfileprefix, "$TIMESTAMP.", name, "\n" ) );
+         od;
+    od;
+    Append( result, "echo '==========================================='\n" );
+    
+    # do not test LoadAllPackages with OnlyNeeded option
+    if not onlyneeded then    
+        Append( result, Concatenation("echo '\n======OUTPUT START: LoadAllPackages", mode, "'\n" ) );
+        Append( result, 
+            Concatenation( "echo 'SetUserPreference(\"UseColorsInTerminal\",false); ",
+                           "if CompareVersionNumbers( GAPInfo.Version, \"4.5.0\") then ",
+                           "SetInfoLevel(InfoPackageLoading,4);",
+                           "fi;LoadAllPackages(", PKGLOADTSTOPT, "); ",
+                           "Print([CHAR_INT(10)]); ",
+                           "Print(\"### all packages loaded                 ", mode, "\"); ' | ",  
+                           gap, " > ", outfileprefix, "$TIMESTAMP.all 2>&1 \n" ) );
+        Append( result, 
+            Concatenation( "cat ", outfileprefix, "$TIMESTAMP.all\n" ) );
+        Append( result, 
+            Concatenation("echo '\n======OUTPUT END: LoadAllPackages", mode, "'\n" ) );
+        Append( result, "echo '==========================================='\n" );
+        Append( result, 
+            Concatenation("echo '\n======OUTPUT START: LoadAllPackages ",
+                          "in the reverse order", mode, "'\n" ) );
+        if PKGLOADTSTOPT="" then
+      	    PKGLOADTSTOPT:=":reversed";
+        else
+      	    PKGLOADTSTOPT:=":OnlyNeeded,reversed";
+        fi;
+        Append( result, 
+            Concatenation( "echo 'SetUserPreference(\"UseColorsInTerminal\",false); ",
+                           "if CompareVersionNumbers( GAPInfo.Version, \"4.5.0\") then ",
+                           "SetInfoLevel(InfoPackageLoading,4);",
+                           "fi;LoadAllPackages(", PKGLOADTSTOPT, "); ",
+                           "Print([CHAR_INT(10)]); ",
+                           "Print(\"### all packages loaded in reverse order", mode, "\"); ' | ", 
+                           gap, " > ", outfileprefix, "$TIMESTAMP.all 2>&1 \n" ) );
+        Append( result, 
+            Concatenation( "cat ", outfileprefix, "$TIMESTAMP.all\n" ) );
+        Append( result, 
+            Concatenation("echo '\n======OUTPUT END: LoadAllPackages ",
+                          "in the reverse order", mode, "'\n" ) );
+    fi;         
+    
+    Append( result, Concatenation( "rm ", outfileprefix, "$TIMESTAMP.*\n" ) );
+    PrintTo( scriptfile, result );
+    end );
+    
+    
+#############################################################################
+##
+#F  CreatePackageVarsTestsInput( <scriptfile>, <outfileprefix>, <gap> )
+##
+##  Writes the file <scriptfile> that calls ShowPackageVariables 
+##  for each package in a new GAP session
+##
+BindGlobal( "CreatePackageVarsTestsInput", 
+
+	function( scriptfile, outfileprefix, gap )
+
+    local result, name, entry, packagenames;
+
+    SizeScreen( [ 1000 ] );
+    InitializePackagesInfoRecords( false );
+    result:= "";
+        
+    packagenames := ShallowCopy( RecNames( GAPInfo.PackagesInfo ) );
+    Sort( packagenames );
+    
+    Append( result, "TIMESTAMP=`date -u +_%Y-%m-%d-%H-%M`\n" );
+    
+    for name in packagenames do
+        for entry in GAPInfo.PackagesInfo.( name ) do
+            Append( result, "echo '==========================================='\n" );
+            Append( result, 
+              Concatenation( "echo '### Checking variables in \"", name, "\", ver. ", 
+                             entry.Version, "'\n" ) );
+            Append( result, 
+              Concatenation( 
+                "echo 'ShowPackageVariables(\"", name, "\"", ");",
+                "Print(\"### Variables checked for \\\"\",\"", name, "\\\"\",\", ver. \",\"", 
+                 entry.Version, "\" );", 
+                "Print([CHAR_INT(10)]);' | ", 
+                gap, " > ", outfileprefix, "$TIMESTAMP.", name, " 2>&1 \n" ) );                
+            Append( result, 
+                Concatenation( "cat ", outfileprefix, "$TIMESTAMP.", name, "\n" ) );
+         od;
+    od;
+    Append( result, "echo '==========================================='\n" );
+    Append( result, Concatenation( "rm ", outfileprefix, "$TIMESTAMP.*\n" ) );
+    PrintTo( scriptfile, result );
+    end );
+    
+    
 
 #############################################################################
 ##

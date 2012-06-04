@@ -1,0 +1,173 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Philosophy}}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Overview over this manual}}{5}{section.1.2}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {cvec}-Package}}{7}{chapter.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }The Data Structures}}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Finite field elements}}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Compressed Vectors in Memory}}{9}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }Packing of prime field elements}}{9}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }Extension Fields}}{10}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }How is information about the base field stored?}}{11}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }Limits that follow from the Data Format}}{12}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Compressed Matrices}}{12}{section.3.3}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }External Representation of Matrices on Storage}}{13}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }Byte ordering and word length}}{13}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }The header of a \texttt {cmat} file}}{13}{subsection.3.4.2}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Vectors}}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Creation}}{15}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }CVec}}{15}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }CVec (cvecclass)}}{15}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }CVec (coefflcvecclass)}}{15}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }CVec (coefflpd)}}{16}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }CVec (compvec)}}{16}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\leavevmode {\color {Chapter }CVec (coefflff)}}{16}{subsection.4.1.6}
+\contentsline {subsection}{\numberline {4.1.7}\leavevmode {\color {Chapter }CVecClass}}{16}{subsection.4.1.7}
+\contentsline {subsection}{\numberline {4.1.8}\leavevmode {\color {Chapter }CVecClass}}{16}{subsection.4.1.8}
+\contentsline {subsection}{\numberline {4.1.9}\leavevmode {\color {Chapter }CVecClass}}{17}{subsection.4.1.9}
+\contentsline {subsection}{\numberline {4.1.10}\leavevmode {\color {Chapter }CVecClass}}{17}{subsection.4.1.10}
+\contentsline {subsection}{\numberline {4.1.11}\leavevmode {\color {Chapter }CVecClass}}{17}{subsection.4.1.11}
+\contentsline {subsection}{\numberline {4.1.12}\leavevmode {\color {Chapter }CVecClass}}{17}{subsection.4.1.12}
+\contentsline {subsection}{\numberline {4.1.13}\leavevmode {\color {Chapter }ZeroSameMutability (cvec)}}{17}{subsection.4.1.13}
+\contentsline {subsection}{\numberline {4.1.14}\leavevmode {\color {Chapter }ShallowCopy (cvec)}}{17}{subsection.4.1.14}
+\contentsline {subsection}{\numberline {4.1.15}\leavevmode {\color {Chapter }Randomize (cvec)}}{17}{subsection.4.1.15}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Arithmetic}}{18}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }Handling of scalars in arithmetic operations}}{18}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }\texttt {\char 92\relax }+ (cveccvec)}}{18}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }\texttt {\char 92\relax }- (cveccvec)}}{18}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }AdditiveInverseSameMutability (cvec)}}{18}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }AdditiveInverseMutable (cvec)}}{18}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (cvecsca)}}{19}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }AddRowVector (cveccvecsca)}}{19}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }MultRowVector (cvecsca)}}{19}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }ScalarProduct (cveccvec)}}{19}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }ZeroMutable (cvec)}}{19}{subsection.4.2.10}
+\contentsline {subsection}{\numberline {4.2.11}\leavevmode {\color {Chapter }ZeroVector (cvec)}}{19}{subsection.4.2.11}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Element access and slicing}}{20}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }ELM{\textunderscore }LIST}}{20}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }ASS{\textunderscore }LIST}}{20}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }ELMS{\textunderscore }LIST}}{20}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }CVEC{\textunderscore }Slice}}{20}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\leavevmode {\color {Chapter }CopySubVector}}{21}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}\leavevmode {\color {Chapter }CVEC{\textunderscore }Concatenation}}{21}{subsection.4.3.6}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Comparison of Vectors and other information}}{21}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }=}}{21}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }LT}}{21}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }IsZero}}{21}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\leavevmode {\color {Chapter }PositionNonZero}}{22}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}\leavevmode {\color {Chapter }PositionLastNonZero}}{22}{subsection.4.4.5}
+\contentsline {subsection}{\numberline {4.4.6}\leavevmode {\color {Chapter }Length}}{22}{subsection.4.4.6}
+\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Changing representation, Unpacking}}{22}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }Unpack (cvec)}}{22}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}\leavevmode {\color {Chapter }IntegerRep (cvec)}}{22}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}\leavevmode {\color {Chapter }NumberFFVector (cvec)}}{22}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.4}\leavevmode {\color {Chapter }CVecNumber}}{23}{subsection.4.5.4}
+\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }Access to the base field}}{23}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}\leavevmode {\color {Chapter }BaseDomain (cvec)}}{23}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }BaseField (cvec)}}{23}{subsection.4.6.2}
+\contentsline {subsection}{\numberline {4.6.3}\leavevmode {\color {Chapter }Characteristic (cvec)}}{23}{subsection.4.6.3}
+\contentsline {subsection}{\numberline {4.6.4}\leavevmode {\color {Chapter }DegreeFFE (cvec)}}{23}{subsection.4.6.4}
+\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }Hashing techniques for \texttt {cvec}s}}{23}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }CVEC{\textunderscore }HashFunctionForCVecs}}{23}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}\leavevmode {\color {Chapter }ChooseHashFunction}}{24}{subsection.4.7.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Matrices}}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Creation}}{25}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }CMat}}{25}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }CMat}}{25}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }CMat}}{25}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }CMat}}{26}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }CVEC{\textunderscore }ZeroMat}}{26}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}\leavevmode {\color {Chapter }CVEC{\textunderscore }IdentityMat}}{26}{subsection.5.1.6}
+\contentsline {subsection}{\numberline {5.1.7}\leavevmode {\color {Chapter }CVEC{\textunderscore }RandomMat}}{26}{subsection.5.1.7}
+\contentsline {subsection}{\numberline {5.1.8}\leavevmode {\color {Chapter }MutableCopyMat}}{26}{subsection.5.1.8}
+\contentsline {subsection}{\numberline {5.1.9}\leavevmode {\color {Chapter }Matrix}}{26}{subsection.5.1.9}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Matrices as lists}}{27}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }Add}}{27}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }Remove}}{27}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }ELM{\textunderscore }LIST}}{27}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }ASS{\textunderscore }LIST}}{27}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }ELMS{\textunderscore }LIST}}{27}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }ASSS{\textunderscore }LIST}}{28}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }Length}}{28}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }ShallowCopy}}{28}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}\leavevmode {\color {Chapter }Collected}}{28}{subsection.5.2.9}
+\contentsline {subsection}{\numberline {5.2.10}\leavevmode {\color {Chapter }DuplicateFreeList}}{28}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}\leavevmode {\color {Chapter }Append}}{28}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}\leavevmode {\color {Chapter }Filtered}}{28}{subsection.5.2.12}
+\contentsline {subsection}{\numberline {5.2.13}\leavevmode {\color {Chapter }Unbind}}{29}{subsection.5.2.13}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Arithmetic}}{29}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }\texttt {\char 92\relax }+ (cmatcmat)}}{29}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }\texttt {\char 92\relax }- (cmatcmat)}}{29}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }AdditiveInverseSameMutability (cmat)}}{29}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }AdditiveInverseMutable (cmat)}}{29}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (cmatsca)}}{29}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (cveccmat)}}{30}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }\texttt {\char 92\relax }\texttt {\char 94\relax } (cveccmat)}}{30}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (cmatcmat)}}{30}{subsection.5.3.8}
+\contentsline {subsection}{\numberline {5.3.9}\leavevmode {\color {Chapter }ZeroSameMutability (cmat)}}{30}{subsection.5.3.9}
+\contentsline {subsection}{\numberline {5.3.10}\leavevmode {\color {Chapter }ZeroMutable (cmat)}}{30}{subsection.5.3.10}
+\contentsline {subsection}{\numberline {5.3.11}\leavevmode {\color {Chapter }OneSameMutability (cmat)}}{30}{subsection.5.3.11}
+\contentsline {subsection}{\numberline {5.3.12}\leavevmode {\color {Chapter }OneMutable (cmat)}}{30}{subsection.5.3.12}
+\contentsline {subsection}{\numberline {5.3.13}\leavevmode {\color {Chapter }InverseMutable}}{31}{subsection.5.3.13}
+\contentsline {subsection}{\numberline {5.3.14}\leavevmode {\color {Chapter }InverseSameMutability}}{31}{subsection.5.3.14}
+\contentsline {subsection}{\numberline {5.3.15}\leavevmode {\color {Chapter }TransposedMat}}{31}{subsection.5.3.15}
+\contentsline {subsection}{\numberline {5.3.16}\leavevmode {\color {Chapter }KroneckerProduct}}{31}{subsection.5.3.16}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Comparison of matrices and other information}}{31}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }=}}{31}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }LT}}{31}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }IsZero}}{31}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}\leavevmode {\color {Chapter }IsOne}}{32}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}\leavevmode {\color {Chapter }IsDiagonalMat}}{32}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}\leavevmode {\color {Chapter }IsUpperTriangularMat}}{32}{subsection.5.4.6}
+\contentsline {subsection}{\numberline {5.4.7}\leavevmode {\color {Chapter }IsLowerTriangularMat}}{32}{subsection.5.4.7}
+\contentsline {subsection}{\numberline {5.4.8}\leavevmode {\color {Chapter }CVEC{\textunderscore }HashFunctionForCMats}}{32}{subsection.5.4.8}
+\contentsline {subsection}{\numberline {5.4.9}\leavevmode {\color {Chapter }ChooseHashFunction}}{32}{subsection.5.4.9}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Slicing and submatrices}}{32}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }ExtractSubMatrix}}{33}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }CopySubMatrix}}{33}{subsection.5.5.2}
+\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }Information about matrices}}{33}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}\leavevmode {\color {Chapter }BaseField (cmat)}}{33}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}\leavevmode {\color {Chapter }Characteristic (cmat)}}{33}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}\leavevmode {\color {Chapter }DegreeFFE (cmat)}}{33}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}\leavevmode {\color {Chapter }DefaultField (cmat)}}{34}{subsection.5.6.4}
+\contentsline {section}{\numberline {5.7}\leavevmode {\color {Chapter }Input and output}}{34}{section.5.7}
+\contentsline {subsection}{\numberline {5.7.1}\leavevmode {\color {Chapter }CVEC{\textunderscore }WriteMat}}{34}{subsection.5.7.1}
+\contentsline {subsection}{\numberline {5.7.2}\leavevmode {\color {Chapter }CVEC{\textunderscore }WriteMatToFile}}{34}{subsection.5.7.2}
+\contentsline {subsection}{\numberline {5.7.3}\leavevmode {\color {Chapter }CVEC{\textunderscore }WriteMatsToFile}}{34}{subsection.5.7.3}
+\contentsline {subsection}{\numberline {5.7.4}\leavevmode {\color {Chapter }CVEC{\textunderscore }ReadMat}}{34}{subsection.5.7.4}
+\contentsline {subsection}{\numberline {5.7.5}\leavevmode {\color {Chapter }CVEC{\textunderscore }ReadMatFromFile}}{35}{subsection.5.7.5}
+\contentsline {subsection}{\numberline {5.7.6}\leavevmode {\color {Chapter }CVEC{\textunderscore }ReadMatsFromFile}}{35}{subsection.5.7.6}
+\contentsline {section}{\numberline {5.8}\leavevmode {\color {Chapter }Grease}}{35}{section.5.8}
+\contentsline {subsection}{\numberline {5.8.1}\leavevmode {\color {Chapter }GreaseMat}}{35}{subsection.5.8.1}
+\contentsline {subsection}{\numberline {5.8.2}\leavevmode {\color {Chapter }UnGreaseMat}}{36}{subsection.5.8.2}
+\contentsline {section}{\numberline {5.9}\leavevmode {\color {Chapter }Everything else}}{36}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}\leavevmode {\color {Chapter }Randomize (cmat)}}{36}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}\leavevmode {\color {Chapter }OverviewMat (cmat)}}{36}{subsection.5.9.2}
+\contentsline {subsection}{\numberline {5.9.3}\leavevmode {\color {Chapter }Unpack (cmat)}}{36}{subsection.5.9.3}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Linear Algebra routines}}{37}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Semi echelonised bases and cleaning}}{37}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }EmptySemiEchelonBasis}}{37}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }MakeSemiEchelonBasis}}{37}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }Vectors}}{37}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }Length (for a semi echelonised basis)}}{38}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }CleanRow}}{38}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }SemiEchelonRows}}{38}{subsection.6.1.6}
+\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }SemiEchelonRowsX}}{38}{subsection.6.1.7}
+\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }SemiEchelonRowsT}}{39}{subsection.6.1.8}
+\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }SemiEchelonRowsTX}}{39}{subsection.6.1.9}
+\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }SemiEchelonRowsP}}{39}{subsection.6.1.10}
+\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }SemiEchelonRowsPX}}{39}{subsection.6.1.11}
+\contentsline {subsection}{\numberline {6.1.12}\leavevmode {\color {Chapter }MutableNullspaceMat}}{39}{subsection.6.1.12}
+\contentsline {subsection}{\numberline {6.1.13}\leavevmode {\color {Chapter }MutableNullspaceMatX}}{39}{subsection.6.1.13}
+\contentsline {subsection}{\numberline {6.1.14}\leavevmode {\color {Chapter }NullspaceMat}}{39}{subsection.6.1.14}
+\contentsline {subsection}{\numberline {6.1.15}\leavevmode {\color {Chapter }NullspaceMatDestructive}}{40}{subsection.6.1.15}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Characteristic and minimal polynomial}}{40}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }CharacteristicPolynomialOfMatrix}}{40}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }FactorsOfCharacteristicPolynomial}}{40}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }MinimalPolynomialOfMatrix}}{40}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\leavevmode {\color {Chapter }CharAndMinimalPolynomialOfMatrix}}{40}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}\leavevmode {\color {Chapter }MinimalPolynomialOfMatrixMC}}{41}{subsection.6.2.5}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Performance}}{42}{chapter.7}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Cooperation with the \textsf {GAP} library}}{43}{chapter.8}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Examples}}{44}{chapter.9}
+\contentsline {chapter}{References}{45}{chapter*.3}
+\contentsline {chapter}{Index}{46}{section*.4}

@@ -2,15 +2,12 @@
 ##
 #W  ringsc.gi                   GAP library                  Alexander Hulpke
 ##
-#H  @(#)$Id: ringsc.gi,v 1.4.2.2 2008/10/08 15:49:04 gap Exp $
 ##
 #Y  Copyright (C) 2008 The GAP Group
 ##
 ##  This file contains methods for elements of rings, given as Z-modules with
 ##  structure constants for multiplication. It is based on algsc.gi
 ##
-Revision.ringsc_gi :=
-    "@(#)$Id: ringsc.gi,v 1.4.2.2 2008/10/08 15:49:04 gap Exp $";
 
 
 BindGlobal("SCRingReducedModuli",function(moduli,l)
@@ -65,6 +62,7 @@ InstallMethod( PrintObj,
 
     local F,      # family of `elm'
           names,  # generators names
+	  moduli,
           len,    # dimension of the ring
           zero,   # zero element of the ring
           depth,  # first nonzero position in coefficients list
@@ -72,6 +70,7 @@ InstallMethod( PrintObj,
 
     F     := FamilyObj( elm );
     names := F!.names;
+    moduli:= F!.moduli;
     elm   := ExtRepOfObj( elm );
     len   := Length( elm );
 
@@ -91,16 +90,21 @@ InstallMethod( PrintObj,
 
     else
 
-      if elm[ depth ] <> 1 then
+      if elm[depth]<>1 and elm[depth]-moduli[depth] =-1 then
+	  Print("-");
+      elif elm[ depth ] <> 1 then
         Print( elm[ depth ], "*" );
       fi;
       Print( names[ depth ] );
 
       for i in [ depth+1 .. len ] do
         if elm[i] <> 0 then
-          Print( "+" );
-          if elm[i] <> 1 then
-            Print( elm[i], "*" );
+	  if elm[i]=1 then
+	    Print( "+" );
+          elif elm[i]-moduli[i] =-1 then
+	    Print("-");
+          elif elm[i] <> 1 then
+            Print("+", elm[i], "*" );
           fi;
           Print( names[i] );
         fi;
@@ -117,12 +121,14 @@ function( elm )
 
     local s,      # string
           names,  # generators names
+	  moduli,
           len,    # dimension of the ring
           zero,   # zero element of the ring
           depth,  # first nonzero position in coefficients list
           i;      # loop over the coefficients list
 
     names := FamilyObj(elm)!.names;
+    moduli:= FamilyObj(elm)!.moduli;
     elm   := ExtRepOfObj( elm );
     len   := Length( elm );
 
@@ -142,7 +148,9 @@ function( elm )
     else
 
       s:="";
-      if elm[ depth ] <> 1 then
+      if elm[depth]<>1 and elm[depth]-moduli[depth] =-1 then
+	Add(s,'-');
+      elif elm[ depth ] <> 1 then
         Append(s,String(elm[ depth ]));
         Add(s,'*');
       fi;
@@ -150,8 +158,12 @@ function( elm )
 
       for i in [ depth+1 .. len ] do
         if elm[i] <> 0 then
-          Add(s,'+');
-          if elm[i] <> 1 then
+	  if elm[i]=1 then
+	    Add(s,'+');
+          elif elm[i]-moduli[i] =-1 then
+	    Add(s,'-');
+          elif elm[i] <> 1 then
+	    Add(s,'+');
             Append(s,String( elm[i]));
 	    Add(s,'*');
           fi;
@@ -273,15 +285,36 @@ end );
 
 InstallMethod( InverseOp, "for s. c. ring element", [ IsSCRingObj ],
 function( x )
-local fam,r;
+local fam,r,w,l,o;
   fam:=FamilyObj(x);
   r:=fam!.fullSCRing;
   if One(r)=fail then return fail;fi;
-  r:=Filtered(Elements(r),y->x*y=One(r) and y*x=One(r));
-  if Length(r)>0 then
-    return r[1];
+  if IsFinite(r) then
+    r:=Filtered(Elements(r),y->x*y=One(r) and y*x=One(r));
+    if Length(r)>0 then
+      return r[1];
+    else
+      return fail;
+    fi;
   else
-    return fail;
+    o:=One(r);
+    if x=o then return x;fi;
+    # try powering
+    w:=x;
+    l:=[w];
+    repeat
+      w:=w*x;
+      if w=o then
+	# last entry was inverse
+	return l[Length(l)];
+      fi;
+      if w in l then
+	# loop without inverse -- not invertible
+	return fail;
+      fi;
+      Add(l,w);
+    until Length(l)>10^6;
+    Error("cannot find inverse");
   fi;
 end );
 
@@ -831,6 +864,22 @@ function(R)
       ForAll(Enumerator(R),j->i*j=j and j*i=j));
 end);
 
+InstallOtherMethod(One,"for SC Rings -- try generators",
+  [IsRing],0,
+function(R)
+  local l,a;
+  if not IsSubringSCRing(R) then
+    TryNextMethod();
+  fi;
+  l:=GeneratorsOfRing(R);
+  a:=First(l,x->ForAll(l,y->x*y=y and y*x=y));
+  if a=fail then
+    TryNextMethod();
+  else
+    return a;
+  fi;
+end);
+
 InstallOtherMethod(OneOp,"for finite SC Rings family",
   [IsSCRingObjFamily],0,
   #-SIZE_FLAGS(WITH_HIDDEN_IMPS_FLAGS(FLAGS_FILTER(IsRing))),
@@ -1019,7 +1068,7 @@ local ids, tup, first, i, G, gens, g, new, D, prop;
     for g in gens do
       new := ShallowCopy( ids );
       new[i] := g;
-      new := Tuple( new );
+      new := DirectProductElement( new );
       Add( tup, new );
     od;
     Add( first, Length( tup )+1 );

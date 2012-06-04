@@ -1,0 +1,106 @@
+  
+  
+                           [1X The [5XGauss[0m[1X Package Manual[0m
+  
+  
+                      [1XExtended Gauss Functionality for [5XGAP[0m[1X[0m
+  
+  
+                               Version 2012.04.23
+  
+  
+                                    May 2011
+  
+  
+                                 Simon Goertzen
+  
+  
+  
+  Simon Goertzen
+      Email:    [7Xmailto:simon.goertzen@rwth-aachen.de[0m
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/goertzen/[0m
+      Address:  Lehrstuhl B für Mathematik
+                Templergraben 64
+                52062 Aachen
+                (Germany)
+  
+  
+  
+  -------------------------------------------------------
+  [1XAbstract[0m
+  This  document explains the primary uses of the [5XGauss[0m package. Included is a
+  documented  list  of the most important methods and functions needed to work
+  with sparse matrices and the algorithms provided by the [5XGauss[0m package.
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[0m
+  © 2007-2011 by Simon Goertzen
+  
+  This  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[0m
+  The  [5XGauss[0m  package  would  not  have  been  possible  without  the  helpful
+  contributions by
+  
+  --    Max Neunhöffer, University of St Andrews, and
+  
+  --    Mohamed Barakat, Lehrstuhl B für Mathematik, RWTH Aachen.
+  
+  Many  thanks  to these two and the Lehrstuhl B für Mathematik in general. It
+  should  be  noted  that  the  [5XGAP[0m  algorithms  for [10XSemiEchelonForm[0m and other
+  methods formed an important and informative basis for the development of the
+  extended  Gaussian  algorithms. This manual was created with the help of the
+  [5XGAPDoc[0m package by F. Lübeck and M. Neunhöffer [LN08].
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (Gauss)[0X
+  
+  1 Introduction
+    1.1 Overview over this manual
+    1.2 Installation of the [5XGauss[0m Package
+  2 Extending Gauss Functionality
+    2.1 The need for extended functionality
+    2.2 The applications of the [5XGauss[0m package algorithms
+  3 The Sparse Matrix Data Type
+    3.1 The inner workings of [5XGauss[0m sparse matrices
+      3.1-1 A special case: GF(2)
+    3.2 Methods and functions for sparse matrices
+      3.2-1 SparseMatrix
+      3.2-2 ConvertSparseMatrixToMatrix
+      3.2-3 CopyMat
+      3.2-4 GetEntry
+      3.2-5 SetEntry
+      3.2-6 AddToEntry
+      3.2-7 SparseZeroMatrix
+      3.2-8 SparseIdentityMatrix
+      3.2-9 TransposedSparseMat
+      3.2-10 CertainRows
+      3.2-11 CertainColumns
+      3.2-12 UnionOfRows
+      3.2-13 UnionOfColumns
+      3.2-14 SparseDiagMat
+      3.2-15 Nrows
+      3.2-16 Ncols
+      3.2-17 IndicesOfSparseMatrix
+      3.2-18 EntriesOfSparseMatrix
+      3.2-19 RingOfDefinition
+  4 Gaussian Algorithms
+    4.1 A list of the available algorithms
+    4.2 Methods and Functions for [5XGauss[0mian algorithms
+      4.2-1 EchelonMat
+      4.2-2 EchelonMatTransformation
+      4.2-3 ReduceMat
+      4.2-4 ReduceMatTransformation
+      4.2-5 KernelMat
+      4.2-6 Rank
+  A An Overview of the [5XGauss[0m package source code
+  
+  
+  -------------------------------------------------------

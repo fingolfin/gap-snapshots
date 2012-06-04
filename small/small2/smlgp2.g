@@ -6,8 +6,6 @@
 ##  This file contains the reading and selection functions for the groups of
 ##  size up to 1000 except 512, 768 and size a product of more then 3 primes
 ##
-Revision.smlgp2_g :=
-    "@(#)$Id: smlgp2.g,v 1.11.14.1 2005/05/03 14:24:19 gap Exp $";
 
 #############################################################################
 ##

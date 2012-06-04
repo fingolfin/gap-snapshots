@@ -1,0 +1,117 @@
+  
+  [1X5 Elements[0X
+  
+  An  element  of an object M is internally represented by a morphism from the
+  "structure  object"  to  the object M. In particular, the data structure for
+  object  elements  automatically  profits  from  the intrinsic realization of
+  morphisms in the [5Xhomalg[0m project.
+  
+  
+  [1X5.1 Elements: Category and Representations[0X
+  
+  [1X5.1-1 IsHomalgElement[0m
+  
+  [2X> IsHomalgElement( [0X[3XM[0X[2X ) _____________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of object elements.
+  
+  [1X5.1-2 IsElementOfAnObjectGivenByAMorphismRep[0m
+  
+  [2X> IsElementOfAnObjectGivenByAMorphismRep( [0X[3XM[0X[2X ) ________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of elements of finitley presented objects.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgElement[0m ([14X5.1-1[0m).)
+  
+  
+  [1X5.2 Elements: Constructors[0X
+  
+  
+  [1X5.3 Elements: Properties[0X
+  
+  [1X5.3-1 IsZero[0m
+  
+  [2X> IsZero( [0X[3Xm[0X[2X ) ______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the object element [3Xm[0m is zero.
+  
+  [1X5.3-2 IsCyclicGenerator[0m
+  
+  [2X> IsCyclicGenerator( [0X[3Xm[0X[2X ) ___________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the object element [3Xm[0m is a cyclic generator.
+  
+  
+  [1X5.4 Elements: Attributes[0X
+  
+  [1X5.4-1 Annihilator[0m
+  
+  [2X> Annihilator( [0X[3Xe[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  The  annihilator  of  the  object  element [3Xe[0m as a subobject of the structure
+  object.
+  
+  
+  [1X5.5 Elements: Operations and Functions[0X
+  
+  [1X5.5-1 in[0m
+  
+  [2X> in( [0X[3Xm, N[0X[2X ) ______________________________________________________[0Xattribute
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Is the element [3Xm[0m of the object M included in the subobject [3XN[0m<= M, i.e., does
+  the  morphism (with the unit object as source and M as target) underling the
+  element [3Xm[0m of M factor over the subobject morphism [3XN[0m-> M?
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> M := 2 * ZZ;[0X
+    [4X<A free left module of rank 2 on free generators>[0X
+    [4Xgap> a := HomalgModuleElement( "[ 6, 0 ]", M );[0X
+    [4X[ 6, 0 ][0X
+    [4Xgap> N := Subobject( HomalgMap( "[ 2, 0 ]", 1 * ZZ, M ) );[0X
+    [4X<A free left submodule given by a cyclic generator>[0X
+    [4Xgap> K := Subobject( HomalgMap( "[ 4, 0 ]", 1 * ZZ, M ) );[0X
+    [4X<A free left submodule given by a cyclic generator>[0X
+    [4Xgap> a in M;[0X
+    [4Xtrue[0X
+    [4Xgap> a in N;[0X
+    [4Xtrue[0X
+    [4Xgap> a in UnderlyingObject( N );[0X
+    [4Xtrue[0X
+    [4Xgap> a in K;[0X
+    [4Xfalse[0X
+    [4Xgap> a in UnderlyingObject( K );[0X
+    [4Xfalse[0X
+    [4Xgap> a in 3 * ZZ;[0X
+    [4Xfalse [0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( \in,[0X
+    [4X        "for homalg elements",[0X
+    [4X        [ IsHomalgElement, IsStaticFinitelyPresentedSubobjectRep ],[0X
+    [4X        [0X
+    [4X  function( m, N )[0X
+    [4X    local phi, psi;[0X
+    [4X    [0X
+    [4X    phi := UnderlyingMorphism( m );[0X
+    [4X    [0X
+    [4X    psi := MorphismHavingSubobjectAsItsImage( N );[0X
+    [4X    [0X
+    [4X    if not IsIdenticalObj( Range( phi ), Range( psi ) ) then[0X
+    [4X        Error( "the super object of the subobject and the range ",[0X
+    [4X               "of the morphism underlying the element do not coincide\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return IsZero( PreCompose( phi, CokernelEpi( psi ) ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  

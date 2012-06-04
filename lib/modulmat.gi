@@ -2,10 +2,9 @@
 ##
 #W  modulmat.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: modulmat.gi,v 4.20 2002/04/15 10:05:04 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for *matrix modules*, that is,
@@ -18,8 +17,6 @@
 ##  matrix modules because the standard delegation to full row modules
 ##  suffices.)
 ##
-Revision.modulmat_gi :=
-    "@(#)$Id: modulmat.gi,v 4.20 2002/04/15 10:05:04 sal Exp $";
 
 
 #############################################################################
@@ -91,14 +88,21 @@ InstallOtherMethod( \^,
 ##
 InstallMethod( IsMatrixModule,
     "for a free left module",
-    [ IsFreeLeftModule ],
+    [ IsFreeLeftModule and HasGeneratorsOfLeftModule ],
     function( M )
     local gens;
     gens:= GeneratorsOfLeftModule( M );
-    return    ( IsEmpty( gens ) and IsMatrix( Zero( M ) ) )
-           or ForAll( gens, IsMatrix );
+    if IsEmpty( gens ) then
+      return IsMatrix( Zero( M ) );
+    else
+      return ForAll( gens, IsMatrix );
+    fi;
     end );
 
+InstallMethod( IsMatrixModule,
+    "for a free left module without generators",
+    [ IsFreeLeftModule ],
+    M -> IsMatrix(Representative(M)));
 
 #############################################################################
 ##
@@ -238,6 +242,7 @@ InstallMethod( \in,
       IsFreeLeftModule and IsFullMatrixModule ],
     function( mat, M )
     return     IsMatrix( mat )
+           and IsRectangularTable( mat )
            and DimensionsMat( mat ) = DimensionOfVectors( M )
            and ForAll( mat, row -> IsSubset( LeftActingDomain( M ), row ) );
     end );

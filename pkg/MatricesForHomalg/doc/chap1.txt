@@ -1,0 +1,111 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1 What is the role of the [5XMatricesForHomalg[1X package in the [5Xhomalg[1X project?[0X
+  
+  
+  [1X1.1-1 [5XMatricesForHomalg[1X provides ...[0X
+  
+  The package [5XMatricesForHomalg[0m provides:
+  
+  --    rings
+  
+  --    ring elements
+  
+  --    ring maps
+  
+  --    matrices
+  
+  
+  [1X1.1-2 [5Xhomalg[1X delegates ...[0X
+  
+  The package [5Xhomalg[0m [13Xdelegates[0m [13Xall[0m matrix operations as it treats matrices and
+  their  rings  as [13Xblack boxes[0m. [5Xhomalg[0m comes with a single predefined class of
+  rings  and  a  single  predefined  class of matrices over these rings -- the
+  so-called  internal  matrices (--> [14X5.1-2[0m) over so-called internal rings (-->
+  [14X3.1-4[0m).  An  internal  matrix  (resp. ring) is simply a wrapper containing a
+  [5XGAP[0m-builtin  matrix  (resp.  ring).  [5Xhomalg[0m  allows other packages to define
+  further  classes  or  extend existing classes of rings and matrices [13Xtogether[0m
+  with their operations. For example:
+  
+  --    The  [5Xhomalg[0m  subpackage  [5XResidueClassRingForHomalg[0m  (-->  Appendix  [14XD[0m)
+        defines  the  classes  of  residue  class  rings,  residue  class ring
+        elements,  and  matrices  over  residue  class rings. Such a matrix is
+        defined  by  a  matrix  over  the  ambient  ring which is nevertheless
+        interpreted  modulo  the ring relations, i.e. modulo the generators of
+        the defining ideal.
+  
+  --    The  package  [5XGaussForHomalg[0m  extends  the  class of internal matrices
+        enabling  it  to  wrap  sparse matrices provided by the package [5XGauss[0m.
+        [5XGaussForHomalg[0m delegates the essential part of the matrix creation and
+        all matrix operations to [5XGauss[0m.
+  
+  --    The  package  [5XHomalgToCAS[0m  defines  the  classes of so-called external
+        rings  and  matrices  and  the  package  [5XRingsForHomalg[0m  delegates the
+        essential  part  of  the  matrix creation and all matrix operations to
+        external  computer  algebra  systems  like  [5XSingular[0m, [5XMacaulay2[0m, [5XSage[0m,
+        [5XMacaulay2[0m,  [5XMAGMA[0m,  [5XMaple[0m,  ... . The package [5Xhomalg[0m accesses external
+        matrices via pointers. The pointer of an external matrix is simply its
+        name in the external system. [5XHomalgToCAS[0m chooses these names.
+  
+  --    The  package  [5XLocalizeRingForHomalg[0m defines the classes of local(ized)
+        rings,  local ring elements, and local matrices. A [5Xhomalg[0m local matrix
+        contains  a  [5Xhomalg[0m matrix as a numerator and an element of the global
+        ring as a denominator.
+  
+  The  matrix  operations  are  divided  into  two  classes called "Tools" and
+  "Basic".    The    "Tools"   operations   include   addition,   subtraction,
+  multiplication, extracting certain rows or columns, stacking, and augmenting
+  matrices  (-->  Appendix  [14XB[0m).  The  "Basic" operations include the two basic
+  operations  in linear algebra needed to solve an inhomogeneous linear system
+  XA=B with coefficients in a not necessarily commutative ring R (--> Appendix
+  [14XA[0m):
+  
+  --    Effectively  reducing  B  modulo A, i.e. effectively deciding if a row
+        (or a set of rows) B lies in the R-span of the rows of the matrix A.
+  
+  --    Computing  an R-generating set of row syzygies (=R-relations among the
+        rows)  of  A, i.e. computing an R-generating set of the left kernel of
+        A.  This  generating  set  is then given as the rows of a matrix Y and
+        YA=0.
+  
+  The  first  operation  is  nothing  but  deciding  the  solvability  of  the
+  inhomogeneous  system  XA=B and if solvable to compute a particular solution
+  X,  while  the  second is to compute an R-generating set for the homogeneous
+  solution  space, i.e. the solution space of the homogeneous system YA=0. The
+  above is of course also valid for the column convention.
+  
+  
+  [1X1.1-3 The black box concept[0X
+  
+  Now we address the following concerns: Wouldn't the idea of using algorithms
+  like the Gröbnerbasis algorithm(s) as a black box (--> [14X1.1-2[0m) contradict the
+  following facts?
+  
+  --    It  is  known  that an efficient Gröbnerbasis algorithm depends on the
+        ring  R  under  consideration.  For  example the implementation of the
+        algorithm depends on the ground ring (or field) k.
+  
+  --    Often  enough  highly  specialized implementations are used to address
+        specific  types  of  linear systems of equations (occuring in specific
+        homological  problems)  in  order  to increase the speed or reduce the
+        space needed for the computations.
+  
+  The following should clarify the above concerns.
+  
+  --    Since  each  ring  comes  with  its  own black box, the first point is
+        automatically resolved.
+  
+  --    Allow  the  black  box  coming with each ring to contain the different
+        available  implementations  and  make  them  accessible  to [5Xhomalg[0m via
+        standarized  names, independent of the computer algebra system used to
+        perform computations.
+  
+  
+  [1X1.2 This manual[0X
+  
+  Chapter [14X2[0m describes the installation of this package. The remaining chapters
+  are  each  devoted  to one of the [5XMatricesForHomalg[0m objects (--> [14X1.1-1[0m) with
+  its constructors, properties, attributes, and operations.
+  

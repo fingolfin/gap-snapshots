@@ -2,14 +2,10 @@
 ##
 #W  pcgsspec.gi                 GAP library                      Bettina Eick
 ##
-#H  @(#)$Id: pcgsspec.gi,v 4.61.2.1 2005/10/14 08:45:40 gap Exp $
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.pcgsspec_gi :=
-    "@(#)$Id: pcgsspec.gi,v 4.61.2.1 2005/10/14 08:45:40 gap Exp $";
 
 
 #############################################################################
@@ -156,6 +152,7 @@ PcgsSystemWithWf := function( pcgs, wf )
         newpcgs := pcgs;
     else
         newpcgs := PcgsByPcSequenceNC( FamilyObj(OneOfPcgs(pcgs)), list );
+        SetRelativeOrders(newpcgs, List(weights, x -> x[3]));
         SetOneOfPcgs( newpcgs, OneOfPcgs(pcgs) );
     fi;
 
@@ -599,6 +596,11 @@ function( pcgs )
         # change to complement base
         Info(InfoSpecPcgs, 1, "exhibit complement system");
         pcgssys := PcgsSystemWithComplementSystem( pcgssys );
+	if IsBound(pcgssys.pcgs!.LGWeights) then
+	  # pcgs is reused -- force new one
+	  pcgssys.pcgs:=PcgsByPcSequence(FamilyObj(OneOfPcgs(pcgs)),
+	    pcgssys.pcgs!.pcSequence);
+	fi;
 
         # create the special pcgs
         newpcgs := pcgssys.pcgs;
@@ -970,6 +972,13 @@ InstallOtherMethod( PcgsCentralSeries, "for pc groups use SpecialPcgs",
 
 InstallOtherMethod( PcgsPCentralSeriesPGroup, "for pc groups use SpecialPcgs",
   true,[IsPcGroup],0,DoCentralSeriesPcgsIfNilpot);
+
+InstallOtherMethod( PcgsCentralSeries, "for pcgs computable use SpecialPcgs",
+  true,[CanEasilyComputePcgs],0,DoCentralSeriesPcgsIfNilpot);
+
+InstallOtherMethod( PcgsPCentralSeriesPGroup,
+  "for pcgs computable use SpecialPcgs",
+  true,[CanEasilyComputePcgs],0,DoCentralSeriesPcgsIfNilpot);
 
 PcgsElAbSerFromSpecPcgs:=function(G)
 local s;

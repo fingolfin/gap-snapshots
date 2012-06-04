@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: simpcomp.aux
+The style file: alpha.bst
+Database file #1: biblio.bib
+Warning--there's a number but no volume in Schulz94PolyhMnfPoly
+You've used 47 entries,
+            2543 wiz_defined-function locations,
+            901 strings with 12608 characters,
+and the built_in function-call counts, 17160 in all, are:
+= -- 1787
+> -- 548
+< -- 49
++ -- 165
+- -- 159
+* -- 1117
+:= -- 2720
+add.period$ -- 159
+call.type$ -- 47
+change.case$ -- 244
+chr.to.int$ -- 44
+cite$ -- 48
+duplicate$ -- 758
+empty$ -- 1405
+format.name$ -- 239
+if$ -- 3602
+int.to.chr$ -- 4
+int.to.str$ -- 0
+missing$ -- 44
+newline$ -- 246
+num.names$ -- 141
+pop$ -- 259
+preamble$ -- 1
+purify$ -- 299
+quote$ -- 0
+skip$ -- 599
+stack$ -- 0
+substring$ -- 1056
+swap$ -- 125
+text.length$ -- 49
+text.prefix$ -- 33
+top$ -- 0
+type$ -- 344
+warning$ -- 1
+while$ -- 171
+width$ -- 53
+write$ -- 644
+(There was 1 warning)

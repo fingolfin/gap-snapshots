@@ -1,0 +1,52 @@
+\begin{thebibliography}{OdRS04}
+
+\bibitem[BdR07]{BR}
+O.~Broche and {\a'A}.~del R{\a'\i}o.
+\newblock Wedderburn decomposition of finite group algebras.
+\newblock {\em Finite Fields Appl.}, 13(1):71{\textendash}79, 2007.
+
+\bibitem[OdR03]{OR}
+A.~Olivieri and {\a'A}.~del R{\a'\i}o.
+\newblock An algorithm to compute the primitive central idempotents and the
+  {W}edderburn decomposition of a rational group algebra.
+\newblock {\em J. Symbolic Comput.}, 35(6):673{\textendash}687, 2003.
+
+\bibitem[OdRS04]{ORS}
+A.~Olivieri, {\a'A}.~del R{\a'\i}o, and J.~J. Sim{\a'o}n.
+\newblock On monomial characters and central idempotents of rational group
+  algebras.
+\newblock {\em Comm. Algebra}, 32(4):1531{\textendash}1550, 2004.
+
+\bibitem[Olt07]{O}
+G.~Olteanu.
+\newblock Computing the {W}edderburn decomposition of group algebras by the
+  {B}rauer-{W}itt theorem.
+\newblock {\em Math. Comp.}, 76(258):1073{\textendash}1087 (electronic), 2007.
+
+\bibitem[Pas89]{P}
+D.~S. Passman.
+\newblock {\em Infinite crossed products}, volume 135 of {\em Pure and Applied
+  Mathematics}.
+\newblock Academic Press Inc., Boston, MA, 1989.
+
+\bibitem[Rei03]{R}
+I.~Reiner.
+\newblock {\em Maximal orders}, volume~28 of {\em London Mathematical Society
+  Monographs. New Series}.
+\newblock The Clarendon Press Oxford University Press, Oxford, 2003.
+\newblock Corrected reprint of the 1975 original, With a foreword by M. J.
+  Taylor.
+
+\bibitem[Sho33]{S}
+K.~Shoda.
+\newblock {\"U}ber die monomialen {D}arstellungen einer endlichen {G}ruppe.
+\newblock {\em Proc. Phys.-Math. Soc. Japan}, III(15):249{\textendash}257,
+  1933.
+
+\bibitem[Yam74]{Y}
+T.~Yamada.
+\newblock {\em The {S}chur subgroup of the {B}rauer group}.
+\newblock Springer-Verlag, Berlin, 1974.
+\newblock Lecture Notes in Mathematics, Vol. 397.
+
+\end{thebibliography}

@@ -2,9 +2,8 @@
 ##
 #W  clashom.gd                  GAP library                  Alexander Hulpke
 ##
-#H  @(#)$Id: clashom.gd,v 4.2 2002/04/15 10:04:29 sal Exp $
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains functions that compute the conjugacy classes of a
@@ -12,8 +11,6 @@
 ##  Literature: A.H: Conjugacy classes in finite permutation groups via
 ##  homomorphic images, MathComp, to appear.
 ##
-Revision.clashom_gd :=
-    "@(#)$Id: clashom.gd,v 4.2 2002/04/15 10:04:29 sal Exp $";
 
 #############################################################################
 ##

@@ -6,8 +6,6 @@
 ##  This file contains the identification routines for groups of order
 ##  p^4 >= 11 ^ 4.
 ##
-Revision.idgrp9_g :=
-    "@(#)$Id: idgrp9.g,v 1.3.2.1 2005/05/03 14:19:18 gap Exp $";
 
 #############################################################################
 ##

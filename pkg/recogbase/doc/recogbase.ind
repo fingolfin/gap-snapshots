@@ -1,0 +1,109 @@
+\begin{theindex}
+
+  \item \textsf{recogbase}, \hyperpage{5}
+
+  \indexspace
+
+  \item \texttt  {AddMethod}, \hyperpage{7}
+
+  \indexspace
+
+  \item \texttt  {CalcNiceGens}, \hyperpage{20}
+  \item \texttt  {calcnicegens}, \hyperpage{19}
+  \item \texttt  {CalcNiceGensGeneric}, \hyperpage{19}
+  \item \texttt  {CalcNiceGensHomNode}, \hyperpage{20}
+  \item \texttt  {CallMethods}, \hyperpage{7}
+
+  \indexspace
+
+  \item \texttt  {DisplayCompositionFactors}, \hyperpage{28}
+
+  \indexspace
+
+  \item \texttt  {fhmethsel}, \hyperpage{18}
+  \item \texttt  {findgensNmeth}, \hyperpage{21}
+  \item \texttt  {FindHomDbBB}, \hyperpage{15}
+  \item \texttt  {FindHomDbMatrix}, \hyperpage{14}
+  \item \texttt  {FindHomDbPerm}, \hyperpage{13}
+  \item \texttt  {FindHomDbProjective}, \hyperpage{14}
+  \item \texttt  {FindHomMethodsBB}, \hyperpage{15}
+  \item \texttt  {FindHomMethodsMatrix}, \hyperpage{14}
+  \item \texttt  {FindHomMethodsPerm}, \hyperpage{13}
+  \item \texttt  {FindHomMethodsProjective}, \hyperpage{14}
+  \item \texttt  {FindHomomorphism}, \hyperpage{24}
+  \item \texttt  {FindKernelDoNothing}, \hyperpage{21}
+  \item \texttt  {FindKernelFastNormalClosure}, \hyperpage{21}
+  \item \texttt  {FindKernelRandom}, \hyperpage{21}
+  \item \texttt  {forfactor}, \hyperpage{22}
+  \item \texttt  {forkernel}, \hyperpage{22}
+
+  \indexspace
+
+  \item \texttt  {gensN}, \hyperpage{20}
+  \item \texttt  {gensNslp}, \hyperpage{22}
+  \item \texttt  {Grp}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {Homom}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {immediateverification}, \hyperpage{22}
+  \item \texttt  {\texttt  {\char 92\relax }in}, \hyperpage{28}
+  \item \texttt  {isequal}, \hyperpage{23}
+  \item \texttt  {IsLeaf}, \hyperpage{16}
+  \item \texttt  {isone}, \hyperpage{23}
+  \item \texttt  {IsReady}, \hyperpage{16}
+  \item \texttt  {IsRecognitionInfo}, \hyperpage{16}
+
+  \indexspace
+
+  \item \texttt  {methodsforfactor}, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {NiceGens}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {pregensfac}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {RecogniseBBGroup}, \hyperpage{13}
+  \item \texttt  {RecogniseGeneric}, \hyperpage{12}
+  \item \texttt  {RecogniseGroup}, \hyperpage{13}
+  \item \texttt  {RecogniseMatrixGroup}, \hyperpage{12}
+  \item \texttt  {RecognisePermGroup}, \hyperpage{12}
+  \item \texttt  {RecogniseProjectiveGroup}, \hyperpage{13}
+  \item \texttt  {RecognitionInfoFamily}, \hyperpage{16}
+  \item \texttt  {RecognizeBBGroup}, \hyperpage{13}
+  \item \texttt  {RecognizeGeneric}, \hyperpage{12}
+  \item \texttt  {RecognizeGroup}, \hyperpage{13}
+  \item \texttt  {RecognizeMatrixGroup}, \hyperpage{12}
+  \item \texttt  {RecognizePermGroup}, \hyperpage{12}
+  \item \texttt  {RecognizeProjectiveGroup}, \hyperpage{13}
+  \item \texttt  {RIFac}, \hyperpage{17}
+  \item \texttt  {RIKer}, \hyperpage{18}
+  \item \texttt  {RIParent}, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {Size}, \hyperpage{28}
+  \item \texttt  {SLPforElement}, \hyperpage{19}
+  \item \texttt  {slpforelement}, \hyperpage{18}
+  \item \texttt  {SLPforElementFuncsBB}, \hyperpage{15}
+  \item \texttt  {SLPforElementFuncsMatrix}, \hyperpage{14}
+  \item \texttt  {SLPforElementFuncsPerm}, \hyperpage{14}
+  \item \texttt  {SLPforElementFuncsProjective}, \hyperpage{15}
+  \item \texttt  {SLPforElementGeneric}, \hyperpage{26}
+  \item \texttt  {SLPforNiceGens}, \hyperpage{28}
+  \item \texttt  {slptonice}, \hyperpage{20}
+  \item \texttt  {StdPresentation}, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {TryFindHomMethod}, \hyperpage{15}
+
+\end{theindex}

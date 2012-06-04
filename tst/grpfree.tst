@@ -2,15 +2,12 @@
 ##
 #W  grpfree.tst                GAP-4 library                    Thomas Breuer
 ##
-#H  @(#)$Id: grpfree.tst,v 4.10.4.3 2005/05/11 14:53:02 gap Exp $
 ##
-#Y  Copyright 1997,    Lehrstuhl D fuer Mathematik,   RWTH Aachen,    Germany
+#Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
 ##
-##  To be listed in testall.g
+##  To be listed in testinstall.g
 ##
-
-gap> START_TEST("$Id: grpfree.tst,v 4.10.4.3 2005/05/11 14:53:02 gap Exp $");
-
+gap> START_TEST("grpfree.tst");
 gap> g:= FreeGroup( "a", "b" );
 <free group on the generators [ a, b ]>
 gap> IsWholeFamily( g );
@@ -22,60 +19,19 @@ infinity
 gap> gens:= GeneratorsOfGroup( g );
 [ a, b ]
 gap> a:= gens[1];; b:= gens[2];;
+gap> firstfifty:=[];;
 gap> iter:= Iterator( g );;
 gap> for i in [ 1 .. 50 ] do
->   Print( NextIterator( iter ), "\n" );
+>   Add( firstfifty, NextIterator( iter ) );
 > od;
-<identity ...>
-a
-a^-1
-b
-b^-1
-a^2
-a^-2
-b*a
-b^-1*a
-b*a^-1
-b^-1*a^-1
-a*b
-a^-1*b
-a*b^-1
-a^-1*b^-1
-b^2
-b^-2
-a^3
-a^-3
-b*a^2
-b^-1*a^2
-b*a^-2
-b^-1*a^-2
-a*b*a
-a^-1*b*a
-a*b^-1*a
-a^-1*b^-1*a
-a*b*a^-1
-a^-1*b*a^-1
-a*b^-1*a^-1
-a^-1*b^-1*a^-1
-b^2*a
-b^-2*a
-b^2*a^-1
-b^-2*a^-1
-a^2*b
-a^-2*b
-a^2*b^-1
-a^-2*b^-1
-b*a*b
-b^-1*a*b
-b*a^-1*b
-b^-1*a^-1*b
-b*a*b^-1
-b^-1*a*b^-1
-b*a^-1*b^-1
-b^-1*a^-1*b^-1
-a*b^2
-a^-1*b^2
-a*b^-2
+gap> firstfifty;     
+[ <identity ...>, a, a^-1, b, b^-1, a^2, a^-2, b*a, b^-1*a, b*a^-1, 
+  b^-1*a^-1, a*b, a^-1*b, a*b^-1, a^-1*b^-1, b^2, b^-2, a^3, a^-3, b*a^2, 
+  b^-1*a^2, b*a^-2, b^-1*a^-2, a*b*a, a^-1*b*a, a*b^-1*a, a^-1*b^-1*a, 
+  a*b*a^-1, a^-1*b*a^-1, a*b^-1*a^-1, a^-1*b^-1*a^-1, b^2*a, b^-2*a, 
+  b^2*a^-1, b^-2*a^-1, a^2*b, a^-2*b, a^2*b^-1, a^-2*b^-1, b*a*b, b^-1*a*b, 
+  b*a^-1*b, b^-1*a^-1*b, b*a*b^-1, b^-1*a*b^-1, b*a^-1*b^-1, b^-1*a^-1*b^-1, 
+  a*b^2, a^-1*b^2, a*b^-2 ]
 gap> IsDoneIterator( iter );
 false
 gap> enum:= Enumerator( g );;
@@ -90,11 +46,8 @@ gap> Print(first50,"\n");
   b^-1*a^-1*b^-1, a*b^-2 ]
 gap> List( first50, x -> Position( enum, x ) ) = [ 1 .. 50 ];
 true
-
-gap> STOP_TEST( "grpfree.tst", 4200000 );
-
+gap> STOP_TEST( "grpfree.tst", 700000 );
 
 #############################################################################
 ##
 #E
-

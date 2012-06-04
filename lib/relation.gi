@@ -2,10 +2,9 @@
 ##
 #W  relation.gi                  GAP library                   Andrew Solomon
 ##
-#H  @(#)$Id: relation.gi,v 4.53 2002/05/29 12:32:09 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementation for binary relations, equivalence
@@ -20,8 +19,6 @@
 ##  Andrew Solomon
 ##
 ##
-Revision.relation_gi :=
-    "@(#)$Id: relation.gi,v 4.53 2002/05/29 12:32:09 gap Exp $";
 
 ############################################################################
 ##
@@ -428,7 +425,7 @@ InstallMethod(ReflexiveClosureBinaryRelation,
 
         ur := ShallowCopy(AsSSortedList(UnderlyingRelation(r)));
         for i in Source(r) do
-           AddSet(ur,Tuple([i,i]));
+           AddSet(ur,DirectProductElement([i,i]));
         od;
 
         d := Source(r);
@@ -474,7 +471,7 @@ InstallMethod(SymmetricClosureBinaryRelation,
         ur := UnderlyingRelation(r);
         t  := ShallowCopy(AsSSortedList(ur));
         for i in ur do
-           AddSet(t,Tuple([i[2],i[1]]));
+           AddSet(t,DirectProductElement([i[2],i[1]]));
         od;
 
         d := Source(r);
@@ -547,7 +544,7 @@ InstallMethod(TransitiveClosureBinaryRelation,
         # transitive closure from the adjacency list
         p := [];
         for i in [1..Length(el)] do
-            Append(p,List(t[i],x->Tuple([el[i],x])));
+            Append(p,List(t[i],x->DirectProductElement([el[i],x])));
         od;
 
         d := Source(r); ##Assumes source is a domain
@@ -577,7 +574,7 @@ InstallMethod(TransitiveClosureBinaryRelation,
 ##
 InstallMethod(HasseDiagramBinaryRelation,
         "for binary relation", true,
-        [IsBinaryRelation and IsPartialOrderBinaryRelation], 0,
+        [IsBinaryRelation], 0,
     function(rel)
 
         local i, j,           # iterators
@@ -591,6 +588,9 @@ InstallMethod(HasseDiagramBinaryRelation,
               HDBREltCovers,  #    to find the cover of an element
               HDBRListCovers; #    to find the set of covers
 
+        while not IsPartialOrderBinaryRelation(rel) do
+	    Error("Relation ",rel," is not a partial order");
+	od;
 
         ## return the minimal elements of a list under rel
         HDBRMinElts := function(list, rel)
@@ -621,7 +621,7 @@ InstallMethod(HasseDiagramBinaryRelation,
         tups := [];
         for i in lc do
             for j in i[2] do
-                Append(tups, [Tuple([i[1], j])]);
+                Append(tups, [DirectProductElement([i[1], j])]);
             od;
         od;
         h := GeneralMappingByElements(d,d, tups);         
@@ -655,7 +655,7 @@ InstallGlobalFunction(PartialOrderByOrderingFunction,
         for i in d do
             for j in d do
                 if of(i,j) then
-                    Add(tup,Tuple([i,j]));
+                    Add(tup,DirectProductElement([i,j]));
                 fi;
             od;
         od;    
@@ -794,24 +794,32 @@ InstallMethod(StronglyConnectedComponents, "for general binary relations",
         ##
         r := AsBinaryRelationOnPoints(rel);
 
+        ## Call the kernel function to find the strongly connected
+        ## components
+        ##
+        e := STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(Successors(r));
+
+        ## Eliminate singletons
+        e := Filtered(e, i->Length(i)>1);
+
         ## Do a depth first search of rel
         ##
-        DFS(r,[1..DegreeOfBinaryRelation(r)]);
+        #DFS(r,[1..DegreeOfBinaryRelation(r)]);
 
         ## Transpose the relation (i.e. take its inverse) and
         ##    complete a DFS searching the vertices in decreasing
         ##    order of the finish time in the first DFS 
         ##
-        DFS(r^-1, List(Reversed(AsSortedList(ftime)),i->
-            Position(ftime,i)));
+        #DFS(r^-1, List(Reversed(AsSortedList(ftime)),i->
+        #    Position(ftime,i)));
 
         ## Find the strongly connected components which are the
         ##     partitions of pi
         ##        
-        e := EquivalenceRelationPartition(
-                 EquivalenceRelationByRelation(
-                     BinaryRelationTransformation(
-                         Transformation(pi))));
+        #e := EquivalenceRelationPartition(
+        #         EquivalenceRelationByRelation(
+        #             BinaryRelationTransformation(
+        #                 Transformation(pi))));
 
         ## Translate the partition of the equivalence relation on points 
         ##    representing the strongly connected components into the 
@@ -1127,7 +1135,7 @@ InstallMethod(Successors, "for a generic relation", true,
 ##  Arithmetic and boolean methods on binary relations on points
 ##
 ##  \=  True if successors lists are equal (by construction each image is
-##      a set of integers so there is a cannonical form to check)
+##      a set of integers so there is a canonical form to check)
 ##
 ##  \in determines whether a tuple [x,y] in rel  
 ##
@@ -1472,7 +1480,7 @@ InstallGlobalFunction(EquivalenceRelationByRelation,
             tups :=[];
             for i in [1..DegreeOfBinaryRelation(r)] do
                 for j in Successors(r)[i] do
-                   Add(tups, Tuple([i,j]));
+                   Add(tups, DirectProductElement([i,j]));
                 od;
             od;
             return EquivalenceRelationByPairs(
@@ -1800,7 +1808,7 @@ InstallMethod(\=, "for eqivalence relations", IsIdenticalObj,
             return Successors(x)=Successors(y);
         fi;
 
-        ## Look at partitions -- they are not in any cannonical 
+        ## Look at partitions -- they are not in any canonical 
         ##     form. 
         ##
         if (HasEquivalenceRelationPartition(x) and 
@@ -1959,7 +1967,7 @@ InstallMethod(EquivalenceClasses, "wraparound to call 2-argument version",
 ##
 #M  EquivalenceClasses( <E>, <C> )
 ##
-##  Returns the list of equivalence classes of an equivalence relation.
+##  Returns the list of equivalence classes of the equivalence relation <E> that intersect <C>.
 ##  This generic method will not terminate for an equivalence over an
 ##  infinite set.
 ##
@@ -1975,13 +1983,17 @@ InstallOtherMethod(EquivalenceClasses, "for a generic equivalence relation",
         classes := [];
         if HasEquivalenceRelationPartition(E) then
             for p in EquivalenceRelationPartition(E) do
-                Add(classes, EquivalenceClassOfElementNC(E, p[1]));
+                for elm in p do
+                    if elm in D then
+                        Add(classes, EquivalenceClassOfElementNC(E, elm));
+                        break;
+                    fi;
+                od;
             od;
             ## Get the singletons
             ##
-            if Sum(List(EquivalenceRelationPartition(E),i->Length(i)))<>
-                   Size(D) then
-                d := Difference(AsSet(D), Flat(EquivalenceRelationPartition(E)));
+            if Sum(List(EquivalenceRelationPartition(E),Length))<>Size(D) then
+                d := Difference(AsSet(D), Concatenation(EquivalenceRelationPartition(E)));
                 for p in d do
                     Add(classes, EquivalenceClassOfElementNC(E,p));
                  od;

@@ -1,0 +1,24 @@
+  
+  [1XA Overview of the [5Xhomalg[1X Package Source Code[0X
+  
+  The package [5XHomalgToCAS[0m is split in several files.
+  
+        Filename [11X.gd[0m/[11X.gi[0m     | Content                                            
+      ---------------------------------------------------------------------------
+        [11XHomalgToCAS[0m          | the global variable [10XHOMALG_IO[0m and                  
+                             | the global function [10XhomalgIOMode[0m                   
+                             |                                                    
+        [11XhomalgExternalObject[0m | [5Xhomalg[0m external objects, [10XhomalgPointer[0m,            
+                             | [10XhomalgExternalCASystem[0m, [10XhomalgStream[0m, ...          
+                             |                                                    
+        [11XHomalgExternalRing[0m   | [10XCreateHomalgExternalRing[0m, [10XHomalgExternalRingElement[0m
+                             |                                                    
+        [11XHomalgExternalMatrix[0m | [10XConvertHomalgMatrix[0m, [10XConvertHomalgMatrixViaFile[0m    
+                             |                                                    
+        [11XhomalgSendBlocking[0m   | [10XhomalgFlush[0m, [10XhomalgSendBlocking[0m                    
+                             |                                                    
+        [11XIO[0m                   | [10XLaunchCAS[0m, [10XTerminateCAS[0m                            
+  
+       [1XTable:[0X [13XThe [5XHomalgToCAS[0m[13X package files[0m
+  
+  

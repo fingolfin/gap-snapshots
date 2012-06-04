@@ -1,0 +1,21 @@
+  
+  [1X4 External Rings[0X
+  
+  
+  [1X4.1 External Rings: Representation[0X
+  
+  [1X4.1-1 IsHomalgExternalRingRep[0m
+  
+  [2X> IsHomalgExternalRingRep( [0X[3XR[0X[2X ) _______________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The internal representation of [5Xhomalg[0m rings.
+  
+  (It is a representation of the [5XGAP[0m category [10XIsHomalgRing[0m.)
+  
+  
+  [1X4.2 Rings: Constructors[0X
+  
+  
+  [1X4.3 External Rings: Operations and Functions[0X
+  

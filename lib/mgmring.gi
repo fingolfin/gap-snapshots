@@ -2,10 +2,9 @@
 ##
 #W  mgmring.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: mgmring.gi,v 4.58.2.2 2005/07/20 15:53:43 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for magma rings and their elements.
@@ -16,8 +15,6 @@
 ##  4. methods for free magma rings modulo the span of a ``zero'' element
 ##  5. methods for groups of free magma ring elements
 ##
-Revision.mgmring_gi :=
-    "@(#)$Id: mgmring.gi,v 4.58.2.2 2005/07/20 15:53:43 gap Exp $";
 
 
 #T > Dear Craig,
@@ -226,6 +223,32 @@ InstallMethod( PrintObj,
       Print( "(", coeffs_and_words[i], ")*", coeffs_and_words[i-1] );
     fi;
     end );
+
+#############################################################################
+##
+#M  String( <elm> ) . . . . . . . . for magma ring element in default repr.
+##
+InstallMethod( String,
+    "for magma ring element",
+    [ IsElementOfMagmaRingModuloRelations ],
+function( elm )
+local coeffs_and_words,s,i;
+
+  s:="";
+  coeffs_and_words:= CoefficientsAndMagmaElements( elm );
+  for i in [ 1, 3 .. Length( coeffs_and_words ) - 3 ] do
+    Append(s,Concatenation("(",String(coeffs_and_words[i+1]), ")*", String(coeffs_and_words[i]),
+    "+" ));
+  od;
+  i:= Length( coeffs_and_words );
+  if i = 0 then
+    Append(s, "<zero> of ..." );
+  else
+    Append(s, Concatenation("(", String(coeffs_and_words[i]), ")*",
+    String(coeffs_and_words[i-1]) ));
+  fi;
+  return s;
+end );
 
 
 #############################################################################
@@ -1484,17 +1507,17 @@ InstallGlobalFunction( MagmaRingModuloSpanOfZero, function( R, M, z )
 #T no!
     F!.zeroOfMagma := z;
 
-    # Set the characteristic.
-    if HasCharacteristic( R ) or HasCharacteristic( FamilyObj( R ) ) then
-      SetCharacteristic( F, Characteristic( R ) );
-    fi;
-
+    # Do not set the characteristic since we do not know whether we are
+    # 0-dimensional and the characteristic would then be 0.
 
     # Make the magma ring object.
     RM:= Objectify( NewType( CollectionsFamily( F ),
                                  IsMagmaRingModuloSpanOfZero
                              and IsAttributeStoringRep ),
                     rec() );
+
+    # Store it in its elements family:
+    F!.magmaring := RM;
 
     # Set the necessary attributes.
     SetLeftActingDomain( RM, R );
@@ -1516,6 +1539,29 @@ InstallGlobalFunction( MagmaRingModuloSpanOfZero, function( R, M, z )
     # Return the ring.
     return RM;
 end );
+
+
+#############################################################################
+##
+#M  Characteristic( <A> )
+#M  Characteristic( <algelm> )
+#M  Characteristic( <algelmfam> )
+##
+##  (via delegations)
+##
+InstallMethod( Characteristic, 
+  "for an elements family of a magma ring quotient",
+  [ IsElementOfMagmaRingModuloSpanOfZeroFamily ],
+  function( fam )
+    local A,n,one,x;
+    A := fam!.magmaring;
+    one := One(A);
+    if Zero(A) = one then 
+        return 1;
+    else
+        return Characteristic(LeftActingDomain(A));
+    fi;
+  end );
 
 
 #############################################################################

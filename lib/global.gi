@@ -2,10 +2,9 @@
 ##
 #W  global.gi                   GAP library                      Steve Linton
 ##
-#H  @(#)$Id: global.gi,v 4.13.4.1 2008/10/15 14:20:28 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##
@@ -31,8 +30,6 @@
 ##  Functions that change data give Info messages at level 2 for InfoGlobal
 ##
 
-Revision.global_gi :=
-    "@(#)$Id: global.gi,v 4.13.4.1 2008/10/15 14:20:28 gap Exp $";
 
 #############################################################################
 ##
@@ -51,16 +48,17 @@ DeclareInfoClass("InfoGlobal");
 ##
 
 IdentifierLetters := 
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@";
 
 #############################################################################
 ##
 #F  IsValidIdentifier( <str> ) . . .  check if a string is a valid identifier
 ##
 
-InstallGlobalFunction("IsValidIdentifier", function(str)
+InstallGlobalFunction( IsValidIdentifier, function(str)
     return ForAll(str, c -> c in IdentifierLetters) and
-           ForAny(str, c -> not (c in "0123456789") );
+           ForAny(str, c -> not (c in "0123456789") and
+           not str in ALL_KEYWORDS() );
 end);
 
 #############################################################################

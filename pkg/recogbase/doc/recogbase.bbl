@@ -1,0 +1,9 @@
+\begin{thebibliography}{NS06}
+
+\bibitem[NS06]{IssacRecog}
+Max Neunh{\"o}ffer and {\'A}kos Seress.
+\newblock A data structure for a uniform approach to computations with finite
+  groups.
+\newblock In {\em ISSAC 2006}, pages 254--261. ACM, New York, 2006.
+
+\end{thebibliography}

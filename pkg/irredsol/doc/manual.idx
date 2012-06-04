@@ -1,0 +1,108 @@
+\indexentry {IRREDSOL}{3}
+\indexentry {Design of the group library@Design of the group library|indexit}{4}
+\indexentry {Low level access functions@Low level access functions|indexit}{5}
+\indexentry {IsAvailableIrreducibleSolvableGroupData@`IsAvailableIrreducibleSolvable\discretionary {\char 92}{}{}GroupData'}{5}
+\indexentry {IndicesIrreducibleSolvableMatrixGroups@`IndicesIrreducibleSolvableMatrixGroups'}{5}
+\indexentry {IndicesIrreducibleSolubleMatrixGroups@`IndicesIrreducibleSolubleMatrixGroups'}{5}
+\indexentry {IrreducibleSolvableMatrixGroup@`IrreducibleSolvableMatrixGroup'}{5}
+\indexentry {IrreducibleSolubleMatrixGroup@`IrreducibleSolubleMatrixGroup'}{5}
+\indexentry {IsAvailableAbsolutelyIrreducibleSolvableGroupData@`IsAvailableAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}GroupData'}{5}
+\indexentry {IndicesMaximalAbsolutelyIrreducibleSolvableMatrixGroups@`IndicesMaximalAbsolutelyIrreducible\discretionary {\char 92}{}{}Solvable\discretionary {\char 92}{}{}MatrixGroups'}{5}
+\indexentry {IndicesAbsolutelyIrreducibleSolvableMatrixGroups@`IndicesAbsolutelyIrreducible\discretionary {\char 92}{}{}Solvable\discretionary {\char 92}{}{}MatrixGroups'}{5}
+\indexentry {AbsolutelyIrreducibleSolvableMatrixGroup@`AbsolutelyIrreducibleSolvableMatrixGroup'}{5}
+\indexentry {Finding matrix groups with given properties@Finding matrix groups with given properties|indexit}{6}
+\indexentry {AllIrreducibleSolvableMatrixGroups@`AllIrreducibleSolvableMatrixGroups'}{6}
+\indexentry {AllIrreducibleSolubleMatrixGroups@`AllIrreducibleSolubleMatrixGroups'}{6}
+\indexentry {AllIrredSolMatGroups@`AllIrredSolMatGroups'}{6}
+\indexentry {OneIrreducibleSolvableMatrixGroup@`OneIrreducibleSolvableMatrixGroup'}{7}
+\indexentry {OneIrreducibleSolubleMatrixGroup@`OneIrreducibleSolubleMatrixGroup'}{7}
+\indexentry {OneIrredSolMatGroup@`OneIrredSolMatGroup'}{7}
+\indexentry {IteratorIrreducibleSolvableMatrixGroups@`IteratorIrreducibleSolvableMatrixGroups'}{7}
+\indexentry {IteratorIrreducibleSolubleMatrixGroups@`IteratorIrreducibleSolubleMatrixGroups'}{7}
+\indexentry {IteratorIrredSolMatGroups@`IteratorIrredSolMatGroups'}{7}
+\indexentry {Loading and unloading group data manually@Loading and unloading group data manually|indexit}{8}
+\indexentry {workspace!running out of}{8}
+\indexentry {LoadAbsolutelyIrreducibleSolvableGroupData@`LoadAbsolutelyIrreducibleSolvableGroupData'}{8}
+\indexentry {LoadAbsolutelyIrreducibleSolubleGroupData@`LoadAbsolutelyIrreducibleSolubleGroupData'}{8}
+\indexentry {LoadAbsoIrredSolGroupData@`LoadAbsoIrredSolGroupData'}{8}
+\indexentry {LoadedAbsolutelyIrreducibleSolvableGroupData@`LoadedAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}GroupData'}{8}
+\indexentry {LoadedAbsolutelyIrreducibleSolubleGroupData@`LoadedAbsolutelyIrreducibleSoluble\discretionary {\char 92}{}{}GroupData'}{8}
+\indexentry {LoadedAbsoIrredSolGroupData@`LoadedAbsoIrredSolGroupData'}{8}
+\indexentry {UnloadAbsolutelyIrreducibleSolvableGroupData@`UnloadAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}GroupData'}{8}
+\indexentry {UnloadAbsolutelyIrreducibleSolubleGroupData@`UnloadAbsolutelyIrreducibleSoluble\discretionary {\char 92}{}{}GroupData'}{8}
+\indexentry {UnloadAbsoIrredSolGroupData@`UnloadAbsoIrredSolGroupData'}{8}
+\indexentry {Identification of irreducible groups@Identification of irreducible groups|indexit}{9}
+\indexentry {IsAvailableIdIrreducibleSolvableMatrixGroup@`IsAvailable\discretionary {\char 92}{}{}Id\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}Solvable\discretionary {\char 92}{}{}MatrixGroup'}{9}
+\indexentry {IsAvailableIdAbsolutelyIrreducibleSolvableMatrixGroup@`IsAvailable\discretionary {\char 92}{}{}Id\discretionary {\char 92}{}{}Absolutely\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}Solvable\discretionary {\char 92}{}{}MatrixGroup'}{9}
+\indexentry {IdIrreducibleSolvableMatrixGroup@`IdIrreducibleSolvableMatrixGroup'}{9}
+\indexentry {RecognitionIrreducibleSolvableMatrixGroup@`RecognitionIrreducibleSolvable\discretionary {\char 92}{}{}MatrixGroup'}{9}
+\indexentry {RecognitionIrreducibleSolvableMatrixGroupNC@`RecognitionIrreducibleSolvable\discretionary {\char 92}{}{}MatrixGroupNC'}{9}
+\indexentry {IdAbsolutelyIrreducibleSolvableMatrixGroup@`IdAbsolutelyIrreducibleSolvableMatrixGroup'}{10}
+\indexentry {RecognitionAbsolutelyIrreducibleSolvableMatrixGroup@`RecognitionAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}MatrixGroup'}{10}
+\indexentry {RecognitionAbsolutelyIrreducibleSolvableMatrixGroupNC@`RecognitionAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}Matrix\discretionary {\char 92}{}{}Group\discretionary {\char 92}{}{}NC'}{10}
+\indexentry {Compatibility with other data libraries@Compatibility with other data libraries|indexit}{10}
+\indexentry {IdIrreducibleSolvableMatrixGroupIndexMS@`IdIrreducibleSolvableMatrixGroupIndexMS'}{10}
+\indexentry {IndexMSIdIrreducibleSolvableMatrixGroup@`IndexMSIdIrreducibleSolvableMatrixGroup'}{10}
+\indexentry {Loading and unloading recognition data manually@Loading and unloading recognition data manually|indexit}{11}
+\indexentry {workspace!running out of}{11}
+\indexentry {LoadAbsolutelyIrreducibleSolvableGroupFingerprints@`LoadAbsolutelyIrreducibleSolvableGroup\discretionary {\char 92}{}{}Fingerprints'}{11}
+\indexentry {LoadedAbsolutelyIrreducibleSolvableGroupFingerprints@`LoadedAbsolutelyIrreducibleSolvableGroup\discretionary {\char 92}{}{}Fingerprints'}{11}
+\indexentry {UnloadAbsolutelyIrreducibleSolvableGroupFingerprints@`UnloadAbsolutelyIrreducibleSolvableGroup\discretionary {\char 92}{}{}Finger\discretionary {\char 92}{}{}prints'}{11}
+\indexentry {Basic attributes for matrix groups@Basic attributes for matrix groups|indexit}{12}
+\indexentry {DegreeOfMatrixGroup@`DegreeOfMatrixGroup'}{12}
+\indexentry {Degree@`Degree'!for matrix groups}{12}
+\indexentry {DimensionOfMatrixGroup@`DimensionOfMatrixGroup'}{12}
+\indexentry {Dimension@`Dimension'!for matrix groups}{12}
+\indexentry {FieldOfMatrixGroup@`FieldOfMatrixGroup'}{12}
+\indexentry {DefaultFieldOfMatrixGroup@`DefaultFieldOfMatrixGroup'}{12}
+\indexentry {SplittingField@`SplittingField'}{12}
+\indexentry {CharacteristicOfField@`CharacteristicOfField'}{12}
+\indexentry {Characteristic@`Characteristic'!for matrix groups}{12}
+\indexentry {RepresentationIsomorphism@`RepresentationIsomorphism'}{12}
+\indexentry {Irreducibility and maximality of matrix groups@Irreducibility and maximality of matrix groups|indexit}{13}
+\indexentry {IsIrreducibleMatrixGroup@`IsIrreducibleMatrixGroup'}{13}
+\indexentry {IsIrreducibleMatrixGroup@`IsIrreducibleMatrixGroup'}{13}
+\indexentry {IsIrreducible@`IsIrreducible'!for matrix groups}{13}
+\indexentry {IsAbsolutelyIrreducibleMatrixGroup@`IsAbsolutelyIrreducibleMatrixGroup'}{13}
+\indexentry {IsAbsolutelyIrreducible@`IsAbsolutelyIrreducible'}{13}
+\indexentry {IsMaximalAbsolutelyIrreducibleSolvableMatrixGroup@`IsMaximalAbsolutelyIrreducibleSolvable\discretionary {\char 92}{}{}MatrixGroup'}{13}
+\indexentry {Primitivity of matrix groups@Primitivity of matrix groups|indexit}{13}
+\indexentry {MinimalBlockDimensionOfMatrixGroup@`MinimalBlockDimensionOfMatrixGroup'}{13}
+\indexentry {MinimalBlockDimensionOfMatrixGroup@`MinimalBlockDimensionOfMatrixGroup'}{13}
+\indexentry {MinimalBlockDimension@`MinimalBlockDimension'!for matrix groups}{13}
+\indexentry {IsPrimitiveMatrixGroup@`IsPrimitiveMatrixGroup'}{14}
+\indexentry {IsPrimitiveMatrixGroup@`IsPrimitiveMatrixGroup'}{14}
+\indexentry {IsPrimitive@`IsPrimitive'!for matrix groups}{14}
+\indexentry {IsLinearlyPrimitive@`IsLinearlyPrimitive'}{14}
+\indexentry {ImprimitivitySystems@`ImprimitivitySystems'}{14}
+\indexentry {Conjugating matrix groups into smaller fields@Conjugating matrix groups into smaller fields|indexit}{15}
+\indexentry {TraceField@`TraceField'}{15}
+\indexentry {ConjugatingMatTraceField@`ConjugatingMatTraceField'}{15}
+\indexentry {Translating between irreducible solvable matrix groups and primitive solvable groups@Translating between irreducible solvable matrix groups and primitive solvable groups|indexit}{16}
+\indexentry {PrimitivePcGroup@`PrimitivePcGroup'}{16}
+\indexentry {PrimitiveSolvablePermGroup@`PrimitiveSolvablePermGroup'}{16}
+\indexentry {PrimitivePcGroupIrreducibleMatrixGroup@`PrimitivePcGroupIrreducibleMatrixGroup'}{16}
+\indexentry {PrimitivePcGroupIrreducibleMatrixGroupNC@`PrimitivePcGroupIrreducibleMatrixGroupNC'}{16}
+\indexentry {PrimitivePermGroupIrreducibleMatrixGroup@`PrimitivePermGroup\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}MatrixGroup'}{16}
+\indexentry {PrimitivePermGroupIrreducibleMatrixGroupNC@`PrimitivePermGroup\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}MatrixGroupNC'}{16}
+\indexentry {IrreducibleMatrixGroupPrimitiveSolvableGroup@`IrreducibleMatrixGroup\discretionary {\char 92}{}{}Primitive\discretionary {\char 92}{}{}SolvableGroup'}{17}
+\indexentry {IrreducibleMatrixGroupPrimitiveSolvableGroupNC@`IrreducibleMatrixGroup\discretionary {\char 92}{}{}Primitive\discretionary {\char 92}{}{}SolvableGroupNC'}{17}
+\indexentry {Finding primitive pc groups with given properties@Finding primitive pc groups with given properties|indexit}{17}
+\indexentry {AllPrimitivePcGroups@`AllPrimitivePcGroups'}{17}
+\indexentry {OnePrimitivePcGroup@`OnePrimitivePcGroup'}{17}
+\indexentry {IteratorPrimitivePcGroups@`IteratorPrimitivePcGroups'}{17}
+\indexentry {Finding primitive solvable permutation groups with given properties@Finding primitive solvable permutation groups with given properties|indexit}{18}
+\indexentry {AllPrimitiveSolvablePermGroups@`AllPrimitiveSolvablePermGroups'}{18}
+\indexentry {OnePrimitiveSolvablePermGroup@`OnePrimitiveSolvablePermGroup'}{18}
+\indexentry {IteratorPrimitivePermGroups@`IteratorPrimitivePermGroups'}{18}
+\indexentry {Recognizing primitive solvable groups@Recognizing primitive solvable groups|indexit}{19}
+\indexentry {IdPrimitiveSolvableGroup@`IdPrimitiveSolvableGroup'}{19}
+\indexentry {IdPrimitiveSolvableGroupNC@`IdPrimitiveSolvableGroupNC'}{19}
+\indexentry {RecognitionPrimitiveSolvableGroup@`RecognitionPrimitiveSolvableGroup'}{19}
+\indexentry {Obsolete functions@Obsolete functions|indexit}{19}
+\indexentry {PrimitiveSolvablePermutationGroup@`PrimitiveSolvablePermutationGroup'}{19}
+\indexentry {PrimitivePermutationGroupIrreducibleMatrixGroup@`PrimitivePermutationGroup\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}MatrixGroup'}{19}
+\indexentry {PrimitivePermutationGroupIrreducibleMatrixGroupNC@`PrimitivePermutationGroup\discretionary {\char 92}{}{}Irreducible\discretionary {\char 92}{}{}MatrixGroupNC'}{19}
+\indexentry {AllPrimitiveSolvablePermutationGroups@`AllPrimitiveSolvablePermutationGroups'}{19}
+\indexentry {IteratorPrimitivePermutationGroups@`IteratorPrimitivePermutationGroups'}{19}
+\indexentry {OnePrimitiveSolvablePermutationGroup@`OnePrimitiveSolvablePermutationGroup'}{19}

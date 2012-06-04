@@ -2,7 +2,7 @@
 ##
 #W  stdgen.gd                GAP library                        Thomas Breuer
 ##
-#H  @(#)$Id: stdgen.gd,v 1.1 2002/02/20 17:21:29 gap Exp $
+#H  @(#)$Id: stdgen.gd,v 1.6 2010/09/28 16:47:46 alexk Exp $
 ##
 #Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
 ##
@@ -10,7 +10,7 @@
 ##  generators of finite groups.
 ##
 Revision.stdgen_gd :=
-    "@(#)$Id: stdgen.gd,v 1.1 2002/02/20 17:21:29 gap Exp $";
+    "@(#)$Id: stdgen.gd,v 1.6 2010/09/28 16:47:46 alexk Exp $";
 
 
 #T TO DO:
@@ -22,20 +22,24 @@ Revision.stdgen_gd :=
 #############################################################################
 ##
 ##  Standard Generators of Groups
-#1
-##  An $s$-tuple of *standard generators* of a given group $G$ is a vector
-##  $(g_1, g_2, \ldots, g_s)$ of elements $g_i \in G$ satisfying certain
-##  conditions (depending on the isomorphism type of $G$) such that
-##  \beginlist%ordered
-##  \item{1.}
-##      $\langle g_1, g_2, \ldots, g_s \rangle = G$ and
-##  \item{2.}
-##      the vector is unique up to automorphisms of $G$,
-##      i.e., for two vectors $(g_1, g_2, \ldots, g_s)$ and
-##      $(h_1, h_2, \ldots, h_s)$ of standard generators,
-##      the map $g_i \mapsto h_i$ extends to an automorphism of $G$.
-##  \endlist
-##  For details about standard generators, see~\cite{Wil96}.
+##  <#GAPDoc Label="[1]{stdgen}">
+##  An <M>s</M>-tuple of <E>standard generators</E> of a given group <M>G</M>
+##  is a vector <M>(g_1, g_2, \ldots, g_s)</M> of elements <M>g_i \in G</M>
+##  satisfying certain conditions (depending on the isomorphism type of
+##  <M>G</M>) such that
+##  <Enum>
+##  <Item>
+##      <M>\langle g_1, g_2, \ldots, g_s \rangle = G</M> and
+##  </Item>
+##  <Item>
+##      the vector is unique up to automorphisms of <M>G</M>,
+##      i.e., for two vectors <M>(g_1, g_2, \ldots, g_s)</M> and
+##      <M>(h_1, h_2, \ldots, h_s)</M> of standard generators,
+##      the map <M>g_i \mapsto h_i</M> extends to an automorphism of <M>G</M>.
+##  </Item>
+##  </Enum>
+##  For details about standard generators, see&nbsp;<Cite Key="Wil96"/>.
+##  <#/GAPDoc>
 ##
 
 
@@ -43,74 +47,100 @@ Revision.stdgen_gd :=
 ##
 #A  StandardGeneratorsInfo( <G> )
 ##
-##  When called with the group <G>,
-##  `StandardGeneratorsInfo' returns a list of records with at least one of
-##  the components `script' and `description'.
-##  Each such record defines *standard generators* of groups isomorphic
-##  to <G>, the $i$-th record is referred to as the $i$-th set of
-##  standard generators for such groups.
-##  The value of `script' is a dense list of lists, each encoding a command
-##  that has one of the following forms.
-##  \beginitems
-##  A *definition* $[ i, n, k ]$ or $[ i, n ]$ &
-##      means to search for an element of order $n$,
-##      and to take its $k$-th power as candidate for the $i$-th standard
-##      generator (the default for $k$ is $1$),
+##  <#GAPDoc Label="StandardGeneratorsInfo:stdgen">
+##  <ManSection>
+##  <Attr Name="StandardGeneratorsInfo" Arg='G' Label="for groups"/>
 ##
-##  a *relation* $[ i_1, k_1, i_2, k_2, \ldots, i_m, k_m, n ]$ with $m > 1$ &
+##  <Description>
+##  When called with the group <A>G</A>,
+##  <Ref Func="StandardGeneratorsInfo" Label="for groups"/> returns a list of
+##  records with at least one of the components <C>script</C> and
+##  <C>description</C>.
+##  Each such record defines <E>standard generators</E> of groups isomorphic
+##  to <A>G</A>, the <M>i</M>-th record is referred to as the <M>i</M>-th set
+##  of standard generators for such groups.
+##  The value of <C>script</C> is a dense list of lists, each encoding a
+##  command that has one of the following forms.
+##  <List>
+##  <Mark>A <E>definition</E> <M>[ i, n, k ]</M> or <M>[ i, n ]</M></Mark>
+##  <Item>
+##      means to search for an element of order <M>n</M>,
+##      and to take its <M>k</M>-th power as candidate for the <M>i</M>-th
+##      standard generator (the default for <M>k</M> is <M>1</M>),
+##  </Item>
+##  <Mark>a <E>relation</E> <M>[ i_1, k_1, i_2, k_2, \ldots, i_m, k_m, n ]</M> with <M>m > 1</M></Mark>
+##  <Item>
 ##      means a check whether the element
-##      $g_{i_1}^{k_1} g_{i_2}^{k_2} \cdots g_{i_m}^{k_m}$ has order $n$;
-##      if $g_j$ occurs then of course the $j$-th generator must have been
-##      defined before,
-##
-##  a *relation* $[ [ i_1, i_2, \ldots, i_m ], <slp>, n ]$ &
-##      means a check whether the result of the straight line program <slp>
-##      (see~"Straight Line Programs") applied to the candidates
-##      $g_{i_1}, g_{i_2}, \ldots, g_{i_m}$ has order $n$,
-##      where the candidates $g_j$ for the $j$-th standard generators
-##      must have been defined before,
-##
-##  a *condition* $[ [ i_1, k_1, i_2, k_2, \ldots, i_m, k_m ], f, v ]$ &
-##      means a check whether the {\GAP} function in the global list
-##      `StandardGeneratorsFunctions' (see "StandardGeneratorsFunctions")
-##      that is followed by the list $f$ of strings returns the value $v$
-##      when it is called with $G$ and
-##      $g_{i_1}^{k_1} g_{i_2}^{k_2} \cdots g_{i_m}^{k_m}$.
-##  \enditems
+##      <M>g_{{i_1}}^{{k_1}} g_{{i_2}}^{{k_2}} \cdots g_{{i_m}}^{{k_m}}</M>
+##      has order <M>n</M>; if <M>g_j</M> occurs then of course the
+##      <M>j</M>-th generator must have been defined before,
+##  </Item>
+##  <Mark>a <E>relation</E> <M>[ [ i_1, i_2, \ldots, i_m ], <A>slp</A>, n ]</M></Mark>
+##  <Item>
+##      means a check whether the result of the straight line program
+##      <A>slp</A> (see&nbsp;<Ref Sect="Straight Line Programs" BookName="ref"/>) applied to
+##      the candidates <M>g_{{i_1}}, g_{{i_2}}, \ldots, g_{{i_m}}</M> has
+##      order <M>n</M>, where the candidates <M>g_j</M> for the <M>j</M>-th
+##      standard generators must have been defined before,
+##  </Item>
+##  <Mark>a <E>condition</E> <M>[ [ i_1, k_1, i_2, k_2, \ldots, i_m, k_m ], f, v ]</M></Mark>
+##  <Item>
+##      means a check whether the &GAP; function in the global list
+##      <Ref Var="StandardGeneratorsFunctions"/>
+##      that is followed by the list <M>f</M> of strings returns the value
+##      <M>v</M> when it is called with <M>G</M> and
+##      <M>g_{{i_1}}^{{k_1}} g_{{i_2}}^{{k_2}} \cdots g_{{i_m}}^{{k_m}}</M>.
+##  </Item>
+##  </List>
 ##  Optional components of the returned records are
-##  \beginitems
-##  `generators' &
+##  <List>
+##  <Mark><C>generators</C></Mark>
+##  <Item>
 ##      a string of names of the standard generators,
-##
-##  `description' &
-##      a string describing the `script' information in human readable form,
-##      in terms of the `generators' value,
-##
-##  `classnames' &
-##      a list of strings, the $i$-th entry being the name of the conjugacy
-##      class containing the $i$-th standard generator,
-##      according to the {\ATLAS} character table of the group
-##      (see~"ClassNames"), and
-#T function that tries to compute the classes from the `description' value
-#T and the character table?
-##
-##  `ATLAS' &
-##      a boolean; `true' means that the standard generators coincide with
-##      those defined in Rob Wilson's {\ATLAS} of Group Representations
-##      (see~\cite{AGR}), and `false' means that this property is not
-##      guaranteed.
-##  \enditems
-##
+##  </Item>
+##  <Mark><C>description</C></Mark>
+##  <Item>
+##      a string describing the <C>script</C> information in human readable
+##      form, in terms of the <C>generators</C> value,
+##  </Item>
+##  <Mark><C>classnames</C></Mark>
+##  <Item>
+##      a list of strings, the <M>i</M>-th entry being the name of the
+##      conjugacy class containing the <M>i</M>-th standard generator,
+##      according to the &ATLAS; character table of the group
+##      (see&nbsp;<Ref Func="ClassNames" BookName="ref"/>), and
+##  <!-- function that tries to compute the classes from the <C>description</C> value-->
+##  <!-- and the character table? -->
+##  </Item>
+##  <Mark><C>ATLAS</C></Mark>
+##  <Item>
+##      a boolean; <K>true</K> means that the standard generators coincide
+##      with those defined in Rob Wilson's &ATLAS; of Group Representations
+##      (see&nbsp;<Cite Key="AGR"/>), and <K>false</K> means that this
+##      property is not guaranteed.
+##  </Item>
+##  </List>
+##  <P/>
 ##  There is no default method for an arbitrary isomorphism type,
 ##  since in general the definition of standard generators is not obvious.
-##
-##  The function `StandardGeneratorsOfGroup'
-##  (see~"StandardGeneratorsOfGroup")
+##  <P/>
+##  The function <Ref Func="StandardGeneratorsOfGroup" BookName="ref"/>
 ##  can be used to find standard generators of a given group isomorphic
-##  to <G>.
-##
-##  The `generators' and `description' values, if not known, can be computed
-##  by `HumanReadableDefinition' (see~"HumanReadableDefinition").
+##  to <A>G</A>.
+##  <P/>
+##  The <C>generators</C> and <C>description</C> values, if not known,
+##  can be computed by <Ref Func="HumanReadableDefinition"/>.
+##  <Example><![CDATA[
+##  gap> StandardGeneratorsInfo( TableOfMarks( "L3(3)" ) );
+##  [ rec( ATLAS := true, 
+##        description := "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4", 
+##        generators := "a, b", 
+##        script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+##            [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ] ) ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareAttribute( "StandardGeneratorsInfo", IsGroup );
 #T make this an operation also for strings?
@@ -121,23 +151,50 @@ DeclareAttribute( "StandardGeneratorsInfo", IsGroup );
 #F  HumanReadableDefinition( <info> )
 #F  ScriptFromString( <string> )
 ##
-##  Let <info> be a record that is valid as value of `StandardGeneratorsInfo'
-##  (see~"StandardGeneratorsInfo!for groups").
-##  `HumanReadableDefinition' returns a string that describes the definition
-##  of standard generators given by the `script' component of <info> in
-##  human readable form.
-##  The names of the generators are taken from the `generators' component
-##  (default names `\"a\"', `\"b\"' etc.~are computed if necessary),
-##  and the result is stored in the `description' component.
+##  <#GAPDoc Label="HumanReadableDefinition">
+##  <ManSection>
+##  <Func Name="HumanReadableDefinition" Arg='info'/>
+##  <Func Name="ScriptFromString" Arg='string'/>
 ##
-##  `ScriptFromString' does the converse of `HumanReadableDefinition', i.e.,
-##  it takes a string <string> as returned by `HumanReadableDefinition',
-##  and returns a corresponding `script' list.
-##
-##  If ``condition'' lines occur in the script
-##  (see~"StandardGeneratorsInfo!for groups")
+##  <Description>
+##  Let <A>info</A> be a record that is valid as value of
+##  <Ref Func="StandardGeneratorsInfo" Label="for groups"/>.
+##  <Ref Func="HumanReadableDefinition"/> returns a string that describes the
+##  definition of standard generators given by the <C>script</C> component of
+##  <A>info</A> in human readable form.
+##  The names of the generators are taken from the <C>generators</C>
+##  component (default names <C>"a"</C>, <C>"b"</C> etc.&nbsp;are computed
+##  if necessary),
+##  and the result is stored in the <C>description</C> component.
+##  <P/>
+##  <Ref Func="ScriptFromString"/> does the converse of
+##  <Ref Func="HumanReadableDefinition"/>, i.e.,
+##  it takes a string <A>string</A> as returned by
+##  <Ref Func="HumanReadableDefinition"/>, and returns a corresponding
+##  <C>script</C> list.
+##  <P/>
+##  If <Q>condition</Q> lines occur in the script
+##  (see&nbsp;<Ref Func="StandardGeneratorsInfo" Label="for groups"/>)
 ##  then the functions that occur must be contained in
-##  `StandardGeneratorsFunctions' (see~"StandardGeneratorsFunctions").
+##  <Ref Var="StandardGeneratorsFunctions"/>.
+##  <Example><![CDATA[
+##  gap> scr:= ScriptFromString( "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4" );
+##  [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], [ 1, 1, 2, 1, 13 ], 
+##    [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ]
+##  gap> info:= rec( script:= scr );
+##  rec( script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+##        [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ] )
+##  gap> HumanReadableDefinition( info );
+##  "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4"
+##  gap> info;
+##  rec( description := "|a|=2, |b|=3, |C(b)|=9, |ab|=13, |ababb|=4", 
+##    generators := "a, b", 
+##    script := [ [ 1, 2 ], [ 2, 3 ], [ [ 2, 1 ], [ "|C(",, ")|" ], 9 ], 
+##        [ 1, 1, 2, 1, 13 ], [ 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 4 ] ] )
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "HumanReadableDefinition" );
 
@@ -148,19 +205,33 @@ DeclareGlobalFunction( "ScriptFromString" );
 ##
 #V  StandardGeneratorsFunctions
 ##
-##  `StandardGeneratorsFunctions' is a list of even length.
-##  At position $2i-1$, a function of two arguments is stored,
-##  which are expected to be a group and a group element.
-##  At position $2i$ a list of strings is stored such that first inserting a
-##  generator name in all holes and then forming the concatenation yields
-##  a string that describes the function at the previous position;
-##  this string must contain the generator enclosed in round brackets `('
-##  and `)'.
+##  <#GAPDoc Label="StandardGeneratorsFunctions">
+##  <ManSection>
+##  <Var Name="StandardGeneratorsFunctions"/>
 ##
-##  This list is used by the functions `StandardGeneratorsInfo'
-##  (see~"StandardGeneratorsInfo!for groups"), `HumanReadableDefinition', and
-##  `ScriptFromString' (see~"HumanReadableDefinition").
+##  <Description>
+##  <Ref Func="StandardGeneratorsFunctions"/> is a list of even length.
+##  At position <M>2i-1</M>, a function of two arguments is stored,
+##  which are expected to be a group and a group element.
+##  At position <M>2i</M> a list of strings is stored such that first
+##  inserting a generator name in all holes and then forming the
+##  concatenation yields a string that describes the function at the previous
+##  position;
+##  this string must contain the generator enclosed in round brackets
+##  <C>(</C> and <C>)</C>.
+##  <P/>
+##  This list is used by the functions
+##  <Ref Func="StandardGeneratorsInfo" Label="for groups"/>),
+##  <Ref Func="HumanReadableDefinition"/>, and
+##  <Ref Func="ScriptFromString"/>.
 ##  Note that the lists at even positions must be pairwise different.
+##  <Example><![CDATA[
+##  gap> StandardGeneratorsFunctions{ [ 1, 2 ] };
+##  [ function( G, g ) ... end, [ "|C(",, ")|" ] ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalVariable( "StandardGeneratorsFunctions",
     "list of functions used in scripts, and their translations to strings" );
@@ -170,16 +241,24 @@ DeclareGlobalVariable( "StandardGeneratorsFunctions",
 ##
 #F  IsStandardGeneratorsOfGroup( <info>, <G>, <gens> )
 ##
-##  Let <info> be a record that is valid as value of `StandardGeneratorsInfo'
-##  (see~"StandardGeneratorsInfo!for groups"), <G> a group, and <gens> a list
-##  of generators for <G>.
-##  In this case, `IsStandardGeneratorsOfGroup' returns `true' if <gens>
-##  satisfies the conditions of the `script' component of <info>,
-##  and `false' otherwise.
+##  <#GAPDoc Label="IsStandardGeneratorsOfGroup">
+##  <ManSection>
+##  <Func Name="IsStandardGeneratorsOfGroup" Arg='info, G, gens'/>
 ##
-##  Note that the result `true' means that <gens> is a list of standard
-##  generators for <G> only if <G> has the isomorphism type for which <info>
-##  describes standard generators.
+##  <Description>
+##  Let <A>info</A> be a record that is valid as value of
+##  <Ref Func="StandardGeneratorsInfo" Label="for groups"/>,
+##  <A>G</A> a group, and <A>gens</A> a list of generators for <A>G</A>.
+##  In this case, <Ref Func="IsStandardGeneratorsOfGroup"/> returns
+##  <K>true</K> if <A>gens</A> satisfies the conditions of the <C>script</C>
+##  component of <A>info</A>, and <K>false</K> otherwise.
+##  <P/>
+##  Note that the result <K>true</K> means that <A>gens</A> is a list of
+##  standard generators for <A>G</A> only if <A>G</A> has the isomorphism
+##  type for which <A>info</A> describes standard generators.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "IsStandardGeneratorsOfGroup" );
 
@@ -188,42 +267,125 @@ DeclareGlobalFunction( "IsStandardGeneratorsOfGroup" );
 ##
 #F  StandardGeneratorsOfGroup( <info>, <G>[, <randfunc>] )
 ##
-##  Let <info> be a record that is valid as value of `StandardGeneratorsInfo'
-##  (see~"StandardGeneratorsInfo!for groups"),
-##  and <G> a group of the isomorphism type for which <info> describes
-##  standard generators.
-##  In this case, `StandardGeneratorsOfGroup' returns a list of standard
-##  generators (see~Section~"Standard Generators of Groups") of <G>.
+##  <#GAPDoc Label="StandardGeneratorsOfGroup">
+##  <ManSection>
+##  <Func Name="StandardGeneratorsOfGroup" Arg='info, G[, randfunc]'/>
 ##
-##  The optional argument <randfunc> must be a function that returns an
-##  element of <G> when called with <G>; the default is `PseudoRandom'.
-##
-##  In each call to `StandardGeneratorsOfGroup',
-##  the `script' component of <info> is scanned line by line.
-##  <randfunc> is used to find an element of the prescribed order
+##  <Description>
+##  Let <A>info</A> be a record that is valid as value of
+##  <Ref Func="StandardGeneratorsInfo" Label="for groups"/>,
+##  and <A>G</A> a group of the isomorphism type for which <A>info</A>
+##  describes standard generators.
+##  In this case, <Ref Func="StandardGeneratorsOfGroup"/> returns a list of
+##  standard generators of <A>G</A>,
+##  see&nbsp;Section&nbsp;<Ref Sect="Standard Generators of Groups"/>.
+##  <P/>
+##  The optional argument <A>randfunc</A> must be a function that returns an
+##  element of <A>G</A> when called with <A>G</A>; the default is
+##  <Ref Func="PseudoRandom" BookName="ref"/>.
+##  <P/>
+##  In each call to <Ref Func="StandardGeneratorsOfGroup" BookName="ref"/>,
+##  the <C>script</C> component of <A>info</A> is scanned line by line.
+##  <A>randfunc</A> is used to find an element of the prescribed order
 ##  whenever a definition line is met,
-##  and for the relation and condition lines in the `script' list,
+##  and for the relation and condition lines in the <C>script</C> list,
 ##  the current generator candidates are checked;
 ##  if a condition is not fulfilled, all candidates are thrown away,
 ##  and the procedure starts again with the first line.
 ##  When the conditions are fulfilled after processing the last line
-##  of the `script' list, the standard generators are returned.
-##
-#T Admit the possibility to specify the desired classes?
-#T For example, if there is only one class of a given order of a standard
-#T generator then this element may be taken first and kept also after
-#T failure for a partial vector of candidates.
-#T  (then the first element of right order may be kept, for example)
-##
-##  Note that if <G> has the wrong isomorphism type then
-##  `StandardGeneratorsOfGroup' returns a list of elements in <G>
-##  that satisfy the conditions of the `script' component of <info>
-##  if such elements exist, and does not terminate otherwise.
+##  of the <C>script</C> list, the standard generators are returned.
+##  <P/>
+##  <!-- Admit the possibility to specify the desired classes?-->
+##  <!-- For example, if there is only one class of a given order of a standard-->
+##  <!-- generator then this element may be taken first and kept also after-->
+##  <!-- failure for a partial vector of candidates.-->
+##  <!--  (then the first element of right order may be kept, for example)-->
+##  Note that if <A>G</A> has the wrong isomorphism type then
+##  <Ref Func="StandardGeneratorsOfGroup" BookName="ref"/> returns a list of elements in
+##  <A>G</A> that satisfy the conditions of the <C>script</C> component of
+##  <A>info</A> if such elements exist, and does not terminate otherwise.
 ##  In the former case, obviously the returned elements need not be standard
-##  generators of <G>.
+##  generators of <A>G</A>.
+##  <Example><![CDATA[
+##  gap> a5:= AlternatingGroup( 5 );
+##  Alt( [ 1 .. 5 ] )
+##  gap> info:= StandardGeneratorsInfo( TableOfMarks( "A5" ) )[1];
+##  rec( ATLAS := true, description := "|a|=2, |b|=3, |ab|=5", 
+##    generators := "a, b", script := [ [ 1, 2 ], [ 2, 3 ], [ 1, 1, 2, 1, 5 ] ] )
+##  gap> IsStandardGeneratorsOfGroup( info, a5, [ (1,3)(2,4), (3,4,5) ] );
+##  true
+##  gap> IsStandardGeneratorsOfGroup( info, a5, [ (1,3)(2,4), (1,2,3) ] );
+##  false
+##  gap> s5:= SymmetricGroup( 5 );;
+##  gap> RepresentativeAction( s5, [ (1,3)(2,4), (3,4,5) ], 
+##  >        StandardGeneratorsOfGroup( info, a5 ), OnPairs ) <> fail;
+##  true
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "StandardGeneratorsOfGroup" );
 
+#############################################################################
+##
+#A  StandardGeneratorsInfo( <tom> )
+##
+##  <#GAPDoc Label="StandardGeneratorsInfo:tom">
+##  <ManSection>
+##  <Attr Name="StandardGeneratorsInfo" Arg='tom'
+##  Label="for tables of marks"/>
+##
+##  <Description>
+##  For a table of marks <A>tom</A>, a stored value of
+##  <Ref Func="StandardGeneratorsInfo" Label="for tables of marks" BookName="ref"/>
+##  equals  the  value  of  this   attribute   for   the   underlying group
+##  (see&nbsp;<Ref Attr="UnderlyingGroup" Label="for tables of marks" BookName="ref"/>)
+##  of <A>tom</A>,
+##  cf.&nbsp;Section&nbsp;<Ref Sect="Standard Generators of Groups" BookName="ref"/>.
+##  <P/>
+##  In this case, the <Ref Func="GeneratorsOfGroup" BookName="ref"/> value of the underlying
+##  group <M>G</M> of <A>tom</A> is assumed to be in fact a list of
+##  standard generators for <M>G</M>;
+##  So one should be careful when setting the
+##  <Ref Func="StandardGeneratorsInfo" Label="for tables of marks"/> value
+##  by hand.
+##  <P/>
+##  There is no default method to compute the
+##  <Ref Func="StandardGeneratorsInfo" Label="for tables of marks"/> value
+##  of a table of marks if it is not yet stored.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> std:= StandardGeneratorsInfo( a5 );
+##  [ rec( ATLAS := true, description := "|a|=2, |b|=3, |ab|=5",
+##        generators := "a, b", script := [ [ 1, 2 ], [ 2, 3 ], [ 1, 1, 2, 1, 5 ]
+##           ] ) ]
+##  gap> # Now find standard generators of an isomorphic group.
+##  gap> g:= SL(2,4);;
+##  gap> repeat
+##  >   x:= PseudoRandom( g );
+##  > until Order( x ) = 2;
+##  gap> repeat  
+##  >   y:= PseudoRandom( g );
+##  > until Order( y ) = 3 and Order( x*y ) = 5;
+##  gap> # Compute a representative w.r.t. these generators.
+##  gap> RepresentativeTomByGenerators( a5, 4, [ x, y ] );
+##  Group([ [ [ 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2) ] ],
+##    [ [ Z(2^2), Z(2^2)^2 ], [ Z(2^2)^2, Z(2^2) ] ] ])
+##  gap> # Show that the new generators are really good.
+##  gap> grp:= UnderlyingGroup( a5 );;
+##  gap> iso:= GroupGeneralMappingByImages( grp, g,
+##  >              GeneratorsOfGroup( grp ), [ x, y ] );;
+##  gap> IsGroupHomomorphism( iso );
+##  true
+##  gap> IsBijective( iso );
+##  true
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "StandardGeneratorsInfo", IsTableOfMarks );
 
 #############################################################################
 ##

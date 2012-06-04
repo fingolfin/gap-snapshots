@@ -1,0 +1,122 @@
+\GAPDocLabFile{wedderga}
+\makelabel{wedderga:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{wedderga:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{wedderga:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{wedderga:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{wedderga:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{wedderga:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{wedderga:General aims of Wedderga package}{1.1}{X7D83783F79DCABB9}
+\makelabel{wedderga:Installation and system requirements}{1.2}{X7DB566D5785B7DBC}
+\makelabel{wedderga:Main functions of Wedderga package}{1.3}{X7D7B9D0D80A6B7F3}
+\makelabel{wedderga:Wedderburn decomposition}{2}{X87273420791F220E}
+\makelabel{wedderga:Wedderburn decomposition}{2.1}{X87273420791F220E}
+\makelabel{wedderga:Simple quotients}{2.2}{X7D06959F7D444C55}
+\makelabel{wedderga:Strong Shoda pairs}{3}{X81DAF5267D30C83A}
+\makelabel{wedderga:Computing strong Shoda pairs}{3.1}{X807C74B07C4B99AF}
+\makelabel{wedderga:Properties related with Shoda pairs}{3.2}{X7B49C1BC834E57E3}
+\makelabel{wedderga:Idempotents}{4}{X7C651C9C78398FFF}
+\makelabel{wedderga:Computing idempotents from character table}{4.1}{X7DF49142844C278D}
+\makelabel{wedderga:Testing lists of idempotents for completeness}{4.2}{X83F7CF1E87D02581}
+\makelabel{wedderga:Idempotents from Shoda pairs}{4.3}{X7C66102485AF5F80}
+\makelabel{wedderga:Crossed products}{5}{X7FB21779832CE1CB}
+\makelabel{wedderga:Construction of crossed products}{5.1}{X79122C7F877430A7}
+\makelabel{wedderga:Crossed product elements and their properties}{5.2}{X8560A2F37B608A9F}
+\makelabel{wedderga:Useful properties and functions}{6}{X7D3C0B1F7A66056F}
+\makelabel{wedderga:Semisimple group algebras of finite groups}{6.1}{X7BA5D68A86B8C772}
+\makelabel{wedderga:Operations with group rings elements}{6.2}{X86121BD77F7E5C7A}
+\makelabel{wedderga:Cyclotomic classes}{6.3}{X7AAB3882785C04E0}
+\makelabel{wedderga:Other commands}{6.4}{X7B16423A7FBED034}
+\makelabel{wedderga:The basic theory behind Wedderga}{7}{X8487E7AD7D6B2EA5}
+\makelabel{wedderga:Group rings and group algebras}{7.1}{X815ECCD97B18314B}
+\makelabel{wedderga:Semisimple group algebras}{7.2}{X7FDD93FB79ADCC91}
+\makelabel{wedderga:Wedderburn decomposition}{7.3}{X87273420791F220E}
+\makelabel{wedderga:Characters and primitive central idempotents}{7.4}{X87B6505C7C2EE054}
+\makelabel{wedderga:Central simple algebras and Brauer equivalence}{7.5}{X7A24D5407F72C633}
+\makelabel{wedderga:Crossed Products}{7.6}{X7FB21779832CE1CB}
+\makelabel{wedderga:Cyclic Crossed Products}{7.7}{X828C42CD86AF605F}
+\makelabel{wedderga:Abelian Crossed Products}{7.8}{X7869E2A48784C232}
+\makelabel{wedderga:Classical crossed products}{7.9}{X80BABE5078A29793}
+\makelabel{wedderga:Cyclic Algebras}{7.10}{X84C98BB8859BBEE2}
+\makelabel{wedderga:Cyclotomic algebras}{7.11}{X8099A8C784255672}
+\makelabel{wedderga:Numerical description of cyclotomic algebras}{7.12}{X84A142407B7565E0}
+\makelabel{wedderga:Idempotents given by subgroups}{7.13}{X8310E96086509397}
+\makelabel{wedderga:Shoda pairs}{7.14}{X80C058BE81824B23}
+\makelabel{wedderga:Strong Shoda pairs}{7.15}{X81DAF5267D30C83A}
+\makelabel{wedderga:Strongly monomial characters and strongly monomial groups}{7.16}{X84C694978557EFE5}
+\makelabel{wedderga:Cyclotomic Classes and Strong Shoda Pairs}{7.17}{X800D8C5087D79DC8}
+\makelabel{wedderga:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{wedderga:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{wedderga:Index}{Ind}{X83A0356F839C696F}
+\makelabel{wedderga:Wedderga package}{}{X7AA6C5737B711C89}
+\makelabel{wedderga:WedderburnDecomposition}{2.1.1}{X7F1779ED8777F3E7}
+\makelabel{wedderga:WedderburnDecompositionInfo}{2.1.2}{X8710F98A85F0DD29}
+\makelabel{wedderga:SimpleAlgebraByCharacter}{2.2.1}{X8349114C83161C2D}
+\makelabel{wedderga:SimpleAlgebraByCharacterInfo}{2.2.2}{X876FD2367E64462D}
+\makelabel{wedderga:SimpleAlgebraByStrongSP (for rational group algebra)}{2.2.3}{X812D667D7D913EB5}
+\makelabel{wedderga:SimpleAlgebraByStrongSPNC (for rational group algebra)}{2.2.3}{X812D667D7D913EB5}
+\makelabel{wedderga:SimpleAlgebraByStrongSP (for semisimple finite group algebra)}{2.2.3}{X812D667D7D913EB5}
+\makelabel{wedderga:SimpleAlgebraByStrongSPNC (for semisimple finite group algebra)}{2.2.3}{X812D667D7D913EB5}
+\makelabel{wedderga:SimpleAlgebraByStrongSPInfo (for rational group algebra)}{2.2.4}{X858152C882129A0B}
+\makelabel{wedderga:SimpleAlgebraByStrongSPInfoNC (for rational group algebra)}{2.2.4}{X858152C882129A0B}
+\makelabel{wedderga:SimpleAlgebraByStrongSPInfo (for semisimple finite group algebra)}{2.2.4}{X858152C882129A0B}
+\makelabel{wedderga:SimpleAlgebraByStrongSPInfoNC (for semisimple finite group algebra)}{2.2.4}{X858152C882129A0B}
+\makelabel{wedderga:StrongShodaPairs}{3.1.1}{X820A398687A79B9D}
+\makelabel{wedderga:IsStrongShodaPair}{3.2.1}{X7C17476F854F1E34}
+\makelabel{wedderga:IsShodaPair}{3.2.2}{X823B8DEC7ECC3326}
+\makelabel{wedderga:IsStronglyMonomial}{3.2.3}{X80C4ED17809FC547}
+\makelabel{wedderga:PrimitiveCentralIdempotentsByCharacterTable}{4.1.1}{X7BBEB4A084DBF0D6}
+\makelabel{wedderga:IsCompleteSetOfOrthogonalIdempotents}{4.2.1}{X81FCD27E812078F0}
+\makelabel{wedderga:PrimitiveCentralIdempotentsByStrongSP}{4.3.1}{X7B48EE1A7ECAB151}
+\makelabel{wedderga:PrimitiveCentralIdempotentsBySP}{4.3.2}{X82460B1285A0A7D7}
+\makelabel{wedderga:CrossedProduct}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:IsCrossedProduct}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:LeftActingDomain}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:UnderlyingMagma}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:ActionForCrossedProduct}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:TwistingForCrossedProduct}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:Quaternion algebra}{5.1.1}{X797F31EF7B51A4DF}
+\makelabel{wedderga:ElementOfCrossedProduct}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:ZeroCoefficient}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:IsElementOfCrossedProduct}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:IsCrossedProductObjDefaultRep}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:CoefficientsAndMagmaElements}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:Embedding}{5.2.1}{X7D2313AA82F1D5CC}
+\makelabel{wedderga:IsSemisimpleZeroCharacteristicGroupAlgebra}{6.1.1}{X7EF856E880722311}
+\makelabel{wedderga:IsSemisimpleRationalGroupAlgebra}{6.1.2}{X85999B6A7C52E305}
+\makelabel{wedderga:IsSemisimpleANFGroupAlgebra}{6.1.3}{X79289F7F7FC04846}
+\makelabel{wedderga:IsSemisimpleFiniteGroupAlgebra}{6.1.4}{X7B546E2D7FB561BA}
+\makelabel{wedderga:Centralizer}{6.2.1}{X7A2BF4527E08803C}
+\makelabel{wedderga:OnPoints}{6.2.2}{X7FE417DD837987B4}
+\makelabel{wedderga:AverageSum}{6.2.3}{X798CEA1F80D355EE}
+\makelabel{wedderga:CyclotomicClasses}{6.3.1}{X7D7BDF5087C8F4C6}
+\makelabel{wedderga:IsCyclotomicClass}{6.3.2}{X7FA101AE7BC33671}
+\makelabel{wedderga:InfoWedderga}{6.4.1}{X872510997A7AF31D}
+\makelabel{wedderga:group ring}{7.1}{X815ECCD97B18314B}
+\makelabel{wedderga:group algebra}{7.1}{X815ECCD97B18314B}
+\makelabel{wedderga:semisimple ring}{7.2}{X7FDD93FB79ADCC91}
+\makelabel{wedderga:Wedderburn decomposition}{7.3}{X87273420791F220E}
+\makelabel{wedderga:Wedderburn components}{7.3}{X87273420791F220E}
+\makelabel{wedderga:primitive central idempotent}{7.4}{X87B6505C7C2EE054}
+\makelabel{wedderga:field of character values}{7.4}{X87B6505C7C2EE054}
+\makelabel{wedderga:central simple algebra}{7.5}{X7A24D5407F72C633}
+\makelabel{wedderga:(Brauer) equivalence}{7.5}{X7A24D5407F72C633}
+\makelabel{wedderga:equivalence (Brauer)}{7.5}{X7A24D5407F72C633}
+\makelabel{wedderga:Crossed Product}{7.6}{X7FB21779832CE1CB}
+\makelabel{wedderga:Basis of units (for crossed product)}{7.6}{X7FB21779832CE1CB}
+\makelabel{wedderga:Cyclic Crossed Product}{7.7}{X828C42CD86AF605F}
+\makelabel{wedderga:Abelian Crossed Product}{7.8}{X7869E2A48784C232}
+\makelabel{wedderga:Classical Crossed Product}{7.9}{X80BABE5078A29793}
+\makelabel{wedderga:Cyclic Algebra}{7.10}{X84C98BB8859BBEE2}
+\makelabel{wedderga:Cyclotomic algebra}{7.11}{X8099A8C784255672}
+\makelabel{wedderga:ε(K,H)}{7.13}{X8310E96086509397}
+\makelabel{wedderga:e(G,K,H)}{7.13}{X8310E96086509397}
+\makelabel{wedderga:eC(G,K,H)}{7.13}{X8310E96086509397}
+\makelabel{wedderga:Shoda pair}{7.14}{X80C058BE81824B23}
+\makelabel{wedderga:primitive central idempotent realized by a Shoda pair}{7.14}{X80C058BE81824B23}
+\makelabel{wedderga:strong Shoda pair}{7.15}{X81DAF5267D30C83A}
+\makelabel{wedderga:equivalent strong Shoda pairs}{7.15}{X81DAF5267D30C83A}
+\makelabel{wedderga:strongly monomial character}{7.16}{X84C694978557EFE5}
+\makelabel{wedderga:strongly monomial group}{7.16}{X84C694978557EFE5}
+\makelabel{wedderga:cyclotomic class}{7.17}{X800D8C5087D79DC8}
+\makelabel{wedderga:generating cyclotomic class}{7.17}{X800D8C5087D79DC8}
+\makelabel{wedderga:primitive central idempotent realized by a strong Shoda pair and a cyclotomic class}{7.17}{X800D8C5087D79DC8}

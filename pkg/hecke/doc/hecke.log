@@ -1,0 +1,764 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.11)  14 JAN 2011 11:58
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**hecke
+(./hecke.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, ngerman, german, german-x-2009-06-19, ngerman-x-2009-06-19, loaded.
+
+(/usr/share/texmf-texlive/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size11.clo
+File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/share/texmf-texlive/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+))
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks15
+\inpenc@posthook=\toks16
+
+(/usr/share/texmf-texlive/tex/latex/base/latin1.def
+File: latin1.def 2008/03/30 v1.1d Input encoding file
+))
+(/usr/share/texmf-texlive/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `hecke.idx'.
+
+
+Writing index file hecke.idx
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/etc/texmf/tex/latex/config/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count88
+))
+(/usr/share/texmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz) (/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+\FV@CodeLineNo=\count89
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count90
+\FV@StepNumber=\count91
+\FV@OutFile=\write4
+)
+(/usr/share/texmf-texlive/tex/latex/pslatex/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
+Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+O)
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
+Package: xcolor-patch 2009/10/02 xcolor patch
+))
+\@linkdim=\dimen103
+\Hy@linkcounter=\count92
+\Hy@pagecounter=\count93
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)
+(/etc/texmf/tex/latex/config/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
+t (HO)
+))
+Package hyperref Info: Option `bookmarks' set `false' on input line 2864.
+Package hyperref Info: Option `colorlinks' set `true' on input line 2864.
+Package hyperref Info: Option `breaklinks' set `true' on input line 2864.
+
+
+Package hyperref Warning: Option `pagecolor' is not available anymore.
+
+Package hyperref Info: Hyper figures OFF on input line 2975.
+Package hyperref Info: Link nesting OFF on input line 2980.
+Package hyperref Info: Hyper index ON on input line 2983.
+Package hyperref Info: Plain pages OFF on input line 2990.
+Package hyperref Info: Backreferencing ON on input line 2993.
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks OFF on input line 3197.
+(/usr/share/texmf-texlive/tex/latex/hyperref/backref.sty
+Package: backref 2006/09/05 v1.28 Bibliographical back referencing
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 3428.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+ (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
+)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)))
+\Fld@menulength=\count94
+\Field@Width=\dimen104
+\Fld@charsize=\dimen105
+\Field@toks=\toks18
+Package hyperref Info: Hyper figures OFF on input line 4377.
+Package hyperref Info: Link nesting OFF on input line 4382.
+Package hyperref Info: Hyper index ON on input line 4385.
+Package hyperref Info: backreferencing ON on input line 4390.
+Package hyperref Info: Link coloring ON on input line 4395.
+Package hyperref Info: Link coloring with OCG OFF on input line 4402.
+Package hyperref Info: PDF/A mode OFF on input line 4407.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+)
+\Hy@abspage=\count95
+\c@Item=\count96
+\c@Hfootnote=\count97
+)
+*hyperref using driver hpdftex*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
+\Fld@listcount=\count98
+)
+\pagenrlog=\write5
+\openout5 = `hecke.pnr'.
+
+ (./hecke.aux)
+\openout1 = `hecke.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 43.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 43
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count99
+\scratchdimen=\dimen106
+\scratchbox=\box27
+\nofMPsegments=\count100
+\nofMParguments=\count101
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count102
+\MPscratchDim=\dimen107
+\MPnumerator=\count103
+\everyMPtoPDFconversion=\toks20
+)
+Package hyperref Info: Link coloring ON on input line 43.
+ (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+)
+\c@section@level=\count104
+)
+LaTeX Info: Redefining \ref on input line 43.
+LaTeX Info: Redefining \pageref on input line 43.
+\AtBeginShipoutBox=\box28
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 47.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 47.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 22.39185pt on input line 47.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 50.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 12.9599pt on input line 50.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 50
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 50
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 50
+.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 50.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 50.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 60.
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--62
+
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/pzccm/m/n' tried instead on input line 68.
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+
+ []
+
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 7.19995pt on input line 72.
+[2] (./hecke.toc
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 9.85492pt on input line 7.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.85492pt on input line 10.
+ [3
+
+] [4])
+\tf@toc=\write6
+\openout6 = `hecke.toc'.
+
+ [5]
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 80.
+[6
+
+] [7] [8] [9]
+Chapter 2.
+[10
+
+]
+Chapter 3.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 256.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 10.79993pt on input line 256.
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--272
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--328
+
+ []
+
+[11
+
+]
+Underfull \hbox (badness 5460) in paragraph at lines 330--332
+[]\OT1/ptm/m/n/10.95 The hi-er-ar-chy of mod-ule ob-jects is more com-plex. On 
+top we have the fil-ter
+ []
+
+
+Underfull \hbox (badness 2253) in paragraph at lines 330--332
+\OT1/ptm/m/n/10.95 o-gously, \OT1/pcr/m/n/10.95 IsSchurModule \OT1/ptm/m/n/10.9
+5 is su-per-fil-ter of \OT1/pcr/m/n/10.95 IsSchurWeyl\OT1/ptm/m/n/10.95 , \OT1/
+pcr/m/n/10.95 IsSchurPIM\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 IsSchurSimple \
+OT1/ptm/m/n/10.95 and
+ []
+
+
+Underfull \hbox (badness 8151) in paragraph at lines 330--332
+\OT1/pcr/m/n/10.95 IsFockSchurModule \OT1/ptm/m/n/10.95 which it-self is su-per
+-fil-ter of \OT1/pcr/m/n/10.95 IsFockSchurWeyl\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n
+/10.95 IsFockSchurPIM\OT1/ptm/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 4454) in paragraph at lines 330--332
+\OT1/pcr/m/n/10.95 IsFockSchurSimple\OT1/ptm/m/n/10.95 . Fur-ther, there are su
+b-fil-ter re-la-tions be-tween \OT1/pcr/m/n/10.95 IsFockSpecht \OT1/ptm/m/n/10.
+95 and
+ []
+
+
+Underfull \hbox (badness 5985) in paragraph at lines 330--332
+\OT1/pcr/m/n/10.95 IsHeckeSpecht \OT1/ptm/m/n/10.95 etc., \OT1/pcr/m/n/10.95 Is
+FockSchurWeyl \OT1/ptm/m/n/10.95 and \OT1/pcr/m/n/10.95 IsFockSpecht \OT1/ptm/m
+/n/10.95 etc., \OT1/pcr/m/n/10.95 IsFockSchurWeyl \OT1/ptm/m/n/10.95 and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--339
+
+ []
+
+
+Underfull \hbox (badness 1540) in paragraph at lines 341--342
+[]\OT1/ptm/m/n/10.95 For de-com-po-si-tion ma-tri-ces we use the fil-ter \OT1/p
+cr/m/n/10.95 IsDecompositionMatrix \OT1/ptm/m/n/10.95 and its sub-fil-ter
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 457--460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 464--467
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 485--494
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 505--514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--540
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 560--569
+
+ []
+
+[15]
+LaTeX Font Info:    Try loading font information for OML+ptm on input line 624.
+
+ (/usr/share/texmf-texlive/tex/latex/psnfss/omlptm.fd
+File: omlptm.fd 
+)
+LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10.95> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 624.
+
+Underfull \hbox (badness 10000) in paragraph at lines 644--650
+
+ []
+
+[16]
+Underfull \hbox (badness 1178) in paragraph at lines 652--653
+[]\OT1/ptm/m/n/10.95 Notice that, un-like \OT1/pcr/m/n/10.95 MakePIM \OT1/ptm/m
+/n/10.95 ([][]3.2.3[][]) and \OT1/pcr/m/n/10.95 MakeSpecht \OT1/ptm/m/n/10.95 (
+[][]3.2.3[][]), the only ar-gu-ments which
+ []
+
+[17]
+Underfull \hbox (badness 1436) in paragraph at lines 750--753
+[]\OT1/pcr/m/n/10.95 DecompositionMatrix \OT1/ptm/m/n/10.95 first checks whethe
+r the re-quired de-com-po-si-tion ma-trix ex-ists as
+ []
+
+
+Underfull \hbox (badness 2856) in paragraph at lines 750--753
+\OT1/ptm/m/n/10.95 a li-brary file (check-ing first in the cur-rent di-rec-tory
+, next in the di-rec-tory spec-i-fied by
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 764--766
+[]\OT1/ptm/m/n/10.95 By de-fault, the rows and columns of the de-com-po-si-tion
+ ma-tri-ces are or-dered
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 844--850
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 897--901
+\OT1/phv/m/n/10.95 Hecke \OT1/ptm/m/n/10.95 pro-vides four func-tions \OT1/pcr/
+m/n/10.95 RInducedModule \OT1/ptm/m/n/10.95 ([][]3.4.1[][]), \OT1/pcr/m/n/10.95
+ RRestrictedModule \OT1/ptm/m/n/10.95 ([][]3.4.3[][]),
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 897--901
+\OT1/pcr/m/n/10.95 SInducedModule \OT1/ptm/m/n/10.95 ([][]3.4.2[][]) and \OT1/p
+cr/m/n/10.95 SRestrictedModule \OT1/ptm/m/n/10.95 ([][]3.4.4[][]) for in-duc-in
+g and re-strict-ing mod-
+ []
+
+[21] [22]
+Underfull \hbox (badness 10000) in paragraph at lines 981--987
+
+ []
+
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 1028--1029
+[]\OT1/ptm/m/n/10.95 When more than one residue if given to \OT1/pcr/m/n/10.95 
+RRestrictedModule
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1028--1029
+\OT1/ptm/m/n/10.95 it re-turns \OT1/pcr/m/n/10.95 RRestrictedModule($\OML/ptmcm
+/m/it/10.95 x; r[]; r[]; [] ; r[]$\OT1/pcr/m/n/10.95 )\OT1/ptm/m/n/10.95 = \OT1
+/pcr/m/n/10.95 RRestrictedModule(
+ []
+
+
+Underfull \hbox (badness 1735) in paragraph at lines 1037--1038
+[]\OT1/ptm/m/n/10.95 As with \OT1/pcr/m/n/10.95 RInducedModule \OT1/ptm/m/n/10.
+95 ([][]3.4.1[][]), when \OT1/pcr/m/n/10.95 RRestrictedModule \OT1/ptm/m/n/10.9
+5 is ap-plied to the canon-i-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1046--1052
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 1094--1097
+
+ []
+
+
+Underfull \hbox (badness 1173) in paragraph at lines 1099--1101
+\OT1/pcr/m/n/10.95 InducedDecompositionMatrix \OT1/ptm/m/n/10.95 then tries to 
+de-com-pose these pro-jec-tives us-ing the func-tion
+ []
+
+
+Underfull \hbox (badness 2875) in paragraph at lines 1112--1116
+[]\OT1/ptm/m/n/10.95 Almost all of the de-com-po-si-tion ma-tri-ces in-cluded i
+n \OT1/phv/m/n/10.95 Hecke \OT1/ptm/m/n/10.95 were cal-cu-lated di-rectly
+ []
+
+
+Underfull \hbox (badness 1845) in paragraph at lines 1112--1116
+\OT1/ptm/m/n/10.95 by \OT1/pcr/m/n/10.95 InducedDecompositionMatrix\OT1/ptm/m/n
+/10.95 . When $\OML/ptmcm/m/it/10.95 n$ \OT1/ptm/m/n/10.95 is ``small'' \OT1/pc
+r/m/n/10.95 InducedDecompositionMatrix \OT1/ptm/m/n/10.95 is
+ []
+
+
+Underfull \hbox (badness 3354) in paragraph at lines 1112--1116
+\OT1/ptm/m/n/10.95 usu-ally able to re-turn the full de-com-po-si-tion ma-trix 
+for $\OML/ptmcm/m/it/10.95 H\OT1/ptmcm/m/n/10.95 (\OML/ptmcm/m/it/10.95 S[]\OT1
+/ptmcm/m/n/10.95 )$\OT1/ptm/m/n/10.95 . Fi-nally, al-though the
+ []
+
+
+Underfull \hbox (badness 4531) in paragraph at lines 1130--1132
+[]\OT1/pcr/m/n/10.95 IsNewIndecomposable \OT1/ptm/m/n/10.95 is the func-tion wh
+ich does all of the hard work when the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1130--1132
+\OT1/ptm/m/n/10.95 func-tion \OT1/pcr/m/n/10.95 InducedDecompositionMatrix \OT1
+/ptm/m/n/10.95 ([][]3.5.1[][]) is ap-plied to de-com-po-si-tion ma-tri-ces.
+ []
+
+[25] [26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 1265--1271
+
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 1304--1307
+
+ []
+
+[29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 1412--1415
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1426--1429
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1441--1444
+
+ []
+
+
+Underfull \hbox (badness 3386) in paragraph at lines 1457--1458
+\OT1/phv/m/n/10.95 Hecke \OT1/ptm/m/n/10.95 has two func-tions for cal-cu-lat-i
+ng the di-men-sions of mod-ules of Hecke al-ge-bras;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1462--1471
+
+ []
+
+[31] [32]
+Underfull \hbox (badness 10000) in paragraph at lines 1582--1585
+
+ []
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 1612--1615
+
+ []
+
+[34] [35]
+Underfull \hbox (badness 10000) in paragraph at lines 1737--1740
+
+ []
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 1838--1844
+
+ []
+
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 1908--1914
+
+ []
+
+
+Underfull \hbox (badness 2478) in paragraph at lines 1916--1918
+[]\OT1/ptm/m/n/10.95 The $\OML/ptmcm/m/it/10.95 e$\OT1/ptm/m/n/10.95 -residue o
+f the $\OT1/ptmcm/m/n/10.95 (\OML/ptmcm/m/it/10.95 i; j\OT1/ptmcm/m/n/10.95 )$\
+OT1/ptm/m/n/10.95 -th node in the di-a-gram of a par-ti-tion $\OML/ptmcm/m/it/1
+0.95 ^^V$ \OT1/ptm/m/n/10.95 is $\OT1/ptmcm/m/n/10.95 (\OML/ptmcm/m/it/10.95 j 
+\OMS/pzccm/m/n/10.95 ^^@ \OML/ptmcm/m/it/10.95 i\OT1/ptmcm/m/n/10.95 )  []  \OM
+L/ptmcm/m/it/10.95 e$\OT1/ptm/m/n/10.95 .
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1942--1945
+
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 2031--2034
+
+ []
+
+[40]
+Underfull \hbox (badness 10000) in paragraph at lines 2110--2113
+
+ []
+
+[41]
+Underfull \hbox (badness 1975) in paragraph at lines 2127--2132
+[]\OT1/ptm/b/n/10.95 Returns:  \OT1/ptm/m/n/10.95 the list of $\OML/ptmcm/m/it/
+10.95 e$\OT1/ptm/m/n/10.95 -regular par-ti-tions of $\OML/ptmcm/m/it/10.95 n$\O
+T1/ptm/m/n/10.95 , or-dered re-verse lex-i-co-graph-i-cally (see
+ []
+
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 2224--2227
+
+ []
+
+[43] [44]
+Underfull \hbox (badness 10000) in paragraph at lines 2380--2389
+
+ []
+
+[45]
+Underfull \hbox (badness 10000) in paragraph at lines 2476--2479
+
+ []
+
+[46]
+Underfull \hbox (badness 1448) in paragraph at lines 2562--2563
+\OT1/ptm/m/n/10.95 See also \OT1/pcr/m/n/10.95 SemiStandardTableaux \OT1/ptm/m/
+n/10.95 ([][]3.10.2[][]). This func-tion re-quires the pack-age \OT1/phv/m/n/10
+.95 hecke \OT1/ptm/m/n/10.95 (see
+ []
+
+[47] (./hecke.bbl (./hecke.brf)
+\tf@brf=\write7
+\openout7 = `hecke.brf'.
+
+ [48]) (./hecke.ind [49
+
+] [50
+
+] [51]) (./hecke.aux) ) 
+Here is how much of TeX's memory you used:
+ 5641 strings out of 495021
+ 81618 string characters out of 1181034
+ 159653 words of memory out of 3000000
+ 8443 multiletter control sequences out of 15000+50000
+ 59218 words of font info for 113 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 38i,8n,30p,783b,598s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+symbols/msam10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr
+/share/texmf-texlive/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/u
+rw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvro
+8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/symbol/usyr.pfb></usr/share/te
+xmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a
+.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb></usr/share/te
+xmf-texlive/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on hecke.pdf (51 pages, 443772 bytes).
+PDF statistics:
+ 1075 PDF objects out of 1200 (max. 8388607)
+ 255 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

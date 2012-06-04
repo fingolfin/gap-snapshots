@@ -2,7 +2,6 @@
 ##
 #W  teachmod.g                GAP library                   Alexander Hulpke
 ##
-#H  @(#)$Id: teachmod.g,v 4.1.2.3 2008/11/10 04:20:39 gap Exp $
 ##
 #Y  Copyright (C) 2008 The GAP Group
 ##
@@ -11,8 +10,6 @@
 ##  context. It is made part of the general system to ensure it will be
 ##  always installed with GAP.
 ##
-Revision.teachmod_g:=
-  "@(#)$Id: teachmod.g,v 4.1.2.3 2008/11/10 04:20:39 gap Exp $";
 
 
 ## FFE Display
@@ -26,9 +23,24 @@ function(x)
   d:=DegreeFFE(x);
   p:=Characteristic(x);
   if d=1 then
-    Print("ZmodnZObj( ",Int(x),", ",p," )");
+    Print("ZmodnZObj(",Int(x),",",p,")");
   else
     Print("Z(",p^d,")^",LogFFE(x,Z(p^d)));
+  fi;
+end);
+
+InstallMethod(String,true,[IsFFE],100,
+function(x)
+  local p,d;
+  if TEACHMODE<>true then
+    TryNextMethod();
+  fi;
+  d:=DegreeFFE(x);
+  p:=Characteristic(x);
+  if d=1 then
+    return Concatenation("ZmodnZObj(",String(Int(x)),",",String(p),")");
+  else
+    return Concatenation("Z(",String(p^d),")^",String(LogFFE(x,Z(p^d))));
   fi;
 end);
 
@@ -55,48 +67,114 @@ local a,p, d, e, b, i;
   if IsRat(x) or TEACHMODE<>true or Conductor(x)=4 then
     TryNextMethod();
   fi;
-  p:=MinimalPolynomial(Rationals,x,1);
-  if DegreeOfUnivariateLaurentPolynomial(p)>2 then
+  a:=Quadratic(x,true);
+  if a=fail then
     TryNextMethod();
   fi;
-  p:=CoefficientsOfUnivariateLaurentPolynomial(p)[1];
-  d:=p[2]^2-4*p[1];
-  e:=1;
-  if d<0 then
-    e:=-e;
-    d:=-d;
-  fi;
-  if not IsInt(d) then
-    a:=DenominatorRat(d);
-    d:=NumeratorRat(d)*a;
-    a:=1/(2*a);
-  else
-    a:=1/2;
-  fi;
-  d:=Collected(Factors(d));
-  for i in d do
-    b:=QuoInt(i[2],2);
-    a:=a*i[1]^b;
-    if (i[2] mod 2)=1 then
-      e:=e*i[1];
-    fi;
-  od;
-  if not IsRat(x-a*ER(e)) then
-    a:=-a;
-  fi;
-
-  p:=-p[2]/2;
-  if p<>0 then
-    Print(p);
-    if a>0 then
-      Print("+");
-    fi;
-  fi;
-  if a=-1 then
-    Print("-");
-  elif a<>1 then 
-    Print(a,"*");
-  fi;
-  Print("ER(",e,")");
+  Print(a.display);
 end);
 
+# basic constructors -- if teaching mode they will default to fp groups
+
+
+#############################################################################
+##
+#F  AbelianGroup( [<filt>, ]<ints> )  . . . . . . . . . . . . . abelian group
+##
+BindGlobal( "AbelianGroup", function ( arg )
+
+  if Length(arg) = 1  then
+    if ForAny(arg[1],x->x=0) or TEACHMODE=true then
+      return AbelianGroupCons( IsFpGroup, arg[1] );
+    else
+      return AbelianGroupCons( IsPcGroup, arg[1] );
+    fi;
+  elif IsOperation(arg[1]) then
+
+    if Length(arg) = 2  then
+      return AbelianGroupCons( arg[1], arg[2] );
+
+    elif Length(arg) = 3  then
+      return AbelianGroupCons( arg[1], arg[2], arg[3] );
+    fi;
+  fi;
+  Error( "usage: AbelianGroup( [<filter>, ]<ints> )" );
+
+end );
+
+
+#############################################################################
+##
+#F  CyclicGroup( [<filt>, ]<n> )  . . . . . . . . . . . . . . .  cyclic group
+##
+BindGlobal( "CyclicGroup", function ( arg )
+
+  if Length(arg) = 1  then
+    if arg[1]=infinity or TEACHMODE=true then
+      return CyclicGroupCons(IsFpGroup,arg[1]);
+    fi;
+    return CyclicGroupCons( IsPcGroup, arg[1] );
+  elif IsOperation(arg[1]) then
+
+    if Length(arg) = 2  then
+      return CyclicGroupCons( arg[1], arg[2] );
+
+    elif Length(arg) = 3  then
+      return CyclicGroupCons( arg[1], arg[2], arg[3] );
+    fi;
+  fi;
+  Error( "usage: CyclicGroup( [<filter>, ]<size> )" );
+
+end );
+
+
+#############################################################################
+##
+#F  DihedralGroup( [<filt>, ]<n> )  . . . . . . . dihedral group of order <n>
+##
+BindGlobal( "DihedralGroup", function ( arg )
+
+  if Length(arg) = 1  then
+    if TEACHMODE=true then
+      return DihedralGroupCons( IsFpGroup, arg[1] );
+    else
+      return DihedralGroupCons( IsPcGroup, arg[1] );
+    fi;
+  elif IsOperation(arg[1]) then
+
+    if Length(arg) = 2  then
+      return DihedralGroupCons( arg[1], arg[2] );
+
+    elif Length(arg) = 3  then
+      return DihedralGroupCons( arg[1], arg[2], arg[3] );
+    fi;
+  fi;
+  Error( "usage: DihedralGroup( [<filter>, ]<size> )" );
+
+end );
+
+
+#############################################################################
+##
+#F  ElementaryAbelianGroup( [<filt>, ]<n> ) . . . .  elementary abelian group
+##
+BindGlobal( "ElementaryAbelianGroup", function ( arg )
+
+  if Length(arg) = 1  then
+    if TEACHMODE=true then
+      return ElementaryAbelianGroupCons( IsFpGroup, arg[1] );
+    else
+      return ElementaryAbelianGroupCons( IsPcGroup, arg[1] );
+    fi;
+  elif IsOperation(arg[1]) then
+
+    if Length(arg) = 2  then
+      return ElementaryAbelianGroupCons( arg[1], arg[2] );
+
+    elif Length(arg) = 3  then
+      return ElementaryAbelianGroupCons( arg[1], arg[2], arg[3] );
+    fi;
+  fi;
+  Error( "usage: ElementaryAbelianGroup( [<filter>, ]<size> )" );
+
+end );

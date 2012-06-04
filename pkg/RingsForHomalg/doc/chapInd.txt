@@ -1,0 +1,36 @@
+  
+  
+  [1XIndex[0X
+  
+  [2XBasisOfColumnModule[0X (in the homalg table for Singular)  3.1-3
+  [2XBasisOfColumnModule[0X (Singular macro)  3.1-4
+  [2XBasisOfColumnsCoeff[0X (in the homalg table for Singular)  3.1-15
+  [2XBasisOfColumnsCoeff[0X (Singular macro)  3.1-16
+  [2XBasisOfRowModule[0X (in the homalg table for Singular)  3.1-1
+  [2XBasisOfRowModule[0X (Singular macro)  3.1-2
+  [2XBasisOfRowsCoeff[0X (in the homalg table for Singular)  3.1-13
+  [2XBasisOfRowsCoeff[0X (Singular macro)  3.1-14
+  [2XDecideZeroColumns[0X (in the homalg table for Singular)  3.1-7
+  [2XDecideZeroColumns[0X (Singular macro)  3.1-8
+  [2XDecideZeroColumnsEffectively[0X (in the homalg table for Singular)  3.1-19
+  [2XDecideZeroColumnsEffectively[0X (Singular macro)  3.1-20
+  [2XDecideZeroRows[0X (in the homalg table for Singular)  3.1-5
+  [2XDecideZeroRows[0X (Singular macro)  3.1-6
+  [2XDecideZeroRowsEffectively[0X (in the homalg table for Singular)  3.1-17
+  [2XDecideZeroRowsEffectively[0X (Singular macro)  3.1-18
+  [2XReducedSyzygiesGeneratorsOfColumns[0X (in the homalg table for Singular)  3.1-27
+  [2XReducedSyzygiesGeneratorsOfColumns[0X (Singular macro)  3.1-28
+  [2XReducedSyzygiesGeneratorsOfRows[0X (in the homalg table for Singular)  3.1-25
+  [2XReducedSyzygiesGeneratorsOfRows[0X (Singular macro)  3.1-26
+  [2XRelativeSyzygiesGeneratorsOfColumns[0X (in the homalg table for Singular)  3.1-23
+  [2XRelativeSyzygiesGeneratorsOfColumns[0X (Singular macro)  3.1-24
+  [2XRelativeSyzygiesGeneratorsOfRows[0X (in the homalg table for Singular)  3.1-21
+  [2XRelativeSyzygiesGeneratorsOfRows[0X (Singular macro)  3.1-22
+  [5XRingsForHomalg[0m  .-2
+  [2XSyzygiesGeneratorsOfColumns[0X (in the homalg table for Singular)  3.1-11
+  [2XSyzygiesGeneratorsOfColumns[0X (Singular macro)  3.1-12
+  [2XSyzygiesGeneratorsOfRows[0X (Singular macro)  3.1-10
+  [2XSyzygiesGeneratorsOfRows[0X (in the homalg table for Singular)  3.1-9
+  
+  
+  -------------------------------------------------------

@@ -1,0 +1,19 @@
+\begin{thebibliography}{LPRR02}
+
+\bibitem[LM90]{lallement}
+G.~Lallement and R.~McFadden.
+\newblock On the determination of {G}reen's relations in finite transformation
+  semigroups.
+\newblock {\em J. Symbolic Comput.}, 10(5):481--498, 1990.
+
+\bibitem[LPRR98]{pfeiffer1}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ru{\v{s}}kuc.
+\newblock Groups and actions in transformation semigroups.
+\newblock {\em Math. Z.}, 228(3):435--450, 1998.
+
+\bibitem[LPRR02]{pfeiffer2}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ru{\v{s}}kuc.
+\newblock Computing transformation semigroups.
+\newblock {\em J. Symbolic Comput.}, 33(2):145--162, 2002.
+
+\end{thebibliography}

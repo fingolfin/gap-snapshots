@@ -2,10 +2,9 @@
 ##
 #W  hash.gd                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: hash.gd,v 4.11 2002/04/15 10:04:53 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  Hash tables module, declarations part. 
@@ -15,8 +14,6 @@
 ##  mappings they are often mutable (and, indeed only likely to be a sensible
 ##  choice of representation when mutability is needed)
 ##
-Revision.hash_gd :=
-    "@(#)$Id: hash.gd,v 4.11 2002/04/15 10:04:53 sal Exp $";
 
 
 #############################################################################
@@ -75,9 +72,11 @@ DeclareOperation("AddImage",
 #O  AddImageNC( <map>, <srcpt>, <im> )  add a new pair to an extensible 
 ##                                         general mapping  without checks
 ##
-##  This makes two assumptions -- firstly that <srcpt> and <im> are in the 
+##  This makes two assumptions.
+##  Firstly that <srcpt> and <im> are in the 
 ##  source and  range of the map, and secondly that if <map> is required to
-##  be single-valued then <srcpt> currently has no images under <map>
+##  be single-valued then <srcpt> currently has no images under <map>.
+##
 DeclareOperation("AddImageNC", 
                       [ IsExtensibleGeneralMapping and IsMutable, 
                         IsObject, IsObject ]);

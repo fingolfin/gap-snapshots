@@ -2,10 +2,9 @@
 ##
 #W  zmodnz.gi                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zmodnz.gi,v 4.53.2.1 2006/02/22 13:52:08 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for the elements of the rings $Z / n Z$
@@ -26,8 +25,6 @@
 ##  internal finite field elements must be respected, for larger primes
 ##  again the ordering of representatives is chosen.
 ##
-Revision.zmodnz_gi :=
-    "@(#)$Id: zmodnz.gi,v 4.53.2.1 2006/02/22 13:52:08 sal Exp $";
 
 #T for small residue class rings, avoid constructing new objects by
 #T keeping an elements list, and change the constructor such that the
@@ -577,6 +574,21 @@ InstallMethod( InverseOp,
     return inv;
     end );
 
+#############################################################################
+##
+#M  Order( <obj> )  . . . . . . . . . . . . . . . . . . . . for `IsZmodpZObj'
+##
+InstallMethod( Order,
+    "for element in Z/nZ (ModulusRep)",
+    [ IsZmodnZObj and IsModulusRep ],
+    function( elm )
+    local ord;
+    ord := OrderMod( elm![1], ModulusOfZmodnZObj( elm ) );
+    if ord = 0  then
+        Error( "<obj> is not invertible" );
+    fi;
+    return ord;
+    end );
 
 #############################################################################
 ##
@@ -761,6 +773,7 @@ InstallMethod( PrintObj,
 InstallMethod( AsList,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
+    RankFilter( IsRing ),
     function( R )
     local F;
     F:= ElementsFamily( FamilyObj( R ) );
@@ -773,6 +786,7 @@ InstallMethod( AsList,
 InstallMethod( AsSSortedList,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
+    RankFilter( IsRing ),
     function( R )
     local F;
     F:= ElementsFamily( FamilyObj( R ) );
@@ -789,6 +803,7 @@ InstallMethod( AsSSortedList,
 InstallMethod( Random,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
+    RankFilter( IsRing ),
     R -> ZmodnZObj( ElementsFamily( FamilyObj( R ) ),
                     Random( [ 0 .. Size( R ) - 1 ] ) ) );
 
@@ -800,8 +815,30 @@ InstallMethod( Random,
 InstallMethod( Size,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
+    RankFilter( IsRing ),
     R -> ElementsFamily( FamilyObj( R ) )!.modulus );
 
+
+#############################################################################
+##
+#M  IsIntegralRing( <obj> )  . . . . . . . . . .  method for subrings of Z/nZ
+##
+InstallImmediateMethod( IsIntegralRing,
+    IsZmodnZObjNonprimeCollection and IsRing, 0,
+    ReturnFalse );
+
+
+#############################################################################
+##
+#M  IsUnit( <obj> )  . . . . . . . . . . . . . . . . . . .  for `IsZmodpZObj'
+##
+InstallMethod( IsUnit,
+    "for element in Z/nZ (ModulusRep)",
+    IsCollsElms,
+    [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing, IsZmodnZObj and IsModulusRep ],
+    function( R, elm )
+    return GcdInt( elm![1], ModulusOfZmodnZObj( elm ) ) = 1;
+    end );
 
 #############################################################################
 ##
@@ -820,7 +857,7 @@ InstallMethod( Units,
     gens := Flat( gens ) * One( R );
     G := GroupByGenerators( gens, One( R ) );
     SetIsAbelian( G, true );
-    SetIndependentGeneratorsOfAbelianGroup( G, gens );
+    SetSize( G, Product( List( gens, Order ) ) );
     SetIsHandledByNiceMonomorphism(G,true);
     return G;
 end );
@@ -976,7 +1013,7 @@ InstallGlobalFunction( ZmodnZ, function( n )
                      IsZmodnZObj,
                      IsZmodnZObjNonprime and CanEasilySortElements
                                          and IsNoImmediateMethodsObject,
-		     CanEasilySortElements);
+                     CanEasilySortElements);
 
       # Install the data.
       F!.modulus:= n;

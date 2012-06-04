@@ -2,263 +2,120 @@
 ##
 #W  system.g                   GAP Library                   Alexander Hulpke
 ##
-#H  @(#)$Id: system.g,v 4.12.2.26 2008/12/16 13:08:34 gapchron Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains functions that are architecture dependent,
 ##  and the record `GAPInfo', which collects global variables that are needed
 ##  internally.
 ##
-Revision.system_g :=
-    "@(#)$Id: system.g,v 4.12.2.26 2008/12/16 13:08:34 gapchron Exp $";
-
+##  `GAPInfo' is initialized when GAP is started without a workspace,
+##  and various components are added and modified later on.
+##  When GAP is started with a workspace, the value of `GAPInfo' is kept,
+##  just some dedicated components are modified via the
+##  ``post restore functions'' mechanism.
+##  
 
 BIND_GLOBAL( "GAPInfo", rec(
 
 # do not edit the following two lines. They get replaced by string matching
 # in the distribution wrapper scripts. (Occurrences of `4.dev' and `today'
-# get replaced.)
-    Version := "4.4.12",
-    Date := "17-Dec-2008",
-
+# get replaced.)    
+    Version := "4.5.4",
+    Date := "05-Jun-2012",
+        
     # The kernel version numbers are expected in the format `<v>.<r>.<p>'.
-    KernelVersion := KERNEL_VERSION,
-    NeedKernelVersion := ["4.4.12"],
+    NeedKernelVersion := "4.5",
 
-    Architecture := GAP_ARCHITECTURE,
+    # Without the needed packages, GAP does not start.
+    # The suggested packages are loaded if available when GAP is started.
+    Dependencies := rec(
+      NeededOtherPackages := [
+        [ "gapdoc", ">= 1.2" ],
+      ],
+      SuggestedOtherPackages := [
+        [ "ctbllib", ">= 1.0" ],
+        [ "tomlib", ">= 1.0" ],
+      ],
+    ),
 
-    # The exact command line which called GAP as list of strings;
-    # first entry is the executable followed by the options.
-    SystemCommandLine := SYSTEM_COMMAND_LINE,
-
-    # The shell environment in which GAP was called as list of strings of
-    # form "var=val".
-    SystemEnvironment := SYSTEM_ENVIRONMENT,
-                    
-    # paths
-    RootPaths := GAP_ROOT_PATHS,
-    UserHome := USER_HOME,
-    gaprc := GAP_RC_FILE,
-    DirectoriesLibrary := rec(),
-    DirectoriesSystemPrograms := DIRECTORIES_SYSTEM_PROGRAMS,
-    DirectoriesPrograms := false,
-    DirectoriesTemporary := [],
-    DirectoryCurrent := false,
-
-    # Shall the file `lib/obsolete.g' be read upon initialization?
-    # (This can be changed in the user's `.gaprc' file.)
-    ReadObsolete := true,
-
-    # the command line options that were given for the current session
-    CommandLineOptions := rec(),
-
-    # the banner that is printed if no `-b' or `-q' option was given
-    BannerString := "\
-    \n\
-            #########           ######         ###########           ###  \n\
-         #############          ######         ############         ####  \n\
-        ##############         ########        #############       #####  \n\
-       ###############         ########        #####   ######      #####  \n\
-      ######         #         #########       #####    #####     ######  \n\
-     ######                   ##########       #####    #####    #######  \n\
-     #####                    ##### ####       #####   ######   ########  \n\
-     ####                    #####  #####      #############   ###  ####  \n\
-     #####     #######       ####    ####      ###########    ####  ####  \n\
-     #####     #######      #####    #####     ######        ####   ####  \n\
-     #####     #######      #####    #####     #####         #############\n\
-      #####      #####     ################    #####         #############\n\
-      ######     #####     ################    #####         #############\n\
-      ################    ##################   #####                ####  \n\
-       ###############    #####        #####   #####                ####  \n\
-         #############    #####        #####   #####                ####  \n\
-          #########      #####          #####  #####                ####  \n\
-                                                                          \n\
-     Information at:  http://www.gap-system.org\n\
-     Try '?help' for help. See also  '?copyright' and  '?authors'\n\
-    \n",
-
-    # This holds the maximal number of lines that are reasonably printed
-    # in `ViewObj' methods.
-#T The value can be changed using the function `ViewLength' that is defined
-#T in `lib/oper.g' but currently is undocumented.
-#T Should it become documented or is it sufficient to document this variable?
-    ViewLength := 3,
+    HasReadGAPRC:= false,
+    
+    # list of all reserved keywords
+    Keywords:=ALL_KEYWORDS(),
 
     # the maximal number of arguments a method can have
     MaxNrArgsMethod:= 6,
- ) );
 
-GAPInfo.ScanCommandLineOption := function( name, type, default )
-    if not IsBound( SY_COMMAND_LINE_OPTIONS.( name ) ) then
-      GAPInfo.CommandLineOptions.( name ):= default;
-    elif type = "toggle" then
-      if LEN_LIST( SY_COMMAND_LINE_OPTIONS.( name ) ) mod 2 = 0 then
-        GAPInfo.CommandLineOptions.( name ):= default;
-      else
-        GAPInfo.CommandLineOptions.( name ):= not default;
-      fi;
-    elif type = "string" then
-      # Take the last value for this option.
-      GAPInfo.CommandLineOptions.( name ):= SY_COMMAND_LINE_OPTIONS.( name )[
-          LEN_LIST( SY_COMMAND_LINE_OPTIONS.( name ) ) ];
-    elif type = "strlst" then
-      # Take all values for this option.
-      GAPInfo.CommandLineOptions.( name ):= SY_COMMAND_LINE_OPTIONS.( name );
-    elif type = "modul3" then
-      # special case for `-g'
-      GAPInfo.CommandLineOptions.( name ):=
-          LEN_LIST( SY_COMMAND_LINE_OPTIONS.( name ) ) mod 3;
-    fi;
-end;
+    # caches of functions that are needed also with a workspace
+    AtExitFuncs:= [],
+    PostRestoreFuncs:= [],
 
-GAPInfo.ScanCommandLineOption( "A", "toggle", false );
-GAPInfo.ScanCommandLineOption( "B", "string", "" );
-GAPInfo.ScanCommandLineOption( "D", "toggle", false );
-GAPInfo.ScanCommandLineOption( "E", "toggle", false );
-GAPInfo.ScanCommandLineOption( "K", "string", "0" );
-GAPInfo.ScanCommandLineOption( "L", "string", "" );
-GAPInfo.ScanCommandLineOption( "M", "toggle", false );
-GAPInfo.ScanCommandLineOption( "N", "toggle", false );
-GAPInfo.ScanCommandLineOption( "O", "toggle", false );
-GAPInfo.ScanCommandLineOption( "P", "string", "0" );
-GAPInfo.ScanCommandLineOption( "U", "string", "" );
-GAPInfo.ScanCommandLineOption( "W", "string", "0" );
-GAPInfo.ScanCommandLineOption( "R", "string", "" );
-GAPInfo.ScanCommandLineOption( "T", "toggle", false );
-GAPInfo.ScanCommandLineOption( "X", "toggle", false );
-GAPInfo.ScanCommandLineOption( "Y", "toggle", false );
-GAPInfo.ScanCommandLineOption( "a", "string", "0" );
-GAPInfo.ScanCommandLineOption( "b", "toggle", false );
-GAPInfo.ScanCommandLineOption( "c", "string", "0" );
-GAPInfo.ScanCommandLineOption( "e", "toggle", false );
-GAPInfo.ScanCommandLineOption( "f", "toggle", false );
-GAPInfo.ScanCommandLineOption( "g", "modul3", 0 );
-GAPInfo.ScanCommandLineOption( "i", "string", "" );
-GAPInfo.ScanCommandLineOption( "l", "strlst", [] );
-GAPInfo.ScanCommandLineOption( "m", "string", "24m" );
-GAPInfo.ScanCommandLineOption( "n", "toggle", false );
-GAPInfo.ScanCommandLineOption( "o", "string", "256m" );
-GAPInfo.ScanCommandLineOption( "p", "toggle", false );
-GAPInfo.ScanCommandLineOption( "q", "toggle", false );
-GAPInfo.ScanCommandLineOption( "r", "toggle", false );
-GAPInfo.ScanCommandLineOption( "x", "string", "80" );
-GAPInfo.ScanCommandLineOption( "y", "string", "24" );
-GAPInfo.ScanCommandLineOption( "z", "string", "20" );
+    TestData:= rec(),
 
-
-#############################################################################
-##  
-##  Administration of Packages
-##
-
-
-#############################################################################
-##
-#V  GAPInfo.PackagesLoaded
-##
-##  This is a mutable record, the component names are the names of those
-##  packages that are already loaded.
-##  The component for each package is a list of length three, the entries
-##  being the path to the {\GAP} root directory that contains the package,
-##  the package version, and the package name.
-##  For each package, the value gets bound in the `LoadPackage' call.
-##
-GAPInfo.PackagesLoaded := rec();
-
-
-#############################################################################
-##
-#V  GAPInfo.PackagesInfo
-##
-##  This is a mutable record, the component names are the names of those
-##  packages for which the `PackageInfo.g' files have been read.
-##  (These packages are not necessarily loaded.)
-##
-GAPInfo.PackagesInfo := rec();
-
-
-#############################################################################
-##
-#V  GAPInfo.TestData
-##
-##  This is a mutable record used in files that are read via `ReadTest'.
-##  These files contain the commands `START_TEST' and `STOP_TEST',
-##  which set, read, and unbind the components `START_TIME' and `START_NAME'.
-##  The function `RunStandardTests' also uses a component `results'.
-##
-GAPInfo.TestData:= rec();
-
-
-#############################################################################
-##
-##  Remove globals exported by the kernel that are no longer needed.
-#T wouldn't it be better to create the record `GAPInfo' with these components
-#T in the kernel?
-##
-for name in [ "KERNEL_VERSION", "GAP_ARCHITECTURE", "GAP_ROOT_PATHS",
-              "USER_HOME", "GAP_RC_FILE", "DIRECTORIES_SYSTEM_PROGRAMS",
-              "DEBUG_LOADING" ] do
-  MAKE_READ_WRITE_GLOBAL( name );
-  UNBIND_GLOBAL( name );
-od;
-
-
-#############################################################################
-##
-##  identifier that will recognize the Windows and the Mac version
-##
-BIND_GLOBAL("WINDOWS_ARCHITECTURE",
-  IMMUTABLE_COPY_OBJ("win"));
-BIND_GLOBAL("MACINTOSH_68K_ARCHITECTURE",
-  IMMUTABLE_COPY_OBJ("MC68020-motorola-macos-mwerksc"));
-BIND_GLOBAL("MACINTOSH_PPC_ARCHITECTURE",
-  IMMUTABLE_COPY_OBJ("PPC-motorola-macos-mwerksc"));
-
-#T the following functions eventually should be more clever. This however
-#T will require kernel support and thus is something for later.  AH
-
-#############################################################################
-##
-#F  ARCH_IS_MAC()
-##
-##  tests whether {\GAP} is running on a Macintosh under MacOS
-BIND_GLOBAL("ARCH_IS_MAC",function()
-  return GAPInfo.Architecture = MACINTOSH_68K_ARCHITECTURE
-      or GAPInfo.Architecture = MACINTOSH_PPC_ARCHITECTURE;
-end);
-
-#############################################################################
-##
-#F  ARCH_IS_WINDOWS()
-##
-##  tests whether {\GAP} is running on a Windows system.
-BIND_GLOBAL("ARCH_IS_WINDOWS",function()
-local l;
-  l:=LEN_LIST( GAPInfo.Architecture );
-  if l<9 then return false;fi; # trap some unixes with incredibly short
-                               # string name
-  return GAPInfo.Architecture{[l-6..l-4]} = WINDOWS_ARCHITECTURE;
-end);
-
-#############################################################################
-##
-#F  ARCH_IS_UNIX()
-##
-##  tests whether {\GAP} is running on a UNIX system.
-BIND_GLOBAL("ARCH_IS_UNIX",function()
-  return not (ARCH_IS_MAC() or ARCH_IS_WINDOWS());
-end);
+    # admissible command line options
+    # (name of the option, default value, descr. strings for help page;
+    # if no help string appears then option is not advertised in the help)
+    CommandLineOptionData := [
+      [ "h", false, "print this help and exit" ],
+      [ "b", false, "disable/enable the banner" ],
+      [ "q", false, "enable/disable quiet mode" ],
+      [ "e", false, "disable/enable quitting on <ctr>-D" ],
+      [ "f", false, "force line editing" ],
+      [ "n", false, "prevent line editing" ],
+      [ "E", true, "disable/enable use of readline library (if possible)" ],
+      [ "x", "", "<num>", "set line width" ],
+      [ "y", "", "<num>", "set number of lines" ],
+      ,
+      [ "g", 0, "show GASMAN messages (full/all/no garbage collections)" ],
+      [ "m", "128m", "<mem>", "set the initial workspace size" ],
+      [ "o", "2g", "<mem>", "set hint for maximal workspace size (GAP may allocate more)" ],
+      [ "K", "0", "<mem>", "set maximal workspace size (GAP never allocates more)" ],
+      [ "c", "0", "<mem>", "set the cache size value" ],
+      [ "a", "0", "<mem>", "set amount to pre-malloc-ate",
+             "postfix 'k' = *1024, 'm' = *1024*1024, 'g' = *1024*1024*1024" ],
+      ,
+      [ "l", [], "<paths>", "set the GAP root paths" ],
+      [ "r", false, "disable/enable user GAP root dir GAPInfo.UserGapRoot" ],
+      [ "A", false, "disable/enable autoloading of suggested GAP packages" ],
+      [ "B", "", "<name>", "current architecture" ],
+      [ "D", false, "enable/disable debugging the loading of files" ],
+      [ "M", false, "disable/enable loading of compiled modules" ],
+      [ "N", false, "unused, for backward compatibility only" ],
+      [ "X", false, "enable/disable CRC checking for compiled modules" ],
+      [ "T", false, "disable/enable break loop" ],
+      [ "i", "", "<file>", "change the name of the init file" ],
+      ,
+      [ "L", "", "<file>", "restore a saved workspace" ],
+      [ "R", false, "prevent restoring of workspace (ignoring -L)" ],
+      ,
+      [ "p", false, "enable/disable package output mode" ],
+      [ "E", false ],
+      [ "U", "" ],     # -C -U undocumented options to the compiler
+      [ "s", "4g" ],
+      [ "z", "20" ],
+          ],
+    ) );
+  
 
 #############################################################################
 ##
 #V  GAPInfo.BytesPerVariable
 #V  DOUBLE_OBJLEN
 ##
-##  `GAPInfo.BytesPerVariable' is the number of bytes used for one `Obj'
-##  variable.
+##  <ManSection>
+##  <Var Name="GAPInfo.BytesPerVariable"/>
+##  <Var Name="DOUBLE_OBJLEN"/>
+##
+##  <Description>
+##  <Ref Var="GAPInfo.BytesPerVariable"/> is the number of bytes used for one
+##  <C>Obj</C> variable.
+##  </Description>
+##  </ManSection>
+##
+##  These variables need not be recomputed when a workspace is loaded.
 ##
 GAPInfo.BytesPerVariable := 4;
 # are we a 64 (or more) bit system?
@@ -267,6 +124,313 @@ while TNUM_OBJ( 2^((GAPInfo.BytesPerVariable-1)*8) )
   GAPInfo.BytesPerVariable:= GAPInfo.BytesPerVariable + 4;
 od;
 BIND_GLOBAL( "DOUBLE_OBJLEN", 2*GAPInfo.BytesPerVariable );
+
+
+
+
+#############################################################################
+##
+#F  CallAndInstallPostRestore( <func> )
+##
+##  The argument <func> must be a function with no argument.
+##  This function is called,
+##  and it is added to the global list `GAPInfo.PostRestoreFuncs'.
+##  The effect of the latter is that the function will be called
+##  when GAP is started with a workspace (option `-L').
+##
+BIND_GLOBAL( "CallAndInstallPostRestore", function( func )
+    if not IS_FUNCTION( func )  then
+      Error( "<func> must be a function" );
+    fi;
+    if CHECK_INSTALL_METHOD  then
+      if not NARG_FUNC( func ) in [ -1, 0 ]  then
+        Error( "<func> must accept zero arguments" );
+      fi;
+    fi;
+
+    func();
+
+    ADD_LIST( GAPInfo.PostRestoreFuncs, func );
+end );
+
+
+#############################################################################
+##
+##  - Set/adjust the kernel specific components.
+##  - Compute `GAPInfo.DirectoriesSystemPrograms' from
+##    `GAPInfo.SystemEnvironment.PATH'.
+##  - Scan the command line.
+##    In case of `-h' print a help screen and exit.
+##
+CallAndInstallPostRestore( function()
+    local j, i, CommandLineOptions, opt, InitFiles, line, word, value;
+
+    GAPInfo.KernelInfo:= KERNEL_INFO();    
+    GAPInfo.KernelVersion:= GAPInfo.KernelInfo.KERNEL_VERSION;
+    GAPInfo.Architecture:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
+    GAPInfo.ArchitectureBase:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
+    for i in [ 1 .. LENGTH( GAPInfo.Architecture ) ] do
+      if GAPInfo.Architecture[i] = '/' then
+        GAPInfo.ArchitectureBase:= GAPInfo.Architecture{ [ 1 .. i-1 ] };
+        break;
+      fi;
+    od;
+    # On 32-bit we have to adjust some values:
+    if GAPInfo.BytesPerVariable = 4 then
+      i := 1;
+      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+            GAPInfo.CommandLineOptionData[i][1] <> "m" do i := i + 1; od;
+      GAPInfo.CommandLineOptionData[i][2] := "64m";
+      i := 1;
+      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+            GAPInfo.CommandLineOptionData[i][1] <> "o" do i := i + 1; od;
+      GAPInfo.CommandLineOptionData[i][2] := "1g";
+      i := 1;
+      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+            GAPInfo.CommandLineOptionData[i][1] <> "s" do i := i + 1; od;
+      GAPInfo.CommandLineOptionData[i][2] := "1500m";
+    fi;
+
+    # The exact command line which called GAP as list of strings;
+    # first entry is the executable followed by the options.
+    GAPInfo.SystemCommandLine:= GAPInfo.KernelInfo.COMMAND_LINE;
+
+    # The shell environment in which GAP was called as record
+    GAPInfo.SystemEnvironment:= GAPInfo.KernelInfo.ENVIRONMENT;
+
+    # paths
+    GAPInfo.RootPaths:= GAPInfo.KernelInfo.GAP_ROOT_PATHS;
+    GAPInfo.UserHome:= GAPInfo.SystemEnvironment.HOME;
+    if IsBound(GAPInfo.KernelInfo.DOT_GAP_PATH) then
+      GAPInfo.UserGapRoot := GAPInfo.KernelInfo.DOT_GAP_PATH;
+    else
+      GAPInfo.UserGapRoot := fail;
+    fi;
+
+    # directory caches
+    GAPInfo.DirectoriesLibrary:= rec();
+    GAPInfo.DirectoriesPrograms:= false;
+    GAPInfo.DirectoriesTemporary:= [];
+    GAPInfo.DirectoryCurrent:= false;
+    GAPInfo.DirectoriesSystemPrograms:= [];
+    j:= 1;
+    for i in [1..LENGTH(GAPInfo.SystemEnvironment.PATH)] do
+      if GAPInfo.SystemEnvironment.PATH[i] = ':' then
+        if i > j then
+          ADD_LIST_DEFAULT(GAPInfo.DirectoriesSystemPrograms, 
+                GAPInfo.SystemEnvironment.PATH{[j..i-1]});
+        fi;
+        j := i+1;
+      fi;
+    od;
+    if j <= LENGTH( GAPInfo.SystemEnvironment.PATH ) then
+      ADD_LIST_DEFAULT( GAPInfo.DirectoriesSystemPrograms, 
+          GAPInfo.SystemEnvironment.PATH{ [ j ..
+              LENGTH( GAPInfo.SystemEnvironment.PATH ) ] } );
+    fi;
+
+    # the command line options that were given for the current session
+    CommandLineOptions:= rec();
+    for opt in GAPInfo.CommandLineOptionData do
+      CommandLineOptions.( opt[1] ):= SHALLOW_COPY_OBJ( opt[2] );
+    od;
+
+    InitFiles:= [];
+
+    line:= GAPInfo.SystemCommandLine;
+    i:= 2;
+    while i <= LENGTH( line ) do
+      word:= line[i];
+      i:= i+1;
+      if word[1] = '-' and LENGTH( word ) = 2 then
+        opt:= word{[2]};
+        if not IsBound( CommandLineOptions.( opt ) ) then
+          PRINT_TO( "*errout*", "Unrecognised command line option: -",
+                    word, "\n" );
+        else
+          value:= CommandLineOptions.( opt );
+          if IS_BOOL( value ) then
+            CommandLineOptions.( opt ):= not CommandLineOptions.( opt );
+          elif IS_INT( value ) then
+            CommandLineOptions.( opt ):= CommandLineOptions.( opt ) + 1;
+          elif i <= LENGTH( line ) then
+            if IS_STRING_REP( value ) then
+              # string
+              CommandLineOptions.( opt ):= line[i];
+              i := i+1;
+            elif IS_LIST( value ) then
+              # list of strings, starting from the empty list
+              ADD_LIST_DEFAULT( CommandLineOptions.( opt ), line[i] );
+              i := i+1;
+            fi;
+          else
+            PRINT_TO( "*errout*", "Command line option -", word, " needs an argument.\n" );
+          fi;
+        fi;
+      else
+        ADD_LIST_DEFAULT( InitFiles, word );
+      fi;
+    od;
+    CommandLineOptions.g:= CommandLineOptions.g mod 3;
+    # use the same as the kernel
+    CommandLineOptions.E:= GAPInfo.KernelInfo.HAVE_LIBREADLINE;
+    MakeImmutable( CommandLineOptions );
+    MakeImmutable( InitFiles );
+
+    if CommandLineOptions.L = "" or CommandLineOptions.R then
+      # start without a workspace
+      GAPInfo.CommandLineOptionsPrev:= [];
+      GAPInfo.InitFilesPrev:= [];
+    else
+      # start with a workspace
+      ADD_LIST_DEFAULT( GAPInfo.CommandLineOptionsPrev,
+                        GAPInfo.CommandLineOptions );
+      ADD_LIST_DEFAULT( GAPInfo.InitFilesPrev, GAPInfo.InitFiles );
+    fi;
+    GAPInfo.CommandLineOptions:= CommandLineOptions;
+    GAPInfo.InitFiles:= InitFiles;
+
+    # Switch on debugging (`-D' option) when GAP is started with a workspace.
+    if GAPInfo.CommandLineOptions.D then
+      InfoRead1:= Print;
+    fi;
+
+    # Evaluate the `-h' option.
+    if GAPInfo.CommandLineOptions.h then
+      PRINT_TO( "*errout*",
+        "usage: gap [OPTIONS] [FILES]\n",
+        "       run the Groups, Algorithms and Programming system, Version ",
+        GAPInfo.KernelVersion, "\n\n" );
+
+      for i in [ 1 .. LENGTH( GAPInfo.CommandLineOptionData ) ] do
+        if IsBound( GAPInfo.CommandLineOptionData[i] ) then
+          opt:= GAPInfo.CommandLineOptionData[i];
+          if LENGTH( opt ) > 2 then
+            PRINT_TO( "*errout*", "  -", opt[1], " " );
+            if LENGTH( opt )  = 3 then
+              PRINT_TO( "*errout*", "         ", opt[3], "\n" );
+            else
+              PRINT_TO( "*errout*", opt[3] );
+              for j in [ 1 .. 9 - LENGTH( opt[3] ) ] do
+                PRINT_TO( "*errout*", " " );
+              od;
+              PRINT_TO( "*errout*", opt[4], "\n" );
+              for j in [ 5 .. LENGTH( opt ) ] do
+                PRINT_TO( "*errout*", "              ", opt[j], "\n" );
+              od;
+            fi;
+          fi;
+        else
+          PRINT_TO( "*errout*", "\n" );
+        fi;
+      od;
+
+      PRINT_TO("*errout*",
+       "  Boolean options (b,q,e,r,A,D,E,M,N,T,X,Y) toggle the current value\n",
+       "  each time they are called. Default actions are indicated first.\n",
+       "\n" );
+      QUIT_GAP();
+    fi;
+end );
+
+
+#############################################################################
+##
+#V  GAPInfo.TestData
+##
+##  <ManSection>
+##  <Var Name="GAPInfo.TestData"/>
+##
+##  <Description>
+##  This is a mutable record used in files that are read via <C>ReadTest</C>.
+##  These files contain the commands <C>START_TEST</C> and <C>STOP_TEST</C>,
+##  which set, read, and unbind the components <C>START_TIME</C> and <C>START_NAME</C>.
+##  The function <C>RunStandardTests</C> also uses a component <C>results</C>.
+##  </Description>
+##  </ManSection>
+##
+
+
+#T the following functions eventually should be more clever. This however
+#T will require kernel support and thus is something for later.  AH
+
+#############################################################################
+##
+#F  ARCH_IS_WINDOWS()
+##
+##  <#GAPDoc Label="ARCH_IS_WINDOWS">
+##  <ManSection>
+##  <Func Name="ARCH_IS_WINDOWS" Arg=''/>
+##
+##  <Description>
+##  tests whether &GAP; is running on a Windows system.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL("ARCH_IS_WINDOWS",function()
+  return POSITION_SUBSTRING (GAPInfo.Architecture, "cygwin", 0) <> fail;
+end);
+
+#############################################################################
+##
+#F  ARCH_IS_MAC_OS_X()
+##
+##  <#GAPDoc Label="ARCH_IS_MAC_OS_X">
+##  <ManSection>
+##  <Func Name="ARCH_IS_MAC_OS_X" Arg=''/>
+##
+##  <Description>
+##  tests whether &GAP; is running on Mac OS X. Note that on Mac OS X, also
+##  <Ref Func="ARCH_IS_UNIX"/> will be <C>true</C>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL("ARCH_IS_MAC_OS_X",function()
+  return POSITION_SUBSTRING (GAPInfo.Architecture, "apple-darwin", 0) <> fail 
+    and IsReadableFile ("/System/Library/CoreServices/Finder.app");
+end);
+
+#############################################################################
+##
+#F  ARCH_IS_UNIX()
+##
+##  <#GAPDoc Label="ARCH_IS_UNIX">
+##  <ManSection>
+##  <Func Name="ARCH_IS_UNIX" Arg=''/>
+##
+##  <Description>
+##  tests whether &GAP; is running on a UNIX system (including Mac OS X).
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL("ARCH_IS_UNIX",function()
+  return not ARCH_IS_WINDOWS();
+end);
+
+
+#############################################################################
+##
+#V  GAPInfo.InitFiles
+#V  GAPInfo.CommandLineArguments
+##
+##  <ManSection>
+##  <Var Name="GAPInfo.InitFiles"/>
+##  <Var Name="GAPInfo.CommandLineArguments"/>
+##
+##  <Description>
+##  <C>GAPInfo.InitFiles</C> is a list of strings containing the filenames
+##  specified on the command line to be read initially.
+##  <P/>
+##  <C>GAPInfo.CommandLineArguments</C> is a single string containing all
+##  the options and arguments passed to GAP at runtime (although not
+##  necessarily in the original order).
+##  </Description>
+##  </ManSection>
+##
+#T really ???
 
 
 #############################################################################

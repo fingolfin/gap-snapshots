@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (LocalizeRingForHomalg) - Chapter 5: Examples</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap4.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+<div class="ChapSects"><a href="chap5.html#X7A489A5D79DA9E5C">5 <span class="Heading">Examples</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X8426A658837B4911">5.1 <span class="Heading">An Easy Polynomial Example</span></a>
+<div class="ContSSBlock">
+</div></div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7820475F7C884EA5">5.2 <span class="Heading">Hom(Hom(-,Z128),Z16)</span></a>
+<div class="ContSSBlock">
+</div></div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7CC8EA507E7AABA4">5.3 <span class="Heading">ResidueClass</span></a>
+<div class="ContSSBlock">
+</div></div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7958E7417BB312F0">5.4 <span class="Heading">Testing the Intersection Formula</span></a>
+<div class="ContSSBlock">
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Examples</span></h3>
+
+<p><a id="X8426A658837B4911" name="X8426A658837B4911"></a></p>
+
+<h4>5.1 <span class="Heading">An Easy Polynomial Example</span></h4>
+
+<p>The ground ring used in this example is F_3[x,y]. We want to see, how the different rings in this package can be used to localize at different points and how the results differ.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; LoadPackage("RingsForHomalg");;
+gap&gt; F3xy := HomalgRingOfIntegersInSingular(3) * "x,y";;
+gap&gt; x1 := HomalgRingElement( "x+2", F3xy );;
+gap&gt; y0 := HomalgRingElement( "y", F3xy );;
+gap&gt; LoadPackage("LocalizeRingForHomalg");;
+gap&gt; R00 := LocalizeAtZero( F3xy );;
+gap&gt; R10 := LocalizeAt( F3xy, [ x1, y0 ] );;
+gap&gt; RMora := LocalizePolynomialRingAtZeroWithMora( F3xy );;
+gap&gt; M := HomalgMatrix( "[\
+&gt;        y^3+2*y^2+x+x^2+2*x*y+y^4+x*y^2, \
+&gt;        x*y^3+2*x^2*y+y^3+y^2+x+2*y+x^2, \
+&gt;        x^2*y^2+2*x^3+x^2*y+y^3+2*x^2+2*x*y+y^2+2*y\
+&gt;      ]", 1, 3, F3xy );;
+gap&gt; LoadPackage( "Modules" );;
+gap&gt; I := RightPresentation( M );;
+gap&gt; M00 := HomalgLocalMatrix( M, R00 );;
+gap&gt; M10 := HomalgLocalMatrix( M, R10 );;
+gap&gt; MMora := HomalgLocalMatrix( M, RMora );;
+gap&gt; I00 := RightPresentation( M00 );;
+gap&gt; I10 := RightPresentation( M10 );;
+gap&gt; IMora := RightPresentation( MMora );;
+</pre></td></tr></table>
+
+<p>This ring is able to compute a standard basis of the module.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Display( IMora );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; (x+x^2-x*y-y^2+x*y^2+y^3+y^4)/1, (x-y+x^2+y^2-x^2*y+y^3+\
+x*y^3)/1, (-y-x^2-x*y+y^2-x^3+x^2*y+y^3+x^2*y^2)/1 &gt;
+gap&gt; ByASmallerPresentation( IMora );
+&lt;A cyclic torsion right module on a cyclic generator satisfying 2 relations&gt;
+gap&gt; Display( IMora );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; x/1, y/1 &gt;
+</pre></td></tr></table>
+
+<p>This ring recognizes, that the module is not zero, but is not able to find better generators.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Display( I00 );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; (y^4+x*y^2+y^3+x^2-x*y-y^2+x)/1, (x*y^3-x^2*y+y^3+x^2+y^\
+2+x-y)/1, (x^2*y^2-x^3+x^2*y+y^3-x^2-x*y+y^2-y)/1 &gt;
+gap&gt; ByASmallerPresentation( I00 );
+&lt;A cyclic right module on a cyclic generator satisfying 3 relations&gt;
+gap&gt; Display( I00 );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; (y^4+x*y^2+y^3+x^2-x*y-y^2+x)/1, (x*y^3-x^2*y+y^3+x^2+y^\
+2+x-y)/1, (x^2*y^2-x^3+x^2*y+y^3-x^2-x*y+y^2-y)/1 &gt;
+</pre></td></tr></table>
+
+<p>We are able to change the ring, to compute a nicer basis.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; I00ToMora := RMora * I00;
+&lt;A cyclic right module on a cyclic generator satisfying 3 relations&gt;
+gap&gt; Display( I00ToMora );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; (x+x^2-x*y-y^2+x*y^2+y^3+y^4)/1, (x-y+x^2+y^2-x^2*y+y^3+\
+x*y^3)/1, (-y-x^2-x*y+y^2-x^3+x^2*y+y^3+x^2*y^2)/1 &gt;
+gap&gt; ByASmallerPresentation( I00ToMora );
+&lt;A cyclic torsion right module on a cyclic generator satisfying 2 relations&gt;
+gap&gt; Display( I00ToMora );
+GF(3)[x,y]_&lt; x, y &gt;/&lt; x/1, y/1 &gt;
+</pre></td></tr></table>
+
+<p>We are able to find out, that this module is actually zero.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Display( I10 );
+GF(3)[x,y]_&lt; x-1, y &gt;/&lt; (y^4+x*y^2+y^3+x^2-x*y-y^2+x)/1, (x*y^3-x^2*y+y^3+x^2+\
+y^2+x-y)/1, (x^2*y^2-x^3+x^2*y+y^3-x^2-x*y+y^2-y)/1 &gt;
+gap&gt; ByASmallerPresentation( I10 );
+&lt;A zero right module&gt;
+gap&gt; Display( I10 );
+0
+</pre></td></tr></table>
+
+<p><a id="X7820475F7C884EA5" name="X7820475F7C884EA5"></a></p>
+
+<h4>5.2 <span class="Heading">Hom(Hom(-,Z128),Z16)</span></h4>
+
+<p>The following example is taken from Section 2 of <a href="chapBib.html#biBBREACA">[BR06]</a>. <br /> <br /> The computation takes place over the local ring R=ℤ_&lt; 2&gt; (i.e. ℤ localized at the maximal ideal generated by 2).</p>
+
+<p>Here we compute the (infinite) long exact homology sequence of the covariant functor Hom(Hom(-,R/2^7R),R/2^4R) (and its left derived functors) applied to the short exact sequence<br /> <br /> 0 -&gt; M_=R/2^2R --alpha_1--&gt; M=R/2^5R --alpha_2--&gt; _M=R/2^3R -&gt; 0.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; LoadPackage( "LocalizeRingForHomalg" );;
+gap&gt; GlobalR := HomalgRingOfIntegersInExternalGAP(  );
+Z
+gap&gt; Display( GlobalR );
+&lt;An external ring residing in the CAS GAP&gt;
+gap&gt; LoadPackage( "RingsForHomalg" );;
+gap&gt; R := LocalizeAt( GlobalR , [ 2 ] );
+Z_&lt; 2 &gt;
+gap&gt; Display( R );
+&lt;A local ring&gt;
+gap&gt; M := LeftPresentation( HomalgMatrix( [ 2^5 ], R ) );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; _M := LeftPresentation( HomalgMatrix( [ 2^3 ], R ) );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; alpha2 := HomalgMap( HomalgMatrix( [ 1 ], R ), M, _M );
+&lt;A "homomorphism" of left modules&gt;
+gap&gt; M_ := Kernel( alpha2 );
+&lt;A cyclic left module presented by yet unknown relations for a cyclic generato\
+r&gt;
+gap&gt; alpha1 := KernelEmb( alpha2 );
+&lt;A monomorphism of left modules&gt;
+gap&gt; seq := HomalgComplex( alpha2 );
+&lt;A "complex" containing a single morphism of left modules at degrees
+[ 0 .. 1 ]&gt;
+gap&gt; Add( seq, alpha1 );
+gap&gt; IsShortExactSequence( seq );
+true
+gap&gt; K := LeftPresentation( HomalgMatrix( [ 2^7 ], R ) );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; L := RightPresentation( HomalgMatrix( [ 2^4 ], R ) );
+&lt;A cyclic right module on a cyclic generator satisfying an unknown number of r\
+elations&gt;
+gap&gt; triangle := LHomHom( 4, seq, K, L, "t" );
+&lt;An exact triangle containing 3 morphisms of left complexes at degrees
+[ 1, 2, 3, 1 ]&gt;
+gap&gt; lehs := LongSequence( triangle );
+&lt;A sequence containing 14 morphisms of left modules at degrees [ 0 .. 14 ]&gt;
+gap&gt; ByASmallerPresentation( lehs );
+&lt;A non-zero sequence containing 14 morphisms of left modules at degrees
+[ 0 .. 14 ]&gt;
+gap&gt; IsExactSequence( lehs );
+true
+</pre></td></tr></table>
+
+<p><a id="X7CC8EA507E7AABA4" name="X7CC8EA507E7AABA4"></a></p>
+
+<h4>5.3 <span class="Heading">ResidueClass</span></h4>
+
+<p>We want to show, how localization can work together with residue class rings.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; LoadPackage( "RingsForHomalg" );;
+gap&gt; Qxy := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y";
+Q[x,y]
+gap&gt; wmat := HomalgMatrix(
+&gt;           "[ y^3-y^2 , x^3-x^2 , y^3+y^2 , x^3+x^2 ]",
+&gt;           2, 2, Qxy );
+&lt;A 2 x 2 matrix over an external ring&gt;
+gap&gt; ec := HomalgRingElement( "-x^3-x^2+2*y^2", Qxy );
+-x^3-x^2+2*y^2
+</pre></td></tr></table>
+
+<p>Compute globally:</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; LoadPackage( "Modules" );;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A left module presented by 2 relations for 2 generators&gt;
+gap&gt; Res := Resolution( 2 , W );
+&lt;A right acyclic complex containing 2 morphisms of left modules at degrees
+[ 0 .. 2 ]&gt;
+gap&gt; Display( Res );
+-------------------------
+at homology degree: 2
+0
+-------------------------
+(an empty 0 x 2 matrix)
+
+the map is currently represented by the above 0 x 2 matrix
+------------v------------
+at homology degree: 1
+Q[x,y]^(1 x 2)
+-------------------------
+y^2,      x^2,
+x*y^2-y^3,0
+
+the map is currently represented by the above 2 x 2 matrix
+------------v------------
+at homology degree: 0
+Q[x,y]^(1 x 2)
+-------------------------
+</pre></td></tr></table>
+
+<p>Try a localization of a residue class ring:</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; R1 := Qxy / ec;
+Q[x,y]/( x^3+x^2-2*y^2 )
+gap&gt; Display( R1 );
+&lt;A residue class ring&gt;
+gap&gt; wmat1 := R1 * wmat;
+&lt;A 2 x 2 matrix over a residue class ring&gt;
+gap&gt; LoadPackage( "LocalizeRingForHomalg" );;
+gap&gt; R10 := LocalizeAt( R1 ,
+&gt;          [ HomalgRingElement( "x", R1 ),
+&gt;            HomalgRingElement( "y", R1 ) ]
+&gt;        );
+Q[x,y]/( x^3+x^2-2*y^2 )_&lt; |[ x ]|, |[ y ]| &gt;
+gap&gt; Display( R10 );
+&lt;A local ring&gt;
+gap&gt; wmat10 := HomalgLocalMatrix( wmat, R10 );
+&lt;A 2 x 2 matrix over a local ring&gt;
+gap&gt; W10 := LeftPresentation( wmat10 );
+&lt;A left module presented by 2 relations for 2 generators&gt;
+gap&gt; Res10 := Resolution( 2 , W10 );
+&lt;A right acyclic complex containing 2 morphisms of left modules at degrees
+[ 0 .. 2 ]&gt;
+gap&gt; Display( Res10 );
+-------------------------
+at homology degree: 2
+0
+-------------------------
+(an empty 0 x 2 matrix)
+
+the map is currently represented by the above 0 x 2 matrix
+------------v------------
+at homology degree: 1
+Q[x,y]/( x^3+x^2-2*y^2 )_&lt; |[ x ]|, |[ y ]| &gt;^(1 x 2)
+-------------------------
+0,  x*y^2-y^3,
+y^2,y^4-2*y^3+2*y^2
+
+modulo [ x^3+x^2-2*y^2 ]
+/ |[ 1 ]|
+
+the map is currently represented by the above 2 x 2 matrix
+------------v------------
+at homology degree: 0
+Q[x,y]/( x^3+x^2-2*y^2 )_&lt; |[ x ]|, |[ y ]| &gt;^(1 x 2)
+-------------------------
+</pre></td></tr></table>
+
+<p>Try a residue class ring of a localization:</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; R0 := LocalizeAtZero( Qxy );
+Q[x,y]_&lt; x, y &gt;
+gap&gt; Display( R0 );
+&lt;A local ring&gt;
+gap&gt; wmat0 := R0 * wmat;
+&lt;A 2 x 2 matrix over a local ring&gt;
+gap&gt; R01 := R0 / ( ec / R0 );
+Q[x,y]_&lt; x, y &gt;/( (x^3+x^2-2*y^2)/1 )
+gap&gt; Display( R01 );
+&lt;A residue class ring&gt;
+gap&gt; wmat01 := R01 * wmat0;
+&lt;A 2 x 2 matrix over a residue class ring&gt;
+gap&gt; W01 := LeftPresentation( wmat01 );
+&lt;A left module presented by 2 relations for 2 generators&gt;
+gap&gt; Res01 := Resolution( 2 , W01 );
+&lt;A right acyclic complex containing 2 morphisms of left modules at degrees
+[ 0 .. 2 ]&gt;
+gap&gt; Display( Res01 );
+-------------------------
+at homology degree: 2
+0
+-------------------------
+(an empty 0 x 2 matrix)
+
+the map is currently represented by the above 0 x 2 matrix
+------------v------------
+at homology degree: 1
+Q[x,y]_&lt; x, y &gt;/( (x^3+x^2-2*y^2)/1 )^(1 x 2)
+-------------------------
+y^2,    x^2,
+y^3+y^2,2*y^2
+/ 1
+
+modulo [ (x^3+x^2-2*y^2)/1 ]
+
+the map is currently represented by the above 2 x 2 matrix
+------------v------------
+at homology degree: 0
+Q[x,y]_&lt; x, y &gt;/( (x^3+x^2-2*y^2)/1 )^(1 x 2)
+-------------------------
+</pre></td></tr></table>
+
+<p><a id="X7958E7417BB312F0" name="X7958E7417BB312F0"></a></p>
+
+<h4>5.4 <span class="Heading">Testing the Intersection Formula</span></h4>
+
+<p>We want to check Serre's intersection formula i(I_1, I_2; 0)=sum_i(-1)^i length(Tor^R_0_i(R_0/I_1,R_0/I_2)) on an easy affine example.</p>
+
+
+<table class="example">
+<tr><td><pre>
+ 
+gap&gt; LoadPackage( "RingsForHomalg" );;
+gap&gt; R := HomalgFieldOfRationalsInSingular() * "w,x,y,z";;
+gap&gt; LoadPackage( "LocalizeRingForHomalg" );;
+gap&gt; R0 := LocalizePolynomialRingAtZeroWithMora( R );;
+gap&gt; M1 := HomalgMatrix( "[\
+&gt;        (w-x^2)*y, \
+&gt;        (w-x^2)*z, \
+&gt;        (x-w^2)*y, \
+&gt;        (x-w^2)*z  \
+&gt;      ]", 4, 1, R );;
+gap&gt; M2 := HomalgMatrix( "[\
+&gt;        (w-x^2)-y, \
+&gt;        (x-w^2)-z  \
+&gt;      ]", 2, 1, R );;
+gap&gt; LoadPackage( "Modules" );;
+gap&gt; RmodI1 := LeftPresentation( M1 );;
+gap&gt; RmodI2 := LeftPresentation( M2 );;
+gap&gt; T:=Tor( RmodI1, RmodI2 );
+&lt;A graded homology object consisting of 4 left modules at degrees [ 0 .. 3 ]&gt;
+gap&gt; List( ObjectsOfComplex( T ), AffineDegree );
+[ 12, 4, 0, 0 ]
+</pre></td></tr></table>
+
+<p>We read, that the intersection multiplicity is 12-4=8 globally.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; M10 := R0 * M1;
+&lt;A 4 x 1 matrix over a local (Mora) ring&gt;
+gap&gt; M20 := R0 * M2;
+&lt;A 2 x 1 matrix over a local (Mora) ring&gt;
+gap&gt; R0modI10 := LeftPresentation( M10 );;
+gap&gt; R0modI20 := LeftPresentation( M20 );;
+gap&gt; T0 := Tor( R0modI10, R0modI20 );
+&lt;A graded homology object consisting of 4 left modules at degrees [ 0 .. 3 ]&gt;
+gap&gt; List( ObjectsOfComplex( T0 ), AffineDegree );
+[ 3, 1, 0, 0 ]
+</pre></td></tr></table>
+
+<p>The intersection multiplicity at zero is 3-1=2.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap4.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -2,76 +2,74 @@
 ##
 #W  rws.gd                      GAP Library                      Frank Celler
 ##
-#H  @(#)$Id: rws.gd,v 4.45 2002/04/15 10:05:15 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-
-#1  
 ##  This file  contains    the   operations for   rewriting   systems.    Any
 ##  implementation of a rewriting system must at least implement methods for
-##
+##  <P/>
 ##    constructing such a rewriting system,
-##    `CopyRws',
-##    `IsConfluent',
-##    `ReducedForm', and
-##    `Rules'.
-##
-##  An  implementation might  also  want to  implement `MakeConfluent' and/or
-##  `ConfluentRws'.
-##
-##  The generic methods, which are defined in "rws.gi", for
-##
-##    `ReducedAdditiveInverse',
-##    `ReducedComm',
-##    `ReducedConjugate',
-##    `ReducedDifference'
-##    `ReducedInverse',
-##    `ReducedLeftQuotient',
-##    `ReducedOne',
-##    `ReducedPower',
-##    `ReducedProduct'
-##    `ReducedScalarProduct',
-##    `ReducedSum', and
-##    `ReducedZero',
-##
-##  use `ReducedForm'. Depending on the underlying  structure not all of them
-##  will  work.  For example, for  a  monoid `ReducedInverse' will produce an
+##    <C>CopyRws</C>,
+##    <C>IsConfluent</C>,
+##    <C>ReducedForm</C>, and
+##    <C>Rules</C>.
+##  <P/>
+##  An  implementation might  also  want to  implement <C>MakeConfluent</C> and/or
+##  <C>ConfluentRws</C>.
+##  <P/>
+##  The generic methods, which are defined in <F>rws.gi</F>, for
+##  <P/>
+##    <C>ReducedAdditiveInverse</C>,
+##    <C>ReducedComm</C>,
+##    <C>ReducedConjugate</C>,
+##    <C>ReducedDifference</C>
+##    <C>ReducedInverse</C>,
+##    <C>ReducedLeftQuotient</C>,
+##    <C>ReducedOne</C>,
+##    <C>ReducedPower</C>,
+##    <C>ReducedProduct</C>
+##    <C>ReducedScalarProduct</C>,
+##    <C>ReducedSum</C>, and
+##    <C>ReducedZero</C>,
+##  <P/>
+##  use <C>ReducedForm</C>. Depending on the underlying  structure not all of them
+##  will  work.  For example, for  a  monoid <C>ReducedInverse</C> will produce an
 ##  error because  the generic methods  tries to  reduced  the inverse of the
 ##  given element.
-##
+##  <P/>
 ##  As in  general  a rewriting system will    be first built   and then used
-##  without   changing   it,  some   functions    (e.g.  `GroupByRws')   call
-##  `ReduceRules'  to give the rewriting  system a chance to optimise itself.
-##  The default method for `ReduceRules' is "do nothing".
-##
-##  The underlying  structure is stored  in the  attribute `UnderlyingFamily'
+##  without   changing   it,  some   functions    (e.g.  <C>GroupByRws</C>)   call
+##  <C>ReduceRules</C>  to give the rewriting  system a chance to optimise itself.
+##  The default method for <C>ReduceRules</C> is <Q>do nothing</Q>.
+##  <P/>
+##  The underlying  structure is stored  in the  attribute <C>UnderlyingFamily</C>
 ##  and  the  generators  used for  the  rewriting  system   in the attribute
-##  `GeneratorsOfRws'.   The number  of  rws  generators   is stored in   the
-##  attribute `NumberGeneratorsOfRws'.
-##
+##  <C>GeneratorsOfRws</C>.   The number  of  rws  generators   is stored in   the
+##  attribute <C>NumberGeneratorsOfRws</C>.
+##  <P/>
 ##  The family of a rewriting system also contains the underlying family, the
-##  default    method for `UnderlyingFamily'    uses  the family  to get  the
+##  default    method for <C>UnderlyingFamily</C>    uses  the family  to get  the
 ##  underlying family for a given rewriting system.
 ##
-
-#2
+##  <#GAPDoc Label="[2]{rws}">
 ##  The key point to note about rewriting systems is that they have 
-##  properties such as `IsConfluent' and attributes such as `Rules', however
+##  properties such as
+##  <Ref Func="IsConfluent" Label="for a rewriting system"/>
+##  and attributes such as <Ref Func="Rules"/>, however
 ##  they are rarely stored, but rather computed afresh each time they
 ##  are asked for, from data stored in the private members of the rewriting
 ##  system object.  This is because a rewriting system often evolves
 ##  through a session, starting with some rules which define the
-##  algebra <A> as relations, and then adding more rules to make
+##  algebra <A>A</A> as relations, and then adding more rules to make
 ##  the system confluent.
-##  For example, in the case of Knuth-Bendix rewriting systems
-##  (see Chapter~"Finitely Presented Semigroups and Monoids"), the function
-##  `CreateKnuthBendixRewritingSystem' creating the
-##  rewriting system (in `kbsemi.gi') uses
-##  
-##  \begintt
+##  For example, in the case of Knuth-Bendix rewriting systems (see
+##  Chapter&nbsp;<Ref Chap="Finitely Presented Semigroups and Monoids"/>),
+##  the function <C>CreateKnuthBendixRewritingSystem</C> creating the
+##  rewriting system (in the file <F>lib/kbsemi.gi</F>) uses
+##  <P/>
+##  <Log><![CDATA[
 ##  kbrws := Objectify(NewType(rwsfam, 
 ##    IsMutable and IsKnuthBendixRewritingSystem and 
 ##    IsKnuthBendixRewritingSystemRep), 
@@ -82,21 +80,31 @@
 ##    pairs2check:=CantorList(Length(r)),
 ##    ordering:=wordord,
 ##    freefam:=freefam));
-##  \endtt
-##  
-##  In particular, since we don't use the filter `IsAttributeStoringRep'
-##  in the `Objectify', whenever `IsConfluent' is called, the appropriate
-##  method to determine confluence is called. 
-
-Revision.rws_gd :=
-    "@(#)$Id: rws.gd,v 4.45 2002/04/15 10:05:15 sal Exp $";
+##  ]]></Log>
+##  <P/>
+##  In particular, since we don't use the filter
+##  <C>IsAttributeStoringRep</C>
+##  in the <Ref Func="Objectify"/>,
+##  whenever <Ref Func="IsConfluent" Label="for a rewriting system"/> is
+##  called,
+##  the appropriate method to determine confluence is called. 
+##  <#/GAPDoc>
+##
 
 
 #############################################################################
 ##
 #C  IsRewritingSystem( <obj> )
 ##
+##  <#GAPDoc Label="IsRewritingSystem">
+##  <ManSection>
+##  <Filt Name="IsRewritingSystem" Arg='obj' Type='Category'/>
+##
+##  <Description>
 ##  This is the category in which all rewriting systems lie.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareCategory(
     "IsRewritingSystem",
@@ -106,8 +114,14 @@ DeclareCategory(
 ##
 #C  IsReducedConfluentRewritingSystem( <obj> )
 ##
-##  This is a subcategory of `IsRewritingSystem' for (immutable) rws which
-##  are reduced and confluent.
+##  <ManSection>
+##  <Filt Name="IsReducedConfluentRewritingSystem" Arg='obj' Type='Category'/>
+##
+##  <Description>
+##  This is a subcategory of <Ref Func="IsRewritingSystem"/> for (immutable)
+##  rws which are reduced and confluent.
+##  </Description>
+##  </ManSection>
 ##
 DeclareCategory(
     "IsReducedConfluentRewritingSystem",
@@ -116,6 +130,13 @@ DeclareCategory(
 #############################################################################
 ##
 #P  IsBuiltFromAdditiveMagmaWithInverses( <obj> )
+##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromAdditiveMagmaWithInverses" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareProperty( 
     "IsBuiltFromAdditiveMagmaWithInverses",
@@ -126,6 +147,13 @@ DeclareProperty(
 ##
 #P  IsBuiltFromMagma( <obj> )
 ##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromMagma" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareProperty(
     "IsBuiltFromMagma",
     IsObject );
@@ -134,6 +162,13 @@ DeclareProperty(
 #############################################################################
 ##
 #P  IsBuiltFromMagmaWithOne( <obj> )
+##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromMagmaWithOne" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareProperty(
     "IsBuiltFromMagmaWithOne",
@@ -144,6 +179,13 @@ DeclareProperty(
 ##
 #P  IsBuiltFromMagmaWithInverses( <obj> )
 ##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromMagmaWithInverses" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareProperty( 
     "IsBuiltFromMagmaWithInverses",
     IsObject );
@@ -152,6 +194,13 @@ DeclareProperty(
 #############################################################################
 ##
 #P  IsBuiltFromGroup( <obj> )
+##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromGroup" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareProperty(
     "IsBuiltFromGroup",
@@ -175,11 +224,25 @@ InstallTrueMethod( IsBuiltFromMagmaWithOne, IsBuiltFromMagmaWithInverses );
 ##
 #P  IsBuiltFromSemigroup( <obj> )
 ##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromSemigroup" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareProperty( "IsBuiltFromSemigroup", IsObject );
 
 #############################################################################
 ##
 #P  IsBuiltFromMonoid( <obj> )
+##
+##  <ManSection>
+##  <Prop Name="IsBuiltFromMonoid" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareProperty( "IsBuiltFromMonoid", IsObject );
 
@@ -194,16 +257,32 @@ InstallTrueMethod( IsBuiltFromMagmaWithInverses, IsBuiltFromGroup );
 ##
 #A  SemigroupOfRewritingSystem( <rws> )
 ##
-##  returns the semigroup over which <rws> is
+##  <#GAPDoc Label="SemigroupOfRewritingSystem">
+##  <ManSection>
+##  <Attr Name="SemigroupOfRewritingSystem" Arg='rws'/>
+##
+##  <Description>
+##  returns the semigroup over which <A>rws</A> is
 ##  a rewriting system
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareAttribute("SemigroupOfRewritingSystem",IsRewritingSystem);
 
 #############################################################################
 ##
 #A  MonoidOfRewritingSystem( <rws> )
-##  
-##  returns the monoid over which <rws> is a rewriting system
+##
+##  <#GAPDoc Label="MonoidOfRewritingSystem">
+##  <ManSection>
+##  <Attr Name="MonoidOfRewritingSystem" Arg='rws'/>
+##
+##  <Description>
+##  returns the monoid over which <A>rws</A> is a rewriting system
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareAttribute("MonoidOfRewritingSystem",IsRewritingSystem);
 
@@ -212,14 +291,30 @@ DeclareAttribute("MonoidOfRewritingSystem",IsRewritingSystem);
 ##
 #O  FreeStructureOfRewritingSystem( <obj> )
 ##
+##  <ManSection>
+##  <Oper Name="FreeStructureOfRewritingSystem" Arg='obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation( "FreeStructureOfRewritingSystem", [IsRewritingSystem]);
 
 #############################################################################
 ##
 #A  ConfluentRws( <rws> )
 ##
-##  Return a new rewriting system defining the same algebra as <rws> 
+##  <#GAPDoc Label="ConfluentRws">
+##  <ManSection>
+##  <Attr Name="ConfluentRws" Arg='rws'/>
+##
+##  <Description>
+##  Return a new rewriting system defining the same algebra as <A>rws</A> 
 ##  which is confluent.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 
 #  NOTE: this is an  attribute  *but* rewriting system   do not  store  this
 #  attribute because they are mutable.
@@ -234,6 +329,16 @@ DeclareAttribute(
 ##
 #A  GeneratorsOfRws( <rws> )
 ##
+##  <#GAPDoc Label="GeneratorsOfRws">
+##  <ManSection>
+##  <Attr Name="GeneratorsOfRws" Arg='rws'/>
+##
+##  <Description>
+##  Returns the list of generators of the rewriting system <A>rws</A>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareAttribute(
     "GeneratorsOfRws",
     IsRewritingSystem );
@@ -243,6 +348,13 @@ DeclareAttribute(
 #############################################################################
 ##
 #A  NumberGeneratorsOfRws( <rws> )
+##
+##  <ManSection>
+##  <Attr Name="NumberGeneratorsOfRws" Arg='rws'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareAttribute(
     "NumberGeneratorsOfRws",
@@ -254,10 +366,19 @@ DeclareAttribute(
 ##
 #A  Rules( <rws> )
 ##
+##  <#GAPDoc Label="Rules">
+##  <ManSection>
+##  <Attr Name="Rules" Arg='rws'/>
+##
+##  <Description>
 ##  The rules comprising the rewriting system. Note that these may 
 ##  change through the life of the rewriting system, however they
 ##  will always be a set of defining relations of the algebra
 ##  described by the rewriting system.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 
 ##  NOTE: this is an   attribute *but*, normally, rewriting  system  
 ##  do not store this attribute.
@@ -282,8 +403,17 @@ DeclareAttribute(
 #A  OrderOfRewritingSystem(<rws>)
 #A  OrderingOfRewritingSystem(<rws>)
 ##
-##  return the ordering of the rewriting system <rws>.
-##  %the synonym here guarantees compatibility with {\GAP}~4.1 and {\GAP}~4.2.
+##  <#GAPDoc Label="OrderOfRewritingSystem">
+##  <ManSection>
+##  <Attr Name="OrderOfRewritingSystem" Arg='rws'/>
+##  <Attr Name="OrderingOfRewritingSystem" Arg='rws'/>
+##
+##  <Description>
+##  return the ordering of the rewriting system <A>rws</A>.
+##  <!-- %the synonym here guarantees compatibility with &GAP;&nbsp;4.1 and &GAP;&nbsp;4.2. -->
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareAttribute("OrderingOfRewritingSystem", IsRewritingSystem);
 DeclareSynonym("OrderOfRewritingSystem", OrderingOfRewritingSystem);
@@ -293,19 +423,35 @@ DeclareSynonym("OrderOfRewritingSystem", OrderingOfRewritingSystem);
 #P  IsConfluent( <rws> )
 #P  IsConfluent( <A> )
 ##
-##  return `true' if and only if the rewriting system <rws> is confluent. 
-##  A rewriting system is *confluent* if, for every two words 
-##  <u> and <v> in the free algebra <T> which represent the same element 
-##  of the algebra <A> defined by <rws>,
-##  `ReducedForm(<rws>,<u>) =  ReducedForm(<rws>,<v>)' as words in the
-##  free algebra <T>. This element is the *unique normal form*
-##  of the element represented by <u>.
+##  <#GAPDoc Label="IsConfluent">
+##  <ManSection>
+##  <Heading>IsConfluent</Heading>
+##  <Prop Name="IsConfluent" Arg='rws' Label="for a rewriting system"/>
+##  <Prop Name="IsConfluent" Arg='A'
+##   Label="for an algebra with canonical rewriting system"/>
 ##
-##  In its second
-##  form, if <A> is an algebra with a canonical rewriting system associated
-##  with it, `IsConfluent' checks whether that rewriting system is confluent.
-##
-##  Also see~"IsConfluent!for pc groups".
+##  <Description>
+##  For a rewriting system <A>rws</A>,
+##  <Ref Func="IsConfluent" Label="for a rewriting system"/> returns
+##  <K>true</K> if and only if <A>rws</A> is confluent. 
+##  A rewriting system is <E>confluent</E> if, for every two words 
+##  <M>u</M> and <M>v</M> in the free algebra <M>T</M> which represent the
+##  same element  of the algebra <M>A</M> defined by <A>rws</A>,
+##  <C>ReducedForm( <A>rws</A>, </C><M>u</M> <C>) =
+##  ReducedForm( <A>rws</A>, </C><M>v</M><C>)</C> as words in the
+##  free algebra <M>T</M>.
+##  This element is the <E>unique normal form</E>
+##  of the element represented by <M>u</M>.
+##  <P/>
+##  For an algebra <A>A</A> with a canonical rewriting system associated
+##  with it,
+##  <Ref Prop="IsConfluent" Label="for an algebra with canonical rewriting system"/>
+##  checks whether that rewriting system is confluent.
+##  <P/>
+##  Also see&nbsp;<Ref Prop="IsConfluent" Label="for pc groups"/>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 
 #  NOTE: this is a property *but* the rewriting system does not store  this
@@ -321,9 +467,17 @@ DeclareProperty(
 ##
 #P  IsReduced( <rws> )
 ##
-##  A rewriting system is reduced if for each rule (<l>, <r>), 
-##  <l> and <r> are both reduced.
-##  
+##  <#GAPDoc Label="IsReduced">
+##  <ManSection>
+##  <Prop Name="IsReduced" Arg='rws'/>
+##
+##  <Description>
+##  A rewriting system is reduced if for each rule <M>(l, r)</M>,
+##  <M>l</M> and <M>r</M> are both reduced.
+##  <P/>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareProperty( "IsReduced", IsRewritingSystem and IsMutable );
 
@@ -334,8 +488,15 @@ DeclareProperty( "IsReduced", IsRewritingSystem and IsMutable );
 ##
 #O  AddRule(<rws>, <rule>)
 ##
+##  <#GAPDoc Label="AddRule">
+##  <ManSection>
+##  <Oper Name="AddRule" Arg='rws, rule'/>
 ##
-##  Add  <rule> to a rewriting system <rws>. 
+##  <Description>
+##  Add  <A>rule</A> to a rewriting system <A>rws</A>. 
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareOperation(
     "AddRule",
@@ -345,8 +506,17 @@ DeclareOperation(
 ##
 #O  AddRuleReduced(<rws>, <rule>)
 ##
-##  Add <rule> to rewriting system <rws>. Performs a reduction operation
-##  on the resulting system, so that if <rws> is reduced it will remain reduced.
+##  <#GAPDoc Label="AddRuleReduced">
+##  <ManSection>
+##  <Oper Name="AddRuleReduced" Arg='rws, rule'/>
+##
+##  <Description>
+##  Add <A>rule</A> to rewriting system <A>rws</A>.
+##  Performs a reduction operation on the resulting system,
+##  so that if <A>rws</A> is reduced it will remain reduced.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareOperation(
     "AddRuleReduced",
@@ -358,6 +528,13 @@ DeclareOperation(
 ##
 #O  AddGenerators( <rws>, <gens> )
 ##
+##  <ManSection>
+##  <Oper Name="AddGenerators" Arg='rws, gens'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "AddGenerators",
     [ IsRewritingSystem and IsMutable, IsHomogeneousList ] );
@@ -367,7 +544,15 @@ DeclareOperation(
 ##
 #O  MakeConfluent( <rws> )
 ##
-##  Add rules (and perhaps reduce) in order to make <rws> confluent
+##  <#GAPDoc Label="MakeConfluent">
+##  <ManSection>
+##  <Oper Name="MakeConfluent" Arg='rws'/>
+##
+##  <Description>
+##  Add rules (and perhaps reduce) in order to make <A>rws</A> confluent
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareOperation(
     "MakeConfluent",
@@ -378,7 +563,15 @@ DeclareOperation(
 ##
 #O  ReduceRules( <rws> )
 ##
-##  Reduce rules and remove redundant rules to make <rws> reduced.
+##  <#GAPDoc Label="ReduceRules">
+##  <ManSection>
+##  <Oper Name="ReduceRules" Arg='rws'/>
+##
+##  <Description>
+##  Reduce rules and remove redundant rules to make <A>rws</A> reduced.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareOperation(
     "ReduceRules",
@@ -387,8 +580,14 @@ DeclareOperation(
 
 #############################################################################
 ##
-
 #O  ReducedAdditiveInverse( <rws>, <obj> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedAdditiveInverse" Arg='rws, obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedAdditiveInverse",
@@ -399,6 +598,13 @@ DeclareOperation(
 #############################################################################
 ##
 #O  ReducedComm( <rws>, <left>, <right> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedComm" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedComm",
@@ -411,6 +617,13 @@ DeclareOperation(
 ##
 #O  ReducedConjugate( <rws>, <left>, <right> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedConjugate" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedConjugate", 
     [ IsRewritingSystem,
@@ -421,6 +634,13 @@ DeclareOperation(
 #############################################################################
 ##
 #O  ReducedDifference( <rws>, <left>, <right> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedDifference" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedDifference", 
@@ -433,10 +653,19 @@ DeclareOperation(
 ##
 #O  ReducedForm( <rws>, <u> )
 ##
-##  Given an element <u> in the free (or term) algebra over which
-##  <rws> is defined, rewrite <u> by successive applications of the
-##  rules of <rws> until no further rewriting is possible, and return
-##  the resulting element of <T>.
+##  <#GAPDoc Label="ReducedForm">
+##  <ManSection>
+##  <Oper Name="ReducedForm" Arg='rws, u'/>
+##
+##  <Description>
+##  Given an element <A>u</A> in the free (or term) algebra <M>T</M> over
+##  which <A>rws</A> is defined,
+##  rewrite <A>u</A> by successive applications of the
+##  rules of <A>rws</A> until no further rewriting is possible, and return
+##  the resulting element of <M>T</M>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareOperation(
     "ReducedForm", 
@@ -447,8 +676,15 @@ DeclareOperation(
 ##
 #O  IsReducedForm( <rws>, <u> )
 ##
-##  Given an element <u> in the free (or term) algebra over which
-##  <rws> is defined, returns `<u> = ReducedForm(<rws>, <u>)'. 
+##  <ManSection>
+##  <Oper Name="IsReducedForm" Arg='rws, u'/>
+##
+##  <Description>
+##  Given an element <A>u</A> in the free (or term) algebra over which
+##  <A>rws</A> is defined,
+##  returns <C><A>u</A> = ReducedForm(<A>rws</A>, <A>u</A>)</C>. 
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "IsReducedForm",
@@ -461,6 +697,13 @@ DeclareOperation(
 ##
 #O  ReducedInverse( <rws>, <obj> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedInverse" Arg='rws, obj'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedInverse", 
     [ IsRewritingSystem,
@@ -470,6 +713,13 @@ DeclareOperation(
 #############################################################################
 ##
 #O  ReducedLeftQuotient( <rws>, <left>, <right> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedLeftQuotient" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedLeftQuotient",
@@ -482,6 +732,13 @@ DeclareOperation(
 ##
 #O  ReducedOne( <rws> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedOne" Arg='rws'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedOne", 
     [ IsRewritingSystem ] );
@@ -490,6 +747,13 @@ DeclareOperation(
 #############################################################################
 ##
 #O  ReducedPower( <rws>, <obj>, <pow> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedPower" Arg='rws, obj, pow'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedPower",
@@ -502,8 +766,17 @@ DeclareOperation(
 ##
 #O  ReducedProduct( <rws>, <u>, <v> )
 ##
-##  The result is  <w> where <[w]> = <[u]><[v]> in <A> and
-##  <w> is  in reduced form.
+##  <ManSection>
+##  <Oper Name="ReducedProduct" Arg='rws, u, v'/>
+##
+##  <Description>
+##  The result is <M>w</M> where <M>[w]</M> equals [<A>u</A>][<A>v</A>] in
+##  <M>A</M> and <M>w</M> is in reduced form.
+##  <P/>
+##  The remaining operations are defined similarly when they
+##  are defined (as determined by the signature of the term algebra).
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedProduct", 
@@ -516,6 +789,13 @@ DeclareOperation(
 ##
 #O  ReducedQuotient( <rws>, <left>, <right> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedQuotient" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedQuotient", 
     [ IsRewritingSystem,
@@ -526,6 +806,13 @@ DeclareOperation(
 #############################################################################
 ##
 #O  ReducedScalarProduct( <rws>, <left>, <right> )
+##
+##  <ManSection>
+##  <Oper Name="ReducedScalarProduct" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
 ##
 DeclareOperation(
     "ReducedScalarProduct", 
@@ -538,6 +825,13 @@ DeclareOperation(
 ##
 #O  ReducedSum( <rws>, <left>, <right> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedSum" Arg='rws, left, right'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedSum",
     [ IsRewritingSystem,
@@ -549,6 +843,13 @@ DeclareOperation(
 ##
 #O  ReducedZero( <rws> )
 ##
+##  <ManSection>
+##  <Oper Name="ReducedZero" Arg='rws'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
 DeclareOperation(
     "ReducedZero", 
     [ IsRewritingSystem ] );
@@ -556,7 +857,6 @@ DeclareOperation(
 
 #############################################################################
 ##
-
 #V  InfoConfluence
 ##
 DeclareInfoClass("InfoConfluence");
@@ -564,7 +864,5 @@ DeclareInfoClass("InfoConfluence");
 
 #############################################################################
 ##
-
-#E  rws.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+#E
 

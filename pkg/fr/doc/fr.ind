@@ -1,0 +1,663 @@
+\begin{theindex}
+
+  \item \texttt  {\texttt  {\char 92\relax }*}, \hyperpage{21}
+    \subitem PROD, \hyperpage{36}
+  \item \texttt  {\texttt  {\char 92\relax }+}, \hyperpage{20}
+  \item \texttt  {\texttt  {\char 92\relax }[\texttt  {\char 92\relax }]}
+    \subitem ELMLIST, \hyperpage{37}
+  \item \texttt  {\texttt  {\char 92\relax }\texttt  {\char 94\relax }}
+    \subitem POW, \hyperpage{36}
+  \item \texttt  {\texttt  {\char 92\relax }\texttt  {\char 123\relax }\texttt  {\char 92\relax }\texttt  {\char 125\relax }}
+    \subitem ELMSLIST, \hyperpage{37}
+
+  \indexspace
+
+  \item \texttt  {Activities}, \hyperpage{58}
+  \item \texttt  {Activity}, \hyperpage{31}
+  \item \texttt  {ActivityInt}, \hyperpage{31}
+  \item \texttt  {ActivityPerm}, \hyperpage{31}
+  \item \texttt  {ActivitySparse}, \hyperpage{57}
+  \item \texttt  {ActivityTransformation}, \hyperpage{31}
+  \item \texttt  {Add}
+    \subitem FIFO, \hyperpage{156}
+  \item \texttt  {AddingElement}, \hyperpage{111}
+    \subitem FR machine, \hyperpage{96}
+  \item \texttt  {AddingGroup}, \hyperpage{111}
+  \item \texttt  {AddingMachine}, \hyperpage{111}
+  \item \texttt  {AdjacencyBasesWithOne}, \hyperpage{80}
+  \item \texttt  {AdjacencyPoset}, \hyperpage{80}
+  \item \texttt  {AleshinGroup}, \hyperpage{115}
+  \item \texttt  {AleshinGroups}, \hyperpage{115}
+  \item \texttt  {AleshinMachine}, \hyperpage{115}
+  \item \texttt  {AleshinMachines}, \hyperpage{115}
+  \item \texttt  {AlgebraElement}, \hyperpage{56}
+  \item \texttt  {AlgebraElementNC}, \hyperpage{56}
+  \item \texttt  {AlgebraHomomorphismByFunction}, \hyperpage{157}
+  \item \texttt  {AlgebraMachine}, \hyperpage{56}
+  \item \texttt  {AlgebraMachineNC}, \hyperpage{56}
+  \item \texttt  {Algebra}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {One}\discretionary {-}{}{}\texttt  {Homomorphism}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Function}, 
+		\hyperpage{157}
+  \item \texttt  {AllInternalAddresses}, \hyperpage{108}
+  \item \texttt  {AllMealyMachines}, \hyperpage{41}
+  \item \texttt  {Alphabet}, \hyperpage{131}
+  \item \texttt  {AlphabetInvolution}, \hyperpage{44}
+  \item \texttt  {AlphabetOfFRAlgebra}, \hyperpage{131}
+  \item \texttt  {AlphabetOfFRObject}, \hyperpage{131}
+  \item \texttt  {AlphabetOfFRSemigroup}, \hyperpage{131}
+  \item \texttt  {Append}
+    \subitem FIFO, \hyperpage{156}
+  \item \texttt  {ArgumentOfCyclotomic}, \hyperpage{159}
+  \item \texttt  {ArtinRepresentation}, \hyperpage{146}
+  \item \texttt  {AsAlgebraElement}, \hyperpage{62}
+    \subitem Linear machine, \hyperpage{62}
+  \item \texttt  {AsAlgebraMachine}, \hyperpage{62}
+    \subitem Linear machine, \hyperpage{62}
+  \item \texttt  {AsGroupFRElement}, \hyperpage{29}
+  \item \texttt  {AsGroupFRMachine}, \hyperpage{14}
+    \subitem endomorphism, \hyperpage{100}
+  \item \texttt  {AsIMGElement}, \hyperpage{94}
+  \item \texttt  {AsIMGMachine}, \hyperpage{93}
+  \item \texttt  {AsIntMealyElement}, \hyperpage{50}
+  \item \texttt  {AsIntMealyMachine}, \hyperpage{50}
+  \item \texttt  {AsLinearElement}, \hyperpage{60}
+  \item \texttt  {AsLinearMachine}, \hyperpage{60}
+  \item \texttt  {AsLpGroup}, \hyperpage{84}
+  \item \texttt  {AsMealyElement}, \hyperpage{49}
+  \item \texttt  {AsMealyMachine}
+    \subitem FR machine, \hyperpage{48}
+    \subitem List, \hyperpage{49}
+  \item \texttt  {AsMonoidFRElement}, \hyperpage{29}
+  \item \texttt  {AsMonoidFRMachine}, \hyperpage{14}
+    \subitem endomorphism, \hyperpage{100}
+  \item \texttt  {AsPermutation}
+    \subitem FR object, \hyperpage{132}
+  \item \texttt  {AsPolynomialFRMachine}, \hyperpage{95}
+  \item \texttt  {AsPolynomialIMGMachine}, \hyperpage{95}
+  \item \texttt  {AsSemigroupFRElement}, \hyperpage{29}
+  \item \texttt  {AsSemigroupFRMachine}, \hyperpage{14}
+    \subitem endomorphism, \hyperpage{100}
+  \item \texttt  {AssociativeObject}, \hyperpage{55}
+  \item \texttt  {AsSubgroupFpGroup}, \hyperpage{84}
+  \item \texttt  {AsTrans}, \hyperpage{147}
+  \item \texttt  {AsTransformation}
+    \subitem FR object, \hyperpage{132}
+  \item \texttt  {AsVectorElement}, \hyperpage{61}
+    \subitem Linear machine, \hyperpage{62}
+  \item \texttt  {AsVectorMachine}, \hyperpage{61}
+    \subitem Linear machine, \hyperpage{62}
+  \item \texttt  {AutomorphismIMGMachine}, \hyperpage{102}
+  \item \texttt  {AutomorphismVirtualEndomorphism}, \hyperpage{102}
+
+  \indexspace
+
+  \item \texttt  {BabyAleshinGroup}, \hyperpage{115}
+  \item \texttt  {BabyAleshinMachine}, \hyperpage{115}
+  \item \texttt  {Ball}, \hyperpage{143}
+  \item \texttt  {BasilicaGroup}, \hyperpage{110}
+  \item \texttt  {BinaryAddingElement}, \hyperpage{112}
+  \item \texttt  {BinaryAddingGroup}, \hyperpage{112}
+  \item \texttt  {BinaryAddingMachine}, \hyperpage{112}
+  \item \texttt  {BinaryKneadingGroup}, \hyperpage{109}
+  \item \texttt  {BinaryKneadingMachine}, \hyperpage{109}
+  \item \texttt  {BoundedBinaryGroup}, \hyperpage{109}
+  \item \texttt  {BraidTwists}, \hyperpage{17}
+  \item \texttt  {BranchingIdeal}, \hyperpage{89}
+  \item \texttt  {BranchingSubgroup}, \hyperpage{81}
+  \item \texttt  {BranchStructure}, \hyperpage{82}
+  \item \texttt  {BrunnerSidkiVieiraGroup}, \hyperpage{114}
+  \item \texttt  {BrunnerSidkiVieiraMachine}, \hyperpage{114}
+
+  \indexspace
+
+  \item \texttt  {CayleyGroup}, \hyperpage{120}
+  \item \texttt  {CayleyMachine}, \hyperpage{120}
+  \item \texttt  {ChangeFRMachineBasis}, \hyperpage{16}
+  \item \texttt  {CharneyBraidFpGroup}, \hyperpage{146}
+  \item \texttt  {CleanedIMGMachine}, \hyperpage{94}
+  \item \texttt  {CleanedP1Map}, \hyperpage{152}
+  \item \texttt  {CleanedP1Point}, \hyperpage{150}
+  \item \texttt  {CoefficientsInAbelianExtension}, \hyperpage{156}
+  \item \texttt  {CoefficientsOfP1Map}, \hyperpage{152}
+  \item \texttt  {ComplexConjugate}, \hyperpage{16}
+  \item \texttt  {ComposeElement}
+    \subitem elementcoll,perm, \hyperpage{27}
+  \item \texttt  {CompressedPeriodicList}, \hyperpage{141}
+    \subitem period, looping point, \hyperpage{141}
+  \item \texttt  {CompressPeriodicList}, \hyperpage{141}
+  \item \texttt  {ConfinalityClass}, \hyperpage{142}
+  \item \texttt  {ConfinalityClasses}, \hyperpage{51}
+  \item \texttt  {Correspondence}
+    \subitem FR machine, \hyperpage{24}
+    \subitem FR semigroup, \hyperpage{66}
+  \item \texttt  {Cycle}, \hyperpage{147}
+  \item \texttt  {Cycles}, \hyperpage{147}
+  \item \texttt  {CyclotomicByArgument}, \hyperpage{159}
+
+  \indexspace
+
+  \item \texttt  {DahmaniGroup}, \hyperpage{118}
+  \item \texttt  {DBRationalIMGGroup}, \hyperpage{103}
+  \item \texttt  {DecompositionOfFRElement}, \hyperpage{32}
+  \item \texttt  {Degree}
+    \subitem FR element, \hyperpage{45}
+    \subitem FR semigroup, \hyperpage{78}
+  \item \texttt  {DegreeDirichletSeries}, \hyperpage{154}
+  \item \texttt  {DegreeOfFRElement}, \hyperpage{45}
+  \item \texttt  {DegreeOfFRMachine}, \hyperpage{45}
+  \item \texttt  {DegreeOfFRSemigroup}, \hyperpage{78}
+  \item \texttt  {DegreeOfHomogeneousElement}, \hyperpage{91}
+  \item \texttt  {DegreeOfP1Map}, \hyperpage{152}
+  \item \texttt  {DegreeOfProjectiveRepresentation}, \hyperpage{155}
+  \item \texttt  {DelaunayTriangulation}, \hyperpage{104}
+  \item \texttt  {Depth}
+    \subitem FR element, \hyperpage{46}
+    \subitem FR semigroup, \hyperpage{78}
+  \item \texttt  {DepthOfFRElement}, \hyperpage{46}
+  \item \texttt  {DepthOfFRMachine}, \hyperpage{46}
+  \item \texttt  {DepthOfFRSemigroup}, \hyperpage{78}
+  \item \texttt  {DiagonalElement}, \hyperpage{28}
+  \item \texttt  {DimensionSeries}, \hyperpage{157}
+  \item \texttt  {DirectProductOp}
+    \subitem FR Machines, \hyperpage{22}
+  \item \texttt  {DirectSum}, \hyperpage{140}
+  \item \texttt  {DirectSumOp}
+    \subitem FR Machines, \hyperpage{22}
+  \item \texttt  {DirichletSeries}
+    \subitem 0, \hyperpage{153}
+    \subitem ic, \hyperpage{153}
+    \subitem md, \hyperpage{153}
+    \subitem sm, \hyperpage{153}
+  \item \texttt  {Draw}, \hyperpage{42}
+    \subitem poset, \hyperpage{156}
+    \subitem spider, \hyperpage{106}
+  \item \texttt  {DualMachine}, \hyperpage{43}
+
+  \indexspace
+
+  \item \texttt  {EpimorphismFromFpGroup}, \hyperpage{84}
+  \item \texttt  {EpimorphismGermGroup}, \hyperpage{74}
+    \subitem EGG0, \hyperpage{74}
+  \item \texttt  {EpimorphismMatrixQuotient}, \hyperpage{90}
+  \item \texttt  {EpimorphismPcGroup}, \hyperpage{72}
+  \item \texttt  {EpimorphismPermGroup}, \hyperpage{71}
+  \item \texttt  {EpimorphismTransformationMonoid}, \hyperpage{73}
+  \item \texttt  {EpimorphismTransformationSemigroup}, \hyperpage{73}
+  \item \texttt  {EpimorphismTransMonoid}, \hyperpage{73}
+  \item \texttt  {EpimorphismTransSemigroup}, \hyperpage{73}
+  \item \texttt  {ExternalAngle}, \hyperpage{108}
+  \item \texttt  {ExternalAnglesRelation}, \hyperpage{108}
+
+  \indexspace
+
+  \item \texttt  {FabrykowskiGuptaGroup}, \hyperpage{117}
+  \item \texttt  {FabrykowskiGuptaGroups}, \hyperpage{117}
+  \item \texttt  {FindBranchingSubgroup}, \hyperpage{81}
+  \item \texttt  {FindThurstonObstruction}, \hyperpage{107}
+  \item \texttt  {FinitaryBinaryGroup}, \hyperpage{109}
+  \item \texttt  {FiniteDepthBinaryGroup}, \hyperpage{109}
+  \item \texttt  {FiniteStateBinaryGroup}, \hyperpage{109}
+  \item \texttt  {FixedRay}
+    \subitem FR element, \hyperpage{47}
+  \item \texttt  {FixedStates}, \hyperpage{34}
+  \item \texttt  {FornaessSibonyGroup}, \hyperpage{110}
+  \item \texttt  {FRAffineGroup}, \hyperpage{119}
+  \item \texttt  {FRAlgebra}, \hyperpage{88}
+  \item \texttt  {FRAlgebraWithOne}, \hyperpage{88}
+  \item \texttt  {FREFamily}, \hyperpage{131}
+  \item \texttt  {FRElement}
+    \subitem [list,]list,list,list, \hyperpage{26}
+    \subitem machine/element,list, \hyperpage{27}
+    \subitem semigroup,list,list,list, \hyperpage{26}
+  \item \texttt  {FRElementNC}
+    \subitem family,free,listlist,list,assocword, \hyperpage{25}
+  \item \texttt  {FRGroup}, \hyperpage{63}
+  \item \texttt  {FRGroupByVirtualEndomorphism}, \hyperpage{70}
+  \item \texttt  {FRMachine}
+    \subitem [list,]list,list, \hyperpage{12}
+    \subitem rational function, \hyperpage{106}
+    \subitem semigroup,list,list, \hyperpage{12}
+  \item \texttt  {FRMachineFRGroup}, \hyperpage{67}
+  \item \texttt  {FRMachineFRMonoid}, \hyperpage{67}
+  \item \texttt  {FRMachineFRSemigroup}, \hyperpage{67}
+  \item \texttt  {FRMachineNC}
+    \subitem family,free,listlist,list, \hyperpage{12}
+  \item \texttt  {FRMachineRWS}, \hyperpage{135}
+  \item \texttt  {FRMFamily}, \hyperpage{131}
+  \item \texttt  {FRMonoid}, \hyperpage{63}
+  \item \texttt  {FRSemigroup}, \hyperpage{63}
+  \item \texttt  {FullBinaryGroup}, \hyperpage{109}
+  \item \texttt  {FullSCGroup}, \hyperpage{66}
+  \item \texttt  {FullSCMonoid}, \hyperpage{66}
+  \item \texttt  {FullSCSemigroup}, \hyperpage{66}
+  \item \texttt  {FullTransMonoid}, \hyperpage{148}
+
+  \indexspace
+
+  \item \texttt  {GammaPQGroup}, \hyperpage{117}
+  \item \texttt  {GammaPQMachine}, \hyperpage{117}
+  \item \texttt  {GeneralizedGuptaSidkiGroups}, \hyperpage{116}
+  \item \texttt  {GeneratorsOfFRMachine}, \hyperpage{18}
+  \item \texttt  {GermData}, \hyperpage{74}
+  \item \texttt  {Germs}, \hyperpage{51}
+  \item \texttt  {GermValue}, \hyperpage{74}
+  \item \texttt  {GrigorchukGroup}, \hyperpage{113}
+  \item \texttt  {GrigorchukGroups}, \hyperpage{113}
+  \item \texttt  {GrigorchukLieAlgebra}, \hyperpage{123}
+  \item \texttt  {GrigorchukMachine}, \hyperpage{113}
+  \item \texttt  {GrigorchukMachines}, \hyperpage{113}
+  \item \texttt  {GrigorchukOverGroup}, \hyperpage{114}
+  \item \texttt  {GrigorchukThinnedAlgebra}, \hyperpage{122}
+  \item \texttt  {GrigorchukTwistedTwin}, \hyperpage{114}
+  \item \texttt  {GuessMealyElement}, \hyperpage{53}
+  \item \texttt  {GuessVectorElement}, \hyperpage{60}
+  \item \texttt  {GuptaSidkiGroup}, \hyperpage{116}
+  \item \texttt  {GuptaSidkiGroups}, \hyperpage{116}
+  \item \texttt  {GuptaSidkiLieAlgebra}, \hyperpage{123}
+  \item \texttt  {GuptaSidkiMachine}, \hyperpage{116}
+  \item \texttt  {GuptaSidkiMachines}, \hyperpage{116}
+  \item \texttt  {GuptaSidkiThinnedAlgebra}, \hyperpage{123}
+
+  \indexspace
+
+  \item \texttt  {HanoiGroup}, \hyperpage{118}
+  \item \texttt  {HasCongruenceProperty}, \hyperpage{79}
+  \item \texttt  {HasOpenSetConditionFRElement}, \hyperpage{52}
+  \item \texttt  {HasOpenSetConditionFRSemigroup}, \hyperpage{78}
+  \item \texttt  {HeightOfPoset}, \hyperpage{156}
+  \item \texttt  {HorizontalAction}, \hyperpage{128}
+
+  \indexspace
+
+  \item \texttt  {I2Machine}, \hyperpage{121}
+  \item \texttt  {I2Monoid}, \hyperpage{121}
+  \item \texttt  {I4Machine}, \hyperpage{121}
+  \item \texttt  {I4Monoid}, \hyperpage{121}
+  \item \texttt  {ImageSetOfTrans}, \hyperpage{148}
+  \item \texttt  {IMGMachine}
+    \subitem rational function, \hyperpage{106}
+  \item \texttt  {IMGMachineNC}, \hyperpage{93}
+  \item \texttt  {IMGRelator}, \hyperpage{94}
+  \item \texttt  {InfoFR}, \hyperpage{159}
+  \item \texttt  {InitialState}, \hyperpage{36}
+  \item \texttt  {IsAlgebraFRMachineRep}, \hyperpage{133}
+  \item \texttt  {IsAmenableGroup}, \hyperpage{86}
+  \item \texttt  {IsAntisymmetricFRElement}, \hyperpage{59}
+  \item \texttt  {IsBireversible}, \hyperpage{44}
+  \item \texttt  {IsBoundedFRElement}, \hyperpage{46}
+  \item \texttt  {IsBoundedFRMachine}, \hyperpage{46}
+  \item \texttt  {IsBoundedFRSemigroup}, \hyperpage{78}
+  \item \texttt  {IsBranched}
+    \subitem FR group, \hyperpage{82}
+  \item \texttt  {IsBranchingSubgroup}
+    \subitem FR semigroup, \hyperpage{82}
+  \item \texttt  {IsConfinal}, \hyperpage{142}
+  \item \texttt  {IsContracting}, \hyperpage{79}
+  \item \texttt  {IsConvergent}, \hyperpage{58}
+  \item \texttt  {IsDiagonalFRElement}, \hyperpage{59}
+  \item \texttt  {IsFIFO}, \hyperpage{156}
+  \item \texttt  {IsFinitaryFRElement}, \hyperpage{45}
+  \item \texttt  {IsFinitaryFRMachine}, \hyperpage{45}
+  \item \texttt  {IsFinitaryFRSemigroup}, \hyperpage{77}
+  \item \texttt  {IsFiniteStateFRElement}, \hyperpage{35}
+  \item \texttt  {IsFiniteStateFRMachine}, \hyperpage{35}
+  \item \texttt  {IsFiniteStateFRSemigroup}, \hyperpage{78}
+  \item \texttt  {IsFpLieAlgebra}, \hyperpage{158}
+  \item \texttt  {IsFRAlgebra}, \hyperpage{135}
+  \item \texttt  {IsFRAlgebraWithOne}, \hyperpage{135}
+  \item \texttt  {IsFRElement}, \hyperpage{134}
+  \item \texttt  {IsFRGroup}, \hyperpage{135}
+  \item \texttt  {IsFRMachine}, \hyperpage{134}
+  \item \texttt  {IsFRMachineStrRep}, \hyperpage{132}
+  \item \texttt  {IsFRMealyElement}, \hyperpage{134}
+  \item \texttt  {IsFRMonoid}, \hyperpage{135}
+  \item \texttt  {IsFRObject}, \hyperpage{134}
+  \item \texttt  {IsFRSemigroup}, \hyperpage{135}
+  \item \texttt  {IsGroupFRElement}, \hyperpage{134}
+  \item \texttt  {IsGroupFRMachine}, \hyperpage{132}
+  \item \texttt  {IsGroupFRMealyElement}, \hyperpage{134}
+  \item \texttt  {IsHomogeneousElement}, \hyperpage{91}
+  \item \texttt  {IsIMGElement}, \hyperpage{94}
+  \item \texttt  {IsIMGMachine}, \hyperpage{92}
+  \item \texttt  {IsInfinitelyTransitive}, \hyperpage{77}
+  \item \texttt  {IsInvertible}, \hyperpage{135}
+  \item \texttt  {IsIrreducibleVHGroup}, \hyperpage{129}
+  \item \texttt  {IsJustInfinite}, \hyperpage{87}
+  \item \texttt  {IsKneadingMachine}, \hyperpage{95}
+  \item \texttt  {IsLevelTransitive}
+    \subitem FR element, \hyperpage{48}
+    \subitem FR group, \hyperpage{76}
+  \item \texttt  {IsLevelTransitiveOnPatterns}, \hyperpage{77}
+  \item \texttt  {IsLinearFRElement}, \hyperpage{134}
+  \item \texttt  {IsLinearFRMachine}, \hyperpage{133}
+  \item \texttt  {IsLinearRepresentation}, \hyperpage{154}
+  \item \texttt  {IsLowerTriangularFRElement}, \hyperpage{59}
+  \item \texttt  {IsMarkedSphere}, \hyperpage{105}
+  \item \texttt  {IsMealyElement}, \hyperpage{133}
+  \item \texttt  {IsMealyMachine}, \hyperpage{132}
+  \item \texttt  {IsMealyMachineDomainRep}, \hyperpage{133}
+  \item \texttt  {IsMealyMachineIntRep}, \hyperpage{133}
+  \item \texttt  {IsMinimized}, \hyperpage{43}
+  \item \texttt  {IsMonoidFRElement}, \hyperpage{134}
+  \item \texttt  {IsMonoidFRMachine}, \hyperpage{132}
+  \item \texttt  {IsMonoidFRMealyElement}, \hyperpage{134}
+  \item \texttt  {IsNilElement}, \hyperpage{90}
+  \item \texttt  {IsomorphismFRGroup}, \hyperpage{68}
+  \item \texttt  {IsomorphismFRMonoid}, \hyperpage{68}
+  \item \texttt  {IsomorphismFRSemigroup}, \hyperpage{68}
+  \item \texttt  {IsomorphismLpGroup}, \hyperpage{84}
+  \item \texttt  {IsomorphismMealyGroup}, \hyperpage{69}
+  \item \texttt  {IsomorphismMealyMonoid}, \hyperpage{69}
+  \item \texttt  {IsomorphismMealySemigroup}, \hyperpage{69}
+  \item \texttt  {IsomorphismSubgroupFpGroup}, \hyperpage{84}
+  \item \texttt  {IsP1Map}, \hyperpage{151}
+  \item \texttt  {IsP1Point}, \hyperpage{150}
+  \item \texttt  {IsPeriodicList}, \hyperpage{140}
+  \item \texttt  {IsPlanarKneadingMachine}, \hyperpage{95}
+  \item \texttt  {IsPMComplex}, \hyperpage{149}
+  \item \texttt  {IsPolynomialFRMachine}, \hyperpage{92}
+  \item \texttt  {IsPolynomialGrowthFRElement}, \hyperpage{46}
+  \item \texttt  {IsPolynomialGrowthFRMachine}, \hyperpage{46}
+  \item \texttt  {IsPolynomialGrowthFRSemigroup}, \hyperpage{78}
+  \item \texttt  {IsPolynomialIMGMachine}, \hyperpage{92}
+  \item \texttt  {IsProjectiveRepresentation}, \hyperpage{154}
+  \item \texttt  {IsRecurrentFRSemigroup}, \hyperpage{76}
+  \item \texttt  {IsResiduallyFinite}, \hyperpage{86}
+  \item \texttt  {IsReversible}, \hyperpage{43}
+  \item \texttt  {IsSemigroupFRElement}, \hyperpage{134}
+  \item \texttt  {IsSemigroupFRMachine}, \hyperpage{132}
+  \item \texttt  {IsSemigroupFRMealyElement}, \hyperpage{134}
+  \item \texttt  {IsSphereTriangulation}, \hyperpage{105}
+  \item \texttt  {IsSQUniversal}, \hyperpage{87}
+  \item \texttt  {IsStateClosed}, \hyperpage{75}
+  \item \texttt  {IsSymmetricFRElement}, \hyperpage{59}
+  \item \texttt  {IsTorsionFreeGroup}, \hyperpage{85}
+  \item \texttt  {IsTorsionGroup}, \hyperpage{85}
+  \item \texttt  {IsTrans}, \hyperpage{146}
+  \item \texttt  {IsUpperTriangularFRElement}, \hyperpage{59}
+  \item \texttt  {IsVectorFRMachineRep}, \hyperpage{133}
+  \item \texttt  {IsVHGroup}, \hyperpage{128}
+  \item \texttt  {IsVirtuallySimpleGroup}, \hyperpage{86}
+  \item \texttt  {IsWeaklyFinitaryFRElement}, \hyperpage{51}
+  \item \texttt  {IsWeaklyFinitaryFRSemigroup}, \hyperpage{77}
+
+  \indexspace
+
+  \item \texttt  {JenningsLieAlgebra}, \hyperpage{158}
+
+  \indexspace
+
+  \item \texttt  {KernelOfTrans}, \hyperpage{148}
+  \item \texttt  {KneadingSequence}
+    \subitem angle, \hyperpage{107}
+
+  \indexspace
+
+  \item \texttt  {LambdaElementVHGroup}, \hyperpage{86}
+  \item \texttt  {LamplighterGroup}, \hyperpage{120}
+  \item \texttt  {LargestCommonPrefix}, \hyperpage{142}
+  \item \texttt  {LDUDecompositionFRElement}, \hyperpage{59}
+  \item \texttt  {LevelStabilizer}, \hyperpage{75}
+  \item \texttt  {LimitFRMachine}, \hyperpage{52}
+  \item \texttt  {LimitStates}, \hyperpage{34}
+  \item \texttt  {LinearRepresentationByImages}, \hyperpage{155}
+  \item \texttt  {ListTrans}, \hyperpage{148}
+  \item \texttt  {LocateInTriangulation}, \hyperpage{105}
+
+  \indexspace
+
+  \item \texttt  {MagmaEndomorphismByImagesNC}, \hyperpage{156}
+  \item \texttt  {MagmaHomomorphismByImagesNC}, \hyperpage{156}
+  \item \texttt  {MamaghaniGroup}, \hyperpage{119}
+  \item \texttt  {Mandel}, \hyperpage{104}
+  \item \texttt  {Mating}, \hyperpage{101}
+  \item \texttt  {MatrixQuotient}, \hyperpage{90}
+  \item \texttt  {MaximalSimpleSubgroup}, \hyperpage{130}
+  \item \texttt  {MealyElement}
+    \subitem [list,]listlist,list,int, \hyperpage{39}
+    \subitem domain,domain,function,function,obj, \hyperpage{40}
+  \item \texttt  {MealyElementNC}
+    \subitem family,listlist,list,int, \hyperpage{40}
+  \item \texttt  {MealyMachine}
+    \subitem [list,]listlist,list, \hyperpage{39}
+    \subitem domain,domain,function,function, \hyperpage{40}
+  \item \texttt  {MealyMachineFRGroup}, \hyperpage{67}
+  \item \texttt  {MealyMachineFRMonoid}, \hyperpage{67}
+  \item \texttt  {MealyMachineFRSemigroup}, \hyperpage{67}
+  \item \texttt  {MealyMachineNC}
+    \subitem family,listlist,list, \hyperpage{40}
+  \item \texttt  {Minimized}
+    \subitem FR machine, \hyperpage{24}
+    \subitem Mealy machine, \hyperpage{42}
+  \item \texttt  {MixerGroup}, \hyperpage{112}
+  \item \texttt  {MixerMachine}, \hyperpage{112}
+  \item \texttt  {MoebiusMap}, \hyperpage{151}
+    \subitem 2, \hyperpage{151}
+    \subitem 3, \hyperpage{151}
+    \subitem 6, \hyperpage{151}
+
+  \indexspace
+
+  \item \texttt  {NestedMatrixCoefficient}, \hyperpage{57}
+  \item \texttt  {NestedMatrixState}, \hyperpage{57}
+  \item \texttt  {NeumannGroup}, \hyperpage{116}
+  \item \texttt  {NeumannMachine}, \hyperpage{116}
+  \item \texttt  {NewFIFO}, \hyperpage{156}
+  \item \texttt  {NewGroupFRMachine}, \hyperpage{94}
+  \item \texttt  {NewIMGMachine}, \hyperpage{94}
+  \item \texttt  {NewMonoidFRMachine}, \hyperpage{94}
+  \item \texttt  {NewSemigroupFRMachine}, \hyperpage{94}
+  \item \texttt  {Nillity}, \hyperpage{90}
+  \item \texttt  {NormalizedPolynomialFRMachine}, \hyperpage{100}
+  \item \texttt  {NormalizedPolynomialIMGMachine}, \hyperpage{100}
+  \item \texttt  {NormOfBoundedFRElement}, \hyperpage{51}
+  \item \texttt  {Nucleus}
+    \subitem FR algebra, \hyperpage{89}
+    \subitem FR machine, \hyperpage{35}
+    \subitem FR semigroup, \hyperpage{79}
+  \item \texttt  {NucleusMachine}
+    \subitem FR machine, \hyperpage{53}
+    \subitem FR semigroup, \hyperpage{80}
+  \item \texttt  {NucleusOfFRAlgebra}, \hyperpage{89}
+  \item \texttt  {NucleusOfFRMachine}, \hyperpage{35}
+  \item \texttt  {NucleusOfFRSemigroup}, \hyperpage{79}
+
+  \indexspace
+
+  \item \texttt  {OneTrans}, \hyperpage{148}
+  \item \texttt  {OrbitGrowth}, \hyperpage{143}
+  \item \texttt  {Output}
+    \subitem FR element, \hyperpage{30}
+    \subitem FR machine,state, \hyperpage{18}
+    \subitem FR machine,state,letter, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {P1Antipode}, \hyperpage{150}
+  \item \texttt  {P1Barycentre}, \hyperpage{150}
+  \item \texttt  {P1Circumcentre}, \hyperpage{150}
+  \item \texttt  {P1Distance}, \hyperpage{151}
+  \item \texttt  {P1Image}, \hyperpage{152}
+  \item \texttt  {P1infinity}, \hyperpage{150}
+  \item \texttt  {P1MapByCoefficients}, \hyperpage{152}
+  \item \texttt  {P1MapCriticalPoints}, \hyperpage{152}
+  \item \texttt  {P1MapRational}, \hyperpage{153}
+  \item \texttt  {P1MapsFamily}, \hyperpage{151}
+  \item \texttt  {P1MapSL2}, \hyperpage{153}
+  \item \texttt  {P1Midpoint}, \hyperpage{151}
+  \item \texttt  {P1one}, \hyperpage{150}
+  \item \texttt  {P1Path}, \hyperpage{152}
+  \item \texttt  {P1Point}, \hyperpage{150}
+    \subitem ri, \hyperpage{150}
+    \subitem s, \hyperpage{150}
+  \item \texttt  {P1PointsFamily}, \hyperpage{150}
+  \item \texttt  {P1PreImages}, \hyperpage{152}
+  \item \texttt  {P1Sphere}, \hyperpage{151}
+  \item \texttt  {P1XRatio}, \hyperpage{151}
+  \item \texttt  {P1z}, \hyperpage{152}
+  \item \texttt  {P1zero}, \hyperpage{150}
+  \item \texttt  {PcGroup}, \hyperpage{72}
+  \item \texttt  {Period}, \hyperpage{141}
+  \item \texttt  {PeriodicList}, \hyperpage{141}
+    \subitem list, function, \hyperpage{141}
+    \subitem period, looping point, \hyperpage{141}
+  \item \texttt  {PeriodicListsFamily}, \hyperpage{140}
+  \item \texttt  {PermGroup}, \hyperpage{71}
+  \item \texttt  {PMCOMPLEX}, \hyperpage{149}
+  \item \texttt  {PMCOMPLEX{\textunderscore }FAMILY}, \hyperpage{149}
+  \item \texttt  {PMC}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {M}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {L}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {X{\textunderscore }}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {S}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {U}\discretionary {-}{}{}\texttt  {D}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {F}\discretionary {-}{}{}\texttt  {IELD}, 
+		\hyperpage{149}
+  \item \texttt  {PoirierExamples}, \hyperpage{111}
+  \item \texttt  {PolynomialFRMachine}, \hyperpage{97}
+  \item \texttt  {PolynomialGrowthBinaryGroup}, \hyperpage{109}
+  \item \texttt  {PolynomialIMGMachine}, \hyperpage{97}
+  \item \texttt  {PolynomialMealyMachine}, \hyperpage{97}
+  \item \texttt  {Portrait}, \hyperpage{32}
+  \item \texttt  {PortraitInt}, \hyperpage{32}
+  \item \texttt  {PortraitPerm}, \hyperpage{32}
+  \item \texttt  {PositionInTower}, \hyperpage{155}
+  \item \texttt  {PostCriticalMachine}, \hyperpage{103}
+  \item \texttt  {PreImagesOfTrans}, \hyperpage{148}
+  \item \texttt  {PrePeriod}, \hyperpage{141}
+  \item \texttt  {ProductBOIIdeal}, \hyperpage{157}
+  \item \texttt  {ProductIdeal}, \hyperpage{157}
+  \item \texttt  {ProjectiveExtension}, \hyperpage{155}
+  \item \texttt  {ProjectiveQuotient}, \hyperpage{155}
+  \item \texttt  {ProjectiveRepresentationByFunction}, \hyperpage{154}
+  \item \texttt  {PSZAlgebra}, \hyperpage{122}
+  \item \texttt  {PureSurfaceBraidFpGroup}, \hyperpage{146}
+
+  \indexspace
+
+  \item \texttt  {RandomTrans}, \hyperpage{148}
+  \item \texttt  {RankOfTrans}, \hyperpage{148}
+  \item \texttt  {RationalFunction}, \hyperpage{106}
+  \item \texttt  {RationalP1Map}, \hyperpage{153}
+    \subitem im, \hyperpage{153}
+  \item \texttt  {RattaggiGroup}, \hyperpage{118}
+  \item \texttt  {RenameSubobjects}, \hyperpage{155}
+  \item \texttt  {RestrictedTrans}, \hyperpage{149}
+  \item \texttt  {RotatedSpider}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {SCAlgebra}, \hyperpage{89}
+  \item \texttt  {SCAlgebraNC}, \hyperpage{89}
+  \item \texttt  {SCAlgebraWithOne}, \hyperpage{89}
+  \item \texttt  {SCAlgebraWithOneNC}, \hyperpage{89}
+  \item \texttt  {SCGroup}, \hyperpage{65}
+  \item \texttt  {SCGroupNC}, \hyperpage{65}
+  \item \texttt  {SCLieAlgebra}, \hyperpage{89}
+  \item \texttt  {SCMonoid}, \hyperpage{65}
+  \item \texttt  {SCMonoidNC}, \hyperpage{65}
+  \item \texttt  {SCSemigroup}, \hyperpage{65}
+  \item \texttt  {SCSemigroupNC}, \hyperpage{65}
+  \item \texttt  {SetP1Points}, \hyperpage{153}
+  \item \texttt  {ShiftDirichletSeries}, \hyperpage{154}
+  \item \texttt  {ShortGroupRelations}, \hyperpage{145}
+  \item \texttt  {ShortGroupWordInSet}, \hyperpage{145}
+  \item \texttt  {ShortMonoidRelations}, \hyperpage{145}
+  \item \texttt  {ShortMonoidWordInSet}, \hyperpage{145}
+  \item \texttt  {ShortSemigroupWordInSet}, \hyperpage{145}
+  \item \texttt  {ShrunkDirichletSeries}, \hyperpage{154}
+  \item \texttt  {SidkiFreeAlgebra}, \hyperpage{123}
+  \item \texttt  {SidkiFreeGroup}, \hyperpage{116}
+  \item \texttt  {SidkiMonomialAlgebra}, \hyperpage{124}
+  \item \texttt  {Signatures}, \hyperpage{47}
+  \item \texttt  {SimplifiedIMGMachine}, \hyperpage{100}
+  \item \texttt  {SL2P1Map}, \hyperpage{153}
+  \item \texttt  {SolutionMatMod1}, \hyperpage{159}
+  \item \texttt  {SolutionMatModN}, \hyperpage{158}
+  \item \texttt  {Sphere}, \hyperpage{143}
+  \item \texttt  {SphereP1}, \hyperpage{151}
+  \item \texttt  {SphereP1Y}, \hyperpage{151}
+  \item \texttt  {Spider}
+    \subitem m, \hyperpage{105}
+    \subitem r, \hyperpage{105}
+  \item \texttt  {SpreadDirichletSeries}, \hyperpage{154}
+  \item \texttt  {StabilizerImage}, \hyperpage{75}
+  \item \texttt  {State}, \hyperpage{33}
+  \item \texttt  {StateClosure}, \hyperpage{76}
+  \item \texttt  {StateGrowth}, \hyperpage{44}
+  \item \texttt  {States}, \hyperpage{33}
+  \item \texttt  {StateSet}
+    \subitem FR element, \hyperpage{33}
+    \subitem FR machine, \hyperpage{18}
+  \item \texttt  {StringByInt}, \hyperpage{155}
+  \item \texttt  {StructuralGroup}, \hyperpage{20}
+  \item \texttt  {StructuralMonoid}, \hyperpage{20}
+  \item \texttt  {StructuralSemigroup}, \hyperpage{20}
+  \item \texttt  {SubFRMachine}, \hyperpage{23}
+    \subitem machine,map, \hyperpage{23}
+  \item \texttt  {SunicGroup}, \hyperpage{112}
+  \item \texttt  {SunicMachine}, \hyperpage{112}
+  \item \texttt  {SupportingRays}, \hyperpage{99}
+  \item \texttt  {SurfaceBraidFpGroup}, \hyperpage{146}
+
+  \indexspace
+
+  \item \texttt  {TensorProduct}, \hyperpage{140}
+  \item \texttt  {TensorProductOp}
+    \subitem FR Machines, \hyperpage{21}
+  \item \texttt  {TensorSum}, \hyperpage{140}
+  \item \texttt  {TensorSumOp}
+    \subitem FR Machines, \hyperpage{21}
+  \item \texttt  {ThinnedAlgebra}, \hyperpage{90}
+  \item \texttt  {ThinnedAlgebraWithOne}, \hyperpage{90}
+  \item \texttt  {TopElement}, \hyperpage{50}
+  \item \texttt  {TopVertexTransformations}, \hyperpage{83}
+  \item \texttt  {Trans}, \hyperpage{147}
+  \item \texttt  {TRANS{\textunderscore }FAMILY}, \hyperpage{146}
+  \item \texttt  {TransformationMonoid}, \hyperpage{73}
+  \item \texttt  {TransformationSemigroup}, \hyperpage{73}
+  \item \texttt  {Transition}
+    \subitem FR element,input, \hyperpage{31}
+    \subitem FR machine,state,input, \hyperpage{19}
+    \subitem Linear machine, \hyperpage{56}
+  \item \texttt  {Transitions}, \hyperpage{57}
+    \subitem FR element, \hyperpage{32}
+    \subitem FR machine,state, \hyperpage{19}
+  \item \texttt  {TransList}, \hyperpage{147}
+  \item \texttt  {TransMonoid}, \hyperpage{73}
+  \item \texttt  {TransNC}, \hyperpage{147}
+  \item \texttt  {TransposedFRElement}, \hyperpage{59}
+  \item \texttt  {TransSemigroup}, \hyperpage{73}
+  \item \texttt  {TreeWreathProduct}
+    \subitem FR group, \hyperpage{71}
+    \subitem FR machine, \hyperpage{23}
+
+  \indexspace
+
+  \item \texttt  {UnderlyingFRMachine}, \hyperpage{13}
+  \item \texttt  {UnderlyingMealyElement}, \hyperpage{134}
+
+  \indexspace
+
+  \item \texttt  {ValueOfDirichletSeries}, \hyperpage{154}
+  \item \texttt  {VectorElement}, \hyperpage{54}
+  \item \texttt  {VectorElementNC}, \hyperpage{54}
+  \item \texttt  {VectorMachine}, \hyperpage{54}
+  \item \texttt  {VectorMachineNC}, \hyperpage{54}
+  \item \texttt  {VertexElement}, \hyperpage{28}
+  \item \texttt  {VertexTransformations}
+    \subitem FR semigroup, \hyperpage{83}
+  \item \texttt  {VertexTransformationsFRElement}, \hyperpage{47}
+  \item \texttt  {VertexTransformationsFRMachine}, \hyperpage{47}
+  \item \texttt  {VerticalAction}, \hyperpage{128}
+  \item \texttt  {VHGroup}, \hyperpage{129}
+  \item \texttt  {VHStructure}, \hyperpage{128}
+  \item \texttt  {VirtualEndomorphism}, \hyperpage{83}
+
+  \indexspace
+
+  \item \texttt  {WeaklyBranchedEmbedding}, \hyperpage{71}
+  \item \texttt  {WeierstrassGroup}, \hyperpage{119}
+  \item \texttt  {WordGrowth}, \hyperpage{142}
+    \subitem 1arg, \hyperpage{142}
+  \item \texttt  {WreathRecursion}, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {ZetaSeriesOfGroup}, \hyperpage{154}
+  \item \texttt  {ZugadiSpinalGroup}, \hyperpage{117}
+
+\end{theindex}

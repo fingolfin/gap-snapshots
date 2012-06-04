@@ -1,0 +1,183 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1 What is the role of the [5XModules[1X package in the [5Xhomalg[1X project?[0X
+  
+  
+  [1X1.1-1 [5XModules[1X provides ...[0X
+  
+  It provides procedures to construct basic objects in homological algebra:
+  
+  --    modules (generators, relations)
+  
+  --    submodules (as images of maps)
+  
+  --    maps
+  
+  Beside  these  so-called constructors [5XModules[0m provides [13Xoperations[0m to perform
+  computations with these objects. The list of operations includes:
+  
+  --    resolution of modules
+  
+  --    images of maps
+  
+  --    the  functors  [10XHom[0m and [10XTensorProduct[0m ([10XExt[0m and [10XTor[0m are then provided by
+        [5Xhomalg[0m)
+  
+  --    test  if a module is torsion-free, reflexive, projective, stably free,
+        free, pure
+  
+  --    determine   the   rank,   grade,   projective   dimension,  degree  of
+        torsion-freeness, and codegree of purity of a module
+  
+  Using  the  philosophy  of  [5XGAP4[0m, one or more methods are [13Xinstalled[0m for each
+  operation,  depending  on  [13Xproperties[0m and [13Xattributes[0m of these objects. These
+  properties  and  attributes  can themselves be computed by methods installed
+  for this purpose.
+  
+  
+  [1X1.1-2 Rings supported in a sufficient way[0X
+  
+  Through  out  this  manual  the following terminology is used. We say that a
+  computer  algebra  system  "sufficiently  supports" a ring R, if it contains
+  procedures  to effectively solve one-sided inhomogeneous linear systems XA=B
+  and AX=B with coefficients over R (--> [14X1.1-3[0m).
+  
+  
+  [1X1.1-3 Principal limitation[0X
+  
+  Note that the solution space of the one-sided finite dimensional system YA=0
+  (resp.  AY=0)  over  a  left  (resp.  right) noetherian ring R is a finitely
+  generated  left  (resp.  right)  R-module, even if R is not commutative. The
+  solution  space of the linear system X_1 A_1 + A_2 X_2 + A_3 X_3 A_4=0 is in
+  general  not  an R-module, and worse, in general not finitely generated over
+  the  center  of R. [5XModules[0m can only handle homological problems that lead to
+  [13Xone  sided[0m  [13Xfinite dimensional[0m homogeneous or inhomogeneous systems over the
+  underlying  ring R. Such problems are called problems of [13Xfinite type[0m over R.
+  Typically,  the  computation  of  [10XHom[0m(M,N)  of two (even) finitely generated
+  modules over a [13Xnon[0mcommutative ring R is generally [13Xnot[0m of finite type over R,
+  unless at least one of the two modules is an R-bimodule. Also note that over
+  a  commutative  ring  any linear system can be easily brought to a one-sided
+  form. For more details see [BR08].
+  
+  
+  [1X1.1-4 Ring dictionaries (technical)[0X
+  
+  [5XModules[0m uses the so-called [10XhomalgTable[0m, which is stored in the ring, to know
+  how to delegate the necessary matrix operations. I.e. the [10XhomalgTable[0m serves
+  as  a  small dictionary that enables [5XModules[0m to speak (as much as needed of)
+  the  language  of  the  computer algebra system which hosts the ring and the
+  matrices.  The  [5XGAP[0m internal ring of integers is the only ring which [5XModules[0m
+  endows   with   a   [10XhomalgTable[0m.  Other  packages  like  [5XGaussForHomalg[0m  and
+  [5XRingsForHomalg[0m  provide dictionaries for further rings. While [5XGaussForHomalg[0m
+  defines  internal  rings  and  matrices,  the package [5XRingsForHomalg[0m enables
+  defining  external rings and matrices in a wide range of (external) computer
+  algebra  systems  ([5XSingular[0m,  [5XSage[0m,  [5XMacaulay2[0m,  [5XMAGMA[0m,  [5XMaple[0m) by providing
+  appropriate dictionaries.
+  
+  Since these dictionaries are all what is needed to handle matrix operations,
+  [5XModules[0m does not distinguish between handling internal and handling external
+  matrices.  Even  the physical communication with the external systems is not
+  at  all  a  concern of [5XModules[0m. This is the job of the package [5XIO_ForHomalg[0m,
+  which  is  based  on the powerful [5XIO[0m package of Max Neunhöffer. Furthermore,
+  for all structures beyond matrices (from relations, generators, and modules,
+  to  functors and spectral sequences) [5XModules[0m no longer distinguishes between
+  internal and external.
+  
+  
+  [1X1.1-5 The advantages of the outsourcing concept[0X
+  
+  Linking  different  systems to achieve one task is a highly attractive idea,
+  especially if it helps to avoid reinventing wheels over and over again. This
+  was  essential  for [5Xhomalg[0m, since [5XSingular[0m and [5XMAGMA[0m provide the fastest and
+  most  advanced  Gröbner  basis  algorithms,  while  [5XGAP4[0m  is by far the most
+  convenient  programming  language to realize complex mathematical structures
+  (-->  Appendix  [14X'homalg:  Why  GAP4?'[0m).  Second,  the  implementation of the
+  homological   constructions   is   automatically   universal,  since  it  is
+  independent  of  where  the  matrices  reside  and  how  the  several matrix
+  operations  are  realized.  In particular, [5Xhomalg[0m will always be able to use
+  the system with the fastest Gröbner basis implementation. In this respect is
+  [5Xhomalg[0m and all packages that build upon it future proof.
+  
+  
+  [1X1.1-6 Does this mean that [5Xhomalg[1X has only algorithms for the generic case?[0X
+  
+  No,  on the contrary. There are a lot of specialized algorithms installed in
+  [5Xhomalg[0m.  These  algorithms  are  based  on properties and attributes that --
+  thanks  to [5XGAP4[0m -- [5Xhomalg[0m objects can carry (--> Appendix [14X'homalg: GAP4 is a
+  mathematical  object-oriented  programming  language'[0m):  Not only can [5Xhomalg[0m
+  take  the  special nature of the underlying ring into account, it also deals
+  with  modules,  complexes, ... depending on their special properties. Still,
+  these  special algorithms, like all algorithms in [5Xhomalg[0m, are independent of
+  the  computer algebra system which hosts the matrices and which will perform
+  the several matrix operations.
+  
+  
+  [1X1.1-7 The principle of least communication (technical)[0X
+  
+  Linking  different systems can also be highly problematic. The following two
+  points are often among the major sources of difficulties:
+  
+  --    Different systems use different languages:
+        It  takes  a  huge  amount  of  time  and  effort to teach systems the
+        dialects of each others. These dialects are also rarely fixed forever,
+        and  might very well be subject to slight modifications. So the larger
+        the dictionary, the more difficult is its maintenance.
+  
+  --    Data has to be transferred from one system to another:
+        Even  if  there  is  a  unified data format, transferring data between
+        systems  can  lead to performance losses, especially when a big amount
+        of data has to be transferred.
+  
+  Solving  these  two  difficulties  is an important part of [5XModules[0m's design.
+  [5XModules[0m  splits homological computations into two parts. The matrices reside
+  in a system which provides fast matrix operations (addition, multiplication,
+  bases  and  normal form computations), while the higher structures (modules,
+  maps,  complexes,  chain  morphisms, spectral sequences, functors, ...) with
+  their  properties,  attributes,  and  algorithms live in [5XGAP4[0m, as the system
+  where  one  can  easily  create such complex structures and handle all their
+  logical dependencies. With this split there is no need to transfer each sort
+  of  data outside of its system. The remaining communication between [5XGAP4[0m and
+  the system hosting the matrices gets along with a tiny dictionary. Moreover,
+  [5XGAP4[0m,  as  it manages and delegates all computations, also manages the whole
+  data flow, while the other system does not even recognize that it is part of
+  a bidirectional communication.
+  
+  The  existence  of  such  a clear cut is certainly to some extent due to the
+  special nature of homological computations.
+  
+  
+  [1X1.1-8 Frequently asked questions[0X
+  
+  --    [12XQ[0m:  Does outsourcing the matrices mean that [5XModules[0m is able to compute
+        spectral  sequences,  for  example,  without  ever seeing the matrices
+        involved in the computation?
+        A: Yes.
+  
+  --    [12XQ[0m:   Can   [5XModules[0m  profit  from  the  implementation  of  homological
+        constructions like [10XHom[0m, [10XExt[0m, ... in [5XSingular[0m?
+        A:  No.  This  is  for a lot of reasons incompatible with the idea and
+        design (--> [14X1[0m) of [5XModules[0m.
+  
+  --    [12XQ[0m: Are the external systems involved in the higher algorithms?
+        A:  No.  They  host  all  the  matrices  and  do all matrix operations
+        delegated  to  them  without  knowing  what  for.  The  meaning of the
+        matrices and their logical interrelation is only known to [5XGAP4[0m.
+  
+  --    [12XQ[0m:  Do  developers  of  packages  building  upon  [5XModules[0m need to know
+        anything about the communication with the external systems?
+        A:  No,  unless they want to use more features of the external systems
+        than  those reflected by [5XModules[0m. For this purpose, developers can use
+        the  unified  communication interface provideb by [5XHomalgToCAS[0m. This is
+        the interface used by [5XModules[0m.
+  
+  
+  [1X1.2 This manual[0X
+  
+  Chapter  [14X2[0m  describes  the  installation  of  this  package, while Chapter [14X3[0m
+  provides  a  short  quick  guide  to build your first own example, using the
+  package [5XExamplesForHomalg[0m. The remaining chapters are each devoted to one of
+  the   [5Xhomalg[0m   objects   (-->  [14X1.1-1[0m)  with  its  constructors,  properties,
+  attributes, and operations.
+  

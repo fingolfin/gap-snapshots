@@ -2,25 +2,32 @@
 ##
 #W  init.g                      GAP library                     Thomas Breuer
 #W                                                             & Frank Celler
-#W                                                         & Martin Schoenert
+#W                                                          & Martin Schönert
 ##
-#H  @(#)$Id: init.g,v 4.212.2.12 2007/09/05 11:08:13 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file initializes GAP.
 ##
-Revision.init_g :=
-    "@(#)$Id: init.g,v 4.212.2.12 2007/09/05 11:08:13 gap Exp $";
+Revision := rec();
+
+
+    
+#############################################################################
+##
+#1 Temporary error handling until we are able to read error.g
+##
+##
 
 #############################################################################
 ##
 #F  OnBreak( )  . . . . . . . . . function to call at entry to the break loop
 ##
 ##
-OnBreak := Where;
+OnBreak := function() Print("An error has occurred before the traceback ",
+        "functions are defined\n"); end;
 
 #############################################################################
 ##
@@ -41,7 +48,7 @@ end;
 ##
 ##  called when a user elects to `quit;' a break loop entered  via  execution
 ##  of `Error'. Here we define it to do nothing, in  case,  we  encounter  an
-##  `Error' when {\GAP} is starting up (i.e. reading this file). `OnQuit'  is
+##  `Error' when GAP is starting up (i.e. reading this file). `OnQuit'  is
 ##  later  redefined  to  do  a  variant  of  `ResetOptionsStack'  to  ensure
 ##  `OptionsStack' is empty after a user quits an `Error'-induced break loop.
 ##  Currently, `OnQuit( )' is not advertised, since  exception  handling  may
@@ -49,11 +56,32 @@ end;
 ##
 OnQuit := function() end;
 
+
+Error := function( arg )
+    local x;
+    Print("Error before error-handling is initialized: ");
+    for x in arg do
+      Print(x);
+    od;
+    Print("\n");
+    JUMP_TO_CATCH("early error");
+end;
+
+ErrorInner := function(arg)
+    local x;
+    Print("Error before error-handling is initialized: ");
+    for x in [6..LENGTH(arg)] do
+      Print(arg[x]);
+    od;
+    Print("\n");
+    JUMP_TO_CATCH("early error");
+end;
+
 #############################################################################
 ##
 #F  Ignore( <arg> ) . . . . . . . . . . . . ignore but evaluate the arguments
 ##
-#T  1996/08/07 M.Schoenert 'Ignore' should be in the kernel
+#T  1996/08/07 M.Schönert 'Ignore' should be in the kernel
 #T  1996/09/08 S.Linton    Do we need it at all?
 ##
 Ignore := function ( arg )  end;
@@ -126,8 +154,23 @@ CHECK_INSTALL_METHOD := true;
 
 #############################################################################
 ##
-
+#F  READ_GAP_ROOT( <name> ) . . . . . . . . .  read file from GAP's root area
 #F  ReadGapRoot( <name> ) . . . . . . . . . .  read file from GAP's root area
+##
+##  <Ref Func="READ_GAP_ROOT"/> runs through &GAP;'s root directories
+##  (see <Ref Sect="GAP Root Directories"/>), 
+##  reads the first readable file with name <A>name</A> relative to the root
+##  directory, and then returns <K>true</K> if a file was read or
+##  <K>false</K> if no readable file <A>name</A> was found in any root
+##  directory.
+##
+##  <Ref Func="ReadGapRoot"/> calls <Ref Func="READ_GAP_ROOT"/> and signals
+##  an error if <K>false</K> was returned; it does not return anything.
+##
+##  <Ref Func="READ_GAP_ROOT"/> and <Ref Func="ReadGapRoot"/> are used only
+##  for reading files from the &GAP; library.
+##  Note that the paths of files from &GAP; packages are determined by the
+##  path of the <F>PackageInfo.g</F> file of the package in question.
 ##
 ReadGapRoot := function( name )
     if not READ_GAP_ROOT(name)  then
@@ -147,10 +190,10 @@ ReadGapRoot( "lib/global.g" );
 
 #############################################################################
 ##
-##  Read the dependency information.
+##  Read architecture dependent data and other globals, such as version
+##  information.
 ##
 ReadGapRoot( "lib/system.g" );
-
 
 IS_READ_OR_COMPLETE := false;
 
@@ -168,68 +211,96 @@ RankFilter               := Error;      # defined in "filter.g"
 
 #############################################################################
 ##
-#F  ReadOrComplete( <name> )  . . . . . . . . . . . . read file or completion
+##  - Unbind `DEBUG_LOADING', since later the `-D' option can be checked.
+##  - Set or disable break loop according to the `-T' option.
 ##
-COMPLETABLE_FILES := [];
-COMPLETED_FILES   := [];
-
-ReadOrComplete := function( name )
-    local check;
-
-    READED_FILES := [];
-    check        := CHECK_INSTALL_METHOD;
-
-    # use completion files
-    if not GAPInfo.CommandLineOptions.N then
-
-        # do not check installation and use cached ranks
-        CHECK_INSTALL_METHOD := false;
-        RankFilter           := RANK_FILTER_COMPLETION;
-
-        # check for the completion file
-        if not READ_GAP_ROOT( ReplacedString( name, ".g", ".co" ) ) then
-
-            # set filter functions to store
-            IS_READ_OR_COMPLETE  := true;
-            CHECK_INSTALL_METHOD := check;
-            RankFilter           := RANK_FILTER_STORE;
-            RANK_FILTER_LIST     := [];
-
-            # read the original file
-            InfoRead1( "#I  reading ", name, "\n" );
-            if not READ_GAP_ROOT( name ) then
-                Error( "cannot read or complete file ", name );
-            fi;
-            ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
-
-        # file completed
-        else
-            ADD_LIST( COMPLETED_FILES, name );
-            InfoRead1( "#I  completed ", name, "\n" );
-        fi;
-
+CallAndInstallPostRestore( function()
+    if DEBUG_LOADING then
+      InfoRead1:= Print;
     else
-
-        # set `RankFilter' to hash the ranks
-        IS_READ_OR_COMPLETE := true;
-        RankFilter          := RANK_FILTER_STORE;
-        RANK_FILTER_LIST    := [];
-
-        # read the file
-        if not READ_GAP_ROOT( name ) then
-            Error( "cannot read file ", name );
-        fi;
-        ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
+      InfoRead1:= Ignore;
     fi;
+    MAKE_READ_WRITE_GLOBAL( "DEBUG_LOADING" );
+    UNBIND_GLOBAL( "DEBUG_LOADING" );
 
-    # reset rank and filter functions
-    IS_READ_OR_COMPLETE  := false;
-    CHECK_INSTALL_METHOD := check;
-    RankFilter           := RANK_FILTER;
-    Unbind(RANK_FILTER_LIST);
-    Unbind(READED_FILES);
+    MAKE_READ_WRITE_GLOBAL( "TEACHING_MODE" );
+    UNBIND_GLOBAL( "TEACHING_MODE" );
+    BIND_GLOBAL( "TEACHING_MODE", GAPInfo.CommandLineOptions.T );
+    ASS_GVAR( "BreakOnError", not GAPInfo.CommandLineOptions.T );
+end);
+
+
+#############################################################################
+##
+#F  ReadOrComplete( <name> )  . . . . . . . . . . . . read file or completion
+####
+##COMPLETABLE_FILES := [];
+##COMPLETED_FILES   := [];
+##
+##ReadOrComplete := function( name )
+##    local check;
+##
+##    READED_FILES := [];
+##    check        := CHECK_INSTALL_METHOD;
+##
+##    # use completion files
+##    if not GAPInfo.CommandLineOptions.N then
+##
+##        # do not check installation and use cached ranks
+##        CHECK_INSTALL_METHOD := false;
+##        RankFilter           := RANK_FILTER_COMPLETION;
+##
+##        # check for the completion file
+##        if not READ_GAP_ROOT( ReplacedString( name, ".g", ".co" ) ) then
+##
+##            # set filter functions to store
+##            IS_READ_OR_COMPLETE  := true;
+##            CHECK_INSTALL_METHOD := check;
+##            RankFilter           := RANK_FILTER_STORE;
+##            RANK_FILTER_LIST     := [];
+##
+##            # read the original file
+##            InfoRead1( "#I  reading ", name, "\n" );
+##            if not READ_GAP_ROOT( name ) then
+##                Error( "cannot read or complete file ", name );
+##            fi;
+##            ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
+##
+##        # file completed
+##        else
+##            ADD_LIST( COMPLETED_FILES, name );
+##            InfoRead1( "#I  completed ", name, "\n" );
+##        fi;
+##
+##    else
+##
+##        # set `RankFilter' to hash the ranks
+##        IS_READ_OR_COMPLETE := true;
+##        RankFilter          := RANK_FILTER_STORE;
+##        RANK_FILTER_LIST    := [];
+##
+##        # read the file
+##        if not READ_GAP_ROOT( name ) then
+##            Error( "cannot read file ", name );
+##        fi;
+##        ADD_LIST( COMPLETABLE_FILES, [ name, READED_FILES, RANK_FILTER_LIST ] );
+##    fi;
+##
+##    # reset rank and filter functions
+##    IS_READ_OR_COMPLETE  := false;
+##    CHECK_INSTALL_METHOD := check;
+##    RankFilter           := RANK_FILTER;
+##    Unbind(RANK_FILTER_LIST);
+##    Unbind(READED_FILES);
+##end;
+##
+
+ReadOrComplete := function(name)
+    InfoRead1( "#I  reading ", name, "\n" );
+    if not READ_GAP_ROOT( name ) then
+        Error( "cannot read file ", name );
+    fi;
 end;
-
 
 #############################################################################
 ##
@@ -250,14 +321,15 @@ end;
 
 #############################################################################
 ##
-##  Read architecture dependent data and other globals, such as version
-##  information, 
+##  Check whether kernel version and library version fit.
 ##
-GAPInfo.CompareKernelVersions := function()
+CallAndInstallPostRestore( function()
     local nondigits, digits, i, char, have, need, haveint, needint;
-    
-    if (not IS_STRING(GAPInfo.NeedKernelVersion) and not GAPInfo.KernelVersion in GAPInfo.NeedKernelVersion) or
-      (IS_STRING(GAPInfo.NeedKernelVersion) and  GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion) then
+
+    if ( not IS_STRING(GAPInfo.NeedKernelVersion) and
+         not GAPInfo.KernelVersion in GAPInfo.NeedKernelVersion ) or
+       ( IS_STRING(GAPInfo.NeedKernelVersion) and
+         GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion ) then
       Print( "\n\n",
         "You are running a GAP kernel which does not fit with the library.\n",
         "Probably you forgot to apply the kernel part or the library part\n",
@@ -279,7 +351,7 @@ GAPInfo.CompareKernelVersions := function()
       # Translate them to integers.
       # (When this function is called during startup, the function
       # `IntHexString' is available;
-      # it has the right monotony behaviour for the comparisons.
+      # it has the right monotony behaviour for the comparisons.)
       haveint:= [];
       needint:= [];
       for i in [ 1 .. 3 ] do
@@ -302,26 +374,12 @@ GAPInfo.CompareKernelVersions := function()
                "bin", need[1], "r", need[2], "n", need[3],
                "-PPC.sit (or -68k.sit) is installed,\n",
                "Unix users please recompile.\n\n" );
+#T can't we give an architecture dependent message here?
       fi;
       Error( "Update to correct kernel version!\n\n" );
     fi;
-end;
+end );
 
-GAPInfo.CompareKernelVersions();
-
-
-#############################################################################
-##
-## print the banner (but not on the Macintosh version)
-##
-if not ( GAPInfo.CommandLineOptions.q or GAPInfo.CommandLineOptions.b ) then
-  if not ARCH_IS_MAC() then
-    Print( GAPInfo.BannerString,
-      "   Loading the library. Please be patient, this may take a while.\n");
-  else
-    Print("Loading the library. Please be patient, this may take a while.\n\n");
-  fi;
-fi;
 
 #############################################################################
 ##
@@ -329,8 +387,7 @@ fi;
 ##
 ##  `ReadAndCheckFunc' creates a function that reads in a file named
 ##  `<name>.<ext>'.
-##  The file must define `Revision.<name>_<ext>'.
-##  If a second argument <libname> is given, {\GAP} return `true' or `false'
+##  If a second argument <libname> is given, GAP return `true' or `false'
 ##  according to the read status, otherwise an error is signalled if the file
 ##  cannot be read.
 ##  This can be used for partial reading of the library.
@@ -386,18 +443,12 @@ BIND_GLOBAL("ReadAndCheckFunc",function( arg )
 	    Error( "the library file '", name, "' must exist and ",
 		   "be readable");
 	  else
-# we don't print a warning here but instead list the components at the end
-#	    Print("#W  The library file '",name,"' was not available\n",
-#	          "#W  The library of ",arg[2]," is not installed!\n");
 	    return false;
 	  fi;
 	elif path<>"pkg" then
 	  # check the revision entry
           ext := SHALLOW_COPY_OBJ(prefix);
 	  APPEND_LIST_INTR(ext,ReplacedString( name, ".", "_" ));
-	  if not IsBound(Revision.(ext))  then
-	      Print( "#W  revision entry missing in \"", name, "\"\n" );
-	  fi;
         fi;
 
       if LEN_LIST(arg)>1 then
@@ -479,9 +530,166 @@ end);
 #X  read in the files
 ##
 
+
 # inner functions, needed in the kernel
 ReadGapRoot( "lib/read1.g" );
 ExportToKernelFinished();
+
+# try to find terminal encoding
+CallAndInstallPostRestore( function()
+  local env, pos, enc, a, PositionSublist;
+  PositionSublist := function (str, sub)
+    local i;
+ 
+    for i in [1..Length(str)-Length(sub)+1] do
+       if str{[i..i+Length(sub)-1]}=sub then 
+         return i; 
+       fi; 
+    od;
+    return fail;
+  end;
+
+
+  ##  i := Length (str)-Length (sub) + 1;
+  ##  while i > 0 do
+  ##      if str{[i..i+Length(sub)-1]}=sub then
+  ##          return i;
+  ##      fi;
+  ##  od;
+  ##  return fail;
+  ##end;
+        
+  # we leave the GAPInfo.TermEncodingOverwrite for gaprc
+  # for a moment, but don't document it - doesn't work with 
+  # loaded workspaces
+  if not IsBound(GAPInfo.TermEncodingOverwrite) then
+    if IsList(GAPInfo.SystemEnvironment) then
+      # for compatibility with GAP 4.4.
+      env := rec();
+      for a in GAPInfo.SystemEnvironment do
+        pos := Position(a, '=');
+        env.(a{[1..pos-1]}) := a{[pos+1..Length(a)]};
+      od;
+    else
+      env := GAPInfo.SystemEnvironment;
+    fi;
+    enc := fail;
+    if IsBound(env.LC_CTYPE) then
+      enc := env.LC_CTYPE;
+    fi;
+    if enc = fail and IsBound(env.LC_ALL) then
+      enc := env.LC_ALL;
+    fi;
+    if enc = fail and IsBound(env.LANG) then
+      enc := env.LANG;
+    fi;
+    if enc <> fail and 
+                   (PositionSublist(enc, ".UTF-8") <> fail  or
+                    PositionSublist(enc, ".utf8") <> fail) then
+      GAPInfo.TermEncoding := "UTF-8";
+    fi;
+    if not IsBound(GAPInfo.TermEncoding) then
+      # default is latin1
+      GAPInfo.TermEncoding := "ISO-8859-1";
+    fi;
+  else
+    GAPInfo.TermEncoding := GAPInfo.TermEncodingOverwrite;
+  fi;
+end );
+
+
+BindGlobal( "ShowKernelInformation", function()
+  local sysdate, fun, linelen, indent, btop, vert, bbot, print_info,
+        libs;
+
+    linelen:= SizeScreen()[1] - 2;
+    print_info:= function( prefix, values, suffix )
+      local PL, comma, N;
+
+      Print( prefix );
+      PL:= Length(prefix)+1;
+      comma:= "";
+      for N in values do
+        Print( comma );
+        PL:= PL + Length( comma );
+        if PL + Length( N ) > linelen then
+          Print( "\n", indent);
+          PL:= Length(indent)+1;
+        fi;
+        Print( N, "\c" );
+        PL:= PL + Length( N );
+        comma:= ", ";
+      od;
+      if PL + Length( suffix ) + 1 > linelen then
+        Print( "\n", indent);
+      fi;
+      Print( suffix );
+    end;
+
+    sysdate:= GAPInfo.Date;
+    if sysdate = "today" and IsBoundGlobal( "IO_stat" ) then
+      # In the case of the development version, show the compilation date.
+      fun:= ValueGlobal( "IO_stat" );
+      fun:= fun( GAPInfo.SystemCommandLine[1] );
+      if fun <> fail then
+        sysdate:= NormalizedWhitespace(StringDate( QuoInt( fun.mtime, 86400 )));
+      fi;
+    fi;
+
+    if IsBound(GAPInfo.shortbanner) then
+        Print("This is GAP ", GAPInfo.Version, " of ",
+              sysdate, " (", GAPInfo.Architecture);
+        if "gmpints" in LoadedModules() then
+            Print("+gmp");
+        fi;
+        if IsBound( GAPInfo.UseReadline ) then
+            Print("+readline");
+        fi;
+        Print(")\n");
+        if GAPInfo.CommandLineOptions.L <> "" then
+            Print( "Restoring workspace ", GAPInfo.CommandLineOptions.L, "\n");
+        fi;
+    else
+      indent := "             ";
+      if GAPInfo.TermEncoding = "UTF-8" then
+        btop := "┌───────┐\c"; vert := "│"; bbot := "└───────┘\c";
+      else
+        btop := "*********"; vert := "*"; bbot := btop;
+      fi;
+      Print( " ",btop,"   GAP, Version ", GAPInfo.Version, " of ",
+             sysdate, " (free software, GPL)\n",
+             " ",vert,"  GAP  ",vert,"   http://www.gap-system.org\n",
+             " ",bbot,"   Architecture: ", GAPInfo.Architecture, "\n" );
+      # For each library, print the name.
+      libs:= [];
+      if "gmpints" in LoadedModules() then
+        Add( libs, "gmp" );
+      fi;
+      if IsBound( GAPInfo.UseReadline ) then
+        Add( libs, "readline" );
+      fi;
+      if libs <> [] then
+        print_info( " Libs used:  ", libs, "\n" );
+      fi;
+      if GAPInfo.CommandLineOptions.L <> "" then
+        Print( " Loaded workspace: ", GAPInfo.CommandLineOptions.L, "\n" );
+      fi;
+    fi;
+end );
+
+# delay printing the banner, if -L option was passed (LB)
+
+CallAndInstallPostRestore( function()
+     if not ( GAPInfo.CommandLineOptions.q or
+              GAPInfo.CommandLineOptions.b or GAPInfo.CommandLineOptions.L<>"" ) then
+       ShowKernelInformation();
+     fi;
+     end );
+
+if not ( GAPInfo.CommandLineOptions.q or GAPInfo.CommandLineOptions.b ) then
+    #Print (" Loading the library ... (see '?Saving and Loading' to start GAP faster)\n");
+    Print (" Loading the library \c");
+fi;
 
 ReadOrComplete( "lib/read2.g" );
 ReadOrComplete( "lib/read3.g" );
@@ -507,19 +715,6 @@ BindGlobal( "NamesGVars", function()
 end );
 
 
-
-# help system, profiling
-ReadOrComplete( "lib/read4.g" );
-#  moved here from read4.g, because completion doesn't work with if-statements
-#  around function definitions!
-ReadLib( "helpview.gi"  );
-
-#T  1996/09/01 M.Schoenert this helps performance
-IMPLICATIONS:=IMPLICATIONS{[Length(IMPLICATIONS),Length(IMPLICATIONS)-1..1]};
-# allow type determination of IMPLICATIONS without using it
-TypeObj(IMPLICATIONS[1]);
-HIDDEN_IMPS:=HIDDEN_IMPS{[Length(HIDDEN_IMPS),Length(HIDDEN_IMPS)-1..1]};
-
 # we cannot complete the following command because printing may mess up the
 # backslash-masked characters!
 BIND_GLOBAL("VIEW_STRING_SPECIAL_CHARACTERS_OLD",
@@ -527,294 +722,404 @@ BIND_GLOBAL("VIEW_STRING_SPECIAL_CHARACTERS_OLD",
   # contains characters that should instead be printed after a `\'.
   Immutable([ "\c\b\n\r\"\\", "cbnr\"\\" ]));
 BIND_GLOBAL("SPECIAL_CHARS_VIEW_STRING",
-[ List(Concatenation([0..31],[34,92],[127..159]), CHAR_INT), [
+[ List(Concatenation([0..31],[34,92],[127..255]), CHAR_INT), [
 "\\000", "\\>", "\\<", "\\c", "\\004", "\\005", "\\006", "\\007", "\\b", "\\t",
 "\\n", "\\013", "\\014", "\\r", "\\016", "\\017", "\\020", "\\021", "\\022",
 "\\023", "\\024", "\\025", "\\026", "\\027", "\\030", "\\031", "\\032", "\\033",
-"\\034", "\\035", "\\036", "\\037", "\\\"", "\\\\", "\\177", "\\200", "\\201",
-"\\202", "\\203", "\\204", "\\205", "\\206", "\\207", "\\210", "\\211",
-"\\212", "\\213", "\\214", "\\215", "\\216", "\\217", "\\220", "\\221",
-"\\222", "\\223", "\\224", "\\225", "\\226", "\\227", "\\230", "\\231",
-"\\232", "\\233", "\\234", "\\235", "\\236", "\\237"]]);
+"\\034", "\\035", "\\036", "\\037", "\\\"", "\\\\",
+"\\177","\\200","\\201","\\202","\\203","\\204","\\205","\\206","\\207",
+"\\210","\\211","\\212","\\213","\\214","\\215","\\216","\\217","\\220",
+"\\221","\\222","\\223","\\224","\\225","\\226","\\227","\\230","\\231",
+"\\232","\\233","\\234","\\235","\\236","\\237","\\240","\\241","\\242",
+"\\243","\\244","\\245","\\246","\\247","\\250","\\251","\\252","\\253",
+"\\254","\\255","\\256","\\257","\\260","\\261","\\262","\\263","\\264",
+"\\265","\\266","\\267","\\270","\\271","\\272","\\273","\\274","\\275",
+"\\276","\\277","\\300","\\301","\\302","\\303","\\304","\\305","\\306",
+"\\307","\\310","\\311","\\312","\\313","\\314","\\315","\\316","\\317",
+"\\320","\\321","\\322","\\323","\\324","\\325","\\326","\\327","\\330",
+"\\331","\\332","\\333","\\334","\\335","\\336","\\337","\\340","\\341",
+"\\342","\\343","\\344","\\345","\\346","\\347","\\350","\\351","\\352",
+"\\353","\\354","\\355","\\356","\\357","\\360","\\361","\\362","\\363",
+"\\364","\\365","\\366","\\367","\\370","\\371","\\372","\\373","\\374",
+"\\375","\\376","\\377" ]]);
 
-ReadOrComplete( "lib/read5.g" );
 
-ReadOrComplete( "lib/read6.g" );
+# help system, profiling
+ReadOrComplete( "lib/read4.g" );
+#  moved here from read4.g, because completion doesn't work with if-statements
+#  around function definitions!
+ReadLib( "helpview.gi"  );
 
-# character theory stuff
-ReadOrComplete( "lib/read7.g" );
+#T  1996/09/01 M.Schönert this helps performance
+IMPLICATIONS:=IMPLICATIONS{[Length(IMPLICATIONS),Length(IMPLICATIONS)-1..1]};
+# allow type determination of IMPLICATIONS without using it
+TypeObj(IMPLICATIONS[1]);
+HIDDEN_IMPS:=HIDDEN_IMPS{[Length(HIDDEN_IMPS),Length(HIDDEN_IMPS)-1..1]};
+#T shouldn't this better be at the end of reading the library?
+#T and what about implications installed in packages?
+#T (put later installations to the front?)
 
-# overloaded operations and compiler interface
-ReadOrComplete( "lib/read8.g" );
-ReadLib( "colorprompt.g"  );
-
-
-#############################################################################
-##
-##  Load data libraries
-##  The data libraries which may be absent cannot be completed, therefore
-##  they must be read in here!
-
-#############################################################################
-##
-#X  Read library of groups of small order
-#X  Read identification routine
-##
-ReadSmall( "readsml.g","small groups" );
-
-#############################################################################
-##
-#X  Read transitive groups library
-##
-TRANS_AVAILABLE:=ReadTrans( "trans.gd","transitive groups" );
-TRANS_AVAILABLE:= TRANS_AVAILABLE and ReadTrans( "trans.grp",
-                                        "transitive groups" );
-TRANS_AVAILABLE:= TRANS_AVAILABLE and ReadTrans( "trans.gi",
-                                        "transitive groups" );
-
-if TRANS_AVAILABLE then
-  ReadLib("galois.gd"); # the Galois group identification relies on the list
-                        # of transitive groups
-  ReadLib("galois.gi");
-fi;
 
 #############################################################################
 ##
-#X  Read primitive groups library
+##  Set the defaults of `GAPInfo.UserPreferences'.
 ##
-PRIM_AVAILABLE:=ReadPrim( "primitiv.gd","primitive groups" );
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "irredsol.gd","irreducible solvable groups" );
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "primitiv.grp",
-                                     "primitive groups" );
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "primitiv.gi",
-                                     "primitive groups" );
-
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "irredsol.grp","irreducible solvable groups" );
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "irredsol.gi","irreducible solvable groups" );
-PRIM_AVAILABLE:=PRIM_AVAILABLE and ReadPrim( "cohorts.grp","irreducible solvable groups" );
-
-#############################################################################
+##  We locate the first file `gap.ini' in GAP root directories,
+##  and read it if available.
+##  This must be done before `GAPInfo.UserPreferences' is used.
+##  Some of the preferences require an initialization,
+##  but this cannot be called before the complete library has been loaded.
 ##
-##  check whether version of loaded workspace coincides with
-##  version of GAP library
-##
-Add( POST_RESTORE_FUNCS, function()
-    local wsp_version, name, iw;
 
-    wsp_version := GAPInfo;
-    RereadLib( "system.g" );
-    if GAPInfo.Version <> wsp_version.Version then
-      Info( InfoWarning, 1,
-            "The loaded workspace was created with a version of GAP (", 
-            wsp_version.Version, ")" );
-      Info( InfoWarning, 1,
-            "which is different from the one presently installed (",
-            GAPInfo.Version, ")." );
-      Info( InfoWarning, 1,
-            "This may lead to wrong results or further errors." );
-    fi;
-    for name in [ "PackagesLoaded", "PackagesInfo",
-        "PackagesInfoAutoload", "PackagesInfoAutoloadDocumentation",
-        "PackagesInfoRefuseLoad", "PackagesInfoInitialized",
-        "PackagesNames", "PackagesRestrictions",
-        "PackageInfoCurrent", "LoadedComponents",
-        "CompareKernelVersions", "SystemInformation" ] do
-      if IsBound( wsp_version.( name ) ) then
-        GAPInfo.( name ) := wsp_version.( name );
+# The following function is not recommended anymore.
+# Give a warning but do what the function was expected to do.
+BindGlobal( "SetUserPreferences", function( arg )
+    local name, record;
+    
+    Info( InfoWarning, 1, "");
+    Info( InfoWarning, 1, Concatenation( [
+          "The call to 'SetUserPreferences' (probably in a 'gap.ini' file)\n",
+          "#I  should be replaced by individual 'SetUserPreference' calls,\n",
+          "#I  which are package specific.\n",
+          "#I  Try 'WriteGapIniFile()'." ] ) );
+ 
+    # Set the new values.
+    if Length( arg ) = 1 then
+      record:= arg[1];
+      if not IsBound(GAPInfo.UserPreferences.gapdoc) then
+        GAPInfo.UserPreferences.gapdoc := rec();
       fi;
-      GAPInfo.CommandLineOptionsRestore := 
-                                     ShallowCopy(GAPInfo.CommandLineOptions);
-      for name in NamesOfComponents(SY_RESTORE_OPTIONS) do
-        GAPInfo.CommandLineOptionsRestore.(name) := SY_RESTORE_OPTIONS.(name);
+      if not IsBound(GAPInfo.UserPreferences.gap) then
+        GAPInfo.UserPreferences.gap := rec();
+      fi;
+      for name in RecNames( record ) do
+        if name in [ "HTMLStyle", "TextTheme", "UseMathJax" ] then
+          GAPInfo.UserPreferences.gapdoc.( name ):= record.( name );
+        else
+          GAPInfo.UserPreferences.gap.( name ):= record.( name );
+        fi;
       od;
-  od;
-  #
-  # Workaround for warning message from reread of obsolete.g
-  # SL
-  #
-  iw := InfoLevel(InfoWarning);
-  SetInfoLevel(InfoWarning,0);
-  RereadLib( "obsolete.g" );
-  SetInfoLevel(InfoWarning,iw);
-#T Remove this as soon as the globals corresponding to command line options
-#T have disappeared and are not getting unbound in `system.g'.
-    end );
-Add(POST_RESTORE_FUNCS, function() 
-    local A;
-      # recheck in case user has given additional directories
-      A:= GAPInfo.CommandLineOptionsRestore.A;
-      if A = false or ( IsList( A ) and ( Length( A ) mod 2 = 0 ) ) then
-#T This is just a hack, GAPInfo.CommandLineOptionsRestore should be
-#T translated in the same way as GAPInfo.CommandLineOptions.
-        GAPInfo.PackagesInfoInitialized := false;
-        InitializePackagesInfoRecords(false);
-      fi;
-end);
-
-#############################################################################
-##
-##  Display version, loaded components and packages
-##
-GAPInfo.SystemInformation := function( basic, extended )
-    local linelen, PL, comma, name, info, N;
-
-    linelen:= SizeScreen()[1] - 2;
-    if basic then
-    Print( "GAP4, Version: ", GAPInfo.Version, " of ", GAPInfo.Date, ", ",
-           GAPInfo.Architecture, "\n" );
-      if extended then
-
-      # For each loaded component, print name and version number.
-      if GAPInfo.LoadedComponents <> rec() then
-        Print("Components:  ");
-        PL:= 13;
-        comma:=false;
-        for name in RecNames( GAPInfo.LoadedComponents ) do
-          N:= Concatenation( name, " ", GAPInfo.LoadedComponents.( name ) );
-          if comma then
-            Print(", ");
-            PL:= PL + 2;
-          fi;
-          if PL + Length( N ) > linelen then
-            Print("\n             ");
-            PL:=13;
-          fi;
-          Print( N, "\c" );
-          PL:=PL+Length( N );
-          comma:= true;
-        od;
-        if PL + 10 > linelen then
-          Print("\n             ");
-        fi;
-        Print("  loaded.\n");
-      fi;
-
-      # For each loaded package, print name and version number.
-      if GAPInfo.PackagesLoaded <> rec() then
-        Print( "Packages:    " );
-        PL:= 13;
-        comma:= false;
-        for name in RecNames( GAPInfo.PackagesLoaded ) do
-          info:= GAPInfo.PackagesLoaded.( name );
-          N:= Concatenation( info[3], " ", info[2] );
-          if comma then
-            Print(", ");
-            PL:= PL + 2;
-          fi;
-          if PL + Length( N ) > linelen then
-            Print("\n             ");
-            PL:= 13;
-          fi;
-          Print( N, "\c" );
-          PL:=PL+Length(N);
-          comma:= true;
-        od;
-        if PL + 10 > linelen then
-          Print("\n             ");
-        fi;
-        Print("  loaded.\n");
-      fi;
-
     fi;
-  fi;
-end;
-Add( POST_RESTORE_FUNCS, function()
-     GAPInfo.SystemInformation( not GAPInfo.CommandLineOptions.q,
-                                not GAPInfo.CommandLineOptions.b );
-     end );
+    end );
 
+# SetUserPreferences();
 
-#############################################################################
-##
-##  Deal with compatibility mode via command line option `-O'.
-##
-if false = fail then ReadLib( "compat3d.g" ); fi;
+# Here are a few general user preferences which may be useful for 
+# various purposes. They are self-explaining.
+DeclareUserPreference( rec(
+  name:= "UseColorsInTerminal",
+  description:= [
+    "Almost all current terminal emulations support color display, \
+setting this to 'true' implies a default display of most manuals with \
+color markup. It may influence the display of other things in the future."
+    ],
+  default:= true,
+  values:= [ true, false ],
+  multi:= false,
+  ) );
+DeclareUserPreference( rec(
+  name:= "ViewLength",
+  description:= [
+    "A bound for the number of lines printed when 'View'ing some large objects."
+    ],
+  default:= 3,
+  check:= val -> IsInt( val ) and 0 <= val,
+  ) );
 
-
-#############################################################################
-##
-##  Determine which packages are installed as autoloadable.
-##  (This can be modified in the user's `.gaprc' file.)
-##
-InitializePackagesInfoRecords( GAPInfo.CommandLineOptions.A );
-AUTOLOAD_PACKAGES:= GAPInfo.PackagesNames;
-#T Remove this as soon as it is no longer needed.
-#T (Note that we cannot put the assignment into `lib/obsolete.g'
-#T because both autoloading and reading `lib/obsolete.g' are controlled by
-#T the `.gaprc' file.)
-
-
-#############################################################################
-##
-##  ParGAP/MPI slave hook
-##
-##  A ParGAP slave redefines this as a function if the {\GAP} package ParGAP
-##  is loaded. It is called just once at  the  end  of  GAP's  initialisation
-##  process i.e. at the end of this file.
-##
-PAR_GAP_SLAVE_START := fail;
-
-#############################################################################
-##
-##  Read the .gaprc file
-##
-READ( GAPInfo.gaprc );
+CallAndInstallPostRestore( function()
+    READ_GAP_ROOT( "gap.ini" );
+end );
 
 
 #############################################################################
 ##
 #X  files installing compatibility with deprecated, obsolescent or
 ##  obsolete GAP4 behaviour;
-##  *not* to be read if `GAPInfo.ReadObsolete' has the value `false'
-##  (this value can be set in the `.gaprc' file)
+##  *not* to be read if `GAPInfo.UserPreferences.ReadObsolete' has the value
+##  `false'
+##  (this value can be set in the `gap.ini' file)
 ##
-if ISB_GVAR( "GAP_OBSOLESCENT" ) then
-#T for compatibility with GAP 4.3
-  GAPInfo.ReadObsolete:= GAP_OBSOLESCENT;
-  Print( "Please use `GAPInfo.ReadObsolete' instead of `GAP_OBSOLESCENT'\n",
-         "in your `.gaprc' file\n" );
-fi;
-if GAPInfo.ReadObsolete <> false then
-  RereadLib( "obsolete.g" );
-fi;
+# reading can be configured via a user preference
+DeclareUserPreference( rec(
+  name:= "ReadObsolete",
+  description:= [
+    "May be useful to say 'false' here to check if you are using commands \
+which may vanish in a future version of GAP"
+    ],
+  default:= true,
+  values:= [ true, false ],
+  multi:= false,
+  ) );
+# HACKUSERPREF temporary hack for AtlasRep and CTblLib:
+GAPInfo.UserPreferences.ReadObsolete := UserPreference("ReadObsolete");
+CallAndInstallPostRestore( function()
+    if UserPreference( "ReadObsolete" ) <> false and
+       not IsBound( GAPInfo.Read_obsolete_gd ) then
+      ReadLib( "obsolete.gd" );
+      GAPInfo.Read_obsolete_gd:= true;
+    fi;
+end );
 
 
 #############################################################################
 ##
-##  Autoload packages (suppressing banners)
+##  ParGAP/MPI slave hook
 ##
-if not GAPInfo.CommandLineOptions.A then
-BANNER_ORIG:= BANNER;
-#T remove this as soon as `BANNER' is not used anymore
-MakeReadWriteGlobal("BANNER");
-UnbindGlobal("BANNER");
-BANNER:= false;
-GAPInfo.InfoWarningLevel:= InfoLevel( InfoWarning );
-SetInfoLevel( InfoWarning, 0 );
-  AutoloadPackages();
-SetInfoLevel( InfoWarning, GAPInfo.InfoWarningLevel );
-Unbind( GAPInfo.InfoWarningLevel );
-BANNER:= BANNER_ORIG;
-MakeReadOnlyGlobal("BANNER");
-Unbind( BANNER_ORIG );
+##  A ParGAP slave redefines this as a function if the GAP package ParGAP
+##  is loaded. It is called just once at  the  end  of  GAP's  initialisation
+##  process i.e. at the end of this file.
+##
+PAR_GAP_SLAVE_START := fail;
+
+
+#############################################################################
+##
+##  Autoload packages (suppressing banners).
+##  (If GAP was started with a workspace then the user may have given
+##  additional directories, so more suggested packages may become available.
+##  So we have to call `AutoloadPackages' also then.)
+##
+##  Load the implementation part of the GAP library.
+##
+##  Load additional packages, such that their names appear in the banner.
+##
+if not ( GAPInfo.CommandLineOptions.q or GAPInfo.CommandLineOptions.b ) then
+    Print ("and packages ...\n");
 fi;
+CallAndInstallPostRestore( function()
+    local pkgname;
+    SetInfoLevel( InfoPackageLoading,
+        UserPreference( "InfoPackageLoadingLevel" ) );
+
+    GAPInfo.PackagesInfoInitialized:= false;
+    InitializePackagesInfoRecords();
+    AutoloadPackages();
+
+    if not GAPInfo.CommandLineOptions.A then
+      Perform( UserPreference( "PackagesToLoad" ), 
+               pkgname -> LoadPackage( pkgname, false ) );
+    fi;
+end );
+
+
+############################################################################
+##
+##  Propagate the user preferences.
+##  (This function cannot be called earlier,
+##  since the GAP library may not be loaded before.)
+##
+CallAndInstallPostRestore( function()
+    local   xy;
+
+    # screen size (options `-x' and `-y').
+    xy := [];
+    if GAPInfo.CommandLineOptions.x <> "" then
+        xy[1] := SMALLINT_STR(GAPInfo.CommandLineOptions.x);
+    fi;
+    if GAPInfo.CommandLineOptions.y <> "" then
+        xy[2] := SMALLINT_STR(GAPInfo.CommandLineOptions.y);
+    fi;
+    if xy <> [] then
+        SizeScreen(xy);
+    fi;
+
+    # option `-g'
+    if   GAPInfo.CommandLineOptions.g = 0 then
+      SetGasmanMessageStatus( "none" );
+    elif GAPInfo.CommandLineOptions.g = 1 then
+      SetGasmanMessageStatus( "full" );
+    else
+      SetGasmanMessageStatus( "all" );
+    fi;
+
+    # maximal number of lines that are reasonably printed
+    # in `ViewObj' methods
+    GAPInfo.ViewLength:= UserPreference( "ViewLength" );
+
+    # user preference `UseColorPrompt'
+    ColorPrompt( UserPreference( "UseColorPrompt" ) );
+end );
+
+
+############################################################################
+##
+#X  Name Synonyms for different spellings
+##
+ReadLib("transatl.g");
+
+
+#############################################################################
+##
+#X  files installing compatibility with deprecated, obsolescent or
+##  obsolete GAP4 behaviour;
+##  *not* to be read if `UserPreference( "ReadObsolete" )' has the value
+##  `false'
+##  (this value can be set in the `gap.ini' file)
+##
+CallAndInstallPostRestore( function()
+    if UserPreference( "ReadObsolete" ) <> false and
+       not IsBound( GAPInfo.Read_obsolete_gi ) then
+      ReadLib( "obsolete.gi" );
+      GAPInfo.Read_obsolete_gi:= true;
+    fi;
+end );
+
+
+#############################################################################
+##
+##  Install SaveCommandLineHistory as exit function and read history from 
+##  file, depending on user preference.
+##  
+CallAndInstallPostRestore( function()
+  if UserPreference("SaveAndRestoreHistory") = true then
+    InstallAtExit(SaveCommandLineHistory);
+    ReadCommandLineHistory();
+  fi;
+end );
+
+#############################################################################
+##
+##  If the command line option `-r' is not given
+##  and if no `gaprc' file has been read yet (if applicable then including
+##  the times before the current workspace had been created)
+##  then read the first `gaprc' file from the GAP root directories.
+##
+CallAndInstallPostRestore( function()
+    if READ_GAP_ROOT( "gaprc" ) then
+      GAPInfo.HasReadGAPRC:= true;
+    elif not IsExistingFile(GAPInfo.UserGapRoot) then
+      # For compatibility with GAP 4.4:
+      # If no readable `gaprc' file exists in the GAP root directories and
+      # the user root directory does not (yet) exist then
+      # try to read `~/.gaprc' (on UNIX systems) or `gap.rc' (otherwise).
+      if not ( GAPInfo.CommandLineOptions.r or GAPInfo.HasReadGAPRC ) then
+        if ARCH_IS_UNIX() then
+          GAPInfo.gaprc:= SHALLOW_COPY_OBJ( GAPInfo.UserHome );
+          APPEND_LIST_INTR( GAPInfo.gaprc, "/.gaprc" );
+        else
+          GAPInfo.gaprc:= "gap.rc";
+        fi;
+        if READ( GAPInfo.gaprc ) then
+          Info(InfoWarning, 1, 
+            "You are using an old ",GAPInfo.gaprc, " file. ");
+          Info(InfoWarning, 1, 
+            "See '?Ref: The former .gaprc file' for hints to upgrade.");
+          GAPInfo.HasReadGAPRC:= true;
+        fi;
+      fi;
+    fi;
+end );
 
 
 #############################################################################
 ##
 ##  Display version, loaded components and packages
 ##
-GAPInfo.SystemInformation( not GAPInfo.CommandLineOptions.q,
-                           not GAPInfo.CommandLineOptions.b );
 
+BindGlobal( "ShowPackageInformation", function()
+  local linelen, indent, btop, vert, bbot, print_info,
+        libs, cmpdist, ld, f;
+
+    linelen:= SizeScreen()[1] - 2;
+    print_info:= function( prefix, values, suffix )
+      local PL, comma, N;
+
+      Print( prefix );
+      PL:= Length(prefix)+1;
+      comma:= "";
+      for N in values do
+        Print( comma );
+        PL:= PL + Length( comma );
+        if PL + Length( N ) > linelen then
+          Print( "\n", indent);
+          PL:= Length(indent)+1;
+        fi;
+        Print( N, "\c" );
+        PL:= PL + Length( N );
+        comma:= ", ";
+      od;
+      if PL + Length( suffix ) + 1 > linelen then
+        Print( "\n", indent);
+      fi;
+      Print( suffix );
+    end;
+
+
+    if IsBound(GAPInfo.shortbanner) then
+        indent := "  ";
+        if GAPInfo.PackagesLoaded <> rec() then
+            print_info( "Packages ",
+                  List( RecNames( GAPInfo.PackagesLoaded ),
+                        name -> Concatenation(
+                                    GAPInfo.PackagesLoaded.( name )[3], " ",
+                                    GAPInfo.PackagesLoaded.( name )[2] ) ),
+                  ".\n" );
+        fi;
+    else
+      indent := "             ";
+
+      # For each loaded component, print name and version number.
+      # We use an abbreviation for the distributed combination of
+      # idX and smallX components.
+      if GAPInfo.LoadedComponents <> rec() then
+        cmpdist := rec(id10:="0.1",id2:="3.0",id3:="2.1",id4:="1.0",id5:="1.0",
+                   id6:="1.0",id9:="1.0",small:="2.1",small10:="0.2",
+                   small11:="0.1",small2:="2.0",small3:="2.0",small4:="1.0",
+                   small5:="1.0",small6:="1.0",small7:="1.0",small8:="1.0",
+                   small9:="1.0");
+        ld := ShallowCopy(GAPInfo.LoadedComponents);
+        if ForAll(RecNames(cmpdist), f-> IsBound(ld.(f))
+                                          and ld.(f) = cmpdist.(f)) then
+          for f in RecNames(cmpdist) do
+            Unbind(ld.(f));
+          od;
+          ld.("small*") := "1.0";
+          ld.("id*") := "1.0";
+        fi;
+        print_info( " Components: ",
+                    List( RecNames( ld ), name -> Concatenation( name, " ",
+                                      ld.( name ) ) ),
+                    "\n");
+      fi;
+
+      # For each loaded package, print name and version number.
+      if GAPInfo.PackagesLoaded <> rec() then
+        print_info( " Packages:   ",
+                    List( SortedList( RecNames( GAPInfo.PackagesLoaded ) ),
+                          name -> Concatenation(
+                                      GAPInfo.PackagesLoaded.( name )[3], " ",
+                                      GAPInfo.PackagesLoaded.( name )[2] ) ),
+                    "\n" );
+      fi;
+
+      Print( " Try '?help' for help. See also  '?copyright' and  '?authors'",
+             "\n" );
+    fi;
+end );
+#T show also root paths?
+
+CallAndInstallPostRestore( function()
+     if not ( GAPInfo.CommandLineOptions.q or
+              GAPInfo.CommandLineOptions.b ) then
+       if GAPInfo.CommandLineOptions.L<>"" then
+         ShowKernelInformation();
+       fi;
+       ShowPackageInformation();
+     fi;
+     end );
+
+BindGlobal ("ShowSystemInformation", function ()
+    ShowKernelInformation();
+    ShowPackageInformation();
+end );
 
 #############################################################################
 ##
 ##  Finally, deal with the lists of global variables.
 ##  This must be done at the end of this file,
 ##  since the variables defined in packages are regarded as system variables.
-##  (But also the variables defined in the file `GAPInfo.gaprc' are regarded
-##  as system variables this way; is this inconvenient?)
+#T But this way also the variables that get bound in `gaprc' are regarded
+#T as system variables!
 ##
 
 
@@ -823,7 +1128,7 @@ GAPInfo.SystemInformation( not GAPInfo.CommandLineOptions.q,
 #F  NamesSystemGVars()  . . . . . .  list of names of system global variables
 ##
 ##  This function returns an immutable sorted list of all the global
-##  variable names created by the {\GAP} library when {\GAP} was started.
+##  variable names created by the GAP library when GAP was started.
 ##
 NAMES_SYSTEM_GVARS := Filtered( IDENTS_GVAR(), ISB_GVAR );
 Add( NAMES_SYSTEM_GVARS, "NamesUserGVars" );
@@ -864,18 +1169,45 @@ end);
 ##
 HELP_ADD_BOOK("Tutorial", "GAP 4 Tutorial", "doc/tut");
 HELP_ADD_BOOK("Reference", "GAP 4 Reference Manual", "doc/ref");
-HELP_ADD_BOOK("Extending", "Extending GAP 4 Reference Manual", "doc/ext");
-HELP_ADD_BOOK("Prg Tutorial", "Programmers Tutorial", "doc/prg");
-HELP_ADD_BOOK("New Features", "New Features for Developers", "doc/new");
+HELP_ADD_BOOK("Changes", "Changes from Earlier Versions", "doc/changes");
 
 
 #############################################################################
 ##
-##  ParGAP/MPI slave hook
+##  ParGAP loading and switching into the slave mode hook
 ##
+if IsBoundGlobal("MPI_Initialized") then
+  LoadPackage("pargap");
+fi;
 if PAR_GAP_SLAVE_START <> fail then PAR_GAP_SLAVE_START(); fi;
+
+
+#############################################################################
+##
+##  Read init files, run a shell, and do exit-time processing.
+##
+CallAndInstallPostRestore( function()
+    local i, status;
+    for i in [1..Length(GAPInfo.InitFiles)] do
+        status := READ_NORECOVERY(GAPInfo.InitFiles[i]);
+        if status = fail then
+            PRINT_TO( "*errout*", "Reading file \"", GAPInfo.InitFiles[i],
+                "\" has been aborted.\n");
+            if i < Length (GAPInfo.InitFiles) then
+                PRINT_TO( "*errout*",
+                    "The remaining files on the command line will not be read.\n" );
+            fi;
+            break;
+        elif status = false then
+            PRINT_TO( "*errout*", 
+                "Could not read file \"", GAPInfo.InitFiles[i],"\".\n" );
+        fi;
+    od;
+end );
+
+SESSION();
+
 
 #############################################################################
 ##
 #E
-

@@ -2,12 +2,10 @@
 ##
 #W  randiso2.gi               GAP library                  Hans Ulrich Besche
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.randiso2_gi :=
-    "@(#)$Id: randiso2.gi,v 1.23 2002/04/15 10:05:13 sal Exp $";
 
 #############################################################################
 ##
@@ -251,6 +249,9 @@ IsomorphismSolvableSmallGroups := function( g, h )
    size := Size( g );
    if size <> Size( h ) then
       return fail;
+   fi;
+   if size = 1 then
+     return GroupHomomorphismByImagesNC( g, h, [], [] );
    fi;
    if ID_AVAILABLE( size ) = fail or size > 2000 then
       Error( "IsomorphismSmallSolvableGroups: groups are not small" );

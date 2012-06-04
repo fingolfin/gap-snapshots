@@ -1,16 +1,13 @@
 #############################################################################
 ##
 #W  gprd.gi                     GAP library                      Bettina Eick
-##                                                             Heiko Thei"sen
+##                                                             Heiko Theißen
 ##
-#H  @(#)$Id: gprd.gi,v 4.46.2.7 2007/10/08 22:12:26 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.gprd_gi :=
-    "@(#)$Id: gprd.gi,v 4.46.2.7 2007/10/08 22:12:26 gap Exp $";
 
 
 #############################################################################
@@ -18,7 +15,7 @@ Revision.gprd_gi :=
 #F  DirectProduct( <arg> )
 ##
 InstallGlobalFunction( DirectProduct, function( arg )
-local d;
+local d, prop;
   if Length( arg ) = 0 then
     Error( "<arg> must be nonempty" );
   elif Length( arg ) = 1 and IsList( arg[1] ) then
@@ -28,6 +25,15 @@ local d;
     arg:= arg[1];
   fi;
   d:=DirectProductOp( arg, arg[1] );
+
+  # test/set a few properties and attributes from factors
+
+  for prop in [IsFinite, IsNilpotentGroup, IsAbelian, IsSolvableGroup] do
+    if ForAll(arg, Tester(prop)) then
+      Setter(prop)(d, ForAll(arg, prop));
+    fi;
+  od;
+    
   if ForAll(arg,HasSize) then
     if   ForAll(arg,IsFinite)
     then SetSize(d,Product(List(arg,Size)));
@@ -43,11 +49,10 @@ end );
 ##
 InstallMethod( DirectProductOp,
     "for a list (of groups), and a group",
-    true,
-    [ IsList, IsGroup ], 0,
+    [ IsList, IsGroup ],
     function( list, gp )
 
-    local ids, tup, first, i, G, gens, g, new, D, prop;
+    local ids, tup, first, i, G, gens, g, new, D;
 
     # Check the arguments.
     if IsEmpty( list ) then
@@ -65,30 +70,22 @@ InstallMethod( DirectProductOp,
         for g in gens do
             new := ShallowCopy( ids );
             new[i] := g;
-            new := Tuple( new );
+            new := DirectProductElement( new );
             Add( tup, new );
         od;
         Add( first, Length( tup )+1 );
     od;
 
-    D := GroupByGenerators( tup, Tuple( ids ) );
+    D := GroupByGenerators( tup, DirectProductElement( ids ) );
 
-    # test/set a few properties and attributes from factors
-    
-    for prop in [IsFinite, IsNilpotentGroup, IsAbelian, IsSolvableGroup] do
-        if ForAll (list, Tester (prop)) then
-            Setter (prop)(D, ForAll (list, prop));
-        fi;
-    od;
-    
-    if ForAll (list, G -> HasSize(G)) then
-        SetSize (G, Product (List (list, Size)));
-    fi;
-            
     SetDirectProductInfo( D, rec( groups := list,
                                   first  := first,
                                   embeddings := [],
                                   projections := [] ) );
+    
+    if ForAll( list, CanEasilyComputeWithIndependentGensAbelianGroup ) then
+      SetFilterObj( D, CanEasilyComputeWithIndependentGensAbelianGroup );
+    fi;
 
     return D;
     end );        
@@ -96,10 +93,10 @@ InstallMethod( DirectProductOp,
 
 #############################################################################
 ##
-#M  \in( <tuple>, <G> )
+#M  \in( <dpelm>, <G> )
 ##
 InstallMethod( \in,"generic direct product", IsElmsColls,
-    [ IsTuple, IsGroup and HasDirectProductInfo ], 0,
+    [ IsDirectProductElement, IsGroup and HasDirectProductInfo ],
 function( g, G )
     local n, info;
     n := Length( g );
@@ -112,9 +109,8 @@ end );
 ##
 #A Embedding
 ##
-InstallMethod( Embedding, "group direct product and integer", true, 
-         [ IsGroup and HasDirectProductInfo, IsPosInt ], 
-         0,
+InstallMethod( Embedding, "group direct product and integer",
+    [ IsGroup and HasDirectProductInfo, IsPosInt ], 
     function( D, i )
     local info, G, imgs, hom, gens;
 
@@ -129,14 +125,15 @@ InstallMethod( Embedding, "group direct product and integer", true,
     G := info.groups[i];
     gens := GeneratorsOfGroup( G );
     imgs := GeneratorsOfGroup( D ){[info.first[i] .. info.first[i+1]-1]};
-    if Length(imgs)>0 and IsTuple(imgs[1]) then
-      # the direct product is represented by tuples. The easiest way to
-      # compute the embedding is to construct tuples
+    if Length(imgs)>0 and IsDirectProductElement(imgs[1]) then
+      # the direct product is represented by direct product elements.
+      # The easiest way to compute the embedding is to construct
+      # direct product elements.
       hom:=GroupHomomorphismByFunction(G,D,function(elm)
 	       local l;
 	       l:=ShallowCopy(info.onelist);
 	       l[i]:=elm;
-	       return Tuple(l);
+	       return DirectProductElement(l);
              end);
     else
       hom  := GroupHomomorphismByImagesNC( G, D, gens, imgs );
@@ -150,11 +147,10 @@ end );
 
 #############################################################################
 ##
-#A Projection
+#A  Projection
 ##
-InstallMethod( Projection, "group direct product and integer", true, 
-         [ IsGroup and HasDirectProductInfo, IsPosInt ], 
-         0,
+InstallMethod( Projection, "group direct product and integer",
+    [ IsGroup and HasDirectProductInfo, IsPosInt ], 
     function( D, i )
     local info, G, imgs, hom, N, gens;
 
@@ -171,9 +167,9 @@ InstallMethod( Projection, "group direct product and integer", true,
                List( [1..info.first[i]-1], x -> One( G ) ),
                GeneratorsOfGroup( G ),
                List( [info.first[i+1]..Length(gens)], x -> One(G)));
-    if Length(gens)>0 and IsTuple(gens[1]) then
-      # the direct product is represented by tuples. The easiest way to
-      # compute the projection is to take elements apart
+    if Length(gens)>0 and IsDirectProductElement(gens[1]) then
+      # The direct product is represented by direct product elements.
+      # The easiest way to compute the projection is to take elements apart.
       hom:=GroupHomomorphismByFunction( D, G, elm -> elm[i] );
     else
       hom := GroupHomomorphismByImagesNC( D, G, gens, imgs );
@@ -192,18 +188,18 @@ end );
 ##
 #M  Size( <D> )
 ##
-InstallMethod( Size, "group direct product",true, 
-  [IsGroup and HasDirectProductInfo], 0,
+InstallMethod( Size, "group direct product",
+  [IsGroup and HasDirectProductInfo],
 function( D )
-    return Product( List( DirectProductInfo( D ).groups, x -> Size(x) ) );
+    return Product( List( DirectProductInfo( D ).groups, Size ) );
 end );
 
 #############################################################################
 ##
 #M  IsSolvableGroup( <D> )
 ##
-InstallMethod( IsSolvableGroup, "for direct products", true, 
-               [IsGroup and HasDirectProductInfo], 0,
+InstallMethod( IsSolvableGroup, "for direct products",
+               [IsGroup and HasDirectProductInfo],
 function( D )
     return ForAll( DirectProductInfo( D ).groups, IsSolvableGroup );
 end );
@@ -212,8 +208,8 @@ end );
 ##
 #M  IsNilpotentGroup( <D> )
 ##
-InstallMethod( IsNilpotentGroup, "for direct products", true, 
-               [IsGroup and HasDirectProductInfo], 0,
+InstallMethod( IsNilpotentGroup, "for direct products",
+               [IsGroup and HasDirectProductInfo],
 function( D )
     return ForAll( DirectProductInfo( D ).groups, IsNilpotentGroup );
 end );
@@ -222,8 +218,8 @@ end );
 ##
 #M  IsAbelian( <D> )
 ##
-InstallMethod( IsAbelian, "for direct products", true, 
-               [IsGroup and HasDirectProductInfo], 0,
+InstallMethod( IsAbelian, "for direct products",
+               [IsGroup and HasDirectProductInfo],
 function( D )
     return ForAll( DirectProductInfo( D ).groups, IsAbelian );
 end );
@@ -232,8 +228,8 @@ end );
 ##
 #M  IsPGroup( <D> )
 ##
-InstallMethod( IsPGroup, "for direct products", true, 
-               [IsGroup and HasDirectProductInfo], 0,
+InstallMethod( IsPGroup, "for direct products",
+               [IsGroup and HasDirectProductInfo],
 function( D )
     local list, G, p;
     
@@ -264,15 +260,70 @@ end );
 ##
 #M  PrimePGroup( <D> )
 ##
-InstallMethod( PrimePGroup, "for direct products", true, 
-               [IsPGroup and HasDirectProductInfo], 0,
+InstallMethod( PrimePGroup, "for direct products",
+               [IsPGroup and HasDirectProductInfo],
 function( D )
     local p;
     Assert (1, ForAll (DirectProductInfo( D ).groups, IsPGroup));    
     p := First (DirectProductInfo( D ).groups, G -> PrimePGroup (G) <> fail);
     Assert (1, ForAll (DirectProductInfo( D ).groups, G -> PrimePGroup (G) in [fail, p]));
-    return p;
+    return PrimePGroup(p);
 end );
+
+#############################################################################
+##
+#F AbelianInvariants( <D > )
+##
+InstallMethod( AbelianInvariants, "for direct products", 
+               [IsGroup and HasDirectProductInfo],
+function( D )
+    local info, ai;
+    info := DirectProductInfo( D );
+    ai := Concatenation( List( info.groups, AbelianInvariants ) );
+    Sort(ai);
+    return ai;
+end );
+
+#############################################################################
+##
+#A  IndependentGeneratorsOfAbelianGroup( <D> )
+##
+InstallMethod( IndependentGeneratorsOfAbelianGroup, "for direct products", 
+               [IsGroup and HasDirectProductInfo and IsAbelian],
+function(D)
+    local info, ai, gens, i, phi;
+    info := DirectProductInfo( D );
+    ai := Concatenation( List( info.groups, AbelianInvariants ) );
+    gens := [];
+    for i in [ 1..Length(info.groups) ] do
+        phi := Embedding( D, i );
+        Append( gens, List( IndependentGeneratorsOfAbelianGroup( info.groups[i] ),
+                                g -> ImageElm( phi, g ) ) );
+    od;
+    SortParallel(ai, gens);
+    return gens;
+end );
+
+#############################################################################
+##
+#O  IndependentGeneratorExponents( <D>, <g> )
+##
+InstallMethod( IndependentGeneratorExponents, "for direct products",
+               IsCollsElms,
+               [IsGroup and HasDirectProductInfo and IsAbelian,
+                IsMultiplicativeElementWithInverse and IsDirectProductElement],
+function(D,g)
+    local info, ai, exps, i, phi;
+    info := DirectProductInfo( D );
+    ai := Concatenation( List( info.groups, AbelianInvariants ) );
+    exps := [];
+    for i in [ 1..Length(info.groups) ] do
+        phi := Projection( D, i );
+        Append( exps, IndependentGeneratorExponents(info.groups[i], ImageElm( phi, g )) );
+    od;
+    SortParallel(ai, exps);
+    return exps;
+end);
 
 
 #############################################################################
@@ -290,7 +341,7 @@ DeclareRepresentation ("IsPcgsDirectProductRep", IsPcgsDefaultRep, ["pcgs","len"
 InstallGlobalFunction (PcgsDirectProduct,
     function( D, pcgsop, indsop, filter )
         local info, pcs, i, pcgs, rels, indices, inds, offset, one, new, g, attl;
-        if not IsTuple( One( D ) ) then TryNextMethod(); fi;
+        if not IsDirectProductElement( One( D ) ) then TryNextMethod(); fi;
         info := DirectProductInfo( D );
         pcs := [];
         rels := [];
@@ -307,7 +358,7 @@ InstallGlobalFunction (PcgsDirectProduct,
             for g in pcgs[i] do
                 new := ShallowCopy( one );
                 new[i] := g;
-                Add( pcs, Tuple( new ) );
+                Add( pcs, DirectProductElement( new ) );
             od;
             Append( rels, RelativeOrders( pcgs[i] ) );
             offset := offset + Length (pcgs[i]);
@@ -387,7 +438,7 @@ InstallMethod( PcgsPCentralSeriesPGroup, "for direct products", true,
 #M  ExponentsOfPcElement( <pcgs>, <g> )
 ##
 InstallMethod (ExponentsOfPcElement, "for pcgs of direct product", IsCollsElms,
-    [IsPcgs and IsPcgsDirectProductRep, IsTuple], 0,
+    [IsPcgs and IsPcgsDirectProductRep, IsDirectProductElement], 0,
     
     function (pcgs, g)
         local exp, i;
@@ -409,7 +460,7 @@ InstallMethod (ExponentsOfPcElement, "for pcgs of direct product", IsCollsElms,
 #M  DepthOfPcElement( <pcgs>, <g> )
 ##
 InstallMethod (DepthOfPcElement, "for pcgs of direct product", IsCollsElms,
-    [IsPcgs and IsPcgsDirectProductRep, IsTuple], 0,
+    [IsPcgs and IsPcgsDirectProductRep, IsDirectProductElement], 0,
     
     function (pcgs, g)
         local i, d, prevdepth;
@@ -727,7 +778,12 @@ InstallOtherMethod( WreathProduct,"generic groups", true,
  [ IsGroup, IsGroup ], 0,
 function(G,H)
 local iso;
-  iso:=IsomorphismPermGroup(H);
+  # take the regular action, unless permutation group
+  if IsPermGroup(H) then
+    iso:=IdentityMapping(H);
+  else
+    iso:=ActionHomomorphism(H,Elements(H),OnRight,"surjective");
+  fi;
   return WreathProduct(G,H,iso);
 end);
 
@@ -1076,10 +1132,23 @@ end);
 InstallOtherMethod( SemidirectProduct, "group with vector space: affine", true,
   [ IsGroup, IsGroupHomomorphism, IsFullRowModule and IsVectorSpace ], 0,
 function( G, map, V )
-local pm,F,d,b,s,t,pos,i,j,img,m,P,info,Go,bnt;
+local pm,F,d,b,s,t,pos,i,j,img,m,P,info,Go,bnt,N,pcgs,auts,mapi,ag,phi,imgs;
   # construction assumes faithful action. AH
   if Size(KernelOfMultiplicativeGeneralMapping(map))<>1 then
-    TryNextMethod();
+    # not faithful -- cannot simply build as matrices
+    N:=ElementaryAbelianGroup(Size(V));
+    pcgs:=Pcgs(N);
+    auts:=[];
+    mapi:=MappingGeneratorsImages(map);
+    for i in mapi[2] do
+      imgs:=List(i,x->PcElementByExponents(pcgs,x));
+      Add(auts,GroupHomomorphismByImagesNC(N,N,pcgs,imgs));
+    od;
+    ag:=Group(auts,IdentityMapping(N));
+    SetIsGroupOfAutomorphismsFiniteGroup(ag,true);
+    phi:=GroupHomomorphismByImages(G,ag,mapi[1],auts);
+    s:=SemidirectProduct(G,phi,N);
+    return s;
   fi;
   G:=Image(map,G);
   F:=LeftActingDomain(V);

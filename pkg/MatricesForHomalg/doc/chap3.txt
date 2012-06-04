@@ -1,0 +1,835 @@
+  
+  [1X3 Rings[0X
+  
+  
+  [1X3.1 Rings: Category and Representations[0X
+  
+  [1X3.1-1 IsHomalgRing[0m
+  
+  [2X> IsHomalgRing( [0X[3XR[0X[2X ) ________________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m rings.
+  
+  (It   is   a   subcategory  of  the  [5XGAP[0m  categories  [10XIsStructureObject[0m  and
+  [10XIsHomalgRingOrModule[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgRing",[0X
+    [4X        IsStructureObject and[0X
+    [4X        IsHomalgRingOrModule );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-2 IsPreHomalgRing[0m
+  
+  [2X> IsPreHomalgRing( [0X[3XR[0X[2X ) _____________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of pre [5Xhomalg[0m rings.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgRing[0m.)
+  These are rings with an incomplete [10XhomalgTable[0m. They provide flexibility for
+  developers  to  support  a  wider  class  of rings, as was necessary for the
+  development  of  the  [5XLocalizeRingForHomalg[0m package. They are not suited for
+  direct usage.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsPreHomalgRing",[0X
+    [4X        IsHomalgRing );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-3 IsHomalgRingElement[0m
+  
+  [2X> IsHomalgRingElement( [0X[3Xr[0X[2X ) _________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of elements of [5Xhomalg[0m rings which are not GAP4 built-in.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgRingElement",[0X
+    [4X        IsExtAElement and[0X
+    [4X        IsExtLElement and[0X
+    [4X        IsExtRElement and[0X
+    [4X        IsAdditiveElementWithInverse and[0X
+    [4X        IsMultiplicativeElementWithInverse and[0X
+    [4X        IsAssociativeElement and[0X
+    [4X        IsAdditivelyCommutativeElement and[0X
+    [4X        ## all the above guarantees IsHomalgRingElement => IsRingElement (in GAP4)[0X
+    [4X        IsAttributeStoringRep );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-4 IsHomalgInternalRingRep[0m
+  
+  [2X> IsHomalgInternalRingRep( [0X[3XR[0X[2X ) _______________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The internal representation of [5Xhomalg[0m rings.
+  
+  (It is a representation of the [5XGAP[0m category [10XIsHomalgRing[0m.)
+  
+  
+  [1X3.2 Rings: Constructors[0X
+  
+  This   section   describes   how   to   construct   rings   for   use   with
+  [5XMatricesForHomalg[0m,  which exploit the [5XGAP4[0m-built-in abilities to perform the
+  necessary  ring operations. By this we also mean necessary matrix operations
+  over  such  rings.  For  the  purposes of [5XMatricesForHomalg[0m only the ring of
+  integers  is  properly  supported in [5XGAP4[0m. The [5XGAP4[0m extension packages [5XGauss[0m
+  and [5XGaussForHomalg[0m extend these built-in abilities to operations with sparse
+  matrices over the ring ℤ / p^n for p prime and n positive.
+  
+  If a ring R is supported in [5XMatricesForHomalg[0m any of its residue class rings
+  R/I  is supported as well, provided the ideal I of relations admits a finite
+  set  of  generators  as  a  left resp. right ideal (--> [2X\/[0m ([14X3.2-3[0m)). This is
+  immediate for commutative noetherian rings.
+  
+  [1X3.2-1 HomalgRingOfIntegers[0m
+  
+  [2X> HomalgRingOfIntegers( [0X[3X[0X[2X ) _________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  [2X> HomalgRingOfIntegers( [0X[3Xc[0X[2X ) ________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The no-argument form returns the ring of integers ℤ for [5Xhomalg[0m.
+  
+  The  one-argument  form  accepts an integer [3Xc[0m and returns the ring ℤ / c for
+  [5Xhomalg[0m:
+  
+  --    [3Xc[0m= 0 defaults to ℤ
+  
+  --    if [3Xc[0m is a prime power then the package [5XGaussForHomalg[0m is loaded (if it
+        fails to load an error is issued)
+  
+  --    otherwise,  the  residue  class ring constructor [10X/[0m (--> [2X\/[0m ([14X3.2-3[0m)) is
+        invoked
+  
+  The  operation  [10XSetRingProperties[0m  is  automatically invoked to set the ring
+  properties.
+  
+  If  for  some reason you don't want to use the [5XGaussForHomalg[0m package (maybe
+  because you didn't install it), then use
+  
+  [10XHomalgRingOfIntegers[0m( ) [10X/[0m [3Xc[0m;
+  
+  but note that the computations will then be considerably slower.
+  
+  [1X3.2-2 HomalgFieldOfRationals[0m
+  
+  [2X> HomalgFieldOfRationals( [0X[3X[0X[2X ) _______________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The  package  [5XGaussForHomalg[0m  is  loaded  and  the  field  of rationals ℚ is
+  returned. If [5XGaussForHomalg[0m fails to load an error is issued.
+  
+  The  operation  [10XSetRingProperties[0m  is  automatically invoked to set the ring
+  properties.
+  
+  [1X3.2-3 \/[0m
+  
+  [2X> \/( [0X[3XR, ring_rel[0X[2X ) _______________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  This  is  the [5Xhomalg[0m constructor for residue class rings [3XR[0m / I, where [3XR[0m is a
+  [5Xhomalg[0m  ring and I=[3Xring_rel[0m is the ideal of relations generated by [3Xring_rel[0m.
+  [3Xring_rel[0m might be:
+  
+  --    a set of ring relations of a left resp. right ideal
+  
+  --    a list of ring elements of [3XR[0m
+  
+  --    a ring element of [3XR[0m
+  
+  For noncommutative rings: In the first case the set of ring relations should
+  generate  the  ideal  of  relations  I  as left resp. right ideal, and their
+  involutions  should generate I as right resp. left ideal. If [3Xring_rel[0m is not
+  a set of relations, a [13Xleft[0m set of relations is constructed.
+  
+  The  operation  [10XSetRingProperties[0m  is  automatically invoked to set the ring
+  properties.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> Display( ZZ );[0X
+    [4X<An internal ring>[0X
+    [4Xgap> Z256 := ZZ / 2^8;[0X
+    [4XZ/( 256 )[0X
+    [4Xgap> Display( Z256 );[0X
+    [4X<A residue class ring>[0X
+    [4Xgap> Z2 := Z256 / 6;[0X
+    [4XZ/( 2 )[0X
+    [4Xgap> Display( Z2 );[0X
+    [4X<A residue class ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X3.3 Rings: Properties[0X
+  
+  The  following  properties  are  declared for [5Xhomalg[0m rings. Note that (apart
+  from  so-called  true  and immediate methods (--> [14XC.1[0m)) there are no methods
+  installed  for  ring  properties.  This  means that if the value of the ring
+  property [10XProp[0m is not set for a [5Xhomalg[0m ring [3XR[0m, then
+  
+  [10XProp[0m( [3XR[0m );
+  
+  will  cause  an  error. One can use the usual [5XGAP4[0m mechanism to check if the
+  value of the property is set or not
+  
+  [10XHasProp[0m( [3XR[0m );
+  
+  If  you  discover  that  a  specific  property [10XProp[0m is missing for a certain
+  [5Xhomalg[0m ring [3XR[0m you can it add using the usual [5XGAP4[0m mechanism
+  
+  [10XSetProp[0m( [3XR[0m, true );
+  
+  or
+  
+  [10XSetProp[0m( [3XR[0m, false );
+  
+  Be very cautious with setting "missing" properties to [5Xhomalg[0m objects: If the
+  value  you  set  is  mathematically  wrong  [5Xhomalg[0m  will probably draw wrong
+  conclusions and might return wrong results.
+  
+  [1X3.3-1 IsZero[0m
+  
+  [2X> IsZero( [0X[3XR[0X[2X ) ______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the ring [3XR[0m is a zero, i.e., if [10XOne[0m([3XR[0m)=[10XZero[0m([3XR[0m).
+  
+  [1X3.3-2 ContainsAField[0m
+  
+  [2X> ContainsAField( [0X[3XR[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-3 IsRationalsForHomalg[0m
+  
+  [2X> IsRationalsForHomalg( [0X[3XR[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-4 IsFieldForHomalg[0m
+  
+  [2X> IsFieldForHomalg( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-5 IsDivisionRingForHomalg[0m
+  
+  [2X> IsDivisionRingForHomalg( [0X[3XR[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-6 IsIntegersForHomalg[0m
+  
+  [2X> IsIntegersForHomalg( [0X[3XR[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-7 IsResidueClassRingOfTheIntegers[0m
+  
+  [2X> IsResidueClassRingOfTheIntegers( [0X[3XR[0X[2X ) _____________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-8 IsBezoutRing[0m
+  
+  [2X> IsBezoutRing( [0X[3XR[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-9 IsIntegrallyClosedDomain[0m
+  
+  [2X> IsIntegrallyClosedDomain( [0X[3XR[0X[2X ) ____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-10 IsUniqueFactorizationDomain[0m
+  
+  [2X> IsUniqueFactorizationDomain( [0X[3XR[0X[2X ) _________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-11 IsKaplanskyHermite[0m
+  
+  [2X> IsKaplanskyHermite( [0X[3XR[0X[2X ) __________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-12 IsDedekindDomain[0m
+  
+  [2X> IsDedekindDomain( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-13 IsDiscreteValuationRing[0m
+  
+  [2X> IsDiscreteValuationRing( [0X[3XR[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-14 IsFreePolynomialRing[0m
+  
+  [2X> IsFreePolynomialRing( [0X[3XR[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-15 IsWeylRing[0m
+  
+  [2X> IsWeylRing( [0X[3XR[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-16 IsLocalizedWeylRing[0m
+  
+  [2X> IsLocalizedWeylRing( [0X[3XR[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-17 IsGlobalDimensionFinite[0m
+  
+  [2X> IsGlobalDimensionFinite( [0X[3XR[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-18 IsLeftGlobalDimensionFinite[0m
+  
+  [2X> IsLeftGlobalDimensionFinite( [0X[3XR[0X[2X ) _________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-19 IsRightGlobalDimensionFinite[0m
+  
+  [2X> IsRightGlobalDimensionFinite( [0X[3XR[0X[2X ) ________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-20 HasInvariantBasisProperty[0m
+  
+  [2X> HasInvariantBasisProperty( [0X[3XR[0X[2X ) ___________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-21 HasLeftInvariantBasisProperty[0m
+  
+  [2X> HasLeftInvariantBasisProperty( [0X[3XR[0X[2X ) _______________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-22 HasRightInvariantBasisProperty[0m
+  
+  [2X> HasRightInvariantBasisProperty( [0X[3XR[0X[2X ) ______________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-23 IsLocal[0m
+  
+  [2X> IsLocal( [0X[3XR[0X[2X ) _____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-24 IsSemiLocalRing[0m
+  
+  [2X> IsSemiLocalRing( [0X[3XR[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-25 IsIntegralDomain[0m
+  
+  [2X> IsIntegralDomain( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-26 IsHereditary[0m
+  
+  [2X> IsHereditary( [0X[3XR[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-27 IsLeftHereditary[0m
+  
+  [2X> IsLeftHereditary( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-28 IsRightHereditary[0m
+  
+  [2X> IsRightHereditary( [0X[3XR[0X[2X ) ___________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-29 IsHermite[0m
+  
+  [2X> IsHermite( [0X[3XR[0X[2X ) ___________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-30 IsLeftHermite[0m
+  
+  [2X> IsLeftHermite( [0X[3XR[0X[2X ) _______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-31 IsRightHermite[0m
+  
+  [2X> IsRightHermite( [0X[3XR[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-32 IsNoetherian[0m
+  
+  [2X> IsNoetherian( [0X[3XR[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-33 IsLeftNoetherian[0m
+  
+  [2X> IsLeftNoetherian( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-34 IsRightNoetherian[0m
+  
+  [2X> IsRightNoetherian( [0X[3XR[0X[2X ) ___________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-35 IsCohenMacaulay[0m
+  
+  [2X> IsCohenMacaulay( [0X[3XR[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-36 IsGorenstein[0m
+  
+  [2X> IsGorenstein( [0X[3XR[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-37 IsKoszul[0m
+  
+  [2X> IsKoszul( [0X[3XR[0X[2X ) ____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-38 IsArtinian[0m
+  
+  [2X> IsArtinian( [0X[3XR[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-39 IsLeftArtinian[0m
+  
+  [2X> IsLeftArtinian( [0X[3XR[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-40 IsRightArtinian[0m
+  
+  [2X> IsRightArtinian( [0X[3XR[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-41 IsOreDomain[0m
+  
+  [2X> IsOreDomain( [0X[3XR[0X[2X ) _________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-42 IsLeftOreDomain[0m
+  
+  [2X> IsLeftOreDomain( [0X[3XR[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-43 IsRightOreDomain[0m
+  
+  [2X> IsRightOreDomain( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-44 IsPrincipalIdealRing[0m
+  
+  [2X> IsPrincipalIdealRing( [0X[3XR[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-45 IsLeftPrincipalIdealRing[0m
+  
+  [2X> IsLeftPrincipalIdealRing( [0X[3XR[0X[2X ) ____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-46 IsRightPrincipalIdealRing[0m
+  
+  [2X> IsRightPrincipalIdealRing( [0X[3XR[0X[2X ) ___________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-47 IsRegular[0m
+  
+  [2X> IsRegular( [0X[3XR[0X[2X ) ___________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-48 IsFiniteFreePresentationRing[0m
+  
+  [2X> IsFiniteFreePresentationRing( [0X[3XR[0X[2X ) ________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-49 IsLeftFiniteFreePresentationRing[0m
+  
+  [2X> IsLeftFiniteFreePresentationRing( [0X[3XR[0X[2X ) ____________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-50 IsRightFiniteFreePresentationRing[0m
+  
+  [2X> IsRightFiniteFreePresentationRing( [0X[3XR[0X[2X ) ___________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-51 IsSimpleRing[0m
+  
+  [2X> IsSimpleRing( [0X[3XR[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-52 IsSemiSimpleRing[0m
+  
+  [2X> IsSemiSimpleRing( [0X[3XR[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-53 IsSuperCommutative[0m
+  
+  [2X> IsSuperCommutative( [0X[3XR[0X[2X ) __________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-54 BasisAlgorithmRespectsPrincipalIdeals[0m
+  
+  [2X> BasisAlgorithmRespectsPrincipalIdeals( [0X[3XR[0X[2X ) _______________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XR[0m is a ring for [5Xhomalg[0m.
+  
+  [1X3.3-55 IsMinusOne[0m
+  
+  [2X> IsMinusOne( [0X[3Xr[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the ring element [3Xr[0m is the additive inverse of one.
+  
+  [1X3.3-56 IsLeftRegular[0m
+  
+  [2X> IsLeftRegular( [0X[3Xr[0X[2X ) _______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring element [3Xr[0m is left regular.
+  
+  [1X3.3-57 IsRightRegular[0m
+  
+  [2X> IsRightRegular( [0X[3Xr[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring element [3Xr[0m is right regular.
+  
+  [1X3.3-58 IsRegular[0m
+  
+  [2X> IsRegular( [0X[3Xr[0X[2X ) ___________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring element [3Xr[0m is regular, i.e. left and right regular.
+  
+  
+  [1X3.4 Rings: Attributes[0X
+  
+  [1X3.4-1 Zero[0m
+  
+  [2X> Zero( [0X[3Xr[0X[2X ) _______________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The zero of the [5Xhomalg[0m ring element [3Xr[0m.
+  
+  [1X3.4-2 One[0m
+  
+  [2X> One( [0X[3Xr[0X[2X ) ________________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The one of the [5Xhomalg[0m ring element [3Xr[0m.
+  
+  [1X3.4-3 Inverse[0m
+  
+  [2X> Inverse( [0X[3Xr[0X[2X ) ____________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element or fail
+  
+  The inverse of the [5Xhomalg[0m ring element [3Xr[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> R := ZZ / 2^8;[0X
+    [4XZ/( 256 )[0X
+    [4Xgap> r := (1/3*One(R)+1/5)+3/7;[0X
+    [4X|[ 157 ]|[0X
+    [4Xgap> 1 / r;	## = r^-1;[0X
+    [4X|[ 181 ]|[0X
+    [4Xgap> s := (1/3*One(R)+2/5)+3/7;[0X
+    [4X|[ 106 ]|[0X
+    [4Xgap> 1 / s;[0X
+    [4Xfail[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.4-4 homalgTable[0m
+  
+  [2X> homalgTable( [0X[3XR[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m table
+  
+  The  [5Xhomalg[0m  table  of  [3XR[0m  is a ring dictionary, i.e. the translator between
+  [5Xhomalg[0m and the (specific implementation of the) ring.
+  
+  Every [5Xhomalg[0m ring has a [5Xhomalg[0m table.
+  
+  [1X3.4-5 RingElementConstructor[0m
+  
+  [2X> RingElementConstructor( [0X[3XR[0X[2X ) _____________________________________[0Xattribute
+  [6XReturns:[0X  a function
+  
+  The constructor of ring elements in the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-6 TypeOfHomalgMatrix[0m
+  
+  [2X> TypeOfHomalgMatrix( [0X[3XR[0X[2X ) _________________________________________[0Xattribute
+  [6XReturns:[0X  a type
+  
+  The [5XGAP4[0m-type of [5Xhomalg[0m matrices over the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-7 ConstructorForHomalgMatrices[0m
+  
+  [2X> ConstructorForHomalgMatrices( [0X[3XR[0X[2X ) _______________________________[0Xattribute
+  [6XReturns:[0X  a type
+  
+  The constructor for [5Xhomalg[0m matrices over the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-8 Zero[0m
+  
+  [2X> Zero( [0X[3XR[0X[2X ) _______________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The zero of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-9 One[0m
+  
+  [2X> One( [0X[3XR[0X[2X ) ________________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The one of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-10 MinusOne[0m
+  
+  [2X> MinusOne( [0X[3XR[0X[2X ) ___________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The minus one of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-11 ProductOfIndeterminates[0m
+  
+  [2X> ProductOfIndeterminates( [0X[3XR[0X[2X ) ____________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring element
+  
+  The product of indeterminates of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-12 RationalParameters[0m
+  
+  [2X> RationalParameters( [0X[3XR[0X[2X ) _________________________________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of rational parameters of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-13 IndeterminatesOfPolynomialRing[0m
+  
+  [2X> IndeterminatesOfPolynomialRing( [0X[3XR[0X[2X ) _____________________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of indeterminates of the [5Xhomalg[0m polynomial ring [3XR[0m.
+  
+  [1X3.4-14 RelativeIndeterminatesOfPolynomialRing[0m
+  
+  [2X> RelativeIndeterminatesOfPolynomialRing( [0X[3XR[0X[2X ) _____________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of relative indeterminates of the [5Xhomalg[0m polynomial ring [3XR[0m.
+  
+  [1X3.4-15 IndeterminateCoordinatesOfRingOfDerivations[0m
+  
+  [2X> IndeterminateCoordinatesOfRingOfDerivations( [0X[3XR[0X[2X ) ________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of indeterminate coordinates of the [5Xhomalg[0m Weyl ring [3XR[0m.
+  
+  [1X3.4-16 RelativeIndeterminateCoordinatesOfRingOfDerivations[0m
+  
+  [2X> RelativeIndeterminateCoordinatesOfRingOfDerivations( [0X[3XR[0X[2X ) ________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of relative indeterminate coordinates of the [5Xhomalg[0m Weyl ring [3XR[0m.
+  
+  [1X3.4-17 IndeterminateDerivationsOfRingOfDerivations[0m
+  
+  [2X> IndeterminateDerivationsOfRingOfDerivations( [0X[3XR[0X[2X ) ________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of indeterminate derivations of the [5Xhomalg[0m Weyl ring [3XR[0m.
+  
+  [1X3.4-18 RelativeIndeterminateDerivationsOfRingOfDerivations[0m
+  
+  [2X> RelativeIndeterminateDerivationsOfRingOfDerivations( [0X[3XR[0X[2X ) ________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of relative indeterminate derivations of the [5Xhomalg[0m Weyl ring [3XR[0m.
+  
+  [1X3.4-19 IndeterminateAntiCommutingVariablesOfExteriorRing[0m
+  
+  [2X> IndeterminateAntiCommutingVariablesOfExteriorRing( [0X[3XR[0X[2X ) __________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The list of anti-commuting indeterminates of the [5Xhomalg[0m exterior ring [3XR[0m.
+  
+  [1X3.4-20 RelativeIndeterminateAntiCommutingVariablesOfExteriorRing[0m
+  
+  [2X> RelativeIndeterminateAntiCommutingVariablesOfExteriorRing( [0X[3XR[0X[2X ) __[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The  list  of  anti-commuting relative indeterminates of the [5Xhomalg[0m exterior
+  ring [3XR[0m.
+  
+  [1X3.4-21 IndeterminatesOfExteriorRing[0m
+  
+  [2X> IndeterminatesOfExteriorRing( [0X[3XR[0X[2X ) _______________________________[0Xattribute
+  [6XReturns:[0X  a list of [5Xhomalg[0m ring elements
+  
+  The  list of all indeterminates (commuting and anti-commuting) of the [5Xhomalg[0m
+  exterior ring [3XR[0m.
+  
+  [1X3.4-22 CoefficientsRing[0m
+  
+  [2X> CoefficientsRing( [0X[3XR[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The ring of coefficients of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-23 KrullDimension[0m
+  
+  [2X> KrullDimension( [0X[3XR[0X[2X ) _____________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The Krull dimension of the commutative [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-24 LeftGlobalDimension[0m
+  
+  [2X> LeftGlobalDimension( [0X[3XR[0X[2X ) ________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The left global dimension of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-25 RightGlobalDimension[0m
+  
+  [2X> RightGlobalDimension( [0X[3XR[0X[2X ) _______________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The right global dimension of the [5Xhomalg[0m ring [3XR[0m.
+  
+  [1X3.4-26 GlobalDimension[0m
+  
+  [2X> GlobalDimension( [0X[3XR[0X[2X ) ____________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The  global dimension of the [5Xhomalg[0m ring [3XR[0m. The global dimension is defined,
+  only if the left and right global dimensions coincide.
+  
+  [1X3.4-27 GeneralLinearRank[0m
+  
+  [2X> GeneralLinearRank( [0X[3XR[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The general linear rank of the [5Xhomalg[0m ring [3XR[0m ([MR01], 11.1.14).
+  
+  [1X3.4-28 ElementaryRank[0m
+  
+  [2X> ElementaryRank( [0X[3XR[0X[2X ) _____________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The elementary rank of the [5Xhomalg[0m ring [3XR[0m ([MR01], 11.3.10).
+  
+  [1X3.4-29 StableRank[0m
+  
+  [2X> StableRank( [0X[3XR[0X[2X ) _________________________________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The stable rank of the [5Xhomalg[0m ring [3XR[0m ([MR01], 11.3.4).
+  
+  [1X3.4-30 AssociatedGradedRing[0m
+  
+  [2X> AssociatedGradedRing( [0X[3XR[0X[2X ) _______________________________________[0Xattribute
+  [6XReturns:[0X  a homalg ring
+  
+  The graded ring associated to the filtered ring [3XR[0m.
+  
+  
+  [1X3.5 Rings: Operations and Functions[0X
+  

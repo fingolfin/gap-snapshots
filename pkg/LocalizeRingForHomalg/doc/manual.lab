@@ -1,0 +1,58 @@
+\makelabel{localizeringforhomalg:Title page}{}
+\makelabel{localizeringforhomalg:Copyright}{}
+\makelabel{localizeringforhomalg:Acknowledgements}{}
+\makelabel{localizeringforhomalg:Table of Contents}{}
+\makelabel{localizeringforhomalg:Introduction}{1}
+\makelabel{localizeringforhomalg:What is the Role of the LocalizeRingForHomalg Package in the homalg Project?}{1.1}
+\makelabel{localizeringforhomalg:Functionality}{1.2}
+\makelabel{localizeringforhomalg:The Math Behind This Package}{1.3}
+\makelabel{localizeringforhomalg:Which Ring to Use?}{1.4}
+\makelabel{localizeringforhomalg:Installation of the LocalizeRingForHomalg Package}{2}
+\makelabel{localizeringforhomalg:Quick Start}{3}
+\makelabel{localizeringforhomalg:Localization of ℤ}{3.1}
+\makelabel{localizeringforhomalg:Localize Rings}{4}
+\makelabel{localizeringforhomalg:Category and Representations}{4.1}
+\makelabel{localizeringforhomalg:Rings: Attributes}{4.2}
+\makelabel{localizeringforhomalg:Operations and Functions}{4.3}
+\makelabel{localizeringforhomalg:Examples}{5}
+\makelabel{localizeringforhomalg:An Easy Polynomial Example}{5.1}
+\makelabel{localizeringforhomalg:Hom(Hom(-,Z128),Z16)}{5.2}
+\makelabel{localizeringforhomalg:ResidueClass}{5.3}
+\makelabel{localizeringforhomalg:Testing the Intersection Formula}{5.4}
+\makelabel{localizeringforhomalg:Overview of the LocalizeRingForHomalg Package Source Code}{A}
+\makelabel{localizeringforhomalg:The generic Methods}{A.1}
+\makelabel{localizeringforhomalg:The Local Decide Zero trick}{A.2}
+\makelabel{localizeringforhomalg:Tools}{A.3}
+\makelabel{localizeringforhomalg:Bibliography}{Bib}
+\makelabel{localizeringforhomalg:References}{Bib}
+\makelabel{localizeringforhomalg:Index}{Ind}
+\makelabel{localizeringforhomalg:LocalizeRingForHomalg}{}
+\makelabel{localizeringforhomalg:IsHomalgLocalRingRep}{4.1.1}
+\makelabel{localizeringforhomalg:IsHomalgLocalRingElementRep}{4.1.2}
+\makelabel{localizeringforhomalg:IsHomalgLocalMatrixRep}{4.1.3}
+\makelabel{localizeringforhomalg:GeneratorsOfMaximalLeftIdeal}{4.2.1}
+\makelabel{localizeringforhomalg:GeneratorsOfMaximalRightIdeal}{4.2.2}
+\makelabel{localizeringforhomalg:AssociatedGlobalRing (for homalg local rings)}{4.3.1}
+\makelabel{localizeringforhomalg:AssociatedGlobalRing (for homalg local ring elements)}{4.3.2}
+\makelabel{localizeringforhomalg:AssociatedGlobalRing (for homalg local matrices)}{4.3.3}
+\makelabel{localizeringforhomalg:Numerator (for homalg local ring elements)}{4.3.4}
+\makelabel{localizeringforhomalg:Numerator (for homalg local matrices)}{4.3.5}
+\makelabel{localizeringforhomalg:Denominator (for homalg local ring elements)}{4.3.6}
+\makelabel{localizeringforhomalg:Denominator (for homalg local matrices)}{4.3.7}
+\makelabel{localizeringforhomalg:Name (for homalg local ring elements)}{4.3.8}
+\makelabel{localizeringforhomalg:SetMatElm (for homalg local matrices)}{4.3.9}
+\makelabel{localizeringforhomalg:AddToMatElm (for homalg local matrices)}{4.3.10}
+\makelabel{localizeringforhomalg:MatElmAsString (for homalg local matrices)}{4.3.11}
+\makelabel{localizeringforhomalg:MatElm (for homalg local matrices)}{4.3.12}
+\makelabel{localizeringforhomalg:Cancel (for pairs of ring elements)}{4.3.13}
+\makelabel{localizeringforhomalg:LocalizeAt (for a commutative ring and a maximal ideal)}{4.3.14}
+\makelabel{localizeringforhomalg:LocalizeAtZero (for a free polynomial ring)}{4.3.15}
+\makelabel{localizeringforhomalg:LocalizePolynomialRingAtZeroWithMora (constructor for homalg localized rings using Mora's algorithm)}{4.3.16}
+\makelabel{localizeringforhomalg:HomalgLocalRingElement (constructor for local ring elements using numerator and denominator)}{4.3.17}
+\makelabel{localizeringforhomalg:HomalgLocalRingElement (constructor for local ring elements using a given numerator and one as denominator)}{4.3.17}
+\makelabel{localizeringforhomalg:HomalgLocalMatrix (constructor for local matrices using numerator and denominator)}{4.3.18}
+\makelabel{localizeringforhomalg:HomalgLocalMatrix (constructor for local matrices using a given numerator and one as denominator)}{4.3.18}
+\makelabel{localizeringforhomalg:BasisOfRowModule (for local rings)}{A.1.1}
+\makelabel{localizeringforhomalg:DecideZeroRows (for local rings with Mora's algorithm)}{A.1.2}
+\makelabel{localizeringforhomalg:SyzygiesGeneratorsOfRows (for local rings)}{A.1.3}
+\makelabel{localizeringforhomalg:DecideZeroRows (for local rings)}{A.2.1}

@@ -1,0 +1,53 @@
+\makelabel{gradedmodules:Title page}{}
+\makelabel{gradedmodules:Copyright}{}
+\makelabel{gradedmodules:Acknowledgements}{}
+\makelabel{gradedmodules:Table of Contents}{}
+\makelabel{gradedmodules:Introduction}{1}
+\makelabel{gradedmodules:Installation of the GradedModules Package}{2}
+\makelabel{gradedmodules:Quick Start}{3}
+\makelabel{gradedmodules:Ring Maps}{4}
+\makelabel{gradedmodules:Ring Maps: Attributes}{4.1}
+\makelabel{gradedmodules:Ring Maps: Operations and Functions}{4.2}
+\makelabel{gradedmodules:GradedModules}{5}
+\makelabel{gradedmodules:GradedModules: Category and Representations}{5.1}
+\makelabel{gradedmodules:GradedModules: Constructors}{5.2}
+\makelabel{gradedmodules:GradedModules: Properties}{5.3}
+\makelabel{gradedmodules:GradedModules: Attributes}{5.4}
+\makelabel{gradedmodules:LISHV: Logical Implications for GradedModules}{5.5}
+\makelabel{gradedmodules:GradedModules: Operations and Functions}{5.6}
+\makelabel{gradedmodules:The Tate Resolution}{6}
+\makelabel{gradedmodules:The Tate Resolution: Operations and Functions}{6.1}
+\makelabel{gradedmodules:Examples}{7}
+\makelabel{gradedmodules:Betti Diagrams}{7.1}
+\makelabel{gradedmodules:DE-2.2}{7.1.1}
+\makelabel{gradedmodules:DE-Code}{7.1.2}
+\makelabel{gradedmodules:Schenck-3.2}{7.1.3}
+\makelabel{gradedmodules:Schenck-8.3}{7.1.4}
+\makelabel{gradedmodules:Schenck-8.3.3}{7.1.5}
+\makelabel{gradedmodules:Commutative Algebra}{7.2}
+\makelabel{gradedmodules:Saturate}{7.2.1}
+\makelabel{gradedmodules:Global Section Modules of the Induced Sheaves}{7.3}
+\makelabel{gradedmodules:Examples of the ModuleOfGlobalSections Functor and Purity Filtrations}{7.3.1}
+\makelabel{gradedmodules:Horrocks Mumford bundle}{7.3.2}
+\makelabel{gradedmodules:Overview of the GradedModules Package Source Code}{A}
+\makelabel{gradedmodules:Bibliography}{Bib}
+\makelabel{gradedmodules:References}{Bib}
+\makelabel{gradedmodules:Index}{Ind}
+\makelabel{gradedmodules:GradedModules}{}
+\makelabel{gradedmodules:KernelSubobject}{4.1.1}
+\makelabel{gradedmodules:SegreMap}{4.2.1}
+\makelabel{gradedmodules:PlueckerMap}{4.2.2}
+\makelabel{gradedmodules:VeroneseMap}{4.2.3}
+\makelabel{gradedmodules:BettiDiagram (for modules)}{5.4.1}
+\makelabel{gradedmodules:CastelnuovoMumfordRegularity}{5.4.2}
+\makelabel{gradedmodules:CastelnuovoMumfordRegularityOfSheafification}{5.4.3}
+\makelabel{gradedmodules:MonomialMap}{5.6.1}
+\makelabel{gradedmodules:RandomMatrix}{5.6.2}
+\makelabel{gradedmodules:GeneratorsOfHomogeneousPart}{5.6.3}
+\makelabel{gradedmodules:SubmoduleGeneratedByHomogeneousPart}{5.6.4}
+\makelabel{gradedmodules:RepresentationMapOfRingElement}{5.6.5}
+\makelabel{gradedmodules:RepresentationMatrixOfKoszulId}{5.6.6}
+\makelabel{gradedmodules:RepresentationMapOfKoszulId}{5.6.7}
+\makelabel{gradedmodules:KoszulRightAdjoint}{5.6.8}
+\makelabel{gradedmodules:HomogeneousPartOverCoefficientsRing}{5.6.9}
+\makelabel{gradedmodules:TateResolution}{6.1.1}

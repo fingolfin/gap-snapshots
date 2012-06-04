@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: nqman.aux
+The style file: alpha.bst
+Database file #1: nqbib.xml.bib
+You've used 8 entries,
+            2543 wiz_defined-function locations,
+            614 strings with 5650 characters,
+and the built_in function-call counts, 3429 in all, are:
+= -- 357
+> -- 90
+< -- 6
++ -- 26
+- -- 26
+* -- 223
+:= -- 499
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 41
+chr.to.int$ -- 8
+cite$ -- 8
+duplicate$ -- 153
+empty$ -- 290
+format.name$ -- 36
+if$ -- 750
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 7
+newline$ -- 43
+num.names$ -- 21
+pop$ -- 43
+preamble$ -- 1
+purify$ -- 51
+quote$ -- 0
+skip$ -- 145
+stack$ -- 0
+substring$ -- 316
+swap$ -- 50
+text.length$ -- 6
+text.prefix$ -- 4
+top$ -- 0
+type$ -- 60
+warning$ -- 0
+while$ -- 22
+width$ -- 11
+write$ -- 103

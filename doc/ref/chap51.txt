@@ -1,0 +1,618 @@
+  
+  [1X51 [33X[0;0YSemigroups[133X[101X
+  
+  [33X[0;0YThis  chapter  describes  functions  for creating semigroups and determining
+  information about them.[133X
+  
+  
+  [1X51.1 [33X[0;0YIsSemigroup (Filter)[133X[101X
+  
+  [1X51.1-1 IsSemigroup[101X
+  
+  [29X[2XIsSemigroup[102X( [3XD[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if the object [3XD[103X is a semigroup. A [13Xsemigroup[113X is a magma (see [14X35[114X)
+  with associative multiplication.[133X
+  
+  
+  [1X51.1-2 [33X[0;0YSemigroup[133X[101X
+  
+  [29X[2XSemigroup[102X( [3Xgen1[103X, [3Xgen2[103X, [3X...[103X ) [32X function
+  [29X[2XSemigroup[102X( [3Xgens[103X ) [32X function
+  
+  [33X[0;0YIn  the  first  form,  [2XSemigroup[102X  returns  the  semigroup  generated  by the
+  arguments  [3Xgen1[103X,  [3Xgen2[103X,  [22X...[122X,  that  is, the closure of these elements under
+  multiplication.   In  the  second  form,  [2XSemigroup[102X  returns  the  semigroup
+  generated  by  the elements in the homogeneous list [3Xgens[103X; a square matrix as
+  only argument is treated as one generator, not as a list of generators.[133X
+  
+  [33X[0;0YIt  is [13Xnot[113X checked whether the underlying multiplication is associative, use
+  [2XMagma[102X  ([14X35.2-1[114X)  and  [2XIsAssociative[102X  ([14X35.4-7[114X) if you want to check whether a
+  magma is in fact a semigroup.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xa:= Transformation([2, 3, 4, 1]);[127X[104X
+    [4X[28XTransformation( [ 2, 3, 4, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xb:= Transformation([2, 2, 3, 4]);[127X[104X
+    [4X[28XTransformation( [ 2, 2, 3, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xs:= Semigroup(a, b);[127X[104X
+    [4X[28X<semigroup with 2 generators>[128X[104X
+  [4X[32X[104X
+  
+  [1X51.1-3 Subsemigroup[101X
+  
+  [29X[2XSubsemigroup[102X( [3XS[103X, [3Xgens[103X ) [32X function
+  [29X[2XSubsemigroupNC[102X( [3XS[103X, [3Xgens[103X ) [32X function
+  
+  [33X[0;0Yare   just   synonyms   of   [2XSubmagma[102X   ([14X35.2-7[114X)  and  [2XSubmagmaNC[102X  ([14X35.2-7[114X),
+  respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xa:=GeneratorsOfSemigroup(s)[1];[127X[104X
+    [4X[28XTransformation( [ 2, 3, 4, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xt:=Subsemigroup(s,[a]);[127X[104X
+    [4X[28X<semigroup with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  [1X51.1-4 SemigroupByGenerators[101X
+  
+  [29X[2XSemigroupByGenerators[102X( [3Xgens[103X ) [32X operation
+  
+  [33X[0;0Yis the underlying operation of [2XSemigroup[102X ([14X51.1-2[114X).[133X
+  
+  [1X51.1-5 AsSemigroup[101X
+  
+  [29X[2XAsSemigroup[102X( [3XC[103X ) [32X attribute
+  
+  [33X[0;0YIf  [3XC[103X  is  a  collection  whose  elements  form a semigroup (see [2XIsSemigroup[102X
+  ([14X51.1-1[114X))  then  [2XAsSemigroup[102X  returns  this  semigroup.  Otherwise  [9Xfail[109X  is
+  returned.[133X
+  
+  [1X51.1-6 AsSubsemigroup[101X
+  
+  [29X[2XAsSubsemigroup[102X( [3XD[103X, [3XC[103X ) [32X operation
+  
+  [33X[0;0YLet  [3XD[103X  be  a  domain and [3XC[103X a collection. If [3XC[103X is a subset of [3XD[103X that forms a
+  semigroup  then  [2XAsSubsemigroup[102X  returns  this  semigroup,  with  parent  [3XD[103X.
+  Otherwise [9Xfail[109X is returned.[133X
+  
+  [1X51.1-7 GeneratorsOfSemigroup[101X
+  
+  [29X[2XGeneratorsOfSemigroup[102X( [3XS[103X ) [32X attribute
+  
+  [33X[0;0YSemigroup  generators  of  a  semigroup  [3XD[103X are the same as magma generators,
+  see [2XGeneratorsOfMagma[102X ([14X35.4-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup(s);[127X[104X
+    [4X[28X[ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 2, 3, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup(t);[127X[104X
+    [4X[28X[ Transformation( [ 2, 3, 4, 1 ] ) ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X51.1-8 [33X[0;0YFreeSemigroup[133X[101X
+  
+  [29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function
+  [29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
+  [29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function
+  [29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function
+  
+  [33X[0;0YCalled  with a positive integer [3Xrank[103X, [2XFreeSemigroup[102X returns a free semigroup
+  on  [3Xrank[103X  generators.  If  the  optional  argument  [3Xname[103X  is  given then the
+  generators  are  printed  as  [3Xname[103X[10X1[110X,  [3Xname[103X[10X2[110X  etc., that is, each name is the
+  concatenation of the string [3Xname[103X and an integer from [10X1[110X to [3Xrange[103X. The default
+  for [3Xname[103X is the string [10X"s"[110X.[133X
+  
+  [33X[0;0YCalled in the second form, [2XFreeSemigroup[102X returns a free semigroup on as many
+  generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  
+  [33X[0;0YCalled  in the third form, [2XFreeSemigroup[102X returns a free semigroup on as many
+  generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being printed
+  as [3Xnames[103X[22X[i][122X.[133X
+  
+  [33X[0;0YCalled  in  the  fourth  form,  [2XFreeSemigroup[102X  returns  a  free semigroup on
+  infinitely  many  generators,  where the first generators are printed by the
+  names  in  the  list  [3Xinit[103X, and the other generators by [3Xname[103X and an appended
+  number.[133X
+  
+  [33X[0;0YIf    the   extra   argument   [3Xwfilt[103X   is   given,   it   must   be   either
+  [2XIsSyllableWordsFamily[102X    ([14X37.6-6[114X)   or   [2XIsLetterWordsFamily[102X   ([14X37.6-2[114X)   or
+  [2XIsWLetterWordsFamily[102X  ([14X37.6-4[114X) or [2XIsBLetterWordsFamily[102X ([14X37.6-4[114X). This filter
+  then  specifies  the  representation  used  for  the  elements  of  the free
+  semigroup (see [14X37.6[114X). If no such filter is given, a letter representation is
+  used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf1 := FreeSemigroup( 3 );[127X[104X
+    [4X[28X<free semigroup on the generators [ s1, s2, s3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf2 := FreeSemigroup( 3 , "generator" );[127X[104X
+    [4X[28X<free semigroup on the generators [128X[104X
+    [4X[28X[ generator1, generator2, generator3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf3 := FreeSemigroup( "gen1" , "gen2" );[127X[104X
+    [4X[28X<free semigroup on the generators [ gen1, gen2 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf4 := FreeSemigroup( ["gen1" , "gen2"] );[127X[104X
+    [4X[28X<free semigroup on the generators [ gen1, gen2 ]>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlso see Chapter [14X51[114X.[133X
+  
+  [33X[0;0YEach  free  object defines a unique alphabet (and a unique family of words).
+  Its generators are the letters of this alphabet, thus words of length one.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeGroup( 5 );[127X[104X
+    [4X[28X<free group on the generators [ f1, f2, f3, f4, f5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup( "a", "b" );[127X[104X
+    [4X[28X<free group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup( infinity );[127X[104X
+    [4X[28X<free group with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup( "x", "y" );[127X[104X
+    [4X[28X<free semigroup on the generators [ x, y ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid( 7 );[127X[104X
+    [4X[28X<free monoid on the generators [ m1, m2, m3, m4, m5, m6, m7 ]>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YRemember  that  names  are  just  a help for printing and do not necessarily
+  distinguish  letters.  It is possible to create arbitrarily weird situations
+  by choosing strange names for the letters.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:= FreeGroup( "x", "x" );  gens:= GeneratorsOfGroup( f );;[127X[104X
+    [4X[28X<free group on the generators [ x, x ]>[128X[104X
+    [4X[25Xgap>[125X [27Xgens[1] = gens[2];[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xf:= FreeGroup( "f1*f2", "f2^-1", "Group( [ f1, f2 ] )" );[127X[104X
+    [4X[28X<free group on the generators [ f1*f2, f2^-1, Group( [ f1, f2 ] ) ]>[128X[104X
+    [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( f );;[127X[104X
+    [4X[25Xgap>[125X [27Xgens[1]*gens[2];[127X[104X
+    [4X[28Xf1*f2*f2^-1[128X[104X
+    [4X[25Xgap>[125X [27Xgens[1]/gens[3];[127X[104X
+    [4X[28Xf1*f2*Group( [ f1, f2 ] )^-1[128X[104X
+    [4X[25Xgap>[125X [27Xgens[3]/gens[1]/gens[2];[127X[104X
+    [4X[28XGroup( [ f1, f2 ] )*f1*f2^-1*f2^-1^-1[128X[104X
+  [4X[32X[104X
+  
+  [1X51.1-9 SemigroupByMultiplicationTable[101X
+  
+  [29X[2XSemigroupByMultiplicationTable[102X( [3XA[103X ) [32X function
+  
+  [33X[0;0Yreturns the semigroup whose multiplication is defined by the square matrix [3XA[103X
+  (see [2XMagmaByMultiplicationTable[102X   ([14X35.3-1[114X))  if  such  a  semigroup  exists.
+  Otherwise [9Xfail[109X is returned.[133X
+  
+  
+  [1X51.2 [33X[0;0YProperties of Semigroups[133X[101X
+  
+  [33X[0;0YThe following functions determine information about semigroups.[133X
+  
+  [1X51.2-1 IsRegularSemigroup[101X
+  
+  [29X[2XIsRegularSemigroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if [3XS[103X is regular, i.e., if every D class of [3XS[103X is regular.[133X
+  
+  [1X51.2-2 IsRegularSemigroupElement[101X
+  
+  [29X[2XIsRegularSemigroupElement[102X( [3XS[103X, [3Xx[103X ) [32X operation
+  
+  [33X[0;0Yreturns  [9Xtrue[109X if [3Xx[103X has a general inverse in [3XS[103X, i.e., there is an element [22Xy ∈
+  [3XS[103X[122X such that [22X[3Xx[103X y [3Xx[103X = [3Xx[103X[122X and [22Xy [3Xx[103X y = y[122X.[133X
+  
+  [1X51.2-3 IsSimpleSemigroup[101X
+  
+  [29X[2XIsSimpleSemigroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Yis [9Xtrue[109X if and only if the semigroup [3XS[103X has no proper ideals.[133X
+  
+  [1X51.2-4 IsZeroSimpleSemigroup[101X
+  
+  [29X[2XIsZeroSimpleSemigroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Yis  [9Xtrue[109X  if  and  only  if the semigroup has no proper ideals except for 0,
+  where  [3XS[103X  is a semigroup with zero. If the semigroup does not find its zero,
+  then a break-loop is entered.[133X
+  
+  [1X51.2-5 IsZeroGroup[101X
+  
+  [29X[2XIsZeroGroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Yis [9Xtrue[109X if and only if the semigroup [3XS[103X is a group with zero adjoined.[133X
+  
+  [1X51.2-6 IsReesCongruenceSemigroup[101X
+  
+  [29X[2XIsReesCongruenceSemigroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Yreturns  [9Xtrue[109X  if  [3XS[103X  is  a  Rees  Congruence  semigroup,  that  is,  if all
+  congruences of [3XS[103X are Rees Congruences.[133X
+  
+  
+  [1X51.3 [33X[0;0YMaking transformation semigroups[133X[101X
+  
+  [33X[0;0YCayley's  Theorem gives special status to semigroups of transformations, and
+  accordingly  there  are  special  functions to deal with them, and to create
+  them from other finite semigroups.[133X
+  
+  [1X51.3-1 IsTransformationSemigroup[101X
+  
+  [29X[2XIsTransformationSemigroup[102X( [3Xobj[103X ) [32X property
+  [29X[2XIsTransformationMonoid[102X( [3Xobj[103X ) [32X property
+  
+  [33X[0;0YA   transformation   semigroup  (resp.  monoid)  is  a  subsemigroup  (resp.
+  submonoid) of the full transformation monoid. Note that for a transformation
+  semigroup  to be a transformation monoid we necessarily require the identity
+  transformation to be an element.[133X
+  
+  [1X51.3-2 DegreeOfTransformationSemigroup[101X
+  
+  [29X[2XDegreeOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute
+  
+  [33X[0;0YThe number of points the semigroup [3XS[103X acts on.[133X
+  
+  [1X51.3-3 IsomorphismTransformationSemigroup[101X
+  
+  [29X[2XIsomorphismTransformationSemigroup[102X( [3XS[103X ) [32X attribute
+  [29X[2XHomomorphismTransformationSemigroup[102X( [3XS[103X, [3Xr[103X ) [32X operation
+  
+  [33X[0;0Y[2XIsomorphismTransformationSemigroup[102X   is  a  generic  attribute  which  is  a
+  transformation  semigroup  isomorphic to [3XS[103X (if such can be computed). In the
+  case  of  an  fp-semigroup, a Todd-Coxeter approach will be attempted. For a
+  semigroup of endomorphisms of a finite domain of [22Xn[122X elements, it will be to a
+  semigroup  of transformations of [22X{ 1, 2, ..., n }[122X. Otherwise, it will be the
+  right  regular representation on [3XS[103X or [22X[3XS[103X^1[122X if [3XS[103X has no multiplicative neutral
+  element, see [2XMultiplicativeNeutralElement[102X ([14X35.4-10[114X).[133X
+  
+  [33X[0;0Y[2XHomomorphismTransformationSemigroup[102X   finds   a   representation   of  [3XS[103X  as
+  transformations of the set of equivalence classes of the right congruence [3Xr[103X.[133X
+  
+  [1X51.3-4 IsFullTransformationSemigroup[101X
+  
+  [29X[2XIsFullTransformationSemigroup[102X( [3Xobj[103X ) [32X property
+  
+  [33X[0;0Ychecks whether [3Xobj[103X is a full transformation semigroup.[133X
+  
+  [1X51.3-5 FullTransformationSemigroup[101X
+  
+  [29X[2XFullTransformationSemigroup[102X( [3Xdegree[103X ) [32X function
+  
+  [33X[0;0YReturns the full transformation semigroup of degree [3Xdegree[103X.[133X
+  
+  
+  [1X51.4 [33X[0;0YIdeals of semigroups[133X[101X
+  
+  [33X[0;0YIdeals of semigroups are the same as ideals of the semigroup when considered
+  as a magma. For documentation on ideals for magmas, see [2XMagma[102X ([14X35.2-1[114X).[133X
+  
+  [1X51.4-1 SemigroupIdealByGenerators[101X
+  
+  [29X[2XSemigroupIdealByGenerators[102X( [3XS[103X, [3Xgens[103X ) [32X operation
+  
+  [33X[0;0Y[3XS[103X  is  a  semigroup,  [3Xgens[103X is a list of elements of [3XS[103X. Returns the two-sided
+  ideal of [3XS[103X generated by [3Xgens[103X.[133X
+  
+  [1X51.4-2 ReesCongruenceOfSemigroupIdeal[101X
+  
+  [29X[2XReesCongruenceOfSemigroupIdeal[102X( [3XI[103X ) [32X attribute
+  
+  [33X[0;0YA  two sided ideal [3XI[103X of a semigroup [3XS[103X defines a congruence on [3XS[103X given by [22X∆ ∪
+  I × I[122X.[133X
+  
+  [1X51.4-3 IsLeftSemigroupIdeal[101X
+  
+  [29X[2XIsLeftSemigroupIdeal[102X( [3XI[103X ) [32X property
+  [29X[2XIsRightSemigroupIdeal[102X( [3XI[103X ) [32X property
+  [29X[2XIsSemigroupIdeal[102X( [3XI[103X ) [32X property
+  
+  [33X[0;0YCategories of semigroup ideals.[133X
+  
+  
+  [1X51.5 [33X[0;0YCongruences for semigroups[133X[101X
+  
+  [33X[0;0YAn  equivalence  or  a  congruence  on  a  semigroup  is  the equivalence or
+  congruence  on  the  semigroup  considered  as  a  magma.  So,  to deal with
+  equivalences  and  congruences  on semigroups, magma functions are used. For
+  documentation   on  equivalences  and  congruences  for  magmas,  see  [2XMagma[102X
+  ([14X35.2-1[114X).[133X
+  
+  [1X51.5-1 IsSemigroupCongruence[101X
+  
+  [29X[2XIsSemigroupCongruence[102X( [3Xc[103X ) [32X property
+  
+  [33X[0;0Ya magma congruence [3Xc[103X on a semigroup.[133X
+  
+  [1X51.5-2 IsReesCongruence[101X
+  
+  [29X[2XIsReesCongruence[102X( [3Xc[103X ) [32X property
+  
+  [33X[0;0Yreturns  [9Xtrue[109X  if  and only if the congruence [3Xc[103X has at most one nonsingleton
+  congruence class.[133X
+  
+  
+  [1X51.6 [33X[0;0YQuotients[133X[101X
+  
+  [33X[0;0YGiven a semigroup and a congruence on the semigroup, one can construct a new
+  semigroup:  the  quotient  semigroup.  The  following  functions  deal  with
+  quotient  semigroups  in  [5XGAP[105X.  For  a  semigroup  [22XS[122X, elements of a quotient
+  semigroup     are     equivalence     classes    of    elements    of    the
+  [2XQuotientSemigroupPreimage[102X  ([14X51.6-3[114X)  value under the congruence given by the
+  value of [2XQuotientSemigroupCongruence[102X ([14X51.6-3[114X).[133X
+  
+  [33X[0;0YIt  is  probably most useful for calculating the elements of the equivalence
+  classes  by using [2XElements[102X ([14X30.3-11[114X) or by looking at the images of elements
+  of   [2XQuotientSemigroupPreimage[102X   ([14X51.6-3[114X)   under   the   map   returned  by
+  [2XQuotientSemigroupHomomorphism[102X       ([14X51.6-3[114X),       which      maps      the
+  [2XQuotientSemigroupPreimage[102X ([14X51.6-3[114X) value to [3XS[103X.[133X
+  
+  [33X[0;0YFor   intensive  computations  in  a  quotient  semigroup,  it  is  probably
+  worthwhile finding another representation as the equality test could involve
+  enumeration of the elements of the congruence classes being compared.[133X
+  
+  [1X51.6-1 IsQuotientSemigroup[101X
+  
+  [29X[2XIsQuotientSemigroup[102X( [3XS[103X ) [32X Category
+  
+  [33X[0;0Yis  the  category  of  semigroups  constructed  from another semigroup and a
+  congruence on it.[133X
+  
+  [1X51.6-2 HomomorphismQuotientSemigroup[101X
+  
+  [29X[2XHomomorphismQuotientSemigroup[102X( [3Xcong[103X ) [32X function
+  
+  [33X[0;0Yfor  a congruence [3Xcong[103X and a semigroup [3XS[103X. Returns the homomorphism from [3XS[103X to
+  the quotient of [3XS[103X by [3Xcong[103X.[133X
+  
+  [1X51.6-3 QuotientSemigroupPreimage[101X
+  
+  [29X[2XQuotientSemigroupPreimage[102X( [3XS[103X ) [32X attribute
+  [29X[2XQuotientSemigroupCongruence[102X( [3XS[103X ) [32X attribute
+  [29X[2XQuotientSemigroupHomomorphism[102X( [3XS[103X ) [32X attribute
+  
+  [33X[0;0Yfor a quotient semigroup [3XS[103X.[133X
+  
+  
+  [1X51.7 [33X[0;0YGreen's Relations[133X[101X
+  
+  [33X[0;0YGreen's  equivalence  relations  play  a  very  important  role in semigroup
+  theory. In this section we describe how they can be used in [5XGAP[105X.[133X
+  
+  [33X[0;0YThe  five  Green's  relations  are  [22XR[122X,  [22XL[122X, [22XJ[122X, [22XH[122X, [22XD[122X: two elements [22Xx[122X, [22Xy[122X from a
+  semigroup  [22XS[122X are [22XR[122X-related if and only if [22XxS^1 = yS^1[122X, [22XL[122X-related if and only
+  if  [22XS^1 x = S^1 y[122X and [22XJ[122X-related if and only if [22XS^1 xS^1 = S^1 yS^1[122X; finally,
+  [22XH = R ∧ L[122X, and [22XD = R ∘ L[122X.[133X
+  
+  [33X[0;0YRecall  that  relations [22XR[122X, [22XL[122X and [22XJ[122X induce a partial order among the elements
+  of the semigroup [22XS[122X: for two elements [22Xx[122X, [22Xy[122X from [22XS[122X, we say that [22Xx[122X is less than
+  or equal to [22Xy[122X in the order on [22XR[122X if [22XxS^1 ⊆ yS^1[122X; similarly, [22Xx[122X is less than or
+  equal  to  [22Xy[122X  under  [22XL[122X  if [22XS^1x ⊆ S^1y[122X; finally [22Xx[122X is less than or equal to [22Xy[122X
+  under  [22XJ[122X  if [22XS^1 xS^1 ⊆ S^1 tS^1[122X. We extend this preorder to a partial order
+  on equivalence classes in the natural way.[133X
+  
+  [1X51.7-1 GreensRRelation[101X
+  
+  [29X[2XGreensRRelation[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensLRelation[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensJRelation[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensDRelation[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensHRelation[102X( [3Xsemigroup[103X ) [32X attribute
+  
+  [33X[0;0YThe  Green's  relations  (which are equivalence relations) are attributes of
+  the semigroup [3Xsemigroup[103X.[133X
+  
+  [1X51.7-2 IsGreensRelation[101X
+  
+  [29X[2XIsGreensRelation[102X( [3Xbin-relation[103X ) [32X property
+  [29X[2XIsGreensRRelation[102X( [3Xequiv-relation[103X ) [32X property
+  [29X[2XIsGreensLRelation[102X( [3Xequiv-relation[103X ) [32X property
+  [29X[2XIsGreensJRelation[102X( [3Xequiv-relation[103X ) [32X property
+  [29X[2XIsGreensHRelation[102X( [3Xequiv-relation[103X ) [32X property
+  [29X[2XIsGreensDRelation[102X( [3Xequiv-relation[103X ) [32X property
+  
+  [33X[0;0YCategories for the Green's relations.[133X
+  
+  [1X51.7-3 IsGreensClass[101X
+  
+  [29X[2XIsGreensClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensRClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensLClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensJClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensHClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensDClass[102X( [3Xequiv-class[103X ) [32X property
+  
+  [33X[0;0Yreturn  [9Xtrue[109X  if the equivalence class [3Xequiv-class[103X is a Green's class of any
+  type, or of [22XR[122X, [22XL[122X, [22XJ[122X, [22XH[122X, [22XD[122X type, respectively, or [9Xfalse[109X otherwise.[133X
+  
+  [1X51.7-4 IsGreensLessThanOrEqual[101X
+  
+  [29X[2XIsGreensLessThanOrEqual[102X( [3XC1[103X, [3XC2[103X ) [32X operation
+  
+  [33X[0;0Yreturns  [9Xtrue[109X  if the Green's class [3XC1[103X is less than or equal to [3XC2[103X under the
+  respective ordering (as defined above), and [9Xfalse[109X otherwise.[133X
+  
+  [33X[0;0YOnly defined for [22XR[122X, [22XL[122X and [22XJ[122X classes.[133X
+  
+  [1X51.7-5 RClassOfHClass[101X
+  
+  [29X[2XRClassOfHClass[102X( [3XH[103X ) [32X attribute
+  [29X[2XLClassOfHClass[102X( [3XH[103X ) [32X attribute
+  
+  [33X[0;0Yare  attributes  reflecting  the  natural  ordering over the various Green's
+  classes.  [2XRClassOfHClass[102X  and  [2XLClassOfHClass[102X  return  the  [22XR[122X and [22XL[122X classes,
+  respectively, in which an [22XH[122X class is contained.[133X
+  
+  [1X51.7-6 EggBoxOfDClass[101X
+  
+  [29X[2XEggBoxOfDClass[102X( [3XDclass[103X ) [32X attribute
+  
+  [33X[0;0Yreturns for a Green's [22XD[122X class [3XDclass[103X a matrix whose rows represent [22XR[122X classes
+  and columns represent [22XL[122X classes. The entries are the [22XH[122X classes.[133X
+  
+  [1X51.7-7 DisplayEggBoxOfDClass[101X
+  
+  [29X[2XDisplayEggBoxOfDClass[102X( [3XDclass[103X ) [32X function
+  
+  [33X[0;0Ydisplays  a  [21Xpicture[121X  of  the  [22XD[122X class [3XDclass[103X, as an array of 1s and 0s. A 1
+  represents a group [22XH[122X class.[133X
+  
+  [1X51.7-8 GreensRClassOfElement[101X
+  
+  [29X[2XGreensRClassOfElement[102X( [3XS[103X, [3Xa[103X ) [32X operation
+  [29X[2XGreensLClassOfElement[102X( [3XS[103X, [3Xa[103X ) [32X operation
+  [29X[2XGreensDClassOfElement[102X( [3XS[103X, [3Xa[103X ) [32X operation
+  [29X[2XGreensJClassOfElement[102X( [3XS[103X, [3Xa[103X ) [32X operation
+  [29X[2XGreensHClassOfElement[102X( [3XS[103X, [3Xa[103X ) [32X operation
+  
+  [33X[0;0YCreates the [22XX[122X class of the element [3Xa[103X in the semigroup [3XS[103X where [22XX[122X is one of [22XL[122X,
+  [22XR[122X, [22XD[122X, [22XJ[122X, or [22XH[122X.[133X
+  
+  [1X51.7-9 GreensRClasses[101X
+  
+  [29X[2XGreensRClasses[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensLClasses[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensJClasses[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensDClasses[102X( [3Xsemigroup[103X ) [32X attribute
+  [29X[2XGreensHClasses[102X( [3Xsemigroup[103X ) [32X attribute
+  
+  [33X[0;0Yreturn  the  [22XR[122X,  [22XL[122X,  [22XJ[122X,  [22XH[122X, or [22XD[122X Green's classes, respectively for semigroup
+  [3Xsemigroup[103X. [2XEquivalenceClasses[102X ([14X33.7-3[114X) for a Green's relation lead to one of
+  these functions.[133X
+  
+  [1X51.7-10 GroupHClassOfGreensDClass[101X
+  
+  [29X[2XGroupHClassOfGreensDClass[102X( [3XDclass[103X ) [32X attribute
+  
+  [33X[0;0Yfor a [22XD[122X class [3XDclass[103X of a semigroup, returns a group [22XH[122X class of the [22XD[122X class,
+  or [9Xfail[109X if there is no group [22XH[122X class.[133X
+  
+  [1X51.7-11 IsGroupHClass[101X
+  
+  [29X[2XIsGroupHClass[102X( [3XHclass[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if the Green's [22XH[122X class [3XHclass[103X is a group, which in turn is true
+  if and only if [3XHclass[103X[22X^2[122X intersects [3XHclass[103X.[133X
+  
+  [1X51.7-12 IsRegularDClass[101X
+  
+  [29X[2XIsRegularDClass[102X( [3XDclass[103X ) [32X property
+  
+  [33X[0;0Yreturns  [9Xtrue[109X  if the Greens [22XD[122X class [3XDclass[103X is regular. A [22XD[122X class is regular
+  if and only if each of its elements is regular, which in turn is true if and
+  only  if any one element of [3XDclass[103X is regular. Idempotents are regular since
+  [22Xeee  =  e[122X  so  it follows that a Green's [22XD[122X class containing an idempotent is
+  regular. Conversely, it is true that a regular [22XD[122X class must contain at least
+  one idempotent. (See [How76, Prop. 3.2].)[133X
+  
+  
+  [1X51.8 [33X[0;0YRees Matrix Semigroups[133X[101X
+  
+  [33X[0;0YIn  this  section  we  describe [5XGAP[105X functions for Rees matrix semigroups and
+  Rees  0-matrix  semigroups. The importance of this construction is that Rees
+  Matrix  semigroups over groups are exactly the completely simple semigroups,
+  and  Rees  0-matrix  semigroups  over  groups  are  the  completely 0-simple
+  semigroups[133X
+  
+  [33X[0;0YRecall  that  a  Rees  Matrix semigroup is constructed from a semigroup (the
+  underlying  semigroup),  and  a matrix. A Rees Matrix semigroup element is a
+  triple  [22X(s, i, λ)[122X where [22Xs[122X is an element of the underlying semigroup [22XS[122X and [22Xi[122X,
+  [22Xλ[122X  are  indices.  This  can  be  thought of as a matrix with zero everywhere
+  except  for  an occurrence of [22Xs[122X at row [22Xi[122X and column [22Xλ[122X. The multiplication is
+  defined by [22X(i, s, λ)*(j, t, μ) = (i, s P_{λ j} t, μ)[122X where [22XP[122X is the defining
+  matrix  of  the  semigroup.  In the case that the underlying semigroup has a
+  zero  we  can create the [2XReesZeroMatrixSemigroup[102X ([14X51.8-2[114X) value, wherein all
+  elements  whose  [22Xs[122X  entry  is  the  zero  of  the  underlying  semigroup are
+  identified to the unique zero of the Rees 0-matrix semigroup.[133X
+  
+  [1X51.8-1 ReesMatrixSemigroup[101X
+  
+  [29X[2XReesMatrixSemigroup[102X( [3XS[103X, [3Xmatrix[103X ) [32X function
+  
+  [33X[0;0Yfor a semigroup [3XS[103X and [3Xmatrix[103X whose entries are in [3XS[103X. Returns the Rees Matrix
+  semigroup with multiplication defined by [3Xmatrix[103X.[133X
+  
+  [1X51.8-2 ReesZeroMatrixSemigroup[101X
+  
+  [29X[2XReesZeroMatrixSemigroup[102X( [3XS[103X, [3Xmatrix[103X ) [32X function
+  
+  [33X[0;0Yfor  a  semigroup  [3XS[103X  with zero, and [3Xmatrix[103X over [3XS[103X returns the Rees 0-Matrix
+  semigroup such that all elements [22X(i, 0, λ)[122X are identified to zero.[133X
+  
+  [33X[0;0YThe  zero  in  [3XS[103X is found automatically. If one cannot be found, an error is
+  signalled.[133X
+  
+  [1X51.8-3 IsReesMatrixSemigroup[101X
+  
+  [29X[2XIsReesMatrixSemigroup[102X( [3XT[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if the object [3XT[103X is a (whole) Rees matrix semigroup.[133X
+  
+  [1X51.8-4 IsReesZeroMatrixSemigroup[101X
+  
+  [29X[2XIsReesZeroMatrixSemigroup[102X( [3XT[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if the object [3XT[103X is a (whole) Rees 0-matrix semigroup.[133X
+  
+  [1X51.8-5 ReesMatrixSemigroupElement[101X
+  
+  [29X[2XReesMatrixSemigroupElement[102X( [3XR[103X, [3Xi[103X, [3Xa[103X, [3Xlambda[103X ) [32X function
+  [29X[2XReesZeroMatrixSemigroupElement[102X( [3XR[103X, [3Xi[103X, [3Xa[103X, [3Xlambda[103X ) [32X function
+  
+  [33X[0;0Yfor  a Rees matrix semigroup [3XR[103X, [3Xa[103X in [10XUnderlyingSemigroup([3XR[103X[10X)[110X, [3Xi[103X and [3Xlambda[103X in
+  the  row  (resp. column) ranges of [3XR[103X, returns the element of [3XR[103X corresponding
+  to the matrix with zero everywhere and [3Xa[103X in row [3Xi[103X and column [3Xx[103X.[133X
+  
+  [1X51.8-6 IsReesMatrixSemigroupElement[101X
+  
+  [29X[2XIsReesMatrixSemigroupElement[102X( [3Xe[103X ) [32X Category
+  [29X[2XIsReesZeroMatrixSemigroupElement[102X( [3Xe[103X ) [32X Category
+  
+  [33X[0;0Yis the category of elements of a Rees (0-) matrix semigroup. Returns true if
+  [3Xe[103X is an element of a Rees Matrix semigroup.[133X
+  
+  [1X51.8-7 SandwichMatrixOfReesMatrixSemigroup[101X
+  
+  [29X[2XSandwichMatrixOfReesMatrixSemigroup[102X( [3XR[103X ) [32X attribute
+  [29X[2XSandwichMatrixOfReesZeroMatrixSemigroup[102X( [3XR[103X ) [32X attribute
+  
+  [33X[0;0Yeach return the defining matrix of the Rees (0-) matrix semigroup.[133X
+  
+  [1X51.8-8 RowIndexOfReesMatrixSemigroupElement[101X
+  
+  [29X[2XRowIndexOfReesMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XRowIndexOfReesZeroMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XColumnIndexOfReesMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XColumnIndexOfReesZeroMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XUnderlyingElementOfReesMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XUnderlyingElementOfReesZeroMatrixSemigroupElement[102X( [3Xx[103X ) [32X attribute
+  
+  [33X[0;0YFor  an element [3Xx[103X of a Rees Matrix semigroup, of the form [22X(i, s, λ)[122X, the row
+  index  is  [22Xi[122X,  the  column index is [22Xλ[122X and the underlying element is [22Xs[122X. If we
+  think  of  an element as a matrix then this corresponds to the row where the
+  non-zero  entry  is, the column where the non-zero entry is and the entry at
+  that position, respectively.[133X
+  
+  [1X51.8-9 ReesZeroMatrixSemigroupElementIsZero[101X
+  
+  [29X[2XReesZeroMatrixSemigroupElementIsZero[102X( [3Xx[103X ) [32X property
+  
+  [33X[0;0Yreturns [9Xtrue[109X if [3Xx[103X is the zero of the Rees 0-matrix semigroup.[133X
+  
+  [1X51.8-10 AssociatedReesMatrixSemigroupOfDClass[101X
+  
+  [29X[2XAssociatedReesMatrixSemigroupOfDClass[102X( [3XD[103X ) [32X attribute
+  
+  [33X[0;0YGiven  a  regular  [3XD[103X class of a finite semigroup, it can be viewed as a Rees
+  matrix  semigroup  by  identifying  products which do not lie in the [3XD[103X class
+  with zero, and this is what it is returned.[133X
+  
+  [33X[0;0YFormally, let [22XI_1[122X be the ideal of all J classes less than or equal to [3XD[103X, [22XI_2[122X
+  the  ideal  of all J classes [13Xstrictly[113X less than [3XD[103X, and [22Xρ[122X the Rees congruence
+  associated     with     [22XI_2[122X.     Then     [22XI/ρ[122X     is    zero-simple.    Then
+  [10XAssociatedReesMatrixSemigroupOfDClass(   [3XD[103X[10X   )[110X   returns   this  zero-simple
+  semigroup as a Rees matrix semigroup.[133X
+  
+  [1X51.8-11 IsomorphismReesMatrixSemigroup[101X
+  
+  [29X[2XIsomorphismReesMatrixSemigroup[102X( [3Xobj[103X ) [32X attribute
+  
+  [33X[0;0YIf  [3XS[103X  is  a  completely  simple  (resp.  zero simple) semigroup, returns an
+  isomorphism to a Rees matrix semigroup over a group (resp. zero group).[133X
+  

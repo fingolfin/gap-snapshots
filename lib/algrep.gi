@@ -2,16 +2,13 @@
 ##
 #W  algrep.gi                  GAP library               Willem de Graaf
 ##
-#H  @(#)$Id: algrep.gi,v 4.31.2.2 2005/08/24 14:15:12 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for general modules over algebras.
 ##
-Revision.algrep_gi :=
-    "@(#)$Id: algrep.gi,v 4.31.2.2 2005/08/24 14:15:12 sal Exp $";
 
 
 #############################################################################
@@ -138,6 +135,24 @@ BindGlobal( "BasisOfAlgebraModule",
         B!.delegateBasis:= Basis( delmod, vecs );
     fi;
     return B;
+    end );
+
+
+#############################################################################
+##
+#M  CanonicalBasis( <V> ) . . . . . .  for a space of algebra module elements
+##
+InstallMethod( CanonicalBasis,
+    "for algebra module",
+    [ IsVectorSpace and IsAlgebraModuleElementCollection ],
+    function( V )
+    local B, fam, vecs;
+
+    B:= CanonicalBasis( VectorSpace( LeftActingDomain( V ),
+            List( GeneratorsOfLeftModule( V ), ExtRepOfObj ) ) );
+    fam:= ElementsFamily( FamilyObj( V ) );
+    vecs:= List( BasisVectors( B ), x -> ObjByExtRep( fam, x ) );
+    return BasisOfAlgebraModule( V, vecs );
     end );
 
 
@@ -1891,12 +1906,12 @@ end );
 
 ##############################################################################
 ##
-#M  TensorProduct( <list> ) . . . . for a list of vectorspaces.
+#M  TensorProductOp( <list> ) . . . . for a list of vectorspaces.
 ##
-InstallMethod( TensorProduct,
-        "for a list of finite dimensional vector spaces",
-        true, [ IsDenseList ], 0,
-        function( list )
+InstallMethod( TensorProductOp,
+        "for a list of finite dimensional vector spaces, and a space (for method selection)",
+        true, [ IsDenseList, IsVectorSpace ], 0,
+        function( list, list1 )
 
     local   F,  fam,  type,  gens,  i,  gV,  gens1,  ten,  v,  ten1,  
             VT,  BT;
@@ -1907,7 +1922,7 @@ InstallMethod( TensorProduct,
     # forms will fail. Hence we can assume that every module has a basis,
     # and therefore we have a basis of the tensor space as well.
 
-    F:= LeftActingDomain( list[1] );
+    F:= LeftActingDomain( list1 );
     
     if not ForAll( list, x -> LeftActingDomain(x) = F ) then
         Error("all vector spaces must be defined over the same field.");
@@ -1919,7 +1934,11 @@ InstallMethod( TensorProduct,
     fam!.zeroCoefficient:= Zero( F );
     fam!.constituentBases:= List( list, Basis );
 
-    gens:= List( Basis( list[1] ), x -> [ x ] );
+    if Length(list)=0 then
+        gens := [One(F)];
+    else
+        gens:= List( Basis( list[1] ), x -> [ x ] );
+    fi;
     for i in [2..Length(list)] do
         gV:= Basis( list[i] );
         gens1:= [ ];
@@ -1959,14 +1978,26 @@ InstallMethod( TensorProduct,
 
 end );
 
-InstallOtherMethod( TensorProduct,
-        "for two vector spaces",
-        true, [ IsVectorSpace, IsVectorSpace ], 0,
-        function( V, W )
-    return TensorProduct( [V,W] );
-
-end );
-
+InstallGlobalFunction(TensorProduct, function(arg)
+    local d;
+    if Length(arg) = 0 then
+        Error("<arg> must be nonempty");
+    elif Length(arg) = 1 and IsList(arg[1])  then
+        if IsEmpty(arg[1])  then
+            Error("<arg>[1] must be nonempty");
+        fi;
+        arg := arg[1];
+    fi;
+    d := TensorProductOp(arg,arg[1]);
+    if ForAll(arg, HasSize) then
+        if ForAll(arg, IsFinite) then
+            SetSize(d, Product( List(arg, Size)));
+        else
+            SetSize(d, infinity);
+        fi;
+    fi;
+    return d;
+end);
 
 ##############################################################################
 ##
@@ -3349,6 +3380,7 @@ InstallHandlingByNiceBasis( "IsDirectSumElementsSpace", rec(
       return ObjByExtRep( fam, u );
       end ) );
 
+
 ############################################################################
 ##
 #M  DirectSumOfAlgebraModules( <list> )
@@ -3496,6 +3528,7 @@ InstallMethod( DirectSumOfAlgebraModules,
 
 
 end );
+
 
 InstallOtherMethod( DirectSumOfAlgebraModules,
         "for two algebra modules",

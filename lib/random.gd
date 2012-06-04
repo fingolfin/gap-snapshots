@@ -3,35 +3,42 @@
 #W   random.gd                     GAP library                    Frank Lübeck
 #W                                                              Max Neunhöffer
 ##
-#H  @(#)$Id: random.gd,v 4.1.4.1 2006/08/28 15:52:58 gap Exp $
 ##
 #Y  Copyright (C) 2006 The GAP Group
 ##
 ##  This file declares variables for random sources.
 ##
-Revision.random_gd :=
-    "@(#)$Id: random.gd,v 4.1.4.1 2006/08/28 15:52:58 gap Exp $";
 
 
 #############################################################################
 ##  
 #C  IsRandomSource( <rs> ) 
-##  
-##  This is the category of random source objects <rs> which are defined to
-##  have methods available for the following operations which are explained 
-##  in more detail below: `Random( <rs>, <list> )' giving a random element 
-##  of a list, `Random( <rs>, <low>, <high> )' giving a random integer between
-##  <low> and <high> (inclusive), `Init', `State' and `Reset'.
-##  
-##  Use `RandomSource' (see "RandomSource") to construct new random sources.
-##  
+##
+##  <#GAPDoc Label="IsRandomSource">
+##  <ManSection>
+##  <Filt Name="IsRandomSource" Arg='obj' Type='Category'/>
+##
+##  <Description>
+##  This is the category of random source objects which are defined to have,
+##  for  an  object  <A>rs</A>  in  this  category,  methods  available  for
+##  the  following operations  which  are explained  in  more detail  below:
+##  <C>Random( <A>rs</A>,  <A>list</A> )</C>  giving a  random element  of a
+##  list,  <C>Random(  <A>rs</A>,  <A>low</A>, <A>high</A>  )</C>  giving  a
+##  random  integer between  <A>low</A>  and  <A>high</A> (inclusive),  <Ref
+##  Oper="Init"/>, <Ref Oper="State"/> and <Ref Oper="Reset"/>.
+##  <P/>
+##  Use <Ref Func="RandomSource"/> to construct new random sources.
+##  <P/>
 ##  One idea behind providing several independent (pseudo) random sources is
 ##  to make algorithms which use some sort of random choices deterministic.
 ##  They can use their own new random source created with a fixed seed and 
 ##  so do exactly the same in different calls.
-##  
-##  Random source objects lie in the family `RandomSourcesFamily'.
-##  
+##  <P/>
+##  Random source objects lie in the family <C>RandomSourcesFamily</C>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 BindGlobal( "RandomSourcesFamily", NewFamily( "RandomSourcesFamily" ) );    
 DeclareCategory( "IsRandomSource", IsComponentObjectRep );
 
@@ -39,13 +46,22 @@ DeclareCategory( "IsRandomSource", IsComponentObjectRep );
 ##  
 #O  Random( <rs>, <list> ) . . . . . . . . . . for random source and a list
 #O  Random( <rs>, <low>, <high> )  . . . for random source and two integers
-##  
-##  This operation returns a random element from list <list>, or an integer 
-##  in the range from the given (possibly large) integers <low> to <high>,
+##
+##  <#GAPDoc Label="Random">
+##  <ManSection>
+##  <Oper Name="Random" Arg='rs, list' Label="for a list"/>
+##  <Oper Name="Random" Arg='rs, low, high' Label="for a range of integers"/>
+##
+##  <Description>
+##  This operation returns a random element from list <A>list</A>, or an integer 
+##  in the range from the given (possibly large) integers <A>low</A> to <A>high</A>,
 ##  respectively. 
-##  The choice should only depend on the random source <rs> and have no 
+##  The choice should only depend on the random source <A>rs</A> and have no 
 ##  effect on other random sources.
-##  
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareOperation( "Random", [IsRandomSource, IsList] );
 DeclareOperation( "Random", [IsRandomSource, IsInt, IsInt] );
 
@@ -56,27 +72,52 @@ DeclareOperation( "Random", [IsRandomSource, IsInt, IsInt] );
 #O  Reset( <rs>, <seed> ) . . . . . . . . . . . reset a random source
 #O  Init( <rs> )
 #O  Init( <prers>, <seed> )  . . . . . . . initialize a random source
-##  
+##
+##  <#GAPDoc Label="State">
+##  <ManSection>
+##  <Oper Name="State" Arg='rs'/>
+##  <Oper Name="Reset" Arg='rs[, seed]'/>
+##  <Oper Name="Init" Arg='prers[, seed]'/>
+##
+##  <Description>
 ##  These are the basic operations for which random sources (see
-##  "IsRandomSource") must have methods. 
-##  
-##  `State' should return a data structure which allows to recover the state
+##  <Ref Func="IsRandomSource"/>) must have methods. 
+##  <P/>
+##  <Ref Oper="State"/> should return a data structure which allows to recover the state
 ##  of the random source such that a sequence of random calls using this 
 ##  random source can be reproduced. If a random source cannot be reset 
-##  (say, it uses truely random physical data) then `State' should return 
-##  `fail'.
-##  
-##  `Reset( <rs>, <seed> )' resets the random source <rs> to a state described
-##  by <seed>, if the random source can be reset (otherwise it should do
-##  nothing). Here <seed> can be an output of `State' and then should reset
-##  to that state. Also, the methods should always allow integers as <seed>.
-##  Without the <seed> argument the default $<seed> = 1$ is used.
-##  
-##  `Init' is the constructor of a random source, it gets an empty component 
-##  object which has already the correct type and should fill in the actual 
+##  (say, it uses truly random physical data) then <Ref Oper="State"/>
+##  should return  <K>fail</K>.
+##  <P/>
+##  <C>Reset( <A>rs</A>, <A>seed</A> )</C> resets the random source <A>rs</A> to a state described
+##  by <A>seed</A>, if the random source can be reset (otherwise it should do
+##  nothing). Here <A>seed</A> can be an output of <Ref Oper="State"/> and then should reset
+##  to that state. Also, the methods should always allow integers as <A>seed</A>.
+##  Without the <A>seed</A> argument the default <M><A>seed</A> = 1</M> is used.
+##  <P/>
+##  <Ref Oper="Init"/> is the constructor of a random source, it gets an empty component 
+##  object <A>prers</A> which has already the correct type and should fill in the actual 
 ##  data which are needed. Optionally, it should allow one to specify a 
-##  <seed> for the initial state, as explained for `Reset'.
-##  
+##  <A>seed</A> for the initial state, as explained for <Ref Oper="Reset"/>.
+##  <P/>
+##  Most methods for <Ref Oper="Random" Label="for a list or collection"/> 
+##  in the &GAP; library use the 
+##  <Ref Var="GlobalMersenneTwister"/> as random source. It can be reset 
+##  into a known state as in the following example.
+##  <Example><![CDATA[
+##  gap> seed := State(GlobalMersenneTwister);;
+##  gap> List([1..10],i->Random(Integers));
+##  [ -1, -3, -2, 1, -2, -1, 0, 1, 0, 1 ]
+##  gap> List([1..10],i->Random(Integers));
+##  [ -1, 0, 2, 0, 4, -1, -3, 1, -4, -1 ]
+##  gap> Reset(GlobalMersenneTwister, seed);;
+##  gap> List([1..10],i->Random(Integers));
+##  [ -1, -3, -2, 1, -2, -1, 0, 1, 0, 1 ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareOperation( "State", [IsRandomSource] );
 DeclareOperation( "Reset", [IsRandomSource] );
 DeclareOperation( "Reset", [IsRandomSource, IsObject] );
@@ -85,40 +126,55 @@ DeclareOperation( "Init", [IsRandomSource, IsObject] );
 
 #############################################################################
 ##  
+#C  IsMersenneTwister( <rs> )
 #C  IsGlobalRandomSource( <rs> )
 #C  IsGAPRandomSource( <rs> )
-#C  IsMersenneTwister( <rs> )
 #V  GlobalRandomSource
 #V  GlobalMersenneTwister
-##  
-##  Currently, the {\GAP} library provides three types of random sources,
+##
+##  <#GAPDoc Label="IsGlobalRandomSource">
+##  <ManSection>
+##  <Filt Name="IsMersenneTwister" Arg='rs' Type='Category'/>
+##  <Filt Name="IsGAPRandomSource" Arg='rs' Type='Category'/>
+##  <Filt Name="IsGlobalRandomSource" Arg='rs' Type='Category'/>
+##  <Var Name="GlobalMersenneTwister"/>
+##  <Var Name="GlobalRandomSource"/>
+##
+##  <Description>
+##  Currently, the &GAP; library provides three types of random sources,
 ##  distinguished by the three listed categories.
-##  
-##  `IsGlobalRandomSource' gives access to the *classical* global 
-##  random generator which was used by {\GAP} in previous releases. 
-##  You do not need to construct new random sources of this kind which would
-##  all use the same global data structure. Just use the existing random
-##  source `GlobalRandomSource'. This uses the additive random number 
-##  generator described in  \cite{TACP2} (Algorithm A in~3.2.2 with lag $30$).
-##  
-##  `IsGAPRandomSource' uses the same number generator as 
-##  `IsGlobalRandomSource', but you can create several of these random sources 
-##  which generate their random numbers independently of all other random
-##  sources. 
-##  
-##  `IsMersenneTwister' are random sources which use a fast random generator of
-##  32 bit numbers, called the Mersenne twister. The pseudo random sequence has 
-##  a period of $2^{19937}-1$ and the numbers have a $623$-dimensional 
-##  equidistribution. For more details and the origin of the code used in the
-##  {\GAP} kernel, see:
-##  
-##  `http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html'
-##  
+##  <P/>
+##  <Ref  Var="IsMersenneTwister"/>  are random  sources  which  use a  fast
+##  random generator  of 32  bit numbers, called  the Mersenne  twister. The
+##  pseudo  random  sequence has  a  period  of <M>2^{19937}-1</M>  and  the
+##  numbers have a <M>623</M>-dimensional equidistribution. For more details
+##  and the origin of the code used in the &GAP; kernel, see:
+##  <URL>http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</URL>.
+##  <P/>
 ##  Use the Mersenne twister if possible, in particular for generating many 
 ##  large random integers. 
-##  
-##  There is also a predefined global random source `GlobalMersenneTwister'.
-##  
+##  <P/>
+##  There is also a predefined global random source 
+##  <Ref Var="GlobalMersenneTwister"/> which is used by most of the library
+##  methods for <Ref Oper="Random" Label="for a list or collection"/>.
+##  <P/>
+##  <Ref Filt="IsGAPRandomSource"/> uses the same number generator as 
+##  <Ref Filt="IsGlobalRandomSource"/>, but you can create several of these 
+##  random sources which generate their random numbers independently of 
+##  all other random sources. 
+##  <P/>
+##  <Ref Filt="IsGlobalRandomSource"/> gives access to the <E>classical</E> 
+##  global random generator which was used by &GAP; in former releases. 
+##  You do not need to construct new random sources of this kind which would
+##  all use the same global data structure. Just use the existing random
+##  source <Ref Var="GlobalRandomSource"/>. This uses the additive random number 
+##  generator described in  <Cite Key="TACP2"/> (Algorithm A in&nbsp;3.2.2 
+##  with lag <M>30</M>).
+##  <P/>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareCategory("IsGlobalRandomSource", IsRandomSource);
 DeclareCategory("IsGAPRandomSource", IsRandomSource);
 DeclareCategory("IsMersenneTwister", IsRandomSource);
@@ -130,13 +186,18 @@ DeclareGlobalVariable( "GlobalMersenneTwister" );
 ##  
 #O  RandomSource( <cat> )
 #O  RandomSource( <cat>, <seed> )
-##  
-##  This operation is used to create new random sources. The first argument is 
-##  the category describing the type of the random generator, an optional
-##  <seed> which can be an integer or a type specific data structure can be
-##  given to specify the initial state.
-##  
-##  \beginexample
+##
+##  <#GAPDoc Label="RandomSource">
+##  <ManSection>
+##  <Oper Name="RandomSource" Arg='cat[, seed]'/>
+##
+##  <Description>
+##  This operation is used to create new random sources. The first argument 
+##  <A>cat</A> is the category describing the type of the random generator, 
+##  an optional <A>seed</A> which can be an integer or a type specific data 
+##  structure can be given to specify the initial state.
+##  <P/>
+##  <Example><![CDATA[
 ##  gap> rs1 := RandomSource(IsMersenneTwister);
 ##  <RandomSource in IsMersenneTwister>
 ##  gap> state1 := State(rs1);;
@@ -149,42 +210,14 @@ DeclareGlobalVariable( "GlobalMersenneTwister" );
 ##  false
 ##  gap> n := Random(rs1, 1, 2^220);
 ##  1598617776705343302477918831699169150767442847525442557699717518961
-##  \endexample
-##  
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareOperation( "RandomSource", [IsOperation] );
 DeclareOperation( "RandomSource", [IsOperation, IsObject] );
 
-
-# Outdated, but kept since they were documented for a long time.
 #############################################################################
 ##
-#F  StateRandom()
-#F  RestoreStateRandom(<obj>)
-##
-##  [This interface to the global random generator is kept for compatibility 
-##  with older versions of {\GAP}. Use now `State(GlobalRandomSource)'
-##  and `Reset(GlobalRandomSource, <obj>)' instead.]
-##  
-##  For debugging purposes, it can be desirable to reset the random number
-##  generator to a state it had before. `StateRandom' returns a {\GAP}
-##  object that represents the current state of the random number generator
-##  used by `RandomList'.
-##
-##  By calling `RestoreStateRandom' with this object as argument, the
-##  random number is reset to this same state.
-##
-##  (The same result can be obtained by accessing the two global variables
-##  `R_N' and `R_X'.)
-##
-##  (The format of the object used to represent the random generator seed
-##  is not guaranteed to be stable between different machines or versions
-##  of {\GAP}.
-##
-DeclareGlobalFunction( "StateRandom" );
-DeclareGlobalFunction( "RestoreStateRandom" );
-
-# older documentation referred to `StatusRandom'. 
-DeclareSynonym("StatusRandom",StateRandom);
-
-#############################################################################
-##  
+#E

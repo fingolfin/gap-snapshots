@@ -4,16 +4,13 @@
 #W                                                                 Sarah Rees
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: meataxe.gd,v 4.3.2.1 2005/11/26 06:59:00 gap Exp $ 
 ##
-#Y  (C) 1998-2001 School Math. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1998-2001 School Math. Sci., University of St Andrews, Scotland
 ##
 ##  This file contains the declarations for the 'Smash'-MeatAxe modified for
 ##  GAP4 and using the standard MeatAxe interface.  It defines the MeatAxe
 ##  SMTX.
 ##
-Revision.meataxe_gd:=
-  "@(#)$Id: meataxe.gd,v 4.3.2.1 2005/11/26 06:59:00 gap Exp $";
 
 #############################################################################
 ##
@@ -74,7 +71,18 @@ DeclareGlobalFunction("WedgeGModule");
 ## 
 DeclareGlobalFunction("DualGModule");
 
+###############################################################################
+##
+#F TestModulesFitTogether(m1,m2) 
+##
+##  Given two modules <m1> and <m2> this routine tests whether both have the
+##  same number of generators and are defined over the same field.
+## 
+DeclareGlobalFunction("TestModulesFitTogether");
+
 DeclareInfoClass("InfoMeatAxe");
+DeclareInfoClass("InfoMtxHom");
+
 
 SMTX:=rec(name:="The Smash MeatAxe");
 MTX:=SMTX;
@@ -89,3 +97,4 @@ SMTX.Getter := function(string)
     fi;
   end;
 end;
+

@@ -2,12 +2,10 @@
 ##
 #W  straight.gi              GAP library                        Thomas Breuer
 #W                                                           Alexander Hulpke
-#W                                                            Max Neunhoeffer
+#W                                                            Max Neunhöffer
 ##
-#H  @(#)$Id: straight.gi,v 4.28.2.4 2008/09/10 09:24:53 gap Exp $
-##
-#Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1999,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementations of methods and functions
@@ -16,8 +14,6 @@
 ##  1. Functions for straight line programs
 ##  2. Functions for elements represented by straight line programs
 ##
-Revision.straight_gi :=
-    "@(#)$Id: straight.gi,v 4.28.2.4 2008/09/10 09:24:53 gap Exp $";
 
 
 #############################################################################
@@ -180,7 +176,7 @@ InstallGlobalFunction( StringToStraightLineProgram,
           else
 
             # The bracket may be powered or be multiplied.
-            if i < len and string[ i+1 ] = '^' then
+            if i+1 < len and string[ i+1 ] = '^' then
 
               exp:= 0;
               j:= i+2;
@@ -1951,6 +1947,24 @@ local c,i,f;
   return c;
 end);
 
+InstallOtherMethod( CycleStructurePerm, "straight line program perms", true,
+  [ IsPerm and IsStraightLineProgElm ],1, 
+function(p)
+  return CycleStructurePerm(EvalStraightLineProgElm(p));
+end);
+
+InstallOtherMethod( SignPerm, "straight line program perms", true,
+  [ IsPerm and IsStraightLineProgElm ],1, 
+function(p)
+  return SignPerm(EvalStraightLineProgElm(p));
+end);
+
+InstallOtherMethod( RestrictedPermNC, "straight line program perms", true,
+  [ IsPerm and IsStraightLineProgElm,IsList ],1, 
+function(p,l)
+  return RestrictedPermNC(EvalStraightLineProgElm(p),l);
+end);
+
 ##
 ##  special methods for straight line assoc words
 ##
@@ -2277,19 +2291,24 @@ InstallGlobalFunction( SLPReversedRenumbered,
 ##
 #F  RestrictOutputsOfSLP( <slp>, <k> )
 ##
-##  Returns a new slp that calculates only those outputs specified by
-##  <k>. <k> may be an integer or a list of integers. If <k> is an integer,
-##  the resulting slp calculates only the result with that number. 
-##  If <k> is a list of integers, the resulting slp calculates those
-##  results with numbers in <k>. In both cases the resulting slp
-##  does only what is necessary. The slp must have a line with at least
-##  <k> expressions (lists) as its last line (if <k> is an integer).
-##  <slp> is either an slp or a pair where the first entry are the lines
+##  slp must be a straight line program returning a tuple
+##  of values. This function
+##  returns a new slp that calculates only those outputs specified by
+##  k. The argument
+##  k may be an integer or a list of integers. If k is an integer,
+##  the resulting slp calculates only the result with that number
+##  in the original output tuple. 
+##  If k is a list of integers, the resulting slp calculates those
+##  results with indices k in the original output tuple. 
+##  In both cases the resulting slp
+##  does only what is necessary. Obviously, the slp must have a line with 
+##  enough expressions (lists) for the supplied k as its last line.
+##  slp is either an slp or a pair where the first entry are the lines
 ##  of the slp and the second is the number of inputs.
 ##
 InstallGlobalFunction( RestrictOutputsOfSLP,
   function(slp,k)
-    local biggest,changes,i,invtab,j,kk,kkl,kl,klist,l,lastline,line,ll,lll,n,
+    local biggest,changes,i,invtab,j,kk,kkl,kl,klist,l,lastline,word,ll,lll,n,
           needed,nrinps,slotsused;
 
     if IsInt(k) then
@@ -2317,24 +2336,25 @@ InstallGlobalFunction( RestrictOutputsOfSLP,
         if Length(l[i]) < k or not(IsList(l[i][k])) then
             Error("slp does not have result number ",k);
         fi;
-        line := l[i][k];
-        for j in [1,3..Length(line)-1] do
-            needed[line[j]] := true;
+        word := l[i][k];
+        for j in [1,3..Length(word)-1] do
+            needed[word[j]] := true;
         od;
-        if Length(line) > 2 or (Length(line)=2 and line[2] <> 1) then
-            ll[1] := [ShallowCopy(line),biggest+1];
+        if Length(word) > 2 then
+            ll[1] := [ShallowCopy(word),biggest+1];
             AddSet(slotsused,biggest+1);
         fi;   
         lastline := fail;
-        # if Length(line)=2 and line[2]=1 then the last result is the result
+        # if Length(word)=2 and word[2]=1 then the last result is the result
+        # if the SLP has actually no lines, then we fix this further down!
     else   # a list of results:
         lastline := [];  # Here we collect results
         for n in klist do
-            line := l[i][n];
-            for j in [1,3..Length(line)-1] do
-                needed[line[j]] := true;
+            word := l[i][n];
+            for j in [1,3..Length(word)-1] do
+                needed[word[j]] := true;
             od;
-            Add(lastline,ShallowCopy(line));
+            Add(lastline,ShallowCopy(word));
         od;
     fi;
     
@@ -2358,15 +2378,9 @@ InstallGlobalFunction( RestrictOutputsOfSLP,
         Add(lll,kkl);
     fi;
     if Length(lll) = 0 then  # One of the original generators!
-        if IsList(k) then
-            ll := [];
-            for i in k do
-                Add(ll,[i,1]);
-            od;
-            return StraightLineProgramNC([ll],nrinps);
-        else
-            return StraightLineProgramNC([[k,1]],nrinps);
-        fi;
+        # k must be an integer here, otherwise lastline was added to lll!
+        # also, word must be of length 2 and second component equal to 1
+        return StraightLineProgramNC([ShallowCopy(word)],nrinps);
     else
        return StraightLineProgramNC(lll, nrinps);
     fi;
@@ -2546,7 +2560,7 @@ InstallGlobalFunction( IntermediateResultOfSLPWithoutOverwrite,
 #F  ProductOfStraightLinePrograms( <s1>, <s2> )
 ##
 ##  <s1> and <s2> must be two slps that return a single element with the same
-##  number of inputs. This function contructs an slp that returns the result
+##  number of inputs. This function constructs an slp that returns the result
 ##  <s1>(g_1,...,g_n) * <s2>(g_1,...,g_n) for all possible inputs g_1,...,g_n.
 ##
 InstallGlobalFunction( ProductOfStraightLinePrograms,
@@ -2776,6 +2790,231 @@ function(s1,inputs1,s2,inputs2,newnrinputs)
   return StraightLineProgramNC(y.l,newnrinputs);
 end);
             
+##
+#A  SlotUsagePattern( <s> )
+##
+##  <ManSection>
+##  <Attr Name="SlotUsagePattern" Arg="s"/>
+##
+##  <Description>
+##  Analyses the straight line program <A>s</A> for more efficient
+##  evaluation. This means in particular two things, when this attribute
+##  is known: First of all,
+##  intermediate results which are not actually needed later on are
+##  not computed at all, and once an intermediate result is used for
+##  the last time in this SLP, it is discarded. The latter leads to 
+##  the fact that the evaluation of the SLP needs less memory.
+##  </Description>
+##  </ManSection>
+InstallMethod( SlotUsagePattern, "for an slp",
+  [ IsStraightLineProgram ],
+  function( slp )
+    local addedun,cur,deletions,i,j,l,li,nr,res,slotusage,step,su,
+          unnecessary,used;
+    l := LinesOfStraightLineProgram(slp);
+    nr := NrInputsOfStraightLineProgram(slp);
+
+    unnecessary := [];
+
+    repeat     # we repeat leaving out unused lines until it becomes stable
+        addedun := false;
+        # First compute what is when read and written:
+        slotusage := List([1..nr],i->[0]);   # means: written in step 0
+        cur := nr+1;  # the current slot
+        for step in [1..Length(l)] do
+            if step in unnecessary then continue; fi;
+            li := l[step];
+            if IsInt(li[1]) then     # standard line without write
+                # We write to cur and read from every second entry in li:
+                if not(IsBound(slotusage[cur])) then slotusage[cur] := []; fi;
+                used := Set(li{[1,3..Length(li)-1]});
+                for i in used do
+                    Add(slotusage[i],step);
+                od;
+                Add(slotusage[cur],-step);
+                res := cur;
+                cur := cur + 1;
+            elif Length(li) = 2 and IsInt(li[2]) then # a standard line with w.
+                if not(IsBound(slotusage[li[2]])) then 
+                    slotusage[li[2]] := []; 
+                fi;
+                used := Set(li[1]{[1,3..Length(li[1])-1]});
+                for i in used do
+                    Add(slotusage[i],step);
+                od;
+                Add(slotusage[li[2]],-step);
+                res := li[2];
+                cur := Maximum(cur,li[2]+1);
+            else   # a return line
+                used := [];
+                for i in [1..Length(li)] do
+                    for j in li[i]{[1,3..Length(li[i])-1]} do
+                        AddSet(used,j);
+                    od;
+                od;
+                for i in used do
+                    Add(slotusage[i],step);
+                od;
+                res := 0;
+            fi;
+        od;
+        # Note the reading of the result if needed:
+        if res <> 0 then
+            Add(slotusage[res],Length(l)+1);
+        fi;
+
+        # Compute possible deletions from the slotusage:
+        deletions := List([1..Length(l)],i->[]);
+        for i in [1..Length(slotusage)] do
+            su := slotusage[i];
+            for j in [1..Length(su)-1] do
+                if su[j] > 0 and su[j+1] < 0 and su[j] <> -su[j+1] then
+                    Add(deletions[su[j]],i);
+                fi;
+            od;
+            if Length(su) > 0 then
+                if su[Length(su)] < 0 then
+                    Add(unnecessary,-su[Length(su)]);
+                    addedun := true;
+                elif su[Length(su)] > 0 and su[Length(su)] < Length(l) then
+                    Add(deletions[su[Length(su)]],i);
+                fi;
+            fi;
+        od;
+        if addedun then
+            Info(InfoSLP,3,"#Warning: Unnecessary steps: ",unnecessary);
+        fi;
+    until not(addedun);
+    if Length(unnecessary) > 0 then
+        Info(InfoSLP,1,"#Warning: Total unnecessary steps: ",
+             Length(unnecessary));
+    fi;
+    return rec( slotusage := slotusage, largestused := Length(slotusage),
+                unnecessary := unnecessary, deletions := deletions );
+  end );
+
+InstallMethod( ResultOfStraightLineProgram,
+  "for a straight line program with slot usage pattern, a list",
+  [ IsStraightLineProgram and HasSlotUsagePattern, IsHomogeneousList ],
+  function( prog, gens )
+    local cur,i,line,r,res,step,sup,nrslots,maxnrslots;
+
+    # Initialize the list of intermediate results.
+    r:= ShallowCopy( gens );
+    res:= false;
+    sup := SlotUsagePattern(prog);
+    step := 1;
+    cur := Length(r)+1;
+    nrslots := Length(r);
+    maxnrslots := nrslots;
+
+    # Loop over the program.
+    for line in LinesOfStraightLineProgram( prog ) do
+      if not(step in sup.unnecessary) then
+          if   not IsEmpty( line ) and IsInt( line[1] ) then
+            # The line describes a word to be appended.
+            r[cur] := ResultOfLineOfStraightLineProgram( line, r );
+            res:= r[cur];
+            cur := cur + 1;
+            nrslots := nrslots + 1;
+            if nrslots > maxnrslots then maxnrslots := nrslots; fi;
+          elif 2 <= Length( line ) and IsInt( line[2] ) then
+            # The line describes a word that shall replace.
+            if not(IsBound(r[line[2]])) then
+                nrslots := nrslots + 1;
+                if nrslots > maxnrslots then maxnrslots := nrslots; fi;
+            fi;
+            r[ line[2] ]:= ResultOfLineOfStraightLineProgram( line[1], r );
+            res:= r[line[2]];
+            cur := Maximum(cur,line[2]+1);
+          else
+            # The line describes a list of words to be returned.
+            res := 0*[1..Length(line)];
+            for i in [1..Length(line)] do
+                res[i] := ResultOfLineOfStraightLineProgram(line[i],r);
+                Info(InfoSLP,2,"Have computed result ",i," of ",
+                     Length(line),".");
+            od;
+            return res;
+          fi;
+          # Delete unused stuff:
+          for i in sup.deletions[step] do 
+              Unbind(r[i]); 
+              nrslots := nrslots-1;
+          od;
+          if InfoLevel(InfoSLP) >= 2 then
+              Print("Step ",step," of ",
+               Length(LinesOfStraightLineProgram(prog))," done, used slots: ",
+               nrslots,"/",maxnrslots,".\r");
+          fi;
+      else
+          if InfoLevel(InfoSLP) >= 3 then
+              Print("Unnecessary step ",step," of ",
+               Length(LinesOfStraightLineProgram(prog))," skipped.        \n");
+          fi;
+      fi;
+
+      step := step + 1;
+    od;
+
+    # Return the result.
+    return res;
+  end );
+
+##
+#A  LargestNrSlots( <s> )
+##
+##  <ManSection>
+##  <Attr Name="LargestNrSlots" Arg="s"/>
+##
+##  <Description>
+##  Returns the maximal number of slots used during the evaluation of
+##  the SLP <A>s</A>.
+##  </Description>
+##  </ManSection>
+
+InstallMethod( LargestNrSlots, "for a straight line program",
+  [ IsStraightLineProgram ],
+  function( slp )
+    local cur,i,line,maxnrslots,nrslots,r,step,sup;
+    sup := SlotUsagePattern(slp);
+    nrslots := NrInputsOfStraightLineProgram(slp);
+    step := 1;
+    cur := nrslots+1;
+    r := 0*[1..nrslots];
+    maxnrslots := nrslots;
+
+    # Loop over the program.
+    for line in LinesOfStraightLineProgram( slp ) do
+      if not(step in sup.unnecessary) then
+          if   not IsEmpty( line ) and IsInt( line[1] ) then
+            # The line describes a word to be appended.
+            r[cur] := 1;
+            nrslots := nrslots + 1;
+            if nrslots > maxnrslots then maxnrslots := nrslots; fi;
+            cur := cur + 1;
+          elif 2 <= Length( line ) and IsInt( line[2] ) then
+            # The line describes a word that shall replace.
+            if not(IsBound(r[line[2]])) then
+                r[line[2]] := 1;
+                nrslots := nrslots + 1;
+                if nrslots > maxnrslots then maxnrslots := nrslots; fi;
+            fi;
+            cur := Maximum(cur,line[2]+1);
+          else
+            # The line describes a list of words to be returned.
+            return maxnrslots;
+          fi;
+          # Delete unused stuff:
+          for i in sup.deletions[step] do 
+              Unbind(r[i]); 
+              nrslots := nrslots - 1;
+          od;
+      fi;
+      step := step + 1;
+    od;
+    return maxnrslots;
+  end );
 
 #############################################################################
 ##

@@ -10,7 +10,7 @@
 ;;! Changed from version 1.50,  15:44 Thu 22 Apr 1993
 ;;! by Gary Zablackis (4/2005)
 ;;
-;; A modification and extension of the GAP mode of Goetz Pfeiffer.
+;; A modification and extension of the GAP mode of Götz Pfeiffer.
 ;;
 ;; Uses comint-mode instead of shell-mode (which means you must have the
 ;; comint package installed).

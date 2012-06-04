@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (ref) - Chapter 54: Transformations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap54"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chap41.html">41</a>  <a href="chap42.html">42</a>  <a href="chap43.html">43</a>  <a href="chap44.html">44</a>  <a href="chap45.html">45</a>  <a href="chap46.html">46</a>  <a href="chap47.html">47</a>  <a href="chap48.html">48</a>  <a href="chap49.html">49</a>  <a href="chap50.html">50</a>  <a href="chap51.html">51</a>  <a href="chap52.html">52</a>  <a href="chap53.html">53</a>  <a href="chap54.html">54</a>  <a href="chap55.html">55</a>  <a href="chap56.html">56</a>  <a href="chap57.html">57</a>  <a href="chap58.html">58</a>  <a href="chap59.html">59</a>  <a href="chap60.html">60</a>  <a href="chap61.html">61</a>  <a href="chap62.html">62</a>  <a href="chap63.html">63</a>  <a href="chap64.html">64</a>  <a href="chap65.html">65</a>  <a href="chap66.html">66</a>  <a href="chap67.html">67</a>  <a href="chap68.html">68</a>  <a href="chap69.html">69</a>  <a href="chap70.html">70</a>  <a href="chap71.html">71</a>  <a href="chap72.html">72</a>  <a href="chap73.html">73</a>  <a href="chap74.html">74</a>  <a href="chap75.html">75</a>  <a href="chap76.html">76</a>  <a href="chap77.html">77</a>  <a href="chap78.html">78</a>  <a href="chap79.html">79</a>  <a href="chap80.html">80</a>  <a href="chap81.html">81</a>  <a href="chap82.html">82</a>  <a href="chap83.html">83</a>  <a href="chap84.html">84</a>  <a href="chap85.html">85</a>  <a href="chap86.html">86</a>  <a href="chap87.html">87</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap53.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap55.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap54_mj.html">[MathJax on]</a></p>
+<p><a id="X860026B880BCB2A5" name="X860026B880BCB2A5"></a></p>
+<div class="ChapSects"><a href="chap54.html#X860026B880BCB2A5">54 <span class="Heading">Transformations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X7EB5F6967BC9D340">54.1 <span class="Heading">Functions for Transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7B6259467974FB70">54.1-1 IsTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7E58AFA1832FF064">54.1-2 TransformationFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7B2E556E7BCF9CDF">54.1-3 Transformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8268A58685BEFD6F">54.1-4 IdentityTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8475448F87E8CB8A">54.1-5 RandomTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X78A209C87CF0E32B">54.1-6 DegreeOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7AEC9E6687B3505A">54.1-7 ImageListOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X839A6D6082A21D1F">54.1-8 ImageSetOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X85F22DDD84C28583">54.1-9 RankOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X80FCB5048789CF75">54.1-10 KernelOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X82F5DEEC837B60A3">54.1-11 PreimagesOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X846A6F6B7B715188">54.1-12 RestrictedTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C5360B2799943F3">54.1-13 AsTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X83DBA2A18719EFA8">54.1-14 PermLeftQuoTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7CCD27327CC84626">54.1-15 BinaryRelationTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7BF5FA5C8068EB3B">54.1-16 TransformationRelation</a></span>
+</div></div>
+</div>
+
+<h3>54 <span class="Heading">Transformations</span></h3>
+
+<p>This chapter describes functions for transformations.</p>
+
+<p>A <em>transformation</em> in <strong class="pkg">GAP</strong> is an endomorphism of a set of integers of the form <span class="SimpleMath">{ 1, ..., n }</span>. Transformations are taken to act on the right, which defines the composition <span class="SimpleMath">i^(α β) = (i^α)^β</span> for <span class="SimpleMath">i</span> in <span class="SimpleMath">{ 1, ..., n }</span>.</p>
+
+<p>For a transformation <span class="SimpleMath">α</span> on the set <span class="SimpleMath">{ 1, ..., n }</span>, we define its <em>degree</em> to be <span class="SimpleMath">n</span>, its <em>image list</em> to be the list <span class="SimpleMath">[1 α, ..., n α]</span>, its <em>image</em> to be the image list considered as a set, and its <em>rank</em> to be the size of the image. We also define the <em>kernel</em> of <span class="SimpleMath">α</span> to be the equivalence relation containing the pair <span class="SimpleMath">(i, j)</span> if and only if <span class="SimpleMath">i^α = j^α</span>.</p>
+
+<p>Note that unlike permutations, we do not consider unspecified points to be fixed by a transformation. Therefore multiplication is only defined on two transformations of the same degree.</p>
+
+<p><a id="X7EB5F6967BC9D340" name="X7EB5F6967BC9D340"></a></p>
+
+<h4>54.1 <span class="Heading">Functions for Transformations</span></h4>
+
+<p><a id="X7B6259467974FB70" name="X7B6259467974FB70"></a></p>
+
+<h5>54.1-1 IsTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformation</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>We declare it as <code class="func">IsMultiplicativeElementWithOne</code> (<a href="chap31.html#X82BC294F7D388AE8"><span class="RefLink">31.14-11</span></a>) since the identity automorphism of <span class="SimpleMath">{ 1, ..., n }</span> is a multiplicative two sided identity for any transformation on the same set.</p>
+
+<p><a id="X7E58AFA1832FF064" name="X7E58AFA1832FF064"></a></p>
+
+<h5>54.1-2 TransformationFamily</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationFamily</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationType</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationData</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>For each <code class="code"><var class="Arg">n</var> &gt; 0</code> there is a single family and type of transformations on <var class="Arg">n</var> points. To speed things up, we store these in a database of types. The three functions above a then access functions. If the <var class="Arg">n</var>th entry isn't yet created, they trigger creation as well.</p>
+
+<p>For <code class="code"><var class="Arg">n</var> &gt; 0</code>, element <var class="Arg">n</var> of the type database is <code class="code">[TransformationFamily(</code><var class="Arg">n</var><code class="code">), TransformationType(</code><var class="Arg">n</var><code class="code">)]</code></p>
+
+<p><a id="X7B2E556E7BCF9CDF" name="X7B2E556E7BCF9CDF"></a></p>
+
+<h5>54.1-3 Transformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transformation</code>( <var class="Arg">images</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationNC</code>( <var class="Arg">images</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>both return a transformation with the image list <var class="Arg">images</var>. The first version checks that the all the elements of the given list lie within the range <span class="SimpleMath">{ 1, ..., n }</span> where <span class="SimpleMath">n</span> is the length of <var class="Arg">images</var>, but for speed purposes, a non-checking version is also supplied.</p>
+
+<p><a id="X8268A58685BEFD6F" name="X8268A58685BEFD6F"></a></p>
+
+<h5>54.1-4 IdentityTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityTransformation</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns the identity transformation of degree <var class="Arg">n</var>.</p>
+
+<p><a id="X8475448F87E8CB8A" name="X8475448F87E8CB8A"></a></p>
+
+<h5>54.1-5 RandomTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomTransformation</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a random transformation of degree <var class="Arg">n</var>.</p>
+
+<p><a id="X78A209C87CF0E32B" name="X78A209C87CF0E32B"></a></p>
+
+<h5>54.1-6 DegreeOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the degree of <var class="Arg">trans</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:= Transformation([2, 3, 4, 2, 4]);</span>
+Transformation( [ 2, 3, 4, 2, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfTransformation(t);</span>
+5
+</pre></div>
+
+<p><a id="X7AEC9E6687B3505A" name="X7AEC9E6687B3505A"></a></p>
+
+<h5>54.1-7 ImageListOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageListOfTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the image list of <var class="Arg">trans</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageListOfTransformation(t);</span>
+[ 2, 3, 4, 2, 4 ]
+</pre></div>
+
+<p><a id="X839A6D6082A21D1F" name="X839A6D6082A21D1F"></a></p>
+
+<h5>54.1-8 ImageSetOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageSetOfTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the image of <var class="Arg">trans</var> as a set.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageSetOfTransformation(t);</span>
+[ 2, 3, 4 ]
+</pre></div>
+
+<p><a id="X85F22DDD84C28583" name="X85F22DDD84C28583"></a></p>
+
+<h5>54.1-9 RankOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the rank of <var class="Arg">trans</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfTransformation(t);</span>
+3
+</pre></div>
+
+<p><a id="X80FCB5048789CF75" name="X80FCB5048789CF75"></a></p>
+
+<h5>54.1-10 KernelOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the kernel of <var class="Arg">trans</var> as an equivalence relation, see <a href="chap33.html#X7DED7F1F78D31785"><span class="RefLink">33.1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KernelOfTransformation(t);         </span>
+[ [ 1, 4 ], [ 2 ], [ 3, 5 ] ]
+</pre></div>
+
+<p><a id="X82F5DEEC837B60A3" name="X82F5DEEC837B60A3"></a></p>
+
+<h5>54.1-11 PreimagesOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreimagesOfTransformation</code>( <var class="Arg">trans</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the subset of <span class="SimpleMath">{ 1, ..., n }</span> which maps to <var class="Arg">i</var> under <var class="Arg">trans</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreimagesOfTransformation(t, 2);</span>
+[ 1, 4 ]
+</pre></div>
+
+<p><a id="X846A6F6B7B715188" name="X846A6F6B7B715188"></a></p>
+
+<h5>54.1-12 RestrictedTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedTransformation</code>( <var class="Arg">trans</var>, <var class="Arg">alpha</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>The transformation <var class="Arg">trans</var> is restricted to only those points of <var class="Arg">alpha</var>.</p>
+
+<p><a id="X7C5360B2799943F3" name="X7C5360B2799943F3"></a></p>
+
+<h5>54.1-13 AsTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformation</code>( <var class="Arg">O</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformationNC</code>( <var class="Arg">O</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the object <var class="Arg">O</var> as a transformation. Supported objects are permutations and binary relations on points. Called with two arguments, the operation returns a transformation of degree <var class="Arg">n</var>, signalling an error if such a representation is not possible. <code class="func">AsTransformationNC</code> does not perform this check.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation((1, 3)(2, 4));</span>
+Transformation( [ 3, 4, 1, 2 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation((1, 3)(2, 4), 10);</span>
+Transformation( [ 3, 4, 1, 2, 5, 6, 7, 8, 9, 10 ] )
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation((1, 3)(2, 4), 3);</span>
+Error, Permutation moves points over the degree specified called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>
+</pre></div>
+
+<p><a id="X83DBA2A18719EFA8" name="X83DBA2A18719EFA8"></a></p>
+
+<h5>54.1-14 PermLeftQuoTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoTransformation</code>( <var class="Arg">tr1</var>, <var class="Arg">tr2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Given transformations <var class="Arg">tr1</var> and <var class="Arg">tr2</var> with equal kernel and image, we compute the permutation induced by (<var class="Arg">tr1</var>)<span class="SimpleMath">^{-1} *</span> <var class="Arg">tr2</var> on the set of images of <var class="Arg">tr1</var>. If the kernels and images are not equal, an error is signaled.</p>
+
+<p><a id="X7CCD27327CC84626" name="X7CCD27327CC84626"></a></p>
+
+<h5>54.1-15 BinaryRelationTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationTransformation</code>( <var class="Arg">trans</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns <var class="Arg">trans</var> when considered as a binary relation.</p>
+
+<p><a id="X7BF5FA5C8068EB3B" name="X7BF5FA5C8068EB3B"></a></p>
+
+<h5>54.1-16 TransformationRelation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the binary relation <var class="Arg">R</var> when considered as a transformation. Only makes sense for injective binary relations over <code class="code">[1..n]</code>. An error is signalled if the relation is not over <code class="code">[1..n]</code>, and <code class="keyw">fail</code> if it is not injective.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap53.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap55.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chap21.html">21</a>  <a href="chap22.html">22</a>  <a href="chap23.html">23</a>  <a href="chap24.html">24</a>  <a href="chap25.html">25</a>  <a href="chap26.html">26</a>  <a href="chap27.html">27</a>  <a href="chap28.html">28</a>  <a href="chap29.html">29</a>  <a href="chap30.html">30</a>  <a href="chap31.html">31</a>  <a href="chap32.html">32</a>  <a href="chap33.html">33</a>  <a href="chap34.html">34</a>  <a href="chap35.html">35</a>  <a href="chap36.html">36</a>  <a href="chap37.html">37</a>  <a href="chap38.html">38</a>  <a href="chap39.html">39</a>  <a href="chap40.html">40</a>  <a href="chap41.html">41</a>  <a href="chap42.html">42</a>  <a href="chap43.html">43</a>  <a href="chap44.html">44</a>  <a href="chap45.html">45</a>  <a href="chap46.html">46</a>  <a href="chap47.html">47</a>  <a href="chap48.html">48</a>  <a href="chap49.html">49</a>  <a href="chap50.html">50</a>  <a href="chap51.html">51</a>  <a href="chap52.html">52</a>  <a href="chap53.html">53</a>  <a href="chap54.html">54</a>  <a href="chap55.html">55</a>  <a href="chap56.html">56</a>  <a href="chap57.html">57</a>  <a href="chap58.html">58</a>  <a href="chap59.html">59</a>  <a href="chap60.html">60</a>  <a href="chap61.html">61</a>  <a href="chap62.html">62</a>  <a href="chap63.html">63</a>  <a href="chap64.html">64</a>  <a href="chap65.html">65</a>  <a href="chap66.html">66</a>  <a href="chap67.html">67</a>  <a href="chap68.html">68</a>  <a href="chap69.html">69</a>  <a href="chap70.html">70</a>  <a href="chap71.html">71</a>  <a href="chap72.html">72</a>  <a href="chap73.html">73</a>  <a href="chap74.html">74</a>  <a href="chap75.html">75</a>  <a href="chap76.html">76</a>  <a href="chap77.html">77</a>  <a href="chap78.html">78</a>  <a href="chap79.html">79</a>  <a href="chap80.html">80</a>  <a href="chap81.html">81</a>  <a href="chap82.html">82</a>  <a href="chap83.html">83</a>  <a href="chap84.html">84</a>  <a href="chap85.html">85</a>  <a href="chap86.html">86</a>  <a href="chap87.html">87</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

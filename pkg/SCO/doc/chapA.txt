@@ -1,0 +1,13 @@
+  
+  [1XA An Overview of the [5XSCO[1X package source code[0X
+  
+        Filename                 | Content                                            
+      -------------------------------------------------------------------------------
+        OrbifoldTriangulation.gi | Definitions and methods for orbifold triangulations
+        SimplicialSet.gi         | Definitions and methods for simplicial sets        
+        Matrices.gi              | Methods for (Co-)homology matrix creation          
+        SCO.gi                   | (Co-)homology computations and [2XSCO_Examples[0m ([14X4.3-6[0m)
+  
+       [1XTable:[0X [13XThe [5XSCO[0m[13X package files.[0m
+  
+  

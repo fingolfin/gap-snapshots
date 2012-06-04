@@ -1,0 +1,36 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1 Overview over this manual[0X
+  
+  Chapter  [14X1[0m is concerned with the technical details of installing and running
+  this   package.  Chapter  [14X2[0m  answers  the  question  why  and  how  the  [5XGAP[0m
+  functionality  concerning  a  sparse matrix type and gaussian algorithms was
+  extended.  The  following  chapters  are  concerned with the workings of the
+  sparse  matrix  type  ([14X3[0m)  and sparse Gaussian algorithms ([14X4[0m). Included is a
+  documented  list  of the most important methods and functions needed to work
+  with  sparse  matrices  and  the  algorithms  provided by the [5XGauss[0m package.
+  Anyone  interested  in  source  code  should just check out the files in the
+  [11Xgap/pkg/Gauss/gap/[0m folder (--> Appendix [14XA[0m).
+  
+  
+  [1X1.2 Installation of the [5XGauss[1X Package[0X
+  
+  To  install  this package just extract the package's archive file to the GAP
+  [11Xpkg/[0m  directory.  The  [5XGauss[0m package utilizes some [5XC[0m-code by Max Neunhoeffer
+  that  has  to  be  compiled  before you can load Gauss. To compile the code,
+  first  run  [10X./configure[0m.  If  the  package  is  not  installed  in  the [11Xpkg/[0m
+  subdirectory  of  [5XGAP[0m's  root directory you will need to provide the correct
+  path  to  the latter. This will create a makefile. Complete the installation
+  of the package by running [10Xmake[0m. Recompiling the documentation is possible by
+  the  command  [10Xmake  doc[0m  in  the  Gauss  directory,  but  this should not be
+  necessary.
+  
+  By  default  the [5XGauss[0m package is not automatically loaded by [5XGAP[0m when it is
+  installed.  You  must load the package with [10XLoadPackage("Gauss");[0m before its
+  functions  become  available.  Please,  send  me  an  e-mail if you have any
+  questions,  remarks,  suggestions, etc. concerning [5XGauss[0m. Also, I would like
+  to hear about applications of this package.
+  Simon Goertzen
+  

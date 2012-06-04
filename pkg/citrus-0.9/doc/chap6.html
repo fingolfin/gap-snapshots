@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (citrus) - Chapter 6: Orbits</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
+<p><a id="X81E0FF0587C54543" name="X81E0FF0587C54543"></a></p>
+<div class="ChapSects"><a href="chap6.html#X81E0FF0587C54543">6 <span class="Heading">Orbits</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X81E0FF0587C54543">6.1 <span class="Heading">Orbits</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C4F9F007D55EF8B">6.1-1 <span class="Heading">Graded images and kernels</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7BC9579885CFC361">6.1-2 <span class="Heading">Images and kernels</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8178A420792E6AAC">6.1-3 OrbSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X814337A47B773F50">6.1-4 OrbSCCLookup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78AFD003840823BD">6.1-5 OrbSCCTruthTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D9A29B47D743213">6.1-6 ReverseSchreierTreeOfSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8071C7148255D0DB">6.1-7 SchreierTreeOfSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7853DC817C3102A4">6.1-8 TraceSchreierTreeOfSCCBack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D2E200A7B2D5946">6.1-9 TraceSchreierTreeOfSCCForward</a></span>
+</div></div>
+</div>
+
+<h3>6 <span class="Heading">Orbits</span></h3>
+
+<p><a id="X81E0FF0587C54543" name="X81E0FF0587C54543"></a></p>
+
+<h4>6.1 <span class="Heading">Orbits</span></h4>
+
+<p><a id="X7C4F9F007D55EF8B" name="X7C4F9F007D55EF8B"></a></p>
+
+<h5>6.1-1 <span class="Heading">Graded images and kernels</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GradedImagesOfTransSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GradedKernelsOfTransSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of images or kernels.</p>
+
+<p><code class="code">GradedImagesOfTransSemigroup</code> returns a list where the <code class="code">i</code>th entry is a list of all the images of transformations in <var class="Arg">S</var> with size <code class="code">i</code>.</p>
+
+<p><code class="code">GradedKernelsOfTransSemigroup</code> returns a list where the <code class="code">i</code>th entry is a list of the values of <code class="func">CanonicalTransSameKernel</code> (<a href="chap2.html#X7CA4FE7A7C7EBBA3"><span class="RefLink">2.4-1</span></a>) for all transformations in <var class="Arg">S</var> with rank <code class="code">i</code>.</p>
+
+<p>See also <code class="func">ImagesOfTransSemigroup</code> (<a href="chap6.html#X7BC9579885CFC361"><span class="RefLink">6.1-2</span></a>) and <code class="func">KernelsOfTransSemigroup</code> (<a href="chap6.html#X7BC9579885CFC361"><span class="RefLink">6.1-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 4, 4, 5, 2, 2 ] ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GradedImagesOfTransSemigroup(S);</span>
+[ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
+  [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GradedKernelsOfTransSemigroup(S);</span>
+[ [ [ 1, 1, 1, 1, 1 ] ], [ [ 1, 2, 1, 1, 1 ], [ 1, 1, 1, 2, 2 ] ], 
+  [ [ 1, 1, 2, 3, 3 ] ], [  ], [  ] ]</pre></div>
+
+<p><a id="X7BC9579885CFC361" name="X7BC9579885CFC361"></a></p>
+
+<h5>6.1-2 <span class="Heading">Images and kernels</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesOfTransSemigroup</code>( <var class="Arg">S</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelsOfTransSemigroup</code>( <var class="Arg">S</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An orbit.</p>
+
+<p>The argument <var class="Arg">S</var> should be a transformation semigroup and the optional second argument <var class="Arg">n</var> should be a positive integer not greater than the degree of <var class="Arg">S</var>. <code class="code">ImagesOfTransSemigroup</code> returns the <code class="func">Orb</code> (<a href="/Users/jdm/gap/pkg/orb/doc/chap2.html#X86E1817D7C55126B"><span class="RefLink">orb: orb</span></a>) object:</p>
+
+
+<div class="example"><pre>Orb(S, [1..Degree(S)],
+  OnSets);</pre></div>
+
+<p>which contains the image sets of all the transformations belonging to <var class="Arg">S</var>.</p>
+
+<p><code class="code">KernelsOfTransSemigroup</code> returns the <code class="func">Orb</code> (<a href="/Users/jdm/gap/pkg/orb/doc/chap2.html#X86E1817D7C55126B"><span class="RefLink">orb: orb</span></a>) object:</p>
+
+
+<div class="example"><pre>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</pre></div>
+
+<p>If the optional second argument <var class="Arg">n</var> (a positive integer) is present, then only the images or kernels of size at least <var class="Arg">n</var> are found.</p>
+
+<p>Note that the image/kernel <code class="code">[1..Degree(S)]</code> always occurs in both orbits even if there is no element of <var class="Arg">S</var> with image/kernel equal to <code class="code">[1..Degree(S)]</code>.</p>
+
+<p>See also <code class="func">GradedImagesOfTransSemigroup</code> (<a href="chap6.html#X7C4F9F007D55EF8B"><span class="RefLink">6.1-1</span></a>), <code class="func">GradedKernelsOfTransSemigroup</code> (<a href="chap6.html#X7C4F9F007D55EF8B"><span class="RefLink">6.1-1</span></a>), <code class="func">OnKernelsAntiAction</code> (<a href="chap2.html#X849A43DE7AF3C639"><span class="RefLink">2.9-1</span></a>), and <code class="func">CanonicalTransSameKernel</code> (<a href="chap2.html#X7CA4FE7A7C7EBBA3"><span class="RefLink">2.4-1</span></a>)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> S:=Semigroup( Transformation( [ 6, 4, 4, 4, 6, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 6, 5, 1, 6, 2, 2 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 6); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 1 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 5); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 1 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 4); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 2 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 3); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 4 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 5, 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 2); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 8 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
+  [ 2, 5 ], [ 4, 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S, 1); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree with grading&gt;
+&lt;closed orbit, 13 points with Schreier tree with grading&gt;
+[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
+  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);</span>
+&lt;open orbit, 1 points with Schreier tree&gt;
+&lt;closed orbit, 13 points with Schreier tree&gt;
+[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
+  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]</pre></div>
+
+<p><a id="X8178A420792E6AAC" name="X8178A420792E6AAC"></a></p>
+
+<h5>6.1-3 OrbSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCC</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCC</code> returns a set of sets of positions in <var class="Arg">o</var> corresponding to its strongly connected components.</p>
+
+<p>See also <code class="func">OrbSCCLookup</code> (<a href="chap6.html#X814337A47B773F50"><span class="RefLink">6.1-4</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap6.html#X78AFD003840823BD"><span class="RefLink">6.1-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]</pre></div>
+
+<p><a id="X814337A47B773F50" name="X814337A47B773F50"></a></p>
+
+<h5>6.1-4 OrbSCCLookup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCLookup</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A lookup table for the strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCLookup</code> returns a lookup table for its strongly connected components. More precisely, <code class="code">OrbSCCLookup(o)[i]</code> equals the index of the strongly connected component containing <code class="code">o[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap6.html#X78AFD003840823BD"><span class="RefLink">6.1-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o);</span>
+[ 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; </span>
+1
+2
+3</pre></div>
+
+<p><a id="X78AFD003840823BD" name="X78AFD003840823BD"></a></p>
+
+<h5>6.1-5 OrbSCCTruthTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCTruthTable</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Truth tables for strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCTruthTable</code> returns a list of boolean lists such that <code class="code">OrbSCCTruthTable(o)[i][j]</code> is <code class="keyw">true</code> if <code class="code">j</code> belongs to <code class="code">OrbSCC(o)[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>) and <code class="func">OrbSCCLookup</code> (<a href="chap6.html#X814337A47B773F50"><span class="RefLink">6.1-4</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=ImagesOfTransSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCTruthTable(o);</span>
+[ [ true, false, false, false, false, false, false, false, false, false, 
+      false, false, false, false, false ], 
+  [ false, true, true, true, true, false, false, false, false, false, false, 
+      false, false, false, false ], 
+  [ false, false, false, false, false, true, true, true, true, true, true, 
+      false, false, false, false ], 
+  [ false, false, false, false, false, false, false, false, false, false, 
+      false, true, true, true, true ] ]</pre></div>
+
+<p><a id="X7D9A29B47D743213" name="X7D9A29B47D743213"></a></p>
+
+<h5>6.1-6 ReverseSchreierTreeOfSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReverseSchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The reverse Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">ReverseSchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
+
+
+<div class="example"><pre>act(o[j], o!.gens[gen[j]])=o[pos[j]].</pre></div>
+
+<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from every element of <code class="code">OrbSCC(o)[i]</code> to the root.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap6.html#X7853DC817C3102A4"><span class="RefLink">6.1-8</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap6.html#X8071C7148255D0DB"><span class="RefLink">6.1-7</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap6.html#X7D2E200A7B2D5946"><span class="RefLink">6.1-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 3);</span>
+[ [ fail, fail, fail, fail, 2, 1, 2, fail, fail, fail, 1, fail ], 
+  [ fail, fail, fail, fail, 3, 5, 3, fail, fail, fail, 7, fail ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 7);</span>
+[ [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 3 ], 
+  [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 10 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[11], Generators(S)[1]);</span>
+[ 1, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
+7</pre></div>
+
+<p><a id="X8071C7148255D0DB" name="X8071C7148255D0DB"></a></p>
+
+<h5>6.1-7 SchreierTreeOfSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">SchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
+
+
+<div class="example"><pre>act(o[pos[j]], o!.gens[gen[j]])=o[j].</pre></div>
+
+<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from the root to every element of <code class="code">OrbSCC(o)[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap6.html#X7853DC817C3102A4"><span class="RefLink">6.1-8</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap6.html#X7D9A29B47D743213"><span class="RefLink">6.1-6</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap6.html#X7D2E200A7B2D5946"><span class="RefLink">6.1-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 3);</span>
+[ [ fail, fail, fail, fail, 1, 3, 1, fail, fail, fail, 2, fail ], 
+  [ fail, fail, fail, fail, 7, 5, 3, fail, fail, fail, 6, fail ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 7);</span>
+[ [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 1 ], 
+  [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 10 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[6], Generators(S)[2]);</span>
+[ 3, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
+11</pre></div>
+
+<p><a id="X7853DC817C3102A4" name="X7853DC817C3102A4"></a></p>
+
+<h5>6.1-8 TraceSchreierTreeOfSCCBack</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCBack</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A word in the generators.</p>
+
+<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>. This operation traces the result of <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap6.html#X7D9A29B47D743213"><span class="RefLink">6.1-6</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the point with number <var class="Arg">nr</var> to the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>),<code class="func">EvaluateWord</code> (<a href="chap3.html#X799D2F3C866B9AED"><span class="RefLink">3.4-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap6.html#X7D9A29B47D743213"><span class="RefLink">6.1-6</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap6.html#X8071C7148255D0DB"><span class="RefLink">6.1-7</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap6.html#X7D2E200A7B2D5946"><span class="RefLink">6.1-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 4);               </span>
+[ [ fail, fail, fail, fail, 4, 1, 1, 3, fail, fail, fail, fail ], 
+  [ fail, fail, fail, fail, 4, 4, 4, 4, fail, fail, fail, fail ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 7);</span>
+[ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 8);</span>
+[ 3 ]</pre></div>
+
+<p><a id="X7D2E200A7B2D5946" name="X7D2E200A7B2D5946"></a></p>
+
+<h5>6.1-9 TraceSchreierTreeOfSCCForward</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCForward</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A word in the generators.</p>
+
+<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>. This operation traces the result of <code class="func">SchreierTreeOfSCC</code> (<a href="chap6.html#X8071C7148255D0DB"><span class="RefLink">6.1-7</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var> to the point with number <var class="Arg">nr</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap6.html#X8178A420792E6AAC"><span class="RefLink">6.1-3</span></a>), <code class="func">EvaluateWord</code> (<a href="chap3.html#X799D2F3C866B9AED"><span class="RefLink">3.4-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap6.html#X7D9A29B47D743213"><span class="RefLink">6.1-6</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap6.html#X8071C7148255D0DB"><span class="RefLink">6.1-7</span></a>), and <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap6.html#X7853DC817C3102A4"><span class="RefLink">6.1-8</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 4);</span>
+[ [ fail, fail, fail, fail, 1, 2, 2, 4, fail, fail, fail, fail ], 
+  [ fail, fail, fail, fail, 4, 4, 6, 4, fail, fail, fail, fail ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 8);</span>
+[ 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 7);</span>
+[ 2, 2 ]</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,40 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Philosophy}}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Overview over this manual}}{4}{section.1.2}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {genss}-Package}}{5}{chapter.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Stabiliser Chains}}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Computing stabiliser chains}}{6}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }StabilizerChain}}{6}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Options for the computation of stabiliser chains}}{6}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }GENSS{\textunderscore }IsOneProjective}}{11}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }How base points are chosen}}{11}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }FindBasePointCandidates}}{11}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Using stabiliser chains}}{12}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }SiftGroupElement}}{12}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }SiftGroupElementSLP}}{12}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }StrongGenerators}}{12}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }NrStrongGenerators}}{12}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }BaseStabilizerChain}}{13}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }Size}}{13}{subsection.3.4.6}
+\contentsline {subsection}{\numberline {3.4.7}\leavevmode {\color {Chapter }Random}}{13}{subsection.3.4.7}
+\contentsline {subsection}{\numberline {3.4.8}\leavevmode {\color {Chapter }\texttt {\char 92\relax }in}}{13}{subsection.3.4.8}
+\contentsline {subsection}{\numberline {3.4.9}\leavevmode {\color {Chapter }IsProved}}{13}{subsection.3.4.9}
+\contentsline {subsection}{\numberline {3.4.10}\leavevmode {\color {Chapter }GroupIteratorByStabilizerChain}}{13}{subsection.3.4.10}
+\contentsline {subsection}{\numberline {3.4.11}\leavevmode {\color {Chapter }SetStabilizerChain}}{14}{subsection.3.4.11}
+\contentsline {subsection}{\numberline {3.4.12}\leavevmode {\color {Chapter }StoredStabilizerChain}}{14}{subsection.3.4.12}
+\contentsline {subsection}{\numberline {3.4.13}\leavevmode {\color {Chapter }StabChainOp}}{14}{subsection.3.4.13}
+\contentsline {subsection}{\numberline {3.4.14}\leavevmode {\color {Chapter }SiftBaseImage}}{14}{subsection.3.4.14}
+\contentsline {subsection}{\numberline {3.4.15}\leavevmode {\color {Chapter }SLPChainStabilizerChain}}{14}{subsection.3.4.15}
+\contentsline {subsection}{\numberline {3.4.16}\leavevmode {\color {Chapter }GroupHomomorphismByImagesNCStabilizerChain}}{15}{subsection.3.4.16}
+\contentsline {subsection}{\numberline {3.4.17}\leavevmode {\color {Chapter }FindShortGeneratorsOfSubgroup}}{15}{subsection.3.4.17}
+\contentsline {subsection}{\numberline {3.4.18}\leavevmode {\color {Chapter }Stab}}{15}{subsection.3.4.18}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Backtrack search methods}}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Setwise stabilisers}}{17}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }SetwiseStabilizer}}{17}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }SetwiseStabilizerPartitionBacktrack}}{17}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Generic backtrack search}}{18}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }BacktrackSearchStabilizerChainElement}}{18}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }BacktrackSearchStabilizerChainSubgroup}}{18}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Examples}}{20}{chapter.5}
+\contentsline {chapter}{References}{21}{chapter*.3}
+\contentsline {chapter}{Index}{22}{section*.4}

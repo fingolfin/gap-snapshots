@@ -1,12 +1,11 @@
 #############################################################################
 ##
 #W  ffe.gi                      GAP library                     Werner Nickel
-#W                                                         & Martin Schoenert
+#W                                                         & Martin Schönert
 ##
-#H  @(#)$Id: ffe.gi,v 4.67.2.6 2008/11/19 23:39:59 alexk Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for `FFE's.
@@ -22,8 +21,6 @@
 ##  The implementation of elements of rings `Integers mod <n>' can be found
 ##  in the file `zmodnz.gi'.
 ##
-Revision.ffe_gi :=
-    "@(#)$Id: ffe.gi,v 4.67.2.6 2008/11/19 23:39:59 alexk Exp $";
 
 
 #############################################################################
@@ -633,70 +630,44 @@ InstallMethod( RootOfDefiningPolynomial,
 
 #############################################################################
 ##
-#M  ViewObj( <F> ) . . . . . . . . . . . . . . . . .  view a field of `FFE's
-##
-InstallMethod( ViewObj,
-    "for a field of FFEs",
-    [ IsField and IsFFECollection ], 10,
-    function( F )
-    if IsPrimeField( F ) then
-      Print( "GF(", Characteristic( F ), ")" );
-    elif IsPrimeField( LeftActingDomain( F ) ) then
-      Print( "GF(", Characteristic( F ),
-                    "^", DegreeOverPrimeField( F ), ")" );
-    elif F = LeftActingDomain( F ) then
-      Print( "FieldOverItselfByGenerators( ",
-             GeneratorsOfField( F ), " )" );
-    else
-      Print( "AsField( ", LeftActingDomain( F ),
-             ", GF(", Characteristic( F ),
-                      "^", DegreeOverPrimeField( F ), ") )" );
-    fi;
-    end );
-
-
-#############################################################################
-##
+#M  ViewObj( <F> ) . . . . . . . . . . . . . . . . . . view a field of `FFE's
 #M  PrintObj( <F> ) . . . . . . . . . . . . . . . . . print a field of `FFE's
-##
-InstallMethod( PrintObj,
-    "for a field of FFEs",
-    [ IsField and IsFFECollection ], 10,
-    function( F )
-    if IsPrimeField( F ) then
-      Print( "GF(", Characteristic( F ), ")" );
-    elif IsPrimeField( LeftActingDomain( F ) ) then
-      Print( "GF(", Characteristic( F ),
-                    "^", DegreeOverPrimeField( F ), ")" );
-    elif F = LeftActingDomain( F ) then
-      Print( "FieldOverItselfByGenerators( ",
-             GeneratorsOfField( F ), " )" );
-    else
-      Print( "AsField( ", LeftActingDomain( F ),
-             ", GF(", Characteristic( F ),
-                      "^", DegreeOverPrimeField( F ), ") )" );
-    fi;
-    end );
-#T or consider how the field was defined ?
-
-#############################################################################
-##
 #M  String( <F> ) . . . . . . . . . . a string representing a field of `FFE's
+#M  ViewString( <F> ) . . . . . a short string representing a field of `FFE's
 ##
-InstallMethod( String,
-               "for a field of FFEs", true,
-               [ IsField and IsFFECollection ], 10,
 
-  function( F )
+GAPInfo.tmpGFstring := function( F )
+    if IsPrimeField( F ) then
+      return Concatenation( "GF(", String(Characteristic( F )), ")" );
+    elif IsPrimeField( LeftActingDomain( F ) ) then
+      return Concatenation( "GF(", String(Characteristic( F )),
+                    "^", String(DegreeOverPrimeField( F )), ")" );
+    elif F = LeftActingDomain( F ) then
+      return Concatenation( "FieldOverItselfByGenerators( ",
+             String(GeneratorsOfField( F )), " )" );
+    else
+      return Concatenation( "AsField( ", String(LeftActingDomain( F )),
+             ", GF(", String(Characteristic( F )),
+                      "^", String(DegreeOverPrimeField( F )), ") )" );
+    fi;
+end;
+InstallMethod( String, "for a field of FFEs",
+        [ IsField and IsFFECollection ], 10, GAPInfo.tmpGFstring );
 
-    local  str, out;
+InstallMethod( ViewString, "for a field of FFEs",
+        [ IsField and IsFFECollection ], 10, GAPInfo.tmpGFstring );
+Unbind(GAPInfo.tmpGFstring);
+InstallMethod( ViewObj, "for a field of FFEs",
+        [ IsField and IsFFECollection ], 10, function( F )
+    Print( ViewString(F) );
+end );
 
-    str := "";
-    out := OutputTextString( str, true );
-    PrintTo( out, F );
-    CloseStream(out);
-    return str;
-  end );
+InstallMethod( PrintObj, "for a field of FFEs",
+        [ IsField and IsFFECollection ], 10, function( F )
+    Print( ViewString(F) );
+end );
+    
+
 
 #############################################################################
 ##
@@ -974,34 +945,6 @@ local   str, log,deg,char;
     log:= LogFFE(ffe,Z( char ^ deg ));
     if log <> 1 then
       str := Concatenation(str,"^",String(log));
-    fi;
-  fi;
-  ConvertToStringRep( str );
-  return str;
-end );
-
-
-
-#############################################################################
-##
-#M  LaTeXObj( <ffe> ) . . . . . .  convert a finite field element into a string
-##
-InstallMethod(LaTeXObj,"for an internal FFE",true,[IsFFE and IsInternalRep],0,
-function ( ffe )
-local   str, log,deg,char;
-  char:=Characteristic(ffe);
-  if   IsZero( ffe )  then
-    str := Concatenation("0\*Z(",String(char),")");
-  else
-    str := Concatenation("Z(",String(char));
-    deg:=DegreeFFE(ffe);
-    if deg <> 1  then
-      str := Concatenation(str,"^{",String(deg),"}");
-    fi;
-    str := Concatenation(str,")");
-    log:= LogFFE(ffe,Z( char ^ deg ));
-    if log <> 1 then
-      str := Concatenation(str,"^{",String(log),"}");
     fi;
   fi;
   ConvertToStringRep( str );

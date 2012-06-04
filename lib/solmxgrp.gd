@@ -3,10 +3,9 @@
 #W  solmxgrp.gd			GAP Library		       Gene Cooperman
 #W							     and Scott Murray
 ##
-#H  @(#)$Id: solmxgrp.gd,v 4.7 2002/04/15 10:05:22 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  Computing with soluble matrix groups, as described in 
@@ -15,8 +14,6 @@
 ##  Note:  This code is incomplete (in fact we only deal with nilpotent 
 ##  groups) and should be considered experimental.
 ##
-Revision.solmxgrp_gd :=
-    "@(#)$Id: solmxgrp.gd,v 4.7 2002/04/15 10:05:22 sal Exp $";
 
 
 #############################################################################

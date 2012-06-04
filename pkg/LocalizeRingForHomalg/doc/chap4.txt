@@ -1,0 +1,244 @@
+  
+  [1X4 Localize Rings[0X
+  
+  The  package [5XLocalizeRingForHomalg[0m defines the classes of local(ized) rings,
+  local  ring  elements and local matrices. These three objects can be used as
+  data structures defined in [5XMatricesForHomalg[0m on which the [5Xhomalg[0m project can
+  rely to do homological computations over localized rings.
+  
+  A  [5Xhomalg[0m  local ring element contains two [5Xhomalg[0m ring elements, a numerator
+  (-->  [2XNumerator[0m  ([14X4.3-4[0m))  and  a  denominator  (--> [2XDenominator[0m ([14X4.3-6[0m)). A
+  [5Xhomalg[0m  local  matrix  contains  a  global [5Xhomalg[0m matrix as a numerator (-->
+  [2XNumerator[0m  ([14X4.3-5[0m))  and  a  ring  element as a denominator (--> [2XDenominator[0m
+  ([14X4.3-7[0m)).   New   constructors   for   ring   elements   and   matrices  are
+  [2XHomalgLocalRingElement[0m  ([14X4.3-17[0m)  and [2XHomalgLocalMatrix[0m ([14X4.3-18[0m) in addition
+  to  the  standard  contructors  introduced  in  other packages of the [5Xhomalg[0m
+  project.
+  
+  The local rings most prominently can be used with methods known from general
+  [5Xhomalg[0m  rings.  The  methods for doing the computations are presented in the
+  appendix  ([14XA[0m),  since  they are not for external use. The new attributes and
+  operations are documented here.
+  
+  Since   the  objects  inplemented  here  are  representations  from  objects
+  elsewhere  in the [5Xhomalg[0m project (i.e. [5XMatricesForHomalg[0m), we want to stress
+  that  there  are  many  other  operations  in  [5Xhomalg[0m,  which can be used in
+  connection  with  the ones presented here. A few of them can be found in the
+  examples and the appendix of this documentation.
+  
+  
+  [1X4.1 Category and Representations[0X
+  
+  [1X4.1-1 IsHomalgLocalRingRep[0m
+  
+  [2X> IsHomalgLocalRingRep( [0X[3XR[0X[2X ) __________________________________[0XRepresentation
+  [6XReturns:[0X  true or false
+  
+  The representation of [5Xhomalg[0m local rings.
+  
+  (It is a subrepresentation of the [5XGAP[0m representation
+  [10XIsHomalgRingOrFinitelyPresentedModuleRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsHomalgLocalRingRep",[0X
+    [4X        IsHomalgRing[0X
+    [4X        and IsHomalgRingOrFinitelyPresentedModuleRep,[0X
+    [4X        [ "ring" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-2 IsHomalgLocalRingElementRep[0m
+  
+  [2X> IsHomalgLocalRingElementRep( [0X[3Xr[0X[2X ) ___________________________[0XRepresentation
+  [6XReturns:[0X  true or false
+  
+  The representation of elements of [5Xhomalg[0m local rings.
+  
+  (It is a representation of the [5XGAP[0m category [10XIsHomalgRingElement[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsHomalgLocalRingElementRep",[0X
+    [4X        IsHomalgRingElement,[0X
+    [4X        [ "pointer" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-3 IsHomalgLocalMatrixRep[0m
+  
+  [2X> IsHomalgLocalMatrixRep( [0X[3XA[0X[2X ) ________________________________[0XRepresentation
+  [6XReturns:[0X  true or false
+  
+  The representation of [5Xhomalg[0m matrices with entries in a [5Xhomalg[0m local ring.
+  
+  (It is a representation of the [5XGAP[0m category [10XIsHomalgMatrix[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsHomalgLocalMatrixRep",[0X
+    [4X        IsHomalgMatrix,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X4.2 Rings: Attributes[0X
+  
+  [1X4.2-1 GeneratorsOfMaximalLeftIdeal[0m
+  
+  [2X> GeneratorsOfMaximalLeftIdeal( [0X[3XR[0X[2X ) _______________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  the  generators  of  the maximal ideal, at which R was created. The
+  generators are given as a column over the associated global ring.
+  
+  [1X4.2-2 GeneratorsOfMaximalRightIdeal[0m
+  
+  [2X> GeneratorsOfMaximalRightIdeal( [0X[3XR[0X[2X ) ______________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  the  generators  of  the maximal ideal, at which R was created. The
+  generators are given as a row over the associated global ring.
+  
+  
+  [1X4.3 Operations and Functions[0X
+  
+  [1X4.3-1 AssociatedGlobalRing[0m
+  
+  [2X> AssociatedGlobalRing( [0X[3XR[0X[2X ) _______________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring
+  
+  The global [5Xhomalg[0m ring, from which the local ring [3XR[0m was created.
+  
+  [1X4.3-2 AssociatedGlobalRing[0m
+  
+  [2X> AssociatedGlobalRing( [0X[3Xr[0X[2X ) _______________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring
+  
+  The global [5Xhomalg[0m ring, from which the local ring element [3Xr[0m was created.
+  
+  [1X4.3-3 AssociatedGlobalRing[0m
+  
+  [2X> AssociatedGlobalRing( [0X[3Xmat[0X[2X ) _____________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring
+  
+  The global [5Xhomalg[0m ring, from which the local matrix [3Xmat[0m was created.
+  
+  [1X4.3-4 Numerator[0m
+  
+  [2X> Numerator( [0X[3Xr[0X[2X ) __________________________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring element
+  
+  The  numerator  from  a local ring element [3Xr[0m, which is a [5Xhomalg[0m ring element
+  from the computation ring.
+  
+  [1X4.3-5 Numerator[0m
+  
+  [2X> Numerator( [0X[3Xmat[0X[2X ) ________________________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m matrix
+  
+  The  numerator  from  a  local matrix [3Xmat[0m, which is a [5Xhomalg[0m matrix from the
+  computation ring.
+  
+  [1X4.3-6 Denominator[0m
+  
+  [2X> Denominator( [0X[3Xr[0X[2X ) ________________________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring element
+  
+  The  denominator from a local ring element [3Xr[0m, which is a [5Xhomalg[0m ring element
+  from the computation ring.
+  
+  [1X4.3-7 Denominator[0m
+  
+  [2X> Denominator( [0X[3Xmat[0X[2X ) ______________________________________________[0Xoperation
+  [6XReturns:[0X  a (global) [5Xhomalg[0m ring element
+  
+  The  denominator  from a local matrix [3Xmat[0m, which is a [5Xhomalg[0m matrix from the
+  computation ring.
+  
+  [1X4.3-8 Name[0m
+  
+  [2X> Name( [0X[3Xr[0X[2X ) _______________________________________________________[0Xoperation
+  [6XReturns:[0X  a string
+  
+  The name of the local ring element [3Xr[0m.
+  
+  [1X4.3-9 SetMatElm[0m
+  
+  [2X> SetMatElm( [0X[3Xmat, i, j, r, R[0X[2X ) ____________________________________[0Xoperation
+  
+  Changes  the  entry  ([3Xi,j[0m) of the local matrix [3Xmat[0m to the value [3Xr[0m. Here [3XR[0m is
+  the (local) [5Xhomalg[0m ring involved in these computations.
+  
+  [1X4.3-10 AddToMatElm[0m
+  
+  [2X> AddToMatElm( [0X[3Xmat, i, j, r, R[0X[2X ) __________________________________[0Xoperation
+  
+  Changes the entry ([3Xi,j[0m) of the local matrix [3Xmat[0m by adding the value [3Xr[0m to it.
+  Here [3XR[0m is the (local) [5Xhomalg[0m ring involved in these computations.
+  
+  [1X4.3-11 MatElmAsString[0m
+  
+  [2X> MatElmAsString( [0X[3Xmat, i, j, R[0X[2X ) __________________________________[0Xoperation
+  [6XReturns:[0X  a string
+  
+  Returns  the  entry ([3Xi,j[0m) of the local matrix [3Xmat[0m as a string. Here [3XR[0m is the
+  (local) [5Xhomalg[0m ring involved in these computations.
+  
+  [1X4.3-12 MatElm[0m
+  
+  [2X> MatElm( [0X[3Xmat, i, j, R[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a local ring element
+  
+  Returns  the  entry  ([3Xi,j[0m)  of  the  local matrix [3Xmat[0m. Here [3XR[0m is the (local)
+  [5Xhomalg[0m ring involved in these computations.
+  
+  [1X4.3-13 Cancel[0m
+  
+  [2X> Cancel( [0X[3Xa, b[0X[2X ) __________________________________________________[0Xoperation
+  [6XReturns:[0X  two ring elements
+  
+  For  [3Xa[0m=a'*c  and  [3Xb[0m=b'*c  return  a'  and b'. The exact form of c depends on
+  whether a procedure for gcd computation is included in the ring package.
+  
+  [1X4.3-14 LocalizeAt[0m
+  
+  [2X> LocalizeAt( [0X[3XR, l[0X[2X ) ______________________________________________[0Xoperation
+  [6XReturns:[0X  a local ring
+  
+  If  [3Xl[0m is a list of elements of the global ring [3XR[0m generating a maximal ideal,
+  the  method creates the corresponding localization of [3XR[0m at the complement of
+  the maximal ideal.
+  
+  [1X4.3-15 LocalizeAtZero[0m
+  
+  [2X> LocalizeAtZero( [0X[3XR[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  a local ring
+  
+  This method creates the corresponding localization of [3XR[0m at the complement of
+  the maximal ideal generated by the indeterminates ("at zero").
+  
+  [1X4.3-16 LocalizePolynomialRingAtZeroWithMora[0m
+  
+  [2X> LocalizePolynomialRingAtZeroWithMora( [0X[3XR[0X[2X ) _______________________[0Xoperation
+  [6XReturns:[0X  a local ring
+  
+  This  method  localizes  the  ring  [3XR[0m  at  zero  and  this localized ring is
+  returned.  The  ring table uses Mora's algorithm as implemented [5XSingular[0m for
+  low level computations.
+  
+  [1X4.3-17 HomalgLocalRingElement[0m
+  
+  [2X> HomalgLocalRingElement( [0X[3Xnumer, denom, R[0X[2X ) ________________________[0Xfunction
+  [2X> HomalgLocalRingElement( [0X[3Xnumer, R[0X[2X ) _______________________________[0Xfunction
+  [6XReturns:[0X  a local ring element
+  
+  Creates the local ring element [3Xnumer[0m/[3Xdenom[0m or in the second case [3Xnumer[0m/1 for
+  the  local  ring [3XR[0m. Both [3Xnumer[0m and [3Xdenom[0m may either be a string describing a
+  valid global ring element or from the global ring or computation ring.
+  
+  [1X4.3-18 HomalgLocalMatrix[0m
+  
+  [2X> HomalgLocalMatrix( [0X[3Xnumer, denom, R[0X[2X ) _____________________________[0Xfunction
+  [2X> HomalgLocalMatrix( [0X[3Xnumer, R[0X[2X ) ____________________________________[0Xfunction
+  [6XReturns:[0X  a local matrix
+  
+  Creates  the  local matrix [3Xnumer[0m/[3Xdenom[0m or in the second case [3Xnumer[0m/1 for the
+  local ring [3XR[0m. Both [3Xnumer[0m and [3Xdenom[0m may either be from the global ring or the
+  computation ring.
+  

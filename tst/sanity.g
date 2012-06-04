@@ -2,9 +2,8 @@
 ##
 #W  sanity.g                   GAP tests                     Alexander Hulpke
 ##
-#H  @(#)$Id: sanity.g,v 4.6 1998/07/16 14:16:32 ahulpke Exp $
 ##
-#Y  Copyright (C)  1997,  St. Andrews
+#Y  Copyright (C)  1997,  St Andrews
 ##
 ##  This file runs a vast number of sanity checks on a large number of
 ##  groups.
@@ -44,7 +43,7 @@ local u,cs,ncs,n,rep,i,au,hom,cl,co;
 	hom:=NaturalHomomorphismByNormalSubgroup(G,i);
 	Assert(1,Index(G,i)=Size(Image(hom,G)));
 	if IsSolvableGroup(i) then
-	  co:=Complementclasses(G,i);
+	  co:=ComplementClassesRepresentatives(G,i);
 	  Assert(1,ForAll(co,j->Size(j)=Index(G,i)
 	                        and Size(Intersection(i,j))=1));
 	  if u<>fail then

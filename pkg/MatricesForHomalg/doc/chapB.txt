@@ -1,0 +1,820 @@
+  
+  [1XB The Matrix Tool Operations[0X
+  
+  The  functions  listed below are components of the [10XhomalgTable[0m object stored
+  in  the  ring.  They are only indirectly accessible through standard methods
+  that invoke them.
+  
+  
+  [1XB.1 The Tool Operations [13Xwithout[1X a Fallback Method[0X
+  
+  There  are  matrix  methods  for  which [5Xhomalg[0m needs a [10XhomalgTable[0m entry for
+  non-internal  rings,  as it cannot provide a suitable fallback. Below is the
+  list of these [10XhomalgTable[0m entries.
+  
+  [1XB.1-1 InitialMatrix[0m
+  
+  [2X> InitialMatrix( [0X[3XC[0X[2X ) _______________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component RP!.[10XInitialMatrix[0m is bound then the method [2XEval[0m ([14XC.4-1[0m) resets the
+  filter [10XIsInitialMatrix[0m and returns RP!.[10XInitialMatrix[0m( [3XC[0m ).
+  
+  [1XB.1-2 InitialIdentityMatrix[0m
+  
+  [2X> InitialIdentityMatrix( [0X[3XC[0X[2X ) _______________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XInitialIdentityMatrix[0m  is  bound then the method [2XEval[0m ([14XC.4-2[0m)
+  resets      the      filter      [10XIsInitialIdentityMatrix[0m     and     returns
+  RP!.[10XInitialIdentityMatrix[0m( [3XC[0m ).
+  
+  [1XB.1-3 ZeroMatrix[0m
+  
+  [2X> ZeroMatrix( [0X[3XC[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XZeroMatrix[0m  is  bound  then  the  method [2XEval[0m ([14XC.4-3[0m) returns
+  RP!.[10XZeroMatrix[0m( [3XC[0m ).
+  
+  [1XB.1-4 IdentityMatrix[0m
+  
+  [2X> IdentityMatrix( [0X[3XC[0X[2X ) ______________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XIdentityMatrix[0m  is bound then the method [2XEval[0m ([14XC.4-4[0m) returns
+  RP!.[10XIdentityMatrix[0m( [3XC[0m ).
+  
+  [1XB.1-5 Involution[0m
+  
+  [2X> Involution( [0X[3XM[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XInvolution[0m  is  bound  then  the  method [2XEval[0m ([14XC.4-7[0m) returns
+  RP!.[10XInvolution[0m applied to the content of the attribute [10XEvalInvolution[0m( [3XC[0m ) =
+  [3XM[0m.
+  
+  [1XB.1-6 CertainRows[0m
+  
+  [2X> CertainRows( [0X[3XM, plist[0X[2X ) __________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XCertainRows[0m  is  bound  then  the method [2XEval[0m ([14XC.4-8[0m) returns
+  RP!.[10XCertainRows[0m applied to the content of the attribute [10XEvalCertainRows[0m( [3XC[0m )
+  = [ [3XM[0m, [3Xplist[0m ].
+  
+  [1XB.1-7 CertainColumns[0m
+  
+  [2X> CertainColumns( [0X[3XM, plist[0X[2X ) _______________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XCertainColumns[0m  is bound then the method [2XEval[0m ([14XC.4-9[0m) returns
+  RP!.[10XCertainColumns[0m    applied    to    the    content   of   the   attribute
+  [10XEvalCertainColumns[0m( [3XC[0m ) = [ [3XM[0m, [3Xplist[0m ].
+  
+  [1XB.1-8 UnionOfRows[0m
+  
+  [2X> UnionOfRows( [0X[3XA, B[0X[2X ) ______________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XUnionOfRows[0m  is  bound  then the method [2XEval[0m ([14XC.4-10[0m) returns
+  RP!.[10XUnionOfRows[0m applied to the content of the attribute [10XEvalUnionOfRows[0m( [3XC[0m )
+  = [ [3XA[0m, [3XB[0m ].
+  
+  [1XB.1-9 UnionOfColumns[0m
+  
+  [2X> UnionOfColumns( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XUnionOfColumns[0m is bound then the method [2XEval[0m ([14XC.4-11[0m) returns
+  RP!.[10XUnionOfColumns[0m    applied    to    the    content   of   the   attribute
+  [10XEvalUnionOfColumns[0m( [3XC[0m ) = [ [3XA[0m, [3XB[0m ].
+  
+  [1XB.1-10 DiagMat[0m
+  
+  [2X> DiagMat( [0X[3Xe[0X[2X ) _____________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XDiagMat[0m  is  bound  then  the  method  [2XEval[0m  ([14XC.4-12[0m) returns
+  RP!.[10XDiagMat[0m applied to the content of the attribute [10XEvalDiagMat[0m( [3XC[0m ) = [3Xe[0m.
+  
+  [1XB.1-11 KroneckerMat[0m
+  
+  [2X> KroneckerMat( [0X[3XA, B[0X[2X ) _____________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XKroneckerMat[0m  is  bound then the method [2XEval[0m ([14XC.4-13[0m) returns
+  RP!.[10XKroneckerMat[0m applied to the content of the attribute [10XEvalKroneckerMat[0m( [3XC[0m
+  ) = [ [3XA[0m, [3XB[0m ].
+  
+  [1XB.1-12 MulMat[0m
+  
+  [2X> MulMat( [0X[3Xa, A[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XMulMat[0m  is  bound  then  the  method  [2XEval[0m  ([14XC.4-14[0m)  returns
+  RP!.[10XMulMat[0m  applied to the content of the attribute [10XEvalMulMat[0m( [3XC[0m ) = [ [3Xa[0m, [3XA[0m
+  ].
+  
+  [1XB.1-13 AddMat[0m
+  
+  [2X> AddMat( [0X[3XA, B[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XAddMat[0m  is  bound  then  the  method  [2XEval[0m  ([14XC.4-15[0m)  returns
+  RP!.[10XAddMat[0m  applied to the content of the attribute [10XEvalAddMat[0m( [3XC[0m ) = [ [3XA[0m, [3XB[0m
+  ].
+  
+  [1XB.1-14 SubMat[0m
+  
+  [2X> SubMat( [0X[3XA, B[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XSubMat[0m  is  bound  then  the  method  [2XEval[0m  ([14XC.4-16[0m)  returns
+  RP!.[10XSubMat[0m  applied to the content of the attribute [10XEvalSubMat[0m( [3XC[0m ) = [ [3XA[0m, [3XB[0m
+  ].
+  
+  [1XB.1-15 Compose[0m
+  
+  [2X> Compose( [0X[3XA, B[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XCompose[0m  is  bound  then  the  method  [2XEval[0m  ([14XC.4-17[0m) returns
+  RP!.[10XCompose[0m  applied to the content of the attribute [10XEvalCompose[0m( [3XC[0m ) = [ [3XA[0m,
+  [3XB[0m ].
+  
+  [1XB.1-16 IsZeroMatrix[0m
+  
+  [2X> IsZeroMatrix( [0X[3XM[0X[2X ) ________________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XIsZeroMatrix[0m  is  bound  then  the  standard  method  for the
+  property [2XIsZero[0m ([14X5.3-1[0m) shown below returns RP!.[10XIsZeroMatrix[0m( [3XM[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( IsZero,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M )[0X
+    [4X    local R, RP;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.IsZeroMatrix) then[0X
+    [4X        ## CAUTION: the external system must be able[0X
+    [4X        ## to check zero modulo possible ring relations![0X
+    [4X        [0X
+    [4X        return RP!.IsZeroMatrix( M ); ## with this, \= can fall back to IsZero[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    ## from the GAP4 documentation: ?Zero[0X
+    [4X    ## `ZeroSameMutability( <obj> )' is equivalent to `0 * <obj>'.[0X
+    [4X    [0X
+    [4X    return M = 0 * M; ## hence, by default, IsZero falls back to \= (see below)[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.1-17 NrRows[0m
+  
+  [2X> NrRows( [0X[3XC[0X[2X ) ______________________________________________________[0Xfunction
+  [6XReturns:[0X  a nonnegative integer
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XNrRows[0m  is  bound  then the standard method for the attribute
+  [2XNrRows[0m ([14X5.4-1[0m) shown below returns RP!.[10XNrRows[0m( [3XC[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( NrRows,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.NrRows) then[0X
+    [4X        return RP!.NrRows( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called NrRows ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Length( Eval( C )!.matrix );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.1-18 NrColumns[0m
+  
+  [2X> NrColumns( [0X[3XC[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  a nonnegative integer
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XNrColumns[0m is bound then the standard method for the attribute
+  [2XNrColumns[0m ([14X5.4-2[0m) shown below returns RP!.[10XNrColumns[0m( [3XC[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( NrColumns,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.NrColumns) then[0X
+    [4X        return RP!.NrColumns( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called NrColumns ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Length( Eval( C )!.matrix[ 1 ] );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.1-19 Determinant[0m
+  
+  [2X> Determinant( [0X[3XC[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  a ring element
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XDeterminant[0m  is  bound  then  the  standard  method  for  the
+  attribute [2XDeterminantMat[0m ([14X5.4-3[0m) shown below returns RP!.[10XDeterminant[0m( [3XC[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( DeterminantMat,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if NrRows( C ) <> NrColumns( C ) then[0X
+    [4X        Error( "the matrix is not quadratic\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.Determinant) then[0X
+    [4X        return RingElementConstructor( R )( RP!.Determinant( C ), R );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called Determinant ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Determinant( Eval( C )!.matrix );[0X
+    [4X    [0X
+    [4Xend );[0X
+    [4X[0X
+    [4X[0X
+    [4XInstallMethod( Determinant,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    [0X
+    [4X    return DeterminantMat( C );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1XB.2 The Tool Operations with a Fallback Method[0X
+  
+  These are the methods for which it is recommended for performance reasons to
+  have  a  [10XhomalgTable[0m  entry  for  non-internal rings. [5Xhomalg[0m only provides a
+  generic fallback method.
+  
+  [1XB.2-1 AreEqualMatrices[0m
+  
+  [2X> AreEqualMatrices( [0X[3XM1, M2[0X[2X ) _______________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM1[0m ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XAreEqualMatrices[0m  is  bound  then the standard method for the
+  operation [2X\=[0m ([14X5.5-17[0m) shown below returns RP!.[10XAreEqualMatrices[0m( [3XM1[0m, [3XM2[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( \=,[0X
+    [4X        "for homalg comparable matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M1, M2 )[0X
+    [4X    local R, RP, are_equal;[0X
+    [4X    [0X
+    [4X    ## do not touch mutable matrices[0X
+    [4X    if not ( IsMutable( M1 ) or IsMutable( M2 ) ) then[0X
+    [4X        [0X
+    [4X        if IsBound( M1!.AreEqual ) then[0X
+    [4X            are_equal := _ElmWPObj_ForHomalg( M1!.AreEqual, M2, fail );[0X
+    [4X            if are_equal <> fail then[0X
+    [4X                return are_equal;[0X
+    [4X            fi;[0X
+    [4X        else[0X
+    [4X            M1!.AreEqual :=[0X
+    [4X              ContainerForWeakPointers([0X
+    [4X                      TheTypeContainerForWeakPointersOnComputedValues,[0X
+    [4X                      [ "operation", "AreEqual" ] );[0X
+    [4X        fi;[0X
+    [4X        [0X
+    [4X        if IsBound( M2!.AreEqual ) then[0X
+    [4X            are_equal := _ElmWPObj_ForHomalg( M2!.AreEqual, M1, fail );[0X
+    [4X            if are_equal <> fail then[0X
+    [4X                return are_equal;[0X
+    [4X            fi;[0X
+    [4X        fi;[0X
+    [4X        ## do not store things symmetrically below to ``save'' memory[0X
+    [4X        [0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M1 );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.AreEqualMatrices) then[0X
+    [4X        ## CAUTION: the external system must be able to check equality[0X
+    [4X        ## modulo possible ring relations (known to the external system)![0X
+    [4X        are_equal := RP!.AreEqualMatrices( M1, M2 );[0X
+    [4X    elif IsBound(RP!.Equal) then[0X
+    [4X        ## CAUTION: the external system must be able to check equality[0X
+    [4X        ## modulo possible ring relations (known to the external system)![0X
+    [4X        are_equal := RP!.Equal( M1, M2 );[0X
+    [4X    elif IsBound(RP!.IsZeroMatrix) then   ## ensuring this avoids infinite loops[0X
+    [4X        are_equal := IsZero( M1 - M2 );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if IsBound( are_equal ) then[0X
+    [4X        [0X
+    [4X        ## do not touch mutable matrices[0X
+    [4X        if not ( IsMutable( M1 ) or IsMutable( M2 ) ) then[0X
+    [4X            [0X
+    [4X            if are_equal then[0X
+    [4X                MatchPropertiesAndAttributes( M1, M2,[0X
+    [4X                        LIMAT.intrinsic_properties,[0X
+    [4X                        LIMAT.intrinsic_attributes,[0X
+    [4X                        LIMAT.intrinsic_components[0X
+    [4X                        );[0X
+    [4X            fi;[0X
+    [4X            [0X
+    [4X            ## do not store things symmetrically to ``save'' memory[0X
+    [4X            _AddTwoElmWPObj_ForHomalg( M1!.AreEqual, M2, are_equal );[0X
+    [4X            [0X
+    [4X        fi;[0X
+    [4X        [0X
+    [4X        return are_equal;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    TryNextMethod( );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-2 IsIdentityMatrix[0m
+  
+  [2X> IsIdentityMatrix( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XIsIdentityMatrix[0m  is  bound  then the standard method for the
+  property [2XIsOne[0m ([14X5.3-2[0m) shown below returns RP!.[10XIsIdentityMatrix[0m( [3XM[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( IsOne,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M )[0X
+    [4X    local R, RP;[0X
+    [4X    [0X
+    [4X    if NrRows( M ) <> NrColumns( M ) then[0X
+    [4X        return false;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.IsIdentityMatrix) then[0X
+    [4X        return RP!.IsIdentityMatrix( M );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    return M = HomalgIdentityMatrix( NrRows( M ), HomalgRing( M ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-3 IsDiagonalMatrix[0m
+  
+  [2X> IsDiagonalMatrix( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XIsDiagonalMatrix[0m  is  bound  then the standard method for the
+  property [2XIsDiagonalMatrix[0m ([14X5.3-13[0m) shown below returns RP!.[10XIsDiagonalMatrix[0m(
+  [3XM[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( IsDiagonalMatrix,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M )[0X
+    [4X    local R, RP, diag;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.IsDiagonalMatrix) then[0X
+    [4X        return RP!.IsDiagonalMatrix( M );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    diag := DiagonalEntries( M );[0X
+    [4X    [0X
+    [4X    return M = HomalgDiagonalMatrix( diag, NrRows( M ), NrColumns( M ), R );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-4 ZeroRows[0m
+  
+  [2X> ZeroRows( [0X[3XC[0X[2X ) ____________________________________________________[0Xfunction
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XZeroRows[0m  is  bound then the standard method of the attribute
+  [2XZeroRows[0m ([14X5.4-4[0m) shown below returns RP!.[10XZeroRows[0m( [3XC[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( ZeroRows,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, z;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.ZeroRows) then[0X
+    [4X        return RP!.ZeroRows( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    z := HomalgZeroMatrix( 1, NrColumns( C ), R );[0X
+    [4X    [0X
+    [4X    return Filtered( [ 1 .. NrRows( C ) ], a -> CertainRows( C, [ a ] ) = z );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-5 ZeroColumns[0m
+  
+  [2X> ZeroColumns( [0X[3XC[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XC[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component RP!.[10XZeroColumns[0m is bound then the standard method of the attribute
+  [2XZeroColumns[0m ([14X5.4-5[0m) shown below returns RP!.[10XZeroColumns[0m( [3XC[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( ZeroColumns,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, z;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.ZeroColumns) then[0X
+    [4X        return RP!.ZeroColumns( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    z := HomalgZeroMatrix( NrRows( C ), 1, R );[0X
+    [4X    [0X
+    [4X    return Filtered( [ 1 .. NrColumns( C ) ], a -> CertainColumns( C, [ a ] ) = z );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-6 GetColumnIndependentUnitPositions[0m
+  
+  [2X> GetColumnIndependentUnitPositions( [0X[3XM, poslist[0X[2X ) __________________[0Xfunction
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XGetColumnIndependentUnitPositions[0m  is bound then the standard
+  method  of  the  operation  [2XGetColumnIndependentUnitPositions[0m ([14X5.5-18[0m) shown
+  below returns RP!.[10XGetColumnIndependentUnitPositions[0m( [3XM[0m, [3Xposlist[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( GetColumnIndependentUnitPositions,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomogeneousList ],[0X
+    [4X        [0X
+    [4X  function( M, poslist )[0X
+    [4X    local R, RP, rest, pos, i, j, k;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.GetColumnIndependentUnitPositions) then[0X
+    [4X        pos := RP!.GetColumnIndependentUnitPositions( M, poslist );[0X
+    [4X        if pos <> [ ] then[0X
+    [4X            SetIsZero( M, false );[0X
+    [4X        fi;[0X
+    [4X        return pos;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    rest := [ 1 .. NrColumns( M ) ];[0X
+    [4X    [0X
+    [4X    pos := [ ];[0X
+    [4X    [0X
+    [4X    for i in [ 1 .. NrRows( M ) ] do[0X
+    [4X        for k in Reversed( rest ) do[0X
+    [4X            if not [ i, k ] in poslist and[0X
+    [4X               IsUnit( R, MatElm( M, i, k ) ) then[0X
+    [4X                Add( pos, [ i, k ] );[0X
+    [4X                rest := Filtered( rest,[0X
+    [4X                                a -> IsZero( MatElm( M, i, a ) ) );[0X
+    [4X                break;[0X
+    [4X            fi;[0X
+    [4X        od;[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    if pos <> [ ] then[0X
+    [4X        SetIsZero( M, false );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return pos;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-7 GetRowIndependentUnitPositions[0m
+  
+  [2X> GetRowIndependentUnitPositions( [0X[3XM, poslist[0X[2X ) _____________________[0Xfunction
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XGetRowIndependentUnitPositions[0m  is  bound  then  the standard
+  method  of the operation [2XGetRowIndependentUnitPositions[0m ([14X5.5-19[0m) shown below
+  returns RP!.[10XGetRowIndependentUnitPositions[0m( [3XM[0m, [3Xposlist[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( GetRowIndependentUnitPositions,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomogeneousList ],[0X
+    [4X        [0X
+    [4X  function( M, poslist )[0X
+    [4X    local R, RP, rest, pos, j, i, k;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.GetRowIndependentUnitPositions) then[0X
+    [4X        pos := RP!.GetRowIndependentUnitPositions( M, poslist );[0X
+    [4X        if pos <> [ ] then[0X
+    [4X            SetIsZero( M, false );[0X
+    [4X        fi;[0X
+    [4X        return pos;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    rest := [ 1 .. NrRows( M ) ];[0X
+    [4X    [0X
+    [4X    pos := [ ];[0X
+    [4X    [0X
+    [4X    for j in [ 1 .. NrColumns( M ) ] do[0X
+    [4X        for k in Reversed( rest ) do[0X
+    [4X            if not [ j, k ] in poslist and[0X
+    [4X               IsUnit( R, MatElm( M, k, j ) ) then[0X
+    [4X                Add( pos, [ j, k ] );[0X
+    [4X                rest := Filtered( rest,[0X
+    [4X                                a -> IsZero( MatElm( M, a, j ) ) );[0X
+    [4X                break;[0X
+    [4X            fi;[0X
+    [4X        od;[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    if pos <> [ ] then[0X
+    [4X        SetIsZero( M, false );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return pos;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-8 GetUnitPosition[0m
+  
+  [2X> GetUnitPosition( [0X[3XM, poslist[0X[2X ) ____________________________________[0Xfunction
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XGetUnitPosition[0m  is  bound  then  the  standard method of the
+  operation  [2XGetUnitPosition[0m ([14X5.5-20[0m) shown below returns RP!.[10XGetUnitPosition[0m(
+  [3XM[0m, [3Xposlist[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( GetUnitPosition,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomogeneousList ],[0X
+    [4X        [0X
+    [4X  function( M, poslist )[0X
+    [4X    local R, RP, pos, m, n, i, j;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.GetUnitPosition) then[0X
+    [4X        pos := RP!.GetUnitPosition( M, poslist );[0X
+    [4X        if IsList( pos ) and IsPosInt( pos[1] ) and IsPosInt( pos[2] ) then[0X
+    [4X            SetIsZero( M, false );[0X
+    [4X        fi;[0X
+    [4X        return pos;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    m := NrRows( M );[0X
+    [4X    n := NrColumns( M );[0X
+    [4X    [0X
+    [4X    for i in [ 1 .. m ] do[0X
+    [4X        for j in [ 1 .. n ] do[0X
+    [4X            if not [ i, j ] in poslist and not j in poslist and[0X
+    [4X               IsUnit( R, MatElm( M, i, j ) ) then[0X
+    [4X                SetIsZero( M, false );[0X
+    [4X                return [ i, j ];[0X
+    [4X            fi;[0X
+    [4X        od;[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    return fail;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-9 PositionOfFirstNonZeroEntryPerRow[0m
+  
+  [2X> PositionOfFirstNonZeroEntryPerRow( [0X[3XM, poslist[0X[2X ) __________________[0Xfunction
+  [6XReturns:[0X  a list of nonnegative integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component  RP!.[10XPositionOfFirstNonZeroEntryPerRow[0m  is bound then the standard
+  method  of  the  attribute  [2XPositionOfFirstNonZeroEntryPerRow[0m  ([14X5.4-8[0m) shown
+  below returns RP!.[10XPositionOfFirstNonZeroEntryPerRow[0m( [3XM[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( PositionOfFirstNonZeroEntryPerRow,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M )[0X
+    [4X    local R, RP, pos, entries, r, c, i, k, j;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.PositionOfFirstNonZeroEntryPerRow) then[0X
+    [4X        return RP!.PositionOfFirstNonZeroEntryPerRow( M );[0X
+    [4X    elif IsBound(RP!.PositionOfFirstNonZeroEntryPerColumn) then[0X
+    [4X        return PositionOfFirstNonZeroEntryPerColumn( Involution( M ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    entries := EntriesOfHomalgMatrix( M );[0X
+    [4X    [0X
+    [4X    r := NrRows( M );[0X
+    [4X    c := NrColumns( M );[0X
+    [4X    [0X
+    [4X    pos := ListWithIdenticalEntries( r, 0 );[0X
+    [4X    [0X
+    [4X    for i in [ 1 .. r ] do[0X
+    [4X        k := (i - 1) * c;[0X
+    [4X        for j in [ 1 .. c ] do[0X
+    [4X            if not IsZero( entries[k + j] ) then[0X
+    [4X                pos[i] := j;[0X
+    [4X            fi;[0X
+    [4X        od;[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    return pos;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XB.2-10 PositionOfFirstNonZeroEntryPerColumn[0m
+  
+  [2X> PositionOfFirstNonZeroEntryPerColumn( [0X[3XM, poslist[0X[2X ) _______________[0Xfunction
+  [6XReturns:[0X  a list of nonnegative integers
+  
+  Let  R  :=  [10XHomalgRing[0m(  [3XM[0m  ) and RP := [10XhomalgTable[0m( R ). If the [10XhomalgTable[0m
+  component   RP!.[10XPositionOfFirstNonZeroEntryPerColumn[0m   is   bound  then  the
+  standard   method   of  the  attribute  [2XPositionOfFirstNonZeroEntryPerColumn[0m
+  ([14X5.4-9[0m) shown below returns RP!.[10XPositionOfFirstNonZeroEntryPerColumn[0m( [3XM[0m ).
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( PositionOfFirstNonZeroEntryPerColumn,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( M )[0X
+    [4X    local R, RP, pos, entries, r, c, j, i, k;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( M );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.PositionOfFirstNonZeroEntryPerColumn) then[0X
+    [4X        return RP!.PositionOfFirstNonZeroEntryPerColumn( M );[0X
+    [4X    elif IsBound(RP!.PositionOfFirstNonZeroEntryPerRow) then[0X
+    [4X        return PositionOfFirstNonZeroEntryPerRow( Involution( M ) );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# the fallback method #=====#[0X
+    [4X    [0X
+    [4X    entries := EntriesOfHomalgMatrix( M );[0X
+    [4X    [0X
+    [4X    r := NrRows( M );[0X
+    [4X    c := NrColumns( M );[0X
+    [4X    [0X
+    [4X    pos := ListWithIdenticalEntries( c, 0 );[0X
+    [4X    [0X
+    [4X    for j in [ 1 .. c ] do[0X
+    [4X        for i in [ 1 .. r ] do[0X
+    [4X            k := (i - 1) * c;[0X
+    [4X            if not IsZero( entries[k + j] ) then[0X
+    [4X                pos[j] := i;[0X
+    [4X            fi;[0X
+    [4X        od;[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    return pos;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  

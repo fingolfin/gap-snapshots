@@ -1,0 +1,490 @@
+\begin{theindex}
+
+  \item \texttt  {\texttt  {\char 92\relax }*}
+    \subitem copy a matrix over a different ring, \hyperpage{38}
+    \subitem copy a matrix over a different ring (right), 
+		\hyperpage{38}
+    \subitem for composable matrices, \hyperpage{49}
+    \subitem for ring elements and matrices, \hyperpage{49}
+  \item \texttt  {\texttt  {\char 92\relax }+}
+    \subitem for matrices, \hyperpage{49}
+  \item \texttt  {\texttt  {\char 92\relax }-}
+    \subitem for matrices, \hyperpage{49}
+  \item \texttt  {\texttt  {\char 92\relax }/}
+    \subitem constructor for residue class rings, \hyperpage{17}
+  \item \texttt  {\texttt  {\char 92\relax }=}
+    \subitem for matrices, \hyperpage{49}
+  \item \textsf{MatricesForHomalg}, \hyperpage{12}
+
+  \indexspace
+
+  \item \texttt  {AddMat}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{103}
+  \item \texttt  {AffineDegree}, \hyperpage{45}
+  \item \texttt  {AffineDimension}, \hyperpage{45}
+  \item \texttt  {AreEqualMatrices}
+    \subitem homalgTable entry, \hyperpage{69}
+    \subitem ResidueClassRing, \hyperpage{105}
+  \item \texttt  {AssociatedGradedRing}, \hyperpage{29}
+
+  \indexspace
+
+  \item \texttt  {Basis}\discretionary {-}{}{}\texttt  {Algorithm}\discretionary {-}{}{}\texttt  {Respects}\discretionary {-}{}{}\texttt  {Principal}\discretionary {-}{}{}\texttt  {Ideals}, 
+		\hyperpage{24}
+  \item \texttt  {BasisOfColumnModule}
+    \subitem for matrices, \hyperpage{51}
+    \subitem ResidueClassRing, \hyperpage{93}
+  \item \texttt  {BasisOfColumns}
+    \subitem for matrices, \hyperpage{54}
+    \subitem for pairs of matrices, \hyperpage{54}
+  \item \texttt  {BasisOfColumnsCoeff}
+    \subitem for matrices, \hyperpage{53}
+    \subitem ResidueClassRing, \hyperpage{96}
+  \item \texttt  {BasisOfRowModule}
+    \subitem for matrices, \hyperpage{51}
+    \subitem ResidueClassRing, \hyperpage{93}
+  \item \texttt  {BasisOfRows}
+    \subitem for matrices, \hyperpage{54}
+    \subitem for pairs of matrices, \hyperpage{54}
+  \item \texttt  {BasisOfRowsCoeff}
+    \subitem for matrices, \hyperpage{53}
+    \subitem ResidueClassRing, \hyperpage{96}
+
+  \indexspace
+
+  \item \texttt  {CanBeUsedToDecideZero}, \hyperpage{60}
+  \item \texttt  {CertainColumns}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{101}
+  \item \texttt  {CertainRows}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{100}
+  \item \texttt  {Coefficients}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}, 
+		\hyperpage{44}
+  \item \texttt  {Coefficients}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Unreduced}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}, 
+		\hyperpage{44}
+  \item \texttt  {CoefficientsRing}, \hyperpage{28}
+  \item \texttt  {ColumnRankOfMatrix}, \hyperpage{44}
+  \item \texttt  {Compose}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{104}
+  \item \texttt  {ConstantTermOfHilbertPolynomialn}, \hyperpage{45}
+  \item \texttt  {ConstructorForHomalgMatrices}, \hyperpage{26}
+  \item \texttt  {ContainsAField}, \hyperpage{18}
+  \item \texttt  {CoordinateRingOfGraph}
+    \subitem for ring maps, \hyperpage{32}
+
+  \indexspace
+
+  \item \texttt  {DecideZero}
+    \subitem for matrices and relations, \hyperpage{54}
+  \item \texttt  {DecideZeroColumns}
+    \subitem for pairs of matrices, \hyperpage{52}
+    \subitem ResidueClassRing, \hyperpage{94}
+  \item \texttt  {DecideZeroColumnsEffectively}
+    \subitem for pairs of matrices, \hyperpage{54}
+    \subitem ResidueClassRing, \hyperpage{97}
+  \item \texttt  {DecideZeroRows}
+    \subitem for pairs of matrices, \hyperpage{51}
+    \subitem ResidueClassRing, \hyperpage{94}
+  \item \texttt  {DecideZeroRowsEffectively}
+    \subitem for pairs of matrices, \hyperpage{54}
+    \subitem ResidueClassRing, \hyperpage{97}
+  \item \texttt  {DegreeOfMorphism}
+    \subitem for ring maps, \hyperpage{32}
+  \item \texttt  {Determinant}
+    \subitem homalgTable entry, \hyperpage{68}
+    \subitem ResidueClassRing, \hyperpage{105}
+  \item \texttt  {DeterminantMat}, \hyperpage{43}
+  \item \texttt  {DiagMat}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{102}
+
+  \indexspace
+
+  \item \texttt  {ElementaryRank}, \hyperpage{29}
+  \item \texttt  {Eliminate}, \hyperpage{51}
+  \item \texttt  {Eval}
+    \subitem for matrices created with AddMat, \hyperpage{90}
+    \subitem for matrices created with CertainColumns, \hyperpage{85}
+    \subitem for matrices created with CertainRows, \hyperpage{84}
+    \subitem for matrices created with Compose, \hyperpage{91}
+    \subitem for matrices created with DiagMat, \hyperpage{87}
+    \subitem for matrices created with HomalgIdentityMatrix, 
+		\hyperpage{81}
+    \subitem for matrices created with HomalgInitialIdentityMatrix, 
+		\hyperpage{79}
+    \subitem for matrices created with HomalgInitialMatrix, 
+		\hyperpage{78}
+    \subitem for matrices created with HomalgZeroMatrix, \hyperpage{80}
+    \subitem for matrices created with Involution, \hyperpage{83}
+    \subitem for matrices created with KroneckerMat, \hyperpage{88}
+    \subitem for matrices created with LeftInverseLazy, \hyperpage{82}
+    \subitem for matrices created with MulMat, \hyperpage{89}
+    \subitem for matrices created with RightInverseLazy, \hyperpage{83}
+    \subitem for matrices created with SubMat, \hyperpage{90}
+    \subitem for matrices created with UnionOfColumns, \hyperpage{86}
+    \subitem for matrices created with UnionOfRows, \hyperpage{85}
+
+  \indexspace
+
+  \item \texttt  {GeneralLinearRank}, \hyperpage{28}
+  \item \texttt  {GenerateSameColumnModule}
+    \subitem for pairs of matrices, \hyperpage{58}
+  \item \texttt  {GenerateSameRowModule}
+    \subitem for pairs of matrices, \hyperpage{58}
+  \item \texttt  {GetColumnIndependentUnitPositions}
+    \subitem for matrices, \hyperpage{50}
+    \subitem homalgTable entry, \hyperpage{73}
+  \item \texttt  {GetRowIndependentUnitPositions}
+    \subitem for matrices, \hyperpage{50}
+    \subitem homalgTable entry, \hyperpage{74}
+  \item \texttt  {GetUnitPosition}
+    \subitem for matrices, \hyperpage{50}
+    \subitem homalgTable entry, \hyperpage{75}
+  \item \texttt  {GlobalDimension}, \hyperpage{28}
+
+  \indexspace
+
+  \item \texttt  {HasInvariantBasisProperty}, \hyperpage{20}
+  \item \texttt  {HasLeftInvariantBasisProperty}, \hyperpage{20}
+  \item \texttt  {HasRightInvariantBasisProperty}, \hyperpage{20}
+  \item \texttt  {HilbertPoincareSeries}, \hyperpage{45}
+  \item \texttt  {HilbertPolynomial}, \hyperpage{45}
+  \item \texttt  {HomalgDiagonalMatrix}
+    \subitem constructor for diagonal matrices, \hyperpage{37}
+  \item \texttt  {HomalgFieldOfRationals}
+    \subitem constructor for the field of rationals, \hyperpage{17}
+  \item \texttt  {HomalgIdentityMatrix}
+    \subitem constructor for identity matrices, \hyperpage{35}
+  \item \texttt  {HomalgInitialIdentityMatrix}
+    \subitem constructor for initial quadratic matrices with ones on the diagonal, 
+		\hyperpage{34}
+  \item \texttt  {HomalgInitialMatrix}
+    \subitem constructor for initial matrices filled with zeros, 
+		\hyperpage{34}
+  \item \texttt  {HomalgMatrix}
+    \subitem constructor for matrices using a list, \hyperpage{36}
+    \subitem constructor for matrices using a listlist, \hyperpage{36}
+    \subitem constructor for matrices using a string of a list, 
+		\hyperpage{36}
+    \subitem constructor for matrices using a string of a listlist, 
+		\hyperpage{36}
+  \item \texttt  {homalgMode}, \hyperpage{109}
+  \item \texttt  {HomalgRing}
+    \subitem for matrices, \hyperpage{46}
+  \item \texttt  {HomalgRingOfIntegers}
+    \subitem constructor for the integers, \hyperpage{16}
+    \subitem constructor for the residue class rings of the integers, 
+		\hyperpage{16}
+  \item \texttt  {homalgTable}, \hyperpage{26}
+  \item \texttt  {HomalgVoidMatrix}
+    \subitem constructor for void matrices, \hyperpage{36}
+  \item \texttt  {HomalgZeroMatrix}
+    \subitem constructor for zero matrices, \hyperpage{35}
+
+  \indexspace
+
+  \item \texttt  {IdentityMatrix}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{100}
+  \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}, 
+		\hyperpage{27}
+  \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
+		\hyperpage{27}
+  \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
+		\hyperpage{27}
+  \item \texttt  {IndeterminatesOfExteriorRing}, \hyperpage{28}
+  \item \texttt  {IndeterminatesOfPolynomialRing}, \hyperpage{27}
+  \item \texttt  {InitialIdentityMatrix}
+    \subitem homalgTable entry for initial identity matrices, 
+		\hyperpage{63}
+    \subitem ResidueClassRing, \hyperpage{99}
+  \item \texttt  {InitialMatrix}
+    \subitem homalgTable entry for initial matrices, \hyperpage{63}
+    \subitem ResidueClassRing, \hyperpage{99}
+  \item \texttt  {Inverse}
+    \subitem for homalg ring elements, \hyperpage{25}
+  \item \texttt  {Involution}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{100}
+  \item \texttt  {IsArtinian}
+    \subitem for rings, \hyperpage{22}
+  \item \texttt  {IsAutomorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsBasisOfColumnsMatrix}, \hyperpage{41}
+  \item \texttt  {IsBasisOfRowsMatrix}, \hyperpage{41}
+  \item \texttt  {IsBezoutRing}, \hyperpage{19}
+  \item \texttt  {IsCohenMacaulay}, \hyperpage{22}
+  \item \texttt  {IsDedekindDomain}, \hyperpage{19}
+  \item \texttt  {IsDiagonalMatrix}, \hyperpage{40}
+    \subitem homalgTable entry, \hyperpage{71}
+    \subitem ResidueClassRing, \hyperpage{105}
+  \item \texttt  {IsDiscreteValuationRing}, \hyperpage{19}
+  \item \texttt  {IsDivisionRingForHomalg}, \hyperpage{18}
+  \item \texttt  {IsEmptyMatrix}, \hyperpage{40}
+  \item \texttt  {IsEpimorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsFieldForHomalg}, \hyperpage{18}
+  \item \texttt  {IsFiniteFreePresentationRing}, \hyperpage{24}
+  \item \texttt  {IsFreePolynomialRing}, \hyperpage{19}
+  \item \texttt  {IsGlobalDimensionFinite}, \hyperpage{20}
+  \item \texttt  {IsGorenstein}, \hyperpage{22}
+  \item \texttt  {IsHereditary}, \hyperpage{21}
+  \item \texttt  {IsHermite}, \hyperpage{21}
+  \item \texttt  {IsHomalgInternalMatrixRep}, \hyperpage{33}
+  \item \texttt  {IsHomalgInternalRingRep}, \hyperpage{16}
+  \item \texttt  {IsHomalgMatrix}, \hyperpage{33}
+  \item \texttt  {IsHomalgRing}, \hyperpage{15}
+  \item \texttt  {IsHomalgRingElement}, \hyperpage{15}
+  \item \texttt  {IsHomalgRingMap}, \hyperpage{30}
+  \item \texttt  {IsHomalgRingMapRep}, \hyperpage{30}
+  \item \texttt  {IsHomalgRingRelations}, \hyperpage{59}
+  \item \texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Relations}\discretionary {-}{}{}\texttt  {As}\discretionary {-}{}{}\texttt  {Generators}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Left}\discretionary {-}{}{}\texttt  {Ideal}, 
+		\hyperpage{59}
+  \item \texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Relations}\discretionary {-}{}{}\texttt  {As}\discretionary {-}{}{}\texttt  {Generators}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Right}\discretionary {-}{}{}\texttt  {Ideal}, 
+		\hyperpage{59}
+  \item \texttt  {IsHomalgRingSelfMap}, \hyperpage{30}
+  \item \texttt  {IsIdentityMatrix}
+    \subitem homalgTable entry, \hyperpage{70}
+  \item \texttt  {IsIdentityMorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsInitialIdentityMatrix}, \hyperpage{42}
+  \item \texttt  {IsInitialMatrix}, \hyperpage{42}
+  \item \texttt  {IsInjectivePresentation}, \hyperpage{60}
+  \item \texttt  {IsIntegersForHomalg}, \hyperpage{18}
+  \item \texttt  {IsIntegralDomain}, \hyperpage{21}
+  \item \texttt  {IsIntegrallyClosedDomain}, \hyperpage{19}
+  \item \texttt  {IsInvertibleMatrix}, \hyperpage{40}
+  \item \texttt  {IsIsomorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsKaplanskyHermite}, \hyperpage{19}
+  \item \texttt  {IsKoszul}, \hyperpage{22}
+  \item \texttt  {IsLeftArtinian}, \hyperpage{22}
+  \item \texttt  {IsLeftFiniteFreePresentationRing}, \hyperpage{24}
+  \item \texttt  {IsLeftGlobalDimensionFinite}, \hyperpage{20}
+  \item \texttt  {IsLeftHereditary}, \hyperpage{21}
+  \item \texttt  {IsLeftHermite}, \hyperpage{21}
+  \item \texttt  {IsLeftInvertibleMatrix}, \hyperpage{40}
+  \item \texttt  {IsLeftNoetherian}, \hyperpage{22}
+  \item \texttt  {IsLeftOreDomain}, \hyperpage{23}
+  \item \texttt  {IsLeftPrincipalIdealRing}, \hyperpage{23}
+  \item \texttt  {IsLeftRegular}, \hyperpage{39}
+    \subitem for homalg ring elements, \hyperpage{25}
+  \item \texttt  {IsLocal}, \hyperpage{20}
+  \item \texttt  {IsLocalizedWeylRing}, \hyperpage{20}
+  \item \texttt  {IsLowerStairCaseMatrix}, \hyperpage{41}
+  \item \texttt  {IsLowerTriangularMatrix}, \hyperpage{41}
+  \item \texttt  {IsMinusOne}, \hyperpage{24}
+  \item \texttt  {IsMonomorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsMorphism}
+    \subitem for ring maps, \hyperpage{31}
+  \item \texttt  {IsNoetherian}, \hyperpage{22}
+  \item \texttt  {IsOne}, \hyperpage{39}
+    \subitem ResidueClassRing, \hyperpage{105}
+  \item \texttt  {IsOreDomain}, \hyperpage{23}
+  \item \texttt  {IsPermutationMatrix}, \hyperpage{39}
+  \item \texttt  {IsPreHomalgRing}, \hyperpage{15}
+  \item \texttt  {IsPrincipalIdealRing}, \hyperpage{23}
+  \item \texttt  {IsRationalsForHomalg}, \hyperpage{18}
+  \item \texttt  {IsReducedBasisOfColumnsMatrix}, \hyperpage{42}
+  \item \texttt  {IsReducedBasisOfRowsMatrix}, \hyperpage{42}
+  \item \texttt  {IsRegular}, \hyperpage{23}
+    \subitem for homalg ring elements, \hyperpage{25}
+  \item \texttt  {IsResidueClassRingOfTheIntegers}, \hyperpage{18}
+  \item \texttt  {IsRightArtinian}, \hyperpage{23}
+  \item \texttt  {IsRightFiniteFreePresentationRing}, \hyperpage{24}
+  \item \texttt  {IsRightGlobalDimensionFinite}, \hyperpage{20}
+  \item \texttt  {IsRightHereditary}, \hyperpage{21}
+  \item \texttt  {IsRightHermite}, \hyperpage{21}
+  \item \texttt  {IsRightInvertibleMatrix}, \hyperpage{40}
+  \item \texttt  {IsRightNoetherian}, \hyperpage{22}
+  \item \texttt  {IsRightOreDomain}, \hyperpage{23}
+  \item \texttt  {IsRightPrincipalIdealRing}, \hyperpage{23}
+  \item \texttt  {IsRightRegular}, \hyperpage{40}
+    \subitem for homalg ring elements, \hyperpage{25}
+  \item \texttt  {IsRingRelationsRep}, \hyperpage{59}
+  \item \texttt  {IsScalarlMatrix}, \hyperpage{40}
+  \item \texttt  {IsSemiLocalRing}, \hyperpage{21}
+  \item \texttt  {IsSemiSimpleRing}, \hyperpage{24}
+  \item \texttt  {IsSimpleRing}, \hyperpage{24}
+  \item \texttt  {IsSpecialSubidentityMatrix}, \hyperpage{39}
+  \item \texttt  {IsStrictLowerTriangularMatrix}, \hyperpage{41}
+  \item \texttt  {IsStrictUpperTriangularMatrix}, \hyperpage{41}
+  \item \texttt  {IsSubidentityMatrix}, \hyperpage{39}
+  \item \texttt  {IsSuperCommutative}, \hyperpage{24}
+  \item \texttt  {IsTriangularMatrix}, \hyperpage{41}
+  \item \texttt  {IsUniqueFactorizationDomain}, \hyperpage{19}
+  \item \texttt  {IsUnitFree}, \hyperpage{39}
+  \item \texttt  {IsUpperStairCaseMatrix}, \hyperpage{41}
+  \item \texttt  {IsUpperTriangularMatrix}, \hyperpage{40}
+  \item \texttt  {IsVoidMatrix}, \hyperpage{42}
+  \item \texttt  {IsWeylRing}, \hyperpage{19}
+  \item \texttt  {IsZero}
+    \subitem for matrices, \hyperpage{38}
+    \subitem for rings, \hyperpage{18}
+  \item \texttt  {IsZeroMatrix}
+    \subitem homalgTable entry, \hyperpage{66}
+    \subitem ResidueClassRing, \hyperpage{104}
+
+  \indexspace
+
+  \item \texttt  {KroneckerMat}
+    \subitem for matrices, \hyperpage{49}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{103}
+  \item \texttt  {KrullDimension}, \hyperpage{28}
+
+  \indexspace
+
+  \item \texttt  {LeftDivide}
+    \subitem for pairs of matrices, \hyperpage{56}
+    \subitem for triples of matrices, \hyperpage{57}
+  \item \texttt  {LeftGlobalDimension}, \hyperpage{28}
+  \item \texttt  {LeftInverse}, \hyperpage{44}
+    \subitem for matrices, \hyperpage{46}
+  \item \texttt  {LeftInverseLazy}
+    \subitem for matrices, \hyperpage{47}
+
+  \indexspace
+
+  \item \texttt  {MatrixOfSymbolsn}, \hyperpage{45}
+  \item \texttt  {MinusOne}, \hyperpage{26}
+  \item \texttt  {MulMat}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{103}
+
+  \indexspace
+
+  \item \texttt  {NonZeroColumns}, \hyperpage{43}
+  \item \texttt  {NonZeroRows}, \hyperpage{43}
+  \item \texttt  {NrColumns}, \hyperpage{42}
+    \subitem homalgTable entry, \hyperpage{67}
+    \subitem ResidueClassRing, \hyperpage{104}
+  \item \texttt  {NrRows}, \hyperpage{42}
+    \subitem homalgTable entry, \hyperpage{66}
+    \subitem ResidueClassRing, \hyperpage{104}
+  \item \texttt  {NumeratorOfHilbertPoincareSeries}, \hyperpage{45}
+
+  \indexspace
+
+  \item \texttt  {One}
+    \subitem for homalg ring elements, \hyperpage{25}
+    \subitem for homalg rings, \hyperpage{26}
+
+  \indexspace
+
+  \item \texttt  {Position}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {First}\discretionary {-}{}{}\texttt  {Non}\discretionary {-}{}{}\texttt  {Zero}\discretionary {-}{}{}\texttt  {Entry}\discretionary {-}{}{}\texttt  {Per}\discretionary {-}{}{}\texttt  {Column}, 
+		\hyperpage{43}
+    \subitem homalgTable entry, \hyperpage{77}
+  \item \texttt  {PositionOfFirstNonZeroEntryPerRow}, \hyperpage{43}
+    \subitem homalgTable entry, \hyperpage{76}
+  \item \texttt  {ProductOfIndeterminates}, \hyperpage{26}
+  \item \texttt  {ProjectiveDegree}, \hyperpage{45}
+
+  \indexspace
+
+  \item \texttt  {Range}
+    \subitem for ring maps, \hyperpage{32}
+  \item \texttt  {RationalParameters}, \hyperpage{27}
+  \item \texttt  {ReducedBasisOfColumnModule}
+    \subitem for matrices, \hyperpage{53}
+  \item \texttt  {ReducedBasisOfRowModule}
+    \subitem for matrices, \hyperpage{53}
+  \item \texttt  {ReducedSyzygiesGeneratorsOfColumns}
+    \subitem for matrices, \hyperpage{53}
+  \item \texttt  {ReducedSyzygiesGeneratorsOfRows}
+    \subitem for matrices, \hyperpage{53}
+  \item \texttt  {ReducedSyzygiesOfColumns}
+    \subitem for matrices, \hyperpage{55}
+    \subitem for pairs of matrices, \hyperpage{55}
+  \item \texttt  {ReducedSyzygiesOfRows}
+    \subitem for matrices, \hyperpage{55}
+    \subitem for pairs of matrices, \hyperpage{55}
+  \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}, 
+		\hyperpage{28}
+  \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
+		\hyperpage{27}
+  \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
+		\hyperpage{27}
+  \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Polynomial}\discretionary {-}{}{}\texttt  {Ring}, 
+		\hyperpage{27}
+  \item \texttt  {RelativeSyzygiesGeneratorsOfColumns}
+    \subitem ResidueClassRing, \hyperpage{98}
+  \item \texttt  {RelativeSyzygiesGeneratorsOfRows}
+    \subitem ResidueClassRing, \hyperpage{98}
+  \item \texttt  {RightDivide}
+    \subitem for pairs of matrices, \hyperpage{55}
+    \subitem for triples of matrices, \hyperpage{56}
+  \item \texttt  {RightGlobalDimension}, \hyperpage{28}
+  \item \texttt  {RightInverse}, \hyperpage{44}
+    \subitem for matrices, \hyperpage{47}
+  \item \texttt  {RightInverseLazy}
+    \subitem for matrices, \hyperpage{48}
+  \item \texttt  {RingElementConstructor}, \hyperpage{26}
+  \item \texttt  {RingMap}
+    \subitem constructor for ring maps, \hyperpage{30}
+  \item \texttt  {RowRankOfMatrix}, \hyperpage{44}
+
+  \indexspace
+
+  \item \texttt  {Source}
+    \subitem for ring maps, \hyperpage{32}
+  \item \texttt  {StableRank}, \hyperpage{29}
+  \item \texttt  {SubMat}
+    \subitem homalgTable entry, \hyperpage{65}
+    \subitem ResidueClassRing, \hyperpage{104}
+  \item \texttt  {SyzygiesGeneratorsOfColumns}
+    \subitem for matrices, \hyperpage{52}
+    \subitem for pairs of matrices, \hyperpage{52}
+    \subitem ResidueClassRing, \hyperpage{95}
+  \item \texttt  {SyzygiesGeneratorsOfRows}
+    \subitem for matrices, \hyperpage{52}
+    \subitem for pairs of matrices, \hyperpage{52}
+    \subitem ResidueClassRing, \hyperpage{94}
+  \item \texttt  {SyzygiesOfColumns}
+    \subitem for matrices, \hyperpage{55}
+    \subitem for pairs of matrices, \hyperpage{55}
+  \item \texttt  {SyzygiesOfRows}
+    \subitem for matrices, \hyperpage{55}
+    \subitem for pairs of matrices, \hyperpage{55}
+
+  \indexspace
+
+  \item \texttt  {TypeOfHomalgMatrix}, \hyperpage{26}
+
+  \indexspace
+
+  \item \texttt  {UnionOfColumns}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{102}
+  \item \texttt  {UnionOfRows}
+    \subitem for matrices, \hyperpage{48}
+    \subitem homalgTable entry, \hyperpage{64}
+    \subitem ResidueClassRing, \hyperpage{101}
+  \item \texttt  {Unreduced}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}, 
+		\hyperpage{44}
+
+  \indexspace
+
+  \item \texttt  {Zero}
+    \subitem for homalg ring elements, \hyperpage{25}
+    \subitem for homalg rings, \hyperpage{26}
+  \item \texttt  {ZeroColumns}, \hyperpage{43}
+    \subitem homalgTable entry, \hyperpage{72}
+    \subitem ResidueClassRing, \hyperpage{106}
+  \item \texttt  {ZeroMatrix}
+    \subitem homalgTable entry, \hyperpage{63}
+    \subitem ResidueClassRing, \hyperpage{99}
+  \item \texttt  {ZeroRows}, \hyperpage{43}
+    \subitem homalgTable entry, \hyperpage{71}
+    \subitem ResidueClassRing, \hyperpage{106}
+
+\end{theindex}

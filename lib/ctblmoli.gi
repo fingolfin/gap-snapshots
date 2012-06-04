@@ -2,16 +2,13 @@
 ##
 #W  ctblmoli.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblmoli.gi,v 4.14.2.2 2005/05/10 08:30:45 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for Molien series.
 ##
-Revision.ctblmoli_gi :=
-    "@(#)$Id: ctblmoli.gi,v 4.14.2.2 2005/05/10 08:30:45 gap Exp $";
 
 
 #############################################################################
@@ -628,7 +625,7 @@ InstallGlobalFunction( MolienSeriesWithGivenDenominator,
     # Create the Molien series object (create the rat. function
     # from the given one, without division).
     coeffs:= CoefficientsOfUnivariateRationalFunction( info.ratfun );
-    series:= UnivariateRationalFunctionByExtRep( FamilyObj( info.ratfun ),
+    series:= UnivariateRationalFunctionByExtRepNC( FamilyObj( info.ratfun ),
         coeffs[1], coeffs[2], coeffs[3],
         IndeterminateNumberOfUnivariateRationalFunction( info.ratfun ) );
     SetIsUnivariateRationalFunction( series, true );

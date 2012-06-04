@@ -1,0 +1,395 @@
+\begin{theindex}
+
+  \item AcyclicSubomplexOfPureCubicalComplex, \hyperpage{82}
+  \item Add, \hyperpage{91}
+  \item AddFreeWords, \hyperpage{51}
+  \item AddFreeWordsModP, \hyperpage{51}
+  \item AlgebraicReduction, \hyperpage{51}
+  \item Append, \hyperpage{91}
+  \item Array, \hyperpage{89}
+  \item ArrayAssign, \hyperpage{90}
+  \item ArrayAssignFunctions, \hyperpage{90}
+  \item ArrayDimension, \hyperpage{89}
+  \item ArrayDimensions, \hyperpage{89}
+  \item ArrayIterate, \hyperpage{90}
+  \item ArraySum, \hyperpage{89}
+  \item ArrayToPureCubicalComplex, \hyperpage{77}
+  \item ArrayValue, \hyperpage{90}
+  \item ArrayValueFunctions, \hyperpage{90}
+  \item AutomorphismGroupAsCatOneGroup, \hyperpage{61}
+
+  \indexspace
+
+  \item BaerInvariant, \hyperpage{35}
+  \item Bar Cocomplex, \hyperpage{67}
+  \item Bar Complex, \hyperpage{65}
+  \item Bar Resolution, \hyperpage{64}
+  \item BarCocomplexCoboundary, \hyperpage{67}
+  \item BarCode, \hyperpage{24}
+  \item BarCodeDisplay, \hyperpage{24}
+  \item BarComplexBoundary, \hyperpage{66}
+  \item BarComplexEquivalence, \hyperpage{66}
+  \item BarResolutionBoundary, \hyperpage{65}
+  \item BarResolutionEquivalence, \hyperpage{66}
+  \item BarResolutionHomotopy, \hyperpage{65}
+  \item Bettinumbers, \hyperpage{72}, \hyperpage{79}
+  \item BigStepLCS, \hyperpage{99}
+  \item BinaryArrayToTextFile, \hyperpage{90}
+  \item BoundaryMap, \hyperpage{97}
+  \item BoundaryMatrix, \hyperpage{97}
+  \item BoundaryOfPureCubicalComplex, \hyperpage{83}
+  \item BoundingPureCubicalComplex, \hyperpage{83}
+
+  \indexspace
+
+  \item CategoricalEnrichment, \hyperpage{86}
+  \item CategoryName, \hyperpage{87}
+  \item CayleyGraphOfGroup, \hyperpage{75}
+  \item CayleyGraphOfGroupDisplay, \hyperpage{43}
+  \item CcGroup (HAPcocyclic), \hyperpage{49}
+  \item CechComplexOfPureCubicalComplex, \hyperpage{73}
+  \item Centre, \hyperpage{60}
+  \item ChainComplex, \hyperpage{17}
+  \item ChainComplexOfPair, \hyperpage{17}
+  \item ChainComplexOfSimplicialGroup, \hyperpage{64}
+  \item ChainInclusionOfPureCubicalPair, \hyperpage{80}
+  \item ChainMapOfPureCubicalPairs, \hyperpage{81}
+  \item ChainMapOfSimplicialMap, \hyperpage{76}
+  \item ChevalleyEilenbergComplex, \hyperpage{17}
+  \item ChildClose, \hyperpage{93}
+  \item ChildCommand, \hyperpage{94}
+  \item ChildFunction, \hyperpage{96}
+  \item ChildGet, \hyperpage{94}
+  \item ChildProcess, \hyperpage{93}
+  \item ChildPut, \hyperpage{94}
+  \item ChildRead, \hyperpage{96}
+  \item ChildReadEval, \hyperpage{96}
+  \item Classify, \hyperpage{99}
+  \item Coclass, \hyperpage{35}
+  \item CocycleCondition, \hyperpage{49}
+  \item Cohomology, \hyperpage{20}
+  \item CohomologyModule, \hyperpage{20}
+  \item CohomologyPrimePart, \hyperpage{20}
+  \item ComplementOfPureCubicalComplex, \hyperpage{84}
+  \item Compose(f,g), \hyperpage{100}
+  \item CompositionSeriesOfFpGModules, \hyperpage{53}
+  \item ConjugatedResolution, \hyperpage{10}
+  \item ContractCubicalComplex, \hyperpage{81}
+  \item ContractedComplex, \hyperpage{81}
+  \item ContractGraph, \hyperpage{75}
+  \item ContractibleGcomplex, \hyperpage{45}
+  \item ContractibleSubcomplexOfSimplicialComplex, \hyperpage{74}
+  \item ContractibleSubomplexOfPureCubicalComplex, \hyperpage{82}
+  \item ContractPureCubicalComplex, \hyperpage{81}
+  \item CoreducedChainComplex, \hyperpage{18}
+  \item CoxeterComplex, \hyperpage{45}
+  \item CoxeterDiagramComponents, \hyperpage{68}
+  \item CoxeterDiagramDegree, \hyperpage{68}
+  \item CoxeterDiagramDisplay, \hyperpage{68}
+  \item CoxeterDiagramFpArtinGroup, \hyperpage{68}
+  \item CoxeterDiagramFpCoxeterGroup, \hyperpage{68}
+  \item CoxeterDiagramIsSpherical, \hyperpage{69}
+  \item CoxeterDiagramMatrix, \hyperpage{69}
+  \item CoxeterDiagramVertices, \hyperpage{69}
+  \item CoxeterSubDiagram, \hyperpage{69}
+  \item CropPureCubicalComplex, \hyperpage{83}
+
+  \indexspace
+
+  \item DesuspensionFpGModule, \hyperpage{54}
+  \item DesuspensionMtxModule, \hyperpage{58}
+  \item Dimension, \hyperpage{97}
+  \item DirectProductGog, \hyperpage{60}
+  \item DirectProductOfPureCubicalComplexes, \hyperpage{79}
+  \item DirectSumOfFpGModules, \hyperpage{53}
+  \item DVFReducedCubicalComplex, \hyperpage{81}
+
+  \indexspace
+
+  \item EilenbergMacLaneSimplicialGroup, \hyperpage{63}
+  \item EilenbergMacLaneSimplicialGroupMap, \hyperpage{63}
+  \item EpiCentre, \hyperpage{35}
+  \item EquivariantChainMap, \hyperpage{12}
+  \item EulerCharacteristic, \hyperpage{73}
+  \item EvaluateProperty, \hyperpage{97}
+  \item EvenSubgroup, \hyperpage{69}
+  \item ExpansionOfRationalFunction, \hyperpage{28}
+  \item ExtendScalars, \hyperpage{13}
+
+  \indexspace
+
+  \item FilteredTensorWithIntegers, \hyperpage{15}
+  \item FpGModule, \hyperpage{53}
+  \item FpGModuleDualBasis, \hyperpage{53}
+  \item FpGModuleHomomorphism, \hyperpage{54}
+  \item FpG{\textunderscore}to{\textunderscore}MtxModule, 
+		\hyperpage{58}
+  \item FrameArray, \hyperpage{91}
+  \item FreeGResolution, \hyperpage{3}
+  \item FundamentalDomainStandardSpaceGroup (HAPcryst), \hyperpage{46}
+
+  \indexspace
+
+  \item GeneratorsOfFpGModule, \hyperpage{55}
+  \item GeneratorsOfMtxModule, \hyperpage{58}
+  \item GOuterGroup, \hyperpage{59}
+  \item GOuterGroupHomomorphismNC, \hyperpage{59}
+  \item GOuterHomomorphismTester, \hyperpage{59}
+  \item GraphDisplay, \hyperpage{76}
+  \item GraphOfGroups, \hyperpage{70}
+  \item GraphOfGroupsDisplay, \hyperpage{69}
+  \item GraphOfGroupsTest, \hyperpage{70}
+  \item GraphOfResolutions, \hyperpage{70}
+  \item GraphOfResolutionsDisplay, \hyperpage{70}
+  \item GraphOfSimplicialComplex, \hyperpage{74}
+  \item GroupAlgebraAsFpGModule, \hyperpage{55}
+  \item GroupCohomology, \hyperpage{21}
+  \item GroupHomology, \hyperpage{21}
+  \item GroupHomologyOfCommutativeDiagram, \hyperpage{86}
+  \item GroupOfResolution, \hyperpage{98}
+
+  \indexspace
+
+  \item HAPcopyright, \hyperpage{100}
+  \item HAPPrintTo, \hyperpage{94}
+  \item HAPRead, \hyperpage{95}
+  \item HasInitialObject, \hyperpage{87}
+  \item HasTerminalObject, \hyperpage{87}
+  \item Homology, \hyperpage{25}, \hyperpage{79}
+  \item HomologyPb, \hyperpage{25}
+  \item HomologyPrimePart, \hyperpage{26}
+  \item HomologyVectorSpace, \hyperpage{25}
+  \item HomomorphismChainToCommutativeDiagram, \hyperpage{85}
+  \item HomotopyEquivalentMaximalPureCubicalSubcomplex, \hyperpage{82}
+  \item HomotopyEquivalentMinimalPureCubicalSubcomplex, \hyperpage{82}
+  \item HomotopyGroup, \hyperpage{61}, \hyperpage{64}
+  \item HomotopyModule, \hyperpage{61}
+  \item HomToGModule, \hyperpage{14}
+  \item HomToIntegers, \hyperpage{13}
+  \item HomToIntegersModP, \hyperpage{13}
+  \item HomToIntegralModule, \hyperpage{13}
+
+  \indexspace
+
+  \item IdentityAmongRelatorsDisplay, \hyperpage{43}
+  \item IdentityArrow, \hyperpage{86}
+  \item ImageOfFpGModuleHomomorphism, \hyperpage{55}
+  \item IncidenceMatrixToGraph, \hyperpage{75}
+  \item InduceScalars, \hyperpage{14}
+  \item InitialArrow, \hyperpage{86}
+  \item IntegralCupProduct, \hyperpage{30}
+  \item IntegralRingGenerators, \hyperpage{30}
+  \item IntersectionOfFpGModules, \hyperpage{55}
+  \item IsAspherical, \hyperpage{43}
+  \item IsAvailableChild, \hyperpage{94}
+  \item IsCategoryArrow, \hyperpage{88}
+  \item IsCategoryObject, \hyperpage{88}
+  \item IsFpGModuleHomomorphismData, \hyperpage{55}
+  \item IsLieAlgebraHomomorphism, \hyperpage{100}
+  \item IsSuperperfect, \hyperpage{100}
+
+  \indexspace
+
+  \item LefschetzNumber, \hyperpage{18}
+  \item LeibnizAlgebraHomology, \hyperpage{26}
+  \item LeibnizComplex, \hyperpage{17}
+  \item LeibnizQuasiCoveringHomomorphism, \hyperpage{40}
+  \item Length, \hyperpage{98}
+  \item LieAlgebraHomology, \hyperpage{26}
+  \item LieCoveringHomomorphism, \hyperpage{40}
+  \item LieEpiCentre, \hyperpage{41}
+  \item LieExteriorSquare, \hyperpage{41}
+  \item LieTensorCentre, \hyperpage{41}
+  \item LieTensorSquare, \hyperpage{41}
+  \item LinearHomomorphismsPersistenceMat, \hyperpage{101}
+  \item ListToPseudoList, \hyperpage{91}
+  \item LowerCentralSeriesLieAlgebra, \hyperpage{14}
+
+  \indexspace
+
+  \item MakeHAPManual, \hyperpage{100}
+  \item Map, \hyperpage{98}
+  \item Mapping, \hyperpage{88}
+  \item MaximalSimplicesToSimplicialComplex, \hyperpage{74}
+  \item MaximalSubmoduleOfFpGModule, \hyperpage{56}
+  \item MaximalSubmodulesOfFpGModule, \hyperpage{56}
+  \item Mod2CohomologyRingPresentation (HAPprime), \hyperpage{33}
+  \item ModPCohomologyGenerators, \hyperpage{31}
+  \item ModPCohomologyRing, \hyperpage{31}
+  \item ModPRingGenerators, \hyperpage{31}
+  \item ModuleAsCatOneGroup, \hyperpage{61}
+  \item MooreComplex, \hyperpage{62}, \hyperpage{64}
+  \item MorseFiltration, \hyperpage{83}
+  \item MultipleOfFpGModule, \hyperpage{56}
+  \item MultiplyWord, \hyperpage{51}
+
+  \indexspace
+
+  \item Negate, \hyperpage{52}
+  \item NegateWord, \hyperpage{52}
+  \item NerveOfCatOneGroup, \hyperpage{63}
+  \item NerveOfCommutativeDiagram, \hyperpage{85}
+  \item NextAvailableChild, \hyperpage{94}
+  \item NonabelianExteriorProduct, \hyperpage{36}
+  \item NonabelianSymmetricKernel, \hyperpage{36}
+  \item NonabelianSymmetricSquare, \hyperpage{36}
+  \item NonabelianTensorProduct, \hyperpage{37}
+  \item NonabelianTensorSquare, \hyperpage{37}
+  \item NormalSeriesToQuotientDiagram, \hyperpage{85}
+  \item NormalSeriesToQuotientHomomorphisms, \hyperpage{101}
+  \item NormalSubgroupAsCatOneGroup, \hyperpage{62}
+
+  \indexspace
+
+  \item Object, \hyperpage{88}
+  \item OrbitPolytope, \hyperpage{46}
+
+  \indexspace
+
+  \item ParallelList, \hyperpage{96}
+  \item PathComponentOfPureCubicalComplex, \hyperpage{80}
+  \item PathComponentsOfGraph, \hyperpage{75}
+  \item PathComponentsOfSimplicialComplex, \hyperpage{74}
+  \item PermToMatrixGroup, \hyperpage{100}
+  \item PermuteArray, \hyperpage{89}
+  \item PersistentCohomologyOfQuotientGroupSeries, \hyperpage{22}
+  \item PersistentHomologyOfCommutativeDiagramOfPGroups, \hyperpage{86}
+  \item PersistentHomologyOfFilteredChainComplex, \hyperpage{23}
+  \item PersistentHomologyOfPureCubicalComplex, \hyperpage{24}
+  \item PersistentHomologyOfQuotientGroupSeries, \hyperpage{22}
+  \item PersistentHomologyOfSubGroupSeries, \hyperpage{23}
+  \item PoincareSeries, \hyperpage{28}
+  \item PoincareSeriesLHS (HAPprime), \hyperpage{33}
+  \item PoincareSeriesPrimePart, \hyperpage{29}
+  \item PolytopalComplex, \hyperpage{47}
+  \item PolytopalGenerators, \hyperpage{47}
+  \item Prank, \hyperpage{29}
+  \item PresentationOfResolution, \hyperpage{44}
+  \item PrimePartDerivedFunctor, \hyperpage{26}
+  \item PrintZGword, \hyperpage{52}
+  \item ProjectedFpGModule, \hyperpage{56}
+  \item PureComplexToSimplicialComplex, \hyperpage{73}
+  \item PureCubicalComplex, \hyperpage{77}
+  \item PureCubicalComplexDifference, \hyperpage{78}
+  \item PureCubicalComplexIntersection, \hyperpage{77}
+  \item PureCubicalComplexToTextFile, \hyperpage{84}
+  \item PureCubicalComplexUnion, \hyperpage{77}
+
+  \indexspace
+
+  \item QuasiIsomorph, \hyperpage{61}
+  \item QuillenComplex, \hyperpage{74}
+  \item QuotientOfContractibleGcomplex, \hyperpage{46}
+
+  \indexspace
+
+  \item RadicalOfFpGModule, \hyperpage{54}
+  \item RadicalSeriesOfFpGModule, \hyperpage{55}
+  \item RandomHomomorphismOfFpGModules, \hyperpage{56}
+  \item Rank, \hyperpage{57}
+  \item RankHomologyPGroup, \hyperpage{26}
+  \item RankPrimeHomology, \hyperpage{27}
+  \item ReadImageAsPureCubicalComplex, \hyperpage{78}
+  \item ReadImageSequenceAsPureCubicalComplex, \hyperpage{78}
+  \item RecalculateIncidenceNumbers, \hyperpage{10}
+  \item ReducedSuspendedChainComplex, \hyperpage{18}
+  \item RefineClassification, \hyperpage{99}
+  \item RelativeSchurMultiplier, \hyperpage{38}
+  \item ResolutionAbelianGroup, \hyperpage{4}
+  \item ResolutionAlmostCrystalGroup, \hyperpage{4}
+  \item ResolutionAlmostCrystalQuotient, \hyperpage{4}
+  \item ResolutionArithmeticGroup, \hyperpage{3}
+  \item ResolutionArtinGroup, \hyperpage{5}
+  \item ResolutionAsphericalPresentation, \hyperpage{5}
+  \item ResolutionBieberbachGroup (HAPcryst), \hyperpage{5}
+  \item ResolutionBoundaryOfWord, \hyperpage{52}
+  \item ResolutionCoxeterGroup, \hyperpage{6}
+  \item ResolutionDirectProduct, \hyperpage{6}
+  \item ResolutionExtension, \hyperpage{6}
+  \item ResolutionFiniteDirectProduct, \hyperpage{7}
+  \item ResolutionFiniteExtension, \hyperpage{7}
+  \item ResolutionFiniteGroup, \hyperpage{7}
+  \item ResolutionFiniteSubgroup, \hyperpage{7}
+  \item ResolutionFpGModule, \hyperpage{11}
+  \item ResolutionGraphOfGroups, \hyperpage{8}
+  \item ResolutionGTree, \hyperpage{4}
+  \item ResolutionNilpotentGroup, \hyperpage{8}
+  \item ResolutionNormalSeries, \hyperpage{8}
+  \item ResolutionPrimePowerGroup, \hyperpage{9}
+  \item ResolutionSL2Z, \hyperpage{4}
+  \item ResolutionSmallFpGroup, \hyperpage{9}
+  \item ResolutionSubgroup, \hyperpage{9}
+  \item ResolutionSubnormalSeries, \hyperpage{10}
+  \item RipsChainComplex, \hyperpage{73}
+  \item RipsHomology, \hyperpage{24}
+
+  \indexspace
+
+  \item SimplicialGroupMap, \hyperpage{64}
+  \item SimplicialMap, \hyperpage{76}
+  \item SimplicialMapNC, \hyperpage{76}
+  \item SimplicialNerveOfGraph, \hyperpage{76}
+  \item SingularitiesOfPureCubicalComplex, \hyperpage{83}
+  \item SkeletonOfCubicalComplex, \hyperpage{82}
+  \item SkeletonOfSimplicialComplex, \hyperpage{74}
+  \item SL2Z, \hyperpage{99}
+  \item SolutionsMatDestructive, \hyperpage{101}
+  \item Source, \hyperpage{87}, \hyperpage{98}
+  \item StandardCocycle, \hyperpage{49}
+  \item SumOfFpGModules, \hyperpage{57}
+  \item SumOp, \hyperpage{57}
+  \item SuspendedChainComplex, \hyperpage{18}
+  \item SuspensionOfPureCubicalComplex, \hyperpage{79}
+  \item SymmetricMatrixToIncidenceMatrix, \hyperpage{75}
+  \item Syzygy, \hyperpage{49}
+
+  \indexspace
+
+  \item Target, \hyperpage{87}, \hyperpage{98}
+  \item TensorCentre, \hyperpage{38}
+  \item TensorProductOfChainComplexes, \hyperpage{18}
+  \item TensorWithIntegers, \hyperpage{14}
+  \item TensorWithIntegersModP, \hyperpage{15}
+  \item TensorWithIntegralModule, \hyperpage{14}
+  \item TensorWithRationals, \hyperpage{16}
+  \item TensorWithTwistedIntegers, \hyperpage{15}
+  \item TensorWithTwistedIntegersModP, \hyperpage{15}
+  \item TerminalArrow, \hyperpage{87}
+  \item TestHap, \hyperpage{101}
+  \item ThickenedPureCubicalComplex, \hyperpage{83}
+  \item ThirdHomotopyGroupOfSuspensionB, \hyperpage{38}
+  \item TietzeReducedResolution, \hyperpage{3}
+  \item TietzeReduction, \hyperpage{52}
+  \item TorsionGeneratorsAbelianGroup, \hyperpage{44}
+  \item TreeOfGroupsToContractibleGcomplex, \hyperpage{70}
+  \item TreeOfResolutionsToContractibleGcomplex, \hyperpage{71}
+  \item TruncatedGComplex, \hyperpage{46}
+  \item TwistedTensorProduct, \hyperpage{10}
+
+  \indexspace
+
+  \item UnframeArray, \hyperpage{91}
+  \item UniversalBarCode, \hyperpage{23}
+  \item UpperEpicentralSeries, \hyperpage{38}
+
+  \indexspace
+
+  \item VectorStabilizer, \hyperpage{48}
+  \item VectorsToFpGModuleWords, \hyperpage{57}
+  \item VectorsToSymmetricMatrix, \hyperpage{73}
+  \item ViewPureCubicalComplex, \hyperpage{79}
+
+  \indexspace
+
+  \item WritePureCubicalComplexAsImage, \hyperpage{78}
+
+  \indexspace
+
+  \item XmodToHAP, \hyperpage{62}
+
+  \indexspace
+
+  \item ZigZagContractedPureCubicalComplex, \hyperpage{81}
+  \item ZZPersistentHomologyOfPureCubicalComplex, \hyperpage{24}
+
+\end{theindex}

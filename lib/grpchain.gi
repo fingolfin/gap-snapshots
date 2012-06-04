@@ -3,10 +3,9 @@
 #W  grpchain.gi			GAP Library		       Gene Cooperman
 #W							     and Scott Murray
 ##
-#H  @(#)$Id: grpchain.gi,v 4.9 2002/04/15 10:04:44 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  Requires: transversal, rss (for ChainSubgroup only)
@@ -35,8 +34,6 @@
 ##  this means that creating mixed chains (with different kinds of 
 ##  transversal), may have unpredictable results.
 ##
-Revision.grpchain_gi :=
-    "@(#)$Id: grpchain.gi,v 4.9 2002/04/15 10:04:44 sal Exp $";
 
 ##
 ##  For debugging only:
@@ -467,7 +464,6 @@ InstallGlobalFunction( ChainSubgroupByStabiliser,
 	SetChainSubgroup( G, subgp );
 	return subgp;
     end );
-ChainSubgroupByStabilizer := ChainSubgroupByStabiliser;
 
 #############################################################################
 ##

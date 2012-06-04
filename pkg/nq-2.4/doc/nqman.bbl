@@ -1,0 +1,49 @@
+\begin{thebibliography}{LGS90}
+
+\bibitem[EN02]{polycyclic}
+B.~Eick and W.~Nickel.
+\newblock Polycyclic, algorithms for working with polycyclic groups.
+\newblock \href {http://www.icm.tu-bs.de/ag_algebra/software/polycyclic/}
+  {\texttt{http://www.icm.tu-bs.de/}\discretionary
+  {}{}{}\texttt{ag{\textunderscore}algebra/}\discretionary
+  {}{}{}\texttt{software/}\discretionary {}{}{}\texttt{polycyclic/}}, 2002.
+\newblock GAP package.
+
+\bibitem[GMP]{GNUMP}
+{\em GNU MP}.
+\newblock \href {http://gmplib.org/} {\texttt{http://gmplib.org/}}.
+
+\bibitem[Hig59]{Higman59}
+G.~Higman.
+\newblock Some remarks on varieties of groups.
+\newblock {\em Quart. J. Math. Oxford}, 2(10):165{\textendash}178, 1959.
+
+\bibitem[LGS90]{LS90}
+C.~R. Leedham-Green and L.~H. Soicher.
+\newblock Collection from the left and other strategies.
+\newblock {\em J. Symbolic Comput.}, 9(5{\textendash}6):665{\textendash}675,
+  1990.
+
+\bibitem[Nic96]{Nickel96}
+W.~Nickel.
+\newblock Computing nilpotent quotients of finitely presented groups.
+\newblock In {\em Geometric and Computational Perspectives on Infinite Groups},
+  volume~25 of {\em Dimacs Series in Discrete Mathematics and Theoretical
+  Computer Science}, page 175{\textendash}191, 1996.
+
+\bibitem[NN94]{NewmanNickel94}
+M.~F. Newman and W.~Nickel.
+\newblock Engel elements in groups.
+\newblock {\em J. Pure Appl. Algebra}, 96:39{\textendash}45, 1994.
+
+\bibitem[Sim94]{Sims94}
+C.~C. Sims.
+\newblock {\em Computation with Finitely Presented Groups}.
+\newblock Cambridge University Press, 1994.
+
+\bibitem[VL90]{VL90a}
+M.~R. Vaughan-Lee.
+\newblock Collection from the left.
+\newblock {\em J. Symbolic Comput.}, 9:725{\textendash}733, 1990.
+
+\end{thebibliography}

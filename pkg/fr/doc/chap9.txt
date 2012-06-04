@@ -1,0 +1,1016 @@
+  
+  [1X9 [33X[0;0YIterated monodromy groups[133X[101X
+  
+  [33X[0;0YIterated  monodromy  machines  are a special class of group FR machines (see
+  Section  [14X3[114X)  with  attribute  [2XIMGRelator[102X  ([14X9.1-4[114X).  This attribute records a
+  cyclic ordering of the generators of the machine whose product is trivial.[133X
+  
+  [33X[0;0YThe  interpretation  is  the  following: the machine encodes a [13XThurston map[113X,
+  i.e.  a  post-critically  finite  topological  branched self-covering of the
+  sphere [22XS^2[122X. Generators of the machine correspond to loops in the fundamental
+  group  of  the  sphere (punctured at post-critical points), that circle once
+  counter-clockwise  around  a  post-critical  point.  For more details on the
+  connection between self-similar groups and Thurston maps, see [Nek05].[133X
+  
+  [33X[0;0YIMG  elements  are  a  bit different from group FR elements: while we said a
+  group  FR  element  is  trivial  if  and  only if its action on sequences is
+  trivial,  we say that an IMG element [22Xg[122X is trivial if there exists an integer
+  [22XN[122X such that unfolding [22XN[122X times the recursion for [22Xg[122X yields only trivial states
+  (as elements of the underlying free group).[133X
+  
+  
+  [1X9.1 [33X[0;0YCreators and operations for IMG machines[133X[101X
+  
+  [1X9.1-1 IsIMGMachine[101X
+  
+  [29X[2XIsIMGMachine[102X( [3Xm[103X ) [32X filter
+  [29X[2XIsPolynomialFRMachine[102X( [3Xm[103X ) [32X filter
+  [29X[2XIsPolynomialIMGMachine[102X( [3Xm[103X ) [32X filter
+  
+  [33X[0;0YThe  categories  of  [13XIMG[113X  and [13Xpolynomial[113X machines. IMG machines are group FR
+  machines with an additional element, their attribute [2XIMGRelator[102X ([14X9.1-4[114X); see
+  [2XAsIMGMachine[102X ([14X9.1-3[114X).[133X
+  
+  [33X[0;0YA polynomial machine is a group FR machine with a distinguished state (which
+  must  be a generator of the stateset), stored as the attribute [2XAddingElement[102X
+  ([14X10.1-6[114X);  see  [2XAsPolynomialFRMachine[102X  ([14X9.1-9[114X).  If it is normalized, in the
+  sense   that   the   wreath   recursion   of   the   adding   element  [10Xa[110X  is
+  [10X[[a,1,...,1],[d,1,...,d-1]][110X,  then the basepoint is assumed to be at [22X+∞[122X; the
+  element  [10Xa[110X  describes  a clockwise loop around infinity; the [22Xk[122Xth preimage of
+  the  basepoint is at [22Xexp(2iπ(k-1)/d)∞[122X, for [22Xk=1,dots,d[122X; and there is a direct
+  connection from basepoint [22Xk[122X to [22Xk+1[122X for all [22Xk=1,dots,d-1[122X.[133X
+  
+  [33X[0;0YThe last category is the intersection of the first two.[133X
+  
+  [1X9.1-2 IMGMachineNC[101X
+  
+  [29X[2XIMGMachineNC[102X( [3Xfam[103X, [3Xgroup[103X, [3Xtrans[103X, [3Xout[103X, [3Xrel[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn IMG FR machine.[133X
+  
+  [33X[0;0YThis  function creates, without checking its arguments, a new IMG machine in
+  family  [3Xfam[103X,  stateset [3Xgroup[103X, with transitions and output [3Xtrans,out[103X, and IMG
+  relator [3Xrel[103X.[133X
+  
+  [1X9.1-3 AsIMGMachine[101X
+  
+  [29X[2XAsIMGMachine[102X( [3Xm[103X[, [3Xw[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn IMG FR machine.[133X
+  
+  [33X[0;0YThis function creates a new IMG FR machine, starting from a group FR machine
+  [3Xm[103X. If a state [10Xw[110X is specified, and that state defines the trivial FR element,
+  then it is used as [2XIMGRelator[102X ([14X9.1-4[114X); if the state [10Xw[110X is non-trivial, then a
+  new  generator  [10Xf[110X  is  added  to  [3Xm[103X,  equal to the inverse of [10Xw[110X; and the IMG
+  relator  is  chosen  to be [10Xw*f[110X. Finally, if no relator is specified, and the
+  product  (in  some ordering) of the generators is trivial, then that product
+  is used as IMG relator. In other cases, the method returns [9Xfail[109X.[133X
+  
+  [33X[0;0YNote  that  IMG  elements  and FR elements are compared differently (see the
+  example  below);  namely,  an  FR  element is trivial precisely when it acts
+  trivially  on  sequences.  An IMG element is trivial precisely when a finite
+  number  of  applications  of  free  cancellation,  the  IMG relator, and the
+  decomposition map, result in trivial elements of the underlying free group.[133X
+  
+  [33X[0;0YA  standard  FR  machine  can  be  recovered  from  an  IMG  FR  machine  by
+  [2XAsGroupFRMachine[102X      ([14X3.3-4[114X),      [2XAsMonoidFRMachine[102X      ([14X3.3-4[114X),      and
+  [2XAsSemigroupFRMachine[102X ([14X3.3-4[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xm := UnderlyingFRMachine(BasilicaGroup);[127X[104X
+    [4X[28X<Mealy machine on alphabet [ 1 .. 2 ] with 3 states>[128X[104X
+    [4X[25Xgap>[125X [27Xg := AsGroupFRMachine(m);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 .. 2 ] on Group( [ f1, f2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XAsIMGMachine(g,Product(GeneratorsOfFRMachine(g)));[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 .. 2 ] on Group( [ f1, f2, t ] )/[ f1*f2*t ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X G  |              1         2[128X[104X
+    [4X[28X----+-----------------+---------+[128X[104X
+    [4X[28X f1 |          <id>,2      f2,1[128X[104X
+    [4X[28X f2 |          <id>,1      f1,2[128X[104X
+    [4X[28X  t | f2^-1*f1*f2*t,2   f1^-1,1[128X[104X
+    [4X[28X----+-----------------+---------+[128X[104X
+    [4X[28XRelator: f1*f2*t[128X[104X
+    [4X[25Xgap>[125X [27Xg := AsGroupFRMachine(GuptaSidkiMachine);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 .. 3 ] on Group( [ f1, f2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27Xm := AsIMGMachine(g,GeneratorsOfFRMachine(g)[1]);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 .. 3 ] on Group( [ f1, f2, t ] )/[ f1*t ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := FRElement(g,2)^3; IsOne(x);[127X[104X
+    [4X[28X<3|identity ...>[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := FRElement(m,2)^3; IsOne(x);[127X[104X
+    [4X[28X<3#f2^3>[128X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-4 IMGRelator[101X
+  
+  [29X[2XIMGRelator[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe relator of the IMG FR machine.[133X
+  
+  [33X[0;0YThis attribute stores the product of generators that is trivial. In essence,
+  it  records  an  ordering  of the generators whose product is trivial in the
+  punctured sphere's fundamental group.[133X
+  
+  [1X9.1-5 CleanedIMGMachine[101X
+  
+  [29X[2XCleanedIMGMachine[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA cleaned-up version of [3Xm[103X.[133X
+  
+  [33X[0;0YThis  command  attempts  to  shorten the length of the transitions in [3Xm[103X, and
+  ensure  (if  possible) that the product along every cycle of the states of a
+  generator is a conjugate of a generator. It returns the new machine.[133X
+  
+  [1X9.1-6 NewSemigroupFRMachine[101X
+  
+  [29X[2XNewSemigroupFRMachine[102X( [3X...[103X ) [32X attribute
+  [29X[2XNewMonoidFRMachine[102X( [3X...[103X ) [32X attribute
+  [29X[2XNewGroupFRMachine[102X( [3X...[103X ) [32X attribute
+  [29X[2XNewIMGMachine[102X( [3X...[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA new FR machine, based on string descriptions.[133X
+  
+  [33X[0;0YThis  command  constructs  a  new  FR or IMG machine, in a format similar to
+  [2XFRGroup[102X   ([14X7.1-1[114X);   namely,   the   arguments   are  strings  of  the  form
+  "gen=<word-1,...,word-d>perm";  each [10Xword-i[110X is a word in the generators; and
+  [10Xperm[110X  is  a  transformation,  either  written in disjoint cycle or in images
+  notation.[133X
+  
+  [33X[0;0YExcept  in the semigroup case, [10Xword-i[110X is allowed to be the empty string; and
+  the "<...>" may be skipped altogether. In the group or IMG case, each [10Xword-i[110X
+  may also contain inverses.[133X
+  
+  [33X[0;0YIn  the IMG case, an extra final argument is allowed, which is a word in the
+  generators,  and  describes  the IMG relation. If absent, [5XFR[105X will attempt to
+  find such a relation.[133X
+  
+  [33X[0;0YThe  following  examples  construct  realizable  foldings  of the polynomial
+  [22Xz^3+i[122X, following Cui's arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfold1 := NewIMGMachine("a=<,,b,,,B>(1,2,3)(4,5,6)","b=<,,b*a/b,,,B*A/B>",[127X[104X
+    [4X[28X     "A=<,,b*a,,,B*A>(3,6)","B=(1,6,5,4,3,2)");[128X[104X
+    [4X[25Xgap>[125X [27X<FR machine with alphabet [ 1, 2, 3, 4, 5, 6 ] on Group( [ a, b, A, B ] )/[ a*B*A*b ]>                                [127X[104X
+    [4X[25Xgap>[125X [27Xfold2 := NewIMGMachine("a=<,,b,,,B>(1,2,3)(4,5,6)","b=<,,b*a/b,,,B*A/B>",[127X[104X
+    [4X[28X     "A=(1,6)(2,5)(3,4)","B=<B*A,,,b*a,,>(1,4)(2,6)(3,5)");;[128X[104X
+    [4X[25Xgap>[125X [27XRationalFunction(fold1); RationalFunction(fold2);[127X[104X
+    [4X[28X...[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-7 AsIMGElement[101X
+  
+  [29X[2XAsIMGElement[102X( [3Xe[103X ) [32X operation
+  [29X[2XIsIMGElement[102X( [3Xe[103X ) [32X filter
+  
+  [33X[0;0YThe  category  of  [13XIMG  elements[113X,  namely FR elements of an IMG machine. See
+  [2XAsIMGMachine[102X ([14X9.1-3[114X) for details.[133X
+  
+  [1X9.1-8 IsKneadingMachine[101X
+  
+  [29X[2XIsKneadingMachine[102X( [3Xm[103X ) [32X property
+  [29X[2XIsPlanarKneadingMachine[102X( [3Xm[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10YWhether [3Xm[103X is a (planar) kneading machine.[133X
+  
+  [33X[0;0YA  [13Xkneading  machine[113X  is  a  special kind of Mealy machine, used to describe
+  postcritically finite complex polynomials. It is a machine such that its set
+  of  permutations  is  "treelike"  (see  [Nek05,  §6.7])  and  such that each
+  non-trivial state occurs exactly once among the outputs.[133X
+  
+  [33X[0;0YFurthermore,  this  set  of  permutations  is  [13Xtreelike[113X  if  there exists an
+  ordering  of  the  states  that  their  product in that order [22Xt[122X is an adding
+  machine; i.e. such that [22Xt[122X's activity is a full cycle, and the product of its
+  states  along  that  cycle  is conjugate to [22Xt[122X. This element [22Xt[122X represents the
+  Carathéodory loop around infinity.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM := BinaryKneadingMachine("0");[127X[104X
+    [4X[28XBinaryKneadingMachine("0*")[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(M);[127X[104X
+    [4X[28X   |  1     2[128X[104X
+    [4X[28X---+-----+-----+[128X[104X
+    [4X[28X a | c,2   b,1[128X[104X
+    [4X[28X b | a,1   c,2[128X[104X
+    [4X[28X c | c,1   c,2[128X[104X
+    [4X[28X---+-----+-----+[128X[104X
+    [4X[25Xgap>[125X [27XIsPlanarKneadingMachine(M);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsPlanarKneadingMachine(GrigorchukMachine);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-9 AsPolynomialFRMachine[101X
+  
+  [29X[2XAsPolynomialFRMachine[102X( [3Xm[103X[, [3Xadder[103X] ) [32X operation
+  [29X[2XAsPolynomialIMGMachine[102X( [3Xm[103X[, [3Xadder[103X[, [3Xrelator[103X]] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA polynomial FR machine.[133X
+  
+  [33X[0;0YThe  first  function  creates  a  new polynomial FR machine, starting from a
+  group or Mealy machine. A [13Xpolynomial[113X machine is one that has a distinguished
+  adding element, [2XAddingElement[102X ([14X10.1-6[114X).[133X
+  
+  [33X[0;0YIf   the   argument   is   a   Mealy   machine,   it  must  be  planar  (see
+  [2XIsPlanarKneadingMachine[102X  ([14X9.1-8[114X)).  If  the argument is a group machine, its
+  permutations  must  be  treelike,  and  its outputs must be such that, up to
+  conjugation,  each  non-trivial  state  appears  exactly once as the product
+  along all cycles of all states.[133X
+  
+  [33X[0;0YIf a second argument [3Xadder[103X is supplied, it is checked to represent an adding
+  element, and is used as such.[133X
+  
+  [33X[0;0YThe  second function creates a new polynomial IMG machine, i.e. a polynomial
+  FR  machine with an extra relation among the generators. the optional second
+  argument  may  be  an adder (if [3Xm[103X is an IMG machine) or a relator (if [3Xm[103X is a
+  polynomial  FR machine). Finally, if [3Xm[103X is a group FR machine, two arguments,
+  an adder and a relator, may be specified.[133X
+  
+  [33X[0;0YA  machine  without  the extra polynomial / IMG information may be recovered
+  using [2XAsGroupFRMachine[102X ([14X3.3-4[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM := PolynomialIMGMachine(2,[1/7],[]);; SetName(StateSet(M),"F"); M;[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XMi := AsIMGMachine(M);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on F/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XMp := AsPolynomialFRMachine(M);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F>[128X[104X
+    [4X[25Xgap>[125X [27XMg := AsGroupFRMachine(M);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on F>[128X[104X
+    [4X[28Xgap>[128X[104X
+    [4X[25Xgap>[125X [27XAsPolynomialIMGMachine(Mg);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsPolynomialIMGMachine(Mi);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsPolynomialIMGMachine(Mp);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsIMGMachine(Mg);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on F4/[ f1*f4*f3*f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsPolynomialFRMachine(Mg);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F4>[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-10 AddingElement[101X
+  
+  [29X[2XAddingElement[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe relator of the IMG FR machine.[133X
+  
+  [33X[0;0YThis  attribute  stores the product of generators that is an adding machine.
+  In  essence,  it  records  an  ordering  of  the  generators  whose  product
+  corresponds to the Carathéodory loop around infinity.[133X
+  
+  [33X[0;0YThe  following  example  illustrates Wittner's shared mating of the airplane
+  and the rabbit. In the machine [10Xm[110X, an airplane is represented by [10XGroup(a,b,c)[110X
+  and  a rabbit is represented by [10XGroup(x,y,z)[110X; in the machine [10Xnewm[110X, it is the
+  other  way  round. The effect of [10XCleanedIMGMachine[110X was to remove unnecessary
+  instances of the IMG relator from [10Xnewm[110X's recursion.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := FreeGroup("a","b","c","x","y","z");;[127X[104X
+    [4X[25Xgap>[125X [27XAssignGeneratorVariables(f);[127X[104X
+    [4X[25Xgap>[125X [27Xm := AsIMGMachine(FRMachine(f,[[a^-1,b*a],[One(f),c],[a,One(f)],[z*y*x,[127X[104X
+    [4X[28X       x^-1*y^-1],[One(f),x],[One(f),y]],[(1,2),(),(),(1,2),(),()]));;[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(m);[127X[104X
+    [4X[28X G |      1             2   [128X[104X
+    [4X[28X---+---------+-------------+[128X[104X
+    [4X[28X a |  a^-1,2         b*a,1  [128X[104X
+    [4X[28X b |  <id>,1           c,2  [128X[104X
+    [4X[28X c |     a,1        <id>,2  [128X[104X
+    [4X[28X x | z*y*x,2   x^-1*y^-1,1  [128X[104X
+    [4X[28X y |  <id>,1           x,2  [128X[104X
+    [4X[28X z |  <id>,1           y,2  [128X[104X
+    [4X[28X---+---------+-------------+[128X[104X
+    [4X[28XRelator: z*y*x*c*b*a[128X[104X
+    [4X[25Xgap>[125X [27Xiso := GroupHomomorphismByImages(f,f,[a,b^(y^-1),c^(x^-1*y^-1*a^-1),x^(b*a*z*a^-1),y,z^(a^-1)],[a,b,c,x,y,z]);;[127X[104X
+    [4X[25Xgap>[125X [27Xnewm := CleanedIMGMachine(ChangeFRMachineBasis(m^iso,[a^-1*y^-1,y^-1*a^-1*c^-1]));;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(newm);[127X[104X
+    [4X[28X G |          1         2   [128X[104X
+    [4X[28X---+-------------+---------+[128X[104X
+    [4X[28X a | a^-1*c^-1,2   c*a*b,1  [128X[104X
+    [4X[28X b |      <id>,1       c,2  [128X[104X
+    [4X[28X c |         a,1    <id>,2  [128X[104X
+    [4X[28X x |       z*x,2    x^-1,1  [128X[104X
+    [4X[28X y |      <id>,1       x,2  [128X[104X
+    [4X[28X z |         y,1    <id>,2  [128X[104X
+    [4X[28X---+-------------+---------+[128X[104X
+    [4X[28XRelator: c*a*b*y*z*x[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-11 PolynomialFRMachine[101X
+  
+  [29X[2XPolynomialFRMachine[102X( [3Xd[103X, [3Xper[103X[, [3Xpre[103X] ) [32X operation
+  [29X[2XPolynomialIMGMachine[102X( [3Xd[103X, [3Xper[103X[, [3Xpre[103X[, [3Xformal[103X]] ) [32X operation
+  [29X[2XPolynomialMealyMachine[102X( [3Xd[103X, [3Xper[103X[, [3Xpre[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn IMG FR machine.[133X
+  
+  [33X[0;0YThis  function  creates  a  group,  IMG  or  Mealy  machine that describes a
+  topological  polynomial.  The  polynomial  is  described symbolically in the
+  language of [13Xexternal angles[113X. For more details, see [DH84] and [DH85] (in the
+  quadratic  case),  [BFH92]  (in  the  preperiodic  case),  and [Poi] (in the
+  general case).[133X
+  
+  [33X[0;0Y[3Xd[103X  is  the  degree  of  the  polynomial.  [3Xper[103X and [3Xpre[103X are lists of angles or
+  preangles.  In  what follows, angles are rational numbers, considered modulo
+  1.  Each entry in [3Xper[103X or [3Xpre[103X is either a rational (interpreted as an angle),
+  or a list of angles [22X[a_1,...,a_i][122X such that [22Xda_1=...=da_i[122X. The angles in [3Xper[103X
+  are  angles  landing at the root of a Fatou component, and the angles in [3Xpre[103X
+  land on the Julia set.[133X
+  
+  [33X[0;0YNote  that,  for IMG machines, the last generator of the machine produced is
+  an  adding  machine,  representing  a  loop  going  counterclockwise  around
+  infinity  (in  the compactification of [22XC[122X by a disk, this loop goes [13Xclockwise[113X
+  around that disk).[133X
+  
+  [33X[0;0YIn  constructing  a  polynomial  IMG machine, one may specify a boolean flag
+  [3Xformal[103X,  which defaults to [9Xtrue[109X. In a [13Xformal[113X recursion, distinct angles give
+  distinct generators; while in a non-formal recursion, distinct angles, which
+  land  at  the  same  point  in  the  Julia set, give a single generator. The
+  simplest example where this occurs is angle [22X5/12[122X in the quadratic family, in
+  which angles [22X1/3[122X and [22X2/3[122X land at the same point -- see the example below.[133X
+  
+  [33X[0;0YThe   attribute   [10XCorrespondence(m)[110X   records  the  angles  landing  on  the
+  generators: [10XCorrespondence(m)[i][110X is a list [10X[a,s][110X where [22Xa[122X is an angle landing
+  on generator [10Xi[110X and [22Xs[122X is [9X"Julia"[109X or [9X"Fatou"[109X.[133X
+  
+  [33X[0;0YIf only one list of angles is supplied, then [5XFR[105X guesses that all angles with
+  denominator coprime to [3Xn[103X are Fatou, and all the others are Julia.[133X
+  
+  [33X[0;0YThe  inverse  operation,  reconstructing the angles from the IMG machine, is
+  [2XSupportingRays[102X ([14X9.1-12[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPolynomialIMGMachine(2,[0],[]); # the adding machine[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 .. 2 ] on Group( [ f1, f2 ] )/[ f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X G  |     1        2[128X[104X
+    [4X[28X----+--------+--------+[128X[104X
+    [4X[28X f1 | <id>,2     f1,1[128X[104X
+    [4X[28X f2 |   f2,2   <id>,1[128X[104X
+    [4X[28X----+--------+--------+[128X[104X
+    [4X[28XRelator: f2*f1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(PolynomialIMGMachine(2,[1/3],[])); # the Basilica[127X[104X
+    [4X[28X G  |      1         2[128X[104X
+    [4X[28X----+---------+---------+[128X[104X
+    [4X[28X f1 | f1^-1,2   f2*f1,1[128X[104X
+    [4X[28X f2 |    f1,1    <id>,2[128X[104X
+    [4X[28X f3 |    f3,2    <id>,1[128X[104X
+    [4X[28X----+---------+---------+[128X[104X
+    [4X[28XRelator: f3*f2*f1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(PolynomialIMGMachine(2,[],[1/6])); # z^2+I[127X[104X
+    [4X[28X G  |            1         2[128X[104X
+    [4X[28X----+---------------+---------+[128X[104X
+    [4X[28X f1 | f1^-1*f2^-1,2   f2*f1,1[128X[104X
+    [4X[28X f2 |          f1,1      f3,2[128X[104X
+    [4X[28X f3 |          f2,1    <id>,2[128X[104X
+    [4X[28X f4 |          f4,2    <id>,1[128X[104X
+    [4X[28X----+---------------+---------+[128X[104X
+    [4X[28XRelator: f4*f3*f2*f1[128X[104X
+    [4X[25Xgap>[125X [27XPolynomialIMGMachine(2,[],[5/12]);[127X[104X
+    [4X[25Xgap>[125X [27XPolynomialIMGMachine(2,[],[5/12]);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f5 on Group( [ f1, f2, f3, f4, f5 ] )/[ f5*f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XCorrespondence(last);[127X[104X
+    [4X[28X[ [ 1/3, "Julia" ], [ 5/12, "Julia" ], [ 2/3, "Julia" ], [ 5/6, "Julia" ] ][128X[104X
+    [4X[25Xgap>[125X [27XPolynomialIMGMachine(2,[],[5/12],false);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on Group( [ f1, f2, f3, f4 ] )/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XCorrespondence(last);[127X[104X
+    [4X[28X[ [ [ 1/3, 2/3 ], "Julia" ], [ [ 5/12 ], "Julia" ], [ [ 5/6 ], "Julia" ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe following construct the examples in Poirier's paper:[133X
+  
+  [4X[32X[104X
+    [4XPoirierExamples := function(arg)[104X
+    [4X    if arg=[1] then[104X
+    [4X        return PolynomialIMGMachine(2,[1/7],[]);[104X
+    [4X    elif arg=[2] then[104X
+    [4X        return PolynomialIMGMachine(2,[],[1/2]);[104X
+    [4X    elif arg=[3,1] then[104X
+    [4X        return PolynomialIMGMachine(2,[],[5/12]);[104X
+    [4X    elif arg=[3,2] then[104X
+    [4X        return PolynomialIMGMachine(2,[],[7/12]);[104X
+    [4X    elif arg=[4,1] then[104X
+    [4X        return PolynomialIMGMachine(3,[[3/4,1/12],[1/4,7/12]],[]);[104X
+    [4X    elif arg=[4,2] then[104X
+    [4X        return PolynomialIMGMachine(3,[[7/8,5/24],[5/8,7/24]],[]);[104X
+    [4X    elif arg=[4,3] then[104X
+    [4X        return PolynomialIMGMachine(3,[[1/8,19/24],[3/8,17/24]],[]);[104X
+    [4X    elif arg=[5] then[104X
+    [4X        return PolynomialIMGMachine(3,[[3/4,1/12],[3/8,17/24]],[]);[104X
+    [4X    elif arg=[6,1] then[104X
+    [4X        return PolynomialIMGMachine(4,[],[[1/4,3/4],[1/16,13/16],[5/16,9/16]]);[104X
+    [4X    elif arg=[6,2] then[104X
+    [4X        return PolynomialIMGMachine(4,[],[[1/4,3/4],[3/16,15/16],[7/16,11/16]]);[104X
+    [4X    elif arg=[7] then[104X
+    [4X        return PolynomialIMGMachine(5,[[0,4/5],[1/5,2/5,3/5]],[[1/5,4/5]]);[104X
+    [4X    elif arg=[9,1] then[104X
+    [4X        return PolynomialIMGMachine(3,[[0,1/3],[5/9,8/9]],[]);[104X
+    [4X    elif arg=[9,2] then[104X
+    [4X        return PolynomialIMGMachine(3,[[0,1/3]],[[5/9,8/9]]);[104X
+    [4X    else[104X
+    [4X        Error("Unknown Poirier example ",arg);[104X
+    [4X    fi;[104X
+    [4Xend;[104X
+  [4X[32X[104X
+  
+  [1X9.1-12 SupportingRays[101X
+  
+  [29X[2XSupportingRays[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA [10X[degree,fatou,julia][110X description of [3Xm[103X.[133X
+  
+  [33X[0;0YThis  operation is the inverse of [2XPolynomialIMGMachine[102X ([14X9.1-11[114X): it computes
+  a choice of angles, describing landing rays on Fatou/Julia critical points.[133X
+  
+  [33X[0;0YIf  there  does  not  exist  a complex realization, namely if the machine is
+  obstructed, then this command returns an obstruction, as a record. The field
+  [9Xminimal[109X  is  set  to  false,  and  a  proper sub-machine is set as the field
+  [9Xsubmachine[109X.  The  field  [9Xhomomorphism[109X  gives an embedding of the stateset of
+  [9Xsubmachine[109X  into  the  original  machine,  and  [9Xrelation[109X  is the equivalence
+  relation on the set of generators of [3Xm[103X that describes the pinching.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialIMGMachine(2,[1/7],[]);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on Group( [ f1, f2, f3, f4 ] )/[ f4*f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XF := StateSet(r);; SetName(F,"F");[127X[104X
+    [4X[25Xgap>[125X [27XSupportingRays(r);[127X[104X
+    [4X[28X[ 2, [ [ 1/7, 9/14 ] ], [  ] ] # actually returns the angle 2/7[128X[104X
+    [4X[25Xgap>[125X [27X# now CallFuncList(PolynomialIMGMachine,last) would return the machine r[127X[104X
+    [4X[25Xgap>[125X [27Xtwist := GroupHomomorphismByImages(F,F,GeneratorsOfGroup(F),[F.1^(F.2*F.1),F.2^F.1,F.3,F.4])^-1;[127X[104X
+    [4X[28X[ f1, f2, f3, f4 ] -> [ f1*f2*f1^-1, f2*f1*f2*f1^-1*f2^-1, f3, f4 ][128X[104X
+    [4X[25Xgap>[125X [27XList([-5..5],i->2*SupportingRays(r*twist^i)[2][1][1]);[127X[104X
+    [4X[28X[ 4/7, 5/7, 4/7, 4/7, 5/7, 2/7, 4/7, 4/7, 2/7, 4/7, 4/7 ][128X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialIMGMachine(2,[],[1/6]);;[127X[104X
+    [4X[25Xgap>[125X [27XF := StateSet(r);;[127X[104X
+    [4X[25Xgap>[125X [27Xtwist := GroupHomomorphismByImages(F,F,GeneratorsOfGroup(F),[F.1,F.2^(F.3*F.2),F.3^F.2,F.4]);;[127X[104X
+    [4X[25Xgap>[125X [27XSupportingRays(r);[127X[104X
+    [4X[28X[ 2, [  ], [ [ 1/12, 7/12 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XSupportingRays(r*twist);[127X[104X
+    [4X[28X[ 2, [  ], [ [ 5/12, 11/12 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XSupportingRays(r*twist^2);[127X[104X
+    [4X[28Xrec([128X[104X
+    [4X[28X  transformation := [ [ f1, f2^-1*f3^-1*f2^-1*f3^-1*f2*f3*f2*f3*f2, f2^-1*f3^-1*f2^-1*f3*f2*f3*f2,[128X[104X
+    [4X[28X          f4 ] -> [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1^-1*f2^-1*f1^-1*f2^-1*f1*f2*f1*f2*f1, f1^-1*f2^-1*f1^-1*f2*f1*f2*f1, f3, f4 ] ->[128X[104X
+    [4X[28X        [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1^-1*f2^-1*f3^-1*f2*f1*f2^-1*f3*f2*f1, f2, f2*f1^-1*f2^-1*f3*f2*f1*f2^-1, f4 ] ->[128X[104X
+    [4X[28X        [ f1, f2, f3, f4 ], [ f1, f3*f2*f3^-1, f3, f4 ] -> [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1, f2, f2*f3*f2^-1, f4 ] -> [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1, f3*f2*f3^-1, f3, f4 ] -> [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1, f2, f2*f3*f2^-1, f4 ] -> [ f1, f2, f3, f4 ],[128X[104X
+    [4X[28X      [ f1, f3*f2*f3^-1, f3, f4 ] -> [ f1, f2, f3, f4 ] ], machine := <FR machine with alphabet[128X[104X
+    [4X[28X    [ 1, 2 ] and adder f4 on Group( [ f1, f2, f3, f4 ] )/[ f4*f3*f2*f1 ]>, minimal := false,[128X[104X
+    [4X[28X  submachine := <FR machine with alphabet [ 1, 2 ] and adder f3 on Group( [ f1, f2, f3 ] )>,[128X[104X
+    [4X[28X  homomorphism := [ f1, f2, f3 ] -> [ f1, f2*f3, f4 ],[128X[104X
+    [4X[28X  relation := <equivalence relation on <object> >, niter := 8 )[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-13 AsGroupFRMachine[101X
+  
+  [29X[2XAsGroupFRMachine[102X( [3Xf[103X ) [32X attribute
+  [29X[2XAsMonoidFRMachine[102X( [3Xf[103X ) [32X attribute
+  [29X[2XAsSemigroupFRMachine[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn FR machine.[133X
+  
+  [33X[0;0YThis  function creates an FR machine on a 1-letter alphabet, that represents
+  the  endomorphism  [3Xf[103X.  It is specially useful when combined with products of
+  machines; indeed the usual product of machines corresponds to composition of
+  endomorphisms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := FreeGroup(2);;[127X[104X
+    [4X[25Xgap>[125X [27Xh := GroupHomomorphismByImages(f,f,[f.1,f.2],[f.2,f.1*f.2]);[127X[104X
+    [4X[28X[ f1, f2 ] -> [ f2, f1*f2 ][128X[104X
+    [4X[25Xgap>[125X [27Xm := AsGroupFRMachine(h);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 ] on Group( [ f1, f2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27Xmm := TensorProduct(m,m);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1 ] on Group( [ f1, f2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(mm);[127X[104X
+    [4X[28X G  |         1[128X[104X
+    [4X[28X----+------------+[128X[104X
+    [4X[28X f1 |    f1*f2,1[128X[104X
+    [4X[28X f2 | f2*f1*f2,1[128X[104X
+    [4X[28X----+------------+[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-14 NormalizedPolynomialFRMachine[101X
+  
+  [29X[2XNormalizedPolynomialFRMachine[102X( [3Xm[103X ) [32X attribute
+  [29X[2XNormalizedPolynomialIMGMachine[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA polynomial FR machine.[133X
+  
+  [33X[0;0YThis function returns a new FR machine, in which the adding element has been
+  put into a standard form [22Xt=[t,1,dots,1]s[122X, where [22Xs[122X is the long cycle [22Xi↦ i-1[122X.[133X
+  
+  [33X[0;0YFor  the  first  command,  the  machine  returned  is an FR machine; for the
+  second, it is an IMG machine.[133X
+  
+  [1X9.1-15 SimplifiedIMGMachine[101X
+  
+  [29X[2XSimplifiedIMGMachine[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA simpler IMG machine.[133X
+  
+  [33X[0;0YThis function returns a new IMG machine, with hopefully simpler transitions.
+  The  simplified  machine  is  obtained  by  applying  automorphisms  to  the
+  stateset. The sequence of automorphisms (in increasing order) is stored as a
+  correspondence;      namely,      if     [10Xn=SimplifiedIMGMachine(m)[110X,     then
+  [10Xm^Product(Correspondence(n))=n[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialIMGMachine(2,[1/7],[]);;[127X[104X
+    [4X[25Xgap>[125X [27XF := StateSet(r);; SetName(F,"F");[127X[104X
+    [4X[25Xgap>[125X [27Xtwist := GroupHomomorphismByImages(F,F,GeneratorsOfGroup(F),[F.1^(F.2*F.1),F.2^F.1,F.3,F.4]);;[127X[104X
+    [4X[25Xgap>[125X [27Xm := r*twist;; Display(m);[127X[104X
+    [4X[28X G  |                     1            2[128X[104X
+    [4X[28X----+------------------------+------------+[128X[104X
+    [4X[28X f1 |          f1^-1*f2^-1,2   f3*f2*f1,1[128X[104X
+    [4X[28X f2 | f1^-1*f2^-1*f1*f2*f1,1       <id>,2[128X[104X
+    [4X[28X f3 |          f1^-1*f2*f1,1       <id>,2[128X[104X
+    [4X[28X f4 |                   f4,2       <id>,1[128X[104X
+    [4X[28X----+------------------------+------------+[128X[104X
+    [4X[28XAdding element: f4[128X[104X
+    [4X[28XRelator: f4*f3*f2*f1[128X[104X
+    [4X[25Xgap>[125X [27Xn := SimplifiedIMGMachine(m);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] and adder f4 on F>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(n);[127X[104X
+    [4X[28X G  |            1            2[128X[104X
+    [4X[28X----+---------------+------------+[128X[104X
+    [4X[28X f1 | f2^-1*f1^-1,2   f1*f2*f3,1[128X[104X
+    [4X[28X f2 |        <id>,1         f1,2[128X[104X
+    [4X[28X f3 |        <id>,1         f2,2[128X[104X
+    [4X[28X f4 |          f4,2       <id>,1[128X[104X
+    [4X[28X----+---------------+------------+[128X[104X
+    [4X[28XAdding element: f4[128X[104X
+    [4X[28XRelator: f4*f1*f2*f3[128X[104X
+    [4X[25Xgap>[125X [27Xn = m^Product(Correspondence(n));[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-16 Mating[101X
+  
+  [29X[2XMating[102X( [3Xm1[103X, [3Xm2[103X[, [3Xformal[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn IMG FR machine.[133X
+  
+  [33X[0;0YThis function "mates" two polynomial IMG machines.[133X
+  
+  [33X[0;0YThe  mating  is  defined  as  follows:  one removes a disc around the adding
+  machine  in  [3Xm1[103X and [3Xm2[103X; one applies complex conjugation to [3Xm2[103X; and one glues
+  the hollowed spheres along their boundary circle.[133X
+  
+  [33X[0;0YThe  optional  argument  [3Xformal[103X, which defaults to [9Xtrue[109X, specifies whether a
+  [13Xformal[113X  mating  should be done; in a non-formal mating, generators of [3Xm1[103X and
+  [3Xm2[103X  which  have  identical  angle should be treated as a single generator. A
+  non-formal  mating is of course possible only if the machines are realizable
+  -- see [2XSupportingRays[102X ([14X9.1-12[114X).[133X
+  
+  [33X[0;0YThe  attribute [10XCorrespondence[110X is a pair of homomorphisms, from the statesets
+  of [3Xm1,m2[103X respectively to the stateset of the mating.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# the Tan-Shishikura examples[127X[104X
+    [4X[25Xgap>[125X [27Xz := Indeterminate(MPC_PSEUDOFIELD);;[127X[104X
+    [4X[25Xgap>[125X [27Xa := RootsFloat((z-1)*(3*z^2-2*z^3)+1);;[127X[104X
+    [4X[25Xgap>[125X [27Xc := RootsFloat((z^3+z)^3+z);;[127X[104X
+    [4X[25Xgap>[125X [27Xam := List(a,a->IMGMachine((a-1)*(3*z^2-2*z^3)+1));;[127X[104X
+    [4X[25Xgap>[125X [27Xcm := List(c,c->IMGMachine(z^3+c));;[127X[104X
+    [4X[25Xgap>[125X [27Xm := ListX(am,cm,Mating);;[127X[104X
+    [4X[25Xgap>[125X [27X# m[2] is realizable[127X[104X
+    [4X[25Xgap>[125X [27XRationalFunction(m[2]);[127X[104X
+    [4X[28X((1.66408+I*0.668485)*z^3+(-2.59772+I*0.627498)*z^2+(-1.80694-I*0.833718)*z[128X[104X
+    [4X[28X  +(1.14397-I*1.38991))/((-1.52357-I*1.27895)*z^3+(2.95502+I*0.234926)*z^2[128X[104X
+    [4X[28X  +(1.61715+I*1.50244)*z+1)[128X[104X
+    [4X[25Xgap>[125X [27X# m[6] is obstructed[127X[104X
+    [4X[25Xgap>[125X [27XRationalFunction(m[6]);[127X[104X
+    [4X[28Xrec( matrix := [ [ 1/2, 1 ], [ 1/2, 0 ] ], machine := <FR machine with alphabet[128X[104X
+    [4X[28X    [ 1, 2, 3 ] on Group( [ f1, f2, f3, g1, g2, g3 ] )/[ f2*f3*f1*g1*g3*g2 ]>,[128X[104X
+    [4X[28X  obstruction := [ f1^-1*f3^-1*f2^-1*f1*f2*f3*f1*g2^-1*g3^-1*f1^-1*f3^-1*f2^-1,[128X[104X
+    [4X[28X      f2*f3*f1*f2*f3*f1*g2*f1^-1*f3^-1*f2^-1*f1^-1*f3^-1 ],[128X[104X
+    [4X[28X  spider := <spider on <triangulation with 8 vertices, 36 edges and[128X[104X
+    [4X[28X    12 faces> marked by GroupHomomorphismByImages( Group( [ f1, f2, f3, g1, g2, g3[128X[104X
+    [4X[28X     ] ), Group( [ f1, f2, f3, f4, f5 ] ), [ f1, f2, f3, g1, g2, g3 ],[128X[104X
+    [4X[28X    [ f1*f4*f2^-1*f1*f4^-1*f1^-1, f1*f4*f2^-1*f1*f4*f5^-1*f1^-1*f2*f4^-1*f1^-1,[128X[104X
+    [4X[28X      f1*f4*f2^-1*f1*f5*f1^-1*f2*f4^-1*f1^-1, f2*f4^-1*f1^-1*f2*f1*f4*f2^-1,[128X[104X
+    [4X[28X      f2*f4^-1*f3*f2^-1, f2*f4^-1*f1^-1*f3^-1*f4*f2^-1 ] )> )[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-17 AutomorphismVirtualEndomorphism[101X
+  
+  [29X[2XAutomorphismVirtualEndomorphism[102X( [3Xv[103X ) [32X attribute
+  [29X[2XAutomorphismIMGMachine[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA description of the pullback map on Teichmüller space.[133X
+  
+  [33X[0;0YLet  [3Xm[103X  be an IMG machine, thought of as a biset for the fundamental group [22XG[122X
+  of a punctured sphere. Let [22XM[122X denote the automorphism of the surface, seen as
+  a  group  of  outer  automorphisms  of [22XG[122X that fixes the conjugacy classes of
+  punctures.[133X
+  
+  [33X[0;0YChoose  an  alphabet letter [3Xa[103X, and consider the virtual endomorphism [22Xv:G_a->
+  G[122X.  Let  [22XH[122X denote the subgroup of [22XM[122X that fixes all conjugacy classes of [22XG_a[122X.
+  then   there  is  an  induced  virtual  endomorphism  [22Xα:H->  M[122X,  defined  by
+  [22Xt^α=v^-1tv[122X.  This  is  the  homomorphism  computed by the first command. Its
+  source and range are in fact groups of automorphisms of range of [3Xv[103X.[133X
+  
+  [33X[0;0YThe  second  command  constructs  an  FR machine associated with [3X\alpha[103X. Its
+  stateset  is  a  free  group  generated  by  elementary  Dehn  twists of the
+  generators of [3XG[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xz := Indeterminate(COMPLEX_FIELD);;[127X[104X
+    [4X[25Xgap>[125X [27X# a Sierpinski carpet map without multicurves[127X[104X
+    [4X[25Xgap>[125X [27Xm := IMGMachine((z^2-z^-2)/2/COMPLEX_I);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2, 3, 4 ] on Group( [ f1, f2, f3, f4 ] )/[ f3*f2*f1*f4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAutomorphismIMGMachine(i);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on Group( [ x1, x2, x3, x4, x5, x6 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X G  |     1        2[128X[104X
+    [4X[28X----+--------+--------+[128X[104X
+    [4X[28X x1 | <id>,2   <id>,1  [128X[104X
+    [4X[28X x2 | <id>,1   <id>,2  [128X[104X
+    [4X[28X x3 | <id>,2   <id>,1  [128X[104X
+    [4X[28X x4 | <id>,2   <id>,1  [128X[104X
+    [4X[28X x5 | <id>,1   <id>,2  [128X[104X
+    [4X[28X x6 | <id>,2   <id>,1  [128X[104X
+    [4X[28X----+--------+--------+[128X[104X
+    [4X[25Xgap>[125X [27X# the original rabbit problem[127X[104X
+    [4X[25Xgap>[125X [27Xm := PolynomialIMGMachine(2,[1/7],[]);;[127X[104X
+    [4X[25Xgap>[125X [27Xv := VirtualEndomorphism(m,1);;[127X[104X
+    [4X[25Xgap>[125X [27Xa := AutomorphismVirtualEndomorphism(v);[127X[104X
+    [4X[28XMappingByFunction( <group with 20 generators>, <group with 6 generators>, function( a ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XSource(a).1;[127X[104X
+    [4X[28X[ f1, f2, f3, f4 ] -> [ f3*f2*f1*f2^-1*f3^-1, f2, f3, f3*f2*f1^-1*f2^-1*f3^-1*f2^-1*f3^-1 ][128X[104X
+    [4X[25Xgap>[125X [27XImage(a,last);[127X[104X
+    [4X[28X[ f1, f2, f3, f4 ] -> [ f1, f2, f2*f1*f3*f1^-1*f2^-1, f3^-1*f1^-1*f2^-1 ][128X[104X
+    [4X[25Xgap>[125X [27X# so last2*m is equivalent to m*last[127X[104X
+  [4X[32X[104X
+  
+  [1X9.1-18 DBRationalIMGGroup[101X
+  
+  [29X[2XDBRationalIMGGroup[102X( [3Xsequence/map[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YAn IMG group from Dau's database.[133X
+  
+  [33X[0;0YThis function returns the iterated monodromy group from a database of groups
+  associated  to  quadratic  rational maps. This database has been compiled by
+  Dau Truong Tan [Tan02].[133X
+  
+  [33X[0;0YWhen called with no arguments, this command returns the database contents in
+  raw form.[133X
+  
+  [33X[0;0YThe  argments  can  be  a  sequence;  the  first  integer is the size of the
+  postcritical  set,  the  second  argument  is  an index for the postcritical
+  graph,  and  sometimes a third argument distinguishes between maps with same
+  post-critical graph.[133X
+  
+  [33X[0;0YIf the argument is a rational map, the command returns the IMG group of that
+  map,  assuming  its  canonical  quadratic  rational  form form exists in the
+  database.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDBRationalIMGGroup(z^2-1);[127X[104X
+    [4X[28XIMG((z-1)^2)[128X[104X
+    [4X[25Xgap>[125X [27XDBRationalIMGGroup(z^2+1); # not post-critically finite[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XDBRationalIMGGroup(4,1,1);[127X[104X
+    [4X[28XIMG((z/h+1)^2|2h^3+2h^2+2h+1=0,h~-0.64)[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-19 PostCriticalMachine[101X
+  
+  [29X[2XPostCriticalMachine[102X( [3Xf[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe Mealy machine of [3Xf[103X's post-critical orbit.[133X
+  
+  [33X[0;0YThis  function  constructs  a  Mealy  machine  [10XP[110X  on the alphabet [10X[1][110X, which
+  describes  the  post-critical set of [3Xf[103X. It is in fact an oriented graph with
+  constant out-degree 1. It is most conveniently passed to [2XDraw[102X ([14X5.2-1[114X).[133X
+  
+  [33X[0;0YThe  attribute  [10XCorrespondence(P)[110X  is the list of values associated with the
+  stateset of [10XP[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xz := Indeterminate(Rationals,"z");;[127X[104X
+    [4X[25Xgap>[125X [27Xm := PostCriticalMachine(z^2);[127X[104X
+    [4X[28X<Mealy machine on alphabet [ 1 ] with 2 states>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(m);[127X[104X
+    [4X[28X   |  1[128X[104X
+    [4X[28X---+-----+[128X[104X
+    [4X[28X a | a,1[128X[104X
+    [4X[28X b | b,1[128X[104X
+    [4X[28X---+-----+[128X[104X
+    [4X[25Xgap>[125X [27XCorrespondence(m);[127X[104X
+    [4X[28X[ 0, infinity ][128X[104X
+    [4X[25Xgap>[125X [27Xm := PostCriticalMachine(z^2-1);; Display(m); Correspondence(m);[127X[104X
+    [4X[28X   |  1[128X[104X
+    [4X[28X---+-----+[128X[104X
+    [4X[28X a | c,1[128X[104X
+    [4X[28X b | b,1[128X[104X
+    [4X[28X c | a,1[128X[104X
+    [4X[28X---+-----+[128X[104X
+    [4X[28X[ -1, infinity, 0 ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-20 Mandel[101X
+  
+  [29X[2XMandel[102X( [[3Xmap[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YCalls the external program [11Xmandel[111X.[133X
+  
+  [33X[0;0YThis  function starts the external program [11Xmandel[111X, by Wolf Jung. The program
+  is  searched for along the standard PATH; alternatively, its location can be
+  set in the string variable EXEC@FR.mandel.[133X
+  
+  [33X[0;0YWhen  called  with  no  arguments, this command returns starts [11Xmandel[111X in its
+  default  mode. With a rational map as argument, it starts [11Xmandel[111X pointing at
+  that rational map.[133X
+  
+  [33X[0;0YMore information on [11Xmandel[111X can be found at [7Xhttp://www.mndynamics.com[107X.[133X
+  
+  
+  [1X9.2 [33X[0;0YSpiders[133X[101X
+  
+  [33X[0;0Y[5XFR[105X  contains  an  implementation  of the Thurston-Hubbard-Schleicher "spider
+  algorithm" [HS94] that constructs a rational map from an IMG recursion. This
+  implementation does not give rigourous results, but relies of floating-point
+  approximation.  In particular, various floating-point parameters control the
+  proper  functioning  of  the algorithm. They are stored in a record, [10XEPS@fr[110X.
+  Their meaning and default values are:[133X
+  
+  [8X[10XEPS@fr.mesh := 10^-1[110X[108X
+        [33X[0;6YIf  points  on  the unit sphere are that close, the triangulation mesh
+        should be refined.[133X
+  
+  [8X[10XEPS@fr.prec := 10^-6[110X[108X
+        [33X[0;6YIf  points  on  the  unit  sphere  are that close, they are considered
+        equal.[133X
+  
+  [8X[10XEPS@fr.obst := 10^-1[110X[108X
+        [33X[0;6YIf  points  on  the  unit sphere are that close, they are suspected to
+        form a Thurston obstruction.[133X
+  
+  [8X[10XEPS@fr.juliaiter := 10^3[110X[108X
+        [33X[0;6YIn computing images of the Julia set, never recur deeper than that.[133X
+  
+  [8X[10XEPS@fr.fast := 10^-1[110X[108X
+        [33X[0;6YIf  the  spider moved less than that amount in the last iteration, try
+        speeding  up  by  only wiggling the spider's legs, without recomputing
+        it.[133X
+  
+  [8X[10XEPS@fr.ratprec := 10^-10[110X[108X
+        [33X[0;6YThe desired precision on the coefficients of the rational function.[133X
+  
+  [1X9.2-1 DelaunayTriangulation[101X
+  
+  [29X[2XDelaunayTriangulation[102X( [3Xpoints[103X[, [3Xquality[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Delaunay triangulation of the sphere.[133X
+  
+  [33X[0;0YIf  [3Xpoints[103X  is  a list of points on the unit sphere, represented by their 3D
+  coordinates,  this function creates a triangulation of the sphere with these
+  points  as  vertices.  This  triangulation  is  such  that the angles are as
+  equilateral as possible.[133X
+  
+  [33X[0;0YThis  triangulation  is  a  recursive  collection  of  records, one for each
+  vertex,  oriented  edge or face. Each such object has a [10Xpos[110X component giving
+  its   coordinates;   and   an   [10Xindex[110X  component  identifying  it  uniquely.
+  Additionally,  vertices  and  faces  have  a  [10Xn[110X  component which lists their
+  neighbours   in   CCW   order,  and  edges  have  [10Xfrom,to,left,right,reverse[110X
+  components.[133X
+  
+  [33X[0;0YIf  all  points  are  aligned  on  a great circle, or if all points are in a
+  hemisphere, some points are added so as to make the triangulation simplicial
+  with  all  edges  of  length  [22X<π[122X.  These  vertices  additionally have a [10Xfake[110X
+  component set to [9Xtrue[109X.[133X
+  
+  [33X[0;0YA  triangulation  may be plotted with [10XDraw[110X; this requires [5Xappletviewer[105X to be
+  installed.  The  command  [10XDraw(t:detach)[110X detaches the subprocess after it is
+  started.  The  extra  arguments  [10XDraw(t:lower)[110X  or [10XDraw(t:upper)[110X stretch the
+  triangulation to the lower, respectively upper, hemisphere.[133X
+  
+  [33X[0;0YIf  the  second argument [3Xquality[103X, which must be a floatean, is present, then
+  all  triangles  in  the  resulting  triangulation  are  guaranteed  to  have
+  circumcircle  ratio  /  minimal  edge  length  at  most  [3Xquality[103X. Of course,
+  additional vertices may need to be added to ensure that.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xoctagon := Concatenation(IdentityMat(3),-IdentityMat(3))*1.0;[127X[104X
+    [4X[25Xgap>[125X [27Xdt := DelaunayTriangulation(octagon);[127X[104X
+    [4X[28X<triangulation with 6 vertices, 24 edges and 8 faces>[128X[104X
+    [4X[25Xgap>[125X [27Xdt!.v;[127X[104X
+    [4X[28X[ <vertex 1>, <vertex 2>, <vertex 3>, <vertex 4>, <vertex 5>, <vertex 6> ][128X[104X
+    [4X[25Xgap>[125X [27Xlast[1].n;[127X[104X
+    [4X[28X[ <edge 17>, <edge 1>, <edge 2>, <edge 11> ][128X[104X
+    [4X[25Xgap>[125X [27Xlast[1].from;[127X[104X
+    [4X[28X<vertex 1>[128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-2 LocateInTriangulation[101X
+  
+  [29X[2XLocateInTriangulation[102X( [3Xt[103X[, [3Xseed[103X], [3Xpoint[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YThe face in [3Xt[103X containing [3Xpoint[103X.[133X
+  
+  [33X[0;0YThis command locates the face in [3Xt[103X that contains [3Xpoint[103X; or, if [3Xpoint[103X lies on
+  an edge or a vertex, it returns that edge or vertex.[133X
+  
+  [33X[0;0YThe  optional  second  argument  specifies a starting vertex, edge, face, or
+  vertex  index from which to start the search. Its only effect is to speed up
+  the algorithm.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xcube := Tuples([-1,1],3)/Sqrt(3.0);;[127X[104X
+    [4X[25Xgap>[125X [27Xdt := DelaunayTriangulation(cube);[127X[104X
+    [4X[28X<triangulation with 8 vertices, 36 edges and 12 faces>[128X[104X
+    [4X[25Xgap>[125X [27XLocateInTriangulation(dt,dt!.v[1].pos);[127X[104X
+    [4X[28X<vertex 1>[128X[104X
+    [4X[25Xgap>[125X [27XLocateInTriangulation(dt,[3/5,0,4/5]*1.0);[127X[104X
+    [4X[28X<face 9>[128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-3 IsSphereTriangulation[101X
+  
+  [29X[2XIsSphereTriangulation[102X[32X filter
+  [29X[2XIsMarkedSphere[102X[32X filter
+  [29X[2XSpider[102X( [3Xratmap[103X ) [32X attribute
+  [29X[2XSpider[102X( [3Xmachine[103X ) [32X attribute
+  
+  [33X[0;0YThe category of triangulated spheres (points in Moduli space), or of marked,
+  triangulated spheres (points in Teichmüller space).[133X
+  
+  [33X[0;0YVarious  commands  have  an  attribudte  [10XSpider[110X, which records this point in
+  Teichmüller space.[133X
+  
+  [1X9.2-4 RationalFunction[101X
+  
+  [29X[2XRationalFunction[102X( [[3Xz[103X, ][3Xm[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA rational function.[133X
+  
+  [33X[0;0YThis  command  runs  a  modification  of  Hubbard  and  Schleicher's "spider
+  algorithm"  [HS94]  on  the  IMG  FR machine [3Xm[103X. It either returns a rational
+  function  [10Xf[110X  whose  associated  machine  is  [3Xm[103X;  or  a record describing the
+  Thurston obstruction to realizability of [10Xf[110X.[133X
+  
+  [33X[0;0YThis  obstruction record [10Xr[110X contains a list [10Xr.multicurve[110X of conjugacy classes
+  in  [10XStateSet(m)[110X,  which  represent  short multicurves; a matrix [10Xr.mat[110X, and a
+  spider [10Xr.spider[110X on which the obstruction was discovered.[133X
+  
+  [33X[0;0YIf  a  rational function is returned, it has preset attributes [10XSpider(f)[110X and
+  [10XIMGMachine(f)[110X  which is a simplified version of [3Xm[103X. This rational function is
+  also  normalized  so that its post-critical points have barycenter=0 and has
+  two  post-critical  points  at  infinity  and  on  the  positive  real axis.
+  Furthermore, if [3Xm[103X is polynomial-like, then the returned map is a polynomial.[133X
+  
+  [33X[0;0YThe  command  accepts  the  following  options,  to  return a map in a given
+  normalization:[133X
+  
+  [8X[10XRationalFunction(m:param:=IsPolynomial)[110X[108X
+        [33X[0;6Yreturns [22Xf=z^d+A_d-2z^d-2+⋯+A_0[122X;[133X
+  
+  [8X[10XRationalFunction(m:param:=IsBicritical)[110X[108X
+        [33X[0;6Yreturns [22Xf=((pz+q)/(rz+s)^d[122X, with [22X1[122Xpostcritical;[133X
+  
+  [8X[10XRationalFunction(m:param:=n)[110X[108X
+        [33X[0;6Yreturns [22Xf=1+a/z+b/z^2[122X or [22Xf=a/(z^2+2z)[122X if [10Xn=2[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xm := PolynomialIMGMachine(2,[1/3],[]);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on Group( [ f1, f2, f3 ] )/[ f3*f2*f1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRationalFunction(m);[127X[104X
+    [4X[28X0.866025*z^2+(-1)*z+(-0.288675)[128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-5 Draw[101X
+  
+  [29X[2XDraw[102X( [3Xs[103X ) [32X operation
+  
+  [33X[0;0YThis  command  plots  the  spider  [3Xs[103X in a separate X window. It displays the
+  complex  sphere, big dots at the post-critical set (feet of the spider), and
+  the arcs and dual arcs of the triangulation connecting the feet.[133X
+  
+  [33X[0;0YIf  the option [9Xjulia:=<gridsize>[109X (if no grid size is specified, it is 500 by
+  default),  then  the Julia set of the map associated with the spider is also
+  displayed.  Points  attracted  to  attracting  cycles are coloured in pastel
+  tones, and unattracted points are coloured black.[133X
+  
+  [33X[0;0YIf the option [9Xnoarcs[109X is specified, the printing of the arcs and dual arcs is
+  disabled.[133X
+  
+  [33X[0;0YThe options [9Xupper[109X, [9Xlower[109X and [9Xdetach[109X also apply.[133X
+  
+  [1X9.2-6 FRMachine[101X
+  
+  [29X[2XFRMachine[102X( [3Xf[103X ) [32X operation
+  [29X[2XIMGMachine[102X( [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn IMG FR machine.[133X
+  
+  [33X[0;0YThis  function  computes a triangulation of the sphere, on the post-critical
+  set  of  [3Xf[103X,  and  lifts  it through the map [3Xf[103X. the action of the fundamental
+  group  of  the punctured sphere is then read into an IMG fr machine [10Xm[110X, which
+  is returned.[133X
+  
+  [33X[0;0YThis machine has a preset attribute [10XSpider(m)[110X.[133X
+  
+  [33X[0;0YAn  approximation  of the Julia set of [3Xf[103X can be computed, and plotted on the
+  spider, with the form [10XIMGMachine(f:julia)[110X or [10XIMGMachine(f:julia:=gridsize)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xz := Indeterminate(COMPLEX_FIELD);;[127X[104X
+    [4X[25Xgap>[125X [27XIMGMachine(z^2-1);[127X[104X
+    [4X[28X<FR machine with alphabet [ 1, 2 ] on Group( [ f1, f2, f3 ] )/[ f2*f1*f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X G  |            1        2[128X[104X
+    [4X[28X----+---------------+--------+[128X[104X
+    [4X[28X f1 |          f2,2   <id>,1[128X[104X
+    [4X[28X f2 | f3^-1*f1*f3,1   <id>,2[128X[104X
+    [4X[28X f3 |        <id>,2     f3,1[128X[104X
+    [4X[28X----+---------------+--------+[128X[104X
+    [4X[28XRelator: f2*f1*f3[128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-7 FindThurstonObstruction[101X
+  
+  [29X[2XFindThurstonObstruction[102X( [3Xlist[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA description of the obstruction corresponding to [3Xlist[103X, or [9Xfail[109X.[133X
+  
+  [33X[0;0YThis  method  accepts a list of IMG elements on the same underlying machine,
+  and  treats these as representatives of conjugacy classes defining (part of)
+  a multicurve. It computes whether these curves, when supplemented with their
+  lifts  under  the recursion, constitute a Thurston obstruction, by computing
+  its transition matrix.[133X
+  
+  [33X[0;0YThe method either returns [9Xfail[109X, if there is no obstruction, or a record with
+  as  fields  [10Xmatrix,machine,obstruction[110X  giving  respectively  the transition
+  matrix,  a  simplified  machine,  and  the  curves that constitute a minimal
+  obstruction.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialIMGMachine(2,[],[1/6]);;[127X[104X
+    [4X[25Xgap>[125X [27XF := StateSet(r);;[127X[104X
+    [4X[25Xgap>[125X [27Xtwist := GroupHomomorphismByImages(F,F,GeneratorsOfGroup(F),[F.1,F.2^(F.3*F.2),F.3^F.2,F.4]);;[127X[104X
+    [4X[25Xgap>[125X [27XSupportingRays(r*twist^-1);[127X[104X
+    [4X[28Xrec( machine := <FR machine with alphabet [ 1, 2 ] on F/[ f4*f1*f2*f3 ]>,[128X[104X
+    [4X[28X     twist := [ f1, f2, f3, f4 ] -> [ f1, f3^-1*f2*f3, f3^-1*f2^-1*f3*f2*f3, f4 ],[128X[104X
+    [4X[28X     obstruction := "Dehn twist" )[128X[104X
+    [4X[25Xgap>[125X [27XFindThurstonObstruction([FRElement(last.machine,[2,3])]);[127X[104X
+    [4X[28Xrec( matrix := [ [ 1 ] ], machine := <FR machine with alphabet [ 1, 2 ] on F/[ f4*f1*f2*f3 ]>, obstruction := [ f1^-1*f4^-1 ] )[128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-8 KneadingSequence[101X
+  
+  [29X[2XKneadingSequence[102X( [3Xangle[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe kneading sequence associated with [3Xangle[103X.[133X
+  
+  [33X[0;0YThis  function converts a rational angle to a kneading sequence, to describe
+  a quadratic polynomial.[133X
+  
+  [33X[0;0YIf [3Xangle[103X is in [22X[1/7,2/7][122X and the option [10Xmarked[110X is set, the kneading sequence
+  is decorated with markings in A,B,C.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XKneadingSequence(1/7);[127X[104X
+    [4X[28X[ 1, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XKneadingSequence(1/5:marked);[127X[104X
+    [4X[28X[ "A1", "B1", "B0" ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-9 AllInternalAddresses[101X
+  
+  [29X[2XAllInternalAddresses[102X( [3Xn[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YInternal addresses of maps with period up to [3Xn[103X.[133X
+  
+  [33X[0;0YThis  function  returns internal addresses for all periodic points of period
+  up  to  [3Xn[103X  under  angle  doubling.  These  internal  addresses  describe the
+  prominent hyperbolic components along the path from the landing point to the
+  main  cardioid  in  the Mandelbrot set; this is a list of length [10X3k[110X, with at
+  position  [10X3i+1,3i+2[110X the left and right angles, respectively, and at position
+  [10X3i+3[110X the period of that component. For example, [10X[ 3/7, 4/7, 3, 1/3, 2/3, 2 ][110X
+  describes the airplane: a polynomial with landing angles [22X[3/7,4/7][122X of period
+  [22X3[122X;  and  such  that  there is a polynomial with landing angles [22X[1/3,2/3][122X and
+  period [22X2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAllInternalAddresses(3);[127X[104X
+    [4X[28X[ [  ], [ [ 1/3, 2/3, 2 ] ], [128X[104X
+    [4X[28X[ [ 1/7, 2/7, 3 ], [ 3/7, 4/7, 3, 1/3, 2/3, 2 ], [ 5/7, 6/7, 3 ] ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-10 ExternalAnglesRelation[101X
+  
+  [29X[2XExternalAnglesRelation[102X( [3Xdegree[103X, [3Xn[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YAn equivalence relation on the rationals.[133X
+  
+  [33X[0;0YThis  function returns the equivalence relation on [10XRationals[110X identifying all
+  pairs of external angles that land at a common point of period up to [3Xn[103X under
+  angle multiplication by by [3Xdegree[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XExternalAnglesRelation(2,3);[127X[104X
+    [4X[28X<equivalence relation on Rationals >[128X[104X
+    [4X[25Xgap>[125X [27XEquivalenceRelationPartition(last);[127X[104X
+    [4X[28X[ [ 1/7, 2/7 ], [ 1/3, 2/3 ], [ 3/7, 4/7 ], [ 5/7, 6/7 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-11 ExternalAngle[101X
+  
+  [29X[2XExternalAngle[102X( [3Xmachine[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe external angle identifying [3Xmachine[103X.[133X
+  
+  [33X[0;0YIn  case  [3Xmachine[103X  is  the  IMG  machine  of  a unicritical polynomial, this
+  function  computes  the  external  angle landing at the critical value. More
+  precisely,  it  computes  the equivalence class of that external angle under
+  [2XExternalAnglesRelation[102X ([14X9.2-10[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XExternalAngle(PolynomialIMGMachine(2,[1/7])); # the rabbit[127X[104X
+    [4X[28X{2/7}[128X[104X
+    [4X[25Xgap>[125X [27XElements(last);[127X[104X
+    [4X[28X[ 1/7, 2/7 ][128X[104X
+  [4X[32X[104X
+  

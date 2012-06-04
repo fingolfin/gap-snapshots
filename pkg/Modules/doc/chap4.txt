@@ -1,0 +1,31 @@
+  
+  [1X4 Ring Maps[0X
+  
+  
+  [1X4.1 Ring Maps: Attributes[0X
+  
+  [1X4.1-1 KernelSubobject[0m
+  
+  [2X> KernelSubobject( [0X[3Xphi[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  The kernel ideal of the ring map [3Xphi[0m.
+  
+  [1X4.1-2 KernelEmb[0m
+  
+  [2X> KernelEmb( [0X[3Xphi[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  The  embedding  of  the  kernel ideal [10XKernel[0m([3Xphi[0m) into the [10XSource[0m([3Xphi[0m), both
+  viewed as modules over the ring R :=[10XSource[0m([3Xphi[0m) (cf. [2XKernel[0m ([14X4.2-1[0m)).
+  
+  
+  [1X4.2 Ring Maps: Operations and Functions[0X
+  
+  [1X4.2-1 Kernel[0m
+  
+  [2X> Kernel( [0X[3Xphi[0X[2X ) ______________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  The kernel ideal of the ring map [3Xphi[0m as an abstract module.
+  

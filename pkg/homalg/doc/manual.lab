@@ -1,0 +1,302 @@
+\makelabel{homalg:Title page}{}
+\makelabel{homalg:Copyright}{}
+\makelabel{homalg:Acknowledgements}{}
+\makelabel{homalg:Table of Contents}{}
+\makelabel{homalg:Introduction}{1}
+\makelabel{homalg:What is the role of the homalg package in the homalg project?}{1.1}
+\makelabel{homalg:Philosophy}{1.1.1}
+\makelabel{homalg:homalg provides ...}{1.1.2}
+\makelabel{homalg:Building upon the homalg package}{1.1.3}
+\makelabel{homalg:This manual}{1.2}
+\makelabel{homalg:Installation of the homalg Package}{2}
+\makelabel{homalg:Objects}{3}
+\makelabel{homalg:Objects: Category and Representations}{3.1}
+\makelabel{homalg:Objects: Constructors}{3.2}
+\makelabel{homalg:Objects: Properties}{3.3}
+\makelabel{homalg:Objects: Attributes}{3.4}
+\makelabel{homalg:Objects: Operations and Functions}{3.5}
+\makelabel{homalg:Morphisms}{4}
+\makelabel{homalg:Morphisms: Categories and Representations}{4.1}
+\makelabel{homalg:Morphisms: Constructors}{4.2}
+\makelabel{homalg:Morphisms: Properties}{4.3}
+\makelabel{homalg:Morphisms: Attributes}{4.4}
+\makelabel{homalg:Morphisms: Operations and Functions}{4.5}
+\makelabel{homalg:Elements}{5}
+\makelabel{homalg:Elements: Category and Representations}{5.1}
+\makelabel{homalg:Elements: Constructors}{5.2}
+\makelabel{homalg:Elements: Properties}{5.3}
+\makelabel{homalg:Elements: Attributes}{5.4}
+\makelabel{homalg:Elements: Operations and Functions}{5.5}
+\makelabel{homalg:Complexes}{6}
+\makelabel{homalg:Complexes: Category and Representations}{6.1}
+\makelabel{homalg:Complexes: Constructors}{6.2}
+\makelabel{homalg:Complexes: Properties}{6.3}
+\makelabel{homalg:Complexes: Attributes}{6.4}
+\makelabel{homalg:Complexes: Operations and Functions}{6.5}
+\makelabel{homalg:Chain Morphisms}{7}
+\makelabel{homalg:ChainMorphisms: Categories and Representations}{7.1}
+\makelabel{homalg:Chain Morphisms: Constructors}{7.2}
+\makelabel{homalg:Chain Morphisms: Properties}{7.3}
+\makelabel{homalg:Chain Morphisms: Attributes}{7.4}
+\makelabel{homalg:Chain Morphisms: Operations and Functions}{7.5}
+\makelabel{homalg:Bicomplexes}{8}
+\makelabel{homalg:Bicomplexes: Category and Representations}{8.1}
+\makelabel{homalg:Bicomplexes: Constructors}{8.2}
+\makelabel{homalg:Bicomplexes: Properties}{8.3}
+\makelabel{homalg:Bicomplexes: Attributes}{8.4}
+\makelabel{homalg:Bicomplexes: Operations and Functions}{8.5}
+\makelabel{homalg:Bigraded Objects}{9}
+\makelabel{homalg:BigradedObjects: Categories and Representations}{9.1}
+\makelabel{homalg:Bigraded Objects: Constructors}{9.2}
+\makelabel{homalg:Bigraded Objects: Properties}{9.3}
+\makelabel{homalg:Bigraded Objects: Operations and Functions}{9.4}
+\makelabel{homalg:Spectral Sequences}{10}
+\makelabel{homalg:SpectralSequences: Categorie and Representations}{10.1}
+\makelabel{homalg:Spectral Sequences: Constructors}{10.2}
+\makelabel{homalg:Spectral Sequences: Attributes}{10.3}
+\makelabel{homalg:Spectral Sequences: Operations and Functions}{10.4}
+\makelabel{homalg:Functors}{11}
+\makelabel{homalg:Functors: Category and Representations}{11.1}
+\makelabel{homalg:Functors: Constructors}{11.2}
+\makelabel{homalg:Functors: Attributes}{11.3}
+\makelabel{homalg:Basic Functors}{11.4}
+\makelabel{homalg:Tool Functors}{11.5}
+\makelabel{homalg:Other Functors}{11.6}
+\makelabel{homalg:Functors: Operations and Functions}{11.7}
+\makelabel{homalg:Examples}{12}
+\makelabel{homalg:ExtExt}{12.1}
+\makelabel{homalg:Purity}{12.2}
+\makelabel{homalg:TorExt-Grothendieck}{12.3}
+\makelabel{homalg:TorExt}{12.4}
+\makelabel{homalg:The Mathematical Idea behind homalg}{A}
+\makelabel{homalg:Development}{B}
+\makelabel{homalg:Why was homalg discontinued in Maple?}{B.1}
+\makelabel{homalg:Why GAP4?}{B.2}
+\makelabel{homalg:GAP is free and open software}{B.2.1}
+\makelabel{homalg:GAP has an area of expertise}{B.2.2}
+\makelabel{homalg:GAP4 can communicate}{B.2.3}
+\makelabel{homalg:GAP4 is a mathematical object-oriented programming language}{B.2.4}
+\makelabel{homalg:GAP4 packages are easily extendible}{B.2.5}
+\makelabel{homalg:Why not Sage?}{B.3}
+\makelabel{homalg:How does homalg compare to Sage?}{B.4}
+\makelabel{homalg:They differ in objectives and scale}{B.4.1}
+\makelabel{homalg:They differ in the programming language}{B.4.2}
+\makelabel{homalg:They differ in the way they communicate with the outer world}{B.4.3}
+\makelabel{homalg:Logic Subpackages}{C}
+\makelabel{homalg:LIOBJ: Logical Implications for Objects of Abelian Categories}{C.1}
+\makelabel{homalg:LIMOR: Logical Implications for Morphisms of Abelian Categories}{C.2}
+\makelabel{homalg:LICPX: Logical Implications for Complexes in Abelian Categories}{C.3}
+\makelabel{homalg:Debugging homalg}{D}
+\makelabel{homalg:Increase the assertion level}{D.1}
+\makelabel{homalg:The Core Packages and the Idea behind their Splitting}{E}
+\makelabel{homalg:The 6=2+4 split}{E.1}
+\makelabel{homalg:Logically independent}{E.1.1}
+\makelabel{homalg:Black boxes}{E.1.2}
+\makelabel{homalg:Summing up}{E.1.3}
+\makelabel{homalg:The 4=1+1+1+1 split}{E.2}
+\makelabel{homalg:HomalgToCAS}{E.2.1}
+\makelabel{homalg:IOForHomalg and Alternatives}{E.2.2}
+\makelabel{homalg:RingsForHomalg}{E.2.3}
+\makelabel{homalg:Your own RingsForHomalg}{E.2.4}
+\makelabel{homalg:ExamplesForHomalg}{E.2.5}
+\makelabel{homalg:Documentation}{E.2.6}
+\makelabel{homalg:Crediting}{E.2.7}
+\makelabel{homalg:Stability}{E.2.8}
+\makelabel{homalg:Overview of the homalg Package Source Code}{F}
+\makelabel{homalg:The Basic Objects}{F.1}
+\makelabel{homalg:The High Level Homological Algorithms}{F.2}
+\makelabel{homalg:Logical Implications for homalg Objects}{F.3}
+\makelabel{homalg:Bibliography}{Bib}
+\makelabel{homalg:References}{Bib}
+\makelabel{homalg:Index}{Ind}
+\makelabel{homalg:homalg}{}
+\makelabel{homalg:IsHomalgObject}{3.1.1}
+\makelabel{homalg:IsHomalgStaticObject}{3.1.2}
+\makelabel{homalg:IsFinitelyPresentedObjectRep}{3.1.3}
+\makelabel{homalg:IsStaticFinitelyPresentedObjectOrSubobjectRep}{3.1.4}
+\makelabel{homalg:IsStaticFinitelyPresentedObjectRep}{3.1.5}
+\makelabel{homalg:IsStaticFinitelyPresentedSubobjectRep}{3.1.6}
+\makelabel{homalg:Subobject (constructor for subobjects using morphisms)}{3.2.1}
+\makelabel{homalg:IsFree}{3.3.1}
+\makelabel{homalg:IsStablyFree}{3.3.2}
+\makelabel{homalg:IsProjective}{3.3.3}
+\makelabel{homalg:IsProjectiveOfConstantRank}{3.3.4}
+\makelabel{homalg:IsInjective}{3.3.5}
+\makelabel{homalg:IsInjectiveCogenerator}{3.3.6}
+\makelabel{homalg:FiniteFreeResolutionExists}{3.3.7}
+\makelabel{homalg:IsReflexive}{3.3.8}
+\makelabel{homalg:IsTorsionFree}{3.3.9}
+\makelabel{homalg:IsArtinian}{3.3.10}
+\makelabel{homalg:IsTorsion}{3.3.11}
+\makelabel{homalg:IsPure}{3.3.12}
+\makelabel{homalg:IsCohenMacaulay}{3.3.13}
+\makelabel{homalg:IsGorenstein}{3.3.14}
+\makelabel{homalg:IsKoszul}{3.3.15}
+\makelabel{homalg:HasConstantRank}{3.3.16}
+\makelabel{homalg:ConstructedAsAnIdeal}{3.3.17}
+\makelabel{homalg:TorsionSubobject}{3.4.1}
+\makelabel{homalg:TheMorphismToZero}{3.4.2}
+\makelabel{homalg:TheIdentityMorphism}{3.4.3}
+\makelabel{homalg:FullSubobject}{3.4.4}
+\makelabel{homalg:ZeroSubobject}{3.4.5}
+\makelabel{homalg:EmbeddingInSuperObject}{3.4.6}
+\makelabel{homalg:SuperObject (for subobjects)}{3.4.7}
+\makelabel{homalg:FactorObject}{3.4.8}
+\makelabel{homalg:UnderlyingSubobject}{3.4.9}
+\makelabel{homalg:NatTrIdToHomHomR (for morphisms)}{3.4.10}
+\makelabel{homalg:Annihilator (for static objects)}{3.4.11}
+\makelabel{homalg:EndomorphismRing (for static objects)}{3.4.12}
+\makelabel{homalg:UnitObject}{3.4.13}
+\makelabel{homalg:RankOfObject}{3.4.14}
+\makelabel{homalg:ProjectiveDimension}{3.4.15}
+\makelabel{homalg:DegreeOfTorsionFreeness}{3.4.16}
+\makelabel{homalg:Grade}{3.4.17}
+\makelabel{homalg:PurityFiltration}{3.4.18}
+\makelabel{homalg:CodegreeOfPurity}{3.4.19}
+\makelabel{homalg:HilbertPolynomial}{3.4.20}
+\makelabel{homalg:AffineDimension}{3.4.21}
+\makelabel{homalg:ProjectiveDegree}{3.4.22}
+\makelabel{homalg:ConstantTermOfHilbertPolynomialn}{3.4.23}
+\makelabel{homalg:ElementOfGrothendieckGroup}{3.4.24}
+\makelabel{homalg:ChernPolynomial}{3.4.25}
+\makelabel{homalg:ChernCharacter}{3.4.26}
+\makelabel{homalg:CurrentResolution}{3.5.1}
+\makelabel{homalg:UnderlyingObject (for subobjects)}{3.5.2}
+\makelabel{homalg:Saturate (for ideals)}{3.5.3}
+\makelabel{homalg:IsHomalgMorphism}{4.1.1}
+\makelabel{homalg:IsHomalgStaticMorphism}{4.1.2}
+\makelabel{homalg:IsHomalgEndomorphism}{4.1.3}
+\makelabel{homalg:IsMorphismOfFinitelyGeneratedObjectsRep}{4.1.4}
+\makelabel{homalg:IsStaticMorphismOfFinitelyGeneratedObjectsRep}{4.1.5}
+\makelabel{homalg:IsMorphism}{4.3.1}
+\makelabel{homalg:IsGeneralizedMorphism}{4.3.2}
+\makelabel{homalg:IsGeneralizedEpimorphism}{4.3.3}
+\makelabel{homalg:IsGeneralizedMonomorphism}{4.3.4}
+\makelabel{homalg:IsGeneralizedIsomorphism}{4.3.5}
+\makelabel{homalg:IsOne}{4.3.6}
+\makelabel{homalg:IsIdempotent}{4.3.7}
+\makelabel{homalg:IsMonomorphism}{4.3.8}
+\makelabel{homalg:IsEpimorphism}{4.3.9}
+\makelabel{homalg:IsSplitMonomorphism}{4.3.10}
+\makelabel{homalg:IsSplitEpimorphism}{4.3.11}
+\makelabel{homalg:IsIsomorphism}{4.3.12}
+\makelabel{homalg:IsAutomorphism}{4.3.13}
+\makelabel{homalg:Source}{4.4.1}
+\makelabel{homalg:Range}{4.4.2}
+\makelabel{homalg:CokernelEpi (for morphisms)}{4.4.3}
+\makelabel{homalg:CokernelNaturalGeneralizedIsomorphism (for morphisms)}{4.4.4}
+\makelabel{homalg:KernelSubobject}{4.4.5}
+\makelabel{homalg:KernelEmb (for morphisms)}{4.4.6}
+\makelabel{homalg:ImageSubobject}{4.4.7}
+\makelabel{homalg:ImageObjectEmb (for morphisms)}{4.4.8}
+\makelabel{homalg:ImageObjectEpi (for morphisms)}{4.4.9}
+\makelabel{homalg:MorphismAid}{4.4.10}
+\makelabel{homalg:GeneralizedInverse}{4.4.11}
+\makelabel{homalg:ByASmallerPresentation (for morphisms)}{4.5.1}
+\makelabel{homalg:IsHomalgElement}{5.1.1}
+\makelabel{homalg:IsElementOfAnObjectGivenByAMorphismRep}{5.1.2}
+\makelabel{homalg:IsZero (for elements)}{5.3.1}
+\makelabel{homalg:IsCyclicGenerator}{5.3.2}
+\makelabel{homalg:Annihilator (for elements)}{5.4.1}
+\makelabel{homalg:in (for elements)}{5.5.1}
+\makelabel{homalg:IsHomalgComplex}{6.1.1}
+\makelabel{homalg:IsComplexOfFinitelyPresentedObjectsRep}{6.1.2}
+\makelabel{homalg:IsCocomplexOfFinitelyPresentedObjectsRep}{6.1.3}
+\makelabel{homalg:HomalgComplex (constructor for complexes given an object)}{6.2.1}
+\makelabel{homalg:HomalgComplex (constructor for complexes given a morphism)}{6.2.1}
+\makelabel{homalg:HomalgComplex (constructor for complexes given a complex)}{6.2.1}
+\makelabel{homalg:HomalgComplex (constructor for complexes given a chain morphism)}{6.2.1}
+\makelabel{homalg:HomalgCocomplex (constructor for cocomplexes given a object)}{6.2.2}
+\makelabel{homalg:HomalgCocomplex (constructor for cocomplexes given a morphism)}{6.2.2}
+\makelabel{homalg:HomalgCocomplex (constructor for cocomplexes given a complex)}{6.2.2}
+\makelabel{homalg:HomalgCocomplex (constructor for cocomplexes given a chain morphism)}{6.2.2}
+\makelabel{homalg:IsSequence}{6.3.1}
+\makelabel{homalg:IsComplex}{6.3.2}
+\makelabel{homalg:IsAcyclic}{6.3.3}
+\makelabel{homalg:IsRightAcyclic}{6.3.4}
+\makelabel{homalg:IsLeftAcyclic}{6.3.5}
+\makelabel{homalg:IsGradedObject}{6.3.6}
+\makelabel{homalg:IsExactSequence}{6.3.7}
+\makelabel{homalg:IsShortExactSequence}{6.3.8}
+\makelabel{homalg:IsSplitShortExactSequence}{6.3.9}
+\makelabel{homalg:IsTriangle}{6.3.10}
+\makelabel{homalg:IsExactTriangle}{6.3.11}
+\makelabel{homalg:BettiDiagram (for complexes)}{6.4.1}
+\makelabel{homalg:FiltrationByShortExactSequence (for complexes)}{6.4.2}
+\makelabel{homalg:Add (to complexes given a morphism)}{6.5.1}
+\makelabel{homalg:Add (to complexes given a matrix)}{6.5.1}
+\makelabel{homalg:ByASmallerPresentation (for complexes)}{6.5.2}
+\makelabel{homalg:IsHomalgChainMorphism}{7.1.1}
+\makelabel{homalg:IsHomalgChainEndomorphism}{7.1.2}
+\makelabel{homalg:IsChainMorphismOfFinitelyPresentedObjectsRep}{7.1.3}
+\makelabel{homalg:IsCochainMorphismOfFinitelyPresentedObjectsRep}{7.1.4}
+\makelabel{homalg:HomalgChainMorphism (constructor for chain morphisms given a morphism)}{7.2.1}
+\makelabel{homalg:IsMorphism (for chain morphisms)}{7.3.1}
+\makelabel{homalg:IsGeneralizedMorphism (for chain morphisms)}{7.3.2}
+\makelabel{homalg:IsGeneralizedEpimorphism (for chain morphisms)}{7.3.3}
+\makelabel{homalg:IsGeneralizedMonomorphism (for chain morphisms)}{7.3.4}
+\makelabel{homalg:IsGeneralizedIsomorphism (for chain morphisms)}{7.3.5}
+\makelabel{homalg:IsOne (for chain morphisms)}{7.3.6}
+\makelabel{homalg:IsMonomorphism (for chain morphisms)}{7.3.7}
+\makelabel{homalg:IsEpimorphism (for chain morphisms)}{7.3.8}
+\makelabel{homalg:IsSplitMonomorphism (for chain morphisms)}{7.3.9}
+\makelabel{homalg:IsSplitEpimorphism (for chain morphisms)}{7.3.10}
+\makelabel{homalg:IsIsomorphism (for chain morphisms)}{7.3.11}
+\makelabel{homalg:IsAutomorphism (for chain morphisms)}{7.3.12}
+\makelabel{homalg:IsGradedMorphism (for chain morphisms)}{7.3.13}
+\makelabel{homalg:IsQuasiIsomorphism (for chain morphisms)}{7.3.14}
+\makelabel{homalg:Source (for chain morphisms)}{7.4.1}
+\makelabel{homalg:Range (for chain morphisms)}{7.4.2}
+\makelabel{homalg:ByASmallerPresentation (for chain morphisms)}{7.5.1}
+\makelabel{homalg:IsHomalgBicomplex}{8.1.1}
+\makelabel{homalg:IsBicomplexOfFinitelyPresentedObjectsRep}{8.1.2}
+\makelabel{homalg:IsBicocomplexOfFinitelyPresentedObjectsRep}{8.1.3}
+\makelabel{homalg:HomalgBicomplex (constructor for bicomplexes given a complex of complexes)}{8.2.1}
+\makelabel{homalg:IsBisequence}{8.3.1}
+\makelabel{homalg:IsBicomplex}{8.3.2}
+\makelabel{homalg:IsTransposedWRTTheAssociatedComplex}{8.3.3}
+\makelabel{homalg:TotalComplex}{8.4.1}
+\makelabel{homalg:SpectralSequence (for bicomplexes)}{8.4.2}
+\makelabel{homalg:UnderlyingComplex}{8.5.1}
+\makelabel{homalg:ByASmallerPresentation (for bicomplexes)}{8.5.2}
+\makelabel{homalg:IsHomalgBigradedObject}{9.1.1}
+\makelabel{homalg:IsHomalgBigradedObjectAssociatedToAnExactCouple}{9.1.2}
+\makelabel{homalg:IsHomalgBigradedObjectAssociatedToAFilteredComplex}{9.1.3}
+\makelabel{homalg:IsHomalgBigradedObjectAssociatedToABicomplex}{9.1.4}
+\makelabel{homalg:IsBigradedObjectOfFinitelyPresentedObjectsRep}{9.1.5}
+\makelabel{homalg:HomalgBigradedObject (constructor for bigraded objects given a bicomplex)}{9.2.1}
+\makelabel{homalg:AsDifferentialObject (for homalg bigraded objects stemming from a bicomplex)}{9.2.2}
+\makelabel{homalg:DefectOfExactness (for homalg differential bigraded objects)}{9.2.3}
+\makelabel{homalg:IsEndowedWithDifferential}{9.3.1}
+\makelabel{homalg:IsStableSheet}{9.3.2}
+\makelabel{homalg:ByASmallerPresentation (for bigraded objects)}{9.4.1}
+\makelabel{homalg:IsHomalgSpectralSequence}{10.1.1}
+\makelabel{homalg:IsHomalgSpectralSequenceAssociatedToAnExactCouple}{10.1.2}
+\makelabel{homalg:IsHomalgSpectralSequenceAssociatedToAFilteredComplex}{10.1.3}
+\makelabel{homalg:IsHomalgSpectralSequenceAssociatedToABicomplex}{10.1.4}
+\makelabel{homalg:IsSpectralSequenceOfFinitelyPresentedObjectsRep}{10.1.5}
+\makelabel{homalg:IsSpectralCosequenceOfFinitelyPresentedObjectsRep}{10.1.6}
+\makelabel{homalg:HomalgSpectralSequence (constructor for spectral sequences given a bicomplex)}{10.2.1}
+\makelabel{homalg:HomalgSpectralSequence (constructor for spectral sequences without a special sheet given a bicomplex)}{10.2.1}
+\makelabel{homalg:HomalgSpectralSequence (constructor for spectral sequences without bound given a bicomplex)}{10.2.1}
+\makelabel{homalg:HomalgSpectralSequence (constructor for spectral sequences without bound and without a special sheet given a bicomplex)}{10.2.1}
+\makelabel{homalg:GeneralizedEmbeddingsInTotalObjects}{10.3.1}
+\makelabel{homalg:GeneralizedEmbeddingsInTotalDefects}{10.3.2}
+\makelabel{homalg:ByASmallerPresentation (for spectral sequences)}{10.4.1}
+\makelabel{homalg:IsHomalgFunctor}{11.1.1}
+\makelabel{homalg:IsHomalgFunctorRep}{11.1.2}
+\makelabel{homalg:CreateHomalgFunctor (constructor for functors)}{11.2.1}
+\makelabel{homalg:InsertObjectInMultiFunctor (constructor for functors given a multi-functor and an object)}{11.2.2}
+\makelabel{homalg:RightSatelliteOfCofunctor (constructor of the right satellite of a contravariant functor)}{11.2.3}
+\makelabel{homalg:LeftSatelliteOfFunctor (constructor of the left satellite of a covariant functor)}{11.2.4}
+\makelabel{homalg:RightDerivedCofunctor (constructor of the right derived functor of a contravariant functor)}{11.2.5}
+\makelabel{homalg:LeftDerivedFunctor (constructor of the left derived functor of a covariant functor)}{11.2.6}
+\makelabel{homalg:ComposeFunctors (constructor for functors given two functors)}{11.2.7}
+\makelabel{homalg:NameOfFunctor}{11.3.1}
+\makelabel{homalg:OperationOfFunctor}{11.3.2}
+\makelabel{homalg:Genesis}{11.3.3}
+\makelabel{homalg:ProcedureToReadjustGenerators (for functors)}{11.3.4}
+\makelabel{homalg:functorKernel}{11.4.1}
+\makelabel{homalg:functorDefectOfExactness}{11.4.2}
+\makelabel{homalg:InstallFunctor}{11.7.1}
+\makelabel{homalg:InstallDeltaFunctor}{11.7.2}

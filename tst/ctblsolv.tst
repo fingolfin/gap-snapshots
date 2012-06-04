@@ -2,15 +2,12 @@
 ##
 #W  ctblsolv.tst               GAP Library                      Thomas Breuer
 ##
-#H  @(#)$Id: ctblsolv.tst,v 1.7.2.4 2005/08/29 14:50:35 gap Exp $
 ##
-#Y  Copyright (C)  1998,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  1998,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testall.g
+##  To be listed in testinstall.g
 ##
-
-gap> START_TEST("$Id: ctblsolv.tst,v 1.7.2.4 2005/08/29 14:50:35 gap Exp $");
-
+gap> START_TEST("ctblsolv.tst");
 gap> CharacterDegrees( SmallGroup( 256, 529 ) );
 [ [ 1, 8 ], [ 2, 30 ], [ 4, 8 ] ]
 gap> for pair in [ [ 18, 3 ], [ 27, 3 ], [ 36, 7 ], [ 50, 3 ], [ 54, 4 ] ] do
@@ -20,11 +17,8 @@ gap> for pair in [ [ 18, 3 ], [ 27, 3 ], [ 36, 7 ], [ 50, 3 ], [ 54, 4 ] ] do
 >        Error( IdGroup( G ) );
 >      fi;
 >    od;
-
-gap> STOP_TEST( "ctblsolv.tst", 324300000 );
-
+gap> STOP_TEST( "ctblsolv.tst", 54000000 );
 
 #############################################################################
 ##
 #E
-

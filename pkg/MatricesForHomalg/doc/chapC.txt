@@ -1,0 +1,783 @@
+  
+  [1XC Logic Subpackages[0X
+  
+  
+  [1XC.1 [5XLIRNG[1X: Logical Implications for Rings[0X
+  
+  
+  [1XC.2 [5XLIMAP[1X: Logical Implications for Ring Maps[0X
+  
+  
+  [1XC.3 [5XLIMAT[1X: Logical Implications for Matrices[0X
+  
+  
+  [1XC.4 [5XCOLEM[1X: Clever Operations for Lazy Evaluated Matrices[0X
+  
+  Most of the matrix tool operations listed in Appendix [14XB.1[0m which return a new
+  matrix  are  lazy  evaluated.  The value of a [5Xhomalg[0m matrix is stored in the
+  attribute [10XEval[0m. Below is the list of the installed methods for the attribute
+  [10XEval[0m.
+  
+  [1XC.4-1 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case the matrix [3XC[0m was created using [2XHomalgInitialMatrix[0m ([14X5.2-1[0m) then the
+  filter  [10XIsInitialMatrix[0m  for  [3XC[0m  is set to true and the [10XhomalgTable[0m function
+  (-->  [2XInitialMatrix[0m  ([14XB.1-1[0m))  will  be  used  to set the attribute [10XEval[0m and
+  resets the filter [10XIsInitialMatrix[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (IsInitialMatrix)",[0X
+    [4X        [ IsHomalgMatrix and IsInitialMatrix and[0X
+    [4X          HasNrRows and HasNrColumns ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, z, zz;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound( RP!.InitialMatrix ) then[0X
+    [4X        ResetFilterObj( C, IsInitialMatrix );[0X
+    [4X        return RP!.InitialMatrix( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called InitialMatrix in the ",[0X
+    [4X               "homalgTable to evaluate a non-internal initial matrix\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    z := Zero( HomalgRing( C ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( C, IsInitialMatrix );[0X
+    [4X    [0X
+    [4X    zz := ListWithIdenticalEntries( NrColumns( C ), z );[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull([0X
+    [4X                   List( [ 1 .. NrRows( C ) ], i -> ShallowCopy( zz ) ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-2 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the matrix [3XC[0m was created using [2XHomalgInitialIdentityMatrix[0m ([14X5.2-2[0m)
+  then  the  filter  [10XIsInitialIdentityMatrix[0m  for  [3XC[0m  is  set  to true and the
+  [10XhomalgTable[0m function (--> [2XInitialIdentityMatrix[0m ([14XB.1-2[0m)) will be used to set
+  the attribute [10XEval[0m and resets the filter [10XIsInitialIdentityMatrix[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (IsInitialIdentityMatrix)",[0X
+    [4X        [ IsHomalgMatrix and IsInitialIdentityMatrix and[0X
+    [4X          HasNrRows and HasNrColumns ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, o, z, zz, id;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound( RP!.InitialIdentityMatrix ) then[0X
+    [4X        ResetFilterObj( C, IsInitialIdentityMatrix );[0X
+    [4X        return RP!.InitialIdentityMatrix( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called InitialIdentityMatrix in the ",[0X
+    [4X               "homalgTable to evaluate a non-internal initial identity matrix\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    z := Zero( HomalgRing( C ) );[0X
+    [4X    o := One( HomalgRing( C ) );[0X
+    [4X    [0X
+    [4X    ResetFilterObj( C, IsInitialIdentityMatrix );[0X
+    [4X    [0X
+    [4X    zz := ListWithIdenticalEntries( NrColumns( C ), z );[0X
+    [4X    [0X
+    [4X    id := List( [ 1 .. NrRows( C ) ],[0X
+    [4X                function(i)[0X
+    [4X                  local z;[0X
+    [4X                  z := ShallowCopy( zz ); z[i] := o; return z;[0X
+    [4X                end );[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( id );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-3 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the  matrix  [3XC[0m was created using [2XHomalgZeroMatrix[0m ([14X5.2-3[0m) then the
+  filter  [10XIsZeroMatrix[0m  for [3XC[0m is set to true and the [10XhomalgTable[0m function (-->
+  [2XZeroMatrix[0m ([14XB.1-3[0m)) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (IsZero)",[0X
+    [4X        [ IsHomalgMatrix and IsZero and HasNrRows and HasNrColumns ], 20,[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, z;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if ( NrRows( C ) = 0 or NrColumns( C ) = 0 ) and[0X
+    [4X       not ( IsBound( R!.SafeToEvaluateEmptyMatrices ) and[0X
+    [4X             R!.SafeToEvaluateEmptyMatrices = true ) then[0X
+    [4X        Info( InfoWarning, 1, "\033[01m\033[5;31;47m",[0X
+    [4X              "an empty matrix is about to get evaluated!",[0X
+    [4X              "\033[0m" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if IsBound( RP!.ZeroMatrix ) then[0X
+    [4X        return RP!.ZeroMatrix( C );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called ZeroMatrix ",[0X
+    [4X               "homalgTable to evaluate a non-internal zero matrix\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    z := Zero( HomalgRing( C ) );[0X
+    [4X    [0X
+    [4X    ## copying the rows saves memory;[0X
+    [4X    ## we assume that the entries are never modified!!![0X
+    [4X    return homalgInternalMatrixHull([0X
+    [4X                   ListWithIdenticalEntries( NrRows( C ),[0X
+    [4X                           ListWithIdenticalEntries( NrColumns( C ), z ) ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-4 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In case the matrix [3XC[0m was created using [2XHomalgIdentityMatrix[0m ([14X5.2-4[0m) then the
+  filter  [10XIsOne[0m  for  [3XC[0m  is  set  to  true  and  the [10XhomalgTable[0m function (-->
+  [2XIdentityMatrix[0m ([14XB.1-4[0m)) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (IsOne)",[0X
+    [4X        [ IsHomalgMatrix and IsOne and HasNrRows and HasNrColumns ], 10,[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, id, RP, o, z, zz;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    if IsBound( R!.IdentityMatrices ) then[0X
+    [4X        id := ElmWPObj( R!.IdentityMatrices!.weak_pointers, NrColumns( C ) );[0X
+    [4X        if id <> fail then[0X
+    [4X            R!.IdentityMatrices!.cache_hits := R!.IdentityMatrices!.cache_hits + 1;[0X
+    [4X            return id;[0X
+    [4X        fi;[0X
+    [4X        ## we do not count cache_misses as it is equivalent to counter[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    if IsBound( RP!.IdentityMatrix ) then[0X
+    [4X        id := RP!.IdentityMatrix( C );[0X
+    [4X        SetElmWPObj( R!.IdentityMatrices!.weak_pointers, NrColumns( C ), id );[0X
+    [4X        R!.IdentityMatrices!.counter := R!.IdentityMatrices!.counter + 1;[0X
+    [4X        return id;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called IdentityMatrix ",[0X
+    [4X               "homalgTable to evaluate a non-internal identity matrix\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    z := Zero( HomalgRing( C ) );[0X
+    [4X    o := One( HomalgRing( C ) );[0X
+    [4X    [0X
+    [4X    zz := ListWithIdenticalEntries( NrColumns( C ), z );[0X
+    [4X    [0X
+    [4X    id := List( [ 1 .. NrRows( C ) ],[0X
+    [4X                function(i)[0X
+    [4X                  local z;[0X
+    [4X                  z := ShallowCopy( zz ); z[i] := o; return z;[0X
+    [4X                end );[0X
+    [4X    [0X
+    [4X    id := homalgInternalMatrixHull( id );[0X
+    [4X    [0X
+    [4X    SetElmWPObj( R!.IdentityMatrices!.weak_pointers, NrColumns( C ), id );[0X
+    [4X    [0X
+    [4X    return id;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-5 Eval[0m
+  
+  [2X> Eval( [0X[3XLI[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  see below
+  
+  In  case  the  matrix  [3XLI[0m was created using [2XLeftInverseLazy[0m ([14X5.5-4[0m) then the
+  filter  [10XHasEvalLeftInverse[0m for [3XLI[0m is set to true and the method listed below
+  will be used to set the attribute [10XEval[0m. (--> [2XLeftInverse[0m ([14X5.5-2[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix and HasEvalLeftInverse ],[0X
+    [4X        [0X
+    [4X  function( LI )[0X
+    [4X    local left_inv;[0X
+    [4X    [0X
+    [4X    left_inv := LeftInverse( EvalLeftInverse( LI ) );[0X
+    [4X    [0X
+    [4X    if IsBool( left_inv ) then[0X
+    [4X        return false;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return Eval( left_inv );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-6 Eval[0m
+  
+  [2X> Eval( [0X[3XRI[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  see below
+  
+  In  case  the  matrix [3XRI[0m was created using [2XRightInverseLazy[0m ([14X5.5-5[0m) then the
+  filter [10XHasEvalRightInverse[0m for [3XRI[0m is set to true and the method listed below
+  will be used to set the attribute [10XEval[0m. (--> [2XRightInverse[0m ([14X5.5-3[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix and HasEvalRightInverse ],[0X
+    [4X        [0X
+    [4X  function( RI )[0X
+    [4X    local right_inv;[0X
+    [4X    [0X
+    [4X    right_inv := RightInverse( EvalRightInverse( RI ) );[0X
+    [4X    [0X
+    [4X    if IsBool( right_inv ) then[0X
+    [4X        return false;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return Eval( right_inv );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-7 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the  matrix  was  created using [2XInvolution[0m ([14X5.5-6[0m) then the filter
+  [10XHasEvalInvolution[0m  for  [3XC[0m  is  set  to  true  and  the  [10XhomalgTable[0m function
+  [2XInvolution[0m ([14XB.1-5[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalInvolution)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalInvolution ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, M;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    M :=  EvalInvolution( C );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.Involution) then[0X
+    [4X        return RP!.Involution( M );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called Involution ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( TransposedMat( Eval( M )!.matrix ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-8 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the  matrix  was created using [2XCertainRows[0m ([14X5.5-7[0m) then the filter
+  [10XHasEvalCertainRows[0m  for  [3XC[0m  is  set  to  true  and  the [10XhomalgTable[0m function
+  [2XCertainRows[0m ([14XB.1-6[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalCertainRows)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalCertainRows ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, M, plist;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalCertainRows( C );[0X
+    [4X    [0X
+    [4X    M := e[1];[0X
+    [4X    plist := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.CertainRows) then[0X
+    [4X        return RP!.CertainRows( M, plist );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called CertainRows ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( Eval( M )!.matrix{ plist } );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-9 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case the matrix was created using [2XCertainColumns[0m ([14X5.5-8[0m) then the filter
+  [10XHasEvalCertainColumns[0m  for  [3XC[0m  is  set  to true and the [10XhomalgTable[0m function
+  [2XCertainColumns[0m ([14XB.1-7[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalCertainColumns)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalCertainColumns ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, M, plist;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalCertainColumns( C );[0X
+    [4X    [0X
+    [4X    M := e[1];[0X
+    [4X    plist := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.CertainColumns) then[0X
+    [4X        return RP!.CertainColumns( M, plist );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called CertainColumns ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull([0X
+    [4X                   Eval( M )!.matrix{[ 1 .. NrRows( M ) ]}{plist} );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-10 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the  matrix  was created using [2XUnionOfRows[0m ([14X5.5-9[0m) then the filter
+  [10XHasEvalUnionOfRows[0m  for  [3XC[0m  is  set  to  true  and  the [10XhomalgTable[0m function
+  [2XUnionOfRows[0m ([14XB.1-8[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalUnionOfRows)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalUnionOfRows ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, A, B, U;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalUnionOfRows( C );[0X
+    [4X    [0X
+    [4X    A := e[1];[0X
+    [4X    B := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.UnionOfRows) then[0X
+    [4X        return RP!.UnionOfRows( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called UnionOfRows ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    U := ShallowCopy( Eval( A )!.matrix );[0X
+    [4X    [0X
+    [4X    U{ [ NrRows( A ) + 1 .. NrRows( A ) + NrRows( B ) ] } := Eval( B )!.matrix;[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( U );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-11 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In case the matrix was created using [2XUnionOfColumns[0m ([14X5.5-10[0m) then the filter
+  [10XHasEvalUnionOfColumns[0m  for  [3XC[0m  is  set  to true and the [10XhomalgTable[0m function
+  [2XUnionOfColumns[0m ([14XB.1-9[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalUnionOfColumns)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalUnionOfColumns ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, A, B, U;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalUnionOfColumns( C );[0X
+    [4X    [0X
+    [4X    A := e[1];[0X
+    [4X    B := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.UnionOfColumns) then[0X
+    [4X        return RP!.UnionOfColumns( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called UnionOfColumns ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    U := List( Eval( A )!.matrix, ShallowCopy );[0X
+    [4X    [0X
+    [4X    U{ [ 1 .. NrRows( A ) ] }[0X
+    [4X      { [ NrColumns( A ) + 1 .. NrColumns( A ) + NrColumns( B ) ] }[0X
+    [4X      := Eval( B )!.matrix;[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( U );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-12 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the  matrix  was  created  using  [2XDiagMat[0m ([14X5.5-11[0m) then the filter
+  [10XHasEvalDiagMat[0m  for  [3XC[0m  is  set to true and the [10XhomalgTable[0m function [2XDiagMat[0m
+  ([14XB.1-10[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalDiagMat)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalDiagMat ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, z, m, n, diag, mat;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalDiagMat( C );[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.DiagMat) then[0X
+    [4X        return RP!.DiagMat( e );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called DiagMat ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    z := Zero( R );[0X
+    [4X    [0X
+    [4X    m := Sum( List( e, NrRows ) );[0X
+    [4X    n := Sum( List( e, NrColumns ) );[0X
+    [4X    [0X
+    [4X    diag := List( [ 1 .. m ], a -> List( [ 1 .. n ], b -> z ) );[0X
+    [4X    [0X
+    [4X    m := 0;[0X
+    [4X    n := 0;[0X
+    [4X    [0X
+    [4X    for mat in e do[0X
+    [4X        diag{ [ m + 1 .. m + NrRows( mat ) ] }{ [ n + 1 .. n + NrColumns( mat ) ] }[0X
+    [4X          := Eval( mat )!.matrix;[0X
+    [4X        [0X
+    [4X        m := m + NrRows( mat );[0X
+    [4X        n := n + NrColumns( mat );[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull( diag );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-13 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In  case  the matrix was created using [2XKroneckerMat[0m ([14X5.5-12[0m) then the filter
+  [10XHasEvalKroneckerMat[0m  for  [3XC[0m  is  set  to  true  and the [10XhomalgTable[0m function
+  [2XKroneckerMat[0m ([14XB.1-11[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalKroneckerMat)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalKroneckerMat ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, A, B;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    if ( HasIsCommutative( R ) and not IsCommutative( R ) ) and[0X
+    [4X       ( HasIsSuperCommutative( R ) and not IsSuperCommutative( R ) ) then[0X
+    [4X        Info( InfoWarning, 1, "\033[01m\033[5;31;47m",[0X
+    [4X              "the Kronecker product is only defined for (super) commutative rings!",[0X
+    [4X              "\033[0m" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    A :=  EvalKroneckerMat( C )[1];[0X
+    [4X    B :=  EvalKroneckerMat( C )[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.KroneckerMat) then[0X
+    [4X        return RP!.KroneckerMat( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called KroneckerMat ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return homalgInternalMatrixHull([0X
+    [4X                   KroneckerProduct( Eval( A )!.matrix, Eval( B )!.matrix ) );[0X
+    [4X    ## this was easy, thanks GAP :)[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-14 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In   case  the  matrix  was  created  using  [2X\*[0m  ([14X5.5-13[0m)  then  the  filter
+  [10XHasEvalMulMat[0m  for  [3XC[0m  is  set  to  true and the [10XhomalgTable[0m function [2XMulMat[0m
+  ([14XB.1-12[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalMulMat)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalMulMat ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, a, A;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalMulMat( C );[0X
+    [4X    [0X
+    [4X    a := e[1];[0X
+    [4X    A := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.MulMat) then[0X
+    [4X        return RP!.MulMat( a, A );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called MulMat ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return a * Eval( A );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-15 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In   case  the  matrix  was  created  using  [2X\+[0m  ([14X5.5-14[0m)  then  the  filter
+  [10XHasEvalAddMat[0m  for  [3XC[0m  is  set  to  true and the [10XhomalgTable[0m function [2XAddMat[0m
+  ([14XB.1-13[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalAddMat)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalAddMat ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, A, B;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalAddMat( C );[0X
+    [4X    [0X
+    [4X    A := e[1];[0X
+    [4X    B := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.AddMat) then[0X
+    [4X        return RP!.AddMat( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called AddMat ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Eval( A ) + Eval( B );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-16 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In   case  the  matrix  was  created  using  [2X\-[0m  ([14X5.5-15[0m)  then  the  filter
+  [10XHasEvalSubMat[0m  for  [3XC[0m  is  set  to  true and the [10XhomalgTable[0m function [2XSubMat[0m
+  ([14XB.1-14[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalSubMat)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalSubMat ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, A, B;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalSubMat( C );[0X
+    [4X    [0X
+    [4X    A := e[1];[0X
+    [4X    B := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.SubMat) then[0X
+    [4X        return RP!.SubMat( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called SubMat ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Eval( A ) - Eval( B );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1XC.4-17 Eval[0m
+  
+  [2X> Eval( [0X[3XC[0X[2X ) __________________________________________________________[0Xmethod
+  [6XReturns:[0X  the [10XEval[0m value of a [5Xhomalg[0m matrix [3XC[0m
+  
+  In   case  the  matrix  was  created  using  [2X\*[0m  ([14X5.5-16[0m)  then  the  filter
+  [10XHasEvalCompose[0m  for  [3XC[0m  is  set to true and the [10XhomalgTable[0m function [2XCompose[0m
+  ([14XB.1-15[0m) will be used to set the attribute [10XEval[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Eval,[0X
+    [4X        "for homalg matrices (HasEvalCompose)",[0X
+    [4X        [ IsHomalgMatrix and HasEvalCompose ],[0X
+    [4X        [0X
+    [4X  function( C )[0X
+    [4X    local R, RP, e, A, B;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( C );[0X
+    [4X    [0X
+    [4X    RP := homalgTable( R );[0X
+    [4X    [0X
+    [4X    e :=  EvalCompose( C );[0X
+    [4X    [0X
+    [4X    A := e[1];[0X
+    [4X    B := e[2];[0X
+    [4X    [0X
+    [4X    if IsBound(RP!.Compose) then[0X
+    [4X        return RP!.Compose( A, B );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if not IsHomalgInternalMatrixRep( C ) then[0X
+    [4X        Error( "could not find a procedure called Compose ",[0X
+    [4X               "in the homalgTable of the non-internal ring\n" );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    #=====# can only work for homalg internal matrices #=====#[0X
+    [4X    [0X
+    [4X    return Eval( A ) * Eval( B );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  

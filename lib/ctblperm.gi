@@ -2,16 +2,13 @@
 ##
 #W  ctblperm.gi                  GAP library                 Alexander Hulpke
 ##
-#H  @(#)$Id: ctblperm.gi,v 4.11 2002/04/15 10:04:35 sal Exp $
 ##
 #Y  Copyright (C) 1993, 1997
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
-Revision.ctblperm_gi :=
-    "@(#)$Id: ctblperm.gi,v 4.11 2002/04/15 10:04:35 sal Exp $";
 
 #############################################################################
 ##

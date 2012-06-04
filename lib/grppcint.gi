@@ -3,16 +3,13 @@
 #W  grppcint.gi                 GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppcint.gi,v 4.27.4.1 2005/04/12 19:07:15 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for the intersection of polycylic groups.
 ##
-Revision.grppcint_gi :=
-    "@(#)$Id: grppcint.gi,v 4.27.4.1 2005/04/12 19:07:15 gap Exp $";
 
 
 #############################################################################
@@ -77,7 +74,7 @@ GlasbyStabilizer := function( pcgs, A, B, pcgsL )
 
     A := InducedPcgsByPcSequenceNC( pcgs, A );
     #U := SubgroupByPcgs( GroupOfPcgs(pcgs), A );
-    matA  := AffineOperationLayer( A, pcgsL, transl );
+    matA  := AffineActionLayer( A, pcgsL, transl );
 
     pt := List( pcgsL, x -> Zero( f ) );
     Add( pt, One( f ) );

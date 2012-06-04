@@ -6,8 +6,6 @@
 ##  This file contains the generic construction of groups with order containg
 ##  maximal 3 primes. 
 ##
-Revision.smlgp1_g :=
-    "@(#)$Id: smlgp1.g,v 4.10.4.1 2005/05/03 14:21:26 gap Exp $";
 
 #############################################################################
 ##

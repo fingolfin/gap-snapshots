@@ -1,0 +1,137 @@
+\begin{theindex}
+
+  \item $\varepsilon(K,H)$, \hyperpage{42}
+  \item $e(G,K,H)$, \hyperpage{42}
+  \item $e_C(G,K,H)$, \hyperpage{42}
+  \item \texttt  {\texttt  {\char 92\relax }\texttt  {\char 94\relax }}, 
+		\hyperpage{33}
+
+  \indexspace
+
+  \item Abelian Crossed Product, \hyperpage{40}
+  \item \texttt{ActionForCrossedProduct}, \hyperpage{26}
+  \item \texttt  {AverageSum}, \hyperpage{34}
+
+  \indexspace
+
+  \item Basis of units (for crossed product), \hyperpage{39}
+  \item (Brauer) equivalence, \hyperpage{38}
+
+  \indexspace
+
+  \item central simple algebra, \hyperpage{38}
+  \item \texttt  {Centralizer}, \hyperpage{32}
+  \item Classical Crossed Product, \hyperpage{40}
+  \item CoefficientsAndMagmaElements, \hyperpage{30}
+  \item Crossed Product, \hyperpage{38}
+  \item \texttt  {CrossedProduct}, \hyperpage{23}
+  \item Cyclic Algebra, \hyperpage{40}
+  \item Cyclic Crossed Product, \hyperpage{39}
+  \item Cyclotomic algebra, \hyperpage{41}
+  \item cyclotomic class, \hyperpage{44}
+  \item \texttt  {CyclotomicClasses}, \hyperpage{34}
+
+  \indexspace
+
+  \item \texttt  {ElementOfCrossedProduct}, \hyperpage{30}
+  \item \texttt{Embedding}, \hyperpage{30}
+  \item equivalence (Brauer), \hyperpage{38}
+  \item equivalent strong Shoda pairs, \hyperpage{43}
+
+  \indexspace
+
+  \item field of character values, \hyperpage{37}
+
+  \indexspace
+
+  \item generating cyclotomic class, \hyperpage{44}
+  \item group algebra, \hyperpage{36}
+  \item group ring, \hyperpage{36}
+
+  \indexspace
+
+  \item \texttt  {InfoWedderga}, \hyperpage{35}
+  \item \texttt  {IsComplete}\discretionary {-}{}{}\texttt  {Set}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Orthogonal}\discretionary {-}{}{}\texttt  {Idempotents}, 
+		\hyperpage{19}
+  \item \texttt{IsCrossedProduct}, \hyperpage{23}
+  \item \texttt{IsCrossedProductObjDefaultRep}, \hyperpage{30}
+  \item \texttt  {IsCyclotomicClass}, \hyperpage{35}
+  \item \texttt{IsElementOfCrossedProduct}, \hyperpage{30}
+  \item \texttt  {IsSemisimpleANFGroupAlgebra}, \hyperpage{32}
+  \item \texttt  {IsSemisimpleFiniteGroupAlgebra}, \hyperpage{32}
+  \item \texttt  {IsSemisimpleRationalGroupAlgebra}, \hyperpage{31}
+  \item \texttt  {IsSemisimple}\discretionary {-}{}{}\texttt  {Zero}\discretionary {-}{}{}\texttt  {Characteristic}\discretionary {-}{}{}\texttt  {Group}\discretionary {-}{}{}\texttt  {Algebra}, 
+		\hyperpage{31}
+  \item \texttt  {IsShodaPair}, \hyperpage{17}
+  \item \texttt  {IsStronglyMonomial}, \hyperpage{18}
+  \item \texttt  {IsStrongShodaPair}, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt{LeftActingDomain}, \hyperpage{26}
+
+  \indexspace
+
+  \item \texttt  {OnPoints}, \hyperpage{33}
+
+  \indexspace
+
+  \item primitive central idempotent, \hyperpage{37}
+  \item primitive central idempotent realized by a Shoda pair, 
+		\hyperpage{42}
+  \item primitive central idempotent realized by a strong Shoda pair and a cyclotomic class, 
+		\hyperpage{44}
+  \item \texttt  {Primitive}\discretionary {-}{}{}\texttt  {Central}\discretionary {-}{}{}\texttt  {Idempotents}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Character}\discretionary {-}{}{}\texttt  {Table}, 
+		\hyperpage{19}
+  \item \texttt  {PrimitiveCentralIdempotentsBySP}, \hyperpage{21}
+  \item \texttt  {Primitive}\discretionary {-}{}{}\texttt  {Central}\discretionary {-}{}{}\texttt  {Idempotents}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {StrongSP}, 
+		\hyperpage{20}
+
+  \indexspace
+
+  \item Quaternion algebra, \hyperpage{28}
+
+  \indexspace
+
+  \item semisimple ring, \hyperpage{36}
+  \item Shoda pair, \hyperpage{42}
+  \item \texttt  {SimpleAlgebraByCharacter}, \hyperpage{13}
+  \item \texttt  {SimpleAlgebraByCharacterInfo}, \hyperpage{13}
+  \item \texttt  {SimpleAlgebraByStrongSP}
+    \subitem for rational group algebra, \hyperpage{13}
+    \subitem for semisimple finite group algebra, \hyperpage{14}
+  \item \texttt  {SimpleAlgebraByStrongSPInfo}
+    \subitem for rational group algebra, \hyperpage{14}
+    \subitem for semisimple finite group algebra, \hyperpage{14}
+  \item \texttt  {SimpleAlgebraByStrongSPInfoNC}
+    \subitem for rational group algebra, \hyperpage{14}
+    \subitem for semisimple finite group algebra, \hyperpage{14}
+  \item \texttt  {SimpleAlgebraByStrongSPNC}
+    \subitem for rational group algebra, \hyperpage{13}
+    \subitem for semisimple finite group algebra, \hyperpage{14}
+  \item strongly monomial character, \hyperpage{43}
+  \item strongly monomial group, \hyperpage{43}
+  \item strong Shoda pair, \hyperpage{42}
+  \item \texttt  {StrongShodaPairs}, \hyperpage{16}
+
+  \indexspace
+
+  \item \texttt{TwistingForCrossedProduct}, \hyperpage{26}
+
+  \indexspace
+
+  \item \texttt{UnderlyingMagma}, \hyperpage{26}
+
+  \indexspace
+
+  \item Wedderburn components, \hyperpage{36}
+  \item Wedderburn decomposition, \hyperpage{36}
+  \item \texttt  {WedderburnDecomposition}, \hyperpage{8}
+  \item \texttt  {WedderburnDecompositionInfo}, \hyperpage{9}
+  \item \textsf{Wedderga} package, \hyperpage{2}
+
+  \indexspace
+
+  \item \texttt{ZeroCoefficient}, \hyperpage{30}
+
+\end{theindex}

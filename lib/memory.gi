@@ -1,16 +1,14 @@
 #############################################################################
 ##
-##  memory.gi          recog package                      Max Neunhoeffer
-##                                                            ¡kos Seress
+##  memory.gi          recog package                      Max Neunh√∂ffer
+##                                                            √Åkos Seress
 ##
-##  Copyright 2005 Lehrstuhl D f¸r Mathematik, RWTH Aachen
+##  Copyright 2005 Lehrstuhl D f√ºr Mathematik, RWTH Aachen
 ##
 ##  Group objects remembering how they were created from the generators.
 ##
 #############################################################################
 
-Revision.memory_gi :=
-  "@(#)$Id: memory.gi,v 1.1.2.2 2006/08/19 13:09:13 gap Exp $";
 
 InstallMethod(TypeOfObjWithMemory,"generic",true,[IsFamily],0,
 function(fam)
@@ -123,7 +121,7 @@ InstallGlobalFunction( GroupWithMemory,
     else
         memgens := GeneratorsWithMemory(gens);
     fi;
-    g := Group(memgens);
+    g := GroupWithGenerators(memgens);
     return g;
   end);
 

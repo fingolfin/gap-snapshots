@@ -7,8 +7,6 @@
 ##  for all groups of cubefree order up to 50000 not contained in lower
 ##  layers of the small groups library.
 ##
-Revision.smlgp10_g :=
-    "@(#)$Id: smlgp10.g,v 1.3.2.1 2005/05/03 14:19:18 gap Exp $";
 
 #############################################################################
 ##

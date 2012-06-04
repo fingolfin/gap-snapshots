@@ -1,26 +1,27 @@
 #############################################################################
 ##  
-##  PackageInfo.g for the GAP 4 package TomLib                  Thomas Breuer
+##  PackageInfo.g for the GAP 4 package TomLib                  Liam Naughton
 ##  
 SetPackageInfo( rec(
 PackageName :=
   "TomLib",
 MyVersion :=
-  "1r1p4",
+  "1r2p2",
 MyWWWHome :=
-  "http://www.math.rwth-aachen.de/~Thomas.Breuer",
+  "http://schmidt.nuigalway.ie",
 Subtitle :=
   "The GAP Library of Tables of Marks",
 Version :=
   JoinStringsWithSeparator( SplitString( ~.MyVersion, "rp" ), "." ),
-Autoload :=
-  true,
 Date :=
   # "06/05/2002" // Version 1.0  # the release date of GAP 4.3
   # "18/12/2003" // Version 1.1.1
   # "26/02/2004" // Version 1.1.2
   # "28/09/2007" // Version 1.1.3
-  "20/11/2008",
+  # "20/11/2008" // Version 1.1.4
+  # "06/08/2009" // Version 1.1.5
+  # "06/04/2011" // Version 1.2.1
+"30/09/2011",
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
@@ -29,32 +30,25 @@ ArchiveURL :=
 ArchiveFormats :=
   ".tar.gz,.zoo",
 Persons := [
-  rec(
-    LastName := "Breuer",
-    FirstNames := "Thomas",
+rec(
+    LastName := "Naughton",
+    FirstNames := "Liam",
     IsAuthor := false,
     IsMaintainer := true,
-    Email := "sam@math.rwth-aachen.de",
+    Email := "liam.naughton@nuigalway.ie",
     WWWHome := ~.MyWWWHome,
-    Place := "Aachen",
-    Institution := "Lehrstuhl D f&uuml;r Mathematik, RWTH Aachen",
+    Place := "Galway",
+    Institution := "School of Mathematics, Statistics and Applied Mathematics, NUI Galway",
     PostalAddress := Concatenation( [
-      "Thomas Breuer\n",
-      "Lehrstuhl D f&uuml;r Mathematik\n",
-      "Templergraben 64\n",
-      "52062 Aachen\n",
-      "Germany"
+      "Liam Naughton\n",
+      "School of Mathematics, Statistics and Applied Mathematics\n",
+      "NUI Galway\n",
+      "University Road\n",
+      "Galway\n",
+      "Ireland"
       ] )
   ),
-  rec(
-    LastName := "Merkwitz",
-    FirstNames := "Thomas",
-    IsAuthor := true,
-    IsMaintainer := false,
-    Email := "Thomas.Merkwitz@Team4.DE"
-#   WWWHome := 
-  ),
-  rec(
+rec(
     LastName := "Pfeiffer",
     FirstNames := "G&ouml;tz",
     IsAuthor := true,
@@ -87,15 +81,13 @@ PackageDoc := rec(
   ArchiveURLSubset :=
     [ "doc", "htm" ],
   HTMLStart :=
-    "htm/chapters.htm",
+    "doc/chap0.html",
   PDFFile :=
     "doc/manual.pdf",
   SixFile :=
     "doc/manual.six",
   LongTitle :=
-    "The GAP Library of Tables of Marks",
-  Autoload :=
-    true
+    "The GAP Library of Tables of Marks"
   ),
 Dependencies := rec(
   GAP :=

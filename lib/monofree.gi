@@ -2,16 +2,13 @@
 ##
 #W  monofree.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: monofree.gi,v 4.36.2.1 2008/11/25 09:35:27 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for free monoids.
 ##
-Revision.monofree_gi:=
-    "@(#)$Id: monofree.gi,v 4.36.2.1 2008/11/25 09:35:27 gap Exp $";
 
 
 #############################################################################
@@ -164,7 +161,7 @@ InstallMethod( MagmaGeneratorsOfFamily,
     # Return the magma generators.
     return gens;
     end );
-
+    
 # GeneratorsOfMonoid returns the generators in ascending order
     
 InstallMethod( GeneratorsSmallest,
@@ -260,7 +257,7 @@ InstallGlobalFunction( FreeMonoid, function( arg )
       M:= MonoidByGenerators( InfiniteListOfGenerators( F ) );
     fi;
 
-		SetIsFreeMonoid(M,true);
+    SetIsFreeMonoid(M,true);
 
     SetIsWholeFamily( M, true );
     SetIsTrivial( M, false );

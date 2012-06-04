@@ -3,16 +3,13 @@
 #W  grppccom.gi                  GAP Library                     Frank Celler
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: grppccom.gi,v 4.35 2002/04/15 10:04:51 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for complements in pc groups
 ##
-Revision.grppccom_gi:=
-    "@(#)$Id: grppccom.gi,v 4.35 2002/04/15 10:04:51 sal Exp $";
 
 BindGlobal("HomomorphismsSeries",function(G,h)
 local r,img,i,gens,img2;
@@ -31,24 +28,25 @@ local r,img,i,gens,img2;
 end);
 
 # test function for relators
-OCTestRelators:=function(ocr)
+BindGlobal("OCTestRelators",function(ocr)
   if not IsBound(ocr.relators) then return true;fi;
   return ForAll(ocr.relators,i->ExponentsOfPcElement(ocr.generators,
      Product(List([1..Length(i.generators)],
              j->ocr.generators[i.generators[j]]^i.powers[j])))
      =List(ocr.generators,i->0));
-end;
+end);
 
 #############################################################################
 ##
-#F  COAffineBlocks( <S>, <mats> ) . . . . . . . . . . . . . . . . . . . local
+#F  COAffineBlocks( <S>,<Sgens>,<mats>,<orbs> )
 ##
 ##  Divide the vectorspace  into blocks using  the  affine operations of  <S>
 ##  described by <mats>.  Return representative  for  these blocks and  their
 ##  normalizers in <S>.
+##  if <orbs> is true orbits are kept.
 ##
-InstallGlobalFunction( COAffineBlocks, function( S, Spcgs,mats )
-local   dim, p, nul, one, C, L, blt, B, O, Q, i, j, v, w, n, z, root;
+InstallGlobalFunction( COAffineBlocks, function( S, Sgens,mats,orbs )
+local   dim, p, nul, one, C, L, blt, B, O, Q, i, j, v, w, n, z, root,r;
 
   # The affine operation of <S> is described via <mats> as
   #
@@ -89,7 +87,7 @@ local   dim, p, nul, one, C, L, blt, B, O, Q, i, j, v, w, n, z, root;
     ConvertToVectorRep(w,p);
     v:=Concatenation(v,[one]);
     ConvertToVectorRep(v,p);
-    O:=OrbitStabilizer( S,v, Spcgs,mats);
+    O:=OrbitStabilizer( S,v, Sgens,mats);
     for v  in O.orbit  do
         n:=1;
         for j  in [1..dim]  do
@@ -101,7 +99,9 @@ local   dim, p, nul, one, C, L, blt, B, O, Q, i, j, v, w, n, z, root;
         blt[n]:=true;
     od;
     Info(InfoComplement,2,"COAffineBlocks: |block| = ", Length(O.orbit));
-    Add( B, rec( vector:=w, stabilizer:=O.stabilizer ) );
+    r:=rec( vector:=w, stabilizer:=O.stabilizer );
+    if orbs=true then r.orbit:=O.orbit;fi;
+    Add( B, r);
     i:=Position( blt, false );
   od;
   Info(InfoComplement,2,"COAffineBlocks: ", Length( B ), " blocks found" );
@@ -134,6 +134,99 @@ local   gens,  pnt,  i;
 
 end );
 
+#ocr is oc record, acts are elements that act via ^ on group elements, B
+#is the result of BaseSteinitzVectors on the 1-cocycles in ocr.
+InstallGlobalFunction(COAffineCohomologyAction,function(ocr,relativeGens,acts,B)
+local tau, phi, mats;
+
+  # Get  the  matrices describing the affine operations. The linear  part
+  # of the  operation  is just conjugation of the entries of cocycle. The
+  # translation are  commuators  with the  generators.  So check if <ocr>
+  # has a small generating set. Use only these to form the commutators.
+
+  # Translation: (.. h ..) -> (.. [h,c] ..)
+  if IsBound( ocr.smallGeneratingSet )  then
+
+    Error("not yet implemented");
+    tau:=function( c )
+    local   l,  i,  j,  z,  v;
+      l:=[];
+      for i  in ocr.smallGeneratingSet  do
+	Add( l, Comm( ocr.generators[i], c ) );
+      od;
+      l:=ocr.listToCocycle( l );
+      v:=ShallowCopy( B.factorzero );
+      for i  in [1..Length(l)]  do
+	if l[i] <> ocr.zero  then
+	  z:=l[i];
+	  j:=B.heads[i];
+	  if j > 0  then
+	    l:=l - z * B.factorspace[j];
+	    v[j]:=z;
+	  else
+	    l:=l - z * B.subspace[-j];
+	  fi;
+	fi;
+      od;
+      IsRowVector( v );
+      return v;
+    end;
+
+  else
+
+    tau:=function( c )
+    local   l,  i,  j,  z,  v;
+      l:=[];
+      for i  in relativeGens  do
+	#Add( l, LeftQuotient(i,i^c));
+	Add( l, Comm(i,c));
+      od;
+      l:=ocr.listToCocycle( l );
+      v:=ListWithIdenticalEntries(Length(B.factorspace),ocr.zero);
+      for i  in [1..Length(l)]  do
+	if l[i] <> ocr.zero  then
+	  z:=l[i];
+	  j:=B.heads[i];
+	  if j > 0  then
+	    l:=l - z * B.factorspace[j];
+	    v[j]:=z;
+	  else
+	    l:=l - z * B.subspace[-j];
+	  fi;
+	fi;
+      od;
+      IsRowVector( v );
+      return v;
+    end;
+  fi;
+
+  # Linear Operation: (.. hm ..) -> (.. (hm)^c ..)
+  phi:=function( z, c )
+  local   l,  i,  j,  v;
+    l:=ocr.listToCocycle( List( ocr.cocycleToList(z), x -> x ^ c ) );
+    v:=ListWithIdenticalEntries(Length(B.factorspace),ocr.zero);
+    for i  in [1..Length( l )]  do
+      if l[i] <> ocr.zero  then
+        z:=l[i];
+        j:=B.heads[i];
+        if j > 0  then
+          l:=l - z * B.factorspace[j];
+          v[j]:=z;
+        else
+          l:=l - z * B.subspace[-j];
+        fi;
+      fi;
+    od;
+    IsRowVector( v );
+    return v;
+  end;
+
+  # Construct the affine operations and blocks under them.
+  mats:=AffineAction( acts,B.factorspace, phi, tau );
+  Assert(2,ForAll(mats,i->ForAll(i,j->Length(i)=Length(j))));
+  return mats;
+end);
+
 
 #############################################################################
 ##
@@ -147,7 +240,7 @@ end );
 ##  returned as list of records rec( complement, centralizer ).
 ##
 InstallGlobalFunction( CONextCocycles, function( cor, ocr, S )
-local   K, N, Z, SN, B, L, LL, tau, phi, mats, i,SNpcgs;
+local K, N, Z, SN, B, L, LL, SNpcgs, mats, i;
 
   # Try to split <K> over <M>, if it does not split return.
   Info(InfoComplement,2,"CONextCocycles: computing cocycles" );
@@ -249,95 +342,11 @@ local   K, N, Z, SN, B, L, LL, tau, phi, mats, i,SNpcgs;
   #     N   ?      affine,  this can be done using affine operation
   #      \ /       (given as matrices).
   #       1
-  # Get  the  matrices describing the affine operations. The linear  part
-  # of the  operation  is just conjugation of the entries of cocycle. The
-  # translation are  commuators  with the  generators.  So check if <ocr>
-  # has a small generating set. Use only these to form the commutators.
 
-  # Translation: (.. h ..) -> (.. [h,c] ..)
-  if IsBound( ocr.smallGeneratingSet )  then
-
-    Error("not yet implemented");
-    tau:=function( c )
-    local   l,  i,  j,  z,  v;
-      l:=[];
-      for i  in ocr.smallGeneratingSet  do
-	Add( l, Comm( ocr.generators[i], c ) );
-      od;
-      l:=ocr.listToCocycle( l );
-      v:=ShallowCopy( B.factorzero );
-      for i  in [1..Length(l)]  do
-	if l[i] <> ocr.zero  then
-	  z:=l[i];
-	  j:=B.heads[i];
-	  if j > 0  then
-	    l:=l - z * B.factorspace[j];
-	    v[j]:=z;
-	  else
-	    l:=l - z * B.subspace[-j];
-	  fi;
-	fi;
-      od;
-      IsRowVector( v );
-      return v;
-    end;
-
-  else
-
-    tau:=function( c )
-    local   l,  i,  j,  z,  v;
-      l:=[];
-      for i  in ocr.generators  do
-	Add( l, Comm( i, c ) );
-      od;
-      l:=ocr.listToCocycle( l );
-      #v:=ShallowCopy( B.factorzero );
-      v:=ListWithIdenticalEntries(Length(B.factorspace),ocr.zero);
-      for i  in [1..Length(l)]  do
-	if l[i] <> ocr.zero  then
-	  z:=l[i];
-	  j:=B.heads[i];
-	  if j > 0  then
-	    l:=l - z * B.factorspace[j];
-	    v[j]:=z;
-	  else
-	    l:=l - z * B.subspace[-j];
-	  fi;
-	fi;
-      od;
-      IsRowVector( v );
-      return v;
-    end;
-  fi;
-
-  # Linear Operation: (.. hm ..) -> (.. (hm)^c ..)
-  phi:=function( z, c )
-  local   l,  i,  j,  v;
-    l:=ocr.listToCocycle( List( ocr.cocycleToList( z ), x -> x ^ c ) );
-    #v:=ShallowCopy( B.factorzero );
-    v:=ListWithIdenticalEntries(Length(B.factorspace),ocr.zero);
-    for i  in [1..Length( l )]  do
-      if l[i] <> ocr.zero  then
-        z:=l[i];
-        j:=B.heads[i];
-        if j > 0  then
-          l:=l - z * B.factorspace[j];
-          v[j]:=z;
-        else
-          l:=l - z * B.subspace[-j];
-        fi;
-      fi;
-    od;
-    IsRowVector( v );
-    return v;
-  end;
-
-  # Construct the affine operations and blocks under them.
   SNpcgs:=InducedPcgs(cor.pcgs,SN);
-  mats:=AffineOperation( SNpcgs,B.factorspace, phi, tau );
+  mats:=COAffineCohomologyAction(ocr,ocr.generators,SNpcgs,B);
 
-  Assert(2,ForAll(mats,i->ForAll(i,j->Length(i)=Length(j))));
-  L :=COAffineBlocks( SN, SNpcgs,mats );
+  L :=COAffineBlocks( SN, SNpcgs,mats,false );
   Info(InfoComplement,2,"CONextCocycles:", Length( L ), " complements found" );
 
   # choose a representative from each block and correct the blockstab
@@ -897,19 +906,244 @@ local   H, E,  cor,  a,  i,  fun2,pcgs,home;
 end );
 
 
-InstallMethod(ComplementclassesSolvableNC,"pc groups",IsIdenticalObj,
-  [CanEasilyComputePcgs,CanEasilyComputePcgs],0,
+InstallMethod( ComplementClassesRepresentativesSolvableNC, "pc groups", 
+  IsIdenticalObj, [CanEasilyComputePcgs,CanEasilyComputePcgs], 0,
 function(G,N)
   return List( COComplementsMain(G, N, true, false), G -> G.complement );
 end);
 
 
+# Solvable factor group case
+# find complements to (N\cap H)M/M in H/M where H=N_G(M), assuming factor is
+# solvable
+InstallGlobalFunction(COSolvableFactor,function(G,N,M)
+local H,K,f,primes,p,A,S,L,hom,c,cn,nc,ncn,lnc,lncn,q,qs,qn,ser,pos,i,pcgs,
+      z,qk,j,ocr,bas,mark,k,orb,shom,shomgens,subbas,elm,acterlist,
+      free,nz,gp,actfun,mat,cond,pos2;
+  H:=Normalizer(G,M);
+  Info(InfoComplement,1,"Call COSolvableFactor ",Index(G,N)," ",
+       Size(N)," ",Size(M)," ",Size(H));
+  if Size(ClosureGroup(N,H))<Size(G) then
+    #Print("discard\n");
+    return [];
+  fi;
+
+  K:=ClosureGroup(M,Intersection(H,N));
+  f:=Size(H)/Size(K);
+  
+  # find prime that gives normal subgroup
+  primes:=Set(Factors(f));
+  if Length(primes)=1 then
+    p:=primes[1];
+    A:=H;
+  else
+    while Length(primes)>0 do
+      p:=primes[1];
+      A:=ClosureGroup(K,SylowSubgroup(H,p));
+  #Print(Index(A,K)," in ",Index(H,K),"\n");
+      A:=Core(H,A);
+      if Size(A)>Size(K) then
+	# found one. Doesn't need to be elementary abelian
+	if Length(Set(Factors(Size(A)/Size(K))))>1 then
+	  Error("multiple primes");
+	else
+	  primes:=[];
+	fi;
+      else
+	primes:=primes{[2..Length(primes)]}; # next one
+      fi;
+    od;
+  fi;
+
+  #if HasAbelianFactorGroup(A,K) then
+  #  pcgs:=ModuloPcgs(A,K);
+  #  S:=LinearActionLayer(H,pcgs);
+  #  S:=GModuleByMats(S,GF(p));
+  #  L:=MTX.BasesMinimalSubmodules(S);
+  #  if Length(L)>0 then
+  #    Sort(L,function(a,b) return Length(a)<Length(b);end);
+  #    L:=List(L[1],x->PcElementByExponents(pcgs,x));
+  #    A:=ClosureGroup(K,L);
+  ##  fi;
+  #else
+  #  Print("IDX",Index(A,K),"\n");
+  #fi;
+
+  S:=ClosureGroup(M,SylowSubgroup(A,p));
+  L:=Normalizer(H,S);
+
+  # determine complements up to L-conjugacy. Currently brute-force
+  hom:=NaturalHomomorphismByNormalSubgroup(L,M);
+
+  q:=Image(hom);
+  if IsSolvableGroup(q) and not IsPcGroup(q) then
+    hom:=hom*IsomorphismSpecialPcGroup(q);
+    q:=Image(hom);
+  fi;
+  #q:=Group(SmallGeneratingSet(q),One(q));
+  qs:=Image(hom,S);
+  qn:=Image(hom,Intersection(L,K));
+  qk:=Image(hom,Intersection(S,K));
+  shom:=NaturalHomomorphismByNormalSubgroup(qs,qk);
+  ser:=ElementaryAbelianSeries([q,qs,qk]);
+  pos:=Position(ser,qk);
+  Info(InfoComplement,2,"Series ",List(ser,Size),pos);
+  c:=[qs];
+  cn:=[q];
+  for i in [pos+1..Length(ser)] do
+    pcgs:=ModuloPcgs(ser[i-1],ser[i]);
+    nc:=[];
+    ncn:=[];
+    for j in [1..Length(c)] do
+      ocr:=OneCocycles(c[j],pcgs);
+      shomgens:=List(ocr.generators,x->Image(shom,x));
+      if ocr.isSplitExtension then
+	subbas:=Basis(ocr.oneCoboundaries);
+
+	bas:=BaseSteinitzVectors(BasisVectors(Basis(ocr.oneCocycles)),
+	                         BasisVectors(subbas));
+        lnc:=[];
+	lncn:=[];
+	Info(InfoComplement,2,p^Length(bas.factorspace)," Complements");
+	elm:=VectorSpace(GF(p),bas.factorspace,Zero(ocr.oneCocycles));
+	if Length(bas.factorspace)=0 then
+	  elm:=Elements(elm);
+	else
+	  elm:=Enumerator(elm);
+	fi;
+	mark:=BlistList([1..Length(elm)],[]);
+
+	# we act on cocycles, not cocycles modulo coboundaries. This is
+	# because orbits are short, and we otherwise would have to do a
+	# double stabilizer calculation to obtain the normalizer.
+	acterlist:=[];
+	free:=FreeGroup(Length(ocr.generators));
+	#cn[j]:=Group(SmallGeneratingSet(cn[j]));
+	for z in GeneratorsOfGroup(cn[j]) do
+	  nz:=[z];
+	  gp:=List(ocr.generators,x->Image(shom,x^z));
+	  if gp=shomgens then 
+	    # no action on qs/qk -- action on cohomology is affine
+
+	    # linear part
+	    mat:=[];
+	    for k in BasisVectors(Basis(GF(p)^Length(Zero(ocr.oneCocycles)))) do
+	      k:=ocr.listToCocycle(List(ocr.cocycleToList(k),x->x^z));
+	      Add(mat,k);
+	    od;
+	    mat:=ImmutableMatrix(GF(p),mat);
+	    Add(nz,mat);
+
+	    # affine part
+	    mat:=ocr.listToCocycle(List(ocr.complementGens,x->Comm(x,z)));
+	    ConvertToVectorRep(mat,GF(p));
+	    MakeImmutable(mat);
+	    Add(nz,mat);
+
+	    if IsOne(nz[2]) and IsZero(nz[3]) then 
+	      nz[4]:=fail; # indicate that element does not act
+	    fi;
+
+	  else
+	    gp:=GroupWithGenerators(gp);
+	    SetEpimorphismFromFreeGroup(gp,GroupHomomorphismByImages(free,
+	      gp,GeneratorsOfGroup(free),GeneratorsOfGroup(gp)));
+	    Add(nz,List(shomgens,x->Factorization(gp,x)));
+	  fi;
+
+	  Add(acterlist,nz);
+	od;
+	actfun:=function(cy,a)
+	local genpos,l;
+	  genpos:=PositionProperty(acterlist,x->a=x[1]);
+	  if genpos=fail then
+	    if IsOne(a) then 
+	      # the action test always does the identity, so its worth
+	      # catching this as we have many short orbits
+	      return cy;
+	    else
+	      return ocr.complementToCocycle(ocr.cocycleToComplement(cy)^a);
+	    fi;
+	  elif Length(acterlist[genpos])=4 then
+	    # no action
+	    return cy;
+	  elif Length(acterlist[genpos])=3 then
+	    # affine case
+	    l:=cy*acterlist[genpos][2]+acterlist[genpos][3];
+	  else
+	    l:=ocr.cocycleToList(cy);
+	    l:=List([1..Length(l)],x->(ocr.complementGens[x]*l[x])^a);
+	    if acterlist[genpos][2]<>fail then
+	      l:=List(acterlist[genpos][2],
+			x->MappedWord(x,GeneratorsOfGroup(free),l));
+	    fi;
+	    l:=List([1..Length(l)],x->LeftQuotient(ocr.complementGens[x],l[x]));
+	    l:=ocr.listToCocycle(l);
+	  fi;
+
+  #if l<>ocr.complementToCocycle(ocr.cocycleToComplement(cy)^a) then Error("ACT");fi;
+	  return l;
+	end;
+        pos:=1;
+	repeat
+	  #z:=ClosureGroup(ser[i],ocr.cocycleToComplement(elm[pos]));
+
+	  orb:=OrbitStabilizer(cn[j],elm[pos],actfun);
+	  mark[pos]:=true;
+	  #cnt:=1;
+	  for k in [2..Length(orb.orbit)] do
+	    pos2:=Position(elm,SiftedVector(subbas,orb.orbit[k]));
+	    #if mark[pos2]=false then cnt:=cnt+1;fi;
+	    mark[pos2]:=true; # mark orbit off
+	  od;
+	  #Print(cnt,"/",Length(orb.orbit),"\n");
+	  if IsSubset(orb.stabilizer,qn) then
+	    cond:=Size(orb.stabilizer)=Size(q);
+	  else
+	    cond:=Size(ClosureGroup(qn,orb.stabilizer))=Size(q);
+	  fi;
+	  if cond then
+	    # normalizer is still large enough to keep the complement
+	    Add(lnc,ClosureGroup(ser[i],ocr.cocycleToComplement(elm[pos])));
+	    Add(lncn,orb.stabilizer);
+	  fi;
+
+	  pos:=Position(mark,false);
+	until pos=fail;
+	Info(InfoComplement,2,Length(lnc)," good normalizer orbits");
+
+	Append(nc,lnc);
+	Append(ncn,lncn);
+      fi;
+    od;
+    c:=nc;
+    cn:=ncn;
+  od;
+
+  c:=List(c,x->PreImage(hom,x));
+  c:=SubgroupsOrbitsAndNormalizers(K,c,false);
+  c:=List(c,x->x.representative);
+  Info(InfoComplement,1,"Overall ",Length(c)," Complements ",
+    Size(qs)/Size(qk));
+
+  if Size(A)<Size(H) then
+    # recursively do the next step up
+    cn:=List(c,x->COSolvableFactor(G,N,x));
+    nc:=Concatenation(cn);
+    c:=nc;
+  fi;
+  return c;
+end);
+
+
+
 #############################################################################
 ##
-#M  Complementclasses( <G>, <N> ) . . . . . . . . . . . . find all complement
+#M  ComplementClassesRepresentatives( <G>, <N> ) . . . .  find all complement
 ##
-InstallMethod(Complementclasses,"solvable normal subgroup",IsIdenticalObj,
-  [IsGroup,IsGroup],0,
+InstallMethod( ComplementClassesRepresentatives,
+  "solvable normal subgroup or factor group",
+  IsIdenticalObj, [IsGroup,IsGroup],0,
 function( G, N )
   local   C;
 
@@ -921,11 +1155,15 @@ function( G, N )
   elif Size(N) = 1 then
       C:=[G];
 
-  elif not IsSolvableGroup(N) then
-    TryNextMethod();
-  else
+  elif not IsNormal(G,N) then
+    Error("N must be normal in G");
+  elif IsSolvableGroup(N) then
     # otherwise we have to work
-    C:=ComplementclassesSolvableNC(G,N);
+    C:=ComplementClassesRepresentativesSolvableNC(G,N);
+  elif HasSolvableFactorGroup(G,N) then
+    C:=COSolvableFactor(G,N,TrivialSubgroup(G));
+  else
+    TryNextMethod();
   fi;
 
   # return what we have found
@@ -936,9 +1174,9 @@ end);
 
 #############################################################################
 ##
-#M  Complementclasses( <G>, <N> )
+#M  ComplementcClassesRepresentatives( <G>, <N> )
 ##
-InstallMethod(Complementclasses,
+InstallMethod( ComplementClassesRepresentatives,
   "tell that the normal subgroup must be solvable",IsIdenticalObj,
   [IsGroup,IsGroup],-2*RankFilter(IsGroup),
 function( G, N )

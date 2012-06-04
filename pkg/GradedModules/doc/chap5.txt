@@ -1,0 +1,431 @@
+  
+  [1X5 GradedModules[0X
+  
+  
+  [1X5.1 GradedModules: Category and Representations[0X
+  
+  
+  [1X5.2 GradedModules: Constructors[0X
+  
+  
+  [1X5.3 GradedModules: Properties[0X
+  
+  For  more  properties  see  the  corresponding  section  [14X'Modules:  Modules:
+  Properties'[0m) in the documentation of the [5Xhomalg[0m package.
+  
+  
+  [1X5.4 GradedModules: Attributes[0X
+  
+  [1X5.4-1 BettiDiagram[0m
+  
+  [2X> BettiDiagram( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m diagram
+  
+  The Betti diagram of the [5Xhomalg[0m graded module [3XM[0m.
+  
+  [1X5.4-2 CastelnuovoMumfordRegularity[0m
+  
+  [2X> CastelnuovoMumfordRegularity( [0X[3XM[0X[2X ) _______________________________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The Castelnuovo-Mumford regularity of the [5Xhomalg[0m graded module [3XM[0m.
+  
+  [1X5.4-3 CastelnuovoMumfordRegularityOfSheafification[0m
+  
+  [2X> CastelnuovoMumfordRegularityOfSheafification( [0X[3XM[0X[2X ) _______________[0Xattribute
+  [6XReturns:[0X  a non-negative integer
+  
+  The  Castelnuovo-Mumford  regularity  of the sheafification of [5Xhomalg[0m graded
+  module [3XM[0m.
+  
+  For  more  attributes  see  the  corresponding  section  [14X'Modules:  Modules:
+  Attributes'[0m) in the documentation of the [5Xhomalg[0m package.
+  
+  
+  [1X5.5 [5XLISHV[1X: Logical Implications for GradedModules[0X
+  
+  
+  [1X5.6 GradedModules: Operations and Functions[0X
+  
+  [1X5.6-1 MonomialMap[0m
+  
+  [2X> MonomialMap( [0X[3Xd, M[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  The  map  from a free graded module onto all degree [3Xd[0m monomial generators of
+  the finitely generated [5Xhomalg[0m module [3XM[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> m := MonomialMap( 1, M );[0X
+    [4X<A homomorphism of graded left modules>[0X
+    [4X gap> Display( m );[0X
+    [4X z^2,0,0,[0X
+    [4X y*z,0,0,[0X
+    [4X y^2,0,0,[0X
+    [4X x*z,0,0,[0X
+    [4X x*y,0,0,[0X
+    [4X x^2,0,0,[0X
+    [4X 0,  x,0,[0X
+    [4X 0,  y,0,[0X
+    [4X 0,  z,0,[0X
+    [4X 0,  0,1 [0X
+    [4X [0X
+    [4X the map is currently represented by the above 10 x 3 matrix[0X
+    [4X [0X
+    [4X (degrees of generators of target: [ -1, 0, 1 ])[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-2 RandomMatrix[0m
+  
+  [2X> RandomMatrix( [0X[3XS, T[0X[2X ) ____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A  random  matrix  between  the graded source module [3XS[0m and the graded target
+  module [3XT[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> rand := RandomMatrix( S^[ 1, 2 ], S^[ 2, 3, 4 ] );[0X
+    [4X<A 2 x 3 matrix over a graded ring>[0X
+    [4X gap> Display( rand );[0X
+    [4X -3*a-b,                                                  -1,                   [0X
+    [4X -a^2+a*b+2*b^2-2*a*c+2*b*c+c^2,                          -a+c,                 [0X
+    [4X -2*a^3+5*a^2*b-3*b^3+3*a*b*c+3*b^2*c+2*a*c^2+2*b*c^2+c^3,-3*b^2-2*a*c-2*b*c+c^2[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-3 GeneratorsOfHomogeneousPart[0m
+  
+  [2X> GeneratorsOfHomogeneousPart( [0X[3Xd, M[0X[2X ) _____________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The  resulting  [5Xhomalg[0m  matrix  consists of a generating set (over R) of the
+  [3Xd[0m-th  homogeneous  part of the finitely generated [5Xhomalg[0m S-module [3XM[0m, where R
+  is the coefficients ring of the graded ring S with S_0=R.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> m := GeneratorsOfHomogeneousPart( 1, M );[0X
+    [4X<An unevaluated non-zero 7 x 3 matrix over a graded ring>[0X
+    [4X gap> Display( m );[0X
+    [4X x^2,0,0,[0X
+    [4X x*y,0,0,[0X
+    [4X y^2,0,0,[0X
+    [4X 0,  x,0,[0X
+    [4X 0,  y,0,[0X
+    [4X 0,  z,0,[0X
+    [4X 0,  0,1 [0X
+    [4X (homogeneous)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Compare with [2XMonomialMap[0m ([14X5.6-1[0m).
+  
+  [1X5.6-4 SubmoduleGeneratedByHomogeneousPart[0m
+  
+  [2X> SubmoduleGeneratedByHomogeneousPart( [0X[3Xd, M[0X[2X ) _____________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  The  submodule  of  the  [5Xhomalg[0m  module [3XM[0m generated by the image of the [3Xd[0m-th
+  monomial  map  (--> [2XMonomialMap[0m ([14X5.6-1[0m)), or equivalently, by the generating
+  set of the [3Xd[0m-th homogeneous part of [3XM[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> n := SubmoduleGeneratedByHomogeneousPart( 1, M );[0X
+    [4X<A graded left submodule given by 7 generators>[0X
+    [4X gap> Display( M );[0X
+    [4X x^3,y^2,z,[0X
+    [4X z,  0,  0 [0X
+    [4X [0X
+    [4X Cokernel of the map[0X
+    [4X [0X
+    [4X Q[x,y,z]^(1x2) --> Q[x,y,z]^(1x3),[0X
+    [4X [0X
+    [4X currently represented by the above matrix[0X
+    [4X (graded, degrees of generators: [ -1, 0, 1 ])[0X
+    [4X gap> Display( n );[0X
+    [4X x^2,0,0,[0X
+    [4X x*y,0,0,[0X
+    [4X y^2,0,0,[0X
+    [4X 0,  x,0,[0X
+    [4X 0,  y,0,[0X
+    [4X 0,  z,0,[0X
+    [4X 0,  0,1 [0X
+    [4X [0X
+    [4X A left submodule generated by the 7 rows of the above matrix[0X
+    [4X [0X
+    [4X (graded, degrees of generators: [ 1, 1, 1, 1, 1, 1, 1 ])[0X
+    [4Xgap> N := UnderlyingObject( n );[0X
+    [4X<A graded left module presented by yet unknown relations for 7 generators>[0X
+    [4X gap> Display( N );[0X
+    [4X z, 0, 0,0,    0,  0,0,   [0X
+    [4X 0, z, 0,0,    0,  0,0,   [0X
+    [4X 0, 0, z,0,    0,  0,0,   [0X
+    [4X 0, 0, 0,0,    -z, y,0,   [0X
+    [4X x, 0, 0,0,    y,  0,z,   [0X
+    [4X -y,x, 0,0,    0,  0,0,   [0X
+    [4X 0, -y,x,0,    0,  0,0,   [0X
+    [4X 0, 0, 0,-y,   x,  0,0,   [0X
+    [4X 0, 0, 0,-z,   0,  x,0,   [0X
+    [4X 0, 0, 0,0,    y*z,0,z^2, [0X
+    [4X 0, 0, 0,y^2*z,0,  0,x*z^2[0X
+    [4X [0X
+    [4X Cokernel of the map[0X
+    [4X [0X
+    [4X Q[x,y,z]^(1x11) --> Q[x,y,z]^(1x7),[0X
+    [4X [0X
+    [4X currently represented by the above matrix[0X
+    [4X [0X
+    [4X (graded, degrees of generators: [ 1, 1, 1, 1, 1, 1, 1 ])[0X
+    [4Xgap> gens := GeneratorsOfModule( N );[0X
+    [4X<A set of 7 generators of a homalg left module>[0X
+    [4X gap> Display( gens );[0X
+    [4X x^2,0,0,[0X
+    [4X x*y,0,0,[0X
+    [4X y^2,0,0,[0X
+    [4X 0,  x,0,[0X
+    [4X 0,  y,0,[0X
+    [4X 0,  z,0,[0X
+    [4X 0,  0,1 [0X
+    [4X [0X
+    [4X a set of 7 generators given by the rows of the above matrix[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-5 RepresentationMapOfRingElement[0m
+  
+  [2X> RepresentationMapOfRingElement( [0X[3Xr, M, d[0X[2X ) _______________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The  graded  map  induced by the homogeneous degree [13X1[0m ring element [3Xr[0m (of the
+  underlying [5Xhomalg[0m graded ring S) regarded as a R-linear map between the [3Xd[0m-th
+  and  the  ([3Xd[0m+1)-st  homogeneous part of the graded finitely generated [5Xhomalg[0m
+  S-module  M,  where  R  is  the  coefficients ring of the graded ring S with
+  S_0=R.    The    generating    set    of    both   modules   is   given   by
+  [2XGeneratorsOfHomogeneousPart[0m  ([14X5.6-3[0m).  The  entries of the matrix presenting
+  the map lie in the coefficients ring R.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> x := Indeterminate( S, 1 );[0X
+    [4Xx[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> m := RepresentationMapOfRingElement( x, M, 0 );[0X
+    [4X<A "homomorphism" of graded left modules>[0X
+    [4Xgap> Display( m );[0X
+    [4X1,0,0,0,0,0,0,[0X
+    [4X0,1,0,0,0,0,0,[0X
+    [4X0,0,0,1,0,0,0 [0X
+    [4X[0X
+    [4Xthe graded map is currently represented by the above 3 x 7 matrix[0X
+    [4X[0X
+    [4X(degrees of generators of target: [ 1, 1, 1, 1, 1, 1, 1 ])[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-6 RepresentationMatrixOfKoszulId[0m
+  
+  [2X> RepresentationMatrixOfKoszulId( [0X[3Xd, M[0X[2X ) __________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  It is assumed that all indeterminates of the underlying [5Xhomalg[0m graded ring S
+  are  of  degree 1. The output is the [5Xhomalg[0m matrix of the multiplication map
+  Hom(  A,  M_[3Xd[0m  )  ->  Hom( A, M_[3Xd[0m+1 ), where A is the Koszul dual ring of S,
+  defined using the operation [10XKoszulDualRing[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> A := KoszulDualRing( S, "a,b,c" );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> m := RepresentationMatrixOfKoszulId( 0, M );[0X
+    [4X<An unevaluated 3 x 7 matrix over a graded ring>[0X
+    [4X gap> Display( m );[0X
+    [4X 0,b,a,0,0,0,0,[0X
+    [4X b,a,0,0,0,0,0,[0X
+    [4X 0,0,0,a,b,c,0 [0X
+    [4X (homogeneous)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-7 RepresentationMapOfKoszulId[0m
+  
+  [2X> RepresentationMapOfKoszulId( [0X[3Xd, M[0X[2X ) _____________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  It is assumed that all indeterminates of the underlying [5Xhomalg[0m graded ring S
+  are  of  degree 1. The output is the the multiplication map Hom( A, M_[3Xd[0m ) ->
+  Hom(  A,  M_[3Xd[0m+1  ),  where A is the Koszul dual ring of S, defined using the
+  operation [10XKoszulDualRing[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> A := KoszulDualRing( S, "a,b,c" );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ] );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> m := RepresentationMapOfKoszulId( 0, M );[0X
+    [4X<A homomorphism of graded left modules>[0X
+    [4X gap> Display( m );[0X
+    [4X a,b,0,0,0,0,0,[0X
+    [4X 0,a,b,0,0,0,0,[0X
+    [4X 0,0,0,a,b,c,0 [0X
+    [4X [0X
+    [4X the graded map is currently represented by the above 3 x 7 matrix[0X
+    [4X [0X
+    [4X (degrees of generators of target: [ 1, 1, 1, 1, 1, 1, 1 ])[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-8 KoszulRightAdjoint[0m
+  
+  [2X> KoszulRightAdjoint( [0X[3XM, degree_lowest, degree_highest[0X[2X ) __________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m cocomplex
+  
+  It is assumed that all indeterminates of the underlying [5Xhomalg[0m graded ring S
+  are  of  degree  1.  Compute  the [5Xhomalg[0m A-cocomplex C of Koszul maps of the
+  [5Xhomalg[0m  S-module  [3XM[0m  (-->  [2XRepresentationMapOfKoszulId[0m  ([14X5.6-7[0m))  in  the  [
+  [3Xdegree_lowest[0m  ..  [3Xdegree_highest[0m ]. The Castelnuovo-Mumford regularity of [3XM[0m
+  is  characterized  as the highest degree d, such that C is not exact at d. A
+  is the Koszul dual ring of S, defined using the operation [10XKoszulDualRing[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> A := KoszulDualRing( S, "a,b,c" );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x^3, y^2, z,   z, 0, 0 ]", 2, 3, S );;[0X
+    [4Xgap> M := LeftPresentationWithDegrees( M, [ -1, 0, 1 ], S );[0X
+    [4X<A graded non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> CastelnuovoMumfordRegularity( M );[0X
+    [4X1[0X
+    [4Xgap> R := KoszulRightAdjoint( M, -5, 5 );[0X
+    [4X<A cocomplex containing 10 morphisms of graded left modules at degrees[0X
+    [4X[ -5 .. 5 ]>[0X
+    [4Xgap> R := KoszulRightAdjoint( M, 1, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X4 morphisms of graded left modules at degrees [ 1 .. 5 ]>[0X
+    [4Xgap> R := KoszulRightAdjoint( M, 0, 5 );[0X
+    [4X<A cocomplex containing 5 morphisms of graded left modules at degrees[0X
+    [4X[ 0 .. 5 ]>[0X
+    [4Xgap> R := KoszulRightAdjoint( M, -5, 5 );[0X
+    [4X<A cocomplex containing 10 morphisms of graded left modules at degrees[0X
+    [4X[ -5 .. 5 ]>[0X
+    [4Xgap> H := Cohomology( R );[0X
+    [4X<A graded cohomology object consisting of 11 graded left modules at degrees [0X
+    [4X[ -5 .. 5 ]>[0X
+    [4Xgap> ByASmallerPresentation( H );[0X
+    [4X<A non-zero graded cohomology object consisting of[0X
+    [4X11 graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> Cohomology( R, -2 );[0X
+    [4X<A graded zero left module>[0X
+    [4Xgap> Cohomology( R, -3 );[0X
+    [4X<A graded zero left module>[0X
+    [4Xgap> Cohomology( R, -1 );[0X
+    [4X<A graded cyclic torsion-free non-free left module presented by 2 relations fo\[0X
+    [4Xr a cyclic generator>[0X
+    [4Xgap> Cohomology( R, 0 );[0X
+    [4X<A graded non-zero cyclic left module presented by 3 relations for a cyclic ge\[0X
+    [4Xnerator>[0X
+    [4Xgap> Cohomology( R, 1 );[0X
+    [4X<A graded non-zero cyclic left module presented by 2 relations for a cyclic ge\[0X
+    [4Xnerator>[0X
+    [4Xgap> Cohomology( R, 2 );[0X
+    [4X<A graded zero left module>[0X
+    [4Xgap> Cohomology( R, 3 );[0X
+    [4X<A graded zero left module>[0X
+    [4Xgap> Cohomology( R, 4 );[0X
+    [4X<A graded zero left module>[0X
+    [4X gap> Display( Cohomology( R, -1 ) );[0X
+    [4X Q{a,b,c}/< b, a >[0X
+    [4X [0X
+    [4X (graded, degree of generator: -3)[0X
+    [4X gap> Display( Cohomology( R, 0 ) );[0X
+    [4X Q{a,b,c}/< c, b, a >[0X
+    [4X [0X
+    [4X (graded, degree of generator: -3)[0X
+    [4X gap> Display( Cohomology( R, 1 ) );[0X
+    [4X Q{a,b,c}/< b, a >[0X
+    [4X [0X
+    [4X (graded, degree of generator: -1)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.6-9 HomogeneousPartOverCoefficientsRing[0m
+  
+  [2X> HomogeneousPartOverCoefficientsRing( [0X[3Xd, M[0X[2X ) _____________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  The  degree d homogeneous part of the graded R-module [3XM[0m as a module over the
+  coefficient ring or field of R.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> M := HomalgMatrix( "[ x, y^2, z^3 ]", 3, 1, S );;[0X
+    [4Xgap> M := Subobject( M, ( 1 * S )^0 );[0X
+    [4X<A graded torsion-free (left) ideal given by 3 generators>[0X
+    [4Xgap> CastelnuovoMumfordRegularity( M );[0X
+    [4X4[0X
+    [4Xgap> M1 := HomogeneousPartOverCoefficientsRing( 1, M );[0X
+    [4X<A graded left vector space of dimension 1 on a free generator>[0X
+    [4Xgap> gen1 := GeneratorsOfModule( M1 );[0X
+    [4X<A set consisting of a single generator of a homalg left module>[0X
+    [4Xgap> Display( M1 );[0X
+    [4XQ^(1 x 1)[0X
+    [4X[0X
+    [4X(graded, degree of generator: 1)[0X
+    [4Xgap> M2 := HomogeneousPartOverCoefficientsRing( 2, M );[0X
+    [4X<A graded left vector space of dimension 4 on free generators>[0X
+    [4Xgap> Display( M2 );[0X
+    [4XQ^(1 x 4)[0X
+    [4X[0X
+    [4X(graded, degrees of generators: [ 2, 2, 2, 2 ])[0X
+    [4Xgap> gen2 := GeneratorsOfModule( M2 );[0X
+    [4X<A set of 4 generators of a homalg left module>[0X
+    [4Xgap> M3 := HomogeneousPartOverCoefficientsRing( 3, M );[0X
+    [4X<A graded left vector space of dimension 9 on free generators>[0X
+    [4Xgap> Display( M3 );[0X
+    [4XQ^(1 x 9)[0X
+    [4X[0X
+    [4X(graded, degrees of generators: [ 3, 3, 3, 3, 3, 3, 3, 3, 3 ])[0X
+    [4Xgap> gen3 := GeneratorsOfModule( M3 );[0X
+    [4X<A set of 9 generators of a homalg left module>[0X
+    [4X gap> Display( gen1 );[0X
+    [4X x[0X
+    [4X [0X
+    [4X a set consisting of a single generator given by (the row of) the above matrix[0X
+    [4X gap> Display( gen2 );[0X
+    [4X x^2,[0X
+    [4X x*y,[0X
+    [4X x*z,[0X
+    [4X y^2 [0X
+    [4X [0X
+    [4X a set of 4 generators given by the rows of the above matrix[0X
+    [4X gap> Display( gen3 );[0X
+    [4X x^3,  [0X
+    [4X x^2*y,[0X
+    [4X x^2*z,[0X
+    [4X x*y*z,[0X
+    [4X x*z^2,[0X
+    [4X x*y^2,[0X
+    [4X y^3,  [0X
+    [4X y^2*z,[0X
+    [4X z^3   [0X
+    [4X [0X
+    [4X a set of 9 generators given by the rows of the above matrix[0X
+  [4X------------------------------------------------------------------[0X
+  

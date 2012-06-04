@@ -3,14 +3,12 @@
 #W  schur.gi                 GAP library                        Werner Nickel 
 #W                                                           Alexander Hulpke
 ##
-#Y  (C) 2000 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 2000 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementation of the methods for SchurMultiplier
 ##  and Darstellungsgruppen.
 ##  
-Revision.schur_gi :=
-    "@(#)$Id: schur.gi,v 4.18.4.6 2006/08/17 14:41:21 gap Exp $";
 
 ##    Take a finite presentation F/R for a group G and compute a presentation
 ##    of one of G's representation groups (Darstellungsgruppen, Schur covers).

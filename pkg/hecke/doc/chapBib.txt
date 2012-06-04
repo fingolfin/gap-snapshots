@@ -1,0 +1,55 @@
+  
+  
+  [1XReferences[0X
+  
+  [[20XAri96[15X]  [16XAriki, S.[15X, [17XOn the decomposition numbers of the Hecke algebra of
+  G(m,1,n)[15X, [18XJ. Math. Kyoto Univ.[15X, [19X36[15X, 4 (1996), 789--808.
+  
+  [[20XBru98[15X]  [16XBrundan,  J.[15X, [17XModular branching rules and the Mullineux map for
+  Hecke  algebras  of  type  A[15X, [18XProc. London Math. Soc. (3)[15X, [19X77[15X, 3 (1998),
+  551--581.
+  
+  [[20XDJ86[15X]  [16XDipper,  R.  and James, G.[15X, [17XRepresentations of Hecke algebras of
+  general  linear  groups[15X,  [18XProc.  London  Math.  Soc.  (3)[15X, [19X52[15X, 1 (1986),
+  20--52.
+  
+  [[20XDJ87[15X]  [16XDipper,  R.  and  James,  G.[15X,  [17XBlocks  and  idempotents of Hecke
+  algebras  of  general  linear groups[15X, [18XProc. London Math. Soc. (3)[15X, [19X54[15X, 1
+  (1987), 57--82.
+  
+  [[20XGec92[15X]  [16XGeck, M.[15X, [17XBrauer trees of Hecke algebras[15X, [18XComm. Algebra[15X, [19X20[15X, 10
+  (1992), 2937--2973.
+  
+  [[20XGro94[15X]  [16XGrojnowski,  I.[15X,  [17XRepresentations of affine Hecke algebras (and
+  affine  quantum  GL_n)  at roots of unity[15X, [18XInternat. Math. Res. Notices[15X,
+  [19X1994[15X, 5 (1994), 215 ff., approx.\ 3 pp.\ (electronic).
+  
+  [[20XJam90[15X]  [16XJames,  G.[15X,  [17XThe  decomposition matrices of GL_n(q) for nle 10[15X,
+  [18XProc. London Math. Soc. (3)[15X, [19X60[15X, 2 (1990), 225--265.
+  
+  [[20XJK81[15X]  [16XJames,  G.  and  Kerber,  A.[15X,  [17XThe  representation theory of the
+  symmetric   group[15X,   Addison-Wesley   Publishing  Co.,  Reading,  Mass.,
+  Encyclopedia  of Mathematics and its Applications, [19X16[15X (1981), xxviii+510
+  pages,  ((With a foreword by P. M. Cohn, With an introduction by Gilbert
+  de B. Robinson)).
+  
+  [[20XJM96[15X]  [16XJames, G. and Mathas, A.[15X, [17XHecke algebras of type A with q=-1[15X, [18XJ.
+  Algebra[15X, [19X184[15X, 1 (1996), 102--158.
+  
+  [[20XJM97[15X]  [16XJames,  G.  and  Mathas, A.[15X, [17XA q-analogue of the Jantzen-Schaper
+  theorem[15X, [18XProc. London Math. Soc. (3)[15X, [19X74[15X, 2 (1997), 241--274.
+  
+  [[20XKle96[15X] [16XKleshchev, A. S.[15X, [17XBranching rules for modular representations of
+  symmetric  groups.  III. Some corollaries and a problem of Mullineux[15X, [18XJ.
+  London Math. Soc. (2)[15X, [19X54[15X, 1 (1996), 25--38.
+  
+  [[20XLLT96[15X]  [16XLascoux,  A.,  Leclerc, B. and Thibon, J.-Y.[15X, [17XHecke algebras at
+  roots of unity and crystal bases of quantum affine algebras[15X, [18XComm. Math.
+  Phys.[15X, [19X181[15X, 1 (1996), 205--263.
+  
+  [[20XLT96[15X] [16XLeclerc, B. and Thibon, J.-Y.[15X, [17XCanonical bases of q-deformed Fock
+  spaces[15X, [18XInternat. Math. Res. Notices[15X, [19X1996[15X, 9 (1996), 447--456.
+  
+  
+  
+  -------------------------------------------------------

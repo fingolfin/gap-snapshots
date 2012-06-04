@@ -1,0 +1,19 @@
+  
+  
+  [1XReferences[0X
+  
+  [[20XBR08[15X]   [16XBarakat,  M.  and  Robertz,  D.[15X,  [17Xhomalg  project[15X  (2003-2008),
+  ((http://wwwb.math.rwth-aachen.de/homalg)).
+  
+  [[20XGör08a[15X]  [16XGörtzen,  S.[15X,  [17XSimplicial  Cohomology  of  Orbifolds[15X, Master's
+  thesis, RWTH Aachen University (2008), ((in preparation)).
+  
+  [[20XGör08b[15X]    [16XGörtzen,    S.[15X,    [17XWallpaper    Group   Cohomology[15X   (2008),
+  ((http://wwwb.math.rwth-aachen.de/goertzen/)).
+  
+  [[20XMP99[15X]   [16XMoerdijk,  I.  and  Pronk,  D.  A.[15X,  [17XSimplicial  cohomology  of
+  orbifolds[15X, [18XIndag. Math. (N.S.)[15X, [19X10[15X, 2 (1999), 269--293.
+  
+  
+  
+  -------------------------------------------------------

@@ -1,183 +1,296 @@
-C preface.tex 1. Preface
-S 1.1. The GAP System
-S 1.2. Authorship and Maintenance
-S 1.3. Acknowledgements
-S 1.4. Changes from Earlier Versions
-S 1.5. Further Information about GAP
-I 1.5. web sites!for GAP
-I 1.5. email addresses
-I 1.5. support!email address
-C introduc.tex 2. A First Session with GAP
-S 2.1. Starting and Leaving GAP
-I 2.1. starting GAP
-I 2.1. leaving GAP
-I 2.1. quit
-I 2.1. whitespace
-I 2.1. comments
-S 2.2. Loading Source Code from a File
-I 2.2. loading source code from a file
-I 2.2. reading source code from a file
-I 2.2. Read
-S 2.3. The Read Evaluate Print Loop
-I 2.3. read evaluate print loop
-I 2.3. line editing
-I 2.3. line editing
-I 2.3. break loops
-S 2.4. Constants and Operators
-I 2.4. constants
-I 2.4. operators
-S 2.5. Variables versus Objects
-I 2.5. variables
-I 2.5. assignment
-I 2.5. identifier
-I 2.5. objects
-I 2.5. objects!vs. variables
-I 2.5. last
-I 2.5. last2
-I 2.5. last3
-S 2.6. Objects vs. Elements
-I 2.6. objects!vs. elements
-I 2.6. elements
-I 2.6. IsIdenticalObj
-S 2.7. About Functions
-I 2.7. maps-to operator
-S 2.8. Help
-S 2.9. Further Information introducing the System
-C lists.tex 3. Lists and Records
-S 3.1. Plain Lists
-I 3.1. lists!plain
-I 3.1. strings
-I 3.1. lists!dense
-S 3.2. Identical Lists
-I 3.2. lists!identical
-S 3.3. Immutability
-S 3.4. Sets
-I 3.4. lists!strictly sorted
-I 3.4. family
-S 3.5. Ranges
-S 3.6. For and While Loops
-I 3.6. loops!for
-I 3.6. loops!while
-S 3.7. List Operations
-S 3.8. Vectors and Matrices
-I 3.8. vectors!row
-I 3.8. matrices
-S 3.9. Plain Records
-S 3.10. Further Information about Lists
-C function.tex 4. Functions
-S 4.1. Writing Functions
-S 4.2. If Statements
-S 4.3. Local Variables
-S 4.4. Recursion
-S 4.5. Further Information about Functions
-C group.tex 5. Groups and Homomorphisms
-S 5.1. Permutation groups
-I 5.1. homomorphism!natural
-S 5.2. Actions of Groups
-I 5.2. homomorphism!operation
-I 5.2. homomorphism!action
-I 5.2. external set
-I 5.2. right transversal
-I 5.2. enumerator
-I 5.2. Position vs. PositionCanonical
-S 5.3. Subgroups!as Stabilizers
-S 5.4. Group Homomorphisms!by Images
-I 5.4. group general mapping
-I 5.4. cokernel
-I 5.4. kernel
-I 5.4. GroupHomomorphismByImages vs. GroupGeneralMappingByImages
-I 5.4. group general mapping!single-valued
-I 5.4. group general mapping!total
-S 5.5. Nice Monomorphisms
-S 5.6. Further Information about Groups and Homomorphisms
-C algvspc.tex 6. Vector Spaces and Algebras
-S 6.1. Vector Spaces
-S 6.2. Algebras
-S 6.3. Further Information about Vector Spaces and Algebras
-C domain.tex 7. Domains
-S 7.1. Domains as Sets
-S 7.2. Algebraic Structure
-S 7.3. Notions of Generation
-I 7.3. GeneratorsOfSomething
-S 7.4. Domain Constructors
-I 7.4. Something
-S 7.5. Forming Closures of Domains
-I 7.5. ClosureSomething
-S 7.6. Changing the Structure
-I 7.6. AsSomething
-S 7.7. Subdomains
-I 7.7. Subsomething
-I 7.7. SubsomethingNC
-S 7.8. Further Information about Domains
-C opers.tex 8. Operations and Methods
-S 8.1. Attributes
-I 8.1. getter!of an attribute
-I 8.1. setter!of an attribute
-I 8.1. tester!of an attribute
-I 8.1. methods
-S 8.2. Properties and Filters
-I 8.2. filters
-I 8.2. methods!selection
-I 8.2. TryNextMethod
-S 8.3. Immediate and True Methods
-I 8.3. methods!immediate
-I 8.3. methods!true
-S 8.4. Operations and Method Selection
-I 8.4. operations
-I 8.4. KnownPropertiesOfObject
-I 8.4. KnownTruePropertiesOfObject
-I 8.4. KnownAttributesOfObject
-I 8.4. ApplicableMethod
-I 8.4. TraceMethods
-C migrat.tex 9. Migrating to GAP 4
-S 9.1. Changed Command Line Options
-S 9.2. Fail
-F 9.2. fail instead of false
-S 9.3. Changed Functionality
-F 9.3. Orbit
-F 9.3. Order
-F 9.3. Position
-F 9.3. PermGroupOps.ElementProperty
-F 9.3. Print
-F 9.3. PrintTo
-S 9.4. Changed Variable Names
-I 9.4. AgGroup
-I 9.4. ApplyFunc
-I 9.4. Backtrace
-I 9.4. CharTable
-I 9.4. Denominator
-I 9.4. DepthVector
-I 9.4. Elements
-I 9.4. IsBijection
-I 9.4. IsFunc
-I 9.4. IsMat
-I 9.4. IsRec
-I 9.4. IsSet
-I 9.4. LengthWord
-I 9.4. NOfCyc
-I 9.4. Numerator
-I 9.4. RandomInvertableMat
-I 9.4. RecFields
-I 9.4. X
-S 9.5. Naming Conventions
-S 9.6. Immutable Objects
-S 9.7. Copy
-I 9.7. StructuralCopy
-I 9.7. ShallowCopy
-S 9.8. Attributes vs. Record Components
-S 9.9. Different Notions of Generation
-S 9.10. Operations Records
-S 9.11. Operations vs. Dispatcher Functions
-S 9.12. Parents and Subgroups
-S 9.13. Homomorphisms vs. General Mappings
-S 9.14. Homomorphisms vs. Factor Structures
-S 9.15. Isomorphisms vs. Isomorphic Structures
-S 9.16. Elements of Finitely Presented Groups
-S 9.17. Polynomials
-S 9.18. The Info Mechanism
-S 9.19. Debugging
-I 9.19. Backtrace
-I 9.19. DownEnv
-I 9.19. Where
-S 9.20. Compatibility Mode
-C authors.tex 10. Authors
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "tut",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Copyright", ".-1", [ 0, 0, 1 ], 18, 2, "copyright", "X81488B807F2A1CF1" ]
+    , [ "Table of Contents", ".-2", [ 0, 0, 2 ], 36, 3, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YPreface\033[133X\033[101X", "1", [ 1, 0, 0 ], 
+      1, 5, "preface", "X874E1D45845007FE" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YThe \033[5XGAP\033[105X\033[101X\027\033[1X\027 S\
+ystem\033[133X\033[101X", "1.1", [ 1, 1, 0 ], 25, 5, "the gap\027\027 system",
+      "X869E3CF37EC69123" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about \033[5XGAP\033[105X\\
+033[101X\027\033[1X\027\033[133X\033[101X", "1.2", [ 1, 2, 0 ], 141, 7, 
+      "further information about gap\027\027", "X7B488D2E8492AB6A" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YA First Session with \033[5XGAP\033[105X\033[101X\
+\027\033[1X\027\033[133X\033[101X", "2", [ 2, 0, 0 ], 1, 8, 
+      "a first session with gap\027\027", "X7E1648BF8446FBC2" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YStarting and Leaving \033[5XGAP\033[105X\033[101X\
+\027\033[1X\027\033[133X\033[101X", "2.1", [ 2, 1, 0 ], 41, 8, 
+      "starting and leaving gap\027\027", "X7B5258097F48EFB6" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YLoading Source Code from a File\033[133X\033[101X\
+", "2.2", [ 2, 2, 0 ], 90, 9, "loading source code from a file", 
+      "X7B8D5EC27E33AF6D" ], 
+  [ "\033[1X\033[33X\033[0;-2YThe Read Evaluate Print Loop\033[133X\033[101X",
+      "2.3", [ 2, 3, 0 ], 106, 9, "the read evaluate print loop", 
+      "X7C7388A683D15599" ], 
+  [ "\033[1X\033[33X\033[0;-2YConstants and Operators\033[133X\033[101X", 
+      "2.4", [ 2, 4, 0 ], 210, 11, "constants and operators", 
+      "X86CA8242832F5F71" ], 
+  [ "\033[1X\033[33X\033[0;-2YVariables versus Objects\033[133X\033[101X", 
+      "2.5", [ 2, 5, 0 ], 344, 13, "variables versus objects", 
+      "X82F47EA88347AC2D" ], 
+  [ "\033[1X\033[33X\033[0;-2YObjects vs. Elements\033[133X\033[101X", "2.6", 
+      [ 2, 6, 0 ], 467, 15, "objects vs. elements", "X7F36AE347AD3CDEC" ], 
+  [ "\033[1X\033[33X\033[0;-2YAbout Functions\033[133X\033[101X", "2.7", 
+      [ 2, 7, 0 ], 508, 15, "about functions", "X796E055D86856B42" ], 
+  [ "\033[1X\033[33X\033[0;-2YHelp\033[133X\033[101X", "2.8", [ 2, 8, 0 ], 
+      579, 16, "help", "X7A7EADB77FF38BC9" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information introducing the System\033[13\
+3X\033[101X", "2.9", [ 2, 9, 0 ], 643, 17, 
+      "further information introducing the system", "X798515EF7D762548" ], 
+  [ "\033[1X\033[33X\033[0;-2YLists and Records\033[133X\033[101X", "3", 
+      [ 3, 0, 0 ], 1, 19, "lists and records", "X7863DAFD78E5DFB6" ], 
+  [ "\033[1X\033[33X\033[0;-2YPlain Lists\033[133X\033[101X", "3.1", 
+      [ 3, 1, 0 ], 17, 19, "plain lists", "X81ECC2077D88E112" ], 
+  [ "\033[1X\033[33X\033[0;-2YIdentical Lists\033[133X\033[101X", "3.2", 
+      [ 3, 2, 0 ], 187, 22, "identical lists", "X7DD65BEA7EDB0CD7" ], 
+  [ "\033[1X\033[33X\033[0;-2YImmutability\033[133X\033[101X", "3.3", 
+      [ 3, 3, 0 ], 277, 23, "immutability", "X8614C8207D57AD7A" ], 
+  [ "\033[1X\033[33X\033[0;-2YSets\033[133X\033[101X", "3.4", [ 3, 4, 0 ], 
+      323, 24, "sets", "X83BE0C20875DD285" ], 
+  [ "\033[1X\033[33X\033[0;-2YRanges\033[133X\033[101X", "3.5", [ 3, 5, 0 ], 
+      411, 25, "ranges", "X79596BDE7CAF8491" ], 
+  [ "\033[1X\033[33X\033[0;-2YFor and While Loops\033[133X\033[101X", "3.6", 
+      [ 3, 6, 0 ], 454, 26, "for and while loops", "X7CC5B0347F8EC820" ], 
+  [ "\033[1X\033[33X\033[0;-2YList Operations\033[133X\033[101X", "3.7", 
+      [ 3, 7, 0 ], 584, 28, "list operations", "X879CFE0985DBA041" ], 
+  [ "\033[1X\033[33X\033[0;-2YVectors and Matrices\033[133X\033[101X", "3.8", 
+      [ 3, 8, 0 ], 662, 29, "vectors and matrices", "X851A7DD07866323F" ], 
+  [ "\033[1X\033[33X\033[0;-2YPlain Records\033[133X\033[101X", "3.9", 
+      [ 3, 9, 0 ], 805, 31, "plain records", "X7CF7BBD58135B981" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about Lists\033[133X\033[101X\
+", "3.10", [ 3, 10, 0 ], 862, 32, "further information about lists", 
+      "X800A5E8681E28E2D" ], 
+  [ "\033[1X\033[33X\033[0;-2YFunctions\033[133X\033[101X", "4", [ 4, 0, 0 ], 
+      1, 33, "functions", "X86FA580F8055B274" ], 
+  [ "\033[1X\033[33X\033[0;-2YWriting Functions\033[133X\033[101X", "4.1", 
+      [ 4, 1, 0 ], 12, 33, "writing functions", "X7D81680E7BB09F45" ], 
+  [ "\033[1X\033[33X\033[0;-2YIf Statements\033[133X\033[101X", "4.2", 
+      [ 4, 2, 0 ], 74, 34, "if statements", "X801EE07E839B31B2" ], 
+  [ "\033[1X\033[33X\033[0;-2YLocal Variables\033[133X\033[101X", "4.3", 
+      [ 4, 3, 0 ], 132, 35, "local variables", "X797E24D67BB804A2" ], 
+  [ "\033[1X\033[33X\033[0;-2YRecursion\033[133X\033[101X", "4.4", 
+      [ 4, 4, 0 ], 183, 36, "recursion", "X7981E4197F7113EA" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about Functions\033[133X\033[\
+101X", "4.5", [ 4, 5, 0 ], 249, 37, "further information about functions", 
+      "X85B6E21781804BBB" ], 
+  [ "\033[1X\033[33X\033[0;-2YGroups and Homomorphisms\033[133X\033[101X", 
+      "5", [ 5, 0, 0 ], 1, 38, "groups and homomorphisms", 
+      "X8171DAF2833FF728" ], 
+  [ "\033[1X\033[33X\033[0;-2YPermutation groups\033[133X\033[101X", "5.1", 
+      [ 5, 1, 0 ], 11, 38, "permutation groups", "X85ED46007CED6191" ], 
+  [ "\033[1X\033[33X\033[0;-2YActions of Groups\033[133X\033[101X", "5.2", 
+      [ 5, 2, 0 ], 221, 41, "actions of groups", "X8493BB7D7ECB5AB2" ], 
+  [ "\033[1X\033[33X\033[0;-2YSubgroups as Stabilizers\033[133X\033[101X", 
+      "5.3", [ 5, 3, 0 ], 477, 45, "subgroups as stabilizers", 
+      "X8742F6A083ADE513" ], 
+  [ "\033[1X\033[33X\033[0;-2YGroup Homomorphisms by Images\033[133X\033[101X"
+        , "5.4", [ 5, 4, 0 ], 789, 50, "group homomorphisms by images", 
+      "X8131EE9182385680" ], 
+  [ "\033[1X\033[33X\033[0;-2YNice Monomorphisms\033[133X\033[101X", "5.5", 
+      [ 5, 5, 0 ], 956, 53, "nice monomorphisms", "X7FFD731684606BC6" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about Groups and Homomorphism\
+s\033[133X\033[101X", "5.6", [ 5, 6, 0 ], 1070, 55, 
+      "further information about groups and homomorphisms", 
+      "X84579FB48474079C" ], 
+  [ "\033[1X\033[33X\033[0;-2YVector Spaces and Algebras\033[133X\033[101X", 
+      "6", [ 6, 0, 0 ], 1, 56, "vector spaces and algebras", 
+      "X853484B982F1DF96" ], 
+  [ "\033[1X\033[33X\033[0;-2YVector Spaces\033[133X\033[101X", "6.1", 
+      [ 6, 1, 0 ], 7, 56, "vector spaces", "X7DAD6700787EC845" ], 
+  [ "\033[1X\033[33X\033[0;-2YAlgebras\033[133X\033[101X", "6.2", 
+      [ 6, 2, 0 ], 178, 59, "algebras", "X7DDBF6F47A2E021C" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about Vector Spaces and Algeb\
+ras\033[133X\033[101X", "6.3", [ 6, 3, 0 ], 538, 65, 
+      "further information about vector spaces and algebras", 
+      "X843A8D6F7A7592B5" ], 
+  [ "\033[1X\033[33X\033[0;-2YDomains\033[133X\033[101X", "7", [ 7, 0, 0 ], 
+      1, 66, "domains", "X7BAF69417BB925F6" ], 
+  [ "\033[1X\033[33X\033[0;-2YDomains as Sets\033[133X\033[101X", "7.1", 
+      [ 7, 1, 0 ], 12, 66, "domains as sets", "X7D94C6F07ACEA397" ], 
+  [ "\033[1X\033[33X\033[0;-2YAlgebraic Structure\033[133X\033[101X", "7.2", 
+      [ 7, 2, 0 ], 61, 67, "algebraic structure", "X81F376D67BA4F5EB" ], 
+  [ "\033[1X\033[33X\033[0;-2YNotions of Generation\033[133X\033[101X", 
+      "7.3", [ 7, 3, 0 ], 82, 67, "notions of generation", 
+      "X7E8D59018638925F" ], 
+  [ "\033[1X\033[33X\033[0;-2YDomain Constructors\033[133X\033[101X", "7.4", 
+      [ 7, 4, 0 ], 133, 68, "domain constructors", "X85AB533B7DE21C8B" ], 
+  [ "\033[1X\033[33X\033[0;-2YForming Closures of Domains\033[133X\033[101X", 
+      "7.5", [ 7, 5, 0 ], 146, 68, "forming closures of domains", 
+      "X849B1C5F8136F3A9" ], 
+  [ "\033[1X\033[33X\033[0;-2YChanging the Structure\033[133X\033[101X", 
+      "7.6", [ 7, 6, 0 ], 157, 68, "changing the structure", 
+      "X7EA77DE17DD8A231" ], 
+  [ "\033[1X\033[33X\033[0;-2YSubdomains\033[133X\033[101X", "7.7", 
+      [ 7, 7, 0 ], 211, 69, "subdomains", "X8318352D7B5F19BA" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFurther Information about Domains\033[133X\033[10\
+1X", "7.8", [ 7, 8, 0 ], 244, 70, "further information about domains", 
+      "X7C83996381F67238" ], 
+  [ "\033[1X\033[33X\033[0;-2YOperations and Methods\033[133X\033[101X", "8", 
+      [ 8, 0, 0 ], 1, 71, "operations and methods", "X7AEED9AB824CD4DA" ], 
+  [ "\033[1X\033[33X\033[0;-2YAttributes\033[133X\033[101X", "8.1", 
+      [ 8, 1, 0 ], 4, 71, "attributes", "X7C701DBF7BAE649A" ], 
+  [ "\033[1X\033[33X\033[0;-2YProperties and Filters\033[133X\033[101X", 
+      "8.2", [ 8, 2, 0 ], 107, 72, "properties and filters", 
+      "X81C430C37B2F16D8" ], 
+  [ "\033[1X\033[33X\033[0;-2YImmediate and True Methods\033[133X\033[101X", 
+      "8.3", [ 8, 3, 0 ], 188, 74, "immediate and true methods", 
+      "X85CC8C167A280043" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YOperations and Method Selection\033[133X\033[101X\
+", "8.4", [ 8, 4, 0 ], 220, 74, "operations and method selection", 
+      "X7DF5DBF9868B02C0" ], 
+  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 77, "bibliography", 
+      "X7A6F98FD85F02BFE" ], 
+  [ "References", "bib", [ "Bib", 0, 0 ], 1, 77, "references", 
+      "X7A6F98FD85F02BFE" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 78, "index", "X83A0356F839C696F" ], 
+  [ "starting \033[5XGAP\033[105X", "2.1", [ 2, 1, 0 ], 41, 8, 
+      "starting gap", "X7B5258097F48EFB6" ], 
+  [ "leaving \033[5XGAP\033[105X", "2.1", [ 2, 1, 0 ], 41, 8, "leaving gap", 
+      "X7B5258097F48EFB6" ], 
+  [ "\033[9Xquit\033[109X", "2.1", [ 2, 1, 0 ], 41, 8, "quit", 
+      "X7B5258097F48EFB6" ], 
+  [ "whitespace", "2.1", [ 2, 1, 0 ], 41, 8, "whitespace", 
+      "X7B5258097F48EFB6" ], 
+  [ "comments", "2.1", [ 2, 1, 0 ], 41, 8, "comments", "X7B5258097F48EFB6" ], 
+  [ "loading source code from a file", "2.2", [ 2, 2, 0 ], 90, 9, 
+      "loading source code from a file", "X7B8D5EC27E33AF6D" ], 
+  [ "reading source code from a file", "2.2", [ 2, 2, 0 ], 90, 9, 
+      "reading source code from a file", "X7B8D5EC27E33AF6D" ], 
+  [ "\033[10XRead\033[110X", "2.2", [ 2, 2, 0 ], 90, 9, "read", 
+      "X7B8D5EC27E33AF6D" ], 
+  [ "read evaluate print loop", "2.3", [ 2, 3, 0 ], 106, 9, 
+      "read evaluate print loop", "X7C7388A683D15599" ], 
+  [ "line editing", "2.3", [ 2, 3, 0 ], 106, 9, "line editing", 
+      "X7C7388A683D15599" ], 
+  [ "line editing", "2.3", [ 2, 3, 0 ], 106, 9, "line editing", 
+      "X7C7388A683D15599" ], 
+  [ "break loops", "2.3", [ 2, 3, 0 ], 106, 9, "break loops", 
+      "X7C7388A683D15599" ], 
+  [ "constants", "2.4", [ 2, 4, 0 ], 210, 11, "constants", 
+      "X86CA8242832F5F71" ], 
+  [ "operators", "2.4", [ 2, 4, 0 ], 210, 11, "operators", 
+      "X86CA8242832F5F71" ], 
+  [ "variables", "2.5", [ 2, 5, 0 ], 344, 13, "variables", 
+      "X82F47EA88347AC2D" ], 
+  [ "assignment", "2.5", [ 2, 5, 0 ], 344, 13, "assignment", 
+      "X82F47EA88347AC2D" ], 
+  [ "identifier", "2.5", [ 2, 5, 0 ], 344, 13, "identifier", 
+      "X82F47EA88347AC2D" ], 
+  [ "objects", "2.5", [ 2, 5, 0 ], 344, 13, "objects", "X82F47EA88347AC2D" ], 
+  [ "objects vs. variables", "2.5", [ 2, 5, 0 ], 344, 13, 
+      "objects vs. variables", "X82F47EA88347AC2D" ], 
+  [ "\033[10Xlast\033[110X", "2.5", [ 2, 5, 0 ], 344, 13, "last", 
+      "X82F47EA88347AC2D" ], 
+  [ "\033[10Xlast2\033[110X", "2.5", [ 2, 5, 0 ], 344, 13, "last2", 
+      "X82F47EA88347AC2D" ], 
+  [ "\033[10Xlast3\033[110X", "2.5", [ 2, 5, 0 ], 344, 13, "last3", 
+      "X82F47EA88347AC2D" ], 
+  [ "objects vs. elements", "2.6", [ 2, 6, 0 ], 467, 15, 
+      "objects vs. elements", "X7F36AE347AD3CDEC" ], 
+  [ "elements", "2.6", [ 2, 6, 0 ], 467, 15, "elements", "X7F36AE347AD3CDEC" ]
+    , [ "\033[10XIsIdenticalObj\033[110X", "2.6", [ 2, 6, 0 ], 467, 15, 
+      "isidenticalobj", "X7F36AE347AD3CDEC" ], 
+  [ "maps-to operator", "2.7", [ 2, 7, 0 ], 508, 15, "maps-to operator", 
+      "X796E055D86856B42" ], 
+  [ "lists plain", "3.1", [ 3, 1, 0 ], 17, 19, "lists plain", 
+      "X81ECC2077D88E112" ], 
+  [ "strings", "3.1", [ 3, 1, 0 ], 17, 19, "strings", "X81ECC2077D88E112" ], 
+  [ "lists dense", "3.1", [ 3, 1, 0 ], 17, 19, "lists dense", 
+      "X81ECC2077D88E112" ], 
+  [ "lists identical", "3.2", [ 3, 2, 0 ], 187, 22, "lists identical", 
+      "X7DD65BEA7EDB0CD7" ], 
+  [ "lists strictly sorted", "3.4", [ 3, 4, 0 ], 323, 24, 
+      "lists strictly sorted", "X83BE0C20875DD285" ], 
+  [ "family", "3.4", [ 3, 4, 0 ], 323, 24, "family", "X83BE0C20875DD285" ], 
+  [ "loop for", "3.6", [ 3, 6, 0 ], 454, 26, "loop for", "X7CC5B0347F8EC820" ]
+    , 
+  [ "loop while", "3.6", [ 3, 6, 0 ], 454, 26, "loop while", 
+      "X7CC5B0347F8EC820" ], 
+  [ "vectors row", "3.8", [ 3, 8, 0 ], 662, 29, "vectors row", 
+      "X851A7DD07866323F" ], 
+  [ "matrices", "3.8", [ 3, 8, 0 ], 662, 29, "matrices", "X851A7DD07866323F" ]
+    , 
+  [ "homomorphism natural", "5.1", [ 5, 1, 0 ], 11, 38, 
+      "homomorphism natural", "X85ED46007CED6191" ], 
+  [ "homomorphism operation", "5.2", [ 5, 2, 0 ], 221, 41, 
+      "homomorphism operation", "X8493BB7D7ECB5AB2" ], 
+  [ "homomorphism action", "5.2", [ 5, 2, 0 ], 221, 41, "homomorphism action",
+      "X8493BB7D7ECB5AB2" ], 
+  [ "enumerator", "5.2", [ 5, 2, 0 ], 221, 41, "enumerator", 
+      "X8493BB7D7ECB5AB2" ], 
+  [ "transversal", "5.2", [ 5, 2, 0 ], 221, 41, "transversal", 
+      "X8493BB7D7ECB5AB2" ], 
+  [ "canonical position", "5.2", [ 5, 2, 0 ], 221, 41, "canonical position", 
+      "X8493BB7D7ECB5AB2" ], 
+  [ "group general mapping", "5.4", [ 5, 4, 0 ], 789, 50, 
+      "group general mapping", "X8131EE9182385680" ], 
+  [ "cokernel", "5.4", [ 5, 4, 0 ], 789, 50, "cokernel", "X8131EE9182385680" ]
+    , [ "kernel", "5.4", [ 5, 4, 0 ], 789, 50, "kernel", "X8131EE9182385680" ]
+    , 
+  [ 
+      "\033[10XGroupHomomorphismByImages\033[110X vs. \033[10XGroupGeneralMapping\
+ByImages\033[110X", "5.4", [ 5, 4, 0 ], 789, 50, 
+      "grouphomomorphismbyimages vs. groupgeneralmappingbyimages", 
+      "X8131EE9182385680" ], 
+  [ "group general mapping single-valued", "5.4", [ 5, 4, 0 ], 789, 50, 
+      "group general mapping single-valued", "X8131EE9182385680" ], 
+  [ "group general mapping total", "5.4", [ 5, 4, 0 ], 789, 50, 
+      "group general mapping total", "X8131EE9182385680" ], 
+  [ "\033[10XGeneratorsOfSomething\033[110X", "7.3", [ 7, 3, 0 ], 82, 67, 
+      "generatorsofsomething", "X7E8D59018638925F" ], 
+  [ "\033[10XSomething\033[110X", "7.4", [ 7, 4, 0 ], 133, 68, "something", 
+      "X85AB533B7DE21C8B" ], 
+  [ "\033[10XClosureSomething\033[110X", "7.5", [ 7, 5, 0 ], 146, 68, 
+      "closuresomething", "X849B1C5F8136F3A9" ], 
+  [ "\033[10XAsSomething\033[110X", "7.6", [ 7, 6, 0 ], 157, 68, 
+      "assomething", "X7EA77DE17DD8A231" ], 
+  [ "\033[10XSubsomething\033[110X", "7.7", [ 7, 7, 0 ], 211, 69, 
+      "subsomething", "X8318352D7B5F19BA" ], 
+  [ "\033[10XSubsomethingNC\033[110X", "7.7", [ 7, 7, 0 ], 211, 69, 
+      "subsomethingnc", "X8318352D7B5F19BA" ], 
+  [ "getter of an attribute", "8.1", [ 8, 1, 0 ], 4, 71, 
+      "getter of an attribute", "X7C701DBF7BAE649A" ], 
+  [ "setter of an attribute", "8.1", [ 8, 1, 0 ], 4, 71, 
+      "setter of an attribute", "X7C701DBF7BAE649A" ], 
+  [ "tester of an attribute", "8.1", [ 8, 1, 0 ], 4, 71, 
+      "tester of an attribute", "X7C701DBF7BAE649A" ], 
+  [ "methods", "8.1", [ 8, 1, 0 ], 4, 71, "methods", "X7C701DBF7BAE649A" ], 
+  [ "filters", "8.2", [ 8, 2, 0 ], 107, 72, "filters", "X81C430C37B2F16D8" ], 
+  [ "methods selection", "8.2", [ 8, 2, 0 ], 107, 72, "methods selection", 
+      "X81C430C37B2F16D8" ], 
+  [ "\033[10XTryNextMethod\033[110X", "8.2", [ 8, 2, 0 ], 107, 72, 
+      "trynextmethod", "X81C430C37B2F16D8" ], 
+  [ "methods immediate", "8.3", [ 8, 3, 0 ], 188, 74, "methods immediate", 
+      "X85CC8C167A280043" ], 
+  [ "methods true", "8.3", [ 8, 3, 0 ], 188, 74, "methods true", 
+      "X85CC8C167A280043" ], 
+  [ "operations", "8.4", [ 8, 4, 0 ], 220, 74, "operations", 
+      "X7DF5DBF9868B02C0" ], 
+  [ "\033[10XKnownPropertiesOfObject\033[110X", "8.4", [ 8, 4, 0 ], 220, 74, 
+      "knownpropertiesofobject", "X7DF5DBF9868B02C0" ], 
+  [ "\033[10XKnownTruePropertiesOfObject\033[110X", "8.4", [ 8, 4, 0 ], 220, 
+      74, "knowntruepropertiesofobject", "X7DF5DBF9868B02C0" ], 
+  [ "\033[10XKnownAttributesOfObject\033[110X", "8.4", [ 8, 4, 0 ], 220, 74, 
+      "knownattributesofobject", "X7DF5DBF9868B02C0" ], 
+  [ "\033[10XApplicableMethod\033[110X", "8.4", [ 8, 4, 0 ], 220, 74, 
+      "applicablemethod", "X7DF5DBF9868B02C0" ], 
+  [ "\033[10XTraceMethods\033[110X", "8.4", [ 8, 4, 0 ], 220, 74, 
+      "tracemethods", "X7DF5DBF9868B02C0" ] ]
+);

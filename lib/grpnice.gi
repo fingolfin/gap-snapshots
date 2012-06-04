@@ -2,17 +2,14 @@
 ##
 #W  grpnice.gi                  GAP library                      Frank Celler
 ##
-#H  @(#)$Id: grpnice.gi,v 4.71.2.2 2005/11/17 16:47:05 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This  file  contains generic     methods   for groups handled    by  nice
 ##  monomorphisms..
 ##
-Revision.grpnice_gi :=
-    "@(#)$Id: grpnice.gi,v 4.71.2.2 2005/11/17 16:47:05 gap Exp $";
 
 #############################################################################
 ##
@@ -34,7 +31,7 @@ end);
 ##
 InstallGlobalFunction(RestrictedNiceMonomorphism,
 function(hom,G)
-  hom:=RestrictedMapping(hom,G);
+  hom:=RestrictedMapping(hom,G:surjective);
 
   # CompositionMapping methods need this to avoid forming an AsGHBI of an
   # nice mono!
@@ -163,17 +160,22 @@ end );
 InstallMethod( NiceMonomorphism, "regular action", true,
         [ IsGroup and IsHandledByNiceMonomorphism ], 0,
     function( G )
-    local   mon;
-
     if not HasGeneratorsOfGroup( G )  then
-        TryNextMethod();
-    elif not HasOne( G ) and HasGeneratorsOfGroup(G) and
-      Length(GeneratorsOfGroup(G))>0  then
+      TryNextMethod();
+    elif not HasOne( G ) and Length(GeneratorsOfGroup(G))>0  then
       SetOne( G, One( GeneratorsOfGroup( G )[ 1 ] ) );
     fi;
-    mon := ActionHomomorphism( G, AsList( G ), OnRight,"surjective" );
-    SetIsInjective( mon, true );
-    return mon;
+    return RegularActionHomomorphism( G );
+end );
+
+#############################################################################
+##
+#M  NiceMonomorphism( <G> ) . . . . . . . . .  independent abelian generators
+##
+InstallMethod( NiceMonomorphism, "via IsomorphismAbelianGroupViaIndependentGenerators", true,
+        [ IsGroup and IsHandledByNiceMonomorphism and CanEasilyComputeWithIndependentGensAbelianGroup ], 0,
+    function( G )
+    return IsomorphismAbelianGroupViaIndependentGenerators( IsPermGroup, G );
 end );
 
 
@@ -200,7 +202,7 @@ function( elm, G )
     local   nice,  img;
  
     nice := NiceMonomorphism( G );
-    img  := ImagesRepresentative( nice, elm );
+    img  := ImagesRepresentative( nice, elm:actioncanfail:=true );
     return img<>fail and img in NiceObject( G )
        and PreImagesRepresentative( nice, img ) = elm;
 end );
@@ -511,8 +513,10 @@ local mon,iso;
   mon:=NiceMonomorphism(g);
   if not IsIdenticalObj(Source(mon),g) then
     mon:=RestrictedNiceMonomorphism(mon,g);
+    iso:=IsomorphismPermGroup(Image(mon,g));
+  else
+    iso:=IsomorphismPermGroup(NiceObject(g));
   fi;
-  iso:=IsomorphismPermGroup(NiceObject(g));
   if iso=fail then
     return fail;
   else
@@ -793,7 +797,7 @@ GroupSeriesMethodByNiceMonomorphism( UpperCentralSeriesOfGroup,
 
 #############################################################################
 ##
-#M  RepresentativeAction( <G> )  . . . . upper central series of a group
+#M  RepresentativeAction( <G> )
 ##
 InstallOtherMethod(RepresentativeActionOp,"nice group on elements",
   IsCollsElmsElmsX,[IsHandledByNiceMonomorphism and IsGroup,
@@ -805,8 +809,11 @@ local hom,rep;
     TryNextMethod();
   fi;
   hom:=NiceMonomorphism(G);
-  rep:=RepresentativeAction(NiceObject(G),Image(hom,a),Image(hom,b),
-                               OnPoints);
+  if not ( a in Source( hom ) and b in Source( hom ) ) then
+    TryNextMethod();
+  fi;
+  rep:= RepresentativeAction( NiceObject( G ),
+            ImageElm( hom, a ), ImageElm( hom, b ), OnPoints );
   if rep<>fail then
     rep:=PreImagesRepresentative(hom,rep);
   fi;
@@ -837,10 +844,11 @@ InstallMethod( GroupGeneralMappingByImages,
    "from a group handled by a niceomorphism",true,
     [ IsGroup and IsHandledByNiceMonomorphism, IsGroup, IsList, IsList ], 0,
 function( G, H, gens, imgs )
-local nice,geni,map2;
+local nice,geni,map2,tmp;
   if RUN_IN_GGMBI=true then
     TryNextMethod();
   fi;
+  tmp := RUN_IN_GGMBI;
   RUN_IN_GGMBI:=true;
   nice:=NiceMonomorphism(G);
   if not IsIdenticalObj(Source(nice),G) then
@@ -848,7 +856,7 @@ local nice,geni,map2;
   fi;
   geni:=List(gens,i->ImageElm(nice,i));
   map2:=GroupGeneralMappingByImages(NiceObject(G),H,geni,imgs);
-  RUN_IN_GGMBI:=false;
+  RUN_IN_GGMBI:=tmp;
   return CompositionMapping(map2,nice);
 end );
 
@@ -860,16 +868,17 @@ InstallMethod( AsGroupGeneralMappingByImages,
   "for Niceomorphisms: avoid recursion",true,
   [IsGroupGeneralMapping and IsNiceMonomorphism],NICE_FLAGS,
 function(hom)
-local h;
+local h, tmp;
   # we actually want to use the next method with `RUN_IN_GGMBI' set to
   # `true'. Therefore we redispatch, but will skip this method the second
   # time.
   if RUN_IN_GGMBI=true then
     TryNextMethod();
   fi;
+  tmp := RUN_IN_GGMBI;
   RUN_IN_GGMBI:=true;
   h:=AsGroupGeneralMappingByImages(hom);
-  RUN_IN_GGMBI:=false;
+  RUN_IN_GGMBI:=tmp;
   return h;
 end);
 
@@ -882,11 +891,12 @@ InstallMethod( PreImagesRepresentative, "for PBG-Niceo",
     [ IsPreimagesByAsGroupGeneralMappingByImages and IsNiceMonomorphism,
       IsMultiplicativeElementWithInverse ], 0,
 function( hom, elm )
-local p;
+local p, tmp;
   # avoid the double dispatch for `AsGroupGeneralMappingByImages'
-  RUN_IN_GGMBI:=true;
+  tmp := RUN_IN_GGMBI;
+   RUN_IN_GGMBI:=true;
   p:=PreImagesRepresentative( AsGroupGeneralMappingByImages( hom ), elm );
-  RUN_IN_GGMBI:=false;
+  RUN_IN_GGMBI:=tmp;
   return p;
 end );
 
@@ -911,6 +921,31 @@ function(G)
   else
     TryNextMethod();
   fi;
+end);
+
+#############################################################################
+##
+#M  SeedFaithfulAction( <group> )	. .
+##
+InstallMethod(SeedFaithfulAction,
+    "default: fail",
+    true,[ IsGroup ],0,
+    G->fail);
+
+#############################################################################
+##
+#M  NiceMonomorphism( <G> ) . . . . . . . . . . . . . . . . regular operation
+##
+InstallMethod( NiceMonomorphism, "SeedFaithfulAction supersedes", true,
+        [ IsGroup and IsHandledByNiceMonomorphism and
+	  HasSeedFaithfulAction], 1000,
+function(G)
+local b;
+  b:=SeedFaithfulAction(G);
+  if b=fail then
+    TryNextMethod();
+  fi;
+  return MultiActionsHomomorphism(G,b.points,b.ops);
 end);
 
 #############################################################################

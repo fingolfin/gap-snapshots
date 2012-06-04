@@ -2,11 +2,9 @@
 ##
 #W  ghomfp.gi                   GAP library                  Alexander Hulpke
 ##
-#Y  (C) 2000 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 2000 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.ghomfp_gi :=
-    "@(#)$Id: ghomfp.gi,v 4.41.2.3 2006/01/11 04:51:33 gap Exp $";
 
 #############################################################################
 ##
@@ -33,12 +31,30 @@ end);
 #M  IsSingleValued
 ##
 InstallMethod( IsSingleValued,
-  "map from fp group or free group, given on std. gens: test relators",
+  "map from fp group or free group on arbitrary gens: rewrite",
+  true,
+  [IsFromFpGroupGeneralMappingByImages and HasMappingGeneratorsImages],0,
+function(hom)
+local m, fp, s, sg, o, gi;
+  m:=MappingGeneratorsImages(hom);
+  fp:=IsomorphismFpGroupByGenerators(Source(hom),m[1]);
+  s:=Image(fp);
+  sg:=FreeGeneratorsOfFpGroup(s);
+  o:=One(Range(hom));
+  gi:=m[2];
+  return ForAll(RelatorsOfFpGroup(s),i->MappedWord(i,sg,gi)=o);
+end);
+
+InstallMethod( IsSingleValued,
+  "map from whole fp group or free group, given on std. gens: test relators",
   true,
   [IsFromFpGroupStdGensGeneralMappingByImages],0,
 function(hom)
 local s,sg,o,gi;
   s:=Source(hom);
+  if not IsWholeFamily(s) then
+    TryNextMethod();
+  fi;
   if IsFreeGroup(s) then
     return true;
   fi;
@@ -49,13 +65,16 @@ local s,sg,o,gi;
 end);
 
 InstallMethod( IsSingleValued,
-  "map from fp group or free group to perm, given on std. gens: test relators",
+  "map from whole fp group or free group to perm, std. gens: test relators",
   true,
   [IsFromFpGroupStdGensGeneralMappingByImages and 
    IsToPermGroupGeneralMappingByImages],0,
 function(hom)
 local s, bas, sg, o, gi, l, p, rel, start, i;
   s:=Source(hom);
+  if not IsWholeFamily(s) then
+    TryNextMethod();
+  fi;
   if IsFreeGroup(s) then
     return true;
   fi;
@@ -308,7 +327,7 @@ InstallMethod( ImagesRepresentative,
 function( hom, elm )
 local he,ue,p,mapi;
   ue:=UnderlyingElement(elm);
-  if IsDataObjectRep(ue) and IsOne(ue) then
+  if IsLetterAssocWordRep(ue) and IsOne(ue) then
     return One(Range(hom));
   fi;
   mapi:=MappingGeneratorsImages(hom);
@@ -490,8 +509,20 @@ local s,t,p,w,c,q,chom,tg,thom,hi,i,lp,max;
   s:=Source(hom);
   if HasIsWholeFamily(s) and IsWholeFamily(s) then
     t:=List(GeneratorsOfGroup(s),i->Image(hom,i));
+    if IsPermGroup(Range(hom)) and LargestMovedPoint(t)<>NrMovedPoints(t) then
+      c:=MappingPermListList(MovedPoints(t),[1..NrMovedPoints(t)]);
+      t:=List(t,i->i^c);
+      u:=u^c;
+    else
+      c:=false;
+    fi;
     p:=GroupWithGenerators(t);
-    SetParent(p,Range(hom));
+    if HasImagesSource(hom) and HasSize(Image(hom)) then
+      SetSize(p,Size(Image(hom)));
+    fi;
+    if c=false then
+      SetParent(p,Range(hom));
+    fi;
     if HasIsSurjective(hom) and IsSurjective(hom) then
       SetIndexInParent(p,1);
     fi;
@@ -532,7 +563,9 @@ local s,t,p,w,c,q,chom,tg,thom,hi,i,lp,max;
     else
       u:=KuKGenerators(w,chom,thom);
       # could the group be too expensive?
-      if (not IsBound(s!.quot)) or Size(s!.quot)>10^50 then
+      if (not IsBound(s!.quot)) or
+        (IsPermGroup(s!.quot)
+	  and Size(s!.quot)>10^50 and NrMovedPoints(s!.quot)>10000) then
 	t:=[];
 	max:=LargestMovedPoint(u);
 	for i in u do
@@ -794,7 +827,7 @@ local aug,w,p,pres,f,fam;
   fi;
   aug:=CopiedAugmentedCosetTable(aug);
   pres := PresentationAugmentedCosetTable( aug,nam,0,true );
-  TzOptions(pres).printLevel:=0; # shut up
+  TzOptions(pres).printLevel:=InfoLevel(InfoFpGroup);
   DecodeTree(pres);
 
   # new free group
@@ -848,6 +881,10 @@ local H, pres,map,mapi,opt;
     opt.lengthLimit:=ValueOption("lengthLimit");
   else
     opt.lengthLimit:=Int(3*pres!.tietze[TZ_TOTAL]); # not too big.
+  fi;
+
+  if ValueOption("protected")<>fail then
+    opt.expandLimit:=ValueOption("protected");
   fi;
 
   opt.printLevel:=InfoLevel(InfoFpGroup); 
@@ -1020,6 +1057,54 @@ local phi,m;
   m:=MaximalAbelianQuotient(Image(phi));
   SetAbelianInvariants(U,AbelianInvariants(Image(phi)));
   return phi*MaximalAbelianQuotient(Image(phi));
+end);
+
+# u must be a subgroup of the image of home
+InstallGlobalFunction(
+LargerQuotientBySubgroupAbelianization,function(hom,u)
+local v,ma,mau,a,gens,imgs,q,k,co,aiu,aiv,primes,irrel;
+  v:=PreImage(hom,u);
+  aiv:=AbelianInvariants(v);
+  aiu:=AbelianInvariants(u);
+  if aiu=aiv then
+    return fail;
+  fi;
+  # are there irrelevant primes?
+  primes:=Set(Factors(Product(aiu)*Product(aiv)));
+  irrel:=Filtered(primes,x->Filtered(aiv,z->IsInt(z/x))=
+                            Filtered(aiu,z->IsInt(z/x)));
+
+  Info(InfoFpGroup,1,"Larger by factor ",
+    Product(AbelianInvariants(v))/Product(AbelianInvariants(u)),"\n");
+  ma:=MaximalAbelianQuotient(v);
+  mau:=MaximalAbelianQuotient(u);
+  a:=Image(ma);
+  k:=TrivialSubgroup(a);
+  for primes in irrel do
+    k:=ClosureGroup(k,GeneratorsOfGroup(SylowSubgroup(a,primes)));
+  od;
+  if Size(k)>1 then
+    ma:=ma*NaturalHomomorphismByNormalSubgroup(a,k);
+    a:=Image(ma);
+    k:=TrivialSubgroup(Image(mau));
+    for primes in irrel do
+      k:=ClosureGroup(k,GeneratorsOfGroup(SylowSubgroup(Image(mau),primes)));
+    od;
+    mau:=mau*NaturalHomomorphismByNormalSubgroup(Image(mau),k);
+  fi;
+
+  gens:=SmallGeneratingSet(a);
+  imgs:=List(gens,x->Image(mau,Image(hom,PreImagesRepresentative(ma,x))));
+  q:=GroupHomomorphismByImages(a,Image(mau),gens,imgs);
+  k:=KernelOfMultiplicativeGeneralMapping(q);
+  co:=ComplementClassesRepresentatives(a,k);
+  if Length(co)=0 then
+    co:=List(ConjugacyClassesSubgroups(a),Representative);
+    co:=Filtered(co,x->Size(Intersection(k,x))=1);
+    Sort(co,function(a,b) return Size(a)>Size(b);end);
+  fi;
+  Info(InfoFpGroup,2,"Degree larger ",Index(a,co[1]),"\n");
+  return PreImage(ma,co[1]);
 end);
 
 DeclareRepresentation("IsModuloPcgsFpGroupRep",

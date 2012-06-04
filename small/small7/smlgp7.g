@@ -6,8 +6,6 @@
 ##  This file contains the reading and constrution functions for the groups
 ##  of size 512.
 ##
-Revision.smlgp7_g :=
-    "@(#)$Id: smlgp7.g,v 1.5.4.1 2005/05/03 14:24:19 gap Exp $";
 
 #############################################################################
 ##

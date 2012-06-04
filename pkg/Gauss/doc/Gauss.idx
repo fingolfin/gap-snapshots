@@ -1,0 +1,29 @@
+\indexentry{\textsf{Gauss}|hyperpage}{5}
+\indexentry{SparseMatrix@\texttt  {SparseMatrix}!constructor using gap matrices|hyperpage}{10}
+\indexentry{SparseMatrix@\texttt  {SparseMatrix}!constructor using indices|hyperpage}{10}
+\indexentry{SparseMatrix@\texttt  {SparseMatrix}!constructor using indices and entries|hyperpage}{10}
+\indexentry{ConvertSparseMatrixToMatrix@\texttt  {ConvertSparseMatrixToMatrix}|hyperpage}{11}
+\indexentry{CopyMat@\texttt  {CopyMat}|hyperpage}{11}
+\indexentry{GetEntry@\texttt  {GetEntry}|hyperpage}{11}
+\indexentry{SetEntry@\texttt  {SetEntry}|hyperpage}{12}
+\indexentry{AddToEntry@\texttt  {AddToEntry}|hyperpage}{12}
+\indexentry{SparseZeroMatrix@\texttt  {SparseZeroMatrix}!constructor using number of rows|hyperpage}{12}
+\indexentry{SparseZeroMatrix@\texttt  {SparseZeroMatrix}!constructor using number of rows and columns|hyperpage}{12}
+\indexentry{SparseIdentityMatrix@\texttt  {SparseIdentityMatrix}|hyperpage}{12}
+\indexentry{TransposedSparseMat@\texttt  {TransposedSparseMat}|hyperpage}{12}
+\indexentry{CertainRows@\texttt  {CertainRows}|hyperpage}{12}
+\indexentry{CertainColumns@\texttt  {CertainColumns}|hyperpage}{12}
+\indexentry{UnionOfRows@\texttt  {UnionOfRows}|hyperpage}{12}
+\indexentry{UnionOfColumns@\texttt  {UnionOfColumns}|hyperpage}{13}
+\indexentry{SparseDiagMat@\texttt  {SparseDiagMat}|hyperpage}{13}
+\indexentry{Nrows@\texttt  {Nrows}|hyperpage}{13}
+\indexentry{Ncols@\texttt  {Ncols}|hyperpage}{13}
+\indexentry{IndicesOfSparseMatrix@\texttt  {IndicesOfSparseMatrix}|hyperpage}{13}
+\indexentry{EntriesOfSparseMatrix@\texttt  {EntriesOfSparseMatrix}|hyperpage}{13}
+\indexentry{RingOfDefinition@\texttt  {RingOfDefinition}|hyperpage}{13}
+\indexentry{EchelonMat@\texttt  {EchelonMat}|hyperpage}{15}
+\indexentry{EchelonMatTransformation@\texttt  {EchelonMatTransformation}|hyperpage}{16}
+\indexentry{ReduceMat@\texttt  {ReduceMat}|hyperpage}{17}
+\indexentry{ReduceMatTransformation@\texttt  {ReduceMatTransformation}|hyperpage}{18}
+\indexentry{KernelMat@\texttt  {KernelMat}|hyperpage}{19}
+\indexentry{Rank@\texttt  {Rank}|hyperpage}{19}

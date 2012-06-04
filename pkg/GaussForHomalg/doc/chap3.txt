@@ -1,0 +1,250 @@
+  
+  [1X3 [5XGaussForHomalg[1X methods and functions[0X
+  
+  
+  [1X3.1 The Tools[0X
+  
+  Please   note   that   there   are  more  tool  functions  you  can  define,
+  [5XGaussForHomalg[0m  just  provides  homalg with a sufficient subset. This varies
+  with  the  type and complexity of the rings you want to define. On the other
+  hand,   [2XImportMatrix[0m   ([14X3.1-4[0m)  is  a  function  specifically  designed  for
+  [5XGaussForHomalg[0m.
+  
+  [1X3.1-1 ZeroMatrix[0m
+  
+  [2X> ZeroMatrix( [0X[3XC[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  a sparse matrix with the same dimensions and base ring as the
+  [5Xhomalg[0m matrix [3XC[0m.
+  
+  [1X3.1-2 IdentityMatrix[0m
+  
+  [2X> IdentityMatrix( [0X[3XC[0X[2X ) ______________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This returns a sparse n x n identity matrix with the same ring as the [5Xhomalg[0m
+  matrix [3XC[0m, n being the number of rows of [3XC[0m.
+  
+  [1X3.1-3 CopyMatrix[0m
+  
+  [2X> CopyMatrix( [0X[3XC[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  a  sparse matrix which is a shallow copy of the sparse matrix
+  stored in the [10XEval[0m attribute of the [5Xhomalg[0m matrix [3XC[0m.
+  
+  [1X3.1-4 ImportMatrix[0m
+  
+  [2X> ImportMatrix( [0X[3XM, R[0X[2X ) _____________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the  sparse  version  of the [5XGAP[0m matrix [3XM[0m over the ring [3XR[0m. It
+  prevents [5Xhomalg[0m from calling sparse matrix algorithms on dense [5XGAP[0m matrices.
+  Note  that  this  is not a "standard" tool but neccessary because of the new
+  data type.
+  
+  [1X3.1-5 Involution[0m
+  
+  [2X> Involution( [0X[3XM[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  a  sparse  matrix which is the transpose of the sparse matrix
+  stored in the [10XEval[0m attribute of the [5Xhomalg[0m matrix [3XM[0m.
+  
+  [1X3.1-6 CertainRows[0m
+  
+  [2X> CertainRows( [0X[3XM, plist[0X[2X ) __________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the  rows  in  [3Xplist[0m  of the sparse matrix stored in the [10XEval[0m
+  attribute of the [5Xhomalg[0m matrix [3XM[0m as a new matrix.
+  
+  [1X3.1-7 CertainColumns[0m
+  
+  [2X> CertainColumns( [0X[3XM, plist[0X[2X ) _______________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the  columns in [3Xplist[0m of the sparse matrix stored in the [10XEval[0m
+  attribute of the [5Xhomalg[0m matrix [3XM[0m as a new matrix.
+  
+  [1X3.1-8 UnionOfRows[0m
+  
+  [2X> UnionOfRows( [0X[3XA, B[0X[2X ) ______________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the  sparse  matrix  created by concatenating the rows of the
+  sparse  matrices  stored in the [10XEval[0m attributes of the [5Xhomalg[0m matrices [3XA[0m and
+  [3XB[0m.
+  
+  [1X3.1-9 UnionOfColumns[0m
+  
+  [2X> UnionOfColumns( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the sparse matrix created by concatenating the columns of the
+  sparse  matrices  stored in the [10XEval[0m attributes of the [5Xhomalg[0m matrices [3XA[0m and
+  [3XB[0m.
+  
+  [1X3.1-10 DiagMat[0m
+  
+  [2X> DiagMat( [0X[3Xe[0X[2X ) _____________________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  method  takes a list [3Xe[0m of [5Xhomalg[0m matrices and returns the sparse block
+  matrix of the matrices stored in the [10XEval[0m attributes of the matrices in [3Xe[0m.
+  
+  [1X3.1-11 KroneckerMat[0m
+  
+  [2X> KroneckerMat( [0X[3XA, B[0X[2X ) _____________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns the sparse Kronecker matrix of the matrices stored in the [10XEval[0m
+  attributes of the [5Xhomalg[0m matrices [3XA[0m and [3XB[0m.
+  
+  [1X3.1-12 Compose[0m
+  
+  [2X> Compose( [0X[3XA, B[0X[2X ) __________________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix
+  
+  This  returns  the  matrix product of the sparse matrices stored in the [10XEval[0m
+  attributes of the [5Xhomalg[0m matrices [3XA[0m and [3XB[0m.
+  
+  [1X3.1-13 NrRows[0m
+  
+  [2X> NrRows( [0X[3XC[0X[2X ) ______________________________________________________[0Xfunction
+  [6XReturns:[0X  an integer
+  
+  This  returns  the  number  of  rows of the sparse matrix stored in the [10XEval[0m
+  attribute of the [5Xhomalg[0m matrix [3XC[0m.
+  
+  [1X3.1-14 NrColumns[0m
+  
+  [2X> NrColumns( [0X[3XC[0X[2X ) ___________________________________________________[0Xfunction
+  [6XReturns:[0X  an integer
+  
+  This  returns  the number of columns of the sparse matrix stored in the [10XEval[0m
+  attribute of the [5Xhomalg[0m matrix [3XC[0m.
+  
+  [1X3.1-15 IsZeroMatrix[0m
+  
+  [2X> IsZeroMatrix( [0X[3XC[0X[2X ) ________________________________________________[0Xfunction
+  [6XReturns:[0X  [12Xtrue[0m or [12Xfalse[0m
+  
+  This  returns  [12Xtrue[0m if the sparse matrix stored in the [10XEval[0m attribute of the
+  [5Xhomalg[0m matrix [3XC[0m is a zero matrix, and [12Xfalse[0m otherwise.
+  
+  [1X3.1-16 IsDiagonalMatrix[0m
+  
+  [2X> IsDiagonalMatrix( [0X[3XC[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  [12Xtrue[0m or [12Xfalse[0m
+  
+  This  returns  [12Xtrue[0m if the sparse matrix stored in the [10XEval[0m attribute of the
+  [5Xhomalg[0m matrix [3XC[0m is a diagonal matrix, and [12Xfalse[0m otherwise.
+  
+  [1X3.1-17 ZeroRows[0m
+  
+  [2X> ZeroRows( [0X[3XC[0X[2X ) ____________________________________________________[0Xfunction
+  [6XReturns:[0X  a list
+  
+  This  returns  the list of zero rows of the sparse matrix stored in the [10XEval[0m
+  attribute of the [5Xhomalg[0m matrix [3XC[0m.
+  
+  [1X3.1-18 ZeroColumns[0m
+  
+  [2X> ZeroColumns( [0X[3XC[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  a list
+  
+  This  returns  the  list  of zero columns of the sparse matrix stored in the
+  [10XEval[0m attribute of the [5Xhomalg[0m matrix [3XC[0m.
+  
+  
+  [1X3.2 The Basic Functions and [5Xhomalg[1X table creation[0X
+  
+  [1X3.2-1 DecideZeroRows[0m
+  
+  [2X> DecideZeroRows( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  This  returns  the [5Xhomalg[0m matrix you get by row reducing the [5Xhomalg[0m matrix [3XA[0m
+  with the [5Xhomalg[0m matrix [3XB[0m.
+  
+  [1X3.2-2 DecideZeroRowsEffectively[0m
+  
+  [2X> DecideZeroRowsEffectively( [0X[3XA, B, T[0X[2X ) _____________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix [3XM[0m
+  
+  This returns the [5Xhomalg[0m matrix [3XM[0m you get by row reducing the [5Xhomalg[0m matrix [3XA[0m
+  with  the  [5Xhomalg[0m  matrix [3XB[0m. The transformation matrix is stored in the void
+  [5Xhomalg[0m matrix [3XT[0m as a side effect. The matrices satisfy M = A + T * B.
+  
+  [1X3.2-3 SyzygiesGeneratorsOfRows[0m
+  
+  [2X> SyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ____________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  This  returns  the  row  syzygies  of the [5Xhomalg[0m matrix [3XM[0m, again as a [5Xhomalg[0m
+  matrix.
+  
+  [1X3.2-4 RelativeSyzygiesGeneratorsOfRows[0m
+  
+  [2X> RelativeSyzygiesGeneratorsOfRows( [0X[3XM, N[0X[2X ) _________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The  row syzygies of [3XM[0m are returned, but now the computation interpretes the
+  rows of the [5Xhomalg[0m matrix [3XN[0m as additional zero relations.
+  
+  [1X3.2-5 RowReducedEchelonForm[0m
+  
+  [2X> RowReducedEchelonForm( [0X[3XM[, U][0X[2X ) __________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix [3XN[0m
+  
+  If  one  argument  is  given, this returns the triangular basis (reduced row
+  echelon  form)  of the [5Xhomalg[0m matrix [3XM[0m, again as a [5Xhomalg[0m matrix. In case of
+  two  arguments,  still  only  the triangular basis of [3XM[0m is returned, but the
+  transformation  matrix  is  stored  in  the  void  [5Xhomalg[0m matrix [3XU[0m as a side
+  effect. The matrices satisfy N = U * M.
+  
+  [1X3.2-6 CreateHomalgTable[0m
+  
+  [2X> CreateHomalgTable( [0X[3XR[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m table
+  
+  This returns the [5Xhomalg[0m table of what will become the [5Xhomalg[0m ring [3XR[0m (at this
+  point  [3XR[0m  is  just  a  [5Xhomalg[0m  object  with  some  properties for the method
+  selection  of  [10XCreateHomalgTable[0m). This method includes the needed functions
+  stored   in   the   global   variables   [10XCommonHomalgTableForGaussTools[0m  and
+  [10XCommonHomalgTableForGaussBasic[0m,  and  can  add  some more to the record that
+  will become the [5Xhomalg[0m table.
+  
+  
+  [1X3.3 Matrix entry manipulation[0X
+  
+  This is just support for the sparse matrix data type.
+  
+  [1X3.3-1 MatElm[0m
+  
+  [2X> MatElm( [0X[3XM, r, c, R[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  [3XM[0m[[3Xr[0m,[3Xc[0m]
+  
+  If  the  Eval  attribute  of  the  homalg matrix [3XM[0m over the [5Xhomalg[0m ring [3XR[0m is
+  sparse, this calls the corresponding [5XGauss[0m command [10XGetEntry[0m.
+  
+  [1X3.3-2 SetMatElm[0m
+  
+  [2X> SetMatElm( [0X[3XM, r, c, e, R[0X[2X ) _________________________________________[0Xmethod
+  [6XReturns:[0X  nothing
+  
+  If  the  Eval  attribute  of  the  homalg matrix [3XM[0m over the [5Xhomalg[0m ring [3XR[0m is
+  sparse,  this  calls  the  corresponding  [5XGauss[0m command [10XGetEntry[0m, to achieve
+  [10X[3XM[0m[10X[[3Xr[0m[10X,[3Xc[0m[10X]:=[3Xe[0m[10X[0m.
+  
+  [1X3.3-3 AddToMatElm[0m
+  
+  [2X> AddToMatElm( [0X[3XM, r, c, e, R[0X[2X ) _______________________________________[0Xmethod
+  [6XReturns:[0X  nothing
+  
+  If  the  Eval  attribute  of  the  homalg matrix [3XM[0m over the [5Xhomalg[0m ring [3XR[0m is
+  sparse,  this  calls  the corresponding [5XGauss[0m command [10XAddToEntry[0m, to achieve
+  [10X[3XM[0m[10X[[3Xr[0m[10X,[3Xc[0m[10X] := [3XM[0m[10X[[3Xr[0m[10X,[3Xc[0m[10X] + [3Xe[0m[10X[0m.
+  

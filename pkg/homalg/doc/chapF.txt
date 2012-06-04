@@ -1,0 +1,93 @@
+  
+  [1XF Overview of the [5Xhomalg[1X Package Source Code[0X
+  
+  The  [5Xhomalg[0m  package  reached more than 50.000 lines of [5XGAP4[0m code (excluding
+  the documentation) before the first release was made. To keep this amount of
+  code tracebale, the package was split in several files.
+  
+  
+  [1XF.1 The Basic Objects[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m       | Content                                        
+      -------------------------------------------------------------------------
+        [11XHomalgObject[0m           | objects of Abelian categories                  
+                               |                                                
+        [11XHomalgSubobject[0m        | subobject of objects of Abelian categories     
+                               |                                                
+        [11XHomalgMorphism[0m         | morphisms of Abelian categories                
+                               |                                                
+        [11XHomalgElement[0m          | elements are morphisms from "structure objects"
+                               |                                                
+        [11XHomalgFiltration[0m       | filtrations of objects of Abelian categories   
+                               |                                                
+        [11XHomalgComplex[0m          | (co)complexes of objects or of (co)complexes   
+                               |                                                
+        [11XHomalgChainMorphism[0m    | chain morphisms of (co)complexes               
+                               | consisting of morphisms or chain morphisms     
+                               |                                                
+        [11XHomalgBicomplex[0m        | bicomplexes of objects or of (co)complexes     
+                               |                                                
+        [11XHomalgBigradedObject[0m   | (differential) bigraded objects                
+                               |                                                
+        [11XHomalgSpectralSequence[0m | homological and cohomological                  
+                               | spectral sequences                             
+                               |                                                
+        [11XHomalgFunctor[0m          | constructors of (multi) functors of            
+                               | Abelian categories,                            
+                               | left derivation of covariant functors,         
+                               | right derivation of contravariant functors,    
+                               | left satellites of covariant functors,         
+                               | right satellites of contravariant functors,    
+                               | and composition of functors                    
+                               |                                                
+        [11XHomalgDiagram[0m          | basic diagrams                                 
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  
+  
+  [1XF.2 The High Level Homological Algorithms[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m  | Content                                         
+      ---------------------------------------------------------------------
+        [11XStaticObjects[0m     | subfactors, syzygy objects, shorten resolutions,
+                          | saturations                                     
+                          |                                                 
+        [11XMorphisms[0m         | resolutions, (co)kernel sequences               
+                          |                                                 
+        [11XComplexes[0m         | (co)homology, horse shoe lemma, connecting      
+                          | homomorphisms, Cartan-Eilenberg resolution      
+                          |                                                 
+        [11XChainMorphisms[0m    | (co)homology                                    
+                          |                                                 
+        [11XSpectralSequences[0m | Grothendieck bicomplexes associated to two      
+                          | composable functors, spectral sequences         
+                          | of bicomplexes, Grothendieck spectral sequences 
+        [11XFiltrations[0m       | spectral filtrations, i.e. filtrations induced  
+                          | by spectral sequences of bicomplexes,           
+                          | purity filtration                               
+                          |                                                 
+        [11XToolFunctors[0m      | composition, addition, substraction,            
+                          | stacking, augmentation, and post dividing maps  
+        [11XBasicFunctors[0m     | kernel, defect of exactness                     
+        [11XOtherFunctors[0m     | torsion submodule, torsion free factor,         
+                          | pullback, pushout, Auslander dual               
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  
+  
+  [1XF.3 Logical Implications for [5Xhomalg[1X Objects[0X
+  
+        Filename [11X.gd[0m/[11X.gi[0m | Content                                                  
+      -----------------------------------------------------------------------------
+        [11XLIOBJ[0m            | logical implications for objects of an Abelian category  
+                         |                                                          
+        [11XLIMOR[0m            | logical implications for morphisms of an Abelian category
+                         |                                                          
+        [11XLICPX[0m            | logical implications for complexes                       
+                         |                                                          
+  
+       [1XTable:[0X [13XThe [5Xhomalg[0m[13X package files (continued)[0m
+  
+  

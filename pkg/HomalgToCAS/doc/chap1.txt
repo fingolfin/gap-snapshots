@@ -1,0 +1,50 @@
+  
+  [1X1 Introduction[0X
+  
+  [5XHomalgToCAS[0m  is  one of the core packages of the [5Xhomalg[0m project [hpa10]. But
+  as  one  of  the  rather  technical packages, this manual is probably not of
+  interest  for  the  average  uers.  The average user will usually not get in
+  direct contact with the operations provided by this package.
+  
+  Quoting  from  the  Appendix  [14X'homalg: The Core Packages and the Idea behind
+  their Splitting'[0m of the [5Xhomalg[0m package manual (--> [14X'homalg: HomalgToCAS'[0m):
+  
+  "The  package [5XHomalgToCAS[0m (which needs the [5Xhomalg[0m package) includes all what
+  is  needed to let the black boxes used by [5Xhomalg[0m reside in external computer
+  algebra  systems.  So  as mentioned above, [5XHomalgToCAS[0m is the right place to
+  declare   the  three  [5XGAP[0m  representations  external  rings,  external  ring
+  elements,  and external matrices. Still, [5XHomalgToCAS[0m is independent from the
+  external  computer  algebra  system  with  which  [5XGAP[0m  will  communicate [13Xand[0m
+  independent of how this communication physically looks like."
+  
+  
+  [1X1.1 [5XHomalgToCAS[1X provides ...[0X
+  
+  --    Declaration and construction of
+  
+        --    external   objects  (which  are  pointers  to  data  (rings,ring
+              elements, matrices, ...) residing in external systems)
+  
+        --    external rings (as a new representation for the [5XGAP4[0m-category of
+              homalg rings)
+  
+        --    external   ring  elements  (as  a  new  representation  for  the
+              [5XGAP4[0m-category of homalg ring elements)
+  
+        --    external matrices (as a new representation for the [5XGAP4[0m-category
+              of homalg matrices)
+  
+  --    [10XLaunchCAS[0m:  the  standard  interface used by [5Xhomalg[0m to launch external
+        systems
+  
+  --    [10XTerminateCAS[0m:  the  standard  interface  used  by  [5Xhomalg[0m to terminate
+        external systems
+  
+  --    [10XhomalgSendBlocking[0m:  the  standard  interface  used  by [5Xhomalg[0m to send
+        commands to external systems
+  
+  --    External  garbage  collection: delete the data in the external systems
+        that became obsolete for [5Xhomalg[0m
+  
+  --    [10XhomalgIOMode[0m: decide how much of the communication you want to see
+  

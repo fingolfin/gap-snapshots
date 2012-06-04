@@ -1,0 +1,175 @@
+\indexentry {CRISP}{3}
+\indexentry {FORMAT package@FORMAT package}{3}
+\indexentry {classes!creation of}{4}
+\indexentry {IsClass@`IsClass'}{4}
+\indexentry {Class@`Class'}{4}
+\indexentry {Class@`Class'}{4}
+\indexentry {View@`View'!for classes}{4}
+\indexentry {Print@`Print'!for classes}{4}
+\indexentry {Display@`Display'!for classes}{4}
+\indexentry {in@`in'!for classes}{4}
+\indexentry {membership test!for classes}{4}
+\indexentry {element test!for classes}{4}
+\indexentry {equality!for classes}{5}
+\indexentry {comparison!for classes}{5}
+\indexentry {classes!properties of}{5}
+\indexentry {properties!of classes}{5}
+\indexentry {IsEmpty@`IsEmpty'!for classes}{5}
+\indexentry {MemberFunction@`MemberFunction'}{5}
+\indexentry {lattice operations!for classes}{5}
+\indexentry {Complement@`Complement'}{5}
+\indexentry {Intersection@`Intersection'!of classes}{5}
+\indexentry {Intersection@`Intersection'!of classes}{5}
+\indexentry {INTERSECTION_LIMIT@`INTERSECTION_LIMIT'}{5}
+\indexentry {Union@`Union'}{5}
+\indexentry {Difference@`Difference'}{5}
+\indexentry {group classes!creation of}{6}
+\indexentry {GroupClass@`GroupClass'}{6}
+\indexentry {GroupClass@`GroupClass'}{6}
+\indexentry {GroupClass@`GroupClass'}{6}
+\indexentry {GroupClass@`GroupClass'}{6}
+\indexentry {Intersection@`Intersection'!of group classes}{7}
+\indexentry {Intersection@`Intersection'!of group classes}{7}
+\indexentry {closure properties!of group classes}{7}
+\indexentry {group classes!closure properties of}{7}
+\indexentry {IsGroupClass@`IsGroupClass'}{7}
+\indexentry {ContainsTrivialGroup@`ContainsTrivialGroup'}{7}
+\indexentry {IsSubgroupClosed@`IsSubgroupClosed'}{8}
+\indexentry {IsNormalSubgroupClosed@`IsNormalSubgroupClosed'}{8}
+\indexentry {IsQuotientClosed@`IsQuotientClosed'}{8}
+\indexentry {IsResiduallyClosed@`IsResiduallyClosed'}{8}
+\indexentry {IsNormalProductClosed@`IsNormalProductClosed'}{8}
+\indexentry {IsDirectProductClosed@`IsDirectProductClosed'}{8}
+\indexentry {IsSchunckClass@`IsSchunckClass'}{8}
+\indexentry {IsSaturated@`IsSaturated'}{8}
+\indexentry {group classes!properties of}{8}
+\indexentry {properties!of group classes}{8}
+\indexentry {HasIsFittingClass@`HasIsFittingClass'}{8}
+\indexentry {IsFittingClass@`IsFittingClass'}{8}
+\indexentry {SetIsFittingClass@`SetIsFittingClass'}{8}
+\indexentry {HasIsOrdinaryFormation@`HasIsOrdinaryFormation'}{8}
+\indexentry {HasIsFormation@`HasIsFormation'}{8}
+\indexentry {IsOrdinaryFormation@`IsOrdinaryFormation'}{9}
+\indexentry {IsFormation@`IsFormation'}{9}
+\indexentry {SetIsOrdinaryFormation@`SetIsOrdinaryFormation'}{9}
+\indexentry {SetIsFormation@`SetIsFormation'}{9}
+\indexentry {HasIsSaturatedFormation@`HasIsSaturatedFormation'}{9}
+\indexentry {IsSaturatedFormation@`IsSaturatedFormation'}{9}
+\indexentry {SetIsSaturatedFormation@`SetIsSaturatedFormation'}{9}
+\indexentry {HasIsFittingFormation@`HasIsFittingFormation'}{9}
+\indexentry {IsFittingFormation@`IsFittingFormation'}{9}
+\indexentry {SetIsFittingFormation@`SetIsFittingFormation'}{9}
+\indexentry {HasIsSaturatedFittingFormation@`HasIsSaturatedFittingFormation'}{9}
+\indexentry {IsSaturatedFittingFormation@`IsSaturatedFittingFormation'}{9}
+\indexentry {SetIsSaturatedFittingFormation@`SetIsSaturatedFittingFormation'}{9}
+\indexentry {group classes!attributes for}{9}
+\indexentry {attributes!of group classes}{9}
+\indexentry {Characteristic@`Characteristic'}{9}
+\indexentry {Schunck class!creating}{10}
+\indexentry {SchunckClass@`SchunckClass'}{10}
+\indexentry {Schunck class!attributes of}{10}
+\indexentry {Schunck class!operations for}{10}
+\indexentry {attributes!of Schunck class}{10}
+\indexentry {operations!for Schunck class!}{10}
+\indexentry {Boundary@`Boundary'}{10}
+\indexentry {Basis@`Basis'}{10}
+\indexentry {Projector@`Projector'}{11}
+\indexentry {CoveringSubgroup@`CoveringSubgroup'}{11}
+\indexentry {BoundaryFunction@`BoundaryFunction'}{11}
+\indexentry {ProjectorFunction@`ProjectorFunction'}{11}
+\indexentry {primitive solvable group!attributes of}{11}
+\indexentry {attributes!of primitive solvable group}{11}
+\indexentry {IsPrimitiveSolvableGroup@`IsPrimitiveSolvableGroup'}{11}
+\indexentry {IsPrimitiveSolvable@`IsPrimitiveSolvable'}{11}
+\indexentry {SocleComplement@`SocleComplement'}{12}
+\indexentry {formations!creating}{12}
+\indexentry {OrdinaryFormation@`OrdinaryFormation'}{12}
+\indexentry {SaturatedFormation@`SaturatedFormation'}{12}
+\indexentry {FormationProduct@`FormationProduct'}{13}
+\indexentry {FittingFormationProduct@`FittingFormationProduct'}{13}
+\indexentry {formations!attributes for}{14}
+\indexentry {formations!operations for}{14}
+\indexentry {attributes!of formation}{14}
+\indexentry {operations!for formation}{14}
+\indexentry {Residual@`Residual'}{14}
+\indexentry {Residuum@`Residuum'}{14}
+\indexentry {ResidualFunction@`ResidualFunction'}{14}
+\indexentry {LocalDefinitionFunction@`LocalDefinitionFunction'}{14}
+\indexentry {NormalSubgroups@`NormalSubgroups'}{14}
+\indexentry {CharacteristicSubgroups@`CharacteristicSubgroups'}{14}
+\indexentry {normal subgroups!with properties inherited by normal subgroups above}{15}
+\indexentry {invariant normal subgroups!with properties inherited by normal subgroups above}{15}
+\indexentry {factor groups!with properties inherited by factor groups}{15}
+\indexentry {quotient groups!with properties inherited by quotients}{15}
+\indexentry {OneInvariantSubgroupMinWrtQProperty@`OneInvariantSubgroupMinWrtQProperty'}{15}
+\indexentry {AllInvariantSubgroupsWithQProperty@`AllInvariantSubgroupsWithQProperty'}{16}
+\indexentry {OneNormalSubgroupMinWrtQProperty@`OneNormalSubgroupMinWrtQProperty'}{16}
+\indexentry {AllNormalSubgroupsWithQProperty@`AllNormalSubgroupsWithQProperty'}{16}
+\indexentry {Fitting classes!creating}{17}
+\indexentry {FittingClass@`FittingClass'}{17}
+\indexentry {FittingProduct@`FittingProduct'}{17}
+\indexentry {FittingFormationProduct@`FittingFormationProduct'}{17}
+\indexentry {Fitting formations!creating}{18}
+\indexentry {formations!creating Fitting formations}{18}
+\indexentry {Fitting classes!creating Fitting formations}{18}
+\indexentry {FittingFormation@`FittingFormation'}{18}
+\indexentry {SaturatedFittingFormation@`SaturatedFittingFormation'}{18}
+\indexentry {Fitting sets!creating}{18}
+\indexentry {IsFittingSet@`IsFittingSet'}{18}
+\indexentry {FittingSet@`FittingSet'}{18}
+\indexentry {ImageFittingSet@`ImageFittingSet'}{19}
+\indexentry {PreImageFittingSet@`PreImageFittingSet'}{19}
+\indexentry {Intersection@`Intersection'!of Fitting sets}{19}
+\indexentry {attributes!of Fitting sets}{20}
+\indexentry {attributes!of Fitting classes}{20}
+\indexentry {operations!for Fitting sets}{20}
+\indexentry {operations!for Fitting classes}{20}
+\indexentry {Fitting sets!operations for}{20}
+\indexentry {Fitting classes!operations for}{20}
+\indexentry {Fitting sets!attributes of}{20}
+\indexentry {Fitting classes!attributes of}{20}
+\indexentry {Radical@`Radical'}{20}
+\indexentry {Injector@`Injector'}{20}
+\indexentry {RadicalFunction@`RadicalFunction'}{20}
+\indexentry {InjectorFunction@`InjectorFunction'}{20}
+\indexentry {Socle@`Socle'}{21}
+\indexentry {AbelianSocle@`AbelianSocle'}{21}
+\indexentry {SolvableSocle@`SolvableSocle'}{21}
+\indexentry {SocleComponents@`SocleComponents'}{21}
+\indexentry {AbelianSocleComponents@`AbelianSocleComponents'}{21}
+\indexentry {SolvableSocleComponents@`SolvableSocleComponents'}{21}
+\indexentry {PSocle@`PSocle'}{21}
+\indexentry {PSocleComponents@`PSocleComponents'}{21}
+\indexentry {AbelianMinimalNormalSubgroups@`AbelianMinimalNormalSubgroups'}{21}
+\indexentry {minimal normal subgroups}{21}
+\indexentry {normal subgroups!with properties inherited by normal subgroups}{22}
+\indexentry {invariant normal subgroups!with properties inherited by normal subgroups}{22}
+\indexentry {OneInvariantSubgroupMaxWrtNProperty@`OneInvariantSubgroupMaxWrtNProperty'}{22}
+\indexentry {AllInvariantSubgroupsWithNProperty@`AllInvariantSubgroupsWithNProperty'}{22}
+\indexentry {OneNormalSubgroupWithNProperty@`OneNormalSubgroupWithNProperty'}{22}
+\indexentry {AllNormalSubgroupsWithNProperty@`AllNormalSubgroupsWithNProperty'}{22}
+\indexentry {class!of all trivial groups}{23}
+\indexentry {trivial groups!class of}{23}
+\indexentry {class!of all trivial groups}{23}
+\indexentry {class!of all nilpotent groups}{23}
+\indexentry {nilpotent groups!class of}{23}
+\indexentry {class!of all nilpotent groups}{23}
+\indexentry {class!of all supersolvable groups}{23}
+\indexentry {supersolvable groups!class of}{23}
+\indexentry {class!of all supersolvable groups}{23}
+\indexentry {class!of all abelian groups}{23}
+\indexentry {AbelianGroups@`AbelianGroups'}{23}
+\indexentry {abelian groups!class of}{23}
+\indexentry {class!of all abelian groups}{23}
+\indexentry {AbelianGroupsOfExponent@`AbelianGroupsOfExponent'}{23}
+\indexentry {class!of all abelian groups of bounded exponent}{23}
+\indexentry {abelian groups of bounded exponent!class of}{23}
+\indexentry {PiGroups@`PiGroups'}{23}
+\indexentry {class!of all $\pi $-groups}{23}
+\indexentry {PGroups@`PGroups'}{23}
+\indexentry {class!of all $p$-groups}{23}
+\indexentry {NilpotentProjector@`NilpotentProjector'}{23}
+\indexentry {Carter subgroup}{23}
+\indexentry {SupersolvableProjector@`SupersolvableProjector'}{23}
+\indexentry {set!of all primes}{24}
+\indexentry {primes!set of all}{24}

@@ -3,10 +3,9 @@
 #W  smgrpfre.gi                 GAP library                     Thomas Breuer
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: smgrpfre.gi,v 4.42.2.1 2008/11/25 09:35:27 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for free semigroups.
@@ -15,8 +14,6 @@
 ##  associative words.
 ##  For the external representation see the file 'wordrep.gi'.
 ##
-Revision.smgrpfre_gi :=
-    "@(#)$Id: smgrpfre.gi,v 4.42.2.1 2008/11/25 09:35:27 gap Exp $";
 
 
 #############################################################################
@@ -351,11 +348,12 @@ InstallMethod( MagmaGeneratorsOfFamily,
                  i -> ObjByExtRep( F, 1, 1, [ i, 1 ] ) ) );
 
 # GeneratorsOfSemigroup returns the generators in ascending order
-
+    
 InstallMethod( GeneratorsSmallest,
         "for a free semigroup",
         [ IsFreeSemigroup ],
         GeneratorsOfSemigroup);
+
 
 #############################################################################
 ##

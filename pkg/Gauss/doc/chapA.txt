@@ -1,0 +1,15 @@
+  
+  [1XA An Overview of the [5XGauss[1X package source code[0X
+  
+        Filename           | Content                                                 
+      ------------------------------------------------------------------------------
+        SparseMatrix.gi    | Definitions and methods for the sparse matrix type      
+        SparseMatrixGF2.gi | Special case GF(2): no matrix entries needed            
+        GaussDense.gi      | Gaussian elmination for [5XGAP[0m matrices over fields        
+        Sparse.gi          | Documentation and forking depending on the base ring    
+        GaussSparse.gi     | Gaussian elimination for sparse matrices over fields    
+        HermiteSparse.gi   | Hermite elimination for sparse matrices over ℤ / < p^n >
+  
+       [1XTable:[0X [13XThe [5XGauss[0m[13X package files.[0m
+  
+  

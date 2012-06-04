@@ -1,0 +1,118 @@
+  
+  [1X4 Graded Rings[0X
+  
+  The  package  [5XGradedRingForHomalg[0m  defines the classes of graded rings, ring
+  elements  and  matrices  over such rings. These three objects can be used as
+  data structures defined in [5XMatricesForHomalg[0m on which the [5Xhomalg[0m project can
+  rely to do homological computations over graded rings.
+  
+  The  graded  rings  most  prominently  can  be  used with methods known from
+  general  [5Xhomalg[0m  rings. The methods for doing the computations are presented
+  in the appendix ([14XB[0m), since they are not for external use. The new attributes
+  and operations are documented here.
+  
+  Since   the  objects  inplemented  here  are  representations  from  objects
+  elsewhere  in the [5Xhomalg[0m project (i.e. [5XMatricesForHomalg[0m), we want to stress
+  that there are many other operations in [5XMatricesForHomalg[0m, which can be used
+  in  connection  with  the ones presented here. A few of them can be found in
+  the examples and the appendix of this documentation.
+  
+  
+  [1X4.1 Graded Rings: Category and Representations[0X
+  
+  [1X4.1-1 IsHomalgGradedRingRep[0m
+  
+  [2X> IsHomalgGradedRingRep( [0X[3XR[0X[2X ) _________________________________[0XRepresentation
+  [6XReturns:[0X  true or false
+  
+  The representation of [5Xhomalg[0m graded rings.
+  
+  (It is a subrepresentation of the [5XGAP[0m representation
+  [10XIsHomalgRingOrFinitelyPresentedModuleRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsHomalgGradedRingRep",[0X
+    [4X        IsHomalgGradedRing and[0X
+    [4X        IsHomalgGradedRingOrGradedModuleRep,[0X
+    [4X        [ "ring" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-2 IsHomalgGradedRingElementRep[0m
+  
+  [2X> IsHomalgGradedRingElementRep( [0X[3Xr[0X[2X ) __________________________[0XRepresentation
+  [6XReturns:[0X  true or false
+  
+  The representation of elements of [5Xhomalg[0m graded rings.
+  
+  (It is a representation of the [5XGAP[0m category [10XIsHomalgRingElement[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsHomalgGradedRingElementRep",[0X
+    [4X        IsHomalgGradedRingElement,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X4.2 Graded Rings: Constructors[0X
+  
+  [1X4.2-1 HomalgGradedRingElement[0m
+  
+  [2X> HomalgGradedRingElement( [0X[3Xnumer, denom, R[0X[2X ) _______________________[0Xfunction
+  [2X> HomalgGradedRingElement( [0X[3Xnumer, R[0X[2X ) ______________________________[0Xfunction
+  [6XReturns:[0X  a graded ring element
+  
+  Creates  the  graded  ring element [3Xnumer[0m/[3Xdenom[0m or in the second case [3Xnumer[0m/1
+  for  the  graded  ring  [3XR[0m.  Both  [3Xnumer[0m  and  [3Xdenom[0m  may  either be a string
+  describing  a  valid  global  ring  element  or  from  the  global  ring  or
+  computation ring.
+  
+  
+  [1X4.3 Graded Rings: Attributes[0X
+  
+  [1X4.3-1 CommonNonTrivialWeightOfIndeterminates[0m
+  
+  [2X> CommonNonTrivialWeightOfIndeterminates( [0X[3XS[0X[2X ) _____________________[0Xattribute
+  [6XReturns:[0X  a degree
+  
+  The  common  nontrivial weight of the indeterminates of the graded ring [3XS[0m if
+  it exists. Otherwise an error is issued.
+  
+  [1X4.3-2 WeightsOfIndeterminates[0m
+  
+  [2X> WeightsOfIndeterminates( [0X[3XS[0X[2X ) ____________________________________[0Xattribute
+  [6XReturns:[0X  a list or listlist of integers
+  
+  The list of degrees of the indeterminates of the graded ring [3XS[0m.
+  
+  [1X4.3-3 MatrixOfWeightsOfIndeterminates[0m
+  
+  [2X> MatrixOfWeightsOfIndeterminates( [0X[3XS[0X[2X ) ____________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A   [5Xhomalg[0m   matrix   where  the  list  (or  listlist)  of  degrees  of  the
+  indeterminates of the graded ring [3XS[0m is stored.
+  
+  
+  [1X4.4 Graded Rings: Operations and Functions[0X
+  
+  [1X4.4-1 UnderlyingNonGradedRing[0m
+  
+  [2X> UnderlyingNonGradedRing( [0X[3XR[0X[2X ) ____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  Internally there is a ring, in which computations take place.
+  
+  [1X4.4-2 UnderlyingNonGradedRing[0m
+  
+  [2X> UnderlyingNonGradedRing( [0X[3Xr[0X[2X ) ____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  Internally there is a ring, in which computations take place.
+  
+  [1X4.4-3 Name[0m
+  
+  [2X> Name( [0X[3Xr[0X[2X ) _______________________________________________________[0Xoperation
+  [6XReturns:[0X  a string
+  
+  The name of the graded ring element [3Xr[0m.
+  

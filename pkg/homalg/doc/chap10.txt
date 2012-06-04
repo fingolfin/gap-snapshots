@@ -1,0 +1,248 @@
+  
+  [1X10 Spectral Sequences[0X
+  
+  Spectral  sequences  are  regarded  as  the  computational  sledgehammer  in
+  homological algebra. Quoting the last lines of Rotman's book [Rot79]:
+  
+  "The  reader should now be convinced that virtually every purely homological
+  result  may  be  proved  with  spectral  sequences. Even though "elementary"
+  proofs  may  exist  for  many  of  these results, spectral sequences offer a
+  systematic approach in place of sporadic success."
+  
+  
+  [1X10.1 SpectralSequences: Categorie and Representations[0X
+  
+  [1X10.1-1 IsHomalgSpectralSequence[0m
+  
+  [2X> IsHomalgSpectralSequence( [0X[3XE[0X[2X ) ____________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m (co)homological spectral sequences.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgObject[0m.)
+  
+  [1X10.1-2 IsHomalgSpectralSequenceAssociatedToAnExactCouple[0m
+  
+  [2X> IsHomalgSpectralSequenceAssociatedToAnExactCouple( [0X[3XE[0X[2X ) ___________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m associated to an exact couple.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgSpectralSequence[0m.)
+  
+  [1X10.1-3 IsHomalgSpectralSequenceAssociatedToAFilteredComplex[0m
+  
+  [2X> IsHomalgSpectralSequenceAssociatedToAFilteredComplex( [0X[3XE[0X[2X ) ________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m associated to a filtered complex.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgSpectralSequence[0m.)
+  The  0-th  spectral  sheet  E_0  stemming  from  a  filtration is a bigraded
+  (differential) object, which, in general, does not stem from an exact couple
+  (although E_1, E_2, ... do).
+  
+  [1X10.1-4 IsHomalgSpectralSequenceAssociatedToABicomplex[0m
+  
+  [2X> IsHomalgSpectralSequenceAssociatedToABicomplex( [0X[3XE[0X[2X ) ______________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m associated to a bicomplex.
+  
+  (It is a subcategory of the [5XGAP[0m category
+  [10XIsHomalgSpectralSequenceAssociatedToAFilteredComplex[0m.)
+  
+  [1X10.1-5 IsSpectralSequenceOfFinitelyPresentedObjectsRep[0m
+  
+  [2X> IsSpectralSequenceOfFinitelyPresentedObjectsRep( [0X[3XE[0X[2X ) _______[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The  [5XGAP[0m  representation  of  homological  spectral  sequences  of  finitley
+  generated [5Xhomalg[0m objects.
+  
+  (It  is  a  representation  of  the  [5XGAP[0m  category  [2XIsHomalgSpectralSequence[0m
+  ([14X10.1-1[0m),   which   is   a   subrepresentation  of  the  [5XGAP[0m  representation
+  [10XIsFinitelyPresentedObjectRep[0m.)
+  
+  [1X10.1-6 IsSpectralCosequenceOfFinitelyPresentedObjectsRep[0m
+  
+  [2X> IsSpectralCosequenceOfFinitelyPresentedObjectsRep( [0X[3XE[0X[2X ) _____[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The  [5XGAP[0m  representation  of  cohomological  spectral  sequences of finitley
+  generated [5Xhomalg[0m objects.
+  
+  (It  is  a  representation  of  the  [5XGAP[0m  category  [2XIsHomalgSpectralSequence[0m
+  ([14X10.1-1[0m),   which   is   a   subrepresentation  of  the  [5XGAP[0m  representation
+  [10XIsFinitelyPresentedObjectRep[0m.)
+  
+  
+  [1X10.2 Spectral Sequences: Constructors[0X
+  
+  [1X10.2-1 HomalgSpectralSequence[0m
+  
+  [2X> HomalgSpectralSequence( [0X[3Xr, B, a[0X[2X ) _______________________________[0Xoperation
+  [2X> HomalgSpectralSequence( [0X[3Xr, B[0X[2X ) __________________________________[0Xoperation
+  [2X> HomalgSpectralSequence( [0X[3XB, a[0X[2X ) __________________________________[0Xoperation
+  [2X> HomalgSpectralSequence( [0X[3XB[0X[2X ) _____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m spectral sequence
+  
+  The  first syntax is the main constructor. It creates the homological (resp.
+  cohomological)  spectral  sequence  associated  to  the  homological  (resp.
+  cohomological)  bicomplex  [3XB[0m  starting  at level 0 and ending at level [3Xr[0m>= 0
+  (regardless  if  the  spectral sequence stabilizes earlier). The generalized
+  embeddings  into  the  objects  of  0-th  sheet are always computed for each
+  higher   sheet   Er   and   stored   as   a   record   under  the  component
+  Er!.absolute_embeddings.  If  [3Xa[0m is greater than 0 the generalized embeddings
+  into  the  objects of the [3Xa[0m-th sheet also get computed for each higher sheet
+  Er  and  stored as a record under the component Er!.relative_embeddings. The
+  level  [3Xa[0m  at  which  the  spectral  sequence  becomes intrinsic is a natural
+  candidate for [3Xa[0m. The [3Xa[0m-th sheet is called the [13Xspecial[0m sheet.
+  
+  If  [3Xr[0m=-1  it  computes  all  the  sheets  of the spectral sequence until the
+  sequence stabilizes, i.e. until all higher arrows become zero.
+  
+  If [3Xa[0m=-1 no special sheet is specified.
+  
+  In the second syntax [3Xa[0m is set to -1.
+  
+  In the third syntax [3Xr[0m is set to -1.
+  
+  In the fourth syntax both [3Xr[0m and [3Xa[0m are set to -1.
+  
+  The  following  example  demonstrates  the computation of a Tor-Ext spectral
+  sequence:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> M := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );;[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> dM := Resolution( M );[0X
+    [4X<A non-zero right acyclic complex containing a single morphism of left modules\[0X
+    [4X at degrees [ 0 .. 1 ]>[0X
+    [4Xgap> CC := Hom( dM, dM );[0X
+    [4X<A non-zero acyclic cocomplex containing a single morphism of right complexes \[0X
+    [4Xat degrees [ 0 .. 1 ]>[0X
+    [4Xgap> B := HomalgBicomplex( CC );[0X
+    [4X<A non-zero bicocomplex containing right modules at bidegrees [ 0 .. 1 ]x[0X
+    [4X[ -1 .. 0 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Now  we  construct the spectral sequence associated to the bicomplex B, also
+  called the [13Xfirst[0m spectral sequence:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> I_E := HomalgSpectralSequence( 2, B );[0X
+    [4X<A stable cohomological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of right modules at bidegrees [ 0 .. 1 ]x[0X
+    [4X[ -1 .. 0 ]>[0X
+    [4Xgap> Display( I_E );[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ 0 .. 1 ], [ -1 .. 0 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . .[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . .[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Legend:
+  
+  --    A star [3X*[0m stands for a nonzero object.
+  
+  --    A dot [3X.[0m stands for a zero object.
+  
+  --    The letter [3Xs[0m stands for a nonzero object that became stable.
+  
+  The  [13Xsecond[0m  spectral  sequence  of  the  bicomplex  is,  by definition, the
+  spectral sequence associated to the transposed bicomplex:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> tB := TransposedBicomplex( B );[0X
+    [4X<A non-zero bicocomplex containing right modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> II_E := HomalgSpectralSequence( tB, 2 );[0X
+    [4X<A stable cohomological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of right modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> Display( II_E );[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ -1 .. 0 ], [ 0 .. 1 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . s[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X10.3 Spectral Sequences: Attributes[0X
+  
+  [1X10.3-1 GeneralizedEmbeddingsInTotalObjects[0m
+  
+  [2X> GeneralizedEmbeddingsInTotalObjects( [0X[3XE[0X[2X ) ________________________[0Xattribute
+  [6XReturns:[0X  a record containing [5Xhomalg[0m maps
+  
+  The  generalized  embbedings  of  the  objects  in the stable sheet into the
+  objects of the associated total complex.
+  
+  [1X10.3-2 GeneralizedEmbeddingsInTotalDefects[0m
+  
+  [2X> GeneralizedEmbeddingsInTotalDefects( [0X[3XE[0X[2X ) ________________________[0Xattribute
+  [6XReturns:[0X  a record containing [5Xhomalg[0m maps
+  
+  The  generalized  embbedings  of  the  objects  in the stable sheet into the
+  defects of the associated total complex.
+  
+  
+  [1X10.4 Spectral Sequences: Operations and Functions[0X
+  
+  [1X10.4-1 ByASmallerPresentation[0m
+  
+  [2X> ByASmallerPresentation( [0X[3XE[0X[2X ) ________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m spectral sequence
+  
+  See [2XByASmallerPresentation[0m ([14X9.4-1[0m) on bigraded object.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( ByASmallerPresentation,[0X
+    [4X        "for homalg spectral sequences",[0X
+    [4X        [ IsHomalgSpectralSequence ],[0X
+    [4X        [0X
+    [4X  function( E )[0X
+    [4X    [0X
+    [4X    ByASmallerPresentation( HighestLevelSheetInSpectralSequence( E ) );[0X
+    [4X    [0X
+    [4X    if IsBound( E!.TransposedSpectralSequence ) then[0X
+    [4X        ByASmallerPresentation( E!.TransposedSpectralSequence );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    return E;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This method performs side effects on its argument [3XE[0m and returns it.
+  

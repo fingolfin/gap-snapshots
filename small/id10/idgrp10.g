@@ -6,8 +6,6 @@
 ##  This file contains the identification routines for groups of squarefree
 ##  order and for groups of cubefree order up to 50000.
 ##
-Revision.idgrp10_g :=
-    "@(#)$Id: idgrp10.g,v 1.2.2.1 2005/05/03 14:19:18 gap Exp $";
 
 #############################################################################
 ##
@@ -29,7 +27,7 @@ ID_AVAILABLE_FUNCS[ 10 ] := SMALL_AVAILABLE_FUNCS[ 10 ];
 ##
 ID_GROUP_FUNCS[ 24 ] := function( G, inforec )
     local primes, spcgs, lg, p_ind, mat, kp, m, n, k, s, im, root, set, i,
-          op_indices, op_index;
+          op, op_indices, op_index;
 
     if IsAbelian( G ) then
          return 1;

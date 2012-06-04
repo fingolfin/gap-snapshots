@@ -1,0 +1,2282 @@
+  
+  [1X3 Specht functionality[0X
+  
+  
+  [1X3.1 Porting notes[0X
+  
+  Porting the [5XSpecht[0m 2.4 package to [5XGAP[0m 4 did not influence the algorithms but
+  required  a  completely  new  object  oriented design of the underlying data
+  structures. In [5XGAP[0m 3 records were used to represent algebra objects, modules
+  and  decomposition  matrices  of  [5XSpecht[0m  2.4. Further functions were stored
+  inside of such records to provide name safety.
+  
+  In  [5XHecke[0m  objects  represent  all  the  data  that  was  named  above.  The
+  overloading  mechanism  the former record-internal functions to be available
+  on  the  toplevel.  The operation selection mechanism of [5XGAP[0m 4 allows one to
+  concentrate  on  the  computation  code  instead  of  dealing with different
+  possible argument inputs.
+  
+  Since variable argument length operations are not yet supported by [5XGAP[0m 4, we
+  introduced  our  own dispatcher facility to enable the former possibility of
+  passing patrition arguments as sequences of integers (see [14X3.3[0m).
+  
+  
+  [1X3.1-1 Structure of [5XHecke[1X[0X
+  
+  The  data  structure hierarchy in [5XGAP[0m 4 is defined through filters and their
+  dependencies.
+  
+  [2X> IsAlgebraObj________________________________________________________[0Xfilter
+  [2X> IsHecke_____________________________________________________________[0Xfilter
+  [2X> IsSchur_____________________________________________________________[0Xfilter
+  
+  [2XIsAlgebraObj[0m  is  a generic filter for the objects returned by the functions
+  [2XSpecht[0m  ([14X3.2-1[0m)  and  [2XSchur[0m  ([14X3.2-7[0m).  Concretely, [2XSpecht[0m ([14X3.2-1[0m) returns an
+  [2XIsHecke[0m  object  (automatically  also  an  [2XIsAlgebraObj[0m  object). For design
+  reasons  [2XIsSchur[0m  is  a  subfilter  of  [2XIsHecke[0m. This allows to use the same
+  functions for Schur-algebras as for Hecke-algebras with minor restrictions.
+  
+  [2X> IsAlgebraObjModule__________________________________________________[0Xfilter
+  [2X> IsHeckeModule_______________________________________________________[0Xfilter
+  [2X> IsHeckeSpecht_______________________________________________________[0Xfilter
+  [2X> IsHeckePIM__________________________________________________________[0Xfilter
+  [2X> IsHeckeSimple_______________________________________________________[0Xfilter
+  [2X> IsFockModule________________________________________________________[0Xfilter
+  [2X> IsFockSpecht________________________________________________________[0Xfilter
+  [2X> IsFockPIM___________________________________________________________[0Xfilter
+  [2X> IsFockSimple________________________________________________________[0Xfilter
+  [2X> IsSchurModule_______________________________________________________[0Xfilter
+  [2X> IsSchurWeyl_________________________________________________________[0Xfilter
+  [2X> IsSchurPIM__________________________________________________________[0Xfilter
+  [2X> IsSchurSimple_______________________________________________________[0Xfilter
+  [2X> IsFockSchurModule___________________________________________________[0Xfilter
+  [2X> IsFockSchurWeyl_____________________________________________________[0Xfilter
+  [2X> IsFockSchurPIM______________________________________________________[0Xfilter
+  [2X> IsFockSchurSimple___________________________________________________[0Xfilter
+  
+  The  hierarchy  of module objects is more complex. On top we have the filter
+  [2XIsAlgebraObjModule[0m.  Its  direct descendant [2XIsHeckeModule[0m has [2XIsHeckeSpecht[0m,
+  [2XIsHeckePIM[0m,  [2XIsHeckeSimple[0m,  [2XIsFockModule[0m  and  [2XIsSchurModule[0m as subfilters.
+  Again  the  last  two subfilter relations have no mathematical sense but are
+  technically   comfortable.   The   filter  [2XIsFockModule[0m  is  superfilter  of
+  [2XIsFockSpecht[0m,  [2XIsFockPIM[0m,  [2XIsFockSimple[0m  and [2XIsFockSchurModule[0m. Analogously,
+  [2XIsSchurModule[0m  is  superfilter of [2XIsSchurWeyl[0m, [2XIsSchurPIM[0m, [2XIsSchurSimple[0m and
+  [2XIsFockSchurModule[0m   which   itself   is   superfilter   of  [2XIsFockSchurWeyl[0m,
+  [2XIsFockSchurPIM[0m,  [2XIsFockSchurSimple[0m.  Further,  there are subfilter relations
+  between   [2XIsFockSpecht[0m   and   [2XIsHeckeSpecht[0m   etc.,   [2XIsFockSchurWeyl[0m   and
+  [2XIsFockSpecht[0m  etc.,  [2XIsFockSchurWeyl[0m  and  [2XIsSchurWeyl[0m etc., [2XIsSchurWeyl[0m and
+  [2XIsHeckeSpecht[0m etc. filters.
+  
+  [2X> IsDecompositionMatrix_______________________________________________[0Xfilter
+  [2X> IsCrystalDecompositionMatrix________________________________________[0Xfilter
+  
+  For  decomposition  matrices we use the filter [2XIsDecompositionMatrix[0m and its
+  subfilter [2XIsCrystalDecompositionMatrix[0m.
+  
+  
+  [1X3.1-2 Renamings[0X
+  
+  To  keep  things as backwards compatible as possible, we tried not to change
+  names   and   function   signatures.   But   for   the   former  [10XH.***[0m-  and
+  [10XH.operations.***[0m-style  functions  it  makes  more  sense  to  use  toplevel
+  functions  (especially  when  the  H  is not explicitly needed inside of the
+  called operation). Here is an overview of some important changes:
+  
+      |        [5XGAP[0m 3         |           [5XGAP[0m 4           | 
+      ----------------------------------------------------
+      |         [10XH.S[0m          |    [2XMakeSpecht[0m ([14X3.2-3[0m)     | 
+      ----------------------------------------------------
+      |         [10XH.P[0m          |      [2XMakePIM[0m ([14X3.2-3[0m)      | 
+      ----------------------------------------------------
+      |         [10XH.D[0m          |    [2XMakeSimple[0m ([14X3.2-3[0m)     | 
+      ----------------------------------------------------
+      |         [10XH.Sq[0m         |  [2XMakeFockSpecht[0m ([14X3.2-6[0m)   | 
+      ----------------------------------------------------
+      |         [10XH.Pq[0m         |    [2XMakeFockPIM[0m ([14X3.2-6[0m)    | 
+      ----------------------------------------------------
+      |         [10XS.W[0m          |    [2XMakeSpecht[0m ([14X3.2-3[0m)     | 
+      ----------------------------------------------------
+      |         [10XS.F[0m          |    [2XMakeSimple[0m ([14X3.2-3[0m)     | 
+      ----------------------------------------------------
+      |    [10XInducedModule[0m     |  [2XRInducedModule[0m ([14X3.4-1[0m)   | 
+      ----------------------------------------------------
+      |   [10XRestrictedModule[0m   | [2XRRestrictedModule[0m ([14X3.4-3[0m) | 
+      ----------------------------------------------------
+      |   [10XH.operations.New[0m   |          [10XModule[0m           | 
+      ----------------------------------------------------
+      | [10XH.operations.Collect[0m |          [10XCollect[0m          | 
+      ----------------------------------------------------
+  
+  
+  [1X3.2 Specht functions[0X
+  
+  [1X3.2-1 Specht[0m
+  
+  [2X> Specht( [0X[3Xe[0X[2X ) ________________________________________________________[0Xmethod
+  [2X> Specht( [0X[3Xe, p[0X[2X ) _____________________________________________________[0Xmethod
+  [2X> Specht( [0X[3Xe, p, val[0X[2X ) ________________________________________________[0Xmethod
+  [2X> Specht( [0X[3Xe, p, val, ring[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  object belonging to the filter [2XIsHecke[0m ([14X3.1-1[0m)
+  
+  Let  R  be a field of characteristic 0, q a non-zero element of R, and let e
+  be the smallest positive integer such that 1+q+...+q^e-1=0 (we set e=0 if no
+  such  integer  exists). The object returned by [10XSpecht(e)[0m allows calculations
+  in  the  Grothendieck  rings  of  the  Hecke  algebras H of type [13XA[0m which are
+  defined  over R and have parameter q. Below we also describe how to consider
+  Hecke algebras defined over fields of positive characteristic.
+  
+  [2XSpecht[0m  returns an object which contains information about the the family of
+  Hecke  algebras determined by R and q. This object needs to be passed to the
+  most of the [5XHecke[0m functions as an argument.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(5);[0X
+    [4X<Hecke algebra with e = 5>[0X
+    [4Xgap> Display(last);[0X
+    [4XSpecht(e=5, S(), P(), D())[0X
+    [4Xgap> IsZeroCharacteristic(last);[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  There is also a method [2XSchur[0m ([14X3.2-7[0m) for doing calculations with the q-Schur
+  algebra.  See  [2XDecompositionMatrix[0m  ([14X3.2-8[0m),  and [2XCrystalDecompositionMatrix[0m
+  ([14X3.2-9[0m).   This   function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m
+  ([14XReference: LoadPackage[0m)).
+  
+  
+  [1X3.2-2 Simple information access[0X
+  
+  We  allow to read/store some information from/in the algebra object returned
+  by [2XSpecht[0m ([14X3.2-1[0m) using the following functions.
+  
+  [2X> OrderOfQ( [0X[3XH[0X[2X ) ______________________________________________________[0Xmethod
+  [6XReturns:[0X  e.
+  
+  [2X> Characteristic( [0X[3XH[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  p.
+  
+  [2X> SetOrdering( [0X[3XH, Ordering[0X[2X ) _________________________________________[0Xmethod
+  
+  Provides  writing  access  to  Ordering  that  is  stored in H. The ordering
+  influences the way how decomposition matrices are printed.
+  
+  [2X> SpechtDirectory____________________________________________[0Xglobal variable
+  
+  Setting  this  global  variable  the  user  can  tell  [5XHecke[0m  where  to find
+  decomposition  matrices  that  are  not  in  the library and also not in the
+  current directory. By default this variable is set to the current directory.
+  
+  
+  [1X3.2-3 The functions MakeSpecht, MakePIM and MakeSimple[0X
+  
+  The functions MakeSpecht, MakePIM and MakeSimple return objects belonging to
+  the  filter  [2XIsAlgebraObjModule[0m  ([14X3.1-1[0m)  which correspond to Specht modules
+  ([2XIsHeckeSpecht[0m   ([14X3.1-1[0m)),  projective  indecomposable  modules  ([2XIsHeckePIM[0m
+  ([14X3.1-1[0m))  and  simple  modules  ([2XIsHeckeSimple[0m  ([14X3.1-1[0m)) respectively. [5XHecke[0m
+  allows  manipulation of arbitrary linear combinations of these "modules", as
+  well  as  a  way  of  inducing  and restricting them, "multiplying" them and
+  converting  between  these  three  natural  bases  of the Grothendieck ring.
+  Multiplication  of  modules  corresponds  to taking a tensor productand then
+  inducing  (thus  giving  a module for a larger Hecke algebra). Each of these
+  three functions can be called in four different ways, as we now describe.
+  
+  [2X> MakeSpecht( [0X[3XH, mu[0X[2X ) ________________________________________________[0Xmethod
+  [2X> MakePIM( [0X[3XH, mu[0X[2X ) ___________________________________________________[0Xmethod
+  [2X> MakeSimple( [0X[3XH, mu[0X[2X ) ________________________________________________[0Xmethod
+  
+  In  the  first  form,  mu  is  a  partition (either a list, or a sequence of
+  integers)  and  the  corresponding  Specht  module,  PIM,  or  simple module
+  (respectively), is returned.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(5);; MakePIM(H,4,3,2);; Display(last);[0X
+    [4XP(4,3,2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [2X> MakeSpecht( [0X[3Xx[0X[2X ) ____________________________________________________[0Xmethod
+  [2X> MakePIM( [0X[3Xx[0X[2X ) _______________________________________________________[0Xmethod
+  [2X> MakeSimple( [0X[3Xx[0X[2X ) ____________________________________________________[0Xmethod
+  
+  Here,  x  is  an  H-module.  In this form, [2XMakeSpecht[0m rewrites x as a linear
+  combination   of   Specht  modules,  if  possible.  Similarly,  [2XMakePIM[0m  and
+  [2XMakeSimple[0m  rewrite  x  as  a  linear combination of PIMs and simple modules
+  respectively.   These   conversions   require   knowledge  of  the  relevant
+  decomposition  matrix of H; if this is not known then [9Xfail[0m is returned (over
+  fields  of  characteristic zero, all of the decomposition matrices are known
+  via  the  algorithm  of  [LLT96];  various  other decomposition matrices are
+  included with [5XHecke[0m). For example, [10XMakeSpecht(MakePIM([0mH, mu[10X))[0m returns sum_nu
+  d_nu,mu  S(nu) or [9Xfail[0m if some of these decomposition multiplicities are not
+  known.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Display( MakeSimple( MakePIM(H,4,3,2) ) );[0X
+    [4XD(5,3,1) + 2D(4,3,2) + D(2^4,1)[0X
+    [4Xgap> Display( MakeSpecht( MakeSimple( MakeSpecht(H,1,1,1,1,1) ) ) );[0X
+    [4X - S(5) + S(4,1) - S(3,1^2) + S(2,1^3)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  As  the  last  example  shows, [5XHecke[0m does not always behave as expected. The
+  reason  for this is that Specht modules indexed by e-singular partitions can
+  always  be  written  as a linear combination of Specht modules which involve
+  only e-regular partitions. As such, it is not always clear when two elements
+  are  equal  in  the  Grothendieck  ring.  Consequently,  to test whether two
+  modules are equal you should first rewrite both modules in the D-basis; this
+  is [13Xnot[0m done by [5XHecke[0m because it would be very inefficient.
+  
+  [2X> MakeSpecht( [0X[3Xd, mu[0X[2X ) ________________________________________________[0Xmethod
+  [2X> MakePIM( [0X[3Xd, mu[0X[2X ) ___________________________________________________[0Xmethod
+  [2X> MakeSimple( [0X[3Xd, mu[0X[2X ) ________________________________________________[0Xmethod
+  
+  In  the  third form, d is a decomposition matrix and mu is a partition. This
+  is  useful  when  you  are  trying to calculate a new decomposition matrix d
+  because  it  allows  you  to do calculations using the known entries of d to
+  deduce  information  about  the unknown ones. When used in this way, [2XMakePIM[0m
+  and  [2XMakeSimple[0m  use  d  to rewrite P(mu) and D(mu) respectively as a linear
+  combination  of  Specht  modules  and  [2XMakeSpecht[0m uses d to write S(mu) as a
+  linear  combination  of simple modules. If the values of the unknown entries
+  in d are needed, [9Xfail[0m is returned.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3,3);;   # e = 3, p = 3 = characteristic of 'R'[0X
+    [4Xgap>  d:=InducedDecompositionMatrix(DecompositionMatrix(H,14));;[0X
+    [4X# Inducing....[0X
+    [4XThe following projectives are missing from <d>:[0X
+    [4X    [ 15 ]  [ 8, 7 ][0X
+    [4Xgap> Display(MakePIM(d,4,3,3,2,2,1));[0X
+    [4XS(4,3^2,2^2,1) + S(4,3^2,2,1^3) + S(4,3,2^3,1^2) + S(3^3,2^2,1^2)[0X
+    [4Xgap> Display(MakeSpecht(d,7, 3, 3, 2));[0X
+    [4XD(11,2,1^2) + D(10,3,1^2) + D(8,5,1^2) + D(8,3^2,1) + D(7,6,1^2) + D(7,3^2,2)[0X
+    [4Xgap> Display(MakeSimple(d,14,1));[0X
+    [4Xfail[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  final example returned [9Xfail[0m because the partitions (14,1) and (15) have
+  the same 3-core (and P(15) is missing from d).
+  
+  [2X> MakeSpecht( [0X[3Xd, x[0X[2X ) _________________________________________________[0Xmethod
+  [2X> MakePIM( [0X[3Xd, x[0X[2X ) ____________________________________________________[0Xmethod
+  [2X> MakeSimple( [0X[3Xd, x[0X[2X ) _________________________________________________[0Xmethod
+  
+  In  the final form, d is a decomposition matrix and x is a module. All three
+  functions  rewrite  x  in their respective basis using d. Again this is only
+  useful  when you are trying to calculate a new decomposition matrix because,
+  for  any  "known" decomposition matrix d, [10XMakeSpecht([0mx[10X)[0m and [10XMakeSpecht([0md, x[10X)[0m
+  are equivalent (and similarly for [2XMakePIM[0m and [2XMakeSimple[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Display(MakeSpecht(d, MakeSimple(d,10,5) ));[0X
+    [4X - S(13,2) + S(10,5)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X3.2-4 Decomposition numbers of the symmetric groups[0X
+  
+  The  last  example looked at Hecke algebras with parameter q=1 and R a field
+  of  characteristic  3  (so e=3); that is, the group algebra of the symmetric
+  group  over  a  field  of  characteristic  3.  More  generally,  the command
+  [10XSpecht([0mp,p[10X)[0m  can  be  used  to  consider the group algebras of the symmetric
+  groups  over  fields  of  characteristic  p  (i.e.  e=p  and  R  a  field of
+  characteristic  p). For example, the dimensions of the simple modules of S_6
+  over fields of characteristic 5 can be computed as follows:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(5,5);; SimpleDimension(H,6);[0X
+    [4X6       : 1[0X
+    [4X5,1     : 5[0X
+    [4X4,2     : 8[0X
+    [4X4,1^2   : 10[0X
+    [4X3^2     : 5[0X
+    [4X3,2,1   : 8[0X
+    [4X3,1^3   : 10[0X
+    [4X2^3     : 5[0X
+    [4X2^2,1^2 : 1[0X
+    [4X2,1^4   : 5[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X3.2-5 Hecke algebras over fields of positive characteristic[0X
+  
+  To  consider  Hecke  algebras  defined over arbitrary fields, [2XSpecht[0m ([14X3.2-1[0m)
+  must  also be supplied with a valuation map val as an argument. The function
+  val is a map from some PID into the natural numbers; at present it is needed
+  only  by  functions which rely (at least implicitly), upon the q-analogue of
+  Schaper's  theorem. In general, val depends upon q and the characteristic of
+  R;  full  details can be found in [JM97]. Over fields of characteristic zero
+  and  in  the symmetric group case, the function val is automatically defined
+  by [2XSpecht[0m ([14X3.2-1[0m). When R is a field of characteristic zero, val([i]_q) is 1
+  if  e divides i and 0 otherwise (this is the valuation map associated to the
+  prime  ideal  in ℂ[v] generated by the e-th cyclotomic polynomial). When q=1
+  and R is a field of characteristic p, val is the usual p-adic valuation map.
+  As  another  example,  if q=4 and R is a field of characteristic 5 (so e=2),
+  then  the  valuation  map  sends the integer x to nu_5([4]_x) where [4]_x is
+  interpreted  as  an  integer  and  nu_5  is  the  usual 5-adic valuation. To
+  consider this Hecke algebra one could proceed as follows:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> val:=function(x) local v;[0X
+    [4X>       x:=Sum([0..x-1],v->4^v);  # x->[x]_q[0X
+    [4X>       v:=0; while x mod 5=0 do x:=x/5; v:=v+1; od;[0X
+    [4X>       return v;[0X
+    [4X>     end;;[0X
+    [4Xgap> H:=Specht(2,5,val,"e2q4");; Display(H);[0X
+    [4XSpecht(e=2, p=5, S(), P(), D(), HeckeRing="e2q4")[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Notice  the  string  "e2q4"  which was also passed to [2XSpecht[0m ([14X3.2-1[0m) in this
+  example. Although it is not strictly necessary, it is a good idea when using
+  a  "non-standard"  valuation map val to specify the value of HeckeRing. This
+  string  is used for internal bookkeeping by [5XHecke[0m; in particular, it is used
+  to  determine filenames when reading and saving decomposition matrices. If a
+  "standard"  valuation  map  is  used  then  HeckeRing  is  set to the string
+  "e<e>p<p>";    otherwise    it   defaults   to   "unknown".   The   function
+  [2XSaveDecompositionMatrix[0m  ([14X3.5-5[0m)  will not save any decomposition matrix for
+  any Hecke algebra H with HeckeRing="unknown".
+  
+  
+  [1X3.2-6 The Fock space and Hecke algebras over fields of characteristic zero[0X
+  
+  For  Hecke  algebras  H  defined over fields of characteristic zero Lascoux,
+  Leclerc  and Thibon [LLT96] have described an easy, inductive, algorithm for
+  calculating   the  decomposition  matrices  of  H.  Their  algorithm  really
+  calculates the [13Xcanonical basis[0m, or (global) [13Xcrystal basis[0m of the Fock space;
+  results  of  Grojnowski-Lusztig  [Gro94]  show  that computing this basis is
+  equivalent to computing the decomposition matrices of H (see also [Ari96]).
+  
+  The [13XFock space[0m F is an (integrable) module for the quantum group U_q( sl^_e)
+  of  the  affine special linear group. F is a free ℂ[v]-module with basis the
+  set of all Specht modules S(mu) for all partitions mu of all integers.
+  
+  Here v is an indeterminate over the integers (or strictly, ℂ) that is stored
+  in  the  algebra  object  produced  by  [2XSpecht[0m  ([14X3.2-1[0m). The canonical basis
+  elements  Pq(mu)  for  the  U_q(  sl^_e)-submodule  of  F  generated  by the
+  0-partition   are  indexed  by  e-regular  partitions  mu.  Moreover,  under
+  [13Xspecialization[0m,  Pq(mu)  maps  to  P(mu).  An  eloquent  description  of the
+  algorithm for computing Pq(mu) can be found in [LLT96].
+  
+  To access the elements of the Fock space [5XHecke[0m provides the functions:
+  
+  [2X> MakeFockPIM( [0X[3XH, mu[0X[2X ) _______________________________________________[0Xmethod
+  [2X> MakeFockSpecht( [0X[3XH, mu[0X[2X ) ____________________________________________[0Xmethod
+  
+  Notice  that,  unlike  [2XMakePIM[0m  ([14X3.2-3[0m)  and  [2XMakeSpecht[0m  ([14X3.2-3[0m),  the only
+  arguments which [2XMakeFockPIM[0m and [2XMakeFockSpecht[0m accept are partitions.
+  
+  The  function [2XMakeFockPIM[0m computes the canonical basis element Pq(mu) of the
+  Fock space corresponding to the e-regular partition mu (there is a canonical
+  basis  --  defined using a larger quantum group -- for the whole of the Fock
+  space  [LT96];  conjecturally,  this  basis  can  be  used  to  compute  the
+  decomposition matrices for the q-Schur algebra over fields of characteristic
+  zero). The second function returns a standard basis element Sq(mu) of F.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; MakeFockPIM(H,6,2);; Display(last);[0X
+    [4XSq(6,2) + vSq(5,3)[0X
+    [4Xgap> RRestrictedModule(last); Display(last);[0X
+    [4XSq(6,1) + (v+v^-1)Sq(5,2) + vSq(4,3)[0X
+    [4Xgap> MakePIM(last);; Display(last);[0X
+    [4XPq(6,1) + (v+v^-1)Pq(5,2)[0X
+    [4Xgap> Specialized(last);; Display(last);[0X
+    [4XP(6,1) + 2P(5,2)[0X
+    [4Xgap> MakeFockSpecht(H,5,3,2);; Display(last);[0X
+    [4XSq(5,3,2)[0X
+    [4Xgap> RInducedModule(last,0);; Display(last);[0X
+    [4Xv^-1Sq(5,3^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The modules returned by [2XMakeFockPIM[0m and [2XMakeFockSpecht[0m behave very much like
+  elements  of  the Grothendieck ring of H; however, they should be considered
+  as  elements  of  the Fock space. The key difference is that when induced or
+  restricted  "quantum" analogues of induction and restriction are used. These
+  analogues correspond to the action of U_q( sl^_e) on F [LLT96].
+  
+  In  effect,  the functions [2XMakeFockPIM[0m and [2XMakeFockSpecht[0m allow computations
+  in   the   Fock  space,  using  the  functions  [2XRInducedModule[0m  ([14X3.4-1[0m)  and
+  [2XRRestrictedModule[0m ([14X3.4-3[0m). The functions [2XMakeSpecht[0m ([14X3.2-3[0m), [2XMakePIM[0m ([14X3.2-3[0m)
+  and [2XMakeSimple[0m ([14X3.2-3[0m) can also be applied to elements of the Fock space, in
+  which  case  they  have the expected effect. In addition, any element of the
+  Fock  space  can  be  specialized  to  give the corresponding element of the
+  Grothendieck  ring of H (it is because of this correspondence that we do not
+  make  a  distinction between elements of the Fock space and the Grothendieck
+  ring of H).
+  
+  When  working  over  fields  of characteristic zero [5XHecke[0m will automatically
+  calculate any canonical basis elements that it needs for computations in the
+  Grothendieck  ring  of  H.  If you are not interested in the canonical basis
+  elements you need never work with them directly.
+  
+  [1X3.2-7 Schur[0m
+  
+  [2X> Schur( [0X[3Xe[0X[2X ) _________________________________________________________[0Xmethod
+  [2X> Schur( [0X[3Xe, p[0X[2X ) ______________________________________________________[0Xmethod
+  [2X> Schur( [0X[3Xe, p, val[0X[2X ) _________________________________________________[0Xmethod
+  [2X> Schur( [0X[3Xe, p, val, ring[0X[2X ) ___________________________________________[0Xmethod
+  [6XReturns:[0X  object belonging to the filter [2XIsSchur[0m ([14X3.1-1[0m)
+  
+  This function behaves almost identically to the function [2XSpecht[0m ([14X3.2-1[0m), the
+  only  difference  being  that the belonging modules are printed as "W", "P",
+  "F"  and  that  they  correspond  to  the  q-Weyl  modules,  the  projective
+  indecomposable  modules,  and  the  simple  modules  of  the q-Schur algebra
+  respectively.  Note  that  the [10XMake***[0m-functions (i.e. [2XMakeSpecht[0m ([14X3.2-3[0m) is
+  used  to  generate q-Weyl modules). Further, note that our labeling of these
+  modules  is  non-standard,  following  that  used  by  James in [Jam90]. The
+  standard  labeling  can be obtained from ours by replacing all partitions by
+  their conjugates.
+  
+  Almost  all  of the functions in [5XHecke[0m which accept a Hecke algebra object H
+  will also accept the object S returned by [2XSchur[0m .
+  
+  In  the  current  version  of  [5XHecke[0m  the decomposition matrices of q -Schur
+  algebras  are  not  fully  supported. The [2XInducedDecompositionMatrix[0m ([14X3.5-1[0m)
+  function  can  be applied to these matrices; however there are no additional
+  routines  available  for calculating the columns corresponding to e-singular
+  partitions. The decomposition matrices for the q-Schur algebras defined over
+  a field of characteristic 0 for n<= 10 are in the [5XHecke[0m libraries.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S:=Schur(2);[0X
+    [4X<Schur algebra with e = 2>[0X
+    [4Xgap> InducedDecompositionMatrix(DecompositionMatrix(S,3));[0X
+    [4X# The following projectives are missing from <d>:[0X
+    [4X#  [ 2, 2 ][0X
+    [4X<5x5 decomposition matrix>[0X
+    [4Xgap> Display(last);[0X
+    [4X4    | 1                   # DecompositionMatrix(S,4) returns the[0X
+    [4X3,1  | 1 1                 # full decomposition matrix. The point[0X
+    [4X2^2  | . 1 .               # of this example is to emphasize the[0X
+    [4X2,1^2| 1 1 . 1             # current limitations of Schur.[0X
+    [4X1^4  | 1 . . 1 1[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Note  that  when  S  is defined over a field of characteristic zero then the
+  functions  [2XMakeFockSpecht[0m ([14X3.2-6[0m) and [2XMakeFockPIM[0m ([14X3.2-6[0m) will calculate the
+  canonical  basis elements (see [2XSpecht[0m ([14X3.2-1[0m)); currently [10XMakeFockPIM([0mmu[10X)[0m is
+  implemented only for e-regular partitions.
+  
+  See  also  [2XSpecht[0m  ([14X3.2-1[0m).  This  function  requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.2-8 DecompositionMatrix[0m
+  
+  [2X> DecompositionMatrix( [0X[3XH, n[, Ordering][0X[2X ) ____________________________[0Xmethod
+  [2X> DecompositionMatrix( [0X[3XH, file[, Ordering][0X[2X ) _________________________[0Xmethod
+  [6XReturns:[0X  the  decomposition  matrix  D of H(S_n) where H is a Hecke algebra
+            object  returned  by the function [2XSpecht[0m ([14X3.2-1[0m) (or [2XSchur[0m ([14X3.2-7[0m)
+            ).
+  
+  [2XDecompositionMatrix[0m  first  checks whether the required decomposition matrix
+  exists  as  a library file (checking first in the current directory, next in
+  the directory specified by [2XSpechtDirectory[0m ([14X3.2-2[0m), and finally in the [5XHecke[0m
+  libraries).   If   the   base   field   of   H   has   characteristic  zero,
+  [2XDecompositionMatrix[0m  next looks for [13Xcrystallized decomposition matrices[0m (see
+  [2XCrystalDecompositionMatrix[0m  ([14X3.2-9[0m)).  If  the decomposition matrix d is not
+  stored in the library [2XDecompositionMatrix[0m will calculate d when H is a Hecke
+  algebra  with  a  base  field  of  characteristic zero, and will return [10Xfail[0m
+  otherwise  (in  which case the function [2XCalculateDecompositionMatrix[0m ([14X3.5-6[0m)
+  can be used to force [5XHecke[0m to try and calculate this matrix).
+  
+  For  Hecke  algebras  defined over fields of characteristic zero, [5XHecke[0m uses
+  the   algorithm   of   [LLT96]   to  calculate  decomposition  matrices  The
+  decomposition  matrices  for the q-Schur algebras for n<=10 are contained in
+  the  [5XHecke[0m  library,  as  are  those  for the symmetric group over fields of
+  positive characteristic when n<15.
+  
+  Once  a  decomposition  matrix  is known, [5XHecke[0m keeps an internal copy of it
+  which  is  used  by  the  functions [2XMakeSpecht[0m ([14X3.2-3[0m), [2XMakePIM[0m ([14X3.2-3[0m), and
+  [2XMakeSimple[0m  ([14X3.2-3[0m); these functions also read decomposition matrix files as
+  needed.
+  
+  If you set the variable [2XSpechtDirectory[0m ([14X3.2-2[0m), then [5XHecke[0m will also search
+  for  decomposition  matrix files in this directory. The files in the current
+  directory  override  those in [2XSpechtDirectory[0m ([14X3.2-2[0m) and those in the [5XHecke[0m
+  libraries.
+  
+  In   the  second  form  of  the  function,  when  a  filename  is  supplied,
+  [2XDecompositionMatrix[0m will read the decomposition matrix in the file filename,
+  and this matrix will become [5XHecke[0m's internal copy of this matrix.
+  
+  By  default,  the rows and columns of the decomposition matrices are ordered
+  [2XDecompositionMatrix[0m  with  an  ordering function such as [2XLengthLexicographic[0m
+  ([14X3.8-13[0m)  or  [2XReverseDominance[0m  ([14X3.8-15[0m).  You  do  not  need to specify the
+  ordering  you  want every time you call [2XDecompositionMatrix[0m; [5XHecke[0m will keep
+  the  same  ordering until you change it again. This ordering can also be set
+  "by hand" using the operation [2XSetOrdering[0m ([14X3.2-2[0m)
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> DecompositionMatrix(Specht(3),6,LengthLexicographic);[0X
+    [4X<11x7 decomposition matrix>[0X
+    [4Xgap> Display(last);[0X
+    [4X6      | 1[0X
+    [4X5,1    | 1 1[0X
+    [4X4,2    | . . 1[0X
+    [4X3^2    | . 1 . 1[0X
+    [4X4,1^2  | . 1 . . 1[0X
+    [4X3,2,1  | 1 1 . 1 1 1[0X
+    [4X2^3    | 1 . . . . 1[0X
+    [4X3,1^3  | . . . . 1 1[0X
+    [4X2^2,1^2| . . . . . . 1[0X
+    [4X2,1^4  | . . . 1 . 1 .[0X
+    [4X1^6    | . . . 1 . . .[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Once  you  have  a decomposition matrix it is often nice to be able to print
+  it. The on screen version is often good enough; There are also functions for
+  converting  [5XHecke[0m  decomposition  matrices  into [5XGAP[0m matrices and vice versa
+  (see   [2XMatrixDecompositionMatrix[0m   ([14X3.5-7[0m)   and   [2XDecompositionMatrixMatrix[0m
+  ([14X3.5-8[0m)).
+  
+  Using  the  function  [2XInducedDecompositionMatrix[0m  ([14X3.5-1[0m), it is possible to
+  induce  a decomposition matrix. See also [2XSaveDecompositionMatrix[0m ([14X3.5-5[0m) and
+  [2XIsNewIndecomposable[0m    ([14X3.5-2[0m),   [2XSpecht[0m   ([14X3.2-1[0m),   [2XSchur[0m   ([14X3.2-7[0m),   and
+  [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.2-9 CrystalDecompositionMatrix[0m
+  
+  [2X> CrystalDecompositionMatrix( [0X[3XH, n[, Ordering][0X[2X ) _____________________[0Xmethod
+  [2X> CrystalDecompositionMatrix( [0X[3XH, file[, Ordering][0X[2X ) __________________[0Xmethod
+  [6XReturns:[0X  the  crystal  decomposition  matrix D of H(S_n) where H is a Hecke
+            algebra  object  returned by the function [2XSpecht[0m ([14X3.2-1[0m) (or [2XSchur[0m
+            ([14X3.2-7[0m) ).
+  
+  This  function  is  similar  to  [2XDecompositionMatrix[0m ([14X3.2-8[0m). The columns of
+  decomposition matrices correspond to projective indecomposables; the columns
+  of  crystallized  decomposition  matrices  correspond to the canonical basis
+  elements  of  the Fock space (see [2XSpecht[0m ([14X3.2-1[0m)). Consequently, the entries
+  in  these matrices are polynomials (in v), and by specializing (i.e. setting
+  v  equal to 1; see [2XSpecialized[0m ([14X3.9-1[0m)), the decomposition matrices of H are
+  obtained  (see  [2XSpecht[0m  ([14X3.2-1[0m)).  Crystallized  decomposition  matrices are
+  defined  only  for  Hecke algebras over a base field of characteristic zero.
+  Unlike  "normal" decomposition matrices, crystallized decomposition matrices
+  cannot be induced.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> CrystalDecompositionMatrix(Specht(3), 6);[0X
+    [4X<11x7 decomposition matrix>[0X
+    [4Xgap> Display(last);[0X
+    [4X6      |   1[0X
+    [4X5,1    |   v   1[0X
+    [4X4,2    |   .   .   1[0X
+    [4X4,1^2  |   .   v   .   1[0X
+    [4X3^2    |   .   v   .   .   1[0X
+    [4X3,2,1  |   v v^2   .   v   v   1[0X
+    [4X3,1^3  |   .   .   . v^2   .   v[0X
+    [4X2^3    | v^2   .   .   .   .   v[0X
+    [4X2^2,1^2|   .   .   .   .   .   .   1[0X
+    [4X2,1^4  |   .   .   .   .   v v^2   .[0X
+    [4X1^6    |   .   .   .   . v^2   .   .[0X
+    [4Xgap> Specialized(last);   # set v equal to 1.[0X
+    [4X<11x7 decomposition matrix>[0X
+    [4Xgap> Display(last);[0X
+    [4X6      | 1[0X
+    [4X5,1    | 1 1[0X
+    [4X4,2    | . . 1[0X
+    [4X4,1^2  | . 1 . 1[0X
+    [4X3^2    | . 1 . . 1[0X
+    [4X3,2,1  | 1 1 . 1 1 1[0X
+    [4X3,1^3  | . . . 1 . 1[0X
+    [4X2^3    | 1 . . . . 1[0X
+    [4X2^2,1^2| . . . . . . 1[0X
+    [4X2,1^4  | . . . . 1 1 .[0X
+    [4X1^6    | . . . . 1 . .[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XSpecht[0m  ([14X3.2-1[0m),  [2XSchur[0m  ([14X3.2-7[0m), [2XDecompositionMatrix[0m ([14X3.2-8[0m) and
+  [2XSpecialized[0m   ([14X3.9-1[0m).   This  function  requires  the  package  [5Xhecke[0m  (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.2-10 DecompositionNumber[0m
+  
+  [2X> DecompositionNumber( [0X[3XH, mu, nu[0X[2X ) ___________________________________[0Xmethod
+  [2X> DecompositionNumber( [0X[3Xd, mu, nu[0X[2X ) ___________________________________[0Xmethod
+  
+  This  function attempts to calculate the decomposition multiplicity of D(nu)
+  in  S(mu)  (equivalently,  the  multiplicity of S(mu) in P(nu)). If P(nu) is
+  known,  we  just  look  up  the  answer; if not [2XDecompositionNumber[0m tries to
+  calculate  the  answer  using  "row and column removal" (see [Jam90, Theorem
+  6.18]).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(6);; DecompositionNumber(H,[6,4,2],[6,6]);[0X
+    [4X0[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  
+  [1X3.3 Partitions in [5XHecke[1X[0X
+  
+  Many  of the functions in [5XHecke[0m take partitions as arguments. Partitions are
+  usually  represented  by  lists  in  [5XGAP[0m.  In [5XHecke[0m, all the functions which
+  expect  a partition will accept their argument either as a list or simply as
+  a sequence of numbers. So, for example:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; Print(MakeSpecht(MakePIM(H,6,4)),"\n");[0X
+    [4XS(6,4) + S(6,3,1) + S(5,3,1,1) + S(3,3,2,1,1) + S(2,2,2,2,2)[0X
+    [4Xgap> Print(MakeSpecht(MakePIM(H,[6,4])),"\n");[0X
+    [4XS(6,4) + S(6,3,1) + S(5,3,1,1) + S(3,3,2,1,1) + S(2,2,2,2,2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Some  functions  require  more  than  one argument, but the convention still
+  applies.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ECore(3, [6,4,2]);[0X
+    [4X[ 6, 4, 2 ][0X
+    [4Xgap> ECore(3, 6,4,2);[0X
+    [4X[ 6, 4, 2 ][0X
+    [4Xgap> GoodNodes(3, 6,4,2);[0X
+    [4X[ false, false, 3 ][0X
+    [4Xgap> GoodNodes(3, [6,4,2], 2);[0X
+    [4X3[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Basically,  it  never  hurts  to  put the extra brackets in, and they can be
+  omitted  so  long  as this is not ambiguous. One function where the brackets
+  are  needed  is  [2XDecompositionNumber[0m  ([14X3.2-10[0m)  this  is  clear  because the
+  function takes two partitions as its arguments.
+  
+  
+  [1X3.4 Inducing and restricting modules[0X
+  
+  [5XHecke[0m  provides  four  functions  [2XRInducedModule[0m  ([14X3.4-1[0m), [2XRRestrictedModule[0m
+  ([14X3.4-3[0m),  [2XSInducedModule[0m  ([14X3.4-2[0m) and [2XSRestrictedModule[0m ([14X3.4-4[0m) for inducing
+  and  restricting  modules.  All  functions can be applied to Specht modules,
+  PIMs,  and  simple  modules. These functions all work by first rewriting all
+  modules  as  a linear combination of Specht modules (or q-Weyl modules), and
+  then  inducing  and restricting. Whenever possible the induced or restricted
+  module will be written in the original basis.
+  
+  All  of  these  functions  can also be applied to elements of the Fock space
+  (see  [2XSpecht[0m  ([14X3.2-1[0m));  in  which case they correspond to the action of the
+  generators  E_i  and  F_i  of  U_q(  sl^_e)  on  F. There is also a function
+  [2XInducedDecompositionMatrix[0m ([14X3.5-1[0m) for inducing decomposition matrices.
+  
+  [1X3.4-1 RInducedModule[0m
+  
+  [2X> RInducedModule( [0X[3Xx[0X[2X ) ________________________________________________[0Xmethod
+  [2X> RInducedModule( [0X[3Xx, r1[, r2, ...][0X[2X ) _________________________________[0Xmethod
+  [6XReturns:[0X  the   induced   modules   of   the   Specht   modules,   principal
+            indecomposable modules, and simple modules (more accurately, their
+            image in the Grothendieck ring).
+  
+  There  is  an natural embedding of H(S_n) in H(S_n+1) which in the usual way
+  lets us define an [13Xinduced[0m H(S_n+1)-module for every H(S_n)-module.
+  
+  There is also a function [2XSInducedModule[0m ([14X3.4-2[0m) which provides a much faster
+  way of r-inducing s times (and inducing s times).
+  
+  Let mu be a partition. Then the induced module [10XRInducedModule(S([0mmu[10X))[0m is easy
+  to  describe: it has the same composition factors as sum S(nu) where nu runs
+  over  all  partitions whose diagrams can be obtained by adding a single node
+  to the diagram of mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2,2);;[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,7,4,3,1)));[0X
+    [4XS(8,4,3,1) + S(7,5,3,1) + S(7,4^2,1) + S(7,4,3,2) + S(7,4,3,1^2)[0X
+    [4Xgap> Display(RInducedModule(MakePIM(H,5,3,1)));[0X
+    [4XP(6,3,1) + 2P(5,4,1) + P(5,3,2)[0X
+    [4Xgap> Display(RInducedModule(MakeSimple(H,11,2,1)));[0X
+    [4X# D(<x>), unable to rewrite <x> as a sum of simples[0X
+    [4XS(12,2,1) + S(11,3,1) + S(11,2^2) + S(11,2,1^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  When  inducing  indecomposable  modules  and  simple modules, [2XRInducedModule[0m
+  first  rewrites  these  modules  as  a  linear combination of Specht modules
+  (using   known   decomposition  matrices),  and  then  induces  this  linear
+  combination  of  Specht modules. If possible [5XHecke[0m then rewrites the induced
+  module  back in the original basis. Note that in the last example above, the
+  decomposition   matrix   for  S_15  is  not  known  by  [5XHecke[0m  this  is  why
+  [2XRInducedModule[0m was unable to rewrite this module in the D-basis.
+  
+  [13Xr-Induction[0m
+  
+  Two  Specht  modules S(mu) and S(nu) belong to the same block if and only if
+  the  corresponding  partitions  mu  and  nu have the same e-core [JM97] (see
+  [2XECore[0m  ([14X3.8-1[0m)).  Because  the  e-core  of  a partition is determined by its
+  (multiset    of)    e    -residues,   if   S(mu)   and   S(nu)   appear   in
+  [10XRInducedModule(S([0mtau[10X))[0m,  for some partition tau, then S(mu) and S(nu) belong
+  to  the same block if and only if mu and nu can be obtained by adding a node
+  of   the  same  e-residue  to  the  diagram  of  tau.  The  second  form  of
+  [2XRInducedModule[0m  allows one to induce "within blocks" by only adding nodes of
+  some fixed e-residue r; this is known as [13Xr-induction[0m. Note that 0<= r<e.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; Display(RInducedModule(MakeSpecht(H,5,2,1)));[0X
+    [4XS(6,2,1) + S(5,3,1) + S(5,2^2) + S(5,2,1^2)[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,2,1),0));[0X
+    [4X0S()[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,2,1),1));[0X
+    [4XS(6,2,1) + S(5,3,1) + S(5,2,1^2)[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,2,1),2));[0X
+    [4X0S()[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,2,1),3));[0X
+    [4XS(5,2^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  function  [2XEResidueDiagram[0m  ([14X3.7-13[0m), prints the diagram of mu, labeling
+  each  node  with  its  e-residue. A quick check of this diagram confirms the
+  answers above.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> EResidueDiagram(H,5,2,1);[0X
+    [4X  0  1  2  3  0[0X
+    [4X  3  0[0X
+    [4X  2[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [13X"Quantized" induction[0m
+  
+  When   [2XRInducedModule[0m   is   applied   to   the   canonical  basis  elements
+  [10XMakeFockPIM([0mmu[10X)[0m  (or  more  generally elements of the Fock space; see [2XSpecht[0m
+  ([14X3.2-1[0m)),  a "quantum analogue" of induction is applied. More precisely, the
+  function  [10XRInducedModule([0m*,i[10X)[0m corresponds to the action of the generator F_i
+  of the quantum group U_q( sl^_e) on F [LLT96].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3);; x:=RInducedModule(MakeFockPIM(H,4,2),1,2);;[0X
+    [4Xgap> Display(x); Display(MakePIM(x));[0X
+    [4XSq(6,2) + vSq(4^2) + v^2Sq(4,2^2)[0X
+    [4XPq(6,2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See    also    [2XSInducedModule[0m   ([14X3.4-2[0m),   [2XRRestrictedModule[0m   ([14X3.4-3[0m)   and
+  [2XSRestrictedModule[0m  ([14X3.4-4[0m).  This  function  requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.4-2 SInducedModule[0m
+  
+  [2X> SInducedModule( [0X[3Xx, s[0X[2X ) _____________________________________________[0Xmethod
+  [2X> SInducedModule( [0X[3Xx, s, r[0X[2X ) __________________________________________[0Xmethod
+  
+  The  function  [2XSInducedModule[0m,  standing  for "string induction", provides a
+  more  efficient  way of r-inducing s times (and a way of inducing s times if
+  the  residue  r  is  omitted);  r-induction  is explained in "[2XRInducedModule[0m
+  ([14X3.4-1[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);;[0X
+    [4Xgap> H:=Specht(4);; Display(SInducedModule(MakePIM(H,5,2,1),3));[0X
+    [4XP(8,2,1) + 3P(7,3,1) + 2P(7,2^2) + 6P(6,3,2) + 6P(6,3,1^2) + 3P(6,2,1^3) + 2P(\[0X
+    [4X5,3^2) + P(5,2^2,1^2)[0X
+    [4Xgap> Display(SInducedModule(MakePIM(H,5,2,1),3,1));[0X
+    [4XP(6,3,1^2)[0X
+    [4Xgap> Display(RInducedModule(MakePIM(H,5,2,1),1,1,1));[0X
+    [4X6P(6,3,1^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Note  that  the multiplicity of each summand of [10XRInducedModule([0mx,r,...,r[10X)[0m is
+  divisible by s! and that [2XSInducedModule[0m divides by this constant.
+  
+  As with [2XRInducedModule[0m ([14X3.4-1[0m) this function can also be applied to elements
+  of  the  Fock space (see [2XSpecht[0m ([14X3.2-1[0m)), in which case the quantum analogue
+  of induction is used.
+  
+  See  also  [2XRInducedModule[0m  ([14X3.4-1[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.4-3 RRestrictedModule[0m
+  
+  [2X> RRestrictedModule( [0X[3Xx[0X[2X ) _____________________________________________[0Xmethod
+  [2X> RRestrictedModule( [0X[3Xx, r1[, r2, ...][0X[2X ) ______________________________[0Xmethod
+  [6XReturns:[0X  the  corresponding  module  for H(S_n-1) when given a module x for
+            H(S_n)
+  
+  The  restriction  of  the  Specht  module S(mu) is the linear combination of
+  Specht  modules  sum  S(nu) where nu runs over the partitions whose diagrams
+  are  obtained  by  deleting  a node from the diagram of mu. If only nodes of
+  residue  r  are deleted then this corresponds to first restricting S(mu) and
+  then  taking one of the block components of the restriction; this process is
+  known as [13Xr-restriction[0m (cf. r-induction in [2XRInducedModule[0m ([14X3.4-1[0m)).
+  
+  There  is  also a function [2XSRestrictedModule[0m ([14X3.4-4[0m) which provides a faster
+  way of r-restricting s times (and restricting s times).
+  
+  When  more  than  one  residue  if  given  to  [2XRRestrictedModule[0m  it returns
+  [10XRRestrictedModule([0mx,r_1,r_2,...,r_k[10X)[0m=                     [10XRRestrictedModule(
+  RRestrictedModule([0mx,r_1[10X)[0m,r_2,...,r_k[10X)[0m (cf. [2XRInducedModule[0m ([14X3.4-1[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(6);; Display(RRestrictedModule(MakePIM(H,5,3,2,1),4));[0X
+    [4X2P(4,3,2,1)[0X
+    [4Xgap> Display(RRestrictedModule(MakeSimple(H,5,3,2),1));[0X
+    [4XD(5,2^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [13X"Quantized" restriction[0m
+  
+  As  with  [2XRInducedModule[0m  ([14X3.4-1[0m),  when [2XRRestrictedModule[0m is applied to the
+  canonical  basis  elements [10XMakeFockPIM([0mmu[10X)[0m a quantum analogue of restriction
+  is  applied;  this time, [10XRRestrictedModule([0m*,i[10X)[0m corresponds to the action of
+  the generator E_i of U_q( sl^_e) on F[LLT96].
+  
+  See    also    [2XRInducedModule[0m    ([14X3.4-1[0m),    [2XSInducedModule[0m    ([14X3.4-2[0m)   and
+  [2XSRestrictedModule[0m  ([14X3.4-4[0m).  This  function  requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.4-4 SRestrictedModule[0m
+  
+  [2X> SRestrictedModule( [0X[3Xx, s[0X[2X ) __________________________________________[0Xmethod
+  [2X> SRestrictedModule( [0X[3Xx, s, r[0X[2X ) _______________________________________[0Xmethod
+  
+  As  with  [2XSInducedModule[0m ([14X3.4-2[0m) this function provides a more efficient way
+  of r-restricting s times, or restricting s times if the residue r is omitted
+  (cf. [2XSInducedModule[0m ([14X3.4-2[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(6);; Display(SRestrictedModule(MakeSpecht(H,4,3,2),3));[0X
+    [4X3S(4,2) + 2S(4,1^2) + 3S(3^2) + 6S(3,2,1) + 2S(2^3)[0X
+    [4Xgap> Display(SRestrictedModule(MakePIM(H,5,4,1),2,4));[0X
+    [4XP(4^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See    also    [2XRInducedModule[0m    ([14X3.4-1[0m),    [2XSInducedModule[0m    ([14X3.4-2[0m)   and
+  [2XRRestrictedModule[0m  ([14X3.4-3[0m).  This  function  requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  
+  [1X3.5 Operations on decomposition matrices[0X
+  
+  [5XHecke[0m  is  a  package  for  computing  decomposition  matrices; this section
+  describes  the functions available for accessing these matrices directly. In
+  addition  to decomposition matrices, [5XHecke[0m also calculates the "crystallized
+  decomposition  matrices" of [LLT96] and the "adjustment matrices" introduced
+  by James [Jam90] (and Geck [Gec92]).
+  
+  Throughout  [5XHecke[0m  we  place  an  emphasis  on  calculating  the  projective
+  indecomposable  modulesand hence upon the columns of decomposition matrices.
+  This  approach  seems  more  efficient  than  the  traditional  approach  of
+  calculating  decomposition  matrices by rows; ideally both approaches should
+  be combined (as is done by [2XIsNewIndecomposable[0m ([14X3.5-2[0m)).
+  
+  In principle, all decomposition matrices for all Hecke algebras defined over
+  a field of characteristic zero are available from within [5XHecke[0m. In addition,
+  the  decomposition  matrices  for  all  q-Schur  algebras with n<=10 and all
+  values of e and the p-modular decomposition matrices of the symmetric groups
+  S_n for n<15 are in the [5XHecke[0m library files.
+  
+  If you are using [5XHecke[0m regularly to do calculations involving certain values
+  of  e it would be advantageous to have [5XHecke[0m calculate and save the first 20
+  odd  decomposition  matrices that you are interested in. So, for e=4 use the
+  commands:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; for n in [8..20] do[0X
+    [4X>      SaveDecompositionMatrix(DecompositionMatrix(H,n));[0X
+    [4X>    od;[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Alternatively,  you could save the crystallized decomposition matrices. Note
+  that  for  n<2e  the decomposition matrices are known (by [5XHecke[0m) and easy to
+  compute.
+  
+  [1X3.5-1 InducedDecompositionMatrix[0m
+  
+  [2X> InducedDecompositionMatrix( [0X[3Xd[0X[2X ) ____________________________________[0Xmethod
+  
+  If     d     is     the     decomposition    matrix    of    H(S_n),    then
+  [10XInducedDecompositionMatrix([0md[10X)[0m attempts to calculate the decomposition matrix
+  of  H(S_n+1). It does this by extracting each projective indecomposable from
+  d  and  inducing  these  modules  to obtain projective modules for H(S_n+1).
+  [2XInducedDecompositionMatrix[0m  then  tries to decompose these projectives using
+  the  function  [2XIsNewIndecomposable[0m ([14X3.5-2[0m). In general there will be columns
+  of  the  decomposition  matrix which [2XInducedDecompositionMatrix[0m is unable to
+  decompose    and   these   will   have   to   be   calculated   "by   hand".
+  [2XInducedDecompositionMatrix[0m   prints   a   list   of  those  columns  of  the
+  decomposition  matrix  which  it  is  unable to calculate (this list is also
+  printed by the function [2XMissingIndecomposables[0m ([14X3.5-11[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> d:=DecompositionMatrix(Specht(3,3),14);[0X
+    [4X<135x57 decomposition matrix>[0X
+    [4Xgap> InducedDecompositionMatrix(d);[0X
+    [4X# Inducing....[0X
+    [4XThe following projectives are missing from <d>:[0X
+    [4X    [ 15 ]  [ 8, 7 ][0X
+    [4X<176x70 decomposition matrix>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Note  that  the  missing  indecomposables  come in "pairs" which map to each
+  other under the Mullineux map (see [2XMullineuxMap[0m ([14X3.7-3[0m)).
+  
+  Almost  all  of the decomposition matrices included in [5XHecke[0m were calculated
+  directly     by    [2XInducedDecompositionMatrix[0m.    When    n    is    "small"
+  [2XInducedDecompositionMatrix[0m  is usually able to return the full decomposition
+  matrix for H(S_n). Finally, although the [2XInducedDecompositionMatrix[0m can also
+  be  applied to the decomposition matrices of the q-Schur algebras (see [2XSchur[0m
+  ([14X3.2-7[0m)),  [2XInducedDecompositionMatrix[0m  is  much  less successful in inducing
+  these  decomposition  matrices  because  it contains no special routines for
+  dealing  with  the  indecomposable  modules of the q-Schur algebra which are
+  indexed  by  e-singular  partitions.  Note  also  that we use a non-standard
+  labeling  of  the  decomposition  matrices  of  q-Schur  algebras; see [2XSchur[0m
+  ([14X3.2-7[0m).
+  
+  [1X3.5-2 IsNewIndecomposable[0m
+  
+  [2X> IsNewIndecomposable( [0X[3Xd, x[, mu][0X[2X ) __________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m  if  it  is  able  to show that x is indecomposable (and this
+            indecomposable is not already listed in d), and [9Xfalse[0m otherwise.
+  
+  [2XIsNewIndecomposable[0m is the function which does all of the hard work when the
+  function  [2XInducedDecompositionMatrix[0m  ([14X3.5-1[0m)  is  applied  to decomposition
+  matrices.  [2XIsNewIndecomposable[0m  will  also  print a brief description of its
+  findings,  giving an upper and lower bound on the [13Xfirst[0m decomposition number
+  mu for which it is unable to determine the multiplicity of S(mu) in x.
+  
+  [2XIsNewIndecomposable[0m  works  by running through all of the partitions nu such
+  that  P(nu) could be a summand of x and it uses various results, such as the
+  q-Schaper  theorem  of  [JM97] (see [2XSchaper[0m ([14X3.7-1[0m)), the Mullineux map (see
+  [2XMullineuxMap[0m  ([14X3.7-3[0m))  and  inducing  simple modules, to determine if P(nu)
+  does  indeed  split  off.  In addition, if d is the decomposition matrix for
+  H(S_n)  then [2XIsNewIndecomposable[0m will probably use some of the decomposition
+  matrices  of  H(S_m) for m<= n, if they are known. Consequently it is a good
+  idea   to   save   decomposition   matrices  as  they  are  calculated  (see
+  [2XSaveDecompositionMatrix[0m ([14X3.5-5[0m)).
+  
+  For  example, in calculating the 2-modular decomposition matrices of S_r the
+  first  projective  which  [2XInducedDecompositionMatrix[0m  ([14X3.5-1[0m)  is  unable to
+  calculate is P(10).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2,2);;[0X
+    [4Xgap> d:=InducedDecompositionMatrix(DecompositionMatrix(H,9));;[0X
+    [4X# Inducing.[0X
+    [4X# The following projectives are missing from <d>:[0X
+    [4X#  [ 10 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  (In fact, given the above commands, [5XHecke[0m will return the full decomposition
+  matrix  for  S_10  because  this  matrix  is  in the library; these were the
+  commands  that  were  used  to  calculate  the  decomposition  matrix in the
+  library.)
+  
+  By  inducing P(9) we can find a projective H-module which contains P(10). We
+  can  then  use  [2XIsNewIndecomposable[0m to try and decompose this induced module
+  into a sum of PIMs.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; x:=RInducedModule(MakePIM(H,9),1);; Display(x);[0X
+    [4X# P(<x>), unable to rewrite <x> as a sum of projectives[0X
+    [4XS(10) + S(9,1) + S(8,2) + 2S(8,1^2) + S(7,3) + 2S(7,1^3) + 3S(6,3,1) + 3S(6,2^\[0X
+    [4X2) + 4S(6,2,1^2) + 2S(6,1^4) + 4S(5,3,2) + 5S(5,3,1^2) + 5S(5,2^2,1) + 2S(5,1^\[0X
+    [4X5) + 2S(4^2,2) + 2S(4^2,1^2) + 2S(4,3^2) + 5S(4,3,1^3) + 2S(4,2^3) + 5S(4,2^2,\[0X
+    [4X1^2) + 4S(4,2,1^4) + 2S(4,1^6) + 2S(3^3,1) + 2S(3^2,2^2) + 4S(3^2,2,1^2) + 3S(\[0X
+    [4X3^2,1^4) + 3S(3,2^2,1^3) + 2S(3,1^7) + S(2^3,1^4) + S(2^2,1^6) + S(2,1^8) + S(\[0X
+    [4X1^10)[0X
+    [4Xgap> IsNewIndecomposable(d,x);[0X
+    [4X# The multiplicity of S(6,3,1) in P(10) is at least 1 and at most 2.[0X
+    [4Xfalse[0X
+    [4Xgap> Display(x);[0X
+    [4XS(10) + S(9,1) + S(8,2) + 2S(8,1^2) + S(7,3) + 2S(7,1^3) + 2S(6,3,1) + 2S(6,2^\[0X
+    [4X2) + 3S(6,2,1^2) + 2S(6,1^4) + 3S(5,3,2) + 4S(5,3,1^2) + 4S(5,2^2,1) + 2S(5,1^\[0X
+    [4X5) + 2S(4^2,2) + 2S(4^2,1^2) + 2S(4,3^2) + 4S(4,3,1^3) + 2S(4,2^3) + 4S(4,2^2,\[0X
+    [4X1^2) + 3S(4,2,1^4) + 2S(4,1^6) + 2S(3^3,1) + 2S(3^2,2^2) + 3S(3^2,2,1^2) + 2S(\[0X
+    [4X3^2,1^4) + 2S(3,2^2,1^3) + 2S(3,1^7) + S(2^3,1^4) + S(2^2,1^6) + S(2,1^8) + S(\[0X
+    [4X1^10)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Notice  that  some  of  the  coefficients  of  the  Specht modules in x have
+  changed;  this is because [2XIsNewIndecomposable[0m was able to determine that the
+  multiplicity  of  S(6,3,1)  was  at  most 2 and so it subtracted one copy of
+  P(6,3,1) from x.
+  
+  In  this  case,  the  multiplicity  of  S(6,3,1) in P(10) is easy to resolve
+  because  general  theory says that this multiplicity must be odd. Therefore,
+  x-P(6,3,1)  is  projective.  After  subtracting P(6,3,1) from x we again use
+  [2XIsNewIndecomposable[0m  to  see  if  x  is  now  indecomposable.  We  can  tell
+  [2XIsNewIndecomposable[0m  that  all  of  the  multiplicities  up to and including
+  S(6,3,1)  have  already  been  checked  by  giving  it the addition argument
+  mu=[6,3,1].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> x:=x-MakePIM(d,6,3,1);; IsNewIndecomposable(d,x,6,3,1);[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Consequently,  x=P(10) and we add it to the decomposition matrix d (and save
+  it).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> AddIndecomposable(d,x); SaveDecompositionMatrix(d);[0X
+  [4X------------------------------------------------------------------[0X
+  
+  A  full description of what [2XIsNewIndecomposable[0m does can be found by reading
+  the  comments in [11Xspecht.gi[0m. Any suggestions or improvements on this function
+  would be especially welcome.
+  
+  See also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XInducedDecompositionMatrix[0m ([14X3.5-1[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-3 InvertDecompositionMatrix[0m
+  
+  [2X> InvertDecompositionMatrix( [0X[3Xd[0X[2X ) _____________________________________[0Xmethod
+  [6XReturns:[0X  inverse  of  the (e-regular part of) d, where d is a decomposition
+            matrix,  or  crystallized decomposition matrix, of a Hecke algebra
+            or q-Schur algebra.
+  
+  If    part    of    the    decomposition    matrix   d   is   unknown   then
+  [2XInvertDecompositionMatrix[0m will invert as much of d as possible.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; d:=CrystalDecompositionMatrix(H,5);;[0X
+    [4Xgap> Display(InvertDecompositionMatrix(d));[0X
+    [4X5    |   1[0X
+    [4X4,1  |   .   1[0X
+    [4X3,2  |  -v   .   1[0X
+    [4X3,1^2|   .   .   .   1[0X
+    [4X2^2,1| v^2   .  -v   .   1[0X
+    [4X2,1^3|   .   .   .   .   .   1[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-4 AdjustmentMatrix[0m
+  
+  [2X> AdjustmentMatrix( [0X[3Xdp, d[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  the adjustment matrix a
+  
+  James  [Jam90]  noticed  and  Geck  [Gec92]  proved,  that the decomposition
+  matrices   dp   for   Hecke   algebras   defined  over  fields  of  positive
+  characteristic  admit  a factorization dp = d * a where d is a decomposition
+  matrix  for  a suitable Hecke algebra defined over a field of characteristic
+  zero and a is the so-called [13Xadjustment matrix[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2);; Hp:=Specht(2,2);;[0X
+    [4Xgap> d:=DecompositionMatrix(H,13);; dp:=DecompositionMatrix(Hp,13);;[0X
+    [4Xgap> a:=AdjustmentMatrix(dp,d);[0X
+    [4X<18x18 decomposition matrix>[0X
+    [4Xgap> Display(a);[0X
+    [4X13     | 1[0X
+    [4X12,1   | . 1[0X
+    [4X11,2   | 1 . 1[0X
+    [4X10,3   | . . . 1[0X
+    [4X10,2,1 | . . . . 1[0X
+    [4X9,4    | 1 . 1 . . 1[0X
+    [4X9,3,1  | 2 . . . . . 1[0X
+    [4X8,5    | . 1 . . . . . 1[0X
+    [4X8,4,1  | 1 . . . . . . . 1[0X
+    [4X8,3,2  | . 2 . . . . . 1 . 1[0X
+    [4X7,6    | 1 . . . . 1 . . . . 1[0X
+    [4X7,5,1  | . . . . . . 1 . . . . 1[0X
+    [4X7,4,2  | 1 . 1 . . 1 . . . . 1 . 1[0X
+    [4X7,3,2,1| . . . . . . . . . . . . . 1[0X
+    [4X6,5,2  | . 1 . . . . . 1 . 1 . . . . 1[0X
+    [4X6,4,3  | 2 . . . 1 . . . . . . . . . . 1[0X
+    [4X6,4,2,1| . 2 . 1 . . . . . . . . . . . . 1[0X
+    [4X5,4,3,1| 4 . 2 . . . . . . . . . . . . . . 1[0X
+    [4Xgap> MatrixDecompositionMatrix(dp)=[0X
+    [4X>           MatrixDecompositionMatrix(d)*MatrixDecompositionMatrix(a);[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  In the last line we have checked our calculation.
+  
+  See also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-5 SaveDecompositionMatrix[0m
+  
+  [2X> SaveDecompositionMatrix( [0X[3Xd[0X[2X ) _______________________________________[0Xmethod
+  [2X> SaveDecompositionMatrix( [0X[3Xd, filename[0X[2X ) _____________________________[0Xmethod
+  
+  The function [2XSaveDecompositionMatrix[0m saves the decomposition matrix d. After
+  a  decomposition  matrix  has  been saved, the functions [2XMakeSpecht[0m ([14X3.2-3[0m),
+  [2XMakePIM[0m  ([14X3.2-3[0m)  and  [2XMakeSimple[0m  ([14X3.2-3[0m)  will  automatically access it as
+  needed.  So,  for  example,  before  saving  d  in  order  to  retrieve  the
+  indecomposable  P(mu)  from d it is necessary to type [10XMakePIM([0md, mu[10X)[0m; once d
+  has been saved, the command [10XMakePIM([0mmu[10X)[0m suffices.
+  
+  Since [2XInducedDecompositionMatrix[0m ([14X3.5-1[0m) consults the decomposition matrices
+  for   smaller  n,  if  they  are  available,  it  is  advantageous  to  save
+  decomposition  matrices as they are calculated. For example, over a field of
+  characteristic  5,  the  decomposition matrices for the symmetric groups S_n
+  with n<= 20 can be calculated as follows:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(5,5);;[0X
+    [4Xgap> d:=DecompositionMatrix(H,9);;[0X
+    [4Xgap> for r in [10..20] do[0X
+    [4X>      d:=InducedDecompositionMatrix(d);[0X
+    [4X>      SaveDecompositionMatrix(d);[0X
+    [4X>    od;[0X
+    [4X# Inducing...[0X
+    [4X# Inducing....[0X
+    [4X# Inducing....[0X
+    [4X# Inducing.....[0X
+    [4X# Inducing......[0X
+    [4X# Inducing.......[0X
+    [4X# Inducing........[0X
+    [4X# Inducing..........[0X
+    [4X# Inducing............[0X
+    [4X# Inducing..............[0X
+    [4X# Inducing.................[0X
+  [4X------------------------------------------------------------------[0X
+  
+  If your Hecke algebra object H is defined using a non-standard valuation map
+  (see  [2XSpecht[0m ([14X3.2-1[0m)) then it is also necessary to set the string HeckeRing,
+  or  to  supply the function with a filename before it will save your matrix.
+  [2XSaveDecompositionMatrix[0m  will  also save adjustment matrices and the various
+  other  matrices  that  appear  in  [5XHecke[0m  (they  can  be  read back in using
+  [2XDecompositionMatrix[0m  ([14X3.2-8[0m)).  Each matrix has a default filename which you
+  can  over  ride  by supplying a filename. Using non-standard file names will
+  stop  [5XHecke[0m  from automatically accessing these matrices in future. See also
+  [2XDecompositionMatrix[0m  ([14X3.2-8[0m)  and  [2XCrystalDecompositionMatrix[0m  ([14X3.2-9[0m). This
+  function   requires   the   package   [5Xhecke[0m   (see  [2XLoadPackage[0m  ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-6 CalculateDecompositionMatrix[0m
+  
+  [2X> CalculateDecompositionMatrix( [0X[3XH, n[0X[2X ) _______________________________[0Xmethod
+  
+  [2XCalculateDecompositionMatrix[0m  is similar to the function [2XDecompositionMatrix[0m
+  ([14X3.2-8[0m)  in  that both functions try to return the decomposition matrix d of
+  H(S_n);  the difference is that this function tries to calculate this matrix
+  whereas   the   latter   reads   the  matrix  from  the  library  files  (in
+  characteristic zero both functions apply the algorithm of [LLT96] to compute
+  d).  In effect this function is only needed when working with Hecke algebras
+  defined  over  fields  of positive characteristic (or when you wish to avoid
+  the  libraries).  For  example,  if  you  want  to  do calculations with the
+  decomposition   matrix   of  the  symmetric  group  S_15  over  a  field  of
+  characteristic   two,   [2XDecompositionMatrix[0m  ([14X3.2-8[0m)  returns  fail  whereas
+  [2XCalculateDecompositionMatrix[0m returns a part of the decomposition matrix.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2,2);; d:=DecompositionMatrix(H,15);[0X
+    [4X# This decomposition matrix is not known; use CalculateDecompositionMatrix()[0X
+    [4X# or InducedDecompositionMatrix() to calculate with this matrix.[0X
+    [4Xfail[0X
+    [4Xgap> d:=CalculateDecompositionMatrix(H,15);;[0X
+    [4X# Projective indecomposable P(6,4,3,2) not known.[0X
+    [4X# Projective indecomposable P(6,5,3,1) not known.[0X
+    [4X# Projective indecomposable P(6,5,4) not known.[0X
+    [4X# Projective indecomposable P(7,4,3,1) not known.[0X
+    [4X# Projective indecomposable P(7,5,2,1) not known.[0X
+    [4X# Projective indecomposable P(7,5,3) not known.[0X
+    [4X# Projective indecomposable P(7,6,2) not known.[0X
+    [4X# Projective indecomposable P(8,4,2,1) not known.[0X
+    [4X# Projective indecomposable P(8,4,3) not known.[0X
+    [4X# Projective indecomposable P(8,5,2) not known.[0X
+    [4X# Projective indecomposable P(8,6,1) not known.[0X
+    [4X# Projective indecomposable P(8,7) not known.[0X
+    [4X# Projective indecomposable P(9,3,2,1) not known.[0X
+    [4X# Projective indecomposable P(9,4,2) not known.[0X
+    [4X# Projective indecomposable P(9,5,1) not known.[0X
+    [4X# Projective indecomposable P(9,6) not known.[0X
+    [4X# Projective indecomposable P(10,3,2) not known.[0X
+    [4X# Projective indecomposable P(10,4,1) not known.[0X
+    [4X# Projective indecomposable P(10,5) not known.[0X
+    [4X# Projective indecomposable P(11,3,1) not known.[0X
+    [4X# Projective indecomposable P(11,4) not known.[0X
+    [4X# Projective indecomposable P(12,2,1) not known.[0X
+    [4X# Projective indecomposable P(12,3) not known.[0X
+    [4X# Projective indecomposable P(13,2) not known.[0X
+    [4X# Projective indecomposable P(14,1) not known.[0X
+    [4X# Projective indecomposable P(15) not known.[0X
+    [4Xgap> SizeScreen([80,20]);; MissingIndecomposables(d);[0X
+    [4XThe following projectives are missing from <d>:[0X
+    [4X    [ 15 ]  [ 14, 1 ]  [ 13, 2 ]  [ 12, 3 ]  [ 12, 2, 1 ]  [ 11, 4 ][0X
+    [4X[ 11, 3, 1 ]  [ 10, 5 ]  [ 10, 4, 1 ]  [ 10, 3, 2 ]  [ 9, 6 ]  [ 9, 5, 1 ][0X
+    [4X[ 9, 4, 2 ]  [ 9, 3, 2, 1 ]  [ 8, 7 ]  [ 8, 6, 1 ]  [ 8, 5, 2 ]  [ 8, 4, 3 ][0X
+    [4X[ 8, 4, 2, 1 ]  [ 7, 6, 2 ]  [ 7, 5, 3 ]  [ 7, 5, 2, 1 ]  [ 7, 4, 3, 1 ][0X
+    [4X[ 6, 5, 4 ]  [ 6, 5, 3, 1 ]  [ 6, 4, 3, 2 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  Actually, you are much better starting with the decomposition matrix of S_14
+  and  then  applying  [2XInducedDecompositionMatrix[0m  ([14X3.5-1[0m) to this matrix. See
+  also  [2XDecompositionMatrix[0m  ([14X3.2-8[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.5-7 MatrixDecompositionMatrix[0m
+  
+  [2X> MatrixDecompositionMatrix( [0X[3Xd[0X[2X ) _____________________________________[0Xmethod
+  [6XReturns:[0X  the [5XGAP[0m matrix corresponding to the [5XHecke[0m decomposition matrix d
+  
+  The  rows and columns of d are sorted by the ordering stored in the internal
+  algebra object of the matrix d.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);;[0X
+    [4Xgap> MatrixDecompositionMatrix(DecompositionMatrix(Specht(3),5));[0X
+    [4X[ [ 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ],[0X
+    [4X  [ 1, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1 ], [ 0, 0, 1, 0, 0 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XDecompositionMatrixMatrix[0m ([14X3.5-8[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-8 DecompositionMatrixMatrix[0m
+  
+  [2X> DecompositionMatrixMatrix( [0X[3XH, m, n[0X[2X ) _______________________________[0Xmethod
+  [6XReturns:[0X  the [5XHecke[0m decomposition matrix corresponding to the [5XGAP[0m matrix m
+  
+  If  p  is  the  number  of  partitions  of  n  and r the number of e-regular
+  partitions  of  n,  then  m  must be either rx r, px r or px p. The rows and
+  columns  of m are assumed to be indexed by partitions sorted by the ordering
+  stored in the algebra object H (see [2XSpecht[0m ([14X3.2-1[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3);;[0X
+    [4Xgap> m:=[ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 1, 0, 1, 0 ],[0X
+    [4X>         [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ] ];;[0X
+    [4Xgap> Display(DecompositionMatrixMatrix(H,m,4));[0X
+    [4X4    | 1[0X
+    [4X3,1  | . 1[0X
+    [4X2^2  | 1 . 1[0X
+    [4X2,1^2| . . . 1[0X
+    [4X1^4  | . . 1 .[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XMatrixDecompositionMatrix[0m ([14X3.5-7[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-9 AddIndecomposable[0m
+  
+  [2X> AddIndecomposable( [0X[3Xd, x[0X[2X ) __________________________________________[0Xmethod
+  
+  [2XAddIndecomposable[0m inserts the indecomposable module x into the decomposition
+  matrix  d.  If  d  already  contains  the indecomposable d then a warning is
+  printed.  The  function  [2XAddIndecomposable[0m  also calculates [10XMullineuxMap([0m x[10X)[0m
+  (see  [2XMullineuxMap[0m  ([14X3.7-3[0m)) and adds this indecomposable to d (or checks to
+  see  that it agrees with the corresponding entry of d if this indecomposable
+  is already in d).
+  
+  See [2XIsNewIndecomposable[0m ([14X3.5-2[0m) for an example. See also [2XDecompositionMatrix[0m
+  ([14X3.2-8[0m)  and  [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m). This function requires the
+  package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.5-10 RemoveIndecomposable[0m
+  
+  [2X> RemoveIndecomposable( [0X[3Xd, mu[0X[2X ) ______________________________________[0Xmethod
+  
+  The   function   [2XRemoveIndecomposable[0m   removes  the  column  from  d  which
+  corresponds  to  P(mu).  This is sometimes useful when trying to calculate a
+  new  decomposition  matrix using [5XHecke[0m and want to test a possible candidate
+  for a yet to be identified PIM.
+  
+  See also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.5-11 MissingIndecomposables[0m
+  
+  [2X> MissingIndecomposables( [0X[3Xd[0X[2X ) ________________________________________[0Xmethod
+  
+  The   function   [2XMissingIndecomposables[0m   prints   the  list  of  partitions
+  corresponding to the indecomposable modules which are not listed in d.
+  
+  See also [2XDecompositionMatrix[0m ([14X3.2-8[0m) and [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m).
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  
+  [1X3.6 Calculating dimensions[0X
+  
+  [5XHecke[0m  has  two functions for calculating the dimensions of modules of Hecke
+  algebras; [2XSimpleDimension[0m ([14X3.6-1[0m) and [2XSpechtDimension[0m ([14X3.6-2[0m). As yet, [5XHecke[0m
+  does  not  know  how  to  calculate  the  dimensions  of modules for q-Schur
+  algebras (these depend up on q).
+  
+  [1X3.6-1 SimpleDimension[0m
+  
+  [2X> SimpleDimension( [0X[3Xd[0X[2X ) _______________________________________________[0Xmethod
+  [2X> SimpleDimension( [0X[3XH, n[0X[2X ) ____________________________________________[0Xmethod
+  [2X> SimpleDimension( [0X[3XH|d, mu[0X[2X ) _________________________________________[0Xmethod
+  
+  In  the first two forms, [2XSimpleDimension[0m prints the dimensions of all of the
+  simple  modules specified by d or for the Hecke algebra H(S_n) respectively.
+  If  a  partition  mu is supplied, as in the last form, then the dimension of
+  the  simple  module  D(mu)  is  returned.  At  present  the  function is not
+  implemented for the simple modules of the q-Schur algebras.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(6);;[0X
+    [4Xgap> SimpleDimension(H,11,3);[0X
+    [4X272[0X
+    [4Xgap> d:=DecompositionMatrix(H,5);; SimpleDimension(d,3,2);[0X
+    [4X5[0X
+    [4Xgap> SimpleDimension(d);[0X
+    [4X5     : 1[0X
+    [4X4,1   : 4[0X
+    [4X3,2   : 5[0X
+    [4X3,1^2 : 6[0X
+    [4X2^2,1 : 5[0X
+    [4X2,1^3 : 4[0X
+    [4X1^5   : 1[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.6-2 SpechtDimension[0m
+  
+  [2X> SpechtDimension( [0X[3Xmu[0X[2X ) ______________________________________________[0Xmethod
+  [6XReturns:[0X  the dimension of the Specht module S(mu)
+  
+  dim  S(mu)  is  equal  to  the number of standard mu-tableaux; the answer is
+  given by the hook length formula (see [JK81]).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SpechtDimension(6,3,2,1);[0X
+    [4X5632[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XSimpleDimension[0m ([14X3.6-1[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  
+  [1X3.7 Combinatorics on Young diagrams[0X
+  
+  These  functions  range  from the representation theoretic q-Schaper theorem
+  and   Kleshchev's   algorithm  for  the  Mullineux  map  through  to  simple
+  combinatorial  operations  like  adding  and  removing  rim hooks from Young
+  diagrams.
+  
+  [1X3.7-1 Schaper[0m
+  
+  [2X> Schaper( [0X[3XH, mu[0X[2X ) ___________________________________________________[0Xmethod
+  [6XReturns:[0X  a  linear  combination  of  Specht  modules  which  have  the same
+            composition  factors  as  the  sum  of the modules in the "Jantzen
+            filtration  "  of S(mu); see [JM97]. In particular, if nu strictly
+            dominates  mu  then  D(nu) is a composition factor of S(mu) if and
+            only if it is a composition factor of [10XSchaper([0mmu[10X)[0m.
+  
+  [2XSchaper[0m  uses  the  valuation  map  attached  to  H  (see [2XSpecht[0m ([14X3.2-1[0m) and
+  [JM97]).
+  
+  One way in which the q-Schaper theorem can be applied is as follows. Suppose
+  that  we  have  a  projective  module  x, written as a linear combination of
+  Specht  modules  and  suppose  that  we  are  trying  to  decide whether the
+  projective  indecomposable  P(mu)  is a direct summand of x. Then, providing
+  that we know that P(nu) is not a summand of x for all (e-regular) partitions
+  nu  which  strictly dominate mu (see [2XDominates[0m ([14X3.8-12[0m)), P(mu) is a summand
+  of  x  if  and  only if [10XInnerProduct(Schaper( [0mH,mu[10X)[0m,x[10X)[0m is non-zero (note, in
+  particular,  that we don't need to know the indecomposable P(mu) in order to
+  perform this calculation).
+  
+  The  q-Schaper theorem can also be used to check for irreduciblity; in fact,
+  this is the basis for the criterion employed by [2XIsSimpleModule[0m ([14X3.7-2[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; H:=Specht(2);;[0X
+    [4Xgap> Display(Schaper(H,9,5,3,2,1));[0X
+    [4XS(17,2,1) - S(15,2,1^3) + S(13,2^3,1) - S(11,3^2,2,1) + S(10,4,3,2,1) - S(9,8,\[0X
+    [4X3) - S(9,8,1^3) + S(9,6,3,2) + S(9,6,3,1^2) + S(9,6,2^2,1)[0X
+    [4Xgap> Display(Schaper(H,9,6,5,2));[0X
+    [4X0S()[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  last calculation shows that S(9,6,5,2) is irreducible when R is a field
+  of   characteristic  zero  and  e=2  (cf.  [10XIsSimpleModule([0mH,9,6,5,2[10X)[0m).  This
+  function   requires   the   package   [5Xhecke[0m   (see  [2XLoadPackage[0m  ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.7-2 IsSimpleModule[0m
+  
+  [2X> IsSimpleModule( [0X[3XH, mu[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if S(mu) is simple and [9Xfalse[0m otherwise.
+  
+  mu an e-regular partition.
+  
+  This  calculation uses the valuation function of H; see [2XSpecht[0m ([14X3.2-1[0m). Note
+  that the criterion used by [2XIsSimpleModule[0m is completely combinatorial; it is
+  derived from the q-Schaper theorem [JM97].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3);;[0X
+    [4Xgap> IsSimpleModule(H,45,31,24);[0X
+    [4Xfalse[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XSchaper[0m  ([14X3.7-1[0m).  This  function requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-3 MullineuxMap[0m
+  
+  [2X> MullineuxMap( [0X[3Xe|H, mu[0X[2X ) ____________________________________________[0Xmethod
+  
+  The sign representation D(1^n) of the Hecke algebra is the (one dimensional)
+  representation  sending  T_w to (-1)^l(w). The Hecke algebra H is not a Hopf
+  algebra  so  there is no well defined action of H upon the tensor product of
+  two  H-modules;  however,  there  is  an  outer  automorphism  #  of H which
+  corresponds to tensoring with D(1^n). This sends an irreducible module D(mu)
+  to  an irreducible D(mu)^#cong D(mu^#) for some e-regular partition mu^#. In
+  the  symmetric  group  case,  Mullineux  gave  a  conjectural  algorithm for
+  calculating  mu^#;  consequently  the map sending mu to mu^# is known as the
+  [13XMullineux map[0m.
+  
+  Deep  results  of  Kleshchev  [Kle96]  for  the symmetric group give another
+  (proven)  algorithm  for  calculating the partition mu^# (Ford and Kleshchev
+  have  deduced  Mullineux's conjecture from this). Using the canonical basis,
+  it  was  shown  by  [LLT96]  that  the natural generalization of Kleshchev's
+  algorithm  to  H  gives  the Mullineux map for Hecke algebras over fields of
+  characteristic  zero.  The  general case follows from this, so the Mullineux
+  map is now known for all Hecke algebras.
+  
+  Kleshchev's  map is easy to describe; he proved that if gns is any good node
+  sequence  for  mu,  then  the  sequence  obtained from gns by replacing each
+  residue  r by -rmod e is a good node sequence for mu^# (see [2XGoodNodeSequence[0m
+  ([14X3.7-8[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> MullineuxMap(Specht(2),12,5,2);[0X
+    [4X[ 12, 5, 2 ][0X
+    [4Xgap> MullineuxMap(Specht(4),12,5,2);[0X
+    [4X[ 4, 4, 4, 2, 2, 1, 1, 1 ][0X
+    [4Xgap> MullineuxMap(Specht(6),12,5,2);[0X
+    [4X[ 4, 3, 2, 2, 2, 2, 2, 1, 1 ][0X
+    [4Xgap> MullineuxMap(Specht(8),12,5,2);[0X
+    [4X[ 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1 ][0X
+    [4Xgap> MullineuxMap(Specht(10),12,5,2);[0X
+    [4X[ 3, 3, 3, 3, 2, 1, 1, 1, 1, 1 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [6XReturns:[0X  the image of mu under the Mullineux map
+  
+  [2X> MullineuxMap( [0X[3Xd, mu[0X[2X ) ______________________________________________[0Xmethod
+  
+  The  Mullineux  map  can also be calculated using a decomposition matrix. To
+  see  this  recall  that  "tensoring"  a  Specht  module  S(mu) with the sign
+  representation  yields  a  module isomorphic to the dual of S(lambda), where
+  lambda    is    the   partition   conjugate   to   mu.   It   follows   that
+  d_mu,nu=d_lambda,nu^#  for  all e-regular partitions nu. Therefore, if mu is
+  the  last partition in the lexicographic order such that d_mu,nu<> 0 then we
+  must  have  nu^#=lambda. The second form of [2XMullineuxMap[0m uses d to calculate
+  mu^# rather than the Kleshchev-[LLT96] result.
+  
+  [2X> MullineuxMap( [0X[3Xx[0X[2X ) __________________________________________________[0Xmethod
+  [6XReturns:[0X  returns x^#, the image of x under #.
+  
+  Note  that  the  above  remarks show that P(mu) is mapped to P(mu^#) via the
+  Mullineux  map;  this  observation  is useful when calculating decomposition
+  matrices (and is used by the function [2XInducedDecompositionMatrix[0m ([14X3.5-1[0m)).
+  
+  See  also  [2XGoodNodes[0m  ([14X3.7-6[0m)  and  [2XGoodNodeSequence[0m  ([14X3.7-8[0m). This function
+  requires the package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-4 MullineuxSymbol[0m
+  
+  [2X> MullineuxSymbol( [0X[3Xe|H, mu[0X[2X ) _________________________________________[0Xmethod
+  [6XReturns:[0X  the Mullineux symbol of the e-regular partition mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> MullineuxSymbol(5,[8,6,5,5]);[0X
+    [4X[ [ 10, 6, 5, 3 ], [ 4, 4, 3, 2 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XPartitionMullineuxSymbol[0m  ([14X3.7-5[0m).  This  function  requires  the
+  package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-5 PartitionMullineuxSymbol[0m
+  
+  [2X> PartitionMullineuxSymbol( [0X[3Xe|H, ms[0X[2X ) ________________________________[0Xmethod
+  [6XReturns:[0X  the  e-regular  partition  corresponding  to  the  given Mullineux
+            symbol ms
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> PartitionMullineuxSymbol(5, MullineuxSymbol(5,[8,6,5,5]) );[0X
+    [4X[ 8, 6, 5, 5 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XMullineuxSymbol[0m ([14X3.7-4[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-6 GoodNodes[0m
+  
+  [2X> GoodNodes( [0X[3Xe|H, mu[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  a  list  of the rows of mu which end in a good node. The good node
+            of residue r (if it exists) is the (r+1)-st element in this list.
+  
+  [2X> GoodNodes( [0X[3Xe|H, mu, r[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  the  number  of the row which ends with the good node of residue r
+            or [9Xfail[0m if there is no good node of residue r.
+  
+  Given a partition and an integer e, Kleshchev [K] defined the notion of [13Xgood
+  node[0m  for  each  residue  r  (0<= r<e). When e is prime and mu is e-regular,
+  Kleshchev  showed  that the good nodes describe the restriction of the socle
+  of  D(mu)  in  the  symmetric  group  case.  Brundan  [Bru98]  has  recently
+  generalized this result to the Hecke algebra.
+  
+  By  definition,  there  is at most one good node for each residue r and this
+  node is a removable node (in the diagram of mu).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> GoodNodes(5,[5,4,3,2]);[0X
+    [4X[ fail, fail, 2, fail, 1 ][0X
+    [4Xgap> GoodNodes(5,[5,4,3,2],0);[0X
+    [4Xfail[0X
+    [4Xgap> GoodNodes(5,[5,4,3,2],4);[0X
+    [4X1[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The   good   nodes   also   determine   the   Kleshchev-Mullineux  map  (see
+  [2XGoodNodeSequence[0m  ([14X3.7-8[0m)  and [2XMullineuxMap[0m ([14X3.7-3[0m)). This function requires
+  the package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-7 NormalNodes[0m
+  
+  [2X> NormalNodes( [0X[3Xe|H, mu[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  the  numbers  of  the  rows  of mu which end in one of Kleshchev's
+            [Kle96] normal nodes.
+  
+  [2X> NormalNodes( [0X[3Xe|H, mu, r[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  the rows corresponding to normal nodes of the specified residue.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> NormalNodes(5,[6,5,4,4,3,2,1,1,1]);[0X
+    [4X[ [ 1, 4 ], [  ], [  ], [ 2, 5 ], [  ] ][0X
+    [4Xgap> NormalNodes(5,[6,5,4,4,3,2,1,1,1],0);[0X
+    [4X[ 1, 4 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XGoodNodes[0m  ([14X3.7-6[0m). This function requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-8 GoodNodeSequence[0m
+  
+  [2X> GoodNodeSequence( [0X[3Xe|H, mu[0X[2X ) ________________________________________[0Xmethod
+  
+  Given  an  e-regular  partition  mu  of  n, a [13Xgood node sequence[0m for mu is a
+  sequence  gns of n residues such that mu has a good node of residue r, where
+  r  is  the  last residue in gns and the first n-1 residues in gns are a good
+  node  sequence  for  the partition obtained from mu by deleting its (unique)
+  good  node  with residue r (see [2XGoodNodes[0m ([14X3.7-6[0m)). In general, mu will have
+  more  than  one good node sequence; however, any good node sequence uniquely
+  determines mu (see [2XPartitionGoodNodeSequence[0m ([14X3.7-9[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; GoodNodeSequence(H,4,3,1);[0X
+    [4X[ 0, 3, 1, 0, 2, 2, 1, 3 ][0X
+    [4Xgap> GoodNodeSequence(H,4,3,2);[0X
+    [4X[ 0, 3, 1, 0, 2, 2, 1, 3, 3 ][0X
+    [4Xgap> GoodNodeSequence(H,4,4,2);[0X
+    [4X[ 0, 3, 1, 0, 2, 2, 1, 3, 3, 2 ][0X
+    [4Xgap> GoodNodeSequence(H,5,4,2);[0X
+    [4X[ 0, 3, 1, 0, 2, 2, 1, 3, 3, 2, 0 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [2X> GoodNodeSequences( [0X[3Xe|H, mu[0X[2X ) _______________________________________[0Xmethod
+  [6XReturns:[0X  list of all good node sequences for mu
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);; GoodNodeSequences(H,5,2,1);[0X
+    [4X[ [ 0, 1, 2, 3, 3, 2, 0, 0 ], [ 0, 3, 1, 2, 2, 3, 0, 0 ],[0X
+    [4X  [ 0, 1, 3, 2, 2, 3, 0, 0 ], [ 0, 1, 2, 3, 3, 0, 2, 0 ],[0X
+    [4X  [ 0, 1, 2, 3, 0, 3, 2, 0 ], [ 0, 1, 2, 3, 3, 0, 0, 2 ],[0X
+    [4X  [ 0, 1, 2, 3, 0, 3, 0, 2 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  good  node sequences determine the Mullineux map (see [2XGoodNodes[0m ([14X3.7-6[0m)
+  and  [2XMullineuxMap[0m  ([14X3.7-3[0m)).  This  function requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-9 PartitionGoodNodeSequence[0m
+  
+  [2X> PartitionGoodNodeSequence( [0X[3Xe|H, gns[0X[2X ) ______________________________[0Xmethod
+  [6XReturns:[0X  the unique e-regular partition corresponding to gns (or [9Xfail[0m if in
+            fact gns is not a good node sequence).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);;[0X
+    [4Xgap> PartitionGoodNodeSequence(H,0, 3, 1, 0, 2, 2, 1, 3, 3, 2);[0X
+    [4X[ 4, 4, 2 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XGoodNodes[0m  ([14X3.7-6[0m),  [2XGoodNodeSequence[0m  ([14X3.7-8[0m)  and  [2XMullineuxMap[0m
+  ([14X3.7-3[0m).   This   function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m
+  ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-10 GoodNodeLatticePath[0m
+  
+  [2X> GoodNodeLatticePath( [0X[3Xe|H, mu[0X[2X ) _____________________________________[0Xmethod
+  [6XReturns:[0X  a sequence of partitions which give a path in the e-good partition
+            lattice from the empty partition to mu.
+  
+  [2X> GoodNodeLatticePaths( [0X[3Xe|H, mu[0X[2X ) ____________________________________[0Xmethod
+  [6XReturns:[0X  the list of all paths in the e-good partition lattice which end in
+            mu.
+  
+  [2X> LatticePathGoodNodeSequence( [0X[3Xe|H, gns[0X[2X ) ____________________________[0Xmethod
+  [6XReturns:[0X  the path corresponding to a given good node sequence gns
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> GoodNodeLatticePath(3,3,2,1);[0X
+    [4X[ [ 1 ], [ 1, 1 ], [ 2, 1 ], [ 2, 1, 1 ], [ 2, 2, 1 ], [ 3, 2, 1 ] ][0X
+    [4Xgap> GoodNodeLatticePaths(3,3,2,1);[0X
+    [4X[ [ [ 1 ], [ 1, 1 ], [ 2, 1 ], [ 2, 1, 1 ], [ 2, 2, 1 ], [ 3, 2, 1 ] ],[0X
+    [4X  [ [ 1 ], [ 1, 1 ], [ 2, 1 ], [ 2, 2 ], [ 2, 2, 1 ], [ 3, 2, 1 ] ] ][0X
+    [4Xgap> GoodNodeSequence(4,6,3,2);[0X
+    [4X[ 0, 3, 1, 0, 2, 2, 3, 3, 0, 1, 1 ][0X
+    [4Xgap> LatticePathGoodNodeSequence(4,last);[0X
+    [4X[ [ 1 ], [ 1, 1 ], [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 3, 2, 1 ], [ 4, 2, 1 ],[0X
+    [4X  [ 4, 2, 2 ], [ 5, 2, 2 ], [ 6, 2, 2 ], [ 6, 3, 2 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XGoodNodes[0m  ([14X3.7-6[0m). This function requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-11 LittlewoodRichardsonRule[0m
+  
+  [2X> LittlewoodRichardsonRule( [0X[3Xmu, nu[0X[2X ) _________________________________[0Xmethod
+  [2X> LittlewoodRichardsonCoefficient( [0X[3Xmu, nu, tau[0X[2X ) _____________________[0Xmethod
+  
+  Given  partitions  mu  of  n  and  nu  of  m the module S(mu)otimes S(nu) is
+  naturally   an   H(S_nx   S_m)-  module  and,  by  inducing,  we  obtain  an
+  H(S_n+m)-module.  This  module  has  the  same composition factors as sum_nu
+  a_mu,nu^lambda  S(lambda),  where the sum runs over all partitions lambda of
+  n+m   and   the   integers   a_mu,nu^lambda  are  the  Littlewood-Richardson
+  coefficients.   The  integers  a_mu,nu^lambda  can  be  calculated  using  a
+  straightforward  combinatorial  algorithm known as the Littlewood-Richardson
+  rule   (see   [JK81]).  The  function  [2XLittlewoodRichardsonRule[0m  returns  an
+  (unordered)  list of partitions of n+m in which each partition lambda occurs
+  a_mu,nu^lambda times. The Littlewood-Richardson coefficients are independent
+  of e; they can be read more easily from the computation S(mu)otimes S(nu).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);;[0X
+    [4Xgap> H:=Specht(0);; # the generic Hecke algebra with R=C[q][0X
+    [4Xgap> LittlewoodRichardsonRule([3,2,1],[4,2]);[0X
+    [4X[ [ 4, 3, 2, 2, 1 ], [ 4, 3, 3, 1, 1 ], [ 4, 3, 3, 2 ], [ 4, 4, 2, 1, 1 ],[0X
+    [4X  [ 4, 4, 2, 2 ], [ 4, 4, 3, 1 ], [ 5, 2, 2, 2, 1 ], [ 5, 3, 2, 1, 1 ],[0X
+    [4X  [ 5, 3, 2, 2 ], [ 5, 4, 2, 1 ], [ 5, 3, 2, 1, 1 ], [ 5, 3, 3, 1 ],[0X
+    [4X  [ 5, 4, 1, 1, 1 ], [ 5, 4, 2, 1 ], [ 5, 5, 1, 1 ], [ 5, 3, 2, 2 ],[0X
+    [4X  [ 5, 3, 3, 1 ], [ 5, 4, 2, 1 ], [ 5, 4, 3 ], [ 5, 5, 2 ], [ 6, 2, 2, 1, 1 ],[0X
+    [4X  [ 6, 3, 1, 1, 1 ], [ 6, 3, 2, 1 ], [ 6, 4, 1, 1 ], [ 6, 2, 2, 2 ],[0X
+    [4X  [ 6, 3, 2, 1 ], [ 6, 4, 2 ], [ 6, 3, 2, 1 ], [ 6, 3, 3 ], [ 6, 4, 1, 1 ],[0X
+    [4X  [ 6, 4, 2 ], [ 6, 5, 1 ], [ 7, 2, 2, 1 ], [ 7, 3, 1, 1 ], [ 7, 3, 2 ],[0X
+    [4X  [ 7, 4, 1 ] ][0X
+    [4Xgap> Display(MakeSpecht(H,3,2,1)*MakeSpecht(H,4,2));[0X
+    [4XS(7,4,1) + S(7,3,2) + S(7,3,1^2) + S(7,2^2,1) + S(6,5,1) + 2S(6,4,2) + 2S(6,4,\[0X
+    [4X1^2) + S(6,3^2) + 3S(6,3,2,1) + S(6,3,1^3) + S(6,2^3) + S(6,2^2,1^2) + S(5^2,2\[0X
+    [4X) + S(5^2,1^2) + S(5,4,3) + 3S(5,4,2,1) + S(5,4,1^3) + 2S(5,3^2,1) + 2S(5,3,2^\[0X
+    [4X2) + 2S(5,3,2,1^2) + S(5,2^3,1) + S(4^2,3,1) + S(4^2,2^2) + S(4^2,2,1^2) + S(4\[0X
+    [4X,3^2,2) + S(4,3^2,1^2) + S(4,3,2^2,1)[0X
+    [4Xgap> LittlewoodRichardsonCoefficient([3,2,1],[4,2],[5,4,2,1]);[0X
+    [4X3[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The    function    [2XLittlewoodRichardsonCoefficient[0m    returns    a    single
+  Littlewood-Richardson coefficient (although you are really better off asking
+  for all of them, since they will all be calculated anyway).
+  
+  See   also   [2XRInducedModule[0m   ([14X3.4-1[0m)   and  [2XInverseLittlewoodRichardsonRule[0m
+  ([14X3.7-12[0m).   This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m
+  ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-12 InverseLittlewoodRichardsonRule[0m
+  
+  [2X> InverseLittlewoodRichardsonRule( [0X[3Xtau[0X[2X ) _____________________________[0Xmethod
+  [6XReturns:[0X  a   list  of  all  pairs  of  partitions  [mu,nu]  such  that  the
+            Littlewood-Richardson  coefficient  a_mu,nu^tau  is  non-zero (see
+            [2XLittlewoodRichardsonRule[0m ([14X3.7-11[0m)). The list returned is unordered
+            and [mu,nu] will appear a_mu,nu^tau times in it.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; InverseLittlewoodRichardsonRule(3,2,1);[0X
+    [4X[ [ [  ], [ 3, 2, 1 ] ], [ [ 1 ], [ 3, 2 ] ], [ [ 1 ], [ 2, 2, 1 ] ],[0X
+    [4X  [ [ 1 ], [ 3, 1, 1 ] ], [ [ 1, 1 ], [ 2, 2 ] ], [ [ 1, 1 ], [ 3, 1 ] ],[0X
+    [4X  [ [ 1, 1 ], [ 2, 1, 1 ] ], [ [ 1, 1, 1 ], [ 2, 1 ] ], [ [ 2 ], [ 2, 2 ] ],[0X
+    [4X  [ [ 2 ], [ 3, 1 ] ], [ [ 2 ], [ 2, 1, 1 ] ], [ [ 2, 1 ], [ 3 ] ],[0X
+    [4X  [ [ 2, 1 ], [ 2, 1 ] ], [ [ 2, 1 ], [ 2, 1 ] ], [ [ 2, 1 ], [ 1, 1, 1 ] ],[0X
+    [4X  [ [ 2, 1, 1 ], [ 2 ] ], [ [ 2, 1, 1 ], [ 1, 1 ] ], [ [ 2, 2 ], [ 2 ] ],[0X
+    [4X  [ [ 2, 2 ], [ 1, 1 ] ], [ [ 2, 2, 1 ], [ 1 ] ], [ [ 3 ], [ 2, 1 ] ],[0X
+    [4X  [ [ 3, 1 ], [ 2 ] ], [ [ 3, 1 ], [ 1, 1 ] ], [ [ 3, 1, 1 ], [ 1 ] ],[0X
+    [4X  [ [ 3, 2 ], [ 1 ] ], [ [ 3, 2, 1 ], [  ] ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XLittlewoodRichardsonRule[0m  ([14X3.7-11[0m).  This  function  requires the
+  package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-13 EResidueDiagram[0m
+  
+  [2X> EResidueDiagram( [0X[3XH|e, mu[0X[2X ) _________________________________________[0Xmethod
+  [2X> EResidueDiagram( [0X[3Xx[0X[2X ) _______________________________________________[0Xmethod
+  
+  The  e-residue  of  the  (i,j)-th  node  in the diagram of a partition mu is
+  (j-i)mod  e.  [10XEResidueDiagram([0me,  mu[10X)[0m prints the diagram of the partition mu
+  replacing   each   node   with   its  e-residue.  If  x  is  a  module  then
+  [10XEResidueDiagram([0mx[10X)[0m  prints  the  e-residue  diagrams of all of the e-regular
+  partitions  appearing  in  x (such diagrams are useful when trying to decide
+  how  to restrict and induce modules and also in applying results such as the
+  "Scattering theorem" of [JM96]). It is not necessary to supply the integer e
+  in this case because x "knows" the value of e.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2);; EResidueDiagram(MakeSpecht(MakePIM(H,7,5)));[0X
+    [4X[ 7, 5 ][0X
+    [4X   0   1   0   1   0   1   0[0X
+    [4X   1   0   1   0   1[0X
+    [4X[ 6, 5, 1 ][0X
+    [4X   0   1   0   1   0   1[0X
+    [4X   1   0   1   0   1[0X
+    [4X   0[0X
+    [4X[ 5, 4, 2, 1 ][0X
+    [4X   0   1   0   1   0[0X
+    [4X   1   0   1   0[0X
+    [4X   0   1[0X
+    [4X   1[0X
+    [4X# There are 3 2-regular partitions.[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.7-14 HookLengthDiagram[0m
+  
+  [2X> HookLengthDiagram( [0X[3Xmu[0X[2X ) ____________________________________________[0Xmethod
+  
+  Prints  the  diagram  of  mu,  replacing each node with its hook length (see
+  [JK81]).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> HookLengthDiagram(11,6,3,2);[0X
+    [4X  14  13  11   9   8   7   5   4   3   2   1[0X
+    [4X   8   7   5   3   2   1[0X
+    [4X   4   3   1[0X
+    [4X   2   1[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.7-15 RemoveRimHook[0m
+  
+  [2X> RemoveRimHook( [0X[3Xmu, row, col[0X[2X ) ______________________________________[0Xmethod
+  [6XReturns:[0X  the  partition  obtained from mu by removing the (row, col)-th rim
+            hook from (the diagram of) mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> RemoveRimHook([6,5,4],1,2);[0X
+    [4X[ 4, 3, 1 ][0X
+    [4Xgap> RemoveRimHook([6,5,4],2,3);[0X
+    [4X[ 6, 3, 2 ][0X
+    [4Xgap> HookLengthDiagram(6,5,4);[0X
+    [4X   8   7   6   5   3   1[0X
+    [4X   6   5   4   3   1[0X
+    [4X   4   3   2   1[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also [2XAddRimHook[0m ([14X3.7-16[0m). This function requires the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.7-16 AddRimHook[0m
+  
+  [2X> AddRimHook( [0X[3Xmu, r, h[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  a  list  [nu,  l]  where  nu  is the partition obtained from mu by
+            adding  a  rim hook of length h with its "foot" in the r-th row of
+            (the  diagram of) mu and l is the leg length of the wrapped on rim
+            hook  (see,  for  example, [JK81]). If the resulting diagram nu is
+            not the diagram of a partition then [9Xfail[0m is returned.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> AddRimHook([6,4,3],1,3);[0X
+    [4X[ [ 9, 4, 3 ], 0 ][0X
+    [4Xgap> AddRimHook([6,4,3],2,3);[0X
+    [4Xfail[0X
+    [4Xgap> AddRimHook([6,4,3],3,3);[0X
+    [4X[ [ 6, 5, 5 ], 1 ][0X
+    [4Xgap> AddRimHook([6,4,3],4,3);[0X
+    [4X[ [ 6, 4, 3, 3 ], 0 ][0X
+    [4Xgap> AddRimHook([6,4,3],5,3);[0X
+    [4Xfail[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XRemoveRimHook[0m  ([14X3.7-15[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  
+  [1X3.8 Operations on partitions[0X
+  
+  This section contains functions for manipulating partitions and also several
+  useful orderings on the set of partitions.
+  
+  [1X3.8-1 ECore[0m
+  
+  [2X> ECore( [0X[3Xe|H, mu[0X[2X ) ___________________________________________________[0Xmethod
+  [6XReturns:[0X  the e-core of the partition mu.
+  
+  [2X> EAbacus( [0X[3Xe|H, mu[0X[2X ) _________________________________________________[0Xmethod
+  
+  The  e-core  of  a partition mu is what remains after as many rim e-hooks as
+  possible have been removed from the diagram of mu (that this is well defined
+  is not obvious; see [JK81]).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(6);; ECore(H,16,8,6,5,3,1);[0X
+    [4X[ 4, 3, 1, 1 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  e-core  is calculated here using James'; notation of an [13Xabacus[0m there is
+  also an [2XEAbacus[0m function; but it is more "pretty" than useful.
+  
+  See  also  [2XIsECore[0m  ([14X3.8-2[0m),  [2XEQuotient[0m  ([14X3.8-3[0m)  and  [2XEWeight[0m ([14X3.8-5[0m). This
+  function   requires   the   package   [5Xhecke[0m   (see  [2XLoadPackage[0m  ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-2 IsECore[0m
+  
+  [2X> IsECore( [0X[3Xe|H, mu[0X[2X ) _________________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if mu is an e-core and [9Xfalse[0m otherwise.
+  
+  See  also  [2XECore[0m  ([14X3.8-1[0m).  This  function  requires  the package [5Xhecke[0m (see
+  [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.8-3 EQuotient[0m
+  
+  [2X> EQuotient( [0X[3Xe|H, mu[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  the  e-quotient  of  mu;  this is a sequence of e partitions whose
+            definition can be found in [JK81].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(8);; EQuotient(H,22,18,16,12,12,1,1);[0X
+    [4X[ [ 1, 1 ], [  ], [  ], [  ], [  ], [ 2, 2 ], [  ], [ 1 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XECore[0m  ([14X3.8-1[0m)  and  [2XCombineEQuotientECore[0m ([14X3.8-4[0m). This function
+  requires the package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.8-4 CombineEQuotientECore[0m
+  
+  [2X> CombineEQuotientECore( [0X[3Xe|H, q, C[0X[2X ) _________________________________[0Xmethod
+  [6XReturns:[0X  the partition which has e-quotient q and e -core C.
+  
+  A  partition  is  uniquely determined by its e-quotient and its e -core (see
+  [2XEQuotient[0m ([14X3.8-3[0m) and [2XECore[0m ([14X3.8-1[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(11);; mu:=[100,98,57,43,12,1];;[0X
+    [4Xgap> Q:=EQuotient(H,mu);[0X
+    [4X[ [ 9 ], [  ], [  ], [  ], [  ], [  ], [ 3 ], [ 1 ], [ 9 ], [  ], [ 5 ] ][0X
+    [4Xgap> C:=ECore(H,mu);[0X
+    [4X[ 7, 2, 2, 1, 1, 1 ][0X
+    [4Xgap> CombineEQuotientECore(H,Q,C);[0X
+    [4X[ 100, 98, 57, 43, 12, 1 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XECore[0m  ([14X3.8-1[0m)  and [2XEQuotient[0m ([14X3.8-3[0m). This function requires the
+  package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.8-5 EWeight[0m
+  
+  [2X> EWeight( [0X[3Xe|H, mu[0X[2X ) _________________________________________________[0Xmethod
+  
+  The  e-weight  of a partition is the number of e-hooks which must be removed
+  from the partition to reach the e-core (see [2XECore[0m ([14X3.8-1[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> EWeight(6,[16,8,6,5,3,1]);[0X
+    [4X5[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-6 ERegularPartitions[0m
+  
+  [2X> ERegularPartitions( [0X[3Xe|H, n[0X[2X ) _______________________________________[0Xmethod
+  [6XReturns:[0X  the   list   of   e-regular   partitions  of  n,  ordered  reverse
+            lexicographically (see [2XLexicographic[0m ([14X3.8-14[0m)).
+  
+  A  partition  mu=(mu_1,mu_2,...)  is [13Xe-regular[0m if there is no integer i such
+  that mu_i=mu_i+1=cdots=mu_i+e-1>0.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3);; ERegularPartitions(H,6);[0X
+    [4X[ [ 2, 2, 1, 1 ], [ 3, 2, 1 ], [ 3, 3 ], [ 4, 1, 1 ], [ 4, 2 ], [ 5, 1 ],[0X
+    [4X  [ 6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-7 IsERegular[0m
+  
+  [2X> IsERegular( [0X[3Xe|H, mu[0X[2X ) ______________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if mu is e-regular and [9Xfalse[0m otherwise.
+  
+  This  functions  requires  the  package  [5Xhecke[0m  (see [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-8 ConjugatePartition[0m
+  
+  [2X> ConjugatePartition( [0X[3Xmu[0X[2X ) ___________________________________________[0Xmethod
+  [6XReturns:[0X  the  partition whose diagram is obtained by interchanging the rows
+            and columns in the diagram of mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ConjugatePartition(6,4,3,2);[0X
+    [4X[ 4, 4, 3, 2, 1, 1 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-9 BetaSet[0m
+  
+  [2X> BetaSet( [0X[3Xmu[0X[2X ) ______________________________________________________[0Xmethod
+  [6XReturns:[0X  a [13Xset[0m of beta numbers (i.e. first column hook lengths; see [JK81])
+            corresponding to the partition mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> BetaSet([5,4,2,2]);[0X
+    [4X[ 2, 3, 6, 8 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See also [2XPartitionBetaSet[0m ([14X3.8-10[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.8-10 PartitionBetaSet[0m
+  
+  [2X> PartitionBetaSet( [0X[3Xbn[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  the  partitions  corresponding  to  the  given set of beta numbers
+            bn.Note in particular that bn must be a set of integers.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> PartitionBetaSet([ 2, 3, 6, 8 ]);[0X
+    [4X[ 5, 4, 2, 2 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-11 ETopLadder[0m
+  
+  [2X> ETopLadder( [0X[3Xe|H, mu[0X[2X ) ______________________________________________[0Xmethod
+  
+  The  ladders in the diagram of a partition are the lines connecting nodes of
+  constant  e-residue,  having  slope e-1 (see [JK81]). A new partition can be
+  obtained  from  mu  by sliding all nodes up to the highest possible rungs on
+  their ladders.
+  
+  [6XReturns:[0X  the  partition obtained in this way; it is automatically e-regular
+            (this partition is denoted mu^R in [JK81]).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);;[0X
+    [4Xgap> ETopLadder(H,1,1,1,1,1,1,1,1,1,1);[0X
+    [4X[ 4, 3, 3 ][0X
+    [4Xgap> ETopLadder(6,1,1,1,1,1,1,1,1,1,1);[0X
+    [4X[ 2, 2, 2, 2, 2 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-12 Dominates[0m
+  
+  [2X> Dominates( [0X[3Xmu, nu[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if either mu=nu or forall i>= 1: sum_j=1^imu_j>=sum_j=1^inu_j
+            and [9Xfalse[0m otherwise.
+  
+  The  dominance  ordering is an important partial order in the representation
+  theory of Hecke algebra because d_mu,nu=0 unless nu dominates mu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Dominates([5,4],[4,4,1]);[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-13 LengthLexicographic[0m
+  
+  [2X> LengthLexicographic( [0X[3Xmu, nu[0X[2X ) ______________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m  if  the length of mu is less than the length of nu or if the
+            length of mu equals the length of nu and [10XLexicographic([0mmu, nu[10X)[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> p:=Partitions(6);;Sort(p,LengthLexicographic); p;[0X
+    [4X[ [ 6 ], [ 5, 1 ], [ 4, 2 ], [ 3, 3 ], [ 4, 1, 1 ], [ 3, 2, 1 ], [ 2, 2, 2 ],[0X
+    [4X  [ 3, 1, 1, 1 ], [ 2, 2, 1, 1 ], [ 2, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-14 Lexicographic[0m
+  
+  [2X> Lexicographic( [0X[3Xmu, nu[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if mu is lexicographically greater than or equal to nu.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> p:=Partitions(6);;Sort(p,Lexicographic); p;[0X
+    [4X[ [ 6 ], [ 5, 1 ], [ 4, 2 ], [ 4, 1, 1 ], [ 3, 3 ], [ 3, 2, 1 ],[0X
+    [4X  [ 3, 1, 1, 1 ], [ 2, 2, 2 ], [ 2, 2, 1, 1 ], [ 2, 1, 1, 1, 1 ],[0X
+    [4X  [ 1, 1, 1, 1, 1, 1 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.8-15 ReverseDominance[0m
+  
+  [2X> ReverseDominance( [0X[3Xmu, nu[0X[2X ) _________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m if forall i>0: sum_j>= imu_j > sum_j>= inu_j.
+  
+  This  is  another  total  order  on  partitions  which extends the dominance
+  ordering (see [2XDominates[0m ([14X3.8-12[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> p:=Partitions(6);;Sort(p,ReverseDominance); p;[0X
+    [4X[ [ 6 ], [ 5, 1 ], [ 4, 2 ], [ 3, 3 ], [ 4, 1, 1 ], [ 3, 2, 1 ], [ 2, 2, 2 ],[0X
+    [4X  [ 3, 1, 1, 1 ], [ 2, 2, 1, 1 ], [ 2, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1, 1 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  is  the ordering used by James in the appendix of his Springer lecture
+  notes book.
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  
+  [1X3.9 Miscellaneous functions on modules[0X
+  
+  This  section  contains  some  functions  for looking at the partitions in a
+  given  module  for  the  Hecke algebras. Most of them are used internally by
+  [5XHecke[0m.
+  
+  [1X3.9-1 Specialized[0m
+  
+  [2X> Specialized( [0X[3Xx[, q][0X[2X ) ______________________________________________[0Xmethod
+  [2X> Specialized( [0X[3Xd[, q][0X[2X ) ______________________________________________[0Xmethod
+  [6XReturns:[0X  the   corresponding  element  of  the  Grothendieck  ring  or  the
+            corresponding decomposition matrix of the Hecke algebra when given
+            an  element  of  the  Fock  space  x  (see  [2XSpecht[0m  ([14X3.2-1[0m)), or a
+            crystallized  decomposition matrix (see [2XCrystalDecompositionMatrix[0m
+            ([14X3.2-9[0m)), respectively.
+  
+  By  default  the  indeterminate  v  is  specialized  to  1; however v can be
+  specialized to any (integer) q by supplying a second argument.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; H:=Specht(2);; x:=MakeFockPIM(H,6,2);; Display(x);[0X
+    [4XSq(6,2) + vSq(6,1^2) + vSq(5,3) + v^2Sq(5,1^3) + vSq(4,3,1) + v^2Sq(4,2^2) + (\[0X
+    [4Xv^3+v)Sq(4,2,1^2) + v^2Sq(4,1^4) + v^2Sq(3^2,1^2) + v^3Sq(3,2^2,1) + v^3Sq(3,1\[0X
+    [4X^5) + v^3Sq(2^3,1^2) + v^4Sq(2^2,1^4)[0X
+    [4Xgap> Display(Specialized(x));[0X
+    [4XS(6,2) + S(6,1^2) + S(5,3) + S(5,1^3) + S(4,3,1) + S(4,2^2) + 2S(4,2,1^2) + S(\[0X
+    [4X4,1^4) + S(3^2,1^2) + S(3,2^2,1) + S(3,1^5) + S(2^3,1^2) + S(2^2,1^4)[0X
+    [4Xgap> Display(Specialized(x,2));[0X
+    [4XS(6,2) + 2S(6,1^2) + 2S(5,3) + 4S(5,1^3) + 2S(4,3,1) + 4S(4,2^2) + 10S(4,2,1^2\[0X
+    [4X) + 4S(4,1^4) + 4S(3^2,1^2) + 8S(3,2^2,1) + 8S(3,1^5) + 8S(2^3,1^2) + 16S(2^2,\[0X
+    [4X1^4)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  An  example  of  [2XSpecialized[0m  being  applied to a crystallized decomposition
+  matrix  can  be  found  in [2XCrystalDecompositionMatrix[0m ([14X3.2-9[0m). This function
+  requires the package [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.9-2 ERegulars[0m
+  
+  [2X> ERegulars( [0X[3Xx[0X[2X ) _____________________________________________________[0Xmethod
+  [2X> ERegulars( [0X[3Xd[0X[2X ) _____________________________________________________[0Xmethod
+  [2X> ListERegulars( [0X[3Xx[0X[2X ) _________________________________________________[0Xmethod
+  
+  [10XERegulars([0mx[10X)[0m  prints  a  list  of  the  e-regular  partitions, together with
+  multiplicities,  which  occur  in  the module x. [10XListERegulars([0mx[10X)[0m returns an
+  actual list of these partitions rather than printing them.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(8);;[0X
+    [4Xgap> x:=MakeSpecht(RInducedModule(MakePIM(H,8,5,3)));; Display(x);[0X
+    [4XS(9,5,3) + S(8,6,3) + S(8,5,4) + S(8,5,3,1) + S(6,5,3^2) + S(5^2,4,3) + S(5^2,3^2,1)[0X
+    [4Xgap> ERegulars(x);[0X
+    [4X[ 9, 5, 3 ]  [ 8, 6, 3 ]  [ 8, 5, 4 ]  [ 8, 5, 3, 1 ][0X
+    [4X[ 6, 5, 3, 3 ]  [ 5, 5, 4, 3 ]  [ 5, 5, 3, 3, 1 ][0X
+    [4Xgap> Display(MakePIM(x));[0X
+    [4XP(9,5,3) + P(8,6,3) + P(8,5,4) + P(8,5,3,1)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This example shows why these functions are useful: given a projective module
+  x,  as  aboveand  the list of e-regular partitions in x we know the possible
+  indecomposable direct summands of x.
+  
+  Note  that  it  is  not  necessary  to  specify  what e is when calling this
+  function because x "knows" the value of e.
+  
+  The  function  [2XERegulars[0m can also be applied to a decomposition matrix d; in
+  this case it returns the unitriangular submatrix of d whose rows and columns
+  are indexed by the e-regular partitions.
+  
+  These  function  requires  the  package  [5Xhecke[0m  (see [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.9-3 SplitECores[0m
+  
+  [2X> SplitECores( [0X[3Xx[0X[2X ) ___________________________________________________[0Xmethod
+  [6XReturns:[0X  a  list  [b_1,...,b_k]  where  the  Specht modules in each b_i all
+            belong to the same block (i.e. they have the same e-core).
+  
+  [2X> SplitECores( [0X[3Xx, mu[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  the component of x which is in the same block as mu.
+  
+  [2X> SplitECores( [0X[3Xx, y[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  the component of x which is in the same block as y.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2);;[0X
+    [4Xgap> Display(SplitECores(RInducedModule(MakeSpecht(H,5,3,1))));[0X
+    [4X[ S(6,3,1) + S(5,3,2) + S(5,3,1,1), S(5,4,1) ][0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,3,1),0));[0X
+    [4XS(5,4,1)[0X
+    [4Xgap> Display(RInducedModule(MakeSpecht(H,5,3,1),1));[0X
+    [4XS(6,3,1) + S(5,3,2) + S(5,3,1^2)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  See   also  [2XECore[0m  ([14X3.8-1[0m),  [2XRInducedModule[0m  ([14X3.4-1[0m)  and  [2XRRestrictedModule[0m
+  ([14X3.4-3[0m).   This   function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m
+  ([14XReference: LoadPackage[0m)).
+  
+  [1X3.9-4 Coefficient[0m
+  
+  [2X> Coefficient( [0X[3Xx, mu[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  the coefficient of S(mu) in x (resp. D(mu), or P(mu)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);;[0X
+    [4Xgap> H:=Specht(3);; x:=MakeSpecht(MakePIM(H,7,3));; Display(x);[0X
+    [4XS(7,3) + S(7,2,1) + S(6,2,1^2) + S(5^2) + S(5,2^2,1) + S(4^2,1^2) + S(4,3^2) +\[0X
+    [4X S(4,3,2,1)[0X
+    [4Xgap> Coefficient(x,5,2,2,1);[0X
+    [4X1[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.9-5 InnerProduct[0m
+  
+  [2X> InnerProduct( [0X[3Xx, y[0X[2X ) _______________________________________________[0Xmethod
+  
+  Here  x  and  y  are some modules of the Hecke algebra (i.e. Specht modules,
+  PIMS,  or  simple modules). [2XInnerProduct[0m computes the standard inner product
+  of   these   elements.  This  is  sometimes  a  convenient  way  to  compute
+  decomposition numbers (for example).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(2);; InnerProduct(MakeSpecht(H,2,2,2,1), MakePIM(H,4,3));[0X
+    [4X1[0X
+    [4Xgap> DecompositionNumber(H,[2,2,2,1],[4,3]);[0X
+    [4X1[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  
+  [1X3.10 Semi-standard and standard tableaux[0X
+  
+  These  functions  are  not  really  part  of  [5XHecke[0m proper; however they are
+  related  and  may  well  be  of  use to someone. Tableaux are represented by
+  objects, that can be constructed from a list of lists.
+  
+  [1X3.10-1 Tableau[0m
+  
+  [2X> Tableau( [0X[3Xtab[0X[2X ) _____________________________________________________[0Xmethod
+  [6XReturns:[0X  tableau object corresponding to the given list of lists
+  
+  This  is  the  constructor for tableau objects. The first entry of the given
+  argument list is the list corresponding to the first row of the tableau.
+  
+  [1X3.10-2 SemiStandardTableaux[0m
+  
+  [2X> SemiStandardTableaux( [0X[3Xmu, nu[0X[2X ) _____________________________________[0Xmethod
+  [6XReturns:[0X  list of the semistandard mu-tableaux of type nu [JK81]
+  
+  mu a partition, nu a composition.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; Display(SemiStandardTableaux([4,3],[1,1,1,2,2]));[0X
+    [4X[ Tableau( [ [ 1, 2, 3, 4 ], [ 4, 5, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 2, 3, 5 ], [ 4, 4, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 2, 4, 4 ], [ 3, 5, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 2, 4, 5 ], [ 3, 4, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 3, 4, 4 ], [ 2, 5, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 3, 4, 5 ], [ 2, 4, 5 ] ] ) ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See also [2XStandardTableaux[0m ([14X3.10-3[0m). This function requires the package [5Xhecke[0m
+  (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.10-3 StandardTableaux[0m
+  
+  [2X> StandardTableaux( [0X[3Xmu[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  list of the standard mu-tableaux
+  
+  mu a partition
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);; Display(StandardTableaux(4,2));[0X
+    [4X[ Tableau( [ [ 1, 2, 3, 4 ], [ 5, 6 ] ] ), Tableau( [ [ 1, 2, 3, 5 ], [ 4, 6 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 2, 3, 6 ], [ 4, 5 ] ] ), Tableau( [ [ 1, 2, 4, 5 ], [ 3, 6 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 2, 4, 6 ], [ 3, 5 ] ] ), Tableau( [ [ 1, 2, 5, 6 ], [ 3, 4 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 3, 4, 5 ], [ 2, 6 ] ] ), Tableau( [ [ 1, 3, 4, 6 ], [ 2, 5 ] ] ),[0X
+    [4X  Tableau( [ [ 1, 3, 5, 6 ], [ 2, 4 ] ] ) ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  See  also  [2XSemiStandardTableaux[0m ([14X3.10-2[0m). This function requires the package
+  [5Xhecke[0m (see [2XLoadPackage[0m ([14XReference: LoadPackage[0m)).
+  
+  [1X3.10-4 ConjugateTableau[0m
+  
+  [2X> ConjugateTableau( [0X[3Xtab[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  tableau obtained from tab by interchangings its rows and columns
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Display(ConjugateTableau(Tableau([ [ 1, 3, 5, 6 ], [ 2, 4 ] ])));[0X
+    [4XStandard Tableau:[0X
+    [4X1	2[0X
+    [4X3	4[0X
+    [4X5[0X
+    [4X6[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.10-5 ShapeTableau[0m
+  
+  [2X> ShapeTableau( [0X[3Xtab[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  the partition (or composition) obtained from tab
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ShapeTableau( Tableau([ [ 1, 1, 2, 3 ], [ 4, 5 ] ]) );[0X
+    [4X[ 4, 2 ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  
+  [1X3.10-6 TypeTableau[0m
+  
+  [2X> TypeTableau( [0X[3Xtab[0X[2X ) _________________________________________________[0Xmethod
+  [6XReturns:[0X  the type of the (semistandard) tableau tab
+  
+  The type of a tableau is, the composition sigma= (sigma_1,sigma_2,...) where
+  sigma_i is the number of entries in tab which are equal to i.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SizeScreen([80,20]);;[0X
+    [4Xgap> List(SemiStandardTableaux([5,4,2],[4,3,0,1,3]),TypeTableau);[0X
+    [4X[ [ 4, 3, 0, 1, 3 ], [ 4, 3, 0, 1, 3 ], [ 4, 3, 0, 1, 3 ], [ 4, 3, 0, 1, 3 ],[0X
+    [4X  [ 4, 3, 0, 1, 3 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  This  function  requires  the  package  [5Xhecke[0m  (see  [2XLoadPackage[0m ([14XReference:
+  LoadPackage[0m)).
+  

@@ -1,17 +1,14 @@
 #############################################################################
 ##
-#W  list.gi                     GAP library                  Martin Schoenert
+#W  list.gi                     GAP library                  Martin Schönert
 ##
-#H  @(#)$Id: list.gi,v 4.202.2.13 2007/06/14 15:13:05 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for lists in general.
 ##
-Revision.list_gi :=
-    "@(#)$Id: list.gi,v 4.202.2.13 2007/06/14 15:13:05 gap Exp $";
 
 
 #############################################################################
@@ -528,6 +525,8 @@ for op  in [ ConstantTimeAccessList, ShallowCopy ]  do
 
 od;
 
+Unbind( op );
+
 InstallMethod( ConstantTimeAccessList,
     "for a constant time access list",
     [ IsList and IsConstantTimeAccessList ],
@@ -626,48 +625,6 @@ function(l)
 	fi;
 	return AsSSortedListList(AsPlist(l));
 end);
-
-
-#############################################################################
-##
-#M  ListOp( <list> )
-#M  ListOp( <list>, <func> )
-##
-InstallMethod( ListOp,
-    "for a list",
-    [ IsList ],
-    ShallowCopy );
-
-InstallMethod( ListOp,
-    "for a dense list",
-    [ IsList and IsDenseList ],
-    list -> list{ [ 1 .. Length( list ) ] } );
-
-InstallMethod( ListOp,
-    "for a dense list, and a function",
-    [ IsDenseList, IsFunction ],
-    function ( list, func )
-    local   res, i;
-    res := [];
-    for i  in [ 1 .. Length( list ) ] do
-        res[i] := func( list[i] );
-    od;
-    return res;
-    end );
-
-InstallMethod( ListOp,
-    "for any list, and a function",
-    [ IsList, IsFunction ],
-    function ( list, func )
-    local   res, i;
-    res := [];
-    for i  in [ 1 .. Length( list ) ] do
-        if IsBound(list[i]) then
-            Add(res,func( list[i] ));
-        fi;
-    od;
-    return res;
-end );
 
 
 #############################################################################
@@ -1219,27 +1176,19 @@ InstallOtherMethod( IsPositionsList,
 
 #############################################################################
 ##
-#M  Position(<list>,<obj>,<from>)
+#M  Position( <list>, <obj>, <from> )
 ##
 InstallMethod( Position,
     "for a small list, an object, and an integer",
     [ IsList and IsSmallList, IsObject, IsInt ],
-    function( list, obj, start )
-    local   pos;
-    pos := POS_LIST_DEFAULT( list, obj, start );
-    if pos = 0  then  return fail;
-                else  return pos;   fi;
-    end );
+    POS_LIST_DEFAULT );
 
 InstallMethod( Position,
     "for a (small) list, an object, and an integer",
     [ IsList, IsObject, IsInt ],
     function( list, obj, start )
-    local pos;
     if IsSmallList( list ) then
-      pos:= POS_LIST_DEFAULT( list, obj, start );
-      if pos = 0 then return fail;
-                 else return pos; fi;
+      return POS_LIST_DEFAULT( list, obj, start );
     else
       TryNextMethod();
     fi;
@@ -1262,14 +1211,20 @@ InstallMethod( Position,
     function ( list, obj, start )
     local   pos;
 
-#N  1996/08/14 M.Schoenert 'POSITION_SORTED_LIST' should take 3 arguments
-    if start = 0 then  pos := POSITION_SORTED_LIST( list, obj );
-                 else  pos := POS_LIST_DEFAULT( list, obj, start );  fi;
-    # `PositionSorted' will not return fail. Therefore we have to test
-    # explicitly once it had been called.
-    if pos = 0  or (start=0 and (pos>Length(list) or list[pos]<>obj))
-      then return fail;
-    else  return pos;   fi;
+#N  1996/08/14 M.Schönert 'POSITION_SORTED_LIST' should take 3 arguments
+#T  (This method is used only for ``external'' lists, the kernel methods
+#T  `PosPlistSort', `PosPlistHomSort' support the argument `start'.)
+    if start = 0 then
+      pos := POSITION_SORTED_LIST( list, obj );
+      # `PositionSorted' will not return fail. Therefore we have to test
+      # explicitly once it had been called.
+      if pos > Length( list ) or list[pos] <> obj then
+        return fail;
+      fi;
+    else
+      pos := POS_LIST_DEFAULT( list, obj, start );
+    fi;
+    return pos;
 end );
 
 InstallMethod( Position,
@@ -1278,13 +1233,17 @@ InstallMethod( Position,
     function ( list, obj, start )
     local   pos;
     if IsSmallList( list ) then
-      if start = 0 then  pos := POSITION_SORTED_LIST( list, obj );
-                   else  pos := POS_LIST_DEFAULT( list, obj, start );  fi;
-      # `PositionSorted' will not return fail. Therefore we have to test
-      # explicitly once it had been called.
-      if pos = 0  or (start=0 and (pos>Length(list) or list[pos]<>obj))
-                  then  return fail;
-                  else  return pos;   fi;
+      if start = 0 then
+        pos := POSITION_SORTED_LIST( list, obj );
+        # `PositionSorted' will not return fail. Therefore we have to test
+        # explicitly once it had been called.
+        if pos > Length( list ) or list[pos] <> obj then
+          return fail;
+        fi;
+      else
+        pos := POS_LIST_DEFAULT( list, obj, start );
+      fi;
+      return pos;
     else
       TryNextMethod();
     fi;
@@ -1492,7 +1451,43 @@ InstallGlobalFunction( PositionSet, function( arg )
 #############################################################################
 ##
 #M  PositionProperty(<list>,<func>) .  position of an element with a property
+#M  PositionProperty( <list>, <func>, <from> )
 ##
+
+InstallMethod( PositionProperty,
+    "for list and function",
+    [ IsList, IsFunction ],
+    function ( list, func )
+    local i;
+    for i in [ 1 .. Length( list ) ] do
+        if IsBound( list[i] ) then
+        	if func( list[ i ] ) then
+            	return i;
+            fi;	
+        fi;
+    od;
+    return fail;
+    end );
+
+InstallMethod( PositionProperty,
+    "for list, function, and integer",
+    [ IsList, IsFunction, IsInt ],
+    function( list, func, from )
+    local i;
+
+    if from < 1 then
+      from:= 1;
+    fi;
+    for i in [ from+1 .. Length( list ) ] do
+      if IsBound( list[i] ) then
+        if func( list[i] ) then
+          return i;
+        fi;  
+      fi;
+    od;
+    return fail;
+    end );
+    
 InstallMethod( PositionProperty,
     "for dense list and function",
     [ IsDenseList, IsFunction ],
@@ -1504,6 +1499,44 @@ InstallMethod( PositionProperty,
         fi;
     od;
     return fail;
+    end );
+
+InstallMethod( PositionProperty,
+    "for dense list, function, and integer",
+    [ IsDenseList, IsFunction, IsInt ],
+    function( list, func, from )
+    local i;
+
+    if from < 1 then
+      from:= 1;
+    fi;
+    for i in [ from+1 .. Length( list ) ] do
+      if func( list[i] ) then
+        return i;
+      fi;
+    od;
+    return fail;
+    end );
+
+
+#############################################################################
+##
+#M  PositionsProperty(<list>,<func>)  . positions of elements with a property
+##
+InstallMethod( PositionsProperty,
+    "for dense list and function",
+    [ IsDenseList, IsFunction ],
+    function( list, func )
+    local result, i;
+
+    result:= [];
+    for i in [ 1 .. Length( list ) ] do
+      if func( list[i] ) then
+        Add( result, i );
+      fi;
+    od;
+
+    return result;
     end );
 
 
@@ -1669,9 +1702,24 @@ InstallMethod( Add, "three arguments fast version",
     local len;
     len := Length(l);
     if p <= len then
-        COPY_LIST_ENTRIES(l,p,1,l,p+1,1,len-p+1);
+        CopyListEntries(l,p,1,l,p+1,1,len-p+1);
     fi;
     l[p] := o;
+    return;
+end);
+
+InstallMethod( Add, "three arguments fast version sorted",
+        [ IsPlistRep and IsSSortedList and IsMutable, IsObject, IsPosInt],
+        function(l, o, p)
+    local len;
+    len := Length(l);
+    if p <= len then
+        CopyListEntries(l,p,1,l,p+1,1,len-p+1);
+    fi;
+    l[p] := o;
+    if IS_DENSE_LIST(l) and (p = 1 or l[p-1] < o) and (p = len+1 or o < l[p+1]) then
+        SET_IS_SSORTED_PLIST(l);
+    fi;
     return;
 end);
 
@@ -1686,6 +1734,7 @@ InstallMethod( Add, "three arguments general version",
     l[p] := o;
     return;
 end);
+
           
 #############################################################################
 ##
@@ -1710,7 +1759,7 @@ InstallMethod(Remove, "two arguments, fast", [IsList and IsPlistRep and IsMutabl
         x := l[p];
     fi;
     if p <= len then
-        COPY_LIST_ENTRIES(l,p+1,1,l,p,1,len-p);
+        CopyListEntries(l,p+1,1,l,p,1,len-p);
         Unbind(l[len]);
     fi;
     if ret then
@@ -1817,6 +1866,9 @@ InstallMethod( Compacted,
     function ( list )
     local   res,        # compacted of <list>, result
             elm;        # element of <list>
+    if IsDenseList(list) then
+      return ShallowCopy(list);
+    fi;
     res := [];
     for elm in list do
         Add( res, elm );
@@ -1969,6 +2021,22 @@ InstallMethod( ReversedOp,
     fi;
     end );
 
+#############################################################################
+##
+#M  Shuffle( <list> ) . . . . . . . . . . . . . . . . permute entries randomly
+InstallMethod(Shuffle, [IsDenseList and IsMutable], function(l)
+  local len, j, tmp, i;
+  len := Length(l);
+  for i in [1..len-1] do
+    j := Random([i..len]);
+    if i <> j then
+      tmp := l[i];
+      l[i] := l[j];
+      l[j] := tmp;
+    fi;
+  od;
+  return l;
+end);
 
 #############################################################################
 ##
@@ -2017,6 +2085,7 @@ InstallMethod( Sort,
 #F  SORT_MUTABILITY_ERROR_HANDLER( <list> )
 #F  SORT_MUTABILITY_ERROR_HANDLER( <list>, <func> )
 #F  SORT_MUTABILITY_ERROR_HANDLER( <list1>, <list2> )
+#F  SORT_MUTABILITY_ERROR_HANDLER( <list1>, <list2>, <func> )
 ##
 ##  This function will be installed as method for `Sort', `Sortex' and
 ##  `SortParallel', for the sake of a more gentle error message.
@@ -2024,7 +2093,9 @@ InstallMethod( Sort,
 BindGlobal( "SORT_MUTABILITY_ERROR_HANDLER", function( arg )
   if    ( Length( arg ) = 1 and IsMutable( arg[1] ) )
      or ( Length( arg ) = 2 and IsMutable( arg[1] )
-            and ( IsFunction( arg[2] ) or IsMutable( arg[2] ) ) ) then
+            and ( IsFunction( arg[2] ) or IsMutable( arg[2] ) ) )
+     or ( Length( arg ) = 3 and IsMutable( arg[1] )
+            and IsMutable( arg[2] ) ) then
     TryNextMethod();
   fi;
   Error( "immutable lists cannot be sorted" );
@@ -2095,6 +2166,39 @@ InstallMethod( Sortex,
     end );
 
 InstallMethod( Sortex,
+    "for a mutable list and a function",
+    [ IsList and IsMutable, IsFunction ],
+    function ( list, comp )
+    local   both, perm, i;
+
+    # {\GAP} supports permutations only up to `MAX_SIZE_LIST_INTERNAL'.
+    if not IsSmallList( list ) then
+      Error( "<list> must have length at most ", MAX_SIZE_LIST_INTERNAL );
+    fi;
+
+    # make a new list that contains the elements of <list> and their indices
+    both := [];
+    for i in [ 1 .. Length( list ) ] do
+        both[i] := [ list[i], i ];
+    od;
+
+    # Sort the new list according to the first item (stable).
+    SORT_LIST_COMP(both, function(p,q)
+        return comp(p[1],q[1]) or (p[1]=q[1] and p[2]<q[2]);
+    end);
+
+    # Copy back and remember the permutation.
+    list{ [ 1 .. Length( list ) ] }:= both{ [ 1 .. Length( list ) ] }[1];
+    perm:= both{ [ 1 .. Length( list ) ] }[2];
+
+    # If the entries are immutable then store that the list is sorted.
+    IsSSortedList( list );
+
+    # return the permutation mapping old <list> onto the sorted list
+    return PermList( perm )^(-1);
+    end );
+
+InstallMethod( Sortex,
     "for a mutable sorted list",
     [ IsDenseList and IsSortedList and IsMutable ], SUM_FLAGS,
     list -> () );
@@ -2148,7 +2252,7 @@ InstallMethod( SortingPerm,
 
     # Sort the new list according to the first item (stable).
     # This needs more memory than a call of 'Sort' but is much faster.
-    # (The change was proposed by Frank Luebeck.)
+    # (The change was proposed by Frank Lübeck.)
     both := Set( both );
 
     # Remember the permutation.
@@ -2210,6 +2314,14 @@ InstallOtherMethod( SortParallel,
     [IsList,IsList,IsFunction],
     SORT_MUTABILITY_ERROR_HANDLER);
 
+#############################################################################
+##
+#F  LengthComparison(<list1>,<list2>)
+##
+InstallGlobalFunction(LengthComparison,function(a,b)
+  return Length(a)<Length(b);
+end);
+
 
 #############################################################################
 ##
@@ -2252,7 +2364,20 @@ InstallMethod( MaximumList,
     od;
     return max;
     end );
-
+    
+InstallMethod( MaximumList,
+    "for a list and a seed",
+    [ IsList, IsObject ],
+    function ( list, max )
+    local elm;
+    for elm in list do
+        if max < elm  then
+            max := elm;
+        fi;
+    od;
+    return max;
+    end );
+    
 InstallMethod( MaximumList,
     "for a range",
     [ IsRange ],
@@ -2269,14 +2394,42 @@ InstallMethod( MaximumList,
     end );
 
 InstallMethod( MaximumList,
+    "for a range and a seed",
+    [ IsRange, IsObject ],
+    function ( range, max )
+    local len;
+    len := Length(range);
+    if max < range[1] then
+        max := range[1];
+    fi;
+    if len > 0 and max < range[len] then
+        max := range[len];
+    fi;
+    return max;
+    end );
+
+InstallMethod( MaximumList,
     "for a sorted list",
     [ IsSSortedList ],
-    function ( l )
-    local min;
-    if Length( l ) = 0 then
+    function ( list )
+    local len;
+    len := Length(list);
+    if len = 0 then
       Error( "MaximumList: <list> must contain at least one element" );
     fi;
-    return l[Length(l)];
+    return list[len];
+    end );
+
+InstallMethod( MaximumList,
+    "for a sorted list and a seed",
+    [ IsSSortedList, IsObject ],
+    function ( list, max )
+    local len;
+    len := Length(list);
+    if len > 0 and list[len] > max then
+        return list[len];
+    fi;
+    return max;
     end );
 
 
@@ -2323,14 +2476,28 @@ InstallMethod( MinimumList,
     end );
 
 InstallMethod( MinimumList,
+    "for a list",
+    [ IsList, IsObject ],
+    function ( list, min )
+    local elm;
+    for elm  in list  do
+        if elm < min then
+            min := elm;
+        fi;
+    od;
+    return min;
+    end );
+
+InstallMethod( MinimumList,
     "for a range",
     [ IsRange ],
     function ( range )
-    local min;
-    if Length( range ) = 0 then
+    local min, len;
+    len := Length(range);
+    if len = 0 then
         Error( "MinimumList: <range> must contain at least one element" );
     fi;
-    min := range[ Length( range ) ];
+    min := range[ len ];
     if range[1] < min then
         return range[1];
     fi;
@@ -2338,16 +2505,39 @@ InstallMethod( MinimumList,
     end );
 
 InstallMethod( MinimumList,
+    "for a range and a seed",
+    [ IsRange, IsObject ],
+    function ( range, min )
+    local len;
+    len := Length(range);
+    if min > range[1] then
+        min := range[1];
+    fi;
+    if len > 0 and min > range[len] then
+        min := range[len];
+    fi;
+    return min;
+    end );
+    
+InstallMethod( MinimumList,
     "for a sorted list",
     [ IsSSortedList ],
-    function ( l )
-    local min;
-    if Length( l ) = 0 then
+    function ( list )
+    if Length(list) = 0 then
       Error( "MinimumList: <list> must contain at least one element" );
     fi;
-    return l[1];
+    return list[1];
     end );
 
+InstallMethod( MinimumList,
+    "for a sorted list and a seed",
+    [ IsSSortedList, IsObject ],
+    function ( list, min )
+    if Length(list) > 0 and list[1] < min then
+        return list[1];
+    fi;
+    return min;
+    end );
 
 #############################################################################
 ##
@@ -3434,8 +3624,29 @@ InstallMethod( PositionNot, "default method ", [IsList, IsObject, IsInt ],
 
 InstallOtherMethod( PositionNot, "default value of third argument ",
         [IsList, IsObject],
-        function(l,x) return PositionNot(l,x,0); 
-    end);
+        function(l,x) 
+    return PositionNot(l,x,0); 
+end
+  );
+    
+InstallMethod( PositionNonZero, "default method", [IsHomogeneousList],
+        function(l)
+    if Length(l) = 0 then
+        return 1;
+    else
+        return PositionNot(l, Zero(l[1]));
+    fi;
+end);
+
+InstallMethod( PositionNonZero, "default method with start", [IsHomogeneousList, IsInt ],
+        function(l,from)
+    if Length(l) = 0 then
+        return from+1;
+    fi;
+    return PositionNot(l, Zero(l[1]), from);
+end);
+
+        
         
 #############################################################################
 ##
@@ -3448,7 +3659,7 @@ InstallOtherMethod( PositionNot, "default value of third argument ",
 ##    
     
 InstallMethod( PositionFirstComponent,"for dense plain list", true,
-    [ IsDenseList and IsPlistRep, IsObject ], 0,
+    [ IsDenseList and IsSortedList and IsPlistRep, IsObject ], 0,
     POSITION_FIRST_COMPONENT_SORTED);
 
 
@@ -3607,6 +3818,9 @@ local i,n,s;
     i:=i+8;
   od;
   b:=b{[i..n]};
+  if Length(b) = 0 then
+    return s;
+  fi;  
   while Length(b)<8 do
     Add(b,false);
   od;
@@ -3702,6 +3916,13 @@ InstallMethod(IntersectSet,
          IsRange and IsRangeRep ],
         INTER_RANGE);
 
+InstallGlobalFunction(Average,l->1/Length(l)*Sum(l));
+
+InstallGlobalFunction(Median,function(l)
+  l:=ShallowCopy(l);
+  Sort(l);
+  return l[Int((Length(l)+1)/2)];
+end);
 
 #############################################################################
 ##

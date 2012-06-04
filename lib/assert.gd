@@ -2,10 +2,9 @@
 ##
 #W  assert.gd                   GAP library                      Steve Linton
 ##
-#H  @(#)$Id: assert.gd,v 4.6 2002/04/15 10:04:26 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This package sets up a mechanism for diagnostic assertions at GAP
@@ -34,8 +33,6 @@
 ##
 ##  This file is the declarations part of that package
 ##
-Revision.assert_gd :=
-    "@(#)$Id: assert.gd,v 4.6 2002/04/15 10:04:26 sal Exp $";
 
 #############################################################################
 ##

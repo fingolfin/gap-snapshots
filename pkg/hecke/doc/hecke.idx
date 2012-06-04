@@ -1,0 +1,137 @@
+\indexentry{\textsf{hecke} package|hyperpage}{6}
+\indexentry{\textsf{hecke}|hyperpage}{10}
+\indexentry{IsAlgebraObj@\texttt  {IsAlgebraObj}|hyperpage}{11}
+\indexentry{IsHecke@\texttt  {IsHecke}|hyperpage}{11}
+\indexentry{IsSchur@\texttt  {IsSchur}|hyperpage}{11}
+\indexentry{IsAlgebraObjModule@\texttt  {IsAlgebraObjModule}|hyperpage}{11}
+\indexentry{IsHeckeModule@\texttt  {IsHeckeModule}|hyperpage}{11}
+\indexentry{IsHeckeSpecht@\texttt  {IsHeckeSpecht}|hyperpage}{11}
+\indexentry{IsHeckePIM@\texttt  {IsHeckePIM}|hyperpage}{11}
+\indexentry{IsHeckeSimple@\texttt  {IsHeckeSimple}|hyperpage}{11}
+\indexentry{IsFockModule@\texttt  {IsFockModule}|hyperpage}{11}
+\indexentry{IsFockSpecht@\texttt  {IsFockSpecht}|hyperpage}{11}
+\indexentry{IsFockPIM@\texttt  {IsFockPIM}|hyperpage}{11}
+\indexentry{IsFockSimple@\texttt  {IsFockSimple}|hyperpage}{11}
+\indexentry{IsSchurModule@\texttt  {IsSchurModule}|hyperpage}{12}
+\indexentry{IsSchurWeyl@\texttt  {IsSchurWeyl}|hyperpage}{12}
+\indexentry{IsSchurPIM@\texttt  {IsSchurPIM}|hyperpage}{12}
+\indexentry{IsSchurSimple@\texttt  {IsSchurSimple}|hyperpage}{12}
+\indexentry{IsFockSchurModule@\texttt  {IsFockSchurModule}|hyperpage}{12}
+\indexentry{IsFockSchurWeyl@\texttt  {IsFockSchurWeyl}|hyperpage}{12}
+\indexentry{IsFockSchurPIM@\texttt  {IsFockSchurPIM}|hyperpage}{12}
+\indexentry{IsFockSchurSimple@\texttt  {IsFockSchurSimple}|hyperpage}{12}
+\indexentry{IsDecompositionMatrix@\texttt  {IsDecompositionMatrix}|hyperpage}{12}
+\indexentry{IsCrystalDecompositionMatrix@\texttt  {IsCrystalDecompositionMatrix}|hyperpage}{12}
+\indexentry{Specht@\texttt  {Specht}!for an integer|hyperpage}{13}
+\indexentry{Specht@\texttt  {Specht}!for two integers|hyperpage}{13}
+\indexentry{Specht@\texttt  {Specht}!for to integers and a valuation map|hyperpage}{13}
+\indexentry{Specht@\texttt  {Specht}|hyperpage}{13}
+\indexentry{OrderOfQ@\texttt  {OrderOfQ}|hyperpage}{13}
+\indexentry{Characteristic@\texttt  {Characteristic}|hyperpage}{13}
+\indexentry{SetOrdering@\texttt  {SetOrdering}|hyperpage}{13}
+\indexentry{SpechtDirectory@\texttt  {SpechtDirectory}|hyperpage}{13}
+\indexentry{MakeSpecht@\texttt  {MakeSpecht}|hyperpage}{14}
+\indexentry{MakePIM@\texttt  {MakePIM}|hyperpage}{14}
+\indexentry{MakeSimple@\texttt  {MakeSimple}|hyperpage}{14}
+\indexentry{MakeSpecht@\texttt  {MakeSpecht}!for a module|hyperpage}{14}
+\indexentry{MakePIM@\texttt  {MakePIM}!for a module|hyperpage}{14}
+\indexentry{MakeSimple@\texttt  {MakeSimple}!for a module|hyperpage}{14}
+\indexentry{MakeSpecht@\texttt  {MakeSpecht}!for a decomposition matrix|hyperpage}{14}
+\indexentry{MakePIM@\texttt  {MakePIM}!for a decomposition matrix|hyperpage}{14}
+\indexentry{MakeSimple@\texttt  {MakeSimple}!for a decomposition matrix|hyperpage}{14}
+\indexentry{MakeSpecht@\texttt  {MakeSpecht}!for a decomposition matrix and a module|hyperpage}{15}
+\indexentry{MakePIM@\texttt  {MakePIM}!for a decomposition matrix and a module|hyperpage}{15}
+\indexentry{MakeSimple@\texttt  {MakeSimple}!for a decomposition matrix and a module|hyperpage}{15}
+\indexentry{MakeFockPIM@\texttt  {MakeFockPIM}|hyperpage}{17}
+\indexentry{MakeFockSpecht@\texttt  {MakeFockSpecht}|hyperpage}{17}
+\indexentry{Schur@\texttt  {Schur}!for an integer|hyperpage}{17}
+\indexentry{Schur@\texttt  {Schur}!for two integers|hyperpage}{17}
+\indexentry{Schur@\texttt  {Schur}!for to integers and a valuation map|hyperpage}{17}
+\indexentry{Schur@\texttt  {Schur}|hyperpage}{17}
+\indexentry{DecompositionMatrix@\texttt  {DecompositionMatrix}!for an algebra and an integer|hyperpage}{18}
+\indexentry{DecompositionMatrix@\texttt  {DecompositionMatrix}|hyperpage}{18}
+\indexentry{CrystalDecompositionMatrix@\texttt  {CrystalDecompositionMatrix}|hyperpage}{19}
+\indexentry{CrystalDecompositionMatrix@\texttt  {CrystalDecompositionMatrix}!for an algebra and a filename|hyperpage}{19}
+\indexentry{DecompositionNumber@\texttt  {DecompositionNumber}|hyperpage}{20}
+\indexentry{DecompositionNumber@\texttt  {DecompositionNumber}!for a decomposition matrix|hyperpage}{20}
+\indexentry{RInducedModule@\texttt  {RInducedModule}|hyperpage}{21}
+\indexentry{RInducedModule@\texttt  {RInducedModule}!for residues|hyperpage}{21}
+\indexentry{SInducedModule@\texttt  {SInducedModule}|hyperpage}{23}
+\indexentry{SInducedModule@\texttt  {SInducedModule}!for residues|hyperpage}{23}
+\indexentry{RRestrictedModule@\texttt  {RRestrictedModule}|hyperpage}{23}
+\indexentry{RRestrictedModule@\texttt  {RRestrictedModule}!for residues|hyperpage}{23}
+\indexentry{SRestrictedModule@\texttt  {SRestrictedModule}|hyperpage}{24}
+\indexentry{SRestrictedModule@\texttt  {SRestrictedModule}!for residues|hyperpage}{24}
+\indexentry{InducedDecompositionMatrix@\texttt  {InducedDecompositionMatrix}|hyperpage}{25}
+\indexentry{IsNewIndecomposable@\texttt  {IsNewIndecomposable}|hyperpage}{25}
+\indexentry{InvertDecompositionMatrix@\texttt  {InvertDecompositionMatrix}|hyperpage}{27}
+\indexentry{AdjustmentMatrix@\texttt  {AdjustmentMatrix}|hyperpage}{27}
+\indexentry{SaveDecompositionMatrix@\texttt  {SaveDecompositionMatrix}|hyperpage}{28}
+\indexentry{SaveDecompositionMatrix@\texttt  {SaveDecompositionMatrix}!for a filename|hyperpage}{28}
+\indexentry{CalculateDecompositionMatrix@\texttt  {CalculateDecompositionMatrix}|hyperpage}{29}
+\indexentry{MatrixDecompositionMatrix@\texttt  {MatrixDecompositionMatrix}|hyperpage}{30}
+\indexentry{DecompositionMatrixMatrix@\texttt  {DecompositionMatrixMatrix}|hyperpage}{30}
+\indexentry{AddIndecomposable@\texttt  {AddIndecomposable}|hyperpage}{31}
+\indexentry{RemoveIndecomposable@\texttt  {RemoveIndecomposable}|hyperpage}{31}
+\indexentry{MissingIndecomposables@\texttt  {MissingIndecomposables}|hyperpage}{31}
+\indexentry{SimpleDimension@\texttt  {SimpleDimension}|hyperpage}{32}
+\indexentry{SimpleDimension@\texttt  {SimpleDimension}!for an algebra object and an integer|hyperpage}{32}
+\indexentry{SimpleDimension@\texttt  {SimpleDimension}!for a partition|hyperpage}{32}
+\indexentry{SpechtDimension@\texttt  {SpechtDimension}|hyperpage}{32}
+\indexentry{Schaper@\texttt  {Schaper}|hyperpage}{33}
+\indexentry{IsSimpleModule@\texttt  {IsSimpleModule}|hyperpage}{33}
+\indexentry{MullineuxMap@\texttt  {MullineuxMap}|hyperpage}{33}
+\indexentry{MullineuxMap@\texttt  {MullineuxMap}!for a decomposition matrix|hyperpage}{34}
+\indexentry{MullineuxMap@\texttt  {MullineuxMap}!for a module|hyperpage}{34}
+\indexentry{MullineuxSymbol@\texttt  {MullineuxSymbol}|hyperpage}{34}
+\indexentry{PartitionMullineuxSymbol@\texttt  {PartitionMullineuxSymbol}|hyperpage}{35}
+\indexentry{GoodNodes@\texttt  {GoodNodes}|hyperpage}{35}
+\indexentry{GoodNodes@\texttt  {GoodNodes}!for residues|hyperpage}{35}
+\indexentry{NormalNodes@\texttt  {NormalNodes}|hyperpage}{35}
+\indexentry{NormalNodes@\texttt  {NormalNodes}!for residues|hyperpage}{36}
+\indexentry{GoodNodeSequence@\texttt  {GoodNodeSequence}|hyperpage}{36}
+\indexentry{GoodNodeSequences@\texttt  {GoodNodeSequences}|hyperpage}{36}
+\indexentry{PartitionGoodNodeSequence@\texttt  {PartitionGoodNodeSequence}|hyperpage}{36}
+\indexentry{GoodNodeLatticePath@\texttt  {GoodNodeLatticePath}|hyperpage}{37}
+\indexentry{GoodNodeLatticePaths@\texttt  {GoodNodeLatticePaths}|hyperpage}{37}
+\indexentry{LatticePathGoodNodeSequence@\texttt  {LatticePathGoodNodeSequence}|hyperpage}{37}
+\indexentry{LittlewoodRichardsonRule@\texttt  {LittlewoodRichardsonRule}|hyperpage}{37}
+\indexentry{LittlewoodRichardsonCoefficient@\texttt  {LittlewoodRichardsonCoefficient}|hyperpage}{37}
+\indexentry{InverseLittlewoodRichardsonRule@\texttt  {InverseLittlewoodRichardsonRule}|hyperpage}{38}
+\indexentry{EResidueDiagram@\texttt  {EResidueDiagram}|hyperpage}{38}
+\indexentry{EResidueDiagram@\texttt  {EResidueDiagram}!for modules|hyperpage}{38}
+\indexentry{HookLengthDiagram@\texttt  {HookLengthDiagram}|hyperpage}{39}
+\indexentry{RemoveRimHook@\texttt  {RemoveRimHook}|hyperpage}{39}
+\indexentry{AddRimHook@\texttt  {AddRimHook}|hyperpage}{40}
+\indexentry{ECore@\texttt  {ECore}|hyperpage}{40}
+\indexentry{EAbacus@\texttt  {EAbacus}|hyperpage}{40}
+\indexentry{IsECore@\texttt  {IsECore}|hyperpage}{41}
+\indexentry{EQuotient@\texttt  {EQuotient}|hyperpage}{41}
+\indexentry{CombineEQuotientECore@\texttt  {CombineEQuotientECore}|hyperpage}{41}
+\indexentry{EWeight@\texttt  {EWeight}|hyperpage}{41}
+\indexentry{ERegularPartitions@\texttt  {ERegularPartitions}|hyperpage}{42}
+\indexentry{IsERegular@\texttt  {IsERegular}|hyperpage}{42}
+\indexentry{ConjugatePartition@\texttt  {ConjugatePartition}|hyperpage}{42}
+\indexentry{BetaSet@\texttt  {BetaSet}|hyperpage}{42}
+\indexentry{PartitionBetaSet@\texttt  {PartitionBetaSet}|hyperpage}{43}
+\indexentry{ETopLadder@\texttt  {ETopLadder}|hyperpage}{43}
+\indexentry{Dominates@\texttt  {Dominates}|hyperpage}{43}
+\indexentry{LengthLexicographic@\texttt  {LengthLexicographic}|hyperpage}{43}
+\indexentry{Lexicographic@\texttt  {Lexicographic}|hyperpage}{44}
+\indexentry{ReverseDominance@\texttt  {ReverseDominance}|hyperpage}{44}
+\indexentry{Specialized@\texttt  {Specialized}|hyperpage}{44}
+\indexentry{Specialized@\texttt  {Specialized}!for a decomposition matrix|hyperpage}{44}
+\indexentry{ERegulars@\texttt  {ERegulars}|hyperpage}{45}
+\indexentry{ERegulars@\texttt  {ERegulars}!for a decomposition matrix|hyperpage}{45}
+\indexentry{ListERegulars@\texttt  {ListERegulars}|hyperpage}{45}
+\indexentry{SplitECores@\texttt  {SplitECores}|hyperpage}{45}
+\indexentry{SplitECores@\texttt  {SplitECores}!for a module and a partition|hyperpage}{45}
+\indexentry{SplitECores@\texttt  {SplitECores}!for two modules|hyperpage}{45}
+\indexentry{Coefficient@\texttt  {Coefficient}|hyperpage}{46}
+\indexentry{InnerProduct@\texttt  {InnerProduct}|hyperpage}{46}
+\indexentry{Tableau@\texttt  {Tableau}|hyperpage}{46}
+\indexentry{SemiStandardTableaux@\texttt  {SemiStandardTableaux}|hyperpage}{47}
+\indexentry{StandardTableaux@\texttt  {StandardTableaux}|hyperpage}{47}
+\indexentry{ConjugateTableau@\texttt  {ConjugateTableau}|hyperpage}{47}
+\indexentry{ShapeTableau@\texttt  {ShapeTableau}|hyperpage}{48}
+\indexentry{TypeTableau@\texttt  {TypeTableau}|hyperpage}{48}

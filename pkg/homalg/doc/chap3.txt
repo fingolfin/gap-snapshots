@@ -1,0 +1,539 @@
+  
+  [1X3 Objects[0X
+  
+  
+  [1X3.1 Objects: Category and Representations[0X
+  
+  [1X3.1-1 IsHomalgObject[0m
+  
+  [2X> IsHomalgObject( [0X[3XF[0X[2X ) ______________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  This  is  the  super  [5XGAP[0m-category  which  will  include  the [5XGAP[0m-categories
+  [2XIsHomalgStaticObject[0m  ([14X3.1-2[0m),  [2XIsHomalgComplex[0m  ([14X6.1-1[0m),  [2XIsHomalgBicomplex[0m
+  ([14X8.1-1[0m),   [2XIsHomalgBigradedObject[0m   ([14X9.1-1[0m),   and  [2XIsHomalgSpectralSequence[0m
+  ([14X10.1-1[0m).  We  need  this  [5XGAP[0m-category  to  be able to build complexes with
+  *objects* being objects of [5Xhomalg[0m categories or again complexes.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgObject",[0X
+    [4X        IsHomalgObjectOrMorphism and[0X
+    [4X        IsStructureObjectOrObject and[0X
+    [4X        IsAdditiveElementWithZero );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-2 IsHomalgStaticObject[0m
+  
+  [2X> IsHomalgStaticObject( [0X[3XF[0X[2X ) ________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  This  is  the  super  [5XGAP[0m-category  which  will  include  the [5XGAP[0m-categories
+  [10XIsHomalgModule[0m, etc.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgStaticObject",[0X
+    [4X        IsHomalgStaticObjectOrMorphism and[0X
+    [4X        IsHomalgObject );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-3 IsFinitelyPresentedObjectRep[0m
+  
+  [2X> IsFinitelyPresentedObjectRep( [0X[3XM[0X[2X ) __________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley presented [5Xhomalg[0m objects.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgObject[0m ([14X3.1-1[0m), which is
+  a       subrepresentation       of       the       [5XGAP[0m       representations
+  [10XIsStructureObjectOrFinitelyPresentedObjectRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsFinitelyPresentedObjectRep",[0X
+    [4X        IsHomalgObject and[0X
+    [4X        IsStructureObjectOrFinitelyPresentedObjectRep,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-4 IsStaticFinitelyPresentedObjectOrSubobjectRep[0m
+  
+  [2X> IsStaticFinitelyPresentedObjectOrSubobjectRep( [0X[3XM[0X[2X ) _________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley presented [5Xhomalg[0m static objects.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgStaticObject[0m ([14X3.1-2[0m).)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsStaticFinitelyPresentedObjectOrSubobjectRep",[0X
+    [4X        IsHomalgStaticObject,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-5 IsStaticFinitelyPresentedObjectRep[0m
+  
+  [2X> IsStaticFinitelyPresentedObjectRep( [0X[3XM[0X[2X ) ____________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley presented [5Xhomalg[0m static objects.
+  
+  (It  is  a  representation of the [5XGAP[0m category [2XIsHomalgStaticObject[0m ([14X3.1-2[0m),
+  which    is    a    subrepresentation    of    the    [5XGAP[0m    representations
+  [10XIsStaticFinitelyPresentedObjectOrSubobjectRep[0m                            and
+  [10XIsFinitelyPresentedObjectRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsStaticFinitelyPresentedObjectRep",[0X
+    [4X        IsStaticFinitelyPresentedObjectOrSubobjectRep and[0X
+    [4X        IsFinitelyPresentedObjectRep,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.1-6 IsStaticFinitelyPresentedSubobjectRep[0m
+  
+  [2X> IsStaticFinitelyPresentedSubobjectRep( [0X[3XM[0X[2X ) _________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The  [5XGAP[0m  representation  of  finitley presented [5Xhomalg[0m subobjects of static
+  objects.
+  
+  (It  is  a  representation of the [5XGAP[0m category [2XIsHomalgStaticObject[0m ([14X3.1-2[0m),
+  which    is    a    subrepresentation    of    the    [5XGAP[0m    representations
+  [10XIsStaticFinitelyPresentedObjectOrSubobjectRep[0m                            and
+  [10XIsFinitelyPresentedObjectRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsStaticFinitelyPresentedSubobjectRep",[0X
+    [4X        IsStaticFinitelyPresentedObjectOrSubobjectRep and[0X
+    [4X        IsFinitelyPresentedObjectRep,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X3.2 Objects: Constructors[0X
+  
+  [1X3.2-1 Subobject[0m
+  
+  [2X> Subobject( [0X[3Xphi[0X[2X ) ________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  A synonym of [2XImageSubobject[0m ([14X4.4-7[0m).
+  
+  
+  [1X3.3 Objects: Properties[0X
+  
+  [1X3.3-1 IsFree[0m
+  
+  [2X> IsFree( [0X[3XM[0X[2X ) ______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is free.
+  
+  [1X3.3-2 IsStablyFree[0m
+  
+  [2X> IsStablyFree( [0X[3XM[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is stably free.
+  
+  [1X3.3-3 IsProjective[0m
+  
+  [2X> IsProjective( [0X[3XM[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is projective.
+  
+  [1X3.3-4 IsProjectiveOfConstantRank[0m
+  
+  [2X> IsProjectiveOfConstantRank( [0X[3XM[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is projective of constant rank.
+  
+  [1X3.3-5 IsInjective[0m
+  
+  [2X> IsInjective( [0X[3XM[0X[2X ) _________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is (marked) injective.
+  
+  [1X3.3-6 IsInjectiveCogenerator[0m
+  
+  [2X> IsInjectiveCogenerator( [0X[3XM[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is (marked) an injective cogenerator.
+  
+  [1X3.3-7 FiniteFreeResolutionExists[0m
+  
+  [2X> FiniteFreeResolutionExists( [0X[3XM[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m allows a finite free resolution.
+  (no method installed)
+  
+  [1X3.3-8 IsReflexive[0m
+  
+  [2X> IsReflexive( [0X[3XM[0X[2X ) _________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is reflexive.
+  
+  [1X3.3-9 IsTorsionFree[0m
+  
+  [2X> IsTorsionFree( [0X[3XM[0X[2X ) _______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is torsion-free.
+  
+  [1X3.3-10 IsArtinian[0m
+  
+  [2X> IsArtinian( [0X[3XM[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is artinian.
+  
+  [1X3.3-11 IsTorsion[0m
+  
+  [2X> IsTorsion( [0X[3XM[0X[2X ) ___________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is torsion.
+  
+  [1X3.3-12 IsPure[0m
+  
+  [2X> IsPure( [0X[3XM[0X[2X ) ______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m is pure.
+  
+  [1X3.3-13 IsCohenMacaulay[0m
+  
+  [2X> IsCohenMacaulay( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  object  [3XM[0m is Cohen-Macaulay (depends on the specific
+  Abelian category).
+  
+  [1X3.3-14 IsGorenstein[0m
+  
+  [2X> IsGorenstein( [0X[3XM[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if the [5Xhomalg[0m object [3XM[0m is Gorenstein (depends on the specific Abelian
+  category).
+  
+  [1X3.3-15 IsKoszul[0m
+  
+  [2X> IsKoszul( [0X[3XM[0X[2X ) ____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  object  [3XM[0m is Koszul (depends on the specific Abelian
+  category).
+  
+  [1X3.3-16 HasConstantRank[0m
+  
+  [2X> HasConstantRank( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m object [3XM[0m has constant rank.
+  (no method installed)
+  
+  [1X3.3-17 ConstructedAsAnIdeal[0m
+  
+  [2X> ConstructedAsAnIdeal( [0X[3XJ[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m subobject [3XJ[0m was constructed as an ideal.
+  (no method installed)
+  
+  
+  [1X3.4 Objects: Attributes[0X
+  
+  [1X3.4-1 TorsionSubobject[0m
+  
+  [2X> TorsionSubobject( [0X[3XM[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  This  constructor  returns  the  finitely generated torsion subobject of the
+  [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-2 TheMorphismToZero[0m
+  
+  [2X> TheMorphismToZero( [0X[3XM[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  The zero morphism from the [5Xhomalg[0m object [3XM[0m to zero.
+  
+  [1X3.4-3 TheIdentityMorphism[0m
+  
+  [2X> TheIdentityMorphism( [0X[3XM[0X[2X ) ________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  The identity automorphism of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-4 FullSubobject[0m
+  
+  [2X> FullSubobject( [0X[3XM[0X[2X ) ______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  The [5Xhomalg[0m object [3XM[0m as a subobject of itself.
+  
+  [1X3.4-5 ZeroSubobject[0m
+  
+  [2X> ZeroSubobject( [0X[3XM[0X[2X ) ______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  The zero subobject of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-6 EmbeddingInSuperObject[0m
+  
+  [2X> EmbeddingInSuperObject( [0X[3XN[0X[2X ) _____________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  In  case [3XN[0m was defined as a subobject of some object L the embedding of [3XN[0m in
+  L is returned.
+  
+  [1X3.4-7 SuperObject[0m
+  
+  [2X> SuperObject( [0X[3XM[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  In  case [3XM[0m was defined as a subobject of some object L the super object L is
+  returned.
+  
+  [1X3.4-8 FactorObject[0m
+  
+  [2X> FactorObject( [0X[3XN[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  In  case [3XN[0m was defined as a subobject of some object L the factor object L/[3XN[0m
+  is returned.
+  
+  [1X3.4-9 UnderlyingSubobject[0m
+  
+  [2X> UnderlyingSubobject( [0X[3XM[0X[2X ) ________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  In  case  [3XM[0m  was  defined  as  the object underlying a subobject L then L is
+  returned.
+  (no method installed)
+  
+  [1X3.4-10 NatTrIdToHomHom_R[0m
+  
+  [2X> NatTrIdToHomHom_R( [0X[3XM[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The  natural evaluation morphism from the [5Xhomalg[0m object [3XM[0m to its double dual
+  [10XHomHom[0m([3XM[0m).
+  
+  [1X3.4-11 Annihilator[0m
+  
+  [2X> Annihilator( [0X[3XM[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  The annihilator of the object [3XM[0m as a subobject of the structure object.
+  
+  [1X3.4-12 EndomorphismRing[0m
+  
+  [2X> EndomorphismRing( [0X[3XM[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  The endomorphism ring of the object [3XM[0m.
+  
+  [1X3.4-13 UnitObject[0m
+  
+  [2X> UnitObject( [0X[3XM[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  a Chern character
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-14 RankOfObject[0m
+  
+  [2X> RankOfObject( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The projective rank of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-15 ProjectiveDimension[0m
+  
+  [2X> ProjectiveDimension( [0X[3XM[0X[2X ) ________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The projective dimension of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-16 DegreeOfTorsionFreeness[0m
+  
+  [2X> DegreeOfTorsionFreeness( [0X[3XM[0X[2X ) ____________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer of infinity
+  
+  Auslander's  degree of torsion-freeness of the [5Xhomalg[0m object [3XM[0m. It is set to
+  infinity only for [3XM[0m=0.
+  
+  [1X3.4-17 Grade[0m
+  
+  [2X> Grade( [0X[3XM[0X[2X ) ______________________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer of infinity
+  
+  The grade of the [5Xhomalg[0m object [3XM[0m. It is set to infinity if [3XM[0m=0. Another name
+  for this operation is [10XDepth[0m.
+  
+  [1X3.4-18 PurityFiltration[0m
+  
+  [2X> PurityFiltration( [0X[3XM[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m filtration
+  
+  The purity filtration of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-19 CodegreeOfPurity[0m
+  
+  [2X> CodegreeOfPurity( [0X[3XM[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a list of nonnegative integers
+  
+  The codegree of purity of the [5Xhomalg[0m object [3XM[0m.
+  
+  [1X3.4-20 HilbertPolynomial[0m
+  
+  [2X> HilbertPolynomial( [0X[3XM[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-21 AffineDimension[0m
+  
+  [2X> AffineDimension( [0X[3XM[0X[2X ) ____________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-22 ProjectiveDegree[0m
+  
+  [2X> ProjectiveDegree( [0X[3XM[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-23 ConstantTermOfHilbertPolynomialn[0m
+  
+  [2X> ConstantTermOfHilbertPolynomialn( [0X[3XM[0X[2X ) ___________________________[0Xattribute
+  [6XReturns:[0X  an integer
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-24 ElementOfGrothendieckGroup[0m
+  
+  [2X> ElementOfGrothendieckGroup( [0X[3XM[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  an element of the Grothendieck group of a projective space
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-25 ChernPolynomial[0m
+  
+  [2X> ChernPolynomial( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  a Chern polynomial with rank
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  [1X3.4-26 ChernCharacter[0m
+  
+  [2X> ChernCharacter( [0X[3XM[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  a Chern character
+  
+  [3XM[0m is a [5Xhomalg[0m object.
+  
+  
+  [1X3.5 Objects: Operations and Functions[0X
+  
+  [1X3.5-1 CurrentResolution[0m
+  
+  [2X> CurrentResolution( [0X[3XM[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m complex
+  
+  The computed (part of a) resolution of the static object [3XM[0m.
+  
+  [1X3.5-2 UnderlyingObject[0m
+  
+  [2X> UnderlyingObject( [0X[3XM[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  In  case [3XM[0m was defined as a subobject of some object L the object underlying
+  the subobject M is returned.
+  
+  [1X3.5-3 Saturate[0m
+  
+  [2X> Saturate( [0X[3XK, J[0X[2X ) ________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ideal
+  
+  Compute the saturation ideal [3XK[0m:[3XJ[0m^infty of the ideals [3XK[0m and [3XJ[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> Display( ZZ );[0X
+    [4X<An internal ring>[0X
+    [4Xgap> m := LeftSubmodule( "2", ZZ );[0X
+    [4X<A principal (left) ideal given by a cyclic generator>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  2 ] ][0X
+    [4X[0X
+    [4XA (left) ideal generated by the entry of the above matrix[0X
+    [4Xgap> J := LeftSubmodule( "3", ZZ );[0X
+    [4X<A principal (left) ideal given by a cyclic generator>[0X
+    [4Xgap> Display( J );[0X
+    [4X[ [  3 ] ][0X
+    [4X[0X
+    [4XA (left) ideal generated by the entry of the above matrix[0X
+    [4Xgap> I := Intersect( J, m^3 );[0X
+    [4X<A principal (left) ideal given by a cyclic generator>[0X
+    [4Xgap> Display( I );[0X
+    [4X[ [  24 ] ][0X
+    [4X[0X
+    [4XA (left) ideal generated by the entry of the above matrix[0X
+    [4Xgap> Im := SubobjectQuotient( I, m );[0X
+    [4X<A principal (left) ideal of rank 1 on a free generator>[0X
+    [4Xgap> Display( Im );[0X
+    [4X[ [  -12 ] ][0X
+    [4X[0X
+    [4XA (left) ideal generated by the entry of the above matrix[0X
+    [4Xgap> I_m := Saturate( I, m );[0X
+    [4X<A principal (left) ideal of rank 1 on a free generator>[0X
+    [4Xgap> Display( I_m );[0X
+    [4X[ [  -3 ] ][0X
+    [4X[0X
+    [4XA (left) ideal generated by the entry of the above matrix[0X
+    [4Xgap> I_m = J;[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( Saturate,[0X
+    [4X        "for homalg subobjects of static objects",[0X
+    [4X        [ IsStaticFinitelyPresentedSubobjectRep, IsStaticFinitelyPresentedSubobjectRep ],[0X
+    [4X        [0X
+    [4X  function( K, J )[0X
+    [4X    local quotient_last, quotient;[0X
+    [4X    [0X
+    [4X    quotient_last := SubobjectQuotient( K, J );[0X
+    [4X    [0X
+    [4X    quotient := SubobjectQuotient( quotient_last, J );[0X
+    [4X    [0X
+    [4X    while not IsSubset( quotient_last, quotient ) do[0X
+    [4X        quotient_last := quotient;[0X
+    [4X        quotient := SubobjectQuotient( quotient_last, J );[0X
+    [4X    od;[0X
+    [4X    [0X
+    [4X    return quotient_last;[0X
+    [4X    [0X
+    [4Xend );[0X
+    [4X[0X
+    [4X[0X
+    [4XInstallMethod( \-,	## a geometrically motivated definition[0X
+    [4X        "for homalg subobjects of static objects",[0X
+    [4X        [ IsStaticFinitelyPresentedSubobjectRep, IsStaticFinitelyPresentedSubobjectRep ],[0X
+    [4X        [0X
+    [4X  function( K, J )[0X
+    [4X    [0X
+    [4X    return Saturate( K, J );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  

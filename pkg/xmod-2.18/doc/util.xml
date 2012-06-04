@@ -1,0 +1,284 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  util.xml              XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.14, 30/07/2011                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2011, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-util">
+<Heading>Utility functions</Heading>
+
+By a utility function we mean a {\GAP} function which is
+
+<List>
+<Item>
+needed by other functions in this package,
+</Item>
+<Item>
+not (as far as we know) provided by the standard &GAP; library,
+</Item>
+<Item>
+more suitable for inclusion in the main library than in this package.
+</Item>
+</List>
+
+
+<Section><Heading>Inclusion and Restriction Mappings</Heading>
+
+<Index>inclusion mapping</Index>
+<Index>restriction mapping</Index>
+
+These two functions have been moved to the <Package>gpd</Package> package, 
+but are still documented here. 
+<ManSection>
+   <Oper Name="InclusionMappingGroups"
+         Arg="G H" />
+   <Oper Name="RestrictionMappingGroups"
+         Arg="hom src rng" />
+   <Oper Name="MappingToOne"
+         Arg="G H" />
+<Description>
+The first set of utilities concerns inclusion and restriction mappings.
+Restriction may apply to both the source and the range of the map.
+The map <C>incd8</C> is the inclusion of <C>d8</C> in <C>d16</C> 
+used in Section <Ref Sect="sect-oper-mor" />.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> Print( incd8, "\n" );
+[ (11,13,15,17)(12,14,16,18), (11,18)(12,17)(13,16)(14,15) ] ->
+[ (11,13,15,17)(12,14,16,18), (11,18)(12,17)(13,16)(14,15) ]
+gap> imd8 := Image( incd8 );;
+gap> resd8 := RestrictionMappingGroups( incd8, c4, imd8 );;
+gap> Source( res8 );  Range( res8 );
+c4
+Group([ (11,13,15,17)(12,14,16,18), (11,18)(12,17)(13,16)(14,15) ])
+gap> MappingToOne( c4, imd8 );
+[ (11,13,15,17)(12,14,16,18) ] -> [ () ]
+]]>
+</Example>
+</Section>
+
+
+<Section><Heading>Endomorphism Classes and Automorphisms</Heading>
+
+<Index>endomorphism classes</Index>
+<ManSection>
+   <Func Name="EndomorphismClasses"
+         Arg="grp case" />
+   <Attr Name="EndoClassNaturalHom"
+         Arg="class" />
+   <Attr Name="EndoClassIsomorphism"
+         Arg="class" />
+   <Attr Name="EndoClassConjugators"
+         Arg="class" />
+   <Attr Name="AutoGroup"
+         Arg="class" />
+<Description>
+The monoid of endomorphisms of a group is used when calculating
+the monoid of derivations of a crossed module and when determining 
+all the cat1-structures on a group.
+<P/>
+An endomorphism <M>\epsilon</M> of <M>R</M> with image <M>H'</M> 
+is determined by
+<List>
+<Item>
+a normal subgroup <M>N</M> of <M>R</M> and a permutation representation
+<M>\theta : R/N \to Q</M> of the quotient, giving a projection
+<M>\theta \circ \nu : R \to Q</M>, where <M>\nu : R \to R/N</M>
+is the natural homomorphism;
+</Item>
+<Item>
+an automorphism <M>\alpha</M> of <M>Q</M>;
+</Item>
+<Item>
+a subgroup <M>H'</M> in a conjugacy class <M>[H]</M> of subgroups of <M>R</M> 
+isomorphic to <M>Q</M> having representative <M>H</M>, an isomorphism 
+<M>\phi : Q \cong H</M>, and a conjugating element <M>c \in R</M>
+such that <M>H^c = H'</M>.
+</Item>
+</List>
+<P/>
+Then <M>\epsilon</M> takes values
+<Display>
+\epsilon r ~=~ (\phi\alpha\theta\nu\,r)^c~.
+</Display>
+Endomorphisms are placed in the same class if they have the same
+choice of <M>N</M> and <M>[H]</M>,
+and so the number of endomorphisms is
+<Display>
+|{\rm End}(R)| ~=~ \sum_{{\rm classes}} |{\rm Aut}(Q)|.|[H]|~.
+</Display>
+The function <C>EndomorphismClasses( &lt;grp&gt;, &lt;case&gt; )</C> 
+may be called in three ways:
+<List>
+<Item>
+case 1 includes automorphisms and the zero map,
+</Item><Item>
+case 2 excludes automorphisms and the zero map,
+</Item><Item>
+case 3 is when <C>N</C> intersects <C>H</C>  trivially.
+</Item>
+</List>
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> end8 := EndomorphismClasses( d8, 1 );;
+gap> Length( end8 );
+13
+gap> e4 := end8[4];
+<enumerator>
+gap> EndoClassNaturalHom( e4 );
+[ (1,2,3,4), (1,3) ] -> [ <identity> of ..., f1 ]
+gap> EndoClassIsomorphism( e4 );
+[ f1 ] -> [ (1,2)(3,4) ]
+gap> EndoClassConjugators( e4 );
+[ (), (2,4) ]
+gap> Size( AutoGroup( e4 ) );
+1
+gap> L := List( end8, e->Length(EndoClassConjugators(e))*Size(AutoGroup(e)) );
+[ 8, 1, 2, 2, 1, 2, 2, 1, 2, 2, 6, 6, 1 ]
+gap> Sum(L);
+36
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="InnerAutomorphismByNormalSubgroup"
+         Arg="G N" />
+   <Prop Name="IsGroupOfAutomorphisms"
+         Arg="A" />
+<Description>
+Inner automorphisms of a group <C>G</C> 
+by the elements of a normal subgroup <C>N</C>
+are calculated with the first of these functions, 
+usually with <C>G</C> = <C>N</C>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> autd8 := AutomorphismGroup( d8 );;
+gap> innd8 := InnerAutomorphismsByNormalSubgroup( d8, d8 );;
+gap> GeneratorsOfGroup( innd8 );
+[ ^(1,2,3,4), ^(1,3) ]
+gap> IsGroupOfAutomorphisms( innd8 );
+true
+]]>
+</Example>
+</Section>
+
+
+<Section><Heading>Abelian Modules</Heading>
+<Index>abelian module</Index>
+
+<ManSection>
+   <Oper Name="AbelianModuleObject"
+         Arg="grp act" />
+   <Prop Name="IsAbelianModule"
+         Arg="obj" />
+   <Attr Name="AbelianModuleGroup"
+         Arg="obj" />
+   <Attr Name="AbelianModuleAction"
+         Arg="obj" />
+<Description>
+An abelian module is an abelian group together with a group action.
+These are used by the crossed module constructor <C>XModByAbelianModule</C>.
+<P/>
+The resulting <C>Xabmod</C> is isomorphic to the output from 
+<C>XModByAutomorphismGroup( k4 );</C>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> x := (6,7)(8,9);;  y := (6,8)(7,9);;  z := (6,9)(7,8);;
+gap> k4 := Group( x, y );;  SetName( k4, "k4" );
+gap> s3 := Group( (1,2), (2,3) );;  SetName( s3, "s3" );
+gap> alpha := GroupHomomorphismByImages( k4, k4, [x,y], [y,x] );;
+gap> beta := GroupHomomorphismByImages( k4, k4, [x,y], [x,z] );;
+gap> aut := Group( alpha, beta );;
+gap> act := GroupHomomorphismByImages( s3, aut, [(1,2),(2,3)], [alpha,beta] );;
+gap> abmod := AbelianModuleObject( k4, act );;
+gap> Xabmod := XModByAbelianModule( abmod );
+[k4->s3]
+gap> Display( Xabmod );
+
+Crossed module [k4->s3] :- 
+: Source group k4 has generators:
+  [ (6,7)(8,9), (6,8)(7,9) ]
+: Range group s3 has generators:
+  [ (1,2), (2,3) ]
+: Boundary homomorphism maps source generators to:
+  [ (), () ]
+: Action homomorphism maps range generators to automorphisms:
+  (1,2) --> { source gens --> [ (6,8)(7,9), (6,7)(8,9) ] }
+  (2,3) --> { source gens --> [ (6,7)(8,9), (6,9)(7,8) ] }
+  These 2 automorphisms generate the group of automorphisms.
+
+]]>
+</Example>
+</Section>
+
+
+<Section><Heading>Distinct and Common Representatives</Heading>
+<Index>distinct and common representatives</Index>
+
+<ManSection>
+   <Oper Name="DistinctRepresentatives"
+         Arg="list" />
+   <Oper Name="CommonRepresentatives"
+         Arg="list" />
+   <Oper Name="CommonTransversal"
+         Arg="grp subgrp" />
+   <Oper Name="IsCommonTransversal"
+         Arg="grp subgrp list" />
+<Description>
+The final set of utilities deal with lists of subsets of <M>[1 \ldots n]</M>
+and construct systems of distinct and common representatives using
+simple, non-recursive, combinatorial algorithms.
+<P/>
+When <M>L</M> is a set of <M>n</M> subsets of <M>[1 \ldots n]</M> 
+and the Hall condition is satisfied
+(the union of any <M>k</M> subsets has at least <M>k</M> elements),
+a set of distinct representatives exists.
+<P/>
+When <M>J,K</M> are both lists of <M>n</M> sets, 
+the function <C>CommonRepresentatives</C> returns two lists: 
+the set of representatives, 
+and a permutation of the subsets of the second list.
+It may also be used to provide a common transversal
+for sets of left and right cosets of a subgroup <M>H</M> of a group <M>G</M>,
+although a greedy algorithm is usually quicker.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> J := [ [1,2,3], [3,4], [3,4], [1,2,4] ];
+[ [ 1, 2, 3 ], [ 3, 4 ], [ 3, 4 ], [ 1, 2, 4 ] ]
+gap> DistinctRepresentatives( J );
+[ 1, 3, 4, 2 ]
+gap> K := [ [3,4], [1,2], [2,3], [2,3,4] ];
+[ [ 3, 4 ], [ 1, 2 ], [ 2, 3 ], [ 2, 3, 4 ] ]
+gap> CommonRepresentatives( J, K );
+[ [ 3, 3, 3, 1 ], [ 1, 3, 4, 2 ] ]
+gap> CommonTransversal( d16, c4 );
+[ (), (12,18)(13,17)(14,16), (11,12,13,14,15,16,17,18), 
+  (11,12)(13,18)(14,17)(15,16) ]
+]]>
+</Example>
+
+</Section>
+
+</Chapter>

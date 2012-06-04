@@ -2,28 +2,21 @@
 ##
 #W  zlattice.tst                GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: zlattice.tst,v 1.2.4.3 2005/05/11 14:53:02 gap Exp $
 ##
-#Y  Copyright (C)  1999,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  1999,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testall.g
+##  To be listed in testinstall.g
 ##
-
-gap> START_TEST("$Id: zlattice.tst,v 1.2.4.3 2005/05/11 14:53:02 gap Exp $");
-
+gap> START_TEST("zlattice.tst");
 
 # trivial cases of `LLLReducedBasis'
 gap> LLLReducedBasis( [ ] );
-rec( basis := [  ], mue := [  ], B := [  ] )
+rec( B := [  ], basis := [  ], mue := [  ] )
 gap> LLLReducedBasis( [ [ 0, 0 ], [ 0, 0 ] ], "linearcomb" );
-rec( basis := [  ], relations := [ [ 1, 0 ], [ 0, 1 ] ], 
-  transformation := [  ], mue := [  ], B := [  ] )
-
-
-gap> STOP_TEST( "zlattice.tst", 800000 );
-
+rec( B := [  ], basis := [  ], mue := [  ], 
+  relations := [ [ 1, 0 ], [ 0, 1 ] ], transformation := [  ] )
+gap> STOP_TEST( "zlattice.tst", 100000 );
 
 #############################################################################
 ##
 #E
-

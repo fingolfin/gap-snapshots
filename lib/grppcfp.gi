@@ -2,15 +2,13 @@
 ##
 #W  grppcfp.gi                  GAP library                      Bettina Eick
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains some functions to convert a pc group into an
 ##  fp group and vice versa.
 ##
-Revision.grppcfp_gi :=
-    "@(#)$Id: grppcfp.gi,v 4.44.2.3 2005/11/30 03:05:31 gap Exp $";
 
 #############################################################################
 ##
@@ -237,7 +235,7 @@ gensA, relsA, gensG, imgs, prei, i, j, k, l, norm, index, diag, n,genu;
                 imgs   := imgs,
                 prei   := prei );
   elif IsMapping(F) then
-    if IsWholeFamily(Image(F)) then
+    if IsSurjective(F) and IsWholeFamily(Range(F)) then
       return rec(source:=Source(F),
 		image:=Parent(Image(F)), # parent will replace full group
 		                         # with other gens.
@@ -768,7 +766,7 @@ end );
 #F  SQ( <F>, <...> ) / SolvableQuotient( <F>, <...> )
 ##
 InstallGlobalFunction( SolvableQuotient, function ( F, primes )
-    local G, epi, tup, lift, i, found, fac, j, p, iso;
+local G, epi, tup, lift, i, found, fac, j, p, iso;
 
     # initialise epimorphism
     epi := InitEpimorphismSQ(F);
@@ -783,6 +781,7 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
 
     # if <primes> is a list of tuples, it denotes a chief series
     if IsList( primes ) and IsList( primes[1] ) then
+	
         Info(InfoSQ,2,"have chief series given");
         for tup in primes{[2..Length(primes)]} do
             Info(InfoSQ,1,"trying ", tup);
@@ -827,6 +826,12 @@ InstallGlobalFunction( SolvableQuotient, function ( F, primes )
                 
     # if <primes> is an integer it is size we want
     if IsInt(primes)  then
+	if not IsInt(primes/Size(G)) then
+	  i:=Lcm(primes,Size(G));
+	  Info(InfoWarning,1,"Added extra factor ",i/primes,
+	       " to allow for G/G'");
+          primes:=i;
+	fi;
         i := primes / Size( G );
         found := true;
         while i > 1 and found do

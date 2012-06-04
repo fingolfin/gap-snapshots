@@ -2,10 +2,9 @@
 ##
 #W  mgmcong.gi              GAP library                       Robert F. Morse
 ##
-#H  @(#)$Id: mgmcong.gi,v 4.19 2002/04/15 10:05:03 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains generic methods for magma congruences
@@ -15,8 +14,6 @@
 ##  Andrew Solomon
 ##
 ##
-Revision.mgmcong_gi :=
-    "@(#)$Id: mgmcong.gi,v 4.19 2002/04/15 10:05:03 sal Exp $";
 
 
 #############################################################################

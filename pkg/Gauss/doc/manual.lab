@@ -1,0 +1,51 @@
+\makelabel{gauss:Title page}{}
+\makelabel{gauss:Abstract}{}
+\makelabel{gauss:Copyright}{}
+\makelabel{gauss:Acknowledgements}{}
+\makelabel{gauss:Table of Contents}{}
+\makelabel{gauss:Introduction}{1}
+\makelabel{gauss:Overview over this manual}{1.1}
+\makelabel{gauss:Installation of the Gauss Package}{1.2}
+\makelabel{gauss:Extending Gauss Functionality}{2}
+\makelabel{gauss:The need for extended functionality}{2.1}
+\makelabel{gauss:The applications of the Gauss package algorithms}{2.2}
+\makelabel{gauss:The Sparse Matrix Data Type}{3}
+\makelabel{gauss:The inner workings of Gauss sparse matrices}{3.1}
+\makelabel{gauss:A special case: GF(2)}{3.1.1}
+\makelabel{gauss:Methods and functions for sparse matrices}{3.2}
+\makelabel{gauss:Gaussian Algorithms}{4}
+\makelabel{gauss:A list of the available algorithms}{4.1}
+\makelabel{gauss:Methods and Functions for Gaussian algorithms}{4.2}
+\makelabel{gauss:An Overview of the Gauss package source code}{A}
+\makelabel{gauss:Bibliography}{Bib}
+\makelabel{gauss:References}{Bib}
+\makelabel{gauss:Index}{Ind}
+\makelabel{gauss:Gauss}{1.2}
+\makelabel{gauss:SparseMatrix (constructor using gap matrices)}{3.2.1}
+\makelabel{gauss:SparseMatrix (constructor using indices)}{3.2.1}
+\makelabel{gauss:SparseMatrix (constructor using indices and entries)}{3.2.1}
+\makelabel{gauss:ConvertSparseMatrixToMatrix}{3.2.2}
+\makelabel{gauss:CopyMat}{3.2.3}
+\makelabel{gauss:GetEntry}{3.2.4}
+\makelabel{gauss:SetEntry}{3.2.5}
+\makelabel{gauss:AddToEntry}{3.2.6}
+\makelabel{gauss:SparseZeroMatrix (constructor using number of rows)}{3.2.7}
+\makelabel{gauss:SparseZeroMatrix (constructor using number of rows and columns)}{3.2.7}
+\makelabel{gauss:SparseIdentityMatrix}{3.2.8}
+\makelabel{gauss:TransposedSparseMat}{3.2.9}
+\makelabel{gauss:CertainRows}{3.2.10}
+\makelabel{gauss:CertainColumns}{3.2.11}
+\makelabel{gauss:UnionOfRows}{3.2.12}
+\makelabel{gauss:UnionOfColumns}{3.2.13}
+\makelabel{gauss:SparseDiagMat}{3.2.14}
+\makelabel{gauss:Nrows}{3.2.15}
+\makelabel{gauss:Ncols}{3.2.16}
+\makelabel{gauss:IndicesOfSparseMatrix}{3.2.17}
+\makelabel{gauss:EntriesOfSparseMatrix}{3.2.18}
+\makelabel{gauss:RingOfDefinition}{3.2.19}
+\makelabel{gauss:EchelonMat}{4.2.1}
+\makelabel{gauss:EchelonMatTransformation}{4.2.2}
+\makelabel{gauss:ReduceMat}{4.2.3}
+\makelabel{gauss:ReduceMatTransformation}{4.2.4}
+\makelabel{gauss:KernelMat}{4.2.5}
+\makelabel{gauss:Rank}{4.2.6}

@@ -1,0 +1,87 @@
+  
+  [1X5 [33X[0;0YInstallation of the Package[133X[101X
+  
+  [33X[0;0YInstallation of the package requires the GNU multiple precision library (GNU
+  MP  [GMP]).  If  this  library is not available on your system, it has to be
+  installed  first.  A copy of GNU MP can be obtained from [7Xhttp://gmplib.org/[107X.
+  Installation  of the ANU NQ is done in two steps. First the configure script
+  is run:[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X ./configure  [104X
+  [4X[32X[104X
+  
+  [33X[0;0YAmong other things it will tell you whether it succeeded in locating the GNU
+  MP  library  and  the  corresponding  include files. If it tells you that it
+  could not find the GNU MP include files or the GNU MP libraries, you have to
+  run configure with additional parameters. For example, if you have installed
+  GNU  MP  yourself  in your home directory, you would type something like the
+  following[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X ./configure --with-gmp=/home/me/gmp [104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf configure reports no problems, the next step is to start the compilation:[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X make [104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  compiled  version  of  the  program  named  `nq'  is then placed into the
+  directory `bin/<complicated name>'. The <complicated name> component encodes
+  the operating system and the compiler used. This allows you to compile NQ on
+  several architectures sharing the same files system.[133X
+  
+  [33X[0;0YIf  there  are  any  warnings  or  even  fatal  error  messages  during  the
+  compilation  process,  please  send a copy to the address at the end of this
+  document together with information about your operating system, the compiler
+  you  used  and  any  changes you might have made to the source code. We will
+  have a look at your problems and try to fix them.[133X
+  
+  [33X[0;0YAfter  the  compilation  is  finished you can check if the ANU NQ is running
+  properly on your system. Simply type[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X make test [104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  runs some computations and compares their output with the output files
+  in  the  directory `examples'. If any errors are reported, please follow the
+  instruction that are printed out.[133X
+  
+  [33X[0;0YThe  installation  is completed by compiling the manual of the package. This
+  is done from within [5XGAP[105X.[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4Xgap> NqBuildManual();[104X
+    [4XComposing XML document . . .[104X
+    [4XParsing XML document . . .[104X
+    [4XChecking XML structure . . .[104X
+    [4XLaTeX version and calling latex and pdflatex:[104X
+    [4X    writing LaTeX file, 3 x latex, bibtex and makeindex, 2 x pdflatex, dvips[104X
+    [4XText version . . .[104X
+    [4X#I  first run, collecting cross references, index, toc, bib and so on . . .[104X
+    [4X#I  table of contents complete.[104X
+    [4X#I  producing the index . . .[104X
+    [4X#I  reading bibliography data files . . . [104X
+    [4X#I  writing bibliography . . .[104X
+    [4X#I  second run through document . . .[104X
+    [4XWriting manual.six file . . .[104X
+    [4XAnd finally the HTML version . . .[104X
+    [4X#I  first run, collecting cross references, index, toc, bib and so on . . .[104X
+    [4X#I  table of contents complete.[104X
+    [4X#I  producing the index . . .[104X
+    [4X#I  reading bibliography data files . . . [104X
+    [4X#I  writing bibliography . . .[104X
+    [4X#I  second run through document . . .[104X
+    [4Xgap> ?NilpotentQuotient[104X
+    [4XHelp: several entries match this topic - type ?2 to get match [2][104X
+    [4X[104X
+    [4X[1] ANU NQ: NilpotentQuotient[104X
+    [4X[2] ANU NQ: NilpotentQuotient[104X
+    [4X[3] Reference: NilpotentQuotientOfFpLieAlgebra[104X
+    [4Xgap>[104X
+    [4X  [104X
+  [4X[32X[104X
+  

@@ -1,0 +1,259 @@
+\begin{theindex}
+
+  \item 2d-domain, \hyperpage{7}
+  \item 2d-domain with objects, \hyperpage{36}
+  \item 2d-group, \hyperpage{7}
+  \item 2d-mapping, \hyperpage{15}
+  \item 3d-group, \hyperpage{31}
+  \item 3d-mapping, \hyperpage{34}
+
+  \indexspace
+
+  \item abelian module, \hyperpage{39}
+  \item \texttt  {AbelianModuleAction}, \hyperpage{39}
+  \item \texttt  {AbelianModuleGroup}, \hyperpage{39}
+  \item \texttt  {AbelianModuleObject}, \hyperpage{39}
+  \item actor, \hyperpage{25}
+  \item \texttt  {ActorXMod}, \hyperpage{25}
+  \item \texttt  {ActorXSq}, \hyperpage{32}
+  \item \texttt  {AllDerivations}, \hyperpage{22}
+  \item \texttt  {AllInducedXMods}, \hyperpage{30}
+  \item \texttt  {AllSections}, \hyperpage{22}
+  \item \texttt  {AutoGroup}, \hyperpage{8}, \hyperpage{38}
+  \item \texttt  {AutomorphismPermGroup}, \hyperpage{25}
+
+  \indexspace
+
+  \item \texttt  {Boundary}, \hyperpage{8}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {Cat1}, \hyperpage{11}
+  \item cat1-group, \hyperpage{11}
+  \item \texttt  {Cat1ByPeifferQuotient}, \hyperpage{11}
+  \item \texttt  {Cat1Morphism}, \hyperpage{17}
+  \item \texttt  {Cat1MorphismByHoms}, \hyperpage{17}
+  \item \texttt  {Cat1OfXMod}, \hyperpage{12}
+  \item \texttt  {Cat1Select}, \hyperpage{13}
+  \item cat2-group, \hyperpage{31}
+  \item \texttt  {CommonRepresentatives}, \hyperpage{40}
+  \item \texttt  {CommonTransversal}, \hyperpage{40}
+  \item \texttt  {CompositeDerivation}, \hyperpage{23}
+  \item \texttt  {CompositeSection}, \hyperpage{23}
+  \item \texttt  {CompositionMorphism}, \hyperpage{18}
+  \item crossed module, \hyperpage{7}, \hyperpage{31}
+  \item crossed module morphism, \hyperpage{15}
+  \item crossed module of groupoids, \hyperpage{36}
+  \item crossed module over a groupoid, \hyperpage{36}
+  \item crossed pairing, \hyperpage{31}
+  \item crossed square, \hyperpage{25}
+  \item crossed square morphism, \hyperpage{34}
+
+  \indexspace
+
+  \item derivation, of crossed module, \hyperpage{20}
+  \item \texttt  {DerivationByImages}, \hyperpage{20}
+  \item \texttt  {DerivationBySection}, \hyperpage{21}
+  \item \texttt  {DiagonalAction}, \hyperpage{33}
+  \item \texttt  {DirectProduct}, \hyperpage{7}
+  \item \texttt  {DiscreteNormalPreXModWithObjects}, \hyperpage{36}
+  \item display a 2d-group, \hyperpage{8}
+  \item display a 2d-mapping, \hyperpage{16}
+  \item distinct and common representatives, \hyperpage{40}
+  \item \texttt  {DistinctRepresentatives}, \hyperpage{40}
+  \item \texttt  {Down2dGroup}, \hyperpage{33}
+  \item \texttt  {Down2dMorphism}, \hyperpage{34}
+
+  \indexspace
+
+  \item \texttt  {EndoClassConjugators}, \hyperpage{38}
+  \item \texttt  {EndoClassIsomorphism}, \hyperpage{38}
+  \item \texttt  {EndoClassNaturalHom}, \hyperpage{38}
+  \item endomorphism classes, \hyperpage{38}
+  \item \texttt  {EndomorphismClasses}, \hyperpage{38}
+
+  \indexspace
+
+  \item \texttt  {HeadMap}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {IdentityMapping}, \hyperpage{16, 17}
+  \item \texttt  {IdentitySubXMod}, \hyperpage{9}
+  \item \texttt  {ImageElmXPair}, \hyperpage{33}
+  \item \texttt  {ImagesList}, \hyperpage{22}
+  \item \texttt  {ImagesTable}, \hyperpage{22}
+  \item inclusion mapping, \hyperpage{37}
+  \item \texttt  {InclusionMappingGroups}, \hyperpage{37}
+  \item \texttt  {InclusionMorphism2dDomains}, \hyperpage{16, 17}
+  \item induced crossed module, \hyperpage{28}
+  \item \texttt  {InducedCat1}, \hyperpage{28}
+  \item \texttt  {InducedXMod}, \hyperpage{28}
+  \item \texttt{InfoXMod}, \hyperpage{6}
+  \item \texttt  {InnerActorXMod}, \hyperpage{27}
+  \item \texttt  {InnerAutomorphismByNormalSubgroup}, \hyperpage{39}
+  \item \texttt  {InnerAutomorphismCat1}, \hyperpage{17}
+  \item \texttt  {InnerAutomorphismXMod}, \hyperpage{16}
+  \item \texttt  {InnerMorphism}, \hyperpage{27}
+  \item \texttt  {Is3dObject}, \hyperpage{33}
+  \item \texttt  {IsAbelianModule}, \hyperpage{39}
+  \item \texttt  {IsAutomorphism3dObject}, \hyperpage{34}
+  \item \texttt  {IsBijective}, \hyperpage{16}, \hyperpage{34}
+  \item \texttt  {IsCat1Morphism}, \hyperpage{17}
+  \item \texttt  {IsCommonTransversal}, \hyperpage{40}
+  \item \texttt  {IsDerivation}, \hyperpage{20}
+  \item \texttt  {IsEndo2dMapping}, \hyperpage{16}
+  \item \texttt  {IsEndomorphism3dObject}, \hyperpage{34}
+  \item \texttt  {IsFp3dObject}, \hyperpage{33}
+  \item \texttt  {IsGroupOfAutomorphisms}, \hyperpage{39}
+  \item \texttt  {IsInducedCat1}, \hyperpage{28}
+  \item \texttt  {IsInducedXMod}, \hyperpage{28}
+  \item \texttt  {IsInjective}, \hyperpage{15}
+  \item \texttt  {IsmorphismPermObject}, \hyperpage{17}
+  \item \texttt  {IsomorphismPermObject}, \hyperpage{16}
+  \item \texttt  {IsPc3dObject}, \hyperpage{33}
+  \item \texttt  {IsPcPreXMod}, \hyperpage{10}
+  \item \texttt  {IsPerm3dObject}, \hyperpage{33}
+  \item \texttt  {IsPermXMod}, \hyperpage{10}
+  \item \texttt  {IsPreCat1Morphism}, \hyperpage{17}
+  \item \texttt  {IsPreXModMorphism}, \hyperpage{15}
+  \item \texttt  {IsPreXSq}, \hyperpage{33}
+  \item \texttt  {IsPreXSqMorphism}, \hyperpage{34}
+  \item \texttt  {IsSection}, \hyperpage{20}
+  \item \texttt  {IsSingleValued}, \hyperpage{16}
+  \item \texttt  {IsSurjective}, \hyperpage{15}
+  \item \texttt  {IsTotal}, \hyperpage{16}
+  \item \texttt  {IsUp2dMapping}, \hyperpage{20}
+  \item \texttt  {IsXModMorphism}, \hyperpage{15}
+  \item \texttt  {IsXSq}, \hyperpage{33}
+  \item \texttt  {IsXSqMorphism}, \hyperpage{34}
+
+  \indexspace
+
+  \item \texttt  {Kernel}, \hyperpage{18}
+  \item \texttt  {Kernel2dMapping}, \hyperpage{18}
+  \item \texttt  {KernelEmbedding}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {Left2dGroup}, \hyperpage{33}
+  \item \texttt  {Left2dMorphism}, \hyperpage{34}
+  \item License, \hyperpage{2}
+  \item \texttt  {LueXMod}, \hyperpage{25}
+
+  \indexspace
+
+  \item \texttt  {MappingToOne}, \hyperpage{37}
+  \item morphism, \hyperpage{15}
+  \item morphism of 2d-group, \hyperpage{15}
+  \item morphism of 3d-group, \hyperpage{34}
+  \item \texttt  {MorphismOfInducedXMod}, \hyperpage{28}
+
+  \indexspace
+
+  \item \texttt  {Name}, \hyperpage{8}, \hyperpage{11}, \hyperpage{32}
+  \item \texttt  {NormalSubXMods}, \hyperpage{9}
+  \item \texttt  {NorrieXMod}, \hyperpage{25}
+
+  \indexspace
+
+  \item operations on morphisms, \hyperpage{18}
+  \item order of a 2d-automorphism, \hyperpage{16}
+
+  \indexspace
+
+  \item Peiffer subgroup, \hyperpage{10}
+  \item \texttt  {PeifferSubgroup}, \hyperpage{10}
+  \item pre-crossed module, \hyperpage{9}
+  \item \texttt  {PreCat1ByEndomorphisms}, \hyperpage{11}
+  \item \texttt  {PreCat1ByNormalSubgroup}, \hyperpage{11}
+  \item \texttt  {PreCat1ByTailHeadEmbedding}, \hyperpage{11}
+  \item \texttt  {PreCat1Morphism}, \hyperpage{17}
+  \item \texttt  {PreCat1MorphismByHoms}, \hyperpage{17}
+  \item \texttt  {PreCat1OfPreXMod}, \hyperpage{12}
+  \item \texttt  {PreXModByBoundaryAndAction}, \hyperpage{9}
+  \item \texttt  {PreXModMorphism}, \hyperpage{16}
+  \item \texttt  {PreXModMorphismByHoms}, \hyperpage{16}
+  \item \texttt  {PreXModOfPreCat1}, \hyperpage{12}
+  \item \texttt  {PreXModWithObjectsObj}, \hyperpage{36}
+
+  \indexspace
+
+  \item \texttt  {Range}, \hyperpage{8}, \hyperpage{11}, \hyperpage{15}, 
+		\hyperpage{34}
+  \item \texttt  {RangeEmbedding}, \hyperpage{11}
+  \item \texttt  {RangeHom}, \hyperpage{15}
+  \item regular derivation, \hyperpage{20}
+  \item \texttt  {RegularDerivations}, \hyperpage{22}
+  \item \texttt  {RegularSections}, \hyperpage{22}
+  \item restriction mapping, \hyperpage{37}
+  \item \texttt  {RestrictionMappingGroups}, \hyperpage{37}
+  \item \texttt  {Reverse}, \hyperpage{11}
+  \item \texttt  {Right2dGroup}, \hyperpage{33}
+  \item \texttt  {Right2dMorphism}, \hyperpage{34}
+
+  \indexspace
+
+  \item section, of cat1-group, \hyperpage{20}
+  \item \texttt  {SectionByDerivation}, \hyperpage{21}
+  \item \texttt  {SectionByImages}, \hyperpage{21}
+  \item selection of a small cat1-group, \hyperpage{13}
+  \item \texttt  {Size}, \hyperpage{8}, \hyperpage{11}
+  \item \texttt  {SmallerDegreePerm2dDomain}, \hyperpage{17}
+  \item \texttt  {Source}, \hyperpage{8}, \hyperpage{11}, 
+		\hyperpage{15}, \hyperpage{34}
+  \item \texttt  {SourceHom}, \hyperpage{15}
+  \item \texttt  {SubPreXMod}, \hyperpage{9}
+  \item \texttt  {SubXMod}, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {TailMap}, \hyperpage{11}
+  \item \texttt  {Transpose3dGroup}, \hyperpage{32}
+
+  \indexspace
+
+  \item up 2d-mapping of 2d-group, \hyperpage{20}
+  \item \texttt  {Up2dGroup}, \hyperpage{33}
+  \item \texttt  {Up2dMorphism}, \hyperpage{34}
+  \item \texttt  {UpGeneratorImages}, \hyperpage{23}
+  \item \texttt  {UpImagePositions}, \hyperpage{23}
+
+  \indexspace
+
+  \item version 1 for \textsf{GAP} 3, \hyperpage{41}
+  \item version 2.001 for \textsf{GAP} 4, \hyperpage{41}
+
+  \indexspace
+
+  \item Whitehead group, \hyperpage{20}
+  \item Whitehead monoid, \hyperpage{20}
+  \item Whitehead multiplication, \hyperpage{20}
+  \item \texttt  {WhiteheadGroupTable}, \hyperpage{23}
+  \item \texttt  {WhiteheadMonoidTable}, \hyperpage{23}
+  \item \texttt  {WhiteheadPermGroup}, \hyperpage{23}
+  \item \texttt  {WhiteheadTransMonoid}, \hyperpage{23}
+  \item \texttt  {WhiteheadXMod}, \hyperpage{25}
+
+  \indexspace
+
+  \item \texttt  {XMod}, \hyperpage{7}
+  \item \texttt  {XModAction}, \hyperpage{8}
+  \item \texttt  {XModByAbelianModule}, \hyperpage{7}
+  \item \texttt  {XModByAutomorphismGroup}, \hyperpage{7}
+  \item \texttt  {XModByBoundaryAndAction}, \hyperpage{7}
+  \item \texttt  {XModByCentralExtension}, \hyperpage{7}
+  \item \texttt  {XModByGroupOfAutomorphisms}, \hyperpage{7}
+  \item \texttt  {XModByInnerAutomorphismGroup}, \hyperpage{7}
+  \item \texttt  {XModByNormalSubgroup}, \hyperpage{7}
+  \item \texttt  {XModByPeifferQuotient}, \hyperpage{10}
+  \item \texttt  {XModByTrivialAction}, \hyperpage{7}
+  \item \texttt  {XModCentre}, \hyperpage{27}
+  \item \texttt  {XModMorphism}, \hyperpage{16}
+  \item \texttt  {XModMorphismByHoms}, \hyperpage{16}
+  \item \texttt  {XModOfCat1}, \hyperpage{12}
+  \item \texttt  {XPair}, \hyperpage{33}
+  \item \texttt  {XSq}, \hyperpage{32}
+  \item \texttt  {XSqByNormalSubgroups}, \hyperpage{32}
+
+\end{theindex}

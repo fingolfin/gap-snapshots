@@ -1,16 +1,13 @@
 #############################################################################
 ##
-#W  orders.gi           GAP library                           Isabel Araujo 
+#W  orders.gi           GAP library                           Isabel Araújo 
 ##
-#H  @(#)$Id: orders.gi,v 4.13 2002/04/15 10:05:11 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##
-Revision.orders_gi :=
-    "@(#)$Id: orders.gi,v 4.13 2002/04/15 10:05:11 sal Exp $";
 
 
 #############################################################################
@@ -1276,7 +1273,7 @@ end);
 ##  gens[i]<gens[j] if and only if orderofgens[i]<orderofgens[j]
 ##
 ##  <levels> is a list of length equal to the number of generators,
-##  specififying the levels of the generators IN THEIR NEW ORDERING,
+##  specifying the levels of the generators IN THEIR NEW ORDERING,
 ##  That is, levels[i] is the level of the generator that comes i-th
 ##  in the new ordering.
 ##

@@ -1,17 +1,14 @@
 #############################################################################
 ##
-#W  rational.gi                 GAP library                  Martin Schoenert
+#W  rational.gi                 GAP library                  Martin Schönert
 ##
-#H  @(#)$Id: rational.gi,v 4.36.2.3 2006/01/25 10:13:51 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for rationals.
 ##
-Revision.rational_gi :=
-    "@(#)$Id: rational.gi,v 4.36.2.3 2006/01/25 10:13:51 gap Exp $";
 
 
 #############################################################################
@@ -449,27 +446,10 @@ InstallMethod( PadicValuation,
   end );
 
 
-#############################################################################
-##
-#M  LaTeXObj
-##
-InstallMethod(LaTeXObj,"rational",
-  [IsRat],
-function(r)
-local n,d;
-  if IsInt(r) then
-    return String(r);
-  fi;
-  n:=NumeratorRat(r);
-  d:=DenominatorRat(r);
-  if AbsInt(n)<5 and AbsInt(d)<5 then
-    return Concatenation(String(n),"/",String(d));
-  else
-    return Concatenation("\\frac{",String(n),"}{",String(d),"}");
-  fi;
+InstallMethod( ViewString, "for rationals", [IsRat], function(r)
+  return Concatenation(ViewString(NumeratorRat(r)), "/\>\<",
+                       ViewString(DenominatorRat(r)));
 end);
-
-
 #############################################################################
 ##
 #E

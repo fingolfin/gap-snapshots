@@ -1,18 +1,15 @@
 #############################################################################
 ##
-#W  pcgsperm.gi                 GAP library                    Heiko Thei"sen
+#W  pcgsperm.gi                 GAP library                    Heiko Theißen
 ##
-#H  @(#)$Id: pcgsperm.gi,v 4.120.2.4 2008/09/18 19:55:11 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file  contains    functions which deal with   polycyclic  generating
 ##  systems of solvable permutation groups.
 ##
-Revision.pcgsperm_gi :=
-    "@(#)$Id: pcgsperm.gi,v 4.120.2.4 2008/09/18 19:55:11 gap Exp $";
 
 #############################################################################
 ##
@@ -84,10 +81,10 @@ InstallGlobalFunction( AddNormalizingElementPcgs, function( G, z )
             f := 1;
             for p  in FactorsInt( m )  do
                 if relord <> false  then
-                    InsertElmList( relord, pos, p );
+                    Add( relord, p, pos );
                 fi;
                 pos := pos + 1;
-                InsertElmList( S.labels, pos, z );
+                Add( S.labels, z, pos );
                 edg := ListWithIdenticalEntries( l, -pos );
                 for i  in f * [ 1 .. m / f - 1 ]  do
                     S.translabels{ orb{ i * l + [ 1 .. l ] } } := edg;
@@ -272,11 +269,11 @@ InstallGlobalFunction( ExtendSeriesPermGroup, function(
     if desc  then
         series[ lev + 1 ] := M0;
         if IsEmpty( X )  then
-            RemoveElmList( series, lev + 2 );
+            Remove( series, lev + 2 );
         fi;
     else
         if not IsEmpty( X )  then
-            InsertElmList( series, 1, M0 );
+            Add( series, M0, 1 );
         fi;
     fi;
     
@@ -285,23 +282,36 @@ end );
 
 #############################################################################
 ##
-#F  TryPcgsPermGroup(<G>, <cent>, <desc>, <elab>) . . try to construct a pcgs
+#F  TryPcgsPermGroup(<Act>[, <G>] , <cent>, <desc>, <elab>) . . try for pcgs
 ##
-InstallGlobalFunction(TryPcgsPermGroup,function( G, cent, desc, elab )
+InstallGlobalFunction(TryPcgsPermGroup,function(arg)
     local   grp,  pcgs,  U,  oldlen,  series,  y,  w,  whole,
-            bound,  deg,  step,  i,  S,  filter;
+            bound,  deg,  step,  i,  S,  filter,A,G,cent,desc,elab,gens;
+
+    A:=arg[1];
+    cent:=arg[Length(arg)-2];
+    desc:=arg[Length(arg)-1];
+    elab:=arg[Length(arg)];
 
     # If the last member <U> of the series <G> already has a pcgs, start with
     # its stabilizer chain.
-    if IsList( G )  then
+    if IsList( A )  then
+	G:=A;
+	A:=A[1];
         U := G[ Length( G ) ];
         if HasPcgs( U )  and  IsPcgsPermGroupRep( Pcgs( U ) )  then
             U := CopyStabChain( Pcgs( U )!.stabChain );
         fi;
+    elif Length(arg)>4 then
+      G:=arg[2];
+      U := TrivialSubgroup( G );
+      if ForAll(GeneratorsOfGroup(G),x->IsOne(x)) then G:=[G];
+                                      else G:=[G,U];fi;
     else
-        U := TrivialSubgroup( G );
-        if IsTrivial( G )  then  G := [ G ];
-                           else  G := [ G, U ];  fi;
+      G:=A;
+      U := TrivialSubgroup( G );
+      if IsTrivial( G )  then  G := [ G ];
+			  else  G := [ G, U ];  fi;
     fi;
     
     # Otherwise start  with stabilizer chain  of  <U> with identical `labels'
@@ -352,6 +362,7 @@ InstallGlobalFunction(TryPcgsPermGroup,function( G, cent, desc, elab )
     series := [ U ];
     series[ 1 ].relativeOrders := [  ];
 
+step:="W";
     if not IsTrivial( grp )  then
         
         # The derived  length of  <G> was  bounded by  Dixon. The  nilpotency
@@ -371,7 +382,7 @@ InstallGlobalFunction(TryPcgsPermGroup,function( G, cent, desc, elab )
         for step  in Reversed( [ 1 .. Length( G ) - 1  ] )  do
             for y  in GeneratorsOfGroup( G[ step ] )  do
                 if not y in GeneratorsOfGroup( G[ step + 1 ] )  then
-                    w := ExtendSeriesPermGroup( G[ step ], series, cent,
+                    w := ExtendSeriesPermGroup( A, series, cent,
                                  desc, elab, y, 0, 0, bound );
                     if w <> true  then
                         SetIsNilpotentGroup( grp, false );
@@ -1015,45 +1026,6 @@ InstallMethod( IsomorphismPcGroup, true, [ IsPermGroup ], 0,
     SetIsBijective( iso, true );
     
     return iso;
-end );
-
-#############################################################################
-##
-#M  EpiPcByModpcgs( <G>, <H>, <gens>, <imgs> ) . . . . make GHBI
-##
-BindGlobal("EpiPcByModpcgs",function( G, H, gens, imgs )
-local   filter,  hom,pcgs,imgso;
-  
-  hom := rec();
-  filter := HasSource and HasRange and IsGroupGeneralMappingByPcgs
-            and IsToPcGroupGeneralMappingByImages and IsTotal;
-
-  if IsPermGroup( G )  then
-    filter := filter and IsPermGroupGeneralMappingByImages;
-  fi;
-
-  pcgs:=[gens,imgs];
-
-  hom.sourcePcgs       := gens;
-  hom.sourcePcgsImages := imgs;
-
-  if HasGeneratorsOfGroup(H) 
-      and IsIdenticalObj(GeneratorsOfGroup(H),imgs) then
-    imgso:=H;
-  else
-    imgso:=SubgroupNC( H, imgs);
-  fi;
-  # we can also get the ImagesSource quickly
-  ObjectifyWithAttributes( hom,
-  NewType( GeneralMappingsFamily
-	  ( ElementsFamily( FamilyObj( G ) ),
-	    ElementsFamily( FamilyObj( H ) ) ), filter and HasImagesSource ), 
-	    Source,G,
-	    Range,H,
-	    ImagesSource,imgso);
-
-  SetIsMapping(hom,true);
-  return hom;
 end );
 
 #############################################################################

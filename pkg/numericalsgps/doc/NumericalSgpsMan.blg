@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: NumericalSgpsMan.aux
+The style file: alpha.bst
+Database file #1: NumericalSgpsMan.bib
+You've used 29 entries,
+            2543 wiz_defined-function locations,
+            757 strings with 8447 characters,
+and the built_in function-call counts, 12021 in all, are:
+= -- 1225
+> -- 597
+< -- 10
++ -- 211
+- -- 205
+* -- 916
+:= -- 2015
+add.period$ -- 89
+call.type$ -- 29
+change.case$ -- 183
+chr.to.int$ -- 28
+cite$ -- 29
+duplicate$ -- 433
+empty$ -- 838
+format.name$ -- 238
+if$ -- 2408
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 33
+newline$ -- 149
+num.names$ -- 87
+pop$ -- 133
+preamble$ -- 1
+purify$ -- 216
+quote$ -- 0
+skip$ -- 363
+stack$ -- 0
+substring$ -- 772
+swap$ -- 46
+text.length$ -- 10
+text.prefix$ -- 5
+top$ -- 0
+type$ -- 216
+warning$ -- 0
+while$ -- 123
+width$ -- 31
+write$ -- 380

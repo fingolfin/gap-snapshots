@@ -1,0 +1,203 @@
+  
+  [1X6 The Tate Resolution[0X
+  
+  
+  [1X6.1 The Tate Resolution: Operations and Functions[0X
+  
+  [1X6.1-1 TateResolution[0m
+  
+  [2X> TateResolution( [0X[3XM, degree_lowest, degree_highest[0X[2X ) ______________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m cocomplex
+  
+  Compute the Tate resolution of the sheaf [3XM[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x3";;[0X
+    [4Xgap> S := GradedRing( R );;[0X
+    [4Xgap> A := KoszulDualRing( S, "e0..e3" );;[0X
+  [4X------------------------------------------------------------------[0X
+  
+  In the following we construct the different exterior powers of the cotangent
+  bundle  shifted  by  1. Observe how a single 1 travels along the diagnoal in
+  the window [ -3 .. 0 ] x [ 0 .. 3 ].
+  First we start with the structure sheaf with its Tate resolution:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> O := S^0;[0X
+    [4X<The graded free left module of rank 1 on a free generator>[0X
+    [4Xgap> T := TateResolution( O, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> betti := BettiDiagram( T );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( betti );[0X
+    [4Xtotal:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?[0X
+    [4X----------|---|---|---|---|---|---|---|---|---|---|---|---|---|[0X
+    [4X    3:   35  20  10   4   1   .   .   .   .   .   .   0   0   0[0X
+    [4X    2:    *   .   .   .   .   .   .   .   .   .   .   .   0   0[0X
+    [4X    1:    *   *   .   .   .   .   .   .   .   .   .   .   .   0[0X
+    [4X    0:    *   *   *   .   .   .   .   .   1   4  10  20  35  56[0X
+    [4X----------|---|---|---|---|---|---|---|---S---|---|---|---|---|[0X
+    [4Xtwist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5[0X
+    [4X---------------------------------------------------------------[0X
+    [4XEuler:  -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35  56[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The Castelnuovo-Mumford regularity of the [13Xunderlying module[0m is distinguished
+  among  the  list of twists by the character [10X'V'[0m pointing to it. It is [13Xnot[0m an
+  invariant of the sheaf (see the next diagram).
+  The residue class field (i.e. S modulo the maximal homogeneous ideal):
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> k := HomalgMatrix( Indeterminates( S ), Length( Indeterminates( S ) ), 1, S );[0X
+    [4X<A 4 x 1 matrix over a graded ring>[0X
+    [4Xgap> k := LeftPresentationWithDegrees( k );[0X
+    [4X<A graded cyclic left module presented by 4 relations for a cyclic generator>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Another way of constructing the structure sheaf:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> U0 := SyzygiesObject( 1, k );[0X
+    [4X<A graded torsion-free left module presented by yet unknown relations for 4 ge\[0X
+    [4Xnerators>[0X
+    [4Xgap> T0 := TateResolution( U0, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> betti0 := BettiDiagram( T0 );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( betti0 );[0X
+    [4Xtotal:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?[0X
+    [4X----------|---|---|---|---|---|---|---|---|---|---|---|---|---|[0X
+    [4X    3:   35  20  10   4   1   .   .   .   .   .   .   0   0   0[0X
+    [4X    2:    *   .   .   .   .   .   .   .   .   .   .   .   0   0[0X
+    [4X    1:    *   *   .   .   .   .   .   .   .   .   .   .   .   0[0X
+    [4X    0:    *   *   *   .   .   .   .   .   1   4  10  20  35  56[0X
+    [4X----------|---|---|---|---|---|---|---|---S---|---|---|---|---|[0X
+    [4Xtwist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5[0X
+    [4X---------------------------------------------------------------[0X
+    [4XEuler:  -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35  56[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The cotangent bundle:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> cotangent := SyzygiesObject( 2, k );[0X
+    [4X<A graded torsion-free left module presented by yet unknown relations for 6 ge\[0X
+    [4Xnerators>[0X
+    [4Xgap> IsFree( UnderlyingModule( cotangent ) );[0X
+    [4Xfalse[0X
+    [4Xgap> Rank( cotangent );[0X
+    [4X3[0X
+    [4Xgap> cotangent;[0X
+    [4X<A graded reflexive non-projective rank 3 left module presented by 4 relations\[0X
+    [4X for 6 generators>[0X
+    [4Xgap> ProjectiveDimension( UnderlyingModule( cotangent ) );[0X
+    [4X2[0X
+  [4X------------------------------------------------------------------[0X
+  
+  the cotangent bundle shifted by 1 with its Tate resolution:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> U1 := cotangent * S^1;[0X
+    [4X<A graded non-torsion left module presented by 4 relations for 6 generators>[0X
+    [4Xgap> T1 := TateResolution( U1, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> betti1 := BettiDiagram( T1 );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( betti1 );[0X
+    [4Xtotal:   120   70   36   15    4    1    6   20   45   84  140    ?    ?    ?[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----|----|----|----|----|[0X
+    [4X    3:   120   70   36   15    4    .    .    .    .    .    .    0    0    0[0X
+    [4X    2:     *    .    .    .    .    .    .    .    .    .    .    .    0    0[0X
+    [4X    1:     *    *    .    .    .    .    .    1    .    .    .    .    .    0[0X
+    [4X    0:     *    *    *    .    .    .    .    .    .    6   20   45   84  140[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----S----|----|----|----|[0X
+    [4Xtwist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5[0X
+    [4X-----------------------------------------------------------------------------[0X
+    [4XEuler:  -120  -70  -36  -15   -4    0    0   -1    0    6   20   45   84  140[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  second  power  U^2  of  the shifted cotangent bundle U=U^1 and its Tate
+  resolution:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> U2 := SyzygiesObject( 3, k ) * S^2;[0X
+    [4X<A graded rank 3 left module presented by 1 relation for 4 generators>[0X
+    [4Xgap> T2 := TateResolution( U2, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> betti2 := BettiDiagram( T2 );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( betti2 );[0X
+    [4Xtotal:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----|----|----|----|----|[0X
+    [4X    3:   140   84   45   20    6    .    .    .    .    .    .    0    0    0[0X
+    [4X    2:     *    .    .    .    .    .    1    .    .    .    .    .    0    0[0X
+    [4X    1:     *    *    .    .    .    .    .    .    .    .    .    .    .    0[0X
+    [4X    0:     *    *    *    .    .    .    .    .    .    4   15   36   70  120[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----S----|----|----|----|[0X
+    [4Xtwist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5[0X
+    [4X-----------------------------------------------------------------------------[0X
+    [4XEuler:  -140  -84  -45  -20   -6    0    1    0    0    4   15   36   70  120[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  third  power  U^3  of  the  shifted cotangent bundle U=U^1 and its Tate
+  resolution:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> U3 := SyzygiesObject( 4, k ) * S^3;[0X
+    [4X<A graded free left module of rank 1 on a free generator>[0X
+    [4Xgap> Display( U3 );[0X
+    [4XQ[x0,x1,x2,x3]^(1 x 1)[0X
+    [4X[0X
+    [4X(graded, degree of generator: 1)[0X
+    [4Xgap> T3 := TateResolution( U3, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> betti3 := BettiDiagram( T3 );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( betti3 );[0X
+    [4Xtotal:   56  35  20  10   4   1   1   4  10  20  35   ?   ?   ?[0X
+    [4X----------|---|---|---|---|---|---|---|---|---|---|---|---|---|[0X
+    [4X    3:   56  35  20  10   4   1   .   .   .   .   .   0   0   0[0X
+    [4X    2:    *   .   .   .   .   .   .   .   .   .   .   .   0   0[0X
+    [4X    1:    *   *   .   .   .   .   .   .   .   .   .   .   .   0[0X
+    [4X    0:    *   *   *   .   .   .   .   .   .   1   4  10  20  35[0X
+    [4X----------|---|---|---|---|---|---|---|---|---S---|---|---|---|[0X
+    [4Xtwist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5[0X
+    [4X---------------------------------------------------------------[0X
+    [4XEuler:  -56 -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35[0X
+  [4X------------------------------------------------------------------[0X
+  
+  Another way to construct U^2=U^(3-1):
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> u2 := GradedHom( U1, S^(-1) );[0X
+    [4X<A graded torsion-free right module on 4 generators satisfying yet unknown rel\[0X
+    [4Xations>[0X
+    [4Xgap> t2 := TateResolution( u2, -5, 5 );[0X
+    [4X<An acyclic cocomplex containing[0X
+    [4X10 morphisms of graded right modules at degrees [ -5 .. 5 ]>[0X
+    [4Xgap> BettiDiagram( t2 );[0X
+    [4X<A Betti diagram of <An acyclic cocomplex containing [0X
+    [4X10 morphisms of graded right modules at degrees [ -5 .. 5 ]>>[0X
+    [4Xgap> Display( last );[0X
+    [4Xtotal:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----|----|----|----|----|[0X
+    [4X    3:   140   84   45   20    6    .    .    .    .    .    .    0    0    0[0X
+    [4X    2:     *    .    .    .    .    .    1    .    .    .    .    .    0    0[0X
+    [4X    1:     *    *    .    .    .    .    .    .    .    .    .    .    .    0[0X
+    [4X    0:     *    *    *    .    .    .    .    .    .    4   15   36   70  120[0X
+    [4X-----------|----|----|----|----|----|----|----|----|----S----|----|----|----|[0X
+    [4Xtwist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5[0X
+    [4X-----------------------------------------------------------------------------[0X
+    [4XEuler:  -140  -84  -45  -20   -6    0    1    0    0    4   15   36   70  120[0X
+  [4X------------------------------------------------------------------[0X
+  

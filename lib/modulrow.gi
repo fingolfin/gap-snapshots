@@ -2,10 +2,9 @@
 ##
 #W  modulrow.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: modulrow.gi,v 4.38.2.2 2008/04/14 16:36:58 stefan Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for *row modules*, that is,
@@ -15,8 +14,6 @@
 ##
 ##  (See the file `modulmat.gi' for the methods for matrix modules.)
 ##
-Revision.modulrow_gi :=
-    "@(#)$Id: modulrow.gi,v 4.38.2.2 2008/04/14 16:36:58 stefan Exp $";
 
 
 #############################################################################

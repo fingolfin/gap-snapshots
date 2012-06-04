@@ -1,0 +1,135 @@
+  
+  [1X4 Ring Maps[0X
+  
+  A  [5Xhomalg[0m  ring  map is a data structure for maps between finitely generated
+  rings.  [5Xhomalg[0m more or less provides the basic declarations and installs the
+  generic  methods for ring maps, but it is up to other high level packages to
+  install  methods  applicable  to  specific  rings.  For example, the package
+  [5XSheaves[0m provides methods for ring maps of (finitely generated) affine rings.
+  
+  
+  [1X4.1 Ring Maps: Category and Representations[0X
+  
+  [1X4.1-1 IsHomalgRingMap[0m
+  
+  [2X> IsHomalgRingMap( [0X[3Xphi[0X[2X ) ___________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of ring maps.
+  
+  [1X4.1-2 IsHomalgRingSelfMap[0m
+  
+  [2X> IsHomalgRingSelfMap( [0X[3Xphi[0X[2X ) _______________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of ring self-maps.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgRingMap[0m.)
+  
+  [1X4.1-3 IsHomalgRingMapRep[0m
+  
+  [2X> IsHomalgRingMapRep( [0X[3Xphi[0X[2X ) __________________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of [5Xhomalg[0m ring maps.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgRingMap[0m ([14X4.1-1[0m).)
+  
+  
+  [1X4.2 Ring Maps: Constructors[0X
+  
+  [1X4.2-1 RingMap[0m
+  
+  [2X> RingMap( [0X[3Ximages, S, T[0X[2X ) _________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  
+  This  constructor  returns  a  ring map (homomorphism) of finitely generated
+  rings/algebras.  It  is  represented  by  the  images  [3Ximages[0m  of the set of
+  generators  of  the  source  [5Xhomalg[0m ring [3XS[0m in terms of the generators of the
+  target  ring  [3XT[0m  (--> [14X3.2[0m). Unless the source ring is free [13Xand[0m given on free
+  ring/algebra  generators the returned map will cautiously be indicated using
+  parenthesis:  "homomorphism".  To  verify  if  the  result  is indeed a well
+  defined  map  use  [2XIsMorphism[0m  ([14X4.3-1[0m).  If  source and target are identical
+  objects, and only then, the ring map is created as a selfmap.
+  
+  
+  [1X4.3 Ring Maps: Properties[0X
+  
+  [1X4.3-1 IsMorphism[0m
+  
+  [2X> IsMorphism( [0X[3Xphi[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  [3Xphi[0m  is  a  well-defined  map,  i.e.  independent of all involved
+  presentations.
+  
+  [1X4.3-2 IsIdentityMorphism[0m
+  
+  [2X> IsIdentityMorphism( [0X[3Xphi[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring map [3Xphi[0m is the identity morphism.
+  
+  [1X4.3-3 IsMonomorphism[0m
+  
+  [2X> IsMonomorphism( [0X[3Xphi[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring map [3Xphi[0m is a monomorphism.
+  
+  [1X4.3-4 IsEpimorphism[0m
+  
+  [2X> IsEpimorphism( [0X[3Xphi[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring map [3Xphi[0m is an epimorphism.
+  
+  [1X4.3-5 IsIsomorphism[0m
+  
+  [2X> IsIsomorphism( [0X[3Xphi[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring map [3Xphi[0m is an isomorphism.
+  
+  [1X4.3-6 IsAutomorphism[0m
+  
+  [2X> IsAutomorphism( [0X[3Xphi[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring map [3Xphi[0m is an automorphism.
+  
+  
+  [1X4.4 Ring Maps: Attributes[0X
+  
+  [1X4.4-1 Source[0m
+  
+  [2X> Source( [0X[3Xphi[0X[2X ) ___________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The source of the [5Xhomalg[0m ring map [3Xphi[0m.
+  
+  [1X4.4-2 Range[0m
+  
+  [2X> Range( [0X[3Xphi[0X[2X ) ____________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The target (range) of the [5Xhomalg[0m ring map [3Xphi[0m.
+  
+  [1X4.4-3 DegreeOfMorphism[0m
+  
+  [2X> DegreeOfMorphism( [0X[3Xphi[0X[2X ) _________________________________________[0Xattribute
+  [6XReturns:[0X  an integer
+  
+  The degree of the morphism [3Xphi[0m of graded rings.
+  (no method installed)
+  
+  [1X4.4-4 CoordinateRingOfGraph[0m
+  
+  [2X> CoordinateRingOfGraph( [0X[3Xphi[0X[2X ) ____________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The coordinate ring of the graph of the ring map [3Xphi[0m.
+  
+  
+  [1X4.5 Ring Maps: Operations and Functions[0X
+  

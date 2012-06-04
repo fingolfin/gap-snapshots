@@ -1,0 +1,186 @@
+\makelabel{modules:Title page}{}
+\makelabel{modules:Copyright}{}
+\makelabel{modules:Acknowledgements}{}
+\makelabel{modules:Table of Contents}{}
+\makelabel{modules:Introduction}{1}
+\makelabel{modules:What is the role of the Modules package in the homalg project?}{1.1}
+\makelabel{modules:Modules provides ...}{1.1.1}
+\makelabel{modules:Rings supported in a sufficient way}{1.1.2}
+\makelabel{modules:Principal limitation}{1.1.3}
+\makelabel{modules:Ring dictionaries (technical)}{1.1.4}
+\makelabel{modules:The advantages of the outsourcing concept}{1.1.5}
+\makelabel{modules:Does this mean that homalg has only algorithms for the generic case?}{1.1.6}
+\makelabel{modules:The principle of least communication (technical)}{1.1.7}
+\makelabel{modules:Frequently asked questions}{1.1.8}
+\makelabel{modules:This manual}{1.2}
+\makelabel{modules:Installation of the Modules Package}{2}
+\makelabel{modules:Quick Start}{3}
+\makelabel{modules:Why are all examples in this manual over ℤ or ℤ/mℤ?}{3.1}
+\makelabel{modules:gap> ExamplesForHomalg();}{3.2}
+\makelabel{modules:A typical example}{3.3}
+\makelabel{modules:HomHom}{3.3.1}
+\makelabel{modules:Ring Maps}{4}
+\makelabel{modules:Ring Maps: Attributes}{4.1}
+\makelabel{modules:Ring Maps: Operations and Functions}{4.2}
+\makelabel{modules:Relations}{5}
+\makelabel{modules:Relations: Categories and Representations}{5.1}
+\makelabel{modules:Relations: Constructors}{5.2}
+\makelabel{modules:Relations: Properties}{5.3}
+\makelabel{modules:Relations: Attributes}{5.4}
+\makelabel{modules:Relations: Operations and Functions}{5.5}
+\makelabel{modules:Generators}{6}
+\makelabel{modules:Generators: Categories and Representations}{6.1}
+\makelabel{modules:Generators: Constructors}{6.2}
+\makelabel{modules:Generators: Properties}{6.3}
+\makelabel{modules:Generators: Attributes}{6.4}
+\makelabel{modules:Generators: Operations and Functions}{6.5}
+\makelabel{modules:Modules}{7}
+\makelabel{modules:Modules: Category and Representations}{7.1}
+\makelabel{modules:Modules: Constructors}{7.2}
+\makelabel{modules:Modules: Properties}{7.3}
+\makelabel{modules:Modules: Attributes}{7.4}
+\makelabel{modules:Modules: Operations and Functions}{7.5}
+\makelabel{modules:Maps}{8}
+\makelabel{modules:Maps: Categories and Representations}{8.1}
+\makelabel{modules:Maps: Constructors}{8.2}
+\makelabel{modules:Maps: Properties}{8.3}
+\makelabel{modules:Maps: Attributes}{8.4}
+\makelabel{modules:Maps: Operations and Functions}{8.5}
+\makelabel{modules:Module Elements}{9}
+\makelabel{modules:Module Elements: Category and Representations}{9.1}
+\makelabel{modules:Module Elements: Constructors}{9.2}
+\makelabel{modules:Module Elements: Properties}{9.3}
+\makelabel{modules:Module Elements: Attributes}{9.4}
+\makelabel{modules:Module Elements: Operations and Functions}{9.5}
+\makelabel{modules:Functors}{10}
+\makelabel{modules:Functors: Category and Representations}{10.1}
+\makelabel{modules:Functors: Constructors}{10.2}
+\makelabel{modules:Functors: Attributes}{10.3}
+\makelabel{modules:Basic Functors}{10.4}
+\makelabel{modules:Tool Functors}{10.5}
+\makelabel{modules:Other Functors}{10.6}
+\makelabel{modules:Functors: Operations and Functions}{10.7}
+\makelabel{modules:Exterior Algebra and Koszul Complex}{11}
+\makelabel{modules:Exterior Algebra: Constructor}{11.1}
+\makelabel{modules:Exterior Algebra: Properties and Attributes}{11.2}
+\makelabel{modules:Exterior Algebra: Element Properties}{11.3}
+\makelabel{modules:Exterior Algebra: Element Operations}{11.4}
+\makelabel{modules:Koszul complex and Cayley determinant}{11.5}
+\makelabel{modules:Examples}{12}
+\makelabel{modules:ExtExt}{12.1}
+\makelabel{modules:Purity}{12.2}
+\makelabel{modules:TorExt-Grothendieck}{12.3}
+\makelabel{modules:TorExt}{12.4}
+\makelabel{modules:The Mathematical Idea behind Modules}{A}
+\makelabel{modules:Logic Subpackages}{B}
+\makelabel{modules:LIMOD: Logical Implications for Modules}{B.1}
+\makelabel{modules:LIHOM: Logical Implications for Homomorphisms of Modules}{B.2}
+\makelabel{modules:Overview of the Modules Package Source Code}{C}
+\makelabel{modules:Relations and Generators}{C.1}
+\makelabel{modules:The Basic Objects}{C.2}
+\makelabel{modules:The High Level Homological Algorithms}{C.3}
+\makelabel{modules:Logical Implications for homalg Objects}{C.4}
+\makelabel{modules:Bibliography}{Bib}
+\makelabel{modules:References}{Bib}
+\makelabel{modules:Index}{Ind}
+\makelabel{modules:Modules}{}
+\makelabel{modules:KernelSubobject (for ring maps)}{4.1.1}
+\makelabel{modules:KernelEmb (for ring maps)}{4.1.2}
+\makelabel{modules:Kernel (for ring maps)}{4.2.1}
+\makelabel{modules:IsHomalgRelations}{5.1.1}
+\makelabel{modules:IsHomalgRelationsOfLeftModule}{5.1.2}
+\makelabel{modules:IsHomalgRelationsOfRightModule}{5.1.3}
+\makelabel{modules:IsRelationsOfFinitelyPresentedModuleRep}{5.1.4}
+\makelabel{modules:CanBeUsedToDecideZeroEffectively}{5.3.1}
+\makelabel{modules:IsInjectivePresentation}{5.3.2}
+\makelabel{modules:IsHomalgGenerators}{6.1.1}
+\makelabel{modules:IsHomalgGeneratorsOfLeftModule}{6.1.2}
+\makelabel{modules:IsHomalgGeneratorsOfRightModule}{6.1.3}
+\makelabel{modules:IsGeneratorsOfModuleRep}{6.1.4}
+\makelabel{modules:IsGeneratorsOfFinitelyGeneratedModuleRep}{6.1.5}
+\makelabel{modules:IsReduced}{6.3.1}
+\makelabel{modules:ProcedureToReadjustGenerators}{6.4.1}
+\makelabel{modules:IsHomalgModule}{7.1.1}
+\makelabel{modules:IsFinitelyPresentedModuleOrSubmoduleRep}{7.1.2}
+\makelabel{modules:IsFinitelyPresentedModuleRep}{7.1.3}
+\makelabel{modules:IsFinitelyPresentedSubmoduleRep}{7.1.4}
+\makelabel{modules:LeftPresentation (constructor for left modules)}{7.2.1}
+\makelabel{modules:RightPresentation (constructor for right modules)}{7.2.2}
+\makelabel{modules:HomalgFreeLeftModule (constructor for free left modules)}{7.2.3}
+\makelabel{modules:HomalgFreeRightModule (constructor for free right modules)}{7.2.4}
+\makelabel{modules:HomalgZeroLeftModule (constructor for zero left modules)}{7.2.5}
+\makelabel{modules:HomalgZeroRightModule (constructor for zero right modules)}{7.2.6}
+\makelabel{modules:\* (transfer a module over a different ring)}{7.2.7}
+\makelabel{modules:\* (transfer a module over a different ring (right))}{7.2.7}
+\makelabel{modules:Subobject (constructor for submodules using matrices)}{7.2.8}
+\makelabel{modules:Subobject (constructor for submodules using a list of ring elements)}{7.2.9}
+\makelabel{modules:LeftSubmodule (constructor for left submodules)}{7.2.10}
+\makelabel{modules:RightSubmodule (constructor for right submodules)}{7.2.11}
+\makelabel{modules:IsCyclic}{7.3.1}
+\makelabel{modules:IsHolonomic}{7.3.2}
+\makelabel{modules:IsPrimeIdeal}{7.3.3}
+\makelabel{modules:ResidueClassRing}{7.4.1}
+\makelabel{modules:PrimaryDecomposition}{7.4.2}
+\makelabel{modules:ElementaryDivisors}{7.4.3}
+\makelabel{modules:FittingIdeal}{7.4.4}
+\makelabel{modules:NonFlatLocus}{7.4.5}
+\makelabel{modules:LargestMinimalNumberOfLocalGenerators}{7.4.6}
+\makelabel{modules:CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}{7.4.7}
+\makelabel{modules:CoefficientsOfNumeratorOfHilbertPoincareSeries}{7.4.8}
+\makelabel{modules:UnreducedNumeratorOfHilbertPoincareSeries}{7.4.9}
+\makelabel{modules:NumeratorOfHilbertPoincareSeries}{7.4.10}
+\makelabel{modules:HilbertPoincareSeries}{7.4.11}
+\makelabel{modules:AffineDegree}{7.4.12}
+\makelabel{modules:DataOfHilbertFunction}{7.4.13}
+\makelabel{modules:HilbertFunction}{7.4.14}
+\makelabel{modules:IndexOfRegularity}{7.4.15}
+\makelabel{modules:HomalgRing (for modules)}{7.5.1}
+\makelabel{modules:ByASmallerPresentation (for modules)}{7.5.2}
+\makelabel{modules:\* (constructor for ideal multiples)}{7.5.3}
+\makelabel{modules:SubobjectQuotient (for submodules)}{7.5.4}
+\makelabel{modules:IsHomalgMap}{8.1.1}
+\makelabel{modules:IsHomalgSelfMap}{8.1.2}
+\makelabel{modules:IsMapOfFinitelyGeneratedModulesRep}{8.1.3}
+\makelabel{modules:HomalgMap (constructor for maps)}{8.2.1}
+\makelabel{modules:HomalgMap (constructor for maps between free modules)}{8.2.1}
+\makelabel{modules:HomalgZeroMap (constructor for zero maps)}{8.2.2}
+\makelabel{modules:HomalgIdentityMap (constructor for identity maps)}{8.2.3}
+\makelabel{modules:DegreeOfMorphism (for maps)}{8.4.1}
+\makelabel{modules:HomalgRing}{8.5.1}
+\makelabel{modules:PreInverse}{8.5.2}
+\makelabel{modules:IsHomalgElement}{9.1.1}
+\makelabel{modules:IsElementOfAModuleGivenByAMorphismRep}{9.1.2}
+\makelabel{modules:IsElementOfIntegers}{9.3.1}
+\makelabel{modules:HomalgRing (for module elements)}{9.5.1}
+\makelabel{modules:functorCokernel}{10.4.1}
+\makelabel{modules:Cokernel}{10.4.2}
+\makelabel{modules:functorImageObject}{10.4.3}
+\makelabel{modules:ImageObject}{10.4.4}
+\makelabel{modules:Kernel (for maps)}{10.4.5}
+\makelabel{modules:DefectOfExactness}{10.4.6}
+\makelabel{modules:FunctorHom}{10.4.7}
+\makelabel{modules:Hom}{10.4.8}
+\makelabel{modules:FunctorTensorProduct}{10.4.9}
+\makelabel{modules:TensorProduct}{10.4.10}
+\makelabel{modules:\* (TensorProduct)}{10.4.10}
+\makelabel{modules:FunctorExt}{10.4.11}
+\makelabel{modules:Ext}{10.4.12}
+\makelabel{modules:FunctorTor}{10.4.13}
+\makelabel{modules:Tor}{10.4.14}
+\makelabel{modules:FunctorRHom}{10.4.15}
+\makelabel{modules:RHom}{10.4.16}
+\makelabel{modules:FunctorLTensorProduct}{10.4.17}
+\makelabel{modules:LTensorProduct}{10.4.18}
+\makelabel{modules:FunctorHomHom}{10.4.19}
+\makelabel{modules:FunctorLHomHom}{10.4.20}
+\makelabel{modules:ExteriorPower}{11.1.1}
+\makelabel{modules:IsExteriorPower}{11.2.1}
+\makelabel{modules:ExteriorPowerExponent}{11.2.2}
+\makelabel{modules:ExteriorPowerBaseModule}{11.2.3}
+\makelabel{modules:IsExteriorPowerElement}{11.3.1}
+\makelabel{modules:Wedge (for elements of exterior powers of free modules)}{11.4.1}
+\makelabel{modules:ExteriorPowerElementDual}{11.4.2}
+\makelabel{modules:SingleValueOfExteriorPowerElement}{11.4.3}
+\makelabel{modules:KoszulCocomplex}{11.5.1}
+\makelabel{modules:CayleyDeterminant}{11.5.2}
+\makelabel{modules:GcdUsingCayleyDeterminant}{11.5.3}

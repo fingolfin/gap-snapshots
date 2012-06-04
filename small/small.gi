@@ -6,8 +6,6 @@
 ##  This file contains the basic installations for the library of small
 ##  groups and the group identification routines. 
 ##
-Revision.small_gi :=
-    "@(#)$Id: small.gi,v 4.17.2.1 2005/05/03 14:21:26 gap Exp $";
 
 #############################################################################
 ##

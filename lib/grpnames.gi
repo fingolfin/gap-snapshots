@@ -1,10 +1,9 @@
 #############################################################################
 ##
 #W  grpnames.gi                                                   Stefan Kohl
-##                                                             Markus Püschel
+##                                                             Markus PÃ¼schel
 ##                                                            Sebastian Egner
 ##
-#H  @(#)$Id: grpnames.gi,v 4.9.2.5 2006/02/15 10:11:34 stefan Exp $
 ##
 #Y  Copyright (C) 2004 The GAP Group
 ##
@@ -18,10 +17,8 @@
 ##  description for a given group.
 ##
 ##  The code has been translated, simplified and extended by Stefan Kohl
-##  from GAP3 code written by Markus Püschel and Sebastian Egner.
+##  from GAP3 code written by Markus PÃ¼schel and Sebastian Egner.
 ##
-Revision.grpnames_gi :=
-  "@(#)$Id: grpnames.gi,v 4.9.2.5 2006/02/15 10:11:34 stefan Exp $";
 
 #############################################################################
 ##
@@ -32,16 +29,35 @@ InstallMethod( DirectFactorsOfGroup,
 
   function ( G )
 
-    local  N, facts;
+    local  N, facts, sizes, i, j, s1, s2;
 
     if not IsFinite(G) then TryNextMethod(); fi;
-    N := Difference(NormalSubgroups(G),[TrivialSubgroup(G),G]);
-    facts := First(Combinations(N,2),
-                   norms -> Product(List(norms,Size)) = Size(G)
-                            and IsTrivial(Intersection(norms)));
-    if   facts = fail
-    then return [ G ];
-    else return Union(List(facts,DirectFactorsOfGroup)); fi;
+    N := ShallowCopy(NormalSubgroups(G));
+    sizes := List(N,Size);
+    SortParallel(sizes,N);
+    for s1 in Difference(Set(sizes),[Size(G),1]) do
+      i := PositionSet(sizes,s1);
+      s2 := Size(G)/s1;
+      if s1 <= s2 then 
+        repeat
+          if s2 > s1 then
+            j := PositionSet(sizes,s2);
+            if j = fail then break; fi;
+          else 
+            j := i + 1;
+          fi;
+          while sizes[j] = s2 do
+            if IsTrivial(Intersection(N[i],N[j])) then
+              return Union(DirectFactorsOfGroup(N[i]),
+                           DirectFactorsOfGroup(N[j]));
+            fi;
+            j := j + 1;
+          od;
+          i := i + 1;
+        until sizes[i] <> s1;
+      fi;
+    od;
+    return [ G ];
   end );
 
 #############################################################################
@@ -355,11 +371,14 @@ InstallMethod( IsAlternatingGroup,
 
     if not IsFinite(G) then TryNextMethod(); fi;
 
+    if IsNaturalAlternatingGroup(G) then return true;fi;
     if Size(G) < 60 then
-      ids := [ [ 1, 1 ], [ 1, 1 ], [ 3, 1 ], [ 12, 3 ] ];
-      n := Position(ids,IdGroup(G));
-      if   IsInt(n)
-      then SetAlternatingDegree(G,n); return true;
+      if Size(G) = 1 then
+        SetAlternatingDegree(G,0); return true;
+      elif Size(G) = 3 then
+        SetAlternatingDegree(G,3); return true;
+      elif Size(G) = 12 and IdGroup(G) = [ 12, 3 ] then
+        SetAlternatingDegree(G,4); return true;
       else return false; fi;
     fi;
 
@@ -412,10 +431,18 @@ InstallMethod( IsSymmetricGroup,
 
     local  G1;
 
+    if IsNaturalSymmetricGroup(G) then return true;fi;
     if not IsFinite(G) then TryNextMethod(); fi;
-    if IsTrivial(G) then SetSymmetricDegree(G,1); return true; fi;
+
+    # special treatment of small cases
+    if Size(G)<=2 then SetSymmetricDegree(G,Size(G)); return true;
+    elif Size(G)=6 and not IsAbelian(G) then
+      SetSymmetricDegree(G,3);return true;
+    fi;
+
     G1 := DerivedSubgroup(G);
     if   not (IsAlternatingGroup(G1) and Index(G,G1) = 2)
+      # this requires deg>=4
       or not IsTrivial(Centralizer(G,G1))
       or Size(G) = 720 and IdGroup(G) <> [ 720, 763 ]
     then return false; fi;
@@ -575,6 +602,10 @@ InstallMethod( IsPSL,
 
     if not IsFinite(G) then TryNextMethod(); fi;
 
+    if Size(G)>12 and not IsSimpleGroup(G) then
+      return false;
+    fi;
+
     # check if G has appropiate size
     npes := LinearGroupParameters(Size(G)).npePSL;
     if Length(npes) = 0 then return false; fi;
@@ -594,23 +625,23 @@ InstallMethod( IsPSL,
     # PSL(2, 2)
     if npes[1] = [2, 2, 1] then
       if IsAbelian(G) then return false; fi;
-      SetnpePSL(G,npe); return true;
+      SetParametersOfGroupViewedAsPSL(G,npe); return true;
   
     # PSL(2, 3)
     elif npes[1] = [2, 3, 1] then
       if Size(DerivedSubgroup(G)) <> 4 then return false; fi;
-      SetnpePSL(G,npe); return true;
+      SetParametersOfGroupViewedAsPSL(G,npe); return true;
 
    # PSL(3, 4) / PSL(4, 2)
     elif npes = [ [ 4, 2, 1 ], [ 3, 2, 2 ] ] then
       if   IdGroup(SylowSubgroup(G,2)) = [64,138] then npe := npes[1];
       elif IdGroup(SylowSubgroup(G,2)) = [64,242] then npe := npes[2]; fi;
-      SetnpePSL(G,npe); return true;
+      SetParametersOfGroupViewedAsPSL(G,npe); return true;
 
     # other cases
     else
       if not IsSimpleGroup(G) then return false; fi;
-      SetnpePSL(G,npe); return true;
+      SetParametersOfGroupViewedAsPSL(G,npe); return true;
     fi;
   end );
 
@@ -624,7 +655,7 @@ InstallMethod( PSLDegree,
   function ( G )
     if not IsFinite(G) then TryNextMethod(); fi;
     if not IsPSL(G) then return fail; fi;
-    return npePSL(G)[1];
+    return ParametersOfGroupViewedAsPSL(G)[1];
   end );
 
 #############################################################################
@@ -637,7 +668,7 @@ InstallMethod( PSLUnderlyingField,
   function ( G )
     if not IsFinite(G) then TryNextMethod(); fi;
     if not IsPSL(G) then return fail; fi;
-    return GF(npePSL(G)[2]^npePSL(G)[3]);
+    return GF(ParametersOfGroupViewedAsPSL(G)[2]^ParametersOfGroupViewedAsPSL(G)[3]);
   end );
 
 #############################################################################
@@ -671,12 +702,12 @@ InstallMethod( IsSL,
     # SL(2, 2)
     if npes = [2, 2, 1] then
       if IsAbelian(G) then return false; fi;
-      SetnpeSL(G,npes); return true;
+      SetParametersOfGroupViewedAsSL(G,npes); return true;
 
     # SL(2, 3)
     elif npes = [2, 3, 1] then
       if Size(DerivedSubgroup(G)) <> 8 then return false; fi;
-      SetnpeSL(G,npes); return true;
+      SetParametersOfGroupViewedAsSL(G,npes); return true;
 
     # other cases, in which the contained PSL is simple
     else
@@ -691,7 +722,7 @@ InstallMethod( IsSL,
       then return false; fi;
      if   IsomorphismGroups(G,SL(npes[1],npes[2]^npes[3])) = fail
      then return false; fi;
-     SetnpeSL(G,npes); return true;
+     SetParametersOfGroupViewedAsSL(G,npes); return true;
     fi;
   end );
 
@@ -707,7 +738,7 @@ InstallMethod( SLDegree,
     if not IsSL(G) then return fail; fi;
     if   HasIsNaturalSL(G) and IsNaturalSL(G)
     then return DimensionOfMatrixGroup(G); fi;
-    return npeSL(G)[1];
+    return ParametersOfGroupViewedAsSL(G)[1];
   end );
 
 #############################################################################
@@ -722,7 +753,7 @@ InstallMethod( SLUnderlyingField,
     if not IsSL(G) then return fail; fi;
     if   HasIsNaturalSL(G) and IsNaturalSL(G)
     then return FieldOfMatrixGroup(G); fi;
-    return GF(npeSL(G)[2]^npeSL(G)[3]);
+    return GF(ParametersOfGroupViewedAsSL(G)[2]^ParametersOfGroupViewedAsSL(G)[3]);
   end );
 
 #############################################################################
@@ -757,12 +788,12 @@ InstallMethod( IsGL,
     # GL(2, 2)
     if npes = [2, 2, 1] then
       if IsAbelian(G) then return false; fi;
-      SetnpeGL(G,npes); return true;
+      SetParametersOfGroupViewedAsGL(G,npes); return true;
 
     # GL(2, 3)
     elif npes = [2, 3, 1] then
       if IdGroup(G) <> [48,29] then return false; fi;
-      SetnpeGL(G,npes); return true;
+      SetParametersOfGroupViewedAsGL(G,npes); return true;
 
     # other cases, in which contained PSL is simple
     else
@@ -781,7 +812,7 @@ InstallMethod( IsGL,
       then return false; fi;
       if   IsomorphismGroups(G,GL(npes[1],npes[2]^npes[3])) = fail
       then return false; fi;
-      SetnpeGL(G,npes); return true;
+      SetParametersOfGroupViewedAsGL(G,npes); return true;
     fi;
   end );
 
@@ -797,7 +828,7 @@ InstallMethod( GLDegree,
     if not IsGL(G) then return fail; fi;
     if   HasIsNaturalGL(G) and IsNaturalGL(G)
     then return DimensionOfMatrixGroup(G); fi;
-    return npeGL(G)[1];
+    return ParametersOfGroupViewedAsGL(G)[1];
   end );
 
 #############################################################################
@@ -812,7 +843,7 @@ InstallMethod( GLUnderlyingField,
     if not IsGL(G) then return fail; fi;
     if   HasIsNaturalGL(G) and IsNaturalGL(G)
     then return FieldOfMatrixGroup(G); fi;
-    return GF(npeGL(G)[2]^npeGL(G)[3]);
+    return GF(ParametersOfGroupViewedAsGL(G)[2]^ParametersOfGroupViewedAsGL(G)[3]);
   end );
 
 #############################################################################
@@ -1077,8 +1108,10 @@ InstallMethod( StructureDescription,
     elif not IsTrivial(FrattiniSubgroup(G))
     then return insertsep([StructureDescription(FrattiniSubgroup(G)),
                            StructureDescription(G/FrattiniSubgroup(G))],
-                          " . ","x:.");       
-    elif IsPosInt(NrPerfectGroups(Size(G))) then
+                          " . ","x:.");
+    elif     IsPosInt(NrPerfectGroups(Size(G)))
+         and not Size(G) in [ 86016, 368640, 737280 ]
+    then
          id := PerfectIdentification(G);
          return Concatenation("PerfectGroup(",String(id[1]),",",
                                               String(id[2]),")");
@@ -1088,6 +1121,18 @@ InstallMethod( StructureDescription,
                 "semidirect product of smaller groups>");
     fi;
   end );
+
+#############################################################################
+##
+#M  StructureDescription( <G> ) . . . . . . . . . . .  for group by nice mono
+##
+InstallMethod( StructureDescription,
+               "for groups handled by nice monomorphism", true, 
+			   [ IsGroup and IsHandledByNiceMonomorphism], 0,
+	function ( G )
+		return StructureDescription ( NiceObject ( G ) );
+	end );
+	
 
 #############################################################################
 ##

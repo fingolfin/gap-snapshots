@@ -1,0 +1,58 @@
+  
+  [1X2 Usage[0X
+  
+  There  are  different  ways  to  use  [5XSCO[0m.  Please  note that for the actual
+  computations  the  [5Xhomalg[0m  package  is  required, and you will need both the
+  [5XRingsForHomalg[0m  and  the  [5XGaussForHomalg[0m  package  to  make  use of the full
+  computational  capabilities.  For  your  information,  [5XRingsForHomalg[0m offers
+  support  for  external  computer algebra systems and the rings they support,
+  while  [5XGaussForHomalg[0m  extends  [5XGAP[0m  functionality  with  regards  to sparse
+  matrices and computations over fields and ℤ / < p^n >.
+  
+  
+  [1X2.1 The Examples Script[0X
+  
+  Regardless  of  the  extend of your installation, you will always be able to
+  call  the  example  script  [11XSCO/examples/examples.g[0m. This script is not only
+  callable in-[5XGAP[0m by [2XSCO_Examples[0m ([14X4.3-6[0m), but also automatically checks which
+  packages you have installed and provides you with the available options. The
+  example script is designed to take you through the ring creation process and
+  then   load   one   of   the   files   of   your   choice   located  in  the
+  [11XSCO/examples/orbifolds/[0m  directory.  In  there  you  will find a lot of test
+  files  with  small  0-  or  1-dimensional  orbifolds,  but also the complete
+  triangulations  of  the  17  orbifolds  corresponding  to  the 2-dimensional
+  wallpaper  groups  (these should be exactly the uncapitalized files, ranging
+  from  [11Xp1.g[0m  to  [11Xp6m.g[0m).  Computing  the cohomology of these orbifolds was an
+  important  part  of  my  diploma  thesis  [Gör08a] and I have also created a
+  separate document [Gör08b] to present my results.
+  
+  Please  note that the variables [3XM[0m, [3Xiso[0m, and [3Xmu[0m in the orbifold files have to
+  keep their name for the example script to work correctly. Refer to chapter [14X3[0m
+  for concrete examples.
+  
+  
+  [1X2.2 Working Manually[0X
+  
+  Once  you  are familiar with the example script and want to try out your own
+  triangulations,   it   is   best   to   create  your  own  [11X.g[0m  file  in  the
+  [11XSCO/examples/orbifolds/[0m  directory,  then  call the script again. If for any
+  reason  you  do  not  want to create a file or work with the script, you can
+  always  do  every  step  by  hand.  Check  [14X4[0m  if you need to know more about
+  specific methods and functions. The basic steps are:
+  
+  --    Define a list of maximum simplices
+  
+  --    If applicable, define an isotropy record
+  
+  --    If applicable, define a list encoding the mu-map
+  
+  --    From the above data, create an orbifold triangulation
+  
+  --    Define the simplicial set of the orbifold triangulation
+  
+  --    Create a [5Xhomalg[0m ring R
+  
+  --    Create boundary or coboundary matrices over R
+  
+  --    Calculate their homology or cohomology
+  

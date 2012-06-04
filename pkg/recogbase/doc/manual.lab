@@ -1,0 +1,90 @@
+\GAPDocLabFile{recogbase}
+\makelabel{recogbase:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{recogbase:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{recogbase:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{recogbase:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{recogbase:Philosophy}{1.1}{X873C99678745ABAF}
+\makelabel{recogbase:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{recogbase:Installation of the recogbase-Package}{2}{X83C19B2B7BF99709}
+\makelabel{recogbase:Method Selection}{3}{X8058CC8187162644}
+\makelabel{recogbase:What are methods?}{3.1}{X7F89FF55818F1139}
+\makelabel{recogbase:How methods are called}{3.2}{X83FCCBCA78F608E1}
+\makelabel{recogbase:Group Recognition}{4}{X7F73983582251807}
+\makelabel{recogbase:The recursive procedure}{4.1}{X81E31E377B16CF39}
+\makelabel{recogbase:Recognition info records}{4.2}{X7D7B4A3D81878179}
+\makelabel{recogbase:Other components of recognition info records}{4.2.33}{X800B9BBE82F24C49}
+\makelabel{recogbase:Methods to find homomorphisms}{4.3}{X8577717D85D631C2}
+\makelabel{recogbase:Conventions for the recognition of permutation groups}{4.4}{X7B2941D57B361990}
+\makelabel{recogbase:Conventions for the recognition of matrix groups}{4.5}{X8676A21280D842DB}
+\makelabel{recogbase:Conventions for the recognition of projective groups}{4.6}{X835738DA86087BB3}
+\makelabel{recogbase:Conventions for the recognition of black box groups}{4.7}{X853D4D0F82D40D6A}
+\makelabel{recogbase:After successful recognition}{5}{X851A3F04786123D5}
+\makelabel{recogbase:Functions and methods for recognition info records}{5.1}{X803CC158789AADDA}
+\makelabel{recogbase:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{recogbase:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{recogbase:Index}{Ind}{X83A0356F839C696F}
+\makelabel{recogbase:recogbase}{2}{X83C19B2B7BF99709}
+\makelabel{recogbase:AddMethod}{3.1.1}{X845DB71C806CADDC}
+\makelabel{recogbase:CallMethods}{3.2.1}{X7BC2692183B6C4E6}
+\makelabel{recogbase:RecogniseGeneric}{4.1.1}{X7BFEB34483548A89}
+\makelabel{recogbase:RecognizeGeneric}{4.1.1}{X7BFEB34483548A89}
+\makelabel{recogbase:RecognisePermGroup}{4.1.2}{X84338F037B91CDD0}
+\makelabel{recogbase:RecognizePermGroup}{4.1.2}{X84338F037B91CDD0}
+\makelabel{recogbase:RecogniseMatrixGroup}{4.1.3}{X788DCF6A7D9E80BD}
+\makelabel{recogbase:RecognizeMatrixGroup}{4.1.3}{X788DCF6A7D9E80BD}
+\makelabel{recogbase:RecogniseProjectiveGroup}{4.1.4}{X841176DD7BA1CAA0}
+\makelabel{recogbase:RecognizeProjectiveGroup}{4.1.4}{X841176DD7BA1CAA0}
+\makelabel{recogbase:RecogniseBBGroup}{4.1.5}{X8463F0AA7B1B71CB}
+\makelabel{recogbase:RecognizeBBGroup}{4.1.5}{X8463F0AA7B1B71CB}
+\makelabel{recogbase:RecogniseGroup}{4.1.6}{X853B4EE27AF57CD3}
+\makelabel{recogbase:RecognizeGroup}{4.1.6}{X853B4EE27AF57CD3}
+\makelabel{recogbase:FindHomDbPerm}{4.1.7}{X836B50947A46B1A5}
+\makelabel{recogbase:FindHomMethodsPerm}{4.1.8}{X7A94720080D344DA}
+\makelabel{recogbase:SLPforElementFuncsPerm}{4.1.9}{X7B5561D187242287}
+\makelabel{recogbase:FindHomDbMatrix}{4.1.10}{X7CA5F5FA7E850885}
+\makelabel{recogbase:FindHomMethodsMatrix}{4.1.11}{X79B60CEF8292F142}
+\makelabel{recogbase:SLPforElementFuncsMatrix}{4.1.12}{X7A2E7DF67F4949C8}
+\makelabel{recogbase:FindHomDbProjective}{4.1.13}{X7A4F8342854507E3}
+\makelabel{recogbase:FindHomMethodsProjective}{4.1.14}{X7D796A2179E9026A}
+\makelabel{recogbase:SLPforElementFuncsProjective}{4.1.15}{X7F6FCC4F81ACF20F}
+\makelabel{recogbase:FindHomDbBB}{4.1.16}{X7C3021F381A54203}
+\makelabel{recogbase:FindHomMethodsBB}{4.1.17}{X7BC8D0158242150D}
+\makelabel{recogbase:SLPforElementFuncsBB}{4.1.18}{X7E762E1D86A31695}
+\makelabel{recogbase:TryFindHomMethod}{4.1.19}{X7AD4A7168016DF8F}
+\makelabel{recogbase:RecognitionInfoFamily}{4.2.1}{X820267927AB548EC}
+\makelabel{recogbase:IsRecognitionInfo}{4.2.2}{X836958B87C783165}
+\makelabel{recogbase:IsLeaf}{4.2.3}{X8469BB658377FD92}
+\makelabel{recogbase:IsReady}{4.2.4}{X7D6CEF0178ED73A7}
+\makelabel{recogbase:Grp}{4.2.5}{X7972380780D99B04}
+\makelabel{recogbase:Homom}{4.2.6}{X8273C2FC79FB6543}
+\makelabel{recogbase:NiceGens}{4.2.7}{X864194958685AAD7}
+\makelabel{recogbase:pregensfac}{4.2.8}{X808A01AA869115EC}
+\makelabel{recogbase:RIFac}{4.2.9}{X85D69105867342C7}
+\makelabel{recogbase:RIKer}{4.2.10}{X85B6D66F7BD0E964}
+\makelabel{recogbase:RIParent}{4.2.11}{X7C66C89C84F9C6AA}
+\makelabel{recogbase:fhmethsel}{4.2.12}{X7ACD6B4C7982B1E3}
+\makelabel{recogbase:slpforelement}{4.2.13}{X83167779869A3BF5}
+\makelabel{recogbase:SLPforElement}{4.2.14}{X83167779869A3BF5}
+\makelabel{recogbase:StdPresentation}{4.2.15}{X7FBE4706828964EB}
+\makelabel{recogbase:methodsforfactor}{4.2.16}{X826BC2BB7D7AD6A9}
+\makelabel{recogbase:calcnicegens}{4.2.17}{X7EFA298E7E4760A0}
+\makelabel{recogbase:CalcNiceGensGeneric}{4.2.18}{X78B05A1E78564BBF}
+\makelabel{recogbase:CalcNiceGensHomNode}{4.2.19}{X80444E4E8501D0B0}
+\makelabel{recogbase:CalcNiceGens}{4.2.20}{X7EFA298E7E4760A0}
+\makelabel{recogbase:slptonice}{4.2.21}{X80C2451F805CA06D}
+\makelabel{recogbase:gensN}{4.2.22}{X7B7E9EAC7AACF8D8}
+\makelabel{recogbase:findgensNmeth}{4.2.23}{X81644C3A8064063F}
+\makelabel{recogbase:FindKernelRandom}{4.2.24}{X7DC1D16F807D6895}
+\makelabel{recogbase:FindKernelDoNothing}{4.2.25}{X8244F0DE86C23ECA}
+\makelabel{recogbase:FindKernelFastNormalClosure}{4.2.26}{X87E8AB1B78F60112}
+\makelabel{recogbase:gensNslp}{4.2.27}{X82154EA88011654F}
+\makelabel{recogbase:immediateverification}{4.2.28}{X86A101E17F87F01F}
+\makelabel{recogbase:forkernel}{4.2.29}{X87B550967D90B794}
+\makelabel{recogbase:forfactor}{4.2.30}{X7CBBF7FC8200790C}
+\makelabel{recogbase:isone}{4.2.31}{X814D78347858EC13}
+\makelabel{recogbase:isequal}{4.2.32}{X7D0F06047B88E5CD}
+\makelabel{recogbase:FindHomomorphism}{4.3.1}{X7FCBB7C686D0B1DF}
+\makelabel{recogbase:SLPforElementGeneric}{4.3.2}{X7F299344834AAB6E}
+\makelabel{recogbase:SLPforNiceGens}{5.1.1}{X82F5B37186B949BF}
+\makelabel{recogbase:Size}{5.1.3}{X858ADA3B7A684421}
+\makelabel{recogbase:DisplayCompositionFactors}{5.1.4}{X80FFBDCD816690E3}

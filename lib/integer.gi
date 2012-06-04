@@ -2,19 +2,17 @@
 ##
 #W  integer.gi                  GAP library                     Thomas Breuer
 #W                                                             & Frank Celler
+#W                                                              & Stefan Kohl
 #W                                                            & Werner Nickel
 #W                                                           & Alice Niemeyer
-#W                                                         & Martin Schoenert
+#W                                                         & Martin Schönert
 #W                                                              & Alex Wegner
 ##
-#H  @(#)$Id: integer.gi,v 4.67.2.7 2008/11/21 08:01:28 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.integer_gi :=
-    "@(#)$Id: integer.gi,v 4.67.2.7 2008/11/21 08:01:28 gap Exp $";
 
 
 #############################################################################
@@ -33,6 +31,7 @@ SetSize( Integers, infinity );
 SetLeftActingDomain( Integers, Integers );
 SetGeneratorsOfRing( Integers, [ 1 ] );
 SetGeneratorsOfLeftModule( Integers, [ 1 ] );
+SetIsFiniteDimensional( Integers, true );
 SetUnits( Integers, [ -1, 1 ] );
 SetIsWholeFamily( Integers, false );
 
@@ -536,7 +535,9 @@ end);
 ##  D. Knuth, Seminumerical Algorithms  (TACP II),  AddiWesl,  1973,  369-371
 ##
 FactorsRho := function ( n, inc, cluster, limit )
-    local   i, sign,  factors,  composite,  x,  y,  k,  z,  g,  tmp;
+
+    local   i,  sign,  factors,  composite,  x,  y,  k,  z,  g,  tmp,
+            IsPrimeOrProbablyPrimeInt;
 
     # make $n$ positive and handle trivial cases
     sign := 1;
@@ -546,7 +547,12 @@ FactorsRho := function ( n, inc, cluster, limit )
     composite := [];
     while n mod 2 = 0  do Add( factors, 2 );  n := n / 2;  od;
     while n mod 3 = 0  do Add( factors, 3 );  n := n / 3;  od;
-    if IsPrimeInt(n)  then Add( factors, n );  n := 1;  fi;
+
+    if   ValueOption("UseProbabilisticPrimalityTest") = true
+    then IsPrimeOrProbablyPrimeInt := IsProbablyPrimeInt;
+    else IsPrimeOrProbablyPrimeInt := IsPrimeInt; fi;
+
+    if IsPrimeOrProbablyPrimeInt(n)  then Add( factors, n );  n := 1;  fi;
 
     # initialize $x_0$
     x := 1;  z := 1;  i := 0;
@@ -578,7 +584,9 @@ FactorsRho := function ( n, inc, cluster, limit )
                     composite := Concatenation( composite, tmp[2] );
 
                     n := n / g;
-                    if IsPrimeInt(n)  then Add( factors, n );  n := 1;  fi;
+                    if IsPrimeOrProbablyPrimeInt(n)  then
+                        Add( factors, n );  n := 1;
+                    fi;
                 fi;
             fi;
         od;
@@ -616,7 +624,10 @@ MakeReadOnlyGlobal( "FactorsRho" );
 ##  factorization failed and return the factorization found so far.
 ##
 InstallGlobalFunction(FactorsInt,function ( n )
-    local  sign,  factors,  p,  tmp;
+
+    local  sign,  factors,  p,  tmp, n_orig, len, rt, tmp2;
+
+    n_orig := n;
 
     # make $n$ positive and handle trivial cases
     sign := 1;
@@ -635,6 +646,7 @@ InstallGlobalFunction(FactorsInt,function ( n )
     # do trial divisions by known primes
     for p  in Primes2  do
         while n mod p = 0  do Add( factors, p );  n := n / p;  od;
+        if p^2 > n then break; fi;
         if n = 1  then factors[1] := sign*factors[1];  return factors;  fi;
     od;
     
@@ -678,10 +690,34 @@ InstallGlobalFunction(FactorsInt,function ( n )
       fi;
     if 0 < Length(tmp[2])  then
       if ValueOption("quiet")<>true then
-	Error( "sorry,  cannot factor ", tmp[2], 
-	" try increasing trials in Rho method by option RhoTrials\n",
-        "or using the FactInt package, which provides more efficient\n",
-        "factoring methods" );
+        len := Length(tmp[2]);
+        if LoadPackage("FactInt") = true then
+##            # in general cases we should proceed with the found factors:
+##            while len > 0 do
+##              Append(tmp[1], Factors(tmp[2][len]));
+##              Unbind(tmp[2][len]);
+##              len := len-1;
+##            od;
+          # but this way we miss that FactInt can detect certain numbers of
+          # special shape for which it uses lookup tables, therefore for the
+          # moment:
+          return Factors(n_orig);
+        else
+          Error( "sorry,  cannot factor ", tmp[2], 
+            "\ntype 'return;' to try again with a larger number of trials in\n",
+            "FactorsRho (or use option 'RhoTrials')\n");
+          if ValueOption("RhoTrials") <> fail then
+            rt := 5 * ValueOption("RhoTrials");
+          else
+            rt := 5 * 8192;
+          fi;
+          while len > 0 do
+            tmp2 := FactorsInt(tmp[2][len]: RhoTrials := rt);
+            Append(tmp[1], tmp2);
+            Unbind(tmp[2][len]);
+            len := len-1;
+          od;
+        fi;
       else
 	factors := Concatenation( factors, tmp[2] );
       fi;
@@ -692,6 +728,25 @@ InstallGlobalFunction(FactorsInt,function ( n )
     return factors;
 end);
 
+#############################################################################
+##
+#F  PrimeDivisors( <n> ) . . . . . . . . . . . . . . list of prime divisors
+##  
+##  delegating to FactorsInt
+##  
+InstallGlobalFunction(PrimeDivisors, function(n)
+  if n = 0 then
+    Error("PrimeDivisors: 0 has an infinite number of prime divisors.");
+    return;
+  fi;
+  if n < 0 then
+    n := -n;
+  fi;
+  if n = 1 then
+    return [];
+  fi;
+  return Set(FactorsInt(n));
+end);
 
 #############################################################################
 ##
@@ -881,7 +936,7 @@ InstallGlobalFunction( IsOddInt, n -> n mod 2 = 1 );
 ##
 # a non-recursive version,  nowadays the algorithm can be applied to
 # numbers with many thousand digits
-BindGlobal("TraceModQF", function ( p, k, n )
+InstallGlobalFunction(TraceModQF, function ( p, k, n )
   local kb, trc, i;
   kb := [];
   while k <> 1 do
@@ -980,11 +1035,7 @@ BindGlobal( "IsProbablyPrimeIntWithFail", function( n )
     return false;
 end);
 
-InstallGlobalFunction( IsProbablyPrimeInt, function( n )
-  return IsProbablyPrimeIntWithFail(n) <> false;
-end);
-
-InstallGlobalFunction(IsPrimeInt,function ( n )
+InstallGlobalFunction(IsPrimeIntOld,function ( n )
   local res;
   res := IsProbablyPrimeIntWithFail(n);
   if res = false then
@@ -1299,17 +1350,42 @@ end);
 #M  RingByGenerators( <elms> ) . . . . . . .  ring generated by some integers
 ##
 InstallMethod( RingByGenerators,
-    "method that catches the cases of `Integers'",
+    "method that catches the cases of `Integers' and subrings of `Integers'",
     [ IsCyclotomicCollection ], 
     SUM_FLAGS, # test this before doing anything else
     function( elms )
-      if ForAll( elms, IsInt ) and Gcd( elms ) = 1 then
-        return Integers;
+      if ForAll( elms, IsInt ) then
+        # check that the number of generators is bigger than one
+        # to avoid infinite recursion    
+        if Length( elms ) > 1 then
+          return RingByGenerators( [ Gcd(elms) ] );
+        elif elms[1] = 1 then
+          return Integers;
+        else
+          TryNextMethod();        
+        fi;
       else
         TryNextMethod();
       fi;
     end );
-
+    
+    
+#############################################################################
+##
+#M  RingWithOneByGenerators( <elms> ) . . . . ring generated by some integers
+##
+InstallMethod( RingWithOneByGenerators,
+    "method that catches the cases of `Integers'",
+    [ IsCyclotomicCollection ], 
+    SUM_FLAGS, # test this before doing anything else
+    function( elms )
+      if ForAll( elms, IsInt ) then
+        return Integers;
+      else
+        TryNextMethod();
+      fi;
+    end );    
+    
 
 #############################################################################
 ##
@@ -1329,6 +1405,33 @@ InstallMethod( DefaultRingByGenerators,
       fi;
     end );
 
+    
+#############################################################################
+##
+#M  DefaultRingByGenerators( <mats> ) .  for a list of n x n integer matrices
+##
+InstallMethod( DefaultRingByGenerators,
+               "for lists of n x n integer matrices", true,
+               [ IsCyclotomicCollCollColl and IsFinite ],
+
+  function ( mats )
+    local d;
+    if IsEmpty(mats) or not ForAll(mats,IsRectangularTable and IsMatrix) then
+       TryNextMethod(); 
+    fi;
+    d := Length( mats[1] );
+    if d=0 then
+       TryNextMethod(); 
+    fi;
+    if not ForAll( mats, m -> Length(m)=d and Length(m[1])=d ) then
+       TryNextMethod(); 
+    fi;    
+    if not ForAll( mats, m -> ForAll( m, r -> ForAll(r,IsInt))) then
+       TryNextMethod(); 
+    fi;
+    return FullMatrixAlgebra(Integers,d);
+  end );
+  
 
 #############################################################################
 ##
@@ -1547,6 +1650,7 @@ InstallMethod( QuotientMod,
     true,
     [ IsIntegers, IsInt, IsInt, IsInt ], 0,
     function ( Integers, r, s, m )
+    if s>m then s:=s mod m;fi;
     if   m = 1 then
         return 0;
     elif r mod GcdInt( s, m ) = 0  then
@@ -1611,6 +1715,7 @@ InstallMethod( Random,
     end );
 
 
+
 #############################################################################
 ##
 #M  Root( <n>, <k> )
@@ -1626,14 +1731,14 @@ InstallMethod( Root,
 ##
 #M  RoundCyc( <cyc> ) . . . . . . . . . . cyclotomic integer near to <cyc>
 ##
-InstallMethod( RoundCyc, "Integer", true, [ IsInt], 0,  x->x );
+InstallMethod( RoundCyc, "Integer", true, [ IsInt ], 0,  x->x );
 
 
 #############################################################################
 ##
 #M  RoundCycDown( <cyc> ) . . . . . . . . . . cyclotomic integer near to <cyc>
 ##
-InstallMethod( RoundCycDown, "Integer", true, [ IsInt], 0,  x->x );
+InstallMethod( RoundCycDown, "Integer", true, [ IsInt ], 0,  x->x );
 
 
 #############################################################################
@@ -1649,6 +1754,22 @@ InstallMethod( StandardAssociate,
         return -n;
     else
         return n;
+    fi;
+    end );
+
+#############################################################################
+##
+#M  StandardAssociateUnit( Integers, <n> )
+##
+InstallMethod( StandardAssociateUnit,
+    "for integers",
+    true,
+    [ IsIntegers, IsInt ], 0,
+    function ( Integers, n )
+    if n < 0 then
+        return -1;
+    else
+        return 1;
     fi;
     end );
 
@@ -1775,6 +1896,37 @@ local d,i,r;
     i:=i+1;
   until r<2;
   return d;
+end);
+
+##  The behaviour of View(String) for large integers can be configured via a
+##  user preference.
+DeclareUserPreference( rec(
+  name:= "MaxBitsIntView",
+  description:= [
+    "Maximal bit length of integers to 'view' unabbreviated.  \
+Default is about 30 lines of a 80 character wide terminal.  \
+Set this to '0' to avoid abbreviated ints."
+    ],
+  default:= 8000,
+  check:= val -> IsInt( val ) and 0 <= val,
+  ) );
+##  give only a short info if |n| is larger than 2^GAPInfo.MaxBitsIntView
+InstallMethod(ViewString, "for integer", [IsInt], function(n)
+  local mb, l, start, trail;
+  mb := UserPreference("MaxBitsIntView");
+  if not IsSmallIntRep(n) and mb <> fail and 
+      mb > 64 and Log2Int(n) > mb then
+    l := LogInt(n, 10);
+    start := String(QuoInt(n, 10^(l-2)));
+    trail := String(n mod 1000);
+    while Length(trail) < 3 do
+      trail := Concatenation("0", trail);
+    od;
+    return Concatenation("<integer ",start,"...",trail," (",
+                         String(l+1)," digits)>");
+  else
+    return String(n);
+  fi;
 end);
 
 #############################################################################

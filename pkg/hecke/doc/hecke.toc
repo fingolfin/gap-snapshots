@@ -1,0 +1,89 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Decomposition numbers of Hecke algebras of type A}}{6}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Description}}{6}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }The modular representation theory of Hecke algebras}}{7}{section.1.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Two small examples}}{7}{section.1.3}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Overview over this manual}}{8}{section.1.4}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Credits}}{8}{section.1.5}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {hecke}-Package}}{10}{chapter.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Specht functionality}}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Porting notes}}{11}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Structure of \textsf {Hecke}}}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }Renamings}}{12}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Specht functions}}{13}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }Specht (for an integer)}}{13}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }Simple information access}}{13}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }The functions MakeSpecht, MakePIM and MakeSimple}}{14}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }Decomposition numbers of the symmetric groups}}{15}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }Hecke algebras over fields of positive characteristic}}{16}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }The Fock space and Hecke algebras over fields of characteristic zero }}{16}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}\leavevmode {\color {Chapter }Schur (for an integer)}}{17}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.8}\leavevmode {\color {Chapter }DecompositionMatrix (for an algebra and an integer)}}{18}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}\leavevmode {\color {Chapter }CrystalDecompositionMatrix}}{19}{subsection.3.2.9}
+\contentsline {subsection}{\numberline {3.2.10}\leavevmode {\color {Chapter }DecompositionNumber}}{20}{subsection.3.2.10}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Partitions in \textsf {Hecke}}}{21}{section.3.3}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Inducing and restricting modules}}{21}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }RInducedModule}}{21}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }SInducedModule}}{23}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }RRestrictedModule}}{23}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }SRestrictedModule}}{24}{subsection.3.4.4}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Operations on decomposition matrices}}{24}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }InducedDecompositionMatrix}}{25}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }IsNewIndecomposable}}{25}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }InvertDecompositionMatrix}}{27}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}\leavevmode {\color {Chapter }AdjustmentMatrix}}{27}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}\leavevmode {\color {Chapter }SaveDecompositionMatrix}}{28}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}\leavevmode {\color {Chapter }CalculateDecompositionMatrix}}{29}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}\leavevmode {\color {Chapter }MatrixDecompositionMatrix}}{30}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.8}\leavevmode {\color {Chapter }DecompositionMatrixMatrix}}{30}{subsection.3.5.8}
+\contentsline {subsection}{\numberline {3.5.9}\leavevmode {\color {Chapter }AddIndecomposable}}{31}{subsection.3.5.9}
+\contentsline {subsection}{\numberline {3.5.10}\leavevmode {\color {Chapter }RemoveIndecomposable}}{31}{subsection.3.5.10}
+\contentsline {subsection}{\numberline {3.5.11}\leavevmode {\color {Chapter }MissingIndecomposables}}{31}{subsection.3.5.11}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Calculating dimensions}}{31}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }SimpleDimension}}{32}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}\leavevmode {\color {Chapter }SpechtDimension}}{32}{subsection.3.6.2}
+\contentsline {section}{\numberline {3.7}\leavevmode {\color {Chapter }Combinatorics on Young diagrams}}{32}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}\leavevmode {\color {Chapter }Schaper}}{33}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}\leavevmode {\color {Chapter }IsSimpleModule}}{33}{subsection.3.7.2}
+\contentsline {subsection}{\numberline {3.7.3}\leavevmode {\color {Chapter }MullineuxMap}}{33}{subsection.3.7.3}
+\contentsline {subsection}{\numberline {3.7.4}\leavevmode {\color {Chapter }MullineuxSymbol}}{34}{subsection.3.7.4}
+\contentsline {subsection}{\numberline {3.7.5}\leavevmode {\color {Chapter }PartitionMullineuxSymbol}}{35}{subsection.3.7.5}
+\contentsline {subsection}{\numberline {3.7.6}\leavevmode {\color {Chapter }GoodNodes}}{35}{subsection.3.7.6}
+\contentsline {subsection}{\numberline {3.7.7}\leavevmode {\color {Chapter }NormalNodes}}{35}{subsection.3.7.7}
+\contentsline {subsection}{\numberline {3.7.8}\leavevmode {\color {Chapter }GoodNodeSequence}}{36}{subsection.3.7.8}
+\contentsline {subsection}{\numberline {3.7.9}\leavevmode {\color {Chapter }PartitionGoodNodeSequence}}{36}{subsection.3.7.9}
+\contentsline {subsection}{\numberline {3.7.10}\leavevmode {\color {Chapter }GoodNodeLatticePath}}{37}{subsection.3.7.10}
+\contentsline {subsection}{\numberline {3.7.11}\leavevmode {\color {Chapter }LittlewoodRichardsonRule}}{37}{subsection.3.7.11}
+\contentsline {subsection}{\numberline {3.7.12}\leavevmode {\color {Chapter }InverseLittlewoodRichardsonRule}}{38}{subsection.3.7.12}
+\contentsline {subsection}{\numberline {3.7.13}\leavevmode {\color {Chapter }EResidueDiagram}}{38}{subsection.3.7.13}
+\contentsline {subsection}{\numberline {3.7.14}\leavevmode {\color {Chapter }HookLengthDiagram}}{39}{subsection.3.7.14}
+\contentsline {subsection}{\numberline {3.7.15}\leavevmode {\color {Chapter }RemoveRimHook}}{39}{subsection.3.7.15}
+\contentsline {subsection}{\numberline {3.7.16}\leavevmode {\color {Chapter }AddRimHook}}{40}{subsection.3.7.16}
+\contentsline {section}{\numberline {3.8}\leavevmode {\color {Chapter }Operations on partitions}}{40}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}\leavevmode {\color {Chapter }ECore}}{40}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}\leavevmode {\color {Chapter }IsECore}}{41}{subsection.3.8.2}
+\contentsline {subsection}{\numberline {3.8.3}\leavevmode {\color {Chapter }EQuotient}}{41}{subsection.3.8.3}
+\contentsline {subsection}{\numberline {3.8.4}\leavevmode {\color {Chapter }CombineEQuotientECore}}{41}{subsection.3.8.4}
+\contentsline {subsection}{\numberline {3.8.5}\leavevmode {\color {Chapter }EWeight}}{41}{subsection.3.8.5}
+\contentsline {subsection}{\numberline {3.8.6}\leavevmode {\color {Chapter }ERegularPartitions}}{42}{subsection.3.8.6}
+\contentsline {subsection}{\numberline {3.8.7}\leavevmode {\color {Chapter }IsERegular}}{42}{subsection.3.8.7}
+\contentsline {subsection}{\numberline {3.8.8}\leavevmode {\color {Chapter }ConjugatePartition}}{42}{subsection.3.8.8}
+\contentsline {subsection}{\numberline {3.8.9}\leavevmode {\color {Chapter }BetaSet}}{42}{subsection.3.8.9}
+\contentsline {subsection}{\numberline {3.8.10}\leavevmode {\color {Chapter }PartitionBetaSet}}{43}{subsection.3.8.10}
+\contentsline {subsection}{\numberline {3.8.11}\leavevmode {\color {Chapter }ETopLadder}}{43}{subsection.3.8.11}
+\contentsline {subsection}{\numberline {3.8.12}\leavevmode {\color {Chapter }Dominates}}{43}{subsection.3.8.12}
+\contentsline {subsection}{\numberline {3.8.13}\leavevmode {\color {Chapter }LengthLexicographic}}{43}{subsection.3.8.13}
+\contentsline {subsection}{\numberline {3.8.14}\leavevmode {\color {Chapter }Lexicographic}}{44}{subsection.3.8.14}
+\contentsline {subsection}{\numberline {3.8.15}\leavevmode {\color {Chapter }ReverseDominance}}{44}{subsection.3.8.15}
+\contentsline {section}{\numberline {3.9}\leavevmode {\color {Chapter }Miscellaneous functions on modules}}{44}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}\leavevmode {\color {Chapter }Specialized}}{44}{subsection.3.9.1}
+\contentsline {subsection}{\numberline {3.9.2}\leavevmode {\color {Chapter }ERegulars}}{45}{subsection.3.9.2}
+\contentsline {subsection}{\numberline {3.9.3}\leavevmode {\color {Chapter }SplitECores}}{45}{subsection.3.9.3}
+\contentsline {subsection}{\numberline {3.9.4}\leavevmode {\color {Chapter }Coefficient}}{46}{subsection.3.9.4}
+\contentsline {subsection}{\numberline {3.9.5}\leavevmode {\color {Chapter }InnerProduct}}{46}{subsection.3.9.5}
+\contentsline {section}{\numberline {3.10}\leavevmode {\color {Chapter }Semi-standard and standard tableaux}}{46}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}\leavevmode {\color {Chapter }Tableau}}{46}{subsection.3.10.1}
+\contentsline {subsection}{\numberline {3.10.2}\leavevmode {\color {Chapter }SemiStandardTableaux}}{47}{subsection.3.10.2}
+\contentsline {subsection}{\numberline {3.10.3}\leavevmode {\color {Chapter }StandardTableaux}}{47}{subsection.3.10.3}
+\contentsline {subsection}{\numberline {3.10.4}\leavevmode {\color {Chapter }ConjugateTableau}}{47}{subsection.3.10.4}
+\contentsline {subsection}{\numberline {3.10.5}\leavevmode {\color {Chapter }ShapeTableau}}{48}{subsection.3.10.5}
+\contentsline {subsection}{\numberline {3.10.6}\leavevmode {\color {Chapter }TypeTableau}}{48}{subsection.3.10.6}

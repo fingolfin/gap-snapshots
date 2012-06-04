@@ -1,0 +1,97 @@
+  
+  
+                             [1XThe [5XSCO[0m[1X Package Manual[0m
+  
+  
+                       [1XSimplicial Cohomology of Orbifolds[0m
+  
+  
+                               Version 2011.08.10
+  
+  
+                                  August 2011
+  
+  
+                                 Simon Görtzen
+  
+  
+  
+  Simon Görtzen
+      Email:    [7Xmailto:simon.goertzen@rwth-aachen.de[0m
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/goertzen/[0m
+      Address:  Lehrstuhl B für Mathematik
+                RWTH Aachen
+                Templergraben 64
+                52062 Aachen
+                (Germany)
+  
+  
+  
+  -------------------------------------------------------
+  [1XAbstract[0m
+  This document explains the primary uses of the [5XSCO[0m package. Included in this
+  manual  is a documented list of the most important methods and functions you
+  will  need.  For  the  theoretical  basis of this package please refer to my
+  diploma thesis and the corresponding paper (work in progress; [Gör08a]).
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[0m
+  © 2007-2011 by Simon Görtzen
+  
+  This  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[0m
+  The [5XSCO[0m package would not have been possible without the theoretical work by
+  I.  Moerdijk  and  D. A. Pronk concerning simplicial cohomology of orbifolds
+  [MP99].  Many  thanks  to  these  two,  as  well  as Mohamed Barakat and the
+  Lehrstuhl  B  für Mathematik at RWTH Aachen University in general. It should
+  be  noted  that  [5XSCO[0m  in  its  current functionality is dependent on the [5XGAP[0m
+  package [5Xhomalg[0m by M. Barakat [BR08], as it relies on [5Xhomalg[0m to do the actual
+  computations. This manual was created with the help of the [5XGAPDoc[0m package by
+  M. Neunhöffer and F. Lübeck.
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (SCO)[0X
+  
+  1 Introduction
+    1.1 Overview over this manual
+    1.2 Installation of the [5XSCO[0m Package
+  2 Usage
+    2.1 The Examples Script
+    2.2 Working Manually
+  3 Examples
+    3.1 Example 1: Klein Bottle
+    3.2 Example 2: V_4
+    3.3 Example 3: The "Teardrop" orbifold
+  4 [5XSCO[0m methods and functions
+    4.1 Methods and functions for orbifold triangulations
+      4.1-1 OrbifoldTriangulation
+      4.1-2 Vertices
+      4.1-3 Simplices
+      4.1-4 Isotropy
+      4.1-5 Mu
+      4.1-6 MuData
+      4.1-7 InfoString
+    4.2 Methods and functions for simplicial sets
+      4.2-1 SimplicialSet
+      4.2-2 SimplicialSet
+      4.2-3 ComputeNextDimension
+      4.2-4 Extend
+    4.3 Methods and functions for matrix creation and computation
+      4.3-1 BoundaryOperator
+      4.3-2 CreateBoundaryMatrices
+      4.3-3 Homology
+      4.3-4 CreateCoboundaryMatrices
+      4.3-5 Cohomology
+      4.3-6 SCO_Examples
+  A An Overview of the [5XSCO[0m package source code
+  
+  
+  -------------------------------------------------------

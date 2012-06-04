@@ -1,0 +1,324 @@
+  
+  [1X4 [5XSCO[1X methods and functions[0X
+  
+  
+  [1X4.1 Methods and functions for orbifold triangulations[0X
+  
+  [1X4.1-1 OrbifoldTriangulation[0m
+  
+  [2X> OrbifoldTriangulation( [0X[3XM[, I, mu_data, info][0X[2X ) ___________________[0Xfunction
+  [6XReturns:[0X  OrbifoldTriangulation
+  
+  The  constructor  for  OrbifoldTriangulations.  Needs  the list [3XM[0m of maximal
+  simplices,  the  Isotropy  at  certain  vertices as a record [3XI[0m, and the list
+  [3Xmu_data[0m  that  encodes the function mu. If only one argument is given, [3XI[0m and
+  [3Xmu_data[0m  are  supposed  to  be  empty.  In case of two arguments, [3Xmu_data[0m is
+  supposed  to be empty. If the last argument [3Xinfo[0m is given as a string, it is
+  stored  in  the  info  component  of the orbifold triangulation and does not
+  count towards the total number of arguments.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> M := [ [1,2,3], [1,2,4], [1,3,4], [2,3,4] ];;[0X
+    [4Xgap> S2 := OrbifoldTriangulation( M, "S^2" );[0X
+    [4X<OrbifoldTriangulation "S^2" of dimension 2. 4 simplices on 4 vertices without\[0X
+    [4X Isotropy>[0X
+    [4Xgap> I := rec( 1 := Group( (1,2) ) );;[0X
+    [4Xgap> mu_data := [[0X
+    [4X> [ [2], [1,2], [1,2,3], [1,2,4], x->x*(1,2) ],[0X
+    [4X> [ [2], [1,2], [1,2,4], [1,2,3], x->x*(1,2) ][0X
+    [4X> ];;[0X
+    [4Xgap> Teardrop := OrbifoldTriangulation( M, I, mu_data, "Teardrop" );[0X
+    [4X<OrbifoldTriangulation "Teardrop" of dimension 2. 4 simplices on 4 vertices wi\[0X
+    [4Xth Isotropy on 1 vertex and nontrivial mu-maps>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-2 Vertices[0m
+  
+  [2X> Vertices( [0X[3Xot[0X[2X ) _____________________________________________________[0Xmethod
+  [6XReturns:[0X  List [3XV[0m
+  
+  This returns the list of vertices [3XV[0m of the orbifold triangulation [3Xot[0m. Should
+  be preferred to the equivalent [10Xot!.vertices[0m.
+  
+  [1X4.1-3 Simplices[0m
+  
+  [2X> Simplices( [0X[3Xot[0X[2X ) ____________________________________________________[0Xmethod
+  [6XReturns:[0X  List [3XM[0m
+  
+  This  returns  the list of maximal simplices [3XM[0m of the orbifold triangulation
+  [3Xot[0m. Should be preferred to the equivalent [10Xot!.max_simplices[0m.
+  
+  [1X4.1-4 Isotropy[0m
+  
+  [2X> Isotropy( [0X[3Xot[0X[2X ) _____________________________________________________[0Xmethod
+  [6XReturns:[0X  Record [3XI[0m
+  
+  This  returns the isotropy record [3XI[0m of the orbifold triangulation [3Xot[0m. Should
+  be preferred to the equivalent [10Xot!.isotropy[0m.
+  
+  [1X4.1-5 Mu[0m
+  
+  [2X> Mu( [0X[3Xot[0X[2X ) ___________________________________________________________[0Xmethod
+  [6XReturns:[0X  Function [3Xmu[0m
+  
+  This  returns  the  function  [3Xmu[0m of the orbifold triangulation [3Xot[0m. Should be
+  preferred to the equivalent [10Xot!.mu[0m.
+  
+  [1X4.1-6 MuData[0m
+  
+  [2X> MuData( [0X[3Xot[0X[2X ) _______________________________________________________[0Xmethod
+  [6XReturns:[0X  List [3Xmu_data[0m
+  
+  This  returns  the list [3Xmu_data[0m that encodes the function mu of the orbifold
+  triangulation [3Xot[0m. Should be preferred to the equivalent [10Xot!.mu_data[0m.
+  
+  [1X4.1-7 InfoString[0m
+  
+  [2X> InfoString( [0X[3Xot[0X[2X ) ___________________________________________________[0Xmethod
+  [6XReturns:[0X  String [3Xinfo[0m
+  
+  This  return  the  string  [3Xinfo[0m  of the orbifold triangulation [3Xot[0m. Should be
+  preferred to the equivalent [10Xot!.info[0m.
+  
+  
+  [1X4.2 Methods and functions for simplicial sets[0X
+  
+  [1X4.2-1 SimplicialSet[0m
+  
+  [2X> SimplicialSet( [0X[3Xot[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  SimplicialSet
+  
+  The  constructor  for simplicial sets based on an orbifold triangulation [3Xot[0m.
+  This  just  sets  up  the  object  without  any  computations.  These can be
+  triggered later, either explicitly or by [2XSimplicialSet[0m ([14X4.2-2[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Teardrop;[0X
+    [4X<OrbifoldTriangulation "Teardrop" of dimension 2. 4 simplices on 4 vertices wi\[0X
+    [4Xth Isotropy on 1 vertex and nontrivial mu-maps>[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.2-2 SimplicialSet[0m
+  
+  [2X> SimplicialSet( [0X[3XS, i[0X[2X ) ______________________________________________[0Xmethod
+  [6XReturns:[0X  List [3XS[0m_[3Xi[0m
+  
+  This  returns  the components of dimension [3Xi[0m of the simplicial set [3XS[0m. Should
+  be used to access existing data instead of using [10XS!.simplicial_set[ i + 1 ][0m,
+  as  it has the additional side effect of computing [3XS[0m up to dimension [3Xi[0m, thus
+  always returning the desired result.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+    [4Xgap> S!.simplicial_set[1];[0X
+    [4X[ [ [ 1, 2, 3 ] ], [ [ 1, 2, 4 ] ], [ [ 1, 3, 4 ] ], [ [ 2, 3, 4 ] ] ][0X
+    [4Xgap> S!.simplicial_set[2];;[0X
+    [4XList Element: <list>[2] must have an assigned value[0X
+    [4Xnot in any function[0X
+    [4XEntering break read-eval-print loop ...[0X
+    [4Xyou can 'quit;' to quit to outer loop, or[0X
+    [4Xyou can 'return;' after assigning a value to continue[0X
+    [4Xbrk> [0X
+    [4Xgap> SimplicialSet( S, 0 );[0X
+    [4X[ [ [ 1, 2, 3 ] ], [ [ 1, 2, 4 ] ], [ [ 1, 3, 4 ] ], [ [ 2, 3, 4 ] ] ][0X
+    [4Xgap> SimplicialSet( S, 1 );;[0X
+    [4Xgap> S;[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 1 with Length vector [ 4, 12 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.2-3 ComputeNextDimension[0m
+  
+  [2X> ComputeNextDimension( [0X[3XS[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  [3XS[0m
+  
+  This computes the component of the next dimension of the simplicial set [3XS[0m. [3XS[0m
+  is extended as a side effect.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S;[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 1 with Length vector [ 4, 12 ]>[0X
+    [4Xgap> ComputeNextDimension( S );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 2 with Length vector [ 4, 12, 22 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.2-4 Extend[0m
+  
+  [2X> Extend( [0X[3XS, i[0X[2X ) _____________________________________________________[0Xmethod
+  [6XReturns:[0X  [3XS[0m
+  
+  This computes the components of the simplicial set [3XS[0m up to dimension [3Xi[0m. [3XS[0m is
+  extended   as   a   side  effect.  This  method  is  equivalent  to  calling
+  [2XComputeNextDimension[0m ([14X4.2-3[0m) the appropriate number of times.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S;[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 2 with Length vector [ 4, 12, 22 ]>[0X
+    [4Xgap> Extend( S, 5 );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 5 with Length vector [ 4, 12, 22, 33, 51, 73 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X4.3 Methods and functions for matrix creation and computation[0X
+  
+  [1X4.3-1 BoundaryOperator[0m
+  
+  [2X> BoundaryOperator( [0X[3Xi, L, mu[0X[2X ) _____________________________________[0Xfunction
+  [6XReturns:[0X  List B
+  
+  This  returns  the  [3Xi[0mth  boundary  of  [3XL[0m,  which  has  to be an element of a
+  simplicial set. [3Xmu[0m is the function mu that has to be taken into account when
+  computing  orbifold  boundaries.  This function is used for matrix creation,
+  there should not be much reason for calling it independently.
+  
+  [1X4.3-2 CreateBoundaryMatrices[0m
+  
+  [2X> CreateBoundaryMatrices( [0X[3XS, d, R[0X[2X ) __________________________________[0Xmethod
+  [6XReturns:[0X  List [3XM[0m
+  
+  This  returns  the  list  [3XM[0m  of homalg matrices over the homalg ring [3XR[0m up to
+  dimension   [3Xd[0m,  corresponding  to  the  boundary  matrices  induced  by  the
+  simplicial set [3XS[0m. If [3Xd[0m is not given, the current dimension of [3XS[0m is used.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+    [4Xgap> M := CreateBoundaryMatrices( S, 4, HomalgRingOfIntegers() );;[0X
+    [4Xgap> S;[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 5 with Length vector [ 4, 12, 22, 33, 51, 73 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.3-3 Homology[0m
+  
+  [2X> Homology( [0X[3XM[, R][0X[2X ) _________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m complex
+  
+  This  returns  the  homology complex of a list [3XM[0m of [5Xhomalg[0m matrices over the
+  [5Xhomalg[0m ring [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+    [4Xgap> R := HomalgRingOfIntegers();[0X
+    [4XZ[0X
+    [4Xgap> M := CreateBoundaryMatrices( S, 4, R );;[0X
+    [4Xgap> Homology( M, R );[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  0[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  Z/< 2 >[0X
+    [4X----------------------------------------------->>>>  0[0X
+    [4X<A graded homology object consisting of 5 left modules at degrees [ 0 .. 4 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.3-4 CreateCoboundaryMatrices[0m
+  
+  [2X> CreateCoboundaryMatrices( [0X[3XS[, d], R[0X[2X ) ______________________________[0Xmethod
+  [6XReturns:[0X  List [3XM[0m
+  
+  This  returns  the  list  [3XM[0m  of homalg matrices over the homalg ring [3XR[0m up to
+  dimension  [3Xd[0m,  corresponding  to  the  coboundary  matrices  induced  by the
+  simplicial set [3XS[0m. If [3Xd[0m is not given, the current dimension of [3XS[0m is used.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+    [4Xgap> M := CreateCoboundaryMatrices( S, 4, HomalgRingOfIntegers() );;[0X
+    [4Xgap> S;[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 5 with Length vector [ 4, 12, 22, 33, 51, 73 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.3-5 Cohomology[0m
+  
+  [2X> Cohomology( [0X[3XM[, R][0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m complex
+  
+  This  returns the cohomology complex of a list [3XM[0m of [5Xhomalg[0m matrices over the
+  [5Xhomalg[0m ring [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S := SimplicialSet( Teardrop );[0X
+    [4X<The simplicial set of the orbifold triangulation "Teardrop", computed up to d\[0X
+    [4Ximension 0 with Length vector [ 4 ]>[0X
+    [4Xgap> R := HomalgRingOfIntegers();[0X
+    [4XZ[0X
+    [4Xgap> M := CreateCoboundaryMatrices( S, 4, R );;[0X
+    [4Xgap> Cohomology( M, R );[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  0[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  0[0X
+    [4X----------------------------------------------->>>>  Z/< 2 >[0X
+    [4X<A graded cohomology object consisting of 5 left modules at degrees[0X
+    [4X[ 0 .. 4 ]>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.3-6 SCO_Examples[0m
+  
+  [2X> SCO_Examples( [0X[3X[0X[2X ) _________________________________________________[0Xfunction
+  [6XReturns:[0X  nothing
+  
+  This  is just an easy way to call the script [11Xexamples.g[0m, which is located in
+  [11Xgap/pkg/SCO/examples/[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> SCO_Examples();[0X
+    [4X@@@@@@@@ SCO @@@@@@@@[0X
+    [4X[0X
+    [4XSelect base ring:[0X
+    [4X 1) Integers (default)[0X
+    [4X 2) Rationals[0X
+    [4X 3) Z/nZ[0X
+    [4X:1[0X
+    [4X[0X
+    [4XSelect Computer Algebra System:[0X
+    [4X 1) GAP (default)[0X
+    [4X 2) External GAP[0X
+    [4X 3) MAGMA[0X
+    [4X 4) Maple[0X
+    [4X 5) Sage[0X
+    [4X:3[0X
+    [4X---------------------------------------------------------------[0X
+    [4XMagma V2.14-14    Tue Aug 19 2008 08:36:19 on evariste [Seed = 1054613462][0X
+    [4XType ? for help.  Type <Ctrl>-D to quit.[0X
+    [4X----------------------------------------------------------------[0X
+    [4X[0X
+    [4X[0X
+    [4XSelect Method:[0X
+    [4X 1) Full syzygy computation (default)[0X
+    [4X 2) matrix creation and rank computation only[0X
+    [4X:1[0X
+    [4X[0X
+    [4XSelect orbifold (default="C2")[0X
+    [4X:Torus[0X
+    [4X  [0X
+    [4XSelect mode:[0X
+    [4X 1) Cohomology (default)[0X
+    [4X 2) Homology[0X
+    [4X:1[0X
+    [4X[0X
+    [4XSelect dimension (default = 4)[0X
+    [4X:4[0X
+    [4XCreating the coboundary matrices ...[0X
+    [4XStarting cohomology computation ...[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 2)[0X
+    [4X----------------------------------------------->>>>  Z^(1 x 1)[0X
+    [4X----------------------------------------------->>>>  0[0X
+    [4X----------------------------------------------->>>>  0    [0X
+  [4X------------------------------------------------------------------[0X
+  

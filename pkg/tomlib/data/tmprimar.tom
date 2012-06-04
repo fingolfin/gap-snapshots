@@ -1,125 +1,17 @@
 #############################################################################
 ##
 #W  tmprimar.tom         GAP table of marks library           Thomas Merkwitz
-##
-#H  @(#)$Id: tmprimar.tom,v 4.15 2005/12/10 12:43:27 gap Exp $
+##                                                              Liam Naughton
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 #Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C) 2011, School of Maths Stats Appl Maths, NUI Galway, Ireland
 ##
 ##  This file contains the all necessary information about the data files of
 ##  the library of table of marks.
 ##
-#H  tomlib history
-#H  --------------
-#H  $Log: tmprimar.tom,v $
-#H  Revision 4.15  2005/12/10 12:43:27  gap
-#H  added the tables of marks of S12 and A13 (computed by G"otz Pfeiffer)
-#H      TB
-#H
-#H  Revision 4.14  2003/02/26 17:39:56  gap
-#H  fixed data format for two tables (will be changed again ...)
-#H      TB
-#H
-#H  Revision 4.13  2001/08/08 15:21:46  gap
-#H  made `LIBTOMLIST' read only
-#H
-#H      TB
-#H
-#H  Revision 4.12  2001/07/24 15:30:38  gap
-#H  first revision for tomlib
-#H
-#H
-#H  tom history (GAP 4)
-#H  -------------------
-#H  (Rev. 4.12 of tomlib coincides with Rev. 4.11 of tom in GAP 4)
-#H
-#H  RCS file: /gap/CVS/GAP/4.0/tom/tmprimar.tom,v
-#H  Working file: tmprimar.tom
-#H  head: 4.11
-#H  branch:
-#H  locks: strict
-#H  access list:
-#H  symbolic names:
-#H  	GAP4R2: 4.11.0.6
-#H  	GAP4R2PRE2: 4.11.0.4
-#H  	GAP4R2PRE1: 4.11.0.2
-#H  	GAP4R1: 4.8.0.2
-#H  	GAP4B5: 4.7.0.2
-#H  	dec16-98b: 4.7
-#H  	GAP4b4: 4.6
-#H  	version-14-apr: 4.6
-#H  	version-15-jun: 4.6
-#H  keyword substitution: kv
-#H  total revisions: 12;	selected revisions: 12
-#H  description:
-#H  ----------------------------
-#H  revision 4.11
-#H  date: 1999/10/26 07:24:54;  author: gap;  state: Exp;  lines: +9 -9
-#H  renamed tables of marks: 2^(2+4):(3xS3).2  ->  2^(2+4):(S3xS3),
-#H                           M10.2^2  ->  2xA6.2^2
-#H  
-#H      TB
-#H  ----------------------------
-#H  revision 4.10
-#H  date: 1999/10/07 07:08:57;  author: gap;  state: Exp;  lines: +9 -9
-#H  renamed 2^2.L2(7) to 2^2xL2(7), and 2^2.(7:3x3) to A4x7:3
-#H  
-#H      TB
-#H  ----------------------------
-#H  revision 4.9
-#H  date: 1999/10/06 10:25:39;  author: gap;  state: Exp;  lines: +6 -6
-#H  changed strange name 2^2.A6 to 2^2xA6
-#H  
-#H      TB
-#H  ----------------------------
-#H  revision 4.8
-#H  date: 1999/07/01 09:42:01;  author: gap;  state: Exp;  lines: +25 -20
-#H  added list of definitions of standard generators
-#H  (taken from Thomas Merkwitz's thesis),
-#H  changed names of 2.S5`, 3`D4(2), 2`F4(2) to 2.S5', 3D4(2), 2F4(2)
-#H  for consistency with the names in the character table library
-#H  
-#H      TB
-#H  ----------------------------
-#H  revision 4.7
-#H  date: 1998/09/12 14:20:22;  author: gap;  state: Exp;  lines: +54 -11
-#H  added some more fusions to the library of table of marks
-#H  T. Merkwitz
-#H  ----------------------------
-#H  revision 4.6
-#H  date: 1998/03/27 15:14:27;  author: gap;  state: Exp;  lines: +38 -11
-#H  added table of marks of "Co3", and tables of some maximal subgoups
-#H  T.Merkwitz
-#H  ----------------------------
-#H  revision 4.5
-#H  date: 1998/03/27 13:21:10;  author: gap;  state: Exp;  lines: +1135 -375
-#H  added a few names and fusions
-#H  T.Merkwitz
-#H  ----------------------------
-#H  revision 4.4
-#H  date: 1998/02/12 19:05:38;  author: gap;  state: Exp;  lines: +3 -3
-#H  added a few names
-#H  ----------------------------
-#H  revision 4.3
-#H  date: 1997/12/05 14:56:49;  author: gap;  state: Exp;  lines: +27 -14
-#H  added new table of marks "3`D4(2)"
-#H  ----------------------------
-#H  revision 4.2
-#H  date: 1997/11/24 11:16:18;  author: gap;  state: Exp;  lines: +20 -16
-#H  added table of marks of "G2(4)" to the library
-#H  ----------------------------
-#H  revision 4.1
-#H  date: 1997/11/20 12:37:53;  author: gap;  state: Exp;  lines: +2 -2
-#H  changed revisio number to 4.1
-#H  ----------------------------
-#H  revision 1.1
-#H  date: 1997/11/19 13:21:01;  author: gap;  state: Exp;
-#H  added new table of marks library files
-#H  ==========================================================================
-##
 Revision.tmprimar_tom :=
-    "@(#)$Id: tmprimar.tom,v 4.15 2005/12/10 12:43:27 gap Exp $";
+    "2011-02-17 13:21:22";
 
 
 #############################################################################
@@ -255,7 +147,8 @@ LIBTOMLIST.namelist:=[
   "l2121m2", "l2121m3", "u311m3", "u311m4", "u311m5", "l3(11)m3" ],
 [ "L2(8).3", "l2(8).3", "l2(8):3", "a9m4", "a9m5", "s6(2)m8", "g2(3)m7" ],
 [ "L2(13).2", "l2(13).2", "g2(3).2m5" ],
-[ "L2(25).2_2", "l2(25).2_2", "s4(5)m3", "l2(25):2_2" ]],
+[ "L2(25).2_2", "l2(25).2_2", "s4(5)m3", "l2(25):2_2" ],
+[ "L2(32).5", "l2(32).5", "l2(32):5"]],
 # file "tmsym1.tom"
 [[ "S5", "s5", "j2.2m10", "m11m4", "m12.2m4", "l3(5)m3", "l3(4).2_1m3", 
   "a7m4", "2^4:s5am4", "l2(25)m2", "l2(25)m3", "a5.2" ],
@@ -389,7 +282,7 @@ LIBTOMLIST.namelist:=[
 [ "2.S5'", "2.s5'", "2.s5b", "2.a7m4" ],
 [ "2.S7", "2.s7", "2.s8m2" ]],
 # file "tmhe.tom"
-[[ "HE", "he", "f7" ]],
+[[ "He", "he", "f7" ]],
 # file "tmhemx.tom"
 [[ "2^(1+6)+.L3(2)", "2^(1+6)+.l3(2)", "hem5" ],
 [ "7^2:2L2(7)", "7^2:2l2(7)", "hem6" ],
@@ -435,16 +328,16 @@ LIBTOMLIST.namelist:=[
 # file "tmlin2mx.tom"
 [[ "109:54", "l2109m1" ],
 [ "(5x11).2", "l2(109)m2" ],
-[ "27:2^2", "l2109m3" ],
+[ "27:2^2", "l2109m3", "d108" ],
 [ "113:56", "l2113m1" ],
 [ "(3x19).2", "l2113m2" ],
-[ "28.2^2", "l2113m3" ],
+[ "28.2^2", "l2113m3", "d112" ],
 [ "11^2:60", "l2121m1" ],
 [ "D122", "d122", "l2121m4" ],
 [ "30.2^2", "l2121m5" ],
 [ "5^3:62", "l2125m1" ],
 [ "63:2", "l2125m2" ],
-[ "D62x2", "d62x2", "l2125m3" ]],
+[ "D62x2", "d62x2", "l2125m3", "d124" ]],
 # file "tmlinomx.tom"
 [[ "5^2:GL2(5)", "5^2:gl2(5)", "l3(5)m1", "l3(5)m2" ],
 [ "4^2:S3", "4^2:s3", "l3(5)m4", "u3(3)m4" ],
@@ -607,7 +500,7 @@ LIBTOMLIST.namelist:=[
 # file "tmunitcm.tom"
 [[ "2.(2^4:S5)", "2.(2^4:s5)", "2.u4(2).2m2" ],
 [ "2.(S6x2)", "2.(s6x2)", "2.u4(2).2m3" ],
-[ "2.(3^(1+2)+:2S4)", "2.(3^(1+2)+:2s4)", "2.u4(2).2m4" ],
+[ "2.(3^(1+2)+:2S4)", "2.(3^(1+2)+:2s4)", "2.u4(2).2m4", "2x3^(1+2)_+:2s4" ],
 [ "2.(3^3:(S4x2))", "2.(3^3:(s4x2))", "2.u4(2).2m5" ],
 [ "2.(2.(A4xA4).2.2)", "2.(2.(a4xa4).2.2)", "2.u4(2).2m6" ]],
 # file "tm4l34.tom"
@@ -617,7 +510,7 @@ LIBTOMLIST.namelist:=[
 # file "tm4l34mx.tom"
 [[ "2^2.(2^4S5)", "2^2.l3(4).2_2m2", "2^2.l3(4).2_2m3", "2^2.(2^4s5)" ],
 [ "2^2.S6", "2^2.l3(4).2_2m4", "2^2.s6" ],
-[ "2^2.(L2(7)x2)", "2^2.l3(4).2_2m5", "2^2.(l2(7)x2)" ],
+[ "2^2.(L2(7)x2)", "2^2.l3(4).2_2m5", "2^2.(l2(7)x2)", "d8xl3(2)" ],
 [ "2^2.(3^2:Q8.2)", "2^2.l3(4).2_2m6", "2^2.(3^2:q8.2)" ],
 [ "2^2.(2^4:A5)", "2^2.l3(4)m1", "2^2.l3(4)m2", "2^2.(2^4:a5)" ],
 [ "2^2xA6", "2^2.l3(4)m3", "2^2.l3(4)m4", "2^2.l3(4)m5", "2^2xa6" ],
@@ -626,7 +519,7 @@ LIBTOMLIST.namelist:=[
 [ "2^2.(3^2:2A4)", "2^2.l3(4).3m5", "2^2.(3^2:2a4)" ],
 [ "A4x7:3", "a4x7:3", "2^2.l3(4).3m4" ],
 [ "2^2.(3^2:2S4)", "2^2.l3(4).3.2_2m6", "2^2.(3^2:2s4)" ],
-[ "2^2.(7:3xS3)", "2^2.l3(4).3.2_2m5", "2^2.(7:3xs3)" ]],
+[ "2^2.(7:3xS3)", "2^2.l3(4).3.2_2m5", "2^2.(7:3xs3)", "7:3xs4" ]],
 # file "tmu43v4.tom"
 [[ "U4(3).2^2_133", "u4(3).2^2_133", "u4(3):(2^2)_133", "u4(3):2^2_133", 
   "co3m3" ]],
@@ -679,6 +572,16 @@ LIBTOMLIST.namelist:=[
 [[ "S12", "s12", "a12.2" ]],
 # file "tma13.tom"
 [[ "A13", "a13" ]],
+# file "tmhs2.tom"
+[["HS.2", "hs.2", "hs:2"]],
+# file "tmhe2.tom"
+[["He.2", "he.2", "he:2"]], 
+# file "tms13.tom"
+[["S13", "s13", "a13.2", "a13:2"]], 
+# file "tmsz83.tom"
+[["Sz(8).3", "sz(8).3", "sz(8):3", "Sz(8):3"]],
+# file "tm2f42.tom"
+[["2F4(2)","2f4(2)","2F4(2)'.2", "2f4(2)'.2"]],
 ];
 
 LIBTOMLIST.files:=
@@ -694,7 +597,7 @@ LIBTOMLIST.files:=
   "tmunitcm", "tm4l34", "tm4l34mx", "tmu43v4", "tmu43v4m", "tma12mx", 
   "tma12m4", "tma12m5", "tma12m9", "tma12", "tmg24", "tm3d42", "tm3d42m1", 
   "tmco3", "tmco3mx", "tmo8m2", "tmo8p2", "tmo8m2m1", "tmo82mx", "tmo8p2m4",
-  "tms12", "tma13" ];
+  "tms12", "tma13", "tmhs2" ,"tmhe2", "tms13","tmsz83","tm2f42"];
 
 LIBTOMLIST.fusions:=[
 # file "tmalt1.tom"
@@ -929,7 +832,9 @@ LIBTOMLIST.fusions:=[
 [ [ "L2(13)", 29 ], [ "S4", 21 ] ],
 # fusions to 'L2(25).2_2'
 [ [ "L2(25)", 102 ], [ "5^2:(4xS3)", 101 ], [ "2xs5", 96 ], [ "2xs5", 97 ], 
-  [ "13:4", 79 ] ]],
+  [ "13:4", 79 ] ],
+# fusions to 'L2(32).5'
+[  ]],
 
 # file "tmsym1.tom"
 [# fusions to 'S5'
@@ -1203,7 +1108,7 @@ LIBTOMLIST.fusions:=[
 [ [ "2.S6", 111 ], [ "2.A7", 112 ] ]],
 
 # file "tmhe.tom"
-[# fusions to 'HE'
+[# fusions to 'He'
 [ [ "S4(4).2", 1697 ], [ "2^2.L3(4).3.2_2", 1695 ], [ "3.S7", 1679 ], 
   [ "2^6:3.S6", 1692 ], [ "2^6:3.S6", 1691 ], [ "2^(1+6)+.L3(2)", 1683 ], 
   [ "7^2:2L2(7)", 1682 ], [ "7^(1+2)+:(S3x3)", 1652 ], [ "S4xL3(2)", 1638 ], 
@@ -1373,7 +1278,7 @@ LIBTOMLIST.fusions:=[
 # file "tms11m4.tom"
 [# fusions to 'S8xS3'
 [  ]],
-
+# file "tml232a.tom"
 # file "tms11m5.tom"
 [# fusions to 'S7xS4'
 [  ]],
@@ -1721,7 +1626,7 @@ LIBTOMLIST.fusions:=[
 [  ],
 # fusions to '(A7xA5):2'
 [  ],
-# fusions to '3^4:2^3.S4'
+# fusions to '3^4:2^3.S4'# file "tml232a.tom"
 [  ]],
 
 # file "tma12m4.tom"
@@ -1812,6 +1717,26 @@ LIBTOMLIST.fusions:=[
 # file "tma13.tom"
 [# fusions to 'A13'
 [  ]],
+
+# file "tmhs2.tom"
+[# fusions to 'HS.2'
+[ [ "HS", 533 ] ]],
+
+# file "tmhe2.tom"
+[# fusions to 'He.2'
+[ [ "He", 1066 ] ]],
+
+# file "tms13.tom"
+[# fusions to 'S13'
+[ ["A13", 4409] ]],
+
+# file "tmsz83.tom"
+[# fusions to 'Sz(8).3'
+[ ["Sz(8)", 20] ]],
+
+# file "tm2f42.tom"
+[# fusions to '2F4(2)'
+[ [ "2F4(2)'", 350] ]]
 ];
 
 MakeLIBTOMLIST();

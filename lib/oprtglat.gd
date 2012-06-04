@@ -2,16 +2,13 @@
 ##
 #W  oprtglat.gd                GAP library                   Alexander Hulpke
 ##
-#H  @(#)$Id: oprtglat.gd,v 4.6 2002/04/15 10:05:06 sal Exp $ 
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains declarations for orbits on subgroups
 ##
-Revision.oprtglat_gd:=
-  "@(#)$Id: oprtglat.gd,v 4.6 2002/04/15 10:05:06 sal Exp $";
 
 #############################################################################
 ##

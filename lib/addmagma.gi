@@ -2,14 +2,11 @@
 ##
 #W  addmagma.gi                 GAP library                     Thomas Breuer
 ##
-#W  @(#)$Id: addmagma.gi,v 4.24 2002/09/03 15:24:14 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-Revision.addmagma_gi :=
-    "@(#)$Id: addmagma.gi,v 4.24 2002/09/03 15:24:14 gap Exp $";
 
 
 #############################################################################
@@ -616,6 +613,18 @@ InstallOtherMethod( Zero,
     [ IsAdditiveMagmaWithZero ],
     A -> Zero( Representative( A ) ) );
 
+
+#############################################################################
+##
+#M  Characteristic(<obj>)
+##
+
+InstallMethod( Characteristic,
+    "delegate to family (magma)",
+    [ IsAdditiveMagmaWithZero ],
+    function( el )
+      return Characteristic( FamilyObj(el) );
+    end );
 
 #############################################################################
 ##

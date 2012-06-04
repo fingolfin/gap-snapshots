@@ -1,0 +1,168 @@
+\makelabel{hecke:Title page}{}
+\makelabel{hecke:Copyright}{}
+\makelabel{hecke:Table of Contents}{}
+\makelabel{hecke:Decomposition numbers of Hecke algebras of type A}{1}
+\makelabel{hecke:Description}{1.1}
+\makelabel{hecke:The modular representation theory of Hecke algebras}{1.2}
+\makelabel{hecke:Two small examples}{1.3}
+\makelabel{hecke:Overview over this manual}{1.4}
+\makelabel{hecke:Credits}{1.5}
+\makelabel{hecke:Installation of the hecke-Package}{2}
+\makelabel{hecke:Specht functionality}{3}
+\makelabel{hecke:Porting notes}{3.1}
+\makelabel{hecke:Structure of Hecke}{3.1.1}
+\makelabel{hecke:Renamings}{3.1.2}
+\makelabel{hecke:Specht functions}{3.2}
+\makelabel{hecke:Simple information access}{3.2.2}
+\makelabel{hecke:The functions MakeSpecht, MakePIM and MakeSimple}{3.2.3}
+\makelabel{hecke:Decomposition numbers of the symmetric groups}{3.2.4}
+\makelabel{hecke:Hecke algebras over fields of positive characteristic}{3.2.5}
+\makelabel{hecke:The Fock space and Hecke algebras over fields of characteristic zero}{3.2.6}
+\makelabel{hecke:Partitions in Hecke}{3.3}
+\makelabel{hecke:Inducing and restricting modules}{3.4}
+\makelabel{hecke:Operations on decomposition matrices}{3.5}
+\makelabel{hecke:Calculating dimensions}{3.6}
+\makelabel{hecke:Combinatorics on Young diagrams}{3.7}
+\makelabel{hecke:Operations on partitions}{3.8}
+\makelabel{hecke:Miscellaneous functions on modules}{3.9}
+\makelabel{hecke:Semi-standard and standard tableaux}{3.10}
+\makelabel{hecke:Bibliography}{Bib}
+\makelabel{hecke:References}{Bib}
+\makelabel{hecke:Index}{Ind}
+\makelabel{hecke:hecke package}{1}
+\makelabel{hecke:hecke}{2}
+\makelabel{hecke:IsAlgebraObj}{3.1.1}
+\makelabel{hecke:IsHecke}{3.1.1}
+\makelabel{hecke:IsSchur}{3.1.1}
+\makelabel{hecke:IsAlgebraObjModule}{3.1.1}
+\makelabel{hecke:IsHeckeModule}{3.1.1}
+\makelabel{hecke:IsHeckeSpecht}{3.1.1}
+\makelabel{hecke:IsHeckePIM}{3.1.1}
+\makelabel{hecke:IsHeckeSimple}{3.1.1}
+\makelabel{hecke:IsFockModule}{3.1.1}
+\makelabel{hecke:IsFockSpecht}{3.1.1}
+\makelabel{hecke:IsFockPIM}{3.1.1}
+\makelabel{hecke:IsFockSimple}{3.1.1}
+\makelabel{hecke:IsSchurModule}{3.1.1}
+\makelabel{hecke:IsSchurWeyl}{3.1.1}
+\makelabel{hecke:IsSchurPIM}{3.1.1}
+\makelabel{hecke:IsSchurSimple}{3.1.1}
+\makelabel{hecke:IsFockSchurModule}{3.1.1}
+\makelabel{hecke:IsFockSchurWeyl}{3.1.1}
+\makelabel{hecke:IsFockSchurPIM}{3.1.1}
+\makelabel{hecke:IsFockSchurSimple}{3.1.1}
+\makelabel{hecke:IsDecompositionMatrix}{3.1.1}
+\makelabel{hecke:IsCrystalDecompositionMatrix}{3.1.1}
+\makelabel{hecke:Specht (for an integer)}{3.2.1}
+\makelabel{hecke:Specht (for two integers)}{3.2.1}
+\makelabel{hecke:Specht (for to integers and a valuation map)}{3.2.1}
+\makelabel{hecke:Specht}{3.2.1}
+\makelabel{hecke:OrderOfQ}{3.2.2}
+\makelabel{hecke:Characteristic}{3.2.2}
+\makelabel{hecke:SetOrdering}{3.2.2}
+\makelabel{hecke:SpechtDirectory}{3.2.2}
+\makelabel{hecke:MakeSpecht}{3.2.3}
+\makelabel{hecke:MakePIM}{3.2.3}
+\makelabel{hecke:MakeSimple}{3.2.3}
+\makelabel{hecke:MakeSpecht (for a module)}{3.2.3}
+\makelabel{hecke:MakePIM (for a module)}{3.2.3}
+\makelabel{hecke:MakeSimple (for a module)}{3.2.3}
+\makelabel{hecke:MakeSpecht (for a decomposition matrix)}{3.2.3}
+\makelabel{hecke:MakePIM (for a decomposition matrix)}{3.2.3}
+\makelabel{hecke:MakeSimple (for a decomposition matrix)}{3.2.3}
+\makelabel{hecke:MakeSpecht (for a decomposition matrix and a module)}{3.2.3}
+\makelabel{hecke:MakePIM (for a decomposition matrix and a module)}{3.2.3}
+\makelabel{hecke:MakeSimple (for a decomposition matrix and a module)}{3.2.3}
+\makelabel{hecke:MakeFockPIM}{3.2.6}
+\makelabel{hecke:MakeFockSpecht}{3.2.6}
+\makelabel{hecke:Schur (for an integer)}{3.2.7}
+\makelabel{hecke:Schur (for two integers)}{3.2.7}
+\makelabel{hecke:Schur (for to integers and a valuation map)}{3.2.7}
+\makelabel{hecke:Schur}{3.2.7}
+\makelabel{hecke:DecompositionMatrix (for an algebra and an integer)}{3.2.8}
+\makelabel{hecke:DecompositionMatrix}{3.2.8}
+\makelabel{hecke:CrystalDecompositionMatrix}{3.2.9}
+\makelabel{hecke:CrystalDecompositionMatrix (for an algebra and a filename)}{3.2.9}
+\makelabel{hecke:DecompositionNumber}{3.2.10}
+\makelabel{hecke:DecompositionNumber (for a decomposition matrix)}{3.2.10}
+\makelabel{hecke:RInducedModule}{3.4.1}
+\makelabel{hecke:RInducedModule (for residues)}{3.4.1}
+\makelabel{hecke:SInducedModule}{3.4.2}
+\makelabel{hecke:SInducedModule (for residues)}{3.4.2}
+\makelabel{hecke:RRestrictedModule}{3.4.3}
+\makelabel{hecke:RRestrictedModule (for residues)}{3.4.3}
+\makelabel{hecke:SRestrictedModule}{3.4.4}
+\makelabel{hecke:SRestrictedModule (for residues)}{3.4.4}
+\makelabel{hecke:InducedDecompositionMatrix}{3.5.1}
+\makelabel{hecke:IsNewIndecomposable}{3.5.2}
+\makelabel{hecke:InvertDecompositionMatrix}{3.5.3}
+\makelabel{hecke:AdjustmentMatrix}{3.5.4}
+\makelabel{hecke:SaveDecompositionMatrix}{3.5.5}
+\makelabel{hecke:SaveDecompositionMatrix (for a filename)}{3.5.5}
+\makelabel{hecke:CalculateDecompositionMatrix}{3.5.6}
+\makelabel{hecke:MatrixDecompositionMatrix}{3.5.7}
+\makelabel{hecke:DecompositionMatrixMatrix}{3.5.8}
+\makelabel{hecke:AddIndecomposable}{3.5.9}
+\makelabel{hecke:RemoveIndecomposable}{3.5.10}
+\makelabel{hecke:MissingIndecomposables}{3.5.11}
+\makelabel{hecke:SimpleDimension}{3.6.1}
+\makelabel{hecke:SimpleDimension (for an algebra object and an integer)}{3.6.1}
+\makelabel{hecke:SimpleDimension (for a partition)}{3.6.1}
+\makelabel{hecke:SpechtDimension}{3.6.2}
+\makelabel{hecke:Schaper}{3.7.1}
+\makelabel{hecke:IsSimpleModule}{3.7.2}
+\makelabel{hecke:MullineuxMap}{3.7.3}
+\makelabel{hecke:MullineuxMap (for a decomposition matrix)}{3.7.3}
+\makelabel{hecke:MullineuxMap (for a module)}{3.7.3}
+\makelabel{hecke:MullineuxSymbol}{3.7.4}
+\makelabel{hecke:PartitionMullineuxSymbol}{3.7.5}
+\makelabel{hecke:GoodNodes}{3.7.6}
+\makelabel{hecke:GoodNodes (for residues)}{3.7.6}
+\makelabel{hecke:NormalNodes}{3.7.7}
+\makelabel{hecke:NormalNodes (for residues)}{3.7.7}
+\makelabel{hecke:GoodNodeSequence}{3.7.8}
+\makelabel{hecke:GoodNodeSequences}{3.7.8}
+\makelabel{hecke:PartitionGoodNodeSequence}{3.7.9}
+\makelabel{hecke:GoodNodeLatticePath}{3.7.10}
+\makelabel{hecke:GoodNodeLatticePaths}{3.7.10}
+\makelabel{hecke:LatticePathGoodNodeSequence}{3.7.10}
+\makelabel{hecke:LittlewoodRichardsonRule}{3.7.11}
+\makelabel{hecke:LittlewoodRichardsonCoefficient}{3.7.11}
+\makelabel{hecke:InverseLittlewoodRichardsonRule}{3.7.12}
+\makelabel{hecke:EResidueDiagram}{3.7.13}
+\makelabel{hecke:EResidueDiagram (for modules)}{3.7.13}
+\makelabel{hecke:HookLengthDiagram}{3.7.14}
+\makelabel{hecke:RemoveRimHook}{3.7.15}
+\makelabel{hecke:AddRimHook}{3.7.16}
+\makelabel{hecke:ECore}{3.8.1}
+\makelabel{hecke:EAbacus}{3.8.1}
+\makelabel{hecke:IsECore}{3.8.2}
+\makelabel{hecke:EQuotient}{3.8.3}
+\makelabel{hecke:CombineEQuotientECore}{3.8.4}
+\makelabel{hecke:EWeight}{3.8.5}
+\makelabel{hecke:ERegularPartitions}{3.8.6}
+\makelabel{hecke:IsERegular}{3.8.7}
+\makelabel{hecke:ConjugatePartition}{3.8.8}
+\makelabel{hecke:BetaSet}{3.8.9}
+\makelabel{hecke:PartitionBetaSet}{3.8.10}
+\makelabel{hecke:ETopLadder}{3.8.11}
+\makelabel{hecke:Dominates}{3.8.12}
+\makelabel{hecke:LengthLexicographic}{3.8.13}
+\makelabel{hecke:Lexicographic}{3.8.14}
+\makelabel{hecke:ReverseDominance}{3.8.15}
+\makelabel{hecke:Specialized}{3.9.1}
+\makelabel{hecke:Specialized (for a decomposition matrix)}{3.9.1}
+\makelabel{hecke:ERegulars}{3.9.2}
+\makelabel{hecke:ERegulars (for a decomposition matrix)}{3.9.2}
+\makelabel{hecke:ListERegulars}{3.9.2}
+\makelabel{hecke:SplitECores}{3.9.3}
+\makelabel{hecke:SplitECores (for a module and a partition)}{3.9.3}
+\makelabel{hecke:SplitECores (for two modules)}{3.9.3}
+\makelabel{hecke:Coefficient}{3.9.4}
+\makelabel{hecke:InnerProduct}{3.9.5}
+\makelabel{hecke:Tableau}{3.10.1}
+\makelabel{hecke:SemiStandardTableaux}{3.10.2}
+\makelabel{hecke:StandardTableaux}{3.10.3}
+\makelabel{hecke:ConjugateTableau}{3.10.4}
+\makelabel{hecke:ShapeTableau}{3.10.5}
+\makelabel{hecke:TypeTableau}{3.10.6}

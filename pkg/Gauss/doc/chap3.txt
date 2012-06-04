@@ -1,0 +1,271 @@
+  
+  [1X3 The Sparse Matrix Data Type[0X
+  
+  
+  [1X3.1 The inner workings of [5XGauss[1X sparse matrices[0X
+  
+  When  doing  any  kind  of  computation there is a constant conflict between
+  memory load and speed. On the one hand, memory usage is bounded by the total
+  available memory, on the other hand, computation time should also not exceed
+  certain  proportions.  Memory  usage  and  CPU  time are generally inversely
+  proportional,  because the computer needs more time to perform operations on
+  a  compactified  data structure. The idea of sparse matrices mirrors exactly
+  the  need  for  less  memory  load,  therefore  it  is  natural  that sparse
+  algorithms  take  more  time  than  dense  ones.  However,  if the matrix is
+  sufficiently large and sparse at the same time, sparse algorithms can easily
+  be faster than dense ones while maintaining minimal memory load.
+  
+  It  should  be  noted  that,  although  matrices  that  appear  naturally in
+  homological  algebra  are  almost  always  sparse,  they do not have to stay
+  sparse under (R)REF algorithms, especially when the computation is concerned
+  with  transformation matrices. Therefore, in a perfect world there should be
+  ways  implemented to not only find out which data structure to use, but also
+  at  what  point to convert from one to the other. This was, however, not the
+  aim  of  the  [5XGauss[0m  package  and  is  just one of many points in which this
+  package could be optimized or extended. Take a look at this matrix M:
+  
+      ---------------------
+      | 0   0   2   9   0 | 
+      | 0   5   0   0   0 | 
+      | 0   0   0   1   0 | 
+      ---------------------
+  
+  The  matrix  M  carries  the same information as the following table, if and
+  only if you know how many rows and columns the matrix has. There is also the
+  matter of the base ring, but this is not important for now:
+  
+      -----------------
+      | (i,j)   Entry | 
+      -----------------
+      | (1,3)     2   | 
+      | (1,4)     9   | 
+      | (2,2)     5   | 
+      | (3,4)     1   | 
+      -----------------
+  
+  This  table  relates each index tuple to its nonzero entry, all other matrix
+  entries  are defined to be zero. This only works for known dimensions of the
+  matrix,  otherwise trailing zero rows and columns could get lost (notice how
+  the table gives no hint about the existence of a 5th column). To convert the
+  above  table  into a sparse data structure, one could list the table entries
+  in this way:
+  
+        [ [ 1, 3, 2 ], [ 1, 4, 9 ], [ 2, 2, 5 ], [ 3, 4, 1 ] ]
+  
+  However,  this  data structure would not be very efficient. Whenever you are
+  interested  in  a  row  i  of  M  (this happens all the time when performing
+  Gaussian  elimination) the whole list would have to be searched for 3-tuples
+  of  the  form  [  i,  *, * ]. This is why I tried to manage the row index by
+  putting the tuples into the corresponding list entry:
+  
+        [ [ 3, 2 ], [ 4, 9 ] ],
+        [ [ 2, 5 ] ],          
+        [ [ 4, 1 ] ] ]         
+  
+  As you can see, this looks fairly complicated. However, the same information
+  can  be stored in this form, which would become the final data structure for
+  [5XGauss[0m sparse matrices:
+  
+        indices :=   [ [ 3, 4 ],   entries:=   [ [ 2, 9 ],
+                     [ 2 ],                    [ 5 ],     
+                     [ 4 ] ]                   [ 1 ] ]    
+  
+  Although now the number of rows is equal to the Length of both `indices' and
+  `entries',  it  is  still stored in the sparse matrix. Here is the full data
+  structure (--> [2XSparseMatrix[0m ([14X3.2-1[0m)):
+  
+  [4X---------------------  from SparseMatrix.gi  ---------------------[0X
+    [4X    DeclareRepresentation( "IsSparseMatrixRep",[0X
+    [4X         IsSparseMatrix, [ "nrows", "ncols", "indices", "entries", "ring" ] );[0X
+    [4X    [0X
+  [4X------------------------------------------------------------------[0X
+  
+  As  you  can see, the matrix stores its ring to be on the safe side. This is
+  especially  important for zero matrices, as there is no way to determine the
+  base  ring  from  the  sparse  matrix  structure. For further information on
+  sparse matrix construction and converting, refer to [2XSparseMatrix[0m ([14X3.2-1[0m).
+  
+  
+  [1X3.1-1 A special case: GF(2)[0X
+  
+  [4X---------------------  from SparseMatrix.gi  ---------------------[0X
+    [4X    DeclareRepresentation( "IsSparseMatrixGF2Rep",[0X
+    [4X         IsSparseMatrix, [ "nrows", "ncols", "indices", "ring" ] );[0X
+    [4X    [0X
+  [4X------------------------------------------------------------------[0X
+  
+  Because  the nonzero entries of a matrix over GF(2) are all "1", the entries
+  of  M are not stored at all. It is of course crucial that all operations and
+  algorithms  make  100% sure that all appearing zero entries are deleted from
+  the `indices' as well as the `entries' list as they arise.
+  
+  
+  [1X3.2 Methods and functions for sparse matrices[0X
+  
+  [1X3.2-1 SparseMatrix[0m
+  
+  [2X> SparseMatrix( [0X[3Xmat[, R][0X[2X ) _________________________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix over the ring [3XR[0m
+  
+  [2X> SparseMatrix( [0X[3Xnrows, ncols, indices[0X[2X ) ____________________________[0Xfunction
+  [6XReturns:[0X  a sparse matrix over GF(2)
+  
+  [2X> SparseMatrix( [0X[3Xnrows, ncols, indices, entries[, R][0X[2X ) ______________[0Xfunction
+  [6XReturns:[0X  a sparse matrix over the ring [3XR[0m
+  
+  The  sparse  matrix  constructor.  In the one-argument form the SparseMatrix
+  constructor  converts  a  [5XGAP[0m matrix to a sparse matrix. If not provided the
+  base  ring  [3XR[0m  is found automatically. For the multi-argument form [3Xnrows[0m and
+  [3Xncols[0m  are  the  dimensions  of the matrix. [3Xindices[0m must be a list of length
+  [3Xnrows[0m  containing  lists  of  the  column indices of the matrix in ascending
+  order.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> M := [ [ 0 , 1 ], [ 3, 0 ] ] * One( GF(2) );[0X
+    [4X[ [ 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2) ] ][0X
+    [4Xgap> SM := SparseMatrix( M );[0X
+    [4X<a 2 x 2 sparse matrix over GF(2)>[0X
+    [4Xgap> IsSparseMatrix( SM );[0X
+    [4Xtrue[0X
+    [4Xgap> Display( SM );[0X
+    [4X . 1[0X
+    [4X 1 .[0X
+    [4Xgap> SN := SparseMatrix( 2, 2, [ [ 2 ], [ 1 ] ] );[0X
+    [4X<a 2 x 2 sparse matrix over GF(2)>[0X
+    [4Xgap> SN = SM;[0X
+    [4Xtrue[0X
+    [4Xgap> SN := SparseMatrix( 2, 3,[0X
+    [4X>                   [ [ 2 ], [ 1, 3 ] ],[0X
+    [4X>                   [ [ 1 ], [ 3, 2 ] ] * One( GF(5) ) );[0X
+    [4X<a 2 x 3 sparse matrix over GF(5)>[0X
+    [4Xgap> Display( SN );[0X
+    [4X . 1 .[0X
+    [4X 3 . 2[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.2-2 ConvertSparseMatrixToMatrix[0m
+  
+  [2X> ConvertSparseMatrixToMatrix( [0X[3Xsm[0X[2X ) __________________________________[0Xmethod
+  [6XReturns:[0X  a [5XGAP[0m matrix, [], or a list of empty lists
+  
+  This  function  converts  the sparse matrix [3Xsm[0m into a [5XGAP[0m matrix. In case of
+  [10Xnrows(sm)=0[0m  or  [10Xncols(sm)=0[0m the return value is the empty list or a list of
+  empty lists, respectively.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> M := [ [ 0 , 1 ], [ 3, 0 ] ] * One( GF(3) );[0X
+    [4X[ [ 0*Z(3), Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ][0X
+    [4Xgap> SM := SparseMatrix( M );[0X
+    [4X<a 2 x 2 sparse matrix over GF(3)>[0X
+    [4Xgap> N := ConvertSparseMatrixToMatrix( SM );[0X
+    [4X[ [ 0*Z(3), Z(3)^0 ], [ 0*Z(3), 0*Z(3) ] ][0X
+    [4Xgap> M = N;[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.2-3 CopyMat[0m
+  
+  [2X> CopyMat( [0X[3Xsm[0X[2X ) ______________________________________________________[0Xmethod
+  [6XReturns:[0X  a shallow copy of the sparse matrix [3Xsm[0m
+  
+  [1X3.2-4 GetEntry[0m
+  
+  [2X> GetEntry( [0X[3Xsm, i, j[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  a ring element.
+  
+  This returns the entry [10Xsm[i,j][0m of the sparse matrix [3Xsm[0m
+  
+  [1X3.2-5 SetEntry[0m
+  
+  [2X> SetEntry( [0X[3Xsm, i, j, elm[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  nothing.
+  
+  This sets the entry [10Xsm[i,j][0m of the sparse matrix [3Xsm[0m to [3Xelm[0m.
+  
+  [1X3.2-6 AddToEntry[0m
+  
+  [2X> AddToEntry( [0X[3Xsm, i, j, elm[0X[2X ) ________________________________________[0Xmethod
+  [6XReturns:[0X  [9Xtrue[0m or a ring element
+  
+  AddToEntry  adds  the  element  [3Xelm[0m  to the sparse matrix [3Xsm[0m at the [3X(i,j)[0m-th
+  position.  This  is  a  Method  with a side effect which returns true if you
+  tried  to  add zero or the sum of [10Xsm[i,j][0m and [3Xelm[0m otherwise. Please use this
+  method whenever possible.
+  
+  [1X3.2-7 SparseZeroMatrix[0m
+  
+  [2X> SparseZeroMatrix( [0X[3Xnrows[, ring][0X[2X ) ________________________________[0Xfunction
+  [6XReturns:[0X  a sparse <[3Xnrows[0m x [3Xnrows[0m> zero matrix over the ring [3Xring[0m
+  
+  [2X> SparseZeroMatrix( [0X[3Xnrows, ncols[, ring][0X[2X ) _________________________[0Xfunction
+  [6XReturns:[0X  a sparse <[3Xnrows[0m x [3Xncols[0m> zero matrix over the ring [3Xring[0m
+  
+  [1X3.2-8 SparseIdentityMatrix[0m
+  
+  [2X> SparseIdentityMatrix( [0X[3Xdim[, ring][0X[2X ) ______________________________[0Xfunction
+  [6XReturns:[0X  a  sparse  <[3Xdim[0m  x  [3Xdim[0m> identity matrix over the ring [3Xring[0m. If no
+            ring  is  specified (one should try to avoid this if possible) the
+            Rationals are the default ring.
+  
+  [1X3.2-9 TransposedSparseMat[0m
+  
+  [2X> TransposedSparseMat( [0X[3Xsm[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  the transposed matrix of the sparse matrix [3Xsm[0m
+  
+  [1X3.2-10 CertainRows[0m
+  
+  [2X> CertainRows( [0X[3Xsm, list[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  the submatrix [10Xsm{[list]}[0m as a sparse matrix
+  
+  [1X3.2-11 CertainColumns[0m
+  
+  [2X> CertainColumns( [0X[3Xsm, list[0X[2X ) _________________________________________[0Xmethod
+  [6XReturns:[0X  the submatrix [10Xsm{[1..nrows(sm)]}{[list]}[0m as a sparse matrix
+  
+  [1X3.2-12 UnionOfRows[0m
+  
+  [2X> UnionOfRows( [0X[3XA, B[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  the row union of the sparse matrices [3XA[0m and [3XB[0m
+  
+  [1X3.2-13 UnionOfColumns[0m
+  
+  [2X> UnionOfColumns( [0X[3XA, B[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  the column union of the sparse matrices [3XA[0m and [3XB[0m
+  
+  [1X3.2-14 SparseDiagMat[0m
+  
+  [2X> SparseDiagMat( [0X[3Xlist[0X[2X ) ____________________________________________[0Xfunction
+  [6XReturns:[0X  the block diagonal matrix composed of the sparse matrices in [3Xlist[0m
+  
+  [1X3.2-15 Nrows[0m
+  
+  [2X> Nrows( [0X[3Xsm[0X[2X ) ________________________________________________________[0Xmethod
+  [6XReturns:[0X  the  number  of  rows  of  the  sparse  matrix  [3Xsm[0m. This should be
+            preferred to the equivalent [10Xsm!.nrows[0m.
+  
+  [1X3.2-16 Ncols[0m
+  
+  [2X> Ncols( [0X[3Xsm[0X[2X ) ________________________________________________________[0Xmethod
+  [6XReturns:[0X  the  number  of  columns  of  the sparse matrix [3Xsm[0m. This should be
+            preferred to the equivalent [10Xsm!.ncols[0m.
+  
+  [1X3.2-17 IndicesOfSparseMatrix[0m
+  
+  [2X> IndicesOfSparseMatrix( [0X[3Xsm[0X[2X ) ________________________________________[0Xmethod
+  [6XReturns:[0X  the  indices of the sparse matrix [3Xsm[0m as a ListList. This should be
+            preferred to the equivalent [10Xsm!.indices[0m.
+  
+  [1X3.2-18 EntriesOfSparseMatrix[0m
+  
+  [2X> EntriesOfSparseMatrix( [0X[3Xsm[0X[2X ) ________________________________________[0Xmethod
+  [6XReturns:[0X  the  entries  of  the  sparse  matrix  [3Xsm[0m  as  a  ListList of ring
+            elements.  This  should be preferred to the equivalent [10Xsm!.entries[0m
+            and  has  the  additional advantage of working for sparse matrices
+            over GF(2) which do not have any entries.
+  
+  [1X3.2-19 RingOfDefinition[0m
+  
+  [2X> RingOfDefinition( [0X[3Xsm[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  the base ring of the sparse matrix [3Xsm[0m. This should be preferred to
+            the equivalent [10Xsm!.ring[0m.
+  

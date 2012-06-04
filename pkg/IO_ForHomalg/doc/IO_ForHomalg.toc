@@ -1,0 +1,2 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {IO{\textunderscore }ForHomalg} Package}}{5}{chapter.2}

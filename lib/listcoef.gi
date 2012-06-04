@@ -2,8 +2,8 @@
 ##
 #W  listcoef.gi                 GAP Library                      Frank Celler
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  The  '<Something>RowVector' functions operate  on row vectors, that is to
@@ -20,8 +20,6 @@
 ##  The '<Something>Coeffs' functions operate on row vectors which might have
 ##  different lengths, the returned result will have trailing zeros removed.
 ##
-Revision.listcoef_gi :=
-    "@(#)$Id: listcoef.gi,v 4.54.2.3 2006/02/22 12:26:40 sal Exp $";
 
 
 #############################################################################
@@ -841,24 +839,6 @@ InstallOtherMethod( RemoveOuterCoeffs,"error if immutable", true,
     L1_IMMUTABLE_ERROR);
 
 
-#############################################################################
-##
-#M  ShrinkCoeffs( <list> )
-##
-InstallMethod( ShrinkCoeffs,"call `ShrinkRowVector'",
-    true,
-    [ IsList and IsMutable ],
-    0,
-
-function( l1 )
-    ShrinkRowVector(l1);
-    return Length(l1);
-end );
-
-InstallOtherMethod( ShrinkCoeffs,"error if immutable", true,
-    [ IsList],0,
-    L1_IMMUTABLE_ERROR);
-
 
 #############################################################################
 ##
@@ -1006,27 +986,6 @@ end);
 
 #############################################################################
 ##
-#F  ProductPol( <coeffs_f>, <coeffs_g> )  . . . .  product of two polynomials
-##
-InstallGlobalFunction( ProductPol, function( f, g )
-    local  prod,  q,  m,  n,  i,  k;
-    m := Length(f);  while 1 < m  and f[m] = 0  do m := m-1;  od;
-    n := Length(g);  while 1 < n  and g[n] = 0  do n := n-1;  od;
-#T other zero elements are not allowed?
-    prod := [];
-    for i  in [ 2 .. m+n ]  do
-        q := 0;
-        for k  in [ Maximum(1,i-n) .. Minimum(m,i-1) ]  do
-            q := q + f[k] * g[i-k];
-        od;
-        prod[i-1] := q;
-    od;
-    return prod;
-end );
-
-
-#############################################################################
-##
 #F  ValuePol( <coeffs_f>, <x> ) . . . . . .  evaluate a polynomial at a point
 ##
 InstallMethod( ValuePol,"generic",true,[IsList,IsRingElement],0,
@@ -1132,8 +1091,8 @@ InstallMethod(DistancesDistributionVecFFEsVecFFE,"generic",IsCollsElms,
   [IsList, IsList],0,
 function(vecs,vec)
 local d,i;
-  ConvertToMatrixRepNC(vecs);
-  ConvertToVectorRepNC(vec);
+  ConvertToMatrixRep(vecs);
+  ConvertToVectorRep(vec);
   d:=ListWithIdenticalEntries(Length(vec)+1,0);
   for i in vecs do
     i:=DistanceVecFFE(i,vec);
@@ -1310,8 +1269,7 @@ AClosVecLib:=function(veclis,vec,sum,pos,l,m,cnt,stop,bd,bv,coords,bcoords)
     return bd;
 end;
 
-AClosestVectorDriver :=
-  function(mat,f,vec,cnt,stop,coords)
+AClosestVectorDriver := function(mat,f,vec,cnt,stop,coords)
     local b,fdi,i,j,veclis,mult,mults,fdip, q, ok8,c,bc;
 
     # special case: combination of 0 vectors
@@ -1327,7 +1285,7 @@ AClosestVectorDriver :=
       Error("First list needs at least ", cnt, " vectors . . .\n");
     fi;
     
-    ConvertToMatrixRepNC(mat);
+    ConvertToMatrixRepNC(mat,Size(f));
     ConvertToVectorRepNC(vec,f);
     
     # build the data structures
@@ -1639,6 +1597,12 @@ InstallMethod( AddToListEntries, "fast kernel method", true,
          IsRange and IsRangeRep, IsInt], 0, 
         ADD_TO_LIST_ENTRIES_PLIST_RANGE);
 
+
+# data types for low index memory blocks. Created here to avoid having to
+# read the fp group stuff early
+InstallValue(TYPE_LOWINDEX_DATA,
+  NewType(NewFamily("LowIndexDataFamily",IsObject),
+    IsObject and IsDataObjectRep));
 
 #############################################################################
 ##

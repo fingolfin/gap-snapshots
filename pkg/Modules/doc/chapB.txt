@@ -1,0 +1,9 @@
+  
+  [1XB Logic Subpackages[0X
+  
+  
+  [1XB.1 [5XLIMOD[1X: Logical Implications for Modules[0X
+  
+  
+  [1XB.2 [5XLIHOM[1X: Logical Implications for Homomorphisms of Modules[0X
+  

@@ -1,0 +1,275 @@
+Using grep on 7th September 2010
+================================
+unknown-00-26-bb-51-5f-14:gap christopherwensley$ grep -n Declare *.gd
+gpd.gd:20:## DeclareProperty( "IsGroupoid", IsMathCat and
+gpd.gd:23:##  DeclareSynonym( "IsGroupoid", IsMathCat and 
+gpd.gd:25:##  DeclareSynonymAttr( "IsGroupoid", 
+gpd.gd:37:DeclareOperation( "ObjectsOfGroupoid", [ IsGroupoid ] );  
+gpd.gd:38:DeclareOperation( "GeneratorsOfGroupoid", [ IsGroupoid ] );
+gpd.gd:39:DeclareOperation( "PiecesOfGroupoid", [ IsGroupoid ] );  
+gpd.gd:49:DeclareRepresentation( "IsSinglePieceRaysRep",
+gpd.gd:60:DeclareProperty( "IsPermGroupoid", IsGroupoid );  
+gpd.gd:61:DeclareProperty( "IsFpGroupoid", IsGroupoid );  
+gpd.gd:62:DeclareProperty( "IsPcGroupoid", IsGroupoid );  
+gpd.gd:63:DeclareProperty( "IsFreeGroupoid", IsGroupoid );  
+gpd.gd:69:DeclareGlobalFunction( "Groupoid" );
+gpd.gd:79:DeclareOperation( "SinglePieceGroupoidNC", 
+gpd.gd:81:DeclareOperation( "SinglePieceGroupoid", 
+gpd.gd:83:DeclareOperation( "SubgroupoidWithRaysNC", 
+gpd.gd:85:DeclareOperation( "SubgroupoidWithRays", 
+gpd.gd:87:DeclareOperation( "SinglePieceGroupoidByGenerators", 
+gpd.gd:96:##  DeclareOperation( "GroupAsGroupoid", [ IsScalar, IsGroup ] );    
+gpd.gd:97:##  DeclareOperation( "GroupoidByUnionNC", [ IsHomogeneousList ] );    
+gpd.gd:98:##  DeclareOperation( "GroupoidByUnion", [ IsList ] );
+gpd.gd:105:DeclareOperation( "ObjectGroup", [ IsGroupoid, IsScalar ] );    
+gpd.gd:106:DeclareAttribute( "ObjectGroups", IsGroupoid );    
+gpd.gd:119:DeclareRepresentation( "IsGroupoidElementRep",
+gpd.gd:131:DeclareOperation( "GroupoidElementNC", 
+gpd.gd:133:DeclareOperation( "GroupoidElement",
+gpd.gd:164:DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
+gpd.gd:165:DeclareRepresentation( "IsHomsetCosetsRep", 
+gpd.gd:167:## DeclareAttribute( "UnionHomsets", IsGroupoid );
+gpd.gd:168:DeclareOperation( "IdentityElement", [ IsGroupoid, IsScalar ] ); 
+gpd.gd:169:DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsScalar ] ); 
+gpd.gd:170:DeclareOperation( "ObjectStar", [ IsGroupoid, IsScalar ] ); 
+gpd.gd:171:DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsScalar ] ); 
+gpd.gd:172:DeclareOperation( "ObjectCostar", [ IsGroupoid, IsScalar ] ); 
+gpd.gd:173:DeclareOperation( "HomsetNC", [ IsGroupoid, IsScalar, IsScalar ] ); 
+gpd.gd:174:DeclareOperation( "Homset", [ IsGroupoid, IsScalar, IsScalar ] ); 
+gpd.gd:175:DeclareAttribute( "ElementsOfGroupoid", IsGroupoid ); 
+gpd.gd:192:DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
+gpd.gd:193:DeclareAttribute( "SuperDomain", IsRightCosetDefaultRep ); 
+gpd.gd:194:DeclareAttribute( "HomsetCosetsGroupoidCoset", IsRightCosetDefaultRep ); 
+gpd.gd:195:DeclareCategory( "IsLeftCosetWithObjects", IsDomain and IsExternalOrbit );
+gpd.gd:196:DeclareRepresentation( "IsLeftCosetWithObjectsDefaultRep", 
+gpd.gd:199:DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
+gpd.gd:200:DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
+gpd.gd:201:DeclareOperation( "LeftCosetRepresentativesFromObject", 
+gpd.gd:203:DeclareOperation( "LeftCosetsNC", [ IsGroupoid, IsGroupoid ] ); 
+gpd.gd:204:DeclareOperation( "LeftCoset", [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
+gpd.gd:205:DeclareOperation( "DoubleCosetRepresentatives", 
+gpd.gd:214:DeclareOperation( "IsElementInGroupoid", [ IsGroupoidElement, IsGroupoid ] ); 
+gpd.gd:226:DeclareGlobalFunction( "Subgroupoid" );
+gpd.gd:227:DeclareOperation( "IsSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+gpd.gd:240:DeclareOperation( "SubgroupoidBySubgroup", 
+gpd.gd:242:DeclareOperation( "SubgroupoidByPieces",
+gpd.gd:244:##  DeclareOperation( "PiecePositions", [ IsGroupoid, IsGroupoid ] );
+gpd.gd:245:DeclareOperation( "DiscreteSubgroupoid",
+gpd.gd:247:DeclareAttribute( "MaximalDiscreteSubgroupoid", IsGroupoid );
+gpd.gd:248:DeclareOperation( "FullSubgroupoid", [ IsGroupoid, IsHomogeneousList ] );
+gpd.gd:249:DeclareAttribute( "FullIdentitySubgroupoid", IsGroupoid );
+gpd.gd:250:DeclareAttribute( "DiscreteIdentitySubgroupoid", IsGroupoid );
+gpd.gd:259:DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
+gpd.gd:260:DeclareOperation( "ConjugateSubgroupoid",
+gpd.gd:268:DeclareOperation( "ConjugateGroupoidElement", 
+gpdaut.gd:12:DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
+gpdaut.gd:13:DeclareAttribute( "GroupoidActedUpon", IsAutomorphismGroupOfGroupoid );
+gpdgraph.gd:25:DeclareRepresentation( "IsGraphOfGroupoids",
+gpdgraph.gd:34:DeclareProperty( "IsGraphOfPermGroupoids", IsGraphOfGroupoids ); 
+gpdgraph.gd:41:DeclareProperty( "IsGraphOfFpGroupoids", IsGraphOfGroupoids ); 
+gpdgraph.gd:42:DeclareProperty( "IsGraphOfPcGroupoids", IsGraphOfGroupoids ); 
+gpdgraph.gd:49:DeclareOperation( "GraphOfGroupoidsNC", 
+gpdgraph.gd:51:DeclareOperation( "GraphOfGroupoids", 
+gpdgraph.gd:61:DeclareAttribute( "GroupoidsOfGraphOfGroupoids", IsGraphOfGroupoids ); 
+gpdgraph.gd:62:DeclareAttribute( "DigraphOfGraphOfGroupoids", IsGraphOfGroupoids );  
+gpdgraph.gd:63:DeclareAttribute( "SubgroupoidsOfGraphOfGroupoids", IsGraphOfGroupoids ); 
+gpdgraph.gd:64:DeclareAttribute( "IsomorphismsOfGraphOfGroupoids", IsGraphOfGroupoids );  
+gpdgraph.gd:70:##  DeclareOperation( "NormalFormKBRWS", [ IsFpGroupoid, IsObject ] );    
+gpdgraph.gd:77:DeclareAttribute( "RightTransversalsOfGraphOfGroupoids", IsGraphOfGroupoids );
+gpdgraph.gd:78:DeclareAttribute( "LeftTransversalsOfGraphOfGroupoids", IsGraphOfGroupoids );  
+gpdgraph.gd:87:DeclareRepresentation( "IsGraphOfGroupoidsWordRep", 
+gpdgraph.gd:97:DeclareProperty( "IsGraphOfGroupoidsWord", IsGraphOfGroupoidsWordRep ); 
+gpdgraph.gd:98:DeclareProperty( "IsReducedGraphOfGroupoidsWord", IsGraphOfGroupoidsWord ); 
+gpdgraph.gd:105:DeclareOperation( "GraphOfGroupoidsWordNC",  
+gpdgraph.gd:107:DeclareOperation( "GraphOfGroupoidsWord", 
+gpdgraph.gd:116:DeclareAttribute( "GraphOfGroupoidsOfWord", IsGraphOfGroupoidsWordRep ); 
+gpdgraph.gd:117:DeclareAttribute( "WordOfGraphOfGroupoidsWord", IsGraphOfGroupoidsWordRep); 
+gpdgraph.gd:118:DeclareOperation( "ReducedGraphOfGroupoidsWord",
+gpdgraph.gd:126:DeclareOperation( "IsGraphOfGroupoidsGroupoid", [ IsGroupoid ] );
+gpdgraph.gd:127:DeclareOperation( "GraphOfGroupoidsGroupoid", [ IsGraphOfGroupoids ] );
+gpdhom.gd:17:DeclareGlobalFunction( "GroupoidHomomorphism" ); 
+gpdhom.gd:24:DeclareAttribute( "IsomorphismPermGroupoid", IsGroupoid );
+gpdhom.gd:25:DeclareAttribute( "IsomorphismSmallPermGroupoid", IsGroupoid );
+gpdhom.gd:32:DeclareSynonym( "IsGroupoidEndomorphism", 
+gpdhom.gd:34:DeclareSynonym( "IsGroupoidAutomorphism", 
+gpdhom.gd:43:DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
+gpdhom.gd:44:DeclareOperation( "RestrictionMappingGroupoids", 
+gpdhom.gd:51:DeclareOperation( "GroupoidHomomorphismFromDiscreteToSinglePiece", 
+gpdhom.gd:67:DeclareRepresentation( "IsDefaultGroupoidHomomorphismRep",
+gpdhom.gd:75:DeclareOperation( "MappingPermObjectsImages", [ IsList, IsList ] ); 
+gpdhom.gd:76:DeclareAttribute( "ObjectPermOfGroupoidHomomorphism", IsDefaultGroupoidHomomorphismRep );
+gpdhom.gd:90:DeclareAttribute( "RootHomomorphism", 
+gpdhom.gd:92:DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC", 
+gpdhom.gd:95:DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
+gpdhom.gd:98:DeclareOperation( "GroupoidHomomorphismByGroupHomNC", 
+gpdhom.gd:100:DeclareOperation( "GroupoidHomomorphismByGroupHom", 
+gpdhom.gd:102:DeclareOperation( "GroupoidHomomorphismByObjectImagesNC", 
+gpdhom.gd:104:DeclareOperation( "GroupoidHomomorphismByObjectImages", 
+gpdhom.gd:106:DeclareOperation( "GroupoidHomomorphismByRayProdsNC", 
+gpdhom.gd:108:DeclareOperation( "GroupoidHomomorphismByRayProds", 
+grpgraph.gd:20:DeclareCategory( "IsDigraph", IsDomain );
+grpgraph.gd:24:## DeclareOperation( "Vertices", IsDigraph );  
+grpgraph.gd:25:## DeclareOperation( "Arcs", IsDigraph );  
+grpgraph.gd:33:DeclareRepresentation( "IsFpWeightedDigraph",
+grpgraph.gd:41:DeclareOperation( "FpWeightedDigraphNC",  
+grpgraph.gd:43:DeclareOperation( "FpWeightedDigraph", 
+grpgraph.gd:53:DeclareAttribute( "InvolutoryArcs", IsFpWeightedDigraph ); 
+grpgraph.gd:63:DeclareProperty( "IsStructuredDigraph", IsDigraph ); 
+grpgraph.gd:75:DeclareRepresentation( "IsGraphOfGroups",
+grpgraph.gd:86:DeclareProperty( "IsGraphOfPermGroups", IsGraphOfGroups ); 
+grpgraph.gd:87:DeclareProperty( "IsGraphOfFpGroups", IsGraphOfGroups ); 
+grpgraph.gd:88:DeclareProperty( "IsGraphOfPcGroups", IsGraphOfGroups ); 
+grpgraph.gd:95:DeclareOperation( "GraphOfGroupsNC", 
+grpgraph.gd:97:DeclareOperation( "GraphOfGroups", 
+grpgraph.gd:109:DeclareAttribute( "GroupsOfGraphOfGroups", IsGraphOfGroups ); 
+grpgraph.gd:110:DeclareAttribute( "DigraphOfGraphOfGroups", IsGraphOfGroups );  
+grpgraph.gd:111:DeclareAttribute( "SubgroupsOfGraphOfGroups", IsGraphOfGroups ); 
+grpgraph.gd:112:DeclareAttribute( "IsomorphismsOfGraphOfGroups", IsGraphOfGroups );  
+grpgraph.gd:113:DeclareAttribute( "RightTransversalsOfGraphOfGroups", IsGraphOfGroups );  
+grpgraph.gd:114:DeclareAttribute( "LeftTransversalsOfGraphOfGroups", IsGraphOfGroups );  
+grpgraph.gd:128:DeclareAttribute( "InverseOfIsomorphismFpSemigroup", 
+grpgraph.gd:130:DeclareAttribute( "FreeSemigroupOfKnuthBendixRewritingSystem", 
+grpgraph.gd:132:DeclareOperation( "NormalFormKBRWS", [ IsFpGroup, IsObject ] );    
+grpgraph.gd:140:DeclareOperation( "FreeProductWithAmalgamation",
+grpgraph.gd:142:DeclareProperty( "IsFpaGroup", IsFpGroup );
+grpgraph.gd:143:DeclareAttribute( "FpaInfo", IsFpaGroup, "mutable" );    
+grpgraph.gd:151:DeclareOperation( "HnnExtension", [ IsGroup, IsGroupHomomorphism ] );    
+grpgraph.gd:152:DeclareProperty( "IsHnnGroup", IsFpGroup );
+grpgraph.gd:153:DeclareAttribute( "HnnInfo", IsHnnGroup, "mutable" );    
+grpgraph.gd:160:DeclareAttribute( "GraphOfGroupsRewritingSystem", IsFpGroup );
+grpgraph.gd:161:DeclareOperation( "NormalFormGGRWS", [ IsFpGroup, IsObject ] );    
+grpgraph.gd:174:DeclareRepresentation( "IsGraphOfGroupsWordRep", 
+grpgraph.gd:184:DeclareProperty( "IsGraphOfGroupsWord", IsGraphOfGroupsWordRep ); 
+grpgraph.gd:185:DeclareProperty( "IsReducedGraphOfGroupsWord", IsGraphOfGroupsWord ); 
+grpgraph.gd:192:DeclareOperation( "GraphOfGroupsWordNC", [ IsGraphOfGroups, IsInt, IsList ] );
+grpgraph.gd:193:DeclareOperation( "GraphOfGroupsWord", [ IsGraphOfGroups, IsInt, IsList ] );   
+grpgraph.gd:204:DeclareAttribute( "GraphOfGroupsOfWord", IsGraphOfGroupsWordRep ); 
+grpgraph.gd:205:DeclareAttribute( "GGTail", IsGraphOfGroupsWordRep ); 
+grpgraph.gd:206:DeclareAttribute( "GGHead", IsGraphOfGroupsWordRep ); 
+grpgraph.gd:207:DeclareAttribute( "WordOfGraphOfGroupsWord", IsGraphOfGroupsWordRep); 
+grpgraph.gd:208:DeclareOperation( "ReducedGraphOfGroupsWord", [ IsGraphOfGroupsWordRep ] );   
+grpgraph.gd:219:## DeclareProperty( "IsGraphOfGroupsGroupoid", IsGroupoid );
+grpgraph.gd:220:## DeclareOperation( "GraphOfGroupsGroupoid", [ IsGraphOfGroups ] );
+mwo.gd:25:DeclareCategory( "IsDomainWithObjects", IsDomain ); 
+mwo.gd:31:DeclareGlobalFunction( "DomainWithObjects" ); 
+mwo.gd:39:DeclareProperty( "IsSinglePieceDomain", IsDomainWithObjects );  
+mwo.gd:40:DeclareProperty( "IsDiscreteDomain", IsDomainWithObjects ); 
+mwo.gd:41:DeclareProperty( "IsDirectProductWithCompleteGraphDomain", 
+mwo.gd:49:DeclareAttribute( "ObjectList", IsDomainWithObjects ); 
+mwo.gd:50:DeclareAttribute( "Pieces", IsDomainWithObjects );  
+mwo.gd:58:DeclareRepresentation( "IsPiecesRep", 
+mwo.gd:67:DeclareOperation( "UnionOfPiecesNC", [ IsList, IsInt ] );    
+mwo.gd:68:DeclareOperation( "UnionOfPieces", [ IsList ] );
+mwo.gd:75:DeclareOperation( "PieceOfObject", [ IsDomainWithObjects, IsScalar ] );  
+mwo.gd:76:DeclareOperation( "PieceNrOfObject", [ IsDomainWithObjects, IsScalar ] );
+mwo.gd:82:DeclareOperation( "TypeOfDomainWithObjects", [ IsList ] );  
+mwo.gd:91:DeclareCategory( "IsMultiplicativeElementWithObjects", 
+mwo.gd:93:DeclareCategoryCollections( "IsMultiplicativeElementWithObjects" ); 
+mwo.gd:94:DeclareCategoryCollections( "IsMultiplicativeElementWithObjectsCollection" ); 
+mwo.gd:95:DeclareCategoryCollections( "IsMultiplicativeElementWithObjectsCollColl" ); 
+mwo.gd:96:##  DeclareSynonyms ??? 
+mwo.gd:104:DeclareCategory( "IsMultiplicativeElementWithObjectsAndOnes", 
+mwo.gd:106:DeclareCategoryCollections( "IsMultiplicativeElementWithObjectsAndOnes" ); 
+mwo.gd:107:DeclareCategoryCollections( 
+mwo.gd:109:DeclareCategoryCollections( 
+mwo.gd:117:DeclareCategory( "IsMultiplicativeElementWithObjectsAndInversesIfNonzero", 
+mwo.gd:119:DeclareCategoryCollections( 
+mwo.gd:121:DeclareCategoryCollections( 
+mwo.gd:123:DeclareCategoryCollections(     
+mwo.gd:130:DeclareCategory( "IsGroupoidElement", 
+mwo.gd:132:DeclareCategoryCollections( "IsGroupoidElement" ); 
+mwo.gd:133:DeclareCategoryCollections( "IsGroupoidElementCollection" ); 
+mwo.gd:134:DeclareCategoryCollections( "IsGroupoidElementCollColl" ); 
+mwo.gd:140:##  DeclareRepresentation( "IsMultiplicativeElementWithObjectsPosRep", 
+mwo.gd:162:DeclareOperation( "Arrowelt", [ IsMultiplicativeElementWithObjects ] ); 
+mwo.gd:163:DeclareOperation( "Arrowtail", [ IsMultiplicativeElementWithObjects ] ); 
+mwo.gd:164:DeclareOperation( "Arrowhead", [ IsMultiplicativeElementWithObjects ] ); 
+mwo.gd:179:DeclareCategory( "IsMagmaWithObjects", IsDomainWithObjects and 
+mwo.gd:181:DeclareCategoryCollections( "IsMagmaWithObjects" ); 
+mwo.gd:182:##  ?? (23/04/10) Declare more CategoryColections ?? 
+mwo.gd:183:DeclareCategory( "IsMagmaWithObjectsAndOnes", 
+mwo.gd:186:DeclareCategory( "IsMagmaWithObjectsAndInversesIfNonzero", 
+mwo.gd:189:##  DeclareCategory( "IsMagmaWithObjectsAndInverses",
+mwo.gd:190:DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInversesIfNonzero 
+mwo.gd:210:DeclareSynonymAttr( "IsSinglePiece", 
+mwo.gd:212:DeclareSynonymAttr( "IsDiscrete", 
+mwo.gd:214:DeclareSynonymAttr( "IsDirectProductWithCompleteGraph", 
+mwo.gd:226:DeclareGlobalFunction( "MagmaWithObjects" ); 
+mwo.gd:232:DeclareOperation( "GeneratorsOfMagmaWithObjects", [ IsMagmaWithObjects ] ); 
+mwo.gd:240:DeclareRepresentation( "IsMWOSinglePieceRep", 
+mwo.gd:249:DeclareOperation( "SinglePieceMagmaWithObjects", [ IsMagma, IsCollection ] ); 
+mwo.gd:250:DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );    
+mwo.gd:258:DeclareOperation( "MultiplicativeElementWithObjects", 
+mwo.gd:260:DeclareOperation( "MultiplicativeElementWithObjectsNC", 
+mwo.gd:275:DeclareSynonymAttr( "IsSemigroupWithObjects",
+mwo.gd:284:DeclareGlobalFunction( "SemigroupWithObjects" ); 
+mwo.gd:290:DeclareOperation( "SinglePieceSemigroupWithObjects", 
+mwo.gd:305:DeclareSynonymAttr( "IsMonoidWithObjects", 
+mwo.gd:314:DeclareGlobalFunction( "MonoidWithObjects" ); 
+mwo.gd:320:DeclareOperation( "SinglePieceMonoidWithObjects", 
+mwo.gd:341:DeclareOperation( "IsSubdomainWithObjects", 
+mwo.gd:343:DeclareGlobalFunction( "SubdomainWithObjects" );
+mwo.gd:353:DeclareOperation( "SubdomainByPieces",
+mwo.gd:355:DeclareOperation( "PiecePositions", 
+mwo.gd:357:DeclareOperation( "DiscreteSubdomain",
+mwo.gd:359:DeclareAttribute( "MaximalDiscreteSubdomain", IsDomainWithObjects );
+mwo.gd:360:DeclareOperation( "FullSubdomain", [IsDomainWithObjects,IsHomogeneousList] );
+mwo.gd:366:DeclareProperty( "IsWide", IsDomainWithObjects ); 
+mwo.gd:377:DeclareRepresentation( "IsSubmagmaWithObjectsTableRep", 
+mwo.gd:387:DeclareOperation( "IsSubmagmaWithObjectsGeneratingTable", [IsMagma,IsList] );
+mwo.gd:388:DeclareOperation( "SubmagmaWithObjectsElementsTable", [IsMagma,IsList] );
+mwo.gd:389:DeclareOperation( "SubmagmaWithObjectsByElementsTable", 
+mwo.gd:400:DeclareOperation( "Ancestor", [ IsDomainWithObjects ] );    
+mwohom.gd:22:DeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); 
+mwohom.gd:23:DeclareCategory( "IsSPGeneralMappingWithObjects", 
+mwohom.gd:25:DeclareCategory( "IsNonSPGeneralMappingWithObjects", 
+mwohom.gd:34:DeclareCategoryCollections( "IsGeneralMappingWithObjects" );
+mwohom.gd:35:DeclareCategoryCollections( "IsGeneralMappingWithObjectsCollection" );
+mwohom.gd:36:DeclareCategoryCollections( "IsGeneralMappingWithObjectsCollColl" );
+mwohom.gd:57:DeclareSynonymAttr( "IsMappingWithObjects",
+mwohom.gd:59:DeclareSynonymAttr( "IsEndoGeneralMappingWithObjects",
+mwohom.gd:61:DeclareSynonymAttr( "IsEndoMappingWithObjects",
+mwohom.gd:63:DeclareSynonymAttr( "IsMagmaWithObjectsGeneralMapping", 
+mwohom.gd:65:DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", 
+mwohom.gd:69:DeclareProperty( "IsSemigroupWithObjectsHomomorphism", 
+mwohom.gd:71:DeclareProperty( "IsMonoidWithObjectsHomomorphism", 
+mwohom.gd:73:DeclareProperty( "IsGroupWithObjectsHomomorphism", 
+mwohom.gd:81:##  DeclareProperty( "IsGroupoidHomomorphism", 
+mwohom.gd:84:DeclareCategory( "IsGroupoidHomomorphism", ## IsGeneralMappingWithObjects ); 
+mwohom.gd:93:DeclareCategoryCollections( "IsGroupoidHomomorphism" );
+mwohom.gd:94:DeclareCategoryCollections( "IsGroupoidHomomorphismCollection" );
+mwohom.gd:95:DeclareCategoryCollections( "IsGroupoidHomomorphismCollColl" );
+mwohom.gd:117:DeclareRepresentation( "IsHomomorphismToSinglePieceRep",
+mwohom.gd:121:DeclareRepresentation( "IsHomomorphismWithObjectsRep", 
+mwohom.gd:138:DeclareProperty("IsConstantOnObjects", IsGeneralMappingWithObjects );  
+mwohom.gd:139:DeclareProperty("IsGeneralMappingToSinglePiece", IsGeneralMappingWithObjects);
+mwohom.gd:140:DeclareProperty("IsGeneralMappingFromSinglePiece", 
+mwohom.gd:142:DeclareSynonymAttr( "IsHomomorphismToSinglePiece", 
+mwohom.gd:144:DeclareSynonymAttr( "IsHomomorphismFromSinglePiece", 
+mwohom.gd:151:DeclareGlobalFunction( "MagmaWithObjectsHomomorphism" ); 
+mwohom.gd:163:DeclareOperation( "MagmaHomomorphismFromSinglePieceNC",
+mwohom.gd:165:DeclareOperation( "MagmaHomomorphismFromSinglePiece",
+mwohom.gd:167:DeclareOperation( "HomomorphismToSinglePieceNC",
+mwohom.gd:169:DeclareOperation( "HomomorphismToSinglePiece",
+mwohom.gd:171:DeclareOperation( "HomomorphismByUnionNC",
+mwohom.gd:173:DeclareOperation( "HomomorphismByUnion",
+mwohom.gd:175:DeclareOperation( "MagmaHomomorphismFromSinglePieceGeneratorsImages",
+mwohom.gd:184:DeclareOperation( "IsomorphismNewObjects", 
+mwohom.gd:196:DeclareAttribute( "PieceImages", IsHomomorphismToSinglePieceRep );
+mwohom.gd:197:DeclareAttribute( "HomsOfMapping", IsHomomorphismToSinglePiece );  
+mwohom.gd:198:DeclareAttribute( "PiecesOfMapping", IsHomomorphismWithObjectsRep );  
+mwohom.gd:199:DeclareAttribute( "PartitionOfSource", IsHomomorphismWithObjectsRep );
+mwohom.gd:200:DeclareAttribute( "ImagesOfObjects", IsMagmaWithObjectsHomomorphism ); 
+mwohom.gd:201:DeclareAttribute( "LeftProdsOfRays", IsMagmaWithObjectsHomomorphism ); 
+mwohom.gd:211:DeclareProperty( "IsInjectiveWithObjects", IsMagmaWithObjectsHomomorphism );  
+mwohom.gd:212:DeclareProperty( "IsSurjectiveWithObjects", IsMagmaWithObjectsHomomorphism );  
+mwohom.gd:213:DeclareProperty( "IsBijectiveWithObjects", IsMagmaWithObjectsHomomorphism );  
+mwohom.gd:214:DeclareProperty( "IsEndomorphismWithObjects", IsMagmaWithObjectsHomomorphism );
+mwohom.gd:215:DeclareProperty( "IsAutomorphismWithObjects", IsMagmaWithObjectsHomomorphism );
+mwohom.gd:221:DeclareAttribute( "InverseMapping",
+util.gd:16:DeclareAttribute( "IdentitySubgroup", IsGroup );
+util.gd:25:DeclareOperation( "GroupHomomorphismByImagesTriv", 
+util.gd:27:DeclareOperation( "InclusionMappingGroups", [ IsGroup, IsGroup ] );
+util.gd:28:DeclareOperation( "RestrictionMappingGroups", 
+util.gd:30:DeclareOperation( "MappingToOne", [ IsGroup, IsGroup ] );
+unknown-00-26-bb-51-5f-14:gap christopherwensley$ 

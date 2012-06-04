@@ -1,0 +1,41 @@
+\makelabel{sco:Title page}{}
+\makelabel{sco:Abstract}{}
+\makelabel{sco:Copyright}{}
+\makelabel{sco:Acknowledgements}{}
+\makelabel{sco:Table of Contents}{}
+\makelabel{sco:Introduction}{1}
+\makelabel{sco:Overview over this manual}{1.1}
+\makelabel{sco:Installation of the SCO Package}{1.2}
+\makelabel{sco:Usage}{2}
+\makelabel{sco:The Examples Script}{2.1}
+\makelabel{sco:Working Manually}{2.2}
+\makelabel{sco:Examples}{3}
+\makelabel{sco:Example 1: Klein Bottle}{3.1}
+\makelabel{sco:Example 2: V4}{3.2}
+\makelabel{sco:Example 3: The "Teardrop" orbifold}{3.3}
+\makelabel{sco:SCO methods and functions}{4}
+\makelabel{sco:Methods and functions for orbifold triangulations}{4.1}
+\makelabel{sco:Methods and functions for simplicial sets}{4.2}
+\makelabel{sco:Methods and functions for matrix creation and computation}{4.3}
+\makelabel{sco:An Overview of the SCO package source code}{A}
+\makelabel{sco:Bibliography}{Bib}
+\makelabel{sco:References}{Bib}
+\makelabel{sco:Index}{Ind}
+\makelabel{sco:SCO}{}
+\makelabel{sco:OrbifoldTriangulation}{4.1.1}
+\makelabel{sco:Vertices}{4.1.2}
+\makelabel{sco:Simplices}{4.1.3}
+\makelabel{sco:Isotropy}{4.1.4}
+\makelabel{sco:Mu}{4.1.5}
+\makelabel{sco:MuData}{4.1.6}
+\makelabel{sco:InfoString}{4.1.7}
+\makelabel{sco:SimplicialSet (constructor)}{4.2.1}
+\makelabel{sco:SimplicialSet (data access)}{4.2.2}
+\makelabel{sco:ComputeNextDimension}{4.2.3}
+\makelabel{sco:Extend}{4.2.4}
+\makelabel{sco:BoundaryOperator}{4.3.1}
+\makelabel{sco:CreateBoundaryMatrices}{4.3.2}
+\makelabel{sco:Homology}{4.3.3}
+\makelabel{sco:CreateCoboundaryMatrices}{4.3.4}
+\makelabel{sco:Cohomology}{4.3.5}
+\makelabel{sco:SCOExamples}{4.3.6}

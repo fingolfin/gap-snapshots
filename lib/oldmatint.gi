@@ -2,10 +2,9 @@
 ##
 #A  oldmatint.gi                   GAP library                 Robert Wainwright
 ##
-#H  $Id: oldmatint.gi,v 1.1 2003/06/02 19:55:08 gap Exp $
 ##
-#Y  Copyright (C)  1997,  St. Andrews
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  St Andrews
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file is preserved to keep the old routines available. It is not
@@ -17,8 +16,6 @@
 ##  on (and in parts identical to) code written by Bohdan Majewski.
 
 ##
-Revision.oldmatint_gi :=
-    "$Id: oldmatint.gi,v 1.1 2003/06/02 19:55:08 gap Exp $";
 
 
 ##############################################################################
@@ -260,7 +257,7 @@ end);
 
 #############################################################################
 ##
-#F  LcNormHnf( <array> [,< Bool/Rat >] )  . the HNF and the tranforming matrix
+#F  LcNormHnf( <array> [,< Bool/Rat >] )  . the HNF and the transforming matrix
 ##
 BindGlobal("LcNormHnf" , function( arg )
 
@@ -489,7 +486,7 @@ end);
 
 ##############################################################################
 ##
-#F  LcLLLHnf( <array> [, <rat>] ) .. the Hermite NF and the tranforming matrix
+#F  LcLLLHnf( <array> [, <rat>] ) .. the Hermite NF and the transforming matrix
 ##
 BindGlobal("LcLLLHnf", function(arg)
 
@@ -1237,15 +1234,12 @@ end;
 ##  If <reduction> is not given, a value of 1 is assumed.
 ##  Note, if <trans> is given the operation does not change <mat>.
 ##
-##  \beginexample
 ##  gap> m:=[ [ 14, 20 ], [ 6, 9 ] ];;
 ##  gap> HNFNormDriven(m);
 ##  [ [ 2, 2 ], [ 0, 3 ] ]
 ##  gap> m;
 ##  [ [ 2, 2 ], [ 0, 3 ] ]
-##  \endexample
 ##
-##  \beginexample
 ##  gap> m:=[[14,20],[6,9]];; 
 ##  gap> HNFNormDriven(m,1);
 ##  rec( normal := [ [ 2, 2 ], [ 0, 3 ] ], rowtrans := [ [ 1, -2 ], [ -3, 7 ] ] )
@@ -1253,7 +1247,6 @@ end;
 ##  [ [ 14, 20 ], [ 6, 9 ] ]
 ##  gap> last2.rowtrans*m;
 ##  [ [ 2, 2 ], [ 0, 3 ] ]
-##  \endexample
 ##
 BindGlobal("HNFNormDriven", function(arg)
 

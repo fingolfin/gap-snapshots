@@ -1,0 +1,35 @@
+  
+  [1XD Debugging [5Xhomalg[1X[0X
+  
+  Beside  the  [5XGAP[0m  builtin  debugging  facilities (--> [14X'Tutorial: Debugging'[0m)
+  [5Xhomalg[0m provides two ways to debug the computations.
+  
+  
+  [1XD.1 Increase the assertion level[0X
+  
+  [5Xhomalg[0m  comes  with numerous builtin assertion checks. They are activated if
+  the user increases the assertion level using
+  [10XSetAssertionLevel[0m( [3Xlevel[0m );
+  (-->  [14X'Reference:  SetAssertionLevel'[0m),  where  [3Xlevel[0m  is  one of the values
+  below:
+  
+        [3Xlevel[0m | description                                                                                           
+      ---------------------------------------------------------------------------------------------------------------
+              |                                                                                                       
+        0     | no assertion checks whatsoever                                                                        
+              |                                                                                                       
+        1     | "high"-level homological assertions are checked                                                       
+              |                                                                                                       
+        2     | "mid"-level homological assertions are checked                                                        
+              |                                                                                                       
+        3     | "low"-level homological assertions are checked                                                        
+              |                                                                                                       
+        4     | assertions about basic matrix operations are checked (--> Appendices of the [5XMatricesForHomalg[0m package)
+              | (these are among the operations often delegated to external systems)                                  
+              |                                                                                                       
+      ---------------------------------------------------------------------------------------------------------------
+  
+  In  particular,  if [5Xhomalg[0m delegates matrix operations to an external system
+  then  [10XSetAssertionLevel[0m(  4  ); can be used to let [5Xhomalg[0m debug the external
+  system.
+  

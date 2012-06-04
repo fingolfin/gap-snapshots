@@ -1,0 +1,191 @@
+\indexentry{\textsf{homalg}|hyperpage}{11}
+\indexentry{IsHomalgObject@\texttt  {IsHomalgObject}|hyperpage}{15}
+\indexentry{IsHomalgStaticObject@\texttt  {IsHomalgStaticObject}|hyperpage}{15}
+\indexentry{IsFinitelyPresentedObjectRep@\texttt  {IsFinitelyPresentedObjectRep}|hyperpage}{15}
+\indexentry{IsStaticFinitelyPresentedObjectOrSubobjectRep@\texttt  {IsStatic}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {SubobjectRep}|hyperpage}{16}
+\indexentry{IsStaticFinitelyPresentedObjectRep@\texttt  {IsStaticFinitelyPresentedObjectRep}|hyperpage}{16}
+\indexentry{IsStaticFinitelyPresentedSubobjectRep@\texttt  {IsStatic}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {SubobjectRep}|hyperpage}{16}
+\indexentry{Subobject@\texttt  {Subobject}!constructor for subobjects using morphisms|hyperpage}{17}
+\indexentry{IsFree@\texttt  {IsFree}|hyperpage}{17}
+\indexentry{IsStablyFree@\texttt  {IsStablyFree}|hyperpage}{17}
+\indexentry{IsProjective@\texttt  {IsProjective}|hyperpage}{17}
+\indexentry{IsProjectiveOfConstantRank@\texttt  {IsProjectiveOfConstantRank}|hyperpage}{17}
+\indexentry{IsInjective@\texttt  {IsInjective}|hyperpage}{17}
+\indexentry{IsInjectiveCogenerator@\texttt  {IsInjectiveCogenerator}|hyperpage}{17}
+\indexentry{FiniteFreeResolutionExists@\texttt  {FiniteFreeResolutionExists}|hyperpage}{18}
+\indexentry{IsReflexive@\texttt  {IsReflexive}|hyperpage}{18}
+\indexentry{IsTorsionFree@\texttt  {IsTorsionFree}|hyperpage}{18}
+\indexentry{IsArtinian@\texttt  {IsArtinian}|hyperpage}{18}
+\indexentry{IsTorsion@\texttt  {IsTorsion}|hyperpage}{18}
+\indexentry{IsPure@\texttt  {IsPure}|hyperpage}{18}
+\indexentry{IsCohenMacaulay@\texttt  {IsCohenMacaulay}|hyperpage}{18}
+\indexentry{IsGorenstein@\texttt  {IsGorenstein}|hyperpage}{18}
+\indexentry{IsKoszul@\texttt  {IsKoszul}|hyperpage}{19}
+\indexentry{HasConstantRank@\texttt  {HasConstantRank}|hyperpage}{19}
+\indexentry{ConstructedAsAnIdeal@\texttt  {ConstructedAsAnIdeal}|hyperpage}{19}
+\indexentry{TorsionSubobject@\texttt  {TorsionSubobject}|hyperpage}{19}
+\indexentry{TheMorphismToZero@\texttt  {TheMorphismToZero}|hyperpage}{19}
+\indexentry{TheIdentityMorphism@\texttt  {TheIdentityMorphism}|hyperpage}{19}
+\indexentry{FullSubobject@\texttt  {FullSubobject}|hyperpage}{19}
+\indexentry{ZeroSubobject@\texttt  {ZeroSubobject}|hyperpage}{20}
+\indexentry{EmbeddingInSuperObject@\texttt  {EmbeddingInSuperObject}|hyperpage}{20}
+\indexentry{SuperObject@\texttt  {SuperObject}!for subobjects|hyperpage}{20}
+\indexentry{FactorObject@\texttt  {FactorObject}|hyperpage}{20}
+\indexentry{UnderlyingSubobject@\texttt  {UnderlyingSubobject}|hyperpage}{20}
+\indexentry{NatTrIdToHomHomR@\texttt  {NatTrIdToHomHom{\textunderscore }R}!for morphisms|hyperpage}{20}
+\indexentry{Annihilator@\texttt  {Annihilator}!for static objects|hyperpage}{20}
+\indexentry{EndomorphismRing@\texttt  {EndomorphismRing}!for static objects|hyperpage}{20}
+\indexentry{UnitObject@\texttt  {UnitObject}|hyperpage}{21}
+\indexentry{RankOfObject@\texttt  {RankOfObject}|hyperpage}{21}
+\indexentry{ProjectiveDimension@\texttt  {ProjectiveDimension}|hyperpage}{21}
+\indexentry{DegreeOfTorsionFreeness@\texttt  {DegreeOfTorsionFreeness}|hyperpage}{21}
+\indexentry{Grade@\texttt  {Grade}|hyperpage}{21}
+\indexentry{PurityFiltration@\texttt  {PurityFiltration}|hyperpage}{21}
+\indexentry{CodegreeOfPurity@\texttt  {CodegreeOfPurity}|hyperpage}{21}
+\indexentry{HilbertPolynomial@\texttt  {HilbertPolynomial}|hyperpage}{21}
+\indexentry{AffineDimension@\texttt  {AffineDimension}|hyperpage}{22}
+\indexentry{ProjectiveDegree@\texttt  {ProjectiveDegree}|hyperpage}{22}
+\indexentry{ConstantTermOfHilbertPolynomialn@\texttt  {ConstantTermOfHilbertPolynomialn}|hyperpage}{22}
+\indexentry{ElementOfGrothendieckGroup@\texttt  {ElementOfGrothendieckGroup}|hyperpage}{22}
+\indexentry{ChernPolynomial@\texttt  {ChernPolynomial}|hyperpage}{22}
+\indexentry{ChernCharacter@\texttt  {ChernCharacter}|hyperpage}{22}
+\indexentry{CurrentResolution@\texttt  {CurrentResolution}|hyperpage}{22}
+\indexentry{UnderlyingObject@\texttt  {UnderlyingObject}!for subobjects|hyperpage}{23}
+\indexentry{Saturate@\texttt  {Saturate}!for ideals|hyperpage}{23}
+\indexentry{IsHomalgMorphism@\texttt  {IsHomalgMorphism}|hyperpage}{25}
+\indexentry{IsHomalgStaticMorphism@\texttt  {IsHomalgStaticMorphism}|hyperpage}{25}
+\indexentry{IsHomalgEndomorphism@\texttt  {IsHomalgEndomorphism}|hyperpage}{25}
+\indexentry{IsMorphismOfFinitelyGeneratedObjectsRep@\texttt  {IsMorphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{26}
+\indexentry{IsStaticMorphismOfFinitelyGeneratedObjectsRep@\texttt  {IsStatic}\discretionary {-}{}{}\texttt  {Morphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{26}
+\indexentry{IsMorphism@\texttt  {IsMorphism}|hyperpage}{26}
+\indexentry{IsGeneralizedMorphism@\texttt  {IsGeneralizedMorphism}|hyperpage}{26}
+\indexentry{IsGeneralizedEpimorphism@\texttt  {IsGeneralizedEpimorphism}|hyperpage}{27}
+\indexentry{IsGeneralizedMonomorphism@\texttt  {IsGeneralizedMonomorphism}|hyperpage}{27}
+\indexentry{IsGeneralizedIsomorphism@\texttt  {IsGeneralizedIsomorphism}|hyperpage}{27}
+\indexentry{IsOne@\texttt  {IsOne}|hyperpage}{27}
+\indexentry{IsIdempotent@\texttt  {IsIdempotent}|hyperpage}{27}
+\indexentry{IsMonomorphism@\texttt  {IsMonomorphism}|hyperpage}{27}
+\indexentry{IsEpimorphism@\texttt  {IsEpimorphism}|hyperpage}{27}
+\indexentry{IsSplitMonomorphism@\texttt  {IsSplitMonomorphism}|hyperpage}{27}
+\indexentry{IsSplitEpimorphism@\texttt  {IsSplitEpimorphism}|hyperpage}{28}
+\indexentry{IsIsomorphism@\texttt  {IsIsomorphism}|hyperpage}{28}
+\indexentry{IsAutomorphism@\texttt  {IsAutomorphism}|hyperpage}{28}
+\indexentry{Source@\texttt  {Source}|hyperpage}{28}
+\indexentry{Range@\texttt  {Range}|hyperpage}{28}
+\indexentry{CokernelEpi@\texttt  {CokernelEpi}!for morphisms|hyperpage}{28}
+\indexentry{CokernelNaturalGeneralizedIsomorphism@\texttt  {Cokernel}\discretionary {-}{}{}\texttt  {Natural}\discretionary {-}{}{}\texttt  {Generalized}\discretionary {-}{}{}\texttt  {Isomorphism}!for morphisms|hyperpage}{28}
+\indexentry{KernelSubobject@\texttt  {KernelSubobject}|hyperpage}{29}
+\indexentry{KernelEmb@\texttt  {KernelEmb}!for morphisms|hyperpage}{29}
+\indexentry{ImageSubobject@\texttt  {ImageSubobject}|hyperpage}{29}
+\indexentry{ImageObjectEmb@\texttt  {ImageObjectEmb}!for morphisms|hyperpage}{29}
+\indexentry{ImageObjectEpi@\texttt  {ImageObjectEpi}!for morphisms|hyperpage}{29}
+\indexentry{MorphismAid@\texttt  {MorphismAid}|hyperpage}{29}
+\indexentry{GeneralizedInverse@\texttt  {GeneralizedInverse}|hyperpage}{29}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for morphisms|hyperpage}{30}
+\indexentry{IsHomalgElement@\texttt  {IsHomalgElement}|hyperpage}{32}
+\indexentry{IsElementOfAnObjectGivenByAMorphismRep@\texttt  {IsElement}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {An}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {MorphismRep}|hyperpage}{32}
+\indexentry{IsZero@\texttt  {IsZero}!for elements|hyperpage}{32}
+\indexentry{IsCyclicGenerator@\texttt  {IsCyclicGenerator}|hyperpage}{32}
+\indexentry{Annihilator@\texttt  {Annihilator}!for elements|hyperpage}{33}
+\indexentry{in@\texttt  {in}!for elements|hyperpage}{33}
+\indexentry{IsHomalgComplex@\texttt  {IsHomalgComplex}|hyperpage}{35}
+\indexentry{IsComplexOfFinitelyPresentedObjectsRep@\texttt  {IsComplex}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{35}
+\indexentry{IsCocomplexOfFinitelyPresentedObjectsRep@\texttt  {IsCocomplex}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{35}
+\indexentry{HomalgComplex@\texttt  {HomalgComplex}!constructor for complexes given an object|hyperpage}{35}
+\indexentry{HomalgComplex@\texttt  {HomalgComplex}!constructor for complexes given a morphism|hyperpage}{35}
+\indexentry{HomalgComplex@\texttt  {HomalgComplex}!constructor for complexes given a complex|hyperpage}{35}
+\indexentry{HomalgComplex@\texttt  {HomalgComplex}!constructor for complexes given a chain morphism|hyperpage}{35}
+\indexentry{HomalgCocomplex@\texttt  {HomalgCocomplex}!constructor for cocomplexes given a object|hyperpage}{37}
+\indexentry{HomalgCocomplex@\texttt  {HomalgCocomplex}!constructor for cocomplexes given a morphism|hyperpage}{37}
+\indexentry{HomalgCocomplex@\texttt  {HomalgCocomplex}!constructor for cocomplexes given a complex|hyperpage}{37}
+\indexentry{HomalgCocomplex@\texttt  {HomalgCocomplex}!constructor for cocomplexes given a chain morphism|hyperpage}{37}
+\indexentry{IsSequence@\texttt  {IsSequence}|hyperpage}{38}
+\indexentry{IsComplex@\texttt  {IsComplex}|hyperpage}{38}
+\indexentry{IsAcyclic@\texttt  {IsAcyclic}|hyperpage}{38}
+\indexentry{IsRightAcyclic@\texttt  {IsRightAcyclic}|hyperpage}{38}
+\indexentry{IsLeftAcyclic@\texttt  {IsLeftAcyclic}|hyperpage}{38}
+\indexentry{IsGradedObject@\texttt  {IsGradedObject}|hyperpage}{38}
+\indexentry{IsExactSequence@\texttt  {IsExactSequence}|hyperpage}{38}
+\indexentry{IsShortExactSequence@\texttt  {IsShortExactSequence}|hyperpage}{39}
+\indexentry{IsSplitShortExactSequence@\texttt  {IsSplitShortExactSequence}|hyperpage}{39}
+\indexentry{IsTriangle@\texttt  {IsTriangle}|hyperpage}{39}
+\indexentry{IsExactTriangle@\texttt  {IsExactTriangle}|hyperpage}{39}
+\indexentry{BettiDiagram@\texttt  {BettiDiagram}!for complexes|hyperpage}{39}
+\indexentry{FiltrationByShortExactSequence@\texttt  {FiltrationByShortExactSequence}!for complexes|hyperpage}{39}
+\indexentry{Add@\texttt  {Add}!to complexes given a morphism|hyperpage}{39}
+\indexentry{Add@\texttt  {Add}!to complexes given a matrix|hyperpage}{39}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for complexes|hyperpage}{41}
+\indexentry{IsHomalgChainMorphism@\texttt  {IsHomalgChainMorphism}|hyperpage}{43}
+\indexentry{IsHomalgChainEndomorphism@\texttt  {IsHomalgChainEndomorphism}|hyperpage}{43}
+\indexentry{IsChainMorphismOfFinitelyPresentedObjectsRep@\texttt  {IsChain}\discretionary {-}{}{}\texttt  {Morphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{43}
+\indexentry{IsCochainMorphismOfFinitelyPresentedObjectsRep@\texttt  {IsCochain}\discretionary {-}{}{}\texttt  {Morphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{43}
+\indexentry{HomalgChainMorphism@\texttt  {HomalgChainMorphism}!constructor for chain morphisms given a morphism|hyperpage}{44}
+\indexentry{IsMorphism@\texttt  {IsMorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsGeneralizedMorphism@\texttt  {IsGeneralizedMorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsGeneralizedEpimorphism@\texttt  {IsGeneralizedEpimorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsGeneralizedMonomorphism@\texttt  {IsGeneralizedMonomorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsGeneralizedIsomorphism@\texttt  {IsGeneralizedIsomorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsOne@\texttt  {IsOne}!for chain morphisms|hyperpage}{45}
+\indexentry{IsMonomorphism@\texttt  {IsMonomorphism}!for chain morphisms|hyperpage}{45}
+\indexentry{IsEpimorphism@\texttt  {IsEpimorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsSplitMonomorphism@\texttt  {IsSplitMonomorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsSplitEpimorphism@\texttt  {IsSplitEpimorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsIsomorphism@\texttt  {IsIsomorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsAutomorphism@\texttt  {IsAutomorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsGradedMorphism@\texttt  {IsGradedMorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{IsQuasiIsomorphism@\texttt  {IsQuasiIsomorphism}!for chain morphisms|hyperpage}{46}
+\indexentry{Source@\texttt  {Source}!for chain morphisms|hyperpage}{47}
+\indexentry{Range@\texttt  {Range}!for chain morphisms|hyperpage}{47}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for chain morphisms|hyperpage}{47}
+\indexentry{IsHomalgBicomplex@\texttt  {IsHomalgBicomplex}|hyperpage}{48}
+\indexentry{IsBicomplexOfFinitelyPresentedObjectsRep@\texttt  {IsBicomplex}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{48}
+\indexentry{IsBicocomplexOfFinitelyPresentedObjectsRep@\texttt  {IsBicocomplex}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{48}
+\indexentry{HomalgBicomplex@\texttt  {HomalgBicomplex}!constructor for bicomplexes given a complex of complexes|hyperpage}{49}
+\indexentry{IsBisequence@\texttt  {IsBisequence}|hyperpage}{50}
+\indexentry{IsBicomplex@\texttt  {IsBicomplex}|hyperpage}{50}
+\indexentry{IsTransposedWRTTheAssociatedComplex@\texttt  {IsTransposedWRTTheAssociatedComplex}|hyperpage}{50}
+\indexentry{TotalComplex@\texttt  {TotalComplex}|hyperpage}{50}
+\indexentry{SpectralSequence@\texttt  {SpectralSequence}!for bicomplexes|hyperpage}{50}
+\indexentry{UnderlyingComplex@\texttt  {UnderlyingComplex}|hyperpage}{50}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for bicomplexes|hyperpage}{50}
+\indexentry{IsHomalgBigradedObject@\texttt  {IsHomalgBigradedObject}|hyperpage}{52}
+\indexentry{IsHomalgBigradedObjectAssociatedToAnExactCouple@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Bigraded}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {An}\discretionary {-}{}{}\texttt  {Exact}\discretionary {-}{}{}\texttt  {Couple}|hyperpage}{52}
+\indexentry{IsHomalgBigradedObjectAssociatedToAFilteredComplex@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Bigraded}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Filtered}\discretionary {-}{}{}\texttt  {Complex}|hyperpage}{52}
+\indexentry{IsHomalgBigradedObjectAssociatedToABicomplex@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Bigraded}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Bicomplex}|hyperpage}{52}
+\indexentry{IsBigradedObjectOfFinitelyPresentedObjectsRep@\texttt  {IsBigraded}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{53}
+\indexentry{HomalgBigradedObject@\texttt  {HomalgBigradedObject}!constructor for bigraded objects given a bicomplex|hyperpage}{53}
+\indexentry{AsDifferentialObject@\texttt  {AsDifferentialObject}!for homalg bigraded objects stemming from a bicomplex|hyperpage}{53}
+\indexentry{DefectOfExactness@\texttt  {DefectOfExactness}!for homalg differential bigraded objects|hyperpage}{54}
+\indexentry{IsEndowedWithDifferential@\texttt  {IsEndowedWithDifferential}|hyperpage}{56}
+\indexentry{IsStableSheet@\texttt  {IsStableSheet}|hyperpage}{56}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for bigraded objects|hyperpage}{56}
+\indexentry{IsHomalgSpectralSequence@\texttt  {IsHomalgSpectralSequence}|hyperpage}{57}
+\indexentry{IsHomalgSpectralSequenceAssociatedToAnExactCouple@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Spectral}\discretionary {-}{}{}\texttt  {Sequence}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {An}\discretionary {-}{}{}\texttt  {Exact}\discretionary {-}{}{}\texttt  {Couple}|hyperpage}{57}
+\indexentry{IsHomalgSpectralSequenceAssociatedToAFilteredComplex@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Spectral}\discretionary {-}{}{}\texttt  {Sequence}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Filtered}\discretionary {-}{}{}\texttt  {Complex}|hyperpage}{57}
+\indexentry{IsHomalgSpectralSequenceAssociatedToABicomplex@\texttt  {IsHomalg}\discretionary {-}{}{}\texttt  {Spectral}\discretionary {-}{}{}\texttt  {Sequence}\discretionary {-}{}{}\texttt  {Associated}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Bicomplex}|hyperpage}{58}
+\indexentry{IsSpectralSequenceOfFinitelyPresentedObjectsRep@\texttt  {IsSpectral}\discretionary {-}{}{}\texttt  {Sequence}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{58}
+\indexentry{IsSpectralCosequenceOfFinitelyPresentedObjectsRep@\texttt  {IsSpectral}\discretionary {-}{}{}\texttt  {Cosequence}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Presented}\discretionary {-}{}{}\texttt  {ObjectsRep}|hyperpage}{58}
+\indexentry{HomalgSpectralSequence@\texttt  {HomalgSpectralSequence}!constructor for spectral sequences given a bicomplex|hyperpage}{58}
+\indexentry{HomalgSpectralSequence@\texttt  {HomalgSpectralSequence}!constructor for spectral sequences without a special sheet given a bicomplex|hyperpage}{58}
+\indexentry{HomalgSpectralSequence@\texttt  {HomalgSpectralSequence}!constructor for spectral sequences without bound given a bicomplex|hyperpage}{58}
+\indexentry{HomalgSpectralSequence@\texttt  {HomalgSpectralSequence}!constructor for spectral sequences without bound and without a special sheet given a bicomplex|hyperpage}{58}
+\indexentry{GeneralizedEmbeddingsInTotalObjects@\texttt  {GeneralizedEmbeddingsInTotalObjects}|hyperpage}{60}
+\indexentry{GeneralizedEmbeddingsInTotalDefects@\texttt  {GeneralizedEmbeddingsInTotalDefects}|hyperpage}{60}
+\indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for spectral sequences|hyperpage}{60}
+\indexentry{IsHomalgFunctor@\texttt  {IsHomalgFunctor}|hyperpage}{63}
+\indexentry{IsHomalgFunctorRep@\texttt  {IsHomalgFunctorRep}|hyperpage}{63}
+\indexentry{CreateHomalgFunctor@\texttt  {CreateHomalgFunctor}!constructor for functors|hyperpage}{63}
+\indexentry{InsertObjectInMultiFunctor@\texttt  {InsertObjectInMultiFunctor}!constructor for functors given a multi-functor and an object|hyperpage}{63}
+\indexentry{RightSatelliteOfCofunctor@\texttt  {RightSatelliteOfCofunctor}!constructor of the right satellite of a contravariant functor|hyperpage}{64}
+\indexentry{LeftSatelliteOfFunctor@\texttt  {LeftSatelliteOfFunctor}!constructor of the left satellite of a covariant functor|hyperpage}{64}
+\indexentry{RightDerivedCofunctor@\texttt  {RightDerivedCofunctor}!constructor of the right derived functor of a contravariant functor|hyperpage}{64}
+\indexentry{LeftDerivedFunctor@\texttt  {LeftDerivedFunctor}!constructor of the left derived functor of a covariant functor|hyperpage}{65}
+\indexentry{ComposeFunctors@\texttt  {ComposeFunctors}!constructor for functors given two functors|hyperpage}{65}
+\indexentry{NameOfFunctor@\texttt  {NameOfFunctor}|hyperpage}{66}
+\indexentry{OperationOfFunctor@\texttt  {OperationOfFunctor}|hyperpage}{66}
+\indexentry{Genesis@\texttt  {Genesis}|hyperpage}{66}
+\indexentry{ProcedureToReadjustGenerators@\texttt  {ProcedureToReadjustGenerators}!for functors|hyperpage}{67}
+\indexentry{functorKernel@\texttt  {functor{\textunderscore }Kernel}|hyperpage}{68}
+\indexentry{functorDefectOfExactness@\texttt  {functor{\textunderscore }}\discretionary {-}{}{}\texttt  {Defect}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exactness}|hyperpage}{68}
+\indexentry{InstallFunctor@\texttt  {InstallFunctor}|hyperpage}{69}
+\indexentry{InstallDeltaFunctor@\texttt  {InstallDeltaFunctor}|hyperpage}{69}

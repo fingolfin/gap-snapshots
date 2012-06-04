@@ -2,16 +2,13 @@
 ##
 #W  padics.gi                   GAP Library                     Jens Hollmann
 ##
-#H  @(#)$Id: padics.gi,v 4.18 2002/04/15 10:05:11 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementation part of the padic numbers.
 ##
-Revision.padics_gi :=
-    "@(#)$Id: padics.gi,v 4.18 2002/04/15 10:05:11 sal Exp $";
 
 
 #############################################################################
@@ -370,6 +367,10 @@ end );
 ##  prime  <p> with  <precision>  "digits".  For the  representation  of pure
 ##  p-adic numbers see "PadicNumber" below.
 ##
+
+InstallValue(PADICS_FAMILIES,[]);
+
+
 InstallGlobalFunction( PurePadicNumberFamily, function( p, precision )
     local   str,  fam;
 
@@ -379,18 +380,24 @@ InstallGlobalFunction( PurePadicNumberFamily, function( p, precision )
     if (not IsInt( precision )) or (precision < 0) then
         Error( "<precision> must be a positive integer" );
     fi;
-    str := "PurePadicNumberFamily(";
-    Append( str, String(p) );
-    Append( str, "," );
-    Append( str, String(precision) );
-    Append( str, ")" );
-    fam := NewFamily( str, IsPurePadicNumber );
-    fam!.prime:= p;
-    fam!.precision:= precision;
-    fam!.modulus:= p^precision;
-    fam!.printPadicSeries:= true;
-    fam!.defaultType := NewType( fam, IsPurePadicNumber );
-    return fam;
+    if not IsBound(PADICS_FAMILIES[p]) then
+        PADICS_FAMILIES[p] := [];
+    fi;
+    if not IsBound(PADICS_FAMILIES[p][precision]) then
+        str := "PurePadicNumberFamily(";
+        Append( str, String(p) );
+        Append( str, "," );
+        Append( str, String(precision) );
+        Append( str, ")" );
+        fam := NewFamily( str, IsPurePadicNumber );
+        fam!.prime:= p;
+        fam!.precision:= precision;
+        fam!.modulus:= p^precision;
+        fam!.printPadicSeries:= true;
+        fam!.defaultType := NewType( fam, IsPurePadicNumber );
+        PADICS_FAMILIES[p][precision] := fam;
+    fi;
+    return PADICS_FAMILIES[p][precision];
 end );
 
 
@@ -403,7 +410,7 @@ end );
 ##  list[2].  It is easily guaranteed that  list[2] is never divisible by the
 ##  prime p.  By that we have always maximum precision.
 ##  
-InstallMethod( PadicNumber,
+InstallMethod( PadicNumber, "for a pure p-adic family and a list",
     true,
     [ IsPurePadicNumberFamily,
       IsCyclotomicCollection ],
@@ -427,7 +434,7 @@ end );
 ##
 ##  Make a pure p-adic number out of a rational.
 ##
-InstallMethod( PadicNumber,
+InstallMethod( PadicNumber, "for a pure p-adic family and a rational",
     true,
     [ IsPurePadicNumberFamily,
       IsRat ],
@@ -816,7 +823,7 @@ end );
 ##
 ##  So watch it!
 ##
-InstallMethod( PadicNumber,
+InstallMethod( PadicNumber, "for a p-adic extension family and a list",
     true,
     [ IsPadicExtensionNumberFamily,
       IsList ],
@@ -845,7 +852,7 @@ end );
 ##  result of PadicExpansionByRat  and put it at  the  first position of  the
 ##  coeff.list.
 ##
-InstallMethod( PadicNumber,
+InstallMethod( PadicNumber, "for a p-adic extension family and a rational",
     true,
     [ IsPadicExtensionNumberFamily,
       IsRat ],

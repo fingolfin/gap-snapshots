@@ -1,0 +1,175 @@
+  
+  [1X1 Decomposition numbers of Hecke algebras of type A[0X
+  
+  
+  [1X1.1 Description[0X
+  
+  [5XHecke[0m is a port of the [5XGAP[0m 3-package [5XSpecht[0m 2.4 to [5XGAP[0m 4.
+  
+  This package contains functions for computing the decomposition matrices for
+  Iwahori-Hecke   algebras   of   the   symmetric  groups.  As  the  (modular)
+  representation  theory  of  these  algebras  closely  resembles  that of the
+  (modular)  representation theory of the symmetric groups (indeed, the latter
+  is  a  special  case of the former) many of the combinatorial tools from the
+  representation theory of the symmetric group are included in the package.
+  
+  These  programs  grew  out of the attempts by Gordon James and Andrew Mathas
+  [JM96]  to understand the decomposition matrices of Hecke algebras of type [13XA[0m
+  when q=-1. The package is now much more general and its highlights include:
+  
+  (1)   [5XHecke[0m  provides a means of working in the Grothendieck ring of a Hecke
+        algebra  H  using  the three natural bases corresponding to the Specht
+        modules, projective indecomposable modules, and simple modules.
+  
+  (2)   For  Hecke  algebras  defined  over fields of characteristic zero, the
+        algorithm  of  Lascoux,  Leclerc,  and  Thibon  [LLT96]  for computing
+        decomposition  numbers  and  "crystallized decomposition matrices" has
+        been  implemented.  In  principle, this gives all of the decomposition
+        matrices of Hecke algebras defined over fields of characteristic zero.
+  
+  (3)   [5XHecke[0m provides a way of inducing and restricting modules. In addition,
+        it  is  possible  to "induce" decomposition matrices; this function is
+        quite  effective  in  calculating  the decomposition matrices of Hecke
+        algebras for small n.
+  
+  (4)   The  q-analogue  of  Schaper's  theorem  [JM97]  is  included,  as  is
+        Kleshchev's  [Kle96]  algorithm of calculating the Mullineux map. Both
+        are used extensively when inducing decomposition matrices.
+  
+  (5)   [5XHecke[0m  can  be  used  to  compute the decomposition numbers of q-Schur
+        algebras  (and  the  general  linear  groups),  although there is less
+        direct  support for these algebras. The decomposition matrices for the
+        q-Schur  algebras  defined over fields of characteristic zero for n<11
+        and all e are included in [5XHecke[0m.
+  
+  (6)   The  Littlewood-Richard  rule,  its inverse, and functions for many of
+        the  standard  operations  on  partitions  (such as calculating cores,
+        quotients, and adding and removing hooks), are included.
+  
+  (7)   The  decomposition  matrices for the symmetric groups S_n are included
+        for n<15 and for all primes.
+  
+  
+  [1X1.2 The modular representation theory of Hecke algebras[0X
+  
+  The  "modular" representation theory of the Iwahori-Hecke algebras of type [13XA[0m
+  was  pioneered by Dipper and James [DJ86] [DJ87]; here the theory is briefly
+  outlined, referring the reader to the references for details.
+  
+  Given a commutative integral domain R and a non-zero unit q in R, let H=H_R,
+  q  be the Hecke algebra of the symmetric group S_n on n symbols defined over
+  R and with parameter q. For each partition mu of n, Dipper and James defined
+  a  [13XSpecht  module[0m  S(mu).  Let  rad~S(mu) be the radical of S(mu) and define
+  D(mu)=S(mu)/rad~S(mu). When R is a field, D(mu) is either zero or absolutely
+  irreducible. Henceforth, we will always assume that R is a field.
+  
+  Given  a non-negative integer i, let [i]_q=1+q+...+q^i-1. Define e to be the
+  smallest  non-negative integer such that [e]_q=0; if no such integer exists,
+  we  set  e  equal to 0. Many of the functions in this package depend upon e;
+  the  integer  e  is the Hecke algebras analogue of the characteristic of the
+  field in the modular representation theory of finite groups.
+  
+  A  partition  mu=(mu_1,mu_2,...)  is [13Xe-singular[0m if there exists an integer i
+  such  that mu_i=mu_i+1=cdots= mu_i+e-1>0; otherwise, mu is [13Xe-regular[0m. Dipper
+  and  James  [DJ86]  showed that D(nu)<> 0 if and only if nu is e-regular and
+  that  the  D(nu) give a complete set of non-isomorphic irreducible H-modules
+  as  nu  runs  over  the  e-regular partitions of n. Further, S(mu) and S(nu)
+  belong  to  the  same  block  if  and only if mu and nu have the same e-core
+  [DJ87][JM97]. Note that these results depend only on e and not directly on R
+  or q.
+  
+  Given  two  partitions mu and nu, where nu is e -regular, let d_mu,nu be the
+  composition  multiplicity  of D(nu) in S(nu). The matrix D=(d_mu,nu) is the [13X
+  decomposition  matrix[0m  of  H. When the rows and columns are ordered in a way
+  compatible with dominance, D is lower unitriangular.
+  
+  The  indecomposable H-modules P(nu) are indexed by e -regular partitions nu.
+  By  general  arguments,  P(nu)  has  the  same composition factors as sum_mu
+  d_mu,nu  S(mu); so these linear combinations of modules become identified in
+  the  Grothendieck  ring  of H. Similarly, D(nu) = sum_mu d_nu,mu^-1 S(mu) in
+  the  Grothendieck  ring.  These  observations  are the basis for many of the
+  computations in [5XHecke[0m.
+  
+  
+  [1X1.3 Two small examples[0X
+  
+  Because  of  the  algorithm  of  [LLT96], in principle, all of decomposition
+  matrices  for  all Hecke algebras defined over fields of characteristic zero
+  are known and available using [5XHecke[0m. The algorithm is recursive; however, it
+  is quite quick and, as with a car, you need never look at the engine:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(4);   # e=4, 'R' a field of characteristic 0[0X
+    [4X<Hecke algebra with e = 4>[0X
+    [4Xgap> RInducedModule(MakePIM(H,12,2));[0X
+    [4X<direct sum of 5 P-modules>[0X
+    [4Xgap> Display(last);[0X
+    [4XP(13,2) + P(12,3) + P(12,2,1) + P(10,3,2) + P(9,6)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The [LLT96] algorithm was applied 24 times during this calculation.
+  
+  For  Hecke algebras defined over fields of positive characteristic the major
+  tool  provided  by [5XHecke[0m, apart from the decomposition matrices contained in
+  the  libraries, is a way of "inducing" decomposition matrices. This makes it
+  fairly  easy  to calculate the associated decomposition matrices for "small"
+  n.  For  example, the [5XHecke[0m libraries contain the decomposition matrices for
+  the  symmetric  groups  S_n  over fields of characteristic 3 for n<15. These
+  matrices were calculated by [5XHecke[0m using the following commands:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> H:=Specht(3,3);   # e=3, 'R' field of characteristic 3[0X
+    [4X<Hecke algebra with e = 3>[0X
+    [4Xgap> d:=DecompositionMatrix(H,5);  # known for n<2e[0X
+    [4X<7x5 decomposition matrix>[0X
+    [4Xgap> Display(last);[0X
+    [4X5    | 1[0X
+    [4X4,1  | . 1[0X
+    [4X3,2  | . 1 1[0X
+    [4X3,1^2| . . . 1[0X
+    [4X2^2,1| 1 . . . 1[0X
+    [4X2,1^3| . . . . 1[0X
+    [4X1^5  | . . 1 . .[0X
+    [4Xgap> for n in [6..14] do[0X
+    [4X>       d:=InducedDecompositionMatrix(d); SaveDecompositionMatrix(d);[0X
+    [4X>    od;[0X
+  [4X------------------------------------------------------------------[0X
+  
+  The  function  [10XInducedDecompositionMatrix[0m  contains  almost  every trick for
+  computing decomposition matrices (except using the spin groups).
+  
+  [5XHecke[0m can also be used to calculate the decomposition numbers of the q-Schur
+  algebras;  although, as yet, here no additional routines for calculating the
+  projective  indecomposables  indexed by e-singular partitions. Such routines
+  may  be  included  in  a  future  release,  together  with the (conjectural)
+  algorithm  [LT96]  for  computing  the decomposition matrices of the q-Schur
+  algebras over fields of characteristic zero.
+  
+  
+  [1X1.4 Overview over this manual[0X
+  
+  Chapter  [14X2[0m  describes  the  installation  of  this  package. Chapter [14X3[0m shows
+  instructive examples for the usage of this package.
+  
+  
+  [1X1.5 Credits[0X
+  
+  I  would like to thank Anne Henke for offering me the interesting project of
+  porting  [5XSpecht[0m 2.4 to the current [5XGAP[0m version, Max Neunhöffer for giving me
+  an  excellent  introduction  to  the [5XGAP[0m 4-style of programming and Benjamin
+  Wilson  for  supporting  the  project  and  helping  me  to  understand  the
+  mathematics behind [5XHecke[0m.
+  
+  Also  I  thank  Andrew  Mathas  for allowing me to use his [5XGAP[0m 3-code of the
+  [5XSpecht[0m 2.4 package.
+  
+  The lastest version of [5XHecke[0m can be obtained from
+  
+  [7Xhttp://home.in.tum.de/~traytel/hecke/[0m.
+  
+  Dmitriy Traytel
+  
+  traytel@in.tum.de
+  
+  Technische Universität München, 2010.
+  

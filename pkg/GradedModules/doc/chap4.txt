@@ -1,0 +1,42 @@
+  
+  [1X4 Ring Maps[0X
+  
+  
+  [1X4.1 Ring Maps: Attributes[0X
+  
+  [1X4.1-1 KernelSubobject[0m
+  
+  [2X> KernelSubobject( [0X[3Xphi[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  The kernel ideal of the ring map [3Xphi[0m.
+  
+  
+  [1X4.2 Ring Maps: Operations and Functions[0X
+  
+  [1X4.2-1 SegreMap[0m
+  
+  [2X> SegreMap( [0X[3XR, s[0X[2X ) ___________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  
+  The  ring  map corresponding to the Segre embedding of MultiProj([3XR[0m) into the
+  projective space according to P(W_1)x P(W_2) -> P(W_1otimes W_2).
+  
+  [1X4.2-2 PlueckerMap[0m
+  
+  [2X> PlueckerMap( [0X[3Xl, n, A, s[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  
+  The  ring  map  corresponding  to  the Plücker embedding of the Grassmannian
+  G_l(P^[3Xn[0m([3XA[0m))=G_l(P(W)) into the projective space P(bigwedge^l W), where W=V^*
+  is the [3XA[0m-dual of the free module V=A^[3Xn[0m+1 of rank [3Xn[0m+1.
+  
+  [1X4.2-3 VeroneseMap[0m
+  
+  [2X> VeroneseMap( [0X[3Xn, d, A, s[0X[2X ) __________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  
+  The ring map corresponding to the Veronese embedding of the projective space
+  P^[3Xn[0m([3XA[0m)=P(W) into the projective space P(S^d W), where W=V^* is the [3XA[0m-dual of
+  the free module V=A^[3Xn[0m+1 of rank [3Xn[0m+1.
+  

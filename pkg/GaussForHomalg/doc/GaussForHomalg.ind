@@ -1,0 +1,65 @@
+\begin{theindex}
+
+  \item \textsf{GaussForHomalg}, \hyperpage{5}
+
+  \indexspace
+
+  \item \texttt  {AddToMatElm}, \hyperpage{12}
+
+  \indexspace
+
+  \item \texttt  {CertainColumns}, \hyperpage{9}
+  \item \texttt  {CertainRows}, \hyperpage{9}
+  \item \texttt  {Compose}, \hyperpage{10}
+  \item \texttt  {CopyMatrix}, \hyperpage{8}
+  \item \texttt  {CreateHomalgTable}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {DecideZeroRows}, \hyperpage{11}
+  \item \texttt  {DecideZeroRowsEffectively}, \hyperpage{11}
+  \item \texttt  {DiagMat}, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {IdentityMatrix}, \hyperpage{8}
+  \item \texttt  {ImportMatrix}, \hyperpage{8}
+  \item \texttt  {Involution}, \hyperpage{9}
+  \item \texttt  {IsDiagonalMatrix}, \hyperpage{10}
+  \item \texttt  {IsZeroMatrix}, \hyperpage{10}
+
+  \indexspace
+
+  \item \texttt  {KroneckerMat}, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {MatElm}, \hyperpage{12}
+
+  \indexspace
+
+  \item \texttt  {NrColumns}, \hyperpage{10}
+  \item \texttt  {NrRows}, \hyperpage{10}
+
+  \indexspace
+
+  \item \texttt  {RelativeSyzygiesGeneratorsOfRows}, \hyperpage{11}
+  \item \texttt  {RowReducedEchelonForm}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {SetMatElm}, \hyperpage{12}
+  \item \texttt  {SyzygiesGeneratorsOfRows}, \hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {UnionOfColumns}, \hyperpage{9}
+  \item \texttt  {UnionOfRows}, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {ZeroColumns}, \hyperpage{10}
+  \item \texttt  {ZeroMatrix}, \hyperpage{8}
+  \item \texttt  {ZeroRows}, \hyperpage{10}
+
+\end{theindex}

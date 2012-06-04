@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (ExamplesForHomalg) - Chapter 3: Examples</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapBib.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+<div class="ChapSects"><a href="chap3.html#X7A489A5D79DA9E5C">3 <span class="Heading">Examples</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7AD67ACA80E44216">3.1 <span class="Heading">Spectral Filtrations</span></a>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7BB9DE017ECE6E86">3.1-1 <span class="Heading">ExtExt</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7EE63228803A04F1">3.1-2 <span class="Heading">Purity</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7816D6ED815ED641">3.1-3 <span class="Heading">A3_Purity</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X812EF8147AE16E72">3.1-4 <span class="Heading">TorExt-Grothendieck</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X784BC2567875830B">3.1-5 <span class="Heading">TorExt</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8021C33D85444081">3.1-6 <span class="Heading">CodegreeOfPurity</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X791E21F47805048A">3.1-7 <span class="Heading">HomHom</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X85CF19B87D1C375F">3.2 <span class="Heading">Commutative Algebra</span></a>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X781B1C0C80529B09">3.2-1 <span class="Heading">Eliminate</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>3 <span class="Heading">Examples</span></h3>
+
+<p><a id="X7AD67ACA80E44216" name="X7AD67ACA80E44216"></a></p>
+
+<h4>3.1 <span class="Heading">Spectral Filtrations</span></h4>
+
+<p><a id="X7BB9DE017ECE6E86" name="X7BB9DE017ECE6E86"></a></p>
+
+<h5>3.1-1 <span class="Heading">ExtExt</span></h5>
+
+<p>This is Example B.2 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; wmat := HomalgMatrix( "[ \
+&gt; x*y,  y*z,    z,        0,         0,    \
+&gt; x^3*z,x^2*z^2,0,        x*z^2,     -z^2, \
+&gt; x^4,  x^3*z,  0,        x^2*z,     -x*z, \
+&gt; 0,    0,      x*y,      -y^2,      x^2-1,\
+&gt; 0,    0,      x^2*z,    -x*y*z,    y*z,  \
+&gt; 0,    0,      x^2*y-x^2,-x*y^2+x*y,y^2-y \
+&gt; ]", 6, 5, Qxyz );
+&lt;A 6 x 5 matrix over an external ring&gt;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A left module presented by 6 relations for 5 generators&gt;
+gap&gt; Y := Hom( Qxyz, W );
+&lt;A right module on 5 generators satisfying yet unknown relations&gt;
+gap&gt; F := InsertObjectInMultiFunctor( Functor_Hom_for_fp_modules, 2, Y, "TensorY" );
+&lt;The functor TensorY for f.p. modules and their maps over computable rings&gt;
+gap&gt; G := LeftDualizingFunctor( Qxyz );;
+gap&gt; II_E := GrothendieckSpectralSequence( F, G, W );
+&lt;A stable homological spectral sequence with sheets at levels 
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 3 ]&gt;
+gap&gt; Display( II_E );
+The associated transposed spectral sequence:
+
+a homological spectral sequence at bidegrees
+[ [ 0 .. 3 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ . . . .
+ . . . .
+ . . . .
+---------
+Level 2:
+
+ s s s s
+ . . . .
+ . . . .
+ . . . .
+
+Now the spectral sequence of the bicomplex:
+
+a homological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 3 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 2:
+
+ * * s s
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 3:
+
+ * s s s
+ * s s s
+ . . s *
+ . . . *
+---------
+Level 4:
+
+ s s s s
+ . s s s
+ . . s s
+ . . . s
+gap&gt; filt := FiltrationBySpectralSequence( II_E, 0 );
+&lt;An ascending filtration with degrees [ -3 .. 0 ] and graded parts:
+
+0:	&lt;A non-zero left module presented by yet unknown relations for 23 generator\
+s&gt;
+  -1:	&lt;A non-zero left module presented by 37 relations for 22 generators&gt;
+  -2:	&lt;A non-zero left module presented by 31 relations for 10 generators&gt;
+  -3:	&lt;A non-zero left module presented by 32 relations for 5 generators&gt;
+of
+&lt;A non-zero left module presented by 111 relations for 37 generators&gt;&gt;
+gap&gt; ByASmallerPresentation( filt );
+&lt;An ascending filtration with degrees [ -3 .. 0 ] and graded parts:
+   0:	&lt;A non-zero left module presented by 25 relations for 16 generators&gt;
+  -1:	&lt;A non-zero left module presented by 30 relations for 14 generators&gt;
+  -2:	&lt;A non-zero left module presented by 18 relations for 7 generators&gt;
+  -3:	&lt;A non-zero left module presented by 12 relations for 4 generators&gt;
+of
+&lt;A non-zero left module presented by 48 relations for 20 generators&gt;&gt;
+gap&gt; m := IsomorphismOfFiltration( filt );
+&lt;A non-zero isomorphism of left modules&gt;
+</pre></td></tr></table>
+
+<p><a id="X7EE63228803A04F1" name="X7EE63228803A04F1"></a></p>
+
+<h5>3.1-2 <span class="Heading">Purity</span></h5>
+
+<p>This is Example B.3 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; wmat := HomalgMatrix( "[ \
+&gt; x*y,  y*z,    z,        0,         0,    \
+&gt; x^3*z,x^2*z^2,0,        x*z^2,     -z^2, \
+&gt; x^4,  x^3*z,  0,        x^2*z,     -x*z, \
+&gt; 0,    0,      x*y,      -y^2,      x^2-1,\
+&gt; 0,    0,      x^2*z,    -x*y*z,    y*z,  \
+&gt; 0,    0,      x^2*y-x^2,-x*y^2+x*y,y^2-y \
+&gt; ]", 6, 5, Qxyz );
+&lt;A 6 x 5 matrix over an external ring&gt;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A left module presented by 6 relations for 5 generators&gt;
+gap&gt; filt := PurityFiltration( W );
+&lt;The ascending purity filtration with degrees [ -3 .. 0 ] and graded parts:
+
+0:	&lt;A codegree-[ 1, 1 ]-pure rank 2 left module presented by 3 relations for 4\
+ generators&gt;
+
+-1:	&lt;A codegree-1-pure grade 1 left module presented by 4 relations for 3 gene\
+rators&gt;
+
+-2:	&lt;A cyclic reflexively pure grade 2 left module presented by 2 relations fo\
+r a cyclic generator&gt;
+
+-3:	&lt;A cyclic reflexively pure grade 3 left module presented by 3 relations fo\
+r a cyclic generator&gt;
+of
+&lt;A non-pure rank 2 left module presented by 6 relations for 5 generators&gt;&gt;
+gap&gt; W;
+&lt;A non-pure rank 2 left module presented by 6 relations for 5 generators&gt;
+gap&gt; II_E := SpectralSequence( filt );
+&lt;A stable homological spectral sequence with sheets at levels
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 3 ]&gt;
+gap&gt; Display( II_E );
+The associated transposed spectral sequence:
+
+a homological spectral sequence at bidegrees
+[ [ 0 .. 3 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ . . . .
+ . . . .
+ . . . .
+---------
+Level 2:
+
+ s . . .
+ . . . .
+ . . . .
+ . . . .
+
+Now the spectral sequence of the bicomplex:
+
+a homological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 3 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 2:
+
+ s . . .
+ * s . .
+ . * * .
+ . . . *
+---------
+Level 3:
+
+ s . . .
+ * s . .
+ . . s .
+ . . . *
+---------
+Level 4:
+
+ s . . .
+ . s . .
+ . . s .
+ . . . s
+
+gap&gt; m := IsomorphismOfFiltration( filt );
+&lt;A non-zero isomorphism of left modules&gt;
+gap&gt; IsIdenticalObj( Range( m ), W );
+true
+gap&gt; Source( m );
+&lt;A left module presented by 12 relations for 9 generators (locked)&gt;
+gap&gt; Display( last );
+0,  0,   x, -y,0,1, 0,    0,  0,
+x*y,-y*z,-z,0, 0,0, 0,    0,  0,
+x^2,-x*z,0, -z,1,0, 0,    0,  0,
+0,  0,   0, 0, y,-z,0,    0,  0,
+0,  0,   0, 0, x,0, -z,   0,  -1,
+0,  0,   0, 0, 0,x, -y,   -1, 0,
+0,  0,   0, 0, 0,-y,x^2-1,0,  0,
+0,  0,   0, 0, 0,0, 0,    z,  0,
+0,  0,   0, 0, 0,0, 0,    y-1,0,
+0,  0,   0, 0, 0,0, 0,    0,  z,
+0,  0,   0, 0, 0,0, 0,    0,  y,
+0,  0,   0, 0, 0,0, 0,    0,  x
+
+Cokernel of the map
+
+Q[x,y,z]^(1x12) --&gt; Q[x,y,z]^(1x9),
+
+currently represented by the above matrix
+gap&gt; Display( filt );
+Degree 0:
+
+0,  0,   x, -y,
+x*y,-y*z,-z,0, 
+x^2,-x*z,0, -z 
+
+Cokernel of the map
+
+Q[x,y,z]^(1x3) --&gt; Q[x,y,z]^(1x4),
+
+currently represented by the above matrix
+----------
+Degree -1:
+
+y,-z,0,   
+x,0, -z,  
+0,x, -y,  
+0,-y,x^2-1
+
+Cokernel of the map
+
+Q[x,y,z]^(1x4) --&gt; Q[x,y,z]^(1x3),
+
+currently represented by the above matrix
+----------
+Degree -2:
+
+Q[x,y,z]/&lt; z, y-1 &gt;
+----------
+Degree -3:
+
+Q[x,y,z]/&lt; z, y, x &gt;
+gap&gt; Display( m );
+1,   0,     0,  0,   0,
+0,   -1,    0,  0,   0,
+0,   0,     -1, 0,   0,
+0,   0,     0,  -1,  0,
+-x^2,-x*z,  0,  -z,  0,
+0,   0,     x,  -y,  0,
+0,   0,     0,  0,   -1,
+0,   0,     x^2,-x*y,y,
+-x^3,-x^2*z,0,  -x*z,z
+
+the map is currently represented by the above 9 x 5 matrix
+</pre></td></tr></table>
+
+<p><a id="X7816D6ED815ED641" name="X7816D6ED815ED641"></a></p>
+
+<h5>3.1-3 <span class="Heading">A3_Purity</span></h5>
+
+<p>This is Example B.4 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; A3 := RingOfDerivations( Qxyz, "Dx,Dy,Dz" );
+Q[x,y,z]&lt;Dx,Dy,Dz&gt;
+gap&gt; nmat := HomalgMatrix( "[ \
+&gt; 3*Dy*Dz-Dz^2+Dx+3*Dy-Dz,           3*Dy*Dz-Dz^2,     \
+&gt; Dx*Dz+Dz^2+Dz,                     Dx*Dz+Dz^2,       \
+&gt; Dx*Dy,                             0,                \
+&gt; Dz^2-Dx+Dz,                        3*Dx*Dy+Dz^2,     \
+&gt; Dx^2,                              0,                \
+&gt; -Dz^2+Dx-Dz,                       3*Dx^2-Dz^2,      \
+&gt; Dz^3-Dx*Dz+Dz^2,                   Dz^3,             \
+&gt; 2*x*Dz^2-2*x*Dx+2*x*Dz+3*Dx+3*Dz+3,2*x*Dz^2+3*Dx+3*Dz\
+&gt; ]", 8, 2, A3 );
+&lt;A 8 x 2 matrix over an external ring&gt;
+gap&gt; N := LeftPresentation( nmat );
+&lt;A left module presented by 8 relations for 2 generators&gt;
+gap&gt; filt := PurityFiltration( N );
+&lt;The ascending purity filtration with degrees [ -3 .. 0 ] and graded parts:
+   0:	&lt;A zero left module&gt;
+
+-1:	&lt;A cyclic reflexively pure grade 1 left module presented by 1 relation for\
+ a cyclic generator&gt;
+
+-2:	&lt;A cyclic reflexively pure grade 2 left module presented by 2 relations fo\
+r a cyclic generator&gt;
+
+-3:	&lt;A cyclic reflexively pure grade 3 left module presented by 3 relations fo\
+r a cyclic generator&gt;
+of
+&lt;A non-pure grade 1 left module presented by 8 relations for 2 generators&gt;&gt;
+gap&gt; II_E := SpectralSequence( filt );
+&lt;A stable homological spectral sequence with sheets at levels 
+[ 0 .. 2 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 3 ]&gt;
+gap&gt; Display( II_E );
+The associated transposed spectral sequence:
+
+a homological spectral sequence at bidegrees
+[ [ 0 .. 3 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * * *
+ . * * *
+ . . * *
+ . . . *
+---------
+Level 1:
+
+ * * * *
+ . . . .
+ . . . .
+ . . . .
+---------
+Level 2:
+
+ s . . .
+ . . . .
+ . . . .
+ . . . .
+
+Now the spectral sequence of the bicomplex:
+
+a homological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 3 ] ]
+---------
+Level 0:
+
+ * * * *
+ . * * *
+ . . * *
+ . . . *
+---------
+Level 1:
+
+ * * * *
+ . * * *
+ . . * *
+ . . . .
+---------
+Level 2:
+
+ s . . .
+ . s . .
+ . . s .
+ . . . .
+gap&gt; m := IsomorphismOfFiltration( filt );
+&lt;A non-zero isomorphism of left modules&gt;
+gap&gt; IsIdenticalObj( Range( m ), N );
+true
+gap&gt; Source( m );
+&lt;A left module presented by 6 relations for 3 generators (locked)&gt;
+gap&gt; Display( last );
+Dx,1/3,-1/9*x,
+0, Dy, 1/6,   
+0, Dx, -1/2,  
+0, 0,  Dz,    
+0, 0,  Dy,    
+0, 0,  Dx     
+
+Cokernel of the map
+
+R^(1x6) --&gt; R^(1x3), ( for R := Q[x,y,z]&lt;Dx,Dy,Dz&gt; )
+
+currently represented by the above matrix
+gap&gt; Display( filt );
+Degree 0:
+
+0
+----------
+Degree -1:
+
+Q[x,y,z]&lt;Dx,Dy,Dz&gt;/&lt; Dx &gt; 
+----------
+Degree -2:
+
+Q[x,y,z]&lt;Dx,Dy,Dz&gt;/&lt; Dy, Dx &gt;
+----------
+Degree -3:
+
+Q[x,y,z]&lt;Dx,Dy,Dz&gt;/&lt; Dz, Dy, Dx &gt;
+gap&gt; Display( m );
+1,                1,     
+3*Dz+3,           3*Dz,  
+-6*Dz^2+6*Dx-6*Dz,-6*Dz^2
+
+the map is currently represented by the above 3 x 2 matrix
+</pre></td></tr></table>
+
+<p><a id="X812EF8147AE16E72" name="X812EF8147AE16E72"></a></p>
+
+<h5>3.1-4 <span class="Heading">TorExt-Grothendieck</span></h5>
+
+<p>This is Example B.5 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; wmat := HomalgMatrix( "[ \
+&gt; x*y,  y*z,    z,        0,         0,    \
+&gt; x^3*z,x^2*z^2,0,        x*z^2,     -z^2, \
+&gt; x^4,  x^3*z,  0,        x^2*z,     -x*z, \
+&gt; 0,    0,      x*y,      -y^2,      x^2-1,\
+&gt; 0,    0,      x^2*z,    -x*y*z,    y*z,  \
+&gt; 0,    0,      x^2*y-x^2,-x*y^2+x*y,y^2-y \
+&gt; ]", 6, 5, Qxyz );
+&lt;A 6 x 5 matrix over an external ring&gt;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A left module presented by 6 relations for 5 generators&gt;
+gap&gt; F := InsertObjectInMultiFunctor( Functor_TensorProduct_for_fp_modules, 2, W, "TensorW" );
+&lt;The functor TensorW for f.p. modules and their maps over computable rings&gt;
+gap&gt; G := LeftDualizingFunctor( Qxyz );;
+gap&gt; II_E := GrothendieckSpectralSequence( F, G, W );
+&lt;A stable cohomological spectral sequence with sheets at levels
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 3 ]&gt;
+gap&gt; Display( II_E );
+The associated transposed spectral sequence:
+
+a cohomological spectral sequence at bidegrees
+[ [ 0 .. 3 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ . . . .
+ . . . .
+ . . . .
+---------
+Level 2:
+
+ s s s s
+ . . . .
+ . . . .
+ . . . .
+
+Now the spectral sequence of the bicomplex:
+
+a cohomological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 3 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 2:
+
+ * * s s
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 3:
+
+ * s s s
+ . s s s
+ . . s *
+ . . . s
+---------
+Level 4:
+
+ s s s s
+ . s s s
+ . . s s
+ . . . s
+gap&gt; filt := FiltrationBySpectralSequence( II_E, 0 );
+&lt;A descending filtration with degrees [ -3 .. 0 ] and graded parts:
+
+-3:	&lt;A non-zero cyclic torsion left module presented by yet unknown relations \
+for a cyclic generator&gt;
+  -2:	&lt;A non-zero left module presented by 17 relations for 6 generators&gt;
+  -1:	&lt;A non-zero left module presented by 23 relations for 10 generators&gt;
+   0:	&lt;A non-zero left module presented by 13 relations for 10 generators&gt;
+of
+&lt;A left module presented by yet unknown relations for 41 generators&gt;&gt;
+gap&gt; ByASmallerPresentation( filt );
+&lt;A descending filtration with degrees [ -3 .. 0 ] and graded parts:
+
+-3:	&lt;A non-zero cyclic torsion left module presented by 3 relations for a cycl\
+ic generator&gt;
+  -2:	&lt;A non-zero left module presented by 12 relations for 4 generators&gt;
+  -1:	&lt;A non-zero left module presented by 18 relations for 8 generators&gt;
+   0:	&lt;A non-zero left module presented by 11 relations for 10 generators&gt;
+of
+&lt;A non-zero left module presented by 21 relations for 12 generators&gt;&gt;
+gap&gt; m := IsomorphismOfFiltration( filt );
+&lt;A non-zero isomorphism of left modules&gt;
+</pre></td></tr></table>
+
+<p><a id="X784BC2567875830B" name="X784BC2567875830B"></a></p>
+
+<h5>3.1-5 <span class="Heading">TorExt</span></h5>
+
+<p>This is Example B.6 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; wmat := HomalgMatrix( "[ \
+&gt; x*y,  y*z,    z,        0,         0,    \
+&gt; x^3*z,x^2*z^2,0,        x*z^2,     -z^2, \
+&gt; x^4,  x^3*z,  0,        x^2*z,     -x*z, \
+&gt; 0,    0,      x*y,      -y^2,      x^2-1,\
+&gt; 0,    0,      x^2*z,    -x*y*z,    y*z,  \
+&gt; 0,    0,      x^2*y-x^2,-x*y^2+x*y,y^2-y \
+&gt; ]", 6, 5, Qxyz );
+&lt;A 6 x 5 matrix over an external ring&gt;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A left module presented by 6 relations for 5 generators&gt;
+gap&gt; P := Resolution( W );
+&lt;A right acyclic complex containing 3 morphisms of left modules at degrees 
+[ 0 .. 3 ]&gt;
+gap&gt; GP := Hom( P );
+&lt;A cocomplex containing 3 morphisms of right modules at degrees [ 0 .. 3 ]&gt;
+gap&gt; FGP := GP * P;
+&lt;A cocomplex containing 3 morphisms of left complexes at degrees [ 0 .. 3 ]&gt;
+gap&gt; BC := HomalgBicomplex( FGP );
+&lt;A bicocomplex containing left modules at bidegrees [ 0 .. 3 ]x[ -3 .. 0 ]&gt;
+gap&gt; p_degrees := ObjectDegreesOfBicomplex( BC )[1];
+[ 0 .. 3 ]
+gap&gt; II_E := SecondSpectralSequenceWithFiltration( BC, p_degrees );
+&lt;A stable cohomological spectral sequence with sheets at levels 
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 3 ]&gt;
+gap&gt; Display( II_E );
+The associated transposed spectral sequence:
+
+a cohomological spectral sequence at bidegrees
+[ [ 0 .. 3 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ * * * *
+ * * * *
+---------
+Level 1:
+
+ * * * *
+ . . . .
+ . . . .
+ . . . .
+---------
+Level 2:
+
+ s s s s
+ . . . .
+ . . . .
+ . . . .
+
+Now the spectral sequence of the bicomplex:
+
+a cohomological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 3 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ * * * *
+ * * * *
+---------
+Level 1:
+
+ * * * *
+ * * * *
+ * * * *
+ * * * *
+---------
+Level 2:
+
+ * * s s
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 3:
+
+ * s s s
+ . s s s
+ . . s *
+ . . . s
+---------
+Level 4:
+
+ s s s s
+ . s s s
+ . . s s
+ . . . s
+gap&gt; filt := FiltrationBySpectralSequence( II_E, 0 );
+&lt;A descending filtration with degrees [ -3 .. 0 ] and graded parts:
+
+-3:	&lt;A non-zero cyclic torsion left module presented by yet unknown relations \
+for a cyclic generator&gt;
+  -2:	&lt;A non-zero left module presented by 17 relations for 7 generators&gt;
+  -1:	&lt;A non-zero left module presented by 29 relations for 13 generators&gt;
+   0:	&lt;A non-zero left module presented by 13 relations for 10 generators&gt;
+of
+&lt;A left module presented by yet unknown relations for 24 generators&gt;&gt;
+gap&gt; ByASmallerPresentation( filt );
+&lt;A descending filtration with degrees [ -3 .. 0 ] and graded parts:
+
+-3:	&lt;A non-zero cyclic torsion left module presented by 3 relations for a cycl\
+ic generator&gt;
+  -2:	&lt;A non-zero left module presented by 12 relations for 4 generators&gt;
+  -1:	&lt;A non-zero left module presented by 21 relations for 8 generators&gt;
+   0:	&lt;A non-zero left module presented by 11 relations for 10 generators&gt;
+of
+&lt;A non-zero left module presented by 23 relations for 12 generators&gt;&gt;
+gap&gt; m := IsomorphismOfFiltration( filt );
+&lt;A non-zero isomorphism of left modules&gt;
+</pre></td></tr></table>
+
+<p><a id="X8021C33D85444081" name="X8021C33D85444081"></a></p>
+
+<h5>3.1-6 <span class="Heading">CodegreeOfPurity</span></h5>
+
+<p>This is Example B.7 in <a href="chapBib.html#biBBaSF">[Bar]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
+Q[x,y,z]
+gap&gt; vmat := HomalgMatrix( "[ \
+&gt; 0,  0,  x,-z, \
+&gt; x*z,z^2,y,0,  \
+&gt; x^2,x*z,0,y   \
+&gt; ]", 3, 4, Qxyz );
+&lt;A 3 x 4 matrix over an external ring&gt;
+gap&gt; V := LeftPresentation( vmat );
+&lt;A non-torsion left module presented by 3 relations for 4 generators&gt;
+gap&gt; wmat := HomalgMatrix( "[ \
+&gt; 0,  0,  x,-y, \
+&gt; x*y,y*z,z,0,  \
+&gt; x^2,x*z,0,z   \
+&gt; ]", 3, 4, Qxyz );
+&lt;A 3 x 4 matrix over an external ring&gt;
+gap&gt; W := LeftPresentation( wmat );
+&lt;A non-torsion left module presented by 3 relations for 4 generators&gt;
+gap&gt; Rank( V );
+2
+gap&gt; Rank( W );
+2
+gap&gt; ProjectiveDimension( V );
+2
+gap&gt; ProjectiveDimension( W );
+2
+gap&gt; DegreeOfTorsionFreeness( V );
+1
+gap&gt; DegreeOfTorsionFreeness( W );
+1
+gap&gt; CodegreeOfPurity( V );
+[ 2 ]
+gap&gt; CodegreeOfPurity( W );
+[ 1, 1 ]
+gap&gt; filtV := PurityFiltration( V );
+&lt;The ascending purity filtration with degrees [ -2 .. 0 ] and graded parts:
+
+0:	&lt;A codegree-[ 2 ]-pure rank 2 left module presented by 3 relations for 4 ge\
+nerators&gt;
+  -1:	&lt;A zero left module&gt;
+  -2:	&lt;A zero left module&gt;
+of
+&lt;A codegree-[ 2 ]-pure rank 2 left module presented by 3 relations for 4 gener\
+ators&gt;&gt;
+gap&gt; filtW := PurityFiltration( W );
+&lt;The ascending purity filtration with degrees [ -2 .. 0 ] and graded parts:
+
+0:	&lt;A codegree-[ 1, 1 ]-pure rank 2 left module presented by 3 relations for 4\
+ generators&gt;
+  -1:	&lt;A zero left module&gt;
+  -2:	&lt;A zero left module&gt;
+of
+&lt;A codegree-[ 1, 1 ]-pure rank 2 left module presented by 3 relations for 4 ge\
+nerators&gt;&gt;
+gap&gt; II_EV := SpectralSequence( filtV );
+&lt;A stable homological spectral sequence with sheets at levels 
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 2 ]&gt;
+gap&gt; Display( II_EV );
+The associated transposed spectral sequence:
+
+a homological spectral sequence at bidegrees
+[ [ 0 .. 2 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * *
+ * * *
+ * * *
+ . * *
+---------
+Level 1:
+
+ * * *
+ . . .
+ . . .
+ . . .
+---------
+Level 2:
+
+ s . .
+ . . .
+ . . .
+ . . .
+
+Now the spectral sequence of the bicomplex:
+
+a homological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 2 ] ]
+---------
+Level 0:
+
+ * * * *
+ * * * *
+ . * * *
+---------
+Level 1:
+
+ * * * *
+ * * * *
+ . . * *
+---------
+Level 2:
+
+ * . . .
+ * . . .
+ . . * *
+---------
+Level 3:
+
+ * . . .
+ . . . .
+ . . . *
+---------
+Level 4:
+
+ . . . .
+ . . . .
+ . . . s
+gap&gt; II_EW := SpectralSequence( filtW );
+&lt;A stable homological spectral sequence with sheets at levels 
+[ 0 .. 4 ] each consisting of left modules at bidegrees [ -3 .. 0 ]x
+[ 0 .. 2 ]&gt;
+gap&gt; Display( II_EW );                  
+The associated transposed spectral sequence:
+
+a homological spectral sequence at bidegrees
+[ [ 0 .. 2 ], [ -3 .. 0 ] ]
+---------
+Level 0:
+
+ * * *
+ * * *
+ . * *
+ . . *
+---------
+Level 1:
+
+ * * *
+ . . .
+ . . .
+ . . .
+---------
+Level 2:
+
+ s . .
+ . . .
+ . . .
+ . . .
+
+Now the spectral sequence of the bicomplex:
+
+a homological spectral sequence at bidegrees
+[ [ -3 .. 0 ], [ 0 .. 2 ] ]
+---------
+Level 0:
+
+ * * * *
+ . * * *
+ . . * *
+---------
+Level 1:
+
+ * * * *
+ . * * *
+ . . . *
+---------
+Level 2:
+
+ * . . .
+ . * . .
+ . . . *
+---------
+Level 3:
+
+ * . . .
+ . . . .
+ . . . *
+---------
+Level 4:
+
+ . . . .
+ . . . .
+ . . . s
+</pre></td></tr></table>
+
+<p><a id="X791E21F47805048A" name="X791E21F47805048A"></a></p>
+
+<h5>3.1-7 <span class="Heading">HomHom</span></h5>
+
+<p>This corresponds to the example of Section 2 in <a href="chapBib.html#biBBREACA">[BR06]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; R := HomalgRingOfIntegersInExternalGAP( ) / 2^8;
+Z/( 256 )
+gap&gt; Display( R );
+&lt;A residue class ring&gt;
+gap&gt; M := LeftPresentation( [ 2^5 ], R );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; Display( M );
+Z/( 256 )/&lt; |[ 32 ]| &gt; 
+gap&gt; M;
+&lt;A cyclic left module presented by 1 relation for a cyclic generator&gt;
+gap&gt; _M := LeftPresentation( [ 2^3 ], R );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; Display( _M );
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+gap&gt; _M;
+&lt;A cyclic left module presented by 1 relation for a cyclic generator&gt;
+gap&gt; alpha2 := HomalgMap( [ 1 ], M, _M );
+&lt;A "homomorphism" of left modules&gt;
+gap&gt; IsMorphism( alpha2 );
+true
+gap&gt; alpha2;
+&lt;A homomorphism of left modules&gt;
+gap&gt; Display( alpha2 );
+[ [  1 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+gap&gt; M_ := Kernel( alpha2 );
+&lt;A cyclic left module presented by yet unknown relations for a cyclic generato\
+r&gt;
+gap&gt; alpha1 := KernelEmb( alpha2 );
+&lt;A monomorphism of left modules&gt;
+gap&gt; seq := HomalgComplex( alpha2 );
+&lt;An acyclic complex containing a single morphism of left modules at degrees 
+[ 0 .. 1 ]&gt;
+gap&gt; Add( seq, alpha1 );
+gap&gt; seq;
+&lt;A sequence containing 2 morphisms of left modules at degrees [ 0 .. 2 ]&gt;
+gap&gt; IsShortExactSequence( seq );
+true
+gap&gt; seq;
+&lt;A short exact sequence containing 2 morphisms of left modules at degrees 
+[ 0 .. 2 ]&gt;
+gap&gt; Display( seq );
+-------------------------
+at homology degree: 2
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  24 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 1
+Z/( 256 )/&lt; |[ 32 ]| &gt; 
+-------------------------
+[ [  1 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 0
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+gap&gt; K := LeftPresentation( [ 2^7 ], R );
+&lt;A cyclic left module presented by an unknown number of relations for a cyclic\
+ generator&gt;
+gap&gt; L := RightPresentation( [ 2^4 ], R );
+&lt;A cyclic right module on a cyclic generator satisfying an unknown number of r\
+elations&gt;
+gap&gt; triangle := LHomHom( 4, seq, K, L, "t" );
+&lt;An exact triangle containing 3 morphisms of left complexes at degrees 
+[ 1, 2, 3, 1 ]&gt;
+gap&gt; lehs := LongSequence( triangle );
+&lt;A sequence containing 14 morphisms of left modules at degrees [ 0 .. 14 ]&gt;
+gap&gt; ByASmallerPresentation( lehs );
+&lt;A non-zero sequence containing 14 morphisms of left modules at degrees 
+[ 0 .. 14 ]&gt;
+gap&gt; IsExactSequence( lehs );
+false
+gap&gt; lehs;
+&lt;A non-zero left acyclic complex containing 
+14 morphisms of left modules at degrees [ 0 .. 14 ]&gt;
+gap&gt; Assert( 0, IsLeftAcyclic( lehs ) );
+gap&gt; Display( lehs );
+-------------------------
+at homology degree: 14
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  4 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 13
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 12
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 11
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  4 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 10
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 9
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 8
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  4 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 7
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 6
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 5
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  4 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 4
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 3
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+[ [  2 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 2
+Z/( 256 )/&lt; |[ 4 ]| &gt; 
+-------------------------
+[ [  8 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 1
+Z/( 256 )/&lt; |[ 16 ]| &gt; 
+-------------------------
+[ [  1 ] ]
+
+modulo [ 256 ]
+
+the map is currently represented by the above 1 x 1 matrix
+------------v------------
+at homology degree: 0
+Z/( 256 )/&lt; |[ 8 ]| &gt; 
+-------------------------
+</pre></td></tr></table>
+
+<p><a id="X85CF19B87D1C375F" name="X85CF19B87D1C375F"></a></p>
+
+<h4>3.2 <span class="Heading">Commutative Algebra</span></h4>
+
+<p><a id="X781B1C0C80529B09" name="X781B1C0C80529B09"></a></p>
+
+<h5>3.2-1 <span class="Heading">Eliminate</span></h5>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z,l,m";
+Q[x,y,z,l,m]
+gap&gt; var := Indeterminates( R );
+[ x, y, z, l, m ]
+gap&gt; x := var[1];; y := var[2];; z := var[3];; l := var[4];; m := var[5];;
+gap&gt; L := [ x*m+l-4, y*m+l-2, z*m-l+1, x^2+y^2+z^2-1, x+y-z ];
+[ x*m+l-4, y*m+l-2, z*m-l+1, x^2+y^2+z^2-1, x+y-z ]
+gap&gt; e := Eliminate( L, [ l, m ] );
+&lt;A ? x 1 matrix over an external ring&gt;
+gap&gt; Display( e );
+4*y+z,  
+4*x-5*z,
+21*z^2-8
+gap&gt; I := LeftSubmodule( e );
+&lt;A torsion-free (left) ideal given by 3 generators&gt;
+gap&gt; Display( I );
+4*y+z,  
+4*x-5*z,
+21*z^2-8
+
+A (left) ideal generated by the 3 entries of the above matrix
+gap&gt; J := LeftSubmodule( "x+y-z, -2*z-3*y+x, x^2+y^2+z^2-1", R );
+&lt;A torsion-free (left) ideal given by 3 generators&gt;
+gap&gt; I = J;
+true
+</pre></td></tr></table>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapBib.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

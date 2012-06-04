@@ -1,17 +1,14 @@
 #############################################################################
 ##
-#W  numtheor.gi                 GAP library                  Martin Schoenert
+#W  numtheor.gi                 GAP library                  Martin Schönert
 ##
-#H  @(#)$Id: numtheor.gi,v 4.19.2.2 2005/07/22 11:26:27 stefan Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods mainly for integer primes.
 ##
-Revision.numtheor_gi :=
-    "@(#)$Id: numtheor.gi,v 4.19.2.2 2005/07/22 11:26:27 stefan Exp $";
 
 
 #############################################################################
@@ -335,7 +332,6 @@ end );
 ##
 #F  Jacobi( <n>, <m> ) . . . . . . . . . . . . . . . . . . . .  Jacobi symbol
 ##
-#N  29-Apr-91 martin remember to change the description of 'Jacobi'
 ##
 InstallGlobalFunction( Jacobi, function ( n, m )
     local  jac, t;
@@ -426,6 +422,7 @@ end );
 #F  RootMod( <n>, <m> ) . . . . . . . . . . . . . . .  root modulo an integer
 #F  RootMod( <n>, <k>, <m> )  . . . . . . . . . . . .  root modulo an integer
 ##
+##  Carried over from GAP3: This code requires that k is a prime.
 BindGlobal( "RootModPrime", function ( n, k, p )
     local   r,                  # <k>th root of <n> mod <p>, result
             kk,                 # largest power of <k> dividing <p>-1
@@ -502,6 +499,7 @@ BindGlobal( "RootModPrime", function ( n, k, p )
     return r;
 end );
 
+
 RootModPrimePower := function ( n, k, p, l )
     local   r,                  # <k>th root of <n> mod <p>^<l>, result
             s,                  # <k>th root of <n> mod smaller power
@@ -533,6 +531,8 @@ RootModPrimePower := function ( n, k, p, l )
     # handle the case that the root may not lift
     elif k = p  then
 
+	Info( InfoNumtheor, 3, "k=p case" );
+
         # compute the root mod $p^{l/2}$, or $p^{l/2+1}$ if 32 divides $p^l$
         if 2 < p  or l < 5  then
             s := RootModPrimePower( n, k, p, QuoInt(l+1,2) );
@@ -540,13 +540,17 @@ RootModPrimePower := function ( n, k, p, l )
             s := RootModPrimePower( n, k, p, QuoInt(l+3,2) );
         fi;
 
-        # lift the root to $p^l$, use higher precision
-        Info( InfoNumtheor, 2, " lift root with Newton / Hensel" );
-        t := PowerModInt( s, k-1, p^(l+1) );
-        r := (s + (n - t * s) / (k * t)) mod p^l;
-        if PowerModInt(r,k,p^l) <> n mod p^l  then
-            r := fail;
-        fi;
+	if s=fail then
+	  r:=fail;
+	else
+	  # lift the root to $p^l$, use higher precision
+	  Info( InfoNumtheor, 2, " lift root with Newton / Hensel" );
+	  t := PowerModInt( s, k-1, p^(l+1) );
+	  r := (s + (n - t * s) / (k * t)) mod p^l;
+	  if PowerModInt(r,k,p^l) <> n mod p^l  then
+	      r := fail;
+	  fi;
+	fi;
 
     # otherwise lift the root with Newton / Hensel
     else
@@ -557,6 +561,7 @@ RootModPrimePower := function ( n, k, p, l )
         else
             s := RootModPrimePower( n, k, p, QuoInt(l+3,2) );
         fi;
+	Info( InfoNumtheor, 3, "lift case s=",s );
 
 	if s=fail then
 	  r:=fail;
@@ -586,6 +591,8 @@ InstallGlobalFunction( RootMod, function ( arg )
             ii,                 # inverse of <qq> mod <q>
             r,                  # <k>th root of <n> mod <qq>
             s,                  # <k>th root of <n> mod <q>
+	    f, # factors
+	    i, # loop
             t;                  # temporary variable
 
     # get the arguments
@@ -598,6 +605,29 @@ InstallGlobalFunction( RootMod, function ( arg )
     # check the arguments and reduce $n$ into the range $0..m-1$
     if m <= 0  then Error("<m> must be positive");  fi;
     n := n mod m;
+
+    if not IsPrime(k) then
+      # try over factors of k
+      f:=Factors(k);
+      l:=n;
+      for i in f do
+	l:=RootMod(l,i,m);
+	if l=fail then 
+	  Info( InfoNumtheor, 2, "must try multiple roots");
+	  # it failed. This might have been because of taking the wrong root 
+	  # do again with all roots
+	  l:=RootsMod(n,k,m);
+	  if Length(l)=0 then 
+	    return fail;
+	  else
+	    return l[1];
+	  fi;
+
+	fi;
+
+      od;
+      return l;
+    fi;
 
     # combine the root modulo every prime power $p^l$
     r := 0;  qq := 1;
@@ -793,7 +823,7 @@ RootsModPrimePower := function ( n, k, p, l )
     fi;
 
     # return the roots $rr$
-    Info( InfoNumtheor, 1, "RootsModPrimePower returns ", r );
+    Info( InfoNumtheor, 1, "RootsModPrimePower returns ", rr );
     return rr;
 end;
 MakeReadOnlyGlobal( "RootsModPrimePower" );
@@ -805,6 +835,7 @@ InstallGlobalFunction( RootsMod, function ( arg )
             p,                  # prime divisor of <m>
             q,                  # power of <p>
             l,                  # <q> = <p>^<l>
+	    f, # factors
             qq,                 # product of prime powers dividing <m>
             ii,                 # inverse of <qq> mod <q>
             rr,                 # <k>th roots of <n> mod <qq>
@@ -823,6 +854,16 @@ InstallGlobalFunction( RootsMod, function ( arg )
     # check the arguments and reduce $n$ into the range $0..m-1$
     if m <= 0  then Error("<m> must be positive");  fi;
     n := n mod m;
+
+    if not IsPrime(k) then
+      # try over factors of k
+      f:=Factors(k);
+      l:=[n];
+      for ii in f do
+	l:=Concatenation(List(l,x->RootsMod(x,ii,m)));
+      od;
+      return l;
+    fi;
 
     # combine the roots modulo every prime power $p^l$
     rr := [0];  qq := 1;
@@ -947,7 +988,7 @@ RootsUnityModPrimePower := function ( k, p, l )
     fi;
 
     # return the roots $rr$
-    Info( InfoNumtheor, 1, "RootsUnityModPrimePower returns ", r );
+    Info( InfoNumtheor, 1, "RootsUnityModPrimePower returns ", rr );
     return rr;
 end;
 MakeReadOnlyGlobal( "RootsUnityModPrimePower" );

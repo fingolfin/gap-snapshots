@@ -2,9 +2,8 @@
 ##
 #W  ctblauto.gi                 GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ctblauto.gi,v 4.9 2003/01/27 08:18:03 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains functions to calculate automorphisms of matrices,
 ##  e.g., the character matrices of character tables, and functions to
@@ -15,8 +14,6 @@
 ##  The methods in this file do not use the partition backtrack techniques.
 ##  It would be desirable to translate them.
 ##
-Revision.ctblauto_gi :=
-    "@(#)$Id: ctblauto.gi,v 4.9 2003/01/27 08:18:03 gap Exp $";
 
 
 #############################################################################
@@ -997,11 +994,11 @@ InstallMethod( TransformingPermutationsCharacterTables,
     "for two character tables",
     [ IsCharacterTable, IsCharacterTable ],
     function( tbl1, tbl2 )
-    local irr1, irr2,    # lists of irreducible characters of the tables
+    local primes,        # prime divisors of the order of each table
+          irr1, irr2,    # lists of irreducible characters of the tables
           trans,         # result record
           gens,          # generators of the matrix automorphisms of `tbl2'
           nccl,          # no. of conjugacy classes
-          primes,        # prime divisors of the order of each table
           powermap1,     # list of power maps of `tbl1'
           powermap2,     # list of power maps of `tbl2'
           admissible,    # group of table automorphisms of `tbl2'
@@ -1010,6 +1007,31 @@ InstallMethod( TransformingPermutationsCharacterTables,
           orders1,       # element orders of `tbl1'
           orders2;       # element orders of `tbl2'
 
+    # Shortcuts:
+    # - If the group orders differ then return `fail'.
+    # - If irreducibles are stored in the two tables and coincide,
+    #   and if the power maps are known and equal then return the identity.
+    primes:= Set( Factors( Size( tbl1 ) ) );
+    if Size( tbl1 ) <> Size( tbl2 ) then
+      return fail;
+    elif HasIrr( tbl1 ) and HasIrr( tbl2 ) and Irr( tbl1 ) = Irr( tbl2 )
+         and ForAll( primes, p -> IsBound( ComputedPowerMaps( tbl1 )[p] ) and
+                                  IsBound( ComputedPowerMaps( tbl1 )[p] ) and
+                                  ComputedPowerMaps( tbl1 )[p] =
+                                  ComputedPowerMaps( tbl2 )[p] ) then
+      if HasAutomorphismsOfTable( tbl1 ) then
+        return rec( columns:= (),
+                    rows:= (),
+                    group:= AutomorphismsOfTable( tbl1 ) );
+      else
+        return rec( columns:= (),
+                    rows:= (),
+                    group:= AutomorphismsOfTable( tbl2 ) );
+      fi;
+    fi;
+
+# change: TransformingPermutations: should not access Irr until
+#         it is checked that centralizers and element orders match!
     irr1:= Irr( tbl1 );
     irr2:= Irr( tbl2 );
 
@@ -1028,7 +1050,6 @@ InstallMethod( TransformingPermutationsCharacterTables,
     # Note that we know the group of matrix automorphisms already,
     # so we use the same method as in `TableAutomorphisms'.
 
-    primes:= Set( Factors( Size( tbl1 ) ) );
     powermap1:= List( primes, p -> PowerMap( tbl1, p ) );
     powermap2:= List( primes, p -> PowerMap( tbl2, p ) );
 

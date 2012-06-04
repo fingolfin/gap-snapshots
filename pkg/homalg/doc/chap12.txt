@@ -1,0 +1,361 @@
+  
+  [1X12 Examples[0X
+  
+  
+  [1X12.1 ExtExt[0X
+  
+  This corresponds to Example B.2 in [Bar].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> imat := HomalgMatrix( "[ \[0X
+    [4X>   262,  -33,   75,  -40, \[0X
+    [4X>   682,  -86,  196, -104, \[0X
+    [4X>  1186, -151,  341, -180, \[0X
+    [4X> -1932,  248, -556,  292, \[0X
+    [4X>  1018, -127,  293, -156  \[0X
+    [4X> ]", 5, 4, ZZ );[0X
+    [4X<A 5 x 4 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( imat );[0X
+    [4X<A left module presented by 5 relations for 4 generators>[0X
+    [4Xgap> N := Hom( ZZ, M );[0X
+    [4X<A rank 1 right module on 4 generators satisfying yet unknown relations>[0X
+    [4Xgap> F := InsertObjectInMultiFunctor( Functor_Hom_for_fp_modules, 2, N, "TensorN" );[0X
+    [4X<The functor TensorN for f.p. modules and their maps over computable rings>[0X
+    [4Xgap> G := LeftDualizingFunctor( ZZ );;[0X
+    [4Xgap> II_E := GrothendieckSpectralSequence( F, G, M );[0X
+    [4X<A stable homological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> Display( II_E );[0X
+    [4XThe associated transposed spectral sequence:[0X
+    [4X[0X
+    [4Xa homological spectral sequence at bidegrees[0X
+    [4X[ [ 0 .. 1 ], [ -1 .. 0 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . .[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . .[0X
+    [4X[0X
+    [4XNow the spectral sequence of the bicomplex:[0X
+    [4X[0X
+    [4Xa homological spectral sequence at bidegrees[0X
+    [4X[ [ -1 .. 0 ], [ 0 .. 1 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . s[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . s[0X
+    [4Xgap> filt := FiltrationBySpectralSequence( II_E, 0 );[0X
+    [4X<An ascending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X   0:	<A non-torsion left module presented by 3 relations for 4 generators>[0X
+    [4X  -1:	<A non-zero left module presented by 33 relations for 8 generators>[0X
+    [4Xof[0X
+    [4X<A non-zero left module presented by 27 relations for 19 generators>>[0X
+    [4Xgap> ByASmallerPresentation( filt );[0X
+    [4X<An ascending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X   0:	<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4X  -1:	<A non-zero left module presented by 6 relations for 6 generators>[0X
+    [4Xof[0X
+    [4X<A non-torsion left module presented by 8 relations for 9 generators>>[0X
+    [4Xgap> m := IsomorphismOfFiltration( filt );[0X
+    [4X<A non-zero isomorphism of left modules>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X12.2 Purity[0X
+  
+  This corresponds to Example B.3 in [Bar].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> imat := HomalgMatrix( "[ \[0X
+    [4X>   262,  -33,   75,  -40, \[0X
+    [4X>   682,  -86,  196, -104, \[0X
+    [4X>  1186, -151,  341, -180, \[0X
+    [4X> -1932,  248, -556,  292, \[0X
+    [4X>  1018, -127,  293, -156  \[0X
+    [4X> ]", 5, 4, ZZ );[0X
+    [4X<A 5 x 4 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( imat );[0X
+    [4X<A left module presented by 5 relations for 4 generators>[0X
+    [4Xgap> filt := PurityFiltration( M );[0X
+    [4X<The ascending purity filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X   0:	<A free left module of rank 1 on a free generator>[0X
+    [4X  [0X
+    [4X-1:	<A non-zero torsion left module presented by 2 relations for 2 generators>[0X
+    [4Xof[0X
+    [4X<A non-pure rank 1 left module presented by 2 relations for 3 generators>>[0X
+    [4Xgap> M;[0X
+    [4X<A non-pure rank 1 left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> II_E := SpectralSequence( filt );[0X
+    [4X<A stable homological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> Display( II_E );[0X
+    [4XThe associated transposed spectral sequence:[0X
+    [4X[0X
+    [4Xa homological spectral sequence at bidegrees[0X
+    [4X[ [ 0 .. 1 ], [ -1 .. 0 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . .[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s .[0X
+    [4X . .[0X
+    [4X[0X
+    [4XNow the spectral sequence of the bicomplex:[0X
+    [4X[0X
+    [4Xa homological spectral sequence at bidegrees[0X
+    [4X[ [ -1 .. 0 ], [ 0 .. 1 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . s[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s .[0X
+    [4X . s[0X
+    [4Xgap> m := IsomorphismOfFiltration( filt );[0X
+    [4X<A non-zero isomorphism of left modules>[0X
+    [4Xgap> IsIdenticalObj( Range( m ), M );[0X
+    [4Xtrue[0X
+    [4Xgap> Source( m );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators (locked)>[0X
+    [4Xgap> Display( last );[0X
+    [4X[ [   0,   2,   0 ],[0X
+    [4X  [   0,   0,  12 ] ][0X
+    [4X[0X
+    [4XCokernel of the map[0X
+    [4X[0X
+    [4XZ^(1x2) --> Z^(1x3),[0X
+    [4X[0X
+    [4Xcurrently represented by the above matrix[0X
+    [4Xgap> Display( filt );[0X
+    [4XDegree 0:[0X
+    [4X[0X
+    [4XZ^(1 x 1)[0X
+    [4X----------[0X
+    [4XDegree -1:[0X
+    [4X[0X
+    [4XZ/< 2 > + Z/< 12 > [0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X12.3 TorExt-Grothendieck[0X
+  
+  This corresponds to Example B.5 in [Bar].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> imat := HomalgMatrix( "[ \[0X
+    [4X>   262,  -33,   75,  -40, \[0X
+    [4X>   682,  -86,  196, -104, \[0X
+    [4X>  1186, -151,  341, -180, \[0X
+    [4X> -1932,  248, -556,  292, \[0X
+    [4X>  1018, -127,  293, -156  \[0X
+    [4X> ]", 5, 4, ZZ );[0X
+    [4X<A 5 x 4 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( imat );[0X
+    [4X<A left module presented by 5 relations for 4 generators>[0X
+    [4Xgap> F := InsertObjectInMultiFunctor( Functor_TensorProduct_for_fp_modules, 2, M, "TensorM" );[0X
+    [4X<The functor TensorM for f.p. modules and their maps over computable rings>[0X
+    [4Xgap> G := LeftDualizingFunctor( ZZ );;[0X
+    [4Xgap> II_E := GrothendieckSpectralSequence( F, G, M );[0X
+    [4X<A stable cohomological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> Display( II_E );[0X
+    [4XThe associated transposed spectral sequence:[0X
+    [4X[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ 0 .. 1 ], [ -1 .. 0 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . .[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . .[0X
+    [4X[0X
+    [4XNow the spectral sequence of the bicomplex:[0X
+    [4X[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ -1 .. 0 ], [ 0 .. 1 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . s[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . s[0X
+    [4Xgap> filt := FiltrationBySpectralSequence( II_E, 0 );[0X
+    [4X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X[0X
+    [4X-1:	<A non-zero left module presented by yet unknown relations for 9 generator\[0X
+    [4Xs>[0X
+    [4X[0X
+    [4X0:	<A non-zero left module presented by yet unknown relations for 4 generators\[0X
+    [4X>[0X
+    [4Xof[0X
+    [4X<A left module presented by yet unknown relations for 29 generators>>[0X
+    [4Xgap> ByASmallerPresentation( filt );[0X
+    [4X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X  -1:	<A non-zero left module presented by 4 relations for 4 generators>[0X
+    [4X   0:	<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xof[0X
+    [4X<A non-torsion left module presented by 6 relations for 7 generators>>[0X
+    [4Xgap> m := IsomorphismOfFiltration( filt );[0X
+    [4X<A non-zero isomorphism of left modules>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X12.4 TorExt[0X
+  
+  This corresponds to Example B.6 in [Bar].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> imat := HomalgMatrix( "[ \[0X
+    [4X>   262,  -33,   75,  -40, \[0X
+    [4X>   682,  -86,  196, -104, \[0X
+    [4X>  1186, -151,  341, -180, \[0X
+    [4X> -1932,  248, -556,  292, \[0X
+    [4X>  1018, -127,  293, -156  \[0X
+    [4X> ]", 5, 4, ZZ );[0X
+    [4X<A 5 x 4 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( imat );[0X
+    [4X<A left module presented by 5 relations for 4 generators>[0X
+    [4Xgap> P := Resolution( M );[0X
+    [4X<A non-zero right acyclic complex containing a single morphism of left modules\[0X
+    [4X at degrees [ 0 .. 1 ]>[0X
+    [4Xgap> GP := Hom( P );[0X
+    [4X<A non-zero acyclic cocomplex containing a single morphism of right modules at\[0X
+    [4X degrees [ 0 .. 1 ]>[0X
+    [4Xgap> FGP := GP * P;[0X
+    [4X<A non-zero acyclic cocomplex containing a single morphism of left complexes a\[0X
+    [4Xt degrees [ 0 .. 1 ]>[0X
+    [4Xgap> BC := HomalgBicomplex( FGP );[0X
+    [4X<A non-zero bicocomplex containing left modules at bidegrees [ 0 .. 1 ]x[0X
+    [4X[ -1 .. 0 ]>[0X
+    [4Xgap> p_degrees := ObjectDegreesOfBicomplex( BC )[1];[0X
+    [4X[ 0, 1 ][0X
+    [4Xgap> II_E := SecondSpectralSequenceWithFiltration( BC, p_degrees );[0X
+    [4X<A stable cohomological spectral sequence with sheets at levels [0X
+    [4X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[0X
+    [4X[ 0 .. 1 ]>[0X
+    [4Xgap> Display( II_E );[0X
+    [4XThe associated transposed spectral sequence:[0X
+    [4X[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ 0 .. 1 ], [ -1 .. 0 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X . .[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . .[0X
+    [4X[0X
+    [4XNow the spectral sequence of the bicomplex:[0X
+    [4X[0X
+    [4Xa cohomological spectral sequence at bidegrees[0X
+    [4X[ [ -1 .. 0 ], [ 0 .. 1 ] ][0X
+    [4X---------[0X
+    [4XLevel 0:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 1:[0X
+    [4X[0X
+    [4X * *[0X
+    [4X * *[0X
+    [4X---------[0X
+    [4XLevel 2:[0X
+    [4X[0X
+    [4X s s[0X
+    [4X . s[0X
+    [4Xgap> filt := FiltrationBySpectralSequence( II_E, 0 );[0X
+    [4X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X[0X
+    [4X-1:	<A non-zero left module presented by yet unknown relations for 10 generato\[0X
+    [4Xrs>[0X
+    [4X   0:	<A rank 1 left module presented by 3 relations for 4 generators>[0X
+    [4Xof[0X
+    [4X<A left module presented by yet unknown relations for 13 generators>>[0X
+    [4Xgap> ByASmallerPresentation( filt );[0X
+    [4X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[0X
+    [4X  -1:	<A non-zero left module presented by 4 relations for 4 generators>[0X
+    [4X   0:	<A rank 1 left module presented by 2 relations for 3 generators>[0X
+    [4Xof[0X
+    [4X<A non-torsion left module presented by 6 relations for 7 generators>>[0X
+    [4Xgap> m := IsomorphismOfFiltration( filt );[0X
+    [4X<A non-zero isomorphism of left modules>[0X
+  [4X------------------------------------------------------------------[0X
+  

@@ -3,16 +3,13 @@
 #W  grppcatr.gi                 GAP Library                      Frank Celler
 #W                                                             & Bettina Eick
 ##
-#H  @(#)$Id: grppcatr.gi,v 4.56.2.2 2005/12/15 21:20:59 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for attributes of polycylic groups.
 ##
-Revision.grppcatr_gi :=
-    "@(#)$Id: grppcatr.gi,v 4.56.2.2 2005/12/15 21:20:59 gap Exp $";
 
 
 #############################################################################
@@ -357,17 +354,7 @@ MaximalSubgroupClassesRepsLayer := function( pcgs, l )
 end;
 
 
-#############################################################################
-##
-#M  MaximalSubgroupClassReps( <G> )
-##
-InstallMethod( MaximalSubgroupClassReps,
-    "pcgs computable groups using special pcgs",
-    true, 
-    [ IsGroup and CanEasilyComputePcgs and IsFinite ],
-    0,
-
-function( G )
+MAXSUBS_BY_PCGS:=function( G )
     local spec, first, max, i, new;
 
     spec  := SpecialPcgs(G);
@@ -379,8 +366,26 @@ function( G )
     od;
     return max;
 
-end );
+end;
 
+#############################################################################
+##
+#M  MaximalSubgroupClassReps( <G> )
+##
+InstallMethod( MaximalSubgroupClassReps,
+    "pcgs computable groups using special pcgs",
+    true, 
+    [ IsGroup and CanEasilyComputePcgs and IsFinite ],
+    0,
+    MAXSUBS_BY_PCGS);
+
+#fallback
+InstallMethod( MaximalSubgroupClassReps,
+    "pcgs computable groups using special pcgs",
+    true, 
+    [ IsGroup and IsSolvableGroup and IsFinite ],
+    0,
+    MAXSUBS_BY_PCGS);
 
 #############################################################################
 ##

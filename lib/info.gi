@@ -2,10 +2,9 @@
 ##
 #W  info.gi                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: info.gi,v 4.29 2002/10/07 01:41:46 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This package sets up a GAP level prototype of the new Info messages
@@ -27,8 +26,6 @@
 ##
 ##  This file is the implementation  part of that package
 ##
-Revision.info_gi :=
-    "@(#)$Id: info.gi,v 4.29 2002/10/07 01:41:46 gap Exp $";
 
 
 #############################################################################
@@ -46,10 +43,11 @@ DeclareRepresentation("IsInfoClassListRep", IsPositionalObjectRep,[]);
 ##
 #V  InfoData                 record of private stuff
 #V  InfoData.CurrentLevels   the current desired verbosity levels set by user
-#V  InfoData.ClassNames          names of all info classes, used for printing
+#V  InfoData.ClassNames      names of all info classes, used for printing
+#V  InfoData.Handler         optional handler for InfoDoPrint
 ##
-##  these are both lists, and should have the same length, which defines the
-##  number of Info classes that exist
+##  these are all lists, and the first two should have the same length, 
+##  which defines the number of Info classes that exist
 ##
 
 if not IsBound(InfoData) then
@@ -57,7 +55,51 @@ if not IsBound(InfoData) then
     BIND_GLOBAL( "InfoData", rec() );
     InfoData.CurrentLevels := [];
     InfoData.ClassNames := [];
+    InfoData.Handler := [];
+    InfoData.Output := [];
 fi;
+
+InstallGlobalFunction( "SetDefaultInfoOutput", function( out )
+  if IsBound(DefaultInfoOutput) then
+    MakeReadWriteGlobal("DefaultInfoOutput");
+  fi;
+  DefaultInfoOutput := out;
+  MakeReadOnlyGlobal("DefaultInfoOutput");
+end);
+
+InstallGlobalFunction( "DefaultInfoHandler", function( infoclass, level, list )
+  local cl, out, fun, s;
+  cl := InfoData.LastClass![1];
+  if IsBound(InfoData.Output[cl]) then
+    out := InfoData.Output[cl];
+  else
+    out := DefaultInfoOutput;
+  fi;
+  if out = "*Print*" then
+    if IsBoundGlobal( "PrintFormattedString" ) then
+      fun := function(s)
+        if IsString(s) then
+          ValueGlobal( "PrintFormattedString" )(s); 
+        else
+          Print(s);
+        fi;
+      end;
+    else
+      fun := Print;
+    fi;
+    fun("#I  ");
+    for s in list do
+      fun(s);
+    od;
+    fun("\n");
+  else
+    AppendTo(out, "#I  ");
+    for s in list do
+      AppendTo(out, s);
+    od;
+    AppendTo(out, "\n");
+  fi;
+end);
 
 
 #############################################################################
@@ -113,6 +155,21 @@ InstallGlobalFunction( DeclareInfoClass, function( name )
     fi;
 end );
 
+#############################################################################
+##
+#F  SetInfoHandler( <class>, <handler> )
+##
+InstallGlobalFunction( SetInfoHandler, function(class, handler)
+  InfoData.Handler[class![1]] := handler;
+end);
+
+#############################################################################
+##
+#F  SetInfoOutput( <class>, <handler> )
+##
+InstallGlobalFunction( SetInfoOutput, function(class, out)
+  InfoData.Output[class![1]] := out;
+end);
 
 #############################################################################
 ##
@@ -239,7 +296,15 @@ BIND_GLOBAL( "InfoDecision", function(selectors, level)
             Error(usage);
         fi;
     fi;
-    
+   
+    # store the class an level
+    if IsInfoClass(selectors) then
+      InfoData.LastClass := selectors;
+    else
+      InfoData.LastClass := selectors[1];
+    fi;
+    InfoData.LastLevel := level;
+
     if IsInfoClass(selectors) then
         return InfoLevel(selectors) >= level;
     elif IsInfoSelector(selectors)  then
@@ -259,9 +324,13 @@ end );
 ##
 
 BIND_GLOBAL( "InfoDoPrint", function(arglist)
-    Print("#I  ");
-    CallFuncList(Print, arglist);
-    Print("\n");
+    local fun;
+    if IsBound(InfoData.Handler[InfoData.LastClass![1]]) then
+      fun := InfoData.Handler[InfoData.LastClass![1]];
+    else
+      fun := DefaultInfoHandler;
+    fi;
+    fun(InfoData.LastClass, InfoData.LastLevel, arglist);
 end );
 
 
@@ -290,8 +359,30 @@ end );
 ##
 #V  InfoDebug
 ##
-if not IsBound(InfoDebug) then
-    DeclareInfoClass( "InfoDebug" );
+##  This info class has a default level of 1.
+##  Warnings can be switched off by setting its level to zero.
+##
+##  The files `lib/oper.g', `lib/oper1.g', `lib/variable.g' contain
+##  calls to `INFO_DEBUG' (a plain function delegating to `Print').
+##  Here we define the proper info class `InfoDebug',
+##  and replace `INFO_DEBUG' by a function that calls `Info'
+##  and respects the user defined info level of `InfoDebug'.
+##
+if not IsBound( InfoDebug ) then
+  DeclareInfoClass( "InfoDebug" );
+  SetInfoLevel( InfoDebug, 1 );
+
+  MAKE_READ_WRITE_GLOBAL( "INFO_DEBUG" );
+  INFO_DEBUG:= function( arg )
+    local string, i;
+
+    string:= [];
+    for i in [ 2 .. LEN_LIST( arg ) ] do
+      APPEND_LIST_INTR( string, arg[i] );
+    od;
+    Info( InfoDebug, arg[1], string );
+  end;
+  MAKE_READ_ONLY_GLOBAL( "INFO_DEBUG" );
 fi;
 
 
@@ -317,24 +408,11 @@ fi;
 #V  InfoWarning
 ##
 ##  This info class has a default level of 1.
-##  Warnings can be switched off by setting its level to zero
+##  Warnings can be switched off by setting its level to zero.
 ##
 if not IsBound(InfoWarning) then
     DeclareInfoClass( "InfoWarning" );
     SetInfoLevel( InfoWarning, 1 );
-
-    # The call of `INFO_INSTALL' in `oper.g' (with level 2)
-    # is thought as a call to `InfoWarning'.
-    MAKE_READ_WRITE_GLOBAL( "INFO_INSTALL" );
-    INFO_INSTALL:= function( arg )
-        local string, i;
-        string:= [];
-        for i in [ 2 .. LEN_LIST( arg ) ] do
-          APPEND_LIST_INTR( string, arg[i] );
-        od;
-        Info( InfoWarning, arg[1], string );
-    end;
-    MAKE_READ_ONLY_GLOBAL( "INFO_INSTALL" );
 fi;
 
 #############################################################################
@@ -362,21 +440,32 @@ if not IsBound(InfoTeaching) then
   fi;
 fi;
 
+LAST_COMPLETIONBAR_STRING:=fail;
+LAST_COMPLETIONBAR_VAL:=0;
+
 InstallGlobalFunction(CompletionBar,function(c,a,s,v)
-local out,w,i;
+local out,w,w0,i;
   if InfoLevel(c)>=a then
-    out:=OutputTextUser();
     if not IsRat(v) then
+      out:=OutputTextUser();
       PrintTo(out,"\n");
       return;
     fi;
-    w:=SizeScreen()[1];
+    w0:=SizeScreen()[1];
+    w:=Int(v*(w0-Length(s)-5));
+    if s=LAST_COMPLETIONBAR_STRING and w=LAST_COMPLETIONBAR_VAL then
+      return; # nothing new to say
+    fi;
+    LAST_COMPLETIONBAR_STRING:=s;
+    LAST_COMPLETIONBAR_VAL:=w;
+    out:=OutputTextUser();
+    v:=w;
+    w:=w0;
     for i in [1..w] do
       PrintTo(out,"\r");
     od;
     PrintTo(out,"\c");
     w:=w-Length(s)-5;
-    v:=v*w;
     PrintTo(out,s," ");
     for i in [1..w] do
       if v>0 then

@@ -2,15 +2,12 @@
 ##
 #W  ringhom.gi                   GAP library                  Alexander Hulpke
 ##
-#H  @(#)$Id: ringhom.gi,v 1.3.2.2 2008/10/08 15:49:05 gap Exp $
 ##
 #Y  Copyright (C) 2008 The GAP Group
 ##
 ##  This file contains methods for ring general mappings and homomorphisms.
 ##  It is based on alghom.gi
 ##
-Revision.ringhom_gi :=
-    "@(#)$Id: ringhom.gi,v 1.3.2.2 2008/10/08 15:49:05 gap Exp $";
 
 
 #############################################################################
@@ -32,10 +29,10 @@ DeclareRepresentation( "IsSCRingGeneralMappingByImagesDefaultRep",
 #M  RingGeneralMappingByImages( <S>, <R>, <gens>, <imgs> )
 ##
 InstallMethod( RingGeneralMappingByImages,
-    "for sc ring and arbitrary ring and two homogeneous lists",
-    [ IsSubringSCRing, IsRing, IsHomogeneousList, IsHomogeneousList ],
+    "for two rings and two homogeneous lists",
+    [ IsRing, IsRing, IsHomogeneousList, IsHomogeneousList ],
 function( S, R, gens, imgs )
-local map;        # general mapping from <S> to <R>, result
+  local filter,map;        # general mapping from <S> to <R>, result
 
   # Check the arguments.
   if   Length( gens ) <> Length( imgs )  then
@@ -44,6 +41,11 @@ local map;        # general mapping from <S> to <R>, result
     Error( "<gens> must lie in <S>" );
   elif not IsSubset( R, imgs ) then
     Error( "<imgs> must lie in <R>" );
+  fi;
+  filter:=IsSPGeneralMapping and IsRingGeneralMapping;
+
+  if IsSubringSCRing(S) then
+    filter:=filter and IsSCRingGeneralMappingByImagesDefaultRep;
   fi;
 
   # Make the general mapping.
@@ -83,7 +85,7 @@ InstallGlobalFunction( RingHomomorphismByImages,
     function( S, R, gens, imgs )
     local hom;
     hom:= RingGeneralMappingByImages( S, R, gens, imgs );
-    if IsMapping( hom ) and IsTotal( hom ) then
+    if IsMapping( hom ) then
       return RingHomomorphismByImagesNC( S, R, gens, imgs );
     else
       return fail;
@@ -110,7 +112,7 @@ end );
 #M  PrintObj( <map> ) . . . . . . . . . . . . . . . . .  for ring g.m.b.i.
 ##
 InstallMethod( PrintObj, "for an ring hom. b.i.", true,
-    [     IsMapping and IsTotal
+    [     IsMapping
       and IsRingGeneralMappingByImagesDefaultRep ], 0,
 function( map )
 local mapi;
@@ -169,7 +171,7 @@ end);
 #M  IsSingleValued( <map> ) . . . . . . . . . . . . . .  for ring g.m.b.i.
 ##
 InstallMethod( IsSingleValued,
-    "for ring g.m.b.i.",
+    "for sc ring g.m.b.i.",
     [ IsGeneralMapping and IsSCRingGeneralMappingByImagesDefaultRep ],
 function(map)
   local r, moduli, std, stdi, sel, o, elm, elmi, i, j, k;
@@ -611,6 +613,16 @@ function( R, I )
   x:=List(GeneratorsOfRing(R),x->Zero(q));
   x{posi}:=GeneratorsOfRing(q);
   hom:=RingHomomorphismByImages(R,q,GeneratorsOfRing(R),x);
+  SetIsSurjective(hom,true);
+  SetKernelOfAdditiveGeneralMapping(hom,I);
   return hom;
 end );
+
+InstallOtherMethod( \/,
+    "generic method for two rings",
+    IsIdenticalObj,
+    [ IsRing, IsRing ],
+    function( R, I )
+    return ImagesSource( NaturalHomomorphismByIdeal( R, I ) );
+    end );
 

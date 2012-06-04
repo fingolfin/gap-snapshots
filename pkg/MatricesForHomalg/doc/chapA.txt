@@ -1,0 +1,50 @@
+  
+  [1XA The Basic Matrix Operations[0X
+  
+  These  are  the  operations  used  to solve one-sided (in)homogeneous linear
+  systems XA=B resp. AX=B.
+  
+  
+  [1XA.1 Main[0X
+  
+  --    [2XBasisOfRowModule[0m ([14X5.5-22[0m)
+  
+  --    [2XBasisOfColumnModule[0m ([14X5.5-23[0m)
+  
+  --    [2XDecideZeroRows[0m ([14X5.5-24[0m)
+  
+  --    [2XDecideZeroColumns[0m ([14X5.5-25[0m)
+  
+  --    [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-26[0m)
+  
+  --    [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-27[0m)
+  
+  
+  [1XA.2 Effective[0X
+  
+  --    [2XBasisOfRowsCoeff[0m ([14X5.5-34[0m)
+  
+  --    [2XBasisOfColumnsCoeff[0m ([14X5.5-35[0m)
+  
+  --    [2XDecideZeroRowsEffectively[0m ([14X5.5-36[0m)
+  
+  --    [2XDecideZeroColumnsEffectively[0m ([14X5.5-37[0m)
+  
+  
+  [1XA.3 Relative[0X
+  
+  --    [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-28[0m)
+  
+  --    [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-29[0m)
+  
+  
+  [1XA.4 Reduced[0X
+  
+  --    [2XReducedBasisOfRowModule[0m ([14X5.5-30[0m)
+  
+  --    [2XReducedBasisOfColumnModule[0m ([14X5.5-31[0m)
+  
+  --    [2XReducedSyzygiesGeneratorsOfRows[0m ([14X5.5-32[0m)
+  
+  --    [2XReducedSyzygiesGeneratorsOfColumns[0m ([14X5.5-33[0m)
+  

@@ -2,10 +2,9 @@
 ##
 #W  mat8bit.gi                   GAP Library                     Steve Linton
 ##
-#H  @(#)$Id: mat8bit.gi,v 4.33 2002/07/02 09:52:23 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file is a first stab at a special posobj-based representation 
@@ -13,8 +12,6 @@
 ##
 ##  all rows must be the same length and written over the same field
 ##
-Revision.mat8bit_gi :=
-    "@(#)$Id: mat8bit.gi,v 4.33 2002/07/02 09:52:23 sal Exp $";
 
 #############################################################################
 ##
@@ -63,7 +60,7 @@ end);
 #M  Length( <mat> )
 ##
 
-InstallMethod( Length, "For a compressed MatFFE", 
+InstallOtherMethod( Length, "For a compressed MatFFE", 
         true, [IsList and Is8BitMatrixRep], 0, m->m![1]);
 
 #############################################################################
@@ -71,7 +68,7 @@ InstallMethod( Length, "For a compressed MatFFE",
 #M  <mat> [ <pos> ]
 ##
 
-InstallMethod( \[\],  "For a compressed MatFFE", 
+InstallOtherMethod( \[\],  "For a compressed MatFFE", 
         true, [IsList and Is8BitMatrixRep, IsPosInt], 0, function(m,i) 
     return m![i+1]; end);
 
@@ -83,7 +80,7 @@ InstallMethod( \[\],  "For a compressed MatFFE",
 ##  not lie in the appropriate field.
 ##
                
-InstallMethod( \[\]\:\=,  "For a compressed MatFE", 
+InstallOtherMethod( \[\]\:\=,  "For a compressed MatFE", 
         true, [IsMutable and IsList and Is8BitMatrixRep, IsPosInt, IsObject], 
         0,
         ASS_MAT8BIT
@@ -97,7 +94,7 @@ InstallMethod( \[\]\:\=,  "For a compressed MatFE",
 ##  turning into a plain list
 ##
 
-InstallMethod( Unbind\[\], "For a compressed MatFFE",
+InstallOtherMethod( Unbind\[\], "For a compressed MatFFE",
         true, [IsMutable and IsList and Is8BitMatrixRep, IsPosInt],
         0, function(m,p)
     if p = 1 or  p <> m![1] then
@@ -247,11 +244,12 @@ end);
 
 #############################################################################
 ##
-#M  ConvertToMatrixRepNC( <list> )
+#M  ConvertToMatrixRepNC( <list>, <fieldsize )
+#M  ConvertToMatrixRep( <list>[, <fieldsize> | <field>])
 ##
 
 
-InstallGlobalFunction(ConvertToMatrixRepNC,
+InstallGlobalFunction(ConvertToMatrixRep,
         function( arg )
     local m,qs, v,  q, givenq, q1, LeastCommonPower, lens;
     
@@ -280,7 +278,10 @@ InstallGlobalFunction(ConvertToMatrixRepNC,
     if Length(arg) > 1 then
         q1 := arg[2];
         if not IsInt(q1) then
-	  if IsField(q1) then
+            if IsField(q1) then
+                if Characteristic(q1) = 0 then
+                    return fail;
+                fi;
 	      q1 := Size(q1);
 	  else
 	    return; # not a field -- exit
@@ -384,14 +385,48 @@ InstallGlobalFunction(ConvertToMatrixRepNC,
         od;
     fi;
     
+    if q <= 256 then
+        ConvertToMatrixRepNC(m,q);
+    fi;
+    
+    return q;
+end);    
+
+
+InstallGlobalFunction(ConvertToMatrixRepNC, function(arg)    
+    local   v, m,  q, result;
+    if Length(arg) = 1 then
+        return ConvertToMatrixRep(arg[1]);
+    else 
+        m := arg[1];
+        q := arg[2];
+    fi;
+    if Length(m)=0 then
+    	return ConvertToMatrixRep(m,q);  
+    fi;
+    if not IsInt(q) then 
+        q := Size(q);
+    fi;
+    if Is8BitMatrixRep(m) then
+        return Q_VEC8BIT(m[1]);
+    fi;
+    if IsGF2MatrixRep(m) then
+        return 2;
+    fi;
+    for v in m do
+        result := ConvertToVectorRepNC(v,q);
+        if result <> q then
+            Error("ConvertToMatrixRep: Failed to convert a row");
+        fi;
+    od;
     if q = 2 then
         CONV_GF2MAT(m);
     elif q <= 256 then
         CONV_MAT8BIT(m, q);
     fi;
     return q;
-end);    
-        
+end);
+
 #############################################################################
 ##
 #M <vec> * <mat>
@@ -866,12 +901,12 @@ InstallMethod( \=, "for two compressed 8 bit matrices", IsIdenticalObj,
 #M  MutableTransposedMat( <mat> )
 ##
 
-InstallMethod( TransposedMat, "for a compressed 8 bit matrix",
+InstallOtherMethod( TransposedMat, "for a compressed 8 bit matrix",
         true, [IsMatrix and IsFFECollColl and
         Is8BitMatrixRep ], 0,
         TRANSPOSED_MAT8BIT);
 
-InstallMethod( MutableTransposedMat, "for a compressed 8 bit matrix",
+InstallOtherMethod( MutableTransposedMat, "for a compressed 8 bit matrix",
         true, [IsMatrix and IsFFECollColl and
         Is8BitMatrixRep ], 0,
         TRANSPOSED_MAT8BIT);

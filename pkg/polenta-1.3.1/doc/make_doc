@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export GAPROOT=${1:-../../..}
+export GAP=${2:-$GAPROOT/bin/gap.sh}
+
+$GAP -A -q -T < make_doc.g

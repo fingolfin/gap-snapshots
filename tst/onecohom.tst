@@ -2,17 +2,14 @@
 ##
 #W  onecohom.tst                GAP tests                    Alexander Hulpke
 ##
-#H  @(#)$Id: onecohom.tst,v 1.10.2.3 2005/05/11 14:53:02 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This  file  tests the automorphism routines
 ##
-##  To be listed in testall.g
+##  To be listed in testinstall.g
 ##
-
-gap> START_TEST("$Id: onecohom.tst,v 1.10.2.3 2005/05/11 14:53:02 gap Exp $");
-
+gap> START_TEST("onecohom.tst");
 gap> g:=Group((16,18,17),(14,15)(17,18),(17,18),(13,14,15),
 > (11,12)(13,15)(16,18,17),
 > (10,12)(13,14),(8,9)(10,12),(7,8)(14,15)(16,18,17),
@@ -28,7 +25,7 @@ gap> n:=Group((10,12)(14,15),(10,11)(13,15),(10,12,11),(11,12),
 > (1,3)(7,8)(11,12)(13,15)(16,18,17),
 > (1,3)(4,6,5)(8,9)(10,11)(17,18),(4,6,5)(7,8,9)(14,15)(17,18),
 > (1,3)(7,8)(10,12)(13,15,14)(16,17));;
-gap> Length(Complementclasses(g,n));
+gap> Length(ComplementClassesRepresentatives(g,n));
 2
 gap> g:=PerfectGroup(IsPermGroup,120,1);;
 gap> n:=Filtered(NormalSubgroups(g),i->IsElementaryAbelian(i) and Size(i)>1)[1];;
@@ -61,10 +58,8 @@ gap> List(com,i->Number(com,j->RepresentativeAction(g,i,j)<>fail));
 [ 1, 1, 1, 1 ]
 
 # that's all, folks
-gap> STOP_TEST( "onecohom.tst", 303400000 );
-
+gap> STOP_TEST( "onecohom.tst", 50600000 );
 
 #############################################################################
 ##
 #E
-

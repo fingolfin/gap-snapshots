@@ -1,0 +1,22 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1  What  is  the  Role  of  the  [5XGradedRingForHomalg[1X Package in the [5Xhomalg[1X[0X
+  [1XProject?[0X
+  
+  The  [5Xhomalg[0m  project  [hpa10]  aims  at  providing  a  general  and abstract
+  framework  for  homological  computations.  The  package [5XGradedRingForHomalg[0m
+  enables  the  [5Xhomalg[0m  project  to  endow commutative rings in [5Xhomalg[0m with an
+  Abelian grading.
+  
+  
+  [1X1.2 Functionality[0X
+  
+  The  package  [5XGradedRingForHomalg[0m  on  the  one  hand  builds on the package
+  [5XMatricesForHomalg[0m   and   on   the   other   hands   adds  functionality  to
+  [5XMatricesForHomalg[0m.
+  
+  
+  [1X1.3 The Math Behind This Package[0X
+  

@@ -1,0 +1,108 @@
+  
+  [1X6 Generators[0X
+  
+  To  present  a  left/right  module  it  suffices  to  take  a matrix [3Xrel[0m and
+  interpret its rows/columns as relations among n [13Xabstract[0m generators, where n
+  is  the  number  of columns/rows of [3Xrel[0m. Only that these abstract generators
+  are useless when it comes to specific modules like modules of homomorphisms,
+  where one expects the generators to be maps between modules. For this reason
+  a  presentation  of  a module in [5Xhomalg[0m is not merely a matrix of relations,
+  but together with a set of generators.
+  
+  In  [5Xhomalg[0m  a  set of generators of a left/right module is given by a matrix
+  [3Xgen[0m with rows/columns being interpreted as the generators.
+  
+  The data structure of a module in [5Xhomalg[0m is designed to contain not only one
+  but  several  sets of generators (together with their sets of relations (-->
+  Chapter  [14X5[0m)).  The  different  sets  of generators are linked with so-called
+  transition matrices (--> Chapter [14X7[0m).
+  
+  
+  [1X6.1 Generators: Categories and Representations[0X
+  
+  [1X6.1-1 IsHomalgGenerators[0m
+  
+  [2X> IsHomalgGenerators( [0X[3Xrel[0X[2X ) ________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m generators.
+  
+  [1X6.1-2 IsHomalgGeneratorsOfLeftModule[0m
+  
+  [2X> IsHomalgGeneratorsOfLeftModule( [0X[3Xrel[0X[2X ) ____________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m generators of a left module.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgGenerators[0m.)
+  
+  [1X6.1-3 IsHomalgGeneratorsOfRightModule[0m
+  
+  [2X> IsHomalgGeneratorsOfRightModule( [0X[3Xrel[0X[2X ) ___________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m generators of a right module.
+  
+  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgGenerators[0m.)
+  
+  [1X6.1-4 IsGeneratorsOfModuleRep[0m
+  
+  [2X> IsGeneratorsOfModuleRep( [0X[3Xrel[0X[2X ) _____________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of a finite set of generators of a [5Xhomalg[0m module.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgGenerators[0m ([14X6.1-1[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsGeneratorsOfModuleRep",[0X
+    [4X        IsHomalgGenerators,[0X
+    [4X        [ "generators" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X6.1-5 IsGeneratorsOfFinitelyGeneratedModuleRep[0m
+  
+  [2X> IsGeneratorsOfFinitelyGeneratedModuleRep( [0X[3Xrel[0X[2X ) ____________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of a finite set of generators of a finitely generated
+  [5Xhomalg[0m module.
+  
+  (It  is  a  representation of the [5XGAP[0m representation [2XIsGeneratorsOfModuleRep[0m
+  ([14X6.1-4[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsGeneratorsOfFinitelyGeneratedModuleRep",[0X
+    [4X        IsGeneratorsOfModuleRep,[0X
+    [4X        [ "generators", "relations_of_hullmodule" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X6.2 Generators: Constructors[0X
+  
+  
+  [1X6.3 Generators: Properties[0X
+  
+  [1X6.3-1 IsReduced[0m
+  
+  [2X> IsReduced( [0X[3Xgen[0X[2X ) _________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m set of generators [3Xgen[0m is marked reduced.
+  (no method installed)
+  
+  
+  [1X6.4 Generators: Attributes[0X
+  
+  [1X6.4-1 ProcedureToReadjustGenerators[0m
+  
+  [2X> ProcedureToReadjustGenerators( [0X[3Xgen[0X[2X ) ____________________________[0Xattribute
+  [6XReturns:[0X  a function
+  
+  A  function that takes the rows/columns of [3Xgen[0m and returns an object (e.g. a
+  matrix)  that  can  be  interpreted  as  a  generator (this is important for
+  modules of homomorphisms).
+  
+  
+  [1X6.5 Generators: Operations and Functions[0X
+  

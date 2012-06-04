@@ -1,0 +1,254 @@
+  
+  
+  [1XIndex[101X
+  
+  [10X*[110X (for transformations)  2.6
+  [10X*[110X (for partial permutations)  2.7
+  [10X/[110X (for partial permutations)  2.7
+  [10X<[110X (for transformations)  2.6
+  [10X<[110X (for partial permutations)  2.7
+  [10X=[110X (for transformations)  2.6
+  [10X=[110X (for partial permutations)  2.7
+  [2X\<[102X (for Green's classes)  4.4-1
+  [10X^[110X (for a pos int and a transformation)  2.6
+  [10X^[110X (for a transformation and a permutation)  2.6
+  [10X^[110X (for a partial perm and negative int)  2.7
+  [10X^[110X (for a pos int and a partial perm)  2.7
+  [2XAntiIsomorphismTransformationSemigroup[102X  4.7-1
+  [2XAsPartialPerm[102X  2.8-3
+  [2XAsPartialPermNC[102X  2.8-3
+  [2XAsPermOfKerImg[102X  2.8-1
+  [2XAsPermutation[102X  2.8-2
+  [2XAsTransformation[102X  2.8-4
+  [2XCanonicalTransSameKernel[102X  2.4-1
+  [5XCitrus[105X package overview  1.
+  [2XCitrusDir[102X  1.6-1
+  [2XCitrusMakeDoc[102X  1.3-1
+  [2XCitrusOptionsRec[102X  3.3-1
+  [2XCitrusTestAll[102X  1.4-1
+  [2XCitrusTestInstall[102X  1.4-2
+  [2XCitrusTestManualExamples[102X  1.4-3
+  [2XClosureInverseSemigroup[102X  3.2-1
+  [2XClosureSemigroup[102X  3.2-2
+  [2XConstantTransformation[102X  2.1-1
+  [2XDClass[102X  4.2-2
+  [2XDClasses[102X  4.3-1
+  [2XDClassNC[102X  4.2-3
+  [2XDClassOfHClass[102X  4.2-1
+  [2XDClassOfLClass[102X  4.2-1
+  [2XDClassOfRClass[102X  4.2-1
+  [2XDClassReps[102X  4.3-4
+  [2XDegree[102X (for a transformation coll)  2.4-6
+  [2XDegree[102X (for a transformation)  2.4-6
+  [2XDegree[102X (for a partial perm coll)  2.5-12
+  [2XDegree[102X (for a partial perm)  2.5-12
+  [2XDegreeOfPartialPerm[102X  2.5-12
+  [2XDegreeOfTransformation[102X  2.4-6
+  [2XDenseRangeList[102X  2.5-10
+  [2XDomainOfPartialPerm[102X  2.5-2
+  [2XDomainOfPartialPermSemigroup[102X  4.5-1
+  [2XEvaluateWord[102X  4.1-1
+  [2XFactorization[102X  4.1-2
+  [2XFixedPointsOfPartialPerm[102X  2.5-5
+  [2XFullMatrixSemigroup[102X  3.4-1
+  [2XGeneralLinearSemigroup[102X  3.4-1
+  [2XGenerators[102X  4.5-4
+  [2XGeneratorsOfInverseMonoid[102X  4.5-3
+  [2XGeneratorsOfInverseSemigroup[102X  4.5-2
+  [2XGradedImagesOfTransSemigroup[102X  4.5-17
+  [2XGradedKernelsOfTransSemigroup[102X  4.5-17
+  [2XGreensDClasses[102X  4.3-1
+  [2XGreensDClassOfElement[102X  4.2-2
+  [2XGreensDClassOfElementNC[102X  4.2-3
+  [2XGreensHClasses[102X  4.3-1
+  [2XGreensHClassOfElement[102X  4.2-2
+  [2XGreensHClassOfElementNC[102X  4.2-3
+  [2XGreensJClasses[102X  4.3-1
+  [2XGreensLClasses[102X  4.3-1
+  [2XGreensLClassOfElement[102X  4.2-2
+  [2XGreensLClassOfElementNC[102X  4.2-3
+  [2XGreensRClasses[102X  4.3-1
+  [2XGreensRClassOfElement[102X  4.2-2
+  [2XGreensRClassOfElementNC[102X  4.2-3
+  [2XGroupHClass[102X  4.2-4
+  [2XGroupOfUnits[102X  4.5-5
+  [2XHClass[102X  4.2-2
+  [2XHClasses[102X  4.3-1
+  [2XHClassNC[102X  4.2-3
+  [2XHClassReps[102X  4.3-4
+  [2XIdempotent[102X  2.1-2
+  [2XIdempotentGeneratedSubsemigp[102X  4.5-8
+  [2XIdempotentNC[102X  2.1-2
+  [2XIdempotents[102X  4.5-6
+  [2XImagesOfTransSemigroup[102X  4.5-18
+  [2XIndexPeriodOfPartialPerm[102X  2.5-13
+  [2XIndexPeriodOfTransformation[102X  2.4-2
+  [2XInfoCitrus[102X  1.5-1
+  [2XInjectionPrincipalFactor[102X  4.4-2
+  [2XInverseMonoid[102X  3.1-1
+  [2XInverseMonoidByGenerators[102X  3.1-2
+  [2XInverseSemigroup[102X  3.1-1
+  [2XInverseSemigroupByGenerators[102X  3.1-2
+  [2XInversesOfTransformation[102X  2.4-3
+  [2XInversesOfTransformationNC[102X  2.4-3
+  [2XIrredundantGeneratingSubset[102X  4.5-9
+  [2XIsAperiodicSemigroup[102X  4.6-21
+  [2XIsBand[102X  4.6-1
+  [2XIsBlockGroup[102X  4.6-2
+  [2XIsBrandtSemigroup[102X  4.6-3
+  [2XIsCliffordSemigroup[102X  4.6-4
+  [2XIsCombinatorialSemigroup[102X  4.6-21
+  [2XIsCommutativeSemigroup[102X  4.6-5
+  [2XIsCompletelyRegularSemigroup[102X  4.6-6
+  [2XIsCompletelySimpleSemigroup[102X  4.6-23
+  [2XIsDTrivial[102X  4.6-21
+  [2XIsFactorisableSemigroup[102X  4.6-7
+  [2XIsFullMatrixSemigroup[102X  3.4-2
+  [2XIsGeneralLinearSemigroup[102X  3.4-2
+  [2XIsGreensClassOfPartialPermSemigp[102X  4.4-5
+  [2XIsGreensClassOfTransSemigp[102X  4.4-4
+  [2XIsGroupAsSemigroup[102X  4.6-8
+  [2XIsHTrivial[102X  4.6-21
+  [2XIsIdempotentGenerated[102X  4.6-9
+  [2XIsInjectiveTransOnList[102X  2.4-4
+  [2XIsInverseMonoid[102X  4.6-10
+  [2XIsInverseSemigroup[102X  4.6-10
+  [2XIsLeftSimple[102X  4.6-11
+  [2XIsLeftZeroSemigroup[102X  4.6-12
+  [2XIsLTrivial[102X  4.6-21
+  [2XIsMonogenicInverseSemigroup[102X  4.6-14
+  [2XIsMonogenicSemigroup[102X  4.6-13
+  [2XIsMonoidAsSemigroup[102X  4.6-15
+  [2XIsomorphismPartialPermMonoid[102X  4.7-2
+  [2XIsomorphismPartialPermSemigroup[102X  4.7-2
+  [2XIsomorphismPermGroup[102X  4.7-3
+  [2XIsomorphismReesMatrixSemigroup[102X  4.4-2
+  [2XIsomorphismTransformationMonoid[102X  4.7-4
+  [2XIsomorphismTransformationSemigroup[102X  4.7-4
+  [2XIsOrthodoxSemigroup[102X  4.6-17
+  [2XIsPartialPerm[102X  2.5-1
+  [2XIsPartialPermCollection[102X  2.5-1
+  [2XIsPartialPermMonoid[102X  4.6-16
+  [2XIsPartialPermSemigroup[102X  4.6-16
+  [2XIsRectangularBand[102X  4.6-18
+  [2XIsRegularDClass[102X  4.4-6
+  [2XIsRegularLClass[102X  4.4-6
+  [2XIsRegularRClass[102X  4.4-6
+  [2XIsRegularSemigroup[102X  4.6-19
+  [2XIsRegularTransformation[102X  2.4-5
+  [2XIsRightSimple[102X  4.6-11
+  [2XIsRightZeroSemigroup[102X  4.6-20
+  [2XIsRTrivial[102X  4.6-21
+  [2XIsSemiBand[102X  4.6-9
+  [2XIsSemigroupWithCommutingIdempotents[102X  4.6-2
+  [2XIsSemilatticeAsSemigroup[102X  4.6-22
+  [2XIsSimpleSemigroup[102X  4.6-23
+  [2XIsSynchronizingSemigroup[102X  4.6-24
+  [2XIsZeroGroup[102X  4.6-25
+  [2XIsZeroRectangularBand[102X  4.6-26
+  [2XIsZeroSemigroup[102X  4.6-27
+  [2XIsZeroSimpleSemigroup[102X  4.6-28
+  [2XIteratorOfDClasses[102X  4.3-3
+  [2XIteratorOfDClassReps[102X  4.3-2
+  [2XIteratorOfHClasses[102X  4.3-3
+  [2XIteratorOfHClassReps[102X  4.3-2
+  [2XIteratorOfLClasses[102X  4.3-3
+  [2XIteratorOfLClassReps[102X  4.3-2
+  [2XIteratorOfRClasses[102X  4.3-3
+  [2XIteratorOfRClassReps[102X  4.3-2
+  [2XJClasses[102X  4.3-1
+  [2XKernelsOfTransSemigroup[102X  4.5-18
+  [2XLargestMovedPoint[102X (for a partial perm coll)  2.5-8
+  [2XLargestMovedPoint[102X (for a partial perm)  2.5-8
+  [2XLClass[102X  4.2-2
+  [2XLClasses[102X  4.3-1
+  [2XLClassNC[102X  4.2-3
+  [2XLClassOfHClass[102X  4.2-1
+  [2XLClassReps[102X  4.3-4
+  [2XLeftOne[102X  2.2-4
+  [2XMinimalIdeal[102X  4.5-10
+  [2XMonoid[102X  3.1-3
+  [2XMonoidByGenerators[102X  3.1-4
+  [2XMovedPoints[102X (for a partial perm coll)  2.5-6
+  [2XMovedPoints[102X (for a partial perm)  2.5-6
+  [2XMultiplicativeZero[102X  4.5-11
+  [2XMunnSemigroup[102X  3.4-3
+  [2XNaturalLeqPartialPerm[102X  2.7-1
+  [2XNaturalPartialOrder[102X  4.5-12
+  [2XNrDClasses[102X  4.4-8
+  [2XNrElementsOfRank[102X  4.5-13
+  [2XNrHClasses[102X  4.4-8
+  [2XNrIdempotents[102X  4.5-7
+  [2XNrLClasses[102X  4.4-8
+  [2XNrMovedPoints[102X (for a partial perm coll)  2.5-7
+  [2XNrMovedPoints[102X (for a partial perm)  2.5-7
+  [2XNrRClasses[102X  4.4-8
+  [2XNrRegularDClasses[102X  4.4-7
+  [2XOne[102X (for a partial perm)  2.2-3
+  [2XOnIntegerSetsWithPartialPerm[102X  2.9-2
+  [2XOnKernelsAntiAction[102X  2.9-1
+  [2XOrbSCC[102X  2.10-1
+  [2XOrbSCCLookup[102X  2.10-2
+  [2XOrbSCCTruthTable[102X  2.10-3
+  [2XOrderEndomorphisms[102X (monoid of order preserving transformations)  3.4-4
+  [2XPartialOrderOfDClasses[102X  4.4-9
+  [2XPartialPerm[102X (for a dense range)  2.2-1
+  [2XPartialPerm[102X (for a domain and range)  2.2-1
+  [2XPartialPermNC[102X (for a dense range)  2.2-1
+  [2XPartialPermNC[102X (for a domain and range)  2.2-1
+  [2XPOI[102X (monoid of order preserving partial perms)  3.4-4
+  [2XPoints[102X (for a partial perm coll)  4.5-1
+  [2XPoints[102X (for a semigroup of partial perms)  4.5-1
+  [2XPOPI[102X (monoid of orientation preserving partial
+        perms)  3.4-4
+  [2XPrettyPrintPP[102X  2.3-1
+  [2XPrimitiveIdempotents[102X  4.5-14
+  [2XPrincipalFactor[102X  4.4-3
+  [2XRandom[102X (for a semigroup)  4.5-15
+  [2XRandomIdempotent[102X  2.1-3
+  [2XRandomIdempotentNC[102X  2.1-3
+  [2XRandomInverseMonoid[102X  3.1-5
+  [2XRandomInverseSemigroup[102X  3.1-5
+  [2XRandomPartialPerm[102X  2.2-5
+  [2XRandomTransformation[102X  2.1-4
+  [2XRandomTransformationMonoid[102X  3.1-6
+  [2XRandomTransformationNC[102X  2.1-4
+  [2XRandomTransformationSemigroup[102X  3.1-6
+  [2XRangeOfPartialPerm[102X  2.5-3
+  [2XRangeSetOfPartialPerm[102X  2.5-4
+  [2XRank[102X (for a transformation)  2.4-7
+  [2XRank[102X (for a partial perm)  2.5-11
+  [2XRankOfPartialPerm[102X  2.5-11
+  [2XRankOfTransformation[102X  2.4-7
+  [2XRClass[102X  4.2-2
+  [2XRClasses[102X  4.3-1
+  [2XRClassNC[102X  4.2-3
+  [2XRClassOfHClass[102X  4.2-1
+  [2XRClassReps[102X  4.3-4
+  [2XReadCitrus[102X  1.6-2
+  [2XRestrictedPartialPerm[102X  2.2-2
+  [2XRestrictedPartialPermNC[102X  2.2-2
+  [2XReverseSchreierTreeOfSCC[102X  2.10-4
+  [2XRightOne[102X  2.2-4
+  [2XSchreierTreeOfSCC[102X  2.10-5
+  [2XSchutzenbergerGroup[102X  4.4-10
+  [2XSemigroup[102X  3.1-3
+  [2XSemigroupByGenerators[102X  3.1-4
+  [2XSingularSemigroup[102X  3.4-5
+  [2XSmallestIdempotentPower[102X (for a transformation)  2.4-8
+  [2XSmallestIdempotentPower[102X (for a partial perm)  2.5-14
+  [2XSmallestMovedPoint[102X (for a partial perm coll)  2.5-9
+  [2XSmallestMovedPoint[102X (for a partial perm)  2.5-9
+  [2XSmallGeneratingSet[102X  4.5-16
+  [2XSubsemigroupByProperty[102X (for a
+      semigroup, function, and limit on the size of the subsemigroup)  3.2-3
+  [2XSubsemigroupByProperty[102X (for a semigroup and
+      function)  3.2-3
+  [2XSymmetricInverseSemigp[102X  3.4-6
+  [2XTraceSchreierTreeOfSCCBack[102X  2.10-6
+  [2XTraceSchreierTreeOfSCCForward[102X  2.10-7
+  [2XTransformationActionNC[102X  2.9-3
+  [2XWriteCitrus[102X  1.6-3
+  
+  
+  -------------------------------------------------------

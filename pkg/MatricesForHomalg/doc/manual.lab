@@ -1,0 +1,385 @@
+\makelabel{matricesforhomalg:Title page}{}
+\makelabel{matricesforhomalg:Copyright}{}
+\makelabel{matricesforhomalg:Table of Contents}{}
+\makelabel{matricesforhomalg:Introduction}{1}
+\makelabel{matricesforhomalg:What is the role of the MatricesForHomalg package in the homalg project?}{1.1}
+\makelabel{matricesforhomalg:MatricesForHomalg provides ...}{1.1.1}
+\makelabel{matricesforhomalg:homalg delegates ...}{1.1.2}
+\makelabel{matricesforhomalg:The black box concept}{1.1.3}
+\makelabel{matricesforhomalg:This manual}{1.2}
+\makelabel{matricesforhomalg:Installation of the MatricesForHomalg Package}{2}
+\makelabel{matricesforhomalg:Rings}{3}
+\makelabel{matricesforhomalg:Rings: Category and Representations}{3.1}
+\makelabel{matricesforhomalg:Rings: Constructors}{3.2}
+\makelabel{matricesforhomalg:Rings: Properties}{3.3}
+\makelabel{matricesforhomalg:Rings: Attributes}{3.4}
+\makelabel{matricesforhomalg:Rings: Operations and Functions}{3.5}
+\makelabel{matricesforhomalg:Ring Maps}{4}
+\makelabel{matricesforhomalg:Ring Maps: Category and Representations}{4.1}
+\makelabel{matricesforhomalg:Ring Maps: Constructors}{4.2}
+\makelabel{matricesforhomalg:Ring Maps: Properties}{4.3}
+\makelabel{matricesforhomalg:Ring Maps: Attributes}{4.4}
+\makelabel{matricesforhomalg:Ring Maps: Operations and Functions}{4.5}
+\makelabel{matricesforhomalg:Matrices}{5}
+\makelabel{matricesforhomalg:Matrices: Category and Representations}{5.1}
+\makelabel{matricesforhomalg:Matrices: Constructors}{5.2}
+\makelabel{matricesforhomalg:Matrices: Properties}{5.3}
+\makelabel{matricesforhomalg:Matrices: Attributes}{5.4}
+\makelabel{matricesforhomalg:Matrices: Operations and Functions}{5.5}
+\makelabel{matricesforhomalg:Ring Relations}{6}
+\makelabel{matricesforhomalg:Ring Relations: Categories and Representations}{6.1}
+\makelabel{matricesforhomalg:Ring Relations: Constructors}{6.2}
+\makelabel{matricesforhomalg:Ring Relations: Properties}{6.3}
+\makelabel{matricesforhomalg:Ring Relations: Attributes}{6.4}
+\makelabel{matricesforhomalg:Ring Relations: Operations and Functions}{6.5}
+\makelabel{matricesforhomalg:The Basic Matrix Operations}{A}
+\makelabel{matricesforhomalg:Main}{A.1}
+\makelabel{matricesforhomalg:Effective}{A.2}
+\makelabel{matricesforhomalg:Relative}{A.3}
+\makelabel{matricesforhomalg:Reduced}{A.4}
+\makelabel{matricesforhomalg:The Matrix Tool Operations}{B}
+\makelabel{matricesforhomalg:The Tool Operations without a Fallback Method}{B.1}
+\makelabel{matricesforhomalg:The Tool Operations with a Fallback Method}{B.2}
+\makelabel{matricesforhomalg:Logic Subpackages}{C}
+\makelabel{matricesforhomalg:LIRNG: Logical Implications for Rings}{C.1}
+\makelabel{matricesforhomalg:LIMAP: Logical Implications for Ring Maps}{C.2}
+\makelabel{matricesforhomalg:LIMAT: Logical Implications for Matrices}{C.3}
+\makelabel{matricesforhomalg:COLEM: Clever Operations for Lazy Evaluated Matrices}{C.4}
+\makelabel{matricesforhomalg:The subpackage ResidueClassRingForHomalg as a sample ring package}{D}
+\makelabel{matricesforhomalg:The Mandatory Basic Operations}{D.1}
+\makelabel{matricesforhomalg:The Mandatory Tool Operations}{D.2}
+\makelabel{matricesforhomalg:Some of the Recommended Tool Operations}{D.3}
+\makelabel{matricesforhomalg:Debugging MatricesForHomalg}{E}
+\makelabel{matricesforhomalg:Increase the assertion level}{E.1}
+\makelabel{matricesforhomalg:Using homalgMode}{E.2}
+\makelabel{matricesforhomalg:Overview of the MatricesForHomalg Package Source Code}{F}
+\makelabel{matricesforhomalg:Rings, Ring Maps, Matrices, Ring Relations}{F.1}
+\makelabel{matricesforhomalg:The Low Level Algorithms}{F.2}
+\makelabel{matricesforhomalg:Logical Implications for MatricesForHomalg Objects}{F.3}
+\makelabel{matricesforhomalg:The subpackage ResidueClassRingForHomalg}{F.4}
+\makelabel{matricesforhomalg:The homalgTable for GAP4 built-in rings}{F.5}
+\makelabel{matricesforhomalg:Bibliography}{Bib}
+\makelabel{matricesforhomalg:References}{Bib}
+\makelabel{matricesforhomalg:Index}{Ind}
+\makelabel{matricesforhomalg:MatricesForHomalg}{}
+\makelabel{matricesforhomalg:IsHomalgRing}{3.1.1}
+\makelabel{matricesforhomalg:IsPreHomalgRing}{3.1.2}
+\makelabel{matricesforhomalg:IsHomalgRingElement}{3.1.3}
+\makelabel{matricesforhomalg:IsHomalgInternalRingRep}{3.1.4}
+\makelabel{matricesforhomalg:HomalgRingOfIntegers (constructor for the integers)}{3.2.1}
+\makelabel{matricesforhomalg:HomalgRingOfIntegers (constructor for the residue class rings of the integers)}{3.2.1}
+\makelabel{matricesforhomalg:HomalgFieldOfRationals (constructor for the field of rationals)}{3.2.2}
+\makelabel{matricesforhomalg:\/ (constructor for residue class rings)}{3.2.3}
+\makelabel{matricesforhomalg:IsZero (for rings)}{3.3.1}
+\makelabel{matricesforhomalg:ContainsAField}{3.3.2}
+\makelabel{matricesforhomalg:IsRationalsForHomalg}{3.3.3}
+\makelabel{matricesforhomalg:IsFieldForHomalg}{3.3.4}
+\makelabel{matricesforhomalg:IsDivisionRingForHomalg}{3.3.5}
+\makelabel{matricesforhomalg:IsIntegersForHomalg}{3.3.6}
+\makelabel{matricesforhomalg:IsResidueClassRingOfTheIntegers}{3.3.7}
+\makelabel{matricesforhomalg:IsBezoutRing}{3.3.8}
+\makelabel{matricesforhomalg:IsIntegrallyClosedDomain}{3.3.9}
+\makelabel{matricesforhomalg:IsUniqueFactorizationDomain}{3.3.10}
+\makelabel{matricesforhomalg:IsKaplanskyHermite}{3.3.11}
+\makelabel{matricesforhomalg:IsDedekindDomain}{3.3.12}
+\makelabel{matricesforhomalg:IsDiscreteValuationRing}{3.3.13}
+\makelabel{matricesforhomalg:IsFreePolynomialRing}{3.3.14}
+\makelabel{matricesforhomalg:IsWeylRing}{3.3.15}
+\makelabel{matricesforhomalg:IsLocalizedWeylRing}{3.3.16}
+\makelabel{matricesforhomalg:IsGlobalDimensionFinite}{3.3.17}
+\makelabel{matricesforhomalg:IsLeftGlobalDimensionFinite}{3.3.18}
+\makelabel{matricesforhomalg:IsRightGlobalDimensionFinite}{3.3.19}
+\makelabel{matricesforhomalg:HasInvariantBasisProperty}{3.3.20}
+\makelabel{matricesforhomalg:HasLeftInvariantBasisProperty}{3.3.21}
+\makelabel{matricesforhomalg:HasRightInvariantBasisProperty}{3.3.22}
+\makelabel{matricesforhomalg:IsLocal}{3.3.23}
+\makelabel{matricesforhomalg:IsSemiLocalRing}{3.3.24}
+\makelabel{matricesforhomalg:IsIntegralDomain}{3.3.25}
+\makelabel{matricesforhomalg:IsHereditary}{3.3.26}
+\makelabel{matricesforhomalg:IsLeftHereditary}{3.3.27}
+\makelabel{matricesforhomalg:IsRightHereditary}{3.3.28}
+\makelabel{matricesforhomalg:IsHermite}{3.3.29}
+\makelabel{matricesforhomalg:IsLeftHermite}{3.3.30}
+\makelabel{matricesforhomalg:IsRightHermite}{3.3.31}
+\makelabel{matricesforhomalg:IsNoetherian}{3.3.32}
+\makelabel{matricesforhomalg:IsLeftNoetherian}{3.3.33}
+\makelabel{matricesforhomalg:IsRightNoetherian}{3.3.34}
+\makelabel{matricesforhomalg:IsCohenMacaulay}{3.3.35}
+\makelabel{matricesforhomalg:IsGorenstein}{3.3.36}
+\makelabel{matricesforhomalg:IsKoszul}{3.3.37}
+\makelabel{matricesforhomalg:IsArtinian (for rings)}{3.3.38}
+\makelabel{matricesforhomalg:IsLeftArtinian}{3.3.39}
+\makelabel{matricesforhomalg:IsRightArtinian}{3.3.40}
+\makelabel{matricesforhomalg:IsOreDomain}{3.3.41}
+\makelabel{matricesforhomalg:IsLeftOreDomain}{3.3.42}
+\makelabel{matricesforhomalg:IsRightOreDomain}{3.3.43}
+\makelabel{matricesforhomalg:IsPrincipalIdealRing}{3.3.44}
+\makelabel{matricesforhomalg:IsLeftPrincipalIdealRing}{3.3.45}
+\makelabel{matricesforhomalg:IsRightPrincipalIdealRing}{3.3.46}
+\makelabel{matricesforhomalg:IsRegular}{3.3.47}
+\makelabel{matricesforhomalg:IsFiniteFreePresentationRing}{3.3.48}
+\makelabel{matricesforhomalg:IsLeftFiniteFreePresentationRing}{3.3.49}
+\makelabel{matricesforhomalg:IsRightFiniteFreePresentationRing}{3.3.50}
+\makelabel{matricesforhomalg:IsSimpleRing}{3.3.51}
+\makelabel{matricesforhomalg:IsSemiSimpleRing}{3.3.52}
+\makelabel{matricesforhomalg:IsSuperCommutative}{3.3.53}
+\makelabel{matricesforhomalg:BasisAlgorithmRespectsPrincipalIdeals}{3.3.54}
+\makelabel{matricesforhomalg:IsMinusOne}{3.3.55}
+\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.56}
+\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.57}
+\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.58}
+\makelabel{matricesforhomalg:Zero (for homalg ring elements)}{3.4.1}
+\makelabel{matricesforhomalg:One (for homalg ring elements)}{3.4.2}
+\makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.3}
+\makelabel{matricesforhomalg:homalgTable}{3.4.4}
+\makelabel{matricesforhomalg:RingElementConstructor}{3.4.5}
+\makelabel{matricesforhomalg:TypeOfHomalgMatrix}{3.4.6}
+\makelabel{matricesforhomalg:ConstructorForHomalgMatrices}{3.4.7}
+\makelabel{matricesforhomalg:Zero (for homalg rings)}{3.4.8}
+\makelabel{matricesforhomalg:One (for homalg rings)}{3.4.9}
+\makelabel{matricesforhomalg:MinusOne}{3.4.10}
+\makelabel{matricesforhomalg:ProductOfIndeterminates}{3.4.11}
+\makelabel{matricesforhomalg:RationalParameters}{3.4.12}
+\makelabel{matricesforhomalg:IndeterminatesOfPolynomialRing}{3.4.13}
+\makelabel{matricesforhomalg:RelativeIndeterminatesOfPolynomialRing}{3.4.14}
+\makelabel{matricesforhomalg:IndeterminateCoordinatesOfRingOfDerivations}{3.4.15}
+\makelabel{matricesforhomalg:RelativeIndeterminateCoordinatesOfRingOfDerivations}{3.4.16}
+\makelabel{matricesforhomalg:IndeterminateDerivationsOfRingOfDerivations}{3.4.17}
+\makelabel{matricesforhomalg:RelativeIndeterminateDerivationsOfRingOfDerivations}{3.4.18}
+\makelabel{matricesforhomalg:IndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.19}
+\makelabel{matricesforhomalg:RelativeIndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.20}
+\makelabel{matricesforhomalg:IndeterminatesOfExteriorRing}{3.4.21}
+\makelabel{matricesforhomalg:CoefficientsRing}{3.4.22}
+\makelabel{matricesforhomalg:KrullDimension}{3.4.23}
+\makelabel{matricesforhomalg:LeftGlobalDimension}{3.4.24}
+\makelabel{matricesforhomalg:RightGlobalDimension}{3.4.25}
+\makelabel{matricesforhomalg:GlobalDimension}{3.4.26}
+\makelabel{matricesforhomalg:GeneralLinearRank}{3.4.27}
+\makelabel{matricesforhomalg:ElementaryRank}{3.4.28}
+\makelabel{matricesforhomalg:StableRank}{3.4.29}
+\makelabel{matricesforhomalg:AssociatedGradedRing}{3.4.30}
+\makelabel{matricesforhomalg:IsHomalgRingMap}{4.1.1}
+\makelabel{matricesforhomalg:IsHomalgRingSelfMap}{4.1.2}
+\makelabel{matricesforhomalg:IsHomalgRingMapRep}{4.1.3}
+\makelabel{matricesforhomalg:RingMap (constructor for ring maps)}{4.2.1}
+\makelabel{matricesforhomalg:IsMorphism (for ring maps)}{4.3.1}
+\makelabel{matricesforhomalg:IsIdentityMorphism (for ring maps)}{4.3.2}
+\makelabel{matricesforhomalg:IsMonomorphism (for ring maps)}{4.3.3}
+\makelabel{matricesforhomalg:IsEpimorphism (for ring maps)}{4.3.4}
+\makelabel{matricesforhomalg:IsIsomorphism (for ring maps)}{4.3.5}
+\makelabel{matricesforhomalg:IsAutomorphism (for ring maps)}{4.3.6}
+\makelabel{matricesforhomalg:Source (for ring maps)}{4.4.1}
+\makelabel{matricesforhomalg:Range (for ring maps)}{4.4.2}
+\makelabel{matricesforhomalg:DegreeOfMorphism (for ring maps)}{4.4.3}
+\makelabel{matricesforhomalg:CoordinateRingOfGraph (for ring maps)}{4.4.4}
+\makelabel{matricesforhomalg:IsHomalgMatrix}{5.1.1}
+\makelabel{matricesforhomalg:IsHomalgInternalMatrixRep}{5.1.2}
+\makelabel{matricesforhomalg:HomalgInitialMatrix (constructor for initial matrices filled with zeros)}{5.2.1}
+\makelabel{matricesforhomalg:HomalgInitialIdentityMatrix (constructor for initial quadratic matrices with ones on the diagonal)}{5.2.2}
+\makelabel{matricesforhomalg:HomalgZeroMatrix (constructor for zero matrices)}{5.2.3}
+\makelabel{matricesforhomalg:HomalgIdentityMatrix (constructor for identity matrices)}{5.2.4}
+\makelabel{matricesforhomalg:HomalgVoidMatrix (constructor for void matrices)}{5.2.5}
+\makelabel{matricesforhomalg:HomalgMatrix (constructor for matrices using a listlist)}{5.2.6}
+\makelabel{matricesforhomalg:HomalgMatrix (constructor for matrices using a list)}{5.2.6}
+\makelabel{matricesforhomalg:HomalgMatrix (constructor for matrices using a string of a listlist)}{5.2.6}
+\makelabel{matricesforhomalg:HomalgMatrix (constructor for matrices using a string of a list)}{5.2.6}
+\makelabel{matricesforhomalg:HomalgDiagonalMatrix (constructor for diagonal matrices)}{5.2.7}
+\makelabel{matricesforhomalg:\* (copy a matrix over a different ring)}{5.2.8}
+\makelabel{matricesforhomalg:\* (copy a matrix over a different ring (right))}{5.2.8}
+\makelabel{matricesforhomalg:IsZero (for matrices)}{5.3.1}
+\makelabel{matricesforhomalg:IsOne}{5.3.2}
+\makelabel{matricesforhomalg:IsUnitFree}{5.3.3}
+\makelabel{matricesforhomalg:IsPermutationMatrix}{5.3.4}
+\makelabel{matricesforhomalg:IsSpecialSubidentityMatrix}{5.3.5}
+\makelabel{matricesforhomalg:IsSubidentityMatrix}{5.3.6}
+\makelabel{matricesforhomalg:IsLeftRegular}{5.3.7}
+\makelabel{matricesforhomalg:IsRightRegular}{5.3.8}
+\makelabel{matricesforhomalg:IsInvertibleMatrix}{5.3.9}
+\makelabel{matricesforhomalg:IsLeftInvertibleMatrix}{5.3.10}
+\makelabel{matricesforhomalg:IsRightInvertibleMatrix}{5.3.11}
+\makelabel{matricesforhomalg:IsEmptyMatrix}{5.3.12}
+\makelabel{matricesforhomalg:IsDiagonalMatrix}{5.3.13}
+\makelabel{matricesforhomalg:IsScalarlMatrix}{5.3.14}
+\makelabel{matricesforhomalg:IsUpperTriangularMatrix}{5.3.15}
+\makelabel{matricesforhomalg:IsLowerTriangularMatrix}{5.3.16}
+\makelabel{matricesforhomalg:IsStrictUpperTriangularMatrix}{5.3.17}
+\makelabel{matricesforhomalg:IsStrictLowerTriangularMatrix}{5.3.18}
+\makelabel{matricesforhomalg:IsUpperStairCaseMatrix}{5.3.19}
+\makelabel{matricesforhomalg:IsLowerStairCaseMatrix}{5.3.20}
+\makelabel{matricesforhomalg:IsTriangularMatrix}{5.3.21}
+\makelabel{matricesforhomalg:IsBasisOfRowsMatrix}{5.3.22}
+\makelabel{matricesforhomalg:IsBasisOfColumnsMatrix}{5.3.23}
+\makelabel{matricesforhomalg:IsReducedBasisOfRowsMatrix}{5.3.24}
+\makelabel{matricesforhomalg:IsReducedBasisOfColumnsMatrix}{5.3.25}
+\makelabel{matricesforhomalg:IsInitialMatrix}{5.3.26}
+\makelabel{matricesforhomalg:IsInitialIdentityMatrix}{5.3.27}
+\makelabel{matricesforhomalg:IsVoidMatrix}{5.3.28}
+\makelabel{matricesforhomalg:NrRows}{5.4.1}
+\makelabel{matricesforhomalg:NrColumns}{5.4.2}
+\makelabel{matricesforhomalg:DeterminantMat}{5.4.3}
+\makelabel{matricesforhomalg:ZeroRows}{5.4.4}
+\makelabel{matricesforhomalg:ZeroColumns}{5.4.5}
+\makelabel{matricesforhomalg:NonZeroRows}{5.4.6}
+\makelabel{matricesforhomalg:NonZeroColumns}{5.4.7}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerRow}{5.4.8}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerColumn}{5.4.9}
+\makelabel{matricesforhomalg:RowRankOfMatrix}{5.4.10}
+\makelabel{matricesforhomalg:ColumnRankOfMatrix}{5.4.11}
+\makelabel{matricesforhomalg:LeftInverse}{5.4.12}
+\makelabel{matricesforhomalg:RightInverse}{5.4.13}
+\makelabel{matricesforhomalg:CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}{5.4.14}
+\makelabel{matricesforhomalg:CoefficientsOfNumeratorOfHilbertPoincareSeries}{5.4.15}
+\makelabel{matricesforhomalg:UnreducedNumeratorOfHilbertPoincareSeries}{5.4.16}
+\makelabel{matricesforhomalg:NumeratorOfHilbertPoincareSeries}{5.4.17}
+\makelabel{matricesforhomalg:HilbertPoincareSeries}{5.4.18}
+\makelabel{matricesforhomalg:HilbertPolynomial}{5.4.19}
+\makelabel{matricesforhomalg:AffineDimension}{5.4.20}
+\makelabel{matricesforhomalg:AffineDegree}{5.4.21}
+\makelabel{matricesforhomalg:ProjectiveDegree}{5.4.22}
+\makelabel{matricesforhomalg:ConstantTermOfHilbertPolynomialn}{5.4.23}
+\makelabel{matricesforhomalg:MatrixOfSymbolsn}{5.4.24}
+\makelabel{matricesforhomalg:HomalgRing (for matrices)}{5.5.1}
+\makelabel{matricesforhomalg:LeftInverse (for matrices)}{5.5.2}
+\makelabel{matricesforhomalg:RightInverse (for matrices)}{5.5.3}
+\makelabel{matricesforhomalg:LeftInverseLazy (for matrices)}{5.5.4}
+\makelabel{matricesforhomalg:RightInverseLazy (for matrices)}{5.5.5}
+\makelabel{matricesforhomalg:Involution (for matrices)}{5.5.6}
+\makelabel{matricesforhomalg:CertainRows (for matrices)}{5.5.7}
+\makelabel{matricesforhomalg:CertainColumns (for matrices)}{5.5.8}
+\makelabel{matricesforhomalg:UnionOfRows (for matrices)}{5.5.9}
+\makelabel{matricesforhomalg:UnionOfColumns (for matrices)}{5.5.10}
+\makelabel{matricesforhomalg:DiagMat (for matrices)}{5.5.11}
+\makelabel{matricesforhomalg:KroneckerMat (for matrices)}{5.5.12}
+\makelabel{matricesforhomalg:\* (for ring elements and matrices)}{5.5.13}
+\makelabel{matricesforhomalg:\+ (for matrices)}{5.5.14}
+\makelabel{matricesforhomalg:\- (for matrices)}{5.5.15}
+\makelabel{matricesforhomalg:\* (for composable matrices)}{5.5.16}
+\makelabel{matricesforhomalg:\= (for matrices)}{5.5.17}
+\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions (for matrices)}{5.5.18}
+\makelabel{matricesforhomalg:GetRowIndependentUnitPositions (for matrices)}{5.5.19}
+\makelabel{matricesforhomalg:GetUnitPosition (for matrices)}{5.5.20}
+\makelabel{matricesforhomalg:Eliminate}{5.5.21}
+\makelabel{matricesforhomalg:BasisOfRowModule (for matrices)}{5.5.22}
+\makelabel{matricesforhomalg:BasisOfColumnModule (for matrices)}{5.5.23}
+\makelabel{matricesforhomalg:DecideZeroRows (for pairs of matrices)}{5.5.24}
+\makelabel{matricesforhomalg:DecideZeroColumns (for pairs of matrices)}{5.5.25}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows (for matrices)}{5.5.26}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns (for matrices)}{5.5.27}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows (for pairs of matrices)}{5.5.28}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns (for pairs of matrices)}{5.5.29}
+\makelabel{matricesforhomalg:ReducedBasisOfRowModule (for matrices)}{5.5.30}
+\makelabel{matricesforhomalg:ReducedBasisOfColumnModule (for matrices)}{5.5.31}
+\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfRows (for matrices)}{5.5.32}
+\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfColumns (for matrices)}{5.5.33}
+\makelabel{matricesforhomalg:BasisOfRowsCoeff (for matrices)}{5.5.34}
+\makelabel{matricesforhomalg:BasisOfColumnsCoeff (for matrices)}{5.5.35}
+\makelabel{matricesforhomalg:DecideZeroRowsEffectively (for pairs of matrices)}{5.5.36}
+\makelabel{matricesforhomalg:DecideZeroColumnsEffectively (for pairs of matrices)}{5.5.37}
+\makelabel{matricesforhomalg:BasisOfRows (for matrices)}{5.5.38}
+\makelabel{matricesforhomalg:BasisOfRows (for pairs of matrices)}{5.5.38}
+\makelabel{matricesforhomalg:BasisOfColumns (for matrices)}{5.5.39}
+\makelabel{matricesforhomalg:BasisOfColumns (for pairs of matrices)}{5.5.39}
+\makelabel{matricesforhomalg:DecideZero (for matrices and relations)}{5.5.40}
+\makelabel{matricesforhomalg:SyzygiesOfRows (for matrices)}{5.5.41}
+\makelabel{matricesforhomalg:SyzygiesOfRows (for pairs of matrices)}{5.5.41}
+\makelabel{matricesforhomalg:SyzygiesOfColumns (for matrices)}{5.5.42}
+\makelabel{matricesforhomalg:SyzygiesOfColumns (for pairs of matrices)}{5.5.42}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfRows (for matrices)}{5.5.43}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfRows (for pairs of matrices)}{5.5.43}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns (for matrices)}{5.5.44}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns (for pairs of matrices)}{5.5.44}
+\makelabel{matricesforhomalg:RightDivide (for pairs of matrices)}{5.5.45}
+\makelabel{matricesforhomalg:LeftDivide (for pairs of matrices)}{5.5.46}
+\makelabel{matricesforhomalg:RightDivide (for triples of matrices)}{5.5.47}
+\makelabel{matricesforhomalg:LeftDivide (for triples of matrices)}{5.5.48}
+\makelabel{matricesforhomalg:GenerateSameRowModule (for pairs of matrices)}{5.5.49}
+\makelabel{matricesforhomalg:GenerateSameColumnModule (for pairs of matrices)}{5.5.50}
+\makelabel{matricesforhomalg:IsHomalgRingRelations}{6.1.1}
+\makelabel{matricesforhomalg:IsHomalgRingRelationsAsGeneratorsOfLeftIdeal}{6.1.2}
+\makelabel{matricesforhomalg:IsHomalgRingRelationsAsGeneratorsOfRightIdeal}{6.1.3}
+\makelabel{matricesforhomalg:IsRingRelationsRep}{6.1.4}
+\makelabel{matricesforhomalg:CanBeUsedToDecideZero}{6.3.1}
+\makelabel{matricesforhomalg:IsInjectivePresentation}{6.3.2}
+\makelabel{matricesforhomalg:InitialMatrix (homalgTable entry for initial matrices)}{B.1.1}
+\makelabel{matricesforhomalg:InitialIdentityMatrix (homalgTable entry for initial identity matrices)}{B.1.2}
+\makelabel{matricesforhomalg:ZeroMatrix (homalgTable entry)}{B.1.3}
+\makelabel{matricesforhomalg:IdentityMatrix (homalgTable entry)}{B.1.4}
+\makelabel{matricesforhomalg:Involution (homalgTable entry)}{B.1.5}
+\makelabel{matricesforhomalg:CertainRows (homalgTable entry)}{B.1.6}
+\makelabel{matricesforhomalg:CertainColumns (homalgTable entry)}{B.1.7}
+\makelabel{matricesforhomalg:UnionOfRows (homalgTable entry)}{B.1.8}
+\makelabel{matricesforhomalg:UnionOfColumns (homalgTable entry)}{B.1.9}
+\makelabel{matricesforhomalg:DiagMat (homalgTable entry)}{B.1.10}
+\makelabel{matricesforhomalg:KroneckerMat (homalgTable entry)}{B.1.11}
+\makelabel{matricesforhomalg:MulMat (homalgTable entry)}{B.1.12}
+\makelabel{matricesforhomalg:AddMat (homalgTable entry)}{B.1.13}
+\makelabel{matricesforhomalg:SubMat (homalgTable entry)}{B.1.14}
+\makelabel{matricesforhomalg:Compose (homalgTable entry)}{B.1.15}
+\makelabel{matricesforhomalg:IsZeroMatrix (homalgTable entry)}{B.1.16}
+\makelabel{matricesforhomalg:NrRows (homalgTable entry)}{B.1.17}
+\makelabel{matricesforhomalg:NrColumns (homalgTable entry)}{B.1.18}
+\makelabel{matricesforhomalg:Determinant (homalgTable entry)}{B.1.19}
+\makelabel{matricesforhomalg:AreEqualMatrices (homalgTable entry)}{B.2.1}
+\makelabel{matricesforhomalg:IsIdentityMatrix (homalgTable entry)}{B.2.2}
+\makelabel{matricesforhomalg:IsDiagonalMatrix (homalgTable entry)}{B.2.3}
+\makelabel{matricesforhomalg:ZeroRows (homalgTable entry)}{B.2.4}
+\makelabel{matricesforhomalg:ZeroColumns (homalgTable entry)}{B.2.5}
+\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions (homalgTable entry)}{B.2.6}
+\makelabel{matricesforhomalg:GetRowIndependentUnitPositions (homalgTable entry)}{B.2.7}
+\makelabel{matricesforhomalg:GetUnitPosition (homalgTable entry)}{B.2.8}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerRow (homalgTable entry)}{B.2.9}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerColumn (homalgTable entry)}{B.2.10}
+\makelabel{matricesforhomalg:Eval (for matrices created with HomalgInitialMatrix)}{C.4.1}
+\makelabel{matricesforhomalg:Eval (for matrices created with HomalgInitialIdentityMatrix)}{C.4.2}
+\makelabel{matricesforhomalg:Eval (for matrices created with HomalgZeroMatrix)}{C.4.3}
+\makelabel{matricesforhomalg:Eval (for matrices created with HomalgIdentityMatrix)}{C.4.4}
+\makelabel{matricesforhomalg:Eval (for matrices created with LeftInverseLazy)}{C.4.5}
+\makelabel{matricesforhomalg:Eval (for matrices created with RightInverseLazy)}{C.4.6}
+\makelabel{matricesforhomalg:Eval (for matrices created with Involution)}{C.4.7}
+\makelabel{matricesforhomalg:Eval (for matrices created with CertainRows)}{C.4.8}
+\makelabel{matricesforhomalg:Eval (for matrices created with CertainColumns)}{C.4.9}
+\makelabel{matricesforhomalg:Eval (for matrices created with UnionOfRows)}{C.4.10}
+\makelabel{matricesforhomalg:Eval (for matrices created with UnionOfColumns)}{C.4.11}
+\makelabel{matricesforhomalg:Eval (for matrices created with DiagMat)}{C.4.12}
+\makelabel{matricesforhomalg:Eval (for matrices created with KroneckerMat)}{C.4.13}
+\makelabel{matricesforhomalg:Eval (for matrices created with MulMat)}{C.4.14}
+\makelabel{matricesforhomalg:Eval (for matrices created with AddMat)}{C.4.15}
+\makelabel{matricesforhomalg:Eval (for matrices created with SubMat)}{C.4.16}
+\makelabel{matricesforhomalg:Eval (for matrices created with Compose)}{C.4.17}
+\makelabel{matricesforhomalg:BasisOfRowModule (ResidueClassRing)}{D.1.1}
+\makelabel{matricesforhomalg:BasisOfColumnModule (ResidueClassRing)}{D.1.2}
+\makelabel{matricesforhomalg:DecideZeroRows (ResidueClassRing)}{D.1.3}
+\makelabel{matricesforhomalg:DecideZeroColumns (ResidueClassRing)}{D.1.4}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows (ResidueClassRing)}{D.1.5}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns (ResidueClassRing)}{D.1.6}
+\makelabel{matricesforhomalg:BasisOfRowsCoeff (ResidueClassRing)}{D.1.7}
+\makelabel{matricesforhomalg:BasisOfColumnsCoeff (ResidueClassRing)}{D.1.8}
+\makelabel{matricesforhomalg:DecideZeroRowsEffectively (ResidueClassRing)}{D.1.9}
+\makelabel{matricesforhomalg:DecideZeroColumnsEffectively (ResidueClassRing)}{D.1.10}
+\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfRows (ResidueClassRing)}{D.1.11}
+\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfColumns (ResidueClassRing)}{D.1.12}
+\makelabel{matricesforhomalg:InitialMatrix (ResidueClassRing)}{D.2.1}
+\makelabel{matricesforhomalg:InitialIdentityMatrix (ResidueClassRing)}{D.2.2}
+\makelabel{matricesforhomalg:ZeroMatrix (ResidueClassRing)}{D.2.3}
+\makelabel{matricesforhomalg:IdentityMatrix (ResidueClassRing)}{D.2.4}
+\makelabel{matricesforhomalg:Involution (ResidueClassRing)}{D.2.5}
+\makelabel{matricesforhomalg:CertainRows (ResidueClassRing)}{D.2.6}
+\makelabel{matricesforhomalg:CertainColumns (ResidueClassRing)}{D.2.7}
+\makelabel{matricesforhomalg:UnionOfRows (ResidueClassRing)}{D.2.8}
+\makelabel{matricesforhomalg:UnionOfColumns (ResidueClassRing)}{D.2.9}
+\makelabel{matricesforhomalg:DiagMat (ResidueClassRing)}{D.2.10}
+\makelabel{matricesforhomalg:KroneckerMat (ResidueClassRing)}{D.2.11}
+\makelabel{matricesforhomalg:MulMat (ResidueClassRing)}{D.2.12}
+\makelabel{matricesforhomalg:AddMat (ResidueClassRing)}{D.2.13}
+\makelabel{matricesforhomalg:SubMat (ResidueClassRing)}{D.2.14}
+\makelabel{matricesforhomalg:Compose (ResidueClassRing)}{D.2.15}
+\makelabel{matricesforhomalg:IsZeroMatrix (ResidueClassRing)}{D.2.16}
+\makelabel{matricesforhomalg:NrRows (ResidueClassRing)}{D.2.17}
+\makelabel{matricesforhomalg:NrColumns (ResidueClassRing)}{D.2.18}
+\makelabel{matricesforhomalg:Determinant (ResidueClassRing)}{D.2.19}
+\makelabel{matricesforhomalg:AreEqualMatrices (ResidueClassRing)}{D.3.1}
+\makelabel{matricesforhomalg:IsOne (ResidueClassRing)}{D.3.2}
+\makelabel{matricesforhomalg:IsDiagonalMatrix (ResidueClassRing)}{D.3.3}
+\makelabel{matricesforhomalg:ZeroRows (ResidueClassRing)}{D.3.4}
+\makelabel{matricesforhomalg:ZeroColumns (ResidueClassRing)}{D.3.5}
+\makelabel{matricesforhomalg:homalgMode}{E.2.1}

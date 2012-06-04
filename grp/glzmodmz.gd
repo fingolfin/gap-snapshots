@@ -1,13 +1,13 @@
 #############################################################################
 ##
 #W  glzmodmz.gd                    GAP library                    Stefan Kohl
+#W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: glzmodmz.gd,v 1.1 2001/11/29 12:12:15 stefan Exp $
 ##
-#Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C) 2011 The GAP Group
 ##
-Revision.glzmodmz_gd :=
-    "@(#)$Id: glzmodmz.gd,v 1.1 2001/11/29 12:12:15 stefan Exp $";
+##  This file contains declarations for constructing clasical groups over
+##  residue class rings.
 
 #############################################################################
 ##
@@ -17,6 +17,15 @@ Revision.glzmodmz_gd :=
 ##  positive integers <d> and <m> > 1.
 ##
 DeclareGlobalFunction( "SizeOfGLdZmodmZ" );
+
+#############################################################################
+##
+#F  ConstructFormPreservingGroup(oper [,sign] d, R )
+##
+##  constructs the classical group sefined by <A>oper</A> over a prime field
+##  over the residue class ring <A>R</A>, which must be modulo an odd prime
+##  power.
+DeclareGlobalFunction("ConstructFormPreservingGroup");
 
 #############################################################################
 ##

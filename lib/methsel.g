@@ -1,20 +1,17 @@
 #############################################################################
 ##
 #W  methsel.g                   GAP library                      Frank Celler
-#W                                                           Martin Schoenert
+#W                                                           Martin Schönert
 ##
-#H  @(#)$Id: methsel.g,v 4.20 2002/04/15 10:05:02 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file defines the less frequently used functions to 
 ##  select methods. More frequently used functions are in methsel1.g, which
 ##  is compiled in the default setup
 ##
-Revision.methsel_g :=
-    "@(#)$Id: methsel.g,v 4.20 2002/04/15 10:05:02 sal Exp $";
 
 
 #############################################################################

@@ -1,0 +1,7 @@
+1.3
+    - fixed PackageInfo.g
+1.2
+    - added missing PackageInfo.g file
+    - added changelog
+1.1
+    - set package status to deposited

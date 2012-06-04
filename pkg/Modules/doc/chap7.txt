@@ -1,0 +1,664 @@
+  
+  [1X7 Modules[0X
+  
+  A  [5Xhomalg[0m  module  is  a  data  structure for a finitely presented module. A
+  presentation  is  given  by a set of generators and a set of relations among
+  these  generators.  The  data  structure for modules in [5Xhomalg[0m has two novel
+  features:
+  
+  --    The  data structure allows several presentations linked with so-called
+        transition matrices. One of the presentations is marked as the default
+        presentation,  which is usually the last added one. A new presentation
+        can  always be added provided it is linked to the default presentation
+        by  a  transition  matrix.  If  needed, the user can reset the default
+        presentation  by  choosing one of the other presentations saved in the
+        data  structure  of  the  [5Xhomalg[0m module. Effectively, a module is then
+        given  by  "all"  its  presentations  (as "coordinates") together with
+        isomorphisms  between  them  (as  "coordinate changes"). Being able to
+        "change  coordinates"  makes  the  realization  of  a module in [5Xhomalg[0m
+        [13Xintrinsic[0m (or "coordinate free").
+  
+  --    To  present  a  left/right  module  it suffices to take a matrix [3XM[0m and
+        interpret  its  rows/columns as relations among n [13Xabstract[0m generators,
+        where  n  is the number of columns/rows of [3XM[0m. Only that these abstract
+        generators  are useless when it comes to specific modules like modules
+        of  homomorphisms, where one expects the generators to be maps between
+        modules.  For  this reason a presentation of a module in [5Xhomalg[0m is not
+        merely a matrix of relations, but together with a set of generators.
+  
+  
+  [1X7.1 Modules: Category and Representations[0X
+  
+  [1X7.1-1 IsHomalgModule[0m
+  
+  [2X> IsHomalgModule( [0X[3XM[0X[2X ) ______________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m modules.
+  
+  (It  is  a  subcategory  of  the  [5XGAP[0m  categories  [10XIsHomalgRingOrModule[0m  and
+  [10XIsHomalgStaticObject[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgModule",[0X
+    [4X        IsHomalgRingOrModule and[0X
+    [4X        IsHomalgModuleOrMap and[0X
+    [4X        IsHomalgStaticObject );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.1-2 IsFinitelyPresentedModuleOrSubmoduleRep[0m
+  
+  [2X> IsFinitelyPresentedModuleOrSubmoduleRep( [0X[3XM[0X[2X ) _______________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley presented [5Xhomalg[0m modules or submodules.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgModule[0m ([14X7.1-1[0m), which is
+  a       subrepresentation       of       the       [5XGAP[0m       representations
+  [10XIsStaticFinitelyPresentedObjectOrSubobjectRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsFinitelyPresentedModuleOrSubmoduleRep",[0X
+    [4X        IsHomalgModule and[0X
+    [4X        IsStaticFinitelyPresentedObjectOrSubobjectRep,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.1-3 IsFinitelyPresentedModuleRep[0m
+  
+  [2X> IsFinitelyPresentedModuleRep( [0X[3XM[0X[2X ) __________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley presented [5Xhomalg[0m modules.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgModule[0m ([14X7.1-1[0m), which is
+  a       subrepresentation       of       the       [5XGAP[0m       representations
+  [10XIsFinitelyPresentedModuleOrSubmoduleRep[0m, [10XIsStaticFinitelyPresentedObjectRep[0m,
+  and [10XIsHomalgRingOrFinitelyPresentedModuleRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsFinitelyPresentedModuleRep",[0X
+    [4X        IsFinitelyPresentedModuleOrSubmoduleRep and[0X
+    [4X        IsStaticFinitelyPresentedObjectRep and[0X
+    [4X        IsHomalgRingOrFinitelyPresentedModuleRep,[0X
+    [4X        [ "SetsOfGenerators", "SetsOfRelations",[0X
+    [4X          "PresentationMorphisms",[0X
+    [4X          "Resolutions",[0X
+    [4X          "TransitionMatrices",[0X
+    [4X          "PositionOfTheDefaultPresentation" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.1-4 IsFinitelyPresentedSubmoduleRep[0m
+  
+  [2X> IsFinitelyPresentedSubmoduleRep( [0X[3XM[0X[2X ) _______________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of finitley generated [5Xhomalg[0m submodules.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgModule[0m ([14X7.1-1[0m), which is
+  a       subrepresentation       of       the       [5XGAP[0m       representations
+  [10XIsFinitelyPresentedModuleOrSubmoduleRep[0m,
+  [10XIsStaticFinitelyPresentedSubobjectRep[0m,                                   and
+  [10XIsHomalgRingOrFinitelyPresentedModuleRep[0m.)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsFinitelyPresentedSubmoduleRep",[0X
+    [4X        IsFinitelyPresentedModuleOrSubmoduleRep and[0X
+    [4X        IsStaticFinitelyPresentedSubobjectRep and[0X
+    [4X        IsHomalgRingOrFinitelyPresentedModuleRep,[0X
+    [4X        [ "map_having_subobject_as_its_image" ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.2 Modules: Constructors[0X
+  
+  [1X7.2-1 LeftPresentation[0m
+  
+  [2X> LeftPresentation( [0X[3Xmat[0X[2X ) _________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor  returns the finitely presented left module with relations
+  given by the rows of the [5Xhomalg[0m matrix [3Xmat[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> M := HomalgMatrix( "[ \[0X
+    [4X> 2, 3, 4, \[0X
+    [4X> 5, 6, 7  \[0X
+    [4X> ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> Display( M );[0X
+    [4X[ [  2,  3,  4 ],[0X
+    [4X  [  5,  6,  7 ] ][0X
+    [4X[0X
+    [4XCokernel of the map[0X
+    [4X[0X
+    [4XZ^(1x2) --> Z^(1x3),[0X
+    [4X[0X
+    [4Xcurrently represented by the above matrix[0X
+    [4Xgap> ByASmallerPresentation( M );[0X
+    [4X<A rank 1 left module presented by 1 relation for 2 generators>[0X
+    [4Xgap> Display( last );[0X
+    [4XZ/< 3 > + Z^(1 x 1)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-2 RightPresentation[0m
+  
+  [2X> RightPresentation( [0X[3Xmat[0X[2X ) ________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor returns the finitely presented right module with relations
+  given by the columns of the [5Xhomalg[0m matrix [3Xmat[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> M := HomalgMatrix( "[ \[0X
+    [4X> 2, 3, 4, \[0X
+    [4X> 5, 6, 7  \[0X
+    [4X> ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := RightPresentation( M );[0X
+    [4X<A right module on 2 generators satisfying 3 relations>[0X
+    [4Xgap> ByASmallerPresentation( M );[0X
+    [4X<A cyclic torsion right module on a cyclic generator satisfying 1 relation>[0X
+    [4Xgap> Display( last );[0X
+    [4XZ/< 3 >[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-3 HomalgFreeLeftModule[0m
+  
+  [2X> HomalgFreeLeftModule( [0X[3Xr, R[0X[2X ) ____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor  returns a free left module of rank [3Xr[0m over the [5Xhomalg[0m ring
+  [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> F := HomalgFreeLeftModule( 1, ZZ );[0X
+    [4X<A free left module of rank 1 on a free generator>[0X
+    [4Xgap> 1 * ZZ;[0X
+    [4X<The free left module of rank 1 on a free generator>[0X
+    [4Xgap> F := HomalgFreeLeftModule( 2, ZZ );[0X
+    [4X<A free left module of rank 2 on free generators>[0X
+    [4Xgap> 2 * ZZ;[0X
+    [4X<A free left module of rank 2 on free generators>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-4 HomalgFreeRightModule[0m
+  
+  [2X> HomalgFreeRightModule( [0X[3Xr, R[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor returns a free right module of rank [3Xr[0m over the [5Xhomalg[0m ring
+  [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> F := HomalgFreeRightModule( 1, ZZ );[0X
+    [4X<A free right module of rank 1 on a free generator>[0X
+    [4Xgap> ZZ * 1;[0X
+    [4X<The free right module of rank 1 on a free generator>[0X
+    [4Xgap> F := HomalgFreeRightModule( 2, ZZ );[0X
+    [4X<A free right module of rank 2 on free generators>[0X
+    [4Xgap> ZZ * 2;[0X
+    [4X<A free right module of rank 2 on free generators>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-5 HomalgZeroLeftModule[0m
+  
+  [2X> HomalgZeroLeftModule( [0X[3Xr, R[0X[2X ) ____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor  returns a zero left module of rank [3Xr[0m over the [5Xhomalg[0m ring
+  [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> F := HomalgZeroLeftModule( ZZ );[0X
+    [4X<A zero left module>[0X
+    [4Xgap> 0 * ZZ;[0X
+    [4X<The zero left module>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-6 HomalgZeroRightModule[0m
+  
+  [2X> HomalgZeroRightModule( [0X[3Xr, R[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  This  constructor returns a zero right module of rank [3Xr[0m over the [5Xhomalg[0m ring
+  [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> F := HomalgZeroRightModule( ZZ );[0X
+    [4X<A zero right module>[0X
+    [4Xgap> ZZ * 0;[0X
+    [4X<The zero right module>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-7 \*[0m
+  
+  [2X> \*( [0X[3XR, M[0X[2X ) ______________________________________________________[0Xoperation
+  [2X> \*( [0X[3XM, R[0X[2X ) ______________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  Transfers  the  S-module  [3XM[0m over the [5Xhomalg[0m ring [3XR[0m. This works only in three
+  cases:
+  
+  (1)   S is a subring of [3XR[0m.
+  
+  (2)   [3XR[0m is a residue class ring of S constructed using [10X/[0m.
+  
+  (3)   [3XR[0m  is  a  subring  of  S  and  the  entries  of  the current matrix of
+        S-relations of [3XM[0m lie in [3XR[0m.
+  
+  CAUTION: So it is not suited for general base change.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> Display( ZZ );[0X
+    [4X<An internal ring>[0X
+    [4Xgap> Z4 := ZZ / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> Display( Z4 );[0X
+    [4X<A residue class ring>[0X
+    [4Xgap> M := HomalgDiagonalMatrix( [ 2 .. 4 ], ZZ );[0X
+    [4X<An unevaluated diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A left module presented by 3 relations for 3 generators>[0X
+    [4Xgap> Display( M );[0X
+    [4XZ/< 2 > + Z/< 3 > + Z/< 4 >[0X
+    [4Xgap> M;[0X
+    [4X<A torsion left module presented by 3 relations for 3 generators>[0X
+    [4Xgap> N := Z4 * M; ## or N := M * Z4;[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> ByASmallerPresentation( N );[0X
+    [4X<A non-torsion left module presented by 1 relation for 2 generators>[0X
+    [4Xgap> Display( N );[0X
+    [4XZ/( 4 )/< |[ 2 ]| > + Z/( 4 )^(1 x 1)[0X
+    [4Xgap> N;[0X
+    [4X<A non-torsion left module presented by 1 relation for 2 generators>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> M := HomalgMatrix( "[ \[0X
+    [4X> 2, 3, 4, \[0X
+    [4X> 5, 6, 7  \[0X
+    [4X> ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> Z4 := ZZ / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> Display( Z4 );[0X
+    [4X<A residue class ring>[0X
+    [4Xgap> M4 := Z4 * M;[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> Display( M4 );[0X
+    [4X[ [  2,  3,  4 ],[0X
+    [4X  [  5,  6,  7 ] ][0X
+    [4X[0X
+    [4Xmodulo [ 4 ][0X
+    [4X[0X
+    [4XCokernel of the map[0X
+    [4X[0X
+    [4XZ/( 4 )^(1x2) --> Z/( 4 )^(1x3),[0X
+    [4X[0X
+    [4Xcurrently represented by the above matrix[0X
+    [4Xgap> d := Resolution( 2, M4 );[0X
+    [4X<A right acyclic complex containing 2 morphisms of left modules at degrees [0X
+    [4X[ 0 .. 2 ]>[0X
+    [4Xgap> dd := Hom( d, Z4 );[0X
+    [4X<A cocomplex containing 2 morphisms of right modules at degrees [ 0 .. 2 ]>[0X
+    [4Xgap> DD := Resolution( 2, dd );[0X
+    [4X<A cocomplex containing 2 morphisms of right complexes at degrees [ 0 .. 2 ]>[0X
+    [4Xgap> D := Hom( DD, Z4 );[0X
+    [4X<A complex containing 2 morphisms of left cocomplexes at degrees [ 0 .. 2 ]>[0X
+    [4Xgap> C := ZZ * D;[0X
+    [4X<A "complex" containing 2 morphisms of left cocomplexes at degrees [ 0 .. 2 ]>[0X
+    [4Xgap> LowestDegreeObject( C );[0X
+    [4X<A "cocomplex" containing 2 morphisms of left modules at degrees [ 0 .. 2 ]>[0X
+    [4Xgap> Display( last );[0X
+    [4X-------------------------[0X
+    [4Xat cohomology degree: 2[0X
+    [4X0[0X
+    [4X------------^------------[0X
+    [4X(an empty 1 x 0 matrix)[0X
+    [4X[0X
+    [4Xthe map is currently represented by the above 1 x 0 matrix[0X
+    [4X-------------------------[0X
+    [4Xat cohomology degree: 1[0X
+    [4XZ/< 4 > [0X
+    [4X------------^------------[0X
+    [4X[ [  0 ],[0X
+    [4X  [  1 ],[0X
+    [4X  [  2 ],[0X
+    [4X  [  1 ] ][0X
+    [4X[0X
+    [4Xthe map is currently represented by the above 4 x 1 matrix[0X
+    [4X-------------------------[0X
+    [4Xat cohomology degree: 0[0X
+    [4XZ/< 4 > + Z/< 4 > + Z/< 4 > + Z/< 4 > [0X
+    [4X-------------------------[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-8 Subobject[0m
+  
+  [2X> Subobject( [0X[3Xmat, M[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  This  constructor returns the finitely generated left/right submodule of the
+  [5Xhomalg[0m  module  [3XM[0m  with  generators  given by the rows/columns of the [5Xhomalg[0m
+  matrix [3Xmat[0m.
+  
+  [1X7.2-9 Subobject[0m
+  
+  [2X> Subobject( [0X[3Xgens, M[0X[2X ) ____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  This  constructor returns the finitely generated left/right submodule of the
+  [5Xhomalg[0m  cyclic  left/right  module [3XM[0m with generators given by the entries of
+  the list [3Xgens[0m.
+  
+  [1X7.2-10 LeftSubmodule[0m
+  
+  [2X> LeftSubmodule( [0X[3Xmat[0X[2X ) ____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  This   constructor  returns  the  finitely  generated  left  submodule  with
+  generators given by the rows of the [5Xhomalg[0m matrix [3Xmat[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( LeftSubmodule,[0X
+    [4X        "constructor for homalg submodules",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( gen )[0X
+    [4X    local R;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( gen );[0X
+    [4X    [0X
+    [4X    return Subobject( gen, NrColumns( gen ) * R );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Z4 := HomalgRingOfIntegers( ) / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> I := HomalgMatrix( "[ 2 ]", 1, 1, Z4 );[0X
+    [4X<A 1 x 1 matrix over a residue class ring>[0X
+    [4Xgap> I := LeftSubmodule( I );[0X
+    [4X<A principal torsion-free (left) ideal given by a cyclic generator>[0X
+    [4Xgap> IsFree( I );[0X
+    [4Xfalse[0X
+    [4Xgap> I;[0X
+    [4X<A principal reflexive non-projective (left) ideal given by a cyclic generator\[0X
+    [4X>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.2-11 RightSubmodule[0m
+  
+  [2X> RightSubmodule( [0X[3Xmat[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  This  constructor  returns  the  finitely  generated  right  submodule  with
+  generators given by the columns of the [5Xhomalg[0m matrix [3Xmat[0m.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( RightSubmodule,[0X
+    [4X        "constructor for homalg submodules",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( gen )[0X
+    [4X    local R;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( gen );[0X
+    [4X    [0X
+    [4X    return Subobject( gen, R * NrRows( gen ) );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> Z4 := HomalgRingOfIntegers( ) / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> I := HomalgMatrix( "[ 2 ]", 1, 1, Z4 );[0X
+    [4X<A 1 x 1 matrix over a residue class ring>[0X
+    [4Xgap> I := RightSubmodule( I );[0X
+    [4X<A principal torsion-free (right) ideal given by a cyclic generator>[0X
+    [4Xgap> IsFree( I );[0X
+    [4Xfalse[0X
+    [4Xgap> I;[0X
+    [4X<A principal reflexive non-projective (right) ideal given by a cyclic generato\[0X
+    [4Xr>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.3 Modules: Properties[0X
+  
+  [1X7.3-1 IsCyclic[0m
+  
+  [2X> IsCyclic( [0X[3XM[0X[2X ) ____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m module [3XM[0m is cyclic.
+  
+  [1X7.3-2 IsHolonomic[0m
+  
+  [2X> IsHolonomic( [0X[3XM[0X[2X ) _________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m module [3XM[0m is holonomic.
+  
+  [1X7.3-3 IsPrimeIdeal[0m
+  
+  [2X> IsPrimeIdeal( [0X[3XJ[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  submodule  [3XJ[0m  is  a  prime ideal. The ring has to be
+  commutative.
+  (no method installed)
+  
+  For   more  properties  see  the  corresponding  section  [14X'homalg:  Objects:
+  Properties'[0m) in the documentation of the [5Xhomalg[0m package.
+  
+  
+  [1X7.4 Modules: Attributes[0X
+  
+  [1X7.4-1 ResidueClassRing[0m
+  
+  [2X> ResidueClassRing( [0X[3XJ[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  In  case  [3XJ[0m  was  defined  as a (left/right) ideal of the ring R the residue
+  class ring R/[3XJ[0m is returned.
+  
+  [1X7.4-2 PrimaryDecomposition[0m
+  
+  [2X> PrimaryDecomposition( [0X[3XJ[0X[2X ) _______________________________________[0Xattribute
+  [6XReturns:[0X  a list
+  
+  The primary decomposition of the ideal [3XJ[0m. The ring has to be commutative.
+  (no method installed)
+  
+  [1X7.4-3 ElementaryDivisors[0m
+  
+  [2X> ElementaryDivisors( [0X[3XM[0X[2X ) _________________________________________[0Xattribute
+  [6XReturns:[0X  a list of ring elements
+  
+  The list of elementary divisors of the [5Xhomalg[0m module [3XM[0m, in case they exist.
+  (no method installed)
+  
+  [1X7.4-4 FittingIdeal[0m
+  
+  [2X> FittingIdeal( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a list
+  
+  The Fitting ideal of [3XM[0m.
+  
+  [1X7.4-5 NonFlatLocus[0m
+  
+  [2X> NonFlatLocus( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a list
+  
+  The non flat locus of [3XM[0m.
+  
+  [1X7.4-6 LargestMinimalNumberOfLocalGenerators[0m
+  
+  [2X> LargestMinimalNumberOfLocalGenerators( [0X[3XM[0X[2X ) ______________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The minimal number of [13Xlocal[0m generators of the module [3XM[0m.
+  
+  [1X7.4-7 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries( [0X[3XM[0X[2X ) ____[0Xattribute
+  [6XReturns:[0X  a list of integers
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-8 CoefficientsOfNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> CoefficientsOfNumeratorOfHilbertPoincareSeries( [0X[3XM[0X[2X ) _____________[0Xattribute
+  [6XReturns:[0X  a list of integers
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-9 UnreducedNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> UnreducedNumeratorOfHilbertPoincareSeries( [0X[3XM[0X[2X ) __________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-10 NumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> NumeratorOfHilbertPoincareSeries( [0X[3XM[0X[2X ) ___________________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-11 HilbertPoincareSeries[0m
+  
+  [2X> HilbertPoincareSeries( [0X[3XM[0X[2X ) ______________________________________[0Xattribute
+  [6XReturns:[0X  a univariate rational function with rational coefficients
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-12 AffineDegree[0m
+  
+  [2X> AffineDegree( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-13 DataOfHilbertFunction[0m
+  
+  [2X> DataOfHilbertFunction( [0X[3XM[0X[2X ) _______________________________________[0Xproperty
+  [6XReturns:[0X  a function
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-14 HilbertFunction[0m
+  
+  [2X> HilbertFunction( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  a function
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  [1X7.4-15 IndexOfRegularity[0m
+  
+  [2X> IndexOfRegularity( [0X[3XM[0X[2X ) ___________________________________________[0Xproperty
+  [6XReturns:[0X  a function
+  
+  [3XM[0m is a [5Xhomalg[0m module.
+  
+  For   more  attributes  see  the  corresponding  section  [14X'homalg:  Objects:
+  Attributes'[0m) in the documentation of the [5Xhomalg[0m package.
+  
+  
+  [1X7.5 Modules: Operations and Functions[0X
+  
+  [1X7.5-1 HomalgRing[0m
+  
+  [2X> HomalgRing( [0X[3XM[0X[2X ) _________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The [5Xhomalg[0m ring of the [5Xhomalg[0m module [3XM[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> M := ZZ * 4;[0X
+    [4X<A free right module of rank 4 on free generators>[0X
+    [4Xgap> R := HomalgRing( M );[0X
+    [4XZ[0X
+    [4Xgap> IsIdenticalObj( R, ZZ );[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-2 ByASmallerPresentation[0m
+  
+  [2X> ByASmallerPresentation( [0X[3XM[0X[2X ) ________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m module
+  
+  Use  different  strategies  to  reduce  the presentation of the given [5Xhomalg[0m
+  module  [3XM[0m.  This  method performs side effects on its argument [3XM[0m and returns
+  it.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );;[0X
+    [4Xgap> M := HomalgMatrix( "[ \[0X
+    [4X> 2, 3, 4, \[0X
+    [4X> 5, 6, 7  \[0X
+    [4X> ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> Display( M );[0X
+    [4X[ [  2,  3,  4 ],[0X
+    [4X  [  5,  6,  7 ] ][0X
+    [4X[0X
+    [4XCokernel of the map[0X
+    [4X[0X
+    [4XZ^(1x2) --> Z^(1x3),[0X
+    [4X[0X
+    [4Xcurrently represented by the above matrix[0X
+    [4Xgap> ByASmallerPresentation( M );[0X
+    [4X<A rank 1 left module presented by 1 relation for 2 generators>[0X
+    [4Xgap> Display( last );[0X
+    [4XZ/< 3 > + Z^(1 x 1)[0X
+    [4Xgap> SetsOfGenerators( M );[0X
+    [4X<A set containing 3 sets of generators of a homalg module>[0X
+    [4Xgap> SetsOfRelations( M );[0X
+    [4X<A set containing 3 sets of relations of a homalg module>[0X
+    [4Xgap> M;[0X
+    [4X<A rank 1 left module presented by 1 relation for 2 generators>[0X
+    [4Xgap> SetPositionOfTheDefaultPresentation( M, 1 );[0X
+    [4Xgap> M;[0X
+    [4X<A rank 1 left module presented by 2 relations for 3 generators>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-3 \*[0m
+  
+  [2X> \*( [0X[3XJ, M[0X[2X ) ______________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  
+  Compute the submodule [3XJ[0m[3XM[0m (resp. [3XM[0m[3XJ[0m) of the given left (resp. right) R-module
+  [3XM[0m, where [3XJ[0m is a left (resp. right) ideal in R.
+  
+  [1X7.5-4 SubobjectQuotient[0m
+  
+  [2X> SubobjectQuotient( [0X[3XK, J[0X[2X ) _______________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ideal
+  
+  Compute  the  submodule  quotient  ideal  [3XK[0m:[3XJ[0m of the submodules [3XK[0m and [3XJ[0m of a
+  common R-module M.
+  

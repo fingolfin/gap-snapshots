@@ -1,0 +1,347 @@
+  
+  [1X4 Morphisms[0X
+  
+  
+  [1X4.1 Morphisms: Categories and Representations[0X
+  
+  [1X4.1-1 IsHomalgMorphism[0m
+  
+  [2X> IsHomalgMorphism( [0X[3Xphi[0X[2X ) __________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  This  is  the  super  [5XGAP[0m-category  which  will  include  the [5XGAP[0m-categories
+  [2XIsHomalgStaticMorphism[0m  ([14X4.1-2[0m)  and  [2XIsHomalgChainMorphism[0m ([14X7.1-1[0m). We need
+  this [5XGAP[0m-category to be able to build complexes with *objects* being objects
+  of  [5Xhomalg[0m  categories  or  again complexes. We need this GAP-category to be
+  able  to  build  chain  morphisms with *morphisms* being morphisms of [5Xhomalg[0m
+  categories or again chain morphisms.
+  CAUTION:  Never  let  [5Xhomalg[0m  morphisms  (which  are  not  endomorphisms) be
+  multiplicative elements!!
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgMorphism",[0X
+    [4X        IsHomalgStaticObjectOrMorphism and[0X
+    [4X        IsAdditiveElementWithInverse );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-2 IsHomalgStaticMorphism[0m
+  
+  [2X> IsHomalgStaticMorphism( [0X[3Xphi[0X[2X ) ____________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  This  is  the  super  [5XGAP[0m-category  which  will  include  the [5XGAP[0m-categories
+  [10XIsHomalgMap[0m, etc.
+  CAUTION:  Never  let  homalg  morphisms  (which  are  not  endomorphisms) be
+  multiplicative elements!!
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgStaticMorphism",[0X
+    [4X        IsHomalgMorphism );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-3 IsHomalgEndomorphism[0m
+  
+  [2X> IsHomalgEndomorphism( [0X[3Xphi[0X[2X ) ______________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  This  is  the  super  [5XGAP[0m-category  which  will  include  the [5XGAP[0m-categories
+  [10XIsHomalgSelfMap[0m,  [2XIsHomalgChainEndomorphism[0m  ([14X7.1-2[0m), etc. be multiplicative
+  elements!!
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareCategory( "IsHomalgEndomorphism",[0X
+    [4X        IsHomalgMorphism and[0X
+    [4X        IsMultiplicativeElementWithInverse );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-4 IsMorphismOfFinitelyGeneratedObjectsRep[0m
+  
+  [2X> IsMorphismOfFinitelyGeneratedObjectsRep( [0X[3Xphi[0X[2X ) _____________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m representation of morphisms of finitley generated [5Xhomalg[0m objects.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgMorphism[0m ([14X4.1-1[0m).)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsMorphismOfFinitelyGeneratedObjectsRep",[0X
+    [4X        IsHomalgMorphism,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X4.1-5 IsStaticMorphismOfFinitelyGeneratedObjectsRep[0m
+  
+  [2X> IsStaticMorphismOfFinitelyGeneratedObjectsRep( [0X[3Xphi[0X[2X ) _______[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The  [5XGAP[0m  representation  of  static  morphisms of finitley generated [5Xhomalg[0m
+  static objects.
+  
+  (It  is a representation of the [5XGAP[0m category [2XIsHomalgStaticMorphism[0m ([14X4.1-2[0m),
+  which     is    a    subrepresentation    of    the    [5XGAP[0m    representation
+  [2XIsMorphismOfFinitelyGeneratedObjectsRep[0m ([14X4.1-4[0m).)
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XDeclareRepresentation( "IsStaticMorphismOfFinitelyGeneratedObjectsRep",[0X
+    [4X        IsHomalgStaticMorphism and[0X
+    [4X        IsMorphismOfFinitelyGeneratedObjectsRep,[0X
+    [4X        [ ] );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X4.2 Morphisms: Constructors[0X
+  
+  
+  [1X4.3 Morphisms: Properties[0X
+  
+  [1X4.3-1 IsMorphism[0m
+  
+  [2X> IsMorphism( [0X[3Xphi[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  [3Xphi[0m  is  a  well-defined  map,  i.e.  independent of all involved
+  presentations.
+  
+  [1X4.3-2 IsGeneralizedMorphism[0m
+  
+  [2X> IsGeneralizedMorphism( [0X[3Xphi[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if [3Xphi[0m is a generalized morphism.
+  
+  [1X4.3-3 IsGeneralizedEpimorphism[0m
+  
+  [2X> IsGeneralizedEpimorphism( [0X[3Xphi[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if [3Xphi[0m is a generalized epimorphism.
+  
+  [1X4.3-4 IsGeneralizedMonomorphism[0m
+  
+  [2X> IsGeneralizedMonomorphism( [0X[3Xphi[0X[2X ) _________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if [3Xphi[0m is a generalized monomorphism.
+  
+  [1X4.3-5 IsGeneralizedIsomorphism[0m
+  
+  [2X> IsGeneralizedIsomorphism( [0X[3Xphi[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if [3Xphi[0m is a generalized isomorphism.
+  
+  [1X4.3-6 IsOne[0m
+  
+  [2X> IsOne( [0X[3Xphi[0X[2X ) _____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is the identity morphism.
+  
+  [1X4.3-7 IsIdempotent[0m
+  
+  [2X> IsIdempotent( [0X[3Xphi[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is an automorphism.
+  
+  [1X4.3-8 IsMonomorphism[0m
+  
+  [2X> IsMonomorphism( [0X[3Xphi[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is a monomorphism.
+  
+  [1X4.3-9 IsEpimorphism[0m
+  
+  [2X> IsEpimorphism( [0X[3Xphi[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is an epimorphism.
+  
+  [1X4.3-10 IsSplitMonomorphism[0m
+  
+  [2X> IsSplitMonomorphism( [0X[3Xphi[0X[2X ) _______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is a split monomorphism.
+  
+  [1X4.3-11 IsSplitEpimorphism[0m
+  
+  [2X> IsSplitEpimorphism( [0X[3Xphi[0X[2X ) ________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is a split epimorphism.
+  
+  [1X4.3-12 IsIsomorphism[0m
+  
+  [2X> IsIsomorphism( [0X[3Xphi[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is an isomorphism.
+  
+  [1X4.3-13 IsAutomorphism[0m
+  
+  [2X> IsAutomorphism( [0X[3Xphi[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m morphism [3Xphi[0m is an automorphism.
+  
+  
+  [1X4.4 Morphisms: Attributes[0X
+  
+  [1X4.4-1 Source[0m
+  
+  [2X> Source( [0X[3Xphi[0X[2X ) ___________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  The source of the [5Xhomalg[0m morphism [3Xphi[0m.
+  
+  [1X4.4-2 Range[0m
+  
+  [2X> Range( [0X[3Xphi[0X[2X ) ____________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m object
+  
+  The target (range) of the [5Xhomalg[0m morphism [3Xphi[0m.
+  
+  [1X4.4-3 CokernelEpi[0m
+  
+  [2X> CokernelEpi( [0X[3Xphi[0X[2X ) ______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The natural epimorphism from the [10XRange[0m([3Xphi[0m) onto the [10XCokernel[0m([3Xphi[0m).
+  
+  [1X4.4-4 CokernelNaturalGeneralizedIsomorphism[0m
+  
+  [2X> CokernelNaturalGeneralizedIsomorphism( [0X[3Xphi[0X[2X ) ____________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The   natural  generalized  isomorphism  from  the  [10XCokernel[0m([3Xphi[0m)  onto  the
+  [10XRange[0m([3Xphi[0m).
+  
+  [1X4.4-5 KernelSubobject[0m
+  
+  [2X> KernelSubobject( [0X[3Xphi[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  This  constructor  returns  the  finitely  generated  kernel  of  the [5Xhomalg[0m
+  morphism [3Xphi[0m as a subobject of the [5Xhomalg[0m object [10XSource[0m([3Xphi[0m) with generators
+  given by the syzygies of [3Xphi[0m.
+  
+  [1X4.4-6 KernelEmb[0m
+  
+  [2X> KernelEmb( [0X[3Xphi[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The natural embedding of the [10XKernel[0m([3Xphi[0m) into the [10XSource[0m([3Xphi[0m).
+  
+  [1X4.4-7 ImageSubobject[0m
+  
+  [2X> ImageSubobject( [0X[3Xphi[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m subobject
+  
+  This constructor returns the finitely generated image of the [5Xhomalg[0m morphism
+  [3Xphi[0m  as a subobject of the [5Xhomalg[0m object [10XRange[0m([3Xphi[0m) with generators given by
+  [3Xphi[0m applied to the generators of its source object.
+  
+  [1X4.4-8 ImageObjectEmb[0m
+  
+  [2X> ImageObjectEmb( [0X[3Xphi[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The natural embedding of the [10XImageObject[0m([3Xphi[0m) into the [10XRange[0m([3Xphi[0m).
+  
+  [1X4.4-9 ImageObjectEpi[0m
+  
+  [2X> ImageObjectEpi( [0X[3Xphi[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The natural epimorphism from the [10XSource[0m([3Xphi[0m) onto the [10XImageObject[0m([3Xphi[0m).
+  
+  [1X4.4-10 MorphismAid[0m
+  
+  [2X> MorphismAid( [0X[3Xphi[0X[2X ) ______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The morphism aid map of a true generalized map.
+  (no method installed)
+  
+  [1X4.4-11 GeneralizedInverse[0m
+  
+  [2X> GeneralizedInverse( [0X[3Xphi[0X[2X ) _______________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m morphism
+  
+  The generalized inverse of the epimorphism [3Xphi[0m (cf. [Bar, Cor. 4.8])).
+  
+  
+  [1X4.5 Morphisms: Operations and Functions[0X
+  
+  [1X4.5-1 ByASmallerPresentation[0m
+  
+  [2X> ByASmallerPresentation( [0X[3Xphi[0X[2X ) ______________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m map
+  
+  It invokes [10XByASmallerPresentation[0m for [5Xhomalg[0m (static) objects.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( ByASmallerPresentation,[0X
+    [4X        "for homalg morphisms",[0X
+    [4X        [ IsStaticMorphismOfFinitelyGeneratedObjectsRep ],[0X
+    [4X        [0X
+    [4X  function( phi )[0X
+    [4X    [0X
+    [4X    ByASmallerPresentation( Source( phi ) );[0X
+    [4X    ByASmallerPresentation( Range( phi ) );[0X
+    [4X    [0X
+    [4X    return DecideZero( phi );[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  This method performs side effects on its argument [3Xphi[0m and returns it.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> M := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> M := LeftPresentation( M );[0X
+    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
+    [4Xgap> N := HomalgMatrix( "[ 2, 3, 4, 5,   6, 7, 8, 9 ]", 2, 4, ZZ );[0X
+    [4X<A 2 x 4 matrix over an internal ring>[0X
+    [4Xgap> N := LeftPresentation( N );[0X
+    [4X<A non-torsion left module presented by 2 relations for 4 generators>[0X
+    [4Xgap> mat := HomalgMatrix( "[ \[0X
+    [4X> 1, 0, -2, -4, \[0X
+    [4X> 0, 1,  4,  7, \[0X
+    [4X> 1, 0, -2, -4  \[0X
+    [4X> ]", 3, 4, ZZ );;[0X
+    [4X<A 3 x 4 matrix over an internal ring>[0X
+    [4Xgap> phi := HomalgMap( mat, M, N );[0X
+    [4X<A "homomorphism" of left modules>[0X
+    [4Xgap> IsMorphism( phi );[0X
+    [4Xtrue[0X
+    [4Xgap> phi;[0X
+    [4X<A homomorphism of left modules>[0X
+    [4Xgap> Display( phi );[0X
+    [4X[ [   1,   0,  -2,  -4 ],[0X
+    [4X  [   0,   1,   4,   7 ],[0X
+    [4X  [   1,   0,  -2,  -4 ] ][0X
+    [4X[0X
+    [4Xthe map is currently represented by the above 3 x 4 matrix[0X
+    [4Xgap> ByASmallerPresentation( phi );[0X
+    [4X<A non-zero homomorphism of left modules>[0X
+    [4Xgap> Display( phi );[0X
+    [4X[ [   0,   0,   0 ],[0X
+    [4X  [   1,  -1,  -2 ] ][0X
+    [4X[0X
+    [4Xthe map is currently represented by the above 2 x 3 matrix[0X
+    [4Xgap> M;[0X
+    [4X<A rank 1 left module presented by 1 relation for 2 generators>[0X
+    [4Xgap> Display( M );[0X
+    [4XZ/< 3 > + Z^(1 x 1)[0X
+    [4Xgap> N;[0X
+    [4X<A rank 2 left module presented by 1 relation for 3 generators>[0X
+    [4Xgap> Display( N );[0X
+    [4XZ/< 4 > + Z^(1 x 2)[0X
+  [4X------------------------------------------------------------------[0X
+  

@@ -3,10 +3,9 @@
 #W  solmxgrp.gi			GAP Library		       Gene Cooperman
 #W							     and Scott Murray
 ##
-#H  @(#)$Id: solmxgrp.gi,v 4.16 2002/04/15 10:05:22 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  REFERENCE:
@@ -23,8 +22,6 @@
 ##    The method, InvariantSubspaceOrCyclicGroup, "for abelian non-char.
 ##       p-group" is too long and hence should be rewritten.
 ##
-Revision.solmxgrp_gi :=
-    "@(#)$Id: solmxgrp.gi,v 4.16 2002/04/15 10:05:22 sal Exp $";
 
 # InfoChain already declared.
 #DeclareInfoClass("InfoChain");

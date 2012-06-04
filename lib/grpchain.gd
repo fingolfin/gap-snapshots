@@ -3,16 +3,13 @@
 #W  grpchain.gd			GAP Library		       Gene Cooperman
 #W							     and Scott Murray
 ##
-#H  @(#)$Id: grpchain.gd,v 4.7 2002/04/15 10:04:44 sal Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  Requires: transversal
 ##
-Revision.grpchain_gd :=
-    "@(#)$Id: grpchain.gd,v 4.7 2002/04/15 10:04:44 sal Exp $";
 
 #1
 ##  Data structures for storing general group chains. Note that this does 

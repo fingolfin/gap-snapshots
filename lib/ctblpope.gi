@@ -1,19 +1,16 @@
 #############################################################################
 ##
 #W  ctblpope.gi                 GAP library                     Thomas Breuer
-#W                                                           & Goetz Pfeiffer
+#W                                                           & Götz Pfeiffer
 ##
-#H  @(#)$Id: ctblpope.gi,v 4.24.4.1 2005/05/09 08:40:59 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for those functions that are needed to
 ##  compute and test possible permutation characters.
 ##
-Revision.ctblpope_gi :=
-    "@(#)$Id: ctblpope.gi,v 4.24.4.1 2005/05/09 08:40:59 gap Exp $";
 
 
 #############################################################################
@@ -397,8 +394,10 @@ end );
 
 #############################################################################
 ##
-#M  Inequalities( <tbl>, <chars>[, <option>] )
+#M  Inequalities( <tbl>, <chars>[, <option>] ) . . .
 #M                                           projected system of inequalities
+##
+##  Supported for <option>: `"small"'
 ##
 InstallMethod( Inequalities,
     [ IsOrdinaryTable, IsList ],
@@ -618,7 +617,6 @@ InstallMethod( Inequalities,
 ##  and the properties (f) and (i) are consequences of (b) and (e).
 ##
 InstallGlobalFunction( Permut, function( tbl, arec )
-
     local tbl_size, permel, sortedchars,
           a, amin, amax, c, ncha, len, i, j, k, l, permch,
           Conditor, comb, cond, X, divs, pm, minR, maxR,
@@ -634,14 +632,10 @@ InstallGlobalFunction( Permut, function( tbl, arec )
     tbl_size:= Size( tbl );
 
     if IsBound(arec.ineq) then
-
       permel:= arec.ineq;
-
     else
-
       sortedchars:= SortedCharacters( tbl, Irr( tbl ), "degree" );
       permel:= Inequalities( tbl, sortedchars );
-
     fi;
 
     # local functions
@@ -906,16 +900,27 @@ end );
 
 #############################################################################
 ##
-#F  PermBounds( <tbl> , <option> ) . . . . . . .  boundary points for simplex
+#F  PermBounds( <tbl>, <degree>[, <ratirr>] )  .  boundary points for simplex
 ##
-InstallGlobalFunction( PermBounds, function(tbl, degree)
+InstallGlobalFunction( PermBounds, function( arg )
+   local tbl, degree, X, irreds, i, j, h, o, dim, nccl, ncha, c, dir, root,
+         ineq, other, rho, pos, vec, deglist, point;
 
-   local i, j, h, o, dim, nccl, ncha, c, X, dir, root, ineq, other, rho,
-         pos, vec, deglist, point;
+   tbl:= arg[1];
+   degree:= arg[2];
+   if IsBound( arg[3] ) then
+     X:= arg[3];
+   else
+     # The trivial character is expected to be the first one.
+     # So sort the irreducibles, if necessary.
+     irreds:= List( Irr( tbl ), ValuesOfClassFunction );
+     if not ForAll( irreds[1], x -> x = 1 ) then
+       irreds:= SortedCharacters( tbl, irreds, "degree" );
+     fi;
+     X:= RationalizedMat( irreds );
+   fi;
 
    nccl:= NrConjugacyClasses( tbl );
-   X:= RationalizedMat( List( Irr( tbl ), ValuesOfClassFunction ) );
-
    c:= TransposedMat(X);
 
    # determine power conditions
@@ -1046,8 +1051,7 @@ InstallGlobalFunction( PermComb, function( tbl, arec )
    end;
 
    lincom:= function()
-
-      local i, j, k, a, d, ncha, comb, mdeg, maxb, searching, char, fail;
+      local i, j, k, a, d, ncha, comb, mdeg, maxb, searching, char;
 
       ncha:= Length(xdegrees);
       mdeg:= List([1..ncha], x->0);
@@ -1077,13 +1081,7 @@ InstallGlobalFunction( PermComb, function( tbl, arec )
 
          if mdeg[1] = d then
            char:= Constituent + comb * X;
-           fail:= TestPerm1(tbl, char);
-           if fail = 0 then
-             fail:= TestPerm2(tbl, char);
-           fi;
-           if fail = 0 then
-#T better:
-#T         if TestPerm1( tbl, char ) = 0 and TestPerm2( tbl, char ) = 0 then
+           if TestPerm1( tbl, char ) = 0 and TestPerm2( tbl, char ) = 0 then
              Add( permch, char );
              Info( InfoCharacterTable, 2, Length(permch), comb, "\n", char );
 #T ??
@@ -1110,17 +1108,19 @@ InstallGlobalFunction( PermComb, function( tbl, arec )
    end;
 
    if IsBound(arec.bounds) then
-      prep:= arec.bounds;
+     prep:= arec.bounds;
+     if prep = false then
+       X:= RationalizedMat( irreds );
+     else
+       X:= prep.obj;
+       rho:= Size( tbl ) ^-1 * (List(prep.point, x->prep.rho) - prep.point);
+     fi;
    else
-      prep:= PermBounds(tbl, 0);
+     X:= RationalizedMat( irreds );
+     prep:= PermBounds( tbl, 0, X );
+     rho:= Size( tbl ) ^-1 * (List(prep.point, x->prep.rho) - prep.point);
    fi;
 
-   if prep = false then
-      X:= RationalizedMat( irreds );
-   else
-      X:= prep.obj;
-      rho:= Size( tbl ) ^-1 * (List(prep.point, x->prep.rho) - prep.point);
-   fi;
    xdegrees:= List(X, x->x[1]);
    permch:= [];
 
@@ -1479,7 +1479,7 @@ InstallGlobalFunction( PermCandidates,
     fi;
     return extracted;
     # impossible = true: calling function will return from backtrack
-    # impossible = false: then min_class < E( 3 ), and images[ min_class ]
+    # impossible = false: then min_class < infinity, and images[ min_class ]
     #           contains the information for descending at min_class
     end;
 
@@ -1495,7 +1495,7 @@ InstallGlobalFunction( PermCandidates,
     fi;
 
     Info( InfoCharacterTable, 2,
-          "PermCandidates : unique columns erased, there are ",
+          "PermCandidates: unique columns erased, there are ",
           Length( Filtered( nonzerocol, x -> x ) ), " columns left,\n",
           "#I    the number of constituents is ", Length( matrix ), "." );
 
@@ -1533,7 +1533,7 @@ InstallGlobalFunction( PermCandidates,
     nccl:= Length( nonzerocol );
 
     Info( InfoCharacterTable, 2,
-          "PermCandidates : known columns physically deleted,\n",
+          "PermCandidates: known columns physically deleted,\n",
           "#I    a backtrack search will be needed" );
 
     # step 4: backtrack
@@ -1909,7 +1909,7 @@ InstallGlobalFunction( PermCandidatesFaithful,
         Add( pparts, ppart );
       fi;
     od;
-    cyclics:= [];           # cyclic sylow subgroups
+    cyclics:= [];           # cyclic Sylow subgroups
     for i in [ 1 .. nccl ] do
       if tbl_orders[i] in pparts and nonfaithful[i] <> 0 then
         Add( cyclics, i );
@@ -2007,7 +2007,7 @@ InstallGlobalFunction( PermCandidatesFaithful,
     fi;
 
     Info( InfoCharacterTable, 2,
-          "PermCandidatesFaithful : There are ",
+          "PermCandidatesFaithful: There are ",
           Length( matrix ), " possible constituents,\n",
           "#I    the number of unknown values is ",
           Length( Filtered( [ 1 .. nccl ],
@@ -2087,12 +2087,12 @@ InstallGlobalFunction( PermCandidatesFaithful,
     od;
 
     Info( InfoCharacterTable, 2,
-          "PermCandidatesFaithful : There are ", nccl,
+          "PermCandidatesFaithful: There are ", nccl,
           " families of classes left,\n",
           "#I    the number of unknown values is ",
           nccl - Length( uniques ), ",\n",
           "#I    the numbers of possible values for each class are",
-          " appropriately\n",
+          " approximately\n",
           "#I    ",
           List( [ 1 .. nccl ],
           x -> Int( ( upper[x] - lower[x] ) / divs[x] )+1),
@@ -2268,7 +2268,7 @@ InstallGlobalFunction( PermCandidatesFaithful,
     fi;
     return extracted;
     # impossible = true: calling function will return from backtrack
-    # impossible = false: then min_class < E( 3 ), and faithful[ min_class ]
+    # impossible = false: then min_class < infinity, and faithful[ min_class ]
     #                 contains the information for descending at min_class
     end;
 
@@ -2281,7 +2281,7 @@ InstallGlobalFunction( PermCandidatesFaithful,
     fi;
 
     Info( InfoCharacterTable, 2,
-          "PermCandidatesFaithful : A backtrack search",
+          "PermCandidatesFaithful: A backtrack search",
           " will be needed;\n",
           "#I    now physically deleting known classes" );
 
@@ -2333,10 +2333,10 @@ InstallGlobalFunction( PermCandidatesFaithful,
     nccl:= Length( nonzerocol );
 
     Info( InfoCharacterTable, 2,
-          "#I PermCandidatesFaithful:",
+          "PermCandidatesFaithful:",
           " The number of unknown values is ", nccl, ";\n",
           "#I    the numbers of possible values for each class are",
-          " appropriately\n#I    ",
+          " approximately\n#I    ",
           List( [ 1 .. nccl ],
           x -> Int( ( upper[x] - lower[x] ) / divs[x]+1)),
           "\n#I    now beginning the backtrack search" );
@@ -2498,7 +2498,6 @@ end );
 #F  PermCharInfo( <tbl>, <permchars>[, \"HTML\" ] )
 ##
 InstallGlobalFunction( PermCharInfo, function( arg )
-
     local tbl,                # character table, first argument
           permchars,          # list of characters, second argument
           supopen,            # opening tag for exponentiation
@@ -2631,7 +2630,6 @@ end );
 #F  PermCharInfoRelative( <tbl>, <tbl2>, <permchars> )
 ##
 InstallGlobalFunction( PermCharInfoRelative, function( tbl, tbl2, permchars )
-
     local tblfustbl2,     # fusion of `tbl' in `tbl2'
           size2,          # order of `tbl2'
           cont,
@@ -2661,6 +2659,7 @@ InstallGlobalFunction( PermCharInfoRelative, function( tbl, tbl2, permchars )
           ATLAS,
           error,
           scprs,
+          ATL1,
           nam,
           mult;
 
@@ -2794,6 +2793,7 @@ InstallGlobalFunction( PermCharInfoRelative, function( tbl, tbl2, permchars )
               Add( ATL, '+' );
             fi;
             Append( ATL, String( degreeset[i] ) );
+            ATL1:= [];
             for j in [ 1 .. Length( scprs ) ] do
               nam:= false;
               if scprs[j] <> 0 then
@@ -2826,28 +2826,34 @@ InstallGlobalFunction( PermCharInfoRelative, function( tbl, tbl2, permchars )
 
               # Deal with the `\pm' constituents.
               if nam <> false then
-                if mult = 1 then
-                  Append( ATL, nam );
-                else
-                  Add( ATL, '(' );
-                  Append( ATL, nam );
-                  Append( ATL, ")^{" );
-                  Append( ATL, String( mult ) );
-                  Add( ATL, '}' );
-                fi;
+                Add( ATL1, [ nam, mult ] );
               fi;
 
               # Deal with the ordinary constituents.
-              if   scprs[j] = 1 then
-                Append( ATL, irrnam2[i][j] );
-              elif scprs[j] > 1 then
-                Add( ATL, '(' );
-                Append( ATL, irrnam2[i][j] );
-                Append( ATL, ")^{" );
-                Append( ATL, String( scprs[j] ) );
-                Add( ATL, '}' );
+              if scprs[j] <> 0 then
+                if Length( irrnam2[i][j] ) = 2 then
+                  Add( ATL1, [ [ irrnam2[i][j][1] ], scprs[j] ] );
+                  Add( ATL1, [ [ irrnam2[i][j][2] ], scprs[j] ] );
+                else
+                  Add( ATL1, [ irrnam2[i][j], scprs[j] ] );
+                fi;
               fi;
 
+            od;
+
+            # It may happen that constituents "ad" and "bc" occur.
+            # Here we want to write "abcd" not "adbc", that's why we sort.
+            Sort( ATL1 );
+            for j in ATL1 do
+              if j[2] = 1 then
+                Append( ATL, j[1] );
+              else
+                Add( ATL, '(' );
+                Append( ATL, j[1] );
+                Append( ATL, ")^{" );
+                Append( ATL, String( j[2] ) );
+                Add( ATL, '}' );
+              fi;
             od;
 
           fi;

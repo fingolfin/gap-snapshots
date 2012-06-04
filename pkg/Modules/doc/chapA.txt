@@ -1,0 +1,20 @@
+  
+  [1XA The Mathematical Idea behind [5XModules[1X[0X
+  
+  As  finite  dimensional  constructions in linear algebra over a field k boil
+  down  to  solving  (in)homogeneous  linear  systems  over  k,  the  Gaussian
+  algorithm makes the whole theory perfectly computable.
+  
+  Hence, for homological algebra (viewed as linear algebra over general rings)
+  to  be computable one needs to find appropriate substitutes for the Gaussian
+  algorithm,  where  finite  dimensionality  has  to  be  replaced  by  finite
+  generatedness.
+  
+  Luckily  such  substitutes  exist  for  many  rings  of interest. Beside the
+  well-known  Hermite normal form algorithm for principal ideal rings it turns
+  out   that  appropriate  generalizations  of  the  classical  Gröbner  basis
+  algorithm  for  polynomial  rings  provide the desired substitute for a wide
+  class  of commutative [13Xand[0m noncommutative rings. Note that for noncommutative
+  rings the above discussion has to be restricted to homological constructions
+  leading to one-sided linear systems XA=B resp. AX=B (--> [14X1.1-3[0m).
+  

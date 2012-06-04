@@ -1,0 +1,67 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1  What  is  the  Role  of the [5XLocalizeRingForHomalg[1X Package in the [5Xhomalg[1X[0X
+  [1XProject?[0X
+  
+  The  [5Xhomalg[0m  project  [hpa10]  aims  at  providing  a  general  and abstract
+  framework  for  homological  computations. The package [5XLocalizeRingForHomalg[0m
+  enables the [5Xhomalg[0m project to construct localizations from commutative rings
+  in [5Xhomalg[0m at their maximal ideals.
+  
+  
+  [1X1.2 Functionality[0X
+  
+  The  package  [5XLocalizeRingForHomalg[0m  on  the  one hand builds on the package
+  [5XMatricesForHomalg[0m   and   on   the   other   hands   adds  functionality  to
+  [5XMatricesForHomalg[0m.  It  uses  the  computability  (i.e.  capability to solve
+  linear  systems)  of  a  commutative ring R declared in [5XMatricesForHomalg[0m to
+  construct  the localization R_m of R at a maximal ideal m (given by a finite
+  set of generators). This localized ring R_m is again computable and can thus
+  be used by [5XMatricesForHomalg[0m.
+  
+  Furthermore,  via  the  package  [5XRingsForHomalg[0m, an interface to [5XSingular[0m is
+  used  to  compute  in  localized  polynomial  rings  with the help of Mora's
+  algorithm.
+  
+  
+  [1X1.3 The Math Behind This Package[0X
+  
+  The  math  behind  this  package  is  a  simple  trick  in  allowing  global
+  computation  to  be  done  instead  of local computations. This works on any
+  commutative computable ring (in the sense of [5Xhomalg[0m [Bar10]) without need of
+  implementing  new  low  level  algorithms. Details can be found in the paper
+  [BL11].   This   ring   can   be  constructed  by  [2XLocalizeAt[0m  ([14X4.3-14[0m)  and
+  [2XLocalizeAtZero[0m ([14X4.3-15[0m).
+  
+  Furthermore  we  use the package [5XRingsForHomalg[0m to communicate with [5XSingular[0m
+  and  use the implementation of Mora's algorithm there. This is restricted to
+  polynomial  rings  and  needs  the  package [5XRingsForHomalg[0m. This ring can be
+  constructed by [2XLocalizePolynomialRingAtZeroWithMora[0m ([14X4.3-16[0m).
+  
+  
+  [1X1.4 Which Ring to Use?[0X
+  
+  Since  there  are  two  kinds  of rings included in this package, we want to
+  offer a short comparison of these.
+  
+  As  usually one important part of such a comparison is the computation time.
+  In  our  experience  the  general  localization  is  much faster than Mora's
+  algorithm for large examples.
+  
+  The  main  advantage  of  using  local  bases  with  Mora's algorithm is the
+  possibility  of  computing  Hilbert  polynomials  and  other  combinatorical
+  invariants.  This is not possible with our localization algorithm. But it is
+  possible  to  do a large computation without Mora's algorithm, which perhaps
+  would  not  terminate  in  acceptable  time,  and afterwards compute a local
+  standard  basis  of the - in comparison to intermediate computations usually
+  much smaller - result to get the combinatorical information and invariants.
+  
+  Furthermore  we remark, that our localization algorithm works on any maximal
+  ideal  in  any  computable  commutative  ring, whereas Mora's algorithm only
+  works   for   polynomial  rings  at  the  maximal  ideal  generated  by  the
+  indeterminates.  Of  course  by  affine transformation Mora's algorithm will
+  work on any maximal ideal in a polynomial ring where the residue class field
+  is isomorphic to the ground field.
+  

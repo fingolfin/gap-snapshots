@@ -1,0 +1,367 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{12}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }What is the role of the \textsf {MatricesForHomalg} package in the \textsf {homalg} project?}}{12}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }\textsf {MatricesForHomalg} provides ...}}{12}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }\textsf {homalg} delegates ...}}{12}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}\leavevmode {\color {Chapter }The black box concept}}{13}{subsection.1.1.3}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }This manual}}{13}{section.1.2}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {MatricesForHomalg} Package}}{14}{chapter.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Rings}}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Rings: Category and Representations}}{15}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }IsHomalgRing}}{15}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }IsPreHomalgRing}}{15}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }IsHomalgRingElement}}{15}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }IsHomalgInternalRingRep}}{16}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Rings: Constructors}}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }HomalgRingOfIntegers (constructor for the integers)}}{16}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }HomalgFieldOfRationals (constructor for the field of rationals)}}{17}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }\texttt {\char 92\relax }/ (constructor for residue class rings)}}{17}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Rings: Properties}}{17}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }IsZero (for rings)}}{18}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }ContainsAField}}{18}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }IsRationalsForHomalg}}{18}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }IsFieldForHomalg}}{18}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }IsDivisionRingForHomalg}}{18}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }IsIntegersForHomalg}}{18}{subsection.3.3.6}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }IsResidueClassRingOfTheIntegers}}{18}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }IsBezoutRing}}{19}{subsection.3.3.8}
+\contentsline {subsection}{\numberline {3.3.9}\leavevmode {\color {Chapter }IsIntegrallyClosedDomain}}{19}{subsection.3.3.9}
+\contentsline {subsection}{\numberline {3.3.10}\leavevmode {\color {Chapter }IsUniqueFactorizationDomain}}{19}{subsection.3.3.10}
+\contentsline {subsection}{\numberline {3.3.11}\leavevmode {\color {Chapter }IsKaplanskyHermite}}{19}{subsection.3.3.11}
+\contentsline {subsection}{\numberline {3.3.12}\leavevmode {\color {Chapter }IsDedekindDomain}}{19}{subsection.3.3.12}
+\contentsline {subsection}{\numberline {3.3.13}\leavevmode {\color {Chapter }IsDiscreteValuationRing}}{19}{subsection.3.3.13}
+\contentsline {subsection}{\numberline {3.3.14}\leavevmode {\color {Chapter }IsFreePolynomialRing}}{19}{subsection.3.3.14}
+\contentsline {subsection}{\numberline {3.3.15}\leavevmode {\color {Chapter }IsWeylRing}}{19}{subsection.3.3.15}
+\contentsline {subsection}{\numberline {3.3.16}\leavevmode {\color {Chapter }IsLocalizedWeylRing}}{20}{subsection.3.3.16}
+\contentsline {subsection}{\numberline {3.3.17}\leavevmode {\color {Chapter }IsGlobalDimensionFinite}}{20}{subsection.3.3.17}
+\contentsline {subsection}{\numberline {3.3.18}\leavevmode {\color {Chapter }IsLeftGlobalDimensionFinite}}{20}{subsection.3.3.18}
+\contentsline {subsection}{\numberline {3.3.19}\leavevmode {\color {Chapter }IsRightGlobalDimensionFinite}}{20}{subsection.3.3.19}
+\contentsline {subsection}{\numberline {3.3.20}\leavevmode {\color {Chapter }HasInvariantBasisProperty}}{20}{subsection.3.3.20}
+\contentsline {subsection}{\numberline {3.3.21}\leavevmode {\color {Chapter }HasLeftInvariantBasisProperty}}{20}{subsection.3.3.21}
+\contentsline {subsection}{\numberline {3.3.22}\leavevmode {\color {Chapter }HasRightInvariantBasisProperty}}{20}{subsection.3.3.22}
+\contentsline {subsection}{\numberline {3.3.23}\leavevmode {\color {Chapter }IsLocal}}{20}{subsection.3.3.23}
+\contentsline {subsection}{\numberline {3.3.24}\leavevmode {\color {Chapter }IsSemiLocalRing}}{21}{subsection.3.3.24}
+\contentsline {subsection}{\numberline {3.3.25}\leavevmode {\color {Chapter }IsIntegralDomain}}{21}{subsection.3.3.25}
+\contentsline {subsection}{\numberline {3.3.26}\leavevmode {\color {Chapter }IsHereditary}}{21}{subsection.3.3.26}
+\contentsline {subsection}{\numberline {3.3.27}\leavevmode {\color {Chapter }IsLeftHereditary}}{21}{subsection.3.3.27}
+\contentsline {subsection}{\numberline {3.3.28}\leavevmode {\color {Chapter }IsRightHereditary}}{21}{subsection.3.3.28}
+\contentsline {subsection}{\numberline {3.3.29}\leavevmode {\color {Chapter }IsHermite}}{21}{subsection.3.3.29}
+\contentsline {subsection}{\numberline {3.3.30}\leavevmode {\color {Chapter }IsLeftHermite}}{21}{subsection.3.3.30}
+\contentsline {subsection}{\numberline {3.3.31}\leavevmode {\color {Chapter }IsRightHermite}}{21}{subsection.3.3.31}
+\contentsline {subsection}{\numberline {3.3.32}\leavevmode {\color {Chapter }IsNoetherian}}{22}{subsection.3.3.32}
+\contentsline {subsection}{\numberline {3.3.33}\leavevmode {\color {Chapter }IsLeftNoetherian}}{22}{subsection.3.3.33}
+\contentsline {subsection}{\numberline {3.3.34}\leavevmode {\color {Chapter }IsRightNoetherian}}{22}{subsection.3.3.34}
+\contentsline {subsection}{\numberline {3.3.35}\leavevmode {\color {Chapter }IsCohenMacaulay}}{22}{subsection.3.3.35}
+\contentsline {subsection}{\numberline {3.3.36}\leavevmode {\color {Chapter }IsGorenstein}}{22}{subsection.3.3.36}
+\contentsline {subsection}{\numberline {3.3.37}\leavevmode {\color {Chapter }IsKoszul}}{22}{subsection.3.3.37}
+\contentsline {subsection}{\numberline {3.3.38}\leavevmode {\color {Chapter }IsArtinian (for rings)}}{22}{subsection.3.3.38}
+\contentsline {subsection}{\numberline {3.3.39}\leavevmode {\color {Chapter }IsLeftArtinian}}{22}{subsection.3.3.39}
+\contentsline {subsection}{\numberline {3.3.40}\leavevmode {\color {Chapter }IsRightArtinian}}{23}{subsection.3.3.40}
+\contentsline {subsection}{\numberline {3.3.41}\leavevmode {\color {Chapter }IsOreDomain}}{23}{subsection.3.3.41}
+\contentsline {subsection}{\numberline {3.3.42}\leavevmode {\color {Chapter }IsLeftOreDomain}}{23}{subsection.3.3.42}
+\contentsline {subsection}{\numberline {3.3.43}\leavevmode {\color {Chapter }IsRightOreDomain}}{23}{subsection.3.3.43}
+\contentsline {subsection}{\numberline {3.3.44}\leavevmode {\color {Chapter }IsPrincipalIdealRing}}{23}{subsection.3.3.44}
+\contentsline {subsection}{\numberline {3.3.45}\leavevmode {\color {Chapter }IsLeftPrincipalIdealRing}}{23}{subsection.3.3.45}
+\contentsline {subsection}{\numberline {3.3.46}\leavevmode {\color {Chapter }IsRightPrincipalIdealRing}}{23}{subsection.3.3.46}
+\contentsline {subsection}{\numberline {3.3.47}\leavevmode {\color {Chapter }IsRegular}}{23}{subsection.3.3.47}
+\contentsline {subsection}{\numberline {3.3.48}\leavevmode {\color {Chapter }IsFiniteFreePresentationRing}}{24}{subsection.3.3.48}
+\contentsline {subsection}{\numberline {3.3.49}\leavevmode {\color {Chapter }IsLeftFiniteFreePresentationRing}}{24}{subsection.3.3.49}
+\contentsline {subsection}{\numberline {3.3.50}\leavevmode {\color {Chapter }IsRightFiniteFreePresentationRing}}{24}{subsection.3.3.50}
+\contentsline {subsection}{\numberline {3.3.51}\leavevmode {\color {Chapter }IsSimpleRing}}{24}{subsection.3.3.51}
+\contentsline {subsection}{\numberline {3.3.52}\leavevmode {\color {Chapter }IsSemiSimpleRing}}{24}{subsection.3.3.52}
+\contentsline {subsection}{\numberline {3.3.53}\leavevmode {\color {Chapter }IsSuperCommutative}}{24}{subsection.3.3.53}
+\contentsline {subsection}{\numberline {3.3.54}\leavevmode {\color {Chapter }BasisAlgorithmRespectsPrincipalIdeals}}{24}{subsection.3.3.54}
+\contentsline {subsection}{\numberline {3.3.55}\leavevmode {\color {Chapter }IsMinusOne}}{24}{subsection.3.3.55}
+\contentsline {subsection}{\numberline {3.3.56}\leavevmode {\color {Chapter }IsLeftRegular (for homalg ring elements)}}{25}{subsection.3.3.56}
+\contentsline {subsection}{\numberline {3.3.57}\leavevmode {\color {Chapter }IsRightRegular (for homalg ring elements)}}{25}{subsection.3.3.57}
+\contentsline {subsection}{\numberline {3.3.58}\leavevmode {\color {Chapter }IsRegular (for homalg ring elements)}}{25}{subsection.3.3.58}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Rings: Attributes}}{25}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }Zero (for homalg ring elements)}}{25}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }One (for homalg ring elements)}}{25}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }Inverse (for homalg ring elements)}}{25}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }homalgTable}}{26}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }RingElementConstructor}}{26}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }TypeOfHomalgMatrix}}{26}{subsection.3.4.6}
+\contentsline {subsection}{\numberline {3.4.7}\leavevmode {\color {Chapter }ConstructorForHomalgMatrices}}{26}{subsection.3.4.7}
+\contentsline {subsection}{\numberline {3.4.8}\leavevmode {\color {Chapter }Zero (for homalg rings)}}{26}{subsection.3.4.8}
+\contentsline {subsection}{\numberline {3.4.9}\leavevmode {\color {Chapter }One (for homalg rings)}}{26}{subsection.3.4.9}
+\contentsline {subsection}{\numberline {3.4.10}\leavevmode {\color {Chapter }MinusOne}}{26}{subsection.3.4.10}
+\contentsline {subsection}{\numberline {3.4.11}\leavevmode {\color {Chapter }ProductOfIndeterminates}}{26}{subsection.3.4.11}
+\contentsline {subsection}{\numberline {3.4.12}\leavevmode {\color {Chapter }RationalParameters}}{27}{subsection.3.4.12}
+\contentsline {subsection}{\numberline {3.4.13}\leavevmode {\color {Chapter }IndeterminatesOfPolynomialRing}}{27}{subsection.3.4.13}
+\contentsline {subsection}{\numberline {3.4.14}\leavevmode {\color {Chapter }RelativeIndeterminatesOfPolynomialRing}}{27}{subsection.3.4.14}
+\contentsline {subsection}{\numberline {3.4.15}\leavevmode {\color {Chapter }IndeterminateCoordinatesOfRingOfDerivations}}{27}{subsection.3.4.15}
+\contentsline {subsection}{\numberline {3.4.16}\leavevmode {\color {Chapter }RelativeIndeterminateCoordinatesOfRingOfDerivations}}{27}{subsection.3.4.16}
+\contentsline {subsection}{\numberline {3.4.17}\leavevmode {\color {Chapter }IndeterminateDerivationsOfRingOfDerivations}}{27}{subsection.3.4.17}
+\contentsline {subsection}{\numberline {3.4.18}\leavevmode {\color {Chapter }RelativeIndeterminateDerivationsOfRingOfDerivations}}{27}{subsection.3.4.18}
+\contentsline {subsection}{\numberline {3.4.19}\leavevmode {\color {Chapter }IndeterminateAntiCommutingVariablesOfExteriorRing}}{27}{subsection.3.4.19}
+\contentsline {subsection}{\numberline {3.4.20}\leavevmode {\color {Chapter }RelativeIndeterminateAntiCommutingVariablesOfExteriorRing}}{28}{subsection.3.4.20}
+\contentsline {subsection}{\numberline {3.4.21}\leavevmode {\color {Chapter }IndeterminatesOfExteriorRing}}{28}{subsection.3.4.21}
+\contentsline {subsection}{\numberline {3.4.22}\leavevmode {\color {Chapter }CoefficientsRing}}{28}{subsection.3.4.22}
+\contentsline {subsection}{\numberline {3.4.23}\leavevmode {\color {Chapter }KrullDimension}}{28}{subsection.3.4.23}
+\contentsline {subsection}{\numberline {3.4.24}\leavevmode {\color {Chapter }LeftGlobalDimension}}{28}{subsection.3.4.24}
+\contentsline {subsection}{\numberline {3.4.25}\leavevmode {\color {Chapter }RightGlobalDimension}}{28}{subsection.3.4.25}
+\contentsline {subsection}{\numberline {3.4.26}\leavevmode {\color {Chapter }GlobalDimension}}{28}{subsection.3.4.26}
+\contentsline {subsection}{\numberline {3.4.27}\leavevmode {\color {Chapter }GeneralLinearRank}}{28}{subsection.3.4.27}
+\contentsline {subsection}{\numberline {3.4.28}\leavevmode {\color {Chapter }ElementaryRank}}{29}{subsection.3.4.28}
+\contentsline {subsection}{\numberline {3.4.29}\leavevmode {\color {Chapter }StableRank}}{29}{subsection.3.4.29}
+\contentsline {subsection}{\numberline {3.4.30}\leavevmode {\color {Chapter }AssociatedGradedRing}}{29}{subsection.3.4.30}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Rings: Operations and Functions}}{29}{section.3.5}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Ring Maps}}{30}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Ring Maps: Category and Representations}}{30}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }IsHomalgRingMap}}{30}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }IsHomalgRingSelfMap}}{30}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }IsHomalgRingMapRep}}{30}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Ring Maps: Constructors}}{30}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }RingMap (constructor for ring maps)}}{30}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Ring Maps: Properties}}{31}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }IsMorphism (for ring maps)}}{31}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }IsIdentityMorphism (for ring maps)}}{31}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }IsMonomorphism (for ring maps)}}{31}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }IsEpimorphism (for ring maps)}}{31}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\leavevmode {\color {Chapter }IsIsomorphism (for ring maps)}}{31}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}\leavevmode {\color {Chapter }IsAutomorphism (for ring maps)}}{31}{subsection.4.3.6}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Ring Maps: Attributes}}{32}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }Source (for ring maps)}}{32}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }Range (for ring maps)}}{32}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }DegreeOfMorphism (for ring maps)}}{32}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\leavevmode {\color {Chapter }CoordinateRingOfGraph (for ring maps)}}{32}{subsection.4.4.4}
+\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Ring Maps: Operations and Functions}}{32}{section.4.5}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Matrices}}{33}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Matrices: Category and Representations}}{33}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }IsHomalgMatrix}}{33}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }IsHomalgInternalMatrixRep}}{33}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Matrices: Constructors}}{34}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }HomalgInitialMatrix (constructor for initial matrices filled with zeros)}}{34}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }HomalgInitialIdentityMatrix (constructor for initial quadratic matrices with ones on the diagonal)}}{34}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }HomalgZeroMatrix (constructor for zero matrices)}}{35}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }HomalgIdentityMatrix (constructor for identity matrices)}}{35}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }HomalgVoidMatrix (constructor for void matrices)}}{36}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }HomalgMatrix (constructor for matrices using a listlist)}}{36}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }HomalgDiagonalMatrix (constructor for diagonal matrices)}}{37}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (copy a matrix over a different ring)}}{38}{subsection.5.2.8}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Matrices: Properties}}{38}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }IsZero (for matrices)}}{38}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }IsOne}}{39}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }IsUnitFree}}{39}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }IsPermutationMatrix}}{39}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }IsSpecialSubidentityMatrix}}{39}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }IsSubidentityMatrix}}{39}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }IsLeftRegular}}{39}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}\leavevmode {\color {Chapter }IsRightRegular}}{40}{subsection.5.3.8}
+\contentsline {subsection}{\numberline {5.3.9}\leavevmode {\color {Chapter }IsInvertibleMatrix}}{40}{subsection.5.3.9}
+\contentsline {subsection}{\numberline {5.3.10}\leavevmode {\color {Chapter }IsLeftInvertibleMatrix}}{40}{subsection.5.3.10}
+\contentsline {subsection}{\numberline {5.3.11}\leavevmode {\color {Chapter }IsRightInvertibleMatrix}}{40}{subsection.5.3.11}
+\contentsline {subsection}{\numberline {5.3.12}\leavevmode {\color {Chapter }IsEmptyMatrix}}{40}{subsection.5.3.12}
+\contentsline {subsection}{\numberline {5.3.13}\leavevmode {\color {Chapter }IsDiagonalMatrix}}{40}{subsection.5.3.13}
+\contentsline {subsection}{\numberline {5.3.14}\leavevmode {\color {Chapter }IsScalarlMatrix}}{40}{subsection.5.3.14}
+\contentsline {subsection}{\numberline {5.3.15}\leavevmode {\color {Chapter }IsUpperTriangularMatrix}}{40}{subsection.5.3.15}
+\contentsline {subsection}{\numberline {5.3.16}\leavevmode {\color {Chapter }IsLowerTriangularMatrix}}{41}{subsection.5.3.16}
+\contentsline {subsection}{\numberline {5.3.17}\leavevmode {\color {Chapter }IsStrictUpperTriangularMatrix}}{41}{subsection.5.3.17}
+\contentsline {subsection}{\numberline {5.3.18}\leavevmode {\color {Chapter }IsStrictLowerTriangularMatrix}}{41}{subsection.5.3.18}
+\contentsline {subsection}{\numberline {5.3.19}\leavevmode {\color {Chapter }IsUpperStairCaseMatrix}}{41}{subsection.5.3.19}
+\contentsline {subsection}{\numberline {5.3.20}\leavevmode {\color {Chapter }IsLowerStairCaseMatrix}}{41}{subsection.5.3.20}
+\contentsline {subsection}{\numberline {5.3.21}\leavevmode {\color {Chapter }IsTriangularMatrix}}{41}{subsection.5.3.21}
+\contentsline {subsection}{\numberline {5.3.22}\leavevmode {\color {Chapter }IsBasisOfRowsMatrix}}{41}{subsection.5.3.22}
+\contentsline {subsection}{\numberline {5.3.23}\leavevmode {\color {Chapter }IsBasisOfColumnsMatrix}}{41}{subsection.5.3.23}
+\contentsline {subsection}{\numberline {5.3.24}\leavevmode {\color {Chapter }IsReducedBasisOfRowsMatrix}}{42}{subsection.5.3.24}
+\contentsline {subsection}{\numberline {5.3.25}\leavevmode {\color {Chapter }IsReducedBasisOfColumnsMatrix}}{42}{subsection.5.3.25}
+\contentsline {subsection}{\numberline {5.3.26}\leavevmode {\color {Chapter }IsInitialMatrix}}{42}{subsection.5.3.26}
+\contentsline {subsection}{\numberline {5.3.27}\leavevmode {\color {Chapter }IsInitialIdentityMatrix}}{42}{subsection.5.3.27}
+\contentsline {subsection}{\numberline {5.3.28}\leavevmode {\color {Chapter }IsVoidMatrix}}{42}{subsection.5.3.28}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Matrices: Attributes}}{42}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }NrRows}}{42}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }NrColumns}}{42}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }DeterminantMat}}{43}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}\leavevmode {\color {Chapter }ZeroRows}}{43}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}\leavevmode {\color {Chapter }ZeroColumns}}{43}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}\leavevmode {\color {Chapter }NonZeroRows}}{43}{subsection.5.4.6}
+\contentsline {subsection}{\numberline {5.4.7}\leavevmode {\color {Chapter }NonZeroColumns}}{43}{subsection.5.4.7}
+\contentsline {subsection}{\numberline {5.4.8}\leavevmode {\color {Chapter }PositionOfFirstNonZeroEntryPerRow}}{43}{subsection.5.4.8}
+\contentsline {subsection}{\numberline {5.4.9}\leavevmode {\color {Chapter }PositionOfFirstNonZeroEntryPerColumn}}{43}{subsection.5.4.9}
+\contentsline {subsection}{\numberline {5.4.10}\leavevmode {\color {Chapter }RowRankOfMatrix}}{44}{subsection.5.4.10}
+\contentsline {subsection}{\numberline {5.4.11}\leavevmode {\color {Chapter }ColumnRankOfMatrix}}{44}{subsection.5.4.11}
+\contentsline {subsection}{\numberline {5.4.12}\leavevmode {\color {Chapter }LeftInverse}}{44}{subsection.5.4.12}
+\contentsline {subsection}{\numberline {5.4.13}\leavevmode {\color {Chapter }RightInverse}}{44}{subsection.5.4.13}
+\contentsline {subsection}{\numberline {5.4.14}\leavevmode {\color {Chapter }CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}}{44}{subsection.5.4.14}
+\contentsline {subsection}{\numberline {5.4.15}\leavevmode {\color {Chapter }CoefficientsOfNumeratorOfHilbertPoincareSeries}}{44}{subsection.5.4.15}
+\contentsline {subsection}{\numberline {5.4.16}\leavevmode {\color {Chapter }UnreducedNumeratorOfHilbertPoincareSeries}}{44}{subsection.5.4.16}
+\contentsline {subsection}{\numberline {5.4.17}\leavevmode {\color {Chapter }NumeratorOfHilbertPoincareSeries}}{45}{subsection.5.4.17}
+\contentsline {subsection}{\numberline {5.4.18}\leavevmode {\color {Chapter }HilbertPoincareSeries}}{45}{subsection.5.4.18}
+\contentsline {subsection}{\numberline {5.4.19}\leavevmode {\color {Chapter }HilbertPolynomial}}{45}{subsection.5.4.19}
+\contentsline {subsection}{\numberline {5.4.20}\leavevmode {\color {Chapter }AffineDimension}}{45}{subsection.5.4.20}
+\contentsline {subsection}{\numberline {5.4.21}\leavevmode {\color {Chapter }AffineDegree}}{45}{subsection.5.4.21}
+\contentsline {subsection}{\numberline {5.4.22}\leavevmode {\color {Chapter }ProjectiveDegree}}{45}{subsection.5.4.22}
+\contentsline {subsection}{\numberline {5.4.23}\leavevmode {\color {Chapter }ConstantTermOfHilbertPolynomialn}}{45}{subsection.5.4.23}
+\contentsline {subsection}{\numberline {5.4.24}\leavevmode {\color {Chapter }MatrixOfSymbolsn}}{45}{subsection.5.4.24}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Matrices: Operations and Functions}}{46}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }HomalgRing (for matrices)}}{46}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }LeftInverse (for matrices)}}{46}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}\leavevmode {\color {Chapter }RightInverse (for matrices)}}{47}{subsection.5.5.3}
+\contentsline {subsection}{\numberline {5.5.4}\leavevmode {\color {Chapter }LeftInverseLazy (for matrices)}}{47}{subsection.5.5.4}
+\contentsline {subsection}{\numberline {5.5.5}\leavevmode {\color {Chapter }RightInverseLazy (for matrices)}}{48}{subsection.5.5.5}
+\contentsline {subsection}{\numberline {5.5.6}\leavevmode {\color {Chapter }Involution (for matrices)}}{48}{subsection.5.5.6}
+\contentsline {subsection}{\numberline {5.5.7}\leavevmode {\color {Chapter }CertainRows (for matrices)}}{48}{subsection.5.5.7}
+\contentsline {subsection}{\numberline {5.5.8}\leavevmode {\color {Chapter }CertainColumns (for matrices)}}{48}{subsection.5.5.8}
+\contentsline {subsection}{\numberline {5.5.9}\leavevmode {\color {Chapter }UnionOfRows (for matrices)}}{48}{subsection.5.5.9}
+\contentsline {subsection}{\numberline {5.5.10}\leavevmode {\color {Chapter }UnionOfColumns (for matrices)}}{48}{subsection.5.5.10}
+\contentsline {subsection}{\numberline {5.5.11}\leavevmode {\color {Chapter }DiagMat (for matrices)}}{48}{subsection.5.5.11}
+\contentsline {subsection}{\numberline {5.5.12}\leavevmode {\color {Chapter }KroneckerMat (for matrices)}}{49}{subsection.5.5.12}
+\contentsline {subsection}{\numberline {5.5.13}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (for ring elements and matrices)}}{49}{subsection.5.5.13}
+\contentsline {subsection}{\numberline {5.5.14}\leavevmode {\color {Chapter }\texttt {\char 92\relax }+ (for matrices)}}{49}{subsection.5.5.14}
+\contentsline {subsection}{\numberline {5.5.15}\leavevmode {\color {Chapter }\texttt {\char 92\relax }- (for matrices)}}{49}{subsection.5.5.15}
+\contentsline {subsection}{\numberline {5.5.16}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (for composable matrices)}}{49}{subsection.5.5.16}
+\contentsline {subsection}{\numberline {5.5.17}\leavevmode {\color {Chapter }\texttt {\char 92\relax }= (for matrices)}}{49}{subsection.5.5.17}
+\contentsline {subsection}{\numberline {5.5.18}\leavevmode {\color {Chapter }GetColumnIndependentUnitPositions (for matrices)}}{50}{subsection.5.5.18}
+\contentsline {subsection}{\numberline {5.5.19}\leavevmode {\color {Chapter }GetRowIndependentUnitPositions (for matrices)}}{50}{subsection.5.5.19}
+\contentsline {subsection}{\numberline {5.5.20}\leavevmode {\color {Chapter }GetUnitPosition (for matrices)}}{50}{subsection.5.5.20}
+\contentsline {subsection}{\numberline {5.5.21}\leavevmode {\color {Chapter }Eliminate}}{51}{subsection.5.5.21}
+\contentsline {subsection}{\numberline {5.5.22}\leavevmode {\color {Chapter }BasisOfRowModule (for matrices)}}{51}{subsection.5.5.22}
+\contentsline {subsection}{\numberline {5.5.23}\leavevmode {\color {Chapter }BasisOfColumnModule (for matrices)}}{51}{subsection.5.5.23}
+\contentsline {subsection}{\numberline {5.5.24}\leavevmode {\color {Chapter }DecideZeroRows (for pairs of matrices)}}{51}{subsection.5.5.24}
+\contentsline {subsection}{\numberline {5.5.25}\leavevmode {\color {Chapter }DecideZeroColumns (for pairs of matrices)}}{52}{subsection.5.5.25}
+\contentsline {subsection}{\numberline {5.5.26}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfRows (for matrices)}}{52}{subsection.5.5.26}
+\contentsline {subsection}{\numberline {5.5.27}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfColumns (for matrices)}}{52}{subsection.5.5.27}
+\contentsline {subsection}{\numberline {5.5.28}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfRows (for pairs of matrices)}}{52}{subsection.5.5.28}
+\contentsline {subsection}{\numberline {5.5.29}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfColumns (for pairs of matrices)}}{52}{subsection.5.5.29}
+\contentsline {subsection}{\numberline {5.5.30}\leavevmode {\color {Chapter }ReducedBasisOfRowModule (for matrices)}}{53}{subsection.5.5.30}
+\contentsline {subsection}{\numberline {5.5.31}\leavevmode {\color {Chapter }ReducedBasisOfColumnModule (for matrices)}}{53}{subsection.5.5.31}
+\contentsline {subsection}{\numberline {5.5.32}\leavevmode {\color {Chapter }ReducedSyzygiesGeneratorsOfRows (for matrices)}}{53}{subsection.5.5.32}
+\contentsline {subsection}{\numberline {5.5.33}\leavevmode {\color {Chapter }ReducedSyzygiesGeneratorsOfColumns (for matrices)}}{53}{subsection.5.5.33}
+\contentsline {subsection}{\numberline {5.5.34}\leavevmode {\color {Chapter }BasisOfRowsCoeff (for matrices)}}{53}{subsection.5.5.34}
+\contentsline {subsection}{\numberline {5.5.35}\leavevmode {\color {Chapter }BasisOfColumnsCoeff (for matrices)}}{53}{subsection.5.5.35}
+\contentsline {subsection}{\numberline {5.5.36}\leavevmode {\color {Chapter }DecideZeroRowsEffectively (for pairs of matrices)}}{54}{subsection.5.5.36}
+\contentsline {subsection}{\numberline {5.5.37}\leavevmode {\color {Chapter }DecideZeroColumnsEffectively (for pairs of matrices)}}{54}{subsection.5.5.37}
+\contentsline {subsection}{\numberline {5.5.38}\leavevmode {\color {Chapter }BasisOfRows (for matrices)}}{54}{subsection.5.5.38}
+\contentsline {subsection}{\numberline {5.5.39}\leavevmode {\color {Chapter }BasisOfColumns (for matrices)}}{54}{subsection.5.5.39}
+\contentsline {subsection}{\numberline {5.5.40}\leavevmode {\color {Chapter }DecideZero (for matrices and relations)}}{54}{subsection.5.5.40}
+\contentsline {subsection}{\numberline {5.5.41}\leavevmode {\color {Chapter }SyzygiesOfRows (for matrices)}}{55}{subsection.5.5.41}
+\contentsline {subsection}{\numberline {5.5.42}\leavevmode {\color {Chapter }SyzygiesOfColumns (for matrices)}}{55}{subsection.5.5.42}
+\contentsline {subsection}{\numberline {5.5.43}\leavevmode {\color {Chapter }ReducedSyzygiesOfRows (for matrices)}}{55}{subsection.5.5.43}
+\contentsline {subsection}{\numberline {5.5.44}\leavevmode {\color {Chapter }ReducedSyzygiesOfColumns (for matrices)}}{55}{subsection.5.5.44}
+\contentsline {subsection}{\numberline {5.5.45}\leavevmode {\color {Chapter }RightDivide (for pairs of matrices)}}{55}{subsection.5.5.45}
+\contentsline {subsection}{\numberline {5.5.46}\leavevmode {\color {Chapter }LeftDivide (for pairs of matrices)}}{56}{subsection.5.5.46}
+\contentsline {subsection}{\numberline {5.5.47}\leavevmode {\color {Chapter }RightDivide (for triples of matrices)}}{56}{subsection.5.5.47}
+\contentsline {subsection}{\numberline {5.5.48}\leavevmode {\color {Chapter }LeftDivide (for triples of matrices)}}{57}{subsection.5.5.48}
+\contentsline {subsection}{\numberline {5.5.49}\leavevmode {\color {Chapter }GenerateSameRowModule (for pairs of matrices)}}{58}{subsection.5.5.49}
+\contentsline {subsection}{\numberline {5.5.50}\leavevmode {\color {Chapter }GenerateSameColumnModule (for pairs of matrices)}}{58}{subsection.5.5.50}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Ring Relations}}{59}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Ring Relations: Categories and Representations}}{59}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }IsHomalgRingRelations}}{59}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }IsHomalgRingRelationsAsGeneratorsOfLeftIdeal}}{59}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }IsHomalgRingRelationsAsGeneratorsOfRightIdeal}}{59}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }IsRingRelationsRep}}{59}{subsection.6.1.4}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Ring Relations: Constructors}}{60}{section.6.2}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Ring Relations: Properties}}{60}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }CanBeUsedToDecideZero}}{60}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }IsInjectivePresentation}}{60}{subsection.6.3.2}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Ring Relations: Attributes}}{60}{section.6.4}
+\contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Ring Relations: Operations and Functions}}{60}{section.6.5}
+\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }The Basic Matrix Operations}}{61}{appendix.A}
+\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter }Main}}{61}{section.A.1}
+\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter }Effective}}{61}{section.A.2}
+\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter }Relative}}{61}{section.A.3}
+\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter }Reduced}}{62}{section.A.4}
+\contentsline {chapter}{\numberline {B}\leavevmode {\color {Chapter }The Matrix Tool Operations}}{63}{appendix.B}
+\contentsline {section}{\numberline {B.1}\leavevmode {\color {Chapter }The Tool Operations \emph {without} a Fallback Method}}{63}{section.B.1}
+\contentsline {subsection}{\numberline {B.1.1}\leavevmode {\color {Chapter }InitialMatrix (homalgTable entry for initial matrices)}}{63}{subsection.B.1.1}
+\contentsline {subsection}{\numberline {B.1.2}\leavevmode {\color {Chapter }InitialIdentityMatrix (homalgTable entry for initial identity matrices)}}{63}{subsection.B.1.2}
+\contentsline {subsection}{\numberline {B.1.3}\leavevmode {\color {Chapter }ZeroMatrix (homalgTable entry)}}{63}{subsection.B.1.3}
+\contentsline {subsection}{\numberline {B.1.4}\leavevmode {\color {Chapter }IdentityMatrix (homalgTable entry)}}{64}{subsection.B.1.4}
+\contentsline {subsection}{\numberline {B.1.5}\leavevmode {\color {Chapter }Involution (homalgTable entry)}}{64}{subsection.B.1.5}
+\contentsline {subsection}{\numberline {B.1.6}\leavevmode {\color {Chapter }CertainRows (homalgTable entry)}}{64}{subsection.B.1.6}
+\contentsline {subsection}{\numberline {B.1.7}\leavevmode {\color {Chapter }CertainColumns (homalgTable entry)}}{64}{subsection.B.1.7}
+\contentsline {subsection}{\numberline {B.1.8}\leavevmode {\color {Chapter }UnionOfRows (homalgTable entry)}}{64}{subsection.B.1.8}
+\contentsline {subsection}{\numberline {B.1.9}\leavevmode {\color {Chapter }UnionOfColumns (homalgTable entry)}}{64}{subsection.B.1.9}
+\contentsline {subsection}{\numberline {B.1.10}\leavevmode {\color {Chapter }DiagMat (homalgTable entry)}}{65}{subsection.B.1.10}
+\contentsline {subsection}{\numberline {B.1.11}\leavevmode {\color {Chapter }KroneckerMat (homalgTable entry)}}{65}{subsection.B.1.11}
+\contentsline {subsection}{\numberline {B.1.12}\leavevmode {\color {Chapter }MulMat (homalgTable entry)}}{65}{subsection.B.1.12}
+\contentsline {subsection}{\numberline {B.1.13}\leavevmode {\color {Chapter }AddMat (homalgTable entry)}}{65}{subsection.B.1.13}
+\contentsline {subsection}{\numberline {B.1.14}\leavevmode {\color {Chapter }SubMat (homalgTable entry)}}{65}{subsection.B.1.14}
+\contentsline {subsection}{\numberline {B.1.15}\leavevmode {\color {Chapter }Compose (homalgTable entry)}}{65}{subsection.B.1.15}
+\contentsline {subsection}{\numberline {B.1.16}\leavevmode {\color {Chapter }IsZeroMatrix (homalgTable entry)}}{66}{subsection.B.1.16}
+\contentsline {subsection}{\numberline {B.1.17}\leavevmode {\color {Chapter }NrRows (homalgTable entry)}}{66}{subsection.B.1.17}
+\contentsline {subsection}{\numberline {B.1.18}\leavevmode {\color {Chapter }NrColumns (homalgTable entry)}}{67}{subsection.B.1.18}
+\contentsline {subsection}{\numberline {B.1.19}\leavevmode {\color {Chapter }Determinant (homalgTable entry)}}{68}{subsection.B.1.19}
+\contentsline {section}{\numberline {B.2}\leavevmode {\color {Chapter }The Tool Operations with a Fallback Method}}{69}{section.B.2}
+\contentsline {subsection}{\numberline {B.2.1}\leavevmode {\color {Chapter }AreEqualMatrices (homalgTable entry)}}{69}{subsection.B.2.1}
+\contentsline {subsection}{\numberline {B.2.2}\leavevmode {\color {Chapter }IsIdentityMatrix (homalgTable entry)}}{70}{subsection.B.2.2}
+\contentsline {subsection}{\numberline {B.2.3}\leavevmode {\color {Chapter }IsDiagonalMatrix (homalgTable entry)}}{71}{subsection.B.2.3}
+\contentsline {subsection}{\numberline {B.2.4}\leavevmode {\color {Chapter }ZeroRows (homalgTable entry)}}{71}{subsection.B.2.4}
+\contentsline {subsection}{\numberline {B.2.5}\leavevmode {\color {Chapter }ZeroColumns (homalgTable entry)}}{72}{subsection.B.2.5}
+\contentsline {subsection}{\numberline {B.2.6}\leavevmode {\color {Chapter }GetColumnIndependentUnitPositions (homalgTable entry)}}{73}{subsection.B.2.6}
+\contentsline {subsection}{\numberline {B.2.7}\leavevmode {\color {Chapter }GetRowIndependentUnitPositions (homalgTable entry)}}{74}{subsection.B.2.7}
+\contentsline {subsection}{\numberline {B.2.8}\leavevmode {\color {Chapter }GetUnitPosition (homalgTable entry)}}{75}{subsection.B.2.8}
+\contentsline {subsection}{\numberline {B.2.9}\leavevmode {\color {Chapter }PositionOfFirstNonZeroEntryPerRow (homalgTable entry)}}{76}{subsection.B.2.9}
+\contentsline {subsection}{\numberline {B.2.10}\leavevmode {\color {Chapter }PositionOfFirstNonZeroEntryPerColumn (homalgTable entry)}}{77}{subsection.B.2.10}
+\contentsline {chapter}{\numberline {C}\leavevmode {\color {Chapter }Logic Subpackages}}{78}{appendix.C}
+\contentsline {section}{\numberline {C.1}\leavevmode {\color {Chapter }\textsf {LIRNG}: Logical Implications for Rings}}{78}{section.C.1}
+\contentsline {section}{\numberline {C.2}\leavevmode {\color {Chapter }\textsf {LIMAP}: Logical Implications for Ring Maps}}{78}{section.C.2}
+\contentsline {section}{\numberline {C.3}\leavevmode {\color {Chapter }\textsf {LIMAT}: Logical Implications for Matrices}}{78}{section.C.3}
+\contentsline {section}{\numberline {C.4}\leavevmode {\color {Chapter }\textsf {COLEM}: Clever Operations for Lazy Evaluated Matrices}}{78}{section.C.4}
+\contentsline {subsection}{\numberline {C.4.1}\leavevmode {\color {Chapter }Eval (for matrices created with HomalgInitialMatrix)}}{78}{subsection.C.4.1}
+\contentsline {subsection}{\numberline {C.4.2}\leavevmode {\color {Chapter }Eval (for matrices created with HomalgInitialIdentityMatrix)}}{79}{subsection.C.4.2}
+\contentsline {subsection}{\numberline {C.4.3}\leavevmode {\color {Chapter }Eval (for matrices created with HomalgZeroMatrix)}}{80}{subsection.C.4.3}
+\contentsline {subsection}{\numberline {C.4.4}\leavevmode {\color {Chapter }Eval (for matrices created with HomalgIdentityMatrix)}}{81}{subsection.C.4.4}
+\contentsline {subsection}{\numberline {C.4.5}\leavevmode {\color {Chapter }Eval (for matrices created with LeftInverseLazy)}}{82}{subsection.C.4.5}
+\contentsline {subsection}{\numberline {C.4.6}\leavevmode {\color {Chapter }Eval (for matrices created with RightInverseLazy)}}{83}{subsection.C.4.6}
+\contentsline {subsection}{\numberline {C.4.7}\leavevmode {\color {Chapter }Eval (for matrices created with Involution)}}{83}{subsection.C.4.7}
+\contentsline {subsection}{\numberline {C.4.8}\leavevmode {\color {Chapter }Eval (for matrices created with CertainRows)}}{84}{subsection.C.4.8}
+\contentsline {subsection}{\numberline {C.4.9}\leavevmode {\color {Chapter }Eval (for matrices created with CertainColumns)}}{85}{subsection.C.4.9}
+\contentsline {subsection}{\numberline {C.4.10}\leavevmode {\color {Chapter }Eval (for matrices created with UnionOfRows)}}{85}{subsection.C.4.10}
+\contentsline {subsection}{\numberline {C.4.11}\leavevmode {\color {Chapter }Eval (for matrices created with UnionOfColumns)}}{86}{subsection.C.4.11}
+\contentsline {subsection}{\numberline {C.4.12}\leavevmode {\color {Chapter }Eval (for matrices created with DiagMat)}}{87}{subsection.C.4.12}
+\contentsline {subsection}{\numberline {C.4.13}\leavevmode {\color {Chapter }Eval (for matrices created with KroneckerMat)}}{88}{subsection.C.4.13}
+\contentsline {subsection}{\numberline {C.4.14}\leavevmode {\color {Chapter }Eval (for matrices created with MulMat)}}{89}{subsection.C.4.14}
+\contentsline {subsection}{\numberline {C.4.15}\leavevmode {\color {Chapter }Eval (for matrices created with AddMat)}}{90}{subsection.C.4.15}
+\contentsline {subsection}{\numberline {C.4.16}\leavevmode {\color {Chapter }Eval (for matrices created with SubMat)}}{90}{subsection.C.4.16}
+\contentsline {subsection}{\numberline {C.4.17}\leavevmode {\color {Chapter }Eval (for matrices created with Compose)}}{91}{subsection.C.4.17}
+\contentsline {chapter}{\numberline {D}\leavevmode {\color {Chapter }The subpackage \textsf {ResidueClassRingForHomalg} as a sample ring package}}{93}{appendix.D}
+\contentsline {section}{\numberline {D.1}\leavevmode {\color {Chapter }The Mandatory Basic Operations}}{93}{section.D.1}
+\contentsline {subsection}{\numberline {D.1.1}\leavevmode {\color {Chapter }BasisOfRowModule (ResidueClassRing)}}{93}{subsection.D.1.1}
+\contentsline {subsection}{\numberline {D.1.2}\leavevmode {\color {Chapter }BasisOfColumnModule (ResidueClassRing)}}{93}{subsection.D.1.2}
+\contentsline {subsection}{\numberline {D.1.3}\leavevmode {\color {Chapter }DecideZeroRows (ResidueClassRing)}}{94}{subsection.D.1.3}
+\contentsline {subsection}{\numberline {D.1.4}\leavevmode {\color {Chapter }DecideZeroColumns (ResidueClassRing)}}{94}{subsection.D.1.4}
+\contentsline {subsection}{\numberline {D.1.5}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfRows (ResidueClassRing)}}{94}{subsection.D.1.5}
+\contentsline {subsection}{\numberline {D.1.6}\leavevmode {\color {Chapter }SyzygiesGeneratorsOfColumns (ResidueClassRing)}}{95}{subsection.D.1.6}
+\contentsline {subsection}{\numberline {D.1.7}\leavevmode {\color {Chapter }BasisOfRowsCoeff (ResidueClassRing)}}{96}{subsection.D.1.7}
+\contentsline {subsection}{\numberline {D.1.8}\leavevmode {\color {Chapter }BasisOfColumnsCoeff (ResidueClassRing)}}{96}{subsection.D.1.8}
+\contentsline {subsection}{\numberline {D.1.9}\leavevmode {\color {Chapter }DecideZeroRowsEffectively (ResidueClassRing)}}{97}{subsection.D.1.9}
+\contentsline {subsection}{\numberline {D.1.10}\leavevmode {\color {Chapter }DecideZeroColumnsEffectively (ResidueClassRing)}}{97}{subsection.D.1.10}
+\contentsline {subsection}{\numberline {D.1.11}\leavevmode {\color {Chapter }RelativeSyzygiesGeneratorsOfRows (ResidueClassRing)}}{98}{subsection.D.1.11}
+\contentsline {subsection}{\numberline {D.1.12}\leavevmode {\color {Chapter }RelativeSyzygiesGeneratorsOfColumns (ResidueClassRing)}}{98}{subsection.D.1.12}
+\contentsline {section}{\numberline {D.2}\leavevmode {\color {Chapter }The Mandatory Tool Operations}}{99}{section.D.2}
+\contentsline {subsection}{\numberline {D.2.1}\leavevmode {\color {Chapter }InitialMatrix (ResidueClassRing)}}{99}{subsection.D.2.1}
+\contentsline {subsection}{\numberline {D.2.2}\leavevmode {\color {Chapter }InitialIdentityMatrix (ResidueClassRing)}}{99}{subsection.D.2.2}
+\contentsline {subsection}{\numberline {D.2.3}\leavevmode {\color {Chapter }ZeroMatrix (ResidueClassRing)}}{99}{subsection.D.2.3}
+\contentsline {subsection}{\numberline {D.2.4}\leavevmode {\color {Chapter }IdentityMatrix (ResidueClassRing)}}{100}{subsection.D.2.4}
+\contentsline {subsection}{\numberline {D.2.5}\leavevmode {\color {Chapter }Involution (ResidueClassRing)}}{100}{subsection.D.2.5}
+\contentsline {subsection}{\numberline {D.2.6}\leavevmode {\color {Chapter }CertainRows (ResidueClassRing)}}{100}{subsection.D.2.6}
+\contentsline {subsection}{\numberline {D.2.7}\leavevmode {\color {Chapter }CertainColumns (ResidueClassRing)}}{101}{subsection.D.2.7}
+\contentsline {subsection}{\numberline {D.2.8}\leavevmode {\color {Chapter }UnionOfRows (ResidueClassRing)}}{101}{subsection.D.2.8}
+\contentsline {subsection}{\numberline {D.2.9}\leavevmode {\color {Chapter }UnionOfColumns (ResidueClassRing)}}{102}{subsection.D.2.9}
+\contentsline {subsection}{\numberline {D.2.10}\leavevmode {\color {Chapter }DiagMat (ResidueClassRing)}}{102}{subsection.D.2.10}
+\contentsline {subsection}{\numberline {D.2.11}\leavevmode {\color {Chapter }KroneckerMat (ResidueClassRing)}}{103}{subsection.D.2.11}
+\contentsline {subsection}{\numberline {D.2.12}\leavevmode {\color {Chapter }MulMat (ResidueClassRing)}}{103}{subsection.D.2.12}
+\contentsline {subsection}{\numberline {D.2.13}\leavevmode {\color {Chapter }AddMat (ResidueClassRing)}}{103}{subsection.D.2.13}
+\contentsline {subsection}{\numberline {D.2.14}\leavevmode {\color {Chapter }SubMat (ResidueClassRing)}}{104}{subsection.D.2.14}
+\contentsline {subsection}{\numberline {D.2.15}\leavevmode {\color {Chapter }Compose (ResidueClassRing)}}{104}{subsection.D.2.15}
+\contentsline {subsection}{\numberline {D.2.16}\leavevmode {\color {Chapter }IsZeroMatrix (ResidueClassRing)}}{104}{subsection.D.2.16}
+\contentsline {subsection}{\numberline {D.2.17}\leavevmode {\color {Chapter }NrRows (ResidueClassRing)}}{104}{subsection.D.2.17}
+\contentsline {subsection}{\numberline {D.2.18}\leavevmode {\color {Chapter }NrColumns (ResidueClassRing)}}{104}{subsection.D.2.18}
+\contentsline {subsection}{\numberline {D.2.19}\leavevmode {\color {Chapter }Determinant (ResidueClassRing)}}{105}{subsection.D.2.19}
+\contentsline {section}{\numberline {D.3}\leavevmode {\color {Chapter }Some of the Recommended Tool Operations}}{105}{section.D.3}
+\contentsline {subsection}{\numberline {D.3.1}\leavevmode {\color {Chapter }AreEqualMatrices (ResidueClassRing)}}{105}{subsection.D.3.1}
+\contentsline {subsection}{\numberline {D.3.2}\leavevmode {\color {Chapter }IsOne (ResidueClassRing)}}{105}{subsection.D.3.2}
+\contentsline {subsection}{\numberline {D.3.3}\leavevmode {\color {Chapter }IsDiagonalMatrix (ResidueClassRing)}}{105}{subsection.D.3.3}
+\contentsline {subsection}{\numberline {D.3.4}\leavevmode {\color {Chapter }ZeroRows (ResidueClassRing)}}{106}{subsection.D.3.4}
+\contentsline {subsection}{\numberline {D.3.5}\leavevmode {\color {Chapter }ZeroColumns (ResidueClassRing)}}{106}{subsection.D.3.5}
+\contentsline {chapter}{\numberline {E}\leavevmode {\color {Chapter }Debugging \textsf {MatricesForHomalg}}}{107}{appendix.E}
+\contentsline {section}{\numberline {E.1}\leavevmode {\color {Chapter }Increase the assertion level}}{107}{section.E.1}
+\contentsline {section}{\numberline {E.2}\leavevmode {\color {Chapter }\texttt {Using homalgMode}}}{109}{section.E.2}
+\contentsline {subsection}{\numberline {E.2.1}\leavevmode {\color {Chapter }homalgMode}}{109}{subsection.E.2.1}
+\contentsline {chapter}{\numberline {F}\leavevmode {\color {Chapter }Overview of the \textsf {MatricesForHomalg} Package Source Code}}{111}{appendix.F}
+\contentsline {section}{\numberline {F.1}\leavevmode {\color {Chapter }Rings, Ring Maps, Matrices, Ring Relations}}{111}{section.F.1}
+\contentsline {section}{\numberline {F.2}\leavevmode {\color {Chapter }The Low Level Algorithms}}{111}{section.F.2}
+\contentsline {section}{\numberline {F.3}\leavevmode {\color {Chapter }Logical Implications for \textsf {MatricesForHomalg} Objects}}{112}{section.F.3}
+\contentsline {section}{\numberline {F.4}\leavevmode {\color {Chapter }The subpackage \textsf {ResidueClassRingForHomalg}}}{112}{section.F.4}
+\contentsline {section}{\numberline {F.5}\leavevmode {\color {Chapter }The homalgTable for \textsf {GAP4} built-in rings}}{113}{section.F.5}

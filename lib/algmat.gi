@@ -3,17 +3,14 @@
 #W  algmat.gi                   GAP library                     Thomas Breuer
 #W                                                            Willem de Graaf
 ##
-#H  @(#)$Id: algmat.gi,v 4.32.4.2 2008/02/13 17:06:30 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains those functions that mainly deal with matrix algebras,
 ##  that is, associative matrix algebras and matrix Lie algebras.
 ##
-Revision.algmat_gi :=
-    "@(#)$Id: algmat.gi,v 4.32.4.2 2008/02/13 17:06:30 gap Exp $";
 
 
 #############################################################################
@@ -925,14 +922,14 @@ InstallMethod( RadicalOfAlgebra,
       # If `p' is greater than 0, then the situation is more difficult.
       # We implement the algorithm presented in
       # "Cohen, Arjeh M, G\'{a}bor Ivanyos, and David B. Wales,
-      # 'Finding the radical of an algebra of linear tranformations,'
+      # 'Finding the radical of an algebra of linear transformations,'
       # Journal of Pure and Applied Algebra 117 & 118 (1997), 177-193".
 
       q := Size( F );
       dim := Length( bas[1] );
       pexp := 1;
       invFrob := InverseGeneralMapping(FrobeniusAutomorphism(F));
-      invFrobexp := invFrob;
+      invFrobexp := IdentityMapping(F);
       minusOne := -One(F);
       ident := IdentityMat( dim, F );
       changed := true;
@@ -972,9 +969,7 @@ InstallMethod( RadicalOfAlgebra,
           elif Length( G ) <> r then
               # $I_i <> I_{i-1}$, so compute the basis for $I_i$
               changed := true;
-              if 1 < pexp and pexp < q then
-                  G := List( G, x -> List( x, y -> y^invFrobexp ) );
-              fi;
+              G := List( G, x -> List( x, y -> y^invFrobexp ) );
               I := List( G, x -> LinearCombination( I, x ) );
           fi;
 

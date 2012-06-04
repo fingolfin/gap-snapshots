@@ -3,15 +3,12 @@
 #W  polyfinf.gd                 GAP Library                      Frank Celler
 #W                                                         & Alexander Hulpke
 ##
-#H  @(#)$Id: polyfinf.gd,v 4.2 2002/04/15 10:05:13 sal Exp $
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains functions for polynomials over finite fields
 ##
-Revision.polyfinf_gd :=
-    "@(#)$Id: polyfinf.gd,v 4.2 2002/04/15 10:05:13 sal Exp $";
 
 #############################################################################
 ##

@@ -1,0 +1,14 @@
+  
+  [1XA An Overview of the [5XGaussForHomalg[1X package source code[0X
+  
+        Filename          | Content                                            
+      ------------------------------------------------------------------------
+        [11XGaussForHomalg.gi[0m | Methods for matrix entry manipulation              
+        [11XGaussTools.gi[0m     | Tools for matrix operations                        
+        [11XGaussBasic.gi[0m     | The "Basic" Operations (--> [BR08] and [Bar09])    
+        [11XGaussFQI.gi[0m       | [5Xhomalg[0m Table for finite quotients of ℤ: ℤ / < p^n >
+        [11XGaussRationals.gi[0m | [5Xhomalg[0m Table for the rationals ℚ                   
+  
+       [1XTable:[0X [13XThe [5XGaussForHomalg[0m[13X package files.[0m
+  
+  

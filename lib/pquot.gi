@@ -2,12 +2,9 @@
 ##  
 #W  pquot.gi                    GAP Library                     Werner Nickel
 ##
-#H  $Id: pquot.gi,v 4.42.2.2 2008/10/29 16:08:14 gap Exp $
 ##
 #Y  Copyright (C) 1998  . . . . . . . . .  University of St Andrews, Scotland
 ##
-Revision.pquot_gi :=
-    "$Id: pquot.gi,v 4.42.2.2 2008/10/29 16:08:14 gap Exp $";
 
 CHECK := false;
 NumberOfCommutators := function( ranks )
@@ -177,7 +174,7 @@ AddVectorLTM := function( LTM, v )
 
         i := PositionSorted( LTM.bound, trailingEntry, 
                      function( a,b ) return a > b; end );
-        InsertElmList( LTM.bound, i, trailingEntry );
+        Add( LTM.bound, trailingEntry, i );
     fi;
     
 end;
@@ -1381,7 +1378,7 @@ end );
 InstallGlobalFunction( PQuotient,
 function( arg )
 
-    local   G,  p,  cl,  ngens,  collector,  qs,  t;
+    local   G,  p,  cl,  ngens,  collector,  qs,  t,noninteractive;
 
 
     ##  First we parse the arguments to this function
@@ -1443,8 +1440,10 @@ function( arg )
         fi;
     fi;
 
+    # do we call the routine within code (and want a `fail' returned if not
+    # enough generators can be created, instead of an error message.
+    noninteractive:=ValueOption("noninteractive")=true;
 
-    
     ClearPQuotientStatistics();
     qs := QuotientSystem( G, p, ngens, collector );
 
@@ -1470,6 +1469,9 @@ function( arg )
 
         Info( InfoQuotientSystem, 2, "  Define new generators." );
         if DefineNewGenerators( qs ) = fail then
+          if noninteractive then
+	    return fail;
+	  else
             Error( "Collector not large enough ",
                    "to define generators for the next class.\n",
                    "To return the current quotient (of class ",
@@ -1477,6 +1479,7 @@ function( arg )
                    "and `quit;' otherwise.\n" );
 
             return qs;
+	  fi;
         fi;
 
         Info( InfoQuotientSystem, 2, "  Compute tails." );
@@ -1524,14 +1527,16 @@ InstallMethod( EpimorphismPGroup,
 end );
 
 InstallMethod( EpimorphismPGroup,
-        "for finitely presented groups, class bound",
-        true,
-        [IsSubgroupFpGroup and IsWholeFamily, IsPosInt, IsPosInt],
-        0,
+        "for finitely presented groups, class bound", true,
+        [IsSubgroupFpGroup and IsWholeFamily, IsPosInt, IsPosInt], 0,
 function( G, p, c )
-local m;
-  m:=Minimum(30000,Maximum(256,(c*Length(GeneratorsOfGroup(G)))^2));
-  return EpimorphismQuotientSystem( PQuotient( G, p, c, m) );
+local ngens,pq;
+  ngens:=32;
+  repeat
+    ngens:=ngens*8;
+    pq:=PQuotient(G,p,c,ngens:noninteractive);
+  until pq<>fail;
+  return EpimorphismQuotientSystem(pq);
 end );
 
 
@@ -1545,30 +1550,50 @@ function( U, p )
 end );    
 
 InstallMethod( EpimorphismPGroup,
-        "for subgroups of finitely presented groups, class bound",
-        true,
-        [IsSubgroupFpGroup, IsPosInt, IsPosInt ],
-        0,
-        function( U, p, c )
+  "for subgroups of finitely presented groups, class bound",true,
+  [IsSubgroupFpGroup, IsPosInt, IsPosInt ],0,
+function( U, p, c )
+local phi, ngens, qs, psi, images, eps;
 
-    local   phi,  qs,  psi,  images,  eps;
-
-    phi := IsomorphismFpGroup( U );
+    phi:=IsomorphismFpGroup( U );
     
-    qs  := PQuotient( Image( phi ), p, c );
-    psi := EpimorphismQuotientSystem( qs );
+    ngens:=32;
+    repeat
+      ngens:=ngens*8;
+      qs:=PQuotient(Image(phi),p,c,ngens:noninteractive );
+    until qs<>fail;
+
+    psi:=EpimorphismQuotientSystem( qs );
 
 #    images := GeneratorsOfGroup( U );
 #    images := List( images , g->Image( phi, g ) );
 
-    images := MappingGeneratorsImages(phi)[2];
-    images := List( images , g->Image( psi, g ) );
+    images:=MappingGeneratorsImages(phi)[2];
+    images:=List( images , g->Image( psi, g ) );
   
     eps:=CompositionMapping2(psi,phi);
 
     SetIsSurjective( eps, true );
 
     return eps;
+end);
+
+InstallMethod( EpimorphismPGroup,"finite groups",true,
+        [IsFinite and IsGroup, IsPosInt ],0,
+function( U, p )
+  return EpimorphismPGroup( U, p, LogInt(Size(U),p) );
+end );    
+
+InstallMethod( EpimorphismPGroup,"finite group, class bound",true,
+  [IsFinite and IsGroup, IsPosInt, IsPosInt ],0,
+function( U, p, c )
+local ser;
+  if IsSubgroupFpGroup(U) or IsFreeGroup(U) then
+    TryNextMethod(); # fp groups *use* the PQ for the central series.
+  fi;
+  ser:=PCentralSeries(U,p);
+  c:=Minimum(c+1,Length(ser));
+  return NaturalHomomorphismByNormalSubgroupNC(U,ser[c]);
 end);
 
 

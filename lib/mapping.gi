@@ -1,13 +1,12 @@
 #############################################################################
 ##
 #W  mapping.gi                  GAP library                     Thomas Breuer
-#W                                                         & Martin Schoenert
+#W                                                         & Martin Schönert
 #W                                                             & Frank Celler
 ##
-#H  @(#)$Id: mapping.gi,v 4.67.2.1 2008/09/10 08:53:22 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains
@@ -15,8 +14,6 @@
 ##  2. generic methods for general mappings
 ##  3. generic methods for underlying relations of general mappings
 ##
-Revision.mapping_gi :=
-    "@(#)$Id: mapping.gi,v 4.67.2.1 2008/09/10 08:53:22 gap Exp $";
 
 
 #############################################################################
@@ -187,11 +184,11 @@ InstallGlobalFunction( Image, function ( arg )
            and IsSubset( Source( map ), elm ) then
 
         if IsDomain( elm ) or IsSSortedList( elm ) then
-	  if HasSource(map) and IsIdenticalObj(Source(map),elm) then
-	    return ImagesSource( map );
-	  else
-	    return ImagesSet( map, elm );
-	  fi;
+          if HasSource(map) and IsIdenticalObj(Source(map),elm) then
+            return ImagesSource( map );
+          else
+            return ImagesSet( map, elm );
+          fi;
         elif IsHomogeneousList( elm ) then
           return ImagesSet( map, Set( elm ) );
         fi;
@@ -421,12 +418,12 @@ InstallGlobalFunction( CompositionMapping, function ( arg )
 
         if     HasIsTotal( com ) and IsTotal( com )
            and HasIsTotal( nxt ) and IsTotal( nxt ) 
-	   and ((HasImagesSource(com) and
-	   CanComputeIsSubset(Source(nxt),ImagesSource(com)) and
-	   IsSubset(Source(nxt),ImagesSource(com)))
-	   or (HasRange(com) and
-	   CanComputeIsSubset(Source(nxt),Range(com)) and
-	   IsSubset(Source(nxt),Range(com))) ) then
+           and ((HasImagesSource(com) and
+           CanComputeIsSubset(Source(nxt),ImagesSource(com)) and
+           IsSubset(Source(nxt),ImagesSource(com)))
+           or (HasRange(com) and
+           CanComputeIsSubset(Source(nxt),Range(com)) and
+           IsSubset(Source(nxt),Range(com))) ) then
           SetIsTotal( new, true );
         fi;
 
@@ -869,7 +866,7 @@ InstallMethod( InverseOp,
     else
       Info(InfoWarning,1,
         "The mapping must be bijective and have source=range\n",
-	"#I  You might want to use `InverseGeneralMapping'");
+        "#I  You might want to use `InverseGeneralMapping'");
       return fail;
     fi;
     end );
@@ -1211,7 +1208,6 @@ InstallMethod( PreImagesRepresentative,
 #F  GeneralMappingByElements( <S>, <R>, <elms> )
 ##
 InstallGlobalFunction( GeneralMappingByElements, function( S, R, elms )
-
     local map, tupfam, rel;
 
     # Check the arguments.
@@ -1219,23 +1215,23 @@ InstallGlobalFunction( GeneralMappingByElements, function( S, R, elms )
 
       Error( "<S> and <R> must be domains" );
 
-    elif IsTupleCollection( elms ) then
+    elif IsDirectProductElementCollection( elms ) then
 
       tupfam:= ElementsFamily( FamilyObj( elms ) );
       if not (  IsIdenticalObj( ElementsFamily( FamilyObj( S ) ),
-                          ComponentsOfTuplesFamily( tupfam )[1] )
+                          ComponentsOfDirectProductElementsFamily( tupfam )[1] )
          and IsIdenticalObj( ElementsFamily( FamilyObj( R ) ),
-                          ComponentsOfTuplesFamily( tupfam )[2] ) ) then
+                          ComponentsOfDirectProductElementsFamily( tupfam )[2] ) ) then
         Error( "families of arguments do not match" );
       fi;
 
     elif IsEmpty( elms ) then
 
-      tupfam:= TuplesFamily( [ ElementsFamily( FamilyObj( S ) ),
+      tupfam:= DirectProductElementsFamily( [ ElementsFamily( FamilyObj( S ) ),
                                ElementsFamily( FamilyObj( R ) ) ] );
 
     else
-      Error( "<elms> must be a collection of tuples or empty" );
+      Error( "<elms> must be a collection of direct product elements or empty" );
     fi;
 
     # Construct the general mapping.
@@ -1265,7 +1261,7 @@ InstallMethod( UnderlyingRelation,
     function( map )
     local rel;
     rel:= Objectify( NewType( CollectionsFamily(
-          TuplesFamily( [ ElementsFamily( FamilyObj( Source( map ) ) ),
+          DirectProductElementsFamily( [ ElementsFamily( FamilyObj( Source( map ) ) ),
                           ElementsFamily( FamilyObj( Range( map  ) ) ) ] ) ),
                               IsDomain and IsAttributeStoringRep ),
                      rec() );
@@ -1287,7 +1283,7 @@ InstallMethod( UnderlyingRelation,
 InstallMethod( SetUnderlyingGeneralMapping,
     "for an underlying relation and a general mapping",
     true,
-    [ IsDomain and IsTupleCollection and HasAsList
+    [ IsDomain and IsDirectProductElementCollection and HasAsList
       and IsAttributeStoringRep,
       IsGeneralMapping ], 0,
     function( rel, map )
@@ -1298,7 +1294,7 @@ InstallMethod( SetUnderlyingGeneralMapping,
 InstallMethod( SetUnderlyingGeneralMapping,
     "for an underlying relation and a general mapping",
     true,
-    [ IsDomain and IsTupleCollection and HasGeneratorsOfDomain
+    [ IsDomain and IsDirectProductElementCollection and HasGeneratorsOfDomain
       and IsAttributeStoringRep,
       IsGeneralMapping ], 0,
     function( rel, map )
@@ -1309,34 +1305,32 @@ InstallMethod( SetUnderlyingGeneralMapping,
 
 #############################################################################
 ##
-#M  SetAsList( <rel>, <tuples> )
-#M  SetGeneratorsOfDomain( <rel>, <tuples> )
+#M  SetAsList( <rel>, <dpelms> )
+#M  SetGeneratorsOfDomain( <rel>, <dpelms> )
 ##
 ##  Make sure that <map> gets the flag `IsConstantTimeAccessGeneralMapping'
 ##  if <rel> knows its `AsList' or `GeneratorsOfDomain' value,
 ##  where <map> is the underlying general mapping of <rel>.
 ##
 InstallMethod( SetAsList,
-    "for an underlying relation and a list of tuples",
+    "for an underlying relation and a list of direct product elements",
     IsIdenticalObj,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping
       and IsAttributeStoringRep,
-      IsTupleCollection ],
-    0,
-    function( rel, tuples )
+      IsDirectProductElementCollection ],
+    function( rel, dpelms )
     SetIsConstantTimeAccessGeneralMapping( UnderlyingGeneralMapping( rel ),
         true );
     TryNextMethod();
     end );
 
 InstallMethod( SetGeneratorsOfDomain,
-    "for an underlying relation and a list of tuples",
+    "for an underlying relation and a list of direct product elements",
     IsIdenticalObj,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping
       and IsAttributeStoringRep,
-      IsTupleCollection ],
-    0,
-    function( rel, tuples )
+      IsDirectProductElementCollection ],
+    function( rel, dpelms )
     SetIsConstantTimeAccessGeneralMapping( UnderlyingGeneralMapping( rel ),
         true );
     TryNextMethod();
@@ -1360,8 +1354,8 @@ InstallMethod( SetGeneratorsOfDomain,
 InstallMethod( \=,
     "for two underlying relations of general mappings",
     IsIdenticalObj,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping,
-      IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping,
+      IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ], 0,
     function( rel1, rel2 )
     local map1, map2;
     map1:= UnderlyingGeneralMapping( rel1 );
@@ -1393,8 +1387,8 @@ InstallMethod( \=,
 InstallMethod( \<,
     "for two underlying relations of general mappings",
     IsIdenticalObj,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping,
-      IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping,
+      IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ], 0,
     function( rel1, rel2 )
     local map1,       # first general mapping,
           map2,       # second general mapping,
@@ -1428,7 +1422,7 @@ InstallMethod( \<,
 InstallMethod( IsFinite,
     "for an underlying relation of a general mapping",
     true,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ], 0,
     function( rel )
     local map;
     map:= UnderlyingGeneralMapping( rel );
@@ -1447,7 +1441,7 @@ InstallMethod( IsFinite,
 InstallMethod( Enumerator,
     "for an underlying relation of a general mapping",
     true,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ], 0,
     function( rel )
     local map, enum, S, R, elm, imgs;
     map:= UnderlyingGeneralMapping( rel );
@@ -1458,7 +1452,7 @@ InstallMethod( Enumerator,
       for elm in Enumerator( S ) do
         imgs:= ImagesElm( map, elm );
         if IsFinite( imgs ) then
-          UniteSet( enum, List( imgs, im -> Tuple( [ elm, im ] ) ) );
+          UniteSet( enum, List( imgs, im -> DirectProductElement( [ elm, im ] ) ) );
         else
           TryNextMethod();
         fi;
@@ -1468,7 +1462,7 @@ InstallMethod( Enumerator,
       for elm in Enumerator( R ) do
         imgs:= PreImagesElm( map, elm );
         if IsFinite( imgs ) then
-          UniteSet( enum, List( imgs, im -> Tuple( [ im, elm ] ) ) );
+          UniteSet( enum, List( imgs, im -> DirectProductElement( [ im, elm ] ) ) );
         else
           TryNextMethod();
         fi;
@@ -1482,13 +1476,13 @@ InstallMethod( Enumerator,
 
 #############################################################################
 ##
-#M  \in( <tuple>, <map> ) . . . . . . for elm and underl. rel. of a gen. map.
+#M  \in( <dpelm>, <map> ) . . . . . . for elm and underl. rel. of a gen. map.
 ##
 InstallMethod( \in,
     "for an element and an underlying relation of a general mapping",
     IsElmsColls,
-    [ IsTuple,
-      IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDirectProductElement,
+      IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ], 0,
     function( elm, rel )
     return elm[2] in ImagesElm( UnderlyingGeneralMapping( rel ), elm[1] );
     end );
@@ -1500,8 +1494,7 @@ InstallMethod( \in,
 ##
 InstallMethod( Size,
     "for an underlying relation of a general mapping",
-    true,
-    [ IsDomain and IsTupleCollection and HasUnderlyingGeneralMapping ], 0,
+    [ IsDomain and IsDirectProductElementCollection and HasUnderlyingGeneralMapping ],
     function( rel )
     local map;
     map:= UnderlyingGeneralMapping( rel );
@@ -1528,7 +1521,8 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
     "for a collection of general mappings",
     true,
     [ IsGeneralMappingCollection ], 0,
-    mappinglist -> ForAll( mappinglist, map -> Inverse( map ) <> fail ) );
+    mappinglist -> ForAll( mappinglist, map -> 
+    (HasIsBijective(map) and IsBijective(map)) or Inverse( map ) <> fail ) );
 
 #############################################################################
 ##

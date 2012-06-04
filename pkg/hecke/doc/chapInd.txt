@@ -1,0 +1,144 @@
+  
+  
+  [1XIndex[0X
+  
+  [2XAddIndecomposable[0X  3.5-9
+  [2XAddRimHook[0X  3.7-16
+  [2XAdjustmentMatrix[0X  3.5-4
+  [2XBetaSet[0X  3.8-9
+  [2XCalculateDecompositionMatrix[0X  3.5-6
+  [2XCharacteristic[0X  3.2-2
+  [2XCoefficient[0X  3.9-4
+  [2XCombineEQuotientECore[0X  3.8-4
+  [2XConjugatePartition[0X  3.8-8
+  [2XConjugateTableau[0X  3.10-4
+  [2XCrystalDecompositionMatrix[0X  3.2-9
+  [2XCrystalDecompositionMatrix[0X (for an algebra and a filename)  3.2-9
+  [2XDecompositionMatrix[0X  3.2-8
+  [2XDecompositionMatrix[0X (for an algebra and an integer)  3.2-8
+  [2XDecompositionMatrixMatrix[0X  3.5-8
+  [2XDecompositionNumber[0X  3.2-10
+  [2XDecompositionNumber[0X (for a decomposition matrix)  3.2-10
+  [2XDominates[0X  3.8-12
+  [2XEAbacus[0X  3.8-1
+  [2XECore[0X  3.8-1
+  [2XEQuotient[0X  3.8-3
+  [2XERegularPartitions[0X  3.8-6
+  [2XERegulars[0X  3.9-2
+  [2XERegulars[0X (for a decomposition matrix)  3.9-2
+  [2XEResidueDiagram[0X  3.7-13
+  [2XEResidueDiagram[0X (for modules)  3.7-13
+  [2XETopLadder[0X  3.8-11
+  [2XEWeight[0X  3.8-5
+  [2XGoodNodeLatticePath[0X  3.7-10
+  [2XGoodNodeLatticePaths[0X  3.7-10
+  [2XGoodNodes[0X  3.7-6
+  [2XGoodNodes[0X (for residues)  3.7-6
+  [2XGoodNodeSequence[0X  3.7-8
+  [2XGoodNodeSequences[0X  3.7-8
+  [5Xhecke[0m  2.
+  [5Xhecke[0m package  1.
+  [2XHookLengthDiagram[0X  3.7-14
+  [2XInducedDecompositionMatrix[0X  3.5-1
+  [2XInnerProduct[0X  3.9-5
+  [2XInverseLittlewoodRichardsonRule[0X  3.7-12
+  [2XInvertDecompositionMatrix[0X  3.5-3
+  [2XIsAlgebraObj[0X  3.1-1
+  [2XIsAlgebraObjModule[0X  3.1-1
+  [2XIsCrystalDecompositionMatrix[0X  3.1-1
+  [2XIsDecompositionMatrix[0X  3.1-1
+  [2XIsECore[0X  3.8-2
+  [2XIsERegular[0X  3.8-7
+  [2XIsFockModule[0X  3.1-1
+  [2XIsFockPIM[0X  3.1-1
+  [2XIsFockSchurModule[0X  3.1-1
+  [2XIsFockSchurPIM[0X  3.1-1
+  [2XIsFockSchurSimple[0X  3.1-1
+  [2XIsFockSchurWeyl[0X  3.1-1
+  [2XIsFockSimple[0X  3.1-1
+  [2XIsFockSpecht[0X  3.1-1
+  [2XIsHecke[0X  3.1-1
+  [2XIsHeckeModule[0X  3.1-1
+  [2XIsHeckePIM[0X  3.1-1
+  [2XIsHeckeSimple[0X  3.1-1
+  [2XIsHeckeSpecht[0X  3.1-1
+  [2XIsNewIndecomposable[0X  3.5-2
+  [2XIsSchur[0X  3.1-1
+  [2XIsSchurModule[0X  3.1-1
+  [2XIsSchurPIM[0X  3.1-1
+  [2XIsSchurSimple[0X  3.1-1
+  [2XIsSchurWeyl[0X  3.1-1
+  [2XIsSimpleModule[0X  3.7-2
+  [2XLatticePathGoodNodeSequence[0X  3.7-10
+  [2XLengthLexicographic[0X  3.8-13
+  [2XLexicographic[0X  3.8-14
+  [2XListERegulars[0X  3.9-2
+  [2XLittlewoodRichardsonCoefficient[0X  3.7-11
+  [2XLittlewoodRichardsonRule[0X  3.7-11
+  [2XMakeFockPIM[0X  3.2-6
+  [2XMakeFockSpecht[0X  3.2-6
+  [2XMakePIM[0X  3.2-3
+  [2XMakePIM[0X (for a decomposition matrix and a module)  3.2-3
+  [2XMakePIM[0X (for a decomposition matrix)  3.2-3
+  [2XMakePIM[0X (for a module)  3.2-3
+  [2XMakeSimple[0X  3.2-3
+  [2XMakeSimple[0X (for a decomposition matrix and a module)  3.2-3
+  [2XMakeSimple[0X (for a decomposition matrix)  3.2-3
+  [2XMakeSimple[0X (for a module)  3.2-3
+  [2XMakeSpecht[0X  3.2-3
+  [2XMakeSpecht[0X (for a decomposition matrix and a module)  3.2-3
+  [2XMakeSpecht[0X (for a decomposition matrix)  3.2-3
+  [2XMakeSpecht[0X (for a module)  3.2-3
+  [2XMatrixDecompositionMatrix[0X  3.5-7
+  [2XMissingIndecomposables[0X  3.5-11
+  [2XMullineuxMap[0X  3.7-3
+  [2XMullineuxMap[0X (for a decomposition matrix)  3.7-3
+  [2XMullineuxMap[0X (for a module)  3.7-3
+  [2XMullineuxSymbol[0X  3.7-4
+  [2XNormalNodes[0X  3.7-7
+  [2XNormalNodes[0X (for residues)  3.7-7
+  [2XOrderOfQ[0X  3.2-2
+  [2XPartitionBetaSet[0X  3.8-10
+  [2XPartitionGoodNodeSequence[0X  3.7-9
+  [2XPartitionMullineuxSymbol[0X  3.7-5
+  [2XRemoveIndecomposable[0X  3.5-10
+  [2XRemoveRimHook[0X  3.7-15
+  [2XReverseDominance[0X  3.8-15
+  [2XRInducedModule[0X  3.4-1
+  [2XRInducedModule[0X (for residues)  3.4-1
+  [2XRRestrictedModule[0X  3.4-3
+  [2XRRestrictedModule[0X (for residues)  3.4-3
+  [2XSaveDecompositionMatrix[0X  3.5-5
+  [2XSaveDecompositionMatrix[0X (for a filename)  3.5-5
+  [2XSchaper[0X  3.7-1
+  [2XSchur[0X  3.2-7
+  [2XSchur[0X (for an integer)  3.2-7
+  [2XSchur[0X (for to integers and a valuation map)  3.2-7
+  [2XSchur[0X (for two integers)  3.2-7
+  [2XSemiStandardTableaux[0X  3.10-2
+  [2XSetOrdering[0X  3.2-2
+  [2XShapeTableau[0X  3.10-5
+  [2XSimpleDimension[0X  3.6-1
+  [2XSimpleDimension[0X (for a partition)  3.6-1
+  [2XSimpleDimension[0X (for an algebra object and an integer)  3.6-1
+  [2XSInducedModule[0X  3.4-2
+  [2XSInducedModule[0X (for residues)  3.4-2
+  [2XSpecht[0X  3.2-1
+  [2XSpecht[0X (for an integer)  3.2-1
+  [2XSpecht[0X (for to integers and a valuation map)  3.2-1
+  [2XSpecht[0X (for two integers)  3.2-1
+  [2XSpechtDimension[0X  3.6-2
+  [2XSpechtDirectory[0X  3.2-2
+  [2XSpecialized[0X  3.9-1
+  [2XSpecialized[0X (for a decomposition matrix)  3.9-1
+  [2XSplitECores[0X  3.9-3
+  [2XSplitECores[0X (for a module and a partition)  3.9-3
+  [2XSplitECores[0X (for two modules)  3.9-3
+  [2XSRestrictedModule[0X  3.4-4
+  [2XSRestrictedModule[0X (for residues)  3.4-4
+  [2XStandardTableaux[0X  3.10-3
+  [2XTableau[0X  3.10-1
+  [2XTypeTableau[0X  3.10-6
+  
+  
+  -------------------------------------------------------

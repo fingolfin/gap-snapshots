@@ -5,18 +5,15 @@
 #W                                                            Juergen Mueller
 #W                                                           Alexander Hulpke
 ##
-#H  @(#)$Id: ratfun1.gi,v 4.17.2.2 2007/07/24 17:07:02 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file  contains those  methods  for    rational  functions,  laurent
 ##  polynomials and polynomials and their families which are time critical
 ##  and will benefit from compilation.
 ##
-Revision.ratfun1_gi :=
-    "@(#)$Id: ratfun1.gi,v 4.17.2.2 2007/07/24 17:07:02 gap Exp $";
 
 # Functions to create objects 
 
@@ -292,9 +289,13 @@ end;
 UNIV_FUNC_BY_EXTREP:=function(rfam,ncof,dcof,val,inum)
 local f;
 
-  # constand denominator -> ratfun
+  # constant denominator -> ratfun
   if Length(dcof)=1 then
-    return LAUR_POL_BY_EXTREP(rfam,ncof/dcof[1],val,inum);
+    if not IsOne(dcof[1]) then
+      return LAUR_POL_BY_EXTREP(rfam,1/dcof[1]*ncof,val,inum);
+    else
+      return LAUR_POL_BY_EXTREP(rfam,ncof,val,inum);
+    fi;
   fi;
 
   # slightly better to do this after the Length id determined 
@@ -734,13 +735,13 @@ local   indn,  fam,  zero,  l,  r,  val,  sum;
     sum:=ShallowCopy(r[1]);
     RightShiftRowVector(sum,r[2]-l[2],zero);
     AddCoeffs(sum,l[1]);
-    ShrinkCoeffs(sum);
+    ShrinkRowVector(sum);
     val:=l[2];
   else #l[2]>r[2]
     sum:=ShallowCopy(l[1]);
     RightShiftRowVector(sum,l[2]-r[2],zero);
     AddCoeffs(sum,r[1]);
-    ShrinkCoeffs(sum);
+    ShrinkRowVector(sum);
     val:=r[2];
   fi;
 
@@ -791,14 +792,14 @@ local   indn,  fam,  zero,  l,  r,  val,  sum;
     sum:=ShallowCopy(AdditiveInverseOp(r[1]));
     RightShiftRowVector(sum,r[2]-l[2],zero);
     AddCoeffs(sum,l[1]);
-    ShrinkCoeffs(sum);
+    ShrinkRowVector(sum);
     val:=l[2];
   else #l[2]>r[2]
     sum:=ShallowCopy(l[1]);
     RightShiftRowVector(sum,l[2]-r[2],zero);
     # was: AddCoeffs(sum,AdditiveInverseOp(r[1]));
     AddCoeffs(sum,r[1],-fam!.oneCoefficient);
-    ShrinkCoeffs(sum);
+    ShrinkRowVector(sum);
     val:=r[2];
   fi;
 
@@ -858,7 +859,7 @@ local w;
   while 0<Length(v) do
     w:=v;
     ReduceCoeffs(u,v);
-    ShrinkCoeffs(u);
+    ShrinkRowVector(u);
     v:=u;
     u:=w;
   od;

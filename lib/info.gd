@@ -2,10 +2,9 @@
 ##
 #W  info.gd                     GAP library                      Steve Linton
 ##
-#H  @(#)$Id: info.gd,v 4.16 2002/04/15 10:04:53 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This package sets up the new Info messages system
@@ -23,7 +22,8 @@
 ##  \+ or \[\] to combine InfoClasses into an InfoSelector
 ##  SetInfoLevel( <class>, <level> ) to set desired printing levels and
 ##  Info( <selector>, <level>, <data>, <moredata>, ... ) to selectively print
-##  <data>, <moredata>, etc.
+##  <data>, <moredata>, etc. There is SetInfoHandler( <class>, <fun> ) to
+##  customize the way the <data>, etc. are printed. 
 ##
 ##  Also available are InfoLevel( <class> ) to inspect the level, and
 ##  SetAllInfoLevels( <level> )
@@ -34,8 +34,6 @@
 ##
 ##  This file is the declarations part of that package
 ##
-Revision.info_gd :=
-    "@(#)$Id: info.gd,v 4.16 2002/04/15 10:04:53 sal Exp $";
 
 #############################################################################
 ##
@@ -117,13 +115,30 @@ DeclareOperation("InfoLevel", [IsInfoClass]);
 ##  If the desired verbosity level for any of the classes making up selector
 ##  is equal to or greater than level, then this function should Print "#I  "
 ##  then do CallFuncList(Print, <data> ...) (where <data> may be multiple
-##  arguments), then Print a newline
+##  arguments), then Print a newline. Can be customized with SetInfoHandler.
 ##
 ##  Info is now a keyword, implemented in the kernel, so that data arguments
 ##  are not evaluated when they are not needed
 ##
 
-##  DeclareGlobalFunction("Info");
+#############################################################################
+##
+#O  SetInfoHandler( <selector>, <handler> )
+##  
+##  <handler> must be of the form  function(selector, level, moreargsfrominfo)
+##  
+DeclareGlobalFunction("SetInfoHandler");
+DeclareGlobalFunction("DefaultInfoHandler");
+
+#############################################################################
+##
+#O  SetInfoOutput( <selector>, <out> )
+##  
+##  <out> must be output file name or stream
+##  
+DeclareGlobalFunction("SetInfoOutput");
+DeclareGlobalFunction("SetDefaultInfoOutput");
+BIND_GLOBAL("DefaultInfoOutput", "*Print*");
 
 #############################################################################
 ##

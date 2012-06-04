@@ -2,7 +2,7 @@
 ##
 #W  tmadmin.tmi         GAP table of marks library           Thomas Merkwitz
 ##
-#H  @(#)$Id: tmadmin.tmi,v 1.8 2003/10/30 08:03:15 gap Exp $
+#H  @(#)$Id: tmadmin.tmi,v 1.10 2008/01/08 10:48:38 gap Exp $
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
@@ -10,7 +10,7 @@
 ##  handle the table of marks library
 ##
 Revision.( "tomlib/gap/tmadmin_tmi" ) :=
-    "@(#)$Id: tmadmin.tmi,v 1.8 2003/10/30 08:03:15 gap Exp $";
+    "@(#)$Id: tmadmin.tmi,v 1.10 2008/01/08 10:48:38 gap Exp $";
 
 
 #############################################################################
@@ -20,49 +20,67 @@ Revision.( "tomlib/gap/tmadmin_tmi" ) :=
 ##  This function is used to read data files of the tables of marks library.
 ##
 BindGlobal( "ReadTom",
-    name -> ReadPkg( "tomlib", Concatenation( "data/", name ) ) );
-
-
-#############################################################################
-##
-#M  FusionCharTableTom( <tbl>, <tom> )  . . . . . . . . . . .  element fusion
-##
-InstallMethod( FusionCharTableTom,
-    "for library character table and library table of marks",
-    [ IsOrdinaryTable and IsLibraryCharacterTableRep,
-      IsTableOfMarks and IsLibTomRep ],
-    function( tbl, tom )
-
-    local fus,
-          i, j, h, hh, orders, cycs, ll, ind, p, pow, subs,
-          marks, powermap;
-
-    # If the fusion is stored on `tbl' then take it.
-    if not IsBound( tbl!.tomfusion ) then
-      TryNextMethod();
-    fi;
-
-    fus:= tbl!.tomfusion.map;
-    if HasPermutationTom( tom ) then
-      fus:= OnTuples( fus, PermutationTom( tom ) );
-    fi;
-    if HasClassPermutation( tbl ) then
-      fus:= Permuted( fus, ClassPermutation( tbl ) );
-    fi;
-
-    return fus;
-    end );
+    name -> ReadPackage( "tomlib", Concatenation( "data/", name ) ) );
 
 
 #############################################################################
 ##
 #V  LIBTOMLIST
 ##
-##  `LIBTOMLIST' provides all necessary information about the library of
-##  table of marks.
-##  It is a record with information about admissible names, fusion sources
-##  etc. of all library tables;
-##  The record is stored in the file `data/tmprimar.tom'.
+##  <Ref Var="LIBTOMLIST"/> provides all necessary information about the
+##  library of table of marks.
+##  It is a record with the following components.
+##  <P/>
+##  <List>
+##  <Mark><C>files</C></Mark>
+##  <Item>
+##     list of data filenames, relative to the directory
+##     <F>pkg/tomlib/data</F> and without the suffix <C>.tom</C>,
+##  </Item>
+##  <Mark><C>namelist</C></Mark>
+##  <Item>
+##     list whose <M>i</M>-th entry corresponds to the <M>i</M>-th entry
+##     of the <C>files</C> component and is itself a list of identifier
+##     information about the tables of marks stored in this file;
+##     for each table of marks, the list of admissible identifiers is stored,
+##     with first entry the identifier that is used in the data file;
+##     note that some tables may be not actually installed, see the component
+##     <C>noninstalled</C> below,
+##  </Item>
+##  <Mark><C>names</C></Mark>
+##  <Item>
+##     list of admissible identifiers of tables of marks that are stored
+##     in files that are actually available,
+##  </Item>
+##  <Mark><C>noninstalled</C></Mark>
+##  <Item>
+##     list of admissible identifiers of tables of marks that are stored
+##     in files that are not available,
+##  </Item>
+##  <Mark><C>positions</C></Mark>
+##  <Item>
+##     list of pairs, the value <M>[ i, j ]</M> at position <M>k</M> means
+##     that the table of marks with admissible identifier the <M>k</M>-th
+##     entry of the <C>names</C> component is the <M>j</M>-th table in the
+##     <M>i</M>-th data file,
+##  </Item>
+##  <Mark><C>fusions</C></Mark>
+##  <Item>
+##     list whose <M>i</M>-th entry corresponds to the <M>i</M>-th entry
+##     of the <C>files</C> component and is itself a list of fusion
+##     information about the tables of marks stored in this file;
+##     for each table of marks,
+##     the list of pairs <C>[ <A>id</A>, <A>nr</A> ]</C> is stored,
+##     where <A>id</A> is the identifiers of a table of marks of a subgroup
+##     such that the fusion into the current table of marks is known
+##     (in the sense of a calls of <Ref Func="ALFT"/>),
+##     and <A>nr</A> is the number of the class of these subgroups in the
+##     current table of marks.
+##  </Item>
+##  <List>
+##  <P/>
+##  The record is stored in the file <F>data/tmprimar.tom</F>.
+##  The function <C>MakeLIBTOMLIST</C> creates its final version at runtime.
 ##
 DeclareAutoreadableVariables( "tomlib", "data/tmprimar.tom",
     [ "LIBTOMLIST" ] );
@@ -171,6 +189,7 @@ InstallGlobalFunction( TableOfMarksFromLibrary, function( string )
 
       # read it
       ReadTom( Concatenation( file, ".tom" ) );
+#T get rid of ReadTom?
 
       # reset the load status
       if LIBTOMKNOWN.UNLOAD then
@@ -187,9 +206,19 @@ InstallGlobalFunction( TableOfMarksFromLibrary, function( string )
 #F  ConvertToLibTom( <record> )
 ##
 InstallGlobalFunction( ConvertToLibTom, function( record )
+    local   names;
+    
+    names:= RecNames( record );
     ConvertToTableOfMarks( record );
+    
+    # StandardGeneratorsInfo is not listed in TableOfMarksComponents
+    if "StandardGeneratorsInfo" in names then
+        Setter( StandardGeneratorsInfo )( record,
+                record!.( "StandardGeneratorsInfo" ) );
+    fi;
+    
     SetFilterObj( record, IsLibTomRep );
-   return record;
+    return record;
 end );
 
 
@@ -461,7 +490,7 @@ InstallMethod( NotifiedFusionsOfLibTom,
 #M  FusionsToLibTom( <string> )
 ##
 InstallMethod( FusionsToLibTom,
-    [ IsTableOfMarks and IsLibTomRep],
+    [ IsTableOfMarks and IsLibTomRep ],
     x -> FusionsToLibTom( Identifier( x ) ) );
 
 InstallMethod( FusionsToLibTom,
@@ -516,6 +545,20 @@ InstallMethod( NotifiedFusionsToLibTom,
     return Filtered(LIBTOMLIST.fusions[pos[1]][pos[2]], x-> not x[1] in
                      LIBTOMLIST.noninstalled );
 end );
+
+
+#############################################################################
+##
+#F  UnloadTableOfMarksData()
+##
+InstallGlobalFunction( UnloadTableOfMarksData, function()
+    local name;
+
+    for name in RecNames( LIBTOMKNOWN.LOADSTATUS ) do
+      Unbind( LIBTOMKNOWN.LOADSTATUS.( name ) );
+      Unbind( LIBTOMKNOWN.( name ) );
+    od;
+    end );
 
 
 #############################################################################

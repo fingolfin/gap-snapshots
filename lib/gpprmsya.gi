@@ -1,19 +1,16 @@
 #############################################################################
 ##
-#W  gpprmsya.gi                 GAP Library                    Heiko Theissen
+#W  gpprmsya.gi                 GAP Library                    Heiko Theißen
 #W                                                           Alexander Hulpke
-#W                                                           Martin Schoenert
+#W                                                           Martin Schönert
 ##
-#H  @(#)$Id: gpprmsya.gi,v 4.38.2.12 2006/07/26 21:12:50 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the methods for symmetric and alternating groups
 ##
-Revision.gpprmsya_gi :=
-    "@(#)$Id: gpprmsya.gi,v 4.38.2.12 2006/07/26 21:12:50 gap Exp $";
 
 # xref to transgrp library
 if not IsBound(TRANSDEGREES) then
@@ -557,7 +554,7 @@ local schreiertree, cosetrepresentative, flag, schtree, stab, k, p, j,
   fi;
 end;
 
-# see Akos Seress, Permutation group algorithms. Cambridge Tracts in
+# see Ákos Seress, Permutation group algorithms. Cambridge Tracts in
 # Mathematics, 152. Section 10.2 for the background of this function.
 BindGlobal("DoSnAnGiantTest",function(g,dom,kind)
 local bound, n, i, p, cycles, l, pnt;
@@ -578,7 +575,7 @@ local bound, n, i, p, cycles, l, pnt;
   repeat
     i:=i+1;
     p:=PseudoRandom(g);
-    l:=CycleLengthPermInt(p,pnt);
+    l:=CYCLE_LENGTH_PERM_INT(p,pnt);
   until (i>bound) or (l> n/2 and l<n-2 and IsPrime(l));
   if i>bound then
     return fail;
@@ -763,6 +760,29 @@ end );
 
 #############################################################################
 ##
+#M  Socle( <nat-sym/alt-grp> )
+##
+InstallMethod( Socle,
+    true, [ IsNaturalSymmetricGroup ], 0,
+function(sym)
+  if NrMovedPoints(sym)<=4 then
+    TryNextMethod();
+  else
+    return AlternatingGroup(MovedPoints(sym));
+  fi;
+end);
+
+InstallMethod( Socle, true, [ IsNaturalAlternatingGroup ], 0,
+function(alt)
+  if NrMovedPoints(alt)<=4 then
+    TryNextMethod();
+  else
+    return alt;
+  fi;
+end);
+
+#############################################################################
+##
 #M  Size( <nat-sym-grp> )
 ##
 InstallMethod( Size,
@@ -913,14 +933,14 @@ local b, bl;
 end);
 
 BindGlobal("NormalizerParentSA",function(s,u)
-local dom, issym, o, b, w, perm, pg, l, is, ie, ll, syll, act, typ, sel,
-      bas, wdom, comp, lperm, other, away, i, j;
+  local dom, issym, o, b, beta, alpha, emb, nb, na, w, perm, pg, l, is, ie, ll, syll, act, typ, sel, bas, wdom, comp, lperm, other, away, i, j;
 
   dom:=Set(MovedPoints(s));
-  if not IsSubset(dom,MovedPoints(u)) then
-    return s; # cannot get parent
-  fi;
   issym:=IsNaturalSymmetricGroup(s);
+  if not IsSubset(dom,MovedPoints(u)) or
+    ((not issym) and ForAny(GeneratorsOfGroup(u),x->SignPerm(x)=-1)) then
+    return s; # cannot get parent, as not contained
+  fi;
   # get orbits
   o:=ShallowCopy(Orbits(u,dom));
   Info(InfoGroup,1,"SymmAlt normalizer: orbits ",List(o,Length));
@@ -933,9 +953,27 @@ local dom, issym, o, b, w, perm, pg, l, is, ie, ll, syll, act, typ, sel,
       return s;
     fi;
     # the normalizer must fix this block system
-    w:=WreathProduct(SymmetricGroup(Length(b[1])),SymmetricGroup(Length(b)));
-    perm:=MappingPermListList([1..Length(o[1])],Concatenation(b));
-    pg:=w^perm;
+
+    beta:=ActionHomomorphism(u,b,OnSets,"surjective");
+    alpha:=ActionHomomorphism(Stabilizer(u,b[1],OnSets),b[1],"surjective");
+    emb:=KuKGenerators(u,beta,alpha);
+    nb:=Normalizer(SymmetricGroup(Length(b)),Image(beta));
+    na:=Normalizer(SymmetricGroup(Length(b[1])),Image(alpha));
+    w:=WreathProduct(na,nb);
+    if issym then
+      perm:=s;
+    else
+      perm:=SymmetricGroup(MovedPoints(s));
+    fi;
+    perm:=RepresentativeAction(perm,emb,GeneratorsOfGroup(u),OnTuples);
+    if perm<>fail then
+      pg:=w^perm;
+    else
+      #Print("Embedding Problem!\n");
+      w:=WreathProduct(SymmetricGroup(Length(b[1])),SymmetricGroup(Length(b)));
+      perm:=MappingPermListList([1..Length(o[1])],Concatenation(b));
+      pg:=w^perm;
+    fi;
   else
 
     # first sort by Length
@@ -1006,6 +1044,10 @@ local dom, issym, o, b, w, perm, pg, l, is, ie, ll, syll, act, typ, sel,
   fi;
   if not issym then 
     pg:=AlternatingSubgroup(pg);
+  fi;
+  if IsSolvableGroup(pg) then
+    perm:=IsomorphismPcGroup(pg);
+    pg:=PreImage(perm,Normalizer(Image(perm,pg),Image(perm,u)));
   fi;
   return pg;
 end);
@@ -1340,14 +1382,24 @@ end);
 ##
 #M  ViewObj( <nat-sym-grp> )
 ##
-InstallMethod( ViewObj,
+InstallMethod( ViewString,
+    "for natural alternating group",
+    true,
+    [ IsNaturalAlternatingGroup ], 0,
+function(alt)
+    alt:=MovedPoints(alt);
+    IsRange(alt);
+    return Concatenation( "Alt( ", String(alt), " )" );
+end );
+
+InstallMethod( ViewString,
     "for natural symmetric group",
     true,
     [ IsNaturalSymmetricGroup ], 0,
 function(sym)
     sym:=MovedPoints(sym);
     IsRange(sym);
-    Print( "Sym( ",sym, " )" );
+    return Concatenation( "Sym( ",String(sym), " )" );
 end );
 
 InstallMethod( ViewObj,
@@ -1355,24 +1407,39 @@ InstallMethod( ViewObj,
     true,
     [ IsNaturalAlternatingGroup ], 0,
 function(alt)
-    alt:=MovedPoints(alt);
-    IsRange(alt);
-    Print( "Alt( ", alt, " )" );
+    Print(ViewString(alt));
 end );
 
+InstallMethod( ViewObj,
+    "for natural symmetric group",
+    true,
+    [ IsNaturalSymmetricGroup ], 0,
+function(sym)
+    Print(ViewString(sym));
+end );
 
 #############################################################################
 ##
 #M  PrintObj( <nat-sym-grp> )
 ##
-InstallMethod( PrintObj,
+InstallMethod( String,
     "for natural symmetric group",
     true,
     [ IsNaturalSymmetricGroup ], 0,
 function(sym)
     sym:=MovedPoints(sym);
     IsRange(sym);
-    Print( "SymmetricGroup( ",sym, " )" );
+    return Concatenation( "SymmetricGroup( ",String(sym), " )" );
+end );
+
+InstallMethod( String,
+    "for natural alternating group",
+    true,
+    [ IsNaturalAlternatingGroup ], 0,
+function(alt)
+    alt:=MovedPoints(alt);
+    IsRange(alt);
+    return Concatenation( "AlternatingGroup( ",String(alt), " )" );
 end );
 
 InstallMethod( PrintObj,
@@ -1380,11 +1447,16 @@ InstallMethod( PrintObj,
     true,
     [ IsNaturalAlternatingGroup ], 0,
 function(alt)
-    alt:=MovedPoints(alt);
-    IsRange(alt);
-    Print( "AlternatingGroup( ", alt, " )" );
+    Print(String(alt));
 end );
 
+InstallMethod( PrintObj,
+    "for natural symmetric group",
+    true,
+    [ IsNaturalSymmetricGroup ], 0,
+function(sym)
+    Print(String(sym));
+end );
 
 #############################################################################
 ##

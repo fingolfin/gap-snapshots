@@ -1,0 +1,39 @@
+\chapcontents {1}{Introduction}{3}
+\seccontents {1.1}{Authors and Acknowledgements} {4}
+\seccontents {1.2}{Change history} {4}
+\chapcontents {2}{Mathematical Background and Terminology}{6}
+\seccontents {2.1}{Basic notions} {6}
+\seccontents {2.2}{The p-quotient Algorithm} {8}
+\seccontents {2.3}{The p-group generation Algorithm, Standard Presentation, Isomorphism Testing} {9}
+\chapcontents {3}{Infrastructure}{10}
+\seccontents {3.1}{Loading the ANUPQ Package} {10}
+\seccontents {3.2}{The ANUPQData Record} {11}
+\seccontents {3.3}{Setting the Verbosity of ANUPQ via Info and InfoANUPQ} {13}
+\seccontents {3.4}{Utility Functions} {14}
+\seccontents {3.5}{Attributes and a Property for fp and pc p-groups} {15}
+\seccontents {3.6}{Hints and Warnings regarding the use of Options} {16}
+\chapcontents {4}{Non-interactive ANUPQ functions}{19}
+\seccontents {4.1}{Computing p-Quotients} {19}
+\seccontents {4.2}{Computing Standard Presentations} {23}
+\seccontents {4.3}{Testing p-Groups for Isomorphism} {25}
+\seccontents {4.4}{Computing Descendants of a p-Group} {26}
+\chapcontents {5}{Interactive ANUPQ functions}{29}
+\seccontents {5.1}{Starting and Stopping Interactive ANUPQ Processes} {29}
+\seccontents {5.2}{Interactive ANUPQ Process Utility Functions} {30}
+\seccontents {5.3}{Interactive Versions of Non-interactive ANUPQ Functions} {31}
+\seccontents {5.4}{Low-level Interactive ANUPQ Functions based on menu items of the pq program} {38}
+\seccontents {5.5}{Primitive Interactive ANUPQ Process Read/Write Functions} {51}
+\chapcontents {6}{ANUPQ Options}{53}
+\seccontents {6.1}{Detailed descriptions of ANUPQ Options} {54}
+\chapcontents {7}{Installing the ANUPQ Package}{60}
+\seccontents {7.1}{Testing your ANUPQ installation} {62}
+\seccontents {7.2}{Running the pq program as a standalone} {63}
+\seccontents {7.3}{Setting the Verbosity of ANUPQ via Info and InfoANUPQ} {63}
+\seccontents {7.4}{Utility Functions} {64}
+\chapcontents {A}{Examples}{65}
+\seccontents {A.1}{The Relators Option} {67}
+\seccontents {A.2}{The Identities Option and PqEvaluateIdentities Function} {68}
+\seccontents {A.3}{A Large Example} {71}
+\seccontents {A.4}{Developing descendants trees} {73}
+\chapcontents {}{Bibliography}{78}
+\chapcontents {}{Index}{79}

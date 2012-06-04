@@ -2,15 +2,12 @@
 ##
 #W  ffeconway.gi               GAP library                       Steve Linton
 ##
-#H  @(#)$Id: ffeconway.gi,v 4.10.2.8 2008/08/13 08:44:30 sal Exp $
 ##
 #Y  Copyright (C) 2005 The GAP Group
 ##
 ##  This file contains methods for `FFE's represented as library objects by
 ##  coefficients of polynomials modulo the Conway polynomial.
 ##
-Revision.ffeconway_gi :=
-    "@(#)$Id: ffeconway.gi,v 4.10.2.8 2008/08/13 08:44:30 sal Exp $";
 
 #############################################################################
 ##
@@ -241,9 +238,8 @@ InstallMethod(PrintObj, "for large finite field elements (use String)",
     Print(String(x));
 end);
 
-InstallMethod(DisplayString,"For large finite field elements",
-        [IsFFE and IsCoeffsModConwayPolRep], 
-        function(x)
+BindGlobal( "DisplayStringForLargeFiniteFieldElements",
+  function(x)
     local   s,  j,  a;
     if IsZero(x) then
         return "0z\n";
@@ -270,7 +266,11 @@ InstallMethod(DisplayString,"For large finite field elements",
     od;
     Add(s,'\n');
     return s;
-end);
+  end );
+
+InstallMethod(DisplayString,"For large finite field elements",
+        [IsFFE and IsCoeffsModConwayPolRep], 
+        DisplayStringForLargeFiniteFieldElements );
 
 InstallMethod(Display,"For large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
@@ -282,7 +282,7 @@ InstallMethod(ViewString,"For large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         function(x)
     local   s;
-    s := DisplayString(x);
+    s := DisplayStringForLargeFiniteFieldElements(x);
     if Length(s) > ViewLength()*SizeScreen()[1] then
         return Concatenation("<<an element of GF(",
                        String(Characteristic(x)), ", ",
@@ -1634,7 +1634,7 @@ InstallMethod( Display,
     od;
     for dr in d do
         for s in dr do
-            Print(FormattedString(s,-w-1));
+            Print(String(s,-w-1));
         od;
         Print("\n");
     od;
@@ -1670,3 +1670,5 @@ FFECONWAY.WriteOverSmallestCommonField := function(v)
     return p^d;
 end;
         
+
+SetNamesForFunctionsInRecord("FFECONWAY");

@@ -2,12 +2,18 @@
 ##
 #W  suzuki.gi                   GAP library                       Stefan Kohl
 ##
-#H  @(#)$Id: suzuki.gi,v 4.5 2002/08/21 13:46:36 stefan Exp $
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
 ##
-Revision.suzuki_gi :=
-    "@(#)$Id: suzuki.gi,v 4.5 2002/08/21 13:46:36 stefan Exp $";
+##  This file contains constructors for the Suzuki groups.
+##
+##  The generators are taken from
+##
+##    Michio Suzuki. On a Class of Doubly Transitive Groups,
+##    Ann. Math. 75 (1962), 105-145.
+##
+##  See the middle of page 140, in the proof of Theorem 12.
+##
 
 #############################################################################
 ##
@@ -34,12 +40,12 @@ function ( filter, q )
         [[1,                         0,   0,0],
          [1,                         1,   0,0],
          [1+Z(q),                    1,   1,0],
-         [1+Z(q)+Z(q)^RootInt(2 * q),Z(q),1,1]] * One(f)),
+         [1+Z(q)+Z(q)^RootInt(2 * q),Z(q),1,1]] * One(f),true),
         ImmutableMatrix(f,
         [[0,0,0,1],
          [0,0,1,0],
          [0,1,0,0],
-         [1,0,0,0]] * One(f))]);
+         [1,0,0,0]] * One(f),true)]);
 
   SetName(G,Concatenation("Sz(",String(q),")"));
   SetDimensionOfMatrixGroup(G,4);

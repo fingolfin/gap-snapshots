@@ -2,16 +2,13 @@
 ##
 #W  module.gi                   GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: module.gi,v 4.41 2002/04/15 10:05:04 sal Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains generic methods for modules.
 ##
-Revision.module_gi :=
-    "@(#)$Id: module.gi,v 4.41 2002/04/15 10:05:04 sal Exp $";
 
 
 #############################################################################
@@ -24,8 +21,7 @@ Revision.module_gi :=
 ##
 InstallMethod( LeftModuleByGenerators,
     "for ring and collection",
-    true,
-    [ IsRing, IsCollection ], 0,
+    [ IsRing, IsCollection ],
     function( R, gens )
     local V;
     V:= Objectify( NewType( FamilyObj( gens ),
@@ -40,8 +36,7 @@ InstallMethod( LeftModuleByGenerators,
 
 InstallMethod( LeftModuleByGenerators,
     "for ring, homogeneous list, and vector",
-    true,
-    [ IsRing, IsHomogeneousList, IsObject ], 0,
+    [ IsRing, IsHomogeneousList, IsObject ],
     function( R, gens, zero )
     local V;
 
@@ -66,8 +61,7 @@ InstallMethod( LeftModuleByGenerators,
 ##
 InstallMethod( AsLeftModule,
     "generic method for a ring and a collection",
-    true,
-    [ IsRing, IsCollection ], 0,
+    [ IsRing, IsCollection ],
     function ( R, D )
     local   S,  L;
 
@@ -100,10 +94,8 @@ InstallMethod( AsLeftModule,
 ##
 InstallMethod( AsLeftModule,
     " for a ring and a left module",
-    true,
-    [ IsRing, IsLeftModule ], 0,
+    [ IsRing, IsLeftModule ],
     function( R, M )
-
     local W,        # the space, result
           base,     # basis vectors of field extension
           gen,      # loop over generators of `V'
@@ -183,7 +175,7 @@ InstallMethod( AsLeftModule,
 InstallMethod( SetGeneratorsOfLeftModule,
     "method that checks for `IsFiniteDimensional'",
     IsIdenticalObj,
-    [ IsFreeLeftModule and IsAttributeStoringRep, IsList ], 0,
+    [ IsFreeLeftModule and IsAttributeStoringRep, IsList ],
   function( M, gens )
     SetIsFiniteDimensional( M, IsFinite( gens ) );
     TryNextMethod();
@@ -194,17 +186,7 @@ InstallMethod( SetGeneratorsOfLeftModule,
 ##
 #M  Characteristic( <M> ) . . . . . . . . . . characteristic of a left module
 ##
-InstallMethod( Characteristic,
-    "for a left module with known left acting domain",
-    true,
-    [ IsLeftModule and HasLeftActingDomain ], 0,
-    function( M )
-    if IsIdenticalObj( M, LeftActingDomain( M ) ) then
-      TryNextMethod();
-    else
-      return Characteristic( LeftActingDomain( M ) );
-    fi;
-    end );
+##  Do we have and/or need a replacement method?
 
 
 #############################################################################
@@ -213,9 +195,8 @@ InstallMethod( Characteristic,
 ##
 InstallMethod( Representative,
     "for left operator additive group with known generators",
-    true,
     [ IsLeftOperatorAdditiveGroup
-      and HasGeneratorsOfLeftOperatorAdditiveGroup ], 0,
+      and HasGeneratorsOfLeftOperatorAdditiveGroup ],
     RepresentativeFromGenerators( GeneratorsOfLeftOperatorAdditiveGroup ) );
 
 
@@ -225,9 +206,8 @@ InstallMethod( Representative,
 ##
 InstallMethod( Representative,
     "for right operator additive group with known generators",
-    true,
     [ IsRightOperatorAdditiveGroup
-      and HasGeneratorsOfRightOperatorAdditiveGroup ], 0,
+      and HasGeneratorsOfRightOperatorAdditiveGroup ],
     RepresentativeFromGenerators( GeneratorsOfRightOperatorAdditiveGroup ) );
 
 
@@ -238,7 +218,7 @@ InstallMethod( Representative,
 InstallMethod( ClosureLeftModule,
     "for left module and vector",
     IsCollsElms,
-    [ IsLeftModule, IsVector ], 0,
+    [ IsLeftModule, IsVector ],
     function( V, w )
 
     # if possible test if the element lies in the module already
@@ -261,7 +241,7 @@ InstallMethod( ClosureLeftModule,
 InstallOtherMethod( ClosureLeftModule,
     "for two left modules",
     IsIdenticalObj,
-    [ IsLeftModule, IsLeftModule ], 0,
+    [ IsLeftModule, IsLeftModule ],
     function( V, W )
     local C, v;
     if LeftActingDomain( V ) = LeftActingDomain( W ) then
@@ -283,7 +263,7 @@ InstallOtherMethod( ClosureLeftModule,
 InstallOtherMethod( \+,
     "for two left modules",
     IsIdenticalObj,
-    [ IsLeftModule, IsLeftModule ], 0,
+    [ IsLeftModule, IsLeftModule ],
     function( V, W )
 
     local S;          # sum of <V> and <W>, result
@@ -342,6 +322,9 @@ InstallGlobalFunction( Submodule, function( arg )
       if IsRowModule(M) then
           SetIsRowModule(S, true);
           SetDimensionOfVectors(S,DimensionOfVectors(M));
+      elif IsMatrixModule( M ) then
+        SetIsMatrixModule( S, true );
+        SetDimensionOfVectors( S, DimensionOfVectors( M ) );
       fi;
       if IsGaussianSpace(M) then
           SetFilterObj(S, IsGaussianSpace);
@@ -378,6 +361,9 @@ InstallGlobalFunction( SubmoduleNC, function( arg )
     if IsRowModule(arg[1]) then
         SetIsRowModule(S, true);
         SetDimensionOfVectors(S, DimensionOfVectors(arg[1]));
+    elif IsMatrixModule( arg[1] ) then
+      SetIsMatrixModule( S, true );
+      SetDimensionOfVectors( S, DimensionOfVectors( arg[1] ) );
     fi;
     if IsGaussianSpace(arg[1]) then
         SetFilterObj(S, IsGaussianSpace);
@@ -392,8 +378,7 @@ end );
 ##
 InstallMethod( TrivialSubadditiveMagmaWithZero,
     "generic method for left modules",
-    true,
-    [ IsLeftModule ], 0,
+    [ IsLeftModule ],
     M -> SubmoduleNC( M, [] ) );
 
 
@@ -403,8 +388,7 @@ InstallMethod( TrivialSubadditiveMagmaWithZero,
 ##
 InstallMethod( DimensionOfVectors,
     "generic method for left modules",
-    true,
-    [ IsFreeLeftModule ], 0,
+    [ IsFreeLeftModule ],
     function( M )
 
     M:= Representative( M );

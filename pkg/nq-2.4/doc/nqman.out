@@ -1,0 +1,21 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{General remarks}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Commutators and the Lower Central Series}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Nilpotent groups}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Nilpotent presentations }{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.4}{A sketch of the algorithm}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.5}{Identical Relations}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.6}{Expression Trees}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.7}{A word about the implementation}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.8}{The input format of the standalone}{chapter.2}% 10
+\BOOKMARK [0][-]{chapter.3}{The Functions of the Package}{}% 11
+\BOOKMARK [1][-]{section.3.1}{Nilpotent Quotients of Finitely Presented Groups}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.2}{Expression Trees}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.3}{Auxiliary Functions}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.4}{Global Variables}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.5}{Diagnostic Output}{chapter.3}% 16
+\BOOKMARK [0][-]{chapter.4}{Examples}{}% 17
+\BOOKMARK [1][-]{section.4.1}{Right Engel elements}{chapter.4}% 18
+\BOOKMARK [0][-]{chapter.5}{Installation of the Package}{}% 19
+\BOOKMARK [0][-]{chapter*.4}{References}{}% 20
+\BOOKMARK [0][-]{section*.5}{Index}{}% 21

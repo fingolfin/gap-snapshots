@@ -2,10 +2,9 @@
 ##
 #W  vspchom.gi                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: vspchom.gi,v 4.38.4.3 2007/08/30 08:10:50 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains methods for general linear mappings of finite
@@ -32,8 +31,6 @@
 ##  4. methods for algebras of linear mappings
 ##  5. methods for full hom spaces
 ##
-Revision.vspchom_gi :=
-    "@(#)$Id: vspchom.gi,v 4.38.4.3 2007/08/30 08:10:50 gap Exp $";
 
 #T TODO:
 #T
@@ -215,7 +212,7 @@ InstallGlobalFunction( LeftModuleHomomorphismByImages,
     function( S, R, gens, imgs )
     local hom;
     hom:= LeftModuleGeneralMappingByImages( S, R, gens, imgs );
-    if IsMapping( hom ) and IsTotal( hom ) then
+    if IsMapping( hom ) then
       return LeftModuleHomomorphismByImagesNC( S, R, gens, imgs );
     else
       return fail;
@@ -246,6 +243,7 @@ InstallMethod( ImagesSource,
       return UnderlyingLeftModule( map!.basisimage );
     else
       return SubmoduleNC( Range( map ), MappingGeneratorsImages(map)[2] );
+#T is it used that the second argument may be a basis object?
     fi;
     end );
 
@@ -262,6 +260,7 @@ InstallMethod( PreImagesRange,
       return UnderlyingLeftModule( map!.basispreimage );
     else
       return SubmoduleNC( Source( map ), MappingGeneratorsImages(map)[1] );
+#T is it used that the second argument may be a basis object?
     fi;
     end );
 
@@ -304,6 +303,7 @@ BindGlobal( "MakeImagesInfoLinearGeneralMappingByImages", function( map )
                                       preimage, ech.vectors );
       map!.corelations         := Immutable( ech.relations );
       map!.imagesbasispreimage := Immutable( ech.coeffs * mapi[2] );
+#T problem if mapi[2] is a basis and if this does not store that it is a small list!
 
     else
 
@@ -356,6 +356,7 @@ BindGlobal( "MakePreImagesInfoLinearGeneralMappingByImages", function( map )
       map!.basisimage          := SemiEchelonBasisNC( image, ech.vectors );
       map!.relations           := Immutable( ech.relations );
       map!.preimagesbasisimage := Immutable( ech.coeffs * mapi[1]);
+#T problem if mapi[1] is a basis and if this does not store that it is a small list!
 
     else
 

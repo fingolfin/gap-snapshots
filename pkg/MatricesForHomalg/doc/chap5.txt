@@ -1,0 +1,1482 @@
+  
+  [1X5 Matrices[0X
+  
+  
+  [1X5.1 Matrices: Category and Representations[0X
+  
+  [1X5.1-1 IsHomalgMatrix[0m
+  
+  [2X> IsHomalgMatrix( [0X[3XA[0X[2X ) ______________________________________________[0XCategory
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The [5XGAP[0m category of [5Xhomalg[0m matrices.
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4Xif CompareVersionNumbers( "4.4.99", VERSION ) then[0X
+    [4X    [0X
+    [4X    ## GAP 4.4 style:[0X
+    [4X    DeclareCategory( "IsHomalgMatrix",[0X
+    [4X            IsAdditiveElementWithInverse and[0X
+    [4X            IsMultiplicativeElementWithInverse and[0X
+    [4X            IsAttributeStoringRep );[0X
+    [4X    [0X
+    [4Xelse[0X
+    [4X    [0X
+    [4X    ## GAP 4.5 style: Max's matrix category[0X
+    [4X    DeclareCategory( "IsHomalgMatrix",[0X
+    [4X            IsMatrixObj and[0X
+    [4X            IsAttributeStoringRep );[0X
+    [4X    [0X
+    [4Xfi;[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.1-2 IsHomalgInternalMatrixRep[0m
+  
+  [2X> IsHomalgInternalMatrixRep( [0X[3XA[0X[2X ) _____________________________[0XRepresentation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  The internal representation of [5Xhomalg[0m matrices.
+  
+  (It is a representation of the [5XGAP[0m category [2XIsHomalgMatrix[0m ([14X5.1-1[0m).)
+  
+  
+  [1X5.2 Matrices: Constructors[0X
+  
+  [1X5.2-1 HomalgInitialMatrix[0m
+  
+  [2X> HomalgInitialMatrix( [0X[3Xm, n, R[0X[2X ) ___________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A mutable unevaluated initial [3Xm[0m x [3Xn[0m [5Xhomalg[0m matrix filled with zeros over the
+  [5Xhomalg[0m  ring  [3XR[0m.  This  construction is useful in case one wants to define a
+  matrix  by  assigning  its  nonzero  entries.  The  property [2XIsInitialMatrix[0m
+  ([14X5.3-26[0m)  is  reset  as  soon  as  the  matrix  is  evaluated.  New computed
+  properties  or attributes of the matrix won't be cached, until the matrix is
+  explicitly    made    immutable   using   (-->   [2XMakeImmutable[0m   ([14XReference:
+  MakeImmutable[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> z := HomalgInitialMatrix( 2, 3, ZZ );[0X
+    [4X<An initial 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> HasIsZero( z );[0X
+    [4Xfalse[0X
+    [4Xgap> IsZero( z );[0X
+    [4Xtrue[0X
+    [4Xgap> z;[0X
+    [4X<A 2 x 3 mutable matrix over an internal ring>[0X
+    [4Xgap> HasIsZero( z );[0X
+    [4Xfalse[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> n := HomalgInitialMatrix( 2, 3, ZZ );[0X
+    [4X<An initial 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> SetMatElm( n, 1, 1, "1" );[0X
+    [4Xgap> SetMatElm( n, 2, 3, "1" );[0X
+    [4Xgap> MakeImmutable( n );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( n );[0X
+    [4X[ [  1,  0,  0 ],[0X
+    [4X  [  0,  0,  1 ] ][0X
+    [4Xgap> IsZero( n );[0X
+    [4Xfalse[0X
+    [4Xgap> n;[0X
+    [4X<A non-zero 2 x 3 matrix over an internal ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-2 HomalgInitialIdentityMatrix[0m
+  
+  [2X> HomalgInitialIdentityMatrix( [0X[3Xm, R[0X[2X ) ______________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A mutable unevaluated initial [3Xm[0m x [3Xm[0m [5Xhomalg[0m quadratic matrix with ones on the
+  diagonal  over  the  [5Xhomalg[0m  ring [3XR[0m. This construction is useful in case one
+  wants  to  define an elementary matrix by assigning its off-diagonal nonzero
+  entries.  The  property [2XIsInitialIdentityMatrix[0m ([14X5.3-27[0m) is reset as soon as
+  the matrix is evaluated. New computed properties or attributes of the matrix
+  won't  be  cached,  until the matrix is explicitly made immutable using (-->
+  [2XMakeImmutable[0m ([14XReference: MakeImmutable[0m)).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> id := HomalgInitialIdentityMatrix( 3, ZZ );[0X
+    [4X<An initial identity 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> HasIsOne( id );[0X
+    [4Xfalse[0X
+    [4Xgap> IsOne( id );[0X
+    [4Xtrue[0X
+    [4Xgap> id;[0X
+    [4X<A 3 x 3 mutable matrix over an internal ring>[0X
+    [4Xgap> HasIsOne( id );[0X
+    [4Xfalse[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> e := HomalgInitialIdentityMatrix( 3, ZZ );[0X
+    [4X<An initial identity 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> SetMatElm( e, 1, 2, "1" );[0X
+    [4Xgap> SetMatElm( e, 2, 1, "-1" );[0X
+    [4Xgap> MakeImmutable( e );[0X
+    [4X<A 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( e );[0X
+    [4X[ [   1,   1,   0 ],[0X
+    [4X  [  -1,   1,   0 ],[0X
+    [4X  [   0,   0,   1 ] ][0X
+    [4Xgap> IsOne( e );[0X
+    [4Xfalse[0X
+    [4Xgap> e;[0X
+    [4X<A 3 x 3 matrix over an internal ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-3 HomalgZeroMatrix[0m
+  
+  [2X> HomalgZeroMatrix( [0X[3Xm, n, R[0X[2X ) ______________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  An immutable unevaluated [3Xm[0m x [3Xn[0m [5Xhomalg[0m zero matrix over the [5Xhomalg[0m ring [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> z := HomalgZeroMatrix( 2, 3, ZZ );[0X
+    [4X<An unevaluated 2 x 3 zero matrix over an internal ring>[0X
+    [4Xgap> Display( z );[0X
+    [4X[ [  0,  0,  0 ],[0X
+    [4X  [  0,  0,  0 ] ][0X
+    [4Xgap> z;[0X
+    [4X<A 2 x 3 zero matrix over an internal ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-4 HomalgIdentityMatrix[0m
+  
+  [2X> HomalgIdentityMatrix( [0X[3Xm, R[0X[2X ) _____________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  An  immutable  unevaluated [3Xm[0m x [3Xm[0m [5Xhomalg[0m identity matrix over the [5Xhomalg[0m ring
+  [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> id := HomalgIdentityMatrix( 3, ZZ );[0X
+    [4X<An unevaluated 3 x 3 identity matrix over an internal ring>[0X
+    [4Xgap> Display( id );[0X
+    [4X[ [  1,  0,  0 ],[0X
+    [4X  [  0,  1,  0 ],[0X
+    [4X  [  0,  0,  1 ] ][0X
+    [4Xgap> id;[0X
+    [4X<A 3 x 3 identity matrix over an internal ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-5 HomalgVoidMatrix[0m
+  
+  [2X> HomalgVoidMatrix( [0X[3X[m, ][n, ]R[0X[2X ) __________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A void [3Xm[0m x [3Xn[0m [5Xhomalg[0m matrix.
+  
+  [1X5.2-6 HomalgMatrix[0m
+  
+  [2X> HomalgMatrix( [0X[3Xllist, R[0X[2X ) _________________________________________[0Xfunction
+  [2X> HomalgMatrix( [0X[3Xlist, m, n, R[0X[2X ) ____________________________________[0Xfunction
+  [2X> HomalgMatrix( [0X[3Xstr_llist, R[0X[2X ) _____________________________________[0Xfunction
+  [2X> HomalgMatrix( [0X[3Xstr_list, m, n, R[0X[2X ) ________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  An immutable evaluated [3Xm[0m x [3Xn[0m [5Xhomalg[0m matrix over the [5Xhomalg[0m ring [3XR[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> m := HomalgMatrix( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ], ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ], 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( [ 1, 2, 3,   4, 5, 6 ], 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( "[ [ 1, 2, 3 ], [ 4, 5, 6 ] ]", ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( "[ [ 1, 2, 3 ], [ 4, 5, 6 ] ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  It  is  nevertheless  recommended to use the following form to create [5Xhomalg[0m
+  matrices.  This  form  can  also  be used to define external matrices. Since
+  whitespaces  (-->  [14XReference:  Whitespaces[0m) are ignored, they can be used as
+  optical delimiters:
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( "[ 1, 2, 3,   4, 5, 6 ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  One  can  split  the  input  string  over  several lines using the backslash
+  character '\' to end each line
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> m := HomalgMatrix( "[ \[0X
+    [4X> 1, 2, 3, \[0X
+    [4X> 4, 5, 6  \[0X
+    [4X> ]", 2, 3, ZZ );[0X
+    [4X<A 2 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( m );[0X
+    [4X[ [  1,  2,  3 ],[0X
+    [4X  [  4,  5,  6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-7 HomalgDiagonalMatrix[0m
+  
+  [2X> HomalgDiagonalMatrix( [0X[3Xdiag, R[0X[2X ) __________________________________[0Xfunction
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  An  immutable unevaluated diagonal [5Xhomalg[0m matrix over the [5Xhomalg[0m ring [3XR[0m. The
+  diagonal consists of the entries of the list [3Xdiag[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> d := HomalgDiagonalMatrix( [ 1, 2, 3 ], ZZ );[0X
+    [4X<An unevaluated diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> Display( d );[0X
+    [4X[ [  1,  0,  0 ],[0X
+    [4X  [  0,  2,  0 ],[0X
+    [4X  [  0,  0,  3 ] ][0X
+    [4Xgap> d;[0X
+    [4X<A diagonal 3 x 3 matrix over an internal ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.2-8 \*[0m
+  
+  [2X> \*( [0X[3XR, mat[0X[2X ) ____________________________________________________[0Xoperation
+  [2X> \*( [0X[3Xmat, R[0X[2X ) ____________________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  An  immutable evaluated [5Xhomalg[0m matrix over the [5Xhomalg[0m ring [3XR[0m having the same
+  entries as the matrix [3Xmat[0m. Syntax: [3XR[0m [10X*[0m [3Xmat[0m or [3Xmat[0m [10X*[0m [3XR[0m
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> Z4 := ZZ / 4;[0X
+    [4XZ/( 4 )[0X
+    [4Xgap> Display( Z4 );[0X
+    [4X<A residue class ring>[0X
+    [4Xgap> d := HomalgDiagonalMatrix( [ 2 .. 4 ], ZZ );[0X
+    [4X<An unevaluated diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> d2 := Z4 * d; ## or d2 := d * Z4;[0X
+    [4X<A 3 x 3 matrix over a residue class ring>[0X
+    [4Xgap> Display( d2 );[0X
+    [4X[ [  2,  0,  0 ],[0X
+    [4X  [  0,  3,  0 ],[0X
+    [4X  [  0,  0,  4 ] ][0X
+    [4X[0X
+    [4Xmodulo [ 4 ][0X
+    [4Xgap> d;[0X
+    [4X<A diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> ZeroRows( d );[0X
+    [4X[  ][0X
+    [4Xgap> ZeroRows( d2 );[0X
+    [4X[ 3 ][0X
+    [4Xgap> d;[0X
+    [4X<A non-zero diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> d2;[0X
+    [4X<A non-zero 3 x 3 matrix over a residue class ring>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X5.3 Matrices: Properties[0X
+  
+  [1X5.3-1 IsZero[0m
+  
+  [2X> IsZero( [0X[3XA[0X[2X ) ______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  matrix  [3XA[0m  is  a  zero  matrix, taking possible ring
+  relations into account.
+  
+  (for the installed standard method see [2XIsZeroMatrix[0m ([14XB.1-16[0m))
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> A := HomalgMatrix( "[ 2 ]", ZZ );[0X
+    [4X<A 1 x 1 matrix over an internal ring>[0X
+    [4Xgap> Z2 := ZZ / 2;[0X
+    [4XZ/( 2 )[0X
+    [4Xgap> A := Z2 * A;[0X
+    [4X<A 1 x 1 matrix over a residue class ring>[0X
+    [4Xgap> Display( A );[0X
+    [4X[ [  2 ] ][0X
+    [4X[0X
+    [4Xmodulo [ 2 ][0X
+    [4Xgap> IsZero( A );[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.3-2 IsOne[0m
+  
+  [2X> IsOne( [0X[3XA[0X[2X ) _______________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  matrix [3XA[0m is an identity matrix, taking possible ring
+  relations into account.
+  
+  (for the installed standard method see [2XIsIdentityMatrix[0m ([14XB.2-2[0m))
+  
+  [1X5.3-3 IsUnitFree[0m
+  
+  [2X> IsUnitFree( [0X[3XA[0X[2X ) __________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-4 IsPermutationMatrix[0m
+  
+  [2X> IsPermutationMatrix( [0X[3XA[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-5 IsSpecialSubidentityMatrix[0m
+  
+  [2X> IsSpecialSubidentityMatrix( [0X[3XA[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-6 IsSubidentityMatrix[0m
+  
+  [2X> IsSubidentityMatrix( [0X[3XA[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-7 IsLeftRegular[0m
+  
+  [2X> IsLeftRegular( [0X[3XA[0X[2X ) _______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-8 IsRightRegular[0m
+  
+  [2X> IsRightRegular( [0X[3XA[0X[2X ) ______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-9 IsInvertibleMatrix[0m
+  
+  [2X> IsInvertibleMatrix( [0X[3XA[0X[2X ) __________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-10 IsLeftInvertibleMatrix[0m
+  
+  [2X> IsLeftInvertibleMatrix( [0X[3XA[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-11 IsRightInvertibleMatrix[0m
+  
+  [2X> IsRightInvertibleMatrix( [0X[3XA[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-12 IsEmptyMatrix[0m
+  
+  [2X> IsEmptyMatrix( [0X[3XA[0X[2X ) _______________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-13 IsDiagonalMatrix[0m
+  
+  [2X> IsDiagonalMatrix( [0X[3XA[0X[2X ) ____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  matrix [3XA[0m is an identity matrix, taking possible ring
+  relations into account.
+  
+  (for the installed standard method see [2XIsDiagonalMatrix[0m ([14XB.2-3[0m))
+  
+  [1X5.3-14 IsScalarlMatrix[0m
+  
+  [2X> IsScalarlMatrix( [0X[3XA[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-15 IsUpperTriangularMatrix[0m
+  
+  [2X> IsUpperTriangularMatrix( [0X[3XA[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-16 IsLowerTriangularMatrix[0m
+  
+  [2X> IsLowerTriangularMatrix( [0X[3XA[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-17 IsStrictUpperTriangularMatrix[0m
+  
+  [2X> IsStrictUpperTriangularMatrix( [0X[3XA[0X[2X ) _______________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-18 IsStrictLowerTriangularMatrix[0m
+  
+  [2X> IsStrictLowerTriangularMatrix( [0X[3XA[0X[2X ) _______________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-19 IsUpperStairCaseMatrix[0m
+  
+  [2X> IsUpperStairCaseMatrix( [0X[3XA[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-20 IsLowerStairCaseMatrix[0m
+  
+  [2X> IsLowerStairCaseMatrix( [0X[3XA[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-21 IsTriangularMatrix[0m
+  
+  [2X> IsTriangularMatrix( [0X[3XA[0X[2X ) __________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-22 IsBasisOfRowsMatrix[0m
+  
+  [2X> IsBasisOfRowsMatrix( [0X[3XA[0X[2X ) _________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-23 IsBasisOfColumnsMatrix[0m
+  
+  [2X> IsBasisOfColumnsMatrix( [0X[3XA[0X[2X ) ______________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-24 IsReducedBasisOfRowsMatrix[0m
+  
+  [2X> IsReducedBasisOfRowsMatrix( [0X[3XA[0X[2X ) __________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-25 IsReducedBasisOfColumnsMatrix[0m
+  
+  [2X> IsReducedBasisOfColumnsMatrix( [0X[3XA[0X[2X ) _______________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-26 IsInitialMatrix[0m
+  
+  [2X> IsInitialMatrix( [0X[3XA[0X[2X ) _____________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-27 IsInitialIdentityMatrix[0m
+  
+  [2X> IsInitialIdentityMatrix( [0X[3XA[0X[2X ) _____________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  [1X5.3-28 IsVoidMatrix[0m
+  
+  [2X> IsVoidMatrix( [0X[3XA[0X[2X ) ________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  
+  [1X5.4 Matrices: Attributes[0X
+  
+  [1X5.4-1 NrRows[0m
+  
+  [2X> NrRows( [0X[3XA[0X[2X ) _____________________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The number of rows of the matrix [3XA[0m.
+  
+  (for the installed standard method see [2XNrRows[0m ([14XB.1-17[0m))
+  
+  [1X5.4-2 NrColumns[0m
+  
+  [2X> NrColumns( [0X[3XA[0X[2X ) __________________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The number of columns of the matrix [3XA[0m.
+  
+  (for the installed standard method see [2XNrColumns[0m ([14XB.1-18[0m))
+  
+  [1X5.4-3 DeterminantMat[0m
+  
+  [2X> DeterminantMat( [0X[3XA[0X[2X ) _____________________________________________[0Xattribute
+  [6XReturns:[0X  a ring element
+  
+  The determinant of the quadratic matrix [3XA[0m.
+  
+  You can invoke it with [10XDeterminant[0m( [3XA[0m ).
+  
+  (for the installed standard method see [2XDeterminant[0m ([14XB.1-19[0m))
+  
+  [1X5.4-4 ZeroRows[0m
+  
+  [2X> ZeroRows( [0X[3XA[0X[2X ) ___________________________________________________[0Xattribute
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  The list of zero rows of the matrix [3XA[0m.
+  
+  (for the installed standard method see [2XZeroRows[0m ([14XB.2-4[0m))
+  
+  [1X5.4-5 ZeroColumns[0m
+  
+  [2X> ZeroColumns( [0X[3XA[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  The list of zero columns of the matrix [3XA[0m.
+  
+  (for the installed standard method see [2XZeroColumns[0m ([14XB.2-5[0m))
+  
+  [1X5.4-6 NonZeroRows[0m
+  
+  [2X> NonZeroRows( [0X[3XA[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  The list of nonzero rows of the matrix [3XA[0m.
+  
+  [1X5.4-7 NonZeroColumns[0m
+  
+  [2X> NonZeroColumns( [0X[3XA[0X[2X ) _____________________________________________[0Xattribute
+  [6XReturns:[0X  a (possibly empty) list of positive integers
+  
+  The list of nonzero columns of the matrix [3XA[0m.
+  
+  [1X5.4-8 PositionOfFirstNonZeroEntryPerRow[0m
+  
+  [2X> PositionOfFirstNonZeroEntryPerRow( [0X[3XA[0X[2X ) __________________________[0Xattribute
+  [6XReturns:[0X  a list of nonnegative integers
+  
+  The  list  of  positions of the first nonzero entry per row of the matrix [3XA[0m,
+  else zero.
+  
+  [1X5.4-9 PositionOfFirstNonZeroEntryPerColumn[0m
+  
+  [2X> PositionOfFirstNonZeroEntryPerColumn( [0X[3XA[0X[2X ) _______________________[0Xattribute
+  [6XReturns:[0X  a list of nonnegative integers
+  
+  The list of positions of the first nonzero entry per column of the matrix [3XA[0m,
+  else zero.
+  
+  [1X5.4-10 RowRankOfMatrix[0m
+  
+  [2X> RowRankOfMatrix( [0X[3XA[0X[2X ) ____________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The row rank of the matrix [3XA[0m.
+  
+  [1X5.4-11 ColumnRankOfMatrix[0m
+  
+  [2X> ColumnRankOfMatrix( [0X[3XA[0X[2X ) _________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  The column rank of the matrix [3XA[0m.
+  
+  [1X5.4-12 LeftInverse[0m
+  
+  [2X> LeftInverse( [0X[3XM[0X[2X ) ________________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A  left  inverse  C of the matrix [3XM[0m. If no left inverse exists then [10Xfalse[0m is
+  returned. (--> [2XRightDivide[0m ([14X5.5-45[0m))
+  
+  (for the installed standard method see [2XLeftInverse[0m ([14X5.5-2[0m))
+  
+  [1X5.4-13 RightInverse[0m
+  
+  [2X> RightInverse( [0X[3XM[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A  right inverse C of the matrix [3XM[0m. If no right inverse exists then [10Xfalse[0m is
+  returned. (--> [2XLeftDivide[0m ([14X5.5-46[0m))
+  
+  (for the installed standard method see [2XRightInverse[0m ([14X5.5-3[0m))
+  
+  [1X5.4-14 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries( [0X[3XA[0X[2X ) ____[0Xattribute
+  [6XReturns:[0X  a list of integers
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-15 CoefficientsOfNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> CoefficientsOfNumeratorOfHilbertPoincareSeries( [0X[3XA[0X[2X ) _____________[0Xattribute
+  [6XReturns:[0X  a list of integers
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-16 UnreducedNumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> UnreducedNumeratorOfHilbertPoincareSeries( [0X[3XA[0X[2X ) __________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-17 NumeratorOfHilbertPoincareSeries[0m
+  
+  [2X> NumeratorOfHilbertPoincareSeries( [0X[3XA[0X[2X ) ___________________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-18 HilbertPoincareSeries[0m
+  
+  [2X> HilbertPoincareSeries( [0X[3XA[0X[2X ) ______________________________________[0Xattribute
+  [6XReturns:[0X  a univariate rational function with rational coefficients
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-19 HilbertPolynomial[0m
+  
+  [2X> HilbertPolynomial( [0X[3XA[0X[2X ) __________________________________________[0Xattribute
+  [6XReturns:[0X  a univariate polynomial with rational coefficients
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-20 AffineDimension[0m
+  
+  [2X> AffineDimension( [0X[3XA[0X[2X ) ____________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-21 AffineDegree[0m
+  
+  [2X> AffineDegree( [0X[3XA[0X[2X ) _______________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-22 ProjectiveDegree[0m
+  
+  [2X> ProjectiveDegree( [0X[3XA[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  a nonnegative integer
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-23 ConstantTermOfHilbertPolynomialn[0m
+  
+  [2X> ConstantTermOfHilbertPolynomialn( [0X[3XA[0X[2X ) ___________________________[0Xattribute
+  [6XReturns:[0X  an integer
+  
+  [3XA[0m is a [5Xhomalg[0m matrix (row convention).
+  
+  [1X5.4-24 MatrixOfSymbolsn[0m
+  
+  [2X> MatrixOfSymbolsn( [0X[3XA[0X[2X ) ___________________________________________[0Xattribute
+  [6XReturns:[0X  an integer
+  
+  [3XA[0m is a [5Xhomalg[0m matrix.
+  
+  
+  [1X5.5 Matrices: Operations and Functions[0X
+  
+  [1X5.5-1 HomalgRing[0m
+  
+  [2X> HomalgRing( [0X[3Xmat[0X[2X ) _______________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m ring
+  
+  The [5Xhomalg[0m ring of the [5Xhomalg[0m matrix [3Xmat[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> d := HomalgDiagonalMatrix( [ 2 .. 4 ], ZZ );[0X
+    [4X<An unevaluated diagonal 3 x 3 matrix over an internal ring>[0X
+    [4Xgap> R := HomalgRing( d );[0X
+    [4XZ[0X
+    [4Xgap> IsIdenticalObj( R, ZZ );[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-2 LeftInverse[0m
+  
+  [2X> LeftInverse( [0X[3XRI[0X[2X ) __________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  The  left  inverse  of  the matrix [3XRI[0m. The lazy version of this operation is
+  [2XLeftInverseLazy[0m ([14X5.5-4[0m). (--> [2XRightDivide[0m ([14X5.5-45[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( LeftInverse,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( RI )[0X
+    [4X    local Id, LI;[0X
+    [4X    [0X
+    [4X    Id := HomalgIdentityMatrix( NrColumns( RI ), HomalgRing( RI ) );[0X
+    [4X    [0X
+    [4X    LI := RightDivide( Id, RI );	## ( cf. [BR08, Subsection 3.1.3] )[0X
+    [4X    [0X
+    [4X    ## CAUTION: for the following SetXXX RightDivide is assumed[0X
+    [4X    ## NOT to be lazy evaluated!!![0X
+    [4X    [0X
+    [4X    SetIsLeftInvertibleMatrix( RI, IsHomalgMatrix( LI ) );[0X
+    [4X    [0X
+    [4X    if IsBool( LI ) then[0X
+    [4X        return fail;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if HasIsInvertibleMatrix( RI ) and IsInvertibleMatrix( RI ) then[0X
+    [4X        SetIsInvertibleMatrix( LI, true );[0X
+    [4X    else[0X
+    [4X        SetIsRightInvertibleMatrix( LI, true );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    SetRightInverse( LI, RI );[0X
+    [4X    [0X
+    [4X    return LI;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-3 RightInverse[0m
+  
+  [2X> RightInverse( [0X[3XLI[0X[2X ) _________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  The  right  inverse  of the matrix [3XLI[0m. The lazy version of this operation is
+  [2XRightInverseLazy[0m ([14X5.5-5[0m). (--> [2XLeftDivide[0m ([14X5.5-46[0m))
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( RightInverse,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( LI )[0X
+    [4X    local Id, RI;[0X
+    [4X    [0X
+    [4X    Id := HomalgIdentityMatrix( NrRows( LI ), HomalgRing( LI ) );[0X
+    [4X    [0X
+    [4X    RI := LeftDivide( LI, Id );	## ( cf. [BR08, Subsection 3.1.3] )[0X
+    [4X    [0X
+    [4X    ## CAUTION: for the following SetXXX LeftDivide is assumed[0X
+    [4X    ## NOT to be lazy evaluated!!![0X
+    [4X    [0X
+    [4X    SetIsRightInvertibleMatrix( LI, IsHomalgMatrix( RI ) );[0X
+    [4X    [0X
+    [4X    if IsBool( RI ) then[0X
+    [4X        return fail;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    if HasIsInvertibleMatrix( LI ) and IsInvertibleMatrix( LI ) then[0X
+    [4X        SetIsInvertibleMatrix( RI, true );[0X
+    [4X    else[0X
+    [4X        SetIsLeftInvertibleMatrix( RI, true );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    SetLeftInverse( RI, LI );[0X
+    [4X    [0X
+    [4X    return RI;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-4 LeftInverseLazy[0m
+  
+  [2X> LeftInverseLazy( [0X[3XM[0X[2X ) ____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A  lazy  evaluated left inverse C of the matrix [3XM[0m. If no left inverse exists
+  then [10XEval[0m( [3XC[0m ) will issue an error.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-5[0m))
+  
+  [1X5.5-5 RightInverseLazy[0m
+  
+  [2X> RightInverseLazy( [0X[3XM[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  A lazy evaluated right inverse C of the matrix [3XM[0m. If no right inverse exists
+  then [10XEval[0m( [3XC[0m ) will issue an error.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-6[0m))
+  
+  [1X5.5-6 Involution[0m
+  
+  [2X> Involution( [0X[3XM[0X[2X ) ____________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The twisted transpose of the [5Xhomalg[0m matrix [3XM[0m.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-7[0m))
+  
+  [1X5.5-7 CertainRows[0m
+  
+  [2X> CertainRows( [0X[3XM, plist[0X[2X ) ____________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The  matrix  of  which  the i-th row is the k-th row of the [5Xhomalg[0m matrix [3XM[0m,
+  where k=[3Xplist[0m[i].
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-8[0m))
+  
+  [1X5.5-8 CertainColumns[0m
+  
+  [2X> CertainColumns( [0X[3XM, plist[0X[2X ) _________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The  matrix of which the j-th column is the l-th column of the [5Xhomalg[0m matrix
+  [3XM[0m, where l=[3Xplist[0m[i].
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-9[0m))
+  
+  [1X5.5-9 UnionOfRows[0m
+  
+  [2X> UnionOfRows( [0X[3XA, B[0X[2X ) ________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Stack the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-10[0m))
+  
+  [1X5.5-10 UnionOfColumns[0m
+  
+  [2X> UnionOfColumns( [0X[3XA, B[0X[2X ) _____________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Augment the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-11[0m))
+  
+  [1X5.5-11 DiagMat[0m
+  
+  [2X> DiagMat( [0X[3Xlist[0X[2X ) ____________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Build  the  block diagonal matrix out of the [5Xhomalg[0m matrices listed in [3Xlist[0m.
+  An  error  is  issued  if  [3Xlist[0m is empty or if one of the arguments is not a
+  [5Xhomalg[0m matrix.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-12[0m))
+  
+  [1X5.5-12 KroneckerMat[0m
+  
+  [2X> KroneckerMat( [0X[3XA, B[0X[2X ) _______________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The Kronecker (or tensor) product of the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m.
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-13[0m))
+  
+  [1X5.5-13 \*[0m
+  
+  [2X> \*( [0X[3Xa, A[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The product of the ring element [3Xa[0m with the [5Xhomalg[0m matrix [3XA[0m (enter: [3Xa[0m [10X*[0m [3XA[0m;).
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-14[0m))
+  
+  [1X5.5-14 \+[0m
+  
+  [2X> \+( [0X[3XA, B[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The sum of the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m (enter: [3XA[0m [10X+[0m [3XB[0m;).
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-15[0m))
+  
+  [1X5.5-15 \-[0m
+  
+  [2X> \-( [0X[3XA, B[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The difference of the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m (enter: [3XA[0m [10X-[0m [3XB[0m;).
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-16[0m))
+  
+  [1X5.5-16 \*[0m
+  
+  [2X> \*( [0X[3XA, B[0X[2X ) _________________________________________________________[0Xmethod
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  The matrix product of the two [5Xhomalg[0m matrices [3XA[0m and [3XB[0m (enter: [3XA[0m [10X*[0m [3XB[0m;).
+  
+  (for the installed standard method see [2XEval[0m ([14XC.4-17[0m))
+  
+  [1X5.5-17 \=[0m
+  
+  [2X> \=( [0X[3XA, B[0X[2X ) ______________________________________________________[0Xoperation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  [5Xhomalg[0m  matrices  [3XA[0m  and [3XB[0m are equal (enter: [3XA[0m [10X=[0m [3XB[0m;), taking
+  possible ring relations into account.
+  
+  (for the installed standard method see [2XAreEqualMatrices[0m ([14XB.2-1[0m))
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
+    [4XZ[0X
+    [4Xgap> A := HomalgMatrix( "[ 1 ]", ZZ );[0X
+    [4X<A 1 x 1 matrix over an internal ring>[0X
+    [4Xgap> B := HomalgMatrix( "[ 3 ]", ZZ );[0X
+    [4X<A 1 x 1 matrix over an internal ring>[0X
+    [4Xgap> Z2 := ZZ / 2;[0X
+    [4XZ/( 2 )[0X
+    [4Xgap> A := Z2 * A;[0X
+    [4X<A 1 x 1 matrix over a residue class ring>[0X
+    [4Xgap> B := Z2 * B;[0X
+    [4X<A 1 x 1 matrix over a residue class ring>[0X
+    [4Xgap> Display( A );[0X
+    [4X[ [  1 ] ][0X
+    [4X[0X
+    [4Xmodulo [ 2 ][0X
+    [4Xgap> Display( B );[0X
+    [4X[ [  3 ] ][0X
+    [4X[0X
+    [4Xmodulo [ 2 ][0X
+    [4Xgap> A = B;[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-18 GetColumnIndependentUnitPositions[0m
+  
+  [2X> GetColumnIndependentUnitPositions( [0X[3XA, poslist[0X[2X ) _________________[0Xoperation
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  The  list  of column independet unit position of the matrix [3XA[0m. We say that a
+  unit  [3XA[0m[i,k]  is column independet from the unit [3XA[0m[l,j] if i>l and [3XA[0m[l,k]=0.
+  The  rows are scanned from top to bottom and within each row the columns are
+  scanned  from right to left searching for new units, column independent from
+  the preceding ones. If [3XA[0m[i,k] is a new column independent unit then [i,k] is
+  added to the output list. If [3XA[0m has no units the empty list is returned.
+  
+  (for  the  installed  standard  method see [2XGetColumnIndependentUnitPositions[0m
+  ([14XB.2-6[0m))
+  
+  [1X5.5-19 GetRowIndependentUnitPositions[0m
+  
+  [2X> GetRowIndependentUnitPositions( [0X[3XA, poslist[0X[2X ) ____________________[0Xoperation
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  The list of row independet unit position of the matrix [3XA[0m. We say that a unit
+  [3XA[0m[k,j]  is  row  independet  from  the  unit [3XA[0m[i,l] if j>l and [3XA[0m[k,l]=0. The
+  columns  are  scanned from left to right and within each column the rows are
+  scanned from bottom to top searching for new units, row independent from the
+  preceding  ones.  If  [3XA[0m[k,j]  is  a new row independent unit then [j,k] (yes
+  [j,k])  is  added  to  the  output list. If [3XA[0m has no units the empty list is
+  returned.
+  
+  (for   the  installed  standard  method  see  [2XGetRowIndependentUnitPositions[0m
+  ([14XB.2-7[0m))
+  
+  [1X5.5-20 GetUnitPosition[0m
+  
+  [2X> GetUnitPosition( [0X[3XA, poslist[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  a (possibly empty) list of pairs of positive integers
+  
+  The  position [i,j] of the first unit [3XA[0m[i,j] in the matrix [3XA[0m, where the rows
+  are  scanned  from top to bottom and within each row the columns are scanned
+  from  left  to  right.  If [3XA[0m[i,j] is the first occurrence of a unit then the
+  position pair [i,j] is returned. Otherwise [10Xfail[0m is returned.
+  
+  (for the installed standard method see [2XGetUnitPosition[0m ([14XB.2-8[0m))
+  
+  [1X5.5-21 Eliminate[0m
+  
+  [2X> Eliminate( [0X[3Xrel, indets[0X[2X ) ________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Eliminate  the  independents [3Xindets[0m from the list of ring elements [3Xrel[0m, i.e.
+  compute  a  generating  set  of the ideal defined as the intersection of the
+  ideal generated by the entries of the list [3Xrel[0m with the subring generated by
+  all  indeterminates  except  those  in [3Xindets[0m. by the list of indeterminates
+  [3Xindets[0m.
+  
+  [1X5.5-22 BasisOfRowModule[0m
+  
+  [2X> BasisOfRowModule( [0X[3XM[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )) and S be the
+  row  span  of [3XM[0m, i.e. the R-submodule of the free module R^(1 x NrColumns( [3XM[0m
+  ))  spanned  by  the  rows  of  [3XM[0m.  A  solution to the "submodule membership
+  problem"  is  an  algorithm  which  can  decide  if  an  element m in R^(1 x
+  NrColumns(  [3XM[0m  ))  is  contained  in S or not. And exactly like the Gaussian
+  (resp.  Hermite) normal form when R is a field (resp. principal ideal ring),
+  the  row  span of the resulting matrix B coincides with the row span S of [3XM[0m,
+  and  computing  B  is  typically  the  first step of such an algorithm. (-->
+  Appendix [14XA[0m)
+  
+  [1X5.5-23 BasisOfColumnModule[0m
+  
+  [2X> BasisOfColumnModule( [0X[3XM[0X[2X ) ________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )) and S be the
+  column  span  of [3XM[0m, i.e. the R-submodule of the free module R^(NrRows( [3XM[0m ) x
+  1)  spanned  by  the  columns  of [3XM[0m. A solution to the "submodule membership
+  problem"  is an algorithm which can decide if an element m in R^(NrRows( [3XM[0m )
+  x 1) is contained in S or not. And exactly like the Gaussian (resp. Hermite)
+  normal  form when R is a field (resp. principal ideal ring), the column span
+  of  the  resulting  matrix  B  coincides  with  the  column span S of [3XM[0m, and
+  computing  B is typically the first step of such an algorithm. (--> Appendix
+  [14XA[0m)
+  
+  [1X5.5-24 DecideZeroRows[0m
+  
+  [2X> DecideZeroRows( [0X[3XA, B[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  [3XA[0m  and [3XB[0m be matrices having the same number of columns and defined over
+  the  same  ring  R  (:=[10XHomalgRing[0m( [3XA[0m )) and S be the row span of [3XB[0m, i.e. the
+  R-submodule of the free module R^(1 x NrColumns( [3XB[0m )) spanned by the rows of
+  [3XB[0m.  The  result is a matrix C having the same shape as [3XA[0m, for which the i-th
+  row  [3XC[0m^i is equivalent to the i-th row [3XA[0m^i of [3XA[0m modulo S, i.e. [3XC[0m^i-[3XA[0m^i is an
+  element  of  the row span S of [3XB[0m. Moreover, the row [3XC[0m^i is zero, if and only
+  if the row [3XA[0m^i is an element of S. So [10XDecideZeroRows[0m decides which rows of [3XA[0m
+  are zero modulo the rows of [3XB[0m. (--> Appendix [14XA[0m)
+  
+  [1X5.5-25 DecideZeroColumns[0m
+  
+  [2X> DecideZeroColumns( [0X[3XA, B[0X[2X ) _______________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  [3XA[0m and [3XB[0m be matrices having the same number of rows and defined over the
+  same  ring  R  (:=[10XHomalgRing[0m(  [3XA[0m  )) and S be the column span of [3XB[0m, i.e. the
+  R-submodule of the free module R^(NrRows( [3XB[0m ) x 1) spanned by the columns of
+  [3XB[0m.  The  result is a matrix C having the same shape as [3XA[0m, for which the i-th
+  column  [3XC[0m_i is equivalent to the i-th column [3XA[0m_i of [3XA[0m modulo S, i.e. [3XC[0m_i-[3XA[0m_i
+  is  an  element of the column span S of [3XB[0m. Moreover, the column [3XC[0m_i is zero,
+  if  and  only  if  the  column  [3XA[0m_i is an element of S. So [10XDecideZeroColumns[0m
+  decides  which  columns of [3XA[0m are zero modulo the columns of [3XB[0m. (--> Appendix
+  [14XA[0m)
+  
+  [1X5.5-26 SyzygiesGeneratorsOfRows[0m
+  
+  [2X> SyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R  be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )). The matrix
+  of  row  syzygies  [10XSyzygiesGeneratorsOfRows[0m( [3XM[0m ) is a matrix whose rows span
+  the left kernel of [3XM[0m, i.e. the R-submodule of the free module R^(1 x NrRows(
+  [3XM[0m )) consisting of all rows X satisfying X[3XM[0m=0. (--> Appendix [14XA[0m)
+  
+  [1X5.5-27 SyzygiesGeneratorsOfColumns[0m
+  
+  [2X> SyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) ________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R  be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )). The matrix
+  of  column  syzygies  [10XSyzygiesGeneratorsOfColumns[0m(  [3XM[0m  )  is  a matrix whose
+  columns  span the right kernel of [3XM[0m, i.e. the R-submodule of the free module
+  R^(NrColumns(  [3XM[0m  )  x  1) consisting of all columns X satisfying [3XM[0mX=0. (-->
+  Appendix [14XA[0m)
+  
+  [1X5.5-28 SyzygiesGeneratorsOfRows[0m
+  
+  [2X> SyzygiesGeneratorsOfRows( [0X[3XM, M2[0X[2X ) _______________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R  be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )). The matrix
+  of [13Xrelative[0m row syzygies [10XSyzygiesGeneratorsOfRows[0m( [3XM[0m, [3XM2[0m ) is a matrix whose
+  rows  span  the left kernel of [3XM[0m modulo [3XM2[0m, i.e. the R-submodule of the free
+  module  R^(1 x NrRows( [3XM[0m )) consisting of all rows X satisfying X[3XM[0m+Y[3XM2[0m=0 for
+  some row Y in R^(1 x NrRows( [3XM2[0m )). (--> Appendix [14XA[0m)
+  
+  [1X5.5-29 SyzygiesGeneratorsOfColumns[0m
+  
+  [2X> SyzygiesGeneratorsOfColumns( [0X[3XM, M2[0X[2X ) ____________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Let  R  be the ring over which [3XM[0m is defined (R:=[10XHomalgRing[0m( [3XM[0m )). The matrix
+  of [13Xrelative[0m column syzygies [10XSyzygiesGeneratorsOfColumns[0m( [3XM[0m, [3XM2[0m ) is a matrix
+  whose  columns span the right kernel of [3XM[0m modulo [3XM2[0m, i.e. the R-submodule of
+  the  free  module  R^(NrColumns(  [3XM[0m  )  x  1)  consisting  of  all columns X
+  satisfying  [3XM[0mX+[3XM2[0mY=0  for  some  column  Y  in R^(NrColumns( [3XM2[0m ) x 1). (-->
+  Appendix [14XA[0m)
+  
+  [1X5.5-30 ReducedBasisOfRowModule[0m
+  
+  [2X> ReducedBasisOfRowModule( [0X[3XM[0X[2X ) ____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Like  [10XBasisOfRowModule[0m(  [3XM[0m  ) but where the matrix [10XSyzygiesGeneratorsOfRows[0m(
+  [10XReducedBasisOfRowModule[0m(  [3XM[0m  )  )  contains  no  units.  This  can easily be
+  achieved    starting    from    B:=[10XBasisOfRowModule[0m(    [3XM[0m   )   (and   using
+  [2XGetColumnIndependentUnitPositions[0m  ([14X5.5-18[0m)  applied  to  the  matrix of row
+  syzygies of B, etc). (--> Appendix [14XA[0m)
+  
+  [1X5.5-31 ReducedBasisOfColumnModule[0m
+  
+  [2X> ReducedBasisOfColumnModule( [0X[3XM[0X[2X ) _________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Like     [10XBasisOfColumnModule[0m(     [3XM[0m     )     but     where    the    matrix
+  [10XSyzygiesGeneratorsOfColumns[0m(  [10XReducedBasisOfColumnModule[0m(  [3XM[0m ) ) contains no
+  units. This can easily be achieved starting from B:=[10XBasisOfColumnModule[0m( [3XM[0m )
+  (and  using [2XGetRowIndependentUnitPositions[0m ([14X5.5-19[0m) applied to the matrix of
+  column syzygies of B, etc.). (--> Appendix [14XA[0m)
+  
+  [1X5.5-32 ReducedSyzygiesGeneratorsOfRows[0m
+  
+  [2X> ReducedSyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ____________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Like    [10XSyzygiesGeneratorsOfRows[0m(    [3XM[0m    )    but    where    the    matrix
+  [10XSyzygiesGeneratorsOfRows[0m( [10XReducedSyzygiesGeneratorsOfRows[0m( [3XM[0m ) ) contains no
+  units.     This     can     easily     be     achieved     starting     from
+  C:=[10XSyzygiesGeneratorsOfRows[0m(          [3XM[0m         )         (and         using
+  [2XGetColumnIndependentUnitPositions[0m  ([14X5.5-18[0m)  applied  to  the  matrix of row
+  syzygies of C, etc.). (--> Appendix [14XA[0m)
+  
+  [1X5.5-33 ReducedSyzygiesGeneratorsOfColumns[0m
+  
+  [2X> ReducedSyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) _________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Like    [10XSyzygiesGeneratorsOfColumns[0m(    [3XM[0m    )    but   where   the   matrix
+  [10XSyzygiesGeneratorsOfColumns[0m(   [10XReducedSyzygiesGeneratorsOfColumns[0m(   [3XM[0m  )  )
+  contains   no   units.   This   can   easily   be   achieved  starting  from
+  C:=[10XSyzygiesGeneratorsOfColumns[0m(         [3XM[0m         )        (and        using
+  [2XGetRowIndependentUnitPositions[0m  ([14X5.5-19[0m)  applied  to  the  matrix of column
+  syzygies of C, etc.). (--> Appendix [14XA[0m)
+  
+  [1X5.5-34 BasisOfRowsCoeff[0m
+  
+  [2X> BasisOfRowsCoeff( [0X[3XM, T[0X[2X ) ________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  B:=[10XBasisOfRowModule[0m(  [3XM[0m  )  and  assigns  the  [13Xvoid[0m  matrix  [3XT[0m (-->
+  [2XHomalgVoidMatrix[0m ([14X5.2-5[0m)) such that B = [3XT[0m [3XM[0m. (--> Appendix [14XA[0m)
+  
+  [1X5.5-35 BasisOfColumnsCoeff[0m
+  
+  [2X> BasisOfColumnsCoeff( [0X[3XM, T[0X[2X ) _____________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  B:=[10XBasisOfRowModule[0m(  [3XM[0m  )  and  assigns  the  [13Xvoid[0m  matrix  [3XT[0m (-->
+  [2XHomalgVoidMatrix[0m ([14X5.2-5[0m)) such that B = [3XM[0m [3XT[0m. (--> Appendix [14XA[0m)
+  
+  [1X5.5-36 DecideZeroRowsEffectively[0m
+  
+  [2X> DecideZeroRowsEffectively( [0X[3XA, B, T[0X[2X ) ____________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  M:=[10XDecideZeroRows[0m(  [3XA[0m,  [3XB[0m  )  and  assigns  the  [13Xvoid[0m matrix [3XT[0m (-->
+  [2XHomalgVoidMatrix[0m ([14X5.2-5[0m)) such that M = [3XA[0m + [3XT[0m[3XB[0m. (--> Appendix [14XA[0m)
+  
+  [1X5.5-37 DecideZeroColumnsEffectively[0m
+  
+  [2X> DecideZeroColumnsEffectively( [0X[3XA, B, T[0X[2X ) _________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  Returns  M:=[10XDecideZeroColumns[0m(  [3XA[0m,  [3XB[0m  )  and assigns the [13Xvoid[0m matrix [3XT[0m (-->
+  [2XHomalgVoidMatrix[0m ([14X5.2-5[0m)) such that M = [3XA[0m + [3XB[0m[3XT[0m. (--> Appendix [14XA[0m)
+  
+  [1X5.5-38 BasisOfRows[0m
+  
+  [2X> BasisOfRows( [0X[3XM[0X[2X ) ________________________________________________[0Xoperation
+  [2X> BasisOfRows( [0X[3XM, T[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With  one  argument  it  is a synonym of [2XBasisOfRowModule[0m ([14X5.5-22[0m). with two
+  arguments it is a synonym of [2XBasisOfRowsCoeff[0m ([14X5.5-34[0m).
+  
+  [1X5.5-39 BasisOfColumns[0m
+  
+  [2X> BasisOfColumns( [0X[3XM[0X[2X ) _____________________________________________[0Xoperation
+  [2X> BasisOfColumns( [0X[3XM, T[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With  one argument it is a synonym of [2XBasisOfColumnModule[0m ([14X5.5-23[0m). with two
+  arguments it is a synonym of [2XBasisOfColumnsCoeff[0m ([14X5.5-35[0m).
+  
+  [1X5.5-40 DecideZero[0m
+  
+  [2X> DecideZero( [0X[3Xmat, rel[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( DecideZero,[0X
+    [4X        "for sets of ring relations",[0X
+    [4X        [ IsHomalgMatrix, IsHomalgRingRelations ],[0X
+    [4X        [0X
+    [4X  function( mat, rel )[0X
+    [4X    local rel_mat;[0X
+    [4X    [0X
+    [4X    rel_mat := MatrixOfRelations( BasisOfModule( rel ) );[0X
+    [4X    [0X
+    [4X    if IsHomalgRingRelationsAsGeneratorsOfLeftIdeal( rel ) then[0X
+    [4X        return DecideZeroRows( mat, rel_mat );[0X
+    [4X    else[0X
+    [4X        return DecideZeroColumns( mat, rel_mat );[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-41 SyzygiesOfRows[0m
+  
+  [2X> SyzygiesOfRows( [0X[3XM[0X[2X ) _____________________________________________[0Xoperation
+  [2X> SyzygiesOfRows( [0X[3XM, M2[0X[2X ) _________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With one argument it is a synonym of [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-26[0m). with
+  two arguments it is a synonym of [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-28[0m).
+  
+  [1X5.5-42 SyzygiesOfColumns[0m
+  
+  [2X> SyzygiesOfColumns( [0X[3XM[0X[2X ) __________________________________________[0Xoperation
+  [2X> SyzygiesOfColumns( [0X[3XM, M2[0X[2X ) ______________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With  one  argument it is a synonym of [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-27[0m).
+  with two arguments it is a synonym of [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-29[0m).
+  
+  [1X5.5-43 ReducedSyzygiesOfRows[0m
+  
+  [2X> ReducedSyzygiesOfRows( [0X[3XM[0X[2X ) ______________________________________[0Xoperation
+  [2X> ReducedSyzygiesOfRows( [0X[3XM, M2[0X[2X ) __________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With  one  argument  it  is  a  synonym  of  [2XReducedSyzygiesGeneratorsOfRows[0m
+  ([14X5.5-32[0m).    With    two   arguments   it   calls   [10XReducedBasisOfRowModule[0m(
+  [10XSyzygiesGeneratorsOfRows[0m(  [3XM[0m,  [3XM2[0m ) ). (--> [2XReducedBasisOfRowModule[0m ([14X5.5-30[0m)
+  and [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-28[0m))
+  
+  [1X5.5-44 ReducedSyzygiesOfColumns[0m
+  
+  [2X> ReducedSyzygiesOfColumns( [0X[3XM[0X[2X ) ___________________________________[0Xoperation
+  [2X> ReducedSyzygiesOfColumns( [0X[3XM, M2[0X[2X ) _______________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix
+  
+  With  one  argument  it  is  a synonym of [2XReducedSyzygiesGeneratorsOfColumns[0m
+  ([14X5.5-33[0m).   With   two   arguments   it   calls  [10XReducedBasisOfColumnModule[0m(
+  [10XSyzygiesGeneratorsOfColumns[0m(  [3XM[0m,  [3XM2[0m  )  ).  (--> [2XReducedBasisOfColumnModule[0m
+  ([14X5.5-31[0m) and [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-29[0m))
+  
+  [1X5.5-45 RightDivide[0m
+  
+  [2X> RightDivide( [0X[3XB, A[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  Let  [3XB[0m  and [3XA[0m be matrices having the same number of columns and defined over
+  the  same  ring.  The matrix [10XRightDivide[0m( [3XB[0m, [3XA[0m ) is a particular solution of
+  the  inhomogeneous (one sided) linear system of equations X[3XA[0m=[3XB[0m in case it is
+  solvable.  Otherwise  [10Xfalse[0m  is  returned.  The  name  [10XRightDivide[0m  suggests
+  "X=[3XB[0m[3XA[0m^-1".  This  generalizes  [2XLeftInverse[0m  ([14X5.5-2[0m)  for which [3XB[0m becomes the
+  identity matrix. (--> [2XSyzygiesGeneratorsOfRows[0m ([14X5.5-26[0m))
+  
+  [1X5.5-46 LeftDivide[0m
+  
+  [2X> LeftDivide( [0X[3XA, B[0X[2X ) ______________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  Let  [3XA[0m and [3XB[0m be matrices having the same number of rows and defined over the
+  same  ring.  The  matrix  [10XLeftDivide[0m( [3XA[0m, [3XB[0m ) is a particular solution of the
+  inhomogeneous  (one  sided)  linear  system  of equations [3XA[0mX=[3XB[0m in case it is
+  solvable.   Otherwise  [10Xfalse[0m  is  returned.  The  name  [10XLeftDivide[0m  suggests
+  "X=[3XA[0m^-1[3XB[0m".  This  generalizes  [2XRightInverse[0m  ([14X5.5-3[0m) for which [3XB[0m becomes the
+  identity matrix. (--> [2XSyzygiesGeneratorsOfColumns[0m ([14X5.5-27[0m))
+  
+  [1X5.5-47 RightDivide[0m
+  
+  [2X> RightDivide( [0X[3XB, A, L[0X[2X ) __________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  Let  [3XB[0m,  [3XA[0m  and  [3XL[0m be matrices having the same number of columns and defined
+  over  the  same  ring.  The  matrix  [10XRightDivide[0m(  [3XB[0m, [3XA[0m, [3XL[0m ) is a particular
+  solution of the inhomogeneous (one sided) linear system of equations X[3XA[0m+Y[3XL[0m=[3XB[0m
+  in  case  it is solvable (for some Y which is forgotten). Otherwise [10Xfalse[0m is
+  returned.  The  name  [10XRightDivide[0m  suggests  "X=[3XB[0m[3XA[0m^-1 modulo [3XL[0m". (Cf. [BR08,
+  Subsection 3.1.1])
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( RightDivide,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomalgMatrix, IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( B, A, L )	## CAUTION: Do not use lazy evaluation here!!![0X
+    [4X    local R, BL, ZA, AL, CA, IAL, ZB, CB, NF, X;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( B );[0X
+    [4X    [0X
+    [4X    BL := BasisOfRows( L );[0X
+    [4X    [0X
+    [4X    ## first reduce A modulo L[0X
+    [4X    ZA := DecideZeroRows( A, BL );[0X
+    [4X    [0X
+    [4X    AL := UnionOfRows( ZA, BL );[0X
+    [4X    [0X
+    [4X    ## CA * AL = IAL[0X
+    [4X    CA := HomalgVoidMatrix( R );[0X
+    [4X    IAL := BasisOfRows( AL, CA );[0X
+    [4X    [0X
+    [4X    ## also reduce B modulo L[0X
+    [4X    ZB := DecideZeroRows( B, BL );[0X
+    [4X    [0X
+    [4X    ## knowing this will avoid computations[0X
+    [4X    IsOne( IAL );[0X
+    [4X    [0X
+    [4X    ## IsSpecialSubidentityMatrix( IAL );	## does not increase performance[0X
+    [4X    [0X
+    [4X    ## NF = ZB + CB * IAL[0X
+    [4X    CB := HomalgVoidMatrix( R );[0X
+    [4X    NF := DecideZeroRowsEffectively( ZB, IAL, CB );[0X
+    [4X    [0X
+    [4X    ## NF <> 0[0X
+    [4X    if not IsZero( NF ) then[0X
+    [4X        return fail;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    ## CD = -CB * CA => CD * A = B[0X
+    [4X    X := -CB * CertainColumns( CA, [ 1 .. NrRows( A ) ] );[0X
+    [4X    [0X
+    [4X    ## check assertion[0X
+    [4X    Assert( 3, IsZero( DecideZeroRows( X * A - B, BL ) ) );[0X
+    [4X    [0X
+    [4X    return X;[0X
+    [4X    [0X
+    [4X    ## technical: -CB * CA := (-CB) * CA and COLEM should take over[0X
+    [4X    ## since CB := -matrix[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-48 LeftDivide[0m
+  
+  [2X> LeftDivide( [0X[3XA, B, L[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  a [5Xhomalg[0m matrix or false
+  
+  Let  [3XA[0m,  [3XB[0m  and  [3XL[0m be matrices having the same number of columns and defined
+  over  the  same  ring.  The  matrix  [10XLeftDivide[0m(  [3XA[0m,  [3XB[0m, [3XL[0m ) is a particular
+  solution of the inhomogeneous (one sided) linear system of equations [3XA[0mX+[3XL[0mY=[3XB[0m
+  in  case  it is solvable (for some Y which is forgotten). Otherwise [10Xfalse[0m is
+  returned.  The  name  [10XLeftDivide[0m  suggests  "X=[3XA[0m^-1[3XB[0m  modulo [3XL[0m". (Cf. [BR08,
+  Subsection 3.1.1])
+  
+  [4X-----------------------------  Code  -----------------------------[0X
+    [4XInstallMethod( LeftDivide,[0X
+    [4X        "for homalg matrices",[0X
+    [4X        [ IsHomalgMatrix, IsHomalgMatrix, IsHomalgMatrix ],[0X
+    [4X        [0X
+    [4X  function( A, B, L )	## CAUTION: Do not use lazy evaluation here!!![0X
+    [4X    local R, BL, ZA, AL, CA, IAL, ZB, CB, NF, X;[0X
+    [4X    [0X
+    [4X    R := HomalgRing( B );[0X
+    [4X    [0X
+    [4X    BL := BasisOfColumns( L );[0X
+    [4X    [0X
+    [4X    ## first reduce A modulo L[0X
+    [4X    ZA := DecideZeroColumns( A, BL );[0X
+    [4X    [0X
+    [4X    AL := UnionOfColumns( ZA, BL );[0X
+    [4X    [0X
+    [4X    ## AL * CA = IAL[0X
+    [4X    CA := HomalgVoidMatrix( R );[0X
+    [4X    IAL := BasisOfColumns( AL, CA );[0X
+    [4X    [0X
+    [4X    ## also reduce B modulo L[0X
+    [4X    ZB := DecideZeroColumns( B, BL );[0X
+    [4X    [0X
+    [4X    ## knowing this will avoid computations[0X
+    [4X    IsOne( IAL );[0X
+    [4X    [0X
+    [4X    ## IsSpecialSubidentityMatrix( IAL );	## does not increase performance[0X
+    [4X    [0X
+    [4X    ## NF = ZB + IAL * CB[0X
+    [4X    CB := HomalgVoidMatrix( R );[0X
+    [4X    NF := DecideZeroColumnsEffectively( ZB, IAL, CB );[0X
+    [4X    [0X
+    [4X    ## NF <> 0[0X
+    [4X    if not IsZero( NF ) then[0X
+    [4X        return fail;[0X
+    [4X    fi;[0X
+    [4X    [0X
+    [4X    ## CD = CA * -CB => A * CD = B[0X
+    [4X    X := CertainRows( CA, [ 1 .. NrColumns( A ) ] ) * -CB;[0X
+    [4X    [0X
+    [4X    ## check assertion[0X
+    [4X    Assert( 3, IsZero( DecideZeroColumns( A * X - B, BL ) ) );[0X
+    [4X    [0X
+    [4X    return X;[0X
+    [4X    [0X
+    [4X    ## technical: CA * -CB := CA * (-CB) and COLEM should take over since[0X
+    [4X    ## CB := -matrix[0X
+    [4X    [0X
+    [4Xend );[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X5.5-49 GenerateSameRowModule[0m
+  
+  [2X> GenerateSameRowModule( [0X[3XM, N[0X[2X ) ___________________________________[0Xoperation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if  the  row span of [3XM[0m and of [3XN[0m are identical or not (--> [2XRightDivide[0m
+  ([14X5.5-45[0m)).
+  
+  [1X5.5-50 GenerateSameColumnModule[0m
+  
+  [2X> GenerateSameColumnModule( [0X[3XM, N[0X[2X ) ________________________________[0Xoperation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check  if the column span of [3XM[0m and of [3XN[0m are identical or not (--> [2XLeftDivide[0m
+  ([14X5.5-46[0m)).
+  

@@ -1,18 +1,15 @@
 #############################################################################
 ##  
-#W  helpbase.gi                 GAP Library                      Frank Lübeck
+#W  helpbase.gi                 GAP Library                      Frank LÃ¼beck
 ##  
-#H  @(#)$Id: helpbase.gi,v 1.15.2.3 2005/05/05 09:26:12 gap Exp $
 ##  
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 2001 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  2001,  Lehrstuhl D fÃ¼r Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 2001 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##  
 ## The files helpbase.g{d,i} contain the interface between GAP's online help
 ## and the actual help books.
 ##  
-Revision.helpbase_gi := 
-  "@(#)$Id: helpbase.gi,v 1.15.2.3 2005/05/05 09:26:12 gap Exp $";
 
 #############################################################################
 ##  
@@ -41,21 +38,47 @@ end);
 
 #############################################################################
 ##  
-#F  IsDocumentedVariable( <varname> ) . . . . . . .  check documentation for
-#F  name of global variable
+#F  IsDocumentedWord( <word>[, false ] ) . . . . . . .  check documentation for
+#F  <word> in a search string
 ##  
-##  Returns `true' if <varname> is a string which is the name of a bound global
-##  variable and if there exists a help section with this name as index entry
-##  (up to case).
+##  Returns 'true' if <word> appears as word in some search string of the help
+##  system. By default this is checked case sensitively. If the optional second
+##  argument 'false' is given, the check is case insensitive.
 ##  
 ##  This utility will first be used in some debug tools showing what is newly
 ##  installed by loading a package. Can be documented if desired.
 ##  
-BindGlobal("IsDocumentedVariable",  varname -> 
-      IsBoundGlobal( varname ) and 
-      not IsEmpty( HELP_GET_MATCHES( 
-                 HELP_KNOWN_BOOKS[1], SIMPLE_STRING( varname ), true )[1] )
-);
+# avoid warning for vars from GAPDoc package
+if not IsBound(StripEscapeSequences) then
+  StripEscapeSequences := 0;
+  WordsString := 0;
+fi;
+BindGlobal("IsDocumentedWord",  function(arg) 
+  local word, case, books, simple, cword, matches, i;
+  word := arg[1];
+  if Length(arg) > 1 and arg[2] = false then
+    case := LowercaseString;
+  else
+    case := IdFunc;
+  fi;
+  books := [];
+  simple := SIMPLE_STRING( word );
+  cword := case(word);
+  for i in [1..Length(HELP_KNOWN_BOOKS[1])] do
+    matches := HELP_GET_MATCHES( [HELP_KNOWN_BOOKS[1][i]], simple, true);
+    if ForAny(Concatenation(matches), a-> cword in 
+           WordsString(case(StripEscapeSequences(a[1].entries[a[2]][1])))) then
+      Add(books, HELP_KNOWN_BOOKS[2][i][1]);
+    fi;
+  od;
+  # we could return more precise information:
+  # return List(books, s-> ReplacedString(s, " (not loaded)", ""));
+  return Length(books) > 0;
+end);
+if StripEscapeSequences = 0 then
+  Unbind(StripEscapeSequences);
+  Unbind(WordsString);
+fi;
 
 #############################################################################
 ##  
@@ -188,14 +211,16 @@ InstallGlobalFunction(SIMPLE_STRING, function(str)
   # we simply list here in Position i how character i-1 should be translated
   trans :=Concatenation(
 "\000\>\<\c\004\005\006\007\b\t\n\013\014\r\016\017\020\021\022\023\024\025",
-"\026\027\030\031\032\033\034\035\036\037  \000   &\000   + -. ",
-"0123456789: < >? abcd",
-"efghijklmnopqrstuvwxyz \000  _\000abcdefghijklmnopqrstuvwxyz    ",
+"\026\027\030\031\032\033\034\035\036\037  \000   &\000  *+ -./",
+"0123456789: <=>? abcd",
+"efghijklmnopqrstuvwxyz[\000]^_\000abcdefghijklmnopqrstuvwxyz{ }~",
 "\177\200\201\202",
 "\203\204\205\206\207\210\211\212\213\214\215\216\217\220\221\222\223\224\225",
 "\226\227\230\231\232\233\234\235\236\237\238",
-"¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿aaaaaa",
-"aceeeeiiiidnooooo×ouuuuypsaaaaaaaceeeeiiiidnooooo÷ouuuuypy");
+"\241\242\244\244\246\246\250\250\251\252\253\254\255\256\257\260\261\262",
+"\264\264\265\266\270\270\271\272\276\276\276\276\277aaaaaa",
+"aceeeeiiiidnooooo\327ouuuuypsaaaaaaaceeeeiiiidnooooo\367ouuuuypy"
+);
 
   CONV_STRING(str);
   str := trans{List(str, INT_CHAR) + 1};
@@ -234,16 +259,19 @@ end);
 InstallValue(HELP_KNOWN_BOOKS, [[],[]]);
 
 # if book with normalized name is already installed, we overwrite, if dir
-# is the same (so short and long can be changed), else we raise an error
+# is the same (so short and long can be changed)
+# or if short corresponds to an installed "(not loaded)" version,
+# else we raise an error
 # dir can be given as string relative to GAP's home or as directory object
+
+
 InstallGlobalFunction(HELP_ADD_BOOK, function( short, long, dir )
   local sortfun, str, hnb, pos;
   # we sort books with main books first and packages alphabetically,
   # (looks a bit lengthy)
   sortfun := function(a, b)
     local main, pa, pb;
-    main := ["tutorial", "reference", "extending", "prg tutorial", 
-             "new features"];
+    main := ["tutorial", "reference", "changes"];
     pa := Position(main, a);
     pb := Position(main, b);
     if pa <> fail then
@@ -267,8 +295,14 @@ InstallGlobalFunction(HELP_ADD_BOOK, function( short, long, dir )
   if not (Position(hnb[1], str) in [fail, pos]) then
     Error("Help book with normalized name ", str, " already installed!\n");
   fi;
-  if pos = fail then 
-    pos := Length(hnb[1]) + 1;
+  if pos = fail then
+    # Perhaps we want to replace a "(not loaded)" book by another one.
+    pos:= Position( hnb[1], Concatenation( str, " not loaded" ) );
+    if pos = fail then
+      pos := Length(hnb[1]) + 1;
+    else
+      Unbind(HELP_BOOKS_INFO.(hnb[1][pos]));
+    fi;
   elif IsBound(HELP_BOOKS_INFO.(hnb[1][pos])) then
     # rename help book info if already loaded
     HELP_BOOKS_INFO.(str) := HELP_BOOKS_INFO.(hnb[1][pos]);
@@ -280,6 +314,22 @@ InstallGlobalFunction(HELP_ADD_BOOK, function( short, long, dir )
   hnb[2][pos] := [short, long, dir];
   SortParallel(hnb[1], hnb[2], sortfun);
 end);
+
+
+InstallGlobalFunction(HELP_REMOVE_BOOK, function( short )
+  local str, pos;
+  
+  str := SIMPLE_STRING(short);
+  pos := Position(HELP_KNOWN_BOOKS[1], str);
+  if pos = fail then
+    Error("Book with normalized name ", str, " is not installed.");
+  else
+    Remove (HELP_KNOWN_BOOKS[1], pos);
+    Remove (HELP_KNOWN_BOOKS[2], pos);
+    Unbind (HELP_BOOKS_INFO.(str));
+  fi;
+end);
+
 
 #############################################################################
 ##  
@@ -476,6 +526,8 @@ InstallGlobalFunction(HELP_SHOW_CHAPTERS, function(book)
   if info = fail then
     Print("#W Help: Book ", book, " not found.\n");
   else
+    HELP_LAST.BOOK := book;
+    HELP_LAST.MATCH := 1;
     Pager(HELP_BOOK_HANDLER.(info.handler).ShowChapters(info));
   fi;
   return true;  
@@ -492,6 +544,8 @@ InstallGlobalFunction(HELP_SHOW_SECTIONS, function(book)
   if info = fail then
     Print("#W Help: Book ", book, " not found.\n");
   else
+    HELP_LAST.BOOK := book;
+    HELP_LAST.MATCH := 1;
     Pager(HELP_BOOK_HANDLER.(info.handler).ShowSections(info));
   fi;
   return true;  
@@ -504,18 +558,19 @@ end);
 ##  
 ##  <match> is [book, entrynr]
 ##  
-if not IsBound(HELP_VIEWER) then HELP_VIEWER := ["screen"]; fi;
 InstallGlobalFunction(HELP_PRINT_MATCH, function(match)
-  local   book,  entrynr,  viewer,  type,  data, hv;
+  local book, entrynr, viewer, hv, pos, type, data;
   book := HELP_BOOK_INFO(match[1]);
   entrynr := match[2];
+  viewer:= UserPreference("HelpViewers");
   if HELP_LAST.NEXT_VIEWER = false then
-    hv := HELP_VIEWER;
+    hv := viewer;
   else
-    hv := HELP_VIEWER{[Position(HELP_VIEWER,
-                            HELP_LAST.VIEWER)+1..Length(HELP_VIEWER)]};
-    if Length(hv) = 0 then
-      hv := [HELP_LAST.VIEWER];
+    pos := Position( viewer, HELP_LAST.VIEWER );
+    if pos = fail then
+      hv := viewer;
+    else
+      hv := viewer{Concatenation([pos+1..Length(viewer)],[1..pos])};
     fi;
     HELP_LAST.NEXT_VIEWER := false;
   fi;
@@ -543,8 +598,12 @@ end);
 ##  
 InstallGlobalFunction(HELP_SHOW_PREV_CHAPTER, function( arg )
   local   info,  match;
+  if HELP_LAST.BOOK = 0 then
+    Print("Help: no history so far.\n");
+    return;
+  fi;
   info := HELP_BOOK_INFO(HELP_LAST.BOOK);
-   match := HELP_BOOK_HANDLER.(info.handler).MatchPrevChap(info, 
+  match := HELP_BOOK_HANDLER.(info.handler).MatchPrevChap(info, 
                    HELP_LAST.MATCH);
   if match[2] = fail then
     Print("Help:  no match found.\n");
@@ -561,6 +620,10 @@ end);
 ##
 InstallGlobalFunction(HELP_SHOW_NEXT_CHAPTER, function( arg )
   local   info,  match;
+  if HELP_LAST.BOOK = 0 then
+    Print("Help: no history so far.\n");
+    return;
+  fi;
   info := HELP_BOOK_INFO(HELP_LAST.BOOK);
   match := HELP_BOOK_HANDLER.(info.handler).MatchNextChap(info, 
                    HELP_LAST.MATCH);
@@ -579,6 +642,10 @@ end);
 ##
 InstallGlobalFunction(HELP_SHOW_PREV, function( arg )
   local   info,  match;
+  if HELP_LAST.BOOK = 0 then
+    Print("Help: no history so far.\n");
+    return;
+  fi;
   info := HELP_BOOK_INFO(HELP_LAST.BOOK);
   match := HELP_BOOK_HANDLER.(info.handler).MatchPrev(info, 
                    HELP_LAST.MATCH);
@@ -597,6 +664,10 @@ end);
 ##
 InstallGlobalFunction(HELP_SHOW_NEXT, function( arg )
   local   info,  match;
+  if HELP_LAST.BOOK = 0 then
+    Print("Help: no history so far.\n");
+    return;
+  fi;
   info := HELP_BOOK_INFO(HELP_LAST.BOOK);
   match := HELP_BOOK_HANDLER.(info.handler).MatchNext(info, 
                    HELP_LAST.MATCH);
@@ -663,12 +734,11 @@ InstallGlobalFunction(HELP_GET_MATCHES, function( books, topic, frombegin )
     fi;
   od;
   
-  # in case of substring search the only special handling of exact matches
-  # is that they are shown first
-  if frombegin = false then
-    match := Concatenation(exact, match);
-    exact := [];
-  fi;
+  # we now join the two lists, this way the exact matches are displayed
+  # first in case of multiple matches
+  # Note: before GAP 4.5 this was only done in case of substring search.
+  match := Concatenation(exact, match);
+  exact := [];
 
   return [exact, match];
 end);
@@ -833,9 +903,10 @@ InstallValue(HELP_LAST, rec(MATCH := 0, BOOK := 0,
 NAMES_SYSTEM_GVARS:= "to be defined in init.g";
 
 InstallGlobalFunction(HELP, function( str )
-  local origstr, p, book, books, move, add, b;
+  local origstr, nwostr, p, book, books, move, add;
 
   origstr := ShallowCopy(str);
+  nwostr := NormalizedWhitespace(origstr);
   
   # extract the book
   p := Position( str, ':' );
@@ -878,9 +949,9 @@ InstallGlobalFunction(HELP, function( str )
 
   # if topic is "&" show last topic again, but with next viewer in viewer
   # list, or with last viewer again if there is no next one
-  elif book = "" and str = "&" then
+  elif book = "" and str = "&" and Length(nwostr) = 1 then
        if HELP_LAST.BOOK = 0 then
-         HELP("Tutorial: The Help System");
+         HELP("Tutorial: Help");
        else
          HELP_LAST.NEXT_VIEWER := true;
          HELP_PRINT_MATCH( [HELP_LAST.BOOK, HELP_LAST.MATCH] );
@@ -888,14 +959,14 @@ InstallGlobalFunction(HELP, function( str )
        return;
   
   # if the topic is '-' we are interested in the previous search again
-  elif book = "" and str = "-"  then
+  elif book = "" and str = "-" and Length(nwostr) = 1  then
       HELP_RING_IDX := (HELP_RING_IDX-1) mod HELP_RING_SIZE;
       books := HELP_BOOK_RING[HELP_RING_IDX+1];
       str  := HELP_TOPIC_RING[HELP_RING_IDX+1];
       move := true;
 
   # if the topic is '+' we are interested in the last section again
-  elif book = "" and str = "+"  then
+  elif book = "" and str = "+" and Length(nwostr) = 1  then
       HELP_RING_IDX := (HELP_RING_IDX+1) mod HELP_RING_SIZE;
       books := HELP_BOOK_RING[HELP_RING_IDX+1];
       str  := HELP_TOPIC_RING[HELP_RING_IDX+1];
@@ -907,11 +978,11 @@ InstallGlobalFunction(HELP, function( str )
       HELP_SHOW_FROM_LAST_TOPICS(Int(str));
     
   # if the topic is '<' we are interested in the one before 'LastTopic'
-  elif book = "" and str = "<"  then
+  elif book = "" and str = "<" and Length(nwostr) = 1  then
       HELP_SHOW_PREV();
 
   # if the topic is '>' we are interested in the one after 'LastTopic'
-  elif book = "" and str = ">"  then
+  elif book = "" and str = ">" and Length(nwostr) = 1  then
       HELP_SHOW_NEXT();
 
   # if the topic is '<<' we are interested in the previous chapter intro
@@ -935,7 +1006,7 @@ InstallGlobalFunction(HELP, function( str )
       fi;
 
   # if the topic is 'chapters' display the table of chapters
-  elif str = "chapters"  or  book <> "" and str = "" then
+  elif str = "chapters"  or str = "contents" or book <> "" and str = "" then
       if ForAll(books, b->  HELP_SHOW_CHAPTERS(b)) then
         add( books, "chapters" );
       fi;

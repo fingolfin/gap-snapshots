@@ -2,15 +2,12 @@
 ##
 #W  ideal.gi                    GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: ideal.gi,v 4.8.4.2 2008/06/18 21:50:04 gap Exp $
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##
-Revision.ideal_gi :=
-    "@(#)$Id: ideal.gi,v 4.8.4.2 2008/06/18 21:50:04 gap Exp $";
 
 
 #############################################################################
@@ -209,7 +206,7 @@ InstallMethod( TwoSidedIdealByGenerators,
     SetRightActingRingOfIdeal( I, R );
     return I;
     end );
-
+    
 
 #############################################################################
 ##
@@ -250,6 +247,33 @@ InstallMethod( RightIdealByGenerators,
     return I;
     end );
 
+
+#############################################################################
+##
+#M  LeftIdealByGenerators(  <R>, <gens> )  . . . . . .  for commutative rings
+#M  RightIdealByGenerators( <R>, <gens> )  . . . . . .  for commutative rings
+##
+##  If R is a commutative ring, then we create a two-sided ideal in a ring R
+##  instead of its left or right ideal
+##
+InstallMethod( LeftIdealByGenerators,
+    "to construct ideals of commutative rings",
+    true,
+    [ IsFLMLOR and IsCommutative, IsCollection ],
+    0,
+    function( R, gens )
+    return TwoSidedIdealByGenerators( R, gens );
+    end );
+
+InstallMethod( RightIdealByGenerators,
+    "to construct ideals of commutative rings",
+    true,
+    [ IsFLMLOR and IsCommutative, IsCollection ],
+    0,
+    function( R, gens )
+    return TwoSidedIdealByGenerators( R, gens );
+    end );
+    
 
 #############################################################################
 ##
@@ -634,7 +658,7 @@ InstallMethod( GeneratorsOfRightIdeal,
              and HasGeneratorsOfTwoSidedIdeal ], 0,
     GeneratorsOfRing );
 
-
+     
 #############################################################################
 ##
 #M  \+( <I1>, <I2> )  . . . . . . . . . . . . . . . . . . . sum of two ideals
@@ -836,6 +860,28 @@ InstallMethod( AsTwoSidedIdeal,
     fi;
     return I;
     end );
+
+InstallMethod(IsSubset,"2-sided ideal in ring, naive",IsIdenticalObj,
+  [IsRing,IsRing and HasRightActingRingOfIdeal and HasLeftActingRingOfIdeal],
+  2*SIZE_FLAGS(FLAGS_FILTER(IsFLMLOR)),
+function(R,I)
+  if IsIdenticalObj(R,RightActingRingOfIdeal(I)) and
+     IsIdenticalObj(R,LeftActingRingOfIdeal(I)) then
+     return IsSubset(R,GeneratorsOfTwoSidedIdeal(I)); 
+   fi;
+   TryNextMethod();
+end);
+
+InstallMethod(IsLeftIdeal,"left ideal in ring, naive",IsIdenticalObj,
+  [IsRing,IsRing and HasLeftActingRingOfIdeal],
+  2*SIZE_FLAGS(FLAGS_FILTER(IsFLMLOR)),
+function(R,I)
+  if IsIdenticalObj(LeftActingRingOfIdeal(I),R) then
+    return true;
+  else
+    TryNextMethod();
+  fi;
+end);
 
 
 #############################################################################

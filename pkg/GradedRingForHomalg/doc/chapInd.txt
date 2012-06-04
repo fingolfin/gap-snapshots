@@ -1,0 +1,35 @@
+  
+  
+  [1XIndex[0X
+  
+  [2XAddToMatElm[0X (for matrices over graded rings)  5.4-3
+  [2XBasisOfRowModule[0X (for graded rings)  B.1-1
+  [2XCommonNonTrivialWeightOfIndeterminates[0X  4.3-1
+  [2XDecideZeroRows[0X (for graded rings)  B.1-2
+  [2XDegreesOfEntries[0X  5.3-1
+  [2XDiff[0X  A.2-4
+  [5XGradedRingForHomalg[0m  .-3
+  [2XHomalgGradedRingElement[0X (constructor for graded ring elements using a given numerator and one as denominator)  4.2-1
+  [2XHomalgGradedRingElement[0X (constructor for graded ring elements using numerator and denominator)  4.2-1
+  [2XIsHomalgGradedRingElementRep[0X  4.1-2
+  [2XIsHomalgGradedRingRep[0X  4.1-1
+  [2XIsHomalgMatrixOverGradedRingRep[0X  5.1-1
+  [2XMatElm[0X (for matrices over graded rings)  5.4-5
+  [2XMatElmAsString[0X (for matrices over graded rings)  5.4-4
+  [2XMatrixOfWeightsOfIndeterminates[0X  4.3-3
+  [2XMatrixOverGradedRing[0X (constructor for matrices over graded rings)  5.2-1
+  [2XMonomialMatrix[0X  A.2-1
+  [2XName[0X (for homalg graded ring elements)  4.4-3
+  [2XNonTrivialDegreePerColumn[0X  5.3-3
+  [2XNonTrivialDegreePerRow[0X  5.3-2
+  [2XRandomMatrixBetweenGradedFreeLeftModules[0X  A.2-2
+  [2XRandomMatrixBetweenGradedFreeRightModules[0X  A.2-3
+  [2XSetMatElm[0X (for matrices over graded rings)  5.4-2
+  [2XSyzygiesGeneratorsOfRows[0X (for graded rings)  B.1-3
+  [2XUnderlyingNonGradedRing[0X (for homalg graded rings)  4.4-1
+  [2XUnderlyingNonGradedRing[0X (for homalg graded ring elements)  4.4-2
+  [2XUnderlyingNonGradedRing[0X (for matrices over graded rings)  5.4-1
+  [2XWeightsOfIndeterminates[0X  4.3-2
+  
+  
+  -------------------------------------------------------

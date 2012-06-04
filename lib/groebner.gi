@@ -1,15 +1,21 @@
 #############################################################################
 ##
 #W  groebner.gi                   GAP Library               Alexander Hulpke   
+#W                                                              David Joyner   
 ##
-#H  @(#)$Id: groebner.gi,v 4.1.2.6 2006/03/02 18:00:12 gap Exp $
 ##
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the implementations for monomial orderings and Groebner
 ##  bases.
-Revision.groebner_gi :=
-    "@(#)$Id: groebner.gi,v 4.1.2.6 2006/03/02 18:00:12 gap Exp $";
+
+# convenience function to catch cases
+BindGlobal("GBasisFixOrderingArgument",function(a)
+  if IsFunction(a) then
+    a:=a();
+  fi;
+  return a;
+end);
 
 BindGlobal("MakeMonomialOrdering",function(name,ercomp)
 local obj;
@@ -413,6 +419,7 @@ InstallMonomialOrdering(MonomialGrevlexOrdering,
 	return true;
       fi;
       i:=i-2;
+      j:=j-2;
     od;
     if i>0 then
       #a-part left
@@ -525,7 +532,7 @@ local e,fam,a;
   e:=ExtRepPolynomialRatFun(p);
   fam:=FamilyObj(p);
   a:=LeadingMonomialPosExtRep(fam,e,order);
-  return PolynomialByExtRep(fam,e{[a,a+1]});
+  return PolynomialByExtRepNC(fam,e{[a,a+1]});
 end);
 
 InstallOtherMethod(LeadingMonomialOfPolynomial,"with ordering",true,
@@ -539,7 +546,7 @@ local e,fam,a;
   e:=ExtRepPolynomialRatFun(p);
   fam:=FamilyObj(p);
   a:=LeadingMonomialPosExtRep(fam,e,order);
-  return PolynomialByExtRep(fam,[e[a],One(CoefficientsFamily(fam))]);
+  return PolynomialByExtRepNC(fam,[e[a],One(CoefficientsFamily(fam))]);
 end);
 
 InstallOtherMethod(LeadingCoefficientOfPolynomial,"with ordering",true,
@@ -601,8 +608,8 @@ local a,b,c,d,e,f,i,j,ae,be,di,fam;
   elif j<Length(be) then
     Append(c,be{[j..Length(be)]});
   fi;
-  return PolynomialByExtRep(fam,[c,f[b+1]])*p
-         -PolynomialByExtRep(fam,[d,e[a+1]])*q;
+  return PolynomialByExtRepNC(fam,[c,f[b+1]])*p
+         -PolynomialByExtRepNC(fam,[d,e[a+1]])*q;
 end);
 
 #############################################################################
@@ -868,13 +875,13 @@ local fam,quot,elist,lmp,lmo,lmc,x,y,z,mon,mon2,qmon,noreduce,
       fi;
 
       # reduce!
-      qmon:=PolynomialByExtRep(fam,[qmon,ep[x+1]/lmc[y]]); #quotient monomial
+      qmon:=PolynomialByExtRepNC(fam,[qmon,ep[x+1]/lmc[y]]); #quotient monomial
 
       quot[y]:=quot[y]+qmon;
       poly:=poly-qmon*plist[y]; # reduce
     else
       # remove leading monomial
-      qmon:=PolynomialByExtRep(fam,[mon,ep[x+1]]);
+      qmon:=PolynomialByExtRepNC(fam,[mon,ep[x+1]]);
       rem:=rem+qmon;
       poly:=poly-qmon;
     fi;
@@ -1041,26 +1048,40 @@ local ov,i,d;
       d:=Difference(OccuringVariableIndices(i),ov);
       if Length(d)>0 then 
         Error("Ordering is undefined for variables ",
-	  List(d,j->X(DefaultRing([FamilyObj(i)!.zeroCoefficient]),j)));
+	  List(d,j->Indeterminate(DefaultRing([FamilyObj(i)!.zeroCoefficient]),j)));
       fi;
     od;
   fi;
   return GroebnerBasisNC(elms,order);
 end);
 
+InstallOtherMethod(GroebnerBasis,"fix function",true,
+  [IsObject,IsFunction],0,
+function(obj,f)
+  if f=MonomialLexOrdering or f=MonomialGrlexOrdering or
+    f=MonomialGrevlexOrdering then
+    return GroebnerBasis(obj,f());
+  fi;
+  TryNextMethod();
+end);
+
 InstallMethod(StoredGroebnerBasis,"ideal",true,
   [IsPolynomialRingIdeal],0,function(I)
 local ord;
   ord:=MonomialGrlexOrdering();
-  return [GroebnerBasisNC(I,ord),ord];
+  return [ReducedGroebnerBasis(GeneratorsOfTwoSidedIdeal(I),ord),ord];
 end);
 
 InstallMethod(GroebnerBasis,"ideal",true,
   [IsPolynomialRingIdeal,IsMonomialOrdering],0,
 function(I,order)
 local bas;
+  if HasStoredGroebnerBasis(I) then
+    bas:=StoredGroebnerBasis(I);
+    if IsIdenticalObj(bas[2],order) then return bas[1];fi;
+  fi;
   # do some tests
-  bas:=GroebnerBasis(GeneratorsOfIdeal(I),order);
+  bas:=ReducedGroebnerBasis(GeneratorsOfIdeal(I),order);
   if not HasStoredGroebnerBasis(I) then
     SetStoredGroebnerBasis(I,[bas,order]);
   fi;
@@ -1128,6 +1149,16 @@ local bas;
   return bas;
 end);
 
+InstallOtherMethod(ReducedGroebnerBasis,"fix function",true,
+  [IsObject,IsFunction],0,
+function(obj,f)
+  if f=MonomialLexOrdering or f=MonomialGrlexOrdering or
+    f=MonomialGrevlexOrdering then
+    return ReducedGroebnerBasis(obj,f());
+  fi;
+  TryNextMethod();
+end);
+
 InstallMethod(\in,"polynomial ideal",true,
   [IsPolynomial,IsPolynomialRingIdeal],0,function(p,I)
 local g;
@@ -1136,98 +1167,248 @@ local g;
   return IsZero(p);
 end);
 
-BindGlobal("Naive",function(elms,order)
-local orderext, bas, baslte, fam, t, B, i, j, s;
-    orderext:=MonomialExtrepComparisonFun(order);
-    bas:=ShallowCopy(elms);
-    baslte:=List(bas,ExtRepPolynomialRatFun);
-    fam:=FamilyObj(bas[1]);
-    baslte:=List(baslte,i->i[LeadingMonomialPosExtRep(fam,i,orderext)]);
-    t:=Length(bas);
-    B:=Concatenation(List([1..t],i->List([1..i-1],j->[j,i])));
-    while Length(B)>0 do
-      i:=B[1]; # take one
-      j:=i[1];
-      i:=i[2];
-	s:=SPolynomial(bas[i],bas[j],order);
-	if InfoLevel(InfoGroebner)<3 then
-	  Info(InfoGroebner,2,"Spol(",i,",",j,")");
-	else
-	  Info(InfoGroebner,3,"Spol(",i,",",j,")=",s);
-	fi;
-	s:=PolynomialReducedRemainder(s,bas,orderext);
-	if not IsZero(s) then
-	  Info(InfoGroebner,3,"reduces to ",s);
-	  Add(bas,s);
-	  s:=ExtRepPolynomialRatFun(s);
-	  Add(baslte,s[LeadingMonomialPosExtRep(fam,s,orderext)]);
-	  t:=t+1;
-	  # add new pairs
-	  for i in [1..t] do
-	    Add(B,[i,t]);
-	  od;
-	  Info(InfoGroebner,1,"|bas|=",t,", ",Length(B)," pairs left");
-	fi;
-      # remove first entry of B
-      for j in [2..Length(B)] do
-	B[j-1]:=B[j];
-      od;
-      Unbind(B[Length(B)]);
-    od;
-    return bas;
-  end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-BindGlobal("CANGB",function(elms,order)
-local orderext, bas, i, l, nomod, pol;
-  orderext:=MonomialExtrepComparisonFun(order);
-  # do some tests
-  bas:=ShallowCopy(elms);
-  i:=1;
-  l:=Length(bas);
-  repeat
-    nomod:=true;
-    while i<=l do
-      pol:=PolynomialReducedRemainder(bas[i],
-             bas{Difference([1..Length(bas)],[i])},orderext);
-      if pol<>bas[i] then nomod:=false;fi;
-      if IsZero(pol) then
-	bas[i]:=bas[l];
-	Unbind(bas[l]);
-	l:=l-1;
-      else
-	bas[i]:=pol;
-	i:=i+1;
-      fi;
-    od;
-  until nomod;
-  for i in [1..Length(bas)] do
-     bas[i]:=bas[i]/LeadingCoefficientOfPolynomial(bas[i],order);
+InstallOtherMethod(GcdOp,"multivariate Gcd based on Groebner bases",
+  IsCollsElmsElms,[IsPolynomialRing,IsPolynomial,IsPolynomial],0,
+# Input: f, g are multivariate polys in R=F[x1,...,xn]
+# Output: a gcd of f,g in R
+function(R,f,g)
+local basis_elt,p,t,F,vars,vars2,GB,coeff_t;
+  F:=CoefficientsRing(R); 
+  vars:=IndeterminatesOfPolynomialRing(R);
+  t:=Indeterminate(F,vars);
+  vars2:=Concatenation([t],vars);
+  GB:=ReducedGroebnerBasis([t*f,(1-t)*g],MonomialLexOrdering(vars2));
+  for basis_elt in GB do
+    coeff_t:=PolynomialCoefficientsOfPolynomial(basis_elt,t);
+    if Length(coeff_t)=1 then 
+      return f*g/coeff_t[1];
+    fi;
   od;
-  Sort(bas,MonomialComparisonFunction(order));
+  return One(F);
+end);
+
+InstallOtherMethod(LcmOp,"multivariate Lcm based on Groebner bases",
+  IsCollsElmsElms,[IsPolynomialRing,IsPolynomial,IsPolynomial],0,
+function(R,f,g)
+  return f*g/GcdOp(R,f,g);
+end);
+
+BindGlobal("NaiveBuchberger",function(elms,order)
+local orderext, bas, baslte, fam, t, B, i, j, s;
+  orderext:=MonomialExtrepComparisonFun(order);
+  bas:=ShallowCopy(elms);
+  baslte:=List(bas,ExtRepPolynomialRatFun);
+  fam:=FamilyObj(bas[1]);
+  baslte:=List(baslte,i->i[LeadingMonomialPosExtRep(fam,i,orderext)]);
+  t:=Length(bas);
+  B:=Concatenation(List([1..t],i->List([1..i-1],j->[j,i])));
+  while Length(B)>0 do
+    i:=B[1]; # take one
+    j:=i[1];
+    i:=i[2];
+      s:=SPolynomial(bas[i],bas[j],order);
+      if InfoLevel(InfoGroebner)<3 then
+	Info(InfoGroebner,2,"Spol(",i,",",j,")");
+      else
+	Info(InfoGroebner,3,"Spol(",i,",",j,")=",s);
+      fi;
+      s:=PolynomialReducedRemainder(s,bas,orderext);
+      if not IsZero(s) then
+	Info(InfoGroebner,3,"reduces to ",s);
+	Add(bas,s);
+	s:=ExtRepPolynomialRatFun(s);
+	Add(baslte,s[LeadingMonomialPosExtRep(fam,s,orderext)]);
+	t:=t+1;
+	# add new pairs
+	for i in [1..t] do
+	  Add(B,[i,t]);
+	od;
+	Info(InfoGroebner,1,"|bas|=",t,", ",Length(B)," pairs left");
+      fi;
+    # remove first entry of B
+    for j in [2..Length(B)] do
+      B[j-1]:=B[j];
+    od;
+    Unbind(B[Length(B)]);
+  od;
   return bas;
 end);
 
-DoTest:=function(l,ord)
-local a,b,t1,t2;
-  t1:=Runtime();
-  a:=Naive(l,ord);
-  t1:=Runtime()-t1;
-  t2:=Runtime();
-  b:=GroebnerBasis(l,ord);
-  t2:=Runtime()-t2;
-  a:=CANGB(a,ord);
-  b:=CANGB(b,ord);
-  return [t1,t2,a=b];
-end;
+# setup for quotient rings of polynomial rings
+
+#############################################################################
+##
+#M  NaturalHomomorphismByIdeal(<R>,<I>)
+##
+InstallMethod( NaturalHomomorphismByIdeal,"polynomial rings",IsIdenticalObj,
+    [ IsPolynomialRing,IsRing],
+function(R,I)
+  local ord,b,ind,num,c,corners,i,j,a,bound,mon,n,monb,dim,sc,k,l,char,hom;
+  if not IsIdeal(R,I) then
+    Error("I is not an ideal!");
+  fi;
+  if not IsField(LeftActingDomain(R)) then
+    TryNextMethod();
+  fi;
+  char:=Characteristic(LeftActingDomain(R));
+  ord:=MonomialGrlexOrdering();
+  b:=GroebnerBasis(I,ord);
+
+  # determine all monomials bounded
+  ind:=IndeterminatesOfPolynomialRing(R);
+  n:=Length(ind);
+  num:=List(ind,IndeterminateNumberOfUnivariateRationalFunction);
+  c:=List(b,x->ExtRepNumeratorRatFun(LeadingMonomialOfPolynomial(x,ord))[1]);
+  corners:=[];
+  bound:=List(ind,x->infinity);
+  for i in c do
+    a:=List(ind,x->0);
+    for j in [1,3..Length(i)-1] do
+      a[Position(num,i[j])]:=i[j+1];
+    od;
+    # single variable bound
+    if Number(a,x->x<>0)=1 then
+      bound[PositionNonZero(a)]:=Sum(a);
+    else
+      Add(corners,a); # extra corner
+    fi;
+  od;
+  if not ForAll(bound,x->IsInt(x)) then
+    Info(InfoWarning,1,"quotient ring has infinite dimension");
+    TryNextMethod();
+  fi;
+
+  #run through bounded simplex
+  a:=[0,0];
+  mon:=[a];
+  i:=Length(a);
+  repeat
+    a[i]:=a[i]+1;
+    while i>0 and a[i]>=bound[i] do
+      a[i]:=0;
+      i:=i-1;
+      if i>0 then
+	a[i]:=a[i]+1;
+      fi;
+    od;
+    if i>0 then
+      if ForAny(corners,x->ForAll([1..n],j->x[j]<=a[j])) then
+	# set last coordinate to become 0 again
+	a[n]:=bound[n];
+      else
+	Add(mon,ShallowCopy(a));
+	i:=Length(a);
+      fi;
+    fi;
+  until i=0;
+
+  # basis of the quotient as vector space
+  mon:=List(mon,x->Product([1..n],y->ind[y]^x[y]));
+  monb:=Basis(VectorSpace(LeftActingDomain(R),mon));
+
+  # now form the quotient
+  dim:=Length(mon);
+  sc:=EmptySCTable(dim,0);
+  for i in [1..dim] do
+    for j in [1..dim] do
+      a:=PolynomialReducedRemainder(mon[i]*mon[j],b,ord);
+      if not IsZero(a) then
+	a:=Coefficients(monb,a);
+	if char>0 then
+	  a:=List(a,Int);
+	fi;
+	l:=[];
+	for k in [1..dim] do
+	  if not IsZero(a[k]) then
+	    Add(l,a[k]);
+	    Add(l,k);
+	  fi;
+	od;
+	SetEntrySCTable(sc,i,j,l);
+      fi;
+    od;
+  od;
+  l:=List(mon,x->Concatenation("(",
+        Filtered(String(x),y->y<>'^' and y<>'*'),")"));
+  a:=PositionProperty(mon,IsOne);
+  if a<>fail then
+    l[a]:="(1)";
+  fi;
+
+  a:=AlgebraByStructureConstants(LeftActingDomain(R),sc,l);
+  if Length(l)<50 then
+    j:=Concatenation("<ring ",String(LeftActingDomain(R)));
+    for i in l do
+      Append(j,",");
+      Append(j,i);
+    od;
+    Append(j,">");
+    SetName(a,j);
+  fi;
+  #k:=Concatenation([One(R)],IndeterminatesOfPolynomialRing(R));
+  k:=IndeterminatesOfPolynomialRing(R);
+  l:=[];
+  for i in k do
+    j:=Position(mon,i);
+    if j<>fail then
+      Add(l,GeneratorsOfLeftOperatorRing(a)[j]);
+    else
+      Add(l,Zero(a));
+    fi;
+  od;
+
+  hom:=AlgebraWithOneHomomorphismByImages(R,a,k,l);
+  SetIsSurjective(hom,true);
+  SetKernelOfAdditiveGeneralMapping(hom,I);
+
+  j:=AlgebraWithOneGeneralMappingByImages(a,R,l,k);
+  SetInverseGeneralMapping(hom,j);
+
+  return hom;
+  #x*y^3-x^2,x^3*y^2-y
+
+end);
+
+
+# BindGlobal("CANGB",function(elms,order)
+#local orderext, bas, i, l, nomod, pol;
+#  orderext:=MonomialExtrepComparisonFun(order);
+#  # do some tests
+#  bas:=ShallowCopy(elms);
+#  i:=1;
+#  l:=Length(bas);
+#  repeat
+#    nomod:=true;
+#    while i<=l do
+#      pol:=PolynomialReducedRemainder(bas[i],
+#             bas{Difference([1..Length(bas)],[i])},orderext);
+#      if pol<>bas[i] then nomod:=false;fi;
+#      if IsZero(pol) then
+#	bas[i]:=bas[l];
+#	Unbind(bas[l]);
+#	l:=l-1;
+#      else
+#	bas[i]:=pol;
+#	i:=i+1;
+#      fi;
+#    od;
+#  until nomod;
+#  for i in [1..Length(bas)] do
+#     bas[i]:=bas[i]/LeadingCoefficientOfPolynomial(bas[i],order);
+#  od;
+#  Sort(bas,MonomialComparisonFunction(order));
+#  return bas;
+#end);
+#
+#DoTest:=function(l,ord)
+#local a,b,t1,t2;
+#  t1:=Runtime();
+#  a:=NaiveBuchberger(l,ord);
+#  t1:=Runtime()-t1;
+#  t2:=Runtime();
+#  b:=GroebnerBasis(l,ord);
+#  t2:=Runtime()-t2;
+#  a:=CANGB(a,ord);
+#  b:=CANGB(b,ord);
+#  return [t1,t2,a=b];
+#end;

@@ -1,0 +1,9381 @@
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.11.28)  7 APR 2012 14:32
+entering extended mode
+**HapMan
+(./HapMan.tex
+LaTeX2e <2003/12/01>
+Babel <v3.8d> and hyphenation patterns for american, french, german, ngerman, b
+ahasa, basque, bulgarian, catalan, croatian, czech, danish, dutch, esperanto, e
+stonian, finnish, greek, icelandic, irish, italian, latin, magyar, norsk, polis
+h, portuges, romanian, russian, serbian, slovak, slovene, spanish, swedish, tur
+kish, ukrainian, nohyphenation, loaded.
+(/usr/share/texmf-tetex/tex/latex/base/report.cls
+Document Class: report 2004/02/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf-tetex/tex/latex/base/size11.clo
+File: size11.clo 2004/02/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-tetex/tex/latex/a4wide/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/share/texmf-tetex/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+))
+(/usr/share/texmf-tetex/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf-tetex/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/share/texmf-tetex/tex/latex/base/inputenc.sty
+Package: inputenc 2004/02/05 v1.0d Input encoding file
+
+(/usr/share/texmf-tetex/tex/latex/base/latin1.def
+File: latin1.def 2004/02/05 v1.0d Input encoding file
+))
+(/usr/share/texmf-tetex/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `HapMan.idx'.
+
+
+Writing index file HapMan.idx
+(/usr/share/texmf-tetex/tex/latex/graphics/color.sty
+Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
+
+(/usr/share/texmf-tetex/tex/latex/graphics/color.cfg
+File: color.cfg 2005/02/03 v1.3 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 125.
+
+(/usr/share/texmf-tetex/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count88
+))
+(/usr/share/texmf-tetex/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 1998/07/17
+
+Style option: `fancyvrb' v2.6, with DG/SPQR fixes <1998/07/17> (tvz)
+(/usr/share/texmf-tetex/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+\FV@CodeLineNo=\count89
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count90
+\FV@StepNumber=\count91
+\FV@OutFile=\write4
+
+No file fancyvrb.cfg.
+) (/usr/share/texmf-tetex/tex/latex/pslatex/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+(/usr/share/texmf-tetex/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2003/11/30 v6.74m Hypertext links for LaTeX
+\@linkdim=\dimen103
+\Hy@linkcounter=\count92
+\Hy@pagecounter=\count93
+
+(/usr/share/texmf-tetex/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2003/11/30 v6.74m Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf-tetex/tex/latex/hyperref/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
+)
+Package hyperref Info: Option `bookmarks' set `false' on input line 1830.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1830.
+Package hyperref Info: Option `breaklinks' set `true' on input line 1830.
+Package hyperref Info: Hyper figures OFF on input line 1880.
+Package hyperref Info: Link nesting OFF on input line 1885.
+Package hyperref Info: Hyper index ON on input line 1888.
+Package hyperref Info: Plain pages ON on input line 1893.
+Package hyperref Info: Backreferencing ON on input line 1898.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks OFF on input line 2010.
+(/usr/share/texmf-tetex/tex/latex/hyperref/backref.sty
+Package: backref 2003/03/20 v1.23 Bibliographical back referencing
+)
+(/usr/share/texmf-tetex/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2004/03/15  ver 3.1  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 2143.
+\Fld@menulength=\count94
+\Field@Width=\dimen104
+\Fld@charsize=\dimen105
+\Choice@toks=\toks16
+\Field@toks=\toks17
+Package hyperref Info: Hyper figures OFF on input line 2618.
+Package hyperref Info: Link nesting OFF on input line 2623.
+Package hyperref Info: Hyper index ON on input line 2626.
+Package hyperref Info: backreferencing ON on input line 2631.
+Package hyperref Info: Link coloring ON on input line 2636.
+\c@Item=\count95
+\c@Hfootnote=\count96
+)
+*hyperref using driver hpdftex*
+(/usr/share/texmf-tetex/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2003/11/30 v6.74m Hyperref driver for pdfTeX
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/pifont.sty
+Package: pifont 2004/09/15 PSNFSS-v9.2 Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 63.
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 64.
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+\Fld@listcount=\count97
+\@outlinefile=\write5
+)
+\pagenrlog=\write6
+\openout6 = `HapMan.pnr'.
+
+
+(/usr/share/texmf-tetex/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2004/07/19 v1.0 Customized lists
+\labelindent=\skip43
+\enit@outerparindent=\dimen106
+) (./HapMan.aux)
+\openout1 = `HapMan.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 47.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 47
+.
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+
+(/usr/share/texmf-tetex/tex/context/base/supp-pdf.tex
+(/usr/share/texmf-tetex/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Miscellaneous (2004.10.26)
+\protectiondepth=\count98
+\scratchcounter=\count99
+\scratchtoks=\toks18
+\scratchdimen=\dimen107
+\scratchskip=\skip44
+\scratchmuskip=\muskip11
+\scratchbox=\box27
+\scratchread=\read2
+\scratchwrite=\write7
+\zeropoint=\dimen108
+\onepoint=\dimen109
+\onebasepoint=\dimen110
+\minusone=\count100
+\thousandpoint=\dimen111
+\onerealpoint=\dimen112
+\emptytoks=\toks19
+\nextbox=\box28
+\nextdepth=\dimen113
+\everyline=\toks20
+\!!counta=\count101
+\!!countb=\count102
+\recursecounter=\count103
+)
+loading : Context Support Macros / PDF (2004.03.26)
+\nofMPsegments=\count104
+\nofMParguments=\count105
+\MPscratchCnt=\count106
+\MPscratchDim=\dimen114
+\MPnumerator=\count107
+\everyMPtoPDFconversion=\toks21
+)
+Package hyperref Info: Link coloring ON on input line 47.
+ (/usr/share/texmf-tetex/tex/latex/hyperref/nameref.sty
+Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
+\c@section@level=\count108
+)
+LaTeX Info: Redefining \ref on input line 47.
+LaTeX Info: Redefining \pageref on input line 47.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+ (./HapMan.toc
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 9.
+
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 9.
+
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 9.
+
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 9.
+
+(/usr/share/texmf-tetex/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 9.
+
+(/usr/share/texmf-tetex/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 9.
+ [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
+\tf@toc=\write8
+\openout8 = `HapMan.toc'.
+
+ [2]
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59  \\
+        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.60  \\
+        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61  \index
+            {TietzeReducedResolution}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--63
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--97
+
+ []
+
+[3
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 101--107
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--107
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--107
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--107
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 127--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 127--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 127--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 127--134
+
+ []
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/pzccm/m/n' tried instead on input line 136.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 1
+36.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--155
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+[]\OT1/ptm/m/n/10.95 In ad-di-tion to the usual com-po-nents, the res-o-lu-tion
+ $\OML/ptmcm/m/it/10.95 R$ \OT1/ptm/m/n/10.95 has the com-po-nent
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--184
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--184
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--184
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--184
+
+ []
+
+LaTeX Font Info:    Try loading font information for OML+ptm on input line 188.
+
+(/usr/share/texmf-tetex/tex/latex/psnfss/omlptm.fd
+File: omlptm.fd 
+)
+LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10.95> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 188.
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--196
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--196
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--196
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--196
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 203--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--249
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 253--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--280
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--280
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--280
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--280
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--297
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--297
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--297
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--297
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 304--311
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 304--311
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 304--311
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 304--311
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--329
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--329
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--329
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--329
+
+ []
+
+
+Underfull \hbox (badness 3219) in paragraph at lines 334--335
+[]\OT1/ptm/m/n/10.95 This func-tion can be ap-plied to in-fi-nite groups $\OML/
+ptmcm/m/it/10.95 G$\OT1/ptm/m/n/10.95 . For fi-nite groups the func-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--347
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--347
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--347
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--347
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 355--363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--389
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--389
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--389
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--389
+
+ []
+
+
+Underfull \hbox (badness 2564) in paragraph at lines 393--401
+[]\OT1/ptm/m/n/10.95 If $\OML/ptmcm/m/it/10.95 G$ \OT1/ptm/m/n/10.95 is fi-nite
+ then the func-tion $\OML/ptmcm/m/it/10.95 ResolutionFiniteSubgroup\OT1/ptmcm/m
+/n/10.95 (\OML/ptmcm/m/it/10.95 R; G; K\OT1/ptmcm/m/n/10.95 )$ \OT1/ptm/m/n/10.
+95 will prob-a-bly work
+ []
+
+
+Underfull \hbox (badness 1038) in paragraph at lines 393--401
+\OT1/ptm/m/n/10.95 bet-ter. In par-tic-u-lar, res-o-lu-tions from this func-tio
+n prob-a-bly won't work with the func-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--401
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--401
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--401
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--401
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 405--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 405--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 405--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 405--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 429--436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 429--436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 429--436
+
+ []
+
+[10]
+Chapter 2.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.442  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.443  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.444  \index
+             {ResolutionFpGModule}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 444--446
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 448--452
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 448--452
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 448--452
+
+ []
+
+[11
+
+]
+Chapter 3.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.458  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.459  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.460  \index
+             {EquivariantChainMap}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--462
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.467  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.468  $
+        M!.source$ is the resolution $R$.\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 478--482
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 478--482
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 478--482
+
+ []
+
+[12
+
+]
+Chapter 4.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.488  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.489  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.490  \index
+             {ExtendScalars}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--492
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--500
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--500
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--500
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--500
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--508
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--508
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--508
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--508
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--516
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--516
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--516
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--516
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--525
+
+ []
+
+[13
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 527--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 527--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 527--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 527--534
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 545--552
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 545--552
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 545--552
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 545--552
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--568
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 570--577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--577
+
+ []
+
+
+Underfull \hbox (badness 1147) in paragraph at lines 579--588
+[]\OT1/ptm/m/n/10.95 Inputs a $\OML/ptmcm/m/it/10.95 ZG$\OT1/ptm/m/n/10.95 -res
+olution $\OML/ptmcm/m/it/10.95 R$ \OT1/ptm/m/n/10.95 for which "fil-tered-Di-me
+n-sion" lies in Name-sOf-Com-po-nents(R).
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 579--588
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 579--588
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 579--588
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 579--588
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 590--597
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 590--597
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 590--597
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 590--597
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 599--607
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 599--607
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 599--607
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 599--607
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--616
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--616
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--616
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--616
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 618--623
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--623
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--623
+
+ []
+
+[16]
+Chapter 5.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.629  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.630  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.631  \index
+             {ChainComplex}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 631--633
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 635--641
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 635--641
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 635--641
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 635--641
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 655--661
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 655--661
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 655--661
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 655--661
+
+ []
+
+[17
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 668--674
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 668--674
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 668--674
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 668--674
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 676--682
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 676--682
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 676--682
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 676--682
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 684--691
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 684--691
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 684--691
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 684--691
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 693--700
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 693--700
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 693--700
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 693--700
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 705--711
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 705--711
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 705--711
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 705--711
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 713--719
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 713--719
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 713--719
+
+ []
+
+[19]
+Chapter 6.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.725  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.726  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.727  \index
+             {Cohomology}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 727--729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 745--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 745--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 745--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 745--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--762
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--762
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--762
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--762
+
+ []
+
+[20
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 764--779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 782--791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 793--808
+
+ []
+
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 811--820
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 811--820
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 811--820
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 811--820
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 831--841
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 831--841
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 831--841
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 831--841
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 857--865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 857--865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 857--865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 857--865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--880
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--880
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--880
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--880
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 884--892
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 884--892
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 884--892
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 884--892
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 894--901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 894--901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 894--901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 894--901
+
+ []
+
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 903--909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 903--909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 903--909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 903--909
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.914  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.915  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.916  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.917  \index
+             {ZZPersistentHomologyOfPureCubicalComplex}:::::::::::::::::::::...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 917--919
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.926  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.927  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.928  \\
+         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.929  \index
+             {RipsHomology}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 929--932
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 934--940
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 934--940
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 934--940
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 934--940
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 942--950
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 942--950
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 942--950
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 942--950
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 952--960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 952--960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 952--960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 952--960
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 962--974
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 993--999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 993--999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 993--999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 993--999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1013
+
+ []
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 1015--1021
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1015--1021
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1015--1021
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1015--1021
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1023--1029
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1023--1029
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1023--1029
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1023--1029
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1031--1037
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1031--1037
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1031--1037
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1031--1037
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1053
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1053
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1053
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1053
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 1057--1065
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1057--1065
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1057--1065
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1057--1065
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1067--1071
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1067--1071
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1067--1071
+
+ []
+
+[27]
+Chapter 7.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1077  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1078  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1079  \texttt
+               {EfficientNormalSubgroups(G)}\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1079--1081
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1083--1089
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1083--1089
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1083--1089
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1083--1089
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1115
+
+ []
+
+[28
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1119--1124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1119--1124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1119--1124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1119--1124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1128--1134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1128--1134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1128--1134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1128--1134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1136--1140
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1136--1140
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1136--1140
+
+ []
+
+[29]
+Chapter 8.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1146  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1147  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1148  \index
+              {IntegralCupProduct}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1148--1151
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1160--1174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1179--1186
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1179--1186
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1179--1186
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1179--1186
+
+ []
+
+[30
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1191--1201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1191--1201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1191--1201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1191--1201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1215--1221
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1215--1221
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1215--1221
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1215--1221
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1223--1232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1223--1232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1223--1232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1223--1232
+
+ []
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1247
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1247
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1247
+
+ []
+
+[32]
+Chapter 9.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1249.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1249.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1252--1261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1252--1261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1252--1261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1271--1278
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1271--1278
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1271--1278
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1271--1278
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1282--1286
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1282--1286
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1282--1286
+
+ []
+
+[33
+
+] [34]
+Chapter 10.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1292  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1293  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1294  \index
+              {BaerInvariant}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1294--1296
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1300--1306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1300--1306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1300--1306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1300--1306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1308--1315
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1308--1315
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1308--1315
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1308--1315
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1319--1325
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1319--1325
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1319--1325
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1319--1325
+
+ []
+
+[35
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1327--1341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1357--1365
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1357--1365
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1357--1365
+
+ []
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 1369--1376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1369--1376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1369--1376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1369--1376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1392
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1394--1402
+
+ []
+
+
+Underfull \hbox (badness 1038) in paragraph at lines 1394--1402
+\OML/ptmcm/m/it/10.95 T:homomorphism$ \OT1/ptm/m/n/10.95 is a group ho-mo-mor-p
+hism $\OML/ptmcm/m/it/10.95 ^^V \OT1/ptmcm/m/n/10.95 : (\OML/ptmcm/m/it/10.95 G
+ \OMS/pzccm/m/n/10.95 
+ \OML/ptmcm/m/it/10.95 G\OT1/ptmcm/m/n/10.95 ) [][]\OMS/pzccm/m/n/10.95 ! \OML/
+ptmcm/m/it/10.95 G$ \OT1/ptm/m/n/10.95 from the non-abelian ten-sor
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1394--1402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1394--1402
+
+ []
+
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 1406--1413
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1406--1413
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1406--1413
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1406--1413
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1421--1427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1421--1427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1421--1427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1421--1427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1440--1442
+[]\OT1/ptm/m/n/10.95 For non-nilpotent groups the im-ple-men-ta-tion of the fun
+c-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1443--1449
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1443--1449
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1443--1449
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1443--1449
+
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1455--1459
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1455--1459
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1455--1459
+
+ []
+
+[39]
+Chapter 11.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1465  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1466  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1467  F
+         unctions on this page are joint work with \textsc{Hamid Mohammadzad...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1467--1473
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1467--1473
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1467--1473
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1467--1473
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
+
+ []
+
+[40
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1510
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1510
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1510
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1510
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1524
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1538
+
+ []
+
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 1540--1544
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1540--1544
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1540--1544
+
+ []
+
+[42]
+Chapter 12.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1550  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1551  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1552  \index
+              {CayleyGraphOfGroupDisplay}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1552--1555
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1564--1571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1564--1571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1564--1571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1564--1571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1585
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1585
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1585
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1585
+
+ []
+
+[43
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1602
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1602
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1602
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1602
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1604--1619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1621--1625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1621--1625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1621--1625
+
+ []
+
+[44]
+Chapter 13.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1631  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1632  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1633  \index
+              {CoxeterComplex}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1633--1636
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1638--1645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1638--1645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1638--1645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1638--1645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1647--1670
+
+ []
+
+[45
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1672--1679
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1672--1679
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1672--1679
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1672--1679
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1681--1687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1681--1687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1681--1687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1681--1687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1696--1702
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1696--1702
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1696--1702
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1696--1702
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1710--1729
+
+ []
+
+[46]
+Underfull \hbox (badness 10000) in paragraph at lines 1731--1743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1731--1743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1731--1743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1731--1743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1731--1743
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1744--1750
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1744--1750
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1744--1750
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1744--1750
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1752--1768
+
+ []
+
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 1770--1774
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1770--1774
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1770--1774
+
+ []
+
+[48]
+Chapter 14.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1780  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1781  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1782  \index
+              {CcGroup (HAPcocyclic)}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1782--1784
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1789--1795
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1789--1795
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1789--1795
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1789--1795
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1805
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1805
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1805
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1805
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1805
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1807--1813
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1807--1813
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1807--1813
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1807--1813
+
+ []
+
+[49
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1815--1819
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1815--1819
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1815--1819
+
+ []
+
+[50]
+Chapter 15.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1825  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1826  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1827  \index
+              {AddFreeWords}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1827--1829
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1831--1837
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1831--1837
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1831--1837
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1831--1837
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1847
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1847
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1847
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1847
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1847
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1857
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1857
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1857
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1857
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1859--1865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1859--1865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1859--1865
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1859--1865
+
+ []
+
+[51
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1867--1873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1867--1873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1867--1873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1867--1873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1875--1881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1875--1881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1875--1881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1875--1881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1888--1894
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1888--1894
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1888--1894
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1888--1894
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1896--1903
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1896--1903
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1896--1903
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1896--1903
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1905--1909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1905--1909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1905--1909
+
+ []
+
+[52]
+Chapter 16.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1915  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1916  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1917  \index
+              {CompositionSeriesOfFpGModules}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1917--1919
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1928
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1932--1939
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1932--1939
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1932--1939
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1932--1939
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1949
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1949
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1949
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1949
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1964
+
+ []
+
+[53
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1972--1980
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1972--1980
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1972--1980
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1972--1980
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1985--1991
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1985--1991
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1985--1991
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1985--1991
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1993--1999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1993--1999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1993--1999
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1993--1999
+
+ []
+
+[54]
+Underfull \hbox (badness 10000) in paragraph at lines 2001--2007
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2001--2007
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2001--2007
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2001--2007
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2009--2015
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2009--2015
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2009--2015
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2009--2015
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2017--2023
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2017--2023
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2017--2023
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2017--2023
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2025--2031
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2025--2031
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2025--2031
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2025--2031
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2033--2039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2033--2039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2033--2039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2033--2039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2045--2051
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2045--2051
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2045--2051
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2045--2051
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 2053--2059
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2053--2059
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2053--2059
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2053--2059
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2061--2067
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2061--2067
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2061--2067
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2061--2067
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2069--2075
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2069--2075
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2069--2075
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2069--2075
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2077--2083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2077--2083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2077--2083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2077--2083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2089--2095
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2089--2095
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2089--2095
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2089--2095
+
+ []
+
+[56]
+Underfull \hbox (badness 10000) in paragraph at lines 2097--2103
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2097--2103
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2097--2103
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2097--2103
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2105--2111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2105--2111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2105--2111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2105--2111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2113--2119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2113--2119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2113--2119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2113--2119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2129--2133
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2129--2133
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2129--2133
+
+ []
+
+[57]
+Chapter 17.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2139  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2140  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2141  \index
+              {DesuspensionMtxModule}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2141--2143
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2148--2154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2148--2154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2148--2154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2148--2154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2156--2162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2156--2162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2156--2162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2156--2162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2164--2168
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2164--2168
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2164--2168
+
+ []
+
+[58
+
+]
+Chapter 18.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2174  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2175  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2176  \index
+              {GOuterGroup}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2176--2179
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2183--2192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2183--2192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2183--2192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2183--2192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2199--2206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2199--2206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2199--2206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2199--2206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2212--2219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2212--2219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2212--2219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2212--2219
+
+ []
+
+[59
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2221--2228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2221--2228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2221--2228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2221--2228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2236--2242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2236--2242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2236--2242
+
+ []
+
+[60]
+Chapter 19.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2248  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2249  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2250  \index
+              {AutomorphismGroupAsCatOneGroup}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2250--2252
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2254--2260
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2254--2260
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2254--2260
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2254--2260
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2262--2268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2262--2268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2262--2268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2262--2268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2270--2277
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2270--2277
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2270--2277
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2270--2277
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2281--2287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2281--2287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2281--2287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2281--2287
+
+ []
+
+[61
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2289--2295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2289--2295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2289--2295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2289--2295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2297--2304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2297--2304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2297--2304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2297--2304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2306--2312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2306--2312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2306--2312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2306--2312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2316--2320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2316--2320
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2316--2320
+
+ []
+
+[62]
+Chapter 20.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2326  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2327  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2328  \index
+              {NerveOfCatOneGroup}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2328--2330
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 1173) in paragraph at lines 2332--2343
+\OT1/ptm/m/n/10.95 This func-tion ap-plies both to cat-1-groups for which IsHap
+-Ca-tOne-Group(G) is true, and to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2332--2343
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2345--2353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2345--2353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2345--2353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2345--2353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2345--2353
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2355--2363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2355--2363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2355--2363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2355--2363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2355--2363
+
+ []
+
+[63
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2365--2373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2365--2373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2365--2373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2365--2373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2365--2373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2375--2384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2375--2384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2375--2384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2375--2384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2375--2384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2397--2404
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2397--2404
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2397--2404
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2397--2404
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2406--2422
+
+ []
+
+[64]
+Underfull \hbox (badness 10000) in paragraph at lines 2424--2432
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2424--2432
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2424--2432
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2424--2432
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2424--2432
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2434--2442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2434--2442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2434--2442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2434--2442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2434--2442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2444--2460
+
+ []
+
+[65]
+Underfull \hbox (badness 10000) in paragraph at lines 2462--2470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2462--2470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2462--2470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2462--2470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2462--2470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2472--2483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2472--2483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2472--2483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2472--2483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2472--2483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2483--2492
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2483--2492
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2483--2492
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2483--2492
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2483--2492
+
+ []
+
+
+Underfull \hbox (badness 3240) in paragraph at lines 2494--2505
+[]\OT1/ptm/m/n/10.95 This func-tion in-puts a free $\OML/ptmcm/m/it/10.95 ZG$\O
+T1/ptm/m/n/10.95 -resolution $\OML/ptmcm/m/it/10.95 R$\OT1/ptm/m/n/10.95 . It f
+irst con-structs the chain com-plex
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2494--2505
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2494--2505
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2494--2505
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2494--2505
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2494--2505
+
+ []
+
+[66]
+Underfull \hbox (badness 10000) in paragraph at lines 2505--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2505--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2505--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2505--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2505--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2516--2532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2534--2540
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2534--2540
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2534--2540
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2534--2540
+
+ []
+
+[67]
+Chapter 21.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2546  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2547  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2548  \index
+              {CoxeterDiagramComponents}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2548--2550
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2552--2558
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2552--2558
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2552--2558
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2552--2558
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2560--2567
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2560--2567
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2560--2567
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2560--2567
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2573--2579
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2573--2579
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2573--2579
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2573--2579
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2581--2587
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2581--2587
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2581--2587
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2581--2587
+
+ []
+
+[68
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2589--2595
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2589--2595
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2589--2595
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2589--2595
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2597--2604
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2597--2604
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2597--2604
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2597--2604
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2606--2612
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2606--2612
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2606--2612
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2606--2612
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2614--2620
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2614--2620
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2614--2620
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2614--2620
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2622--2628
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2622--2628
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2622--2628
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2622--2628
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2630--2637
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2630--2637
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2630--2637
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2630--2637
+
+ []
+
+[69]
+Underfull \hbox (badness 10000) in paragraph at lines 2643--2649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2643--2649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2643--2649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2643--2649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2651--2657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2651--2657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2651--2657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2651--2657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2659--2665
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2659--2665
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2659--2665
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2659--2665
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2670--2676
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2670--2676
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2670--2676
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2670--2676
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2681--2687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2681--2687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2681--2687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2681--2687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2689--2696
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2689--2696
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2689--2696
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2689--2696
+
+ []
+
+[70]
+Underfull \hbox (badness 10000) in paragraph at lines 2698--2704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2698--2704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2698--2704
+
+ []
+
+[71]
+Chapter 22.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2710  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2711  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2712  \texttt
+               {Homology(T,n)}\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2712--2714
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2716--2722
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2716--2722
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2716--2722
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2716--2722
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2724--2731
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2724--2731
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2724--2731
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2724--2731
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2733--2740
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2733--2740
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2733--2740
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2733--2740
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2742--2748
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2742--2748
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2742--2748
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2742--2748
+
+ []
+
+[72
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2750--2757
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2750--2757
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2750--2757
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2750--2757
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2762--2769
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2762--2769
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2762--2769
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2762--2769
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2771--2779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2771--2779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2771--2779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2771--2779
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2784--2791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2784--2791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2784--2791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2784--2791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2793--2799
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2793--2799
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2793--2799
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2793--2799
+
+ []
+
+[73]
+Underfull \hbox (badness 10000) in paragraph at lines 2801--2809
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2801--2809
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2801--2809
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2801--2809
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2811--2817
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2811--2817
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2811--2817
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2811--2817
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2819--2825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2819--2825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2819--2825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2819--2825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2833
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2833
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2833
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2833
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2835--2842
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2835--2842
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2835--2842
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2835--2842
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2844--2852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2844--2852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2844--2852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2844--2852
+
+ []
+
+[74]
+Underfull \hbox (badness 10000) in paragraph at lines 2856--2864
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2856--2864
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2856--2864
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2856--2864
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2866--2873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2866--2873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2866--2873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2866--2873
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2875--2881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2875--2881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2875--2881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2875--2881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2883--2890
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2883--2890
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2883--2890
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2883--2890
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2892--2898
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2892--2898
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2892--2898
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2892--2898
+
+ []
+
+[75]
+Underfull \hbox (badness 10000) in paragraph at lines 2900--2908
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2900--2908
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2900--2908
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2900--2908
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2910--2918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2910--2918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2910--2918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2910--2918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2920--2926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2920--2926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2920--2926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2920--2926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2928--2933
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2928--2933
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2928--2933
+
+ []
+
+[76]
+Chapter 23.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2939  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2940  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2941  \index
+              {ArrayToPureCubicalComplex}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2941--2943
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2945--2953
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2945--2953
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2945--2953
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2945--2953
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2955--2961
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2955--2961
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2955--2961
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2955--2961
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2963--2972
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2963--2972
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2963--2972
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2963--2972
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2974--2983
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2974--2983
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2974--2983
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2974--2983
+
+ []
+
+[77
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 2985--2994
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2985--2994
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2985--2994
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2985--2994
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2996--3003
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2996--3003
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2996--3003
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2996--3003
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3005--3012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3005--3012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3005--3012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3005--3012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3014--3020
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3014--3020
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3014--3020
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3014--3020
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3022--3028
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3022--3028
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3022--3028
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3022--3028
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3030--3039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3030--3039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3030--3039
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3030--3039
+
+ []
+
+[78]
+Underfull \hbox (badness 10000) in paragraph at lines 3041--3049
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3041--3049
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3041--3049
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3041--3049
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3051--3058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3051--3058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3051--3058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3051--3058
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3060--3068
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3060--3068
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3060--3068
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3060--3068
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3070--3076
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3070--3076
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3070--3076
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3070--3076
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3078--3083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3078--3083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3078--3083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3078--3083
+
+ []
+
+[79]
+Underfull \hbox (badness 10000) in paragraph at lines 3085--3091
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3085--3091
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3085--3091
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3085--3091
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3093--3098
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3093--3098
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3093--3098
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3093--3098
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3100--3105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3100--3105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3100--3105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3100--3105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3107--3112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3107--3112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3107--3112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3107--3112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3114--3120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3114--3120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3114--3120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3114--3120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3122--3128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3122--3128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3122--3128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3122--3128
+
+ []
+
+[80]
+Underfull \hbox (badness 10000) in paragraph at lines 3130--3136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3130--3136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3130--3136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3130--3136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3138--3144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3138--3144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3138--3144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3138--3144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3146--3152
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3146--3152
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3146--3152
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3146--3152
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3154--3160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3154--3160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3154--3160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3154--3160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3165--3171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3165--3171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3165--3171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3165--3171
+
+ []
+
+[81]
+Underfull \hbox (badness 10000) in paragraph at lines 3180--3187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3180--3187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3180--3187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3180--3187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3189--3195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3189--3195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3189--3195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3189--3195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3197--3203
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3197--3203
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3197--3203
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3197--3203
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3205--3212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3205--3212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3205--3212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3205--3212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3214--3220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3214--3220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3214--3220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3214--3220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3222--3228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3222--3228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3222--3228
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3222--3228
+
+ []
+
+[82]
+Underfull \hbox (badness 10000) in paragraph at lines 3230--3237
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3230--3237
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3230--3237
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3230--3237
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3239--3249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3239--3249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3239--3249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3239--3249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3251--3257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3251--3257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3251--3257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3251--3257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3259--3266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3259--3266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3259--3266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3259--3266
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3268--3275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3268--3275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3268--3275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3268--3275
+
+ []
+
+[83]
+Underfull \hbox (badness 10000) in paragraph at lines 3280--3287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3280--3287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3280--3287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3280--3287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3289--3295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3289--3295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3289--3295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3289--3295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3297--3304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3297--3304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3297--3304
+
+ []
+
+[84]
+Chapter 24.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3310 \textsc
+              {COMMUTATIVE DIAGRAMS} \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3310--3317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3310--3317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3310--3317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3310--3317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3310--3317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3319--3327
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3319--3327
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3319--3327
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3319--3327
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3331--3338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3331--3338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3331--3338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3331--3338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3340--3348
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3340--3348
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3340--3348
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3340--3348
+
+ []
+
+[85
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 3355--3362
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3355--3362
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3355--3362
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3355--3362
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3364--3374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3376--3385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3376--3385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3376--3385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3376--3385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3387--3393
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3387--3393
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3387--3393
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3387--3393
+
+ []
+
+[86]
+Underfull \hbox (badness 10000) in paragraph at lines 3395--3402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3395--3402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3395--3402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3395--3402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3404--3410
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3404--3410
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3404--3410
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3404--3410
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3412--3419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3412--3419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3412--3419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3412--3419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3421--3428
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3421--3428
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3421--3428
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3421--3428
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3430--3436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3430--3436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3430--3436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3430--3436
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3438--3444
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3438--3444
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3438--3444
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3438--3444
+
+ []
+
+[87]
+Underfull \hbox (badness 10000) in paragraph at lines 3446--3451
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3446--3451
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3446--3451
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3446--3451
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3457--3463
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3457--3463
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3457--3463
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3457--3463
+
+ []
+
+
+Underfull \hbox (badness 4096) in paragraph at lines 3465--3471
+[]\OT1/ptm/m/n/10.95 Inputs an ob-ject $\OML/ptmcm/m/it/10.95 X$ \OT1/ptm/m/n/1
+0.95 in some cat-e-gory, and re-turns the GAP struc-ture $\OML/ptmcm/m/it/10.95
+ Y$ \OT1/ptm/m/n/10.95 such that
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3465--3471
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3465--3471
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3465--3471
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3465--3471
+
+ []
+
+
+Underfull \hbox (badness 4556) in paragraph at lines 3473--3479
+[]\OT1/ptm/m/n/10.95 Inputs an ar-row $\OML/ptmcm/m/it/10.95 f$ \OT1/ptm/m/n/10
+.95 in some cat-e-gory, and re-turns the GAP struc-ture $\OML/ptmcm/m/it/10.95 
+Y$ \OT1/ptm/m/n/10.95 such that
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3473--3479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3473--3479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3473--3479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3473--3479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3481--3487
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3481--3487
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3481--3487
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3481--3487
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3489--3493
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3489--3493
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3489--3493
+
+ []
+
+[88]
+Chapter 25.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3499  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3500  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3501  \index
+              {Array}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3501--3503
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3505--3511
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3505--3511
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3505--3511
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3505--3511
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3513--3519
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3513--3519
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3513--3519
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3513--3519
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3521--3527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3521--3527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3521--3527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3521--3527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3529--3535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3529--3535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3529--3535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3529--3535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3537--3543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3537--3543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3537--3543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3537--3543
+
+ []
+
+[89
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 3545--3551
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3545--3551
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3545--3551
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3545--3551
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3553--3560
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3553--3560
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3553--3560
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3553--3560
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3562--3568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3562--3568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3562--3568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3562--3568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3570--3577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3570--3577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3570--3577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3570--3577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3579--3586
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3579--3586
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3579--3586
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3579--3586
+
+ []
+
+[90]
+Underfull \hbox (badness 10000) in paragraph at lines 3593--3599
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3593--3599
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3593--3599
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3593--3599
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3601--3608
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3601--3608
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3601--3608
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3601--3608
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3610--3617
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3610--3617
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3610--3617
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3610--3617
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3619--3625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3619--3625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3619--3625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3619--3625
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3627--3633
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3627--3633
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3627--3633
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3627--3633
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3635--3639
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3635--3639
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3635--3639
+
+ []
+
+[91] [92]
+Chapter 26.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3645  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3646  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3647  \index
+              {ChildProcess}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3647--3652
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3661--3687
+
+ []
+
+[93
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 3689--3695
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3689--3695
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3689--3695
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3689--3695
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3697--3704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3697--3704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3697--3704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3697--3704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3706--3712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3706--3712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3706--3712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3706--3712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3714--3721
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3714--3721
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3714--3721
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3714--3721
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3723--3730
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3723--3730
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3723--3730
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3723--3730
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3732--3739
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3732--3739
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3732--3739
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3732--3739
+
+ []
+
+[94]
+Underfull \hbox (badness 10000) in paragraph at lines 3741--3749
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3741--3749
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3741--3749
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3741--3749
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3751--3756
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3751--3756
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3751--3756
+
+ []
+
+[95]
+Chapter 27.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3762  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3763  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3764  \index
+              {ChildFunction}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3764--3766
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3768--3775
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3768--3775
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3768--3775
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3768--3775
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3777--3783
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3777--3783
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3777--3783
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3777--3783
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3785--3791
+[]\OT1/ptm/m/n/10.95 This re-turns, as an eval-u-ated string, the out-put of th
+e last ap-pli-ca-tion of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3785--3791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3785--3791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3785--3791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3785--3791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3793--3797
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3793--3797
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3793--3797
+
+ []
+
+[96
+
+]
+Chapter 28.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3803  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3804  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3805  \index
+              {BoundaryMap}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3805--3807
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3809--3815
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3809--3815
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3809--3815
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3809--3815
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3817--3825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3817--3825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3817--3825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3817--3825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3817--3825
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3829--3835
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3829--3835
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3829--3835
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3829--3835
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3837--3844
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3837--3844
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3837--3844
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3837--3844
+
+ []
+
+[97
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 3846--3852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3846--3852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3846--3852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3846--3852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3854--3860
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3854--3860
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3854--3860
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3854--3860
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3862--3868
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3862--3868
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3862--3868
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3862--3868
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3870--3876
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3870--3876
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3870--3876
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3870--3876
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3878--3882
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3878--3882
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3878--3882
+
+ []
+
+[98]
+Chapter 29.
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3888  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3889  \\
+          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3890  \index
+              {SL2Z}::::::::::::::::::::::::\\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3890--3893
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3895--3901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3895--3901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3895--3901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3895--3901
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3903--3909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3903--3909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3903--3909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3903--3909
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3911--3918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3911--3918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3911--3918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3911--3918
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3920--3926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3920--3926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3920--3926
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3920--3926
+
+ []
+
+[99
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 3930--3936
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3930--3936
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3930--3936
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3930--3936
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3938--3944
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3938--3944
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3938--3944
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3938--3944
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3946--3952
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3946--3952
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3946--3952
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3946--3952
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3954--3960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3954--3960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3954--3960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3954--3960
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3962--3968
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3962--3968
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3962--3968
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3962--3968
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3970--3976
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3970--3976
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3970--3976
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3970--3976
+
+ []
+
+[100]
+Underfull \hbox (badness 10000) in paragraph at lines 3982--3988
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3982--3988
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3982--3988
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3982--3988
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3990--3997
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3990--3997
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3990--3997
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3990--3997
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3999--4006
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3999--4006
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3999--4006
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3999--4006
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4008--4013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4008--4013
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4008--4013
+
+ []
+
+(./HapMan.ind [101]
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
+[]\OT1/ptm/m/n/10.95 ContractibleSubcomplexOfSimplicialComplex,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--83
+[]\OT1/ptm/m/n/10.95 ContractibleSubomplexOfPureCubicalComplex,
+ []
+
+[102
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
+[]\OT1/ptm/m/n/10.95 FundamentalDomainStandardSpaceGroup
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+[]\OT1/ptm/m/n/10.95 HomomorphismChainToCommutativeDiagram,
+ []
+
+
+Overfull \hbox (28.3045pt too wide) in paragraph at lines 163--164
+[]\OT1/ptm/m/n/10.95 HomotopyEquivalentMaximalPureCubicalSubcomplex,
+ []
+
+
+Overfull \hbox (26.48677pt too wide) in paragraph at lines 164--165
+[]\OT1/ptm/m/n/10.95 HomotopyEquivalentMinimalPureCubicalSubcomplex,
+ []
+
+[103]
+Underfull \hbox (badness 10000) in paragraph at lines 216--217
+[]\OT1/ptm/m/n/10.95 Mod2CohomologyRingPresentation (HAP-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
+[]\OT1/ptm/m/n/10.95 PersistentCohomologyOfQuotientGroupSeries,
+ []
+
+
+Overfull \hbox (34.76465pt too wide) in paragraph at lines 256--257
+[]\OT1/ptm/m/n/10.95 PersistentHomologyOfCommutativeDiagramOfPGroups,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+[]\OT1/ptm/m/n/10.95 PersistentHomologyOfFilteredChainComplex,
+ []
+
+[104]
+Underfull \hbox (badness 10000) in paragraph at lines 393--394
+[]\OT1/ptm/m/n/10.95 ZZPersistentHomologyOfPureCubicalComplex,
+ []
+
+[105]) (./HapMan.aux) ) 
+Here is how much of TeX's memory you used:
+ 3790 strings out of 94500
+ 51571 string characters out of 1175770
+ 100319 words of memory out of 1000000
+ 6721 multiletter control sequences out of 10000+50000
+ 42484 words of font info for 94 fonts, out of 500000 for 2000
+ 580 hyphenation exceptions out of 8191
+ 28i,6n,24p,603b,197s stack positions out of 1500i,500n,5000p,200000b,5000s
+PDF statistics:
+ 892 PDF objects out of 300000
+ 166 named destinations out of 131072
+ 17 words of extra memory for PDF output out of 65536
+</usr/share/texmf-tetex/fonts/type1/bluesky/cm/cmsy10.pf
+b></usr/share/texmf-tetex/fonts/type1/urw/symbol/usyr.pfb></usr/share/texmf-tet
+ex/fonts/type1/bluesky/cm/cmmi10.pfb></usr/share/texmf-tetex/fonts/type1/bluesk
+y/symbols/msbm10.pfb>{/usr/share/texmf-tetex/fonts/enc/dvips/psnfss/8r.enc}</us
+r/share/texmf-tetex/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-tetex/
+fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-tetex/fonts/type1/bluesky/cm
+/cmr10.pfb></usr/share/texmf-tetex/fonts/type1/urw/times/utmri8a.pfb></usr/shar
+e/texmf-tetex/fonts/type1/urw/times/utmb8a.pfb>
+Output written on HapMan.pdf (105 pages, 381704 bytes).

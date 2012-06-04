@@ -1,0 +1,192 @@
+  
+  [1X54 [33X[0;0YTransformations[133X[101X
+  
+  [33X[0;0YThis chapter describes functions for transformations.[133X
+  
+  [33X[0;0YA  [13Xtransformation[113X in [5XGAP[105X is an endomorphism of a set of integers of the form
+  [22X{  1, ..., n }[122X. Transformations are taken to act on the right, which defines
+  the composition [22Xi^(α β) = (i^α)^β[122X for [22Xi[122X in [22X{ 1, ..., n }[122X.[133X
+  
+  [33X[0;0YFor  a transformation [22Xα[122X on the set [22X{ 1, ..., n }[122X, we define its [13Xdegree[113X to be
+  [22Xn[122X,  its [13Ximage list[113X to be the list [22X[1 α, ..., n α][122X, its [13Ximage[113X to be the image
+  list  considered as a set, and its [13Xrank[113X to be the size of the image. We also
+  define  the  [13Xkernel[113X  of [22Xα[122X to be the equivalence relation containing the pair
+  [22X(i, j)[122X if and only if [22Xi^α = j^α[122X.[133X
+  
+  [33X[0;0YNote  that  unlike permutations, we do not consider unspecified points to be
+  fixed  by  a transformation. Therefore multiplication is only defined on two
+  transformations of the same degree.[133X
+  
+  
+  [1X54.1 [33X[0;0YFunctions for Transformations[133X[101X
+  
+  [1X54.1-1 IsTransformation[101X
+  
+  [29X[2XIsTransformation[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTransformationCollection[102X( [3Xobj[103X ) [32X Category
+  
+  [33X[0;0YWe   declare  it  as  [2XIsMultiplicativeElementWithOne[102X  ([14X31.14-11[114X)  since  the
+  identity  automorphism  of  [22X{  1,  ...,  n  }[122X  is a multiplicative two sided
+  identity for any transformation on the same set.[133X
+  
+  [1X54.1-2 TransformationFamily[101X
+  
+  [29X[2XTransformationFamily[102X( [3Xn[103X ) [32X function
+  [29X[2XTransformationType[102X( [3Xn[103X ) [32X function
+  [29X[2XTransformationData[102X( [3Xn[103X ) [32X function
+  
+  [33X[0;0YFor  each  [10X[3Xn[103X[10X  >  0[110X there is a single family and type of transformations on [3Xn[103X
+  points. To speed things up, we store these in a database of types. The three
+  functions above a then access functions. If the [3Xn[103Xth entry isn't yet created,
+  they trigger creation as well.[133X
+  
+  [33X[0;0YFor  [10X[3Xn[103X[10X  >  0[110X,  element  [3Xn[103X  of the type database is [10X[TransformationFamily([110X[3Xn[103X[10X),
+  TransformationType([110X[3Xn[103X[10X)][110X[133X
+  
+  [1X54.1-3 Transformation[101X
+  
+  [29X[2XTransformation[102X( [3Ximages[103X ) [32X function
+  [29X[2XTransformationNC[102X( [3Ximages[103X ) [32X function
+  
+  [33X[0;0Yboth  return  a transformation with the image list [3Ximages[103X. The first version
+  checks that the all the elements of the given list lie within the range [22X{ 1,
+  ...,  n  }[122X  where  [22Xn[122X  is  the  length  of  [3Ximages[103X, but for speed purposes, a
+  non-checking version is also supplied.[133X
+  
+  [1X54.1-4 IdentityTransformation[101X
+  
+  [29X[2XIdentityTransformation[102X( [3Xn[103X ) [32X function
+  
+  [33X[0;0Yreturns the identity transformation of degree [3Xn[103X.[133X
+  
+  [1X54.1-5 RandomTransformation[101X
+  
+  [29X[2XRandomTransformation[102X( [3Xn[103X ) [32X function
+  
+  [33X[0;0Yreturns a random transformation of degree [3Xn[103X.[133X
+  
+  [1X54.1-6 DegreeOfTransformation[101X
+  
+  [29X[2XDegreeOfTransformation[102X( [3Xtrans[103X ) [32X attribute
+  
+  [33X[0;0Yreturns the degree of [3Xtrans[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xt:= Transformation([2, 3, 4, 2, 4]);[127X[104X
+    [4X[28XTransformation( [ 2, 3, 4, 2, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27XDegreeOfTransformation(t);[127X[104X
+    [4X[28X5[128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-7 ImageListOfTransformation[101X
+  
+  [29X[2XImageListOfTransformation[102X( [3Xtrans[103X ) [32X attribute
+  
+  [33X[0;0Yreturns the image list of [3Xtrans[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XImageListOfTransformation(t);[127X[104X
+    [4X[28X[ 2, 3, 4, 2, 4 ][128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-8 ImageSetOfTransformation[101X
+  
+  [29X[2XImageSetOfTransformation[102X( [3Xtrans[103X ) [32X attribute
+  
+  [33X[0;0Yreturns the image of [3Xtrans[103X as a set.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XImageSetOfTransformation(t);[127X[104X
+    [4X[28X[ 2, 3, 4 ][128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-9 RankOfTransformation[101X
+  
+  [29X[2XRankOfTransformation[102X( [3Xtrans[103X ) [32X attribute
+  
+  [33X[0;0Yreturns the rank of [3Xtrans[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRankOfTransformation(t);[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-10 KernelOfTransformation[101X
+  
+  [29X[2XKernelOfTransformation[102X( [3Xtrans[103X ) [32X attribute
+  
+  [33X[0;0Yreturns the kernel of [3Xtrans[103X as an equivalence relation, see [14X33.1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XKernelOfTransformation(t);         [127X[104X
+    [4X[28X[ [ 1, 4 ], [ 2 ], [ 3, 5 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-11 PreimagesOfTransformation[101X
+  
+  [29X[2XPreimagesOfTransformation[102X( [3Xtrans[103X, [3Xi[103X ) [32X operation
+  
+  [33X[0;0Yreturns the subset of [22X{ 1, ..., n }[122X which maps to [3Xi[103X under [3Xtrans[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPreimagesOfTransformation(t, 2);[127X[104X
+    [4X[28X[ 1, 4 ][128X[104X
+  [4X[32X[104X
+  
+  [1X54.1-12 RestrictedTransformation[101X
+  
+  [29X[2XRestrictedTransformation[102X( [3Xtrans[103X, [3Xalpha[103X ) [32X operation
+  
+  [33X[0;0YThe transformation [3Xtrans[103X is restricted to only those points of [3Xalpha[103X.[133X
+  
+  [1X54.1-13 AsTransformation[101X
+  
+  [29X[2XAsTransformation[102X( [3XO[103X[, [3Xn[103X] ) [32X operation
+  [29X[2XAsTransformationNC[102X( [3XO[103X, [3Xn[103X ) [32X operation
+  
+  [33X[0;0Yreturns the object [3XO[103X as a transformation. Supported objects are permutations
+  and  binary  relations  on  points. Called with two arguments, the operation
+  returns  a  transformation  of  degree  [3Xn[103X,  signalling  an  error  if such a
+  representation  is  not  possible.  [2XAsTransformationNC[102X does not perform this
+  check.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAsTransformation((1, 3)(2, 4));[127X[104X
+    [4X[28XTransformation( [ 3, 4, 1, 2 ] )[128X[104X
+    [4X[25Xgap>[125X [27XAsTransformation((1, 3)(2, 4), 10);[127X[104X
+    [4X[28XTransformation( [ 3, 4, 1, 2, 5, 6, 7, 8, 9, 10 ] )[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAsTransformation((1, 3)(2, 4), 3);[127X[104X
+    [4X[28XError, Permutation moves points over the degree specified called from[128X[104X
+    [4X[28X<function>( <arguments> ) called from read-eval-loop[128X[104X
+    [4X[28XEntering break read-eval-print loop ...[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+  [4X[32X[104X
+  
+  [1X54.1-14 PermLeftQuoTransformation[101X
+  
+  [29X[2XPermLeftQuoTransformation[102X( [3Xtr1[103X, [3Xtr2[103X ) [32X operation
+  
+  [33X[0;0YGiven  transformations  [3Xtr1[103X  and [3Xtr2[103X with equal kernel and image, we compute
+  the  permutation induced by ([3Xtr1[103X)[22X^{-1} *[122X [3Xtr2[103X on the set of images of [3Xtr1[103X. If
+  the kernels and images are not equal, an error is signaled.[133X
+  
+  [1X54.1-15 BinaryRelationTransformation[101X
+  
+  [29X[2XBinaryRelationTransformation[102X( [3Xtrans[103X ) [32X operation
+  
+  [33X[0;0Yreturns [3Xtrans[103X when considered as a binary relation.[133X
+  
+  [1X54.1-16 TransformationRelation[101X
+  
+  [29X[2XTransformationRelation[102X( [3XR[103X ) [32X operation
+  
+  [33X[0;0Yreturns  the  binary  relation  [3XR[103X  when considered as a transformation. Only
+  makes  sense  for  injective  binary  relations  over  [10X[1..n][110X.  An  error is
+  signalled  if  the  relation  is  not  over  [10X[1..n][110X,  and  [9Xfail[109X if it is not
+  injective.[133X
+  

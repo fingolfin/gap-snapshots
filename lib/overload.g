@@ -2,10 +2,9 @@
 ##
 #W  overload.g                  GAP library                     Thomas Breuer
 ##
-#H  @(#)$Id: overload.g,v 4.26 2003/03/10 07:36:13 gap Exp $
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
+#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
 ##  This file contains the declaration and methods of ``overloaded''
@@ -30,7 +29,7 @@
 ##  
 ##  The key requirement is that no object ever exists which inherits from
 ##  two types with distinct meanings.
-##  Whenever this happens, there *must* be a method installed for the join
+##  Whenever this happens, there *must* be a method installed for the meet
 ##  of the relevant categories which decides which meaning applies,
 ##  otherwise the meaning of the operation is at the mercy of the ranking
 ##  system.
@@ -48,8 +47,6 @@
 ##
 #T Shall we print warnings when the shorthands are used?
 ##
-Revision.overload_g :=
-    "@(#)$Id: overload.g,v 4.26 2003/03/10 07:36:13 gap Exp $";
 
 
 #############################################################################
@@ -160,6 +157,9 @@ InstallMethod( IsIrreducible, [ IsRingElement ],
     return IsIrreducibleRingElement( r );
     end );
 
+InstallOtherMethod(IsIrreducible,"polynomial",IsCollsElms,
+  [IsPolynomialRing,IsPolynomial],0,IsIrreducibleRingElement);
+
 
 #############################################################################
 ##
@@ -214,6 +214,20 @@ InstallMethod( IsSimple, [ IsAlgebra ], IsSimpleAlgebra );
 #T InstallMethod( IsSimple, [ IsAModule ], IsSimpleModule );
 InstallMethod( IsSimple, [ IsGroup   ], IsSimpleGroup   );
 InstallMethod( IsSimple, [ IsOrdinaryTable ], IsSimpleCharacterTable );
+
+
+#############################################################################
+##
+#O  IsAlmostSimple( <obj> )
+##
+##  is `true' if <obj> is an almost simple group
+##  or an almost simple character table or ...
+##
+DeclareOperation( "IsAlmostSimple", [ IsObject ] );
+
+InstallMethod( IsAlmostSimple, [ IsGroup   ], IsAlmostSimpleGroup   );
+InstallMethod( IsAlmostSimple, [ IsOrdinaryTable ],
+    IsAlmostSimpleCharacterTable );
 
 
 #############################################################################
@@ -357,6 +371,14 @@ InstallMethod( UpperCentralSeries, [ IsAlgebra ],
 
 InstallMethod( UpperCentralSeries, [ IsGroup ], UpperCentralSeriesOfGroup );
 
+
+DeclareGlobalFunction( "InsertElmList" );
+
+InstallGlobalFunction(InsertElmList, function (list, pos, elm)
+    Add(list,elm,pos);
+end);
+
+DeclareSynonym( "RemoveElmList", Remove);
 
 #############################################################################
 ##

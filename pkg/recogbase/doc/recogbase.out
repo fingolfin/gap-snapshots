@@ -1,0 +1,19 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{Philosophy}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Overview over this manual}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Installation of the recogbase-Package}{}
+\BOOKMARK [0][-]{chapter.3}{Method Selection}{}
+\BOOKMARK [1][-]{section.3.1}{What are methods?}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{How methods are called}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{Group Recognition}{}
+\BOOKMARK [1][-]{section.4.1}{The recursive procedure}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{Recognition info records}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Methods to find homomorphisms}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{Conventions for the recognition of permutation groups}{chapter.4}
+\BOOKMARK [1][-]{section.4.5}{Conventions for the recognition of matrix groups}{chapter.4}
+\BOOKMARK [1][-]{section.4.6}{Conventions for the recognition of projective groups}{chapter.4}
+\BOOKMARK [1][-]{section.4.7}{Conventions for the recognition of black box groups}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{After successful recognition}{}
+\BOOKMARK [1][-]{section.5.1}{Functions and methods for recognition info records}{chapter.5}
+\BOOKMARK [0][-]{chapter*.3}{References}{}
+\BOOKMARK [0][-]{section*.4}{Index}{}

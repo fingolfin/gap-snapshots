@@ -1,26 +1,25 @@
 #############################################################################
 ##  
-#W  pager.gi                     GAP Library                     Frank L�beck
+#W  pager.gi                     GAP Library                     Frank Lübeck
 ##  
-#H  @(#)$Id: pager.gi,v 1.4 2002/05/10 12:56:28 gap Exp $
 ##  
-#Y  Copyright  (C) 2001, Lehrstuhl  D  fuer  Mathematik, RWTH  Aachen, Germany 
-#Y (C) 2001 School Math and  Comp. Sci., University of St. Andrews, Scotland
+#Y  Copyright  (C) 2001, Lehrstuhl  D  für  Mathematik, RWTH  Aachen, Germany 
+#Y (C) 2001 School Math and  Comp. Sci., University of St Andrews, Scotland
 #Y Copyright (C) 2002 The GAP Group
 ##  
 ##  The  files  pager.g{d,i}  contain  the `Pager'  utility.  A  rudimentary
 ##  version of this  was integrated in first versions of  GAP's help system.
 ##  But this utility is certainly useful for other purposes as well.
 ##  
-Revision.pager_gi := 
-  "@(#)$Id: pager.gi,v 1.4 2002/05/10 12:56:28 gap Exp $";
 ##  
 ##  There is a builtin pager `PAGER_BUILTIN', but  at least under UNIX one
-##  should use an external one.  This can be  set via the variable `PAGER'
-##  (e.g., PAGER :=  "less";). Here,  `less'  should be  in the executable
+##  should use an external one.  This can be  set via the variable
+##  `SetUserPreference("Pager", ...);'
+##  (e.g., SetUserPreference("Pager", "less");).
+##  Here,  `less'  should be  in the executable
 ##  PATH of the user and we assume that it supports an argument `+num' for
 ##  starting display in   line number `num'.   Additional options  can  be
-##  assigned to `PAGER_OPTIONS' as list of strings.
+##  given by  `SetUserPreference("PagerOptions", ...);' as list of strings.
 ##  
 ##  The user function is `Pager'.
 ##  
@@ -36,25 +35,67 @@ Revision.pager_gi :=
 ##   .formatted (true/false) If true, the builtin pager tries to avoid
 ##                           line breaks by GAP's Print.
 ##   .start (number)         The display is started with line .start, but 
-##                           beginning is available via back scrolling
+##                           beginning is available via back scrolling.
+##   .exitAtEnd (true/false) If true (default), the pager is terminated
+##                           as soon as the end of the list is reached;
+##                           if false, entering 'q' is necessary in order to
+##                           return from the pager.
 ##  
- 
+
+# The preferred pager can be specified via a user preference.
+DeclareUserPreference( rec(
+  name:= [ "Pager", "PagerOptions" ],
+  description:= [
+  "For displaying help pages on screen and other things GAP has a rudimentary \
+builtin pager. We recommend using a more sophisticated external program.  \
+For example, when you have the program 'less' on your computer we recommend:",
+    " Pager := \"less\";",
+    " PagerOptions := [\"-f\", \"-r\", \"-a\", \"-i\", \"-M\", \"-j2\"];",
+    "If you want to use 'more', we suggest to use the '-f' option.  \
+If you want to use the pager defined in your environment then \
+leave the 'Pager' and 'PagerOptions' preferences empty."
+    ],
+  default:= function()    # copied from GAPInfo.READENVPAGEREDITOR
+    local str, sp, pager, options;
+    if IsBound(GAPInfo.KernelInfo.ENVIRONMENT.PAGER) then
+      str := GAPInfo.KernelInfo.ENVIRONMENT.PAGER;
+      sp := SplitStringInternal(str, "", " \n\t\r");
+      if Length(sp) > 0 then
+        pager:= sp[1];
+        options:= sp{ [ 2 .. Length( sp ) ] };
+        # 'less' could have options in variable 'LESS'
+        if sp[1] = "less" and IsBound(GAPInfo.KernelInfo.ENVIRONMENT.LESS) then
+          str := GAPInfo.KernelInfo.ENVIRONMENT.LESS;
+          sp := SplitStringInternal(str, "", " \n\t\r");
+          Append( options, sp );
+        elif sp[1]="more" and IsBound(GAPInfo.KernelInfo.ENVIRONMENT.MORE) then
+          # similarly for 'more'
+          str := GAPInfo.KernelInfo.ENVIRONMENT.MORE;
+          sp := SplitStringInternal(str, "", " \n\t\r");
+          Append( options, sp );
+        fi;
+        return [ pager, options ];
+      fi;
+    fi;
+    return [ "builtin", [] ];
+  end,
+  ) );
+## HACKUSERPREF  temporary until all packages are adjusted
+GAPInfo.UserPreferences.Pager := UserPreference("Pager");
+
 #############################################################################
 ##
 #F  PAGER_BUILTIN( <lines> )	. . . . . . . . . . . . . . . .  format lines
 ##
-# We take  into account a  variable from the  GAPDoc package. If  the text
-# contains ANSI color sequences we reset  the terminal before we print the
-# last line.
-if not IsBound(ANSI_COLORS) then
-  ANSI_COLORS := false;
-fi;
+# If  the text contains ANSI color sequences we reset  the terminal before 
+# we print the last line.
 BindGlobal("PAGER_BUILTIN", function( lines )
-  local   formatted,  linepos,  size,  wd,  pl,  count,  i,  stream,  
-          halt,  delhaltline,  from,  len,  char, out;
+  local formatted, linepos, exitAtEnd, size, wd, pl, count, i, stream, halt,
+        lenhalt, delhaltline, from, len, emptyline, char, out;
   
   formatted := false;
   linepos := 1;
+  exitAtEnd:= true;
   # don't print this to LOG files
   out := OutputTextUser();
   
@@ -65,11 +106,16 @@ BindGlobal("PAGER_BUILTIN", function( lines )
     if IsBound(lines.start) then
       linepos := lines.start;
     fi;
+    if IsBound( lines.exitAtEnd ) then
+      exitAtEnd:= lines.exitAtEnd;
+    fi;
     lines := lines.lines;
   fi;
   
   if IsString(lines) then
     lines := SplitString(lines, "\n", "");
+  elif not formatted then
+    lines := ShallowCopy(lines);
   fi;
   
   size   := SizeScreen();
@@ -115,62 +161,63 @@ BindGlobal("PAGER_BUILTIN", function( lines )
   count  := 0;
   halt   := 
     "  -- <space> page, <n> next line, <b> back, <p> back line, <q> quit --\c";
-  if IsBound(ANSI_COLORS) and ANSI_COLORS = true then
+  # remember number of visible characters
+  lenhalt := Length(halt)-1;
+  if UserPreference("UseColorsInTerminal") = true then
     halt := Concatenation("\033[0m", halt);
   fi;
   delhaltline := function()
     local i;
-    for i  in halt  do 
-      if i <> '\c' then
-        PrintTo(out,  "\b\c \c\b\c" );
-      fi;
+    for i  in [1..lenhalt] do 
+      PrintTo(out,  "\b\c \c\b\c" );
     od;
   end;
   from := linepos; 
   len := Length(lines);
+  emptyline:= String( "", size[1]-2 );
   repeat
     for i in [from..Minimum(len, from+size[2]-2)] do
       pl(lines[i]);
     od;
-    if len = i+1 then
-      pl(lines[len]);
-      char := 'q';
-    elif len = i then
-      char := 'q';
-    else
-      PrintTo(out, halt);
-      char := CHAR_INT(ReadByte(stream));
-      while not char in " nbpq" do
-        char := CHAR_INT(ReadByte(stream));
-      od;
-      if char = ' ' then
-        from := from+size[2]-1;
-      elif char = 'n' then
-        from := from+1;
-      elif char = 'p' and from>1 then
-        from := from-1;
-      elif char = 'b' then
-        from := Maximum(1, from-size[2]+1);
+    if len = i then
+      if exitAtEnd then
+        break;
       fi;
-      delhaltline();  
+      for i in [ len+1 .. from+size[2]-2 ] do
+        pl( emptyline );
+      od;
     fi;
+    PrintTo(out, halt);
+    char := CHAR_INT(ReadByte(stream));
+    while not char in " nbpq" do
+      char := CHAR_INT(ReadByte(stream));
+    od;
+    if char = ' ' and i < len then
+      from := from+size[2]-1;
+    elif char = 'n' and i < len then
+      from := from+1;
+    elif char = 'p' and from>1 then
+      from := from-1;
+    elif char = 'b' then
+      from := Maximum(1, from-size[2]+1);
+    fi;
+    delhaltline();  
   until char = 'q';
   
   CloseStream(stream);
 end);
 
-# for using `more' or `less' or ... (read from `PAGER')
-# we assume that PAGER allows command line option +num for starting
-# display in line num
-PAGER := "builtin";
-PAGER_OPTIONS := [];
+# for using `more' or `less' or ... (read from `UserPreference("Pager")')
+# we assume that UserPreference("Pager") allows command line option
+# +num for starting display in line num
 
 BindGlobal("PAGER_EXTERNAL",  function( lines )
   local   path,  pager,  linepos,  str,  i,  cmdargs,  stream;
   path := DirectoriesSystemPrograms();
-  pager := Filename(path, PAGER);
+  pager := Filename( path, UserPreference("Pager") );
   if pager=fail then
-    Error("Pager ", PAGER, " not found, change `PAGER'.");
+    Error( "Pager ", UserPreference("Pager"),
+            " not found, reset with `SetUserPreference(\"Pager\", ...);'." );
   fi;
   linepos := 1;
   if IsRecord(lines) then
@@ -194,16 +241,29 @@ BindGlobal("PAGER_EXTERNAL",  function( lines )
     cmdargs := [];
   fi;
   stream:=InputTextString(lines);
-  Process(path[1], pager, stream, OutputTextUser(),
-          Concatenation(PAGER_OPTIONS, cmdargs));
+  Process(DirectoryCurrent(), pager, stream, OutputTextUser(),
+  Concatenation( UserPreference("PagerOptions"), cmdargs ));
 end);
 
 InstallGlobalFunction("Pager",  function(lines)
-  if PAGER="builtin" then
+  if UserPreference("Pager") = "builtin" then
     PAGER_BUILTIN(lines);
   else
     PAGER_EXTERNAL(lines);
   fi;
 end);
+
+BindGlobal( "PagerAsHelpViewer", function( lines )
+  if UserPreference( "Pager" ) = "builtin" then
+    if IsRecord( lines ) then
+      lines.exitAtEnd:= false;
+    else
+      lines:= rec( lines:= lines, exitAtEnd:= false );
+    fi;
+    PAGER_BUILTIN( lines );
+  else
+    PAGER_EXTERNAL( lines );
+  fi;
+end );
 
 
