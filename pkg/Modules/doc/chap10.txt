@@ -580,11 +580,11 @@
     [4X[0X
     [4Xthe map is currently represented by the above 4 x 4 matrix[0X
     [4Xgap> ML := Source( psi );[0X
-    [4X<A non-torsion right module on 4 generators satisfying 3 relations>[0X
+    [4X<A rank 1 right module on 4 generators satisfying 3 relations>[0X
     [4Xgap> IsIdenticalObj( ML, M * L );	## the caching at work[0X
     [4Xtrue[0X
     [4Xgap> NL := Range( psi );[0X
-    [4X<A non-torsion right module on 4 generators satisfying 2 relations>[0X
+    [4X<A rank 2 right module on 4 generators satisfying 2 relations>[0X
     [4Xgap> IsIdenticalObj( NL, N * L );	## the caching at work[0X
     [4Xtrue[0X
     [4Xgap> Display( ML );[0X
@@ -666,7 +666,7 @@
     [4X   0:	<A rank 1 left module presented by 1 relation for 2 generators>[0X
     [4X  -1:	<A non-zero left module presented by 2 relations for 2 generators>[0X
     [4Xof[0X
-    [4X<A non-torsion left module presented by 3 relations for 4 generators>>[0X
+    [4X<A rank 1 left module presented by 3 relations for 4 generators>>[0X
     [4Xgap> Display( filt );[0X
     [4XDegree 0:[0X
     [4X[0X

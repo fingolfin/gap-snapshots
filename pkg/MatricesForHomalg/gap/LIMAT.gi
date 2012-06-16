@@ -467,7 +467,10 @@ InstallImmediateMethod( ZeroRows,
         TryNextMethod( );
     fi;
     
-    return Intersection2( ZeroRows( e[1] ), e[2] );
+    return List(
+                Intersection2( ZeroRows( e[1] ), e[2] ),
+                i -> Position( e[2], i )
+                );
     
 end );
 
@@ -544,7 +547,10 @@ InstallImmediateMethod( ZeroColumns,
         TryNextMethod( );
     fi;
     
-    return Intersection2( ZeroColumns( e[1] ), e[2] );
+    return List(
+                Intersection2( ZeroColumns( e[1] ), e[2] ),
+                i -> Position( e[2], i )
+                );
     
 end );
 
@@ -1539,6 +1545,46 @@ end );
 
 ##
 InstallMethod( \*,
+        "LIMAT: for two homalg matrices (IsSubidentityMatrix)",
+        [ IsHomalgMatrix and IsSubidentityMatrix and HasEvalCertainRows and IsRightInvertibleMatrix, IsHomalgMatrix ], 16001,
+        
+  function( A, B )
+    local id;
+    
+    id := EvalCertainRows( A )[1];
+    
+    if not ( HasIsOne( id ) and IsOne( id ) ) then
+        TryNextMethod( );
+    fi;
+    
+    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "CertainRows(IsOne(Matrix)) * IsHomalgMatrix", "\033[0m", "	", NrRows( A ), " x ", NrColumns( A ), " x ", NrColumns( B ) );
+    
+    return CertainRows( B, EvalCertainRows( A )[2] );
+    
+end );
+
+##
+InstallMethod( \*,
+        "LIMAT: for two homalg matrices (IsSubidentityMatrix)",
+        [ IsHomalgMatrix, IsHomalgMatrix and IsSubidentityMatrix and HasEvalCertainColumns and IsLeftInvertibleMatrix ], 16001,
+        
+  function( A, B )
+    local id;
+    
+    id := EvalCertainColumns( B )[1];
+    
+    if not ( HasIsOne( id ) and IsOne( id ) ) then
+        TryNextMethod( );
+    fi;
+    
+    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "IsHomalgMatrix * CertainColumns(IsOne(Matrix))", "\033[0m", "	", NrRows( A ), " x ", NrColumns( A ), " x ", NrColumns( B ) );
+    
+    return CertainColumns( A, EvalCertainColumns( B )[2] );
+    
+end );
+
+##
+InstallMethod( \*,
         "LIMAT: for two homalg matrices (IsOne)",
         [ IsHomalgMatrix and IsOne, IsHomalgMatrix ], 17001,
         
@@ -1889,15 +1935,17 @@ end );
 ##
 InstallMethod( LeftInverse,
         "LIMAT: for homalg matrices (IsSubidentityMatrix)",
-        [ IsHomalgMatrix and IsSubidentityMatrix ],
+        [ IsHomalgMatrix and IsSubidentityMatrix and HasEvalCertainColumns ],
         
   function( M )
     local C;
     
-    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "LeftInverse( IsSubidentityMatrix )", "\033[0m" );
+    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "LeftInverse( CertainColumns(IsOne(Matrix)) )", "\033[0m" );
     
     ## the consistency test is performed by a high rank method above
-    C := Involution( M );
+    C := EvalCertainColumns( M );
+    
+    C := CertainRows( Involution( C[1] ), C[2] );	## Involution( Id ) = Id;
     
     SetRightInverse( M, C );
     
@@ -1960,15 +2008,17 @@ end );
 ##
 InstallMethod( RightInverse,
         "LIMAT: for homalg matrices (IsSubidentityMatrix)",
-        [ IsHomalgMatrix and IsSubidentityMatrix ],
+        [ IsHomalgMatrix and IsSubidentityMatrix and HasEvalCertainRows ],
         
   function( M )
     local C;
     
-    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "RightInverse( IsSubidentityMatrix )", "\033[0m" );
+    Info( InfoLIMAT, 2, LIMAT.color, "\033[01mLIMAT\033[0m ", LIMAT.color, "RightInverse( CertainRows(IsOne(Matrix)) )", "\033[0m" );
     
     ## the consistency test is performed by a high rank method above
-    C := Involution( M );
+    C := EvalCertainRows( M );
+    
+    C := CertainColumns( Involution( C[1] ), C[2] );	## Involution( Id ) = Id;
     
     SetLeftInverse( M, C );
     

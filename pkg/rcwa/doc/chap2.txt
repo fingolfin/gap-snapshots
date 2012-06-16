@@ -871,7 +871,7 @@
   [1X2.5-3 mKnot[101X
   
   [29X[2XmKnot[102X( [3Xm[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10Ythe permutation [22Xg_m[122X as introduced in [Kel99].[133X
+  [6XReturns:[106X  [33X[0;10Ythe permutation [22Xg_m[122X as defined in [Kel99].[133X
   
   [33X[0;0YThe argument [3Xm[103X must be an odd integer greater than 1.[133X
   
@@ -1217,8 +1217,8 @@
   [1X2.8-10 GluckTaylorInvariant[101X
   
   [29X[2XGluckTaylorInvariant[102X( [3Xa[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10Ythe invariant introduced in [GT02]. This is [22X(∑_i=1^l a_i ⋅ a_i mod
-            l + 1)/(∑_i=1^l a_i^2)[122X, where [22Xl[122X denotes the length of [3Xa[103X.[133X
+  [6XReturns:[106X  [33X[0;10Ythe  invariant defined in [GT02]. This is [22X(∑_i=1^l a_i ⋅ a_i mod l
+            + 1)/(∑_i=1^l a_i^2)[122X, where [22Xl[122X denotes the length of [3Xa[103X.[133X
   
   [33X[0;0YThe  argument  [3Xa[103X must be a list of integers. In [GT02] it is shown that if [3Xa[103X
   is  a  trajectory of the `original' Collatz mapping [22Xn[122X [22X↦[122X ([22Xn/2[122X if [22Xn[122X even, [22X3n+1[122X

@@ -53,8 +53,8 @@
 \markright{\scriptsize \mbox{}\hfill \textsf{Modules} \hfill\mbox{}}
 {\Large \textbf{A \textsf{homalg} based Package for the Abelian Category of Finitely Presented Modules over
 Computable Rings\mbox{}}}\\[1cm]
-{Version 2012.05.29\mbox{}}\\[1cm]
-{April 2012\mbox{}}\\[1cm]
+{Version 2012.06.15\mbox{}}\\[1cm]
+{June 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -1865,9 +1865,9 @@ a \textsf{homalg} module
   gap> Display( last );
   Z/< 3 > + Z^(1 x 1)
   gap> SetsOfGenerators( M );
-  <A set containing 3 sets of generators of a homalg module>
+  <A set containing 2 sets of generators of a homalg module>
   gap> SetsOfRelations( M );
-  <A set containing 3 sets of relations of a homalg module>
+  <A set containing 2 sets of relations of a homalg module>
   gap> M;
   <A rank 1 left module presented by 1 relation for 2 generators>
   gap> SetPositionOfTheDefaultPresentation( M, 1 );
@@ -3021,11 +3021,11 @@ a chain morphism.
   
   the map is currently represented by the above 4 x 4 matrix
   gap> ML := Source( psi );
-  <A non-torsion right module on 4 generators satisfying 3 relations>
+  <A rank 1 right module on 4 generators satisfying 3 relations>
   gap> IsIdenticalObj( ML, M * L );	## the caching at work
   true
   gap> NL := Range( psi );
-  <A non-torsion right module on 4 generators satisfying 2 relations>
+  <A rank 2 right module on 4 generators satisfying 2 relations>
   gap> IsIdenticalObj( NL, N * L );	## the caching at work
   true
   gap> Display( ML );
@@ -3105,7 +3105,7 @@ a chain morphism.
      0:	<A rank 1 left module presented by 1 relation for 2 generators>
     -1:	<A non-zero left module presented by 2 relations for 2 generators>
   of
-  <A non-torsion left module presented by 3 relations for 4 generators>>
+  <A rank 1 left module presented by 3 relations for 4 generators>>
   gap> Display( filt );
   Degree 0:
   
@@ -3927,9 +3927,10 @@ using the Cayley determinant. }
   gap> ByASmallerPresentation( filt );
   <An ascending filtration with degrees [ -1 .. 0 ] and graded parts:
      0:	<A non-torsion left module presented by 2 relations for 3 generators>
-    -1:	<A non-zero left module presented by 6 relations for 6 generators>
+    
+  -1:	<A non-zero torsion left module presented by 6 relations for 6 generators>
   of
-  <A non-torsion left module presented by 8 relations for 9 generators>>
+  <A rank 1 left module presented by 8 relations for 9 generators>>
   gap> m := IsomorphismOfFiltration( filt );
   <A non-zero isomorphism of left modules>
 \end{Verbatim}

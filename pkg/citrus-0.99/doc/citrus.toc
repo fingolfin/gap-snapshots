@@ -1,0 +1,177 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }The \textsf {Citrus} package}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Installing \textsf {Citrus}}}{6}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Compiling the kernel component of \textsf {Citrus}}}{7}{section.1.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Compiling the documentation}}{8}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }CitrusMakeDoc}}{8}{subsection.1.3.1}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Testing the installation}}{8}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}\leavevmode {\color {Chapter }CitrusTestAll}}{8}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}\leavevmode {\color {Chapter }CitrusTestInstall}}{9}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}\leavevmode {\color {Chapter }CitrusTestManualExamples}}{9}{subsection.1.4.3}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }More information during a computation}}{9}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}\leavevmode {\color {Chapter }InfoCitrus}}{9}{subsection.1.5.1}
+\contentsline {section}{\numberline {1.6}\leavevmode {\color {Chapter }Reading and writing transformations and partial permutations to a file}}{9}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}\leavevmode {\color {Chapter }CitrusDir}}{9}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {1.6.2}\leavevmode {\color {Chapter }ReadCitrus}}{10}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {1.6.3}\leavevmode {\color {Chapter }WriteCitrus}}{10}{subsection.1.6.3}
+\contentsline {section}{\numberline {1.7}\leavevmode {\color {Chapter }What does \textsf {Citrus} do best?}}{11}{section.1.7}
+\contentsline {section}{\numberline {1.8}\leavevmode {\color {Chapter }New methods for existing functions}}{11}{section.1.8}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Transformations and partial permutations }}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Creating transformations}}{13}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }ConstantTransformation}}{13}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }Idempotent}}{14}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }RandomIdempotent}}{14}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }RandomTransformation}}{14}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Creating partial permutations}}{15}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }PartialPerm (for a domain and range)}}{15}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }RestrictedPartialPerm}}{16}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }One}}{16}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }LeftOne}}{17}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }RandomPartialPerm}}{17}{subsection.2.2.5}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Displaying partial permutations}}{17}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }PrettyPrintPP}}{18}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Properties of transformations}}{18}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }CanonicalTransSameKernel}}{18}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}\leavevmode {\color {Chapter }IndexPeriodOfTransformation}}{19}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}\leavevmode {\color {Chapter }InversesOfTransformation}}{19}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}\leavevmode {\color {Chapter }IsInjectiveTransOnList}}{20}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}\leavevmode {\color {Chapter }IsRegularTransformation}}{20}{subsection.2.4.5}
+\contentsline {subsection}{\numberline {2.4.6}\leavevmode {\color {Chapter }DegreeOfTransformation}}{21}{subsection.2.4.6}
+\contentsline {subsection}{\numberline {2.4.7}\leavevmode {\color {Chapter }RankOfTransformation}}{21}{subsection.2.4.7}
+\contentsline {subsection}{\numberline {2.4.8}\leavevmode {\color {Chapter }SmallestIdempotentPower (for a transformation)}}{21}{subsection.2.4.8}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }Properties of partial permutations}}{21}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}\leavevmode {\color {Chapter }IsPartialPerm}}{22}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}\leavevmode {\color {Chapter }DomainOfPartialPerm}}{22}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}\leavevmode {\color {Chapter }RangeOfPartialPerm}}{22}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}\leavevmode {\color {Chapter }RangeSetOfPartialPerm}}{22}{subsection.2.5.4}
+\contentsline {subsection}{\numberline {2.5.5}\leavevmode {\color {Chapter }FixedPointsOfPartialPerm}}{23}{subsection.2.5.5}
+\contentsline {subsection}{\numberline {2.5.6}\leavevmode {\color {Chapter }MovedPoints (for a partial perm)}}{23}{subsection.2.5.6}
+\contentsline {subsection}{\numberline {2.5.7}\leavevmode {\color {Chapter }NrMovedPoints (for a partial perm)}}{23}{subsection.2.5.7}
+\contentsline {subsection}{\numberline {2.5.8}\leavevmode {\color {Chapter }LargestMovedPoint (for a partial perm)}}{24}{subsection.2.5.8}
+\contentsline {subsection}{\numberline {2.5.9}\leavevmode {\color {Chapter }SmallestMovedPoint (for a partial perm)}}{24}{subsection.2.5.9}
+\contentsline {subsection}{\numberline {2.5.10}\leavevmode {\color {Chapter }DenseRangeList}}{25}{subsection.2.5.10}
+\contentsline {subsection}{\numberline {2.5.11}\leavevmode {\color {Chapter }RankOfPartialPerm}}{25}{subsection.2.5.11}
+\contentsline {subsection}{\numberline {2.5.12}\leavevmode {\color {Chapter }DegreeOfPartialPerm}}{25}{subsection.2.5.12}
+\contentsline {subsection}{\numberline {2.5.13}\leavevmode {\color {Chapter }IndexPeriodOfPartialPerm}}{26}{subsection.2.5.13}
+\contentsline {subsection}{\numberline {2.5.14}\leavevmode {\color {Chapter }SmallestIdempotentPower (for a partial perm)}}{26}{subsection.2.5.14}
+\contentsline {section}{\numberline {2.6}\leavevmode {\color {Chapter }Operators for transformations}}{26}{section.2.6}
+\contentsline {section}{\numberline {2.7}\leavevmode {\color {Chapter }Operators for partial permutations}}{27}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}\leavevmode {\color {Chapter }NaturalLeqPartialPerm}}{27}{subsection.2.7.1}
+\contentsline {section}{\numberline {2.8}\leavevmode {\color {Chapter }Changing representations}}{28}{section.2.8}
+\contentsline {subsection}{\numberline {2.8.1}\leavevmode {\color {Chapter }AsPermOfKerImg}}{28}{subsection.2.8.1}
+\contentsline {subsection}{\numberline {2.8.2}\leavevmode {\color {Chapter }AsPermutation}}{28}{subsection.2.8.2}
+\contentsline {subsection}{\numberline {2.8.3}\leavevmode {\color {Chapter }AsPartialPerm}}{29}{subsection.2.8.3}
+\contentsline {subsection}{\numberline {2.8.4}\leavevmode {\color {Chapter }AsTransformation}}{30}{subsection.2.8.4}
+\contentsline {section}{\numberline {2.9}\leavevmode {\color {Chapter }Actions}}{30}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1}\leavevmode {\color {Chapter }OnKernelsAntiAction}}{30}{subsection.2.9.1}
+\contentsline {subsection}{\numberline {2.9.2}\leavevmode {\color {Chapter }OnIntegerSetsWithPartialPerm}}{31}{subsection.2.9.2}
+\contentsline {subsection}{\numberline {2.9.3}\leavevmode {\color {Chapter }TransformationActionNC}}{31}{subsection.2.9.3}
+\contentsline {section}{\numberline {2.10}\leavevmode {\color {Chapter }Orbits}}{31}{section.2.10}
+\contentsline {subsection}{\numberline {2.10.1}\leavevmode {\color {Chapter }OrbSCC}}{32}{subsection.2.10.1}
+\contentsline {subsection}{\numberline {2.10.2}\leavevmode {\color {Chapter }OrbSCCLookup}}{32}{subsection.2.10.2}
+\contentsline {subsection}{\numberline {2.10.3}\leavevmode {\color {Chapter }OrbSCCTruthTable}}{32}{subsection.2.10.3}
+\contentsline {subsection}{\numberline {2.10.4}\leavevmode {\color {Chapter }ReverseSchreierTreeOfSCC}}{33}{subsection.2.10.4}
+\contentsline {subsection}{\numberline {2.10.5}\leavevmode {\color {Chapter }SchreierTreeOfSCC}}{33}{subsection.2.10.5}
+\contentsline {subsection}{\numberline {2.10.6}\leavevmode {\color {Chapter }TraceSchreierTreeOfSCCBack}}{34}{subsection.2.10.6}
+\contentsline {subsection}{\numberline {2.10.7}\leavevmode {\color {Chapter }TraceSchreierTreeOfSCCForward}}{35}{subsection.2.10.7}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Creating semigroups and monoids}}{36}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Semigroups defined by a generating set}}{36}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }InverseMonoid}}{36}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }InverseMonoidByGenerators}}{37}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }Monoid}}{37}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }MonoidByGenerators}}{38}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}\leavevmode {\color {Chapter }RandomInverseMonoid}}{38}{subsection.3.1.5}
+\contentsline {subsection}{\numberline {3.1.6}\leavevmode {\color {Chapter }RandomTransformationMonoid}}{38}{subsection.3.1.6}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }New semigroups from old}}{39}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }ClosureInverseSemigroup}}{39}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }ClosureSemigroup}}{39}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }SubsemigroupByProperty (for a semigroup and function)}}{40}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Options when creating semigroups}}{40}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }CitrusOptionsRec}}{41}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Standard examples}}{42}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }FullMatrixSemigroup}}{42}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }IsFullMatrixSemigroup}}{42}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }MunnSemigroup}}{42}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }Monoids of order preserving functions}}{43}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }SingularSemigroup}}{44}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }SymmetricInverseSemigp}}{44}{subsection.3.4.6}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }The examples directory}}{45}{section.3.5}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Determining the structure of a semigroup}}{47}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Expressing semigroup elements as words in generators}}{47}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }EvaluateWord}}{47}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }Factorization}}{48}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Creating Green's classes}}{48}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }XClassOfYClass}}{48}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }GreensXClassOfElement}}{49}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }GreensXClassOfElementNC}}{50}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }GroupHClass}}{51}{subsection.4.2.4}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Iterators and enumerators of classes and representatives }}{52}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }GreensXClasses}}{52}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }IteratorOfXClassReps}}{53}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }IteratorOfXClasses}}{54}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }XClassReps}}{55}{subsection.4.3.4}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Attributes and properties directly related to Green's classes}}{56}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }Less than for Green's classes}}{56}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }InjectionPrincipalFactor}}{57}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }PrincipalFactor}}{58}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\leavevmode {\color {Chapter }IsGreensClassOfTransSemigp}}{58}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}\leavevmode {\color {Chapter }IsGreensClassOfPartialPermSemigp}}{59}{subsection.4.4.5}
+\contentsline {subsection}{\numberline {4.4.6}\leavevmode {\color {Chapter }IsRegularXClass}}{59}{subsection.4.4.6}
+\contentsline {subsection}{\numberline {4.4.7}\leavevmode {\color {Chapter }NrRegularDClasses}}{60}{subsection.4.4.7}
+\contentsline {subsection}{\numberline {4.4.8}\leavevmode {\color {Chapter }NrXClasses}}{60}{subsection.4.4.8}
+\contentsline {subsection}{\numberline {4.4.9}\leavevmode {\color {Chapter }PartialOrderOfDClasses}}{62}{subsection.4.4.9}
+\contentsline {subsection}{\numberline {4.4.10}\leavevmode {\color {Chapter }SchutzenbergerGroup}}{62}{subsection.4.4.10}
+\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Further attributes of semigroups}}{63}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }DomainOfPartialPermSemigroup}}{63}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}\leavevmode {\color {Chapter }GeneratorsOfInverseSemigroup}}{64}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}\leavevmode {\color {Chapter }GeneratorsOfInverseMonoid}}{64}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.4}\leavevmode {\color {Chapter }Generators}}{65}{subsection.4.5.4}
+\contentsline {subsection}{\numberline {4.5.5}\leavevmode {\color {Chapter }GroupOfUnits}}{66}{subsection.4.5.5}
+\contentsline {subsection}{\numberline {4.5.6}\leavevmode {\color {Chapter }Idempotents}}{66}{subsection.4.5.6}
+\contentsline {subsection}{\numberline {4.5.7}\leavevmode {\color {Chapter }NrIdempotents}}{67}{subsection.4.5.7}
+\contentsline {subsection}{\numberline {4.5.8}\leavevmode {\color {Chapter }IdempotentGeneratedSubsemigp}}{68}{subsection.4.5.8}
+\contentsline {subsection}{\numberline {4.5.9}\leavevmode {\color {Chapter }IrredundantGeneratingSubset}}{69}{subsection.4.5.9}
+\contentsline {subsection}{\numberline {4.5.10}\leavevmode {\color {Chapter }MinimalIdeal}}{69}{subsection.4.5.10}
+\contentsline {subsection}{\numberline {4.5.11}\leavevmode {\color {Chapter }MultiplicativeZero}}{70}{subsection.4.5.11}
+\contentsline {subsection}{\numberline {4.5.12}\leavevmode {\color {Chapter }NaturalPartialOrder}}{70}{subsection.4.5.12}
+\contentsline {subsection}{\numberline {4.5.13}\leavevmode {\color {Chapter }NrElementsOfRank}}{71}{subsection.4.5.13}
+\contentsline {subsection}{\numberline {4.5.14}\leavevmode {\color {Chapter }PrimitiveIdempotents}}{72}{subsection.4.5.14}
+\contentsline {subsection}{\numberline {4.5.15}\leavevmode {\color {Chapter }Random (for a semigroup)}}{72}{subsection.4.5.15}
+\contentsline {subsection}{\numberline {4.5.16}\leavevmode {\color {Chapter }SmallGeneratingSet}}{72}{subsection.4.5.16}
+\contentsline {subsection}{\numberline {4.5.17}\leavevmode {\color {Chapter }Graded images and kernels}}{73}{subsection.4.5.17}
+\contentsline {subsection}{\numberline {4.5.18}\leavevmode {\color {Chapter }Images and kernels}}{73}{subsection.4.5.18}
+\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }Further properties of semigroups}}{74}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}\leavevmode {\color {Chapter }IsBand}}{74}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }IsBlockGroup}}{75}{subsection.4.6.2}
+\contentsline {subsection}{\numberline {4.6.3}\leavevmode {\color {Chapter }IsBrandtSemigroup}}{75}{subsection.4.6.3}
+\contentsline {subsection}{\numberline {4.6.4}\leavevmode {\color {Chapter }IsCliffordSemigroup}}{76}{subsection.4.6.4}
+\contentsline {subsection}{\numberline {4.6.5}\leavevmode {\color {Chapter }IsCommutativeSemigroup}}{76}{subsection.4.6.5}
+\contentsline {subsection}{\numberline {4.6.6}\leavevmode {\color {Chapter }IsCompletelyRegularSemigroup}}{76}{subsection.4.6.6}
+\contentsline {subsection}{\numberline {4.6.7}\leavevmode {\color {Chapter }IsFactorisableSemigroup}}{77}{subsection.4.6.7}
+\contentsline {subsection}{\numberline {4.6.8}\leavevmode {\color {Chapter }IsGroupAsSemigroup}}{77}{subsection.4.6.8}
+\contentsline {subsection}{\numberline {4.6.9}\leavevmode {\color {Chapter }IsIdempotentGenerated}}{78}{subsection.4.6.9}
+\contentsline {subsection}{\numberline {4.6.10}\leavevmode {\color {Chapter }IsInverseSemigroup}}{78}{subsection.4.6.10}
+\contentsline {subsection}{\numberline {4.6.11}\leavevmode {\color {Chapter }IsLeftSimple}}{78}{subsection.4.6.11}
+\contentsline {subsection}{\numberline {4.6.12}\leavevmode {\color {Chapter }IsLeftZeroSemigroup}}{79}{subsection.4.6.12}
+\contentsline {subsection}{\numberline {4.6.13}\leavevmode {\color {Chapter }IsMonogenicSemigroup}}{79}{subsection.4.6.13}
+\contentsline {subsection}{\numberline {4.6.14}\leavevmode {\color {Chapter }IsMonogenicInverseSemigroup}}{80}{subsection.4.6.14}
+\contentsline {subsection}{\numberline {4.6.15}\leavevmode {\color {Chapter }IsMonoidAsSemigroup}}{80}{subsection.4.6.15}
+\contentsline {subsection}{\numberline {4.6.16}\leavevmode {\color {Chapter }IsPartialPermSemigroup}}{81}{subsection.4.6.16}
+\contentsline {subsection}{\numberline {4.6.17}\leavevmode {\color {Chapter }IsOrthodoxSemigroup}}{81}{subsection.4.6.17}
+\contentsline {subsection}{\numberline {4.6.18}\leavevmode {\color {Chapter }IsRectangularBand}}{81}{subsection.4.6.18}
+\contentsline {subsection}{\numberline {4.6.19}\leavevmode {\color {Chapter }IsRegularSemigroup}}{82}{subsection.4.6.19}
+\contentsline {subsection}{\numberline {4.6.20}\leavevmode {\color {Chapter }IsRightZeroSemigroup}}{82}{subsection.4.6.20}
+\contentsline {subsection}{\numberline {4.6.21}\leavevmode {\color {Chapter }IsXTrivial}}{82}{subsection.4.6.21}
+\contentsline {subsection}{\numberline {4.6.22}\leavevmode {\color {Chapter }IsSemilatticeAsSemigroup}}{83}{subsection.4.6.22}
+\contentsline {subsection}{\numberline {4.6.23}\leavevmode {\color {Chapter }IsSimpleSemigroup}}{83}{subsection.4.6.23}
+\contentsline {subsection}{\numberline {4.6.24}\leavevmode {\color {Chapter }IsSynchronizingSemigroup}}{84}{subsection.4.6.24}
+\contentsline {subsection}{\numberline {4.6.25}\leavevmode {\color {Chapter }IsZeroGroup}}{84}{subsection.4.6.25}
+\contentsline {subsection}{\numberline {4.6.26}\leavevmode {\color {Chapter }IsZeroRectangularBand}}{85}{subsection.4.6.26}
+\contentsline {subsection}{\numberline {4.6.27}\leavevmode {\color {Chapter }IsZeroSemigroup}}{85}{subsection.4.6.27}
+\contentsline {subsection}{\numberline {4.6.28}\leavevmode {\color {Chapter }IsZeroSimpleSemigroup}}{86}{subsection.4.6.28}
+\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }Changing the representation of a semigroup}}{86}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }AntiIsomorphismTransformationSemigroup}}{86}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}\leavevmode {\color {Chapter }IsomorphismPartialPermMonoid}}{87}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.3}\leavevmode {\color {Chapter }IsomorphismPermGroup}}{88}{subsection.4.7.3}
+\contentsline {subsection}{\numberline {4.7.4}\leavevmode {\color {Chapter }IsomorphismTransformationMonoid}}{88}{subsection.4.7.4}
+\contentsline {chapter}{References}{90}{chapter*.5}
+\contentsline {chapter}{Index}{91}{section*.6}

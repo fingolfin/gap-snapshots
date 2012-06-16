@@ -52,8 +52,8 @@
 \hypersetup{pdftitle=\textsf{MatricesForHomalg}}
 \markright{\scriptsize \mbox{}\hfill \textsf{MatricesForHomalg} \hfill\mbox{}}
 {\Large \textbf{Matrices for the \textsf{homalg} project\mbox{}}}\\[1cm]
-{Version 2012.05.27\mbox{}}\\[1cm]
-{May 2012\mbox{}}\\[1cm]
+{Version 2012.06.08\mbox{}}\\[1cm]
+{June 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -1272,8 +1272,23 @@ value of the ring property \texttt{Prop} is not set for a \textsf{homalg} ring \
 
  
 
-\subsection{\textcolor{Chapter }{IsMinusOne}}
+\subsection{\textcolor{Chapter }{AreUnitsCentral}}
 \logpage{[ 3, 3, 55 ]}\nobreak
+\hyperdef{L}{X781617F678CC0BA8}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{AreUnitsCentral({\slshape R})\index{AreUnitsCentral@\texttt{AreUnitsCentral}}
+\label{AreUnitsCentral}
+}\hfill{\scriptsize (property)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true} or \texttt{false}
+
+
+
+ \mbox{\texttt{\slshape R}} is a ring for \textsf{homalg}. }
+
+ 
+
+\subsection{\textcolor{Chapter }{IsMinusOne}}
+\logpage{[ 3, 3, 56 ]}\nobreak
 \hyperdef{L}{X85B6710082984863}{}
 {\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsMinusOne({\slshape r})\index{IsMinusOne@\texttt{IsMinusOne}}
 \label{IsMinusOne}
@@ -1288,7 +1303,7 @@ value of the ring property \texttt{Prop} is not set for a \textsf{homalg} ring \
  
 
 \subsection{\textcolor{Chapter }{IsLeftRegular (for homalg ring elements)}}
-\logpage{[ 3, 3, 56 ]}\nobreak
+\logpage{[ 3, 3, 57 ]}\nobreak
 \hyperdef{L}{X811A01D5803ADCA3}{}
 {\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsLeftRegular({\slshape r})\index{IsLeftRegular@\texttt{IsLeftRegular}!for homalg ring elements}
 \label{IsLeftRegular:for homalg ring elements}
@@ -1303,7 +1318,7 @@ value of the ring property \texttt{Prop} is not set for a \textsf{homalg} ring \
  
 
 \subsection{\textcolor{Chapter }{IsRightRegular (for homalg ring elements)}}
-\logpage{[ 3, 3, 57 ]}\nobreak
+\logpage{[ 3, 3, 58 ]}\nobreak
 \hyperdef{L}{X7E99731F83A41777}{}
 {\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsRightRegular({\slshape r})\index{IsRightRegular@\texttt{IsRightRegular}!for homalg ring elements}
 \label{IsRightRegular:for homalg ring elements}
@@ -1318,7 +1333,7 @@ value of the ring property \texttt{Prop} is not set for a \textsf{homalg} ring \
  
 
 \subsection{\textcolor{Chapter }{IsRegular (for homalg ring elements)}}
-\logpage{[ 3, 3, 58 ]}\nobreak
+\logpage{[ 3, 3, 59 ]}\nobreak
 \hyperdef{L}{X80A3294C834D8F21}{}
 {\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsRegular({\slshape r})\index{IsRegular@\texttt{IsRegular}!for homalg ring elements}
 \label{IsRegular:for homalg ring elements}
@@ -3385,6 +3400,15 @@ a \textsf{homalg} matrix or false
       
       SetRightInverse( LI, RI );
       
+      SetNrColumns( LI, NrRows( RI ) );
+      
+      if NrRows( RI ) = NrColumns( RI ) then
+          ## a left inverse of a ring element is unique
+          ## and coincides with the right inverse
+          SetRightInverse( RI, LI );
+          SetLeftInverse( LI, RI );
+      fi;
+      
       return LI;
       
   end );
@@ -3433,6 +3457,15 @@ a \textsf{homalg} matrix or false
       fi;
       
       SetLeftInverse( RI, LI );
+      
+      SetNrRows( RI, NrColumns( LI ) );
+      
+      if NrRows( LI ) = NrColumns( LI ) then
+          ## a right inverse of a ring element is unique
+          ## and coincides with the left inverse
+          SetLeftInverse( LI, RI );
+          SetRightInverse( RI, LI );
+      fi;
       
       return RI;
       

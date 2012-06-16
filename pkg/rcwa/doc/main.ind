@@ -285,6 +285,14 @@
   \item \texttt{ListOfPowers}, \hyperpage{124}
   \item \texttt{LoadBitmapPicture}
     \subitem filename, \hyperpage{123}
+  \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Groups}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {By3}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
+		\hyperpage{63}
+  \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Nonbalanced}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
+		\hyperpage{65}
+  \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of2}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
+		\hyperpage{64}
+  \item \texttt  {LoadRCWAExamples}, \hyperpage{62}
+  \item \texttt{LoadRCWAExamples}, \hyperpage{66}
   \item \texttt  {LocalizedRcwaMapping}
     \subitem for an rcwa mapping of Z and a prime, \hyperpage{13}
   \item \texttt  {Log2HTML}
@@ -463,14 +471,6 @@
     \subitem membership test, \hyperpage{50}
   \item \texttt  {RCWABuildManual}, \hyperpage{121}
   \item \texttt{RCWAInfo}, \hyperpage{122}
-  \item \texttt  {RCW}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Groups}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {By3}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
-		\hyperpage{63}
-  \item \texttt  {RCW}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Nonbalanced}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
-		\hyperpage{65}
-  \item \texttt  {RCW}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of2}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
-		\hyperpage{64}
-  \item \texttt  {RCWALoadExamples}, \hyperpage{62}
-  \item \texttt{RCWALoadExamples}, \hyperpage{66}
   \item \texttt  {RcwaMapping}
     \subitem by arithmetical expression, \hyperpage{12}
     \subitem by finite field size, modulus and list of coefficients, 

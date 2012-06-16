@@ -790,6 +790,15 @@
     [4X    [0X
     [4X    SetRightInverse( LI, RI );[0X
     [4X    [0X
+    [4X    SetNrColumns( LI, NrRows( RI ) );[0X
+    [4X    [0X
+    [4X    if NrRows( RI ) = NrColumns( RI ) then[0X
+    [4X        ## a left inverse of a ring element is unique[0X
+    [4X        ## and coincides with the right inverse[0X
+    [4X        SetRightInverse( RI, LI );[0X
+    [4X        SetLeftInverse( LI, RI );[0X
+    [4X    fi;[0X
+    [4X    [0X
     [4X    return LI;[0X
     [4X    [0X
     [4Xend );[0X
@@ -831,6 +840,15 @@
     [4X    fi;[0X
     [4X    [0X
     [4X    SetLeftInverse( RI, LI );[0X
+    [4X    [0X
+    [4X    SetNrRows( RI, NrColumns( LI ) );[0X
+    [4X    [0X
+    [4X    if NrRows( LI ) = NrColumns( LI ) then[0X
+    [4X        ## a right inverse of a ring element is unique[0X
+    [4X        ## and coincides with the left inverse[0X
+    [4X        SetLeftInverse( LI, RI );[0X
+    [4X        SetRightInverse( RI, LI );[0X
+    [4X    fi;[0X
     [4X    [0X
     [4X    return RI;[0X
     [4X    [0X

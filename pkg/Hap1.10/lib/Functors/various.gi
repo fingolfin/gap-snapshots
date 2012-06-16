@@ -423,7 +423,8 @@ Add(gens,P*T*P^-1);
 od;
 G:=Group(gens);
 SetName(G,Concatenation("SL(2,Z[1/",String(DenominatorRat(g)),"])")  );
-G!.primes:=F[1];
+#G!.primes:=F[1];
+G!.primes:=DenominatorRat(g);
 SetIsHAPRationalMatrixGroup(G,true);
 SetIsHAPRationalSpecialLinearGroup(G,true);
 
@@ -440,7 +441,7 @@ InstallMethod( \in,
                "for SL(2,Z)_p",
               [ IsMatrix,  IsHAPRationalSpecialLinearGroup ],
 function ( g, G )
-local P,n,d,facs;
+local P,n,d,facs,   m,p,H,K;
 
 if IsBound(G!.mat) then
 ###############
@@ -456,7 +457,7 @@ facs:=SSortedList(Factors(G!.primes));
 AddSet(facs,1);
 for n in Flat(g) do
 d:=SSortedList(Factors(DenominatorRat(n)));
-if not IsSubset(facs,d) and n>1 then
+if not IsSubset(facs,d) then # and n>1 then
 return false; fi;
 od;
 
@@ -465,7 +466,42 @@ return false;
 ###############
 fi;
 
+
+########
+if IsBound(G!.coprimes) then
+m:=G!.coprimes[1];
+p:=G!.coprimes[2];
+P:=[[1,0],[0,p]];
+return P^-1*g*P in SL2Z(1/m);
+fi;
+###############
+if IsBound(G!.levels) then
+m:=G!.levels[1];
+p:=G!.levels[2];
+H:=SL2Z(1/m);
+K:=ConjugateSL2ZGroup(H,[[1,0],[0,p]]);
+return (g in H and g in K);
+fi;
+##############################
+
 end );
 ######################
 
 
+if IsPackageMarkedForLoading("congruence","0.0") then
+######################
+InstallMethod( \in,
+               "for CongruenceSubgroupGamma0(p)",
+              [ IsMatrix,  IsCongruenceSubgroupGamma0 ],
+function ( g, G )
+local p;
+p:=G!.LevelOfCongruenceSubgroup;
+if g in SL(2,Integers) then
+if Determinant(g)=1 then
+if IsInt(g[2][1]/p) then return true;fi;
+fi;
+fi;
+############################
+return false;
+end );
+fi;

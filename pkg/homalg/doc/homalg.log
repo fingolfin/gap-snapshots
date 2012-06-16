@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  4 JUN 2012 08:52
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  13 JUN 2012 10:36
 entering extended mode
 **homalg
 (./homalg.tex
@@ -764,7 +764,7 @@ Appendix B.
 
 ]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 5141.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 5142.
 
  [80] [81] [82]
 Appendix C.
@@ -773,22 +773,22 @@ Appendix C.
 ]
 Appendix D.
 
-Underfull \hbox (badness 10000) in paragraph at lines 5280--5285
+Underfull \hbox (badness 10000) in paragraph at lines 5281--5286
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5280--5285
+Underfull \hbox (badness 10000) in paragraph at lines 5281--5286
 
  []
 
 
-Overfull \hbox (74.53055pt too wide) in paragraph at lines 5286--5314
+Overfull \hbox (74.53055pt too wide) in paragraph at lines 5287--5315
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5317--5318
+Underfull \hbox (badness 10000) in paragraph at lines 5318--5319
 []\OT1/ptm/m/n/10.95 In par-tic-u-lar, if \OT1/phv/m/n/10.95 homalg \OT1/ptm/m/
 n/10.95 del-e-gates ma-trix op-er-a-tions to an ex-ter-nal sys-tem then
  []
@@ -805,10 +805,10 @@ Appendix F.
 
 ]
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 5541.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 5542.
 
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 5541.
+(Font)              scaled to size 9.85492pt on input line 5542.
  [89] (./homalg.bbl (./homalg.brf)
 \tf@brf=\write9
 \openout9 = `homalg.brf'.
@@ -997,4 +997,4 @@ c/uhvr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></sw/shar
 e/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></sw/share/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><
 /sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on homalg.pdf (96 pages, 562313 bytes).
+Output written on homalg.pdf (96 pages, 562347 bytes).

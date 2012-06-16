@@ -1,8 +1,4 @@
 \contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }About the RCWA Package}}{5}{chapter.1}
-\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Motivation}}{5}{section.1.1}
-\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Purpose of this package}}{5}{section.1.2}
-\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Groups which this package can deal with}}{6}{section.1.3}
-\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Scope of this package}}{6}{section.1.4}
 \contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Residue-Class-Wise Affine Mappings}}{7}{chapter.2}
 \contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Basic definitions}}{7}{section.2.1}
 \contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Entering residue-class-wise affine mappings}}{8}{section.2.2}
@@ -95,12 +91,12 @@
 \contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter } DrawGrid }}{61}{subsection.5.4.2}
 \contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter } Databases of Residue-Class-Wise Affine Groups and -Mappings }}{62}{chapter.6}
 \contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }The collection of examples}}{62}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }RCWALoadExamples}}{62}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }LoadRCWAExamples}}{62}{subsection.6.1.1}
 \contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Databases of rcwa groups}}{63}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions}}{63}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions}}{63}{subsection.6.2.1}
 \contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Databases of rcwa mappings}}{64}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }RCWALoadDatabaseOfProductsOf2ClassTranspositions}}{64}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions}}{65}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }LoadDatabaseOfProductsOf2ClassTranspositions}}{64}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }LoadDatabaseOfNonbalancedProductsOfClassTranspositions}}{65}{subsection.6.3.2}
 \contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Examples}}{66}{chapter.7}
 \contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter } The Higman-Thompson group }}{66}{section.7.1}
 \contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter } An extension of the Collatz mapping T to a permutation of ${\ensuremath {\@mathbb Z}}^2$ }}{69}{section.7.2}

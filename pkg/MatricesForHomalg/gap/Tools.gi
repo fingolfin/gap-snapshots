@@ -2115,6 +2115,10 @@ InstallMethod( DivideEntryByUnit,
   function( M, i, j, u )
     local R, RP;
     
+    if IsEmptyMatrix( M ) then
+        return;
+    fi;
+    
     R := HomalgRing( M );
     
     RP := homalgTable( R );
@@ -2136,6 +2140,10 @@ InstallMethod( DivideRowByUnit,
         
   function( M, i, u, j )
     local R, RP, a, mat;
+    
+    if IsEmptyMatrix( M ) then
+        return M;
+    fi;
     
     R := HomalgRing( M );
     
@@ -2188,6 +2196,10 @@ InstallMethod( DivideColumnByUnit,
         
   function( M, j, u, i )
     local R, RP, a, mat;
+    
+    if IsEmptyMatrix( M ) then
+        return M;
+    fi;
     
     R := HomalgRing( M );
     
@@ -2876,5 +2888,234 @@ InstallMethod( MatrixOfSymbols,
     ## TODO: add more properties and attributes to symb
     
     return symb;
+    
+end );
+
+##
+InstallMethod( GetRidOfRowsAndColumnsWithUnits,
+        "for a homalg matrix",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    local MM, R, RP, rr, cc, r, c, UI, VI, U, V, rows, columns,
+          deleted_rows, deleted_columns, pos, i, j, e,
+          column, column_range, row, row_range, IdU, IdV, u, v, U_M_V;
+    
+    if IsBound( M!.GetRidOfRowsAndColumnsWithUnits ) then
+        return M!.GetRidOfRowsAndColumnsWithUnits;
+    fi;
+    
+    MM := M;
+    
+    R := HomalgRing( M );
+    
+    RP := homalgTable( R );
+    
+    rr := NrRows( M );
+    cc := NrColumns( M );
+    
+    r := rr;
+    c := cc;
+    
+    UI := HomalgIdentityMatrix( rr, R );
+    VI := HomalgIdentityMatrix( cc, R );
+    
+    U := UI;
+    V := VI;
+    
+    if IsBound( RP!.GetRidOfRowsAndColumnsWithUnits ) then
+        
+        M := RP!.GetRidOfRowsAndColumnsWithUnits( M );
+        
+        rows := M[2];
+        columns := M[3];
+        
+        deleted_rows := M[4];
+        deleted_columns := M[5];
+        
+        M := M[1];
+        
+        Assert( 4, IsUnitFree( M ) );
+        SetIsUnitFree( M, true );
+        
+    else
+        
+        rows := [ ];
+        columns := [ ];
+        
+        deleted_rows := [ ];
+        deleted_columns := [ ];
+        
+    fi;
+    
+    #=====# the fallback method #=====#
+    
+    pos := GetUnitPosition( M );
+    
+    SetIsUnitFree( M, pos = fail );
+    
+    while not IsUnitFree( M ) do
+        
+        i := pos[1]; j := pos[2];
+        
+        e := MatElm( M, i, j );
+        
+        Assert( 4, IsUnit( e ) );
+        Assert( 4, not IsZero( e ) );
+        
+        if IsHomalgRingElement( e ) then
+            e!.IsUnit := true;
+            SetIsZero( e, false );
+        fi;
+        
+        if IsOne( e ) then
+            e := HomalgIdentityMatrix( 1, R );
+        else
+            e := e^-1;
+            e := HomalgMatrix( [ e ], 1, 1, R );
+            
+            Assert( 4, not IsZero( e ) );
+            SetIsZero( e, false );
+            
+        fi;
+        
+        Add( rows, i );
+        Add( columns, j );
+        
+        column := CertainColumns( M, [ j ] );
+        
+        column_range := Concatenation( [ 1 .. j - 1 ], [ j + 1 .. c ] );
+        
+        M := CertainColumns( M, column_range ); c := c - 1;
+        
+        row := CertainRows( M, [ i ] );
+        
+        row_range := Concatenation( [ 1 .. i - 1 ], [ i + 1 .. r ] );
+        
+        column := CertainRows( column, row_range );
+        
+        M := CertainRows( M, row_range ); r := r - 1;
+        
+        ## the following line breaks the symmetry of the line redefining M,
+        ## which could have been M := M - column * e * row;
+        ## but since the adapted row will be reused in creating
+        ## the trafo matrix V below, I decided to redefine the row
+        ## for effeciency reasons
+        
+        row := e * row;
+        
+        M := M - column * row;
+        
+        column := column * e;
+        
+        Add( deleted_rows, -row );
+        Add( deleted_columns, -column );
+        
+        pos := GetUnitPosition( M );
+        
+        SetIsUnitFree( M, pos = fail );
+        
+    od;
+    
+    r := rr;
+    c := cc;
+    
+    for pos in [ 1 .. Length( rows ) ] do
+        
+        r := r - 1;
+        c := c - 1;
+        
+        i := rows[pos]; j := columns[pos];
+        
+        IdU := HomalgIdentityMatrix( r, R );
+        IdV := HomalgIdentityMatrix( c, R );
+        
+        u := CertainColumns( IdU, [ 1 .. i - 1 ] );
+        u := UnionOfColumns( u, deleted_columns[pos] );
+        u := UnionOfColumns( u, CertainColumns( IdU, [ i .. r ] ) );
+        
+        v := CertainRows( IdV, [ 1 .. j - 1 ] );
+        v := UnionOfRows( v, deleted_rows[pos] );
+        v := UnionOfRows( v, CertainRows( IdV, [ j .. c ] ) );
+        
+        U := u * U;
+        V := V * v;
+        
+    od;
+    
+    ## now bring rows and columns to absolute positions
+    
+    rr := [ 1 .. rr ];
+    cc := [ 1 .. cc ];
+    
+    Perform( rows, function( i ) Remove( rr, i ); end );
+    Perform( columns, function( j ) Remove( cc, j ); end );
+    
+    UI := CertainColumns( UI, rr );
+    VI := CertainRows( VI, cc );
+    
+    ## 1. Left/RightInverse is better than Left/RightInverseLazy here
+    ##    as V and U are known to be a subidentity matrices
+    ## 2. Caution:
+    ##    (-) U * MM * V is NOT = M, in general, nor
+    ##    (-) UI * M * VI is NOT = MM, in general, but
+    ##    (+) U * MM and M generate the same column space
+    ##    (+) MM * V and M generate the same row space
+    ##    (+) UI * M generate column subspace of MM
+    ##    (+) M * VI generate row subspace of MM
+    
+    Assert( 4, GenerateSameColumnModule( U * MM, M ) );
+    Assert( 4, GenerateSameRowModule( MM * V, M ) );
+    
+    Assert( 4, IsZero( DecideZeroColumns( UI * M, BasisOfColumnModule( MM ) ) ) );
+    Assert( 4, IsZero( DecideZeroRows( M * VI, BasisOfRowModule( MM ) ) ) );
+    
+    U_M_V := [ U, UI, M, VI, V ];
+    
+    MM!.GetRidOfRowsAndColumnsWithUnits := U_M_V;
+    
+    return U_M_V;
+    
+end );
+
+##
+InstallMethod( Random,
+        "for a homalg ring and a list",
+        [ IsHomalgRing, IsList ],
+        
+  function( R, L )
+    local RP;
+    
+    RP := homalgTable( R );
+    
+    L := Concatenation( [ R ], L );
+    
+    if IsBound(RP!.RandomPol) then
+        return RingElementConstructor( R )( CallFuncList( RP!.RandomPol, L ), R );
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( Random,
+        "for a homalg ring and an integer",
+        [ IsHomalgRing, IsInt ],
+        
+  function( R, maxdeg )
+    
+    return Random( R, [ maxdeg ] );
+    
+end );
+
+##
+InstallMethod( Random,
+        "for a homalg ring",
+        [ IsHomalgRing ],
+        
+  function( R )
+    
+    return Random( R, Random( [ 1 .. 10 ] ) );
     
 end );

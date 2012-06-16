@@ -2,7 +2,7 @@
 ##
 #W read.g                                                   Laurent Bartholdi
 ##
-#H   @(#)$Id: read.g,v 1.23 2012/05/06 12:02:57 gap Exp $
+#H   @(#)$Id: read.g,v 1.24 2012/06/05 09:57:48 gap Exp $
 ##
 #Y Copyright (C) 2006, Laurent Bartholdi
 ##
@@ -28,10 +28,13 @@ elif IsPackageMarkedForLoading("float","") then
     elif IsBound(CXSC) then
         SetP1Points(CXSC);
     else
-        Info(InfoPackageLoading, 1, "You installed the float package and no DLL, but didn't include a complex number handler. That's probably not what you wanted.");
+        Info(InfoPackageLoading, 1, "You installed the Float package but compiled neither the Float nor the FR DLL. That's probably not what you wanted. I'll disable the P1Points code.");
+        @.ro := 1.0_l; # minimal defaults to shut up warnings -- won't be usable.
+        @.o := NewFloat(IsPMComplex,1);
+        @.reps := IEEE754FLOAT.constants.EPSILON;
     fi;
 else
-    Info(InfoPackageLoading, 2, "No handler for P1 points found");
+    Info(InfoPackageLoading, 2, "You didn't install the Float package, and didn't compile the FR DLL. I'll disable the P1Points code.");
     @.ro := 1.0_l; # minimal defaults to shut up warnings -- won't be usable.
     @.o := NewFloat(IsPMComplex,1);
     @.reps := IEEE754FLOAT.constants.EPSILON;

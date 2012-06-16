@@ -1472,7 +1472,7 @@ InstallMethod( NonZeroGenerators,
 end );
 
 ##
-InstallMethod( GetRidOfObsoleteGenerators,	### defines: GetRidOfObsoleteGenerators (BetterPresentation)
+InstallMethod( GetRidOfZeroGenerators,	### defines: GetRidOfZeroGenerators (BetterPresentation)
         "for homalg modules",
         [ IsFinitelyPresentedModuleRep ],
         
@@ -1549,15 +1549,15 @@ InstallMethod( OnLessGenerators,
     
     rel := SimplerEquivalentMatrix( rel_old, U, UI, "", "", "" );
     
-    if rel_old = rel then
-        return GetRidOfObsoleteGenerators( M );
+    if not rel_old = rel then
+        
+        rel := HomalgRelationsForRightModule( rel, M );
+        
+        AddANewPresentation( M, rel, U, UI );
+        
     fi;
     
-    rel := HomalgRelationsForRightModule( rel, M );
-    
-    AddANewPresentation( M, rel, U, UI );
-    
-    return GetRidOfObsoleteGenerators( M );
+    return GetRidOfZeroGenerators( M );
     
 end );
 
@@ -1578,15 +1578,15 @@ InstallMethod( OnLessGenerators,
     
     rel := SimplerEquivalentMatrix( rel_old, V, VI, "", "" );
     
-    if rel_old = rel then
-        return GetRidOfObsoleteGenerators( M );
+    if not rel_old = rel then
+        
+        rel := HomalgRelationsForLeftModule( rel, M );
+        
+        AddANewPresentation( M, rel, V, VI );
+        
     fi;
     
-    rel := HomalgRelationsForLeftModule( rel, M );
-    
-    AddANewPresentation( M, rel, V, VI );
-    
-    return GetRidOfObsoleteGenerators( M );
+    return GetRidOfZeroGenerators( M );
     
 end );
 
@@ -1620,9 +1620,9 @@ end );
 ##  gap> Display( last );
 ##  Z/< 3 > + Z^(1 x 1)
 ##  gap> SetsOfGenerators( M );
-##  <A set containing 3 sets of generators of a homalg module>
+##  <A set containing 2 sets of generators of a homalg module>
 ##  gap> SetsOfRelations( M );
-##  <A set containing 3 sets of relations of a homalg module>
+##  <A set containing 2 sets of relations of a homalg module>
 ##  gap> M;
 ##  <A rank 1 left module presented by 1 relation for 2 generators>
 ##  gap> SetPositionOfTheDefaultPresentation( M, 1 );

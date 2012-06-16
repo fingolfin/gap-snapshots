@@ -2,7 +2,7 @@
      automatically by the distribution wrapper scripts. -->
 <!ENTITY VERSIONNUMBER "4.5.4">
 <!ENTITY VERSIONSUFFIX "4r5p4">
-<!ENTITY RELEASEDAY "05-Jun-2012">
+<!ENTITY RELEASEDAY "16-Jun-2012">
 <!ENTITY RELEASEYEAR "2012">
 <!-- Two lines below are updated manually, but only for main releases -->
 <!ENTITY GAPDIRNAME "gap4r5">

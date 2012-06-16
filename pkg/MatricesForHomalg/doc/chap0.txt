@@ -6,10 +6,10 @@
                         [1XMatrices for the [5Xhomalg[0m[1X project[0m
   
   
-                               Version 2012.05.27
+                               Version 2012.06.08
   
   
-                                    May 2012
+                                   June 2012
   
   
                                 Mohamed Barakat
@@ -132,10 +132,11 @@
       3.3-52 IsSemiSimpleRing
       3.3-53 IsSuperCommutative
       3.3-54 BasisAlgorithmRespectsPrincipalIdeals
-      3.3-55 IsMinusOne
-      3.3-56 IsLeftRegular
-      3.3-57 IsRightRegular
-      3.3-58 IsRegular
+      3.3-55 AreUnitsCentral
+      3.3-56 IsMinusOne
+      3.3-57 IsLeftRegular
+      3.3-58 IsRightRegular
+      3.3-59 IsRegular
     3.4 Rings: Attributes
       3.4-1 Zero
       3.4-2 One

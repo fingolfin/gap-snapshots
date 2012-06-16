@@ -23,20 +23,20 @@ ReadPackage("HAP", "lib/TitlePage/copyright.gap");
 ## Most HAP functions should work on pcp groups if the polycyclic package 
 ## is installed. Otherwise we need to give a meaning to certain commands
 ## defined in the polycyclic package.
-if not IsPackageMarkedForLoading("polycyclic","1.1") then 
-DeclareOperation("NaturalHomomorphism",[IsGroup,IsGroup]);
-IsPcpGroup:=function(G);return false;end;
-Collector:=function(x);return fail; end;
-PcpGroupByCollector:=function(x);return fail; end;
-Igs:=function(x);return fail; end;
-GenExpList:=function(x);return fail; end;
-HeisenbergPcpGroup:=function(x);return fail; end;
-Pcp:=function(G,D); return fail; end;
-IsAlmostCrystallographic:=function(G); return fail; end;
-GeneratorsOfPcp:=function(G); return fail; end;
-IsomorphismPcpGroup:=function(G);return fail;end;
-AbelianPcpGroup:=function(G);return fail;end;
-fi;
+#if not IsPackageMarkedForLoading("polycyclic","1.1") then 
+#DeclareOperation("NaturalHomomorphism",[IsGroup,IsGroup]);
+#IsPcpGroup:=function(G);return false;end;
+#Collector:=function(x);return fail; end;
+#PcpGroupByCollector:=function(x);return fail; end;
+#Igs:=function(x);return fail; end;
+#GenExpList:=function(x);return fail; end;
+#HeisenbergPcpGroup:=function(x);return fail; end;
+#Pcp:=function(G,D); return fail; end;
+#IsAlmostCrystallographic:=function(G); return fail; end;
+#GeneratorsOfPcp:=function(G); return fail; end;
+#IsomorphismPcpGroup:=function(G);return fail;end;
+#AbelianPcpGroup:=function(G);return fail;end;
+#fi;
 ################## POLYCYCLIC COMMANDS DONE #########################
 
 ################# NQ COMMANDS #######################################
@@ -74,7 +74,7 @@ fi;
 
 ################# CONGRUENE COMMANDS #######################################
 if not IsPackageMarkedForLoading("congruence","0.0") then
-CongruenceGamma0:=function(m); return fail; end;
+CongruenceSubgroupGamma0:=function(m); return fail; end;
 fi;
 ################# CONGRUENCE COMMANDS DONE ###############################
 
@@ -95,6 +95,8 @@ if COMPILED=false then
 if IsPackageMarkedForLoading("aclib","1.1") then
 ReadPackage("HAP", "lib/Resolutions/resACgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resACquotient.gi");
+else
+IsAlmostCrystallographic:=function(G); return fail; end;
 fi;
 if IsPackageMarkedForLoading("nq","1.1") then
 ReadPackage("HAP", "lib/NonabelianTensor/epiNilGrp.gi");
@@ -170,6 +172,7 @@ ReadPackage("HAP", "lib/Homology/lefschetz.gi");
 ReadPackage("HAP", "lib/Homology/modularHomology.gi");
 ReadPackage("HAP", "lib/Homology/modularHomologyVectSpace.gi");
 ReadPackage("HAP", "lib/Homology/homology.gi");
+ReadPackage("HAP", "lib/Homology/cat1homology.gi");
 ReadPackage("HAP", "lib/Homology/groupHomology.gi");
 ReadPackage("HAP", "lib/Homology/integralCohomology.gi");
 ReadPackage("HAP", "lib/Homology/cohomology.gi");
@@ -193,7 +196,6 @@ ReadPackage("HAP", "lib/Perturbations/resNormalSer.gi");
 ReadPackage("HAP", "lib/Perturbations/resFiniteDirectProd.gi");
 ReadPackage("HAP", "lib/Perturbations/resSubNormSeries.gi");
 ReadPackage("HAP", "lib/Perturbations/freeRes.gi");
-ReadPackage("HAP", "lib/Perturbations/resGTree.gi");
 ReadPackage("HAP", "lib/Perturbations/dutour.gi");
 ReadPackage("HAP", "lib/Perturbations/contractibleSL2Zcomplex.gi");
 ReadPackage("HAP", "lib/Perturbations/filteredChainComplex.gi");
@@ -295,16 +297,17 @@ ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
-ReadPackage("HAP","lib/SimplicialGroups/Kpinmap.gi");
-ReadPackage("HAP","lib/SimplicialGroups/eilen_mac.gi");
-ReadPackage("HAP","lib/SimplicialGroups/simplicialmap.gi");
-ReadPackage("HAP","lib/SimplicialGroups/nerveCat1Group.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/Kpinmap.gi");
+ReadPackage("HAP","lib/SimplicialGroups/eilenbergMacLane.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/simplicialmap.gi");
+ReadPackage("HAP","lib/SimplicialGroups/nerveOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
 ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
-ReadPackage("HAP","lib/SimplicialGroups/chaincomplexofsimplicialgroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
+ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
 
 
 ################## REGULAR CW_SPACES ###############################
@@ -312,6 +315,16 @@ ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
 fi;
 
+if IsPackageMarkedForLoading("congruence","0.0") then
+############### ARITHMETIC GROUPS#########################
+ ReadPackage("HAP","lib/ArithmeticGroups/arithVarious.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/arithmeticOps.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/sl2zngens.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
+ ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
+######################################################
+fi;
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");

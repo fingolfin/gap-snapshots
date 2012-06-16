@@ -52,7 +52,7 @@
 \hypersetup{pdftitle=\textsf{homalg}}
 \markright{\scriptsize \mbox{}\hfill \textsf{homalg} \hfill\mbox{}}
 {\Large \textbf{A homological algebra meta-package for computable Abelian categories\mbox{}}}\\[1cm]
-{Version 2012.06.02\mbox{}}\\[1cm]
+{Version 2012.06.07\mbox{}}\\[1cm]
 {April 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\large \textbf{Mohamed Barakat\\
@@ -4745,9 +4745,10 @@ three. This restriction should disappear in future versions.)
   gap> ByASmallerPresentation( filt );
   <An ascending filtration with degrees [ -1 .. 0 ] and graded parts:
      0:	<A non-torsion left module presented by 2 relations for 3 generators>
-    -1:	<A non-zero left module presented by 6 relations for 6 generators>
+    
+  -1:	<A non-zero torsion left module presented by 6 relations for 6 generators>
   of
-  <A non-torsion left module presented by 8 relations for 9 generators>>
+  <A rank 1 left module presented by 8 relations for 9 generators>>
   gap> m := IsomorphismOfFiltration( filt );
   <A non-zero isomorphism of left modules>
 \end{Verbatim}

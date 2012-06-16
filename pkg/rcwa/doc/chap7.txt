@@ -8,11 +8,11 @@
   
   [33X[0;0YThe rcwa mappings, rcwa groups and other objects defined in this chapter can
   be  found  in  the  file [11Xpkg/rcwa/examples/examples.g[111X. This file can be read
-  into  the current [5XGAP[105X session by the function [2XRCWALoadExamples[102X ([14X6.1-1[114X) which
+  into  the current [5XGAP[105X session by the function [2XLoadRCWAExamples[102X ([14X6.1-1[114X) which
   takes  no arguments and returns a record containing all examples. The global
   variable  assignments  made  in  a  section  of  this chapter can be made by
   applying  the  function  [10XAssignGlobals[110X  to  the  respective component of the
-  record  returned  by  [10XRCWALoadExamples[110X. The component names are given at the
+  record  returned  by  [10XLoadRCWAExamples[110X. The component names are given at the
   end of the corresponding sections.[133X
   
   [33X[0;0YThe  discussions of the examples are typically far from being exhaustive. It
@@ -198,7 +198,7 @@
   [33X[0;0YThe  correctness  of  this representation can likewise be verified by simply
   checking the defining relations given above.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().HigmanThompson);[110X  in order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().HigmanThompson);[110X  in order to assign
   the global variables defined in this section.[133X
   
   
@@ -372,7 +372,7 @@
   [33X[0;0YIt is left as an easy exercise to the reader to find out how the cycles of [10Xb[110X
   look like.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().ZxZ);[110X  in order to assign the global
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().ZxZ);[110X  in order to assign the global
   variables defined in this section.[133X
   
   
@@ -488,7 +488,7 @@
   [33X[0;0YThe   factors   [10XPrimeSwitch(3)[110X   are  products  of  6  class  transpositions
   (cf. [2XPrimeSwitch[102X ([14X2.5-2[114X)).[133X
   
-  [33X[0;0YEnter [10XAssignGlobals(RCWALoadExamples().CollatzlikePerms);[110X in order to assign
+  [33X[0;0YEnter [10XAssignGlobals(LoadRCWAExamples().CollatzlikePerms);[110X in order to assign
   the global variables defined in this section.[133X
   
   
@@ -579,7 +579,7 @@
   [22Xk[122X  such that applying the [22Xk[122Xth power of the respective mapping to any integer
   decreases its absolute value.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().SlowlyContractingMappings);[110X in order
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().SlowlyContractingMappings);[110X in order
   to assign the global variables defined in this section.[133X
   
   
@@ -625,7 +625,7 @@
   
   [33X[0;0YFurther similar computations are shown in Section [14X7.14[114X.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().CollatzMapping);[110X  in order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().CollatzMapping);[110X  in order to assign
   the global variables defined in this section.[133X
   
   
@@ -741,7 +741,7 @@
   these  lines given in the article cited above, but just sheds a light on the
   idea behind it.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().MatthewsLeigh);[110X  in  order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().MatthewsLeigh);[110X  in  order to assign
   the global variables defined in this section.[133X
   
   
@@ -819,7 +819,7 @@
   [33X[0;0YWe  observe that our commutators have various different orders, and that the
   prime factors of these orders are not all [21Xvery small[121X.[133X
   
-  [33X[0;0YEnter [10XAssignGlobals(RCWALoadExamples().CollatzlikePerms);[110X in order to assign
+  [33X[0;0YEnter [10XAssignGlobals(LoadRCWAExamples().CollatzlikePerms);[110X in order to assign
   the global variables defined in this section.[133X
   
   
@@ -975,7 +975,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter    [10XAssignGlobals(RCWALoadExamples().OddNumberOfGens_FiniteOrder);[110X   in
+  [33X[0;0YEnter    [10XAssignGlobals(LoadRCWAExamples().OddNumberOfGens_FiniteOrder);[110X   in
   order to assign the global variables defined in this section.[133X
   
   
@@ -1076,7 +1076,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().AbelianGroupOverPolynomialRing);[110X  in
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().AbelianGroupOverPolynomialRing);[110X  in
   order to assign the global variables defined in this section.[133X
   
   
@@ -1128,7 +1128,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().CheckingForSolvability);[110X in order to
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().CheckingForSolvability);[110X in order to
   assign the global variables defined in this section.[133X
   
   
@@ -1261,7 +1261,7 @@
   [33X[0;0YAgain, viewed as an rcwa mapping of the integers the commutator given at the
   end of the example would not be surjective.[133X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().Semilocals);[110X  in order to assign the
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().Semilocals);[110X  in order to assign the
   global variables defined in this section.[133X
   
   
@@ -1303,7 +1303,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter [10XAssignGlobals(RCWALoadExamples().LongCyclesOfPrimeLength);[110X in order to
+  [33X[0;0YEnter [10XAssignGlobals(LoadRCWAExamples().LongCyclesOfPrimeLength);[110X in order to
   assign the global variables defined in this section.[133X
   
   
@@ -1367,7 +1367,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().ModuliOfPowers);[110X  in order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().ModuliOfPowers);[110X  in order to assign
   the global variables defined in this section.[133X
   
   
@@ -1474,7 +1474,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().CollatzMapping);[110X  in order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().CollatzMapping);[110X  in order to assign
   the global variables defined in this section.[133X
   
   
@@ -1921,7 +1921,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter [10XAssignGlobals(RCWALoadExamples().CollatzlikePerms);[110X in order to assign
+  [33X[0;0YEnter [10XAssignGlobals(LoadRCWAExamples().CollatzlikePerms);[110X in order to assign
   the global variables defined in this section.[133X
   
   
@@ -2201,7 +2201,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().GrigorchukQuotients);[110X  in  order  to
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().GrigorchukQuotients);[110X  in  order  to
   assign the global variables defined in this section.[133X
   
   
@@ -2285,7 +2285,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().CollatzMapping);[110X  in order to assign
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().CollatzMapping);[110X  in order to assign
   the global variables defined in this section.[133X
   
   
@@ -2416,6 +2416,6 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YEnter  [10XAssignGlobals(RCWALoadExamples().F2_PSL2Z);[110X  in  order  to assign the
+  [33X[0;0YEnter  [10XAssignGlobals(LoadRCWAExamples().F2_PSL2Z);[110X  in  order  to assign the
   global variables defined in this section.[133X
   

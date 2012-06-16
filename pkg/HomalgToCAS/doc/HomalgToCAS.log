@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  25 MAY 2012 14:23
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  13 JUN 2012 20:59
 entering extended mode
 **HomalgToCAS
 (./HomalgToCAS.tex
@@ -671,9 +671,9 @@ Chapter 4.
 ]
 Appendix A.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 948.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 954.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 948.
+(Font)              scaled to size 9.85492pt on input line 954.
 (./HomalgToCAS.bbl (./HomalgToCAS.brf)
 \tf@brf=\write9
 \openout9 = `HomalgToCAS.brf'.
@@ -708,4 +708,4 @@ pe1/urw/courier/ucrr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmri8a.
 pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></sw/share/texmf-dis
 t/fonts/type1/urw/times/utmb8a.pfb></sw/share/texmf-dist/fonts/type1/urw/helvet
 ic/uhvb8a.pfb>
-Output written on HomalgToCAS.pdf (22 pages, 149253 bytes).
+Output written on HomalgToCAS.pdf (22 pages, 149380 bytes).

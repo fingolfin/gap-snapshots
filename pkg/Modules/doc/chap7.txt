@@ -636,9 +636,9 @@
     [4Xgap> Display( last );[0X
     [4XZ/< 3 > + Z^(1 x 1)[0X
     [4Xgap> SetsOfGenerators( M );[0X
-    [4X<A set containing 3 sets of generators of a homalg module>[0X
+    [4X<A set containing 2 sets of generators of a homalg module>[0X
     [4Xgap> SetsOfRelations( M );[0X
-    [4X<A set containing 3 sets of relations of a homalg module>[0X
+    [4X<A set containing 2 sets of relations of a homalg module>[0X
     [4Xgap> M;[0X
     [4X<A rank 1 left module presented by 1 relation for 2 generators>[0X
     [4Xgap> SetPositionOfTheDefaultPresentation( M, 1 );[0X

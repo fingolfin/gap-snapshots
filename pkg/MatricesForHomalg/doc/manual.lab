@@ -124,10 +124,11 @@
 \makelabel{matricesforhomalg:IsSemiSimpleRing}{3.3.52}
 \makelabel{matricesforhomalg:IsSuperCommutative}{3.3.53}
 \makelabel{matricesforhomalg:BasisAlgorithmRespectsPrincipalIdeals}{3.3.54}
-\makelabel{matricesforhomalg:IsMinusOne}{3.3.55}
-\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.56}
-\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.57}
-\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.58}
+\makelabel{matricesforhomalg:AreUnitsCentral}{3.3.55}
+\makelabel{matricesforhomalg:IsMinusOne}{3.3.56}
+\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.57}
+\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.58}
+\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.59}
 \makelabel{matricesforhomalg:Zero (for homalg ring elements)}{3.4.1}
 \makelabel{matricesforhomalg:One (for homalg ring elements)}{3.4.2}
 \makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.3}

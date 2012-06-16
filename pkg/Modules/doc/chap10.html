@@ -669,11 +669,11 @@ gap&gt; Display( psi );
 
 the map is currently represented by the above 4 x 4 matrix
 gap&gt; ML := Source( psi );
-&lt;A non-torsion right module on 4 generators satisfying 3 relations&gt;
+&lt;A rank 1 right module on 4 generators satisfying 3 relations&gt;
 gap&gt; IsIdenticalObj( ML, M * L );	## the caching at work
 true
 gap&gt; NL := Range( psi );
-&lt;A non-torsion right module on 4 generators satisfying 2 relations&gt;
+&lt;A rank 2 right module on 4 generators satisfying 2 relations&gt;
 gap&gt; IsIdenticalObj( NL, N * L );	## the caching at work
 true
 gap&gt; Display( ML );
@@ -757,7 +757,7 @@ gap&gt; ByASmallerPresentation( filt );
    0:	&lt;A rank 1 left module presented by 1 relation for 2 generators&gt;
   -1:	&lt;A non-zero left module presented by 2 relations for 2 generators&gt;
 of
-&lt;A non-torsion left module presented by 3 relations for 4 generators&gt;&gt;
+&lt;A rank 1 left module presented by 3 relations for 4 generators&gt;&gt;
 gap&gt; Display( filt );
 Degree 0:
 

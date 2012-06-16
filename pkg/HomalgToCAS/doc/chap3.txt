@@ -308,6 +308,12 @@
     [4X  ## cancel the (greatest) common divisor:[0X
     [4X  CancelGcd                               := "ccd",[0X
     [4X  [0X
+    [4X  ## random polynomial:[0X
+    [4X  RandomPol                               := "rpl",[0X
+    [4X  [0X
+    [4X  ## is irreducible:[0X
+    [4X  IsIrreducible                           := "irr",[0X
+    [4X  [0X
     [4X  ##[0X
     [4X  ## create matrices:[0X
     [4X  ##[0X

@@ -16,6 +16,7 @@
   [2XAffineDimension[0X  5.4-20
   [2XAreEqualMatrices[0X (homalgTable entry)  B.2-1
   [2XAreEqualMatrices[0X (ResidueClassRing)  D.3-1
+  [2XAreUnitsCentral[0X  3.3-55
   [2XAssociatedGradedRing[0X  3.4-30
   [2XBasisAlgorithmRespectsPrincipalIdeals[0X  3.3-54
   [2XBasisOfColumnModule[0X (for matrices)  5.5-23
@@ -181,13 +182,13 @@
   [2XIsLeftNoetherian[0X  3.3-33
   [2XIsLeftOreDomain[0X  3.3-42
   [2XIsLeftPrincipalIdealRing[0X  3.3-45
-  [2XIsLeftRegular[0X (for homalg ring elements)  3.3-56
+  [2XIsLeftRegular[0X (for homalg ring elements)  3.3-57
   [2XIsLeftRegular[0X  5.3-7
   [2XIsLocal[0X  3.3-23
   [2XIsLocalizedWeylRing[0X  3.3-16
   [2XIsLowerStairCaseMatrix[0X  5.3-20
   [2XIsLowerTriangularMatrix[0X  5.3-16
-  [2XIsMinusOne[0X  3.3-55
+  [2XIsMinusOne[0X  3.3-56
   [2XIsMonomorphism[0X (for ring maps)  4.3-3
   [2XIsMorphism[0X (for ring maps)  4.3-1
   [2XIsNoetherian[0X  3.3-32
@@ -201,7 +202,7 @@
   [2XIsReducedBasisOfColumnsMatrix[0X  5.3-25
   [2XIsReducedBasisOfRowsMatrix[0X  5.3-24
   [2XIsRegular[0X  3.3-47
-  [2XIsRegular[0X (for homalg ring elements)  3.3-58
+  [2XIsRegular[0X (for homalg ring elements)  3.3-59
   [2XIsResidueClassRingOfTheIntegers[0X  3.3-7
   [2XIsRightArtinian[0X  3.3-40
   [2XIsRightFiniteFreePresentationRing[0X  3.3-50
@@ -212,7 +213,7 @@
   [2XIsRightNoetherian[0X  3.3-34
   [2XIsRightOreDomain[0X  3.3-43
   [2XIsRightPrincipalIdealRing[0X  3.3-46
-  [2XIsRightRegular[0X (for homalg ring elements)  3.3-57
+  [2XIsRightRegular[0X (for homalg ring elements)  3.3-58
   [2XIsRightRegular[0X  5.3-8
   [2XIsRingRelationsRep[0X  6.1-4
   [2XIsScalarlMatrix[0X  5.3-14

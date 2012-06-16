@@ -1,6 +1,6 @@
 #C Ellis & Le
 
-#####################################################################
+#1####################################################################
 #####################################################################
 DeclareCategory("IsHapSimplicialGroup",IsObject);
 
@@ -32,7 +32,7 @@ InstallMethod( PrintObj,
 Print("Simplicial group of length ",EvaluateProperty(R,"length"),  "\n");
  end);
  
-###################################################################
+#2##################################################################
 #####################################################################
 
 DeclareCategory("IsHapSimplicialGroupMap",IsObject);
@@ -40,7 +40,8 @@ DeclareCategory("IsHapSimplicialGroupMap",IsObject);
 DeclareRepresentation(  "IsHapSimplicialGroupMapRep",
                         IsComponentObjectRep,
                         ["sourceMap",
-                         "targetMap"
+                         "targetMap",
+						 "mapping"
                          ]);
 
 HapSimplicialGroupMapFamily:=NewFamily( "HapSimplicialGroupMapFamily",
@@ -65,8 +66,40 @@ InstallMethod( PrintObj,
 Print("Simplicial group map of length ",EvaluateProperty(R,"length"),  "\n");
  end);
  
-###################################################################
+#3##################################################################
 #####################################################################
+
+DeclareCategory("IsHapCatOneGroupHomomorphism",IsObject);
+
+DeclareRepresentation(  "IsHapCatOneGroupHomomorphismRep",
+                        IsComponentObjectRep,
+                        ["source",
+                         "target",
+						 "mapping"
+                         ]);
+
+HapCatOneGroupHomomorphismFamily:=NewFamily( "HapCatOneGroupHomomorphismFamily",
+                                          IsHapCatOneGroupHomomorphism,
+                                          IsHapCatOneGroupHomomorphism);
+
+HapCatOneGroupHomomorphism:=NewType(HapCatOneGroupHomomorphismFamily,
+                                IsHapCatOneGroupHomomorphismRep);
+
+
+InstallMethod( ViewObj,
+"for HapCatOneGroupHomomorphism",
+ [IsHapCatOneGroupHomomorphism],
+ function(R)
+ Print("Homormophism of two cat one groups",  "\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapCatOneGroupHomomorphism",
+ [IsHapCatOneGroupHomomorphism],
+ function(R)
+ Print("Homormophism of two cat one groups",  "\n");
+ end);
+ 
 
 
  

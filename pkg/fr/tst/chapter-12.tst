@@ -2,7 +2,7 @@
 ##
 #W  chapter-12.tst                 FR Package               Laurent Bartholdi
 ##
-#H  @(#)$Id: chapter-12.tst,v 1.1 2012/06/03 14:48:59 gap Exp $
+#H  @(#)$Id: chapter-12.tst,v 1.2 2012/06/05 09:57:49 gap Exp $
 ##
 #Y  Copyright (C) 2008,  Laurent Bartholdi
 ##
@@ -35,11 +35,6 @@ gap> 1.0_z;
 1.
 gap> last/2;
 0.5
-gap> Info(InfoFR,1,"12.8 P1 points");
-#I  12.8 P1 points
-gap> P1Distance(P1infinity,P1infinity);
-0.
-gap> 
 gap> Info(InfoFR,1,"12.9 Dirichlet series");
 #I  12.9 Dirichlet series
 gap> 

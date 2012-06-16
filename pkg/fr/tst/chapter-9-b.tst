@@ -2,7 +2,7 @@
 ##
 #W  chapter-9-b.tst                 FR Package              Laurent Bartholdi
 ##
-#H  @(#)$Id: chapter-9-b.tst,v 1.1 2012/06/04 07:14:54 gap Exp $
+#H  @(#)$Id: chapter-9-b.tst,v 1.2 2012/06/05 09:57:49 gap Exp $
 ##
 #Y  Copyright (C) 2011,  Laurent Bartholdi
 ##
@@ -14,6 +14,11 @@
 #############################################################################
 
 gap> START_TEST("fr:chapter 9 (2/2)");
+gap> 
+gap> Info(InfoFR,1,"12.8 P1 points");
+#I  12.8 P1 points
+gap> P1Distance(P1infinity,P1infinity);
+0.
 gap> 
 gap> Info(InfoFR,1,"Shishikura-Tan Lei matings");
 #I  Shishikura-Tan Lei matings

@@ -3828,8 +3828,8 @@ BindGlobal( "Action",
 ##
 #F  Stabilizer( <arg> ) . . . . . . . . . .  use StabilizerOp for rcwa groups
 ##
-MakeReadWriteGlobal( "Stabilizer" ); Unbind( Stabilizer );
-BindGlobal( "Stabilizer",
+MakeReadWriteGlobal( "Stabilizer" ); Unbind( Stabilizer ); # dirty hack ...
+BindGlobal( "Stabilizer",                                  #
 
   function ( arg )
     if   Length( arg ) = 1   then return StabilizerOfExternalSet( arg[1] );
@@ -5035,7 +5035,8 @@ InstallMethod( PreImagesRepresentatives,
     then TryNextMethod(); fi;
     lng := 1; add := 1;
     repeat
-      lng := lng + add; if IsPermGroup(G) then add := add + 1; fi;
+      lng := lng + add; add := add + 1; 
+      # formerly: if IsPermGroup(G) then add := add + 1; fi;
       preimage := [1..lng];
       if IsRcwaGroupOverGFqx(G) then
         R        := Source(One(G));
@@ -5529,9 +5530,9 @@ InstallMethod( StructureDescription,
 
 #############################################################################
 ##
-#F  RCWALoadExamples( ) . . . . . . . . . . . . . . .  load examples database
+#F  LoadRCWAExamples( ) . . . . . . . . . . . . . . .  load examples database
 ##
-InstallGlobalFunction( RCWALoadExamples,
+InstallGlobalFunction( LoadRCWAExamples,
 
   function ( )
     return ReadAsFunction(
@@ -5541,9 +5542,9 @@ InstallGlobalFunction( RCWALoadExamples,
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfProductsOf2ClassTranspositions( )
+#F  LoadDatabaseOfProductsOf2ClassTranspositions( )
 ##
-InstallGlobalFunction( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
+InstallGlobalFunction( LoadDatabaseOfProductsOf2ClassTranspositions,
             
   function ( )
     return ReadAsFunction(
@@ -5553,10 +5554,10 @@ InstallGlobalFunction( "RCWALoadDatabaseOfProductsOf2ClassTranspositions",
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
+#F  LoadDatabaseOfNonbalancedProductsOfClassTranspositions( )
 ##
 InstallGlobalFunction(
-  RCWALoadDatabaseOfNonbalancedProductsOfClassTranspositions,
+  LoadDatabaseOfNonbalancedProductsOfClassTranspositions,
 
   function ( )
     return ReadAsFunction(
@@ -5566,10 +5567,9 @@ InstallGlobalFunction(
 
 #############################################################################
 ##
-#F  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
+#F  LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions( )
 ##
-InstallGlobalFunction(
-  RCWALoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
+InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
 
   function ( )
     return ReadAsFunction(

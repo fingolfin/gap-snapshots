@@ -797,6 +797,19 @@ DeclareProperty( "IsSuperCommutative",
 DeclareProperty( "BasisAlgorithmRespectsPrincipalIdeals",
         IsHomalgRing );
 
+##  <#GAPDoc Label="AreUnitsCentral">
+##  <ManSection>
+##    <Prop Arg="R" Name="AreUnitsCentral"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      <A>R</A> is a ring for &homalg;.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "AreUnitsCentral",
+        IsHomalgRing );
+
 ##  <#GAPDoc Label="IsMinusOne">
 ##  <ManSection>
 ##    <Prop Arg="r" Name="IsMinusOne"/>
@@ -847,6 +860,20 @@ DeclareProperty( "IsRightRegular",
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsRegular",
+        IsHomalgRingElement );
+
+##  <#GAPDoc Label="IsIrreducibleHomalgRingElement:ringelement">
+##  <ManSection>
+##    <Prop Arg="r" Name="IsIrreducibleHomalgRingElement" Label="for homalg ring elements"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      Check if the &homalg; ring element <A>r</A> is irreducible.
+##      The short operation name is <C>IsIrreducible</C>.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsIrreducibleHomalgRingElement",
         IsHomalgRingElement );
 
 ####################################
@@ -1404,3 +1431,12 @@ DeclareOperation( "homalgSetName",
 
 DeclareOperation( "homalgSetName",
         [ IsHomalgRingElement, IsString, IsHomalgRing ] );
+
+DeclareOperation( "Random",
+        [ IsHomalgRing, IsList ] );
+
+DeclareOperation( "Random",
+        [ IsHomalgRing, IsInt ] );
+
+DeclareOperation( "Random",
+        [ IsHomalgRing ] );

@@ -1,0 +1,273 @@
+  
+  [1X1 [33X[0;0YMany-object structures[133X[101X
+  
+  [33X[0;0YA  [13Xmagma  with  objects[113X  [22XM[122X  consists of a set of [13Xobjects[113X Ob[22X(M)[122X, and a set of
+  [13Xarrows[113X  Arr[22X(M)[122X together with [13Xtail[113X and [13Xhead[113X maps [22Xt,h :[122X Arr[22X(M) ->[122X Ob[22X(M)[122X, and a
+  [13Xpartial multiplication[113X [22X* :[122X Arr[22X(M) ->[122X Arr[22X(M)[122X, with [22Xa*b[122X defined precisely when
+  the  head of [22Xa[122X coincides with the tail of [22Xb[122X. We write an arrow [22Xa[122X with tail [22Xu[122X
+  and head [22Xv[122X as [22X(a : u -> v)[122X.[133X
+  
+  [33X[0;0YWhen this multiplication is associative we obtain a [13Xsemigroup with objects[113X.[133X
+  
+  [33X[0;0YA  [13Xloop[113X  is  an  arrow  whose tail and head are the same object. An [13Xidentity
+  arrow[113X  at  object  [22Xu[122X  is a loop [22X(1_u : u -> u)[122X such that [22Xa*1_u=a[122X and [22X1_u*b=b[122X
+  whenever  [22Xu[122X  is  the head of [22Xa[122X and the tail of [22Xb[122X. When [22XM[122X is a semigroup with
+  objects  and  every  object  has  an identity arrow, we obtain a [13Xmonoid with
+  objects[113X, which is just the usual notion of mathematical category.[133X
+  
+  [33X[0;0YAn  arrow  [22X(a : u -> v)[122X in a monoid with objects has [13Xinverse[113X [22X(a^-1 : v -> u)[122X
+  provided [22Xa*a^-1 = 1_u[122X and [22Xa^-1*a = 1_v[122X. A monoid with objects in which every
+  arrow has an inverse is a [13Xgroup with objects[113X, usually called a [13Xgroupoid[113X.[133X
+  
+  [33X[0;0YFor  the  definitions of the standard properties of groupoids we refer to P.
+  Higgins'  book ``Categories and Groupoids'' [Hig05] (originally published in
+  1971,  reprinted  by  TAC  in  2005),  and  to  R. Brown's book ``Topology''
+  [Bro88],  recently  revised  and  reissued  as  ``Topology  and  Groupoids''
+  [Bro06].[133X
+  
+  
+  [1X1.1 [33X[0;0YMagmas with objects[133X[101X
+  
+  [1X1.1-1 MagmaWithObjects[101X
+  
+  [29X[2XMagmaWithObjects[102X( [3Xargs[103X ) [32X function
+  [29X[2XSinglePieceMagmaWithObjects[102X( [3Xmagma[103X, [3Xobs[103X ) [32X operation
+  [29X[2XObjectList[102X( [3Xmwo[103X ) [32X attribute
+  [29X[2XRootObject[102X( [3Xmwo[103X ) [32X operation
+  
+  [33X[0;0YThe  simplest construction for a magma with objects is to take a magma [22Xm[122X and
+  form  arrows  [22X(u,x,v)[122X  for  every  [22Xx[122X  in  [22Xm[122X and every pair of objects [22X(u,v)[122X.
+  Multiplication  is  defined  by  [22X(u,x,v)*(v,y,w)  =  (u,x*y,w)[122X.  Any finite,
+  ordered  set is in principle acceptable as the object list of [22XM[122X, but we find
+  it convenient to restrict ourselves to sets of negative integers.[133X
+  
+  [33X[0;0YThis  is  the only construction implemented here for magmas, semigroups, and
+  monoids    with    objects,    and    these    all    have    the   property
+  [10XIsDirectProductWithComlpleteGraph[110X. There are other constructions implemented
+  for groupoids.[133X
+  
+  [33X[0;0YThe   output   from   function   [10XMagmaWithObjects[110X  lies  in  the  categories
+  [10XIsDomainWithObjects[110X,                                     [10XIsMagmaWithObjects[110X,
+  [10XCategoryCollections(IsMultiplicativeElementWithObjects)[110X and [10XIsMagma[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtm := [[1,2,4,3],[1,2,4,3],[3,4,2,1],[3,4,2,1]];;  Display( tm );[127X[104X
+    [4X[28X[ [  1,  2,  4,  3 ],[128X[104X
+    [4X[28X  [  1,  2,  4,  3 ],[128X[104X
+    [4X[28X  [  3,  4,  2,  1 ],[128X[104X
+    [4X[28X  [  3,  4,  2,  1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xm := MagmaByMultiplicationTable( tm ); [127X[104X
+    [4X[28X<magma with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSetName( m, "m" ); [127X[104X
+    [4X[25Xgap>[125X [27Xm1 := MagmaElement(m,1);; [127X[104X
+    [4X[25Xgap>[125X [27Xm2 := MagmaElement(m,2);; [127X[104X
+    [4X[25Xgap>[125X [27Xm3 := MagmaElement(m,3);; [127X[104X
+    [4X[25Xgap>[125X [27Xm4 := MagmaElement(m,4);; [127X[104X
+    [4X[25Xgap>[125X [27XOne(m); [127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XM78 := MagmaWithObjects( [-8,-7], m ); [127X[104X
+    [4X[28Xmagma with objects :-[128X[104X
+    [4X[28X    magma = m[128X[104X
+    [4X[28X  objects = [ -8, -7 ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( M78, "M78" );[127X[104X
+    [4X[25Xgap>[125X [27X[ IsAssociative(M78), IsCommutative(M78), IsDomainWithObjects(M78) ]; [127X[104X
+    [4X[28X[ false, false, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.1-2 MultiplicativeElementWithObjects[101X
+  
+  [29X[2XMultiplicativeElementWithObjects[102X( [3Xmwo[103X, [3Xelt[103X, [3Xtail[103X, [3Xhead[103X ) [32X operation
+  [29X[2XArrowelt[102X( [3Xelt[103X ) [32X attribute
+  [29X[2XArrowtail[102X( [3Xelt[103X ) [32X attribute
+  [29X[2XArrowhead[102X( [3Xelt[103X ) [32X attribute
+  
+  [33X[0;0YElements    in    a    magma    with    objects    lie   in   the   category
+  [10XIsMultiplicativeElementWithObjects[110X.  An attempt to multiply two arrows which
+  do not compose resuts in [10Xfail[110X being returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa78 := MultiplicativeElementWithObjects( M78, m4, -7, -8 ); [127X[104X
+    [4X[28X[m2 : -7 -> -8][128X[104X
+    [4X[25Xgap>[125X [27Xb87 := MultiplicativeElementWithObjects( M78, m3, -8, -7 );; [127X[104X
+    [4X[25Xgap>[125X [27X[ Arrowelt(b87), Arrowtail(b87), Arrowhead(b87) ];[127X[104X
+    [4X[28X[ m3, -8, -7 ] [128X[104X
+    [4X[25Xgap>[125X [27Xba := b87*a78; [127X[104X
+    [4X[28X[m4 : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27Xab := a78*b87;[127X[104X
+    [4X[28X[m4 : -7 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xa78^2; [127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27X[ ba^2, ba^3, ba^4=ba^2 ];[127X[104X
+    [4X[28X[ [m1 : -8 -> -8], [m3 : -8 -> -8], true ] [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.1-3 IsSinglePiece[101X
+  
+  [29X[2XIsSinglePiece[102X( [3Xmwo[103X ) [32X property
+  [29X[2XIsDirectProductWithCompleteGraph[102X( [3Xmwo[103X ) [32X property
+  [29X[2XIsDiscrete[102X( [3Xmwo[103X ) [32X property
+  
+  [33X[0;0YIf  the  partial  composition  is  forgotten, then what remains is a digraph
+  (usually  with  multiple  edges  and  loops).  Thus  the notion of [13Xconnected
+  component[113X   may   be   inherited  by  magmas  with  objects  from  digraphs.
+  Unfortunately   the   terms   [10XComponent[110X   and  [10XConstituent[110X  are  already  in
+  considerable  use  elsewhere  in  [5XGAP[105X,  so  (and  this  may change if a more
+  suitable  word  is  suggested)  we  use the term [10XIsSinglePiece[110X to describe a
+  connected  magma  with  objects.  When each connected component has a single
+  object, the magma with objects is discrete.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsSinglePiece( M78 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsDirectProductWithCompleteGraph( M78 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xgasp> IsDiscrete( M78 ); [128X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.2 [33X[0;0YSemigroups with objects[133X[101X
+  
+  [1X1.2-1 SemigroupWithObjects[101X
+  
+  [29X[2XSemigroupWithObjects[102X( [3Xargs[103X ) [32X function
+  [29X[2XSinglePieceSemigroupWithObjects[102X( [3Xsgp[103X, [3Xobs[103X ) [32X operation
+  
+  [33X[0;0YWhen  the  magma is a semigroup we obtain a [10XSinglePieceSemigroupWithObjects[110X.
+  In tyhe example we use a transformation semigroup.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xt := Transformation( [1,1,2,3] );;[127X[104X
+    [4X[25Xgap>[125X [27Xs := Transformation( [2,2,3,3] );;[127X[104X
+    [4X[25Xgap>[125X [27Xr := Transformation( [2,3,4,4] );;[127X[104X
+    [4X[25Xgap>[125X [27Xsgp := Semigroup( t, s, r );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( sgp, "sgp<t,s,r>" ); [127X[104X
+    [4X[25Xgap>[125X [27XS123 := SemigroupWithObjects( sgp, [-3,-2,-1] ); [127X[104X
+    [4X[28Xsemigroup with objects :-[128X[104X
+    [4X[28X    magma = sgp<t,s,r>[128X[104X
+    [4X[28X  objects = [ -3, -2, -1 ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsAssociative(S123), IsCommutative(S123) ];[127X[104X
+    [4X[28X[ true, false ][128X[104X
+    [4X[25Xgap>[125X [27Xt12 := MultiplicativeElementWithObjects( S123, t, -1, -2 );[127X[104X
+    [4X[28X[Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2][128X[104X
+    [4X[25Xgap>[125X [27Xs23 := MultiplicativeElementWithObjects( S123, s, -2, -3 );; [127X[104X
+    [4X[25Xgap>[125X [27Xr31 := MultiplicativeElementWithObjects( S123, r, -3, -1 );; [127X[104X
+    [4X[25Xgap>[125X [27Xts13 := t12 * s23;[127X[104X
+    [4X[28X[Transformation( [ 2, 2, 2, 3 ] ) : -1 -> -3][128X[104X
+    [4X[25Xgap>[125X [27Xsr21 := s23 * r31;[127X[104X
+    [4X[28X[Transformation( [ 3, 3, 4, 4 ] ) : -2 -> -1][128X[104X
+    [4X[25Xgap>[125X [27Xrt32 := r31 * t12;[127X[104X
+    [4X[28X[Transformation( [ 1, 2, 3, 3 ] ) : -3 -> -2][128X[104X
+    [4X[25Xgap>[125X [27Xtsr1 := ts13 * r31;[127X[104X
+    [4X[28X[Transformation( [ 3, 3, 3, 4 ] ) : -1 -> -1][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.3 [33X[0;0YMonoids with objects[133X[101X
+  
+  [1X1.3-1 MonoidWithObjects[101X
+  
+  [29X[2XMonoidWithObjects[102X( [3Xargs[103X ) [32X function
+  [29X[2XSinglePieceMonoidWithObjects[102X( [3Xmon[103X, [3Xobs[103X ) [32X operation
+  
+  [33X[0;0YWhen  the  magma  is  a monoid we obtain a [10XSinglePieceMonoidWithObjects[110X. The
+  example uses a finitely presented monoid.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfm := FreeMonoid( 2, "f" );;[127X[104X
+    [4X[25Xgap>[125X [27Xem := One( fm );;[127X[104X
+    [4X[25Xgap>[125X [27Xgm := GeneratorsOfMonoid( fm );;[127X[104X
+    [4X[25Xgap>[125X [27Xmon := fm/[ [gm[1]^3,em], [gm[1]*gm[2],gm[2]] ];; [127X[104X
+    [4X[25Xgap>[125X [27XM49 := MonoidWithObjects( mon, [-9,-4] ); [127X[104X
+    [4X[28Xmonoid with objects :-[128X[104X
+    [4X[28X    magma = Monoid( [ f1, f2 ], ... )[128X[104X
+    [4X[28X  objects = [ -9, -4 ][128X[104X
+    [4X[25Xgap>[125X [27XgenM : GeneratorsOfMagmaWithOne( M49 );[127X[104X
+    [4X[28X[ [<identity ...> : -9 -> -9], [f1 : -9 -> -9], [f2 : -9 -> -9],[128X[104X
+    [4X[28X  [<identity ...> : -9 -> -4], [<identity ...> : -4 -> -9] ][128X[104X
+    [4X[25Xgap>[125X [27Xg2:=genM[2];; g3:=genM[3];; g4:=genM[4];; g5:=genM[5];; [127X[104X
+    [4X[25Xgap>[125X [27Xg5*g2*g4;[127X[104X
+    [4X[28X[f1 : -4 -> -4][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.4 [33X[0;0YStructures with one or more pieces[133X[101X
+  
+  [1X1.4-1 DomainWithSingleObject[101X
+  
+  [29X[2XDomainWithSingleObject[102X( [3Xdom[103X, [3Xobj[103X ) [32X operation
+  
+  [33X[0;0YA  magma,  semigroup, monoid, or group with a single object is algebraically
+  isomorphic to the same structure without the object, but is implemented with
+  the extra structure of a single object.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xd8 := Group( (1,2,3,4), (1,3) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d8, "d8" );[127X[104X
+    [4X[25Xgap>[125X [27XD0 := DomainWithSingleObject( d8, 0 );[127X[104X
+    [4X[28Xsingle piece groupoid: < d8, [ 0 ] >[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagmaWithInverses( D0 );[127X[104X
+    [4X[28X[ [(1,2,3,4) : 0 -> 0], [(1,3) : 0 -> 0] ][128X[104X
+    [4X[25Xgap>[125X [27XSize( D0 );[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.4-2 UnionOfPieces[101X
+  
+  [29X[2XUnionOfPieces[102X( [3Xpieces[103X ) [32X operation
+  [29X[2XGeneratorsOfMagmaWithObjects[102X( [3Xmwo[103X ) [32X operation
+  [29X[2XPieces[102X( [3Xmwo[103X ) [32X attribute
+  
+  [33X[0;0YA  magma  with  objects  whose  underlying digraph has two or more connected
+  components  can  be constructed by taking the union of two or more connected
+  structures   and  these,  in  turn,  can  be  combined  together.  The  only
+  requirement is that all the object lists should be disjoint.[133X
+  
+  [33X[0;0YWe   have   formed  structures  [10XS123,  M46,  D0[110X  which  have,  respectively,
+  [10XGeneratorsOfMagma[110X,                [10XGeneratorsOfMagmaWithOne[110X               and
+  [10XGeneratorsOfMagmaWithInverses[110X.  The  generators  of a structure with several
+  pieces is the union of the generators of the individual pieces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN1 := UnionOfPieces( [ M78, S123 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XObjectList( N1 );[127X[104X
+    [4X[28X[ -8, -7, -3, -2, -1 ][128X[104X
+    [4X[28Xgap N2 := UnionOfPieces( [ M49, D0 ] );;[128X[104X
+    [4X[25Xgap>[125X [27XPieces( N2 );[127X[104X
+    [4X[28X[ monoid with objects :-[128X[104X
+    [4X[28X        magma = Monoid( [ f1, f2 ], ... )[128X[104X
+    [4X[28X      objects = [ -9, -4 ][128X[104X
+    [4X[28X    , single piece groupoid: < d8, [ 0 ] > ][128X[104X
+    [4X[25Xgap>[125X [27XN3 := UnionOfPieces( [ N1, N2 ] );[127X[104X
+    [4X[28Xmagma with objects having 4 pieces :-[128X[104X
+    [4X[28X1: monoid with objects :-[128X[104X
+    [4X[28X    magma = Monoid( [ f1, f2 ], ... )[128X[104X
+    [4X[28X  objects = [ -9, -4 ][128X[104X
+    [4X[28X2: M78[128X[104X
+    [4X[28X3: semigroup with objects :-[128X[104X
+    [4X[28X    magma = sgp<t,s,r>[128X[104X
+    [4X[28X  objects = [ -3, -2, -1 ][128X[104X
+    [4X[28X4: single piece groupoid: < d8, [ 0 ] >[128X[104X
+    [4X[25Xgap>[125X [27XObjectList( N3 ); [127X[104X
+    [4X[28X[ -9, -8, -7, -4, -3, -2, -1, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XLength( GeneratorsOfMagmaWithObjects( N3 ) ); [127X[104X
+    [4X[28X49[128X[104X
+    [4X[25Xgap>[125X [27X## this should fail since the object sets are not disjoint: [127X[104X
+    [4X[25Xgap>[125X [27XN4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  [127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

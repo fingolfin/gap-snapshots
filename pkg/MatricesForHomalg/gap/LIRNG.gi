@@ -71,7 +71,8 @@ InstallValue( LIRNG,
                                      "IsRightFiniteFreePresentationRing",
                                      "IsSimpleRing",
                                      "IsSemiSimpleRing",
-                                     "BasisAlgorithmRespectsPrincipalIdeals"
+                                     "BasisAlgorithmRespectsPrincipalIdeals",
+                                     "AreUnitsCentral"
                                    ],
             
             intrinsic_attributes := [
@@ -276,6 +277,9 @@ InstallValue( LogicalImplicationsForHomalgRings,
           ## IsCommutative
           [ IsCommutative,
             "implies", HasInvariantBasisProperty ],	## [Lam06, p. 26]
+          
+          [ IsCommutative,
+            "implies", AreUnitsCentral ],	## by definition
           
           ## IsLocal (a single maximal left/right/ideal)
           [ IsLocal,
@@ -911,6 +915,37 @@ InstallMethod( IsRegular,
              IsLeftRegular( r_mat ) ) and
            ( ( HasIsRightRegular( r ) and IsRightRegular( r ) ) or
              IsRightRegular( r_mat ) );
+    
+end );
+
+##
+InstallMethod( IsIrreducibleHomalgRingElement,
+        "for a homalg ring",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    local R, RP;
+    
+    R := HomalgRing( r );
+    
+    RP := homalgTable( R );
+    
+    if IsBound(RP!.IsIrreducible) then
+        return RP!.IsIrreducible( r );
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( IsIrreducible,
+        "for a homalg ring",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    
+    return IsIrreducibleHomalgRingElement( r );
     
 end );
 

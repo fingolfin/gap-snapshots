@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (citrus) - Chapter 3: Creating semigroups and monoids</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3.html">[MathJax off]</a></p>
+<p><a id="X79A4C070831D989D" name="X79A4C070831D989D"></a></p>
+<div class="ChapSects"><a href="chap3_mj.html#X79A4C070831D989D">3 <span class="Heading">Creating semigroups and monoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X8208D90078983892">3.1 <span class="Heading">Semigroups defined by a generating set</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80D9B9A98736051B">3.1-1 InverseMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79A15C7C83BBA60B">3.1-2 InverseMonoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F95328B7C7E49EA">3.1-3 Monoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85129EE387CC4D28">3.1-4 MonoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B341D6C7CECFB55">3.1-5 RandomInverseMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79834BC080B011B4">3.1-6 RandomTransformationMonoid</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7A5CFD4F8607CBF7">3.2 <span class="Heading">New semigroups from old</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78A488637BBEF7AD">3.2-1 ClosureInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7BE36790862AE26F">3.2-2 ClosureSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E5B4C5A82F9E0E0">3.2-3 SubsemigroupByProperty</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X799EBA2F819D8867">3.3 <span class="Heading">Options when creating semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86BA5FA4816AAF44">3.3-1 CitrusOptionsRec</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7C76D1DC7DAF03D3">3.4 <span class="Heading">Standard examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78F9812D79A457EF">3.4-1 FullMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85D49CF2826D3AA4">3.4-2 IsFullMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78FBE6DD7BCA30C1">3.4-3 MunnSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87B855227B9870BD">3.4-4 <span class="Heading">Monoids of order preserving functions</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79B1A1127B3B784A">3.4-5 SingularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7A1412CB79039397">3.4-6 SymmetricInverseSemigp</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7F59D5A17CE475CC">3.5 <span class="Heading">The examples directory</span></a>
+</span>
+</div>
+</div>
+
+<h3>3 <span class="Heading">Creating semigroups and monoids</span></h3>
+
+<p>In this chapter we describe the various ways that semigroups and monoids can be created in <strong class="pkg">Citrus</strong>, the options that are available at the time of creation, and describe some standard examples availabl in <strong class="pkg">Citrus</strong>.</p>
+
+<p>Any transformation semigroup created before <strong class="pkg">Citrus</strong> has been loaded must be recreated after <strong class="pkg">Citrus</strong> is loaded so that the options record (described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>) is defined. Almost all of the functions and methods provided by <strong class="pkg">Citrus</strong>, including those methods for existing <strong class="pkg">GAP</strong> library functions, will return an error when applied to a transformation semigroup created before <strong class="pkg">Citrus</strong> is loaded.</p>
+
+<p><a id="X8208D90078983892" name="X8208D90078983892"></a></p>
+
+<h4>3.1 <span class="Heading">Semigroups defined by a generating set</span></h4>
+
+<p>In this section we give details of how to create semigroups and monoids from a set of generators. Much of what is described here is syntactic sugar.</p>
+
+<p><a id="X80D9B9A98736051B" name="X80D9B9A98736051B"></a></p>
+
+<h5>3.1-1 InverseMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseMonoid</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSemigroup</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An inverse semigroup or monoid.</p>
+
+<p>If <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, ... are (any combination) of partial permutations, partial permutation semigroup, or lists of partial permutations, then <code class="code">InverseMonoid</code> or <code class="code">InverseSemigroup</code> returns the inverse monoid or semigroup generated by the union of <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, ... which equals the semigroup or monoid generated by the union of <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, ... and their inverses.</p>
+
+<p>If present, the optional final argument <var class="Arg">opts</var> should be a record containing the values of the options for the inverse semigroup being created, as described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p>As an example of how the syntax provided by <strong class="pkg">Citrus</strong> can be convenient: <code class="code">U:=Semigroup(S, f, Idempotents(T));</code>, in the example below, returns the same value as: <code class="code">U:=Semigroup(Concatenation(Generators(S), [f], Idempotents(T)));</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 3, 4, 6, 8, 9, 10, 11, 13, 14, 16, 17, 18, 20 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 2, 14, 5, 8, 11, 12, 16, 17, 18, 9, 13, 15, 20, 6, 4 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 17 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 2, 14, 8, 19, 5, 1, 3, 16, 6, 9, 10, 17, 12, 20 ] ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPermNC( </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> 18, 20, 22, 23, 25, 26, 30, 31, 32, 33, 34, 39, 40, 42, 43, 45 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 4, 47, 34, 19, 32, 22, 12, 15, 16, 45, 49, 8, 24, 40, 17, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> 46, 14, 6, 44, 2, 48, 41, 10, 31, 18, 50, 23, 5, 37, 11, 38, 30, 21 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigp(10)));</span>
+&lt;inverse semigroup with 1027 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigp(10)),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">rec(small:=true));</span>
+&lt;inverse semigroup with 13 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+17147970
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseMonoid(Generators(S));</span>
+&lt;inverse monoid with 13 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+17147971</pre></div>
+
+<p><a id="X79A15C7C83BBA60B" name="X79A15C7C83BBA60B"></a></p>
+
+<h5>3.1-2 InverseMonoidByGenerators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseMonoidByGenerators</code>( <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSemigroupByGenerators</code>( <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An inverse monoid or semigroup.</p>
+
+<p>If <var class="Arg">coll</var> is a partial permutation collection, then <code class="code">InverseMonoidByGenerators</code> and <code class="code">InverseSemigroupByGenerators</code> return the inverse monoid and semigroup generated by <var class="Arg">coll</var>, respectively.</p>
+
+<p>If present, the optional second argument <var class="Arg">opts</var> should be a record containing the values of the options for the semigroup being created, as described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p><a id="X7F95328B7C7E49EA" name="X7F95328B7C7E49EA"></a></p>
+
+<h5>3.1-3 Monoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Monoid</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Semigroup</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A monoid or semigroup.</p>
+
+<p>If <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, ... are (any combination) of transformations, transformation semigroups, or lists of transformations, then <code class="code">Monoid</code> or <code class="code">Semigroup</code> returns the monoid or semigroup generated by the union of <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, ....</p>
+
+<p>If present, the optional final argument <var class="Arg">opts</var> should be a record containing the values of the options for the semigroup being created, as described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p>When applied to arguments other than transformations or transformation collections these functions behave precisely as described in the reference manual. Please consult <code class="func">Monoid</code> (<a href="../../../doc/ref/chap52_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>) and <code class="func">Semigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) for further details.</p>
+
+<p>As an example of how the syntax provided by <strong class="pkg">Citrus</strong> can be convenient: <code class="code">U:=Semigroup(S, f, Idempotents(T));</code>, in the example below, returns the same value as: <code class="code">U:=Semigroup(Concatenation(Generators(S), [f], Idempotents(T)));</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1, 3, 5 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 6, 1, 6, 3 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 2, 4, 6, 1, 6, 5 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Monoid(Transformation( [ 4, 1, 2, 6, 2, 1 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 2, 5, 3, 5, 3 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=Semigroup(S, f, Idempotents(T));</span>
+&lt;semigroup with 14 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(U);</span>
+2182
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(U);</span>
+53</pre></div>
+
+<p><a id="X85129EE387CC4D28" name="X85129EE387CC4D28"></a></p>
+
+<h5>3.1-4 MonoidByGenerators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonoidByGenerators</code>( <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupByGenerators</code>( <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Returns: A monoid or semigroup.</p>
+
+<p>If <var class="Arg">coll</var> is a transformation collection, then <code class="code">MonoidByGenerators</code> and <code class="code">SemigroupByGenerators</code> return the monoid and semigroup generated by <var class="Arg">coll</var>, respectively.</p>
+
+<p>If present, the optional second argument <var class="Arg">opts</var> should be a record containing the values of the options for the semigroup being created, as described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p>When applied to arguments other than transformations or transformation collections these functions behave precisely as described in the reference manual. Please consult <code class="func">MonoidByGenerators</code> (<a href="../../../doc/ref/chap52_mj.html#X85129EE387CC4D28"><span class="RefLink">Reference: MonoidByGenerators</span></a>) and <code class="func">SemigroupByGenerators</code> (<a href="../../../doc/ref/chap51_mj.html#X79FBBEC9841544F3"><span class="RefLink">Reference: SemigroupByGenerators</span></a>) for further details.</p>
+
+<p><a id="X7B341D6C7CECFB55" name="X7B341D6C7CECFB55"></a></p>
+
+<h5>3.1-5 RandomInverseMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInverseMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInverseSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An inverse monoid or semigroup.</p>
+
+<p>Returns a random inverse monoid or semigroup of partial permutations with degree at most <var class="Arg">n</var> with <var class="Arg">m</var> generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomInverseSemigroup(10,10);                                </span>
+&lt;inverse semigroup with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomInverseMonoid(10,10);   </span>
+&lt;inverse monoid with 10 generators&gt;</pre></div>
+
+<p><a id="X79834BC080B011B4" name="X79834BC080B011B4"></a></p>
+
+<h5>3.1-6 RandomTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomTransformationMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomTransformationSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A transformation semigroup.</p>
+
+<p>Returns a random transformation monoid or semigroup of degree <var class="Arg">n</var> with <var class="Arg">m</var> generators.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomTransformationMonoid(5,5);</span>
+&lt;monoid with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomTransformationSemigroup(5,5);</span>
+&lt;semigroup with 5 generators&gt;</pre></div>
+
+<p><a id="X7A5CFD4F8607CBF7" name="X7A5CFD4F8607CBF7"></a></p>
+
+<h4>3.2 <span class="Heading">New semigroups from old</span></h4>
+
+<p><a id="X78A488637BBEF7AD" name="X78A488637BBEF7AD"></a></p>
+
+<h5>3.2-1 ClosureInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureInverseSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An inverse semigroup or monoid.</p>
+
+<p>This function returns the inverse semigroup or monoid generated by the inverse semigroup of partial permutations <var class="Arg">S</var> and the partial permutation collection or partial permutation <var class="Arg">coll</var> after first removing duplicates and partial permutations in <var class="Arg">coll</var> that are already in <var class="Arg">S</var>. In most cases, the new semigroups knows at least as much information about its structure as was already known about that of <var class="Arg">S</var>.</p>
+
+<p>If present, the optional third argument <var class="Arg">opts</var> should be a record contiaing the values of the options for the inverse semigroup being created; these options are described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p>Unlike <code class="func">ClosureSemigroup</code> (<a href="chap3_mj.html#X7BE36790862AE26F"><span class="RefLink">3.2-2</span></a>), <code class="code">ClosureInverseSemigroup</code> is always at least as efficient as (and often much more than) simply creating an inverse semigroup from scratch using <code class="func">InverseSemigroup</code> (<a href="chap3_mj.html#X80D9B9A98736051B"><span class="RefLink">3.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseMonoid(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPermNC(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ClosureInverseSemigroup(S, f);</span>
+&lt;inverse semigroup with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+9726
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Idempotents(SymmetricInverseSemigp(10));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ClosureInverseSemigroup(S, T);</span>
+&lt;inverse semigroup with 858 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(SmallGeneratingSet(S));</span>
+&lt;inverse semigroup with 14 generators&gt;</pre></div>
+
+<p><a id="X7BE36790862AE26F" name="X7BE36790862AE26F"></a></p>
+
+<h5>3.2-2 ClosureSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A transformation semigroup or monoid.</p>
+
+<p>This function returns the semigroup or monoid generated by the transformation semigroup <var class="Arg">S</var> and the transformation collection or transformation <var class="Arg">coll</var> after removing duplicates and transformations in <var class="Arg">coll</var> that are already in <var class="Arg">S</var>. In some cases, the new semigroup knows at least as much information about its structure as was already known about that of <var class="Arg">S</var>.</p>
+
+<p>If present, the optional third argument <var class="Arg">opts</var> should be a record containing the values of the options for the semigroup being created as described in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>. For technical reasons if the option <code class="code">schreier</code> is <code class="keyw">false</code>, then <code class="code">ClosureSemigroup(S, coll)</code> does exactly the same as <code class="func">Semigroup</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>) or <code class="func">Monoid</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>), in that the new semigroup does not know any information about its structure even if the old semigroup had been completely determined.</p>
+
+<p>More specifically, if the option <code class="code">schreier</code> is <code class="keyw">false</code>, then the new semigroup knows the Green's class of any representative of a Green's classes of <var class="Arg">S</var> that was known at the time that <code class="code">ClosureSemigroup</code> was called. Consequently, if, for example, the number of \(\mathcal{R}\)-classes of <var class="Arg">S</var> is greater than the number of elements required to find the \(\mathcal{R}\)-classes of the new semigroup, then <code class="code">ClosureSemigroup</code> might be less efficient than creating the new semigroup using the command <code class="func">Semigroup</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>) or <code class="func">Monoid</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>). It is unlikely that you will be able to determine which of <code class="code">ClosureSemigroup</code> and <code class="func">Semigroup</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>) will be better before calling these functions, except in the following case. If the rank of the transformations in <var class="Arg">coll</var> are lower than the ranks of the Green's classes containing the majority of the known elements of <var class="Arg">S</var>, then <code class="code">ClosureSemigroup</code> should be superior to <code class="func">Semigroup</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Monoid(gens[1], rec(schreier:=false));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
+&lt;monoid with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+233606</pre></div>
+
+<p><a id="X7E5B4C5A82F9E0E0" name="X7E5B4C5A82F9E0E0"></a></p>
+
+<h5>3.2-3 SubsemigroupByProperty</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubsemigroupByProperty</code>( <var class="Arg">S</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubsemigroupByProperty</code>( <var class="Arg">S</var>, <var class="Arg">func</var>, <var class="Arg">limit</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup.</p>
+
+<p><code class="code">SubsemigroupByProperty</code> creates a subsemigroup of the semigroup <var class="Arg">S</var> of transformations or partial permutations consisting of those elements fulfilling <var class="Arg">func</var> (which should be a function returning <code class="keyw">true</code> or <code class="keyw">false</code>). No test is done to check if the property actually defines a subsemigroup.</p>
+
+<p>If the optional third argument <var class="Arg">limit</var> is present and a positive integer, then once the subsemigroup has at least <var class="Arg">limit</var> elements the computation stops.</p>
+
+<p><a id="X799EBA2F819D8867" name="X799EBA2F819D8867"></a></p>
+
+<h4>3.3 <span class="Heading">Options when creating semigroups</span></h4>
+
+<p>When using any of <code class="func">InverseSemigroup</code> (<a href="chap3_mj.html#X80D9B9A98736051B"><span class="RefLink">3.1-1</span></a>), <code class="func">InverseMonoid</code> (<a href="chap3_mj.html#X80D9B9A98736051B"><span class="RefLink">3.1-1</span></a>), <code class="func">Semigroup</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>), <code class="func">Monoid</code> (<a href="chap3_mj.html#X7F95328B7C7E49EA"><span class="RefLink">3.1-3</span></a>), <code class="func">SemigroupByGenerators</code> (<a href="chap3_mj.html#X85129EE387CC4D28"><span class="RefLink">3.1-4</span></a>), <code class="func">MonoidByGenerators</code> (<a href="chap3_mj.html#X85129EE387CC4D28"><span class="RefLink">3.1-4</span></a>), <code class="func">ClosureInverseSemigroup</code> (<a href="chap3_mj.html#X78A488637BBEF7AD"><span class="RefLink">3.2-1</span></a>) or <code class="func">ClosureSemigroup</code> (<a href="chap3_mj.html#X7BE36790862AE26F"><span class="RefLink">3.2-2</span></a>) a record can be given as an optional final argument. The components of this record specify the values of certain options for the semigroup being created. A list of these options and their default values is given below.</p>
+
+<p>Assume that <var class="Arg">S</var> is the semigroup created by one of the functions given above and that <var class="Arg">S</var> is generated by the list of transformations <var class="Arg">gens</var>.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">hashlen</code></strong></dt>
+<dd><p>this component should be a positive integer, which roughly specifies the lengths of the hash tables used internally by <strong class="pkg">Citrus</strong>. <strong class="pkg">Citrus</strong> uses hash tables in several fundamental methods. The lengths of these tables are a compromise between performance and memory usage; larger tables provide better performance for large computations but use more memory. Note that it is unlikely that you will need to specify this option unless you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly or that the performance of <strong class="pkg">Citrus</strong> is poorer than expected. If you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly, or you plan to do a large number of computations with relatively small semigroups (say with tens of thousands of elements), then you might consider setting <code class="code">hashlen</code> to be less than the default value of <code class="code">25013</code> for each of these semigroups. If you find that the performance of <strong class="pkg">Citrus</strong> is unexpectedly poor, or you plan to do a computation with a very large semigroup (say, more than 10 million elements), then you might consider setting <code class="code">hashlen</code> to be greater than the default value of <code class="code">25013</code>.</p>
+
+<p>You might find it useful to set the info level of the info class <code class="code">InfoOrb</code> to 2 or higher since this will indicate when hash tables used by <strong class="pkg">Citrus</strong> are being grown; see <code class="func">SetInfoLevel</code> (<a href="../../../doc/ref/chap7_mj.html#X7A43B9E68765EE9E"><span class="RefLink">Reference: SetInfoLevel</span></a>).</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">schreier</code></strong></dt>
+<dd><p>if this component is set to <code class="keyw">true</code>, then <strong class="pkg">Citrus</strong> will keep track of various pieces of information so that it is possible to factorize elements of <var class="Arg">S</var> using <code class="func">Factorization</code> (<a href="chap4_mj.html#X8357294D7B164106"><span class="RefLink">4.1-2</span></a>). This will cause a slight decrease in performance and an increase in memory usage. If this component is set to <code class="keyw">false</code>, then it will not be possible to factorize the elements of <var class="Arg">S</var> using <code class="func">Factorization</code> (<a href="chap4_mj.html#X8357294D7B164106"><span class="RefLink">4.1-2</span></a>). The default value for this component is <code class="keyw">true</code>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">small</code></strong></dt>
+<dd><p>if this component is set to <code class="keyw">true</code>, then <strong class="pkg">Citrus</strong> will compute a small subset of <var class="Arg">gens</var> that generates <var class="Arg">S</var> at the time that <var class="Arg">S</var> is created. This will increase the amount of time required to create <var class="Arg">S</var> substantially, but may decrease the amount of time required for subsequent calculations with <var class="Arg">S</var>. If this component is set to <code class="keyw">false</code>, then <strong class="pkg">Citrus</strong> will return the semigroup generated by <var class="Arg">gens</var> without modifying <var class="Arg">gens</var>. The default value for this component is <code class="keyw">false</code>.</p>
+
+</dd>
+</dl>
+<p>The default values of the options described above are stored in a global variable named <code class="func">CitrusOptionsRec</code> (<a href="chap3_mj.html#X86BA5FA4816AAF44"><span class="RefLink">3.3-1</span></a>). If you want to change the default values of these options for a single <strong class="pkg">GAP</strong> session, then you can simply redefine the value in <strong class="pkg">GAP</strong>. For example, to change the option <code class="code">small</code> from the default value of <var class="Arg">false</var> use:</p>
+
+
+<div class="example"><pre><span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CitrusOptionsRec.small:=true;</span>
+true</pre></div>
+
+<p>If you want to change the default values of the options stored in <code class="func">CitrusOptionsRec</code> (<a href="chap3_mj.html#X86BA5FA4816AAF44"><span class="RefLink">3.3-1</span></a>) for all subsequent <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="code">citrus/gap/options.g</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">hashlen:=100003, small:=false));</span>
+&lt;semigroup with 1 generator&gt;</pre></div>
+
+<p><a id="X86BA5FA4816AAF44" name="X86BA5FA4816AAF44"></a></p>
+
+<h5>3.3-1 CitrusOptionsRec</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CitrusOptionsRec</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<p>This global variable is a record whose components contain the default values of certain options for transformation semigroups created after <strong class="pkg">Citrus</strong> has been loaded. A description of these options is given above in Section <a href="chap3_mj.html#X799EBA2F819D8867"><span class="RefLink">3.3</span></a>.</p>
+
+<p>The value of <code class="code">CitrusOptionsRec</code> is defined in the file <code class="code">citrus/gap/options.g</code> as:</p>
+
+
+<div class="example"><pre>rec( schreier:=true, small:=false,
+         hashlen:=rec(S:=251, M:=6257, L:=25013));</pre></div>
+
+<p><a id="X7C76D1DC7DAF03D3" name="X7C76D1DC7DAF03D3"></a></p>
+
+<h4>3.4 <span class="Heading">Standard examples</span></h4>
+
+<p>In this section we describe functions for creating several standard examples of semigroups of transformations and partial permutations.</p>
+
+<p><a id="X78F9812D79A457EF" name="X78F9812D79A457EF"></a></p>
+
+<h5>3.4-1 FullMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixSemigroup</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralLinearSemigroup</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A matrix semigroup.</p>
+
+<p><code class="code">FullMatrixSemigroup</code> and <code class="code">GeneralLinearSemigroup</code> are synonyms for each other. They both return the full matrix semigroup, or if you prefer the general linear semigroup, of <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries over the field with <var class="Arg">q</var> elements. This semigroup has <code class="code">q^(d^2)</code> elements.</p>
+
+<p><strong class="button">Please note:</strong> there are currently no special methods for computing with matrix semigroups in <strong class="pkg">Citrus</strong> and so it might be advisable to use <code class="func">IsomorphismTransformationSemigroup</code> (<a href="chap4_mj.html#X84AF7B907E82F2D1"><span class="RefLink">4.7-4</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullMatrixSemigroup(3,4);</span>
+&lt;full matrix semigroup 3x3 over GF(2^2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Range(IsomorphismTransformationSemigroup(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
+262144</pre></div>
+
+<p><a id="X85D49CF2826D3AA4" name="X85D49CF2826D3AA4"></a></p>
+
+<h5>3.4-2 IsFullMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralLinearSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p><code class="code">IsFullMatrixSemigroup</code> and <code class="code">IsGeneralLinearSemigroup</code> return <code class="keyw">true</code> if the semigroup <code class="code">S</code> was created using either of the commands <code class="func">FullMatrixSemigroup</code> (<a href="chap3_mj.html#X78F9812D79A457EF"><span class="RefLink">3.4-1</span></a>) or <code class="func">GeneralLinearSemigroup</code> (<a href="chap3_mj.html#X78F9812D79A457EF"><span class="RefLink">3.4-1</span></a>) and <code class="keyw">false</code> otherwise.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomTransformationSemigroup(4,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullMatrixSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=GeneralLinearSemigroup(3,3);</span>
+&lt;full matrix semigroup 3x3 over GF(3)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullMatrixSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X78FBE6DD7BCA30C1" name="X78FBE6DD7BCA30C1"></a></p>
+
+<h5>3.4-3 MunnSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MunnSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The Munn semigroup of a semilattice.</p>
+
+<p>If <var class="Arg">S</var> is a semilattice, then <code class="code">MunnSemigroup(<var class="Arg">S</var>);</code> returns the inverse semigroup of partial permutations of isomorphisms of principal ideals of <var class="Arg">S</var>; called the <em>Munn semigroup</em> of <var class="Arg">S</var>.</p>
+
+<p>This function was written jointly by J. D. Mitchell, Yann Peresse (St Andrews), Yanhui Wang (York).</p>
+
+<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher should be fully installed for this function to work.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );</span>
+&lt;inverse semigroup with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=InverseSemigroup(Idempotents(S), rec(small:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=MunnSemigroup(T);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(M);</span>
+60
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(S);</span>
+60</pre></div>
+
+<p><a id="X87B855227B9870BD" name="X87B855227B9870BD"></a></p>
+
+<h5>3.4-4 <span class="Heading">Monoids of order preserving functions</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POPI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup of transformations or partial permutations related to a linear order.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> returns the monoid of transformations that preserve the usual order on <span class="SimpleMath">\(\{1,2,\ldots, n\}\)</span> where <var class="Arg">n</var> is a positive integer. <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath">\(\textit{n+1}\)</span> transformations:</p>
+
+<p class="center">\[
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;3&amp;\cdots&amp;n-1&amp; n\\
+              1&amp;1&amp;2&amp;\cdots&amp;n-2&amp;n-1
+              \end{array}\right), \qquad
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              \end{array}\right)
+            \]</p>
+
+<p>where <span class="SimpleMath">\(i=0,\ldots,n-1\)</span> and has <span class="SimpleMath">\({2n-1\choose n-1}\)</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">POI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">POI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve the usual order on <span class="SimpleMath">\(\{1,2,\ldots, n\}\)</span> where <var class="Arg">n</var> is a positive integer. <code class="code">POI(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath">\(\textit{n}\)</span> partial permutations:</p>
+
+<p class="center">\[
+      \left(
+      \begin{array}{ccccc}
+      1&amp;2&amp;3&amp;\cdots&amp;n\\          
+      -&amp;1&amp;2&amp;\cdots&amp;n-1
+      \end{array}\right), \qquad
+      \left(
+      \begin{array}{ccccccccc}
+      1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+      &amp;n\\
+      1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
+      \end{array}\right)
+    \]</p>
+
+<p>where <span class="SimpleMath">\(i=1, \ldots, n-1\)</span> and has <span class="SimpleMath">\({2n\choose n}\)</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">POPI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">POPI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutation that preserve the orientation of <span class="SimpleMath">\(\{1,2,\ldots, n\}\)</span> where <span class="SimpleMath">\(n\)</span> is a positive integer. <code class="code">POPI(<var class="Arg">n</var>)</code> is generated by the partial permutations:</p>
+
+<p class="center">\[
+      \left(
+      \begin{array}{ccccc}
+1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+2&amp;3&amp;\cdots&amp;n&amp;1
+\end{array}\right),\qquad
+\left(
+\begin{array}{cccccc}
+1&amp;2&amp;\cdots&amp;n-2&amp;n-1&amp;n\\
+1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
+\end{array}\right).
+    \]</p>
+
+<p>and has <span class="SimpleMath">\(1+\frac{n}{2}{2n\choose n}\)</span> elements.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=POPI(10);                                            </span>
+&lt;inverse monoid with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+923781
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1+5*Binomial(20, 10);</span>
+923781
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=POI(10);</span>
+&lt;inverse monoid with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+184756
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Binomial(20,10);</span>
+184756
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(POPI(10), POI(10));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=OrderEndomorphisms(5);</span>
+&lt;monoid with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotentGenerated(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S)=Binomial(2*5-1, 5-1);</span>
+true</pre></div>
+
+<p><a id="X79B1A1127B3B784A" name="X79B1A1127B3B784A"></a></p>
+
+<h5>3.4-5 SingularSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The semigroup of non-invertible transformations.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then <code class="code">SingularSemigroup(<var class="Arg">n</var>)</code> returns the semigroup of non-invertible transformations, which is generated by the <var class="Arg">n(n-1)</var> idempotents of degree <var class="Arg">n</var> and rank <span class="SimpleMath">\(n-1\)</span> and has <span class="SimpleMath">\(n^n-n!\)</span> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SingularSemigroup(5);</span>
+&lt;semigroup with 20 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+3005</pre></div>
+
+<p><a id="X7A1412CB79039397" name="X7A1412CB79039397"></a></p>
+
+<h5>3.4-6 SymmetricInverseSemigp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricInverseSemigp</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The symmetric inverse semigroup.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then <code class="code">SymmetricInverseSemigp(<var class="Arg">n</var>);</code> returns the symmetric inverse semigroup consisting of all partial permutations on the set <span class="SimpleMath">\(\{1,\ldots, n\}\)</span>. The symmetric inverse semigroup on <span class="SimpleMath">\(\{1,\ldots, n\}\)</span> is generated by the partial permutations:</p>
+
+<p class="center">\[\left(
+          \begin{array}{ccccc}
+1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+2&amp;3&amp;\cdots&amp;n&amp;1
+\end{array}\right), 
+\quad
+\left(\begin{array}{cccccc}
+1&amp;2&amp;3&amp;\cdots&amp;n-1&amp;n\\
+2&amp;1&amp;3&amp;\cdots&amp;n-1&amp;n
+\end{array}\right), 
+\quad
+\left(\begin{array}{ccccc}
+1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+1&amp;2&amp;\cdots&amp;n-1&amp;-
+\end{array}\right)
+        \]</p>
+
+<p>and has <span class="SimpleMath">\(\sum_{r=0}^n{n\choose r}^2\cdot r!\)</span> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigp(15);</span>
+&lt;inverse semigroup with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+306827170866106</pre></div>
+
+<p><a id="X7F59D5A17CE475CC" name="X7F59D5A17CE475CC"></a></p>
+
+<h4>3.5 <span class="Heading">The examples directory</span></h4>
+
+<p>The <code class="code">examples</code> folder of the <strong class="pkg">Citrus</strong> package directory contains catalogues of some naturally occurring semigroups of transformations and partial permutations. These files can be read into <strong class="pkg">GAP</strong> using <code class="func">ReadCitrus</code> (<a href="chap1_mj.html#X7A0CE3A67EEB1EA9"><span class="RefLink">1.6-2</span></a>) and similar files can be created using <code class="func">WriteCitrus</code> (<a href="chap1_mj.html#X7AB7775378DE8585"><span class="RefLink">1.6-3</span></a>).</p>
+
+<p>Further examples can be downloaded from</p>
+
+<p><span class="URL"><a href="http://tinyurl.com/jdmitchell/examples.html">http://tinyurl.com/jdmitchell/examples.html</a></span></p>
+
+<p>A summary of the available files, a desciption of their contents, and how they were created is given below.</p>
+
+
+<dl>
+<dt><strong class="Mark">Endomorphisms of graphs</strong></dt>
+<dd><p>the files <code class="code">eul<var class="Arg">n</var>c.citrus.gz</code> with <span class="SimpleMath">\(n=3,...,10\)</span>; <code class="code">graph<var class="Arg">n</var>c.citrus.gz</code> with <span class="SimpleMath">\(n=3,...,8\)</span>; and <code class="file">selfcomp.citrus.gz</code> contain small generating sets for the endomorphism monoids of all connected Eulerian graphs, all connected graphs, and all self complimentary graphs with <span class="SimpleMath">\(n\)</span> vertices, respectively. These files were created using the catalogues of such graphs available at:</p>
+
+<p><span class="URL"><a href="http://cs.anu.edu.au/~bdm/data/graphs.html">http://cs.anu.edu.au/~bdm/data/graphs.html</a></span></p>
+
+<p>a C program written by Max Neunhoeffer which produces a relatively large list of endomorphisms containing a generating set for the endomorphism monoid, <code class="func">SmallGeneratingSet</code> (<a href="chap4_mj.html#X814DBABC878D5232"><span class="RefLink">4.5-16</span></a>) and then <code class="func">IrredundantGeneratingSubset</code> (<a href="chap4_mj.html#X7F88DA9487720D2B"><span class="RefLink">4.5-9</span></a>) in <strong class="pkg">Citrus</strong>. The monoid generated by the transformations output by <code class="code">ReadCitrus("eul7c.citrus.gz", i);</code>, say, is the monoid of endomorphisms of the <code class="code">i</code>th graph in the file:</p>
+
+<p><span class="URL"><a href="http://cs.anu.edu.au/~bdm/data/eul7c.g6">http://cs.anu.edu.au/~bdm/data/eul7c.g6</a></span></p>
+
+</dd>
+<dt><strong class="Mark">Munn semigroups</strong></dt>
+<dd><p>the file <code class="file">munn.citrus.gz</code> contains generators for all the Munn semigroups of semilattices with 2 to 8 elements. The semilattices were obtained from the <span class="URL"><a href="http://www-history.mcs.st-and.ac.uk/~jamesm/smallsemi/index.html">Smallsemi</a></span> package using the command:</p>
+
+
+<div class="example"><pre>AllSmallSemigroups([2..8], IsSemilatticeAsSemigroup, true);</pre></div>
+
+<p>and the generators for the Munn semigroups were calculated using <code class="func">MunnSemigroup</code> (<a href="chap3_mj.html#X78FBE6DD7BCA30C1"><span class="RefLink">3.4-3</span></a>). More information is available at:</p>
+
+<p><span class="URL"><a href="http://tinyurl.com/jdmitchell/examples.html">http://tinyurl.com/jdmitchell/examples.html</a></span></p>
+
+</dd>
+<dt><strong class="Mark">Syntactic semigroups</strong></dt>
+<dd><p>the files <code class="file">syntactic.citrus.gz</code> contain generators for the syntactic semigroups of word acceptors of certain triangle groups, provided by Markus Pfeiffer (St Andrews). A <em>triangle group</em> is a group defined by a presentation of the form</p>
+
+<p class="center">\[ 
+        \langle x, y | x^p, y^q, (xy)^r\rangle
+        \]</p>
+
+<p>for some positive integers <span class="SimpleMath">\(p, q, r\)</span>. The file contains generators of the syntactic semigroups of word acceptors of triangle groups where <span class="SimpleMath">\(p\)</span> ranges from <span class="SimpleMath">\(1\)</span> to <span class="SimpleMath">\(94\)</span>, <span class="SimpleMath">\(q=3\)</span>, and <span class="SimpleMath">\(r=2\)</span>; <span class="SimpleMath">\(p=101\)</span>, <span class="SimpleMath">\(q\)</span> ranges from <span class="SimpleMath">\(3\)</span> to <span class="SimpleMath">\(99\)</span> and <span class="SimpleMath">\(r=2\)</span>; <span class="SimpleMath">\(p=101\)</span>, <span class="SimpleMath">\(q=72\)</span>, and <span class="SimpleMath">\(r\)</span> ranges from <span class="SimpleMath">\(7\)</span> to <span class="SimpleMath">\(71\)</span>; and some further randomly chosen values of <span class="SimpleMath">\(p,q,r\)</span>.</p>
+
+</dd>
+<dt><strong class="Mark">Endomorphisms of groups</strong></dt>
+<dd><p>the files <code class="code">nonabelian_groups_<var class="Arg">n</var>.citrus.gz</code> with <span class="SimpleMath">\(n=6,....,64\)</span> contains small generating sets for the endomorphism monoids of all non-abelian groups with <var class="Arg">n</var> elements. These files were created using the Small Groups Library in <strong class="pkg">GAP</strong> and the <strong class="pkg">Sonata</strong> function <code class="code">Endomorphisms</code>.</p>
+
+</dd>
+</dl>
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

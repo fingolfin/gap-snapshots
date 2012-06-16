@@ -2,7 +2,7 @@
 ##
 #W img.gi                                                   Laurent Bartholdi
 ##
-#H   @(#)$Id: img.gi,v 1.102 2012/06/01 19:27:42 gap Exp $
+#H   @(#)$Id: img.gi,v 1.103 2012/06/05 09:57:48 gap Exp $
 ##
 #Y Copyright (C) 2006, Laurent Bartholdi
 ##
@@ -147,7 +147,7 @@ BindGlobal("MAKENFREL@", function(rel)
     return rel;
 end);
 
-if not IsBound(NFFUNCTION_FR) then # optimized, C code
+if not @.dll then # optimized, C code
 BindGlobal("NFFUNCTION_FR", function(rel,dir,word)
     local push_letter, match_pos, posind, negind, result, resulti, i, j, match, matchlen, n, vi;
     
@@ -174,7 +174,7 @@ BindGlobal("NFFUNCTION_FR", function(rel,dir,word)
     # if dir=true, replace all (>=1/2)-cyclic occurrences of rel in word by the shorter half
     # if dir=false, replace all occurrences of the last generator in word by the corresponding bit of rel
     
-    rel := rel[1]; posind := rel[2]; negind := rel[3];
+    posind := rel[2]; negind := rel[3]; rel := rel[1];
     n := Length(posind);
     
     i := 0;
@@ -209,7 +209,7 @@ BindGlobal("NFFUNCTION_FR", function(rel,dir,word)
                 push_letter(vi);
                 if match>0 and vi = rel[match+matchlen] then
                     matchlen := matchlen+1;
-                    if matchlen >= (n+1+(match < 2*n))/2 then # more than half, or exactly half and negatives
+                    if matchlen >= QuoInt((n+2-QuoInt(match,2*n)),2) then # more than half, or exactly half and negatives
                         resulti := resulti-matchlen;
                         for j in [match+n-1,match+n-2..match+matchlen] do
                             push_letter(-rel[j]);
@@ -245,6 +245,7 @@ fi;
 InstallOtherMethod(NFFUNCTION@, [IsGroup, IsWord], function(g,rel)
     # simplify a word in the free group g/[rel]
     local gfam;
+
     gfam := FamilyObj(Representative(g));
     rel := MAKENFREL@(rel);
     return x->AssocWordByLetterRep(gfam,NFFUNCTION_FR(rel,true,LetterRepAssocWord(x)));
@@ -439,6 +440,7 @@ BindGlobal("IMGOPTIMIZE@", function(trans, perm, relator, canfail)
     
     group := CollectionsFamily(FamilyObj(relator))!.wholeGroup;
     nf := NFFUNCTION@(group, relator);
+
     iso := ISOMORPHISMSIMPLIFIEDIMGGROUP@(group, relator);
     seen := [];
 

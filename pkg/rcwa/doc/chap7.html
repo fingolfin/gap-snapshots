@@ -106,7 +106,7 @@
 
 <p>This chapter discusses a number of "nice" examples of rcwa mappings and -groups in detail. All of them show different aspects of the package, and the order in which they appear is entirely arbitrary. In particular they are not ordered by degree of difficulty or interest.</p>
 
-<p>The rcwa mappings, rcwa groups and other objects defined in this chapter can be found in the file <code class="file">pkg/rcwa/examples/examples.g</code>. This file can be read into the current <strong class="pkg">GAP</strong> session by the function <code class="func">RCWALoadExamples</code> (<a href="chap6.html#X7FE59E9A7D7CE772"><span class="RefLink">6.1-1</span></a>) which takes no arguments and returns a record containing all examples. The global variable assignments made in a section of this chapter can be made by applying the function <code class="code">AssignGlobals</code> to the respective component of the record returned by <code class="code">RCWALoadExamples</code>. The component names are given at the end of the corresponding sections.</p>
+<p>The rcwa mappings, rcwa groups and other objects defined in this chapter can be found in the file <code class="file">pkg/rcwa/examples/examples.g</code>. This file can be read into the current <strong class="pkg">GAP</strong> session by the function <code class="func">LoadRCWAExamples</code> (<a href="chap6.html#X8714254784AFD64B"><span class="RefLink">6.1-1</span></a>) which takes no arguments and returns a record containing all examples. The global variable assignments made in a section of this chapter can be made by applying the function <code class="code">AssignGlobals</code> to the respective component of the record returned by <code class="code">LoadRCWAExamples</code>. The component names are given at the end of the corresponding sections.</p>
 
 <p>The discussions of the examples are typically far from being exhaustive. It is quite likely that in many instances by just a few little modifications or additional easy commands you can find out interesting things yourself -- have fun!</p>
 
@@ -282,7 +282,7 @@ ClassTransposition(1,4,2,4)
 
 <p>The correctness of this representation can likewise be verified by simply checking the defining relations given above.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().HigmanThompson);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().HigmanThompson);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7ABC81A07C5B42AE" name="X7ABC81A07C5B42AE"></a></p>
 
@@ -451,7 +451,7 @@ Rcwa permutation of Z^2 with modulus (2,0)Z+(0,3)Z
 
 <p>It is left as an easy exercise to the reader to find out how the cycles of <code class="code">b</code> look like.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().ZxZ);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().ZxZ);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X86C2BAE3876985A6" name="X86C2BAE3876985A6"></a></p>
 
@@ -557,7 +557,7 @@ true
 
 <p>The factors <code class="code">PrimeSwitch(3)</code> are products of 6 class transpositions (cf. <code class="func">PrimeSwitch</code> (<a href="chap2.html#X861C74E97AE5DA3B"><span class="RefLink">2.5-2</span></a>)).</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X878499AF7889FD9E" name="X878499AF7889FD9E"></a></p>
 
@@ -635,7 +635,7 @@ See ?LikelyContractionCentre for more information.
 
 <p>Although the trajectories of <code class="code">T</code> are much shorter than those of <code class="code">f6</code>, it seems likely that this does not make the problem of deciding whether the mapping <code class="code">T</code> is contracting essentially easier -- even for mappings with much shorter trajectories than <code class="code">T</code> the problem seems to be equally hard. A solution can usually only be found in trivial cases, i.e. for example when there is some <span class="SimpleMath">k</span> such that applying the <span class="SimpleMath">k</span>th power of the respective mapping to any integer decreases its absolute value.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().SlowlyContractingMappings);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().SlowlyContractingMappings);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X84A915BA833E0BDE" name="X84A915BA833E0BDE"></a></p>
 
@@ -677,7 +677,7 @@ Integers
 
 <p>Further similar computations are shown in Section <a href="chap7.html#X855A3CD88459958B"><span class="RefLink">7.14</span></a>.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7E8CD9B67ED78735" name="X7E8CD9B67ED78735"></a></p>
 
@@ -788,7 +788,7 @@ Rcwa mapping of GF(2)[x] with modulus x
 
 <p>This looks clearly acyclic, thus the trajectories diverge. Needless to say however that this computational evidence does not replace the proof along these lines given in the article cited above, but just sheds a light on the idea behind it.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().MatthewsLeigh);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().MatthewsLeigh);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X854E9F65817E4F63" name="X854E9F65817E4F63"></a></p>
 
@@ -866,7 +866,7 @@ IdentityMapping( Integers )
 
 <p>We observe that our commutators have various different orders, and that the prime factors of these orders are not all "very small".</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7F085B867D799293" name="X7F085B867D799293"></a></p>
 
@@ -1024,7 +1024,7 @@ end;
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().OddNumberOfGens_FiniteOrder);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().OddNumberOfGens_FiniteOrder);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7A8605E680F664BF" name="X7A8605E680F664BF"></a></p>
 
@@ -1125,7 +1125,7 @@ false
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().AbelianGroupOverPolynomialRing);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().AbelianGroupOverPolynomialRing);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X78DFE4B4821E07A6" name="X78DFE4B4821E07A6"></a></p>
 
@@ -1173,7 +1173,7 @@ true
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CheckingForSolvability);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CheckingForSolvability);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X783D54DC7A646273" name="X783D54DC7A646273"></a></p>
 
@@ -1304,7 +1304,7 @@ Rcwa permutation of Z_( 2 ) with modulus 8
 
 <p>Again, viewed as an rcwa mapping of the integers the commutator given at the end of the example would not be surjective.</p>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().Semilocals);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().Semilocals);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X846D7D087861E0AC" name="X846D7D087861E0AC"></a></p>
 
@@ -1347,7 +1347,7 @@ Rcwa permutation of Z with modulus 32, of order 257
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().LongCyclesOfPrimeLength);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().LongCyclesOfPrimeLength);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X78D5DC93845CA6A0" name="X78D5DC93845CA6A0"></a></p>
 
@@ -1411,7 +1411,7 @@ true
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().ModuliOfPowers);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().ModuliOfPowers);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X855A3CD88459958B" name="X855A3CD88459958B"></a></p>
 
@@ -1515,7 +1515,7 @@ Integers
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7968C1DF7EF0BD8E" name="X7968C1DF7EF0BD8E"></a></p>
 
@@ -1944,7 +1944,7 @@ Z \ 1(8) U 7(8)
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzlikePerms);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X85C529088050BEA3" name="X85C529088050BEA3"></a></p>
 
@@ -2211,7 +2211,7 @@ d := level -&gt; SequenceElement(1,level);
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().GrigorchukQuotients);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().GrigorchukQuotients);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X7DD9502F80364631" name="X7DD9502F80364631"></a></p>
 
@@ -2283,7 +2283,7 @@ d := level -&gt; SequenceElement(1,level);
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().CollatzMapping);</code> in order to assign the global variables defined in this section.</p>
 
 <p><a id="X815800ED820C6ECF" name="X815800ED820C6ECF"></a></p>
 
@@ -2409,7 +2409,7 @@ true
 
 </pre></div>
 
-<p>Enter <code class="code">AssignGlobals(RCWALoadExamples().F2_PSL2Z);</code> in order to assign the global variables defined in this section.  </p>
+<p>Enter <code class="code">AssignGlobals(LoadRCWAExamples().F2_PSL2Z);</code> in order to assign the global variables defined in this section.  </p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
