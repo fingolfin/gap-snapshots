@@ -390,9 +390,15 @@ F 7.7. IsLeftBruckLoop
 F 7.7. IsLeftKLoop
 F 7.7. IsRightBruckLoop
 F 7.7. IsRightKLoop
-I 7.7. A-loop!left
-I 7.7. A-loop!middle
-I 7.7. A-loop!right
+I 7.7. automorphic loop!left
+I 7.7. automorphic loop!middle
+I 7.7. automorphic loop!right
+I 7.7. automorphic loop
+I 7.7. loop!automorphic
+F 7.7. IsLeftAutomorphicLoop
+F 7.7. IsMiddleAutomorphicLoop
+F 7.7. IsRightAutomorphicLoop
+F 7.7. IsAutomorphicLoop
 I 7.7. A-loop
 I 7.7. loop!A
 F 7.7. IsLeftALoop
@@ -451,11 +457,13 @@ I 9.8. loop!Paige
 F 9.8. PaigeLoop
 S 9.9. Nilpotent loops
 F 9.9. NilpotentLoop
-S 9.10. Interesting loops
-I 9.10. sedenion loop
-I 9.10. loop!sedenion
-F 9.10. InterestingLoop
-S 9.11. Libraries of loops up to isotopism
-F 9.11. ItpSmallLoop
+S 9.10. Automorphic loops
+F 9.10. AutomorphicLoop
+S 9.11. Interesting loops
+I 9.11. sedenion loop
+I 9.11. loop!sedenion
+F 9.11. InterestingLoop
+S 9.12. Libraries of loops up to isotopism
+F 9.12. ItpSmallLoop
 C files.tex 10. Files
 C filters.tex 11. Filters built into the package

@@ -388,19 +388,19 @@ BindGlobal( "PegSolitaire", function( arg )
     else
       BrowseData.SetActions( modes[1], [
         # jump via `j' plus arrow keys
-        [ [ [ [ INT_CHAR( 'j' ), NCurses.keys.RIGHT ], "j + arrow right" ] ],
+        [ [ [ [ IntChar( 'j' ), NCurses.keys.RIGHT ], "j + arrow right" ] ],
           rec(
           helplines:= [ "jump over a peg to a hole two cells to the right" ],
           action:= t -> jump( t, 2, 0 ) ) ],
-        [ [ [ [ INT_CHAR( 'j' ), NCurses.keys.LEFT ], "j + arrow left" ] ],
+        [ [ [ [ IntChar( 'j' ), NCurses.keys.LEFT ], "j + arrow left" ] ],
           rec(
           helplines:= [ "jump over a peg to a hole two cells to the left" ],
           action:= t -> jump( t, -2, 0 ) ) ],
-        [ [ [ [ INT_CHAR( 'j' ), NCurses.keys.DOWN ], "j + arrow down" ] ],
+        [ [ [ [ IntChar( 'j' ), NCurses.keys.DOWN ], "j + arrow down" ] ],
           rec(
           helplines:= [ "jump over a peg to a hole two cells down" ],
           action:= t -> jump( t, 0, 2 ) ) ],
-        [ [ [ [ INT_CHAR( 'j' ), NCurses.keys.UP ], "j + arrow up" ] ], rec(
+        [ [ [ [ IntChar( 'j' ), NCurses.keys.UP ], "j + arrow up" ] ], rec(
           helplines:= [ "jump over a peg to a hole two cells up" ],
           action:= t -> jump( t, 0, -2 ) ) ],
         ] );

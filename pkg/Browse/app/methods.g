@@ -15,18 +15,10 @@
 ##  (Reset the table with input '!'.)
 ##
 BindGlobal( "BrowseGapMethods", function( arg )
-    local myFilenameFunc, myStartlineFunc, opnamewidth, argumentswidth,
+    local opnamewidth, argumentswidth,
           commentwidth, filenamewidth, operations, pkgnames, pkgpaths,
           matrix, methodlist, cats, operation, opname, i, methods, j,
           argnames, comment, func, filename, pkg, path, len, sel_action, t;
-
-    # This should work also with GAP 4.4.
-    if IsBoundGlobal( "FilenameFunc" ) then
-      myFilenameFunc:= ValueGlobal( "FilenameFunc" );
-      myStartlineFunc:= ValueGlobal( "StartlineFunc" );
-    else
-      myFilenameFunc:= ReturnFail;
-    fi;
 
     opnamewidth:= 20;
     argumentswidth:= 25;
@@ -87,7 +79,7 @@ BindGlobal( "BrowseGapMethods", function( arg )
             Add( methodlist, func );
 
             # Compute package (if applicable) and filename.
-            filename:= myFilenameFunc( func );
+            filename:= FilenameFunc( func );
             if filename = fail then
               filename:= "(no filename stored)";
               if IsOperation( func ) then
@@ -155,7 +147,7 @@ BindGlobal( "BrowseGapMethods", function( arg )
         if t.dynamic.selectedEntry <> [ 0, 0 ] then
           pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
           func:= methodlist[ pos ];
-          file:= myFilenameFunc( func );
+          file:= FilenameFunc( func );
           if file = fail or file = "*stdin*" then
             # Show the code in a pager.
             lines:= "";
@@ -165,7 +157,7 @@ BindGlobal( "BrowseGapMethods", function( arg )
           else
             # Show the file in a pager.
             lines:= rec( lines:= StringFile( file ),
-                         start:= myStartlineFunc( func ) );
+                         start:= StartlineFunc( func ) );
           fi;
           if BrowseData.IsDoneReplay( t.dynamic.replay ) then
             NCurses.Pager( lines );

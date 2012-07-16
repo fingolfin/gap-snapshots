@@ -70,9 +70,9 @@
 \seccontents {9.7}{Small loops} {34}
 \seccontents {9.8}{Paige loops} {34}
 \seccontents {9.9}{Nilpotent loops} {34}
-\seccontents {9.10}{Interesting loops} {34}
-\seccontents {9.11}{Libraries of loops up to isotopism} {35}
+\seccontents {9.10}{Automorphic loops} {34}
+\seccontents {9.11}{Interesting loops} {35}
+\seccontents {9.12}{Libraries of loops up to isotopism} {35}
 \chapcontents {A}{Files}{36}
 \chapcontents {B}{Filters built into the package}{37}
 \chapcontents {}{Bibliography}{40}
-\chapcontents {}{Index}{41}

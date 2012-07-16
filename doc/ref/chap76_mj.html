@@ -103,7 +103,7 @@
 
 <p>After a package has been loaded its code and documentation should be available as other parts of the <strong class="pkg">GAP</strong> library are.</p>
 
-<p>When <strong class="pkg">GAP</strong> is started then some packages are loaded automatically. These are the packages listed in the <code class="code">NeededOtherPackages</code> and (if this is not disabled, see below) <code class="code">SuggestedOtherPackages</code> components of the record <code class="code">GAPInfo.Dependencies</code>.</p>
+<p>When <strong class="pkg">GAP</strong> is started then some packages are loaded automatically. These are the packages listed in <code class="code">GAPInfo.Dependencies.NeededOtherPackages</code> and (if this is not disabled, see below) <code class="code">UserPreference( "PackagesToLoad" )</code>.</p>
 
 <p>A <strong class="pkg">GAP</strong> package may also install only its documentation automatically but still need loading by <code class="func">LoadPackage</code>. In this situation the online help displays <code class="code">(not loaded)</code> in the header lines of the manual pages belonging to this <strong class="pkg">GAP</strong> package.</p>
 
@@ -111,9 +111,9 @@
 
 <p>The autoloading of specific packages can be overwritten <em>for the whole <strong class="pkg">GAP</strong> installation</em> by putting a file <code class="file">NOAUTO</code> into a <code class="file">pkg</code> directory that contains lines with the names of packages which should not be automatically loaded.</p>
 
-<p>Furthermore, <em>individual users</em> can disable the autoloading of specific packages by putting the names of these packages into the list that is assigned to the <code class="code">ExcludeFromAutoload</code> component of the record in the user's <code class="file">gap.ini</code> file (see <a href="chap3_mj.html#X87DF11C885E73583"><span class="RefLink">3.2-1</span></a>).</p>
+<p>Furthermore, <em>individual users</em> can disable the autoloading of specific packages by putting the names of these packages into the list that is assigned to the user preference "ExcludeFromAutoload", for example in the user's <code class="file">gap.ini</code> file (see <a href="chap3_mj.html#X87DF11C885E73583"><span class="RefLink">3.2-1</span></a>).</p>
 
-<p>Using the <code class="code">-A</code> command line option when starting up <strong class="pkg">GAP</strong> (see <a href="chap3_mj.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>), automatic loading of all suggested packages of <strong class="pkg">GAP</strong> is switched off <em>for this <strong class="pkg">GAP</strong> session</em>.</p>
+<p>Using the <code class="code">-A</code> command line option when starting up <strong class="pkg">GAP</strong> (see <a href="chap3_mj.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>), automatic loading of packages is switched off <em>for this <strong class="pkg">GAP</strong> session</em>.</p>
 
 <p>In any of the above three cases, the packages listed in <code class="code">GAPInfo.Dependencies.NeededOtherPackages</code> are still loaded automatically, and an error is signalled if not all of these packages are available.</p>
 

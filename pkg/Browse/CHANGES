@@ -1,6 +1,19 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.2
+ - `BrowseAtlasInfo' now admits a user input 'Y' (show an overview of the
+   entries chosen for the result) and prints a message in the footer whenever
+   a new entry is added to the result.
+ - `BrowsePackageVariables' now admits also the same argument syntax as the
+   GAP library function `ShowPackageVariables', which is simpler than the one
+   which has to be used for packags that are loaded before `Browse'.
+   `BrowsePackageVariables' shows now also the comments of method
+   installations, corresponding to the extension of the GAP library function
+   `ShowPackageVariables'.
+ - `NCurses.Select' now admits entering digits, in order to jump to the next
+   row whose label matches the given number.
+
 1.8.1
  - improved README before release of GAP 4.5
  - made the compiler call in Makefile more flexible: can now give additional

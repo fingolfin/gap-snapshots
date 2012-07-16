@@ -1,112 +1,112 @@
   
-  [1X5 Homogeneous Matrices[0X
+  [1X5 [33X[0;0YHomogeneous Matrices[133X[101X
   
-  The  package  [5XGradedRingForHomalg[0m  defines the classes of graded rings, ring
+  [33X[0;0YThe  package  [5XGradedRingForHomalg[105X  defines the classes of graded rings, ring
   elements  and  homogeneous matrices over such rings. These three objects can
-  be  used as data structures defined in [5XMatricesForHomalg[0m on which the [5Xhomalg[0m
-  project can rely to do homological computations over graded rings.
+  be  used as data structures defined in [5XMatricesForHomalg[105X on which the [5Xhomalg[105X
+  project can rely to do homological computations over graded rings.[133X
   
-  The  graded  rings  most  prominently  can  be  used with methods known from
-  general  [5Xhomalg[0m  rings. The methods for doing the computations are presented
-  in the appendix ([14XB[0m), since they are not for external use. The new attributes
-  and operations are documented here.
+  [33X[0;0YThe  graded  rings  most  prominently  can  be  used with methods known from
+  general  [5Xhomalg[105X  rings. The methods for doing the computations are presented
+  in the appendix ([14XB[114X), since they are not for external use. The new attributes
+  and operations are documented here.[133X
   
-  Since   the  objects  inplemented  here  are  representations  from  objects
-  elsewhere  in the [5Xhomalg[0m project (i.e. [5XMatricesForHomalg[0m), we want to stress
-  that there are many other operations in [5XMatricesForHomalg[0m, which can be used
+  [33X[0;0YSince   the  objects  inplemented  here  are  representations  from  objects
+  elsewhere  in the [5Xhomalg[105X project (i.e. [5XMatricesForHomalg[105X), we want to stress
+  that there are many other operations in [5XMatricesForHomalg[105X, which can be used
   in  connection  with  the ones presented here. A few of them can be found in
-  the examples and the appendix of this documentation.
+  the examples and the appendix of this documentation.[133X
   
   
-  [1X5.1 Homogeneous Matrices: Category and Representations[0X
+  [1X5.1 [33X[0;0YHomogeneous Matrices: Category and Representations[133X[101X
   
-  [1X5.1-1 IsHomalgMatrixOverGradedRingRep[0m
+  [1X5.1-1 IsHomalgMatrixOverGradedRingRep[101X
   
-  [2X> IsHomalgMatrixOverGradedRingRep( [0X[3XA[0X[2X ) _______________________[0XRepresentation
-  [6XReturns:[0X  true or false
+  [29X[2XIsHomalgMatrixOverGradedRingRep[102X( [3XA[103X ) [32X Representation
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
-  The representation of [5Xhomalg[0m matrices with entries in a [5Xhomalg[0m graded ring.
+  [33X[0;0YThe representation of [5Xhomalg[105X matrices with entries in a [5Xhomalg[105X graded ring.[133X
   
-  (It is a representation of the [5XGAP[0m category [10XIsMatrixOverGradedRing[0m.)
+  [33X[0;0Y(It is a representation of the [5XGAP[105X category [10XIsMatrixOverGradedRing[110X.)[133X
   
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XDeclareRepresentation( "IsHomalgMatrixOverGradedRingRep",[0X
-    [4X        IsMatrixOverGradedRing,[0X
-    [4X        [ ] );[0X
-  [4X------------------------------------------------------------------[0X
-  
-  
-  [1X5.2 Homogeneous Matrices: Constructors[0X
-  
-  [1X5.2-1 MatrixOverGradedRing[0m
-  
-  [2X> MatrixOverGradedRing( [0X[3Xmat, S[0X[2X ) ___________________________________[0Xfunction
-  [6XReturns:[0X  a matrix over a graded ring
-  
-  Creates  a  matrix  for  the  graded  ring  [3XS[0m,  where  [3Xmat[0m  is a matrix over
-  [10XUnderlyingNonGradedRing[0m([3XS[0m).
+  [4X[32X  Code  [32X[104X
+    [4XDeclareRepresentation( "IsHomalgMatrixOverGradedRingRep",[104X
+    [4X        IsMatrixOverGradedRing,[104X
+    [4X        [ ] );[104X
+  [4X[32X[104X
   
   
-  [1X5.3 Homogeneous Matrices: Attributes[0X
+  [1X5.2 [33X[0;0YHomogeneous Matrices: Constructors[133X[101X
   
-  [1X5.3-1 DegreesOfEntries[0m
+  [1X5.2-1 MatrixOverGradedRing[101X
   
-  [2X> DegreesOfEntries( [0X[3XA[0X[2X ) ___________________________________________[0Xattribute
-  [6XReturns:[0X  a listlist of degrees/multi-degrees
+  [29X[2XMatrixOverGradedRing[102X( [3Xmat[103X, [3XS[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Ya matrix over a graded ring[133X
   
-  The matrix of degrees of the matrix [3XA[0m.
-  
-  [1X5.3-2 NonTrivialDegreePerRow[0m
-  
-  [2X> NonTrivialDegreePerRow( [0X[3XA[, col_degrees][0X[2X ) ______________________[0Xattribute
-  [6XReturns:[0X  a list of degrees/multi-degrees
-  
-  The list of first nontrivial degree per row of the matrix [3XA[0m.
-  
-  [1X5.3-3 NonTrivialDegreePerColumn[0m
-  
-  [2X> NonTrivialDegreePerColumn( [0X[3XA[, row_degrees][0X[2X ) ___________________[0Xattribute
-  [6XReturns:[0X  a list of degrees/multi-degrees
-  
-  The list of first nontrivial degree per column of the matrix [3XA[0m.
+  [33X[0;0YCreates  a  matrix  for  the  graded  ring  [3XS[103X,  where  [3Xmat[103X  is a matrix over
+  [10XUnderlyingNonGradedRing[110X([3XS[103X).[133X
   
   
-  [1X5.4 Homogeneous Matrices: Operations and Functions[0X
+  [1X5.3 [33X[0;0YHomogeneous Matrices: Attributes[133X[101X
   
-  [1X5.4-1 UnderlyingNonGradedRing[0m
+  [1X5.3-1 DegreesOfEntries[101X
   
-  [2X> UnderlyingNonGradedRing( [0X[3Xmat[0X[2X ) __________________________________[0Xoperation
-  [6XReturns:[0X  a [5Xhomalg[0m ring
+  [29X[2XDegreesOfEntries[102X( [3XA[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya listlist of degrees/multi-degrees[133X
   
-  The nongraded ring underlying [10XHomalgRing[0m([3Xmat[0m).
+  [33X[0;0YThe matrix of degrees of the matrix [3XA[103X.[133X
   
-  [1X5.4-2 SetMatElm[0m
+  [1X5.3-2 NonTrivialDegreePerRow[101X
   
-  [2X> SetMatElm( [0X[3Xmat, i, j, r, R[0X[2X ) ____________________________________[0Xoperation
+  [29X[2XNonTrivialDegreePerRow[102X( [3XA[103X[, [3Xcol_degrees[103X] ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya list of degrees/multi-degrees[133X
   
-  Changes  the  entry  ([3Xi,j[0m)  of  the matrix [3Xmat[0m to the value [3Xr[0m. Here [3XR[0m is the
-  graded [5Xhomalg[0m ring involved in these computations.
+  [33X[0;0YThe list of first nontrivial degree per row of the matrix [3XA[103X.[133X
   
-  [1X5.4-3 AddToMatElm[0m
+  [1X5.3-3 NonTrivialDegreePerColumn[101X
   
-  [2X> AddToMatElm( [0X[3Xmat, i, j, r, R[0X[2X ) __________________________________[0Xoperation
+  [29X[2XNonTrivialDegreePerColumn[102X( [3XA[103X[, [3Xrow_degrees[103X] ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya list of degrees/multi-degrees[133X
   
-  Changes  the entry ([3Xi,j[0m) of the matrix [3Xmat[0m by adding the value [3Xr[0m to it. Here
-  [3XR[0m is the (graded) [5Xhomalg[0m ring involved in these computations.
+  [33X[0;0YThe list of first nontrivial degree per column of the matrix [3XA[103X.[133X
   
-  [1X5.4-4 MatElmAsString[0m
   
-  [2X> MatElmAsString( [0X[3Xmat, i, j, R[0X[2X ) __________________________________[0Xoperation
-  [6XReturns:[0X  a string
+  [1X5.4 [33X[0;0YHomogeneous Matrices: Operations and Functions[133X[101X
   
-  Returns  the  entry  ([3Xi,j[0m)  of  the  matrix  [3Xmat[0m  as a string. Here [3XR[0m is the
-  (graded) [5Xhomalg[0m ring involved in these computations.
+  [1X5.4-1 UnderlyingNonGradedRing[101X
   
-  [1X5.4-5 MatElm[0m
+  [29X[2XUnderlyingNonGradedRing[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring[133X
   
-  [2X> MatElm( [0X[3Xmat, i, j, R[0X[2X ) __________________________________________[0Xoperation
-  [6XReturns:[0X  a graded ring element
+  [33X[0;0YThe nongraded ring underlying [10XHomalgRing[110X([3Xmat[103X).[133X
   
-  Returns  the  entry  ([3Xi,j[0m)  of the matrix [3Xmat[0m. Here [3XR[0m is the (graded) [5Xhomalg[0m
-  ring involved in these computations.
+  [1X5.4-2 SetMatElm[101X
+  
+  [29X[2XSetMatElm[102X( [3Xmat[103X, [3Xi[103X, [3Xj[103X, [3Xr[103X, [3XR[103X ) [32X operation
+  
+  [33X[0;0YChanges  the  entry  ([3Xi,j[103X)  of  the matrix [3Xmat[103X to the value [3Xr[103X. Here [3XR[103X is the
+  graded [5Xhomalg[105X ring involved in these computations.[133X
+  
+  [1X5.4-3 AddToMatElm[101X
+  
+  [29X[2XAddToMatElm[102X( [3Xmat[103X, [3Xi[103X, [3Xj[103X, [3Xr[103X, [3XR[103X ) [32X operation
+  
+  [33X[0;0YChanges  the entry ([3Xi,j[103X) of the matrix [3Xmat[103X by adding the value [3Xr[103X to it. Here
+  [3XR[103X is the (graded) [5Xhomalg[105X ring involved in these computations.[133X
+  
+  [1X5.4-4 MatElmAsString[101X
+  
+  [29X[2XMatElmAsString[102X( [3Xmat[103X, [3Xi[103X, [3Xj[103X, [3XR[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya string[133X
+  
+  [33X[0;0YReturns  the  entry  ([3Xi,j[103X)  of  the  matrix  [3Xmat[103X  as a string. Here [3XR[103X is the
+  (graded) [5Xhomalg[105X ring involved in these computations.[133X
+  
+  [1X5.4-5 MatElm[101X
+  
+  [29X[2XMatElm[102X( [3Xmat[103X, [3Xi[103X, [3Xj[103X, [3XR[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya graded ring element[133X
+  
+  [33X[0;0YReturns  the  entry  ([3Xi,j[103X)  of the matrix [3Xmat[103X. Here [3XR[103X is the (graded) [5Xhomalg[105X
+  ring involved in these computations.[133X
   

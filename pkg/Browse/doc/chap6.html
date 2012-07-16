@@ -389,7 +389,9 @@
 
 <p>Row and column separators are drawn as grids (cf. <code class="func">NCurses.Grid</code> (<a href="chap2.html#X790715F683BF1E66"><span class="RefLink">2.2-8</span></a>)) composed from the special characters described in Section <a href="chap2.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>, using the component <code class="code">work.SpecialGrid</code> of the browse table, see <code class="func">BrowseData</code> (<a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a>).</p>
 
-<p>When a row is selected, the "click" functionality opens a new window (via a second level call to <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>)), in which a browse table with the list of available data for the given group is shown; in this table, "click" results in adding the info for the selected row to the result list. One can choose further data, return to the first browse table, and perhaps iterate the process for other groups. When the first level table is left, the list of info records for the chosen data is returned.</p>
+<p>When a row is selected, the "click" functionality opens a new window (via a second level call to <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>)), in which a browse table with the list of available data for the given group is shown; in this table, "click" results in adding the info for the selected row to the result list, and a message about this addition is shown in the footer row. One can choose further data, return to the first browse table, and perhaps iterate the process for other groups. When the first level table is left, the list of info records for the chosen data is returned.</p>
+
+<p>For the two kinds of browse tables, the standard modes in <code class="func">BrowseData</code> (<a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a>) (except the <code class="code">help</code> mode) have been extended by a new action that opens a pager giving an overview of all data that have been chosen in the current call. The corresponding user input is the <strong class="button">Y</strong> key.</p>
 
 <p>This function is available only if the <strong class="pkg">GAP</strong> package <strong class="pkg">AtlasRep</strong> is available.</p>
 
@@ -623,16 +625,19 @@
 
 <h5>6.9-1 BrowsePackageVariables</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePackageVariables</code>( <var class="Arg">pkgname</var>[, <var class="Arg">version</var>][, <var class="Arg">arec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePackageVariables</code>( <var class="Arg">pkgname</var>, <var class="Arg">info</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: nothing.</p>
 
-<p>Let <var class="Arg">pkgname</var> be the name of a <strong class="pkg">GAP</strong> package, and <var class="Arg">info</var> be the output of <code class="func">PackageVariablesInfo</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: PackageVariablesInfo</span></a>) for this package. The optional record <var class="Arg">arec</var>, if given, has the same meaning as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>).</p>
+<p>In the first version, the arguments are the same as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>), that is, <var class="Arg">pkgname</var> is the name of a <strong class="pkg">GAP</strong> package, and the optional arguments <var class="Arg">version</var> and <var class="Arg">arec</var> are a version number of this package and a record used for customizing the output, respectively.</p>
 
-<p><code class="func">BrowsePackageVariables</code> opens a Browse table that shows the global variables that become bound and the methods that become installed when <strong class="pkg">GAP</strong> loads the package.</p>
+<p>In the second version, <var class="Arg">pkgname</var> is the name of a <strong class="pkg">GAP</strong> package, <var class="Arg">info</var> is the output of <code class="func">PackageVariablesInfo</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: PackageVariablesInfo</span></a>) for this package, and the optional record <var class="Arg">arec</var> has the same meaning as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>).</p>
+
+<p><code class="func">BrowsePackageVariables</code> opens a Browse table that shows the global variables that become bound and the methods that become installed when <strong class="pkg">GAP</strong> loads the package <var class="Arg">pkgname</var>.</p>
 
 <p>The table is categorized by the kinds of variables (new or redeclared operations, methods, info classes, synonyms, other globals). The column "Doc.?" distinguishes undocumented and documented variables, so one can use this column as a filter or for categorizing. The column "Filename" shows the names of the package files. Clicking a selected row of the table opens the relevant package file at the code in question.</p>
 
-<p>Note that using the same arguments as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>) would not allow one to apply <code class="func">BrowsePackageVariables</code> to packages that have been loaded before the <strong class="pkg">Browse</strong> package. The idea is to compute the underlying data first, using <code class="func">PackageVariablesInfo</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: PackageVariablesInfo</span></a>), then to load the <strong class="pkg">Browse</strong> package, and finally to call <code class="func">BrowsePackageVariables</code>.</p>
+<p>The idea behind the argument <var class="Arg">info</var> is that using the same arguments as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>) does not allow one to apply <code class="func">BrowsePackageVariables</code> to packages that have been loaded before the <strong class="pkg">Browse</strong> package. Thus one can compute the underlying data <var class="Arg">info</var> first, using <code class="func">PackageVariablesInfo</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: PackageVariablesInfo</span></a>), then load the <strong class="pkg">Browse</strong> package, and finally call <code class="func">BrowsePackageVariables</code>.</p>
 
 <p>For example, the overview of package variables for <strong class="pkg">Browse</strong> can be shown by starting <strong class="pkg">GAP</strong> without packages and entering the following lines.</p>
 
@@ -916,7 +921,7 @@
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">choice:= List( [ 1 .. 30 ], i -&gt; Random( [ 1 .. 6 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">input:= List( "tlfrbd", INT_CHAR ){ choice };;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">input:= List( "tlfrbd", IntChar ){ choice };;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( Concatenation(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       input{ [ 1 .. 20 ] },</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "s",                    # switch to number display</span>

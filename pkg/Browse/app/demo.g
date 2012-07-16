@@ -167,10 +167,10 @@ NCurses.Demo:= function( arg )
         NCurses.doupdate();
         ch:= NCurses.wgetch( win );
         continu:= true;
-        if   ch = INT_CHAR( 'q' ) then
+        if   ch = IntChar( 'q' ) then
           # return to the same item in the choices list
           continu:= false;
-        elif ch = INT_CHAR( 'b' ) then
+        elif ch = IntChar( 'b' ) then
           # repeat the current item
           keepsel:= true;
           continu:= false;
@@ -249,7 +249,7 @@ NCurses.update_panels(); NCurses.doupdate();\n\
 ",
 "# make window/panel more visible with a border:\n\
 # first with prescribed characters for lines and corners ...\n\
-NCurses.wborder(win2, List(\"abcdefgh\", INT_CHAR));;\n\
+NCurses.wborder(win2, List(\"abcdefgh\", IntChar));;\n\
 NCurses.update_panels(); NCurses.doupdate();\n\
 ",
 "# now with default lines, depending on terminal capabilities:\n\

@@ -6,7 +6,7 @@
            [1XDictionaries of External Rings for the [5XGAP[0m[1X Package [5Xhomalg[0m[1X[0m
   
   
-                               Version 2012.06.08
+                               Version 2012.06.28
   
   
                                  February 2012

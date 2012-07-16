@@ -1,22 +1,22 @@
   
-  [1X1 Introduction[0X
+  [1X1 [33X[0;0YIntroduction[133X[101X
   
   
-  [1X1.1  What  is  the  Role  of  the  [5XGradedRingForHomalg[1X Package in the [5Xhomalg[1X[0X
-  [1XProject?[0X
+  [1X1.1  [33X[0;0YWhat  is  the  Role  of  the  [5XGradedRingForHomalg[105X[101X[1X Package in the [5Xhomalg[105X[101X[1X[101X
+  [1XProject?[133X[101X
   
-  The  [5Xhomalg[0m  project  [hpa10]  aims  at  providing  a  general  and abstract
-  framework  for  homological  computations.  The  package [5XGradedRingForHomalg[0m
-  enables  the  [5Xhomalg[0m  project  to  endow commutative rings in [5Xhomalg[0m with an
-  Abelian grading.
-  
-  
-  [1X1.2 Functionality[0X
-  
-  The  package  [5XGradedRingForHomalg[0m  on  the  one  hand  builds on the package
-  [5XMatricesForHomalg[0m   and   on   the   other   hands   adds  functionality  to
-  [5XMatricesForHomalg[0m.
+  [33X[0;0YThe  [5Xhomalg[105X  project  [hpa10]  aims  at  providing  a  general  and abstract
+  framework  for  homological  computations.  The  package [5XGradedRingForHomalg[105X
+  enables  the  [5Xhomalg[105X  project  to  endow commutative rings in [5Xhomalg[105X with an
+  Abelian grading.[133X
   
   
-  [1X1.3 The Math Behind This Package[0X
+  [1X1.2 [33X[0;0YFunctionality[133X[101X
+  
+  [33X[0;0YThe  package  [5XGradedRingForHomalg[105X  on  the  one  hand  builds on the package
+  [5XMatricesForHomalg[105X   and   on   the   other   hands   adds  functionality  to
+  [5XMatricesForHomalg[105X.[133X
+  
+  
+  [1X1.3 [33X[0;0YThe Math Behind This Package[133X[101X
   

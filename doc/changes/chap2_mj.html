@@ -45,11 +45,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X81A313117C30EC28">2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.4.12</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X83D3FC7781921387">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.5.5 (July 2012)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.4 and <strong class="pkg">GAP</strong> 4.5</span></h3>
 
-<p>This chapter lists most important changes between <strong class="pkg">GAP</strong> 4.4.12 and the first public release of <strong class="pkg">GAP</strong> 4.5. It is not meant to serve as a complete account on all improvements; instead, it should be viewed as an introduction to <strong class="pkg">GAP</strong> 4.5, accompanying its release announcement.</p>
+<p>This chapter lists most important changes between <strong class="pkg">GAP</strong> 4.4.12 and the first public release of <strong class="pkg">GAP</strong> 4.5. It also contains information about subsequent update releases for <strong class="pkg">GAP</strong> 4.5. It is not meant to serve as a complete account on all improvements; instead, it should be viewed as an introduction to <strong class="pkg">GAP</strong> 4.5, accompanying its release announcement.</p>
 
 <p><a id="X7C1300337DD936C4" name="X7C1300337DD936C4"></a></p>
 
@@ -130,16 +133,10 @@
 
 
 <ul>
-<li><p><strong class="pkg">CTblLib</strong> package (the <strong class="pkg">GAP</strong> Character Table Library) by T. Breuer has been extended by many new character tables.</p>
-
-</li>
 <li><p>Functions and iterators are now available to create and enumerate simple groups by their order up to isomorphism: <code class="func">SimpleGroup</code> (<a href="../../doc/ref/chap39_mj.html#X8492B05B822AC58C"><span class="RefLink">Reference: SimpleGroup</span></a>), <code class="func">SmallSimpleGroup</code> (<a href="../../doc/ref/chap39_mj.html#X872E93F586F54FCE"><span class="RefLink">Reference: SmallSimpleGroup</span></a>), <code class="func">SimpleGroupsIterator</code> (<a href="../../doc/ref/chap39_mj.html#X839CDD8C7AE39FD6"><span class="RefLink">Reference: SimpleGroupsIterator</span></a>) and <code class="func">AllSmallNonabelianSimpleGroups</code> (<a href="../../doc/ref/chap39_mj.html#X7EB47BF27D8CBF72"><span class="RefLink">Reference: AllSmallNonabelianSimpleGroups</span></a>).</p>
 
 </li>
-<li><p><strong class="pkg">IRREDSOL</strong> package by B. Höfling now covers all irreducible soluble subgroups of <span class="SimpleMath">\(GL(n,q)\)</span> for <span class="SimpleMath">\(q^n &lt; 1000000\)</span> and primitive soluble permutation groups of degree <span class="SimpleMath">\(&lt; 1000000\)</span> (previously, the bound was <span class="SimpleMath">\(65536\)</span>).</p>
-
-</li>
-<li><p>The new package <strong class="pkg">Smallsemi</strong> by A. Distler and J. Mitchell contains the library of all semigroups of order at most 8.</p>
+<li><p>See also packages <strong class="pkg">CTblLib</strong>, <strong class="pkg">IRREDSOL</strong> and <strong class="pkg">Smallsemi</strong> listed in Section <a href="chap2_mj.html#X81A313117C30EC28"><span class="RefLink">2.2-2</span></a>.</p>
 
 </li>
 </ul>
@@ -200,13 +197,13 @@
 
 
 <ul>
-<li><p>Polynomial factorisation over rationals can miss factors of degree greater than <span class="SimpleMath">\(deg(f)/2\)</span> if they have very small coefficients, while the cofactor has large coefficients.</p>
+<li><p>Polynomial factorisation over rationals could miss factors of degree greater than <span class="SimpleMath">\(deg(f)/2\)</span> if they have very small coefficients, while the cofactor has large coefficients.</p>
 
 </li>
 <li><p><code class="func">IntermediateSubgroups</code> (<a href="../../doc/ref/chap39_mj.html#X781661FB78DC83B5"><span class="RefLink">Reference: IntermediateSubgroups</span></a>) called on a group and a normal subgroup did not properly calculate maximal inclusion relationships.</p>
 
 </li>
-<li><p><code class="func">CentreOfCharacter</code> (<a href="../../doc/ref/chap72_mj.html#X7E77D4147A0836D3"><span class="RefLink">Reference: CentreOfCharacter</span></a>) and <code class="func">ClassPositionsOfCentre</code> (<a href="../../doc/ref/chap72_mj.html#X7CE5B4137B399274"><span class="RefLink">Reference: ClassPositionsOfCentre (for a character)</span></a>) called for a group character may return a perhaps too large result.</p>
+<li><p><code class="func">CentreOfCharacter</code> (<a href="../../doc/ref/chap72_mj.html#X7E77D4147A0836D3"><span class="RefLink">Reference: CentreOfCharacter</span></a>) and <code class="func">ClassPositionsOfCentre</code> (<a href="../../doc/ref/chap72_mj.html#X7CE5B4137B399274"><span class="RefLink">Reference: ClassPositionsOfCentre (for a character)</span></a>) called for a group character could return a perhaps too large result.</p>
 
 </li>
 <li><p><code class="func">Trace</code> (<a href="../../doc/ref/chap7_mj.html#X7D82FAD881B262D1"><span class="RefLink">Reference: TraceMethods</span></a>) called for an element of a finite field that was created with <code class="func">AlgebraicExtension</code> (<a href="../../doc/ref/chap67_mj.html#X7CDA90537D2BAC8A"><span class="RefLink">Reference: AlgebraicExtension</span></a>) ran into an error.</p>
@@ -215,7 +212,7 @@
 <li><p><code class="func">IrreducibleRepresentationsDixon</code> (<a href="../../doc/ref/chap71_mj.html#X8493ED7A86FFCB8A"><span class="RefLink">Reference: IrreducibleRepresentationsDixon</span></a>) did not accept a list with one character as a second argument.</p>
 
 </li>
-<li><p>Composing a homomorphism from a permutation group to a finitely presented group with another homomorphism can give wrong results.</p>
+<li><p>Composing a homomorphism from a permutation group to a finitely presented group with another homomorphism could give wrong results.</p>
 
 </li>
 <li><p>For certain arguments, the function <code class="func">EU</code> (<a href="../../doc/ref/chap18_mj.html#X842338F184E63894"><span class="RefLink">Reference: EU</span></a>) returned wrong results.</p>
@@ -239,13 +236,13 @@
 <li><p>The membership test for a group of finite field elements ran into an error if the zero element of the field was given as the first argument.</p>
 
 </li>
-<li><p>Constant polynomials are now recognised as univariate in any variable.</p>
+<li><p>Constant polynomials were not recognised as univariate in any variable.</p>
 
 </li>
-<li><p>Fixed problem with resetting the kernels recursion depth counter when running into many break loops.</p>
+<li><p>The kernel recursion depth counter was not reset properly when running into many break loops.</p>
 
 </li>
-<li><p><strong class="pkg">GAP</strong> behaves now much better when the printing of a (large) object is interrupted with <code class="code">Ctrl-C</code>. The object is no longer corrupted and the indentation level is reset.</p>
+<li><p><strong class="pkg">GAP</strong> did not behave well when printing of a (large) object was interrupted with <code class="code">Ctrl-C</code>. Now the object is no longer corrupted and the indentation level is reset.</p>
 
 </li>
 </ul>
@@ -257,6 +254,12 @@
 
 </li>
 <li><p>Multiple unary <code class="code">+</code> or <code class="code">-</code> signs are no longer allowed (to avoid confusion with increment/decrement operators from other programming languages).</p>
+
+</li>
+<li><p>Due to changes to improve the performance of records with large number of components, the ordering of record components in <code class="code">View</code>'ed records has changed.</p>
+
+</li>
+<li><p>Due to improvements for vectors over finite fields, certain objects have more limitations on changing their base field. For example, one can not create a compressed matrix over <span class="SimpleMath">\(GF(2)\)</span> and then assign an element of <span class="SimpleMath">\(GF(4)\)</span> to one of its entries.</p>
 
 </li>
 </ul>
@@ -291,10 +294,10 @@
 
 
 <ul>
-<li><p>The binary <code class="file">rsync</code> distribution for <strong class="pkg">GAP</strong> on Linux PCs with i686 or x86_64 compatible processors provided by Frank Lübeck, see <span class="URL"><a href="http://rsync.gap-system.org">http://rsync.gap-system.org</a></span>.</p>
+<li><p>The binary <code class="file">rsync</code> distribution for <strong class="pkg">GAP</strong> on Linux PCs with i686 or x86_64 compatible processors provided by Frank Lübeck, see <span class="URL"><a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/gap/rsync">http://www.math.rwth-aachen.de/~Frank.Luebeck/gap/rsync</a></span>.</p>
 
 </li>
-<li><p><strong class="pkg">BOB</strong>, a tool for Linux and Mac OS X to download and build <strong class="pkg">GAP</strong> and its packages from source provided by M. Neunhöffer: <span class="URL"><a href="www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html">www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html</a></span>.</p>
+<li><p><strong class="pkg">BOB</strong>, a tool for Linux and Mac OS X to download and build <strong class="pkg">GAP</strong> and its packages from source provided by M. Neunhöffer: <span class="URL"><a href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html">http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html</a></span>.</p>
 
 </li>
 <li><p>The <strong class="pkg">GAP</strong> installer for Windows provided by Alexander Konovalov: <span class="URL"><a href="http://www.gap-system.org/ukrgap/wininst/">http://www.gap-system.org/ukrgap/wininst/</a></span>.</p>
@@ -342,7 +345,7 @@
 <li><p><code class="func">SetHelpViewer</code> (<a href="../../doc/ref/chap2_mj.html#X87C1BFB2826488B0"><span class="RefLink">Reference: SetHelpViewer</span></a>) now supports the Google Chrome browser.</p>
 
 </li>
-<li><p>The <strong class="pkg">CTblLib</strong> package, which is loaded by default, now needs the <strong class="pkg">Browse</strong> package. As a result, if the <strong class="pkg">Browse</strong> kernel module is compiled, then a function from the <strong class="pkg">Browse</strong> package will be used to display multiple matches in the <strong class="pkg">GAP</strong> online help. To switch off this feature, use the command</p>
+<li><p>Multiple matches in the <strong class="pkg">GAP</strong> online help are displayed via a function from the <strong class="pkg">Browse</strong> package, which is loaded in the default configuration. This feature can be replaced by the known pager using the command</p>
 
 
 <pre class="normal">
@@ -389,7 +392,7 @@ SetUserPreference( "browse", "SelectHelpMatches", false );
 
 <h5>2.2-1 <span class="Heading">Interface between the core system and packages</span></h5>
 
-<p>The package loading mechanism has been improved. In particular, there is a better error management if package loading fails for packages that use the new mechanism (see <code class="func">DisplayPackageLoadingLog</code> (<a href="../../doc/ref/chap76_mj.html#X7D162DDF813D2BBA"><span class="RefLink">Reference: DisplayPackageLoadingLog</span></a>) and the rest of the Chapter <a href="../../doc/ref/chap76_mj.html#X816DC7C580D41F49"><span class="RefLink">Reference: GAP Packages</span></a> which documents how to <em>use</em> <strong class="pkg">GAP</strong> packages). The old mechanisms are still supported for now, but are not recommended.</p>
+<p>The package loading mechanism has been improved. The most important new feature is that all dependencies are evaluated in advance and then used to determine the order in which package files are read. This allows <strong class="pkg">GAP</strong> to handle cyclic dependencies as well as situations where package A requires package B to be loaded completely before any file of package A is read. To avoid distortions of the order in which packages will be loaded, package authors are strongly discouraged from calling <code class="func">LoadPackage</code> (<a href="../../doc/ref/chap76_mj.html#X79B373A77B29D1F5"><span class="RefLink">Reference: LoadPackage</span></a>) and <code class="func">TestPackageAvailability</code> (<a href="../../doc/ref/chap76_mj.html#X8580DF257E4D7046"><span class="RefLink">Reference: TestPackageAvailability</span></a>) in a package code in order to determine whether some other package will be loaded before or together with the current package - instead, one should use <code class="func">IsPackageMarkedForLoading</code> (<a href="../../doc/ref/chap76_mj.html#X8067348B836BAF37"><span class="RefLink">Reference: IsPackageMarkedForLoading</span></a>). In addition, there is now a better error management if package loading fails for packages that use the new functionality to log package loading messages (see <code class="func">DisplayPackageLoadingLog</code> (<a href="../../doc/ref/chap76_mj.html#X7D162DDF813D2BBA"><span class="RefLink">Reference: DisplayPackageLoadingLog</span></a>) and the rest of the Chapter <a href="../../doc/ref/chap76_mj.html#X816DC7C580D41F49"><span class="RefLink">Reference: GAP Packages</span></a> which documents how to <em>use</em> <strong class="pkg">GAP</strong> packages), and package authors are very much encouraged to use these logging facilities.</p>
 
 <p>In <strong class="pkg">GAP</strong> 4.4 certain packages were marked as <em>autoloaded</em> and would be loaded, if present, when <strong class="pkg">GAP</strong> started up. In <strong class="pkg">GAP</strong> 4.5, this notion is divided into three. Certain packages are recorded as <em>needed</em> by the <strong class="pkg">GAP</strong> system and others as <em>suggested</em>, in the same way that packages may <em>need</em> or <em>suggest</em> other packages. If a needed package is not loadable, <strong class="pkg">GAP</strong> will not start. Currently only <strong class="pkg">GAPDoc</strong> is needed. If a suggested package is loadable, it will be loaded. Typically these are packages which install better methods for Operations and Objects already present in <strong class="pkg">GAP</strong>. Finally, the user preferences mechanism can be used to specify additional packages that should be loaded if possible. By default this includes most packages that were autoloaded in <strong class="pkg">GAP</strong> 4.4.12, see <code class="func">ShowUserPreferences</code> (<a href="../../doc/ref/chap3_mj.html#X79C78FE1869C9004"><span class="RefLink">Reference: ShowUserPreferences</span></a>).</p>
 
@@ -647,6 +650,73 @@ SetUserPreference( "browse", "SelectHelpMatches", false );
 
 </li>
 <li><p><strong class="pkg">NQL</strong> package by R. Hartung has been withdrawn by the author.</p>
+
+</li>
+</ul>
+<p><a id="X83D3FC7781921387" name="X83D3FC7781921387"></a></p>
+
+<h4>2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.5.5 (July 2012)</span></h4>
+
+<p>Fixed bugs which could lead to crashes:</p>
+
+
+<ul>
+<li><p>For small primes (compact fields) <code class="code">ZmodnZObj(r,p)</code> now returns the corresponding FFE to avoid crashes when compacting matrices. [Reported by Ignat Soroko]</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>Fixed a bug in <code class="func">CommutatorSubgroup</code> (<a href="../../doc/ref/chap39_mj.html#X7A9A3D5578CE33A0"><span class="RefLink">Reference: CommutatorSubgroup</span></a>) for fp groups causing infinite recursion, which could, for example, be triggered by computing automorphism groups.</p>
+
+</li>
+<li><p>Previously, the list of factors of a polynomial was mutable, and hence could be accidentally corrupted by callers. Now the list of irreducible factors is stored immutable. To deal with implicit reliance on old code, always a shallow copy is returned. [reported by Jakob Kroeker]</p>
+
+</li>
+<li><p>Computing high powers of matrices ran into an error for matrices in the format of the <strong class="pkg">cvec</strong> package. Now the library function also works with these matrices. [reported by Klaus Lux]</p>
+
+</li>
+<li><p>The pseudo tty code which is responsible for spawning subprocesses has been partially rewritten to allow more than 128 subprocesses on certain systems. This mechanism is for example used by <strong class="pkg">ANUPQ</strong> and <strong class="pkg">nq</strong> packages to compute group quotients via an external program. Previously, on Mac OS X this could be done precisely 128 times, and then an error would occur. That is, one could e.g. compute 128 nilpotent quotients, and then had to restart <strong class="pkg">GAP</strong> to compute more. This also affected other systems, such as OpenBSD, where it now also works correctly.</p>
+
+</li>
+<li><p>On Mac OS X, using <strong class="pkg">GAP</strong> compiled against GNU readline 6.2, pasting text into the terminal session would result in this text appearing very slowly, with a 0.1 sec delay between each "keystroke". This is not the case with versions 6.1 and older, and has been reported to the GNU readline team. In the meantime, we work around this issue in most situations by setting <code class="code">rl_event_hook</code> only if <code class="code">OnCharReadHookActive</code> is set.</p>
+
+</li>
+<li><p><code class="func">ShowUserPreferences</code> (<a href="../../doc/ref/chap3_mj.html#X79C78FE1869C9004"><span class="RefLink">Reference: ShowUserPreferences</span></a>) ran into a break loop in case of several undeclared user preferences. [Reported by James Mitchell]</p>
+
+</li>
+<li><p><strong class="pkg">GAP</strong> did not start correctly if the user preference <code class="code">"InfoPackageLoadingLevel"</code> was set to a number <span class="SimpleMath">\( &gt;= 3\)</span>. The reason is that <code class="code">PrintFormattedString</code> was called before it was installed. The current fix is a temporary solution.</p>
+
+</li>
+<li><p>The <code class="code">"hints"</code> member of <code class="code">TypOutputFile</code> used to contain 3*100 entries, yet <code class="code">addLineBreakHint</code> would write entries with index up to and including 3*99+3=300, leading to a buffer overflow. This would end up overwriting the <code class="code">"stream"</code> member with -1. Fixed by incrementing the size of <code class="code">"hints"</code> to 301. [Reported by Jakob Kroeker]</p>
+
+</li>
+<li><p>The function <code class="code">IsDocumentedWord</code> tested the given word against strings obtained by splitting help matches at non-letter characters. This way, variable names containing underscores or digits were erroneously not regarded as documented, and certain substrings of these names were erroneously regarded as documented.</p>
+
+</li>
+<li><p>On Windows, an error occurred if one tried to use the default Windows browser as a help viewer (see <code class="func">SetHelpViewer</code> (<a href="../../doc/ref/chap2_mj.html#X87C1BFB2826488B0"><span class="RefLink">Reference: SetHelpViewer</span></a>)). Now the browser opens the top of the correspoding manual chapter. The current fix is a temporary solution since the problem remains with the positioning at the required manual section.</p>
+
+</li>
+</ul>
+<p>Improved functionality:</p>
+
+
+<ul>
+<li><p><code class="func">WriteGapIniFile</code> (<a href="../../doc/ref/chap3_mj.html#X79C78FE1869C9004"><span class="RefLink">Reference: WriteGapIniFile</span></a>) on Windows now produces the <code class="file">gap.ini</code> file with Windows style line breaks. Also, an info message is now printed if an existing <code class="file">gap.ini</code> file was moved to a backup file <code class="file">gap.ini.bak</code>.</p>
+
+</li>
+<li><p>The <strong class="pkg">CTblLib</strong> and <strong class="pkg">TomLib</strong> packages are removed from the list of suggested packages of the core part of <strong class="pkg">GAP</strong>. Instead they are added to the default list of the user preference <code class="code">"PackagesToLoad"</code>. This way it is possible to configure <strong class="pkg">GAP</strong> to not load these packages via changing the default value of <code class="code">"PackagesToLoad"</code>.</p>
+
+</li>
+<li><p>The conjugacy test in <span class="SimpleMath">\(S_n\)</span> for intransitive subgroups was improved. This deals with inefficiency issue in the case reported by Stefan Kohl.</p>
+
+</li>
+<li><p>Added <code class="code">InstallAndCallPostRestore</code> to <code class="file">lib/system.g</code> and call it in <code class="file">lib/init.g</code> instead of <code class="code">CallAndInstallPostRestore</code> for the function that reads the files listed in <strong class="pkg">GAP</strong> command line. This fixes the problem reported by Yevgen Muntyan when <code class="func">SaveWorkspace</code> (<a href="../../doc/ref/chap3_mj.html#X876544A57C73C488"><span class="RefLink">Reference: SaveWorkspace</span></a>) was used in a file listed in <strong class="pkg">GAP</strong> command line (before, according to the documentation, <code class="func">SaveWorkspace</code> (<a href="../../doc/ref/chap3_mj.html#X876544A57C73C488"><span class="RefLink">Reference: SaveWorkspace</span></a>) was only allowed at the main <strong class="pkg">GAP</strong> prompt).</p>
+
+</li>
+<li><p>There is now a new user preference <code class="code">PackagesToIgnore</code>, see <code class="func">SetUserPreference</code> (<a href="../../doc/ref/chap3_mj.html#X79C78FE1869C9004"><span class="RefLink">Reference: SetUserPreference</span></a>). It contains a list of names of packages that shall be regarded as not available at all in the current session, both for autoloading and for later calls of <code class="func">LoadPackage</code> (<a href="../../doc/ref/chap76_mj.html#X79B373A77B29D1F5"><span class="RefLink">Reference: LoadPackage</span></a>). This preference is useful for testing purposes if one wants to run some code without loading certain packages.</p>
 
 </li>
 </ul>

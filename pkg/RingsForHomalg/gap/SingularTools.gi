@@ -46,9 +46,9 @@ InstallValue( CommonHomalgTableForSingularTools,
                    fi;
                    if e{[1]} = "-" then
                        #Info( InfoWarning, 1, "\033[01m\033[5;31;47mdividing by a unit starting with a minus sign:\033[0m ", e );
-                       return homalgSendBlocking( [ "-(", a, ")/", e{[ 2..Length( e ) ]} ], [ "def" ], HOMALG_IO.Pictograms.DivideByUnit );
+                       return homalgSendBlocking( [ "-poly(", a, ")/", e{[ 2..Length( e ) ]} ], [ "def" ], HOMALG_IO.Pictograms.DivideByUnit );
                    else
-                       return homalgSendBlocking( [ "(",  a, ")/", e ], [ "def" ], HOMALG_IO.Pictograms.DivideByUnit );
+                       return homalgSendBlocking( [ "poly(",  a, ")/", e ], [ "def" ], HOMALG_IO.Pictograms.DivideByUnit );
                    fi;
                    
                  end,
@@ -93,8 +93,8 @@ InstallValue( CommonHomalgTableForSingularTools,
                    local g, a_g, b_g;
                    
                    g := homalgSendBlocking( [ "gcd(", a, b, ")" ], [ "def" ], HOMALG_IO.Pictograms.Gcd );
-                   a_g := homalgSendBlocking( [ "(", a, ") / (", g, ")" ], [ "def" ], HOMALG_IO.Pictograms.CancelGcd );
-                   b_g := homalgSendBlocking( [ "(", b, ") / (", g, ")" ], [ "def" ], HOMALG_IO.Pictograms.CancelGcd );
+                   a_g := homalgSendBlocking( [ "poly(", a, ") / (", g, ")" ], [ "def" ], HOMALG_IO.Pictograms.CancelGcd );
+                   b_g := homalgSendBlocking( [ "poly(", b, ") / (", g, ")" ], [ "def" ], HOMALG_IO.Pictograms.CancelGcd );
                    
                    return [ a_g, b_g ];
                    
@@ -609,7 +609,7 @@ InstallValue( CommonHomalgTableForSingularTools,
                  function( rel, indets, R )
                    local elim;
                    
-                   elim := Iterated( indets, \* );
+                   elim := Product( indets );
                    
                    return homalgSendBlocking( [ "matrix(eliminate(ideal(", rel, "),", elim, "))" ], [ "matrix" ], R, HOMALG_IO.Pictograms.Eliminate );
                    
@@ -638,6 +638,20 @@ InstallValue( CommonHomalgTableForSingularTools,
                    l := StringToIntList( homalgSendBlocking( [ "IndicatorMatrixOfNonZeroEntries(", mat, ")" ], "need_output", HOMALG_IO.Pictograms.IndicatorMatrixOfNonZeroEntries ) );
                    
                    return ListToListList( l, NrRows( mat ), NrColumns( mat ) );
+                   
+                 end,
+               
+               DegreeOfRingElement :=
+                 function( r, R )
+                   
+                   return Int( homalgSendBlocking( [ "deg( ", r, " )" ], "need_output", HOMALG_IO.Pictograms.DegreeOfRingElement ) );
+                   
+                 end,
+               
+               CoefficientsOfUnivariatePolynomial :=
+                 function( r, var )
+                   
+                   return homalgSendBlocking( [ "coeffs( ", r, var, " )" ], [ "matrix" ], HOMALG_IO.Pictograms.Coefficients );
                    
                  end,
                

@@ -1014,7 +1014,7 @@ BindGlobal( "PlaySudoku", function( arg )
             if IsInt(game.poss[p]) then
               Sudoku.Remove(game, p);
             fi;
-            r := INT_CHAR(val[1])-INT_CHAR('0');
+            r := IntChar(val[1])-IntChar('0');
             Sudoku.Place(game, p, r);
             if not IsBound(game.impossible) then
               matrix[ sel[1] ][ sel[2] ]:= entries[r];

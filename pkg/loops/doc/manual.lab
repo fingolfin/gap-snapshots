@@ -221,10 +221,14 @@
 \makelabel{loops:IsLeftKLoop}{7.7.3}
 \makelabel{loops:IsRightBruckLoop}{7.7.3}
 \makelabel{loops:IsRightKLoop}{7.7.3}
-\makelabel{loops:IsLeftALoop}{7.7.4}
-\makelabel{loops:IsMiddleALoop}{7.7.4}
-\makelabel{loops:IsRightALoop}{7.7.4}
-\makelabel{loops:IsALoop}{7.7.4}
+\makelabel{loops:IsLeftAutomorphicLoop}{7.7.4}
+\makelabel{loops:IsMiddleAutomorphicLoop}{7.7.4}
+\makelabel{loops:IsRightAutomorphicLoop}{7.7.4}
+\makelabel{loops:IsAutomorphicLoop}{7.7.4}
+\makelabel{loops:IsLeftALoop}{7.7.5}
+\makelabel{loops:IsMiddleALoop}{7.7.5}
+\makelabel{loops:IsRightALoop}{7.7.5}
+\makelabel{loops:IsALoop}{7.7.5}
 \makelabel{loops:Specific methods}{8}
 \makelabel{loops:Core methods for Bol loops}{8.1}
 \makelabel{loops:AssociatedLeftBruckLoop}{8.1.1}
@@ -264,10 +268,12 @@
 \makelabel{loops:PaigeLoop}{9.8.1}
 \makelabel{loops:Nilpotent loops}{9.9}
 \makelabel{loops:NilpotentLoop}{9.9.1}
-\makelabel{loops:Interesting loops}{9.10}
-\makelabel{loops:InterestingLoop}{9.10.1}
-\makelabel{loops:Libraries of loops up to isotopism}{9.11}
-\makelabel{loops:ItpSmallLoop}{9.11.1}
+\makelabel{loops:Automorphic loops}{9.10}
+\makelabel{loops:AutomorphicLoop}{9.10.1}
+\makelabel{loops:Interesting loops}{9.11}
+\makelabel{loops:InterestingLoop}{9.11.1}
+\makelabel{loops:Libraries of loops up to isotopism}{9.12}
+\makelabel{loops:ItpSmallLoop}{9.12.1}
 \makelabel{loops:Files}{A}
 \makelabel{loops:Filters built into the package}{B}
 \makelabel{loops:Bibliography}{}
@@ -290,6 +296,7 @@
 \setcitlab {NaVo2007}{17}
 \setcitlab {Pf}{18}
 \setcitlab {PhVo}{19}
-\setcitlab {Vo}{20}
-\setcitlab {Wi}{21}
+\setcitlab {SlZe2011}{20}
+\setcitlab {Vo}{21}
+\setcitlab {Wi}{22}
 \makelabel{loops:Index}{}

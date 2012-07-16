@@ -92,9 +92,8 @@
   available as other parts of the [5XGAP[105X library are.[133X
   
   [33X[0;0YWhen  [5XGAP[105X  is started then some packages are loaded automatically. These are
-  the packages listed in the [10XNeededOtherPackages[110X and (if this is not disabled,
-  see    below)    [10XSuggestedOtherPackages[110X    components    of    the    record
-  [10XGAPInfo.Dependencies[110X.[133X
+  the packages listed in [10XGAPInfo.Dependencies.NeededOtherPackages[110X and (if this
+  is not disabled, see below) [10XUserPreference( "PackagesToLoad" )[110X.[133X
   
   [33X[0;0YA  [5XGAP[105X  package  may  also  install only its documentation automatically but
   still  need  loading  by  [2XLoadPackage[102X.  In  this  situation  the online help
@@ -110,12 +109,11 @@
   
   [33X[0;0YFurthermore,  [13Xindividual  users[113X  can  disable  the  autoloading  of specific
   packages  by  putting  the  names  of  these  packages into the list that is
-  assigned  to  the  [10XExcludeFromAutoload[110X component of the record in the user's
-  [11Xgap.ini[111X file (see [14X3.2-1[114X).[133X
+  assigned  to  the  user  preference  [21XExcludeFromAutoload[121X, for example in the
+  user's [11Xgap.ini[111X file (see [14X3.2-1[114X).[133X
   
   [33X[0;0YUsing  the  [10X-A[110X command line option when starting up [5XGAP[105X (see [14X3.1[114X), automatic
-  loading  of  all  suggested  packages  of  [5XGAP[105X  is switched off [13Xfor this [5XGAP[105X
-  session[113X.[133X
+  loading of packages is switched off [13Xfor this [5XGAP[105X session[113X.[133X
   
   [33X[0;0YIn    any   of   the   above   three   cases,   the   packages   listed   in
   [10XGAPInfo.Dependencies.NeededOtherPackages[110X are still loaded automatically, and

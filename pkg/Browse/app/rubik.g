@@ -144,7 +144,7 @@
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> choice:= List( [ 1 .. 30 ], i -> Random( [ 1 .. 6 ] ) );;
-##  gap> input:= List( "tlfrbd", INT_CHAR ){ choice };;
+##  gap> input:= List( "tlfrbd", IntChar ){ choice };;
 ##  gap> BrowseData.SetReplay( Concatenation(
 ##  >        input{ [ 1 .. 20 ] },
 ##  >        "s",                    # switch to number display

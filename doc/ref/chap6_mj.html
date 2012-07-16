@@ -966,7 +966,7 @@ $endif
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCommandLineHistory</code>( [<var class="Arg">fname</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="keyw">fail</code> or number of added lines</p>
 
-<p>The first command saves the lines in the command line history to the file given by the string <var class="Arg">fname</var>. The default for <var class="Arg">fname</var> is <code class="file">history</code> in the users <strong class="pkg">GAP</strong> root path <code class="code">GAPInfo.UserGapRoot</code> or <code class="file">"~/.gap_hist"</code> if this directory does not exist. If the optional argument <var class="Arg">app</var> is <code class="keyw">true</code> then the lines are appended to that file otherwise the file is overwritten.</p>
+<p>The first command saves the lines in the command line history to the file given by the string <var class="Arg">fname</var>. The default for <var class="Arg">fname</var> is <code class="file">history</code> in the user's <strong class="pkg">GAP</strong> root path <code class="code">GAPInfo.UserGapRoot</code> or <code class="file">"~/.gap_hist"</code> if this directory does not exist. If the optional argument <var class="Arg">app</var> is <code class="keyw">true</code> then the lines are appended to that file otherwise the file is overwritten.</p>
 
 <p>The second command is the converse, it reads the lines from file <var class="Arg">fname</var> and <em>prepends</em> them to the current command line history.</p>
 

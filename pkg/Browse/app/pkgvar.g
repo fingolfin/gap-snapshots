@@ -5,19 +5,10 @@
 #Y  Copyright (C)  2011,  Lehrstuhl D für Mathematik,   RWTH Aachen,  Germany
 ##
 
-##
-##  A &Browse; adapted way to evaluate profiling results is
-##  to show the overview that is printed by the &GAP; function
-##  <Ref Func="DisplayProfile" BookName="ref"/> in a &Browse; table,
-##  which allows one to sort the profiled functions according to
-##  the numbers of calls, the time spent, etc.,
-##  and to search for certain functions one is interested in.
-##
-##  <ManSection>
-
 
 #############################################################################
 ##
+#F  BrowsePackageVariables( <pkgname>[, <version>][, <arec>] )
 #F  BrowsePackageVariables( <pkgname>, <info>[, <arec>] )
 ##
 ##  <#GAPDoc Label="BrowsePackageVariables_section">
@@ -30,6 +21,7 @@
 ##  in a &Browse; table.
 ##
 ##  <ManSection>
+##  <Func Name="BrowsePackageVariables" Arg="pkgname[, version][, arec]"/>
 ##  <Func Name="BrowsePackageVariables" Arg="pkgname, info[, arec]"/>
 ##
 ##  <Returns>
@@ -37,15 +29,22 @@
 ##  </Returns>
 ##
 ##  <Description>
-##  Let <A>pkgname</A> be the name of a &GAP; package, and <A>info</A> be the
-##  output of <Ref Func="PackageVariablesInfo" BookName="ref"/> for this
-##  package.
-##  The optional record <A>arec</A>, if given, has the same meaning as for
+##  In the first version, the arguments are the same as for
+##  <Ref Func="ShowPackageVariables" BookName="ref"/>, that is,
+##  <A>pkgname</A> is the name of a &GAP; package,
+##  and the optional arguments <A>version</A> and <A>arec</A> are a version
+##  number of this package and a record used for customizing the output,
+##  respectively.
+##  <P/>
+##  In the second version, <A>pkgname</A> is the name of a &GAP; package,
+##  <A>info</A> is the output of
+##  <Ref Func="PackageVariablesInfo" BookName="ref"/> for this package,
+##  and the optional record <A>arec</A> has the same meaning as for
 ##  <Ref Func="ShowPackageVariables" BookName="ref"/>.
 ##  <P/>
 ##  <Ref Func="BrowsePackageVariables"/> opens a Browse table that shows the
 ##  global variables that become bound and the methods that become installed
-##  when &GAP; loads the package.
+##  when &GAP; loads the package <A>pkgname</A>.
 ##  <P/>
 ##  The table is categorized by the kinds of variables (new or redeclared
 ##  operations, methods, info classes, synonyms, other globals).
@@ -55,14 +54,14 @@
 ##  Clicking a selected row of the table opens the relevant package file at
 ##  the code in question.
 ##  <P/>
-##  Note that using the same arguments as for
-##  <Ref Func="ShowPackageVariables" BookName="ref"/> would not allow one to
-##  apply <Ref Func="BrowsePackageVariables"/> to packages that have been
-##  loaded before the <Package>Browse</Package> package.
-##  The idea is to compute the underlying data first,
+##  The idea behind the argument <A>info</A> is that using the same arguments
+##  as for <Ref Func="ShowPackageVariables" BookName="ref"/> does not allow
+##  one to apply <Ref Func="BrowsePackageVariables"/> to packages that have
+##  been loaded before the <Package>Browse</Package> package.
+##  Thus one can compute the underlying data <A>info</A> first,
 ##  using <Ref Func="PackageVariablesInfo" BookName="ref"/>,
-##  then to load the <Package>Browse</Package> package,
-##  and finally to call <Ref Func="BrowsePackageVariables"/>.
+##  then load the <Package>Browse</Package> package,
+##  and finally call <Ref Func="BrowsePackageVariables"/>.
 ##  <P/>
 ##  For example, the overview of package variables for
 ##  <Package>Browse</Package> can be shown by starting &GAP; without packages
@@ -80,29 +79,52 @@
 ##  <#/GAPDoc>
 ##
 BindGlobal( "BrowsePackageVariables", function( arg )
-    local pkgname, info, arec, prefix, matrix, jump, suffix, show,
-          documented, undocumented, private, filenamewidth, namewidth, entry,
-          subentry, sel_action, t;
+    local pkgname, arec, info, prefix, matrix, jump, suffix, show,
+          documented, undocumented, private, filenamewidth, namewidth,
+          entry, subentry, nameandcomment, sel_action, t;
 
-    if Length( arg ) = 2 and IsString( arg[1] ) and IsList( arg[2] ) then
-      pkgname:= LowercaseString( arg[1] );
-      info:= arg[2];
-      arec:= rec();
-    elif Length( arg ) = 3 and IsString( arg[1] ) and IsList( arg[2] )
-                           and IsRecord( arg[3] ) then
-      pkgname:= LowercaseString( arg[1] );
-      info:= arg[2];
-      arec:= arg[3];
-    else
-      Error( "usage: BrowsePackageVariables( <pkgname>, <info>",
+    if   Length( arg ) = 0 or not IsString( arg[1] ) then
+      Error( "usage: BrowsePackageVariables( <pkgname>[, <info>]",
              "[, <arec>] )" );
     fi;
-
+    pkgname:= LowercaseString( arg[1] );
     if not IsBound( GAPInfo.PackagesInfo.( pkgname ) ) then
       Error( "no package with name <pkgname>" );
     fi;
-
     pkgname:= GAPInfo.PackagesInfo.( pkgname )[1].PackageName;
+
+    arec:= rec();
+    if Length( arg ) = 1 then
+      # BrowsePackageVariables( <pkgname> )
+      info:= PackageVariablesInfo( pkgname, "" );
+    elif Length( arg ) = 2 and IsString( arg[2] ) then
+      # BrowsePackageVariables( <pkgname>, <version> )
+      info:= PackageVariablesInfo( pkgname, arg[2] );
+    elif Length( arg ) = 2 and IsRecord( arg[2] ) then
+      # BrowsePackageVariables( <pkgname>, <arec> )
+      info:= PackageVariablesInfo( pkgname, "" );
+      arec:= arg[2];
+    elif Length( arg ) = 3 and IsString( arg[2] ) and IsRecord( arg[3] ) then
+      # BrowsePackageVariables( <pkgname>, <version>, <arec> )
+      info:= PackageVariablesInfo( pkgname, arg[2] );
+      arec:= arg[3];
+    elif Length( arg ) = 2 and IsList( arg[2] ) then
+      # BrowsePackageVariables( <pkgname>, <info> )
+      info:= arg[2];
+    elif Length( arg ) = 3 and IsList( arg[2] ) and IsRecord( arg[3] ) then
+      # BrowsePackageVariables( <pkgname>, <info>, <arec> )
+      info:= arg[2];
+      arec:= arg[3];
+    else
+      Error( "usage: BrowsePackageVariables( <pkgname>[, <info>]",
+             "[, <arec>] )" );
+    fi;
+
+    # If nothing is in the result then probably the package was already
+    # loaded, and we have seen a message about it.
+    if IsEmpty( info ) then
+      return;
+    fi;
 
     prefix:= Filename( DirectoriesPackageLibrary( pkgname, "" ), "" );
     matrix:= [];
@@ -143,22 +165,27 @@ BindGlobal( "BrowsePackageVariables", function( arg )
           if ( ( documented and subentry[1][3] = "" ) or
                ( undocumented and subentry[1][3] = "*" ) ) and
              ( private or not '@' in subentry[1][1] ) then
+            nameandcomment:= BrowseData.ReallyFormatParagraph(
+              Concatenation( subentry[1]{ [ 1, 2 ] } ), namewidth, "left" );
+            if Length( subentry[1] ) = 4 and
+               not IsEmpty( subentry[1][4] ) then
+              Append( nameandcomment, "\n" );
+              Append( nameandcomment, BrowseData.ReallyFormatParagraph(
+                subentry[1][4], namewidth, "left" ) );
+            fi;
             Add( matrix, [
               # kind of the variable
               rec( align:= "tl", rows:= [ entry[1] ] ),
-              # variable name
-              rec( align:= "tl", rows:= SplitString(
-                BrowseData.ReallyFormatParagraph( Concatenation(
-                    subentry[1]{ [ 1, 2 ] } ), namewidth, "left" ), "\n" ) ),
+              # variable name, arguments, and comment
+              rec( align:= "tl", rows:= SplitString( nameandcomment, "\n" ) ),
               # documented?
               rec( align:= "tc", rows:= [ BrowseData.ReplacedEntry(
                     subentry[1][3], [ "*", "" ], [ "-", "+" ] ) ] ),
     
               # filename
               rec( align:= "tl", rows:= SplitString(
-                BrowseData.ReallyFormatParagraph( suffix( subentry[2][1] ),
-                                                  filenamewidth,
-                                                  "left" ), "\n" ) ),
+                BrowseData.ReallyFormatParagraph(
+                    suffix( subentry[2][1] ), filenamewidth, "left" ), "\n" ) ),
             ] );
           fi;
           Add( jump, subentry[2] );
@@ -210,7 +237,7 @@ BindGlobal( "BrowsePackageVariables", function( arg )
         sepCol:= [ "| ", " | ", " | ", " | ", " |" ],
 #       sepCategories:= "",
 # problem: first contents rows are not high enough!
-        widthCol:= [ ,,, namewidth,,,, filenamewidth ],
+        widthCol:= [ ,,, namewidth,, 5,, filenamewidth ],
         SpecialGrid:= BrowseData.SpecialGridLineDraw,
 
         CategoryValues:= function( t, i, j )

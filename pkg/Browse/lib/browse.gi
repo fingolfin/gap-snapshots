@@ -1055,7 +1055,7 @@ BrowseData.GetCharacter:= function( t )
       currlog:= replay.logs[ replay.pointer ];
       c:= currlog.steps[ currlog.position ];
       if IsChar( c ) then
-        c:= INT_CHAR( c );
+        c:= IntChar( c );
       fi;
       currlog.position:= currlog.position + 1;
       if not currlog.quiet then
@@ -1285,19 +1285,19 @@ BrowseData.GetPatternEditParameters:= function( arg )
           ins:= not ins;
         elif c = NCurses.keys.REPLACE then
           ins:= not ins;
-        elif c in [ NCurses.keys.HOME, INT_CHAR( '' ) ] then
+        elif c in [ NCurses.keys.HOME, IntChar( '' ) ] then
           pos:= 1;
-        elif c in [ NCurses.keys.END, INT_CHAR( '' ) ] then
+        elif c in [ NCurses.keys.END, IntChar( '' ) ] then
           pos:= Length( res ) + 1;
           if pos > max then
             pos:= pos - 1;
           fi;
-        elif c in [ NCurses.keys.BACKSPACE, INT_CHAR( '' ) ] then
+        elif c in [ NCurses.keys.BACKSPACE, IntChar( '' ) ] then
           if pos > 1 then
             pos:= pos - 1;
             RemoveElmList( res, pos );
           fi;
-        elif c in [ NCurses.keys.DC, INT_CHAR( '' ) ] then
+        elif c in [ NCurses.keys.DC, IntChar( '' ) ] then
           if pos <= Length( res ) then
             RemoveElmList( res, pos );
           fi;
@@ -1318,7 +1318,7 @@ BrowseData.GetPatternEditParameters:= function( arg )
                                yx[2] - width );
             buttondown:= false;
           fi;
-        elif not c in [ NCurses.keys.ENTER, INT_CHAR( '' ), 27 ] then
+        elif not c in [ NCurses.keys.ENTER, IntChar( '' ), 27 ] then
           if ins and Length( res ) < max then
             InsertElmList( res, pos, CHAR_INT( c mod 256 ) );
             pos:= pos + 1;
@@ -1327,7 +1327,7 @@ BrowseData.GetPatternEditParameters:= function( arg )
             pos:= pos + 1;
           fi;
         fi;
-      until c in [ NCurses.keys.ENTER, INT_CHAR( '' ), 27 ];
+      until c in [ NCurses.keys.ENTER, IntChar( '' ), 27 ];
 
       if t <> fail and not BrowseData.IsQuietSession( t.dynamic.replay ) then
         NCurses.show_panel( t.dynamic.statuspanel );
@@ -2395,7 +2395,7 @@ BrowseData.actions.QuitMode := rec(
         # Do *not* add the return value to `t.dynamic.log'.
         Unbind( t.dynamic.log[ Length( t.dynamic.log ) ] );
       fi;
-      if c in List( "yY", INT_CHAR ) then
+      if c in List( "yY", IntChar ) then
         return BrowseData.actions.QuitTable.action( t );
       fi;
     else
@@ -6897,7 +6897,7 @@ BrowseData.SetActions := function( arg )
 
         # Create the triple.
         if IsString( entry ) and 0 < Length( entry ) then
-          new:= [ List( entry, INT_CHAR ), action, entry ];
+          new:= [ List( entry, IntChar ), action, entry ];
         elif IsList( entry ) and
              Length( entry ) = 2 and
              IsList( entry[1] ) and

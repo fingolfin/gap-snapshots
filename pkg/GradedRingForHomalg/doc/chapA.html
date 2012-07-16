@@ -9,20 +9,23 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chapA"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapB.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapB.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X7B2993CB7B012115" name="X7B2993CB7B012115"></a></p>
 <div class="ChapSects"><a href="chapA.html#X7B2993CB7B012115">A <span class="Heading">The Matrix Tool Operations</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chapA.html#X7988F0AF7D87FD23">A.1 <span class="Heading">The Tool Operations <em>without</em> a Fallback Method</span></a>
-<div class="ContSSBlock">
-</div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chapA.html#X7912E42C81296637">A.2 <span class="Heading">The Tool Operations with a Fallback Method</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7E6D7EAE78DAE6B0">A.1 <span class="Heading">The Tool Operations <em>without</em> a Fallback Method</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7912E42C81296637">A.2 <span class="Heading">The Tool Operations with a Fallback Method</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X84C78C6B7C0890BF">A.2-1 MonomialMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X7F9F9C978703E871">A.2-2 RandomMatrixBetweenGradedFreeLeftModules</a></span>
@@ -35,7 +38,7 @@
 
 <p>The functions listed below are components of the <code class="code">homalgTable</code> object stored in the ring. They are only indirectly accessible through standard methods that invoke them.</p>
 
-<p><a id="X7988F0AF7D87FD23" name="X7988F0AF7D87FD23"></a></p>
+<p><a id="X7E6D7EAE78DAE6B0" name="X7E6D7EAE78DAE6B0"></a></p>
 
 <h4>A.1 <span class="Heading">The Tool Operations <em>without</em> a Fallback Method</span></h4>
 
@@ -51,21 +54,20 @@
 
 <h5>A.2-1 MonomialMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; MonomialMatrix</code>( <var class="Arg">d, R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> matrix</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialMatrix</code>( <var class="Arg">d</var>, <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> matrix</p>
 
 <p>The column matrix of <var class="Arg">d</var>-th monomials of the <strong class="pkg">homalg</strong> graded ring <var class="Arg">R</var>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;
-gap&gt; S := GradedRing( R );;
-gap&gt; m := MonomialMatrix( 2, S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := MonomialMatrix( 2, S );</span>
 &lt;A ? x 1 matrix over a graded ring&gt;
-gap&gt; NrRows( m );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRows( m );</span>
 6
-gap&gt; m;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m;</span>
 &lt;A 6 x 1 matrix over a graded ring&gt;
  gap&gt; Display( m );
  z^2,
@@ -74,76 +76,73 @@ gap&gt; m;
  x*z,
  x*y,
  x^2 
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7F9F9C978703E871" name="X7F9F9C978703E871"></a></p>
 
 <h5>A.2-2 RandomMatrixBetweenGradedFreeLeftModules</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomMatrixBetweenGradedFreeLeftModules</code>( <var class="Arg">degreesS, degreesT, R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> matrix</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrixBetweenGradedFreeLeftModules</code>( <var class="Arg">degreesS</var>, <var class="Arg">degreesT</var>, <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> matrix</p>
 
-<p>A random r x c-matrix between the graded free <em>left</em> modules <var class="Arg">R</var>^(-<var class="Arg">degreesS</var>) -&gt; <var class="Arg">R</var>^(-<var class="Arg">degreesT</var>), where r =<code class="code">Length</code>(<var class="Arg">degreesS</var>) and c =<code class="code">Length</code>(<var class="Arg">degreesT</var>).</p>
+<p>A random <span class="SimpleMath">r × c</span>-matrix between the graded free <em>left</em> modules <span class="SimpleMath"><var class="Arg">R</var>^(-<var class="Arg">degreesS</var>) -&gt; <var class="Arg">R</var>^(-<var class="Arg">degreesT</var>)</span>, where <span class="SimpleMath">r =</span><code class="code">Length</code><span class="SimpleMath">(</span><var class="Arg">degreesS</var><span class="SimpleMath">)</span> and <span class="SimpleMath">c =</span><code class="code">Length</code><span class="SimpleMath">(</span><var class="Arg">degreesT</var><span class="SimpleMath">)</span>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c";;
-gap&gt; S := GradedRing( R );;
-gap&gt; rand := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 1, 2 ], S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rand := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 1, 2 ], S );</span>
 &lt;A 3 x 2 matrix over a graded ring&gt;
  gap&gt; Display( rand );
  a-2*b+2*c,                                                2,                 
  a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               
  2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X82E813D982331C0B" name="X82E813D982331C0B"></a></p>
 
 <h5>A.2-3 RandomMatrixBetweenGradedFreeRightModules</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomMatrixBetweenGradedFreeRightModules</code>( <var class="Arg">degreesT, degreesS, R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> matrix</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrixBetweenGradedFreeRightModules</code>( <var class="Arg">degreesT</var>, <var class="Arg">degreesS</var>, <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> matrix</p>
 
-<p>A random r x c-matrix between the graded free <em>right</em> modules <var class="Arg">R</var>^(-<var class="Arg">degreesS</var>) -&gt; <var class="Arg">R</var>^(-<var class="Arg">degreesT</var>), where r =<code class="code">Length</code>(<var class="Arg">degreesT</var>) and c =<code class="code">Length</code>(<var class="Arg">degreesS</var>).</p>
+<p>A random <span class="SimpleMath">r × c</span>-matrix between the graded free <em>right</em> modules <span class="SimpleMath"><var class="Arg">R</var>^(-<var class="Arg">degreesS</var>) -&gt; <var class="Arg">R</var>^(-<var class="Arg">degreesT</var>)</span>, where <span class="SimpleMath">r =</span><code class="code">Length</code><span class="SimpleMath">(</span><var class="Arg">degreesT</var><span class="SimpleMath">)</span> and <span class="SimpleMath">c =</span><code class="code">Length</code><span class="SimpleMath">(</span><var class="Arg">degreesS</var><span class="SimpleMath">)</span>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c";;
-gap&gt; S := GradedRing( R );;
-gap&gt; rand := RandomMatrixBetweenGradedFreeRightModules( [ 1, 2 ], [ 2, 3, 4 ], S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rand := RandomMatrixBetweenGradedFreeRightModules( [ 1, 2 ], [ 2, 3, 4 ], S );</span>
 &lt;A 2 x 3 matrix over a graded ring&gt;
  gap&gt; Display( rand );
  a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,
  -5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7EA1DC07822DE322" name="X7EA1DC07822DE322"></a></p>
 
 <h5>A.2-4 Diff</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; Diff</code>( <var class="Arg">D, N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> matrix</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Diff</code>( <var class="Arg">D</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> matrix</p>
 
-<p>If <var class="Arg">D</var> is a f x p-matrix and <var class="Arg">N</var> is a g x q-matrix then H=Diff(<var class="Arg">D</var>,<var class="Arg">N</var>) is an fg x pq-matrix whose entry H[g*(i-1)+j,q*(k-1)+l] is the result of differentiating <var class="Arg">N</var>[j,l] by the differential operator corresponding to <var class="Arg">D</var>[i,k]. (Here we follow the Macaulay2 convention.)</p>
+<p>If <var class="Arg">D</var> is a <span class="SimpleMath">f × p</span>-matrix and <var class="Arg">N</var> is a <span class="SimpleMath">g × q</span>-matrix then <span class="SimpleMath">H=Diff(</span><var class="Arg">D</var>,<var class="Arg">N</var><span class="SimpleMath">)</span> is an <span class="SimpleMath">fg × pq</span>-matrix whose entry <span class="SimpleMath">H[g*(i-1)+j,q*(k-1)+l]</span> is the result of differentiating <var class="Arg">N</var><span class="SimpleMath">[j,l]</span> by the differential operator corresponding to <var class="Arg">D</var><span class="SimpleMath">[i,k]</span>. (Here we follow the Macaulay2 convention.)</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; S := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c" * "x,y,z";;
-gap&gt; D := HomalgMatrix( "[ \
-&gt; x,2*y,   \
-&gt; y,a-b^2, \
-&gt; z,y-b    \
-&gt; ]", 3, 2, S );;
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := HomalgFieldOfRationalsInDefaultCAS( ) * "a,b,c" * "x,y,z";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := HomalgMatrix( "[ \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x,2*y,   \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">y,a-b^2, \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">z,y-b    \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 3, 2, S );;</span>
 &lt;A 3 x 2 matrix over an external ring&gt;
-gap&gt; N := HomalgMatrix( "[ \
-&gt; x^2-a*y^3,x^3-z^2*y,x*y-b,x*z-c, \
-&gt; x,        x*y,      a-b,  x*a*b  \
-&gt; ]", 2, 4, S );;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := HomalgMatrix( "[ \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x^2-a*y^3,x^3-z^2*y,x*y-b,x*z-c, \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x,        x*y,      a-b,  x*a*b  \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 2, 4, S );;</span>
 &lt;A 2 by 4 matrix over an external ring&gt;
-gap&gt; H := Diff( D, N );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := Diff( D, N );</span>
 &lt;A 6 x 8 matrix over an external ring&gt;
  gap&gt; Display( H );
  2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  
@@ -152,10 +151,10 @@ gap&gt; H := Diff( D, N );
  0,       x,     0,0,  0,       0,     1,  b*x,
  0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  
  0,       0,     0,0,  0,       x,     1,  -a*x
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapB.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapB.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

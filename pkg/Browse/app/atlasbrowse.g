@@ -8,16 +8,58 @@
 
 #############################################################################
 ##
-#F  BrowseData.AtlasInfoGroupTable( <conditions>, <log>, <replay> )
+#V  BrowseData.AtlasInfoActionShowOverview
+##
+##  is used in the tables constructed by `BrowseData.AtlasInfoGroupTable' and
+##  `BrowseData.AtlasInfoOverview'.
+##
+BrowseData.AtlasInfoActionShowOverview:= [
+    [ [ "Y" ], rec( helplines := [
+         "show an overview of selected entries" ],
+      action := function( t )
+        local str, grps, grp, line;
+
+        str:= "";
+        grps:= Set( List( t.dynamic.viewReturn, x -> x[1] ) );
+        for grp in grps do
+          Append( str, "G = " );
+          Append( str, grp );
+          Append( str, ":\n" );
+          for line in Filtered( t.dynamic.viewReturn,
+                                x -> x[1] = grp ) do
+            Append( str, "  " );
+            Append( str, line[2] );
+            Append( str, "\n" );
+          od;
+          Append( str, "\n" );
+        od;
+        if IsEmpty( str ) then
+          str:= "(nothing was chosen yet)";
+        fi;
+
+        if BrowseData.IsDoneReplay( t.dynamic.replay ) then
+          NCurses.Pager( str );
+          NCurses.update_panels();
+          NCurses.doupdate();
+          NCurses.curs_set( 0 );
+        fi;
+        return t.dynamic.changed;
+      end ) ],
+  ];
+
+
+#############################################################################
+##
+#F  BrowseData.AtlasInfoGroupTable( <conditions>, <log>, <replay>, <t> )
 ##
 ##  This function is called by `BrowseData.AtlasInfoOverview' when a row in
 ##  the overview table is clicked.
 ##  It returns a browse table with the details for the chosen group,
 ##  which is shown via a second level `Browse' call.
 ##
-BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay )
+BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
     local gapname, cats, labelsRow, info, inforeps, name, infoprgs, entry,
-          sel_action, header, table;
+          sel_action, header, footer, showTables, modes, mode, table;
 
     gapname:= AGR.GAPName( conditions[1] );
     cats:= [];
@@ -74,37 +116,61 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay )
       od;
     fi;
 
+    # Provide functionality for the `Click' function, the header, the footer,
+    # and a modified `showTables' function.
     sel_action:= rec(
       helplines:= [ "add the selected entry to the result" ],
       action:= function( t )
-        local pos, i;
+        local info, pos, line, choice, i;
 
         if t.dynamic.selectedEntry <> [ 0, 0 ] then
           # Set the return value and close the window.
           pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
           if pos <= Length( inforeps.list ) then
+            info:= inforeps.list[ pos ];
             pos:= t.work.labelsRow[ pos ][1];
             pos:= pos{ [ 1 .. Length( pos ) - 1 ] };
-            Add( t.dynamic.Return, [ gapname, Int( pos ) ] );
+            line:= Concatenation( info[2] );
+            if not IsEmpty( info[3] ) then
+              Append( line, " (" );
+              Append( line, Concatenation( info[3] ) );
+              Append( line, ")" );
+            fi;
+            choice:= [ gapname, Int( pos ) ];
           else
             pos:= pos - Length( inforeps.list );
             for i in [ 1 .. Length( infoprgs.list ) ] do
               if Length( infoprgs.list[i] ) = 1 then
                 if pos = 1 then
-                  Add( t.dynamic.Return, [ gapname, infoprgs.nams[i] ] );
-                  return;
+                  line:= infoprgs.list[i][1];
+                  choice:= [ gapname, infoprgs.nams[i] ];
+                  break;
                 fi;
                 pos:= pos - 1;
               elif 1 < Length( infoprgs.list[i] ) then
                 if pos < Length( infoprgs.list[i] ) then
-                  Add( t.dynamic.Return,
-                       [ gapname, infoprgs.nams[i],
-                         infoprgs.list[i][ pos+1 ] ] );
-                  return;
+                  if infoprgs.nams[i] = "maxes" then
+                    line:= Concatenation( "max. no. ",
+                               infoprgs.list[i][ pos+1 ] );
+                  else
+                    line:= infoprgs.list[i][ pos+1 ];
+                  fi;
+                  choice:= [ gapname, infoprgs.nams[i],
+                             infoprgs.list[i][ pos+1 ] ];
+                  break;
                 fi;
                 pos:= pos - Length( infoprgs.list[i] ) + 1;
               fi;
             od;
+          fi;
+          if choice in t.dynamic.Return then
+            t.dynamic.currentFooterRow:= Concatenation( line,
+                " was already chosen" );
+          else
+            Add( t.dynamic.Return, choice );
+            Add( t.dynamic.viewReturn, [ gapname, line ] );
+            t.dynamic.currentFooterRow:= Concatenation( line,
+                " added to the result" );
           fi;
         fi;
       end );
@@ -114,11 +180,52 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay )
       Append( header, " (selected entries)" );
     fi;
 
+    footer:= t -> [ [ NCurses.attrs.UNDERLINE, true,
+                      RepeatedString( " ",
+                          BrowseData.HeightWidthWindow( t )[2] ) ],
+                    t.dynamic.currentFooterRow ];
+
+    showTables:= function( t )
+      BrowseData.ShowTables( t );
+      t.dynamic.currentFooterRow:= "";
+      end;
+
+    # Construct the modified modes if necessary.
+    if not IsBound( BrowseData.defaults.work.customizedModes.atlasbrowse2 )
+       then
+      # Create a shallow copy of each default mode for `Browse',
+      # modify the `showTables' function,
+      # and add a new action to all available modes (except the help mode):
+      # - Y: Show a pager with the entries that have been selected.
+      modes:= List( BrowseData.defaults.work.availableModes,
+                    BrowseData.ShallowCopyMode );
+      for mode in modes do
+        if mode.name in [ "select_entry", "select_row",
+             "select_row_and_entry", "select_column_and_entry" ] then
+          mode.ShowTables:= showTables;
+        fi;
+        if mode.name <> "help" then
+          BrowseData.SetActions( mode,
+              BrowseData.AtlasInfoActionShowOverview );
+        fi;
+      od;
+      BrowseData.defaults.work.customizedModes.atlasbrowse2:= modes;
+    else
+      modes:= BrowseData.defaults.work.customizedModes.atlasbrowse2;
+    fi;
+
     # Construct the browse table.
     table:= rec(
       work:= rec(
         align:= "tl",
         header:= [ "", [ NCurses.attrs.UNDERLINE, true, header ], "" ],
+        footer:= rec(
+          select_entry:= footer,
+          select_row:= footer,
+          select_row_and_entry:= footer,
+          select_column_and_entry:= footer,
+        ),
+        availableModes:= modes,
         main:= info,
         labelsRow:= labelsRow,
         sepLabelsRow:= [ " ", "" ],
@@ -134,11 +241,17 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay )
         categories:= [ List( cats, x -> x.pos ), cats, [ 1 ] ],
         initialSteps:= [ 115, 114 ],
         Return:= [],
+        currentFooterRow:= "",
+        viewReturn:= [],
       ),
     );
     if log <> fail then
       table.dynamic.log:= log;
       table.dynamic.replay:= replay;
+    fi;
+    if t <> fail then
+      table.dynamic.Return:= t.dynamic.Return;
+      table.dynamic.viewReturn:= t.dynamic.viewReturn;
     fi;
 
     return table;
@@ -152,7 +265,7 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay )
 ##  Part of the code is analogous to `AGR.DisplayAtlasInfoOverview'.
 ##
 BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
-    local tocs, columns, type, i, sel_action, header, table;
+    local tocs, columns, type, i, sel_action, header, modes, mode, table;
 
     tocs:= AGR.TablesOfContents( conditions );
 
@@ -192,24 +305,25 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
     od;
 
     sel_action:= function( t )
-      local name, tt, result;
+      local name, tt;
 
       if t.dynamic.selectedEntry <> [ 0, 0 ] then
         name:= gapnames[ t.dynamic.indexRow[
                              t.dynamic.selectedEntry[1] ] / 2 ][1];
         tt:= BrowseData.AtlasInfoGroupTable(
                Concatenation( [ name ], conditions ),
-               t.dynamic.log, t.dynamic.replay );
+               t.dynamic.log, t.dynamic.replay, t );
         if IsEmpty( tt.work.main ) then
           BrowseData.AlertWithReplay( t,
             Concatenation( "There are no data for the group", name, "." ),
             NCurses.attrs.BOLD );
         else
-          result:= NCurses.BrowseGeneric( tt );
+          NCurses.BrowseGeneric( tt );
           if tt.dynamic.interrupt then
             BrowseData.actions.QuitTable.action( t );
           else
-            Append( t.dynamic.Return, result );
+            t.dynamic.Return:= tt.dynamic.Return;
+            t.dynamic.viewReturn:= tt.dynamic.viewReturn;
           fi;
         fi;
       fi;
@@ -220,12 +334,32 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
       Append( header, " (selected entries)" );
     fi;
 
+    # Construct the modified modes if necessary.
+    if not IsBound( BrowseData.defaults.work.customizedModes.atlasbrowse1 )
+       then
+      # Create a shallow copy of each default mode for `Browse'
+      # and add a new action to all available modes (except the help mode):
+      # - Y: Show a pager with the entries that have been selected.
+      modes:= List( BrowseData.defaults.work.availableModes,
+                    BrowseData.ShallowCopyMode );
+      for mode in modes do
+        if mode.name <> "help" then
+          BrowseData.SetActions( mode,
+              BrowseData.AtlasInfoActionShowOverview );
+        fi;
+      od;
+      BrowseData.defaults.work.customizedModes.atlasbrowse1:= modes;
+    else
+      modes:= BrowseData.defaults.work.customizedModes.atlasbrowse1;
+    fi;
+
     # Construct and show the browse table.
     table:= rec(
       work:= rec(
         align:= "tl",
         header:= t -> BrowseData.HeaderWithRowCounter( t, header,
                           Length( gapnames ) ),
+        availableModes:= modes,
         main:= List( [ 1 .. Length( gapnames ) ], i ->  List( columns,
                     col -> rec( rows:= [ col[3][i][1] ], align:= col[2] ) ) ),
         labelsCol:= [ List( columns,
@@ -252,6 +386,7 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
       ),
       dynamic:= rec(
         Return:= [],
+        viewReturn:= [],
       ),
     );
 
@@ -260,18 +395,18 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
       table.dynamic.replay:= replay;
     fi;
 
-    return DuplicateFreeList( NCurses.BrowseGeneric( table ) );
+    return NCurses.BrowseGeneric( table );
     end;
 
 
 #############################################################################
 ##
-#F  BrowseData.AtlasInfoGroup( <conditions>, <log>, <replay> )
+#F  BrowseData.AtlasInfoGroup( <conditions>, <log>, <replay>, <t> )
 ##
-BrowseData.AtlasInfoGroup:= function( conditions, log, replay )
+BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
     local table;
 
-    table:= BrowseData.AtlasInfoGroupTable( conditions, log, replay );
+    table:= BrowseData.AtlasInfoGroupTable( conditions, log, replay, t );
     if IsEmpty( table.work.main ) then
       BrowseData.AlertWithReplay( table,
           Concatenation( "There are no data for the group ", conditions[1],
@@ -279,7 +414,7 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay )
           NCurses.attrs.BOLD );
       return [];
     fi;
-    return DuplicateFreeList( NCurses.BrowseGeneric( table ) );
+    return NCurses.BrowseGeneric( table );
     end;
 
 
@@ -402,11 +537,18 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay )
 ##  in which a browse table with the list of available data for
 ##  the given group is shown;
 ##  in this table, <Q>click</Q> results in adding the info for the selected
-##  row to the result list.
+##  row to the result list, and a message about this addition is shown in the
+##  footer row.
 ##  One can choose further data, return to the first browse table,
 ##  and perhaps iterate the process for other groups.
 ##  When the first level table is left, the list of info records for the
 ##  chosen data is returned.
+##  <P/>
+##  For the two kinds of browse tables,
+##  the standard modes in <Ref Var="BrowseData"/> (except the <C>help</C>
+##  mode) have been extended by a new action that opens a pager giving an
+##  overview of all data that have been chosen in the current call.
+##  The corresponding user input is the <B>Y</B> key.
 ##  <P/>
 ##  This function is available only if the &GAP; package
 ##  <Package>AtlasRep</Package> is available.
@@ -441,7 +583,7 @@ BindGlobal( "BrowseAtlasInfo", function( arg )
     elif not IsString( arg[1] ) or arg[1] = "contents" then
       result:= BrowseData.AtlasInfoOverview( "all", arg, log, replay );
     else
-      result:= BrowseData.AtlasInfoGroup( arg, log, replay );
+      result:= BrowseData.AtlasInfoGroup( arg, log, replay, fail );
     fi;
 
     # Evaluate the return value.

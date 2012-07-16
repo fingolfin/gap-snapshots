@@ -9,6 +9,7 @@ ReadPackage("HAP","lib/SimplicialGroups/hapbar.gd");
 ReadPackage("HAP","lib/RegularCWSpaces/cwTypes.gd");
 ReadPackage("HAP","lib/Sparse/sparse.gd");
 ReadPackage("HAP","lib/ArithmeticGroups/arithTypes.gd");
+#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gd");
 
 
 
@@ -342,6 +343,7 @@ DeclareAttribute("EulerCharacteristic",IsHapCubicalComplex);
 DeclareAttribute("EulerCharacteristic",IsHapSimplicialComplex);
 DeclareOperation("ContractedComplex",[IsObject]);
 DeclareGlobalFunction("ReadImageAsPureCubicalComplex");
+DeclareGlobalFunction("ReadLinkImageAsPureCubicalComplex");
 DeclareGlobalFunction("ReadMatrixAsPureCubicalComplex");
 DeclareGlobalFunction("ReadImageSequenceAsPureCubicalComplex");
 DeclareGlobalFunction("WritePureCubicalComplexAsImage");
@@ -481,6 +483,9 @@ DeclareGlobalFunction("CriticalCellsOfRegularCWSpace");
 DeclareGlobalFunction("HAPContractRegularCWSpace_Alt");
 DeclareGlobalFunction("ChainComplexOfRegularCWSpace");
 DeclareGlobalFunction("ChainComplexOfRegularCWSpaceWithVectorField");
+DeclareGlobalFunction("FundamentalGroupOfRegularCWSpace");
+DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace]);
+DeclareOperation("FundamentalGroup",[IsHapRegularCWSpace,IsInt]);
 
 
 ## SPARSE ###########################################################

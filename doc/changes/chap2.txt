@@ -2,8 +2,9 @@
   [1X2 [33X[0;0YChanges between [5XGAP[105X[101X[1X 4.4 and [5XGAP[105X[101X[1X 4.5[133X[101X
   
   [33X[0;0YThis  chapter  lists most important changes between [5XGAP[105X 4.4.12 and the first
-  public release of [5XGAP[105X 4.5. It is not meant to serve as a complete account on
-  all  improvements;  instead,  it  should be viewed as an introduction to [5XGAP[105X
+  public  release  of  [5XGAP[105X  4.5. It also contains information about subsequent
+  update  releases for [5XGAP[105X 4.5. It is not meant to serve as a complete account
+  on  all improvements; instead, it should be viewed as an introduction to [5XGAP[105X
   4.5, accompanying its release announcement.[133X
   
   
@@ -95,9 +96,6 @@
   
   [30X    [33X[0;6YExtensions of data libraries:[133X
   
-        [30X    [33X[0;12Y[5XCTblLib[105X  package  (the [5XGAP[105X Character Table Library) by T. Breuer
-              has been extended by many new character tables.[133X
-  
         [30X    [33X[0;12YFunctions   and  iterators  are  now  available  to  create  and
               enumerate  simple  groups  by  their  order  up  to isomorphism:
               [2XSimpleGroup[102X     ([14XReference:    SimpleGroup[114X),    [2XSmallSimpleGroup[102X
@@ -105,13 +103,8 @@
               SimpleGroupsIterator[114X)     and     [2XAllSmallNonabelianSimpleGroups[102X
               ([14XReference: AllSmallNonabelianSimpleGroups[114X).[133X
   
-        [30X    [33X[0;12Y[5XIRREDSOL[105X  package  by  B.  Höfling  now  covers  all irreducible
-              soluble  subgroups  of  [22XGL(n,q)[122X  for [22Xq^n < 1000000[122X and primitive
-              soluble  permutation groups of degree [22X< 1000000[122X (previously, the
-              bound was [22X65536[122X).[133X
-  
-        [30X    [33X[0;12YThe new package [5XSmallsemi[105X by A. Distler and J. Mitchell contains
-              the library of all semigroups of order at most 8.[133X
+        [30X    [33X[0;12YSee  also  packages  [5XCTblLib[105X,  [5XIRREDSOL[105X  and [5XSmallsemi[105X listed in
+              Section [14X2.2-2[114X.[133X
   
   [30X    [33X[0;6YMany  more  methods  are now available for the built-in floating point
         numbers, see [14X'Reference: Floats'[114X.[133X
@@ -175,7 +168,7 @@
   
   [33X[0;0YMany problems in [5XGAP[105X have have been fixed, among them the following:[133X
   
-  [30X    [33X[0;6YPolynomial  factorisation  over  rationals  can miss factors of degree
+  [30X    [33X[0;6YPolynomial  factorisation  over rationals could miss factors of degree
         greater  than [22Xdeg(f)/2[122X if they have very small coefficients, while the
         cofactor has large coefficients.[133X
   
@@ -185,7 +178,7 @@
   
   [30X    [33X[0;6Y[2XCentreOfCharacter[102X       ([14XReference:       CentreOfCharacter[114X)       and
         [2XClassPositionsOfCentre[102X   ([14XReference:   ClassPositionsOfCentre  (for  a
-        character)[114X)  called  for  a  group  character may return a perhaps too
+        character)[114X)  called  for  a group character could return a perhaps too
         large result.[133X
   
   [30X    [33X[0;6Y[2XTrace[102X  ([14XReference:  TraceMethods[114X)  called  for  an element of a finite
@@ -197,7 +190,7 @@
         character as a second argument.[133X
   
   [30X    [33X[0;6YComposing  a  homomorphism  from  a  permutation  group  to a finitely
-        presented group with another homomorphism can give wrong results.[133X
+        presented group with another homomorphism could give wrong results.[133X
   
   [30X    [33X[0;6YFor  certain arguments, the function [2XEU[102X ([14XReference: EU[114X) returned wrong
         results.[133X
@@ -225,13 +218,14 @@
         error  if  the  zero  element  of  the  field  was  given as the first
         argument.[133X
   
-  [30X    [33X[0;6YConstant polynomials are now recognised as univariate in any variable.[133X
+  [30X    [33X[0;6YConstant   polynomials  were  not  recognised  as  univariate  in  any
+        variable.[133X
   
-  [30X    [33X[0;6YFixed  problem with resetting the kernels recursion depth counter when
-        running into many break loops.[133X
+  [30X    [33X[0;6YThe kernel recursion depth counter was not reset properly when running
+        into many break loops.[133X
   
-  [30X    [33X[0;6Y[5XGAP[105X  behaves  now much better when the printing of a (large) object is
-        interrupted  with  [10XCtrl-C[110X.  The  object is no longer corrupted and the
+  [30X    [33X[0;6Y[5XGAP[105X  did  not  behave  well  when  printing  of  a  (large) object was
+        interrupted with [10XCtrl-C[110X. Now the object is no longer corrupted and the
         indentation level is reset.[133X
   
   [33X[0;0YPotentially incompatible changes:[133X
@@ -241,6 +235,15 @@
   
   [30X    [33X[0;6YMultiple  unary [10X+[110X or [10X-[110X signs are no longer allowed (to avoid confusion
         with increment/decrement operators from other programming languages).[133X
+  
+  [30X    [33X[0;6YDue to changes to improve the performance of records with large number
+        of  components,  the  ordering of record components in [10XView[110X'ed records
+        has changed.[133X
+  
+  [30X    [33X[0;6YDue  to  improvements  for vectors over finite fields, certain objects
+        have  more  limitations on changing their base field. For example, one
+        can  not  create  a  compressed  matrix  over [22XGF(2)[122X and then assign an
+        element of [22XGF(4)[122X to one of its entries.[133X
   
   [33X[0;0YNo longer supported:[133X
   
@@ -301,11 +304,11 @@
   
   [30X    [33X[0;6YThe binary [11Xrsync[111X distribution for [5XGAP[105X on Linux PCs with i686 or x86_64
         compatible     processors    provided    by    Frank    Lübeck,    see
-        [7Xhttp://rsync.gap-system.org[107X.[133X
+        [7Xhttp://www.math.rwth-aachen.de/~Frank.Luebeck/gap/rsync[107X.[133X
   
   [30X    [33X[0;6Y[5XBOB[105X,  a  tool for Linux and Mac OS X to download and build [5XGAP[105X and its
         packages     from     source     provided     by     M.    Neunhöffer:
-        [7Xwww-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html[107X.[133X
+        [7Xhttp://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html[107X.[133X
   
   [30X    [33X[0;6YThe  [5XGAP[105X  installer  for  Windows  provided  by  Alexander  Konovalov:
         [7Xhttp://www.gap-system.org/ukrgap/wininst/[107X.[133X
@@ -383,11 +386,9 @@
   [30X    [33X[0;6Y[2XSetHelpViewer[102X  ([14XReference:  SetHelpViewer[114X)  now  supports  the  Google
         Chrome browser.[133X
   
-  [30X    [33X[0;6YThe  [5XCTblLib[105X package, which is loaded by default, now needs the [5XBrowse[105X
-        package.  As a result, if the [5XBrowse[105X kernel module is compiled, then a
-        function  from  the  [5XBrowse[105X  package  will be used to display multiple
-        matches  in  the  [5XGAP[105X online help. To switch off this feature, use the
-        command[133X
+  [30X    [33X[0;6YMultiple  matches  in the [5XGAP[105X online help are displayed via a function
+        from the [5XBrowse[105X package, which is loaded in the default configuration.
+        This feature can be replaced by the known pager using the command[133X
   
   SetUserPreference( "browse", "SelectHelpMatches", false );
   
@@ -431,12 +432,23 @@
   
   [1X2.2-1 [33X[0;0YInterface between the core system and packages[133X[101X
   
-  [33X[0;0YThe  package  loading mechanism has been improved. In particular, there is a
-  better  error  management if package loading fails for packages that use the
-  new       mechanism      (see      [2XDisplayPackageLoadingLog[102X      ([14XReference:
-  DisplayPackageLoadingLog[114X)  and  the  rest  of  the  Chapter  [14X'Reference: GAP
-  Packages'[114X  which  documents how to [13Xuse[113X [5XGAP[105X packages). The old mechanisms are
-  still supported for now, but are not recommended.[133X
+  [33X[0;0YThe  package  loading  mechanism  has  been improved. The most important new
+  feature  is  that all dependencies are evaluated in advance and then used to
+  determine  the  order  in  which  package files are read. This allows [5XGAP[105X to
+  handle  cyclic  dependencies  as well as situations where package A requires
+  package  B  to be loaded completely before any file of package A is read. To
+  avoid  distortions  of  the  order in which packages will be loaded, package
+  authors  are  strongly  discouraged  from  calling  [2XLoadPackage[102X  ([14XReference:
+  LoadPackage[114X)         and         [2XTestPackageAvailability[102X         ([14XReference:
+  TestPackageAvailability[114X)  in  a  package  code in order to determine whether
+  some  other  package  will  be  loaded  before  or together with the current
+  package  -  instead,  one  should  use [2XIsPackageMarkedForLoading[102X ([14XReference:
+  IsPackageMarkedForLoading[114X).  In  addition,  there  is  now  a  better  error
+  management   if  package  loading  fails  for  packages  that  use  the  new
+  functionality  to log package loading messages (see [2XDisplayPackageLoadingLog[102X
+  ([14XReference:   DisplayPackageLoadingLog[114X)   and   the   rest  of  the  Chapter
+  [14X'Reference:  GAP  Packages'[114X  which  documents  how to [13Xuse[113X [5XGAP[105X packages), and
+  package authors are very much encouraged to use these logging facilities.[133X
   
   [33X[0;0YIn  [5XGAP[105X  4.4 certain packages were marked as [13Xautoloaded[113X and would be loaded,
   if  present,  when  [5XGAP[105X  started up. In [5XGAP[105X 4.5, this notion is divided into
@@ -745,4 +757,107 @@
         the same author.[133X
   
   [30X    [33X[0;6Y[5XNQL[105X package by R. Hartung has been withdrawn by the author.[133X
+  
+  
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.5.5 (July 2012)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFor  small  primes  (compact  fields)  [10XZmodnZObj(r,p)[110X  now returns the
+        corresponding FFE to avoid crashes when compacting matrices. [Reported
+        by Ignat Soroko][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFixed  a bug in [2XCommutatorSubgroup[102X ([14XReference: CommutatorSubgroup[114X) for
+        fp  groups  causing  infinite  recursion, which could, for example, be
+        triggered by computing automorphism groups.[133X
+  
+  [30X    [33X[0;6YPreviously, the list of factors of a polynomial was mutable, and hence
+        could   be   accidentally  corrupted  by  callers.  Now  the  list  of
+        irreducible  factors  is  stored  immutable.  To  deal  with  implicit
+        reliance  on old code, always a shallow copy is returned. [reported by
+        Jakob Kroeker][133X
+  
+  [30X    [33X[0;6YComputing  high  powers  of matrices ran into an error for matrices in
+        the  format  of  the [5Xcvec[105X package. Now the library function also works
+        with these matrices. [reported by Klaus Lux][133X
+  
+  [30X    [33X[0;6YThe pseudo tty code which is responsible for spawning subprocesses has
+        been  partially  rewritten  to  allow  more  than  128 subprocesses on
+        certain  systems.  This  mechanism is for example used by [5XANUPQ[105X and [5Xnq[105X
+        packages   to   compute  group  quotients  via  an  external  program.
+        Previously,  on  Mac  OS X this could be done precisely 128 times, and
+        then  an  error  would  occur.  That  is,  one  could e.g. compute 128
+        nilpotent quotients, and then had to restart [5XGAP[105X to compute more. This
+        also  affected other systems, such as OpenBSD, where it now also works
+        correctly.[133X
+  
+  [30X    [33X[0;6YOn Mac OS X, using [5XGAP[105X compiled against GNU readline 6.2, pasting text
+        into  the  terminal  session  would result in this text appearing very
+        slowly,  with  a 0.1 sec delay between each [21Xkeystroke[121X. This is not the
+        case  with  versions  6.1  and older, and has been reported to the GNU
+        readline  team.  In  the  meantime,  we work around this issue in most
+        situations  by  setting  [10Xrl_event_hook[110X only if [10XOnCharReadHookActive[110X is
+        set.[133X
+  
+  [30X    [33X[0;6Y[2XShowUserPreferences[102X  ([14XReference: ShowUserPreferences[114X) ran into a break
+        loop  in  case  of  several  undeclared user preferences. [Reported by
+        James Mitchell][133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X    did    not    start    correctly   if   the   user   preference
+        [10X"InfoPackageLoadingLevel"[110X was set to a number [22X>= 3[122X. The reason is that
+        [10XPrintFormattedString[110X  was  called before it was installed. The current
+        fix is a temporary solution.[133X
+  
+  [30X    [33X[0;6YThe [10X"hints"[110X member of [10XTypOutputFile[110X used to contain 3*100 entries, yet
+        [10XaddLineBreakHint[110X  would  write  entries with index up to and including
+        3*99+3=300,   leading   to  a  buffer  overflow.  This  would  end  up
+        overwriting  the  [10X"stream"[110X  member  with -1. Fixed by incrementing the
+        size of [10X"hints"[110X to 301. [Reported by Jakob Kroeker][133X
+  
+  [30X    [33X[0;6YThe  function  [10XIsDocumentedWord[110X  tested the given word against strings
+        obtained by splitting help matches at non-letter characters. This way,
+        variable  names  containing underscores or digits were erroneously not
+        regarded  as  documented,  and  certain substrings of these names were
+        erroneously regarded as documented.[133X
+  
+  [30X    [33X[0;6YOn  Windows, an error occurred if one tried to use the default Windows
+        browser    as   a   help   viewer   (see   [2XSetHelpViewer[102X   ([14XReference:
+        SetHelpViewer[114X)).  Now  the  browser  opens the top of the correspoding
+        manual  chapter.  The  current  fix  is a temporary solution since the
+        problem remains with the positioning at the required manual section.[133X
+  
+  [33X[0;0YImproved functionality:[133X
+  
+  [30X    [33X[0;6Y[2XWriteGapIniFile[102X  ([14XReference:  WriteGapIniFile[114X) on Windows now produces
+        the [11Xgap.ini[111X file with Windows style line breaks. Also, an info message
+        is  now printed if an existing [11Xgap.ini[111X file was moved to a backup file
+        [11Xgap.ini.bak[111X.[133X
+  
+  [30X    [33X[0;6YThe [5XCTblLib[105X and [5XTomLib[105X packages are removed from the list of suggested
+        packages  of  the  core  part  of  [5XGAP[105X.  Instead they are added to the
+        default  list  of the user preference [10X"PackagesToLoad"[110X. This way it is
+        possible  to configure [5XGAP[105X to not load these packages via changing the
+        default value of [10X"PackagesToLoad"[110X.[133X
+  
+  [30X    [33X[0;6YThe  conjugacy  test  in  [22XS_n[122X for intransitive subgroups was improved.
+        This  deals  with  inefficiency  issue  in the case reported by Stefan
+        Kohl.[133X
+  
+  [30X    [33X[0;6YAdded   [10XInstallAndCallPostRestore[110X  to  [11Xlib/system.g[111X  and  call  it  in
+        [11Xlib/init.g[111X  instead of [10XCallAndInstallPostRestore[110X for the function that
+        reads  the  files  listed  in [5XGAP[105X command line. This fixes the problem
+        reported    by   Yevgen   Muntyan   when   [2XSaveWorkspace[102X   ([14XReference:
+        SaveWorkspace[114X)  was used in a file listed in [5XGAP[105X command line (before,
+        according    to    the    documentation,   [2XSaveWorkspace[102X   ([14XReference:
+        SaveWorkspace[114X) was only allowed at the main [5XGAP[105X prompt).[133X
+  
+  [30X    [33X[0;6YThere   is   now   a   new   user   preference  [10XPackagesToIgnore[110X,  see
+        [2XSetUserPreference[102X  ([14XReference:  SetUserPreference[114X). It contains a list
+        of names of packages that shall be regarded as not available at all in
+        the  current  session,  both  for  autoloading  and for later calls of
+        [2XLoadPackage[102X  ([14XReference:  LoadPackage[114X).  This preference is useful for
+        testing purposes if one wants to run some code without loading certain
+        packages.[133X
   

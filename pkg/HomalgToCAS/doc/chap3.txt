@@ -311,6 +311,9 @@
     [4X  ## random polynomial:[0X
     [4X  RandomPol                               := "rpl",[0X
     [4X  [0X
+    [4X  ## degree of a multivariate polynomial[0X
+    [4X  DegreeOfRingElement                     := "deg",[0X
+    [4X  [0X
     [4X  ## is irreducible:[0X
     [4X  IsIrreducible                           := "irr",[0X
     [4X  [0X
@@ -578,7 +581,7 @@
     [4X  [0X
     [4X  ## leading module:[0X
     [4X  ## coefficients:[0X
-    [4X  Coefficients                            := "cof",[0X
+    [4X  Coefficients                            := "cfs",[0X
     [4X  [0X
     [4X  ##[0X
     [4X  ## optional module operations:[0X

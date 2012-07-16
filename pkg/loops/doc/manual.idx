@@ -383,9 +383,15 @@
 \indexentry {IsLeftKLoop@`IsLeftKLoop'}{29}
 \indexentry {IsRightBruckLoop@`IsRightBruckLoop'}{29}
 \indexentry {IsRightKLoop@`IsRightKLoop'}{29}
-\indexentry {A-loop!left}{29}
-\indexentry {A-loop!middle}{29}
-\indexentry {A-loop!right}{29}
+\indexentry {automorphic loop!left}{29}
+\indexentry {automorphic loop!middle}{29}
+\indexentry {automorphic loop!right}{29}
+\indexentry {automorphic loop}{29}
+\indexentry {loop!automorphic}{29}
+\indexentry {IsLeftAutomorphicLoop@`IsLeftAutomorphicLoop'}{29}
+\indexentry {IsMiddleAutomorphicLoop@`IsMiddleAutomorphicLoop'}{29}
+\indexentry {IsRightAutomorphicLoop@`IsRightAutomorphicLoop'}{29}
+\indexentry {IsAutomorphicLoop@`IsAutomorphicLoop'}{29}
 \indexentry {A-loop}{29}
 \indexentry {loop!A}{29}
 \indexentry {IsLeftALoop@`IsLeftALoop'}{29}
@@ -442,9 +448,11 @@
 \indexentry {PaigeLoop@`PaigeLoop'}{34}
 \indexentry {Nilpotent loops@Nilpotent loops|indexit}{34}
 \indexentry {NilpotentLoop@`NilpotentLoop'}{34}
+\indexentry {Automorphic loops@Automorphic loops|indexit}{34}
+\indexentry {AutomorphicLoop@`AutomorphicLoop'}{34}
 \indexentry {Interesting loops@Interesting loops|indexit}{34}
 \indexentry {sedenion loop}{34}
 \indexentry {loop!sedenion}{34}
 \indexentry {InterestingLoop@`InterestingLoop'}{34}
 \indexentry {Libraries of loops up to isotopism@Libraries of loops up to isotopism|indexit}{34}
-\indexentry {ItpSmallLoop@`ItpSmallLoop'}{34}
+\indexentry {ItpSmallLoop@`ItpSmallLoop'}{35}

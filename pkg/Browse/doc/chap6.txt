@@ -395,10 +395,16 @@
   [33X[0;0YWhen  a  row  is selected, the [21Xclick[121X functionality opens a new window (via a
   second level call to [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X)), in which a browse table
   with the list of available data for the given group is shown; in this table,
-  [21Xclick[121X  results  in  adding the info for the selected row to the result list.
-  One  can  choose further data, return to the first browse table, and perhaps
-  iterate  the  process  for other groups. When the first level table is left,
-  the list of info records for the chosen data is returned.[133X
+  [21Xclick[121X  results  in  adding the info for the selected row to the result list,
+  and a message about this addition is shown in the footer row. One can choose
+  further  data,  return  to  the  first browse table, and perhaps iterate the
+  process  for  other  groups. When the first level table is left, the list of
+  info records for the chosen data is returned.[133X
+  
+  [33X[0;0YFor the two kinds of browse tables, the standard modes in [2XBrowseData[102X ([14X5.4-1[114X)
+  (except the [10Xhelp[110X mode) have been extended by a new action that opens a pager
+  giving  an  overview  of all data that have been chosen in the current call.
+  The corresponding user input is the [12XY[112X key.[133X
   
   [33X[0;0YThis function is available only if the [5XGAP[105X package [5XAtlasRep[105X is available.[133X
   
@@ -788,17 +794,23 @@
   
   [1X6.9-1 BrowsePackageVariables[101X
   
+  [29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function
   [29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X, [3Xinfo[103X[, [3Xarec[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
-  [33X[0;0YLet  [3Xpkgname[103X  be  the  name  of  a  [5XGAP[105X  package,  and [3Xinfo[103X be the output of
-  [2XPackageVariablesInfo[102X ([14XReference: PackageVariablesInfo[114X) for this package. The
-  optional   record   [3Xarec[103X,   if   given,   has   the   same  meaning  as  for
+  [33X[0;0YIn the first version, the arguments are the same as for [2XShowPackageVariables[102X
+  ([14XReference:  ShowPackageVariables[114X),  that  is,  [3Xpkgname[103X is the name of a [5XGAP[105X
+  package, and the optional arguments [3Xversion[103X and [3Xarec[103X are a version number of
+  this package and a record used for customizing the output, respectively.[133X
+  
+  [33X[0;0YIn  the  second  version,  [3Xpkgname[103X is the name of a [5XGAP[105X package, [3Xinfo[103X is the
+  output  of  [2XPackageVariablesInfo[102X  ([14XReference: PackageVariablesInfo[114X) for this
+  package,  and  the  optional  record  [3Xarec[103X  has  the  same  meaning  as  for
   [2XShowPackageVariables[102X ([14XReference: ShowPackageVariables[114X).[133X
   
   [33X[0;0Y[2XBrowsePackageVariables[102X  opens a Browse table that shows the global variables
   that  become  bound and the methods that become installed when [5XGAP[105X loads the
-  package.[133X
+  package [3Xpkgname[103X.[133X
   
   [33X[0;0YThe  table  is  categorized  by  the  kinds  of variables (new or redeclared
   operations,  methods,  info  classes,  synonyms,  other globals). The column
@@ -807,12 +819,12 @@
   names  of  the package files. Clicking a selected row of the table opens the
   relevant package file at the code in question.[133X
   
-  [33X[0;0YNote  that  using the same arguments as for [2XShowPackageVariables[102X ([14XReference:
-  ShowPackageVariables[114X) would not allow one to apply [2XBrowsePackageVariables[102X to
-  packages  that  have  been  loaded before the [5XBrowse[105X package. The idea is to
-  compute  the  underlying  data first, using [2XPackageVariablesInfo[102X ([14XReference:
-  PackageVariablesInfo[114X),  then to load the [5XBrowse[105X package, and finally to call
-  [2XBrowsePackageVariables[102X.[133X
+  [33X[0;0YThe  idea  behind  the argument [3Xinfo[103X is that using the same arguments as for
+  [2XShowPackageVariables[102X ([14XReference: ShowPackageVariables[114X) does not allow one to
+  apply  [2XBrowsePackageVariables[102X  to  packages that have been loaded before the
+  [5XBrowse[105X  package.  Thus one can compute the underlying data [3Xinfo[103X first, using
+  [2XPackageVariablesInfo[102X ([14XReference: PackageVariablesInfo[114X), then load the [5XBrowse[105X
+  package, and finally call [2XBrowsePackageVariables[102X.[133X
   
   [33X[0;0YFor  example,  the  overview of package variables for [5XBrowse[105X can be shown by
   starting [5XGAP[105X without packages and entering the following lines.[133X
@@ -1187,7 +1199,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xchoice:= List( [ 1 .. 30 ], i -> Random( [ 1 .. 6 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xinput:= List( "tlfrbd", INT_CHAR ){ choice };;[127X[104X
+    [4X[25Xgap>[125X [27Xinput:= List( "tlfrbd", IntChar ){ choice };;[127X[104X
     [4X[25Xgap>[125X [27XBrowseData.SetReplay( Concatenation([127X[104X
     [4X[25X>[125X [27X       input{ [ 1 .. 20 ] },[127X[104X
     [4X[25X>[125X [27X       "s",                    # switch to number display[127X[104X

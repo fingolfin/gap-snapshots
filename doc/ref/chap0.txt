@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.5.4, 16-Jun-2012
+                           Release 4.5.5, 16-Jul-2012
   
   
                                  The GAP Group
@@ -2452,7 +2452,7 @@
       56.8-2 RingHomomorphismByImages
       56.8-3 RingHomomorphismByImagesNC
       56.8-4 NaturalHomomorphismByIdeal
-  57 [33X[0;0YModules (preliminary)[133X
+  57 [33X[0;0YModules[133X
     57.1 [33X[0;0YGenerating modules[133X
       57.1-1 IsLeftOperatorAdditiveGroup
       57.1-2 IsLeftModule
@@ -3561,7 +3561,7 @@
     86.3 [33X[0;0YAccessing Weak Pointer Objects as Lists[133X
     86.4 [33X[0;0YCopying Weak Pointer Objects[133X
     86.5 [33X[0;0YThe GASMAN Interface for Weak Pointer Objects[133X
-  87 [33X[0;0YMore about Stabilizer Chains (preliminary)[133X
+  87 [33X[0;0YMore about Stabilizer Chains[133X
     87.1 [33X[0;0YGeneralized Conjugation Technique[133X
     87.2 [33X[0;0YThe General Backtrack Algorithm with Ordered Partitions[133X
       87.2-1 [33X[0;0YInternal representation of ordered partitions[133X

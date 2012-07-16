@@ -445,8 +445,8 @@
   [1X72.4-2 ComplexConjugate[101X
   
   [29X[2XComplexConjugate[102X( [3Xchi[103X ) [32X function
-  [29X[2XGaloisCyc[102X( [3Xchi[103X ) [32X function
-  [29X[2XPermuted[102X( [3Xchi[103X ) [32X function
+  [29X[2XGaloisCyc[102X( [3Xchi[103X, [3Xk[103X ) [32X function
+  [29X[2XPermuted[102X( [3Xchi[103X, [3Xpi[103X ) [32X function
   
   [33X[0;0YThe  operations  [2XComplexConjugate[102X,  [2XGaloisCyc[102X,  and  [2XPermuted[102X return a class
   function  when  they are called with a class function; The complex conjugate

@@ -1059,10 +1059,10 @@
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of added lines[133X
   
   [33X[0;0YThe  first  command  saves the lines in the command line history to the file
-  given by the string [3Xfname[103X. The default for [3Xfname[103X is [11Xhistory[111X in the users [5XGAP[105X
-  root  path  [10XGAPInfo.UserGapRoot[110X  or [11X"~/.gap_hist"[111X if this directory does not
-  exist.  If  the optional argument [3Xapp[103X is [9Xtrue[109X then the lines are appended to
-  that file otherwise the file is overwritten.[133X
+  given  by  the  string [3Xfname[103X. The default for [3Xfname[103X is [11Xhistory[111X in the user's
+  [5XGAP[105X  root  path  [10XGAPInfo.UserGapRoot[110X or [11X"~/.gap_hist"[111X if this directory does
+  not  exist. If the optional argument [3Xapp[103X is [9Xtrue[109X then the lines are appended
+  to that file otherwise the file is overwritten.[133X
   
   [33X[0;0YThe  second  command is the converse, it reads the lines from file [3Xfname[103X and
   [13Xprepends[113X them to the current command line history.[133X

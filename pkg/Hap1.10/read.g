@@ -17,7 +17,10 @@ fi;
 
 ReadPackage("HAP","boolean");
 ReadPackage("HAP", "lib/TitlePage/copyright.gap");
-
+HAP_ROOT:=DirectoriesPackageLibrary("HAP");
+HAP_ROOT:=Filename(HAP_ROOT,".");
+HAP_ROOT:=HAP_ROOT{[1..Length(HAP_ROOT)-1]};
+MakeReadOnlyGlobal("HAP_ROOT");
 
 ################### POLYCYLIC COMMANDS ##############################
 ## Most HAP functions should work on pcp groups if the polycyclic package 
@@ -313,6 +316,7 @@ ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
 ################## REGULAR CW_SPACES ###############################
 ReadPackage("HAP","lib/RegularCWSpaces/basicRegular.gi");
 ReadPackage("HAP","lib/RegularCWSpaces/contractAlt.gi");
+ReadPackage("HAP","lib/RegularCWSpaces/fundamental.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -343,5 +347,6 @@ fi;
 
 
 ReadPackage("HAP", "lib/Homology/BarCodes/barcode.gi");
+#ReadPackage("HAP","lib/TorsionSubcomplexes/TorsionSubcomplexes.gi");
 
 SetInfoLevel(InfoWarning,1); #This is GAP's default level

@@ -84,7 +84,7 @@ NCurses.MouseDemo := function()
         if Length(ev) > 0 then
           NCurses.top_panel(ev[Length(ev)].win);
         fi;
-      elif c = INT_CHAR( 'M' ) then
+      elif c = IntChar( 'M' ) then
         if status.new <> false then
           status := NCurses.UseMouse( false );
         else
@@ -96,7 +96,7 @@ NCurses.MouseDemo := function()
         else
           info := "('M' to change)";
         fi;
-      elif c = INT_CHAR( 'N' ) then
+      elif c = IntChar( 'N' ) then
         # try to enable only BUTTON2 events
         status := NCurses.mousemask( [ 5, 6, 7, 8, 9 ] );
         if Length(status.new) = 0  then
@@ -110,7 +110,7 @@ NCurses.MouseDemo := function()
         s:= Concatenation( "Keyboard input character: ", String( c ) );
       fi;
 
-    until c = INT_CHAR( 'q' );
+    until c = IntChar( 'q' );
 
     # this is to avoid strange background in non-visual state
     NCurses.top_panel( win1 );

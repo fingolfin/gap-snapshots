@@ -480,7 +480,7 @@ NCurses.Loop := function(arg)
     fi;
     for i in [1..Length(a[1])] do
       if IsChar(a[1][i]) then
-        a[1][i] := INT_CHAR(a[1][i]);
+        a[1][i] := IntChar(a[1][i]);
       fi;
     od;
   od;
@@ -769,7 +769,7 @@ NCurses.WBorder := function(arg)
     return true;
   fi;
   if IsStringRep(chars) then
-    chars := List(chars, INT_CHAR);
+    chars := List(chars, IntChar);
   fi;
   if IsInt(chars) then
     chars := [chars];
@@ -1296,23 +1296,23 @@ NCurses.GetLineFromUser := function( arec )
       ins := not ins;
     elif c = NCurses.keys.REPLACE then
       ins := not ins;
-    elif c in [NCurses.keys.HOME, INT_CHAR('')] then
+    elif c in [NCurses.keys.HOME, IntChar('')] then
       pos := 1;
-    elif c in [NCurses.keys.END, INT_CHAR('')] then
+    elif c in [NCurses.keys.END, IntChar('')] then
       pos := Length(res) + 1;
       if pos > max then
         pos := pos - 1;
       fi;
-    elif c in [NCurses.keys.BACKSPACE, INT_CHAR('')] then
+    elif c in [NCurses.keys.BACKSPACE, IntChar('')] then
       if pos > 1 then
         pos := pos - 1;
         RemoveElmList(res, pos);
       fi;
-    elif c in [NCurses.keys.DC, INT_CHAR('')] then
+    elif c in [NCurses.keys.DC, IntChar('')] then
       if pos <= Length(res) then
         RemoveElmList(res, pos);
       fi;
-    elif not c in [ NCurses.keys.ENTER, INT_CHAR(''), 27 ] then
+    elif not c in [ NCurses.keys.ENTER, IntChar(''), 27 ] then
       if ins and Length(res) < max then
         InsertElmList(res, pos, CHAR_INT(c mod 256));
         pos := pos + 1;
@@ -1321,7 +1321,7 @@ NCurses.GetLineFromUser := function( arec )
         pos := pos + 1;
       fi;
     fi;
-  until c in [ NCurses.keys.ENTER, INT_CHAR(''), 27 ];
+  until c in [ NCurses.keys.ENTER, IntChar(''), 27 ];
   NCurses.del_panel(pan);
   NCurses.delwin(win);
   NCurses.curs_set(curs);
@@ -1464,24 +1464,24 @@ NCurses.EditFields := function( win, arecs )
           ins:= not ins;
         elif c = NCurses.keys.REPLACE then
           ins:= not ins;
-        elif c in [ NCurses.keys.HOME, INT_CHAR('') ] then
+        elif c in [ NCurses.keys.HOME, IntChar('') ] then
           pos:= 1;
-        elif c in [ NCurses.keys.END, INT_CHAR('') ] then
+        elif c in [ NCurses.keys.END, IntChar('') ] then
           pos := Length( res ) + 1;
           if pos > max then
             max:= max + 1;
             arec.ncols:= arec.ncols + 1;
           fi;
-        elif c in [ NCurses.keys.BACKSPACE, INT_CHAR('') ] then
+        elif c in [ NCurses.keys.BACKSPACE, IntChar('') ] then
           if pos > 1 then
             pos:= pos - 1;
             RemoveElmList( res, pos );
           fi;
-        elif c in [ NCurses.keys.DC, INT_CHAR('') ] then
+        elif c in [ NCurses.keys.DC, IntChar('') ] then
           if pos <= Length( res ) then
             RemoveElmList( res, pos );
           fi;
-        elif c in [ NCurses.keys.ENTER, INT_CHAR(''), 27, 9 ] then
+        elif c in [ NCurses.keys.ENTER, IntChar(''), 27, 9 ] then
           break;
         else
           if ins then
@@ -1684,7 +1684,7 @@ NCurses.Pager := function(arg)
   NCurses.savetty();
   NCurses.SetTerm();
   nk := NCurses.keys;
-  ic := INT_CHAR;
+  ic := IntChar;
   b := NCurses.attrs.BOLD;
   helppage := [
     [b, "'q', <Esc>:"],
@@ -2091,7 +2091,8 @@ NCurses.Select := function(arg)
   local r, t, labels, len, mwin, mpan, size, offitems, offitemsv, start, 
         b, max, ind, sel, pos, draw, c, a, helppage,
         searchString, searchParameters, filterParameters, isvisible,
-        nrvisible, str, pos2, move, onsubmit;
+        nrvisible, jumpto, digits, resetjump, str, pos2, move, onsubmit,
+        cand, candlen, i;
 
   # If we know that there will be no chance to show anything
   # in visual mode then print a warning and give up.
@@ -2236,7 +2237,7 @@ NCurses.Select := function(arg)
   b := NCurses.attrs.BOLD;
   if r.single and r.none then
     helppage := [
-        [b, "'q', <Esc>:"],
+        [b, "'q', 'Q', <Esc>:"],
         "      quit without selecting an item" ];
   else
     helppage := [];
@@ -2244,7 +2245,7 @@ NCurses.Select := function(arg)
   if r.single then
     Append(helppage, [
     [b, "<Return>:"],
-    "      quit with choosing focussed item",
+    "      choose focussed item",
     ] );
   else
     Append(helppage, [
@@ -2267,6 +2268,8 @@ NCurses.Select := function(arg)
     "      goto first item",
     [b, "<End>, 'B', 'G':"],
     "      goto last item",
+    [b, "<nr>:"],
+    "      goto the item with label <nr>",
     [b, "'/':"],
     "      ask for a search string, and search",
     [b, "'n':"],
@@ -2275,7 +2278,7 @@ NCurses.Select := function(arg)
     "      ask for a filtering string, and filter",
     [b, "'!':"],
     "      reset the filtering",
-    [b, "'h':"],
+    [b, "<F1>, 'h':"],
     "      show this help",
     ] );
 
@@ -2288,6 +2291,8 @@ NCurses.Select := function(arg)
   isvisible:= BlistList( [ 1 .. Length( r.items ) ],
                          [ 1 .. Length( r.items ) ] );
   nrvisible:= Length( r.items );
+  jumpto:= "[";
+  digits:= List( "0123456789", IntChar );
 
   # the loop to (re)draw the window
   draw := function()
@@ -2348,16 +2353,19 @@ NCurses.Select := function(arg)
                       NCurses.WidthAttributeLine(r.hint), 2)), r.hint);
     fi;
   end;
+
   while true do
     draw();
     NCurses.curs_set(0);
     NCurses.update_panels();
     NCurses.doupdate();
+    resetjump:= true;
     c := NCurses.wgetch(mwin);
-    if c in [INT_CHAR('q'), 27] and r.single and r.none then
+    if c in [ IntChar( 'q' ), IntChar( 'Q' ), 27 ]
+       and r.single and r.none then
       r.RESULT := false;
       break;
-    elif c in [NCurses.keys.DOWN, INT_CHAR('d')] then
+    elif c in [NCurses.keys.DOWN, IntChar('d')] then
       # Move to next visible entry if there is one.
       pos2:= pos + 1;
       while pos2 <= Length( r.items ) and not isvisible[ pos2 ] do
@@ -2366,7 +2374,7 @@ NCurses.Select := function(arg)
       if pos2 <= Length( r.items ) then
         pos:= pos2;
       fi;
-    elif c in [NCurses.keys.UP, INT_CHAR('p'), INT_CHAR('u')]  then
+    elif c in [NCurses.keys.UP, IntChar('p'), IntChar('u')]  then
       # Move to the previous visible entry if there is one.
       pos2:= pos - 1;
       while 0 < pos2 and not isvisible[ pos2 ] do
@@ -2375,7 +2383,7 @@ NCurses.Select := function(arg)
       if 0 < pos2 then
         pos:= pos2;
       fi;
-    elif c in [NCurses.keys.NPAGE, INT_CHAR('N'), INT_CHAR('D')] then
+    elif c in [NCurses.keys.NPAGE, IntChar('N'), IntChar('D')] then
       # Move half a screen down if possible.
       move:= QuoInt( max+1, 2 );
       pos2:= pos + 1;
@@ -2389,7 +2397,7 @@ NCurses.Select := function(arg)
       if pos > Length(r.items) then
         pos := Length(r.items);
       fi;
-    elif c in [NCurses.keys.PPAGE, INT_CHAR('P'), INT_CHAR('U')] then
+    elif c in [NCurses.keys.PPAGE, IntChar('P'), IntChar('U')] then
       # Move half a screen up if possible.
       move:= QuoInt( max+1, 2 );
       pos2:= pos - 1;
@@ -2403,17 +2411,17 @@ NCurses.Select := function(arg)
       if  pos < 1 then
         pos := 1;
       fi;
-    elif c in [INT_CHAR(' '), INT_CHAR('x')] and not r.single then
+    elif c in [IntChar(' '), IntChar('x')] and not r.single then
       # Toggle the selection at `pos'.
       sel[pos] := not sel[pos];
-    elif c in [NCurses.keys.HOME, INT_CHAR('T')] then
+    elif c in [NCurses.keys.HOME, IntChar('T')] then
       # Move to the first visible entry.
       pos2:= 1;
       while pos2 < pos and not isvisible[ pos2 ] do
         pos2:= pos2 + 1;
       od;
       pos:= pos2;
-    elif c in [NCurses.keys.END, INT_CHAR('B'), INT_CHAR('G')] then
+    elif c in [NCurses.keys.END, IntChar('B'), IntChar('G')] then
       # Move to the last visible entry.
       pos2:= Length( r.items );
       while pos < pos2 and not isvisible[ pos2 ] do
@@ -2452,7 +2460,7 @@ NCurses.Select := function(arg)
       else
         break;
       fi;
-    elif c in [ INT_CHAR( '/' ) ] then 
+    elif c in [ IntChar( '/' ) ] then 
       str:= BrowseData.GetPatternEditParameters(
                 [ NCurses.attrs.BOLD, "enter a search string: " ],
                 searchString,
@@ -2468,7 +2476,7 @@ NCurses.Select := function(arg)
           pos:= pos2;
         fi;
       fi;
-    elif c in [ INT_CHAR( 'n' ) ] then 
+    elif c in [ IntChar( 'n' ) ] then 
       if searchString <> "" then
         pos2:= NCurses.Select_SearchPattern( r.items, searchString, pos,
                    false, searchParameters, isvisible );
@@ -2479,7 +2487,7 @@ NCurses.Select := function(arg)
           pos:= pos2;
         fi;
       fi;
-    elif c in [ INT_CHAR( 'f' ) ] then
+    elif c in [ IntChar( 'f' ) ] then
       str:= BrowseData.GetPatternEditParameters(
                 [ NCurses.attrs.BOLD, "enter a search string: " ],
                 searchString,
@@ -2512,10 +2520,36 @@ NCurses.Select := function(arg)
           fi;
         fi;
       fi;
-    elif c in [ INT_CHAR( '!' ) ] then
+    elif c in [ IntChar( '!' ) ] then
       isvisible:= BlistList( [ 1 .. Length( r.items ) ],
                              [ 1 .. Length( r.items ) ] );
-    elif c in [INT_CHAR('h')] and not IsBound(r.thisishelp) then 
+    elif c in digits or c in [NCurses.keys.BACKSPACE, IntChar('')] then
+      if c in digits then
+        # If the input corresponds to a label in the list
+        # then extend the prefix and jump to the first matching line.
+        cand:= Concatenation( jumpto, String( Position( digits, c ) - 1 ) );
+        candlen:= Length( cand );
+      else
+        # If the user had entered as least one digit then delete the last digit
+        # from the buffer, and jump to the first matching line.
+        candlen:= Length( jumpto );
+        if 1 < candlen then
+          Unbind( jumpto[ candlen ] );
+          candlen:= candlen - 1;
+        fi;
+      fi;
+      for i in [ 1 .. Length( r.items ) ] do
+        if isvisible[i]
+           and candlen <= Length( labels[i] )
+           and labels[i]{ [ 1 .. candlen ] } = cand then
+          jumpto:= cand;
+          pos:= i;
+          break;
+        fi;
+      od;
+      resetjump:= false;
+    elif c in [ NCurses.keys.F1, IntChar('h') ]
+         and not IsBound(r.thisishelp) then 
       NCurses.Pager(rec( lines := helppage,
           size := [Minimum(NCurses.getmaxyx(0)[1]-2, Length(helppage)+2),
                   Maximum(List(helppage, Length)) + 2],
@@ -2523,6 +2557,10 @@ NCurses.Select := function(arg)
           border := true,
           hint := " [ q to leave help ] ",
           thisishelp := true ));
+    fi;
+    if resetjump then
+      # We have read a non-digit, reset the buffer.
+      jumpto:= "[";
     fi;
     # correct offitems, offitemsv if pos not in visible part
     pos2:= Number( [ 1 .. pos ], i -> isvisible[i] );

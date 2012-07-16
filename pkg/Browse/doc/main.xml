@@ -17,7 +17,7 @@
 <#Include SYSTEM "../version">
  )
   </Version>
-  <Date>May 2012</Date>
+  <Date>July 2012</Date>
   <Author> Thomas Breuer
     <Email>Thomas.Breuer@Math.RWTH-Aachen.De</Email>
     <Homepage>http://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>

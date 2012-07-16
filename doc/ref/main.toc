@@ -2413,7 +2413,7 @@
 \contentsline {subsection}{\numberline {56.8.2}\leavevmode {\color {Chapter }RingHomomorphismByImages}}{802}{subsection.56.8.2}
 \contentsline {subsection}{\numberline {56.8.3}\leavevmode {\color {Chapter }RingHomomorphismByImagesNC}}{802}{subsection.56.8.3}
 \contentsline {subsection}{\numberline {56.8.4}\leavevmode {\color {Chapter }NaturalHomomorphismByIdeal}}{802}{subsection.56.8.4}
-\contentsline {chapter}{\numberline {57}\leavevmode {\color {Chapter }Modules (preliminary)}}{803}{chapter.57}
+\contentsline {chapter}{\numberline {57}\leavevmode {\color {Chapter }Modules}}{803}{chapter.57}
 \contentsline {section}{\numberline {57.1}\leavevmode {\color {Chapter }Generating modules}}{803}{section.57.1}
 \contentsline {subsection}{\numberline {57.1.1}\leavevmode {\color {Chapter }IsLeftOperatorAdditiveGroup}}{803}{subsection.57.1.1}
 \contentsline {subsection}{\numberline {57.1.2}\leavevmode {\color {Chapter }IsLeftModule}}{803}{subsection.57.1.2}
@@ -3522,7 +3522,7 @@
 \contentsline {section}{\numberline {86.3}\leavevmode {\color {Chapter }Accessing Weak Pointer Objects as Lists}}{1235}{section.86.3}
 \contentsline {section}{\numberline {86.4}\leavevmode {\color {Chapter }Copying Weak Pointer Objects}}{1235}{section.86.4}
 \contentsline {section}{\numberline {86.5}\leavevmode {\color {Chapter }The GASMAN Interface for Weak Pointer Objects}}{1236}{section.86.5}
-\contentsline {chapter}{\numberline {87}\leavevmode {\color {Chapter }More about Stabilizer Chains (preliminary)}}{1237}{chapter.87}
+\contentsline {chapter}{\numberline {87}\leavevmode {\color {Chapter }More about Stabilizer Chains}}{1237}{chapter.87}
 \contentsline {section}{\numberline {87.1}\leavevmode {\color {Chapter }Generalized Conjugation Technique}}{1237}{section.87.1}
 \contentsline {section}{\numberline {87.2}\leavevmode {\color {Chapter }The General Backtrack Algorithm with Ordered Partitions}}{1238}{section.87.2}
 \contentsline {subsection}{\numberline {87.2.1}\leavevmode {\color {Chapter }Internal representation of ordered partitions}}{1238}{subsection.87.2.1}

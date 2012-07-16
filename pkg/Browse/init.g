@@ -51,4 +51,4 @@ ReadPackage( "Browse", "lib/brdbattr.gd" );
 # utilities for Browse applications (must be read before `read.g')
 ReadPackage( "Browse", "lib/brutils.g" );
 
-Browse_svnRevision := "457";
+Browse_svnRevision := "465";

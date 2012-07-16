@@ -45,6 +45,7 @@
   [10XBrowseGapPackages[110X, see BrowseGapData  6.10-1
   [2XBrowseMSC[102X  6.7-2
   [2XBrowsePackageVariables[102X  6.9-1
+  [2XBrowsePackageVariables[102X  6.9-1
   [2XBrowseProfile[102X  6.8-1
   [2XBrowsePuzzle[102X  6.12-1
   [2XBrowseRubiksCube[102X  6.14-1
