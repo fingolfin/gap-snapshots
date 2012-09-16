@@ -453,7 +453,7 @@
   
   [1X27.6-5 PrintString[101X
   
-  [29X[2XPrintString[102X( [3Xobj[103X ) [32X operation
+  [29X[2XPrintString[102X( [3Xobj[103X[, [3Xlength[103X] ) [32X operation
   
   [33X[0;0Y[2XPrintString[102X  returns  a  representation  of  [3Xobj[103X,  which may be an object of
   arbitrary  type,  as  a string. This string should approximate as closely as

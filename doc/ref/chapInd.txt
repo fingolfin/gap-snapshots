@@ -729,7 +729,7 @@
   [10XDeclareRepresentation[110X, example  80.6
   [2XDeclareSynonym[102X  79.17-10
   [2XDeclareSynonymAttr[102X  79.17-10
-  [2XDeclareUserPreference[102X  3.2-3
+  [2XDeclareUserPreference[102X  3.2-4
   [2XDecodeTree[102X  48.10-1
   decompose, a group character  72.8-5
   [2XDecomposedFixedPointVector[102X  70.9-8

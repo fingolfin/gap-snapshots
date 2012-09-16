@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.5.5, 16-Jul-2012
+                           Release 4.5.6, 16-Sep-2012
   
   
                                  The GAP Group
@@ -54,7 +54,8 @@
     3.2 [33X[0;0YThe gap.ini and gaprc files[133X
       3.2-1 [33X[0;0YThe gap.ini file[133X
       3.2-2 [33X[0;0YThe gaprc file[133X
-      3.2-3 [33X[0;0YUser preferences[133X
+      3.2-3 [33X[0;0YConfiguring User preferences[133X
+      3.2-4 DeclareUserPreference
     3.3 [33X[0;0YSaving and Loading a Workspace[133X
       3.3-1 SaveWorkspace
     3.4 [33X[0;0YTesting for the System Architecture[133X

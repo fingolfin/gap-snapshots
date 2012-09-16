@@ -1,0 +1,299 @@
+  
+  [1X5 Tools[0X
+  
+  
+  [1X5.1 Functions[0X
+  
+  [1X5.1-1 homalgTotalRuntimes[0m
+  
+  [2X> homalgTotalRuntimes( [0X[3Xargs[0X[2X ) ______________________________________[0Xfunction
+  [6XReturns:[0X  an integer
+  
+  A tool to compute the runtime of several methods.
+  
+  [1X5.1-2 AddLeftRightLogicalImplicationsForHomalg[0m
+  
+  [2X> AddLeftRightLogicalImplicationsForHomalg( [0X[3Xargs[0X[2X ) _________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  A tool to install equivalence between filters.
+  
+  [1X5.1-3 LogicalImplicationsForOneHomalgObject[0m
+  
+  [2X> LogicalImplicationsForOneHomalgObject( [0X[3Xargs[0X[2X ) ____________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs a logical implication for one type with all it's contrapositions.
+  
+  [1X5.1-4 LogicalImplicationsForTwoHomalgBasicObjects[0m
+  
+  [2X> LogicalImplicationsForTwoHomalgBasicObjects( [0X[3Xargs[0X[2X ) ______________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  [1X5.1-5 InstallLogicalImplicationsForHomalgBasicObjects[0m
+  
+  [2X> InstallLogicalImplicationsForHomalgBasicObjects( [0X[3Xargs[0X[2X ) __________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  [1X5.1-6 LeftRightAttributesForHomalg[0m
+  
+  [2X> LeftRightAttributesForHomalg( [0X[3Xargs[0X[2X ) _____________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  [1X5.1-7 InstallLeftRightAttributesForHomalg[0m
+  
+  [2X> InstallLeftRightAttributesForHomalg( [0X[3Xargs[0X[2X ) ______________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  [1X5.1-8 MatchPropertiesAndAttributes[0m
+  
+  [2X> MatchPropertiesAndAttributes( [0X[3Xargs[0X[2X ) _____________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  A method to match the properties and attributes of two objects.
+  
+  [1X5.1-9 InstallImmediateMethodToPullPropertyOrAttribute[0m
+  
+  [2X> InstallImmediateMethodToPullPropertyOrAttribute( [0X[3Xargs[0X[2X ) __________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs methods to pull new known properties and attributes from one object
+  to another
+  
+  [1X5.1-10 InstallImmediateMethodToConditionallyPullPropertyOrAttribute[0m
+  
+  [2X> InstallImmediateMethodToConditionallyPullPropertyOrAttribute( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  methods  to pull new known properties and attributes under certain
+  conditions from one object to another.
+  
+  [1X5.1-11 InstallImmediateMethodToPullPropertyOrAttributeWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPullPropertyOrAttributeWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method which can pull a property from one object to
+  another with different names.
+  
+  [1X5.1-12 InstallImmediateMethodToPullPropertiesOrAttributes[0m
+  
+  [2X> InstallImmediateMethodToPullPropertiesOrAttributes( [0X[3Xargs[0X[2X ) _______[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method to pull several properties or attributes from
+  one object to another.
+  
+  [1X5.1-13 InstallImmediateMethodToPullTrueProperty[0m
+  
+  [2X> InstallImmediateMethodToPullTrueProperty( [0X[3Xargs[0X[2X ) _________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method to pull a property if it is true.
+  
+  [1X5.1-14 InstallImmediateMethodToConditionallyPullTrueProperty[0m
+  
+  [2X> InstallImmediateMethodToConditionallyPullTrueProperty( [0X[3Xargs[0X[2X ) ____[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method which conditionally pulls a property if it is
+  true.
+  
+  [1X5.1-15 InstallImmediateMethodToPullTruePropertyWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPullTruePropertyWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method which pulls a property with a different name if
+  it is true.
+  
+  [1X5.1-16 InstallImmediateMethodToPullTrueProperties[0m
+  
+  [2X> InstallImmediateMethodToPullTrueProperties( [0X[3Xargs[0X[2X ) _______________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method which pulls several properties if they are true
+  
+  [1X5.1-17 InstallImmediateMethodToPullFalseProperty[0m
+  
+  [2X> InstallImmediateMethodToPullFalseProperty( [0X[3Xargs[0X[2X ) ________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method to pull a property if it is false.
+  
+  [1X5.1-18 InstallImmediateMethodToConditionallyPullFalseProperty[0m
+  
+  [2X> InstallImmediateMethodToConditionallyPullFalseProperty( [0X[3Xargs[0X[2X ) ___[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method which conditionally pulls a property if it is
+  false.
+  
+  [1X5.1-19 InstallImmediateMethodToPullFalsePropertyWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPullFalsePropertyWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method which pulls a property with a different name if
+  it is false.
+  
+  [1X5.1-20 InstallImmediateMethodToPullFalseProperties[0m
+  
+  [2X> InstallImmediateMethodToPullFalseProperties( [0X[3Xargs[0X[2X ) ______________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method  which  pulls several properties if they are
+  false.
+  
+  [1X5.1-21 InstallImmediateMethodToPushPropertyOrAttribute[0m
+  
+  [2X> InstallImmediateMethodToPushPropertyOrAttribute( [0X[3Xargs[0X[2X ) __________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method to push a property from one object to another.
+  
+  [1X5.1-22 InstallImmediateMethodToConditionallyPushPropertyOrAttribute[0m
+  
+  [2X> InstallImmediateMethodToConditionallyPushPropertyOrAttribute( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method  to  conditionally  push a property from one
+  object to another.
+  
+  [1X5.1-23 InstallImmediateMethodToPushPropertyOrAttributeWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPushPropertyOrAttributeWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method which can push a property from one object to
+  another with different names.
+  
+  [1X5.1-24 InstallImmediateMethodToPushPropertiesOrAttributes[0m
+  
+  [2X> InstallImmediateMethodToPushPropertiesOrAttributes( [0X[3Xargs[0X[2X ) _______[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method to push several properties or attributes from
+  one object to another.
+  
+  [1X5.1-25 InstallImmediateMethodToPushTrueProperty[0m
+  
+  [2X> InstallImmediateMethodToPushTrueProperty( [0X[3Xargs[0X[2X ) _________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method to push a property if it is true.
+  
+  [1X5.1-26 InstallImmediateMethodToPushTruePropertyWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPushTruePropertyWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method which pushes a property with a different name
+  if it is true.
+  
+  [1X5.1-27 InstallImmediateMethodToPushTrueProperties[0m
+  
+  [2X> InstallImmediateMethodToPushTrueProperties( [0X[3Xargs[0X[2X ) _______________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method  which pushes several properties if they are
+  true
+  
+  [1X5.1-28 InstallImmediateMethodToPushFalseProperty[0m
+  
+  [2X> InstallImmediateMethodToPushFalseProperty( [0X[3Xargs[0X[2X ) ________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an immediate method to push a property if it is false.
+  
+  [1X5.1-29 InstallImmediateMethodToPushFalsePropertyWithDifferentName[0m
+  
+  [2X> InstallImmediateMethodToPushFalsePropertyWithDifferentName( [0X[3Xargs[0X[2X ) [0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate method which pushes a property with a different name
+  if it is false.
+  
+  [1X5.1-30 InstallImmediateMethodToPushFalseProperties[0m
+  
+  [2X> InstallImmediateMethodToPushFalseProperties( [0X[3Xargs[0X[2X ) ______________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs  an  immediate  method  which  push  several properties if they are
+  false.
+  
+  [1X5.1-31 DeclareAttributeWithCustomGetter[0m
+  
+  [2X> DeclareAttributeWithCustomGetter( [0X[3Xargs[0X[2X ) _________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Installs an attribute with a coustom getter function.
+  
+  [1X5.1-32 AppendToAhomalgTable[0m
+  
+  [2X> AppendToAhomalgTable( [0X[3Xargs[0X[2X ) _____________________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Appends an entry to a homalg table.
+  
+  [1X5.1-33 homalgNamesOfComponentsToIntLists[0m
+  
+  [2X> homalgNamesOfComponentsToIntLists( [0X[3Xargs[0X[2X ) ________________________[0Xfunction
+  [6XReturns:[0X  a list of integers
+  
+  Creates a list of integers out of the names of components.
+  
+  [1X5.1-34 IncreaseExistingCounterInObject[0m
+  
+  [2X> IncreaseExistingCounterInObject( [0X[3Xargs[0X[2X ) __________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Increases an existing counter in an object.
+  
+  [1X5.1-35 IncreaseExistingCounterInObjectWithTiming[0m
+  
+  [2X> IncreaseExistingCounterInObjectWithTiming( [0X[3Xargs[0X[2X ) ________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Increases an existiing counter on an object with timing.
+  
+  [1X5.1-36 IncreaseCounterInObject[0m
+  
+  [2X> IncreaseCounterInObject( [0X[3Xargs[0X[2X ) __________________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Increases a counter in an object and creates one if it not exists
+  
+  [1X5.1-37 MemoryToString[0m
+  
+  [2X> MemoryToString( [0X[3Xargs[0X[2X ) ___________________________________________[0Xfunction
+  [6XReturns:[0X  Nothing
+  
+  Converts the current memory state to a string
+  
+  [1X5.1-38 homalgLaTeX[0m
+  
+  [2X> homalgLaTeX( [0X[3Xarg1[0X[2X ) _____________________________________________[0Xoperation
+  [6XReturns:[0X  Nothing
+  
+  Filters for arguments are: IsObject
+  
+  
+  [1X5.2 Examplefunctions[0X
+  
+  [1X5.2-1 ExamplesForHomalg[0m
+  
+  [2X> ExamplesForHomalg( [0X[3X[0X[2X ) ___________________________________________[0Xoperation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Filters for arguments are:
+  Runs the examples for homalg if the package is loadable.
+  
+  [1X5.2-2 ExamplesForHomalg[0m
+  
+  [2X> ExamplesForHomalg( [0X[3Xarg1[0X[2X ) _______________________________________[0Xoperation
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Filters for arguments are: IS_INT
+  Runs the named example for homalg
+  

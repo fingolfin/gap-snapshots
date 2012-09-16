@@ -6,10 +6,10 @@
                        [1XCompact vectors over finite fields[101X
   
   
-                                  Version 2.3
+                                  Version 2.4
   
   
-                                   July 2012
+                                 September 2012
   
   
                                  Max Neunhöffer

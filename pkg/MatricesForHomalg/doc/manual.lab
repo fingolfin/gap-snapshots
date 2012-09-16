@@ -126,9 +126,10 @@
 \makelabel{matricesforhomalg:BasisAlgorithmRespectsPrincipalIdeals}{3.3.54}
 \makelabel{matricesforhomalg:AreUnitsCentral}{3.3.55}
 \makelabel{matricesforhomalg:IsMinusOne}{3.3.56}
-\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.57}
-\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.58}
-\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.59}
+\makelabel{matricesforhomalg:IsMonic (for homalg ring elements)}{3.3.57}
+\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.58}
+\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.59}
+\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.60}
 \makelabel{matricesforhomalg:Zero (for homalg ring elements)}{3.4.1}
 \makelabel{matricesforhomalg:One (for homalg ring elements)}{3.4.2}
 \makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.3}
@@ -238,7 +239,7 @@
 \makelabel{matricesforhomalg:AffineDegree}{5.4.21}
 \makelabel{matricesforhomalg:ProjectiveDegree}{5.4.22}
 \makelabel{matricesforhomalg:ConstantTermOfHilbertPolynomialn}{5.4.23}
-\makelabel{matricesforhomalg:MatrixOfSymbolsn}{5.4.24}
+\makelabel{matricesforhomalg:MatrixOfSymbols}{5.4.24}
 \makelabel{matricesforhomalg:HomalgRing (for matrices)}{5.5.1}
 \makelabel{matricesforhomalg:LeftInverse (for matrices)}{5.5.2}
 \makelabel{matricesforhomalg:RightInverse (for matrices)}{5.5.3}

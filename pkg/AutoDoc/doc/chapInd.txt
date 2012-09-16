@@ -1,0 +1,16 @@
+  
+  
+  [1XIndex[101X
+  
+  [5XAutoDoc[105X  .-2
+  [2XAUTOMATIC_DOCUMENTATION[102X  2.1-1
+  [2XCreateAutoDoc[102X  2.1-2
+  [2XDeclareAttributeWithDocumentation[102X  2.1-5
+  [2XDeclareCategoryWithDocumentation[102X  2.1-3
+  [2XDeclareGlobalFunctionWithDocumentation[102X  2.1-7
+  [2XDeclareGlobalVariableWithDocumentation[102X  2.1-8
+  [2XDeclareOperationWithDocumentation[102X  2.1-4
+  [2XDeclarePropertyWithDocumentation[102X  2.1-6
+  
+  
+  -------------------------------------------------------

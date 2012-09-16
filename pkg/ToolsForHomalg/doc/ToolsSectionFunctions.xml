@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+ This is an automatically generated file. 
+ -->
+<Section Label="Functions_automatically_generated_documentation_parts">
+<Heading>Functions</Heading>
+<#Include Label="homalgTotalRuntimes1773195636">
+<#Include Label="AddLeftRightLogicalImplicationsForHomalg2790402285">
+<#Include Label="LogicalImplicationsForOneHomalgObject2419050586">
+<#Include Label="LogicalImplicationsForTwoHomalgBasicObjects6617139316">
+<#Include Label="InstallLogicalImplicationsForHomalgBasicObjects2288229292">
+<#Include Label="LeftRightAttributesForHomalg582495927">
+<#Include Label="InstallLeftRightAttributesForHomalg4026616483">
+<#Include Label="MatchPropertiesAndAttributes5695911628">
+<#Include Label="InstallImmediateMethodToPullPropertyOrAttribute2103292957">
+<#Include Label="InstallImmediateMethodToConditionallyPullPropertyOrAttribute1157196869">
+<#Include Label="InstallImmediateMethodToPullPropertyOrAttributeWithDifferentName3946687479">
+<#Include Label="InstallImmediateMethodToPullPropertiesOrAttributes2965218046">
+<#Include Label="InstallImmediateMethodToPullTrueProperty8685520928">
+<#Include Label="InstallImmediateMethodToConditionallyPullTrueProperty4344978700">
+<#Include Label="InstallImmediateMethodToPullTruePropertyWithDifferentName8270643413">
+<#Include Label="InstallImmediateMethodToPullTrueProperties9893460484">
+<#Include Label="InstallImmediateMethodToPullFalseProperty3668944714">
+<#Include Label="InstallImmediateMethodToConditionallyPullFalseProperty7915899011">
+<#Include Label="InstallImmediateMethodToPullFalsePropertyWithDifferentName7564835850">
+<#Include Label="InstallImmediateMethodToPullFalseProperties5574123499">
+<#Include Label="InstallImmediateMethodToPushPropertyOrAttribute2068484036">
+<#Include Label="InstallImmediateMethodToConditionallyPushPropertyOrAttribute5417082191">
+<#Include Label="InstallImmediateMethodToPushPropertyOrAttributeWithDifferentName447094292">
+<#Include Label="InstallImmediateMethodToPushPropertiesOrAttributes389370811">
+<#Include Label="InstallImmediateMethodToPushTrueProperty306564681">
+<#Include Label="InstallImmediateMethodToPushTruePropertyWithDifferentName3983721463">
+<#Include Label="InstallImmediateMethodToPushTrueProperties5341988114">
+<#Include Label="InstallImmediateMethodToPushFalseProperty5751977936">
+<#Include Label="InstallImmediateMethodToPushFalsePropertyWithDifferentName2422539408">
+<#Include Label="InstallImmediateMethodToPushFalseProperties40336648">
+<#Include Label="DeclareAttributeWithCustomGetter5062487088">
+<#Include Label="AppendToAhomalgTable1546353352">
+<#Include Label="homalgNamesOfComponentsToIntLists4735836652">
+<#Include Label="IncreaseExistingCounterInObject7948424250">
+<#Include Label="IncreaseExistingCounterInObjectWithTiming9089442460">
+<#Include Label="IncreaseCounterInObject3252163367">
+<#Include Label="MemoryToString5841231805">
+<#Include Label="homalgLaTeX7335716407">
+</Section>

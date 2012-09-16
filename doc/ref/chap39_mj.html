@@ -879,10 +879,6 @@ x2*x1*x2*x1*x2^-2
 <dd><p>In particular many <span class="SimpleMath">\(p\)</span>-groups have very "similar" structure, and <code class="func">StructureDescription</code> can only exhibit a little of it. Changing this would likely make the output not essentially easier to read than a pc presentation.</p>
 
 </dd>
-<dt><strong class="Mark">3.</strong></dt>
-<dd><p>The output of <code class="func">StructureDescription</code> is guaranteed to depend only on the isomorphism type of the group, but neither on the choice of its generators nor on the choice of its representation. Therefore <code class="func">StructureDescription</code> needs to determine <em>all</em> possible decompositions of the group, and choose the "nicest" from them. This is very time- and memory-consuming if the group has many normal subgroups. Therefore, <code class="func">StructureDescription</code> is particularly unsuitable for solvable groups and in particular <span class="SimpleMath">\(p\)</span>-groups, unless they are very small, i.e. have order less than 128.</p>
-
-</dd>
 </dl>
 
 <div class="example"><pre>
@@ -2763,7 +2759,7 @@ M(11)
 <h5>39.21-1 LatticeByCyclicExtension</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeByCyclicExtension</code>( <var class="Arg">G</var>[, <var class="Arg">func</var>[, <var class="Arg">noperf</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>computes the lattice of <var class="Arg">G</var> using the cyclic extension algorithm. If the function <var class="Arg">func</var> is given, the algorithm will discard all subgroups not fulfilling <var class="Arg">func</var> (and will also not extend them), returning a partial lattice. This can be useful to compute only subgroups with certain properties. Note however that this will <em>not</em> necessarily yield all subgroups that fulfill <var class="Arg">func</var>, but the subgroups whose subgroups are used for the construction must also fulfill <var class="Arg">func</var> as well. (In fact the filter <var class="Arg">func</var> will simply discard subgroups in the cyclic extension algorithm. Therefore the trivial subgroup will always be included.) Also note, that for such a partial lattice maximality/minimality inclusion relations cannot be computed.</p>
+<p>computes the lattice of <var class="Arg">G</var> using the cyclic extension algorithm. If the function <var class="Arg">func</var> is given, the algorithm will discard all subgroups not fulfilling <var class="Arg">func</var> (and will also not extend them), returning a partial lattice. This can be useful to compute only subgroups with certain properties. Note however that this will <em>not</em> necessarily yield all subgroups that fulfill <var class="Arg">func</var>, but the subgroups whose subgroups are used for the construction must also fulfill <var class="Arg">func</var> as well. (In fact the filter <var class="Arg">func</var> will simply discard subgroups in the cyclic extension algorithm. Therefore the trivial subgroup will always be included.) Also note, that for such a partial lattice maximality/minimality inclusion relations cannot be computed. (If <var class="Arg">func</var> is a list of length 2, its first entry is such a discarding function, the second a function for discarding zuppos.)</p>
 
 <p>The cyclic extension algorithm requires the perfect subgroups of <var class="Arg">G</var>. However <strong class="pkg">GAP</strong> cannot analyze the function <var class="Arg">func</var> for its implication but can only apply it. If it is known that <var class="Arg">func</var> implies solvability, the computation of the perfect subgroups can be avoided by giving a third parameter <var class="Arg">noperf</var> set to <code class="keyw">true</code>.</p>
 
@@ -2785,6 +2781,8 @@ M(11)
 &lt;subgroup lattice of &lt;permutation group of size 5184 with 
 9 generators&gt;, 566 classes, 27134 subgroups&gt;
 </pre></div>
+
+<p>##</p>
 
 <p><a id="X78918D83835A0EDF" name="X78918D83835A0EDF"></a></p>
 

@@ -1,0 +1,71 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }What is the role of the \textsf {ToolsForHomalg} package in the \textsf {homalg} project?}}{5}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }\textsf {ToolsForHomalg} provides ...}}{5}{subsection.1.1.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {ToolsForHomalg} Package}}{6}{chapter.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Basics}}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Variables}}{7}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }HOMALG{\textunderscore }TOOLS}}{7}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Categories}}{7}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IsStructureObjectOrObjectOrMorphism}}{7}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }IsStructureObjectOrObject}}{7}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IsStructureObject}}{7}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }IsStructureObjectMorphism}}{8}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }IsHomalgRingOrModule}}{8}{subsection.3.2.5}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Pointers}}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Weak pointer objects}}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }IsContainerForWeakPointers}}{9}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }ContainerForWeakPointers}}{9}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }UpdateContainerOfWeakPointers}}{9}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }{\textunderscore }AddElmWPObj{\textunderscore }ForHomalg}}{9}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }{\textunderscore }AddTwoElmWPObj{\textunderscore }ForHomalg}}{9}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\leavevmode {\color {Chapter }{\textunderscore }ElmWPObj{\textunderscore }ForHomalg}}{10}{subsection.4.1.6}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Pointer objects}}{10}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }IsContainerForPointers}}{10}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }ContainerForPointers}}{10}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }UpdateContainerOfPointers}}{10}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }{\textunderscore }AddElmPObj{\textunderscore }ForHomalg}}{10}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }{\textunderscore }AddTwoElmPObj{\textunderscore }ForHomalg}}{10}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }{\textunderscore }ElmPObj{\textunderscore }ForHomalg}}{10}{subsection.4.2.6}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Tools}}{11}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Functions}}{11}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }homalgTotalRuntimes}}{11}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }AddLeftRightLogicalImplicationsForHomalg}}{11}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }LogicalImplicationsForOneHomalgObject}}{11}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }LogicalImplicationsForTwoHomalgBasicObjects}}{11}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }InstallLogicalImplicationsForHomalgBasicObjects}}{11}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}\leavevmode {\color {Chapter }LeftRightAttributesForHomalg}}{11}{subsection.5.1.6}
+\contentsline {subsection}{\numberline {5.1.7}\leavevmode {\color {Chapter }InstallLeftRightAttributesForHomalg}}{12}{subsection.5.1.7}
+\contentsline {subsection}{\numberline {5.1.8}\leavevmode {\color {Chapter }MatchPropertiesAndAttributes}}{12}{subsection.5.1.8}
+\contentsline {subsection}{\numberline {5.1.9}\leavevmode {\color {Chapter }InstallImmediateMethodToPullPropertyOrAttribute}}{12}{subsection.5.1.9}
+\contentsline {subsection}{\numberline {5.1.10}\leavevmode {\color {Chapter }InstallImmediateMethodToConditionallyPullPropertyOrAttribute}}{12}{subsection.5.1.10}
+\contentsline {subsection}{\numberline {5.1.11}\leavevmode {\color {Chapter }InstallImmediateMethodToPullPropertyOrAttributeWithDifferentName}}{12}{subsection.5.1.11}
+\contentsline {subsection}{\numberline {5.1.12}\leavevmode {\color {Chapter }InstallImmediateMethodToPullPropertiesOrAttributes}}{12}{subsection.5.1.12}
+\contentsline {subsection}{\numberline {5.1.13}\leavevmode {\color {Chapter }InstallImmediateMethodToPullTrueProperty}}{12}{subsection.5.1.13}
+\contentsline {subsection}{\numberline {5.1.14}\leavevmode {\color {Chapter }InstallImmediateMethodToConditionallyPullTrueProperty}}{12}{subsection.5.1.14}
+\contentsline {subsection}{\numberline {5.1.15}\leavevmode {\color {Chapter }InstallImmediateMethodToPullTruePropertyWithDifferentName}}{13}{subsection.5.1.15}
+\contentsline {subsection}{\numberline {5.1.16}\leavevmode {\color {Chapter }InstallImmediateMethodToPullTrueProperties}}{13}{subsection.5.1.16}
+\contentsline {subsection}{\numberline {5.1.17}\leavevmode {\color {Chapter }InstallImmediateMethodToPullFalseProperty}}{13}{subsection.5.1.17}
+\contentsline {subsection}{\numberline {5.1.18}\leavevmode {\color {Chapter }InstallImmediateMethodToConditionallyPullFalseProperty}}{13}{subsection.5.1.18}
+\contentsline {subsection}{\numberline {5.1.19}\leavevmode {\color {Chapter }InstallImmediateMethodToPullFalsePropertyWithDifferentName}}{13}{subsection.5.1.19}
+\contentsline {subsection}{\numberline {5.1.20}\leavevmode {\color {Chapter }InstallImmediateMethodToPullFalseProperties}}{13}{subsection.5.1.20}
+\contentsline {subsection}{\numberline {5.1.21}\leavevmode {\color {Chapter }InstallImmediateMethodToPushPropertyOrAttribute}}{13}{subsection.5.1.21}
+\contentsline {subsection}{\numberline {5.1.22}\leavevmode {\color {Chapter }InstallImmediateMethodToConditionallyPushPropertyOrAttribute}}{13}{subsection.5.1.22}
+\contentsline {subsection}{\numberline {5.1.23}\leavevmode {\color {Chapter }InstallImmediateMethodToPushPropertyOrAttributeWithDifferentName}}{14}{subsection.5.1.23}
+\contentsline {subsection}{\numberline {5.1.24}\leavevmode {\color {Chapter }InstallImmediateMethodToPushPropertiesOrAttributes}}{14}{subsection.5.1.24}
+\contentsline {subsection}{\numberline {5.1.25}\leavevmode {\color {Chapter }InstallImmediateMethodToPushTrueProperty}}{14}{subsection.5.1.25}
+\contentsline {subsection}{\numberline {5.1.26}\leavevmode {\color {Chapter }InstallImmediateMethodToPushTruePropertyWithDifferentName}}{14}{subsection.5.1.26}
+\contentsline {subsection}{\numberline {5.1.27}\leavevmode {\color {Chapter }InstallImmediateMethodToPushTrueProperties}}{14}{subsection.5.1.27}
+\contentsline {subsection}{\numberline {5.1.28}\leavevmode {\color {Chapter }InstallImmediateMethodToPushFalseProperty}}{14}{subsection.5.1.28}
+\contentsline {subsection}{\numberline {5.1.29}\leavevmode {\color {Chapter }InstallImmediateMethodToPushFalsePropertyWithDifferentName}}{14}{subsection.5.1.29}
+\contentsline {subsection}{\numberline {5.1.30}\leavevmode {\color {Chapter }InstallImmediateMethodToPushFalseProperties}}{14}{subsection.5.1.30}
+\contentsline {subsection}{\numberline {5.1.31}\leavevmode {\color {Chapter }DeclareAttributeWithCustomGetter}}{15}{subsection.5.1.31}
+\contentsline {subsection}{\numberline {5.1.32}\leavevmode {\color {Chapter }AppendToAhomalgTable}}{15}{subsection.5.1.32}
+\contentsline {subsection}{\numberline {5.1.33}\leavevmode {\color {Chapter }homalgNamesOfComponentsToIntLists}}{15}{subsection.5.1.33}
+\contentsline {subsection}{\numberline {5.1.34}\leavevmode {\color {Chapter }IncreaseExistingCounterInObject}}{15}{subsection.5.1.34}
+\contentsline {subsection}{\numberline {5.1.35}\leavevmode {\color {Chapter }IncreaseExistingCounterInObjectWithTiming}}{15}{subsection.5.1.35}
+\contentsline {subsection}{\numberline {5.1.36}\leavevmode {\color {Chapter }IncreaseCounterInObject}}{15}{subsection.5.1.36}
+\contentsline {subsection}{\numberline {5.1.37}\leavevmode {\color {Chapter }MemoryToString}}{15}{subsection.5.1.37}
+\contentsline {subsection}{\numberline {5.1.38}\leavevmode {\color {Chapter }homalgLaTeX}}{15}{subsection.5.1.38}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Examplefunctions}}{16}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }ExamplesForHomalg}}{16}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }ExamplesForHomalg}}{16}{subsection.5.2.2}

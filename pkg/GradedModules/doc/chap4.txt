@@ -1,42 +1,42 @@
   
-  [1X4 Ring Maps[0X
+  [1X4 [33X[0;0YRing Maps[133X[101X
   
   
-  [1X4.1 Ring Maps: Attributes[0X
+  [1X4.1 [33X[0;0YRing Maps: Attributes[133X[101X
   
-  [1X4.1-1 KernelSubobject[0m
+  [1X4.1-1 KernelSubobject[101X
   
-  [2X> KernelSubobject( [0X[3Xphi[0X[2X ) _____________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  [29X[2XKernelSubobject[102X( [3Xphi[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X submodule[133X
   
-  The kernel ideal of the ring map [3Xphi[0m.
+  [33X[0;0YThe kernel ideal of the ring map [3Xphi[103X.[133X
   
   
-  [1X4.2 Ring Maps: Operations and Functions[0X
+  [1X4.2 [33X[0;0YRing Maps: Operations and Functions[133X[101X
   
-  [1X4.2-1 SegreMap[0m
+  [1X4.2-1 SegreMap[101X
   
-  [2X> SegreMap( [0X[3XR, s[0X[2X ) ___________________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  [29X[2XSegreMap[102X( [3XR[103X, [3Xs[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring map[133X
   
-  The  ring  map corresponding to the Segre embedding of MultiProj([3XR[0m) into the
-  projective space according to P(W_1)x P(W_2) -> P(W_1otimes W_2).
+  [33X[0;0YThe  ring  map corresponding to the Segre embedding of [22XMultiProj([3XR[103X)[122X into the
+  projective space according to [22XP(W_1)× P(W_2) -> P(W_1⊗ W_2)[122X.[133X
   
-  [1X4.2-2 PlueckerMap[0m
+  [1X4.2-2 PlueckerMap[101X
   
-  [2X> PlueckerMap( [0X[3Xl, n, A, s[0X[2X ) __________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  [29X[2XPlueckerMap[102X( [3Xl[103X, [3Xn[103X, [3XA[103X, [3Xs[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring map[133X
   
-  The  ring  map  corresponding  to  the Plücker embedding of the Grassmannian
-  G_l(P^[3Xn[0m([3XA[0m))=G_l(P(W)) into the projective space P(bigwedge^l W), where W=V^*
-  is the [3XA[0m-dual of the free module V=A^[3Xn[0m+1 of rank [3Xn[0m+1.
+  [33X[0;0YThe  ring  map  corresponding  to  the Plücker embedding of the Grassmannian
+  [22XG_l(P^[3Xn[103X([3XA[103X))=G_l(P(W))[122X into the projective space [22XP(⋀^l W)[122X, where [22XW=V^*[122X is the
+  [22X[3XA[103X[122X-dual of the free module [22XV=A^[3Xn[103X+1[122X of rank [22X[3Xn[103X+1[122X.[133X
   
-  [1X4.2-3 VeroneseMap[0m
+  [1X4.2-3 VeroneseMap[101X
   
-  [2X> VeroneseMap( [0X[3Xn, d, A, s[0X[2X ) __________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m ring map
+  [29X[2XVeroneseMap[102X( [3Xn[103X, [3Xd[103X, [3XA[103X, [3Xs[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring map[133X
   
-  The ring map corresponding to the Veronese embedding of the projective space
-  P^[3Xn[0m([3XA[0m)=P(W) into the projective space P(S^d W), where W=V^* is the [3XA[0m-dual of
-  the free module V=A^[3Xn[0m+1 of rank [3Xn[0m+1.
+  [33X[0;0YThe ring map corresponding to the Veronese embedding of the projective space
+  [22XP^[3Xn[103X([3XA[103X)=P(W)[122X into the projective space [22XP(S^d W)[122X, where [22XW=V^*[122X is the [22X[3XA[103X[122X-dual of
+  the free module [22XV=A^[3Xn[103X+1[122X of rank [22X[3Xn[103X+1[122X.[133X
   

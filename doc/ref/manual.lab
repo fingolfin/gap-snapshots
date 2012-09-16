@@ -18,7 +18,7 @@
 \makelabel{ref:The gap.ini and gaprc files}{3.2}{X7FD66F977A3B02DF}
 \makelabel{ref:The gap.ini file}{3.2.1}{X87DF11C885E73583}
 \makelabel{ref:The gaprc file}{3.2.2}{X84D4CF587D437C00}
-\makelabel{ref:User preferences}{3.2.3}{X79C78FE1869C9004}
+\makelabel{ref:Configuring User preferences}{3.2.3}{X7B0AD104839B6C3C}
 \makelabel{ref:Saving and Loading a Workspace}{3.3}{X7CB282757ACB1C09}
 \makelabel{ref:Testing for the System Architecture}{3.4}{X83BF07587F2CC6CD}
 \makelabel{ref:Global Values that Control the GAP Session}{3.5}{X7F1E823886F3681B}
@@ -1039,11 +1039,11 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:-z}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-p}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:gap.ini}{3.2.1}{X87DF11C885E73583}
-\makelabel{ref:DeclareUserPreference}{3.2.3}{X79C78FE1869C9004}
-\makelabel{ref:SetUserPreference}{3.2.3}{X79C78FE1869C9004}
-\makelabel{ref:UserPreference}{3.2.3}{X79C78FE1869C9004}
-\makelabel{ref:ShowUserPreferences}{3.2.3}{X79C78FE1869C9004}
-\makelabel{ref:WriteGapIniFile}{3.2.3}{X79C78FE1869C9004}
+\makelabel{ref:SetUserPreference}{3.2.3}{X7B0AD104839B6C3C}
+\makelabel{ref:UserPreference}{3.2.3}{X7B0AD104839B6C3C}
+\makelabel{ref:ShowUserPreferences}{3.2.3}{X7B0AD104839B6C3C}
+\makelabel{ref:WriteGapIniFile}{3.2.3}{X7B0AD104839B6C3C}
+\makelabel{ref:DeclareUserPreference}{3.2.4}{X7F1DF6757B248014}
 \makelabel{ref:SaveWorkspace}{3.3.1}{X876544A57C73C488}
 \makelabel{ref:save}{3.3.1}{X876544A57C73C488}
 \makelabel{ref:ARCHISUNIX}{3.4.1}{X7C825AF087A27884}

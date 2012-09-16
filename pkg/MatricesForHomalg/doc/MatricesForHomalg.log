@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  13 JUN 2012 20:58
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  27 AUG 2012 16:27
 entering extended mode
 **MatricesForHomalg
 (./MatricesForHomalg.tex
@@ -651,20 +651,20 @@ Chapter 5.
 
 ] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47]
 [48] [49] [50] [51] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 3945--3946
+Underfull \hbox (badness 10000) in paragraph at lines 3960--3961
 []\OT1/ptm/m/n/10.95 Like \OT1/pcr/m/n/10.95 BasisOfRowModule\OT1/ptm/m/n/10.95
  ( [] ) but where the ma-trix \OT1/pcr/m/n/10.95 SyzygiesGeneratorsOfRows\OT1/p
 tm/m/n/10.95 (
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3990--3991
+Underfull \hbox (badness 10000) in paragraph at lines 4005--4006
 []\OT1/ptm/m/n/10.95 Like \OT1/pcr/m/n/10.95 SyzygiesGeneratorsOfColumns\OT1/pt
 m/m/n/10.95 ( [] ) but where the ma-trix
  []
 
 
-Underfull \hbox (badness 4582) in paragraph at lines 3990--3991
+Underfull \hbox (badness 4582) in paragraph at lines 4005--4006
 \OT1/pcr/m/n/10.95 SyzygiesGeneratorsOfColumns\OT1/ptm/m/n/10.95 ( \OT1/pcr/m/n
 /10.95 ReducedSyzygiesGeneratorsOfColumns\OT1/ptm/m/n/10.95 ( [] ) ) con-tains
  []
@@ -680,10 +680,10 @@ Appendix A.
 ] [63]
 Appendix B.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 4626.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 4641.
 
 
-Underfull \hbox (badness 2165) in paragraph at lines 4659--4660
+Underfull \hbox (badness 2165) in paragraph at lines 4674--4675
 []\OT1/ptm/m/n/10.95 Let $\OML/ptmcm/m/it/10.95 R \OT1/ptmcm/m/n/10.95 :=$ \OT1
 /pcr/m/n/10.95 HomalgRing$\OT1/ptmcm/m/n/10.95 ([])$ \OT1/ptm/m/n/10.95 and $\O
 ML/ptmcm/m/it/10.95 RP \OT1/ptmcm/m/n/10.95 :=$ \OT1/pcr/m/n/10.95 homalgTable$
@@ -692,7 +692,7 @@ n/10.95 . If the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 com-po-
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 4659--4660
+Underfull \hbox (badness 1490) in paragraph at lines 4674--4675
 \OT1/ptm/m/n/10.95 nent $\OML/ptmcm/m/it/10.95 RP$\OT1/ptm/m/n/10.95 !.\OT1/pcr
 /m/n/10.95 InitialIdentityMatrix \OT1/ptm/m/n/10.95 is bound then the method \O
 T1/pcr/m/n/10.95 Eval \OT1/ptm/m/n/10.95 ([][]C.4.2[][]) re-sets the fil-ter
@@ -701,7 +701,7 @@ T1/pcr/m/n/10.95 Eval \OT1/ptm/m/n/10.95 ([][]C.4.2[][]) re-sets the fil-ter
 [64
 
 ] [65] [66] [67] [68] [69] [70] [71] [72] [73]
-Underfull \hbox (badness 3612) in paragraph at lines 5317--5318
+Underfull \hbox (badness 3612) in paragraph at lines 5332--5333
 []\OT1/ptm/m/n/10.95 Let $\OML/ptmcm/m/it/10.95 R \OT1/ptmcm/m/n/10.95 :=$ \OT1
 /pcr/m/n/10.95 HomalgRing$\OT1/ptmcm/m/n/10.95 ([])$ \OT1/ptm/m/n/10.95 and $\O
 ML/ptmcm/m/it/10.95 RP \OT1/ptmcm/m/n/10.95 :=$ \OT1/pcr/m/n/10.95 homalgTable$
@@ -710,20 +710,20 @@ n/10.95 . If the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5317--5318
+Underfull \hbox (badness 10000) in paragraph at lines 5332--5333
 \OT1/ptm/m/n/10.95 po-nent $\OML/ptmcm/m/it/10.95 RP$\OT1/ptm/m/n/10.95 !.\OT1/
 pcr/m/n/10.95 GetColumnIndependentUnitPositions \OT1/ptm/m/n/10.95 is bound the
 n the stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5317--5318
+Underfull \hbox (badness 10000) in paragraph at lines 5332--5333
 \OT1/ptm/m/n/10.95 of the op-er-a-tion \OT1/pcr/m/n/10.95 GetColumnIndependentU
 nitPositions \OT1/ptm/m/n/10.95 ([][]5.5.18[][]) shown be-low re-turns
  []
 
 [74]
-Underfull \hbox (badness 3612) in paragraph at lines 5379--5380
+Underfull \hbox (badness 3612) in paragraph at lines 5394--5395
 []\OT1/ptm/m/n/10.95 Let $\OML/ptmcm/m/it/10.95 R \OT1/ptmcm/m/n/10.95 :=$ \OT1
 /pcr/m/n/10.95 HomalgRing$\OT1/ptmcm/m/n/10.95 ([])$ \OT1/ptm/m/n/10.95 and $\O
 ML/ptmcm/m/it/10.95 RP \OT1/ptmcm/m/n/10.95 :=$ \OT1/pcr/m/n/10.95 homalgTable$
@@ -732,20 +732,20 @@ n/10.95 . If the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5379--5380
+Underfull \hbox (badness 10000) in paragraph at lines 5394--5395
 \OT1/ptm/m/n/10.95 po-nent $\OML/ptmcm/m/it/10.95 RP$\OT1/ptm/m/n/10.95 !.\OT1/
 pcr/m/n/10.95 GetRowIndependentUnitPositions \OT1/ptm/m/n/10.95 is bound then t
 he stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5379--5380
+Underfull \hbox (badness 10000) in paragraph at lines 5394--5395
 \OT1/ptm/m/n/10.95 of the op-er-a-tion \OT1/pcr/m/n/10.95 GetRowIndependentUnit
 Positions \OT1/ptm/m/n/10.95 ([][]5.5.19[][]) shown be-low re-turns
  []
 
 [75] [76]
-Underfull \hbox (badness 3612) in paragraph at lines 5496--5497
+Underfull \hbox (badness 3612) in paragraph at lines 5511--5512
 []\OT1/ptm/m/n/10.95 Let $\OML/ptmcm/m/it/10.95 R \OT1/ptmcm/m/n/10.95 :=$ \OT1
 /pcr/m/n/10.95 HomalgRing$\OT1/ptmcm/m/n/10.95 ([])$ \OT1/ptm/m/n/10.95 and $\O
 ML/ptmcm/m/it/10.95 RP \OT1/ptmcm/m/n/10.95 :=$ \OT1/pcr/m/n/10.95 homalgTable$
@@ -754,20 +754,20 @@ n/10.95 . If the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5496--5497
+Underfull \hbox (badness 10000) in paragraph at lines 5511--5512
 \OT1/ptm/m/n/10.95 po-nent $\OML/ptmcm/m/it/10.95 RP$\OT1/ptm/m/n/10.95 !.\OT1/
 pcr/m/n/10.95 PositionOfFirstNonZeroEntryPerRow \OT1/ptm/m/n/10.95 is bound the
 n the stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5496--5497
+Underfull \hbox (badness 10000) in paragraph at lines 5511--5512
 \OT1/ptm/m/n/10.95 of the at-tribute \OT1/pcr/m/n/10.95 PositionOfFirstNonZeroE
 ntryPerRow \OT1/ptm/m/n/10.95 ([][]5.4.8[][]) shown be-low re-turns
  []
 
 [77]
-Underfull \hbox (badness 3612) in paragraph at lines 5552--5553
+Underfull \hbox (badness 3612) in paragraph at lines 5567--5568
 []\OT1/ptm/m/n/10.95 Let $\OML/ptmcm/m/it/10.95 R \OT1/ptmcm/m/n/10.95 :=$ \OT1
 /pcr/m/n/10.95 HomalgRing$\OT1/ptmcm/m/n/10.95 ([])$ \OT1/ptm/m/n/10.95 and $\O
 ML/ptmcm/m/it/10.95 RP \OT1/ptmcm/m/n/10.95 :=$ \OT1/pcr/m/n/10.95 homalgTable$
@@ -776,14 +776,14 @@ n/10.95 . If the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 com-
  []
 
 
-Underfull \hbox (badness 3068) in paragraph at lines 5552--5553
+Underfull \hbox (badness 3068) in paragraph at lines 5567--5568
 \OT1/ptm/m/n/10.95 po-nent $\OML/ptmcm/m/it/10.95 RP$\OT1/ptm/m/n/10.95 !.\OT1/
 pcr/m/n/10.95 PositionOfFirstNonZeroEntryPerColumn \OT1/ptm/m/n/10.95 is bound 
 then the stan-dard method
  []
 
 
-Underfull \hbox (badness 7851) in paragraph at lines 5552--5553
+Underfull \hbox (badness 7851) in paragraph at lines 5567--5568
 \OT1/ptm/m/n/10.95 of the at-tribute \OT1/pcr/m/n/10.95 PositionOfFirstNonZeroE
 ntryPerColumn \OT1/ptm/m/n/10.95 ([][]5.4.9[][]) shown be-low re-turns
  []
@@ -791,7 +791,7 @@ ntryPerColumn \OT1/ptm/m/n/10.95 ([][]5.4.9[][]) shown be-low re-turns
 [78]
 Appendix C.
 
-Underfull \hbox (badness 2197) in paragraph at lines 5643--5644
+Underfull \hbox (badness 2197) in paragraph at lines 5658--5659
 []\OT1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \OT1/pcr/m/n/10
 .95 HomalgInitialMatrix \OT1/ptm/m/n/10.95 ([][]5.2.1[][]) then the fil-ter
  []
@@ -799,44 +799,44 @@ Underfull \hbox (badness 2197) in paragraph at lines 5643--5644
 [79
 
 ]
-Underfull \hbox (badness 2050) in paragraph at lines 5695--5696
+Underfull \hbox (badness 2050) in paragraph at lines 5710--5711
 \OT1/ptm/m/n/10.95 fil-ter \OT1/pcr/m/n/10.95 IsInitialIdentityMatrix \OT1/ptm/
 m/n/10.95 for [] is set to true and the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm
 /m/n/10.95 func-tion ($\OMS/pzccm/m/n/10.95 !$
  []
 
 [80] [81] [82]
-Underfull \hbox (badness 4726) in paragraph at lines 5880--5881
+Underfull \hbox (badness 4726) in paragraph at lines 5895--5896
 []\OT1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \OT1/pcr/m/n/10
 .95 LeftInverseLazy \OT1/ptm/m/n/10.95 ([][]5.5.4[][]) then the fil-ter
  []
 
 [83]
-Underfull \hbox (badness 3701) in paragraph at lines 5914--5915
+Underfull \hbox (badness 3701) in paragraph at lines 5929--5930
 []\OT1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \OT1/pcr/m/n/10
 .95 RightInverseLazy \OT1/ptm/m/n/10.95 ([][]5.5.5[][]) then the fil-ter
  []
 
 [84] [85]
-Underfull \hbox (badness 10000) in paragraph at lines 6041--6042
+Underfull \hbox (badness 10000) in paragraph at lines 6056--6057
 []\OT1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \OT1/pcr/m/n/10.95
  CertainColumns \OT1/ptm/m/n/10.95 ([][]5.5.8[][]) then the fil-ter
  []
 
 [86]
-Underfull \hbox (badness 10000) in paragraph at lines 6142--6143
+Underfull \hbox (badness 10000) in paragraph at lines 6157--6158
 []\OT1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \OT1/pcr/m/n/10.95
  UnionOfColumns \OT1/ptm/m/n/10.95 ([][]5.5.10[][]) then the fil-ter
  []
 
 [87] [88]
-Underfull \hbox (badness 10000) in paragraph at lines 6259--6260
+Underfull \hbox (badness 10000) in paragraph at lines 6274--6275
 []\OT1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \OT1/pcr/m/n/10.95
  KroneckerMat \OT1/ptm/m/n/10.95 ([][]5.5.12[][]) then the fil-ter
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 6259--6260
+Underfull \hbox (badness 1796) in paragraph at lines 6274--6275
 \OT1/pcr/m/n/10.95 HasEvalKroneckerMat \OT1/ptm/m/n/10.95 for [] is set to true
  and the \OT1/pcr/m/n/10.95 homalgTable \OT1/ptm/m/n/10.95 func-tion \OT1/pcr/m
 /n/10.95 KroneckerMat
@@ -850,17 +850,17 @@ Appendix D.
 [107]
 Appendix E.
 
-Underfull \hbox (badness 10000) in paragraph at lines 7578--7583
+Underfull \hbox (badness 10000) in paragraph at lines 7593--7598
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7578--7583
+Underfull \hbox (badness 10000) in paragraph at lines 7593--7598
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7603--7607
+Underfull \hbox (badness 10000) in paragraph at lines 7618--7622
 
  []
 
@@ -868,24 +868,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 7603--7607
 
 ] [109]
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 7695.
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 7710.
 
-Underfull \hbox (badness 10000) in paragraph at lines 7704--7707
+Underfull \hbox (badness 10000) in paragraph at lines 7719--7722
 
  []
 
 
-Overfull \hbox (14.93933pt too wide) in paragraph at lines 7712--7747
+Overfull \hbox (14.93933pt too wide) in paragraph at lines 7727--7762
  [] 
  []
 
 [110] [111]
 Appendix F.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 7849.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 7864.
 
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 9.85492pt on input line 7849.
+(Font)              scaled to size 9.85492pt on input line 7864.
 [112
 
 ] [113] (./MatricesForHomalg.bbl (./MatricesForHomalg.brf)
@@ -956,7 +956,7 @@ r/m/n/10.95 Of\OT1/ptm/m/n/10.95 -
  []
 
 [118]
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
+Underfull \hbox (badness 10000) in paragraph at lines 386--388
 []\OT1/pcr/m/n/10.95 Position\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Of\OT1/ptm/
 m/n/10.95 -\OT1/pcr/m/n/10.95 First\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Non\O
 T1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Zero\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95
@@ -965,35 +965,35 @@ n/10.95 Column\OT1/ptm/m/n/10.95 ,
  []
 
 [119]
-Underfull \hbox (badness 10000) in paragraph at lines 411--413
+Underfull \hbox (badness 10000) in paragraph at lines 413--415
 []\OT1/pcr/m/n/10.95 Relative\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Indetermina
 te\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Anti\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/1
 0.95 Commuting\OT1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 413--415
+Underfull \hbox (badness 10000) in paragraph at lines 415--417
 []\OT1/pcr/m/n/10.95 Relative\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Indetermina
 te\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Coordinates\OT1/ptm/m/n/10.95 -\OT1/pc
 r/m/n/10.95 Of\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Ring\OT1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 415--417
+Underfull \hbox (badness 10000) in paragraph at lines 417--419
 []\OT1/pcr/m/n/10.95 Relative\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Indetermina
 te\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Derivations\OT1/ptm/m/n/10.95 -\OT1/pc
 r/m/n/10.95 Of\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Ring\OT1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--419
+Underfull \hbox (badness 10000) in paragraph at lines 419--421
 []\OT1/pcr/m/n/10.95 Relative\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Indetermina
 tes\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Of\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10
 .95 Polynomial\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Ring\OT1/ptm/m/n/10.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 473--475
+Underfull \hbox (badness 10000) in paragraph at lines 475--477
 []\OT1/pcr/m/n/10.95 Unreduced\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Numerator\
 OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Of\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 
 Hilbert\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Poincare\OT1/ptm/m/n/10.95 -
@@ -1001,16 +1001,16 @@ Hilbert\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Poincare\OT1/ptm/m/n/10.95 -
 
 [120]) (./MatricesForHomalg.aux) ) 
 Here is how much of TeX's memory you used:
- 5074 strings out of 94500
- 75964 string characters out of 1176115
- 133681 words of memory out of 1500000
- 7276 multiletter control sequences out of 10000+50000
+ 5077 strings out of 94500
+ 76033 string characters out of 1176115
+ 133765 words of memory out of 1500000
+ 7277 multiletter control sequences out of 10000+50000
  56490 words of font info for 105 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
  27i,7n,30p,1146b,484s stack positions out of 5000i,500n,6000p,200000b,5000s
 PDF statistics:
- 2206 PDF objects out of 65536
- 864 named destinations out of 20000
+ 2210 PDF objects out of 65536
+ 866 named destinations out of 20000
  17 words of extra memory for PDF output out of 65536
 {/sw/share/texmf-dist/fonts/enc/dvips/psnfss/
 8r.enc}</sw/share/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></sw/share/texmf
@@ -1024,4 +1024,4 @@ are/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></sw/share/texmf-dist/fonts
 rr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></sw/share/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/
 times/utmb8a.pfb></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on MatricesForHomalg.pdf (121 pages, 701266 bytes).
+Output written on MatricesForHomalg.pdf (121 pages, 702089 bytes).

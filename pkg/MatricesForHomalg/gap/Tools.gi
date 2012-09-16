@@ -2697,6 +2697,12 @@ InstallMethod( Coefficients,
     
     R := HomalgRing( poly );
     
+    if IsZero( poly ) then
+        coeffs := HomalgZeroMatrix( 1, 0, R );
+        coeffs!.monomials := [ ];
+        return coeffs;
+    fi;
+    
     RP := homalgTable( R );
     
     if IsBound(RP!.Coefficients) then
@@ -2709,11 +2715,154 @@ InstallMethod( Coefficients,
     fi;
     
     if not IsHomalgInternalRingRep( R ) then
-        Error( "could not find a procedure called Eliminate ",
+        Error( "could not find a procedure called Coefficients ",
                "in the homalgTable of the non-internal ring\n" );
     fi;
     
     TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( Coefficients,
+        "for a homalg ring element and a string",
+        [ IsHomalgRingElement, IsString ],
+        
+  function( poly, var_name )
+    
+    return Coefficients( poly, var_name / HomalgRing( poly ) );
+    
+end );
+
+##
+InstallMethod( Coefficients,
+        "for a homalg ring element",
+        [ IsHomalgRingElement ],
+        
+  function( poly )
+    local R, indets, coeffs;
+    
+    R := HomalgRing( poly );
+    
+    if IsBound( poly!.Coefficients ) then
+        return poly!.Coefficients;
+    fi;
+    
+    if HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        indets := RelativeIndeterminatesOfPolynomialRing( R );
+    elif HasIndeterminatesOfPolynomialRing( R ) then
+        indets := IndeterminatesOfPolynomialRing( R );
+    fi;
+    
+    coeffs := Coefficients( poly, Product( indets ) );
+    
+    poly!.Coefficients := coeffs;
+    
+    return coeffs;
+    
+end );
+
+##
+InstallMethod( CoefficientsOfUnivariatePolynomial,
+        "for two homalg ring elements",
+        [ IsHomalgRingElement, IsHomalgRingElement ],
+        
+  function( r, var )
+    local R, RP, ext_obj;
+    
+    if IsZero( r ) then
+        return HomalgZeroMatrix( 1, 0, R );
+    fi;
+    
+    R := HomalgRing( r );
+    
+    RP := homalgTable( R );
+    
+    if IsBound(RP!.CoefficientsOfUnivariatePolynomial) then
+        ext_obj := RP!.CoefficientsOfUnivariatePolynomial( r, var );
+        return HomalgMatrix( ext_obj, 1, "unknown_number_of_columns", R );
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( CoefficientsOfUnivariatePolynomial,
+        "for a homalg ring element and a string",
+        [ IsHomalgRingElement, IsString ],
+        
+  function( r, var_name )
+    
+    return CoefficientsOfUnivariatePolynomial( r, var_name / HomalgRing( r ) );
+    
+end );
+
+## for univariate polynomials over arbitrary base rings
+InstallMethod( CoefficientsOfUnivariatePolynomial,
+        "for a homalg ring element",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    local R, indets;
+    
+    R := HomalgRing( r );
+    
+    if HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        indets := RelativeIndeterminatesOfPolynomialRing( R );
+    elif HasIndeterminatesOfPolynomialRing( R ) then
+        indets := IndeterminatesOfPolynomialRing( R );
+    fi;
+    
+    if not Length( indets ) = 1 then
+        TryNextMethod( );
+    fi;
+    
+    return CoefficientsOfUnivariatePolynomial( r, indets[1] );
+    
+end );
+
+##
+InstallMethod( LeadingCoefficient,
+        "for lists of ring elements",
+        [ IsHomalgRingElement, IsHomalgRingElement ],
+        
+  function( poly, var )
+    
+    return MatElm( Coefficients( poly, var ), 1, 1 );
+    
+end );
+
+##
+InstallMethod( LeadingCoefficient,
+        "for a homalg ring element and a string",
+        [ IsHomalgRingElement, IsString ],
+        
+  function( r, var_name )
+    
+    return LeadingCoefficient( r, var_name / HomalgRing( r ) );
+    
+end );
+
+##
+InstallMethod( LeadingCoefficient,
+        "for a homalg ring element",
+        [ IsHomalgRingElement ],
+        
+  function( poly )
+    local R, lc;
+    
+    if IsBound( poly!.LeadingCoefficient ) then
+        return poly!.LeadingCoefficient;
+    fi;
+    
+    R := HomalgRing( poly );
+    
+    lc := MatElm( Coefficients( poly ), 1, 1 );
+    
+    poly!.LeadingCoefficient := lc;
+    
+    return lc;
     
 end );
 
@@ -2817,9 +2966,9 @@ InstallMethod( SUM,
     RP := homalgTable( R );
     
     if IsBound(RP!.Sum) then
-        return RingElementConstructor( R )( RP!.Sum( r1, r2 ), R ) ;
+        return RingElementConstructor( R )( RP!.Sum( r1, r2 ), R );
     elif IsBound(RP!.Minus) then
-        return RingElementConstructor( R )( RP!.Minus( r1, RP!.Minus( Zero( R ), r2 ) ), R ) ;
+        return RingElementConstructor( R )( RP!.Minus( r1, RP!.Minus( Zero( R ), r2 ) ), R );
     fi;
     
     TryNextMethod( );
@@ -2853,6 +3002,77 @@ InstallMethod( PROD,
     #=====# the fallback method #=====#
     
     return MatElm( HomalgMatrix( [ r1 ], 1, 1, R ) * HomalgMatrix( [ r2 ], 1, 1, R ), 1, 1 );
+    
+end );
+
+##
+InstallMethod( Degree,
+        "for homalg ring elements",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    local R, RP, deg;
+    
+    if IsBound( r!.Degree ) then
+        return r!.Degree;
+    fi;
+    
+    R := HomalgRing( r );
+    
+    ## do not delete this
+    if HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        TryNextMethod( );
+    fi;
+    
+    RP := homalgTable( R );
+    
+    if not IsBound(RP!.DegreeOfRingElement) then
+        TryNextMethod( );
+    fi;
+    
+    deg := RP!.DegreeOfRingElement( r, R );
+    
+    r!.Degree := deg;
+    
+    return deg;
+    
+end );
+
+##
+InstallMethod( Degree,
+        "for homalg ring elements",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    local R, RP, indets, coeffs, deg;
+    
+    if IsBound( r!.Degree ) then
+        return r!.Degree;
+    fi;
+    
+    if IsZero( r ) then
+        return -1;
+    fi;
+    
+    R := HomalgRing( r );
+    
+    if not HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        TryNextMethod( );
+    fi;
+    
+    RP := homalgTable( R );
+    
+    if not ( IsBound(RP!.Coefficients) and IsBound( RP!.DegreeOfRingElement ) ) then
+        TryNextMethod( );
+    fi;
+    
+    coeffs := Coefficients( r );
+    
+    deg := RP!.DegreeOfRingElement( coeffs!.monomials[1], R );
+    
+    r!.Degree := deg;
+    
+    return deg;
     
 end );
 

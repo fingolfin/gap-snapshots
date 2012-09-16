@@ -350,7 +350,7 @@
   [33X[0;0YFurthermore, there are functions to deal with user preferences, for example,
   to  specify  how  [5XGAP[105X's  online help is shown or whether the coloured prompt
   should  be  used.  Calls  to  set  user preferences may appear in the user's
-  [11Xgap.ini[111X file, as explained in [14X'Reference: User preferences'[114X.[133X
+  [11Xgap.ini[111X file, as explained in [14X'Reference: Configuring User preferences'[114X.[133X
   
   [33X[0;0YIn  the  Windows  version,  we  include  a  new  shell which uses the [5Xmintty[105X
   terminal in addition to the two previously used shells (Windows command line
@@ -860,4 +860,119 @@
         [2XLoadPackage[102X  ([14XReference:  LoadPackage[114X).  This preference is useful for
         testing purposes if one wants to run some code without loading certain
         packages.[133X
+  
+  
+  [1X2.4 [33X[0;0Y[5XGAP[105X[101X[1X 4.5.6 (September 2012)[133X[101X
+  
+  [33X[0;0YImproved functionality:[133X
+  
+  [30X    [33X[0;6YThe argument of [2XSaveWorkspace[102X ([14XReference: SaveWorkspace[114X) can now start
+        with [10X~/[110X which is expanded to the users home directory.[133X
+  
+  [30X    [33X[0;6YAdded    the   method   for   [2XIterator[102X   ([14XReference:   Iterator[114X)   for
+        [2XPositiveIntegers[102X  ([14XReference:  PositiveIntegers[114X). [Suggested by Attila
+        Egri-Nagy].[133X
+  
+  [30X    [33X[0;6YChanged   kernel  tables  such  that  list  access  functionality  for
+        [10XT_SINGULAR[110X objects can be installed by methods at the [5XGAP[105X level.[133X
+  
+  [30X    [33X[0;6YIn  case  of  saved  history,  [21XUP[121X arrow after starting [5XGAP[105X yields last
+        stored  line.  The  user  preference  [10XHistoryMaxLines[110X is now used when
+        storing   and   saving   history  (see  [2XSetUserPreference[102X  ([14XReference:
+        SetUserPreference[114X)).[133X
+  
+  [33X[0;0YFixed bugs which could lead to crashes:[133X
+  
+  [30X    [33X[0;6YA  crash  occuring  during  garbage  collection  following  a  call to
+        [10XAClosVec[110X for a [10XGF(2)[110X code. [Reported by Volker Braun][133X
+  
+  [30X    [33X[0;6YA  crash when parsing certain syntactically invalid code. [Reported by
+        multiple users][133X
+  
+  [30X    [33X[0;6YFixed  and  improved  command  line  editing without readline support.
+        Fixed  a  segfault which could be triggered by a combination of [21XUP[121X and
+        [21XDOWN[121X arrows. [Reported by James Mitchell][133X
+  
+  [30X    [33X[0;6YFixed a bug in the kernel code for floats that caused a crash on SPARC
+        Solaris in 32-bit mode. [Reported by Volker Braun][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YVery  large  (more  than  1024  digit)  integers  were not being coded
+        correctly in function bodies unless the integer limb size was 16 bits.
+        [Reported by Stefan Kohl][133X
+  
+  [30X    [33X[0;6YAn  old  variable was used in assertion, causing errors in a debugging
+        compilation. [Reported by Volker Braun][133X
+  
+  [30X    [33X[0;6YThe  environment  variable  [10XPAGER[110X is now correctly interpreted when it
+        contains  the  full  path  to  the  pager program. Furthermore, if the
+        external pager [10Xless[110X is found from the environment it is made sure that
+        the  option  [10X-r[110X  is  used  (same  for  [10Xmore -f[110X). [Reported by Benjamin
+        Lorenz][133X
+  
+  [30X    [33X[0;6YFixed a bug in [10XPermliftSeries[110X. [Reported by Aiichi Yamasaki][133X
+  
+  [30X    [33X[0;6YFixed discarder function in lattice computation to distinguish general
+        and zuppo discarder. [Reported by Leonard Soicher][133X
+  
+  [30X    [33X[0;6YThe  [2XGL[102X  ([14XReference: GL (for dimension and a ring)[114X) and [2XSL[102X ([14XReference:
+        SL  (for  dimension and a ring)[114X) constructors did not correctly handle
+        [10XGL(filter,dim,ring)[110X.[133X
+  
+  [30X    [33X[0;6YThe names of two primitive groups of degree 64 were incorrect.[133X
+  
+  [30X    [33X[0;6YThe  [2X\in[102X  ([14XReference: \in operation for testing membership[114X) method for
+        groups handled by a nice monomorphism sometimes could produce an error
+        in  situations  where  it should return false. This only happened when
+        using [10XSeedFaithfulAction[110X to influence how [2XNiceMonomorphism[102X ([14XReference:
+        NiceMonomorphism[114X) builds the nice monomorphims for a matrix groups.[133X
+  
+  [30X    [33X[0;6YWrong  [2XPrintObj[102X  ([14XReference:  PrintObj[114X)  method  was  removed  to  fix
+        delegations accordingly to [14X'Reference: View and Print'[114X.[133X
+  
+  [30X    [33X[0;6YFixed a method for [2XCoefficients[102X ([14XReference: Coefficients[114X) which, after
+        Gaussian elimination, did not check that the coefficients actually lie
+        in  the  left-acting-domain  of the vector space. This could lead to a
+        wrong  answer  in  a  vector space membership test. [Reported by Kevin
+        Watkins][133X
+  
+  [33X[0;0YImproved documentation:[133X
+  
+  [30X    [33X[0;6YRemoved    outdated    statements    from    the    documentation   of
+        [2XStructureDescription[102X   ([14XReference:   StructureDescription[114X)  which  now
+        non-ambiguolsy  states that [10XStructureDescription[110X is not an isomorphism
+        invariant:  non-isomorphic  groups can have the same string value, and
+        two   isomorphic  groups  in  different  representations  can  produce
+        different strings.[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X  now  allows  overloading of a loaded help book by another one. In
+        this  case,  only  a  warning  is printed and no error is raised. This
+        makes sense if a book of a not loaded package is loaded in a workspace
+        and  then  [5XGAP[105X  is  started  with  a  root  path that contains a newer
+        version. [Reported by Sebastian Gutsche][133X
+  
+  [30X    [33X[0;6YProvided   a   better   description   of  user  preferences  mechanism
+        ([14X'Reference:  Configuring User preferences'[114X) and a hint to familiarise
+        with  them using [2XWriteGapIniFile[102X ([14XReference: WriteGapIniFile[114X) function
+        to  create  a  file  which  contains  descriptions  of  all known user
+        preferences  and  also  sets those user preferences which currently do
+        not have their default value. One can then edit that file to customize
+        (further) the user preferences for future [5XGAP[105X sessions.[133X
+  
+  [33X[0;0YNew packages added for the redistribution with [5XGAP[105X:[133X
+  
+  [30X    [33X[0;6Y[5XAutoDoc[105X   package   by  S.  Gutsche,  providing  tools  for  automated
+        generation of [5XGAPDoc[105X manuals.[133X
+  
+  [30X    [33X[0;6Y[5XConvex[105X package by S. Gutsche, which provides structures and algorithms
+        for convex geometry.[133X
+  
+  [30X    [33X[0;6Y[5XPolymakeInterface[105X  package  by T. Baechler and S. Gutsche, providing a
+        link    to    the    callable   library   of   the   [5Xpolymake[105X   system
+        ([7Xhttp://www.polymake.org[107X).[133X
+  
+  [30X    [33X[0;6Y[5XToolsForHomalg[105X   package   by   M.   Barakat,   S.   Gutsche   and  M.
+        Lange-Hegermann,  which  provides some auxiliary functionality for the
+        [5Xhomalg[105X project ([7Xhttp://homalg.math.rwth-aachen.de/[107X).[133X
   

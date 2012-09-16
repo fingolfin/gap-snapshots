@@ -26,6 +26,7 @@ InstallValue( LIGrMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_properties_specific_shared_with_subobjects_and_ideals :=
             [ 
+              "IsCohenMacaulay",
               ],
             
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
@@ -250,37 +251,37 @@ InstallImmediateMethodToPushPropertiesOrAttributes( Twitter,
         LIGrMOD.exchangeable_attributes,
         UnderlyingModule );
 
-##
-InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
-        IsHomalgGradedModule, 0,
-        
-  function( M )
-    local UM;
-    
-    UM := UnderlyingModule( M );
-    
-    if DegreesOfGenerators( M ) <> [] and HasIsFree( UM ) and IsFree( UM ) then
-        return Minimum( DegreesOfGenerators( M ) );
-    fi;
-    
-    TryNextMethod( );
-    
-end );
+# ##
+# InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
+#         IsHomalgGradedModule, 0,
+#         
+#   function( M )
+#     local UM;
+#     
+#     UM := UnderlyingModule( M );
+#     
+#     if DegreesOfGenerators( M ) <> [] and HasIsFree( UM ) and IsFree( UM ) then
+#         return Minimum( DegreesOfGenerators( M ) );
+#     fi;
+#     
+#     TryNextMethod( );
+#     
+# end );
 
-##
-InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
-        IsHomalgGradedModule and HasCastelnuovoMumfordRegularity, 0,
-        
-  function( M )
-    local UM;
-    
-    if DegreesOfGenerators( M ) <> [] and CastelnuovoMumfordRegularity( M ) <= Minimum( DegreesOfGenerators( M ) ) then
-        return Minimum( DegreesOfGenerators( M ) );
-    fi;
-    
-    TryNextMethod( );
-    
-end );
+# ##
+# InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
+#         IsHomalgGradedModule and HasCastelnuovoMumfordRegularity, 0,
+#         
+#   function( M )
+#     local UM;
+#     
+#     if DegreesOfGenerators( M ) <> [] and CastelnuovoMumfordRegularity( M ) <= Minimum( DegreesOfGenerators( M ) ) then
+#         return Minimum( DegreesOfGenerators( M ) );
+#     fi;
+#     
+#     TryNextMethod( );
+#     
+# end );
 
 ##
 InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
@@ -298,7 +299,6 @@ end );
 # methods for properties:
 #
 ####################################
-
 
 ##
 InstallMethod( IsZero,
@@ -350,7 +350,7 @@ InstallMethod( IsArtinian,
         
   function( M )
     
-    return IsEmptyMatrix( GeneratorsOfHomogeneousPart( CastelnuovoMumfordRegularity( M ) + 1, M ) );
+    return IsEmptyMatrix( GeneratorsOfHomogeneousPart( HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) + 1, M ) );
     
 end );
 
@@ -438,6 +438,7 @@ InstallMethod( BettiDiagram,
     
     ## the list of generators degrees of F_0 and F_1
     degrees := List( C, DegreesOfGenerators );
+    degrees := List( degrees, i -> List( i, HomalgElementToInteger ) );
     
     ## the homological degrees of the resolution complex C: F_0 <- F_1
     C_degrees := [ 0 .. 1 ];
@@ -510,7 +511,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
     B2 := S / max;
     SetWeightsOfIndeterminates( B2, WeightsOfIndeterminates( B ) );
     
-    l := List( [ 0 .. nS ], i-> CastelnuovoMumfordRegularity( B2 * Tor( i, B_S, M ) ) - i );
+    l := List( [ 0 .. nS ], i-> HomalgElementToInteger( CastelnuovoMumfordRegularity( B2 * Tor( i, B_S, M ) ) ) - i );
     
     return Maximum( l );
     
@@ -532,7 +533,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
             return -999999;
         fi;
         deg := DegreesOfGenerators( M );
-        if IsList( deg ) and IsInt( deg[1] ) then
+        if IsList( deg ) and ( IsInt( deg[1] ) or IsHomalgElement( deg[ 1 ] ) ) then
             return Maximum( deg );
         fi;
     fi;
@@ -581,13 +582,19 @@ InstallMethod( ResidueClassRing,
         [ IsGradedSubmoduleRep and ConstructedAsAnIdeal ],
         
   function( J )
-    local S, result;
+    local S, R, RR, result, A;
     
     S := HomalgRing( J );
     
+    R := UnderlyingNonGradedRing( S );
+    
     Assert( 1, not J = S );
     
-    result := GradedRing( ResidueClassRing( UnderlyingModule( J ) ) );
+    RR := ResidueClassRing( UnderlyingModule( J ) );
+    
+    J := GradedModule( DefiningIdeal( RR ), S );
+    
+    result := GradedRing( RR );
     
     if HasContainsAField( S ) and ContainsAField( S ) then
         SetContainsAField( result, true );
@@ -599,10 +606,15 @@ InstallMethod( ResidueClassRing,
     SetDefiningIdeal( result, J );
     
     if HasAmbientRing( S ) then
-      SetAmbientRing( result, AmbientRing( S ) );
+        A := AmbientRing( S );
+    elif HasAmbientRing( R ) then
+        A := GradedRing( AmbientRing( R ) );
     else
-      SetAmbientRing( result, S );
+        A := S;
     fi;
+    
+    SetAmbientRing( result, A );
+    SetRingRelations( result, A * RingRelations( RR ) );
     
     return result;
     
@@ -652,8 +664,8 @@ InstallMethod( ZerothRegularity,
     
     B := BettiDiagram( Resolution( M ) );
     
-    r_min := RowDegreesOfBettiDiagram( B )[ 1 ];
-    r_max := RowDegreesOfBettiDiagram( B )[ Length( RowDegreesOfBettiDiagram( B ) ) ];
+    r_min := HomalgElementToInteger( RowDegreesOfBettiDiagram( B )[ 1 ] );
+    r_max := HomalgElementToInteger( RowDegreesOfBettiDiagram( B )[ Length( RowDegreesOfBettiDiagram( B ) ) ] );
     c := Length( ColumnDegreesOfBettiDiagram( B ) );
     
     last_column := List( MatrixOfDiagram( B ), function( a ) return a[c]; end );
@@ -702,7 +714,11 @@ InstallMethod( CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries,
     
     weights := WeightsOfIndeterminates( R );
     
+    weights := List( weights, HomalgElementToInteger );
+    
     degrees := DegreesOfGenerators( M );
+    
+    degrees := List( degrees, HomalgElementToInteger );
     
     return CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries( UnderlyingModule( M ), weights, degrees );
     
@@ -725,9 +741,9 @@ InstallMethod( CoefficientsOfNumeratorOfHilbertPoincareSeries,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     coeffs := CoefficientsOfNumeratorOfHilbertPoincareSeries( UnderlyingModule( M ), weights, degrees );
     
@@ -751,7 +767,11 @@ InstallMethod( UnreducedNumeratorOfHilbertPoincareSeries,
     
     weights := WeightsOfIndeterminates( R );
     
+    weights := List( weights, HomalgElementToInteger );
+    
     degrees := DegreesOfGenerators( M );
+    
+    degrees := List( degrees, HomalgElementToInteger );
     
     return UnreducedNumeratorOfHilbertPoincareSeries( UnderlyingModule( M ), weights, degrees, lambda );
     
@@ -778,9 +798,9 @@ InstallMethod( NumeratorOfHilbertPoincareSeries,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     return NumeratorOfHilbertPoincareSeries( UnderlyingModule( M ), weights, degrees, lambda );
     
@@ -814,9 +834,9 @@ InstallMethod( HilbertPoincareSeries,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     series := HilbertPoincareSeries( UnderlyingModule( M ), weights, degrees, lambda );
     
@@ -868,6 +888,16 @@ end );
 
 ##
 InstallMethod( HilbertPoincareSeries,
+               [ IsBettiDiagram, IsHomalgElement, IsRingElement ],
+               
+  function( betti, n, s )
+    
+    return HilbertPoincareSeries( betti, HomalgElementToInteger( n ), s );
+    
+end );
+
+##
+InstallMethod( HilbertPoincareSeries,
         "for a Betti diagram and an integer",
         [ IsBettiDiagram, IsInt ],
         
@@ -877,6 +907,16 @@ InstallMethod( HilbertPoincareSeries,
     s := VariableForHilbertPoincareSeries( );
     
     return HilbertPoincareSeries( betti, n, s );
+    
+end );
+
+##
+InstallMethod( HilbertPoincareSeries,
+               [ IsBettiDiagram, IsHomalgElement ],
+               
+  function( betti, n )
+    
+    return HilbertPoincareSeries( betti, HomalgElementToInteger( n ) );
     
 end );
 
@@ -897,9 +937,9 @@ InstallMethod( HilbertPolynomial,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     hilb := HilbertPolynomial( UnderlyingModule( M ), weights, degrees, lambda );
     
@@ -950,6 +990,26 @@ InstallMethod( HilbertPolynomial,
     
 end );
 
+##
+InstallMethod( HilbertPolynomial,
+               [ IsBettiDiagram, IsHomalgElement, IsRingElement ],
+               
+  function( betti, n, s )
+    
+    return HilbertPolynomial( betti, HomalgElementToInteger( n ), s );
+    
+end );
+
+##
+InstallMethod( HilbertPolynomial,
+               [ IsBettiDiagram, IsHomalgElement ],
+               
+  function( betti, n )
+    
+    return HilbertPolynomial( betti, HomalgElementToInteger( n ) );
+    
+end );
+
 ## for CASs which do not support Hilbert* for non-graded modules
 InstallMethod( AffineDimension,
         "for a homalg graded module",
@@ -960,9 +1020,9 @@ InstallMethod( AffineDimension,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     return AffineDimension( UnderlyingModule( M ), weights, degrees );
     
@@ -978,9 +1038,9 @@ InstallMethod( AffineDegree,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     return AffineDegree( UnderlyingModule( M ), weights, degrees );
     
@@ -996,9 +1056,9 @@ InstallMethod( ProjectiveDegree,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     return ProjectiveDegree( UnderlyingModule( M ), weights, degrees );
     
@@ -1014,9 +1074,9 @@ InstallMethod( ConstantTermOfHilbertPolynomial,
     
     R := HomalgRing( M );
     
-    weights := WeightsOfIndeterminates( R );
+    weights := List( WeightsOfIndeterminates( R ), HomalgElementToInteger );
     
-    degrees := DegreesOfGenerators( M );
+    degrees := List( DegreesOfGenerators( M ), HomalgElementToInteger );
     
     return ConstantTermOfHilbertPolynomial( UnderlyingModule( M ), weights, degrees );
     
@@ -1098,5 +1158,47 @@ InstallMethod( PrimaryDecomposition,
           );
     
     return primary_decomposition;
+    
+end );
+
+##
+InstallMethod( KaehlerDifferentials,
+        "for homalg rings",
+        [ IsHomalgRing and HasRingRelations ],
+        
+  function( R )
+    local A, var, I, jac;
+    
+    A := AmbientRing( R );
+    
+    if not ( HasIsFreePolynomialRing( A ) and IsFreePolynomialRing( A ) ) then
+        TryNextMethod( );
+    fi;
+    
+    var := Indeterminates( A );
+    
+    var := HomalgMatrix( var, 1, Length( var ), A );
+    
+    I := MatrixOfRelations( R );
+    
+    jac := R * Diff( var, I );
+    
+    return LeftPresentation( jac );
+    
+end );
+
+##
+InstallMethod( KaehlerDifferentials,
+        "for homalg rings",
+        [ IsHomalgGradedRingRep and HasRingRelations ],
+        
+  function( S )
+    local R, K;
+    
+    R := UnderlyingNonGradedRing( S );
+    
+    K := KaehlerDifferentials( R );
+    
+    return GradedModule( K, S );
     
 end );

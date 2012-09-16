@@ -90,9 +90,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X803259617B5F89AE">3.3-54 BasisAlgorithmRespectsPrincipalIdeals</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X781617F678CC0BA8">3.3-55 AreUnitsCentral</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85B6710082984863">3.3-56 IsMinusOne</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811A01D5803ADCA3">3.3-57 IsLeftRegular</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E99731F83A41777">3.3-58 IsRightRegular</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80A3294C834D8F21">3.3-59 IsRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A0A3A927BE3F352">3.3-57 IsMonic</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811A01D5803ADCA3">3.3-58 IsLeftRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E99731F83A41777">3.3-59 IsRightRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80A3294C834D8F21">3.3-60 IsRegular</a></span>
 </div></div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X867290E7847A5101">3.4 <span class="Heading">Rings: Attributes</span></a>
 <div class="ContSSBlock">
@@ -831,9 +832,18 @@ gap&gt; Display( Z2 );
 
 <p>Check if the ring element <var class="Arg">r</var> is the additive inverse of one.</p>
 
+<p><a id="X7A0A3A927BE3F352" name="X7A0A3A927BE3F352"></a></p>
+
+<h5>3.3-57 IsMonic</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsMonic</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Check if the <strong class="pkg">homalg</strong> ring element <var class="Arg">r</var> is monic.</p>
+
 <p><a id="X811A01D5803ADCA3" name="X811A01D5803ADCA3"></a></p>
 
-<h5>3.3-57 IsLeftRegular</h5>
+<h5>3.3-58 IsLeftRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsLeftRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
@@ -842,7 +852,7 @@ gap&gt; Display( Z2 );
 
 <p><a id="X7E99731F83A41777" name="X7E99731F83A41777"></a></p>
 
-<h5>3.3-58 IsRightRegular</h5>
+<h5>3.3-59 IsRightRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRightRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
@@ -851,7 +861,7 @@ gap&gt; Display( Z2 );
 
 <p><a id="X80A3294C834D8F21" name="X80A3294C834D8F21"></a></p>
 
-<h5>3.3-59 IsRegular</h5>
+<h5>3.3-60 IsRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>

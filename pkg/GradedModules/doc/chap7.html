@@ -9,17 +9,20 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap7"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
 <div class="ChapSects"><a href="chap7.html#X7A489A5D79DA9E5C">7 <span class="Heading">Examples</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X81A7E0D380CE7F31">7.1 <span class="Heading">Betti Diagrams</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X81A7E0D380CE7F31">7.1 <span class="Heading">Betti Diagrams</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8441906E83F6845D">7.1-1 <span class="Heading">DE-2.2</span></a>
 </span>
@@ -32,12 +35,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B672C498385F92F">7.1-5 <span class="Heading">Schenck-8.3.3</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X85CF19B87D1C375F">7.2 <span class="Heading">Commutative Algebra</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X85CF19B87D1C375F">7.2 <span class="Heading">Commutative Algebra</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EA4CC697C01E080">7.2-1 <span class="Heading">Saturate</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X86AF934C83004BF2">7.3 <span class="Heading">Global Section Modules of the Induced Sheaves</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86AF934C83004BF2">7.3 <span class="Heading">Global Section Modules of the Induced Sheaves</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87EE931187E2226C">7.3-1 <span class="Heading">Examples of the ModuleOfGlobalSections Functor and Purity Filtrations</span></a>
 </span>
@@ -57,23 +62,22 @@
 <h5>7.1-1 <span class="Heading">DE-2.2</span></h5>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0,x1,x2";;
-gap&gt; S := GradedRing( R );;
-gap&gt; mat := HomalgMatrix( "[ x0^2, x1^2, x2^2 ]", 1, 3, S ); 
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0,x1,x2";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := HomalgMatrix( "[ x0^2, x1^2, x2^2 ]", 1, 3, S ); </span>
 &lt;A 1 x 3 matrix over a graded ring&gt;
-gap&gt; M := RightPresentationWithDegrees( mat, S );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := RightPresentationWithDegrees( mat, S );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 3 relations&gt;
-gap&gt; M := RightPresentationWithDegrees( mat );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := RightPresentationWithDegrees( mat );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 3 relations&gt;
-gap&gt; d := Resolution( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := Resolution( M );</span>
 &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;
-gap&gt; betti := BettiDiagram( d );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti := BettiDiagram( d );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;&gt;
-gap&gt; Display( betti );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti );</span>
  total:  1 3 3 1
 ----------------
      0:  1 . . .
@@ -82,44 +86,43 @@ gap&gt; Display( betti );
      3:  . . . 1
 ----------------
 degree:  0 1 2 3
-gap&gt; ## we are still below the Castelnuovo-Mumford regularity, which is 3:
-gap&gt; M2 := SubmoduleGeneratedByHomogeneousPart( 2, M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## we are still below the Castelnuovo-Mumford regularity, which is 3:</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M2 := SubmoduleGeneratedByHomogeneousPart( 2, M );</span>
 &lt;A graded torsion right submodule given by 3 generators&gt;
-gap&gt; d2 := Resolution( M2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d2 := Resolution( M2 );</span>
 &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;
-gap&gt; betti2 := BettiDiagram( d2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti2 := BettiDiagram( d2 );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;&gt;
-gap&gt; Display( betti2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti2 );</span>
  total:  3 8 6 1
 ----------------
      2:  3 8 6 .
      3:  . . . 1
 ----------------
 degree:  0 1 2 3
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7E32106D7B13B8D9" name="X7E32106D7B13B8D9"></a></p>
 
 <h5>7.1-2 <span class="Heading">DE-Code</span></h5>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0,x1,x2";;
-gap&gt; S := GradedRing( R );;
-gap&gt; mat := HomalgMatrix( "[ x0^2, x1^2 ]", 1, 2, S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0,x1,x2";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := HomalgMatrix( "[ x0^2, x1^2 ]", 1, 2, S );</span>
 &lt;A 1 x 2 matrix over a graded ring&gt;
-gap&gt; M := RightPresentationWithDegrees( mat, S );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := RightPresentationWithDegrees( mat, S );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 2 relations&gt;
-gap&gt; d := Resolution( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := Resolution( M );</span>
 &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;
-gap&gt; betti := BettiDiagram( d );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti := BettiDiagram( d );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;&gt;
-gap&gt; Display( betti );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti );</span>
  total:  1 2 1
 --------------
      0:  1 . .
@@ -127,19 +130,19 @@ gap&gt; Display( betti );
      2:  . . 1
 --------------
 degree:  0 1 2
-gap&gt; m := SubmoduleGeneratedByHomogeneousPart( 2, M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := SubmoduleGeneratedByHomogeneousPart( 2, M );</span>
 &lt;A graded torsion right submodule given by 4 generators&gt;
-gap&gt; d2 := Resolution( m );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d2 := Resolution( m );</span>
 &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;
-gap&gt; betti2 := BettiDiagram( d2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti2 := BettiDiagram( d2 );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;&gt;
-gap&gt; Display( betti2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti2 );</span>
      2:  4 8 4
 --------------
 degree:  0 1 2
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X793A69C4805C6819" name="X793A69C4805C6819"></a></p>
 
@@ -148,21 +151,20 @@ degree:  0 1 2
 <p>This is an example from Section 3.2 in <a href="chapBib.html#biBSch">[Sch03]</a>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;
-gap&gt; mmat := HomalgMatrix( "[ x, x^3 + y^3 + z^3 ]", 1, 2, Qxyz );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mmat := HomalgMatrix( "[ x, x^3 + y^3 + z^3 ]", 1, 2, Qxyz );</span>
 &lt;A 1 x 2 matrix over an external ring&gt;
-gap&gt; S := GradedRing( Qxyz );;
-gap&gt; M := RightPresentationWithDegrees( mmat, S );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( Qxyz );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := RightPresentationWithDegrees( mmat, S );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 2 relations&gt;
-gap&gt; Mr := Resolution( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mr := Resolution( M );</span>
 &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;
-gap&gt; bettiM := BettiDiagram( Mr );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bettiM := BettiDiagram( Mr );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;&gt;
-gap&gt; Display( bettiM );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( bettiM );</span>
  total:  1 2 1
 --------------
      0:  1 1 .
@@ -170,25 +172,25 @@ gap&gt; Display( bettiM );
      2:  . 1 1
 --------------
 degree:  0 1 2
-gap&gt; R := GradedRing( CoefficientsRing( S ) * "x,y,z,w" );;
-gap&gt; nmat := HomalgMatrix( "[ z^2 - y*w, y*z - x*w, y^2 - x*z ]", 1, 3, R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GradedRing( CoefficientsRing( S ) * "x,y,z,w" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nmat := HomalgMatrix( "[ z^2 - y*w, y*z - x*w, y^2 - x*z ]", 1, 3, R );</span>
 &lt;A 1 x 3 matrix over a graded ring&gt;
-gap&gt; N := RightPresentationWithDegrees( nmat );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := RightPresentationWithDegrees( nmat );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 3 relations&gt;
-gap&gt; Nr := Resolution( N );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Nr := Resolution( N );</span>
 &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;
-gap&gt; bettiN := BettiDiagram( Nr );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bettiN := BettiDiagram( Nr );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 2 morphisms of graded right modules at degrees [ 0 .. 2 ]&gt;&gt;
-gap&gt; Display( bettiN );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( bettiN );</span>
  total:  1 3 2
 --------------
      0:  1 . .
      1:  . 3 2
 --------------
 degree:  0 1 2
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7E8F44338461DC08" name="X7E8F44338461DC08"></a></p>
 
@@ -197,21 +199,20 @@ degree:  0 1 2
 <p>This is an example from Section 8.3 in <a href="chapBib.html#biBSch">[Sch03]</a>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z,w";;
-gap&gt; S := GradedRing( R );;
-gap&gt; jmat := HomalgMatrix( "[ z*w, x*w, y*z, x*y, x^3*z - x*z^3 ]", 1, 5, S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z,w";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">jmat := HomalgMatrix( "[ z*w, x*w, y*z, x*y, x^3*z - x*z^3 ]", 1, 5, S );</span>
 &lt;A 1 x 5 matrix over a graded ring&gt;
-gap&gt; J := RightPresentationWithDegrees( jmat );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">J := RightPresentationWithDegrees( jmat );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 5 relations&gt;
-gap&gt; Jr := Resolution( J );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Jr := Resolution( J );</span>
 &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;
-gap&gt; betti := BettiDiagram( Jr );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti := BettiDiagram( Jr );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;&gt;
-gap&gt; Display( betti );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti );</span>
  total:  1 5 6 2
 ----------------
      0:  1 . . .
@@ -220,7 +221,7 @@ gap&gt; Display( betti );
      3:  . 1 2 1
 ----------------
 degree:  0 1 2 3
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7B672C498385F92F" name="X7B672C498385F92F"></a></p>
 
@@ -229,21 +230,20 @@ degree:  0 1 2 3
 <p>This is Exercise 8.3.3 in <a href="chapBib.html#biBSch">[Sch03]</a>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;
-gap&gt; S := GradedRing( Qxyz );;
-gap&gt; mat := HomalgMatrix( "[ x*y*z, x*y^2, x^2*z, x^2*y, x^3 ]", 1, 5, S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( Qxyz );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := HomalgMatrix( "[ x*y*z, x*y^2, x^2*z, x^2*y, x^3 ]", 1, 5, S );</span>
 &lt;A 1 x 5 matrix over a graded ring&gt;
-gap&gt; M := RightPresentationWithDegrees( mat, S );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := RightPresentationWithDegrees( mat, S );</span>
 &lt;A graded cyclic right module on a cyclic generator satisfying 5 relations&gt;
-gap&gt; Mr := Resolution( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mr := Resolution( M );</span>
 &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;
-gap&gt; betti := BettiDiagram( Mr );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti := BettiDiagram( Mr );</span>
 &lt;A Betti diagram of &lt;A right acyclic complex containing
 3 morphisms of graded right modules at degrees [ 0 .. 3 ]&gt;&gt;
-gap&gt; Display( betti );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti );</span>
  total:  1 5 6 2
 ----------------
      0:  1 . . .
@@ -251,7 +251,7 @@ gap&gt; Display( betti );
      2:  . 5 6 2
 ----------------
 degree:  0 1 2 3
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X85CF19B87D1C375F" name="X85CF19B87D1C375F"></a></p>
 
@@ -262,24 +262,23 @@ degree:  0 1 2 3
 <h5>7.2-1 <span class="Heading">Saturate</span></h5>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;
-gap&gt; S := GradedRing( R );;
-gap&gt; m := GradedLeftSubmodule( "x,y,z", S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := GradedLeftSubmodule( "x,y,z", S );</span>
 &lt;A graded torsion-free (left) ideal given by 3 generators&gt;
-gap&gt; I := Intersect( m^3, GradedLeftSubmodule( "x", S ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := Intersect( m^3, GradedLeftSubmodule( "x", S ) );</span>
 &lt;A graded torsion-free (left) ideal given by 6 generators&gt;
-gap&gt; NrRelations( I );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRelations( I );</span>
 8
-gap&gt; Im := SubobjectQuotient( I, m );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Im := SubobjectQuotient( I, m );</span>
 &lt;A graded torsion-free rank 1 (left) ideal given by 3 generators&gt;
-gap&gt; I_m := Saturate( I, m );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I_m := Saturate( I, m );</span>
 &lt;A graded principal (left) ideal of rank 1 on a free generator&gt;
-gap&gt; Is := Saturate( I );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Is := Saturate( I );</span>
 &lt;A graded principal (left) ideal of rank 1 on a free generator&gt;
-gap&gt; Assert( 0, Is = I_m );
-</pre></td></tr></table>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Assert( 0, Is = I_m );</span>
+</pre></div>
 
 <p><a id="X86AF934C83004BF2" name="X86AF934C83004BF2"></a></p>
 
@@ -290,40 +289,39 @@ gap&gt; Assert( 0, Is = I_m );
 <h5>7.3-1 <span class="Heading">Examples of the ModuleOfGlobalSections Functor and Purity Filtrations</span></h5>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; LoadPackage( "GradedRingForHomalg" );;
-gap&gt; Qxyzt := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z,t";;
-gap&gt; S := GradedRing( Qxyzt );;
-gap&gt; 
-gap&gt; wmat := HomalgMatrix( "[ \
-&gt; x*y,  y*z,    z*t,        0,           0,          0,\
-&gt; x^3*z,x^2*z^2,0,          x*z^2*t,     -z^2*t^2,   0,\
-&gt; x^4,  x^3*z,  0,          x^2*z*t,     -x*z*t^2,   0,\
-&gt; 0,    0,      x*y,        -y^2,        x^2-t^2,    0,\
-&gt; 0,    0,      x^2*z,      -x*y*z,      y*z*t,      0,\
-&gt; 0,    0,      x^2*y-x^2*t,-x*y^2+x*y*t,y^2*t-y*t^2,0,\
-&gt; 0,    0,      0,          0,           -1,         1 \
-&gt; ]", 7, 6, Qxyzt );;
-gap&gt; 
-gap&gt; LoadPackage( "GradedModules" );;
-gap&gt; wmor := GradedMap( wmat, "free", "free", "left", S );;
-gap&gt; IsMorphism( wmor );;
-gap&gt; W := LeftPresentationWithDegrees( wmat, S );;
-gap&gt; HW := ModuleOfGlobalSections( W );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradedRingForHomalg" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qxyzt := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z,t";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( Qxyzt );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">wmat := HomalgMatrix( "[ \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x*y,  y*z,    z*t,        0,           0,          0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x^3*z,x^2*z^2,0,          x*z^2*t,     -z^2*t^2,   0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">x^4,  x^3*z,  0,          x^2*z*t,     -x*z*t^2,   0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0,    0,      x*y,        -y^2,        x^2-t^2,    0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0,    0,      x^2*z,      -x*y*z,      y*z*t,      0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0,    0,      x^2*y-x^2*t,-x*y^2+x*y*t,y^2*t-y*t^2,0,\</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0,    0,      0,          0,           -1,         1 \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 7, 6, Qxyzt );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"></span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradedModules" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">wmor := GradedMap( wmat, "free", "free", "left", S );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMorphism( wmor );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W := LeftPresentationWithDegrees( wmat, S );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HW := ModuleOfGlobalSections( W );</span>
 &lt;A graded left module presented by yet unknown relations for 6 generators&gt;
-gap&gt; LinearStrandOfTateResolution( W, 0,4 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LinearStrandOfTateResolution( W, 0,4 );</span>
 &lt;A cocomplex containing 4 morphisms of graded left modules at degrees
 [ 0 .. 4 ]&gt;
-gap&gt; purity_iso := IsomorphismOfFiltration( PurityFiltration( W ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">purity_iso := IsomorphismOfFiltration( PurityFiltration( W ) );</span>
 &lt;A non-zero isomorphism of graded left modules&gt;
-gap&gt; Hpurity_iso := ModuleOfGlobalSections( purity_iso );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hpurity_iso := ModuleOfGlobalSections( purity_iso );</span>
 &lt;An isomorphism of graded left modules&gt;
-gap&gt; ModuleOfGlobalSections( wmor );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ModuleOfGlobalSections( wmor );</span>
 &lt;A homomorphism of graded left modules&gt;
-gap&gt; NaturalMapToModuleOfGlobalSections( W );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalMapToModuleOfGlobalSections( W );</span>
 &lt;A homomorphism of graded left modules&gt;
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X7DD8F76D7A4206E3" name="X7DD8F76D7A4206E3"></a></p>
 
@@ -332,31 +330,30 @@ gap&gt; NaturalMapToModuleOfGlobalSections( W );
 <p>This example computes the global sections module of the Horrocks-Mumford bundle.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; LoadPackage( "GradedRingForHomalg" );;
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x4";;
-gap&gt; S := GradedRing( R );;
-gap&gt; A := KoszulDualRing( S, "e0..e4" );;
-gap&gt; LoadPackage( "GradedModules" );;
-gap&gt; mat := HomalgMatrix( "[ \
-&gt; e1*e4, e2*e0, e3*e1, e4*e2, e0*e3, \
-&gt; e2*e3, e3*e4, e4*e0, e0*e1, e1*e2  \
-&gt; ]",
-&gt; 2, 5, A );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradedRingForHomalg" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x4";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := KoszulDualRing( S, "e0..e4" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradedModules" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := HomalgMatrix( "[ \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">e1*e4, e2*e0, e3*e1, e4*e2, e0*e3, \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">e2*e3, e3*e4, e4*e0, e0*e1, e1*e2  \</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">2, 5, A );</span>
 &lt;A 2 x 5 matrix over a graded ring&gt;
-gap&gt; phi := GradedMap( mat, "free", "free", "left", A );;
-gap&gt; IsMorphism( phi );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := GradedMap( mat, "free", "free", "left", A );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMorphism( phi );</span>
 true
-gap&gt; M := GuessModuleOfGlobalSectionsFromATateMap( 2, phi );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := GuessModuleOfGlobalSectionsFromATateMap( 2, phi );</span>
 #I  GuessModuleOfGlobalSectionsFromATateMap uses unproven assumptions.
  Do not trust the result.
 &lt;A graded left module presented by yet unknown relations for 19 generators&gt;
-gap&gt; IsPure( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPure( M );</span>
 true
-gap&gt; Rank( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rank( M );</span>
 2 
-gap&gt; Display( BettiDiagram( Resolution( M ) ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( BettiDiagram( Resolution( M ) ) );</span>
  total:  19 35 20  2
 --------------------
      3:   4  .  .  .
@@ -364,7 +361,7 @@ gap&gt; Display( BettiDiagram( Resolution( M ) ) );
      5:   .  .  .  2
 --------------------
 degree:   0  1  2  3
-gap&gt; Display( BettiDiagram( TateResolution( M, -4, 6 ) ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( BettiDiagram( TateResolution( M, -4, 6 ) ) );</span>
 total:   37  14  10   5   2   5  10  14  37 100 210   ?   ?   ?   ?
 ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
     4:   35   4   .   .   .   .   .   .   .   .   .   0   0   0   0
@@ -376,39 +373,39 @@ total:   37  14  10   5   2   5  10  14  37 100 210   ?   ?   ?   ?
 twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
 -------------------------------------------------------------------
 Euler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210
-gap&gt; M;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M;</span>
 &lt;A graded reflexive rank 2 left module presented by 94 relations for 19 genera\
 tors&gt;
-gap&gt; P := ElementOfGrothendieckGroup( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := ElementOfGrothendieckGroup( M );</span>
 ( 2*O_{P^4} - 1*O_{P^3} - 4*O_{P^2} - 2*O_{P^1} ) -&gt; P^4
-gap&gt; P!.DisplayTwistedCoefficients := true;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P!.DisplayTwistedCoefficients := true;</span>
 true
-gap&gt; P;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P;</span>
 ( 2*O(-3) - 10*O(-2) + 15*O(-1) - 5*O(0) ) -&gt; P^4
-gap&gt; chi := HilbertPolynomial( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi := HilbertPolynomial( M );</span>
 1/12*t^4+2/3*t^3-1/12*t^2-17/3*t-5
-gap&gt; c := ChernPolynomial( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := ChernPolynomial( M );</span>
 ( 2 | 1-h+4*h^2 ) -&gt; P^4
-gap&gt; ChernPolynomial( M * S^3 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChernPolynomial( M * S^3 );</span>
 ( 2 | 1+5*h+10*h^2 ) -&gt; P^4
-gap&gt; ch := ChernCharacter( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ch := ChernCharacter( M );</span>
 [ 2-t-7*t^2/2!+11*t^3/3!+17*t^4/4! ] -&gt; P^4
-gap&gt; HilbertPolynomial( ch );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HilbertPolynomial( ch );</span>
 1/12*t^4+2/3*t^3-1/12*t^2-17/3*t-5
-gap&gt; List( [ -8 .. 7 ], i -&gt; Value( chi, i ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( [ -8 .. 7 ], i -&gt; Value( chi, i ) );</span>
 [ 35, 2, -10, -10, -5, 0, 2, 0, -5, -10, -10, 2, 35, 100, 210, 380 ]
-gap&gt; HF := HilbertFunction( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HF := HilbertFunction( M );</span>
 function( t ) ... end
-gap&gt; List( [ 0 .. 7 ], HF );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( [ 0 .. 7 ], HF );</span>
 [ 0, 0, 0, 4, 35, 100, 210, 380 ]
-gap&gt; IndexOfRegularity( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexOfRegularity( M );</span>
 4
-gap&gt; DataOfHilbertFunction( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DataOfHilbertFunction( M );</span>
 [ [ [ 4 ], [ 3 ] ], 1/12*t^4+2/3*t^3-1/12*t^2-17/3*t-5 ]
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

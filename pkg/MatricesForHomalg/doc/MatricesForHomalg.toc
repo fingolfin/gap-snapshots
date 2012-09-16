@@ -72,19 +72,20 @@
 \contentsline {subsection}{\numberline {3.3.54}\leavevmode {\color {Chapter }BasisAlgorithmRespectsPrincipalIdeals}}{24}{subsection.3.3.54}
 \contentsline {subsection}{\numberline {3.3.55}\leavevmode {\color {Chapter }AreUnitsCentral}}{24}{subsection.3.3.55}
 \contentsline {subsection}{\numberline {3.3.56}\leavevmode {\color {Chapter }IsMinusOne}}{25}{subsection.3.3.56}
-\contentsline {subsection}{\numberline {3.3.57}\leavevmode {\color {Chapter }IsLeftRegular (for homalg ring elements)}}{25}{subsection.3.3.57}
-\contentsline {subsection}{\numberline {3.3.58}\leavevmode {\color {Chapter }IsRightRegular (for homalg ring elements)}}{25}{subsection.3.3.58}
-\contentsline {subsection}{\numberline {3.3.59}\leavevmode {\color {Chapter }IsRegular (for homalg ring elements)}}{25}{subsection.3.3.59}
+\contentsline {subsection}{\numberline {3.3.57}\leavevmode {\color {Chapter }IsMonic (for homalg ring elements)}}{25}{subsection.3.3.57}
+\contentsline {subsection}{\numberline {3.3.58}\leavevmode {\color {Chapter }IsLeftRegular (for homalg ring elements)}}{25}{subsection.3.3.58}
+\contentsline {subsection}{\numberline {3.3.59}\leavevmode {\color {Chapter }IsRightRegular (for homalg ring elements)}}{25}{subsection.3.3.59}
+\contentsline {subsection}{\numberline {3.3.60}\leavevmode {\color {Chapter }IsRegular (for homalg ring elements)}}{25}{subsection.3.3.60}
 \contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Rings: Attributes}}{25}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }Zero (for homalg ring elements)}}{25}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }One (for homalg ring elements)}}{25}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }Inverse (for homalg ring elements)}}{25}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }Inverse (for homalg ring elements)}}{26}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }homalgTable}}{26}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }RingElementConstructor}}{26}{subsection.3.4.5}
 \contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }TypeOfHomalgMatrix}}{26}{subsection.3.4.6}
 \contentsline {subsection}{\numberline {3.4.7}\leavevmode {\color {Chapter }ConstructorForHomalgMatrices}}{26}{subsection.3.4.7}
 \contentsline {subsection}{\numberline {3.4.8}\leavevmode {\color {Chapter }Zero (for homalg rings)}}{26}{subsection.3.4.8}
-\contentsline {subsection}{\numberline {3.4.9}\leavevmode {\color {Chapter }One (for homalg rings)}}{26}{subsection.3.4.9}
+\contentsline {subsection}{\numberline {3.4.9}\leavevmode {\color {Chapter }One (for homalg rings)}}{27}{subsection.3.4.9}
 \contentsline {subsection}{\numberline {3.4.10}\leavevmode {\color {Chapter }MinusOne}}{27}{subsection.3.4.10}
 \contentsline {subsection}{\numberline {3.4.11}\leavevmode {\color {Chapter }ProductOfIndeterminates}}{27}{subsection.3.4.11}
 \contentsline {subsection}{\numberline {3.4.12}\leavevmode {\color {Chapter }RationalParameters}}{27}{subsection.3.4.12}
@@ -92,7 +93,7 @@
 \contentsline {subsection}{\numberline {3.4.14}\leavevmode {\color {Chapter }RelativeIndeterminatesOfPolynomialRing}}{27}{subsection.3.4.14}
 \contentsline {subsection}{\numberline {3.4.15}\leavevmode {\color {Chapter }IndeterminateCoordinatesOfRingOfDerivations}}{27}{subsection.3.4.15}
 \contentsline {subsection}{\numberline {3.4.16}\leavevmode {\color {Chapter }RelativeIndeterminateCoordinatesOfRingOfDerivations}}{27}{subsection.3.4.16}
-\contentsline {subsection}{\numberline {3.4.17}\leavevmode {\color {Chapter }IndeterminateDerivationsOfRingOfDerivations}}{27}{subsection.3.4.17}
+\contentsline {subsection}{\numberline {3.4.17}\leavevmode {\color {Chapter }IndeterminateDerivationsOfRingOfDerivations}}{28}{subsection.3.4.17}
 \contentsline {subsection}{\numberline {3.4.18}\leavevmode {\color {Chapter }RelativeIndeterminateDerivationsOfRingOfDerivations}}{28}{subsection.3.4.18}
 \contentsline {subsection}{\numberline {3.4.19}\leavevmode {\color {Chapter }IndeterminateAntiCommutingVariablesOfExteriorRing}}{28}{subsection.3.4.19}
 \contentsline {subsection}{\numberline {3.4.20}\leavevmode {\color {Chapter }RelativeIndeterminateAntiCommutingVariablesOfExteriorRing}}{28}{subsection.3.4.20}
@@ -100,7 +101,7 @@
 \contentsline {subsection}{\numberline {3.4.22}\leavevmode {\color {Chapter }CoefficientsRing}}{28}{subsection.3.4.22}
 \contentsline {subsection}{\numberline {3.4.23}\leavevmode {\color {Chapter }KrullDimension}}{28}{subsection.3.4.23}
 \contentsline {subsection}{\numberline {3.4.24}\leavevmode {\color {Chapter }LeftGlobalDimension}}{28}{subsection.3.4.24}
-\contentsline {subsection}{\numberline {3.4.25}\leavevmode {\color {Chapter }RightGlobalDimension}}{28}{subsection.3.4.25}
+\contentsline {subsection}{\numberline {3.4.25}\leavevmode {\color {Chapter }RightGlobalDimension}}{29}{subsection.3.4.25}
 \contentsline {subsection}{\numberline {3.4.26}\leavevmode {\color {Chapter }GlobalDimension}}{29}{subsection.3.4.26}
 \contentsline {subsection}{\numberline {3.4.27}\leavevmode {\color {Chapter }GeneralLinearRank}}{29}{subsection.3.4.27}
 \contentsline {subsection}{\numberline {3.4.28}\leavevmode {\color {Chapter }ElementaryRank}}{29}{subsection.3.4.28}
@@ -193,7 +194,7 @@
 \contentsline {subsection}{\numberline {5.4.21}\leavevmode {\color {Chapter }AffineDegree}}{45}{subsection.5.4.21}
 \contentsline {subsection}{\numberline {5.4.22}\leavevmode {\color {Chapter }ProjectiveDegree}}{45}{subsection.5.4.22}
 \contentsline {subsection}{\numberline {5.4.23}\leavevmode {\color {Chapter }ConstantTermOfHilbertPolynomialn}}{45}{subsection.5.4.23}
-\contentsline {subsection}{\numberline {5.4.24}\leavevmode {\color {Chapter }MatrixOfSymbolsn}}{45}{subsection.5.4.24}
+\contentsline {subsection}{\numberline {5.4.24}\leavevmode {\color {Chapter }MatrixOfSymbols}}{45}{subsection.5.4.24}
 \contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Matrices: Operations and Functions}}{46}{section.5.5}
 \contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }HomalgRing (for matrices)}}{46}{subsection.5.5.1}
 \contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }LeftInverse (for matrices)}}{46}{subsection.5.5.2}

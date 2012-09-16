@@ -198,7 +198,7 @@
   \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
 		\hyperpage{27}
   \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
-		\hyperpage{27}
+		\hyperpage{28}
   \item \texttt  {IndeterminatesOfExteriorRing}, \hyperpage{28}
   \item \texttt  {IndeterminatesOfPolynomialRing}, \hyperpage{27}
   \item \texttt  {InitialIdentityMatrix}
@@ -209,7 +209,7 @@
     \subitem homalgTable entry for initial matrices, \hyperpage{64}
     \subitem ResidueClassRing, \hyperpage{100}
   \item \texttt  {Inverse}
-    \subitem for homalg ring elements, \hyperpage{25}
+    \subitem for homalg ring elements, \hyperpage{26}
   \item \texttt  {Involution}
     \subitem for matrices, \hyperpage{48}
     \subitem homalgTable entry, \hyperpage{65}
@@ -282,6 +282,8 @@
   \item \texttt  {IsLowerStairCaseMatrix}, \hyperpage{41}
   \item \texttt  {IsLowerTriangularMatrix}, \hyperpage{41}
   \item \texttt  {IsMinusOne}, \hyperpage{25}
+  \item \texttt  {IsMonic}
+    \subitem for homalg ring elements, \hyperpage{25}
   \item \texttt  {IsMonomorphism}
     \subitem for ring maps, \hyperpage{31}
   \item \texttt  {IsMorphism}
@@ -355,7 +357,7 @@
 
   \indexspace
 
-  \item \texttt  {MatrixOfSymbolsn}, \hyperpage{45}
+  \item \texttt  {MatrixOfSymbols}, \hyperpage{45}
   \item \texttt  {MinusOne}, \hyperpage{27}
   \item \texttt  {MulMat}
     \subitem homalgTable entry, \hyperpage{66}
@@ -377,7 +379,7 @@
 
   \item \texttt  {One}
     \subitem for homalg ring elements, \hyperpage{25}
-    \subitem for homalg rings, \hyperpage{26}
+    \subitem for homalg rings, \hyperpage{27}
 
   \indexspace
 
@@ -423,7 +425,7 @@
   \item \texttt  {RightDivide}
     \subitem for pairs of matrices, \hyperpage{56}
     \subitem for triples of matrices, \hyperpage{56}
-  \item \texttt  {RightGlobalDimension}, \hyperpage{28}
+  \item \texttt  {RightGlobalDimension}, \hyperpage{29}
   \item \texttt  {RightInverse}, \hyperpage{44}
     \subitem for matrices, \hyperpage{47}
   \item \texttt  {RightInverseLazy}

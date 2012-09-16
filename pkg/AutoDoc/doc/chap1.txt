@@ -1,0 +1,10 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YWhat is the idea of the [5XAutoDoc[105X[101X[1X package?[133X[101X
+  
+  [33X[0;0YThis  package  is supposed to help creating documentations for [5XGAP[105X packages.
+  It makes it possible to create documentation without writing .xml. It is not
+  in any way a substitution for GAPDoc, but needs it to compile it's output.[133X
+  

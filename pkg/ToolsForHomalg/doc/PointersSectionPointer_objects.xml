@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+ This is an automatically generated file. 
+ -->
+<Section Label="Pointer_objects_automatically_generated_documentation_parts">
+<Heading>Pointer objects</Heading>
+<#Include Label="IsContainerForPointers9992443183">
+<#Include Label="ContainerForPointers4771861153">
+<#Include Label="UpdateContainerOfPointers2576876125">
+<#Include Label="_AddElmPObj_ForHomalg1345519101">
+<#Include Label="_AddTwoElmPObj_ForHomalg3104113075">
+<#Include Label="_ElmPObj_ForHomalg6522770455">
+</Section>

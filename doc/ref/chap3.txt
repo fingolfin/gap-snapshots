@@ -425,56 +425,86 @@
   recognize.[133X
   
   
-  [1X3.2-3 [33X[0;0YUser preferences[133X[101X
+  [1X3.2-3 [33X[0;0YConfiguring User preferences[133X[101X
   
-  [29X[2XDeclareUserPreference[102X( [3Xrecord[103X ) [32X function
   [29X[2XSetUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X, [3Xvalue[103X ) [32X function
   [29X[2XUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X ) [32X function
   [29X[2XShowUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function
   [29X[2XWriteGapIniFile[102X( [[3Xdir[103X, ][[3Xignorecurrent[103X] ) [32X function
   
-  [33X[0;0YThese  functions  deal  with user preferences, for example the way how [5XGAP[105X's
-  online help is shown. The idea is that such preferences are declared and get
-  default  values  with  [2XDeclareUserPreference[102X,  the  values  can  be set with
-  [2XSetUserPreference[102X, and the values can be accessed with [2XUserPreference[102X.[133X
+  [33X[0;0YSome  aspects of the behaviour of [5XGAP[105X can be customized by the user via [13Xuser
+  preferences[113X. Examples include the way help sections are displayed or the use
+  of colors in the terminal.[133X
   
-  [33X[0;0YThe   function  [2XShowUserPreferences[102X  shows  an  overview  of  the  currently
-  available  user preferences and their values in a pager. (The choice of this
-  pager  is determined by the user preference [10X"Pager"[110X.) If arguments [3Xpackage1[103X,
-  [3Xpackage2[103X etc. are given then the overview is restricted to the packages with
-  these names.[133X
+  [33X[0;0YUser preferences are specified via a pair of strings, the first is the (case
+  insensitive)  name  of a package (or [10X"GAP"[110X for the core [5XGAP[105X library) and the
+  second is some arbitrary case sensitive string.[133X
   
-  [33X[0;0YThe  calls  to  [2XSetUserPreference[102X  may  appear  in  the  user's [11Xgap.ini[111X file
-  (see [14X3.2[114X).  This  file  can  be  created  or  updated  with [2XWriteGapIniFile[102X;
-  optional arguments for this function are the directory path [3Xdir[103X (a string or
-  a  directory  object) where the file shall be written, and [3Xignorecurrent[103X (if
-  the value is [9Xtrue[109X then a file with assignments of the default values for the
-  user preferences is written, not of their current values.[133X
+  [33X[0;0YUser  preferences  can  be  set  to  some  [3Xvalue[103X with [2XSetUserPreference[102X. The
+  current value of a user preference can be found with [2XUserPreference[102X. In both
+  cases,  if  no  package  name  is given the default [10X"GAP"[110X is used. If a user
+  preference is not known or not set then [2XUserPreference[102X returns [9Xfail[109X.[133X
   
-  [33X[0;0YEach  user  preference is identified by the case insensitive strings [3Xpackage[103X
-  (the  name  of  a  [5XGAP[105X  package) and [3Xname[103X. Thus several packages may declare
-  independent  user  preferences  with  the  same  [3Xname[103X  part. The default for
-  [3Xpackage[103X  is  [10X"GAP"[110X.  [2XSetUserPreference[102X  sets  the  value  of  the given user
-  preference to [3Xvalue[103X, and [2XUserPreference[102X returns the current value. Note that
-  [2XUserPreference[102X  returns  [9Xfail[109X  if  no  user  preference for [3Xpackage[103X and [3Xname[103X
-  exists;  thus  the  value  [9Xfail[109X  of  a  user preference is equivalent to the
-  situation that this user preference is not available.[133X
+  [33X[0;0YThe  function  [2XShowUserPreferences[102X  with  no  argument  shows  in a pager an
+  overview  of  all  known user preferences together with some explanation and
+  the  current value. If one or more strings [3Xpackage1[103X, ... are given then only
+  the user preferences for these packages are shown.[133X
   
-  [33X[0;0YIt  is possible to use [2XSetUserPreference[102X and [2XUserPreference[102X for dealing with
-  user  preferences  that  have  not been declared with [2XDeclareUserPreference[102X.
-  (This  is  necessary  in the situation that the [11Xgap.ini[111X file sets values for
-  preferences  which  are  declared  later  in  [5XGAP[105X packages.) Undeclared user
-  preferences  are  ignored by [2XWriteGapIniFile[102X, and are mentioned only briefly
-  in the overview shown by [2XShowUserPreferences[102X.[133X
+  [33X[0;0YThe  easiest  way  to  make  use  of user preferences is probably to use the
+  function  [2XWriteGapIniFile[102X, usually without argument. This function creates a
+  file [11Xgap.ini[111X in your user specific [5XGAP[105X root directory ([10XGAPInfo.UserGapRoot[110X).
+  If  such  a file already exists the function will make a backup of it first.
+  This  newly created file contains descriptions of all known user preferences
+  and  also  calls  of  [2XSetUserPreference[102X  for  those  user  preferences which
+  currently  do  not  have their default value. You can then edit that file to
+  customize (further) the user preferences for future [5XGAP[105X sessions.[133X
   
-  [33X[0;0YNote  that  the  [2XSetUserPreference[102X  calls  in  the [11Xgap.ini[111X file can set only
-  values  which  are avaliable at the time when the [11Xgap.ini[111X is read. Integers,
-  strings, and lists of them are admissible, but more involved objects may not
-  be  available.  In  such  a  situation, the [2XSetUserPreference[102X call should be
-  placed  in  the  [11Xgaprc[111X  file,  see [14X3.2[114X  for  details.  For example, the user
-  preference  [10X"UseColorPrompt"[110X  admits  a record as its value whose components
-  are available only after the [5XGAPDoc[105X package has been loaded, see [2XColorPrompt[102X
-  ([14X3.6-1[114X).[133X
+  [33X[0;0YShould  a  later  version  of  [5XGAP[105X  or  some  packages  introduce  new  user
+  preferences  then  you  can call [2XWriteGapIniFile[102X again since it will set the
+  previously known user preferences to their current values.[133X
+  
+  [33X[0;0YOptionally,  a  different  directory  for  the resulting [11Xgap.ini[111X file can be
+  specified  as  argument [3Xdir[103X to [2XWriteGapIniFile[102X. Another optional argument is
+  the  boolean  value  [9Xtrue[109X,  if  this  is  given,  the  settings  of all user
+  preferences in the current session are ignored.[133X
+  
+  [33X[0;0YNote  that  your  [11Xgap.ini[111X  file is read by [5XGAP[105X very early during its startup
+  process.   A   consequence   is  that  the  [3Xvalue[103X  argument  in  a  call  of
+  [2XSetUserPreference[102X  must  be some very basic [5XGAP[105X object, usually a boolean, a
+  number,  a  string  or  a list of those. A few user preferences support more
+  complicated  settings.  For  example,  the  user preference [10X"UseColorPrompt"[110X
+  admits  a  record as its value whose components are available only after the
+  [5XGAPDoc[105X  package  has  been  loaded,  see [2XColorPrompt[102X ([14X3.6-1[114X). If you want to
+  specify  such  a  complicated  value,  then  move  the corresponding call of
+  [2XSetUserPreference[102X  from  your [11Xgap.ini[111X file into your [11Xgaprc[111X file (also in the
+  directory [10XGAPInfo.UserGapRoot[110X). This file is read much later.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference( "Pager", "less" );[127X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference("PagerOptions",[127X[104X
+    [4X[25X>[125X [27X                     [ "-f", "-r", "-a", "-i", "-M", "-j2" ] );[127X[104X
+    [4X[25Xgap>[125X [27XUserPreference("Pager");[127X[104X
+    [4X[28X"less"[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  first two lines of this example will cause [5XGAP[105X to use the programm [10Xless[110X
+  as  a pager. This is highly recommended if [10Xless[110X is available on your system.
+  The last line displays the current setting.[133X
+  
+  [1X3.2-4 DeclareUserPreference[101X
+  
+  [29X[2XDeclareUserPreference[102X( [3Xrecord[103X ) [32X function
+  
+  [33X[0;0YThis  function  can  be  used  (also  in  packages)  to  introduce  new user
+  preferences.  It  declares a user preference, determines a default value and
+  contains  documentation  of  the  user  preference. After declaration a user
+  preference    will   be   shown   with   [2XShowUserPreferences[102X   ([14X3.2-3[114X)   and
+  [2XWriteGapIniFile[102X ([14X3.2-3[114X).[133X
+  
+  [33X[0;0YWhen this declaration is evaluated it is checked, if this user preference is
+  already  set in the current session. If not the value of the user preference
+  is  set  to  its  default.  (Do  not  use  [9Xfail[109X  as default value since this
+  indicated that a user preference is not set.)[133X
   
   [33X[0;0YThe  argument  [3Xrecord[103X  of  [2XDeclareUserPreference[102X  must  be a record with the
   following components.[133X
@@ -521,7 +551,7 @@
   
   [8X[10XomitFromGapIniFile[110X[108X
         [33X[0;6Yif  the  value  is  [9Xtrue[109X  then  this  user  preference  is  ignored by
-        [2XWriteGapIniFile[102X.[133X
+        [2XWriteGapIniFile[102X ([14X3.2-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XUserPreference( "MyFavouritePrime" );[127X[104X

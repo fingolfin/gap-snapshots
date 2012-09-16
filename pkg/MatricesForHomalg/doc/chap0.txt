@@ -6,7 +6,7 @@
                         [1XMatrices for the [5Xhomalg[0m[1X project[0m
   
   
-                               Version 2012.06.08
+                               Version 2012.06.30
   
   
                                    June 2012
@@ -134,9 +134,10 @@
       3.3-54 BasisAlgorithmRespectsPrincipalIdeals
       3.3-55 AreUnitsCentral
       3.3-56 IsMinusOne
-      3.3-57 IsLeftRegular
-      3.3-58 IsRightRegular
-      3.3-59 IsRegular
+      3.3-57 IsMonic
+      3.3-58 IsLeftRegular
+      3.3-59 IsRightRegular
+      3.3-60 IsRegular
     3.4 Rings: Attributes
       3.4-1 Zero
       3.4-2 One
@@ -255,7 +256,7 @@
       5.4-21 AffineDegree
       5.4-22 ProjectiveDegree
       5.4-23 ConstantTermOfHilbertPolynomialn
-      5.4-24 MatrixOfSymbolsn
+      5.4-24 MatrixOfSymbols
     5.5 Matrices: Operations and Functions
       5.5-1 HomalgRing
       5.5-2 LeftInverse

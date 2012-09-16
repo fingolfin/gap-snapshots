@@ -63,18 +63,19 @@
 \indexentry{BasisAlgorithmRespectsPrincipalIdeals@\texttt  {Basis}\discretionary {-}{}{}\texttt  {Algorithm}\discretionary {-}{}{}\texttt  {Respects}\discretionary {-}{}{}\texttt  {Principal}\discretionary {-}{}{}\texttt  {Ideals}|hyperpage}{24}
 \indexentry{AreUnitsCentral@\texttt  {AreUnitsCentral}|hyperpage}{24}
 \indexentry{IsMinusOne@\texttt  {IsMinusOne}|hyperpage}{25}
+\indexentry{IsMonic@\texttt  {IsMonic}!for homalg ring elements|hyperpage}{25}
 \indexentry{IsLeftRegular@\texttt  {IsLeftRegular}!for homalg ring elements|hyperpage}{25}
 \indexentry{IsRightRegular@\texttt  {IsRightRegular}!for homalg ring elements|hyperpage}{25}
 \indexentry{IsRegular@\texttt  {IsRegular}!for homalg ring elements|hyperpage}{25}
 \indexentry{Zero@\texttt  {Zero}!for homalg ring elements|hyperpage}{25}
 \indexentry{One@\texttt  {One}!for homalg ring elements|hyperpage}{25}
-\indexentry{Inverse@\texttt  {Inverse}!for homalg ring elements|hyperpage}{25}
+\indexentry{Inverse@\texttt  {Inverse}!for homalg ring elements|hyperpage}{26}
 \indexentry{homalgTable@\texttt  {homalgTable}|hyperpage}{26}
 \indexentry{RingElementConstructor@\texttt  {RingElementConstructor}|hyperpage}{26}
 \indexentry{TypeOfHomalgMatrix@\texttt  {TypeOfHomalgMatrix}|hyperpage}{26}
 \indexentry{ConstructorForHomalgMatrices@\texttt  {ConstructorForHomalgMatrices}|hyperpage}{26}
 \indexentry{Zero@\texttt  {Zero}!for homalg rings|hyperpage}{26}
-\indexentry{One@\texttt  {One}!for homalg rings|hyperpage}{26}
+\indexentry{One@\texttt  {One}!for homalg rings|hyperpage}{27}
 \indexentry{MinusOne@\texttt  {MinusOne}|hyperpage}{27}
 \indexentry{ProductOfIndeterminates@\texttt  {ProductOfIndeterminates}|hyperpage}{27}
 \indexentry{RationalParameters@\texttt  {RationalParameters}|hyperpage}{27}
@@ -82,7 +83,7 @@
 \indexentry{RelativeIndeterminatesOfPolynomialRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Polynomial}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{27}
 \indexentry{IndeterminateCoordinatesOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{27}
 \indexentry{RelativeIndeterminateCoordinatesOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{27}
-\indexentry{IndeterminateDerivationsOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{27}
+\indexentry{IndeterminateDerivationsOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{28}
 \indexentry{RelativeIndeterminateDerivationsOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{28}
 \indexentry{IndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{28}
 \indexentry{RelativeIndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{28}
@@ -90,7 +91,7 @@
 \indexentry{CoefficientsRing@\texttt  {CoefficientsRing}|hyperpage}{28}
 \indexentry{KrullDimension@\texttt  {KrullDimension}|hyperpage}{28}
 \indexentry{LeftGlobalDimension@\texttt  {LeftGlobalDimension}|hyperpage}{28}
-\indexentry{RightGlobalDimension@\texttt  {RightGlobalDimension}|hyperpage}{28}
+\indexentry{RightGlobalDimension@\texttt  {RightGlobalDimension}|hyperpage}{29}
 \indexentry{GlobalDimension@\texttt  {GlobalDimension}|hyperpage}{29}
 \indexentry{GeneralLinearRank@\texttt  {GeneralLinearRank}|hyperpage}{29}
 \indexentry{ElementaryRank@\texttt  {ElementaryRank}|hyperpage}{29}
@@ -175,7 +176,7 @@
 \indexentry{AffineDegree@\texttt  {AffineDegree}|hyperpage}{45}
 \indexentry{ProjectiveDegree@\texttt  {ProjectiveDegree}|hyperpage}{45}
 \indexentry{ConstantTermOfHilbertPolynomialn@\texttt  {ConstantTermOfHilbertPolynomialn}|hyperpage}{45}
-\indexentry{MatrixOfSymbolsn@\texttt  {MatrixOfSymbolsn}|hyperpage}{45}
+\indexentry{MatrixOfSymbols@\texttt  {MatrixOfSymbols}|hyperpage}{45}
 \indexentry{HomalgRing@\texttt  {HomalgRing}!for matrices|hyperpage}{46}
 \indexentry{LeftInverse@\texttt  {LeftInverse}!for matrices|hyperpage}{46}
 \indexentry{RightInverse@\texttt  {RightInverse}!for matrices|hyperpage}{47}

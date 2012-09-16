@@ -1,6 +1,8 @@
 #############################################################################
 ##  
 ##  PackageInfo.g for the package `GradedModules'              Mohamed Barakat
+##                                                           Sebastian Gutsche
+##                                                            Sebastian Jambor
 ##                                                      Markus Lange-Hegermann
 ##                                                                 Arne Lorenz
 ##                                                            Oleksandr Motsak
@@ -32,9 +34,11 @@ Subtitle := "A homalg based package for the Abelian category of finitely present
 Version := Maximum( [
   "2011.09.06", ## Markus' version
 ## this line prevents merge conflicts
-  "2012.05.18", ## Mohamed's version
+  "2012.06.24", ## Mohamed's version
 ## this line prevents merge conflicts
   "2011.05.05", ## Sebastian's version
+## this line prevents merge conflicts
+  "2012.06.15", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -141,6 +145,22 @@ Persons := [
                        "Germany" ] ),
     Place         := "Kaiserslautern",
     Institution   := "University of Kaiserslautern"
+  ),
+  rec(
+    LastName      := "Gutsche",
+    FirstNames    := "Sebastian",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "sebastian.gutsche@rwth-aachen.de",
+    WWWHome       := "http://wwwb.math.rwth-aachen.de/~gutsche/",
+    PostalAddress := Concatenation( [
+                       "Sebastian Gutsche\n",
+                       "Lehrstuhl B fuer Mathematik, RWTH Aachen\n",
+                       "Templergraben 64\n",
+                       "52062 Aachen\n",
+                       "Germany" ] ),
+    Place         := "Aachen",
+    Institution   := "RWTH Aachen University"
   ),
   rec(
     LastName      := "Jambor",
@@ -320,11 +340,11 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [
-                   [ "MatricesForHomalg", ">= 2011.10.05" ],
+                   [ "MatricesForHomalg", ">= 2012.06.21" ],
                    [ "HomalgToCAS", ">= 2011.10.05" ],
                    [ "RingsForHomalg", ">= 2011.10.05" ],
-                   [ "GradedRingForHomalg", ">= 2011.10.05" ],
-                   [ "Modules", ">= 2012.05.17" ],
+                   [ "GradedRingForHomalg", ">= 2012.06.22" ],
+                   [ "Modules", ">= 2012.06.15" ],
                    [ "homalg", ">= 2012.05.17" ],
                    [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
@@ -370,6 +390,8 @@ BannerString := Concatenation(
         " (", ~.Persons[4].WWWHome, ")\n",
   "   ", ~.Persons[5].FirstNames, " ", ~.Persons[5].LastName,
         " (", ~.Persons[5].WWWHome, ")\n",
+  "   ", ~.Persons[6].FirstNames, " ", ~.Persons[6].LastName,
+        " (", ~.Persons[6].WWWHome, ")\n",
   "Type:\n",
   "  ?GradedModules:            ## for the contents of the manual\n",
   "  ?GradedModules:x           ## for chapter/section/topic x\n",

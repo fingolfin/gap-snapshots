@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.7.27)  13 JUL 2012 15:27
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.7.27)  14 SEP 2012 13:55
 entering extended mode
  %&-line parsing enabled.
 **cvec
@@ -801,10 +801,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6459 strings out of 493848
- 93663 string characters out of 1152823
+ 6460 strings out of 493848
+ 93675 string characters out of 1152823
  165290 words of memory out of 3000000
- 9197 multiletter control sequences out of 15000+50000
+ 9198 multiletter control sequences out of 15000+50000
  79924 words of font info for 103 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  38i,7n,36p,1202b,440s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -822,9 +822,9 @@ vro8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/symbol/usyr.pfb></usr/share
 /texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts
 /type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utm
 r8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on cvec.pdf (47 pages, 434400 bytes).
+Output written on cvec.pdf (47 pages, 434825 bytes).
 PDF statistics:
- 1012 PDF objects out of 1200 (max. 8388607)
+ 1016 PDF objects out of 1200 (max. 8388607)
  377 named destinations out of 1000 (max. 500000)
- 273 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 281 words of extra memory for PDF output out of 10000 (max. 10000000)
 

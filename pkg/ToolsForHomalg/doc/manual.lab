@@ -1,0 +1,78 @@
+\makelabel{toolsforhomalg:Title page}{}
+\makelabel{toolsforhomalg:Copyright}{}
+\makelabel{toolsforhomalg:Table of Contents}{}
+\makelabel{toolsforhomalg:Introduction}{1}
+\makelabel{toolsforhomalg:What is the role of the ToolsForHomalg package in the homalg project?}{1.1}
+\makelabel{toolsforhomalg:ToolsForHomalg provides ...}{1.1.1}
+\makelabel{toolsforhomalg:Installation of the ToolsForHomalg Package}{2}
+\makelabel{toolsforhomalg:Basics}{3}
+\makelabel{toolsforhomalg:Variables}{3.1}
+\makelabel{toolsforhomalg:Categories}{3.2}
+\makelabel{toolsforhomalg:Pointers}{4}
+\makelabel{toolsforhomalg:Weak pointer objects}{4.1}
+\makelabel{toolsforhomalg:Pointer objects}{4.2}
+\makelabel{toolsforhomalg:Tools}{5}
+\makelabel{toolsforhomalg:Functions}{5.1}
+\makelabel{toolsforhomalg:Examplefunctions}{5.2}
+\makelabel{toolsforhomalg:Bibliography}{Bib}
+\makelabel{toolsforhomalg:References}{Bib}
+\makelabel{toolsforhomalg:Index}{Ind}
+\makelabel{toolsforhomalg:ToolsForHomalg}{}
+\makelabel{toolsforhomalg:HOMALGTOOLS}{3.1.1}
+\makelabel{toolsforhomalg:IsStructureObjectOrObjectOrMorphism}{3.2.1}
+\makelabel{toolsforhomalg:IsStructureObjectOrObject}{3.2.2}
+\makelabel{toolsforhomalg:IsStructureObject}{3.2.3}
+\makelabel{toolsforhomalg:IsStructureObjectMorphism}{3.2.4}
+\makelabel{toolsforhomalg:IsHomalgRingOrModule}{3.2.5}
+\makelabel{toolsforhomalg:IsContainerForWeakPointers}{4.1.1}
+\makelabel{toolsforhomalg:ContainerForWeakPointers}{4.1.2}
+\makelabel{toolsforhomalg:UpdateContainerOfWeakPointers}{4.1.3}
+\makelabel{toolsforhomalg:AddElmWPObjForHomalg}{4.1.4}
+\makelabel{toolsforhomalg:AddTwoElmWPObjForHomalg}{4.1.5}
+\makelabel{toolsforhomalg:ElmWPObjForHomalg}{4.1.6}
+\makelabel{toolsforhomalg:IsContainerForPointers}{4.2.1}
+\makelabel{toolsforhomalg:ContainerForPointers}{4.2.2}
+\makelabel{toolsforhomalg:UpdateContainerOfPointers}{4.2.3}
+\makelabel{toolsforhomalg:AddElmPObjForHomalg}{4.2.4}
+\makelabel{toolsforhomalg:AddTwoElmPObjForHomalg}{4.2.5}
+\makelabel{toolsforhomalg:ElmPObjForHomalg}{4.2.6}
+\makelabel{toolsforhomalg:homalgTotalRuntimes}{5.1.1}
+\makelabel{toolsforhomalg:AddLeftRightLogicalImplicationsForHomalg}{5.1.2}
+\makelabel{toolsforhomalg:LogicalImplicationsForOneHomalgObject}{5.1.3}
+\makelabel{toolsforhomalg:LogicalImplicationsForTwoHomalgBasicObjects}{5.1.4}
+\makelabel{toolsforhomalg:InstallLogicalImplicationsForHomalgBasicObjects}{5.1.5}
+\makelabel{toolsforhomalg:LeftRightAttributesForHomalg}{5.1.6}
+\makelabel{toolsforhomalg:InstallLeftRightAttributesForHomalg}{5.1.7}
+\makelabel{toolsforhomalg:MatchPropertiesAndAttributes}{5.1.8}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullPropertyOrAttribute}{5.1.9}
+\makelabel{toolsforhomalg:InstallImmediateMethodToConditionallyPullPropertyOrAttribute}{5.1.10}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullPropertyOrAttributeWithDifferentName}{5.1.11}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullPropertiesOrAttributes}{5.1.12}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullTrueProperty}{5.1.13}
+\makelabel{toolsforhomalg:InstallImmediateMethodToConditionallyPullTrueProperty}{5.1.14}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullTruePropertyWithDifferentName}{5.1.15}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullTrueProperties}{5.1.16}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullFalseProperty}{5.1.17}
+\makelabel{toolsforhomalg:InstallImmediateMethodToConditionallyPullFalseProperty}{5.1.18}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullFalsePropertyWithDifferentName}{5.1.19}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPullFalseProperties}{5.1.20}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushPropertyOrAttribute}{5.1.21}
+\makelabel{toolsforhomalg:InstallImmediateMethodToConditionallyPushPropertyOrAttribute}{5.1.22}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushPropertyOrAttributeWithDifferentName}{5.1.23}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushPropertiesOrAttributes}{5.1.24}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushTrueProperty}{5.1.25}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushTruePropertyWithDifferentName}{5.1.26}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushTrueProperties}{5.1.27}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushFalseProperty}{5.1.28}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushFalsePropertyWithDifferentName}{5.1.29}
+\makelabel{toolsforhomalg:InstallImmediateMethodToPushFalseProperties}{5.1.30}
+\makelabel{toolsforhomalg:DeclareAttributeWithCustomGetter}{5.1.31}
+\makelabel{toolsforhomalg:AppendToAhomalgTable}{5.1.32}
+\makelabel{toolsforhomalg:homalgNamesOfComponentsToIntLists}{5.1.33}
+\makelabel{toolsforhomalg:IncreaseExistingCounterInObject}{5.1.34}
+\makelabel{toolsforhomalg:IncreaseExistingCounterInObjectWithTiming}{5.1.35}
+\makelabel{toolsforhomalg:IncreaseCounterInObject}{5.1.36}
+\makelabel{toolsforhomalg:MemoryToString}{5.1.37}
+\makelabel{toolsforhomalg:homalgLaTeX}{5.1.38}
+\makelabel{toolsforhomalg:ExamplesForHomalg}{5.2.1}
+\makelabel{toolsforhomalg:ExamplesForHomalg}{5.2.2}

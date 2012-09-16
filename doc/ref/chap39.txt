@@ -617,17 +617,6 @@
         would  likely make the output not essentially easier to read than a pc
         presentation.[133X
   
-  [8X3.[108X
-        [33X[0;6YThe output of [2XStructureDescription[102X is guaranteed to depend only on the
-        isomorphism  type  of  the  group,  but  neither  on the choice of its
-        generators   nor  on  the  choice  of  its  representation.  Therefore
-        [2XStructureDescription[102X needs to determine [13Xall[113X possible decompositions of
-        the  group,  and  choose  the [21Xnicest[121X from them. This is very time- and
-        memory-consuming  if  the  group has many normal subgroups. Therefore,
-        [2XStructureDescription[102X  is  particularly  unsuitable for solvable groups
-        and  in  particular  [22Xp[122X-groups,  unless  they are very small, i.e. have
-        order less than 128.[133X
-  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := AllSmallGroups(12);;[127X[104X
     [4X[25Xgap>[125X [27XList(l,StructureDescription);; l;[127X[104X
@@ -2642,7 +2631,8 @@
   simply  discard  subgroups  in the cyclic extension algorithm. Therefore the
   trivial  subgroup  will  always  be  included.)  Also  note, that for such a
   partial   lattice   maximality/minimality   inclusion  relations  cannot  be
-  computed.[133X
+  computed.  (If  [3Xfunc[103X  is  a  list  of  length  2,  its first entry is such a
+  discarding function, the second a function for discarding zuppos.)[133X
   
   [33X[0;0YThe  cyclic extension algorithm requires the perfect subgroups of [3XG[103X. However
   [5XGAP[105X  cannot analyze the function [3Xfunc[103X for its implication but can only apply
@@ -2667,6 +2657,8 @@
     [4X[28X<subgroup lattice of <permutation group of size 5184 with [128X[104X
     [4X[28X9 generators>, 566 classes, 27134 subgroups>[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0Y##[133X
   
   [1X39.21-2 InvariantSubgroupsElementaryAbelianGroup[101X
   

@@ -1,8 +1,8 @@
 <!-- Do not edit the following four lines. They will be updated 
      automatically by the distribution wrapper scripts. -->
-<!ENTITY VERSIONNUMBER "4.5.5">
-<!ENTITY VERSIONSUFFIX "4r5p5">
-<!ENTITY RELEASEDAY "16-Jul-2012">
+<!ENTITY VERSIONNUMBER "4.5.6">
+<!ENTITY VERSIONSUFFIX "4r5p6">
+<!ENTITY RELEASEDAY "16-Sep-2012">
 <!ENTITY RELEASEYEAR "2012">
 <!-- Two lines below are updated manually, but only for main releases -->
 <!ENTITY GAPDIRNAME "gap4r5">

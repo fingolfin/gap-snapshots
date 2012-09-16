@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+
+  title.xml             AutoDoc package documentation
+
+         Copyright (C) 2007-2012, Sebastian Gutsche, RWTH-Aachen
+
+-->
+<TitlePage>
+  <Title>Automatic
+  Documentation
+  </Title>
+  <Subtitle>a nice way to create documentations</Subtitle>
+  <TitleComment>
+    <Br/><Br/>
+    
+    This manual is best viewed as an <B>HTML</B> document.
+    
+    An <B>offline</B> version should be included in the documentation
+    subfolder of the package.
+    
+    <Br/><Br/>
+    
+    <URL>http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/AutoDoc</URL>
+  </TitleComment>
+  <Version>Version <#Include SYSTEM "../VERSION"></Version>
+  <Author>Sebastian Gutsche<Alt Only="LaTeX"><Br/></Alt>
+    <Address>
+      Lehrstuhl B für Mathematik,
+      RWTH Aachen,
+      Templergraben 64,
+      52056 Aachen,
+      Germany
+    </Address>
+    <Email>sebastian.gutsche@rwth-aachen.de</Email>
+    <Homepage>http://wwwb.math.rwth-aachen.de/~gutsche/</Homepage>
+  </Author>
+  <Date>September 2012</Date>
+  
+  <Copyright>
+    &copyright; 2012 by Sebastian Gutsche<P/>
+    
+    This package may be distributed under the terms and conditions of the
+    GNU Public License Version 2.
+  </Copyright>
+  
+</TitlePage>

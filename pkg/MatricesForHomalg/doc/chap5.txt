@@ -725,9 +725,9 @@
   
   [3XA[0m is a [5Xhomalg[0m matrix (row convention).
   
-  [1X5.4-24 MatrixOfSymbolsn[0m
+  [1X5.4-24 MatrixOfSymbols[0m
   
-  [2X> MatrixOfSymbolsn( [0X[3XA[0X[2X ) ___________________________________________[0Xattribute
+  [2X> MatrixOfSymbols( [0X[3XA[0X[2X ) ____________________________________________[0Xattribute
   [6XReturns:[0X  an integer
   
   [3XA[0m is a [5Xhomalg[0m matrix.

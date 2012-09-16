@@ -25,5 +25,29 @@ DeclareOperation( "Eliminate",
 DeclareOperation( "Coefficients",
         [ IsHomalgRingElement, IsHomalgRingElement ] );
 
+DeclareOperation( "Coefficients",
+        [ IsHomalgRingElement, IsString ] );
+
+DeclareOperation( "Coefficients",
+        [ IsHomalgRingElement ] );
+
+DeclareOperation( "CoefficientOfUnivariatePolynomial",
+        [ IsHomalgRingElement, IsInt ] );
+
+DeclareOperation( "CoefficientsOfUnivariatePolynomial",
+        [ IsHomalgRingElement, IsHomalgRingElement ] );
+
+DeclareOperation( "CoefficientsOfUnivariatePolynomial",
+        [ IsHomalgRingElement, IsString ] );
+
+DeclareOperation( "LeadingCoefficient",
+        [ IsHomalgRingElement, IsHomalgRingElement ] );
+
+DeclareOperation( "LeadingCoefficient",
+        [ IsHomalgRingElement, IsString ] );
+
+DeclareOperation( "LeadingCoefficient",
+        [ IsHomalgRingElement ] );
+
 DeclareOperation( "GetRidOfRowsAndColumnsWithUnits",
         [ IsHomalgMatrix ] );

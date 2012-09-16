@@ -1,0 +1,11 @@
+  
+  [1X1 Introduction[0X
+  
+  
+  [1X1.1 What is the role of the [5XToolsForHomalg[1X package in the [5Xhomalg[1X project?[0X
+  
+  
+  [1X1.1-1 [5XToolsForHomalg[1X provides ...[0X
+  
+  The package [5XToolsForHomalg[0m provides for the [5Xhomalg[0m project [hpa10]:
+  

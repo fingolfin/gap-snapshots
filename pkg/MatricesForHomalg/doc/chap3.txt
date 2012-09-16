@@ -583,21 +583,28 @@
   
   Check if the ring element [3Xr[0m is the additive inverse of one.
   
-  [1X3.3-57 IsLeftRegular[0m
+  [1X3.3-57 IsMonic[0m
+  
+  [2X> IsMonic( [0X[3Xr[0X[2X ) _____________________________________________________[0Xproperty
+  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  
+  Check if the [5Xhomalg[0m ring element [3Xr[0m is monic.
+  
+  [1X3.3-58 IsLeftRegular[0m
   
   [2X> IsLeftRegular( [0X[3Xr[0X[2X ) _______________________________________________[0Xproperty
   [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
   
   Check if the [5Xhomalg[0m ring element [3Xr[0m is left regular.
   
-  [1X3.3-58 IsRightRegular[0m
+  [1X3.3-59 IsRightRegular[0m
   
   [2X> IsRightRegular( [0X[3Xr[0X[2X ) ______________________________________________[0Xproperty
   [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
   
   Check if the [5Xhomalg[0m ring element [3Xr[0m is right regular.
   
-  [1X3.3-59 IsRegular[0m
+  [1X3.3-60 IsRegular[0m
   
   [2X> IsRegular( [0X[3Xr[0X[2X ) ___________________________________________________[0Xproperty
   [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m

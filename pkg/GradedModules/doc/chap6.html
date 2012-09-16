@@ -9,17 +9,20 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap6"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap5.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap7.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X7FE838537D4DF8E7" name="X7FE838537D4DF8E7"></a></p>
 <div class="ChapSects"><a href="chap6.html#X7FE838537D4DF8E7">6 <span class="Heading">The Tate Resolution</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X83CE0B0785329667">6.1 <span class="Heading">The Tate Resolution: Operations and Functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X83CE0B0785329667">6.1 <span class="Heading">The Tate Resolution: Operations and Functions</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A9DCED27D5F0D67">6.1-1 TateResolution</a></span>
 </div></div>
@@ -35,33 +38,31 @@
 
 <h5>6.1-1 TateResolution</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; TateResolution</code>( <var class="Arg">M, degree_lowest, degree_highest</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> cocomplex</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TateResolution</code>( <var class="Arg">M</var>, <var class="Arg">degree_lowest</var>, <var class="Arg">degree_highest</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> cocomplex</p>
 
 <p>Compute the Tate resolution of the sheaf <var class="Arg">M</var>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x3";;
-gap&gt; S := GradedRing( R );;
-gap&gt; A := KoszulDualRing( S, "e0..e3" );;
-</pre></td></tr></table>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x3";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := KoszulDualRing( S, "e0..e3" );;</span>
+</pre></div>
 
-<p>In the following we construct the different exterior powers of the cotangent bundle shifted by 1. Observe how a single 1 travels along the diagnoal in the window [ -3 .. 0 ] x [ 0 .. 3 ]. <br /> <br /> First we start with the structure sheaf with its Tate resolution:</p>
+<p>In the following we construct the different exterior powers of the cotangent bundle shifted by <span class="SimpleMath">1</span>. Observe how a single <span class="SimpleMath">1</span> travels along the diagnoal in the window <span class="SimpleMath">[ -3 .. 0 ] x [ 0 .. 3 ]</span>. <br /> <br /> First we start with the structure sheaf with its Tate resolution:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; O := S^0;
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O := S^0;</span>
 &lt;The graded free left module of rank 1 on a free generator&gt;
-gap&gt; T := TateResolution( O, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := TateResolution( O, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; betti := BettiDiagram( T );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti := BettiDiagram( T );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( betti );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti );</span>
 total:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?
 ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|
     3:   35  20  10   4   1   .   .   .   .   .   .   0   0   0
@@ -72,34 +73,32 @@ total:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?
 twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5
 ---------------------------------------------------------------
 Euler:  -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35  56
-</pre></td></tr></table>
+</pre></div>
 
 <p>The Castelnuovo-Mumford regularity of the <em>underlying module</em> is distinguished among the list of twists by the character <code class="code">'V'</code> pointing to it. It is <em>not</em> an invariant of the sheaf (see the next diagram). <br /> <br /> The residue class field (i.e. S modulo the maximal homogeneous ideal):</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; k := HomalgMatrix( Indeterminates( S ), Length( Indeterminates( S ) ), 1, S );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k := HomalgMatrix( Indeterminates( S ), Length( Indeterminates( S ) ), 1, S );</span>
 &lt;A 4 x 1 matrix over a graded ring&gt;
-gap&gt; k := LeftPresentationWithDegrees( k );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k := LeftPresentationWithDegrees( k );</span>
 &lt;A graded cyclic left module presented by 4 relations for a cyclic generator&gt;
-</pre></td></tr></table>
+</pre></div>
 
 <p>Another way of constructing the structure sheaf:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; U0 := SyzygiesObject( 1, k );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U0 := SyzygiesObject( 1, k );</span>
 &lt;A graded torsion-free left module presented by yet unknown relations for 4 ge\
 nerators&gt;
-gap&gt; T0 := TateResolution( U0, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T0 := TateResolution( U0, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; betti0 := BettiDiagram( T0 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti0 := BettiDiagram( T0 );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( betti0 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti0 );</span>
 total:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?
 ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|
     3:   35  20  10   4   1   .   .   .   .   .   .   0   0   0
@@ -110,41 +109,39 @@ total:   35  20  10   4   1   1   4  10  20  35  56   ?   ?   ?
 twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5
 ---------------------------------------------------------------
 Euler:  -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35  56
-</pre></td></tr></table>
+</pre></div>
 
 <p>The cotangent bundle:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; cotangent := SyzygiesObject( 2, k );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cotangent := SyzygiesObject( 2, k );</span>
 &lt;A graded torsion-free left module presented by yet unknown relations for 6 ge\
 nerators&gt;
-gap&gt; IsFree( UnderlyingModule( cotangent ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFree( UnderlyingModule( cotangent ) );</span>
 false
-gap&gt; Rank( cotangent );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rank( cotangent );</span>
 3
-gap&gt; cotangent;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cotangent;</span>
 &lt;A graded reflexive non-projective rank 3 left module presented by 4 relations\
  for 6 generators&gt;
-gap&gt; ProjectiveDimension( UnderlyingModule( cotangent ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ProjectiveDimension( UnderlyingModule( cotangent ) );</span>
 2
-</pre></td></tr></table>
+</pre></div>
 
-<p>the cotangent bundle shifted by 1 with its Tate resolution:</p>
+<p>the cotangent bundle shifted by <span class="SimpleMath">1</span> with its Tate resolution:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; U1 := cotangent * S^1;
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U1 := cotangent * S^1;</span>
 &lt;A graded non-torsion left module presented by 4 relations for 6 generators&gt;
-gap&gt; T1 := TateResolution( U1, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T1 := TateResolution( U1, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; betti1 := BettiDiagram( T1 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti1 := BettiDiagram( T1 );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( betti1 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti1 );</span>
 total:   120   70   36   15    4    1    6   20   45   84  140    ?    ?    ?
 -----------|----|----|----|----|----|----|----|----|----|----|----|----|----|
     3:   120   70   36   15    4    .    .    .    .    .    .    0    0    0
@@ -155,22 +152,21 @@ total:   120   70   36   15    4    1    6   20   45   84  140    ?    ?    ?
 twist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5
 -----------------------------------------------------------------------------
 Euler:  -120  -70  -36  -15   -4    0    0   -1    0    6   20   45   84  140
-</pre></td></tr></table>
+</pre></div>
 
-<p>The second power U^2 of the shifted cotangent bundle U=U^1 and its Tate resolution:</p>
+<p>The second power <span class="SimpleMath">U^2</span> of the shifted cotangent bundle <span class="SimpleMath">U=U^1</span> and its Tate resolution:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; U2 := SyzygiesObject( 3, k ) * S^2;
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U2 := SyzygiesObject( 3, k ) * S^2;</span>
 &lt;A graded rank 3 left module presented by 1 relation for 4 generators&gt;
-gap&gt; T2 := TateResolution( U2, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T2 := TateResolution( U2, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; betti2 := BettiDiagram( T2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti2 := BettiDiagram( T2 );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( betti2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti2 );</span>
 total:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?
 -----------|----|----|----|----|----|----|----|----|----|----|----|----|----|
     3:   140   84   45   20    6    .    .    .    .    .    .    0    0    0
@@ -181,26 +177,25 @@ total:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?
 twist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5
 -----------------------------------------------------------------------------
 Euler:  -140  -84  -45  -20   -6    0    1    0    0    4   15   36   70  120
-</pre></td></tr></table>
+</pre></div>
 
-<p>The third power U^3 of the shifted cotangent bundle U=U^1 and its Tate resolution:</p>
+<p>The third power <span class="SimpleMath">U^3</span> of the shifted cotangent bundle <span class="SimpleMath">U=U^1</span> and its Tate resolution:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; U3 := SyzygiesObject( 4, k ) * S^3;
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U3 := SyzygiesObject( 4, k ) * S^3;</span>
 &lt;A graded free left module of rank 1 on a free generator&gt;
-gap&gt; Display( U3 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( U3 );</span>
 Q[x0,x1,x2,x3]^(1 x 1)
 
 (graded, degree of generator: 1)
-gap&gt; T3 := TateResolution( U3, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T3 := TateResolution( U3, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; betti3 := BettiDiagram( T3 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betti3 := BettiDiagram( T3 );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded left modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( betti3 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( betti3 );</span>
 total:   56  35  20  10   4   1   1   4  10  20  35   ?   ?   ?
 ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|
     3:   56  35  20  10   4   1   .   .   .   .   .   0   0   0
@@ -211,23 +206,22 @@ total:   56  35  20  10   4   1   1   4  10  20  35   ?   ?   ?
 twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5
 ---------------------------------------------------------------
 Euler:  -56 -35 -20 -10  -4  -1   0   0   0   1   4  10  20  35
-</pre></td></tr></table>
+</pre></div>
 
-<p>Another way to construct U^2=U^(3-1):</p>
+<p>Another way to construct <span class="SimpleMath">U^2=U^(3-1)</span>:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; u2 := GradedHom( U1, S^(-1) );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u2 := GradedHom( U1, S^(-1) );</span>
 &lt;A graded torsion-free right module on 4 generators satisfying yet unknown rel\
 ations&gt;
-gap&gt; t2 := TateResolution( u2, -5, 5 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2 := TateResolution( u2, -5, 5 );</span>
 &lt;An acyclic cocomplex containing
 10 morphisms of graded right modules at degrees [ -5 .. 5 ]&gt;
-gap&gt; BettiDiagram( t2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BettiDiagram( t2 );</span>
 &lt;A Betti diagram of &lt;An acyclic cocomplex containing 
 10 morphisms of graded right modules at degrees [ -5 .. 5 ]&gt;&gt;
-gap&gt; Display( last );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( last );</span>
 total:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?
 -----------|----|----|----|----|----|----|----|----|----|----|----|----|----|
     3:   140   84   45   20    6    .    .    .    .    .    .    0    0    0
@@ -238,10 +232,10 @@ total:   140   84   45   20    6    1    4   15   36   70  120    ?    ?    ?
 twist:    -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5
 -----------------------------------------------------------------------------
 Euler:  -140  -84  -45  -20   -6    0    1    0    0    4   15   36   70  120
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap5.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap7.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

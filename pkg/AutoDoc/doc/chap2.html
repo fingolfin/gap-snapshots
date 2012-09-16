@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (AutoDoc) - Chapter 2: The main functions in the AutoDoc Package</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p><a id="X7B4150D1848BA072" name="X7B4150D1848BA072"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7B4150D1848BA072">2 <span class="Heading">The main functions in the <strong class="pkg">AutoDoc</strong> Package</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8173135A7D187358">2.1 <span class="Heading">The functions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85FE8A148090985E">2.1-1 AUTOMATIC_DOCUMENTATION</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B9CAA7879526E64">2.1-2 CreateAutoDoc</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X813266C082A412F9">2.1-3 DeclareCategoryWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82FAF5637E4A651F">2.1-4 DeclareOperationWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X833A38277FA4848A">2.1-5 DeclareAttributeWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E376CD17AA0566F">2.1-6 DeclarePropertyWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B8162A87F499094">2.1-7 DeclareGlobalFunctionWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CADC9C87BEF79D8">2.1-8 DeclareGlobalVariableWithDocumentation</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">The main functions in the <strong class="pkg">AutoDoc</strong> Package</span></h3>
+
+<p><a id="X8173135A7D187358" name="X8173135A7D187358"></a></p>
+
+<h4>2.1 <span class="Heading">The functions</span></h4>
+
+<p><a id="X85FE8A148090985E" name="X85FE8A148090985E"></a></p>
+
+<h5>2.1-1 AUTOMATIC_DOCUMENTATION</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AUTOMATIC_DOCUMENTATION</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<p>This global variable stores all the streams and some additional data, like chapter names.</p>
+
+<p><a id="X7B9CAA7879526E64" name="X7B9CAA7879526E64"></a></p>
+
+<h5>2.1-2 CreateAutoDoc</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateAutoDoc</code>( <var class="Arg">package_name</var>, <var class="Arg">documentation_file</var>, <var class="Arg">path_to_xml_file</var>, <var class="Arg">create_full_docu</var>[, <var class="Arg">section_intros</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This is the main method of the package. After loading the package, run it with the name of the pacckage you want to create a documentation of as first argument, with an (empty) filepath (everything will be overwritten) as second argument. Make sure you have included this file as source if you run your GAPDoc documentation creating script. The third argument is a path to the directory where it can store the GAPDoc XML files. The path MUST end with a slash. It will produce several files out of the Declare*WithDocumentation declarations you have used in your package <var class="Arg">package_name</var>, and one named AutoDocMainFile.xml, which you can simply include to your documentation. <var class="Arg">create_full_docu</var> can either be true or false. If true, a full documentation with title file is created. The only thing left for you to do is run GAPDoc and provide a bibliography. <var class="Arg">section_intros</var> is optional, it must be a list containing lists of of either two or three strings. If two are given, first one must be a chapter title, with underscores instead of spaces, and the second one a string which will be displayed in the documentation at the beginning of the chapter. If three are given, first one must be a chapter, second a section, third the description.</p>
+
+<p><a id="X813266C082A412F9" name="X813266C082A412F9"></a></p>
+
+<h5>2.1-3 DeclareCategoryWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategoryWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a category, like DeclareCategory( <var class="Arg">name</var>, <var class="Arg">filter</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X82FAF5637E4A651F" name="X82FAF5637E4A651F"></a></p>
+
+<h5>2.1-4 DeclareOperationWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a operation, like DeclareOperation( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X833A38277FA4848A" name="X833A38277FA4848A"></a></p>
+
+<h5>2.1-5 DeclareAttributeWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttributeWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">argument</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares an attribute, like DeclareAttribute( <var class="Arg">name</var>, <var class="Arg">filter</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the attribute. It is not optional. <var class="Arg">argument</var> is an optional string which is displayed in the documentation as attribute of the attribute. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this attribute should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X7E376CD17AA0566F" name="X7E376CD17AA0566F"></a></p>
+
+<h5>2.1-6 DeclarePropertyWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclarePropertyWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a property, like DeclareProperty( <var class="Arg">name</var>, <var class="Arg">filter</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this property should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X7B8162A87F499094" name="X7B8162A87F499094"></a></p>
+
+<h5>2.1-7 DeclareGlobalFunctionWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunctionWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a global function like DeclareGlobalFunction( <var class="Arg">name</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them.<var class="Arg">return_value</var> is a string displayed as the return value of the function. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this function should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X7CADC9C87BEF79D8" name="X7CADC9C87BEF79D8"></a></p>
+
+<h5>2.1-8 DeclareGlobalVariableWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariableWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">description</var>[, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a global variable like DeclareGlobalVariable( <var class="Arg">name</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this variable should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -522,7 +522,7 @@ true
 
 <h5>27.6-5 PrintString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintString</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintString</code>( <var class="Arg">obj</var>[, <var class="Arg">length</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">PrintString</code> returns a representation of <var class="Arg">obj</var>, which may be an object of arbitrary type, as a string. This string should approximate as closely as possible the character sequence you see if you print <var class="Arg">obj</var> using <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
 
 <p>If <var class="Arg">length</var> is given it must be an integer. The absolute value gives the minimal length of the result. If the string representation of <var class="Arg">obj</var> takes less than that many characters it is filled with blanks. If <var class="Arg">length</var> is positive it is filled on the left, if <var class="Arg">length</var> is negative it is filled on the right.</p>
