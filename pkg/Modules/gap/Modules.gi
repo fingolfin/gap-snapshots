@@ -353,14 +353,14 @@ InstallMethod( CurrentResolution,		### defines: Resolution (ResolutionOfModule/R
     if IsBound( S ) and NrRelations( S ) = 0 then
         
         ## check assertion
-        Assert( 3, IsRightAcyclic( d ) );
+        Assert( 5, IsRightAcyclic( d ) );
         
         SetIsRightAcyclic( d, true );
         
     else
         
         ## check assertion
-        Assert( 3, IsAcyclic( d ) );
+        Assert( 5, IsAcyclic( d ) );
         
         SetIsAcyclic( d, true );
     fi;
@@ -799,12 +799,12 @@ InstallOtherMethod( SubobjectQuotient,
     ## the generalized isomorphism M/K -> M
     gen_iso_K := NaturalGeneralizedEmbedding( MmodK );
     
-    Assert( 1, IsGeneralizedIsomorphism( gen_iso_K ) );
+    Assert( 3, IsGeneralizedIsomorphism( gen_iso_K ) );
     
     ## the natural epimorphism M -> M/K
     coker_epi_K := gen_iso_K ^ -1;
     
-    Assert( 1, IsEpimorphism( coker_epi_K ) );
+    Assert( 3, IsEpimorphism( coker_epi_K ) );
     
     mapJ := PreCompose( MorphismHavingSubobjectAsItsImage( J ), coker_epi_K );
     
@@ -1749,5 +1749,105 @@ InstallMethod( NumberOfFirstNonZeroFittingIdeal,
     SetRankOfObject( M, NrGenerators( M ) );
     
     return NrGenerators( M );
+    
+end );
+
+##
+InstallMethod( AMaximalEnvelopingIdeal,
+        "for homalg ideals and a list of variables",
+        [ IsFinitelyPresentedSubmoduleRep and ConstructedAsAnIdeal ],
+        
+  function( I )
+    local R, A, indets, ideal, m, v, l, n_is_one, n, a, k;
+    
+    if I = 1 then
+        Error( "expected a proper ideal\n" );
+    fi;
+    
+    R := HomalgRing( I );
+    
+    A := CoefficientsRing( R );
+    
+    if not ( HasIsFieldForHomalg( A ) and IsFieldForHomalg( A ) ) then
+        TryNextMethod( );
+    fi;
+    
+    indets := Indeterminates( R );
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( I ) then
+        ideal := LeftSubmodule;
+    else
+        ideal := RightSubmodule;
+    fi;
+    
+    if IsZero( I ) then
+        return ideal( indets, R );
+    fi;
+    
+    m := I;
+    
+    while AffineDimension( m ) > 0 do
+        
+        v := MaximalIndependentSet( m );
+        
+        n_is_one := true;
+        
+        while true do
+            
+            n := m + ideal( v, R );
+            
+            if not ( n = 1 ) then
+                n_is_one := false;
+                break;
+            fi;
+            
+            l := Length( v );
+            
+            if l > 1 then
+                Remove( v, l );
+            else
+                break;
+            fi;
+            
+        od;
+        
+        if n_is_one then
+            
+            v := v[1];
+            
+            a := One( R );
+            k := 1;
+            
+            while true do
+                
+                n := m + ideal( [ v^k + a ], R );
+                
+                if not ( n = 1 ) then
+                    break;
+                fi;
+                
+                a := a + 1;
+                
+                if IsZero( a ) then
+                    k := k + 1;
+                fi;
+                
+            od;
+            
+        fi;
+        
+        m := n;
+        
+    od;
+    
+    m := PrimaryDecomposition( m );
+    
+    m := m[1][2];
+    
+    Assert( 4, AffineDimension( m ) = 0 );
+    
+    SetAffineDimension( m, 0 );
+    
+    return m;
     
 end );

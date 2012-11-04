@@ -1,66 +1,66 @@
   
   
-  [1XIndex[0X
+  [1XIndex[101X
   
-  [2X_AddElmPObj_ForHomalg[0X  4.2-4
-  [2X_AddElmWPObj_ForHomalg[0X  4.1-4
-  [2X_AddTwoElmPObj_ForHomalg[0X  4.2-5
-  [2X_AddTwoElmWPObj_ForHomalg[0X  4.1-5
-  [2X_ElmPObj_ForHomalg[0X  4.2-6
-  [2X_ElmWPObj_ForHomalg[0X  4.1-6
-  [2XAddLeftRightLogicalImplicationsForHomalg[0X  5.1-2
-  [2XAppendToAhomalgTable[0X  5.1-32
-  [2XContainerForPointers[0X  4.2-2
-  [2XContainerForWeakPointers[0X  4.1-2
-  [2XDeclareAttributeWithCustomGetter[0X  5.1-31
-  [2XExamplesForHomalg[0X  5.2-1
-  [2XExamplesForHomalg[0X  5.2-2
-  [2XHOMALG_TOOLS[0X  3.1-1
-  [2XhomalgLaTeX[0X  5.1-38
-  [2XhomalgNamesOfComponentsToIntLists[0X  5.1-33
-  [2XhomalgTotalRuntimes[0X  5.1-1
-  [2XIncreaseCounterInObject[0X  5.1-36
-  [2XIncreaseExistingCounterInObject[0X  5.1-34
-  [2XIncreaseExistingCounterInObjectWithTiming[0X  5.1-35
-  [2XInstallImmediateMethodToConditionallyPullFalseProperty[0X  5.1-18
-  [2XInstallImmediateMethodToConditionallyPullPropertyOrAttribute[0X  5.1-10
-  [2XInstallImmediateMethodToConditionallyPullTrueProperty[0X  5.1-14
-  [2XInstallImmediateMethodToConditionallyPushPropertyOrAttribute[0X  5.1-22
-  [2XInstallImmediateMethodToPullFalseProperties[0X  5.1-20
-  [2XInstallImmediateMethodToPullFalseProperty[0X  5.1-17
-  [2XInstallImmediateMethodToPullFalsePropertyWithDifferentName[0X  5.1-19
-  [2XInstallImmediateMethodToPullPropertiesOrAttributes[0X  5.1-12
-  [2XInstallImmediateMethodToPullPropertyOrAttribute[0X  5.1-9
-  [2XInstallImmediateMethodToPullPropertyOrAttributeWithDifferentName[0X  5.1-11
-  [2XInstallImmediateMethodToPullTrueProperties[0X  5.1-16
-  [2XInstallImmediateMethodToPullTrueProperty[0X  5.1-13
-  [2XInstallImmediateMethodToPullTruePropertyWithDifferentName[0X  5.1-15
-  [2XInstallImmediateMethodToPushFalseProperties[0X  5.1-30
-  [2XInstallImmediateMethodToPushFalseProperty[0X  5.1-28
-  [2XInstallImmediateMethodToPushFalsePropertyWithDifferentName[0X  5.1-29
-  [2XInstallImmediateMethodToPushPropertiesOrAttributes[0X  5.1-24
-  [2XInstallImmediateMethodToPushPropertyOrAttribute[0X  5.1-21
-  [2XInstallImmediateMethodToPushPropertyOrAttributeWithDifferentName[0X  5.1-23
-  [2XInstallImmediateMethodToPushTrueProperties[0X  5.1-27
-  [2XInstallImmediateMethodToPushTrueProperty[0X  5.1-25
-  [2XInstallImmediateMethodToPushTruePropertyWithDifferentName[0X  5.1-26
-  [2XInstallLeftRightAttributesForHomalg[0X  5.1-7
-  [2XInstallLogicalImplicationsForHomalgBasicObjects[0X  5.1-5
-  [2XIsContainerForPointers[0X  4.2-1
-  [2XIsContainerForWeakPointers[0X  4.1-1
-  [2XIsHomalgRingOrModule[0X  3.2-5
-  [2XIsStructureObject[0X  3.2-3
-  [2XIsStructureObjectMorphism[0X  3.2-4
-  [2XIsStructureObjectOrObject[0X  3.2-2
-  [2XIsStructureObjectOrObjectOrMorphism[0X  3.2-1
-  [2XLeftRightAttributesForHomalg[0X  5.1-6
-  [2XLogicalImplicationsForOneHomalgObject[0X  5.1-3
-  [2XLogicalImplicationsForTwoHomalgBasicObjects[0X  5.1-4
-  [2XMatchPropertiesAndAttributes[0X  5.1-8
-  [2XMemoryToString[0X  5.1-37
-  [5XToolsForHomalg[0m  .-2
-  [2XUpdateContainerOfPointers[0X  4.2-3
-  [2XUpdateContainerOfWeakPointers[0X  4.1-3
+  [2X_AddElmPObj_ForHomalg[102X  4.2-4
+  [2X_AddElmWPObj_ForHomalg[102X  4.1-4
+  [2X_AddTwoElmPObj_ForHomalg[102X  4.2-5
+  [2X_AddTwoElmWPObj_ForHomalg[102X  4.1-5
+  [2X_ElmPObj_ForHomalg[102X (for IsContainerForPointers, IsObject, IsObject)  4.2-6
+  [2X_ElmWPObj_ForHomalg[102X (for IsContainerForWeakPointers, IsObject, IsObject)  4.1-6
+  [2XAddLeftRightLogicalImplicationsForHomalg[102X  5.1-2
+  [2XAppendToAhomalgTable[102X  5.1-32
+  [2XContainerForPointers[102X  4.2-2
+  [2XContainerForWeakPointers[102X  4.1-2
+  [2XDeclareAttributeWithCustomGetter[102X  5.1-31
+  [2XExamplesForHomalg[102X (for )  5.2-1
+  [2XExamplesForHomalg[102X (for IsInt)  5.2-2
+  [2XHOMALG_TOOLS[102X  3.1-1
+  [2XhomalgLaTeX[102X (for IsObject)  5.1-38
+  [2XhomalgNamesOfComponentsToIntLists[102X  5.1-33
+  [2XhomalgTotalRuntimes[102X  5.1-1
+  [2XIncreaseCounterInObject[102X  5.1-36
+  [2XIncreaseExistingCounterInObject[102X  5.1-34
+  [2XIncreaseExistingCounterInObjectWithTiming[102X  5.1-35
+  [2XInstallImmediateMethodToConditionallyPullFalseProperty[102X  5.1-18
+  [2XInstallImmediateMethodToConditionallyPullPropertyOrAttribute[102X  5.1-10
+  [2XInstallImmediateMethodToConditionallyPullTrueProperty[102X  5.1-14
+  [2XInstallImmediateMethodToConditionallyPushPropertyOrAttribute[102X  5.1-22
+  [2XInstallImmediateMethodToPullFalseProperties[102X  5.1-20
+  [2XInstallImmediateMethodToPullFalseProperty[102X  5.1-17
+  [2XInstallImmediateMethodToPullFalsePropertyWithDifferentName[102X  5.1-19
+  [2XInstallImmediateMethodToPullPropertiesOrAttributes[102X  5.1-12
+  [2XInstallImmediateMethodToPullPropertyOrAttribute[102X  5.1-9
+  [2XInstallImmediateMethodToPullPropertyOrAttributeWithDifferentName[102X  5.1-11
+  [2XInstallImmediateMethodToPullTrueProperties[102X  5.1-16
+  [2XInstallImmediateMethodToPullTrueProperty[102X  5.1-13
+  [2XInstallImmediateMethodToPullTruePropertyWithDifferentName[102X  5.1-15
+  [2XInstallImmediateMethodToPushFalseProperties[102X  5.1-30
+  [2XInstallImmediateMethodToPushFalseProperty[102X  5.1-28
+  [2XInstallImmediateMethodToPushFalsePropertyWithDifferentName[102X  5.1-29
+  [2XInstallImmediateMethodToPushPropertiesOrAttributes[102X  5.1-24
+  [2XInstallImmediateMethodToPushPropertyOrAttribute[102X  5.1-21
+  [2XInstallImmediateMethodToPushPropertyOrAttributeWithDifferentName[102X  5.1-23
+  [2XInstallImmediateMethodToPushTrueProperties[102X  5.1-27
+  [2XInstallImmediateMethodToPushTrueProperty[102X  5.1-25
+  [2XInstallImmediateMethodToPushTruePropertyWithDifferentName[102X  5.1-26
+  [2XInstallLeftRightAttributesForHomalg[102X  5.1-7
+  [2XInstallLogicalImplicationsForHomalgBasicObjects[102X  5.1-5
+  [2XIsContainerForPointers[102X (for IsComponentObjectRep)  4.2-1
+  [2XIsContainerForWeakPointers[102X (for IsComponentObjectRep)  4.1-1
+  [2XIsHomalgRingOrModule[102X (for IsStructureObjectOrObject)  3.2-5
+  [2XIsStructureObject[102X (for IsStructureObjectOrObject)  3.2-3
+  [2XIsStructureObjectMorphism[102X (for IsAttributeStoringRep)  3.2-4
+  [2XIsStructureObjectOrObject[102X (for IsStructureObjectOrObjectOrMorphism)  3.2-2
+  [2XIsStructureObjectOrObjectOrMorphism[102X (for IsAttributeStoringRep)  3.2-1
+  [2XLeftRightAttributesForHomalg[102X  5.1-6
+  [2XLogicalImplicationsForOneHomalgObject[102X  5.1-3
+  [2XLogicalImplicationsForTwoHomalgBasicObjects[102X  5.1-4
+  [2XMatchPropertiesAndAttributes[102X  5.1-8
+  [2XMemoryToString[102X  5.1-37
+  [5XToolsForHomalg[105X  .-2
+  [2XUpdateContainerOfPointers[102X (for IsContainerForPointers)  4.2-3
+  [2XUpdateContainerOfWeakPointers[102X (for IsContainerForWeakPointers)  4.1-3
   
   
   -------------------------------------------------------

@@ -6,10 +6,10 @@
                [1X Set-Theoretic Computations with Residue Classes [101X
   
   
-                                 Version 3.1.1
+                                 Version 3.2.0
   
   
-                                  May 23, 2012
+                                November 1, 2012
   
   
                                   Stefan Kohl
@@ -36,7 +36,7 @@
   moduli.[133X
   
   [33X[0;0YThe  [5XResClasses[105X  package  is used in a group theoretical context by the [5XRCWA[105X
-  package [Koh11].[133X
+  package [Koh12].[133X
   
   
   -------------------------------------------------------
@@ -99,10 +99,13 @@
   4 [33X[0;0YInstallation and Auxiliary Functions[133X
     4.1 [33X[0;0YRequirements[133X
     4.2 [33X[0;0YInstallation[133X
-    4.3 [33X[0;0YThe testing routine[133X
+    4.3 [33X[0;0YThe testing routines[133X
       4.3-1 ResClassesTest
-    4.4 [33X[0;0YBuilding the manual[133X
+      4.3-2 ResClassesTestExamples
+    4.4 [33X[0;0YUtilities for preparing the package for distribution[133X
       4.4-1 ResClassesBuildManual
+      4.4-2 ConvertPackageFilesToUNIXLineBreaks
+      4.4-3 RemoveTemporaryPackageFiles
     4.5 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X
       4.5-1 DownloadFile
       4.5-2 SendEmail

@@ -304,8 +304,8 @@
     [4X[28X-------------------------------------------------------------------[128X[104X
     [4X[28XEuler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210[128X[104X
     [4X[25Xgap>[125X [27XM;[127X[104X
-    [4X[28X<A graded reflexive rank 2 left module presented by 94 relations for 19 genera\[128X[104X
-    [4X[28Xtors>[128X[104X
+    [4X[28X<A graded reflexive non-projective rank 2 left module presented by 94 \[128X[104X
+    [4X[28Xrelations for 19 generators>[128X[104X
     [4X[25Xgap>[125X [27XP := ElementOfGrothendieckGroup( M );[127X[104X
     [4X[28X( 2*O_{P^4} - 1*O_{P^3} - 4*O_{P^2} - 2*O_{P^1} ) -> P^4[128X[104X
     [4X[25Xgap>[125X [27XP!.DisplayTwistedCoefficients := true;[127X[104X
@@ -319,7 +319,7 @@
     [4X[25Xgap>[125X [27XChernPolynomial( M * S^3 );[127X[104X
     [4X[28X( 2 | 1+5*h+10*h^2 ) -> P^4[128X[104X
     [4X[25Xgap>[125X [27Xch := ChernCharacter( M );[127X[104X
-    [4X[28X[ 2-t-7*t^2/2!+11*t^3/3!+17*t^4/4! ] -> P^4[128X[104X
+    [4X[28X[ 2-u-7*u^2/2!+11*u^3/3!+17*u^4/4! ] -> P^4[128X[104X
     [4X[25Xgap>[125X [27XHilbertPolynomial( ch );[127X[104X
     [4X[28X1/12*t^4+2/3*t^3-1/12*t^2-17/3*t-5[128X[104X
     [4X[25Xgap>[125X [27XList( [ -8 .. 7 ], i -> Value( chi, i ) );[127X[104X

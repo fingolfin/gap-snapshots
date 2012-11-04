@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  27 AUG 2012 17:04
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  26 OCT 2012 17:21
 entering extended mode
 **ToolsForHomalg
 (./ToolsForHomalg.tex
@@ -292,40 +292,192 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \FV@OutFile=\write4
 
 No file fancyvrb.cfg.
-) (/sw/share/texmf-dist/tex/latex/pslatex/pslatex.sty
-Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+) (/sw/share/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2004/09/15 PSNFSS-v9.2 Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
-LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
-(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
 LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
-(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
-LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
-LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
 \symbold=\mathgroup6
 \symitalic=\mathgroup7
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+(/sw/share/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2004/09/15 PSNFSS-v9.2 (WaS) 
+)
+(/sw/share/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2004/02/22 v1.99f Standard LaTeX package
+
+(/sw/share/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2004/02/22 v1.99f Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+(/sw/share/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2004/02/22 v1.99f Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+
+(/sw/share/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+(/sw/share/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2004/02/09 v1.1b UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E37 (decimal 3639)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+))
+LaTeX Info: Redefining \oldstylenums on input line 266.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 281.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 282.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 283.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 284.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 285.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 286.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 287.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 288.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 289.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 290.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 291.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 292.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 293.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 294.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 295.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 296.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 297.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 298.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 299.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 300.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 308.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 309.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 310.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 311.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 312.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 313.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 314.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 315.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 316.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 317.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 318.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 319.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 320.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 321.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 322.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 323.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 324.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 325.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 326.
 )
 (/sw/share/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2003/11/30 v6.74m Hypertext links for LaTeX
@@ -341,7 +493,7 @@ Now handling font encoding PD1 ...
 (/sw/share/texmf-dist/tex/latex/hyperref/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
 )
-Package hyperref Info: Option `bookmarks' set `false' on input line 1830.
+Package hyperref Info: Option `bookmarks' set `true' on input line 1830.
 Package hyperref Info: Option `colorlinks' set `true' on input line 1830.
 Package hyperref Info: Option `breaklinks' set `true' on input line 1830.
 Package hyperref Info: Hyper figures OFF on input line 1880.
@@ -351,7 +503,7 @@ Package hyperref Info: Plain pages ON on input line 1893.
 Package hyperref Info: Backreferencing ON on input line 1898.
 
 Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks OFF on input line 2010.
+Package hyperref Info: Bookmarks ON on input line 2004.
 (/sw/share/texmf-dist/tex/latex/hyperref/backref.sty
 Package: backref 2003/03/20 v1.23 Bibliographical back referencing
 )
@@ -400,33 +552,35 @@ File: upsy.fd 2001/06/04 font definitions for U/psy.
 Package: enumitem 2004/07/19 v1.0 Customized lists
 \labelindent=\skip43
 \enit@outerparindent=\dimen106
-) (./ToolsForHomalg.aux
-
-LaTeX Warning: Label `ExamplesForHomalg' multiply defined.
-
-)
+) (./ToolsForHomalg.aux)
 \openout1 = `ToolsForHomalg.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 47.
-LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 47
-.
- (/sw/share/texmf-dist/tex/latex/psnfss/omspzccm.fd
-File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
-)
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 87.
 
+(/sw/share/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 87.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
 (/sw/share/texmf-dist/tex/context/base/supp-pdf.tex
 (/sw/share/texmf-dist/tex/context/base/supp-mis.tex
 loading : Context Support Macros / Miscellaneous (2004.10.26)
@@ -461,125 +615,133 @@ loading : Context Support Macros / PDF (2004.03.26)
 \MPnumerator=\count107
 \everyMPtoPDFconversion=\toks21
 )
-Package hyperref Info: Link coloring ON on input line 47.
+\big@size=\dimen115
+Package hyperref Info: Link coloring ON on input line 87.
  (/sw/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
 \c@section@level=\count108
 )
-LaTeX Info: Redefining \ref on input line 47.
-LaTeX Info: Redefining \pageref on input line 47.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 51.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 22.39185pt on input line 51.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 54.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 59.
+LaTeX Info: Redefining \ref on input line 87.
+LaTeX Info: Redefining \pageref on input line 87.
+ (./ToolsForHomalg.out)
+(./ToolsForHomalg.out)
+\openout5 = `ToolsForHomalg.out'.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <50> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 93.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 93.
+ (/sw/share/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+)
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <50> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 93.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 98.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 98.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 105.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\\' on input line 67.
+(hyperref)                removing `\\' on input line 113.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\\' on input line 67.
+(hyperref)                removing `\\' on input line 113.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\\' on input line 67.
+(hyperref)                removing `\\' on input line 113.
 
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 77.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 120.
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--79
+(/sw/share/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+Underfull \hbox (badness 10000) in paragraph at lines 115--125
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--79
+Underfull \hbox (badness 10000) in paragraph at lines 115--125
 
  []
 
 
-Overfull \hbox (122.07817pt too wide) in paragraph at lines 69--79
-[][]\OT1/pcr/m/n/10.95 http://homalg.math.rwth-aachen.de/~barakat/homalg-projec
+Overfull \hbox (128.21173pt too wide) in paragraph at lines 115--125
+[][]\T1/cmtt/m/n/10.95 http://homalg.math.rwth-aachen.de/~barakat/homalg-projec
 t/ToolsForHomalg/chap0.html[][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--79
+Underfull \hbox (badness 10000) in paragraph at lines 115--125
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--79
+Underfull \hbox (badness 10000) in paragraph at lines 115--125
 
  []
 
 
-Overfull \hbox (60.64897pt too wide) in paragraph at lines 69--79
-[][]\OT1/pcr/m/n/10.95 http://homalg.math.rwth-aachen.de/index.php/core-package
+Overfull \hbox (65.96965pt too wide) in paragraph at lines 115--125
+[][]\T1/cmtt/m/n/10.95 http://homalg.math.rwth-aachen.de/index.php/core-package
 s/toolsforhomalg[][] 
  []
 
-LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 79
-.
-(/sw/share/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
-File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 12
+5.
+(/sw/share/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 79
-.
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 12
+5.
 
-(/sw/share/texmf-dist/tex/latex/psnfss/omlptmcm.fd
-File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+(/sw/share/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+psycm on input line 79
-.
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 12
+5.
 
-(/sw/share/texmf-dist/tex/latex/psnfss/omxpsycm.fd
-File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+(/sw/share/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 79.
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 12
+5.
 
-(/sw/share/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+(/sw/share/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 79.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 125.
 
-(/sw/share/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+
+(/sw/share/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 79.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 79.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 79.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 86.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 132.
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--110
+Underfull \hbox (badness 10000) in paragraph at lines 129--156
 
  []
 
 [1
 
-{/sw/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 7.19995pt on input line 110.
- [2]
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/pzccm/m/n' tried instead on input line 116.
+{/sw/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 162.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--121
+(/sw/share/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 165--167
 
  []
 
@@ -587,338 +749,331 @@ Underfull \hbox (badness 10000) in paragraph at lines 119--121
 s been already used, duplicate ignored
 <to be read again> 
                    \penalty 
-l.121 \newpage
+l.167 \newpage
                [2] (./ToolsForHomalg.toc
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 4.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 4.
- [3
-
-])
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
+)
 \tf@toc=\write8
 \openout8 = `ToolsForHomalg.toc'.
 
- [4]
+ [3
+
+]
 Chapter 1.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 139.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 139.
-[5
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 175.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 180.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 185.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 185.
+[4
 
 ]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--161
+Underfull \hbox (badness 10000) in paragraph at lines 202--207
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--161
+Underfull \hbox (badness 10000) in paragraph at lines 202--207
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--168
+Underfull \hbox (badness 10000) in paragraph at lines 208--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--168
+Underfull \hbox (badness 10000) in paragraph at lines 208--214
+
+ []
+
+[5
+
+]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 230--233
 
  []
 
 [6
 
-]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 184--187
-
- []
-
-[7
-
-] [8]
+] [7]
 Chapter 4.
-[9
+[8
 
-] [10]
+] [9]
 Chapter 5.
-[11
+[10
 
-] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 1088--1090
-
- []
-
-[15] (./ToolsForHomalg.bbl (./ToolsForHomalg.brf)
+] [11] [12] [13] [14] (./ToolsForHomalg.bbl (./ToolsForHomalg.brf)
 \tf@brf=\write9
 \openout9 = `ToolsForHomalg.brf'.
 
- [16
-! pdfTeX warning (ext4): destination with the same identifier (name{L.X7A0A10B5
-85C49632}) has been already used, duplicate ignored
-<to be read again> 
-                   \endgroup \set@typeset@protect 
-l.1 \begin{thebibliography}{hpa10}
-                                  ]) (./ToolsForHomalg.ind [17
+ [15])
+[16
 
-]
+] (./ToolsForHomalg.ind
 Underfull \hbox (badness 10000) in paragraph at lines 11--13
-[]\OT1/pcr/m/n/10.95 Add\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Left\OT1/ptm/m/n
-/10.95 -\OT1/pcr/m/n/10.95 Right\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Logical\
-OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Implications\OT1/ptm/m/n/10.95 -\OT1/pcr/
-m/n/10.95 For\OT1/ptm/m/n/10.95 -
+[]\T1/cmtt/m/n/10.95 Add\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Left\T1/ptm/m/n/1
+0.95 -\T1/cmtt/m/n/10.95 Right\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Logical\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Implications\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/1
+0.95 For\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--49
-[]\OT1/pcr/m/n/10.95 Increase\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Existing\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Counter\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.
-95 In\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Object\OT1/ptm/m/n/10.95 -\OT1/pcr/
-m/n/10.95 With\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 1354) in paragraph at lines 34--36
+[]| \T1/ptm/m/n/10.95 for Is-Con-tain-er-For-Weak-Point-ers, IsOb-ject,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Conditionally\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 52--54
+[]\T1/cmtt/m/n/10.95 Increase\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Existing\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Counter\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 
+In\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Object\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/1
+0.95 With\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--53
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Conditionally\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 54--56
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Conditionally\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--55
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Conditionally\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 56--58
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Conditionally\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--57
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Conditionally\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 58--60
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Conditionally\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--59
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Conditionally\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 62--64
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--63
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 63--65
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Properties\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 66--68
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Property\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Or\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 68--70
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--69
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Property\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 Property\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--69
-\OT1/pcr/m/n/10.95 Or\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Attribute\OT1/ptm/m
-/n/10.95 -\OT1/pcr/m/n/10.95 With\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Differe
-nt\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Name\OT1/ptm/m/n/10.95 ,
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 Property\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--71
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
+\T1/cmtt/m/n/10.95 Or\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Attribute\T1/ptm/m/n
+/10.95 -\T1/cmtt/m/n/10.95 With\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Different\
+T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Name\T1/ptm/m/n/10.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--73
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--75
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Pull\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--77
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 78--80
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Pull\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--79
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 80--82
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--81
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 False\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 82--84
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--83
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Properties\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 84--86
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 False\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--85
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Property\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Or\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 Property\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 88--90
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 Property\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
-\OT1/pcr/m/n/10.95 Or\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Attribute\OT1/ptm/m
-/n/10.95 -\OT1/pcr/m/n/10.95 With\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Differe
-nt\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Name\OT1/ptm/m/n/10.95 ,
+Underfull \hbox (badness 10000) in paragraph at lines 90--92
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 Property\T1/ptm/m/n/10.95 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--89
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 90--92
+\T1/cmtt/m/n/10.95 Or\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Attribute\T1/ptm/m/n
+/10.95 -\T1/cmtt/m/n/10.95 With\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Different\
+T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Name\T1/ptm/m/n/10.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--91
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 91--93
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Immediate\OT
-1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Method\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 To\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Push\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n
-/10.95 True\OT1/ptm/m/n/10.95 -
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 94--96
-[]\OT1/pcr/m/n/10.95 Install\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Logical\OT1/
-ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Implications\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/
-10.95 For\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Homalg\OT1/ptm/m/n/10.95 -
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--98
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Immediate\T1/
+ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Method\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+o\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Push\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.9
+5 True\T1/ptm/m/n/10.95 -
+ []
+
+[17
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 99--101
+[]\T1/cmtt/m/n/10.95 Install\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Logical\T1/pt
+m/m/n/10.95 -\T1/cmtt/m/n/10.95 Implications\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.
+95 For\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Homalg\T1/ptm/m/n/10.95 -
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--121
+[]\T1/cmtt/m/n/10.95 Logical\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Implications\
+T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 For\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 O
+ne\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Homalg\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/1
+0.95 Object\T1/ptm/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
+[]\T1/cmtt/m/n/10.95 Logical\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Implications\
+T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 For\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 T
+wo\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Homalg\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/1
+0.95 Basic\T1/ptm/m/n/10.95 -
  []
 
 [18
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 107--109
-[]\OT1/pcr/m/n/10.95 Logical\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Implications
-\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 For\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 One\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Homalg\OT1/ptm/m/n/10.95 -\OT1/pcr/
-m/n/10.95 Object\OT1/ptm/m/n/10.95 ,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 109--111
-[]\OT1/pcr/m/n/10.95 Logical\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Implications
-\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 For\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.9
-5 Two\OT1/ptm/m/n/10.95 -\OT1/pcr/m/n/10.95 Homalg\OT1/ptm/m/n/10.95 -\OT1/pcr/
-m/n/10.95 Basic\OT1/ptm/m/n/10.95 -
- []
-
-[19
-
-]) (./ToolsForHomalg.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+]) (./ToolsForHomalg.aux) ) 
 Here is how much of TeX's memory you used:
- 4032 strings out of 94500
- 56272 string characters out of 1176115
- 107580 words of memory out of 1500000
- 6946 multiletter control sequences out of 10000+50000
- 47235 words of font info for 88 fonts, out of 1200000 for 2000
+ 4751 strings out of 94500
+ 65909 string characters out of 1176115
+ 111600 words of memory out of 1500000
+ 7632 multiletter control sequences out of 10000+50000
+ 83684 words of font info for 93 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
- 27i,7n,30p,461b,279s stack positions out of 5000i,500n,6000p,200000b,5000s
+ 27i,7n,36p,461b,279s stack positions out of 5000i,500n,6000p,200000b,5000s
 PDF statistics:
- 405 PDF objects out of 65536
- 167 named destinations out of 20000
- 17 words of extra memory for PDF output out of 65536
-{/sw/share/texmf-dist/fonts/enc/dvips/psnfss/8r.enc}</sw/share/texmf-dist/fon
-ts/type1/urw/courier/ucrro8a.pfb></sw/share/texmf-dist/fonts/type1/bluesky/symb
-ols/msam10.pfb></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmsy10.pfb></sw/sha
-re/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></sw/share/texmf-dist/fonts/
-type1/urw/helvetic/uhvr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/courier/ucr
-r8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></sw/share/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/t
-imes/utmb8a.pfb></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on ToolsForHomalg.pdf (20 pages, 170637 bytes).
+ 379 PDF objects out of 65536
+ 168 named destinations out of 20000
+ 121 words of extra memory for PDF output out of 65536
+ </sw/var/lib/texmf/fonts/pk/ljfour/jknappen/ec/ecst
+1095.600pk></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmmi10.pfb> </sw/var/li
+b/texmf/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk>{/sw/share/texmf-dist/fonts/
+enc/dvips/psnfss/8r.enc}</sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.
+pfb></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb> </sw/var/lib/tex
+mf/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk></sw/share/texmf-dist/fonts/type1
+/urw/times/utmri8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+/sw/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></sw/share/texmf-dist/fon
+ts/type1/urw/helvetic/uhvb8a.pfb>
+Output written on ToolsForHomalg.pdf (19 pages, 160952 bytes).

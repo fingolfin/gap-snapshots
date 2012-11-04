@@ -6,7 +6,7 @@
                    [1XA [5XGAP[105X package for handling convex objects.[101X
   
   
-                               Version 2012.09.15
+                               Version 2012.10.30
   
   
                                   August 2012
@@ -80,6 +80,7 @@
       4.4-1 *
     4.5 [33X[0;0YFan: Constructors[133X
       4.5-1 Fan
+      4.5-2 Fan
     4.6 [33X[0;0YFan: Examples[133X
       4.6-1 [33X[0;0YFan example[133X
   5 [33X[0;0YCone[133X
@@ -89,7 +90,7 @@
       5.2-1 IsRay
     5.3 [33X[0;0YCone: Attributes[133X
       5.3-1 DualCone
-      5.3-2 DualCone
+      5.3-2 HilbertBasis
       5.3-3 RaysInFacets
       5.3-4 Facets
       5.3-5 GridGeneratedByCone
@@ -126,9 +127,6 @@
       6.3-5 AffineCone
       6.3-6 NormalFan
       6.3-7 RelativeInteriorLatticePoints
-      6.3-8 DefiningInequalities
-      6.3-9 IsContainedInFan
-      6.3-10 FactorGridMorphism
     6.4 [33X[0;0YPolytope: Methods[133X
       6.4-1 *
       6.4-2 #

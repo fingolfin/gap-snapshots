@@ -1,0 +1,56 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{What is the role of the MatricesForHomalg package in the homalg project?}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{This manual}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Installation of the MatricesForHomalg Package}{}
+\BOOKMARK [0][-]{chapter.3}{Rings}{}
+\BOOKMARK [1][-]{section.3.1}{Rings: Category and Representations}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{Rings: Constructors}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{Rings: Properties}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{Rings: Attributes}{chapter.3}
+\BOOKMARK [1][-]{section.3.5}{Rings: Operations and Functions}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{Ring Maps}{}
+\BOOKMARK [1][-]{section.4.1}{Ring Maps: Category and Representations}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{Ring Maps: Constructors}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Ring Maps: Properties}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{Ring Maps: Attributes}{chapter.4}
+\BOOKMARK [1][-]{section.4.5}{Ring Maps: Operations and Functions}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{Matrices}{}
+\BOOKMARK [1][-]{section.5.1}{Matrices: Category and Representations}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Matrices: Constructors}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Matrices: Properties}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Matrices: Attributes}{chapter.5}
+\BOOKMARK [1][-]{section.5.5}{Matrices: Operations and Functions}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{Ring Relations}{}
+\BOOKMARK [1][-]{section.6.1}{Ring Relations: Categories and Representations}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{Ring Relations: Constructors}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{Ring Relations: Properties}{chapter.6}
+\BOOKMARK [1][-]{section.6.4}{Ring Relations: Attributes}{chapter.6}
+\BOOKMARK [1][-]{section.6.5}{Ring Relations: Operations and Functions}{chapter.6}
+\BOOKMARK [0][-]{appendix.A}{The Basic Matrix Operations}{}
+\BOOKMARK [1][-]{section.A.1}{Main}{appendix.A}
+\BOOKMARK [1][-]{section.A.2}{Effective}{appendix.A}
+\BOOKMARK [1][-]{section.A.3}{Relative}{appendix.A}
+\BOOKMARK [1][-]{section.A.4}{Reduced}{appendix.A}
+\BOOKMARK [0][-]{appendix.B}{The Matrix Tool Operations}{}
+\BOOKMARK [1][-]{section.B.1}{The Tool Operations without a Fallback Method}{appendix.B}
+\BOOKMARK [1][-]{section.B.2}{The Tool Operations with a Fallback Method}{appendix.B}
+\BOOKMARK [0][-]{appendix.C}{Logic Subpackages}{}
+\BOOKMARK [1][-]{section.C.1}{LIRNG: Logical Implications for Rings}{appendix.C}
+\BOOKMARK [1][-]{section.C.2}{LIMAP: Logical Implications for Ring Maps}{appendix.C}
+\BOOKMARK [1][-]{section.C.3}{LIMAT: Logical Implications for Matrices}{appendix.C}
+\BOOKMARK [1][-]{section.C.4}{COLEM: Clever Operations for Lazy Evaluated Matrices}{appendix.C}
+\BOOKMARK [0][-]{appendix.D}{The subpackage ResidueClassRingForHomalg as a sample ring package}{}
+\BOOKMARK [1][-]{section.D.1}{The Mandatory Basic Operations}{appendix.D}
+\BOOKMARK [1][-]{section.D.2}{The Mandatory Tool Operations}{appendix.D}
+\BOOKMARK [1][-]{section.D.3}{Some of the Recommended Tool Operations}{appendix.D}
+\BOOKMARK [0][-]{appendix.E}{Debugging MatricesForHomalg}{}
+\BOOKMARK [1][-]{section.E.1}{Increase the assertion level}{appendix.E}
+\BOOKMARK [1][-]{section.E.2}{Using homalgMode}{appendix.E}
+\BOOKMARK [0][-]{appendix.F}{Overview of the MatricesForHomalg Package Source Code}{}
+\BOOKMARK [1][-]{section.F.1}{Rings, Ring Maps, Matrices, Ring Relations}{appendix.F}
+\BOOKMARK [1][-]{section.F.2}{The Low Level Algorithms}{appendix.F}
+\BOOKMARK [1][-]{section.F.3}{Logical Implications for MatricesForHomalg Objects}{appendix.F}
+\BOOKMARK [1][-]{section.F.4}{The subpackage ResidueClassRingForHomalg}{appendix.F}
+\BOOKMARK [1][-]{section.F.5}{The homalgTable for GAP4 built-in rings}{appendix.F}
+\BOOKMARK [0][-]{appendix*.3}{References}{}
+\BOOKMARK [0][-]{section*.4}{Index}{}

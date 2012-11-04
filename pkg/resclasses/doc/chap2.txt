@@ -122,7 +122,7 @@
     [4X[25Xgap>[125X [27XIsOverlappingFree(U);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XAsOrdinaryUnionOfResidueClasses(U);[127X[104X
-    [4X[28XZ \ Union of the residue classes 1(6) and 5(6) of Z[128X[104X
+    [4X[28XZ \ 1(6) U 5(6)[128X[104X
     [4X[25Xgap>[125X [27XDensity(last);[127X[104X
     [4X[28X2/3[128X[104X
     [4X[28X[128X[104X
@@ -191,7 +191,7 @@
     [4X[25Xgap>[125X [27XIntersection(U,ResidueClassWithFixedRep(2,0));[127X[104X
     [4X[28X[0/2][128X[104X
     [4X[25Xgap>[125X [27XIntersection(U,ResidueClassWithFixedRep(6,0));[127X[104X
-    [4X[28XEmpty union of residue classes of Z with fixed representatives[128X[104X
+    [4X[28X[][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

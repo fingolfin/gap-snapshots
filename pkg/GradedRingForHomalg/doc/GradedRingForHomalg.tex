@@ -98,8 +98,8 @@
 {\Huge \textbf{Endow Commutative Rings with an Abelian Grading\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.05.25\mbox{}}\\[1cm]
-{June 2012\mbox{}}\\[1cm]
+{\Huge Version 2012.10.25\mbox{}}\\[1cm]
+{October 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -697,13 +697,14 @@ a \textsf{homalg} matrix
   6
   !gapprompt@gap>| !gapinput@m;|
   <A 6 x 1 matrix over a graded ring>
-   gap> Display( m );
-   z^2,
-   y*z,
-   y^2,
-   x*z,
-   x*y,
-   x^2 
+  !gapprompt@gap>| !gapinput@Display( m );|
+  x^2,
+  x*y,
+  x*z,
+  y^2,
+  y*z,
+  z^2
+  (over a graded ring) 
 \end{Verbatim}
  }
 
@@ -726,10 +727,10 @@ a \textsf{homalg} matrix
   !gapprompt@gap>| !gapinput@S := GradedRing( R );;|
   !gapprompt@gap>| !gapinput@rand := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 1, 2 ], S );|
   <A 3 x 2 matrix over a graded ring>
-   gap> Display( rand );
-   a-2*b+2*c,                                                2,                 
-   a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               
-   2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2
+  !gapprompt@gap>| !gapinput@#Display( rand );|
+  !gapprompt@gap>| !gapinput@#a-2*b+2*c,                                                2,                 |
+  !gapprompt@gap>| !gapinput@#a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               |
+  !gapprompt@gap>| !gapinput@#2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2|
 \end{Verbatim}
  }
 
@@ -752,9 +753,9 @@ a \textsf{homalg} matrix
   !gapprompt@gap>| !gapinput@S := GradedRing( R );;|
   !gapprompt@gap>| !gapinput@rand := RandomMatrixBetweenGradedFreeRightModules( [ 1, 2 ], [ 2, 3, 4 ], S );|
   <A 2 x 3 matrix over a graded ring>
-   gap> Display( rand );
-   a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,
-   -5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      
+  !gapprompt@gap>| !gapinput@#Display( rand );|
+  !gapprompt@gap>| !gapinput@#a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,|
+  !gapprompt@gap>| !gapinput@#-5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      |
 \end{Verbatim}
  }
 
@@ -778,22 +779,22 @@ a \textsf{homalg} matrix
   !gapprompt@>| !gapinput@x,2*y,   \|
   !gapprompt@>| !gapinput@y,a-b^2, \|
   !gapprompt@>| !gapinput@z,y-b    \|
-  !gapprompt@>| !gapinput@]", 3, 2, S );;|
+  !gapprompt@>| !gapinput@]", 3, 2, S );|
   <A 3 x 2 matrix over an external ring>
   !gapprompt@gap>| !gapinput@N := HomalgMatrix( "[ \|
   !gapprompt@>| !gapinput@x^2-a*y^3,x^3-z^2*y,x*y-b,x*z-c, \|
   !gapprompt@>| !gapinput@x,        x*y,      a-b,  x*a*b  \|
-  !gapprompt@>| !gapinput@]", 2, 4, S );;|
-  <A 2 by 4 matrix over an external ring>
+  !gapprompt@>| !gapinput@]", 2, 4, S );|
+  <A 2 x 4 matrix over an external ring>
   !gapprompt@gap>| !gapinput@H := Diff( D, N );|
   <A 6 x 8 matrix over an external ring>
-   gap> Display( H );
-   2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  
-   1,       y,     0,a*b,0,       2*x,   0,  0,  
-   -3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  
-   0,       x,     0,0,  0,       0,     1,  b*x,
-   0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  
-   0,       0,     0,0,  0,       x,     1,  -a*x
+  !gapprompt@gap>| !gapinput@Display( H );|
+  2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  
+  1,       y,     0,a*b,0,       2*x,   0,  0,  
+  -3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  
+  0,       x,     0,0,  0,       0,     1,  b*x,
+  0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  
+  0,       0,     0,0,  0,       x,     1,  -a*x
 \end{Verbatim}
  }
 

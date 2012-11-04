@@ -174,7 +174,7 @@ InstallMethod( OnBasisOfPresentation,
         phi := ImageObjectEmb( phi );
         phi := phi / EmbeddingInSuperObject( N );	## lift
         
-        Assert( 2, IsEpimorphism( phi ) );
+        Assert( 4, IsEpimorphism( phi ) );
         
         SetIsEpimorphism( phi, true );
         
@@ -224,7 +224,7 @@ InstallMethod( OnLessGenerators,
         phi := ImageObjectEmb( phi );
         phi := phi / EmbeddingInSuperObject( N );	## lift
         
-        Assert( 2, IsEpimorphism( phi ) );
+        Assert( 4, IsEpimorphism( phi ) );
         
         SetIsEpimorphism( phi, true );
         
@@ -377,6 +377,42 @@ InstallMethod( MatchPropertiesAndAttributesOfSubobjectAndUnderlyingObject,
                 LIMOD.intrinsic_attributes_shared_with_subobjects_which_are_not_ideals );
         
     fi;
+    
+end );
+
+##
+InstallMethod( RadicalIdealMembership,
+        "for an element and an ideal",
+        [ IsHomalgRingElement, IsFinitelyPresentedSubmoduleRep and ConstructedAsAnIdeal ],
+        
+  function( M, I )
+  local R, R_Rab, M_Rab, indets, Rabinovich_Element, F, phi;
+    
+    R := HomalgRing( M );
+    
+    if not ( IsIdenticalObj( 1*R, SuperObject( I ) ) or IsIdenticalObj( R*1, SuperObject( I ) ) ) then
+        
+        Error( "the Element and the ideal are not in the same ring" );
+        
+    fi;
+    
+    R_Rab := R * "RadicalTestVariable";
+    
+    M_Rab := M / R_Rab;
+    
+    indets := Indeterminates( R_Rab );
+    
+    Rabinovich_Element := indets[ Length( indets ) ] * M_Rab - One( R_Rab );
+    
+    F := R_Rab*SuperObject(I);
+    
+    Rabinovich_Element := HomalgMap( HomalgMatrix( [ Rabinovich_Element ], 1, 1, R_Rab ), F, F );
+    
+    phi := R_Rab * I!.map_having_subobject_as_its_image;
+    
+    phi := CoproductMorphism( phi, Rabinovich_Element );
+    
+    return IsZero( Cokernel( phi ) );
     
 end );
 
@@ -584,6 +620,21 @@ end );
 ##
 InstallMethod( LeftSubmodule,
         "constructor for homalg ideals",
+        [ IsRingElement ],
+        
+  function( f )
+    
+    if not IsBound( f!.LeftSubmodule ) then
+        f!.LeftSubmodule := LeftSubmodule( [ f ] );
+    fi;
+    
+    return f!.LeftSubmodule;
+    
+end );
+
+##
+InstallMethod( LeftSubmodule,
+        "constructor for homalg ideals",
         [ IsList, IsHomalgRing ],
         
   function( gen, R )
@@ -705,6 +756,21 @@ InstallMethod( RightSubmodule,
     R := HomalgRing( gen[1] );
     
     return RightSubmodule( HomalgMatrix( gen, 1, Length( gen ), R ) );
+    
+end );
+
+##
+InstallMethod( RightSubmodule,
+        "constructor for homalg ideals",
+        [ IsRingElement ],
+        
+  function( f )
+    
+    if not IsBound( f!.RightSubmodule ) then
+        f!.RightSubmodule := RightSubmodule( [ f ] );
+    fi;
+    
+    return f!.RightSubmodule;
     
 end );
 

@@ -6,4 +6,5 @@
  -->
 <Chapter Label="Introduction_automatically_generated_documentation_parts">
 <Heading>Introduction</Heading>
-<#Include SYSTEM "IntroductionSectionWhat_is_the_idea_of_PolymakeInterface.xml"></Chapter>
+<#Include SYSTEM "IntroductionSectionWhat_is_the_idea_of_PolymakeInterface.xml">
+</Chapter>

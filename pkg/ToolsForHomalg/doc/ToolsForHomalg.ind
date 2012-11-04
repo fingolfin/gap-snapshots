@@ -1,122 +1,136 @@
 \begin{theindex}
 
-  \item \textsf{ToolsForHomalg}, \hyperpage{5}
+  \item \textsf{ToolsForHomalg}, \hyperpage{4}
 
   \indexspace
 
   \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{10}
+		\hyperpage{9}
   \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{9}
+		\hyperpage{8}
   \item \texttt  {Add}\discretionary {-}{}{}\texttt  {Left}\discretionary {-}{}{}\texttt  {Right}\discretionary {-}{}{}\texttt  {Logical}\discretionary {-}{}{}\texttt  {Implications}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{11}
+		\hyperpage{10}
   \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{10}
-  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
 		\hyperpage{9}
-  \item \texttt  {AppendToAhomalgTable}, \hyperpage{15}
+  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
+		\hyperpage{8}
+  \item \texttt  {AppendToAhomalgTable}, \hyperpage{14}
 
   \indexspace
 
-  \item \texttt  {ContainerForPointers}, \hyperpage{10}
-  \item \texttt  {ContainerForWeakPointers}, \hyperpage{9}
+  \item \texttt  {ContainerForPointers}, \hyperpage{9}
+  \item \texttt  {ContainerForWeakPointers}, \hyperpage{8}
 
   \indexspace
 
-  \item \texttt  {DeclareAttributeWithCustomGetter}, \hyperpage{15}
+  \item \texttt  {DeclareAttributeWithCustomGetter}, \hyperpage{14}
 
   \indexspace
 
-  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{10}
-  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
-		\hyperpage{10}
-  \item \texttt  {ExamplesForHomalg}, \hyperpage{16}
+  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}
+    \subitem for IsContainerForPointers, IsObject, IsObject, 
+		\hyperpage{9}
+  \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}
+    \subitem for IsContainerForWeakPointers, IsObject, IsObject, 
+		\hyperpage{9}
+  \item \texttt  {ExamplesForHomalg}
+    \subitem for , \hyperpage{15}
+    \subitem for IsInt, \hyperpage{15}
 
   \indexspace
 
-  \item \texttt  {homalgLaTeX}, \hyperpage{15}
-  \item \texttt  {homalgNamesOfComponentsToIntLists}, \hyperpage{15}
-  \item \texttt  {HOMALG{\textunderscore }TOOLS}, \hyperpage{7}
-  \item \texttt  {homalgTotalRuntimes}, \hyperpage{11}
+  \item \texttt  {homalgLaTeX}
+    \subitem for IsObject, \hyperpage{14}
+  \item \texttt  {homalgNamesOfComponentsToIntLists}, \hyperpage{14}
+  \item \texttt  {HOMALG{\textunderscore }TOOLS}, \hyperpage{6}
+  \item \texttt  {homalgTotalRuntimes}, \hyperpage{10}
 
   \indexspace
 
-  \item \texttt  {IncreaseCounterInObject}, \hyperpage{15}
-  \item \texttt  {IncreaseExistingCounterInObject}, \hyperpage{15}
+  \item \texttt  {IncreaseCounterInObject}, \hyperpage{14}
+  \item \texttt  {IncreaseExistingCounterInObject}, \hyperpage{14}
   \item \texttt  {Increase}\discretionary {-}{}{}\texttt  {Existing}\discretionary {-}{}{}\texttt  {Counter}\discretionary {-}{}{}\texttt  {In}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Timing}, 
-		\hyperpage{15}
+		\hyperpage{14}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Conditionally}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Conditionally}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}, 
-		\hyperpage{12}
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Conditionally}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}, 
-		\hyperpage{12}
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Conditionally}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Properties}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {Properties}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attributes}, 
-		\hyperpage{12}
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}, 
-		\hyperpage{12}
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{12}
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Properties}, 
-		\hyperpage{13}
-  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}, 
 		\hyperpage{12}
+  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}, 
+		\hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Pull}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{13}
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Properties}, 
-		\hyperpage{14}
-  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}, 
-		\hyperpage{14}
-  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{14}
-  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Properties}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attributes}, 
-		\hyperpage{14}
-  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}, 
 		\hyperpage{13}
+  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}, 
+		\hyperpage{13}
+  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {False}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
+		\hyperpage{13}
+  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Properties}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attributes}, 
+		\hyperpage{13}
+  \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}, 
+		\hyperpage{12}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {Or}\discretionary {-}{}{}\texttt  {Attribute}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{14}
+		\hyperpage{13}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Properties}, 
-		\hyperpage{14}
+		\hyperpage{13}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}, 
-		\hyperpage{14}
+		\hyperpage{13}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Push}\discretionary {-}{}{}\texttt  {True}\discretionary {-}{}{}\texttt  {Property}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Different}\discretionary {-}{}{}\texttt  {Name}, 
-		\hyperpage{14}
-  \item \texttt  {InstallLeftRightAttributesForHomalg}, \hyperpage{12}
+		\hyperpage{13}
+  \item \texttt  {InstallLeftRightAttributesForHomalg}, \hyperpage{11}
   \item \texttt  {Install}\discretionary {-}{}{}\texttt  {Logical}\discretionary {-}{}{}\texttt  {Implications}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}\discretionary {-}{}{}\texttt  {Basic}\discretionary {-}{}{}\texttt  {Objects}, 
-		\hyperpage{11}
-  \item \texttt  {IsContainerForPointers}, \hyperpage{10}
-  \item \texttt  {IsContainerForWeakPointers}, \hyperpage{9}
-  \item \texttt  {IsHomalgRingOrModule}, \hyperpage{8}
-  \item \texttt  {IsStructureObject}, \hyperpage{7}
-  \item \texttt  {IsStructureObjectMorphism}, \hyperpage{8}
-  \item \texttt  {IsStructureObjectOrObject}, \hyperpage{7}
-  \item \texttt  {IsStructureObjectOrObjectOrMorphism}, \hyperpage{7}
+		\hyperpage{10}
+  \item \texttt  {IsContainerForPointers}
+    \subitem for IsComponentObjectRep, \hyperpage{9}
+  \item \texttt  {IsContainerForWeakPointers}
+    \subitem for IsComponentObjectRep, \hyperpage{8}
+  \item \texttt  {IsHomalgRingOrModule}
+    \subitem for IsStructureObjectOrObject, \hyperpage{7}
+  \item \texttt  {IsStructureObject}
+    \subitem for IsStructureObjectOrObject, \hyperpage{6}
+  \item \texttt  {IsStructureObjectMorphism}
+    \subitem for IsAttributeStoringRep, \hyperpage{7}
+  \item \texttt  {IsStructureObjectOrObject}
+    \subitem for IsStructureObjectOrObjectOrMorphism, \hyperpage{6}
+  \item \texttt  {IsStructureObjectOrObjectOrMorphism}
+    \subitem for IsAttributeStoringRep, \hyperpage{6}
 
   \indexspace
 
-  \item \texttt  {LeftRightAttributesForHomalg}, \hyperpage{11}
+  \item \texttt  {LeftRightAttributesForHomalg}, \hyperpage{10}
   \item \texttt  {Logical}\discretionary {-}{}{}\texttt  {Implications}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {One}\discretionary {-}{}{}\texttt  {Homalg}\discretionary {-}{}{}\texttt  {Object}, 
-		\hyperpage{11}
+		\hyperpage{10}
   \item \texttt  {Logical}\discretionary {-}{}{}\texttt  {Implications}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Homalg}\discretionary {-}{}{}\texttt  {Basic}\discretionary {-}{}{}\texttt  {Objects}, 
-		\hyperpage{11}
+		\hyperpage{10}
 
   \indexspace
 
-  \item \texttt  {MatchPropertiesAndAttributes}, \hyperpage{12}
-  \item \texttt  {MemoryToString}, \hyperpage{15}
+  \item \texttt  {MatchPropertiesAndAttributes}, \hyperpage{11}
+  \item \texttt  {MemoryToString}, \hyperpage{14}
 
   \indexspace
 
-  \item \texttt  {UpdateContainerOfPointers}, \hyperpage{10}
-  \item \texttt  {UpdateContainerOfWeakPointers}, \hyperpage{9}
+  \item \texttt  {UpdateContainerOfPointers}
+    \subitem for IsContainerForPointers, \hyperpage{9}
+  \item \texttt  {UpdateContainerOfWeakPointers}
+    \subitem for IsContainerForWeakPointers, \hyperpage{8}
 
 \end{theindex}

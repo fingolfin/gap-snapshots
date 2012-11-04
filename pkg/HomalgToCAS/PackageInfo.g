@@ -31,7 +31,7 @@ Subtitle := "A window to the outer world",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "2012.06.27",
+Version := "2012.10.22",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -290,8 +290,6 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "HomalgToCAS",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  Archive := 
-    "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/HomalgToCAS/HomalgToCAS.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",

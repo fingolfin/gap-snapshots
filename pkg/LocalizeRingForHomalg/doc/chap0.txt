@@ -1,15 +1,15 @@
   
   
-                             [1X[5XLocalizeRingForHomalg[0m[1X[0m
+                             [1X[5XLocalizeRingForHomalg[105X[101X
   
   
-              [1XLocalize Commutative [5Xhomalg[0m[1X Rings at Maximal Ideals[0m
+              [1XLocalize Commutative [5Xhomalg[105X Rings at Maximal Ideals[101X
   
   
-                               Version 2012.05.27
+                               Version 2012.10.26
   
   
-                                 September 2011
+                                  October 2012
   
   
                                 Mohamed Barakat
@@ -18,68 +18,68 @@
   
   
   
-            This  manual  is  best  viewed  as an [12XHTML[0m document. The
-            latest version is available [12Xonline[0m at:
-            [7Xhttp://homalg.math.rwth-aachen.de/~markus/LocalizeRingForHomalg/chap0.html[0m
-            An   [12Xoffline[0m   version   should   be   included  in  the
-            documentation subfolder of the package.
+            [33X[0;10YThis  manual  is  best  viewed  as an [12XHTML[112X document. The
+            latest version is available [12Xonline[112X at:[133X
+            [33X[0;10Y[7Xhttp://homalg.math.rwth-aachen.de/~markus/LocalizeRingForHomalg/chap0.html[107X[133X
+            [33X[0;10YAn   [12Xoffline[112X   version   should   be   included  in  the
+            documentation subfolder of the package.[133X
   
   
   
   Mohamed Barakat
-      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[0m
-      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[0m
-      Address:  Department of Mathematics,
-                University of Kaiserslautern,
-                67653 Kaiserslautern,
-                Germany
+      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[107X
+      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[107X
+      Address:  [33X[0;14YDepartment of Mathematics,[133X
+                [33X[0;14YUniversity of Kaiserslautern,[133X
+                [33X[0;14Y67653 Kaiserslautern,[133X
+                [33X[0;14YGermany[133X
   
   
   Markus Lange-Hegermann
-      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[0m
-      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus[0m
-      Address:  Lehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
-                52056 Aachen, Germany
+      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[107X
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus[107X
+      Address:  [33X[0;14YLehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
+                52056 Aachen, Germany[133X
   
   
   
   -------------------------------------------------------
-  [1XCopyright[0m
-  © 2009-2011 by Mohamed Barakat and Markus Lange-Hegermann
+  [1XCopyright[101X
+  [33X[0;0Y© 2009-2012 by Mohamed Barakat and Markus Lange-Hegermann[133X
   
-  This  package  may  be distributed under the terms and conditions of the GNU
-  Public License Version 2.
-  
-  
-  -------------------------------------------------------
-  [1XAcknowledgements[0m
-  We  would  like  to  thank the Aachen forest for being such a nice place for
-  jogging.
+  [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.[133X
   
   
   -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YWe  would  like  to  thank the Aachen forest for being such a nice place for
+  jogging.[133X
   
   
-  [1XContents (LocalizeRingForHomalg)[0X
+  -------------------------------------------------------
   
-  1 Introduction
-    1.1 What is the Role of the [5XLocalizeRingForHomalg[0m Package in the [5Xhomalg[0m
-    Project?
-    1.2 Functionality
-    1.3 The Math Behind This Package
-    1.4 Which Ring to Use?
-  2 Installation of the [5XLocalizeRingForHomalg[0m Package
-  3 Quick Start
-    3.1 Localization of ℤ
-  4 Localize Rings
-    4.1 Category and Representations
+  
+  [1XContents (LocalizeRingForHomalg)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YWhat is the Role of the [5XLocalizeRingForHomalg[105X Package in the [5Xhomalg[105X
+    Project?[133X
+    1.2 [33X[0;0YFunctionality[133X
+    1.3 [33X[0;0YThe Math Behind This Package[133X
+    1.4 [33X[0;0YWhich Ring to Use?[133X
+  2 [33X[0;0YInstallation of the [5XLocalizeRingForHomalg[105X Package[133X
+  3 [33X[0;0YQuick Start[133X
+    3.1 [33X[0;0YLocalization of ℤ[133X
+  4 [33X[0;0YLocalize Rings[133X
+    4.1 [33X[0;0YCategory and Representations[133X
       4.1-1 IsHomalgLocalRingRep
       4.1-2 IsHomalgLocalRingElementRep
       4.1-3 IsHomalgLocalMatrixRep
-    4.2 Rings: Attributes
+    4.2 [33X[0;0YRings: Attributes[133X
       4.2-1 GeneratorsOfMaximalLeftIdeal
       4.2-2 GeneratorsOfMaximalRightIdeal
-    4.3 Operations and Functions
+    4.3 [33X[0;0YOperations and Functions[133X
       4.3-1 AssociatedGlobalRing
       4.3-2 AssociatedGlobalRing
       4.3-3 AssociatedGlobalRing
@@ -98,19 +98,19 @@
       4.3-16 LocalizePolynomialRingAtZeroWithMora
       4.3-17 HomalgLocalRingElement
       4.3-18 HomalgLocalMatrix
-  5 Examples
-    5.1 An Easy Polynomial Example
-    5.2 Hom(Hom(-,Z128),Z16)
-    5.3 ResidueClass
-    5.4 Testing the Intersection Formula
-  A Overview of the [5XLocalizeRingForHomalg[0m Package Source Code
-    A.1 The generic Methods
+  5 [33X[0;0YExamples[133X
+    5.1 [33X[0;0YAn Easy Polynomial Example[133X
+    5.2 [33X[0;0YHom(Hom(-,Z128),Z16)[133X
+    5.3 [33X[0;0YResidueClass[133X
+    5.4 [33X[0;0YTesting the Intersection Formula[133X
+  A [33X[0;0YOverview of the [5XLocalizeRingForHomalg[105X Package Source Code[133X
+    A.1 [33X[0;0YThe generic Methods[133X
       A.1-1 BasisOfRowModule
       A.1-2 DecideZeroRows
       A.1-3 SyzygiesGeneratorsOfRows
-    A.2 The Local Decide Zero trick
+    A.2 [33X[0;0YThe Local Decide Zero trick[133X
       A.2-1 DecideZeroRows
-    A.3 Tools
+    A.3 [33X[0;0YTools[133X
   
   
-  -------------------------------------------------------
+  [32X

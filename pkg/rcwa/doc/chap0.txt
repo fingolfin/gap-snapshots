@@ -6,10 +6,10 @@
                         [1XResidue-Class-Wise Affine Groups[101X
   
   
-                                 Version 3.3.1
+                                 Version 3.4.0
   
   
-                                  June 8, 2012
+                                November 1, 2012
   
   
                                   Stefan Kohl
@@ -149,11 +149,12 @@
       permutations)[133X
       3.3-4 [33X[0;0YShortResidueClassOrbits & ShortResidueClassCycles[133X
       3.3-5 CycleRepresentativesAndLengths
-      3.3-6 [33X[0;0YBall (for group, element and radius or group, point, radius and
+      3.3-6 FixedResidueClasses
+      3.3-7 [33X[0;0YBall (for group, element and radius or group, point, radius and
       action)[133X
-      3.3-7 RepresentativeAction
-      3.3-8 ProjectionsToInvariantUnionsOfResidueClasses
-      3.3-9 RepresentativeAction
+      3.3-8 RepresentativeAction
+      3.3-9 ProjectionsToInvariantUnionsOfResidueClasses
+      3.3-10 RepresentativeAction
     3.4 [33X[0;0YSpecial attributes of tame residue-class-wise affine groups[133X
       3.4-1 [33X[0;0YRespectedPartition (of a tame rcwa group or -permutation)[133X
       3.4-2 [33X[0;0YActionOnRespectedPartition & KernelOfActionOnRespectedPartition[133X
@@ -189,24 +190,26 @@
       6.3-2 LoadDatabaseOfNonbalancedProductsOfClassTranspositions
   7 [33X[0;0YExamples[133X
     7.1 [33X[0;0YThe Higman-Thompson group[133X
-    7.2 [33X[0;0YAn extension of the Collatz mapping T to a permutation of [22Xℤ^2[122X[133X
-    7.3 [33X[0;0YFactoring Collatz' permutation of the integers[133X
-    7.4 [33X[0;0YAn rcwa mapping which seems to be contracting, but very slow[133X
-    7.5 [33X[0;0YChecking a result by P. Andaloro[133X
-    7.6 [33X[0;0YTwo examples by Matthews and Leigh[133X
-    7.7 [33X[0;0YOrders of commutators[133X
-    7.8 [33X[0;0YAn infinite subgroup of CT(GF(2)[x]) with many torsion elements[133X
-    7.9 [33X[0;0YAn abelian rcwa group over a polynomial ring[133X
-    7.10 [33X[0;0YChecking for solvability[133X
-    7.11 [33X[0;0YSome examples over (semi)localizations of the integers[133X
-    7.12 [33X[0;0YTwisting 257-cycles into an rcwa mapping with modulus 32[133X
-    7.13 [33X[0;0YThe behaviour of the moduli of powers[133X
-    7.14 [33X[0;0YImages and preimages under the Collatz mapping[133X
-    7.15 [33X[0;0YA group which acts 4-transitively on the positive integers[133X
-    7.16 [33X[0;0YA group which acts 3-transitively, but not 4-transitively on ℤ[133X
-    7.17 [33X[0;0YFinite quotients of Grigorchuk groups[133X
-    7.18 [33X[0;0YForward orbits of a monoid with 2 generators[133X
-    7.19 [33X[0;0YThe free group of rank 2 and the modular group PSL(2,ℤ)[133X
+    7.2 [33X[0;0YFactoring Collatz' permutation of the integers[133X
+    7.3 [33X[0;0YThe [22X3n+1[122X group[133X
+    7.4 [33X[0;0YA group with huge finite orbits[133X
+    7.5 [33X[0;0YA group which acts 4-transitively on the positive integers[133X
+    7.6 [33X[0;0YA group which acts 3-transitively, but not 4-transitively on ℤ[133X
+    7.7 [33X[0;0YAn rcwa mapping which seems to be contracting, but very slow[133X
+    7.8 [33X[0;0YChecking a result by P. Andaloro[133X
+    7.9 [33X[0;0YTwo examples by Matthews and Leigh[133X
+    7.10 [33X[0;0YOrders of commutators[133X
+    7.11 [33X[0;0YAn infinite subgroup of CT(GF(2)[x]) with many torsion elements[133X
+    7.12 [33X[0;0YAn abelian rcwa group over a polynomial ring[133X
+    7.13 [33X[0;0YChecking for solvability[133X
+    7.14 [33X[0;0YSome examples over (semi)localizations of the integers[133X
+    7.15 [33X[0;0YTwisting 257-cycles into an rcwa mapping with modulus 32[133X
+    7.16 [33X[0;0YThe behaviour of the moduli of powers[133X
+    7.17 [33X[0;0YImages and preimages under the Collatz mapping[133X
+    7.18 [33X[0;0YAn extension of the Collatz mapping T to a permutation of [22Xℤ^2[122X[133X
+    7.19 [33X[0;0YFinite quotients of Grigorchuk groups[133X
+    7.20 [33X[0;0YForward orbits of a monoid with 2 generators[133X
+    7.21 [33X[0;0YThe free group of rank 2 and the modular group PSL(2,ℤ)[133X
   8 [33X[0;0YThe Algorithms Implemented in RCWA[133X
   9 [33X[0;0YInstallation and Auxiliary Functions[133X
     9.1 [33X[0;0YRequirements[133X
@@ -216,6 +219,7 @@
     9.4 [33X[0;0YThe testing routines[133X
       9.4-1 RCWATestInstall
       9.4-2 RCWATestAll
+      9.4-3 RCWATestExamples
     9.5 [33X[0;0YThe Info class of the package[133X
       9.5-1 InfoRCWA
     9.6 [33X[0;0YRunning demonstrations[133X

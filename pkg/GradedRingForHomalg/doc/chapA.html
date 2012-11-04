@@ -69,13 +69,14 @@
 6
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m;</span>
 &lt;A 6 x 1 matrix over a graded ring&gt;
- gap&gt; Display( m );
- z^2,
- y*z,
- y^2,
- x*z,
- x*y,
- x^2 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( m );</span>
+x^2,
+x*y,
+x*z,
+y^2,
+y*z,
+z^2
+(over a graded ring) 
 </pre></div>
 
 <p><a id="X7F9F9C978703E871" name="X7F9F9C978703E871"></a></p>
@@ -93,10 +94,10 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rand := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 1, 2 ], S );</span>
 &lt;A 3 x 2 matrix over a graded ring&gt;
- gap&gt; Display( rand );
- a-2*b+2*c,                                                2,                 
- a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               
- 2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Display( rand );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#a-2*b+2*c,                                                2,                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2</span>
 </pre></div>
 
 <p><a id="X82E813D982331C0B" name="X82E813D982331C0B"></a></p>
@@ -114,9 +115,9 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GradedRing( R );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rand := RandomMatrixBetweenGradedFreeRightModules( [ 1, 2 ], [ 2, 3, 4 ], S );</span>
 &lt;A 2 x 3 matrix over a graded ring&gt;
- gap&gt; Display( rand );
- a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,
- -5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#Display( rand );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">#-5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      </span>
 </pre></div>
 
 <p><a id="X7EA1DC07822DE322" name="X7EA1DC07822DE322"></a></p>
@@ -135,22 +136,22 @@
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">x,2*y,   \</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">y,a-b^2, \</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">z,y-b    \</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 3, 2, S );;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 3, 2, S );</span>
 &lt;A 3 x 2 matrix over an external ring&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := HomalgMatrix( "[ \</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">x^2-a*y^3,x^3-z^2*y,x*y-b,x*z-c, \</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">x,        x*y,      a-b,  x*a*b  \</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 2, 4, S );;</span>
-&lt;A 2 by 4 matrix over an external ring&gt;
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">]", 2, 4, S );</span>
+&lt;A 2 x 4 matrix over an external ring&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := Diff( D, N );</span>
 &lt;A 6 x 8 matrix over an external ring&gt;
- gap&gt; Display( H );
- 2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  
- 1,       y,     0,a*b,0,       2*x,   0,  0,  
- -3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  
- 0,       x,     0,0,  0,       0,     1,  b*x,
- 0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  
- 0,       0,     0,0,  0,       x,     1,  -a*x
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( H );</span>
+2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  
+1,       y,     0,a*b,0,       2*x,   0,  0,  
+-3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  
+0,       x,     0,0,  0,       0,     1,  b*x,
+0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  
+0,       0,     0,0,  0,       x,     1,  -a*x
 </pre></div>
 
 

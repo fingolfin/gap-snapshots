@@ -29,9 +29,9 @@ Subtitle := "Matrices for the homalg project",
 Version := Maximum( [
   "2011.09.12", ## Markus' version
 ## this line prevents merge conflicts
-  "2012.06.30", ## Mohamed's version
+  "2012.10.25", ## Mohamed's version
 ## this line prevents merge conflicts
-  "2012.04.22", ## Sebas' version
+  "2012.10.17", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -243,8 +243,6 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "MatricesForHomalg",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  Archive := 
-    "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/MatricesForHomalg/MatricesForHomalg.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -270,7 +268,7 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [
-                   [ "ToolsForHomalg", ">= 2012.06.15" ],
+                   [ "ToolsForHomalg", ">= 2012.10.27" ],
                    [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],

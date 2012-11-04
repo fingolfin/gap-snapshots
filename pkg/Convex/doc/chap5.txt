@@ -33,9 +33,9 @@
   
   [33X[0;0YReturns the dual cone of the cone [3Xcone[103X.[133X
   
-  [1X5.3-2 DualCone[101X
+  [1X5.3-2 HilbertBasis[101X
   
-  [29X[2XDualCone[102X( [3Xcone[103X ) [32X attribute
+  [29X[2XHilbertBasis[102X( [3Xcone[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list[133X
   
   [33X[0;0YReturns a Hilbert Basis of the cone [3Xcone[103X.[133X
@@ -162,17 +162,17 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XC := Cone([[1,2,3],[2,1,1],[1,0,0],[0,1,1]]);[127X[104X
     [4X[28X<A cone in |R^3>[128X[104X
-    [4X[25Xgap>[125X [27XRayGenerators( C );[127X[104X
-    [4X[28X[ [ 1, 2, 3 ], [ 1, 0, 0 ], [ 0, 1, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XLength( RayGenerators( C ) );[127X[104X
+    [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27XIsSmooth( C );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XHilbertBasis( C );[127X[104X
-    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 1 ], [ 1, 2, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XLength( HilbertBasis( C ) );[127X[104X
+    [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27XIsSimplicial( C );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XDC := DualCone( C );[127X[104X
     [4X[28X<A cone in |R^3>[128X[104X
-    [4X[25Xgap>[125X [27XHilbertBasis( DC );[127X[104X
-    [4X[28X[ [ 1, 1, -1 ], [ 0, 3, -2 ], [ 0, -1, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XLength( HilbertBasis( DC ) );[127X[104X
+    [4X[28X3[128X[104X
   [4X[32X[104X
   

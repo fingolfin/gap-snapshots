@@ -9,34 +9,40 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap5"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapD.html">D</a>  <a href="chapE.html">E</a>  <a href="chapF.html">F</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap4.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap6.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X79B130FC7906FB4C" name="X79B130FC7906FB4C"></a></p>
 <div class="ChapSects"><a href="chap5.html#X79B130FC7906FB4C">5 <span class="Heading">Elements</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7FBC2FC77E93856C">5.1 <span class="Heading">Elements: Category and Representations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7FBC2FC77E93856C">5.1 <span class="Heading">Elements: Category and Representations</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X784BBB2A782DB774">5.1-1 IsHomalgElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87F3740E85E9AA51">5.1-2 IsElementOfAnObjectGivenByAMorphismRep</a></span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X8159567F8721ADCA">5.2 <span class="Heading">Elements: Constructors</span></a>
-<div class="ContSSBlock">
-</div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C36DB5C81520E55">5.3 <span class="Heading">Elements: Properties</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8159567F8721ADCA">5.2 <span class="Heading">Elements: Constructors</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C36DB5C81520E55">5.3 <span class="Heading">Elements: Properties</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D16A0BB80BA69DC">5.3-1 IsZero</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7886344B7A8B9304">5.3-2 IsCyclicGenerator</a></span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X875351A77DEB949A">5.4 <span class="Heading">Elements: Attributes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X875351A77DEB949A">5.4 <span class="Heading">Elements: Attributes</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8557F75878DEEA58">5.4-1 Annihilator</a></span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X865C489C7FE750A9">5.5 <span class="Heading">Elements: Operations and Functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X865C489C7FE750A9">5.5 <span class="Heading">Elements: Operations and Functions</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A4ED0528640EEFE">5.5-1 in</a></span>
 </div></div>
@@ -44,7 +50,7 @@
 
 <h3>5 <span class="Heading">Elements</span></h3>
 
-<p>An element of an object M is internally represented by a morphism from the "structure object" to the object M. In particular, the data structure for object elements automatically profits from the intrinsic realization of morphisms in the <strong class="pkg">homalg</strong> project.</p>
+<p>An element of an object <span class="SimpleMath">M</span> is internally represented by a morphism from the "structure object" to the object <span class="SimpleMath">M</span>. In particular, the data structure for object elements automatically profits from the intrinsic realization of morphisms in the <strong class="pkg">homalg</strong> project.</p>
 
 <p><a id="X7FBC2FC77E93856C" name="X7FBC2FC77E93856C"></a></p>
 
@@ -54,8 +60,8 @@
 
 <h5>5.1-1 IsHomalgElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsHomalgElement</code>( <var class="Arg">M</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHomalgElement</code>( <var class="Arg">M</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of object elements.</p>
 
@@ -63,12 +69,12 @@
 
 <h5>5.1-2 IsElementOfAnObjectGivenByAMorphismRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsElementOfAnObjectGivenByAMorphismRep</code>( <var class="Arg">M</var> )</td><td class="tdright">( representation )</td></tr></table></div>
-<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfAnObjectGivenByAMorphismRep</code>( <var class="Arg">M</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> representation of elements of finitley presented objects.</p>
 
-<p>(It is a representation of the <strong class="pkg">GAP</strong> category <code class="func">IsHomalgElement</code> (<a href="chap5.html#X784BBB2A782DB774"><b>5.1-1</b></a>).)</p>
+<p>(It is a representation of the <strong class="pkg">GAP</strong> category <code class="func">IsHomalgElement</code> (<a href="chap5.html#X784BBB2A782DB774"><span class="RefLink">5.1-1</span></a>).)</p>
 
 <p><a id="X8159567F8721ADCA" name="X8159567F8721ADCA"></a></p>
 
@@ -82,8 +88,8 @@
 
 <h5>5.3-1 IsZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsZero</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZero</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
 <p>Check if the object element <var class="Arg">m</var> is zero.</p>
 
@@ -91,8 +97,8 @@
 
 <h5>5.3-2 IsCyclicGenerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsCyclicGenerator</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyclicGenerator</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
 <p>Check if the object element <var class="Arg">m</var> is a cyclic generator.</p>
 
@@ -104,8 +110,8 @@
 
 <h5>5.4-1 Annihilator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; Annihilator</code>( <var class="Arg">e</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p><b>Returns: </b>a <strong class="pkg">homalg</strong> subobject</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Annihilator</code>( <var class="Arg">e</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">homalg</strong> subobject</p>
 
 <p>The annihilator of the object element <var class="Arg">e</var> as a subobject of the structure object.</p>
 
@@ -117,41 +123,39 @@
 
 <h5>5.5-1 in</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; in</code>( <var class="Arg">m, N</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p><b>Returns: </b><code class="code">true</code> or <code class="code">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; in</code>( <var class="Arg">m</var>, <var class="Arg">N</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
-<p>Is the element <var class="Arg">m</var> of the object M included in the subobject <var class="Arg">N</var>&lt;= M, i.e., does the morphism (with the unit object as source and M as target) underling the element <var class="Arg">m</var> of M factor over the subobject morphism <var class="Arg">N</var>-&gt; M?</p>
+<p>Is the element <var class="Arg">m</var> of the object <span class="SimpleMath">M</span> included in the subobject <var class="Arg">N</var><span class="SimpleMath">≤ M</span>, i.e., does the morphism (with the unit object as source and <span class="SimpleMath">M</span> as target) underling the element <var class="Arg">m</var> of <span class="SimpleMath">M</span> factor over the subobject morphism <var class="Arg">N</var><span class="SimpleMath">-&gt; M</span>?</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; ZZ := HomalgRingOfIntegers( );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ := HomalgRingOfIntegers( );</span>
 Z
-gap&gt; M := 2 * ZZ;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := 2 * ZZ;</span>
 &lt;A free left module of rank 2 on free generators&gt;
-gap&gt; a := HomalgModuleElement( "[ 6, 0 ]", M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := HomalgModuleElement( "[ 6, 0 ]", M );</span>
 [ 6, 0 ]
-gap&gt; N := Subobject( HomalgMap( "[ 2, 0 ]", 1 * ZZ, M ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Subobject( HomalgMap( "[ 2, 0 ]", 1 * ZZ, M ) );</span>
 &lt;A free left submodule given by a cyclic generator&gt;
-gap&gt; K := Subobject( HomalgMap( "[ 4, 0 ]", 1 * ZZ, M ) );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := Subobject( HomalgMap( "[ 4, 0 ]", 1 * ZZ, M ) );</span>
 &lt;A free left submodule given by a cyclic generator&gt;
-gap&gt; a in M;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in M;</span>
 true
-gap&gt; a in N;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in N;</span>
 true
-gap&gt; a in UnderlyingObject( N );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in UnderlyingObject( N );</span>
 true
-gap&gt; a in K;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in K;</span>
 false
-gap&gt; a in UnderlyingObject( K );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in UnderlyingObject( K );</span>
 false
-gap&gt; a in 3 * ZZ;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in 3 * ZZ;</span>
 false 
-</pre></td></tr></table>
+</pre></div>
 
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 InstallMethod( \in,
         "for homalg elements",
         [ IsHomalgElement, IsStaticFinitelyPresentedSubobjectRep ],
@@ -171,10 +175,10 @@ InstallMethod( \in,
     return IsZero( PreCompose( phi, CokernelEpi( psi ) ) );
     
 end );
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap4.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap6.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapD.html">D</a>  <a href="chapE.html">E</a>  <a href="chapF.html">F</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

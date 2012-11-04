@@ -552,6 +552,81 @@ end );
 ##
 InstallMethod( Add,
         "for homalg cocomplexes",
+        [ IsMorphismOfFinitelyGeneratedObjectsRep, IsComplexOfFinitelyPresentedObjectsRep ],
+        
+  function( phi, C )
+    local degrees, l, psi;
+    
+    degrees := ObjectDegreesOfComplex( C );
+    
+    l := Length( degrees );
+    
+    if l = 1 then
+        
+        l := degrees[1];
+        
+        if IsHomalgChainMorphism( phi ) then
+            if CertainObject( C, l ) <> Source( phi ) then
+                Error( "the unique object in the complex and the source of the new chain morphism are not equal\n" );
+            fi;
+        else
+            if not IsIdenticalObj( CertainObject( C, l ), Source( phi ) ) then
+                Error( "the unique object in the complex and the source of the new morphism are not identical\n" );
+            fi;
+        fi;
+        
+    else
+        
+        l := degrees[1];
+        
+        if IsHomalgChainMorphism( phi ) then
+            if Range( CertainMorphism( C, l + 1 ) ) <> Source( phi ) then
+                Error( "the target of the ", l + 1, ". chain morphism in the complex (i.e. the highest one) and the source of the new one are not equal\n" );
+            fi;
+        else
+            if not IsIdenticalObj( Range( CertainMorphism( C, l + 1 ) ), Source( phi ) ) then
+                Error( "the target of the ", l + 1, ". morphism in the complex (i.e. the highest one) and the source of the new one are not identical\n" );
+            fi;
+        fi;
+        
+    fi;
+    
+    C!.degrees := Concatenation( [ l - 1 ], degrees );
+    
+    C!.(String( l )) := phi;
+    
+    degrees := C!.degrees;
+    
+    ConvertToRangeRep( degrees );
+    
+    if HasIsGradedObject( C ) and IsGradedObject( C ) and
+       HasIsMorphism( phi ) and IsMorphism( phi ) then
+        homalgResetFilters( C );
+        SetIsComplex( C, true );
+    elif HasIsSequence( C ) and IsSequence( C ) and
+      HasIsMorphism( phi ) and IsMorphism( phi ) then
+        homalgResetFilters( C );
+        SetIsSequence( C, true );
+    else
+        homalgResetFilters( C );
+    fi;
+    
+    if Length( degrees ) = 3 then
+        psi := LowestDegreeMorphism( C );
+        if HasIsEpimorphism( psi ) and IsEpimorphism( psi ) and
+           ( ( HasKernelEmb( psi ) and IsIdenticalObj( KernelEmb( psi ), phi ) ) or
+             ( HasCokernelEpi( phi ) and IsIdenticalObj( CokernelEpi( phi ), psi ) ) ) then
+            SetIsShortExactSequence( C, true );
+        fi;
+    fi;
+    
+    return C;
+    
+end );
+
+##
+InstallMethod( Add,
+        "for homalg cocomplexes",
         [ IsCocomplexOfFinitelyPresentedObjectsRep, IsMorphismOfFinitelyGeneratedObjectsRep ],
         
   function( C, phi )
@@ -951,15 +1026,15 @@ InstallMethod( Subcomplex,
   function( C, i, j )
     local m, A, k;
     
-    m := CertainMorphism( C, i );
+    m := CertainMorphism( C, i + 1 );
     
     if m = fail then
         Error( "The complex does not have the demanded degree" );
     fi;
     
-    A := HomalgComplex( m, i );
+    A := HomalgComplex( m, i + 1 );
     
-    for k in [ i+1 .. j-1 ] do
+    for k in [ i + 2 .. j ] do
         
         m := CertainMorphism( C, k );
         
@@ -1702,9 +1777,9 @@ InstallMethod( \*,
         "for a structure object and a complex",
         [ IsStructureObject, IsHomalgComplex ],
         
-  function( R, phi )
+  function( R, C )
     
-    return BaseChange( R, phi );
+    return BaseChange( R, C );
     
 end );
 
@@ -1713,9 +1788,20 @@ InstallMethod( \*,
         "for a complex and a structure object",
         [ IsHomalgComplex, IsStructureObject ],
         
-  function( phi, R )
+  function( C, R )
     
-    return R * phi;
+    return R * C;
+    
+end );
+
+##
+InstallMethod( ShallowCopy,
+        "for a complex",
+        [ IsHomalgComplex ],
+        
+  function( C )
+    
+    return Shift( C, 0 );
     
 end );
 

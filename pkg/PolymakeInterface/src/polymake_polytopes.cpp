@@ -87,7 +87,7 @@ Obj REAL_VERTICES_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
       pm::Matrix<pm::Rational> matr_temp = polyobj->give("VERTICES");
       matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -136,7 +136,7 @@ Obj REAL_LATTICE_POINTS_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
       pm::Matrix<pm::Rational> matr_temp = polyobj->give("LATTICE_POINTS");
       matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -242,7 +242,46 @@ Obj REAL_FACET_INEQUALITIES_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
     pm::Matrix<pm::Rational> matr_temp = polyobj->give("FACETS");
     matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
+    ErrorMayQuit(" error during polymake computation.",0,0);
+    return NULL;
+  }
+  Obj RETLI = NEW_PLIST( T_PLIST , matr.rows());
+  UInt matr_rows = matr.rows();
+  SET_LEN_PLIST( RETLI , matr_rows );
+  Obj LIZeil;
+  UInt matr_cols = matr.cols();
+  for(int i = 0;i<matr.rows();i++){
+    LIZeil = NEW_PLIST( T_PLIST, matr.cols() );
+    SET_LEN_PLIST( LIZeil , matr_cols );
+    for(int j = 0;j<matr.cols();j++){
+      SET_ELM_PLIST(LIZeil,j+1,INTOBJ_INT((matr(i,j)).to_int()));
+    }
+    SET_ELM_PLIST(RETLI,i+1,LIZeil);
+    CHANGED_BAG(RETLI);
+  }
+  return RETLI;
+  
+}
+
+
+Obj REAL_EQUALITIES_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
+
+#ifdef MORE_TESTS
+  if(! IS_POLYMAKE_POLYTOPE(polytope) ){
+    ErrorMayQuit(" parameter is not a polytope.",0,0);
+    return NULL;
+  }
+#endif
+
+  perlobj* polyobj = PERLOBJ_POLYMAKEOBJ( polytope );
+  data->main_polymake_session->set_application_of(*polyobj);
+  pm::Matrix<pm::Rational> matr;
+  try{
+    pm::Matrix<pm::Rational> matr_temp = polyobj->give("AFFINE_HULL");
+    matr = matr_temp;
+  }
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -281,7 +320,7 @@ Obj REAL_INTERIOR_LATTICE_POINTS( Polymake_Data* data, Obj polytope){
       pm::Matrix<pm::Rational> matr_temp = polyobj->give("INTERIOR_LATTICE_POINTS");
       matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -387,7 +426,7 @@ Obj REAL_HOMOGENEOUS_POINTS_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
       pm::Matrix<pm::Rational> matr_temp = coneobj->give("VERTICES");
       matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -434,7 +473,7 @@ Obj REAL_TAIL_CONE_OF_POLYTOPE( Polymake_Data* data, Obj polytope){
       pm::Matrix<pm::Rational> matr_temp = polyobj->give("VERTICES");
       matr = matr_temp;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -482,7 +521,7 @@ Obj REAL_MINKOWSKI_SUM( Polymake_Data* data, Obj polytope1, Obj polytope2 ){
   try{
     CallPolymakeFunction("minkowski_sum",*poly1,*poly2) >> sum;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }
@@ -518,7 +557,7 @@ Obj REAL_MINKOWSKI_SUM_WITH_COEFFICIENTS( Polymake_Data* data, Obj fact1, Obj po
   try{
       CallPolymakeFunction("minkowski_sum",INT_INTOBJ(fact1),*poly1,INT_INTOBJ(fact2),*poly2) >> sum;
   }
-  catch( pm::perl::exception err ){
+  catch( std::exception err ){
     ErrorMayQuit(" error during polymake computation.",0,0);
     return NULL;
   }

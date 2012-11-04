@@ -982,7 +982,7 @@ InstallMethod( PostDivide,
         Add( psi, psi_i );
     od;
     
-    Assert( 2, IsMorphism( psi ) );
+    Assert( 4, IsMorphism( psi ) );
     
     if b then
         SetIsMorphism( psi, true );
@@ -1028,7 +1028,7 @@ InstallMethod( PreDivide,
         Add( psi, psi_i );
     od;
     
-    Assert( 2, IsMorphism( psi ) );
+    Assert( 4, IsMorphism( psi ) );
     
     if b then
         SetIsMorphism( psi, true );
@@ -1234,7 +1234,8 @@ InstallGlobalFunction( HomalgChainMorphism,
     fi;
     
     if not IsBound( morphism ) then
-        if IsHomalgMatrix( arg[1] ) then
+        ## FIXME: the only IsMatrixObj left in the code
+        if IsMatrixObj( arg[1] ) then
             S := CertainObject( source, degrees[1] );
             category := HomalgCategory( S );
             if IsBound( category!.MorphismConstructor ) then

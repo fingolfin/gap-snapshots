@@ -6,4 +6,6 @@
  -->
 <Chapter Label="Installation_automatically_generated_documentation_parts">
 <Heading>Installation</Heading>
-<#Include SYSTEM "InstallationSectionInstall_polymake.xml"><#Include SYSTEM "InstallationSectionHow_to_install_this_package.xml"></Chapter>
+<#Include SYSTEM "InstallationSectionInstall_polymake.xml">
+<#Include SYSTEM "InstallationSectionHow_to_install_this_package.xml">
+</Chapter>

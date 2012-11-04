@@ -53,7 +53,6 @@
     [4X[28X            |[128X[104X
     [4X[28X            \[128X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
   [4X[32X[104X
   
   
@@ -123,11 +122,21 @@
     [4X[28X  [ 30720, 2 ], [ 38880, 12 ], [ 51840, 8 ], [ 77760, 32 ] ][128X[104X
     [4X[25Xgap>[125X [27XCollected(data.trsstatus);[127X[104X
     [4X[28X[ [ "> 1 orbit (mod m)", 593 ], [128X[104X
-    [4X[28X  [ "Mod(U DecreasingOn) exceeded <maxmod>", 17 ], [128X[104X
-    [4X[28X  [ "U DecreasingOn stable for <maxeq> steps", 5937 ], [128X[104X
-    [4X[28X  [ "exceeded memory bound", 625 ], [ "finite", 21948 ], [128X[104X
-    [4X[28X  [ "finite orbits", 22999 ], [ "transitive", 264 ], [128X[104X
-    [4X[28X  [ "transitivity on small points unclear", 11 ] ][128X[104X
+    [4X[28X  [ "Mod(U DecreasingOn) exceeded <maxmod>", 23 ], [128X[104X
+    [4X[28X  [ "U DecreasingOn stable and exceeded memory bound", 35 ], [128X[104X
+    [4X[28X  [ "U DecreasingOn stable for <maxeq> steps", 5868 ], [128X[104X
+    [4X[28X  [ "exceeded memory bound", 601 ], [ "finite", 21948 ], [128X[104X
+    [4X[28X  [ "intransitive, but finitely many orbits", 8 ], [128X[104X
+    [4X[28X  [ "seemingly finite and infinite orbits (exponential growth)", 2981 ], [128X[104X
+    [4X[28X  [ "seemingly finite and infinite orbits (growth unclear)", 86 ], [128X[104X
+    [4X[28X  [ "seemingly finite and infinite orbits (linear growth)", 10877 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (long)", 778 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (medium)", 1395 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (short)", 4603 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (very long)", 1510 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (very long, very unclear)", 4 ], [128X[104X
+    [4X[28X  [ "seemingly only finite orbits (very short)", 765 ], [128X[104X
+    [4X[28X  [ "transitive", 319 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -161,9 +170,9 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xdata := LoadDatabaseOfProductsOf2ClassTranspositions();;[127X[104X
     [4X[25Xgap>[125X [27XRecNames(data);[127X[104X
-    [4X[28X[ "CTPairs", "CTPairsIntersectionTypes", "CTPairIntersectionType", [128X[104X
-    [4X[28X  "CTPairProductType", "CTPairsProductClassification", [128X[104X
-    [4X[28X  "CTPairsProductType" ][128X[104X
+    [4X[28X[ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", [128X[104X
+    [4X[28X  "CTPairIntersectionType", "CTPairProductType", [128X[104X
+    [4X[28X  "CTPairsProductClassification" ][128X[104X
     [4X[25Xgap>[125X [27XLength(data.CTPairs);[127X[104X
     [4X[28X2346[128X[104X
     [4X[25Xgap>[125X [27XCollected(List(data.CTPairsProductType,l->l[2])); # order statistics[127X[104X

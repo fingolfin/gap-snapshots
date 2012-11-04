@@ -376,6 +376,19 @@ DeclareAttribute( "ChernCharacter",
 DeclareAttribute( "HilbertPolynomial",
         IsChernPolynomialWithRank );
 
+##  <#GAPDoc Label="Dual:ChernPolynomial">
+##  <ManSection>
+##    <Attr Arg="C" Name="Dual" Label="for Chern polynomials"/>
+##    <Returns>a Chern polynomial with rank</Returns>
+##    <Description>
+##      The of the (Chern polynomial with rank).
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "Dual",
+        IsChernPolynomialWithRank );
+
 ##  <#GAPDoc Label="ChernCharacterPolynomial">
 ##  <ManSection>
 ##    <Attr Arg="C" Name="ChernCharacterPolynomial"/>
@@ -523,8 +536,14 @@ DeclareOperation( "ChernPolynomial",
 DeclareOperation( "Coefficients",
         [ IsPolynomialModuloSomePower ] );
 
+DeclareOperation( "Value",
+        [ IsPolynomialModuloSomePower, IsRingElement ] );
+
 DeclareOperation( "Coefficients",
         [ IsChernPolynomialWithRank ] );
+
+DeclareOperation( "Value",
+        [ IsChernPolynomialWithRank, IsRingElement ] );
 
 DeclareOperation( "Coefficients",
         [ IsChernCharacter ] );

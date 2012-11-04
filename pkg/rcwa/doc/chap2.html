@@ -205,7 +205,6 @@ Tame rcwa permutation of Z with modulus 12, of order infinity
         |
         \
 
-
 </pre></div>
 
 <p><a id="X7896C5417E3692B4" name="X7896C5417E3692B4"></a></p>
@@ -233,7 +232,6 @@ Rcwa permutation of Z with modulus 9, of order 2
         |
         \
 
-
 </pre></div>
 
 <p><a id="X8716A75F7DD1C46B" name="X8716A75F7DD1C46B"></a></p>
@@ -250,6 +248,8 @@ Rcwa permutation of Z with modulus 9, of order 2
 
 <p>In the four-argument form, the arguments <var class="Arg">r1</var>, <var class="Arg">m1</var>, <var class="Arg">r2</var> and <var class="Arg">m2</var> stand for <span class="SimpleMath">r_1</span>, <span class="SimpleMath">m_1</span>, <span class="SimpleMath">r_2</span> and <span class="SimpleMath">m_2</span>, respectively. In the two-argument form, the arguments <var class="Arg">cl1</var> and <var class="Arg">cl2</var> stand for the residue classes <span class="SimpleMath">r_1(m_1)</span> and <span class="SimpleMath">r_2(m_2)</span>, respectively. Enclosing the argument list in list brackets is permitted. The residue classes <span class="SimpleMath">r_1(m_1)</span> and <span class="SimpleMath">r_2(m_2)</span> are stored as an attribute <code class="code">TransposedClasses</code>.</p>
 
+<p>A list of all class transpositions interchanging residue classes with moduli less than or equal to a given bound <var class="Arg">m</var> can be obtained by <code class="code">List(ClassPairs(<var class="Arg">m</var>),ClassTransposition)</code>, where the function <code class="code">ClassPairs</code> returns a list of all 4-tuples <span class="SimpleMath">(r_1,m_1,r_2,m_2)</span> of integers corresponding to the unordered pairs of disjoint residue classes <span class="SimpleMath">r_1(m_1)</span> and <span class="SimpleMath">r_2(m_2)</span> with <span class="SimpleMath">m_1</span> and <span class="SimpleMath">m_2</span> less than or equal to the specified bound. The function <code class="code">NrClassPairs(<var class="Arg">m</var>)</code> returns the length of the list <code class="code">ClassPairs(<var class="Arg">m</var>)</code>, where the result is computed much faster and without actually generating the list of tuples.</p>
+
 <p>A class transposition can be written as a product of any given number <span class="SimpleMath">k</span> of class transpositions. Such a decomposition can be obtained by <code class="code">SplittedClassTransposition(<var class="Arg">ct</var>,<var class="Arg">k</var>)</code>.</p>
 
 
@@ -259,13 +259,27 @@ Rcwa permutation of Z with modulus 9, of order 2
 
 Rcwa permutation of Z with modulus 10, of order 2
 
+( 1(2), 8(10) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(ClassTransposition(1,2,8,10):CycleNotation:=false);</span>
+
+Rcwa permutation of Z with modulus 10, of order 2
+
         /
         | 5n+3    if n in 1(2)
  n |-&gt; &lt;  (n-3)/5 if n in 8(10)
         | n       if n in 0(2) \ 8(10)
         \
 
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ClassPairs(4),ClassTransposition);</span>
+[ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(3), 1(3) ), 
+  ( 0(3), 2(3) ), ( 0(4), 1(4) ), ( 0(4), 2(4) ), ( 0(4), 3(4) ), 
+  ( 1(2), 0(4) ), ( 1(2), 2(4) ), ( 1(3), 2(3) ), ( 1(4), 2(4) ), 
+  ( 1(4), 3(4) ), ( 2(4), 3(4) ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrClassPairs(100);</span>
+3528138
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SplittedClassTransposition(ClassTransposition(0,2,1,4),3);</span>
+[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ]
 </pre></div>
 
 <p>The set of all class transpositions of the ring of integers generates the simple group CT(ℤ) mentioned in Chapter <a href="chap1.html#X83A8C2927FAE2C23"><span class="RefLink">1</span></a>. This group has a representation as a <strong class="pkg">GAP</strong> object -- see <code class="func">CT</code> (<a href="chap3.html#X7BD42D8481300E25"><span class="RefLink">3.1-3</span></a>). The set of all generalized class transpositions of ℤ generates a simple group as well, cf. <a href="chapBib.html#biBKohl09">[Koh10]</a>.</p>
@@ -301,7 +315,10 @@ Tame rcwa permutation of Z_( 2 ) with modulus 2, of order infinity
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Indeterminate(GF(8),1);; SetName(x,"x");</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PolynomialRing(GF(8),1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(ClassRotation(1,x,Z(8)*One(R)));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cr := ClassRotation(1,x,Z(8)*One(R)); Support(cr);</span>
+ClassRotation( 1(x), Z(2^3) )
+1(x) \ [ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(cr);</span>
 
 Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
 
@@ -310,7 +327,6 @@ Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
  P |-&gt; &lt;  P                   otherwise
         |
         \
-
 
 </pre></div>
 
@@ -377,7 +393,7 @@ Rcwa permutation of GF(2^3)[x] with modulus x, of order 7
 
 </dd>
 <dt><strong class="Mark">(j)</strong></dt>
-<dd><p>the rcwa permutation of ℤ given by the arithmetical expression <var class="Arg">expression</var> -- a string consisting of class transpositions (e.g. <code class="code">"(0(2),1(4))"</code>), class shifts (e.g. <code class="code">"(4(6))"</code>, class reflections (e.g. <code class="code">"[3(4)]"</code>), arithmetical operators (<code class="code">"*"</code>, <code class="code">"/"</code> and <code class="code">"^"</code>) and brackets (<code class="code">"("</code>, <code class="code">")"</code>),</p>
+<dd><p>the rcwa permutation of ℤ given by the arithmetical expression <var class="Arg">expression</var> -- a string consisting of class transpositions (e.g. <code class="code">"(0(2),1(4))"</code>) or cycles permuting residue classes (e.g. <code class="code">"(0(2),1(8),3(4),5(8))"</code>), class shifts (e.g. <code class="code">"cs(4(6))"</code>, class reflections (e.g. <code class="code">"cr(3(4))"</code>), arithmetical operators (<code class="code">"*"</code>, <code class="code">"/"</code> and <code class="code">"^"</code>) and brackets (<code class="code">"("</code>, <code class="code">")"</code>),</p>
 
 </dd>
 </dl>
@@ -394,7 +410,7 @@ Rcwa mapping of Z_( 2 ): n -&gt; 1/3 n
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)</span>
 &lt;rcwa mapping of Z with modulus 3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RcwaMapping((1,2,3),[1..4]);                                   # (d)</span>
-&lt;rcwa permutation of Z with modulus 4, of order 3&gt;
+( 1(4), 2(4), 3(4) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);                  # (e)</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RcwaMapping([2],[[1/3,0,1]]);                                  # (f)</span>
@@ -405,13 +421,13 @@ Rcwa mapping of Z_( 2 ): n -&gt; 1/3 n
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                   List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)</span>
-&lt;rcwa permutation of Z with modulus 16, of order 4&gt;
+( 0(2), 1(4), 3(8), 7(16) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cycle(last,ResidueClass(0,2));</span>
 [ 0(2), 1(4), 3(8), 7(16) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := RcwaMapping("((0(4),1(6))*(0(6))^-4*[2(4)])^2/(2(8))");   # (j)</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := RcwaMapping("((0(4),1(6))*cr(0(6)))^2/cs(2(8))");         # (j)</span>
 &lt;rcwa permutation of Z with modulus 72&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g = (   ClassTransposition(0,4,1,6) * ClassShift(0,6)^-4</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">         * ClassReflection(2,4) )^2 / ClassShift(2,8);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g = (ClassTransposition(0,4,1,6) * ClassReflection(0,6))^2/</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        ClassShift(2,8);</span>
 true
 
 </pre></div>
@@ -439,7 +455,7 @@ true
 
 </pre></div>
 
-<p>Rcwa mappings can be <code class="code">View</code>ed, <code class="code">Display</code>ed, <code class="code">Print</code>ed and written to a <code class="code">String</code>. The output of the <code class="code">View</code> method is kept reasonably short. In most cases it does not describe an rcwa mapping completely. In these cases the output is enclosed in brackets. The output of the methods for <code class="code">Display</code> and <code class="code">Print</code> describe an rcwa mapping in full. The <code class="code">Print</code>ed representation of an rcwa mapping is <strong class="pkg">GAP</strong> - readable if and only if the <code class="code">Print</code>ed representation of the elements of the underlying ring is so.</p>
+<p>Rcwa mappings can be <code class="code">View</code>ed, <code class="code">Display</code>ed, <code class="code">Print</code>ed and written to a <code class="code">String</code>. The output of the <code class="code">View</code> method is kept reasonably short. In most cases it does not describe an rcwa mapping completely. In these cases the output is enclosed in brackets. There are options <code class="code">CycleNotation</code>, <code class="code">PrintNotation</code> and <code class="code">AbridgedNotation</code> to take influence on how certain rcwa mappings are shown. These options can either be not set, set to <code class="code">true</code> or set to <code class="code">false</code>. If the option <code class="code">CycleNotation</code> is set, it is tried harder to write down an rcwa permutation of ℤ of finite order as a product of disjoint residue class cycles, if this is possible. The option <code class="code">PrintNotation</code> influences the output in favour of <strong class="pkg">GAP</strong> - readability, and the option <code class="code">AbridgedNotation</code> can be used to abridge longer names like <code class="code">ClassShift</code>, <code class="code">ClassReflection</code> etc.. The output of the methods for <code class="code">Display</code> and <code class="code">Print</code> describes an rcwa mapping in full. The <code class="code">Print</code>ed representation of an rcwa mapping is <strong class="pkg">GAP</strong> - readable if and only if the <code class="code">Print</code>ed representation of the elements of the underlying ring is so.</p>
 
 <p>There is also an operation <code class="code">LaTeXStringRcwaMapping</code>, which takes as argument an rcwa mapping and returns a corresponding LaTeX string. The output makes use of the LaTeX macro package <strong class="pkg">amsmath</strong>. If the option <var class="Arg">Factorization</var> is set and the argument is bijective, a factorization into class shifts, class reflections, class transpositions and prime switches is printed (cf. <code class="func">FactorizationIntoCSCRCT</code> (<a href="chap2.html#X853885A182EC5104"><span class="RefLink">2.5-1</span></a>)). For rcwa mappings with modulus greater than 1, an indentation by <var class="Arg">Indentation</var> characters can be obtained by setting this option value accordingly.</p>
 
@@ -749,12 +765,12 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factorization(Comm(ClassShift(0,3)*ClassReflection(1,2),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      ClassShift(0,2)));</span>
-[ ClassReflection(2,3), ClassShift(2,6)^-1, ClassTransposition(0,6,2,6), 
-  ClassTransposition(0,6,5,6) ]
+[ ClassReflection( 2(3) ), ClassShift( 2(6) )^-1, ( 0(6), 2(6) ), 
+  ( 0(6), 5(6) ) ]
 
 </pre></div>
 
-<p>For purposes of demonstrating the capabilities of the factorization routine, in Section <a href="chap7.html#X86C2BAE3876985A6"><span class="RefLink">7.3</span></a> Collatz' permutation is factored. Lothar Collatz has investigated this permutation in 1932. Its cycle structure is unknown so far.</p>
+<p>For purposes of demonstrating the capabilities of the factorization routine, in Section <a href="chap7.html#X86C2BAE3876985A6"><span class="RefLink">7.2</span></a> Collatz' permutation is factored. Lothar Collatz has investigated this permutation in 1932. Its cycle structure is unknown so far.</p>
 
 <p>The permutations of the following kind play an important role in factoring rcwa permutations of ℤ into class shifts, class reflections and class transpositions:</p>
 
@@ -786,9 +802,8 @@ Wild rcwa permutation of Z with modulus 12
         \
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factorization(PrimeSwitch(3));</span>
-[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), 
-  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), 
-  ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ]
+[ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), 
+  ( 2(6), 1(12) ), ( 4(6), 7(12) ) ]
 
 </pre></div>
 
@@ -818,7 +833,6 @@ Wild rcwa permutation of Z with modulus 5
         | (6n-4)/5 if n in 4(5)
         \
 
-
 </pre></div>
 
 <p>In his article, Timothy P. Keller shows that a permutation of this type cannot have infinitely many cycles of any given finite length.</p>
@@ -842,10 +856,10 @@ Wild rcwa permutation of Z with modulus 5
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Root(ClassTransposition(0,2,1,2),100);</span>
-&lt;rcwa permutation of Z with modulus 8&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);</span>
+( 0(8), 2(8), 4(8), 6(8), 1(8), 3(8), 5(8), 7(8) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last:CycleNotation:=false);</span>
 
-Rcwa permutation of Z with modulus 8
+Tame rcwa permutation of Z with modulus 8
 
         /
         | n+2 if n in Z \ 6(8) U 7(8)
@@ -905,7 +919,6 @@ Rcwa mapping of Z with modulus 2
  n |-&gt; &lt;  (n-1)/2 if n in 1(2)
         |
         \
-
 
 </pre></div>
 

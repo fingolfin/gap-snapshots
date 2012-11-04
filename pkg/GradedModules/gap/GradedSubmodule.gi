@@ -149,6 +149,17 @@ InstallMethod( Saturate,
     
 end );
 
+##
+InstallMethod( RadicalIdealMembership,
+        "for a homogeneous ideal and an element",
+        [ IsHomalgRingElement, IsGradedSubmoduleRep ],
+        
+  function( M, I )
+    
+    return RadicalIdealMembership( UnderlyingNonGradedRingElement( M ), UnderlyingModule( I ) );
+    
+end );
+
 ####################################
 #
 # constructor functions and methods:

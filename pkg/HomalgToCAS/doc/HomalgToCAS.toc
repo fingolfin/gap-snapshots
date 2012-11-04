@@ -12,3 +12,5 @@
 \contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Rings: Constructors}}{18}{section.4.2}
 \contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }External Rings: Operations and Functions}}{18}{section.4.3}
 \contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }Overview of the \textsf {homalg} Package Source Code}}{19}{appendix.A}
+\contentsline {chapter}{References}{20}{appendix*.4}
+\contentsline {chapter}{Index}{21}{section*.5}

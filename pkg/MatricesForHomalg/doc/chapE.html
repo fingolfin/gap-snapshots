@@ -9,20 +9,23 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chapE"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapD.html">D</a>  <a href="chapE.html">E</a>  <a href="chapF.html">F</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chapD.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapF.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chapD.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapF.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X82D40F3183F4F259" name="X82D40F3183F4F259"></a></p>
-<div class="ChapSects"><a href="chapE.html#X82D40F3183F4F259">E <span class="Heading">Debugging <strong class="pkg">MatricesForHomalg</strong></span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chapE.html#X8062637283DD739D">E.1 <span class="Heading">Increase the assertion level</span></a>
-<div class="ContSSBlock">
-</div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chapE.html#X81D8EB2A7CE587C6">E.2 <span class="Heading"><code class="code">Using homalgMode</code></span></a>
+<p><a id="X7A7670B27F594061" name="X7A7670B27F594061"></a></p>
+<div class="ChapSects"><a href="chapE.html#X7A7670B27F594061">E <span class="Heading">Debugging <strong class="pkg">MatricesForHomalg</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapE.html#X8062637283DD739D">E.1 <span class="Heading">Increase the assertion level</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapE.html#X86954B797AAF65DF">E.2 <span class="Heading"><code class="code">Using homalgMode</code></span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapE.html#X7D07F29F7EB515EE">E.2-1 homalgMode</a></span>
 </div></div>
@@ -30,13 +33,13 @@
 
 <h3>E <span class="Heading">Debugging <strong class="pkg">MatricesForHomalg</strong></span></h3>
 
-<p>Beside the <strong class="pkg">GAP</strong> builtin debugging facilities (--&gt; <a href="/opt/gap4r4p12/doc/htm/tut/CHAP009.htm#SECT019"><b>Tutorial: Debugging</b></a>) <strong class="pkg">MatricesForHomalg</strong> provides two ways to debug the computations.</p>
+<p>Beside the <strong class="pkg">GAP</strong> builtin debugging facilities (--&gt; <a href="/Users/mo/software/gap/gap4r5/doc/ref/chap7_mj.html#X8345F6817DFD6394"><span class="RefLink">Reference: Debugging and Profiling Facilities</span></a>) <strong class="pkg">MatricesForHomalg</strong> provides two ways to debug the computations.</p>
 
 <p><a id="X8062637283DD739D" name="X8062637283DD739D"></a></p>
 
 <h4>E.1 <span class="Heading">Increase the assertion level</span></h4>
 
-<p><strong class="pkg">MatricesForHomalg</strong> comes with numerous builtin assertion checks. They are activated if the user increases the assertion level using <br /> <br /> <code class="code">SetAssertionLevel</code>( <var class="Arg">level</var> ); <br /> <br /> (--&gt; <a href="/opt/gap4r4p12/doc/htm/ref/CHAP007.htm#SECT005"><b>Reference: SetAssertionLevel</b></a>), where <var class="Arg">level</var> is one of the values below:</p>
+<p><strong class="pkg">MatricesForHomalg</strong> comes with numerous builtin assertion checks. They are activated if the user increases the assertion level using <br /> <br /> <code class="code">SetAssertionLevel</code>( <var class="Arg">level</var> ); <br /> <br /> (--&gt; <a href="/Users/mo/software/gap/gap4r5/doc/ref/chap7_mj.html#X7C7596418423660B"><span class="RefLink">Reference: SetAssertionLevel</span></a>), where <var class="Arg">level</var> is one of the values below:</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <tr>
@@ -57,7 +60,7 @@
 </tr>
 <tr>
 <td class="tdleft">4</td>
-<td class="tdleft">assertions about basic matrix operations are checked (--&gt; Appendix <a href="chapA.html#X7CB422647C7DD289"><b>A</b></a>)</td>
+<td class="tdleft">assertions about basic matrix operations are checked (--&gt; Appendix <a href="chapA.html#X7CB422647C7DD289"><span class="RefLink">A</span></a>)</td>
 </tr>
 <tr>
 <td class="tdleft"></td>
@@ -73,8 +76,7 @@
 <p>In particular, if <strong class="pkg">MatricesForHomalg</strong> delegates matrix operations to an external system then <code class="code">SetAssertionLevel</code>( 4 ); can be used to let <strong class="pkg">MatricesForHomalg</strong> debug the external system. <br /> <br /> Below you can find the record of the available level-4 assertions, which is a <strong class="pkg">GAP</strong>-component of every <strong class="pkg">homalg</strong> ring. Each assertion can thus be overwritten by package developers or even ordinary users.</p>
 
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 asserts :=
   rec(
       BasisOfRowModule :=
@@ -158,9 +160,9 @@ asserts :=
         end,
       
      );
-</pre></td></tr></table>
+</pre></div>
 
-<p><a id="X81D8EB2A7CE587C6" name="X81D8EB2A7CE587C6"></a></p>
+<p><a id="X86954B797AAF65DF" name="X86954B797AAF65DF"></a></p>
 
 <h4>E.2 <span class="Heading"><code class="code">Using homalgMode</code></span></h4>
 
@@ -168,8 +170,8 @@ asserts :=
 
 <h5>E.2-1 homalgMode</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; homalgMode</code>( <var class="Arg">str[, str2]</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<p>This function sets different modes which influence how much of the basic matrix operations and the logical matrix methods become visible (--&gt; Appendices <a href="chapA.html#X7CB422647C7DD289"><b>A</b></a>, <a href="chapC.html#X8222352C78A19214"><b>C</b></a>). Handling the string <var class="Arg">str</var> is <em>not</em> case-sensitive. If a second string <var class="Arg">str2</var> is given, then <code class="code">homalgMode</code>( <var class="Arg">str2</var> ) is invoked at the end. In case you let <strong class="pkg">homalg</strong> delegate matrix operations to an external system the you might also want to check <code class="code">homalgIOMode</code> in the <strong class="pkg">HomalgToCAS</strong> package manual.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; homalgMode</code>( <var class="Arg">str</var>[, <var class="Arg">str2</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<p>This function sets different modes which influence how much of the basic matrix operations and the logical matrix methods become visible (--&gt; Appendices <a href="chapA.html#X7CB422647C7DD289"><span class="RefLink">A</span></a>, <a href="chapC.html#X8222352C78A19214"><span class="RefLink">C</span></a>). Handling the string <var class="Arg">str</var> is <em>not</em> case-sensitive. If a second string <var class="Arg">str2</var> is given, then <code class="code">homalgMode</code>( <var class="Arg">str2</var> ) is invoked at the end. In case you let <strong class="pkg">homalg</strong> delegate matrix operations to an external system the you might also want to check <code class="code">homalgIOMode</code> in the <strong class="pkg">HomalgToCAS</strong> package manual.</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <tr>
@@ -233,8 +235,7 @@ asserts :=
 <p>All modes other than the "default"-mode only set their specific values and leave the other values untouched, which allows combining them to some extent. This also means that in order to get from one mode to a new mode (without the aim to combine them) one needs to reset to the "default"-mode first. This can be done using <code class="code">homalgMode</code>( "", new_mode );</p>
 
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 InstallGlobalFunction( homalgMode,
   function( arg )
     local nargs, mode, s;
@@ -282,10 +283,10 @@ InstallGlobalFunction( homalgMode,
     fi;
     
 end );
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chapD.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapF.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chapD.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapF.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapD.html">D</a>  <a href="chapE.html">E</a>  <a href="chapF.html">F</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

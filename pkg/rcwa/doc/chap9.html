@@ -37,7 +37,31 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8314E1597BF1555B">9.4-1 RCWATestInstall</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X877DDD787E4ABDC2">9.4-2 RCWATestAll</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X799793987AA3F34C">9.4-3 RCWATestExamples</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7A31FA44791E93C5">9.5 <span class="Heading">The Info class of the package</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7BAF5F4986288983">9.5-1 InfoRCWA</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X85E215DB85F610ED">9.6 <span class="Heading">Running demonstrations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X850524E47E3DB78D">9.6-1 RunDemonstration</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7C7AB20486E56B83">9.7 <span class="Heading">Loading and saving bitmap pictures</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X81DE1E838615C214">9.7-1 SaveAsBitmapPicture</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7ED9DEDA83B2BA05">9.8 <span class="Heading">Converting GAP logfiles to HTML</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X87F813817B353844">9.8-1 Log2HTML</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X808A30E37A293D19">9.9 <span class="Heading">Some general utility functions</span></a>
+</span>
+</div>
 </div>
 
 <h3>9 <span class="Heading">Installation and Auxiliary Functions</span></h3>
@@ -46,7 +70,7 @@
 
 <h4>9.1 <span class="Heading">Requirements</span></h4>
 
-<p>This version of <strong class="pkg">RCWA</strong> needs at least <strong class="pkg">GAP</strong> 4.5.2, <strong class="pkg">ResClasses</strong> 3.1.0, <strong class="pkg">GRAPE</strong> 4.3 <a href="chapBib.html#biBGRAPE">[Soi06]</a>, <strong class="pkg">Polycyclic</strong> 2.6 <a href="chapBib.html#biBPolycyclic">[EN09]</a> and <strong class="pkg">GAPDoc</strong> 1.4 <a href="chapBib.html#biBGAPDoc">[LN11]</a>. With possible exception of the most recent version of <strong class="pkg">ResClasses</strong>, all needed packages are already present in an up-to-date standard <strong class="pkg">GAP</strong> installation. The <strong class="pkg">RCWA</strong> package can be used under UNIX, under Windows and on the MacIntosh. It is completely written in the <strong class="pkg">GAP</strong> language and does neither contain nor require external binaries. In particular, warnings concerning missing binaries issued by <strong class="pkg">GRAPE</strong> or other packages can safely be ignored.</p>
+<p>This version of <strong class="pkg">RCWA</strong> needs at least <strong class="pkg">GAP</strong> 4.5.2, <strong class="pkg">ResClasses</strong> 3.2.0, <strong class="pkg">GRAPE</strong> 4.3 <a href="chapBib.html#biBGRAPE">[Soi06]</a>, <strong class="pkg">Polycyclic</strong> 2.6 <a href="chapBib.html#biBPolycyclic">[EN09]</a> and <strong class="pkg">GAPDoc</strong> 1.4 <a href="chapBib.html#biBGAPDoc">[LN11]</a>. With possible exception of the most recent version of <strong class="pkg">ResClasses</strong>, all needed packages are already present in an up-to-date standard <strong class="pkg">GAP</strong> installation. The <strong class="pkg">RCWA</strong> package can be used under UNIX, under Windows and on the MacIntosh. It is completely written in the <strong class="pkg">GAP</strong> language and does neither contain nor require external binaries. In particular, warnings concerning missing binaries issued by <strong class="pkg">GRAPE</strong> or other packages can safely be ignored.</p>
 
 <p><a id="X8360C04082558A12" name="X8360C04082558A12"></a></p>
 
@@ -92,6 +116,15 @@
 <p>Runs the full test suite of the <strong class="pkg">RCWA</strong> package. Any differences to the supposed results of the test computations are reported. The processed test file is <code class="file">pkg/rcwa/tst/testall.g</code>.</p>
 
 <p>Please note that the test suite is a tool for developing. The tests are deliberately very volatile to allow to spot possible problems of any kind also in other packages or in the <strong class="pkg">GAP</strong> Library. For this reason you may see reports of differences which simply reflect improved methods in other packages or in the <strong class="pkg">GAP</strong> Library (for example an object may already know more of its attributes or properties than it is expected to, or an object may be represented in a better way), or which are caused by changes of the way certain objects are printed, and which are therefore harmless. However if the correct and the actual output look different mathematically or if you see error messages or if <strong class="pkg">GAP</strong> crashes, then something went wrong. Also, reports about significantly increased run times of individual commands as well as run times of test files which are much longer than the predicted times shown may indicate a problem.</p>
+
+<p><a id="X799793987AA3F34C" name="X799793987AA3F34C"></a></p>
+
+<h5>9.4-3 RCWATestExamples</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RCWATestExamples</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: nothing.</p>
+
+<p>Runs all examples in the manual of the <strong class="pkg">RCWA</strong> package, and reports any differences between the actual output and the output printed in the manual.</p>
 
 <p><a id="X7A31FA44791E93C5" name="X7A31FA44791E93C5"></a></p>
 

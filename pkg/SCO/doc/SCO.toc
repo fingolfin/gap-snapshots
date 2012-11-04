@@ -26,7 +26,9 @@
 \contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }BoundaryOperator}}{14}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }CreateBoundaryMatrices}}{14}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }Homology}}{14}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }CreateCoboundaryMatrices}}{15}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }CreateCoboundaryMatrices}}{14}{subsection.4.3.4}
 \contentsline {subsection}{\numberline {4.3.5}\leavevmode {\color {Chapter }Cohomology}}{15}{subsection.4.3.5}
 \contentsline {subsection}{\numberline {4.3.6}\leavevmode {\color {Chapter }SCO{\textunderscore }Examples}}{15}{subsection.4.3.6}
 \contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }An Overview of the \textsf {SCO} package source code}}{17}{appendix.A}
+\contentsline {chapter}{References}{18}{appendix*.5}
+\contentsline {chapter}{Index}{19}{section*.6}

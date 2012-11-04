@@ -98,7 +98,7 @@
 {\Huge \textbf{A \textsf{GAP} package for handling convex objects.\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.09.15\mbox{}}\\[1cm]
+{\Huge Version 2012.10.30\mbox{}}\\[1cm]
 {August 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
@@ -420,18 +420,18 @@ a pointer
 
  
 
-\subsection{\textcolor{Chapter }{IsSimplicial}}
+\subsection{\textcolor{Chapter }{IsSimplicial (for a fan)}}
 \logpage{[ 4, 2, 5 ]}\nobreak
-\hyperdef{L}{X87403A3586CAAEC0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsSimplicial({\mdseries\slshape poly})\index{IsSimplicial@\texttt{IsSimplicial}}
-\label{IsSimplicial}
+\hyperdef{L}{X863CBF607A2AD000}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsSimplicial({\mdseries\slshape fan})\index{IsSimplicial@\texttt{IsSimplicial}!for a fan}
+\label{IsSimplicial:for a fan}
 }\hfill{\scriptsize (property)}}\\
 \textbf{\indent Returns:\ }
 \texttt{true} or \texttt{false}
 
 
 
- Checks if the polytope \mbox{\texttt{\mdseries\slshape poly}} is simplicial. }
+ Checks if the fan \mbox{\texttt{\mdseries\slshape fan}} is simplicial, i. e. if every cone in the fan is simplicial. }
 
  
 
@@ -526,11 +526,11 @@ a list
 {
   
 
-\subsection{\textcolor{Chapter }{*}}
+\subsection{\textcolor{Chapter }{* (for fans)}}
 \logpage{[ 4, 4, 1 ]}\nobreak
-\hyperdef{L}{X7857704878577048}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{*({\mdseries\slshape fan1, fan2})\index{*@\texttt{*}}
-\label{*}
+\hyperdef{L}{X846E545D78D769B8}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{*({\mdseries\slshape fan1, fan2})\index{*@\texttt{*}!for fans}
+\label{*:for fans}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a fan
@@ -548,11 +548,11 @@ a fan
 {
   
 
-\subsection{\textcolor{Chapter }{Fan}}
+\subsection{\textcolor{Chapter }{Fan (For Fans)}}
 \logpage{[ 4, 5, 1 ]}\nobreak
-\hyperdef{L}{X80D0196B80DC94F3}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Fan({\mdseries\slshape fan})\index{Fan@\texttt{Fan}}
-\label{Fan}
+\hyperdef{L}{X7C3F2E73846549A2}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Fan({\mdseries\slshape fan})\index{Fan@\texttt{Fan}!For Fans}
+\label{Fan:For Fans}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a fan
@@ -560,6 +560,21 @@ a fan
 
 
  Copy constructor for fans. For completeness reasons. }
+
+ 
+
+\subsection{\textcolor{Chapter }{Fan (For a list of rays and a list of cones)}}
+\logpage{[ 4, 5, 2 ]}\nobreak
+\hyperdef{L}{X79EAB2B5838C6F1A}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Fan({\mdseries\slshape rays, cones})\index{Fan@\texttt{Fan}!For a list of rays and a list of cones}
+\label{Fan:For a list of rays and a list of cones}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a fan
+
+
+
+ Constructs the fan out of the given \mbox{\texttt{\mdseries\slshape rays}} and a list of \mbox{\texttt{\mdseries\slshape cones}} given by a lists of numbers of rays. }
 
  }
 
@@ -677,11 +692,11 @@ a cone
 
  
 
-\subsection{\textcolor{Chapter }{DualCone}}
+\subsection{\textcolor{Chapter }{HilbertBasis}}
 \logpage{[ 5, 3, 2 ]}\nobreak
-\hyperdef{L}{X8635EC787FEBB3FD}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DualCone({\mdseries\slshape cone})\index{DualCone@\texttt{DualCone}}
-\label{DualCone}
+\hyperdef{L}{X7D549E567C52DCB5}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HilbertBasis({\mdseries\slshape cone})\index{HilbertBasis@\texttt{HilbertBasis}}
+\label{HilbertBasis}
 }\hfill{\scriptsize (attribute)}}\\
 \textbf{\indent Returns:\ }
 a list
@@ -851,11 +866,11 @@ a cone
 
  
 
-\subsection{\textcolor{Chapter }{StarFan}}
+\subsection{\textcolor{Chapter }{StarFan (for a cone)}}
 \logpage{[ 5, 4, 3 ]}\nobreak
-\hyperdef{L}{X81900E657AFCEC82}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{StarFan({\mdseries\slshape cone})\index{StarFan@\texttt{StarFan}}
-\label{StarFan}
+\hyperdef{L}{X7C7CF17887D7D27E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{StarFan({\mdseries\slshape cone})\index{StarFan@\texttt{StarFan}!for a cone}
+\label{StarFan:for a cone}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a fan
@@ -866,11 +881,11 @@ a fan
 
  
 
-\subsection{\textcolor{Chapter }{StarFan}}
+\subsection{\textcolor{Chapter }{StarFan (for a cone and a fan)}}
 \logpage{[ 5, 4, 4 ]}\nobreak
-\hyperdef{L}{X81900E657AFCEC82}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{StarFan({\mdseries\slshape cone, fan})\index{StarFan@\texttt{StarFan}}
-\label{StarFan}
+\hyperdef{L}{X84CFDA0883327BB0}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{StarFan({\mdseries\slshape cone, fan})\index{StarFan@\texttt{StarFan}!for a cone and a fan}
+\label{StarFan:for a cone and a fan}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a fan
@@ -903,11 +918,11 @@ a fan
 {
   
 
-\subsection{\textcolor{Chapter }{Cone}}
+\subsection{\textcolor{Chapter }{Cone (for a ray list)}}
 \logpage{[ 5, 5, 1 ]}\nobreak
-\hyperdef{L}{X822975FC7F646FE5}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cone({\mdseries\slshape cone})\index{Cone@\texttt{Cone}}
-\label{Cone}
+\hyperdef{L}{X8044339D7E71010B}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cone({\mdseries\slshape cone})\index{Cone@\texttt{Cone}!for a ray list}
+\label{Cone:for a ray list}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a cone
@@ -932,18 +947,18 @@ a cone
 \begin{Verbatim}[commandchars=!@E,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>E !gapinput@C := Cone([[1,2,3],[2,1,1],[1,0,0],[0,1,1]]);E
   <A cone in |R^3>
-  !gapprompt@gap>E !gapinput@RayGenerators( C );E
-  [ [ 1, 2, 3 ], [ 1, 0, 0 ], [ 0, 1, 1 ] ]
+  !gapprompt@gap>E !gapinput@Length( RayGenerators( C ) );E
+  3
   !gapprompt@gap>E !gapinput@IsSmooth( C );E
   true
-  !gapprompt@gap>E !gapinput@HilbertBasis( C );E
-  [ [ 1, 0, 0 ], [ 0, 1, 1 ], [ 1, 2, 3 ] ]
+  !gapprompt@gap>E !gapinput@Length( HilbertBasis( C ) );E
+  3
   !gapprompt@gap>E !gapinput@IsSimplicial( C );E
   true
   !gapprompt@gap>E !gapinput@DC := DualCone( C );E
   <A cone in |R^3>
-  !gapprompt@gap>E !gapinput@HilbertBasis( DC );E
-  [ [ 1, 1, -1 ], [ 0, 3, -2 ], [ 0, -1, 1 ] ]
+  !gapprompt@gap>E !gapinput@Length( HilbertBasis( DC ) );E
+  3
 \end{Verbatim}
 }
 
@@ -1045,11 +1060,11 @@ a cone
 
  
 
-\subsection{\textcolor{Chapter }{IsSimplicial}}
+\subsection{\textcolor{Chapter }{IsSimplicial (for a polytope)}}
 \logpage{[ 6, 2, 5 ]}\nobreak
-\hyperdef{L}{X87403A3586CAAEC0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsSimplicial({\mdseries\slshape poly})\index{IsSimplicial@\texttt{IsSimplicial}}
-\label{IsSimplicial}
+\hyperdef{L}{X7AB9716B7DFE7CCF}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsSimplicial({\mdseries\slshape poly})\index{IsSimplicial@\texttt{IsSimplicial}!for a polytope}
+\label{IsSimplicial:for a polytope}
 }\hfill{\scriptsize (property)}}\\
 \textbf{\indent Returns:\ }
 \texttt{true} or \texttt{false}
@@ -1185,51 +1200,6 @@ a list
 
  Returns the lattice points in the relative interior of the polytope \mbox{\texttt{\mdseries\slshape poly}}. }
 
- 
-
-\subsection{\textcolor{Chapter }{DefiningInequalities}}
-\logpage{[ 6, 3, 8 ]}\nobreak
-\hyperdef{L}{X7CB1A6657B3B3550}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DefiningInequalities({\mdseries\slshape cone})\index{DefiningInequalities@\texttt{DefiningInequalities}}
-\label{DefiningInequalities}
-}\hfill{\scriptsize (attribute)}}\\
-\textbf{\indent Returns:\ }
-a list
-
-
-
- Returns a list of the defining inequalities of the cone \mbox{\texttt{\mdseries\slshape cone}}. }
-
- 
-
-\subsection{\textcolor{Chapter }{IsContainedInFan}}
-\logpage{[ 6, 3, 9 ]}\nobreak
-\hyperdef{L}{X857893CC7BFDE0E0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsContainedInFan({\mdseries\slshape cone})\index{IsContainedInFan@\texttt{IsContainedInFan}}
-\label{IsContainedInFan}
-}\hfill{\scriptsize (attribute)}}\\
-\textbf{\indent Returns:\ }
-a fan
-
-
-
- If the cone \mbox{\texttt{\mdseries\slshape cone}} is constructed as part of a fan, this method returns the fan. }
-
- 
-
-\subsection{\textcolor{Chapter }{FactorGridMorphism}}
-\logpage{[ 6, 3, 10 ]}\nobreak
-\hyperdef{L}{X7AA3F8617E28E7BD}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{FactorGridMorphism({\mdseries\slshape cone})\index{FactorGridMorphism@\texttt{FactorGridMorphism}}
-\label{FactorGridMorphism}
-}\hfill{\scriptsize (attribute)}}\\
-\textbf{\indent Returns:\ }
-a morphism
-
-
-
- Returns the morphism to the factor grid of the cone \mbox{\texttt{\mdseries\slshape cone}}. }
-
  }
 
  
@@ -1239,11 +1209,11 @@ a morphism
 {
   
 
-\subsection{\textcolor{Chapter }{*}}
+\subsection{\textcolor{Chapter }{* (for polytopes)}}
 \logpage{[ 6, 4, 1 ]}\nobreak
-\hyperdef{L}{X7857704878577048}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{*({\mdseries\slshape polytope1, polytope2})\index{*@\texttt{*}}
-\label{*}
+\hyperdef{L}{X87DA13AA8305F283}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{*({\mdseries\slshape polytope1, polytope2})\index{*@\texttt{*}!for polytopes}
+\label{*:for polytopes}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a polytope
@@ -1276,11 +1246,11 @@ a polytope
 {
   
 
-\subsection{\textcolor{Chapter }{Polytope}}
+\subsection{\textcolor{Chapter }{Polytope (for lists of points)}}
 \logpage{[ 6, 5, 1 ]}\nobreak
-\hyperdef{L}{X855106007DE72898}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Polytope({\mdseries\slshape points})\index{Polytope@\texttt{Polytope}}
-\label{Polytope}
+\hyperdef{L}{X86B877E378DF5E25}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Polytope({\mdseries\slshape points})\index{Polytope@\texttt{Polytope}!for lists of points}
+\label{Polytope:for lists of points}
 }\hfill{\scriptsize (operation)}}\\
 \textbf{\indent Returns:\ }
 a polytope

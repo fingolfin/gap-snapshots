@@ -1368,7 +1368,7 @@ InstallMethod( LeftInverseLazy,
                  ], HomalgRing( M ) );
     
     ## check assertion
-    Assert( 4, not IsBool( Eval( C ) ) );
+    Assert( 6, not IsBool( Eval( C ) ) );
     
     ## SetLeftInverse( M, C ) will cause a infinite loop
     
@@ -1403,7 +1403,7 @@ InstallMethod( RightInverseLazy,
                  ], HomalgRing( M ) );
     
     ## check assertion
-    Assert( 4, not IsBool( Eval( C ) ) );
+    Assert( 6, not IsBool( Eval( C ) ) );
     
     ## SetRightInverse( M, C )  will cause a infinite loop
     
@@ -1929,12 +1929,12 @@ InstallGlobalFunction( HomalgMatrix,
         fi;
         
         if IsBound(RP!.ImportMatrix) then
-            M := RP!.ImportMatrix( One( R ) * M, R!.ring );
+            M := RP!.ImportMatrix( M, R );
         fi;
     elif IsInternalMatrixHull( M ) then
         M := M!.matrix;
     elif IsMatrix( M ) and IsBound(RP!.ImportMatrix) then
-        M := RP!.ImportMatrix( One( R ) * M, R!.ring );
+        M := RP!.ImportMatrix( M, R );
     else
         M := ShallowCopy( M );	## by this we are sure that possible changes to a mutable GAP matrix arg[1] does not destroy the logic of homalg
     fi;

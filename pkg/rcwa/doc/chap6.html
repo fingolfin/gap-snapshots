@@ -98,7 +98,6 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
             |
             \
 
-
 </pre></div>
 
 <p><a id="X85DD85DF87DE47C9" name="X85DD85DF87DE47C9"></a></p>
@@ -153,11 +152,21 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
   [ 30720, 2 ], [ 38880, 12 ], [ 51840, 8 ], [ 77760, 32 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(data.trsstatus);</span>
 [ [ "&gt; 1 orbit (mod m)", 593 ], 
-  [ "Mod(U DecreasingOn) exceeded &lt;maxmod&gt;", 17 ], 
-  [ "U DecreasingOn stable for &lt;maxeq&gt; steps", 5937 ], 
-  [ "exceeded memory bound", 625 ], [ "finite", 21948 ], 
-  [ "finite orbits", 22999 ], [ "transitive", 264 ], 
-  [ "transitivity on small points unclear", 11 ] ]
+  [ "Mod(U DecreasingOn) exceeded &lt;maxmod&gt;", 23 ], 
+  [ "U DecreasingOn stable and exceeded memory bound", 35 ], 
+  [ "U DecreasingOn stable for &lt;maxeq&gt; steps", 5868 ], 
+  [ "exceeded memory bound", 601 ], [ "finite", 21948 ], 
+  [ "intransitive, but finitely many orbits", 8 ], 
+  [ "seemingly finite and infinite orbits (exponential growth)", 2981 ], 
+  [ "seemingly finite and infinite orbits (growth unclear)", 86 ], 
+  [ "seemingly finite and infinite orbits (linear growth)", 10877 ], 
+  [ "seemingly only finite orbits (long)", 778 ], 
+  [ "seemingly only finite orbits (medium)", 1395 ], 
+  [ "seemingly only finite orbits (short)", 4603 ], 
+  [ "seemingly only finite orbits (very long)", 1510 ], 
+  [ "seemingly only finite orbits (very long, very unclear)", 4 ], 
+  [ "seemingly only finite orbits (very short)", 765 ], 
+  [ "transitive", 319 ] ]
 
 </pre></div>
 
@@ -181,9 +190,9 @@ Rcwa mapping of Z^2 with modulus (1,0)Z+(0,6)Z
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">data := LoadDatabaseOfProductsOf2ClassTranspositions();;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RecNames(data);</span>
-[ "CTPairs", "CTPairsIntersectionTypes", "CTPairIntersectionType", 
-  "CTPairProductType", "CTPairsProductClassification", 
-  "CTPairsProductType" ]
+[ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", 
+  "CTPairIntersectionType", "CTPairProductType", 
+  "CTPairsProductClassification" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(data.CTPairs);</span>
 2346
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(List(data.CTPairsProductType,l-&gt;l[2])); # order statistics</span>

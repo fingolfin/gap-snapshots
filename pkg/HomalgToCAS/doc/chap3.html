@@ -9,21 +9,25 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap3"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap4.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X83F828CA834F6529" name="X83F828CA834F6529"></a></p>
 <div class="ChapSects"><a href="chap3.html#X83F828CA834F6529">3 <span class="Heading">Watch and Influence the Communication</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X86FA580F8055B274">3.1 <span class="Heading">Functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86FA580F8055B274">3.1 <span class="Heading">Functions</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X798522BD7B01027E">3.1-1 homalgIOMode</a></span>
 </div></div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X803B49FB7BB6A060">3.2 <span class="Heading">The Pictograms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X803B49FB7BB6A060">3.2 <span class="Heading">The Pictograms</span></a>
+</span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X862CF3DF79482869">3.2-1 HOMALG_IO.Pictograms</a></span>
 </div></div>
@@ -39,7 +43,7 @@
 
 <h5>3.1-1 homalgIOMode</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; homalgIOMode</code>( <var class="Arg">str[, str2[, str3]]</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; homalgIOMode</code>( <var class="Arg">str</var>[, <var class="Arg">str2</var>[, <var class="Arg">str3</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>This function sets different modes which influence how much of the communication becomes visible. Handling the string <var class="Arg">str</var> is <em>not</em> case-sensitive. <code class="code">homalgIOMode</code> invokes the global function <code class="code">homalgMode</code> defined in the <strong class="pkg">homalg</strong> package with an "appropriate" argument (see code below). Alternatively, if a second or more strings are given, then <code class="code">homalgMode</code> is invoked with the remaining strings <var class="Arg">str2</var>, <var class="Arg">str3</var>, ... at the end. In particular, you can use <code class="code">homalgIOMode</code>( <var class="Arg">str</var>, "" ) to reset the effect of invoking <code class="code">homalgMode</code>.</p>
 
 <div class="pcenter"><table class="GAPDocTable">
@@ -143,8 +147,7 @@
 </li>
 </ul>
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 InstallGlobalFunction( homalgIOMode,
   function( arg )
     local nargs, mode, s;
@@ -209,13 +212,12 @@ InstallGlobalFunction( homalgIOMode,
     fi;
     
 end );
-</pre></td></tr></table>
+</pre></div>
 
 <p>This is the part of the global function <code class="code">homalgSendBlocking</code> that controls the visibility of the communication.</p>
 
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 io_info_level := InfoLevel( InfoHomalgToCAS );
 
 if not IsBound( pictogram ) then
@@ -267,7 +269,7 @@ if io_info_level &gt;= 3 then
         Info( InfoHomalgToCAS, 3, pictogram );
     fi;
 fi;
-</pre></td></tr></table>
+</pre></div>
 
 <p><a id="X803B49FB7BB6A060" name="X803B49FB7BB6A060"></a></p>
 
@@ -277,12 +279,11 @@ fi;
 
 <h5>3.2-1 HOMALG_IO.Pictograms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; HOMALG_IO.Pictograms</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HOMALG_IO.Pictograms</code></td><td class="tdright">( global variable )</td></tr></table></div>
 <p>The record of pictograms is a component of the record <code class="code">HOMALG_IO</code>.</p>
 
 
-<table class="example">
-<tr><td><pre>
+<div class="example"><pre>
 Pictograms := rec(
   
   ##
@@ -700,10 +701,10 @@ Pictograms := rec(
   homalgLaTeX                             := "TeX",
   
 )
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap4.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

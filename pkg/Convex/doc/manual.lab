@@ -49,17 +49,18 @@
 \makelabel{convex:IsPointed}{4.2.2}{X843A31A57EAB734C}
 \makelabel{convex:IsSmooth}{4.2.3}{X86CBF5497EC15CFC}
 \makelabel{convex:IsRegularFan}{4.2.4}{X7838A553848AD380}
-\makelabel{convex:IsSimplicial}{4.2.5}{X87403A3586CAAEC0}
+\makelabel{convex:IsSimplicial (for a fan)}{4.2.5}{X863CBF607A2AD000}
 \makelabel{convex:HasConvexSupport}{4.2.6}{X8258DA9E820B9CF5}
 \makelabel{convex:Rays}{4.3.1}{X831FB73F86E6E4E9}
 \makelabel{convex:RayGenerators}{4.3.2}{X7CC22C4A85B6B51B}
 \makelabel{convex:RaysInMaximalCones}{4.3.3}{X80472C677CB77C5B}
 \makelabel{convex:MaximalCones}{4.3.4}{X8549BF0C78C9193B}
-\makelabel{convex:Fan}{4.5.1}{X80D0196B80DC94F3}
+\makelabel{convex:Fan (For Fans)}{4.5.1}{X7C3F2E73846549A2}
+\makelabel{convex:Fan (For a list of rays and a list of cones)}{4.5.2}{X79EAB2B5838C6F1A}
 \makelabel{convex:IsCone}{5.1.1}{X80DFE6EA8575A9B0}
 \makelabel{convex:IsRay}{5.2.1}{X793B0F3E86C039BC}
 \makelabel{convex:DualCone}{5.3.1}{X8635EC787FEBB3FD}
-\makelabel{convex:DualCone}{5.3.2}{X8635EC787FEBB3FD}
+\makelabel{convex:HilbertBasis}{5.3.2}{X7D549E567C52DCB5}
 \makelabel{convex:RaysInFacets}{5.3.3}{X840385CC7ACD01C4}
 \makelabel{convex:Facets}{5.3.4}{X7AFE6D2C82F73788}
 \makelabel{convex:GridGeneratedByCone}{5.3.5}{X7885EDAB80ED7705}
@@ -70,16 +71,16 @@
 \makelabel{convex:FactorGridMorphism}{5.3.10}{X7AA3F8617E28E7BD}
 \makelabel{convex:IntersectionOfCones}{5.4.1}{X803F0640808F0A4A}
 \makelabel{convex:Contains}{5.4.2}{X851A362E8584EE03}
-\makelabel{convex:StarFan}{5.4.3}{X81900E657AFCEC82}
-\makelabel{convex:StarFan}{5.4.4}{X81900E657AFCEC82}
+\makelabel{convex:StarFan (for a cone)}{5.4.3}{X7C7CF17887D7D27E}
+\makelabel{convex:StarFan (for a cone and a fan)}{5.4.4}{X84CFDA0883327BB0}
 \makelabel{convex:StarSubdivisionOfIthMaximalCone}{5.4.5}{X7E4D3AB37B384638}
-\makelabel{convex:Cone}{5.5.1}{X822975FC7F646FE5}
+\makelabel{convex:Cone (for a ray list)}{5.5.1}{X8044339D7E71010B}
 \makelabel{convex:IsPolytope}{6.1.1}{X81EA74AA7B4B6DDB}
 \makelabel{convex:IsNotEmpty}{6.2.1}{X87705F6D7B129879}
 \makelabel{convex:IsLatticePolytope}{6.2.2}{X79F588238781B2C9}
 \makelabel{convex:IsVeryAmple}{6.2.3}{X80A58559802BB02E}
 \makelabel{convex:IsNormalPolytope}{6.2.4}{X7C3C14CB83C98EFD}
-\makelabel{convex:IsSimplicial}{6.2.5}{X87403A3586CAAEC0}
+\makelabel{convex:IsSimplicial (for a polytope)}{6.2.5}{X7AB9716B7DFE7CCF}
 \makelabel{convex:IsSimplePolytope}{6.2.6}{X7F0DF19F82E6DEBD}
 \makelabel{convex:Vertices}{6.3.1}{X79E4BB4F849AC8A1}
 \makelabel{convex:LatticePoints}{6.3.2}{X7FFECA277E47A55B}
@@ -88,9 +89,6 @@
 \makelabel{convex:AffineCone}{6.3.5}{X7C3748B8878B799A}
 \makelabel{convex:NormalFan}{6.3.6}{X7D7E33B97A7B4039}
 \makelabel{convex:RelativeInteriorLatticePoints}{6.3.7}{X7E82C1C483269893}
-\makelabel{convex:DefiningInequalities}{6.3.8}{X7CB1A6657B3B3550}
-\makelabel{convex:IsContainedInFan}{6.3.9}{X857893CC7BFDE0E0}
-\makelabel{convex:FactorGridMorphism}{6.3.10}{X7AA3F8617E28E7BD}
 \makelabel{convex:}{6.4.2}{X8123456781234567}
-\makelabel{convex:Polytope}{6.5.1}{X855106007DE72898}
+\makelabel{convex:Polytope (for lists of points)}{6.5.1}{X86B877E378DF5E25}
 \makelabel{convex:PolytopeByInequalities}{6.5.2}{X7E8849CF87B77402}

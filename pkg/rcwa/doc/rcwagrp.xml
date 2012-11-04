@@ -145,7 +145,7 @@ This group is handled as a special case as well:
 <![CDATA[
 gap> CT_Z := CT(Integers);
 CT(Z)
-gap> IsSimple(CT_Z); # One of a longer list of stored attributes/properties.
+gap> IsSimple(CT_Z); # One of a number of stored attributes/properties.
 true
 gap> IsSubgroup(CT_Z,G);
 true
@@ -298,16 +298,15 @@ gap> Embedding(F2wrA5,1);
 [ <wild rcwa permutation of Z with modulus 40>,
   <wild rcwa permutation of Z with modulus 40> ]
 gap> Embedding(F2wrA5,2);
-[ (1,2,3,4,5), (3,4,5) ] ->
-[ <rcwa permutation of Z with modulus 5, of order 5>,
-  <rcwa permutation of Z with modulus 5, of order 3> ]
+[ (1,2,3,4,5), (3,4,5) ] -> [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
+  ( 2(5), 3(5), 4(5) ) ]
 gap> ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));
 <wild rcwa group over Z with 2 generators>
 gap> Embedding(ZwrZ,1);
-[ ClassShift(0,1) ] ->
+[ ClassShift( Z ) ] ->
 [ <tame rcwa permutation of Z with modulus 4, of order infinity> ]
 gap> Embedding(ZwrZ,2);
-[ ClassShift(0,1) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
+[ ClassShift( Z ) ] -> [ <wild rcwa permutation of Z with modulus 4> ]
 ]]>
 </Example>
   </Description>
@@ -554,8 +553,7 @@ computed by <C>IsomorphismPermGroup</C>:
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));;
 gap> IsomorphismPermGroup(G);
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ] -> 
-[ (1,2)(3,4)(5,6), (1,2)(4,5) ]
+[ ( 0(2), 1(2) ), ( 0(3), 1(3) ) ] -> [ (1,2)(3,4)(5,6), (1,2)(4,5) ]
 ]]>
 </Example>
 
@@ -975,7 +973,16 @@ to determine them:
     an option <A>finite</A>. If this option is set, it is assumed that all
     orbits are finite, in order to speed up the computation. If furthermore
     <A>maxlng</A> is negative, a list of <E>all</E> orbits which intersect
-    non-trivially with&nbsp;<A>S</A> is returned.
+    non-trivially with&nbsp;<A>S</A> is returned. <P/>
+
+    <Index Key="CyclesOnFiniteOrbit"><C>CyclesOnFiniteOrbit</C></Index>
+
+    There is an operation
+    <C>CyclesOnFiniteOrbit(</C><A>G</A><C>,</C><A>g</A><C>,</C><A>n</A><C>)</C>
+    which returns a list of all cycles of the rcwa permutation <A>g</A> on the
+    orbit of the point <A>n</A> under the action of the rcwa group <A>G</A>.
+    Here <A>g</A> is assumed to be an element of <A>G</A>, and the orbit
+    of <A>n</A> is assumed to be finite.
 <Example>
 <![CDATA[
 gap> G := Group(ClassTransposition(1,4,2,4)*ClassTransposition(1,4,3,4),
@@ -991,6 +998,11 @@ gap> ShortCycles(mKnot(7),[1..100],20);
   [ 35, 40 ], [ 37, 42, 48, 54, 47, 41, 46, 52, 45, 39, 44, 50, 43 ], 
   [ 77, 88, 100, 114, 130, 148, 127, 109, 124, 107, 122, 105, 120, 103, 
       89 ] ]
+gap> G := Group(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));;
+gap> CyclesOnFiniteOrbit(G,G.1*G.2,0);
+[ [ 0, 1, 4, 9, 8, 5 ], [ 6, 7 ], [ 10, 11, 14, 19, 18, 15 ], [ 12, 13 ] ]
+gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
+[ 3148, 3148 ]
 ]]>
 </Example>
   </Description>
@@ -1062,6 +1074,32 @@ gap> CycleRepresentativesAndLengths(g,[0..50]);
 [ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], 
   [ 20, 4 ], [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], 
   [ 38, 2 ], [ 40, 6 ], [ 44, 4 ], [ 46, 2 ], [ 50, 2 ] ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Often one also wants to know which residue classes an rcwa mapping
+or an rcwa group fixes setwise:
+
+<ManSection>
+  <Oper Name="FixedResidueClasses" Arg="g, maxmod"
+        Label="for rcwa mapping and bound on modulus"/>
+  <Oper Name="FixedResidueClasses" Arg="G, maxmod"
+        Label="for rcwa group and bound on modulus"/>
+  <Returns>
+    the set of residue classes with modulus greater than 1 and less
+    than or equal to <A>maxmod</A> which the rcwa mapping <A>g</A>,
+    respectively the rcwa group <A>G</A>, fixes setwise. 
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> FixedResidueClasses(ClassTransposition(0,2,1,4),8);
+[ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
+gap> FixedResidueClasses(Group(ClassTransposition(0,2,1,4),
+>                              ClassTransposition(0,3,1,3)),12);
+[ 2(3), 8(9), 11(12) ]
 ]]>
 </Example>
   </Description>
@@ -1236,12 +1274,10 @@ gives rise to proper quotients of the group:
 <![CDATA[
 gap> G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;
 gap> ProjectionsToInvariantUnionsOfResidueClasses(G,4);
-[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <rcwa permutation of Z with modulus 4>,
-      IdentityMapping( Integers ) ],
-  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] ->
-    [ <rcwa permutation of Z with modulus 4>,
-      <rcwa permutation of Z with modulus 4> ] ]
+[ [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 0(4), 1(4) ), IdentityMapping( Integers ) ], 
+  [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -> 
+    [ ( 2(4), 3(4) ), <rcwa permutation of Z with modulus 4> ] ]
 gap> List(last,phi->Support(Image(phi)));
 [ 0(4) U 1(4), 2(4) U 3(4) ]
 ]]>
@@ -1411,7 +1447,7 @@ gap> RankOfKernelOfActionOnRespectedPartition(G);
 gap> Index(G,K);
 6
 gap> List(GeneratorsOfGroup(K),Factorization);
-[ [ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
+[ [ ClassShift( 0(4) ) ], [ ClassShift( 2(4) ) ], [ ClassShift( 1(6) ) ] ]
 gap> Image(IsomorphismPcpGroup(K));
 Pcp-group with orders [ 0, 0, 0 ]
 ]]>
@@ -1487,8 +1523,8 @@ Rcwa permutation of Z with modulus 180
         | (n+1)/2   if n in 15(60) U 27(60) U 39(60) U 51(60)
         | (n+7)/2   if n in 19(60) U 31(60) U 43(60) U 55(60)
         | 3n+1      if n in 13(20)
-        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 95(180) U 
- n |-> <                    131(180) U 143(180) U 179(180)
+        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 
+ n |-> <                    95(180) U 131(180) U 143(180) U 179(180)
         | (-n-1)/6  if n in 11(180) U 47(180) U 83(180) U 155(180)
         | (-n+7)/2  if n in 3(60)
         | (n+3)/2   if n in 7(60)
@@ -1497,7 +1533,6 @@ Rcwa permutation of Z with modulus 180
         | (-n+29)/6 if n in 167(180)
         |
         \
-
 ]]>
 </Log>
 
@@ -1516,40 +1551,6 @@ gap> Factorization(elm);
   ClassReflection(1,2) ]
 ]]>
 </Log>
-
-There is an auxiliary function <C>ClassPairs([<A>R</A>,] <A>m</A>)</C>,
-which is used in this context.
-<Index Key="ClassPairs" Subkey="m"><C>ClassPairs</C></Index>
-<Index Key="ClassPairs" Subkey="R, m"><C>ClassPairs</C></Index>
-In its one-argument form, this function returns a list of 4-tuples
-<M>(r_1,m_1,r_2,m_2)</M> of integers corresponding to the unordered
-pairs of disjoint residue classes <M>r_1(m_1)</M> and <M>r_2(m_2)</M>
-with <M>m_1, m_2 \leq m</M>. In its two-argument form, it does
-<Q>the equivalent</Q> for the ring&nbsp;<A>R</A>.
-<Index Key="NrClassPairs" Subkey="m"><C>NrClassPairs</C></Index>
-The function <C>NrClassPairs(<A>m</A>)</C> returns the length of the
-list <C>ClassPairs(<A>m</A>)</C>, where the result is computed much
-faster and without actually generating the list of tuples.
-
-<Example>
-<![CDATA[
-gap> List(ClassPairs(4),ClassTransposition);
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4),
-  ClassTransposition(0,2,3,4), ClassTransposition(0,3,1,3),
-  ClassTransposition(0,3,2,3), ClassTransposition(0,4,1,4),
-  ClassTransposition(0,4,2,4), ClassTransposition(0,4,3,4),
-  ClassTransposition(1,2,0,4), ClassTransposition(1,2,2,4),
-  ClassTransposition(1,3,2,3), ClassTransposition(1,4,2,4),
-  ClassTransposition(1,4,3,4), ClassTransposition(2,4,3,4) ]
-gap> List(last,TransposedClasses);
-[ [ 0(2), 1(2) ], [ 0(2), 1(4) ], [ 0(2), 3(4) ], [ 0(3), 1(3) ],
-  [ 0(3), 2(3) ], [ 0(4), 1(4) ], [ 0(4), 2(4) ], [ 0(4), 3(4) ],
-  [ 1(2), 0(4) ], [ 1(2), 2(4) ], [ 1(3), 2(3) ], [ 1(4), 2(4) ],
-  [ 1(4), 3(4) ], [ 2(4), 3(4) ] ]
-gap> NrClassPairs(100);
-3528138
-]]>
-</Example>
 
 </Section>
 

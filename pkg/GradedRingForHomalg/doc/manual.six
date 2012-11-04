@@ -40,8 +40,8 @@ entries :=
       "X7D0D1E1E784C3BC7" ], [ "\033[2XAddToMatElm\033[102X (for matrices over graded rings)", "5.4-3", [ 5, 4, 3 ], 90, 11, "addtomatelm for matrices over graded rings", "X7B56EC5E8545C1B6" ], 
   [ "\033[2XMatElmAsString\033[102X (for matrices over graded rings)", "5.4-4", [ 5, 4, 4 ], 97, 11, "matelmasstring for matrices over graded rings", "X865E51967E6D0AD3" ], [ "\033[2XMatElm\033[102X (for matrices over graded rings)", "5.4-5", 
       [ 5, 4, 5 ], 105, 12, "matelm for matrices over graded rings", "X8028986083BEC896" ], [ "\033[2XMonomialMatrix\033[102X", "a.2-1", [ "A", 2, 1 ], 22, 14, "monomialmatrix", "X84C78C6B7C0890BF" ], 
-  [ "\033[2XRandomMatrixBetweenGradedFreeLeftModules\033[102X", "a.2-2", [ "A", 2, 2 ], 47, 15, "randommatrixbetweengradedfreeleftmodules", "X7F9F9C978703E871" ], [ "\033[2XRandomMatrixBetweenGradedFreeRightModules\033[102X", "a.2-3", [ "A", 2, 3 ], 66, 
-      15, "randommatrixbetweengradedfreerightmodules", "X82E813D982331C0B" ], [ "\033[2XDiff\033[102X", "a.2-4", [ "A", 2, 4 ], 84, 15, "diff", "X7EA1DC07822DE322" ], [ "\033[2XBasisOfRowModule\033[102X (for graded rings)", "b.1-1", [ "B", 1, 1 ], 17, 
+  [ "\033[2XRandomMatrixBetweenGradedFreeLeftModules\033[102X", "a.2-2", [ "A", 2, 2 ], 48, 15, "randommatrixbetweengradedfreeleftmodules", "X7F9F9C978703E871" ], [ "\033[2XRandomMatrixBetweenGradedFreeRightModules\033[102X", "a.2-3", [ "A", 2, 3 ], 67, 
+      15, "randommatrixbetweengradedfreerightmodules", "X82E813D982331C0B" ], [ "\033[2XDiff\033[102X", "a.2-4", [ "A", 2, 4 ], 85, 15, "diff", "X7EA1DC07822DE322" ], [ "\033[2XBasisOfRowModule\033[102X (for graded rings)", "b.1-1", [ "B", 1, 1 ], 17, 
       17, "basisofrowmodule for graded rings", "X7D9FBBDE794DE447" ], [ "\033[2XDecideZeroRows\033[102X (for graded rings)", "b.1-2", [ "B", 1, 2 ], 32, 17, "decidezerorows for graded rings", "X84C649FA7C820D49" ], 
   [ "\033[2XSyzygiesGeneratorsOfRows\033[102X (for graded rings)", "b.1-3", [ "B", 1, 3 ], 47, 18, "syzygiesgeneratorsofrows for graded rings", "X87D2B8748076B5DD" ] ]
 );

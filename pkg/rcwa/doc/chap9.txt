@@ -4,7 +4,7 @@
   
   [1X9.1 [33X[0;0YRequirements[133X[101X
   
-  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.5.2,  [5XResClasses[105X 3.1.0,
+  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.5.2,  [5XResClasses[105X 3.2.0,
   [5XGRAPE[105X 4.3 [Soi06],   [5XPolycyclic[105X 2.6 [EN09]   and   [5XGAPDoc[105X 1.4 [LN11].   With
   possible  exception  of  the  most  recent version of [5XResClasses[105X, all needed
   packages are already present in an up-to-date standard [5XGAP[105X installation. The
@@ -72,6 +72,14 @@
   reports  about  significantly  increased run times of individual commands as
   well  as  run  times  of test files which are much longer than the predicted
   times shown may indicate a problem.[133X
+  
+  [1X9.4-3 RCWATestExamples[101X
+  
+  [29X[2XRCWATestExamples[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YRuns  all  examples  in  the  manual  of  the  [5XRCWA[105X package, and reports any
+  differences between the actual output and the output printed in the manual.[133X
   
   
   [1X9.5 [33X[0;0YThe Info class of the package[133X[101X

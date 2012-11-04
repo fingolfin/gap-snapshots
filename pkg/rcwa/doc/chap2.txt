@@ -138,7 +138,6 @@
     [4X[28X        |[128X[104X
     [4X[28X        \[128X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
   [4X[32X[104X
   
   [1X2.2-2 ClassReflection[101X
@@ -166,7 +165,6 @@
     [4X[28X        |[128X[104X
     [4X[28X        \[128X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
   [4X[32X[104X
   
   [1X2.2-3 ClassTransposition[101X
@@ -191,6 +189,16 @@
   Enclosing  the  argument  list  in  list  brackets is permitted. The residue
   classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X are stored as an attribute [10XTransposedClasses[110X.[133X
   
+  [33X[0;0YA list of all class transpositions interchanging residue classes with moduli
+  less   than   or   equal   to   a   given   bound   [3Xm[103X  can  be  obtained  by
+  [10XList(ClassPairs([3Xm[103X[10X),ClassTransposition)[110X,   where   the   function  [10XClassPairs[110X
+  returns  a  list of all 4-tuples [22X(r_1,m_1,r_2,m_2)[122X of integers corresponding
+  to  the  unordered  pairs  of disjoint residue classes [22Xr_1(m_1)[122X and [22Xr_2(m_2)[122X
+  with  [22Xm_1[122X  and  [22Xm_2[122X  less than or equal to the specified bound. The function
+  [10XNrClassPairs([3Xm[103X[10X)[110X  returns  the  length  of  the list [10XClassPairs([3Xm[103X[10X)[110X, where the
+  result  is  computed much faster and without actually generating the list of
+  tuples.[133X
+  
   [33X[0;0YA  class  transposition can be written as a product of any given number [22Xk[122X of
   class   transpositions.   Such   a   decomposition   can   be   obtained  by
   [10XSplittedClassTransposition([3Xct[103X[10X,[3Xk[103X[10X)[110X.[133X
@@ -201,13 +209,27 @@
     [4X[28X[128X[104X
     [4X[28XRcwa permutation of Z with modulus 10, of order 2[128X[104X
     [4X[28X[128X[104X
+    [4X[28X( 1(2), 8(10) )[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ClassTransposition(1,2,8,10):CycleNotation:=false);[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XRcwa permutation of Z with modulus 10, of order 2[128X[104X
+    [4X[28X[128X[104X
     [4X[28X        /[128X[104X
     [4X[28X        | 5n+3    if n in 1(2)[128X[104X
     [4X[28X n |-> <  (n-3)/5 if n in 8(10)[128X[104X
     [4X[28X        | n       if n in 0(2) \ 8(10)[128X[104X
     [4X[28X        \[128X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XList(ClassPairs(4),ClassTransposition);[127X[104X
+    [4X[28X[ ( 0(2), 1(2) ), ( 0(2), 1(4) ), ( 0(2), 3(4) ), ( 0(3), 1(3) ), [128X[104X
+    [4X[28X  ( 0(3), 2(3) ), ( 0(4), 1(4) ), ( 0(4), 2(4) ), ( 0(4), 3(4) ), [128X[104X
+    [4X[28X  ( 1(2), 0(4) ), ( 1(2), 2(4) ), ( 1(3), 2(3) ), ( 1(4), 2(4) ), [128X[104X
+    [4X[28X  ( 1(4), 3(4) ), ( 2(4), 3(4) ) ][128X[104X
+    [4X[25Xgap>[125X [27XNrClassPairs(100);[127X[104X
+    [4X[28X3528138[128X[104X
+    [4X[25Xgap>[125X [27XSplittedClassTransposition(ClassTransposition(0,2,1,4),3);[127X[104X
+    [4X[28X[ ( 0(6), 1(12) ), ( 2(6), 5(12) ), ( 4(6), 9(12) ) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  set  of  all class transpositions of the ring of integers generates the
@@ -255,7 +277,10 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xx := Indeterminate(GF(8),1);; SetName(x,"x");[127X[104X
     [4X[25Xgap>[125X [27XR := PolynomialRing(GF(8),1);;[127X[104X
-    [4X[25Xgap>[125X [27XDisplay(ClassRotation(1,x,Z(8)*One(R)));[127X[104X
+    [4X[25Xgap>[125X [27Xcr := ClassRotation(1,x,Z(8)*One(R)); Support(cr);[127X[104X
+    [4X[28XClassRotation( 1(x), Z(2^3) )[128X[104X
+    [4X[28X1(x) \ [ 1 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(cr);[127X[104X
     [4X[28X[128X[104X
     [4X[28XRcwa permutation of GF(2^3)[x] with modulus x, of order 7[128X[104X
     [4X[28X[128X[104X
@@ -264,7 +289,6 @@
     [4X[28X P |-> <  P                   otherwise[128X[104X
     [4X[28X        |[128X[104X
     [4X[28X        \[128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -345,9 +369,10 @@
   [8X(j)[108X
         [33X[0;6Ythe  rcwa  permutation  of ℤ  given  by  the  arithmetical  expression
         [3Xexpression[103X  --  a  string  consisting  of  class  transpositions (e.g.
-        [10X"(0(2),1(4))"[110X),  class  shifts (e.g. [10X"(4(6))"[110X, class reflections (e.g.
-        [10X"[3(4)]"[110X),  arithmetical  operators  ([10X"*"[110X,  [10X"/"[110X  and [10X"^"[110X) and brackets
-        ([10X"("[110X, [10X")"[110X),[133X
+        [10X"(0(2),1(4))"[110X)    or    cycles   permuting   residue   classes   (e.g.
+        [10X"(0(2),1(8),3(4),5(8))"[110X),   class   shifts   (e.g.  [10X"cs(4(6))"[110X,  class
+        reflections  (e.g.  [10X"cr(3(4))"[110X),  arithmetical operators ([10X"*"[110X, [10X"/"[110X and
+        [10X"^"[110X) and brackets ([10X"("[110X, [10X")"[110X),[133X
   
   [33X[0;0Yrespectively.  The methods for the operation [10XRcwaMapping[110X perform a number of
   argument checks, which can be skipped by using [10XRcwaMappingNC[110X instead.[133X
@@ -362,7 +387,7 @@
     [4X[25Xgap>[125X [27Xa := RcwaMapping([[2,0,3],[4,-1,3],[4,1,3]]);                  # (c)[127X[104X
     [4X[28X<rcwa mapping of Z with modulus 3>[128X[104X
     [4X[25Xgap>[125X [27XRcwaMapping((1,2,3),[1..4]);                                   # (d)[127X[104X
-    [4X[28X<rcwa permutation of Z with modulus 4, of order 3>[128X[104X
+    [4X[28X( 1(4), 2(4), 3(4) )[128X[104X
     [4X[25Xgap>[125X [27XT = RcwaMapping(2,[[1,2],[2,1],[3,5],[4,2]]);                  # (e)[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XRcwaMapping([2],[[1/3,0,1]]);                                  # (f)[127X[104X
@@ -373,13 +398,13 @@
     [4X[25X>[125X [27X                   List([[0,2],[1,4],[3,4]],ResidueClass));       # (h)[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XRcwaMapping([List([[0,2],[1,4],[3,8],[7,16]],ResidueClass)]);  # (i)[127X[104X
-    [4X[28X<rcwa permutation of Z with modulus 16, of order 4>[128X[104X
+    [4X[28X( 0(2), 1(4), 3(8), 7(16) )[128X[104X
     [4X[25Xgap>[125X [27XCycle(last,ResidueClass(0,2));[127X[104X
     [4X[28X[ 0(2), 1(4), 3(8), 7(16) ][128X[104X
-    [4X[25Xgap>[125X [27Xg := RcwaMapping("((0(4),1(6))*(0(6))^-4*[2(4)])^2/(2(8))");   # (j)[127X[104X
+    [4X[25Xgap>[125X [27Xg := RcwaMapping("((0(4),1(6))*cr(0(6)))^2/cs(2(8))");         # (j)[127X[104X
     [4X[28X<rcwa permutation of Z with modulus 72>[128X[104X
-    [4X[25Xgap>[125X [27Xg = (   ClassTransposition(0,4,1,6) * ClassShift(0,6)^-4[127X[104X
-    [4X[25X>[125X [27X         * ClassReflection(2,4) )^2 / ClassShift(2,8);[127X[104X
+    [4X[25Xgap>[125X [27Xg = (ClassTransposition(0,4,1,6) * ClassReflection(0,6))^2/[127X[104X
+    [4X[25X>[125X [27X        ClassShift(2,8);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -411,10 +436,17 @@
   [33X[0;0YRcwa mappings can be [10XView[110Xed, [10XDisplay[110Xed, [10XPrint[110Xed and written to a [10XString[110X. The
   output  of  the  [10XView[110X method is kept reasonably short. In most cases it does
   not  describe  an  rcwa  mapping  completely.  In  these cases the output is
-  enclosed  in  brackets.  The  output  of  the  methods for [10XDisplay[110X and [10XPrint[110X
-  describe  an  rcwa  mapping  in  full. The [10XPrint[110Xed representation of an rcwa
-  mapping  is  [5XGAP[105X - readable if and only if the [10XPrint[110Xed representation of the
-  elements of the underlying ring is so.[133X
+  enclosed  in  brackets.  There  are options [10XCycleNotation[110X, [10XPrintNotation[110X and
+  [10XAbridgedNotation[110X  to  take influence on how certain rcwa mappings are shown.
+  These  options  can  either  be not set, set to [10Xtrue[110X or set to [10Xfalse[110X. If the
+  option  [10XCycleNotation[110X  is  set,  it  is  tried  harder to write down an rcwa
+  permutation  of  ℤ  of  finite  order as a product of disjoint residue class
+  cycles,  if this is possible. The option [10XPrintNotation[110X influences the output
+  in  favour of [5XGAP[105X - readability, and the option [10XAbridgedNotation[110X can be used
+  to abridge longer names like [10XClassShift[110X, [10XClassReflection[110X etc.. The output of
+  the  methods  for  [10XDisplay[110X  and [10XPrint[110X describes an rcwa mapping in full. The
+  [10XPrint[110Xed  representation  of an rcwa mapping is [5XGAP[105X - readable if and only if
+  the [10XPrint[110Xed representation of the elements of the underlying ring is so.[133X
   
   [33X[0;0YThere  is  also an operation [10XLaTeXStringRcwaMapping[110X, which takes as argument
   an  rcwa  mapping and returns a corresponding LaTeX string. The output makes
@@ -811,13 +843,13 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XFactorization(Comm(ClassShift(0,3)*ClassReflection(1,2),[127X[104X
     [4X[25X>[125X [27X                      ClassShift(0,2)));[127X[104X
-    [4X[28X[ ClassReflection(2,3), ClassShift(2,6)^-1, ClassTransposition(0,6,2,6), [128X[104X
-    [4X[28X  ClassTransposition(0,6,5,6) ][128X[104X
+    [4X[28X[ ClassReflection( 2(3) ), ClassShift( 2(6) )^-1, ( 0(6), 2(6) ), [128X[104X
+    [4X[28X  ( 0(6), 5(6) ) ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   [33X[0;0YFor purposes of demonstrating the capabilities of the factorization routine,
-  in   Section [14X7.3[114X  Collatz'  permutation  is  factored.  Lothar  Collatz  has
+  in   Section [14X7.2[114X  Collatz'  permutation  is  factored.  Lothar  Collatz  has
   investigated  this  permutation  in 1932.  Its cycle structure is unknown so
   far.[133X
   
@@ -857,9 +889,8 @@
     [4X[28X        \[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XFactorization(PrimeSwitch(3));[127X[104X
-    [4X[28X[ ClassTransposition(1,6,0,8), ClassTransposition(5,6,4,8), [128X[104X
-    [4X[28X  ClassTransposition(0,4,1,6), ClassTransposition(2,4,5,6), [128X[104X
-    [4X[28X  ClassTransposition(2,6,1,12), ClassTransposition(4,6,7,12) ][128X[104X
+    [4X[28X[ ( 1(6), 0(8) ), ( 5(6), 4(8) ), ( 0(4), 1(6) ), ( 2(4), 5(6) ), [128X[104X
+    [4X[28X  ( 2(6), 1(12) ), ( 4(6), 7(12) ) ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -889,7 +920,6 @@
     [4X[28X        | (6n-4)/5 if n in 4(5)[128X[104X
     [4X[28X        \[128X[104X
     [4X[28X[128X[104X
-    [4X[28X[128X[104X
   [4X[32X[104X
   
   [33X[0;0YIn  his  article,  Timothy  P.  Keller shows that a permutation of this type
@@ -911,10 +941,10 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XRoot(ClassTransposition(0,2,1,2),100);[127X[104X
-    [4X[28X<rcwa permutation of Z with modulus 8>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X( 0(8), 2(8), 4(8), 6(8), 1(8), 3(8), 5(8), 7(8) )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last:CycleNotation:=false);[127X[104X
     [4X[28X[128X[104X
-    [4X[28XRcwa permutation of Z with modulus 8[128X[104X
+    [4X[28XTame rcwa permutation of Z with modulus 8[128X[104X
     [4X[28X[128X[104X
     [4X[28X        /[128X[104X
     [4X[28X        | n+2 if n in Z \ 6(8) U 7(8)[128X[104X
@@ -967,7 +997,6 @@
     [4X[28X n |-> <  (n-1)/2 if n in 1(2)[128X[104X
     [4X[28X        |[128X[104X
     [4X[28X        \[128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

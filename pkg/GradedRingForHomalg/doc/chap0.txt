@@ -6,10 +6,10 @@
                 [1XEndow Commutative Rings with an Abelian Grading[101X
   
   
-                               Version 2012.05.25
+                               Version 2012.10.25
   
   
-                                   June 2012
+                                  October 2012
   
   
                                 Mohamed Barakat

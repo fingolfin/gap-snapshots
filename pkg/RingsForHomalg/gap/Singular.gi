@@ -45,7 +45,7 @@ InstallValue( HOMALG_IO_Singular,
             prompt := "\033[01msingular>\033[0m ",
             output_prompt := "\033[1;30;43m<singular\033[0m ",
             display_color := "\033[0;30;47m",
-            init_string := "option(noredefine);option(redSB);LIB \"matrix.lib\";LIB \"involut.lib\";LIB \"nctools.lib\";LIB \"poly.lib\";LIB \"random.lib\";LIB \"finvar.lib\";LIB \"hnoether.lib\";",
+            init_string := "option(noredefine);option(redSB);LIB \"matrix.lib\";LIB \"involut.lib\";LIB \"nctools.lib\";LIB \"poly.lib\";LIB \"random.lib\";LIB \"finvar.lib\";",
             InitializeCASMacros := InitializeSingularMacros,
             time := function( stream, t ) return Int( homalgSendBlocking( [ "timer" ], "need_output", stream, HOMALG_IO.Pictograms.time ) ) - t; end,
             memory_usage := function( stream, o ) return Int( homalgSendBlocking( [ "memory(", o, ")" ], "need_output", stream, HOMALG_IO.Pictograms.memory ) ); end,
@@ -881,7 +881,7 @@ proc PrimaryDecomposition (matrix m)\n\
   return(primdecSY(m))\n\
 }\n\n",
 
-    DegreeOfRingElement := "\n\
+    Deg := "\n\
 // start: a workaround for a bug in the 64 bit versions of Singular 3-0-4\n\
 if ( defined( basering ) != 0 )\n\
 {\n\

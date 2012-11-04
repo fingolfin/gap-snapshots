@@ -1,112 +1,112 @@
   
-  [1X11 Exterior Algebra and Koszul Complex[0X
+  [1X11 [33X[0;0YExterior Algebra and Koszul Complex[133X[101X
   
-  What  follows  are  several  operations related to the exterior algebra of a
-  free module:
+  [33X[0;0YWhat  follows  are  several  operations related to the exterior algebra of a
+  free module:[133X
   
-  --    A  constructor for the graded parts of the exterior algebra ("exterior
-        powers")
+  [30X    [33X[0;6YA  constructor  for the graded parts of the exterior algebra ([21Xexterior
+        powers[121X)[133X
   
-  --    Several Operations on elements of these exterior powers
+  [30X    [33X[0;6YSeveral Operations on elements of these exterior powers[133X
   
-  --    A constructor for the "Koszul complex"
+  [30X    [33X[0;6YA constructor for the [21XKoszul complex[121X[133X
   
-  --    An  implementation  of  the "Cayley determinant" as defined in [CQ11],
+  [30X    [33X[0;6YAn  implementation  of  the  [21XCayley  determinant[121X as defined in [CQ11],
         which  allows  calculating  greatest  common divisors from finite free
-        resolutions.
+        resolutions.[133X
   
   
-  [1X11.1 Exterior Algebra: Constructor[0X
+  [1X11.1 [33X[0;0YExterior Algebra: Constructor[133X[101X
   
-  [1X11.1-1 ExteriorPower[0m
+  [1X11.1-1 ExteriorPower[101X
   
-  [2X> ExteriorPower( [0X[3Xk, M[0X[2X ) ___________________________________________[0Xoperation
-  [6XReturns:[0X  a [5Xhomalg[0m submodule
+  [29X[2XExteriorPower[102X( [3Xk[103X, [3XM[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X submodule[133X
   
-  Construct the [3Xk[0m-th exterior power of the free module [3XM[0m.
-  
-  
-  [1X11.2 Exterior Algebra: Properties and Attributes[0X
-  
-  [1X11.2-1 IsExteriorPower[0m
-  
-  [2X> IsExteriorPower( [0X[3XM[0X[2X ) _____________________________________________[0Xproperty
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
-  
-  Marks a module as an exterior power of another module.
-  
-  [1X11.2-2 ExteriorPowerExponent[0m
-  
-  [2X> ExteriorPowerExponent( [0X[3XM[0X[2X ) ______________________________________[0Xattribute
-  [6XReturns:[0X  an integer
-  
-  The exponent of the exterior power.
-  
-  [1X11.2-3 ExteriorPowerBaseModule[0m
-  
-  [2X> ExteriorPowerBaseModule( [0X[3XM[0X[2X ) ____________________________________[0Xattribute
-  [6XReturns:[0X  a homalg module
-  
-  The module that [3XM[0m is an exterior power of.
+  [33X[0;0YConstruct the [3Xk[103X-th exterior power of the free module [3XM[103X.[133X
   
   
-  [1X11.3 Exterior Algebra: Element Properties[0X
+  [1X11.2 [33X[0;0YExterior Algebra: Properties and Attributes[133X[101X
   
-  [1X11.3-1 IsExteriorPowerElement[0m
+  [1X11.2-1 IsExteriorPower[101X
   
-  [2X> IsExteriorPowerElement( [0X[3Xx[0X[2X ) ______________________________________[0Xproperty
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsExteriorPower[102X( [3XM[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Checks if the element [3Xx[0m is from an exterior power.
+  [33X[0;0YMarks a module as an exterior power of another module.[133X
   
+  [1X11.2-2 ExteriorPowerExponent[101X
   
-  [1X11.4 Exterior Algebra: Element Operations[0X
+  [29X[2XExteriorPowerExponent[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
   
-  [1X11.4-1 Wedge[0m
+  [33X[0;0YThe exponent of the exterior power.[133X
   
-  [2X> Wedge( [0X[3Xx, y[0X[2X ) ___________________________________________________[0Xoperation
-  [6XReturns:[0X  an element of an exterior power
+  [1X11.2-3 ExteriorPowerBaseModule[101X
   
-  Calculate [3Xx[0m wedge [3Xy[0m.
+  [29X[2XExteriorPowerBaseModule[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya homalg module[133X
   
-  [1X11.4-2 ExteriorPowerElementDual[0m
-  
-  [2X> ExteriorPowerElementDual( [0X[3Xx[0X[2X ) ___________________________________[0Xoperation
-  [6XReturns:[0X  an element of an exterior power
-  
-  For  [3Xx[0m in a q-th exterior power of a free module of rank n, return [3Xx[0m* in the
-  (n-q)-th exterior power, as defined in [CQ11].
-  
-  [1X11.4-3 SingleValueOfExteriorPowerElement[0m
-  
-  [2X> SingleValueOfExteriorPowerElement( [0X[3Xx[0X[2X ) __________________________[0Xoperation
-  [6XReturns:[0X  a ring element
-  
-  For  [3Xx[0m  in  a  highest  exterior power, returns its single coordinate in the
-  canonical basis; i.e. [[3Xx[0m] as defined in [CQ11].
+  [33X[0;0YThe module that [3XM[103X is an exterior power of.[133X
   
   
-  [1X11.5 Koszul complex and Cayley determinant[0X
+  [1X11.3 [33X[0;0YExterior Algebra: Element Properties[133X[101X
   
-  [1X11.5-1 KoszulCocomplex[0m
+  [1X11.3-1 IsExteriorPowerElement[101X
   
-  [2X> KoszulCocomplex( [0X[3Xa, E[0X[2X ) _________________________________________[0Xoperation
-  [6XReturns:[0X  a [5Xhomalg[0m cocomplex
+  [29X[2XIsExteriorPowerElement[102X( [3Xx[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Calculate the [3XE[0m-valued Koszul complex of [3Xa[0m.
+  [33X[0;0YChecks if the element [3Xx[103X is from an exterior power.[133X
   
-  [1X11.5-2 CayleyDeterminant[0m
   
-  [2X> CayleyDeterminant( [0X[3XC[0X[2X ) __________________________________________[0Xoperation
-  [6XReturns:[0X  a ring element
+  [1X11.4 [33X[0;0YExterior Algebra: Element Operations[133X[101X
   
-  Calculate the Cayley determinant of the complex [3XC[0m, as defined in [CQ11].
+  [1X11.4-1 Wedge[101X
   
-  [1X11.5-3 Gcd_UsingCayleyDeterminant[0m
+  [29X[2XWedge[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Yan element of an exterior power[133X
   
-  [2X> Gcd_UsingCayleyDeterminant( [0X[3Xx, y[, ...][0X[2X ) ________________________[0Xfunction
-  [6XReturns:[0X  a ring element
+  [33X[0;0YCalculate [22X[3Xx[103X ∧ [3Xy[103X[122X.[133X
   
-  Returns  the  greatest common divisor of the given ring elements, calculated
-  using the Cayley determinant.
+  [1X11.4-2 ExteriorPowerElementDual[101X
+  
+  [29X[2XExteriorPowerElementDual[102X( [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Yan element of an exterior power[133X
+  
+  [33X[0;0YFor  [3Xx[103X in a q-th exterior power of a free module of rank n, return [22X[3Xx[103X*[122X in the
+  (n-q)-th exterior power, as defined in [CQ11].[133X
+  
+  [1X11.4-3 SingleValueOfExteriorPowerElement[101X
+  
+  [29X[2XSingleValueOfExteriorPowerElement[102X( [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YFor  [3Xx[103X  in  a  highest  exterior power, returns its single coordinate in the
+  canonical basis; i.e. [22X[[3Xx[103X][122X as defined in [CQ11].[133X
+  
+  
+  [1X11.5 [33X[0;0YKoszul complex and Cayley determinant[133X[101X
+  
+  [1X11.5-1 KoszulCocomplex[101X
+  
+  [29X[2XKoszulCocomplex[102X( [3Xa[103X, [3XE[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X cocomplex[133X
+  
+  [33X[0;0YCalculate the [3XE[103X-valued Koszul complex of [3Xa[103X.[133X
+  
+  [1X11.5-2 CayleyDeterminant[101X
+  
+  [29X[2XCayleyDeterminant[102X( [3XC[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YCalculate the Cayley determinant of the complex [3XC[103X, as defined in [CQ11].[133X
+  
+  [1X11.5-3 Gcd_UsingCayleyDeterminant[101X
+  
+  [29X[2XGcd_UsingCayleyDeterminant[102X( [3Xx[103X, [3Xy[103X[, [3X...[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YReturns  the  greatest common divisor of the given ring elements, calculated
+  using the Cayley determinant.[133X
   

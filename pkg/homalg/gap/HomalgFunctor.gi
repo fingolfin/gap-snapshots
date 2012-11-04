@@ -445,8 +445,8 @@ InstallMethod( GetContainerForWeakPointersOfFunctorCachedValue,
     if not IsBound( Functor!.( container ) ) then
         return fail;
     elif Functor!.( container ) = false and
-      IsBound( category!.ring ) and
-      IsHomalgInternalRingRep( category!.ring ) then
+      IsBound( category!.do_not_cache_values_of_some_functors ) and
+      category!.do_not_cache_values_of_some_functors = true then
         return fail;
     fi;
     
@@ -699,7 +699,7 @@ InstallMethod( GetFunctorObjCachedValue,
     
     return fail;
     
-  end );
+end );
 
 ##
 InstallMethod( FunctorObj,
@@ -1038,7 +1038,7 @@ InstallMethod( FunctorMor,
                HasIsMorphism( phi ) and IsMorphism( phi ) then
             
                 ## check assertion
-                Assert( 1, IsMorphism( mor ) );
+                Assert( 3, IsMorphism( mor ) );
             
                 SetIsMorphism( mor, true );
             fi;
@@ -1087,14 +1087,14 @@ InstallMethod( SetPropertiesOfFunctorMor,
     
     if HasIsIsomorphism( phi ) and IsIsomorphism( phi ) then
         
-        Assert( 1, IsIsomorphism( mor ) );
+        Assert( 3, IsIsomorphism( mor ) );
         SetIsIsomorphism( mor, true );
         
     fi;
         
     if HasIsMorphism( phi ) and IsMorphism( phi ) then
         
-        Assert( 1, IsMorphism( mor ) );
+        Assert( 3, IsMorphism( mor ) );
         SetIsMorphism( mor, true );
         
     fi;
@@ -1105,7 +1105,7 @@ InstallMethod( SetPropertiesOfFunctorMor,
             
             if  HasIsMonomorphism( phi ) and IsMonomorphism( phi ) then
                 
-                Assert( 1, IsMonomorphism( mor ) );
+                Assert( 3, IsMonomorphism( mor ) );
                 SetIsMonomorphism( mor, true );
                 
             fi;
@@ -1123,7 +1123,7 @@ InstallMethod( SetPropertiesOfFunctorMor,
             
             if  HasIsEpimorphism( phi ) and IsEpimorphism( phi ) then
                 
-                Assert( 1, IsMonomorphism( mor ) );
+                Assert( 3, IsMonomorphism( mor ) );
                 SetIsMonomorphism( mor, true );
                 
             fi;
@@ -1146,7 +1146,7 @@ InstallMethod( SetPropertiesOfFunctorMor,
             
             if  HasIsEpimorphism( phi ) and IsEpimorphism( phi ) then
                 
-                Assert( 1, IsEpimorphism( mor ) );
+                Assert( 3, IsEpimorphism( mor ) );
                 SetIsEpimorphism( mor, true );
                 
             fi;
@@ -1164,7 +1164,7 @@ InstallMethod( SetPropertiesOfFunctorMor,
             
             if  HasIsMonomorphism( phi ) and IsMonomorphism( phi ) then
                 
-                Assert( 1, IsEpimorphism( mor ) );
+                Assert( 3, IsEpimorphism( mor ) );
                 SetIsEpimorphism( mor, true );
                 
             fi;
@@ -2983,7 +2983,7 @@ InstallMethod( InstallSpecialFunctorOnMorphisms,
             
             psi := CompleteImageSquare( muS, phi, muT );
             
-            Assert( 1, IsMorphism( psi ) );
+            Assert( 3, IsMorphism( psi ) );
             
             SetIsMorphism( psi, true );
             

@@ -1,8 +1,8 @@
   
   
-  [1XIndex[0X
+  [1XIndex[101X
   
-  [5XExamplesForHomalg[0m  .-2
+  [5XExamplesForHomalg[105X  .-2
   
   
   -------------------------------------------------------

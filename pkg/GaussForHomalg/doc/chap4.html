@@ -9,19 +9,21 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap4"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap3.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X85861B017AEEC50B" name="X85861B017AEEC50B"></a></p>
 <div class="ChapSects"><a href="chap4.html#X85861B017AEEC50B">4 <span class="Heading">Example</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap4.html#X791E21F47805048A">4.1 <span class="Heading">HomHom</span></a>
-<div class="ContSSBlock">
-</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X791E21F47805048A">4.1 <span class="Heading">HomHom</span></a>
+</span>
+</div>
 </div>
 
 <h3>4 <span class="Heading">Example</span></h3>
@@ -30,60 +32,59 @@
 
 <h4>4.1 <span class="Heading">HomHom</span></h4>
 
-<p>The following example is taken from Section 2 of <a href="chapBib.html#biBBREACA">[BR06]</a>. <br /> <br /> The computation takes place over the ring R=ℤ/2^8ℤ, which is directly supported by the package <strong class="pkg">Gauss</strong>.</p>
+<p>The following example is taken from Section 2 of <a href="chapBib.html#biBBREACA">[BR06]</a>. <br /> <br /> The computation takes place over the ring <span class="SimpleMath">R=ℤ/2^8ℤ</span>, which is directly supported by the package <strong class="pkg">Gauss</strong>.</p>
 
-<p>Here we compute the (infinite) long exact homology sequence of the covariant functor Hom(Hom(-,ℤ/2^7ℤ),ℤ/2^4ℤ) (and its left derived functors) applied to the short exact sequence<br /> <br /> 0 -&gt; M_=ℤ/2^2ℤ --alpha_1--&gt; M=ℤ/2^5ℤ --alpha_2--&gt; _M=ℤ/2^3ℤ -&gt; 0.</p>
+<p>Here we compute the (infinite) long exact homology sequence of the covariant functor <span class="SimpleMath">Hom(Hom(-,ℤ/2^7ℤ),ℤ/2^4ℤ)</span> (and its left derived functors) applied to the short exact sequence<br /> <br /> <span class="SimpleMath">0 -&gt; M_=ℤ/2^2ℤ --alpha_1--&gt; M=ℤ/2^5ℤ --alpha_2--&gt; _M=ℤ/2^3ℤ -&gt; 0</span>.</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; LoadPackage( "Modules" );
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "Modules" );</span>
 true
-gap&gt; R := HomalgRingOfIntegers( 2^8 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := HomalgRingOfIntegers( 2^8 );</span>
 Z/256Z
-gap&gt; Display( R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( R );</span>
 &lt;An internal ring&gt;
-gap&gt; M := LeftPresentation( [ 2^5 ], R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := LeftPresentation( [ 2^5 ], R );</span>
 &lt;A cyclic left module presented by an unknown number of relations for a cyclic\
  generator&gt;
-gap&gt; Display( M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( M );</span>
 Z/256Z/&lt; ZmodnZObj(32,256) &gt;
-gap&gt; M;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M;</span>
 &lt;A cyclic left module presented by 1 relation for a cyclic generator&gt;
-gap&gt; _M := LeftPresentation( [ 2^3 ], R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">_M := LeftPresentation( [ 2^3 ], R );</span>
 &lt;A cyclic left module presented by an unknown number of relations for a cyclic\
  generator&gt;
-gap&gt; Display( _M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( _M );</span>
 Z/256Z/&lt; ZmodnZObj(8,256) &gt;
-gap&gt; _M;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">_M;</span>
 &lt;A cyclic left module presented by 1 relation for a cyclic generator&gt;
-gap&gt; alpha2 := HomalgMap( [ 1 ], M, _M );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha2 := HomalgMap( [ 1 ], M, _M );</span>
 &lt;A "homomorphism" of left modules&gt;
-gap&gt; IsMorphism( alpha2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMorphism( alpha2 );</span>
 true
-gap&gt; alpha2;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha2;</span>
 &lt;A homomorphism of left modules&gt;
-gap&gt; Display( alpha2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( alpha2 );</span>
    1
 
 the map is currently represented by the above 1 x 1 matrix
-gap&gt; M_ := Kernel( alpha2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M_ := Kernel( alpha2 );</span>
 &lt;A cyclic left module presented by yet unknown relations for a cyclic generato\
 r&gt;
-gap&gt; alpha1 := KernelEmb( alpha2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha1 := KernelEmb( alpha2 );</span>
 &lt;A monomorphism of left modules&gt;
-gap&gt; seq := HomalgComplex( alpha2 );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">seq := HomalgComplex( alpha2 );</span>
 &lt;An acyclic complex containing a single morphism of left modules at degrees 
 [ 0 .. 1 ]&gt;
-gap&gt; Add( seq, alpha1 );
-gap&gt; seq;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Add( seq, alpha1 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">seq;</span>
 &lt;A sequence containing 2 morphisms of left modules at degrees [ 0 .. 2 ]&gt;
-gap&gt; IsShortExactSequence( seq );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsShortExactSequence( seq );</span>
 true
-gap&gt; seq;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">seq;</span>
 &lt;A short exact sequence containing 2 morphisms of left modules at degrees 
 [ 0 .. 2 ]&gt;
-gap&gt; Display( seq );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( seq );</span>
 -------------------------
 at homology degree: 2
 Z/256Z/&lt; ZmodnZObj(4,256) &gt; 
@@ -102,27 +103,27 @@ the map is currently represented by the above 1 x 1 matrix
 at homology degree: 0
 Z/256Z/&lt; ZmodnZObj(8,256) &gt; 
 -------------------------
-gap&gt; K := LeftPresentation( [ 2^7 ], R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := LeftPresentation( [ 2^7 ], R );</span>
 &lt;A cyclic left module presented by an unknown number of relations for a cyclic\
  generator&gt;
-gap&gt; L := RightPresentation( [ 2^4 ], R );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := RightPresentation( [ 2^4 ], R );</span>
 &lt;A cyclic right module on a cyclic generator satisfying an unknown number of r\
 elations&gt;
-gap&gt; triangle := LHomHom( 4, seq, K, L, "t" );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">triangle := LHomHom( 4, seq, K, L, "t" );</span>
 &lt;An exact triangle containing 3 morphisms of left complexes at degrees 
 [ 1, 2, 3, 1 ]&gt;
-gap&gt; lehs := LongSequence( triangle );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lehs := LongSequence( triangle );</span>
 &lt;A sequence containing 14 morphisms of left modules at degrees [ 0 .. 14 ]&gt;
-gap&gt; ByASmallerPresentation( lehs );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ByASmallerPresentation( lehs );</span>
 &lt;A non-zero sequence containing 14 morphisms of left modules at degrees 
 [ 0 .. 14 ]&gt;
-gap&gt; IsExactSequence( lehs );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactSequence( lehs );</span>
 false
-gap&gt; lehs;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lehs;</span>
 &lt;A non-zero left acyclic complex containing 
 14 morphisms of left modules at degrees [ 0 .. 14 ]&gt;
-gap&gt; Assert( 0, IsLeftAcyclic( lehs ) );
-gap&gt; Display( lehs );
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Assert( 0, IsLeftAcyclic( lehs ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( lehs );</span>
 -------------------------
 at homology degree: 14
 Z/256Z/&lt; ZmodnZObj(4,256) &gt; 
@@ -225,10 +226,10 @@ the map is currently represented by the above 1 x 1 matrix
 at homology degree: 0
 Z/256Z/&lt; ZmodnZObj(8,256) &gt; 
 -------------------------
-</pre></td></tr></table>
+</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap3.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapA.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapA.html">A</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

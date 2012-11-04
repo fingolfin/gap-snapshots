@@ -35,13 +35,14 @@
     [4X[28X6[128X[104X
     [4X[25Xgap>[125X [27Xm;[127X[104X
     [4X[28X<A 6 x 1 matrix over a graded ring>[128X[104X
-    [4X[28X gap> Display( m );[128X[104X
-    [4X[28X z^2,[128X[104X
-    [4X[28X y*z,[128X[104X
-    [4X[28X y^2,[128X[104X
-    [4X[28X x*z,[128X[104X
-    [4X[28X x*y,[128X[104X
-    [4X[28X x^2 [128X[104X
+    [4X[25Xgap>[125X [27XDisplay( m );[127X[104X
+    [4X[28Xx^2,[128X[104X
+    [4X[28Xx*y,[128X[104X
+    [4X[28Xx*z,[128X[104X
+    [4X[28Xy^2,[128X[104X
+    [4X[28Xy*z,[128X[104X
+    [4X[28Xz^2[128X[104X
+    [4X[28X(over a graded ring) [128X[104X
   [4X[32X[104X
   
   [1XA.2-2 RandomMatrixBetweenGradedFreeLeftModules[101X
@@ -57,10 +58,10 @@
     [4X[25Xgap>[125X [27XS := GradedRing( R );;[127X[104X
     [4X[25Xgap>[125X [27Xrand := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 1, 2 ], S );[127X[104X
     [4X[28X<A 3 x 2 matrix over a graded ring>[128X[104X
-    [4X[28X gap> Display( rand );[128X[104X
-    [4X[28X a-2*b+2*c,                                                2,                 [128X[104X
-    [4X[28X a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               [128X[104X
-    [4X[28X 2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2[128X[104X
+    [4X[25Xgap>[125X [27X#Display( rand );[127X[104X
+    [4X[25Xgap>[125X [27X#a-2*b+2*c,                                                2,                 [127X[104X
+    [4X[25Xgap>[125X [27X#a^2-a*b+b^2-2*b*c+5*c^2,                                  3*c,               [127X[104X
+    [4X[25Xgap>[125X [27X#2*a^3-3*a^2*b+2*a*b^2+3*a^2*c+a*b*c-2*b^2*c-3*b*c^2-2*c^3,a^2-4*a*b-3*a*c-c^2[127X[104X
   [4X[32X[104X
   
   [1XA.2-3 RandomMatrixBetweenGradedFreeRightModules[101X
@@ -76,9 +77,9 @@
     [4X[25Xgap>[125X [27XS := GradedRing( R );;[127X[104X
     [4X[25Xgap>[125X [27Xrand := RandomMatrixBetweenGradedFreeRightModules( [ 1, 2 ], [ 2, 3, 4 ], S );[127X[104X
     [4X[28X<A 2 x 3 matrix over a graded ring>[128X[104X
-    [4X[28X gap> Display( rand );[128X[104X
-    [4X[28X a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,[128X[104X
-    [4X[28X -5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      [128X[104X
+    [4X[25Xgap>[125X [27X#Display( rand );[127X[104X
+    [4X[25Xgap>[125X [27X#a-2*b-c,a*b+b^2-b*c,2*a^3-a*b^2-4*b^3+4*a^2*c-3*a*b*c-b^2*c+a*c^2+5*b*c^2-2*c^3,[127X[104X
+    [4X[25Xgap>[125X [27X#-5,     -2*a+c,     -2*a^2-a*b-2*b^2-3*a*c                                      [127X[104X
   [4X[32X[104X
   
   [1XA.2-4 Diff[101X
@@ -97,21 +98,21 @@
     [4X[25X>[125X [27Xx,2*y,   \[127X[104X
     [4X[25X>[125X [27Xy,a-b^2, \[127X[104X
     [4X[25X>[125X [27Xz,y-b    \[127X[104X
-    [4X[25X>[125X [27X]", 3, 2, S );;[127X[104X
+    [4X[25X>[125X [27X]", 3, 2, S );[127X[104X
     [4X[28X<A 3 x 2 matrix over an external ring>[128X[104X
     [4X[25Xgap>[125X [27XN := HomalgMatrix( "[ \[127X[104X
     [4X[25X>[125X [27Xx^2-a*y^3,x^3-z^2*y,x*y-b,x*z-c, \[127X[104X
     [4X[25X>[125X [27Xx,        x*y,      a-b,  x*a*b  \[127X[104X
-    [4X[25X>[125X [27X]", 2, 4, S );;[127X[104X
-    [4X[28X<A 2 by 4 matrix over an external ring>[128X[104X
+    [4X[25X>[125X [27X]", 2, 4, S );[127X[104X
+    [4X[28X<A 2 x 4 matrix over an external ring>[128X[104X
     [4X[25Xgap>[125X [27XH := Diff( D, N );[127X[104X
     [4X[28X<A 6 x 8 matrix over an external ring>[128X[104X
-    [4X[28X gap> Display( H );[128X[104X
-    [4X[28X 2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  [128X[104X
-    [4X[28X 1,       y,     0,a*b,0,       2*x,   0,  0,  [128X[104X
-    [4X[28X -3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  [128X[104X
-    [4X[28X 0,       x,     0,0,  0,       0,     1,  b*x,[128X[104X
-    [4X[28X 0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  [128X[104X
-    [4X[28X 0,       0,     0,0,  0,       x,     1,  -a*x[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( H );[127X[104X
+    [4X[28X2*x,     3*x^2, y,z,  -6*a*y^2,-2*z^2,2*x,0,  [128X[104X
+    [4X[28X1,       y,     0,a*b,0,       2*x,   0,  0,  [128X[104X
+    [4X[28X-3*a*y^2,-z^2,  x,0,  -y^3,    0,     0,  0,  [128X[104X
+    [4X[28X0,       x,     0,0,  0,       0,     1,  b*x,[128X[104X
+    [4X[28X0,       -2*y*z,0,x,  -3*a*y^2,-z^2,  x+1,0,  [128X[104X
+    [4X[28X0,       0,     0,0,  0,       x,     1,  -a*x[128X[104X
   [4X[32X[104X
   

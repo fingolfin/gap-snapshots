@@ -69,13 +69,14 @@
   </span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F76B04E86C77B94">3.3-5 CycleRepresentativesAndLengths</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8735855587CC029F">3.3-6 <span class="Heading">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8777A62286597D53">3.3-6 FixedResidueClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8735855587CC029F">3.3-7 <span class="Heading">
     Ball (for group, element and radius or group, point, radius and action)
   </span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87A3462C82FD376E">3.3-7 RepresentativeAction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8587246A7F890849">3.3-8 ProjectionsToInvariantUnionsOfResidueClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X866843D08213067E">3.3-9 RepresentativeAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87A3462C82FD376E">3.3-8 RepresentativeAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8587246A7F890849">3.3-9 ProjectionsToInvariantUnionsOfResidueClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X866843D08213067E">3.3-10 RepresentativeAction</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X781CBEFA7F39B58D">3.4 <span class="Heading">
   Special attributes of tame residue-class-wise affine groups
@@ -194,7 +195,7 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CT_Z := CT(Integers);</span>
 CT(Z)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimple(CT_Z); # One of a longer list of stored attributes/properties.</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimple(CT_Z); # One of a number of stored attributes/properties.</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubgroup(CT_Z,G);</span>
 true
@@ -289,16 +290,15 @@ true
 [ &lt;wild rcwa permutation of Z with modulus 40&gt;,
   &lt;wild rcwa permutation of Z with modulus 40&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Embedding(F2wrA5,2);</span>
-[ (1,2,3,4,5), (3,4,5) ] -&gt;
-[ &lt;rcwa permutation of Z with modulus 5, of order 5&gt;,
-  &lt;rcwa permutation of Z with modulus 5, of order 3&gt; ]
+[ (1,2,3,4,5), (3,4,5) ] -&gt; [ ( 0(5), 1(5), 2(5), 3(5), 4(5) ), 
+  ( 2(5), 3(5), 4(5) ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZwrZ := WreathProduct(Group(ClassShift(0,1)),Group(ClassShift(0,1)));</span>
 &lt;wild rcwa group over Z with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Embedding(ZwrZ,1);</span>
-[ ClassShift(0,1) ] -&gt;
+[ ClassShift( Z ) ] -&gt;
 [ &lt;tame rcwa permutation of Z with modulus 4, of order infinity&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Embedding(ZwrZ,2);</span>
-[ ClassShift(0,1) ] -&gt; [ &lt;wild rcwa permutation of Z with modulus 4&gt; ]
+[ ClassShift( Z ) ] -&gt; [ &lt;wild rcwa permutation of Z with modulus 4&gt; ]
 
 </pre></div>
 
@@ -431,8 +431,7 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(ClassTransposition(0,2,1,2),ClassTransposition(0,3,1,3));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismPermGroup(G);</span>
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,3,1,3) ] -&gt; 
-[ (1,2)(3,4)(5,6), (1,2)(4,5) ]
+[ ( 0(2), 1(2) ), ( 0(3), 1(3) ) ] -&gt; [ (1,2)(3,4)(5,6), (1,2)(4,5) ]
 
 </pre></div>
 
@@ -563,7 +562,7 @@ infinity
 
 <p>The epimorphism <var class="Arg">phi</var> must map the generators of the free group to the generators of the rcwa group one-by-one.</p>
 
-<p>This method can be used for factoring elements of rcwa groups into generators. The implementation is based on <code class="code">RepresentativeActionPreImage</code>, see <code class="func">RepresentativeAction</code> (<a href="chap3.html#X87A3462C82FD376E"><span class="RefLink">3.3-7</span></a>).</p>
+<p>This method can be used for factoring elements of rcwa groups into generators. The implementation is based on <code class="code">RepresentativeActionPreImage</code>, see <code class="func">RepresentativeAction</code> (<a href="chap3.html#X87A3462C82FD376E"><span class="RefLink">3.3-8</span></a>).</p>
 
 <p>Quite frequently, computing several preimages is not harder than computing just one, i.e. often several preimages are found simultaneously. The operation <code class="code">PreImagesRepresentatives</code> takes care of this. It takes the same arguments as <code class="code">PreImagesRepresentative</code> and returns a list of preimages. If multiple preimages are found, their quotients give rise to nontrivial relations among the generators of the image of <var class="Arg">phi</var>.</p>
 
@@ -688,6 +687,8 @@ true
 
 <p>The operation <code class="func">ShortOrbits</code> recognizes an option <var class="Arg">finite</var>. If this option is set, it is assumed that all orbits are finite, in order to speed up the computation. If furthermore <var class="Arg">maxlng</var> is negative, a list of <em>all</em> orbits which intersect non-trivially with <var class="Arg">S</var> is returned.</p>
 
+<p>There is an operation <code class="code">CyclesOnFiniteOrbit(</code><var class="Arg">G</var><code class="code">,</code><var class="Arg">g</var><code class="code">,</code><var class="Arg">n</var><code class="code">)</code> which returns a list of all cycles of the rcwa permutation <var class="Arg">g</var> on the orbit of the point <var class="Arg">n</var> under the action of the rcwa group <var class="Arg">G</var>. Here <var class="Arg">g</var> is assumed to be an element of <var class="Arg">G</var>, and the orbit of <var class="Arg">n</var> is assumed to be finite.</p>
+
 
 <div class="example"><pre>
 
@@ -704,6 +705,11 @@ true
   [ 35, 40 ], [ 37, 42, 48, 54, 47, 41, 46, 52, 45, 39, 44, 50, 43 ], 
   [ 77, 88, 100, 114, 130, 148, 127, 109, 124, 107, 122, 105, 120, 103, 
       89 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(List([[0,2,1,2],[0,5,4,5],[1,4,0,6]],ClassTransposition));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CyclesOnFiniteOrbit(G,G.1*G.2,0);</span>
+[ [ 0, 1, 4, 9, 8, 5 ], [ 6, 7 ], [ 10, 11, 14, 19, 18, 15 ], [ 12, 13 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);</span>
+[ 3148, 3148 ]
 
 </pre></div>
 
@@ -759,11 +765,32 @@ true
 
 </pre></div>
 
+<p>Often one also wants to know which residue classes an rcwa mapping or an rcwa group fixes setwise:</p>
+
+<p><a id="X8777A62286597D53" name="X8777A62286597D53"></a></p>
+
+<h5>3.3-6 FixedResidueClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedResidueClasses</code>( <var class="Arg">g</var>, <var class="Arg">maxmod</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedResidueClasses</code>( <var class="Arg">G</var>, <var class="Arg">maxmod</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: the set of residue classes with modulus greater than 1 and less than or equal to <var class="Arg">maxmod</var> which the rcwa mapping <var class="Arg">g</var>, respectively the rcwa group <var class="Arg">G</var>, fixes setwise.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedResidueClasses(ClassTransposition(0,2,1,4),8);</span>
+[ 2(3), 3(4), 4(5), 6(7), 3(8), 7(8) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedResidueClasses(Group(ClassTransposition(0,2,1,4),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                             ClassTransposition(0,3,1,3)),12);</span>
+[ 2(3), 8(9), 11(12) ]
+
+</pre></div>
+
 <p>Frequently one needs to compute balls of certain radius around points or group elements, be it to estimate the growth of a group, be it to see how an orbit looks like, be it to search for a group element with certain properties or be it for other purposes:</p>
 
 <p><a id="X8735855587CC029F" name="X8735855587CC029F"></a></p>
 
-<h5>3.3-6 <span class="Heading">
+<h5>3.3-7 <span class="Heading">
     Ball (for group, element and radius or group, point, radius and action)
   </span></h5>
 
@@ -795,7 +822,7 @@ true
 
 <p><a id="X87A3462C82FD376E" name="X87A3462C82FD376E"></a></p>
 
-<h5>3.3-7 RepresentativeAction</h5>
+<h5>3.3-8 RepresentativeAction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">G</var>, <var class="Arg">source</var>, <var class="Arg">destination</var>, <var class="Arg">action</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: an element of <var class="Arg">G</var> which maps <var class="Arg">source</var> to <var class="Arg">destination</var> under the action given by <var class="Arg">action</var>.</p>
@@ -859,7 +886,7 @@ a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
 
 <p><a id="X8587246A7F890849" name="X8587246A7F890849"></a></p>
 
-<h5>3.3-8 ProjectionsToInvariantUnionsOfResidueClasses</h5>
+<h5>3.3-9 ProjectionsToInvariantUnionsOfResidueClasses</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectionsToInvariantUnionsOfResidueClasses</code>( <var class="Arg">G</var>, <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: the projections of the rcwa group <var class="Arg">G</var> to the unions of residue classes (mod <var class="Arg">m</var>) which it fixes setwise.</p>
@@ -871,12 +898,10 @@ a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(ClassTransposition(0,2,1,2),ClassShift(3,4));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ProjectionsToInvariantUnionsOfResidueClasses(G,4);</span>
-[ [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -&gt;
-    [ &lt;rcwa permutation of Z with modulus 4&gt;,
-      IdentityMapping( Integers ) ],
-  [ ClassTransposition(0,2,1,2), ClassShift(3,4) ] -&gt;
-    [ &lt;rcwa permutation of Z with modulus 4&gt;,
-      &lt;rcwa permutation of Z with modulus 4&gt; ] ]
+[ [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -&gt; 
+    [ ( 0(4), 1(4) ), IdentityMapping( Integers ) ], 
+  [ ( 0(2), 1(2) ), ClassShift( 3(4) ) ] -&gt; 
+    [ ( 2(4), 3(4) ), &lt;rcwa permutation of Z with modulus 4&gt; ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(last,phi-&gt;Support(Image(phi)));</span>
 [ 0(4) U 1(4), 2(4) U 3(4) ]
 
@@ -886,7 +911,7 @@ a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
 
 <p><a id="X866843D08213067E" name="X866843D08213067E"></a></p>
 
-<h5>3.3-9 RepresentativeAction</h5>
+<h5>3.3-10 RepresentativeAction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">RCWA(R)</var>, <var class="Arg">P1</var>, <var class="Arg">P2</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: an element of RCWA(<span class="SimpleMath">R</span>) which maps the partition <var class="Arg">P1</var> to <var class="Arg">P2</var>.</p>
@@ -988,7 +1013,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Index(G,K);</span>
 6
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(GeneratorsOfGroup(K),Factorization);</span>
-[ [ ClassShift(0,4) ], [ ClassShift(2,4) ], [ ClassShift(1,6) ] ]
+[ [ ClassShift( 0(4) ) ], [ ClassShift( 2(4) ) ], [ ClassShift( 1(6) ) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(IsomorphismPcpGroup(K));</span>
 Pcp-group with orders [ 0, 0, 0 ]
 
@@ -1034,8 +1059,8 @@ Rcwa permutation of Z with modulus 180
         | (n+1)/2   if n in 15(60) U 27(60) U 39(60) U 51(60)
         | (n+7)/2   if n in 19(60) U 31(60) U 43(60) U 55(60)
         | 3n+1      if n in 13(20)
-        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 95(180) U 
- n |-&gt; &lt;                    131(180) U 143(180) U 179(180)
+        | (-n+17)/6 if n in 23(180) U 35(180) U 59(180) U 71(180) U 
+ n |-&gt; &lt;                    95(180) U 131(180) U 143(180) U 179(180)
         | (-n-1)/6  if n in 11(180) U 47(180) U 83(180) U 155(180)
         | (-n+7)/2  if n in 3(60)
         | (n+3)/2   if n in 7(60)
@@ -1044,7 +1069,6 @@ Rcwa permutation of Z with modulus 180
         | (-n+29)/6 if n in 167(180)
         |
         \
-
 
 </pre></div>
 
@@ -1057,29 +1081,6 @@ Rcwa permutation of Z with modulus 180
 [ ClassTransposition(0,2,3,4), ClassTransposition(1,2,4,6), ClassShift(0,2), 
   ClassShift(1,3), ClassReflection(2,5), ClassReflection(1,3), 
   ClassReflection(1,2) ]
-
-</pre></div>
-
-<p>There is an auxiliary function <code class="code">ClassPairs([<var class="Arg">R</var>,] <var class="Arg">m</var>)</code>, which is used in this context. In its one-argument form, this function returns a list of 4-tuples <span class="SimpleMath">(r_1,m_1,r_2,m_2)</span> of integers corresponding to the unordered pairs of disjoint residue classes <span class="SimpleMath">r_1(m_1)</span> and <span class="SimpleMath">r_2(m_2)</span> with <span class="SimpleMath">m_1, m_2 ≤ m</span>. In its two-argument form, it does "the equivalent" for the ring <var class="Arg">R</var>. The function <code class="code">NrClassPairs(<var class="Arg">m</var>)</code> returns the length of the list <code class="code">ClassPairs(<var class="Arg">m</var>)</code>, where the result is computed much faster and without actually generating the list of tuples.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ClassPairs(4),ClassTransposition);</span>
-[ ClassTransposition(0,2,1,2), ClassTransposition(0,2,1,4),
-  ClassTransposition(0,2,3,4), ClassTransposition(0,3,1,3),
-  ClassTransposition(0,3,2,3), ClassTransposition(0,4,1,4),
-  ClassTransposition(0,4,2,4), ClassTransposition(0,4,3,4),
-  ClassTransposition(1,2,0,4), ClassTransposition(1,2,2,4),
-  ClassTransposition(1,3,2,3), ClassTransposition(1,4,2,4),
-  ClassTransposition(1,4,3,4), ClassTransposition(2,4,3,4) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(last,TransposedClasses);</span>
-[ [ 0(2), 1(2) ], [ 0(2), 1(4) ], [ 0(2), 3(4) ], [ 0(3), 1(3) ],
-  [ 0(3), 2(3) ], [ 0(4), 1(4) ], [ 0(4), 2(4) ], [ 0(4), 3(4) ],
-  [ 1(2), 0(4) ], [ 1(2), 2(4) ], [ 1(3), 2(3) ], [ 1(4), 2(4) ],
-  [ 1(4), 3(4) ], [ 2(4), 3(4) ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrClassPairs(100);</span>
-3528138
 
 </pre></div>
 

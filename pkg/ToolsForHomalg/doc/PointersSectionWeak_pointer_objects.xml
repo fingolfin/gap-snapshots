@@ -6,10 +6,10 @@
  -->
 <Section Label="Weak_pointer_objects_automatically_generated_documentation_parts">
 <Heading>Weak pointer objects</Heading>
-<#Include Label="IsContainerForWeakPointers4706066050">
-<#Include Label="ContainerForWeakPointers1539161566">
-<#Include Label="UpdateContainerOfWeakPointers6283815865">
-<#Include Label="_AddElmWPObj_ForHomalg3668003338">
-<#Include Label="_AddTwoElmWPObj_ForHomalg2837569163">
-<#Include Label="_ElmWPObj_ForHomalg1098080276">
+<#Include Label="IsContainerForWeakPointers9992443183">
+<#Include Label="ContainerForWeakPointers1773195636">
+<#Include Label="UpdateContainerOfWeakPointers3668003338">
+<#Include Label="_AddElmWPObj_ForHomalg2837569163">
+<#Include Label="_AddTwoElmWPObj_ForHomalg1098080276">
+<#Include Label="_ElmWPObj_ForHomalg4771861153">
 </Section>

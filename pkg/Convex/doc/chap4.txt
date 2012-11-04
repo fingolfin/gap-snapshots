@@ -48,10 +48,11 @@
   
   [1X4.2-5 IsSimplicial[101X
   
-  [29X[2XIsSimplicial[102X( [3Xpoly[103X ) [32X property
+  [29X[2XIsSimplicial[102X( [3Xfan[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  [33X[0;0YChecks if the polytope [3Xpoly[103X is simplicial.[133X
+  [33X[0;0YChecks  if  the  fan  [3Xfan[103X  is  simplicial, i. e. if every cone in the fan is
+  simplicial.[133X
   
   [1X4.2-6 HasConvexSupport[101X
   
@@ -114,6 +115,14 @@
   [6XReturns:[106X  [33X[0;10Ya fan[133X
   
   [33X[0;0YCopy constructor for fans. For completeness reasons.[133X
+  
+  [1X4.5-2 Fan[101X
+  
+  [29X[2XFan[102X( [3Xrays[103X, [3Xcones[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya fan[133X
+  
+  [33X[0;0YConstructs  the  fan  out  of  the given [3Xrays[103X and a list of [3Xcones[103X given by a
+  lists of numbers of rays.[133X
   
   
   [1X4.6 [33X[0;0YFan: Examples[133X[101X

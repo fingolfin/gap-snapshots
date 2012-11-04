@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2012.6.21)  2 JUL 2012 22:18
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2012.6.21)  27 OCT 2012 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -887,12 +887,12 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
  [9] [10] [11] [12] [13] [14] [15]
 Chapter 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 858--862
+Underfull \hbox (badness 10000) in paragraph at lines 859--863
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--886
+Underfull \hbox (badness 10000) in paragraph at lines 884--887
 
  []
 
@@ -925,11 +925,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--15
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1439.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1439.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1440.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1440.
  (./GradedModulesForHomalg.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1439.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1439.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1440.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1440.
 
 Package rerunfilecheck Info: File `GradedModulesForHomalg.out' has not changed.
 
@@ -937,7 +937,7 @@ Package rerunfilecheck Info: File `GradedModulesForHomalg.out' has not changed.
 Package rerunfilecheck Info: File `GradedModulesForHomalg.brf' has not changed.
 
 (rerunfilecheck)             Checksum: A52C34611CFD29A214F2D365083D7EB2;187.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1439.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1440.
  ) 
 Here is how much of TeX's memory you used:
  7025 strings out of 493633
@@ -958,7 +958,7 @@ urw/helvetic/uhvb8a.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvr8a.pfb><
 /usr/share/texmf/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/texmf/fonts/t
 ype1/urw/times/utmb8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on GradedModulesForHomalg.pdf (30 pages, 240589 bytes).
+Output written on GradedModulesForHomalg.pdf (30 pages, 240533 bytes).
 PDF statistics:
  444 PDF objects out of 1000 (max. 8388607)
  395 compressed objects within 4 object streams

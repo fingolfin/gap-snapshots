@@ -402,17 +402,8 @@ InstallMethod( EXT_AMBIENT_DIM_OF_FAN,
 
 ##
 InstallMethod( EXT_DRAW,
-               " computes fans of polymake fan",
-               [ IsExternalPolymakeFan ],
-               
-  POLYMAKE_DRAW
-  
-);
-
-##
-InstallMethod( EXT_DRAW,
-               " computes fans of polymake fan",
-               [ IsExternalPolymakePolytope ],
+               "draws a polymake object",
+               [ IsExternalPolymakeObject ],
                
   POLYMAKE_DRAW
   
@@ -496,5 +487,23 @@ InstallMethod( EXT_STELLAR_SUBDIVISION,
                [ IsExternalPolymakeCone , IsExternalPolymakeFan ],
                
   POLYMAKE_STELLAR_SUBDIVISION
+  
+);
+
+##
+InstallMethod( EXT_INTERSECTION_OF_CONES,
+               "for polymake cones",
+        [ IsExternalPolymakeCone, IsExternalPolymakeCone ], 
+        
+  POLYMAKE_INTERSECTION_OF_CONES
+  
+);
+
+##
+InstallMethod( EXT_EQUALITIES_OF_POLYTOPE,
+               "for polymake polytopes",
+               [ IsExternalPolymakePolytope ],
+               
+  POLYMAKE_EQUALITIES_OF_POLYTOPE
   
 );

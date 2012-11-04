@@ -103,12 +103,12 @@
     [4X[25Xgap>[125X [27XR := Integers^2;;[127X[104X
     [4X[25Xgap>[125X [27Xtwice := RcwaMapping(R,[[1,0],[0,1]],[127X[104X
     [4X[25X>[125X [27X                          [[[[2,0],[0,2]],[0,0],1]]);       # method (a)[127X[104X
-    [4X[28XRcwa mapping of Z^2: [m,n] -> [2m,2n][128X[104X
+    [4X[28XRcwa mapping of Z^2: (m,n) -> (2m,2n)[128X[104X
     [4X[25Xgap>[125X [27X[4,5]^twice;[127X[104X
     [4X[28X[ 8, 10 ][128X[104X
     [4X[25Xgap>[125X [27Xtwice1 := RcwaMapping(R,[[1,0],[0,1]],[127X[104X
     [4X[25X>[125X [27X                           [[[[2,0],[0,1]],[0,0],1]]);      # method (a)[127X[104X
-    [4X[28XRcwa mapping of Z^2: [m,n] -> [2m,n][128X[104X
+    [4X[28XRcwa mapping of Z^2: (m,n) -> (2m,n)[128X[104X
     [4X[25Xgap>[125X [27X[4,5]^twice1;[127X[104X
     [4X[28X[ 8, 5 ][128X[104X
     [4X[25Xgap>[125X [27XImage(twice1);[127X[104X
@@ -144,7 +144,7 @@
     [4X[28X<rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z>[128X[104X
     [4X[25Xgap>[125X [27XP1^g = P2;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(g:table);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(g:AsTable);[127X[104X
     [4X[28X[128X[104X
     [4X[28XRcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z[128X[104X
     [4X[28X[128X[104X
@@ -194,7 +194,7 @@
     [4X[25Xgap>[125X [27Xg^2;[127X[104X
     [4X[28XIdentityMapping( ( Integers^2 ) )[128X[104X
     [4X[25Xgap>[125X [27XList(ProjectionsToCoordinates(g),Factorization);[127X[104X
-    [4X[28X[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ][128X[104X
+    [4X[28X[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -215,7 +215,7 @@
   [33X[0;0YThe  class transposition [22Xτ_r_1+ℤ^d L_1, r_2+ℤ^d L_2[122X interchanges the residue
   classes [22Xr_1+ℤ^d L_1[122X and [22Xr_2+ℤ^d L_2[122X, and fixes the complement of their union
   pointwise.  The  set of all class transpositions of [22Xℤ^d[122X generates the simple
-  group CT([22Xℤ^d[122X) (cf. [Koh08b]).[133X
+  group CT([22Xℤ^d[122X) (cf. [Koh2+]).[133X
   
   [33X[0;0YIn  the  four-argument  form, the arguments [3Xr1[103X, [3XL1[103X, [3Xr2[103X and [3XL2[103X stand for [22Xr_1[122X,
   [22XL_1[122X,  [22Xr_2[122X and [22XL_2[122X, respectively. In the two-argument form, the arguments [3Xcl1[103X
@@ -236,7 +236,7 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);[127X[104X
-    [4X[28XClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)[128X[104X
+    [4X[28X( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z )[128X[104X
     [4X[25Xgap>[125X [27XDisplay(ct);[127X[104X
     [4X[28X[128X[104X
     [4X[28XRcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2[128X[104X
@@ -248,17 +248,17 @@
     [4X[28X            \[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XTransposedClasses(ct);[127X[104X
-    [4X[28X[ (1,0)+(2,0)Z+(0,4)Z, (0,0)+(2,1)Z+(0,2)Z ][128X[104X
+    [4X[28X[ (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z ][128X[104X
     [4X[25Xgap>[125X [27Xct = ClassTransposition(last);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSplittedClassTransposition(ct,[1,2]);[127X[104X
-    [4X[28X[ ClassTransposition((1,0)+(2,0)Z+(0,8)Z,(0,0)+(2,1)Z+(0,4)Z), [128X[104X
-    [4X[28X  ClassTransposition((1,4)+(2,0)Z+(0,8)Z,(0,2)+(2,1)Z+(0,4)Z) ][128X[104X
+    [4X[28X[ ( (0,0)+(2,1)Z+(0,4)Z, (1,0)+(2,1)Z+(0,8)Z ), [128X[104X
+    [4X[28X  ( (0,2)+(2,1)Z+(0,4)Z, (1,4)+(2,1)Z+(0,8)Z ) ][128X[104X
     [4X[25Xgap>[125X [27XProduct(last) = ct;[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSplittedClassTransposition(ct,[2,1]);[127X[104X
-    [4X[28X[ ClassTransposition((0,0)+(4,0)Z+(0,2)Z,(1,0)+(4,0)Z+(0,4)Z), [128X[104X
-    [4X[28X  ClassTransposition((2,1)+(4,0)Z+(0,2)Z,(3,0)+(4,0)Z+(0,4)Z) ][128X[104X
+    [4X[28X[ ( (0,0)+(4,0)Z+(0,2)Z, (1,0)+(4,2)Z+(0,4)Z ), [128X[104X
+    [4X[28X  ( (2,1)+(4,0)Z+(0,2)Z, (3,1)+(4,2)Z+(0,4)Z ) ][128X[104X
     [4X[25Xgap>[125X [27XProduct(last) = ct;[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[28X[128X[104X
@@ -281,9 +281,9 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xinterchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);[127X[104X
-    [4X[28XClassRotation((Integers^2),[[0,1],[1,0]])[128X[104X
+    [4X[28XClassRotation( Z^2, [ [ 0, 1 ], [ 1, 0 ] ] )[128X[104X
     [4X[25Xgap>[125X [27XDisplay(interchange);[127X[104X
-    [4X[28XRcwa permutation of Z^2: [m,n] -> [n,m][128X[104X
+    [4X[28XRcwa permutation of Z^2: (m,n) -> (n,m)[128X[104X
     [4X[25Xgap>[125X [27Xclasses := AllResidueClassesModulo(Integers^2,[[2,1],[0,3]]);[127X[104X
     [4X[28X[ (0,0)+(2,1)Z+(0,3)Z, (0,1)+(2,1)Z+(0,3)Z, (0,2)+(2,1)Z+(0,3)Z, [128X[104X
     [4X[28X  (1,0)+(2,1)Z+(0,3)Z, (1,1)+(2,1)Z+(0,3)Z, (1,2)+(2,1)Z+(0,3)Z ][128X[104X
@@ -298,7 +298,6 @@
     [4X[28X (m,n) |-> <  (m,n)           otherwise[128X[104X
     [4X[28X            |[128X[104X
     [4X[28X            \[128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -319,9 +318,9 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xshift1 := ClassShift([0,0],[[1,0],[0,1]],1);[127X[104X
-    [4X[28XClassShift((Integers^2),1)[128X[104X
+    [4X[28XClassShift( Z^2, 1 )[128X[104X
     [4X[25Xgap>[125X [27XDisplay(shift1);[127X[104X
-    [4X[28XTame rcwa permutation of Z^2: [m,n] -> [m+1,n][128X[104X
+    [4X[28XTame rcwa permutation of Z^2: (m,n) -> (m+1,n)[128X[104X
     [4X[25Xgap>[125X [27Xs := ClassShift(ResidueClass([1,1],[[2,1],[0,2]]),2);[127X[104X
     [4X[28XClassShift((1,1)+(2,1)Z+(0,2)Z,2)[128X[104X
     [4X[25Xgap>[125X [27XDisplay(s);[127X[104X
@@ -333,7 +332,6 @@
     [4X[28X (m,n) |-> <  (m,n)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z U [128X[104X
     [4X[28X            |                     (1,0)+(2,1)Z+(0,2)Z[128X[104X
     [4X[28X            \[128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -402,7 +400,7 @@
     [4X[28X            \[128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XList(ProjectionsToCoordinates(f),Factorization);[127X[104X
-    [4X[28X[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ][128X[104X
+    [4X[28X[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -452,7 +450,7 @@
     [4X[28X  ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[1,1],[0,1]]) ][128X[104X
     [4X[25Xgap>[125X [27X[[-47,-37],[61,48]]^phi;[127X[104X
     [4X[28XClassRotation((1,0)+(2,2)Z+(0,3)Z,[[-47,-37],[61,48]])[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(last:table);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(last:AsTable);[127X[104X
     [4X[28X[128X[104X
     [4X[28XRcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6[128X[104X
     [4X[28X[128X[104X
@@ -461,7 +459,6 @@
     [4X[28X [0,0] [0,1] [0,2] [1,1]     |[128X[104X
     [4X[28X [1,2]                       | [m,n][128X[104X
     [4X[28X [1,0]                       | [(-263m+122n+266)/3,(-1147m+532n+1147)/6][128X[104X
-    [4X[28X[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

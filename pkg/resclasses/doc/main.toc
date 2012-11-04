@@ -34,13 +34,16 @@
 \contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Installation and Auxiliary Functions}}{18}{chapter.4}
 \contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Requirements}}{18}{section.4.1}
 \contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Installation}}{18}{section.4.2}
-\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }The testing routine}}{18}{section.4.3}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }The testing routines}}{18}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }ResClassesTest}}{18}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Building the manual}}{18}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }ResClassesBuildManual}}{18}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }ResClassesTestExamples}}{18}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Utilities for preparing the package for distribution}}{19}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }ResClassesBuildManual}}{19}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }ConvertPackageFilesToUNIXLineBreaks}}{19}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }RemoveTemporaryPackageFiles}}{19}{subsection.4.4.3}
 \contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }DownloadFile, SendEmail and EmailLogFile}}{19}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }DownloadFile}}{19}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}\leavevmode {\color {Chapter }SendEmail}}{19}{subsection.4.5.2}
-\contentsline {subsection}{\numberline {4.5.3}\leavevmode {\color {Chapter }EmailLogFile}}{19}{subsection.4.5.3}
-\contentsline {chapter}{References}{20}{chapter*.4}
-\contentsline {chapter}{Index}{21}{section*.5}
+\contentsline {subsection}{\numberline {4.5.3}\leavevmode {\color {Chapter }EmailLogFile}}{20}{subsection.4.5.3}
+\contentsline {chapter}{References}{21}{chapter*.4}
+\contentsline {chapter}{Index}{22}{section*.5}

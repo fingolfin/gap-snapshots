@@ -23,17 +23,17 @@ BindGlobal( "RCWABuildManual",
 
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
     MakeGAPDocDoc( Concatenation( RCWADir, "/doc/" ), "main.xml",
-                   [ "../gap/rcwaaux.g", "../gap/frdepend.gi",
-                     "../gap/general.gd", "../gap/general.gi",
-                     "../gap/rcwamap.gd", "../gap/rcwamap.gi",
-                     "../gap/rcwamono.gd", "../gap/rcwamono.gi",
-                     "../gap/rcwagrp.gd", "../gap/rcwagrp.gi" ],
+                   [ "../lib/rcwaaux.g", "../lib/frdepend.gi",
+                     "../lib/general.gd", "../lib/general.gi",
+                     "../lib/rcwamap.gd", "../lib/rcwamap.gi",
+                     "../lib/rcwamono.gd", "../lib/rcwamono.gi",
+                     "../lib/rcwagrp.gd", "../lib/rcwagrp.gi" ],
                      "RCWA", "../../../" );
   end );
 
 #############################################################################
 ##
-#F  RCWATestInstall( ) . . . . .  RCWA test suite
+#F  RCWATestInstall( ) . . . . quick test whether RCWA is installed correctly
 ##
 ##  Performs a nontrivial computation to check whether an installation of
 ##  RCWA appears to work.
@@ -67,6 +67,24 @@ BindGlobal( "RCWATestAll",
     RCWADir := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
     dir := Concatenation( RCWADir, "/tst/" );
     Read( Concatenation( dir, "testall.g" ) );
+  end );
+
+#############################################################################
+##
+#F  RCWATestExamples( ) . . . . . . . . . .  test examples in the RCWA manual
+##
+##  Tests the examples in the manual of the RCWA package.
+##
+BindGlobal( "RCWATestExamples",
+
+  function ( )
+
+    local  path;
+
+    path := GAPInfo.PackagesInfo.("rcwa")[1].InstallationPath;
+    RunExamples(ExtractExamples(Concatenation(path,"/doc"),
+                                "main.xml",[],"Chapter"),
+                rec( width := 75, compareFunction := "uptowhitespace" ) );
   end );
 
 #############################################################################

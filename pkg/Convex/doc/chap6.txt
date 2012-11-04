@@ -112,28 +112,6 @@
   
   [33X[0;0YReturns the lattice points in the relative interior of the polytope [3Xpoly[103X.[133X
   
-  [1X6.3-8 DefiningInequalities[101X
-  
-  [29X[2XDefiningInequalities[102X( [3Xcone[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ya list[133X
-  
-  [33X[0;0YReturns a list of the defining inequalities of the cone [3Xcone[103X.[133X
-  
-  [1X6.3-9 IsContainedInFan[101X
-  
-  [29X[2XIsContainedInFan[102X( [3Xcone[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ya fan[133X
-  
-  [33X[0;0YIf  the  cone  [3Xcone[103X is constructed as part of a fan, this method returns the
-  fan.[133X
-  
-  [1X6.3-10 FactorGridMorphism[101X
-  
-  [29X[2XFactorGridMorphism[102X( [3Xcone[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YReturns the morphism to the factor grid of the cone [3Xcone[103X.[133X
-  
   
   [1X6.4 [33X[0;0YPolytope: Methods[133X[101X
   

@@ -11,6 +11,7 @@
   [10XAsOrdinaryUnionOfResidueClasses[110X, for a union of residue classes with fixed rep's  2.2-1
   [2XAsUnionOfFewClasses[102X (for a residue class union)  1.2-2
   [10XClasses[110X, of a union of residue classes with fixed rep's  2.1-2
+  [2XConvertPackageFilesToUNIXLineBreaks[102X  4.4-2
   [2XDelta[102X (for a union of residue classes with fixed representatives)  2.3-1
   [2XDensity[102X (of a residue class union)  1.2-5
   [10XDensity[110X, of a union of residue classes with fixed rep's  2.2-1
@@ -53,9 +54,11 @@
   [2XPartitionsIntoResidueClasses[102X (of a given ring, of given length)  1.2-3
   [10XPrint[110X, for a residue class union  1.2
   [2XRandomPartitionIntoResidueClasses[102X (of a given ring, of given length)  1.2-4
+  [2XRemoveTemporaryPackageFiles[102X  4.4-3
   [2XRepresentativeStabilizingRefinement[102X (of a union of res.-classes with fixed rep's)  2.3-2
   [2XResClassesBuildManual[102X  4.4-1
   [2XResClassesTest[102X  4.3-1
+  [2XResClassesTestExamples[102X  4.3-2
   [10XResidue[110X, of a residue class  1.1-1
   residue class union, coercion  1.4-2
   residue class union, definition  1.1-2

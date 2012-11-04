@@ -3,9 +3,9 @@
   \item \texttt  {ActionOnRespectedPartition}
     \subitem for a tame rcwa group, \hyperpage{46}
   \item \texttt{AllElementsOfCTZWithGivenModulus}, \hyperpage{31}
-  \item \texttt{AllProducts}, \hyperpage{124}
-  \item \texttt{AllSmoothIntegers}, \hyperpage{124}
-  \item \texttt{AssignGlobals}, \hyperpage{66}, \hyperpage{124}
+  \item \texttt{AllProducts}, \hyperpage{137}
+  \item \texttt{AllSmoothIntegers}, \hyperpage{137}
+  \item \texttt{AssignGlobals}, \hyperpage{67}, \hyperpage{137}
 
   \indexspace
 
@@ -13,7 +13,7 @@
     \subitem definition, \hyperpage{16}
   \item \texttt  {Ball}
     \subitem for group, element and radius, \hyperpage{42}
-    \subitem for group, point and radius, \hyperpage{42}
+    \subitem for group, point and radius, \hyperpage{43}
     \subitem for group, point, radius and action, \hyperpage{42}
     \subitem for monoid, element and radius, \hyperpage{52}
     \subitem for monoid, point, radius and action, \hyperpage{52}
@@ -23,8 +23,7 @@
   \item class-wise translating
     \subitem definition, \hyperpage{16}, \hyperpage{53}
   \item \texttt{ClassPairs}
-    \subitem m, \hyperpage{48}
-    \subitem R, m, \hyperpage{48}
+    \subitem m, \hyperpage{10}
   \item \texttt  {ClassReflection}
     \subitem cl, \hyperpage{9}
     \subitem r, m, \hyperpage{9}
@@ -44,14 +43,14 @@
     \subitem r1, L1, r2, L2 (for Z x Z), \hyperpage{56}
     \subitem r1, m1, r2, m2, \hyperpage{10}
   \item \texttt{ClassWiseConstantOn}, \hyperpage{18}
-    \subitem for rcwa mappings of Z x Z, \hyperpage{59}
+    \subitem for rcwa mappings of Z x Z, \hyperpage{58}
   \item \texttt{ClassWiseOrderPreservingOn}, \hyperpage{18}
-    \subitem for rcwa mappings of Z x Z, \hyperpage{59}
+    \subitem for rcwa mappings of Z x Z, \hyperpage{58}
   \item \texttt{ClassWiseOrderReversingOn}, \hyperpage{18}
-    \subitem for rcwa mappings of Z x Z, \hyperpage{59}
+    \subitem for rcwa mappings of Z x Z, \hyperpage{58}
   \item \texttt{Coefficients}
     \subitem of an rcwa mapping, \hyperpage{16}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
   \item Collatz conjecture, \hyperpage{5}
   \item Collatz mapping, \hyperpage{5}
   \item \texttt  {CommonRightInverse}
@@ -65,6 +64,7 @@
   \item \texttt  {CycleRepresentativesAndLengths}
     \subitem for rcwa permutation and set of seed points, 
 		\hyperpage{42}
+  \item \texttt{CyclesOnFiniteOrbit}, \hyperpage{41}
 
   \indexspace
 
@@ -73,14 +73,14 @@
   \item \texttt{DerivedSubgroup}
     \subitem of an rcwa group, \hyperpage{36}
   \item \texttt  {Determinant}
-    \subitem of an rcwa mapping of Z, \hyperpage{18}
-  \item \texttt{DifferencesList}, \hyperpage{124}
+    \subitem of an rcwa mapping of Z, \hyperpage{19}
+  \item \texttt{DifferencesList}, \hyperpage{137}
   \item \texttt  {DirectProduct}
     \subitem for rcwa groups over Z, \hyperpage{32}
   \item \texttt{Display}
     \subitem for an rcwa group, \hyperpage{30}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{49}
   \item \texttt{DistanceToNextSmallerPointInOrbit}, \hyperpage{39}
   \item \texttt{Div}
@@ -90,7 +90,7 @@
     \subitem of an rcwa group, \hyperpage{33}
     \subitem of an rcwa group over Z x Z, \hyperpage{60}
     \subitem of an rcwa mapping, \hyperpage{16}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
   \item divisor
     \subitem definition, \hyperpage{7}
   \item \texttt  {DrawGrid}
@@ -99,19 +99,19 @@
   \item \texttt  {DrawOrbitPicture}
     \subitem G, p0, r, h, w, colored, palette, filename, \hyperpage{40}
   \item \texttt{DrawOrbitPicture}
-    \subitem for rcwa groups over Z x Z, \hyperpage{61}
+    \subitem for rcwa groups over Z x Z, \hyperpage{60}
 
   \indexspace
 
   \item \texttt{EpimorphismByGenerators}
-    \subitem for two groups, \hyperpage{124}
+    \subitem for two groups, \hyperpage{137}
   \item \texttt  {EpimorphismFromFpGroup}
     \subitem for an rcwa group and a search radius, \hyperpage{37}
   \item \texttt{EquivalenceClasses}
     \subitem for a list and a function computing a class invariant, 
-		\hyperpage{124}
+		\hyperpage{137}
     \subitem for a list and a function describing an equivalence relation, 
-		\hyperpage{124}
+		\hyperpage{137}
   \item \texttt{Exponent}
     \subitem of an rcwa group, \hyperpage{36}
   \item \texttt{ExtRepOfObj}, \hyperpage{28}
@@ -119,19 +119,22 @@
   \indexspace
 
   \item \texttt  {Factorization}
-    \subitem for an rcwa permutation of Z, \hyperpage{19}
+    \subitem for an rcwa permutation of Z, \hyperpage{20}
   \item \texttt  {FactorizationIntoCSCRCT}
-    \subitem for an rcwa permutation of Z, \hyperpage{19}
+    \subitem for an rcwa permutation of Z, \hyperpage{20}
   \item \texttt  {FactorizationOnConnectedComponents}
     \subitem for an rcwa mapping and a modulus, \hyperpage{25}
   \item \texttt  {FixedPointsOfAffinePartialMappings}
-    \subitem for an rcwa mapping, \hyperpage{17}
-  \item \texttt{FloatQuotientsList}, \hyperpage{124}
+    \subitem for an rcwa mapping, \hyperpage{18}
+  \item \texttt  {FixedResidueClasses}
+    \subitem for rcwa group and bound on modulus, \hyperpage{42}
+    \subitem for rcwa mapping and bound on modulus, \hyperpage{42}
+  \item \texttt{FloatQuotientsList}, \hyperpage{137}
 
   \indexspace
 
   \item \texttt{GeneratorsAndInverses}
-    \subitem for a group, \hyperpage{124}
+    \subitem for a group, \hyperpage{137}
   \item \texttt  {GluckTaylorInvariant}
     \subitem of a trajectory, \hyperpage{27}
   \item \texttt{Group}, \hyperpage{29}
@@ -161,23 +164,23 @@
   \item \texttt{Induction}
     \subitem for an rcwa monoid, by an injective rcwa mapping, 
 		\hyperpage{50}
-  \item \texttt  {InfoRCWA}, \hyperpage{122}
+  \item \texttt  {InfoRCWA}, \hyperpage{135}
   \item \texttt{InjectiveAsMappingFrom}
     \subitem for an rcwa mapping, \hyperpage{23}
   \item integral
     \subitem definition, \hyperpage{16}
   \item \texttt{IntegralConjugate}
-    \subitem of a tame rcwa group, \hyperpage{46}
-    \subitem of a tame rcwa permutation, \hyperpage{46}
+    \subitem of a tame rcwa group, \hyperpage{47}
+    \subitem of a tame rcwa permutation, \hyperpage{47}
   \item \texttt{IntegralizingConjugator}
-    \subitem of a tame rcwa group, \hyperpage{46}
-    \subitem of a tame rcwa permutation, \hyperpage{46}
+    \subitem of a tame rcwa group, \hyperpage{47}
+    \subitem of a tame rcwa permutation, \hyperpage{47}
   \item \texttt{IsBalanced}
     \subitem for an rcwa mapping, \hyperpage{16}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{IsBijective}
     \subitem for an rcwa mapping, \hyperpage{15}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{IsClassReflection}
     \subitem for an rcwa mapping, \hyperpage{11}
   \item \texttt{IsClassRotation}
@@ -192,7 +195,7 @@
   \item \texttt{IsClassWiseOrderPreserving}
     \subitem for an rcwa group, \hyperpage{33}
     \subitem for an rcwa mapping, \hyperpage{16}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{50}
   \item \texttt{IsClassWiseTranslating}
     \subitem for an rcwa group, \hyperpage{33}
@@ -205,12 +208,12 @@
     \subitem for an rcwa mapping, \hyperpage{11}
   \item \texttt{IsInjective}
     \subitem for an rcwa mapping, \hyperpage{15}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{IsIntegral}
     \subitem for an rcwa group, \hyperpage{33}
     \subitem for an rcwa group over Z x Z, \hyperpage{60}
     \subitem for an rcwa mapping, \hyperpage{16}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{50}
   \item \texttt{IsNaturalCT}, \hyperpage{48}
   \item \texttt{IsNaturalRCWA}, \hyperpage{48}
@@ -224,11 +227,11 @@
     \subitem for GL(2,Z) and a residue class, \hyperpage{60}
     \subitem for SL(2,Z) and a residue class, \hyperpage{60}
   \item \texttt{IsOne}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{IsPerfect}
     \subitem for an rcwa group, \hyperpage{36}
   \item \texttt{IsPrimeSwitch}
-    \subitem for an rcwa mapping, \hyperpage{20}
+    \subitem for an rcwa mapping, \hyperpage{21}
   \item \texttt  {IsRcwaGroup}, \hyperpage{48}
   \item \texttt  {IsRcwaGroupOverGFqx}, \hyperpage{48}
   \item \texttt  {IsRcwaGroupOverZ}, \hyperpage{48}
@@ -250,19 +253,19 @@
     \subitem for two rcwa monoids, \hyperpage{50}
   \item \texttt{IsSurjective}
     \subitem for an rcwa mapping, \hyperpage{15}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{IsTame}
     \subitem for an rcwa group, \hyperpage{36}
     \subitem for an rcwa group over Z x Z, \hyperpage{60}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{50}
   \item \texttt{IsTransitive}
     \subitem for an rcwa group, on its underlying ring, \hyperpage{38}
   \item \texttt{IsTransitiveOnNonnegativeIntegersInSupport}
     \subitem for an rcwa group over Z, \hyperpage{39}
   \item \texttt{IsZero}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
 
   \indexspace
 
@@ -275,16 +278,16 @@
     \subitem for an rcwa mapping, \hyperpage{17}
   \item \texttt{LaTeXAndXDVI}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
-  \item \texttt{LaTeXStringFactorsInt}, \hyperpage{124}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
+  \item \texttt{LaTeXStringFactorsInt}, \hyperpage{137}
   \item \texttt{LaTeXStringRcwaMapping}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt  {LikelyContractionCentre}
     \subitem of an rcwa mapping, \hyperpage{27}
-  \item \texttt{ListOfPowers}, \hyperpage{124}
+  \item \texttt{ListOfPowers}, \hyperpage{137}
   \item \texttt{LoadBitmapPicture}
-    \subitem filename, \hyperpage{123}
+    \subitem filename, \hyperpage{136}
   \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Groups}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {By3}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
 		\hyperpage{63}
   \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Nonbalanced}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
@@ -292,11 +295,11 @@
   \item \texttt  {Load}\discretionary {-}{}{}\texttt  {Database}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Products}\discretionary {-}{}{}\texttt  {Of2}\discretionary {-}{}{}\texttt  {Class}\discretionary {-}{}{}\texttt  {Transpositions}, 
 		\hyperpage{64}
   \item \texttt  {LoadRCWAExamples}, \hyperpage{62}
-  \item \texttt{LoadRCWAExamples}, \hyperpage{66}
+  \item \texttt{LoadRCWAExamples}, \hyperpage{67}
   \item \texttt  {LocalizedRcwaMapping}
     \subitem for an rcwa mapping of Z and a prime, \hyperpage{13}
   \item \texttt  {Log2HTML}
-    \subitem logfilename, \hyperpage{123}
+    \subitem logfilename, \hyperpage{137}
   \item \texttt  {Loops}
     \subitem of an rcwa mapping, \hyperpage{26}
 
@@ -311,7 +314,7 @@
     \subitem of an rcwa group, \hyperpage{33}
     \subitem of an rcwa group over Z x Z, \hyperpage{60}
     \subitem of an rcwa mapping, \hyperpage{16}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem of an rcwa monoid, \hyperpage{50}
   \item modulus
     \subitem definition, \hyperpage{7}
@@ -321,8 +324,8 @@
   \item \texttt{MonoidByGenerators}, \hyperpage{49}
   \item \texttt{MovedPoints}
     \subitem of an rcwa group, \hyperpage{38}
-    \subitem of an rcwa mapping, \hyperpage{15}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping, \hyperpage{16}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt{Mult}
     \subitem for an rcwa group, \hyperpage{33}
     \subitem for an rcwa mapping, \hyperpage{16}
@@ -330,7 +333,7 @@
     \subitem of an rcwa group, \hyperpage{33}
     \subitem of an rcwa group over Z x Z, \hyperpage{60}
     \subitem of an rcwa mapping, \hyperpage{16}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
   \item multiplier
     \subitem definition, \hyperpage{7}
   \item \texttt  {Multpk}
@@ -338,12 +341,12 @@
 		\hyperpage{18}
   \item \texttt{Multpk}
     \subitem for rcwa mapping of Z x Z, prime and exponent, 
-		\hyperpage{59}
+		\hyperpage{58}
 
   \indexspace
 
   \item \texttt{NrClassPairs}
-    \subitem m, \hyperpage{48}
+    \subitem m, \hyperpage{10}
   \item \texttt{NrConjugacyClassesOfCTZOfOrder}, \hyperpage{31}
   \item \texttt{NrConjugacyClassesOfRCWAZOfOrder}, \hyperpage{30}
   \item \texttt{NrElementsOfCTZWithGivenModulus}, \hyperpage{31}
@@ -352,7 +355,7 @@
 
   \item \texttt{ObjByExtRep}, \hyperpage{28}
   \item \texttt{One}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
   \item \texttt  {Orbit}
     \subitem for an rcwa group and a point, \hyperpage{39}
     \subitem for an rcwa group and a set, \hyperpage{39}
@@ -360,9 +363,9 @@
   \item \texttt  {OrbitsModulo}
     \subitem for an rcwa mapping and a modulus, \hyperpage{25}
   \item \texttt{OrbitsModulo}
-    \subitem for an rcwa group and a modulus, \hyperpage{44}
+    \subitem for an rcwa group and a modulus, \hyperpage{45}
   \item \texttt{Order}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem of an rcwa permutation, \hyperpage{14}
 
   \indexspace
@@ -389,7 +392,7 @@
   \item \texttt{PrimeSet}
     \subitem of an rcwa group, \hyperpage{33}
     \subitem of an rcwa mapping, \hyperpage{16}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem of an rcwa monoid, \hyperpage{50}
   \item \texttt  {PrimeSwitch}
     \subitem p, \hyperpage{20}
@@ -397,7 +400,7 @@
   \item \texttt{Print}
     \subitem for an rcwa group, \hyperpage{30}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{49}
   \item \texttt  {ProjectionsToCoordinates}
     \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
@@ -406,7 +409,7 @@
 
   \indexspace
 
-  \item \texttt{QuotientsList}, \hyperpage{124}
+  \item \texttt{QuotientsList}, \hyperpage{137}
 
   \indexspace
 
@@ -469,8 +472,8 @@
     \subitem wild, \hyperpage{50}
   \item \texttt{rcwa monoids}
     \subitem membership test, \hyperpage{50}
-  \item \texttt  {RCWABuildManual}, \hyperpage{121}
-  \item \texttt{RCWAInfo}, \hyperpage{122}
+  \item \texttt  {RCWABuildManual}, \hyperpage{134}
+  \item \texttt{RCWAInfo}, \hyperpage{135}
   \item \texttt  {RcwaMapping}
     \subitem by arithmetical expression, \hyperpage{12}
     \subitem by finite field size, modulus and list of coefficients, 
@@ -492,25 +495,26 @@
     \subitem of Z x Z, by residue class cycles, \hyperpage{54}
   \item \texttt  {RcwaMappingsFamily}
     \subitem of a ring, \hyperpage{28}
-  \item \texttt  {RCWATestAll}, \hyperpage{122}
-  \item \texttt  {RCWATestInstall}, \hyperpage{122}
+  \item \texttt  {RCWATestAll}, \hyperpage{135}
+  \item \texttt  {RCWATestExamples}, \hyperpage{135}
+  \item \texttt  {RCWATestInstall}, \hyperpage{135}
   \item \texttt  {RepresentativeAction}
     \subitem for RCWA(R) and 2 partitions of R into residue classes, 
-		\hyperpage{44}
+		\hyperpage{45}
     \subitem G, source, destination, action, \hyperpage{43}
   \item \texttt{RepresentativeActionPreImage}
     \subitem G, source, destination, action, F, \hyperpage{43}
   \item \texttt  {RespectedPartition}
-    \subitem of a tame rcwa group, \hyperpage{45}
-    \subitem of a tame rcwa permutation, \hyperpage{45}
+    \subitem of a tame rcwa group, \hyperpage{46}
+    \subitem of a tame rcwa permutation, \hyperpage{46}
   \item \texttt{RespectsPartition}
     \subitem for an rcwa group, \hyperpage{46}
     \subitem for an rcwa permutation, \hyperpage{46}
   \item \texttt{RestrictedBall}
-    \subitem G, g, r, modulusbound, \hyperpage{42}
+    \subitem G, g, r, modulusbound, \hyperpage{43}
   \item \texttt{RestrictedPerm}
     \subitem for an rcwa permutation and a residue class union, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \texttt  {Restriction}
     \subitem of an rcwa group, by an injective rcwa mapping, 
 		\hyperpage{33}
@@ -522,17 +526,17 @@
   \item \texttt  {RightInverse}
     \subitem of an injective rcwa mapping, \hyperpage{22}
   \item \texttt  {Root}
-    \subitem k-th root of an rcwa mapping, \hyperpage{21}
+    \subitem k-th root of an rcwa mapping, \hyperpage{22}
   \item \texttt{RotationFactor}
     \subitem of a class rotation, \hyperpage{11}
     \subitem of a class rotation of Z x Z, \hyperpage{57}
   \item \texttt  {RunDemonstration}
-    \subitem filename, \hyperpage{122}
+    \subitem filename, \hyperpage{136}
 
   \indexspace
 
   \item \texttt  {SaveAsBitmapPicture}
-    \subitem picture, filename, \hyperpage{123}
+    \subitem picture, filename, \hyperpage{136}
   \item \texttt  {SemilocalizedRcwaMapping}
     \subitem for an rcwa mapping of Z and a set of primes, 
 		\hyperpage{13}
@@ -544,7 +548,7 @@
 		\hyperpage{40}
   \item \texttt{ShortCycles}
     \subitem for rcwa perm. of Z x Z, set of points and max. length, 
-		\hyperpage{59}
+		\hyperpage{58}
   \item \texttt  {ShortOrbits}
     \subitem for rcwa group, set of points and bound on length, 
 		\hyperpage{40}
@@ -578,14 +582,14 @@
   \item \texttt{String}
     \subitem for an rcwa group, \hyperpage{30}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{49}
   \item \texttt  {StructureDescription}
     \subitem for an rcwa group, \hyperpage{34}
   \item \texttt{Support}
     \subitem of an rcwa group, \hyperpage{38}
-    \subitem of an rcwa mapping, \hyperpage{15}
-    \subitem of an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem of an rcwa mapping, \hyperpage{16}
+    \subitem of an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem of an rcwa monoid, \hyperpage{50}
 
   \indexspace
@@ -606,11 +610,11 @@
     \subitem for rcwa mapping, starting point, set of end points, modulus, 
 		\hyperpage{23}
   \item \texttt{Trajectory}
-    \subitem for rcwa mappings of Z x Z, \hyperpage{59}
+    \subitem for rcwa mappings of Z x Z, \hyperpage{58}
   \item \texttt  {TransitionGraph}
     \subitem for an rcwa mapping and a modulus, \hyperpage{25}
   \item \texttt  {TransitionMatrix}
-    \subitem for an rcwa mapping and a modulus, \hyperpage{25}
+    \subitem for an rcwa mapping and a modulus, \hyperpage{26}
   \item \texttt{TransposedClasses}
     \subitem of a class transposition, \hyperpage{10}
     \subitem of a class transposition of Z x Z, \hyperpage{56}
@@ -620,7 +624,7 @@
   \item \texttt{View}
     \subitem for an rcwa group, \hyperpage{30}
     \subitem for an rcwa mapping, \hyperpage{14}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
     \subitem for an rcwa monoid, \hyperpage{49}
 
   \indexspace
@@ -637,6 +641,6 @@
   \indexspace
 
   \item \texttt{Zero}
-    \subitem for an rcwa mapping of Z x Z, \hyperpage{59}
+    \subitem for an rcwa mapping of Z x Z, \hyperpage{58}
 
 \end{theindex}

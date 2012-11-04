@@ -27,13 +27,13 @@ Subtitle := "A homalg based Package for the Abelian Category of Finitely Present
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
 Version := Maximum( [
-  "2012.06.07", ## Mohamed's version
+  "2012.10.27", ## Mohamed's version
 ## this line prevents merge conflicts
-  "2011.09.06", ## Markus' version
+  "2012.10.22", ## Markus' version
 ## this line prevents merge conflicts
   "2011.07.20", ## Florian's version
 ## this line prevents merge conflicts
-  "2012.06.15", ## Sebas' version
+  "2012.10.17", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -293,8 +293,6 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "Modules",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  Archive := 
-    "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/Modules/Modules.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -321,7 +319,7 @@ Dependencies := rec(
   # without these, the package will not load
   NeededOtherPackages := [
                    [ "MatricesForHomalg", ">=2012.06.07" ],
-                   [ "homalg", ">=2012.05.17" ],
+                   [ "homalg", ">=2012.10.27" ],
                    [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],

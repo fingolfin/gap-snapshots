@@ -1,15 +1,15 @@
   
   
-                               [1X[5XMatricesForHomalg[0m[1X[0m
+                               [1X[5XMatricesForHomalg[105X[101X
   
   
-                        [1XMatrices for the [5Xhomalg[0m[1X project[0m
+                        [1XMatrices for the [5Xhomalg[105X project[101X
   
   
-                               Version 2012.06.30
+                               Version 2012.10.25
   
   
-                                   June 2012
+                                  October 2012
   
   
                                 Mohamed Barakat
@@ -18,66 +18,66 @@
   
   
   
-            ([13Xthis manual is still under construction[0m)
-            This  manual  is  best  viewed  as an [12XHTML[0m document. The
-            latest version is available [12Xonline[0m at:
-            [7Xhttp://homalg.math.rwth-aachen.de/~barakat/homalg-project/MatricesForHomalg/chap0.html[0m
-            An   [12Xoffline[0m   version   should   be   included  in  the
+            [33X[0;10Y([13Xthis manual is still under construction[113X)[133X
+            [33X[0;10YThis  manual  is  best  viewed  as an [12XHTML[112X document. The
+            latest version is available [12Xonline[112X at:[133X
+            [33X[0;10Y[7Xhttp://homalg.math.rwth-aachen.de/~barakat/homalg-project/MatricesForHomalg/chap0.html[107X[133X
+            [33X[0;10YAn   [12Xoffline[112X   version   should   be   included  in  the
             documentation  subfolder of the package. This package is
-            part of the [5Xhomalg[0m-project:
-            [7Xhttp://homalg.math.rwth-aachen.de/index.php/core-packages/matricesforhomalg[0m
+            part of the [5Xhomalg[105X-project:[133X
+            [33X[0;10Y[7Xhttp://homalg.math.rwth-aachen.de/index.php/core-packages/matricesforhomalg[107X[133X
   
   
   
   Mohamed Barakat
-      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[0m
-      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[0m
-      Address:  Department of Mathematics,
-                University of Kaiserslautern,
-                67653 Kaiserslautern,
-                Germany
+      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[107X
+      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[107X
+      Address:  [33X[0;14YDepartment of Mathematics,[133X
+                [33X[0;14YUniversity of Kaiserslautern,[133X
+                [33X[0;14Y67653 Kaiserslautern,[133X
+                [33X[0;14YGermany[133X
   
   
   Markus Lange-Hegermann
-      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[0m
-      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus/[0m
-      Address:  Lehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
-                52056 Aachen, Germany
+      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[107X
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus/[107X
+      Address:  [33X[0;14YLehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
+                52056 Aachen, Germany[133X
   
   
   
   -------------------------------------------------------
-  [1XCopyright[0m
-  © 2007-2012 by Mohamed Barakat and Markus Lange-Hegermann
+  [1XCopyright[101X
+  [33X[0;0Y© 2007-2012 by Mohamed Barakat and Markus Lange-Hegermann[133X
   
-  This  package  may  be distributed under the terms and conditions of the GNU
-  Public License Version 2.
+  [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.[133X
   
   
   -------------------------------------------------------
   
   
-  [1XContents (MatricesForHomalg)[0X
+  [1XContents (MatricesForHomalg)[101X
   
-  1 Introduction
-    1.1 What is the role of the [5XMatricesForHomalg[0m package in the [5Xhomalg[0m
-    project?
-      1.1-1 [5XMatricesForHomalg[0m provides ...
-      1.1-2 [5Xhomalg[0m delegates ...
-      1.1-3 The black box concept
-    1.2 This manual
-  2 Installation of the [5XMatricesForHomalg[0m Package
-  3 Rings
-    3.1 Rings: Category and Representations
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YWhat is the role of the [5XMatricesForHomalg[105X package in the [5Xhomalg[105X
+    project?[133X
+      1.1-1 [33X[0;0Y[5XMatricesForHomalg[105X provides ...[133X
+      1.1-2 [33X[0;0Y[5Xhomalg[105X delegates ...[133X
+      1.1-3 [33X[0;0YThe black box concept[133X
+    1.2 [33X[0;0YThis manual[133X
+  2 [33X[0;0YInstallation of the [5XMatricesForHomalg[105X Package[133X
+  3 [33X[0;0YRings[133X
+    3.1 [33X[0;0YRings: Category and Representations[133X
       3.1-1 IsHomalgRing
       3.1-2 IsPreHomalgRing
       3.1-3 IsHomalgRingElement
       3.1-4 IsHomalgInternalRingRep
-    3.2 Rings: Constructors
+    3.2 [33X[0;0YRings: Constructors[133X
       3.2-1 HomalgRingOfIntegers
       3.2-2 HomalgFieldOfRationals
       3.2-3 \/
-    3.3 Rings: Properties
+    3.3 [33X[0;0YRings: Properties[133X
       3.3-1 IsZero
       3.3-2 ContainsAField
       3.3-3 IsRationalsForHomalg
@@ -138,7 +138,7 @@
       3.3-58 IsLeftRegular
       3.3-59 IsRightRegular
       3.3-60 IsRegular
-    3.4 Rings: Attributes
+    3.4 [33X[0;0YRings: Attributes[133X
       3.4-1 Zero
       3.4-2 One
       3.4-3 Inverse
@@ -169,32 +169,32 @@
       3.4-28 ElementaryRank
       3.4-29 StableRank
       3.4-30 AssociatedGradedRing
-    3.5 Rings: Operations and Functions
-  4 Ring Maps
-    4.1 Ring Maps: Category and Representations
+    3.5 [33X[0;0YRings: Operations and Functions[133X
+  4 [33X[0;0YRing Maps[133X
+    4.1 [33X[0;0YRing Maps: Category and Representations[133X
       4.1-1 IsHomalgRingMap
       4.1-2 IsHomalgRingSelfMap
       4.1-3 IsHomalgRingMapRep
-    4.2 Ring Maps: Constructors
+    4.2 [33X[0;0YRing Maps: Constructors[133X
       4.2-1 RingMap
-    4.3 Ring Maps: Properties
+    4.3 [33X[0;0YRing Maps: Properties[133X
       4.3-1 IsMorphism
       4.3-2 IsIdentityMorphism
       4.3-3 IsMonomorphism
       4.3-4 IsEpimorphism
       4.3-5 IsIsomorphism
       4.3-6 IsAutomorphism
-    4.4 Ring Maps: Attributes
+    4.4 [33X[0;0YRing Maps: Attributes[133X
       4.4-1 Source
       4.4-2 Range
       4.4-3 DegreeOfMorphism
       4.4-4 CoordinateRingOfGraph
-    4.5 Ring Maps: Operations and Functions
-  5 Matrices
-    5.1 Matrices: Category and Representations
+    4.5 [33X[0;0YRing Maps: Operations and Functions[133X
+  5 [33X[0;0YMatrices[133X
+    5.1 [33X[0;0YMatrices: Category and Representations[133X
       5.1-1 IsHomalgMatrix
       5.1-2 IsHomalgInternalMatrixRep
-    5.2 Matrices: Constructors
+    5.2 [33X[0;0YMatrices: Constructors[133X
       5.2-1 HomalgInitialMatrix
       5.2-2 HomalgInitialIdentityMatrix
       5.2-3 HomalgZeroMatrix
@@ -203,7 +203,7 @@
       5.2-6 HomalgMatrix
       5.2-7 HomalgDiagonalMatrix
       5.2-8 \*
-    5.3 Matrices: Properties
+    5.3 [33X[0;0YMatrices: Properties[133X
       5.3-1 IsZero
       5.3-2 IsOne
       5.3-3 IsUnitFree
@@ -232,7 +232,7 @@
       5.3-26 IsInitialMatrix
       5.3-27 IsInitialIdentityMatrix
       5.3-28 IsVoidMatrix
-    5.4 Matrices: Attributes
+    5.4 [33X[0;0YMatrices: Attributes[133X
       5.4-1 NrRows
       5.4-2 NrColumns
       5.4-3 DeterminantMat
@@ -257,7 +257,7 @@
       5.4-22 ProjectiveDegree
       5.4-23 ConstantTermOfHilbertPolynomialn
       5.4-24 MatrixOfSymbols
-    5.5 Matrices: Operations and Functions
+    5.5 [33X[0;0YMatrices: Operations and Functions[133X
       5.5-1 HomalgRing
       5.5-2 LeftInverse
       5.5-3 RightInverse
@@ -308,25 +308,25 @@
       5.5-48 LeftDivide
       5.5-49 GenerateSameRowModule
       5.5-50 GenerateSameColumnModule
-  6 Ring Relations
-    6.1 Ring Relations: Categories and Representations
+  6 [33X[0;0YRing Relations[133X
+    6.1 [33X[0;0YRing Relations: Categories and Representations[133X
       6.1-1 IsHomalgRingRelations
       6.1-2 IsHomalgRingRelationsAsGeneratorsOfLeftIdeal
       6.1-3 IsHomalgRingRelationsAsGeneratorsOfRightIdeal
       6.1-4 IsRingRelationsRep
-    6.2 Ring Relations: Constructors
-    6.3 Ring Relations: Properties
+    6.2 [33X[0;0YRing Relations: Constructors[133X
+    6.3 [33X[0;0YRing Relations: Properties[133X
       6.3-1 CanBeUsedToDecideZero
       6.3-2 IsInjectivePresentation
-    6.4 Ring Relations: Attributes
-    6.5 Ring Relations: Operations and Functions
-  A The Basic Matrix Operations
-    A.1 Main
-    A.2 Effective
-    A.3 Relative
-    A.4 Reduced
-  B The Matrix Tool Operations
-    B.1 The Tool Operations [13Xwithout[0m a Fallback Method
+    6.4 [33X[0;0YRing Relations: Attributes[133X
+    6.5 [33X[0;0YRing Relations: Operations and Functions[133X
+  A [33X[0;0YThe Basic Matrix Operations[133X
+    A.1 [33X[0;0YMain[133X
+    A.2 [33X[0;0YEffective[133X
+    A.3 [33X[0;0YRelative[133X
+    A.4 [33X[0;0YReduced[133X
+  B [33X[0;0YThe Matrix Tool Operations[133X
+    B.1 [33X[0;0YThe Tool Operations [13Xwithout[113X a Fallback Method[133X
       B.1-1 InitialMatrix
       B.1-2 InitialIdentityMatrix
       B.1-3 ZeroMatrix
@@ -346,7 +346,7 @@
       B.1-17 NrRows
       B.1-18 NrColumns
       B.1-19 Determinant
-    B.2 The Tool Operations with a Fallback Method
+    B.2 [33X[0;0YThe Tool Operations with a Fallback Method[133X
       B.2-1 AreEqualMatrices
       B.2-2 IsIdentityMatrix
       B.2-3 IsDiagonalMatrix
@@ -357,11 +357,11 @@
       B.2-8 GetUnitPosition
       B.2-9 PositionOfFirstNonZeroEntryPerRow
       B.2-10 PositionOfFirstNonZeroEntryPerColumn
-  C Logic Subpackages
-    C.1 [5XLIRNG[0m: Logical Implications for Rings
-    C.2 [5XLIMAP[0m: Logical Implications for Ring Maps
-    C.3 [5XLIMAT[0m: Logical Implications for Matrices
-    C.4 [5XCOLEM[0m: Clever Operations for Lazy Evaluated Matrices
+  C [33X[0;0YLogic Subpackages[133X
+    C.1 [33X[0;0Y[5XLIRNG[105X: Logical Implications for Rings[133X
+    C.2 [33X[0;0Y[5XLIMAP[105X: Logical Implications for Ring Maps[133X
+    C.3 [33X[0;0Y[5XLIMAT[105X: Logical Implications for Matrices[133X
+    C.4 [33X[0;0Y[5XCOLEM[105X: Clever Operations for Lazy Evaluated Matrices[133X
       C.4-1 Eval
       C.4-2 Eval
       C.4-3 Eval
@@ -379,8 +379,8 @@
       C.4-15 Eval
       C.4-16 Eval
       C.4-17 Eval
-  D The subpackage [5XResidueClassRingForHomalg[0m as a sample ring package
-    D.1 The Mandatory Basic Operations
+  D [33X[0;0YThe subpackage [5XResidueClassRingForHomalg[105X as a sample ring package[133X
+    D.1 [33X[0;0YThe Mandatory Basic Operations[133X
       D.1-1 BasisOfRowModule
       D.1-2 BasisOfColumnModule
       D.1-3 DecideZeroRows
@@ -393,7 +393,7 @@
       D.1-10 DecideZeroColumnsEffectively
       D.1-11 RelativeSyzygiesGeneratorsOfRows
       D.1-12 RelativeSyzygiesGeneratorsOfColumns
-    D.2 The Mandatory Tool Operations
+    D.2 [33X[0;0YThe Mandatory Tool Operations[133X
       D.2-1 InitialMatrix
       D.2-2 InitialIdentityMatrix
       D.2-3 ZeroMatrix
@@ -413,22 +413,22 @@
       D.2-17 NrRows
       D.2-18 NrColumns
       D.2-19 Determinant
-    D.3 Some of the Recommended Tool Operations
+    D.3 [33X[0;0YSome of the Recommended Tool Operations[133X
       D.3-1 AreEqualMatrices
       D.3-2 IsOne
       D.3-3 IsDiagonalMatrix
       D.3-4 ZeroRows
       D.3-5 ZeroColumns
-  E Debugging [5XMatricesForHomalg[0m
-    E.1 Increase the assertion level
-    E.2 [10XUsing homalgMode[0m
+  E [33X[0;0YDebugging [5XMatricesForHomalg[105X[133X
+    E.1 [33X[0;0YIncrease the assertion level[133X
+    E.2 [33X[0;0Y[10XUsing homalgMode[110X[133X
       E.2-1 homalgMode
-  F Overview of the [5XMatricesForHomalg[0m Package Source Code
-    F.1 Rings, Ring Maps, Matrices, Ring Relations
-    F.2 The Low Level Algorithms
-    F.3 Logical Implications for [5XMatricesForHomalg[0m Objects
-    F.4 The subpackage [5XResidueClassRingForHomalg[0m
-    F.5 The homalgTable for [5XGAP4[0m built-in rings
+  F [33X[0;0YOverview of the [5XMatricesForHomalg[105X Package Source Code[133X
+    F.1 [33X[0;0YRings, Ring Maps, Matrices, Ring Relations[133X
+    F.2 [33X[0;0YThe Low Level Algorithms[133X
+    F.3 [33X[0;0YLogical Implications for [5XMatricesForHomalg[105X Objects[133X
+    F.4 [33X[0;0YThe subpackage [5XResidueClassRingForHomalg[105X[133X
+    F.5 [33X[0;0YThe homalgTable for [5XGAP4[105X built-in rings[133X
   
   
-  -------------------------------------------------------
+  [32X

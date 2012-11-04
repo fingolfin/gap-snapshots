@@ -3,14 +3,14 @@
   
   [33X[0;0YThis  package  permits  to  compute  in monoids, in particular groups, whose
   elements  are  [13Xresidue-class-wise affine[113X mappings. Probably the widest-known
-  occurrence  of  such  a  mapping is in the statement of the [22X3n+1[122X-Conjecture,
+  occurrence  of  such  a  mapping is in the statement of the [22X3n+1[122X conjecture,
   which asserts that iterated application of the [13XCollatz mapping[113X[133X
   
-                                         /
+                                        /
                                         | n/2 if n even,
                  T:  Z -> Z,   n  |->  <
                                         | (3n+1)/2 if n odd
-                                         \
+                                        \
   
   [33X[0;0Yto  any  given  positive  integer  eventually  yields 1  (cf. [Lag3+]).  For
   definitions, see Section [14X2.1[114X.[133X
@@ -61,7 +61,7 @@
   
   [33X[0;0YProofs  of  most  of  the  results mentioned so far can be found in [Koh10].
   Descriptions  of  a part of the algorithms and methods which are implemented
-  in this package can be found in [Koh08a].[133X
+  in this package can be found in [Koh08].[133X
   
   [33X[0;0YThe reader might want to know what type of results one can obtain with [5XRCWA[105X.
   However,  the  answer  to this is that the package can be applied in various

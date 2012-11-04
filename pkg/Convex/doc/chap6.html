@@ -33,7 +33,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79F588238781B2C9">6.2-2 IsLatticePolytope</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80A58559802BB02E">6.2-3 IsVeryAmple</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C3C14CB83C98EFD">6.2-4 IsNormalPolytope</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87403A3586CAAEC0">6.2-5 IsSimplicial</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AB9716B7DFE7CCF">6.2-5 IsSimplicial</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F0DF19F82E6DEBD">6.2-6 IsSimplePolytope</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X87D8FC34790A474E">6.3 <span class="Heading">Polytope: Attributes</span></a>
@@ -46,20 +46,17 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C3748B8878B799A">6.3-5 AffineCone</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D7E33B97A7B4039">6.3-6 NormalFan</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E82C1C483269893">6.3-7 RelativeInteriorLatticePoints</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CB1A6657B3B3550">6.3-8 DefiningInequalities</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X857893CC7BFDE0E0">6.3-9 IsContainedInFan</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AA3F8617E28E7BD">6.3-10 FactorGridMorphism</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X82806E0786AB09E5">6.4 <span class="Heading">Polytope: Methods</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7857704878577048">6.4-1 *</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87DA13AA8305F283">6.4-1 *</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8123456781234567">6.4-2 #</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X87A9DA5083C07E1E">6.5 <span class="Heading">Polytope: Constructors</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X855106007DE72898">6.5-1 Polytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86B877E378DF5E25">6.5-1 Polytope</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E8849CF87B77402">6.5-2 PolytopeByInequalities</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X854CE5FA7BD81060">6.6 <span class="Heading">Polytope: Examples</span></a>
@@ -127,7 +124,7 @@
 
 <p>Checks if the polytope <var class="Arg">poly</var> is normal.</p>
 
-<p><a id="X87403A3586CAAEC0" name="X87403A3586CAAEC0"></a></p>
+<p><a id="X7AB9716B7DFE7CCF" name="X7AB9716B7DFE7CCF"></a></p>
 
 <h5>6.2-5 IsSimplicial</h5>
 
@@ -212,38 +209,11 @@
 
 <p>Returns the lattice points in the relative interior of the polytope <var class="Arg">poly</var>.</p>
 
-<p><a id="X7CB1A6657B3B3550" name="X7CB1A6657B3B3550"></a></p>
-
-<h5>6.3-8 DefiningInequalities</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningInequalities</code>( <var class="Arg">cone</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>Returns a list of the defining inequalities of the cone <var class="Arg">cone</var>.</p>
-
-<p><a id="X857893CC7BFDE0E0" name="X857893CC7BFDE0E0"></a></p>
-
-<h5>6.3-9 IsContainedInFan</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsContainedInFan</code>( <var class="Arg">cone</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: a fan</p>
-
-<p>If the cone <var class="Arg">cone</var> is constructed as part of a fan, this method returns the fan.</p>
-
-<p><a id="X7AA3F8617E28E7BD" name="X7AA3F8617E28E7BD"></a></p>
-
-<h5>6.3-10 FactorGridMorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorGridMorphism</code>( <var class="Arg">cone</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>Returns the morphism to the factor grid of the cone <var class="Arg">cone</var>.</p>
-
 <p><a id="X82806E0786AB09E5" name="X82806E0786AB09E5"></a></p>
 
 <h4>6.4 <span class="Heading">Polytope: Methods</span></h4>
 
-<p><a id="X7857704878577048" name="X7857704878577048"></a></p>
+<p><a id="X87DA13AA8305F283" name="X87DA13AA8305F283"></a></p>
 
 <h5>6.4-1 *</h5>
 
@@ -265,7 +235,7 @@
 
 <h4>6.5 <span class="Heading">Polytope: Constructors</span></h4>
 
-<p><a id="X855106007DE72898" name="X855106007DE72898"></a></p>
+<p><a id="X86B877E378DF5E25" name="X86B877E378DF5E25"></a></p>
 
 <h5>6.5-1 Polytope</h5>
 

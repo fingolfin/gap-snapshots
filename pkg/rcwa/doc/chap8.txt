@@ -1,17 +1,17 @@
   
   [1X8 [33X[0;0YThe Algorithms Implemented in RCWA[133X[101X
   
-  [33X[0;0YThis  chapter lists brief descriptions of many of the algorithms and methods
-  implemented  in  this package. These descriptions are kept very informal and
-  short,  and  some  of  them  provide  only rudimentary information. They are
-  listed  in  alphabetical order. The word [21Xtrivial[121X as a description means that
-  essentially  nothing  is  done except of storing or recalling one or several
-  values,  and  [21Xstraightforward[121X means that no sophisticated algorithm is used.
-  Note  that  [21Xtrivial[121X  and  [21Xstraightforward[121X  are  to be read as [13Xmathematically[113X
+  [33X[0;0YThis  chapter  lists  brief  descriptions  of  a  part of the algorithms and
+  methods  implemented  in  this  package.  These  descriptions  are kept very
+  informal  and  short, and some of them provide only rudimentary information.
+  They  are  listed  in  alphabetical order. The word [21Xtrivial[121X as a description
+  means that essentially nothing is done except of storing or recalling one or
+  several values, and [21Xstraightforward[121X means that no sophisticated algorithm is
+  used. Note that [21Xtrivial[121X and [21Xstraightforward[121X are to be read as [13Xmathematically[113X
   trivial  respectively  straightforward,  and  that the code of a function or
   method  attributed in this way can still be reasonably long and complicated.
   Longer  and better descriptions of many of the algorithms and methods can be
-  found in [Koh08a].[133X
+  found in [Koh08].[133X
   
   [33X[0;0YFinally   please  note  that  the  descriptions  given  here  represent  the
   functionality  of [5XRCWA[105X in May 2007. Since then, a lot of code has been added

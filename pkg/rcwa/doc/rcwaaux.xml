@@ -13,7 +13,7 @@
 <Heading>Requirements</Heading>
 
 This version of &RCWA; needs at least &GAP;&nbsp;4.5.2,
-&ResClasses;&nbsp;3.1.0,
+&ResClasses;&nbsp;3.2.0,
 <Package>GRAPE</Package>&nbsp;4.3&nbsp;<Cite Key="GRAPE"/>,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/> and
 &GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>. With possible exception of
@@ -104,9 +104,17 @@ are included in the distribution file anyway, users will not need it.
   </Description>
 </ManSection>
 
-</Section>
+<ManSection>
+  <Func Name="RCWATestExamples" Arg=""/>
+  <Returns> nothing. </Returns>
+  <Description>
+    Runs all examples in the manual of the &RCWA; package,
+    and reports any differences between the actual output and the
+    output printed in the manual.
+  </Description>
+</ManSection>
 
-</Chapter>
+</Section>
 
 <!-- #################################################################### -->
 
@@ -293,5 +301,7 @@ not have prime divisors exceeding <A>maxp</A>, and the function
 of an integer <A>n</A> as a string in &LaTeX; format.
 
 </Section>
+
+</Chapter>
 
 <!-- #################################################################### -->

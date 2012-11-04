@@ -1,624 +1,624 @@
   
-  [1X3 The Ring Table[0X
-  
-  
-  [1X3.1 An Example for a Ring Table - Singular[0X
-  
-  todo:  introductory text, mention: transposed matrices, the macros, refer to
-  the philosophy
-  
-  [1X3.1-1 BasisOfRowModule[0m
-  
-  [2X> BasisOfRowModule( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XBasisOfRowModule[0m ([14X3.1-2[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XBasisOfRowModule :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      "unknown_number_of_rows",[0X
-    [4X      NrColumns( M ),[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking( [0X
-    [4X      [ "matrix ", N, " = BasisOfRowModule(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.BasisOfModule[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-2 BasisOfRowModule[0m
-  
-  [2X> BasisOfRowModule( [0X[3XM[0X[2X ) ____________________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    BasisOfRowModule := "\n\[0X
-    [4Xproc BasisOfRowModule (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(std(M));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-3 BasisOfColumnModule[0m
-  
-  [2X> BasisOfColumnModule( [0X[3XM[0X[2X ) _________________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XBasisOfColumnModule[0m ([14X3.1-4[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XBasisOfColumnModule :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( M ),[0X
-    [4X      "unknown_number_of_columns",[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = BasisOfColumnModule(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.BasisOfModule[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-4 BasisOfColumnModule[0m
-  
-  [2X> BasisOfColumnModule( [0X[3XM[0X[2X ) _________________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    BasisOfColumnModule := "\n\[0X
-    [4Xproc BasisOfColumnModule (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(Involution(BasisOfRowModule(Involution(M))));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-5 DecideZeroRows[0m
-  
-  [2X> DecideZeroRows( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XDecideZeroRows[0m ([14X3.1-6[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XDecideZeroRows :=[0X
-    [4X  function( A, B )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( A ),[0X
-    [4X      NrColumns( A ),[0X
-    [4X      HomalgRing( A )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking( [0X
-    [4X      [ "matrix ", N, " = DecideZeroRows(", A, B, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.DecideZero[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-6 DecideZeroRows[0m
-  
-  [2X> DecideZeroRows( [0X[3XA, B[0X[2X ) ___________________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    DecideZeroRows := "\n\[0X
-    [4Xproc DecideZeroRows (matrix A, matrix B)\n\[0X
-    [4X{\n\[0X
-    [4X  return(reduce(A,B));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-7 DecideZeroColumns[0m
-  
-  [2X> DecideZeroColumns( [0X[3XA, B[0X[2X ) ________________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XDecideZeroColumns[0m ([14X3.1-8[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XDecideZeroColumns :=[0X
-    [4X  function( A, B )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( A ),[0X
-    [4X      NrColumns( A ),[0X
-    [4X      HomalgRing( A )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = DecideZeroColumns(", A, B, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.DecideZero[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-8 DecideZeroColumns[0m
-  
-  [2X> DecideZeroColumns( [0X[3XA, B[0X[2X ) ________________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    DecideZeroColumns := "\n\[0X
-    [4Xproc DecideZeroColumns (matrix A, matrix B)\n\[0X
-    [4X{\n\[0X
-    [4X  return(Involution(reduce(Involution(A),Involution(B))));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-9 SyzygiesGeneratorsOfRows[0m
-  
-  [2X> SyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ____________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XSyzygiesGeneratorsOfRows[0m ([14X3.1-10[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XSyzygiesGeneratorsOfRows :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      "unknown_number_of_rows",[0X
-    [4X      NrRows( M ),[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = SyzygiesGeneratorsOfRows(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-10 SyzygiesGeneratorsOfRows[0m
-  
-  [2X> SyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) ____________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    SyzygiesGeneratorsOfRows := "\n\[0X
-    [4Xproc SyzygiesGeneratorsOfRows (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(SyzForHomalg(M));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-11 SyzygiesGeneratorsOfColumns[0m
-  
-  [2X> SyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) _________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XSyzygiesGeneratorsOfColumns[0m ([14X3.1-12[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XSyzygiesGeneratorsOfColumns :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrColumns( M ),[0X
-    [4X      "unknown_number_of_columns",[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = SyzygiesGeneratorsOfColumns(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-12 SyzygiesGeneratorsOfColumns[0m
-  
-  [2X> SyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) _________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    SyzygiesGeneratorsOfColumns := "\n\[0X
-    [4Xproc SyzygiesGeneratorsOfColumns (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(Involution(SyzForHomalg(Involution(M))));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-13 BasisOfRowsCoeff[0m
-  
-  [2X> BasisOfRowsCoeff( [0X[3XM, T[0X[2X ) _________________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XBasisOfRowsCoeff[0m ([14X3.1-14[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XBasisOfRowsCoeff :=[0X
-    [4X  function( M, T )[0X
-    [4X    local v, N;[0X
-    [4X    [0X
-    [4X    v := homalgStream( HomalgRing( M ) )!.variable_name;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      "unknown_number_of_rows",[0X
-    [4X      NrColumns( M ),[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [[0X
-    [4X        "list ", v, "l=BasisOfRowsCoeff(", M, "); ",[0X
-    [4X        "matrix ", N, " = ", v, "l[1]; ",[0X
-    [4X        "matrix ", T, " = ", v, "l[2]"[0X
-    [4X      ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.BasisCoeff[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-14 BasisOfRowsCoeff[0m
-  
-  [2X> BasisOfRowsCoeff( [0X[3XM, T[0X[2X ) _________________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    BasisOfRowsCoeff := "\n\[0X
-    [4Xproc BasisOfRowsCoeff (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  matrix B = BasisOfRowModule(M);\n\[0X
-    [4X  matrix T = lift(M,B);\n\[0X
-    [4X  list l = B,T;\n\[0X
-    [4X  return(l)\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-15 BasisOfColumnsCoeff[0m
-  
-  [2X> BasisOfColumnsCoeff( [0X[3XM, T[0X[2X ) ______________________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XBasisOfColumnsCoeff[0m ([14X3.1-16[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XBasisOfColumnsCoeff :=[0X
-    [4X  function( M, T )[0X
-    [4X    local v, N;[0X
-    [4X    [0X
-    [4X    v := homalgStream( HomalgRing( M ) )!.variable_name;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( M ),[0X
-    [4X      "unknown_number_of_columns",[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking( [0X
-    [4X      [[0X
-    [4X        "list ", v, "l=BasisOfColumnsCoeff(", M, "); ",[0X
-    [4X        "matrix ", N, " = ", v, "l[1]; ",[0X
-    [4X        "matrix ", T, " = ", v, "l[2]"[0X
-    [4X      ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.BasisCoeff[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-16 BasisOfColumnsCoeff[0m
-  
-  [2X> BasisOfColumnsCoeff( [0X[3XM, T[0X[2X ) ______________________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    BasisOfColumnsCoeff := "\n\[0X
-    [4Xproc BasisOfColumnsCoeff (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  list l = BasisOfRowsCoeff(Involution(M));\n\[0X
-    [4X  matrix B = l[1];\n\[0X
-    [4X  matrix T = l[2];\n\[0X
-    [4X  l = Involution(B),Involution(T);\n\[0X
-    [4X  return(l);\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-17 DecideZeroRowsEffectively[0m
-  
-  [2X> DecideZeroRowsEffectively( [0X[3XA, B, T[0X[2X ) _____________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XDecideZeroRowsEffectively[0m ([14X3.1-18[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XDecideZeroRowsEffectively :=[0X
-    [4X  function( A, B, T )[0X
-    [4X    local v, N;[0X
-    [4X    [0X
-    [4X    v := homalgStream( HomalgRing( A ) )!.variable_name;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( A ),[0X
-    [4X      NrColumns( A ),[0X
-    [4X      HomalgRing( A )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [[0X
-    [4X        "list ", v, "l=DecideZeroRowsEffectively(", A, B, "); ",[0X
-    [4X        "matrix ", N, " = ", v, "l[1]; ",[0X
-    [4X        "matrix ", T, " = ", v, "l[2]"[0X
-    [4X      ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.DecideZeroEffectively[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-18 DecideZeroRowsEffectively[0m
-  
-  [2X> DecideZeroRowsEffectively( [0X[3XA, B, T[0X[2X ) _____________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    DecideZeroRowsEffectively := "\n\[0X
-    [4Xproc DecideZeroRowsEffectively (matrix A, matrix B)\n\[0X
-    [4X{\n\[0X
-    [4X  matrix M = reduce(A,B);\n\[0X
-    [4X  matrix T = lift(B,M-A);\n\[0X
-    [4X  list l = M,T;\n\[0X
-    [4X  return(l);\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-19 DecideZeroColumnsEffectively[0m
-  
-  [2X> DecideZeroColumnsEffectively( [0X[3XA, B, T[0X[2X ) __________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XDecideZeroColumnsEffectively[0m ([14X3.1-20[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XDecideZeroColumnsEffectively :=[0X
-    [4X  function( A, B, T )[0X
-    [4X    local v, N;[0X
-    [4X    [0X
-    [4X    v := homalgStream( HomalgRing( A ) )!.variable_name;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrRows( A ),[0X
-    [4X      NrColumns( A ),[0X
-    [4X      HomalgRing( A )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [[0X
-    [4X        "list ", v, "l=DecideZeroColumnsEffectively(", A, B, "); ",[0X
-    [4X        "matrix ", N, " = ", v, "l[1]; ",[0X
-    [4X        "matrix ", T, " = ", v, "l[2]"[0X
-    [4X      ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.DecideZeroEffectively[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-20 DecideZeroColumnsEffectively[0m
-  
-  [2X> DecideZeroColumnsEffectively( [0X[3XA, B, T[0X[2X ) __________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    DecideZeroColumnsEffectively := "\n\[0X
-    [4Xproc DecideZeroColumnsEffectively (matrix A, matrix B)\n\[0X
-    [4X{\n\[0X
-    [4X  list l = DecideZeroRowsEffectively(Involution(A),Involution(B));\n\[0X
-    [4X  matrix B = l[1];\n\[0X
-    [4X  matrix T = l[2];\n\[0X
-    [4X  l = Involution(B),Involution(T);\n\[0X
-    [4X  return(l);\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-21 RelativeSyzygiesGeneratorsOfRows[0m
-  
-  [2X> RelativeSyzygiesGeneratorsOfRows( [0X[3XM, M2[0X[2X ) ________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XRelativeSyzygiesGeneratorsOfRows[0m   ([14X3.1-22[0m)   inside  the  computer  algebra
-  system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XRelativeSyzygiesGeneratorsOfRows :=[0X
-    [4X  function( M, M2 )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      "unknown_number_of_rows",[0X
-    [4X      NrRows( M ),[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = RelativeSyzygiesGeneratorsOfRows(", M, M2, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-22 RelativeSyzygiesGeneratorsOfRows[0m
-  
-  [2X> RelativeSyzygiesGeneratorsOfRows( [0X[3XM, M2[0X[2X ) ________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    RelativeSyzygiesGeneratorsOfRows := "\n\[0X
-    [4Xproc RelativeSyzygiesGeneratorsOfRows (matrix M1, matrix M2)\n\[0X
-    [4X{\n\[0X
-    [4X  return(BasisOfRowModule(modulo(M1, M2)));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-23 RelativeSyzygiesGeneratorsOfColumns[0m
-  
-  [2X> RelativeSyzygiesGeneratorsOfColumns( [0X[3XM, M2[0X[2X ) _____________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XRelativeSyzygiesGeneratorsOfColumns[0m  ([14X3.1-24[0m)  inside  the  computer algebra
-  system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XRelativeSyzygiesGeneratorsOfColumns :=[0X
-    [4X  function( M, M2 )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrColumns( M ),[0X
-    [4X      "unknown_number_of_columns",[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = RelativeSyzygiesGeneratorsOfColumns(", M, M2, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-24 RelativeSyzygiesGeneratorsOfColumns[0m
-  
-  [2X> RelativeSyzygiesGeneratorsOfColumns( [0X[3XM, M2[0X[2X ) _____________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    RelativeSyzygiesGeneratorsOfColumns := "\n\[0X
-    [4Xproc RelativeSyzygiesGeneratorsOfColumns (matrix M1, matrix M2)\n\[0X
-    [4X{\n\[0X
-    [4X  return(Involution(RelativeSyzygiesGeneratorsOfRows(Involution(M1),Involution(M2))));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-25 ReducedSyzygiesGeneratorsOfRows[0m
-  
-  [2X> ReducedSyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) _____________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XReducedSyzygiesGeneratorsOfRows[0m ([14X3.1-26[0m) inside the computer algebra system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XReducedSyzygiesGeneratorsOfRows :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      "unknown_number_of_rows",[0X
-    [4X      NrRows( M ),[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = ReducedSyzygiesGeneratorsOfRows(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-26 ReducedSyzygiesGeneratorsOfRows[0m
-  
-  [2X> ReducedSyzygiesGeneratorsOfRows( [0X[3XM[0X[2X ) _____________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    ReducedSyzForHomalg := "\n\[0X
-    [4Xproc ReducedSyzForHomalg (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(matrix(nres(M,2)[2]));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-27 ReducedSyzygiesGeneratorsOfColumns[0m
-  
-  [2X> ReducedSyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) __________________________[0Xfunction
-  
-  This  is  the entry of the [5Xhomalg[0m table, which calls the corresponding macro
-  [2XReducedSyzygiesGeneratorsOfColumns[0m  ([14X3.1-28[0m)  inside  the  computer  algebra
-  system.
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XReducedSyzygiesGeneratorsOfColumns :=[0X
-    [4X  function( M )[0X
-    [4X    local N;[0X
-    [4X    [0X
-    [4X    N := HomalgVoidMatrix([0X
-    [4X      NrColumns( M ),[0X
-    [4X      "unknown_number_of_columns",[0X
-    [4X      HomalgRing( M )[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    homalgSendBlocking([0X
-    [4X      [ "matrix ", N, " = ReducedSyzygiesGeneratorsOfColumns(", M, ")" ],[0X
-    [4X      "need_command",[0X
-    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[0X
-    [4X    );[0X
-    [4X    [0X
-    [4X    return N;[0X
-    [4X    [0X
-    [4X  end,[0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.1-28 ReducedSyzygiesGeneratorsOfColumns[0m
-  
-  [2X> ReducedSyzygiesGeneratorsOfColumns( [0X[3XM[0X[2X ) __________________________[0Xfunction
-  
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4X    ReducedSyzygiesGeneratorsOfRows := "\n\[0X
-    [4Xproc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\[0X
-    [4X{\n\[0X
-    [4X  return(ReducedSyzForHomalg(M));\n\[0X
-    [4X}\n\n",[0X
-  [4X------------------------------------------------------------------[0X
+  [1X3 [33X[0;0YThe Ring Table[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YAn Example for a Ring Table - Singular[133X[101X
+  
+  [33X[0;0Ytodo:  introductory text, mention: transposed matrices, the macros, refer to
+  the philosophy[133X
+  
+  [1X3.1-1 BasisOfRowModule[101X
+  
+  [29X[2XBasisOfRowModule[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XBasisOfRowModule[102X ([14X3.1-2[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XBasisOfRowModule :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      "unknown_number_of_rows",[104X
+    [4X      NrColumns( M ),[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking( [104X
+    [4X      [ "matrix ", N, " = BasisOfRowModule(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.BasisOfModule[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-2 BasisOfRowModule[101X
+  
+  [29X[2XBasisOfRowModule[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    BasisOfRowModule := "\n\[104X
+    [4Xproc BasisOfRowModule (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(std(M));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-3 BasisOfColumnModule[101X
+  
+  [29X[2XBasisOfColumnModule[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XBasisOfColumnModule[102X ([14X3.1-4[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XBasisOfColumnModule :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( M ),[104X
+    [4X      "unknown_number_of_columns",[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = BasisOfColumnModule(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.BasisOfModule[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-4 BasisOfColumnModule[101X
+  
+  [29X[2XBasisOfColumnModule[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    BasisOfColumnModule := "\n\[104X
+    [4Xproc BasisOfColumnModule (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(Involution(BasisOfRowModule(Involution(M))));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-5 DecideZeroRows[101X
+  
+  [29X[2XDecideZeroRows[102X( [3XA[103X, [3XB[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XDecideZeroRows[102X ([14X3.1-6[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDecideZeroRows :=[104X
+    [4X  function( A, B )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( A ),[104X
+    [4X      NrColumns( A ),[104X
+    [4X      HomalgRing( A )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking( [104X
+    [4X      [ "matrix ", N, " = DecideZeroRows(", A, B, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.DecideZero[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-6 DecideZeroRows[101X
+  
+  [29X[2XDecideZeroRows[102X( [3XA[103X, [3XB[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    DecideZeroRows := "\n\[104X
+    [4Xproc DecideZeroRows (matrix A, matrix B)\n\[104X
+    [4X{\n\[104X
+    [4X  return(reduce(A,B));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-7 DecideZeroColumns[101X
+  
+  [29X[2XDecideZeroColumns[102X( [3XA[103X, [3XB[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XDecideZeroColumns[102X ([14X3.1-8[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDecideZeroColumns :=[104X
+    [4X  function( A, B )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( A ),[104X
+    [4X      NrColumns( A ),[104X
+    [4X      HomalgRing( A )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = DecideZeroColumns(", A, B, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.DecideZero[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-8 DecideZeroColumns[101X
+  
+  [29X[2XDecideZeroColumns[102X( [3XA[103X, [3XB[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    DecideZeroColumns := "\n\[104X
+    [4Xproc DecideZeroColumns (matrix A, matrix B)\n\[104X
+    [4X{\n\[104X
+    [4X  return(Involution(reduce(Involution(A),Involution(B))));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-9 SyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XSyzygiesGeneratorsOfRows[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XSyzygiesGeneratorsOfRows[102X ([14X3.1-10[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XSyzygiesGeneratorsOfRows :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      "unknown_number_of_rows",[104X
+    [4X      NrRows( M ),[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = SyzygiesGeneratorsOfRows(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-10 SyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XSyzygiesGeneratorsOfRows[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    SyzygiesGeneratorsOfRows := "\n\[104X
+    [4Xproc SyzygiesGeneratorsOfRows (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(SyzForHomalg(M));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-11 SyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XSyzygiesGeneratorsOfColumns[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XSyzygiesGeneratorsOfColumns[102X ([14X3.1-12[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XSyzygiesGeneratorsOfColumns :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrColumns( M ),[104X
+    [4X      "unknown_number_of_columns",[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = SyzygiesGeneratorsOfColumns(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-12 SyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XSyzygiesGeneratorsOfColumns[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    SyzygiesGeneratorsOfColumns := "\n\[104X
+    [4Xproc SyzygiesGeneratorsOfColumns (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(Involution(SyzForHomalg(Involution(M))));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-13 BasisOfRowsCoeff[101X
+  
+  [29X[2XBasisOfRowsCoeff[102X( [3XM[103X, [3XT[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XBasisOfRowsCoeff[102X ([14X3.1-14[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XBasisOfRowsCoeff :=[104X
+    [4X  function( M, T )[104X
+    [4X    local v, N;[104X
+    [4X    [104X
+    [4X    v := homalgStream( HomalgRing( M ) )!.variable_name;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      "unknown_number_of_rows",[104X
+    [4X      NrColumns( M ),[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [[104X
+    [4X        "list ", v, "l=BasisOfRowsCoeff(", M, "); ",[104X
+    [4X        "matrix ", N, " = ", v, "l[1]; ",[104X
+    [4X        "matrix ", T, " = ", v, "l[2]"[104X
+    [4X      ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.BasisCoeff[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-14 BasisOfRowsCoeff[101X
+  
+  [29X[2XBasisOfRowsCoeff[102X( [3XM[103X, [3XT[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    BasisOfRowsCoeff := "\n\[104X
+    [4Xproc BasisOfRowsCoeff (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  matrix B = BasisOfRowModule(M);\n\[104X
+    [4X  matrix T = lift(M,B);\n\[104X
+    [4X  list l = B,T;\n\[104X
+    [4X  return(l)\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-15 BasisOfColumnsCoeff[101X
+  
+  [29X[2XBasisOfColumnsCoeff[102X( [3XM[103X, [3XT[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XBasisOfColumnsCoeff[102X ([14X3.1-16[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XBasisOfColumnsCoeff :=[104X
+    [4X  function( M, T )[104X
+    [4X    local v, N;[104X
+    [4X    [104X
+    [4X    v := homalgStream( HomalgRing( M ) )!.variable_name;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( M ),[104X
+    [4X      "unknown_number_of_columns",[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking( [104X
+    [4X      [[104X
+    [4X        "list ", v, "l=BasisOfColumnsCoeff(", M, "); ",[104X
+    [4X        "matrix ", N, " = ", v, "l[1]; ",[104X
+    [4X        "matrix ", T, " = ", v, "l[2]"[104X
+    [4X      ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.BasisCoeff[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-16 BasisOfColumnsCoeff[101X
+  
+  [29X[2XBasisOfColumnsCoeff[102X( [3XM[103X, [3XT[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    BasisOfColumnsCoeff := "\n\[104X
+    [4Xproc BasisOfColumnsCoeff (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  list l = BasisOfRowsCoeff(Involution(M));\n\[104X
+    [4X  matrix B = l[1];\n\[104X
+    [4X  matrix T = l[2];\n\[104X
+    [4X  l = Involution(B),Involution(T);\n\[104X
+    [4X  return(l);\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-17 DecideZeroRowsEffectively[101X
+  
+  [29X[2XDecideZeroRowsEffectively[102X( [3XA[103X, [3XB[103X, [3XT[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XDecideZeroRowsEffectively[102X ([14X3.1-18[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDecideZeroRowsEffectively :=[104X
+    [4X  function( A, B, T )[104X
+    [4X    local v, N;[104X
+    [4X    [104X
+    [4X    v := homalgStream( HomalgRing( A ) )!.variable_name;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( A ),[104X
+    [4X      NrColumns( A ),[104X
+    [4X      HomalgRing( A )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [[104X
+    [4X        "list ", v, "l=DecideZeroRowsEffectively(", A, B, "); ",[104X
+    [4X        "matrix ", N, " = ", v, "l[1]; ",[104X
+    [4X        "matrix ", T, " = ", v, "l[2]"[104X
+    [4X      ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.DecideZeroEffectively[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-18 DecideZeroRowsEffectively[101X
+  
+  [29X[2XDecideZeroRowsEffectively[102X( [3XA[103X, [3XB[103X, [3XT[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    DecideZeroRowsEffectively := "\n\[104X
+    [4Xproc DecideZeroRowsEffectively (matrix A, matrix B)\n\[104X
+    [4X{\n\[104X
+    [4X  matrix M = reduce(A,B);\n\[104X
+    [4X  matrix T = lift(B,M-A);\n\[104X
+    [4X  list l = M,T;\n\[104X
+    [4X  return(l);\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-19 DecideZeroColumnsEffectively[101X
+  
+  [29X[2XDecideZeroColumnsEffectively[102X( [3XA[103X, [3XB[103X, [3XT[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XDecideZeroColumnsEffectively[102X ([14X3.1-20[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDecideZeroColumnsEffectively :=[104X
+    [4X  function( A, B, T )[104X
+    [4X    local v, N;[104X
+    [4X    [104X
+    [4X    v := homalgStream( HomalgRing( A ) )!.variable_name;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrRows( A ),[104X
+    [4X      NrColumns( A ),[104X
+    [4X      HomalgRing( A )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [[104X
+    [4X        "list ", v, "l=DecideZeroColumnsEffectively(", A, B, "); ",[104X
+    [4X        "matrix ", N, " = ", v, "l[1]; ",[104X
+    [4X        "matrix ", T, " = ", v, "l[2]"[104X
+    [4X      ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.DecideZeroEffectively[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-20 DecideZeroColumnsEffectively[101X
+  
+  [29X[2XDecideZeroColumnsEffectively[102X( [3XA[103X, [3XB[103X, [3XT[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    DecideZeroColumnsEffectively := "\n\[104X
+    [4Xproc DecideZeroColumnsEffectively (matrix A, matrix B)\n\[104X
+    [4X{\n\[104X
+    [4X  list l = DecideZeroRowsEffectively(Involution(A),Involution(B));\n\[104X
+    [4X  matrix B = l[1];\n\[104X
+    [4X  matrix T = l[2];\n\[104X
+    [4X  l = Involution(B),Involution(T);\n\[104X
+    [4X  return(l);\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-21 RelativeSyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XRelativeSyzygiesGeneratorsOfRows[102X( [3XM[103X, [3XM2[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XRelativeSyzygiesGeneratorsOfRows[102X   ([14X3.1-22[114X)   inside  the  computer  algebra
+  system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XRelativeSyzygiesGeneratorsOfRows :=[104X
+    [4X  function( M, M2 )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      "unknown_number_of_rows",[104X
+    [4X      NrRows( M ),[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = RelativeSyzygiesGeneratorsOfRows(", M, M2, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-22 RelativeSyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XRelativeSyzygiesGeneratorsOfRows[102X( [3XM[103X, [3XM2[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    RelativeSyzygiesGeneratorsOfRows := "\n\[104X
+    [4Xproc RelativeSyzygiesGeneratorsOfRows (matrix M1, matrix M2)\n\[104X
+    [4X{\n\[104X
+    [4X  return(BasisOfRowModule(modulo(M1, M2)));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-23 RelativeSyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XRelativeSyzygiesGeneratorsOfColumns[102X( [3XM[103X, [3XM2[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XRelativeSyzygiesGeneratorsOfColumns[102X  ([14X3.1-24[114X)  inside  the  computer algebra
+  system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XRelativeSyzygiesGeneratorsOfColumns :=[104X
+    [4X  function( M, M2 )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrColumns( M ),[104X
+    [4X      "unknown_number_of_columns",[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = RelativeSyzygiesGeneratorsOfColumns(", M, M2, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-24 RelativeSyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XRelativeSyzygiesGeneratorsOfColumns[102X( [3XM[103X, [3XM2[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    RelativeSyzygiesGeneratorsOfColumns := "\n\[104X
+    [4Xproc RelativeSyzygiesGeneratorsOfColumns (matrix M1, matrix M2)\n\[104X
+    [4X{\n\[104X
+    [4X  return(Involution(RelativeSyzygiesGeneratorsOfRows(Involution(M1),Involution(M2))));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-25 ReducedSyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XReducedSyzygiesGeneratorsOfRows[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XReducedSyzygiesGeneratorsOfRows[102X ([14X3.1-26[114X) inside the computer algebra system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XReducedSyzygiesGeneratorsOfRows :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      "unknown_number_of_rows",[104X
+    [4X      NrRows( M ),[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = ReducedSyzygiesGeneratorsOfRows(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-26 ReducedSyzygiesGeneratorsOfRows[101X
+  
+  [29X[2XReducedSyzygiesGeneratorsOfRows[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    ReducedSyzForHomalg := "\n\[104X
+    [4Xproc ReducedSyzForHomalg (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(matrix(nres(M,2)[2]));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
+  
+  [1X3.1-27 ReducedSyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XReducedSyzygiesGeneratorsOfColumns[102X( [3XM[103X ) [32X function
+  
+  [33X[0;0YThis  is  the entry of the [5Xhomalg[105X table, which calls the corresponding macro
+  [2XReducedSyzygiesGeneratorsOfColumns[102X  ([14X3.1-28[114X)  inside  the  computer  algebra
+  system.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XReducedSyzygiesGeneratorsOfColumns :=[104X
+    [4X  function( M )[104X
+    [4X    local N;[104X
+    [4X    [104X
+    [4X    N := HomalgVoidMatrix([104X
+    [4X      NrColumns( M ),[104X
+    [4X      "unknown_number_of_columns",[104X
+    [4X      HomalgRing( M )[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    homalgSendBlocking([104X
+    [4X      [ "matrix ", N, " = ReducedSyzygiesGeneratorsOfColumns(", M, ")" ],[104X
+    [4X      "need_command",[104X
+    [4X      HOMALG_IO.Pictograms.SyzygiesGenerators[104X
+    [4X    );[104X
+    [4X    [104X
+    [4X    return N;[104X
+    [4X    [104X
+    [4X  end,[104X
+  [4X[32X[104X
+  
+  [1X3.1-28 ReducedSyzygiesGeneratorsOfColumns[101X
+  
+  [29X[2XReducedSyzygiesGeneratorsOfColumns[102X( [3XM[103X ) [32X function
+  
+  [4X[32X  Code  [32X[104X
+    [4X    ReducedSyzygiesGeneratorsOfRows := "\n\[104X
+    [4Xproc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(ReducedSyzForHomalg(M));\n\[104X
+    [4X}\n\n",[104X
+  [4X[32X[104X
   

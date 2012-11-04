@@ -1,16 +1,16 @@
   
   
-                                    [1X[5XModules[0m[1X[0m
+                                    [1X[5XModules[105X[101X
   
   
-     [1XA [5Xhomalg[0m[1X based Package for the Abelian Category of Finitely Presented
-                         Modules over Computable Rings[0m
+     [1XA [5Xhomalg[105X based Package for the Abelian Category of Finitely Presented
+                         Modules over Computable Rings[101X
   
   
-                               Version 2012.06.15
+                               Version 2012.10.27
   
   
-                                   June 2012
+                                  October 2012
   
   
                                 Mohamed Barakat
@@ -19,108 +19,108 @@
   
   
   
-            ([13Xthis manual is still under construction[0m)
-            This  manual  is  best  viewed  as an [12XHTML[0m document. The
-            latest version is available [12Xonline[0m at:
-            [7Xhttp://homalg.math.rwth-aachen.de/~barakat/homalg-project/Modules/chap0.html[0m
-            An   [12Xoffline[0m   version   should   be   included  in  the
+            [33X[0;10Y([13Xthis manual is still under construction[113X)[133X
+            [33X[0;10YThis  manual  is  best  viewed  as an [12XHTML[112X document. The
+            latest version is available [12Xonline[112X at:[133X
+            [33X[0;10Y[7Xhttp://homalg.math.rwth-aachen.de/~barakat/homalg-project/Modules/chap0.html[107X[133X
+            [33X[0;10YAn   [12Xoffline[112X   version   should   be   included  in  the
             documentation  subfolder of the package. This package is
-            part of the [5Xhomalg[0m-project:
-            [7Xhttp://homalg.math.rwth-aachen.de/index.php/core-packages/modules-package[0m
+            part of the [5Xhomalg[105X-project:[133X
+            [33X[0;10Y[7Xhttp://homalg.math.rwth-aachen.de/index.php/core-packages/modules-package[107X[133X
   
   
   
   Mohamed Barakat
-      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[0m
-      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[0m
-      Address:  Department of Mathematics,
-                University of Kaiserslautern,
-                67653 Kaiserslautern,
-                Germany
+      Email:    [7Xmailto:barakat@mathematik.uni-kl.de[107X
+      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[107X
+      Address:  [33X[0;14YDepartment of Mathematics,[133X
+                [33X[0;14YUniversity of Kaiserslautern,[133X
+                [33X[0;14Y67653 Kaiserslautern,[133X
+                [33X[0;14YGermany[133X
   
   
   Markus Lange-Hegermann
-      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[0m
-      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus[0m
-      Address:  Lehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
-                52056 Aachen, Germany
+      Email:    [7Xmailto:markus.lange.hegermann@rwth-aachen.de[107X
+      Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus[107X
+      Address:  [33X[0;14YLehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
+                52056 Aachen, Germany[133X
   
   
   
   -------------------------------------------------------
-  [1XCopyright[0m
-  © 2007-2012 by Mohamed Barakat and Markus Lange-Hegermann
+  [1XCopyright[101X
+  [33X[0;0Y© 2007-2012 by Mohamed Barakat and Markus Lange-Hegermann[133X
   
-  This  package  may  be distributed under the terms and conditions of the GNU
-  Public License Version 2.
-  
-  
-  -------------------------------------------------------
-  [1XAcknowledgements[0m
-  We are very much indebted to Alban Quadrat.
+  [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2.[133X
   
   
   -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YWe are very much indebted to Alban Quadrat.[133X
   
   
-  [1XContents (Modules)[0X
+  -------------------------------------------------------
   
-  1 Introduction
-    1.1 What is the role of the [5XModules[0m package in the [5Xhomalg[0m project?
-      1.1-1 [5XModules[0m provides ...
-      1.1-2 Rings supported in a sufficient way
-      1.1-3 Principal limitation
-      1.1-4 Ring dictionaries (technical)
-      1.1-5 The advantages of the outsourcing concept
-      1.1-6 Does this mean that [5Xhomalg[0m has only algorithms for the generic
-      case?
-      1.1-7 The principle of least communication (technical)
-      1.1-8 Frequently asked questions
-    1.2 This manual
-  2 Installation of the [5XModules[0m Package
-  3 Quick Start
-    3.1 Why are all examples in this manual over ℤ or ℤ/mℤ?
-    3.2 [10Xgap> ExamplesForHomalg();[0m
-    3.3 A typical example
-      3.3-1 HomHom
-  4 Ring Maps
-    4.1 Ring Maps: Attributes
+  
+  [1XContents (Modules)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YWhat is the role of the [5XModules[105X package in the [5Xhomalg[105X project?[133X
+      1.1-1 [33X[0;0Y[5XModules[105X provides ...[133X
+      1.1-2 [33X[0;0YRings supported in a sufficient way[133X
+      1.1-3 [33X[0;0YPrincipal limitation[133X
+      1.1-4 [33X[0;0YRing dictionaries (technical)[133X
+      1.1-5 [33X[0;0YThe advantages of the outsourcing concept[133X
+      1.1-6 [33X[0;0YDoes this mean that [5Xhomalg[105X has only algorithms for the generic
+      case?[133X
+      1.1-7 [33X[0;0YThe principle of least communication (technical)[133X
+      1.1-8 [33X[0;0YFrequently asked questions[133X
+    1.2 [33X[0;0YThis manual[133X
+  2 [33X[0;0YInstallation of the [5XModules[105X Package[133X
+  3 [33X[0;0YQuick Start[133X
+    3.1 [33X[0;0YWhy are all examples in this manual over ℤ or [22Xℤ/mℤ[122X?[133X
+    3.2 [33X[0;0Y[10Xgap> ExamplesForHomalg();[110X[133X
+    3.3 [33X[0;0YA typical example[133X
+      3.3-1 [33X[0;0YHomHom[133X
+  4 [33X[0;0YRing Maps[133X
+    4.1 [33X[0;0YRing Maps: Attributes[133X
       4.1-1 KernelSubobject
       4.1-2 KernelEmb
-    4.2 Ring Maps: Operations and Functions
+    4.2 [33X[0;0YRing Maps: Operations and Functions[133X
       4.2-1 Kernel
-  5 Relations
-    5.1 Relations: Categories and Representations
+  5 [33X[0;0YRelations[133X
+    5.1 [33X[0;0YRelations: Categories and Representations[133X
       5.1-1 IsHomalgRelations
       5.1-2 IsHomalgRelationsOfLeftModule
       5.1-3 IsHomalgRelationsOfRightModule
       5.1-4 IsRelationsOfFinitelyPresentedModuleRep
-    5.2 Relations: Constructors
-    5.3 Relations: Properties
+    5.2 [33X[0;0YRelations: Constructors[133X
+    5.3 [33X[0;0YRelations: Properties[133X
       5.3-1 CanBeUsedToDecideZeroEffectively
       5.3-2 IsInjectivePresentation
-    5.4 Relations: Attributes
-    5.5 Relations: Operations and Functions
-  6 Generators
-    6.1 Generators: Categories and Representations
+    5.4 [33X[0;0YRelations: Attributes[133X
+    5.5 [33X[0;0YRelations: Operations and Functions[133X
+  6 [33X[0;0YGenerators[133X
+    6.1 [33X[0;0YGenerators: Categories and Representations[133X
       6.1-1 IsHomalgGenerators
       6.1-2 IsHomalgGeneratorsOfLeftModule
       6.1-3 IsHomalgGeneratorsOfRightModule
       6.1-4 IsGeneratorsOfModuleRep
       6.1-5 IsGeneratorsOfFinitelyGeneratedModuleRep
-    6.2 Generators: Constructors
-    6.3 Generators: Properties
+    6.2 [33X[0;0YGenerators: Constructors[133X
+    6.3 [33X[0;0YGenerators: Properties[133X
       6.3-1 IsReduced
-    6.4 Generators: Attributes
+    6.4 [33X[0;0YGenerators: Attributes[133X
       6.4-1 ProcedureToReadjustGenerators
-    6.5 Generators: Operations and Functions
-  7 Modules
-    7.1 Modules: Category and Representations
+    6.5 [33X[0;0YGenerators: Operations and Functions[133X
+  7 [33X[0;0YModules[133X
+    7.1 [33X[0;0YModules: Category and Representations[133X
       7.1-1 IsHomalgModule
       7.1-2 IsFinitelyPresentedModuleOrSubmoduleRep
       7.1-3 IsFinitelyPresentedModuleRep
       7.1-4 IsFinitelyPresentedSubmoduleRep
-    7.2 Modules: Constructors
+    7.2 [33X[0;0YModules: Constructors[133X
       7.2-1 LeftPresentation
       7.2-2 RightPresentation
       7.2-3 HomalgFreeLeftModule
@@ -132,11 +132,11 @@
       7.2-9 Subobject
       7.2-10 LeftSubmodule
       7.2-11 RightSubmodule
-    7.3 Modules: Properties
+    7.3 [33X[0;0YModules: Properties[133X
       7.3-1 IsCyclic
       7.3-2 IsHolonomic
       7.3-3 IsPrimeIdeal
-    7.4 Modules: Attributes
+    7.4 [33X[0;0YModules: Attributes[133X
       7.4-1 ResidueClassRing
       7.4-2 PrimaryDecomposition
       7.4-3 ElementaryDivisors
@@ -152,41 +152,40 @@
       7.4-13 DataOfHilbertFunction
       7.4-14 HilbertFunction
       7.4-15 IndexOfRegularity
-    7.5 Modules: Operations and Functions
+    7.5 [33X[0;0YModules: Operations and Functions[133X
       7.5-1 HomalgRing
       7.5-2 ByASmallerPresentation
       7.5-3 \*
       7.5-4 SubobjectQuotient
-  8 Maps
-    8.1 Maps: Categories and Representations
+  8 [33X[0;0YMaps[133X
+    8.1 [33X[0;0YMaps: Categories and Representations[133X
       8.1-1 IsHomalgMap
       8.1-2 IsHomalgSelfMap
       8.1-3 IsMapOfFinitelyGeneratedModulesRep
-    8.2 Maps: Constructors
+    8.2 [33X[0;0YMaps: Constructors[133X
       8.2-1 HomalgMap
       8.2-2 HomalgZeroMap
       8.2-3 HomalgIdentityMap
-    8.3 Maps: Properties
-    8.4 Maps: Attributes
-      8.4-1 DegreeOfMorphism
-    8.5 Maps: Operations and Functions
+    8.3 [33X[0;0YMaps: Properties[133X
+    8.4 [33X[0;0YMaps: Attributes[133X
+    8.5 [33X[0;0YMaps: Operations and Functions[133X
       8.5-1 HomalgRing
       8.5-2 PreInverse
-  9 Module Elements
-    9.1 Module Elements: Category and Representations
+  9 [33X[0;0YModule Elements[133X
+    9.1 [33X[0;0YModule Elements: Category and Representations[133X
       9.1-1 IsHomalgElement
       9.1-2 IsElementOfAModuleGivenByAMorphismRep
-    9.2 Module Elements: Constructors
-    9.3 Module Elements: Properties
+    9.2 [33X[0;0YModule Elements: Constructors[133X
+    9.3 [33X[0;0YModule Elements: Properties[133X
       9.3-1 IsElementOfIntegers
-    9.4 Module Elements: Attributes
-    9.5 Module Elements: Operations and Functions
+    9.4 [33X[0;0YModule Elements: Attributes[133X
+    9.5 [33X[0;0YModule Elements: Operations and Functions[133X
       9.5-1 HomalgRing
-  10 Functors
-    10.1 Functors: Category and Representations
-    10.2 Functors: Constructors
-    10.3 Functors: Attributes
-    10.4 Basic Functors
+  10 [33X[0;0YFunctors[133X
+    10.1 [33X[0;0YFunctors: Category and Representations[133X
+    10.2 [33X[0;0YFunctors: Constructors[133X
+    10.3 [33X[0;0YFunctors: Attributes[133X
+    10.4 [33X[0;0YBasic Functors[133X
       10.4-1 functor_Cokernel
       10.4-2 Cokernel
       10.4-3 functor_ImageObject
@@ -207,40 +206,40 @@
       10.4-18 LTensorProduct
       10.4-19 Functor_HomHom
       10.4-20 Functor_LHomHom
-    10.5 Tool Functors
-    10.6 Other Functors
-    10.7 Functors: Operations and Functions
-  11 Exterior Algebra and Koszul Complex
-    11.1 Exterior Algebra: Constructor
+    10.5 [33X[0;0YTool Functors[133X
+    10.6 [33X[0;0YOther Functors[133X
+    10.7 [33X[0;0YFunctors: Operations and Functions[133X
+  11 [33X[0;0YExterior Algebra and Koszul Complex[133X
+    11.1 [33X[0;0YExterior Algebra: Constructor[133X
       11.1-1 ExteriorPower
-    11.2 Exterior Algebra: Properties and Attributes
+    11.2 [33X[0;0YExterior Algebra: Properties and Attributes[133X
       11.2-1 IsExteriorPower
       11.2-2 ExteriorPowerExponent
       11.2-3 ExteriorPowerBaseModule
-    11.3 Exterior Algebra: Element Properties
+    11.3 [33X[0;0YExterior Algebra: Element Properties[133X
       11.3-1 IsExteriorPowerElement
-    11.4 Exterior Algebra: Element Operations
+    11.4 [33X[0;0YExterior Algebra: Element Operations[133X
       11.4-1 Wedge
       11.4-2 ExteriorPowerElementDual
       11.4-3 SingleValueOfExteriorPowerElement
-    11.5 Koszul complex and Cayley determinant
+    11.5 [33X[0;0YKoszul complex and Cayley determinant[133X
       11.5-1 KoszulCocomplex
       11.5-2 CayleyDeterminant
       11.5-3 Gcd_UsingCayleyDeterminant
-  12 Examples
-    12.1 ExtExt
-    12.2 Purity
-    12.3 TorExt-Grothendieck
-    12.4 TorExt
-  A The Mathematical Idea behind [5XModules[0m
-  B Logic Subpackages
-    B.1 [5XLIMOD[0m: Logical Implications for Modules
-    B.2 [5XLIHOM[0m: Logical Implications for Homomorphisms of Modules
-  C Overview of the [5XModules[0m Package Source Code
-    C.1 Relations and Generators
-    C.2 The Basic Objects
-    C.3 The High Level Homological Algorithms
-    C.4 Logical Implications for [5Xhomalg[0m Objects
+  12 [33X[0;0YExamples[133X
+    12.1 [33X[0;0YExtExt[133X
+    12.2 [33X[0;0YPurity[133X
+    12.3 [33X[0;0YTorExt-Grothendieck[133X
+    12.4 [33X[0;0YTorExt[133X
+  A [33X[0;0YThe Mathematical Idea behind [5XModules[105X[133X
+  B [33X[0;0YLogic Subpackages[133X
+    B.1 [33X[0;0Y[5XLIMOD[105X: Logical Implications for Modules[133X
+    B.2 [33X[0;0Y[5XLIHOM[105X: Logical Implications for Homomorphisms of Modules[133X
+  C [33X[0;0YOverview of the [5XModules[105X Package Source Code[133X
+    C.1 [33X[0;0YRelations and Generators[133X
+    C.2 [33X[0;0YThe Basic Objects[133X
+    C.3 [33X[0;0YThe High Level Homological Algorithms[133X
+    C.4 [33X[0;0YLogical Implications for [5Xhomalg[105X Objects[133X
   
   
-  -------------------------------------------------------
+  [32X

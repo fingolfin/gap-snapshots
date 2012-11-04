@@ -270,6 +270,48 @@ InstallMethod( Indeterminates,
 end );
 
 ##
+InstallMethod( Indeterminates,
+        "for homalg rings",
+        [ IsHomalgRing and HasIndeterminateCoordinatesOfRingOfDerivations ],
+        
+  function( R )
+    
+    return
+      Concatenation(
+              IndeterminateCoordinatesOfRingOfDerivations( R ),
+              IndeterminateDerivationsOfRingOfDerivations( R )
+              );
+    
+end );
+
+##
+InstallMethod( ExportIndeterminates,
+        "for homalg rings",
+        [ IsHomalgRing ],
+        
+  function( R )
+    local indets, x_name, x;
+    
+    indets := Indeterminates( R );
+    
+    for x in indets do
+        x_name := String( x );
+        if IsBoundGlobal( x_name ) then
+            if not IsHomalgRingElement( ValueGlobal( x_name ) ) then
+                Error( "the name ", x_name, " is not bound to a homalg ring element\n" );
+            elif IsReadOnlyGlobal( x_name ) then
+                MakeReadWriteGlobal( x_name );
+            fi;
+            UnbindGlobal( x_name );
+        fi;
+        BindGlobal( x_name, x );
+    od;
+    
+    return indets;
+    
+end );
+
+##
 InstallMethod( Indeterminate,
         "for homalg rings",
         [ IsHomalgRing, IsPosInt ],
@@ -565,9 +607,15 @@ InstallMethod( SetRingProperties,
         [ IsHomalgRing and IsWeylRing, IsHomalgRing and IsFreePolynomialRing, IsList ],
         
   function( S, R, der )
-    local r, var, d;
+    local r, b, var, d;
     
     r := CoefficientsRing( R );
+    
+    if HasBaseRing( R ) then
+        b := BaseRing( R );
+    else
+        b := r;
+    fi;
     
     var := IndeterminatesOfPolynomialRing( R );
     
@@ -577,11 +625,16 @@ InstallMethod( SetRingProperties,
     
     SetCharacteristic( S, Characteristic( R ) );
     
-    SetIsCommutative( S, false );
+    SetIsCommutative( S, der = [ ] );
     
-    SetCenter( S, r );
+    SetCenter( S, Center( b ) );
     
     SetIndeterminateCoordinatesOfRingOfDerivations( S, var );
+    
+    if HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        SetRelativeIndeterminateCoordinatesOfRingOfDerivations(
+                S, RelativeIndeterminatesOfPolynomialRing( R ) );
+    fi;
     
     SetIndeterminateDerivationsOfRingOfDerivations( S, der );
     
@@ -597,7 +650,7 @@ InstallMethod( SetRingProperties,
         SetGlobalDimension( S, d + GlobalDimension( r ) );
     fi;
     
-    if HasIsFieldForHomalg( r ) and IsFieldForHomalg( r ) and Characteristic( S ) = 0 then
+    if HasIsFieldForHomalg( b ) and IsFieldForHomalg( b ) and Characteristic( S ) = 0 then
         SetGeneralLinearRank( S, 2 );	## [Stafford78], [McCRob, 11.2.15(i)]
         SetIsSimpleRing( S, true );	## [Coutinho, Thm 2.2.1]
     fi;
@@ -1363,7 +1416,11 @@ InstallMethod( RingOfDerivations,
         return R!.RingOfDerivations;
     fi;
     
-    var := Indeterminates( R );
+    if HasRelativeIndeterminatesOfPolynomialRing( R ) then
+        var := RelativeIndeterminatesOfPolynomialRing( R );
+    else
+        var := IndeterminatesOfPolynomialRing( R );
+    fi;
     
     var := List( var, x -> Concatenation( "D", Name( x ) ) );
     

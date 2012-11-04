@@ -606,6 +606,27 @@ InstallMethod( EqualitiesOfCone,
     
 end );
 
+##
+InstallMethod( RelativeInteriorRayGenerator,
+               "for a cone",
+               [ IsCone ],
+               
+  function( cone )
+    local rays, rand_mat;
+    
+    rays := RayGenerators( cone );
+    
+    rand_mat := RandomMat( Length( rays ), 1 );
+    
+    rand_mat := Concatenation( rand_mat );
+    
+    rand_mat := List( rand_mat, i -> AbsInt( i ) + 1 );
+    
+    return Sum( [ 1 .. Length( rays ) ], i -> rays[ i ] * rand_mat[ i ] );
+    
+end );
+
+
 ####################################
 ##
 ## Methods
@@ -650,10 +671,10 @@ end );
 ##
 InstallMethod( IntersectionOfCones,
                "for homalg cones",
-               [ IsCone, IsCone ],
+               [ IsCone and HasDefiningInequalities, IsCone and HasDefiningInequalities ],
                
   function( cone1, cone2 )
-    local rays1, rays2, cone;
+    local inequalities, cone;
     
     if not IsIdenticalObj( ContainingGrid( cone1 ), ContainingGrid( cone2 ) ) then
         
@@ -661,33 +682,125 @@ InstallMethod( IntersectionOfCones,
         
     fi;
     
-    rays1 := HilbertBasis( cone1 );
+    inequalities := Unique( Concatenation( [ DefiningInequalities( cone1 ), DefiningInequalities( cone2 ) ]  ) );
     
-    rays2 := HilbertBasis( cone2 );
+    cone := ConeByInequalities( inequalities );
     
-    cone := Intersection( rays1, rays2 );
+    SetContainingGrid( cone, ContainingGrid( cone1 ) );
     
-    if cone = [] then
+    return cone;
+    
+end );
+
+##
+InstallMethod( IntersectionOfCones,
+               "for homalg cones",
+               [ IsExternalConeRep and HasExternalObject, IsExternalConeRep and HasExternalObject ],
+               
+  function( cone1, cone2 )
+    local cone, ext_cone;
+    
+    if not IsIdenticalObj( ContainingGrid( cone1 ), ContainingGrid( cone2 ) ) then
         
-        if Length( rays1 ) > 0 then
-            
-            cone := [ List( [ 1 .. Length( rays1[ 1 ] ) ], i -> 0 ) ];
-            
-        elif Length( rays2 ) > 0 then
-            
-            cone := [ List( [ 1 .. Length( rays2[ 1 ] ) ], i -> 0 ) ];
-            
-        else
-            
-            Error( "no dimension given\n" );
-            
-        fi;
+        Error( "cones are not from the same grid" );
         
     fi;
     
-    cone := Cone( Intersection( rays1, rays2 ) );
+    ext_cone := EXT_INTERSECTION_OF_CONES( ExternalObject( cone1 ), ExternalObject( cone2 ) );
+    
+    cone := Cone( ext_cone );
     
     SetContainingGrid( cone, ContainingGrid( cone1 ) );
+    
+    return cone;
+    
+end );
+
+# ##
+# InstallMethod( IntersectionOfCones,
+#                "for homalg cones",
+#                [ IsCone, IsCone ],
+#                
+#   function( cone1, cone2 )
+#     local inequalities, cone;
+#     
+#     if not IsIdenticalObj( ContainingGrid( cone1 ), ContainingGrid( cone2 ) ) then
+#         
+#         Error( "cones are not from the same grid" );
+#         
+#     fi;
+#     
+#     if HasDefiningInequalities( cone1 ) then
+#         
+#         
+
+##
+InstallMethod( IntersectionOfConelist,
+               "for a list of convex cones",
+               [ IsList ],
+               
+  function( list_of_cones )
+    local grid, inequalities, equalities, i, cone;
+    
+    if list_of_cones = [ ] then
+        
+        Error( "cannot create an empty cone\n" );
+        
+    fi;
+    
+    if not ForAll( list_of_cones, IsCone ) then
+        
+        Error( "not all list elements are cones\n" );
+        
+    fi;
+    
+    grid := ContainingGrid( list_of_cones[ 1 ] );
+    
+    if not ForAll( list_of_cones, i -> IsIdenticalObj( ContainingGrid( i ), grid ) ) then
+        
+        Error( "all cones must lie in the same grid\n" );
+        
+    fi;
+    
+    inequalities := [ ];
+    
+    equalities := [ ];
+    
+    for i in list_of_cones do
+        
+        if HasDefiningInequalities( i ) then
+            
+            Add( inequalities, DefiningInequalities( i ) );
+            
+        elif IsBound( i!.input_inequalities ) then
+            
+            Add( inequalities, i!.input_inequalities );
+            
+            if IsBound( i!.input_equalities ) then
+                
+                Add( equalities, i!.input_equalities );
+                
+            fi;
+            
+        else
+            
+            Add( inequalities, DefiningInequalities( i ) );
+            
+        fi;
+        
+    od;
+    
+    if equalities <> [ ] then
+        
+        cone := ConeByEqualitiesAndInequalities( Concatenation( equalities ), Concatenation( inequalities ) );
+        
+    else
+        
+        cone := ConeByInequalities( Concatenation( inequalities ) );
+        
+    fi;
+    
+    SetContainingGrid( cone, grid );
     
     return cone;
     
@@ -732,9 +845,25 @@ InstallMethod( RayGeneratorContainedInCone,
     
     ineq := DefiningInequalities( cone );
     
-    ineq := List( ineq, i -> i * raygen );
+    ineq := List( ineq, i -> Sum( [ 1 .. Length( i ) ], j -> i[ j ]*raygen[ j ] ) );
     
     return ForAll( ineq, i -> i >= 0 );
+    
+end );
+
+##
+InstallMethod( ContainedInRelativeInterior,
+               "for cones",
+               [ IsList, IsCone ],
+               
+  function( raygen, cone )
+    local ineq;
+    
+    ineq := DefiningInequalities( cone );
+    
+    ineq := List( ineq, i -> i * raygen );
+    
+    return ForAll( ineq, i -> i > 0 );
     
 end );
 
@@ -826,6 +955,63 @@ InstallMethod( StellarSubdivision,
     return EXT_STELLAR_SUBDIVISION( ExternalObject( ray ), ExternalObject( fan ) );
     
 end );
+
+##
+InstallMethod( \*,
+               "for a matrix and a cone",
+               [ IsHomalgMatrix, IsCone ],
+               
+  function( matrix, cone )
+    local ray_list, multiplied_rays, ring, new_cone;
+    
+    ring := HomalgRing( matrix );
+    
+    ray_list := RayGenerators( cone );
+    
+    ray_list := List( ray_list, i -> HomalgMatrix( i, ring ) );
+    
+    multiplied_rays := List( ray_list, i -> matrix * i );
+    
+    multiplied_rays := List( multiplied_rays, i -> EntriesOfHomalgMatrix( i ) );
+    
+    new_cone := Cone( multiplied_rays );
+    
+    SetContainingGrid( new_cone, ContainingGrid( cone ) );
+    
+    return new_cone;
+    
+end );
+
+##
+InstallMethod( \=,
+               "for two cones",
+               [ IsCone, IsCone ],
+               
+  function( cone1, cone2 )
+    
+    return Contains( cone1, cone2 ) and Contains( cone2, cone1 );
+    
+end );
+
+##
+InstallMethod( DrawObject,
+               "for a cone",
+               [ IsCone ],
+               
+  function( cone )
+    
+    return DrawObject( Fan( [ cone ] ) );
+    
+end );
+
+##
+InstallMethod( \in,
+               "for ray generator and cone",
+               [ IsList, IsCone ],
+               
+RayGeneratorContainedInCone
+
+);
 
 ###################################
 ##

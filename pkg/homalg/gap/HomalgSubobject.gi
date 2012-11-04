@@ -165,7 +165,7 @@ InstallMethod( \=,
   function( J, R )
     local equal;
     
-    if not IsIdenticalObj( HomalgRing( J ), R ) then
+    if not IsIdenticalObj( StructureObject( J ), R ) then
         Error( "the structure object of the subobject and the given structure object are not identical\n" );
     fi;
     
@@ -191,13 +191,25 @@ InstallMethod( \=,
 end );
 
 ##
+InstallMethod( IsOne,
+        "for a homalg subobject and a homalg structure object",
+        [ IsStaticFinitelyPresentedSubobjectRep ],
+        
+  function( J )
+    
+    ## the following uses IsSubset in one direction only; see above
+    return J = StructureObject( J );
+    
+end );
+
+##
 InstallMethod( IsSubset,
         "for a homalg subobject and a homalg structure object",
         [ IsStaticFinitelyPresentedSubobjectRep, IsStructureObject ],
         
   function( J, R )
     
-    ## the following uses IsSubset in one direct only; see above
+    ## the following uses IsSubset in one direction only; see above
     return J = R;
     
 end );

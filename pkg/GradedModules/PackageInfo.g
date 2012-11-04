@@ -32,9 +32,9 @@ Subtitle := "A homalg based package for the Abelian category of finitely present
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
 Version := Maximum( [
-  "2011.09.06", ## Markus' version
+  "2012.10.22", ## Markus' version
 ## this line prevents merge conflicts
-  "2012.06.24", ## Mohamed's version
+  "2012.10.25", ## Mohamed's version
 ## this line prevents merge conflicts
   "2011.05.05", ## Sebastian's version
 ## this line prevents merge conflicts
@@ -313,8 +313,6 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "GradedModules",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  Archive := 
-    "http://homalg.math.rwth-aachen.de/~markus/GradedModules/GradedModules.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -344,8 +342,8 @@ Dependencies := rec(
                    [ "HomalgToCAS", ">= 2011.10.05" ],
                    [ "RingsForHomalg", ">= 2011.10.05" ],
                    [ "GradedRingForHomalg", ">= 2012.06.22" ],
-                   [ "Modules", ">= 2012.06.15" ],
-                   [ "homalg", ">= 2012.05.17" ],
+                   [ "Modules", ">= 2012.10.23" ],
+                   [ "homalg", ">= 2012.10.24" ],
                    [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],

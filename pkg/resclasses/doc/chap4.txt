@@ -19,7 +19,7 @@
   [5XResClasses[105X via [10XLoadPackage( "resclasses" );[110X.[133X
   
   
-  [1X4.3 [33X[0;0YThe testing routine[133X[101X
+  [1X4.3 [33X[0;0YThe testing routines[133X[101X
   
   [1X4.3-1 ResClassesTest[101X
   
@@ -30,8 +30,16 @@
   correct  results  of the test computations, are reported. The processed test
   files are in the directory [11Xpkg/resclasses/tst[111X.[133X
   
+  [1X4.3-2 ResClassesTestExamples[101X
   
-  [1X4.4 [33X[0;0YBuilding the manual[133X[101X
+  [29X[2XResClassesTestExamples[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YRuns  all  examples in the manual of the [5XResClasses[105X package, and reports any
+  differences between the actual output and the output printed in the manual.[133X
+  
+  
+  [1X4.4 [33X[0;0YUtilities for preparing the package for distribution[133X[101X
   
   [1X4.4-1 ResClassesBuildManual[101X
   
@@ -44,6 +52,24 @@
   Building  the manual is possible only on UNIX systems and requires PDFLaTeX.
   As  all  files  generated  by this function are included in the distribution
   file anyway, users will not need it.[133X
+  
+  [1X4.4-2 ConvertPackageFilesToUNIXLineBreaks[101X
+  
+  [29X[2XConvertPackageFilesToUNIXLineBreaks[102X( [3Xpackage[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis function is a development tool which converts the text files of package
+  [3Xpackage[103X  from  Windows-  to  UNIX line breaks. Here [3Xpackage[103X is assumed to be
+  either [10X"resclasses"[110X or [10X"rcwa"[110X.[133X
+  
+  [1X4.4-3 RemoveTemporaryPackageFiles[101X
+  
+  [29X[2XRemoveTemporaryPackageFiles[102X( [3Xpackage[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function  is a development tool which cleans up the temporary files of
+  package  [3Xpackage[103X.  Here  [3Xpackage[103X  is  assumed  to  be either [10X"resclasses"[110X or
+  [10X"rcwa"[110X.[133X
   
   
   [1X4.5 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X[101X

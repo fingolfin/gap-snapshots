@@ -1,0 +1,84 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{What is the role of the homalg package in the homalg project?}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{This manual}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Installation of the homalg Package}{}
+\BOOKMARK [0][-]{chapter.3}{Objects}{}
+\BOOKMARK [1][-]{section.3.1}{Objects: Category and Representations}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{Objects: Constructors}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{Objects: Properties}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{Objects: Attributes}{chapter.3}
+\BOOKMARK [1][-]{section.3.5}{Objects: Operations and Functions}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{Morphisms}{}
+\BOOKMARK [1][-]{section.4.1}{Morphisms: Categories and Representations}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{Morphisms: Constructors}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Morphisms: Properties}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{Morphisms: Attributes}{chapter.4}
+\BOOKMARK [1][-]{section.4.5}{Morphisms: Operations and Functions}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{Elements}{}
+\BOOKMARK [1][-]{section.5.1}{Elements: Category and Representations}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Elements: Constructors}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Elements: Properties}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Elements: Attributes}{chapter.5}
+\BOOKMARK [1][-]{section.5.5}{Elements: Operations and Functions}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{Complexes}{}
+\BOOKMARK [1][-]{section.6.1}{Complexes: Category and Representations}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{Complexes: Constructors}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{Complexes: Properties}{chapter.6}
+\BOOKMARK [1][-]{section.6.4}{Complexes: Attributes}{chapter.6}
+\BOOKMARK [1][-]{section.6.5}{Complexes: Operations and Functions}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{Chain Morphisms}{}
+\BOOKMARK [1][-]{section.7.1}{ChainMorphisms: Categories and Representations}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{Chain Morphisms: Constructors}{chapter.7}
+\BOOKMARK [1][-]{section.7.3}{Chain Morphisms: Properties}{chapter.7}
+\BOOKMARK [1][-]{section.7.4}{Chain Morphisms: Attributes}{chapter.7}
+\BOOKMARK [1][-]{section.7.5}{Chain Morphisms: Operations and Functions}{chapter.7}
+\BOOKMARK [0][-]{chapter.8}{Bicomplexes}{}
+\BOOKMARK [1][-]{section.8.1}{Bicomplexes: Category and Representations}{chapter.8}
+\BOOKMARK [1][-]{section.8.2}{Bicomplexes: Constructors}{chapter.8}
+\BOOKMARK [1][-]{section.8.3}{Bicomplexes: Properties}{chapter.8}
+\BOOKMARK [1][-]{section.8.4}{Bicomplexes: Attributes}{chapter.8}
+\BOOKMARK [1][-]{section.8.5}{Bicomplexes: Operations and Functions}{chapter.8}
+\BOOKMARK [0][-]{chapter.9}{Bigraded Objects}{}
+\BOOKMARK [1][-]{section.9.1}{BigradedObjects: Categories and Representations}{chapter.9}
+\BOOKMARK [1][-]{section.9.2}{Bigraded Objects: Constructors}{chapter.9}
+\BOOKMARK [1][-]{section.9.3}{Bigraded Objects: Properties}{chapter.9}
+\BOOKMARK [1][-]{section.9.4}{Bigraded Objects: Operations and Functions}{chapter.9}
+\BOOKMARK [0][-]{chapter.10}{Spectral Sequences}{}
+\BOOKMARK [1][-]{section.10.1}{SpectralSequences: Categorie and Representations}{chapter.10}
+\BOOKMARK [1][-]{section.10.2}{Spectral Sequences: Constructors}{chapter.10}
+\BOOKMARK [1][-]{section.10.3}{Spectral Sequences: Attributes}{chapter.10}
+\BOOKMARK [1][-]{section.10.4}{Spectral Sequences: Operations and Functions}{chapter.10}
+\BOOKMARK [0][-]{chapter.11}{Functors}{}
+\BOOKMARK [1][-]{section.11.1}{Functors: Category and Representations}{chapter.11}
+\BOOKMARK [1][-]{section.11.2}{Functors: Constructors}{chapter.11}
+\BOOKMARK [1][-]{section.11.3}{Functors: Attributes}{chapter.11}
+\BOOKMARK [1][-]{section.11.4}{Basic Functors}{chapter.11}
+\BOOKMARK [1][-]{section.11.5}{Tool Functors}{chapter.11}
+\BOOKMARK [1][-]{section.11.6}{Other Functors}{chapter.11}
+\BOOKMARK [1][-]{section.11.7}{Functors: Operations and Functions}{chapter.11}
+\BOOKMARK [0][-]{chapter.12}{Examples}{}
+\BOOKMARK [1][-]{section.12.1}{ExtExt}{chapter.12}
+\BOOKMARK [1][-]{section.12.2}{Purity}{chapter.12}
+\BOOKMARK [1][-]{section.12.3}{TorExt-Grothendieck}{chapter.12}
+\BOOKMARK [1][-]{section.12.4}{TorExt}{chapter.12}
+\BOOKMARK [0][-]{appendix.A}{The Mathematical Idea behind homalg}{}
+\BOOKMARK [0][-]{appendix.B}{Development}{}
+\BOOKMARK [1][-]{section.B.1}{Why was homalg discontinued in Maple?}{appendix.B}
+\BOOKMARK [1][-]{section.B.2}{Why GAP4?}{appendix.B}
+\BOOKMARK [1][-]{section.B.3}{Why not Sage?}{appendix.B}
+\BOOKMARK [1][-]{section.B.4}{How does homalg compare to Sage?}{appendix.B}
+\BOOKMARK [0][-]{appendix.C}{Logic Subpackages}{}
+\BOOKMARK [1][-]{section.C.1}{LIOBJ: Logical Implications for Objects of Abelian Categories}{appendix.C}
+\BOOKMARK [1][-]{section.C.2}{LIMOR: Logical Implications for Morphisms of Abelian Categories}{appendix.C}
+\BOOKMARK [1][-]{section.C.3}{LICPX: Logical Implications for Complexes in Abelian Categories}{appendix.C}
+\BOOKMARK [0][-]{appendix.D}{Debugging homalg}{}
+\BOOKMARK [1][-]{section.D.1}{Increase the assertion level}{appendix.D}
+\BOOKMARK [0][-]{appendix.E}{The Core Packages and the Idea behind their Splitting}{}
+\BOOKMARK [1][-]{section.E.1}{The 6=2+4 split}{appendix.E}
+\BOOKMARK [1][-]{section.E.2}{The 4=1+1+1+1 split}{appendix.E}
+\BOOKMARK [0][-]{appendix.F}{Overview of the homalg Package Source Code}{}
+\BOOKMARK [1][-]{section.F.1}{The Basic Objects}{appendix.F}
+\BOOKMARK [1][-]{section.F.2}{The High Level Homological Algorithms}{appendix.F}
+\BOOKMARK [1][-]{section.F.3}{Logical Implications for homalg Objects}{appendix.F}
+\BOOKMARK [0][-]{appendix*.4}{References}{}
+\BOOKMARK [0][-]{section*.5}{Index}{}

@@ -374,8 +374,8 @@ twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
 -------------------------------------------------------------------
 Euler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M;</span>
-&lt;A graded reflexive rank 2 left module presented by 94 relations for 19 genera\
-tors&gt;
+&lt;A graded reflexive non-projective rank 2 left module presented by 94 \
+relations for 19 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := ElementOfGrothendieckGroup( M );</span>
 ( 2*O_{P^4} - 1*O_{P^3} - 4*O_{P^2} - 2*O_{P^1} ) -&gt; P^4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P!.DisplayTwistedCoefficients := true;</span>
@@ -389,7 +389,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ChernPolynomial( M * S^3 );</span>
 ( 2 | 1+5*h+10*h^2 ) -&gt; P^4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ch := ChernCharacter( M );</span>
-[ 2-t-7*t^2/2!+11*t^3/3!+17*t^4/4! ] -&gt; P^4
+[ 2-u-7*u^2/2!+11*u^3/3!+17*u^4/4! ] -&gt; P^4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HilbertPolynomial( ch );</span>
 1/12*t^4+2/3*t^3-1/12*t^2-17/3*t-5
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( [ -8 .. 7 ], i -&gt; Value( chi, i ) );</span>

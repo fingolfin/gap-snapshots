@@ -216,15 +216,17 @@ InstallMethod( CompleteChainMorphism,
         [ IsChainMorphismOfFinitelyPresentedObjectsRep, IsInt ],
         
   function( cm, d )
-    local l, image_square;
+    local morphism, l, image_square;
     
     if not IsHomalgStaticMorphism( LowestDegreeMorphism( cm ) ) then
         TryNextMethod( );
     fi;
     
+    morphism := HasIsMorphism( cm ) and IsMorphism( cm );
+    
     l := HighestDegree( cm );
     
-    while true and l < d do
+    while l < d do
         
         image_square := CertainMorphismAsImageSquare( cm, l );
         
@@ -238,6 +240,11 @@ InstallMethod( CompleteChainMorphism,
         l := l + 1;
         
     od;
+    
+    if morphism then
+        Assert( 1, IsMorphism( cm ) );
+        SetIsMorphism( cm, true );
+    fi;
     
     return cm;
     
@@ -317,12 +324,12 @@ InstallMethod( CokernelEpi,
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedObject( coker ) );
+        Assert( 4, IsGradedObject( coker ) );
         
         SetIsGradedObject( coker, true );
     elif HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsComplex( coker ) );
+        Assert( 4, IsComplex( coker ) );
         
         SetIsComplex( coker, true );
     fi;
@@ -345,14 +352,14 @@ InstallMethod( CokernelEpi,
     
     if HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsEpimorphism( epi ) );
+        Assert( 4, IsEpimorphism( epi ) );
         
         SetIsEpimorphism( epi, true );
     fi;
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedMorphism( epi ) );
+        Assert( 4, IsGradedMorphism( epi ) );
         
         SetIsGradedMorphism( epi, true );
     fi;
@@ -432,12 +439,12 @@ InstallMethod( ImageObjectEmb,
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedObject( img ) );
+        Assert( 4, IsGradedObject( img ) );
         
         SetIsGradedObject( img, true );
     elif HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsComplex( img ) );
+        Assert( 4, IsComplex( img ) );
         
         SetIsComplex( img, true );
     fi;
@@ -460,14 +467,14 @@ InstallMethod( ImageObjectEmb,
     
     if HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsMonomorphism( emb ) );
+        Assert( 4, IsMonomorphism( emb ) );
         
         SetIsMonomorphism( emb, true );
     fi;
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedMorphism( emb ) );
+        Assert( 4, IsGradedMorphism( emb ) );
         
         SetIsGradedMorphism( emb, true );
     fi;
@@ -545,12 +552,12 @@ InstallMethod( KernelEmb,
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedObject( ker ) );
+        Assert( 4, IsGradedObject( ker ) );
         
         SetIsGradedObject( ker, true );
     elif HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsComplex( ker ) );
+        Assert( 4, IsComplex( ker ) );
         
         SetIsComplex( ker, true );
     fi;
@@ -573,14 +580,14 @@ InstallMethod( KernelEmb,
     
     if HasIsMorphism( cm ) and IsMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsMonomorphism( emb ) );
+        Assert( 4, IsMonomorphism( emb ) );
         
         SetIsMonomorphism( emb, true );
     fi;
     
     if HasIsGradedMorphism( cm ) and IsGradedMorphism( cm ) then
         ## check assertion
-        Assert( 2, IsGradedMorphism( emb ) );
+        Assert( 4, IsGradedMorphism( emb ) );
         
         SetIsGradedMorphism( emb, true );
     fi;

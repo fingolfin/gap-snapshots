@@ -11,7 +11,7 @@
   \item \texttt  {Cohomology}, \hyperpage{15}
   \item \texttt  {ComputeNextDimension}, \hyperpage{13}
   \item \texttt  {CreateBoundaryMatrices}, \hyperpage{14}
-  \item \texttt  {CreateCoboundaryMatrices}, \hyperpage{15}
+  \item \texttt  {CreateCoboundaryMatrices}, \hyperpage{14}
 
   \indexspace
 

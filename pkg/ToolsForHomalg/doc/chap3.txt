@@ -1,62 +1,57 @@
   
-  [1X3 Basics[0X
+  [1X3 [33X[0;0YBasics[133X[101X
   
   
-  [1X3.1 Variables[0X
+  [1X3.1 [33X[0;0YVariables[133X[101X
   
-  [1X3.1-1 HOMALG_TOOLS[0m
+  [1X3.1-1 HOMALG_TOOLS[101X
   
-  [2X> HOMALG_TOOLS_______________________________________________[0Xglobal variable
+  [29X[2XHOMALG_TOOLS[102X[32X global variable
   
-  A central place for configurations.
+  [33X[0;0YA central place for configurations.[133X
   
   
-  [1X3.2 Categories[0X
+  [1X3.2 [33X[0;0YCategories[133X[101X
   
-  [1X3.2-1 IsStructureObjectOrObjectOrMorphism[0m
+  [1X3.2-1 IsStructureObjectOrObjectOrMorphism[101X
   
-  [2X> IsStructureObjectOrObjectOrMorphism( [0X[3Xarg[0X[2X ) _______________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsStructureObjectOrObjectOrMorphism[102X( [3Xarg[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Filters for arguments are: IsAttributeStoringRep
-  This  is  the super super GAP-category which will include the GAP-categories
-  IsStructureObjectOrObject and IsHomalgObjectOrMorphism
+  [33X[0;0YThis  is  the super super GAP-category which will include the GAP-categories
+  IsStructureObjectOrObject and IsHomalgObjectOrMorphism[133X
   
-  [1X3.2-2 IsStructureObjectOrObject[0m
+  [1X3.2-2 IsStructureObjectOrObject[101X
   
-  [2X> IsStructureObjectOrObject( [0X[3Xarg[0X[2X ) _________________________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsStructureObjectOrObject[102X( [3Xarg[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Filters for arguments are: IsStructureObjectOrObjectOrMorphism
-  This  is  the  super  GAP-category  which  will  include  the GAP-categories
-  IsHomalgRing, IsHomalgModule, IsHomalgRingOrModule and IsHomal\ gComplex.
+  [33X[0;0YThis  is  the  super  GAP-category  which  will  include  the GAP-categories
+  IsHomalgRing, IsHomalgModule, IsHomalgRingOrModule and IsHomal\ gComplex.[133X
   
-  [1X3.2-3 IsStructureObject[0m
+  [1X3.2-3 IsStructureObject[101X
   
-  [2X> IsStructureObject( [0X[3Xarg[0X[2X ) _________________________________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsStructureObject[102X( [3Xarg[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Filters for arguments are: IsStructureObjectOrObject
-  This  is  the  super  GAP-category  which  will  include  the GAP-categories
+  [33X[0;0YThis  is  the  super  GAP-category  which  will  include  the GAP-categories
   IsHomalgRing  we  need this GAP-category to define things like H\ om(M,R) as
   easy  as  Hom(M,N)  without  distinguishing  between structure objects (e.g.
-  rings) and objects (e.g. modules)
+  rings) and objects (e.g. modules)[133X
   
-  [1X3.2-4 IsStructureObjectMorphism[0m
+  [1X3.2-4 IsStructureObjectMorphism[101X
   
-  [2X> IsStructureObjectMorphism( [0X[3Xarg[0X[2X ) _________________________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsStructureObjectMorphism[102X( [3Xarg[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Filters for arguments are: IsAttributeStoringRep
-  This  is  the  super  GAP-category  which  will  include  the GAP-categories
-  IsHomalgRingMap, etc.
+  [33X[0;0YThis  is  the  super  GAP-category  which  will  include  the GAP-categories
+  IsHomalgRingMap, etc.[133X
   
-  [1X3.2-5 IsHomalgRingOrModule[0m
+  [1X3.2-5 IsHomalgRingOrModule[101X
   
-  [2X> IsHomalgRingOrModule( [0X[3Xarg[0X[2X ) ______________________________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsHomalgRingOrModule[102X( [3Xarg[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  Filters for arguments are: IsStructureObjectOrObject
-  This  is  the  super  GAP-category  which  will  include  the GAP-categories
-  IsHomalgRing, IsHomalgModule.
+  [33X[0;0YThis  is  the  super  GAP-category  which  will  include  the GAP-categories
+  IsHomalgRing, IsHomalgModule.[133X
   

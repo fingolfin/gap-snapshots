@@ -24,6 +24,7 @@
   \item \texttt{Classes}
     \subitem of a union of residue classes with fixed rep's, 
 		\hyperpage{12}
+  \item \texttt  {ConvertPackageFilesToUNIXLineBreaks}, \hyperpage{19}
 
   \indexspace
 
@@ -46,7 +47,7 @@
 
   \indexspace
 
-  \item \texttt  {EmailLogFile}, \hyperpage{19}
+  \item \texttt  {EmailLogFile}, \hyperpage{20}
   \item \texttt{ExcludedElements}
     \subitem of a residue class union, \hyperpage{5}
   \item \texttt{ExtRepOfObj}, \hyperpage{10}
@@ -134,11 +135,13 @@
 
   \item \texttt  {RandomPartitionIntoResidueClasses}
     \subitem of a given ring, of given length, \hyperpage{8}
+  \item \texttt  {RemoveTemporaryPackageFiles}, \hyperpage{19}
   \item \texttt  {RepresentativeStabilizingRefinement}
     \subitem of a union of res.-classes with fixed rep's, 
 		\hyperpage{15}
-  \item \texttt  {ResClassesBuildManual}, \hyperpage{18}
+  \item \texttt  {ResClassesBuildManual}, \hyperpage{19}
   \item \texttt  {ResClassesTest}, \hyperpage{18}
+  \item \texttt  {ResClassesTestExamples}, \hyperpage{18}
   \item \texttt{Residue}
     \subitem of a residue class, \hyperpage{4}
   \item residue class union

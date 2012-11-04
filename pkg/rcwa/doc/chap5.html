@@ -144,12 +144,12 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Integers^2;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">twice := RcwaMapping(R,[[1,0],[0,1]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                          [[[[2,0],[0,2]],[0,0],1]]);       # method (a)</span>
-Rcwa mapping of Z^2: [m,n] -&gt; [2m,2n]
+Rcwa mapping of Z^2: (m,n) -&gt; (2m,2n)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[4,5]^twice;</span>
 [ 8, 10 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">twice1 := RcwaMapping(R,[[1,0],[0,1]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                           [[[[2,0],[0,1]],[0,0],1]]);      # method (a)</span>
-Rcwa mapping of Z^2: [m,n] -&gt; [2m,n]
+Rcwa mapping of Z^2: (m,n) -&gt; (2m,n)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[4,5]^twice1;</span>
 [ 8, 5 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(twice1);</span>
@@ -185,7 +185,7 @@ Rcwa permutation of Z^2 with modulus (1,0)Z+(0,2)Z
 &lt;rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1^g = P2;</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(g:table);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(g:AsTable);</span>
 
 Rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z
 
@@ -235,7 +235,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g^2;</span>
 IdentityMapping( ( Integers^2 ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ProjectionsToCoordinates(g),Factorization);</span>
-[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
+[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
 
 </pre></div>
 
@@ -249,7 +249,7 @@ IdentityMapping( ( Integers^2 ) )
 
 <p>Let <span class="SimpleMath">d ∈ ℕ</span>, and let <span class="SimpleMath">L_1, L_2 ∈ ℤ^d × d</span> be matrices of full rank which are in Hermite normal form. Further let <span class="SimpleMath">r_1 + ℤ^d L_1</span> and <span class="SimpleMath">r_2 + ℤ^d L_2</span> be disjoint residue classes, and assume that the representatives <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> are reduced modulo <span class="SimpleMath">ℤ^d L_1</span> and <span class="SimpleMath">ℤ^d L_2</span>, respectively. Then we define the <em>class transposition</em> <span class="SimpleMath">τ_r_1+ℤ^d L_1, r_2+ℤ^d L_2 ∈ Sym(ℤ^d)</span> as the involution which interchanges <span class="SimpleMath">r_1 + k L_1</span> and <span class="SimpleMath">r_2 + k L_2</span> for all <span class="SimpleMath">k ∈ ℤ^d</span>.</p>
 
-<p>The class transposition <span class="SimpleMath">τ_r_1+ℤ^d L_1, r_2+ℤ^d L_2</span> interchanges the residue classes <span class="SimpleMath">r_1+ℤ^d L_1</span> and <span class="SimpleMath">r_2+ℤ^d L_2</span>, and fixes the complement of their union pointwise. The set of all class transpositions of <span class="SimpleMath">ℤ^d</span> generates the simple group CT(<span class="SimpleMath">ℤ^d</span>) (cf. <a href="chapBib.html#biBKohl08c">[Koh08b]</a>).</p>
+<p>The class transposition <span class="SimpleMath">τ_r_1+ℤ^d L_1, r_2+ℤ^d L_2</span> interchanges the residue classes <span class="SimpleMath">r_1+ℤ^d L_1</span> and <span class="SimpleMath">r_2+ℤ^d L_2</span>, and fixes the complement of their union pointwise. The set of all class transpositions of <span class="SimpleMath">ℤ^d</span> generates the simple group CT(<span class="SimpleMath">ℤ^d</span>) (cf. <a href="chapBib.html#biBKohl08c">[Koh2+]</a>).</p>
 
 <p>In the four-argument form, the arguments <var class="Arg">r1</var>, <var class="Arg">L1</var>, <var class="Arg">r2</var> and <var class="Arg">L2</var> stand for <span class="SimpleMath">r_1</span>, <span class="SimpleMath">L_1</span>, <span class="SimpleMath">r_2</span> and <span class="SimpleMath">L_2</span>, respectively. In the two-argument form, the arguments <var class="Arg">cl1</var> and <var class="Arg">cl2</var> stand for the residue classes <span class="SimpleMath">r_1+ℤ^2 L_1</span> and <span class="SimpleMath">r_2+ℤ^2 L_2</span>, respectively. Enclosing the argument list in list brackets is permitted. The residue classes <span class="SimpleMath">r_1+ℤ^2 L_1</span> and <span class="SimpleMath">r_2+ℤ^2 L_2</span> are stored as an attribute <code class="code">TransposedClasses</code>.</p>
 
@@ -259,7 +259,7 @@ IdentityMapping( ( Integers^2 ) )
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := ClassTransposition([0,0],[[2,1],[0,2]],[1,0],[[2,1],[0,4]]);</span>
-ClassTransposition((0,0)+(2,1)Z+(0,2)Z,(1,0)+(2,1)Z+(0,4)Z)
+( (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(ct);</span>
 
 Rcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
@@ -271,17 +271,17 @@ Rcwa permutation of Z^2 with modulus (2,1)Z+(0,4)Z, of order 2
             \
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransposedClasses(ct);</span>
-[ (1,0)+(2,0)Z+(0,4)Z, (0,0)+(2,1)Z+(0,2)Z ]
+[ (0,0)+(2,1)Z+(0,2)Z, (1,0)+(2,1)Z+(0,4)Z ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct = ClassTransposition(last);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SplittedClassTransposition(ct,[1,2]);</span>
-[ ClassTransposition((1,0)+(2,0)Z+(0,8)Z,(0,0)+(2,1)Z+(0,4)Z), 
-  ClassTransposition((1,4)+(2,0)Z+(0,8)Z,(0,2)+(2,1)Z+(0,4)Z) ]
+[ ( (0,0)+(2,1)Z+(0,4)Z, (1,0)+(2,1)Z+(0,8)Z ), 
+  ( (0,2)+(2,1)Z+(0,4)Z, (1,4)+(2,1)Z+(0,8)Z ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Product(last) = ct;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SplittedClassTransposition(ct,[2,1]);</span>
-[ ClassTransposition((0,0)+(4,0)Z+(0,2)Z,(1,0)+(4,0)Z+(0,4)Z), 
-  ClassTransposition((2,1)+(4,0)Z+(0,2)Z,(3,0)+(4,0)Z+(0,4)Z) ]
+[ ( (0,0)+(4,0)Z+(0,2)Z, (1,0)+(4,2)Z+(0,4)Z ), 
+  ( (2,1)+(4,0)Z+(0,2)Z, (3,1)+(4,2)Z+(0,4)Z ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Product(last) = ct;</span>
 false
 
@@ -301,9 +301,9 @@ false
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">interchange := ClassRotation([0,0],[[1,0],[0,1]],[[0,1],[1,0]]);</span>
-ClassRotation((Integers^2),[[0,1],[1,0]])
+ClassRotation( Z^2, [ [ 0, 1 ], [ 1, 0 ] ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(interchange);</span>
-Rcwa permutation of Z^2: [m,n] -&gt; [n,m]
+Rcwa permutation of Z^2: (m,n) -&gt; (n,m)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := AllResidueClassesModulo(Integers^2,[[2,1],[0,3]]);</span>
 [ (0,0)+(2,1)Z+(0,3)Z, (0,1)+(2,1)Z+(0,3)Z, (0,2)+(2,1)Z+(0,3)Z, 
   (1,0)+(2,1)Z+(0,3)Z, (1,1)+(2,1)Z+(0,3)Z, (1,2)+(2,1)Z+(0,3)Z ]
@@ -318,7 +318,6 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
  (m,n) |-&gt; &lt;  (m,n)           otherwise
             |
             \
-
 
 </pre></div>
 
@@ -338,9 +337,9 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,3)Z, of order infinity
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">shift1 := ClassShift([0,0],[[1,0],[0,1]],1);</span>
-ClassShift((Integers^2),1)
+ClassShift( Z^2, 1 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(shift1);</span>
-Tame rcwa permutation of Z^2: [m,n] -&gt; [m+1,n]
+Tame rcwa permutation of Z^2: (m,n) -&gt; (m+1,n)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := ClassShift(ResidueClass([1,1],[[2,1],[0,2]]),2);</span>
 ClassShift((1,1)+(2,1)Z+(0,2)Z,2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(s);</span>
@@ -352,7 +351,6 @@ Tame rcwa permutation of Z^2 with modulus (2,1)Z+(0,2)Z, of order infinity
  (m,n) |-&gt; &lt;  (m,n)   if (m,n) in (0,0)+(2,0)Z+(0,1)Z U 
             |                     (1,0)+(2,1)Z+(0,2)Z
             \
-
 
 </pre></div>
 
@@ -421,7 +419,7 @@ Rcwa mapping of Z^2 with modulus (2,0)Z+(0,2)Z
             \
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(ProjectionsToCoordinates(f),Factorization);</span>
-[ [ ClassTransposition(0,2,1,2) ], [ ClassReflection(0,2) ] ]
+[ [ ( 0(2), 1(2) ) ], [ ClassReflection( 0(2) ) ] ]
 
 </pre></div>
 
@@ -468,7 +466,7 @@ GL(2,Integers)
   ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[1,1],[0,1]]) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[[-47,-37],[61,48]]^phi;</span>
 ClassRotation((1,0)+(2,2)Z+(0,3)Z,[[-47,-37],[61,48]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last:table);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last:AsTable);</span>
 
 Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
 
@@ -477,7 +475,6 @@ Rcwa permutation of Z^2 with modulus (2,2)Z+(0,3)Z, of order 6
  [0,0] [0,1] [0,2] [1,1]     |
  [1,2]                       | [m,n]
  [1,0]                       | [(-263m+122n+266)/3,(-1147m+532n+1147)/6]
-
 
 </pre></div>
 

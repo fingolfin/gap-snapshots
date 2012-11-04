@@ -1,108 +1,107 @@
   
   
-  [1XIndex[0X
+  [1XIndex[101X
   
-  [2X\*[0X (TensorProduct)  10.4-10
-  [2X\*[0X (transfer a module over a different ring (right))  7.2-7
-  [2X\*[0X (transfer a module over a different ring)  7.2-7
-  [2X\*[0X (constructor for ideal multiples)  7.5-3
-  [2XAffineDegree[0X  7.4-12
-  [2XByASmallerPresentation[0X (for modules)  7.5-2
-  [2XCanBeUsedToDecideZeroEffectively[0X  5.3-1
-  [2XCayleyDeterminant[0X  11.5-2
-  [2XCoefficientsOfNumeratorOfHilbertPoincareSeries[0X  7.4-8
-  [2XCoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[0X  7.4-7
-  [2XCokernel[0X  10.4-2
-  [2XDataOfHilbertFunction[0X  7.4-13
-  [2XDefectOfExactness[0X  10.4-6
-  [2XDegreeOfMorphism[0X (for maps)  8.4-1
-  [2XElementaryDivisors[0X  7.4-3
-  [2XExt[0X  10.4-12
-  [2XExteriorPower[0X  11.1-1
-  [2XExteriorPowerBaseModule[0X  11.2-3
-  [2XExteriorPowerElementDual[0X  11.4-2
-  [2XExteriorPowerExponent[0X  11.2-2
-  [2XFittingIdeal[0X  7.4-4
-  [2Xfunctor_Cokernel[0X  10.4-1
-  [2XFunctor_Ext[0X  10.4-11
-  [2XFunctor_Hom[0X  10.4-7
-  [2XFunctor_HomHom[0X  10.4-19
-  [2Xfunctor_ImageObject[0X  10.4-3
-  [2XFunctor_LHomHom[0X  10.4-20
-  [2XFunctor_LTensorProduct[0X  10.4-17
-  [2XFunctor_RHom[0X  10.4-15
-  [2XFunctor_TensorProduct[0X  10.4-9
-  [2XFunctor_Tor[0X  10.4-13
-  [2XGcd_UsingCayleyDeterminant[0X  11.5-3
-  [2XHilbertFunction[0X  7.4-14
-  [2XHilbertPoincareSeries[0X  7.4-11
-  [2XHom[0X  10.4-8
-  [2XHomalgFreeLeftModule[0X (constructor for free left modules)  7.2-3
-  [2XHomalgFreeRightModule[0X (constructor for free right modules)  7.2-4
-  [2XHomalgIdentityMap[0X (constructor for identity maps)  8.2-3
-  [2XHomalgMap[0X (constructor for maps between free modules)  8.2-1
-  [2XHomalgMap[0X (constructor for maps)  8.2-1
-  [2XHomalgRing[0X (for modules)  7.5-1
-  [2XHomalgRing[0X  8.5-1
-  [2XHomalgRing[0X (for module elements)  9.5-1
-  [2XHomalgZeroLeftModule[0X (constructor for zero left modules)  7.2-5
-  [2XHomalgZeroMap[0X (constructor for zero maps)  8.2-2
-  [2XHomalgZeroRightModule[0X (constructor for zero right modules)  7.2-6
-  [2XImageObject[0X  10.4-4
-  [2XIndexOfRegularity[0X  7.4-15
-  [2XIsCyclic[0X  7.3-1
-  [2XIsElementOfAModuleGivenByAMorphismRep[0X  9.1-2
-  [2XIsElementOfIntegers[0X  9.3-1
-  [2XIsExteriorPower[0X  11.2-1
-  [2XIsExteriorPowerElement[0X  11.3-1
-  [2XIsFinitelyPresentedModuleOrSubmoduleRep[0X  7.1-2
-  [2XIsFinitelyPresentedModuleRep[0X  7.1-3
-  [2XIsFinitelyPresentedSubmoduleRep[0X  7.1-4
-  [2XIsGeneratorsOfFinitelyGeneratedModuleRep[0X  6.1-5
-  [2XIsGeneratorsOfModuleRep[0X  6.1-4
-  [2XIsHolonomic[0X  7.3-2
-  [2XIsHomalgElement[0X  9.1-1
-  [2XIsHomalgGenerators[0X  6.1-1
-  [2XIsHomalgGeneratorsOfLeftModule[0X  6.1-2
-  [2XIsHomalgGeneratorsOfRightModule[0X  6.1-3
-  [2XIsHomalgMap[0X  8.1-1
-  [2XIsHomalgModule[0X  7.1-1
-  [2XIsHomalgRelations[0X  5.1-1
-  [2XIsHomalgRelationsOfLeftModule[0X  5.1-2
-  [2XIsHomalgRelationsOfRightModule[0X  5.1-3
-  [2XIsHomalgSelfMap[0X  8.1-2
-  [2XIsInjectivePresentation[0X  5.3-2
-  [2XIsMapOfFinitelyGeneratedModulesRep[0X  8.1-3
-  [2XIsPrimeIdeal[0X  7.3-3
-  [2XIsReduced[0X  6.3-1
-  [2XIsRelationsOfFinitelyPresentedModuleRep[0X  5.1-4
-  [2XKernel[0X (for maps)  10.4-5
-  [2XKernel[0X (for ring maps)  4.2-1
-  [2XKernelEmb[0X (for ring maps)  4.1-2
-  [2XKernelSubobject[0X (for ring maps)  4.1-1
-  [2XKoszulCocomplex[0X  11.5-1
-  [2XLargestMinimalNumberOfLocalGenerators[0X  7.4-6
-  [2XLeftPresentation[0X (constructor for left modules)  7.2-1
-  [2XLeftSubmodule[0X (constructor for left submodules)  7.2-10
-  [2XLTensorProduct[0X  10.4-18
-  [5XModules[0m  .-3
-  [2XNonFlatLocus[0X  7.4-5
-  [2XNumeratorOfHilbertPoincareSeries[0X  7.4-10
-  [2XPreInverse[0X  8.5-2
-  [2XPrimaryDecomposition[0X  7.4-2
-  [2XProcedureToReadjustGenerators[0X  6.4-1
-  [2XResidueClassRing[0X  7.4-1
-  [2XRHom[0X  10.4-16
-  [2XRightPresentation[0X (constructor for right modules)  7.2-2
-  [2XRightSubmodule[0X (constructor for right submodules)  7.2-11
-  [2XSingleValueOfExteriorPowerElement[0X  11.4-3
-  [2XSubobject[0X (constructor for submodules using matrices)  7.2-8
-  [2XSubobject[0X (constructor for submodules using a list of ring elements)  7.2-9
-  [2XSubobjectQuotient[0X (for submodules)  7.5-4
-  [2XTensorProduct[0X  10.4-10
-  [2XTor[0X  10.4-14
-  [2XUnreducedNumeratorOfHilbertPoincareSeries[0X  7.4-9
-  [2XWedge[0X (for elements of exterior powers of free modules)  11.4-1
+  [2X\*[102X (TensorProduct)  10.4-10
+  [2X\*[102X (transfer a module over a different ring (right))  7.2-7
+  [2X\*[102X (transfer a module over a different ring)  7.2-7
+  [2X\*[102X (constructor for ideal multiples)  7.5-3
+  [2XAffineDegree[102X  7.4-12
+  [2XByASmallerPresentation[102X (for modules)  7.5-2
+  [2XCanBeUsedToDecideZeroEffectively[102X  5.3-1
+  [2XCayleyDeterminant[102X  11.5-2
+  [2XCoefficientsOfNumeratorOfHilbertPoincareSeries[102X  7.4-8
+  [2XCoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[102X  7.4-7
+  [2XCokernel[102X  10.4-2
+  [2XDataOfHilbertFunction[102X  7.4-13
+  [2XDefectOfExactness[102X  10.4-6
+  [2XElementaryDivisors[102X  7.4-3
+  [2XExt[102X  10.4-12
+  [2XExteriorPower[102X  11.1-1
+  [2XExteriorPowerBaseModule[102X  11.2-3
+  [2XExteriorPowerElementDual[102X  11.4-2
+  [2XExteriorPowerExponent[102X  11.2-2
+  [2XFittingIdeal[102X  7.4-4
+  [2Xfunctor_Cokernel[102X  10.4-1
+  [2XFunctor_Ext[102X  10.4-11
+  [2XFunctor_Hom[102X  10.4-7
+  [2XFunctor_HomHom[102X  10.4-19
+  [2Xfunctor_ImageObject[102X  10.4-3
+  [2XFunctor_LHomHom[102X  10.4-20
+  [2XFunctor_LTensorProduct[102X  10.4-17
+  [2XFunctor_RHom[102X  10.4-15
+  [2XFunctor_TensorProduct[102X  10.4-9
+  [2XFunctor_Tor[102X  10.4-13
+  [2XGcd_UsingCayleyDeterminant[102X  11.5-3
+  [2XHilbertFunction[102X  7.4-14
+  [2XHilbertPoincareSeries[102X  7.4-11
+  [2XHom[102X  10.4-8
+  [2XHomalgFreeLeftModule[102X (constructor for free left modules)  7.2-3
+  [2XHomalgFreeRightModule[102X (constructor for free right modules)  7.2-4
+  [2XHomalgIdentityMap[102X (constructor for identity maps)  8.2-3
+  [2XHomalgMap[102X (constructor for maps between free modules)  8.2-1
+  [2XHomalgMap[102X (constructor for maps)  8.2-1
+  [2XHomalgRing[102X (for modules)  7.5-1
+  [2XHomalgRing[102X  8.5-1
+  [2XHomalgRing[102X (for module elements)  9.5-1
+  [2XHomalgZeroLeftModule[102X (constructor for zero left modules)  7.2-5
+  [2XHomalgZeroMap[102X (constructor for zero maps)  8.2-2
+  [2XHomalgZeroRightModule[102X (constructor for zero right modules)  7.2-6
+  [2XImageObject[102X  10.4-4
+  [2XIndexOfRegularity[102X  7.4-15
+  [2XIsCyclic[102X  7.3-1
+  [2XIsElementOfAModuleGivenByAMorphismRep[102X  9.1-2
+  [2XIsElementOfIntegers[102X  9.3-1
+  [2XIsExteriorPower[102X  11.2-1
+  [2XIsExteriorPowerElement[102X  11.3-1
+  [2XIsFinitelyPresentedModuleOrSubmoduleRep[102X  7.1-2
+  [2XIsFinitelyPresentedModuleRep[102X  7.1-3
+  [2XIsFinitelyPresentedSubmoduleRep[102X  7.1-4
+  [2XIsGeneratorsOfFinitelyGeneratedModuleRep[102X  6.1-5
+  [2XIsGeneratorsOfModuleRep[102X  6.1-4
+  [2XIsHolonomic[102X  7.3-2
+  [2XIsHomalgElement[102X  9.1-1
+  [2XIsHomalgGenerators[102X  6.1-1
+  [2XIsHomalgGeneratorsOfLeftModule[102X  6.1-2
+  [2XIsHomalgGeneratorsOfRightModule[102X  6.1-3
+  [2XIsHomalgMap[102X  8.1-1
+  [2XIsHomalgModule[102X  7.1-1
+  [2XIsHomalgRelations[102X  5.1-1
+  [2XIsHomalgRelationsOfLeftModule[102X  5.1-2
+  [2XIsHomalgRelationsOfRightModule[102X  5.1-3
+  [2XIsHomalgSelfMap[102X  8.1-2
+  [2XIsInjectivePresentation[102X  5.3-2
+  [2XIsMapOfFinitelyGeneratedModulesRep[102X  8.1-3
+  [2XIsPrimeIdeal[102X  7.3-3
+  [2XIsReduced[102X  6.3-1
+  [2XIsRelationsOfFinitelyPresentedModuleRep[102X  5.1-4
+  [2XKernel[102X (for maps)  10.4-5
+  [2XKernel[102X (for ring maps)  4.2-1
+  [2XKernelEmb[102X (for ring maps)  4.1-2
+  [2XKernelSubobject[102X (for ring maps)  4.1-1
+  [2XKoszulCocomplex[102X  11.5-1
+  [2XLargestMinimalNumberOfLocalGenerators[102X  7.4-6
+  [2XLeftPresentation[102X (constructor for left modules)  7.2-1
+  [2XLeftSubmodule[102X (constructor for left submodules)  7.2-10
+  [2XLTensorProduct[102X  10.4-18
+  [5XModules[105X  .-3
+  [2XNonFlatLocus[102X  7.4-5
+  [2XNumeratorOfHilbertPoincareSeries[102X  7.4-10
+  [2XPreInverse[102X  8.5-2
+  [2XPrimaryDecomposition[102X  7.4-2
+  [2XProcedureToReadjustGenerators[102X  6.4-1
+  [2XResidueClassRing[102X  7.4-1
+  [2XRHom[102X  10.4-16
+  [2XRightPresentation[102X (constructor for right modules)  7.2-2
+  [2XRightSubmodule[102X (constructor for right submodules)  7.2-11
+  [2XSingleValueOfExteriorPowerElement[102X  11.4-3
+  [2XSubobject[102X (constructor for submodules using matrices)  7.2-8
+  [2XSubobject[102X (constructor for submodules using a list of ring elements)  7.2-9
+  [2XSubobjectQuotient[102X (for submodules)  7.5-4
+  [2XTensorProduct[102X  10.4-10
+  [2XTor[102X  10.4-14
+  [2XUnreducedNumeratorOfHilbertPoincareSeries[102X  7.4-9
+  [2XWedge[102X (for elements of exterior powers of free modules)  11.4-1
   
   
   -------------------------------------------------------

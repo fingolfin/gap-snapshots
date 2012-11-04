@@ -1,287 +1,287 @@
   
-  [1X9 Bigraded Objects[0X
+  [1X9 [33X[0;0YBigraded Objects[133X[101X
   
-  Bigraded  objects  in  [5Xhomalg[0m  provide  a  data structure for the sheets (or
-  pages) of spectral sequences.
+  [33X[0;0YBigraded  objects  in  [5Xhomalg[105X  provide  a  data structure for the sheets (or
+  pages) of spectral sequences.[133X
   
   
-  [1X9.1 BigradedObjects: Categories and Representations[0X
+  [1X9.1 [33X[0;0YBigradedObjects: Categories and Representations[133X[101X
   
-  [1X9.1-1 IsHomalgBigradedObject[0m
+  [1X9.1-1 IsHomalgBigradedObject[101X
   
-  [2X> IsHomalgBigradedObject( [0X[3XEr[0X[2X ) _____________________________________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsHomalgBigradedObject[102X( [3XEr[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  The [5XGAP[0m category of [5Xhomalg[0m bigraded objects.
+  [33X[0;0YThe [5XGAP[105X category of [5Xhomalg[105X bigraded objects.[133X
   
-  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgObject[0m.)
+  [33X[0;0Y(It is a subcategory of the [5XGAP[105X category [10XIsHomalgObject[110X.)[133X
   
-  [1X9.1-2 IsHomalgBigradedObjectAssociatedToAnExactCouple[0m
+  [1X9.1-2 IsHomalgBigradedObjectAssociatedToAnExactCouple[101X
   
-  [2X> IsHomalgBigradedObjectAssociatedToAnExactCouple( [0X[3XEr[0X[2X ) ____________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsHomalgBigradedObjectAssociatedToAnExactCouple[102X( [3XEr[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  The [5XGAP[0m category of [5Xhomalg[0m bigraded objects associated to an exact couple.
+  [33X[0;0YThe [5XGAP[105X category of [5Xhomalg[105X bigraded objects associated to an exact couple.[133X
   
-  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgBigradedObject[0m.)
+  [33X[0;0Y(It is a subcategory of the [5XGAP[105X category [10XIsHomalgBigradedObject[110X.)[133X
   
-  [1X9.1-3 IsHomalgBigradedObjectAssociatedToAFilteredComplex[0m
+  [1X9.1-3 IsHomalgBigradedObjectAssociatedToAFilteredComplex[101X
   
-  [2X> IsHomalgBigradedObjectAssociatedToAFilteredComplex( [0X[3XEr[0X[2X ) _________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsHomalgBigradedObjectAssociatedToAFilteredComplex[102X( [3XEr[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  The  [5XGAP[0m  category  of  [5Xhomalg[0m  bigraded  objects  associated  to a filtered
-  complex.
-  The  0-th  spectral  sheet  E_0  stemming  from  a  filtration is a bigraded
+  [33X[0;0YThe  [5XGAP[105X  category  of  [5Xhomalg[105X  bigraded  objects  associated  to a filtered
+  complex.[133X
+  [33X[0;0YThe  [22X0[122X-th  spectral  sheet  [22XE_0[122X  stemming  from  a  filtration is a bigraded
   (differential) object, which, in general, does not stem from an exact couple
-  (although E_1, E_2, ... do).
+  (although [22XE_1[122X, [22XE_2[122X, ... do).[133X
   
-  (It is a subcategory of the [5XGAP[0m category [10XIsHomalgBigradedObject[0m.)
+  [33X[0;0Y(It is a subcategory of the [5XGAP[105X category [10XIsHomalgBigradedObject[110X.)[133X
   
-  [1X9.1-4 IsHomalgBigradedObjectAssociatedToABicomplex[0m
+  [1X9.1-4 IsHomalgBigradedObjectAssociatedToABicomplex[101X
   
-  [2X> IsHomalgBigradedObjectAssociatedToABicomplex( [0X[3XEr[0X[2X ) _______________[0XCategory
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsHomalgBigradedObjectAssociatedToABicomplex[102X( [3XEr[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  The [5XGAP[0m category of [5Xhomalg[0m bigraded objects associated to a bicmplex.
+  [33X[0;0YThe [5XGAP[105X category of [5Xhomalg[105X bigraded objects associated to a bicmplex.[133X
   
-  (It is a subcategory of the [5XGAP[0m category
-  [10XIsHomalgBigradedObjectAssociatedToAFilteredComplex[0m.)
+  [33X[0;0Y(It is a subcategory of the [5XGAP[105X category[133X
+  [33X[0;0Y[10XIsHomalgBigradedObjectAssociatedToAFilteredComplex[110X.)[133X
   
-  [1X9.1-5 IsBigradedObjectOfFinitelyPresentedObjectsRep[0m
+  [1X9.1-5 IsBigradedObjectOfFinitelyPresentedObjectsRep[101X
   
-  [2X> IsBigradedObjectOfFinitelyPresentedObjectsRep( [0X[3XEr[0X[2X ) ________[0XRepresentation
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
+  [29X[2XIsBigradedObjectOfFinitelyPresentedObjectsRep[102X( [3XEr[103X ) [32X Representation
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  The  [5XGAP[0m  representation  of  bigraded  objects of finitley generated [5Xhomalg[0m
-  objects.
+  [33X[0;0YThe  [5XGAP[105X  representation  of  bigraded  objects of finitley generated [5Xhomalg[105X
+  objects.[133X
   
-  (It  is a representation of the [5XGAP[0m category [2XIsHomalgBigradedObject[0m ([14X9.1-1[0m),
-  which     is    a    subrepresentation    of    the    [5XGAP[0m    representation
-  [10XIsFinitelyPresentedObjectRep[0m.)
+  [33X[0;0Y(It  is a representation of the [5XGAP[105X category [2XIsHomalgBigradedObject[102X ([14X9.1-1[114X),
+  which     is    a    subrepresentation    of    the    [5XGAP[105X    representation
+  [10XIsFinitelyPresentedObjectRep[110X.)[133X
   
   
-  [1X9.2 Bigraded Objects: Constructors[0X
+  [1X9.2 [33X[0;0YBigraded Objects: Constructors[133X[101X
   
-  [1X9.2-1 HomalgBigradedObject[0m
+  [1X9.2-1 HomalgBigradedObject[101X
   
-  [2X> HomalgBigradedObject( [0X[3XB[0X[2X ) _______________________________________[0Xoperation
-  [6XReturns:[0X  a [5Xhomalg[0m bigraded object
+  [29X[2XHomalgBigradedObject[102X( [3XB[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X bigraded object[133X
   
-  This constructor creates a homological (resp. cohomological) bigraded object
-  given   a   homological   (resp.  cohomological)  [5Xhomalg[0m  bicomplex  [3XB[0m  (-->
-  [2XHomalgBicomplex[0m  ([14X8.2-1[0m)). This is nothing but the level zero sheet (without
-  differential)  of the spectral sequence associated to the bicomplex [3XB[0m. So it
-  is  the double array of [5Xhomalg[0m objects (i.e. static objects or complexes) in
-  [3XB[0m forgetting the morphisms.
+  [33X[0;0YThis constructor creates a homological (resp. cohomological) bigraded object
+  given   a   homological   (resp.  cohomological)  [5Xhomalg[105X  bicomplex  [3XB[103X  (-->
+  [2XHomalgBicomplex[102X  ([14X8.2-1[114X)). This is nothing but the level zero sheet (without
+  differential)  of the spectral sequence associated to the bicomplex [3XB[103X. So it
+  is  the double array of [5Xhomalg[105X objects (i.e. static objects or complexes) in
+  [3XB[103X forgetting the morphisms.[133X
   
-  [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
-    [4XZ[0X
-    [4Xgap> M := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );;[0X
-    [4Xgap> M := LeftPresentation( M );[0X
-    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
-    [4Xgap> d := Resolution( M );;[0X
-    [4Xgap> dd := Hom( d );;[0X
-    [4Xgap> C := Resolution( dd );;[0X
-    [4Xgap> CC := Hom( C );[0X
-    [4X<A non-zero acyclic complex containing a single morphism of left cocomplexes a\[0X
-    [4Xt degrees [ 0 .. 1 ]>[0X
-    [4Xgap> B := HomalgBicomplex( CC );[0X
-    [4X<A non-zero bicomplex containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-    [4Xgap> E0 := HomalgBigradedObject( B );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-    [4Xgap> Display( E0 );[0X
-    [4XLevel 0:[0X
-    [4X[0X
-    [4X * *[0X
-    [4X * *[0X
-  [4X------------------------------------------------------------------[0X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
+    [4X[28XZ[128X[104X
+    [4X[25Xgap>[125X [27XM := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );;[127X[104X
+    [4X[25Xgap>[125X [27XM := LeftPresentation( M );[127X[104X
+    [4X[28X<A non-torsion left module presented by 2 relations for 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xd := Resolution( M );;[127X[104X
+    [4X[25Xgap>[125X [27Xdd := Hom( d );;[127X[104X
+    [4X[25Xgap>[125X [27XC := Resolution( dd );;[127X[104X
+    [4X[25Xgap>[125X [27XCC := Hom( C );[127X[104X
+    [4X[28X<A non-zero acyclic complex containing a single morphism of left cocomplexes a\[128X[104X
+    [4X[28Xt degrees [ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XB := HomalgBicomplex( CC );[127X[104X
+    [4X[28X<A non-zero bicomplex containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XE0 := HomalgBigradedObject( B );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( E0 );[127X[104X
+    [4X[28XLevel 0:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[28X * *[128X[104X
+  [4X[32X[104X
   
-  [1X9.2-2 AsDifferentialObject[0m
+  [1X9.2-2 AsDifferentialObject[101X
   
-  [2X> AsDifferentialObject( [0X[3XEr[0X[2X ) _________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m bigraded object
+  [29X[2XAsDifferentialObject[102X( [3XEr[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X bigraded object[133X
   
-  Add the induced bidegree ( -r, r - 1 ) (resp. ( r, -r + 1 )) differential to
-  the  level [3Xr[0m homological (resp. cohomological) bigraded object stemming from
+  [33X[0;0YAdd the induced bidegree [22X( -r, r - 1 )[122X (resp. [22X( r, -r + 1 )[122X) differential to
+  the  level [3Xr[103X homological (resp. cohomological) bigraded object stemming from
   a  homological  (resp.  cohomological)  bicomplex. This method performs side
-  effects on its argument [3XEr[0m and returns it.
+  effects on its argument [3XEr[103X and returns it.[133X
   
-  For an example see [2XDefectOfExactness[0m ([14X9.2-3[0m) below.
+  [33X[0;0YFor an example see [2XDefectOfExactness[102X ([14X9.2-3[114X) below.[133X
   
-  [1X9.2-3 DefectOfExactness[0m
+  [1X9.2-3 DefectOfExactness[101X
   
-  [2X> DefectOfExactness( [0X[3XEr[0X[2X ) ____________________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m bigraded object
+  [29X[2XDefectOfExactness[102X( [3XEr[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X bigraded object[133X
   
-  Homological:  Compute  the  homology  of  a level [3Xr[0m [13Xdifferential[0m homological
-  bigraded  object,  that is the [3Xr[0m-th sheet of a homological spectral sequence
-  endowed  with  a  bidegree ( -r, r - 1 ) differential. The result is a level
-  [3Xr[0m+1 homological bigraded object [13Xwithout[0m its differential.
+  [33X[0;0YHomological:  Compute  the  homology  of  a level [3Xr[103X [13Xdifferential[113X homological
+  bigraded  object,  that is the [3Xr[103X-th sheet of a homological spectral sequence
+  endowed  with  a  bidegree [22X( -r, r - 1 )[122X differential. The result is a level
+  [3Xr[103X[22X+1[122X homological bigraded object [13Xwithout[113X its differential.[133X
   
-  Cohomological:   Compute   the   cohomology   of   a  level  [3Xr[0m  [13Xdifferential[0m
-  cohomological  bigraded  object,  that  is the [3Xr[0m-th sheet of a cohomological
-  spectral  sequence  endowed  with a bidegree ( r, -r + 1 ) differential. The
-  result   is   a   level   [3Xr[0m+1  cohomological  bigraded  object  [13Xwithout[0m  its
-  differential.
+  [33X[0;0YCohomological:   Compute   the   cohomology   of   a  level  [3Xr[103X  [13Xdifferential[113X
+  cohomological  bigraded  object,  that  is the [3Xr[103X-th sheet of a cohomological
+  spectral  sequence  endowed  with a bidegree [22X( r, -r + 1 )[122X differential. The
+  result   is   a   level   [3Xr[103X[22X+1[122X  cohomological  bigraded  object  [13Xwithout[113X  its
+  differential.[133X
   
-  The  differential  of  the  resulting  level  [3Xr[0m+1 object can a posteriori be
-  computed  using  [2XAsDifferentialObject[0m ([14X9.2-2[0m). The objects in the result are
-  subquotients  of  the  objects  in  [3XEr[0m. An object in [3XEr[0m (at a spot (p,q)) is
-  called  [13Xstable[0m  if  no  passage  to  a true subquotient occurs at any higher
-  level. Of course, a zero object (at a spot (p,q)) is always stable.
+  [33X[0;0YThe  differential  of  the  resulting  level  [3Xr[103X[22X+1[122X object can a posteriori be
+  computed  using  [2XAsDifferentialObject[102X ([14X9.2-2[114X). The objects in the result are
+  subquotients  of  the  objects  in  [3XEr[103X. An object in [3XEr[103X (at a spot [22X(p,q)[122X) is
+  called  [13Xstable[113X  if  no  passage  to  a true subquotient occurs at any higher
+  level. Of course, a zero object (at a spot [22X(p,q)[122X) is always stable.[133X
   
-  [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> ZZ := HomalgRingOfIntegers( );[0X
-    [4XZ[0X
-    [4Xgap> M := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );;[0X
-    [4Xgap> M := LeftPresentation( M );[0X
-    [4X<A non-torsion left module presented by 2 relations for 3 generators>[0X
-    [4Xgap> d := Resolution( M );;[0X
-    [4Xgap> dd := Hom( d );;[0X
-    [4Xgap> C := Resolution( dd );;[0X
-    [4Xgap> CC := Hom( C );[0X
-    [4X<A non-zero acyclic complex containing a single morphism of left cocomplexes a\[0X
-    [4Xt degrees [ 0 .. 1 ]>[0X
-    [4Xgap> B := HomalgBicomplex( CC );[0X
-    [4X<A non-zero bicomplex containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-  [4X------------------------------------------------------------------[0X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
+    [4X[28XZ[128X[104X
+    [4X[25Xgap>[125X [27XM := HomalgMatrix( "[ 2, 3, 4,   5, 6, 7 ]", 2, 3, ZZ );;[127X[104X
+    [4X[25Xgap>[125X [27XM := LeftPresentation( M );[127X[104X
+    [4X[28X<A non-torsion left module presented by 2 relations for 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xd := Resolution( M );;[127X[104X
+    [4X[25Xgap>[125X [27Xdd := Hom( d );;[127X[104X
+    [4X[25Xgap>[125X [27XC := Resolution( dd );;[127X[104X
+    [4X[25Xgap>[125X [27XCC := Hom( C );[127X[104X
+    [4X[28X<A non-zero acyclic complex containing a single morphism of left cocomplexes a\[128X[104X
+    [4X[28Xt degrees [ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XB := HomalgBicomplex( CC );[127X[104X
+    [4X[28X<A non-zero bicomplex containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+  [4X[32X[104X
   
-  Now  we  construct the spectral sequence associated to the bicomplex B, also
-  called the [13Xfirst[0m spectral sequence:
+  [33X[0;0YNow  we  construct the spectral sequence associated to the bicomplex [22XB[122X, also
+  called the [13Xfirst[113X spectral sequence:[133X
   
-  [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> I_E0 := HomalgBigradedObject( B );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-    [4Xgap> Display( I_E0 );[0X
-    [4XLevel 0:[0X
-    [4X[0X
-    [4X * *[0X
-    [4X * *[0X
-    [4Xgap> AsDifferentialObject( I_E0 );[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[0X
-    [4Xgap> I_E0;[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[0X
-    [4Xgap> AsDifferentialObject( I_E0 );[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[0X
-    [4Xgap> I_E1 := DefectOfExactness( I_E0 );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-    [4Xgap> Display( I_E1 );[0X
-    [4XLevel 1:[0X
-    [4X[0X
-    [4X * *[0X
-    [4X . .[0X
-    [4Xgap> AsDifferentialObject( I_E1 );[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ -1, 0 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[0X
-    [4Xgap> I_E2 := DefectOfExactness( I_E1 );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[0X
-    [4X[ -1 .. 0 ]>[0X
-    [4Xgap> Display( I_E2 );[0X
-    [4XLevel 2:[0X
-    [4X[0X
-    [4X s .[0X
-    [4X . .[0X
-  [4X------------------------------------------------------------------[0X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XI_E0 := HomalgBigradedObject( B );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( I_E0 );[127X[104X
+    [4X[28XLevel 0:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[25Xgap>[125X [27XAsDifferentialObject( I_E0 );[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XI_E0;[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsDifferentialObject( I_E0 );[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ 0, -1 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XI_E1 := DefectOfExactness( I_E0 );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( I_E1 );[127X[104X
+    [4X[28XLevel 1:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[28X . .[128X[104X
+    [4X[25Xgap>[125X [27XAsDifferentialObject( I_E1 );[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ -1, 0 ] containing left modules at bidegrees [ 0 .. 1 ]x[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XI_E2 := DefectOfExactness( I_E1 );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
+    [4X[28X[ -1 .. 0 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( I_E2 );[127X[104X
+    [4X[28XLevel 2:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X s .[128X[104X
+    [4X[28X . .[128X[104X
+  [4X[32X[104X
   
-  Legend:
+  [33X[0;0YLegend:[133X
   
-  --    A star [3X*[0m stands for a nonzero object.
+  [30X    [33X[0;6YA star [3X*[103X stands for a nonzero object.[133X
   
-  --    A dot [3X.[0m stands for a zero object.
+  [30X    [33X[0;6YA dot [3X.[103X stands for a zero object.[133X
   
-  --    The letter [3Xs[0m stands for a nonzero object that became stable.
+  [30X    [33X[0;6YThe letter [3Xs[103X stands for a nonzero object that became stable.[133X
   
-  The  [13Xsecond[0m  spectral  sequence  of  the  bicomplex  is,  by definition, the
-  spectral sequence associated to the transposed bicomplex:
+  [33X[0;0YThe  [13Xsecond[113X  spectral  sequence  of  the  bicomplex  is,  by definition, the
+  spectral sequence associated to the transposed bicomplex:[133X
   
-  [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> tB := TransposedBicomplex( B );[0X
-    [4X<A non-zero bicomplex containing left modules at bidegrees [ -1 .. 0 ]x[0X
-    [4X[ 0 .. 1 ]>[0X
-    [4Xgap> II_E0 := HomalgBigradedObject( tB );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[0X
-    [4X[ 0 .. 1 ]>[0X
-    [4Xgap> Display( II_E0 );[0X
-    [4XLevel 0:[0X
-    [4X[0X
-    [4X * *[0X
-    [4X * *[0X
-    [4Xgap> AsDifferentialObject( II_E0 );[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ 0, -1 ] containing left modules at bidegrees [ -1 .. 0 ]x[ 0 .. 1 ]>[0X
-    [4Xgap> II_E1 := DefectOfExactness( II_E0 );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[0X
-    [4X[ 0 .. 1 ]>[0X
-    [4Xgap> Display( II_E1 );[0X
-    [4XLevel 1:[0X
-    [4X[0X
-    [4X * *[0X
-    [4X . s[0X
-    [4Xgap> AsDifferentialObject( II_E1 );[0X
-    [4X<A bigraded object with a differential of bidegree[0X
-    [4X[ -1, 0 ] containing left modules at bidegrees [ -1 .. 0 ]x[ 0 .. 1 ]>[0X
-    [4Xgap> II_E2 := DefectOfExactness( II_E1 );[0X
-    [4X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[0X
-    [4X[ 0 .. 1 ]>[0X
-    [4Xgap> Display( II_E2 );[0X
-    [4XLevel 2:[0X
-    [4X[0X
-    [4X s .[0X
-    [4X . s[0X
-  [4X------------------------------------------------------------------[0X
-  
-  
-  [1X9.3 Bigraded Objects: Properties[0X
-  
-  [1X9.3-1 IsEndowedWithDifferential[0m
-  
-  [2X> IsEndowedWithDifferential( [0X[3XEr[0X[2X ) __________________________________[0Xproperty
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
-  
-  Check if [3XEr[0m is a differential bigraded object.
-  (no method installed)
-  
-  [1X9.3-2 IsStableSheet[0m
-  
-  [2X> IsStableSheet( [0X[3XEr[0X[2X ) ______________________________________________[0Xproperty
-  [6XReturns:[0X  [10Xtrue[0m or [10Xfalse[0m
-  
-  Check if [3XEr[0m is stable.
-  (no method installed)
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XtB := TransposedBicomplex( B );[127X[104X
+    [4X[28X<A non-zero bicomplex containing left modules at bidegrees [ -1 .. 0 ]x[128X[104X
+    [4X[28X[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XII_E0 := HomalgBigradedObject( tB );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[128X[104X
+    [4X[28X[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( II_E0 );[127X[104X
+    [4X[28XLevel 0:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[25Xgap>[125X [27XAsDifferentialObject( II_E0 );[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ 0, -1 ] containing left modules at bidegrees [ -1 .. 0 ]x[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XII_E1 := DefectOfExactness( II_E0 );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[128X[104X
+    [4X[28X[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( II_E1 );[127X[104X
+    [4X[28XLevel 1:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X * *[128X[104X
+    [4X[28X . s[128X[104X
+    [4X[25Xgap>[125X [27XAsDifferentialObject( II_E1 );[127X[104X
+    [4X[28X<A bigraded object with a differential of bidegree[128X[104X
+    [4X[28X[ -1, 0 ] containing left modules at bidegrees [ -1 .. 0 ]x[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XII_E2 := DefectOfExactness( II_E1 );[127X[104X
+    [4X[28X<A bigraded object containing left modules at bidegrees [ -1 .. 0 ]x[128X[104X
+    [4X[28X[ 0 .. 1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( II_E2 );[127X[104X
+    [4X[28XLevel 2:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X s .[128X[104X
+    [4X[28X . s[128X[104X
+  [4X[32X[104X
   
   
-  [1X9.4 Bigraded Objects: Operations and Functions[0X
+  [1X9.3 [33X[0;0YBigraded Objects: Properties[133X[101X
   
-  [1X9.4-1 ByASmallerPresentation[0m
+  [1X9.3-1 IsEndowedWithDifferential[101X
   
-  [2X> ByASmallerPresentation( [0X[3XEr[0X[2X ) _______________________________________[0Xmethod
-  [6XReturns:[0X  a [5Xhomalg[0m bigraded object
+  [29X[2XIsEndowedWithDifferential[102X( [3XEr[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
-  It invokes [10XByASmallerPresentation[0m for [5Xhomalg[0m (static) objects.
+  [33X[0;0YCheck if [3XEr[103X is a differential bigraded object.[133X
+  [33X[0;0Y(no method installed)[133X
   
-  [4X-----------------------------  Code  -----------------------------[0X
-    [4XInstallMethod( ByASmallerPresentation,[0X
-    [4X        "for homalg bigraded objects",[0X
-    [4X        [ IsHomalgBigradedObject ],[0X
-    [4X        [0X
-    [4X  function( Er )[0X
-    [4X    [0X
-    [4X    List( Flat( ObjectsOfBigradedObject( Er ) ), ByASmallerPresentation );[0X
-    [4X    [0X
-    [4X    return Er;[0X
-    [4X    [0X
-    [4Xend );[0X
-  [4X------------------------------------------------------------------[0X
+  [1X9.3-2 IsStableSheet[101X
   
-  This method performs side effects on its argument [3XEr[0m and returns it.
+  [29X[2XIsStableSheet[102X( [3XEr[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YCheck if [3XEr[103X is stable.[133X
+  [33X[0;0Y(no method installed)[133X
+  
+  
+  [1X9.4 [33X[0;0YBigraded Objects: Operations and Functions[133X[101X
+  
+  [1X9.4-1 ByASmallerPresentation[101X
+  
+  [29X[2XByASmallerPresentation[102X( [3XEr[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X bigraded object[133X
+  
+  [33X[0;0YIt invokes [10XByASmallerPresentation[110X for [5Xhomalg[105X (static) objects.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XInstallMethod( ByASmallerPresentation,[104X
+    [4X        "for homalg bigraded objects",[104X
+    [4X        [ IsHomalgBigradedObject ],[104X
+    [4X        [104X
+    [4X  function( Er )[104X
+    [4X    [104X
+    [4X    List( Flat( ObjectsOfBigradedObject( Er ) ), ByASmallerPresentation );[104X
+    [4X    [104X
+    [4X    return Er;[104X
+    [4X    [104X
+    [4Xend );[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis method performs side effects on its argument [3XEr[103X and returns it.[133X
   
