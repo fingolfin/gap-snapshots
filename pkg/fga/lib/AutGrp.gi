@@ -4,12 +4,8 @@
 ##
 ##  Methods for automorphism groups of free groups
 ##
-#H  @(#)$Id: AutGrp.gi,v 1.4 2005/05/03 14:47:10 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003 - 2005
-##
-Revision.("fga/lib/AutGrp_gi") :=
-    "@(#)$Id: AutGrp.gi,v 1.4 2005/05/03 14:47:10 gap Exp $";
 
 
 #############################################################################
@@ -64,6 +60,22 @@ InstallMethod( AutomorphismGroup,
 
     end );
 
+#############################################################################
+##
+#M  \in( <hom>, <autgrp> )
+##
+## tests whether <hom> is in <autgrp>.
+##
+## Code contributed by Max Horn.
+ 
+InstallMethod( \in,
+    "for automorphism groups of free groups",
+    [ IsGroupGeneralMapping, IsAutomorphismGroupOfFreeGroup ],
+    function( hom, aut )
+        local G;
+        G := AutomorphismDomain( aut );
+        return Source( hom ) = G and Range( hom ) = G and IsBijective( hom );
+    end );
 
 #############################################################################
 ##

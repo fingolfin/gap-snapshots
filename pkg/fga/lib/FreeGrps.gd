@@ -4,12 +4,8 @@
 ##
 ##  Main declaration file for the FGA package
 ##
-#H  @(#)$Id: FreeGrps.gd,v 1.2 2005/03/01 21:26:29 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/FreeGroups_gd") :=
-    "@(#)$Id: FreeGrps.gd,v 1.2 2005/03/01 21:26:29 gap Exp $";
 
 
 #############################################################################
@@ -101,7 +97,7 @@ DeclareOperation( "CyclicallyReducedWord",
 ##  indicates whether we can use inverse automata to compute with <G>.
 ##  We assume this is possible if <G> is a finitely generated free group,
 ##  hoping that we actually can get a generating set when needed.
-##  This is not always true, but generally than there is also no other way.
+##  This is not always true, but generally then there is also no other way.
 ##
 DeclareSynonym( "CanComputeWithInverseAutomaton",
                  IsFreeGroup and IsFinitelyGeneratedGroup );

@@ -4,13 +4,8 @@
 ##
 ##  Methods for computing RepresentativeAction
 ##
-#H  @(#)$Id: ReprAct.gi,v 1.5 2010/04/13 09:41:43 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003 - 2010
-##
-Revision.("fga/lib/ReprAct_gi") :=
-    "@(#)$Id: ReprAct.gi,v 1.5 2010/04/13 09:41:43 gap Exp $";
-
 
 InstallOtherMethod( RepresentativeActionOp,
     "for conjugation of elements in a free group",

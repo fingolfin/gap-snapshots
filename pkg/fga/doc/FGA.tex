@@ -2,9 +2,7 @@
 %%
 %W  FGA.tex            FGA documentation                Christian Sievers
 %%
-%H  $Id: FGA.tex,v 1.11 2005/05/09 11:11:27 gap Exp $
-%%
-%Y  2003 - 2005
+%Y  2003 - 2012
 %%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,7 +180,6 @@ false
 \endexample
 
 There are also lower level operations to get the same results.
-In fact, they are faster when used repeatedly with the same group.
 
 \>AsWordLetterRepInGenerators( <elm>, <u> ) O
 \>AsWordLetterRepInFreeGenerators( <elm>, <u> ) O
@@ -253,8 +250,8 @@ gap> ImageElm( iso, aut );
 O^2*U*O*P^-1*U
 \endexample
 
-It is also possible to use `aut^iso'.
-Please note that using `Image' does not work.
+It is also possible to use `aut^iso' or `Image( iso, aut )'.
+Using `Image' will perform additional checks on the arguments.
 
 The {\FGA} package provides a simpler way to create endomorphisms:
 

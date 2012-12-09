@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2012.6.21)  30 OCT 2012 18:06
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2012.6.21)  17 NOV 2012 18:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -921,7 +921,7 @@ ublic/cm-super/sftt1095.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvb8a.p
 fb></usr/share/texmf/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf/font
 s/type1/urw/helvetic/uhvro8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a
 .pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.pfb>
-Output written on Convex.pdf (19 pages, 178365 bytes).
+Output written on Convex.pdf (19 pages, 178355 bytes).
 PDF statistics:
  535 PDF objects out of 1000 (max. 8388607)
  500 compressed objects within 5 object streams

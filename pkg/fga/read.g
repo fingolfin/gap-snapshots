@@ -4,9 +4,7 @@
 ##
 ## The read file for the FGA package
 ##
-#H @(#)$Id: read.g,v 1.3 2005/02/22 15:23:33 gap Exp $
-##
-#Y 2003 - 2005
+#Y 2003 - 2012
 ##
 
 

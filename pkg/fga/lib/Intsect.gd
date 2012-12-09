@@ -4,12 +4,8 @@
 ##
 ## The declaration file for the computation of intersections of free groups
 ##
-#H @(#)$Id: Intsect.gd,v 1.3 2010/04/13 09:41:43 gap Exp $
+#Y 2003 - 2012
 ##
-#Y 2003 - 2009
-##
-Revision.("fga/lib/Intsect_gd") :=
-    "@(#)$Id: Intsect.gd,v 1.3 2010/04/13 09:41:43 gap Exp $";
 
 
 ## These are all helper functions:

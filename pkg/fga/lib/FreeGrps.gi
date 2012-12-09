@@ -4,12 +4,8 @@
 ##
 ##  Main installation file for the FGA package
 ##
-#H  @(#)$Id: FreeGrps.gi,v 1.2 2005/03/01 21:29:33 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/FreeGroups_gi") :=
-    "@(#)$Id: FreeGrps.gi,v 1.2 2005/03/01 21:29:33 gap Exp $";
 
 
 #############################################################################

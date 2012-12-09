@@ -5,13 +5,8 @@
 ##  Declarations for methods to create and compute with 
 ##  extended inverse automata
 ##
-#H  @(#)$Id: ExtAutom.gd,v 1.2 2003/08/14 16:00:21 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/ExtAutom_gd") :=
-    "@(#)$Id: ExtAutom.gd,v 1.2 2003/08/14 16:00:21 gap Exp $";
-
 
 DeclareGlobalVariable( "FGA_FreeGroupForGenerators" );
 DeclareGlobalVariable( "FGA_One" );

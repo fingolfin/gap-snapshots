@@ -4,12 +4,8 @@
 ##
 ## Method installations for index computations in free groups
 ##
-#H @(#)$Id: Index.gi,v 1.3 2005/04/07 18:00:43 gap Exp $
+#Y 2003 - 2012
 ##
-#Y 2003
-##
-Revision.("fga/lib/Index_gi") :=
-    "@(#)$Id: Index.gi,v 1.3 2005/04/07 18:00:43 gap Exp $";
 
 
 #############################################################################

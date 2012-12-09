@@ -92,7 +92,7 @@ The first variant returns the normalizer of the finitely generated
 subgroup <var>u2</var> in <var>u1</var>.
 <p>
 The second variant returns the normalizer of <font face="symbol">á</font><i>elm</i>  <font face="symbol">ñ</font>
-in the finitely generated subgroup <var>u</var> (see <a href="../../../doc/ref/chap39.html#X804F0F037F06E25E">Normalizer</a> in the
+in the finitely generated subgroup <var>u</var> (see <a href="../../../doc/ref/CHAP039.htm#X804F0F037F06E25E">Normalizer</a> in the
 Reference Manual).
 <p>
 <a name = "SSEC002.2"></a>
@@ -198,7 +198,6 @@ false
 </pre>
 <p>
 There are also lower level operations to get the same results.
-In fact, they are faster when used repeatedly with the same group.
 <p>
 <a name = "SSEC003.1"></a>
 <li><code>AsWordLetterRepInGenerators( </code><var>elm</var><code>, </code><var>u</var><code> ) O</code>
@@ -206,7 +205,7 @@ In fact, they are faster when used repeatedly with the same group.
 <li><code>AsWordLetterRepInFreeGenerators( </code><var>elm</var><code>, </code><var>u</var><code> ) O</code>
 <p>
 return a letter representation
-(see Section&nbsp;<a href="../../../doc/ref/chap37.html#X80A9F39582ED296E">Representations for Associative Words</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+(see Section&nbsp;<a href="../../../doc/ref/CHAP037.htm#X80A9F39582ED296E">Representations for Associative Words</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
 Reference Manual)
 of the given <var>elm</var> relative to the generators the group was created
 with or the free generators as returned by <code>FreeGeneratorsOfGroup</code>.
@@ -273,8 +272,8 @@ gap&gt; ImageElm( iso, aut );
 O^2*U*O*P^-1*U
 </pre>
 <p>
-It is also possible to use <code>aut^iso</code>.
-Please note that using <code>Image</code> does not work.
+It is also possible to use <code>aut^iso</code> or <code>Image( iso, aut )</code>.
+Using <code>Image</code> will perform additional checks on the arguments.
 <p>
 The <font face="Gill Sans,Helvetica,Arial">FGA</font> package provides a simpler way to create endomorphisms:
 <p>
@@ -319,5 +318,5 @@ return the automorphism which maps the free generators
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>FGA manual<br>Mai 2012
+<address>FGA manual<br>November 2012
 </address></body></html>

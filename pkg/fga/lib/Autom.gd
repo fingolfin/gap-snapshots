@@ -4,12 +4,8 @@
 ##
 ##  Declarations for methods to create and compute with inverse automata
 ##
-#H  @(#)$Id: Autom.gd,v 1.2 2003/04/08 14:41:26 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/Autom_gd") :=
-    "@(#)$Id: Autom.gd,v 1.2 2003/04/08 14:41:26 gap Exp $";
 
 DeclareCategory( "IsInvAutomatonCategory", IsObject);
 

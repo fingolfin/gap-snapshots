@@ -4,12 +4,8 @@
 ##
 ## Installations for the computation of intersections of free groups
 ##
-#H @(#)$Id: Intsect.gi,v 1.6 2012/05/30 09:54:23 gap Exp $
-##
 #Y 2003 - 2012
 ##
-Revision.("fga/lib/Intsect_gi") :=
-    "@(#)$Id: Intsect.gi,v 1.6 2012/05/30 09:54:23 gap Exp $";
 
 
 #############################################################################

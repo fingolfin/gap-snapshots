@@ -4,12 +4,8 @@
 ##
 ##  Method installations for centralizers in free groups
 ##
-#H  @(#)$Id: Central.gi,v 1.2 2003/08/06 16:24:48 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/Central_gi") :=
-    "@(#)$Id: Central.gi,v 1.2 2003/08/06 16:24:48 gap Exp $";
 
 
 #############################################################################

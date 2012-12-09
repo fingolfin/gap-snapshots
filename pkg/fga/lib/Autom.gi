@@ -4,12 +4,8 @@
 ##
 ##  Methods to create and compute with inverse automata
 ##
-#H  @(#)$Id: Autom.gi,v 1.4 2003/09/17 16:14:34 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/Autom_gi") :=
-    "@(#)$Id: Autom.gi,v 1.4 2003/09/17 16:14:34 gap Exp $";
 
 
 DeclareRepresentation( "IsSimpleInvAutomatonRep", 

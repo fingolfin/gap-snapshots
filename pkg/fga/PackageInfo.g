@@ -4,8 +4,6 @@
 ##
 ## The package info file for the FGA package
 ##
-#H @(#)$Id: PackageInfo.g,v 1.8 2005/05/27 14:38:55 gap Exp $
-##
 #Y 2003 - 2012
 ##
 
@@ -13,9 +11,9 @@ SetPackageInfo( rec(
 
 PackageName := "FGA",
 Subtitle := "Free Group Algorithms",
-Version := "1.1.1",
+Version := "1.2.0",
 #        dd/mm/yyyy
-Date := "30/05/2012",
+Date := "20/11/2012",
 
 Persons := [
   rec( 

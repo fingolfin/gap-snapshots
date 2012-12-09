@@ -4,12 +4,8 @@
 ##
 ##  Methods to create and compute with extended inverse automata
 ##
-#H  @(#)$Id: ExtAutom.gi,v 1.3 2003/08/14 16:00:21 gap Exp $
+#Y  2003 - 2012
 ##
-#Y  2003
-##
-Revision.("fga/lib/ExtAutom_gi") :=
-    "@(#)$Id: ExtAutom.gi,v 1.3 2003/08/14 16:00:21 gap Exp $";
 
 
 InstallValue( FGA_FreeGroupForGenerators, FreeGroup(infinity) );

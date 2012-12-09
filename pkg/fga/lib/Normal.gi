@@ -4,13 +4,8 @@
 ##
 ## Method installations for normalizers in free groups
 ##
-#H @(#)$Id: Normal.gi,v 1.3 2003/09/01 16:09:03 gap Exp $
+#Y 2003 - 2012
 ##
-#Y 2003
-##
-Revision.("fga/lib/Normal_gi") :=
-    "@(#)$Id: Normal.gi,v 1.3 2003/09/01 16:09:03 gap Exp $";
-
 
 #############################################################################
 ##
