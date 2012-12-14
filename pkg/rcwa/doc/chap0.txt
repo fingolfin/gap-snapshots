@@ -6,10 +6,10 @@
                         [1XResidue-Class-Wise Affine Groups[101X
   
   
-                                 Version 3.4.0
+                                 Version 3.5.0
   
   
-                                November 1, 2012
+                               December 12, 2012
   
   
                                   Stefan Kohl
@@ -122,9 +122,11 @@
       2.8-10 GluckTaylorInvariant
       2.8-11 LikelyContractionCentre
       2.8-12 GuessedDivergence
-    2.9 [33X[0;0YThe categories and families of rcwa mappings[133X
-      2.9-1 IsRcwaMapping
-      2.9-2 RcwaMappingsFamily
+    2.9 [33X[0;0YSaving memory -- the sparse representation of rcwa mappings[133X
+      2.9-1 SparseRepresentation
+    2.10 [33X[0;0YThe categories and families of rcwa mappings[133X
+      2.10-1 IsRcwaMapping
+      2.10-2 RcwaMappingsFamily
   3 [33X[0;0YResidue-Class-Wise Affine Groups[133X
     3.1 [33X[0;0YConstructing residue-class-wise affine groups[133X
       3.1-1 GroupByResidueClasses

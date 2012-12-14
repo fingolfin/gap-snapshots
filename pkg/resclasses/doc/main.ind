@@ -128,6 +128,8 @@
 
   \item \texttt  {PartitionsIntoResidueClasses}
     \subitem of a given ring, of given length, \hyperpage{7}
+    \subitem of a given ring, of given length, with moduli with given factors, 
+		\hyperpage{7}
   \item \texttt{Print}
     \subitem for a residue class union, \hyperpage{6}
 

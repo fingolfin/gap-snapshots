@@ -6,10 +6,10 @@
            [1XDictionaries of External Rings for the [5XGAP[105X Package [5Xhomalg[105X[101X
   
   
-                               Version 2012.10.25
+                               Version 2012.12.12
   
   
-                                  October 2012
+                                 December 2012
   
   
                                 Mohamed Barakat

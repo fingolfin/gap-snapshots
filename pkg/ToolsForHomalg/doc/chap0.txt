@@ -6,7 +6,7 @@
                           [1XTools for the [5Xhomalg[105X project[101X
   
   
-                               Version 2012.10.27
+                               Version 2012.12.11
   
   
                                   October 2012
@@ -140,6 +140,30 @@
     5.2 [33X[0;0YExamplefunctions[133X
       5.2-1 ExamplesForHomalg
       5.2-2 ExamplesForHomalg
+  6 [33X[0;0YToDo-list[133X
+    6.1 [33X[0;0YToDo-list entries[133X
+      6.1-1 SourcePart
+      6.1-2 TargetPart
+      6.1-3 ProcessAToDoListEntry
+      6.1-4 AreCompatible
+      6.1-5 ToDoListEntryWithWeakPointers
+      6.1-6 ToDoListEntryWithPointers
+      6.1-7 ToDoListEntryWithListOfSources
+      6.1-8 ToDoListEntryWhichLaunchesAFunction
+      6.1-9 CreateImmediateMethodForToDoListEntry
+      6.1-10 JoinToDoListEntries
+      6.1-11 GenesisOfToDoListEntry
+      6.1-12 DescriptionOfImplication
+    6.2 [33X[0;0YCategory[133X
+      6.2-1 IsToDoList
+    6.3 [33X[0;0YConstructor[133X
+      6.3-1 NewToDoList
+    6.4 [33X[0;0YThis is the magic[133X
+      6.4-1 Process_A_ToDo_List_Entry
+      6.4-2 ProcessToDoList
+    6.5 [33X[0;0YMethods for all objects[133X
+      6.5-1 AddToToDoList
+      6.5-2 ToDoList
   
   
   [32X

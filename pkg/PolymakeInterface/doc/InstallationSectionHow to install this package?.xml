@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+ This is an automatically generated file. 
+ -->
+<Section Label="How to install this package?_automatically_generated_documentation_parts">
+<Heading>How to install this package?</Heading>
+This package can only be compiled on a system that has polymake correctly installed, like it is said in the polymake wiki itself. For more information about this please visit www.polymake.org. For\
+ installing this package, first make sure you have polymake installed. Copy it in your GAP pkg-directory and run the configure script (./configure) with your GAP root-directory as argument. The de\
+fault is ../../... Then run make. After this, the package can be loaded via LoadPackage( "PolymakeInterface" );.

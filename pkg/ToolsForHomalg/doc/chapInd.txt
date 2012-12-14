@@ -9,12 +9,17 @@
   [2X_ElmPObj_ForHomalg[102X (for IsContainerForPointers, IsObject, IsObject)  4.2-6
   [2X_ElmWPObj_ForHomalg[102X (for IsContainerForWeakPointers, IsObject, IsObject)  4.1-6
   [2XAddLeftRightLogicalImplicationsForHomalg[102X  5.1-2
+  [2XAddToToDoList[102X (for IsToDoListEntry)  6.5-1
   [2XAppendToAhomalgTable[102X  5.1-32
+  [2XAreCompatible[102X (for IsToDoListEntry, IsToDoListEntry)  6.1-4
   [2XContainerForPointers[102X  4.2-2
   [2XContainerForWeakPointers[102X  4.1-2
+  [2XCreateImmediateMethodForToDoListEntry[102X (for IsToDoListEntry)  6.1-9
   [2XDeclareAttributeWithCustomGetter[102X  5.1-31
+  [2XDescriptionOfImplication[102X (for IsToDoListEntry)  6.1-12
   [2XExamplesForHomalg[102X (for )  5.2-1
   [2XExamplesForHomalg[102X (for IsInt)  5.2-2
+  [2XGenesisOfToDoListEntry[102X (for IsToDoListEntry)  6.1-11
   [2XHOMALG_TOOLS[102X  3.1-1
   [2XhomalgLaTeX[102X (for IsObject)  5.1-38
   [2XhomalgNamesOfComponentsToIntLists[102X  5.1-33
@@ -53,11 +58,26 @@
   [2XIsStructureObjectMorphism[102X (for IsAttributeStoringRep)  3.2-4
   [2XIsStructureObjectOrObject[102X (for IsStructureObjectOrObjectOrMorphism)  3.2-2
   [2XIsStructureObjectOrObjectOrMorphism[102X (for IsAttributeStoringRep)  3.2-1
+  [2XIsToDoList[102X (for IsObject)  6.2-1
+  [2XJoinToDoListEntries[102X (for IsList)  6.1-10
   [2XLeftRightAttributesForHomalg[102X  5.1-6
   [2XLogicalImplicationsForOneHomalgObject[102X  5.1-3
   [2XLogicalImplicationsForTwoHomalgBasicObjects[102X  5.1-4
   [2XMatchPropertiesAndAttributes[102X  5.1-8
   [2XMemoryToString[102X  5.1-37
+  [2XNewToDoList[102X (for )  6.3-1
+  [2XProcess_A_ToDo_List_Entry[102X  6.4-1
+  [2XProcessAToDoListEntry[102X (for IsToDoListEntry)  6.1-3
+  [2XProcessToDoList[102X (for IsObject)  6.4-2
+  [2XSourcePart[102X (for IsToDoListEntry)  6.1-1
+  [2XTargetPart[102X (for IsToDoListEntry)  6.1-2
+  [2XToDoList[102X (for IsObject)  6.5-2
+  [2XToDoListEntryWhichLaunchesAFunction[102X (for IsList, IsFunction)  6.1-8
+  [2XToDoListEntryWithListOfSources[102X (for IsList, IsObject, IsString, IsObject)  6.1-7
+  [2XToDoListEntryWithPointers[102X (for IsObject, IsString, IsObject, IsObject, IsStrin\
+  g, IsObject)  6.1-6
+  [2XToDoListEntryWithWeakPointers[102X (for IsObject, IsString, IsObject, IsObject, IsS\
+  tring, IsObject)  6.1-5
   [5XToolsForHomalg[105X  .-2
   [2XUpdateContainerOfPointers[102X (for IsContainerForPointers)  4.2-3
   [2XUpdateContainerOfWeakPointers[102X (for IsContainerForWeakPointers)  4.1-3

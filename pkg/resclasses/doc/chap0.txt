@@ -6,10 +6,10 @@
                [1X Set-Theoretic Computations with Residue Classes [101X
   
   
-                                 Version 3.2.0
+                                 Version 3.3.0
   
   
-                                November 1, 2012
+                               December 12, 2012
   
   
                                   Stefan Kohl

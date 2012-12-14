@@ -11,7 +11,7 @@
   present,  see [2XIsRingWithOne[102X  ([14X56.3-1[114X).  There is a little support in [5XGAP[105X for
   rings  that  have  no  additional  structure: it is possible to perform some
   computations for small finite rings; infinite rings are handled by [5XGAP[105X in an
-  acceptable way at most if they are at least algebras.[133X
+  acceptable way in the case that they are algebras.[133X
   
   [33X[0;0YAlso,  the  [5XSONATA[105X  package  provides  support for near-rings, and a related
   functionality  for  multiplicative  semigroups of near-rings is available in

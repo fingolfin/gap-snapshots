@@ -72,7 +72,7 @@
   [10XEquivalenceClasses[110X, for a list and a function computing a class invariant  9.9
   [10XEquivalenceClasses[110X, for a list and a function describing an equivalence relation  9.9
   [10XExponent[110X, of an rcwa group  3.2-1
-  [10XExtRepOfObj[110X  2.9-1
+  [10XExtRepOfObj[110X  2.10-1
   [2XFactorization[102X (for an rcwa permutation of Z)  2.5-1
   [2XFactorizationIntoCSCRCT[102X (for an rcwa permutation of Z)  2.5-1
   [2XFactorizationOnConnectedComponents[102X (for an rcwa mapping and a modulus)  2.8-6
@@ -145,12 +145,12 @@
   [2XIsRcwaGroupOverZ[102X  3.6-1
   [2XIsRcwaGroupOverZ_pi[102X  3.6-1
   [10XIsRcwaGroupOverZOrZ_pi[110X  3.6-1
-  [2XIsRcwaMapping[102X  2.9-1
-  [2XIsRcwaMappingOfGFqx[102X  2.9-1
-  [2XIsRcwaMappingOfZ[102X  2.9-1
-  [2XIsRcwaMappingOfZ_pi[102X  2.9-1
-  [10XIsRcwaMappingOfZOrZ_pi[110X  2.9-1
-  [10XIsRcwaMappingStandardRep[110X  2.9-1
+  [2XIsRcwaMapping[102X  2.10-1
+  [2XIsRcwaMappingOfGFqx[102X  2.10-1
+  [2XIsRcwaMappingOfZ[102X  2.10-1
+  [2XIsRcwaMappingOfZ_pi[102X  2.10-1
+  [10XIsRcwaMappingOfZOrZ_pi[110X  2.10-1
+  [10XIsRcwaMappingStandardRep[110X  2.10-1
   [10XIsSignPreserving[110X, for an rcwa group  3.1-8
   [10XIsSignPreserving[110X, for an rcwa mapping  2.4
   [10XIsSignPreserving[110X, for an rcwa monoid  4.2
@@ -164,7 +164,7 @@
   [10XIsTame[110X, for an rcwa mapping of Z x Z  5.3
   [10XIsTame[110X, for an rcwa monoid  4.2
   [10XIsTransitive[110X, for an rcwa group, on its underlying ring  3.3
-  [10XIsTransitiveOnNonnegativeIntegersInSupport[110X, for an rcwa group over Z  3.3
+  [10XIsTransitiveOnNonnegativeIntegersIn-[110X[10XSupport[110X, for an rcwa group over Z  3.3
   [10XIsZero[110X, for an rcwa mapping of Z x Z  5.3
   [2XKernelOfActionOnRespectedPartition[102X (for a tame rcwa group)  3.4-2
   [2XLargestSourcesOfAffineMappings[102X (for an rcwa mapping)  2.4-1
@@ -184,6 +184,8 @@
   [2XLocalizedRcwaMapping[102X (for an rcwa mapping of Z and a prime)  2.2-6
   [2XLog2HTML[102X (logfilename)  9.8-1
   [2XLoops[102X (of an rcwa mapping)  2.8-9
+  maximal shift, definition  2.4
+  [10XMaximalShift[110X, of an rcwa mapping of Z  2.4
   [2XmKnot[102X (for an odd integer)  2.5-3
   [10XMod[110X, for an rcwa group  3.1-8
   [10XMod[110X, for an rcwa mapping  2.3
@@ -212,7 +214,7 @@
   [10XNrConjugacyClassesOfRCWAZOfOrder[110X  3.1-2
   [10XNrConjugacyClassesOfCTZOfOrder[110X  3.1-3
   [10XNrElementsOfCTZWithGivenModulus[110X  3.1-3
-  [10XObjByExtRep[110X  2.9-1
+  [10XObjByExtRep[110X  2.10-1
   [10XOne[110X, for an rcwa mapping of Z x Z  5.3
   [2XOrbit[102X (for an rcwa group and a point)  3.3-1
   [2XOrbit[102X (for an rcwa group and a set)  3.3-1
@@ -272,12 +274,14 @@
   rcwa mapping, divisor  2.1
   rcwa mapping, images under  2.3
   rcwa mapping, integral  2.4
+  rcwa mapping, maximal shift  2.4
   rcwa mapping, modulus  2.1
   rcwa mapping, modulus  5.1
   rcwa mapping, multiplier  2.1
   rcwa mapping, of Z x Z, definition  5.1
   rcwa mapping, prime set  2.4
   rcwa mapping, sign-preserving  2.4
+  rcwa mapping, sparse representation  2.9
   rcwa mapping, tame  2.1
   rcwa mapping, transition graph  2.8-4
   rcwa mapping, wild  2.1
@@ -306,7 +310,8 @@
   [2XRcwaMapping[102X (by two partitions of Z x Z into residue classes)  5.2-1
   [2XRcwaMapping[102X (of Z x Z, by projections to coordinates)  5.2-1
   [2XRcwaMapping[102X (of Z x Z, by residue class cycles)  5.2-1
-  [2XRcwaMappingsFamily[102X (of a ring)  2.9-2
+  [10XRcwaMapping[110X, by list of coefficients, sparse representation  2.9
+  [2XRcwaMappingsFamily[102X (of a ring)  2.10-2
   [2XRCWATestAll[102X  9.4-2
   [2XRCWATestExamples[102X  9.4-3
   [2XRCWATestInstall[102X  9.4-1
@@ -346,8 +351,12 @@
   [10XSize[110X, for an rcwa monoid  4.2
   [10XSmallGeneratingSet[110X  3.1-1
   [2XSources[102X (of an rcwa mapping)  2.8-8
+  [2XSparseRep[102X (of an rcwa mapping)  2.9-1
+  [2XSparseRepresentation[102X (of an rcwa mapping)  2.9-1
   [10XSplittedClassTransposition[110X, for a class transposition and a number of factors  2.2-3
   [10XSplittedClassTransposition[110X, for a class transposition of Z x Z  5.2-2
+  [2XStandardRep[102X (of an rcwa mapping)  2.9-1
+  [2XStandardRepresentation[102X (of an rcwa mapping)  2.9-1
   [10XString[110X, for an rcwa group  3.1-1
   [10XString[110X, for an rcwa mapping  2.2-6
   [10XString[110X, for an rcwa mapping of Z x Z  5.3

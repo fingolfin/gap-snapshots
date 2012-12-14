@@ -106,8 +106,8 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( elab, "2^3" ); elab;</span>
-2^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( elab, "&lt;group of type 2^3&gt;" ); elab;</span>
+&lt;group of type 2^3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">norm := Normalizer( a8, elab );; Size( norm );</span>
 1344
 </pre></div>
@@ -117,13 +117,10 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := NaturalHomomorphismByNormalSubgroup( norm, elab );</span>
-[ (2,3)(6,7), (3,4)(7,8), (3,5)(4,6), (5,7)(6,8), (5,6)(7,8), 
-  (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,6)(2,5)(3,8)(4,7) 
- ] -&gt; [ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7), 
-  (), (), () ]
+&lt;action epimorphism&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Image( hom );</span>
-Group([ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7), 
-  (), (), () ])
+Group([ (), (), (), (4,5)(6,7), (4,6)(5,7), (2,3)(6,7), (2,4)(3,5), 
+ (1,2)(5,6) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( f );</span>
 168
 </pre></div>
@@ -133,14 +130,11 @@ Group([ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ker:= Kernel( hom );</span>
-Group([ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), 
-  (1,5)(2,6)(3,7)(4,8) ])
+&lt;group of type 2^3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := (1,8,3,5,7,6,2);; Image( hom, x );</span>
 (1,7,5,6,2,3,4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coset := PreImages( hom, last );</span>
-RightCoset(Group( [ ( 1, 2)( 3, 4)( 5, 6)( 7, 8), 
-  ( 1, 3)( 2, 4)( 5, 7)( 6, 8), ( 1, 5)( 2, 6)( 3, 7)( 4, 8) ] ),
-(2,8,6,7,3,4,5))
+RightCoset(&lt;group of type 2^3&gt;,(2,8,6,7,3,4,5))
 </pre></div>
 
 <p>Note that <strong class="pkg">GAP</strong> is free to choose any representative for the coset of preimages. Of course the quotient of two representatives lies in the kernel of the homomorphism.</p>
@@ -578,9 +572,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := Blocks( a8, orb );; Length( blocks );</span>
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks[1];</span>
-[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7), 
-  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6), 
-  (1,8)(2,7)(3,6)(4,5) ]
+[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8), 
+  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5), 
+  (1,8)(2,7)(3,5)(4,6) ]
 </pre></div>
 
 <p>To find the subgroup of index 15 we again use closure. Now we must be a little bit careful to avoid confusion. <code class="code">u105</code> is the stabilizer of <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. We know that there is a correspondence between the points of the orbit and the cosets of <code class="code">u105</code>. The point <code class="code">(1,2)(3,4)(5,6)(7,8)</code> corresponds to <code class="code">u105</code>. To get the subgroup above <code class="code">u105</code> that has index 15 in <code class="code">a8</code>, we must form the closure of <code class="code">u105</code> with an element of the coset that corresponds to any other point in the first block. If we choose the point <code class="code">(1,3)(2,4)(5,8)(6,7)</code>, we must use an element of <code class="code">a8</code> that maps <code class="code">(1,2)(3,4)(5,6)(7,8)</code> to <code class="code">(1,3)(2,4)(5,8)(6,7)</code>. The function <code class="func">RepresentativeAction</code> (<a href="../../doc/ref/chap41_mj.html#X857DC7B085EB0539"><span class="RefLink">Reference: RepresentativeAction</span></a>) does what we need. It takes a group and two points and returns an element of the group that maps the first point to the second. In fact it also allows you to specify the action as an optional fourth argument as usual, but we do not need this here. If no such element exists in the group, i.e., if the two points do not lie in one orbit under the group, <code class="func">RepresentativeAction</code> (<a href="../../doc/ref/chap41_mj.html#X857DC7B085EB0539"><span class="RefLink">Reference: RepresentativeAction</span></a>) returns <code class="keyw">fail</code>.</p>
@@ -785,7 +779,7 @@ true
 Group([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismGroups( niceaut, SymmetricGroup( 4 ) );</span>
 [ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -&gt; 
-[ (1,2,3,4), (1,2,3), (1,3)(2,4), (1,4)(2,3) ]
+[ (1,3,4,2), (1,4,2), (1,4)(2,3), (1,2)(3,4) ]
 </pre></div>
 
 <p>The range of a nice monomorphism is in most cases a permutation group, because nice monomorphisms are mostly action homomorphisms. In some cases, like in our last example, the group is solvable and you might prefer a pc group as nice object. You cannot change the nice monomorphism of the automorphism group (because it is the value of the attribute <code class="func">NiceMonomorphism</code> (<a href="../../doc/ref/chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">Reference: NiceMonomorphism</span></a>)), but you can compose it with an isomorphism from the permutation group to a pc group to obtain your personal nicer monomorphism. If you reconstruct the automorphism group, you can even prescribe it this nicer monomorphism as its <code class="func">NiceMonomorphism</code> (<a href="../../doc/ref/chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">Reference: NiceMonomorphism</span></a>), because a newly-constructed group will not yet have a <code class="func">NiceMonomorphism</code> (<a href="../../doc/ref/chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">Reference: NiceMonomorphism</span></a>) set.</p>

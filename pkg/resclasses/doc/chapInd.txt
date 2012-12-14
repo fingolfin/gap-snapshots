@@ -52,6 +52,7 @@
   [10XNumberOfResidues[110X, by ring and modulus  1.1-3
   [10XObjByExtRep[110X  1.4-1
   [2XPartitionsIntoResidueClasses[102X (of a given ring, of given length)  1.2-3
+  [2XPartitionsIntoResidueClasses[102X (of a given ring, of given length, with moduli with given factors)  1.2-3
   [10XPrint[110X, for a residue class union  1.2
   [2XRandomPartitionIntoResidueClasses[102X (of a given ring, of given length)  1.2-4
   [2XRemoveTemporaryPackageFiles[102X  4.4-3

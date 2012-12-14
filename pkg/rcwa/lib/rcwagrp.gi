@@ -878,16 +878,17 @@ InstallMethod( Factorization,
 
 #############################################################################
 ##
-#M  Sign( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Sign( <f> ) . . . . . . . . . . . for rcwa mappings of Z in standard rep.
 ##
 InstallMethod( Sign,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
 
   function ( f )
 
     local  m, c, sgn, r, ar, br, cr;
 
+    if not IsBijective(f) then return fail; fi;
     m := Modulus(f); c := Coefficients(f);
     sgn := 0;
     for r in [0..m-1] do
@@ -901,14 +902,52 @@ InstallMethod( Sign,
 
 #############################################################################
 ##
-#M  Determinant( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of Z
+#M  Sign( <f> ) . . . . . . . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( Sign,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( f )
+
+    local  sgn, c, r, m, a, b;
+
+    if not IsBijective(f) then return fail; fi;
+    sgn := 0;
+    for c in f!.coeffs do
+      r := c[1]; m := c[2]; a := c[3]; b := c[4];
+      sgn := sgn + b/(m*AbsInt(a));
+      if a < 0 then sgn := sgn + (m - 2*r)/m; fi;
+    od;
+    sgn := (-1)^sgn;
+    return sgn;
+  end );
+
+#############################################################################
+##
+#M  Determinant( <f> ) . . . . . . .  for rcwa mappings of Z in standard rep.
 ##
 InstallMethod( Determinant,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
-               f -> Sum( List( Coefficients( f ),
-                               c -> c[2] / AbsInt( c[1] ) ) ) /
-                    Modulus( f ) );
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
+
+  function ( f )
+    if Mult(f) = 0 then return fail; fi;
+    return Sum(List(Coefficients(f),c->c[2]/AbsInt(c[1])))/Modulus(f);
+  end );
+
+#############################################################################
+##
+#M  Determinant( <f> ) . . . . . . . .  for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( Determinant,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( f )
+    if Mult(f) = 0 then return fail; fi;
+    return Sum(List(Coefficients(f),c->c[4]/AbsInt(c[3]*c[2])));
+  end );
 
 #############################################################################
 ##
@@ -916,7 +955,7 @@ InstallMethod( Determinant,
 ##
 InstallOtherMethod( Determinant,
                     "for rcwa mappings on unions of residue classes (RCWA)",
-                    true, [ IsRcwaMappingOfZ,
+                    true, [ IsRcwaMappingOfZInStandardRep,
                             IsResidueClassUnionOfZ ], 0,
 
   function ( f, S )
@@ -927,6 +966,21 @@ InstallOtherMethod( Determinant,
     return Sum(List([1..m],
                     r->Density(Intersection(S,ResidueClass(Integers,m,r-1)))
                       *c[r][2]/AbsInt(c[r][1])));
+  end );
+
+#############################################################################
+##
+#M  Determinant( <f>, <S> ) .  for rcwa mappings on unions of residue classes
+##
+InstallOtherMethod( Determinant,
+                    "for rcwa mappings on unions of residue classes (RCWA)",
+                    true, [ IsRcwaMappingOfZInSparseRep,
+                            IsResidueClassUnionOfZ ], 0,
+
+  function ( f, S )
+    return Sum(List(f!.coeffs,
+                    c -> Density(Intersection(S,ResidueClass(c[1],c[2])))
+                       * c[4]/AbsInt(c[3])));
   end );
 
 #############################################################################
@@ -2836,35 +2890,6 @@ InstallMethod( RespectedPartition,
     if   RespectsPartition(G,P)
     then SetIsTame(G,true); return P;
     else Error("RespectedPartition failed"); fi; # should never happen
-  end );
-
-#############################################################################
-##
-#M  RespectsPartition( <sigma>, <P> ) . . . . . . . . . . . for rcwa mappings
-##
-InstallMethod( RespectsPartition,
-               "for rcwa mappings (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsList ], 0,
-
-  function ( sigma, P )
-
-    local  R, cl, c, c_rest, pos, res, r, m;
-
-    R := Source(sigma);
-    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(R,cl))
-      or Union(P) <> R or Sum(List(P,Density)) <> 1
-    then TryNextMethod(); fi;
-    if Permutation(sigma,P) = fail then return false; fi;
-    c   := Coefficients(sigma);
-    res := AllResidues(R,Modulus(sigma));
-    for cl in P do
-      r      := Residue(cl);
-      m      := Modulus(cl);
-      pos    := Filtered([1..Length(res)],i->res[i] mod m = r);
-      c_rest := c{pos};
-      if Length(Set(c_rest)) > 1 then return false; fi;
-    od;
-    return true;
   end );
 
 #############################################################################

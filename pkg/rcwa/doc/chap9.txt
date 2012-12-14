@@ -4,14 +4,14 @@
   
   [1X9.1 [33X[0;0YRequirements[133X[101X
   
-  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.5.2,  [5XResClasses[105X 3.2.0,
+  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.5.6,  [5XResClasses[105X 3.3.0,
   [5XGRAPE[105X 4.3 [Soi06],   [5XPolycyclic[105X 2.6 [EN09]   and   [5XGAPDoc[105X 1.4 [LN11].   With
   possible  exception  of  the  most  recent version of [5XResClasses[105X, all needed
   packages are already present in an up-to-date standard [5XGAP[105X installation. The
-  [5XRCWA[105X  package can be used under UNIX, under Windows and on the MacIntosh. It
-  is  completely  written  in  the  [5XGAP[105X  language and does neither contain nor
-  require  external  binaries.  In  particular,  warnings  concerning  missing
-  binaries issued by [5XGRAPE[105X or other packages can safely be ignored.[133X
+  [5XRCWA[105X  package can be used on all platforms for which [5XGAP[105X is available. It is
+  completely  written in the [5XGAP[105X language and does neither contain nor require
+  external  binaries.  In  particular,  possible  warnings  concerning missing
+  binaries issued by other packages when loading [5XRCWA[105X can safely be ignored.[133X
   
   
   [1X9.2 [33X[0;0YInstallation[133X[101X

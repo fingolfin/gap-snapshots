@@ -9,6 +9,39 @@
 ##
 #############################################################################
 
+
+####################################
+#
+# attributes:
+#
+####################################
+
+DeclareAttribute( "MaximalGradedLeftIdeal",
+        IsHomalgGradedRing );
+
+DeclareAttribute( "MaximalGradedRightIdeal",
+        IsHomalgGradedRing );
+
+DeclareAttribute( "ResidueClassRingAsGradedLeftModule",
+        IsHomalgGradedRing );
+
+DeclareAttribute( "ResidueClassRingAsGradedRightModule",
+        IsHomalgGradedRing );
+
+DeclareAttribute( "JacobianIdeal",
+        IsHomalgModule );
+
+DeclareAttribute( "JacobianIdeal",
+        IsHomalgRingElement );
+
+####################################
+#
+# global functions and operations:
+#
+####################################
+
+# basic operations
+
 DeclareOperation( "GradedLeftSubmodule",
         [ IsHomalgMatrix ] );
 
@@ -17,6 +50,9 @@ DeclareOperation( "GradedLeftSubmodule",
 
 DeclareOperation( "GradedLeftSubmodule",
         [ IsList ] );
+
+DeclareOperation( "GradedLeftSubmodule",
+        [ IsHomalgRingElement ] );
 
 DeclareOperation( "GradedLeftSubmodule",
         [ IsList, IsHomalgRing ] );
@@ -29,6 +65,9 @@ DeclareOperation( "GradedRightSubmodule",
 
 DeclareOperation( "GradedRightSubmodule",
         [ IsList ] );
+
+DeclareOperation( "GradedRightSubmodule",
+        [ IsHomalgRingElement ] );
 
 DeclareOperation( "GradedRightSubmodule",
         [ IsList, IsHomalgRing ] );
@@ -44,15 +83,3 @@ DeclareOperation( "GradedRightIdealOfMinors",
 
 DeclareOperation( "GradedRightIdealOfMaximalMinors",
         [ IsHomalgMatrix ] );
-
-DeclareOperation( "MaximalGradedLeftIdeal",
-        [ IsHomalgGradedRing ] );
-
-DeclareOperation( "MaximalGradedRightIdeal",
-        [ IsHomalgGradedRing ] );
-
-DeclareOperation( "ResidueClassRingAsGradedLeftModule",
-        [ IsHomalgGradedRing ] );
-
-DeclareOperation( "ResidueClassRingAsGradedRightModule",
-        [ IsHomalgGradedRing ] );

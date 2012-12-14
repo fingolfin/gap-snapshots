@@ -98,7 +98,7 @@
 {\Huge \textbf{Tools for the \textsf{homalg} project\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.10.27\mbox{}}\\[1cm]
+{\Huge Version 2012.12.11\mbox{}}\\[1cm]
 {October 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
@@ -1158,6 +1158,349 @@ Nothing
 
 
  Runs the named example for homalg }
+
+ }
+
+ }
+
+  
+\chapter{\textcolor{Chapter }{ToDo-list}}\label{ToDo-list_automatically_generated_documentation_parts}
+\logpage{[ 6, 0, 0 ]}
+\hyperdef{L}{X7B4028057844FD6B}{}
+{
+    
+\section{\textcolor{Chapter }{ToDo-list entries}}\label{ToDo-list_entries_automatically_generated_documentation_parts}
+\logpage{[ 6, 1, 0 ]}
+\hyperdef{L}{X86137045808AF035}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{SourcePart (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 1 ]}\nobreak
+\hyperdef{L}{X876F23977AA5C19E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{SourcePart({\mdseries\slshape entry})\index{SourcePart@\texttt{SourcePart}!for IsToDoListEntry}
+\label{SourcePart:for IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a list
+
+
+
+ Returns the a list of source parts of the ToDo-list entry \mbox{\texttt{\mdseries\slshape entry}}. This is a triple of an object, a name of a
+filter/attribute\texttt{\symbol{92}} , and a value to which the attribute has
+to be set to activate the entry }
+
+ 
+
+\subsection{\textcolor{Chapter }{TargetPart (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 2 ]}\nobreak
+\hyperdef{L}{X86B9FC7A78FF9347}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{TargetPart({\mdseries\slshape entry})\index{TargetPart@\texttt{TargetPart}!for IsToDoListEntry}
+\label{TargetPart:for IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a list
+
+
+
+ Returns the target part of the ToDo-list entry \mbox{\texttt{\mdseries\slshape entry}}. This is a triple of an object, a name of a filter/attribute, and a
+val\texttt{\symbol{92}} ue to which the specific filter/attribute should be
+set. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ProcessAToDoListEntry (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 3 ]}\nobreak
+\hyperdef{L}{X7F63A94D7B43B880}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ProcessAToDoListEntry({\mdseries\slshape arg1})\index{ProcessAToDoListEntry@\texttt{ProcessAToDoListEntry}!for IsToDoListEntry}
+\label{ProcessAToDoListEntry:for IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a boolean
+
+
+
+ Processes a ToDo-list entry, i.e. sets the information given in TargetPart if
+the definitions in SourcePart are fulfilled. Returns \texttt{\symbol{92}} true
+if the entry could be processed, false if not, and fail if SourcePart or
+TargetPart weren't availible anymore. }
+
+ 
+
+\subsection{\textcolor{Chapter }{AreCompatible (for IsToDoListEntry, IsToDoListEntry)}}
+\logpage{[ 6, 1, 4 ]}\nobreak
+\hyperdef{L}{X843B58A884563E2D}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AreCompatible({\mdseries\slshape arg1, arg2})\index{AreCompatible@\texttt{AreCompatible}!for IsToDoListEntry, IsToDoListEntry}
+\label{AreCompatible:for IsToDoListEntry, IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a boolean
+
+
+
+ Returns true if TargetPart( \mbox{\texttt{\mdseries\slshape A}} ) = SourcePart( \mbox{\texttt{\mdseries\slshape B}} ), false otherwise. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ToDoListEntryWithWeakPointers (for IsObject, IsString, IsObject, IsObject, IsS\
+tring, IsObject)}}
+\logpage{[ 6, 1, 5 ]}\nobreak
+\hyperdef{L}{X837361A982A9DA32}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithWeakPointers({\mdseries\slshape arg1, arg2, arg3, arg4, arg5, arg6})\index{ToDoListEntryWithWeakPointers@\texttt{ToDoListEntryWithWeakPointers}!for IsObject, IsString, IsObject, IsObject, IsS\
+tring, IsObject}
+\label{ToDoListEntryWithWeakPointers:for IsObject, IsString, IsObject, IsObject, IsS\
+tring, IsObject}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a ToDoListEntry
+
+
+
+ Creates a ToDo-list entry where the first three arguments correspond to the
+SourcePart of the entry and the last three ones to the \texttt{\symbol{92}}
+TargetPart. This type of entry uses weakpointers as links to the object so you
+might be careful with it. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ToDoListEntryWithPointers (for IsObject, IsString, IsObject, IsObject, IsStrin\
+g, IsObject)}}
+\logpage{[ 6, 1, 6 ]}\nobreak
+\hyperdef{L}{X811E554386D68A87}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithPointers({\mdseries\slshape arg1, arg2, arg3, arg4, arg5, arg6})\index{ToDoListEntryWithPointers@\texttt{ToDoListEntryWithPointers}!for IsObject, IsString, IsObject, IsObject, IsStrin\
+g, IsObject}
+\label{ToDoListEntryWithPointers:for IsObject, IsString, IsObject, IsObject, IsStrin\
+g, IsObject}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a ToDoListEntry
+
+
+
+ The same as ToDoListEntryWithWeakPointers, but with pointers. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}}
+\logpage{[ 6, 1, 7 ]}\nobreak
+\hyperdef{L}{X86ECD224820CBB4E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithListOfSources({\mdseries\slshape arg1, arg2, arg3, arg4})\index{ToDoListEntryWithListOfSources@\texttt{ToDoListEntryWithListOfSources}!for IsList, IsObject, IsString, IsObject}
+\label{ToDoListEntryWithListOfSources:for IsList, IsObject, IsString, IsObject}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a ToDoListEntry
+
+
+
+ The same as ToDoListEntryWithPointers, but the first argument must be a list
+of triples defining the conditions of this entry }
+
+ 
+
+\subsection{\textcolor{Chapter }{ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}}
+\logpage{[ 6, 1, 8 ]}\nobreak
+\hyperdef{L}{X7ECB3D1C7BDD580E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWhichLaunchesAFunction({\mdseries\slshape arg1, arg2})\index{ToDoListEntryWhichLaunchesAFunction@\texttt{ToDoListEntryWhichLaunchesAFunction}!for IsList, IsFunction}
+\label{ToDoListEntryWhichLaunchesAFunction:for IsList, IsFunction}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a ToDoListEntry
+
+
+
+ The first argument must be a list of triples which contain an object, on which
+the second entry, an attribute given by its name as \texttt{\symbol{92}} a
+string can be applied. If the value of the attribute matches the third entry,
+the function given as second argument is launched. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 9 ]}\nobreak
+\hyperdef{L}{X7A0DF7C07D589BC5}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateImmediateMethodForToDoListEntry({\mdseries\slshape arg1})\index{CreateImmediateMethodForToDoListEntry@\texttt{Create}\-\texttt{Immediate}\-\texttt{Method}\-\texttt{For}\-\texttt{To}\-\texttt{Do}\-\texttt{List}\-\texttt{Entry}!for IsToDoListEntry}
+\label{CreateImmediateMethodForToDoListEntry:for IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ Creates an ImmediateMethod for a ToDoListEntry. This method is for internal
+use only. }
+
+ 
+
+\subsection{\textcolor{Chapter }{JoinToDoListEntries (for IsList)}}
+\logpage{[ 6, 1, 10 ]}\nobreak
+\hyperdef{L}{X79D0F627831D3B87}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{JoinToDoListEntries({\mdseries\slshape arg1})\index{JoinToDoListEntries@\texttt{JoinToDoListEntries}!for IsList}
+\label{JoinToDoListEntries:for IsList}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+a ToDoListEntry
+
+
+
+ Joins a list of compatible ToDo-list entries to a new one. }
+
+ 
+
+\subsection{\textcolor{Chapter }{GenesisOfToDoListEntry (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 11 ]}\nobreak
+\hyperdef{L}{X78F0BFF382F62287}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{GenesisOfToDoListEntry({\mdseries\slshape arg})\index{GenesisOfToDoListEntry@\texttt{GenesisOfToDoListEntry}!for IsToDoListEntry}
+\label{GenesisOfToDoListEntry:for IsToDoListEntry}
+}\hfill{\scriptsize (attribute)}}\\
+\textbf{\indent Returns:\ }
+a list
+
+
+
+ If a ToDoListEntry is created as union of others, this is a list of those. }
+
+ 
+
+\subsection{\textcolor{Chapter }{DescriptionOfImplication (for IsToDoListEntry)}}
+\logpage{[ 6, 1, 12 ]}\nobreak
+\hyperdef{L}{X81E733C27D96F9C8}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DescriptionOfImplication({\mdseries\slshape arg})\index{DescriptionOfImplication@\texttt{DescriptionOfImplication}!for IsToDoListEntry}
+\label{DescriptionOfImplication:for IsToDoListEntry}
+}\hfill{\scriptsize (attribute)}}\\
+\textbf{\indent Returns:\ }
+a list
+
+
+
+ Has to be set to a string, which describes the reason for the conclusion. If
+the ToDo-list entry is displayed, the given string wil\texttt{\symbol{92}} l
+be displayed with a because before it. }
+
+ }
+
+   
+\section{\textcolor{Chapter }{Category}}\label{Category_automatically_generated_documentation_parts}
+\logpage{[ 6, 2, 0 ]}
+\hyperdef{L}{X7D9151158577E272}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{IsToDoList (for IsObject)}}
+\logpage{[ 6, 2, 1 ]}\nobreak
+\hyperdef{L}{X86D2B9E180E01856}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsToDoList({\mdseries\slshape arg})\index{IsToDoList@\texttt{IsToDoList}!for IsObject}
+\label{IsToDoList:for IsObject}
+}\hfill{\scriptsize (Category)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true} or \texttt{false}
+
+
+
+ This is the category of ToDo-lists. Every ToDo-list is an object of this
+category, which basically contains the ToDo-lists. }
+
+ }
+
+   
+\section{\textcolor{Chapter }{Constructor}}\label{Constructor_automatically_generated_documentation_parts}
+\logpage{[ 6, 3, 0 ]}
+\hyperdef{L}{X7ABF649E831D4D8E}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{NewToDoList (for )}}
+\logpage{[ 6, 3, 1 ]}\nobreak
+\hyperdef{L}{X846756CA825D07AD}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NewToDoList({\mdseries\slshape })\index{NewToDoList@\texttt{NewToDoList}!for }
+\label{NewToDoList:for }
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ Creates a new empty ToDo-list. }
+
+ }
+
+   
+\section{\textcolor{Chapter }{This is the magic}}\label{This_is_the_magic_automatically_generated_documentation_parts}
+\logpage{[ 6, 4, 0 ]}
+\hyperdef{L}{X7B69858A7C5DD48B}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{Process{\textunderscore}A{\textunderscore}ToDo{\textunderscore}List{\textunderscore}Entry}}
+\logpage{[ 6, 4, 1 ]}\nobreak
+\hyperdef{L}{X788F2635833587F8}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Process{\textunderscore}A{\textunderscore}ToDo{\textunderscore}List{\textunderscore}Entry({\mdseries\slshape args})\index{ProcessAToDoListEntry@\texttt{Process{\textunderscore}}\-\texttt{A{\textunderscore}}\-\texttt{To}\-\texttt{Do{\textunderscore}}\-\texttt{List{\textunderscore}}\-\texttt{Entry}}
+\label{ProcessAToDoListEntry}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+a boolean
+
+
+
+ Gets a ToDo-list entry, which is a pair of a list of strings and a weak
+pointer object, and processes it. If the action was done,
+i\texttt{\symbol{92}} t returns true, if not, it returns false, and it returns
+fail if the action is not possible anymore due to deleted objects. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ProcessToDoList (for IsObject)}}
+\logpage{[ 6, 4, 2 ]}\nobreak
+\hyperdef{L}{X7AD403197873FE42}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ProcessToDoList({\mdseries\slshape A})\index{ProcessToDoList@\texttt{ProcessToDoList}!for IsObject}
+\label{ProcessToDoList:for IsObject}
+}\hfill{\scriptsize (attribute)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This is the magic! This attribute is never set. Creating an ToDo-list entry
+installs an ImmediateMethod for this attribute for the \texttt{\symbol{92}}
+specific category of the object to which ToDo-list is added, and the filter
+the entry contains. It is then triggert if the filters become
+a\texttt{\symbol{92}} pplicable, so the ToDo-list is processed }
+
+ }
+
+   
+\section{\textcolor{Chapter }{Methods for all objects}}\label{Methods_for_all_objects_automatically_generated_documentation_parts}
+\logpage{[ 6, 5, 0 ]}
+\hyperdef{L}{X844D8E5879757C61}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{AddToToDoList (for IsToDoListEntry)}}
+\logpage{[ 6, 5, 1 ]}\nobreak
+\hyperdef{L}{X7EB7863D7F4DC75E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AddToToDoList({\mdseries\slshape E})\index{AddToToDoList@\texttt{AddToToDoList}!for IsToDoListEntry}
+\label{AddToToDoList:for IsToDoListEntry}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+Nothing
+
+
+
+ Adds the ToDo-list entry \mbox{\texttt{\mdseries\slshape E}} to the ToDo-list of \mbox{\texttt{\mdseries\slshape M}} and creates a new one, if this is needed. }
+
+ 
+
+\subsection{\textcolor{Chapter }{ToDoList (for IsObject)}}
+\logpage{[ 6, 5, 2 ]}\nobreak
+\hyperdef{L}{X87B1AEB986DECB11}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoList({\mdseries\slshape arg})\index{ToDoList@\texttt{ToDoList}!for IsObject}
+\label{ToDoList:for IsObject}
+}\hfill{\scriptsize (attribute)}}\\
+\textbf{\indent Returns:\ }
+A ToDo-list
+
+
+
+ Returns the ToDo-list of an object, or creates a new one. }
 
  }
 

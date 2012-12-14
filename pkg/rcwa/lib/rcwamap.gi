@@ -53,6 +53,19 @@ BindGlobal( "IsRcwaMappingOfZxZInStandardRep",
 BindGlobal( "IsRcwaMappingOfGFqxInStandardRep",
              IsRcwaMappingOfGFqx and IsRcwaMappingStandardRep );
 
+BindGlobal( "IsRcwaMappingInSparseRep",
+             IsRcwaMapping and IsRcwaMappingSparseRep );
+BindGlobal( "IsRcwaMappingOfZInSparseRep",
+             IsRcwaMappingOfZ and IsRcwaMappingSparseRep );
+BindGlobal( "IsRcwaMappingOfZ_piInSparseRep",                 # unused so far
+             IsRcwaMappingOfZ_pi and IsRcwaMappingSparseRep );
+BindGlobal( "IsRcwaMappingOfZOrZ_piInSparseRep",
+             IsRcwaMappingOfZOrZ_pi and IsRcwaMappingSparseRep );
+BindGlobal( "IsRcwaMappingOfZxZInSparseRep",                  # unused so far
+             IsRcwaMappingOfZxZ and IsRcwaMappingSparseRep );
+BindGlobal( "IsRcwaMappingOfGFqxInSparseRep",                 # unused so far
+             IsRcwaMappingOfGFqx and IsRcwaMappingSparseRep );
+
 #############################################################################
 ##
 #S  The families of rcwa mappings. //////////////////////////////////////////
@@ -175,6 +188,21 @@ InstallGlobalFunction( RcwaMappingsFamily,
     then return RcwaMappingsOfGFqxFamily( R );
     else Error("Sorry, rcwa mappings over ",R," are not yet implemented.\n");
     fi;
+  end );
+
+#############################################################################
+##
+#F  RcwaMappingsType( <R> ) . . . . . . . . . .  filter: rcwa mappings of <R>
+##
+InstallGlobalFunction( RcwaMappingsType,
+
+  function ( R )
+    if   IsIntegers( R ) then return IsRcwaMappingOfZ;
+    elif IsZxZ( R )      then return IsRcwaMappingOfZxZ;
+    elif IsZ_pi( R )     then return IsRcwaMappingOfZ_pi;
+    elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
+    then return IsRcwaMappingOfGFqx;
+    else return fail; fi;
   end );
 
 #############################################################################
@@ -392,13 +420,14 @@ InstallMethod( RcwaMappingNC,
 ##
 InstallMethod( RcwaMapping,
                "rcwa mapping of Z by coefficients (RCWA)",
-               true, [ IsList ], 0,
+               true, [ IsList ], 10,
 
   function ( coeffs )
 
     local  quiet;
 
     if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
+      or Length( coeffs[1] ) = 5
     then TryNextMethod( ); fi;
     quiet := ValueOption("BeQuiet") = true;
     if not (     ForAll(Flat(coeffs),IsInt)
@@ -424,7 +453,7 @@ InstallMethod( RcwaMapping,
 ##
 InstallMethod( RcwaMappingNC,
                "rcwa mapping of Z by coefficients (RCWA)",
-               true, [ IsList ], 0,
+               true, [ IsList ], 10,
 
   function ( coeffs )
 
@@ -454,6 +483,7 @@ InstallMethod( RcwaMappingNC,
     end;
 
     if not IsList( coeffs[1] ) or not IsInt( coeffs[1][1] )
+      or Length( coeffs[1] ) = 5
     then TryNextMethod( ); fi;
     Result := Objectify( NewType(    RcwaMappingsOfZFamily,
                                      IsRcwaMappingOfZInStandardRep ),
@@ -910,6 +940,11 @@ InstallMethod( RcwaMappingNC,
     R := cycles[1][1];
     if   not (IsRing(R) or IsZxZ(R))
     then R := UnderlyingRing(FamilyObj(R)); fi;
+    if not IsIntegers(R) and not IsZ_pi(R)
+      and not (     IsUnivariatePolynomialRing(R)
+                and IsFiniteFieldPolynomialRing(R))
+    then TryNextMethod(); fi;
+
     m      := Lcm(List(Union(cycles),Modulus));
     res    := AllResidues(R,m);
     coeffs := List(res,r->[1,0,1]*One(R));
@@ -931,7 +966,7 @@ InstallMethod( RcwaMappingNC,
     elif IsPolynomialRing(R)
     then result := RcwaMappingNC(R,Lcm(List(Flat(cycles),Modulus)),coeffs);
     fi;
-    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    Assert(4,Order(result)=Lcm(List(cycles,Length)));
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
     return result;
@@ -971,7 +1006,7 @@ InstallMethod( RcwaMappingNC,
       od;
     od;
     result := RcwaMapping(R,m,coeffs);
-    Assert(1,Order(result)=Lcm(List(cycles,Length)));
+    Assert(4,Order(result)=Lcm(List(cycles,Length)));
     SetIsBijective(result,true); SetIsTame(result,true);
     SetOrder(result,Lcm(List(cycles,Length)));
     return result;
@@ -1127,6 +1162,280 @@ InstallMethod( RcwaMappingNC,
 
 #############################################################################
 ##
+#M  RcwaMapping( <coeffs> ) . . .  rcwa mapping of Z in sparse representation
+##
+InstallMethod( RcwaMapping,
+               "rcwa mapping of Z in sparse representation (RCWA)",
+               true, [ IsList ], 5,
+
+  function ( coeffs )
+
+    local  result;
+
+    if   not ForAll(coeffs,c->IsList(c) and Length(c)=5 and ForAll(c,IsInt)) 
+    then TryNextMethod(); fi;
+
+    if ForAny(coeffs,c->c[2] = 0 or c[5] = 0) then
+      Error("zero in modulus or denominator not allowed.\n");
+      return fail;
+    fi;
+    if ForAny(Combinations([1..Length(coeffs)],2),
+              i->(    coeffs[i[1]][1]-coeffs[i[2]][1])
+                  mod Gcd(coeffs[i[1]][2],coeffs[i[2]][2]) = 0)
+    then Error("rcwa mapping must be single-valued.\n"); return fail; fi;
+    if   Sum(List(coeffs,c->1/c[2])) <> 1
+    then Error("rcwa mapping must be total.\n"); return fail; fi;
+
+    return RcwaMappingNC(coeffs);
+  end );
+
+#############################################################################
+##
+#M  RcwaMappingNC( <coeffs> ) . .  rcwa mapping of Z in sparse representation
+##
+InstallMethod( RcwaMappingNC,
+               "rcwa mapping of Z in sparse representation (RCWA)",
+               true, [ IsList ], 5,
+
+  function ( coeffs )
+
+    local  result, modulus, coeffset, coeffcoll, cls, redcls, cl,
+           d, d_red, res, res_d, div, m, r, r_red, range, i, j;
+
+    if   not ForAll(coeffs,c->IsList(c) and Length(c)=5)
+      or not ForAll(coeffs[1],IsInt)
+    then TryNextMethod(); fi;
+
+    for i in [1..Length(coeffs)] do
+      coeffs[i][1] := coeffs[i][1] mod coeffs[i][2];
+      coeffs[i]{[3..5]} := coeffs[i]{[3..5]}/Gcd(coeffs[i]{[3..5]});
+      if coeffs[i][5] < 0 then coeffs[i] := -coeffs[i]; fi;
+    od;
+
+    coeffset  := Set(List(coeffs,c->c{[3..5]}));
+    coeffcoll := List(coeffset,c->[]);
+    for i in [1..Length(coeffs)] do
+      j := PositionSorted(coeffset,coeffs[i]{[3..5]});
+      Add(coeffcoll[j],coeffs[i]);
+    od;
+
+    coeffs := [];
+    for i in [1..Length(coeffset)] do
+
+      cls := Set(coeffcoll[i],c->c{[1,2]});
+      if Length(cls) > 1 then
+
+        d_red  := Gcd(DifferencesList(List(cls,cl->cl[1])));
+        d_red  := Gcd(d_red,Gcd(List(cls,cl->cl[2])));
+        r_red  := cls[1][1] mod d_red;
+        redcls := List(cls,cl->[(cl[1]-r_red)/d_red,cl[2]/d_red]);
+        m      := Lcm(List(redcls,cl->cl[2]));
+        res    := [];
+        for cl in redcls do
+          for j in [0..m/cl[2]-1] do Add(res,cl[1]+j*cl[2]); od;
+        od;
+        res := Set(res);
+
+        redcls := [];
+        div    := DivisorsInt(m);
+        for d in div do
+          res_d := Set(res mod d);
+          for r in res_d do
+            range := List([0..m/d-1],j->r+j*d);
+            if IsSubset(res,range) then
+              Add(redcls,[r,d]);
+              res := Difference(res,range);
+              if res = [] then break; fi;
+              if Length(res) < m/d then break; fi;
+            fi;
+          od;
+          if res = [] then break; fi;
+        od;
+
+        cls := List(redcls,cl->[cl[1]*d_red+r_red,cl[2]*d_red]);
+
+      # Erroneous reduction process: doesn't cope with cases like
+      # 0(3) U 1(6) U 5(6) = 1(2) U 0(6).
+      # 
+      # repeat
+      #   oldcls := ShallowCopy(cls);
+      #   mods   := Set(List(oldcls,cl->cl[2]));
+      #   for m in mods do
+      #     resm := List(Set(Filtered(cls,cl->cl[2]=m)),c->c[1]);
+      #     if Length(resm) >= 2 then
+      #       for p in Set(Factors(m)) do
+      #         for r in Filtered(resm,res->res<m/p) do
+      #           # range := [r,r+m/p..m-m/p+r]; -> range restriction (<2^28)
+      #           range := List([0..p-1],j->j*(m/p)+r);
+      #           if IsSubset(resm,range) then
+      #             cls := Difference(cls,List(range,r->[r,m]));
+      #             Add(cls,[r,m/p]);
+      #           fi;
+      #         od;
+      #       od;
+      #     fi;
+      #   od;
+      #   cls := Set(cls);
+      # until cls = oldcls;
+
+      fi;
+
+      for cl in cls do
+        Add(coeffs,Concatenation(cl,coeffset[i]));
+      od;
+
+    od;
+
+    # SortParallel(List(coeffs,c->[c[2],c[1]]),coeffs); -> problematic?
+    coeffs  := Set(coeffs);
+    modulus := Lcm(List(coeffs,c->c[2]));
+
+    MakeImmutable(coeffs);
+    result := Objectify( NewType( RcwaMappingsOfZFamily,
+                                  IsRcwaMappingOfZ
+                              and IsRcwaMappingSparseRep ),
+                         rec( modulus := modulus,
+                              coeffs  := coeffs ) );
+    SetSource(result,Integers);
+    SetRange (result,Integers);
+
+    return result;
+  end );
+
+#############################################################################
+##
+#S  Conversion of rcwa mappings between standard and sparse representation. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  SparseRepresentation( <f> )
+##
+InstallMethod( SparseRepresentation,
+               "for rcwa mappings in standard representation (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
+
+  function ( f )
+
+    local  result, attrs, attrsetters, props, propsetters, attr, prop,
+           R, coeffs, src, sparse, cl, r, m, c, i;
+
+    R      := Source(f);
+    coeffs := f!.coeffs;
+
+    src := Set(Flat(List(LargestSourcesOfAffineMappings(f),
+                         AsUnionOfFewClasses)));
+    sparse := [];
+    for cl in src do
+      r := Residue(cl); m := Modulus(cl);
+      if   IsRcwaMappingOfZ(f)
+      then c := coeffs[r+1];
+      else c := coeffs[Position(AllResidues(R,m),r)]; fi;
+      Add(sparse,[r,m,c[1],c[2],c[3]]);
+    od;
+
+    sparse := Set(sparse);
+
+    result := Objectify(NewType(FamilyObj(f),RcwaMappingsType(R)
+                                         and IsRcwaMappingSparseRep),
+                        rec(modulus := f!.modulus, coeffs := sparse));
+
+    # Copy over representation-independent attributes and properties.
+
+    attrs := List( Intersection( RCWA_REP_INDEPENDENT_ATTRIBUTES,
+                                 KnownAttributesOfObject( f ) ),
+                   ValueGlobal );
+    attrsetters := List(attrs,Setter);
+    for i in [1..Length(attrs)] do attrsetters[i](result,attrs[i](f)); od;
+
+    props := List( Intersection( RCWA_REP_INDEPENDENT_PROPERTIES,
+                                 KnownPropertiesOfObject( f ) ),
+                   ValueGlobal );
+    propsetters := List(props,Setter);
+    for i in [1..Length(props)] do propsetters[i](result,props[i](f)); od;
+
+    return result;
+  end );
+
+#############################################################################
+##
+#M  SparseRepresentation( <f> )
+##
+InstallMethod( SparseRepresentation,
+               "for rcwa mappings in sparse representation (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0, f -> f );
+
+#############################################################################
+##
+#M  StandardRepresentation( <f> )
+##
+InstallMethod( StandardRepresentation,
+               "for rcwa mappings in sparse representation (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0,
+
+  function ( f )
+
+    local  result, attrs, attrsetters, props, propsetters,
+           R, modulus, coeffs, src, sparse, res, cl, r, m, c, n, i;
+
+    R       := Source(f);
+    modulus := f!.modulus;
+    sparse  := f!.coeffs;
+
+    if IsRing(R) then
+      coeffs := List([1..NumberOfResidues(R,modulus)],r->[1,0,1]*One(R));
+    elif IsZxZ(R) then
+      coeffs := List([1..NumberOfResidues(R,modulus)],
+                     r->[[[1,0],[0,1]],[0,0],1]);
+    fi;
+
+    res := AllResidues(R,modulus);
+    for i in [1..Length(sparse)] do
+      c := sparse[i];
+      r := c[1]; m := c[2];
+      if IsRcwaMappingOfZ(f) then
+        for n in [r+1,r+m+1..modulus-m+r+1] do
+          coeffs[n] := c{[3..5]};
+        od;
+      else
+        for n in PositionsProperty(res,el->el mod m = r) do
+          coeffs[n] := c{[3..5]};
+        od;
+      fi;
+    od;
+
+    result := Objectify(NewType(FamilyObj(f),RcwaMappingsType(R)
+                                         and IsRcwaMappingStandardRep),
+                        rec( modulus := modulus, coeffs := coeffs ));
+
+    # Copy over representation-independent attributes and properties.
+
+    attrs := List( Intersection( RCWA_REP_INDEPENDENT_ATTRIBUTES,
+                                 KnownAttributesOfObject( f ) ),
+                   ValueGlobal );
+    attrsetters := List(attrs,Setter);
+    for i in [1..Length(attrs)] do attrsetters[i](result,attrs[i](f)); od;
+
+    props := List( Intersection( RCWA_REP_INDEPENDENT_PROPERTIES,
+                                 KnownPropertiesOfObject( f ) ),
+                   ValueGlobal );
+    propsetters := List(props,Setter);
+    for i in [1..Length(props)] do propsetters[i](result,props[i](f)); od;
+
+    return result;
+  end );
+
+#############################################################################
+##
+#M  StandardRepresentation( <f> )
+##
+InstallMethod( StandardRepresentation,
+               "for rcwa mappings in standard representation (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0, f -> f );
+
+#############################################################################
+##
 #S  ExtRepOfObj / ObjByExtRep for rcwa mappings. ////////////////////////////
 ##
 #############################################################################
@@ -1154,7 +1463,9 @@ InstallMethod( ObjByExtRep,
     if not HasUnderlyingRing(fam) or Length(l) <> 2 then TryNextMethod(); fi;
     R := UnderlyingRing(fam);
     if fam <> RcwaMappingsFamily(R) then TryNextMethod(); fi;
-    return RcwaMappingNC(R,l[1],l[2]);
+    if   ForAll(l[2],c->IsList(c) and Length(c)=5)
+    then return RcwaMappingNC(l[2]); # sparse rep., of Z
+    else return RcwaMappingNC(R,l[1],l[2]); fi;
   end );
 
 #############################################################################
@@ -2070,7 +2381,7 @@ InstallMethod( IsGeneralizedClassTransposition,
       if not IsClassWiseOrderPreserving(sigma) then m2 := -m2; fi;
       cls_fixedrep := [ ResidueClassWithFixedRep(Source(sigma),m1,r1),
                         ResidueClassWithFixedRep(Source(sigma),m2,r2) ];
-      Assert(1,sigma=ClassTransposition(cls_fixedrep));
+      Assert(4,sigma=ClassTransposition(cls_fixedrep));
       SetTransposedClasses(sigma,cls_fixedrep);
       return true;
     else return false; fi;
@@ -2430,7 +2741,7 @@ InstallGlobalFunction( ClassUnionShift,
 ##
 InstallMethod( String,
                "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZInStandardRep ], 0,
+               [ IsRcwaMappingOfZ ], 0,
 
   function ( arg )
 
@@ -2523,7 +2834,7 @@ InstallMethod( ViewString, "for rcwa mappings with base root (RCWA)", true,
 ##
 InstallMethod( PrintObj,
                "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZInStandardRep ], SUM_FLAGS,
+               [ IsRcwaMappingOfZ ], SUM_FLAGS,
 
   function ( f )
     Print( "RcwaMapping( ", Coefficients(f), " )" );
@@ -2616,6 +2927,9 @@ InstallMethod( ViewObj,
       fi;
       Print(" of ",RingToString(Source(f)));
       Print(" with modulus ",ModulusAsFormattedString(Modulus(f)));
+      if IsRcwaMappingSparseRep(f) then
+        Print(" and ",Length(f!.coeffs)," affine parts");
+      fi;
       if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
       then Print(", of order ",Order(f)); fi;
       Print(">");
@@ -2667,7 +2981,7 @@ InstallMethod( Display,
            StringAffineMappingOfZxZ, StringAffineMappingOfZ_pi,
            StringAffineMappingOfGFqx, IdChars,
 
-           R, F, F_el, F_elints, m, c, res,
+           R, F, F_el, F_elints, m, c, res, idcoeffs, inds,
            P, Pcl, D, affs, affstrings, maxafflng, lines, line, maxlinelng,
            cycles, cl, str, ustr, ringname, varname, prefix, col, i, j;
 
@@ -2870,8 +3184,10 @@ InstallMethod( Display,
 
     if   IsOne(f)  then Print("Identity rcwa mapping of ",ringname);
     elif IsZero(f) then Print("Zero rcwa mapping of ",ringname);
-    elif IsOne(m) and IsZero(c[1][1])
+    elif IsOne(m) and IsRcwaMappingStandardRep(f) and IsZero(c[1][1])
     then Print("Constant rcwa mapping of ",ringname," with value ",c[1][2]);
+    elif IsOne(m) and IsRcwaMappingSparseRep(f) and IsZero(c[1][3])
+    then Print("Constant rcwa mapping of ",ringname," with value ",c[1][4]);
     else
       if not IsOne(m) then Print("\n"); fi;
 
@@ -2897,11 +3213,18 @@ InstallMethod( Display,
 
       if IsOne(m) then
 
-        Print(": ",varname," -> ",StringAffineMapping(c[1]));
+        if   IsRcwaMappingStandardRep(f) then
+          Print(": ",varname," -> ",StringAffineMapping(c[1]));
+        elif IsRcwaMappingSparseRep(f) then
+          Print(": ",varname," -> ",StringAffineMapping(c[1]{[3..5]}));
+        fi;
 
       else
 
         Print(" with modulus ",ModulusAsFormattedString(m));
+        if IsRcwaMappingSparseRep(f) then
+          Print(" and ",Length(c)," affine parts");
+        fi;
         if   HasOrder(f) and not (HasIsTame(f) and not IsTame(f))
         then Print(", of order ",Order(f)); fi;
         Print("\n\n");
@@ -2933,18 +3256,34 @@ InstallMethod( Display,
             else Print("\n\n");
             fi;
           od;
-          return;
+          return; # done.
         fi;
 
         P := ShallowCopy(LargestSourcesOfAffineMappings(f));
         D := List(P,cl->1/Density(cl));
-        i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
-        if i <> fail then D[i] := infinity; fi;
+        #i := First([1..Length(P)],j->IsOne(RestrictedMapping(f,P[j])));
+        if   IsRing(R) then idcoeffs := [1,0,1] * One(R);
+        elif IsZxZ(R)  then idcoeffs := [[[1,0],[0,1]],[0,0],1]; fi;
+        if IsRcwaMappingStandardRep(f) then 
+          i := First([1..Length(P)],
+                     j -> c[First([1..Length(res)],k->res[k] in P[j])]
+                        = idcoeffs);
+        elif IsRcwaMappingOfZInSparseRep(f) then
+          i := First([1..Length(P)],
+                     j -> c[PositionProperty(c,d->d[1] in P[j])]{[3..5]}
+                        = idcoeffs);
+        fi;
+        if i <> fail then D[i] := infinity; fi; # constant mappings -> end
 
         SortParallel(D,P);
 
-        affs := List(P,preimg->c[First([1..Length(res)],
-                                       i->res[i] in preimg)]);
+        if   IsRcwaMappingStandardRep(f) then 
+          affs := List(P,preimg->c[First([1..Length(res)],
+                                         i->res[i] in preimg)]);
+        elif IsRcwaMappingSparseRep(f) then
+          affs := List(P,preimg->First(c,d->d[1] in preimg){[3..5]});
+        fi;
+
         Pcl  := List(P,AsUnionOfFewClasses);
 
         affstrings := List(affs,StringAffineMapping);
@@ -3338,8 +3677,8 @@ InstallMethod( Display,
 #M  LaTeXStringRcwaMapping( <f> ) . . . . . . . . . .  for rcwa mappings of Z
 ##
 InstallMethod( LaTeXStringRcwaMapping,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
 
   function ( f )
 
@@ -3698,14 +4037,17 @@ InstallMethod( LaTeXAndXDVI,
 #M  \=( <f>, <g> ) . . . . . . . . . . . . . for rcwa mappings of Z or Z_(pi)
 ##
 InstallMethod( \=,
-               "for two rcwa mappings of Z or Z_(pi) (RCWA)",
+               "for two rcwa mappings of Z or Z_(pi), standard rep. (RCWA)",
                IsIdenticalObj,
                [ IsRcwaMappingOfZOrZ_piInStandardRep,
                  IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
-
-  function ( f, g )
-    return f!.coeffs = g!.coeffs;
-  end );
+               function ( f, g ) return f!.coeffs = g!.coeffs; end );
+InstallMethod( \=,
+               "for two rcwa mappings of Z or Z_(pi), sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZOrZ_piInSparseRep,
+                 IsRcwaMappingOfZOrZ_piInSparseRep ], 0,
+               function ( f, g ) return f!.coeffs = g!.coeffs; end );
 
 #############################################################################
 ##
@@ -3737,20 +4079,107 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \<( <f>, <g> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#M  \=( <f>, <g> ) . . . . . . .  for rcwa mappings, standard vs. sparse rep.
+#M  \=( <f>, <g> ) . . . . . . .  for rcwa mappings, sparse vs. standard rep.
 ##
-##  Total ordering of rcwa maps (for tech. purposes, only).
-##  Separate methods are needed as soon as there are other representations of
-##  rcwa mappings than by modulus <modulus> and coefficients list <coeffs>.
+InstallMethod( \=,
+               "for two rcwa mappings, standard vs. sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInStandardRep, IsRcwaMappingInSparseRep ], 0,
+               function ( f, g ) return SparseRepresentation(f) = g; end );
+InstallMethod( \=,
+               "for two rcwa mappings, sparse vs. standard rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInSparseRep, IsRcwaMappingInStandardRep ], 0,
+               function ( f, g ) return f = SparseRepresentation(g); end );
+
+#############################################################################
+##
+#M  \<( <f>, <g> ) . . . . . . . . . . . . for rcwa mappings in standard rep.
+#M  \<( <f>, <g> ) . . . . . . . . . . . . . for rcwa mappings in sparse rep.
+#M  \<( <f>, <g> ) . . . . . . .  for rcwa mappings: standard vs. sparse rep.
+#M  \<( <f>, <g> ) . . . . . . .  for rcwa mappings: sparse vs. standard rep.
+##
+##  Total ordering of rcwa maps (for technical purposes, only).
+##  More methods are needed as soon as further representations of
+##  rcwa mappings are implemented.
 ##
 InstallMethod( \<,
-               "for two rcwa mappings (RCWA)", IsIdenticalObj,
+               "for rcwa mappings in standard rep. (RCWA)", IsIdenticalObj,
                [ IsRcwaMappingInStandardRep, IsRcwaMappingInStandardRep ], 0,
 
   function ( f, g )
     if   f!.modulus <> g!.modulus
     then return f!.modulus < g!.modulus;
     else return f!.coeffs  < g!.coeffs; fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings in sparse rep. (RCWA)", IsIdenticalObj,
+               [ IsRcwaMappingInSparseRep, IsRcwaMappingInSparseRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := First(f!.coeffs,c->c[1] = r mod c[2]){[3..5]};
+        cg := First(g!.coeffs,c->c[1] = r mod c[2]){[3..5]};
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings: standard vs. sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInStandardRep, IsRcwaMappingInSparseRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := f!.coeffs[r+1];
+        cg := First(g!.coeffs,c->c[1] = r mod c[2]){[3..5]};
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
+  end );
+
+InstallMethod( \<,
+               "for rcwa mappings: sparse vs. standard rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingInSparseRep, IsRcwaMappingInStandardRep ], 0,
+
+  function ( f, g )
+
+    local  r, m, cf, cg;
+
+    if   f!.modulus <> g!.modulus
+    then return f!.modulus < g!.modulus;
+    elif f = g
+    then return false; else
+      m := f!.modulus; r := 0;
+      while r < m do
+        cf := First(f!.coeffs,c->c[1] = r mod c[2]){[3..5]};
+        cg := g!.coeffs[r+1];
+        if cf <> cg then return cf < cg; fi;
+        r := r + 1;
+      od;
+    fi;
   end );
 
 #############################################################################
@@ -3775,14 +4204,18 @@ SetImagesSource( ZeroRcwaMappingOfZ, [ 0, 0 ] );
 
 #############################################################################
 ##
-#M  Zero( <f> ) . . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  Zero( <f> ) . . . . . . . . . . . for rcwa mappings of Z in standard rep.
+#M  Zero( <f> ) . . . . . . . . . . . . for rcwa mappings of Z in sparse rep.
 #M  Zero( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings of Z^2
 ##
 ##  Zero rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( Zero, "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( Zero, "for rcwa mappings of Z in standard rep. (RCWA)", true,
                [ IsRcwaMappingOfZInStandardRep ], 0,
                f -> ZeroRcwaMappingOfZ );
+InstallMethod( Zero, "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> SparseRep( ZeroRcwaMappingOfZ ) );
 InstallMethod( Zero, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> ZeroRcwaMappingOfZxZ );
@@ -3832,13 +4265,17 @@ InstallMethod( Zero, "for rcwa mappings of GF(q)[x] (RCWA)", true,
 ##
 ##  <f> = zero rcwa mapping?
 ##
-InstallMethod( IsZero, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0,
+InstallMethod( IsZero, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
     if not IsRing( Source( f ) ) then TryNextMethod( ); fi;
     return f!.coeffs = [ [ 0, 0, 1 ] ] * One( Source( f ) );
   end );
+
+InstallMethod( IsZero, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> f!.coeffs = [ [ 0, 1, 0, 0, 1 ] ] );
 
 InstallMethod( IsZero, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
@@ -3858,14 +4295,18 @@ SetIsOne( IdentityRcwaMappingOfZxZ, true );
 
 #############################################################################
 ##
-#M  One( <f> ) . . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z
+#M  One( <f> ) . . . . . . . . . . .  for rcwa mappings of Z in standard rep.
+#M  One( <f> ) . . . . . . . . . . . .  for rcwa mappings of Z in sparse rep.
 #M  One( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings of Z^2
 ##
 ##  Identity rcwa mapping of Z or Z^2, respectively.
 ##
-InstallMethod( One, "for rcwa mappings of Z (RCWA)", true,
+InstallMethod( One, "for rcwa mappings of Z in standard rep. (RCWA)", true,
                [ IsRcwaMappingOfZInStandardRep ], 0,
                f -> IdentityRcwaMappingOfZ );
+InstallMethod( One, "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> SparseRep( IdentityRcwaMappingOfZ ) );
 InstallMethod( One, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> IdentityRcwaMappingOfZxZ );
@@ -3911,13 +4352,17 @@ InstallMethod( One, "for rcwa mappings of GF(q)[x] (RCWA)", true,
 ## 
 ##  <f> = identity rcwa mapping?
 ##
-InstallMethod( IsOne,  "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0,
+InstallMethod( IsOne, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
     if not IsRing( Source( f ) ) then TryNextMethod( ); fi;
     return f!.coeffs = [ [ 1, 0, 1 ] ] * One( Source( f ) );
   end );
+
+InstallMethod( IsOne, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> f!.coeffs = [ [ 0, 1, 1, 0, 1 ] ] );
 
 InstallMethod( IsOne, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
@@ -3946,17 +4391,23 @@ InstallMethod( ViewString, "for the identity rcwa mapping (RCWA)", true,
 
 #############################################################################
 ##
-#M  Modulus( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#M  Modulus( <f> ) . . . . . . . for rcwa mappings in standard representation
+#M  Modulus( <f> ) . . . . . . . . for rcwa mappings in sparse representation
 ##
-InstallMethod( Modulus, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0, f -> f!.modulus );
+InstallMethod( Modulus, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0, f -> f!.modulus );
+InstallMethod( Modulus, "for rcwa mappings in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0, f -> f!.modulus );
 
 #############################################################################
 ##
-#M  Coefficients( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
+#M  Coefficients( <f> ) . . . .  for rcwa mappings in standard representation
+#M  Coefficients( <f> ) . . . . .  for rcwa mappings in sparse representation
 ##
-InstallMethod( Coefficients, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
+InstallMethod( Coefficients, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0, f -> f!.coeffs );
+InstallMethod( Coefficients, "for rcwa mappings in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0, f -> f!.coeffs );
 
 #############################################################################
 ##
@@ -3968,10 +4419,14 @@ InstallMethod( Coefficients, "for rcwa mappings (RCWA)", true,
 ##
 #M  Multiplier( <f> ) . . . . . . . . . . . . . . . . . . . for rcwa mappings
 ##
-InstallMethod( Multiplier, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0,
+InstallMethod( Multiplier, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
                          List( f!.coeffs, c -> c[1] ) ) );
+InstallMethod( Multiplier, "for rcwa mappings in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0,
+               f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
+                         List( f!.coeffs, c -> c[3] ) ) );
 InstallMethod( Multiplier, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 10,
                f -> Lcm( List( f!.coeffs, c -> c[1] ) ) );
@@ -3984,10 +4439,14 @@ InstallMethod( Multiplier, "for rcwa mappings of Z_(pi) (RCWA)", true,
 ##
 #M  Divisor( <f> ) . . . . . . . . . . . . . . . . . . . .  for rcwa mappings
 ##
-InstallMethod( Divisor, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMappingInStandardRep ], 0,
+InstallMethod( Divisor, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
                f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
                          List( f!.coeffs, c -> c[3] ) ) );
+InstallMethod( Divisor, "for rcwa mappings in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingInSparseRep ], 0,
+               f -> Lcm( UnderlyingRing( FamilyObj( f ) ),
+                         List( f!.coeffs, c -> c[5] ) ) );
 InstallMethod( Divisor, "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
                f -> Lcm( Integers, List( f!.coeffs, c -> c[3] ) ) );
@@ -4044,17 +4503,26 @@ InstallMethod( PrimeSet, "for rcwa mappings of Z^2 (RCWA)", true,
 #M  IsClassWiseTranslating( <f> ) . . . . . . . . . . . . . for rcwa mappings
 ##
 InstallMethod( IsClassWiseTranslating,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings in standard rep. (RCWA)", true,
+               [ IsRcwaMappingInStandardRep ], 0,
                f -> ForAll(Coefficients(f),c->IsOne(c[1]) and IsOne(c[3])) );
+InstallMethod( IsClassWiseTranslating,
+               "for rcwa mappings in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingInSparseRep ], 0,
+               f -> ForAll(Coefficients(f),c->IsOne(c[3]) and IsOne(c[5])) );
 
 #############################################################################
 ##
 #M  IsClassWiseOrderPreserving( <f> ) . for rcwa mappings of Z, Z^2 or Z_(pi)
 ##
 InstallMethod( IsClassWiseOrderPreserving,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               "for rcwa mappings of Z or Z_(pi) in standard rep. (RCWA)", 
+               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
                f -> ForAll( f!.coeffs, c -> c[ 1 ] > 0 ) );
+InstallMethod( IsClassWiseOrderPreserving,
+               "for rcwa mappings of Z or Z_(pi) in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_piInSparseRep ], 0,
+               f -> ForAll( f!.coeffs, c -> c[ 3 ] > 0 ) );
 InstallMethod( IsClassWiseOrderPreserving,
                "for rcwa mappings of Z^2 (RCWA)", true,
                [ IsRcwaMappingOfZxZInStandardRep ], 0,
@@ -4063,48 +4531,71 @@ InstallMethod( IsClassWiseOrderPreserving,
 #############################################################################
 ##
 #M  ClassWiseOrderPreservingOn( <f> )   for rcwa mappings of Z, Z^2 or Z_(pi)
-#M  ClassWiseOrderReversingOn( <f> ) .  for rcwa mappings of Z, Z^2 or Z_(pi)
-#M  ClassWiseConstantOn( <f> ) . . . .  for rcwa mappings of Z, Z^2 or Z_(pi)
 ##
 InstallMethod( ClassWiseOrderPreservingOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_pi ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-                          Filtered( [ 0 .. Modulus( f ) - 1 ],
-                                    r -> Coefficients( f )[r+1][1] > 0 ) ) );
+               "for rcwa mappings of Z or Z_(pi) in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                r -> Coefficients( f )[r+1][1] > 0 ) ) );
 InstallMethod( ClassWiseOrderPreservingOn,
-               "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-         AllResidues( Source( f ), Modulus( f ) )
-           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
-                     r -> DeterminantMat(Coefficients(f)[r][1]) > 0)} ) );
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union( List( Filtered( f!.coeffs, c -> c[3] > 0 ),
+                                 d -> ResidueClass( d[1], d[2] ) ) ) );
+InstallMethod( ClassWiseOrderPreservingOn,
+               "for rcwa mappings of Z^2 (RCWA)",
+               true, [ IsRcwaMappingOfZxZ ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      AllResidues( Source( f ), Modulus( f ) )
+                        {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                        r -> DeterminantMat(Coefficients(f)[r][1]) > 0)} ) );
+
+#############################################################################
+##
+#M  ClassWiseOrderReversingOn( <f> ) .  for rcwa mappings of Z, Z^2 or Z_(pi)
+##
 InstallMethod( ClassWiseOrderReversingOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_pi ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-                          Filtered( [ 0 .. Modulus( f ) - 1 ],
-                                    r -> Coefficients( f )[r+1][1] < 0 ) ) );
+               "for rcwa mappings of Z or Z_(pi) in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                r -> Coefficients( f )[r+1][1] < 0 ) ) );
 InstallMethod( ClassWiseOrderReversingOn,
-               "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-         AllResidues( Source( f ), Modulus( f ) )
-           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
-                     r -> DeterminantMat(Coefficients(f)[r][1]) < 0)} ) );
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union( List( Filtered( f!.coeffs, c -> c[3] < 0 ),
+                                 d -> ResidueClass( d[1], d[2] ) ) ) );
+InstallMethod( ClassWiseOrderReversingOn,
+               "for rcwa mappings of Z^2 (RCWA)",
+               true, [ IsRcwaMappingOfZxZ ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      AllResidues( Source( f ), Modulus( f ) )
+                        {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                        r -> DeterminantMat(Coefficients(f)[r][1]) < 0)} ) );
+
+#############################################################################
+##
+##M  ClassWiseConstantOn( <f> ) . . . .  for rcwa mappings of Z, Z^2 or Z_(pi)
+##
 InstallMethod( ClassWiseConstantOn,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_pi ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-                          Filtered( [ 0 .. Modulus( f ) - 1 ],
-                                    r -> Coefficients( f )[r+1][1] = 0 ) ) );
+               "for rcwa mappings of Z or Z_(pi) in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      Filtered( [ 0 .. Modulus( f ) - 1 ],
+                                r -> Coefficients( f )[r+1][1] = 0 ) ) );
 InstallMethod( ClassWiseConstantOn,
-               "for rcwa mappings of Z^2 (RCWA)", true,
-               [ IsRcwaMappingOfZxZ ], 0,
-  f -> ResidueClassUnion( Source( f ), Modulus( f ),
-         AllResidues( Source( f ), Modulus( f ) )
-           {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
-                     r -> IsZero(Coefficients(f)[r][1]))} ) );
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union( List( Filtered( f!.coeffs, c -> c[3] = 0 ),
+                                 d -> ResidueClass( d[1], d[2] ) ) ) );
+InstallMethod( ClassWiseConstantOn,
+               "for rcwa mappings of Z^2 (RCWA)",
+               true, [ IsRcwaMappingOfZxZ ], 0,
+               f -> ResidueClassUnion( Source( f ), Modulus( f ),
+                      AllResidues( Source( f ), Modulus( f ) )
+                        {Filtered([ 1 .. DeterminantMat( Modulus( f ) ) ],
+                        r -> IsZero(Coefficients(f)[r][1]))} ) );
 
 #############################################################################
 ##
@@ -4115,19 +4606,22 @@ InstallMethod( IsSignPreserving, "for rcwa mappings of Z (RCWA)", true,
 
   function ( f )
 
-    local  bound;
+    local  bound, ind;
 
     if not IsClassWiseOrderPreserving(f) then return false; fi;
-    bound := Maximum(1,Maximum(List(Coefficients(f),c->AbsInt(c[2]))));
+    if   IsRcwaMappingStandardRep(f) then ind := 2;
+    elif IsRcwaMappingSparseRep(f)   then ind := 4;
+    else TryNextMethod(); fi;
+    bound := Maximum(1,Maximum(List(Coefficients(f),c->AbsInt(c[ind]))));
     return Minimum([0..bound]^f) >= 0 and Maximum([-bound..-1]^f) < 0;
   end );
 
 #############################################################################
 ##
-#M  IncreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
+#M  IncreasingOn( <f> ) . . . . . . . . .  for rcwa mappings in standard rep.
 ##
-InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+InstallMethod( IncreasingOn, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -4147,10 +4641,19 @@ InstallMethod( IncreasingOn, "for rcwa mappings (RCWA)", true,
 
 #############################################################################
 ##
-#M  DecreasingOn( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
+#M  IncreasingOn( <f> ) . . . . . . . . for rcwa mappings of Z in sparse rep.
 ##
-InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+InstallMethod( IncreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])>c[5]),
+                               c->ResidueClass(c[1],c[2]))) );
+
+#############################################################################
+##
+#M  DecreasingOn( <f> ) . . . . . . . . .  for rcwa mappings in standard rep.
+##
+InstallMethod( DecreasingOn, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -4170,40 +4673,66 @@ InstallMethod( DecreasingOn, "for rcwa mappings (RCWA)", true,
 
 #############################################################################
 ##
+#M  DecreasingOn( <f> ) . . . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( DecreasingOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union(List(Filtered(f!.coeffs,c->AbsInt(c[3])<c[5]),
+                               c->ResidueClass(c[1],c[2]))) );
+
+#############################################################################
+##
 #M  ShiftsUpOn( <f> )  . . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallMethod( ShiftsUpOn, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
-  f -> ResidueClassUnion( Integers, Modulus(f),
-                          Filtered( [0..Modulus(f)-1],
-                                    r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
-                                     and Coefficients(f)[r+1][2] > 0 ) ) );
+InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
+               f -> ResidueClassUnion( Integers, Modulus(f),
+                      Filtered( [0..Modulus(f)-1],
+                                r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
+                                 and Coefficients(f)[r+1][2] > 0 ) ) );
+InstallMethod( ShiftsUpOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union(List(Filtered(f!.coeffs,
+                                        c->c{[3,5]}=[1,1] and c[4]>0),
+                               c->ResidueClass(c[1],c[2]))) );
 
 #############################################################################
 ##
 #M  ShiftsDownOn( <f> )  . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallMethod( ShiftsDownOn, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
-  f -> ResidueClassUnion( Integers, Modulus(f),
-                          Filtered( [0..Modulus(f)-1],
-                                    r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
-                                     and Coefficients(f)[r+1][2] < 0 ) ) );
+InstallMethod( ShiftsDownOn,
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
+               f -> ResidueClassUnion( Integers, Modulus(f),
+                      Filtered( [0..Modulus(f)-1],
+                                r -> Coefficients(f)[r+1]{[1,3]} = [1,1]
+                                 and Coefficients(f)[r+1][2] < 0 ) ) );
+InstallMethod( ShiftsDownOn, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Union(List(Filtered(f!.coeffs,
+                                        c->c{[3,5]}=[1,1] and c[4]<0),
+                               c->ResidueClass(c[1],c[2]))) );
 
 #############################################################################
 ##
 #M  MaximalShift( <f> )  . . . . . . . . . . . . . . . for rcwa mappings of Z
 ##
-InstallMethod( MaximalShift, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
-               f -> Maximum( List( Coefficients(f), c -> AbsInt(c[2]) ) ) );
+InstallMethod( MaximalShift,
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
+               f -> Maximum( List( f!.coeffs, c -> AbsInt(c[2]) ) ) );
+InstallMethod( MaximalShift,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Maximum( List( f!.coeffs, c -> AbsInt(c[4]) ) ) );
 
 #############################################################################
 ##
-#M  LargestSourcesOfAffineMappings( <f> ) . . . . . . . . . for rcwa mappings
+#M  LargestSourcesOfAffineMappings( <f> )  for rcwa mappings in standard rep.
 ##
 InstallMethod( LargestSourcesOfAffineMappings,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -4220,15 +4749,27 @@ InstallMethod( LargestSourcesOfAffineMappings,
 
 #############################################################################
 ##
+#M  LargestSourcesOfAffineMappings( <f> ) .  for rcwa mappings in sparse rep.
+##
+InstallMethod( LargestSourcesOfAffineMappings,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Set(EquivalenceClasses(f!.coeffs,c->c{[3..5]}),
+                        cl->Union(List(cl,c->ResidueClass(c[1],c[2])))) );
+
+#############################################################################
+##
 #A  FixedPointsOfAffinePartialMappings( <f> ) for rcwa mapping of Z or Z_(pi)
 ##
 InstallMethod( FixedPointsOfAffinePartialMappings,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_pi ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_pi ], 0,
 
   function ( f )
 
     local  m, c, fixedpoints, r;
+
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
 
     m := Modulus(f); c := Coefficients(f);
     fixedpoints := [];
@@ -4238,15 +4779,16 @@ InstallMethod( FixedPointsOfAffinePartialMappings,
                           else fixedpoints[r] := []; fi;
       else fixedpoints[r] := [ c[r][2]/(c[r][3]-c[r][1]) ]; fi;
     od;
+
     return fixedpoints;
   end );
 
 #############################################################################
 ##
-#M  ImageDensity( <f> ) . . . . . . . . . . . . . . . . . . for rcwa mappings
+#M  ImageDensity( <f> ) . . . . . . . . .  for rcwa mappings in standard rep.
 ##
-InstallMethod( ImageDensity, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+InstallMethod( ImageDensity, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -4264,10 +4806,18 @@ InstallMethod( ImageDensity, "for rcwa mappings (RCWA)", true,
 
 #############################################################################
 ##
-#M  Multpk( <f>, <p>, <k> ) . . . . . . . . . . . . .  for rcwa mappings of Z
+#M  ImageDensity( <f> ) . . . . . . . . . . . for rcwa mappings in sparse rep.
 ##
-InstallMethod( Multpk, "for rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ, IsInt, IsInt ], 0,
+InstallMethod( ImageDensity, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> Sum(List(f!.coeffs,c->c[5]/(c[2]*c[3]))) );
+
+#############################################################################
+##
+#M  Multpk( <f>, <p>, <k> ) . . . . . for rcwa mappings of Z in standard rep.
+##
+InstallMethod( Multpk, "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep, IsInt, IsInt ], 0,
 
   function ( f, p, k )
 
@@ -4276,6 +4826,18 @@ InstallMethod( Multpk, "for rcwa mappings of Z (RCWA)", true,
     m := Modulus(f); c := Coefficients(f);
     res := Filtered([0..m-1],r->PadicValuation(c[r+1][1]/c[r+1][3],p)=k);
     return ResidueClassUnion(Integers,m,res);
+  end );
+
+#############################################################################
+##
+#M  Multpk( <f>, <p>, <k> ) . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( Multpk, "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep, IsInt, IsInt ], 0,
+
+  function ( f, p, k )
+    return Union(List(Filtered(f!.coeffs,c->PadicValuation(c[3]/c[5],p)=k),
+                      c->ResidueClass(c[1],c[2])));
   end );
 
 #############################################################################
@@ -4297,30 +4859,48 @@ InstallMethod( Multpk, "for rcwa mappings of Z^2 (RCWA)", true,
 
 #############################################################################
 ##
-#M  MultDivType( <f> ) . . . . . . . . . . . . . . . . for rcwa mappings of Z
+#M  MultDivType( <f> ) . . . . . . . . for rcwa mappings of Z in standard rep.
 ##
 InstallMethod( MultDivType,
-               "for rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ ], 0,
+               "for rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep ], 0,
                f->List(Collected(List(Coefficients(f),c->c[1]/c[3])),
                        t->[t[1],t[2]/Mod(f)]) );
 
 #############################################################################
 ##
-#M  MappedPartitions( <g> ) . . . . . . . . . . . . . . . . for rcwa mappings
+#M  MultDivType( <f> ) . . . . . . . .  for rcwa mappings of Z in sparse rep.
 ##
-InstallMethod( MappedPartitions, "for rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+InstallMethod( MultDivType,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               f->List(EquivalenceClasses(f!.coeffs,c->c[3]/c[5]),
+                       cl->[cl[1][3]/cl[1][5],Sum(List(cl,c->1/c[2]))]) );
 
+#############################################################################
+##
+#M  MappedPartitions( <g> ) . . . . . . .  for rcwa mappings in standard rep.
+##
+InstallMethod( MappedPartitions, "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( g )
 
     local  P;
 
     P := AllResidueClassesModulo( Source(g), Mod(g) );
-
     return [ List(P,Density), List(P^g,Density) ];
   end );
+
+#############################################################################
+##
+#M  MappedPartitions( <g> ) . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( MappedPartitions,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               g -> [List(g!.coeffs,c->1/c[2]),
+                     List(g!.coeffs,c->c[5]/c[2]*c[3])] );
 
 #############################################################################
 ##
@@ -4330,12 +4910,13 @@ InstallMethod( MappedPartitions, "for rcwa mappings (RCWA)", true,
 
 #############################################################################
 ##
-#M  MovedPoints( <f> ) . . . . . . . . . . . . . . . . . .  for rcwa mappings
+#M  MovedPoints( <f> ) . . . . . . . . . . for rcwa mappings in standard rep.
 ##
 ##  The set of moved points (support) of the rcwa mapping <f>.
 ##
 InstallMethod( MovedPoints,
-               "for rcwa mappings (RCWA)", true, [ IsRcwaMapping ], 0,
+               "for rcwa mappings in standard rep. (RCWA)",
+               true, [ IsRcwaMappingInStandardRep ], 0,
 
   function ( f )
 
@@ -4389,6 +4970,33 @@ InstallMethod( MovedPoints,
 
 #############################################################################
 ##
+#M  MovedPoints( <f> ) . . . . . . . .  for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( MovedPoints,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( f )
+
+    local  S, c, fixedpoint, fixedpoints;
+
+    S := []; fixedpoints := [];
+    for c in f!.coeffs do
+      if c{[3..5]} <> [1,0,1] then
+        S := Union(S,ResidueClass(c[1],c[2]));
+        if c{[3,5]} <> [1,1] then
+          fixedpoint := c[4]/(c[5]-c[3]);
+          if   IsInt(fixedpoint) and fixedpoint mod c[2] = c[1]
+          then Add(fixedpoints,fixedpoint); fi;
+        fi;
+      fi;
+    od;
+    S := Difference(S,fixedpoints);
+    return S;
+  end );
+
+#############################################################################
+##
 #M  NrMovedPoints( <obj> ) . . . . . . . . . . . . . . . . . . default method
 ##
 InstallOtherMethod( NrMovedPoints, "default method (RCWA)", true,
@@ -4418,6 +5026,8 @@ InstallMethod( RestrictedMapping,
   function ( f, S )
 
     local  R, mf, mS, m, resf, resS, resm, cf, cfS, fS, r, pos, idcoeff;
+
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
 
     R := Source(f);
     if UnderlyingRing(FamilyObj(S)) <> R
@@ -4472,11 +5082,11 @@ InstallMethod( RestrictedPerm,
 ##
 #M  ImageElm( <f>, <n> ) . . . . . .  for an rcwa mapping of Z and an integer
 ##
-##  Returns the image of the integer <n> under the rcwa mapping <f>. 
+##  Returns the image of the integer <n> under the rcwa mapping <f>.
 ##
 InstallMethod( ImageElm,
-               "for an rcwa mapping of Z and an integer (RCWA)", true,
-               [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
+               "for rcwa mapping of Z in standard rep. and integer (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep, IsInt ], 0,
 
   function ( f, n )
 
@@ -4484,6 +5094,23 @@ InstallMethod( ImageElm,
 
     m := f!.modulus; c := f!.coeffs[n mod m + 1];
     return (c[1] * n + c[2]) / c[3];
+  end );
+
+#############################################################################
+##
+#M  ImageElm( <f>, <n> ) . . . . . .  for an rcwa mapping of Z and an integer
+##
+InstallMethod( ImageElm,
+               "for rcwa mapping of Z in sparse rep. and integer (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
+
+  function ( f, n )
+
+    local  m, c;
+
+    m := f!.modulus;
+    c := First(f!.coeffs,c->n mod c[2] = c[1]);
+    return (c[3] * n + c[4]) / c[5];
   end );
 
 #############################################################################
@@ -4588,8 +5215,8 @@ InstallMethod( ImagesElm, "for rcwa mapping of Z^2 and row vector (RCWA)",
 ##
 InstallMethod( ImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
-               ReturnTrue, [ IsRcwaMapping, IsListOrCollection ],
-               2 * SUM_FLAGS,
+               ReturnTrue, [ IsRcwaMappingInStandardRep,
+                             IsListOrCollection ], 2 * SUM_FLAGS,
 
   function ( f, S )
 
@@ -4601,6 +5228,22 @@ InstallMethod( ImagesSet,
     cls := AllResidueClassesModulo(R,m);
     return Union(List([1..Length(cls)],
                       i->(Intersection(S,cls[i])*c[i][1]+c[i][2])/c[i][3]));
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <S> )  for an rcwa mapping of Z and a residue class union
+##
+InstallMethod( ImagesSet,
+               "for an rcwa mapping of Z and a residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
+                             IsListOrCollection ], 2 * SUM_FLAGS,
+
+  function ( f, S )
+    if not IsSubset(Integers,S) then TryNextMethod(); fi;
+    if IsList(S) then return Set(List(S,n->n^f)); fi;
+    return Union(List(f!.coeffs,
+             c->(Intersection(S,ResidueClass(c[1],c[2]))*c[3]+c[4])/c[5]));
   end );
 
 #############################################################################
@@ -4659,6 +5302,7 @@ InstallMethod( \^,
 
     local  cls, abc, m, c, k, l;
 
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
     m := Modulus(f); c := Coefficients(f);
     k := List(Classes(U),cl->m/Gcd(m,cl[1])); l := Length(k);
     cls := AsListOfClasses(U);
@@ -4726,14 +5370,44 @@ InstallMethod( PreImagesElm,
 
 #############################################################################
 ##
+#M  PreImagesElm( <f>, <n> ) . . . .  for an rcwa mapping of Z and an integer
+##
+InstallMethod( PreImagesElm,
+               "for an rcwa mapping of Z and an integer (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
+
+  function ( f, n )
+    
+    local  coeffs, preimage, singletons, c, pre;
+
+    coeffs := f!.coeffs;
+    preimage := []; singletons := [];
+    for c in coeffs do
+      if c[3] <> 0 then
+        pre := (c[5] * n - c[4])/c[3];
+        if   IsInt(pre) and pre mod c[2] = c[1]
+        then Add(singletons,pre); fi;
+      else
+        if c[4] = n then
+          if   c[2] = 1 then return Integers;
+          else preimage := Union(preimage,ResidueClass(c[1],c[2])); fi;
+        fi;
+      fi;
+    od;
+    preimage := Union(preimage,singletons);
+    return preimage;
+  end );
+
+#############################################################################
+##
 #M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping and ring element
 ##
 ##  Returns a representative of the set of preimages of the integer <n> under
 ##  the rcwa mapping <f>. 
 ##
 InstallMethod( PreImagesRepresentative,
-               "for an rcwa mapping and a ring element (RCWA)", true, 
-               [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
+               "for an rcwa mapping and a ring element (RCWA)",
+               ReturnTrue, [ IsRcwaMappingInStandardRep, IsRingElement ], 0,
 
   function ( f, n )
     
@@ -4748,6 +5422,30 @@ InstallMethod( PreImagesRepresentative,
         if pre in R and pre mod m = residues[n1] then return pre; fi;
       else
         if c[n1][2] = n then return residues[n1]; fi;
+      fi;
+    od;
+    return fail;
+  end );
+
+#############################################################################
+##
+#M  PreImagesRepresentative( <f>, <n> ) . . for rcwa mapping of Z and integer
+##
+InstallMethod( PreImagesRepresentative,
+               "for an rcwa mapping of Z and an integer (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
+
+  function ( f, n )
+    
+    local  coeffs, c, pre;
+
+    coeffs := f!.coeffs;
+    for c in coeffs do
+      if c[3] <> 0 then
+        pre := (n * c[5] - c[4])/c[3];
+        if IsInt(pre) and pre mod c[2] = c[1] then return pre; fi;
+      else
+        if c[4] = n then return c[1]; fi;
       fi;
     od;
     return fail;
@@ -4820,6 +5518,36 @@ InstallMethod( PreImagesSet,
 
 #############################################################################
 ##
+#M  PreImagesSet( <f>, <S> ) .  for rcwa mapping of Z and residue class union
+##
+InstallMethod( PreImagesSet,
+               "for an rcwa mapping of Z and a residue class union (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
+                             IsResidueClassUnionOfZ ], 0,
+
+  function ( f, S )
+
+    local  coeffs, c, preimage, img, pre;
+
+    coeffs   := f!.coeffs;
+    preimage := [];
+
+    for c in coeffs do
+      if c[3] <> 0 then
+        img := ResidueClass((c[3]*c[1]+c[4])/c[5],c[3]*c[2]/c[5]);
+        img := Intersection(img,S);
+        pre := (c[5]*img-c[4])/c[3];
+      else
+        if c[4] in S then pre := ResidueClass(c[1],c[2]); fi;
+      fi;
+      preimage := Union(preimage,pre);
+    od;
+
+    return preimage;
+  end );
+
+#############################################################################
+##
 #M  PreImagesSet( <f>, <U> ) . . . . as above, but with fixed representatives
 ##
 ##  Returns the preimage of the union <U> of residue classes of Z with fixed
@@ -4836,6 +5564,8 @@ InstallMethod( PreImagesSet,
 
     local  preimage, cls, rep, m, minv, clm, k, l;
 
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
+
     m := Modulus(f); minv := Multiplier(f) * m;
     k := List(Classes(U),cl->minv/Gcd(minv,cl[1])); l := Length(k);
     cls := AsListOfClasses(U);
@@ -4851,6 +5581,7 @@ InstallMethod( PreImagesSet,
                                     Intersection(rep[i],cl)[1]]));
     cls := Concatenation(cls);
     preimage := UnionOfResidueClassesWithFixedRepresentatives(Integers,cls);
+
     return RepresentativeStabilizingRefinement(preimage,0);
   end );
 
@@ -4893,6 +5624,26 @@ InstallMethod( IsInjective,
       od;
     od;
     return true;
+  end );
+
+#############################################################################
+##
+#M  IsInjective( <f> ) . . . . . . . .  for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( IsInjective,
+               "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( f )
+
+    local  coeffs, imgs, c;
+
+    if Multiplier(f) = 0 then return false; fi;
+
+    coeffs := f!.coeffs;
+    imgs   := List(coeffs,c->[(c[3]*c[1]+c[4])/c[5],c[3]*c[2]/c[5]]);
+    return ForAll(Combinations(imgs,2),
+                  c->(c[1][1]-c[2][1]) mod Gcd(c[1][2],c[2][2]) <> 0);
   end );
 
 #############################################################################
@@ -5001,6 +5752,28 @@ InstallMethod( IsSurjective,
 
 #############################################################################
 ##
+#M  IsSurjective( <f> ) . . . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( IsSurjective,
+               "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0, 
+
+  function ( f )
+
+    local  coeffs, imgs;
+
+    coeffs := f!.coeffs;
+    if IsInjective(f) then
+      return Sum(List(coeffs,c->c[5]/(c[2]*c[3]))) = 1;
+    else
+      imgs := List(Filtered(coeffs,c->c[3]<>0),
+                   c->ResidueClass((c[3]*c[1]+c[4])/c[5],(c[3]*c[2])/c[5]));
+      return IsIntegers(Union(imgs));
+    fi;
+  end );
+
+#############################################################################
+##
 #M  IsSurjective( <f> ) . . . . . . . . . . . . for rcwa mappings of GF(q)[x]
 ##
 InstallMethod( IsSurjective,
@@ -5050,6 +5823,7 @@ InstallGlobalFunction( InjectiveAsMappingFrom,
 
     local  R, m, base, pre, im, cl, imcl, overlap;
 
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
     R := Source(f); if IsBijective(f) then return R; fi;
     m := Modulus(f); base := AllResidueClassesModulo(R,m);
     pre := R; im := [];
@@ -5090,7 +5864,7 @@ InstallMethod( \+,
 
   function ( f, g )
     
-    local c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
+    local  c1, c2, c3, m1, m2, m3, n, n1, n2, pi;
 
     c1 := f!.coeffs;  c2 := g!.coeffs;
     m1 := f!.modulus; m2 := g!.modulus;
@@ -5111,6 +5885,58 @@ InstallMethod( \+,
          return RcwaMappingNC( pi, c3 );
     fi;
   end );
+
+#############################################################################
+##
+#M  \+( <f>, <g> ) . . . . . . . .  for two rcwa mappings of Z in sparse rep.
+##
+##  Returns the pointwise sum of the rcwa mappings <f> and <g>.
+##
+InstallMethod( \+,
+               "for two rcwa mappings of Z in sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZInSparseRep,
+                 IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( f, g )
+    
+    local  coeffs1, coeffs2, coeffs3, c1, c2, c3, r;
+
+    coeffs1 := f!.coeffs; coeffs2 := g!.coeffs; coeffs3 := [];
+    for c1 in coeffs1 do
+      for c2 in coeffs2 do
+        if (c1[1] - c2[1]) mod Gcd(c1[2],c2[2]) = 0 then
+          r := ChineseRem([c1[2],c2[2]],[c1[1],c2[1]]);
+          c3 := [ r, Lcm(c1[2],c2[2]),
+                  c1[3]*c2[5] + c1[5]*c2[3],
+                  c1[4]*c2[5] + c1[5]*c2[4],
+                  c1[5]*c2[5] ];
+          Add(coeffs3,c3);
+        fi;
+      od;
+    od;
+
+    return RcwaMappingNC( coeffs3 );
+  end );
+
+#############################################################################
+##
+#M  \+( <f>, <g> ) . . .  for rcwa mappings of Z: sparse rep. + standard rep.
+#M  \+( <f>, <g> ) . . .  for rcwa mappings of Z: standard rep. + sparse rep.
+##
+##  Returns the pointwise sum of the rcwa mappings <f> and <g>.
+##
+InstallMethod( \+,
+               "for rcwa mappings of Z: sparse rep. + standard rep. (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZInSparseRep,
+                                 IsRcwaMappingOfZInStandardRep ], 0,
+               function ( f, g ) return StandardRepresentation(f) + g; end );
+
+InstallMethod( \+,
+               "for rcwa mappings of Z: standard rep. + sparse rep. (RCWA)",
+               IsIdenticalObj, [ IsRcwaMappingOfZInStandardRep,
+                                 IsRcwaMappingOfZInSparseRep ], 0,
+               function ( f, g ) return f + StandardRepresentation(g); end );
 
 #############################################################################
 ##
@@ -5150,6 +5976,7 @@ InstallMethod( \+,
 #############################################################################
 ##
 #M  AdditiveInverseOp( <f> ) . . . . . . . . . . . . . . .  for rcwa mappings
+#M  AdditiveInverseOp( <f> ) . . . . .  for rcwa mappings of Z in sparse rep. 
 ##
 ##  Returns the pointwise additive inverse of rcwa mapping <f>.
 ##
@@ -5158,10 +5985,17 @@ InstallMethod( AdditiveInverseOp,
                f -> f * RcwaMappingNC( Source(f), One(Source(f)),
                                        [[-1,0,1]] * One(Source(f)) ) );
 
+InstallMethod( AdditiveInverseOp,
+               "for rcwa mappings of Z in sparse rep. (RCWA)", true,
+               [ IsRcwaMappingOfZInSparseRep ], 0,
+               f -> RcwaMappingNC(List(f!.coeffs,
+                                       c->[c[1],c[2],-c[3],-c[4],c[5]])) );
+
 #############################################################################
 ##
-#M  \+( <f>, <n> ) . . . . . . . .  for rcwa mappings, addition of a constant
-#M  \+( <n>, <f> )
+#M  \+( <f>, <n> ) . . . . . . . . . . for an rcwa mapping and a ring element
+#M  \+( <f>, <n> ) . . for an rcwa mapping of Z in sparse rep. and an integer
+#M  \+( <n>, <f> ) . . . . . . . . . . for a ring element and an rcwa mapping
 ##
 ##  Returns the pointwise sum of the rcwa mapping <f> and the constant
 ##  rcwa mapping with value <n>.
@@ -5177,6 +6011,15 @@ InstallMethod( \+,
     R := Source(f);
     if not n in R then TryNextMethod(); fi;
     return f + RcwaMapping(R,One(R),[[0,n,1]]*One(R));
+  end );
+
+InstallMethod( \+,
+               "for rcwa mapping of Z in sparse rep. and integer (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsInt ], 0,
+
+  function ( f, n )
+    return RcwaMappingNC(List(f!.coeffs,
+                              c->[c[1],c[2],c[3],c[4]+n*c[5],c[5]]));
   end );
 
 InstallMethod( \+, "for a ring element and an rcwa mapping (RCWA)",
@@ -5269,6 +6112,86 @@ InstallMethod( CompositionMapping2,
 
     return fg;
   end );
+
+#############################################################################
+##
+#M  CompositionMapping2( <g>, <f> ) . for two rcwa mappings of Z, sparse rep.
+##
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first.
+##
+InstallMethod( CompositionMapping2,
+               "for two rcwa mappings of Z, sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZInSparseRep,
+                 IsRcwaMappingOfZInSparseRep ], SUM_FLAGS,
+
+  function ( g, f )
+
+    local  fg, coeffs, c1, c2, c, img, int, pre;
+
+    coeffs := [];
+    for c1 in f!.coeffs do
+      img := [ (c1[3]*c1[1] + c1[4])/c1[5], c1[3]*c1[2]/c1[5] ];
+      for c2 in g!.coeffs do
+        if img[2] <> 0 then
+          if ( c2[1] - img[1] ) mod Gcd( c2[2], img[2] ) = 0 then
+            int := [ ChineseRem( [ c2[2], img[2] ], [ c2[1], img[1] ] ),
+                     Lcm( c2[2], img[2] ) ];
+            pre := [ (int[1]*c1[5] - c1[4])/c1[3], int[2]*c1[5]/c1[3] ];
+            c := [ pre[1], pre[2], c1[3]*c2[3],
+                                   c1[4]*c2[3] + c1[5]*c2[4],
+                                   c1[5]*c2[5] ];
+            Add(coeffs,c);
+          fi;
+        elif img[1] mod c2[2] = c2[1] then
+          pre := [ c1[1], c1[2] ];
+          c := [ pre[1], pre[2], c1[3]*c2[3],
+                                 c1[4]*c2[3] + c1[5]*c2[4],
+                                 c1[5]*c2[5] ];
+          Add(coeffs,c);
+        fi;
+      od;
+    od;
+
+    fg := RcwaMappingNC(coeffs);
+
+    if    HasIsInjective(f) and IsInjective(f)
+      and HasIsInjective(g) and IsInjective(g)
+    then SetIsInjective(fg,true); fi;
+
+    if    HasIsSurjective(f) and IsSurjective(f)
+      and HasIsSurjective(g) and IsSurjective(g)
+    then SetIsSurjective(fg,true); fi;
+
+    return fg;
+  end );
+
+#############################################################################
+##
+#M  CompositionMapping2( <g>, <f> ) . . . . . . . sparse rep. * standard rep.
+#M  CompositionMapping2( <g>, <f> ) . . . . . . . standard rep. * sparse rep.
+##
+##  Returns the product (composition) of the rcwa mappings <f> and <g>.
+##  The mapping <f> is applied first.
+##
+InstallMethod( CompositionMapping2,
+               "for rcwa mappings of Z, sparse rep. * standard rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZInStandardRep,
+                 IsRcwaMappingOfZInSparseRep ], SUM_FLAGS,
+               function ( g, f )
+                 return CompositionMapping2(g,StandardRepresentation(f));
+               end );
+
+InstallMethod( CompositionMapping2,
+               "for rcwa mappings of Z, standard rep. * sparse rep. (RCWA)",
+               IsIdenticalObj,
+               [ IsRcwaMappingOfZInSparseRep,
+                 IsRcwaMappingOfZInStandardRep ], SUM_FLAGS,
+               function ( g, f )
+                 return CompositionMapping2(StandardRepresentation(g),f);
+               end );
 
 #############################################################################
 ##
@@ -5587,17 +6510,27 @@ InstallMethod( \*,
 
 #############################################################################
 ##
-#M  \*( <n>, <f> ) . . . . .  for rcwa mappings, multiplication by a constant
-#M  \*( <f>, <n> )
+#M  \*( <n>, <f> ) . . . . . . . . . . for a ring element and an rcwa mapping
+#M  \*( <n>, <f> ) . .  for an integer and an rcwa mapping of Z in sparse rep.
+#M  \*( <f>, <n> ) . . . . . . . . . . for an rcwa mapping and a ring element
 ##
 InstallMethod( \*,
                "for rcwa mappings, multiplication by a constant (RCWA)",
-               ReturnTrue, [ IsRingElement, IsRcwaMapping ], 0,
+               ReturnTrue, [ IsRingElement, IsRcwaMappingInStandardRep ], 0,
 
   function ( n, f )
     if not n in Source(f) then TryNextMethod(); fi;
     return RcwaMapping(Source(f),Modulus(f),
                        List(Coefficients(f),c->[n*c[1],n*c[2],c[3]]));
+  end );
+
+InstallMethod( \*,
+               "for an rcwa mapping of Z in sparse rep. & a constant (RCWA)",
+               ReturnTrue, [ IsInt, IsRcwaMappingOfZInSparseRep ], 0,
+
+  function ( n, f )
+    if not n in Source(f) then TryNextMethod(); fi;
+    return RcwaMapping(List(f!.coeffs,c->[c[1],c[2],n*c[3],n*c[4],c[5]]));
   end );
 
 InstallMethod( \*, "for rcwa mappings, multiplication by a constant (RCWA)",
@@ -5724,8 +6657,8 @@ BindGlobal( "LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER",
 ##  Returns the inverse mapping of the bijective rcwa mapping <f>.
 ##
 InstallMethod( InverseOp,
-               "for rcwa mappings of Z or Z_(pi) (RCWA)", true,
-               [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
+               "for rcwa mappings of Z or Z_(pi) (RCWA)",
+               true, [ IsRcwaMappingOfZOrZ_piInStandardRep ], 0,
                
   function ( f )
 
@@ -5775,6 +6708,49 @@ InstallMethod( InverseOp,
     fi;
 
     return Result;
+  end );
+
+#############################################################################
+##
+#M  InverseOp( <f> ) . . . . . . . . .  for rcwa mappings of Z in sparse rep.
+##
+##  Returns the inverse mapping of the bijective rcwa mapping <f>.
+##
+InstallMethod( InverseOp,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep ], 0,
+               
+  function ( f )
+
+    local  inverse, order;
+
+    if not IsBijective(f) then return fail; fi;
+    if HasOrder(f) and Order(f) = 2 then return f; fi;
+
+    inverse := RcwaMappingNC(List(f!.coeffs,c->
+                 [(c[3]*c[1]+c[4])/c[5],c[3]*c[2]/c[5],c[5],-c[4],c[3]]));
+
+    SetInverse(f,inverse); SetInverse(inverse,f);
+    if HasOrder(f) then SetOrder(inverse,Order(f)); order := Order(f);
+                   else order := fail; fi;
+    if HasBaseRoot(f) then
+      SetBaseRoot(inverse,BaseRoot(f));
+      SetPowerOverBaseRoot(inverse,-PowerOverBaseRoot(f));
+    fi;
+    if HasSmallestRoot(f) then
+      SetSmallestRoot(inverse,SmallestRoot(f));
+      SetPowerOverSmallestRoot(inverse,-PowerOverSmallestRoot(f));
+    fi;
+    if HasName(f) then
+      SetName(inverse,NAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                      Name(f),-1,order));
+    fi;
+    if HasLaTeXString(f) then
+      SetLaTeXString(inverse,LATEXNAME_OF_POWER_BY_NAME_EXPONENT_AND_ORDER(
+                            LaTeXString(f),-1,order));
+    fi;
+
+    return inverse;
   end );
 
 #############################################################################
@@ -5914,8 +6890,8 @@ InstallMethod( InverseGeneralMapping,
 #M  RightInverse( <f> ) . . . . . . . . . . . . . for injective rcwa mappings
 ##
 InstallMethod( RightInverse,
-               "for injective rcwa mappings (RCWA)", true,
-               [ IsRcwaMapping ], 0,
+               "for injective rcwa mappings (RCWA)",
+               true, [ IsRcwaMapping ], 0,
 
   function ( f )
 
@@ -5923,6 +6899,8 @@ InstallMethod( RightInverse,
            r1, r2, pos1, pos2, idcoeff;
 
     if not IsInjective(f) then return fail; fi;
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
+
     R := Source(f);
     if   IsRing(R) then idcoeff := [1,0,1] * One(R);
     elif IsZxZ(R)  then idcoeff := [[[1,0],[0,1]],[0,0],1];
@@ -5954,14 +6932,16 @@ InstallMethod( RightInverse,
 #M  RightInverse( <f> ) . . . . . . . . . .  for injective rcwa mappings of Z
 ##
 InstallMethod( RightInverse,
-               "for injective rcwa mappings of Z (RCWA)", true,
-               [ IsRcwaMappingOfZ ], 0,
+               "for injective rcwa mappings of Z (RCWA)",
+               true, [ IsRcwaMappingOfZ ], 0,
 
   function ( f )
 
     local  inv, mf, cf, minv, cinv, imgs, r1, r2;
 
     if not IsInjective(f) then return fail; fi;
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
+
     mf := Modulus(f); cf := Coefficients(f);
     imgs := AllResidueClassesModulo(mf)^f;
     minv := Lcm(List(imgs,Modulus));
@@ -5990,6 +6970,9 @@ InstallMethod( CommonRightInverse,
     if not ForAll([l,r],IsInjective) or Intersection(Image(l),Image(r)) <> []
        or Union(Image(l),Image(r)) <> Integers
     then return fail; fi;
+
+    if not IsRcwaMappingStandardRep(l) then l := StandardRep(l); fi;
+    if not IsRcwaMappingStandardRep(l) then r := StandardRep(r); fi;
 
     imgl := AllResidueClassesModulo(Modulus(l))^l;
     imgr := AllResidueClassesModulo(Modulus(r))^r;
@@ -6183,9 +7166,8 @@ InstallMethod( IsTame,
 
   function ( f )
 
-    local  gamma, delta, C, r,
-           m, coeffs, cl, img, c, d,
-           pow, exp, e;
+    local  gamma, delta, C, r, m, coeffs, cl, img,
+           starttime, k, pow, exp, e;
 
     Info(InfoRCWA,3,"`IsTame' for an rcwa mapping <f> of ",
                     RingToString(Source(f)),".");
@@ -6237,17 +7219,25 @@ InstallMethod( IsTame,
       Info(InfoRCWA,3,"IsTame: loop criterion.");
       m := Modulus(f);
       if IsRcwaMappingOfZ(f) then
-        coeffs := Coefficients(f);
-        for r in [0..m-1] do
-          c := coeffs[r+1];
-          if AbsInt(c[1]) <> 1 or c[3] <> 1 then
-            d := Gcd(m,c[1]*m/c[3]);
-            if (r - (c[1]*r+c[2])/c[3]) mod d = 0 then
-              Info(InfoRCWA,3,"IsTame: <f> is wild, by loop criterion.");
-              SetOrder(f,infinity); return false;
-            fi;
+        starttime := Runtime();
+        k := 1; pow := f;
+        repeat
+          if Loops(pow) <> [] then
+            Info(InfoRCWA,3,"IsTame: <f>^",k," has loops, thus <f> ",
+                            "is wild by loop criterion.");
+            SetOrder(f,infinity); return false;
           fi;
-        od;
+          if IsIntegral(pow) then
+            Info(InfoRCWA,3,"IsTame: <f>^",k," is integral, ",
+                            "thus <f> is tame.");
+            return true;
+          fi;
+          if   Mod(pow) < m or LogInt(Int(Mod(pow)/m),2) < k/6 - 1
+          then break; fi; 
+          if Runtime() - starttime > 10 * m then break; fi;
+          starttime := Runtime();
+          k := k + 1; pow := pow * f;
+        until false;
       else
         for cl in AllResidueClassesModulo(Source(f),m) do
           img := cl^f;
@@ -6291,7 +7281,7 @@ InstallMethod( IsTame,
 
 #############################################################################
 ##
-#M  RespectedPartition( <sigma> ) . . . for tame bijective rcwa mappings
+#M  RespectedPartition( <sigma> ) . . . . .  for tame bijective rcwa mappings
 ##
 InstallMethod( RespectedPartition,
                "for tame bijective rcwa mappings (RCWA)", true,
@@ -6300,6 +7290,56 @@ InstallMethod( RespectedPartition,
   function ( sigma )
     if not IsBijective(sigma) then return fail; fi;
     return RespectedPartition( Group( sigma ) );
+  end );
+
+#############################################################################
+##
+#M  RespectsPartition( <sigma>, <P> ) . .  for rcwa mappings in standard rep.
+##
+InstallMethod( RespectsPartition,
+               "for rcwa mappings in standard rep. (RCWA)",
+               ReturnTrue, [ IsRcwaMappingInStandardRep, IsList ], 0,
+
+  function ( sigma, P )
+
+    local  R, cl, c, c_rest, pos, res, r, m;
+
+    R := Source(sigma);
+    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(R,cl))
+      or Union(P) <> R or Sum(List(P,Density)) <> 1
+    then TryNextMethod(); fi;
+    if Permutation(sigma,P) = fail then return false; fi;
+    c   := Coefficients(sigma);
+    res := AllResidues(R,Modulus(sigma));
+    for cl in P do
+      r      := Residue(cl);
+      m      := Modulus(cl);
+      pos    := Filtered([1..Length(res)],i->res[i] mod m = r);
+      c_rest := c{pos};
+      if Length(Set(c_rest)) > 1 then return false; fi;
+    od;
+    return true;
+  end );
+
+#############################################################################
+##
+#M  RespectsPartition( <sigma>, <P> ) . for rcwa mappings of Z in sparse rep.
+##
+InstallMethod( RespectsPartition,
+               "for rcwa mappings of Z in sparse rep. (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep, IsList ], 0,
+
+  function ( sigma, P )
+
+    if   not ForAll(P,cl->IsResidueClass(cl) and IsSubset(Integers,cl))
+      or Union(P) <> Integers or Sum(List(P,Density)) <> 1
+    then TryNextMethod(); fi;
+
+    if Permutation(sigma,P) = fail then return false; fi;
+
+    return ForAll(P,cl->Length(Set(Filtered(sigma!.coeffs,
+                  c -> (c[1]-Residue(cl)) mod Gcd(c[2],Modulus(cl)) = 0),
+                  d -> d{[3..5]})) = 1);
   end );
 
 #############################################################################
@@ -6388,6 +7428,8 @@ InstallMethod( CompatibleConjugate,
       od;
     od;
     sigma := RcwaMapping(c);
+    if   IsRcwaMappingSparseRep(g) and IsRcwaMappingSparseRep(h)
+    then sigma := SparseRep(sigma); fi;
     return h^sigma;
   end );
 
@@ -6430,6 +7472,11 @@ InstallMethod( Order,
         Info(InfoRCWA,3,"       Hence <g> has infinite order.");
         return infinity;
       fi;
+      if Loops(g) <> [] then
+        Info(InfoRCWA,3,"Order: <g> has infinite order, by loop criterion.");
+        SetIsTame(g,false);
+        return infinity;
+      fi;
     fi;
 
     if not IsBalanced(g) then
@@ -6453,6 +7500,12 @@ InstallMethod( Order,
           return infinity;
         fi;
         pow := pow^e; if IsOne(pow) then break; fi;
+        if Loops(pow) <> [] then
+          Info(InfoRCWA,3,"Order: <g>^",e," has loops, ",
+                          "thus <g> has infinite order.");
+          SetIsTame(g,false);
+          return infinity;
+        fi;
       od;
 
       Info(InfoRCWA,3,"Order: Looking for finite cycles ... ");
@@ -6519,7 +7572,7 @@ InstallMethod( Order,
       then return 2*k; else return infinity; fi;
     fi;
 
-    if IsRcwaMappingOfGFqx(g) then
+    if IsRcwaMappingOfGFqxInStandardRep(g) then
       e := Lcm(List(Coefficients(gtilde),c->Order(c[1])));
       gtilde := gtilde^e;
       if IsOne(gtilde) then return k * e; fi;
@@ -6528,7 +7581,16 @@ InstallMethod( Order,
       if IsOne(gtilde) then return k * e * p; fi;
     fi;
 
-    if IsRcwaMappingOfZxZ(g) then
+    if IsRcwaMappingOfGFqxInSparseRep(g) then
+      e := Lcm(List(Coefficients(gtilde),c->Order(c[3])));
+      gtilde := gtilde^e;
+      if IsOne(gtilde) then return k * e; fi;
+      p := Characteristic(Source(g));
+      gtilde := gtilde^p;
+      if IsOne(gtilde) then return k * e * p; fi;
+    fi;
+
+    if IsRcwaMappingOfZxZInStandardRep(g) then
       if ForAny(Coefficients(gtilde),c->Order(c[1])=infinity) then
         return infinity;
       else
@@ -6651,6 +7713,7 @@ InstallMethod( FactorizationOnConnectedComponents,
 
     local  factors, c, comps, comp, coeff, m_f, m_res, r;
 
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
     c := Coefficients(f);
     comps := OrbitsModulo(f,m);
     m_f := Modulus(f); m_res := Lcm(m,m_f);
@@ -6729,11 +7792,11 @@ InstallMethod( Loops,
 
 ############################################################################
 ##
-#M  Loops( <f> ) . . . . . . . . . . . . .  for bijective rcwa mappings of Z
+#M  Loops( <f> ) . . . . . for bijective rcwa mappings of Z in standard rep.
 ##
 InstallMethod( Loops,
-               "for bijective rcwa mappings of Z (RCWA)",
-               true, [ IsRcwaMappingOfZ and IsBijective ], 0,
+               "for bijective rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInStandardRep and IsBijective ], 0,
 
   function ( f )
 
@@ -6748,6 +7811,34 @@ InstallMethod( Loops,
       if   [r_img,m_img] <> [r,m] and (r_img - r) mod Gcd(m,m_img) = 0
       then Add(loops,ResidueClass(r,m)); fi;
     od;
+    if loops <> [] then SetIsTame(f,false); fi;
+    return loops;
+  end );
+
+############################################################################
+##
+#M  Loops( <f> ) . . . . . . for bijective rcwa mappings of Z in sparse rep.
+##
+InstallMethod( Loops,
+               "for bijective rcwa mappings of Z in standard rep. (RCWA)",
+               true, [ IsRcwaMappingOfZInSparseRep and IsBijective ], 0,
+
+  function ( f )
+
+    local  coeffs, modulus, c, r, m, r_img, m_img, loops;
+
+    modulus := Mod(f);
+    coeffs  := f!.coeffs;
+    loops   := [];
+    for c in coeffs do
+      r := c[1]; m := c[2];
+      m_img := AbsInt(c[3]*c[2]/c[5]);
+      r_img := ((c[3]*r+c[4])/c[5]) mod m_img;
+      if    [r_img,m_img] <> [r,m]
+        and (r_img - r) mod Gcd(m,m_img) = 0
+      then Add(loops,ResidueClass(r,modulus)); fi;
+    od;
+    if loops <> [] then SetIsTame(f,false); fi;
     return loops;
   end );
 
@@ -6756,8 +7847,8 @@ InstallMethod( Loops,
 #M  Loops( <f> ) . . . . . . . . . . for bijective rcwa mappings of GF(q)[x]
 ##
 InstallMethod( Loops,
-               "for bijective rcwa mappings of GF(q)[x] (RCWA)",
-               true, [ IsRcwaMappingOfGFqx and IsBijective ], 0,
+               "for bijective rcwa mappings of GF(q)[x] (RCWA)", true,
+               [ IsRcwaMappingOfGFqxInStandardRep and IsBijective ], 0,
 
   function ( f )
 
@@ -6775,6 +7866,7 @@ InstallMethod( Loops,
       if   [r_img,m_img] <> [r,m] and IsZero((r_img - r) mod Gcd(R,m,m_img))
       then Add(loops,ResidueClass(R,m,r)); fi;
     od;
+    if loops <> [] then SetIsTame(f,false); fi;
     return loops;
   end );
 
@@ -6902,6 +7994,7 @@ InstallMethod( Trajectory,
     local  coeffs, triple, traj, length, terminal,
            c, m, d, pos, res, r, deg, R, q, x;
 
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
     if   IsPosInt(lngterm)           then length   := lngterm;
     elif IsListOrCollection(lngterm) then terminal := lngterm;
     else TryNextMethod(); fi;
@@ -6982,6 +8075,7 @@ InstallMethod( GuessedDivergence,
 
     Info(InfoWarning,1,"Warning: GuessedDivergence: no particular return ",
                        "value is guaranteed.");
+    if not IsRcwaMappingStandardRep(f) then f := StandardRep(f); fi;
     R := Source(f);
     prec := 10^8; eps := Float(1/prec);
     pow := f; exp := 1; approx := Float(0);
@@ -7191,8 +8285,8 @@ InstallMethod( ShortCycles,
 #M  CycleRepresentativesAndLengths( <g>, <S> ) . . . . . . . . default method
 ##
 InstallMethod( CycleRepresentativesAndLengths,
-               "default method (RCWA)", ReturnTrue,
-               [ IsRcwaMapping, IsListOrCollection ], 0,
+               "default method (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsListOrCollection ], 0,
 
   function ( g, S )
 
@@ -7225,6 +8319,8 @@ InstallMethod( ShortResidueClassCycles,
 
     local  cycles, cycle, cycs, lngs, lng, startpts, cycbound,
            cl, S, affsrc, divs, c, m, r; 
+
+    if not IsRcwaMappingStandardRep(g) then g := StandardRep(g); fi;
 
     affsrc := LargestSourcesOfAffineMappings(g);
     divs := Difference(DivisorsInt(modbound),[1]);
@@ -7317,7 +8413,7 @@ InstallMethod( Restriction, "for rcwa mappings (RCWA)", IsIdenticalObj,
 
     gf := RestrictedPerm( RightInverse(f) * g * f, Image(f) );
 
-    Assert(1,g*f=f*gf,"Restriction: Diagram does not commute.\n");
+    Assert(4,g*f=f*gf,"Restriction: Diagram does not commute.\n");
 
     if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
     if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
@@ -7343,7 +8439,7 @@ InstallMethod( Induction, "for rcwa mappings (RCWA)", IsIdenticalObj,
 
     gf := f * g * RightInverse(f);
 
-    Assert(1,gf*f=f*g,"Induction: Diagram does not commute.\n");
+    Assert(4,gf*f=f*g,"Induction: Diagram does not commute.\n");
 
     if HasIsInjective(g)  then SetIsInjective(gf,IsInjective(g)); fi;
     if HasIsSurjective(g) then SetIsSurjective(gf,IsSurjective(g)); fi;
@@ -7498,11 +8594,13 @@ InstallMethod( FactorizationIntoCSCRCT,
         leftfacts   := Concatenation(leftfacts,l);
       fi;
       StateInfo();
-      Assert(2,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
+      Assert(4,IsBijective(RcwaMapping(ShallowCopy(Coefficients(g)))));
     end;
 
     if not IsBijective(g) then return fail; fi;
     if IsOne(g) then return [g]; fi;
+
+    if not IsRcwaMappingStandardRep(g) then g := StandardRep(g); fi;
 
     leftfacts := []; rightfacts := []; facts := []; elm := g;
     direction := ValueOption("Direction");
@@ -7548,7 +8646,7 @@ InstallMethod( FactorizationIntoCSCRCT,
           P := Set(newP);
         until P = oldP;
         P := Set(P,res->ResidueClassUnion(Integers,m,res-1));
-        Assert(2,Union(P)=Integers);
+        Assert(4,Union(P)=Integers);
         if   not ForAll(P,IsResidueClass)
         then P := AllResidueClassesModulo(Modulus(g)); fi;
       else P := AllResidueClassesModulo(Modulus(g)); fi;

@@ -208,8 +208,11 @@
   [1X1.2-3 PartitionsIntoResidueClasses[101X
   
   [29X[2XPartitionsIntoResidueClasses[102X( [3XR[103X, [3Xlength[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10Ya  sorted list of all partitions of the ring [3XR[103X into [3Xlength[103X residue
-            classes.[133X
+  [29X[2XPartitionsIntoResidueClasses[102X( [3XR[103X, [3Xlength[103X, [3Xprimes[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Yin  the  2-argument version a sorted list of all partitions of the
+            ring  [3XR[103X  into  [3Xlength[103X residue classes. In the 3-argument version a
+            sorted  list  of  all partitions of the ring [3XR[103X into [3Xlength[103X residue
+            classes whose moduli have only prime factors in the list [3Xprimes[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

@@ -941,7 +941,7 @@
   
   [30X    [33X[0;6YRemoved    outdated    statements    from    the    documentation   of
         [2XStructureDescription[102X   ([14XReference:   StructureDescription[114X)  which  now
-        non-ambiguolsy  states that [10XStructureDescription[110X is not an isomorphism
+        non-ambiguosly  states that [10XStructureDescription[110X is not an isomorphism
         invariant:  non-isomorphic  groups can have the same string value, and
         two   isomorphic  groups  in  different  representations  can  produce
         different strings.[133X
@@ -975,4 +975,66 @@
   [30X    [33X[0;6Y[5XToolsForHomalg[105X   package   by   M.   Barakat,   S.   Gutsche   and  M.
         Lange-Hegermann,  which  provides some auxiliary functionality for the
         [5Xhomalg[105X project ([7Xhttp://homalg.math.rwth-aachen.de/[107X).[133X
+  
+  
+  [1X2.5 [33X[0;0Y[5XGAP[105X[101X[1X 4.5.7 (December 2012)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to crashes:[133X
+  
+  [30X    [33X[0;6YClosing  with  [10XLogInputTo[110X (or [10XLogOutputTo[110X) a logfile opened with [2XLogTo[102X
+        ([14XReference:  LogTo[114X) left the data structures corrupted, resulting in a
+        crash.[133X
+  
+  [30X    [33X[0;6YOn  32-bit systems we can have long integers [10Xn[110X such that [10XLog2Int(n)[110X is
+        not  an  immediate  integer.  In  such  cases  [10XLog2Int[110X  gave  wrong or
+        corrupted results which in turn could crash [5XGAP[105X, e.g., in [10XViewObj(n)[110X.[133X
+  
+  [30X    [33X[0;6YSome   patterns  of  use  of  [2XUpEnv[102X  ([14XReference:  UpEnv[114X)  and  [2XDownEnv[102X
+        ([14XReference: DownEnv[114X) were leading to a segfault.[133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YViewing  of  long negative integers was broken, because it went into a
+        break loop.[133X
+  
+  [30X    [33X[0;6YDivision  by zero in [2XZmodnZ[102X ([14XReference: ZmodnZ[114X) ([22Xn[122X not prime) produced
+        invalid objects. [Reported by Mark Dickinson][133X
+  
+  [30X    [33X[0;6YFixed   a  bug  in  determining  multiplicative  inverse  for  a  zero
+        polynomial.[133X
+  
+  [30X    [33X[0;6YFixed      a      bug      causing      infinite      recursion     in
+        [2XNaturalHomomorphismByNormalSubgroup[102X                        ([14XReference:
+        NaturalHomomorphismByNormalSubgroup[114X).[133X
+  
+  [30X    [33X[0;6YA workaround was added to deal with a package method creating pcgs for
+        permutation groups for which the entry [10XpermpcgsNormalSteps[110X is missing.[133X
+  
+  [30X    [33X[0;6YFor a semigroup of associative words that is not the full semigroup of
+        all  associative  words,  the  methods  for [2XSize[102X ([14XReference: Size[114X) and
+        [2XIsTrivial[102X  ([14XReference:  IsTrivial[114X) called one another causing infinite
+        recursion.[133X
+  
+  [30X    [33X[0;6YThe  64-bit  version  of  the  [11Xgac[111X script produced wrong (>= 2^31) CRC
+        values because of an integer conversion problem.[133X
+  
+  [30X    [33X[0;6YIt  was  not possible to compile [5XGAP[105X on some systems where [10XHAVE_SELECT[110X
+        detects as false.[133X
+  
+  [30X    [33X[0;6YNumbers in memory options on the command line exceeding 2^32 could not
+        be  parsed  correctly,  even  on  64-bit  systems. [Reported by Volker
+        Braun][133X
+  
+  [33X[0;0YNew packages added for the redistribution with [5XGAP[105X:[133X
+  
+  [30X    [33X[0;6Y[5XFloat[105X  package  by  L.  Bartholdi,  which  extends  [5XGAP[105X floating-point
+        capabilities    by   providing   new   floating-point   handlers   for
+        high-precision real, interval and complex arithmetic using MPFR, MPFI,
+        MPC   or   CXSC   external   libraries.   It   also  contains  a  very
+        high-performance  implementation  of  the LLL (Lenstra-Lenstra-Lovász)
+        lattice reduction algorithm via the external library FPLLL.[133X
+  
+  [30X    [33X[0;6Y[5XToricVarieties[105X  package  by S. Gutsche, which provides data structures
+        to  handle  toric varieties by their commutative algebra structure and
+        by their combinatorics.[133X
   

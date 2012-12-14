@@ -10,20 +10,28 @@
 		\hyperpage{8}
   \item \texttt  {Add}\discretionary {-}{}{}\texttt  {Left}\discretionary {-}{}{}\texttt  {Right}\discretionary {-}{}{}\texttt  {Logical}\discretionary {-}{}{}\texttt  {Implications}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
 		\hyperpage{10}
+  \item \texttt  {AddToToDoList}
+    \subitem for IsToDoListEntry, \hyperpage{19}
   \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
 		\hyperpage{9}
   \item \texttt  {{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Two}\discretionary {-}{}{}\texttt  {Elm}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {Obj{\textunderscore }}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {Homalg}, 
 		\hyperpage{8}
   \item \texttt  {AppendToAhomalgTable}, \hyperpage{14}
+  \item \texttt  {AreCompatible}
+    \subitem for IsToDoListEntry, IsToDoListEntry, \hyperpage{16}
 
   \indexspace
 
   \item \texttt  {ContainerForPointers}, \hyperpage{9}
   \item \texttt  {ContainerForWeakPointers}, \hyperpage{8}
+  \item \texttt  {Create}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do}\discretionary {-}{}{}\texttt  {List}\discretionary {-}{}{}\texttt  {Entry}
+    \subitem for IsToDoListEntry, \hyperpage{17}
 
   \indexspace
 
   \item \texttt  {DeclareAttributeWithCustomGetter}, \hyperpage{14}
+  \item \texttt  {DescriptionOfImplication}
+    \subitem for IsToDoListEntry, \hyperpage{18}
 
   \indexspace
 
@@ -36,6 +44,11 @@
   \item \texttt  {ExamplesForHomalg}
     \subitem for , \hyperpage{15}
     \subitem for IsInt, \hyperpage{15}
+
+  \indexspace
+
+  \item \texttt  {GenesisOfToDoListEntry}
+    \subitem for IsToDoListEntry, \hyperpage{17}
 
   \indexspace
 
@@ -112,6 +125,13 @@
     \subitem for IsStructureObjectOrObjectOrMorphism, \hyperpage{6}
   \item \texttt  {IsStructureObjectOrObjectOrMorphism}
     \subitem for IsAttributeStoringRep, \hyperpage{6}
+  \item \texttt  {IsToDoList}
+    \subitem for IsObject, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {JoinToDoListEntries}
+    \subitem for IsList, \hyperpage{17}
 
   \indexspace
 
@@ -125,6 +145,42 @@
 
   \item \texttt  {MatchPropertiesAndAttributes}, \hyperpage{11}
   \item \texttt  {MemoryToString}, \hyperpage{14}
+
+  \indexspace
+
+  \item \texttt  {NewToDoList}
+    \subitem for , \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {ProcessAToDoListEntry}
+    \subitem for IsToDoListEntry, \hyperpage{16}
+  \item \texttt  {Process{\textunderscore }}\discretionary {-}{}{}\texttt  {A{\textunderscore }}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do{\textunderscore }}\discretionary {-}{}{}\texttt  {List{\textunderscore }}\discretionary {-}{}{}\texttt  {Entry}, 
+		\hyperpage{18}
+  \item \texttt  {ProcessToDoList}
+    \subitem for IsObject, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {SourcePart}
+    \subitem for IsToDoListEntry, \hyperpage{16}
+
+  \indexspace
+
+  \item \texttt  {TargetPart}
+    \subitem for IsToDoListEntry, \hyperpage{16}
+  \item \texttt  {ToDoList}
+    \subitem for IsObject, \hyperpage{19}
+  \item \texttt  {ToDoListEntryWhichLaunchesAFunction}
+    \subitem for IsList, IsFunction, \hyperpage{17}
+  \item \texttt  {ToDoListEntryWithListOfSources}
+    \subitem for IsList, IsObject, IsString, IsObject, \hyperpage{17}
+  \item \texttt  {ToDoListEntryWithPointers}
+    \subitem for IsObject, IsString, IsObject, IsObject, IsStrin\ g, IsObject, 
+		\hyperpage{17}
+  \item \texttt  {ToDoListEntryWithWeakPointers}
+    \subitem for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject, 
+		\hyperpage{16}
 
   \indexspace
 

@@ -48,6 +48,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X79311F9185A267DB">2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.5.6 (September 2012)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X81528B5F78B996D2">2.5 <span class="Heading"><strong class="pkg">GAP</strong> 4.5.7 (December 2012)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.4 and <strong class="pkg">GAP</strong> 4.5</span></h3>
@@ -797,7 +800,7 @@ SetUserPreference( "browse", "SelectHelpMatches", false );
 
 
 <ul>
-<li><p>Removed outdated statements from the documentation of <code class="func">StructureDescription</code> (<a href="../../doc/ref/chap39.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>) which now non-ambiguolsy states that <code class="code">StructureDescription</code> is not an isomorphism invariant: non-isomorphic groups can have the same string value, and two isomorphic groups in different representations can produce different strings.</p>
+<li><p>Removed outdated statements from the documentation of <code class="func">StructureDescription</code> (<a href="../../doc/ref/chap39.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>) which now non-ambiguosly states that <code class="code">StructureDescription</code> is not an isomorphism invariant: non-isomorphic groups can have the same string value, and two isomorphic groups in different representations can produce different strings.</p>
 
 </li>
 <li><p><strong class="pkg">GAP</strong> now allows overloading of a loaded help book by another one. In this case, only a warning is printed and no error is raised. This makes sense if a book of a not loaded package is loaded in a workspace and then <strong class="pkg">GAP</strong> is started with a root path that contains a newer version. [Reported by Sebastian Gutsche]</p>
@@ -821,6 +824,67 @@ SetUserPreference( "browse", "SelectHelpMatches", false );
 
 </li>
 <li><p><strong class="pkg">ToolsForHomalg</strong> package by M. Barakat, S. Gutsche and M. Lange-Hegermann, which provides some auxiliary functionality for the <strong class="pkg">homalg</strong> project (<span class="URL"><a href="http://homalg.math.rwth-aachen.de/">http://homalg.math.rwth-aachen.de/</a></span>).</p>
+
+</li>
+</ul>
+<p><a id="X81528B5F78B996D2" name="X81528B5F78B996D2"></a></p>
+
+<h4>2.5 <span class="Heading"><strong class="pkg">GAP</strong> 4.5.7 (December 2012)</span></h4>
+
+<p>Fixed bugs which could lead to crashes:</p>
+
+
+<ul>
+<li><p>Closing with <code class="code">LogInputTo</code> (or <code class="code">LogOutputTo</code>) a logfile opened with <code class="func">LogTo</code> (<a href="../../doc/ref/chap9.html#X79813A6686894960"><span class="RefLink">Reference: LogTo</span></a>) left the data structures corrupted, resulting in a crash.</p>
+
+</li>
+<li><p>On 32-bit systems we can have long integers <code class="code">n</code> such that <code class="code">Log2Int(n)</code> is not an immediate integer. In such cases <code class="code">Log2Int</code> gave wrong or corrupted results which in turn could crash <strong class="pkg">GAP</strong>, e.g., in <code class="code">ViewObj(n)</code>.</p>
+
+</li>
+<li><p>Some patterns of use of <code class="func">UpEnv</code> (<a href="../../doc/ref/chap6.html#X79E66DA2875303B0"><span class="RefLink">Reference: UpEnv</span></a>) and <code class="func">DownEnv</code> (<a href="../../doc/ref/chap6.html#X79E66DA2875303B0"><span class="RefLink">Reference: DownEnv</span></a>) were leading to a segfault.</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>Viewing of long negative integers was broken, because it went into a break loop.</p>
+
+</li>
+<li><p>Division by zero in <code class="func">ZmodnZ</code> (<a href="../../doc/ref/chap14.html#X79CE76AD82B3E2B2"><span class="RefLink">Reference: ZmodnZ</span></a>) (<span class="SimpleMath">n</span> not prime) produced invalid objects. [Reported by Mark Dickinson]</p>
+
+</li>
+<li><p>Fixed a bug in determining multiplicative inverse for a zero polynomial.</p>
+
+</li>
+<li><p>Fixed a bug causing infinite recursion in <code class="func">NaturalHomomorphismByNormalSubgroup</code> (<a href="../../doc/ref/chap39.html#X80FC390C7F38A13F"><span class="RefLink">Reference: NaturalHomomorphismByNormalSubgroup</span></a>).</p>
+
+</li>
+<li><p>A workaround was added to deal with a package method creating pcgs for permutation groups for which the entry <code class="code">permpcgsNormalSteps</code> is missing.</p>
+
+</li>
+<li><p>For a semigroup of associative words that is not the full semigroup of all associative words, the methods for <code class="func">Size</code> (<a href="../../doc/ref/chap30.html#X858ADA3B7A684421"><span class="RefLink">Reference: Size</span></a>) and <code class="func">IsTrivial</code> (<a href="../../doc/ref/chap30.html#X7E3402D6799D3C24"><span class="RefLink">Reference: IsTrivial</span></a>) called one another causing infinite recursion.</p>
+
+</li>
+<li><p>The 64-bit version of the <code class="file">gac</code> script produced wrong (&gt;= 2^31) CRC values because of an integer conversion problem.</p>
+
+</li>
+<li><p>It was not possible to compile <strong class="pkg">GAP</strong> on some systems where <code class="code">HAVE_SELECT</code> detects as false.</p>
+
+</li>
+<li><p>Numbers in memory options on the command line exceeding 2^32 could not be parsed correctly, even on 64-bit systems. [Reported by Volker Braun]</p>
+
+</li>
+</ul>
+<p>New packages added for the redistribution with <strong class="pkg">GAP</strong>:</p>
+
+
+<ul>
+<li><p><strong class="pkg">Float</strong> package by L. Bartholdi, which extends <strong class="pkg">GAP</strong> floating-point capabilities by providing new floating-point handlers for high-precision real, interval and complex arithmetic using MPFR, MPFI, MPC or CXSC external libraries. It also contains a very high-performance implementation of the LLL (Lenstra-Lenstra-Lovász) lattice reduction algorithm via the external library FPLLL.</p>
+
+</li>
+<li><p><strong class="pkg">ToricVarieties</strong> package by S. Gutsche, which provides data structures to handle toric varieties by their commutative algebra structure and by their combinatorics.</p>
 
 </li>
 </ul>
