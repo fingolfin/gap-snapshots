@@ -578,7 +578,7 @@ local A,B,U,V,W,E,F,map;
   #  the relators of A evaluated in the generators of B. This is the
   #  coKernel of a mapping A->B
   if not IsTrivial(V) then
-    map:=GroupGeneralMappingByImages(A,B,GeneratorsOfGroup(A),
+    map:=GroupGeneralMappingByImagesNC(A,B,GeneratorsOfGroup(A),
 					GeneratorsOfGroup(B));
     F:=CoKernelOfMultiplicativeGeneralMapping(map);
     W:=ClosureGroup(F,
@@ -588,7 +588,7 @@ local A,B,U,V,W,E,F,map;
     fi;
   fi;
 
-  map:=GroupGeneralMappingByImages(B,A,GeneratorsOfGroup(B),
+  map:=GroupGeneralMappingByImagesNC(B,A,GeneratorsOfGroup(B),
                                        GeneratorsOfGroup(A));
   E:=CoKernelOfMultiplicativeGeneralMapping(map);
   return IsSubset(U,E);
@@ -3762,6 +3762,10 @@ local   fgens,      # generators of the free group
   # handle nontrivial fp group by computing the index of its trivial
   # subgroup
   else
+    # the abelian invariants are comparatively cheap
+    if 0 in AbelianInvariants(G) then
+      return infinity;
+    fi;
     # the group could be quite big -- try to find a cyclic subgroup of
     # finite index.
     gen:=FinIndexCyclicSubgroupGenerator(G,infinity);
@@ -3828,6 +3832,12 @@ function(arg)
   G:=arg[1];
   if HasIsomorphismPermGroup(G) then
     return IsomorphismPermGroup(G);
+  fi;
+
+  # abelian invariants is comparatively cheap
+  if 0 in AbelianInvariants(G) then
+    SetSize(G,infinity);
+    return fail;
   fi;
 
   if Length(arg)>1 then

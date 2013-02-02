@@ -13,13 +13,19 @@
 
   \indexspace
 
-  \item \texttt  {DeclareAttributeWithDocumentation}, \hyperpage{6}
+  \item \texttt  {DeclareAttributeWithDocumentation}, \hyperpage{7}
   \item \texttt  {DeclareCategoryWithDocumentation}, \hyperpage{5}
   \item \texttt  {Declare}\discretionary {-}{}{}\texttt  {Global}\discretionary {-}{}{}\texttt  {Function}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Documentation}, 
 		\hyperpage{7}
   \item \texttt  {Declare}\discretionary {-}{}{}\texttt  {Global}\discretionary {-}{}{}\texttt  {Variable}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Documentation}, 
-		\hyperpage{7}
+		\hyperpage{8}
   \item \texttt  {DeclareOperationWithDocumentation}, \hyperpage{6}
-  \item \texttt  {DeclarePropertyWithDocumentation}, \hyperpage{6}
+  \item \texttt  {DeclarePropertyWithDocumentation}, \hyperpage{7}
+  \item \texttt  {Declare}\discretionary {-}{}{}\texttt  {Representation}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Documentation}, 
+		\hyperpage{6}
+
+  \indexspace
+
+  \item \texttt  {InstallMethodWithDocumentation}, \hyperpage{6}
 
 \end{theindex}

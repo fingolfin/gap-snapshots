@@ -758,6 +758,7 @@
     [4X        for j in [ 1 .. c ] do[104X
     [4X            if not IsZero( entries[k + j] ) then[104X
     [4X                pos[i] := j;[104X
+    [4X                break;[104X
     [4X            fi;[104X
     [4X        od;[104X
     [4X    od;[104X
@@ -809,6 +810,7 @@
     [4X            k := (i - 1) * c;[104X
     [4X            if not IsZero( entries[k + j] ) then[104X
     [4X                pos[j] := i;[104X
+    [4X                break;[104X
     [4X            fi;[104X
     [4X        od;[104X
     [4X    od;[104X

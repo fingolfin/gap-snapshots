@@ -19,15 +19,19 @@ Most parts of this manual can be accessed directly from within &GAP; using its i
 
 <P/>
 
-Furthermore, <Package>simpcomp</Package> has an extensive library of known triangulations of manifolds. This is the first time that they are easily accessible without having to look them up in the literature <Cite Key="Kuehnel99CensusTight"/>, <Cite Key="Casella01TrigK3MinNumVert"/>, or online <Cite Key="Lutz08ManifoldPage"/>. This allows the user to work with many different known triangulations without having to construct them first.The library contains triangulations of roughly 650 manifolds and roughly 7000 pseudomanifolds, including all vertex transitive triangulations from <Cite Key="Lutz08ManifoldPage"/>. Most properties that <Package>simpcomp</Package> can handle are precomputed for complexes in the library. Searching in the library is possible by the complexes' names as well as some of their properties (such as <M>f</M>-, <M>g</M>- and <M>h</M>-vectors and their homology).<Br/><Br/>
 
-In addition, as of Version 1.4.0 <Package>simpcomp</Package> provides the possibility to perform a combinatorial version of algebraic blowups, so-called simplicial blowups, for combinatorial <M>4</M>-manfolds as described in <Cite Key="Spreer09CombPorpsOfK3"/> and <Cite Key="Spreer10Diss"/>. The implementation can be used as well to resolve isolated singularities of combinatorial <M>4</M>-pseudomanifolds. It seems that this feature, too, is unique to <Package>simpcomp</Package>.
+As of Version 1.4.0, <Package>simpcomp</Package> provides the possibility to perform a combinatorial version of algebraic blowups, so-called simplicial blowups, for combinatorial <M>4</M>-manfolds as described in <Cite Key="Spreer09CombPorpsOfK3"/> and <Cite Key="Spreer10Diss"/>. The implementation can be used as well to resolve isolated singularities of combinatorial <M>4</M>-pseudomanifolds. It seems that this feature, too, is unique to <Package>simpcomp</Package>.
+
+<P/>
+
+Starting from Version 1.5.4, <Package>simpcomp</Package> comes with more efficient code to perform bistellar moves implemented in <C>C</C> (see function <Ref Func="SCReduceComplexFast" />). However, this feature is completely optional.
+
 </Section>
 
 <Section Label="sec:whysimpcomp">
 <Heading><Package>simpcomp</Package> benefits</Heading>
 
-The origin of <Package>simpcomp</Package> is a collection of scripts of the two authors <Cite Key="Effenberger10Diss" />, <Cite Key="Spreer10Diss" /> that provide basic and often-needed functions and operations for working with simplicial complexes. It is written entirely in the &GAP; scripting language, thus giving the user the possibility to see behind the scenes and to customize or alter <Package>simpcomp</Package> functions if needed. 
+The origin of <Package>simpcomp</Package> is a collection of scripts of the two authors <Cite Key="Effenberger10Diss" />, <Cite Key="Spreer10Diss" /> that provide basic and often-needed functions and operations for working with simplicial complexes. Apart from some optional code dealing with bistellar moves (see Section <Ref Chap="chap:bistellar"/> and in particular <Ref Func="SCReduceComplexFast" />), it is written entirely in the &GAP; scripting language, thus giving the user the possibility to see behind the scenes and to customize or alter <Package>simpcomp</Package> functions if needed. 
 
 <P/>
 
@@ -35,7 +39,7 @@ The main benefit when working with <Package>simpcomp</Package> over implementing
 
 <P/>
 
-<Package>simpcomp</Package> provides the user with functions to save and load the simplicial complexes to and from files and to import and export a complex in various formats (e.g. from and to <Package>polymake/TOPAZ</Package> <Cite Key="Joswig00Polymake"/>, <Package>Macaulay2</Package> <Cite Key="M2"/>, LaTeX, etc.). 
+<Package>simpcomp</Package> provides the user with functions to save and load the simplicial complexes to and from files and to import and export a complex in various formats (e.g. from and to <Package>polymake/TOPAZ</Package> <Cite Key="Joswig00Polymake"/>,  <Package>SnapPea</Package> <Cite Key="SnapPea"/> and <Package>Regina</Package> <Cite Key="regina"/> (via the <Package>SnapPea</Package> file format), <Package>Macaulay2</Package> <Cite Key="M2"/>, LaTeX, etc.). 
 
 <P/>
 
@@ -64,7 +68,7 @@ The rest of Chapter <Ref Chap="chap:scfunc"/> contains most of the functions tha
 <Section Label="sec:howtoorg">
 <Heading>Organization of this document</Heading>
 
-This manual accompanying <Package>simpcomp</Package> is divided into 14 chapters.
+This manual accompanying <Package>simpcomp</Package> is organized as follows.
 
 <List>
 	<Item>
@@ -140,7 +144,7 @@ To test the functionality of <Package>simpcomp</Package> you can run the functio
 
 <Log>
 gap> SCRunTest();
-+ test simpcomp package, Version 1.5.4
++ test simpcomp package, Version 1.6.1
 + GAP4stones: 69988
 true
 gap> 
@@ -167,9 +171,9 @@ If you would like to cite <Package>simpcomp</Package> using BibTeX, you can use 
 @manual{simpcomp,
 	author = "Felix Effenberger and Jonathan Spreer",
 	title  = "{\tt simpcomp} - a {\tt GAP} toolkit for simplicial complexes,
-	          {V}ersion 1.5.4",
-	year   = "2011",
-	url    = "\url{http://www.igt.uni-stuttgart.de/LstDiffgeo/simpcomp}",
+	          {V}ersion 1.6.1",
+	year   = "2013",
+	url    = "\url{http://code.google.com/p/simpcomp}",
 }
 </Verb>
 	
@@ -179,9 +183,9 @@ If you are not using BibTeX, you can use the following entry inside the bibliogr
 \bibitem{simpcomp}
 F.~Effenberger and J.~Spreer,
 \emph{{\tt simpcomp} -- a {\tt GAP} toolkit for simplicial complexes},
-Version 1.5.4, 
-2011,
-\url{http://www.igt.uni-stuttgart.de/LstDiffgeo/simpcomp}.
+Version 1.6.1, 
+2013,
+\url{http://code.google.com/p/simpcomp}.
 </Verb>
 </Section>
 

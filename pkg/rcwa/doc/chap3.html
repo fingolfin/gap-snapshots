@@ -546,8 +546,7 @@ infinity
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := EpimorphismFromFpGroup(G,6);</span>
 [ a, b, c ] -&gt; [ a, b, c ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(Source(phi));</span>
-[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, 
-  a*b*a*b*a*b*a*b*a*b*a*b ]
+[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ]
 
 </pre></div>
 
@@ -576,15 +575,15 @@ infinity
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Comm(a^2*b^4,a*b^3); # a sample element to be factored</span>
 &lt;rcwa permutation of Z with modulus 8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreImagesRepresentative(phi,g); # -&gt; a factorization of g</span>
-b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3
+b^-3*(b^-1*a^-1)^2*b^3*a*b^-1*a*b^3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Comm(a*b,Comm(a,b^3));</span>
 &lt;rcwa permutation of Z with modulus 8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pre := PreImagesRepresentatives(phi,g);</span>
-[ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ]
+[ (b^-1*a^-1)^2*b^2*(b*a)^2*b^-2, b^-1*(a^-1*b)^2*b^2*(a*b^-1)^2*b^-1 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel := pre[1]/pre[2]; # -&gt; a nontrivial relation</span>
-b^-1*a^-1*b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1*a*b
+(b^-1*a^-1)^2*b^3*a*b^2*a^-1*b^-2*(b^-1*a)^2*b
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel^phi;</span>
 IdentityMapping( Integers )
 
@@ -874,7 +873,7 @@ Rcwa permutation of Z with modulus 12
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeGroup("a","b");; phi := EpimorphismByGenerators(F,G);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                     OnTuples,F);</span>
-a*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b
+a*b^-1*a^-1*(b^-1*a)^2*b*a*b^-2*a*b*a^-1*b
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := w^phi;</span>
 &lt;rcwa permutation of Z with modulus 324&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([10,-4,9,5],n-&gt;n^elm);</span>

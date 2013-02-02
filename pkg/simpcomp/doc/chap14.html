@@ -66,10 +66,10 @@
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SCInfoLevel(3);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SCInfoLevel(3);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=SCBdCrossPolytope(3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SCReduceComplex(c); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:=SCBdCrossPolytope(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SCReduceComplex(c); </span>
 #I  round 0, move: [ [ 4, 6 ], [ 1, 2 ] ]
 F: [ 6, 12, 8 ]
 #I  round 1, move: [ [ 6 ], [ 1, 2, 3 ] ]
@@ -125,8 +125,10 @@ Reduced complex, F: [ 4, 6, 4 ]
 
 
 <div class="example"><pre>
+ gap&gt; SCMailSetAddress("johndoe@somehost"); #enables mail notification
+ true
  gap&gt; SCMailIsEnabled();
- false
+ true
  </pre></div>
 
 <p><a id="X857AEAAB85BD7513" name="X857AEAAB85BD7513"></a></p>
@@ -155,10 +157,13 @@ Reduced complex, F: [ 4, 6, 4 ]
 
 
 <div class="example"><pre>
+ gap&gt; SCMailSetAddress("johndoe@somehost"); #enables mail notification
+ true
  gap&gt; SCMailIsEnabled();
- false
+ true
  gap&gt; SCMailSend("Hello, this is simpcomp.");
- false
+ WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-bjA1wb/pkcs11: No such file or directory
+ true
  </pre></div>
 
 <p><a id="X82DA7B2682F5F117" name="X82DA7B2682F5F117"></a></p>
@@ -173,7 +178,7 @@ Reduced complex, F: [ 4, 6, 4 ]
 
 <div class="example"><pre>
  gap&gt; SCMailSendPending();
- false
+ true
  </pre></div>
 
 <p><a id="X8771F97F7E78B7AC" name="X8771F97F7E78B7AC"></a></p>
@@ -241,8 +246,10 @@ Reduced complex, F: [ 4, 6, 4 ]
 
 <div class="example"><pre>
  gap&gt; SCRunTest();
+ Line 1075 : 
  + simpcomp package test
- + GAP4stones: 51797
+ Line 1076 : 
+ + GAP4stones: 105119
  true
  </pre></div>
 

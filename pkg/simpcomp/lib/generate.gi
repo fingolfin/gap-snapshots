@@ -1573,7 +1573,7 @@ function(diffcycles)
 	if complex=fail then
 		return fail;
 	fi;
-	
+	SetSCDifferenceCycles(complex,diffcycles);
 	SCRename(complex,Concatenation("complex from diffcycles ",String(diffcycles)));
 	
 	return complex;
@@ -2616,10 +2616,10 @@ end);
 ## <Description>
 ## Generates the <Arg>k</Arg>-th member (<M>k \geq 0</M>) of the series <Arg>K^i</Arg>  (<M>1 \leq i \leq 396</M>) from <Cite Key="Spreer10Diss"/>.  The <M>396</M> series describe a complete classification of all dense series (i. e. there is a member of the series for every integer, <M>f_0 (K^i (k+1) ) = f_0 (K^i (k)) +1</M>) of cyclic <M>3</M>-manifolds with a fixed number of difference cycles and at least one member with less than <M>23</M> vertices. See <Ref Func="SCSeriesL"/> for a list of series of order <M>2</M>.
 ## <Example>
-## gap> cc:=List([1..396],x->SCSeriesK(x,0));;                                                                                                                                                                                                  
+## gap> cc:=List([1..10],x->SCSeriesK(x,0));;                                                                                                                                                                                                  
 ## gap> Set(List(cc,x->x.F));                                                                                                                                                                                                                        
-## gap> cc:=List([1..396],x->SCSeriesK(x,10));;
-## gap> gap> cc:=List([1..396],x->SCSeriesK(x,10));;
+## gap> cc:=List([1..10],x->SCSeriesK(x,10));;
+## gap> gap> cc:=List([1..10],x->SCSeriesK(x,10));;
 ## gap> Set(List(cc,x->x.Homology));
 ## gap> Set(List(cc,x->x.IsManifold));
 ## </Example>
@@ -3205,5 +3205,577 @@ function(k)
 	
 	c:=SCFromDifferenceCycles(dc);
 		SCRename(c,Concatenation(["Neighborly sphere bundle NSB_3"]));
+	return c;
+end);
+
+
+################################################################################
+##<#GAPDoc Label="SCSeriesTorus">
+## <ManSection>
+## <Func Name="SCSeriesTorus" Arg="d"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the <M>d</M>-torus described in <Cite Key="Kuehnel86HigherDimCsaszar"/>.
+## <Example>
+## gap> t4:=SCSeriesTorus(4);
+## gap> t4.Homology;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesTorus,
+function(d)
+
+	local dc, base, i, j, c;
+
+	if not IsPosInt(d) or d < 1 then
+		Info(InfoSimpcomp,1,"SCSeriesTorus: argument must be a positive integer.");
+		return fail;
+	fi;
+
+  dc:=[];
+  base:=[];
+  for j in [1..d] do
+    Add(base,2^j); 
+  od;
+  for i in SymmetricGroup(d) do
+    Add(dc,Concatenation([1],Permuted(base,i))); 
+  od;
+
+  c:=SCFromDifferenceCycles(dc);
+  if d=1 then
+  	SCRename(c,"S^1");
+  	SetSCTopologicalType(c,"S^1");
+  else
+		SCRename(c,Concatenation([String(d),"-torus T^",String(d)]));
+		SetSCTopologicalType(c,Concatenation(["T^",String(d)]));
+	fi;
+	return c;
+end);
+
+################################################################################
+##<#GAPDoc Label="SCSeriesLensSpace">
+## <ManSection>
+## <Func Name="SCSeriesLensSpace" Arg="p,q"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the lens space <M>L(p,q)</M> whenever <M>p = (k+2)^2-1</M> and <M>q = k+2</M> or <M>p = 2k+3</M> and <M>q = 1</M>
+## for a <M>k \geq 0</M> and <K>fail</K> otherwise. All complexes have a transitive cyclic automorphism group.
+## <Example>
+## gap> l154:=SCSeriesLensSpace(15,4);
+## gap> l154.Homology;
+## gap> g:=SimplifiedFpGroup(SCFundamentalGroup(l154));
+## gap> StructureDescription(g);
+## </Example>
+## <Example>
+## gap> l151:=SCSeriesLensSpace(15,1);
+## gap> l151.Homology;
+## gap> g:=SimplifiedFpGroup(SCFundamentalGroup(l151));
+## gap> StructureDescription(g);
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesLensSpace,
+function(p,q)
+
+  local dc, i, n, c, sqrt, k, str;
+
+  if not IsPosInt(p) or not IsPosInt(q) then
+    Info(InfoSimpcomp,1,"SCSeriesLensSpace: arguments must be positive integers.");
+    return fail;
+  fi;
+
+  sqrt:=Sqrt(p+1);
+  if IsInt(sqrt) and q = sqrt then 
+    k:=sqrt-2;
+    n:=14+4*k;
+    dc:=[[1,1,1,n-3],[1,2,4,n-7],[1,4,2,n-7],[1,4,n-7,2]];
+    for i in [0..k] do
+      Add(dc,[2,5+2*i,2,n-9-2*i]);
+    od;
+    for i in [0..k] do
+      Add(dc,[4,2+2*i,4,n-10-2*i]);
+    od;
+    c:=SCFromDifferenceCycles(dc);
+  elif IsOddInt(p) and p > 2 and q = 1 then
+    c:=SCIntFunc.SeifertFibredSpace(2,p,2);
+  else
+    Info(InfoSimpcomp,1,"SCSeriesLensSpace: only lens spaces of type L((k+1)^2-1,k+1) and L(2k+1,1), k > 0, can be generated.");
+    return fail;
+  fi;
+
+  str:=Concatenation("L(",String(p),",",String(q),")");
+  SCRename(c,Concatenation("Lens space ",str));
+  SetSCTopologicalType(c,str);
+  return c;
+end);
+
+################################################################################
+##<#GAPDoc Label="SCSeriesBrehmKuehnelTorus">
+## <ManSection>
+## <Func Name="SCSeriesBrehmKuehnelTorus" Arg="n"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a neighborly 3-torus with <Arg>n</Arg> vertices if <Arg>n</Arg> is odd and a centrally symmetric 3-torus if <Arg>n</Arg> is even (<Arg>n</Arg><M>\geq 15</M> . The triangulations are taken from <Cite Key="Brehm09LatticeTrigE33Torus"/>
+## <Example>
+## gap> T3:=SCSeriesBrehmKuehnelTorus(15);
+## gap> T3.Homology;
+## gap> T3.Neighborliness;
+## gap> T3:=SCSeriesBrehmKuehnelTorus(16);
+## gap> T3.Homology;
+## gap> T3.IsCentrallySymmetric;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesBrehmKuehnelTorus,
+function(n)
+
+	local k, dc, i, c;
+
+	if (not IsInt(n)) or (n < 15) then
+		Info(InfoSimpcomp,1,"SCSeriesBrehmKuehnelTorus: argument must be an integer greater or equal to 15.");
+		return fail;
+	fi;
+
+	if n mod 4 = 3 then
+		k := (n+1)/4;
+		dc := [[1,k-2,k,2*k],[1,k,2,3*k-4],[1,k,2*k,k-2],[1,2*k,k-2,k],[1,2,3*k-4,k],[1,3*k-4,k,2]];
+		for i in Union([2..k-3],[k+2..2*k-3]) do
+			Add(dc,[1,i,1,4*k-i-3]);
+		od;
+	elif n mod 4 = 0 then
+		k := n/4;
+		dc := [[1,k-2,k,2*k+1],[1,k,2,3*k-3],[1,k,2*k+1,k-2],[1,2*k+1,k-2,k],[1,2,3*k-3,k],[1,3*k-3,k,2]];
+		for i in Union([2..k-3],[k+2..2*k-3]) do
+			Add(dc,[1,i,1,4*k-i-2]);
+		od;
+	elif n mod 4 = 1 then
+		k := (n-1)/4;
+		dc := [[1,k-2,k+1,2*k+1],[1,k,2,3*k-2],[1,k,2*k+2,k-2],[1,2*k+1,k-1,k],[1,2,3*k-2,k],[1,3*k-2,k,2]];
+		for i in Union([2..k-3],[k+2..2*k-2]) do
+			Add(dc,[1,i,1,4*k-i-1]);
+		od;
+	elif n mod 4 = 2 then
+		k := (n-2)/4;
+		dc := [[1,k-2,k+1,2*k+2],[1,k,2,3*k-1],[1,k,2*k+3,k-2],[1,2*k+2,k-1,k],[1,2,3*k-1,k],[1,3*k-1,k,2]];
+		for i in Union([2..k-3],[k+2..2*k-2]) do
+			Add(dc,[1,i,1,4*k-i]);
+		od;
+	fi;
+
+	c := SCFromDifferenceCycles(dc);
+	if n mod 2 = 0 then
+		SCRename(c,Concatenation("Centrally symmetric 3-Torus SCT3(",String(n),")"));
+	elif n mod 2 = 1 then
+		SCRename(c,Concatenation("Neighborly 3-Torus NT3(",String(n),")"));
+	fi;
+	SetSCTopologicalType(c,"T^3");
+	return c;
+end);
+
+SCIntFunc.SeifertFibredSpace:=function(p,q,r)
+	local dc,i,k,l,m,gcd,n,a,b,tmp;
+
+	gcd:=function(l,m,n,r)
+		local dc;
+		dc:=[];
+		while l > m do
+			l:=l-m;
+			Add(dc,[m,l,m,n-2*m-l+r]);
+		od;
+		return [m,l,dc];
+	end;
+
+	# make sure p,q co-prime
+	if GCD_INT(p,q) <> 1 then
+		Info(InfoSimpcomp,1,"SCIntFunc.SeifertFibredSpace: arguments one and two must be co-prime.");
+		return fail;
+	fi;  
+
+	# always finds a solution since p and q are co-prime
+	k:=0;
+	for i in [1..p-1] do
+		if IsInt((i*q+1)/p) then
+			k:=i;
+			break;
+		fi;
+	od;
+	
+	# seed triangulation
+	a:=k*q;
+	b:=(p-k)*q-1;
+	dc:=[[1,a,b,p*q+r],[1,a,p*q+r,b],[1,p*q+r,a,b]];
+
+	# 1st exceptional fibre (p,x)
+	if b > p*q-b then
+		l:=b;
+		m:=p*q-b;
+	else
+		l:=p*q-b;
+		m:=b;
+	fi;
+	while l>p do
+		tmp:=gcd(l,m,2*p*q,r);
+		l:=tmp[1];
+		m:=tmp[2];
+		Append(dc,tmp[3]);
+	od;
+	
+	# 2nd exceptional fibre (q,x)
+	if a > p*q-a then
+		l:=a;
+		m:=p*q-a;
+	else
+		l:=p*q-a;
+		m:=a;
+	fi;
+	while l>q do
+		tmp:=gcd(l,m,2*p*q,r);
+		l:=tmp[1];
+		m:=tmp[2];
+		Append(dc,tmp[3]);
+	od;
+
+	# 3rd exceptional fibre (r,x)
+	for i in [0..Int(r/2)] do
+		Add(dc,[1,p*q-1+i,1,p*q-1+r-i]);
+	od;
+
+	return SCFromDifferenceCycles(dc);
+end;
+
+################################################################################
+##<#GAPDoc Label="SCSeriesHomologySphere">
+## <ManSection>
+## <Func Name="SCSeriesHomologySphere" Arg="p,q,r"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial Brieskorn homology sphere of type <M>\Sigma (p,q,r)</M>, <M>p</M>, <M>q</M> and <M>r</M>
+## pairwise co-prime. The complex is a combinatorial <M>3</M>-manifold with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap> c:=SCSeriesHomologySphere(2,3,5);
+## gap> c.Homology;
+## gap> c:=SCSeriesHomologySphere(3,4,13);
+## gap> c.Homology;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesHomologySphere,
+function(p,q,r)
+	local c,l,str;
+
+	if not IsPosInt(p) or not IsPosInt(q) or not IsPosInt(r) or GCD_INT(p,q) > 1 or GCD_INT(p,r) > 1 or GCD_INT(q,r) > 1 or not p > 1 or not q > 1 or not r > 1 then
+		Info(InfoSimpcomp,1,"SCSeriesHomologySphere: arguments must be three positive and pairwise co-prime integer.");
+		return fail;
+	fi;
+	l:=[p,q,r];
+	Sort(l);
+	p:=l[1];
+	q:=l[2];
+	r:=l[3];
+
+	c:= SCIntFunc.SeifertFibredSpace(p,q,r);
+	str:=Concatenation("Sigma(",String(p),",",String(q),",",String(r),")");
+	SetSCTopologicalType(c,str);
+	SCRename(c,Concatenation("Homology sphere ",str));
+	return c;
+end);
+
+################################################################################
+##<#GAPDoc Label="SCSeriesConnectedSum">
+## <ManSection>
+## <Func Name="SCSeriesConnectedSum" Arg="k"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial manifold of type <M>(S^2 x S^1)^#k</M> for <M>k</M> even. 
+## The complex is a combinatorial <M>3</M>-manifold with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap> c:=SCSeriesConnectedSum(12);
+## gap> c.Homology;
+## gap> g:=SimplifiedFpGroup(SCFundamentalGroup(c));
+## gap> RelatorsOfFpGroup(g);
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesConnectedSum,
+function(k)
+	local c,str;
+
+	if not IsEvenInt(k) or k < 2 then
+		Info(InfoSimpcomp,1,"SCSeriesConnectedSum: argument must be an even positive integer.");
+		return fail;
+	fi;
+
+	c:= SCIntFunc.SeifertFibredSpace(2,k+1,0);
+	str:=Concatenation("(S^2xS^1)^#",String(k),")");
+	SetSCTopologicalType(c,str);
+	SCRename(c,str);
+	return c;
+end);
+
+################################################################################
+##<#GAPDoc Label="SCSeriesSeifertFibredSpace">
+## <ManSection>
+## <Func Name="SCSeriesSeifertFibredSpace" Arg="p,q,r"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial Seifert fibred space of type 
+##
+## <Display>SFS [ (\mathbb{T}^2)^{(a-1)(b-1)} : (p/a,b_1)^b , (q/b,b_2)^a, (r/ab,b_3) ]</Display>
+## 
+## where <M>p</M> and <M>q</M> are co-prime, <M>a = \operatorname{gcd} (p,r)</M>, <M>b = \operatorname{gcd} (p,r)</M>,
+## and the <M>b_i</M> are given by the identity
+##
+## <Display>\frac{b_1}{p} + \frac{b_2}{q} + \frac{b_3}{r} = \frac{\pm ab}{pqr}.</Display>
+##
+## This <M>3</M>-parameter family of combinatorial <M>3</M>-manifolds contains the
+## families generated by <Ref Func="SCSeriesHomologySphere"/>, <Ref Func="SCSeriesConnectedSum"/>
+## and parts of <Ref Func="SCSeriesLensSpace"/>, internally calls <K>SCIntFunc.SeifertFibredSpace(p,q,r)</K>.
+##
+## The complexes are combinatorial <M>3</M>-manifolds with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap> c:=SCSeriesSeifertFibredSpace(2,3,15);
+## gap> c.Homology;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSeriesSeifertFibredSpace,
+function(p,q,r)
+	local c,str,a,b,connSum,orbifold;
+
+	if not IsPosInt(p) or not IsPosInt(q) or not IsInt(r) or r < 0 or GCD_INT(p,q) > 1 or p < 2 or q <= p then
+		Info(InfoSimpcomp,1,"SCSeriesSeifertFibredSpace: arguments must be non-negative integers, first argument must be smaller than second argument and first and second argument mus be co-prime and > 1.");
+		return fail;
+	fi;
+
+	c:= SCIntFunc.SeifertFibredSpace(p,q,r);
+	a:=GCD_INT(p,r);
+	b:=GCD_INT(q,r);
+	connSum:=(a-1)*(b-1)/2;
+	if connSum = 0 then
+		orbifold:="S^2";
+	elif connSum = 1 then
+		orbifold:="T^2";
+	else
+		orbifold:=Concatenation("(T^2)^#",String(connSum));
+	fi;
+	if r = 0 then
+		str:=Concatenation("(S^2xS^1)^#",String(2*connSum)); 
+	else
+	str:=Concatenation("SFS [ ",orbifold," : "); 
+	if p/a > 1 then
+		if b > 1 then
+			str:=Concatenation(str,"(",String(p/a),",b1)^",String(b));
+		else
+			str:=Concatenation(str,"(",String(p/a),",b1)");
+		fi;
+	fi;
+	if p/a > 1 and q/b > 1 then
+		str:=Concatenation(str,", ");
+	fi;
+	if q/b > 1 then
+		if a > 1 then
+			str:=Concatenation(str,"(",String(q/b),",b2)^",String(a));
+		else
+			str:=Concatenation(str,"(",String(q/b),",b2)");
+		fi;
+	fi;
+	if q/b > 1 or (q/b = 1 and p/a > 1) then
+		str:=Concatenation(str,", (",String(r/(a*b)),",b3)");
+	else
+		str:=Concatenation(str,"(",String(r/(a*b)),",b3)");
+	fi;
+	fi;
+	str:=Concatenation(str," ]");
+	SetSCTopologicalType(c,str);
+	SCRename(c,str);
+	return c;
+end);
+
+
+################################################################################
+##<#GAPDoc Label="SCSurface">
+## <ManSection>
+## <Func Name="SCSurface" Arg="g,orient"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the surface of genus <Arg>g</Arg> where the boolean argument <Arg>orient</Arg> specifies 
+## whether the surface is orientable or not. The surfaces have transitive cyclic group actions and
+## can be described using the minimum amount of <M>O(\operatorname{log} (g))</M> memory.
+##
+## If <Arg>orient</Arg> is <C>true</C> and <Arg>g</Arg><M> \geq 50</M> or if 
+## <Arg>orient</Arg> is <C>false</C> and <Arg>g</Arg><M> \geq 100</M> only the difference cycles of the
+## surface are returned
+## <Example>
+## gap> c:=SCSurface(23,true); 
+## gap> c.Homology;
+## gap> c.TopologicalType;
+## gap> c:=SCSurface(23,false); 
+## gap> c.Homology;
+## gap> c.TopologicalType;
+## </Example>
+## <Example>
+## gap> dc:=SCSurface(345,true);
+## gap> c:=SCFromDifferenceCycles(dc);
+## gap> c.Chi;
+## gap> dc:=SCSurface(12345678910,true); time;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCSurface,
+function(g,orient)
+	local c, G;
+
+	if not IsInt(g) or g < 0 then
+		Info(InfoSimpcomp,1,"SCSurface: first argument must be a non-negative integer.");
+		return fail;
+	fi;
+
+	if not IsBool(orient) or orient = fail then
+		Info(InfoSimpcomp,1,"SCSurface: second argument must be a boolean (true or false).");
+		return fail;
+	fi;
+
+	if g = 0 and orient = false then
+		Info(InfoSimpcomp,1,"SCSurface: there is no non-orientable surface of genus 0.");
+		return fail;
+	fi;
+
+	if orient = true then
+		if g = 0 then
+			c:=SCBdSimplex(3);
+		elif g = 1 then
+			c:=SCSeriesPrimeTorus(1,2,7);
+		elif g = 2 then
+			c:=SCFromDifferenceCycles([[1,1,10],[2,4,6],[4,4,4]]);
+		elif g = 3 then
+			# Dyck's map
+			G:=Group([ (1,6)(2,10)(3,11)(4,9)(5,8)(7,12), 
+				   (1,10,8,7,4,2)(3,12,11,9,6,5) ]);
+			c:=SCFromGenerators(G,[[1,2,4]]);
+		elif g = 4 then
+			G:=Group([ (1,12)(2,11)(3,10)(4,9)(5,8)(6,7), 
+				   (1,2,3,4,5,6)(7,8,9,10,11,12) ]);
+			c:=SCFromGenerators(G,[[1,2,4],[1,2,7],[1,3,10]]);
+		elif g = 6 then
+			G:=Group([ (1,9,5)(2,4,3)(6,8,7)(10,12,11), 
+				   (1,4)(2,11)(3,6)(5,8)(7,10)(9,12) ]);
+			c:=SCFromGenerators(G,[[1,2,4],[1,2,7],[1,3,8],[1,5,9],[1,5,11]]);
+		elif g = 8 then
+			G:=Group([ (1,3,5,7,9,11,13)(2,4,6,8,10,12,14), 
+				   (1,8)(2,13,12,7,10,11)(3,4,9,6,5,14) ]);
+			c:=SCFromGenerators(G,[[1,2,3],[1,3,7]]);			
+		elif IsOddInt(g)  and g < 50 then
+			c:=SCFromDifferenceCycles([[1,1,4*g-6],[2,g-2,3*g-4],[g-2,g,2*g-2]]);
+		elif IsEvenInt(g)  and g < 50 then
+			c:=SCFromDifferenceCycles([[1,1,2*g-4],[2,4,2*g-8],[3,3,2*g-8],[4,g-3,g-3]]);
+		elif IsOddInt(g)  and g >= 50 then
+			c:=[[1,1,4*g-6],[2,g-2,3*g-4],[g-2,g,2*g-2]];
+		elif IsEvenInt(g)  and g >= 50 then
+			c:=[[1,1,2*g-4],[2,4,2*g-8],[3,3,2*g-8],[4,g-3,g-3]];
+		fi;
+	else
+		if g = 1 then
+			G:=Group([(1,2,5)(3,4,6),(3,5)(4,6)]);
+			c:=SCFromGenerators(G,[[1,2,3]]);
+		elif g = 2 then
+			c:=SCFromDifferenceCycles([[1,1,8],[2,4,4]]);
+		elif g = 3 then
+			Info(InfoSimpcomp,1,"SCSurface: there is no surface of non-orientable genus 3 with transitive automorphism group.");
+			G:=Group([(1,2,5)(3,4,6),(3,5)(4,6)]);
+			c:=SCFromGenerators(G,[[1,2,3]]);
+			return SCConnectedSum(c,SCSeriesPrimeTorus(1,2,7));
+		elif g = 4 then
+			G:=Group([ (1,9,5)(2,4,3)(6,8,7)(10,12,11), 
+				   (1,4)(2,11)(3,6)(5,8)(7,10)(9,12) ]);
+			c:=SCFromGenerators(G,[[1,2,3],[1,2,4],[1,3,8]]);
+		elif g = 5 then
+			G:=Group([ (2,9)(3,5)(6,8), (1,8,3)(2,6,4)(5,9,7) ]);
+			c:=SCFromGenerators(G,[[1,2,4],[1,3,8]]);
+		elif g = 6 then
+			Info(InfoSimpcomp,1,"SCSurface: there is no surface of non-orientable genus 6 with transitive automorphism group KNOWN to the authours.");
+			return fail;
+			G:=Group([]);
+			c:=SCFromGenerators(G,[]);
+		elif g = 7 then
+			G:=Group([ (1,3,5,7,9)(2,4,6,8,10), 
+				   (1,9)(3,4)(5,10)(6,7) ]);
+			c:=SCFromGenerators(G,[[1,2,3]]);
+		elif g = 8 then
+			c:=SCFromDifferenceCycles([[1,2,9],[1,3,8],[2,4,6]]);
+		elif g = 9 then
+			G:=Group([ (1,2,17,18,15,13)(3,4,16,9,14,20)(5,10,7,12,21,11)(6,19,8), 
+				   (1,2,3)(4,8,13)(5,9,14)(6,7,15)(10,19,16)(11,20,17)(12,21,18) ]);
+			c:=SCFromGenerators(G,[[1,2,3],[1,2,4],[1,4,14]]);
+		elif g = 10 then
+			G:=Group([ (1,9,5)(2,4,3)(6,8,7)(10,12,11), 
+				   (1,4)(2,11)(3,6)(5,8)(7,10)(9,12) ]);
+			c:=SCFromGenerators(G,[[1,2,3],[1,2,4],[1,3,7],[1,5,9]]);
+		elif g = 11 then
+			G:=Group([ (1,17,10,3,14,11,6,16,7)(2,18,9,4,13,12,5,15,8), 
+				(7,8)(9,10)(11,12)(13,14)(15,16)(17,18) ]);
+			c:=SCFromGenerators(G,[[1,2,7],[1,7,13]]);
+		elif g = 12 then
+			c:=SCFromDifferenceCycles([[1,1,13],[2,3,10],[3,6,6],[5,5,5]]);
+		elif g = 13 then
+			Info(InfoSimpcomp,1,"SCSurface: there is no surface of non-orientable genus 13 with transitive automorphism group KNOWN to the authours.");
+			return fail;
+			G:=Group([]);
+			c:=SCFromGenerators(G,[]);
+		elif g = 14 then
+			c:=SCFromDifferenceCycles([[1,1,16],[2,6,10],[4,4,10],[6,6,6]]);
+		elif g = 16 then
+			c:=SCFromDifferenceCycles([[1,1,12],[2,3,9],[3,5,6],[4,4,6]]);
+		elif IsOddInt(g) and g < 100 then
+			c:=SCFromDifferenceCycles([[1,1,g-4],[2,(g-7)/2,(g-1)/2],[3,(g-7)/2,(g-3)/2],[3,(g-5)/2,(g-5)/2]]);
+		elif IsEvenInt(g) and g < 100 then
+			c:=SCFromDifferenceCycles([[1,1,g-4],[2,(g-8)/2,g/2],[4,(g-8)/2,(g-4)/2],[4,(g-6)/2,(g-6)/2]]);
+		elif IsOddInt(g) and g >= 100 then
+			c:=[[1,1,g-4],[2,(g-7)/2,(g-1)/2],[3,(g-7)/2,(g-3)/2],[3,(g-5)/2,(g-5)/2]];
+		elif IsEvenInt(g) and g >= 100 then
+			c:=[[1,1,g-4],[2,(g-8)/2,g/2],[4,(g-8)/2,(g-4)/2],[4,(g-6)/2,(g-6)/2]];
+		fi;
+
+
+	fi;
+
+	if (orient and g < 50) or (not orient and g < 100) then
+		if g = 0 then
+			SCRename(c,"S^2");
+			SetSCTopologicalType(c,"S^2");
+		elif g = 1 and orient then
+			SCRename(c,"T^2");
+			SetSCTopologicalType(c,"T^2");
+		elif g = 1 and not orient then
+			SCRename(c,"RP^2");
+			SetSCTopologicalType(c,"RP^2");
+		elif g = 2 and not orient then
+			SCRename(c,"K^2");
+			SetSCTopologicalType(c,"K^2");
+		elif orient then
+			SCRename(c,Concatenation("S_",String(g),"^or"));
+			SetSCTopologicalType(c,Concatenation("(T^2)^#",String(g)));	
+		else
+			SCRename(c,Concatenation("S_",String(g),"^non"));
+			SetSCTopologicalType(c,Concatenation("(RP^2)^#",String(g)));
+		fi;
+	fi;
+
 	return c;
 end);

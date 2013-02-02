@@ -48,7 +48,8 @@
   list [3Ximgs[103X of images in [3XH[103X.[133X
   
   [33X[0;0YIf  omitted,  the  arguments  [3Xgens[103X and [3Ximgs[103X default to the [2XGeneratorsOfGroup[102X
-  ([14X39.2-3[114X) value of [3XG[103X and [3XH[103X, respectively.[133X
+  ([14X39.2-3[114X)  value  of [3XG[103X and [3XH[103X, respectively. If [3XH[103X is not given the maopping is
+  automatically considered as surjective.[133X
   
   [33X[0;0YIf  [3Xgens[103X  does  not  generate [3XG[103X or if the mapping of the generators does not
   extend  to  a homomorphism (i.e., if mapping the generators describes only a
@@ -97,10 +98,16 @@
   [1X40.1-3 GroupGeneralMappingByImages[101X
   
   [29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
   
   [33X[0;0Yreturns a general mapping defined by extending the mapping from [3Xgens[103X to [3Ximgs[103X
-  homomorphically. ([2XGroupHomomorphismByImages[102X ([14X40.1-1[114X) creates a group general
-  mapping by images and tests whether it is in [2XIsMapping[102X ([14X32.3-3[114X).)[133X
+  homomorphically.  If  the  range  [3XH[103X  is  not  given the mapping will be made
+  automatically  surjective.  The  NC  version  does not test whether [3Xgens[103X are
+  contained  in  [3XG[103X  or  [3Ximgs[103X  are  contained  in [3XH[103X. ([2XGroupHomomorphismByImages[102X
+  ([14X40.1-1[114X)  creates  a group general mapping by images and tests whether it is
+  in [2XIsMapping[102X ([14X32.3-3[114X).)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xmap:=GroupGeneralMappingByImages(g,h,gens,[(1,2,3),(1,2)]);[127X[104X

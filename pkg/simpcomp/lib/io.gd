@@ -24,6 +24,7 @@
 ## <#Include Label="SCImportPolymake"/>
 ## <#Include Label="SCExportLatexTable"/>
 ## <#Include Label="SCExportJavaView"/>
+## <#Include Label="SCExportSnapPy"/>
 ##
 ## </Section>
 ## <#/GAPDoc>
@@ -43,6 +44,7 @@ DeclareGlobalFunction("SCExportPolymake");
 DeclareGlobalFunction("SCImportPolymake");
 DeclareGlobalFunction("SCExportLatexTable");
 DeclareGlobalFunction("SCExportJavaView");
+DeclareGlobalFunction("SCExportSnapPy");
 
 
 

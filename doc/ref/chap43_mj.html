@@ -222,6 +222,8 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p>The methods used might involve the use of random elements and the permutation representation (or even the degree of the representation) is not guaranteed to be the same for different calls of <code class="func">SmallerDegreePermutationRepresentation</code>.</p>
 
+<p>If the option cheap is given less work is spent on trying to get a small degree representation, if the value of this option is set to the string "skip" the identity mapping is returned. (This is useful if a function called internally might try a degree reduction.)</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">image:= Image( iso );;  NrMovedPoints( image );</span>

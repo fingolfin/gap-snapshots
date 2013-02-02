@@ -1,12 +1,12 @@
 # Circle, chapter 3
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 41, 46 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 41, 46 ]
 
 gap> a := CircleObject( 2 );
 CircleObject( 2 )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 57, 64 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 57, 64 ]
 
 gap> a := CircleObject( 2 );
 CircleObject( 2 )
@@ -14,7 +14,7 @@ gap> UnderlyingRingElement( a );
 2
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 87, 97 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 87, 97 ]
 
 gap> IsCircleObject( 2 ); IsCircleObject( CircleObject( 2 ) );            
 false
@@ -25,7 +25,7 @@ gap> IsCircleObjectCollection( [ CircleObject(0), CircleObject(2) ] );
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 117, 124 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 117, 124 ]
 
 gap> IsPositionalObjectOneSlotRep( CircleObject( 2 ) );
 true
@@ -33,13 +33,13 @@ gap> IsDefaultCircleObject( CircleObject( 2 ) );
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 140, 145 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 140, 145 ]
 
 gap> FamilyObj( CircleObject ( 2 ) ) = CircleFamily( FamilyObj( 2 ) );
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 164, 173 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 164, 173 ]
 
 gap> One( CircleObject( 5 ) );
 CircleObject( 0 )
@@ -49,7 +49,7 @@ gap> One( CircleObject( [ [ 1, 1 ],[ 0, 1 ] ] ) );
 CircleObject( [ [ 0, 0 ], [ 0, 0 ] ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 191, 200 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 191, 200 ]
 
 gap> CircleObject( -2 )^-1;                        
 CircleObject( -2 )
@@ -59,7 +59,7 @@ gap> CircleObject( -2 )*CircleObject( -2 )^-1;
 CircleObject( 0 )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 202, 213 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 202, 213 ]
 
 gap> m := CircleObject( [ [ 1, 1 ], [ 0, 1 ] ] );   
 CircleObject( [ [ 1, 1 ], [ 0, 1 ] ] )
@@ -71,7 +71,7 @@ gap> CircleObject( [ [ 0, 1 ], [ 1, 0 ] ] )^-1;
 fail
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 228, 242 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 228, 242 ]
 
 gap> IsUnit( Integers, CircleObject( -2 ) );
 true
@@ -86,7 +86,7 @@ gap> IsUnit( FullMatrixAlgebra( Rationals, 2 ), m );
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 249, 260 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 249, 260 ]
 
 gap> IsUnit( CircleObject( -2 ) );
 true
@@ -98,7 +98,7 @@ gap> IsUnit( CircleObject( [ [ 1, 1 ],[ 0, 1 ] ] ) );
 false
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 276, 291 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 276, 291 ]
 
 gap> IsCircleUnit( Integers, -2 );
 true
@@ -114,7 +114,7 @@ gap> IsCircleUnit( FullMatrixAlgebra(Rationals,2), m );
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 296, 307 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 296, 307 ]
 
 gap> IsCircleUnit( -2 );                               
 true
@@ -126,7 +126,7 @@ gap> IsCircleUnit( [ [ 1, 1 ],[ 0, 1 ] ] );
 false
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 331, 338 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 331, 338 ]
 
 gap> R:=Ring( [ ZmodnZObj(2,8) ] );
 <ring with 1 generators>
@@ -134,7 +134,7 @@ gap> S:=AdjointSemigroup(R);
 <monoid with 4 generators>
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 391, 409 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 391, 408 ]
 
 gap> x:=[ [ 0, 1, 0 ],
 >         [ 0, 0, 1 ],
@@ -145,15 +145,14 @@ gap> RadicalOfAlgebra( R ) = R;
 true
 gap> Dimension(R);
 2
-gap> G := AdjointGroup( R );    
-<group of size 4 with 1 generators>
+gap> G := AdjointGroup( R );;
 gap> Size( R ) = Size( G );
 true
 gap> StructureDescription( G );
 "C4"
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 418, 437 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 417, 436 ]
 
 gap> x:=[ [ 0, 1, 0 ],
 >         [ 0, 0, 0 ],     
@@ -173,7 +172,7 @@ gap> StructureDescription( G );
 "D8"
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 453, 468 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 452, 466 ]
 
 gap> R := Ring( [ ZmodnZObj(2,8) ] );
 <ring with 1 generators>
@@ -183,13 +182,12 @@ gap> StructureDescription( G );
 "C2 x C2"
 gap> R := Ring( [ ZmodnZObj(2,256) ] );   
 <ring with 1 generators>
-gap> G := AdjointGroup( R );
-<group of size 128 with 4 generators>
+gap> G := AdjointGroup( R );;
 gap> StructureDescription( G );
 "C64 x C2"
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 476, 489 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 474, 487 ]
 
 gap> R := Ring( [ ZmodnZObj(2,256) ] );  
 <ring with 1 generators>
@@ -203,12 +201,11 @@ gap> StructureDescription(G);
 "C64 x C2"
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 499, 512 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 497, 509 ]
 
 gap> R := Ring( [ ZmodnZObj(2,256) ] );   
 <ring with 1 generators>
-gap> AdjointGroup(R);
-<group of size 128 with 2 generators>
+gap> AdjointGroup(R);;
 gap> R := Ring( [ ZmodnZObj(2,256) ] );
 <ring with 1 generators>
 gap> S:=AdjointSemigroup(R); 
@@ -217,15 +214,14 @@ gap> AsGroup(GreensHClassOfElement(S,One(S)));
 <group of size 128 with 2 generators>
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 531, 546 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 528, 542 ]
 
+gap> LoadPackage( "laguna", false );
+true
 gap> FG := GroupRing( GF(2), DihedralGroup(8) );
 <algebra-with-one over GF(2), with 3 generators>
-gap> R := AugmentationIdeal( FG );
-<two-sided ideal in <algebra-with-one over GF(2), with 3 generators>, 
-  (dimension 7)>
-gap> G := AdjointGroup( R );
-<group of size 128 with 4 generators>
+gap> R := AugmentationIdeal( FG );;
+gap> G := AdjointGroup( R );;
 gap> IdGroup( G );
 [ 128, 170 ]
 gap> IdGroup( Units( FG ) );
@@ -233,25 +229,25 @@ gap> IdGroup( Units( FG ) );
 [ 128, 170 ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 555, 572 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 551, 568 ]
 
-gap> AdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) );
-
-WARNING: usage of AdjointGroup for associative ring <R> with one!!! 
-In this case the adjoint group is isomorphic to the unit group 
-Units(<R>), which possibly may be computed faster!!! 
-
-<group of size 128 with 3 generators>
-gap> AdjointGroup( Integers mod 11 );                  
+gap> Size( AdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) ) );
 
 WARNING: usage of AdjointGroup for associative ring <R> with one!!! 
 In this case the adjoint group is isomorphic to the unit group 
 Units(<R>), which possibly may be computed faster!!! 
 
-<group of size 10 with 1 generators>
+128
+gap> Size( AdjointGroup( Integers mod 11 ) );                  
+
+WARNING: usage of AdjointGroup for associative ring <R> with one!!! 
+In this case the adjoint group is isomorphic to the unit group 
+Units(<R>), which possibly may be computed faster!!! 
+
+10
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/circle/doc/funct.xml", 597, 609 ]
+# [ "/Users/alexk/gap4r6p1/pkg/circle/doc/funct.xml", 593, 605 ]
 
 gap> SetInfoLevel( InfoCircle, 1 );
 gap> SetInfoLevel(InfoCircle,1);

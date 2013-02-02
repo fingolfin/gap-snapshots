@@ -736,7 +736,7 @@
 ##   [ 4397, "S^4~S^1 (VT)" ], [ 4398, "S^4~S^1 (VT)" ], 
 ##   [ 4399, "S^4~S^1 (VT)" ], [ 4402, "S^4~S^1 (VT)" ], 
 ##   [ 4403, "S^4~S^1 (VT)" ], [ 4404, "S^4~S^1 (VT)" ], [ 7479, "S^4xS^2" ], 
-##   [ 7540, "S^4xS^3" ], [ 7574, "S^4xS^4" ] ]
+##   [ 7539, "S^4xS^3" ], [ 7573, "S^4xS^4" ] ]
 ## gap&gt; s:=SCLib.Load(last[1][1]);;
 ## gap&gt; filled:=SCFillSphere(s);
 ## [SimplicialComplex
@@ -882,7 +882,7 @@
 ##   [ 2426, "RP^3=L(2,1) (VT)" ], [ 2488, "(S^2~S^1)#3#RP^3" ], 
 ##   [ 2489, "(S^2xS^1)#3#RP^3" ], [ 2502, "RP^3=L(2,1) (VT)" ], 
 ##   [ 7473, "(S^2~S^1)#4#RP^3" ], [ 7474, "(S^2xS^1)#4#RP^3" ], 
-##   [ 7505, "(S^2~S^1)#5#RP^3" ], [ 7506, "(S^2xS^1)#5#RP^3" ] ]
+##   [ 7504, "(S^2~S^1)#5#RP^3" ], [ 7505, "(S^2xS^1)#5#RP^3" ] ]
 ## gap&gt; rp3:=SCLib.Load(last[1][1]);;
 ## gap&gt; rp3.F;
 ## [ 11, 51, 80, 40 ]
@@ -935,26 +935,17 @@
 ## Every shelling is represented as a permuted version of the facet list of <Arg>complex</Arg>. The list <Arg>checkvector</Arg> encodes a shelling in a shorter form. It only contains the indices of the facets. If an order of indices is assigned to <Arg>checkvector</Arg> the function tests whether it is a valid shelling or not.<P/>
 ## See <Cite Key="Ziegler95LectPolytopes"/>, <Cite Key="Pachner87KonstrMethKombHomeo" /> to learn more about shellings.
 ## <Example>
-## gap&gt; SCLib.SearchByName("RP^2");                 
-## [ [ 3, "RP^2 (VT)" ], [ 635, "RP^2xS^1" ] ]
-## gap&gt; rp2:=SCLib.Load(last[1][1]);;                        
-## gap&gt; rp2:=SCDifference(rp2,SC([rp2.Facets[1]]));; # bounded version
-## gap&gt; all:=SCShellingExt(rp2,true,[]);;
+## gap&gt; c:=SCBdSimplex(4);;
+## gap&gt; c:=SCDifference(c,SC([c.Facets[1]]));; # bounded version
+## gap&gt; all:=SCShellingExt(c,true,[]);;
 ## gap&gt; Size(all);                                  
-## 1488
+## 24
 ## gap&gt; all[1];
-## [ [ 1, 2, 6 ], [ 1, 4, 6 ], [ 1, 4, 5 ], [ 1, 3, 5 ], [ 2, 4, 5 ], 
-##   [ 2, 3, 4 ], [ 2, 5, 6 ], [ 3, 4, 6 ], [ 3, 5, 6 ] ]
-## gap&gt; all:=SCShellingExt(rp2,false,[]);
-## [ [ [ 1, 2, 6 ], [ 1, 4, 6 ], [ 1, 4, 5 ], [ 1, 3, 5 ], [ 2, 4, 5 ], 
-##       [ 2, 3, 4 ], [ 2, 5, 6 ], [ 3, 4, 6 ], [ 3, 5, 6 ] ] ]
-## gap&gt; all:=SCShellingExt(rp2,false,[4, 9, 3, 2, 5, 6, 7, 1, 8]);
+## [ [ 1, 2, 3, 5 ], [ 1, 2, 4, 5 ], [ 1, 3, 4, 5 ], [ 2, 3, 4, 5 ] ]
+## gap&gt; all:=SCShellingExt(c,false,[]);
+## [ [ [ 1, 2, 3, 5 ], [ 1, 2, 4, 5 ], [ 1, 3, 4, 5 ], [ 2, 3, 4, 5 ] ] ]
+## gap&gt; all:=SCShellingExt(c,true,[1..4]);
 ## true
-## gap&gt; all:=SCShellingExt(rp2,true,[4, 9, 3, 2, 5, 6, 7, 1, 8]);
-## true
-## gap&gt; all:=SCShellingExt(rp2,true,[1 .. 9]);
-## #I  SCShellingExt: 2 is not a valid shelling facet.
-## false
 ## </Example>
 ## </Description>
 ## </ManSection>

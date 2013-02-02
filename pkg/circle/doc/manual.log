@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2009.5.26)  31 MAY 2012 11:10
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2009.5.26)  1 FEB 2013 12:23
 entering extended mode
 **manual
 (./manual.tex
@@ -419,7 +419,7 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 Underfull \hbox (badness 4752) in paragraph at lines 152--154
 []\T1/ptm/m/n/10 A. Kono-valov, P. Soules. \T1/ptm/m/it/10 Cir-cle --- Ad-joint
- groups of fi-nite rings, Ver-sion 1.4.1; \T1/ptm/m/n/10 2012
+ groups of fi-nite rings, Ver-sion 1.5.2; \T1/ptm/m/n/10 2013
  []
 
 
@@ -560,7 +560,7 @@ rsOfMagmaWithInverses \T1/ptm/m/n/10.95 method de-fined in
  []
 
 [18] [19] [20]
-Underfull \hbox (badness 10000) in paragraph at lines 1086--1089
+Underfull \hbox (badness 10000) in paragraph at lines 1082--1085
 
  []
 
@@ -586,7 +586,7 @@ Here is how much of TeX's memory you used:
  7425 multiletter control sequences out of 10000+50000
  94400 words of font info for 121 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
- 27i,7n,36p,571b,504s stack positions out of 5000i,500n,6000p,200000b,40000s
+ 27i,7n,36p,571b,500s stack positions out of 5000i,500n,6000p,200000b,40000s
 PDF statistics:
  311 PDF objects out of 65536
  92 named destinations out of 20000
@@ -601,4 +601,4 @@ pfb></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb> </sw/var/lib/te
 xmf/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk></sw/share/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><
 /sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on manual.pdf (25 pages, 211202 bytes).
+Output written on manual.pdf (25 pages, 211413 bytes).

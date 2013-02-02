@@ -123,7 +123,7 @@
 ## -> options:=[[[1,2,3],[]],[[2,3,4],[]],[[1,3,4],[]],[[1,2,4],[]]];
 ##
 ###################################################################
-###									Moves (and reverse moves)									    ###
+###                Moves (and reverse moves)                    ###
 ###################################################################
 ################################################################################
 ##
@@ -220,11 +220,11 @@
 ################################################################################
 ##<#GAPDoc Label="SCMove">
 ## <ManSection>
-## <Meth Name="SCMove" Arg="complex, move"/>
+## <Meth Name="SCMove" Arg="c, move"/>
 ## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Applies the bistellar move <Arg>move</Arg> to a simplicial complex <Arg>complex</Arg>. <Arg>move</Arg> is given as a <M>(r+1)</M>-tuple together with a <M>(d+1-r)</M>-tuple if <M>d</M> is the dimension of <Arg>complex</Arg> and if <Arg>move</Arg> is a <M>r</M>-move. See <Ref Meth="SCRMoves"/> for detailed information about bistellar <M>r</M>-moves.<P/>
-## Note: <Arg>move</Arg> and <Arg>complex</Arg> should be given in standard labeling to ensure a correct result.
+## Applies the bistellar move <Arg>move</Arg> to a simplicial complex <Arg>c</Arg>. <Arg>move</Arg> is given as a <M>(r+1)</M>-tuple together with a <M>(d+1-r)</M>-tuple if <M>d</M> is the dimension of <Arg>c</Arg> and if <Arg>move</Arg> is a <M>r</M>-move. See <Ref Meth="SCRMoves"/> for detailed information about bistellar <M>r</M>-moves.<P/>
+## Note: <Arg>move</Arg> and <Arg>c</Arg> should be given in standard labeling to ensure a correct result.
 ## <Example>
 ## gap&gt; obj:=SC([[1,2],[2,3],[3,4],[4,1]]);
 ## [SimplicialComplex
@@ -431,7 +431,7 @@
 ##      Dim=1
 ##     
 ##     /SimplicialComplex], 3 ]
-## ## </Example>
+## </Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -570,6 +570,17 @@
 ## gap&gt; c.F;
 ## [ 18, 75, 114, 57 ]
 ## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCReduceComplexFast">
+## <ManSection>
+## <Func Name="SCReduceComplexFast" Arg="complex"/>
+## <Returns>a simplicial complex upon success, <K>fail</K> otherwise.</Returns> 
+## <Description>
+## Same as <Ref Func="SCReduceComplex" Style="Text" />, but calls an external binary provided with the simpcomp package.
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>

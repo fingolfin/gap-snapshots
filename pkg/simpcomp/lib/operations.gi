@@ -2193,29 +2193,13 @@ end);
 ## Every shelling is represented as a permuted version of the facet list of <Arg>complex</Arg>. The list <Arg>checkvector</Arg> encodes a shelling in a shorter form. It only contains the indices of the facets. If an order of indices is assigned to <Arg>checkvector</Arg> the function tests whether it is a valid shelling or not.<P/>
 ## See <Cite Key="Ziegler95LectPolytopes"/>, <Cite Key="Pachner87KonstrMethKombHomeo" /> to learn more about shellings.
 ## <Example>
-## gap> SCLib.SearchByName("RP^2");                 
-## [ [ 3, "RP^2 (VT)" ], [ 284, "RP^2xS^1" ] ]
-## gap> rp2:=SCLib.Load(last[1][1]);;                        
-## gap> rp2:=SCDifference(rp2,SC([rp2.Facets[1]]));; # bounded version
-## gap> all:=SCShellingExt(rp2,true,[]);;
+## gap> c:=SCBdSimplex(4);;
+## gap> c:=SCDifference(c,SC([c.Facets[1]]));; # bounded version
+## gap> all:=SCShellingExt(c,true,[]);;
 ## gap> Size(all);                                  
-## 1488
 ## gap> all[1];
-## [ [ 1, 2, 6 ], [ 1, 4, 6 ], [ 1, 4, 5 ], [ 1, 3, 5 ], [ 2, 4, 5 ], 
-##   [ 2, 3, 4 ], [ 2, 5, 6 ], [ 3, 4, 6 ], [ 3, 5, 6 ] ]
-## gap> all:=SCShellingExt(rp2,false,[]);
-## [ [ [1, 2, 6], [1, 4, 6], [1, 4, 5], [1, 3, 5], 
-##     [2, 4, 5], [2, 3, 4], [2, 5, 6], [3, 4, 6], [3, 5, 6] 	] 
-## ]
-## # valid shelling
-## gap> all:=SCShellingExt(rp2,false,[4, 9, 3, 2, 5, 6, 7, 1, 8]);
-## true
-## gap> all:=SCShellingExt(rp2,true,[4, 9, 3, 2, 5, 6, 7, 1, 8]);
-## true
-## # invalid shelling
-## gap> all:=SCShellingExt(rp2,true,[1 .. 9]);
-## #I  SCShellingExt: 2 is not a valid shelling facet.
-## false
+## gap> all:=SCShellingExt(c,false,[]);
+## gap> all:=SCShellingExt(c,true,[1..4]);
 ## </Example>
 ## </Description>
 ## </ManSection>

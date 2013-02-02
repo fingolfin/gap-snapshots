@@ -73,23 +73,25 @@
 \contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }ToDo-list entries}}{16}{section.6.1}
 \contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }SourcePart (for IsToDoListEntry)}}{16}{subsection.6.1.1}
 \contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }TargetPart (for IsToDoListEntry)}}{16}{subsection.6.1.2}
-\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }ProcessAToDoListEntry (for IsToDoListEntry)}}{16}{subsection.6.1.3}
-\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }AreCompatible (for IsToDoListEntry, IsToDoListEntry)}}{16}{subsection.6.1.4}
-\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }ToDoListEntryWithWeakPointers (for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject)}}{16}{subsection.6.1.5}
-\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }ToDoListEntryWithPointers (for IsObject, IsString, IsObject, IsObject, IsStrin\ g, IsObject)}}{17}{subsection.6.1.6}
-\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}}{17}{subsection.6.1.7}
-\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}}{17}{subsection.6.1.8}
-\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}}{17}{subsection.6.1.9}
-\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }JoinToDoListEntries (for IsList)}}{17}{subsection.6.1.10}
-\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }GenesisOfToDoListEntry (for IsToDoListEntry)}}{17}{subsection.6.1.11}
-\contentsline {subsection}{\numberline {6.1.12}\leavevmode {\color {Chapter }DescriptionOfImplication (for IsToDoListEntry)}}{18}{subsection.6.1.12}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }SetTargetValueObject (for IsToDoListEntry, IsObject)}}{16}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }SetTargetObject (for IsToDoListEntry, IsObject)}}{16}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }ProcessAToDoListEntry (for IsToDoListEntry)}}{17}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }AreCompatible (for IsToDoListEntry, IsToDoListEntry)}}{17}{subsection.6.1.6}
+\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }ToDoListEntryWithWeakPointers (for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject)}}{17}{subsection.6.1.7}
+\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }ToDoListEntryWithPointers (for IsObject, IsString, IsObject, IsObject, IsStrin\ g, IsObject)}}{17}{subsection.6.1.8}
+\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}}{17}{subsection.6.1.9}
+\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}}{17}{subsection.6.1.10}
+\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}}{18}{subsection.6.1.11}
+\contentsline {subsection}{\numberline {6.1.12}\leavevmode {\color {Chapter }JoinToDoListEntries (for IsList)}}{18}{subsection.6.1.12}
+\contentsline {subsection}{\numberline {6.1.13}\leavevmode {\color {Chapter }GenesisOfToDoListEntry (for IsToDoListEntry)}}{18}{subsection.6.1.13}
+\contentsline {subsection}{\numberline {6.1.14}\leavevmode {\color {Chapter }DescriptionOfImplication (for IsToDoListEntry)}}{18}{subsection.6.1.14}
 \contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Category}}{18}{section.6.2}
 \contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }IsToDoList (for IsObject)}}{18}{subsection.6.2.1}
 \contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Constructor}}{18}{section.6.3}
 \contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }NewToDoList (for )}}{18}{subsection.6.3.1}
 \contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }This is the magic}}{18}{section.6.4}
 \contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }Process{\textunderscore }A{\textunderscore }ToDo{\textunderscore }List{\textunderscore }Entry}}{18}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }ProcessToDoList (for IsObject)}}{18}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }ProcessToDoList (for IsObject)}}{19}{subsection.6.4.2}
 \contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Methods for all objects}}{19}{section.6.5}
 \contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }AddToToDoList (for IsToDoListEntry)}}{19}{subsection.6.5.1}
 \contentsline {subsection}{\numberline {6.5.2}\leavevmode {\color {Chapter }ToDoList (for IsObject)}}{19}{subsection.6.5.2}

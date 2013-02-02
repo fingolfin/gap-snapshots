@@ -23,7 +23,7 @@
 ## 
 ##  Properties known: Dim, FacetsEx, Name, Vertices.
 ## 
-##  Name="complex from generators under group (C7 : C3) : C2"
+##  Name="complex from generators under unknown group"
 ##  Dim=2
 ## 
 ## /SimplicialComplex]
@@ -33,7 +33,7 @@
 ##  Properties known: BoundaryEx, Dim, FacetsEx, HasBoundary, 
 ##                    IsPseudoManifold, Name, SkelExs[], Vertices.
 ## 
-##  Name="complex from generators under group (C7 : C3) : C2"
+##  Name="complex from generators under unknown group"
 ##  Dim=2
 ##  HasBoundary=false
 ##  IsPseudoManifold=true
@@ -712,9 +712,9 @@
 ## </Example>
 ## <Example>
 ## gap&gt; List([19..23],x->SCSeriesAGL(x));     
-## #I  SCSeriesAGL: argument must be a prime > 13.
-## #I  SCSeriesAGL: argument must be a prime > 13.
-## #I  SCSeriesAGL: argument must be a prime > 13.
+## #I  SCSeriesAGL: argument must be a prime &gt; 13.
+## #I  SCSeriesAGL: argument must be a prime &gt; 13.
+## #I  SCSeriesAGL: argument must be a prime &gt; 13.
 ## [ [ AGL(1,19), [ [ 1, 2, 10, 12, 17 ] ] ], fail, fail, fail, 
 ##   [ AGL(1,23), [ [ 1, 2, 7, 9, 19 ], [ 1, 2, 4, 8, 22 ] ] ] ]
 ## gap&gt; for i in [80000..80100] do if IsPrime(i) then Print(i,"\n"); fi; od;
@@ -739,6 +739,46 @@
 ##<#/GAPDoc>
 ################################################################################
 ################################################################################
+##<#GAPDoc Label="SCSeriesBid">
+## <ManSection>
+## <Func Name="SCSeriesBid" Arg="i,d"/>
+## <Returns> a simplicial complex upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Constructs the complex <M>B(i,d)</M> as described in <Cite Key="Klee11CentSymmMnfFewVert" />, cf. <Cite Key="Effenberger10Diss" />, <Cite Key="Sparla99LBTComb2kMnf" />. The complex <M>B(i,d)</M> is a <M>i</M>-Hamiltonian subcomplex of the <M>d</M>-cross polytope and its boundary topologically is a sphere product <M>S^i\times S^{d-i-2}</M> with vertex transitive automorphism group.   
+## <Example>
+## gap&gt; b26:=SCSeriesBid(2,6);
+## [SimplicialComplex
+## 
+##  Properties known: Dim, FacetsEx, Name, Reference, Vertices.
+## 
+##  Name="B(2,6)"
+##  Dim=5
+## 
+## /SimplicialComplex]
+## gap&gt; s2s2:=SCBoundary(b26);
+## [SimplicialComplex
+## 
+##  Properties known: Dim, FacetsEx, Name, Vertices.
+## 
+##  Name="Bd(B(2,6))"
+##  Dim=4
+## 
+## /SimplicialComplex]
+## gap&gt; SCFVector(s2s2);
+## [ 12, 60, 160, 180, 72 ]
+## gap&gt; SCAutormophismGroup(s2s2); 
+## Error, Variable: 'SCAutormophismGroup' must have a value
+## not in any function at line 194 of *stdin*
+## gap&gt; SCIsManifold(s2s2); 
+## true
+## gap&gt; SCHomology(s2s2);
+## [ [ 0, [  ] ], [ 0, [  ] ], [ 2, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
 ##<#GAPDoc Label="SCSeriesC2n">
 ## <ManSection>
 ## <Func Name="SCSeriesC2n" Arg="n"/>
@@ -749,7 +789,8 @@
 ## gap&gt; c:=SCSeriesC2n(8);
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
 ## 
 ##  Name="C_16 = { (1:1:3:11),(1:1:11:3),(1:3:1:11),(2:3:2:9),(2:5:2:7) }"
 ##  Dim=3
@@ -765,7 +806,8 @@
 ## gap&gt; d:=SCSeriesD2n(8); 
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
 ## 
 ##  Name="D_16 = { (1:1:1:13),(1:2:11:2),(3:4:5:4),(2:3:4:7),(2:7:4:3) }"
 ##  Dim=3
@@ -796,7 +838,8 @@
 ## gap&gt; d:=SCSeriesD2n(15);
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
 ## 
 ##  Name="D_30 = { (1:1:1:27),(1:2:25:2),(3:11:5:11),(2:3:11:14),(2:14:11:3) }"
 ##  Dim=3
@@ -813,7 +856,8 @@
 ## gap&gt; d:=SCSeriesD2n(8); 
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
 ## 
 ##  Name="D_16 = { (1:1:1:13),(1:2:11:2),(3:4:5:4),(2:3:4:7),(2:7:4:3) }"
 ##  Dim=3
@@ -888,7 +932,7 @@
 ## gap&gt; SCSeriesCSTSurface(2,4,14);
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 ## 
 ##  Name="cst surface S_{(2,4,14)} = { (2:4:8),(2:8:4) }"
 ##  Dim=2
@@ -899,7 +943,7 @@
 ## gap&gt; SCSeriesCSTSurface(2,10);  
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 ## 
 ##  Name="cst surface S_{(2,10)} = { (2:2:6),(3:3:4) }"
 ##  Dim=2
@@ -923,8 +967,8 @@
 ## gap&gt; c:=SCSeriesHandleBody(3,7);
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, IsOrientable, Name, TopologicalType, 
-##                    Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, IsOrientable, 
+##                    Name, TopologicalType, Vertices.
 ## 
 ##  Name="Handle body B^2 x S^1"
 ##  Dim=3
@@ -997,7 +1041,7 @@
 ## gap&gt; c:=SCSeriesLe(7);                     
 ## [SimplicialComplex
 ## 
-##  Properties known: Dim, FacetsEx, Name, Vertices.
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 ## 
 ##  Name="Le_14 = { (1:1:1:11),(1:2:4:7),(1:4:2:7),(2:1:4:7),(2:5:2:5),(2:4:2:6) \
 ## }"
@@ -1041,20 +1085,18 @@
 ## <Func Name="SCSeriesK" Arg="i,k"/>
 ## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Generates the <Arg>k</Arg>-th member (<M>k \geq 0</M>) of the series <Arg>K^i</Arg>  (<M>1 \leq i \leq 114</M>) from <Cite Key="Spreer10Diss"/>.  The <M>114</M> series describe a complete classification of all dense series (i. e. there is a member of the series for every integer, <M>f_0 (K^i (k+1) ) = f_0 (K^i (k)) +1</M>) of cyclic <M>3</M>-manifolds with a fixed number of difference cycles and at least one member with less than <M>20</M> vertices. See <Ref Func="SCSeriesL"/> for a list of series of order <M>2</M>.
+## Generates the <Arg>k</Arg>-th member (<M>k \geq 0</M>) of the series <Arg>K^i</Arg>  (<M>1 \leq i \leq 396</M>) from <Cite Key="Spreer10Diss"/>.  The <M>396</M> series describe a complete classification of all dense series (i. e. there is a member of the series for every integer, <M>f_0 (K^i (k+1) ) = f_0 (K^i (k)) +1</M>) of cyclic <M>3</M>-manifolds with a fixed number of difference cycles and at least one member with less than <M>23</M> vertices. See <Ref Func="SCSeriesL"/> for a list of series of order <M>2</M>.
 ## <Example>
-## gap&gt; cc:=List([1..114],x->SCSeriesK(x,0));;                                                                                                                                                                                                  
+## gap&gt; cc:=List([1..10],x->SCSeriesK(x,0));;                                                                                                                                                                                                  
 ## gap&gt; Set(List(cc,x->x.F));                                                                                                                                                                                                                        
-## [ [ 11, 55, 88, 44 ], [ 13, 65, 104, 52 ], [ 13, 78, 130, 65 ], 
-##   [ 15, 90, 150, 75 ], [ 15, 105, 180, 90 ], [ 17, 102, 170, 85 ], 
-##   [ 17, 119, 204, 102 ], [ 17, 136, 238, 119 ], [ 19, 133, 228, 114 ], 
-##   [ 19, 152, 266, 133 ], [ 19, 171, 304, 152 ] ]
-## gap&gt; cc:=List([1..114],x->SCSeriesK(x,10));;
-## gap&gt; gap> cc:=List([1..114],x->SCSeriesK(x,10));;
+## [ [ 9, 36, 54, 27 ], [ 11, 55, 88, 44 ], [ 13, 65, 104, 52 ], 
+##   [ 13, 78, 130, 65 ], [ 15, 90, 150, 75 ], [ 15, 105, 180, 90 ] ]
+## gap&gt; cc:=List([1..10],x->SCSeriesK(x,10));;
+## gap&gt; gap> cc:=List([1..10],x->SCSeriesK(x,10));;
 ## gap&gt; Set(List(cc,x->x.Homology));
-## [ [ [ 0, [  ] ], [ 1, [  ] ], [ 0, [ 2 ] ], [ 0, [  ] ] ], 
-##   [ [ 0, [  ] ], [ 2, [  ] ], [ 1, [ 2 ] ], [ 0, [  ] ] ], 
-##   [ [ 0, [  ] ], [ 3, [  ] ], [ 3, [  ] ], [ 1, [  ] ] ] ]
+## [ [ [ 0, [  ] ], [ 1, [  ] ], [ 0, [ 2 ] ], [ 0, [  ] ] ] ]
+## gap&gt; Set(List(cc,x->x.IsManifold));
+## [ true ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -1126,6 +1168,309 @@
 ## gap&gt; List([11..15],x->SCFVector(SCSeriesNSB3(x)));       
 ## [ [ 11, 55, 88, 44 ], [ 12, 66, 108, 54 ], [ 13, 78, 130, 65 ], 
 ##   [ 14, 91, 154, 77 ], [ 15, 105, 180, 90 ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesTorus">
+## <ManSection>
+## <Func Name="SCSeriesTorus" Arg="d"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the <M>d</M>-torus described in <Cite Key="Kuehnel86HigherDimCsaszar"/>.
+## <Example>
+## gap&gt; t4:=SCSeriesTorus(4);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="4-torus T^4"
+##  Dim=4
+##  TopologicalType="T^4"
+## 
+## /SimplicialComplex]
+## gap&gt; t4.Homology;
+## [ [ 0, [  ] ], [ 4, [  ] ], [ 6, [  ] ], [ 4, [  ] ], [ 1, [  ] ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesLensSpace">
+## <ManSection>
+## <Func Name="SCSeriesLensSpace" Arg="p,q"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the lens space <M>L(p,q)</M> whenever <M>p = (k+2)^2-1</M> and <M>q = k+2</M> or <M>p = 2k+3</M> and <M>q = 1</M>
+## for a <M>k \geq 0</M> and <K>fail</K> otherwise. All complexes have a transitive cyclic automorphism group.
+## <Example>
+## gap&gt; l154:=SCSeriesLensSpace(15,4);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Lens space L(15,4)"
+##  Dim=3
+##  TopologicalType="L(15,4)"
+## 
+## /SimplicialComplex]
+## gap&gt; l154.Homology;
+## [ [ 0, [  ] ], [ 0, [ 15 ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## gap&gt; g:=SimplifiedFpGroup(SCFundamentalGroup(l154));
+## &lt;fp group on the generators [ [2,5] ]&gt;
+## gap&gt; StructureDescription(g);
+## "C15"
+## </Example>
+## <Example>
+## gap&gt; l151:=SCSeriesLensSpace(15,1);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Lens space L(15,1)"
+##  Dim=3
+##  TopologicalType="L(15,1)"
+## 
+## /SimplicialComplex]
+## gap&gt; l151.Homology;
+## [ [ 0, [  ] ], [ 0, [ 15 ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## gap&gt; g:=SimplifiedFpGroup(SCFundamentalGroup(l151));
+## &lt;fp group on the generators [ [2,3] ]&gt;
+## gap&gt; StructureDescription(g);
+## "C15"
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesBrehmKuehnelTorus">
+## <ManSection>
+## <Func Name="SCSeriesBrehmKuehnelTorus" Arg="n"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a neighborly 3-torus with <Arg>n</Arg> vertices if <Arg>n</Arg> is odd and a centrally symmetric 3-torus if <Arg>n</Arg> is even (<Arg>n</Arg><M>\geq 15</M> . The triangulations are taken from <Cite Key="Brehm09LatticeTrigE33Torus"/>
+## <Example>
+## gap&gt; T3:=SCSeriesBrehmKuehnelTorus(15);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Neighborly 3-Torus NT3(15)"
+##  Dim=3
+##  TopologicalType="T^3"
+## 
+## /SimplicialComplex]
+## gap&gt; T3.Homology;
+## [ [ 0, [  ] ], [ 3, [  ] ], [ 3, [  ] ], [ 1, [  ] ] ]
+## gap&gt; T3.Neighborliness;
+## 2
+## gap&gt; T3:=SCSeriesBrehmKuehnelTorus(16);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Centrally symmetric 3-Torus SCT3(16)"
+##  Dim=3
+##  TopologicalType="T^3"
+## 
+## /SimplicialComplex]
+## gap&gt; T3.Homology;
+## [ [ 0, [  ] ], [ 3, [  ] ], [ 3, [  ] ], [ 1, [  ] ] ]
+## gap&gt; T3.IsCentrallySymmetric;
+## true
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesHomologySphere">
+## <ManSection>
+## <Func Name="SCSeriesHomologySphere" Arg="p,q,r"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial Brieskorn homology sphere of type <M>\Sigma (p,q,r)</M>, <M>p</M>, <M>q</M> and <M>r</M>
+## pairwise co-prime. The complex is a combinatorial <M>3</M>-manifold with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap&gt; c:=SCSeriesHomologySphere(2,3,5);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Homology sphere Sigma(2,3,5)"
+##  Dim=3
+##  TopologicalType="Sigma(2,3,5)"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## gap&gt; c:=SCSeriesHomologySphere(3,4,13);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="Homology sphere Sigma(3,4,13)"
+##  Dim=3
+##  TopologicalType="Sigma(3,4,13)"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesConnectedSum">
+## <ManSection>
+## <Func Name="SCSeriesConnectedSum" Arg="k"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial manifold of type <M>(S^2 x S^1)^#k</M> for <M>k</M> even. 
+## The complex is a combinatorial <M>3</M>-manifold with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap&gt; c:=SCSeriesConnectedSum(12);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="(S^2xS^1)^#12)"
+##  Dim=3
+##  TopologicalType="(S^2xS^1)^#12)"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 12, [  ] ], [ 12, [  ] ], [ 1, [  ] ] ]
+## gap&gt; g:=SimplifiedFpGroup(SCFundamentalGroup(c));
+## &lt;fp group of size infinity on the generators 
+## [ [2,3], [2,14], [3,4], [6,7], [9,10], [10,11], [11,12], [12,13], [26,32], 
+##   [26,34], [29,31], [33,35] ]&gt;
+## gap&gt; RelatorsOfFpGroup(g);
+## [  ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesSeifertFibredSpace">
+## <ManSection>
+## <Func Name="SCSeriesSeifertFibredSpace" Arg="p,q,r"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial Seifert fibred space of type 
+##
+## <Display>SFS [ (\mathbb{T}^2)^{(a-1)(b-1)} : (p/a,b_1)^b , (q/b,b_2)^a, (r/ab,b_3) ]</Display>
+## 
+## where <M>p</M> and <M>q</M> are co-prime, <M>a = \operatorname{gcd} (p,r)</M>, <M>b = \operatorname{gcd} (p,r)</M>,
+## and the <M>b_i</M> are given by the identity
+##
+## <Display>\frac{b_1}{p} + \frac{b_2}{q} + \frac{b_3}{r} = \frac{\pm ab}{pqr}.</Display>
+##
+## This <M>3</M>-parameter family of combinatorial <M>3</M>-manifolds contains the
+## families generated by <Ref Func="SCSeriesHomologySphere"/>, <Ref Func="SCSeriesConnectedSum"/>
+## and parts of <Ref Func="SCSeriesLensSpace"/>, internally calls <K>SCIntFunc.SeifertFibredSpace(p,q,r)</K>.
+##
+## The complexes are combinatorial <M>3</M>-manifolds with transitive cyclic symmetry
+## as described in <Cite Key="Spreer12VarCyclPolytope"/>.
+## <Example>
+## gap&gt; c:=SCSeriesSeifertFibredSpace(2,3,15);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="SFS [ S^2 : (2,b1)^3, (5,b3) ]"
+##  Dim=3
+##  TopologicalType="SFS [ S^2 : (2,b1)^3, (5,b3) ]"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 0, [ 2, 2 ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSurface">
+## <ManSection>
+## <Func Name="SCSurface" Arg="g,orient"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates the surface of genus <Arg>g</Arg> where the boolean argument <Arg>orient</Arg> specifies 
+## whether the surface is orientable or not. The surfaces have transitive cyclic group actions and
+## can be described using the minimum amount of <M>O(\operatorname{log} (g))</M> memory.
+##
+## If <Arg>orient</Arg> is <C>true</C> and <Arg>g</Arg><M> \geq 50</M> or if 
+## <Arg>orient</Arg> is <C>false</C> and <Arg>g</Arg><M> \geq 100</M> only the difference cycles of the
+## surface are returned
+## <Example>
+## gap&gt; c:=SCSurface(23,true); 
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="S_23^or"
+##  Dim=2
+##  TopologicalType="(T^2)^#23"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 46, [  ] ], [ 1, [  ] ] ]
+## gap&gt; c.TopologicalType;
+## "(T^2)^#23"
+## gap&gt; c:=SCSurface(23,false); 
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="S_23^non"
+##  Dim=2
+##  TopologicalType="(RP^2)^#23"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 22, [ 2 ] ], [ 0, [  ] ] ]
+## gap&gt; c.TopologicalType;
+## "(RP^2)^#23"
+## </Example>
+## <Example>
+## gap&gt; dc:=SCSurface(345,true);
+## [ [ 1, 1, 1374 ], [ 2, 343, 1031 ], [ 343, 345, 688 ] ]
+## gap&gt; c:=SCFromDifferenceCycles(dc);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
+## 
+##  Name="complex from diffcycles [ [ 1, 1, 1374 ], [ 2, 343, 1031 ], [ 343, 345,\
+##  688 ] ]"
+##  Dim=2
+## 
+## /SimplicialComplex]
+## gap&gt; c.Chi;
+## -688
+## gap&gt; dc:=SCSurface(12345678910,true); time;
+## [ [ 1, 1, 24691357816 ], [ 2, 4, 24691357812 ], [ 3, 3, 24691357812 ], 
+##   [ 4, 12345678907, 12345678907 ] ]
+## 0
 ## </Example>
 ## </Description>
 ## </ManSection>

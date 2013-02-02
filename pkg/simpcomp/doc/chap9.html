@@ -41,6 +41,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X85D69E4F84E8E7D9">9.2-12 SCReduceAsSubcomplex</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FF4BBEC8574C58F">9.2-13 SCReduceComplex</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X814D9AE287F64F74">9.2-14 SCReduceComplexEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8714A0A578A281C0">9.2-15 SCReduceComplexFast</a></span>
 </div></div>
 </div>
 
@@ -299,12 +300,12 @@
 
 <h5>9.2-8 SCMove</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCMove</code>( <var class="Arg">complex</var>, <var class="Arg">move</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCMove</code>( <var class="Arg">c</var>, <var class="Arg">move</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: simplicial complex of type <code class="code">SCSimplicialComplex</code> upon success, <code class="keyw">fail</code> otherwise.</p>
 
-<p>Applies the bistellar move <var class="Arg">move</var> to a simplicial complex <var class="Arg">complex</var>. <var class="Arg">move</var> is given as a <span class="SimpleMath">(r+1)</span>-tuple together with a <span class="SimpleMath">(d+1-r)</span>-tuple if <span class="SimpleMath">d</span> is the dimension of <var class="Arg">complex</var> and if <var class="Arg">move</var> is a <span class="SimpleMath">r</span>-move. See <code class="func">SCRMoves</code> (<a href="chap9.html#X7E70D44179ED6A78"><span class="RefLink">9.2-10</span></a>) for detailed information about bistellar <span class="SimpleMath">r</span>-moves.</p>
+<p>Applies the bistellar move <var class="Arg">move</var> to a simplicial complex <var class="Arg">c</var>. <var class="Arg">move</var> is given as a <span class="SimpleMath">(r+1)</span>-tuple together with a <span class="SimpleMath">(d+1-r)</span>-tuple if <span class="SimpleMath">d</span> is the dimension of <var class="Arg">c</var> and if <var class="Arg">move</var> is a <span class="SimpleMath">r</span>-move. See <code class="func">SCRMoves</code> (<a href="chap9.html#X7E70D44179ED6A78"><span class="RefLink">9.2-10</span></a>) for detailed information about bistellar <span class="SimpleMath">r</span>-moves.</p>
 
-<p>Note: <var class="Arg">move</var> and <var class="Arg">complex</var> should be given in standard labeling to ensure a correct result.</p>
+<p>Note: <var class="Arg">move</var> and <var class="Arg">c</var> should be given in standard labeling to ensure a correct result.</p>
 
 
 <div class="example"><pre>
@@ -468,7 +469,7 @@
       Dim=1
      
      /SimplicialComplex], 3 ]
- ## </pre></div>
+ </pre></div>
 
 <p><a id="X814D9AE287F64F74" name="X814D9AE287F64F74"></a></p>
 
@@ -588,6 +589,15 @@
  
  That's all, I hope this is good news! Have a nice day.
  </pre></div>
+
+<p><a id="X8714A0A578A281C0" name="X8714A0A578A281C0"></a></p>
+
+<h5>9.2-15 SCReduceComplexFast</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCReduceComplexFast</code>( <var class="Arg">complex</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: a simplicial complex upon success, <code class="keyw">fail</code> otherwise.</p>
+
+<p>Same as <code class="func">SCReduceComplex</code> (<a href="chap9.html#X7FF4BBEC8574C58F"><span class="RefLink">9.2-13</span></a>), but calls an external binary provided with the simpcomp package.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>

@@ -20,9 +20,28 @@
   
   [33X[0;0YReturns the target part of the ToDo-list entry [3Xentry[103X. This is a triple of an
   object,  a  name  of a filter/attribute, and a val\ ue to which the specific
-  filter/attribute should be set.[133X
+  filter/attribute  should be set. The third entry of the list might also be a
+  function to which return value the att\ ribute is set.[133X
   
-  [1X6.1-3 ProcessAToDoListEntry[101X
+  [1X6.1-3 SetTargetValueObject[101X
+  
+  [29X[2XSetTargetValueObject[102X( [3Xentry[103X, [3Xvalue[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YIf the given value of the target part is the return value of a function this
+  command  sets the target value of the entry to a functi\ on. This is done to
+  keep proof tracking availible.[133X
+  
+  [1X6.1-4 SetTargetObject[101X
+  
+  [29X[2XSetTargetObject[102X( [3Xentry[103X, [3Xobj[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YIf  the target object, i.e. the first entry of the target part, was given as
+  a function, this method can set this entry to the retur\ n value computed in
+  ProcessToDoListEntry. This happens atomatically, do not worry about it.[133X
+  
+  [1X6.1-5 ProcessAToDoListEntry[101X
   
   [29X[2XProcessAToDoListEntry[102X( [3Xarg1[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya boolean[133X
@@ -32,14 +51,14 @@
   could  be  processed,  false  if  not,  and fail if SourcePart or TargetPart
   weren't availible anymore.[133X
   
-  [1X6.1-4 AreCompatible[101X
+  [1X6.1-6 AreCompatible[101X
   
   [29X[2XAreCompatible[102X( [3Xarg1[103X, [3Xarg2[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya boolean[133X
   
   [33X[0;0YReturns true if TargetPart( [3XA[103X ) = SourcePart( [3XB[103X ), false otherwise.[133X
   
-  [1X6.1-5 ToDoListEntryWithWeakPointers[101X
+  [1X6.1-7 ToDoListEntryWithWeakPointers[101X
   
   [29X[2XToDoListEntryWithWeakPointers[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X, [3Xarg6[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya ToDoListEntry[133X
@@ -49,32 +68,34 @@
   type  of  entry  uses  weakpointers  as  links to the object so you might be
   careful with it.[133X
   
-  [1X6.1-6 ToDoListEntryWithPointers[101X
+  [1X6.1-8 ToDoListEntryWithPointers[101X
   
   [29X[2XToDoListEntryWithPointers[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X, [3Xarg6[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya ToDoListEntry[133X
   
   [33X[0;0YThe same as ToDoListEntryWithWeakPointers, but with pointers.[133X
   
-  [1X6.1-7 ToDoListEntryWithListOfSources[101X
+  [1X6.1-9 ToDoListEntryWithListOfSources[101X
   
   [29X[2XToDoListEntryWithListOfSources[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya ToDoListEntry[133X
   
   [33X[0;0YThe same as ToDoListEntryWithPointers, but the first argument must be a list
-  of triples defining the conditions of this entry[133X
+  of touples or triples defining the conditions of this \ entry[133X
   
-  [1X6.1-8 ToDoListEntryWhichLaunchesAFunction[101X
+  [1X6.1-10 ToDoListEntryWhichLaunchesAFunction[101X
   
   [29X[2XToDoListEntryWhichLaunchesAFunction[102X( [3Xarg1[103X, [3Xarg2[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya ToDoListEntry[133X
   
-  [33X[0;0YThe  first  argument  must  be a list of triples which contain an object, on
-  which  the second entry, an attribute given by its name as \ a string can be
-  applied. If the value of the attribute matches the third entry, the function
-  given as second argument is launched.[133X
+  [33X[0;0YThe  first  argument  must  be  a list of tuples or triples which contain an
+  object,  on  which  the  second entry, an attribute given by it\ s name as a
+  string  can  be  applied. It the entry is a tuple the ToDo-list entry checks
+  wether  the  Tester  of  the  second  value  is  true.  If the\ value of the
+  attribute  matches the third entry, the function given as second argument is
+  launched.[133X
   
-  [1X6.1-9 CreateImmediateMethodForToDoListEntry[101X
+  [1X6.1-11 CreateImmediateMethodForToDoListEntry[101X
   
   [29X[2XCreateImmediateMethodForToDoListEntry[102X( [3Xarg1[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ynothing[133X
@@ -82,21 +103,21 @@
   [33X[0;0YCreates  an ImmediateMethod for a ToDoListEntry. This method is for internal
   use only.[133X
   
-  [1X6.1-10 JoinToDoListEntries[101X
+  [1X6.1-12 JoinToDoListEntries[101X
   
   [29X[2XJoinToDoListEntries[102X( [3Xarg1[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya ToDoListEntry[133X
   
   [33X[0;0YJoins a list of compatible ToDo-list entries to a new one.[133X
   
-  [1X6.1-11 GenesisOfToDoListEntry[101X
+  [1X6.1-13 GenesisOfToDoListEntry[101X
   
   [29X[2XGenesisOfToDoListEntry[102X( [3Xarg[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list[133X
   
   [33X[0;0YIf a ToDoListEntry is created as union of others, this is a list of those.[133X
   
-  [1X6.1-12 DescriptionOfImplication[101X
+  [1X6.1-14 DescriptionOfImplication[101X
   
   [29X[2XDescriptionOfImplication[102X( [3Xarg[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list[133X

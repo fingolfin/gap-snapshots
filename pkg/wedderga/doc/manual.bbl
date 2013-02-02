@@ -23,6 +23,17 @@ G.~Olteanu.
   {B}rauer-{W}itt theorem.
 \newblock {\em Math. Comp.}, 76(258):1073{\textendash}1087 (electronic), 2007.
 
+\bibitem[OVG11]{OV}
+G.~Olteanu and I.~Van~Gelder.
+\newblock Finite group algebras of nilpotent groups: A complete set of
+  orthogonal primitive idempotents.
+\newblock {\em Finite Fields Appl.}, 17(2):157{\textendash}165, 2011.
+
+\bibitem[OVGnt]{OV2}
+G.~Olteanu and I.~Van~Gelder.
+\newblock Construction of minimal non-abelian left group codes.
+\newblock preprint.
+
 \bibitem[Pas89]{P}
 D.~S. Passman.
 \newblock {\em Infinite crossed products}, volume 135 of {\em Pure and Applied

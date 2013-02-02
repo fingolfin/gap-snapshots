@@ -27,11 +27,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85FE8A148090985E">2.1-1 AUTOMATIC_DOCUMENTATION</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B9CAA7879526E64">2.1-2 CreateAutoDoc</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X813266C082A412F9">2.1-3 DeclareCategoryWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82FAF5637E4A651F">2.1-4 DeclareOperationWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X833A38277FA4848A">2.1-5 DeclareAttributeWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E376CD17AA0566F">2.1-6 DeclarePropertyWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B8162A87F499094">2.1-7 DeclareGlobalFunctionWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CADC9C87BEF79D8">2.1-8 DeclareGlobalVariableWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E24A6497A41CDE7">2.1-4 DeclareRepresentationWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82FAF5637E4A651F">2.1-5 DeclareOperationWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85CD8A4B7DAEDE74">2.1-6 InstallMethodWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X833A38277FA4848A">2.1-7 DeclareAttributeWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E376CD17AA0566F">2.1-8 DeclarePropertyWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B8162A87F499094">2.1-9 DeclareGlobalFunctionWithDocumentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CADC9C87BEF79D8">2.1-10 DeclareGlobalVariableWithDocumentation</a></span>
 </div></div>
 </div>
 
@@ -66,18 +68,36 @@
 
 <p>This method declares a category, like DeclareCategory( <var class="Arg">name</var>, <var class="Arg">filter</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
 
+<p><a id="X7E24A6497A41CDE7" name="X7E24A6497A41CDE7"></a></p>
+
+<h5>2.1-4 DeclareRepresentationWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a representation, like DeclareRepresentation( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
 <p><a id="X82FAF5637E4A651F" name="X82FAF5637E4A651F"></a></p>
 
-<h5>2.1-4 DeclareOperationWithDocumentation</h5>
+<h5>2.1-5 DeclareOperationWithDocumentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
 
 <p>This method declares a operation, like DeclareOperation( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
 
+<p><a id="X85CD8A4B7DAEDE74" name="X85CD8A4B7DAEDE74"></a></p>
+
+<h5>2.1-6 InstallMethodWithDocumentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethodWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">func</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>This method declares a operation, like InstallMethod( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">func</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
 <p><a id="X833A38277FA4848A" name="X833A38277FA4848A"></a></p>
 
-<h5>2.1-5 DeclareAttributeWithDocumentation</h5>
+<h5>2.1-7 DeclareAttributeWithDocumentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttributeWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">argument</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
@@ -86,7 +106,7 @@
 
 <p><a id="X7E376CD17AA0566F" name="X7E376CD17AA0566F"></a></p>
 
-<h5>2.1-6 DeclarePropertyWithDocumentation</h5>
+<h5>2.1-8 DeclarePropertyWithDocumentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclarePropertyWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
@@ -95,7 +115,7 @@
 
 <p><a id="X7B8162A87F499094" name="X7B8162A87F499094"></a></p>
 
-<h5>2.1-7 DeclareGlobalFunctionWithDocumentation</h5>
+<h5>2.1-9 DeclareGlobalFunctionWithDocumentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunctionWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
@@ -104,7 +124,7 @@
 
 <p><a id="X7CADC9C87BEF79D8" name="X7CADC9C87BEF79D8"></a></p>
 
-<h5>2.1-8 DeclareGlobalVariableWithDocumentation</h5>
+<h5>2.1-10 DeclareGlobalVariableWithDocumentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariableWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">description</var>[, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>

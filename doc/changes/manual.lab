@@ -3,51 +3,55 @@
 \makelabel{changes:Copyright}{}{X81488B807F2A1CF1}
 \makelabel{changes:Table of Contents}{}{X8537FEB07AF2BEC8}
 \makelabel{changes:Preface}{1}{X874E1D45845007FE}
-\makelabel{changes:Changes between GAP 4.4 and GAP 4.5}{2}{X837AADDA7EA9A541}
-\makelabel{changes:Changes in the core GAP system}{2.1}{X7C1300337DD936C4}
-\makelabel{changes:Improved functionality}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:Changes in distribution formats}{2.1.2}{X7E24E9DE7CADD1B7}
-\makelabel{changes:Improvements to the user interface}{2.1.3}{X80AB8641792E74C9}
-\makelabel{changes:Better documentation}{2.1.4}{X81318FC0873923C3}
-\makelabel{changes:Packages in GAP 4.5}{2.2}{X85D796968453CFBF}
-\makelabel{changes:Interface between the core system and packages}{2.2.1}{X7E8089C881AB6BA1}
-\makelabel{changes:New and updated packages since GAP 4.4.12}{2.2.2}{X81A313117C30EC28}
-\makelabel{changes:GAP 4.5.5 (July 2012)}{2.3}{X83D3FC7781921387}
-\makelabel{changes:GAP 4.5.6 (September 2012)}{2.4}{X79311F9185A267DB}
-\makelabel{changes:GAP 4.5.7 (December 2012)}{2.5}{X81528B5F78B996D2}
-\makelabel{changes:Overview of updates for GAP 4.4}{3}{X78AE465E7AA00F25}
-\makelabel{changes:GAP 4.4 Bugfix 2 (April 2004)}{3.1}{X82AB84287ED2B8FF}
-\makelabel{changes:GAP 4.4 Bugfix 3 (May 2004)}{3.2}{X8208E7F578754467}
-\makelabel{changes:GAP 4.4 Bugfix 4 (December 2004)}{3.3}{X87A965F97E6E6BD0}
-\makelabel{changes:GAP 4.4 Update 5 (May 2005)}{3.4}{X80221EDA877CC106}
-\makelabel{changes:GAP 4.4 Update 6 (September 2005)}{3.5}{X80F9D3E07DD59BD9}
-\makelabel{changes:GAP 4.4 Update 7 (March 2006)}{3.6}{X7B8B22C77DC970F8}
-\makelabel{changes:GAP 4.4 Update 8 (September 2006)}{3.7}{X7B61699179F631E0}
-\makelabel{changes:GAP 4.4 Update 9 (November 2006)}{3.8}{X81B223647C9BD9B9}
-\makelabel{changes:GAP 4.4 Update 10 (October 2007)}{3.9}{X7BB4EC1F7B130FD5}
-\makelabel{changes:GAP 4.4 Update 11 (December 2008)}{3.10}{X7E4C6820809F2384}
-\makelabel{changes:GAP 4.4 Update 12 (December 2008)}{3.11}{X7F5BBE877AAA4BEE}
-\makelabel{changes:Changes from Earlier Versions}{4}{X7F5DE9997CF43125}
-\makelabel{changes:Changes between GAP 4.3 and GAP 4.4}{4.1}{X7DBACE2286A43A31}
-\makelabel{changes:Potentially Incompatible Changes}{4.1.1}{X7C5AC61F824086D6}
-\makelabel{changes:New Packages}{4.1.2}{X7D9702E3815BE9FB}
-\makelabel{changes:Performance Enhancements}{4.1.3}{X7DA8709A850E772D}
-\makelabel{changes:New Programming and User Features}{4.1.4}{X83E1A0D87D3D1EAF}
-\makelabel{changes:Earlier Changes}{4.2}{X8205C966783E6F37}
+\makelabel{changes:Changes between GAP 4.5 and GAP 4.6}{2}{X8175857F79C8AD8E}
+\makelabel{changes:GAP 4.6.1 (January 2013)}{2.1}{X82B73E9A8136B69D}
+\makelabel{changes:Changes in the core GAP system}{2.1.1}{X7C1300337DD936C4}
+\makelabel{changes:New and updated packages since GAP 4.5.4}{2.1.2}{X79A4DFE97A230E6D}
+\makelabel{changes:Changes between GAP 4.4 and GAP 4.5}{3}{X837AADDA7EA9A541}
+\makelabel{changes:Changes in the core GAP system}{3.1}{X7C1300337DD936C4}
+\makelabel{changes:Improved functionality}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:Changes in distribution formats}{3.1.2}{X7E24E9DE7CADD1B7}
+\makelabel{changes:Improvements to the user interface}{3.1.3}{X80AB8641792E74C9}
+\makelabel{changes:Better documentation}{3.1.4}{X81318FC0873923C3}
+\makelabel{changes:Packages in GAP 4.5}{3.2}{X85D796968453CFBF}
+\makelabel{changes:Interface between the core system and packages}{3.2.1}{X7E8089C881AB6BA1}
+\makelabel{changes:New and updated packages since GAP 4.4.12}{3.2.2}{X81A313117C30EC28}
+\makelabel{changes:GAP 4.5.5 (July 2012)}{3.3}{X83D3FC7781921387}
+\makelabel{changes:GAP 4.5.6 (September 2012)}{3.4}{X79311F9185A267DB}
+\makelabel{changes:GAP 4.5.7 (December 2012)}{3.5}{X81528B5F78B996D2}
+\makelabel{changes:Overview of updates for GAP 4.4}{4}{X78AE465E7AA00F25}
+\makelabel{changes:GAP 4.4 Bugfix 2 (April 2004)}{4.1}{X82AB84287ED2B8FF}
+\makelabel{changes:GAP 4.4 Bugfix 3 (May 2004)}{4.2}{X8208E7F578754467}
+\makelabel{changes:GAP 4.4 Bugfix 4 (December 2004)}{4.3}{X87A965F97E6E6BD0}
+\makelabel{changes:GAP 4.4 Update 5 (May 2005)}{4.4}{X80221EDA877CC106}
+\makelabel{changes:GAP 4.4 Update 6 (September 2005)}{4.5}{X80F9D3E07DD59BD9}
+\makelabel{changes:GAP 4.4 Update 7 (March 2006)}{4.6}{X7B8B22C77DC970F8}
+\makelabel{changes:GAP 4.4 Update 8 (September 2006)}{4.7}{X7B61699179F631E0}
+\makelabel{changes:GAP 4.4 Update 9 (November 2006)}{4.8}{X81B223647C9BD9B9}
+\makelabel{changes:GAP 4.4 Update 10 (October 2007)}{4.9}{X7BB4EC1F7B130FD5}
+\makelabel{changes:GAP 4.4 Update 11 (December 2008)}{4.10}{X7E4C6820809F2384}
+\makelabel{changes:GAP 4.4 Update 12 (December 2008)}{4.11}{X7F5BBE877AAA4BEE}
+\makelabel{changes:Changes from Earlier Versions}{5}{X7F5DE9997CF43125}
+\makelabel{changes:Changes between GAP 4.3 and GAP 4.4}{5.1}{X7DBACE2286A43A31}
+\makelabel{changes:Potentially Incompatible Changes}{5.1.1}{X7C5AC61F824086D6}
+\makelabel{changes:New Packages}{5.1.2}{X7D9702E3815BE9FB}
+\makelabel{changes:Performance Enhancements}{5.1.3}{X7DA8709A850E772D}
+\makelabel{changes:New Programming and User Features}{5.1.4}{X83E1A0D87D3D1EAF}
+\makelabel{changes:Earlier Changes}{5.2}{X8205C966783E6F37}
 \makelabel{changes:Index}{Ind}{X83A0356F839C696F}
-\makelabel{changes:GMP support}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:Floats}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:Data libraries}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:Completion files (withdrawn)}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:GAP 3 compatibility mode (withdrawn)}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:GAP compiler (no longer recommended)}{2.1.1}{X84FC44718386FA1A}
-\makelabel{changes:tools archive}{2.1.2}{X7E24E9DE7CADD1B7}
-\makelabel{changes:Bugfixes and packages archives (withdrawn)}{2.1.2}{X7E24E9DE7CADD1B7}
-\makelabel{changes:GAP binary distributions}{2.1.2}{X7E24E9DE7CADD1B7}
-\makelabel{changes:readline support}{2.1.3}{X80AB8641792E74C9}
-\makelabel{changes:User interface customisation}{2.1.3}{X80AB8641792E74C9}
-\makelabel{changes:MathJax support}{2.1.4}{X81318FC0873923C3}
-\makelabel{changes:Namespaces}{2.2.1}{X7E8089C881AB6BA1}
-\makelabel{changes:Packages, new}{2.2.2}{X81A313117C30EC28}
-\makelabel{changes:Packages, upgraded}{2.2.2}{X81A313117C30EC28}
-\makelabel{changes:Packages under Windows}{2.2.2}{X81A313117C30EC28}
+\makelabel{changes:Packages, new}{2.1.2}{X79A4DFE97A230E6D}
+\makelabel{changes:Packages, upgraded}{2.1.2}{X79A4DFE97A230E6D}
+\makelabel{changes:GMP support}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:Floats}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:Data libraries}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:Completion files (withdrawn)}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:GAP 3 compatibility mode (withdrawn)}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:GAP compiler (no longer recommended)}{3.1.1}{X84FC44718386FA1A}
+\makelabel{changes:tools archive}{3.1.2}{X7E24E9DE7CADD1B7}
+\makelabel{changes:Bugfixes and packages archives (withdrawn)}{3.1.2}{X7E24E9DE7CADD1B7}
+\makelabel{changes:GAP binary distributions}{3.1.2}{X7E24E9DE7CADD1B7}
+\makelabel{changes:readline support}{3.1.3}{X80AB8641792E74C9}
+\makelabel{changes:User interface customisation}{3.1.3}{X80AB8641792E74C9}
+\makelabel{changes:MathJax support}{3.1.4}{X81318FC0873923C3}
+\makelabel{changes:Namespaces}{3.2.1}{X7E8089C881AB6BA1}
+\makelabel{changes:Packages under Windows}{3.2.2}{X81A313117C30EC28}

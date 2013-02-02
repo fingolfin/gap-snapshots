@@ -98,7 +98,7 @@
 {\Huge \textbf{Tools for the \textsf{homalg} project\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.12.11\mbox{}}\\[1cm]
+{\Huge Version 2012.12.20\mbox{}}\\[1cm]
 {October 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
@@ -1205,12 +1205,48 @@ a list
 
  Returns the target part of the ToDo-list entry \mbox{\texttt{\mdseries\slshape entry}}. This is a triple of an object, a name of a filter/attribute, and a
 val\texttt{\symbol{92}} ue to which the specific filter/attribute should be
-set. }
+set. The third entry of the list might also be a function to which return
+value the att\texttt{\symbol{92}} ribute is set. }
+
+ 
+
+\subsection{\textcolor{Chapter }{SetTargetValueObject (for IsToDoListEntry, IsObject)}}
+\logpage{[ 6, 1, 3 ]}\nobreak
+\hyperdef{L}{X8041DC118358A5CD}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{SetTargetValueObject({\mdseries\slshape entry, value})\index{SetTargetValueObject@\texttt{SetTargetValueObject}!for IsToDoListEntry, IsObject}
+\label{SetTargetValueObject:for IsToDoListEntry, IsObject}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ If the given value of the target part is the return value of a function this
+command sets the target value of the entry to a functi\texttt{\symbol{92}} on.
+This is done to keep proof tracking availible. }
+
+ 
+
+\subsection{\textcolor{Chapter }{SetTargetObject (for IsToDoListEntry, IsObject)}}
+\logpage{[ 6, 1, 4 ]}\nobreak
+\hyperdef{L}{X793216E3836F177C}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{SetTargetObject({\mdseries\slshape entry, obj})\index{SetTargetObject@\texttt{SetTargetObject}!for IsToDoListEntry, IsObject}
+\label{SetTargetObject:for IsToDoListEntry, IsObject}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ If the target object, i.e. the first entry of the target part, was given as a
+function, this method can set this entry to the retur\texttt{\symbol{92}} n
+value computed in ProcessToDoListEntry. This happens atomatically, do not
+worry about it. }
 
  
 
 \subsection{\textcolor{Chapter }{ProcessAToDoListEntry (for IsToDoListEntry)}}
-\logpage{[ 6, 1, 3 ]}\nobreak
+\logpage{[ 6, 1, 5 ]}\nobreak
 \hyperdef{L}{X7F63A94D7B43B880}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ProcessAToDoListEntry({\mdseries\slshape arg1})\index{ProcessAToDoListEntry@\texttt{ProcessAToDoListEntry}!for IsToDoListEntry}
 \label{ProcessAToDoListEntry:for IsToDoListEntry}
@@ -1228,7 +1264,7 @@ TargetPart weren't availible anymore. }
  
 
 \subsection{\textcolor{Chapter }{AreCompatible (for IsToDoListEntry, IsToDoListEntry)}}
-\logpage{[ 6, 1, 4 ]}\nobreak
+\logpage{[ 6, 1, 6 ]}\nobreak
 \hyperdef{L}{X843B58A884563E2D}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AreCompatible({\mdseries\slshape arg1, arg2})\index{AreCompatible@\texttt{AreCompatible}!for IsToDoListEntry, IsToDoListEntry}
 \label{AreCompatible:for IsToDoListEntry, IsToDoListEntry}
@@ -1244,7 +1280,7 @@ a boolean
 
 \subsection{\textcolor{Chapter }{ToDoListEntryWithWeakPointers (for IsObject, IsString, IsObject, IsObject, IsS\
 tring, IsObject)}}
-\logpage{[ 6, 1, 5 ]}\nobreak
+\logpage{[ 6, 1, 7 ]}\nobreak
 \hyperdef{L}{X837361A982A9DA32}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithWeakPointers({\mdseries\slshape arg1, arg2, arg3, arg4, arg5, arg6})\index{ToDoListEntryWithWeakPointers@\texttt{ToDoListEntryWithWeakPointers}!for IsObject, IsString, IsObject, IsObject, IsS\
 tring, IsObject}
@@ -1265,7 +1301,7 @@ might be careful with it. }
 
 \subsection{\textcolor{Chapter }{ToDoListEntryWithPointers (for IsObject, IsString, IsObject, IsObject, IsStrin\
 g, IsObject)}}
-\logpage{[ 6, 1, 6 ]}\nobreak
+\logpage{[ 6, 1, 8 ]}\nobreak
 \hyperdef{L}{X811E554386D68A87}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithPointers({\mdseries\slshape arg1, arg2, arg3, arg4, arg5, arg6})\index{ToDoListEntryWithPointers@\texttt{ToDoListEntryWithPointers}!for IsObject, IsString, IsObject, IsObject, IsStrin\
 g, IsObject}
@@ -1282,7 +1318,7 @@ a ToDoListEntry
  
 
 \subsection{\textcolor{Chapter }{ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}}
-\logpage{[ 6, 1, 7 ]}\nobreak
+\logpage{[ 6, 1, 9 ]}\nobreak
 \hyperdef{L}{X86ECD224820CBB4E}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWithListOfSources({\mdseries\slshape arg1, arg2, arg3, arg4})\index{ToDoListEntryWithListOfSources@\texttt{ToDoListEntryWithListOfSources}!for IsList, IsObject, IsString, IsObject}
 \label{ToDoListEntryWithListOfSources:for IsList, IsObject, IsString, IsObject}
@@ -1293,12 +1329,13 @@ a ToDoListEntry
 
 
  The same as ToDoListEntryWithPointers, but the first argument must be a list
-of triples defining the conditions of this entry }
+of touples or triples defining the conditions of this \texttt{\symbol{92}}
+entry }
 
  
 
 \subsection{\textcolor{Chapter }{ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}}
-\logpage{[ 6, 1, 8 ]}\nobreak
+\logpage{[ 6, 1, 10 ]}\nobreak
 \hyperdef{L}{X7ECB3D1C7BDD580E}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ToDoListEntryWhichLaunchesAFunction({\mdseries\slshape arg1, arg2})\index{ToDoListEntryWhichLaunchesAFunction@\texttt{ToDoListEntryWhichLaunchesAFunction}!for IsList, IsFunction}
 \label{ToDoListEntryWhichLaunchesAFunction:for IsList, IsFunction}
@@ -1308,15 +1345,17 @@ a ToDoListEntry
 
 
 
- The first argument must be a list of triples which contain an object, on which
-the second entry, an attribute given by its name as \texttt{\symbol{92}} a
-string can be applied. If the value of the attribute matches the third entry,
-the function given as second argument is launched. }
+ The first argument must be a list of tuples or triples which contain an
+object, on which the second entry, an attribute given by
+it\texttt{\symbol{92}} s name as a string can be applied. It the entry is a
+tuple the ToDo-list entry checks wether the Tester of the second value is
+true. If the\texttt{\symbol{92}} value of the attribute matches the third
+entry, the function given as second argument is launched. }
 
  
 
 \subsection{\textcolor{Chapter }{CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}}
-\logpage{[ 6, 1, 9 ]}\nobreak
+\logpage{[ 6, 1, 11 ]}\nobreak
 \hyperdef{L}{X7A0DF7C07D589BC5}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateImmediateMethodForToDoListEntry({\mdseries\slshape arg1})\index{CreateImmediateMethodForToDoListEntry@\texttt{Create}\-\texttt{Immediate}\-\texttt{Method}\-\texttt{For}\-\texttt{To}\-\texttt{Do}\-\texttt{List}\-\texttt{Entry}!for IsToDoListEntry}
 \label{CreateImmediateMethodForToDoListEntry:for IsToDoListEntry}
@@ -1332,7 +1371,7 @@ use only. }
  
 
 \subsection{\textcolor{Chapter }{JoinToDoListEntries (for IsList)}}
-\logpage{[ 6, 1, 10 ]}\nobreak
+\logpage{[ 6, 1, 12 ]}\nobreak
 \hyperdef{L}{X79D0F627831D3B87}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{JoinToDoListEntries({\mdseries\slshape arg1})\index{JoinToDoListEntries@\texttt{JoinToDoListEntries}!for IsList}
 \label{JoinToDoListEntries:for IsList}
@@ -1347,7 +1386,7 @@ a ToDoListEntry
  
 
 \subsection{\textcolor{Chapter }{GenesisOfToDoListEntry (for IsToDoListEntry)}}
-\logpage{[ 6, 1, 11 ]}\nobreak
+\logpage{[ 6, 1, 13 ]}\nobreak
 \hyperdef{L}{X78F0BFF382F62287}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{GenesisOfToDoListEntry({\mdseries\slshape arg})\index{GenesisOfToDoListEntry@\texttt{GenesisOfToDoListEntry}!for IsToDoListEntry}
 \label{GenesisOfToDoListEntry:for IsToDoListEntry}
@@ -1362,7 +1401,7 @@ a list
  
 
 \subsection{\textcolor{Chapter }{DescriptionOfImplication (for IsToDoListEntry)}}
-\logpage{[ 6, 1, 12 ]}\nobreak
+\logpage{[ 6, 1, 14 ]}\nobreak
 \hyperdef{L}{X81E733C27D96F9C8}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DescriptionOfImplication({\mdseries\slshape arg})\index{DescriptionOfImplication@\texttt{DescriptionOfImplication}!for IsToDoListEntry}
 \label{DescriptionOfImplication:for IsToDoListEntry}

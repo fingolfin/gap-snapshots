@@ -27,9 +27,9 @@
 
 <h2>A <strong class="pkg">GAP</strong> toolbox for simplicial complexes</h2>
 
-<p>Version 1.5.4</p>
+<p>Version 1.6.1</p>
 
-<p>November 2011
+<p>January 2013
 	
   </p>
 
@@ -37,24 +37,28 @@
 <p><b>
   	Felix Effenberger
     
+    
+
   </b>
-<br />Email: <span class="URL"><a href="mailto:effenberger@mathematik.uni-stuttgart.de">effenberger@mathematik.uni-stuttgart.de</a></span>
+<br />Email: <span class="URL"><a href="mailto:felix.effenberger@mis.mpg.de">felix.effenberger@mis.mpg.de</a></span>
+<br />Address: <br />Max Planck Institute for Mathematics in the Sciences<br /> Inselstr. 22<br /> D-04103 Leipzig, Germany
 </p><p><b>
   	Jonathan Spreer
     
+    
+
   </b>
-<br />Email: <span class="URL"><a href="mailto:spreer@mathematik.uni-stuttgart.de">spreer@mathematik.uni-stuttgart.de</a></span>
+<br />Email: <span class="URL"><a href="mailto:j.spreer@uq.edu.au">j.spreer@uq.edu.au</a></span>
+<br />Address: <br />University of Queensland<br /> School of Mathematics and Physics<br /> Brisbane QLD 4072 Australia
 </p>
 
-<p><b>Address:</b><br />
-University of Stuttgart<br /> Department of Mathematics<br /> Institute of Geometry and Topology<br /> D-70550 Stuttgart, Germany</p>
 <p><a id="X7AA6C5737B711C89" name="X7AA6C5737B711C89"></a></p>
 <h3>Abstract</h3>
-<p><strong class="pkg">simpcomp</strong> is an extension (a so called package) to <strong class="pkg">GAP</strong> for working with simplicial complexes in the context of combinatorial topology. The package enables the user to compute numerous properties of (abstract) simplicial complexes (such as the <span class="SimpleMath">f</span>-, <span class="SimpleMath">g</span>- and <span class="SimpleMath">h</span>-vectors, the face lattice, the fundamental group, the automorphism group, (co-)homology with explicit basis computation, etc.). It provides functions to generate simplicial complexes from facet lists, orbit representatives or difference cycles. Moreover, a variety of infinite series of combinatorial manifolds and pseudomanifolds (such as the simplex, the cross polytope, transitive handle bodies and sphere bundles, etc.) is given and it is possible to create new complexes from existing ones (links and stars, connected sums, simplicial cartesian products, handle additions, bistellar flips, etc.). Furthermore, <strong class="pkg">simpcomp</strong> ships with an extensive library of known triangulations of manifolds and provides the user with the possibility to create own complex libraries. In addition, functions related to slicings and polyhedral Morse theory as well as a combinatorial version of algebraic blowups and the possibility to resolve isolated singularities of <span class="SimpleMath">4</span>-manifolds are implemented.<br /> <strong class="pkg">simpcomp</strong> caches computed properties of a simplicial complex, thus avoiding unnecessary computations, internally handles the vertex labeling of the complexes and insures the consistency of a simplicial complex throughout all operations.<br /> If possible, <strong class="pkg">simpcomp</strong> makes use of the <strong class="pkg">GAP</strong> package <strong class="pkg">homology</strong> <a href="chapBib.html#biBDumas04Homology">[DHSW04]</a> for its homology computation but also provides the user with own (co-)homology algorithms. For automorphism group computation the <strong class="pkg">GAP</strong> package <strong class="pkg">GRAPE</strong> <a href="chapBib.html#biBSoicher06GRAPE">[Soi06]</a> is used, which in turn uses the program <code class="code">nauty</code> by Brendan McKay <a href="chapBib.html#biBMcKay84Nauty">[McK84]</a>. An internal automorphism group calculation algorithm is used as fallback if the <strong class="pkg">GRAPE</strong> package is not available.</p>
+<p><strong class="pkg">simpcomp</strong> is an extension (a so called package) to <strong class="pkg">GAP</strong> for working with simplicial complexes in the context of combinatorial topology. The package enables the user to compute numerous properties of (abstract) simplicial complexes (such as the <span class="SimpleMath">f</span>-, <span class="SimpleMath">g</span>- and <span class="SimpleMath">h</span>-vectors, the face lattice, the fundamental group, the automorphism group, (co-)homology with explicit basis computation, etc.). It provides functions to generate simplicial complexes from facet lists, orbit representatives or difference cycles. Moreover, a variety of infinite series of combinatorial manifolds and pseudomanifolds (such as the simplex, the cross polytope, transitive handle bodies and sphere bundles, etc.) is given and it is possible to create new complexes from existing ones (links and stars, connected sums, simplicial cartesian products, handle additions, bistellar flips, etc.). <strong class="pkg">simpcomp</strong> ships with an extensive library of known triangulations of manifolds and a census of all combinatorial <span class="SimpleMath">3</span>-manifolds with transitive cyclic symmetry up to <span class="SimpleMath">22</span> vertices. Furthermore, it provides the user with the possibility to create own complex libraries. In addition, functions related to slicings and polyhedral Morse theory as well as a combinatorial version of algebraic blowups and the possibility to resolve isolated singularities of <span class="SimpleMath">4</span>-manifolds are implemented.<br /> <strong class="pkg">simpcomp</strong> caches computed properties of a simplicial complex, thus avoiding unnecessary computations, internally handles the vertex labeling of the complexes and insures the consistency of a simplicial complex throughout all operations.<br /> If possible, <strong class="pkg">simpcomp</strong> makes use of the <strong class="pkg">GAP</strong> package <strong class="pkg">homology</strong> <a href="chapBib.html#biBDumas04Homology">[DHSW04]</a> for its homology computation but also provides the user with own (co-)homology algorithms. For automorphism group computation the <strong class="pkg">GAP</strong> package <strong class="pkg">GRAPE</strong> <a href="chapBib.html#biBSoicher06GRAPE">[Soi06]</a> is used, which in turn uses the program <code class="code">nauty</code> by Brendan McKay <a href="chapBib.html#biBMcKay84Nauty">[McK84]</a>. An internal automorphism group calculation algorithm is used as fallback if the <strong class="pkg">GRAPE</strong> package is not available.</p>
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2011 Felix Effenberger and Jonathan Spreer. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation, see <span class="URL"><a href="http://www.fsf.org/licensing/licenses/fdl.html">http://www.fsf.org/licensing/licenses/fdl.html</a></span> for a copy.</p>
+<p>© 2013 Felix Effenberger and Jonathan Spreer. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation, see <span class="URL"><a href="http://www.fsf.org/licensing/licenses/fdl.html">http://www.fsf.org/licensing/licenses/fdl.html</a></span> for a copy.</p>
 
 <p><strong class="pkg">simpcomp</strong> is free software. The code of <strong class="pkg">simpcomp</strong> is released under the GPL version 2 or later (at your preference). For the text of the GPL see the file <code class="code">COPYING</code> in the <strong class="pkg">simpcomp</strong> directory or <span class="URL"><a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></span>.</p>
 
@@ -221,127 +225,161 @@ University of Stuttgart<br /> Department of Mathematics<br /> Institute of Geome
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X839F3BD37DBA3F3C">6.2-3 SCBdSimplex</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X856E48967BBFCF0E">6.2-4 SCEmpty</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A23532F7A8A3988">6.2-5 SCSimplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X831315CD80BA3654">6.2-6 SCFVectorBdCrossPolytope</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C010361858F0214">6.2-7 SCFVectorBdCyclicPolytope</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C3E0F7687AC966E">6.2-8 SCFVectorBdSimplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8664A90879248282">6.2-6 SCSeriesTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87C67A0087F645C1">6.2-7 SCSurface</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X831315CD80BA3654">6.2-8 SCFVectorBdCrossPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C010361858F0214">6.2-9 SCFVectorBdCyclicPolytope</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C3E0F7687AC966E">6.2-10 SCFVectorBdSimplex</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X814FE0267D7C54A9">6.3 <span class="Heading">Generating infinite series of transitive triangulations</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EA6421A8156EBDF">6.3-1 SCSeriesAGL</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X786AD599875BD006">6.3-2 SCSeriesBdHandleBody</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C0223DF83CC961B">6.3-3 SCSeriesC2n</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D1CEF9F86D3AE66">6.3-4 SCSeriesCSTSurface</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C56D2B7858A80C7">6.3-5 SCSeriesD2n</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CCBF8F487036415">6.3-6 SCSeriesHandleBody</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78DA125479E1D77F">6.3-7 SCSeriesK</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B8300428516DAD8">6.3-8 SCSeriesKu</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X813C5B0E7FA7C1A3">6.3-9 SCSeriesL</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EAC6828812A241A">6.3-10 SCSeriesLe</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DDC1B127F21CFA4">6.3-11 SCSeriesPrimeTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85E6FD6D84FF762B">6.3-2 SCSeriesBrehmKuehnelTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X786AD599875BD006">6.3-3 SCSeriesBdHandleBody</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8787A3A4788E950C">6.3-4 SCSeriesBid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C0223DF83CC961B">6.3-5 SCSeriesC2n</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E2927DA7F60D957">6.3-6 SCSeriesConnectedSum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D1CEF9F86D3AE66">6.3-7 SCSeriesCSTSurface</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C56D2B7858A80C7">6.3-8 SCSeriesD2n</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CCBF8F487036415">6.3-9 SCSeriesHandleBody</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8519C1B678C101BF">6.3-10 SCSeriesHomologySphere</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78DA125479E1D77F">6.3-11 SCSeriesK</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B8300428516DAD8">6.3-12 SCSeriesKu</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X813C5B0E7FA7C1A3">6.3-13 SCSeriesL</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EAC6828812A241A">6.3-14 SCSeriesLe</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8280ED8280FF9218">6.3-15 SCSeriesLensSpace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DDC1B127F21CFA4">6.3-16 SCSeriesPrimeTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CC3944D7E2F6458">6.3-17 SCSeriesSeifertFibredSpace</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F4308DB7C3699D1">6.4 <span class="Heading">Generating new complexes from old</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7899878881EA47F8">6.4 <span class="Heading">A census of regular and chiral maps</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8255A2F97A7432F9">6.4-1 SCCartesianPower</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X859DA29B83BDE35E">6.4-2 SCCartesianProduct</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82C9F57780C0B7F8">6.4-3 SCConnectedComponents</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C63CDF28162C755">6.4-4 SCConnectedProduct</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81338CE18195607C">6.4-5 SCConnectedSum</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78B843417D63B408">6.4-6 SCConnectedSumMinus</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84F3487182AB102A">6.4-7 SCDifferenceCycleCompress</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8510B6CF85070A28">6.4-8 SCDifferenceCycleExpand</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8278E1157A318C32">6.4-9 SCStronglyConnectedComponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X867D2AFC79B11405">6.4-1 SCChiralMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85BB97CB8240E59B">6.4-2 SCChiralMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B362D25784E7217">6.4-3 SCChiralTori</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AB15983833FCA6B">6.4-4 SCNrChiralTori</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87180AD07F799C5A">6.4-5 SCNrRegularTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83D0946E7E2C4163">6.4-6 SCRegularMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F75F5E183CC097E">6.4-7 SCRegularMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79B6F47187668CDF">6.4-8 SCRegularTorus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87CE08247BE77E44">6.4-9 SCSeriesSymmetricTorus</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X87C1C49987E75A9C">6.5 <span class="Heading">Simplicial complexes from transitive permutation groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F4308DB7C3699D1">6.5 <span class="Heading">Generating new complexes from old</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C1592677A76A3E5">6.5-1 SCsFromGroupExt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A04D77085D9BE4E">6.5-2 SCsFromGroupByTransitivity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8255A2F97A7432F9">6.5-1 SCCartesianPower</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X859DA29B83BDE35E">6.5-2 SCCartesianProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82C9F57780C0B7F8">6.5-3 SCConnectedComponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C63CDF28162C755">6.5-4 SCConnectedProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81338CE18195607C">6.5-5 SCConnectedSum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78B843417D63B408">6.5-6 SCConnectedSumMinus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84F3487182AB102A">6.5-7 SCDifferenceCycleCompress</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8510B6CF85070A28">6.5-8 SCDifferenceCycleExpand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8278E1157A318C32">6.5-9 SCStronglyConnectedComponents</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X81CE90127800B91A">6.6 <span class="Heading">Computing properties of simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X87C1C49987E75A9C">6.6 <span class="Heading">Simplicial complexes from transitive permutation groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B69B327809F67A0">6.6-1 SCAltshulerSteinberg</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B88925386E197AC">6.6-2 SCAutomorphismGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A33B8177A7ACD3A">6.6-3 SCAutomorphismGroupInternal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78F6EF808047772C">6.6-4 SCAutomorphismGroupSize</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EAC3A5D7A3339BB">6.6-5 SCAutomorphismGroupStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E9D5C257F88E5E0">6.6-6 SCAutomorphismGroupTransitivity</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X836DC73380EA7414">6.6-7 SCBoundary</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X812AE7397B4FC88E">6.6-8 SCDehnSommervilleCheck</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X859C3981831B4B81">6.6-9 SCDehnSommervilleMatrix</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82351AAE793DCB68">6.6-10 SCDim</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X798175C58050DDBD">6.6-11 SCDualGraph</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X788BAE187D584103">6.6-12 SCEulerCharacteristic</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81F8071385FD9C1D">6.6-13 SCFVector</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F8B561C823DDDBA">6.6-14 SCFaceLattice</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AE0029985BD0775">6.6-15 SCFaceLatticeEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F6FE9B27B8D6922">6.6-16 SCFaces</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B40DFE780A47109">6.6-17 SCFacesEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7BDD568184E3419D">6.6-18 SCFacets</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87DC942881235E25">6.6-19 SCFacetsEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79F60850875BB683">6.6-20 SCFpBettiNumbers</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X875963367A7745FB">6.6-21 SCFundamentalGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B9F77A885E1BABE">6.6-22 SCGVector</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X863CA73D7F66B295">6.6-23 SCGenerators</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789F8FC77FC0E701">6.6-24 SCGeneratorsEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84FBF0A685547ECD">6.6-25 SCHVector</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X796EBADE7803C622">6.6-26 SCHasBoundary</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C2A5B4D7E77E444">6.6-27 SCHasInterior</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78D66254858CE901">6.6-28 SCHomology</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B0C12F5780FDD9B">6.6-29 SCIncidences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B4CA6FE78A9880F">6.6-30 SCIncidencesEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X862926A079F6DFC2">6.6-31 SCInterior</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8123A6E282CD0174">6.6-32 SCIsCentrallySymmetric</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81AF20DC814B51A6">6.6-33 SCIsConnected</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X860375D980E9A801">6.6-34 SCIsEmpty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83E01C957D2F2458">6.6-35 SCIsEulerianManifold</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843C3E7F79D8093F">6.6-36 SCIsFlag</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E66FE0C83A3D371">6.6-37 SCIsHomologySphere</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87BC29AF878E7FD8">6.6-38 SCIsInKd</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F4BECCA7E67B1B2">6.6-39 SCIsKNeighborly</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78C860DC851167F7">6.6-40 SCIsOrientable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79DFCA08808665B7">6.6-41 SCIsPseudoManifold</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AAA757F842EA23A">6.6-42 SCIsPure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EA4F4DB78758652">6.6-43 SCIsShellable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A2BD5657BBE1CC7">6.6-44 SCIsStronglyConnected</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B935899849C8E40">6.6-45 SCMinimalNonFaces</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DE069A0823BD56E">6.6-46 SCMinimalNonFacesEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82A224DF787A97BE">6.6-47 SCNeighborliness</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AC2427184B44C65">6.6-48 SCNumFaces</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78DACE3478340DB8">6.6-49 SCOrientation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8026B46F8236124D">6.6-50 SCSkel</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84ACF7D580FE8B76">6.6-51 SCSkelEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E770DE27938B140">6.6-52 SCSpanningTree</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C1592677A76A3E5">6.6-1 SCsFromGroupExt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A04D77085D9BE4E">6.6-2 SCsFromGroupByTransitivity</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8284003382F863A0">6.7 <span class="Heading">Operations on simplicial complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X81FDA1407B1E96C9">6.7 <span class="Heading">The classification of cyclic combinatorial 3-manifolds</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X818757A17DA5CFFC">6.7-1 SCAlexanderDual</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82D22356858062D6">6.7-2 SCClose</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A4EBD017F4D9747">6.7-3 SCCollapseGreedy</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CF53D8D7E0FA702">6.7-4 SCCone</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X800BDDD878DFCBDB">6.7-5 SCDeletedJoin</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7FB3D29178076EB4">6.7-6 SCDifference</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C8D11C684825ADC">6.7-7 SCFillSphere</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DCB16857D49EC37">6.7-8 SCHandleAddition</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B4BE2C783E6D0BF">6.7-9 SCIntersection</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85659EC77DFF8183">6.7-10 SCIsIsomorphic</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81D9CC438313F589">6.7-11 SCIsSubcomplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8623B92580E8B4E4">6.7-12 SCIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86576B7287686E2B">6.7-13 SCIsomorphismEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86AC8D81837CC677">6.7-14 SCJoin</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8482E1F67C927BB7">6.7-15 SCNeighbors</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F8FBEF17ACD0D4F">6.7-16 SCNeighborsEx</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EDA334983025D3D">6.7-17 SCShelling</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F967A717D4E41C0">6.7-18 SCShellingExt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8373598C7FF5D28E">6.7-19 SCShellings</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7987AAE481C31F38">6.7-20 SCSpan</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AAA4669793C57DC">6.7-21 SCSuspension</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81DA367A813F7599">6.7-22 SCUnion</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D5639CB87A0D3F1">6.7-23 SCVertexIdentification</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E7B17317D1B618D">6.7-24 SCWedge</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X805BBDF58568614F">6.7-1 SCNrCyclic3Mflds</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84477B9E7CAEED7B">6.7-2 SCCyclic3MfldTopTypes</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X781256E37DA1B69F">6.7-3 SCCyclic3Mfld</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8490744E81DA45BF">6.7-4 SCCyclic3MfldByType</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86F8AED6843FCD65">6.7-5 SCCyclic3MfldListOfGivenType</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X81CE90127800B91A">6.8 <span class="Heading">Computing properties of simplicial complexes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B69B327809F67A0">6.8-1 SCAltshulerSteinberg</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B88925386E197AC">6.8-2 SCAutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A33B8177A7ACD3A">6.8-3 SCAutomorphismGroupInternal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78F6EF808047772C">6.8-4 SCAutomorphismGroupSize</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EAC3A5D7A3339BB">6.8-5 SCAutomorphismGroupStructure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E9D5C257F88E5E0">6.8-6 SCAutomorphismGroupTransitivity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X836DC73380EA7414">6.8-7 SCBoundary</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X812AE7397B4FC88E">6.8-8 SCDehnSommervilleCheck</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X859C3981831B4B81">6.8-9 SCDehnSommervilleMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80B33CAF7B5476C0">6.8-10 SCDifferenceCycles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82351AAE793DCB68">6.8-11 SCDim</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X798175C58050DDBD">6.8-12 SCDualGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X788BAE187D584103">6.8-13 SCEulerCharacteristic</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81F8071385FD9C1D">6.8-14 SCFVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F8B561C823DDDBA">6.8-15 SCFaceLattice</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AE0029985BD0775">6.8-16 SCFaceLatticeEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F6FE9B27B8D6922">6.8-17 SCFaces</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B40DFE780A47109">6.8-18 SCFacesEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7BDD568184E3419D">6.8-19 SCFacets</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87DC942881235E25">6.8-20 SCFacetsEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79F60850875BB683">6.8-21 SCFpBettiNumbers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X875963367A7745FB">6.8-22 SCFundamentalGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B9F77A885E1BABE">6.8-23 SCGVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X863CA73D7F66B295">6.8-24 SCGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789F8FC77FC0E701">6.8-25 SCGeneratorsEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84FBF0A685547ECD">6.8-26 SCHVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X796EBADE7803C622">6.8-27 SCHasBoundary</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C2A5B4D7E77E444">6.8-28 SCHasInterior</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A0547F67BBB6546">6.8-29 SCHeegaardSplittingSmallGenus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C7335667C162AFA">6.8-30 SCHeegaardSplitting</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78D66254858CE901">6.8-31 SCHomology</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B0C12F5780FDD9B">6.8-32 SCIncidences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B4CA6FE78A9880F">6.8-33 SCIncidencesEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X862926A079F6DFC2">6.8-34 SCInterior</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8123A6E282CD0174">6.8-35 SCIsCentrallySymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81AF20DC814B51A6">6.8-36 SCIsConnected</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X860375D980E9A801">6.8-37 SCIsEmpty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83E01C957D2F2458">6.8-38 SCIsEulerianManifold</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843C3E7F79D8093F">6.8-39 SCIsFlag</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83F0246384A766F2">6.8-40 SCIsHeegaardSplitting</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E66FE0C83A3D371">6.8-41 SCIsHomologySphere</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87BC29AF878E7FD8">6.8-42 SCIsInKd</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F4BECCA7E67B1B2">6.8-43 SCIsKNeighborly</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78C860DC851167F7">6.8-44 SCIsOrientable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79DFCA08808665B7">6.8-45 SCIsPseudoManifold</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AAA757F842EA23A">6.8-46 SCIsPure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EA4F4DB78758652">6.8-47 SCIsShellable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A2BD5657BBE1CC7">6.8-48 SCIsStronglyConnected</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B935899849C8E40">6.8-49 SCMinimalNonFaces</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DE069A0823BD56E">6.8-50 SCMinimalNonFacesEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82A224DF787A97BE">6.8-51 SCNeighborliness</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AC2427184B44C65">6.8-52 SCNumFaces</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78DACE3478340DB8">6.8-53 SCOrientation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8026B46F8236124D">6.8-54 SCSkel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84ACF7D580FE8B76">6.8-55 SCSkelEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E770DE27938B140">6.8-56 SCSpanningTree</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8284003382F863A0">6.9 <span class="Heading">Operations on simplicial complexes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X818757A17DA5CFFC">6.9-1 SCAlexanderDual</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82D22356858062D6">6.9-2 SCClose</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A4EBD017F4D9747">6.9-3 SCCollapseGreedy</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CF53D8D7E0FA702">6.9-4 SCCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X800BDDD878DFCBDB">6.9-5 SCDeletedJoin</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7FB3D29178076EB4">6.9-6 SCDifference</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C8D11C684825ADC">6.9-7 SCFillSphere</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DCB16857D49EC37">6.9-8 SCHandleAddition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B4BE2C783E6D0BF">6.9-9 SCIntersection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85659EC77DFF8183">6.9-10 SCIsIsomorphic</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81D9CC438313F589">6.9-11 SCIsSubcomplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8623B92580E8B4E4">6.9-12 SCIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86576B7287686E2B">6.9-13 SCIsomorphismEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86AC8D81837CC677">6.9-14 SCJoin</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8482E1F67C927BB7">6.9-15 SCNeighbors</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F8FBEF17ACD0D4F">6.9-16 SCNeighborsEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EDA334983025D3D">6.9-17 SCShelling</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F967A717D4E41C0">6.9-18 SCShellingExt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8373598C7FF5D28E">6.9-19 SCShellings</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7987AAE481C31F38">6.9-20 SCSpan</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AAA4669793C57DC">6.9-21 SCSuspension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81DA367A813F7599">6.9-22 SCUnion</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D5639CB87A0D3F1">6.9-23 SCVertexIdentification</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E7B17317D1B618D">6.9-24 SCWedge</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap7.html#X7DAE7B76858FC4E7">7 <span class="Heading">Functions and operations for <code class="code">SCNormalSurface</code></span></a>
@@ -425,6 +463,7 @@ University of Stuttgart<br /> Department of Mathematics<br /> Institute of Geome
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X85D69E4F84E8E7D9">9.2-12 SCReduceAsSubcomplex</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FF4BBEC8574C58F">9.2-13 SCReduceComplex</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X814D9AE287F64F74">9.2-14 SCReduceComplexEx</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8714A0A578A281C0">9.2-15 SCReduceComplexFast</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap10.html#X7E1BE673859191F0">10 <span class="Heading">Simplicial blowups</span></a>
@@ -480,6 +519,7 @@ University of Stuttgart<br /> Department of Mathematics<br /> Institute of Geome
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X871C94B978881445">12.2-7 SCImportPolymake</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X790C0AD9807A5D82">12.2-8 SCExportLatexTable</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X859BCB9986B55E14">12.2-9 SCExportJavaView</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7B933EA27E8E79C8">12.2-10 SCExportSnapPy</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap13.html#X7D09DEB478A09E55">13 <span class="Heading">Interfaces to other software packages</span></a>

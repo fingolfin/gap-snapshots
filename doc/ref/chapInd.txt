@@ -230,6 +230,7 @@
   [2XAsGroupGeneralMappingByImages[102X  40.1-5
   [2XAsin[102X  19.2-1
   [2XAsinh[102X  19.2-1
+  [2XAsInternalFFE[102X  59.2-6
   [2XAsLeftIdeal[102X  56.2-11
   [2XAsLeftModule[102X  57.1-5
   [2XAsList[102X  30.3-8
@@ -847,6 +848,7 @@
   [2XDisplayPackageLoadingLog[102X  76.2-4
   [2XDisplayProfile[102X  7.7-8
   [2XDisplayString[102X  27.6-1
+  [2XDistancePerms[102X  42.2-2
   [2XDistancesDistributionMatFFEVecFFE[102X  23.6-4
   [2XDistancesDistributionVecFFEsVecFFE[102X  23.6-3
   [2XDistanceVecFFE[102X  23.6-2
@@ -1361,6 +1363,9 @@
   [2XGroupByRws[102X  46.4-6
   [2XGroupByRwsNC[102X  46.4-6
   [2XGroupGeneralMappingByImages[102X  40.1-3
+  [2XGroupGeneralMappingByImages[102X (from group to itself)  40.1-3
+  [2XGroupGeneralMappingByImagesNC[102X  40.1-3
+  [2XGroupGeneralMappingByImagesNC[102X (from group to itself)  40.1-3
   [2XGroupHClassOfGreensDClass[102X  51.7-10
   [2XGroupHomomorphismByFunction[102X (by function (and inverse function) between two domains)  40.1-4
   [2XGroupHomomorphismByFunction[102X (by function and function that computes one preimage)  40.1-4
@@ -3670,7 +3675,7 @@
   smaller or equal  4.12
   smaller test  4.12
   [2XSmallerDegreePermutationRepresentation[102X  43.3-2
-  [2XSmallestGeneratorPerm[102X  42.2-2
+  [2XSmallestGeneratorPerm[102X  42.2-3
   [2XSmallestMovedPoint[102X (for a list or collection of permutations)  42.3-1
   [2XSmallestMovedPoint[102X (for a permutation)  42.3-1
   [2XSmallestRootInt[102X  14.2-10
@@ -3713,6 +3718,7 @@
   [2XSolvableQuotient[102X (for a f.p. group and a list of tuples)  47.14-5
   [2XSolvableQuotient[102X (for a f.p. group and a size)  47.14-5
   [2XSort[102X  21.18-1
+  [2XSortBy[102X  21.18-1
   Sorted Lists as Collections  30.3
   [2XSortedCharacters[102X  71.21-2
   [2XSortedCharacterTable[102X (relative to the table of a factor group)  71.21-4
@@ -4117,6 +4123,7 @@
   [2XUnderlyingLieAlgebra[102X  64.6-6
   [2XUnderlyingMagma[102X  65.1-6
   [2XUnderlyingRelation[102X  32.3-9
+  [2XUnderlyingRingElement[102X  64.1-5
   [2XUnInstallCharReadHookFunc[102X  10.10-2
   [2XUnion[102X (for a list)  30.5-3
   [2XUnion[102X (for various collections)  30.5-3

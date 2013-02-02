@@ -416,11 +416,15 @@ InstallGlobalFunction(SCsFromGroupExt,
 		if(add=1) then
 			# check, if pointwise stabilizer is valid (<= C2)
 			stab:=Stabilizer(G,simplex,OnTuples);
-			if Size(stab) <= 2 then
+			if d > 2 then
+			  if Size(stab) <= 2 then
 				Add(repLow,ShallowCopy(simplex));
-			else
+			  else
 				Info(InfoSimpcomp,3,"simplex ",simplex," not valid, stabilizer too large.");
 				Add(forbiddenLow,ShallowCopy(simplex));
+			  fi;
+			elif d <= 2 then
+			  Add(repLow,ShallowCopy(simplex));
 			fi;
 			repOrbitLen:=repOrbitLen+Length(orbit);
 		fi;
@@ -846,7 +850,10 @@ InstallGlobalFunction(SCsFromGroupByTransitivity,
 	else
 		break;
 	fi;
-	sum:=Sum(List(Gcollection,x->Size(x)));
+	sum:=0;
+	for i in Gcollection do
+		sum:=sum+Size(i);
+	od;
 	Info(InfoSimpcomp,1,"SCsFromGroupByTransitivity: ...",sum," groups found.");
 	for i in Gcollection do
 		if i <> [] then

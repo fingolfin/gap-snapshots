@@ -14,7 +14,7 @@
 CheckAuto := function( auto )
     local new,mapi;
     mapi:=MappingGeneratorsImages(auto);
-    new := GroupGeneralMappingByImages( Source(auto), Range(auto),
+    new := GroupGeneralMappingByImagesNC( Source(auto), Range(auto),
            mapi[1], mapi[2] );
     if Source( auto ) <> Range( auto ) then 
         Print("source and range differ \n");

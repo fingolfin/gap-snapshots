@@ -1143,5 +1143,15 @@ InstallMethod( DefaultFieldOfMatrixGroup,
 
 #############################################################################
 ##
+#M  AsInternalFFE( <zmodpzobj> )
+##
+##  A ZmodpZ object can be a finite field element, but is never equal to
+##  an internal FFE, so this method just returns fail
+##
+InstallMethod(AsInternalFFE, [IsZmodpZObj], ReturnFail);
+
+
+#############################################################################
+##
 #E
 

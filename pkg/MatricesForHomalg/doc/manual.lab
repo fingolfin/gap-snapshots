@@ -130,36 +130,34 @@
 \makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.58}{X811A01D5803ADCA3}
 \makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.59}{X7E99731F83A41777}
 \makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.60}{X80A3294C834D8F21}
-\makelabel{matricesforhomalg:Zero (for homalg ring elements)}{3.4.1}{X8783ADB9834BF934}
-\makelabel{matricesforhomalg:One (for homalg ring elements)}{3.4.2}{X788A1E947DA7F8C8}
-\makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.3}{X8066502785A109B8}
-\makelabel{matricesforhomalg:homalgTable}{3.4.4}{X7AFD26D480AA9323}
-\makelabel{matricesforhomalg:RingElementConstructor}{3.4.5}{X816D807781E8F854}
-\makelabel{matricesforhomalg:TypeOfHomalgMatrix}{3.4.6}{X7E5426C67AA9A6E5}
-\makelabel{matricesforhomalg:ConstructorForHomalgMatrices}{3.4.7}{X80504BE983BD1A70}
-\makelabel{matricesforhomalg:Zero (for homalg rings)}{3.4.8}{X799B5F797F809EE5}
-\makelabel{matricesforhomalg:One (for homalg rings)}{3.4.9}{X84701329860750C3}
-\makelabel{matricesforhomalg:MinusOne}{3.4.10}{X810D03AA827BD128}
-\makelabel{matricesforhomalg:ProductOfIndeterminates}{3.4.11}{X7CC4312578DC42B6}
-\makelabel{matricesforhomalg:RationalParameters}{3.4.12}{X7DF4F71C86835DCF}
-\makelabel{matricesforhomalg:IndeterminatesOfPolynomialRing}{3.4.13}{X80D585E1793D4552}
-\makelabel{matricesforhomalg:RelativeIndeterminatesOfPolynomialRing}{3.4.14}{X84CE78E379A34C56}
-\makelabel{matricesforhomalg:IndeterminateCoordinatesOfRingOfDerivations}{3.4.15}{X7F4A050A87C042E5}
-\makelabel{matricesforhomalg:RelativeIndeterminateCoordinatesOfRingOfDerivations}{3.4.16}{X821FCC287E4FB92F}
-\makelabel{matricesforhomalg:IndeterminateDerivationsOfRingOfDerivations}{3.4.17}{X78776EBA7DC179B4}
-\makelabel{matricesforhomalg:RelativeIndeterminateDerivationsOfRingOfDerivations}{3.4.18}{X8522A7987C6483ED}
-\makelabel{matricesforhomalg:IndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.19}{X7C15E6647945C0E3}
-\makelabel{matricesforhomalg:RelativeIndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.20}{X7C63673A80911044}
-\makelabel{matricesforhomalg:IndeterminatesOfExteriorRing}{3.4.21}{X7BBEF7097B459D33}
-\makelabel{matricesforhomalg:CoefficientsRing}{3.4.22}{X8235D10781BE8003}
-\makelabel{matricesforhomalg:KrullDimension}{3.4.23}{X789CF8B778A0C58D}
-\makelabel{matricesforhomalg:LeftGlobalDimension}{3.4.24}{X8735C56B7BEBC86E}
-\makelabel{matricesforhomalg:RightGlobalDimension}{3.4.25}{X7E6C5B5781EF78C5}
-\makelabel{matricesforhomalg:GlobalDimension}{3.4.26}{X7D511B3E7A50AB2A}
-\makelabel{matricesforhomalg:GeneralLinearRank}{3.4.27}{X792D56C278E346B1}
-\makelabel{matricesforhomalg:ElementaryRank}{3.4.28}{X79BCB23D873268CB}
-\makelabel{matricesforhomalg:StableRank}{3.4.29}{X822907CB7919EEF2}
-\makelabel{matricesforhomalg:AssociatedGradedRing}{3.4.30}{X826BE1E87EE023B2}
+\makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.1}{X8066502785A109B8}
+\makelabel{matricesforhomalg:homalgTable}{3.4.2}{X7AFD26D480AA9323}
+\makelabel{matricesforhomalg:RingElementConstructor}{3.4.3}{X816D807781E8F854}
+\makelabel{matricesforhomalg:TypeOfHomalgMatrix}{3.4.4}{X7E5426C67AA9A6E5}
+\makelabel{matricesforhomalg:ConstructorForHomalgMatrices}{3.4.5}{X80504BE983BD1A70}
+\makelabel{matricesforhomalg:Zero (for homalg rings)}{3.4.6}{X799B5F797F809EE5}
+\makelabel{matricesforhomalg:One (for homalg rings)}{3.4.7}{X84701329860750C3}
+\makelabel{matricesforhomalg:MinusOne}{3.4.8}{X810D03AA827BD128}
+\makelabel{matricesforhomalg:ProductOfIndeterminates}{3.4.9}{X7CC4312578DC42B6}
+\makelabel{matricesforhomalg:RationalParameters}{3.4.10}{X7DF4F71C86835DCF}
+\makelabel{matricesforhomalg:IndeterminatesOfPolynomialRing}{3.4.11}{X80D585E1793D4552}
+\makelabel{matricesforhomalg:RelativeIndeterminatesOfPolynomialRing}{3.4.12}{X84CE78E379A34C56}
+\makelabel{matricesforhomalg:IndeterminateCoordinatesOfRingOfDerivations}{3.4.13}{X7F4A050A87C042E5}
+\makelabel{matricesforhomalg:RelativeIndeterminateCoordinatesOfRingOfDerivations}{3.4.14}{X821FCC287E4FB92F}
+\makelabel{matricesforhomalg:IndeterminateDerivationsOfRingOfDerivations}{3.4.15}{X78776EBA7DC179B4}
+\makelabel{matricesforhomalg:RelativeIndeterminateDerivationsOfRingOfDerivations}{3.4.16}{X8522A7987C6483ED}
+\makelabel{matricesforhomalg:IndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.17}{X7C15E6647945C0E3}
+\makelabel{matricesforhomalg:RelativeIndeterminateAntiCommutingVariablesOfExteriorRing}{3.4.18}{X7C63673A80911044}
+\makelabel{matricesforhomalg:IndeterminatesOfExteriorRing}{3.4.19}{X7BBEF7097B459D33}
+\makelabel{matricesforhomalg:CoefficientsRing}{3.4.20}{X8235D10781BE8003}
+\makelabel{matricesforhomalg:KrullDimension}{3.4.21}{X789CF8B778A0C58D}
+\makelabel{matricesforhomalg:LeftGlobalDimension}{3.4.22}{X8735C56B7BEBC86E}
+\makelabel{matricesforhomalg:RightGlobalDimension}{3.4.23}{X7E6C5B5781EF78C5}
+\makelabel{matricesforhomalg:GlobalDimension}{3.4.24}{X7D511B3E7A50AB2A}
+\makelabel{matricesforhomalg:GeneralLinearRank}{3.4.25}{X792D56C278E346B1}
+\makelabel{matricesforhomalg:ElementaryRank}{3.4.26}{X79BCB23D873268CB}
+\makelabel{matricesforhomalg:StableRank}{3.4.27}{X822907CB7919EEF2}
+\makelabel{matricesforhomalg:AssociatedGradedRing}{3.4.28}{X826BE1E87EE023B2}
 \makelabel{matricesforhomalg:IsHomalgRingMap}{4.1.1}{X7E084D947E3AEFE6}
 \makelabel{matricesforhomalg:IsHomalgRingSelfMap}{4.1.2}{X87DB79AF83F17FB6}
 \makelabel{matricesforhomalg:IsHomalgRingMapRep}{4.1.3}{X7DFD1CBA83E63737}

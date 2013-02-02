@@ -16,11 +16,15 @@
   field (i.e. a subfield of a finite cyclotomic extension of the rationals).[133X
   
   [33X[0;0YOther  functions  of  [5XWedderga[105X  compute the primitive central idempotents of
-  semisimple group algebras.[133X
+  semisimple  group  algebras  and  a  complete  set  of  orthogonal primitive
+  idempotents.[133X
   
   [33X[0;0YThe  package  also  provides  functions to construct crossed products over a
   group  with  coefficients  in  an  associative  ring  with  identity and the
   multiplication determined by a given action and twisting.[133X
+  
+  [33X[0;0YFurhermore, the package provides functions to create code words from a group
+  ring element.[133X
   
   
   [1X1.2 [33X[0;0YInstallation and system requirements[133X[101X
@@ -53,12 +57,13 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XLoadPackage("wedderga");[127X[104X
     [4X[28X-----------------------------------------------------------------------------[128X[104X
-    [4X[28XLoading  Wedderga 4.4.0 (Wedderga)[128X[104X
+    [4X[28XLoading  Wedderga 4.4.4 (Wedderga)[128X[104X
     [4X[28Xby Osnel Broche Cristo (osnel@ufla.br),[128X[104X
     [4X[28X   Alexander Konovalov (http://www.cs.st-andrews.ac.uk/~alexk/),[128X[104X
     [4X[28X   Gabriela Olteanu (golteanu@um.es, olteanu@math.ubbcluj.ro),[128X[104X
-    [4X[28X   Aurora Olivieri (olivieri@usb.ve), and[128X[104X
-    [4X[28X   Angel del Rio (http://www.um.es/adelrio).[128X[104X
+    [4X[28X   Aurora Olivieri (olivieri@usb.ve), [128X[104X
+    [4X[28X   Angel del Rio (http://www.um.es/adelrio) and[128X[104X
+    [4X[28X   Inneke Van Gelder (ivgelder@vub.ac.be).[128X[104X
     [4X[28X-----------------------------------------------------------------------------[128X[104X
     [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
@@ -73,19 +78,19 @@
   [33X[0;0Y[2XWedderburnDecomposition[102X ([14X2.1-1[114X) computes a list of simple algebras such that
   their  direct product is isomorphic to the group algebra [22XFG[122X, given as input.
   Thus,  the  direct  product  of  the entries of the output is the [13XWedderburn
-  decomposition[113X ([14X7.3[114X) of [22XFG[122X.[133X
+  decomposition[113X ([14X8.3[114X) of [22XFG[122X.[133X
   
   [33X[0;0YIf  [22XF[122X is an abelian number field then the entries of the output are given as
-  matrix  algebras  over  cyclotomic algebras (see [14X7.11[114X), thus, the entries of
+  matrix  algebras  over  cyclotomic algebras (see [14X8.11[114X), thus, the entries of
   the  output  of  [2XWedderburnDecomposition[102X  ([14X2.1-1[114X)  are  realizations  of the
-  [13XWedderburn  components[113X  ([14X7.3[114X)  of [22XFG[122X as algebras which are [13XBrauer equivalent[113X
-  ([14X7.5[114X)  to  [13Xcyclotomic  algebras[113X  ([14X7.11[114X). Recall that the Brauer-Witt Theorem
+  [13XWedderburn  components[113X  ([14X8.3[114X)  of [22XFG[122X as algebras which are [13XBrauer equivalent[113X
+  ([14X8.5[114X)  to  [13Xcyclotomic  algebras[113X  ([14X8.11[114X). Recall that the Brauer-Witt Theorem
   ensures  that  every  simple  factor of a semisimple group ring [22XFG[122X is Brauer
   equivalent  (that  is  represents  the same class in the Brauer group of its
   centre)  to  a  cyclotomic  algebra  ([Yam74]. In this case the algorithm is
   based  in  a  computational oriented proof of the Brauer-Witt Theorem due to
   Olteanu  [Olt07]  which  uses  previous  work by Olivieri, del Río and Simón
-  [ORS04] for rational group algebras of [13Xstrongly monomial groups[113X ([14X7.16[114X).[133X
+  [ORS04] for rational group algebras of [13Xstrongly monomial groups[113X ([14X8.16[114X).[133X
   
   [33X[0;0YThe Wedderburn components of [22XFG[122X are also matrix algebras over division rings
   which  are  finite  extensions  of  the  field [22XF[122X. If [22XF[122X is finite then by the
@@ -127,5 +132,5 @@
   
   [33X[0;0YInstead  of  [2XWedderburnDecomposition[102X  ([14X2.1-1[114X),  that  returns  a list of [5XGAP[105X
   objects,   [2XWedderburnDecompositionInfo[102X   ([14X2.1-2[114X)   returns   the   numerical
-  description of these objects. See Section [14X7.12[114X for theoretical background.[133X
+  description of these objects. See Section [14X8.12[114X for theoretical background.[133X
   

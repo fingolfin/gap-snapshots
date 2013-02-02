@@ -15,7 +15,7 @@ MailOnError:=false
 ));
 MakeReadWriteGlobal("SCSettings");
 
-SCIntFunc.Version:="1.5.4";
+SCIntFunc.Version:="1.6.1";
 
 InstallGlobalFunction(SCInfoLevel,
 function(level)
@@ -36,12 +36,14 @@ ReadPackage("simpcomp","lib/glprops.gi");
 ReadPackage("simpcomp","lib/operations.gi");
 ReadPackage("simpcomp","lib/labelops.gi");
 ReadPackage("simpcomp","lib/generate.gi");
+ReadPackage("simpcomp","lib/class3mflds.gi");
 ReadPackage("simpcomp","lib/bistellar.gi");
 ReadPackage("simpcomp", "lib/homology.gi");
 ReadPackage("simpcomp", "lib/normalsurface.gi");
 ReadPackage("simpcomp", "lib/morse.gi");
 ReadPackage("simpcomp", "lib/fromgroup.gi");
 ReadPackage("simpcomp", "lib/blowups.gi");
+ReadPackage("simpcomp", "lib/highlySymmetricSurfaces.gi");
 
 #load `homology' package specific functions if available
 if(SCIntFunc.SetupHomology()=false) then

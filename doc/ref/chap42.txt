@@ -111,7 +111,16 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X42.2-2 SmallestGeneratorPerm[101X
+  [1X42.2-2 DistancePerms[101X
+  
+  [29X[2XDistancePerms[102X( [3Xperm1[103X, [3Xperm2[103X ) [32X operation
+  
+  [33X[0;0Yreturns  the  number  of  points  for  which  [3Xperm1[103X and [3Xperm2[103X have different
+  images.    This    should    always    produce    the    same    result   as
+  [10XNrMovePoints([3Xperm1[103X[10X/[3Xperm2[103X[10X)[110X  but  some  methods  may  be much faster than this
+  form, since no new permutation needs to be created.[133X
+  
+  [1X42.2-3 SmallestGeneratorPerm[101X
   
   [29X[2XSmallestGeneratorPerm[102X( [3Xperm[103X ) [32X function
   

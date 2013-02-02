@@ -51,8 +51,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XG := AdjointGroup( R );[127X[104X
-    [4X[28X<group of size 15625 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XG := AdjointGroup( R );;[127X[104X
+    [4X[25Xgap>[125X [27XSize(G);[127X[104X
+    [4X[28X15625[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -97,8 +98,9 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XR := Algebra( GF(2), One(GF(2))*[x,y] );[127X[104X
     [4X[28X<algebra over GF(2), with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XG := AdjointGroup( R );                   [127X[104X
-    [4X[28X<group of size 64 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XG := AdjointGroup( R );;[127X[104X
+    [4X[25Xgap>[125X [27XSize(G);[127X[104X
+    [4X[28X64[128X[104X
     [4X[25Xgap>[125X [27XH := Image( IsomorphismPcGroup( G ) );[127X[104X
     [4X[28XGroup([ f1, f2, f3, f4, f5, f6 ])[128X[104X
     [4X[25Xgap>[125X [27XLength( MinimalGeneratingSet( H ) );[127X[104X

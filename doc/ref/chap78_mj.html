@@ -188,26 +188,28 @@
 
 <h4>78.6 <span class="Heading">Immediate Methods</span></h4>
 
+<p>Usually a method is called only if its operation has been called and if this method has been selected, see <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>).</p>
+
+<p>For attributes and properties, one can install also <em>immediate methods</em>.</p>
+
 <p><a id="X87B47AC0849611F8" name="X87B47AC0849611F8"></a></p>
 
 <h5>78.6-1 InstallImmediateMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallImmediateMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">name</var>], <var class="Arg">filter</var>, <var class="Arg">rank</var>, <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Usually a method is called only if its operation has been called and if this method has been selected.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallImmediateMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>], <var class="Arg">filter</var>, <var class="Arg">rank</var>, <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p><code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> as an immediate method for <var class="Arg">opr</var>, which must be an attribute or a property, with requirement <var class="Arg">filter</var> and rank <var class="Arg">rank</var>. The rank must be an integer value that measures the priority of <var class="Arg">method</var> among the immediate methods for <var class="Arg">opr</var>. If supplied, <var class="Arg">info</var> should be a short but informative string that describes the situation in which the method is called.</p>
 
-<p>For attributes and properties, one can install also <em>immediate methods</em>. An immediate method is called automatically as soon as it is applicable to an object, provided that the value is not yet known. Afterwards the attribute setter is called in order to store the value.</p>
+<p>An immediate method is called automatically as soon as the object lies in <var class="Arg">filter</var>, provided that the value is not yet known. Afterwards the attribute setter is called in order to store the value, unless the method exits via <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>).</p>
+
+<p>Note the difference to <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) that no family predicate occurs because <var class="Arg">opr</var> expects only one argument, and that <var class="Arg">filter</var> is not a list of requirements but the argument requirement itself.</p>
+
+<p>Immediate methods are thought of as a possibility for objects to gain useful knowledge. They must not be used to force the storing of "defining information" in an object. In other words, <strong class="pkg">GAP</strong> should work even if all immediate methods are completely disabled. Therefore, the call to <code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> also as an ordinary method for <var class="Arg">opr</var> with requirement <var class="Arg">filter</var>.</p>
 
 <p>Note that in such a case <strong class="pkg">GAP</strong> executes a computation for which it was not explicitly asked by the user. So one should install only those methods as immediate methods that are <em>extremely cheap</em>. To emphasize this, immediate methods are also called <em>zero cost methods</em>. The time for their execution should really be approximately zero.</p>
 
 <p>For example, the size of a permutation group can be computed very cheaply if a stabilizer chain of the group is known. So it is reasonable to install an immediate method for <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) with requirement <code class="code">IsGroup and Tester( <var class="Arg">stab</var> )</code>, where <var class="Arg">stab</var> is the attribute corresponding to the stabilizer chain.</p>
 
 <p>Another example would be the implementation of the conclusion that every finite group of prime power order is nilpotent. This could be done by installing an immediate method for the attribute <code class="func">IsNilpotentGroup</code> (<a href="chap39_mj.html#X87D062608719F2CD"><span class="RefLink">39.15-3</span></a>) with requirement <code class="code">IsGroup and Tester( Size )</code>. This method would then check whether the size is a finite prime power, return <code class="keyw">true</code> in this case and otherwise call <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). But this requires factoring of an integer, which cannot be guaranteed to be very cheap, so one should not install this method as an immediate method.</p>
-
-<p><code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> as an immediate method for <var class="Arg">opr</var>, which must be an operation of one argument, with requirement <var class="Arg">filter</var> and rank <var class="Arg">rank</var>. The rank must be an integer value that measures the priority of <var class="Arg">method</var> among the immediate methods for <var class="Arg">opr</var>.</p>
-
-<p>Note the difference to <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) that no family predicate occurs because <var class="Arg">opr</var> expects only one argument, and that <var class="Arg">filter</var> is not a list of requirements but the argument requirement itself.</p>
-
-<p>Immediate methods are thought of as a possibility for objects to gain useful knowledge. They must not be used to force the storing of "defining information" in an object. In other words, <strong class="pkg">GAP</strong> should work even if all immediate methods are completely disabled. Therefore, the call to <code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> also as an ordinary method for <var class="Arg">opr</var>, with requirement <var class="Arg">filter</var>.</p>
 
 <p><a id="X7FB5016E83DB4349" name="X7FB5016E83DB4349"></a></p>
 

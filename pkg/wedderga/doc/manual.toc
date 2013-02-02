@@ -1,68 +1,78 @@
-\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{5}{chapter.1}
-\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }General aims of \textsf {Wedderga} package}}{5}{section.1.1}
-\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Installation and system requirements}}{5}{section.1.2}
-\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Main functions of \textsf {Wedderga} package}}{6}{section.1.3}
-\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Wedderburn decomposition}}{8}{chapter.2}
-\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Wedderburn decomposition}}{8}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }WedderburnDecomposition}}{8}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }WedderburnDecompositionInfo}}{9}{subsection.2.1.2}
-\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Simple quotients}}{13}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }SimpleAlgebraByCharacter}}{13}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }SimpleAlgebraByCharacterInfo}}{13}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }SimpleAlgebraByStrongSP (for rational group algebra)}}{13}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }SimpleAlgebraByStrongSPInfo (for rational group algebra)}}{14}{subsection.2.2.4}
-\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Strong Shoda pairs}}{16}{chapter.3}
-\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Computing strong Shoda pairs}}{16}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }StrongShodaPairs}}{16}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Properties related with Shoda pairs}}{17}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IsStrongShodaPair}}{17}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }IsShodaPair}}{17}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IsStronglyMonomial}}{18}{subsection.3.2.3}
-\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Idempotents}}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Computing idempotents from character table}}{19}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsByCharacterTable}}{19}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Testing lists of idempotents for completeness}}{19}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }IsCompleteSetOfOrthogonalIdempotents}}{19}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Idempotents from Shoda pairs}}{20}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsByStrongSP}}{20}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsBySP}}{21}{subsection.4.3.2}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Crossed products}}{23}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Construction of crossed products}}{23}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }CrossedProduct}}{23}{subsection.5.1.1}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Crossed product elements and their properties}}{30}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }ElementOfCrossedProduct}}{30}{subsection.5.2.1}
-\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Useful properties and functions}}{31}{chapter.6}
-\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Semisimple group algebras of finite groups}}{31}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }IsSemisimpleZeroCharacteristicGroupAlgebra}}{31}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }IsSemisimpleRationalGroupAlgebra}}{31}{subsection.6.1.2}
-\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }IsSemisimpleANFGroupAlgebra}}{32}{subsection.6.1.3}
-\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }IsSemisimpleFiniteGroupAlgebra}}{32}{subsection.6.1.4}
-\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Operations with group rings elements}}{32}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }Centralizer}}{32}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }OnPoints}}{33}{subsection.6.2.2}
-\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }AverageSum}}{34}{subsection.6.2.3}
-\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Cyclotomic classes}}{34}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }CyclotomicClasses}}{34}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }IsCyclotomicClass}}{35}{subsection.6.3.2}
-\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Other commands}}{35}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }InfoWedderga}}{35}{subsection.6.4.1}
-\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }The basic theory behind \textsf {Wedderga}}}{36}{chapter.7}
-\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Group rings and group algebras}}{36}{section.7.1}
-\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Semisimple group algebras}}{36}{section.7.2}
-\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }Wedderburn decomposition}}{36}{section.7.3}
-\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Characters and primitive central idempotents}}{37}{section.7.4}
-\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }Central simple algebras and Brauer equivalence}}{38}{section.7.5}
-\contentsline {section}{\numberline {7.6}\leavevmode {\color {Chapter }Crossed Products}}{38}{section.7.6}
-\contentsline {section}{\numberline {7.7}\leavevmode {\color {Chapter }Cyclic Crossed Products}}{39}{section.7.7}
-\contentsline {section}{\numberline {7.8}\leavevmode {\color {Chapter }Abelian Crossed Products}}{40}{section.7.8}
-\contentsline {section}{\numberline {7.9}\leavevmode {\color {Chapter }Classical crossed products}}{40}{section.7.9}
-\contentsline {section}{\numberline {7.10}\leavevmode {\color {Chapter }Cyclic Algebras}}{40}{section.7.10}
-\contentsline {section}{\numberline {7.11}\leavevmode {\color {Chapter }Cyclotomic algebras}}{41}{section.7.11}
-\contentsline {section}{\numberline {7.12}\leavevmode {\color {Chapter }Numerical description of cyclotomic algebras}}{41}{section.7.12}
-\contentsline {section}{\numberline {7.13}\leavevmode {\color {Chapter }Idempotents given by subgroups}}{42}{section.7.13}
-\contentsline {section}{\numberline {7.14}\leavevmode {\color {Chapter }Shoda pairs}}{42}{section.7.14}
-\contentsline {section}{\numberline {7.15}\leavevmode {\color {Chapter }Strong Shoda pairs}}{42}{section.7.15}
-\contentsline {section}{\numberline {7.16}\leavevmode {\color {Chapter }Strongly monomial characters and strongly monomial groups}}{43}{section.7.16}
-\contentsline {section}{\numberline {7.17}\leavevmode {\color {Chapter }Cyclotomic Classes and Strong Shoda Pairs}}{44}{section.7.17}
-\contentsline {chapter}{References}{45}{chapter*.5}
-\contentsline {chapter}{Index}{46}{section*.6}
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{6}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }General aims of \textsf {Wedderga} package}}{6}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Installation and system requirements}}{6}{section.1.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Main functions of \textsf {Wedderga} package}}{7}{section.1.3}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Wedderburn decomposition}}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Wedderburn decomposition}}{9}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }WedderburnDecomposition}}{9}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }WedderburnDecompositionInfo}}{10}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Simple quotients}}{14}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }SimpleAlgebraByCharacter}}{14}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }SimpleAlgebraByCharacterInfo}}{14}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }SimpleAlgebraByStrongSP (for rational group algebra)}}{14}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }SimpleAlgebraByStrongSPInfo (for rational group algebra)}}{15}{subsection.2.2.4}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Strong Shoda pairs}}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Computing strong Shoda pairs}}{17}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }StrongShodaPairs}}{17}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Properties related with Shoda pairs}}{18}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IsStrongShodaPair}}{18}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }IsShodaPair}}{18}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IsStronglyMonomial}}{19}{subsection.3.2.3}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Idempotents}}{20}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Computing idempotents from character table}}{20}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsByCharacterTable}}{20}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Testing lists of idempotents for completeness}}{20}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }IsCompleteSetOfOrthogonalIdempotents}}{20}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Idempotents from Shoda pairs}}{21}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsByStrongSP}}{21}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }PrimitiveCentralIdempotentsBySP}}{22}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Complete set of orthogonal primitive idempotents from Shoda pairs and cyclotomic classes}}{23}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }PrimitiveIdempotentsNilpotent}}{23}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }PrimitiveIdempotentsTrivialTwisting}}{24}{subsection.4.4.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Crossed products}}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Construction of crossed products}}{25}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }CrossedProduct}}{25}{subsection.5.1.1}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Crossed product elements and their properties}}{32}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }ElementOfCrossedProduct}}{32}{subsection.5.2.1}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Useful properties and functions}}{33}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Semisimple group algebras of finite groups}}{33}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }IsSemisimpleZeroCharacteristicGroupAlgebra}}{33}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }IsSemisimpleRationalGroupAlgebra}}{33}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }IsSemisimpleANFGroupAlgebra}}{34}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }IsSemisimpleFiniteGroupAlgebra}}{34}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }IsTwistingTrivial}}{34}{subsection.6.1.5}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Operations with group rings elements}}{35}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }Centralizer}}{35}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }OnPoints}}{35}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }AverageSum}}{36}{subsection.6.2.3}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Cyclotomic classes}}{37}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }CyclotomicClasses}}{37}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }IsCyclotomicClass}}{37}{subsection.6.3.2}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Other commands}}{37}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }InfoWedderga}}{37}{subsection.6.4.1}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Applications of the Wedderga package}}{39}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Applications to coding theory}}{39}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }CodeWordByGroupRingElement}}{39}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }CodeByLeftIdeal}}{39}{subsection.7.1.2}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }The basic theory behind \textsf {Wedderga}}}{41}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Group rings and group algebras}}{41}{section.8.1}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }Semisimple group algebras}}{41}{section.8.2}
+\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }Wedderburn decomposition}}{41}{section.8.3}
+\contentsline {section}{\numberline {8.4}\leavevmode {\color {Chapter }Characters and primitive central idempotents}}{42}{section.8.4}
+\contentsline {section}{\numberline {8.5}\leavevmode {\color {Chapter }Central simple algebras and Brauer equivalence}}{43}{section.8.5}
+\contentsline {section}{\numberline {8.6}\leavevmode {\color {Chapter }Crossed Products}}{43}{section.8.6}
+\contentsline {section}{\numberline {8.7}\leavevmode {\color {Chapter }Cyclic Crossed Products}}{44}{section.8.7}
+\contentsline {section}{\numberline {8.8}\leavevmode {\color {Chapter }Abelian Crossed Products}}{45}{section.8.8}
+\contentsline {section}{\numberline {8.9}\leavevmode {\color {Chapter }Classical crossed products}}{45}{section.8.9}
+\contentsline {section}{\numberline {8.10}\leavevmode {\color {Chapter }Cyclic Algebras}}{45}{section.8.10}
+\contentsline {section}{\numberline {8.11}\leavevmode {\color {Chapter }Cyclotomic algebras}}{46}{section.8.11}
+\contentsline {section}{\numberline {8.12}\leavevmode {\color {Chapter }Numerical description of cyclotomic algebras}}{46}{section.8.12}
+\contentsline {section}{\numberline {8.13}\leavevmode {\color {Chapter }Idempotents given by subgroups}}{47}{section.8.13}
+\contentsline {section}{\numberline {8.14}\leavevmode {\color {Chapter }Shoda pairs}}{47}{section.8.14}
+\contentsline {section}{\numberline {8.15}\leavevmode {\color {Chapter }Strong Shoda pairs}}{47}{section.8.15}
+\contentsline {section}{\numberline {8.16}\leavevmode {\color {Chapter }Strongly monomial characters and strongly monomial groups}}{48}{section.8.16}
+\contentsline {section}{\numberline {8.17}\leavevmode {\color {Chapter }Cyclotomic Classes and Strong Shoda Pairs}}{49}{section.8.17}
+\contentsline {section}{\numberline {8.18}\leavevmode {\color {Chapter }A complete set of orthogonal primitive idempotents}}{49}{section.8.18}
+\contentsline {section}{\numberline {8.19}\leavevmode {\color {Chapter }Applications to coding theory}}{51}{section.8.19}
+\contentsline {chapter}{References}{52}{chapter*.5}
+\contentsline {chapter}{Index}{53}{section*.6}

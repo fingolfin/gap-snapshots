@@ -211,7 +211,7 @@ end;
 
 
 ###################################################################
-###									Moves (and reverse moves)									    ###
+###                Moves (and reverse moves)                    ###
 ###################################################################
 
 ################################################################################
@@ -1244,8 +1244,9 @@ InstallGlobalFunction(SCReduceComplexEx,
 	if SCBistellarOptions.WriteLevel>=1 then
 		time:=SCIntFunc.GetCurrentTimeString();
 		if(time=fail) then
-			time:="";
+			return fail;
 		fi;
+		# TODO: FIX: paths cannot be given like that
 		rep:=SCLibInit(Concatenation(SCIntFunc.UserHome,"/reducedComplexes/",time));
 	fi;
 	equivalent:=false;
@@ -1337,6 +1338,7 @@ InstallGlobalFunction(SCReduceComplexEx,
 			fi;
 
 			#choose a move
+#			move:=choosemove(dim,tmpOptions,tmpF,globalRounds);
 			move:=choosemove(dim,tmpOptions);
 			if move=fail then
 				Info(InfoSimpcomp,1,"SCReduceComplexEx: error in flip strategy.");
@@ -1476,7 +1478,8 @@ InstallGlobalFunction(SCReduceComplexEx,
 	fi;
 
 	if mode <> 3 then
-		return [fail,minComplex,globalRounds];
+#		return [fail,minComplex,globalRounds];
+		return [fail,SC(tmpFaces[dim+1]),globalRounds];
 	else
 		return [fail,SCFromFacets(tmpFaces[dim+1]),globalRounds];
 	fi;
@@ -1513,7 +1516,7 @@ end);
 ##      Dim=1
 ##     
 ##     /SimplicialComplex], 3 ]
-## ## </Example>
+## </Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -2138,7 +2141,7 @@ SCIntFunc.SCReduceComplexEx2:=
 	if SCBistellarOptions.WriteLevel>=1 then
 		time:=SCIntFunc.GetCurrentTimeString();
 		if(time=fail) then
-			time:="";
+			return fail;
 		fi;
 		rep:=SCLibInit(Concatenation(SCIntFunc.UserHome,"/reducedComplexes/",time));
 	fi;
@@ -2469,6 +2472,71 @@ SCIntFunc.SCMakeFlagComplex:=
 end;
 
 
+################################################################################
+##<#GAPDoc Label="SCReduceComplexFast">
+## <ManSection>
+## <Func Name="SCReduceComplexFast" Arg="complex"/>
+## <Returns>a simplicial complex upon success, <K>fail</K> otherwise.</Returns> 
+## <Description>
+## Same as <Ref Func="SCReduceComplex" Style="Text" />, but calls an external binary provided with the simpcomp package.
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCReduceComplexFast,
+	function(complex)
+	
+	local 
+	movable, dir, bin, stream, line, resultingcomplex;
+	
+	movable:=SCIsMovableComplex(complex);
+	if movable = fail then
+		Info(InfoSimpcomp, 2, "SCReduceComplexFast: invalid complex.");
+		return fail;
+	fi;
+	
+	dir := DirectoriesLibrary("pkg/simpcomp/bin");
+	if dir = fail then
+		Info(InfoSimpcomp, 1, "SCReduceComplexFast: cannot find executable.");
+		return fail;
+	fi;
+	
+	bin := Filename(dir, "bistellar");
+	if bin = fail then
+		Info(InfoSimpcomp, 1, "SCReduceComplexFast: cannot find executable.");
+		return fail;
+	fi;
+	
+	stream := InputOutputLocalProcess(DirectoryCurrent(), bin, []);
+	if stream = fail then
+		Info(InfoSimpcomp, 2, "SCReduceComplexFast: cannot open executable.");
+		return fail;
+	fi;
+	
+	WriteLine(stream, Concatenation("reduce ",
+								SCIntFunc.ListToDenseString(complex.Facets),
+								" with rounds=", String(SCBistellarOptions.MaxRounds),
+								", heating=",
+								String(SCBistellarOptions.BaseHeating),
+								" and relaxation=",
+								String(SCBistellarOptions.BaseRelaxation)));
+	
+	repeat
+		line := ReadAllLine(stream, true);
+		
+		if line{[1..5]} = "found" then
+			Info(InfoSimpcomp, 2, Concatenation("SCReduceComplexFast: ", line));
+		fi;
+	until line{[1..5]} <> "found";
 
+	CloseStream(stream);
+
+	if line{[1..9]} = "resulting" then
+		resultingcomplex := SC(SCIntFunc.ReadArray(line{[22..(Position(line, ' ', 22)-1)]}));
+		return resultingcomplex;
+	else
+		return fail;
+	fi;
+end);
 
 

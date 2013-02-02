@@ -3,7 +3,7 @@
   
   [33X[0;0YThe  functionality  of  [5XGAP[105X  can  be  extended  by loading [5XGAP[105X packages. [5XGAP[105X
   distribution  already contains all currently redistributed with [5XGAP[105X packages
-  in the [11Xgap4r5/pkg[111X directory.[133X
+  in the [11Xgap4r6/pkg[111X directory.[133X
   
   [33X[0;0Y[5XGAP[105X  packages  are written by (groups of) [5XGAP[105X users which may not be members
   of the [5XGAP[105X developer team. The responsibility and copyright of a [5XGAP[105X package

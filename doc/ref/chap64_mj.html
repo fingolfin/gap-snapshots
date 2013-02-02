@@ -32,6 +32,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap64_mj.html#X83E5DD4381D9A65D">64.1-2 IsLieObject</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap64_mj.html#X8725993C7BF386EE">64.1-3 LieFamily</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap64_mj.html#X81D9F5C6876FE93B">64.1-4 UnderlyingFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap64_mj.html#X874B2B2A7F5A9A78">64.1-5 UnderlyingRingElement</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap64_mj.html#X789A44F283C16B2B">64.2 <span class="Heading">Constructing Lie algebras</span></a>
 </span>
@@ -257,6 +258,25 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>If <var class="Arg">Fam</var> is a Lie family then <code class="code">UnderlyingFamily( <var class="Arg">Fam</var> )</code> is a family <code class="code">F</code> such that <code class="code"><var class="Arg">Fam</var> = LieFamily( F )</code>.</p>
+
+<p><a id="X874B2B2A7F5A9A78" name="X874B2B2A7F5A9A78"></a></p>
+
+<h5>64.1-5 UnderlyingRingElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRingElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Let <var class="Arg">obj</var> be a Lie object constructed from a ring element <code class="code">r</code> by calling <code class="code">LieObject( r )</code>. Then <code class="code">UnderlyingRingElement( <var class="Arg">obj</var> )</code> returns the ring element <code class="code">r</code> used to construct <var class="Arg">obj</var>. If <code class="code">r</code> lies in the family <code class="code">F</code>, then <var class="Arg">obj</var> lies in the family <code class="code">LieFamily( F )</code> (see <code class="func">LieFamily</code> (<a href="chap64_mj.html#X8725993C7BF386EE"><span class="RefLink">64.1-3</span></a>)).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lo:= LieObject( [ [ 1, 0 ], [ 0, 1 ] ] );</span>
+LieObject( [ [ 1, 0 ], [ 0, 1 ] ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=UnderlyingRingElement(lo);</span>
+[ [ 1, 0 ], [ 0, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lo*lo;</span>
+LieObject( [ [ 0, 0 ], [ 0, 0 ] ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m*m;</span>
+[ [ 1, 0 ], [ 0, 1 ] ]
+</pre></div>
 
 <p><a id="X789A44F283C16B2B" name="X789A44F283C16B2B"></a></p>
 

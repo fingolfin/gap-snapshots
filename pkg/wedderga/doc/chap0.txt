@@ -6,10 +6,10 @@
                    [1XWedderburn Decomposition of Group Algebras[101X
   
   
-                                 Version 4.4.3
+                                 Version 4.5.3
   
   
-                                  31 May 2012
+                                31 January 2013
   
   
                               Osnel Broche Cristo
@@ -21,6 +21,8 @@
                                 Gabriela Olteanu
   
                                  Ángel del Río
+  
+                               Inneke Van Gelder
   
   
   
@@ -47,10 +49,12 @@
   
   
   Gabriela Olteanu
-      Email:    [7Xmailto:golteanu@um.es, olteanu@math.ubbcluj.ro[107X
-      Address:  [33X[0;14YDepartment of Mathematics and Computer Science[133X
-                [33X[0;14YNorth University of Baia Mare[133X
-                [33X[0;14YVictoriei 76, 430122 Baia Mare, Romania[133X
+      Email:    [7Xmailto:gabriela.olteanu@econ.ubbcluj.ro[107X
+      Homepage: [7Xhttp://math.ubbcluj.ro/~olteanu[107X
+      Address:  [33X[0;14YDepartment of Statistics-Forecasts-Mathematics[133X
+                [33X[0;14YFaculty of Economics and Business Administration[133X
+                [33X[0;14YBabes-Bolyai University[133X
+                [33X[0;14YStr. T. Mihali 58-60, 400591 Cluj-Napoca, Romania[133X
   
   
   Ángel del Río
@@ -58,6 +62,14 @@
       Homepage: [7Xhttp://www.um.es/adelrio[107X
       Address:  [33X[0;14YDepartamento de Matemáticas, Universidad de Murcia[133X
                 [33X[0;14Y30100 Murcia, Spain[133X
+  
+  
+  Inneke Van Gelder
+      Email:    [7Xmailto:ivgelder@vub.ac.be[107X
+      Homepage: [7Xhttp://homepages.vub.ac.be/~ivgelder[107X
+      Address:  [33X[0;14YVrije Universiteit Brussel, Departement Wiskunde[133X
+                [33X[0;14YPleinlaan 2[133X
+                [33X[0;14Y1050 Brussels, Belgium[133X
   
   
   
@@ -68,16 +80,16 @@
   Wedderburn  decomposition of semisimple group algebras of finite groups over
   finite  fields  and  over  subfields  of finite cyclotomic extensions of the
   rationals.  It  also  contains  functions that produce the primitive central
-  idempotents  of semisimple group algebras. Other functions of [5XWedderga[105X allow
-  to  construct  crossed  products  over  a  group  with  coefficients  in  an
-  associative  ring with identity and the multiplication determined by a given
-  action and twisting.[133X
+  idempotents  of  semisimple  group algebras and a complete set of orthogonal
+  primitive  idempotents.  Other  functions  of  [5XWedderga[105X  allow  to construct
+  crossed  products over a group with coefficients in an associative ring with
+  identity and the multiplication determined by a given action and twisting.[133X
   
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©  2006-2012  by  Osnel Broche Cristo, Alexander Konovalov, Aurora Olivieri,
-  Gabriela Olteanu and Ángel del Río.[133X
+  [33X[0;0Y©  2006-2013  by  Osnel Broche Cristo, Alexander Konovalov, Aurora Olivieri,
+  Gabriela Olteanu, Ángel del Río and Inneke Van Gelder.[133X
   
   [33X[0;0Y[5XWedderga[105X  is  free  software; you can redistribute it and/or modify it under
   the  terms  of  the  GNU  General  Public  License  as published by the Free
@@ -91,9 +103,9 @@
   [33X[0;0YIf  you  publish  a  result  which  was partially obtained with the usage of
   [5XWedderga[105X, please cite it in the following form:[133X
   
-  [33X[0;0YO.  Broche  Cristo,  A.  Konovalov,  A. Olivieri, G. Olteanu and Á. del Río.
-  [13XWedderga --- Wedderburn Decomposition of Group Algebras, Version 4.4.3;[113X 2012
-  ([7Xhttp://www.um.es/adelrio/wedderga.htm[107X).[133X
+  [33X[0;0YO.  Broche  Cristo, A. Konovalov, A. Olivieri, G. Olteanu, Á. del Río and I.
+  Van Gelder. [13XWedderga --- Wedderburn Decomposition of Group Algebras, Version
+  4.5.3;[113X 2013 ([7Xhttp://www.cs.st-andrews.ac.uk/~alexk/wedderga[107X).[133X
   
   
   -------------------------------------------------------
@@ -118,7 +130,9 @@
   
   [30X    [33X[0;6YFundación Séneca of Murcia;[133X
   
-  [30X    [33X[0;6YCAPES and FAPESP of Brazil.[133X
+  [30X    [33X[0;6YCAPES and FAPESP of Brazil;[133X
+  
+  [30X    [33X[0;6YResearch Foundation Flanders (FWO - Vlaanderen).[133X
   
   [33X[0;0YWe acknowledge with gratitude this support.[133X
   
@@ -156,6 +170,10 @@
     4.3 [33X[0;0YIdempotents from Shoda pairs[133X
       4.3-1 PrimitiveCentralIdempotentsByStrongSP
       4.3-2 PrimitiveCentralIdempotentsBySP
+    4.4 [33X[0;0YComplete set of orthogonal primitive idempotents from Shoda pairs and
+    cyclotomic classes[133X
+      4.4-1 PrimitiveIdempotentsNilpotent
+      4.4-2 PrimitiveIdempotentsTrivialTwisting
   5 [33X[0;0YCrossed products[133X
     5.1 [33X[0;0YConstruction of crossed products[133X
       5.1-1 CrossedProduct
@@ -167,6 +185,7 @@
       6.1-2 IsSemisimpleRationalGroupAlgebra
       6.1-3 IsSemisimpleANFGroupAlgebra
       6.1-4 IsSemisimpleFiniteGroupAlgebra
+      6.1-5 IsTwistingTrivial
     6.2 [33X[0;0YOperations with group rings elements[133X
       6.2-1 Centralizer
       6.2-2 OnPoints
@@ -176,24 +195,30 @@
       6.3-2 IsCyclotomicClass
     6.4 [33X[0;0YOther commands[133X
       6.4-1 InfoWedderga
-  7 [33X[0;0YThe basic theory behind [5XWedderga[105X[133X
-    7.1 [33X[0;0YGroup rings and group algebras[133X
-    7.2 [33X[0;0YSemisimple group algebras[133X
-    7.3 [33X[0;0YWedderburn decomposition[133X
-    7.4 [33X[0;0YCharacters and primitive central idempotents[133X
-    7.5 [33X[0;0YCentral simple algebras and Brauer equivalence[133X
-    7.6 [33X[0;0YCrossed Products[133X
-    7.7 [33X[0;0YCyclic Crossed Products[133X
-    7.8 [33X[0;0YAbelian Crossed Products[133X
-    7.9 [33X[0;0YClassical crossed products[133X
-    7.10 [33X[0;0YCyclic Algebras[133X
-    7.11 [33X[0;0YCyclotomic algebras[133X
-    7.12 [33X[0;0YNumerical description of cyclotomic algebras[133X
-    7.13 [33X[0;0YIdempotents given by subgroups[133X
-    7.14 [33X[0;0YShoda pairs[133X
-    7.15 [33X[0;0YStrong Shoda pairs[133X
-    7.16 [33X[0;0YStrongly monomial characters and strongly monomial groups[133X
-    7.17 [33X[0;0YCyclotomic Classes and Strong Shoda Pairs[133X
+  7 [33X[0;0YApplications of the Wedderga package[133X
+    7.1 [33X[0;0YApplications to coding theory[133X
+      7.1-1 CodeWordByGroupRingElement
+      7.1-2 CodeByLeftIdeal
+  8 [33X[0;0YThe basic theory behind [5XWedderga[105X[133X
+    8.1 [33X[0;0YGroup rings and group algebras[133X
+    8.2 [33X[0;0YSemisimple group algebras[133X
+    8.3 [33X[0;0YWedderburn decomposition[133X
+    8.4 [33X[0;0YCharacters and primitive central idempotents[133X
+    8.5 [33X[0;0YCentral simple algebras and Brauer equivalence[133X
+    8.6 [33X[0;0YCrossed Products[133X
+    8.7 [33X[0;0YCyclic Crossed Products[133X
+    8.8 [33X[0;0YAbelian Crossed Products[133X
+    8.9 [33X[0;0YClassical crossed products[133X
+    8.10 [33X[0;0YCyclic Algebras[133X
+    8.11 [33X[0;0YCyclotomic algebras[133X
+    8.12 [33X[0;0YNumerical description of cyclotomic algebras[133X
+    8.13 [33X[0;0YIdempotents given by subgroups[133X
+    8.14 [33X[0;0YShoda pairs[133X
+    8.15 [33X[0;0YStrong Shoda pairs[133X
+    8.16 [33X[0;0YStrongly monomial characters and strongly monomial groups[133X
+    8.17 [33X[0;0YCyclotomic Classes and Strong Shoda Pairs[133X
+    8.18 [33X[0;0YA complete set of orthogonal primitive idempotents[133X
+    8.19 [33X[0;0YApplications to coding theory[133X
   
   
   [32X

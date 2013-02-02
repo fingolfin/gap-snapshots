@@ -863,8 +863,28 @@ InstallMethod( \=,
         [ IsHomalgInternalMatrixRep, IsHomalgInternalMatrixRep ],
         
   function( M1, M2 )
+    local RP;
     
-    if Eval( M1 ) = Eval( M2 ) then
+    RP := homalgTable( HomalgRing( M1 ) );
+    
+    if IsBound( RP!.AreEqualMatrices ) then
+        
+        if RP!.AreEqualMatrices( M1, M2 ) then
+            
+            ## do not touch mutable matrices
+            if not ( IsMutable( M1 ) or IsMutable( M2 ) ) then
+                MatchPropertiesAndAttributes( M1, M2,
+                        LIMAT.intrinsic_properties,
+                        LIMAT.intrinsic_attributes,
+                        LIMAT.intrinsic_components
+                        );
+            fi;
+            
+            return true;
+            
+        fi;
+        
+    elif Eval( M1 ) = Eval( M2 ) then
     
         ## do not touch mutable matrices
         if not ( IsMutable( M1 ) or IsMutable( M2 ) ) then
@@ -1931,15 +1951,20 @@ InstallGlobalFunction( HomalgMatrix,
         if IsBound(RP!.ImportMatrix) then
             M := RP!.ImportMatrix( M, R );
         fi;
-    elif IsInternalMatrixHull( M ) then
-        M := M!.matrix;
+    elif IsInternalMatrixHull( M ) then	## why are we doing this? for ShallowCopy?
+        if IsMatrix( M!.matrix ) then
+            M := M!.matrix;
+        else
+            M := homalgInternalMatrixHull( M!.matrix );
+        fi;
     elif IsMatrix( M ) and IsBound(RP!.ImportMatrix) then
         M := RP!.ImportMatrix( M, R );
     else
         M := ShallowCopy( M );	## by this we are sure that possible changes to a mutable GAP matrix arg[1] does not destroy the logic of homalg
     fi;
     
-    if IsHomalgInternalRingRep( R ) then ## TheTypeHomalgInternalMatrix
+    if IsHomalgInternalRingRep( R ) and
+       not IsInternalMatrixHull( M ) then ## TheTypeHomalgInternalMatrix
         
         if IsMatrix( M ) then
             ## Objectify:

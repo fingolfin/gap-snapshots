@@ -189,8 +189,9 @@ DecideZeroRows :=
 
 <div class="example"><pre>
     DecideZeroRows := "\n\
-proc DecideZeroRows (matrix A, matrix B)\n\
+proc DecideZeroRows (matrix A, module B)\n\
 {\n\
+  attrib(B,\"isSB\",1);\n\
   return(reduce(A,B));\n\
 }\n\n",
 </pre></div>
@@ -235,7 +236,7 @@ DecideZeroColumns :=
     DecideZeroColumns := "\n\
 proc DecideZeroColumns (matrix A, matrix B)\n\
 {\n\
-  return(Involution(reduce(Involution(A),Involution(B))));\n\
+  return(Involution(DecideZeroRows(Involution(A),Involution(B))));\n\
 }\n\n",
 </pre></div>
 
@@ -478,8 +479,9 @@ DecideZeroRowsEffectively :=
 
 <div class="example"><pre>
     DecideZeroRowsEffectively := "\n\
-proc DecideZeroRowsEffectively (matrix A, matrix B)\n\
+proc DecideZeroRowsEffectively (matrix A, module B)\n\
 {\n\
+  attrib(B,\"isSB\",1);\n\
   matrix M = reduce(A,B);\n\
   matrix T = lift(B,M-A);\n\
   list l = M,T;\n\

@@ -428,7 +428,7 @@
     [4X[25Xgap>[125X [27Xhom:=EpimorphismFromFreeGroup(g:names:=["x","y"]);[127X[104X
     [4X[28X[ x, y ] -> [ (1,2,3,4), (1,2) ][128X[104X
     [4X[25Xgap>[125X [27XPreImagesRepresentative(hom,(1,4));[127X[104X
-    [4X[28Xy^-1*x^-2*y^-1*x^-1*y^-1*x[128X[104X
+    [4X[28Xy^-1*x^-1*(x^-1*y^-1)^2*x[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  following  example  stems  from  a  real  request  to the [5XGAP[105X Forum. In
@@ -471,7 +471,7 @@
     [4X[25Xgap>[125X [27XH:= Subgroup(G, [ r, s ] );[127X[104X
     [4X[28XGroup([ (3,4), (1,2,3,4,5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XFactorization( H, (1,2,3) );[127X[104X
-    [4X[28Xx2*x1*x2*x1*x2^-2[128X[104X
+    [4X[28X(x2*x1)^2*x2^-2[128X[104X
     [4X[25Xgap>[125X [27Xs*r*s*r*s^-2;[127X[104X
     [4X[28X(1,2,3)[128X[104X
     [4X[25Xgap>[125X [27XMappingGeneratorsImages(EpimorphismFromFreeGroup(H));[127X[104X
@@ -1110,12 +1110,14 @@
   
   [29X[2XNormalClosure[102X( [3XG[103X, [3XU[103X ) [32X operation
   
-  [33X[0;0YThe  normal  closure  of  [3XU[103X  in [3XG[103X is the smallest normal subgroup of [3XG[103X which
-  contains [3XU[103X.[133X
+  [33X[0;0YThe  normal closure of [3XU[103X in [3XG[103X is the smallest normal subgroup of the closure
+  of [3XG[103X and [3XU[103X which contains [3XU[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNormalClosure(g,Subgroup(g,[(1,2,3)]));[127X[104X
-    [4X[28XGroup([ (1,2,3), (2,3,4) ])[128X[104X
+    [4X[28XGroup([ (1,2,3), (1,3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27XNormalClosure(g,Group((3,4,5)));[127X[104X
+    [4X[28XGroup([ (3,4,5), (1,5,4), (1,2,5) ])[128X[104X
   [4X[32X[104X
   
   [1X39.11-5 NormalIntersection[101X
@@ -1196,7 +1198,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,2));;[127X[104X
     [4X[25Xgap>[125X [27XDerivedSubgroup(g);[127X[104X
-    [4X[28XGroup([ (1,3,2), (2,4,3) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (1,4,3) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-4 CommutatorLength[101X
@@ -1272,7 +1274,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPerfectResiduum(Group((1,2,3,4,5),(1,2)));[127X[104X
-    [4X[28XGroup([ (1,3,2), (2,4,3), (2,3)(4,5) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (2,4,3), (1,3)(4,5) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-9 RadicalGroup[101X
@@ -1297,7 +1299,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSocle(g);[127X[104X
-    [4X[28XGroup([ (1,4)(2,3), (1,3)(2,4) ])[128X[104X
+    [4X[28XGroup([ (1,4)(2,3), (1,2)(3,4) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-11 SupersolvableResiduum[101X
@@ -1309,7 +1311,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSupersolvableResiduum(g);[127X[104X
-    [4X[28XGroup([ (1,2)(3,4), (1,3)(2,4) ])[128X[104X
+    [4X[28XGroup([ (1,3)(2,4), (1,4)(2,3) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-12 PRump[101X
@@ -1372,11 +1374,15 @@
   
   [33X[0;0Ycomputes  a  [3XP[103X-Hall  subgroup  for a set [3XP[103X of primes. This is a subgroup the
   order  of  which is only divisible by primes in [3XP[103X and whose index is coprime
-  to  all  primes in [3XP[103X. The function computes Hall subgroups via the operation
+  to  all  primes  in  [3XP[103X.  Such  a  subgroup is unique up to conjugacy if [3XG[103X is
+  solvable.   The   function   computes   Hall  subgroups  via  the  operation
   [10XHallSubgroupOp[110X.[133X
   
-  [33X[0;0YAt  the  moment  methods  exist  only if [3XG[103X is solvable and [5XGAP[105X will issue an
-  error if [3XG[103X is not solvable.[133X
+  [33X[0;0YIf  [3XG[103X  is  solvable  this  function  always  returns a subgroup. If [3XG[103X is not
+  solvable  this  function  might  return  a  subgroup  (if it is unique up to
+  conjugacy),  a list of subgroups (which are representatives of the conjugacy
+  classes  in case there are several such classes) or [9Xfail[109X if no such subgroup
+  exists.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xh:=SmallGroup(60,10);;[127X[104X
@@ -1384,6 +1390,17 @@
     [4X[28XGroup([ f1, f2, f3 ])[128X[104X
     [4X[25Xgap>[125X [27XSize(u);[127X[104X
     [4X[28X12[128X[104X
+    [4X[25Xgap>[125X [27Xh:=PSL(3,5);;[127X[104X
+    [4X[25Xgap>[125X [27XHallSubgroup(h,[2,3]);  [127X[104X
+    [4X[28X[ <permutation group of size 96 with 6 generators>, [128X[104X
+    [4X[28X  <permutation group of size 96 with 6 generators> ][128X[104X
+    [4X[25Xgap>[125X [27XHallSubgroup(h,[3,31]);[127X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ (2,18,11)(3,20,7)(4,19,9)(5,21,8)(6,17,10)(12,29,22)(13,27,26)(14,[128X[104X
+    [4X[28X    31,23)(15,30,24)(16,28,25), (1,6,18,3,16,10,9,28,8,21,2,30,26,20,[128X[104X
+    [4X[28X    5,7,12,23,22,11,25,13,14,31,15,17,4,24,29,27,19) ])[128X[104X
+    [4X[25Xgap>[125X [27XHallSubgroup(h,[5,31]);[127X[104X
+    [4X[28Xfail[128X[104X
   [4X[32X[104X
   
   [1X39.13-4 SylowSystem[101X
@@ -1852,10 +1869,8 @@
   
   [29X[2XIsPSolvable[102X( [3XG[103X, [3Xp[103X ) [32X function
   
-  [33X[0;0YA  group is [22Xp[122X-solvable if every chief factor is either not divisible by [22Xp[122X or
-  solvable.[133X
-  
-  [33X[0;0Y[13X@Currently no method is installed!@[113X[133X
+  [33X[0;0YA  finite  group is [22Xp[122X-solvable if every chief factor is either not divisible
+  by [22Xp[122X or solvable.[133X
   
   [1X39.15-24 IsPNilpotent[101X
   
@@ -2339,9 +2354,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XConjugacyClassesMaximalSubgroups(g);[127X[104X
-    [4X[28X[ Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] )^G, [128X[104X
-    [4X[28X  Group( [ (3,4), (1,4)(2,3), (1,3)(2,4) ] )^G, [128X[104X
-    [4X[28X  Group( [ (3,4), (2,4,3) ] )^G ][128X[104X
+    [4X[28X[ AlternatingGroup( [ 1 .. 4 ] )^G, Group( [ (1,2,3), (1,2) ] )^G, [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] )^G ][128X[104X
   [4X[32X[104X
   
   [1X39.19-5 AllSubgroups[101X
@@ -2367,9 +2381,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMaximalSubgroupClassReps(g);[127X[104X
-    [4X[28X[ Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), [128X[104X
-    [4X[28X  Group([ (3,4), (1,4)(2,3), (1,3)(2,4) ]), Group([ (3,4), (2,4,3) ]) [128X[104X
-    [4X[28X ][128X[104X
+    [4X[28X[ Alt( [ 1 .. 4 ] ), Group([ (1,2,3), (1,2) ]), [128X[104X
+    [4X[28X  Group([ (1,2), (3,4), (1,3)(2,4) ]) ][128X[104X
   [4X[32X[104X
   
   [1X39.19-7 MaximalSubgroups[101X
@@ -2569,10 +2582,10 @@
     [4X[25Xgap>[125X [27Xm11:=TransitiveGroup(11,6);[127X[104X
     [4X[28XM(11)[128X[104X
     [4X[25Xgap>[125X [27Xr:=RepresentativesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group([ (3,4,10)(5,11,6)(7,9,8), (2,5)(3,8)(4,6)(9,11) ]), [128X[104X
-    [4X[28X  Group([ (1,2,3)(4,6,11)(7,9,10), (2,5)(3,8)(4,6)(9,11) ]), [128X[104X
-    [4X[28X  Group([ (3,4,9,7)(5,8,6,10), (2,5)(3,8)(4,6)(9,11) ]), [128X[104X
-    [4X[28X  Group([ (1,2,4)(3,6,11)(7,10,8), (2,5)(3,8)(4,6)(9,11) ]), M(11), [128X[104X
+    [4X[28X[ Group([ (2,3,4)(5,6,8)(7,11,9), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
+    [4X[28X  Group([ (1,2,3)(5,9,6)(7,8,11), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
+    [4X[28X  Group([ (2,3,4,11,6)(5,7,10,8,9), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
+    [4X[28X  Group([ (1,2,3)(4,6,11)(7,9,10), (3,11)(4,5)(6,10)(7,8) ]), M(11), [128X[104X
     [4X[28X  Group(()) ][128X[104X
     [4X[25Xgap>[125X [27XList(r,Size);[127X[104X
     [4X[28X[ 60, 60, 360, 660, 7920, 1 ][128X[104X
@@ -2587,14 +2600,14 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XConjugacyClassesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), [128X[104X
-    [4X[28X      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, [128X[104X
+    [4X[28X[ Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), [128X[104X
+    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
+    [4X[28X  Group( [ ( 1, 2, 3)( 5, 9, 6)( 7, 8,11), [128X[104X
+    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
+    [4X[28X  Group( [ ( 2, 3, 4,11, 6)( 5, 7,10, 8, 9), [128X[104X
+    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
     [4X[28X  Group( [ ( 1, 2, 3)( 4, 6,11)( 7, 9,10), [128X[104X
-    [4X[28X      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 3, 4, 9, 7)( 5, 8, 6,10), ( 2, 5)( 3, 8)( 4, 6)( 9,11) [128X[104X
-    [4X[28X     ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 1, 2, 4)( 3, 6,11)( 7,10, 8), [128X[104X
-    [4X[28X      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, M(11)^G, Group( () )^G ][128X[104X
+    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, M(11)^G, Group( () )^G ][128X[104X
   [4X[32X[104X
   
   [1X39.20-8 Zuppos[101X
@@ -2949,7 +2962,7 @@
   generating  system  for the factor group [3XG[103X/[3XM[103X. If this is done the 1-cocycles
   are computed with respect to these generators (otherwise the routines try to
   select  suitable  generators  themselves).  The  current version of the code
-  assumes that [3XG[103X is a permutation group or a Pc group.[133X
+  assumes that [3XG[103X is a permutation group or a pc group.[133X
   
   [1X39.23-2 OneCoboundaries[101X
   
@@ -3124,22 +3137,32 @@
   
   [33X[0;0Yreturns a list of the abelian invariants of the Schur multiplier of [3XG[103X.[133X
   
+  [33X[0;0YAt  the  moment,  this  operation will not give any information about how to
+  extend the multiplier to a Schur Cover.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(g);[127X[104X
     [4X[28X[ 2 ][128X[104X
-    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(MathieuGroup(22));[127X[104X
-    [4X[28X[ 4, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(AlternatingGroup(6));[127X[104X
+    [4X[28X[ 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(SL(2,3));[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(SL(3,2));[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(PSU(4,2));[127X[104X
+    [4X[28X[ 2 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YNote that the following example will take some time.[133X
+  [33X[0;0Y(Note that the last command from the example will take some time.)[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XAbelianInvariantsMultiplier(PSU(6,2));[127X[104X
-    [4X[28X[ 2, 2, 3 ][128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YAt  the  moment,  this  operation will not give any information about how to
-  extend the multiplier to a Schur Cover.[133X
+  [33X[0;0YThe  [5XGAP[105X 4.4.12  manual  contained  examples  for  larger  groups e.g. [22XM_22[122X.
+  However, some issues that may very rarely (and not easily reproducibly) lead
+  to  wrong  results  were  discovered  in the code capable of handling larger
+  groups,  and  in [5XGAP[105X 4.5 it was replaced by a more reliable basic method. To
+  deal with larger groups, one can use the function [2XSchurMultiplier[102X ([14Xcohomolo:
+  SchurMultiplier[114X)  from  the  [5Xcohomolo[105X  package. Also, additional methods for
+  [2XAbelianInvariantsMultiplier[102X  are  installed  in  the  [5XPolycyclic[105X package for
+  pcp-groups.[133X
   
   [1X39.24-4 Epicentre[101X
   

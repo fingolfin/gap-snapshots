@@ -2075,10 +2075,25 @@ InstallMethod( Sort,
       SORT_LIST_COMP( list, func );
     else
       TryNextMethod();
-    fi;
-    end );
+  fi;
+end );
+
+#############################################################################
+##
+#M  SortBy( <list>, <func> )
+##
+    
+InstallMethod( SortBy, "for a mutable list and a function",
+        [IsList and IsMutable, IsFunction ],
+        function(list, func)
+    local images;
+    images := List(list, func);
+    SortParallel(images, list);
+    return;
+end);
 
 
+    
 #############################################################################
 ##
 #F  SORT_MUTABILITY_ERROR_HANDLER( <list> )

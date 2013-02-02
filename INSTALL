@@ -50,7 +50,8 @@ libraries takes about 1.2 GB of disk space and (except on Windows) will
 require a C compiler (gcc is recommended) to be installed on your system.
 To get maximum benefit from GAP and from various packages it may be useful
 to install a number of other free software libraries (and their associated
-development tools) although they are not required for basic operation.
+development tools) although they are not required for basic operation. See
+http://www.gap-system.org/Download/tools.html for more details.
 
 The installation consists of 5 easy steps:
 * Get the archive suitable for your system
@@ -543,8 +544,7 @@ can type POW(a,b) for a^b.)
 
 You might want to try different shells, starting each of the three .bat 
 files in the 'bin' directory: gap.bat. gaprxvt.bat and gapcmd.bat. Also,
-http://www.gap-system.org/Faq/Hardware-OS/hardware-os.html might give a 
-remedy.
+http://www.gap-system.org/Faq/faq.html#4 might give a remedy.
 
 * GAP does not work in the remote desktop
 

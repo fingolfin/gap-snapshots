@@ -908,7 +908,8 @@ gap> SCSeriesBdHandleBody(3,9);
 gap> SCSeriesC2n(16);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+                   TopologicalType, Vertices.
 
  Name="C_32 = { (1:1:11:19),(1:1:19:11),(1:11:1:19),(2:11:2:17),(2:13:2:15) }"
  Dim=3
@@ -918,7 +919,7 @@ gap> SCSeriesC2n(16);
 gap> SCSeriesCSTSurface(1,2,8);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="cst surface S_{(1,2,8)} = { (1:2:5),(1:5:2) }"
  Dim=2
@@ -927,7 +928,8 @@ gap> SCSeriesCSTSurface(1,2,8);
 gap> SCSeriesD2n(20);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, TopologicalType, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+                   TopologicalType, Vertices.
 
  Name="D_40 = { (1:1:1:37),(1:2:35:2),(3:16:5:16),(2:3:16:19),(2:19:16:3) }"
  Dim=3
@@ -937,8 +939,8 @@ gap> SCSeriesD2n(20);
 gap> SCSeriesHandleBody(3,9);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, IsOrientable, Name, TopologicalType, 
-                   Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, IsOrientable, 
+                   Name, TopologicalType, Vertices.
 
  Name="Handle body B^2 x S^1"
  Dim=3
@@ -949,7 +951,7 @@ gap> SCSeriesHandleBody(3,9);
 gap> SCSeriesK(1,0);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="K^1_0"
  Dim=3
@@ -967,7 +969,7 @@ gap> SCSeriesKu(3);
 gap> SCSeriesL(1,0);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="L^1_0"
  Dim=3
@@ -978,7 +980,7 @@ true
 gap> SCSeriesNSB1(11);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="Neighborly sphere bundle NSB_1"
  Dim=3
@@ -987,7 +989,7 @@ gap> SCSeriesNSB1(11);
 gap> SCSeriesNSB2(11);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="Neighborly sphere bundle NSB_2"
  Dim=3
@@ -996,7 +998,7 @@ gap> SCSeriesNSB2(11);
 gap> SCSeriesNSB3(11);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="Neighborly sphere bundle NSB_3"
  Dim=3
@@ -1005,7 +1007,7 @@ gap> SCSeriesNSB3(11);
 gap> SCSeriesPrimeTorus(1,2,7);
 [SimplicialComplex
 
- Properties known: Dim, FacetsEx, Name, Vertices.
+ Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
 
  Name="prime torus S_{(1,2,7)} = { (1:2:4),(1:4:2) }"
  Dim=2

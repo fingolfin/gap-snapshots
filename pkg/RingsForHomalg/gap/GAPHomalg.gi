@@ -34,7 +34,8 @@ InstallValue( HOMALG_IO_GAP,
             prompt := "\033[01mgap>\033[0m ",
             output_prompt := "\033[1;37;44m<gap\033[0m ",
             display_color := "\033[0;35m",
-            init_string := "LoadPackage(\"HomalgToCAS\")",
+            init_string := "LoadPackage(\"HomalgToCAS\")",	## needed for LoadHomalgMatrixFromFile
+            InitializeCASMacros := InitializeGAPHomalgMacros,
             time := function( stream, t ) return Int( homalgSendBlocking( [ "homalgTotalRuntimes( )" ], "need_output", stream, HOMALG_IO.Pictograms.time ) ) - t; end,
            )
 );
@@ -75,7 +76,7 @@ BindGlobal( "TheTypeHomalgExternalRingInGAP",
 
 ####################################
 #
-# global functions:
+# global functions and variables:
 #
 ####################################
 
@@ -87,6 +88,22 @@ InstallGlobalFunction( _ExternalGAP_multiple_delete,
     str := [ "for _del in ", String( var_list ), " do UnbindGlobal( _del ); od" ];
     
     homalgSendBlocking( str, "need_command", stream, HOMALG_IO.Pictograms.multiple_delete );
+    
+end );
+
+##
+InstallValue( GAPHomalgMacros,
+        rec(
+            
+            )
+
+        );
+
+##
+InstallGlobalFunction( InitializeGAPHomalgMacros,
+  function( stream )
+    
+    return InitializeMacros( GAPHomalgMacros, stream );
     
 end );
 
@@ -251,7 +268,7 @@ InstallMethod( MatElmAsString,
         
   function( M, r, c, R )
     
-    return homalgSendBlocking( [ "MatElm( ", M, r, c, R, " )" ], "need_output", HOMALG_IO.Pictograms.MatElm );
+    return EvalString( homalgSendBlocking( [ "String( MatElm( ", M, r, c, R, " ) )" ], "need_output", HOMALG_IO.Pictograms.MatElm ) );
     
 end );
 
@@ -328,6 +345,23 @@ InstallMethod( GetSparseListOfHomalgMatrixAsString,
     return s{[ 2 .. l-1 ]};
     
 end );
+
+##
+InstallMethod( homalgSetName,
+        "for homalg ring elements",
+        [ IsHomalgExternalRingElementRep, IsString, IsHomalgExternalRingInGAPRep ],
+        
+  function( r, name, R )
+    
+    SetName( r, EvalString( homalgSendBlocking( [ "String( ", r, " )" ], "need_output", HOMALG_IO.Pictograms.homalgSetName ) ) );
+    
+end );
+
+####################################
+#
+# transfer methods:
+#
+####################################
 
 ##
 InstallMethod( SaveHomalgMatrixToFile,

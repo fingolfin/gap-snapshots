@@ -834,7 +834,7 @@ end);
 ## Saves a simplicial complex in a binary format (using <C>IO_Pickle</C>) to a file specified in <Arg>filename</Arg> (as string). If <Arg>filename</Arg> does not end in <C>.scb</C>, this suffix is appended to the file name.
 ## <Example>
 ## gap> c:=SCBdSimplex(3);;
-## gap> SCSave(c,"bddelta3");
+## gap> SCSave(c,"/tmp/bddelta3");
 ## true
 ## </Example>
 ## </Description>
@@ -889,7 +889,7 @@ end);
 ## Saves a simplicial complex <Arg>complex</Arg> to a file specified by <Arg>filename</Arg> (as string) in XML format. If <Arg>filename</Arg> does not end in <C>.sc</C>, this suffix is appended to the file name.
 ## <Example>
 ## gap> c:=SCBdSimplex(3);;
-## gap> SCSaveXML(c,"bddelta3");
+## gap> SCSaveXML(c,"/tmp/bddelta3");
 ## true
 ## </Example>
 ## </Description>
@@ -1637,3 +1637,177 @@ rec(
 
 ################################################################################
 
+################################################################################
+##<#GAPDoc Label="SCExportSnapPy">
+## <ManSection>
+## <Func Name="SCExportSnapPy" Arg="complex, filename"/>
+## <Returns><K>true</K> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Exports the facet list and orientability of a given combinatorial <M>3</M>-pseudomanifold <Arg>complex</Arg> in <C>SnapPy</C> format to a file specified by <Arg>filename</Arg>.
+## <Example>
+## gap> SCLib.SearchByAttribute("Dim=3 and F=[8,28,56,28]");
+## gap> c:=SCLib.Load(last[1][1]);;
+## gap> SCExportSnapPy(c,"/tmp/M38.tri");
+## true
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCExportSnapPy,
+function(complex,filename)
+	local curvertex,buf,dim,name,orient,lks,i,pmflag,lksconn,kleinb,torus,sphere,lktype,neighbors,gluings,cusps,j,k,trig,remoteidx,verts,facets;
+
+	dim:=SCDim(complex);
+	if dim=fail then
+		return fail;
+	fi;
+
+	if dim<>3 then
+		Info(InfoSimpcomp,1,"SCExportSnapPy: argument must be a 3-dimensional simplicial complex.");
+		return fail;
+	fi;
+
+	kleinb:=0;
+	torus:=0;
+	sphere:=0;
+
+	if SCIsManifold(complex) then
+		sphere:=SCNumFaces(complex,0);
+		lktype:=ListWithIdenticalEntries(sphere,0);
+	fi;
+
+	if sphere=0 then
+
+		lks:=SCLinks(complex,0);
+		pmflag:=true;
+		for i in [1..Size(lks)] do 
+			if not SCIsManifold(lks[i]) then
+				pmflag:=false;
+				break;
+			fi;
+		od;
+	
+		if pmflag<>true then
+			Info(InfoSimpcomp,1,"SCExportSnapPy: argument must be a combinatorial 3-pseudomanifold.");
+			return fail;
+		fi;
+
+		lksconn:=true;
+		for i in [1..Size(lks)] do 
+			if not SCIsConnected(lks[i]) then
+				lksconn:=false;
+				break;
+			fi;
+		od;
+
+		if lksconn<>true then
+			Info(InfoSimpcomp,1,"SCExportSnapPy: argument must be a combinatorial 3-pseudomanifold with connected links.");
+			return fail;
+		fi;
+
+		lktype:=[];
+		for i in [1..Size(lks)] do
+			if SCEulerCharacteristic(lks[i])=2 then
+				lktype[i]:=0;
+				sphere:=sphere+1;
+			elif SCEulerCharacteristic(lks[i])=0 then
+				if SCIsOrientable(lks[i]) then
+					lktype[i]:=1;
+					torus:=torus+1;
+				else
+					lktype[i]:=2;
+					kleinb:=kleinb+1;
+				fi;
+			else
+				Info(InfoSimpcomp,1,"SCExportSnapPy: argument must be a combinatorial 3-pseudomanifold with links of type S^2, T^2 or K^2.");
+				return fail;
+			fi;
+		od;
+
+	fi;
+
+	name:=SCName(complex);
+	if name=fail then
+		return fail;
+	fi;
+
+	buf:=["% Triangulation\n"];
+	Append(buf,[name,"\nunknown 0.0\n"]);
+
+	orient:=SCIsOrientable(complex);
+	if orient=fail then
+		return fail;
+	fi;
+
+	if orient=true then
+		Append(buf,["oriented_manifold\nCS_unknown\n\n"]);
+	else
+		Append(buf,["nonorientable_manifold\nCS_unknown\n\n"]);
+	fi;
+
+	verts:=SCVertices(complex);
+
+	Append(buf,[String(torus)," ",String(kleinb),"\n"]);
+	for i in [1..SCNumFaces(complex,0)] do
+		if lktype[i]=0 then
+			#Append(buf,["        internal   0 0\n"]);
+			continue;
+		elif lktype[i]=1 then
+			Append(buf,["        torus   0 0\n"]);
+		elif lktype[i]=2 then
+			Append(buf,["        Klein bottle   0 0\n"]);
+		fi;
+	od;
+
+	neighbors:=[];
+	gluings:=[];
+	cusps:=[];
+	facets:=SCFacets(complex);
+	if facets=fail then
+		return fail;
+	fi;
+	for j in [1..Size(facets)] do
+		neighbors[j]:=[];
+		gluings[j]:=[];
+		cusps[j]:=[];
+		for trig in Combinations(facets[j],3) do
+			curvertex:=Difference(facets[j],trig)[1];
+			k:=Position(facets[j],curvertex);
+			for i in [1..Size(facets)] do
+				if facets[i] = facets[j] then continue; fi;
+				if IsSubset(facets[i],trig) then
+					remoteidx:=Position(facets[i],Difference(facets[i],trig)[1]);
+					neighbors[j][k]:=i-1;	
+					gluings[j][k]:=[];
+					gluings[j][k][k]:=remoteidx-1;				
+					gluings[j][k][Position(facets[j],trig[1])]:=Position(facets[i],trig[1])-1;
+					gluings[j][k][Position(facets[j],trig[2])]:=Position(facets[i],trig[2])-1;
+					gluings[j][k][Position(facets[j],trig[3])]:=Position(facets[i],trig[3])-1;
+					cusps[j][k]:=curvertex-1;
+					break;
+				fi;
+			od;
+		od;
+	od;
+
+	Append(buf,["\n",String(SCNumFaces(complex,dim)),"\n"]);
+	for i in [1..Size(facets)] do
+		Append(buf,["    ",String(neighbors[i][1]),"    ",String(neighbors[i][2]),"    ",String(neighbors[i][3]),"    ",String(neighbors[i][4]),"\n"]);
+		Append(buf,["    ",String(gluings[i][1][1]),String(gluings[i][1][2]),String(gluings[i][1][3]),String(gluings[i][1][4])," ",String(gluings[i][2][1]),String(gluings[i][2][2]),String(gluings[i][2][3]),String(gluings[i][2][4])," ",String(gluings[i][3][1]),String(gluings[i][3][2]),String(gluings[i][3][3]),String(gluings[i][3][4])," ",String(gluings[i][4][1]),String(gluings[i][4][2]),String(gluings[i][4][3]),String(gluings[i][4][4]),"\n"]);
+		Append(buf,["    ",String(cusps[i][1]),"    ",String(cusps[i][2]),"    ",String(cusps[i][3]),"    ",String(cusps[i][4]),"\n"]);
+		Append(buf,["    0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n"]);
+		Append(buf,["    0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n"]);
+		Append(buf,["    0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n"]);
+		Append(buf,["    0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0\n"]);
+		Append(buf,["    0  0\n\n"]);
+	od;
+
+	if(FileString(filename,String(Concatenation(buf)))=fail) then
+		Info(InfoSimpcomp,1,"SCExportSnapPy: file \"",filename,"\" not writeable!");
+		return fail;
+	else
+		return true;
+	fi;
+
+end);

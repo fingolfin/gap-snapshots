@@ -60,6 +60,42 @@ Download and installation
 Changes
 =======
 
+31/01/2013 - Version 1.6.1: Minor update.
+- Fixed minor bug in SCChiralMap and SCRegularMap.
+- Updated deployment system.
+
+22/01/2013 - Version 1.6.0: Major update.
+- Added functions SCHeegaardSplitting, SCHeegaardSplittingSmallGenus and
+  SCIsHeegaardSplitting to handle Heegaard splittings.
+- Added infinte series of d-tori SCSeriesTorus.
+- Added infinte series of lens spaces SCSeriesLensSpace.
+- Fixed bug in SCLibDelete.
+- Recalculated examples of documentation.
+- Fixed inconsistency in SCsFromGroupExt (non-strongly connected
+  2-pseudomanifolds are now all computed).
+- Added external code for bistellar flips.
+- Fixed bug in SCOrientation.
+- Added function SCSeriesBrehmKuehnelTorus.
+- Fixed minor bug in SCCartesianProduct (typo in description of
+  topological type).
+- Added classification of cyclic combinatorial 3-mflds up to 22 vertices.
+- Added K3-surface K3_17 with standard PL-structure to the library.
+- Fixed bug in SCIntersectionFormSignature.
+- Revised documentation.
+- Added SCSurface, generates a surface of prescribed orientability and genus.
+- Added SCDifferenceCycles (analogue of SCGenerators for cyclic combinatorial
+  manifolds).
+- Added census of highly symmetric surfaces. This includes the functions:
+  SCNrRegularTorus, SCNrChiralTori, SCRegularTorus, SCChiralTori,
+  SCSeriesSymmetricTorus, SCRegularMap, SCChiralMap, SCRegularMaps and
+  SCChiralMaps.
+- Fixed dependencies on external UNIX programs to avoid problems with
+  simpcomp running under Windows.
+- Added further combinatorial 3-manifolds with transitive cyclic symmetry.
+  In particular, added functions SCSeriesHomologySphere, SCSeriesConnectedSum,
+  SCSeriesSeifertFibredSpace and extended SCSeriesLensSpace.
+- New deployment system for full support of Google Code Git repository.
+
 23/11/2011 - Version 1.5.4: GAP 4.5 release: required GAP-version is now 4.5
 - Updated references to other packages
 

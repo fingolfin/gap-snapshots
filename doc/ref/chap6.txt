@@ -362,7 +362,7 @@
   objects,  such  as  groups,  this can be done using [2XSetName[102X ([14X12.8-1[114X). If the
   objects   however   is  represented  internally,  for  example  permutations
   representing  group  elements,  this function is not applicable. Instead the
-  function  [2XSetNameObject[102X  ([14X6.3-7[114X)  acn  be used to interface with the display
+  function  [2XSetNameObject[102X  ([14X6.3-7[114X)  can  be used to interface with the display
   routines on a lower level.[133X
   
   [1X6.3-7 SetNameObject[101X

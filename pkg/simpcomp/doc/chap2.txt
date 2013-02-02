@@ -159,7 +159,7 @@
   simplicial  subdivision  of  [22XM[122X  which is a combinatorial manifold. If [22XM[122X is a
   surface we will call it a [13Xpolytopal map[113X. If, in addition [22XM[122X entirely consists
   of [22Xm[122X-gons, we call it a [13Xpolytopal [22Xm[122X-gon map[113X.[133X
-  [33X[0;0Y[12XDefinition[112X (Discrete Normal surface, [Spr11])[133X
+  [33X[0;0Y[12XDefinition[112X (Discrete Normal surface, [Spr11b])[133X
   [33X[0;0YLet  [22XM[122X  be  a  combinatorial [22X3[122X-manifold ([22X3[122X-pseudomanifold), [22X∆ ∈ M[122X one of its
   tetrahedra  and  [22XP[122X  the intersection of [22X∆[122X with a plane that does not include
   any  vertex  of  [22X∆[122X.  Then [22XP[122X is called a [13Xnormal subset[113X of [22X∆[122X. Up to an isotopy
@@ -169,7 +169,7 @@
   tetrahedron  contains at most one facet is called [13Xdiscrete normal surface[113X of
   [22XM[122X.[133X
   [33X[0;0YThe  second  author has recently investigated on the combinatorial theory of
-  discrete normal surfaces, see [Spr11].[133X
+  discrete normal surfaces, see [Spr11b].[133X
   
   
   [1X2.5 [33X[0;0YPolyhedral Morse theory and slicings[133X[101X
@@ -185,7 +185,7 @@
   [22XF[122X is a field.[133X
   [33X[0;0YIt  follows that no point of [22XM[122X can be critical except possibly the vertices.
   In arbitrary dimensions we define:[133X
-  [33X[0;0Y[12XDefinition[112X (Slicing, [Spr11])[133X
+  [33X[0;0Y[12XDefinition[112X (Slicing, [Spr11b])[133X
   [33X[0;0YLet  [22XM[122X  be  a  combinatorial  pseudomanifold  of dimension [22Xd[122X and [22Xf:M -> R[122X an
   rsl-function.  Then we call the pre-image [22Xf^-1 (α)[122X a [13Xslicing[113X of [22XM[122X whenever [22Xα
   ≠ f(v)[122X for any vertex [22Xv ∈ M[122X.[133X

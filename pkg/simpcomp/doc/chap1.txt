@@ -31,32 +31,27 @@
   number of functions (function prefix [10XSCSeries...[110X) provide infinite series of
   combinatorial manifolds with transitive automorphism group.[133X
   
-  [33X[0;0YFurthermore,  [5Xsimpcomp[105X  has  an extensive library of known triangulations of
-  manifolds.  This  is  the first time that they are easily accessible without
-  having  to  look  them  up  in  the  literature  [KL99],  [CK01],  or online
-  [ManifoldPage].  This  allows  the  user  to  work with many different known
-  triangulations  without  having to construct them first.The library contains
-  triangulations  of  roughly  650 manifolds and roughly 7000 pseudomanifolds,
-  including  all  vertex  transitive  triangulations from [ManifoldPage]. Most
-  properties  that  [5Xsimpcomp[105X  can  handle are precomputed for complexes in the
-  library.  Searching  in  the  library is possible by the complexes' names as
-  well  as  some  of  their properties (such as [22Xf[122X-, [22Xg[122X- and [22Xh[122X-vectors and their
-  homology).[133X
-  [33X[0;0YIn  addition,  as  of  Version  1.4.0  [5Xsimpcomp[105X  provides the possibility to
-  perform  a  combinatorial version of algebraic blowups, so-called simplicial
-  blowups,  for  combinatorial [22X4[122X-manfolds as described in [SK11] and [Spr10a].
-  The  implementation can be used as well to resolve isolated singularities of
+  [33X[0;0YAs  of  Version  1.4.0,  [5Xsimpcomp[105X  provides  the  possibility  to  perform a
+  combinatorial  version  of  algebraic blowups, so-called simplicial blowups,
+  for  combinatorial  [22X4[122X-manfolds  as  described  in  [SK11]  and [Spr10a]. The
+  implementation  can  be  used  as  well to resolve isolated singularities of
   combinatorial  [22X4[122X-pseudomanifolds. It seems that this feature, too, is unique
   to [5Xsimpcomp[105X.[133X
+  
+  [33X[0;0YStarting  from  Version  1.5.4,  [5Xsimpcomp[105X  comes with more efficient code to
+  perform  bistellar  moves implemented in [10XC[110X (see function [2XSCReduceComplexFast[102X
+  ([14X9.2-15[114X)). However, this feature is completely optional.[133X
   
   
   [1X1.2 [33X[0;0Y[5Xsimpcomp[105X[101X[1X benefits[133X[101X
   
   [33X[0;0YThe  origin  of  [5Xsimpcomp[105X  is  a  collection  of  scripts of the two authors
   [Eff11a],  [Spr10a]  that  provide  basic  and  often-needed  functions  and
-  operations  for working with simplicial complexes. It is written entirely in
-  the  [5XGAP[105X  scripting  language,  thus  giving the user the possibility to see
-  behind the scenes and to customize or alter [5Xsimpcomp[105X functions if needed.[133X
+  operations  for  working with simplicial complexes. Apart from some optional
+  code  dealing  with  bistellar  moves  (see  Section  [14X9[114X  and  in  particular
+  [2XSCReduceComplexFast[102X  ([14X9.2-15[114X)),  it is written entirely in the [5XGAP[105X scripting
+  language,  thus giving the user the possibility to see behind the scenes and
+  to customize or alter [5Xsimpcomp[105X functions if needed.[133X
   
   [33X[0;0YThe  main  benefit  when  working with [5Xsimpcomp[105X over implementing the needed
   functions  from  scratch  is  that  [5Xsimpcomp[105X  encapsulates  all  methods and
@@ -71,8 +66,8 @@
   
   [33X[0;0Y[5Xsimpcomp[105X  provides  the  user with functions to save and load the simplicial
   complexes  to  and  from files and to import and export a complex in various
-  formats  (e.g.  from  and to [5Xpolymake/TOPAZ[105X [GJ00], [5XMacaulay2[105X [GS09], LaTeX,
-  etc.).[133X
+  formats  (e.g. from and to [5Xpolymake/TOPAZ[105X [GJ00], [5XSnapPea[105X [Wee99] and [5XRegina[105X
+  [BABRBWP12] (via the [5XSnapPea[105X file format), [5XMacaulay2[105X [GS09], LaTeX, etc.).[133X
   
   [33X[0;0YIn  contrast  to  the  software  package  [5Xpolymake[105X [GJ00] providing the most
   efficient algorithms for each task in form of a heterogeneous package (where
@@ -108,7 +103,7 @@
   
   [1X1.4 [33X[0;0YOrganization of this document[133X[101X
   
-  [33X[0;0YThis manual accompanying [5Xsimpcomp[105X is divided into 14 chapters.[133X
+  [33X[0;0YThis manual accompanying [5Xsimpcomp[105X is organized as follows.[133X
   
   [30X    [33X[0;6YChapter  [14X2[114X provides a short introduction into the theory of simplicial
         complexes and PL-topology.[133X
@@ -172,11 +167,11 @@
   ([14X14.3-1[114X) from the [5XGAP[105X console:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XSCRunTest();[127X[104X
-    [4X[28X+ test simpcomp package, Version 1.5.4[128X[104X
-    [4X[28X+ GAP4stones: 69988[128X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[25Xgap>[125X [27XSCRunTest();[127X[104X
+    [4X[28X+ test simpcomp package, Version 1.6.1[128X[104X
+    [4X[28X+ GAP4stones: 69988[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
   [4X[32X[104X
   
   [33X[0;0Y[2XSCRunTest[102X  ([14X14.3-1[114X)  should return [9Xtrue[109X, otherwise the correct functionality
@@ -199,9 +194,9 @@
   @manual{simpcomp,
   	author = "Felix Effenberger and Jonathan Spreer",
   	title  = "{\tt simpcomp} - a {\tt GAP} toolkit for simplicial complexes,
-  	          {V}ersion 1.5.4",
-  	year   = "2011",
-  	url    = "\url{http://www.igt.uni-stuttgart.de/LstDiffgeo/simpcomp}",
+  	          {V}ersion 1.6.1",
+  	year   = "2013",
+  	url    = "\url{http://code.google.com/p/simpcomp}",
   }
   
   [33X[0;0YIf  you  are  not  using  BibTeX, you can use the following entry inside the
@@ -210,7 +205,7 @@
   \bibitem{simpcomp}
   F.~Effenberger and J.~Spreer,
   \emph{{\tt simpcomp} -- a {\tt GAP} toolkit for simplicial complexes},
-  Version 1.5.4, 
-  2011,
-  \url{http://www.igt.uni-stuttgart.de/LstDiffgeo/simpcomp}.
+  Version 1.6.1, 
+  2013,
+  \url{http://code.google.com/p/simpcomp}.
   

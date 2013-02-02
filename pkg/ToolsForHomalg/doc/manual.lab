@@ -85,14 +85,16 @@
 \makelabel{toolsforhomalg:ExamplesForHomalg (for IsInt)}{5.2.2}{X8041FC897BF996CB}
 \makelabel{toolsforhomalg:SourcePart (for IsToDoListEntry)}{6.1.1}{X876F23977AA5C19E}
 \makelabel{toolsforhomalg:TargetPart (for IsToDoListEntry)}{6.1.2}{X86B9FC7A78FF9347}
-\makelabel{toolsforhomalg:ProcessAToDoListEntry (for IsToDoListEntry)}{6.1.3}{X7F63A94D7B43B880}
-\makelabel{toolsforhomalg:AreCompatible (for IsToDoListEntry, IsToDoListEntry)}{6.1.4}{X843B58A884563E2D}
-\makelabel{toolsforhomalg:ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}{6.1.7}{X86ECD224820CBB4E}
-\makelabel{toolsforhomalg:ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}{6.1.8}{X7ECB3D1C7BDD580E}
-\makelabel{toolsforhomalg:CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}{6.1.9}{X7A0DF7C07D589BC5}
-\makelabel{toolsforhomalg:JoinToDoListEntries (for IsList)}{6.1.10}{X79D0F627831D3B87}
-\makelabel{toolsforhomalg:GenesisOfToDoListEntry (for IsToDoListEntry)}{6.1.11}{X78F0BFF382F62287}
-\makelabel{toolsforhomalg:DescriptionOfImplication (for IsToDoListEntry)}{6.1.12}{X81E733C27D96F9C8}
+\makelabel{toolsforhomalg:SetTargetValueObject (for IsToDoListEntry, IsObject)}{6.1.3}{X8041DC118358A5CD}
+\makelabel{toolsforhomalg:SetTargetObject (for IsToDoListEntry, IsObject)}{6.1.4}{X793216E3836F177C}
+\makelabel{toolsforhomalg:ProcessAToDoListEntry (for IsToDoListEntry)}{6.1.5}{X7F63A94D7B43B880}
+\makelabel{toolsforhomalg:AreCompatible (for IsToDoListEntry, IsToDoListEntry)}{6.1.6}{X843B58A884563E2D}
+\makelabel{toolsforhomalg:ToDoListEntryWithListOfSources (for IsList, IsObject, IsString, IsObject)}{6.1.9}{X86ECD224820CBB4E}
+\makelabel{toolsforhomalg:ToDoListEntryWhichLaunchesAFunction (for IsList, IsFunction)}{6.1.10}{X7ECB3D1C7BDD580E}
+\makelabel{toolsforhomalg:CreateImmediateMethodForToDoListEntry (for IsToDoListEntry)}{6.1.11}{X7A0DF7C07D589BC5}
+\makelabel{toolsforhomalg:JoinToDoListEntries (for IsList)}{6.1.12}{X79D0F627831D3B87}
+\makelabel{toolsforhomalg:GenesisOfToDoListEntry (for IsToDoListEntry)}{6.1.13}{X78F0BFF382F62287}
+\makelabel{toolsforhomalg:DescriptionOfImplication (for IsToDoListEntry)}{6.1.14}{X81E733C27D96F9C8}
 \makelabel{toolsforhomalg:IsToDoList (for IsObject)}{6.2.1}{X86D2B9E180E01856}
 \makelabel{toolsforhomalg:NewToDoList (for )}{6.3.1}{X846756CA825D07AD}
 \makelabel{toolsforhomalg:ProcessAToDoListEntry}{6.4.1}{X788F2635833587F8}

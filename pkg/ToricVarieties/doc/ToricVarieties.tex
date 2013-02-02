@@ -98,7 +98,7 @@
 {\Huge \textbf{A \textsf{GAP} package for handling toric varieties.\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.12.08\mbox{}}\\[1cm]
+{\Huge Version 2012.12.22\mbox{}}\\[1cm]
 {October 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
@@ -831,7 +831,7 @@ a ring
   <A divisor of a toric variety with coordinates [ 1, -1, 4, 0 ]>
   !gapprompt@gap>E !gapinput@IsAmple(A);E
   false
-  !gapprompt@gap>E !gapinput@CoordinateRingOfTorus(H5,"x");E
+  !gapprompt@gap>E !gapinput@CoordinateRingOfTorus(H5,"x");;E
   Q[x1,x1_,x2,x2_]/( x2*x2_-1, x1*x1_-1 )
   !gapprompt@gap>E !gapinput@D:=CreateDivisor([0,0,0,0],H5);E
   <A divisor of a toric variety with coordinates 0>
@@ -1215,61 +1215,10 @@ will result in an affine variety. }
   Q[x_1,x_2,x_3]
   !gapprompt@gap>B !gapinput@MorphismFromCoordinateRingToCoordinateRingOfTorus(C3);B
   <A monomorphism of rings>
-  !gapprompt@gap>B !gapinput@Display(last);B
-  Q[x1,x1_,x2,x2_,x3,x3_]/( x3*x3_-1, x2*x2_-1, x1*x1_-1 )
-    ^
-    |
-  [ |[ x3 ]|, |[ x2 ]|, |[ x1 ]| ]
-    |
-    |
-  Q[x_1,x_2,x_3]
   !gapprompt@gap>B !gapinput@C3;B
   <An affine normal smooth toric variety of dimension 3>
   !gapprompt@gap>B !gapinput@StructureDescription(C3);B
   "|A^3"
-\end{Verbatim}
-}
-
- 
-\subsection{\textcolor{Chapter }{Rational normal cone}}\label{RationalNormalConeExampleSubsection}
-\logpage{[ 5, 6, 2 ]}
-\hyperdef{L}{X84E6FB1C7BA42612}{}
-{
-  
-\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>B !gapinput@sigma := Cone([[7,-1],[0,1]]);B
-  <A cone>
-  !gapprompt@gap>B !gapinput@C7:=ToricVariety(sigma);B
-  <An affine toric variety>
-  !gapprompt@gap>B !gapinput@CoordinateRing(C7,["x"]);B
-  Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
-  x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
-  x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
-  x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
-  x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
-  x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
-  x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
-  x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
-  !gapprompt@gap>B !gapinput@CoordinateRingOfTorus(C7,["y","z"]);B
-  Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
-  !gapprompt@gap>B !gapinput@MorphismFromCoordinateRingToCoordinateRingOfTorus(C7);B
-  <A monomorphism of rings>
-  !gapprompt@gap>B !gapinput@Display(last);B
-  Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
-    ^
-    |
-  [ |[ y ]|, |[ y*z ]|, |[ y*z^2 ]|, |[ y*z^3 ]|, 
-    |[ y*z^4 ]|, |[ y*z^5 ]|, |[ y*z^6 ]|, |[ y*z^7 ]| ]
-    |
-    |
-  Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
-  x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
-  x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
-  x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
-  x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
-  x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
-  x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
-  x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
 \end{Verbatim}
 }
 

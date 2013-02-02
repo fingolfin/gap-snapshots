@@ -216,17 +216,37 @@
   
   [1X78.6 [33X[0;0YImmediate Methods[133X[101X
   
+  [33X[0;0YUsually a method is called only if its operation has been called and if this
+  method has been selected, see [2XInstallMethod[102X ([14X78.2-1[114X).[133X
+  
+  [33X[0;0YFor attributes and properties, one can install also [13Ximmediate methods[113X.[133X
+  
   [1X78.6-1 InstallImmediateMethod[101X
   
-  [29X[2XInstallImmediateMethod[102X( [3Xopr[103X[, [3Xname[103X], [3Xfilter[103X, [3Xrank[103X, [3Xmethod[103X ) [32X function
+  [29X[2XInstallImmediateMethod[102X( [3Xopr[103X[, [3Xinfo[103X], [3Xfilter[103X, [3Xrank[103X, [3Xmethod[103X ) [32X function
   
-  [33X[0;0YUsually a method is called only if its operation has been called and if this
-  method has been selected.[133X
+  [33X[0;0Y[2XInstallImmediateMethod[102X installs [3Xmethod[103X as an immediate method for [3Xopr[103X, which
+  must  be  an attribute or a property, with requirement [3Xfilter[103X and rank [3Xrank[103X.
+  The rank must be an integer value that measures the priority of [3Xmethod[103X among
+  the  immediate  methods  for  [3Xopr[103X.  If  supplied, [3Xinfo[103X should be a short but
+  informative  string  that  describes  the  situation  in which the method is
+  called.[133X
   
-  [33X[0;0YFor  attributes  and  properties, one can install also [13Ximmediate methods[113X. An
-  immediate  method  is called automatically as soon as it is applicable to an
-  object,  provided  that the value is not yet known. Afterwards the attribute
-  setter is called in order to store the value.[133X
+  [33X[0;0YAn  immediate  method  is called automatically as soon as the object lies in
+  [3Xfilter[103X,  provided  that the value is not yet known. Afterwards the attribute
+  setter  is  called  in order to store the value, unless the method exits via
+  [2XTryNextMethod[102X ([14X78.4-1[114X).[133X
+  
+  [33X[0;0YNote  the  difference  to  [2XInstallMethod[102X  ([14X78.2-1[114X)  that no family predicate
+  occurs  because [3Xopr[103X expects only one argument, and that [3Xfilter[103X is not a list
+  of requirements but the argument requirement itself.[133X
+  
+  [33X[0;0YImmediate methods are thought of as a possibility for objects to gain useful
+  knowledge.  They  must  not  be  used  to  force  the  storing  of  [21Xdefining
+  information[121X  in  an  object.  In  other  words,  [5XGAP[105X should work even if all
+  immediate   methods   are   completely  disabled.  Therefore,  the  call  to
+  [2XInstallImmediateMethod[102X  installs  [3Xmethod[103X  also as an ordinary method for [3Xopr[103X
+  with requirement [3Xfilter[103X.[133X
   
   [33X[0;0YNote  that  in  such  a case [5XGAP[105X executes a computation for which it was not
   explicitly  asked  by  the user. So one should install only those methods as
@@ -247,22 +267,6 @@
   otherwise  call  [2XTryNextMethod[102X  ([14X78.4-1[114X).  But this requires factoring of an
   integer,  which  cannot  be  guaranteed  to be very cheap, so one should not
   install this method as an immediate method.[133X
-  
-  [33X[0;0Y[2XInstallImmediateMethod[102X installs [3Xmethod[103X as an immediate method for [3Xopr[103X, which
-  must be an operation of one argument, with requirement [3Xfilter[103X and rank [3Xrank[103X.
-  The rank must be an integer value that measures the priority of [3Xmethod[103X among
-  the immediate methods for [3Xopr[103X.[133X
-  
-  [33X[0;0YNote  the  difference  to  [2XInstallMethod[102X  ([14X78.2-1[114X)  that no family predicate
-  occurs  because [3Xopr[103X expects only one argument, and that [3Xfilter[103X is not a list
-  of requirements but the argument requirement itself.[133X
-  
-  [33X[0;0YImmediate methods are thought of as a possibility for objects to gain useful
-  knowledge.  They  must  not  be  used  to  force  the  storing  of  [21Xdefining
-  information[121X  in  an  object.  In  other  words,  [5XGAP[105X should work even if all
-  immediate   methods   are   completely  disabled.  Therefore,  the  call  to
-  [2XInstallImmediateMethod[102X  installs  [3Xmethod[103X also as an ordinary method for [3Xopr[103X,
-  with requirement [3Xfilter[103X.[133X
   
   
   [1X78.7 [33X[0;0YLogical Implications[133X[101X

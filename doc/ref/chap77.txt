@@ -56,7 +56,8 @@
   
   [33X[0;0YFurthermore,  the  global  variable  [10XPACKAGES_VERSIONS[110X  is no longer needed,
   since  this  information is now contained in the [10XGAPInfo.PackagesInfo[110X record
-  (see [14X3.5-1[114X).[133X
+  (see  [14X3.5-1[114X).  The global variable [10XRevisions[110X is also no longer needed, since
+  the function [10XDisplayRevision[110X was made obsolete in [5XGAP[105X 4.5.[133X
   
   [33X[0;0YThe following function names were changed.[133X
   

@@ -59,19 +59,21 @@
 \indexentry{ExamplesForHomalg@\texttt  {ExamplesForHomalg}!for IsInt|hyperpage}{15}
 \indexentry{SourcePart@\texttt  {SourcePart}!for IsToDoListEntry|hyperpage}{16}
 \indexentry{TargetPart@\texttt  {TargetPart}!for IsToDoListEntry|hyperpage}{16}
-\indexentry{ProcessAToDoListEntry@\texttt  {ProcessAToDoListEntry}!for IsToDoListEntry|hyperpage}{16}
-\indexentry{AreCompatible@\texttt  {AreCompatible}!for IsToDoListEntry, IsToDoListEntry|hyperpage}{16}
-\indexentry{ToDoListEntryWithWeakPointers@\texttt  {ToDoListEntryWithWeakPointers}!for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject|hyperpage}{16}
+\indexentry{SetTargetValueObject@\texttt  {SetTargetValueObject}!for IsToDoListEntry, IsObject|hyperpage}{16}
+\indexentry{SetTargetObject@\texttt  {SetTargetObject}!for IsToDoListEntry, IsObject|hyperpage}{16}
+\indexentry{ProcessAToDoListEntry@\texttt  {ProcessAToDoListEntry}!for IsToDoListEntry|hyperpage}{17}
+\indexentry{AreCompatible@\texttt  {AreCompatible}!for IsToDoListEntry, IsToDoListEntry|hyperpage}{17}
+\indexentry{ToDoListEntryWithWeakPointers@\texttt  {ToDoListEntryWithWeakPointers}!for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject|hyperpage}{17}
 \indexentry{ToDoListEntryWithPointers@\texttt  {ToDoListEntryWithPointers}!for IsObject, IsString, IsObject, IsObject, IsStrin\ g, IsObject|hyperpage}{17}
 \indexentry{ToDoListEntryWithListOfSources@\texttt  {ToDoListEntryWithListOfSources}!for IsList, IsObject, IsString, IsObject|hyperpage}{17}
 \indexentry{ToDoListEntryWhichLaunchesAFunction@\texttt  {ToDoListEntryWhichLaunchesAFunction}!for IsList, IsFunction|hyperpage}{17}
-\indexentry{CreateImmediateMethodForToDoListEntry@\texttt  {Create}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do}\discretionary {-}{}{}\texttt  {List}\discretionary {-}{}{}\texttt  {Entry}!for IsToDoListEntry|hyperpage}{17}
-\indexentry{JoinToDoListEntries@\texttt  {JoinToDoListEntries}!for IsList|hyperpage}{17}
-\indexentry{GenesisOfToDoListEntry@\texttt  {GenesisOfToDoListEntry}!for IsToDoListEntry|hyperpage}{17}
+\indexentry{CreateImmediateMethodForToDoListEntry@\texttt  {Create}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do}\discretionary {-}{}{}\texttt  {List}\discretionary {-}{}{}\texttt  {Entry}!for IsToDoListEntry|hyperpage}{18}
+\indexentry{JoinToDoListEntries@\texttt  {JoinToDoListEntries}!for IsList|hyperpage}{18}
+\indexentry{GenesisOfToDoListEntry@\texttt  {GenesisOfToDoListEntry}!for IsToDoListEntry|hyperpage}{18}
 \indexentry{DescriptionOfImplication@\texttt  {DescriptionOfImplication}!for IsToDoListEntry|hyperpage}{18}
 \indexentry{IsToDoList@\texttt  {IsToDoList}!for IsObject|hyperpage}{18}
 \indexentry{NewToDoList@\texttt  {NewToDoList}!for |hyperpage}{18}
 \indexentry{ProcessAToDoListEntry@\texttt  {Process{\textunderscore }}\discretionary {-}{}{}\texttt  {A{\textunderscore }}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do{\textunderscore }}\discretionary {-}{}{}\texttt  {List{\textunderscore }}\discretionary {-}{}{}\texttt  {Entry}|hyperpage}{18}
-\indexentry{ProcessToDoList@\texttt  {ProcessToDoList}!for IsObject|hyperpage}{18}
+\indexentry{ProcessToDoList@\texttt  {ProcessToDoList}!for IsObject|hyperpage}{19}
 \indexentry{AddToToDoList@\texttt  {AddToToDoList}!for IsToDoListEntry|hyperpage}{19}
 \indexentry{ToDoList@\texttt  {ToDoList}!for IsObject|hyperpage}{19}

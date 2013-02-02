@@ -51,8 +51,6 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X782DF75D8761D85B">5.6-1 <span class="Heading">Affine space</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84E6FB1C7BA42612">5.6-2 <span class="Heading">Rational normal cone</span></a>
-</span>
 </div></div>
 </div>
 
@@ -171,59 +169,10 @@ Q[x1,x1_,x2,x2_,x3,x3_]/( x3*x3_-1, x2*x2_-1, x1*x1_-1 )
 Q[x_1,x_2,x_3]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MorphismFromCoordinateRingToCoordinateRingOfTorus(C3);</span>
 &lt;A monomorphism of rings&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);</span>
-Q[x1,x1_,x2,x2_,x3,x3_]/( x3*x3_-1, x2*x2_-1, x1*x1_-1 )
-  ^
-  |
-[ |[ x3 ]|, |[ x2 ]|, |[ x1 ]| ]
-  |
-  |
-Q[x_1,x_2,x_3]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C3;</span>
 &lt;An affine normal smooth toric variety of dimension 3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(C3);</span>
 "|A^3"
-</pre></div>
-
-<p><a id="X84E6FB1C7BA42612" name="X84E6FB1C7BA42612"></a></p>
-
-<h5>5.6-2 <span class="Heading">Rational normal cone</span></h5>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sigma := Cone([[7,-1],[0,1]]);</span>
-&lt;A cone&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C7:=ToricVariety(sigma);</span>
-&lt;An affine toric variety&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoordinateRing(C7,["x"]);</span>
-Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
-x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
-x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
-x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
-x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
-x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
-x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
-x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoordinateRingOfTorus(C7,["y","z"]);</span>
-Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MorphismFromCoordinateRingToCoordinateRingOfTorus(C7);</span>
-&lt;A monomorphism of rings&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);</span>
-Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
-  ^
-  |
-[ |[ y ]|, |[ y*z ]|, |[ y*z^2 ]|, |[ y*z^3 ]|, 
-  |[ y*z^4 ]|, |[ y*z^5 ]|, |[ y*z^6 ]|, |[ y*z^7 ]| ]
-  |
-  |
-Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
-x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
-x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
-x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
-x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
-x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
-x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
-x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
 </pre></div>
 
 

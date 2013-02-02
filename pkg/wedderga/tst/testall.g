@@ -10,7 +10,8 @@ testfiles := [
 "wedderga03.tst",
 "wedderga04.tst",
 "wedderga05.tst",
-"wedderga06.tst"
+"wedderga06.tst",
+"wedderga07.tst"
 ];
 
 testresult:=true;
@@ -22,9 +23,9 @@ for ff in testfiles do
   fi;
 od;  
 if testresult then
-  Print("#I  Tests of ", pkgname, " package completed without errors\n");
+  Print("#I  No errors detected while testing package ", pkgname, "\n");
 else
-  Print("#I  Errors detected during tests of ", pkgname, " package\n");
+  Print("#I  Errors detected while testing package ", pkgname, "\n");
 fi;
 end;
 

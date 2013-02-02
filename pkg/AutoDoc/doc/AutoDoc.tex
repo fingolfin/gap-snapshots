@@ -98,7 +98,7 @@
 {\Huge \textbf{a nice way to create documentations\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.10.26\mbox{}}\\[1cm]
+{\Huge Version 2012.12.20\mbox{}}\\[1cm]
 {September 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
@@ -233,8 +233,30 @@ section. }
 
  
 
-\subsection{\textcolor{Chapter }{DeclareOperationWithDocumentation}}
+\subsection{\textcolor{Chapter }{DeclareRepresentationWithDocumentation}}
 \logpage{[ 2, 1, 4 ]}\nobreak
+\hyperdef{L}{X7E24A6497A41CDE7}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDocumentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareRepresentationWithDocumentation@\texttt{Declare}\-\texttt{Representation}\-\texttt{With}\-\texttt{Documentation}}
+\label{DeclareRepresentationWithDocumentation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ This method declares a representation, like DeclareRepresentation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}req{\textunderscore}entries}} ) would do. The description string is added to the documentation if
+CreateAutoDoc is called. It can either be a string or a list of strings. Lists
+will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
+the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this category should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareOperationWithDocumentation}}
+\logpage{[ 2, 1, 5 ]}\nobreak
 \hyperdef{L}{X82FAF5637E4A651F}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareOperationWithDocumentation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareOperationWithDocumentation@\texttt{DeclareOperationWithDocumentation}}
 \label{DeclareOperationWithDocumentation}
@@ -255,8 +277,30 @@ section. }
 
  
 
+\subsection{\textcolor{Chapter }{InstallMethodWithDocumentation}}
+\logpage{[ 2, 1, 6 ]}\nobreak
+\hyperdef{L}{X85CD8A4B7DAEDE74}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDocumentation({\mdseries\slshape name, short{\textunderscore}descr, list{\textunderscore}of{\textunderscore}filters, func, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{InstallMethodWithDocumentation@\texttt{InstallMethodWithDocumentation}}
+\label{InstallMethodWithDocumentation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ This method declares a operation, like InstallMethod( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape short{\textunderscore}descr}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}}, \mbox{\texttt{\mdseries\slshape func}} ) would do. The description string is added to the documentation if
+CreateAutoDoc is called. It can either be a string or a list of strings. Lists
+will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
+the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this method should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ 
+
 \subsection{\textcolor{Chapter }{DeclareAttributeWithDocumentation}}
-\logpage{[ 2, 1, 5 ]}\nobreak
+\logpage{[ 2, 1, 7 ]}\nobreak
 \hyperdef{L}{X833A38277FA4848A}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareAttributeWithDocumentation({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareAttributeWithDocumentation@\texttt{DeclareAttributeWithDocumentation}}
 \label{DeclareAttributeWithDocumentation}
@@ -279,7 +323,7 @@ section. }
  
 
 \subsection{\textcolor{Chapter }{DeclarePropertyWithDocumentation}}
-\logpage{[ 2, 1, 6 ]}\nobreak
+\logpage{[ 2, 1, 8 ]}\nobreak
 \hyperdef{L}{X7E376CD17AA0566F}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclarePropertyWithDocumentation({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclarePropertyWithDocumentation@\texttt{DeclarePropertyWithDocumentation}}
 \label{DeclarePropertyWithDocumentation}
@@ -301,7 +345,7 @@ section. }
  
 
 \subsection{\textcolor{Chapter }{DeclareGlobalFunctionWithDocumentation}}
-\logpage{[ 2, 1, 7 ]}\nobreak
+\logpage{[ 2, 1, 9 ]}\nobreak
 \hyperdef{L}{X7B8162A87F499094}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalFunctionWithDocumentation({\mdseries\slshape name, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareGlobalFunctionWithDocumentation@\texttt{Declare}\-\texttt{Global}\-\texttt{Function}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareGlobalFunctionWithDocumentation}
@@ -323,7 +367,7 @@ section. }
  
 
 \subsection{\textcolor{Chapter }{DeclareGlobalVariableWithDocumentation}}
-\logpage{[ 2, 1, 8 ]}\nobreak
+\logpage{[ 2, 1, 10 ]}\nobreak
 \hyperdef{L}{X7CADC9C87BEF79D8}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalVariableWithDocumentation({\mdseries\slshape name, description[, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareGlobalVariableWithDocumentation@\texttt{Declare}\-\texttt{Global}\-\texttt{Variable}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareGlobalVariableWithDocumentation}

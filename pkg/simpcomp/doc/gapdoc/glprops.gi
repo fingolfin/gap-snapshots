@@ -507,18 +507,18 @@
 ##   [ 2416, "(S^2~S^1)#L_3_1" ], [ 2417, "(S^2xS^1)#L_3_1" ], [ 2490, "L_5_1" ],
 ##   [ 2492, "(S^2~S^1)#2#L_3_1" ], [ 2494, "(S^2xS^1)#2#L_3_1" ], 
 ##   [ 7467, "L_7_2" ], [ 7468, "L_8_3" ] ]
-## gap&gt; c:=SCConnectedSum(SCConnectedProduct(SCLib.Load(last[9][1]),3),
+## gap&gt; c:=SCConnectedSum(SCLib.Load(last[9][1]),
 ##                        SCConnectedProduct(SCLib.Load(last[10][1]),2));
-## > [SimplicialComplex
+## &gt; [SimplicialComplex
 ## 
 ##  Properties known: Dim, FacetsEx, Name, Vertices.
 ## 
-##  Name="L_7_2#+-L_7_2#+-L_7_2#+-L_8_3#+-L_8_3"
+##  Name="L_7_2#+-L_8_3#+-L_8_3"
 ##  Dim=3
 ## 
 ## /SimplicialComplex]
 ## gap&gt; SCHomology(c);
-## [ [ 0, [  ] ], [ 0, [ 7, 56, 56 ] ], [ 0, [  ] ], [ 1, [  ] ] ]
+## [ [ 0, [  ] ], [ 0, [ 8, 56 ] ], [ 0, [  ] ], [ 1, [  ] ] ]
 ## gap&gt; SCFpBettiNumbers(c,2);
 ## [ 1, 2, 2, 1 ]
 ## gap&gt; SCFpBettiNumbers(c,3);
@@ -592,7 +592,7 @@
 ## The position of the group in the &GAP; libraries of small groups, transitive groups or primitive groups is given. If the group is not listed, its structure description, provided by the &GAP; function <C>StructureDescription()</C>, is returned as the name of the group. Note that the latter form is not always unique, since every non trivial semi-direct product is denoted by ''<C>:</C>''.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");            
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; k3surf:=SCLib.Load(last[1][1]);; 
 ## gap&gt; SCAutomorphismGroup(k3surf);               
 ## Group([ (1,3,8,4,9,16,15,2,14,12,6,7,13,5,10), 
@@ -611,7 +611,7 @@
 ## Computes the size of the automorphism group of a strongly connected pseudomanifold <Arg>complex</Arg>, see <Ref Meth="SCAutomorphismGroup"/>.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");            
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; k3surf:=SCLib.Load(last[1][1]);;           
 ## gap&gt; SCAutomorphismGroupSize(k3surf);               
 ## 240
@@ -629,7 +629,7 @@
 ## Computes the &GAP; structure description of the automorphism group of a strongly connected pseudomanifold <Arg>complex</Arg>, see <Ref Meth="SCAutomorphismGroup"/>.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");     
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; k3surf:=SCLib.Load(last[1][1]);;      
 ## gap&gt; SCAutomorphismGroupStructure(k3surf);
 ## "((C2 x C2 x C2 x C2) : C5) : C3"
@@ -647,7 +647,7 @@
 ## Computes the transitivity of the automorphism group of a strongly connected pseudomanifold <Arg>complex</Arg>, i. e. the maximal integer <M>t</M> such that for any two ordered <M>t</M>-tuples <M>T_1</M> and <M>T_2</M> of vertices of <Arg>complex</Arg>, there exists an element <M>g</M> in the automorphism group of <Arg>complex</Arg> for which <M>gT_1=T_2</M>, see <Cite Key="Huppert67EndlGruppen" />. 
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");            
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; k3surf:=SCLib.Load(last[1][1]);;           
 ## gap&gt; SCAutomorphismGroupTransitivity(k3surf);               
 ## 2
@@ -674,7 +674,7 @@
 ## gap&gt; g:=SCAutomorphismGroupInternal(c);
 ## PrimitiveGroup(3,2) = S(3)
 ## gap&gt; List(g);
-## [ (), (1,3,2), (1,2,3), (2,3), (1,3), (1,2) ]
+## [ (), (1,2,3), (1,3,2), (2,3), (1,2), (1,3) ]
 ## gap&gt; StructureDescription(g);
 ## "S3"
 ## </Example>
@@ -699,7 +699,7 @@
 ## </Example>
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; SCLib.Load(last[1][1]);
 ## [SimplicialComplex
 ## 
@@ -715,7 +715,7 @@
 ##                    MinimalNonFacesEx, Name, Neighborliness, 
 ##                    NumFaces[], Orientation, SkelExs[], Vertices.
 ## 
-##  Name="K3 surface"
+##  Name="K3_16"
 ##  Dim=4
 ##  AltshulerSteinberg=883835714748069945165599539200
 ##  AutomorphismGroupSize=240
@@ -762,7 +762,7 @@
 ## </Example>
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; SCLib.Load(last[1][1]);
 ## [SimplicialComplex
 ## 
@@ -778,7 +778,7 @@
 ##                    MinimalNonFacesEx, Name, Neighborliness, 
 ##                    NumFaces[], Orientation, SkelExs[], Vertices.
 ## 
-##  Name="K3 surface"
+##  Name="K3_16"
 ##  Dim=4
 ##  AltshulerSteinberg=883835714748069945165599539200
 ##  AutomorphismGroupSize=240
@@ -803,6 +803,37 @@
 ## /SimplicialComplex]
 ## gap&gt; SCGenerators(last);
 ## [ [ [ 1, 2, 3, 8, 12 ], 240 ], [ [ 1, 2, 5, 8, 14 ], 48 ] ]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCDifferenceCycles">
+## <ManSection>
+## <Meth Name="SCDifferenceCycles" Arg="complex"/>
+## <Returns> a list of lists upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes the difference cycles of <Arg>complex</Arg> in standard labeling
+## if <Arg>complex</Arg> is invariant under a shift of the vertices of type
+## <M>v \mapsto v+1 \mod n</M>.
+##
+## The function returns the difference cycles as lists where the sum of the entries
+## equals the number of vertices <M>n</M> of <Arg>complex</Arg>.
+## <Example>
+## gap&gt; torus:=SCFromDifferenceCycles([[1,2,4],[1,4,2]]);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, Vertices.
+## 
+##  Name="complex from diffcycles [ [ 1, 2, 4 ], [ 1, 4, 2 ] ]"
+##  Dim=2
+## 
+## /SimplicialComplex]
+## gap&gt; torus.Homology;
+## [ [ 0, [  ] ], [ 2, [  ] ], [ 1, [  ] ] ]
+## gap&gt; torus.DifferenceCycles;
+## [ [ 1, 2, 4 ], [ 1, 4, 2 ] ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -861,7 +892,7 @@
 ## gap&gt; SCNeighborliness(c);
 ## 1
 ## gap&gt; SCLib.SearchByAttribute("F[3]=Binomial(F[1],3) and Dim=4");
-## [ [ 16, "CP^2 (VT)" ], [ 7494, "K3 surface" ] ]
+## [ [ 16, "CP^2 (VT)" ], [ 7648, "K3_16" ] ]
 ## gap&gt; cp2:=SCLib.Load(last[2][1]);;
 ## gap&gt; SCNeighborliness(cp2);
 ## 3
@@ -920,7 +951,7 @@
 ## 
 ##  Properties known: Dim, FacetsEx, Name, Vertices.
 ## 
-##  Name="unnamed complex 50"
+##  Name="unnamed complex 52"
 ##  Dim=3
 ## 
 ## /SimplicialComplex]
@@ -929,7 +960,7 @@
 ## 
 ##  Properties known: Dim, FacetsEx, Name, Vertices.
 ## 
-##  Name="Bd(unnamed complex 50)"
+##  Name="Bd(unnamed complex 52)"
 ##  Dim=2
 ## 
 ## /SimplicialComplex]
@@ -939,7 +970,7 @@
 ##  Properties known: BoundaryEx, Dim, FacetsEx, HasBoundary, Name, 
 ##                    SkelExs[], Vertices.
 ## 
-##  Name="unnamed complex 50"
+##  Name="unnamed complex 52"
 ##  Dim=3
 ##  HasBoundary=true
 ## 
@@ -1284,6 +1315,83 @@
 ## gap&gt; c:=SC([[1,2,3],[1,4,5]]);;
 ## gap&gt; SCDehnSommervilleCheck(c);
 ## false
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCHeegaardSplitting">
+## <ManSection>
+## <Meth Name="SCHeegaardSplitting" Arg="M"/>
+##  <Returns> a list of an integer, a list of two sublists and a string upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes a Heegaard splitting of the combinatorial <M>3</M>-manifold  <Arg>M</Arg>. The function returns the genus of the Heegaard splitting, the vertex partition of the Heegaard splitting and a note, that splitting is arbitrary and in particular possibly not minimal.
+## 
+## See also <Ref Func="SCHeegaardSplittingSmallGenus"/> for the calculation of a Heegaard splitting of small genus and <Ref Func="SCIsHeegaardSplitting"/> for a test whether or not a given splitting defines a Heegaard splitting.
+## <Example>
+## gap&gt; M:=SCSeriesBdHandleBody(3,12);;
+## gap&gt; list:=SCHeegaardSplitting(M);
+## [ 1, [ [ 1, 2, 3, 5, 9 ], [ 4, 6, 7, 8, 10, 11, 12 ] ], "arbitrary" ]
+## gap&gt; sl:=SCSlicing(M,list[2]);
+## [NormalSurface
+## 
+##  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\
+## etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\
+## e, Vertices.
+## 
+##  Name="slicing [ [ 1, 2, 3, 5, 9 ], [ 4, 6, 7, 8, 10, 11, 12 ] ] of Sphere bun\
+## dle S^2 x S^1"
+##  Dim=2
+##  FVector=[ 24, 55, 14, 17 ]
+##  EulerCharacteristic=0
+##  IsOrientable=true
+##  TopologicalType="T^2"
+## 
+## /NormalSurface]
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCHeegaardSplittingSmallGenus">
+## <ManSection>
+## <Meth Name="SCHeegaardSplittingSmallGenus" Arg="M"/>
+## <Returns> a list of an integer, a list of two sublists and a string upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes a Heegaard splitting of the combinatorial <M>3</M>-manifold  <Arg>M</Arg> of small genus. The function returns the genus of the Heegaard splitting, the vertex partition of the Heegaard splitting and information whether the splitting is minimal or just small (i. e. the Heegaard genus could not be determined).
+## 
+## See also <Ref Func="SCHeegaardSplitting"/> for a faster computation of a Heegaard splitting of arbitrary genus and <Ref Func="SCIsHeegaardSplitting"/> for a test whether or not a given splitting defines a Heegaard splitting.
+## <Example> 
+## gap> c:=SCSeriesBdHandleBody(3,10);;
+## gap> M:=SCConnectedProduct(c,3);;
+## gap> list:=SCHeegaardSplittingSmallGenus(M);
+## This creates an error
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCIsHeegaardSplitting">
+## <ManSection>
+## <Meth Name="SCIsHeegaardSplitting" Arg="c,list"/>
+## <Returns> <K>true</K> or <K>false</K> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Checks whether <Arg>list</Arg> defines a Heegaard splitting of <Arg>c</Arg> or not.
+## 
+## See also <Ref Func="SCHeegaardSplitting"/> and <Ref Func="SCHeegaardSplittingSmallGenus"/> for functions to compute Heegaard splittings.
+## <Example>
+## gap&gt; c:=SCSeriesBdHandleBody(3,9);;
+## gap&gt; list:=[[1..3],[4..9]];
+## [ [ 1 .. 3 ], [ 4 .. 9 ] ]
+## gap&gt; SCIsHeegaardSplitting(c,list);
+## false
+## gap&gt; splitting:=SCHeegaardSplitting(c);
+## [ 1, [ [ 1, 2, 3, 6 ], [ 4, 5, 7, 8, 9 ] ], "arbitrary" ]
+## gap&gt; SCIsHeegaardSplitting(c,splitting[2]);                                         
+## true
 ## </Example>
 ## </Description>
 ## </ManSection>

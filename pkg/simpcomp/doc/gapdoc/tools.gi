@@ -62,16 +62,19 @@
 ## <Description>
 ## Tries to send an email to the address specified by <Ref Func="SCMailSetAddress" /> using the Unix program <C>mail</C>. The optional parameter <Arg>starttime</Arg> specifies the starting time (as the integer Unix timestamp) a calculation was started (then the duration of the calculation is included in the email), the optional boolean parameter <Arg>forcesend</Arg> can be used to force the sending of an email, even if this violates the minimal email sending interval, see <Ref Func="SCMailSetMinInterval" />.
 ## <Example>
+## gap&gt; SCMailSetAddress("johndoe@somehost"); #enables mail notification
+## true
 ## gap&gt; SCMailIsEnabled();
-## false
+## true
 ## gap&gt; SCMailSend("Hello, this is simpcomp.");
-## false
+## WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-bjA1wb/pkcs11: No such file or directory
+## true
 ## </Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
 ################################################################################
-	instream:=InputTextString(Concatenation(["\nGreetings master,\n\nthis is simpcomp ",SCIntFunc.Version," running on ",longhost," (",fullinfo,"), GAP ",GAPInfo.Version,".\n\nI have been working hard",runtime," and have a message for you, see below.\n\n#### START MESSAGE ####\n\n",message,"##### END MESSAGE #####\n\nThat's all, I hope this is good news! Have a nice day.\n",String(CHAR_INT(4))]));;
+	instream:=InputTextString(Concatenation(["\nGreetings master,\n\nthis is simpcomp ",SCIntFunc.Version," running on ",host," (",fullinfo,"), GAP ",GAPInfo.Version,".\n\nI have been working hard",runtime," and have a message for you, see below.\n\n#### START MESSAGE ####\n\n",message,"##### END MESSAGE #####\n\nThat's all, I hope this is good news! Have a nice day.\n",String(CHAR_INT(4))]));;
 ################################################################################
 ##<#GAPDoc Label="SCMailSendPending">
 ## <ManSection>
@@ -81,7 +84,7 @@
 ## Tries to send a pending email of the <Package>simpcomp</Package> email notification system. Returns <K>true</K> on success or if there was no mail pending.
 ## <Example>
 ## gap&gt; SCMailSendPending();
-## false
+## true
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -110,8 +113,10 @@
 ## <Description>
 ## Returns <K>true</K> when the mail notification system of <Package>simpcomp</Package> is enabled, <K>false</K> otherwise. Default setting is <K>false</K>.
 ## <Example>
+## gap&gt; SCMailSetAddress("johndoe@somehost"); #enables mail notification
+## true
 ## gap&gt; SCMailIsEnabled();
-## false
+## true
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -141,8 +146,10 @@
 ## Test whether the package <Package>simpcomp</Package> is functional by calling <C>ReadTest("GAPROOT/pkg/simpcomp/tst/simpcomp.tst");</C>. The returned value of GAP4stones is a measure of your system performance and differs from system to system.
 ## <Example>
 ## gap&gt; SCRunTest();
+## Line 1075 : 
 ## + simpcomp package test
-## + GAP4stones: 51797
+## Line 1076 : 
+## + GAP4stones: 105119
 ## true
 ## </Example>
 ## </Description>

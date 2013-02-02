@@ -18,14 +18,14 @@
 		\hyperpage{8}
   \item \texttt  {AppendToAhomalgTable}, \hyperpage{14}
   \item \texttt  {AreCompatible}
-    \subitem for IsToDoListEntry, IsToDoListEntry, \hyperpage{16}
+    \subitem for IsToDoListEntry, IsToDoListEntry, \hyperpage{17}
 
   \indexspace
 
   \item \texttt  {ContainerForPointers}, \hyperpage{9}
   \item \texttt  {ContainerForWeakPointers}, \hyperpage{8}
   \item \texttt  {Create}\discretionary {-}{}{}\texttt  {Immediate}\discretionary {-}{}{}\texttt  {Method}\discretionary {-}{}{}\texttt  {For}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do}\discretionary {-}{}{}\texttt  {List}\discretionary {-}{}{}\texttt  {Entry}
-    \subitem for IsToDoListEntry, \hyperpage{17}
+    \subitem for IsToDoListEntry, \hyperpage{18}
 
   \indexspace
 
@@ -48,7 +48,7 @@
   \indexspace
 
   \item \texttt  {GenesisOfToDoListEntry}
-    \subitem for IsToDoListEntry, \hyperpage{17}
+    \subitem for IsToDoListEntry, \hyperpage{18}
 
   \indexspace
 
@@ -131,7 +131,7 @@
   \indexspace
 
   \item \texttt  {JoinToDoListEntries}
-    \subitem for IsList, \hyperpage{17}
+    \subitem for IsList, \hyperpage{18}
 
   \indexspace
 
@@ -154,14 +154,18 @@
   \indexspace
 
   \item \texttt  {ProcessAToDoListEntry}
-    \subitem for IsToDoListEntry, \hyperpage{16}
+    \subitem for IsToDoListEntry, \hyperpage{17}
   \item \texttt  {Process{\textunderscore }}\discretionary {-}{}{}\texttt  {A{\textunderscore }}\discretionary {-}{}{}\texttt  {To}\discretionary {-}{}{}\texttt  {Do{\textunderscore }}\discretionary {-}{}{}\texttt  {List{\textunderscore }}\discretionary {-}{}{}\texttt  {Entry}, 
 		\hyperpage{18}
   \item \texttt  {ProcessToDoList}
-    \subitem for IsObject, \hyperpage{18}
+    \subitem for IsObject, \hyperpage{19}
 
   \indexspace
 
+  \item \texttt  {SetTargetObject}
+    \subitem for IsToDoListEntry, IsObject, \hyperpage{16}
+  \item \texttt  {SetTargetValueObject}
+    \subitem for IsToDoListEntry, IsObject, \hyperpage{16}
   \item \texttt  {SourcePart}
     \subitem for IsToDoListEntry, \hyperpage{16}
 
@@ -180,7 +184,7 @@
 		\hyperpage{17}
   \item \texttt  {ToDoListEntryWithWeakPointers}
     \subitem for IsObject, IsString, IsObject, IsObject, IsS\ tring, IsObject, 
-		\hyperpage{16}
+		\hyperpage{17}
 
   \indexspace
 

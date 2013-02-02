@@ -290,7 +290,7 @@
 ## Computes the genus of a discrete normal surface <Arg>sl</Arg>.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("(S^2xS^1)#20");
-## [ [ 7618, "(S^2xS^1)#20" ] ]
+## [ [ 7617, "(S^2xS^1)#20" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;               
 ## gap&gt; c.F;                               
 ## [ 27, 298, 542, 271 ]
@@ -639,7 +639,7 @@
 ## Computes the homology of a slicing <Arg>sl</Arg>. Internally, <Arg>sl</Arg> is triangulated (cf. <Ref Meth="SCNSTriangulation"/>) and simplicial homology is computed via <Ref Meth="SCHomology"/> using the triangulation.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("(S^2xS^1)#20");       
-## [ [ 7618, "(S^2xS^1)#20" ] ]
+## [ [ 7617, "(S^2xS^1)#20" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; c.F;
 ## [ 27, 298, 542, 271 ]
@@ -663,7 +663,7 @@
 ## Computes the Betti numbers modulo <Arg>p</Arg> of a slicing <Arg>sl</Arg>. Internally, <Arg>sl</Arg> is triangulated (using <Ref Meth="SCNSTriangulation"/>) and the Betti numbers are computed via <Ref Meth="SCFpBettiNumbers"/> using the triangulation.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("(S^2xS^1)#20");       
-## [ [ 7618, "(S^2xS^1)#20" ] ]
+## [ [ 7617, "(S^2xS^1)#20" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; c.F;
 ## [ 27, 298, 542, 271 ]
@@ -684,15 +684,37 @@
 ## Determines the topological type of <Arg>sl</Arg> via the classification theorem for closed compact surfaces. If <Arg>sl</Arg> is not connected, the topological type of each connected component is computed.<P/>
 ## <Example>
 ## gap&gt; SCLib.SearchByName("(S^2xS^1)#20");      
-## [ [ 7618, "(S^2xS^1)#20" ] ]
+## [ [ 7617, "(S^2xS^1)#20" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; c.F;
 ## [ 27, 298, 542, 271 ]
-## gap&gt; for i in [1..26] do 
-## > sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); 
-## > Syntax error: od expected
-## > sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); 
-## ^
+## gap&gt; for i in [1..26] do sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); Print(sl.TopologicalType,"\n"); od;                                           
+## S^2
+## S^2
+## S^2
+## S^2
+## S^2 U S^2
+## S^2 U S^2
+## S^2
+## (T^2)#3
+## (T^2)#5
+## (T^2)#4
+## (T^2)#3
+## (T^2)#7
+## (T^2)#7 U S^2
+## (T^2)#7 U S^2
+## (T^2)#7 U S^2
+## (T^2)#8 U S^2
+## (T^2)#7 U S^2
+## (T^2)#8
+## (T^2)#6
+## (T^2)#6
+## (T^2)#5
+## (T^2)#3
+## (T^2)#2
+## T^2
+## S^2
+## S^2
 ## </Example>
 ## </Description>
 ## </ManSection>

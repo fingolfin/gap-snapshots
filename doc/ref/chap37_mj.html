@@ -701,11 +701,11 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">prg1:= StraightLineProgram( [ [1,1,2,2], [3,3,1,1] ], 2 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">prg2:= StraightLineProgram( [ [ [1,1,2,2], 2 ], [2,3,1,1] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">res1:= ResultOfStraightLineProgram( prg1, gens );</span>
-x*y^2*x*y^2*x*y^2*x
+(x*y^2)^3*x
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">res1 = (x*y^2)^3*x;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">res2:= ResultOfStraightLineProgram( prg2, gens );</span>
-x*y^2*x*y^2*x*y^2*x
+(x*y^2)^3*x
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">res2 = (x*y^2)^3*x;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">prg:= StraightLineProgram( [ [2,3], [ [3,1,1,4], [1,2,3,1] ] ], 2 );;</span>

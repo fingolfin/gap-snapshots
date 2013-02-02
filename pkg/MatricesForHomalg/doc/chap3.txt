@@ -614,21 +614,7 @@
   
   [1X3.4 [33X[0;0YRings: Attributes[133X[101X
   
-  [1X3.4-1 Zero[101X
-  
-  [29X[2XZero[102X( [3Xr[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
-  
-  [33X[0;0YThe zero of the [5Xhomalg[105X ring element [3Xr[103X.[133X
-  
-  [1X3.4-2 One[101X
-  
-  [29X[2XOne[102X( [3Xr[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
-  
-  [33X[0;0YThe one of the [5Xhomalg[105X ring element [3Xr[103X.[133X
-  
-  [1X3.4-3 Inverse[101X
+  [1X3.4-1 Inverse[101X
   
   [29X[2XInverse[102X( [3Xr[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element or fail[133X
@@ -649,7 +635,7 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X3.4-4 homalgTable[101X
+  [1X3.4-2 homalgTable[101X
   
   [29X[2XhomalgTable[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X table[133X
@@ -659,112 +645,112 @@
   
   [33X[0;0YEvery [5Xhomalg[105X ring has a [5Xhomalg[105X table.[133X
   
-  [1X3.4-5 RingElementConstructor[101X
+  [1X3.4-3 RingElementConstructor[101X
   
   [29X[2XRingElementConstructor[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya function[133X
   
   [33X[0;0YThe constructor of ring elements in the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-6 TypeOfHomalgMatrix[101X
+  [1X3.4-4 TypeOfHomalgMatrix[101X
   
   [29X[2XTypeOfHomalgMatrix[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya type[133X
   
   [33X[0;0YThe [5XGAP4[105X-type of [5Xhomalg[105X matrices over the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-7 ConstructorForHomalgMatrices[101X
+  [1X3.4-5 ConstructorForHomalgMatrices[101X
   
   [29X[2XConstructorForHomalgMatrices[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya type[133X
   
   [33X[0;0YThe constructor for [5Xhomalg[105X matrices over the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-8 Zero[101X
+  [1X3.4-6 Zero[101X
   
   [29X[2XZero[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
   
   [33X[0;0YThe zero of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-9 One[101X
+  [1X3.4-7 One[101X
   
   [29X[2XOne[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
   
   [33X[0;0YThe one of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-10 MinusOne[101X
+  [1X3.4-8 MinusOne[101X
   
   [29X[2XMinusOne[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
   
   [33X[0;0YThe minus one of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-11 ProductOfIndeterminates[101X
+  [1X3.4-9 ProductOfIndeterminates[101X
   
   [29X[2XProductOfIndeterminates[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring element[133X
   
   [33X[0;0YThe product of indeterminates of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-12 RationalParameters[101X
+  [1X3.4-10 RationalParameters[101X
   
   [29X[2XRationalParameters[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of rational parameters of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-13 IndeterminatesOfPolynomialRing[101X
+  [1X3.4-11 IndeterminatesOfPolynomialRing[101X
   
   [29X[2XIndeterminatesOfPolynomialRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of indeterminates of the [5Xhomalg[105X polynomial ring [3XR[103X.[133X
   
-  [1X3.4-14 RelativeIndeterminatesOfPolynomialRing[101X
+  [1X3.4-12 RelativeIndeterminatesOfPolynomialRing[101X
   
   [29X[2XRelativeIndeterminatesOfPolynomialRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of relative indeterminates of the [5Xhomalg[105X polynomial ring [3XR[103X.[133X
   
-  [1X3.4-15 IndeterminateCoordinatesOfRingOfDerivations[101X
+  [1X3.4-13 IndeterminateCoordinatesOfRingOfDerivations[101X
   
   [29X[2XIndeterminateCoordinatesOfRingOfDerivations[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of indeterminate coordinates of the [5Xhomalg[105X Weyl ring [3XR[103X.[133X
   
-  [1X3.4-16 RelativeIndeterminateCoordinatesOfRingOfDerivations[101X
+  [1X3.4-14 RelativeIndeterminateCoordinatesOfRingOfDerivations[101X
   
   [29X[2XRelativeIndeterminateCoordinatesOfRingOfDerivations[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of relative indeterminate coordinates of the [5Xhomalg[105X Weyl ring [3XR[103X.[133X
   
-  [1X3.4-17 IndeterminateDerivationsOfRingOfDerivations[101X
+  [1X3.4-15 IndeterminateDerivationsOfRingOfDerivations[101X
   
   [29X[2XIndeterminateDerivationsOfRingOfDerivations[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of indeterminate derivations of the [5Xhomalg[105X Weyl ring [3XR[103X.[133X
   
-  [1X3.4-18 RelativeIndeterminateDerivationsOfRingOfDerivations[101X
+  [1X3.4-16 RelativeIndeterminateDerivationsOfRingOfDerivations[101X
   
   [29X[2XRelativeIndeterminateDerivationsOfRingOfDerivations[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of relative indeterminate derivations of the [5Xhomalg[105X Weyl ring [3XR[103X.[133X
   
-  [1X3.4-19 IndeterminateAntiCommutingVariablesOfExteriorRing[101X
+  [1X3.4-17 IndeterminateAntiCommutingVariablesOfExteriorRing[101X
   
   [29X[2XIndeterminateAntiCommutingVariablesOfExteriorRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
   
   [33X[0;0YThe list of anti-commuting indeterminates of the [5Xhomalg[105X exterior ring [3XR[103X.[133X
   
-  [1X3.4-20 RelativeIndeterminateAntiCommutingVariablesOfExteriorRing[101X
+  [1X3.4-18 RelativeIndeterminateAntiCommutingVariablesOfExteriorRing[101X
   
   [29X[2XRelativeIndeterminateAntiCommutingVariablesOfExteriorRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
@@ -772,7 +758,7 @@
   [33X[0;0YThe  list  of  anti-commuting relative indeterminates of the [5Xhomalg[105X exterior
   ring [3XR[103X.[133X
   
-  [1X3.4-21 IndeterminatesOfExteriorRing[101X
+  [1X3.4-19 IndeterminatesOfExteriorRing[101X
   
   [29X[2XIndeterminatesOfExteriorRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of [5Xhomalg[105X ring elements[133X
@@ -780,35 +766,35 @@
   [33X[0;0YThe  list of all indeterminates (commuting and anti-commuting) of the [5Xhomalg[105X
   exterior ring [3XR[103X.[133X
   
-  [1X3.4-22 CoefficientsRing[101X
+  [1X3.4-20 CoefficientsRing[101X
   
   [29X[2XCoefficientsRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring[133X
   
   [33X[0;0YThe ring of coefficients of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-23 KrullDimension[101X
+  [1X3.4-21 KrullDimension[101X
   
   [29X[2XKrullDimension[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe Krull dimension of the commutative [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-24 LeftGlobalDimension[101X
+  [1X3.4-22 LeftGlobalDimension[101X
   
   [29X[2XLeftGlobalDimension[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe left global dimension of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-25 RightGlobalDimension[101X
+  [1X3.4-23 RightGlobalDimension[101X
   
   [29X[2XRightGlobalDimension[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe right global dimension of the [5Xhomalg[105X ring [3XR[103X.[133X
   
-  [1X3.4-26 GlobalDimension[101X
+  [1X3.4-24 GlobalDimension[101X
   
   [29X[2XGlobalDimension[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
@@ -816,28 +802,28 @@
   [33X[0;0YThe  global dimension of the [5Xhomalg[105X ring [3XR[103X. The global dimension is defined,
   only if the left and right global dimensions coincide.[133X
   
-  [1X3.4-27 GeneralLinearRank[101X
+  [1X3.4-25 GeneralLinearRank[101X
   
   [29X[2XGeneralLinearRank[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe general linear rank of the [5Xhomalg[105X ring [3XR[103X ([MR01], 11.1.14).[133X
   
-  [1X3.4-28 ElementaryRank[101X
+  [1X3.4-26 ElementaryRank[101X
   
   [29X[2XElementaryRank[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe elementary rank of the [5Xhomalg[105X ring [3XR[103X ([MR01], 11.3.10).[133X
   
-  [1X3.4-29 StableRank[101X
+  [1X3.4-27 StableRank[101X
   
   [29X[2XStableRank[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
   
   [33X[0;0YThe stable rank of the [5Xhomalg[105X ring [3XR[103X ([MR01], 11.3.4).[133X
   
-  [1X3.4-30 AssociatedGradedRing[101X
+  [1X3.4-28 AssociatedGradedRing[101X
   
   [29X[2XAssociatedGradedRing[102X( [3XR[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya homalg ring[133X

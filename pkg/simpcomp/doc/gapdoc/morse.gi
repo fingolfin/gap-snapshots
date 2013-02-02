@@ -16,7 +16,7 @@
 ## Computes all multiplicity vectors of a rsl-function <C>f</C> on a simplicial complex <C>c</C>. <C>f</C> is given as an ordered list <M>(v_1 , \ldots v_n)</M> of all vertices  of <C>c</C> where <C>f</C> is defined by <C>f</C><M>(v_i) = \frac{i-1}{n-1}</M>. The <M>i</M>-th entry of the returned list denotes the multiplicity vector of vertex <M>v_i</M>.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");      
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;    
 ## gap&gt; f:=SCVertices(c);              
 ## [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
@@ -39,7 +39,7 @@
 ## Computes the number of critical points of each index of a rsl-function <C>f</C> on a simplicial complex <C>c</C> as well as the total number of critical points.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");      
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;    
 ## gap&gt; f:=SCVertices(c);              
 ## [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
@@ -216,17 +216,16 @@
 ## #I  SCIsTight: processed 30000 of 40320 rsl-functions so far, all perfect.
 ## #I  SCIsTight: processed 40000 of 40320 rsl-functions so far, all perfect.
 ## true
-## 12529
+## 5648
 ## </Example> 
 ## <Example>
 ## gap&gt; SCLib.SearchByAttribute("F[1] = 120");
-## [ [ 7648, "Bd(600-cell)" ] ]
+## [ [ 7647, "Bd(600-cell)" ] ]
 ## gap&gt; id:=last[1][1];;
 ## gap&gt; c:=SCLib.Load(id);;
 ## gap&gt; SCIsTight(c); time;
 ## #I  SCIsTight: checking non faces...
-## #I  SCIsTight: found non perfect rsl-function: 
-## [ 1, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
+## #I  SCIsTight: found non perfect rsl-function: [ 1, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
 ##   22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
 ##   41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 
 ##   60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 
@@ -234,13 +233,13 @@
 ##   98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 
 ##   113, 114, 115, 116, 117, 118, 119, 120 ], complex not tight.
 ## false
-## 16
+## 4
 ## </Example>
 ## <Example>
 ## gap&gt; SCInfoLevel(0);
 ## true
 ## gap&gt; SCLib.SearchByName("K3");  
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCIsManifold(c);
 ## true
@@ -323,8 +322,7 @@
 ## gap&gt; SCInfoLevel(2); 
 ## true
 ## gap&gt; c.IsTight;                
-## #I  SCIsInKd: complex has transitive automorphism group, only checking one lin\
-## k.
+## #I  SCIsInKd: complex has transitive automorphism group, only checking one link.
 ## #I  SCIsInKd: checking link 1/1
 ## #I  SCIsKStackedSphere: checking if complex is a 1-stacked sphere...
 ## #I  SCIsKStackedSphere: try 1/50
@@ -340,8 +338,7 @@
 ## Reduced complex, F: [ 5, 10, 10, 5 ]
 ## #I  SCReduceComplexEx: computed locally minimal complex after 5 rounds.
 ## #I  SCIsKStackedSphere: complex is a 1-stacked sphere.
-## #I  SCIsInKd: complex has transitive automorphism group, all links are 
-## 1-stacked.
+## #I  SCIsInKd: complex has transitive automorphism group, all links are 1-stacked.
 ## #I  SCIsTight: complex is in class K(1) and 2-neighborly, thus tight.
 ## true
 ## </Example>

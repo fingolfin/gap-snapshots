@@ -10,7 +10,7 @@
   
   [33X[0;0YThe input must be a group ring.[133X
   
-  [33X[0;0YReturns  [9Xtrue[109X  if  the  input  [3XKG[103X is a [13Xsemisimple group algebra[113X ([14X7.2[114X) over a
+  [33X[0;0YReturns  [9Xtrue[109X  if  the  input  [3XKG[103X is a [13Xsemisimple group algebra[113X ([14X8.2[114X) over a
   field of characteristic zero (that is if [22XG[122X is finite), and [9Xfalse[109X otherwise.[133X
   
   [4X[32X  Example  [32X[104X
@@ -36,7 +36,7 @@
   
   [33X[0;0YThe input must be a group ring.[133X
   
-  [33X[0;0YReturns  [9Xtrue[109X  if  [3XKG[103X is a [13Xsemisimple rational group algebra[113X ([14X7.2[114X) and [9Xfalse[109X
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3XKG[103X is a [13Xsemisimple rational group algebra[113X ([14X8.2[114X) and [9Xfalse[109X
   otherwise.[133X
   
   [4X[32X  Example  [32X[104X
@@ -77,9 +77,9 @@
   
   [33X[0;0YThe input must be a group ring.[133X
   
-  [33X[0;0YReturns  [9Xtrue[109X  if  [3XKG[103X  is a [13Xsemisimple finite group algebra[113X ([14X7.2[114X), that is a
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3XKG[103X  is a [13Xsemisimple finite group algebra[113X ([14X8.2[114X), that is a
   group  algebra  of  a  finite group [22XG[122X over a field [22XK[122X of order coprime to the
-  order of [22XG[122X, and [9Xfalse[109X otherwisse.[133X
+  order of [22XG[122X, and [9Xfalse[109X otherwise.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -92,6 +92,27 @@
     [4X[25Xgap>[125X [27XQG:=GroupRing( Rationals, SymmetricGroup(4) );;[127X[104X
     [4X[25Xgap>[125X [27XIsSemisimpleFiniteGroupAlgebra( QG );[127X[104X
     [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.1-5 IsTwistingTrivial[101X
+  
+  [29X[2XIsTwistingTrivial[102X( [3XG[103X, [3XH[103X, [3XK[103X ) [32X property
+  
+  [33X[0;0YThe input must be a group and a strong Shoda pair of the group.[133X
+  
+  [33X[0;0YReturns [9Xtrue[109X if the simple algebra [22XℚGe(G,H,K)[122X has a [13Xtrivial twisting[113X ([14X8.15[114X),
+  and [9Xfalse[109X otherwise.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG:=DihedralGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27XH:=StrongShodaPairs(G)[5][1];[127X[104X
+    [4X[28XGroup([ f1*f2, f3, f3 ])[128X[104X
+    [4X[25Xgap>[125X [27XK:=StrongShodaPairs(G)[5][2]; [127X[104X
+    [4X[28XGroup([ f1*f2 ])[128X[104X
+    [4X[25Xgap>[125X [27XIsTwistingTrivial(G,H,K);[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -212,7 +233,7 @@
   
   [33X[0;0YThe input should be formed by two relatively prime positive integers.[133X
   
-  [33X[0;0YReturns the list [3Xq[103X-[13Xcyclotomic classes [113X ([14X7.17[114X) modulo [3Xn[103X.[133X
+  [33X[0;0YReturns the list [3Xq[103X-[13Xcyclotomic classes [113X ([14X8.17[114X) modulo [3Xn[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -232,7 +253,7 @@
   [33X[0;0YThe input should be formed by two relatively prime positive integers [3Xq[103X and [3Xn[103X
   and a sublist [3XC[103X of [22X[ 0 .. n ][122X.[133X
   
-  [33X[0;0YReturns  [9Xtrue[109X  if  [3XC[103X  is  a  [3Xq[103X-[13Xcyclotomic  class[113X  ([14X7.17[114X)  modulo [3Xn[103X and [9Xfalse[109X
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3XC[103X  is  a  [3Xq[103X-[13Xcyclotomic  class[113X  ([14X8.17[114X)  modulo [3Xn[103X and [9Xfalse[109X
   otherwise.[133X
   
   [4X[32X  Example  [32X[104X

@@ -65,7 +65,7 @@
 
 <p>This section contains functions to construct discrete normal surfaces that are slicings from a list of <span class="SimpleMath">2</span>-dimensional facets (triangles and quadrilaterals) or combinatorial <span class="SimpleMath">3</span>-manifolds.</p>
 
-<p>For a very short introduction to the theory of discrete normal surfaces and slicings see Section <a href="chap2.html#X7BE7221B7C38B27D"><span class="RefLink">2.4</span></a> and Section <a href="chap2.html#X86275D5979B4B531"><span class="RefLink">2.5</span></a>, for an introduction to the <strong class="pkg">GAP</strong> object type <code class="code">SCNormalSurface</code> see <a href="chap5.html#X7A64FE107A3386CB"><span class="RefLink">5.4</span></a>, for more information see the article <a href="chapBib.html#biBSpreer10NormSurfsCombSlic">[Spr11]</a>.</p>
+<p>For a very short introduction to the theory of discrete normal surfaces and slicings see Section <a href="chap2.html#X7BE7221B7C38B27D"><span class="RefLink">2.4</span></a> and Section <a href="chap2.html#X86275D5979B4B531"><span class="RefLink">2.5</span></a>, for an introduction to the <strong class="pkg">GAP</strong> object type <code class="code">SCNormalSurface</code> see <a href="chap5.html#X7A64FE107A3386CB"><span class="RefLink">5.4</span></a>, for more information see the article <a href="chapBib.html#biBSpreer10NormSurfsCombSlic">[Spr11b]</a>.</p>
 
 <p><a id="X7A59063180BD5969" name="X7A59063180BD5969"></a></p>
 
@@ -415,7 +415,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCFaceLattice</code>( <var class="Arg">complex</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: a list of facet lists upon success, <code class="keyw">fail</code> otherwise.</p>
 
-<p>Computes the face lattice of a discrete normal surface <var class="Arg">sl</var> in the original labeling. Triangles and quadrilaterals are stored separately (cf. <code class="func">SCSkel</code> (<a href="chap6.html#X8026B46F8236124D"><span class="RefLink">6.6-50</span></a>)).</p>
+<p>Computes the face lattice of a discrete normal surface <var class="Arg">sl</var> in the original labeling. Triangles and quadrilaterals are stored separately (cf. <code class="func">SCSkel</code> (<a href="chap6.html#X8026B46F8236124D"><span class="RefLink">6.8-54</span></a>)).</p>
 
 
 <div class="example"><pre>
@@ -442,7 +442,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCFaceLatticeEx</code>( <var class="Arg">complex</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: a list of face lists upon success, <code class="keyw">fail</code> otherwise.</p>
 
-<p>Computes the face lattice of a discrete normal surface <var class="Arg">sl</var> in the standard labeling. Triangles and quadrilaterals are stored separately (cf. <code class="func">SCSkelEx</code> (<a href="chap6.html#X84ACF7D580FE8B76"><span class="RefLink">6.6-51</span></a>)).</p>
+<p>Computes the face lattice of a discrete normal surface <var class="Arg">sl</var> in the standard labeling. Triangles and quadrilaterals are stored separately (cf. <code class="func">SCSkelEx</code> (<a href="chap6.html#X84ACF7D580FE8B76"><span class="RefLink">6.8-55</span></a>)).</p>
 
 
 <div class="example"><pre>
@@ -469,7 +469,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("(S^2xS^1)#20");       
- [ [ 7618, "(S^2xS^1)#20" ] ]
+ [ [ 7617, "(S^2xS^1)#20" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; c.F;
  [ 27, 298, 542, 271 ]
@@ -490,7 +490,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("(S^2xS^1)#20");
- [ [ 7618, "(S^2xS^1)#20" ] ]
+ [ [ 7617, "(S^2xS^1)#20" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;               
  gap&gt; c.F;                               
  [ 27, 298, 542, 271 ]
@@ -513,7 +513,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("(S^2xS^1)#20");       
- [ [ 7618, "(S^2xS^1)#20" ] ]
+ [ [ 7617, "(S^2xS^1)#20" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; c.F;
  [ 27, 298, 542, 271 ]
@@ -715,15 +715,37 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("(S^2xS^1)#20");      
- [ [ 7618, "(S^2xS^1)#20" ] ]
+ [ [ 7617, "(S^2xS^1)#20" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; c.F;
  [ 27, 298, 542, 271 ]
- gap&gt; for i in [1..26] do 
- &gt; sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); 
- &gt; Syntax error: od expected
- &gt; sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); 
- ^
+ gap&gt; for i in [1..26] do sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); Print(sl.TopologicalType,"\n"); od;                                           
+ S^2
+ S^2
+ S^2
+ S^2
+ S^2 U S^2
+ S^2 U S^2
+ S^2
+ (T^2)#3
+ (T^2)#5
+ (T^2)#4
+ (T^2)#3
+ (T^2)#7
+ (T^2)#7 U S^2
+ (T^2)#7 U S^2
+ (T^2)#7 U S^2
+ (T^2)#8 U S^2
+ (T^2)#7 U S^2
+ (T^2)#8
+ (T^2)#6
+ (T^2)#6
+ (T^2)#5
+ (T^2)#3
+ (T^2)#2
+ T^2
+ S^2
+ S^2
  </pre></div>
 
 <p><a id="X81DA367A813F7599" name="X81DA367A813F7599"></a></p>

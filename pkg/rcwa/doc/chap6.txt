@@ -172,7 +172,7 @@
     [4X[25Xgap>[125X [27XRecNames(data);[127X[104X
     [4X[28X[ "CTPairsProductType", "CTPairs", "CTPairsIntersectionTypes", [128X[104X
     [4X[28X  "CTPairIntersectionType", "CTPairProductType", [128X[104X
-    [4X[28X  "CTPairsProductClassification" ][128X[104X
+    [4X[28X  "CTPairsProductClassification", "OrdersMatrix" ][128X[104X
     [4X[25Xgap>[125X [27XLength(data.CTPairs);[127X[104X
     [4X[28X2346[128X[104X
     [4X[25Xgap>[125X [27XCollected(List(data.CTPairsProductType,l->l[2])); # order statistics[127X[104X

@@ -31,6 +31,8 @@
 ## <#Include Label="SCBdSimplex"/>
 ## <#Include Label="SCEmpty"/>
 ## <#Include Label="SCSimplex"/>
+## <#Include Label="SCSeriesTorus"/>
+## <#Include Label="SCSurface"/>
 ## <#Include Label="SCFVectorBdCrossPolytope"/>
 ## <#Include Label="SCFVectorBdCyclicPolytope"/>
 ## <#Include Label="SCFVectorBdSimplex"/>
@@ -40,17 +42,31 @@
 ## <Heading>Generating infinite series of transitive triangulations</Heading>
 ##
 ## <#Include Label="SCSeriesAGL"/>
+## <#Include Label="SCSeriesBrehmKuehnelTorus"/>
 ## <#Include Label="SCSeriesBdHandleBody"/>
 ## <#Include Label="SCSeriesBid"/>
 ## <#Include Label="SCSeriesC2n"/>
+## <#Include Label="SCSeriesConnectedSum"/>
 ## <#Include Label="SCSeriesCSTSurface"/>
 ## <#Include Label="SCSeriesD2n"/>
 ## <#Include Label="SCSeriesHandleBody"/>
+## <#Include Label="SCSeriesHomologySphere"/>
 ## <#Include Label="SCSeriesK"/>
 ## <#Include Label="SCSeriesKu"/>
 ## <#Include Label="SCSeriesL"/>
 ## <#Include Label="SCSeriesLe"/>
+## <#Include Label="SCSeriesLensSpace"/>
 ## <#Include Label="SCSeriesPrimeTorus"/>
+## <#Include Label="SCSeriesSeifertFibredSpace"/>
+##
+## </Section >
+## <Section Label="sec:RegularAndChiralMaps">
+## <Heading>A census of regular and chiral maps</Heading>
+##
+## <#Include Label="highlysymmetricsurfaces"/>
+## 
+## See also <Ref Func="SCSurface" /> for example triangulations of all compact closed surfaces 
+## with transitive cyclic automorphism group.
 ##
 ## </Section >
 ## <Section Label="sec:generateFromOld">
@@ -69,6 +85,8 @@
 ## </Section>
 ##
 ## <#Include Label="fromgroup"/>
+##
+## <#Include Label="class3mflds"/>
 ##
 ## <#/GAPDoc>
 
@@ -95,16 +113,23 @@ DeclareGlobalFunction("SCFVectorBdSimplex");
 DeclareGlobalFunction("SCSeriesAGL");
 DeclareGlobalFunction("SCSeriesBdHandleBody");
 DeclareGlobalFunction("SCSeriesBid");
+DeclareGlobalFunction("SCSeriesBrehmKuehnelTorus");
 DeclareGlobalFunction("SCSeriesC2n");
+DeclareGlobalFunction("SCSeriesConnectedSum");
 DeclareGlobalFunction("SCSeriesCSTSurface");
 DeclareGlobalFunction("SCSeriesD2n");
 DeclareGlobalFunction("SCSeriesHandleBody");
+DeclareGlobalFunction("SCSeriesHomologySphere");
 DeclareGlobalFunction("SCSeriesK");
 DeclareGlobalFunction("SCSeriesKu");
 DeclareGlobalFunction("SCSeriesL");
 DeclareGlobalFunction("SCSeriesLe");
+DeclareGlobalFunction("SCSeriesLensSpace");
 DeclareGlobalFunction("SCSeriesNSB1");
 DeclareGlobalFunction("SCSeriesNSB2");
 DeclareGlobalFunction("SCSeriesNSB3");
 DeclareGlobalFunction("SCSeriesPrimeTorus");
+DeclareGlobalFunction("SCSeriesSeifertFibredSpace");
 DeclareGlobalFunction("SCSimplex");
+DeclareGlobalFunction("SCSeriesTorus");
+DeclareGlobalFunction("SCSurface");

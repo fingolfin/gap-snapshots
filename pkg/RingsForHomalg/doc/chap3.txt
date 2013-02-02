@@ -124,8 +124,9 @@
   
   [4X[32X  Code  [32X[104X
     [4X    DecideZeroRows := "\n\[104X
-    [4Xproc DecideZeroRows (matrix A, matrix B)\n\[104X
+    [4Xproc DecideZeroRows (matrix A, module B)\n\[104X
     [4X{\n\[104X
+    [4X  attrib(B,\"isSB\",1);\n\[104X
     [4X  return(reduce(A,B));\n\[104X
     [4X}\n\n",[104X
   [4X[32X[104X
@@ -167,7 +168,7 @@
     [4X    DecideZeroColumns := "\n\[104X
     [4Xproc DecideZeroColumns (matrix A, matrix B)\n\[104X
     [4X{\n\[104X
-    [4X  return(Involution(reduce(Involution(A),Involution(B))));\n\[104X
+    [4X  return(Involution(DecideZeroRows(Involution(A),Involution(B))));\n\[104X
     [4X}\n\n",[104X
   [4X[32X[104X
   
@@ -395,8 +396,9 @@
   
   [4X[32X  Code  [32X[104X
     [4X    DecideZeroRowsEffectively := "\n\[104X
-    [4Xproc DecideZeroRowsEffectively (matrix A, matrix B)\n\[104X
+    [4Xproc DecideZeroRowsEffectively (matrix A, module B)\n\[104X
     [4X{\n\[104X
+    [4X  attrib(B,\"isSB\",1);\n\[104X
     [4X  matrix M = reduce(A,B);\n\[104X
     [4X  matrix T = lift(B,M-A);\n\[104X
     [4X  list l = M,T;\n\[104X

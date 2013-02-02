@@ -19,11 +19,11 @@
 ## [ [ 16, "CP^2 (VT)" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgBoundaryMatrices(c,0);
-## [ [A 36 x 9 matrix over an internal ring], 
-##   [A 84 x 36 matrix over an internal ring], 
-##   [A 90 x 84 matrix over an internal ring], 
-##   [A 36 x 90 matrix over an internal ring], 
-##   [An unevaluated 0 x 36 zero matrix over an internal ring] ]
+## [ &lt;A 36 x 9 mutable matrix over an internal ring&gt;, 
+##   &lt;A 84 x 36 mutable matrix over an internal ring&gt;, 
+##   &lt;A 90 x 84 mutable matrix over an internal ring&gt;, 
+##   &lt;A 36 x 90 mutable matrix over an internal ring&gt;, 
+##   &lt;An unevaluated 0 x 36 zero matrix over an internal ring&gt; ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -41,11 +41,11 @@
 ## [ [ 16, "CP^2 (VT)" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgCoboundaryMatrices(c,0);
-## [ [A 9 x 36 matrix over an internal ring], 
-##   [A 36 x 84 matrix over an internal ring], 
-##   [A 84 x 90 matrix over an internal ring], 
-##   [A 90 x 36 matrix over an internal ring], 
-##   [An unevaluated 36 x 0 zero matrix over an internal ring] ]
+## [ &lt;A 9 x 36 mutable matrix over an internal ring&gt;, 
+##   &lt;A 36 x 84 mutable matrix over an internal ring&gt;, 
+##   &lt;A 84 x 90 mutable matrix over an internal ring&gt;, 
+##   &lt;A 90 x 36 mutable matrix over an internal ring&gt;, 
+##   &lt;An unevaluated 36 x 0 zero matrix over an internal ring&gt; ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -61,7 +61,7 @@
 ## Note that if you are interested not only in the ranks of the homology groups, but rather their full structure, have a look at the function <Ref Meth="SCHomalgHomologyBasis" />.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgHomology(c,0);
 ## #I  SCHomalgHomologyOp: Q-homology ranks: [ 1, 0, 22, 0, 1 ]
@@ -82,11 +82,11 @@
 ## Note that if you are only interested in the ranks of the homology groups, then it is better to use the funtion <Ref Meth="SCHomalgHomology" /> which is way faster.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgHomologyBasis(c,0);
 ## #I  SCHomalgHomologyBasisOp: constructed Q-homology groups.
-## [A graded homology object consisting of 5 left modules at degrees [ 0 .. 4 ]]
+## &lt;A graded homology object consisting of 5 left modules at degrees [ 0 .. 4 ]&gt;
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -102,7 +102,7 @@
 ## Note that if you are interested not only in the ranks of the cohomology groups, but rather their full structure, have a look at the function <Ref Meth="SCHomalgCohomologyBasis" />.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgCohomology(c,0);
 ## #I  SCHomalgCohomologyOp: Q-cohomology ranks: [ 1, 0, 22, 0, 1 ]
@@ -123,12 +123,12 @@
 ## Note that if you are only interested in the ranks of the cohomology groups, then it is better to use the funtion <Ref Meth="SCHomalgCohomology" /> which is way faster.
 ## <Example>
 ## gap&gt; SCLib.SearchByName("K3");
-## [ [ 7494, "K3 surface" ] ]
+## [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ]
 ## gap&gt; c:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCHomalgCohomologyBasis(c,0);
 ## #I  SCHomalgCohomologyBasisOp: constructed Q-cohomology groups.
-## [A graded cohomology object consisting of 5 left modules at degrees 
-## [ 1 .. 5 ]]
+## &lt;A graded cohomology object consisting of 5 left modules at degrees 
+## [ 1 .. 5 ]&gt;
 ## </Example>
 ## </Description>
 ## </ManSection>

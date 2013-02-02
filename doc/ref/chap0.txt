@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.5.7, 14-Dec-2012
+                           Release 4.6.2, 02-Feb-2013
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2012)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2013)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
@@ -1741,7 +1741,8 @@
       42.1-3 PermutationsFamily
     42.2 [33X[0;0YComparison of Permutations[133X
       42.2-1 \=
-      42.2-2 SmallestGeneratorPerm
+      42.2-2 DistancePerms
+      42.2-3 SmallestGeneratorPerm
     42.3 [33X[0;0YMoved Points of Permutations[133X
       42.3-1 SmallestMovedPoint
       42.3-2 LargestMovedPoint
@@ -2524,6 +2525,7 @@
       59.2-3 IntFFE
       59.2-4 IntFFESymm
       59.2-5 IntVecFFE
+      59.2-6 AsInternalFFE
     59.3 [33X[0;0YCreating Finite Fields[133X
       59.3-1 DefaultField
       59.3-2 GaloisField
@@ -2736,6 +2738,7 @@
       64.1-2 IsLieObject
       64.1-3 LieFamily
       64.1-4 UnderlyingFamily
+      64.1-5 UnderlyingRingElement
     64.2 [33X[0;0YConstructing Lie algebras[133X
       64.2-1 LieAlgebraByStructureConstants
       64.2-2 RestrictedLieAlgebraByStructureConstants

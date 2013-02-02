@@ -39,10 +39,32 @@ DeclareOperationWithDocumentation( "TargetPart",
                                   [ IsToDoListEntry ],
                                   [ "Returns the target part of the ToDo-list entry <A>entry</A>.",
                                     "This is a triple of an object, a name of a filter/attribute, and a value to which the",
-                                    "specific filter/attribute should be set." ],
+                                    "specific filter/attribute should be set.",
+                                    "The third entry of the list might also be a function to which return value the",
+                                    "attribute is set." ],
                                   "a list",
                                   "entry",
                                   [ "ToDo-list", "ToDo-list_entries" ]
+                                );
+
+DeclareOperationWithDocumentation( "SetTargetValueObject",
+                                   [ IsToDoListEntry, IsObject ],
+                                   [ "If the given value of the target part is the return value of a function",
+                                     "this command sets the target value of the entry to a function.",
+                                     "This is done to keep proof tracking availible." ],
+                                   "nothing",
+                                   "entry,value",
+                                   [ "ToDo-list", "ToDo-list_entries" ]
+                                );
+
+DeclareOperationWithDocumentation( "SetTargetObject",
+                                   [ IsToDoListEntry, IsObject ],
+                                   [ "If the target object, i.e. the first entry of the target part, was given as",
+                                     "a function, this method can set this entry to the return value computed in",
+                                     "ProcessToDoListEntry. This happens atomatically, do not worry about it." ],
+                                   "nothing",
+                                   "entry,obj",
+                                   [ "ToDo-list", "ToDo-list_entries" ]
                                 );
 
 DeclareOperationWithDocumentation( "ProcessAToDoListEntry",
@@ -84,16 +106,19 @@ DeclareOperationWithDocumentation( "ToDoListEntryWithPointers",
 DeclareOperationWithDocumentation( "ToDoListEntryWithListOfSources",
                                    [ IsList, IsObject, IsString, IsObject ],
                                    [ "The same as ToDoListEntryWithPointers, but the first argument",
-                                     "must be a list of triples defining the conditions of this entry" ],
+                                     "must be a list of touples or triples defining the conditions of this entry" ],
                                    "a ToDoListEntry",
                                    [ "ToDo-list", "ToDo-list_entries" ]
                                  );
 
 DeclareOperationWithDocumentation( "ToDoListEntryWhichLaunchesAFunction",
                                    [ IsList, IsFunction ],
-                                   [ "The first argument must be a list of triples which contain",
+                                   [ "The first argument must be a list of tuples or triples which contain",
                                      "an object, on which the second entry, an attribute given by its name as a string",
-                                     "can be applied. If the value of the attribute matches the third entry,",
+                                     "can be applied. It the entry is a tuple",
+                                     "the ToDo-list entry checks wether the Tester of the",
+                                     "second value is true.",
+                                     "If the value of the attribute matches the third entry,",
                                      "the function given as second argument is launched." ],
                                    "a ToDoListEntry",
                                    [ "ToDo-list", "ToDo-list_entries" ]
@@ -132,3 +157,5 @@ DeclareAttributeWithDocumentation( "DescriptionOfImplication",
                                      "a list",
                                      [ "ToDo-list", "ToDo-list_entries" ]
                                   );
+
+DeclareGlobalFunction( "ToDoLists_Process_Entry_Part" );

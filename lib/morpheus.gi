@@ -974,7 +974,7 @@ local id,result,rig,dom,tall,tsur,tinj,thom,gens,free,rels,len,ind,cla,m,
 
 	  if ok and thom then
 	    Info(InfoMorph,3,"testing");
-	    imgs:=GroupGeneralMappingByImages(params.from,range,gens,imgs);
+	    imgs:=GroupGeneralMappingByImagesNC(params.from,range,gens,imgs);
 	    SetIsTotal(imgs,true);
 	    if tsur then
 	      SetIsSurjective(imgs,true);

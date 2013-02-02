@@ -67,33 +67,31 @@
 \indexentry{IsLeftRegular@\texttt  {IsLeftRegular}!for homalg ring elements|hyperpage}{18}
 \indexentry{IsRightRegular@\texttt  {IsRightRegular}!for homalg ring elements|hyperpage}{18}
 \indexentry{IsRegular@\texttt  {IsRegular}!for homalg ring elements|hyperpage}{18}
-\indexentry{Zero@\texttt  {Zero}!for homalg ring elements|hyperpage}{18}
-\indexentry{One@\texttt  {One}!for homalg ring elements|hyperpage}{18}
-\indexentry{Inverse@\texttt  {Inverse}!for homalg ring elements|hyperpage}{19}
+\indexentry{Inverse@\texttt  {Inverse}!for homalg ring elements|hyperpage}{18}
 \indexentry{homalgTable@\texttt  {homalgTable}|hyperpage}{19}
 \indexentry{RingElementConstructor@\texttt  {RingElementConstructor}|hyperpage}{19}
 \indexentry{TypeOfHomalgMatrix@\texttt  {TypeOfHomalgMatrix}|hyperpage}{19}
 \indexentry{ConstructorForHomalgMatrices@\texttt  {ConstructorForHomalgMatrices}|hyperpage}{19}
 \indexentry{Zero@\texttt  {Zero}!for homalg rings|hyperpage}{19}
-\indexentry{One@\texttt  {One}!for homalg rings|hyperpage}{20}
-\indexentry{MinusOne@\texttt  {MinusOne}|hyperpage}{20}
-\indexentry{ProductOfIndeterminates@\texttt  {ProductOfIndeterminates}|hyperpage}{20}
+\indexentry{One@\texttt  {One}!for homalg rings|hyperpage}{19}
+\indexentry{MinusOne@\texttt  {MinusOne}|hyperpage}{19}
+\indexentry{ProductOfIndeterminates@\texttt  {ProductOfIndeterminates}|hyperpage}{19}
 \indexentry{RationalParameters@\texttt  {RationalParameters}|hyperpage}{20}
 \indexentry{IndeterminatesOfPolynomialRing@\texttt  {IndeterminatesOfPolynomialRing}|hyperpage}{20}
 \indexentry{RelativeIndeterminatesOfPolynomialRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Polynomial}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{20}
 \indexentry{IndeterminateCoordinatesOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
 \indexentry{RelativeIndeterminateCoordinatesOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
-\indexentry{IndeterminateDerivationsOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{21}
-\indexentry{RelativeIndeterminateDerivationsOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{21}
-\indexentry{IndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{21}
+\indexentry{IndeterminateDerivationsOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
+\indexentry{RelativeIndeterminateDerivationsOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
+\indexentry{IndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{20}
 \indexentry{RelativeIndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{21}
 \indexentry{IndeterminatesOfExteriorRing@\texttt  {IndeterminatesOfExteriorRing}|hyperpage}{21}
 \indexentry{CoefficientsRing@\texttt  {CoefficientsRing}|hyperpage}{21}
 \indexentry{KrullDimension@\texttt  {KrullDimension}|hyperpage}{21}
 \indexentry{LeftGlobalDimension@\texttt  {LeftGlobalDimension}|hyperpage}{21}
-\indexentry{RightGlobalDimension@\texttt  {RightGlobalDimension}|hyperpage}{22}
-\indexentry{GlobalDimension@\texttt  {GlobalDimension}|hyperpage}{22}
-\indexentry{GeneralLinearRank@\texttt  {GeneralLinearRank}|hyperpage}{22}
+\indexentry{RightGlobalDimension@\texttt  {RightGlobalDimension}|hyperpage}{21}
+\indexentry{GlobalDimension@\texttt  {GlobalDimension}|hyperpage}{21}
+\indexentry{GeneralLinearRank@\texttt  {GeneralLinearRank}|hyperpage}{21}
 \indexentry{ElementaryRank@\texttt  {ElementaryRank}|hyperpage}{22}
 \indexentry{StableRank@\texttt  {StableRank}|hyperpage}{22}
 \indexentry{AssociatedGradedRing@\texttt  {AssociatedGradedRing}|hyperpage}{22}
@@ -268,57 +266,57 @@
 \indexentry{GetUnitPosition@\texttt  {GetUnitPosition}!homalgTable entry|hyperpage}{69}
 \indexentry{PositionOfFirstNonZeroEntryPerRow@\texttt  {PositionOfFirstNonZeroEntryPerRow}!homalgTable entry|hyperpage}{70}
 \indexentry{PositionOfFirstNonZeroEntryPerColumn@\texttt  {Position}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {First}\discretionary {-}{}{}\texttt  {Non}\discretionary {-}{}{}\texttt  {Zero}\discretionary {-}{}{}\texttt  {Entry}\discretionary {-}{}{}\texttt  {Per}\discretionary {-}{}{}\texttt  {Column}!homalgTable entry|hyperpage}{71}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgInitialMatrix|hyperpage}{72}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgInitialIdentityMatrix|hyperpage}{73}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgZeroMatrix|hyperpage}{74}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgIdentityMatrix|hyperpage}{75}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with LeftInverseLazy|hyperpage}{76}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with RightInverseLazy|hyperpage}{77}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with Involution|hyperpage}{77}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with CertainRows|hyperpage}{78}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with CertainColumns|hyperpage}{79}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with UnionOfRows|hyperpage}{79}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with UnionOfColumns|hyperpage}{80}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with DiagMat|hyperpage}{81}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with KroneckerMat|hyperpage}{82}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with MulMat|hyperpage}{83}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with AddMat|hyperpage}{84}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with SubMat|hyperpage}{84}
-\indexentry{Eval@\texttt  {Eval}!for matrices created with Compose|hyperpage}{85}
-\indexentry{BasisOfRowModule@\texttt  {BasisOfRowModule}!ResidueClassRing|hyperpage}{87}
-\indexentry{BasisOfColumnModule@\texttt  {BasisOfColumnModule}!ResidueClassRing|hyperpage}{87}
-\indexentry{DecideZeroRows@\texttt  {DecideZeroRows}!ResidueClassRing|hyperpage}{88}
-\indexentry{DecideZeroColumns@\texttt  {DecideZeroColumns}!ResidueClassRing|hyperpage}{88}
-\indexentry{SyzygiesGeneratorsOfRows@\texttt  {SyzygiesGeneratorsOfRows}!ResidueClassRing|hyperpage}{88}
-\indexentry{SyzygiesGeneratorsOfColumns@\texttt  {SyzygiesGeneratorsOfColumns}!ResidueClassRing|hyperpage}{89}
-\indexentry{BasisOfRowsCoeff@\texttt  {BasisOfRowsCoeff}!ResidueClassRing|hyperpage}{90}
-\indexentry{BasisOfColumnsCoeff@\texttt  {BasisOfColumnsCoeff}!ResidueClassRing|hyperpage}{90}
-\indexentry{DecideZeroRowsEffectively@\texttt  {DecideZeroRowsEffectively}!ResidueClassRing|hyperpage}{91}
-\indexentry{DecideZeroColumnsEffectively@\texttt  {DecideZeroColumnsEffectively}!ResidueClassRing|hyperpage}{91}
-\indexentry{RelativeSyzygiesGeneratorsOfRows@\texttt  {RelativeSyzygiesGeneratorsOfRows}!ResidueClassRing|hyperpage}{92}
-\indexentry{RelativeSyzygiesGeneratorsOfColumns@\texttt  {RelativeSyzygiesGeneratorsOfColumns}!ResidueClassRing|hyperpage}{92}
-\indexentry{InitialMatrix@\texttt  {InitialMatrix}!ResidueClassRing|hyperpage}{93}
-\indexentry{InitialIdentityMatrix@\texttt  {InitialIdentityMatrix}!ResidueClassRing|hyperpage}{93}
-\indexentry{ZeroMatrix@\texttt  {ZeroMatrix}!ResidueClassRing|hyperpage}{93}
-\indexentry{IdentityMatrix@\texttt  {IdentityMatrix}!ResidueClassRing|hyperpage}{94}
-\indexentry{Involution@\texttt  {Involution}!ResidueClassRing|hyperpage}{94}
-\indexentry{CertainRows@\texttt  {CertainRows}!ResidueClassRing|hyperpage}{94}
-\indexentry{CertainColumns@\texttt  {CertainColumns}!ResidueClassRing|hyperpage}{95}
-\indexentry{UnionOfRows@\texttt  {UnionOfRows}!ResidueClassRing|hyperpage}{95}
-\indexentry{UnionOfColumns@\texttt  {UnionOfColumns}!ResidueClassRing|hyperpage}{96}
-\indexentry{DiagMat@\texttt  {DiagMat}!ResidueClassRing|hyperpage}{96}
-\indexentry{KroneckerMat@\texttt  {KroneckerMat}!ResidueClassRing|hyperpage}{97}
-\indexentry{MulMat@\texttt  {MulMat}!ResidueClassRing|hyperpage}{97}
-\indexentry{AddMat@\texttt  {AddMat}!ResidueClassRing|hyperpage}{97}
-\indexentry{SubMat@\texttt  {SubMat}!ResidueClassRing|hyperpage}{98}
-\indexentry{Compose@\texttt  {Compose}!ResidueClassRing|hyperpage}{98}
-\indexentry{IsZeroMatrix@\texttt  {IsZeroMatrix}!ResidueClassRing|hyperpage}{98}
-\indexentry{NrRows@\texttt  {NrRows}!ResidueClassRing|hyperpage}{98}
-\indexentry{NrColumns@\texttt  {NrColumns}!ResidueClassRing|hyperpage}{98}
-\indexentry{Determinant@\texttt  {Determinant}!ResidueClassRing|hyperpage}{99}
-\indexentry{AreEqualMatrices@\texttt  {AreEqualMatrices}!ResidueClassRing|hyperpage}{99}
-\indexentry{IsOne@\texttt  {IsOne}!ResidueClassRing|hyperpage}{99}
-\indexentry{IsDiagonalMatrix@\texttt  {IsDiagonalMatrix}!ResidueClassRing|hyperpage}{99}
-\indexentry{ZeroRows@\texttt  {ZeroRows}!ResidueClassRing|hyperpage}{100}
-\indexentry{ZeroColumns@\texttt  {ZeroColumns}!ResidueClassRing|hyperpage}{100}
-\indexentry{homalgMode@\texttt  {homalgMode}|hyperpage}{103}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgInitialMatrix|hyperpage}{73}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgInitialIdentityMatrix|hyperpage}{74}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgZeroMatrix|hyperpage}{75}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with HomalgIdentityMatrix|hyperpage}{76}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with LeftInverseLazy|hyperpage}{77}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with RightInverseLazy|hyperpage}{78}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with Involution|hyperpage}{78}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with CertainRows|hyperpage}{79}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with CertainColumns|hyperpage}{80}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with UnionOfRows|hyperpage}{80}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with UnionOfColumns|hyperpage}{81}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with DiagMat|hyperpage}{82}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with KroneckerMat|hyperpage}{83}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with MulMat|hyperpage}{84}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with AddMat|hyperpage}{85}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with SubMat|hyperpage}{85}
+\indexentry{Eval@\texttt  {Eval}!for matrices created with Compose|hyperpage}{86}
+\indexentry{BasisOfRowModule@\texttt  {BasisOfRowModule}!ResidueClassRing|hyperpage}{88}
+\indexentry{BasisOfColumnModule@\texttt  {BasisOfColumnModule}!ResidueClassRing|hyperpage}{88}
+\indexentry{DecideZeroRows@\texttt  {DecideZeroRows}!ResidueClassRing|hyperpage}{89}
+\indexentry{DecideZeroColumns@\texttt  {DecideZeroColumns}!ResidueClassRing|hyperpage}{89}
+\indexentry{SyzygiesGeneratorsOfRows@\texttt  {SyzygiesGeneratorsOfRows}!ResidueClassRing|hyperpage}{89}
+\indexentry{SyzygiesGeneratorsOfColumns@\texttt  {SyzygiesGeneratorsOfColumns}!ResidueClassRing|hyperpage}{90}
+\indexentry{BasisOfRowsCoeff@\texttt  {BasisOfRowsCoeff}!ResidueClassRing|hyperpage}{91}
+\indexentry{BasisOfColumnsCoeff@\texttt  {BasisOfColumnsCoeff}!ResidueClassRing|hyperpage}{91}
+\indexentry{DecideZeroRowsEffectively@\texttt  {DecideZeroRowsEffectively}!ResidueClassRing|hyperpage}{92}
+\indexentry{DecideZeroColumnsEffectively@\texttt  {DecideZeroColumnsEffectively}!ResidueClassRing|hyperpage}{92}
+\indexentry{RelativeSyzygiesGeneratorsOfRows@\texttt  {RelativeSyzygiesGeneratorsOfRows}!ResidueClassRing|hyperpage}{93}
+\indexentry{RelativeSyzygiesGeneratorsOfColumns@\texttt  {RelativeSyzygiesGeneratorsOfColumns}!ResidueClassRing|hyperpage}{93}
+\indexentry{InitialMatrix@\texttt  {InitialMatrix}!ResidueClassRing|hyperpage}{94}
+\indexentry{InitialIdentityMatrix@\texttt  {InitialIdentityMatrix}!ResidueClassRing|hyperpage}{94}
+\indexentry{ZeroMatrix@\texttt  {ZeroMatrix}!ResidueClassRing|hyperpage}{94}
+\indexentry{IdentityMatrix@\texttt  {IdentityMatrix}!ResidueClassRing|hyperpage}{95}
+\indexentry{Involution@\texttt  {Involution}!ResidueClassRing|hyperpage}{95}
+\indexentry{CertainRows@\texttt  {CertainRows}!ResidueClassRing|hyperpage}{95}
+\indexentry{CertainColumns@\texttt  {CertainColumns}!ResidueClassRing|hyperpage}{96}
+\indexentry{UnionOfRows@\texttt  {UnionOfRows}!ResidueClassRing|hyperpage}{96}
+\indexentry{UnionOfColumns@\texttt  {UnionOfColumns}!ResidueClassRing|hyperpage}{97}
+\indexentry{DiagMat@\texttt  {DiagMat}!ResidueClassRing|hyperpage}{97}
+\indexentry{KroneckerMat@\texttt  {KroneckerMat}!ResidueClassRing|hyperpage}{98}
+\indexentry{MulMat@\texttt  {MulMat}!ResidueClassRing|hyperpage}{98}
+\indexentry{AddMat@\texttt  {AddMat}!ResidueClassRing|hyperpage}{98}
+\indexentry{SubMat@\texttt  {SubMat}!ResidueClassRing|hyperpage}{99}
+\indexentry{Compose@\texttt  {Compose}!ResidueClassRing|hyperpage}{99}
+\indexentry{IsZeroMatrix@\texttt  {IsZeroMatrix}!ResidueClassRing|hyperpage}{99}
+\indexentry{NrRows@\texttt  {NrRows}!ResidueClassRing|hyperpage}{99}
+\indexentry{NrColumns@\texttt  {NrColumns}!ResidueClassRing|hyperpage}{99}
+\indexentry{Determinant@\texttt  {Determinant}!ResidueClassRing|hyperpage}{100}
+\indexentry{AreEqualMatrices@\texttt  {AreEqualMatrices}!ResidueClassRing|hyperpage}{100}
+\indexentry{IsOne@\texttt  {IsOne}!ResidueClassRing|hyperpage}{100}
+\indexentry{IsDiagonalMatrix@\texttt  {IsDiagonalMatrix}!ResidueClassRing|hyperpage}{100}
+\indexentry{ZeroRows@\texttt  {ZeroRows}!ResidueClassRing|hyperpage}{101}
+\indexentry{ZeroColumns@\texttt  {ZeroColumns}!ResidueClassRing|hyperpage}{101}
+\indexentry{homalgMode@\texttt  {homalgMode}|hyperpage}{104}

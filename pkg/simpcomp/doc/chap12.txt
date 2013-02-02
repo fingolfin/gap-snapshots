@@ -34,7 +34,7 @@
   category [10XSCPropertyObject[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCIsLibRepository(SCLib); #the global library is stored in SCLib[128X[104X
+    [4X[28X gap> SCIsLibRepository(SCLib); #the global library is stored in SCLib[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -53,25 +53,25 @@
   connected sum. The Klein Bottle is denoted by `K' or `K^2'.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLib;[128X[104X
+    [4X[28X gap> SCLib;[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
-    [4X[28X Number of complexes in library=7648[128X[104X
+    [4X[28X Number of complexes in library=7649[128X[104X
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/afs/.mathe/home/igt2/spreerjn/apps/gap4r4new/pkg/simpcomp/complexes/"[128X[104X
+    [4X[28X Path="/home/jonathan/apps/gap4r5/pkg/simpcomp/complexes/"[128X[104X
     [4X[28X ][128X[104X
-    [4X[28X gap> SCLib.Size;[128X[104X
-    [4X[28X 7648[128X[104X
-    [4X[28X gap> SCLib.SearchByName("S^4~");[128X[104X
+    [4X[28X gap> SCLib.Size;[128X[104X
+    [4X[28X 7649[128X[104X
+    [4X[28X gap> SCLib.SearchByName("S^4~");[128X[104X
     [4X[28X [ [ 463, "S^4~S^1 (VT)" ], [ 1473, "S^4~S^1 (VT)" ], [ 1474, "S^4~S^1 (VT)" ],[128X[104X
     [4X[28X   [ 2477, "S^4~S^1 (VT)" ], [ 4395, "S^4~S^1 (VT)" ], [128X[104X
     [4X[28X   [ 4396, "S^4~S^1 (VT)" ], [ 4397, "S^4~S^1 (VT)" ], [128X[104X
     [4X[28X   [ 4398, "S^4~S^1 (VT)" ], [ 4399, "S^4~S^1 (VT)" ], [128X[104X
     [4X[28X   [ 4402, "S^4~S^1 (VT)" ], [ 4403, "S^4~S^1 (VT)" ], [128X[104X
     [4X[28X   [ 4404, "S^4~S^1 (VT)" ] ][128X[104X
-    [4X[28X gap> SCLib.Load(last[1][1]);          [128X[104X
+    [4X[28X gap> SCLib.Load(last[1][1]);          [128X[104X
     [4X[28X [SimplicialComplex[128X[104X
     [4X[28X [128X[104X
     [4X[28X  Properties known: AltshulerSteinberg, ConnectedComponents, Dim, [128X[104X
@@ -119,20 +119,20 @@
   complex, if it is named.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
+    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
-    [4X[28X Number of complexes in library=0[128X[104X
+    [4X[28X Number of complexes in library=1[128X[104X
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/home/spreerjn/myrepository/"[128X[104X
+    [4X[28X Path="/home/jonathan/myrepository/"[128X[104X
     [4X[28X ][128X[104X
-    [4X[28X gap> complex:=SCBdCrossPolytope(4);;[128X[104X
-    [4X[28X gap> SCLibAdd(myRepository,complex);[128X[104X
-    [4X[28X #I  SCLibAdd: saving complex to file "complex_2011-06-01_15-57-55.sc".[128X[104X
+    [4X[28X gap> complex:=SCBdCrossPolytope(4);;[128X[104X
+    [4X[28X gap> SCLibAdd(myRepository,complex);[128X[104X
+    [4X[28X #I  SCLibAdd: saving complex to file "complex_2013-01-31_00-05-43.scb".[128X[104X
     [4X[28X true[128X[104X
-    [4X[28X gap> myRepository.Add(complex);; # alternative syntax[128X[104X
+    [4X[28X gap> myRepository.Add(complex);; # alternative syntax[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -146,11 +146,11 @@
   the given repository [3Xrepository[103X of type [10XSCIsLibRepository[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> all:=SCLibAllComplexes(SCLib);;[128X[104X
-    [4X[28X gap> all[1];[128X[104X
+    [4X[28X gap> all:=SCLibAllComplexes(SCLib);;[128X[104X
+    [4X[28X gap> all[1];[128X[104X
     [4X[28X [ 1, "Moebius Strip" ][128X[104X
-    [4X[28X gap> Length(all);[128X[104X
-    [4X[28X 7648[128X[104X
+    [4X[28X gap> Length(all);[128X[104X
+    [4X[28X 7649[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -164,19 +164,18 @@
   associated [10X.sc[110X file is also deleted.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
+    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
     [4X[28X Number of complexes in library=2[128X[104X
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/home/spreerjn/myrepository/"[128X[104X
+    [4X[28X Path="/home/jonathan/myrepository/"[128X[104X
     [4X[28X ][128X[104X
-    [4X[28X gap> SCLibDelete(myRepository,1);[128X[104X
-    [4X[28X #I  SCLibDelete: file "/home/spreerjn/myrepository/complex_2011-06-01_15-57-55\[128X[104X
-    [4X[28X .sc" does not exist.[128X[104X
-    [4X[28X fail[128X[104X
+    [4X[28X gap> SCLibAdd(myRepository,SCSimplex(2));;[128X[104X
+    [4X[28X gap> SCLibDelete(myRepository,1);[128X[104X
+    [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -204,15 +203,15 @@
   returned.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> c:=SCFromFacets([[1,2,3],[1,2,6],[1,3,5],[1,4,5],[1,4,6],[128X[104X
-    [4X[28X                       [2,3,4],[2,4,5],[2,5,6],[3,4,6],[3,5,6]]);;[128X[104X
-    [4X[28X gap> SCLibDetermineTopologicalType(c);[128X[104X
+    [4X[28X gap> c:=SCFromFacets([[1,2,3],[1,2,6],[1,3,5],[1,4,5],[1,4,6],[128X[104X
+    [4X[28X                       [2,3,4],[2,4,5],[2,5,6],[3,4,6],[3,5,6]]);;[128X[104X
+    [4X[28X gap> SCLibDetermineTopologicalType(c);[128X[104X
     [4X[28X [SimplicialComplex[128X[104X
     [4X[28X [128X[104X
     [4X[28X  Properties known: BoundaryEx, Dim, FacetsEx, HasBoundary, [128X[104X
     [4X[28X                    IsPseudoManifold, Name, SkelExs[], Vertices.[128X[104X
     [4X[28X [128X[104X
-    [4X[28X  Name="unnamed complex 26"[128X[104X
+    [4X[28X  Name="unnamed complex 32"[128X[104X
     [4X[28X  Dim=2[128X[104X
     [4X[28X  HasBoundary=false[128X[104X
     [4X[28X  IsPseudoManifold=true[128X[104X
@@ -231,8 +230,8 @@
   [3Xconfirm[103X, must be the string [10X"yes"[110X in order to confirm the deletion.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> myRepository:=SCLibInit("~/repository");;[128X[104X
-    [4X[28X gap> SCLibFlush(myRepository,"yes");[128X[104X
+    [4X[28X gap> myRepository:=SCLibInit("~/repository");;[128X[104X
+    [4X[28X gap> SCLibFlush(myRepository,"yes");[128X[104X
     [4X[28X #I  SCLibInit: invalid parameters.[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
@@ -263,14 +262,19 @@
   also in XML format.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
+    [4X[28X gap> myRepository:=SCLibInit("~/myrepository");[128X[104X
+    [4X[28X Found a self-reference to an unknown object![128X[104X
+    [4X[28X #I  IO_Unpicklers.SCLR: Error while unpicking library repository. Delete file complexes.idx and complexes.idxb and recreate them with SCLibInit.[128X[104X
+    [4X[28X #I  SCIntFunc.SCLibInit: error loading binary index  -- trying to reconstruct it.[128X[104X
+    [4X[28X #I  SCLibUpdate: rebuilding index for /home/jonathan/myrepository/.[128X[104X
+    [4X[28X #I  SCLibUpdate: rebuilding index done.[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
     [4X[28X Number of complexes in library=2[128X[104X
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/home/spreerjn/myrepository/"[128X[104X
+    [4X[28X Path="/home/jonathan/myrepository/"[128X[104X
     [4X[28X ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -286,9 +290,9 @@
   If this is not the case [9Xfalse[109X is returned.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLibIsLoaded(SCLib);[128X[104X
+    [4X[28X gap> SCLibIsLoaded(SCLib);[128X[104X
     [4X[28X true[128X[104X
-    [4X[28X gap> SCLib.IsLoaded;[128X[104X
+    [4X[28X gap> SCLib.IsLoaded;[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -310,10 +314,10 @@
   [5Xsimpcomp[105X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLibSearchByAttribute(SCLib,"Dim=4 and F[3]=Binomial(F[1],3)");[128X[104X
-    [4X[28X [ [ 16, "CP^2 (VT)" ], [ 7494, "K3 surface" ] ][128X[104X
-    [4X[28X gap> SCLib.SearchByAttribute("Dim=4 and F[3]=Binomial(F[1],3)");[128X[104X
-    [4X[28X [ [ 16, "CP^2 (VT)" ], [ 7494, "K3 surface" ] ][128X[104X
+    [4X[28X gap> SCLibSearchByAttribute(SCLib,"Dim=4 and F[3]=Binomial(F[1],3)");[128X[104X
+    [4X[28X [ [ 16, "CP^2 (VT)" ], [ 7648, "K3_16" ] ][128X[104X
+    [4X[28X gap> SCLib.SearchByAttribute("Dim=4 and F[3]=Binomial(F[1],3)");[128X[104X
+    [4X[28X [ [ 16, "CP^2 (VT)" ], [ 7648, "K3_16" ] ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -329,13 +333,13 @@
   a naming convention used for the global library of [5Xsimpcomp[105X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLibSearchByName(SCLib,"K3");[128X[104X
-    [4X[28X [ [ 7494, "K3 surface" ] ][128X[104X
-    [4X[28X gap> SCLib.SearchByName("K3"); #alternative syntax[128X[104X
-    [4X[28X [ [ 7494, "K3 surface" ] ][128X[104X
-    [4X[28X gap> SCLib.SearchByName("S^4x"); #search for products with S^4[128X[104X
+    [4X[28X gap> SCLibSearchByName(SCLib,"K3");[128X[104X
+    [4X[28X [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ][128X[104X
+    [4X[28X gap> SCLib.SearchByName("K3"); #alternative syntax[128X[104X
+    [4X[28X [ [ 7648, "K3_16" ], [ 7649, "K3_17" ] ][128X[104X
+    [4X[28X gap> SCLib.SearchByName("S^4x"); #search for products with S^4[128X[104X
     [4X[28X [ [ 713, "S^4xS^1 (VT)" ], [ 1472, "S^4xS^1 (VT)" ], [ 1475, "S^4xS^1 (VT)" ],[128X[104X
-    [4X[28X   [ 7479, "S^4xS^2" ], [ 7540, "S^4xS^3" ], [ 7574, "S^4xS^4" ] ][128X[104X
+    [4X[28X   [ 7479, "S^4xS^2" ], [ 7539, "S^4xS^3" ], [ 7573, "S^4xS^4" ] ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -349,8 +353,8 @@
   [10XSCLibInit[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLibSize(SCLib); #SCLib is the repository of the global library[128X[104X
-    [4X[28X 7648[128X[104X
+    [4X[28X gap> SCLibSize(SCLib); #SCLib is the repository of the global library[128X[104X
+    [4X[28X 7649[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -369,9 +373,9 @@
   simplicial complexes in the repository if set to [9Xtrue[109X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> myRepository:=SCLibInit("~/repository");;[128X[104X
-    [4X[28X gap> SCLibUpdate(myRepository);[128X[104X
-    [4X[28X #I  SCLibUpdate: rebuilding index for /home/spreerjn/repository/.[128X[104X
+    [4X[28X gap> myRepository:=SCLibInit("~/repository");;[128X[104X
+    [4X[28X gap> SCLibUpdate(myRepository);[128X[104X
+    [4X[28X #I  SCLibUpdate: rebuilding index for /home/jonathan/repository/.[128X[104X
     [4X[28X #I  SCLibUpdate: rebuilding index done.[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
@@ -379,7 +383,7 @@
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/home/spreerjn/repository/"[128X[104X
+    [4X[28X Path="/home/jonathan/repository/"[128X[104X
     [4X[28X ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -398,14 +402,14 @@
   indexed.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X gap> SCLibStatus(SCLib);[128X[104X
+    [4X[28X gap> SCLibStatus(SCLib);[128X[104X
     [4X[28X [Simplicial complex library. Properties:[128X[104X
     [4X[28X CalculateIndexAttributes=true[128X[104X
-    [4X[28X Number of complexes in library=7648[128X[104X
+    [4X[28X Number of complexes in library=7649[128X[104X
     [4X[28X IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", [128X[104X
     [4X[28X   "IsManifold" ][128X[104X
     [4X[28X Loaded=true[128X[104X
-    [4X[28X Path="/afs/.mathe/home/igt2/spreerjn/apps/gap4r4new/pkg/simpcomp/complexes/"[128X[104X
+    [4X[28X Path="/home/jonathan/apps/gap4r5/pkg/simpcomp/complexes/"[128X[104X
     [4X[28X ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -519,7 +523,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> c:=SCBdSimplex(3);;[128X[104X
-    [4X[28X gap> SCSave(c,"bddelta3");[128X[104X
+    [4X[28X gap> SCSave(c,"/tmp/bddelta3");[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -535,7 +539,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> c:=SCBdSimplex(3);;[128X[104X
-    [4X[28X gap> SCSaveXML(c,"bddelta3");[128X[104X
+    [4X[28X gap> SCSaveXML(c,"/tmp/bddelta3");[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
@@ -627,10 +631,11 @@
   [29X[2XSCExportJavaView[102X( [3Xcomplex[103X, [3Xfile[103X, [3Xcoords[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X on success, [9Xfail[109X otherwise.[133X
   
-  [33X[0;0YExports  the  facet list of the given simplicial complex [3Xcomplex[103X in [10XJavaView[110X
-  format  (file name suffix [10X.jvx[110X) to a file specified by [3Xfilename[103X (as string).
-  The  list  [3Xcoords[103X must contain a [22X3[122X-tuple of real coordinates for each vertex
-  of  [3Xcomplex[103X,  either  as  tuple  of  length three containing the coordinates
+  [33X[0;0YExports  the  2-skeleton  of  the  given  simplicial complex [3Xcomplex[103X (or the
+  facets  if  the  complex is of dimension 2 or less) in [10XJavaView[110X format (file
+  name  suffix  [10X.jvx[110X)  to  a  file specified by [3Xfilename[103X (as string). The list
+  [3Xcoords[103X  must  contain  a  [22X3[122X-tuple  of  real  coordinates  for each vertex of
+  [3Xcomplex[103X,  either  as  tuple  of  length  three  containing  the  coordinates
   (Warning:  as  [5XGAP[105X  only  has rudimentary support for floating point values,
   currently  only  integer  numbers  can be used as coordinates when providing
   [3Xcoords[103X  as  list  of  [22X3[122X-tuples)  or as string of the form [10X"x.x y.y z.z"[110X with
@@ -640,6 +645,23 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> coords:=[[1,0,0],[0,1,0],[0,0,1]];;[128X[104X
     [4X[28X gap> SCExportJavaView(SCBdSimplex(2),"/tmp/triangle.jvx",coords);[128X[104X
+    [4X[28X true[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X12.2-10 SCExportSnapPy[101X
+  
+  [29X[2XSCExportSnapPy[102X( [3Xcomplex[103X, [3Xfilename[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X upon success, [9Xfail[109X otherwise.[133X
+  
+  [33X[0;0YExports   the   facet  list  and  orientability  of  a  given  combinatorial
+  [22X3[122X-pseudomanifold [3Xcomplex[103X in [10XSnapPy[110X format to a file specified by [3Xfilename[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X gap> SCLib.SearchByAttribute("Dim=3 and F=[8,28,56,28]");[128X[104X
+    [4X[28X [ [ 8, "PM^3 - TransitiveGroup(8,43), No. 1" ] ][128X[104X
+    [4X[28X gap> c:=SCLib.Load(last[1][1]);;[128X[104X
+    [4X[28X gap> SCExportSnapPy(c,"/tmp/M38.tri");[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X

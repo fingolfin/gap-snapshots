@@ -24,6 +24,7 @@
 ## <#Include Label="SCBoundary"/>
 ## <#Include Label="SCDehnSommervilleCheck"/>
 ## <#Include Label="SCDehnSommervilleMatrix"/>
+## <#Include Label="SCDifferenceCycles"/>
 ## <#Include Label="SCDim"/>
 ## <#Include Label="SCDualGraph"/>
 ## <#Include Label="SCEulerCharacteristic"/>
@@ -42,6 +43,8 @@
 ## <#Include Label="SCHVector"/>
 ## <#Include Label="SCHasBoundary"/>
 ## <#Include Label="SCHasInterior"/>
+## <#Include Label="SCHeegaardSplittingSmallGenus"/>
+## <#Include Label="SCHeegaardSplitting"/>
 ## <#Include Label="SCHomology"/>
 ## <#Include Label="SCIncidences"/>
 ## <#Include Label="SCIncidencesEx"/>
@@ -51,6 +54,7 @@
 ## <#Include Label="SCIsEmpty"/>
 ## <#Include Label="SCIsEulerianManifold"/>
 ## <#Include Label="SCIsFlag"/>
+## <#Include Label="SCIsHeegaardSplitting"/>
 ## <#Include Label="SCIsHomologySphere"/>
 ## <#Include Label="SCIsInKd"/>
 ## <#Include Label="SCIsKNeighborly"/>

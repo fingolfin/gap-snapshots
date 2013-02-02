@@ -28,6 +28,33 @@ It returns the corresponding d-dimensional pure cubical complex.
 
 <Row>
 <Item>
+<Index>FramedPureCubicalComplex</Index>
+<C>FramedPureCubicalComplex(M)</C>
+
+<P/>
+Inputs a pure cubical complex <M>M</M> 
+and  returns the pure cubical complex with  a border of zeros attached the each face of the boundary array M!.boundaryArray. This function just adds a bit of space for performing operations such as thickenings to <M>M</M>.
+ </Item>
+ </Row>
+
+
+<Row>
+<Item>
+<Index>RandomCubeOfPureCubicalComplex</Index>
+<C>RandomCubeOfPureCubicalComplex(M)</C>
+
+<P/>
+Inputs a pure cubical complex <M>M</M> 
+and  returns a pure cubical complex <M>R</M> with precisely the same dimensions as <M>M</M>. The complex <M>R</M> consist of one  cube selected at random
+from <M>M</M>. 
+ 
+
+ </Item>
+ </Row>
+
+
+<Row>
+<Item>
 <Index>PureCubicalComplexIntersection</Index>
 <C>PureCubicalComplexIntersection(S,T)</C>
 
@@ -524,6 +551,55 @@ representation of this complex is written to the file in a format that
 can be read by the CAPD (Computer Assisted Proofs in Dynamics) software developed by  Marian Mrozek and others.
 
 </Item> </Row>
+
+<Row>
+<Item>
+<Index>ThickeningFiltration</Index>
+<C>ThickeningFiltration(M,n)</C>
+<C>ThickeningFiltration(M,n,k)</C>
+<P/>
+Inputs a pure cubical complex <M>M</M> and a positive integer <M>n</M>. It returns a filtered pure cubical complex constructed frim <M>n</M> thickenings of <M>M</M>. 
+ If a positive integer <M>k</M> is supplied as an  optional third argument, then each step of the filtration is obtained from a <M>k</M>-fold thickening.
+</Item> </Row>
+
+<Row>
+<Item>
+<Index>Dendrogram</Index>
+<C>Dendrogram(M)</C>
+<P/>
+Inputs a filtered pure cubical complex <M>M</M> and returns data that specifies the dendrogram (or phylogenetic tree) describing how path components are born and then merge during the filtration.
+
+</Item> </Row>
+
+<Row>
+<Item>
+<Index>DendrogramDisplay</Index>
+<C>DendrogramDisplay(M)</C>
+<P/>
+Inputs a filtered pure cubical complex <M>M</M>, or alternatively inputs the out from the command Dendrogram(M),  and then uses GraphViz software to display the path component dendrogram of <M>M</M>.  </Item> </Row>
+
+<Row>
+<Item>
+<Index>DendrogramToPersistenceMat</Index>
+<C>DendrogramToPersistentceMat(D)</C>
+<P/>
+Inputs the output of the function Dendrogram(M) and returns the corresponding degree 0 Betti bar code.  </Item> </Row> 
+
+<Row>
+<Item>
+<Index>ReadImageAsFilteredCubicalComplex</Index>
+<C>ReadImageAsFilteredCubicalComplex(file,n)</C>
+<P/>
+Inputs a string containing the path to an image file, together with a positive integer n. It returns a filtered pure cubical complex of filtration length <M>n</M>.  </Item> </Row>
+
+<Row>
+<Item>
+<Index>ComplementOfFilteredCubicalComplex</Index>
+<C>ComplementOfFilteredCubicalComplex(M)</C>
+<P/>
+Inputs a filtered pure cubical complex <M>M</M> and returns the complement as a filtered pure cubical complex.   </Item> </Row>
+
+
 
 
 </Table>

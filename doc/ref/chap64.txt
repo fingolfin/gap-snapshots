@@ -118,6 +118,26 @@
   [33X[0;0YIf  [3XFam[103X is a Lie family then [10XUnderlyingFamily( [3XFam[103X[10X )[110X is a family [10XF[110X such that
   [10X[3XFam[103X[10X = LieFamily( F )[110X.[133X
   
+  [1X64.1-5 UnderlyingRingElement[101X
+  
+  [29X[2XUnderlyingRingElement[102X( [3Xobj[103X ) [32X attribute
+  
+  [33X[0;0YLet  [3Xobj[103X  be  a  Lie  object  constructed  from  a ring element [10Xr[110X by calling
+  [10XLieObject( r )[110X. Then [10XUnderlyingRingElement( [3Xobj[103X[10X )[110X returns the ring element [10Xr[110X
+  used  to  construct  [3Xobj[103X.  If  [10Xr[110X  lies in the family [10XF[110X, then [3Xobj[103X lies in the
+  family [10XLieFamily( F )[110X (see [2XLieFamily[102X ([14X64.1-3[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xlo:= LieObject( [ [ 1, 0 ], [ 0, 1 ] ] );[127X[104X
+    [4X[28XLieObject( [ [ 1, 0 ], [ 0, 1 ] ] )[128X[104X
+    [4X[25Xgap>[125X [27Xm:=UnderlyingRingElement(lo);[127X[104X
+    [4X[28X[ [ 1, 0 ], [ 0, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xlo*lo;[127X[104X
+    [4X[28XLieObject( [ [ 0, 0 ], [ 0, 0 ] ] )[128X[104X
+    [4X[25Xgap>[125X [27Xm*m;[127X[104X
+    [4X[28X[ [ 1, 0 ], [ 0, 1 ] ][128X[104X
+  [4X[32X[104X
+  
   
   [1X64.2 [33X[0;0YConstructing Lie algebras[133X[101X
   

@@ -125,6 +125,11 @@
   guaranteed     to     be     the     same    for    different    calls    of
   [2XSmallerDegreePermutationRepresentation[102X.[133X
   
+  [33X[0;0YIf  the  option  cheap  is given less work is spent on trying to get a small
+  degree  representation,  if  the  value  of this option is set to the string
+  "skip"  the  identity  mapping  is  returned.  (This is useful if a function
+  called internally might try a degree reduction.)[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Ximage:= Image( iso );;  NrMovedPoints( image );[127X[104X
     [4X[28X24[128X[104X

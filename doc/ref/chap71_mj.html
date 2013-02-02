@@ -2814,18 +2814,18 @@ CharacterTable( S4 )
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kernel:= KernelOfCharacter( irr[3] );</span>
-Group([ (1,2)(3,4), (1,3)(2,4) ])
+Group([ (1,2)(3,4), (1,4)(2,3) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasNormalSubgroupClassesInfo( tbl );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalSubgroupClassesInfo( tbl );</span>
-rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], 
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
   nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClassPositionsOfNormalSubgroup( tbl, kernel );</span>
 [ 1, 3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );</span>
 Group([ f1, f2 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalSubgroupClassesInfo( tbl );</span>
-rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], 
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
   nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )
 </pre></div>
 

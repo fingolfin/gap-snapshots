@@ -1305,10 +1305,7 @@ end);
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> c.F;
 ## [ 27, 298, 542, 271 ]
-## gap> for i in [1..26] do 
-## > sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); 
-## > Print(sl.TopologicalType,"\n"); 
-## > od;                                           
+## gap> for i in [1..26] do sl:=SCNSSlicing(c,[[1..i],[i+1..27]]); Print(sl.TopologicalType,"\n"); od;                                           
 ## S^2
 ## S^2
 ## S^2

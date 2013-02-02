@@ -12,7 +12,7 @@
   [33X[0;0YThe input should be a finite group [3XG[103X.[133X
   
   [33X[0;0YComputes  a  list  of  representatives  of the equivalence classes of [13Xstrong
-  Shoda pairs[113X ([14X7.15[114X) of a finite group [3XG[103X.[133X
+  Shoda pairs[113X ([14X8.15[114X) of a finite group [3XG[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -47,7 +47,7 @@
   [33X[0;0YThe first argument should be a finite group [3XG[103X, the second one a sugroup [3XK[103X of
   [3XG[103X and the third one a subgroup of [3XK[103X.[133X
   
-  [33X[0;0YReturns  [9Xtrue[109X  if  ([3XK[103X,[3XH[103X)  is  a  [13Xstrong  Shoda  pair[113X  ([14X7.15[114X) of [3XG[103X, and [9Xfalse[109X
+  [33X[0;0YReturns  [9Xtrue[109X  if  ([3XK[103X,[3XH[103X)  is  a  [13Xstrong  Shoda  pair[113X  ([14X8.15[114X) of [3XG[103X, and [9Xfalse[109X
   otherwise.[133X
   
   [4X[32X  Example  [32X[104X
@@ -71,7 +71,7 @@
   [33X[0;0YThe  first argument should be a finite group [3XG[103X, the second a subgroup [3XK[103X of [3XG[103X
   and the third one a subgroup of [3XK[103X.[133X
   
-  [33X[0;0YReturns [9Xtrue[109X if ([3XK[103X,[3XH[103X) is a [13XShoda pair[113X ([14X7.14[114X) of [3XG[103X.[133X
+  [33X[0;0YReturns [9Xtrue[109X if ([3XK[103X,[3XH[103X) is a [13XShoda pair[113X ([14X8.14[114X) of [3XG[103X.[133X
   
   [33X[0;0YNote  that  every strong Shoda pair is a Shoda pair, but the converse is not
   true.[133X
@@ -94,7 +94,7 @@
   
   [33X[0;0YThe input [3XG[103X should be a finite group.[133X
   
-  [33X[0;0YReturns [9Xtrue[109X if [3XG[103X is a [13Xstrongly monomial[113X ([14X7.16[114X) finite group.[133X
+  [33X[0;0YReturns [9Xtrue[109X if [3XG[103X is a [13Xstrongly monomial[113X ([14X8.16[114X) finite group.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

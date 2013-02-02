@@ -97,7 +97,7 @@ CircleObject( 2 )
 
 <h5>3.1-2 UnderlyingRingElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRingElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRingElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns the corresponding ring element for the circle object <var class="Arg">x</var>.</p>
 
 
@@ -359,8 +359,7 @@ false
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension(R);</span>
 2
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );    </span>
-&lt;group of size 4 with 1 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( R ) = Size( G );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( G );</span>
@@ -407,8 +406,7 @@ true
 "C2 x C2"
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Ring( [ ZmodnZObj(2,256) ] );   </span>
 &lt;ring with 1 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );</span>
-&lt;group of size 128 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( G );</span>
 "C64 x C2"
 
@@ -439,8 +437,7 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Ring( [ ZmodnZObj(2,256) ] );   </span>
 &lt;ring with 1 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AdjointGroup(R);</span>
-&lt;group of size 128 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AdjointGroup(R);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Ring( [ ZmodnZObj(2,256) ] );</span>
 &lt;ring with 1 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=AdjointSemigroup(R); </span>
@@ -459,13 +456,12 @@ true
 
 <div class="example"><pre>
 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "laguna", false );</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FG := GroupRing( GF(2), DihedralGroup(8) );</span>
 &lt;algebra-with-one over GF(2), with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := AugmentationIdeal( FG );</span>
-&lt;two-sided ideal in &lt;algebra-with-one over GF(2), with 3 generators&gt;, 
-  (dimension 7)&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );</span>
-&lt;group of size 128 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := AugmentationIdeal( FG );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AdjointGroup( R );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( G );</span>
 [ 128, 170 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( Units( FG ) );</span>
@@ -479,20 +475,20 @@ true
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( AdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) ) );</span>
 
 WARNING: usage of AdjointGroup for associative ring &lt;R&gt; with one!!! 
 In this case the adjoint group is isomorphic to the unit group 
 Units(&lt;R&gt;), which possibly may be computed faster!!! 
 
-&lt;group of size 128 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AdjointGroup( Integers mod 11 );                  </span>
+128
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( AdjointGroup( Integers mod 11 ) );                  </span>
 
 WARNING: usage of AdjointGroup for associative ring &lt;R&gt; with one!!! 
 In this case the adjoint group is isomorphic to the unit group 
 Units(&lt;R&gt;), which possibly may be computed faster!!! 
 
-&lt;group of size 10 with 1 generators&gt;
+10
 
 </pre></div>
 

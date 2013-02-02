@@ -1,6 +1,6 @@
 # wedderga, chapter 4
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/wedderga/doc/idempot.xml", 23, 41 ]
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 23, 41 ]
 
 gap> QS3 := GroupRing( Rationals, SymmetricGroup(3) );;                 
 gap> PrimitiveCentralIdempotentsByCharacterTable( QS3 );
@@ -19,7 +19,7 @@ gap> Length(pciFG);
 7
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/wedderga/doc/idempot.xml", 80, 91 ]
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 80, 91 ]
 
 gap> QS5 := GroupRing( Rationals, SymmetricGroup(5) );;
 gap> idemp := PrimitiveCentralIdempotentsByCharacterTable( QS5 );;
@@ -31,7 +31,7 @@ gap> IsCompleteSetOfOrthogonalIdempotents( QS5, [ One( QS5 ), One( QS5 ) ] );
 false
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/wedderga/doc/idempot.xml", 130, 154 ]
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 130, 154 ]
 
 gap> QG:=GroupRing( Rationals, AlternatingGroup(4) );;           
 gap> PrimitiveCentralIdempotentsByStrongSP( QG );
@@ -56,7 +56,7 @@ Wedderga: Warning!!!
 The output is a NON-COMPLETE list of prim. central idemp.s of the input! 
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/wedderga/doc/idempot.xml", 177, 211 ]
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 177, 211 ]
 
 gap> QG := GroupRing( Rationals, SymmetricGroup(4) );
 <algebra-with-one over Rationals, with 2 generators>
@@ -91,7 +91,7 @@ gap> IsCompleteSetOfPCIs( QS5 , pci );
 false
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/wedderga/doc/idempot.xml", 217, 241 ]
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 217, 241 ]
 
 gap> QG := GroupRing( Rationals, SmallGroup(48,28) );;
 gap> pci:=PrimitiveCentralIdempotentsBySP( QG );;
@@ -114,4 +114,52 @@ gap> IsCompleteSetOfPCIs( QG , PrimitiveCentralIdempotentsByStrongSP(QG) );
 Wedderga: Warning!!!
 The output is a NON-COMPLETE list of prim. central idemp.s of the input!
 false
+
+
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 272, 295 ]
+
+gap> G:=DihedralGroup(8);; 
+gap> F:=GF(3);;                     
+gap> FG:=GroupRing(F,G);;
+gap> H:=StrongShodaPairs(G)[5][1];
+Group([ f1*f2, f3, f3 ])
+gap> K:=StrongShodaPairs(G)[5][2];
+Group([ f1*f2 ])
+gap> N:=Normalizer(G,K); 
+Group([ f1*f2*f3, f3 ])
+gap> epi:=NaturalHomomorphismByNormalSubgroup(N,K);
+[ f1*f2*f3, f3 ] -> [ f1, f1 ]
+gap> QHK:=Image(epi,H); 
+Group([ <identity> of ..., f1, f1 ])
+gap> gq:=MinimalGeneratingSet(QHK)[1]; 
+f1
+gap> C:=CyclotomicClasses(Size(F),Index(H,K))[2];
+[ 1 ]
+gap> PrimitiveIdempotentsNilpotent(FG,H,K,C,[epi,gq]);
+[ (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3)^0)*f1*f2+(Z(3))*f1*f2*f3, 
+  (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3))*f1*f2+(Z(3)^0)*f1*f2*f3 ]
+
+
+# [ "/Users/alexk/gap4r6p1/pkg/wedderga/doc/idempot.xml", 322, 345 ]
+
+gap> G:=DihedralGroup(8);; 
+gap> F:=GF(3);;                     
+gap> FG:=GroupRing(F,G);;
+gap> H:=StrongShodaPairs(G)[5][1];
+Group([ f1*f2, f3, f3 ])
+gap> K:=StrongShodaPairs(G)[5][2];
+Group([ f1*f2 ])
+gap> N:=Normalizer(G,K); 
+Group([ f1*f2*f3, f3 ])
+gap> epi:=NaturalHomomorphismByNormalSubgroup(N,K);
+[ f1*f2*f3, f3 ] -> [ f1, f1 ]
+gap> QHK:=Image(epi,H); 
+Group([ <identity> of ..., f1, f1 ])
+gap> gq:=MinimalGeneratingSet(QHK)[1]; 
+f1
+gap> C:=CyclotomicClasses(Size(F),Index(H,K))[2];
+[ 1 ]
+gap> PrimitiveIdempotentsTrivialTwisting(FG,H,K,C,[epi,gq]);
+[ (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3)^0)*f1*f2+(Z(3))*f1*f2*f3, 
+  (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3))*f1*f2+(Z(3)^0)*f1*f2*f3 ]
 

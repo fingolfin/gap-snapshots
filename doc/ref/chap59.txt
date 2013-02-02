@@ -282,6 +282,12 @@
   [33X[0;0Yis  the  list of integers corresponding to the vector [3Xvecffe[103X of finite field
   elements in a prime field (see [2XIntFFE[102X ([14X59.2-3[114X)).[133X
   
+  [1X59.2-6 AsInternalFFE[101X
+  
+  [29X[2XAsInternalFFE[102X( [3Xffe[103X ) [32X attribute
+  
+  [33X[0;0Yreturn an internal FFE equal to [3Xffe[103X if one exists, otherwise [10Xfail[110X[133X
+  
   
   [1X59.3 [33X[0;0YCreating Finite Fields[133X[101X
   

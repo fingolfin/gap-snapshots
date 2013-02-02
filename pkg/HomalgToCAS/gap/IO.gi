@@ -220,9 +220,17 @@ InstallGlobalFunction( InitializeMacros,
     macros_names := [ ];
     
     for component in names do
-        if component[1] <> '_' then
-            homalgSendBlocking( macros.(component), "need_command", stream, HOMALG_IO.Pictograms.define );
-            if component[1] <> '$' then
+        if component[1] = '!' then
+            homalgSendBlocking( macros.(component), "need_command", stream, HOMALG_IO.Pictograms.initialize );
+        fi;
+    od;
+    
+    for component in names do
+        if not component[1] in [ '_', '!' ] then
+            if component[1] = '$' then
+                homalgSendBlocking( macros.(component), "need_command", stream, HOMALG_IO.Pictograms.initialize );
+            else
+                homalgSendBlocking( macros.(component), "need_command", stream, HOMALG_IO.Pictograms.define );
                 Add( macros_names, component );
             fi;
         fi;
@@ -299,7 +307,7 @@ InstallGlobalFunction( UpdateMacrosOfLaunchedCAS,
         ## set back the original stream communicator
         stream!.SendBlockingToCAS := send;	## GAP is wonderful
         
-	## save the current pending assignments
+        ## save the current pending assignments
         container := stream.homalgExternalObjectsPointingToVariables;
         assignments_pending := container!.assignments_pending;
         container!.assignments_pending := [ ];
@@ -319,8 +327,8 @@ InstallGlobalFunction( UpdateMacrosOfLaunchedCAS,
         
         ## the command in arg might depend on the above initialization
         ## so do not move this line higher
-	
-	container!.assignments_pending := assignments_pending;
+        
+        container!.assignments_pending := assignments_pending;
         CallFuncList( send_orig, arg );
         
     end;

@@ -83,6 +83,7 @@
 ## <Row><Item>DeletedJoin</Item><Item><Ref Meth="SCDeletedJoin"/></Item></Row>
 ## <Row><Item>DetermineTopologicalType</Item><Item><Ref Meth="SCLibDetermineTopologicalType"/></Item></Row>
 ## <Row><Item>Difference</Item><Item><Ref Meth="SCDifference"/></Item></Row>
+## <Row><Item>DifferenceCycles</Item><Item><Ref Meth="SCDifferenceCycles"/></Item></Row>
 ## <Row><Item>Dim</Item><Item><Ref Meth="SCDim"/></Item></Row>
 ## <Row><Item>DualGraph</Item><Item><Ref Meth="SCDualGraph"/></Item></Row>
 ## <Row><Item>Equivalent</Item><Item><Ref Meth="SCEquivalent"/></Item></Row>
@@ -310,6 +311,7 @@ ConnectedComponents:=SCConnectedComponents,
 SCConnectedComponents:=SCConnectedComponents,
 DehnSommervilleCheck:=SCDehnSommervilleCheck,
 SCDehnSommervilleCheck:=SCDehnSommervilleCheck,
+DifferenceCycles:=SCDifferenceCycles,
 D:=SCDim,
 SCDim:=SCDim,
 Dim:=SCDim,
@@ -483,26 +485,26 @@ SetDate:=SCSetDate,
 ## <Row><Item><B>Property handler</B></Item><Item><B>Function called</B></Item></Row>
 ## <HorLine/>
 ## <Row><Item></Item><Item></Item></Row>
-## <Row><Item>Betti</Item><Item>SCFpBettiNumbers</Item></Row>
+## <Row><Item>Betti</Item><Item><Ref Meth="SCFpBettiNumbers"/></Item></Row>
 ## <Row><Item>ConnectedComponents</Item><Item><Ref Meth="SCConnectedComponents"/></Item></Row>
-## <Row><Item>FpBettiNumbers</Item><Item>SCFpBettiNumbers</Item></Row>
-## <Row><Item>Chi</Item><Item>SCEulerCharacteristic</Item></Row>
-## <Row><Item>EulerCharacteristic</Item><Item>SCEulerCharacteristic</Item></Row>
-## <Row><Item>Connected</Item><Item>SCIsConnected</Item></Row>
-## <Row><Item>IsConnected</Item><Item>SCIsConnected</Item></Row>
-## <Row><Item>Copy</Item><Item>SCCopy</Item></Row>
-## <Row><Item>D</Item><Item>SCDim</Item></Row>
-## <Row><Item>Dim</Item><Item>SCDim</Item></Row>
-## <Row><Item>F</Item><Item>SCFVector</Item></Row>
-## <Row><Item>FVector</Item><Item>SCFVector</Item></Row>
-## <Row><Item>FaceLattice</Item><Item>SCFaceLattice</Item></Row>
-## <Row><Item>Faces</Item><Item>SCSkel</Item></Row>
-## <Row><Item>Genus</Item><Item>SCGenus</Item></Row>
-## <Row><Item>Homology</Item><Item>SCHomology</Item></Row>
-## <Row><Item>IsEmpty</Item><Item>SCIsEmpty</Item></Row>
-## <Row><Item>Name</Item><Item>SCName</Item></Row>
-## <Row><Item>Triangulation</Item><Item>SCNSTriangulation</Item></Row>
-## <Row><Item>TopologicalType</Item><Item>SCTopologicalType</Item></Row>
+## <Row><Item>FpBettiNumbers</Item><Item><Ref Meth="SCFpBettiNumbers"/></Item></Row>
+## <Row><Item>Chi</Item><Item><Ref Meth="SCEulerCharacteristic"/></Item></Row>
+## <Row><Item>EulerCharacteristic</Item><Item><Ref Meth="SCEulerCharacteristic"/></Item></Row>
+## <Row><Item>Connected</Item><Item><Ref Meth="SCIsConnected"/></Item></Row>
+## <Row><Item>IsConnected</Item><Item><Ref Meth="SCIsConnected"/></Item></Row>
+## <Row><Item>Copy</Item><Item><Ref Meth="SCCopy"/></Item></Row>
+## <Row><Item>D</Item><Item><Ref Meth="SCDim"/></Item></Row>
+## <Row><Item>Dim</Item><Item><Ref Meth="SCDim"/></Item></Row>
+## <Row><Item>F</Item><Item><Ref Meth="SCFVector"/></Item></Row>
+## <Row><Item>FVector</Item><Item><Ref Meth="SCFVector"/></Item></Row>
+## <Row><Item>FaceLattice</Item><Item><Ref Meth="SCFaceLattice"/></Item></Row>
+## <Row><Item>Faces</Item><Item><Ref Meth="SCSkel"/></Item></Row>
+## <Row><Item>Genus</Item><Item><Ref Meth="SCGenus"/></Item></Row>
+## <Row><Item>Homology</Item><Item><Ref Meth="SCHomology"/></Item></Row>
+## <Row><Item>IsEmpty</Item><Item><Ref Meth="SCIsEmpty"/></Item></Row>
+## <Row><Item>Name</Item><Item><Ref Meth="SCName"/></Item></Row>
+## <Row><Item>Triangulation</Item><Item><Ref Meth="SCNSTriangulation"/></Item></Row>
+## <Row><Item>TopologicalType</Item><Item><Ref Meth="SCTopologicalType"/></Item></Row>
 ## </Table>
 ##		
 ##<#/GAPDoc>
@@ -618,18 +620,17 @@ Strs:=SCStars,
 ## <Row><Item><B>Property handler</B></Item><Item><B>Function called</B></Item></Row>
 ## <HorLine/>
 ## <Row><Item></Item><Item></Item></Row>
-## <Row><Item>Update</Item><Item>SCLibUpdate</Item></Row>
-## <Row><Item>IsLoaded</Item><Item>SCLibIsLoaded</Item></Row>
-## <Row><Item>Size</Item><Item>SCLibSize</Item></Row>
-## <Row><Item>Status</Item><Item>SCLibStatus</Item></Row>
-## <Row><Item>Flush</Item><Item>SCLibFlush</Item></Row>
-## <Row><Item>Add</Item><Item>SCLibAdd</Item></Row>
-## <Row><Item>Delete</Item><Item>SCLibDelete</Item></Row>
-## <Row><Item>Load</Item><Item>SCLibLoad</Item></Row>
-## <Row><Item>All</Item><Item>SCLibAllComplexes</Item></Row>
-## <Row><Item>SearchByName</Item><Item>SCLibSearchByName</Item></Row>
-## <Row><Item>SearchByAttribute</Item><Item>SCLibSearchByAttribute</Item></Row>
-## <Row><Item>DetermineTopologicalType</Item><Item>SCLibDetermineTopologicalType</Item></Row>
+## <Row><Item>Update</Item><Item><Ref Meth="SCLibUpdate"/></Item></Row>
+## <Row><Item>IsLoaded</Item><Item><Ref Meth="SCLibIsLoaded"/></Item></Row>
+## <Row><Item>Size</Item><Item><Ref Meth="SCLibSize"/></Item></Row>
+## <Row><Item>Status</Item><Item><Ref Meth="SCLibStatus"/></Item></Row>
+## <Row><Item>Flush</Item><Item><Ref Meth="SCLibFlush"/></Item></Row>
+## <Row><Item>Add</Item><Item><Ref Meth="SCLibAdd"/></Item></Row>
+## <Row><Item>Delete</Item><Item><Ref Meth="SCLibDelete"/></Item></Row>
+## <Row><Item>All</Item><Item><Ref Meth="SCLibAllComplexes"/></Item></Row>
+## <Row><Item>SearchByName</Item><Item><Ref Meth="SCLibSearchByName"/></Item></Row>
+## <Row><Item>SearchByAttribute</Item><Item><Ref Meth="SCLibSearchByAttribute"/></Item></Row>
+## <Row><Item>DetermineTopologicalType</Item><Item><Ref Meth="SCLibDetermineTopologicalType"/></Item></Row>
 ## </Table>
 ##		
 ##<#/GAPDoc>
@@ -683,6 +684,7 @@ BdEx:=1,
 BoundaryEx:=1,
 ConnectedComponents:=1,
 SCConnectedComponents:=1,
+DifferenceCycles:=1,
 D:=1,
 Dim:=1,
 DualGraph:=1,

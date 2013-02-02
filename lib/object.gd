@@ -656,7 +656,8 @@ DeclareOperation( "ObjByExtRep", [ IsFamily, IsObject ] );
 ##  gap> KnownAttributesOfObject(g);
 ##  [ "Size", "OneImmutable", "NrMovedPoints", "MovedPoints", 
 ##    "GeneratorsOfMagmaWithInverses", "MultiplicativeNeutralElement", 
-##    "Pcgs", "GeneralizedPcgs", "StabChainMutable", "StabChainOptions" ]
+##    "HomePcgs", "Pcgs", "GeneralizedPcgs", "StabChainMutable", 
+##    "StabChainOptions" ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

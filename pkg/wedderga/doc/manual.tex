@@ -98,15 +98,16 @@
 {\Huge \textbf{Wedderburn Decomposition of Group Algebras\mbox{}}}\\
 \vfill
 
-{\Huge Version 4.4.3\mbox{}}\\[1cm]
-{31 May 2012\mbox{}}\\[1cm]
+{\Huge Version 4.5.3\mbox{}}\\[1cm]
+{31 January 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Osnel Broche Cristo   \mbox{}}}\\
 {\Large \textbf{Alexander Konovalov    \mbox{}}}\\
 {\Large \textbf{Aurora Olivieri   \mbox{}}}\\
-{\Large \textbf{Gabriela Olteanu   \mbox{}}}\\
+{\Large \textbf{Gabriela Olteanu    \mbox{}}}\\
 {\Large \textbf{{\a'A}ngel del R{\a'\i}o    \mbox{}}}\\
-\hypersetup{pdfauthor=Osnel Broche Cristo   ; Alexander Konovalov    ; Aurora Olivieri   ; Gabriela Olteanu   ; {\a'A}ngel del R{\a'\i}o    }
+{\Large \textbf{Inneke Van Gelder    \mbox{}}}\\
+\hypersetup{pdfauthor=Osnel Broche Cristo   ; Alexander Konovalov    ; Aurora Olivieri   ; Gabriela Olteanu    ; {\a'A}ngel del R{\a'\i}o    ; Inneke Van Gelder    }
 \end{center}\vfill
 
 \mbox{}\\
@@ -132,11 +133,13 @@ Campus Universit{\a'a}rio - Caixa Postal 3037, 37200-000, Lavras - MG, Brazil \e
  Apartado Postal 89000, Caracas 1080-A, Venezuela \end{minipage}
 }\\
 {\mbox{}\\
-\small \noindent \textbf{Gabriela Olteanu   }  Email: \href{mailto://golteanu@um.es, olteanu@math.ubbcluj.ro} {\texttt{golteanu@um.es, olteanu@math.ubbcluj.ro}}\\
+\small \noindent \textbf{Gabriela Olteanu    }  Email: \href{mailto://gabriela.olteanu@econ.ubbcluj.ro} {\texttt{gabriela.olteanu@econ.ubbcluj.ro}}\\
+  Homepage: \href{http://math.ubbcluj.ro/~olteanu} {\texttt{http://math.ubbcluj.ro/\texttt{\symbol{126}}olteanu}}\\
   Address: \begin{minipage}[t]{8cm}\noindent
- Department of Mathematics and Computer Science\\
- North University of Baia Mare\\
- Victoriei 76, 430122 Baia Mare, Romania \end{minipage}
+ Department of Statistics-Forecasts-Mathematics\\
+ Faculty of Economics and Business Administration\\
+ Babes-Bolyai University\\
+ Str. T. Mihali 58-60, 400591 Cluj-Napoca, Romania \end{minipage}
 }\\
 {\mbox{}\\
 \small \noindent \textbf{{\a'A}ngel del R{\a'\i}o    }  Email: \href{mailto://adelrio@um.es} {\texttt{adelrio@um.es}}\\
@@ -144,6 +147,14 @@ Campus Universit{\a'a}rio - Caixa Postal 3037, 37200-000, Lavras - MG, Brazil \e
   Address: \begin{minipage}[t]{8cm}\noindent
  Departamento de Matem{\a'a}ticas, Universidad de Murcia\\
  30100 Murcia, Spain \end{minipage}
+}\\
+{\mbox{}\\
+\small \noindent \textbf{Inneke Van Gelder    }  Email: \href{mailto://ivgelder@vub.ac.be} {\texttt{ivgelder@vub.ac.be}}\\
+  Homepage: \href{http://homepages.vub.ac.be/~ivgelder} {\texttt{http://homepages.vub.ac.be/\texttt{\symbol{126}}ivgelder}}\\
+  Address: \begin{minipage}[t]{8cm}\noindent
+ Vrije Universiteit Brussel, Departement Wiskunde \\
+ Pleinlaan 2 \\
+ 1050 Brussels, Belgium \end{minipage}
 }\\
 \end{titlepage}
 
@@ -155,14 +166,15 @@ Campus Universit{\a'a}rio - Caixa Postal 3037, 37200-000, Lavras - MG, Brazil \e
 semisimple group algebras of finite groups over finite fields and over
 subfields of finite cyclotomic extensions of the rationals. It also contains
 functions that produce the primitive central idempotents of semisimple group
-algebras. Other functions of \textsf{Wedderga} allow to construct crossed products over a group with coefficients in an
+algebras and a complete set of orthogonal primitive idempotents. Other
+functions of \textsf{Wedderga} allow to construct crossed products over a group with coefficients in an
 associative ring with identity and the multiplication determined by a given
 action and twisting. \mbox{}}\\[1cm]
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 2 ]}
- {\copyright} 2006-2012 by Osnel Broche Cristo, Alexander Konovalov, Aurora
-Olivieri, Gabriela Olteanu and {\a'A}ngel del R{\a'\i}o.
+ {\copyright} 2006-2013 by Osnel Broche Cristo, Alexander Konovalov, Aurora
+Olivieri, Gabriela Olteanu, {\a'A}ngel del R{\a'\i}o and Inneke Van Gelder.
 
  \textsf{Wedderga} is free software; you can redistribute it and/or modify it under the terms of
 the GNU General Public License as published by the Free Software Foundation;
@@ -173,8 +185,8 @@ details, see the FSF's own site \href{http://www.gnu.org/licenses/gpl.html} {\te
 
  If you publish a result which was partially obtained with the usage of \textsf{Wedderga}, please cite it in the following form:
 
- O. Broche Cristo, A. Konovalov, A. Olivieri, G. Olteanu and {\a'A}. del
-R{\a'\i}o. \emph{Wedderga --- Wedderburn Decomposition of Group Algebras, Version 4.4.3;} 2012 (\href{http://www.um.es/adelrio/wedderga.htm} {\texttt{http://www.um.es/adelrio/wedderga.htm}}). \mbox{}}\\[1cm]
+ O. Broche Cristo, A. Konovalov, A. Olivieri, G. Olteanu, {\a'A}. del R{\a'\i}o
+and I. Van Gelder. \emph{Wedderga --- Wedderburn Decomposition of Group Algebras, Version 4.5.3;} 2013 (\href{http://www.cs.st-andrews.ac.uk/~alexk/wedderga} {\texttt{http://www.cs.st-andrews.ac.uk/\texttt{\symbol{126}}alexk/wedderga}}). \mbox{}}\\[1cm]
 {\small 
 \section*{Acknowledgements}
 \logpage{[ 0, 0, 3 ]}
@@ -191,7 +203,8 @@ following institutions:
 \item M.E.C. of Romania (CEEX-ET 47/2006);
 \item D.G.I. of Spain;
 \item Fundaci{\a'o}n S{\a'e}neca of Murcia;
-\item CAPES and FAPESP of Brazil.
+\item CAPES and FAPESP of Brazil;
+\item Research Foundation Flanders (FWO - Vlaanderen).
 \end{itemize}
  We acknowledge with gratitude this support.
 
@@ -222,11 +235,15 @@ as input.
 a group algebra $FG$ provided $G$ is a finite group and $F$ is either a finite field of characteristic coprime to the order of $G$, or an abelian number field (i.e. a subfield of a finite cyclotomic extension
 of the rationals). 
 
- Other functions of \textsf{Wedderga} compute the primitive central idempotents of semisimple group algebras. 
+ Other functions of \textsf{Wedderga} compute the primitive central idempotents of semisimple group algebras and a
+complete set of orthogonal primitive idempotents. 
 
  The package also provides functions to construct crossed products over a group
 with coefficients in an associative ring with identity and the multiplication
 determined by a given action and twisting.
+
+ Furhermore, the package provides functions to create code words from a group
+ring element.
 
  }
 
@@ -251,12 +268,13 @@ the type of the operating system. It is designed for \textsf{GAP}4.4 and no comp
   
   !gapprompt|gap>D !gapinput|LoadPackage("wedderga");D
   -----------------------------------------------------------------------------
-  Loading  Wedderga 4.4.0 (Wedderga)
+  Loading  Wedderga 4.4.4 (Wedderga)
   by Osnel Broche Cristo (osnel@ufla.br),
      Alexander Konovalov (http://www.cs.st-andrews.ac.uk/~alexk/),
      Gabriela Olteanu (golteanu@um.es, olteanu@math.ubbcluj.ro),
-     Aurora Olivieri (olivieri@usb.ve), and
-     Angel del Rio (http://www.um.es/adelrio).
+     Aurora Olivieri (olivieri@usb.ve), 
+     Angel del Rio (http://www.um.es/adelrio) and
+     Inneke Van Gelder (ivgelder@vub.ac.be).
   -----------------------------------------------------------------------------
   true
   
@@ -1119,6 +1137,100 @@ complete (i.e. if the group $G$ is not \emph{strongly monomial} (\ref{StMon})) t
 
  }
 
+ 
+\section{\textcolor{Chapter }{Complete set of orthogonal primitive idempotents from Shoda pairs and
+cyclotomic classes}}\label{PI}
+\logpage{[ 4, 4, 0 ]}
+\hyperdef{L}{X8577F9547FC58C4C}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{PrimitiveIdempotentsNilpotent}}
+\logpage{[ 4, 4, 1 ]}\nobreak
+\hyperdef{L}{X7E95CDF17C4D54DB}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PrimitiveIdempotentsNilpotent({\mdseries\slshape FG, H, K, C, arg})\index{PrimitiveIdempotentsNilpotent@\texttt{PrimitiveIdempotentsNilpotent}}
+\label{PrimitiveIdempotentsNilpotent}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+ A list of orthogonal primitive idempotents. 
+
+
+
+ The input \mbox{\texttt{\mdseries\slshape FG}} should be a semisimple group algebra of a finite nilpotent group $G$ whose coefficient field $F$ is a finite field. \mbox{\texttt{\mdseries\slshape H}} and \mbox{\texttt{\mdseries\slshape K}} should form a strong Shoda pair $(H,K)$ of $G$. \mbox{\texttt{\mdseries\slshape arg}} is a list containing an epimorphism map \mbox{\texttt{\mdseries\slshape epi}} from $N_G(K)$ to $N_G(K)/K$ and a generator \mbox{\texttt{\mdseries\slshape gq}} of $H/K$. $C$ is the $|F|$-cyclotomic class modulo $[H:K]$ (w.r.t. the generator $gq$ of $H/K$) 
+
+ The output is a complete set of orthogonal primitive idempotents of the simple
+algebra $FGe_C(G,H,K)$ (\ref{TheoryPI}). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(8);; |
+  !gapprompt@gap>| !gapinput@F:=GF(3);;                     |
+  !gapprompt@gap>| !gapinput@FG:=GroupRing(F,G);;|
+  !gapprompt@gap>| !gapinput@H:=StrongShodaPairs(G)[5][1];|
+  Group([ f1*f2, f3, f3 ])
+  !gapprompt@gap>| !gapinput@K:=StrongShodaPairs(G)[5][2];|
+  Group([ f1*f2 ])
+  !gapprompt@gap>| !gapinput@N:=Normalizer(G,K); |
+  Group([ f1*f2*f3, f3 ])
+  !gapprompt@gap>| !gapinput@epi:=NaturalHomomorphismByNormalSubgroup(N,K);|
+  [ f1*f2*f3, f3 ] -> [ f1, f1 ]
+  !gapprompt@gap>| !gapinput@QHK:=Image(epi,H); |
+  Group([ <identity> of ..., f1, f1 ])
+  !gapprompt@gap>| !gapinput@gq:=MinimalGeneratingSet(QHK)[1]; |
+  f1
+  !gapprompt@gap>| !gapinput@C:=CyclotomicClasses(Size(F),Index(H,K))[2];|
+  [ 1 ]
+  !gapprompt@gap>| !gapinput@PrimitiveIdempotentsNilpotent(FG,H,K,C,[epi,gq]);|
+  [ (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3)^0)*f1*f2+(Z(3))*f1*f2*f3, 
+    (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3))*f1*f2+(Z(3)^0)*f1*f2*f3 ]
+  
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{PrimitiveIdempotentsTrivialTwisting}}
+\logpage{[ 4, 4, 2 ]}\nobreak
+\hyperdef{L}{X8784570980B9B750}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PrimitiveIdempotentsTrivialTwisting({\mdseries\slshape FG, H, K, C, arg})\index{PrimitiveIdempotentsTrivialTwisting@\texttt{PrimitiveIdempotentsTrivialTwisting}}
+\label{PrimitiveIdempotentsTrivialTwisting}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+ A list of orthogonal primitive idempotents. 
+
+
+
+ The input \mbox{\texttt{\mdseries\slshape FG}} should be a semisimple group algebra of a finite group $G$ whose coefficient field $F$ is a finite field. \mbox{\texttt{\mdseries\slshape H}} and \mbox{\texttt{\mdseries\slshape K}} should form a strong Shoda pair $(H,K)$ of $G$. \mbox{\texttt{\mdseries\slshape arg}} is a list containing an epimorphism map \mbox{\texttt{\mdseries\slshape epi}} from $N_G(K)$ to $N_G(K)/K$ and a generator \mbox{\texttt{\mdseries\slshape gq}} of $H/K$. $C$ is the $|F|$-cyclotomic class modulo $[H:K]$ (w.r.t. the generator $gq$ of $H/K$). The input parameters should be such that the simple component $FGe_C(G,H,K)$ has a trivial twisting. 
+
+ The output is a complete set of orthogonal primitive idempotents of the simple
+algebra $FGe_C(G,H,K)$ (\ref{TheoryPI}). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(8);; |
+  !gapprompt@gap>| !gapinput@F:=GF(3);;                     |
+  !gapprompt@gap>| !gapinput@FG:=GroupRing(F,G);;|
+  !gapprompt@gap>| !gapinput@H:=StrongShodaPairs(G)[5][1];|
+  Group([ f1*f2, f3, f3 ])
+  !gapprompt@gap>| !gapinput@K:=StrongShodaPairs(G)[5][2];|
+  Group([ f1*f2 ])
+  !gapprompt@gap>| !gapinput@N:=Normalizer(G,K); |
+  Group([ f1*f2*f3, f3 ])
+  !gapprompt@gap>| !gapinput@epi:=NaturalHomomorphismByNormalSubgroup(N,K);|
+  [ f1*f2*f3, f3 ] -> [ f1, f1 ]
+  !gapprompt@gap>| !gapinput@QHK:=Image(epi,H); |
+  Group([ <identity> of ..., f1, f1 ])
+  !gapprompt@gap>| !gapinput@gq:=MinimalGeneratingSet(QHK)[1]; |
+  f1
+  !gapprompt@gap>| !gapinput@C:=CyclotomicClasses(Size(F),Index(H,K))[2];|
+  [ 1 ]
+  !gapprompt@gap>| !gapinput@PrimitiveIdempotentsTrivialTwisting(FG,H,K,C,[epi,gq]);|
+  [ (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3)^0)*f1*f2+(Z(3))*f1*f2*f3, 
+    (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3))*f1*f2+(Z(3)^0)*f1*f2*f3 ]
+  
+\end{Verbatim}
+ }
+
+ }
+
  }
 
     
@@ -1664,7 +1776,7 @@ extension of the rationals and \texttt{false} otherwise.
 
  The input must be a group ring. 
 
- Returns \texttt{true} if \mbox{\texttt{\mdseries\slshape KG}} is a \emph{semisimple finite group algebra} (\ref{Semisimple}), that is a group algebra of a finite group $G$ over a field $K$ of order coprime to the order of $G$, and \texttt{false} otherwisse. 
+ Returns \texttt{true} if \mbox{\texttt{\mdseries\slshape KG}} is a \emph{semisimple finite group algebra} (\ref{Semisimple}), that is a group algebra of a finite group $G$ over a field $K$ of order coprime to the order of $G$, and \texttt{false} otherwise. 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   
   !gapprompt@gap>| !gapinput@FG:=GroupRing( GF(5), SymmetricGroup(3) );;|
@@ -1676,6 +1788,32 @@ extension of the rationals and \texttt{false} otherwise.
   !gapprompt@gap>| !gapinput@QG:=GroupRing( Rationals, SymmetricGroup(4) );;|
   !gapprompt@gap>| !gapinput@IsSemisimpleFiniteGroupAlgebra( QG );|
   false
+  
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{IsTwistingTrivial}}
+\logpage{[ 6, 1, 5 ]}\nobreak
+\hyperdef{L}{X8337F25387C53B02}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{IsTwistingTrivial({\mdseries\slshape G, H, K})\index{IsTwistingTrivial@\texttt{IsTwistingTrivial}}
+\label{IsTwistingTrivial}
+}\hfill{\scriptsize (property)}}\\
+
+
+ The input must be a group and a strong Shoda pair of the group. 
+
+ Returns \texttt{true} if the simple algebra ${\ensuremath{\mathbb Q}}Ge(G,H,K)$ has a \emph{trivial twisting} (\ref{SSPDef}), and \texttt{false} otherwise. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(8);;|
+  !gapprompt@gap>| !gapinput@H:=StrongShodaPairs(G)[5][1];|
+  Group([ f1*f2, f3, f3 ])
+  !gapprompt@gap>| !gapinput@K:=StrongShodaPairs(G)[5][2]; |
+  Group([ f1*f2 ])
+  !gapprompt@gap>| !gapinput@IsTwistingTrivial(G,H,K);|
+  true
   
 \end{Verbatim}
  }
@@ -1906,8 +2044,106 @@ Wedderburn components each time when we call \texttt{WedderburnDecomposition}.
  }
 
   
-\chapter{\textcolor{Chapter }{The basic theory behind \textsf{Wedderga}}}\label{Theory}
+\chapter{\textcolor{Chapter }{Applications of the Wedderga package}}\label{Applications}
 \logpage{[ 7, 0, 0 ]}
+\hyperdef{L}{X83FD4D318127261B}{}
+{
+  
+\section{\textcolor{Chapter }{Applications to coding theory}}\label{CodingTheory}
+\logpage{[ 7, 1, 0 ]}
+\hyperdef{L}{X856D7975810BF987}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{CodeWordByGroupRingElement}}
+\logpage{[ 7, 1, 1 ]}\nobreak
+\hyperdef{L}{X7AE55D3C7BFCF3A9}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CodeWordByGroupRingElement({\mdseries\slshape F, S, a})\index{CodeWordByGroupRingElement@\texttt{CodeWordByGroupRingElement}}
+\label{CodeWordByGroupRingElement}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+ The code word of length the length of \mbox{\texttt{\mdseries\slshape S}} associated to the group ring element \mbox{\texttt{\mdseries\slshape a}}. 
+
+
+
+ The input \mbox{\texttt{\mdseries\slshape F}} should be a finite field. The input \mbox{\texttt{\mdseries\slshape S}} is a fixed ordering of a group $G$ and \mbox{\texttt{\mdseries\slshape a}} is an element in the group algebra $FG$. 
+
+ Each element $c$ in $FG$ is of the form $ c=\sum_{i=1}^n f_i g_i$, where we fix an ordering $\{g_1,g_2,...,g_n \}$ of the group elements of $G$ and $f_i\in F$. If we look at $c$ as a codeword, we will write $[f_1 f_2 ... f_n]$. (\ref{codes}). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(8);;|
+  !gapprompt@gap>| !gapinput@F:=GF(3);;          |
+  !gapprompt@gap>| !gapinput@FG:=GroupRing(F,G);;|
+  !gapprompt@gap>| !gapinput@a:=AsList(FG)[27];|
+  (Z(3)^0)*<identity> of ...+(Z(3)^0)*f1+(Z(3)^0)*f2+(Z(3)^0)*f3+(Z(3)^
+  0)*f1*f2+(Z(3)^0)*f2*f3+(Z(3))*f1*f2*f3
+  !gapprompt@gap>| !gapinput@S:=AsSet(G);|
+  [ <identity> of ..., f1, f2, f3, f1*f2, f1*f3, f2*f3, f1*f2*f3 ]
+  !gapprompt@gap>| !gapinput@CodeWordByGroupRingElement(F,S,a);|
+  [ Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3), Z(3)^0, Z(3) ]
+  
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{CodeByLeftIdeal}}
+\logpage{[ 7, 1, 2 ]}\nobreak
+\hyperdef{L}{X7C8BBBDB78A1678E}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CodeByLeftIdeal({\mdseries\slshape F, G, S, I})\index{CodeByLeftIdeal@\texttt{CodeByLeftIdeal}}
+\label{CodeByLeftIdeal}
+}\hfill{\scriptsize (operation)}}\\
+\textbf{\indent Returns:\ }
+ All code words of length the length of \mbox{\texttt{\mdseries\slshape S}} associated to the group ring elements in the ideal \mbox{\texttt{\mdseries\slshape I}} of \mbox{\texttt{\mdseries\slshape FG}}. 
+
+
+
+ The input \mbox{\texttt{\mdseries\slshape F}} should be a finite field. The input \mbox{\texttt{\mdseries\slshape S}} is a fixed ordering of a group $G$ and \mbox{\texttt{\mdseries\slshape I}} is a left ideal of the group algebra $FG$. 
+
+ Each element $c$ in $FG$ is of the form $ c=\sum_{i=1}^n f_i g_i$, where we fix an ordering $\{g_1,g_2,...,g_n \}$ of the group elements of $G$ and $f_i\in F$. If we look at $c$ as a codeword, we will write $[f_1 f_2 ... f_n]$. (\ref{codes}). 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@G:=DihedralGroup(8);;|
+  !gapprompt@gap>| !gapinput@F:=GF(3);;          |
+  !gapprompt@gap>| !gapinput@FG:=GroupRing(F,G);;|
+  !gapprompt@gap>| !gapinput@S:=AsSet(G);|
+  [ <identity> of ..., f1, f2, f3, f1*f2, f1*f3, f2*f3, f1*f2*f3 ]
+  !gapprompt@gap>| !gapinput@H:=StrongShodaPairs(G)[5][1];|
+  Group([ f1*f2, f3, f3 ])
+  !gapprompt@gap>| !gapinput@K:=StrongShodaPairs(G)[5][2];|
+  Group([ f1*f2 ])
+  !gapprompt@gap>| !gapinput@N:=Normalizer(G,K);|
+  Group([ f1*f2*f3, f3 ])
+  !gapprompt@gap>| !gapinput@epi:=NaturalHomomorphismByNormalSubgroup(N,K);|
+  [ f1*f2*f3, f3 ] -> [ f1, f1 ]
+  !gapprompt@gap>| !gapinput@QHK:=Image(epi,H);|
+  Group([ <identity> of ..., f1, f1 ])
+  !gapprompt@gap>| !gapinput@gq:=MinimalGeneratingSet(QHK)[1];|
+  f1
+  !gapprompt@gap>| !gapinput@C:=CyclotomicClasses(Size(F),Index(H,K))[2];|
+  [ 1 ]
+  !gapprompt@gap>| !gapinput@e:=PrimitiveIdempotentsNilpotent(FG,H,K,C,[epi,gq]);   |
+  [ (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3)^0)*f1*f2+(Z(3))*f1*f2*f3, 
+    (Z(3)^0)*<identity> of ...+(Z(3))*f3+(Z(3))*f1*f2+(Z(3)^0)*f1*f2*f3 ]
+  !gapprompt@gap>| !gapinput@FGe := LeftIdealByGenerators(FG,[e[1]]);;|
+  !gapprompt@gap>| !gapinput@V := VectorSpace(F,CodeByLeftIdeal(F,G,S,FGe));;|
+  !gapprompt@gap>| !gapinput@B := Basis(V);;|
+  !gapprompt@gap>| !gapinput@LoadPackage("guava");;|
+  !gapprompt@gap>| !gapinput@code := GeneratorMatCode(B,F);|
+  a linear [8,2,1..4]4..5 code defined by generator matrix over GF(3)
+  !gapprompt@gap>| !gapinput@MinimumDistance(code);|
+  4
+  
+\end{Verbatim}
+ }
+
+ }
+
+ }
+
+  
+\chapter{\textcolor{Chapter }{The basic theory behind \textsf{Wedderga}}}\label{Theory}
+\logpage{[ 8, 0, 0 ]}
 \hyperdef{L}{X8487E7AD7D6B2EA5}{}
 {
   In this chapter we describe the theory that is behind the algorithms used by \textsf{Wedderga}. 
@@ -1916,7 +2152,7 @@ Wedderburn components each time when we call \texttt{WedderburnDecomposition}.
 
  We use the following notation: ${\ensuremath{\mathbb Q}}$ denotes the field of rationals and $\mathbb F_q$ the finite field of order $q$. For every positive integer $k$, we denote a complex $k$-th primitive root of unity by $\xi_k$ and so ${\ensuremath{\mathbb Q}}(\xi_k)$ is the $k$-th cyclotomic extension of ${\ensuremath{\mathbb Q}}$. 
 \section{\textcolor{Chapter }{Group rings and group algebras}}\label{GroupRings}
-\logpage{[ 7, 1, 0 ]}
+\logpage{[ 8, 1, 0 ]}
 \hyperdef{L}{X815ECCD97B18314B}{}
 {
   \index{group ring} Given a group $G$ and a ring $R$, the \emph{group ring} $RG$ over the group $G$ with coefficients in $R$ is the ring whose underlying additive group is a right $R-$module with basis $G$ such that the product is defined by the following rule 
@@ -1927,7 +2163,7 @@ Wedderburn components each time when we call \texttt{WedderburnDecomposition}.
 
   
 \section{\textcolor{Chapter }{Semisimple group algebras}}\label{Semisimple}
-\logpage{[ 7, 2, 0 ]}
+\logpage{[ 8, 2, 0 ]}
 \hyperdef{L}{X7FDD93FB79ADCC91}{}
 {
   \index{semisimple ring} We say that a ring $R$ is semisimple if it is a direct sum of simple left (alternatively right)
@@ -1944,7 +2180,7 @@ artinian rings. }
 
   
 \section{\textcolor{Chapter }{Wedderburn decomposition}}\label{WedDec}
-\logpage{[ 7, 3, 0 ]}
+\logpage{[ 8, 3, 0 ]}
 \hyperdef{L}{X87273420791F220E}{}
 {
   \index{Wedderburn decomposition} \index{Wedderburn components} If $R$ is a \emph{semisimple ring} (\ref{Semisimple}) then the \emph{Wedderburn decomposition} of $R$ is the decomposition of $R$ as a direct product of simple algebras. The factors of this Wedderburn
@@ -1976,7 +2212,7 @@ Olteanu \cite{O} which uses previous work by Olivieri, del R{\a'\i}o and Sim{\a'
 
   
 \section{\textcolor{Chapter }{Characters and primitive central idempotents}}\label{Idempotents}
-\logpage{[ 7, 4, 0 ]}
+\logpage{[ 8, 4, 0 ]}
 \hyperdef{L}{X87B6505C7C2EE054}{}
 {
   \index{primitive central idempotent} \index{field of character values} A \emph{primitive central idempotent} of a ring $R$ is a non-zero central idempotent $e$ which cannot be written as the sum of two non-zero central idempotents of $Re$, or equivalently, such that $Re$ is indecomposable as a direct product of two non-trivial two-sided ideals. 
@@ -2003,7 +2239,7 @@ Olteanu \cite{O} which uses previous work by Olivieri, del R{\a'\i}o and Sim{\a'
 
   
 \section{\textcolor{Chapter }{Central simple algebras and Brauer equivalence}}\label{Brauer}
-\logpage{[ 7, 5, 0 ]}
+\logpage{[ 8, 5, 0 ]}
 \hyperdef{L}{X7A24D5407F72C633}{}
 {
   Let $K$ be a field. \index{central simple algebra@central simple algebra} A \emph{central simple $K$-algebra} is a finite dimensional $K$-algebra with center $K$ which has no non-trivial proper ideals. Every central simple $K$-algebra is isomorphic to a matrix algebra $M_n(D)$ where $D$ is a division algebra (which is finite-dimensional over $K$ and has centre $K$). The division algebra $D$ is unique up to $K$-isomorphisms. 
@@ -2014,7 +2250,7 @@ Olteanu \cite{O} which uses previous work by Olivieri, del R{\a'\i}o and Sim{\a'
 
   
 \section{\textcolor{Chapter }{Crossed Products}}\label{CrossedProd}
-\logpage{[ 7, 6, 0 ]}
+\logpage{[ 8, 6, 0 ]}
 \hyperdef{L}{X7FB21779832CE1CB}{}
 {
   \index{Crossed Product@Crossed Product} Let $R$ be a ring and $G$ a group. 
@@ -2061,7 +2297,7 @@ does not change the intrinsic crossed product.
 
   
 \section{\textcolor{Chapter }{Cyclic Crossed Products}}\label{CyclicCP}
-\logpage{[ 7, 7, 0 ]}
+\logpage{[ 8, 7, 0 ]}
 \hyperdef{L}{X828C42CD86AF605F}{}
 {
   \index{Cyclic Crossed Product@Cyclic Crossed Product} Let $R*G=\bigoplus_{g \in G} A_g$ be a \emph{crossed product} (\ref{CrossedProd}) and assume that $G = \langle g \rangle $ is cyclic. Then the crossed product can be given using a particularly nice
@@ -2081,7 +2317,7 @@ description.
 
   
 \section{\textcolor{Chapter }{Abelian Crossed Products}}\label{AbelianCP}
-\logpage{[ 7, 8, 0 ]}
+\logpage{[ 8, 8, 0 ]}
 \hyperdef{L}{X7869E2A48784C232}{}
 {
   \index{Abelian Crossed Product@Abelian Crossed Product} Let $R*G=\bigoplus_{g \in G} A_g$ be a \emph{crossed product} (\ref{CrossedProd}) and assume that $G$ is abelian. Then the crossed product can be given using a simple description. 
@@ -2113,7 +2349,7 @@ u_i^{d_i} = b_i (1 \le i < j \le n) ], \]
 
   
 \section{\textcolor{Chapter }{Classical crossed products}}\label{ClassCP}
-\logpage{[ 7, 9, 0 ]}
+\logpage{[ 8, 9, 0 ]}
 \hyperdef{L}{X80BABE5078A29793}{}
 {
   \index{ClassicalCP@Classical Crossed Product} A \emph{classical crossed product} is a crossed product $L*_a^t G$, where $L/K$ is a finite Galois extension, $G=Gal(L/K)$ is the Galois group of $L/K$ and $a$ is the natural action of $G$ on $L$. Then $t$ is a $2$-cocycle and the \emph{crossed product} (\ref{CrossedProd}) $L*_a^t G$ is denoted by $(L/K,t)$. The crossed product $(L/K,t)$ is known to be a central simple $K$-algebra \cite{R}. 
@@ -2122,7 +2358,7 @@ u_i^{d_i} = b_i (1 \le i < j \le n) ], \]
 
   
 \section{\textcolor{Chapter }{Cyclic Algebras}}\label{CycAlg}
-\logpage{[ 7, 10, 0 ]}
+\logpage{[ 8, 10, 0 ]}
 \hyperdef{L}{X84C98BB8859BBEE2}{}
 {
   \index{Cyclic Algebra@Cyclic Algebra} A \emph{cyclic algebra} is a \emph{classical crossed product} (\ref{ClassCP}) $(L/K,t)$ where $L/K$ is a finite cyclic field extension. The cyclic algebras have a very simple
@@ -2136,7 +2372,7 @@ form.
 
   
 \section{\textcolor{Chapter }{Cyclotomic algebras}}\label{Cyclotomic}
-\logpage{[ 7, 11, 0 ]}
+\logpage{[ 8, 11, 0 ]}
 \hyperdef{L}{X8099A8C784255672}{}
 {
   \index{Cyclotomic algebra@Cyclotomic algebra} A \emph{cyclotomic algebra} over $F$ is a \emph{classical crossed product} (\ref{ClassCP}) $(F(\xi)/F,t)$, where $F$ is a field, $\xi$ is a root of unity in an extension of $F$ and $t(g,h)$ is a root of unity for every $g$ and $h$ in $Gal(F(\xi)/F)$. 
@@ -2147,7 +2383,7 @@ form.
 
   
 \section{\textcolor{Chapter }{Numerical description of cyclotomic algebras}}\label{NumDesc}
-\logpage{[ 7, 12, 0 ]}
+\logpage{[ 8, 12, 0 ]}
 \hyperdef{L}{X84A142407B7565E0}{}
 {
   Let $A=(F(\xi)/F,t)$ be a \emph{cyclotomic algebra} (\ref{Cyclotomic}), where $\xi=\xi_k$ is a $k$-th root of unity. Then the Galois group $G=Gal(F(\xi)/F)$ is abelian and therefore one can obtain a simplified form for the description
@@ -2185,7 +2421,7 @@ u_i^{d_i}=\xi^{\beta_i}, \quad u_s u_r = \xi^{\gamma_{rs}} u_r u_s, \quad i =
 
   
 \section{\textcolor{Chapter }{Idempotents given by subgroups}}\label{IdempotentsSbgps}
-\logpage{[ 7, 13, 0 ]}
+\logpage{[ 8, 13, 0 ]}
 \hyperdef{L}{X8310E96086509397}{}
 {
   \index{$\varepsilon(K,H)$} \index{$e(G,K,H)$} \index{$e_C(G,K,H)$} Let $G$ be a finite group and $F$ a field whose characteristic does not divide the order of $G$. If $H$ is a subgroup of $G$ then set 
@@ -2206,7 +2442,7 @@ u_i^{d_i}=\xi^{\beta_i}, \quad u_s u_r = \xi^{\gamma_{rs}} u_r u_s, \quad i =
 
   
 \section{\textcolor{Chapter }{Shoda pairs}}\label{SPDef}
-\logpage{[ 7, 14, 0 ]}
+\logpage{[ 8, 14, 0 ]}
 \hyperdef{L}{X80C058BE81824B23}{}
 {
   Let $G$ be a finite group. \index{Shoda pair} A \emph{Shoda pair} of $G$ is a pair $(K,H)$ of subgroups of $G$ for which there is a linear character $\chi$ of $K$ with kernel $H$ such that the induced character $\chi^G$ in $G$ is irreducible. By \cite{S} or \cite{ORS}, $(K,H)$ is a Shoda pair if and only if the following conditions hold:
@@ -2225,7 +2461,7 @@ u_i^{d_i}=\xi^{\beta_i}, \quad u_s u_r = \xi^{\gamma_{rs}} u_r u_s, \quad i =
 
   
 \section{\textcolor{Chapter }{Strong Shoda pairs}}\label{SSPDef}
-\logpage{[ 7, 15, 0 ]}
+\logpage{[ 8, 15, 0 ]}
 \hyperdef{L}{X81DAF5267D30C83A}{}
 {
   \index{strong Shoda pair} A \emph{strong Shoda pair} of $G$ is a pair $(K,H)$ of subgroups of $G$ satisfying the following conditions:
@@ -2261,7 +2497,7 @@ Q}}(\chi)]/[F(\xi):F(\chi)]$ and $t'$ is the restriction to $Gal(F(\xi)/F(\chi))
 
   
 \section{\textcolor{Chapter }{Strongly monomial characters and strongly monomial groups}}\label{StMon}
-\logpage{[ 7, 16, 0 ]}
+\logpage{[ 8, 16, 0 ]}
 \hyperdef{L}{X84C694978557EFE5}{}
 {
   \index{SMCh@strongly monomial character} Let $G$ be a finite group an $\chi$ an irreducible character of $G$.
@@ -2279,7 +2515,7 @@ Shoda pairs of $G$ but also the strong Shoda pairs of the subgroups of $G$. }
 
   \pagebreak. 
 \section{\textcolor{Chapter }{Cyclotomic Classes and Strong Shoda Pairs}}\label{CyclotomicClass}
-\logpage{[ 7, 17, 0 ]}
+\logpage{[ 8, 17, 0 ]}
 \hyperdef{L}{X800D8C5087D79DC8}{}
 {
   Let $G$ be a finite group and $F$ a finite field of order $q$, coprime to the order of $G$. 
@@ -2299,6 +2535,78 @@ classes module $n$, or equivalently formed by integers coprime to $n$.
 
  If $G$ is \emph{strongly monomial} (\ref{StMon}) then every primitive central idempotent of $FG$ is realizable by some \emph{strong Shoda pair} (\ref{SSPDef}) of $G$ and some cyclotomic class $C$ \cite{BR}. As in the zero characteristic case, this explain how to compute the \emph{Wedderburn decomposition} (\ref{WedDec}) of $FG$ for a finite semisimple algebra of a strongly monomial group (see \cite{BR} for details). For non strongly monomial groups the algorithm to compute the
 Wedderburn decomposition just uses the Brauer characters. 
+
+ }
+
+ 
+\section{\textcolor{Chapter }{A complete set of orthogonal primitive idempotents}}\label{TheoryPI}
+\logpage{[ 8, 18, 0 ]}
+\hyperdef{L}{X8472ACCF802EC188}{}
+{
+  When $R$ is a semisimple ring, then every left ideal $L$ of $R$ is of the form $L=Re$, where $e$ is an idempotent of $R$. Therefore, we can use the idempotents to characterize the decompositions of
+semisimple rings as a direct sum of minimal left ideals. In particular, let $R=\oplus_{i=1}^t L_i$ be a decomposition of a semisimple ring as a direct sum of minimal left
+ideals. Then, there exists a family $\{e_1,\dots,e_t\}$ of elements of $R$ such that: each $e_i\neq 0$ is an idempotent element, if $i\neq j$, then $e_ie_j=0$, $1=e_1+\cdots+e_t$ and each $e_i$ cannot be written as $e_i=e_i'+e_i''$, where $e_i',e_i''$ are idempotents such that $e_i',e_i''\neq 0$ and $e_i'e_i''=0$, $1\leq i\leq $. Conversely, if there exists a family of idempotents $\{e_1,\dots,e_t\}$ satisfying the previous conditions, then the left ideals $L_i=Re_i$ are minimal and $R=\oplus_{i=1}^t L_i$. Such a set of idempotents is called a \emph{complete set of orthogonal primitive idempotents} of the ring $R$. Such a set is not uniquely determined. \index{Complete set of orthogonal primitive idempotents} 
+
+ Let $\mathbb F$ be a finite field and $G$ a finite nilpotent group such that $\mathbb F G$ is semisimple. Let $(H,K)$ be a strong Shoda pair of $G$, $C\in\mathcal{C}(H/K)$ and set $e_C=e_C(G,H,K)$, $\varepsilon_C=\varepsilon_C(H,K)$, $H/K=\langle\overline{a}\rangle$, $E=E_G(H/K)$. Let $E_2/K$ and $H_2/K=\langle\overline{a_2}\rangle$ (respectively $E_{2'}/K$ and $H_{2'}/K=\langle\overline{a_{2'}}\rangle$) denote the 2-parts (respectively 2'-parts) of $E/K$ and $H/K$ respectively. Then $\langle\overline{a_{2'}}\rangle$ has a cyclic complement $\langle\overline{b_{2'}}\rangle$ in $E_{2'}/K$. Using the description of the primitive central idempotents and the
+Wedderburn components of a semisimple finite group algebra $F G$ (\ref{CyclotomicClass}), a complete set of orthogonal primitive idempotents of $\mathbb F Ge_C$ is described (see \cite{OV}) as the set of conjugates of $\beta_{e_C}=\widetilde{b_{2'}}\beta_2\varepsilon_C$ by the elements of $T_{e_C}=T_{2'}T_2T_E$, where $T_{2'}=\{1,a_{2'},a_{2'}^2,\dots,a_{2'}^{[E_{2'}:H_{2'}]-1}\}$, $T_E$ denotes a right transversal of $E$ in $G$ and $\beta_2$ and $T_2$ are given according to the cases below. 
+\begin{enumerate}
+\item  If $H_2/K$ has a complement $M_2/K$ in $E_2/K$ then $\beta_2=\widetilde{M_2}$. Moreover, if $M_2/K$ is cyclic, then there exists $b_2\in E_2$ such that $E_2/K$ is given by the following presentation 
+\[\langle \overline{a_2},\overline{b_2}\mid
+\overline{a_2}\hspace{1pt}^{2^n}=\overline{b_2}\hspace{1pt}^{2^k}=1,
+\overline{a_2}\hspace{1pt}^{\overline{b_2}}=\overline{a_2}\hspace{1pt}^r
+\rangle,\]
+ and if $M_2/K$ is not cyclic, then there exist $b_2,c_2\in E_2$ such that $E_2/K$ is given by the following presentation 
+\[\langle \overline{a_2},\overline{b_2},\overline{c_2}\mid
+\overline{a_2}\hspace{1pt}^{2^n}=
+\overline{b_2}\hspace{1pt}^{2^k}=\overline{c_2}\hspace{1pt}^2=1,
+\overline{a_2}\hspace{1pt}^{\overline{b_2}}=\overline{a_2}\hspace{1pt}^r,
+\overline{a_2}\hspace{1pt}^{\overline{c_2}}=\overline{a_2}\hspace{1pt}^{-1},
+[\overline{b_2},\overline{c_2}]=1 \rangle,\]
+ with $r \equiv 1 {\rm \,mod\,} 4$ (or equivalently $\overline{a_2}\hspace{1pt}^{2^{n-2}}$ is central in $E_2/K$). Then 
+\begin{enumerate}
+\item  $T_2=\{1,a_2,a_2^2,\dots, a_2^{2^k-1}\}$, if $\overline{a_2}\hspace{1pt}^{2^{n-2}}$ is central in $E_2/K$ (unless $n\leq 1$) and $M_2/K$ is cyclic; and 
+\item  $T_2=\{1,a_2,a_2^2,\dots,a_2^{d/2-1},a_2^{2^{n-2}},a_2^{2^{n-2}+1},\dots,a_2^{2^{n-2}+d/2-1}\}$, where $d=[E_2:H_2]$, otherwise. 
+\end{enumerate}
+ 
+\item  If $H_2/K$ has no complement in $E_2/K$, then there exist $b_2,c_2\in E_2$ such that $E_2/K$ is given by the following presentation 
+\[ \langle \overline{a_2},\overline{b_2},\overline{c_2}\mid
+\overline{a_2}\hspace{1pt}^{2^n}= \overline{b_2}\hspace{1pt}^{2^k}=1,
+\overline{c_2}\hspace{1pt}^2=\overline{a_2}\hspace{1pt}^{2^{n-1}},
+\overline{a_2}\hspace{1pt}^{\overline{b_2}}=\overline{a_2}\hspace{1pt}^r,\\
+\overline{a_2}\hspace{1pt}^{\overline{c_2}}=\overline{a_2}\hspace{1pt}^{-1},[\overline{b_2},\overline{c_2}]=1
+\rangle, \]
+ with $r\equiv 1 {\rm \,mod\,} 4$. In this case, $\beta_2=\widetilde{b_2}\frac{1+xa_2^{2^{n-2}}+ya_2^{2^{n-2}}c_2}{2}$ and 
+\[T_2=\{1,a_2,a_2^2,\dots,
+a_2^{2^k-1},c_2,c_2a_2,c_2a_2^2,\dots,c_2a_2^{2^k-1}\},\]
+ with $x,y\in\mathbb F$, satisfying $x^2+y^2=-1$ and $y\neq 0$. 
+\end{enumerate}
+ When $G$ is not nilpotent, we can still use the following description in some specific
+cases. Let $G$ be a finite group and $\mathbb F$ a finite field of order $s$ such that $s$ is coprime to the order of $G$. Let $(H,K)$ be a strong Shoda pair of $G$ such that $\tau(gH,g'H)=1$ for all $g,g'\in E=E_G(H/K)$, and let $C\in\mathcal{C}(H/K)$. Let $\varepsilon=\varepsilon_C(H,K)$ and $e=e_C(G,H,K)$ (\ref{CyclotomicClass}). Let $w$ be a normal element of $\mathbb F_{s^o}/\mathbb F_{s^{o/[E:H]}}$ (with $o$ the multiplicative order of $s$ modulo $[H:K]$) and $B$ the normal basis determined by $w$. Let $\psi$ be the isomorphism between $\mathbb F E \varepsilon$ and the matrix algebra $M_{[E:H]}(\mathbb F_{s^{o/[E:H]}})$ with respect to the basis $B$ as stated in Corollary 29.8 in \cite{R}. Let $P,A\in M_{[E:H]}(\mathbb F_{s^{o/[E:H]}})$ be the matrices 
+\[ P= \left( \begin{array}{rrrrrr} 1 & 1 & 1 & \cdots & 1 & 1\\ 1 & -1 & 0 &
+\cdots & 0 & 0\\ 1 & 0 & -1 & \cdots & 0 & 0\\ \vdots & \vdots & \vdots &
+\ddots & \vdots & \vdots\\ 1 & 0 & 0 & \cdots & -1 & 0\\ 1 & 0 & 0 & \cdots &
+0 & -1\\ \end{array} \right) \quad {\rm and } \quad A= \left(
+\begin{array}{ccccc} 0 & 0 & \cdots & 0 & 1\\ 1 & 0 & \cdots & 0 & 0\\ 0 & 1 &
+\cdots & 0 & 0\\ \vdots & \vdots & \ddots & \vdots & \vdots\\ 0 & 0 & \cdots &
+0 & 0\\ 0 & 0 & \cdots & 1 & 0\\ \end{array} \right). \]
+ Then 
+\[ \{x\widehat{T_1}\varepsilon x^{-1} \mid x\in T_2\langle{x_e}\rangle\} \]
+ is a complete set of orthogonal primitive idempotents of $\mathbb F G e$ where $x_e=\psi^{-1}(PAP^{-1})$, $T_1$ is a transversal of $H$ in $E$ and $T_2$ is a right transversal of $E$ in $G$ (\cite{OV2}). By $\widehat{T_1}$ we denote the element $\frac{1}{|T_1|}\sum_{t\in T_1}{t}$ in $\mathbb F G$. }
+
+ 
+\section{\textcolor{Chapter }{Applications to coding theory}}\label{codes}
+\logpage{[ 8, 19, 0 ]}
+\hyperdef{L}{X856D7975810BF987}{}
+{
+  \index{linear code} A \emph{linear code} of length $n$ and rank $k$ is a linear subspace $C$ with dimension $k$ of the vector space $\mathbb F_q^n$. The standard basis of $\mathbb F_q^n$ is denoted by $E=\{e_1,...,e_n\}$. The vectors in $C$ are called codewords, the size of a code is the number of codewords and equals $q^k$. The distance of a code is the minimum distance between distinct codewords,
+i.e. the number of elements in which they differ. 
+
+ \index{group code} For any group $G$, we denote by $\mathbb F_q G$ the group algebra over $G$ with coefficients in $\mathbb F_q$. If $G$ is a group of order $n$ and $C\subseteq \mathbb F_q^n$ is a linear code, then we say that $C$ is a left $G$-code (respectively a $G$-code) if there is a bijection $\phi:E\rightarrow G$ such that the linear extension of $\phi$ to an isomorphism $\phi:\mathbb F_q^n\rightarrow \mathbb F_q G$ maps $C$ to a left ideal (respectively a two-sided ideal) of $\mathbb F_q G$. A left \emph{group code} (respectively a group code) is a linear code which is a left $G$-code (respectively a $G$-code) for some group $G$. 
+
+ Since left ideals in $\mathbb F_q G$ are generated by idempotents, there is a one-one relation between (sums of)
+primitive idempotents of $\mathbb F_q G$ and left $G$-codes over $\mathbb F_q$.
+
+ Note that each element $c$ in $\mathbb F_q G$ is of the form $c=\sum_{i=1}^n f_i g_i$, where we fix an ordering $\{g_1,g_2,...,g_n \}$ of the group elements of $G$ and $f_i\in \mathbb F_q$. If one looks at $c$ as a codeword, one writes $[f_1 f_2 ... f_n]$. 
 
  }
 

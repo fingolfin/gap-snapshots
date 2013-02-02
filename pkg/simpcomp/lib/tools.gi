@@ -61,7 +61,43 @@ end;
 
 SCIntFunc.GetCurrentTimeString:=
 function()
-	return Chomp(SCIntFunc.GetProgramOutput("date",["+%F_%H-%M-%S"]));
+	local time,timestring;
+	time:=DMYhmsSeconds(IO_gettimeofday().tv_sec);
+	if time = fail then
+		Info(InfoWarning,1,"simpcomp: could not determine system time.");
+		return fail;
+	fi;
+	if time[1] < 10 then
+		time[1] := Concatenation("0",String(time[1]));
+	else
+		time[1] := String(time[1]);
+	fi;
+	if time[2] < 10 then
+		time[2] := Concatenation("0",String(time[2]));
+	else
+		time[2] := String(time[2]);
+	fi;
+	if time[4] < 10 then
+		time[4] := Concatenation("0",String(time[4]));
+	else
+		time[4] := String(time[4]);
+	fi;
+	if time[5] < 10 then
+		time[5] := Concatenation("0",String(time[5]));
+	else
+		time[5] := String(time[5]);
+	fi;
+	if time[6] < 10 then
+		time[6] := Concatenation("0",String(time[6]));
+	else
+		time[6] := String(time[6]);
+	fi;
+	timestring:=Concatenation(String(time[3]),"-",time[2],"-",time[1],"_",time[4],"-",time[5],"-",time[6]);
+	if timestring = fail then
+		Info(InfoWarning,1,"simpcomp: could not determine system time.");
+		return fail;
+	fi;
+	return timestring;
 end;
 
 SCIntFunc.SanitizeFilename:=
@@ -82,27 +118,36 @@ function(fname)
 end;
 
 SCIntFunc.GetHostname:=
-function(full)
-	if(full=true) then
-		return Chomp(SCIntFunc.GetProgramOutput("hostname",["-f"]));
+function()
+	local hostname;
+	hostname:=IO_gethostname();
+	if hostname = fail then
+		return "unknown";
 	else
-		return Chomp(SCIntFunc.GetProgramOutput("hostname",[]));
+		return hostname;
 	fi;
 end;
 
 SCIntFunc.GetSystemType:=
 function()
-	return Chomp(SCIntFunc.GetProgramOutput("uname",["-a"]));
+	local systype;
+	systype:=Chomp(SCIntFunc.GetProgramOutput("uname",["-a"]));
+	if systype = fail then
+		return "unknown";
+	else
+		return systype;
+	fi;
 end;
 
 SCIntFunc.GetCurrentTimeInt:=
 function()
 	local out;
-	out:=Chomp(SCIntFunc.GetProgramOutput("date",["+%s"]));
+	out:=IO_gettimeofday().tv_sec;
 	if(out=fail) then
+		Info(InfoWarning,1,"simpcomp: could not determine system time.");
 		return fail;
 	else
-		return Int(out);
+		return out;
 	fi;
 end;
 
@@ -229,6 +274,8 @@ end);
 ## <Description>
 ## Tries to send an email to the address specified by <Ref Func="SCMailSetAddress" /> using the Unix program <C>mail</C>. The optional parameter <Arg>starttime</Arg> specifies the starting time (as the integer Unix timestamp) a calculation was started (then the duration of the calculation is included in the email), the optional boolean parameter <Arg>forcesend</Arg> can be used to force the sending of an email, even if this violates the minimal email sending interval, see <Ref Func="SCMailSetMinInterval" />.
 ## <Example>
+## gap> SCMailSetAddress("johndoe@somehost"); #enables mail notification
+## true
 ## gap> SCMailIsEnabled();
 ## true
 ## gap> SCMailSend("Hello, this is simpcomp.");
@@ -240,7 +287,7 @@ end);
 ################################################################################
 InstallGlobalFunction(SCMailSend,
 function(arg)
-	local message,recipient,starttime,curtime,path,mail,instream,outstream,longhost,shorthost,fullinfo,ret,runtime,forcewrite;
+	local message,recipient,starttime,curtime,path,mail,instream,outstream,host,fullinfo,ret,runtime,forcewrite;
 
 	if(Length(arg)<1 or (Length(arg)>0 and not IsString(arg[1])) or (Length(arg)>1 and not IsInt(arg[2]) and not IsBool(arg[2])) or (Length(arg)>2 and not (IsInt(arg[2]) or not IsBool(arg[3])))) then
 		Info(InfoSimpcomp,1,"SCMailSend: invalid parameters.");
@@ -272,6 +319,11 @@ function(arg)
 	path:=DirectoriesSystemPrograms();
 	curtime:=SCIntFunc.GetCurrentTimeInt();
 	mail:=Filename(path,"mail");
+	if(mail=fail) then
+		Info(InfoSimpcomp,1,"SCMail: sending mail failed.");
+		return fail;
+	fi;
+
 
 	if(path=fail or curtime=fail) then
 		Info(InfoSimpcomp,1,"SCMail: getting current time failed.");
@@ -293,11 +345,18 @@ function(arg)
 	fi;
 
 
-	longhost:=SCIntFunc.GetHostname(true);
-	shorthost:=SCIntFunc.GetHostname(false);
+	host:=SCIntFunc.GetHostname();
+	if host = fail then
+		Info(InfoSimpcomp,1,"SCMail: getting hostname failed.");
+		return fail;
+	fi;
 	fullinfo:=SCIntFunc.GetSystemType();
+	if fullinfo = fail then
+		Info(InfoSimpcomp,1,"SCMail: getting system type failed.");
+		return fail;
+	fi;
 
-	if(starttime<>fail) then
+	if(starttime<>fail and curtime<>fail) then
 		runtime:=Concatenation([" for ",SCIntFunc.ConvertTimespanToString(starttime,curtime)]);
 	else
 		runtime:="";
@@ -305,9 +364,9 @@ function(arg)
 
 
 	outstream:=OutputTextNone();
-	instream:=InputTextString(Concatenation(["\nGreetings master,\n\nthis is simpcomp ",SCIntFunc.Version," running on ",longhost," (",fullinfo,"), GAP ",GAPInfo.Version,".\n\nI have been working hard",runtime," and have a message for you, see below.\n\n#### START MESSAGE ####\n\n",message,"##### END MESSAGE #####\n\nThat's all, I hope this is good news! Have a nice day.\n",String(CHAR_INT(4))]));;
+	instream:=InputTextString(Concatenation(["\nGreetings master,\n\nthis is simpcomp ",SCIntFunc.Version," running on ",host," (",fullinfo,"), GAP ",GAPInfo.Version,".\n\nI have been working hard",runtime," and have a message for you, see below.\n\n#### START MESSAGE ####\n\n",message,"##### END MESSAGE #####\n\nThat's all, I hope this is good news! Have a nice day.\n",String(CHAR_INT(4))]));;
 
-	ret:=Process(path[1],mail,instream,outstream,["-s",Concatenation(["Message from simpcomp ",SCIntFunc.Version," running on ",shorthost]),recipient]);
+	ret:=Process(path[1],mail,instream,outstream,["-s",Concatenation(["Message from simpcomp ",SCIntFunc.Version," running on ",host]),recipient]);
 
 	if(ret<>0) then
 		SCSettings.SCMailPendingMsg:=message;
@@ -379,8 +438,10 @@ end);
 ## <Description>
 ## Returns <K>true</K> when the mail notification system of <Package>simpcomp</Package> is enabled, <K>false</K> otherwise. Default setting is <K>false</K>.
 ## <Example>
+## gap> SCMailSetAddress("johndoe@somehost"); #enables mail notification
+## true
 ## gap> SCMailIsEnabled();
-## false
+## true
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -464,7 +525,11 @@ SCIntFunc.MakeDoc:=function(arg)
 	
 	local path, ext, f, main, files, b, bookname,basenames, cp;
 	
-	basenames:=["propobject", "bistellar", "complex", "generate", "glprops", "io", "labelops", "lib", "operations", "tools", "homology", "morse", "normalsurface", "prophandler", "fromgroup","blowups","pkghomalg"];
+	basenames:=["class3mflds", "propobject", "bistellar", "complex", "generate", "glprops", "io", "labelops", "lib", "operations", "tools", "homology", "morse", "normalsurface", "prophandler", "fromgroup", "blowups", "pkghomalg", "highlySymmetricSurfaces" 
+	];
+	
+	
+		
 	cp:="gapdoc/";
 		
 	if Length(arg) = 1 and IsBool(arg[1]) and arg[1]=true then

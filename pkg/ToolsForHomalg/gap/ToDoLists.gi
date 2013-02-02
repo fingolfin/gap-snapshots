@@ -80,7 +80,7 @@ InstallMethod( AddToToDoList,
                [ IsToDoListEntry ],
                
   function( entry )
-    local result, source, source_list, todo_list, target;
+    local result, source, source_list, source_object_list, todo_list, target;
     
     result := ProcessAToDoListEntry( entry );
     
@@ -92,9 +92,21 @@ InstallMethod( AddToToDoList,
         
     fi;
     
+    source_object_list := [ ];
+    
     for source in source_list do
         
-        todo_list := ToDoList( source[ 1 ] );
+        if ForAll( source_object_list, i -> not IsIdenticalObj( i, source[ 1 ] ) ) then
+            
+            Add( source_object_list, source[ 1 ] );
+            
+        fi;
+        
+    od;
+    
+    for source in source_object_list do
+        
+        todo_list := ToDoList( source );
         
         if result = true then
         
@@ -104,7 +116,9 @@ InstallMethod( AddToToDoList,
             
             Add( todo_list!.todos, entry );
             
-            SetFilterObj( source[ 1 ], HasSomethingToDo );
+            SetFilterObj( source, HasSomethingToDo );
+            
+            CreateImmediateMethodForToDoListEntry( entry );
             
         elif result = false and PreconditionsDefinitelyNotFulfilled( entry ) then
             
@@ -118,19 +132,20 @@ InstallMethod( AddToToDoList,
         
     od;
     
-    if result = false and not PreconditionsDefinitelyNotFulfilled( entry ) then
-        
-        target := TargetPart( entry );
-            
-        if target <> fail and not IsFunction( target ) then
-            
-            target := ToDoList( target[ 1 ] );
-            
-            Add( target!.maybe_from_others, entry );
-            
-        fi;
-        
-    fi;
+# #     THIS DOES NOT WORK ANY MORE, maybe fix it later
+# #     if result = false and not PreconditionsDefinitelyNotFulfilled( entry ) then
+# #         
+# #         target := TargetPart( entry );
+# #             
+# #         if target <> fail and not IsFunction( target ) then
+# #             
+# #             target := ToDoList( target[ 1 ] );
+# #             
+# #             Add( target!.maybe_from_others, entry );
+# #             
+# #         fi;
+# #         
+# #     fi;
     
 end );
 
@@ -140,15 +155,25 @@ InstallMethod( ProcessToDoList_Real,
                [ IsObject and HasSomethingToDo ],
                         
   function( M )
-    local todo_list, todos, i, result, remove_list;
+    local todo_list, todos, i, pos, current_entry, result, remove_list;
     
     todo_list := ToDoList( M );
     
-    todos := todo_list!.todos;
+    todos := ShallowCopy( todo_list!.todos );
     
     remove_list := [ ];
     
     for i in [ 1 .. Length( todos ) ] do
+        
+        pos := Position( todo_list!.todos, todos[ i ] );
+        
+        if pos = fail then
+            
+            continue;
+            
+        fi;
+        
+        Remove( todo_list!.todos, pos );
         
         result := ProcessAToDoListEntry( todos[ i ] );
         
@@ -156,32 +181,23 @@ InstallMethod( ProcessToDoList_Real,
             
             Add( todo_list!.already_done, todos[ i ] );
             
-            Add( remove_list, i );
-            
         elif result = fail then
             
             Add( todo_list!.garbage, todos[ i ] );
-            
-            Add( remove_list, i );
             
         elif result = false and PreconditionsDefinitelyNotFulfilled( todos[ i ] ) then
             
             Add( todo_list!.precondition_not_fulfilled, todos[ i ] );
             
-            Add( remove_list, i );
+        else
+            
+            Add( todo_list!.todos, todos[ i ] );
             
         fi;
         
     od;
     
-    for i in remove_list do
-        
-        ##This is sensitive
-        Remove( todos, i );
-        
-    od;
-    
-    if Length( todos ) = 0 then
+    if Length( todo_list!.todos ) = 0 then
         
         ResetFilterObj( M, HasSomethingToDo );
         
@@ -204,14 +220,13 @@ InstallMethod( TraceProof,
                
   function( startobj, attr_name, attr_value )
     
-    return List( TraceProof( [ startobj, attr_name, attr_value ], startobj, attr_name, attr_value ), i -> JoinToDoListEntries( i ) );
+    return List( ToolsForHomalg_ToDoList_TaceProof_RecursivePart( [ startobj, attr_name, attr_value ], startobj, attr_name, attr_value ), i -> JoinToDoListEntries( i ) );
     
 end );
 
 ##
-InstallMethod( TraceProof,
-               "recursive part",
-               [ IsList, IsObject, IsString, IsObject ],
+InstallGlobalFunction( ToolsForHomalg_ToDoList_TaceProof_RecursivePart,
+                       "recursive part",
                
   function( start_list, start_obj, attr_name, attr_value )
     local todo_list, entry, i, temp_tar, source, return_list;
@@ -244,7 +259,10 @@ InstallMethod( TraceProof,
             
         elif source <> fail then
             
-            return_list := Concatenation( return_list, List( TraceProof( start_list, source[ 1 ], source[ 2 ], source[ 3 ] ), j -> Concatenation( j, entry ) ) );
+            return_list := Concatenation( return_list, List( 
+                ToolsForHomalg_ToDoList_TaceProof_RecursivePart( start_list, source[ 1 ], source[ 2 ], source[ 3 ] ),
+                j -> Concatenation( j, entry ) )
+                                         );
             
         fi;
         

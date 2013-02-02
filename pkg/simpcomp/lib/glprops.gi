@@ -625,8 +625,8 @@ function(complex)
 			continue;
 		fi;
 		
-		facets:=SCFacetsEx(sc);
-		sfaces:=SCFacesEx(sc,SCDim(sc)-1);
+		facets:=SCFacets(sc);
+		sfaces:=SCFaces(sc,SCDim(sc)-1);
 		if facets=fail or sfaces=fail then
 			return fail;
 		fi;
@@ -1435,7 +1435,7 @@ end);
 ## gap> kleinBottle:=SCLib.Load(last[1][1]);;
 ## gap> kleinBottle.Homology;          
 ## gap> SCLib.SearchByName("L_"){[1..10]};
-## gap> c:=SCConnectedSum(SCConnectedProduct(SCLib.Load(last[9][1]),3),
+## gap> c:=SCConnectedSum(SCLib.Load(last[9][1]),
 ##                        SCConnectedProduct(SCLib.Load(last[10][1]),2));
 ## gap> SCHomology(c);
 ## gap> SCFpBettiNumbers(c,2);
@@ -2288,6 +2288,69 @@ function(complex)
 	fi;
 end);
 
+
+################################################################################
+##<#GAPDoc Label="SCDifferenceCycles">
+## <ManSection>
+## <Meth Name="SCDifferenceCycles" Arg="complex"/>
+## <Returns> a list of lists upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes the difference cycles of <Arg>complex</Arg> in standard labeling
+## if <Arg>complex</Arg> is invariant under a shift of the vertices of type
+## <M>v \mapsto v+1 \mod n</M>.
+##
+## The function returns the difference cycles as lists where the sum of the entries
+## equals the number of vertices <M>n</M> of <Arg>complex</Arg>.
+## <Example>
+## gap> torus:=SCFromDifferenceCycles([[1,2,4],[1,4,2]]);
+## gap> torus.Homology;
+## gap> torus.DifferenceCycles;
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallMethod(SCDifferenceCycles,
+"for SCSimplicialComplex",
+[SCIsSimplicialComplex],
+function(complex)
+
+	local  facets,tmp,n,i,j,dc;
+
+	facets:=SCFacetsEx(complex);
+	n:=SCNumFaces(complex,0);
+	if facets=fail or n=fail then
+		return fail;
+	fi;
+
+	tmp:=SCIntFunc.DeepCopy(facets)+1;
+	for i in [1..Size(tmp)] do
+		for j in [1..Size(tmp[i])] do
+			if tmp[i][j]=n+1 then
+				tmp[i][j]:=1;
+			fi;
+		od;
+		Sort(tmp[i]);
+	od;
+	Sort(tmp);
+
+	if facets <> tmp then
+		Info(InfoSimpcomp,1,"SCDifferenceCycles: argument has no cyclic symmetry (v |-> v+1) in standard labeling.");
+		return fail;		
+	fi;
+
+	dc:=[];
+	for i in [1..Size(facets)] do
+		AddSet(dc,SCDifferenceCycleCompress(facets[i],n));
+	od;
+
+	if not fail in dc and Set(List(dc,x->Sum(x))) = [n] then
+		return dc;
+	else
+		Info(InfoSimpcomp,1,"SCDifferenceCycles: found invalid difference cycle.");
+		return fail;	
+	fi;	
+end);
 
 
 
@@ -3629,4 +3692,287 @@ function(c)
 	od;
 	
 	return true;
+end);
+
+SCIntFunc.heegaardSplitting:=function(arg)
+
+	local M,start,vertices,n,comb,sz,ctr,m1,m2,d1,d2,idx,dim,manifold,j,i,hom,coll,lowerBound,maxGenus,genus,transitivity;
+	
+	M:=arg[1];
+	if Size(arg) = 2 then
+		start:=arg[2];
+	elif Size(arg) > 2 then
+		Info(InfoSimpcomp,1,"SCIntFunc.heegaardSplitting: number of arguments must be 1 or 2.");
+		return fail;
+	fi;
+
+	dim:=SCDim(M);
+	if dim = fail then
+		return fail;
+	fi;
+
+	if dim <> 3 then
+		Info(InfoSimpcomp,1,"SCIntFunc.heegaardSplitting: argument must be a combinatorial manifold of dimension 3.");
+		return fail;
+	fi;
+
+	manifold:=SCIsManifold(M);
+	if manifold <> true then
+		Info(InfoSimpcomp,1,"SCIntFunc.heegaardSplitting: argument must be a combinatorial manifold of dimension 3.");
+		return fail;
+	fi;
+
+	vertices:=SCVertices(M);
+	n:=Size(vertices);
+	if IsBound(start) then
+		if not IsSubset(vertices,start) or Size(start) > Int(n/2) then
+			Info(InfoSimpcomp,1,"SCIntFunc.heegaardSplitting: second argument must be a subset of vertices of M of size at most n/2.");
+			return fail;
+		fi;
+	fi;
+
+	if n < 9 then
+		return [0,[[vertices[1]],vertices{[2..n]}],"minimal"];
+	fi;
+
+	hom:=SCHomology(M);
+	coll:=[];
+	for i in hom[2][2] do
+		Append(coll,FactorsInt(i));
+	od;
+	lowerBound:=hom[2][1];
+	for i in coll do
+		if SCFpBettiNumbers(M,i) > lowerBound then
+			lowerBound:=SCFpBettiNumbers(M,i)[2];
+		fi;
+	od;
+
+	idx:=3;
+	maxGenus:=1;
+	while maxGenus < lowerBound do
+		idx:=idx+1;
+		maxGenus:=(idx-1)*(idx-2)/2;
+	od;
+
+	if IsBound(start) then
+		if Size(start) > idx then
+			idx:=Size(start);
+		elif Size(start) < idx then
+			Unbind(start);
+		fi;
+	fi;
+
+	transitivity:=Transitivity(SCAutomorphismGroup(M));
+
+	for j in [idx..Int(n/2)] do
+	  comb:=Combinations(vertices{[transitivity+1..Size(vertices)]},j-transitivity);
+	  sz:=Int(Minimum(1000,Size(comb)/10)); 
+	  ctr:=0; 
+	  if IsBound(start) and Size(start) < j then Unbind(start); fi;
+	  if not IsBound(start) then Info(InfoSimpcomp,2,"SCIntFunc.heegaardSplitting: trying to find Heegaard splitting between ",j," and ",n-j," vertices."); fi;
+	  for m1 in comb do
+		m1:=Union(m1,vertices{[1..transitivity]}); 
+		ctr:=ctr+1;		
+		if IsBound(start) and m1 < start then continue; fi;
+		if ctr mod 25 = 0 then 
+			Info(InfoSimpcomp,2,ctr," / ",sz,""); 
+		fi;
+		if ctr > sz then break; fi;
+		m2:=Difference(vertices,m1); 
+		d1:=SCDim(SCCollapseGreedy(SCSpan(M,m1))); 
+		d2:=SCDim(SCCollapseGreedy(SCSpan(M,m2)));
+		if d1 = fail or d2 = fail then
+			return fail;
+		fi;
+		if d1 <= 1 and d2 <= 1 then
+			genus:=SCGenus(SCSlicing(M,[List(m1,x->Position(vertices,x)),List(m2,x->Position(vertices,x))]));
+			if genus = fail then
+				return fail;
+			else
+				return [genus,[m1,m2],"arbitrary"];
+			fi;
+		fi;
+	  od;
+	od;
+
+	Info(InfoSimpcomp,2,"SCIntFunc.heegaardSplitting: did not find any Heegaard splittings.");
+	return [fail,[],"none"];
+
+end;
+
+################################################################################
+##<#GAPDoc Label="SCHeegaardSplitting">
+## <ManSection>
+## <Meth Name="SCHeegaardSplitting" Arg="M"/>
+##  <Returns> a list of an integer, a list of two sublists and a string upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes a Heegaard splitting of the combinatorial <M>3</M>-manifold  <Arg>M</Arg>. The function returns the genus of the Heegaard splitting, the vertex partition of the Heegaard splitting and a note, that splitting is arbitrary and in particular possibly not minimal.
+## 
+## See also <Ref Func="SCHeegaardSplittingSmallGenus"/> for the calculation of a Heegaard splitting of small genus and <Ref Func="SCIsHeegaardSplitting"/> for a test whether or not a given splitting defines a Heegaard splitting.
+## <Example>
+## gap> M:=SCSeriesBdHandleBody(3,12);;
+## gap> list:=SCHeegaardSplitting(M);
+## gap> sl:=SCSlicing(M,list[2]);
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallMethod(SCHeegaardSplitting,
+"for SCSimplicialComplex",
+[SCIsSimplicialComplex],
+function(M)
+	return SCIntFunc.heegaardSplitting(M);
+end);
+
+################################################################################
+##<#GAPDoc Label="SCHeegaardSplittingSmallGenus">
+## <ManSection>
+## <Meth Name="SCHeegaardSplittingSmallGenus" Arg="M"/>
+## <Returns> a list of an integer, a list of two sublists and a string upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Computes a Heegaard splitting of the combinatorial <M>3</M>-manifold  <Arg>M</Arg> of small genus. The function returns the genus of the Heegaard splitting, the vertex partition of the Heegaard splitting and information whether the splitting is minimal or just small (i. e. the Heegaard genus could not be determined).
+## 
+## See also <Ref Func="SCHeegaardSplitting"/> for a faster computation of a Heegaard splitting of arbitrary genus and <Ref Func="SCIsHeegaardSplitting"/> for a test whether or not a given splitting defines a Heegaard splitting.
+## <Example> NOEXECUTE
+## gap> c:=SCSeriesBdHandleBody(3,10);;
+## gap> M:=SCConnectedProduct(c,3);;
+## gap> list:=SCHeegaardSplittingSmallGenus(M);
+## This creates an error
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallMethod(SCHeegaardSplittingSmallGenus,
+"for SCSimplicialComplex",
+[SCIsSimplicialComplex],
+function(M)
+	local vertices,n,hs,j,comb,m1,tmpHs,sl,hom,coll,lowerBound,transitivity,sz,i,ctr;
+
+	vertices:=SCVertices(M);
+	if vertices = fail then
+		return fail;
+	fi;
+	n:=Size(vertices);
+	if n = fail then
+		return fail;
+	fi;
+
+	if n < 9 then
+		Info(InfoSimpcomp,2,"SCHeegaardSplittingSmallGenus: found minimal Heegaard splitting between 1 and ",n-1," vertices, genus is 0");
+		return [0,[[vertices[1]],vertices{[2..n]}],"minimal"];
+	fi;	
+
+	hom:=SCHomology(M);
+	coll:=[];
+	for i in hom[2][2] do
+		Append(coll,FactorsInt(i));
+	od;
+	lowerBound:=hom[2][1];
+	for i in coll do
+		if SCFpBettiNumbers(M,i) > lowerBound then
+			lowerBound:=SCFpBettiNumbers(M,i)[2];
+		fi;
+	od;
+
+	hs:=SCIntFunc.heegaardSplitting(M);
+	if hs = fail then
+		return fail;
+	fi;
+	if hs[2] = [] then
+		return hs;
+	fi;
+
+	if lowerBound = hs[1] then
+		Info(InfoSimpcomp,2,"SCHeegaardSplittingSmallGenus: found minimal Heegaard splitting between ",Size(hs[2][1])," and ",Size(hs[2][2])," vertices, genus is ",hs[1]);
+		return [hs[1],hs[2],"minimal"];
+	fi;
+
+	transitivity:=Transitivity(SCAutomorphismGroup(M));
+
+	for j in [Size(hs[2][1])..Int(n/2)] do
+	  comb:=Combinations(vertices{[transitivity+1..Size(vertices)]},j-transitivity);
+	  sz:=Int(Minimum(1000,Size(comb)/10)); 
+	  ctr:=0; 
+	  Info(InfoSimpcomp,2,"SCHeegaardSplittingSmallGenus: trying to find Heegaard splitting between ",j," and ",n-j," vertices.");
+	  for m1 in comb do 
+		m1:=Union(vertices{[1..transitivity]},m1);
+		ctr:=ctr+1;
+		if IsBound(tmpHs) and Size(m1) < Size(tmpHs[2][1]) then break; fi;
+		if not IsBound(tmpHs) and Size(m1) < Size(hs[2][1]) then break; fi;		
+		if IsBound(tmpHs) and m1 <= tmpHs[2][1] and not j > Size(tmpHs[2][1]) then continue; fi;
+		if not IsBound(tmpHs) and m1 <= hs[2][1] and not j > Size(hs[2][1]) then continue; fi;
+		if ctr > sz then break; fi;
+		tmpHs:=SCIntFunc.heegaardSplitting(M,m1);
+		if tmpHs[2] = [] then
+			return hs;
+		fi;
+		if tmpHs = fail then
+			return fail;
+		fi;
+		sl:=SCSlicing(M,[List(tmpHs[2][1],x->Position(vertices,x)),List(tmpHs[2][2],x->Position(vertices,x))]);
+		if not SCIsConnected(sl) then continue; fi;
+		if tmpHs[1] = lowerBound then
+			Info(InfoSimpcomp,2,"SCHeegaardSplittingSmallGenus: found minimal Heegaard splitting between ",Size(tmpHs[2][1])," and ",Size(tmpHs[2][2])," vertices, genus is ",tmpHs[1]);
+			return [tmpHs[1],tmpHs[2],"minimal"];
+		fi;
+		if tmpHs[1] < hs[1] then
+			hs:=tmpHs;
+		fi;
+	  od;
+	od;	
+	
+	return [hs[1],hs[2],"small"];
+end);
+
+################################################################################
+##<#GAPDoc Label="SCIsHeegaardSplitting">
+## <ManSection>
+## <Meth Name="SCIsHeegaardSplitting" Arg="c,list"/>
+## <Returns> <K>true</K> or <K>false</K> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Checks whether <Arg>list</Arg> defines a Heegaard splitting of <Arg>c</Arg> or not.
+## 
+## See also <Ref Func="SCHeegaardSplitting"/> and <Ref Func="SCHeegaardSplittingSmallGenus"/> for functions to compute Heegaard splittings.
+## <Example>
+## gap> c:=SCSeriesBdHandleBody(3,9);;
+## gap> list:=[[1..3],[4..9]];
+## gap> SCIsHeegaardSplitting(c,list);
+## gap> splitting:=SCHeegaardSplitting(c);
+## gap> SCIsHeegaardSplitting(c,splitting[2]);                                         
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallMethod(SCIsHeegaardSplitting,
+"for SCSimplicialComplex and List",
+[SCIsSimplicialComplex,IsList],
+function(M,m)
+	local vertices,n,d1,d2;
+	
+	vertices:=SCVertices(M);
+	if vertices = fail then
+		return fail;
+	fi;
+	n:=Size(vertices);
+	if n = fail then
+		return fail;
+	fi;
+	if not Union(m) = vertices or Size(m) <> 2 then
+		Info(InfoSimpcomp,1,"SCIsHeegaardSplitting: second argument must be a partition of the set of vertices of size 2.");
+		return fail;
+	fi; 
+	d1:=SCDim(SCCollapseGreedy(SCSpan(M,m[1]))); 
+	d2:=SCDim(SCCollapseGreedy(SCSpan(M,m[2])));
+	if d1 = fail or d2 = fail then
+		return fail;
+		fi;
+	if d1 <= 1 and d2 <= 1 then
+		return true;
+	else
+		return false;
+	fi;
+
 end);

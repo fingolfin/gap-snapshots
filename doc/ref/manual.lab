@@ -1830,6 +1830,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Length}{21.17.5}{X780769238600AFD1}
 \makelabel{ref:ConstantTimeAccessList}{21.17.6}{X7B55FB967CDEF468}
 \makelabel{ref:Sort}{21.18.1}{X7FE4975F8166884D}
+\makelabel{ref:SortBy}{21.18.1}{X7FE4975F8166884D}
 \makelabel{ref:SortParallel}{21.18.2}{X791F2B2C7E9B9A46}
 \makelabel{ref:Sortex}{21.18.3}{X87287FCA81E2B06A}
 \makelabel{ref:SortingPerm}{21.18.4}{X800209E881E7CECB}
@@ -2959,6 +2960,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:GroupHomomorphismByImages}{40.1.1}{X7F348F497C813BE0}
 \makelabel{ref:GroupHomomorphismByImagesNC}{40.1.2}{X7AB15AF5830F2A6B}
 \makelabel{ref:GroupGeneralMappingByImages}{40.1.3}{X7A59F2C47BD41DC8}
+\makelabel{ref:GroupGeneralMappingByImages (from group to itself)}{40.1.3}{X7A59F2C47BD41DC8}
+\makelabel{ref:GroupGeneralMappingByImagesNC}{40.1.3}{X7A59F2C47BD41DC8}
+\makelabel{ref:GroupGeneralMappingByImagesNC (from group to itself)}{40.1.3}{X7A59F2C47BD41DC8}
 \makelabel{ref:GroupHomomorphismByFunction (by function (and inverse function) between two domains)}{40.1.4}{X7BC6C20E7CEDBFC5}
 \makelabel{ref:GroupHomomorphismByFunction (by function and function that computes one preimage)}{40.1.4}{X7BC6C20E7CEDBFC5}
 \makelabel{ref:AsGroupGeneralMappingByImages}{40.1.5}{X785AB6057F736344}
@@ -3132,7 +3136,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:PermutationsFamily}{42.1.3}{X819628B083B3939B}
 \makelabel{ref:equality test for permutations}{42.2.1}{X7CEC03A9808E2E7C}
 \makelabel{ref:precedence test for permutations}{42.2.1}{X7CEC03A9808E2E7C}
-\makelabel{ref:SmallestGeneratorPerm}{42.2.2}{X83A917F67D45C7EA}
+\makelabel{ref:DistancePerms}{42.2.2}{X7BC944F57A04AFF2}
+\makelabel{ref:SmallestGeneratorPerm}{42.2.3}{X83A917F67D45C7EA}
 \makelabel{ref:SmallestMovedPoint (for a permutation)}{42.3.1}{X84EF0A697F7A87DC}
 \makelabel{ref:SmallestMovedPoint (for a list or collection of permutations)}{42.3.1}{X84EF0A697F7A87DC}
 \makelabel{ref:LargestMovedPoint (for a permutation)}{42.3.2}{X84AA603987C94AC0}
@@ -4008,6 +4013,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IntFFESymm (for a FFE)}{59.2.4}{X7DABD827848BCC2A}
 \makelabel{ref:IntFFESymm (for a vector of FFEs)}{59.2.4}{X7DABD827848BCC2A}
 \makelabel{ref:IntVecFFE}{59.2.5}{X8009968782F18888}
+\makelabel{ref:AsInternalFFE}{59.2.6}{X807959EE82CED148}
 \makelabel{ref:DefaultField (for finite field elements)}{59.3.1}{X7979F51D7C43AB05}
 \makelabel{ref:DefaultRing (for finite field elements)}{59.3.1}{X7979F51D7C43AB05}
 \makelabel{ref:GaloisField (for field size)}{59.3.2}{X8592DBB086A8A9BE}
@@ -4245,6 +4251,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:LieFamily}{64.1.3}{X8725993C7BF386EE}
 \makelabel{ref:Embedding for Lie algebras}{64.1.3}{X8725993C7BF386EE}
 \makelabel{ref:UnderlyingFamily}{64.1.4}{X81D9F5C6876FE93B}
+\makelabel{ref:UnderlyingRingElement}{64.1.5}{X874B2B2A7F5A9A78}
 \makelabel{ref:LieAlgebraByStructureConstants}{64.2.1}{X7D362350824FA115}
 \makelabel{ref:RestrictedLieAlgebraByStructureConstants}{64.2.2}{X7EEB79EE855E124C}
 \makelabel{ref:LieAlgebra (for an associative algebra)}{64.2.3}{X7C840A9F85D28C81}

@@ -26,16 +26,18 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X876F23977AA5C19E">6.1-1 SourcePart</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86B9FC7A78FF9347">6.1-2 TargetPart</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F63A94D7B43B880">6.1-3 ProcessAToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843B58A884563E2D">6.1-4 AreCompatible</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X837361A982A9DA32">6.1-5 ToDoListEntryWithWeakPointers</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X811E554386D68A87">6.1-6 ToDoListEntryWithPointers</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86ECD224820CBB4E">6.1-7 ToDoListEntryWithListOfSources</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECB3D1C7BDD580E">6.1-8 ToDoListEntryWhichLaunchesAFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A0DF7C07D589BC5">6.1-9 CreateImmediateMethodForToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79D0F627831D3B87">6.1-10 JoinToDoListEntries</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78F0BFF382F62287">6.1-11 GenesisOfToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81E733C27D96F9C8">6.1-12 DescriptionOfImplication</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8041DC118358A5CD">6.1-3 SetTargetValueObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X793216E3836F177C">6.1-4 SetTargetObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F63A94D7B43B880">6.1-5 ProcessAToDoListEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843B58A884563E2D">6.1-6 AreCompatible</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X837361A982A9DA32">6.1-7 ToDoListEntryWithWeakPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X811E554386D68A87">6.1-8 ToDoListEntryWithPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86ECD224820CBB4E">6.1-9 ToDoListEntryWithListOfSources</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECB3D1C7BDD580E">6.1-10 ToDoListEntryWhichLaunchesAFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A0DF7C07D589BC5">6.1-11 CreateImmediateMethodForToDoListEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79D0F627831D3B87">6.1-12 JoinToDoListEntries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78F0BFF382F62287">6.1-13 GenesisOfToDoListEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81E733C27D96F9C8">6.1-14 DescriptionOfImplication</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7D9151158577E272">6.2 <span class="Heading">Category</span></a>
 </span>
@@ -83,11 +85,29 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TargetPart</code>( <var class="Arg">entry</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a list</p>
 
-<p>Returns the target part of the ToDo-list entry <var class="Arg">entry</var>. This is a triple of an object, a name of a filter/attribute, and a val\ ue to which the specific filter/attribute should be set.</p>
+<p>Returns the target part of the ToDo-list entry <var class="Arg">entry</var>. This is a triple of an object, a name of a filter/attribute, and a val\ ue to which the specific filter/attribute should be set. The third entry of the list might also be a function to which return value the att\ ribute is set.</p>
+
+<p><a id="X8041DC118358A5CD" name="X8041DC118358A5CD"></a></p>
+
+<h5>6.1-3 SetTargetValueObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetTargetValueObject</code>( <var class="Arg">entry</var>, <var class="Arg">value</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>If the given value of the target part is the return value of a function this command sets the target value of the entry to a functi\ on. This is done to keep proof tracking availible.</p>
+
+<p><a id="X793216E3836F177C" name="X793216E3836F177C"></a></p>
+
+<h5>6.1-4 SetTargetObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetTargetObject</code>( <var class="Arg">entry</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>If the target object, i.e. the first entry of the target part, was given as a function, this method can set this entry to the retur\ n value computed in ProcessToDoListEntry. This happens atomatically, do not worry about it.</p>
 
 <p><a id="X7F63A94D7B43B880" name="X7F63A94D7B43B880"></a></p>
 
-<h5>6.1-3 ProcessAToDoListEntry</h5>
+<h5>6.1-5 ProcessAToDoListEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProcessAToDoListEntry</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a boolean</p>
@@ -96,7 +116,7 @@
 
 <p><a id="X843B58A884563E2D" name="X843B58A884563E2D"></a></p>
 
-<h5>6.1-4 AreCompatible</h5>
+<h5>6.1-6 AreCompatible</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AreCompatible</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a boolean</p>
@@ -105,7 +125,7 @@
 
 <p><a id="X837361A982A9DA32" name="X837361A982A9DA32"></a></p>
 
-<h5>6.1-5 ToDoListEntryWithWeakPointers</h5>
+<h5>6.1-7 ToDoListEntryWithWeakPointers</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithWeakPointers</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var>, <var class="Arg">arg5</var>, <var class="Arg">arg6</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a ToDoListEntry</p>
@@ -114,7 +134,7 @@
 
 <p><a id="X811E554386D68A87" name="X811E554386D68A87"></a></p>
 
-<h5>6.1-6 ToDoListEntryWithPointers</h5>
+<h5>6.1-8 ToDoListEntryWithPointers</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithPointers</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var>, <var class="Arg">arg5</var>, <var class="Arg">arg6</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a ToDoListEntry</p>
@@ -123,25 +143,25 @@
 
 <p><a id="X86ECD224820CBB4E" name="X86ECD224820CBB4E"></a></p>
 
-<h5>6.1-7 ToDoListEntryWithListOfSources</h5>
+<h5>6.1-9 ToDoListEntryWithListOfSources</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithListOfSources</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a ToDoListEntry</p>
 
-<p>The same as ToDoListEntryWithPointers, but the first argument must be a list of triples defining the conditions of this entry</p>
+<p>The same as ToDoListEntryWithPointers, but the first argument must be a list of touples or triples defining the conditions of this \ entry</p>
 
 <p><a id="X7ECB3D1C7BDD580E" name="X7ECB3D1C7BDD580E"></a></p>
 
-<h5>6.1-8 ToDoListEntryWhichLaunchesAFunction</h5>
+<h5>6.1-10 ToDoListEntryWhichLaunchesAFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWhichLaunchesAFunction</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a ToDoListEntry</p>
 
-<p>The first argument must be a list of triples which contain an object, on which the second entry, an attribute given by its name as \ a string can be applied. If the value of the attribute matches the third entry, the function given as second argument is launched.</p>
+<p>The first argument must be a list of tuples or triples which contain an object, on which the second entry, an attribute given by it\ s name as a string can be applied. It the entry is a tuple the ToDo-list entry checks wether the Tester of the second value is true. If the\ value of the attribute matches the third entry, the function given as second argument is launched.</p>
 
 <p><a id="X7A0DF7C07D589BC5" name="X7A0DF7C07D589BC5"></a></p>
 
-<h5>6.1-9 CreateImmediateMethodForToDoListEntry</h5>
+<h5>6.1-11 CreateImmediateMethodForToDoListEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateImmediateMethodForToDoListEntry</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: nothing</p>
@@ -150,7 +170,7 @@
 
 <p><a id="X79D0F627831D3B87" name="X79D0F627831D3B87"></a></p>
 
-<h5>6.1-10 JoinToDoListEntries</h5>
+<h5>6.1-12 JoinToDoListEntries</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinToDoListEntries</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a ToDoListEntry</p>
@@ -159,7 +179,7 @@
 
 <p><a id="X78F0BFF382F62287" name="X78F0BFF382F62287"></a></p>
 
-<h5>6.1-11 GenesisOfToDoListEntry</h5>
+<h5>6.1-13 GenesisOfToDoListEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GenesisOfToDoListEntry</code>( <var class="Arg">arg</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: a list</p>
@@ -168,7 +188,7 @@
 
 <p><a id="X81E733C27D96F9C8" name="X81E733C27D96F9C8"></a></p>
 
-<h5>6.1-12 DescriptionOfImplication</h5>
+<h5>6.1-14 DescriptionOfImplication</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DescriptionOfImplication</code>( <var class="Arg">arg</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: a list</p>

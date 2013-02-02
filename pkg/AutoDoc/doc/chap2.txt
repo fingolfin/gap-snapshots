@@ -50,7 +50,23 @@
   allowed  in  this  string,  underscores  will  be converted to spaces in the
   header of the chapter or the section.[133X
   
-  [1X2.1-4 DeclareOperationWithDocumentation[101X
+  [1X2.1-4 DeclareRepresentationWithDocumentation[101X
+  
+  [29X[2XDeclareRepresentationWithDocumentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xlist_of_req_entries[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThis  method  declares  a  representation, like DeclareRepresentation( [3Xname[103X,
+  [3Xfilter[103X,  [3Xlist_of_req_entries[103X  ) would do. The description string is added to
+  the documentation if CreateAutoDoc is called. It can either be a string or a
+  list  of  strings.  Lists  will  be  concatenated with a space between them.
+  [3Xarguments[103X  is  an optional string which is displayed in the documentation as
+  attribute  of the tester. [3Xchapter_and_section[103X is an optional arguments which
+  must be a list with two strings, naming the chapter and the section in which
+  this  category should be displayed in the automatic generated documentation.
+  There are no spaces allowed in this string, underscores will be converted to
+  spaces in the header of the chapter or the section.[133X
+  
+  [1X2.1-5 DeclareOperationWithDocumentation[101X
   
   [29X[2XDeclareOperationWithDocumentation[102X( [3Xname[103X, [3Xlist_of_filters[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
@@ -68,7 +84,25 @@
   underscores  will be converted to spaces in the header of the chapter or the
   section.[133X
   
-  [1X2.1-5 DeclareAttributeWithDocumentation[101X
+  [1X2.1-6 InstallMethodWithDocumentation[101X
+  
+  [29X[2XInstallMethodWithDocumentation[102X( [3Xname[103X, [3Xshort_descr[103X, [3Xlist_of_filters[103X, [3Xfunc[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThis  method  declares  a  operation, like InstallMethod( [3Xname[103X, [3Xshort_descr[103X,
+  [3Xlist_of_filters[103X,  [3Xfunc[103X  )  would  do. The description string is added to the
+  documentation  if  CreateAutoDoc  is  called. It can either be a string or a
+  list  of  strings.  Lists  will  be  concatenated with a space between them.
+  [3Xreturn_value[103X  is a string displayed as the return value of the method. It is
+  not  optional.  [3Xarguments[103X  is  an  optional string which is displayed in the
+  documentation  as  attributes  of  the  operation. [3Xchapter_and_section[103X is an
+  optional arguments which must be a list with two strings, naming the chapter
+  and  the  section  in which this method should be displayed in the automatic
+  generated  documentation.  There  are  no  spaces  allowed  in  this string,
+  underscores  will be converted to spaces in the header of the chapter or the
+  section.[133X
+  
+  [1X2.1-7 DeclareAttributeWithDocumentation[101X
   
   [29X[2XDeclareAttributeWithDocumentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xargument[103X][, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
@@ -85,7 +119,7 @@
   documentation.  There are no spaces allowed in this string, underscores will
   be converted to spaces in the header of the chapter or the section.[133X
   
-  [1X2.1-6 DeclarePropertyWithDocumentation[101X
+  [1X2.1-8 DeclarePropertyWithDocumentation[101X
   
   [29X[2XDeclarePropertyWithDocumentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
@@ -101,7 +135,7 @@
   allowed  in  this  string,  underscores  will  be converted to spaces in the
   header of the chapter or the section.[133X
   
-  [1X2.1-7 DeclareGlobalFunctionWithDocumentation[101X
+  [1X2.1-9 DeclareGlobalFunctionWithDocumentation[101X
   
   [29X[2XDeclareGlobalFunctionWithDocumentation[102X( [3Xname[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
@@ -118,7 +152,7 @@
   documentation.  There are no spaces allowed in this string, underscores will
   be converted to spaces in the header of the chapter or the section.[133X
   
-  [1X2.1-8 DeclareGlobalVariableWithDocumentation[101X
+  [1X2.1-10 DeclareGlobalVariableWithDocumentation[101X
   
   [29X[2XDeclareGlobalVariableWithDocumentation[102X( [3Xname[103X, [3Xdescription[103X[, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X

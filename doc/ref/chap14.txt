@@ -630,9 +630,9 @@
   
   [1X14.4-8 PrimeDivisors[101X
   
-  [29X[2XPrimeDivisors[102X( [3Xn[103X ) [32X function
+  [29X[2XPrimeDivisors[102X( [3Xn[103X ) [32X attribute
   
-  [33X[0;0YThis  function  returns  for  a  non-zero  integer  [3Xn[103X  a set of its positive
+  [33X[0;0Y[2XPrimeDivisors[102X  returns  for  a  non-zero  integer  [3Xn[103X  a  set of its positive
   (probable)  primes  divisors.  In  rare  cases  the  result  could contain a
   composite    number    which    passed    certain   primality   tests,   see
   [2XIsProbablyPrimeInt[102X ([14X14.4-2[114X) and [2XFactorsInt[102X ([14X14.4-7[114X) for more details.[133X

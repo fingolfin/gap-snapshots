@@ -997,8 +997,7 @@ end);
 ## This function computes the reduced simplicial homology with integer coefficients of a given simplicial complex <Arg>complex</Arg> with integer coefficients. It uses the algorithm described in <Cite Key="Desbrun08DiscDiffFormCompModel"/>. <P/>
 ## The output is a list of homology groups of the form <M>[H_0,....,H_d]</M>, where <M>d</M> is the dimension of <Arg>complex</Arg>. The format of the homology groups <M>H_i</M> is given in terms of their maximal cyclic subgroups, i.e. a homology group <M>H_i\cong \mathbb{Z}^f + \mathbb{Z} / t_1 \mathbb{Z} \times \dots \times \mathbb{Z} / t_n \mathbb{Z}</M> is returned in form of a list <M>[ f, [t_1,...,t_n] ]</M>, where <M>f</M> is the (integer) free part of <M>H_i</M> and <M>t_i</M> denotes the torsion parts of <M>H_i</M> ordered in weakly incresing size. See also <Ref Meth="SCHomology"/>.
 ## <Example>
-## gap> c:=SCFromFacets([[1,2,3],[1,2,6],[1,3,5],[1,4,5],[1,4,6],
-##                       [2,3,4],[2,4,5],[2,5,6],[3,4,6],[3,5,6]]);;
+## gap> c:=SCSurface(1,false);;
 ## gap> SCHomologyInternal(c);
 ## [ [ 0, [  ] ], [ 0, [ 2 ] ], [ 0, [  ] ] ]
 ## </Example>
@@ -1099,7 +1098,7 @@ InstallGlobalFunction(SCCupProduct,
 	function(complex,cocycle1,cocycle2)
 
 	local i, k, element, dim, cupProduct, product1, product2, 
-		facets, frontface, backface, coeff, o, verts, numVerts;
+		facets, facetsEx, frontface, backface, coeff, o;
 	
 	
 	dim := SCDim(complex)/2;
@@ -1115,17 +1114,13 @@ InstallGlobalFunction(SCCupProduct,
 		return fail;
 	fi;
 	
-	verts:=SCVertices(complex);
-	if verts = fail then
-		return fail;
-	fi;
-	numVerts:=Size(verts);
 	facets:=SCFacets(complex);
-	if facets = fail then
+	facetsEx:=SCFacetsEx(complex);
+	if facets = fail or facetsEx = fail then
 		return fail;
 	fi;
 	
-	if verts <> [1..numVerts] or not IsSortedList(facets) then
+	if facets <> facetsEx or not IsSortedList(facets) or false in List(facets,x->IsSortedList(x)) then
 		Info(InfoSimpcomp,1,"SCCupProduct: first argument must be a simplicial complex in standard labeling and with sorted facet list.");	
 		return fail;
 	fi;
@@ -1133,7 +1128,6 @@ InstallGlobalFunction(SCCupProduct,
 	
 	for k in [1..Size(facets)] do
 		element:=ShallowCopy(facets[k]);
-		Sort(element);
 		frontface:=element{[1..dim+1]};
 		backface:=element{[dim+1..2*dim+1]};
 		product1:=[];
@@ -1425,7 +1419,7 @@ function(complex)
 	sign:=0;
 	old:=0;
 	
-	for idx in [1..Size(coeff)-1] do 
+	for idx in [1..Size(coeff)] do 
 		if coeff[idx] = 0 then continue; fi;
 		
 		if old = 0 then

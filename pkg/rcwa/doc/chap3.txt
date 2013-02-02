@@ -533,8 +533,7 @@
     [4X[25Xgap>[125X [27Xphi := EpimorphismFromFpGroup(G,6);[127X[104X
     [4X[28X[ a, b, c ] -> [ a, b, c ][128X[104X
     [4X[25Xgap>[125X [27XRelatorsOfFpGroup(Source(phi));[127X[104X
-    [4X[28X[ a^2, b^2, c^2, b*c*b*c*b*c, a*c*b*c*a*c*b*c*a*c*b*c, [128X[104X
-    [4X[28X  a*b*a*b*a*b*a*b*a*b*a*b ][128X[104X
+    [4X[28X[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -569,15 +568,15 @@
     [4X[25Xgap>[125X [27Xg := Comm(a^2*b^4,a*b^3); # a sample element to be factored[127X[104X
     [4X[28X<rcwa permutation of Z with modulus 8>[128X[104X
     [4X[25Xgap>[125X [27XPreImagesRepresentative(phi,g); # -> a factorization of g[127X[104X
-    [4X[28Xb^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3[128X[104X
+    [4X[28Xb^-3*(b^-1*a^-1)^2*b^3*a*b^-1*a*b^3[128X[104X
     [4X[25Xgap>[125X [27Xg = b^-4*a^-1*b^-1*a^-1*b^3*a*b^-1*a*b^3; # check[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xg := Comm(a*b,Comm(a,b^3));[127X[104X
     [4X[28X<rcwa permutation of Z with modulus 8>[128X[104X
     [4X[25Xgap>[125X [27Xpre := PreImagesRepresentatives(phi,g);[127X[104X
-    [4X[28X[ b^-1*a^-1*b^-1*a^-1*b^3*a*b*a*b^-2, b^-1*a^-1*b*a^-1*b^3*a*b^-1*a*b^-2 ][128X[104X
+    [4X[28X[ (b^-1*a^-1)^2*b^2*(b*a)^2*b^-2, b^-1*(a^-1*b)^2*b^2*(a*b^-1)^2*b^-1 ][128X[104X
     [4X[25Xgap>[125X [27Xrel := pre[1]/pre[2]; # -> a nontrivial relation[127X[104X
-    [4X[28Xb^-1*a^-1*b^-1*a^-1*b^3*a*b^2*a^-1*b^-3*a*b^-1*a*b[128X[104X
+    [4X[28X(b^-1*a^-1)^2*b^3*a*b^2*a^-1*b^-2*(b^-1*a)^2*b[128X[104X
     [4X[25Xgap>[125X [27Xrel^phi;[127X[104X
     [4X[28XIdentityMapping( Integers )[128X[104X
     [4X[28X[128X[104X
@@ -940,7 +939,7 @@
     [4X[25Xgap>[125X [27XF := FreeGroup("a","b");; phi := EpimorphismByGenerators(F,G);;[127X[104X
     [4X[25Xgap>[125X [27Xw := RepresentativeActionPreImage(G,[10,-4,9,5],[4,5,13,-8],[127X[104X
     [4X[25X>[125X [27X                                     OnTuples,F);[127X[104X
-    [4X[28Xa*b^-1*a^-1*b^-1*a*b^-1*a*b*a*b^-2*a*b*a^-1*b[128X[104X
+    [4X[28Xa*b^-1*a^-1*(b^-1*a)^2*b*a*b^-2*a*b*a^-1*b[128X[104X
     [4X[25Xgap>[125X [27Xelm := w^phi;[127X[104X
     [4X[28X<rcwa permutation of Z with modulus 324>[128X[104X
     [4X[25Xgap>[125X [27XList([10,-4,9,5],n->n^elm);[127X[104X

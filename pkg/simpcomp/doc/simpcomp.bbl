@@ -1,5 +1,12 @@
 \begin{thebibliography}{DHSW04}
 
+\bibitem[BAB12]{regina}
+William Pettersson et~al. Benjamin A.~Burton, Ryan~Budney.
+\newblock Regina: Software for 3-manifold topology and normal surface theory,
+  version 4.9.2.
+\newblock {\tt http://\allowbreak regina.\allowbreak sourceforge.\allowbreak
+  net/}, 1999--2012.
+
 \bibitem[Ban65]{Banchoff65TightEmb3DimPolyMnf}
 Thomas~F. Banchoff.
 \newblock {T}ightly embedded {$2$}-dimensional polyhedral manifolds.
@@ -29,6 +36,16 @@ Thomas~F. Banchoff and Wolfgang K{\"u}hnel.
   volume~32 of {\em Math. Sci. Res. Inst. Publ.}, pages 51--118. Cambridge
   Univ. Press, Cambridge, 1997.
 
+\bibitem[BK08]{Brehm08EquivMapsTorus}
+Ulrich Brehm and Wolfgang K{\"u}hnel.
+\newblock {E}quivelar maps on the torus.
+\newblock {\em European J. Combin.}, 29(8):1843--1861, 2008.
+
+\bibitem[BK09]{Brehm09LatticeTrigE33Torus}
+U.~Brehm and W.~K\"uhnel.
+\newblock Lattice triangulations of {$E^3$} and of the $3$-torus, 2009.
+\newblock {To appear in Israel J. Math.}
+
 \bibitem[BL98]{Breuer98GAP4TypeSystem}
 Thomas Breuer and Steve Linton.
 \newblock The gap 4 type system: organising algebraic algorithms.
@@ -51,6 +68,12 @@ Mohamed Barakat and Daniel Robertz.
 Mario Casella and Wolfgang K{\"u}hnel.
 \newblock {A} triangulated {$K3$} surface with the minimum number of vertices.
 \newblock {\em Topology}, 40(4):753--772, 2001.
+
+\bibitem[Con09]{Conder09RegMapsOfBdChi}
+Marston D.~E. Conder.
+\newblock Regular maps and hypermaps of {E}uler characteristic {$-1$} to
+  {$-200$}.
+\newblock {\em J. Combin. Theory Ser. B}, 99(2):455--459, 2009.
 
 \bibitem[Dat07]{Datta07MinTrigManifolds}
 Basudeb Datta.
@@ -153,6 +176,11 @@ Wolfgang K{\"u}hnel and Frank~H. Lutz.
 \newblock {\em Period. Math. Hungar.}, 39(1-3):161--183, 1999.
 \newblock {D}iscrete geometry and rigidity ({B}udapest, 1999).
 
+\bibitem[KN11]{Klee11CentSymmMnfFewVert}
+Steven Klee and Isabella Novik.
+\newblock {C}entrally symmetric manifolds with few vertices.
+\newblock {\tt arXiv:1102.0542v1 [math.CO]}, Preprint, 15 pages, 2011.
+
 \bibitem[Kne29]{Kneser29ClosedSurfIn3Mflds}
 Hellmuth Kneser.
 \newblock {Geschlossene Fl\"{a}chen in dreidimensionalen Mannigfaltigkeiten}.
@@ -254,6 +282,11 @@ Edwin~H. Spanier.
 \newblock {T}he homology of {K}ummer manifolds.
 \newblock {\em Proc. AMS}, 7:155--160, 1956.
 
+\bibitem[Spa99]{Sparla99LBTComb2kMnf}
+Eric Sparla.
+\newblock {A} new lower bound theorem for combinatorial {$2k$}-manifolds.
+\newblock {\em Graphs Combin.}, 15(1):109--125, 1999.
+
 \bibitem[Spr10a]{Spreer10Diss}
 Jonathan Spreer.
 \newblock Blowups, slicings and permutation groups in combinatorial topology,
@@ -262,15 +295,32 @@ Jonathan Spreer.
 
 \bibitem[Spr10b]{Spreer10PartBetaK}
 Jonathan Spreer.
-\newblock Partitioning the triangles of the cross polytope into surfaces.
+\newblock {P}artitioning the triangles of the cross polytope into surfaces.
 \newblock {\tt arXiv:1009.2642v1 [math.CO]}, preprint, 12 pages, 1 figure,
   2010.
+\newblock {T}o appear in {B}eitr. {A}lgebra {G}eom.
 
-\bibitem[Spr11]{Spreer10NormSurfsCombSlic}
+\bibitem[Spr11a]{Spreer11CyclicCombMflds}
+Jonathan Spreer.
+\newblock Combinatorial 3-manifolds with a cyclic automorphism group.
+\newblock Stuttgarter Math. Berichte, 2011/028, 2011.
+
+\bibitem[Spr11b]{Spreer10NormSurfsCombSlic}
 Jonathan Spreer.
 \newblock {N}ormal surfaces as combinatorial slicings.
 \newblock {\em Discrete Math.}, 311(14):1295--1309, 2011.
 \newblock {\tt doi:10.1016/j.disc.2011.03.013}.
+
+\bibitem[Spr13]{Spreer12VarCyclPolytope}
+Jonathan Spreer.
+\newblock {C}ombinatorial seifert fibred spaces with transitive cyclic
+  automorphism group, 2013.
+\newblock {I}n preparation.
+
+\bibitem[Wee99]{SnapPea}
+Jeff Weeks.
+\newblock {S}nap{P}ea ({S}oftware for hyperbolic $3$-manifolds), 1999.
+\newblock \url{http://www.geometrygames.org/SnapPea/}.
 
 \bibitem[Zie95]{Ziegler95LectPolytopes}
 G{\"u}nter~M. Ziegler.

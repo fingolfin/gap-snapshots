@@ -103,56 +103,9 @@
     [4X[28XQ[x_1,x_2,x_3][128X[104X
     [4X[25Xgap>[125X [27XMorphismFromCoordinateRingToCoordinateRingOfTorus(C3);[127X[104X
     [4X[28X<A monomorphism of rings>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
-    [4X[28XQ[x1,x1_,x2,x2_,x3,x3_]/( x3*x3_-1, x2*x2_-1, x1*x1_-1 )[128X[104X
-    [4X[28X  ^[128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28X[ |[ x3 ]|, |[ x2 ]|, |[ x1 ]| ][128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28XQ[x_1,x_2,x_3][128X[104X
     [4X[25Xgap>[125X [27XC3;[127X[104X
     [4X[28X<An affine normal smooth toric variety of dimension 3>[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(C3);[127X[104X
     [4X[28X"|A^3"[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.6-2 [33X[0;0YRational normal cone[133X[101X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xsigma := Cone([[7,-1],[0,1]]);[127X[104X
-    [4X[28X<A cone>[128X[104X
-    [4X[25Xgap>[125X [27XC7:=ToricVariety(sigma);[127X[104X
-    [4X[28X<An affine toric variety>[128X[104X
-    [4X[25Xgap>[125X [27XCoordinateRing(C7,["x"]);[127X[104X
-    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/([128X[104X
-    [4X[28Xx_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,[128X[104X
-    [4X[28Xx_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,[128X[104X
-    [4X[28Xx_6^2-x_4*x_8, x_5*x_6-x_3*x_8,[128X[104X
-    [4X[28Xx_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,[128X[104X
-    [4X[28Xx_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,[128X[104X
-    [4X[28Xx_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,[128X[104X
-    [4X[28Xx_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )[128X[104X
-    [4X[25Xgap>[125X [27XCoordinateRingOfTorus(C7,["y","z"]);[127X[104X
-    [4X[28XQ[y,y_,z,z_]/( z*z_-1, y*y_-1 )[128X[104X
-    [4X[25Xgap>[125X [27XMorphismFromCoordinateRingToCoordinateRingOfTorus(C7);[127X[104X
-    [4X[28X<A monomorphism of rings>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
-    [4X[28XQ[y,y_,z,z_]/( z*z_-1, y*y_-1 )[128X[104X
-    [4X[28X  ^[128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28X[ |[ y ]|, |[ y*z ]|, |[ y*z^2 ]|, |[ y*z^3 ]|, [128X[104X
-    [4X[28X  |[ y*z^4 ]|, |[ y*z^5 ]|, |[ y*z^6 ]|, |[ y*z^7 ]| ][128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28X  |[128X[104X
-    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/([128X[104X
-    [4X[28Xx_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,[128X[104X
-    [4X[28Xx_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,[128X[104X
-    [4X[28Xx_6^2-x_4*x_8, x_5*x_6-x_3*x_8,[128X[104X
-    [4X[28Xx_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,[128X[104X
-    [4X[28Xx_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,[128X[104X
-    [4X[28Xx_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,[128X[104X
-    [4X[28Xx_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )[128X[104X
   [4X[32X[104X
   

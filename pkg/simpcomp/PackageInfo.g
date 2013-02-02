@@ -12,8 +12,8 @@ SetPackageInfo( rec(
 
 PackageName := "simpcomp",
 Subtitle := "A GAP toolbox for simplicial complexes",
-Version := "1.5.4",
-Date := "23/11/2011",
+Version := "1.6.1",
+Date := "31/01/2013",
 
 ArchiveURL :=Concatenation( "http://www.igt.uni-stuttgart.de/LstDiffgeo/simpcomp/simpcomp-",String(~.Version)),
 ArchiveFormats := ".tar.gz",
@@ -99,7 +99,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.5",
   NeededOtherPackages := [[ "GAPDoc", ">=0.9999" ],[ "io", ">=3.0" ]],
-  SuggestedOtherPackages := [[ "Homology", ">=1.4.2" ],[ "GRAPE", ">=4.4" ],[ "homalg", ">=2011.10.05" ]],
+  SuggestedOtherPackages := [[ "Homology", ">=1.4.4" ],[ "GRAPE", ">=4.4" ],["Gauss", ">=2011.08.22"],["MatricesForHomalg", ">=2011.10.08"],["homalg", ">=2011.10.05"],["GaussForHomalg", ">=2011.08.10"],["Modules", ">=2011.10.05"]],
 	ExternalConditions := []
 ),
 

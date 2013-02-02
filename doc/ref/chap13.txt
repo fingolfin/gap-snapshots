@@ -443,7 +443,8 @@
     [4X[25Xgap>[125X [27XKnownAttributesOfObject(g);[127X[104X
     [4X[28X[ "Size", "OneImmutable", "NrMovedPoints", "MovedPoints", [128X[104X
     [4X[28X  "GeneratorsOfMagmaWithInverses", "MultiplicativeNeutralElement", [128X[104X
-    [4X[28X  "Pcgs", "GeneralizedPcgs", "StabChainMutable", "StabChainOptions" ][128X[104X
+    [4X[28X  "HomePcgs", "Pcgs", "GeneralizedPcgs", "StabChainMutable", [128X[104X
+    [4X[28X  "StabChainOptions" ][128X[104X
   [4X[32X[104X
   
   

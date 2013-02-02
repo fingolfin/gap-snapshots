@@ -96,6 +96,7 @@
 ## <#Include Label="SCReduceAsSubcomplex"/>
 ## <#Include Label="SCReduceComplex"/>
 ## <#Include Label="SCReduceComplexEx"/>
+## <#Include Label="SCReduceComplexFast"/>
 ##
 ## </Section>
 ##<#/GAPDoc>
@@ -117,4 +118,6 @@ DeclareOperation("SCReduceComplex",[SCIsSimplicialComplex]);
 
 DeclareGlobalFunction("SCRandomize");
 DeclareGlobalFunction("SCReduceComplexEx");
+
+DeclareGlobalFunction("SCReduceComplexFast");
 ################################################################################

@@ -44,7 +44,7 @@
   
   [1X3.1-2 UnderlyingRingElement[101X
   
-  [29X[2XUnderlyingRingElement[102X( [3Xx[103X ) [32X operation
+  [29X[2XUnderlyingRingElement[102X( [3Xx[103X ) [32X attribute
   
   [33X[0;0YReturns the corresponding ring element for the circle object [3Xx[103X.[133X
   
@@ -330,8 +330,7 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XDimension(R);[127X[104X
     [4X[28X2[128X[104X
-    [4X[25Xgap>[125X [27XG := AdjointGroup( R );    [127X[104X
-    [4X[28X<group of size 4 with 1 generators>[128X[104X
+    [4X[25Xgap>[125X [27XG := AdjointGroup( R );;[127X[104X
     [4X[25Xgap>[125X [27XSize( R ) = Size( G );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( G );[127X[104X
@@ -385,8 +384,7 @@
     [4X[28X"C2 x C2"[128X[104X
     [4X[25Xgap>[125X [27XR := Ring( [ ZmodnZObj(2,256) ] );   [127X[104X
     [4X[28X<ring with 1 generators>[128X[104X
-    [4X[25Xgap>[125X [27XG := AdjointGroup( R );[127X[104X
-    [4X[28X<group of size 128 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XG := AdjointGroup( R );;[127X[104X
     [4X[25Xgap>[125X [27XStructureDescription( G );[127X[104X
     [4X[28X"C64 x C2"[128X[104X
     [4X[28X[128X[104X
@@ -424,8 +422,7 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XR := Ring( [ ZmodnZObj(2,256) ] );   [127X[104X
     [4X[28X<ring with 1 generators>[128X[104X
-    [4X[25Xgap>[125X [27XAdjointGroup(R);[127X[104X
-    [4X[28X<group of size 128 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XAdjointGroup(R);;[127X[104X
     [4X[25Xgap>[125X [27XR := Ring( [ ZmodnZObj(2,256) ] );[127X[104X
     [4X[28X<ring with 1 generators>[128X[104X
     [4X[25Xgap>[125X [27XS:=AdjointSemigroup(R); [127X[104X
@@ -448,13 +445,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "laguna", false );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XFG := GroupRing( GF(2), DihedralGroup(8) );[127X[104X
     [4X[28X<algebra-with-one over GF(2), with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XR := AugmentationIdeal( FG );[127X[104X
-    [4X[28X<two-sided ideal in <algebra-with-one over GF(2), with 3 generators>, [128X[104X
-    [4X[28X  (dimension 7)>[128X[104X
-    [4X[25Xgap>[125X [27XG := AdjointGroup( R );[127X[104X
-    [4X[28X<group of size 128 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XR := AugmentationIdeal( FG );;[127X[104X
+    [4X[25Xgap>[125X [27XG := AdjointGroup( R );;[127X[104X
     [4X[25Xgap>[125X [27XIdGroup( G );[127X[104X
     [4X[28X[ 128, 170 ][128X[104X
     [4X[25Xgap>[125X [27XIdGroup( Units( FG ) );[127X[104X
@@ -470,20 +466,20 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XAdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) );[127X[104X
+    [4X[25Xgap>[125X [27XSize( AdjointGroup( GroupRing( GF(2), DihedralGroup(8) ) ) );[127X[104X
     [4X[28X[128X[104X
     [4X[28XWARNING: usage of AdjointGroup for associative ring <R> with one!!! [128X[104X
     [4X[28XIn this case the adjoint group is isomorphic to the unit group [128X[104X
     [4X[28XUnits(<R>), which possibly may be computed faster!!! [128X[104X
     [4X[28X[128X[104X
-    [4X[28X<group of size 128 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XAdjointGroup( Integers mod 11 );                  [127X[104X
+    [4X[28X128[128X[104X
+    [4X[25Xgap>[125X [27XSize( AdjointGroup( Integers mod 11 ) );                  [127X[104X
     [4X[28X[128X[104X
     [4X[28XWARNING: usage of AdjointGroup for associative ring <R> with one!!! [128X[104X
     [4X[28XIn this case the adjoint group is isomorphic to the unit group [128X[104X
     [4X[28XUnits(<R>), which possibly may be computed faster!!! [128X[104X
     [4X[28X[128X[104X
-    [4X[28X<group of size 10 with 1 generators>[128X[104X
+    [4X[28X10[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

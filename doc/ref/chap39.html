@@ -702,7 +702,7 @@ Group([ (1,2,3,4), (1,2) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom:=EpimorphismFromFreeGroup(g:names:=["x","y"]);</span>
 [ x, y ] -&gt; [ (1,2,3,4), (1,2) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreImagesRepresentative(hom,(1,4));</span>
-y^-1*x^-2*y^-1*x^-1*y^-1*x
+y^-1*x^-1*(x^-1*y^-1)^2*x
 </pre></div>
 
 <p>The following example stems from a real request to the <strong class="pkg">GAP</strong> Forum. In September 2000 a <strong class="pkg">GAP</strong> user working with puzzles wanted to express the permutation <code class="code">(1,2)</code> as a word as short as possible in particular generators of the symmetric group <span class="SimpleMath">S_16</span>.</p>
@@ -737,7 +737,7 @@ a^-1*c*b*c^-1*a*b^-1*a^-2*c^-1*a*b^-1*c*b
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:= Subgroup(G, [ r, s ] );</span>
 Group([ (3,4), (1,2,3,4,5,6) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factorization( H, (1,2,3) );</span>
-x2*x1*x2*x1*x2^-2
+(x2*x1)^2*x2^-2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s*r*s*r*s^-2;</span>
 (1,2,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MappingGeneratorsImages(EpimorphismFromFreeGroup(H));</span>
@@ -1323,12 +1323,14 @@ Group([ (1,4)(2,3), (1,2)(3,4) ])
 <h5>39.11-4 NormalClosure</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalClosure</code>( <var class="Arg">G</var>, <var class="Arg">U</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>The normal closure of <var class="Arg">U</var> in <var class="Arg">G</var> is the smallest normal subgroup of <var class="Arg">G</var> which contains <var class="Arg">U</var>.</p>
+<p>The normal closure of <var class="Arg">U</var> in <var class="Arg">G</var> is the smallest normal subgroup of the closure of <var class="Arg">G</var> and <var class="Arg">U</var> which contains <var class="Arg">U</var>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalClosure(g,Subgroup(g,[(1,2,3)]));</span>
-Group([ (1,2,3), (2,3,4) ])
+Group([ (1,2,3), (1,3,4) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalClosure(g,Group((3,4,5)));</span>
+Group([ (3,4,5), (1,5,4), (1,2,5) ])
 </pre></div>
 
 <p><a id="X7D25E7DC7834A703" name="X7D25E7DC7834A703"></a></p>
@@ -1409,7 +1411,7 @@ Group([ (1,4)(2,3), (1,3,4) ])
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,2,3,4),(1,2));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DerivedSubgroup(g);</span>
-Group([ (1,3,2), (2,4,3) ])
+Group([ (1,3,2), (1,4,3) ])
 </pre></div>
 
 <p><a id="X7B10B58F83DDE56E" name="X7B10B58F83DDE56E"></a></p>
@@ -1486,7 +1488,7 @@ Group([  ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PerfectResiduum(Group((1,2,3,4,5),(1,2)));</span>
-Group([ (1,3,2), (2,4,3), (2,3)(4,5) ])
+Group([ (1,3,2), (2,4,3), (1,3)(4,5) ])
 </pre></div>
 
 <p><a id="X787F5F14844FAACE" name="X787F5F14844FAACE"></a></p>
@@ -1514,7 +1516,7 @@ Group([ (1,3,2), (2,4,3), (2,3)(4,5) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Socle(g);</span>
-Group([ (1,4)(2,3), (1,3)(2,4) ])
+Group([ (1,4)(2,3), (1,2)(3,4) ])
 </pre></div>
 
 <p><a id="X8440C61080CDAA14" name="X8440C61080CDAA14"></a></p>
@@ -1527,7 +1529,7 @@ Group([ (1,4)(2,3), (1,3)(2,4) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SupersolvableResiduum(g);</span>
-Group([ (1,2)(3,4), (1,3)(2,4) ])
+Group([ (1,3)(2,4), (1,4)(2,3) ])
 </pre></div>
 
 <p><a id="X796DA805853FAC90" name="X796DA805853FAC90"></a></p>
@@ -1593,9 +1595,9 @@ Group([ (1,2), (3,4), (1,3)(2,4) ])
 <h5>39.13-3 HallSubgroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HallSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>computes a <var class="Arg">P</var>-Hall subgroup for a set <var class="Arg">P</var> of primes. This is a subgroup the order of which is only divisible by primes in <var class="Arg">P</var> and whose index is coprime to all primes in <var class="Arg">P</var>. The function computes Hall subgroups via the operation <code class="code">HallSubgroupOp</code>.</p>
+<p>computes a <var class="Arg">P</var>-Hall subgroup for a set <var class="Arg">P</var> of primes. This is a subgroup the order of which is only divisible by primes in <var class="Arg">P</var> and whose index is coprime to all primes in <var class="Arg">P</var>. Such a subgroup is unique up to conjugacy if <var class="Arg">G</var> is solvable. The function computes Hall subgroups via the operation <code class="code">HallSubgroupOp</code>.</p>
 
-<p>At the moment methods exist only if <var class="Arg">G</var> is solvable and <strong class="pkg">GAP</strong> will issue an error if <var class="Arg">G</var> is not solvable.</p>
+<p>If <var class="Arg">G</var> is solvable this function always returns a subgroup. If <var class="Arg">G</var> is not solvable this function might return a subgroup (if it is unique up to conjugacy), a list of subgroups (which are representatives of the conjugacy classes in case there are several such classes) or <code class="keyw">fail</code> if no such subgroup exists.</p>
 
 
 <div class="example"><pre>
@@ -1604,6 +1606,17 @@ Group([ (1,2), (3,4), (1,3)(2,4) ])
 Group([ f1, f2, f3 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(u);</span>
 12
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=PSL(3,5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[2,3]);  </span>
+[ &lt;permutation group of size 96 with 6 generators&gt;, 
+  &lt;permutation group of size 96 with 6 generators&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[3,31]);</span>
+Group(
+[ (2,18,11)(3,20,7)(4,19,9)(5,21,8)(6,17,10)(12,29,22)(13,27,26)(14,
+    31,23)(15,30,24)(16,28,25), (1,6,18,3,16,10,9,28,8,21,2,30,26,20,
+    5,7,12,23,22,11,25,13,14,31,15,17,4,24,29,27,19) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[5,31]);</span>
+fail
 </pre></div>
 
 <p><a id="X832E8E6B8347B13F" name="X832E8E6B8347B13F"></a></p>
@@ -2046,9 +2059,7 @@ PSL(3,4)
 <h5>39.15-23 IsPSolvable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPSolvable</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>A group is <span class="SimpleMath">p</span>-solvable if every chief factor is either not divisible by <span class="SimpleMath">p</span> or solvable.</p>
-
-<p><em>@Currently no method is installed!@</em></p>
+<p>A finite group is <span class="SimpleMath">p</span>-solvable if every chief factor is either not divisible by <span class="SimpleMath">p</span> or solvable.</p>
 
 <p><a id="X87415A8485FCF510" name="X87415A8485FCF510"></a></p>
 
@@ -2488,9 +2499,8 @@ Group([ (2,3) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConjugacyClassesMaximalSubgroups(g);</span>
-[ Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] )^G, 
-  Group( [ (3,4), (1,4)(2,3), (1,3)(2,4) ] )^G, 
-  Group( [ (3,4), (2,4,3) ] )^G ]
+[ AlternatingGroup( [ 1 .. 4 ] )^G, Group( [ (1,2,3), (1,2) ] )^G, 
+  Group( [ (1,2), (3,4), (1,3)(2,4) ] )^G ]
 </pre></div>
 
 <p><a id="X80399CD4870FFC4B" name="X80399CD4870FFC4B"></a></p>
@@ -2517,9 +2527,8 @@ Group([ (2,3) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalSubgroupClassReps(g);</span>
-[ Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), 
-  Group([ (3,4), (1,4)(2,3), (1,3)(2,4) ]), Group([ (3,4), (2,4,3) ]) 
- ]
+[ Alt( [ 1 .. 4 ] ), Group([ (1,2,3), (1,2) ]), 
+  Group([ (1,2), (3,4), (1,3)(2,4) ]) ]
 </pre></div>
 
 <p><a id="X861CD8DA790D81C2" name="X861CD8DA790D81C2"></a></p>
@@ -2704,10 +2713,10 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m11:=TransitiveGroup(11,6);</span>
 M(11)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=RepresentativesPerfectSubgroups(m11);</span>
-[ Group([ (3,4,10)(5,11,6)(7,9,8), (2,5)(3,8)(4,6)(9,11) ]), 
-  Group([ (1,2,3)(4,6,11)(7,9,10), (2,5)(3,8)(4,6)(9,11) ]), 
-  Group([ (3,4,9,7)(5,8,6,10), (2,5)(3,8)(4,6)(9,11) ]), 
-  Group([ (1,2,4)(3,6,11)(7,10,8), (2,5)(3,8)(4,6)(9,11) ]), M(11), 
+[ Group([ (2,3,4)(5,6,8)(7,11,9), (3,11)(4,5)(6,10)(7,8) ]), 
+  Group([ (1,2,3)(5,9,6)(7,8,11), (3,11)(4,5)(6,10)(7,8) ]), 
+  Group([ (2,3,4,11,6)(5,7,10,8,9), (3,11)(4,5)(6,10)(7,8) ]), 
+  Group([ (1,2,3)(4,6,11)(7,9,10), (3,11)(4,5)(6,10)(7,8) ]), M(11), 
   Group(()) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(r,Size);</span>
 [ 60, 60, 360, 660, 7920, 1 ]
@@ -2723,14 +2732,14 @@ M(11)
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConjugacyClassesPerfectSubgroups(m11);</span>
-[ Group( [ ( 3, 4,10)( 5,11, 6)( 7, 9, 8), 
-      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, 
+[ Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), 
+      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
+  Group( [ ( 1, 2, 3)( 5, 9, 6)( 7, 8,11), 
+      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
+  Group( [ ( 2, 3, 4,11, 6)( 5, 7,10, 8, 9), 
+      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
   Group( [ ( 1, 2, 3)( 4, 6,11)( 7, 9,10), 
-      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, 
-  Group( [ ( 3, 4, 9, 7)( 5, 8, 6,10), ( 2, 5)( 3, 8)( 4, 6)( 9,11) 
-     ] )^G, 
-  Group( [ ( 1, 2, 4)( 3, 6,11)( 7,10, 8), 
-      ( 2, 5)( 3, 8)( 4, 6)( 9,11) ] )^G, M(11)^G, Group( () )^G ]
+      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, M(11)^G, Group( () )^G ]
 </pre></div>
 
 <p><a id="X7BFE573187B4BEF8" name="X7BFE573187B4BEF8"></a></p>
@@ -3017,7 +3026,7 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">G</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Computes the group of 1-cocycles <span class="SimpleMath">Z^1(<var class="Arg">G</var>/<var class="Arg">M</var>,<var class="Arg">M</var>)</span>. The normal subgroup <var class="Arg">M</var> may be given by a (Modulo)Pcgs <var class="Arg">mpcgs</var>. In this case the whole calculation is performed modulo the normal subgroup defined by <code class="code">DenominatorOfModuloPcgs(<var class="Arg">mpcgs</var>)</code> (see <a href="chap45.html#X7F18A01785DBAC4E"><span class="RefLink">45.1</span></a>). Similarly the group <var class="Arg">G</var> may instead be specified by a set of elements <var class="Arg">gens</var> that are representatives for a generating system for the factor group <var class="Arg">G</var>/<var class="Arg">M</var>. If this is done the 1-cocycles are computed with respect to these generators (otherwise the routines try to select suitable generators themselves). The current version of the code assumes that <var class="Arg">G</var> is a permutation group or a Pc group.</p>
+<p>Computes the group of 1-cocycles <span class="SimpleMath">Z^1(<var class="Arg">G</var>/<var class="Arg">M</var>,<var class="Arg">M</var>)</span>. The normal subgroup <var class="Arg">M</var> may be given by a (Modulo)Pcgs <var class="Arg">mpcgs</var>. In this case the whole calculation is performed modulo the normal subgroup defined by <code class="code">DenominatorOfModuloPcgs(<var class="Arg">mpcgs</var>)</code> (see <a href="chap45.html#X7F18A01785DBAC4E"><span class="RefLink">45.1</span></a>). Similarly the group <var class="Arg">G</var> may instead be specified by a set of elements <var class="Arg">gens</var> that are representatives for a generating system for the factor group <var class="Arg">G</var>/<var class="Arg">M</var>. If this is done the 1-cocycles are computed with respect to these generators (otherwise the routines try to select suitable generators themselves). The current version of the code assumes that <var class="Arg">G</var> is a permutation group or a pc group.</p>
 
 <p><a id="X7E6438D5834ACCDA" name="X7E6438D5834ACCDA"></a></p>
 
@@ -3166,23 +3175,25 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianInvariantsMultiplier</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns a list of the abelian invariants of the Schur multiplier of <var class="Arg">G</var>.</p>
 
+<p>At the moment, this operation will not give any information about how to extend the multiplier to a Schur Cover.</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(g);</span>
 [ 2 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(MathieuGroup(22));</span>
-[ 4, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(AlternatingGroup(6));</span>
+[ 2, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(SL(2,3));</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(SL(3,2));</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(PSU(4,2));</span>
+[ 2 ]
 </pre></div>
 
-<p>Note that the following example will take some time.</p>
+<p>(Note that the last command from the example will take some time.)</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AbelianInvariantsMultiplier(PSU(6,2));</span>
-[ 2, 2, 3 ]
-</pre></div>
-
-<p>At the moment, this operation will not give any information about how to extend the multiplier to a Schur Cover.</p>
+<p>The <strong class="pkg">GAP</strong> 4.4.12 manual contained examples for larger groups e.g. <span class="SimpleMath">M_22</span>. However, some issues that may very rarely (and not easily reproducibly) lead to wrong results were discovered in the code capable of handling larger groups, and in <strong class="pkg">GAP</strong> 4.5 it was replaced by a more reliable basic method. To deal with larger groups, one can use the function <code class="func">SchurMultiplier</code> (<span class="RefLink">cohomolo: SchurMultiplier</span>) from the <strong class="pkg">cohomolo</strong> package. Also, additional methods for <code class="func">AbelianInvariantsMultiplier</code> are installed in the <strong class="pkg">Polycyclic</strong> package for pcp-groups.</p>
 
 <p><a id="X819E8AEC835F8CD1" name="X819E8AEC835F8CD1"></a></p>
 

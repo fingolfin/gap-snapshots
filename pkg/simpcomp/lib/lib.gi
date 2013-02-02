@@ -653,16 +653,16 @@ function(arg)
 		#generate filename
 		name:=SCPropertyByName(sc,"Name");
 		if(name=fail) then
-			file:=Concatenation(["complex",time,".sc"]);
+			file:=Concatenation(["complex",time,".scb"]);
 		else
-			file:=Concatenation(["complex_",SCIntFunc.SanitizeFilename(name),time,".sc"]);
+			file:=Concatenation(["complex_",SCIntFunc.SanitizeFilename(name),time,".scb"]);
 		fi;
 
 		#get new name
 		i:=1;
 		newfile:=file;
 		while(IsExistingFile(Filename(Directory(SCPropertyByName(rep,"Path")),newfile))) do
-			newfile:=Concatenation([file{[1..Length(file)-3]},"_",String(i),".sc"]);
+			newfile:=Concatenation([file{[1..Length(file)-3]},"_",String(i),".scb"]);
 			i:=i+1;
 		od;
 
@@ -707,6 +707,7 @@ end);
 ## #I  SCIntFunc.SCLibInit: index not found -- trying to reconstruct it.
 ## #I  SCLibUpdate: rebuilding index for ~/myrepository/.
 ## #I  SCLibUpdate: rebuilding index done.
+## gap> SCLibAdd(myRepository,SCSimplex(2));;
 ## gap> SCLibDelete(myRepository,1);
 ## true
 ## </Example>
@@ -723,9 +724,9 @@ function(repository,id)
 		return fail;
 	fi;
 
-	index:=SCPropertyByName(repository,"Index");
+	index:=ShallowCopy(SCPropertyByName(repository,"Index"));
 
-	if(index=fail or not IsBound(index[id])) then
+	if(index=fail or index = [] or not IsBound(index[id])) then
 		Info(InfoSimpcomp,1,"SCLibDelete: error in index of library repository.");
 		return fail;
 	fi;

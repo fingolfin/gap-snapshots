@@ -100,7 +100,7 @@
 ## Saves a simplicial complex in a binary format (using <C>IO_Pickle</C>) to a file specified in <Arg>filename</Arg> (as string). If <Arg>filename</Arg> does not end in <C>.scb</C>, this suffix is appended to the file name.
 ## <Example>
 ## gap&gt; c:=SCBdSimplex(3);;
-## gap&gt; SCSave(c,"bddelta3");
+## gap&gt; SCSave(c,"/tmp/bddelta3");
 ## true
 ## </Example>
 ## </Description>
@@ -116,7 +116,7 @@
 ## Saves a simplicial complex <Arg>complex</Arg> to a file specified by <Arg>filename</Arg> (as string) in XML format. If <Arg>filename</Arg> does not end in <C>.sc</C>, this suffix is appended to the file name.
 ## <Example>
 ## gap&gt; c:=SCBdSimplex(3);;
-## gap&gt; SCSaveXML(c,"bddelta3");
+## gap&gt; SCSaveXML(c,"/tmp/bddelta3");
 ## true
 ## </Example>
 ## </Description>
@@ -161,7 +161,7 @@
 ## <Func Name="SCExportJavaView" Arg="complex, file, coords"/>
 ## <Returns><K>true</K> on success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Exports the facet list of the given simplicial complex <Arg>complex</Arg> in <C>JavaView</C> format (file name suffix <C>.jvx</C>) to a file specified by <Arg>filename</Arg> (as string). The list <Arg>coords</Arg> must contain a <M>3</M>-tuple of real coordinates for each vertex of <Arg>complex</Arg>, either as tuple of length three containing the coordinates (Warning: as &GAP; only has rudimentary support for floating point values, currently only integer numbers can be used as coordinates when providing <Arg>coords</Arg> as list of <M>3</M>-tuples) or as string of the form <C>"x.x y.y z.z"</C> with decimal numbers <C>x.x</C>, <C>y.y</C>, <C>z.z</C> for the three coordinates (i.e. <C>"1.0 0.0 0.0"</C>).
+## Exports the 2-skeleton of the given simplicial complex <Arg>complex</Arg> (or the facets if the complex is of dimension 2 or less) in <C>JavaView</C> format (file name suffix <C>.jvx</C>) to a file specified by <Arg>filename</Arg> (as string). The list <Arg>coords</Arg> must contain a <M>3</M>-tuple of real coordinates for each vertex of <Arg>complex</Arg>, either as tuple of length three containing the coordinates (Warning: as &GAP; only has rudimentary support for floating point values, currently only integer numbers can be used as coordinates when providing <Arg>coords</Arg> as list of <M>3</M>-tuples) or as string of the form <C>"x.x y.y z.z"</C> with decimal numbers <C>x.x</C>, <C>y.y</C>, <C>z.z</C> for the three coordinates (i.e. <C>"1.0 0.0 0.0"</C>).
 ## <Example>
 ## gap&gt; coords:=[[1,0,0],[0,1,0],[0,0,1]];;
 ## gap&gt; SCExportJavaView(SCBdSimplex(2),"/tmp/triangle.jvx",coords);
@@ -214,4 +214,22 @@
 ## </ManSection>
 ##<#/GAPDoc>
 ################################################################################
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCExportSnapPy">
+## <ManSection>
+## <Func Name="SCExportSnapPy" Arg="complex, filename"/>
+## <Returns><K>true</K> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Exports the facet list and orientability of a given combinatorial <M>3</M>-pseudomanifold <Arg>complex</Arg> in <C>SnapPy</C> format to a file specified by <Arg>filename</Arg>.
+## <Example>
+## gap&gt; SCLib.SearchByAttribute("Dim=3 and F=[8,28,56,28]");
+## [ [ 8, "PM^3 - TransitiveGroup(8,43), No. 1" ] ]
+## gap&gt; c:=SCLib.Load(last[1][1]);;
+## gap&gt; SCExportSnapPy(c,"/tmp/M38.tri");
+## true
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
 ################################################################################

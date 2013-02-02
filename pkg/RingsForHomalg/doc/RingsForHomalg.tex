@@ -98,7 +98,7 @@
 {\Huge \textbf{Dictionaries of External Rings for the \textsf{GAP} Package \textsf{homalg}\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.12.12\mbox{}}\\[1cm]
+{\Huge Version 2013.01.09\mbox{}}\\[1cm]
 {December 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
@@ -800,8 +800,9 @@ the philosophy
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Code]
       DecideZeroRows := "\n\
-  proc DecideZeroRows (matrix A, matrix B)\n\
+  proc DecideZeroRows (matrix A, module B)\n\
   {\n\
+    attrib(B,\"isSB\",1);\n\
     return(reduce(A,B));\n\
   }\n\n",
 \end{Verbatim}
@@ -862,7 +863,7 @@ the philosophy
       DecideZeroColumns := "\n\
   proc DecideZeroColumns (matrix A, matrix B)\n\
   {\n\
-    return(Involution(reduce(Involution(A),Involution(B))));\n\
+    return(Involution(DecideZeroRows(Involution(A),Involution(B))));\n\
   }\n\n",
 \end{Verbatim}
  }
@@ -1185,8 +1186,9 @@ the philosophy
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Code]
       DecideZeroRowsEffectively := "\n\
-  proc DecideZeroRowsEffectively (matrix A, matrix B)\n\
+  proc DecideZeroRowsEffectively (matrix A, module B)\n\
   {\n\
+    attrib(B,\"isSB\",1);\n\
     matrix M = reduce(A,B);\n\
     matrix T = lift(B,M-A);\n\
     list l = M,T;\n\
