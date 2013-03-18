@@ -2,12 +2,8 @@
 ##
 ##  radical.gd                      CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: radical.gd,v 1.5 2011/05/15 19:17:58 gap Exp $
-##
 ##  Copyright (C) 2000, 2002 Burkhard Höfling
 ##
-Revision.radical_gd :=
-    "@(#)$Id: radical.gd,v 1.5 2011/05/15 19:17:58 gap Exp $";
 
 
 #############################################################################

@@ -43,7 +43,7 @@ defines a Schunck class. <var>rec</var> may have the following components: <code
 present, are stored, respectively, in the attributes <code>MemberFunction</code>, 
 <code>ProjectorFunction</code>, <code>BoundaryFunction</code>, <code>Characteristic</code>, and <code>Name</code>, see
 <a href="CHAP002.htm#SSEC002.2">MemberFunction</a>, 
-<a href="CHAP004.htm#SSEC002.6">ProjectorFunction</a>, <a href="CHAP004.htm#SSEC002.5">BoundaryFunction</a>m, <a href="CHAP003.htm#SSEC004.1">Characteristic</a>, and <a href="../../../doc/ref/chap13.html#X7F14EF9D81432113">Name</a>
+<a href="CHAP004.htm#SSEC002.6">ProjectorFunction</a>, <a href="CHAP004.htm#SSEC002.5">BoundaryFunction</a>m, <a href="CHAP003.htm#SSEC004.1">Characteristic</a>, and <a href="../../../doc/ref/chap12.html#X7F14EF9D81432113">Name</a>
 for the meaning of these attributes.
 <p>
 At least one of the attributes <code>MemberFunction</code>, <code>ProjectorFunction</code>, or
@@ -172,7 +172,7 @@ representation, or equivalently, if it has a maximal subgroup <var>M</var> with 
 core. If <var>G</var> is solvable, <var>M</var> complements the unique minimal normal subgroup
 <var>N</var> of <var>G</var>. Therefore <var>N</var> is the socle as well as the Fitting subgroup of
 <var>G</var>. A permutation group may be primitive as an abstract group while it is 
-not primitive as a permutation group (cf. <a href="../../../doc/ref/chap42.html#X84C19AD68247B760">IsPrimitive</a>).
+not primitive as a permutation group (cf. <a href="../../../doc/ref/chap41.html#X84C19AD68247B760">IsPrimitive</a>).
 <p>
 <a name = "SSEC003.2"></a>
 <li><code>SocleComplement(</code><var>grp</var><code>) A</code>
@@ -202,7 +202,7 @@ defines a formation. <var>rec</var> may have components <code>\in</code>,
 <code>res</code>, <code>char</code>, and <code>name</code>, whose values are stored in the attributes
 <code>MemberFunction</code>, <code>ResidualFunction</code>, <code>Characteristic</code>, and
 <code>Name</code>, respectively, of the new formation. See <a href="CHAP002.htm#SSEC002.2">MemberFunction</a>, <a href="CHAP004.htm#SSEC005.2">ResidualFunction</a>,
-<a href="CHAP003.htm#SSEC004.1">Characteristic</a>, and <a href="../../../doc/ref/chap13.html#X7F14EF9D81432113">Name</a>, respectively, for the meaning of these attributes.
+<a href="CHAP003.htm#SSEC004.1">Characteristic</a>, and <a href="../../../doc/ref/chap12.html#X7F14EF9D81432113">Name</a>, respectively, for the meaning of these attributes.
 <p>
 The following example shows how to construct the formations of all groups of 
 derived length at most <var>3</var> and of all groups of exponent dividing <var>6</var>.
@@ -233,7 +233,7 @@ any components admissible for formations (see <a href="CHAP004.htm#SSEC004.1">Or
 <code>ResidualFunction</code>, <code>Characteristic</code>,  <code>ProjectorFunction</code>, <code>BoundaryFunction</code>,
 <code>LocalDefinitionFunction</code>, and <code>Name</code>, respectively.  Please refer to <a href="CHAP002.htm#SSEC002.2">MemberFunction</a>, 
 <a href="CHAP004.htm#SSEC005.2">ResidualFunction</a>, <a href="CHAP003.htm#SSEC004.1">Characteristic</a>,  <a href="CHAP004.htm#SSEC002.6">ProjectorFunction</a>, <a href="CHAP004.htm#SSEC002.5">BoundaryFunction</a>,
-<a href="CHAP004.htm#SSEC005.3">LocalDefinitionFunction</a>,  and <a href="../../../doc/ref/chap13.html#X7F14EF9D81432113">Name</a> for the meaning of these attributes.
+<a href="CHAP004.htm#SSEC005.3">LocalDefinitionFunction</a>,  and <a href="../../../doc/ref/chap12.html#X7F14EF9D81432113">Name</a> for the meaning of these attributes.
 <p>
 There are also functions <code>FittingFormation</code> and <code>SaturatedFittingFormation</code> to create
 Fitting formations and saturated Fitting formations; see
@@ -382,7 +382,7 @@ be called by the user.
 <li><code>NormalSubgroups(</code><var>grp</var><code>) A</code>
 <p>
 <font face="Gill Sans,Helvetica,Arial">CRISP</font> provides an improved method for <code>NormalSubgroups</code> (see
-<a href="../../../doc/ref/chap40.html#X80237A847E24E6CF">NormalSubgroups</a>) for groups <var>grp</var> which are finite and  solvable.
+<a href="../../../doc/ref/chap39.html#X80237A847E24E6CF">NormalSubgroups</a>) for groups <var>grp</var> which are finite and  solvable.
 This method simply calls <code>AllInvSgrsWithQPropUnderAction</code> with
 <var><var>act</var> = <var>grp</var></var>, <code>ReturnTrue</code>
 as <var>pretest</var> and <code>ReturnFail</code> as <var>test</var>. Note that, since
@@ -503,8 +503,9 @@ gap&gt; normsWithSupersolvableFactorGroups :=
 &gt;    ReturnFail, # pretest is sufficient
 &gt;    fail); # no data required
 [ GL(2,3), 
-  Group([ [ [ Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0 ] ], [ [ Z(3), Z(3)^0 ], 
-          [ Z(3)^0, Z(3)^0 ] ], [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 
+  Group([ [ [ Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0 ] ],
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ], 
+      [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ] ]), 
   Group([ [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ], 
       [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 
@@ -528,5 +529,5 @@ gap&gt; normsWithSupersolvableFactorGroups :=
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href ="CHAP005.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>CRISP manual<br>November 2011
+<address>CRISP manual<br>March 2013
 </address></body></html>

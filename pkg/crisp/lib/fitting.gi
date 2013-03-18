@@ -2,12 +2,8 @@
 ##
 ##  fitting.gi                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: fitting.gi,v 1.4 2011/05/15 19:17:54 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.fitting_gi :=
-    "@(#)$Id: fitting.gi,v 1.4 2011/05/15 19:17:54 gap Exp $";
 
 
 #############################################################################

@@ -147,7 +147,7 @@ InstallMethod( ViewObj,
 "for HapFilteredCubicalComplex",
 [IsHapFilteredCubicalComplex],
 function(T)
-Print("Filtered pure cubical complex of dimension ",
+Print("Filtered cubical complex of dimension ",
 EvaluateProperty(T,"dimension"), ".\n");
 end);
 
@@ -155,7 +155,7 @@ InstallMethod( PrintObj,
 "for HapFilteredCubicalComplex",
 [IsHapFilteredCubicalComplex],
 function(T)
-Print("Filtered pure cubical complex of dimension ",
+Print("Filtered cubical complex of dimension ",
 EvaluateProperty(T,"dimension"), ".\n");
 end);
 #####################################################################
@@ -200,6 +200,46 @@ end);
 
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+DeclareCategory("IsHapFilteredSimplicialComplex",IsObject);
+
+DeclareRepresentation(  "IsHapFilteredSimplicialComplexRep",
+                        IsComponentObjectRep,
+                        ["vertices",
+                         "simplices",
+                         "nrSimplices",
+                         "enumeratedSimplex",
+                         "properties"]);
+
+HapFilteredSimplicialComplexFamily:=NewFamily( "HapFilteredSimplicialComplexFamily",
+                                 IsHapFilteredSimplicialComplex,
+                                 IsHapFilteredSimplicialComplex);
+
+HapFilteredSimplicialComplex:=NewType(HapFilteredSimplicialComplexFamily,IsHapFilteredSimplicialComplexRep);
+
+
+InstallMethod( ViewObj,
+"for HapFilteredSimplicialComplex",
+[IsHapFilteredSimplicialComplex],
+function(T)
+Print("Filtered simplicial complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+
+InstallMethod( PrintObj,
+"for HapFilteredSimplicialComplex",
+[IsHapFilteredSimplicialComplex],
+function(T)
+Print("Filtered simplicial complex of dimension ",
+EvaluateProperty(T,"dimension"), ".\n");
+end);
+
+
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################

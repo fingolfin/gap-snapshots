@@ -98,15 +98,16 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X82B77A5F7F9EDBC7">40.10-1 IsGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X7DFBBAB18126B4D9">40.10-2 IsGroupGeneralMappingByAsGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X78707DF57C3927EB">40.10-3 IsPreimagesByAsGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X83E10338798F552B">40.10-4 IsPermGroupGeneralMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X83DADD9F7CAD829B">40.10-5 IsToPermGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X798E72E77EC85D4A">40.10-6 IsGroupGeneralMappingByPcgs</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X86FF63B784FB8F85">40.10-7 IsPcGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X79A853B579B250C0">40.10-8 IsToPcGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X7BE2A2EB80DC5CFF">40.10-9 IsFromFpGroupGeneralMappingByImages</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X81090C207F4F6423">40.10-10 IsFromFpGroupStdGensGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X863805187A24B5E3">40.10-2 MappingGeneratorsImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X7DFBBAB18126B4D9">40.10-3 IsGroupGeneralMappingByAsGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X78707DF57C3927EB">40.10-4 IsPreimagesByAsGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X83E10338798F552B">40.10-5 IsPermGroupGeneralMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X83DADD9F7CAD829B">40.10-6 IsToPermGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X798E72E77EC85D4A">40.10-7 IsGroupGeneralMappingByPcgs</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X86FF63B784FB8F85">40.10-8 IsPcGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X79A853B579B250C0">40.10-9 IsToPcGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X7BE2A2EB80DC5CFF">40.10-10 IsFromFpGroupGeneralMappingByImages</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40.html#X81090C207F4F6423">40.10-11 IsFromFpGroupStdGensGeneralMappingByImages</a></span>
 </div></div>
 </div>
 
@@ -223,7 +224,7 @@ Group([ (1,2), (1,2) ])
 <h5>40.1-5 AsGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>If <var class="Arg">map</var> is a mapping from one group to another this attribute returns a group general mapping that which implements the same abstract mapping. (Some operations can be performed more effective in this representation, see also <code class="func">IsGroupGeneralMappingByAsGroupGeneralMappingByImages</code> (<a href="chap40.html#X7DFBBAB18126B4D9"><span class="RefLink">40.10-2</span></a>).)</p>
+<p>If <var class="Arg">map</var> is a mapping from one group to another this attribute returns a group general mapping that which implements the same abstract mapping. (Some operations can be performed more effective in this representation, see also <code class="func">IsGroupGeneralMappingByAsGroupGeneralMappingByImages</code> (<a href="chap40.html#X7DFBBAB18126B4D9"><span class="RefLink">40.10-3</span></a>).)</p>
 
 
 <div class="example"><pre>
@@ -839,25 +840,32 @@ Group([ (1,2,3,4), (1,2) ])
 <h5>40.10-1 IsGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
-<p>Representation for mappings from one group to another that are defined by extending a mapping of group generators homomorphically. Instead of record components, the attribute <code class="code">MappingGeneratorsImages</code> is used to store generators and their images.</p>
+<p>Representation for mappings from one group to another that are defined by extending a mapping of group generators homomorphically. Instead of record components, the attribute <code class="func">MappingGeneratorsImages</code> (<a href="chap40.html#X863805187A24B5E3"><span class="RefLink">40.10-2</span></a>) is used to store generators and their images.</p>
+
+<p><a id="X863805187A24B5E3" name="X863805187A24B5E3"></a></p>
+
+<h5>40.10-2 MappingGeneratorsImages</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingGeneratorsImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>This attribute contains a list of length 2, the first entry being a list of generators of the source of <var class="Arg">map</var> and the second entry a list of their images. This attribute is used, for example, by <code class="func">GroupHomomorphismByImages</code> (<a href="chap40.html#X7F348F497C813BE0"><span class="RefLink">40.1-1</span></a>) to store generators and images.</p>
 
 <p><a id="X7DFBBAB18126B4D9" name="X7DFBBAB18126B4D9"></a></p>
 
-<h5>40.10-2 IsGroupGeneralMappingByAsGroupGeneralMappingByImages</h5>
+<h5>40.10-3 IsGroupGeneralMappingByAsGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupGeneralMappingByAsGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <p>Representation for mappings that delegate work on a <code class="func">GroupHomomorphismByImages</code> (<a href="chap40.html#X7F348F497C813BE0"><span class="RefLink">40.1-1</span></a>).</p>
 
 <p><a id="X78707DF57C3927EB" name="X78707DF57C3927EB"></a></p>
 
-<h5>40.10-3 IsPreimagesByAsGroupGeneralMappingByImages</h5>
+<h5>40.10-4 IsPreimagesByAsGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPreimagesByAsGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <p>Representation for mappings that delegate work for preimages to a mapping created with <code class="func">GroupHomomorphismByImages</code> (<a href="chap40.html#X7F348F497C813BE0"><span class="RefLink">40.1-1</span></a>).</p>
 
 <p><a id="X83E10338798F552B" name="X83E10338798F552B"></a></p>
 
-<h5>40.10-4 IsPermGroupGeneralMapping</h5>
+<h5>40.10-5 IsPermGroupGeneralMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermGroupGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
@@ -867,7 +875,7 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p><a id="X83DADD9F7CAD829B" name="X83DADD9F7CAD829B"></a></p>
 
-<h5>40.10-5 IsToPermGroupGeneralMappingByImages</h5>
+<h5>40.10-6 IsToPermGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsToPermGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsToPermGroupHomomorphismByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
@@ -875,14 +883,14 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p><a id="X798E72E77EC85D4A" name="X798E72E77EC85D4A"></a></p>
 
-<h5>40.10-6 IsGroupGeneralMappingByPcgs</h5>
+<h5>40.10-7 IsGroupGeneralMappingByPcgs</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupGeneralMappingByPcgs</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <p>is the representations for mappings that map a pcgs to images and thus may use exponents to decompose generators.</p>
 
 <p><a id="X86FF63B784FB8F85" name="X86FF63B784FB8F85"></a></p>
 
-<h5>40.10-7 IsPcGroupGeneralMappingByImages</h5>
+<h5>40.10-8 IsPcGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcGroupHomomorphismByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
@@ -890,7 +898,7 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p><a id="X79A853B579B250C0" name="X79A853B579B250C0"></a></p>
 
-<h5>40.10-8 IsToPcGroupGeneralMappingByImages</h5>
+<h5>40.10-9 IsToPcGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsToPcGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsToPcGroupHomomorphismByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
@@ -898,7 +906,7 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p><a id="X7BE2A2EB80DC5CFF" name="X7BE2A2EB80DC5CFF"></a></p>
 
-<h5>40.10-9 IsFromFpGroupGeneralMappingByImages</h5>
+<h5>40.10-10 IsFromFpGroupGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFromFpGroupGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFromFpGroupHomomorphismByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
@@ -906,7 +914,7 @@ Group([ (1,2,3,4), (1,2) ])
 
 <p><a id="X81090C207F4F6423" name="X81090C207F4F6423"></a></p>
 
-<h5>40.10-10 IsFromFpGroupStdGensGeneralMappingByImages</h5>
+<h5>40.10-11 IsFromFpGroupStdGensGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFromFpGroupStdGensGeneralMappingByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFromFpGroupStdGensHomomorphismByImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>

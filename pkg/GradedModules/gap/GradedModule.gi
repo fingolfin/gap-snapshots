@@ -196,6 +196,24 @@ InstallMethod( AnyParametrization,
 end );
 
 ##
+InstallMethod( MinimalParametrization,
+        "for homalg graded modules",
+        [ IsGradedModuleRep ],
+        
+  function( M )
+    local par;
+    
+    par := MinimalParametrization( UnderlyingModule( M ) );
+    par := GradedMap( par, M, "create", HomalgRing( M ) );
+    
+    Assert( 4, IsMorphism );
+    SetIsMorphism( par, true );
+    
+    return par;
+    
+end );
+
+##
 InstallMethod( CurrentResolution,
         "for graded modules",
         [ IsInt, IsGradedModuleRep ],
@@ -470,6 +488,32 @@ InstallMethod( CompleteComplexByLinearResolution,
     
     return C;
 
+end );
+
+##
+InstallMethod( FittingIdeal,
+        "for homalg graded modules",
+        [ IsInt, IsGradedModuleRep ],
+        
+  function( i, M )
+    local Fitt, Fitt_i;
+    
+    if not IsBound( M!.FittingIdeals ) then
+        M!.FittingIdeals := rec( );
+    fi;
+    
+    Fitt := M!.FittingIdeals;
+    
+    if IsBound( Fitt.(String( i )) ) then
+        return Fitt.(String( i ));
+    fi;
+    
+    Fitt_i := FittingIdeal( i, UnderlyingModule( M ) );
+    
+    Fitt.(String( i )) := GradedModule( Fitt_i, HomalgRing( M ) );
+    
+    return Fitt_i;
+    
 end );
 
 ####################################

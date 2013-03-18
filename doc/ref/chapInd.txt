@@ -108,6 +108,7 @@
   absolute value of an integer  14.2-6
   [2XAbsoluteDiameter[102X  19.2-4
   [2XAbsoluteIrreducibleModules[102X  71.15-2
+  [2XAbsolutelyIrreducibleModules[102X  71.15-2
   [2XAbsoluteValue[102X  18.1-8
   [2XAbsolutIrreducibleModules[102X  71.15-2
   abstract word  36.1-1
@@ -524,7 +525,7 @@
   coefficient, binomial  16.1-2
   [2XCoefficients[102X  61.6-3
   coefficients, for cyclotomics  18.1-10
-  [2XCoefficientsAndMagmaElements[102X  65.2-3
+  [2XCoefficientsAndMagmaElements[102X  65.2-4
   [2XCoefficientsFamily[102X  66.19-3
   [2XCoefficientsMultiadic[102X  14.3-8
   [2XCoefficientsOfLaurentPolynomial[102X  66.13-2
@@ -922,7 +923,7 @@
   [2XElementaryDivisorsTransformationsMatDestructive[102X  24.9-2
   [2XElementOfFpGroup[102X  47.4-5
   [2XElementOfFpSemigroup[102X  53.4-2
-  [2XElementOfMagmaRing[102X  65.2-5
+  [2XElementOfMagmaRing[102X  65.2-6
   [2XElementOrdersPowerMap[102X  73.1-3
   [2XElementProperty[102X  43.12-2
   [2XElements[102X  30.3-11
@@ -1247,6 +1248,7 @@
   [2XGapInputPcGroup[102X  46.6-1
   [2XGapInputSCTable[102X  62.4-5
   [2XGAPKB_REW[102X  53.6-2
+  [10XGAPTCENUM[110X  47.6-5
   [2XGasmanLimits[102X  7.11-3
   [2XGasmanMessageStatus[102X  7.11-2
   [2XGasmanStatistics[102X  7.11-1
@@ -1388,6 +1390,7 @@
   [2XHeadPcElementByNumber[102X  45.5-12
   [2XHELP_ADD_BOOK[102X  84.1-1
   [2XHELP_REMOVE_BOOK[102X  84.1-2
+  [2XHELP_VIEWER_INFO[102X  84.4-1
   [2XHenselBound[102X  66.12-3
   Hermite normal form  77.3
   [2XHermiteNormalFormIntegerMat[102X  25.2-4
@@ -1780,9 +1783,9 @@
   [2XIsElementaryAbelian[102X (for a character table)  71.8-5
   [2XIsElementOfFpMonoid[102X  53.1-6
   [2XIsElementOfFpSemigroup[102X  53.1-5
-  [2XIsElementOfFreeMagmaRing[102X  65.2-1
-  [2XIsElementOfFreeMagmaRingCollection[102X  65.2-1
-  [2XIsElementOfFreeMagmaRingFamily[102X  65.2-2
+  [2XIsElementOfFreeMagmaRing[102X  65.2-2
+  [2XIsElementOfFreeMagmaRingCollection[102X  65.2-2
+  [2XIsElementOfFreeMagmaRingFamily[102X  65.2-3
   [2XIsElementOfMagmaRingModuloRelations[102X  65.4-1
   [2XIsElementOfMagmaRingModuloRelationsCollection[102X  65.4-1
   [2XIsElementOfMagmaRingModuloRelationsFamily[102X  65.4-2
@@ -1835,10 +1838,10 @@
   [2XIsFreeLeftModule[102X  57.3-1
   [2XIsFreeMagmaRing[102X  65.1-3
   [2XIsFreeMagmaRingWithOne[102X  65.1-4
-  [2XIsFromFpGroupGeneralMappingByImages[102X  40.10-9
-  [2XIsFromFpGroupHomomorphismByImages[102X  40.10-9
-  [2XIsFromFpGroupStdGensGeneralMappingByImages[102X  40.10-10
-  [2XIsFromFpGroupStdGensHomomorphismByImages[102X  40.10-10
+  [2XIsFromFpGroupGeneralMappingByImages[102X  40.10-10
+  [2XIsFromFpGroupHomomorphismByImages[102X  40.10-10
+  [2XIsFromFpGroupStdGensGeneralMappingByImages[102X  40.10-11
+  [2XIsFromFpGroupStdGensHomomorphismByImages[102X  40.10-11
   [2XIsFullHomModule[102X  61.10-7
   [2XIsFullMatrixModule[102X  57.3-10
   [2XIsFullRowModule[102X  57.3-8
@@ -1877,9 +1880,9 @@
   [2XIsGreensRRelation[102X  51.7-2
   [2XIsGroup[102X  39.2-6
   [2XIsGroupGeneralMapping[102X  32.9-4
-  [2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X  40.10-2
+  [2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X  40.10-3
   [2XIsGroupGeneralMappingByImages[102X  40.10-1
-  [2XIsGroupGeneralMappingByPcgs[102X  40.10-6
+  [2XIsGroupGeneralMappingByPcgs[102X  40.10-7
   [2XIsGroupHClass[102X  51.7-11
   [2XIsGroupHomomorphism[102X  32.9-4
   [2XIsGroupOfAutomorphisms[102X  40.7-2
@@ -1959,6 +1962,7 @@
   [2XIsMagmaHomomorphism[102X  32.8-1
   [2XIsMagmaRingModuloRelations[102X  65.4-4
   [2XIsMagmaRingModuloSpanOfZero[102X  65.5-2
+  [2XIsMagmaRingObjDefaultRep[102X  65.2-1
   [2XIsMagmaWithInverses[102X  35.1-4
   [2XIsMagmaWithInversesIfNonzero[102X  35.1-3
   [2XIsMagmaWithOne[102X  35.1-2
@@ -2067,8 +2071,8 @@
   [2XIsParentPcgsFamilyPcgs[102X  46.1-4
   [2XIsPartialOrderBinaryRelation[102X  33.2-6
   [2XIsPcGroup[102X  46.3-1
-  [2XIsPcGroupGeneralMappingByImages[102X  40.10-7
-  [2XIsPcGroupHomomorphismByImages[102X  40.10-7
+  [2XIsPcGroupGeneralMappingByImages[102X  40.10-8
+  [2XIsPcGroupHomomorphismByImages[102X  40.10-8
   [2XIsPcgs[102X  45.2-2
   [2XIsPcgsCentralSeries[102X  45.11-5
   [2XIsPcgsChiefSeries[102X  45.11-13
@@ -2081,10 +2085,10 @@
   [2XIsPermCollColl[102X  42.1-2
   [2XIsPermCollection[102X  42.1-2
   [2XIsPermGroup[102X  43.1-1
-  [2XIsPermGroupGeneralMapping[102X  40.10-4
-  [2XIsPermGroupGeneralMappingByImages[102X  40.10-4
-  [2XIsPermGroupHomomorphism[102X  40.10-4
-  [2XIsPermGroupHomomorphismByImages[102X  40.10-4
+  [2XIsPermGroupGeneralMapping[102X  40.10-5
+  [2XIsPermGroupGeneralMappingByImages[102X  40.10-5
+  [2XIsPermGroupHomomorphism[102X  40.10-5
+  [2XIsPermGroupHomomorphismByImages[102X  40.10-5
   [2XIsPGroup[102X  39.15-19
   [2XIsPInfinity[102X  19.2-5
   [2XIsPNilpotent[102X  39.15-24
@@ -2097,7 +2101,7 @@
   [2XIsPosInt[102X  14.2-2
   [2XIsPositiveIntegers[102X  14.1-2
   [2XIsPosRat[102X  17.2-2
-  [2XIsPreimagesByAsGroupGeneralMappingByImages[102X  40.10-3
+  [2XIsPreimagesByAsGroupGeneralMappingByImages[102X  40.10-4
   [2XIsPreOrderBinaryRelation[102X  33.2-5
   [2XIsPrime[102X  56.5-8
   [2XIsPrimeField[102X  58.2-5
@@ -2242,10 +2246,10 @@
   [2XIsTable[102X  21.1-4
   [2XIsTableOfMarks[102X  70.6-2
   [2XIsTableOfMarksWithGens[102X  70.10-3
-  [2XIsToPcGroupGeneralMappingByImages[102X  40.10-8
-  [2XIsToPcGroupHomomorphismByImages[102X  40.10-8
-  [2XIsToPermGroupGeneralMappingByImages[102X  40.10-5
-  [2XIsToPermGroupHomomorphismByImages[102X  40.10-5
+  [2XIsToPcGroupGeneralMappingByImages[102X  40.10-9
+  [2XIsToPcGroupHomomorphismByImages[102X  40.10-9
+  [2XIsToPermGroupGeneralMappingByImages[102X  40.10-6
+  [2XIsToPermGroupHomomorphismByImages[102X  40.10-6
   [2XIsTotal[102X  32.3-1
   [2XIsTotalOrdering[102X  34.3-2
   [2XIsTransformation[102X  54.1-1
@@ -2541,6 +2545,7 @@
   [2XMappedWord[102X  36.3-1
   [2XMappingByFunction[102X (by function (and inverse function) between two domains)  32.2-2
   [2XMappingByFunction[102X (by function and function that computes one preimage)  32.2-2
+  [2XMappingGeneratorsImages[102X  40.10-2
   [2XMappingPermListList[102X  42.5-3
   maps  73.
   [2XMarksTom[102X  70.7-1
@@ -2706,8 +2711,8 @@
   [2XMutableBasisOfClosureUnderAction[102X  62.9-11
   [2XMutableBasisOfIdealInNonassociativeAlgebra[102X  62.9-13
   [2XMutableBasisOfNonassociativeAlgebra[102X  62.9-12
-  [2XMutableIdentityMat[102X  24.5-11
-  [2XMutableNullMat[102X  24.5-12
+  [10XMutableIdentityMat[110X  77.4
+  [10XMutableNullMat[110X  77.4
   [2XName[102X  12.8-2
   [2XNameFunction[102X  5.1-1
   [2XNameRNam[102X  29.7-1
@@ -3959,6 +3964,7 @@
   [2XTan[102X  19.2-1
   [2XTanh[102X  19.2-1
   [2XTau[102X  15.5-2
+  [10XTCENUM[110X  47.6-5
   [2XTeachingMode[102X  6.13-1
   [2XTemporaryGlobalVarName[102X  4.9-11
   [2XTensored[102X  72.8-20
@@ -4225,7 +4231,7 @@
   [2XZClassRepsQClass[102X  44.6-9
   [2XZero[102X  31.10-3
   [2XZeroAttr[102X  31.10-3
-  [2XZeroCoefficient[102X  65.2-4
+  [2XZeroCoefficient[102X  65.2-5
   [2XZeroCoefficientRatFun[102X  66.21-4
   [2XZeroImmutable[102X  31.10-3
   [2XZeroMapping[102X  32.2-8

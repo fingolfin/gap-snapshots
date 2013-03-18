@@ -2,8 +2,6 @@
 %%
 %%  schunck.tex              CRISP documentation            Burkhard Höfling
 %%
-%%  @(#)$Id: schunck.tex,v 1.16 2011/07/17 11:52:11 gap Exp $
-%%
 %%  Copyright (C) 2000 Burkhard Höfling
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -479,8 +477,9 @@ gap> normsWithSupersolvableFactorGroups :=
 >    ReturnFail, # pretest is sufficient
 >    fail); # no data required
 [ GL(2,3), 
-  Group([ [ [ Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0 ] ], [ [ Z(3), Z(3)^0 ], 
-          [ Z(3)^0, Z(3)^0 ] ], [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 
+  Group([ [ [ Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0 ] ],
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ], 
+      [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ] ]), 
   Group([ [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ], 
       [ [ 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], 

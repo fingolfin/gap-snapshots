@@ -2,12 +2,8 @@
 ##
 ##  form.gi                         CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: form.gi,v 1.3 2011/05/15 19:17:54 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.form_gi :=
-    "@(#)$Id: form.gi,v 1.3 2011/05/15 19:17:54 gap Exp $";
 
 
 #############################################################################

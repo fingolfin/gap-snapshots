@@ -371,17 +371,17 @@ fail
 gap> NamesOfEquivalentLibraryCharacterTables( tbl );
 [  ]
 
-##  ./../gap4/ctadmin.tbi (4965-4970)
+##  ./../gap4/ctadmin.tbi (5004-5009)
 gap> TableOfMarks( CharacterTable( "A5" ) );
 TableOfMarks( "A5" )
 gap> TableOfMarks( CharacterTable( "M" ) );
 fail
 
-##  ./../gap4/ctadmin.tbi (5040-5043)
+##  ./../gap4/ctadmin.tbi (5079-5082)
 gap> CharacterTable( TableOfMarks( "A5" ) );
 CharacterTable( "A5" )
 
-##  ./../gap4/ctadmin.tbi (4879-4886)
+##  ./../gap4/ctadmin.tbi (4918-4925)
 gap> tbl:= CharacterTable( "A5" );
 CharacterTable( "A5" )
 gap> tom:= TableOfMarks( "A5" );
@@ -395,7 +395,7 @@ rec( map := [ 1, 2, 5, 4, 8, 3, 7, 11, 11, 6, 13, 6, 13 ],
   name := "2.A6", perm := (4,5), 
   text := "fusion map is unique up to table autom." )
 
-##  ./../gap4/ctadmin.tbd (2312-2317)
+##  ./../gap4/ctadmin.tbd (2317-2322)
 gap> NameOfLibraryCharacterTable( "A5" );
 "A5"
 gap> NameOfLibraryCharacterTable( "S5" );
@@ -589,7 +589,7 @@ gap> BrowseData.SetReplay( Concatenation(
 gap> BrowseCTblLibDifferences();
 gap> BrowseData.SetReplay( false );
 
-##  ./../gap4/ctadmin.tbd (2071-2078)
+##  ./../gap4/ctadmin.tbd (2076-2083)
 gap> Maxes( CharacterTable( "A6" ) );
 [ "A5", "A6M2", "3^2:4", "s4", "A6M5" ]
 gap> IsDuplicateTable( CharacterTable( "A5" ) );
@@ -597,7 +597,7 @@ false
 gap> IsDuplicateTable( CharacterTable( "A6M2" ) );
 true
 
-##  ./../gap4/ctadmin.tbd (2105-2112)
+##  ./../gap4/ctadmin.tbd (2110-2117)
 gap> Maxes( CharacterTable( "A6" ) );
 [ "A5", "A6M2", "3^2:4", "s4", "A6M5" ]
 gap> IdentifierOfMainTable( CharacterTable( "A5" ) );
@@ -605,7 +605,7 @@ fail
 gap> IdentifierOfMainTable( CharacterTable( "A6M2" ) );
 "A5"
 
-##  ./../gap4/ctadmin.tbd (2139-2146)
+##  ./../gap4/ctadmin.tbd (2144-2151)
 gap> Maxes( CharacterTable( "A6" ) );
 [ "A5", "A6M2", "3^2:4", "s4", "A6M5" ]
 gap> IdentifiersOfDuplicateTables( CharacterTable( "A5" ) );
@@ -708,7 +708,7 @@ rec(
     end,
   text := "generic character table for cyclic groups" )
 
-##  ./../gap4/ctadmin.tbd (2270-2286)
+##  ./../gap4/ctadmin.tbd (2275-2291)
 gap> AtlasLabelsOfIrreducibles( CharacterTable( "3.A7.2" ) );
 [ "\\chi_{1,0}", "\\chi_{1,1}", "\\chi_{2,0}", "\\chi_{2,1}", 
   "\\chi_{3+4}", "\\chi_{5,0}", "\\chi_{5,1}", "\\chi_{6,0}", 

@@ -467,8 +467,14 @@ rec( coeff1 := 1, coeff2 := 0, coeff3 := 0, coeff4 := 1, gcd := 0 )
 
 <h5>14.3-7 CoefficientsQadic</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsQadic</code>( <var class="Arg">i</var>, <var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns the <var class="Arg">q</var>-adic representation of the integer <var class="Arg">i</var> as a list <span class="SimpleMath">\(l\)</span> of coefficients satisfying the equality <span class="SimpleMath">\(\textit{i} = \sum_{{j = 0}} \textit{q}^j \cdot l[j+1]\)</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsQadic</code>( <var class="Arg">i</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the <var class="Arg">q</var>-adic representation of the integer <var class="Arg">i</var> as a list <span class="SimpleMath">\(l\)</span> of coefficients satisfying the equality <span class="SimpleMath">\(\textit{i} = \sum_{{j = 0}} \textit{q}^j \cdot l[j+1]\)</span> for an integer <span class="SimpleMath">\(\textit{q} &gt; 1\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l:=CoefficientsQadic(462,3);</span>
+[ 0, 1, 0, 2, 2, 1 ]
+</pre></div>
 
 <p><a id="X83124F86839DC7E6" name="X83124F86839DC7E6"></a></p>
 

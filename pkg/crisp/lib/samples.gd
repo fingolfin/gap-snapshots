@@ -2,12 +2,8 @@
 ##
 ##  samples.gd                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: samples.gd,v 1.3 2011/05/15 19:17:59 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.samples_gd :=
-    "@(#)$Id: samples.gd,v 1.3 2011/05/15 19:17:59 gap Exp $";
 
 
 #############################################################################

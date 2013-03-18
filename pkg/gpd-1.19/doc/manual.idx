@@ -1,0 +1,144 @@
+\indexentry{License|hyperpage}{2}
+\indexentry{MagmaWithObjects@\texttt  {MagmaWithObjects}|hyperpage}{5}
+\indexentry{SinglePieceMagmaWithObjects@\texttt  {SinglePieceMagmaWithObjects}|hyperpage}{5}
+\indexentry{ObjectList@\texttt  {ObjectList}|hyperpage}{5}
+\indexentry{RootObject@\texttt  {RootObject}|hyperpage}{5}
+\indexentry{IsDomainWithObjects@\texttt{IsDomainWithObjects}|hyperpage}{5}
+\indexentry{IsMagmaWithObjects@\texttt{IsMagmaWithObjects}|hyperpage}{6}
+\indexentry{MultiplicativeElementWithObjects@\texttt  {MultiplicativeElementWithObjects}|hyperpage}{6}
+\indexentry{Arrowelt@\texttt  {Arrowelt}|hyperpage}{6}
+\indexentry{Arrowtail@\texttt  {Arrowtail}|hyperpage}{6}
+\indexentry{Arrowhead@\texttt  {Arrowhead}|hyperpage}{6}
+\indexentry{IsMultiplicativeElementWithObjects@\texttt{IsMultiplicativeElementWithObjects}|hyperpage}{6}
+\indexentry{IsSinglePiece@\texttt  {IsSinglePiece}|hyperpage}{7}
+\indexentry{IsDirectProductWithCompleteGraph@\texttt  {IsDirectProductWithCompleteGraph}|hyperpage}{7}
+\indexentry{IsDiscrete@\texttt  {IsDiscrete}|hyperpage}{7}
+\indexentry{SemigroupWithObjects@\texttt  {SemigroupWithObjects}|hyperpage}{7}
+\indexentry{SinglePieceSemigroupWithObjects@\texttt  {SinglePieceSemigroupWithObjects}|hyperpage}{7}
+\indexentry{MonoidWithObjects@\texttt  {MonoidWithObjects}|hyperpage}{8}
+\indexentry{SinglePieceMonoidWithObjects@\texttt  {SinglePieceMonoidWithObjects}|hyperpage}{8}
+\indexentry{DomainWithSingleObject@\texttt  {DomainWithSingleObject}|hyperpage}{8}
+\indexentry{UnionOfPieces@\texttt  {UnionOfPieces}|hyperpage}{9}
+\indexentry{GeneratorsOfMagmaWithObjects@\texttt  {GeneratorsOfMagmaWithObjects}|hyperpage}{9}
+\indexentry{Pieces@\texttt  {Pieces}|hyperpage}{9}
+\indexentry{MagmaWithObjectsHomomorphism@\texttt  {MagmaWithObjectsHomomorphism}|hyperpage}{10}
+\indexentry{HomomorphismFromSinglePiece@\texttt  {HomomorphismFromSinglePiece}|hyperpage}{10}
+\indexentry{HomomorphismToSinglePiece@\texttt  {HomomorphismToSinglePiece}|hyperpage}{10}
+\indexentry{PieceImages@\texttt  {PieceImages}|hyperpage}{10}
+\indexentry{HomsOfMapping@\texttt  {HomsOfMapping}|hyperpage}{10}
+\indexentry{PiecesOfMapping@\texttt  {PiecesOfMapping}|hyperpage}{10}
+\indexentry{IsomorphismNewObjects@\texttt  {IsomorphismNewObjects}|hyperpage}{10}
+\indexentry{IsMappingToSinglePieceRep@\texttt{IsMappingToSinglePieceRep}|hyperpage}{10}
+\indexentry{Source@\texttt{Source}|hyperpage}{10}
+\indexentry{Range@\texttt{Range}|hyperpage}{10}
+\indexentry{HomomorphismByUnion@\texttt  {HomomorphismByUnion}|hyperpage}{13}
+\indexentry{IsInjectiveOnObjects@\texttt  {IsInjectiveOnObjects}|hyperpage}{13}
+\indexentry{IsSurjectiveOnObjects@\texttt  {IsSurjectiveOnObjects}|hyperpage}{13}
+\indexentry{IsBijectiveOnObjects@\texttt  {IsBijectiveOnObjects}|hyperpage}{13}
+\indexentry{IsEndomorphismWithObjects@\texttt  {IsEndomorphismWithObjects}|hyperpage}{13}
+\indexentry{IsAutomorphismWithObjects@\texttt  {IsAutomorphismWithObjects}|hyperpage}{13}
+\indexentry{SinglePieceGroupoid@\texttt  {SinglePieceGroupoid}|hyperpage}{14}
+\indexentry{Groupoid@\texttt  {Groupoid}|hyperpage}{14}
+\indexentry{IsPermGroupoid@\texttt  {IsPermGroupoid}|hyperpage}{15}
+\indexentry{IsPcGroupoid@\texttt  {IsPcGroupoid}|hyperpage}{15}
+\indexentry{IsFpGroupoid@\texttt  {IsFpGroupoid}|hyperpage}{15}
+\indexentry{UnionOfPieces@\texttt  {UnionOfPieces}|hyperpage}{15}
+\indexentry{ReplaceOnePieceInUnion@\texttt  {ReplaceOnePieceInUnion}|hyperpage}{15}
+\indexentry{ObjectList@\texttt{ObjectList}!for groupoids|hyperpage}{15}
+\indexentry{HomogeneousGroupoid@\texttt  {HomogeneousGroupoid}|hyperpage}{16}
+\indexentry{HomogeneousDiscreteGroupoid@\texttt  {HomogeneousDiscreteGroupoid}|hyperpage}{16}
+\indexentry{IsHomogeneousDomainWithObjects@\texttt{IsHomogeneousDomainWithObjects}|hyperpage}{17}
+\indexentry{IsHomogeneousDomainWithObjectsRep@\texttt{IsHomogeneousDiscreteGroupoidRep}|hyperpage}{17}
+\indexentry{GroupoidElement@\texttt  {GroupoidElement}|hyperpage}{17}
+\indexentry{IsElementOfGroupoid@\texttt  {IsElementOfGroupoid}|hyperpage}{17}
+\indexentry{Size@\texttt  {Size}|hyperpage}{17}
+\indexentry{Arrowelt@\texttt{Arrowelt}!for groupoids|hyperpage}{17}
+\indexentry{Arrowtail@\texttt{Arrowtail}!for groupoids|hyperpage}{17}
+\indexentry{Arrowhead@\texttt{Arrowhead}!for groupoids|hyperpage}{17}
+\indexentry{* for groupoid elements|hyperpage}{17}
+\indexentry{IdentityElement@\texttt  {IdentityElement}|hyperpage}{18}
+\indexentry{ObjectStar@\texttt  {ObjectStar}|hyperpage}{18}
+\indexentry{ObjectCostar@\texttt  {ObjectCostar}|hyperpage}{18}
+\indexentry{Homset@\texttt  {Homset}|hyperpage}{18}
+\indexentry{Subgroupoid@\texttt  {Subgroupoid}|hyperpage}{19}
+\indexentry{SubgroupoidByPieces@\texttt  {SubgroupoidByPieces}|hyperpage}{19}
+\indexentry{IsSubgroupoid@\texttt  {IsSubgroupoid}|hyperpage}{19}
+\indexentry{FullSubgroupoid@\texttt  {FullSubgroupoid}|hyperpage}{19}
+\indexentry{MaximalDiscreteSubgroupoid@\texttt  {MaximalDiscreteSubgroupoid}|hyperpage}{19}
+\indexentry{DiscreteSubgroupoid@\texttt  {DiscreteSubgroupoid}|hyperpage}{19}
+\indexentry{FullTrivialSubgroupoid@\texttt  {FullTrivialSubgroupoid}|hyperpage}{19}
+\indexentry{DiscreteTrivialSubgroupoid@\texttt  {DiscreteTrivialSubgroupoid}|hyperpage}{19}
+\indexentry{IsWide@\texttt  {IsWide}|hyperpage}{19}
+\indexentry{trivial subgroupoid@trivial subgroupoid|hyperpage}{19}
+\indexentry{tree groupoid@tree groupoid|hyperpage}{19}
+\indexentry{identity subgroupoid@identity subgroupoid|hyperpage}{19}
+\indexentry{SubgroupoidWithRays@\texttt  {SubgroupoidWithRays}|hyperpage}{20}
+\indexentry{RaysOfGroupoid@\texttt  {RaysOfGroupoid}|hyperpage}{20}
+\indexentry{rays@rays|hyperpage}{21}
+\indexentry{Ancestor@\texttt{Ancestor}|hyperpage}{21}
+\indexentry{RightCoset@\texttt  {RightCoset}|hyperpage}{21}
+\indexentry{RightCosetRepresentatives@\texttt  {RightCosetRepresentatives}|hyperpage}{21}
+\indexentry{LeftCoset@\texttt  {LeftCoset}|hyperpage}{21}
+\indexentry{LeftCosetRepresentatives@\texttt  {LeftCosetRepresentatives}|hyperpage}{22}
+\indexentry{LeftCosetRepresentativesFromObject@\texttt  {LeftCosetRepresentativesFromObject}|hyperpage}{22}
+\indexentry{DoubleCoset@\texttt  {DoubleCoset}|hyperpage}{22}
+\indexentry{DoubleCosetRepresentatives@\texttt  {DoubleCosetRepresentatives}|hyperpage}{22}
+\indexentry{ConjugateGroupoidElement@\texttt  {ConjugateGroupoidElement}|hyperpage}{22}
+\indexentry{\texttt{\symbol{92}}\texttt{\symbol{94}}\texttt{\symbol{123}}\texttt{\symbol{125}} for groupoid elements|hyperpage}{23}
+\indexentry{SinglePieceGroupoidByGenerators@\texttt  {SinglePieceGroupoidByGenerators}|hyperpage}{23}
+\indexentry{ConjugateGroupoid@\texttt  {ConjugateGroupoid}|hyperpage}{24}
+\indexentry{\texttt{\symbol{92}}\texttt{\symbol{94}}\texttt{\symbol{123}}\texttt{\symbol{125}} for groupoids|hyperpage}{24}
+\indexentry{GroupoidHomomorphismFromSinglePiece@\texttt  {GroupoidHomomorphismFromSinglePiece}|hyperpage}{25}
+\indexentry{GroupoidHomomorphismByGroupHom@\texttt  {GroupoidHomomorphismByGroupHom}|hyperpage}{25}
+\indexentry{GroupoidHomomorphism@\texttt  {GroupoidHomomorphism}|hyperpage}{25}
+\indexentry{InclusionMappingGroupoids@\texttt  {InclusionMappingGroupoids}|hyperpage}{25}
+\indexentry{RootObjectHomomorphism@\texttt  {RootObjectHomomorphism}|hyperpage}{25}
+\indexentry{HomomorphismToSinglePiece@\texttt  {HomomorphismToSinglePiece}|hyperpage}{26}
+\indexentry{IdentityMapping@\texttt{IdentityMapping}|hyperpage}{26}
+\indexentry{HomomorphismByUnion@\texttt  {HomomorphismByUnion}|hyperpage}{27}
+\indexentry{GroupoidAutomorphismByObjectPerm@\texttt  {GroupoidAutomorphismByObjectPerm}|hyperpage}{28}
+\indexentry{GroupoidAutomorphismByGroupAuto@\texttt  {GroupoidAutomorphismByGroupAuto}|hyperpage}{28}
+\indexentry{GroupoidAutomorphismByRayImages@\texttt  {GroupoidAutomorphismByRayImages}|hyperpage}{28}
+\indexentry{AutomorphismGroup@\texttt{AutomorphismGroup}|hyperpage}{29}
+\indexentry{GroupoidAutomorphismByGroupAutos@\texttt  {GroupoidAutomorphismByGroupAutos}|hyperpage}{30}
+\indexentry{FpWeightedDigraph@\texttt  {FpWeightedDigraph}|hyperpage}{32}
+\indexentry{IsFpWeightedDigraph@\texttt  {IsFpWeightedDigraph}|hyperpage}{32}
+\indexentry{InvolutoryArcs@\texttt  {InvolutoryArcs}|hyperpage}{32}
+\indexentry{GraphOfGroups@\texttt  {GraphOfGroups}|hyperpage}{33}
+\indexentry{DigraphOfGraphOfGroups@\texttt  {DigraphOfGraphOfGroups}|hyperpage}{33}
+\indexentry{GroupsOfGraphOfGroups@\texttt  {GroupsOfGraphOfGroups}|hyperpage}{33}
+\indexentry{IsomorphismsOfGraphOfGroups@\texttt  {IsomorphismsOfGraphOfGroups}|hyperpage}{33}
+\indexentry{IsGraphOfFpGroups@\texttt  {IsGraphOfFpGroups}|hyperpage}{34}
+\indexentry{IsGraphOfPcGroups@\texttt  {IsGraphOfPcGroups}|hyperpage}{34}
+\indexentry{IsGraphOfPermGroups@\texttt  {IsGraphOfPermGroups}|hyperpage}{34}
+\indexentry{RightTransversalsOfGraphOfGroups@\texttt  {RightTransversalsOfGraphOfGroups}|hyperpage}{34}
+\indexentry{LeftTransversalsOfGraphOfGroups@\texttt  {LeftTransversalsOfGraphOfGroups}|hyperpage}{34}
+\indexentry{GraphOfGroupsWord@\texttt  {GraphOfGroupsWord}|hyperpage}{35}
+\indexentry{IsGraphOfGroupsWord@\texttt  {IsGraphOfGroupsWord}|hyperpage}{35}
+\indexentry{GraphOfGroupsOfWord@\texttt  {GraphOfGroupsOfWord}|hyperpage}{35}
+\indexentry{WordOfGraphOfGroupsWord@\texttt  {WordOfGraphOfGroupsWord}|hyperpage}{35}
+\indexentry{GGTail@\texttt  {GGTail}|hyperpage}{35}
+\indexentry{GGHead@\texttt  {GGHead}|hyperpage}{35}
+\indexentry{ReducedGraphOfGroupsWord@\texttt  {ReducedGraphOfGroupsWord}|hyperpage}{36}
+\indexentry{IsReducedGraphOfGroupsWord@\texttt  {IsReducedGraphOfGroupsWord}|hyperpage}{36}
+\indexentry{FreeProductWithAmalgamation@\texttt  {FreeProductWithAmalgamation}|hyperpage}{36}
+\indexentry{IsFpaGroup@\texttt  {IsFpaGroup}|hyperpage}{36}
+\indexentry{GraphOfGroupsRewritingSystem@\texttt  {GraphOfGroupsRewritingSystem}|hyperpage}{36}
+\indexentry{NormalFormGGRWS@\texttt  {NormalFormGGRWS}|hyperpage}{36}
+\indexentry{HnnExtension@\texttt  {HnnExtension}|hyperpage}{38}
+\indexentry{IsHnnGroup@\texttt  {IsHnnGroup}|hyperpage}{38}
+\indexentry{GraphOfGroupoids@\texttt  {GraphOfGroupoids}|hyperpage}{39}
+\indexentry{IsGraphOfPermGroupoids@\texttt  {IsGraphOfPermGroupoids}|hyperpage}{39}
+\indexentry{IsGraphOfFpGroupoids@\texttt  {IsGraphOfFpGroupoids}|hyperpage}{39}
+\indexentry{GroupoidsOfGraphOfGroupoids@\texttt  {GroupoidsOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{DigraphOfGraphOfGroupoids@\texttt  {DigraphOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{SubgroupoidsOfGraphOfGroupoids@\texttt  {SubgroupoidsOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{IsomorphismsOfGraphOfGroupoids@\texttt  {IsomorphismsOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{RightTransversalsOfGraphOfGroupoids@\texttt  {RightTransversalsOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{LefvtTransversalsOfGraphOfGroupoids@\texttt  {LefvtTransversalsOfGraphOfGroupoids}|hyperpage}{39}
+\indexentry{GraphOfGroupoidsWord@\texttt  {GraphOfGroupoidsWord}|hyperpage}{40}
+\indexentry{IsGraphOfGroupoidsWord@\texttt  {IsGraphOfGroupoidsWord}|hyperpage}{40}
+\indexentry{GraphOfGroupoidsOfWord@\texttt  {GraphOfGroupoidsOfWord}|hyperpage}{40}
+\indexentry{WordOfGraphOfGroupoidsWord@\texttt  {WordOfGraphOfGroupoidsWord}|hyperpage}{40}
+\indexentry{ReducedGraphOfGroupoidsWord@\texttt  {ReducedGraphOfGroupoidsWord}|hyperpage}{40}
+\indexentry{IsReducedGraphOfGroupoidsWord@\texttt  {IsReducedGraphOfGroupoidsWord}|hyperpage}{40}

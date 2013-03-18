@@ -188,34 +188,35 @@
   (The real code is more general and has a few more subtleties.)[133X
   
   [4X[32X[104X
-    [4X 1 Pi_0 := TrivialPartition( omega );[104X
-    [4X 2 R := EmptyRBase( G, omega, Pi_0 );[104X
-    [4X 3 R.nextLevel := function( Pi, rbase )[104X
-    [4X 4 local  fix, p, q, where;[104X
-    [4X 5 NextRBasePoint( Pi, rbase );[104X
-    [4X 6 fix := Fixcells( Pi );[104X
-    [4X 7 for p  in fix  do[104X
-    [4X 8   q := p ^ g;[104X
-    [4X 9   where := IsolatePoint( Pi, q );[104X
-    [4X10   if where <> false  then[104X
-    [4X12     Add( fix, q );[104X
-    [4X13     ProcessFixpoint( R, q );[104X
-    [4X14     AddRefinement( R, "Centralizer", [ Pi.cellno[ p ], q, where ] );[104X
-    [4X15     if Pi.lengths[ where ] = 1  then[104X
-    [4X16       p := FixpointCellNo( Pi, where );[104X
-    [4X17       ProcessFixpoint( R, p );[104X
-    [4X18       AddRefinement( R, "ProcessFixpoint", [ p, where ] );[104X
-    [4X19     fi;[104X
-    [4X20   fi;[104X
-    [4X21 od;[104X
-    [4X22 end;[104X
-    [4X23 return PartitionBacktrack([104X
-    [4X24   G,[104X
-    [4X25   c -> g ^ c = g,[104X
-    [4X26   false,[104X
-    [4X27   R,[104X
-    [4X28   [ Pi_0, g ],[104X
-    [4X29   L, R );[104X
+    [4XPi_0 := TrivialPartition( omega );[104X
+    [4XR := EmptyRBase( G, omega, Pi_0 );[104X
+    [4XR.nextLevel := function( Pi, rbase )[104X
+    [4Xlocal  fix, p, q, where;[104X
+    [4XNextRBasePoint( Pi, rbase );[104X
+    [4Xfix := Fixcells( Pi );[104X
+    [4Xfor p  in fix  do[104X
+    [4X  q := p ^ g;[104X
+    [4X  where := IsolatePoint( Pi, q );[104X
+    [4X  if where <> false  then[104X
+    [4X    Add( fix, q );[104X
+    [4X    ProcessFixpoint( R, q );[104X
+    [4X    AddRefinement( R, "Centralizer", [ Pi.cellno[ p ], q, where ] );[104X
+    [4X    if Pi.lengths[ where ] = 1  then[104X
+    [4X      p := FixpointCellNo( Pi, where );[104X
+    [4X      ProcessFixpoint( R, p );[104X
+    [4X      AddRefinement( R, "ProcessFixpoint", [ p, where ] );[104X
+    [4X    fi;[104X
+    [4X  fi;[104X
+    [4Xod;[104X
+    [4Xend;[104X
+    [4X[104X
+    [4Xreturn PartitionBacktrack([104X
+    [4X  G,[104X
+    [4X  c -> g ^ c = g,[104X
+    [4X  false,[104X
+    [4X  R,[104X
+    [4X  [ Pi_0, g ],[104X
+    [4X  L, R );[104X
   [4X[32X[104X
   
   [33X[0;0YThe list numbers below refer to the line numbers of the code above.[133X
@@ -374,12 +375,12 @@
   function looks like this.[133X
   
   [4X[32X[104X
-    [4X1 Refinements.Centralizer := function( R, I, cellno, p, where )[104X
-    [4X2 local  Sigma, q;[104X
-    [4X3   Sigma := I.partition;[104X
-    [4X4   q := FixpointCellNo( Sigma, cellno ) ^ I.data[ 2 ];[104X
-    [4X5   return IsolatePoint( Sigma, q ) = where and ProcessFixpoint( I, p, q );[104X
-    [4X6 end;[104X
+    [4XRefinements.Centralizer := function( R, I, cellno, p, where )[104X
+    [4Xlocal  Sigma, q;[104X
+    [4XSigma := I.partition;[104X
+    [4Xq := FixpointCellNo( Sigma, cellno ) ^ I.data[ 2 ];[104X
+    [4Xreturn IsolatePoint( Sigma, q ) = where and ProcessFixpoint( I, p, q );[104X
+    [4Xend;[104X
   [4X[32X[104X
   
   [33X[0;0YThe  list  numbers  below  refer to the line numbers of the code immediately
@@ -531,11 +532,11 @@
   the code for [2XCentralizer[102X ([14X35.4-4[114X).[133X
   
   [4X[32X[104X
-    [4X1 return PartitionBacktrack( G,[104X
-    [4X2   [ g, g,[104X
-    [4X3   OnPoints,[104X
-    [4X4   c -> c!.lftObj = c!.rgtObj ],[104X
-    [4X5   false, R, [ Pi_0, g ], L, R );[104X
+    [4Xreturn PartitionBacktrack( G,[104X
+    [4X  [ g, g,[104X
+    [4X  OnPoints,[104X
+    [4X  c -> c!.lftObj = c!.rgtObj ],[104X
+    [4X  false, R, [ Pi_0, g ], L, R );[104X
   [4X[32X[104X
   
   [33X[0;0YThe  test for [22Xc[122X to have the property in question is of the form [22Xopr( left, c

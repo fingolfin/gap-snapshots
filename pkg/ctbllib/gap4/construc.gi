@@ -3239,9 +3239,9 @@ end );
 InstallGlobalFunction( CharacterTableOfIndexTwoSubdirectProduct,
     function( tblH1, tblG1, tblH2, tblG2, identifier )
     local char, ordtblG, permcols, info, H1fusG1, H2fusG2, H1xH2fusG,
-          GfusG1xG2, Gclasses, H1xH2, G1xG2, H1fusG1xG2, H2fusG1xG2, nsg,
-          outer, tblG, powermap, p, pow, i, j, irrH1xH2, irrG1xG2, fus,
-          result;
+          GfusG1xG2, Gclasses, H1xH2, G1xG2, G1fusG1xG2, G2fusG1xG2,
+          H1fusG1xG2, H2fusG1xG2, nsg, outer, tblG, powermap, p, pow, i, j,
+          irrH1xH2, irrG1xG2, fus, result, H1fusH1xH2, H2fusH1xH2;
 
     # Fetch the underlying characteristic, and check the arguments.
     char:= UnderlyingCharacteristic( tblH1 );
@@ -3289,8 +3289,15 @@ InstallGlobalFunction( CharacterTableOfIndexTwoSubdirectProduct,
       # that contains H1 and H2 but none of G1, G2.
       H1xH2:= CharacterTableDirectProduct( tblH1, tblH2 );
       G1xG2:= CharacterTableDirectProduct( tblG1, tblG2 );
-      H1fusG1xG2:= CompositionMaps( GetFusionMap( tblG1, G1xG2 ), H1fusG1 );
-      H2fusG1xG2:= CompositionMaps( GetFusionMap( tblG2, G1xG2 ), H2fusG2 );
+      if Identifier( tblG1 ) = Identifier( tblG2 ) then
+        G1fusG1xG2:= GetFusionMap( tblG1, G1xG2, "1" );
+        G2fusG1xG2:= GetFusionMap( tblG2, G1xG2, "2" );
+      else
+        G1fusG1xG2:= GetFusionMap( tblG1, G1xG2 );
+        G2fusG1xG2:= GetFusionMap( tblG2, G1xG2 );
+      fi;
+      H1fusG1xG2:= CompositionMaps( G1fusG1xG2, H1fusG1 );
+      H2fusG1xG2:= CompositionMaps( G2fusG1xG2, H2fusG2 );
       nsg:= Filtered( ClassPositionsOfNormalSubgroups( G1xG2 ),
                 x ->     Sum( SizesConjugacyClasses( G1xG2 ){ x } )
                            = Size( G1xG2 ) / 2
@@ -3389,10 +3396,15 @@ InstallGlobalFunction( CharacterTableOfIndexTwoSubdirectProduct,
     # Return the result.
     result:= rec( table:= tblG );
     if char = 0 then
-      result.H1fusG:= CompositionMaps( H1xH2fusG,
-                                       GetFusionMap( tblH1, H1xH2 ) );
-      result.H2fusG:= CompositionMaps( H1xH2fusG,
-                                       GetFusionMap( tblH2, H1xH2 ) );
+      if Identifier( tblH1 ) = Identifier( tblH2 ) then
+        H1fusH1xH2:= GetFusionMap( tblH1, H1xH2, "1" );
+        H2fusH1xH2:= GetFusionMap( tblH2, H1xH2, "2" );
+      else
+        H1fusH1xH2:= GetFusionMap( tblH1, H1xH2 );
+        H2fusH1xH2:= GetFusionMap( tblH2, H1xH2 );
+      fi;
+      result.H1fusG:= CompositionMaps( H1xH2fusG, H1fusH1xH2 );
+      result.H2fusG:= CompositionMaps( H1xH2fusG, H2fusH1xH2 );
       result.outerfus:= outer;
     fi;
     return result;

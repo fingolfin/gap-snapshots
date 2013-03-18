@@ -21,9 +21,12 @@
         where  the  magma  is  a  free  magma  or  a free semigroup, or a free
         magma-with-one or a free monoid, respectively.[133X
   
-  [33X[0;0YNote  that a free Lie algebra is [13Xnot[113X a magma ring, because of the additional
-  relations  given  by  the  Jacobi identity; see [14X65.4[114X for a generalization of
-  magma rings that covers such structures.[133X
+  [33X[0;0YNote  that  formally,  polynomial  rings  in [5XGAP[105X are not constructed as free
+  magma rings.[133X
+  
+  [33X[0;0YFurthermore,  a  free  Lie  algebra  is  [13Xnot[113X  a  magma  ring, because of the
+  additional   relations   given  by  the  Jacobi  identity;  see [14X65.4[114X  for  a
+  generalization of magma rings that covers such structures.[133X
   
   [33X[0;0YThe  coefficient ring [22XR[122X and the magma [22XM[122X cannot be regarded as subsets of [22XRM[122X,
   hence the natural [13Xembeddings[113X of [22XR[122X and [22XM[122X into [22XRM[122X must be handled via explicit
@@ -135,16 +138,28 @@
   
   [33X[0;0YIn  order  to  treat elements of free magma rings uniformly, also without an
   external   representation,   the   attributes   [2XCoefficientsAndMagmaElements[102X
-  ([14X65.2-3[114X) and [2XZeroCoefficient[102X ([14X65.2-4[114X) were introduced that allow one to [21Xtake
+  ([14X65.2-4[114X) and [2XZeroCoefficient[102X ([14X65.2-5[114X) were introduced that allow one to [21Xtake
   an element of an arbitrary magma ring into pieces[121X.[133X
   
   [33X[0;0YConversely, for constructing magma ring elements from coefficients and magma
-  elements,  [2XElementOfMagmaRing[102X  ([14X65.2-5[114X) can be used. (Of course one can also
+  elements,  [2XElementOfMagmaRing[102X  ([14X65.2-6[114X) can be used. (Of course one can also
   embed  each  magma  element into the magma ring, see [14X65.3[114X, and then form the
   linear  combination,  but many unnecessary intermediate elements are created
   this way.)[133X
   
-  [1X65.2-1 IsElementOfFreeMagmaRing[101X
+  [1X65.2-1 IsMagmaRingObjDefaultRep[101X
+  
+  [29X[2XIsMagmaRingObjDefaultRep[102X( [3Xobj[103X ) [32X Representation
+  
+  [33X[0;0YThe default representation of a magma ring element is a list of length 2, at
+  first  position  the  zero  coefficient,  at second position a list with the
+  coefficients  at  the  even  positions,  and  the  magma elements at the odd
+  positions, with the ordering as defined for the magma elements.[133X
+  
+  [33X[0;0YIt  is  assumed  that  arithmetic  operations  on  magma  rings produce only
+  normalized elements.[133X
+  
+  [1X65.2-2 IsElementOfFreeMagmaRing[101X
   
   [29X[2XIsElementOfFreeMagmaRing[102X( [3Xobj[103X ) [32X Category
   [29X[2XIsElementOfFreeMagmaRingCollection[102X( [3Xobj[103X ) [32X Category
@@ -152,28 +167,28 @@
   [33X[0;0YThe  category  of  elements  of  a  free  magma  ring  (See  [2XIsFreeMagmaRing[102X
   ([14X65.1-3[114X)).[133X
   
-  [1X65.2-2 IsElementOfFreeMagmaRingFamily[101X
+  [1X65.2-3 IsElementOfFreeMagmaRingFamily[101X
   
   [29X[2XIsElementOfFreeMagmaRingFamily[102X( [3XFam[103X ) [32X Category
   
   [33X[0;0YElements  of  families  in  this  category have trivial normalisation, i.e.,
   efficient methods for [10X\=[110X and [10X\<[110X.[133X
   
-  [1X65.2-3 CoefficientsAndMagmaElements[101X
+  [1X65.2-4 CoefficientsAndMagmaElements[101X
   
   [29X[2XCoefficientsAndMagmaElements[102X( [3Xelm[103X ) [32X attribute
   
   [33X[0;0Yis  a list that contains at the odd positions the magma elements, and at the
   even positions their coefficients in the element [3Xelm[103X.[133X
   
-  [1X65.2-4 ZeroCoefficient[101X
+  [1X65.2-5 ZeroCoefficient[101X
   
   [29X[2XZeroCoefficient[102X( [3Xelm[103X ) [32X attribute
   
   [33X[0;0YFor  an  element  [3Xelm[103X of a magma ring (modulo relations) [22XRM[122X, [2XZeroCoefficient[102X
   returns the zero element of the coefficient ring [22XR[122X.[133X
   
-  [1X65.2-5 ElementOfMagmaRing[101X
+  [1X65.2-6 ElementOfMagmaRing[101X
   
   [29X[2XElementOfMagmaRing[102X( [3XFam[103X, [3Xzerocoeff[103X, [3Xcoeffs[103X, [3Xmgmelms[103X ) [32X operation
   
@@ -265,7 +280,7 @@
   same element, but normalized w.r.t. the relations. So two elements are equal
   if  and only if the result of [2XNormalizedElementOfMagmaRingModuloRelations[102X is
   equal   for  their  internal  data,  that  is,  [2XCoefficientsAndMagmaElements[102X
-  ([14X65.2-3[114X) will return the same for the corresponding two elements.[133X
+  ([14X65.2-4[114X) will return the same for the corresponding two elements.[133X
   
   [33X[0;0Y[2XNormalizedElementOfMagmaRingModuloRelations[102X   is  allowed  to  return  [3Xdescr[103X
   itself, it need not make a copy. This is the case for example in the case of
@@ -277,7 +292,7 @@
   
   [33X[0;0YA  [5XGAP[105X object lies in the category [2XIsMagmaRingModuloRelations[102X if it has been
   constructed  as  a  magma ring modulo relations. Each element of such a ring
-  has  a  unique  normal  form,  so  [2XCoefficientsAndMagmaElements[102X  ([14X65.2-3[114X) is
+  has  a  unique  normal  form,  so  [2XCoefficientsAndMagmaElements[102X  ([14X65.2-4[114X) is
   well-defined for it.[133X
   
   [33X[0;0YThis  category  is  not inherited to factor structures, which are in general
@@ -364,9 +379,9 @@
   
   [33X[0;0YAs  the  above  examples show, there are several possible representations of
   magma  ring  elements, the representations used for polynomials (see Chapter
-   [14X66[114X) as well as the default representation [10XIsMagmaRingObjDefaultRep[110X of magma
-  ring  elements.  The  latter  simply  stores the zero coefficient and a list
-  containing  the  coefficients  of  the element at the even positions and the
-  corresponding  magma  elements at the odd positions, where the succession is
-  compatible with the ordering of magma elements via [10X\<[110X.[133X
+   [14X66[114X) as well as the default representation [2XIsMagmaRingObjDefaultRep[102X ([14X65.2-1[114X)
+  of  magma ring elements. The latter simply stores the zero coefficient and a
+  list  containing  the  coefficients of the element at the even positions and
+  the  corresponding magma elements at the odd positions, where the succession
+  is compatible with the ordering of magma elements via [10X\<[110X.[133X
   

@@ -6,10 +6,10 @@
                       [1XExtended Gauss Functionality for [5XGAP[105X[101X
   
   
-                               Version 2012.10.22
+                               Version 2013.03.07
   
   
-                                    May 2011
+                                   March 2013
   
   
                                  Simon Goertzen
@@ -35,7 +35,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2007-2011 by Simon Goertzen[133X
+  [33X[0;0Y© 2007-2013 by Simon Goertzen[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2.[133X

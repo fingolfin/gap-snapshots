@@ -2,12 +2,8 @@
 ##
 ##  grpclass.gi                      CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: grpclass.gi,v 1.6 2011/05/15 19:17:55 gap Exp $
-##
 ##  Copyright (C) 2000, 2006 Burkhard Höfling
 ##
-Revision.grpclass_gi :=
-    "@(#)$Id: grpclass.gi,v 1.6 2011/05/15 19:17:55 gap Exp $";
 
 
 #############################################################################

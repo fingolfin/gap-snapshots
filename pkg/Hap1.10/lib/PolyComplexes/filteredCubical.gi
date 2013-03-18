@@ -72,8 +72,11 @@ ArrayValue(TT!.pathCompBinList, T!.pathReps[i])-1
 od;
 ###
 
+
 T:=TT;
 od;
+
+phi[F]:=[1..Betti[F]]*0;
 
 return phi;
 
@@ -86,20 +89,28 @@ end);
 InstallGlobalFunction(FiltrationTerm,
 function(M,t)
 local
-        B,
+        B, obj,
         CART, dim,dim1,dims,
         Opp,
         ArrayValueDim,
         ArrayValueDim1,
+        dimSet, ArrayIt,
         x,z;
 
 
 #############################################
-if not IsHapFilteredPureCubicalComplex(M) then
-Print("This function must be applied to a filtered pure cubical complex.\n");
+if not (IsHapFilteredPureCubicalComplex(M) or 
+IsHapFilteredCubicalComplex(M)) then
+Print("This function must be applied to a filtered cubical or pure cubical complex.\n");
 return fail;
 fi;
 #############################################
+
+if IsHapFilteredPureCubicalComplex(M) then
+obj:=HapPureCubicalComplex;
+else
+obj:=HapCubicalComplex;
+fi;
 
 dim:=Dimension(M);
 dim1:=dim-1;
@@ -107,24 +118,28 @@ dims:=EvaluateProperty(M,"arraySize");
 ArrayValueDim:=ArrayValueFunctions(dim);
 ArrayValueDim1:=ArrayValueFunctions(dim1);
 B:=0*M!.binaryArray;
-CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
 
 #######################
 Opp:=function(y)
 local z;
 z:=ArrayValueDim1(B,y{[2..Length(y)]});
 if ArrayValueDim(M!.filtration,y)<=t and
-not ArrayValueDim(M!.filtration,y)=0 then
+not ArrayValueDim(M!.binaryArray,y)=0 then
 z[y[1]]:=1;
 fi;
 end;
 ########################
 
-for x in CART do
-Opp(x);
-od;
+#for x in CART do
+#Opp(x);
+#od;
 
-return Objectify(HapPureCubicalComplex,
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+ArrayIt(dimSet,Opp);
+
+return Objectify(obj,
            rec(
            binaryArray:=B,
            properties:=[
@@ -197,25 +212,18 @@ end);
 #################################################################
 InstallGlobalFunction(ReadImageAsFilteredCubicalComplex,
 function(file,N)
-local A, B, C, F, i, j;
+local A, B, C, F, i, j, D;
+D:=Int(3*255/N);
 
 A:=ReadImageAsPureCubicalComplex(file,"matrix");
 for i in [1..Length(A)] do
 for j in [1..Length(A[1])] do
-A[i][j]:=Int(A[i][j]/N);
+A[i][j]:=1+Int(A[i][j]/D);
 od;od;
-F:=Maximum(Flat(A));
-
-#C:=List([1..Length(A[1])], i->F);
-#C:=List([1..Length(A)], i->StructuralCopy(C));
-#A:=C-A;
+#F:=Maximum(Flat(A));
 
 C:=A*0;
-for i in [1..Length(A)] do
-for j in [1..Length(A[1])] do
-if A[i][j]>0 then C[i][j]:=1;fi;
-od;od;
-
+C:=C+1;
 
 return Objectify(HapFilteredPureCubicalComplex,
                  rec(binaryArray:=C,
@@ -235,7 +243,12 @@ function(M)
 local  F, B, A, T, TT,      D,   k;
 
 
+if IsBound(M!.filtrationLength) then
+F:=M!.filtrationLength;
+else
 F:=Maximum(Flat(M!.filtration));
+fi;
+
 T:=FiltrationTerm(M,1);
 B:=ComplementOfPureCubicalComplex(T);
 B:=StructuralCopy(B!.binaryArray);
@@ -343,7 +356,7 @@ x:=2*i+b;
 ArrayAssignDim(A,x,1);
 m:=ArrayValueDim(M!.filtration,i);
 m:=Minimum(m,ArrayValueDim(F,x));
-ArrayAssignDim(A,x,m );
+ArrayAssignDim(F,x,m );
 od;
 fi;
 end;
@@ -361,6 +374,166 @@ return Objectify(HapFilteredCubicalComplex,
 end);
 #################################################################
 #################################################################
+
+
+###############################################################
+###############################################################
+InstallGlobalFunction(ContractedFilteredPureCubicalComplex,
+function(M)
+local
+        LM, F, i, flen, A,
+        dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
+        Opp, x,t, dimSet, ArrayIt;
+
+LM:=[];
+flen:=Maximum(Flat(M!.filtration));
+
+for i in [1..flen] do
+Add(LM,FiltrationTerm(M,i));
+od;
+
+F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
+
+###############################
+LM[1]:=ContractedComplex(LM[1]);
+for i in [2..Length(LM)] do
+LM[i]:=F(LM[i],LM[i-1]);
+od;
+###############################
+
+
+
+dim:=Dimension(M);
+dim1:=dim-1;
+dims:=EvaluateProperty(M,"arraySize");
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayValueDim1:=ArrayValueFunctions(dim1);
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+
+#######################
+Opp:=function(y)
+local z;
+z:=ArrayValueDim1(B,y{[2..Length(y)]});
+if ArrayValueDim(LM[t]!.binaryArray,y)=1
+and ArrayValueDim(LM[t-1]!.binaryArray,y)=0
+ then
+#z[y[1]]:=z[y[1]]+1;
+z[y[1]]:=t;
+fi;
+end;
+########################
+
+B:=StructuralCopy(LM[1]!.binaryArray);
+
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+
+for t in [2..Length(LM)] do
+#for x in CART do
+#Opp(x);
+#od;
+ArrayIt(dimSet,Opp);
+od;
+
+return Objectify(HapFilteredPureCubicalComplex,
+                 rec(binaryArray:=LM[flen]!.binaryArray,
+                     filtration:=B,
+                     properties:=M!.properties));
+
+
+end);
+###############################################################
+###############################################################
+
+###############################################################
+###############################################################
+InstallGlobalFunction(ZigZagContractedFilteredPureCubicalComplex,
+function(M)
+local
+        LM, F, i, flen, A, G,
+        dim, dim1, dims, ArrayValueDim, ArrayValueDim1, B, CART,
+        Opp, x,t, CM, sz1, sz2, maxB, dimSet, ArrayIt;
+
+LM:=[];
+flen:=Maximum(Flat(M!.filtration));
+
+for i in [1..flen] do
+Add(LM,FiltrationTerm(M,i));
+od;
+
+F:=HomotopyEquivalentMinimalPureCubicalSubcomplex;
+G:=HomotopyEquivalentMaximalPureCubicalSubcomplex;
+sz1:=infinity;
+sz2:=Size(LM[flen]);
+
+while sz2<sz1 do
+
+sz1:=sz2;
+LM[flen]:=F(LM[flen],LM[flen-1]);
+
+###############################
+CM:=CropPureCubicalComplex(LM[flen]);
+for i in Reversed([2..Length(LM)]) do
+LM[i-1]:=G(LM[i],LM[i-1]);
+od;
+###############################
+
+###############################
+LM[1]:=ContractedComplex(LM[1]);
+for i in [2..Length(LM)] do
+LM[i]:=F(LM[i],LM[i-1]);
+od;
+###############################
+sz2:=Size(LM[flen]);
+
+od;
+dim:=Dimension(M);
+dim1:=dim-1;
+dims:=EvaluateProperty(M,"arraySize");
+ArrayValueDim:=ArrayValueFunctions(dim);
+ArrayValueDim1:=ArrayValueFunctions(dim1);
+#CART:=Cartesian(List([1..dim],a->[1..dims[a]]));
+
+
+
+B:=StructuralCopy(LM[1]!.binaryArray);
+
+#######################
+Opp:=function(y)
+local z;
+z:=ArrayValueDim1(B,y{[2..Length(y)]});
+if ArrayValueDim(LM[t]!.binaryArray,y)=1
+and ArrayValueDim(LM[t-1]!.binaryArray,y)=0
+ then
+z[y[1]]:=t;
+fi;
+end;
+########################
+
+dimSet:=List([1..dim],x->[1..dims[x]]);
+ArrayIt:=ArrayIterate(dim);
+
+for t in [2..Length(LM)] do
+#for x in CART do
+#Opp(x);
+#od;
+ArrayIt(dimSet,Opp);
+od;
+
+
+return Objectify(HapFilteredPureCubicalComplex,
+                 rec(binaryArray:=LM[flen]!.binaryArray,
+                     filtration:=B,
+                     filtrationLength:=flen,
+                     properties:=
+                     [["dimension",Dimension(M)],
+                      ["arraySize",ArrayDimensions(M!.binaryArray)]     ]
+                      ));
+
+
+end);
+###############################################################
+###############################################################
 
 
 

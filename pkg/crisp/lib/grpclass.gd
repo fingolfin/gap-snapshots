@@ -2,12 +2,8 @@
 ##
 ##  grpclass.gd                      CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: grpclass.gd,v 1.3 2011/05/15 19:17:54 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.grpclass_gd :=
-    "@(#)$Id: grpclass.gd,v 1.3 2011/05/15 19:17:54 gap Exp $";
 
 
 #############################################################################
@@ -33,7 +29,7 @@ InstallTrueMethod (IsGroupClass, IsEmpty and IsClass);
 ##
 ##  creates a group class from an object
 ##
-DeclareOperation ("GroupClass", [IsObject]);
+DeclareAttribute ("GroupClass", IsObject);
 
 
 #############################################################################

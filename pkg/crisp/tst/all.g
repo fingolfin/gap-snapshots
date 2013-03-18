@@ -2,8 +2,6 @@
 ##
 ##  all.g                           CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: all.g,v 1.8 2011/05/18 16:53:33 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##
@@ -12,7 +10,7 @@ LoadPackage ("crisp", "", false);
 PRINT_METHODS := false;
 
 #Print ("testing manual examples\n");
-#ReadTest (Filename (DirectoriesPackageLibrary ("crisp", "doc"), "manual.examples.tst"));
+#ReadPackage ("crisp", "tst/manual.g");
 
 Print ("testing class construction \n");
 ReadPackage ("crisp", "tst/classes.g");

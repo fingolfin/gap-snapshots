@@ -3,10 +3,12 @@ function(m,n)
 local l,p,k,
       C,R,T,RH,RK,RGamma,H,K,Gamma,D,G,F,RF;
 l:=Factors(m);
-p:=l[1];
+#p:=l[1];
+p:=l[Length(l)];
 k:=m/p;
-C:=SL2ZTree(0,0);
-R:=ResolutionGTree(C,n);
+#C:=SL2ZTree(0,0);
+#R:=ResolutionGTree(C,n);
+R:=ResolutionSL2Z(1,n);
 if m=1 then
 return R;
 else

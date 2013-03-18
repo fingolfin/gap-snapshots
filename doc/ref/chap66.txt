@@ -555,7 +555,8 @@
   [33X[0;0YThis  internal  function  for  euclidean  division  of polynomials takes two
   polynomials [3Xleft[103X and [3Xright[103X and computes their quotient. No test is performed
   whether  the  arguments  indeed  are  polynomials.  Depending on the integer
-  variable [3Xmode[103X it returns:[133X
+  variable  [3Xmode[103X,  which  may  take  values in a range from 1 to 4, it returns
+  respectively:[133X
   
   [31X1[131X   [33X[0;6Ythe quotient (there might be some remainder),[133X
   
@@ -569,13 +570,34 @@
   
   [29X[2XUnivariatenessTestRationalFunction[102X( [3Xf[103X ) [32X function
   
-  [33X[0;0Ytakes  a  rational  function  [3Xf[103X and tests whether it is univariate or even a
-  Laurent polynomial. It returns a list [10X[[3Xisunivariate[103X[10X, [3Xindet[103X[10X, [3Xislaurent[103X[10X, [3Xcofs[103X[10X][110X
-  where  [3Xindet[103X  is  the  indeterminate  number  and  [3Xcofs[103X  (if applicable) the
-  coefficients  lists. The list [3Xcofs[103X is the [10XCoefficientsOfLaurentPolynomial[110X if
-  [3Xislaurent[103X   is  [9Xtrue[109X  and  the  [10XCoefficientsOfUnivariateRationalFunction[110X  if
-  [3Xislaurent[103X is [9Xfalse[109X and [3Xisunivariate[103X [9Xtrue[109X. As there is no proper multivariate
-  gcd, it might return [9Xfail[109X for [3Xisunivariate[103X.[133X
+  [33X[0;0Ytakes  a  rational  function  [3Xf[103X  and tests whether it is univariate rational
+  function  (or  even  a Laurent polynomial). It returns a list [10X[isunivariate,
+  indet, islaurent, cofs][110X.[133X
+  
+  [33X[0;0YIf  [3Xf[103X  is a univariate rational function then [10Xisunivariate[110X is [9Xtrue[109X and [10Xindet[110X
+  is the number of the appropriate indeterminate.[133X
+  
+  [33X[0;0YFurthermore,  if  [3Xf[103X is a Laurent polynomial, then [10Xislaurent[110X is also [9Xtrue[109X. In
+  this   case   the  fourth  entry,  [10Xcofs[110X,  is  the  value  of  the  attribute
+  [2XCoefficientsOfLaurentPolynomial[102X ([14X66.13-2[114X) for [3Xf[103X.[133X
+  
+  [33X[0;0YIf  [10Xisunivariate[110X  is  [9Xtrue[109X but [10Xislaurent[110X is [9Xfalse[109X, then [10Xcofs[110X is the value of
+  the attribute [2XCoefficientsOfUnivariateRationalFunction[102X ([14X66.4-7[114X) for [3Xf[103X.[133X
+  
+  [33X[0;0YOtherwise,  each entry of the returned list is equal to [9Xfail[109X. As there is no
+  proper  multivariate  gcd,  this  may  also happen for the rational function
+  which may be reduced to univariate (see example).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( 50-45*x-6*x^2+x^3 );[127X[104X
+    [4X[28X[ true, 1, true, [ [ 50, -45, -6, 1 ], 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( (-6*y^2+y^3) / (y+1) );[127X[104X
+    [4X[28X[ true, 2, false, [ [ -6, 1 ], [ 1, 1 ], 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( (-6*y^2+y^3) / (x+1));[127X[104X
+    [4X[28X[ fail, fail, fail, fail ][128X[104X
+    [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( ((y+2)*(x+1)) / ((y-1)*(x+1)) );[127X[104X
+    [4X[28X[ fail, fail, fail, fail ][128X[104X
+  [4X[32X[104X
   
   [1X66.5-8 InfoPoly[101X
   
@@ -679,10 +701,10 @@
   [29X[2XDiscriminant[102X( [3Xpol[103X[, [3Xind[103X] ) [32X operation
   
   [33X[0;0YIf [3Xpol[103X is a univariate polynomial then [2XDiscriminant[102X returns the [13Xdiscriminant[113X
-  of  [3Xpol[103X  by its indeterminate. For a polynomial [3Xpol[103X, the discriminant by the
-  indeterminate  [3Xind[103X  is returned, regarding [3Xpol[103X as univariate in [3Xind[103X. Instead
-  of  the  desired indeterminate, also the number of this indeterminate can be
-  given as [3Xind[103X.[133X
+  of  [3Xpol[103X by its indeterminate. The two-argument form returns the discriminant
+  of  a  polynomial  [3Xpol[103X  by  the  indeterminate  number [3Xind[103X, regarding [3Xpol[103X as
+  univariate  in  this indeterminate. Instead of the indeterminate number, the
+  indeterminate itself can also be given as [3Xind[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDiscriminant(f,1);[127X[104X
@@ -690,6 +712,8 @@
     [4X[28X68750*y^16+18225000*y^15+6075000*y^14+1105920*y^13+3037500*y^10+648972\[128X[104X
     [4X[28X0*y^9+4050000*y^8+900000*y^7+62208*y^5+253125*y^4+675000*y^3+675000*y^\[128X[104X
     [4X[28X2+300000*y+50000[128X[104X
+    [4X[25Xgap>[125X [27XDiscriminant(f,1) = Discriminant(f,x);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X66.6-7 Resultant[101X

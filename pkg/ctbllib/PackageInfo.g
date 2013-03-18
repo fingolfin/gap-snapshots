@@ -6,7 +6,7 @@ SetPackageInfo( rec(
 PackageName :=
   "CTblLib",
 MyVersion :=
-  "1r2p1",
+  "1r2p2",
 MyWWWHome :=
   "http://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
@@ -20,14 +20,15 @@ Date :=
   # "27/11/2003" -- Version 1.1.2
   # "31/03/2004" -- Version 1.1.3
   # "07/05/2012" -- Version 1.2.0
-  "30/05/2012",   # Version 1.2.1
+  # "30/05/2012" -- Version 1.2.1
+  "07/03/2013",   # Version 1.2.2
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
   Concatenation( ~.PackageWWWHome, "/", LowercaseString( ~.PackageName ),
                  "-", ~.MyVersion ),
 ArchiveFormats :=
-  ".tar.gz,.zoo",
+  ".tar.gz",
 Persons := [
   rec(
     LastName := "Breuer",
@@ -93,10 +94,11 @@ Dependencies := rec(
     [ [ "gapdoc", ">= 1.5" ] ],
    # [["gpisotyp", ">= 1.0"]],
   SuggestedOtherPackages :=
-    [ [ "tomlib", ">= 1.0" ],     # because of the interface
-      [ "Browse", ">= 1.6" ],     # because of database attributes
-                                  # and overview functions
-      [ "chevie", ">= 1.0" ] ],   # because of Deligne-Lusztig names
+    [ [  "tomlib", ">= 1.0" ],     # because of the interface
+      [  "Browse", ">= 1.6" ],     # because of database attributes
+                                   # and overview functions
+      [  "chevie", ">= 1.0" ],     # because of Deligne-Lusztig names
+      [ "SpinSym", ">= 1.3" ] ],   # because SpinSym extends the library
   ExternalConditions :=
     [],
   ),

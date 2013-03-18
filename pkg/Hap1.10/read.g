@@ -156,6 +156,7 @@ ReadPackage("HAP", "lib/Resolutions/presentation.gi");
 ReadPackage("HAP", "lib/Resolutions/resSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resInfSubgroup.gi");
 ReadPackage("HAP", "lib/Resolutions/resGeneric.gi");
+ReadPackage("HAP", "lib/Resolutions/tietzered.gi");
 ReadPackage("HAP", "lib/Resolutions/coreducedRes.gi");
 ReadPackage("HAP", "lib/Resolutions/pseudoLists.gi");
 ReadPackage("HAP", "lib/Resolutions/resSL2Z.gi");
@@ -286,6 +287,7 @@ ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 ################## POLYTOPAL COMPLEXES #############################
 ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
+ReadPackage("HAP","lib/PolyComplexes/sparseCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
@@ -295,6 +297,7 @@ ReadPackage("HAP","lib/PolyComplexes/rips.gi");
 ReadPackage("HAP","lib/PolyComplexes/simplicialComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/groupComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/cluster.gi");
+ReadPackage("HAP","lib/PolyComplexes/metrics.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
 ReadPackage("HAP","lib/PolyComplexes/filteredCubical.gi");
 fi;
@@ -345,6 +348,7 @@ if IsPackageMarkedForLoading("congruence","0.0") then
  ReadPackage("HAP","lib/ArithmeticGroups/cplGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/resGTree.gi");
  ReadPackage("HAP","lib/ArithmeticGroups/sl2zres.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/sl2zresalt.gi");
 # ReadPackage("HAP","lib/ArithmeticGroups/resDirectProd.gi");
 ######################################################
 fi;
@@ -355,6 +359,15 @@ ReadPackage("HAP","/lib/Knots/cubicalKnot.gi");
 
 ################## SPARSE ##########################################
 ReadPackage("HAP","lib/Sparse/sparse.gi");
+
+
+################# CRYSTALLOGRAPHIC GROUPS #####################
+if IsPackageMarkedForLoading("HAPcryst","0.0") then
+ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
+ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
+fi;
+
 
 
 ################## HAP PRIME ##################################

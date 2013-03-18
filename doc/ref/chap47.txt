@@ -185,8 +185,12 @@
   
   [33X[0;0Yreturns  a string that expresses a given word [3Xw[103X in compact form written as a
   string.  Inverses  are  expressed  by  changing  the upper/lower case of the
-  generators,  recurring  expressions are written as products. For example the
-  word [22Xxyyyxxyyyxy^-1x[122X would be written as [22X(xy3x)2Yx[122X.[133X
+  generators, recurring expressions are written as products.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XStringFactorizationWord(z^-1*x*y*y*y*x*x*y*y*y*x*y^-1*x);[127X[104X
+    [4X[28X"Z(xy3x)2Yx"[128X[104X
+  [4X[32X[104X
   
   
   [1X47.3 [33X[0;0YComparison of Elements of Finitely Presented Groups[133X[101X
@@ -1038,10 +1042,10 @@
   [33X[0;0YWhen  working  with such homomorphisms, some subgroup elements are expressed
   as  extremely  long  words in the group generators. Therefore the underlying
   words  of  subgroup  generators  stored  in  the isomorphism (as obtained by
-  [10XMappingGeneratorsImages[110X and displayed when [2XView[102X ([14X6.3-3[114X)ing the homomorphism)
-  as  well  as  preimages  under  the  homomorphism  are stored in the form of
-  straight  line  program elements (see [14X37.9[114X). These will behave like ordinary
-  words and no extra treatment should be necessary.[133X
+  [2XMappingGeneratorsImages[102X  ([14X40.10-2[114X)  and  displayed  when [2XView[102X ([14X6.3-3[114X)ing the
+  homomorphism)  as well as preimages under the homomorphism are stored in the
+  form  of  straight  line program elements (see [14X37.9[114X). These will behave like
+  ordinary words and no extra treatment should be necessary.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr:=Range(hom).1^10;[127X[104X

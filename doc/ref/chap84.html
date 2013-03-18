@@ -36,7 +36,9 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap84.html#X861927BF822FB162">84.4 <span class="Heading">Introducing new Viewer for the Online Help</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap84.html#X84B011847A4D90F0">84.4-1 HELP_VIEWER_INFO</a></span>
+</div></div>
 </div>
 
 <h3>84 <span class="Heading">Interface to the GAP Help System</span></h3>
@@ -172,9 +174,16 @@
 
 <h4>84.4 <span class="Heading">Introducing new Viewer for the Online Help</span></h4>
 
-<p>There is a record <code class="code">HELP_VIEWER_INFO</code> which contains one component for each help viewer. Such a record contains two components.</p>
+<p>To introduce a new viewer for the online help, one should extend the global record <code class="func">HELP_VIEWER_INFO</code> (<a href="chap84.html#X84B011847A4D90F0"><span class="RefLink">84.4-1</span></a>), the structure of which is explained below.</p>
 
-<p>The component <code class="code">.type</code> refers to one of the <var class="Arg">type</var>s recognized by the <code class="code">HelpData</code> handler function explained in the previous section (currently one of <code class="code">"text"</code>, <code class="code">"url"</code>, <code class="code">"dvi"</code>, or <code class="code">"pdf"</code>).</p>
+<p><a id="X84B011847A4D90F0" name="X84B011847A4D90F0"></a></p>
+
+<h5>84.4-1 HELP_VIEWER_INFO</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_VIEWER_INFO</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<p>The record <code class="func">HELP_VIEWER_INFO</code> contains one component for each help viewer. Each such component is a record with two components: <code class="code">.type</code> and <code class="code">.show</code>.</p>
+
+<p>The component <code class="code">.type</code> refers to one of the <code class="code">type</code>s recognized by the <code class="code">HelpData</code> handler function explained in the previous section (currently one of <code class="code">"text"</code>, <code class="code">"url"</code>, <code class="code">"dvi"</code>, or <code class="code">"pdf"</code>).</p>
 
 <p>The component <code class="code">.show</code> is a function which gets as input the result of a corresponding <code class="code">HelpData</code> handler call, if it was not <code class="keyw">fail</code>. This function has to perform the actual display of the data. (E.g., by calling a function like <code class="func">Pager</code> (<a href="chap2.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>) or by starting up an external viewer program.)</p>
 

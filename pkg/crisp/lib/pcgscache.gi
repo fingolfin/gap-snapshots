@@ -2,13 +2,9 @@
 ##
 ##  pcgscache.gi                    CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: pcgscache.gi,v 1.1 2005/12/21 16:51:12 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##
-Revision.pcgscache_gi :=
-    "@(#)$Id: pcgscache.gi,v 1.1 2005/12/21 16:51:12 gap Exp $";
 
 
 #############################################################################

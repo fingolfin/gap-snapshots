@@ -2,12 +2,8 @@
 ##
 ##  normpro.gi                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: normpro.gi,v 1.6 2011/05/15 19:17:56 gap Exp $
-##
 ##  Copyright (C) 2000, 2001, 2003, 2005 Burkhard Höfling
 ##
-Revision.normpro_gi :=
-    "@(#)$Id: normpro.gi,v 1.6 2011/05/15 19:17:56 gap Exp $";
 
 
 #############################################################################

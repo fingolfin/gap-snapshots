@@ -580,6 +580,11 @@
     [4X{\n\[104X
     [4X  return(matrix(nres(M,2)[2]));\n\[104X
     [4X}\n\n",[104X
+    [4X    ReducedSyzygiesGeneratorsOfRows := "\n\[104X
+    [4Xproc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\[104X
+    [4X{\n\[104X
+    [4X  return(ReducedSyzForHomalg(M));\n\[104X
+    [4X}\n\n",[104X
   [4X[32X[104X
   
   [1X3.1-27 ReducedSyzygiesGeneratorsOfColumns[101X
@@ -617,10 +622,10 @@
   [29X[2XReducedSyzygiesGeneratorsOfColumns[102X( [3XM[103X ) [32X function
   
   [4X[32X  Code  [32X[104X
-    [4X    ReducedSyzygiesGeneratorsOfRows := "\n\[104X
-    [4Xproc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\[104X
+    [4X    ReducedSyzygiesGeneratorsOfColumns := "\n\[104X
+    [4Xproc ReducedSyzygiesGeneratorsOfColumns (matrix M)\n\[104X
     [4X{\n\[104X
-    [4X  return(ReducedSyzForHomalg(M));\n\[104X
+    [4X  return(Involution(ReducedSyzForHomalg(Involution(M))));\n\[104X
     [4X}\n\n",[104X
   [4X[32X[104X
   

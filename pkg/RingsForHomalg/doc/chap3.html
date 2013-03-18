@@ -673,6 +673,11 @@ proc ReducedSyzForHomalg (matrix M)\n\
 {\n\
   return(matrix(nres(M,2)[2]));\n\
 }\n\n",
+    ReducedSyzygiesGeneratorsOfRows := "\n\
+proc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\
+{\n\
+  return(ReducedSyzForHomalg(M));\n\
+}\n\n",
 </pre></div>
 
 <p><a id="X7FF049FA85A2C82E" name="X7FF049FA85A2C82E"></a></p>
@@ -712,10 +717,10 @@ ReducedSyzygiesGeneratorsOfColumns :=
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedSyzygiesGeneratorsOfColumns</code>( <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
 
 <div class="example"><pre>
-    ReducedSyzygiesGeneratorsOfRows := "\n\
-proc ReducedSyzygiesGeneratorsOfRows (matrix M)\n\
+    ReducedSyzygiesGeneratorsOfColumns := "\n\
+proc ReducedSyzygiesGeneratorsOfColumns (matrix M)\n\
 {\n\
-  return(ReducedSyzForHomalg(M));\n\
+  return(Involution(ReducedSyzForHomalg(Involution(M))));\n\
 }\n\n",
 </pre></div>
 

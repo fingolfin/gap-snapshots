@@ -673,6 +673,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Generating Fields}{58.1}{X82B74B458705B3CE}
 \makelabel{ref:Subfields of Fields}{58.2}{X7C53566A839B57F6}
 \makelabel{ref:Galois Action}{58.3}{X7D9A02B07D08FA40}
+\makelabel{ref:Traces of field elements and matrices}{58.3.5}{X7DD17EB581200AD6}
 \makelabel{ref:Finite Fields}{59}{X7893ABF67A028802}
 \makelabel{ref:Finite Field Elements}{59.1}{X7B9DCCCC83400B47}
 \makelabel{ref:Operations for Finite Field Elements}{59.2}{X7A79399283EF78D0}
@@ -2006,8 +2007,6 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:KroneckerProduct}{24.5.8}{X8634C79E7DB22934}
 \makelabel{ref:ReflectionMat}{24.5.9}{X845EC4D18054D140}
 \makelabel{ref:PrintArray}{24.5.10}{X7DEBC9967DFDFC18}
-\makelabel{ref:MutableIdentityMat}{24.5.11}{X7A10CEF47DEBC8CC}
-\makelabel{ref:MutableNullMat}{24.5.12}{X78A9D30981D94FB2}
 \makelabel{ref:RandomMat}{24.6.1}{X7F957F0280A87961}
 \makelabel{ref:RandomInvertibleMat}{24.6.2}{X7C939B4A7EDF015D}
 \makelabel{ref:RandomUnimodularMat}{24.6.3}{X84743732846ACB44}
@@ -3005,23 +3004,24 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:monomorphisms find all}{40.9.5}{X83B417BE7C508DC4}
 \makelabel{ref:MorClassLoop}{40.9.6}{X7AABA9A27E30BF2B}
 \makelabel{ref:IsGroupGeneralMappingByImages}{40.10.1}{X82B77A5F7F9EDBC7}
-\makelabel{ref:IsGroupGeneralMappingByAsGroupGeneralMappingByImages}{40.10.2}{X7DFBBAB18126B4D9}
-\makelabel{ref:IsPreimagesByAsGroupGeneralMappingByImages}{40.10.3}{X78707DF57C3927EB}
-\makelabel{ref:IsPermGroupGeneralMapping}{40.10.4}{X83E10338798F552B}
-\makelabel{ref:IsPermGroupGeneralMappingByImages}{40.10.4}{X83E10338798F552B}
-\makelabel{ref:IsPermGroupHomomorphism}{40.10.4}{X83E10338798F552B}
-\makelabel{ref:IsPermGroupHomomorphismByImages}{40.10.4}{X83E10338798F552B}
-\makelabel{ref:IsToPermGroupGeneralMappingByImages}{40.10.5}{X83DADD9F7CAD829B}
-\makelabel{ref:IsToPermGroupHomomorphismByImages}{40.10.5}{X83DADD9F7CAD829B}
-\makelabel{ref:IsGroupGeneralMappingByPcgs}{40.10.6}{X798E72E77EC85D4A}
-\makelabel{ref:IsPcGroupGeneralMappingByImages}{40.10.7}{X86FF63B784FB8F85}
-\makelabel{ref:IsPcGroupHomomorphismByImages}{40.10.7}{X86FF63B784FB8F85}
-\makelabel{ref:IsToPcGroupGeneralMappingByImages}{40.10.8}{X79A853B579B250C0}
-\makelabel{ref:IsToPcGroupHomomorphismByImages}{40.10.8}{X79A853B579B250C0}
-\makelabel{ref:IsFromFpGroupGeneralMappingByImages}{40.10.9}{X7BE2A2EB80DC5CFF}
-\makelabel{ref:IsFromFpGroupHomomorphismByImages}{40.10.9}{X7BE2A2EB80DC5CFF}
-\makelabel{ref:IsFromFpGroupStdGensGeneralMappingByImages}{40.10.10}{X81090C207F4F6423}
-\makelabel{ref:IsFromFpGroupStdGensHomomorphismByImages}{40.10.10}{X81090C207F4F6423}
+\makelabel{ref:MappingGeneratorsImages}{40.10.2}{X863805187A24B5E3}
+\makelabel{ref:IsGroupGeneralMappingByAsGroupGeneralMappingByImages}{40.10.3}{X7DFBBAB18126B4D9}
+\makelabel{ref:IsPreimagesByAsGroupGeneralMappingByImages}{40.10.4}{X78707DF57C3927EB}
+\makelabel{ref:IsPermGroupGeneralMapping}{40.10.5}{X83E10338798F552B}
+\makelabel{ref:IsPermGroupGeneralMappingByImages}{40.10.5}{X83E10338798F552B}
+\makelabel{ref:IsPermGroupHomomorphism}{40.10.5}{X83E10338798F552B}
+\makelabel{ref:IsPermGroupHomomorphismByImages}{40.10.5}{X83E10338798F552B}
+\makelabel{ref:IsToPermGroupGeneralMappingByImages}{40.10.6}{X83DADD9F7CAD829B}
+\makelabel{ref:IsToPermGroupHomomorphismByImages}{40.10.6}{X83DADD9F7CAD829B}
+\makelabel{ref:IsGroupGeneralMappingByPcgs}{40.10.7}{X798E72E77EC85D4A}
+\makelabel{ref:IsPcGroupGeneralMappingByImages}{40.10.8}{X86FF63B784FB8F85}
+\makelabel{ref:IsPcGroupHomomorphismByImages}{40.10.8}{X86FF63B784FB8F85}
+\makelabel{ref:IsToPcGroupGeneralMappingByImages}{40.10.9}{X79A853B579B250C0}
+\makelabel{ref:IsToPcGroupHomomorphismByImages}{40.10.9}{X79A853B579B250C0}
+\makelabel{ref:IsFromFpGroupGeneralMappingByImages}{40.10.10}{X7BE2A2EB80DC5CFF}
+\makelabel{ref:IsFromFpGroupHomomorphismByImages}{40.10.10}{X7BE2A2EB80DC5CFF}
+\makelabel{ref:IsFromFpGroupStdGensGeneralMappingByImages}{40.10.11}{X81090C207F4F6423}
+\makelabel{ref:IsFromFpGroupStdGensHomomorphismByImages}{40.10.11}{X81090C207F4F6423}
 \makelabel{ref:group actions}{41}{X87115591851FB7F4}
 \makelabel{ref:group actions operations syntax}{41.1}{X83661AFD7B7BD1D9}
 \makelabel{ref:group actions}{41.2}{X81B8F9CD868CD953}
@@ -3413,6 +3413,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:FactorCosetAction (for fp groups)}{47.6.3}{X7EC1B0EE876E478A}
 \makelabel{ref:CosetTableBySubgroup}{47.6.4}{X82926A7F8365A341}
 \makelabel{ref:CosetTableFromGensAndRels}{47.6.5}{X7DE601F179E6FD09}
+\makelabel{ref:TCENUM}{47.6.5}{X7DE601F179E6FD09}
+\makelabel{ref:GAPTCENUM}{47.6.5}{X7DE601F179E6FD09}
 \makelabel{ref:CosetTableDefaultMaxLimit}{47.6.6}{X822B188F87E9E642}
 \makelabel{ref:CosetTableDefaultLimit}{47.6.7}{X7A80A00E7E088E44}
 \makelabel{ref:MostFrequentGeneratorFpGroup}{47.6.8}{X829D31A981CB2AF4}
@@ -3992,8 +3994,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:TracePolynomial}{58.3.3}{X80FE7E017C2D255C}
 \makelabel{ref:characteristic polynomial for field elements}{58.3.3}{X80FE7E017C2D255C}
 \makelabel{ref:Norm}{58.3.4}{X838515278587FF01}
-\makelabel{ref:Trace (for a field element)}{58.3.5}{X8749BCDF7D0F4C4B}
-\makelabel{ref:Trace (for a matrix)}{58.3.5}{X8749BCDF7D0F4C4B}
+\makelabel{ref:Trace (for a field element)}{58.3.5}{X7DD17EB581200AD6}
+\makelabel{ref:Trace (for a matrix)}{58.3.5}{X7DD17EB581200AD6}
 \makelabel{ref:Conjugates}{58.3.6}{X837A4A5781F8EE92}
 \makelabel{ref:NormalBase}{58.3.7}{X8236A8B47E6AAD93}
 \makelabel{ref:IsFFE}{59.1.1}{X7D3DF32C84FEBD25}
@@ -4354,12 +4356,13 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsGroupRing}{65.1.5}{X82C63644805EB1EE}
 \makelabel{ref:UnderlyingMagma}{65.1.6}{X848D60417DFF7947}
 \makelabel{ref:AugmentationIdeal}{65.1.7}{X7B21DB3E7CD80983}
-\makelabel{ref:IsElementOfFreeMagmaRing}{65.2.1}{X7D9C684A81E66310}
-\makelabel{ref:IsElementOfFreeMagmaRingCollection}{65.2.1}{X7D9C684A81E66310}
-\makelabel{ref:IsElementOfFreeMagmaRingFamily}{65.2.2}{X869768AF7B444BF8}
-\makelabel{ref:CoefficientsAndMagmaElements}{65.2.3}{X843D1D8578C33513}
-\makelabel{ref:ZeroCoefficient}{65.2.4}{X78C3DB417E353390}
-\makelabel{ref:ElementOfMagmaRing}{65.2.5}{X8671DE0A81BEEFB0}
+\makelabel{ref:IsMagmaRingObjDefaultRep}{65.2.1}{X827B2D7D7E41780C}
+\makelabel{ref:IsElementOfFreeMagmaRing}{65.2.2}{X7D9C684A81E66310}
+\makelabel{ref:IsElementOfFreeMagmaRingCollection}{65.2.2}{X7D9C684A81E66310}
+\makelabel{ref:IsElementOfFreeMagmaRingFamily}{65.2.3}{X869768AF7B444BF8}
+\makelabel{ref:CoefficientsAndMagmaElements}{65.2.4}{X843D1D8578C33513}
+\makelabel{ref:ZeroCoefficient}{65.2.5}{X78C3DB417E353390}
+\makelabel{ref:ElementOfMagmaRing}{65.2.6}{X8671DE0A81BEEFB0}
 \makelabel{ref:Embedding for magma rings}{65.3}{X80366F1480ACD8DF}
 \makelabel{ref:IsElementOfMagmaRingModuloRelations}{65.4.1}{X869D54847E881848}
 \makelabel{ref:IsElementOfMagmaRingModuloRelationsCollection}{65.4.1}{X869D54847E881848}
@@ -4785,8 +4788,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IrreducibleRepresentations}{71.14.4}{X7F29C5447B5DC102}
 \makelabel{ref:IrreducibleRepresentationsDixon}{71.14.5}{X8493ED7A86FFCB8A}
 \makelabel{ref:IrreducibleModules}{71.15.1}{X87E82F8085745523}
-\makelabel{ref:AbsoluteIrreducibleModules}{71.15.2}{X7D34C5527FDC31F0}
-\makelabel{ref:AbsolutIrreducibleModules}{71.15.2}{X7D34C5527FDC31F0}
+\makelabel{ref:AbsolutelyIrreducibleModules}{71.15.2}{X7D0BD5337D1C069B}
+\makelabel{ref:AbsoluteIrreducibleModules}{71.15.2}{X7D0BD5337D1C069B}
+\makelabel{ref:AbsolutIrreducibleModules}{71.15.2}{X7D0BD5337D1C069B}
 \makelabel{ref:RegularModule}{71.15.3}{X7EB88B2E87AF5556}
 \makelabel{ref:Dixon-Schneider algorithm}{71.16}{X86CDA4007A5EF704}
 \makelabel{ref:irreducible characters computation}{71.17}{X7C083207868066C1}
@@ -5095,6 +5099,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:BANNER}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MonomialTotalDegreeLess}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:NormedVectors}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:MutableIdentityMat}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:MutableNullMat}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:operation}{78}{X8058CC8187162644}
 \makelabel{ref:method}{78}{X8058CC8187162644}
 \makelabel{ref:InstallMethod}{78.2.1}{X837EFDAB7BEF290B}
@@ -5147,6 +5153,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:HELPADDBOOK}{84.1.1}{X7CD0B8507A3D231D}
 \makelabel{ref:HELPREMOVEBOOK}{84.1.2}{X7BDEB25D7AFC4322}
 \makelabel{ref:document formats!for help books}{84.3}{X7AD7541E7C30D5B3}
+\makelabel{ref:HELPVIEWERINFO}{84.4.1}{X84B011847A4D90F0}
 \makelabel{ref:FOA triples}{85}{X8350247A8501969F}
 \makelabel{ref:KeyDependentOperation}{85.1.1}{X7CABFDAA8596757E}
 \makelabel{ref:InParentFOA}{85.2.1}{X7C0E62D8813A4EE6}

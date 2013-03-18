@@ -181,9 +181,9 @@
         character)[114X)  called  for  a group character could return a perhaps too
         large result.[133X
   
-  [30X    [33X[0;6Y[2XTrace[102X  ([14XReference:  TraceMethods[114X)  called  for  an element of a finite
-        field   that   was   created   with   [2XAlgebraicExtension[102X   ([14XReference:
-        AlgebraicExtension[114X) ran into an error.[133X
+  [30X    [33X[0;6Y[2XTrace[102X ([14XReference: Traces of field elements and matrices[114X) called for an
+        element  of  a  finite  field that was created with [2XAlgebraicExtension[102X
+        ([14XReference: AlgebraicExtension[114X) ran into an error.[133X
   
   [30X    [33X[0;6Y[2XIrreducibleRepresentationsDixon[102X                            ([14XReference:
         IrreducibleRepresentationsDixon[114X)  did  not  accept  a  list  with  one

@@ -2,8 +2,6 @@
 ##
 ##  Readme-Tests.txt                CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: Readme-Tests.txt,v 1.4 2005/07/19 14:02:24 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

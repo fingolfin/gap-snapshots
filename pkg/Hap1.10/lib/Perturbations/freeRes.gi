@@ -1,6 +1,5 @@
 #(C) 2008 Graham Ellis
 
-
 ################################################################
 InstallGlobalFunction(FreeGResolution,
 function(arg)
@@ -17,7 +16,7 @@ local
 	StabResls, 
         ResolutionFG,
 	Action,
-        AlgRed,  AlgRed2,
+        AlgRed,  
 	EltsG, G, Mult, MultRecord,
 	DelGen, DelWord, DelGenRec,
 	PseudoBoundary,FinalBoundary,
@@ -123,21 +122,28 @@ else
 AlgRed:= function(ww)
 local x,i,v,k,u,w;
 #if Length(ww)>5000 then return ww; fi;
+
 w:=ww;#w:=StructuralCopy(ww);
 
-v:=[];
         for x in w do
         if x[2]<0 then x[1]:=-x[1];x[2]:=-x[2];fi;
+        od;
+v:=Filtered(w,x->x[1]>0);
+        for x in w do
+        if x[1]<0 then
 #RT:=RT-Runtime(); ##This takes neary all the computation time!!
 ##########################
         k:=Position(v,[-x[1],x[2],x[3]]);  
         if (k=fail) then Add(v,x); 
         else
-        Remove(v,k);
+        #Remove(v,k);
+        Unbind(v[k]);
         fi;
 ##########################
 #RT:=RT+Runtime();
+        fi;
         od;
+        v:=Filtered(v,x->IsBound(x));
 
         return v;
 end;
@@ -445,6 +451,7 @@ Append(y,List(DelGen(k,q,s,x[1],x[2]),
 a->[a[1],a[2],Mult(x[3],a[3])]));
 od;
 
+return y;  #Added Jan 2013. Speeds up the calculation in some(!!) examples.
 return AlgRed(y);
 
 end;
@@ -549,25 +556,36 @@ local
 	R,T,
 	H,EltsH,
 	HhomG,GmapTH,THmapG,
+	HhomGrec,GmapTHrec,THmapGrec,
 	BoundaryS,Boundary,
 	HomotopyS,Homotopy,
-	PseudoBoundary,n,k,PseudoHomotopy,FinalHomotopy;
+	PseudoBoundary,n,k,PseudoHomotopy,FinalHomotopy,
+	PosG;
 
 S:=arg[1];
 G:=arg[2];
 EltsG:=arg[3];
+
+PosG:=Position;
+
 H:=S!.group;
 EltsH:=S!.elts;
 
 BoundaryS:=S!.boundary;
 HomotopyS:=S!.homotopy;
 
+HhomGrec:=[];
 #######################################
 HhomG:=function(i)
 local pos;
-pos:= Position(EltsG,EltsH[i]);
-if pos=fail then Add(EltsG,EltsH[i]);   return Length(EltsG); 
-else return pos; fi;
+
+if IsBound(HhomGrec[i]) then return HhomGrec[i]; fi;
+
+pos:= PosG(EltsG,EltsH[i]);
+if pos=fail then Add(EltsG,EltsH[i]);   HhomGrec[i]:=Length(EltsG); 
+else HhomGrec[i]:= pos; fi;
+
+return HhomGrec[i];
 end;
 #######################################
 
@@ -589,11 +607,13 @@ else return NegateWord(PseudoBoundary[n+1][pk]); fi;
 end;
 #######################################
 
+GmapTHrec:=[];
 #######################################
 GmapTH:=function(g)    #ht=g^-1 ==> g=t^-1 h^-1
 local t,h,gg,pos1,pos2;
 
-#RT:=RT-Runtime();
+if IsBound(GmapTHrec[g]) then return GmapTHrec[g]; fi;
+
 gg:=EltsG[g]^-1;
 #t:=CanonicalRightCosetElement(H,gg)^-1;
 t:=CanonicalRightCountableCosetElement(H,gg)^-1;
@@ -601,22 +621,37 @@ t:=CanonicalRightCountableCosetElement(H,gg)^-1;
 
 h:=(gg*t)^-1;
 
-pos1:=Position(EltsG,t);
+pos1:=PosG(EltsG,t);
 if pos1=fail then Add(EltsG,t); pos1:=Length(EltsG);fi;
 pos2:=Position(EltsH,h);
 if pos2=fail then Add(EltsH,h); pos2:=Length(EltsH);fi;
-#RT:=RT+Runtime();
-return [pos1,pos2];
+
+GmapTHrec[g]:= [pos1,pos2];
+
+return GmapTHrec[g];
 end;
 #######################################
 
+THmapGrec:=[];
 #######################################
 THmapG:=function(t,h)
-local pos;
-pos:= Position(EltsG,EltsG[t]*EltsG[HhomG(h)]);
-if pos=fail then Add(EltsG, EltsG[t]*EltsG[HhomG(h)]);
-return Length(EltsG);
-else return pos; fi;
+local pos, g;
+
+if not IsBound(THmapGrec[t]) then THmapGrec[t]:=[]; fi;
+
+if IsBound( THmapGrec[t][h] ) then return THmapGrec[t][h]; fi;
+
+g:=EltsG[t]*EltsG[HhomG(h)];
+
+pos:= PosG(EltsG,g);
+
+
+if pos=fail then Add(EltsG, g);
+
+ THmapGrec[t][h]:= Length(EltsG);
+else  THmapGrec[t][h]:= pos; fi;
+
+return  THmapGrec[t][h];
 end;
 #######################################
 

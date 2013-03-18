@@ -568,7 +568,17 @@
     [4X        [ IsHomalgMatrix, IsHomogeneousList ],[104X
     [4X        [104X
     [4X  function( M, poslist )[104X
-    [4X    local R, RP, rest, pos, i, j, k;[104X
+    [4X    local cache, R, RP, rest, pos, i, j, k;[104X
+    [4X    [104X
+    [4X    if IsBound( M!.GetColumnIndependentUnitPositions ) then[104X
+    [4X        cache := M!.GetColumnIndependentUnitPositions;[104X
+    [4X        if IsBound( cache.(String( poslist )) ) then[104X
+    [4X            return cache.(String( poslist ));[104X
+    [4X        fi;[104X
+    [4X    else[104X
+    [4X        cache := rec( );[104X
+    [4X        M!.GetColumnIndependentUnitPositions := cache;[104X
+    [4X    fi;[104X
     [4X    [104X
     [4X    R := HomalgRing( M );[104X
     [4X    [104X
@@ -579,6 +589,7 @@
     [4X        if pos <> [ ] then[104X
     [4X            SetIsZero( M, false );[104X
     [4X        fi;[104X
+    [4X        cache.(String( poslist )) := pos;[104X
     [4X        return pos;[104X
     [4X    fi;[104X
     [4X    [104X
@@ -604,6 +615,8 @@
     [4X        SetIsZero( M, false );[104X
     [4X    fi;[104X
     [4X    [104X
+    [4X    cache.(String( poslist )) := pos;[104X
+    [4X    [104X
     [4X    return pos;[104X
     [4X    [104X
     [4Xend );[104X
@@ -625,7 +638,17 @@
     [4X        [ IsHomalgMatrix, IsHomogeneousList ],[104X
     [4X        [104X
     [4X  function( M, poslist )[104X
-    [4X    local R, RP, rest, pos, j, i, k;[104X
+    [4X    local cache, R, RP, rest, pos, j, i, k;[104X
+    [4X    [104X
+    [4X    if IsBound( M!.GetRowIndependentUnitPositions ) then[104X
+    [4X        cache := M!.GetRowIndependentUnitPositions;[104X
+    [4X        if IsBound( cache.(String( poslist )) ) then[104X
+    [4X            return cache.(String( poslist ));[104X
+    [4X        fi;[104X
+    [4X    else[104X
+    [4X        cache := rec( );[104X
+    [4X        M!.GetRowIndependentUnitPositions := cache;[104X
+    [4X    fi;[104X
     [4X    [104X
     [4X    R := HomalgRing( M );[104X
     [4X    [104X
@@ -636,6 +659,7 @@
     [4X        if pos <> [ ] then[104X
     [4X            SetIsZero( M, false );[104X
     [4X        fi;[104X
+    [4X        cache.( String( poslist ) ) := pos;[104X
     [4X        return pos;[104X
     [4X    fi;[104X
     [4X    [104X
@@ -660,6 +684,8 @@
     [4X    if pos <> [ ] then[104X
     [4X        SetIsZero( M, false );[104X
     [4X    fi;[104X
+    [4X    [104X
+    [4X    cache.( String( poslist ) ) := pos;[104X
     [4X    [104X
     [4X    return pos;[104X
     [4X    [104X

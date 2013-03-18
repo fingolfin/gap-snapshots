@@ -2,8 +2,6 @@
 ##
 ##  timing_projectors.g             CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: timing_projectors.g,v 1.4 2005/12/21 17:08:22 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

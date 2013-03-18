@@ -2,12 +2,8 @@
 ##
 ##  util.gd                         CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: util.gd,v 1.9 2011/05/15 19:18:07 gap Exp $
-##
 ##  Copyright (C) 2000-2002, 2005 Burkhard Höfling
 ##
-Revision.util_gd :=
-    "@(#)$Id: util.gd,v 1.9 2011/05/15 19:18:07 gap Exp $";
 
 
 #############################################################################

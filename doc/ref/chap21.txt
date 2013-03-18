@@ -2126,8 +2126,11 @@
   [33X[0;0Yreturns  a  new mutable list whose entries are the elements of the list [3Xlist[103X
   with  duplicates  removed.  [2XDuplicateFreeList[102X only uses the [10X=[110X comparison and
   will  not  sort  the result. Therefore [2XDuplicateFreeList[102X can be used even if
-  the  elements  of [3Xlist[103X do not lie in the same family. [2XUnique[102X is an alias for
-  [2XDuplicateFreeList[102X.[133X
+  the  elements  of  [3Xlist[103X  do  not  lie in the same family. Otherwise, if [3Xlist[103X
+  contains objects that can be compared with [2X\<[102X ([14X31.11-1[114X) then it is much more
+  efficient to use [2XSet[102X ([14X30.3-7[114X) instead of [2XDuplicateFreeList[102X.[133X
+  
+  [33X[0;0Y[2XUnique[102X is a synonym for [2XDuplicateFreeList[102X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl:=[1,Z(3),1,"abc",Group((1,2,3),(1,2)),Z(3),Group((1,2),(2,3))];;[127X[104X

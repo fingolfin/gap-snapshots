@@ -305,7 +305,13 @@ false
 <h5>47.2-4 StringFactorizationWord</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StringFactorizationWord</code>( <var class="Arg">w</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns a string that expresses a given word <var class="Arg">w</var> in compact form written as a string. Inverses are expressed by changing the upper/lower case of the generators, recurring expressions are written as products. For example the word <span class="SimpleMath">\(xyyyxxyyyxy^{-1}x\)</span> would be written as <span class="SimpleMath">\((xy3x)2Yx\)</span>.</p>
+<p>returns a string that expresses a given word <var class="Arg">w</var> in compact form written as a string. Inverses are expressed by changing the upper/lower case of the generators, recurring expressions are written as products.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StringFactorizationWord(z^-1*x*y*y*y*x*x*y*y*y*x*y^-1*x);</span>
+"Z(xy3x)2Yx"
+</pre></div>
 
 <p><a id="X84D693EC872DAA55" name="X84D693EC872DAA55"></a></p>
 
@@ -977,7 +983,7 @@ Group([ f1*f2 ])
 [ &lt;[ [ 1, 1 ] ]|f2^-1*f1^-1&gt; ]
 </pre></div>
 
-<p>When working with such homomorphisms, some subgroup elements are expressed as extremely long words in the group generators. Therefore the underlying words of subgroup generators stored in the isomorphism (as obtained by <code class="code">MappingGeneratorsImages</code> and displayed when <code class="func">View</code> (<a href="chap6_mj.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>)ing the homomorphism) as well as preimages under the homomorphism are stored in the form of straight line program elements (see <a href="chap37_mj.html#X8188799182D82A92"><span class="RefLink">37.9</span></a>). These will behave like ordinary words and no extra treatment should be necessary.</p>
+<p>When working with such homomorphisms, some subgroup elements are expressed as extremely long words in the group generators. Therefore the underlying words of subgroup generators stored in the isomorphism (as obtained by <code class="func">MappingGeneratorsImages</code> (<a href="chap40_mj.html#X863805187A24B5E3"><span class="RefLink">40.10-2</span></a>) and displayed when <code class="func">View</code> (<a href="chap6_mj.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>)ing the homomorphism) as well as preimages under the homomorphism are stored in the form of straight line program elements (see <a href="chap37_mj.html#X8188799182D82A92"><span class="RefLink">37.9</span></a>). These will behave like ordinary words and no extra treatment should be necessary.</p>
 
 
 <div class="example"><pre>

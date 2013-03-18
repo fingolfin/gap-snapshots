@@ -94,7 +94,10 @@ DeclareGlobalFunction("ResolutionAlmostCrystalQuotient");
 DeclareGlobalFunction("CayleyGraphOfGroupDisplay");
 DeclareGlobalFunction("CayleyGraphOfGroup");
 DeclareGlobalFunction("TietzeReducedResolution");
-DeclareGlobalFunction("TietzeReducedResolution_alt");
+DeclareGlobalFunction("HAPTietzeReduction_OneLevel");
+DeclareGlobalFunction("HAPTietzeReduction_OneStep");
+DeclareGlobalFunction("HAPTietzeReduction_Inf");
+#DeclareGlobalFunction("TietzeReducedResolution_alt");
 DeclareGlobalFunction("RecalculateIncidenceNumbers");
 
 ## RESOLUTIONS MOD P ################################################
@@ -199,12 +202,14 @@ DeclareGlobalFunction("PersistentHomologyOfPureCubicalComplex_Alt");
 DeclareGlobalFunction("ZZPersistentHomologyOfPureCubicalComplex");
 DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries");
 DeclareGlobalFunction("PersistentCohomologyOfQuotientGroupSeries");
+DeclareGlobalFunction("PersistentHomologyOfFilteredCubicalComplex");
+DeclareGlobalFunction("PersistentHomologyOfFilteredCubicalComplex_alt");
+DeclareGlobalFunction("PersistentHomologyOfFilteredChainComplex");
 DeclareGlobalFunction("NormalSeriesToQuotientHomomorphisms");
 DeclareGlobalFunction("LinearHomomorphismsPersistenceMat");
 DeclareGlobalFunction("LinearHomomorphismsZZPersistenceMat");
 DeclareGlobalFunction("PersistentHomologyOfQuotientGroupSeries_Int");
 DeclareGlobalFunction("PersistentHomologyOfSubGroupSeries");
-DeclareGlobalFunction("PersistentHomologyOfFilteredChainComplex");
 DeclareGlobalFunction("TruncatedGComplex");
 DeclareGlobalFunction("UniversalBarCode");
 DeclareGlobalFunction("UniversalBarCodeEval");
@@ -364,15 +369,23 @@ DeclareGlobalFunction("PureCubicalComplexDifference");
 DeclareGlobalFunction("PureCubicalComplexIntersection");
 DeclareGlobalFunction("PureCubicalComplexToCubicalComplex");
 DeclareGlobalFunction("FilteredPureCubicalComplexToCubicalComplex");
+DeclareGlobalFunction("ContractedFilteredPureCubicalComplex");
 DeclareOperation("ChainComplex",[IsObject]);
 DeclareOperation("ChainComplexOfPair",[IsObject,IsObject]);
+DeclareOperation("SparseChainComplexOfPair",[IsObject,IsObject]);
 DeclareGlobalFunction("ChainComplexOfCubicalComplex");
+DeclareGlobalFunction("SparseChainComplexOfCubicalComplex");
+DeclareGlobalFunction("SparseFilteredChainComplexOfFilteredCubicalComplex");
 DeclareGlobalFunction("ChainComplexOfCubicalPair");
+DeclareGlobalFunction("SparseChainComplexOfCubicalPair");
 DeclareGlobalFunction("ExcisedPureCubicalPair");
 DeclareGlobalFunction("ExcisedPureCubicalPair_dim_2");
 DeclareGlobalFunction("ChainComplexOfSimplicialPair");
 DeclareGlobalFunction("ChainMapOfCubicalPairs");
+DeclareGlobalFunction("SparseChainMapOfCubicalPairs");
 DeclareGlobalFunction("ChainComplexOfSimplicialComplex");
+DeclareGlobalFunction("SparseChainComplexOfSimplicialComplex");
+DeclareGlobalFunction("SparseFilteredChainComplexOfFilteredSimplicialComplex");
 DeclareGlobalFunction("ChainMapOfSimplicialMap");
 DeclareGlobalFunction("SkeletonOfSimplicialComplex");
 DeclareGlobalFunction("CechComplexOfPureCubicalComplex");
@@ -393,6 +406,7 @@ DeclareGlobalFunction("ThickenedPureCubicalComplex_dim2");
 DeclareGlobalFunction("BoundaryOfPureCubicalComplex");
 DeclareGlobalFunction("ContractPureCubicalComplex");
 DeclareGlobalFunction("ZigZagContractedPureCubicalComplex");
+DeclareGlobalFunction("ZigZagContractedFilteredPureCubicalComplex");
 DeclareGlobalFunction("CropPureCubicalComplex");
 #DeclareGlobalFunction("SingularChainComplex");
 DeclareGlobalFunction("ComplementOfPureCubicalComplex");
@@ -411,12 +425,15 @@ DeclareGlobalFunction("SymmetricMatrixToIncidenceMatrix");
 DeclareGlobalFunction("DensityMat");
 DeclareGlobalFunction("IncidenceMatrixToGraph");
 DeclareGlobalFunction("SymmetricMatrixToGraph");
+DeclareGlobalFunction("SymmetricMatrixToFilteredGraph");
+DeclareGlobalFunction("PermGroupToFilteredGraph");
 DeclareGlobalFunction("GraphOfSimplicialComplex");
 DeclareGlobalFunction("PathComponentsOfGraph");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex");
 DeclareGlobalFunction("PathComponentsOfSimplicialComplex_alt");
 DeclareGlobalFunction("ContractGraph");
 DeclareGlobalFunction("SimplicialNerveOfGraph");
+DeclareGlobalFunction("SimplicialNerveOfFilteredGraph");
 DeclareGlobalFunction("GraphDisplay");
 DeclareGlobalFunction("SkeletonOfCubicalComplex");
 DeclareGlobalFunction("MorseFiltration");
@@ -429,6 +446,7 @@ DeclareGlobalFunction("SuspensionOfPureCubicalComplex");
 DeclareGlobalFunction("ThickeningFiltration");
 DeclareGlobalFunction("Dendrogram");
 DeclareGlobalFunction("FiltrationTerm");
+DeclareGlobalFunction("FiltrationTermOfGraph");
 DeclareGlobalFunction("DendrogramDisplay");
 DeclareGlobalFunction("ComplementOfFilteredCubicalComplex");
 DeclareGlobalFunction("DendrogramToPersistenceMat");
@@ -524,6 +542,11 @@ DeclareGlobalFunction("AlexanderPolynomial");
 DeclareGlobalFunction("ReadPDBfileAsPureCubicalComplex");
 DeclareGlobalFunction("ProjectionOfPureCubicalComplex");
 
+## METRICS #########################################################
+DeclareGlobalFunction("CayleyMetric");
+DeclareGlobalFunction("KendallMetric");
+DeclareGlobalFunction("HammingMetric");
+
 ## SPARSE ###########################################################
 DeclareGlobalFunction("SparseMat");
 DeclareGlobalFunction("SparseRowMult");
@@ -535,6 +558,12 @@ DeclareGlobalFunction("SparseChainComplexOfRegularCWComplex");
 DeclareGlobalFunction("SparseChainComplexOfRegularCWComplexWithVectorField");
 DeclareGlobalFunction("SparseBoundaryMatrix");
 DeclareOperation("SparseChainComplex",[IsHapRegularCWComplex]);
+DeclareGlobalFunction("NullspaceSparseMatDestructive");
+DeclareGlobalFunction("TransposeOfSparseMat");
+DeclareGlobalFunction("ReverseSparseMat");
+DeclareGlobalFunction("PersistentHomologyOfFilteredSparseChainComplex");
+
+
 
 ## OTHER ############################################################
 #ReadPackage("HAP","lib/Objectifications/types.gi");
@@ -551,6 +580,8 @@ ReadPackage("HAP","lib/HapPrime/polynomials.gd");
 ReadPackage("HAP","lib/HapPrime/ringhomomorphism.gd");
 ReadPackage("HAP","lib/HapPrime/rings.gd");
 ReadPackage("HAP","lib/HapPrime/happrime.gd");
+ReadPackage("HAP","lib/ArithmeticGroups/crystTypes.gd");
+
 
 
 

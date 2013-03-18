@@ -359,6 +359,28 @@ Compared to Older Versions?</Heading>
 <Subsection Label="sec:new1.2">
 <Heading>What's New in Version 1.2?</Heading>
 
+The following bugs were fixed in version 1.2.2.
+
+<List>
+<Item>
+  The functions <Ref Func="AllCharacterTableNames"/> and
+  <Ref Func="OneCharacterTableName"/> ran into an error in certain situations,
+  if the library had been extended by private tables,
+  see Section <Ref Sect="sec:extending"/>.
+  (As a consequence, the description of <Ref Prop="IsDuplicateTable"/>
+  has been extended.)
+  Thanks to Alexander Konovalov and Lukas Maas for pointing out this error.
+</Item>
+<Item>
+  The function <Ref Func="CharacterTableOfIndexTwoSubdirectProduct"/>
+  returned a wrong result if the two factors were given by the same
+  character table, for example in the case of <M>(A_5 \times A_5).2</M>
+  created as a subdirect product of two copies of <M>S_5</M>.
+</Item>
+</List>
+
+<P/>
+
 Concerning character table data, we have the following.
 
 <List>

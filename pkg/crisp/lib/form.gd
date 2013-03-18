@@ -2,12 +2,8 @@
 ##
 ##  form.gd                         CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: form.gd,v 1.3 2011/05/15 19:17:54 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.form_gd :=
-    "@(#)$Id: form.gd,v 1.3 2011/05/15 19:17:54 gap Exp $";
 
 
 #############################################################################
@@ -39,7 +35,7 @@ DeclareGlobalFunction ("SetIsOrdinaryFormation");
 ##
 #O  OrdinaryFormation (<obj>)
 ##
-DeclareOperation ("OrdinaryFormation", [IsObject]);
+DeclareAttribute ("OrdinaryFormation", IsObject);
 
 
 #############################################################################
@@ -76,7 +72,7 @@ DeclareGlobalFunction ("SetIsSaturatedFormation");
 ##
 #O  SaturatedFormation (<rec>)
 ##
-DeclareOperation ("SaturatedFormation", [IsObject]);
+DeclareAttribute ("SaturatedFormation", IsObject);
 
 
 #############################################################################
@@ -108,7 +104,7 @@ DeclareGlobalFunction ("SetIsFittingFormation");
 ##
 #O  FittingFormation (<obj>)
 ##
-DeclareOperation ("FittingFormation", [IsObject]);
+DeclareAttribute ("FittingFormation", IsObject);
 
 
 #############################################################################
@@ -154,7 +150,7 @@ DeclareGlobalFunction ("SetIsSaturatedFittingFormation");
 ##
 #O  SaturatedFittingFormation (<obj>)
 ##
-DeclareOperation ("SaturatedFittingFormation", [IsObject]);
+DeclareAttribute ("SaturatedFittingFormation", IsObject);
 
 
 #############################################################################

@@ -342,7 +342,8 @@
   subfield  [3XK[103X,  and  if  no  field is given then [10XDefaultField( [3Xz[103X[10X )[110X is taken as
   default for [3XL[103X.[133X
   
-  [1X58.3-5 Trace[101X
+  
+  [1X58.3-5 [33X[0;0YTraces of field elements and matrices[133X[101X
   
   [29X[2XTrace[102X( [[3XL[103X[, [3XK[103X, ]][3Xz[103X ) [32X attribute
   [29X[2XTrace[102X( [3Xmat[103X ) [32X attribute

@@ -38,6 +38,7 @@ Id:=Position(Elts,[[1,0],[0,1]]);
 #######################
 pos:=function(Elts,g)
 local posit;
+
 posit:=Position(Elts,g);
 if posit=fail then Add(Elts,g);  return Length(Elts);
 else  return posit;

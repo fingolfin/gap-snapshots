@@ -2,8 +2,6 @@
 ##
 ##  timing_normpro.g                CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: timing_normpro.g,v 1.3 2005/07/19 14:01:18 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

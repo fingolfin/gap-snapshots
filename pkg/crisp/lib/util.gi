@@ -2,12 +2,8 @@
 ##
 ##  util.gi                         CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: util.gi,v 1.19 2011/05/15 19:18:07 gap Exp $
-##
 ##  Copyright (C) 2000-2003, 2005 Burkhard Höfling
 ##
-Revision.util_gi :=
-    "@(#)$Id: util.gi,v 1.19 2011/05/15 19:18:07 gap Exp $";
 
 
 #############################################################################

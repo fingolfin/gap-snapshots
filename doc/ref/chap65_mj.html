@@ -39,11 +39,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap65_mj.html#X8402D3897F2C5955">65.2 <span class="Heading">Elements of Free Magma Rings</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X7D9C684A81E66310">65.2-1 IsElementOfFreeMagmaRing</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X869768AF7B444BF8">65.2-2 IsElementOfFreeMagmaRingFamily</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X843D1D8578C33513">65.2-3 CoefficientsAndMagmaElements</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X78C3DB417E353390">65.2-4 ZeroCoefficient</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X8671DE0A81BEEFB0">65.2-5 ElementOfMagmaRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X827B2D7D7E41780C">65.2-1 IsMagmaRingObjDefaultRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X7D9C684A81E66310">65.2-2 IsElementOfFreeMagmaRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X869768AF7B444BF8">65.2-3 IsElementOfFreeMagmaRingFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X843D1D8578C33513">65.2-4 CoefficientsAndMagmaElements</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X78C3DB417E353390">65.2-5 ZeroCoefficient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap65_mj.html#X8671DE0A81BEEFB0">65.2-6 ElementOfMagmaRing</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap65_mj.html#X80366F1480ACD8DF">65.3 <span class="Heading">Natural Embeddings related to Magma Rings</span></a>
 </span>
@@ -89,7 +90,9 @@
 
 </li>
 </ul>
-<p>Note that a free Lie algebra is <em>not</em> a magma ring, because of the additional relations given by the Jacobi identity; see <a href="chap65_mj.html#X81B002EE799B5E77"><span class="RefLink">65.4</span></a> for a generalization of magma rings that covers such structures.</p>
+<p>Note that formally, polynomial rings in <strong class="pkg">GAP</strong> are not constructed as free magma rings.</p>
+
+<p>Furthermore, a free Lie algebra is <em>not</em> a magma ring, because of the additional relations given by the Jacobi identity; see <a href="chap65_mj.html#X81B002EE799B5E77"><span class="RefLink">65.4</span></a> for a generalization of magma rings that covers such structures.</p>
 
 <p>The coefficient ring <span class="SimpleMath">\(R\)</span> and the magma <span class="SimpleMath">\(M\)</span> cannot be regarded as subsets of <span class="SimpleMath">\(RM\)</span>, hence the natural <em>embeddings</em> of <span class="SimpleMath">\(R\)</span> and <span class="SimpleMath">\(M\)</span> into <span class="SimpleMath">\(RM\)</span> must be handled via explicit embedding maps (see <a href="chap65_mj.html#X80366F1480ACD8DF"><span class="RefLink">65.3</span></a>). Note that in a magma ring, the addition of elements is in general different from an addition that may be defined already for the elements of the magma; for example, the addition in the group ring of a matrix group does in general <em>not</em> coincide with the addition of matrices.</p>
 
@@ -194,13 +197,22 @@ false
 
 <h4>65.2 <span class="Heading">Elements of Free Magma Rings</span></h4>
 
-<p>In order to treat elements of free magma rings uniformly, also without an external representation, the attributes <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-3</span></a>) and <code class="func">ZeroCoefficient</code> (<a href="chap65_mj.html#X78C3DB417E353390"><span class="RefLink">65.2-4</span></a>) were introduced that allow one to "take an element of an arbitrary magma ring into pieces".</p>
+<p>In order to treat elements of free magma rings uniformly, also without an external representation, the attributes <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-4</span></a>) and <code class="func">ZeroCoefficient</code> (<a href="chap65_mj.html#X78C3DB417E353390"><span class="RefLink">65.2-5</span></a>) were introduced that allow one to "take an element of an arbitrary magma ring into pieces".</p>
 
-<p>Conversely, for constructing magma ring elements from coefficients and magma elements, <code class="func">ElementOfMagmaRing</code> (<a href="chap65_mj.html#X8671DE0A81BEEFB0"><span class="RefLink">65.2-5</span></a>) can be used. (Of course one can also embed each magma element into the magma ring, see <a href="chap65_mj.html#X80366F1480ACD8DF"><span class="RefLink">65.3</span></a>, and then form the linear combination, but many unnecessary intermediate elements are created this way.)</p>
+<p>Conversely, for constructing magma ring elements from coefficients and magma elements, <code class="func">ElementOfMagmaRing</code> (<a href="chap65_mj.html#X8671DE0A81BEEFB0"><span class="RefLink">65.2-6</span></a>) can be used. (Of course one can also embed each magma element into the magma ring, see <a href="chap65_mj.html#X80366F1480ACD8DF"><span class="RefLink">65.3</span></a>, and then form the linear combination, but many unnecessary intermediate elements are created this way.)</p>
+
+<p><a id="X827B2D7D7E41780C" name="X827B2D7D7E41780C"></a></p>
+
+<h5>65.2-1 IsMagmaRingObjDefaultRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingObjDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>The default representation of a magma ring element is a list of length 2, at first position the zero coefficient, at second position a list with the coefficients at the even positions, and the magma elements at the odd positions, with the ordering as defined for the magma elements.</p>
+
+<p>It is assumed that arithmetic operations on magma rings produce only normalized elements.</p>
 
 <p><a id="X7D9C684A81E66310" name="X7D9C684A81E66310"></a></p>
 
-<h5>65.2-1 IsElementOfFreeMagmaRing</h5>
+<h5>65.2-2 IsElementOfFreeMagmaRing</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRing</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
@@ -208,28 +220,28 @@ false
 
 <p><a id="X869768AF7B444BF8" name="X869768AF7B444BF8"></a></p>
 
-<h5>65.2-2 IsElementOfFreeMagmaRingFamily</h5>
+<h5>65.2-3 IsElementOfFreeMagmaRingFamily</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
 <p>Elements of families in this category have trivial normalisation, i.e., efficient methods for <code class="code">\=</code> and <code class="code">\&lt;</code>.</p>
 
 <p><a id="X843D1D8578C33513" name="X843D1D8578C33513"></a></p>
 
-<h5>65.2-3 CoefficientsAndMagmaElements</h5>
+<h5>65.2-4 CoefficientsAndMagmaElements</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsAndMagmaElements</code>( <var class="Arg">elm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>is a list that contains at the odd positions the magma elements, and at the even positions their coefficients in the element <var class="Arg">elm</var>.</p>
 
 <p><a id="X78C3DB417E353390" name="X78C3DB417E353390"></a></p>
 
-<h5>65.2-4 ZeroCoefficient</h5>
+<h5>65.2-5 ZeroCoefficient</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroCoefficient</code>( <var class="Arg">elm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>For an element <var class="Arg">elm</var> of a magma ring (modulo relations) <span class="SimpleMath">\(RM\)</span>, <code class="func">ZeroCoefficient</code> returns the zero element of the coefficient ring <span class="SimpleMath">\(R\)</span>.</p>
 
 <p><a id="X8671DE0A81BEEFB0" name="X8671DE0A81BEEFB0"></a></p>
 
-<h5>65.2-5 ElementOfMagmaRing</h5>
+<h5>65.2-6 ElementOfMagmaRing</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfMagmaRing</code>( <var class="Arg">Fam</var>, <var class="Arg">zerocoeff</var>, <var class="Arg">coeffs</var>, <var class="Arg">mgmelms</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">ElementOfMagmaRing</code> returns the element <span class="SimpleMath">\(\sum_{{i = 1}}^n c_i m_i'\)</span>, where <span class="SimpleMath">\(\textit{coeffs} = [ c_1, c_2, \ldots, c_n ]\)</span> is a list of coefficients, <span class="SimpleMath">\(\textit{mgmelms} = [ m_1, m_2, \ldots, m_n ]\)</span> is a list of magma elements, and <span class="SimpleMath">\(m_i'\)</span> is the image of <span class="SimpleMath">\(m_i\)</span> under an embedding of a magma containing <span class="SimpleMath">\(m_i\)</span> into a magma ring whose elements lie in the family <var class="Arg">Fam</var>. <var class="Arg">zerocoeff</var> must be the zero of the coefficient ring containing the <span class="SimpleMath">\(c_i\)</span>.</p>
@@ -297,7 +309,7 @@ true
 <h5>65.4-3 NormalizedElementOfMagmaRingModuloRelations</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedElementOfMagmaRingModuloRelations</code>( <var class="Arg">F</var>, <var class="Arg">descr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Let <var class="Arg">F</var> be a family of magma ring elements modulo relations, and <var class="Arg">descr</var> the description of an element in a magma ring modulo relations. <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> returns a description of the same element, but normalized w.r.t. the relations. So two elements are equal if and only if the result of <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> is equal for their internal data, that is, <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-3</span></a>) will return the same for the corresponding two elements.</p>
+<p>Let <var class="Arg">F</var> be a family of magma ring elements modulo relations, and <var class="Arg">descr</var> the description of an element in a magma ring modulo relations. <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> returns a description of the same element, but normalized w.r.t. the relations. So two elements are equal if and only if the result of <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> is equal for their internal data, that is, <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-4</span></a>) will return the same for the corresponding two elements.</p>
 
 <p><code class="func">NormalizedElementOfMagmaRingModuloRelations</code> is allowed to return <var class="Arg">descr</var> itself, it need not make a copy. This is the case for example in the case of free magma rings.</p>
 
@@ -306,7 +318,7 @@ true
 <h5>65.4-4 IsMagmaRingModuloRelations</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingModuloRelations</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>A <strong class="pkg">GAP</strong> object lies in the category <code class="func">IsMagmaRingModuloRelations</code> if it has been constructed as a magma ring modulo relations. Each element of such a ring has a unique normal form, so <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-3</span></a>) is well-defined for it.</p>
+<p>A <strong class="pkg">GAP</strong> object lies in the category <code class="func">IsMagmaRingModuloRelations</code> if it has been constructed as a magma ring modulo relations. Each element of such a ring has a unique normal form, so <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65_mj.html#X843D1D8578C33513"><span class="RefLink">65.2-4</span></a>) is well-defined for it.</p>
 
 <p>This category is not inherited to factor structures, which are in general best described as finitely presented algebras, see Chapter <a href="chap63_mj.html#X85A22A8286596D02"><span class="RefLink">63</span></a>.</p>
 
@@ -373,7 +385,7 @@ true
 
 <p>For convenience, magma rings constructed with <code class="func">FreeAlgebra</code> (<a href="chap62_mj.html#X83484C917D8F7A1A"><span class="RefLink">62.3-1</span></a>), <code class="func">FreeAssociativeAlgebra</code> (<a href="chap62_mj.html#X87835FFE79D2E068"><span class="RefLink">62.3-3</span></a>), <code class="func">FreeAlgebraWithOne</code> (<a href="chap62_mj.html#X7FBD04B07B85623D"><span class="RefLink">62.3-2</span></a>), and <code class="func">FreeAssociativeAlgebraWithOne</code> (<a href="chap62_mj.html#X845A777584A7D711"><span class="RefLink">62.3-4</span></a>) support an external representation of their elements, which is defined as a list of length 2, the first entry being the zero coefficient, the second being a list with the external representations of the magma elements at the odd positions and the corresponding coefficients at the even positions.</p>
 
-<p>As the above examples show, there are several possible representations of magma ring elements, the representations used for polynomials (see Chapter  <a href="chap66_mj.html#X7A14A6588268810A"><span class="RefLink">66</span></a>) as well as the default representation <code class="code">IsMagmaRingObjDefaultRep</code> of magma ring elements. The latter simply stores the zero coefficient and a list containing the coefficients of the element at the even positions and the corresponding magma elements at the odd positions, where the succession is compatible with the ordering of magma elements via <code class="code">\&lt;</code>.</p>
+<p>As the above examples show, there are several possible representations of magma ring elements, the representations used for polynomials (see Chapter  <a href="chap66_mj.html#X7A14A6588268810A"><span class="RefLink">66</span></a>) as well as the default representation <code class="func">IsMagmaRingObjDefaultRep</code> (<a href="chap65_mj.html#X827B2D7D7E41780C"><span class="RefLink">65.2-1</span></a>) of magma ring elements. The latter simply stores the zero coefficient and a list containing the coefficients of the element at the even positions and the corresponding magma elements at the odd positions, where the succession is compatible with the ordering of magma elements via <code class="code">\&lt;</code>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap64_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap66_mj.html">[Next Chapter]</a>&nbsp;  </div>

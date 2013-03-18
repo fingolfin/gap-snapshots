@@ -5,16 +5,13 @@ The GAP Character Table Library
 The GAP Character Table Library is an add-on package for both GAP 3.4
 and GAP 4.
 
-To get the newest released version, download one of the archive files
+To get the newest released version, download the archive file
 (where 'xrypz' stands for the highest available version number)
     ctbllib-xrypz.tar.gz
-    ctbllib-xrypz.zoo
 from
      http://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib
 and unpack it using
     gunzip ctbllib-xrypz.tar.gz; tar xvf ctbllib-xrypz.tar
-respectively
-    unzoo -x ctbllib-xrypz.zoo
 
 Note that if you use a web browser for downloading the archive file the
 'gunzip' step above may already be done by the browser, although the name of

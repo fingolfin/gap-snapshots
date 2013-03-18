@@ -67,8 +67,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24_mj.html#X8634C79E7DB22934">24.5-8 KroneckerProduct</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24_mj.html#X845EC4D18054D140">24.5-9 ReflectionMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24_mj.html#X7DEBC9967DFDFC18">24.5-10 PrintArray</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24_mj.html#X7A10CEF47DEBC8CC">24.5-11 MutableIdentityMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24_mj.html#X78A9D30981D94FB2">24.5-12 MutableNullMat</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24_mj.html#X79CC5F568252D341">24.6 <span class="Heading">Random Matrices</span></a>
 </span>
@@ -483,20 +481,34 @@ true
 
 <h5>24.5-1 IdentityMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMat</code>( <var class="Arg">m</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">m</var> identity matrix over the field given by <var class="Arg">F</var> (i.e. the smallest field containing the element <var class="Arg">F</var> or <var class="Arg">F</var> itself if it is a field).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">m</var> identity matrix over the ring given by <var class="Arg">R</var>. Here, <var class="Arg">R</var> can be either a ring, or an element of a ring. By default, an integer matrix is created.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityMat(3);</span>
+[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityMat(2,Integers mod 15);</span>
+[ [ ZmodnZObj( 1, 15 ), ZmodnZObj( 0, 15 ) ], 
+  [ ZmodnZObj( 0, 15 ), ZmodnZObj( 1, 15 ) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityMat(2,Z(3));</span>
+[ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ]
+</pre></div>
 
 <p><a id="X86D343A77D9B3D4D" name="X86D343A77D9B3D4D"></a></p>
 
 <h5>24.5-2 NullMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">n</var> null matrix over the field given by <var class="Arg">F</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">n</var> null matrix over the ring given by by <var class="Arg">R</var>. Here, <var class="Arg">R</var> can be either a ring, or an element of a ring. By default, an integer matrix is created.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityMat(3,1);</span>
-[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NullMat(3,2);</span>
+[ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NullMat(2,2,Integers mod 15);</span>
+[ [ ZmodnZObj( 0, 15 ), ZmodnZObj( 0, 15 ) ], 
+  [ ZmodnZObj( 0, 15 ), ZmodnZObj( 0, 15 ) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NullMat(3,2,Z(3));</span>
 [ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ]
 </pre></div>
@@ -620,20 +632,6 @@ M = I_n +
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintArray</code>( <var class="Arg">array</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>pretty-prints the array <var class="Arg">array</var>.</p>
-
-<p><a id="X7A10CEF47DEBC8CC" name="X7A10CEF47DEBC8CC"></a></p>
-
-<h5>24.5-11 MutableIdentityMat</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MutableIdentityMat</code>( <var class="Arg">m</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">m</var> identity matrix over the field given by <var class="Arg">F</var>. This is identical to <code class="func">IdentityMat</code> (<a href="chap24_mj.html#X7DB902CE848D1524"><span class="RefLink">24.5-1</span></a>) and is present in <strong class="pkg">GAP</strong> 4.1 only for the sake of compatibility with beta-releases. It should <em>not</em> be used in new code.</p>
-
-<p><a id="X78A9D30981D94FB2" name="X78A9D30981D94FB2"></a></p>
-
-<h5>24.5-12 MutableNullMat</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MutableNullMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">n</var> null matrix over the field given by <var class="Arg">F</var>. This is identical to <code class="func">NullMat</code> (<a href="chap24_mj.html#X86D343A77D9B3D4D"><span class="RefLink">24.5-2</span></a>) and is present in <strong class="pkg">GAP</strong> 4.1 only for the sake of compatibility with beta-releases. It should <em>not</em> be used in new code.</p>
 
 <p><a id="X79CC5F568252D341" name="X79CC5F568252D341"></a></p>
 

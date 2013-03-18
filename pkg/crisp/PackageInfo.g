@@ -13,10 +13,10 @@ PackageName := "CRISP",
 Subtitle := "Computing with Radicals, Injectors, Schunck classes and Projectors",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "1.3.5",
+Version := "1.3.6",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-Date := "22/11/2011",
+Date := "13/03/2013",
 
 BannerString := Concatenation ("\
 ----------------------------------------------------------------------\n\
@@ -29,7 +29,7 @@ BannerString := Concatenation ("\
 ##  the format extension(s), like '.zoo', which are given next.
 ##  The archive file name *must be changed* with each version of the archive
 ##  (and probably somehow contain the package name and version).
-ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/crisp/crisp-1r3n5",
+ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/crisp/crisp-1r3n6",
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -174,8 +174,6 @@ PackageWWWHome := "http://www.icm.tu-bs.de/~bhoeflin/crisp/index.html",
 ##  On the GAP Website there is an online version of all manuals in the
 ##  GAP distribution. To handle the documentation of a package it is
 ##  necessary to have:
-##     - an archive containing the package documentation (in at least one 
-##       of HTML or PDF-format, preferably both formats)
 ##     - the start file of the HTML documentation (if provided), *relative to
 ##       package root*
 ##     - the PDF-file (if provided) *relative to the package root*
@@ -192,7 +190,6 @@ PackageWWWHome := "http://www.icm.tu-bs.de/~bhoeflin/crisp/index.html",
 PackageDoc := rec(
   BookName := "CRISP",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  # Archive := "http://www.math.rwth-aachen.de/~Frank.Luebeck/EDIM/edimdoc-1p1.tar.bz2",
   ArchiveURLSubset := ["doc", "html"],
   HTMLStart := "html/chapters.htm",
   PDFFile := "doc/manual.pdf",

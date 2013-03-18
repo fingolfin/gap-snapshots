@@ -53,6 +53,7 @@
 
 </Body>
 
+
 <Bibliography Databases="manualbib.xml,../../../doc/manualbib.xml,../../atlasrep/doc/manualbib.xml,../../Browse/doc/browsebib.xml"/>
 
 <TheIndex/>

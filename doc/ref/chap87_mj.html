@@ -183,34 +183,35 @@
 
 
 <div class="example"><pre>
- 1 Pi_0 := TrivialPartition( omega );
- 2 R := EmptyRBase( G, omega, Pi_0 );
- 3 R.nextLevel := function( Pi, rbase )
- 4 local  fix, p, q, where;
- 5 NextRBasePoint( Pi, rbase );
- 6 fix := Fixcells( Pi );
- 7 for p  in fix  do
- 8   q := p ^ g;
- 9   where := IsolatePoint( Pi, q );
-10   if where &lt;&gt; false  then
-12     Add( fix, q );
-13     ProcessFixpoint( R, q );
-14     AddRefinement( R, "Centralizer", [ Pi.cellno[ p ], q, where ] );
-15     if Pi.lengths[ where ] = 1  then
-16       p := FixpointCellNo( Pi, where );
-17       ProcessFixpoint( R, p );
-18       AddRefinement( R, "ProcessFixpoint", [ p, where ] );
-19     fi;
-20   fi;
-21 od;
-22 end;
-23 return PartitionBacktrack(
-24   G,
-25   c -&gt; g ^ c = g,
-26   false,
-27   R,
-28   [ Pi_0, g ],
-29   L, R );
+Pi_0 := TrivialPartition( omega );
+R := EmptyRBase( G, omega, Pi_0 );
+R.nextLevel := function( Pi, rbase )
+local  fix, p, q, where;
+NextRBasePoint( Pi, rbase );
+fix := Fixcells( Pi );
+for p  in fix  do
+  q := p ^ g;
+  where := IsolatePoint( Pi, q );
+  if where &lt;&gt; false  then
+    Add( fix, q );
+    ProcessFixpoint( R, q );
+    AddRefinement( R, "Centralizer", [ Pi.cellno[ p ], q, where ] );
+    if Pi.lengths[ where ] = 1  then
+      p := FixpointCellNo( Pi, where );
+      ProcessFixpoint( R, p );
+      AddRefinement( R, "ProcessFixpoint", [ p, where ] );
+    fi;
+  fi;
+od;
+end;
+
+return PartitionBacktrack(
+  G,
+  c -&gt; g ^ c = g,
+  false,
+  R,
+  [ Pi_0, g ],
+  L, R );
 </pre></div>
 
 <p>The list numbers below refer to the line numbers of the code above.</p>
@@ -327,12 +328,12 @@
 
 
 <div class="example"><pre>
-1 Refinements.Centralizer := function( R, I, cellno, p, where )
-2 local  Sigma, q;
-3   Sigma := I.partition;
-4   q := FixpointCellNo( Sigma, cellno ) ^ I.data[ 2 ];
-5   return IsolatePoint( Sigma, q ) = where and ProcessFixpoint( I, p, q );
-6 end;
+Refinements.Centralizer := function( R, I, cellno, p, where )
+local  Sigma, q;
+Sigma := I.partition;
+q := FixpointCellNo( Sigma, cellno ) ^ I.data[ 2 ];
+return IsolatePoint( Sigma, q ) = where and ProcessFixpoint( I, p, q );
+end;
 </pre></div>
 
 <p>The list numbers below refer to the line numbers of the code immediately above.</p>
@@ -412,11 +413,11 @@
 
 
 <div class="example"><pre>
-1 return PartitionBacktrack( G,
-2   [ g, g,
-3   OnPoints,
-4   c -&gt; c!.lftObj = c!.rgtObj ],
-5   false, R, [ Pi_0, g ], L, R );
+return PartitionBacktrack( G,
+  [ g, g,
+  OnPoints,
+  c -&gt; c!.lftObj = c!.rgtObj ],
+  false, R, [ Pi_0, g ], L, R );
 </pre></div>
 
 <p>The test for <span class="SimpleMath">\(c\)</span> to have the property in question is of the form <span class="SimpleMath">\(opr( left, c ) = right\)</span> where <span class="SimpleMath">\(opr\)</span> is an operation function as explained in <a href="chap41_mj.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>. In other words, <span class="SimpleMath">\(c\)</span> passes the test if and only if it maps a "left object" to a "right object" under a certain operation. In the centralizer example, we have <span class="SimpleMath">\(opr\)</span><code class="code"> = OnPoints</code> and <span class="SimpleMath">\(left = right = g\)</span>, but in a conjugacy test, we would have <span class="SimpleMath">\(right = h\)</span>.</p>

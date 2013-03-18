@@ -73,8 +73,8 @@ entries :=
       "reducedsyzygiesgeneratorsofrows in the homalg table for singular", "X7E533B0A8392EBC6" ], 
   [ "\033[2XReducedSyzygiesGeneratorsOfRows\033[102X (Singular macro)", "3.1-26", [ 3, 1, 26 ], 573, 21, 
       "reducedsyzygiesgeneratorsofrows singular macro", "X7A6E97FA7F1FF73D" ], 
-  [ "\033[2XReducedSyzygiesGeneratorsOfColumns\033[102X (in the homalg table for Singular)", "3.1-27", [ 3, 1, 27 ], 585, 22, 
+  [ "\033[2XReducedSyzygiesGeneratorsOfColumns\033[102X (in the homalg table for Singular)", "3.1-27", [ 3, 1, 27 ], 590, 22, 
       "reducedsyzygiesgeneratorsofcolumns in the homalg table for singular", "X7FF049FA85A2C82E" ], 
-  [ "\033[2XReducedSyzygiesGeneratorsOfColumns\033[102X (Singular macro)", "3.1-28", [ 3, 1, 28 ], 615, 22, 
+  [ "\033[2XReducedSyzygiesGeneratorsOfColumns\033[102X (Singular macro)", "3.1-28", [ 3, 1, 28 ], 620, 22, 
       "reducedsyzygiesgeneratorsofcolumns singular macro", "X7AF938828299812C" ] ]
 );

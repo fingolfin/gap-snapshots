@@ -2059,14 +2059,19 @@ DeclareProperty( "KnowsDeligneLusztigNames", IsNearlyCharacterTable );
 ##  <Prop Name="IsDuplicateTable" Arg="tbl"/>
 ##
 ##  <Description>
-##  For an ordinary character table <A>tbl</A>,
-##  this function returns <K>true</K> if <A>tbl</A> was constructed from
-##  another character table by permuting rows and columns,
-##  and <K>false</K> otherwise.
+##  For an ordinary character table <A>tbl</A> from the &GAP; Character Table
+##  Library, this function returns <K>true</K> if <A>tbl</A> was constructed
+##  from another character table by permuting rows and columns,
+##  via the attribute <Ref Attr="ConstructionInfoCharacterTable"/>.
+##  Otherwise <K>false</K> is returned, in particular if <A>tbl</A> is not a
+##  character table from the &GAP; Character Table Library.
 ##  <P/>
 ##  One application of this function is to restrict the search with
-##  <Ref Func="AllCharacterTableNames"/> to exactly one library character
+##  <Ref Func="AllCharacterTableNames"/> to only one library character
 ##  table for each class of permutation equivalent tables.
+##  Note that this does property of the search result cannot be guaranteed
+##  if private character tables have been added to the library,
+##  see <Ref Func="NotifyCharacterTable"/>.
 ##  <P/>
 ##  <Example>
 ##  gap> Maxes( CharacterTable( "A6" ) );

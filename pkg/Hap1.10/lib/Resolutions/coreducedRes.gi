@@ -25,6 +25,14 @@ local
 ##############################################
 #####
 if Length(arg)=1 then R:=StructuralCopy(arg[1]);
+
+####No homotopy present########
+if R!.homotopy=fail then
+return HAPTietzeReduction_Inf(R);
+fi;
+####No homotopy case done######
+
+
 D:=List([0..Length(R)],R!.dimension);
 
 for i in [1..Length(R)-1] do

@@ -12,7 +12,7 @@
 <p>
 In <font face="Gill Sans,Helvetica,Arial">CRISP</font>, a class (in the set-theoretical sense) is usually represented
 by an algorithm which decides membership in that class. Wherever this makes
-sense, sets (see <a href="../../../doc/ref/chap31.html#X7E399AC97FD98217">Set</a>) may also be used as classes.
+sense, sets (see <a href="../../../doc/ref/chap30.html#X7E399AC97FD98217">Set</a>) may also be used as classes.
 <p>
 <p>
 <h2><a name="SECT001">2.1 Creating set theoretical classes</a></h2>
@@ -32,12 +32,12 @@ subcategory of the category <code>IsListOrCollection</code>.
 returns a class <var>C</var>. In the first form, <var>rec</var> must be a record having a
 component <code>\in</code> and an optional component <code>name</code>. The values of these
 components, if present, are bound to the attributes <code>MemberFunction</code> and
-<code>Name</code> (see <a href="../../../doc/ref/chap13.html#X7F14EF9D81432113">Name</a>) of the class created. The value bound to <code>\in</code> must be a function
+<code>Name</code> (see <a href="../../../doc/ref/chap12.html#X7F14EF9D81432113">Name</a>) of the class created. The value bound to <code>\in</code> must be a function
 <var>func</var> which returns <code>true</code> if a <font face="Gill Sans,Helvetica,Arial">GAP</font> object belongs to <var>C</var>, and <code>false</code>
 otherwise; cf. <a href="CHAP002.htm#SSEC002.2">MemberFunction</a> below. The second form is equivalent to <code>Class(rec(\in
 := </code><var>func</var><code>))</code>. It is the user's responsibility to ensure that <var>func</var> returns the same
 result for different <font face="Gill Sans,Helvetica,Arial">GAP</font> objects representing the same mathematical object (or
-element, in the <font face="Gill Sans,Helvetica,Arial">GAP</font> sense; see <a href="../../../doc/ref/chap13.html#X86710F997832ABA4">Objects and Elements</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
+element, in the <font face="Gill Sans,Helvetica,Arial">GAP</font> sense; see <a href="../../../doc/ref/chap12.html#X86710F997832ABA4">Objects and Elements</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font>
 reference manual).
 <p>
 <pre>
@@ -92,7 +92,7 @@ stored in an attribute <code>ComputedIsMembers</code> of <var>obj</var>.
 <p>
 Since it is not possible to compare classes given by membership algorithms,
 two classes are equal in <font face="Gill Sans,Helvetica,Arial">GAP</font> if and only if they are the same <font face="Gill Sans,Helvetica,Arial">GAP</font>
-object (see <a href="../../../doc/ref/chap13.html#X7961183378DFB902">IsIdenticalObj</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual).
+object (see <a href="../../../doc/ref/chap12.html#X7961183378DFB902">IsIdenticalObj</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual).
 <p>
 <a name = "SSEC001.8"></a>
 <li><code></code><var>C1</var><code> &lt; </code><var>C2</var><code></code>
@@ -187,5 +187,5 @@ gap&gt; Difference ([1..10], Class (IsPrimeInt));
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>CRISP manual<br>November 2011
+<address>CRISP manual<br>March 2013
 </address></body></html>

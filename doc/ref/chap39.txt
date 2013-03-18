@@ -456,7 +456,7 @@
   given   in   the   attribute   [2XGeneratorsOfGroup[102X   ([14X39.2-3[114X).  The  attribute
   [2XEpimorphismFromFreeGroup[102X  ([14X39.5-1[114X)  of [3XG[103X will contain a map from the group [3XG[103X
   to   the   free  group  in  which  the  word  is  expressed.  The  attribute
-  [10XMappingGeneratorsImages[110X   of  this  map  gives  a  list  of  generators  and
+  [2XMappingGeneratorsImages[102X ([14X40.10-2[114X) of this map gives a list of generators and
   corresponding letters.[133X
   
   [33X[0;0YThe algorithm used computes all elements of the group to ensure a short word
@@ -1841,6 +1841,10 @@
   the  prime  integer  [22Xp[122X;  if  [3XG[103X  is  trivial  then  [2XPrimePGroup[102X returns [9Xfail[109X.
   Otherwise an error is issued.[133X
   
+  [33X[0;0Y(One  should  avoid  a  common  error  of  writing  [10Xif  IsPGroup(g) then ...
+  PrimePGroup(g)   ...[110X  where  the  code  represented  by  dots  assumes  that
+  [10XPrimePGroup(g)[110X is an integer.)[133X
+  
   [1X39.15-21 PClassPGroup[101X
   
   [29X[2XPClassPGroup[102X( [3XG[103X ) [32X attribute
@@ -1869,8 +1873,8 @@
   
   [29X[2XIsPSolvable[102X( [3XG[103X, [3Xp[103X ) [32X function
   
-  [33X[0;0YA  finite  group is [22Xp[122X-solvable if every chief factor is either not divisible
-  by [22Xp[122X or solvable.[133X
+  [33X[0;0YA  finite  group  is  [22Xp[122X-solvable  if every chief factor either has order not
+  divisible by [22Xp[122X, or is solvable.[133X
   
   [1X39.15-24 IsPNilpotent[101X
   

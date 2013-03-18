@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.6.2, 02-Feb-2013
+                           Release 4.6.3, 18-Mar-2013
   
   
                                  The GAP Group
@@ -783,8 +783,6 @@
       24.5-8 KroneckerProduct
       24.5-9 ReflectionMat
       24.5-10 PrintArray
-      24.5-11 MutableIdentityMat
-      24.5-12 MutableNullMat
     24.6 [33X[0;0YRandom Matrices[133X
       24.6-1 RandomMat
       24.6-2 RandomInvertibleMat
@@ -1646,15 +1644,16 @@
       40.9-6 MorClassLoop
     40.10 [33X[0;0YRepresentations for Group Homomorphisms[133X
       40.10-1 IsGroupGeneralMappingByImages
-      40.10-2 IsGroupGeneralMappingByAsGroupGeneralMappingByImages
-      40.10-3 IsPreimagesByAsGroupGeneralMappingByImages
-      40.10-4 IsPermGroupGeneralMapping
-      40.10-5 IsToPermGroupGeneralMappingByImages
-      40.10-6 IsGroupGeneralMappingByPcgs
-      40.10-7 IsPcGroupGeneralMappingByImages
-      40.10-8 IsToPcGroupGeneralMappingByImages
-      40.10-9 IsFromFpGroupGeneralMappingByImages
-      40.10-10 IsFromFpGroupStdGensGeneralMappingByImages
+      40.10-2 MappingGeneratorsImages
+      40.10-3 IsGroupGeneralMappingByAsGroupGeneralMappingByImages
+      40.10-4 IsPreimagesByAsGroupGeneralMappingByImages
+      40.10-5 IsPermGroupGeneralMapping
+      40.10-6 IsToPermGroupGeneralMappingByImages
+      40.10-7 IsGroupGeneralMappingByPcgs
+      40.10-8 IsPcGroupGeneralMappingByImages
+      40.10-9 IsToPcGroupGeneralMappingByImages
+      40.10-10 IsFromFpGroupGeneralMappingByImages
+      40.10-11 IsFromFpGroupStdGensGeneralMappingByImages
   41 [33X[0;0YGroup Actions[133X
     41.1 [33X[0;0YAbout Group Actions[133X
     41.2 [33X[0;0YBasic Actions[133X
@@ -2511,7 +2510,7 @@
       58.3-2 MinimalPolynomial
       58.3-3 TracePolynomial
       58.3-4 Norm
-      58.3-5 Trace
+      58.3-5 [33X[0;0YTraces of field elements and matrices[133X
       58.3-6 Conjugates
       58.3-7 NormalBase
   59 [33X[0;0YFinite Fields[133X
@@ -2839,11 +2838,12 @@
       65.1-6 UnderlyingMagma
       65.1-7 AugmentationIdeal
     65.2 [33X[0;0YElements of Free Magma Rings[133X
-      65.2-1 IsElementOfFreeMagmaRing
-      65.2-2 IsElementOfFreeMagmaRingFamily
-      65.2-3 CoefficientsAndMagmaElements
-      65.2-4 ZeroCoefficient
-      65.2-5 ElementOfMagmaRing
+      65.2-1 IsMagmaRingObjDefaultRep
+      65.2-2 IsElementOfFreeMagmaRing
+      65.2-3 IsElementOfFreeMagmaRingFamily
+      65.2-4 CoefficientsAndMagmaElements
+      65.2-5 ZeroCoefficient
+      65.2-6 ElementOfMagmaRing
     65.3 [33X[0;0YNatural Embeddings related to Magma Rings[133X
     65.4 [33X[0;0YMagma Rings modulo Relations[133X
       65.4-1 IsElementOfMagmaRingModuloRelations
@@ -3221,7 +3221,7 @@
       71.14-5 IrreducibleRepresentationsDixon
     71.15 [33X[0;0YRepresentations Given by Modules[133X
       71.15-1 IrreducibleModules
-      71.15-2 AbsoluteIrreducibleModules
+      71.15-2 AbsolutelyIrreducibleModules
       71.15-3 RegularModule
     71.16 [33X[0;0YThe Dixon-Schneider Algorithm[133X
     71.17 [33X[0;0YAdvanced Methods for Dixon-Schneider Calculations[133X
@@ -3548,6 +3548,7 @@
     84.2 [33X[0;0YThe manual.six File[133X
     84.3 [33X[0;0YThe Help Book Handler[133X
     84.4 [33X[0;0YIntroducing new Viewer for the Online Help[133X
+      84.4-1 HELP_VIEWER_INFO
   85 [33X[0;0YFunction-Operation-Attribute Triples[133X
     85.1 [33X[0;0YKey Dependent Operations[133X
       85.1-1 KeyDependentOperation

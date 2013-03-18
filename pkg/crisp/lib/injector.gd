@@ -2,12 +2,8 @@
 ##
 ##  injector.gd                      CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: injector.gd,v 1.2 2011/05/15 19:17:55 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.injector_gd :=
-    "@(#)$Id: injector.gd,v 1.2 2011/05/15 19:17:55 gap Exp $";
 
 
 #############################################################################

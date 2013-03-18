@@ -200,10 +200,17 @@
   
   [1X84.4 [33X[0;0YIntroducing new Viewer for the Online Help[133X[101X
   
-  [33X[0;0YThere  is  a  record  [10XHELP_VIEWER_INFO[110X which contains one component for each
-  help viewer. Such a record contains two components.[133X
+  [33X[0;0YTo  introduce a new viewer for the online help, one should extend the global
+  record [2XHELP_VIEWER_INFO[102X ([14X84.4-1[114X), the structure of which is explained below.[133X
   
-  [33X[0;0YThe  component  [10X.type[110X  refers to one of the [3Xtype[103Xs recognized by the [10XHelpData[110X
+  [1X84.4-1 HELP_VIEWER_INFO[101X
+  
+  [29X[2XHELP_VIEWER_INFO[102X[32X global variable
+  
+  [33X[0;0YThe  record  [2XHELP_VIEWER_INFO[102X  contains  one component for each help viewer.
+  Each such component is a record with two components: [10X.type[110X and [10X.show[110X.[133X
+  
+  [33X[0;0YThe  component  [10X.type[110X  refers to one of the [10Xtype[110Xs recognized by the [10XHelpData[110X
   handler function explained in the previous section (currently one of [10X"text"[110X,
   [10X"url"[110X, [10X"dvi"[110X, or [10X"pdf"[110X).[133X
   

@@ -400,20 +400,36 @@
   
   [1X24.5-1 IdentityMat[101X
   
-  [29X[2XIdentityMat[102X( [3Xm[103X[, [3XF[103X] ) [32X function
+  [29X[2XIdentityMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function
   
-  [33X[0;0Yreturns  a (mutable) [3Xm[103X[22X×[122X[3Xm[103X identity matrix over the field given by [3XF[103X (i.e. the
-  smallest field containing the element [3XF[103X or [3XF[103X itself if it is a field).[133X
+  [33X[0;0Yreturns  a  (mutable)  [3Xm[103X[22X×[122X[3Xm[103X identity matrix over the ring given by [3XR[103X. Here, [3XR[103X
+  can be either a ring, or an element of a ring. By default, an integer matrix
+  is created.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIdentityMat(3);[127X[104X
+    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIdentityMat(2,Integers mod 15);[127X[104X
+    [4X[28X[ [ ZmodnZObj( 1, 15 ), ZmodnZObj( 0, 15 ) ], [128X[104X
+    [4X[28X  [ ZmodnZObj( 0, 15 ), ZmodnZObj( 1, 15 ) ] ][128X[104X
+    [4X[25Xgap>[125X [27XIdentityMat(2,Z(3));[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ][128X[104X
+  [4X[32X[104X
   
   [1X24.5-2 NullMat[101X
   
-  [29X[2XNullMat[102X( [3Xm[103X, [3Xn[103X[, [3XF[103X] ) [32X function
+  [29X[2XNullMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function
   
-  [33X[0;0Yreturns a (mutable) [3Xm[103X[22X×[122X[3Xn[103X null matrix over the field given by [3XF[103X.[133X
+  [33X[0;0Yreturns a (mutable) [3Xm[103X[22X×[122X[3Xn[103X null matrix over the ring given by by [3XR[103X. Here, [3XR[103X can
+  be  either a ring, or an element of a ring. By default, an integer matrix is
+  created.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIdentityMat(3,1);[127X[104X
-    [4X[28X[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNullMat(3,2);[127X[104X
+    [4X[28X[ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNullMat(2,2,Integers mod 15);[127X[104X
+    [4X[28X[ [ ZmodnZObj( 0, 15 ), ZmodnZObj( 0, 15 ) ], [128X[104X
+    [4X[28X  [ ZmodnZObj( 0, 15 ), ZmodnZObj( 0, 15 ) ] ][128X[104X
     [4X[25Xgap>[125X [27XNullMat(3,2,Z(3));[127X[104X
     [4X[28X[ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ][128X[104X
   [4X[32X[104X
@@ -544,22 +560,6 @@
   [29X[2XPrintArray[102X( [3Xarray[103X ) [32X function
   
   [33X[0;0Ypretty-prints the array [3Xarray[103X.[133X
-  
-  [1X24.5-11 MutableIdentityMat[101X
-  
-  [29X[2XMutableIdentityMat[102X( [3Xm[103X[, [3XF[103X] ) [32X function
-  
-  [33X[0;0Yreturns  a  (mutable) [3Xm[103X[22X×[122X[3Xm[103X identity matrix over the field given by [3XF[103X. This is
-  identical  to  [2XIdentityMat[102X  ([14X24.5-1[114X)  and is present in [5XGAP[105X 4.1 only for the
-  sake of compatibility with beta-releases. It should [13Xnot[113X be used in new code.[133X
-  
-  [1X24.5-12 MutableNullMat[101X
-  
-  [29X[2XMutableNullMat[102X( [3Xm[103X, [3Xn[103X[, [3XF[103X] ) [32X function
-  
-  [33X[0;0Yreturns  a  (mutable)  [3Xm[103X[22X×[122X[3Xn[103X  null  matrix  over the field given by [3XF[103X. This is
-  identical to [2XNullMat[102X ([14X24.5-2[114X) and is present in [5XGAP[105X 4.1 only for the sake of
-  compatibility with beta-releases. It should [13Xnot[113X be used in new code.[133X
   
   
   [1X24.6 [33X[0;0YRandom Matrices[133X[101X

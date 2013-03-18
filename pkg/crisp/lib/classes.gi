@@ -2,12 +2,8 @@
 ##
 ##  classes.gi                       CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: classes.gi,v 1.5 2011/05/15 19:17:50 gap Exp $
-##
 ##  Copyright (C) 2000, 2003 Burkhard Höfling
 ##
-Revision.classes_gi :=
-    "@(#)$Id: classes.gi,v 1.5 2011/05/15 19:17:50 gap Exp $";
 
 
 #############################################################################
@@ -171,22 +167,6 @@ InstallGlobalFunction ("PrintDefiningAttributes",
       Print (")");
    end);
 
-
-#############################################################################
-##
-#M  String (<class>)
-##
-InstallMethod (String, "for a class", true,
-   [IsClass], 0,
-   function (C)
-      local str, stream;
-      str := "";
-      stream := OutputTextString (str, true);
-      PrintTo (stream, C);
-      CloseStream (stream);
-      return str;
-   end);
-   
 
 #############################################################################
 ##

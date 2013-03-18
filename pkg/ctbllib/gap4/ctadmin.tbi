@@ -2089,9 +2089,19 @@ CTblLib.AccessFunction:= function( args, mode )
               else
                 attr:= attrs[2][ apos ];
                 if IsCharacterTable( val ) then
-                  resul:= attr.attributeValue( attr, Identifier( val ) );
+                  if Identifier( val ) in
+                         CTblLib.Data.IdEnumerator.identifiers then
+                    resul:= attr.attributeValue( attr, Identifier( val ) );
+                  else
+                    resul:= args[ pos+1 ]( val );
+                  fi;
                 else
-                  resul:= attr.attributeValue( attr, val );
+                  if val in CTblLib.Data.IdEnumerator.identifiers then
+                    resul:= attr.attributeValue( attr, val );
+                  else
+                    val:= CharacterTable( val );
+                    resul:= args[ pos+1 ]( val );
+                  fi;
                 fi;
               fi;
 
@@ -2130,9 +2140,19 @@ CTblLib.AccessFunction:= function( args, mode )
             else
               attr:= attrs[2][ apos ];
               if IsCharacterTable( val ) then
-                resul:= attr.attributeValue( attr, Identifier( val ) );
+                if Identifier( val ) in
+                       CTblLib.Data.IdEnumerator.identifiers then
+                  resul:= attr.attributeValue( attr, Identifier( val ) );
+                else
+                  resul:= args[ pos ]( val );
+                fi;
               else
-                resul:= attr.attributeValue( attr, val );
+                if val in CTblLib.Data.IdEnumerator.identifiers then
+                  resul:= attr.attributeValue( attr, val );
+                else
+                  val:= CharacterTable( val );
+                  resul:= args[ pos ]( val );
+                fi;
               fi;
             fi;
             if resul = args[ pos+1 ] or
@@ -2499,12 +2519,31 @@ end );
 #############################################################################
 ##
 #F  LibraryFusion( <name>, <fus> )
+#F  LibraryFusion( <s>, <t> )
 ##
 InstallGlobalFunction( LibraryFusion, function( name, fus )
-    local target, string, linelen, i, str, spec;
+    local poss, reps, source, target, string, linelen, i, str, spec;
 
-    if IsCharacterTable( name ) then
-      name:= Identifier( name );
+    if IsCharacterTable( name ) and IsCharacterTable( fus ) then
+      # Try to compute the information in question.
+      poss:= PossibleClassFusions( name, fus );
+      reps:= RepresentativesFusions( name, poss, fus );
+      source:= Identifier( name );
+      if Length( poss ) = 0 then
+        return fail;
+      elif Length( poss ) = 1 then
+        fus:= rec( name:= fus, map:= poss[1],
+                   text:= "fusion map is unique" );
+      elif Length( reps ) = 1 then
+        fus:= rec( name:= fus, map:= poss[1],
+                   text:= "fusion map is unique up to table aut." );
+      else
+        return fail;
+      fi;
+    elif IsCharacterTable( name ) then
+      source:= Identifier( name );
+    else
+      source:= name;
     fi;
     target:= fus.name;
     if IsCharacterTable( target ) then
@@ -2520,12 +2559,12 @@ InstallGlobalFunction( LibraryFusion, function( name, fus )
 
     # Print the source and destination.
     Append( string, "ALF(\"" );
-    Append( string, name );
+    Append( string, source );
     Append( string, "\",\"" );
     Append( string, target );
 
     # Initialize the current position in the line.
-    linelen:= Length( name ) + Length( target ) + 11;
+    linelen:= Length( source ) + Length( target ) + 11;
 
     # Add the values of the fusion map.
     Append( string, "\",[" );
@@ -3132,7 +3171,7 @@ Error( "handling of Clifford tables not yet installed!" );
     fi;
 
     # Step 2:  Print the compulsory components.
-    PrintTo( stream, Concatenation( "MOT(\"", Identifier( tbl ), "\",\n" ) );
+    PrintTo( stream, Concatenation( "MOT(\"", name, "\",\n" ) );
 
     if HasInfoText( tbl ) then
       PrintTo( stream, TextString( InfoText( tbl ) ), ",\n" );

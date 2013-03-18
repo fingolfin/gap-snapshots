@@ -2,12 +2,8 @@
 ##
 ##  compl.gi                         CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: compl.gi,v 1.10 2011/07/17 11:53:45 gap Exp $
-##
 ##  Copyright (C) 2000-2002, 2005 Burkhard Höfling
 ##
-Revision.compl_gi :=
-    "@(#)$Id: compl.gi,v 1.10 2011/07/17 11:53:45 gap Exp $";
 
 
 #############################################################################
@@ -500,6 +496,10 @@ InstallMethod (InvariantComplementsOfElAbSection,
 
       local cpcgs, complements, pcgs, pcgsL;
       
+      if IsGroup (act) then
+         act := GeneratorsOfGroup (act);
+      fi;
+
       pcgs := ParentPcgs (Pcgs(G));
       pcgsL := InducedPcgs (pcgs, L);
       

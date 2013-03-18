@@ -159,7 +159,7 @@
   [33X[0;0YIf [3Xmap[103X is a mapping from one group to another this attribute returns a group
   general  mapping  that  which  implements  the  same abstract mapping. (Some
   operations  can  be  performed  more  effective  in this representation, see
-  also [2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X ([14X40.10-2[114X).)[133X
+  also [2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X ([14X40.10-3[114X).)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAsGroupGeneralMappingByImages(hom);[127X[104X
@@ -904,24 +904,33 @@
   
   [33X[0;0YRepresentation  for  mappings  from one group to another that are defined by
   extending  a  mapping of group generators homomorphically. Instead of record
-  components,   the   attribute   [10XMappingGeneratorsImages[110X  is  used  to  store
+  components, the attribute [2XMappingGeneratorsImages[102X ([14X40.10-2[114X) is used to store
   generators and their images.[133X
   
-  [1X40.10-2 IsGroupGeneralMappingByAsGroupGeneralMappingByImages[101X
+  [1X40.10-2 MappingGeneratorsImages[101X
+  
+  [29X[2XMappingGeneratorsImages[102X( [3Xmap[103X ) [32X attribute
+  
+  [33X[0;0YThis  attribute contains a list of length 2, the first entry being a list of
+  generators of the source of [3Xmap[103X and the second entry a list of their images.
+  This  attribute  is used, for example, by [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X)
+  to store generators and images.[133X
+  
+  [1X40.10-3 IsGroupGeneralMappingByAsGroupGeneralMappingByImages[101X
   
   [29X[2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0YRepresentation     for     mappings     that     delegate    work    on    a
   [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X).[133X
   
-  [1X40.10-3 IsPreimagesByAsGroupGeneralMappingByImages[101X
+  [1X40.10-4 IsPreimagesByAsGroupGeneralMappingByImages[101X
   
   [29X[2XIsPreimagesByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0YRepresentation  for  mappings  that delegate work for preimages to a mapping
   created with [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X).[133X
   
-  [1X40.10-4 IsPermGroupGeneralMapping[101X
+  [1X40.10-5 IsPermGroupGeneralMapping[101X
   
   [29X[2XIsPermGroupGeneralMapping[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
@@ -930,42 +939,42 @@
   
   [33X[0;0Yare the representations for mappings that map from a perm group[133X
   
-  [1X40.10-5 IsToPermGroupGeneralMappingByImages[101X
+  [1X40.10-6 IsToPermGroupGeneralMappingByImages[101X
   
   [29X[2XIsToPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsToPermGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0Yis the representation for mappings that map to a perm group[133X
   
-  [1X40.10-6 IsGroupGeneralMappingByPcgs[101X
+  [1X40.10-7 IsGroupGeneralMappingByPcgs[101X
   
   [29X[2XIsGroupGeneralMappingByPcgs[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0Yis  the  representations for mappings that map a pcgs to images and thus may
   use exponents to decompose generators.[133X
   
-  [1X40.10-7 IsPcGroupGeneralMappingByImages[101X
+  [1X40.10-8 IsPcGroupGeneralMappingByImages[101X
   
   [29X[2XIsPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0Yis the representation for mappings from a pc group[133X
   
-  [1X40.10-8 IsToPcGroupGeneralMappingByImages[101X
+  [1X40.10-9 IsToPcGroupGeneralMappingByImages[101X
   
   [29X[2XIsToPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsToPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0Yis the representation for mappings to a pc group[133X
   
-  [1X40.10-9 IsFromFpGroupGeneralMappingByImages[101X
+  [1X40.10-10 IsFromFpGroupGeneralMappingByImages[101X
   
   [29X[2XIsFromFpGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsFromFpGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
   
   [33X[0;0Yis the representation of mappings from an fp group.[133X
   
-  [1X40.10-10 IsFromFpGroupStdGensGeneralMappingByImages[101X
+  [1X40.10-11 IsFromFpGroupStdGensGeneralMappingByImages[101X
   
   [29X[2XIsFromFpGroupStdGensGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
   [29X[2XIsFromFpGroupStdGensHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation

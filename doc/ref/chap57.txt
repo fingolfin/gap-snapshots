@@ -10,7 +10,9 @@
   
   [33X[0;0YA  domain  [3XD[103X  lies in [10XIsLeftOperatorAdditiveGroup[110X if it is an additive group
   that  is closed under scalar multiplication from the left, and such that [22Xλ *
-  ( x + y ) = λ * x + λ * y[122X for all scalars [22Xλ[122X and elements [22Xx, y ∈ D[122X.[133X
+  (  x + y ) = λ * x + λ * y[122X for all scalars [22Xλ[122X and elements [22Xx, y ∈ D[122X (here and
+  below by scalars we mean elements of a domain acting on [3XD[103X from left or right
+  as appropriate).[133X
   
   [1X57.1-2 IsLeftModule[101X
   

@@ -2,12 +2,8 @@
 ##
 ##  schunck.gd                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: schunck.gd,v 1.4 2011/05/15 19:18:00 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.schunck_gd :=
-    "@(#)$Id: schunck.gd,v 1.4 2011/05/15 19:18:00 gap Exp $";
 
 
 #############################################################################
@@ -23,7 +19,7 @@ DeclareSynonym ("IsPrimitiveSolvable", IsPrimitiveSolvableGroup);
 ##
 #O  SchunckClass (<obj>)
 ##
-DeclareOperation ("SchunckClass", [IsObject]);
+DeclareAttribute ("SchunckClass", IsObject);
 
 
 #############################################################################

@@ -22,7 +22,7 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
 <p><a id="X8175857F79C8AD8E" name="X8175857F79C8AD8E"></a></p>
 <div class="ChapSects"><a href="chap2.html#X8175857F79C8AD8E">2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.5 and <strong class="pkg">GAP</strong> 4.6</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X82B73E9A8136B69D">2.1 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.1 (January 2013)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X837BB2577D478E55">2.1 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.2 (February 2013)</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C1300337DD936C4">2.1-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system</span></a>
@@ -30,15 +30,18 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79A4DFE97A230E6D">2.1-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.5.4</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C2A78667F08A971">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.3 (March 2013)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.5 and <strong class="pkg">GAP</strong> 4.6</span></h3>
 
-<p>This chapter lists most important changes between <strong class="pkg">GAP</strong> 4.5.7 and <strong class="pkg">GAP</strong> 4.6.1 (i.e. between the last release of <strong class="pkg">GAP</strong> 4.5 and the first public release of <strong class="pkg">GAP</strong> 4.6). Later it will also contain information about subsequent update releases for <strong class="pkg">GAP</strong> 4.6.</p>
+<p>This chapter lists most important changes between <strong class="pkg">GAP</strong> 4.5.7 and <strong class="pkg">GAP</strong> 4.6.2 (i.e. between the last release of <strong class="pkg">GAP</strong> 4.5 and the first public release of <strong class="pkg">GAP</strong> 4.6). It also contains information about subsequent update releases for <strong class="pkg">GAP</strong> 4.6.</p>
 
-<p><a id="X82B73E9A8136B69D" name="X82B73E9A8136B69D"></a></p>
+<p><a id="X837BB2577D478E55" name="X837BB2577D478E55"></a></p>
 
-<h4>2.1 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.1 (January 2013)</span></h4>
+<h4>2.1 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.2 (February 2013)</span></h4>
 
 <p><a id="X7C1300337DD936C4" name="X7C1300337DD936C4"></a></p>
 
@@ -170,6 +173,78 @@
 
 <ul>
 <li><p>Starting from 2.x.x, the functionality for iterated monodromy groups has been moved from the <strong class="pkg">FR</strong> package by L. Bartholdi to a separate package IMG (currently undeposited, available from <span class="URL"><a href="https://github.com/laurentbartholdi/img">https://github.com/laurentbartholdi/img</a></span>). This completely removes the dependency of <strong class="pkg">FR</strong> on external library modules, and should make its installation much easier.</p>
+
+</li>
+</ul>
+<p><a id="X7C2A78667F08A971" name="X7C2A78667F08A971"></a></p>
+
+<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.3 (March 2013)</span></h4>
+
+<p>Improved functionality:</p>
+
+
+<ul>
+<li><p>Several changes were made to <code class="func">IdentityMat</code> (<a href="../../doc/ref/chap24.html#X7DB902CE848D1524"><span class="RefLink">Reference: IdentityMat</span></a>) and <code class="func">NullMat</code> (<a href="../../doc/ref/chap24.html#X86D343A77D9B3D4D"><span class="RefLink">Reference: NullMat</span></a>). First off, the documentation was changed to properly state that these functions support arbitrary rings, and not just fields. Also, more usage examples were added to the manual.</p>
+
+<p>For <code class="code">NullMat</code>, it is now also always possible to specify a ring element instead of a ring, and this is documented. This matches existing <code class="code">IdentityMat</code> behavior, and partially worked before (undocumented), but in some cases could run into error or infinite recursion.</p>
+
+<p>In the other direction, if a finite field element, <code class="code">IdentityMat</code> now really creates a matrix over the smallest field containing that element. Previously, a matrix over the prime field was created instead, contrary to the documentation.</p>
+
+<p>Furthermore, <code class="code">IdentityMat</code> over small finite fields is now substantially faster when creating matrices of large dimension (say a thousand or so).</p>
+
+<p>Finally, <code class="func">MutableIdentityMat</code> (<a href="../../doc/ref/chap77.html#X7F6A6CBC7C9E91E5"><span class="RefLink">Reference: MutableIdentityMat</span></a>) and <code class="func">MutableNullMat</code> (<a href="../../doc/ref/chap77.html#X7F6A6CBC7C9E91E5"><span class="RefLink">Reference: MutableNullMat</span></a>) were explicitly declared obsolete (and may be removed in <strong class="pkg">GAP</strong> 4.7). They actually were deprecated since <strong class="pkg">GAP</strong> 4.1, and their use discouraged by the manual. Code using them should switch to <code class="func">IdentityMat</code> (<a href="../../doc/ref/chap24.html#X7DB902CE848D1524"><span class="RefLink">Reference: IdentityMat</span></a>) respectively <code class="func">NullMat</code> (<a href="../../doc/ref/chap24.html#X86D343A77D9B3D4D"><span class="RefLink">Reference: NullMat</span></a>).</p>
+
+</li>
+<li><p>Two new <code class="func">PerfectResiduum</code> (<a href="../../doc/ref/chap39.html#X83D5C8B8865C85F1"><span class="RefLink">Reference: PerfectResiduum</span></a>) methods were added for solvable and perfect groups, handling these cases optimally. Moreover, the existing generic method was improved by changing it to use <code class="func">DerivedSeriesOfGroup</code> (<a href="../../doc/ref/chap39.html#X7A879948834BD889"><span class="RefLink">Reference: DerivedSeriesOfGroup</span></a>). Previously, it would always compute the derived series from scratch and then throw away the result.</p>
+
+</li>
+<li><p>A new <code class="func">MinimalGeneratingSet</code> (<a href="../../doc/ref/chap39.html#X81D15723804771E2"><span class="RefLink">Reference: MinimalGeneratingSet</span></a>) method for groups handled by a nice monomorphisms was added, similar to the existing <code class="func">SmallGeneratingSet</code> (<a href="../../doc/ref/chap39.html#X814DBABC878D5232"><span class="RefLink">Reference: SmallGeneratingSet</span></a>) method. This is useful if the nice monomorphism is already mapping into a pc or pcp group.</p>
+
+</li>
+<li><p>Added a special method for <code class="func">DerivedSubgroup</code> (<a href="../../doc/ref/chap39.html#X7CC17CF179ED7EF2"><span class="RefLink">Reference: DerivedSubgroup</span></a>) if the group is known to be abelian.</p>
+
+</li>
+</ul>
+<p>Fixed bugs:</p>
+
+
+<ul>
+<li><p>Fixed a bug in <code class="func">PowerModInt</code> (<a href="../../doc/ref/chap14.html#X7E404B1183DBC82A"><span class="RefLink">Reference: PowerModInt</span></a>) computing <span class="SimpleMath">r^e</span> mod <span class="SimpleMath">m</span> in a special case when <span class="SimpleMath">e=0</span> and <span class="SimpleMath">m=0</span>. [Reported by Ignat Soroko]</p>
+
+</li>
+<li><p><code class="func">CoefficientsQadic</code> (<a href="../../doc/ref/chap14.html#X79B466E984CD52D4"><span class="RefLink">Reference: CoefficientsQadic</span></a>) now better checks its arguments to avoid an infinite loop when being asked for a <var class="Arg">q</var>-adic representation for <span class="SimpleMath">q=1</span>. [Reported by Ignat Soroko]</p>
+
+</li>
+<li><p>Methods for <code class="code">SylowSubgroupOp</code> (see <code class="func">SylowSubgroup</code> (<a href="../../doc/ref/chap39.html#X7AA351308787544C"><span class="RefLink">Reference: SylowSubgroup</span></a>)) for symmetric and alternating group did not always set <code class="func">IsPGroup</code> (<a href="../../doc/ref/chap39.html#X8089F18C810B7E3E"><span class="RefLink">Reference: IsPGroup</span></a>) and <code class="func">PrimePGroup</code> (<a href="../../doc/ref/chap39.html#X87356BAA7E9E2142"><span class="RefLink">Reference: PrimePGroup</span></a>) for the returned Sylow subgroup.</p>
+
+</li>
+<li><p>Display of matrices consisting of Conway field elements (which are displayed as polynomials) did not print constant 1 terms.</p>
+
+</li>
+<li><p>Added an extra check and a better error message in the method to access <em>natural</em> generators of domains using the <code class="code">.</code> operator (see <code class="func">GeneratorsOfDomain</code> (<a href="../../doc/ref/chap31.html#X7E353DD1838AB223"><span class="RefLink">Reference: GeneratorsOfDomain</span></a>)).</p>
+
+</li>
+<li><p>Trying to solve the word problem in an fp group where one or more generators has a name of more than one alphabetic character led to a break loop.</p>
+
+</li>
+<li><p>Provided the default method for <code class="func">AbsoluteIrreducibleModules</code> (<a href="../../doc/ref/chap71.html#X7D0BD5337D1C069B"><span class="RefLink">Reference: AbsoluteIrreducibleModules</span></a>) as a temporary workaround for the problem which may cause returning wrong results or producing an error when being called for a non-prime field.</p>
+
+</li>
+<li><p>A bug in the <strong class="pkg">GAP</strong> kernel caused <code class="code">RNamObj</code> to error out when called with a string that had the <code class="func">IsSSortedList</code> (<a href="../../doc/ref/chap21.html#X80CDAF45782E8DCB"><span class="RefLink">Reference: IsSSortedList</span></a>) property set (regardless of whether it was set to <code class="keyw">true</code> or <code class="keyw">false</code>). This in turn would lead to strange (and inappropriate) errors when using such a string to access entries of a record.</p>
+
+</li>
+<li><p><strong class="pkg">GAP</strong> can store vectors over small finite fields (size at most 256) in a special internal data representation where each entry of the vector uses exactly one byte. Due to an off-by-one bug, the case of a field with exactly 256 elements was not handled properly. As a result, <strong class="pkg">GAP</strong> failed to convert a vector to the special data representation, which in some situations could lead to a crash. The off-by-one error was fixed and now vectors over <span class="SimpleMath">GF(256)</span> work as expected.</p>
+
+</li>
+<li><p>A bug in the code for accessing sublist via the <code class="code">list{poss}</code> syntax could lead to <strong class="pkg">GAP</strong> crashing. Specifically, if the list was a compressed vector over a finite field, and the sublist syntax was nested, as in <code class="code">vec{poss1}{poss2}</code>. This now correctly triggers an error instead of crashing.</p>
+
+</li>
+</ul>
+<p>New packages added for the redistribution with <strong class="pkg">GAP</strong>:</p>
+
+
+<ul>
+<li><p><strong class="pkg">SpinSym</strong> package by L. Maas, which contains Brauer tables of Schur covers of symmetric and alternating groups and provides some related functionalities.</p>
 
 </li>
 </ul>

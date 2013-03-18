@@ -91,6 +91,8 @@
         ────────────────────────┼─  
         [10XMonomialTotalDegreeLess[110X │ [2XMonomialExtGrlexLess[102X ([14X66.17-14[114X)
         [10XNormedVectors[110X           │ [2XNormedRowVectors[102X ([14X61.9-11[114X)     
+        [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)           
+        [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)               
   
   
   [1X77.5 [33X[0;0YThe former .gaprc file[133X[101X

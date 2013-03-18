@@ -2,12 +2,8 @@
 ##
 ##  projector.gd                     CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: projector.gd,v 1.5 2011/05/15 19:17:57 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.projector_gd :=
-    "@(#)$Id: projector.gd,v 1.5 2011/05/15 19:17:57 gap Exp $";
 
 
 #############################################################################

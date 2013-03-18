@@ -4,4 +4,4 @@
 <!--
  This is an automatically generated file. 
  -->
-<#Include SYSTEM "Introduction.xml"><#Include SYSTEM "Installation.xml">
+<#Include SYSTEM "Introduction.xml"><#Include SYSTEM "Installation.xml"><#Include SYSTEM "Sketch.xml">

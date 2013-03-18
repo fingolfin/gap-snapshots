@@ -2,8 +2,6 @@
 %%
 %%  fitting.tex              CRISP documentation            Burkhard Höofling
 %%
-%%  @(#)$Id: fitting.tex,v 1.14 2011/05/15 19:18:26 gap Exp $
-%%
 %%  Copyright (C) 2000, 2011 Burkhard Höfling
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -233,7 +231,7 @@ e.g. Example VIII,~2.16 of~\cite{DH92}.
 gap> pre := PreImageFittingSet (alpha, NilpotentGroups);
 FittingSet (SymmetricGroup( [ 1 .. 4 ] ), rec (inj:=function( G ) ... end))
 gap> Injector (Source (alpha), pre);
-Group([ (1,2,3), (1,2)(3,4) ])
+Group([ (1,4,2), (1,4)(2,3) ])
 \endexample
 
 \>Intersection(<fitset1>, <fitset2>)!{of Fitting sets}

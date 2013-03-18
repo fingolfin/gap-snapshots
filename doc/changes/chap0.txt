@@ -3,7 +3,7 @@
                       [1XGAP - Changes from Earlier Versions[101X
   
   
-                           Release 4.6.2, 02-Feb-2013
+                           Release 4.6.3, 18-Mar-2013
   
   
                                  The GAP Group
@@ -40,9 +40,10 @@
   
   1 [33X[0;0YPreface[133X
   2 [33X[0;0YChanges between [5XGAP[105X 4.5 and [5XGAP[105X 4.6[133X
-    2.1 [33X[0;0Y[5XGAP[105X 4.6.1 (January 2013)[133X
+    2.1 [33X[0;0Y[5XGAP[105X 4.6.2 (February 2013)[133X
       2.1-1 [33X[0;0YChanges in the core [5XGAP[105X system[133X
       2.1-2 [33X[0;0YNew and updated packages since [5XGAP[105X 4.5.4[133X
+    2.2 [33X[0;0Y[5XGAP[105X 4.6.3 (March 2013)[133X
   3 [33X[0;0YChanges between [5XGAP[105X 4.4 and [5XGAP[105X 4.5[133X
     3.1 [33X[0;0YChanges in the core [5XGAP[105X system[133X
       3.1-1 [33X[0;0YImproved functionality[133X

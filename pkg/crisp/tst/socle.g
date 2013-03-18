@@ -2,8 +2,6 @@
 ##
 ##  radicals.g                      CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: socle.g,v 1.3 2011/05/26 10:04:28 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

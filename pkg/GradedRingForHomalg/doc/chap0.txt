@@ -6,10 +6,10 @@
                 [1XEndow Commutative Rings with an Abelian Grading[101X
   
   
-                               Version 2012.10.25
+                               Version 2013.08.07
   
   
-                                  October 2012
+                                 February 2013
   
   
                                 Mohamed Barakat
@@ -54,7 +54,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©   2008-2012   by   Mohamed   Barakat,   Sebastian   Gutsche,   and  Markus
+  [33X[0;0Y©   2008-2013   by   Mohamed   Barakat,   Sebastian   Gutsche,   and  Markus
   Lange-Hegermann[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU

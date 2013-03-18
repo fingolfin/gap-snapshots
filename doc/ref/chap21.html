@@ -1977,7 +1977,9 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DuplicateFreeList</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unique</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns a new mutable list whose entries are the elements of the list <var class="Arg">list</var> with duplicates removed. <code class="func">DuplicateFreeList</code> only uses the <code class="code">=</code> comparison and will not sort the result. Therefore <code class="func">DuplicateFreeList</code> can be used even if the elements of <var class="Arg">list</var> do not lie in the same family. <code class="func">Unique</code> is an alias for <code class="func">DuplicateFreeList</code>.</p>
+<p>returns a new mutable list whose entries are the elements of the list <var class="Arg">list</var> with duplicates removed. <code class="func">DuplicateFreeList</code> only uses the <code class="code">=</code> comparison and will not sort the result. Therefore <code class="func">DuplicateFreeList</code> can be used even if the elements of <var class="Arg">list</var> do not lie in the same family. Otherwise, if <var class="Arg">list</var> contains objects that can be compared with <code class="func">\&lt;</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>) then it is much more efficient to use <code class="func">Set</code> (<a href="chap30.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) instead of <code class="func">DuplicateFreeList</code>.</p>
+
+<p><code class="func">Unique</code> is a synonym for <code class="func">DuplicateFreeList</code>.</p>
 
 
 <div class="example"><pre>

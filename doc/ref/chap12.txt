@@ -348,15 +348,12 @@
   
   [29X[2XShallowCopy[102X( [3Xobj[103X ) [32X operation
   
-  [33X[0;0YIf  [5XGAP[105X  supports  a  mutable form of the object [3Xobj[103X (see [14X12.6[114X) then this is
-  obtained by [2XShallowCopy[102X. Otherwise [2XShallowCopy[102X returns [3Xobj[103X itself.[133X
+  [33X[0;0Y[2XShallowCopy[102X  returns  a [13Xnew mutable[113X object [13Xequal[113X to its argument, if this is
+  possible.  The  subobjects  of  [10XShallowCopy(  [3Xobj[103X[10X  )[110X  are  [13Xidentical[113X  to the
+  subobjects of [3Xobj[103X.[133X
   
-  [33X[0;0YThe subobjects of [10XShallowCopy( [3Xobj[103X[10X )[110X are [13Xidentical[113X to the subobjects of [3Xobj[103X.
-  Note that if the object returned by [2XShallowCopy[102X is mutable then it is always
-  a  [13Xnew[113X object. In particular, if the return value is mutable, then it is not
-  [13Xidentical[113X  with  the  argument  [3Xobj[103X,  no  matter  whether  [3Xobj[103X is mutable or
-  immutable.  But of course the object returned by [2XShallowCopy[102X is [13Xequal[113X to [3Xobj[103X
-  w.r.t. the equality operator [10X=[110X.[133X
+  [33X[0;0YIf  [5XGAP[105X  does  not  support  a  mutable  form  of  the  immutable object [3Xobj[103X
+  (see [14X12.6[114X) then [2XShallowCopy[102X returns [3Xobj[103X itself.[133X
   
   [33X[0;0YSince [2XShallowCopy[102X is an operation, the concrete meaning of [21Xsubobject[121X depends
   on  the  type of [3Xobj[103X. But for any copyable object [3Xobj[103X, the definition should

@@ -2,12 +2,8 @@
 ##
 ##  schunck.gi                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: schunck.gi,v 1.6 2011/05/15 19:18:01 gap Exp $
-##
 ##  Copyright (C) 2000, 2005 Burkhard Höfling
 ##
-Revision.schunck_gi :=
-    "@(#)$Id: schunck.gi,v 1.6 2011/05/15 19:18:01 gap Exp $";
 
 
 ###################################################################################

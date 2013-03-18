@@ -728,7 +728,7 @@ a^-1*c*b*c^-1*a*b^-1*a^-2*c^-1*a*b^-1*c*b
 <h5>39.5-2 Factorization</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factorization</code>( <var class="Arg">G</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns a factorization of <var class="Arg">elm</var> as word in the generators of the group <var class="Arg">G</var> given in the attribute <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-3</span></a>). The attribute <code class="func">EpimorphismFromFreeGroup</code> (<a href="chap39_mj.html#X7FE8A3B08458A1BF"><span class="RefLink">39.5-1</span></a>) of <var class="Arg">G</var> will contain a map from the group <var class="Arg">G</var> to the free group in which the word is expressed. The attribute <code class="code">MappingGeneratorsImages</code> of this map gives a list of generators and corresponding letters.</p>
+<p>returns a factorization of <var class="Arg">elm</var> as word in the generators of the group <var class="Arg">G</var> given in the attribute <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-3</span></a>). The attribute <code class="func">EpimorphismFromFreeGroup</code> (<a href="chap39_mj.html#X7FE8A3B08458A1BF"><span class="RefLink">39.5-1</span></a>) of <var class="Arg">G</var> will contain a map from the group <var class="Arg">G</var> to the free group in which the word is expressed. The attribute <code class="func">MappingGeneratorsImages</code> (<a href="chap40_mj.html#X863805187A24B5E3"><span class="RefLink">40.10-2</span></a>) of this map gives a list of generators and corresponding letters.</p>
 
 <p>The algorithm used computes all elements of the group to ensure a short word is found. Therefore this function should <em>not</em> be used when the group <var class="Arg">G</var> has more than a few thousand elements. Because of this, one should not call this function within algorithms, but use homomorphisms instead.</p>
 
@@ -2034,6 +2034,8 @@ PSL(3,4)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimePGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>If <var class="Arg">G</var> is a nontrivial <span class="SimpleMath">\(p\)</span>-group (see <code class="func">IsPGroup</code> (<a href="chap39_mj.html#X8089F18C810B7E3E"><span class="RefLink">39.15-19</span></a>)), <code class="func">PrimePGroup</code> returns the prime integer <span class="SimpleMath">\(p\)</span>; if <var class="Arg">G</var> is trivial then <code class="func">PrimePGroup</code> returns <code class="keyw">fail</code>. Otherwise an error is issued.</p>
 
+<p>(One should avoid a common error of writing <code class="code">if IsPGroup(g) then ... PrimePGroup(g) ...</code> where the code represented by dots assumes that <code class="code">PrimePGroup(g)</code> is an integer.)</p>
+
 <p><a id="X863434AD7DDE514B" name="X863434AD7DDE514B"></a></p>
 
 <h5>39.15-21 PClassPGroup</h5>
@@ -2062,7 +2064,7 @@ PSL(3,4)
 <h5>39.15-23 IsPSolvable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPSolvable</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>A finite group is <span class="SimpleMath">\(p\)</span>-solvable if every chief factor is either not divisible by <span class="SimpleMath">\(p\)</span> or solvable.</p>
+<p>A finite group is <span class="SimpleMath">\(p\)</span>-solvable if every chief factor either has order not divisible by <span class="SimpleMath">\(p\)</span>, or is solvable.</p>
 
 <p><a id="X87415A8485FCF510" name="X87415A8485FCF510"></a></p>
 

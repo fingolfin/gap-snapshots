@@ -2,12 +2,8 @@
 ##
 ##  solveeq.gi                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: solveeq.gi,v 1.6 2011/05/15 19:18:04 gap Exp $
-##
 ##  Copyright (C) 2000-2002 Burkhard Höfling
 ##
-Revision.solveeq_gi :=
-    "@(#)$Id: solveeq.gi,v 1.6 2011/05/15 19:18:04 gap Exp $";
 
 
 #############################################################################

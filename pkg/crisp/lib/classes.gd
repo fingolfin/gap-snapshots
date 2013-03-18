@@ -2,12 +2,8 @@
 ##
 ##  classes.gd                       CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: classes.gd,v 1.3 2011/05/15 19:17:07 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.classes_gd :=
-    "@(#)$Id: classes.gd,v 1.3 2011/05/15 19:17:07 gap Exp $";
 
 
 #############################################################################

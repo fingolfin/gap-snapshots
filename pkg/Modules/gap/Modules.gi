@@ -11,7 +11,7 @@
 ##
 InstallGlobalFunction( ReducedBasisOfModule,	### defines: ReducedBasisOfModule (ReducedBasisOfModule)
   function( arg )
-    local nargs, M, COMPUTE_BASIS, ar, R;
+    local nargs, M, COMPUTE_BASIS, COMPUTE_SMALLER_BASIS, ar, bas, R;
     
     nargs := Length( arg );
     
@@ -34,25 +34,39 @@ InstallGlobalFunction( ReducedBasisOfModule,	### defines: ReducedBasisOfModule (
     ## M is a set of relations (of a module)
     M := arg[1];
     
-    COMPUTE_BASIS := false;
-    
-    for ar in arg{[ 2 .. nargs ]} do
-        if ar = "COMPUTE_BASIS" then
-            COMPUTE_BASIS := true;
-        fi;
-    od;
-    
     if NrRelations( M ) = 0 then
         return M;
     fi;
     
-    if COMPUTE_BASIS and IsBound( M!.ReducedBasisOfModule ) then
+    COMPUTE_BASIS := false;
+    COMPUTE_SMALLER_BASIS := false;
+    
+    for ar in Reversed( arg{[ 2 .. nargs ]} ) do
+        if ar = "COMPUTE_BASIS" then
+            COMPUTE_BASIS := true;
+            break;
+        elif ar = "COMPUTE_SMALLER_BASIS" then
+            COMPUTE_SMALLER_BASIS := true;
+            break;
+        fi;
+    od;
+    
+    if ( COMPUTE_BASIS or COMPUTE_SMALLER_BASIS ) and
+       IsBound( M!.ReducedBasisOfModule ) then
         return M!.ReducedBasisOfModule;
-    elif not COMPUTE_BASIS and IsBound( M!.ReducedBasisOfModule_DID_NOT_COMPUTE_BASIS) then
+    elif IsBound( M!.ReducedBasisOfModule ) then
+        return M!.ReducedBasisOfModule;
+    elif not ( COMPUTE_BASIS or COMPUTE_SMALLER_BASIS ) and
+      IsBound( M!.ReducedBasisOfModule_DID_NOT_COMPUTE_BASIS) then
         return M!.ReducedBasisOfModule_DID_NOT_COMPUTE_BASIS;
     fi;
     
-    if COMPUTE_BASIS then
+    if COMPUTE_SMALLER_BASIS then
+        bas := BasisOfModule( M );
+        if NrRelations( bas ) <= NrRelations( M ) then
+            M := bas;
+        fi;
+    elif COMPUTE_BASIS then
         M := BasisOfModule( M );
     fi;
     
@@ -74,7 +88,7 @@ InstallGlobalFunction( ReducedBasisOfModule,	### defines: ReducedBasisOfModule (
         M := HomalgRelationsForRightModule( M );
     fi;
     
-    if COMPUTE_BASIS then
+    if COMPUTE_BASIS or COMPUTE_SMALLER_BASIS then
         arg[1]!.ReducedBasisOfModule := M;
         M!.ReducedBasisOfModule := M;	## thanks GAP4
     else
@@ -1664,7 +1678,7 @@ InstallMethod( FittingIdeal,
         [ IsInt, IsFinitelyPresentedModuleRep ],
         
   function( i, M )
-    local R, mor, n, Fitt, left, m, mat, Fitt_i;
+    local R, n, Fitt, left, mor, m, mat, Fitt_i;
     
     R := HomalgRing( M );
     
@@ -1674,18 +1688,16 @@ InstallMethod( FittingIdeal,
         Error( "the ring is not commutative\n" );
     fi;
     
-    mor := PresentationMorphism( M );
-    
     n := NrGenerators( M );
     
-    if not IsBound( mor!.FittingIdeals ) then
-        mor!.FittingIdeals := rec( );
+    if not IsBound( M!.FittingIdeals ) then
+        M!.FittingIdeals := rec( );
     fi;
     
-    Fitt := mor!.FittingIdeals;
+    Fitt := M!.FittingIdeals;
     
-    if IsBound( Fitt.(String( n - i )) ) then
-        return Fitt.(String( n - i ));
+    if IsBound( Fitt.(String( i )) ) then
+        return Fitt.(String( i ));
     fi;
     
     left := IsHomalgLeftObjectOrMorphismOfLeftObjects( M );
@@ -1695,13 +1707,13 @@ InstallMethod( FittingIdeal,
     ## better than NrRelations( M )
     m := NrGenerators( Source( mor ) );
     
-    if i >= n then	## <=> n - i <= 0
+    if n - i <= 0 then	## <=> i >= n
         if left then
             Fitt_i := LeftSubmodule( R );
         else
             Fitt_i := RightSubmodule( R );
         fi;
-    elif i < Maximum( n - m, 0 ) then	## <=> n - i > Minimum( n, m )
+    elif n - i > Minimum( n, m ) then	## <=> i < Maximum( n - m, 0 )
         if left then
             Fitt_i := ZeroLeftSubmodule( R );
         else
@@ -1716,7 +1728,7 @@ InstallMethod( FittingIdeal,
         fi;
     fi;
     
-    Fitt.(String( n - i )) := Fitt_i;
+    Fitt.(String( i )) := Fitt_i;
     
     return Fitt_i;
     
@@ -1725,7 +1737,7 @@ end );
 ##
 InstallMethod( NumberOfFirstNonZeroFittingIdeal,
         "for homalg modules",
-        [ IsFinitelyPresentedModuleRep ],
+        [ IsHomalgModule ],
         
   function( M )
     local R, i;

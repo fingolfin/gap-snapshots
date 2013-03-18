@@ -2,14 +2,8 @@
 ##
 ##  socle.gi                         CRISP                  Burkhard Höfling
 ##
-##  @(#)$Id: socle.gi,v 1.7 2011/05/15 19:18:02 gap Exp $
-##
 ##  Copyright (C) 2001, 2002, 2005 Burkhard Höfling
-
 ##
-Revision.socle_gi :=
-    "@(#)$Id: socle.gi,v 1.7 2011/05/15 19:18:02 gap Exp $";
-
 
 #############################################################################
 ##

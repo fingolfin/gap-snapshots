@@ -2,8 +2,6 @@
 ##
 ##  samples.g                       CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: samples.g,v 1.7 2011/05/18 16:53:58 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

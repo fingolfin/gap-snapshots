@@ -43,6 +43,7 @@ Obj TheTypeExternalPolymakeCone;
 Obj TheTypeExternalPolymakeFan;
 Obj TheTypeExternalPolymakePolytope;
 Obj TheTypeExternalPolymakeTropicalHypersurface;
+Obj TheTypeExternalPolymakeTropicalPolytope;
 
 Obj FuncPOLYMAKE_CREATE_CONE_BY_RAYS( Obj self, Obj rays ) {
   
@@ -324,6 +325,20 @@ Obj FuncPOLYMAKE_DRAW( Obj self, Obj cone ){
   
 }
 
+Obj FuncPOLYMAKE_SKETCH( Obj self, Obj cone ){
+  
+  polymake_start( &akt_data );
+  return REAL_POLYMAKE_SKETCH( &akt_data, cone );
+  
+}
+
+Obj FuncPOLYMAKE_SKETCH_WITH_OPTIONS_KERNEL( Obj self, Obj cone, Obj filename, Obj options ){
+  
+  polymake_start( &akt_data );
+  return REAL_POLYMAKE_SKETCH_WITH_OPTIONS( &akt_data, cone, filename, options );
+  
+}
+
 Obj FuncPOLYMAKE_DEFINING_INEQUALITIES_OF_CONE( Obj self, Obj cone ){
   
   return REAL_DEFINING_INEQUALITIES_OF_CONE( &akt_data, cone );
@@ -416,6 +431,20 @@ Obj FuncPOLYMAKE_MONOMIALS_OF_HYPERSURFACE( Obj self, Obj surf ){
   
   polymake_start( &akt_data );
   return REAL_MONOMIALS_OF_HYPERSURFACE( &akt_data, surf );
+  
+}
+
+Obj FuncPOLYMAKE_LATTICE_POINTS_GENERATORS( Obj self, Obj polytope ){
+  
+  polymake_start( &akt_data );
+  return REAL_LATTICE_POINTS_GENERATORS( &akt_data, polytope );
+  
+}
+
+Obj FuncPOLYMAKE_TROPICAL_POLYTOPE_BY_POINTS( Obj self, Obj points ){
+  
+  polymake_start( &akt_data );
+  return REAL_TROPICAL_POLYTOPE_BY_POINTS( &akt_data, points );
   
 }
 
@@ -600,6 +629,14 @@ static StructGVarFunc GVarFuncs [] = {
     (Obj(*)())FuncPOLYMAKE_DRAW,
     "polymake_main.cpp:POLYMAKE_DRAW" },
     
+    { "POLYMAKE_SKETCH", 1, "cone",
+    (Obj(*)())FuncPOLYMAKE_SKETCH,
+    "polymake_main.cpp:POLYMAKE_SKETCH" },
+    
+    { "POLYMAKE_SKETCH_WITH_OPTIONS_KERNEL", 3, "cone,filename,options",
+    (Obj(*)())FuncPOLYMAKE_SKETCH_WITH_OPTIONS_KERNEL,
+    "polymake_main.cpp:POLYMAKE_SKETCH_WITH_OPTIONS_KERNEL" },
+    
     { "POLYMAKE_DEFINING_INEQUALITIES_OF_CONE", 1, "cone",
     (Obj(*)())FuncPOLYMAKE_DEFINING_INEQUALITIES_OF_CONE,
     "polymake_main.cpp:POLYMAKE_DEFINING_INEQUALITIES_OF_CONE" },
@@ -672,6 +709,14 @@ static StructGVarFunc GVarFuncs [] = {
     (Obj(*)())FuncPOLYMAKE_MONOMIALS_OF_HYPERSURFACE,
     "polymake_main.cpp:POLYMAKE_MONOMIALS_OF_HYPERSURFACE" },
     
+    { "POLYMAKE_LATTICE_POINTS_GENERATORS", 1, "polytope",
+    (Obj(*)())FuncPOLYMAKE_LATTICE_POINTS_GENERATORS,
+    "polymake_main.cpp:POLYMAKE_LATTICE_POINTS_GENERATORS" },
+    
+    { "POLYMAKE_TROPICAL_POLYTOPE_BY_POINTS", 1, "points",
+    (Obj(*)())FuncPOLYMAKE_TROPICAL_POLYTOPE_BY_POINTS,
+    "polymake_main.cpp:POLYMAKE_TROPICAL_POLYTOPE_BY_POINTS" },
+    
   { 0 }
 };
 
@@ -688,6 +733,7 @@ static Int InitKernel ( StructInitInfo *module )
     InitCopyGVar( "TheTypeExternalPolymakeFan", &TheTypeExternalPolymakeFan );
     InitCopyGVar( "TheTypeExternalPolymakePolytope", &TheTypeExternalPolymakePolytope );
     InitCopyGVar( "TheTypeExternalPolymakeTropicalHypersurface", &TheTypeExternalPolymakeTropicalHypersurface );
+    InitCopyGVar( "TheTypeExternalPolymakeTropicalPolytope", &TheTypeExternalPolymakeTropicalPolytope );
 
     InfoBags[T_POLYMAKE].name = "ExternalPolymakeObject";
     InitMarkFuncBags(T_POLYMAKE, &MarkOneSubBags);
@@ -704,28 +750,28 @@ static Int InitKernel ( StructInitInfo *module )
 */
 static Int InitLibrary ( StructInitInfo *module )
 {
-    Int i, gvar;
-    
-    // We start with initialising the polymake classes.
-    akt_data.initialized = false;
-//     akt_data.main_polymake_session = new polymake::Main;
-//     akt_data.main_polymake_scope = new polymake::perl::Scope(akt_data.main_polymake_session->newScope());
-//     akt_data.main_polymake_session->set_application("polytope");
-//     akt_data.main_polymake_session->set_custom("$Verbose::scheduler",1);
-    //This is pretty slow.
-    //akt_data.polymake_objects = new map<int, pm::perl::Object*>;
-    //akt_data.new_polymake_object_number=0;
-    // We now have everything to handle polymake, lets do the gapthings
-
-    /* init filters and functions
-       we assign the functions to components of a record "IO"         */
-    for ( i = 0; GVarFuncs[i].name != 0;  i++ ) {
-      gvar = GVarName(GVarFuncs[i].name);
-      AssGVar(gvar,NewFunctionC( GVarFuncs[i].name, GVarFuncs[i].nargs,
-                                 GVarFuncs[i].args, GVarFuncs[i].handler ));
-      MakeReadOnlyGVar(gvar);
-    }
-
+//     Int i, gvar;
+//     
+//     // We start with initialising the polymake classes.
+//     akt_data.initialized = false;
+// //     akt_data.main_polymake_session = new polymake::Main;
+// //     akt_data.main_polymake_scope = new polymake::perl::Scope(akt_data.main_polymake_session->newScope());
+// //     akt_data.main_polymake_session->set_application("polytope");
+// //     akt_data.main_polymake_session->set_custom("$Verbose::scheduler",1);
+//     //This is pretty slow.
+//     //akt_data.polymake_objects = new map<int, pm::perl::Object*>;
+//     //akt_data.new_polymake_object_number=0;
+//     // We now have everything to handle polymake, lets do the gapthings
+// 
+//     /* init filters and functions
+//        we assign the functions to components of a record "IO"         */
+//     for ( i = 0; GVarFuncs[i].name != 0;  i++ ) {
+//       gvar = GVarName(GVarFuncs[i].name);
+//       AssGVar(gvar,NewFunctionC( GVarFuncs[i].name, GVarFuncs[i].nargs,
+//                                  GVarFuncs[i].args, GVarFuncs[i].handler ));
+//       MakeReadOnlyGVar(gvar);
+//     }
+    InitGVarFuncsFromTable(GVarFuncs);
     /* return success                                                      */
     return 0;
 }

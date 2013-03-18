@@ -2,12 +2,8 @@
 ##
 ##  fitting.gd                      CRISP                    Burkhard Höfling
 ##
-##  @(#)$Id: fitting.gd,v 1.3 2011/05/15 19:17:53 gap Exp $
-##
 ##  Copyright (C) 2000 Burkhard Höfling
 ##
-Revision.fitting_gd :=
-    "@(#)$Id: fitting.gd,v 1.3 2011/05/15 19:17:53 gap Exp $";
 
 
 #############################################################################
@@ -39,7 +35,7 @@ DeclareGlobalFunction ("SetIsFittingClass");
 ##
 #O  FittingClass (<obj>)
 ##
-DeclareOperation ("FittingClass", [IsObject]);
+DeclareAttribute ("FittingClass", IsObject);
 
 
 #############################################################################

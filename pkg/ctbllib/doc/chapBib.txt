@@ -26,7 +26,7 @@
   London Math. Soc.[118X, [19X42[119X, 4 (2010), 621–633.
   
   [[20XBL12[120X]  [16XBreuer,  T.  and  Lübeck, F.[116X, [17XBrowse, ncurses interface and browsing
-  applications,       Version      1.8[117X      (2012),      ((GAP      package)),
+  applications,      Version      1.8.2[117X      (2012),      ((GAP     package)),
   http://www.math.rwth-aachen.de/~Browse.
   
   [[20XBN95[120X]  [16XBreuer,  T.  and  Norton,  S.  P.[116X,  [17XImprovements  to  the Atlas[117X, The

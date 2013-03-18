@@ -2,8 +2,6 @@
 ##
 ##  basis.g                         CRISP                 Burkhard H\"ofling
 ##
-##  @(#)$Id: basis.g,v 1.3 2005/12/21 17:06:35 gap Exp $
-##
 ##  Copyright (C) 2000 by Burkhard H\"ofling, Mathematisches Institut,
 ##  Friedrich Schiller-Universit\"at Jena, Germany
 ##

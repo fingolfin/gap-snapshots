@@ -2,12 +2,8 @@
 ##
 ##  residual.gd                      CRISP                   Burkhard Höfling
 ##
-##  @(#)$Id: residual.gd,v 1.7 2011/05/15 19:17:58 gap Exp $
-##
 ##  Copyright (C) 2000-2002, 2006 by Burkhard Höfling
 ##
-Revision.residual_gd :=
-    "@(#)$Id: residual.gd,v 1.7 2011/05/15 19:17:58 gap Exp $";
 
 
 #############################################################################
@@ -15,7 +11,7 @@ Revision.residual_gd :=
 #A  Residual (<grp>, <class>)
 ##
 KeyDependentOperation ("Residual", IsGroup, IsGroupClass, ReturnTrue);
-DeclareOperation ("Residuum", [IsGroup, IsGroupClass]);
+DeclareSynonym ("Residuum", Residual);
 
 
 #############################################################################

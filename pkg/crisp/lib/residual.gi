@@ -2,12 +2,8 @@
 ##
 ##  residual.gi                      CRISP                  Burkhard Höfling
 ##
-##  @(#)$Id: residual.gi,v 1.12 2011/05/15 19:17:59 gap Exp $
-##
 ##  Copyright (C) 2000-2002, 2005, 2006, 2008 by Burkhard Höfling
 ##
-Revision.residual_gi :=
-    "@(#)$Id: residual.gi,v 1.12 2011/05/15 19:17:59 gap Exp $";
 
 
 #############################################################################
@@ -348,17 +344,6 @@ InstallMethod (OneNormalSubgroupMinWrtQProperty,
 	end);
 	
 	
-#############################################################################
-##
-#M  Residuum (<grp>, <class>)
-##
-InstallMethod (Residuum, "for group and group class, call Residual", true, 
-    [IsGroup, IsGroupClass], 0,
-    function (G, C)
-        return Residual (G, C);
-    end);
-
-
 #############################################################################
 ##
 #M  ResidualOp (<grp>, <class>)

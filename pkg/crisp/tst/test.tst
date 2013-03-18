@@ -1,4 +1,4 @@
-gap> START_TEST("$Id: test.tst,v 1.6 2011/05/26 10:04:29 gap Exp $");
+gap> START_TEST("crisp");
 gap> LoadPackage ("crisp", "", false);
 true
 gap> ReadPackage ("crisp", "tst/all.g");
@@ -267,6 +267,6 @@ FittingProduct ([2,5]-grps by proj, [2,5]-grps by inj)
 FittingProduct ([2,5]-grps by proj, [2,5]-grps by proj)
 FittingProduct ([2,5]-grps by proj, [2,5]-grps by proj)
 true
-gap> STOP_TEST("test.tst", 0);
-$Id: test.tst,v 1.6 2011/05/26 10:04:29 gap Exp $
+gap> STOP_TEST("crisp", 0);
+crisp
 GAP4stones: 0

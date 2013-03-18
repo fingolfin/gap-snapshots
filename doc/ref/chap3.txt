@@ -14,9 +14,9 @@
   Options  must  not  be  grouped,  e.g.,  [10Xgap  -gq[110X  is invalid, use [10Xgap -g -q[110X
   instead.  Some  options require an argument, this must follow the option and
   must be separated by whitespace, e.g., [10Xgap -m 256m[110X, it is not correct to say
-  [10Xgap -m256m[110X instead. Certain Boolean options ([10X-b[110X, [10X-q[110X, [10X-e[110X, [10X-r[110X, [10X-A[110X, [10X-D[110X, [10X-M[110X, [10X-N[110X,
-  [10X-T[110X,  [10X-X[110X, [10X-Y[110X) toggle the current value so that [10Xgap -b -b[110X is equivalent to [10Xgap[110X
-  and to [10Xgap -b -q -b -q[110X etc.[133X
+  [10Xgap -m256m[110X instead. Certain Boolean options ([10X-b[110X, [10X-q[110X, [10X-e[110X, [10X-r[110X, [10X-A[110X, [10X-D[110X, [10X-M[110X, [10X-T[110X,
+  [10X-X[110X,  [10X-Y[110X) toggle the current value so that [10Xgap -b -b[110X is equivalent to [10Xgap[110X and
+  to [10Xgap -b -q -b -q[110X etc.[133X
   
   [33X[0;0Y[5XGAP[105X for UNIX will distinguish between upper and lower case options.[133X
   
@@ -581,10 +581,10 @@
   [33X[0;0YThe  recommended  way  to  start  [5XGAP[105X is to load an existing workspace file,
   because  this  reduces  the  startup time of [5XGAP[105X drastically. So if you have
   installed [5XGAP[105X yourself then you should think about creating a workspace file
-  immediately  after you have started [5XGAP[105X with the command line option [10X-N[110X, and
-  then using this workspace file later on, whenever you start [5XGAP[105X. If your [5XGAP[105X
-  installation  is  shared  between  several  users,  the system administrator
-  should think about providing such a workspace file.[133X
+  immediately  after  you have started [5XGAP[105X, and then using this workspace file
+  later on, whenever you start [5XGAP[105X. If your [5XGAP[105X installation is shared between
+  several  users, the system administrator should think about providing such a
+  workspace file.[133X
   
   [1X3.3-1 SaveWorkspace[101X
   

@@ -98,8 +98,8 @@
 {\Huge \textbf{Matrices for the \textsf{homalg} project\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.01.10\mbox{}}\\[1cm]
-{January 2013\mbox{}}\\[1cm]
+{\Huge Version 2013.02.24\mbox{}}\\[1cm]
+{February 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -5352,7 +5352,17 @@ a (possibly empty) list of pairs of positive integers
           [ IsHomalgMatrix, IsHomogeneousList ],
           
     function( M, poslist )
-      local R, RP, rest, pos, i, j, k;
+      local cache, R, RP, rest, pos, i, j, k;
+      
+      if IsBound( M!.GetColumnIndependentUnitPositions ) then
+          cache := M!.GetColumnIndependentUnitPositions;
+          if IsBound( cache.(String( poslist )) ) then
+              return cache.(String( poslist ));
+          fi;
+      else
+          cache := rec( );
+          M!.GetColumnIndependentUnitPositions := cache;
+      fi;
       
       R := HomalgRing( M );
       
@@ -5363,6 +5373,7 @@ a (possibly empty) list of pairs of positive integers
           if pos <> [ ] then
               SetIsZero( M, false );
           fi;
+          cache.(String( poslist )) := pos;
           return pos;
       fi;
       
@@ -5387,6 +5398,8 @@ a (possibly empty) list of pairs of positive integers
       if pos <> [ ] then
           SetIsZero( M, false );
       fi;
+      
+      cache.(String( poslist )) := pos;
       
       return pos;
       
@@ -5414,7 +5427,17 @@ a (possibly empty) list of pairs of positive integers
           [ IsHomalgMatrix, IsHomogeneousList ],
           
     function( M, poslist )
-      local R, RP, rest, pos, j, i, k;
+      local cache, R, RP, rest, pos, j, i, k;
+      
+      if IsBound( M!.GetRowIndependentUnitPositions ) then
+          cache := M!.GetRowIndependentUnitPositions;
+          if IsBound( cache.(String( poslist )) ) then
+              return cache.(String( poslist ));
+          fi;
+      else
+          cache := rec( );
+          M!.GetRowIndependentUnitPositions := cache;
+      fi;
       
       R := HomalgRing( M );
       
@@ -5425,6 +5448,7 @@ a (possibly empty) list of pairs of positive integers
           if pos <> [ ] then
               SetIsZero( M, false );
           fi;
+          cache.( String( poslist ) ) := pos;
           return pos;
       fi;
       
@@ -5449,6 +5473,8 @@ a (possibly empty) list of pairs of positive integers
       if pos <> [ ] then
           SetIsZero( M, false );
       fi;
+      
+      cache.( String( poslist ) ) := pos;
       
       return pos;
       
