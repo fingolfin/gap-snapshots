@@ -32,9 +32,9 @@
 \contentsline {section}{\numberline {A.14}\leavevmode {\color {Chapter }Testing a \textsf {GAP} package}}{24}{section.A.14}
 \contentsline {subsection}{\numberline {A.14.1}\leavevmode {\color {Chapter }Tests files for a GAP package}}{24}{subsection.A.14.1}
 \contentsline {subsection}{\numberline {A.14.2}\leavevmode {\color {Chapter }Testing \textsf {GAP} package loading}}{24}{subsection.A.14.2}
-\contentsline {subsection}{\numberline {A.14.3}\leavevmode {\color {Chapter }LoadAllPackages}}{25}{subsection.A.14.3}
+\contentsline {subsection}{\numberline {A.14.3}\leavevmode {\color {Chapter }LoadAllPackages}}{26}{subsection.A.14.3}
 \contentsline {subsection}{\numberline {A.14.4}\leavevmode {\color {Chapter }Testing a \textsf {GAP} package with the \textsf {GAP} standard test suite}}{26}{subsection.A.14.4}
-\contentsline {section}{\numberline {A.15}\leavevmode {\color {Chapter }Access to the \textsf {GAP} Development Version}}{26}{section.A.15}
+\contentsline {section}{\numberline {A.15}\leavevmode {\color {Chapter }Access to the \textsf {GAP} Development Version}}{27}{section.A.15}
 \contentsline {section}{\numberline {A.16}\leavevmode {\color {Chapter }Selecting a license for a \textsf {GAP} Package}}{27}{section.A.16}
 \contentsline {section}{\numberline {A.17}\leavevmode {\color {Chapter }Wrapping up a \textsf {GAP} Package}}{27}{section.A.17}
 \contentsline {section}{\numberline {A.18}\leavevmode {\color {Chapter }The WWW Homepage of a Package}}{28}{section.A.18}

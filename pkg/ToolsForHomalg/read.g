@@ -18,4 +18,10 @@ ReadPackage( "ToolsForHomalg", "gap/ToolsForHomalg.gi" );
 
 fi;
 ReadPackage( "ToolsForHomalg", "gap/ToDoListEntry.gi" );
+
+ReadPackage( "ToolsForHomalg", "gap/ToDoListBluePrints.gi" );
+
 ReadPackage( "ToolsForHomalg", "gap/ToDoLists.gi" );
+
+
+ReadPackage( "ToolsForHomalg", "gap/Trees.gi" );

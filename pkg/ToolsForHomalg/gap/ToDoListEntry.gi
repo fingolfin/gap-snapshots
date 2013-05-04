@@ -11,9 +11,9 @@
 #############################################################################
 
 InstallValue( TODO_LIST_ENTRIES,
-              rec( 
-                   already_installed_immediate_methods := [ ]
-                   
+              rec(
+                  already_installed_immediate_methods := [ ],
+                  implications := [ ]
               )
 );
 
@@ -22,37 +22,52 @@ DeclareRepresentation( "IsToDoListEntryRep",
                        []
                      );
 
-DeclareRepresentation( "IsToDoListEntryWithDefinedTargetRep",
+DeclareRepresentation( "IsToDoListEntryForEquivalentPropertiesRep",
                        IsToDoListEntryRep,
                        []
                      );
 
-DeclareRepresentation( "IsToDoListEntryWithWeakPointersRep",
-                       IsToDoListEntryWithDefinedTargetRep,
-                       []
-                     );
-
-DeclareRepresentation( "IsToDoListEntryWithPointersRep",
-                       IsToDoListEntryWithDefinedTargetRep,
-                       []
-                     );
-
-DeclareRepresentation( "IsToDoListEntryForEquivalentPropertiesRep",
-                       IsToDoListEntryWithDefinedTargetRep,
-                       []
-                     );
-
-DeclareRepresentation( "IsToDoListEntryMadeFromOtherToDoListEntriesRep",
-                       IsToDoListEntryWithDefinedTargetRep,
+DeclareRepresentation( "IsToDoListEntryForEqualPropertiesRep",
+                       IsToDoListEntryRep,
                        []
                      );
 
 DeclareRepresentation( "IsToDoListEntryWithListOfSourcesRep",
-                       IsToDoListEntryWithDefinedTargetRep,
+                       IsToDoListEntryRep,
                        []
                      );
 
 DeclareRepresentation( "IsToDoListEntryWhichLaunchesAFunctionRep",
+                       IsToDoListEntryWithListOfSourcesRep,
+                       []
+                     );
+
+DeclareRepresentation( "IsToDoListEntryWithDefinedTargetRep",
+                       IsToDoListEntryWithListOfSourcesRep,
+                       []
+                     );
+
+DeclareRepresentation( "IsToDoListEntryWithSingleSourceRep",
+                       IsToDoListEntryWithDefinedTargetRep,
+                       []
+                      );
+
+DeclareRepresentation( "IsToDoListEntryWithWeakPointersRep",
+                       IsToDoListEntryWithSingleSourceRep,
+                       []
+                     );
+
+DeclareRepresentation( "IsToDoListEntryWithPointersRep",
+                       IsToDoListEntryWithSingleSourceRep,
+                       []
+                     );
+
+DeclareRepresentation( "IsToDoListEntryWithContrapositionRep",
+                       IsToDoListEntryRep,
+                       []
+                     );
+
+DeclareRepresentation( "IsToDoListEntryMadeFromOtherToDoListEntriesRep",
                        IsToDoListEntryRep,
                        []
                      );
@@ -72,18 +87,25 @@ BindGlobal( "TheTypeToDoListEntryForEquivalentProperties",
         NewType( TheFamilyOfToDoListEntries,
                 IsToDoListEntryForEquivalentPropertiesRep ) );
 
+BindGlobal( "TheTypeToDoListEntryForEqualProperties",
+        NewType( TheFamilyOfToDoListEntries,
+                IsToDoListEntryForEqualPropertiesRep ) );
+
 BindGlobal( "TheTypeToDoListEntryMadeFromOtherToDoListEntries",
         NewType( TheFamilyOfToDoListEntries,
                 IsToDoListEntryMadeFromOtherToDoListEntriesRep ) );
 
 BindGlobal( "TheTypeToDoListEntryWithListOfSources",
         NewType( TheFamilyOfToDoListEntries,
-                IsToDoListEntryWithListOfSourcesRep ) );
+                IsToDoListEntryWithDefinedTargetRep ) );
 
 BindGlobal( "TheTypeToDoListWhichLaunchesAFunction",
         NewType( TheFamilyOfToDoListEntries,
                 IsToDoListEntryWhichLaunchesAFunctionRep ) );
-            
+
+BindGlobal( "TheTypeToDoListEntryWithContraposition",
+        NewType( TheFamilyOfToDoListEntries,
+                IsToDoListEntryWithContrapositionRep ) );
 
 ##########################################
 ##
@@ -118,6 +140,163 @@ InstallGlobalFunction( ToDoLists_Process_Entry_Part,
     
 end );
 
+##
+InstallMethod( ToDoLists_Move_To_Target_ToDo_List,
+               "for entries",
+               [ IsToDoListEntryWithDefinedTargetRep ],
+               
+  function( entry )
+    local source_list, target, source;
+    
+    source_list := SourcePart( entry );
+    
+    for source in source_list do
+        
+        if IsBound( source[ 3 ] ) then
+            
+            source[ 3 ] := ToDoLists_Process_Entry_Part( source[ 3 ] );
+            
+        elif IsString( source[ 2 ] ) and not IsBound( source[ 3 ] ) and Tester( ValueGlobal( source[ 2 ] ) )( source[ 1 ] ) then
+            
+            Add( source, ValueGlobal( source[ 2 ] )( source[ 1 ] ) );
+            
+        fi;
+        
+    od;
+    
+    target := TargetPart( entry );
+    
+    SetTargetObject( entry, ToDoLists_Process_Entry_Part( target[ 1 ] ) );
+    
+    SetTargetValueObject( entry, ToDoLists_Process_Entry_Part( target[ 3 ] ) );
+    
+    target := target[ 1 ];
+    
+    if Position( ToDoList( target )!.from_others, entry ) = fail then
+        
+        Add( ToDoList( target )!.from_others, entry );
+        
+    fi;
+    
+end );
+
+##
+InstallMethod( ToDoLists_Move_To_Target_ToDo_List,
+               "for all entries",
+               [ IsToDoListEntry ],
+               
+  function( entry )
+  
+end );
+
+##
+InstallGlobalFunction( ToolsForHomalg_ProcessToDoListEquivalenciesAndContrapositions,
+                       
+  function( entry )
+    local i;
+    
+    if IsBound( entry!.contrapositions ) then
+        
+        for i in entry!.contrapositions do
+            
+            SetFilterObj( i, PreconditionsDefinitelyNotFulfilled );
+            
+        od;
+        
+    fi;
+    
+    if IsBound( entry!.equivalencies ) then
+        
+        for i in entry!.equivalencies do
+            
+            SetFilterObj( i, IsProcessedEntry );
+            
+        od;
+        
+    fi;
+    
+end );
+
+##
+InstallGlobalFunction( ToolsForHomalg_CheckASourcePart,
+                       
+  function( source_part )
+    local pull_attr, comparator, i;
+    
+    if ( not IsList( source_part ) ) or Length( source_part ) < 2 or Length( source_part ) > 4 then
+        
+        Error( "not a valid argument" );
+        
+        return fail;
+        
+    fi;
+    
+    if not IsString( source_part[ 2 ] ) then
+        
+        if ForAll( source_part[ 2 ], i -> Tester( ValueGlobal( i ) )( source_part[ 1 ] ) ) then
+            
+            if not IsBound( source_part[ 3 ] ) then
+                
+                return true;
+                
+            elif source_part[ 3 ]() then
+                
+                source_part[ 3 ] := true;
+                
+                return true;
+                
+            else
+                
+                source_part[ 3 ] := false;
+                
+                return fail;
+                
+            fi;
+            
+        else
+            
+            return false;
+            
+        fi;
+        
+    fi;
+    
+    pull_attr := ValueGlobal( source_part[ 2 ] );
+    
+    if Length( source_part ) = 4 and IsFunction( source_part[ 4 ] ) then
+        
+        comparator := source_part[ 4 ];
+        
+    else
+        
+        comparator := \=;
+        
+    fi;
+    
+    if not Tester( pull_attr )( source_part[ 1 ] ) then
+        
+        return false;
+        
+    elif Length( source_part ) = 3 then
+        
+        if IsList( source_part[ 3 ] ) then
+            
+            source_part[ 3 ] := ToDoLists_Process_Entry_Part( source_part[ 3 ] );
+            
+        fi;
+        
+        if not comparator( pull_attr( source_part[ 1 ] ), source_part[ 3 ] ) then
+            
+            return fail;
+            
+        fi;
+        
+    fi;
+    
+    return true;
+    
+end );
+
 ##########################################
 ##
 ## General methods
@@ -125,11 +304,142 @@ end );
 ##########################################
 
 ##
-InstallMethod( ProcessAToDoListEntry,
-               [ IsToDoListEntryWithDefinedTargetRep ],
+InstallMethod( AddToToDoList,
+               "for lists",
+               [ IsList ],
+               
+  function( entry_list )
+    
+    Perform( entry_list, AddToToDoList );
+    
+end );
+
+##
+InstallMethod( AddToToDoList,
+               "for a todo list entry",
+               [ IsToDoListEntryWithListOfSourcesRep ],
                
   function( entry )
-    local source_list, source, pull_attr, target, push_attr, tester_var, target_value, target_obj;
+    local result, source, source_list, source_object_list, todo_list, target;
+    
+    source_list := SourcePart( entry );
+    
+    if source_list = fail then
+        
+        return;
+        
+    fi;
+    
+    source_object_list := [ ];
+    
+    for source in source_list do
+        
+        if ForAll( source_object_list, i -> not IsIdenticalObj( i, source[ 1 ] ) ) then
+            
+            Add( source_object_list, source[ 1 ] );
+            
+        fi;
+        
+    od;
+    
+    if not ForAny( source_object_list, CanHaveAToDoList ) then
+        
+        return;
+        
+    fi;
+    
+    result := ProcessAToDoListEntry( entry );
+    
+    for source in source_object_list do
+        
+        todo_list := ToDoList( source );
+        
+        if IsFunction( result ) then
+            
+            Add( todo_list!.already_done, entry );
+            
+        elif result = false and not PreconditionsDefinitelyNotFulfilled( entry ) and CanHaveAToDoList( source ) then
+            
+            Add( todo_list!.todos, entry );
+            
+            SetFilterObj( source, HasSomethingToDo );
+            
+        elif result = false and PreconditionsDefinitelyNotFulfilled( entry ) then
+            
+            Add( todo_list!.precondition_not_fulfilled, entry );
+            
+        elif result = fail then
+            
+            Add( todo_list!.garbage, entry );
+            
+        fi;
+        
+    od;
+    
+    if IsFunction( result ) then
+        
+        result();
+        
+    fi;
+    
+end );
+
+##########################################
+##
+## Entry with functions
+##
+##########################################
+
+##
+InstallMethod( SourcePart,
+               "for entries that launches functions",
+               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
+               
+  function( entry )
+    
+    return entry!.source_list;
+    
+end );
+
+##
+InstallMethod( TargetPart,
+               "for entries that launches functions",
+               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
+               
+  function( entry )
+    
+    return entry!.func;
+    
+end );
+
+##
+InstallMethod( ToDoListEntry,
+               "constructor",
+               [ IsList, IsFunction ],
+               
+  function( source_list, func )
+    local entry;
+    
+    if not ForAll( source_list, i -> IsList( i[ 2 ] ) and ( Length( i ) = 3 or Length( i ) = 2 or Length( i ) = 4 ) ) then
+        
+        Error( "wrong input format" );
+        
+    fi;
+    
+    entry := rec( source_list := source_list, func := func );
+    
+    ObjectifyWithAttributes( entry, TheTypeToDoListWhichLaunchesAFunction );
+    
+    return entry;
+    
+end );
+
+##
+InstallMethod( ProcessAToDoListEntry,
+               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
+               
+  function( entry )
+    local source_list, source, pull_attr, target, push_attr, tester_var, source_status;
     
     source_list := SourcePart( entry );
     
@@ -151,43 +461,27 @@ InstallMethod( ProcessAToDoListEntry,
     
     for source in source_list do
         
-        pull_attr := ValueGlobal( source[ 2 ] );
+        source_status := ToolsForHomalg_CheckASourcePart( source );
         
-        if not Tester( pull_attr )( source[ 1 ] ) then
-            
-            tester_var := false;
-            
-            break;
-            
-        elif Length( source ) = 3 and not pull_attr( source[ 1 ] ) = source[ 3 ] then
+        if source_status = fail then
             
             SetFilterObj( entry, PreconditionsDefinitelyNotFulfilled );
             
-            return true;
+            return false;
+            
+        elif not source_status then
+            
+            return false;
+            
         fi;
         
     od;
     
     if tester_var then
         
-        push_attr := ValueGlobal( target[ 2 ] );
+        SetFilterObj( entry, IsProcessedEntry );
         
-        target_obj := ToDoLists_Process_Entry_Part( target[ 1 ] );
-        
-        SetTargetObject( entry, target_obj );
-        
-        target_value := ToDoLists_Process_Entry_Part( target[ 3 ] );
-        
-        SetTargetValueObject( entry, target_value );
-        
-        Setter( push_attr )( target_obj, target_value );
-        
-##        FIXME: This does not work any more now, maybe we can repair this in another way.
-##        Remove( ToDoList( target_obj )!.maybe_from_others, Position( ToDoList( target_obj )!.maybe_from_others, entry ) );
-        
-        Add( ToDoList( target_obj )!.from_others, entry );
-        
-        return true;
+        return target;
         
     fi;
     
@@ -195,341 +489,21 @@ InstallMethod( ProcessAToDoListEntry,
     
 end );
 
-##
-InstallMethod( AreCompatible,
-               "for todo-list entries",
-               [ IsToDoListEntryWithDefinedTargetRep, IsToDoListEntry ],
-               
-  function( entry1, entry2 )
-    
-    return  Position( SourcePart( entry2 ), TargetPart( entry1 ) ) <> fail;
-    
-end );
-
-##
-InstallMethod( GenesisOfToDoListEntry,
-               "for atomic entries",
-               [ IsToDoListEntry ],
-               
-  function( entry )
-    
-    return [ entry ];
-    
-end );
-
-##
-InstallMethod( JoinToDoListEntries,
-               "for a list of ToDo-list entries",
-               [ IsList ],
-               
-  function( list )
-    local new_entry;
-    
-    if list = [ ] then
-        
-        return [ ];
-        
-    fi;
-    
-    if not ForAll( list, IsToDoListEntry ) then
-        
-        Error( "must be a list of ToDo-list entries\n" );
-        
-    fi;
-    
-    if not ForAll( [ 1 .. Length( list ) - 1 ], i -> AreCompatible( list[ i ], list[ i + 1 ] ) ) then
-        
-        Error( "entries are not compatible\n" );
-        
-    fi;
-    
-    if not ForAll( [ 1 .. Length( list ) - 1 ], i -> IsToDoListEntryWithDefinedTargetRep( list[ i ] ) ) then
-        
-        Error( "entries without targets cannot be composed\n" );
-        
-    fi;
-    
-    new_entry := rec ( );
-    
-    ObjectifyWithAttributes( new_entry, TheTypeToDoListEntryMadeFromOtherToDoListEntries );
-    
-    SetGenesisOfToDoListEntry( new_entry, Concatenation( List( list, GenesisOfToDoListEntry ) ) );
-    
-    return new_entry;
-    
-end );
-
-##
-InstallMethod( CreateImmediateMethodForToDoListEntry,
-               "for a ToDo-list entry",
-               [ IsToDoListEntry ],
-               
-  function( entry )
-    local source_list, source, cat_list, cat, tester, i;
-    
-    source_list := SourcePart( entry );
-    
-    if source_list = fail then
-        
-        return;
-        
-    fi;
-    
-    for source in source_list do
-        
-        cat_list := CategoriesOfObject( source[ 1 ] );
-        
-        cat := IsObject;
-        
-        for i in cat_list do
-            
-            if ReplacedString( i, ")", " " ) = i then
-                
-                cat := cat and ValueGlobal( i );
-                
-            fi;
-            
-        od;
-        
-        tester := Tester( ValueGlobal( source[ 2 ] ) );
-        
-        tester := cat and tester;
-        
-        if Position( TODO_LIST_ENTRIES.already_installed_immediate_methods, tester ) <> fail then
-            
-            return;
-            
-        else
-            
-            Add( TODO_LIST_ENTRIES.already_installed_immediate_methods, tester );
-            
-        fi;
-        
-        InstallImmediateMethod( ProcessToDoList,
-                                HasSomethingToDo and tester,
-                                0,
-                                
-          function( object )
-              
-              if not HasSomethingToDo( object ) then
-                  
-                  TryNextMethod();
-                  
-              fi;
-              
-              ProcessToDoList_Real( object );
-              
-              TryNextMethod();
-              
-        end );
-        
-    od;
-    
-end );
-
 ##########################################
 ##
-## ToDo-list entry with weak pointers
+## Entry with list of sources
 ##
 ##########################################
 
 ##
-InstallMethod( ToDoListEntryWithWeakPointers,
-               "for 6 arguments",
-               [ IsObject, IsString, IsObject, IsObject, IsString, IsObject ],
-               
-  function( M, attr_to_pull, val_to_pull, obj_to_push, attr_to_push, val_to_push )
-    local string_list, value_list, entry;
-    
-    value_list := WeakPointerObj( [ M, val_to_pull, obj_to_push, val_to_push ] );
-    
-    string_list := [ attr_to_pull, attr_to_push ];
-    
-    entry := rec( );
-    
-    ObjectifyWithAttributes( entry, TheTypeToDoListEntryWithWeakPointers );
-    
-    entry!.value_list := value_list;
-    
-    entry!.string_list := string_list;
-    
-    return entry;
-    
-end );
-
-##
-InstallMethod( SourcePart,
-               "for weak pointer entries",
-               [ IsToDoListEntryWithWeakPointersRep ],
-               
-  function( entry )
-    
-    if not IsBoundElmWPObj( entry!.value_list, 1 ) or not IsBoundElmWPObj( entry!.value_list, 2 ) then
-        
-        return fail;
-        
-    fi;
-    
-    return [ [ ElmWPObj( entry!.value_list, 1 ), entry!.string_list[ 1 ], ElmWPObj( entry!.value_list, 2 ) ] ];
-    
-end );
-
-##
-InstallMethod( TargetPart,
-               "for weak pointer entries",
-               [ IsToDoListEntryWithWeakPointersRep ],
-               
-  function( entry )
-    
-    if not IsBoundElmWPObj( entry!.value_list, 3 ) or not IsBoundElmWPObj( entry!.value_list, 4 ) then
-        
-        return fail;
-        
-    fi;
-    
-    return [ ElmWPObj( entry!.value_list, 3 ), entry!.string_list[ 2 ], ElmWPObj( entry!.value_list, 4 ) ];
-    
-end );
-
-##
-InstallMethod( SetTargetValueObject,
-               "for weak pointer entries",
-               [ IsToDoListEntryWithWeakPointersRep, IsObject ],
-               
-  function( entry, value )
-    
-    SetElmWPObj( entry!.value_list, 4, value );
-    
-end );
-
-##
-InstallMethod( SetTargetObject,
-               "for weak pointer entries",
-               [ IsToDoListEntryWithWeakPointersRep, IsObject ],
-               
-  function( entry, value )
-    
-    SetElmWPObj( entry!.value_list, 3, value );
-    
-end );
-
-##########################################
-##
-## ToDo-list entry with pointers
-##
-##########################################
-
-##
-InstallMethod( ToDoListEntryWithPointers,
-               "for 6 arguments",
-               [ IsObject, IsString, IsObject, IsObject, IsString, IsObject ],
-               
-  function( M, attr_to_pull, val_to_pull, obj_to_push, attr_to_push, val_to_push )
-    local entry;
-    
-    entry := rec( );
-    
-    ObjectifyWithAttributes( entry, TheTypeToDoListEntryWithPointers );
-    
-    entry!.list := [ M, attr_to_pull, val_to_pull, obj_to_push, attr_to_push, val_to_push ];
-    
-    return entry;
-    
-end );
-
-##
-InstallMethod( SourcePart,
-               "for entries with pointers",
-               [ IsToDoListEntryWithPointersRep ],
-               
-  function( entry )
-    
-    return [ entry!.list{ [ 1, 2, 3 ] } ];
-    
-end );
-
-##
-InstallMethod( TargetPart,
-               "for entries with pointers",
-               [ IsToDoListEntryWithPointersRep ],
-               
-  function( entry )
-    
-    return entry!.list{ [ 4, 5, 6 ] };
-    
-end );
-
-##
-InstallMethod( SetTargetValueObject,
-               "for pointer entries",
-               [ IsToDoListEntryWithPointersRep, IsObject ],
-               
-  function( entry, value )
-    
-    entry!.list[ 6 ] := value;
-    
-end );
-
-##
-InstallMethod( SetTargetObject,
-               "for pointer entries",
-               [ IsToDoListEntryWithPointersRep, IsObject ],
-               
-  function( entry, value )
-    
-    entry!.list[ 4 ] := value;
-    
-end );
-
-##########################################
-##
-## Concatenated ToDo-list entry
-##
-##########################################
-
-##
-InstallMethod( SourcePart,
-               "for concatenation",
-               [ IsToDoListEntryMadeFromOtherToDoListEntriesRep ],
-               
-  function( entry )
-    local gen;
-    
-    gen := GenesisOfToDoListEntry( entry );
-    
-    return SourcePart( gen[ 1 ] );
-    
-end );
-
-##
-InstallMethod( TargetPart,
-               "for concatenation",
-               [ IsToDoListEntryMadeFromOtherToDoListEntriesRep ],
-               
-  function( entry )
-    local gen;
-    
-    gen := GenesisOfToDoListEntry( entry );
-    
-    return TargetPart( gen[ Length( gen ) ] );
-    
-end );
-
-######################
-##
-## ToDoListEntryWithListOfSources
-##
-######################
-
-##
-InstallMethod( ToDoListEntryWithListOfSources,
+InstallMethod( ToDoListEntry,
                "todo list entry with list of sources",
                [ IsList, IsObject, IsString, IsObject ],
                
   function( source_list, obj_to_push, attr_to_push, val_to_push )
     local entry;
     
-    if not ForAll( source_list, i -> IsString( i[ 2 ] ) and ( Length( i ) = 3 or Length( i ) = 2 ) ) then
+    if not ForAll( source_list, i -> IsList( i[ 2 ] ) and ( Length( i ) = 3 or Length( i ) = 2 or Length( i ) = 4 ) ) then
         
         Error( "wrong input format" );
         
@@ -567,7 +541,7 @@ end );
 
 ##
 InstallMethod( SetTargetValueObject,
-               "for weak pointer entries",
+               "for los entries",
                [ IsToDoListEntryWithListOfSourcesRep, IsObject ],
                
   function( entry, value )
@@ -578,7 +552,7 @@ end );
 
 ##
 InstallMethod( SetTargetObject,
-               "for weak pointer entries",
+               "for los entries",
                [ IsToDoListEntryWithListOfSourcesRep, IsObject ],
                
   function( entry, value )
@@ -587,62 +561,13 @@ InstallMethod( SetTargetObject,
     
 end );
 
-######################
-##
-## ToDoListEntryWhichLaunchesAFunction
-##
-######################
-
-##
-InstallMethod( ToDoListEntryWhichLaunchesAFunction,
-               "constructor",
-               [ IsList, IsFunction ],
-               
-  function( source_list, func )
-    local entry;
-    
-    if not ForAll( source_list, i -> IsString( i[ 2 ] ) and ( Length( i ) = 3 or Length( i ) = 2 ) ) then
-        
-        Error( "wrong input format" );
-        
-    fi;
-    
-    entry := rec( source_list := source_list, func := func );
-    
-    ObjectifyWithAttributes( entry, TheTypeToDoListWhichLaunchesAFunction );
-    
-    return entry;
-    
-end );
-
-##
-InstallMethod( SourcePart,
-               "for entries that launches functions",
-               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
-               
-  function( entry )
-    
-    return entry!.source_list;
-    
-end );
-
-##
-InstallMethod( TargetPart,
-               "for entries that launches functions",
-               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
-               
-  function( entry )
-    
-    return entry!.func;
-    
-end );
-
 ##
 InstallMethod( ProcessAToDoListEntry,
-               [ IsToDoListEntryWhichLaunchesAFunctionRep ],
+               [ IsToDoListEntryWithDefinedTargetRep ],
                
   function( entry )
-    local source_list, source, pull_attr, target, push_attr, tester_var;
+    local source_list, source, pull_attr, target, push_attr, tester_var, target_value, target_obj,
+          return_function, source_status;
     
     source_list := SourcePart( entry );
     
@@ -663,29 +588,89 @@ InstallMethod( ProcessAToDoListEntry,
     tester_var := true;
     
     for source in source_list do
-          
-        pull_attr := ValueGlobal( source[ 2 ] );
         
-        if not Tester( pull_attr )( source[ 1 ] ) then
-            
-            tester_var := false;
-            
-            break;
-            
-        elif Length( source ) = 3 and not pull_attr( source[ 1 ] ) = source[ 3 ] then
+        source_status := ToolsForHomalg_CheckASourcePart( source );
+        
+        if source_status = fail then
             
             SetFilterObj( entry, PreconditionsDefinitelyNotFulfilled );
             
-            return true;
+            return false;
+            
+        elif not source_status then
+            
+            return false;
+            
         fi;
         
     od;
     
     if tester_var then
         
-        target();
+        ## Sanitize the source.
         
-        return true;
+        for source in source_list do
+            
+            if Length( source ) = 2 and IsString( source[ 2 ] ) then
+                
+                Add( source, ValueGlobal( source[ 2 ] )( source[ 1 ] ) );
+                
+            elif Length( source ) = 4 and IsString( source[ 2 ] ) then
+                
+                source[ 3 ] := ValueGlobal( source[ 2 ] )( source[ 1 ] );
+                
+                Remove( source, 4 );
+                
+            fi;
+            
+        od;
+        
+        return_function := function()
+            local push_attr, target_obj, target_value, str, out;
+            
+            push_attr := ValueGlobal( target[ 2 ] );
+            
+            target_obj := ToDoLists_Process_Entry_Part( target[ 1 ] );
+            
+            target_value := ToDoLists_Process_Entry_Part( target[ 3 ] );
+            
+            SetTargetObject( entry, target_obj );
+            
+            SetTargetValueObject( entry, target_value );
+            
+            if not Tester( push_attr )( target_obj ) then
+                
+                SetFilterObj( entry, HasSetAttributeOfObject );
+                
+                if TODO_LISTS.where_infos then
+                    
+                    str := "";
+                    
+                    out := OutputTextString( str, false );
+                    
+                    PrintTo1( out, function()
+                                       Where( 100 );
+                                   end );
+                    
+                    CloseStream( out );
+                    
+                    entry!.where_infos := str;
+                    
+                fi;
+                
+            fi;
+            
+            Setter( push_attr )( target_obj, target_value );
+            
+            Add( ToDoList( target_obj )!.from_others, entry );
+            
+        end;
+        
+        ToolsForHomalg_ProcessToDoListEquivalenciesAndContrapositions( entry );
+        
+        SetFilterObj( entry, IsProcessedEntry );
+        
+        return return_function;
         
     fi;
     
@@ -693,77 +678,179 @@ InstallMethod( ProcessAToDoListEntry,
     
 end );
 
-######################
+##########################################
+##
+## Entry with contraposition
+##
+##########################################
+
+##
+InstallMethod( ToDoListEntryWithContraposition,
+               "constructor",
+               [ IsObject, IsString, IsBool, IsObject, IsString, IsBool ],
+               
+  function( source, sprop, sval, target, tprop, tval )
+    local entry;
+    
+    entry := rec( );
+    
+    ObjectifyWithAttributes( entry, TheTypeToDoListEntryWithContraposition );
+    
+    entry!.input := [ source, sprop, sval, target, tprop, tval ];
+    
+    return entry;
+    
+end );
+
+##
+InstallMethod( AddToToDoList,
+               "for ToDoListEntriesWithContraposition",
+               [ IsToDoListEntryWithContrapositionRep ],
+               
+  function( entry )
+    local input, entry1, entry_contra, description, description_list_entry;
+    
+    input := entry!.input;
+    
+    entry1 := ToDoListEntry ( [ input{[ 1 .. 3 ]} ], input[ 4 ], input[ 5 ], input[ 6 ] );
+    
+    entry_contra := ToDoListEntry( [ [ input[ 4 ], input[ 5 ], not input[ 6 ] ] ], input[ 1 ], input[ 2 ], not input[ 3 ] );
+    
+    entry1!.contrapositions := [ entry_contra ];
+    
+    entry_contra!.contrapositions := [ entry1 ];
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry1, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry_contra, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( entry1 );
+    
+    AddToToDoList( entry_contra );
+    
+end );
+
+##########################################
+##
+## Equal
+##
+##########################################
+
+##
+InstallMethod( ToDoListEntryForEqualAttributes,
+               "todo-list-entry-for-equivalent-properties",
+               [ IsObject, IsString, IsObject, IsString ],
+               
+  function( obj1, prop1, obj2, prop2 )
+    local entry;
+    
+    entry := rec( input := [ obj1, prop1, obj2, prop2 ] );
+    
+    ObjectifyWithAttributes( entry, TheTypeToDoListEntryForEqualProperties );
+    
+    return entry;
+    
+end );
+
+##
+InstallMethod( AddToToDoList,
+               "for entries for equivalent properties",
+               [ IsToDoListEntryForEqualPropertiesRep ],
+               
+  function( entry )
+    local input, entry_forward, entry_backwards;
+    
+    input := entry!.input;
+    
+    entry_forward := ToDoListEntry( [ [ input[ 1 ], input[ 2 ] ] ], input[ 3 ], input[ 4 ], [ ValueGlobal( input[ 2 ] ), input[ 1 ] ] );
+    
+    entry_backwards := ToDoListEntry( [ [ input[ 3 ], input[ 4 ] ] ], input[ 1 ], input[ 2 ], [ ValueGlobal( input[ 4 ] ), input[ 3 ] ] );
+    
+    entry_forward!.equivalencies := [ entry_backwards ];
+    
+    entry_backwards!.equivalencies := [ entry_forward ];
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry_forward, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry_backwards, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( entry_forward );
+    
+    AddToToDoList( entry_backwards );
+    
+end );
+
+##########################################
+##
+## Equal
+##
+##########################################
+
+##
+InstallMethod( ToDoListEntryForEquivalentAttributes,
+               "todo-list-entry-for-equivalent-properties",
+               [ IsObject, IsString, IsObject, IsObject, IsString, IsObject ],
+               
+  function( obj1, prop1, val1, obj2, prop2, val2 )
+    local entry;
+    
+    entry := rec( input := [ obj1, prop1, val1, obj2, prop2, val2 ] );
+    
+    ObjectifyWithAttributes( entry, TheTypeToDoListEntryForEquivalentProperties );
+    
+    return entry;
+    
+end );
+
+##
+InstallMethod( AddToToDoList,
+               "for entries for equivalent properties",
+               [ IsToDoListEntryForEquivalentPropertiesRep ],
+               
+  function( entry )
+    local input, entry_forward, entry_backwards;
+    
+    entry_forward := ToDoListEntry( [ [ input[ 1 ], input[ 2 ], input[ 3 ] ] ], input[ 4 ], input[ 5 ], input[ 6 ] );
+    
+    entry_backwards := ToDoListEntry( [ [ input[ 4 ], input[ 5 ], input[ 6 ] ] ], input[ 1 ], input[ 2 ], input[ 3 ] );
+    
+    entry_forward!.equivalencies := [ entry_backwards ];
+    
+    entry_backwards!.equivalencies := [ entry_forward ];
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry_forward, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( ToDoListEntry( [ [ entry, "DescriptionOfImplication" ] ], entry_backwards, "DescriptionOfImplication", [ DescriptionOfImplication, entry ] ) );
+    
+    AddToToDoList( entry_forward );
+    
+    AddToToDoList( entry_backwards );
+    
+end );
+
+############################################
 ##
 ## Display & View
 ##
-######################
+############################################
 
 ##
+##
 InstallMethod( ViewObj,
-               "for todo-list entries",
+               "for todo-list entry",
                [ IsToDoListEntry ],
                
   function( entry )
-    local source_list, source, i, target, string;
     
-    source_list := SourcePart( entry );
+    Print( "<A ToDo-list entry" );
     
-    target := TargetPart( entry );
-    
-    if source_list <> fail and target <> fail then
+    if HasDescriptionOfImplication( entry ) then
         
-        source := source_list[ 1 ];
-        
-        Print( "<The ToDo-list entry: " );
-        
-        if IsBound( source[ 3 ] ) then
-            
-            Print( Concatenation( source[ 2 ], "( ", String( source[ 1 ] ), " ) = ", String( source[ 3 ] ) ) );
-            
-        else
-            
-            Print( Concatenation( "Has", source[ 2 ], "( ", String( source[ 1 ] ), " )= true" ) );
-            
-        fi;
-        
-        for i in [ 2 .. Length( source_list ) ] do
-            
-            source := source_list[ i ];
-            
-            Print( " and " );
-            
-            if IsBound( source[ 3 ] ) then
-                
-                Print( Concatenation( source[ 2 ], "( ", String( source[ 1 ] ), " ) = ", String( source[ 3 ] ) ) );
-                
-            else
-                
-                Print( Concatenation( "Has", source[ 2 ], "( ", String( source[ 1 ] ), " ) = true" ) );
-                
-            fi;
-            
-        od;
-        
-        Print( " => " );
-        
-        if IsFunction( target ) then
-            
-            Print( target );
-            
-        else
-            
-            Print( Concatenation( target[ 2 ], "( ", String( target[ 1 ] ), " ) = ", String( target[ 3 ] ) ) );
-            
-        fi;
-        
-        Print( ">" );
-        
-    else
-        
-        Print( "<An incomplete ToDo-list entry>" );
+        Print( Concatenation( " with description: ", DescriptionOfImplication( entry ) ) );
         
     fi;
+    
+    Print( ">" );
     
 end );
 
@@ -773,125 +860,14 @@ InstallMethod( Display,
                [ IsToDoListEntry ],
                
   function( entry )
-    local source_list, i, source, target, string;
     
-    source_list := SourcePart( entry );
+    Print( "A ToDo-list entry" );
     
-    target := TargetPart( entry );
-    
-    if source_list <> fail and target <> fail then
+    if HasDescriptionOfImplication( entry ) then
         
-        source := source_list[ 1 ];
-        
-        Print( "<The ToDo-list entry: " );
-        
-        if IsBound( source[ 3 ] ) then
-            
-            Print( Concatenation( source[ 2 ], "( ", String( source[ 1 ] ), " ) = ", String( source[ 3 ] ) ) );
-            
-        else
-            
-            Print( Concatenation( "Has", source[ 2 ], "( ", String( source[ 1 ] ), " ) = true" ) );
-            
-        fi;
-        
-        for i in [ 2 .. Length( source_list ) ] do
-            
-            source := source_list[ i ];
-            
-            Print( " and " );
-            
-            if IsBound( source[ 3 ] ) then
-                
-                Print( Concatenation( source[ 2 ], "( ", String( source[ 1 ] ), " ) = ", String( source[ 3 ] ) ) );
-                
-            else
-                
-                Print( Concatenation( "Has", source[ 2 ], "( ", String( source[ 1 ] ), " ) = true" ) );
-                
-            fi;
-            
-        od;
-        
-        if HasDescriptionOfImplication( entry ) then
-            
-            Print( "\n" );
-            
-            Print( Concatenation( "because ", DescriptionOfImplication( entry ), "\n" ) );
-            
-        fi;
-        
-        Print( " => " );
-        
-        if IsFunction( target ) then
-            
-            Print( target );
-            
-        else
-            
-            Print( Concatenation( target[ 2 ], "( ", String( target[ 1 ] ), " ) = ", String( target[ 3 ] ) ) );
-            
-        fi;
-        
-        Print( ".\n" );
-        
-    else
-        
-        Print( "An incomplete ToDo-list entry.\n" );
+        Print( Concatenation( " with description: ", DescriptionOfImplication( entry ) ) );
         
     fi;
-    
-end );
-
-##
-InstallMethod( Display,
-               "for concatenated ToDo-list entries",
-               [ IsToDoListEntryMadeFromOtherToDoListEntriesRep ],
-               
-  function( entry )
-    local gen, sourcelist, targetlist, target;
-    
-    gen := GenesisOfToDoListEntry( entry );
-    
-    sourcelist := List( gen, SourcePart );
-    
-    targetlist := List( gen, TargetPart );
-    
-    if ForAny( sourcelist, i -> i = fail ) or ForAny( targetlist, i -> i = fail ) then
-        
-        Print( "An incomplete ToDo-list entry.\n" );
-        
-    fi;
-    
-    Print( "The ToDo-list entry:\n" );
-    
-    ## FIXME: This needs to be done more accurate, once the new structure is fully functional
-    Print( Concatenation( sourcelist[ 1 ][ 1 ][ 2 ], "( ", String( sourcelist[ 1 ][ 1 ][ 1 ] ), " ) = ", String( sourcelist[ 1 ][ 1 ][ 3 ] ) ) );
-    
-    for target in [ 1 .. Length( targetlist ) ] do
-        
-        Print( "\n" );
-        
-        if HasDescriptionOfImplication( gen[ target ] ) then
-            
-            Print( Concatenation( "because ", DescriptionOfImplication( gen[ target ] ), "\n" ) );
-        fi;
-        
-        Print( " => " );
-        
-        target := targetlist[ target ];
-        
-        if IsFunction( target ) then
-            
-            Print( target );
-            
-        else
-            
-            Print( Concatenation( target[ 2 ], "( ", String( target[ 1 ] ), " ) = ", String( target[ 3 ] ) ) );
-            
-        fi;
-        
-    od;
     
     Print( ".\n" );
     

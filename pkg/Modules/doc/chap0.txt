@@ -7,10 +7,10 @@
                          Modules over Computable Rings[101X
   
   
-                               Version 2013.02.10
+                               Version 2013.04.19
   
   
-                                 February 2013
+                                   April 2013
   
   
                                 Mohamed Barakat
@@ -139,19 +139,20 @@
     7.4 [33X[0;0YModules: Attributes[133X
       7.4-1 ResidueClassRing
       7.4-2 PrimaryDecomposition
-      7.4-3 ElementaryDivisors
-      7.4-4 FittingIdeal
-      7.4-5 NonFlatLocus
-      7.4-6 LargestMinimalNumberOfLocalGenerators
-      7.4-7 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries
-      7.4-8 CoefficientsOfNumeratorOfHilbertPoincareSeries
-      7.4-9 UnreducedNumeratorOfHilbertPoincareSeries
-      7.4-10 NumeratorOfHilbertPoincareSeries
-      7.4-11 HilbertPoincareSeries
-      7.4-12 AffineDegree
-      7.4-13 DataOfHilbertFunction
-      7.4-14 HilbertFunction
-      7.4-15 IndexOfRegularity
+      7.4-3 RadicalDecomposition
+      7.4-4 ElementaryDivisors
+      7.4-5 FittingIdeal
+      7.4-6 NonFlatLocus
+      7.4-7 LargestMinimalNumberOfLocalGenerators
+      7.4-8 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries
+      7.4-9 CoefficientsOfNumeratorOfHilbertPoincareSeries
+      7.4-10 UnreducedNumeratorOfHilbertPoincareSeries
+      7.4-11 NumeratorOfHilbertPoincareSeries
+      7.4-12 HilbertPoincareSeries
+      7.4-13 AffineDegree
+      7.4-14 DataOfHilbertFunction
+      7.4-15 HilbertFunction
+      7.4-16 IndexOfRegularity
     7.5 [33X[0;0YModules: Operations and Functions[133X
       7.5-1 HomalgRing
       7.5-2 ByASmallerPresentation

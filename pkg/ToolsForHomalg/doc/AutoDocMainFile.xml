@@ -4,4 +4,4 @@
 <!--
  This is an automatically generated file. 
  -->
-<#Include SYSTEM "Basics.xml"><#Include SYSTEM "Pointers.xml"><#Include SYSTEM "Tools.xml"><#Include SYSTEM "ToDo-list.xml">
+<#Include SYSTEM "ToDo-list.xml"><#Include SYSTEM "Trees.xml"><#Include SYSTEM "Basics.xml"><#Include SYSTEM "Pointers.xml"><#Include SYSTEM "Tools.xml">

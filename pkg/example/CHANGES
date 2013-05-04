@@ -1,3 +1,7 @@
+Version 3.4.3: 2013/03/27
+* Added a suggestion about a naming scheme for package archives
+* Updated C syntax to avoid an error while compiling external binary with clang
+
 Version 3.4.2: 2012/06/02
 * Mentioned that OnlyNeeded option for LoadPackage is used only for testing
   and debugging. Updated the description of 'make testpackagesload' target
@@ -7,7 +11,7 @@ Version 3.4.1: 2012/05/31
 * Additionally emphasized importance of not having two different archives 
   with the same package version number
 * Improved description of `AvailabilityTest' function from Example's 
-  package PackageInfo.g file        
+  package PackageInfo.g file
 
 Version 3.4.0: 2012/04/18
 * Removed PackageDoc.Archive from PackageInfo.g

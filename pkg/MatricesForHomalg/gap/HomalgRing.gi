@@ -41,17 +41,17 @@ DeclareRepresentation( "IsContainerForWeakPointersOnIdentityMatricesRep",
 ####################################
 
 # a new family:
+BindGlobal( "TheFamilyOfHomalgRingElements",
+        NewFamily( "TheFamilyOfHomalgRingElements" ) );
+
+# a new family:
 BindGlobal( "TheFamilyOfHomalgRings",
-        NewFamily( "TheFamilyOfHomalgRings" ) );
+        CollectionsFamily( TheFamilyOfHomalgRingElements ) );
 
 # a new type:
 BindGlobal( "TheTypeHomalgInternalRing",
         NewType( TheFamilyOfHomalgRings,
                 IsHomalgInternalRingRep ) );
-
-# a new family:
-BindGlobal( "TheFamilyOfHomalgRingElements",
-        NewFamily( "TheFamilyOfHomalgRingElements" ) );
 
 # a new family:
 BindGlobal( "TheFamilyOfContainersForWeakPointersOfIdentityMatrices",
@@ -71,7 +71,7 @@ BindGlobal( "TheTypeContainerForWeakPointersOnIdentityMatrices",
 ##
 InstallMethod( Zero,
         "for homalg rings",
-        [ IsHomalgInternalRingRep ],
+        [ IsHomalgInternalRingRep ], 10001,
         
   function( R )
     
@@ -82,7 +82,7 @@ end );
 ##
 InstallMethod( Zero,
         "for homalg rings",
-        [ IsHomalgInternalRingRep ],
+        [ IsHomalgInternalRingRep ], 10001,
         
   function( R )
     local RP;
@@ -100,7 +100,7 @@ end );
 ##
 InstallMethod( One,
         "for homalg rings",
-        [ IsHomalgInternalRingRep ],
+        [ IsHomalgInternalRingRep ], 1001,
         
   function( R )
     
@@ -111,7 +111,7 @@ end );
 ##
 InstallMethod( One,
         "for homalg rings",
-        [ IsHomalgInternalRingRep ],
+        [ IsHomalgInternalRingRep ], 1001,
         
   function( R )
     local RP;
@@ -335,6 +335,22 @@ InstallMethod( Indeterminates,
               IndeterminateCoordinatesOfRingOfDerivations( R ),
               IndeterminateDerivationsOfRingOfDerivations( R )
               );
+    
+end );
+
+##
+InstallMethod( AssignGeneratorVariables,
+        "for homalg rings",
+        [ IsHomalgRing ],
+        
+  function( R )
+    local indets;
+    
+    indets := Indeterminates( R );
+    
+    DoAssignGenVars( indets );
+    
+    return;
     
 end );
 

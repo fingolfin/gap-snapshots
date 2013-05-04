@@ -126,7 +126,7 @@
   [33X[0;0YSee [14X20.4[114X for more details.[133X
   
   [33X[0;0YFor  example,  [10XIsList  and  IsEmpty[110X  is  a  filter  that returns [9Xtrue[109X if its
-  argument  is an empty list, and [9Xfalse[109X otherwise. The filter [2XIsGroup[102X ([14X39.2-6[114X)
+  argument  is an empty list, and [9Xfalse[109X otherwise. The filter [2XIsGroup[102X ([14X39.2-7[114X)
   is  defined as the intersection of the category [2XIsMagmaWithInverses[102X ([14X35.1-4[114X)
   and the property [2XIsAssociative[102X ([14X35.4-7[114X).[133X
   

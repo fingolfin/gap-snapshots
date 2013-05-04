@@ -1,20 +1,25 @@
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}
-\BOOKMARK [1][-]{section.1.1}{What is the role of the ToolsForHomalg package in the homalg project?}{chapter.1}
-\BOOKMARK [0][-]{chapter.2}{Installation of the ToolsForHomalg Package}{}
-\BOOKMARK [0][-]{chapter.3}{Basics}{}
-\BOOKMARK [1][-]{section.3.1}{Variables}{chapter.3}
-\BOOKMARK [1][-]{section.3.2}{Categories}{chapter.3}
-\BOOKMARK [0][-]{chapter.4}{Pointers}{}
-\BOOKMARK [1][-]{section.4.1}{Weak pointer objects}{chapter.4}
-\BOOKMARK [1][-]{section.4.2}{Pointer objects}{chapter.4}
-\BOOKMARK [0][-]{chapter.5}{Tools}{}
-\BOOKMARK [1][-]{section.5.1}{Functions}{chapter.5}
-\BOOKMARK [1][-]{section.5.2}{Examplefunctions}{chapter.5}
-\BOOKMARK [0][-]{chapter.6}{ToDo-list}{}
-\BOOKMARK [1][-]{section.6.1}{ToDo-list entries}{chapter.6}
-\BOOKMARK [1][-]{section.6.2}{Category}{chapter.6}
-\BOOKMARK [1][-]{section.6.3}{Constructor}{chapter.6}
-\BOOKMARK [1][-]{section.6.4}{This is the magic}{chapter.6}
-\BOOKMARK [1][-]{section.6.5}{Methods for all objects}{chapter.6}
-\BOOKMARK [0][-]{chapter*.3}{References}{}
-\BOOKMARK [0][-]{section*.4}{Index}{}
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{What is the role of the ToolsForHomalg package in the homalg project?}{chapter.1}% 2
+\BOOKMARK [0][-]{chapter.2}{Installation of the ToolsForHomalg Package}{}% 3
+\BOOKMARK [0][-]{chapter.3}{ToDo-list}{}% 4
+\BOOKMARK [1][-]{section.3.1}{Proof tracking}{chapter.3}% 5
+\BOOKMARK [1][-]{section.3.2}{ToDo-list entries}{chapter.3}% 6
+\BOOKMARK [1][-]{section.3.3}{Blueprints}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.4}{Category}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.5}{Constructor}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.6}{This is the magic}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.7}{Methods for all objects}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.8}{Maintainance}{chapter.3}% 12
+\BOOKMARK [0][-]{chapter.4}{Trees}{}% 13
+\BOOKMARK [1][-]{section.4.1}{Trees}{chapter.4}% 14
+\BOOKMARK [0][-]{chapter.5}{Basics}{}% 15
+\BOOKMARK [1][-]{section.5.1}{Variables}{chapter.5}% 16
+\BOOKMARK [1][-]{section.5.2}{Categories}{chapter.5}% 17
+\BOOKMARK [0][-]{chapter.6}{Pointers}{}% 18
+\BOOKMARK [1][-]{section.6.1}{Weak pointer objects}{chapter.6}% 19
+\BOOKMARK [1][-]{section.6.2}{Pointer objects}{chapter.6}% 20
+\BOOKMARK [0][-]{chapter.7}{Tools}{}% 21
+\BOOKMARK [1][-]{section.7.1}{Functions}{chapter.7}% 22
+\BOOKMARK [1][-]{section.7.2}{Examplefunctions}{chapter.7}% 23
+\BOOKMARK [0][-]{chapter*.3}{References}{}% 24
+\BOOKMARK [0][-]{section*.4}{Index}{}% 25

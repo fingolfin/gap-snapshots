@@ -546,7 +546,7 @@ Group([ a, b^-1*a*b ])
 <h5>47.6-4 CosetTableBySubgroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetTableBySubgroup</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns a coset table for the action of <var class="Arg">G</var> on the cosets of <var class="Arg">H</var>. The columns of the table correspond to the <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-3</span></a>) value of <var class="Arg">G</var>.</p>
+<p>returns a coset table for the action of <var class="Arg">G</var> on the cosets of <var class="Arg">H</var>. The columns of the table correspond to the <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-4</span></a>) value of <var class="Arg">G</var>.</p>
 
 <p><a id="X7DE601F179E6FD09" name="X7DE601F179E6FD09"></a></p>
 
@@ -790,7 +790,7 @@ gap&gt; Index( f, u : max := 0 );
   Group(&lt;fp, no generators known&gt;), Group(&lt;fp, no generators known&gt;) ]
 </pre></div>
 
-<p>By default, the algorithm computes no generating sets for the subgroups. This can be enforced with <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-3</span></a>):</p>
+<p>By default, the algorithm computes no generating sets for the subgroups. This can be enforced with <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-4</span></a>):</p>
 
 
 <div class="example"><pre>
@@ -1046,7 +1046,7 @@ F1^10
 <h5>47.13-1 SubgroupOfWholeGroupByQuotientSubgroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgroupOfWholeGroupByQuotientSubgroup</code>( <var class="Arg">fpfam</var>, <var class="Arg">Q</var>, <var class="Arg">U</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>takes a FpGroup family <var class="Arg">fpfam</var>, a finitely generated group <var class="Arg">Q</var> such that the fp generators of <var class="Arg">fpfam</var> can be mapped by an epimorphism <span class="SimpleMath">\(phi\)</span> onto the <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-3</span></a>) value of <var class="Arg">Q</var>, and a subgroup <var class="Arg">U</var> of <var class="Arg">Q</var>. It returns the subgroup of <var class="Arg">fpfam</var><code class="code">!.wholeGroup</code> which is the full preimage of <var class="Arg">U</var> under <span class="SimpleMath">\(phi\)</span>.</p>
+<p>takes a FpGroup family <var class="Arg">fpfam</var>, a finitely generated group <var class="Arg">Q</var> such that the fp generators of <var class="Arg">fpfam</var> can be mapped by an epimorphism <span class="SimpleMath">\(phi\)</span> onto the <code class="func">GeneratorsOfGroup</code> (<a href="chap39_mj.html#X79C44528864044C5"><span class="RefLink">39.2-4</span></a>) value of <var class="Arg">Q</var>, and a subgroup <var class="Arg">U</var> of <var class="Arg">Q</var>. It returns the subgroup of <var class="Arg">fpfam</var><code class="code">!.wholeGroup</code> which is the full preimage of <var class="Arg">U</var> under <span class="SimpleMath">\(phi\)</span>.</p>
 
 <p><a id="X8047D7A37B27FEEA" name="X8047D7A37B27FEEA"></a></p>
 

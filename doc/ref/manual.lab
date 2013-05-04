@@ -1010,6 +1010,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:-B}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-b}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-D}{3.1}{X782751D5858A6EAF}
+\makelabel{ref:-E}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-e}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-f}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-g}{3.1}{X782751D5858A6EAF}
@@ -1022,6 +1023,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:-M}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-m}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-n}{3.1}{X782751D5858A6EAF}
+\makelabel{ref:-O}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-o}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-q}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-R}{3.1}{X782751D5858A6EAF}
@@ -2738,12 +2740,14 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:order of a group}{39.1}{X822370B47DEA37B1}
 \makelabel{ref:Group (for several generators)}{39.2.1}{X7D8E473384DE9CD4}
 \makelabel{ref:Group (for a list of generators (and an identity element))}{39.2.1}{X7D8E473384DE9CD4}
-\makelabel{ref:GroupWithGenerators}{39.2.2}{X8589EF9C7B658B94}
-\makelabel{ref:GeneratorsOfGroup}{39.2.3}{X79C44528864044C5}
-\makelabel{ref:AsGroup}{39.2.4}{X7A0747F17B50D967}
-\makelabel{ref:ConjugateGroup}{39.2.5}{X7E4143A08040BB47}
-\makelabel{ref:IsGroup}{39.2.6}{X7939B3177BBD61E4}
-\makelabel{ref:InfoGroup}{39.2.7}{X845874BA82E1A11F}
+\makelabel{ref:GroupByGenerators}{39.2.2}{X7F81960287F3E32A}
+\makelabel{ref:GroupByGenerators (with explicitly specified identity element)}{39.2.2}{X7F81960287F3E32A}
+\makelabel{ref:GroupWithGenerators}{39.2.3}{X8589EF9C7B658B94}
+\makelabel{ref:GeneratorsOfGroup}{39.2.4}{X79C44528864044C5}
+\makelabel{ref:AsGroup}{39.2.5}{X7A0747F17B50D967}
+\makelabel{ref:ConjugateGroup}{39.2.6}{X7E4143A08040BB47}
+\makelabel{ref:IsGroup}{39.2.7}{X7939B3177BBD61E4}
+\makelabel{ref:InfoGroup}{39.2.8}{X845874BA82E1A11F}
 \makelabel{ref:Subgroup}{39.3.1}{X7C82AA387A42DCA0}
 \makelabel{ref:SubgroupNC}{39.3.1}{X7C82AA387A42DCA0}
 \makelabel{ref:Subgroup (for a group)}{39.3.1}{X7C82AA387A42DCA0}

@@ -7,7 +7,7 @@
   
   [1X87.1 [33X[0;0YGeneralized Conjugation Technique[133X[101X
   
-  [33X[0;0YThe  command  [10XConjugateGroup(  [3XG[103X[10X,  [3Xp[103X[10X  )[110X  (see [2XConjugateGroup[102X ([14X39.2-5[114X)) for a
+  [33X[0;0YThe  command  [10XConjugateGroup(  [3XG[103X[10X,  [3Xp[103X[10X  )[110X  (see [2XConjugateGroup[102X ([14X39.2-6[114X)) for a
   permutation  group  [3XG[103X  with  stabilizer  chain equips its result also with a
   stabilizer  chain,  namely with the chain of [3XG[103X conjugate by [3Xp[103X. Conjugating a
   stabilizer  chain  by  a  permutation [3Xp[103X means replacing all the points which

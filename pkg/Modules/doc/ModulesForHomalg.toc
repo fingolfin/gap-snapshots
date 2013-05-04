@@ -71,19 +71,20 @@
 \contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Modules: Attributes}}{30}{section.7.4}
 \contentsline {subsection}{\numberline {7.4.1}\leavevmode {\color {Chapter }ResidueClassRing}}{30}{subsection.7.4.1}
 \contentsline {subsection}{\numberline {7.4.2}\leavevmode {\color {Chapter }PrimaryDecomposition}}{30}{subsection.7.4.2}
-\contentsline {subsection}{\numberline {7.4.3}\leavevmode {\color {Chapter }ElementaryDivisors}}{30}{subsection.7.4.3}
-\contentsline {subsection}{\numberline {7.4.4}\leavevmode {\color {Chapter }FittingIdeal}}{30}{subsection.7.4.4}
-\contentsline {subsection}{\numberline {7.4.5}\leavevmode {\color {Chapter }NonFlatLocus}}{30}{subsection.7.4.5}
-\contentsline {subsection}{\numberline {7.4.6}\leavevmode {\color {Chapter }LargestMinimalNumberOfLocalGenerators}}{30}{subsection.7.4.6}
-\contentsline {subsection}{\numberline {7.4.7}\leavevmode {\color {Chapter }CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.7}
-\contentsline {subsection}{\numberline {7.4.8}\leavevmode {\color {Chapter }CoefficientsOfNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.8}
-\contentsline {subsection}{\numberline {7.4.9}\leavevmode {\color {Chapter }UnreducedNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.9}
-\contentsline {subsection}{\numberline {7.4.10}\leavevmode {\color {Chapter }NumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.10}
-\contentsline {subsection}{\numberline {7.4.11}\leavevmode {\color {Chapter }HilbertPoincareSeries}}{31}{subsection.7.4.11}
-\contentsline {subsection}{\numberline {7.4.12}\leavevmode {\color {Chapter }AffineDegree}}{31}{subsection.7.4.12}
-\contentsline {subsection}{\numberline {7.4.13}\leavevmode {\color {Chapter }DataOfHilbertFunction}}{31}{subsection.7.4.13}
-\contentsline {subsection}{\numberline {7.4.14}\leavevmode {\color {Chapter }HilbertFunction}}{31}{subsection.7.4.14}
-\contentsline {subsection}{\numberline {7.4.15}\leavevmode {\color {Chapter }IndexOfRegularity}}{32}{subsection.7.4.15}
+\contentsline {subsection}{\numberline {7.4.3}\leavevmode {\color {Chapter }RadicalDecomposition}}{30}{subsection.7.4.3}
+\contentsline {subsection}{\numberline {7.4.4}\leavevmode {\color {Chapter }ElementaryDivisors}}{30}{subsection.7.4.4}
+\contentsline {subsection}{\numberline {7.4.5}\leavevmode {\color {Chapter }FittingIdeal}}{30}{subsection.7.4.5}
+\contentsline {subsection}{\numberline {7.4.6}\leavevmode {\color {Chapter }NonFlatLocus}}{30}{subsection.7.4.6}
+\contentsline {subsection}{\numberline {7.4.7}\leavevmode {\color {Chapter }LargestMinimalNumberOfLocalGenerators}}{31}{subsection.7.4.7}
+\contentsline {subsection}{\numberline {7.4.8}\leavevmode {\color {Chapter }CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.8}
+\contentsline {subsection}{\numberline {7.4.9}\leavevmode {\color {Chapter }CoefficientsOfNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.9}
+\contentsline {subsection}{\numberline {7.4.10}\leavevmode {\color {Chapter }UnreducedNumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.10}
+\contentsline {subsection}{\numberline {7.4.11}\leavevmode {\color {Chapter }NumeratorOfHilbertPoincareSeries}}{31}{subsection.7.4.11}
+\contentsline {subsection}{\numberline {7.4.12}\leavevmode {\color {Chapter }HilbertPoincareSeries}}{31}{subsection.7.4.12}
+\contentsline {subsection}{\numberline {7.4.13}\leavevmode {\color {Chapter }AffineDegree}}{31}{subsection.7.4.13}
+\contentsline {subsection}{\numberline {7.4.14}\leavevmode {\color {Chapter }DataOfHilbertFunction}}{31}{subsection.7.4.14}
+\contentsline {subsection}{\numberline {7.4.15}\leavevmode {\color {Chapter }HilbertFunction}}{32}{subsection.7.4.15}
+\contentsline {subsection}{\numberline {7.4.16}\leavevmode {\color {Chapter }IndexOfRegularity}}{32}{subsection.7.4.16}
 \contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }Modules: Operations and Functions}}{32}{section.7.5}
 \contentsline {subsection}{\numberline {7.5.1}\leavevmode {\color {Chapter }HomalgRing (for modules)}}{32}{subsection.7.5.1}
 \contentsline {subsection}{\numberline {7.5.2}\leavevmode {\color {Chapter }ByASmallerPresentation (for modules)}}{32}{subsection.7.5.2}

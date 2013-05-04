@@ -64,7 +64,7 @@
 
   \indexspace
 
-  \item \texttt  {HilbertFunction}, \hyperpage{31}
+  \item \texttt  {HilbertFunction}, \hyperpage{32}
   \item \texttt  {HilbertPoincareSeries}, \hyperpage{31}
   \item \texttt  {Hom}, \hyperpage{46}
   \item \texttt  {HomalgFreeLeftModule}
@@ -135,7 +135,7 @@
   \indexspace
 
   \item \texttt  {Largest}\discretionary {-}{}{}\texttt  {Minimal}\discretionary {-}{}{}\texttt  {Number}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Local}\discretionary {-}{}{}\texttt  {Generators}, 
-		\hyperpage{30}
+		\hyperpage{31}
   \item \texttt  {LeftPresentation}
     \subitem constructor for left modules, \hyperpage{24}
   \item \texttt  {LeftSubmodule}
@@ -155,6 +155,7 @@
 
   \indexspace
 
+  \item \texttt  {RadicalDecomposition}, \hyperpage{30}
   \item \texttt  {ResidueClassRing}, \hyperpage{30}
   \item \texttt  {RHom}, \hyperpage{56}
   \item \texttt  {RightPresentation}

@@ -973,6 +973,11 @@
   update  of  package  archives  in  the  [5XGAP[105X distribution will only work if a
   package has a new version number.[133X
   
+  [33X[0;0YIt   is   a   well-established   custom   to   name  package  archives  like
+  [11Xname-version.tar.gz[111X, [11Xname-version.tar.bz2[111X etc., where [10Xname[110X is the lower case
+  name,  and  [10Xversion[110X  is the version (another custom is that the archive then
+  should extract to a directory that has exactly the name [11Xname-version[111X).[133X
+  
   [33X[0;0YIt is very important that there should not ever be, for a given [5XGAP[105X package,
   two  different  archives  with  the same package version number. If you make
   changes  to  your  package  and  place a new archive of the package onto the

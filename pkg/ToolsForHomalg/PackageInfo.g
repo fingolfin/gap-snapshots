@@ -21,7 +21,7 @@ PackageName := "ToolsForHomalg",
 
 ##  This may be used by a default banner or on a Web page, should fit on
 ##  one line.
-Subtitle := "GAP extensions for the homalg project",
+Subtitle := "Special methods and knowledge propagation tools",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
@@ -31,7 +31,7 @@ Version := Maximum( [
 ## this line prevents merge conflicts
   "2012.12.11", ## Mohamed's version
 ## this line prevents merge conflicts
-  "2012.12.20", ## Sebas' version
+  "2013.04.16", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -50,7 +50,7 @@ Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := Concatenation( "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/ToolsForHomalg/ToolsForHomalg-", ~.Version ),
+ArchiveURL := Concatenation( "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/ToolsForHomalg/ToolsForHomalg-", ~.Version ),
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -205,9 +205,9 @@ Status := "deposited",
 ##  and updating of the package in the GAP distribution.
 #
 README_URL := 
-  "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/ToolsForHomalg/README.ToolsForHomalg",
+  "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/ToolsForHomalg/README.ToolsForHomalg",
 PackageInfoURL := 
-  "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/ToolsForHomalg/PackageInfo.g",
+  "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/ToolsForHomalg/PackageInfo.g",
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -226,7 +226,7 @@ PackageInfoURL :=
 #
 AbstractHTML := 
   "The <span class=\"pkgname\">ToolsForHomalg</span> package provides GAP extensions for the homalg project",
-PackageWWWHome := "http://homalg.math.rwth-aachen.de/index.php/core-packages/matricesforhomalg",
+PackageWWWHome := "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/ToolsForHomalg",
 #               
 ##  Here is the information on the help books of the package, used for
 ##  loading into GAP's online help and maybe for an online copy of the 
@@ -267,7 +267,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "Lazy evaluated matrices with clever operations for the homalg project",
+  LongTitle := "Provides special methods and knowledge propagation tools",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := false
@@ -314,19 +314,19 @@ AvailabilityTest := function()
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-BannerString := Concatenation( 
-  "----------------------------------------------------------------\n",
-  "Loading  ToolsForHomalg ", ~.Version, "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
-  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
-        " (", ~.Persons[2].WWWHome, ")\n",
-  "   ", ~.Persons[3].FirstNames, " ", ~.Persons[3].LastName,
-        " (", ~.Persons[3].WWWHome, ")\n",
-  "Type:\n",
-  "  ?ToolsForHomalg:        ## for the contents of the manual\n",
-  "  ?ToolsForHomalg:x       ## for chapter/section/topic x\n",
-  "----------------------------------------------------------------\n" ),
+#BannerString := Concatenation( 
+#  "----------------------------------------------------------------\n",
+#  "Loading  ToolsForHomalg ", ~.Version, "\n",
+#  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+#        " (", ~.Persons[1].WWWHome, ")\n",
+#  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
+#        " (", ~.Persons[2].WWWHome, ")\n",
+#  "   ", ~.Persons[3].FirstNames, " ", ~.Persons[3].LastName,
+#        " (", ~.Persons[3].WWWHome, ")\n",
+#  "Type:\n",
+#  "  ?ToolsForHomalg:        ## for the contents of the manual\n",
+#  "  ?ToolsForHomalg:x       ## for chapter/section/topic x\n",
+#  "----------------------------------------------------------------\n" ),
 
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
 ##  started.  This should usually be 'false'. Say 'true' only if your package 

@@ -119,19 +119,20 @@
 \makelabel{modules:IsPrimeIdeal}{7.3.3}{X78020A71848F9FDD}
 \makelabel{modules:ResidueClassRing}{7.4.1}{X791F809B8432847F}
 \makelabel{modules:PrimaryDecomposition}{7.4.2}{X7F30DD127FAC8994}
-\makelabel{modules:ElementaryDivisors}{7.4.3}{X7EB20A71864D46BF}
-\makelabel{modules:FittingIdeal}{7.4.4}{X7B83CC6485B028E1}
-\makelabel{modules:NonFlatLocus}{7.4.5}{X8671FA1F820AA86D}
-\makelabel{modules:LargestMinimalNumberOfLocalGenerators}{7.4.6}{X84FECA07854053BE}
-\makelabel{modules:CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}{7.4.7}{X7809E0507E882674}
-\makelabel{modules:CoefficientsOfNumeratorOfHilbertPoincareSeries}{7.4.8}{X7938E13A7EF4ADB1}
-\makelabel{modules:UnreducedNumeratorOfHilbertPoincareSeries}{7.4.9}{X781E2CDB8743B1C6}
-\makelabel{modules:NumeratorOfHilbertPoincareSeries}{7.4.10}{X7C44039382DD5D91}
-\makelabel{modules:HilbertPoincareSeries}{7.4.11}{X7B93B7D082A50E61}
-\makelabel{modules:AffineDegree}{7.4.12}{X87C428A079000336}
-\makelabel{modules:DataOfHilbertFunction}{7.4.13}{X7F8203B47EF626A5}
-\makelabel{modules:HilbertFunction}{7.4.14}{X81F1F3EB868D2117}
-\makelabel{modules:IndexOfRegularity}{7.4.15}{X7AE7FCEA807D189E}
+\makelabel{modules:RadicalDecomposition}{7.4.3}{X839DA707838F72DC}
+\makelabel{modules:ElementaryDivisors}{7.4.4}{X7EB20A71864D46BF}
+\makelabel{modules:FittingIdeal}{7.4.5}{X7B83CC6485B028E1}
+\makelabel{modules:NonFlatLocus}{7.4.6}{X8671FA1F820AA86D}
+\makelabel{modules:LargestMinimalNumberOfLocalGenerators}{7.4.7}{X84FECA07854053BE}
+\makelabel{modules:CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries}{7.4.8}{X7809E0507E882674}
+\makelabel{modules:CoefficientsOfNumeratorOfHilbertPoincareSeries}{7.4.9}{X7938E13A7EF4ADB1}
+\makelabel{modules:UnreducedNumeratorOfHilbertPoincareSeries}{7.4.10}{X781E2CDB8743B1C6}
+\makelabel{modules:NumeratorOfHilbertPoincareSeries}{7.4.11}{X7C44039382DD5D91}
+\makelabel{modules:HilbertPoincareSeries}{7.4.12}{X7B93B7D082A50E61}
+\makelabel{modules:AffineDegree}{7.4.13}{X87C428A079000336}
+\makelabel{modules:DataOfHilbertFunction}{7.4.14}{X7F8203B47EF626A5}
+\makelabel{modules:HilbertFunction}{7.4.15}{X81F1F3EB868D2117}
+\makelabel{modules:IndexOfRegularity}{7.4.16}{X7AE7FCEA807D189E}
 \makelabel{modules:HomalgRing (for modules)}{7.5.1}{X7DDA4A357F4868A0}
 \makelabel{modules:ByASmallerPresentation (for modules)}{7.5.2}{X840D0B4F8798C370}
 \makelabel{modules:SubobjectQuotient (for submodules)}{7.5.4}{X84D89101872CEA2A}

@@ -365,6 +365,20 @@ InstallValue( CommonHomalgTableForMAGMATools,
                    
                  end,
                
+               AffineDimensionOfIdeal :=
+                 function( mat )
+                   local R, v;
+                   
+                   R := HomalgRing ( mat );
+                   
+                   v := homalgStream( R )!.variable_name;
+                   
+                   mat := EntriesOfHomalgMatrix( mat );
+                   
+                   return Int( homalgSendBlocking( [ v, "d := Dimension(ideal<", R, "|", mat, ">); ", v, "d" ], "break_lists", "need_output", HOMALG_IO.Pictograms.AffineDimension ) );
+                   
+                 end,
+               
                ## do not add CoefficientsOf(Unreduced)NumeratorOfHilbertPoincareSeries
                ## since MAGMA does not support Hilbert* for non-graded modules
                CoefficientsOfUnreducedNumeratorOfWeightedHilbertPoincareSeries :=
@@ -385,13 +399,78 @@ InstallValue( CommonHomalgTableForMAGMATools,
                    
                  end,
                
+               PrimaryDecomposition :=
+                 function( mat )
+                   local R, v, c;
+                   
+                   R := HomalgRing( mat );
+                   
+                   v := homalgStream( R )!.variable_name;
+                   
+                   mat := EntriesOfHomalgMatrix( mat );
+                   
+                   homalgSendBlocking( [ v, "Q, ", v, "P := PrimaryDecomposition(ideal<", R, "|", mat, ">)" ], "need_command", "break_lists", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                   homalgSendBlocking( [ v, "Q := [ GroebnerBasis( x ) : x in ", v, "Q ]" ], R, "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                   homalgSendBlocking( [ v, "P := [ GroebnerBasis( x ) : x in ", v, "P ]" ], R, "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                   
+                   c := Int( homalgSendBlocking( [ "#", v, "Q" ], "need_output", R, HOMALG_IO.Pictograms.PrimaryDecomposition ) );
+                   
+                   return
+                     List( [ 1 .. c ],
+                           function( i )
+                             local primary, prime;
+                             
+                             primary := HomalgVoidMatrix( "unkown_number_of_rows", 1, R );
+                             prime := HomalgVoidMatrix( "unkown_number_of_rows", 1, R );
+                             
+                             homalgSendBlocking( [ primary, " := Matrix(", R, ", #(", v, "Q[", i, "]), 1, ", v, "Q[", i, "] )" ], "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                             homalgSendBlocking( [ prime, " := Matrix(", R, ", #(", v, "P[", i, "]), 1, ", v, "P[", i, "] )" ], "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                             
+                             return [ primary, prime ];
+                             
+                           end
+                         );
+                   
+                 end,
+               
+               RadicalDecomposition :=
+                 function( mat )
+                   local R, v, c;
+                   
+                   R := HomalgRing( mat );
+                   
+                   v := homalgStream( R )!.variable_name;
+                   
+                   mat := EntriesOfHomalgMatrix( mat );
+                   
+                   homalgSendBlocking( [ v, "P := RadicalDecomposition(ideal<", R, "|", mat, ">)" ], "need_command", "break_lists", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                   homalgSendBlocking( [ v, "P := [ GroebnerBasis( x ) : x in ", v, "P ]" ], R, "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                   
+                   c := Int( homalgSendBlocking( [ "#", v, "P" ], "need_output", R, HOMALG_IO.Pictograms.PrimaryDecomposition ) );
+                   
+                   return
+                     List( [ 1 .. c ],
+                           function( i )
+                             local prime;
+                             
+                             prime := HomalgVoidMatrix( "unkown_number_of_rows", 1, R );
+                             
+                             homalgSendBlocking( [ prime, " := Matrix(", R, ", #(", v, "P[", i, "]), 1, ", v, "P[", i, "] )" ], "need_command", HOMALG_IO.Pictograms.PrimaryDecomposition );
+                             
+                             return prime;
+                             
+                           end
+                         );
+                   
+                 end,
+               
                Eliminate :=
                  function( rel, indets, R )
                    local elim;
                    
                    elim := Difference( Indeterminates( R ), indets );
                    
-                   return homalgSendBlocking( [ "Transpose(Matrix([GroebnerBasis(EliminationIdeal(ideal<", R, "|", rel, ">,{", elim, "}))]))" ], R, "break_lists", HOMALG_IO.Pictograms.Eliminate );
+                   return homalgSendBlocking( [ "Transpose(Matrix([GroebnerBasis(EliminationIdeal(ideal<", R, "|", rel, ">,{", elim, "}))]))" ], "break_lists", HOMALG_IO.Pictograms.Eliminate );
                    
                  end,
                

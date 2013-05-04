@@ -26,7 +26,7 @@
   \item \texttt  {AreEqualMatrices}
     \subitem homalgTable entry, \hyperpage{63}
     \subitem ResidueClassRing, \hyperpage{100}
-  \item \texttt  {AreUnitsCentral}, \hyperpage{17}
+  \item \texttt  {AreUnitsCentral}, \hyperpage{18}
   \item \texttt  {AssociatedGradedRing}, \hyperpage{22}
 
   \indexspace
@@ -133,7 +133,7 @@
 
   \indexspace
 
-  \item \texttt  {GeneralLinearRank}, \hyperpage{21}
+  \item \texttt  {GeneralLinearRank}, \hyperpage{22}
   \item \texttt  {GenerateSameColumnModule}
     \subitem for pairs of matrices, \hyperpage{52}
   \item \texttt  {GenerateSameRowModule}
@@ -147,7 +147,7 @@
   \item \texttt  {GetUnitPosition}
     \subitem for matrices, \hyperpage{44}
     \subitem homalgTable entry, \hyperpage{69}
-  \item \texttt  {GlobalDimension}, \hyperpage{21}
+  \item \texttt  {GlobalDimension}, \hyperpage{22}
 
   \indexspace
 
@@ -194,7 +194,7 @@
     \subitem homalgTable entry, \hyperpage{58}
     \subitem ResidueClassRing, \hyperpage{95}
   \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
 		\hyperpage{20}
   \item \texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
@@ -266,7 +266,7 @@
     \subitem for ring maps, \hyperpage{24}
   \item \texttt  {IsKaplanskyHermite}, \hyperpage{12}
   \item \texttt  {IsKoszul}, \hyperpage{15}
-  \item \texttt  {IsLeftArtinian}, \hyperpage{15}
+  \item \texttt  {IsLeftArtinian}, \hyperpage{16}
   \item \texttt  {IsLeftFiniteFreePresentationRing}, \hyperpage{17}
   \item \texttt  {IsLeftGlobalDimensionFinite}, \hyperpage{13}
   \item \texttt  {IsLeftHereditary}, \hyperpage{14}
@@ -277,7 +277,7 @@
   \item \texttt  {IsLeftPrincipalIdealRing}, \hyperpage{16}
   \item \texttt  {IsLeftRegular}, \hyperpage{32}
     \subitem for homalg ring elements, \hyperpage{18}
-  \item \texttt  {IsLocal}, \hyperpage{13}
+  \item \texttt  {IsLocal}, \hyperpage{14}
   \item \texttt  {IsLocalizedWeylRing}, \hyperpage{13}
   \item \texttt  {IsLowerStairCaseMatrix}, \hyperpage{34}
   \item \texttt  {IsLowerTriangularMatrix}, \hyperpage{34}
@@ -298,14 +298,14 @@
   \item \texttt  {IsRationalsForHomalg}, \hyperpage{11}
   \item \texttt  {IsReducedBasisOfColumnsMatrix}, \hyperpage{35}
   \item \texttt  {IsReducedBasisOfRowsMatrix}, \hyperpage{35}
-  \item \texttt  {IsRegular}, \hyperpage{16}
+  \item \texttt  {IsRegular}, \hyperpage{17}
     \subitem for homalg ring elements, \hyperpage{18}
-  \item \texttt  {IsResidueClassRingOfTheIntegers}, \hyperpage{11}
+  \item \texttt  {IsResidueClassRingOfTheIntegers}, \hyperpage{12}
   \item \texttt  {IsRightArtinian}, \hyperpage{16}
   \item \texttt  {IsRightFiniteFreePresentationRing}, \hyperpage{17}
   \item \texttt  {IsRightGlobalDimensionFinite}, \hyperpage{13}
   \item \texttt  {IsRightHereditary}, \hyperpage{14}
-  \item \texttt  {IsRightHermite}, \hyperpage{14}
+  \item \texttt  {IsRightHermite}, \hyperpage{15}
   \item \texttt  {IsRightInvertibleMatrix}, \hyperpage{33}
   \item \texttt  {IsRightNoetherian}, \hyperpage{15}
   \item \texttt  {IsRightOreDomain}, \hyperpage{16}
@@ -328,7 +328,7 @@
   \item \texttt  {IsUpperStairCaseMatrix}, \hyperpage{34}
   \item \texttt  {IsUpperTriangularMatrix}, \hyperpage{33}
   \item \texttt  {IsVoidMatrix}, \hyperpage{35}
-  \item \texttt  {IsWeylRing}, \hyperpage{12}
+  \item \texttt  {IsWeylRing}, \hyperpage{13}
   \item \texttt  {IsZero}
     \subitem for matrices, \hyperpage{31}
     \subitem for rings, \hyperpage{11}
@@ -358,7 +358,7 @@
   \indexspace
 
   \item \texttt  {MatrixOfSymbols}, \hyperpage{38}
-  \item \texttt  {MinusOne}, \hyperpage{19}
+  \item \texttt  {MinusOne}, \hyperpage{20}
   \item \texttt  {MulMat}
     \subitem homalgTable entry, \hyperpage{59}
     \subitem ResidueClassRing, \hyperpage{98}
@@ -387,7 +387,7 @@
     \subitem homalgTable entry, \hyperpage{71}
   \item \texttt  {PositionOfFirstNonZeroEntryPerRow}, \hyperpage{36}
     \subitem homalgTable entry, \hyperpage{70}
-  \item \texttt  {ProductOfIndeterminates}, \hyperpage{19}
+  \item \texttt  {ProductOfIndeterminates}, \hyperpage{20}
   \item \texttt  {ProjectiveDegree}, \hyperpage{38}
 
   \indexspace
@@ -414,7 +414,7 @@
   \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
 		\hyperpage{20}
   \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Polynomial}\discretionary {-}{}{}\texttt  {Ring}, 
 		\hyperpage{20}
   \item \texttt  {RelativeSyzygiesGeneratorsOfColumns}

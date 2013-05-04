@@ -36,10 +36,11 @@
 \indexentry{IsPrimeIdeal@\texttt  {IsPrimeIdeal}|hyperpage}{29}
 \indexentry{ResidueClassRing@\texttt  {ResidueClassRing}|hyperpage}{30}
 \indexentry{PrimaryDecomposition@\texttt  {PrimaryDecomposition}|hyperpage}{30}
+\indexentry{RadicalDecomposition@\texttt  {RadicalDecomposition}|hyperpage}{30}
 \indexentry{ElementaryDivisors@\texttt  {ElementaryDivisors}|hyperpage}{30}
 \indexentry{FittingIdeal@\texttt  {FittingIdeal}|hyperpage}{30}
 \indexentry{NonFlatLocus@\texttt  {NonFlatLocus}|hyperpage}{30}
-\indexentry{LargestMinimalNumberOfLocalGenerators@\texttt  {Largest}\discretionary {-}{}{}\texttt  {Minimal}\discretionary {-}{}{}\texttt  {Number}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Local}\discretionary {-}{}{}\texttt  {Generators}|hyperpage}{30}
+\indexentry{LargestMinimalNumberOfLocalGenerators@\texttt  {Largest}\discretionary {-}{}{}\texttt  {Minimal}\discretionary {-}{}{}\texttt  {Number}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Local}\discretionary {-}{}{}\texttt  {Generators}|hyperpage}{31}
 \indexentry{CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries@\texttt  {Coefficients}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Unreduced}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}|hyperpage}{31}
 \indexentry{CoefficientsOfNumeratorOfHilbertPoincareSeries@\texttt  {Coefficients}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}|hyperpage}{31}
 \indexentry{UnreducedNumeratorOfHilbertPoincareSeries@\texttt  {Unreduced}\discretionary {-}{}{}\texttt  {Numerator}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Hilbert}\discretionary {-}{}{}\texttt  {Poincare}\discretionary {-}{}{}\texttt  {Series}|hyperpage}{31}
@@ -47,7 +48,7 @@
 \indexentry{HilbertPoincareSeries@\texttt  {HilbertPoincareSeries}|hyperpage}{31}
 \indexentry{AffineDegree@\texttt  {AffineDegree}|hyperpage}{31}
 \indexentry{DataOfHilbertFunction@\texttt  {DataOfHilbertFunction}|hyperpage}{31}
-\indexentry{HilbertFunction@\texttt  {HilbertFunction}|hyperpage}{31}
+\indexentry{HilbertFunction@\texttt  {HilbertFunction}|hyperpage}{32}
 \indexentry{IndexOfRegularity@\texttt  {IndexOfRegularity}|hyperpage}{32}
 \indexentry{HomalgRing@\texttt  {HomalgRing}!for modules|hyperpage}{32}
 \indexentry{ByASmallerPresentation@\texttt  {ByASmallerPresentation}!for modules|hyperpage}{32}

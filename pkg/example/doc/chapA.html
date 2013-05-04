@@ -578,6 +578,8 @@ For help, type: ?Example package
 
 <p>Package authors should choose a version numbering scheme that admits a new version number even after tiny changes to the package, and ensure that version numbers of successive package versions increase. The automatic update of package archives in the <strong class="pkg">GAP</strong> distribution will only work if a package has a new version number.</p>
 
+<p>It is a well-established custom to name package archives like <code class="file">name-version.tar.gz</code>, <code class="file">name-version.tar.bz2</code> etc., where <code class="code">name</code> is the lower case name, and <code class="code">version</code> is the version (another custom is that the archive then should extract to a directory that has exactly the name <code class="file">name-version</code>).</p>
+
 <p>It is very important that there should not ever be, for a given <strong class="pkg">GAP</strong> package, two different archives with the same package version number. If you make changes to your package and place a new archive of the package onto the public server, please ensure that a new archive has a new version number. This should be done even for very minor changes.</p>
 
 <p>For most of the packages it will be inappropriate to re-use the date of the release as a version number. It's much more obvious how big are the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between versions "2008.12.17", "2011.04.15" and "2011.09.14".</p>

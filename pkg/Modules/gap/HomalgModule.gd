@@ -105,6 +105,20 @@ DeclareProperty( "IsHolonomic",
 DeclareAttribute( "PrimaryDecomposition",
         IsHomalgModule );
 
+##  <#GAPDoc Label="RadicalDecomposition">
+##  <ManSection>
+##    <Attr Arg="J" Name="RadicalDecomposition"/>
+##    <Returns>a list</Returns>
+##    <Description>
+##      The prime decomposition of the radical of the ideal <A>J</A>. The ring has to be commutative. <Br/>
+##      (no method installed)
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "RadicalDecomposition",
+        IsHomalgModule );
+
 ##
 ## the attributes below are intrinsic:
 ##
@@ -335,11 +349,11 @@ DeclareOperation( "HomalgZeroLeftModule",
 DeclareOperation( "HomalgZeroRightModule",
         [ IsHomalgRing ] );
 
-DeclareOperation( "*",
-        [ IsInt, IsHomalgRing ] );
+#DeclareOperation( "*",
+#        [ IsInt, IsHomalgRing ] );
 
-DeclareOperation( "*",
-        [ IsHomalgRing, IsInt ] );
+#DeclareOperation( "*",
+#        [ IsHomalgRing, IsInt ] );
 
 DeclareOperation( "RingMap",
         [ IsHomalgModule, IsHomalgRing, IsHomalgRing ] );
@@ -444,8 +458,8 @@ DeclareOperation( "AddANewPresentation",
 DeclareOperation( "AddANewPresentation",
         [ IsHomalgModule, IsHomalgRelations, IsHomalgMatrix, IsHomalgMatrix ] );
 
-DeclareOperation( "DecideZero",
-        [ IsHomalgMatrix, IsHomalgModule ] );
+#DeclareOperation( "DecideZero",
+#        [ IsHomalgMatrix, IsHomalgModule ] );
 
 DeclareOperation( "UnionOfRelations",
         [ IsHomalgMatrix, IsHomalgModule ] );

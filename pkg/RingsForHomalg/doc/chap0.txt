@@ -6,10 +6,10 @@
            [1XDictionaries of External Rings for the [5XGAP[105X Package [5Xhomalg[105X[101X
   
   
-                               Version 2013.02.25
+                               Version 2013.04.19
   
   
-                                 December 2012
+                                   April 2013
   
   
                                 Mohamed Barakat
@@ -133,7 +133,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©  2007-2012  by  Mohamed  Barakat,  Simon Görtzen, Markus Kirschmer, Markus
+  [33X[0;0Y©  2007-2013  by  Mohamed  Barakat,  Simon Görtzen, Markus Kirschmer, Markus
   Lange-Hegermann,  Oleksandr Motsak, Max Neunhöffer, Daniel Robertz, and Hans
   Schönemann.[133X
   

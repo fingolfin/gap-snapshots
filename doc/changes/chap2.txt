@@ -265,3 +265,58 @@
         covers  of  symmetric and alternating groups and provides some related
         functionalities.[133X
   
+  
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.6.4 (April 2013)[133X[101X
+  
+  [33X[0;0YNew functionality:[133X
+  
+  [30X    [33X[0;6YNew  command line option [10X-O[110X was introduced to disable loading obsolete
+        variables.  This  option  may be used, for example, to check that they
+        are  not  used  in  a  [5XGAP[105X  package or one's own [5XGAP[105X code. For further
+        details  see  [14XReference:  options[114X  and [14XReference: Replaced and Removed
+        Command Names[114X.[133X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFixed     the     bug     in    [2XNewmanInfinityCriterion[102X    ([14XReference:
+        NewmanInfinityCriterion[114X)  which  may  cause  returning [9Xtrue[109X instead of
+        [9Xfalse[109X. [Reported by Lev Glebsky][133X
+  
+  [33X[0;0YFixed bugs which could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFixed  the  kernel method for [2XRemove[102X ([14XReference: Remove[114X) which did not
+        raise  an  error in case of empty lists, but corrupted the object. The
+        error  message  in  a  library  method  is also improved. [Reported by
+        Roberto Ràdina][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YFixed  requirements  in  a  method to multiply a list and an algebraic
+        element. [Reported by Sebastian Gutsche][133X
+  
+  [30X    [33X[0;6YFixed  a  bug  in [2XNaturalCharacter[102X ([14XReference: NaturalCharacter (for a
+        group)[114X)  entering  a  break  loop  when being called on a homomorphism
+        whose  image  is  not  a  permutation  group.  [Reported  by Sebastian
+        Gutsche][133X
+  
+  [30X    [33X[0;6YFixed     a     bug     in     [2XExponentsConjugateLayer[102X     ([14XReference:
+        ExponentsConjugateLayer[114X)  which occured, for example, in some calls of
+        [2XSubgroupsSolvableGroup[102X  ([14XReference:  SubgroupsSolvableGroup[114X) [Reported
+        by Ramon Esteban-Romero][133X
+  
+  [30X    [33X[0;6YFixed    a    problem    with   displaying   function   fields,   e.g.
+        [10XField(Indeterminate(Rationals,"x"))[110X. [Reported by Jan Willem Knopper][133X
+  
+  [30X    [33X[0;6YFixed  two bugs in the code for [2XNaturalHomomorphismByIdeal[102X ([14XReference:
+        NaturalHomomorphismByIdeal[114X)  for polynomial rings. [Reported by Martin
+        Leuner][133X
+  
+  [30X    [33X[0;6YAdded missing method for [2XString[102X ([14XReference: String[114X) for [10X-infinity[110X.[133X
+  
+  [30X    [33X[0;6YFixed  the  bug  with  [2XONanScottType[102X  ([14XReference:  ONanScottType[114X)  not
+        recognising product action properly in some cases.[133X
+  
+  [30X    [33X[0;6YThe  method  for  [2XSlotUsagePattern[102X  ([14XReference:  SlotUsagePattern[114X) for
+        straight  line  programs  had  a  bug which triggered an error, if the
+        straight line program contained unnecessary steps.[133X
+  

@@ -6,10 +6,10 @@
                    [1XWedderburn Decomposition of Group Algebras[101X
   
   
-                                 Version 4.5.3
+                                 Version 4.5.4
   
   
-                                31 January 2013
+                                 28 March 2013
   
   
                               Osnel Broche Cristo
@@ -105,7 +105,7 @@
   
   [33X[0;0YO.  Broche  Cristo, A. Konovalov, A. Olivieri, G. Olteanu, Á. del Río and I.
   Van Gelder. [13XWedderga --- Wedderburn Decomposition of Group Algebras, Version
-  4.5.3;[113X 2013 ([7Xhttp://www.cs.st-andrews.ac.uk/~alexk/wedderga[107X).[133X
+  4.5.4;[113X 2013 ([7Xhttp://www.cs.st-andrews.ac.uk/~alexk/wedderga[107X).[133X
   
   
   -------------------------------------------------------

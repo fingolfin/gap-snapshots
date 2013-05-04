@@ -72,7 +72,7 @@
 
 <p><strong class="pkg">GAP</strong> for UNIX will distinguish between upper and lower case options.</p>
 
-<p>As described in the <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL</code> file in the <strong class="pkg">GAP</strong> root directory, or the <strong class="pkg">GAP</strong> website), usually you will not execute <strong class="pkg">GAP</strong> directly. Instead you will call a (shell) script, with the name <code class="code">gap</code>, which in turn executes <strong class="pkg">GAP</strong>. This script sets some options which are necessary to make <strong class="pkg">GAP</strong> work on your system. This means that the default settings mentioned below may not be what you experience when you execute <strong class="pkg">GAP</strong> on your system.</p>
+<p>As described in the <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL</code> file in the <strong class="pkg">GAP</strong> root directory, or at <span class="URL"><a href="http://www.gap-system.org/Download/INSTALL">http://www.gap-system.org/Download/INSTALL</a></span>), usually you will not execute <strong class="pkg">GAP</strong> directly. Instead you will call a (shell) script, with the name <code class="code">gap</code>, which in turn executes <strong class="pkg">GAP</strong>. This script sets some options which are necessary to make <strong class="pkg">GAP</strong> work on your system. This means that the default settings mentioned below may not be what you experience when you execute <strong class="pkg">GAP</strong> on your system.</p>
 
 <p>During a <strong class="pkg">GAP</strong> session, one can find the current values of command line options in the record <code class="code">GAPInfo.CommandLineOptions</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)), whose component names are the command line options (without the leading <code class="code">-</code>).</p>
 
@@ -128,6 +128,11 @@
 <p>tells you that <strong class="pkg">GAP</strong> has loaded the compiled version of the library file <code class="file">lib/kernel.g</code>. This compiled module was dynamically loaded to the <strong class="pkg">GAP</strong> kernel at runtime from a corresponding <code class="code">.so</code> file.</p>
 
 <p>Obviously, this is a debugging option and most users will not need it.</p>
+
+</dd>
+<dt><strong class="Mark">
+<code class="code">-E</code></strong></dt>
+<dd><p>If your <strong class="pkg">GAP</strong> installation uses the <code class="code">readline</code> library for command line editing (see <a href="chap6.html#X7E95EB017803F53C"><span class="RefLink">6.9</span></a>), this may be disabled by using <code class="code">-E</code> option. This option may be repeated to toggle this behavior on and off. If your <strong class="pkg">GAP</strong> installation does not use the <code class="code">readline</code> library (you can check by <code class="code">IsBound(GAPInfo.UseReadline);</code> if this is the case), this option will have no effect at all.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -221,6 +226,11 @@ gap: hmm, I cannot find 'lib/init.g' maybe use option '-l &lt;gaproot&gt;'?
 <dd><p>tells <strong class="pkg">GAP</strong> to disable the line editing and history (see <a href="chap6.html#X82234FD181899530"><span class="RefLink">6.8</span></a>).</p>
 
 <p>You may want to do this if the command line editing is incompatible with another program that is used to run <strong class="pkg">GAP</strong>. For example if <strong class="pkg">GAP</strong> is run from inside a GNU Emacs shell window, <code class="code">-n</code> should be used since otherwise every input line will be echoed twice, once by Emacs and once by <strong class="pkg">GAP</strong>. This option does not toggle; you must use <code class="code">-f</code> to enable line editing.</p>
+
+</dd>
+<dt><strong class="Mark">
+<code class="code">-O</code></strong></dt>
+<dd><p>disables loading obsolete variables (see Chapter <a href="chap77.html#X78C85ED17F00DCC1"><span class="RefLink">77</span></a>). This option is used mainly for testing purposes, for example in order to make sure that a <strong class="pkg">GAP</strong> package or one's own <strong class="pkg">GAP</strong> code does not rely on the obsolete variables.</p>
 
 </dd>
 <dt><strong class="Mark">

@@ -272,7 +272,7 @@
   [33X[0;0YAs  mentioned  in [14X31.1[114X,  the operational structure of a domain is fixed when
   the  domain  is  constructed.  For  example,  if [3XD[103X was constructed by [2XMonoid[102X
   ([14X52.1-2[114X)  then  [3XD[103X is in general not regarded as a group in [5XGAP[105X, even if [3XD[103X is
-  in fact closed under taking inverses. In this case, [2XIsGroup[102X ([14X39.2-6[114X) returns
+  in fact closed under taking inverses. In this case, [2XIsGroup[102X ([14X39.2-7[114X) returns
   [9Xfalse[109X  for  [3XD[103X.  The  operational  structure  determines which operations are
   applicable  for  a  domain,  so  for  example [2XSylowSubgroup[102X ([14X39.13-1[114X) is not
   defined for [3XD[103X and therefore will signal an error.[133X
@@ -282,7 +282,7 @@
   [33X[0;0YThe  functions  [10XIs[3XStruct[103X[10X[110X  implement  the  tests  whether  a domain [3XD[103X has the
   respective  operational  structure (upon construction). [10XIs[3XStruct[103X[10X[110X is a filter
   (see [14X13[114X)  that  involves  certain  categories  (see [14X13.3[114X)  and  usually also
-  certain  properties  (see [14X13.7[114X). For example, [2XIsGroup[102X ([14X39.2-6[114X) is equivalent
+  certain  properties  (see [14X13.7[114X). For example, [2XIsGroup[102X ([14X39.2-7[114X) is equivalent
   to [10XIsMagmaWithInverses and IsAssociative[110X, the first being a category and the
   second being a property.[133X
   
@@ -461,7 +461,7 @@
   
   [33X[0;0YFor  many domains that have [13Xnatural generators by construction[113X (for example,
   the  natural  generators  of a free group of rank two are the two generators
-  stored as value of the attribute [2XGeneratorsOfGroup[102X ([14X39.2-3[114X), and the natural
+  stored as value of the attribute [2XGeneratorsOfGroup[102X ([14X39.2-4[114X), and the natural
   generators  of  a  free  associative  algebra are those generators stored as
   value of the attribute [2XGeneratorsOfAlgebra[102X ([14X62.9-1[114X)), each [13Xnatural[113X generator
   can  be  accessed using the [10X.[110X operator. For a domain [3XD[103X, [10X[3XD[103X[10X.i[110X returns the [22Xi[122X-th

@@ -328,7 +328,7 @@
   
   [33X[0;0YIf  the  name  of  a  function contains the word [21X[10XOf[110X[121X then the return value is
   thought of as information deduced from the arguments. Usually such functions
-  are  attributes  (see [14X13.5[114X).  Examples are [2XGeneratorsOfGroup[102X ([14X39.2-3[114X), which
+  are  attributes  (see [14X13.5[114X).  Examples are [2XGeneratorsOfGroup[102X ([14X39.2-4[114X), which
   returns  a  list  of  generators  for  the  group  entered  as  argument, or
   [2XDiagonalOfMat[102X ([14X24.12-1[114X).[133X
   
@@ -345,7 +345,7 @@
   
   [33X[0;0YOften   such  functions  construct  an  algebraic  structure  given  by  its
   generators  (for  example, [2XRingByGenerators[102X ([14X56.1-4[114X)). In some cases, [21X[10XBy[110X[121X may
-  be  replaced  by  [21X[10XWith[110X[121X (like e.g. [2XGroupWithGenerators[102X ([14X39.2-2[114X)) or even both
+  be  replaced  by  [21X[10XWith[110X[121X (like e.g. [2XGroupWithGenerators[102X ([14X39.2-3[114X)) or even both
   versions  of the name may be used. The difference between [10XStructByGenerators[110X
   and   [10XStructWithGenerators[110X   is   that   the   latter  guarantees  that  the
   [10XGeneratorsOfStruct[110X  value  of  the  result  is  equal  to  the  given set of
@@ -357,7 +357,7 @@
   
   [30X    [33X[0;6Yknow  more  about  its  own structure (and so support more operations)
         than  its  input (e.g. if the elements of the collection form a group,
-        then this group can be constructed using [2XAsGroup[102X ([14X39.2-4[114X));[133X
+        then this group can be constructed using [2XAsGroup[102X ([14X39.2-5[114X));[133X
   
   [30X    [33X[0;6Ydiscard  its  additional  structure (e.g. [2XAsList[102X ([14X30.3-8[114X) applied to a
         group will return a list of its elements);[133X

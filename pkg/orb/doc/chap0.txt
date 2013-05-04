@@ -6,10 +6,10 @@
                       [1Xorb --- Methods to enumerate Orbits[101X
   
   
-                                  Version 4.5
+                                  Version 4.6
   
   
-                                    May 2012
+                                    May 2013
   
   
                                  Jürgen Müller
@@ -45,7 +45,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2005-2012 by Jürgen Müller, Max Neunhöffer and Felix Noeske[133X
+  [33X[0;0Y© 2005-2013 by Jürgen Müller, Max Neunhöffer and Felix Noeske[133X
   
   [33X[0;0YThis  program  is  free  software:  you can redistribute it and/or modify it
   under  the  terms of the GNU General Public License as published by the Free

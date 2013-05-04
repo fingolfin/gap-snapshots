@@ -20,11 +20,11 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.dev' and `today' 
+# do not edit the following three lines. Occurences of `4.6.4' and `04-May-2013' 
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := "4.6.3",
-    Date := "18-Mar-2013",
-    NeedKernelVersion := "4.6.3",
+    Version := "4.6.4",
+    Date := "04-May-2013",
+    NeedKernelVersion := "4.6.4",
 
 # Without the needed packages, GAP does not start.
     Dependencies := rec(
@@ -76,6 +76,7 @@ BIND_GLOBAL( "GAPInfo", rec(
       [ "D", false, "enable/disable debugging the loading of files" ],
       [ "M", false, "disable/enable loading of compiled modules" ],
       [ "N", false, "unused, for backward compatibility only" ],
+      [ "O", false, "disable/enable loading of obsolete files" ],
       [ "X", false, "enable/disable CRC checking for compiled modules" ],
       [ "T", false, "disable/enable break loop" ],
       [ "i", "", "<file>", "change the name of the init file" ],

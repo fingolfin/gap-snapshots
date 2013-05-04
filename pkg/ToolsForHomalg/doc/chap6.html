@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (ToolsForHomalg) - Chapter 6: ToDo-list</title>
+<title>GAP (ToolsForHomalg) - Chapter 6: Pointers</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,261 +15,157 @@
 <body class="chap6"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X7B4028057844FD6B" name="X7B4028057844FD6B"></a></p>
-<div class="ChapSects"><a href="chap6.html#X7B4028057844FD6B">6 <span class="Heading">ToDo-list</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X86137045808AF035">6.1 <span class="Heading">ToDo-list entries</span></a>
+<p><a id="X81C68E82799A72EA" name="X81C68E82799A72EA"></a></p>
+<div class="ChapSects"><a href="chap6.html#X81C68E82799A72EA">6 <span class="Heading">Pointers</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X86D963DC7968899B">6.1 <span class="Heading">Weak pointer objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X876F23977AA5C19E">6.1-1 SourcePart</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86B9FC7A78FF9347">6.1-2 TargetPart</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8041DC118358A5CD">6.1-3 SetTargetValueObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X793216E3836F177C">6.1-4 SetTargetObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F63A94D7B43B880">6.1-5 ProcessAToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843B58A884563E2D">6.1-6 AreCompatible</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X837361A982A9DA32">6.1-7 ToDoListEntryWithWeakPointers</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X811E554386D68A87">6.1-8 ToDoListEntryWithPointers</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86ECD224820CBB4E">6.1-9 ToDoListEntryWithListOfSources</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECB3D1C7BDD580E">6.1-10 ToDoListEntryWhichLaunchesAFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A0DF7C07D589BC5">6.1-11 CreateImmediateMethodForToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79D0F627831D3B87">6.1-12 JoinToDoListEntries</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78F0BFF382F62287">6.1-13 GenesisOfToDoListEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81E733C27D96F9C8">6.1-14 DescriptionOfImplication</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AF6D36B86EF4FBD">6.1-1 IsContainerForWeakPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78528671799AA08D">6.1-2 ContainerForWeakPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81A9F7857F8526B2">6.1-3 UpdateContainerOfWeakPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E59DD5B8396C63B">6.1-4 _AddElmWPObj_ForHomalg</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E229DC980597F0D">6.1-5 _AddTwoElmWPObj_ForHomalg</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7FD47F2B820F45E1">6.1-6 _ElmWPObj_ForHomalg</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7D9151158577E272">6.2 <span class="Heading">Category</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7D48F98C7CA131A2">6.2 <span class="Heading">Pointer objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86D2B9E180E01856">6.2-1 IsToDoList</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7ABF649E831D4D8E">6.3 <span class="Heading">Constructor</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X846756CA825D07AD">6.3-1 NewToDoList</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7B69858A7C5DD48B">6.4 <span class="Heading">This is the magic</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X788F2635833587F8">6.4-1 Process_A_ToDo_List_Entry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AD403197873FE42">6.4-2 ProcessToDoList</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X844D8E5879757C61">6.5 <span class="Heading">Methods for all objects</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EB7863D7F4DC75E">6.5-1 AddToToDoList</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87B1AEB986DECB11">6.5-2 ToDoList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X820FC040793F6725">6.2-1 IsContainerForPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B40EDC784E11197">6.2-2 ContainerForPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79FC60458580DCAB">6.2-3 UpdateContainerOfPointers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81EB136386E98806">6.2-4 _AddElmPObj_ForHomalg</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C77C0C384F45C0C">6.2-5 _AddTwoElmPObj_ForHomalg</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X854EF9EA85DB1E4F">6.2-6 _ElmPObj_ForHomalg</a></span>
 </div></div>
 </div>
 
-<h3>6 <span class="Heading">ToDo-list</span></h3>
+<h3>6 <span class="Heading">Pointers</span></h3>
 
-<p><a id="X86137045808AF035" name="X86137045808AF035"></a></p>
+<p><a id="X86D963DC7968899B" name="X86D963DC7968899B"></a></p>
 
-<h4>6.1 <span class="Heading">ToDo-list entries</span></h4>
+<h4>6.1 <span class="Heading">Weak pointer objects</span></h4>
 
-<p><a id="X876F23977AA5C19E" name="X876F23977AA5C19E"></a></p>
+<p><a id="X7AF6D36B86EF4FBD" name="X7AF6D36B86EF4FBD"></a></p>
 
-<h5>6.1-1 SourcePart</h5>
+<h5>6.1-1 IsContainerForWeakPointers</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SourcePart</code>( <var class="Arg">entry</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>Returns the a list of source parts of the ToDo-list entry <var class="Arg">entry</var>. This is a triple of an object, a name of a filter/attribute\ , and a value to which the attribute has to be set to activate the entry</p>
-
-<p><a id="X86B9FC7A78FF9347" name="X86B9FC7A78FF9347"></a></p>
-
-<h5>6.1-2 TargetPart</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TargetPart</code>( <var class="Arg">entry</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>Returns the target part of the ToDo-list entry <var class="Arg">entry</var>. This is a triple of an object, a name of a filter/attribute, and a val\ ue to which the specific filter/attribute should be set. The third entry of the list might also be a function to which return value the att\ ribute is set.</p>
-
-<p><a id="X8041DC118358A5CD" name="X8041DC118358A5CD"></a></p>
-
-<h5>6.1-3 SetTargetValueObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetTargetValueObject</code>( <var class="Arg">entry</var>, <var class="Arg">value</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>If the given value of the target part is the return value of a function this command sets the target value of the entry to a functi\ on. This is done to keep proof tracking availible.</p>
-
-<p><a id="X793216E3836F177C" name="X793216E3836F177C"></a></p>
-
-<h5>6.1-4 SetTargetObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetTargetObject</code>( <var class="Arg">entry</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>If the target object, i.e. the first entry of the target part, was given as a function, this method can set this entry to the retur\ n value computed in ProcessToDoListEntry. This happens atomatically, do not worry about it.</p>
-
-<p><a id="X7F63A94D7B43B880" name="X7F63A94D7B43B880"></a></p>
-
-<h5>6.1-5 ProcessAToDoListEntry</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProcessAToDoListEntry</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a boolean</p>
-
-<p>Processes a ToDo-list entry, i.e. sets the information given in TargetPart if the definitions in SourcePart are fulfilled. Returns \ true if the entry could be processed, false if not, and fail if SourcePart or TargetPart weren't availible anymore.</p>
-
-<p><a id="X843B58A884563E2D" name="X843B58A884563E2D"></a></p>
-
-<h5>6.1-6 AreCompatible</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AreCompatible</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a boolean</p>
-
-<p>Returns true if TargetPart( <var class="Arg">A</var> ) = SourcePart( <var class="Arg">B</var> ), false otherwise.</p>
-
-<p><a id="X837361A982A9DA32" name="X837361A982A9DA32"></a></p>
-
-<h5>6.1-7 ToDoListEntryWithWeakPointers</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithWeakPointers</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var>, <var class="Arg">arg5</var>, <var class="Arg">arg6</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a ToDoListEntry</p>
-
-<p>Creates a ToDo-list entry where the first three arguments correspond to the SourcePart of the entry and the last three ones to the \ TargetPart. This type of entry uses weakpointers as links to the object so you might be careful with it.</p>
-
-<p><a id="X811E554386D68A87" name="X811E554386D68A87"></a></p>
-
-<h5>6.1-8 ToDoListEntryWithPointers</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithPointers</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var>, <var class="Arg">arg5</var>, <var class="Arg">arg6</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a ToDoListEntry</p>
-
-<p>The same as ToDoListEntryWithWeakPointers, but with pointers.</p>
-
-<p><a id="X86ECD224820CBB4E" name="X86ECD224820CBB4E"></a></p>
-
-<h5>6.1-9 ToDoListEntryWithListOfSources</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWithListOfSources</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var>, <var class="Arg">arg4</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a ToDoListEntry</p>
-
-<p>The same as ToDoListEntryWithPointers, but the first argument must be a list of touples or triples defining the conditions of this \ entry</p>
-
-<p><a id="X7ECB3D1C7BDD580E" name="X7ECB3D1C7BDD580E"></a></p>
-
-<h5>6.1-10 ToDoListEntryWhichLaunchesAFunction</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoListEntryWhichLaunchesAFunction</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a ToDoListEntry</p>
-
-<p>The first argument must be a list of tuples or triples which contain an object, on which the second entry, an attribute given by it\ s name as a string can be applied. It the entry is a tuple the ToDo-list entry checks wether the Tester of the second value is true. If the\ value of the attribute matches the third entry, the function given as second argument is launched.</p>
-
-<p><a id="X7A0DF7C07D589BC5" name="X7A0DF7C07D589BC5"></a></p>
-
-<h5>6.1-11 CreateImmediateMethodForToDoListEntry</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateImmediateMethodForToDoListEntry</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>Creates an ImmediateMethod for a ToDoListEntry. This method is for internal use only.</p>
-
-<p><a id="X79D0F627831D3B87" name="X79D0F627831D3B87"></a></p>
-
-<h5>6.1-12 JoinToDoListEntries</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinToDoListEntries</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: a ToDoListEntry</p>
-
-<p>Joins a list of compatible ToDo-list entries to a new one.</p>
-
-<p><a id="X78F0BFF382F62287" name="X78F0BFF382F62287"></a></p>
-
-<h5>6.1-13 GenesisOfToDoListEntry</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GenesisOfToDoListEntry</code>( <var class="Arg">arg</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>If a ToDoListEntry is created as union of others, this is a list of those.</p>
-
-<p><a id="X81E733C27D96F9C8" name="X81E733C27D96F9C8"></a></p>
-
-<h5>6.1-14 DescriptionOfImplication</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DescriptionOfImplication</code>( <var class="Arg">arg</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>Has to be set to a string, which describes the reason for the conclusion. If the ToDo-list entry is displayed, the given string wil\ l be displayed with a because before it.</p>
-
-<p><a id="X7D9151158577E272" name="X7D9151158577E272"></a></p>
-
-<h4>6.2 <span class="Heading">Category</span></h4>
-
-<p><a id="X86D2B9E180E01856" name="X86D2B9E180E01856"></a></p>
-
-<h5>6.2-1 IsToDoList</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsToDoList</code>( <var class="Arg">arg</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsContainerForWeakPointers</code>( <var class="Arg">arg</var> )</td><td class="tdright">( category )</td></tr></table></div>
 <p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
 
-<p>This is the category of ToDo-lists. Every ToDo-list is an object of this category, which basically contains the ToDo-lists.</p>
+<p>The category for weak pointer objects</p>
 
-<p><a id="X7ABF649E831D4D8E" name="X7ABF649E831D4D8E"></a></p>
+<p><a id="X78528671799AA08D" name="X78528671799AA08D"></a></p>
 
-<h4>6.3 <span class="Heading">Constructor</span></h4>
+<h5>6.1-2 ContainerForWeakPointers</h5>
 
-<p><a id="X846756CA825D07AD" name="X846756CA825D07AD"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContainerForWeakPointers</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: a list which can store weak pointers</p>
 
-<h5>6.3-1 NewToDoList</h5>
+<p>The constructor for lists of weak pointers.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewToDoList</code>(  )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: nothing</p>
+<p><a id="X81A9F7857F8526B2" name="X81A9F7857F8526B2"></a></p>
 
-<p>Creates a new empty ToDo-list.</p>
+<h5>6.1-3 UpdateContainerOfWeakPointers</h5>
 
-<p><a id="X7B69858A7C5DD48B" name="X7B69858A7C5DD48B"></a></p>
-
-<h4>6.4 <span class="Heading">This is the magic</span></h4>
-
-<p><a id="X788F2635833587F8" name="X788F2635833587F8"></a></p>
-
-<h5>6.4-1 Process_A_ToDo_List_Entry</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Process_A_ToDo_List_Entry</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: a boolean</p>
-
-<p>Gets a ToDo-list entry, which is a pair of a list of strings and a weak pointer object, and processes it. If the action was done, i\ t returns true, if not, it returns false, and it returns fail if the action is not possible anymore due to deleted objects.</p>
-
-<p><a id="X7AD403197873FE42" name="X7AD403197873FE42"></a></p>
-
-<h5>6.4-2 ProcessToDoList</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProcessToDoList</code>( <var class="Arg">A</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>This is the magic! This attribute is never set. Creating an ToDo-list entry installs an ImmediateMethod for this attribute for the \ specific category of the object to which ToDo-list is added, and the filter the entry contains. It is then triggert if the filters become a\ pplicable, so the ToDo-list is processed</p>
-
-<p><a id="X844D8E5879757C61" name="X844D8E5879757C61"></a></p>
-
-<h4>6.5 <span class="Heading">Methods for all objects</span></h4>
-
-<p><a id="X7EB7863D7F4DC75E" name="X7EB7863D7F4DC75E"></a></p>
-
-<h5>6.5-1 AddToToDoList</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddToToDoList</code>( <var class="Arg">E</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpdateContainerOfWeakPointers</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: Nothing</p>
 
-<p>Adds the ToDo-list entry <var class="Arg">E</var> to the ToDo-list of <var class="Arg">M</var> and creates a new one, if this is needed.</p>
+<p>Updates the weak pointers in a container and deletes the empty ones</p>
 
-<p><a id="X87B1AEB986DECB11" name="X87B1AEB986DECB11"></a></p>
+<p><a id="X7E59DD5B8396C63B" name="X7E59DD5B8396C63B"></a></p>
 
-<h5>6.5-2 ToDoList</h5>
+<h5>6.1-4 _AddElmWPObj_ForHomalg</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ToDoList</code>( <var class="Arg">arg</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A ToDo-list</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _AddElmWPObj_ForHomalg</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing</p>
 
-<p>Returns the ToDo-list of an object, or creates a new one.</p>
+<p>Adds a weak pointer of an objects to a weak pointer list.</p>
+
+<p><a id="X7E229DC980597F0D" name="X7E229DC980597F0D"></a></p>
+
+<h5>6.1-5 _AddTwoElmWPObj_ForHomalg</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _AddTwoElmWPObj_ForHomalg</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing</p>
+
+<p>Adds a weak pointer which depends on two objects to a list of weak pointers</p>
+
+<p><a id="X7FD47F2B820F45E1" name="X7FD47F2B820F45E1"></a></p>
+
+<h5>6.1-6 _ElmWPObj_ForHomalg</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _ElmWPObj_ForHomalg</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: Nothing</p>
+
+<p>Creates a weak pointer depending on two objects and adds it to the container.</p>
+
+<p><a id="X7D48F98C7CA131A2" name="X7D48F98C7CA131A2"></a></p>
+
+<h4>6.2 <span class="Heading">Pointer objects</span></h4>
+
+<p><a id="X820FC040793F6725" name="X820FC040793F6725"></a></p>
+
+<h5>6.2-1 IsContainerForPointers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsContainerForPointers</code>( <var class="Arg">arg</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The category for pointer objects</p>
+
+<p><a id="X7B40EDC784E11197" name="X7B40EDC784E11197"></a></p>
+
+<h5>6.2-2 ContainerForPointers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContainerForPointers</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: a container for pointers</p>
+
+<p>Creates a container for pointers.</p>
+
+<p><a id="X79FC60458580DCAB" name="X79FC60458580DCAB"></a></p>
+
+<h5>6.2-3 UpdateContainerOfPointers</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpdateContainerOfPointers</code>( <var class="Arg">arg1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: Nothing</p>
+
+<p>Updates the container of pointers, removes old.</p>
+
+<p><a id="X81EB136386E98806" name="X81EB136386E98806"></a></p>
+
+<h5>6.2-4 _AddElmPObj_ForHomalg</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _AddElmPObj_ForHomalg</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing</p>
+
+<p>Adds a pointer to an object to a container for pointers.</p>
+
+<p><a id="X7C77C0C384F45C0C" name="X7C77C0C384F45C0C"></a></p>
+
+<h5>6.2-5 _AddTwoElmPObj_ForHomalg</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _AddTwoElmPObj_ForHomalg</code>( <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing</p>
+
+<p>Adds a pointer to two objects to a container for pointers</p>
+
+<p><a id="X854EF9EA85DB1E4F" name="X854EF9EA85DB1E4F"></a></p>
+
+<h5>6.2-6 _ElmPObj_ForHomalg</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; _ElmPObj_ForHomalg</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">arg3</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: an object</p>
+
+<p>Returns an object which a pointer refers to.</p>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -51,14 +51,6 @@ DeclareGlobalFunctionWithDocumentation( "Process_A_ToDo_List_Entry",
 ##
 ##########################################
 
-DeclareOperationWithDocumentation( "AddToToDoList",
-                                   [ IsToDoListEntry ],
-                                   [ "Adds the ToDo-list entry <A>E</A> to the",
-                                     "ToDo-list of <A>M</A> and creates a new one, if this is needed." ],
-                                   [  ],
-                                   "E",
-                                   [ "ToDo-list", "Methods_for_all_objects" ] );
-
 DeclareAttributeWithDocumentation( "ToDoList",
                                    IsObject,
                                    "Returns the ToDo-list of an object, or creates a new one.",
@@ -79,8 +71,72 @@ DeclareAttributeWithDocumentation( "ProcessToDoList",
 DeclareOperation( "ProcessToDoList_Real",
                   [ IsObject ] );
 
-## FIXME: Documentation.
-DeclareOperation( "TraceProof",
-                  [ IsObject, IsString, IsObject ] );
+DeclareOperationWithDocumentation( "TraceProof",
+                                   [ IsObject, IsString, IsObject ],
+                                   [ "If the object <A>obj</A> has the attribute <A>name</A>,",
+                                     "and its value is <A>val</A>, and the knowledge has",
+                                     "been obtained trough ToDoList-entries,",
+                                     "this method traces the way the property was set,",
+                                     "and returns a tree which describes the full way of how the attribute became known." ],
+                                   "a tree",
+                                   "obj,name,val",
+                                   [ "ToDo-list", "Proof_tracking" ] 
+                                 );
 
 DeclareGlobalFunction( "ToolsForHomalg_ToDoList_TaceProof_RecursivePart" );
+
+###########################################
+##
+## Tool Methods
+##
+###########################################
+
+DeclareGlobalVariable( "TODO_LISTS" );
+
+DeclareFilter( "CanHaveAToDoList", IsObject );
+
+DeclareProperty( "MaintainanceMethodForToDoLists", IsObject );
+
+DeclareOperationWithDocumentation( "ActivateToDoList",
+                                   [ IsObject ],
+                                   [ "This operation activates ToDoLists for the argument." ],
+                                   "nothing",
+                                   [ "ToDo-list", "Maintainance" ] );
+
+DeclareOperationWithDocumentation( "ActivateToDoList",
+                                   [ ],
+                                   [ "This operation activates ToDoLists for all objects." ],
+                                   "nothing",
+                                   [ "ToDo-list", "Maintainance" ] );
+
+DeclareOperationWithDocumentation( "DeactivateToDoList",
+                                   [ IsObject ],
+                                   [ "This operation deactivates ToDoLists for the argument." ],
+                                   "nothing",
+                                   [ "ToDo-list", "Maintainance" ] );
+
+DeclareOperationWithDocumentation( "DeactivateToDoList",
+                                   [ ],
+                                   [ "This operation deactivates ToDoLists for all objects.",
+                                     "Note that it is not possible to activate ToDoList for a single object",
+                                     "while they are not activated.",
+                                     "ToDoListEntries will yet be stored for all objects that can have ToDoLists.",
+                                     "All objects created while ToDoLists are deactivated have by default no ToDoList."
+                                  ],
+                                   "nothing",
+                                   [ "ToDo-list", "Maintainance" ] );
+
+DeclareGlobalFunction( "TraceProof_Position" );
+
+DeclareGlobalFunctionWithDocumentation( "ActivateWhereInfosInEntries",
+                                        [ "Stores the result of Where( 100 ) in an entry",
+                                          "if the entry is triggered. This is not activated",
+                                          "by default, since it might slow down the system." ],
+                                        "nothing",
+                                        [ "ToDo-list", "Maintainance" ] );
+
+DeclareGlobalFunctionWithDocumentation( "DeactivateWhereInfosInEntries",
+                                        [ "Deactives the storage of the result of Where( 100 )",
+                                          "if an entry is triggered. This is the default." ],
+                                        "nothing",
+                                        [ "ToDo-list", "Maintainance" ] );

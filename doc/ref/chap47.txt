@@ -478,7 +478,7 @@
   [29X[2XCosetTableBySubgroup[102X( [3XG[103X, [3XH[103X ) [32X operation
   
   [33X[0;0Yreturns a coset table for the action of [3XG[103X on the cosets of [3XH[103X. The columns of
-  the table correspond to the [2XGeneratorsOfGroup[102X ([14X39.2-3[114X) value of [3XG[103X.[133X
+  the table correspond to the [2XGeneratorsOfGroup[102X ([14X39.2-4[114X) value of [3XG[103X.[133X
   
   [1X47.6-5 CosetTableFromGensAndRels[101X
   
@@ -810,7 +810,7 @@
   [4X[32X[104X
   
   [33X[0;0YBy  default,  the  algorithm  computes no generating sets for the subgroups.
-  This can be enforced with [2XGeneratorsOfGroup[102X ([14X39.2-3[114X):[133X
+  This can be enforced with [2XGeneratorsOfGroup[102X ([14X39.2-4[114X):[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfGroup(li[2]);[127X[104X
@@ -1120,7 +1120,7 @@
   
   [33X[0;0Ytakes  a FpGroup family [3Xfpfam[103X, a finitely generated group [3XQ[103X such that the fp
   generators   of  [3Xfpfam[103X  can  be  mapped  by  an  epimorphism  [22Xphi[122X  onto  the
-  [2XGeneratorsOfGroup[102X ([14X39.2-3[114X) value of [3XQ[103X, and a subgroup [3XU[103X of [3XQ[103X. It returns the
+  [2XGeneratorsOfGroup[102X ([14X39.2-4[114X) value of [3XQ[103X, and a subgroup [3XU[103X of [3XQ[103X. It returns the
   subgroup of [3Xfpfam[103X[10X!.wholeGroup[110X which is the full preimage of [3XU[103X under [22Xphi[122X.[133X
   
   [1X47.13-2 IsSubgroupOfWholeGroupByQuotientRep[101X

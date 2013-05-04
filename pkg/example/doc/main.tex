@@ -98,8 +98,8 @@
 {\Huge \textbf{Example/Template of a \textsf{GAP} Package and Guidelines for Package Authors\mbox{}}}\\
 \vfill
 
-{\Huge Version 3.4.2\mbox{}}\\[1cm]
-{02 June 2012\mbox{}}\\[1cm]
+{\Huge Version 3.4.3\mbox{}}\\[1cm]
+{27 March 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Werner Nickel   \mbox{}}}\\
 {\Large \textbf{ Greg Gamble   \mbox{}}}\\
@@ -1042,6 +1042,9 @@ the package author to provide upwards compatibility.
 version number even after tiny changes to the package, and ensure that version
 numbers of successive package versions increase. The automatic update of
 package archives in the \textsf{GAP} distribution will only work if a package has a new version number. 
+
+ It is a well-established custom to name package archives like \texttt{name-version.tar.gz}, \texttt{name-version.tar.bz2} etc., where \texttt{name} is the lower case name, and \texttt{version} is the version (another custom is that the archive then should extract to a
+directory that has exactly the name \texttt{name-version}). 
 
  It is very important that there should not ever be, for a given \textsf{GAP} package, two different archives with the same package version number. If you
 make changes to your package and place a new archive of the package onto the

@@ -98,7 +98,7 @@
 {\Huge \textbf{a nice way to create documentations\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.12.20\mbox{}}\\[1cm]
+{\Huge Version 2013.01.16\mbox{}}\\[1cm]
 {September 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
@@ -155,6 +155,18 @@ Public License Version 2. \mbox{}}\\[1cm]
 It is not in any way a substitution for GAPDoc, but needs it to compile it's
 output. }
 
+ 
+\section{\textcolor{Chapter }{ How to use AutoDoc }}\label{HowToAutoDoc}
+\logpage{[ 1, 2, 0 ]}
+\hyperdef{L}{X7CAB1F157A8D51EB}{}
+{
+  To use AutoDoc to create your documentations, just use the *WithDocumentation
+methods to install your methods with documentations. When you want to create
+the documentation, use the CreateAutomaticDocumentation method to create the
+documentation xml files. After that, you need to process them with GAPDoc to
+get the usual documentation. The Package ToolsForHomalg is completely
+documented with AutoDoc, so you can find a example for the usage there. }
+
   }
 
     
@@ -182,11 +194,11 @@ chapter names. }
 
  
 
-\subsection{\textcolor{Chapter }{CreateAutoDoc}}
+\subsection{\textcolor{Chapter }{CreateAutomaticDocumentation}}
 \logpage{[ 2, 1, 2 ]}\nobreak
-\hyperdef{L}{X7B9CAA7879526E64}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateAutoDoc({\mdseries\slshape package{\textunderscore}name, documentation{\textunderscore}file, path{\textunderscore}to{\textunderscore}xml{\textunderscore}file, create{\textunderscore}full{\textunderscore}docu[, section{\textunderscore}intros]})\index{CreateAutoDoc@\texttt{CreateAutoDoc}}
-\label{CreateAutoDoc}
+\hyperdef{L}{X87E8381784333A1A}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateAutomaticDocumentation({\mdseries\slshape package{\textunderscore}name, documentation{\textunderscore}file, path{\textunderscore}to{\textunderscore}xml{\textunderscore}file, create{\textunderscore}full{\textunderscore}docu[, section{\textunderscore}intros]})\index{CreateAutomaticDocumentation@\texttt{CreateAutomaticDocumentation}}
+\label{CreateAutomaticDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
 \texttt{true}
@@ -357,7 +369,7 @@ section. }
 
  This method declares a global function like DeclareGlobalFunction( \mbox{\texttt{\mdseries\slshape name}} ) would do. The description string is added to the documentation if
 CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them.\mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the function. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
+will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the function. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
 the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
 chapter and the section in which this function should be displayed in the
 automatic generated documentation. There are no spaces allowed in this string,

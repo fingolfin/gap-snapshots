@@ -12,6 +12,7 @@
   [10X-b[110X  3.1
   [10X-C[110X  3.1
   [10X-D[110X  3.1
+  [10X-E[110X  3.1
   [10X-e[110X  3.1
   [10X-f[110X  3.1
   [10X-g[110X  3.1
@@ -24,6 +25,7 @@
   [10X-M[110X  3.1
   [10X-m[110X  3.1
   [10X-n[110X  3.1
+  [10X-O[110X  3.1
   [10X-o[110X  3.1
   [10X-P[110X  3.1
   [10X-p[110X  3.1
@@ -227,7 +229,7 @@
   [2XAsDivisionRing[102X  58.1-9
   [2XAsDuplicateFreeList[102X  21.20-5
   [2XAsField[102X  58.1-9
-  [2XAsGroup[102X  39.2-4
+  [2XAsGroup[102X  39.2-5
   [2XAsGroupGeneralMappingByImages[102X  40.1-5
   [2XAsin[102X  19.2-1
   [2XAsinh[102X  19.2-1
@@ -611,7 +613,7 @@
   conjugate, of a word  37.4
   [2XConjugateDominantWeight[102X  64.7-6
   [2XConjugateDominantWeightWithWord[102X  64.7-6
-  [2XConjugateGroup[102X  39.2-5
+  [2XConjugateGroup[102X  39.2-6
   [2XConjugates[102X  58.3-6
   [2XConjugateSubgroup[102X  39.3-8
   [2XConjugateSubgroups[102X  39.3-9
@@ -1288,7 +1290,7 @@
   [2XGeneratorsOfDomain[102X  31.9-2
   [2XGeneratorsOfEquivalenceRelationPartition[102X  33.6-2
   [2XGeneratorsOfField[102X  58.1-7
-  [2XGeneratorsOfGroup[102X  39.2-3
+  [2XGeneratorsOfGroup[102X  39.2-4
   [2XGeneratorsOfIdeal[102X  56.2-7
   [2XGeneratorsOfLeftIdeal[102X  56.2-8
   [2XGeneratorsOfLeftModule[102X  57.1-4
@@ -1362,6 +1364,8 @@
   group operations  41.2
   group operations  77.1
   group ring  65.
+  [2XGroupByGenerators[102X  39.2-2
+  [2XGroupByGenerators[102X (with explicitly specified identity element)  39.2-2
   [2XGroupByRws[102X  46.4-6
   [2XGroupByRwsNC[102X  46.4-6
   [2XGroupGeneralMappingByImages[102X  40.1-3
@@ -1376,7 +1380,7 @@
   [2XGroupOfPcgs[102X  45.4-5
   [2XGroupRing[102X  65.1-2
   [2XGroupStabChain[102X  43.10-5
-  [2XGroupWithGenerators[102X  39.2-2
+  [2XGroupWithGenerators[102X  39.2-3
   [2XGU[102X  50.2-3
   [22Xh_N[122X (irrational value)  18.4-1
   [2XHallSubgroup[102X  39.13-3
@@ -1518,7 +1522,7 @@
   [2XInfoCoset[102X  39.9-6
   [2XInfoFpGroup[102X  47.1-3
   [2XInfoGroebner[102X  66.18-4
-  [2XInfoGroup[102X  39.2-7
+  [2XInfoGroup[102X  39.2-8
   [2XInfoLattice[102X  39.20-9
   [2XInfoLevel[102X  7.4-4
   [2XInfoMatrix[102X  24.1-1
@@ -1878,7 +1882,7 @@
   [2XIsGreensRClass[102X  51.7-3
   [2XIsGreensRelation[102X  51.7-2
   [2XIsGreensRRelation[102X  51.7-2
-  [2XIsGroup[102X  39.2-6
+  [2XIsGroup[102X  39.2-7
   [2XIsGroupGeneralMapping[102X  32.9-4
   [2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X  40.10-3
   [2XIsGroupGeneralMappingByImages[102X  40.10-1

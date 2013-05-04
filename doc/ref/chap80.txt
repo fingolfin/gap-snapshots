@@ -98,10 +98,10 @@
   
   [33X[0;0YThe  full  mechanism  of  [2XInParentFOA[102X  ([14X85.2-1[114X)  is described in chapter [14X85[114X,
   however  for  our purposes it is sufficient to know that for such a function
-  the  actual  work  is  done  by  an  operation  [10XNormalizerOp[110X  (and  all  the
-  complications  are  just  there  to be able to remember certain results) and
-  that  the  declaration of this operation is given by the first arguments, it
-  would be:[133X
+  the  actual  work  is  done  by  an  operation  [10XNormalizerOp[110X,  an underlying
+  operation for [2XNormalizer[102X ([14X39.11-1[114X) (and all the complications are just there
+  to  be  able  to  remember certain results) and that the declaration of this
+  operation is given by the first arguments, it would be:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XDeclareOperation( "NormalizerOp", [IsGroup, IsObject] );[128X[104X
@@ -184,7 +184,7 @@
   [4X[32X[104X
   
   [33X[0;0Ythe  slightly  complicated  construction  of  addition  and  subtraction  is
-  necessary  because  [2XIsGroup[102X  ([14X39.2-6[114X) and [2XIsAbelian[102X ([14X35.4-9[114X) might imply the
+  necessary  because  [2XIsGroup[102X  ([14X39.2-7[114X) and [2XIsAbelian[102X ([14X35.4-9[114X) might imply the
   [13Xsame[113X elementary filters which we otherwise would count twice.[133X
   
   [33X[0;0YA  somehow  similar  situation  occurs  with matrix groups. Most methods for
@@ -229,7 +229,7 @@
   
   [33X[0;0Yas well.)[133X
   
-  [33X[0;0YThe  filters  [2XIsGroup[102X  ([14X39.2-6[114X) and [2XIsPosInt[102X ([14X14.2-2[114X) given are [13Xonly[113X used to
+  [33X[0;0YThe  filters  [2XIsGroup[102X  ([14X39.2-7[114X) and [2XIsPosInt[102X ([14X14.2-2[114X) given are [13Xonly[113X used to
   test  that  [2XInstallMethod[102X  ([14X78.2-1[114X) installs methods with suitable arguments
   and  will  be  completely  ignored  when  using [2XInstallOtherMethod[102X ([14X78.2-2[114X).
   Technically  one  could  therefore  simply  use  [2XIsObject[102X  ([14X12.1-1[114X)  for all
@@ -342,9 +342,9 @@
   
   [33X[0;0YNow we can write a function to create our new objects. Usually it is helpful
   to  look  at  functions from the library that are used in similar situations
-  (for  example  [10XGroupByGenerators[110X  in  our  case)  to  make  sure we have not
-  forgotten  any  further requirements in the declaration we might have to add
-  here. However in most cases the function is straightforward:[133X
+  (for  example  [2XGroupByGenerators[102X  ([14X39.2-2[114X) in our case) to make sure we have
+  not  forgotten  any further requirements in the declaration we might have to
+  add here. However in most cases the function is straightforward:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XPermutationGroupByRelations:=function(degree,relations)[128X[104X
@@ -535,7 +535,7 @@
   intended for and therefore we use one.[133X
   
   [33X[0;0YFirst,  we declare the category. All objects in this category are groups and
-  so we inherit the supercategory [2XIsGroup[102X ([14X39.2-6[114X):[133X
+  so we inherit the supercategory [2XIsGroup[102X ([14X39.2-7[114X):[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XDeclareCategory("IsGroupWithWordLength",IsGroup);[128X[104X

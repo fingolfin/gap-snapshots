@@ -1919,7 +1919,7 @@ InstallMethod( PrimaryDecomposition,
         [ IsFinitelyPresentedModuleRep ],
         
   function( M )
-    local tr, subobject, mat, primary_decomposition;
+    local tr, subobject, mat;
     
     if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
         tr := a -> a;
@@ -1931,10 +1931,8 @@ InstallMethod( PrimaryDecomposition,
     
     mat := MatrixOfRelations( M );
     
-    primary_decomposition := PrimaryDecompositionOp( tr( mat ) );
-    
-    primary_decomposition :=
-      List( primary_decomposition,
+    return
+      List( PrimaryDecompositionOp( tr( mat ) ),
             function( pp )
               local primary, prime;
               
@@ -1946,8 +1944,6 @@ InstallMethod( PrimaryDecomposition,
             end
           );
     
-    return primary_decomposition;
-    
 end );
 
 ##
@@ -1958,6 +1954,59 @@ InstallMethod( PrimaryDecomposition,
   function( N )
     
     return PrimaryDecomposition( FactorObject( N ) );
+    
+end );
+
+## fallback method
+InstallMethod( RadicalDecomposition,
+        "for homalg modules",
+        [ IsFinitelyPresentedModuleRep ],
+        
+  function( M )
+    
+    return List( PrimaryDecomposition( M ), a -> a[2] );
+    
+end );
+
+##
+InstallMethod( RadicalDecomposition,
+        "for homalg modules",
+        [ IsFinitelyPresentedModuleRep ],
+        
+  function( M )
+    local R, RP, tr, subobject, mat;
+    
+    R := HomalgRing( M );
+    
+    RP := homalgTable( R );
+    
+    if not IsBound( RP!.RadicalDecomposition ) then
+        TryNextMethod( );
+    fi;
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
+        tr := a -> a;
+        subobject := LeftSubmodule;
+    else
+        tr := Involution;
+        subobject := RightSubmodule;
+    fi;
+    
+    mat := MatrixOfRelations( M );
+    
+    return List( RadicalDecompositionOp( tr( mat ) ),
+                 pp -> subobject( tr( pp ) ) );
+    
+end );
+
+##
+InstallMethod( RadicalDecomposition,
+        "for homalg submodules",
+        [ IsFinitelyPresentedSubmoduleRep ],
+        
+  function( N )
+    
+    return RadicalDecomposition( FactorObject( N ) );
     
 end );
 

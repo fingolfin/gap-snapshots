@@ -117,7 +117,7 @@
   \item \texttt  {OrbitGraph}, \hyperpage{16}
   \item \texttt  {OrbitGraphAsSets}, \hyperpage{17}
   \item \texttt  {OrbitIntersectionMatrix}, \hyperpage{19}
-  \item \texttt  {OrbitsFromSeedsToOrbitList}, \hyperpage{55}
+  \item \texttt  {OrbitsFromSeedsToOrbitList}, \hyperpage{54}
   \item \texttt  {OrbitStatisticOnVectorSpace}, \hyperpage{37}
   \item \texttt  {OrbitStatisticOnVectorSpaceLines}, \hyperpage{38}
   \item \texttt  {OrigSeed}, \hyperpage{49}

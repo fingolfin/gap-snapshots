@@ -134,7 +134,7 @@ true
 InParentFOA( "Normalizer", IsGroup, IsObject, NewAttribute );
 </pre></div>
 
-<p>The full mechanism of <code class="func">InParentFOA</code> (<a href="chap85_mj.html#X7C0E62D8813A4EE6"><span class="RefLink">85.2-1</span></a>) is described in chapter <a href="chap85_mj.html#X8350247A8501969F"><span class="RefLink">85</span></a>, however for our purposes it is sufficient to know that for such a function the actual work is done by an operation <code class="code">NormalizerOp</code> (and all the complications are just there to be able to remember certain results) and that the declaration of this operation is given by the first arguments, it would be:</p>
+<p>The full mechanism of <code class="func">InParentFOA</code> (<a href="chap85_mj.html#X7C0E62D8813A4EE6"><span class="RefLink">85.2-1</span></a>) is described in chapter <a href="chap85_mj.html#X8350247A8501969F"><span class="RefLink">85</span></a>, however for our purposes it is sufficient to know that for such a function the actual work is done by an operation <code class="code">NormalizerOp</code>, an underlying operation for <code class="func">Normalizer</code> (<a href="chap39_mj.html#X87B5370C7DFD401D"><span class="RefLink">39.11-1</span></a>) (and all the complications are just there to be able to remember certain results) and that the declaration of this operation is given by the first arguments, it would be:</p>
 
 
 <div class="example"><pre>
@@ -197,7 +197,7 @@ InstallMethod(Exponent,"test abelianity", [IsGroup],
 function(G)
 </pre></div>
 
-<p>the slightly complicated construction of addition and subtraction is necessary because <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-6</span></a>) and <code class="func">IsAbelian</code> (<a href="chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">35.4-9</span></a>) might imply the <em>same</em> elementary filters which we otherwise would count twice.</p>
+<p>the slightly complicated construction of addition and subtraction is necessary because <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) and <code class="func">IsAbelian</code> (<a href="chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">35.4-9</span></a>) might imply the <em>same</em> elementary filters which we otherwise would count twice.</p>
 
 <p>A somehow similar situation occurs with matrix groups. Most methods for matrix groups are only applicable if the group is known to be finite.</p>
 
@@ -231,7 +231,7 @@ DeclareOperation("SylowNormalizer",[IsGroup,IsPosInt]);
 
 <p>as well.)</p>
 
-<p>The filters <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-6</span></a>) and <code class="func">IsPosInt</code> (<a href="chap14_mj.html#X82A854757DFA9C76"><span class="RefLink">14.2-2</span></a>) given are <em>only</em> used to test that <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) installs methods with suitable arguments and will be completely ignored when using <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>). Technically one could therefore simply use <code class="func">IsObject</code> (<a href="chap12_mj.html#X7B130AC98415CAFB"><span class="RefLink">12.1-1</span></a>) for all arguments in the declaration. The main point of using more specific filters here is to help documenting with which arguments the function is to be used (so for example a call <code class="code">SylowNormalizer(5,G)</code> would be invalid).</p>
+<p>The filters <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) and <code class="func">IsPosInt</code> (<a href="chap14_mj.html#X82A854757DFA9C76"><span class="RefLink">14.2-2</span></a>) given are <em>only</em> used to test that <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) installs methods with suitable arguments and will be completely ignored when using <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>). Technically one could therefore simply use <code class="func">IsObject</code> (<a href="chap12_mj.html#X7B130AC98415CAFB"><span class="RefLink">12.1-1</span></a>) for all arguments in the declaration. The main point of using more specific filters here is to help documenting with which arguments the function is to be used (so for example a call <code class="code">SylowNormalizer(5,G)</code> would be invalid).</p>
 
 <p>Of course initially there are no useful methods for newly declared operations; you will have to write and install them yourself.</p>
 
@@ -305,7 +305,7 @@ IsPermutationGroupByRelations:=NewRepresentation(
 
 <p>Next we need to check in which family our new objects will be. This will be the same family as of every other permutation group, namely the <code class="code">CollectionsFamily(PermutationsFamily)</code> (where the family <code class="code">PermutationsFamily = FamilyObj((1,2,3))</code> has been defined already in the library).</p>
 
-<p>Now we can write a function to create our new objects. Usually it is helpful to look at functions from the library that are used in similar situations (for example <code class="code">GroupByGenerators</code> in our case) to make sure we have not forgotten any further requirements in the declaration we might have to add here. However in most cases the function is straightforward:</p>
+<p>Now we can write a function to create our new objects. Usually it is helpful to look at functions from the library that are used in similar situations (for example <code class="func">GroupByGenerators</code> (<a href="chap39_mj.html#X7F81960287F3E32A"><span class="RefLink">39.2-2</span></a>) in our case) to make sure we have not forgotten any further requirements in the declaration we might have to add here. However in most cases the function is straightforward:</p>
 
 
 <div class="example"><pre>
@@ -431,7 +431,7 @@ end);
 
 <p>Having a word length is a feature which enables other operations (for example a "word length" function). This is exactly what categories are intended for and therefore we use one.</p>
 
-<p>First, we declare the category. All objects in this category are groups and so we inherit the supercategory <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-6</span></a>):</p>
+<p>First, we declare the category. All objects in this category are groups and so we inherit the supercategory <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>):</p>
 
 
 <div class="example"><pre>

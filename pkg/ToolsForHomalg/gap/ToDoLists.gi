@@ -21,6 +21,14 @@ BindGlobal( "TheTypeToDoList",
         NewType( TheFamilyOfToDoLists,
                 IsToDoListRep ) );
 
+InstallValue( TODO_LISTS,
+            rec(
+              activated := true,
+              are_currently_activated := true,
+              where_infos := false,
+            )
+           );
+
 ################################
 ##
 ## Methods for ToDo-lists.
@@ -75,109 +83,72 @@ InstallMethod( ToDoList,
 end );
 
 ##
-InstallMethod( AddToToDoList,
-               "for a todo list entry",
-               [ IsToDoListEntry ],
-               
-  function( entry )
-    local result, source, source_list, source_object_list, todo_list, target;
-    
-    result := ProcessAToDoListEntry( entry );
-    
-    source_list := SourcePart( entry );
-    
-    if source_list = fail then
-        
-        return;
-        
-    fi;
-    
-    source_object_list := [ ];
-    
-    for source in source_list do
-        
-        if ForAll( source_object_list, i -> not IsIdenticalObj( i, source[ 1 ] ) ) then
-            
-            Add( source_object_list, source[ 1 ] );
-            
-        fi;
-        
-    od;
-    
-    for source in source_object_list do
-        
-        todo_list := ToDoList( source );
-        
-        if result = true then
-        
-            Add( todo_list!.already_done, entry );
-            
-        elif result = false and not PreconditionsDefinitelyNotFulfilled( entry ) then
-            
-            Add( todo_list!.todos, entry );
-            
-            SetFilterObj( source, HasSomethingToDo );
-            
-            CreateImmediateMethodForToDoListEntry( entry );
-            
-        elif result = false and PreconditionsDefinitelyNotFulfilled( entry ) then
-            
-            Add( todo_list!.precondition_not_fulfilled, entry );
-            
-        elif result = fail then
-            
-            Add( todo_list!.garbage, entry );
-            
-        fi;
-        
-    od;
-    
-# #     THIS DOES NOT WORK ANY MORE, maybe fix it later
-# #     if result = false and not PreconditionsDefinitelyNotFulfilled( entry ) then
-# #         
-# #         target := TargetPart( entry );
-# #             
-# #         if target <> fail and not IsFunction( target ) then
-# #             
-# #             target := ToDoList( target[ 1 ] );
-# #             
-# #             Add( target!.maybe_from_others, entry );
-# #             
-# #         fi;
-# #         
-# #     fi;
-    
-end );
-
-##
 InstallMethod( ProcessToDoList_Real,
                "for objects that have something to do",
                [ IsObject and HasSomethingToDo ],
                         
   function( M )
-    local todo_list, todos, i, pos, current_entry, result, remove_list;
+    local todo_list, todos_orig, todos, i, pos, current_entry, result, remove_list, function_list, move_list;
     
     todo_list := ToDoList( M );
     
-    todos := ShallowCopy( todo_list!.todos );
+    todos_orig := todo_list!.todos;
+    
+    todos := ShallowCopy( todo_list!.todos ); 
     
     remove_list := [ ];
     
+    function_list := [ ];
+    
+    move_list := [ ];
+    
     for i in [ 1 .. Length( todos ) ] do
         
-        pos := Position( todo_list!.todos, todos[ i ] );
-        
-        if pos = fail then
+        if not IsBound( todos[ i ] ) then
             
             continue;
             
         fi;
         
-        Remove( todo_list!.todos, pos );
+        if IsProcessedEntry( todos[ i ] ) then
+            
+            Add( todo_list!.already_done, todos[ i ] );
+            
+            Add( move_list, todos[ i ] );
+            
+#             Error( "1" );
+            
+#             Add ( remove_list, todos[ i ] );
+            
+            Remove( todos_orig, Position( todos_orig, todos[ i ] ) );
+            
+            continue;
+            
+        elif PreconditionsDefinitelyNotFulfilled( todos[ i ] ) then
+            
+            Add( todo_list!.precondition_not_fulfilled, todos[ i ] );
+            
+#             Error( "2" );
+            
+#             Add( remove_list, todos[ i ] );
+            
+            Remove( todos_orig, Position( todos_orig, todos[ i ] ) );
+            
+            continue;
+            
+        fi;
         
         result := ProcessAToDoListEntry( todos[ i ] );
         
-        if result = true then
+        if IsFunction( result ) then
+            
+            Add( function_list, result );
+            
+#             Error( "3" );
+            
+#             Add( remove_list, todos[ i ] );
+            
+            Remove( todos_orig, Position( todos_orig, todos[ i ] ) );
             
             Add( todo_list!.already_done, todos[ i ] );
             
@@ -185,23 +156,58 @@ InstallMethod( ProcessToDoList_Real,
             
             Add( todo_list!.garbage, todos[ i ] );
             
+#             Error( "4" );
+            
+#             Add( remove_list, todos[ i ] );
+            
+            Remove( todos_orig, Position( todos_orig, todos[ i ] ) );
+            
         elif result = false and PreconditionsDefinitelyNotFulfilled( todos[ i ] ) then
             
             Add( todo_list!.precondition_not_fulfilled, todos[ i ] );
             
-        else
+#             Error( "5" );
             
-            Add( todo_list!.todos, todos[ i ] );
+#             Add( remove_list, todos[ i ] );
+            
+            Remove( todos_orig, Position( todos_orig, todos[ i ] ) );
             
         fi;
         
     od;
     
-    if Length( todo_list!.todos ) = 0 then
+    ## Once sure it works without this, remove it.
+#     for i in remove_list do
+#         
+#         pos := Position( ToDoList( M )!.todos, i );
+#         
+#         if pos <> fail then
+#             
+#             Remove( ToDoList( M )!.todos, pos );
+#             
+# #             Print( "This should not happen.\n" );
+#             
+#         fi;
+#         
+#     od;
+    
+    if Length( ToDoList( M )!.todos ) = 0 then
         
         ResetFilterObj( M, HasSomethingToDo );
         
     fi;
+    
+    for i in function_list do
+        
+        i( );
+        
+    od;
+    
+    for i in move_list do
+        
+        ToDoLists_Move_To_Target_ToDo_List( i );
+        
+    od;
     
     return;
     
@@ -219,8 +225,15 @@ InstallMethod( TraceProof,
                [ IsObject, IsString, IsObject ],
                
   function( startobj, attr_name, attr_value )
+    local trees, ret_tree;
     
-    return List( ToolsForHomalg_ToDoList_TaceProof_RecursivePart( [ startobj, attr_name, attr_value ], startobj, attr_name, attr_value ), i -> JoinToDoListEntries( i ) );
+    trees := ToolsForHomalg_ToDoList_TaceProof_RecursivePart( [ [ startobj, attr_name, attr_value ] ], startobj, attr_name, attr_value );
+    
+    ret_tree := Tree( [ startobj, attr_name, attr_value ] );
+    
+    Add( ret_tree, trees );
+    
+    return ret_tree;
     
 end );
 
@@ -229,7 +242,7 @@ InstallGlobalFunction( ToolsForHomalg_ToDoList_TaceProof_RecursivePart,
                        "recursive part",
                
   function( start_list, start_obj, attr_name, attr_value )
-    local todo_list, entry, i, temp_tar, source, return_list;
+    local todo_list, entry, i, temp_tar, source_list, source, return_list, return_trees, current_tree;
     
     todo_list := ToDoList( start_obj );
     
@@ -251,26 +264,33 @@ InstallGlobalFunction( ToolsForHomalg_ToDoList_TaceProof_RecursivePart,
     
     for i in entry do
         
-        source := SourcePart( i )[ 1 ];
+        source_list := SourcePart( i );
         
-        if source = start_list then
+        for source in source_list do
             
-            Add( return_list, [ i ] );
+            if TraceProof_Position( start_list, source ) <> fail then
+                
+                Add( return_list, Tree( i ) );
+                
+            elif source <> fail then
+                
+                return_trees := ToolsForHomalg_ToDoList_TaceProof_RecursivePart( Concatenation( start_list, [ source ] ), source[ 1 ], source[ 2 ], source[ 3 ] );
+                
+                current_tree := Tree( i );
+                
+                Add( current_tree, return_trees );
+                
+                Add( return_list, current_tree );
+                
+            fi;
             
-        elif source <> fail then
-            
-            return_list := Concatenation( return_list, List( 
-                ToolsForHomalg_ToDoList_TaceProof_RecursivePart( start_list, source[ 1 ], source[ 2 ], source[ 3 ] ),
-                j -> Concatenation( j, entry ) )
-                                         );
-            
-        fi;
+        od;
         
     od;
     
     if return_list = [ ] then
         
-        return [ [ ] ];
+        return [ ];
         
     fi;
     
@@ -278,7 +298,24 @@ InstallGlobalFunction( ToolsForHomalg_ToDoList_TaceProof_RecursivePart,
     
 end );
 
-
+InstallGlobalFunction( "TraceProof_Position",
+                       
+  function( list, comp )
+    local i;
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        if IsIdenticalObj( comp[ 1 ], list[ i ][ 1 ] ) and comp[ 2 ]=list[ i ][ 2 ] and comp[ 3 ]=list[ i ][ 3 ] then
+            
+            return i;
+            
+        fi;
+        
+    od;
+    
+    return fail;
+    
+end );
 
 ##############################
 ##
@@ -329,5 +366,107 @@ InstallMethod( Display,
     Print( Length( list!.garbage ) );
     
     Print( " failed entries." );
+    
+end );
+
+###### DO NOT DO THIS AT HOME!
+###### This is a HACK given by Max H.
+###### Maybe we can replace this later.
+###### It also might slow down the whole system.
+
+ORIG_RunImmediateMethods := RunImmediateMethods;
+MakeReadWriteGlobal("RunImmediateMethods");
+NEW_RunImmediateMethods := function( obj, bitlist )
+                              if HasSomethingToDo( obj ) and CanHaveAToDoList( obj ) and TODO_LISTS.activated then
+                                  ProcessToDoList_Real( obj );
+                              fi;
+                              ORIG_RunImmediateMethods( obj, bitlist );
+                           end;
+RunImmediateMethods:=NEW_RunImmediateMethods;
+MakeReadOnlyGlobal("RunImmediateMethods");
+
+
+###########################################
+##
+## Tool Methods
+##
+###########################################
+
+##
+InstallImmediateMethod( MaintainanceMethodForToDoLists,
+                        IsAttributeStoringRep,
+                        0,
+                        
+  function( obj )
+    
+    if TODO_LISTS.activated then
+        
+        SetFilterObj( obj, CanHaveAToDoList );
+        
+    fi;
+    
+    TryNextMethod();
+    
+end );
+
+##
+InstallMethod( ActivateToDoList,
+               "for one object",
+               [ IsObject ],
+               
+  function( obj )
+    
+    SetFilterObj( obj, CanHaveAToDoList );
+    
+end );
+
+##
+InstallMethod( ActivateToDoList,
+               "for all objects",
+               [ ],
+               
+  function( )
+    
+    TODO_LISTS.activated := true;
+    
+end );
+
+##
+InstallMethod( DeactivateToDoList,
+               "for one object",
+               [ IsObject ],
+               
+  function( obj )
+    
+    ResetFilterObj( obj, CanHaveAToDoList );
+    
+end );
+
+##
+InstallMethod( DeactivateToDoList,
+               "for all objects",
+               [ ],
+               
+  function( )
+    
+    TODO_LISTS.activated := false;
+    
+end );
+
+##
+InstallGlobalFunction( ActivateWhereInfosInEntries,
+                       
+  function( )
+    
+    TODO_LISTS.where_infos := true;
+    
+end );
+
+##
+InstallGlobalFunction( DeactivateWhereInfosInEntries,
+                       
+  function( )
+    
+    TODO_LISTS.where_infos := false;
     
 end );

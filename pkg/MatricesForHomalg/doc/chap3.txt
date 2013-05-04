@@ -17,6 +17,7 @@
   [4X[32X  Code  [32X[104X
     [4XDeclareCategory( "IsHomalgRing",[104X
     [4X        IsStructureObject and[104X
+    [4X        IsRingWithOne and[104X
     [4X        IsHomalgRingOrModule );[104X
   [4X[32X[104X
   

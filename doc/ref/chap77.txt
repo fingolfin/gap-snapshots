@@ -18,8 +18,9 @@
   [11Xlib/obsolete.gi[111X.  By  default,  these files are read when [5XGAP[105X is started. It
   may be useful to omit reading these files, for example in order to make sure
   that  one's  own [5XGAP[105X code does not rely on the obsolete variables. For that,
-  one  can  set  the  component [10XReadObsolete[110X in the file [11Xgap.ini[111X to [9Xfalse[109X (see
-  [14X3.2[114X).[133X
+  one  can  use  the  [10X-O[110X  command  line  option (see [14X3.1[114X) or set the component
+  [10XReadObsolete[110X  in  the  file [11Xgap.ini[111X to [9Xfalse[109X (see [14X3.2[114X). Note that [10X-O[110X command
+  line option overrides [10XReadObsolete[110X.[133X
   
   [33X[0;0Y(Note  that  the  condition  whether the library files with the obsolete [5XGAP[105X
   code  shall  be  read  has changed. In [5XGAP[105X 4.3 and 4.4, the global variables

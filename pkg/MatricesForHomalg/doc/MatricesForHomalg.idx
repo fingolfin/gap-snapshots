@@ -13,7 +13,7 @@
 \indexentry{IsFieldForHomalg@\texttt  {IsFieldForHomalg}|hyperpage}{11}
 \indexentry{IsDivisionRingForHomalg@\texttt  {IsDivisionRingForHomalg}|hyperpage}{11}
 \indexentry{IsIntegersForHomalg@\texttt  {IsIntegersForHomalg}|hyperpage}{11}
-\indexentry{IsResidueClassRingOfTheIntegers@\texttt  {IsResidueClassRingOfTheIntegers}|hyperpage}{11}
+\indexentry{IsResidueClassRingOfTheIntegers@\texttt  {IsResidueClassRingOfTheIntegers}|hyperpage}{12}
 \indexentry{IsBezoutRing@\texttt  {IsBezoutRing}|hyperpage}{12}
 \indexentry{IsIntegrallyClosedDomain@\texttt  {IsIntegrallyClosedDomain}|hyperpage}{12}
 \indexentry{IsUniqueFactorizationDomain@\texttt  {IsUniqueFactorizationDomain}|hyperpage}{12}
@@ -21,7 +21,7 @@
 \indexentry{IsDedekindDomain@\texttt  {IsDedekindDomain}|hyperpage}{12}
 \indexentry{IsDiscreteValuationRing@\texttt  {IsDiscreteValuationRing}|hyperpage}{12}
 \indexentry{IsFreePolynomialRing@\texttt  {IsFreePolynomialRing}|hyperpage}{12}
-\indexentry{IsWeylRing@\texttt  {IsWeylRing}|hyperpage}{12}
+\indexentry{IsWeylRing@\texttt  {IsWeylRing}|hyperpage}{13}
 \indexentry{IsLocalizedWeylRing@\texttt  {IsLocalizedWeylRing}|hyperpage}{13}
 \indexentry{IsGlobalDimensionFinite@\texttt  {IsGlobalDimensionFinite}|hyperpage}{13}
 \indexentry{IsLeftGlobalDimensionFinite@\texttt  {IsLeftGlobalDimensionFinite}|hyperpage}{13}
@@ -29,7 +29,7 @@
 \indexentry{HasInvariantBasisProperty@\texttt  {HasInvariantBasisProperty}|hyperpage}{13}
 \indexentry{HasLeftInvariantBasisProperty@\texttt  {HasLeftInvariantBasisProperty}|hyperpage}{13}
 \indexentry{HasRightInvariantBasisProperty@\texttt  {HasRightInvariantBasisProperty}|hyperpage}{13}
-\indexentry{IsLocal@\texttt  {IsLocal}|hyperpage}{13}
+\indexentry{IsLocal@\texttt  {IsLocal}|hyperpage}{14}
 \indexentry{IsSemiLocalRing@\texttt  {IsSemiLocalRing}|hyperpage}{14}
 \indexentry{IsIntegralDomain@\texttt  {IsIntegralDomain}|hyperpage}{14}
 \indexentry{IsHereditary@\texttt  {IsHereditary}|hyperpage}{14}
@@ -37,7 +37,7 @@
 \indexentry{IsRightHereditary@\texttt  {IsRightHereditary}|hyperpage}{14}
 \indexentry{IsHermite@\texttt  {IsHermite}|hyperpage}{14}
 \indexentry{IsLeftHermite@\texttt  {IsLeftHermite}|hyperpage}{14}
-\indexentry{IsRightHermite@\texttt  {IsRightHermite}|hyperpage}{14}
+\indexentry{IsRightHermite@\texttt  {IsRightHermite}|hyperpage}{15}
 \indexentry{IsNoetherian@\texttt  {IsNoetherian}|hyperpage}{15}
 \indexentry{IsLeftNoetherian@\texttt  {IsLeftNoetherian}|hyperpage}{15}
 \indexentry{IsRightNoetherian@\texttt  {IsRightNoetherian}|hyperpage}{15}
@@ -45,7 +45,7 @@
 \indexentry{IsGorenstein@\texttt  {IsGorenstein}|hyperpage}{15}
 \indexentry{IsKoszul@\texttt  {IsKoszul}|hyperpage}{15}
 \indexentry{IsArtinian@\texttt  {IsArtinian}!for rings|hyperpage}{15}
-\indexentry{IsLeftArtinian@\texttt  {IsLeftArtinian}|hyperpage}{15}
+\indexentry{IsLeftArtinian@\texttt  {IsLeftArtinian}|hyperpage}{16}
 \indexentry{IsRightArtinian@\texttt  {IsRightArtinian}|hyperpage}{16}
 \indexentry{IsOreDomain@\texttt  {IsOreDomain}|hyperpage}{16}
 \indexentry{IsLeftOreDomain@\texttt  {IsLeftOreDomain}|hyperpage}{16}
@@ -53,7 +53,7 @@
 \indexentry{IsPrincipalIdealRing@\texttt  {IsPrincipalIdealRing}|hyperpage}{16}
 \indexentry{IsLeftPrincipalIdealRing@\texttt  {IsLeftPrincipalIdealRing}|hyperpage}{16}
 \indexentry{IsRightPrincipalIdealRing@\texttt  {IsRightPrincipalIdealRing}|hyperpage}{16}
-\indexentry{IsRegular@\texttt  {IsRegular}|hyperpage}{16}
+\indexentry{IsRegular@\texttt  {IsRegular}|hyperpage}{17}
 \indexentry{IsFiniteFreePresentationRing@\texttt  {IsFiniteFreePresentationRing}|hyperpage}{17}
 \indexentry{IsLeftFiniteFreePresentationRing@\texttt  {IsLeftFiniteFreePresentationRing}|hyperpage}{17}
 \indexentry{IsRightFiniteFreePresentationRing@\texttt  {IsRightFiniteFreePresentationRing}|hyperpage}{17}
@@ -61,7 +61,7 @@
 \indexentry{IsSemiSimpleRing@\texttt  {IsSemiSimpleRing}|hyperpage}{17}
 \indexentry{IsSuperCommutative@\texttt  {IsSuperCommutative}|hyperpage}{17}
 \indexentry{BasisAlgorithmRespectsPrincipalIdeals@\texttt  {Basis}\discretionary {-}{}{}\texttt  {Algorithm}\discretionary {-}{}{}\texttt  {Respects}\discretionary {-}{}{}\texttt  {Principal}\discretionary {-}{}{}\texttt  {Ideals}|hyperpage}{17}
-\indexentry{AreUnitsCentral@\texttt  {AreUnitsCentral}|hyperpage}{17}
+\indexentry{AreUnitsCentral@\texttt  {AreUnitsCentral}|hyperpage}{18}
 \indexentry{IsMinusOne@\texttt  {IsMinusOne}|hyperpage}{18}
 \indexentry{IsMonic@\texttt  {IsMonic}!for homalg ring elements|hyperpage}{18}
 \indexentry{IsLeftRegular@\texttt  {IsLeftRegular}!for homalg ring elements|hyperpage}{18}
@@ -74,24 +74,24 @@
 \indexentry{ConstructorForHomalgMatrices@\texttt  {ConstructorForHomalgMatrices}|hyperpage}{19}
 \indexentry{Zero@\texttt  {Zero}!for homalg rings|hyperpage}{19}
 \indexentry{One@\texttt  {One}!for homalg rings|hyperpage}{19}
-\indexentry{MinusOne@\texttt  {MinusOne}|hyperpage}{19}
-\indexentry{ProductOfIndeterminates@\texttt  {ProductOfIndeterminates}|hyperpage}{19}
+\indexentry{MinusOne@\texttt  {MinusOne}|hyperpage}{20}
+\indexentry{ProductOfIndeterminates@\texttt  {ProductOfIndeterminates}|hyperpage}{20}
 \indexentry{RationalParameters@\texttt  {RationalParameters}|hyperpage}{20}
 \indexentry{IndeterminatesOfPolynomialRing@\texttt  {IndeterminatesOfPolynomialRing}|hyperpage}{20}
 \indexentry{RelativeIndeterminatesOfPolynomialRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Polynomial}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{20}
 \indexentry{IndeterminateCoordinatesOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
 \indexentry{RelativeIndeterminateCoordinatesOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Coordinates}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
 \indexentry{IndeterminateDerivationsOfRingOfDerivations@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
-\indexentry{RelativeIndeterminateDerivationsOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{20}
-\indexentry{IndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{20}
+\indexentry{RelativeIndeterminateDerivationsOfRingOfDerivations@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Derivations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Derivations}|hyperpage}{21}
+\indexentry{IndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{21}
 \indexentry{RelativeIndeterminateAntiCommutingVariablesOfExteriorRing@\texttt  {Relative}\discretionary {-}{}{}\texttt  {Indeterminate}\discretionary {-}{}{}\texttt  {Anti}\discretionary {-}{}{}\texttt  {Commuting}\discretionary {-}{}{}\texttt  {Variables}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Exterior}\discretionary {-}{}{}\texttt  {Ring}|hyperpage}{21}
 \indexentry{IndeterminatesOfExteriorRing@\texttt  {IndeterminatesOfExteriorRing}|hyperpage}{21}
 \indexentry{CoefficientsRing@\texttt  {CoefficientsRing}|hyperpage}{21}
 \indexentry{KrullDimension@\texttt  {KrullDimension}|hyperpage}{21}
 \indexentry{LeftGlobalDimension@\texttt  {LeftGlobalDimension}|hyperpage}{21}
 \indexentry{RightGlobalDimension@\texttt  {RightGlobalDimension}|hyperpage}{21}
-\indexentry{GlobalDimension@\texttt  {GlobalDimension}|hyperpage}{21}
-\indexentry{GeneralLinearRank@\texttt  {GeneralLinearRank}|hyperpage}{21}
+\indexentry{GlobalDimension@\texttt  {GlobalDimension}|hyperpage}{22}
+\indexentry{GeneralLinearRank@\texttt  {GeneralLinearRank}|hyperpage}{22}
 \indexentry{ElementaryRank@\texttt  {ElementaryRank}|hyperpage}{22}
 \indexentry{StableRank@\texttt  {StableRank}|hyperpage}{22}
 \indexentry{AssociatedGradedRing@\texttt  {AssociatedGradedRing}|hyperpage}{22}

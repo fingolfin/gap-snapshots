@@ -31,7 +31,7 @@
 
   \item GAPDoc format
     \subitem for writing package documentation, \hyperpage{10}
-  \item \texttt{GAPDocManualLab}, \hyperpage{27}
+  \item \texttt{GAPDocManualLab}, \hyperpage{28}
   \item \texttt{gapmacro.tex} format
     \subitem for writing package documentation, \hyperpage{10}
 
@@ -53,7 +53,7 @@
 
   \item License, \hyperpage{2}
   \item \texttt  {ListDirectory}, \hyperpage{4}
-  \item \texttt  {LoadAllPackages}, \hyperpage{25}
+  \item \texttt  {LoadAllPackages}, \hyperpage{26}
   \item \texttt  {LoadedPackages}, \hyperpage{4}
   \item local namespace
     \subitem for a GAP package, \hyperpage{15}

@@ -143,7 +143,7 @@
 \contentsline {section}{\numberline {9.4}\leavevmode {\color {Chapter }Lists of orbit-by-suborbit objects}}{54}{section.9.4}
 \contentsline {subsection}{\numberline {9.4.1}\leavevmode {\color {Chapter }InitOrbitBySuborbitList}}{54}{subsection.9.4.1}
 \contentsline {subsection}{\numberline {9.4.2}\leavevmode {\color {Chapter }IsVectorInOrbitBySuborbitList}}{54}{subsection.9.4.2}
-\contentsline {subsection}{\numberline {9.4.3}\leavevmode {\color {Chapter }OrbitsFromSeedsToOrbitList}}{55}{subsection.9.4.3}
+\contentsline {subsection}{\numberline {9.4.3}\leavevmode {\color {Chapter }OrbitsFromSeedsToOrbitList}}{54}{subsection.9.4.3}
 \contentsline {subsection}{\numberline {9.4.4}\leavevmode {\color {Chapter }VerifyDisjointness}}{55}{subsection.9.4.4}
 \contentsline {subsection}{\numberline {9.4.5}\leavevmode {\color {Chapter }Memory (forobsol)}}{55}{subsection.9.4.5}
 \contentsline {subsection}{\numberline {9.4.6}\leavevmode {\color {Chapter }TotalLength (forobsol)}}{55}{subsection.9.4.6}

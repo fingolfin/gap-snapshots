@@ -6,18 +6,16 @@
  -->
 <Section Label="ToDo-list_entries_automatically_generated_documentation_parts">
 <Heading>ToDo-list entries</Heading>
-<#Include Label="SourcePart1019473529">
-<#Include Label="TargetPart5267494696">
-<#Include Label="SetTargetValueObject9973010329">
-<#Include Label="SetTargetObject6387964527">
-<#Include Label="ProcessAToDoListEntry5409482588">
-<#Include Label="AreCompatible3484179378">
-<#Include Label="ToDoListEntryWithWeakPointers4427526754">
-<#Include Label="ToDoListEntryWithPointers6070257957">
-<#Include Label="ToDoListEntryWithListOfSources2959217358">
-<#Include Label="ToDoListEntryWhichLaunchesAFunction2214626046">
-<#Include Label="CreateImmediateMethodForToDoListEntry8096932409">
-<#Include Label="JoinToDoListEntries6178543832">
-<#Include Label="GenesisOfToDoListEntry7939279669">
-<#Include Label="DescriptionOfImplication6347315354">
+<#Include Label="AddToToDoList1019473529">
+<#Include Label="SourcePart5267494696">
+<#Include Label="TargetPart9973010329">
+<#Include Label="ProcessAToDoListEntry6387964527">
+<#Include Label="ToDoListEntry5409482588">
+<#Include Label="ToDoListEntry3484179378">
+<#Include Label="SetTargetValueObject4427526754">
+<#Include Label="SetTargetObject6070257957">
+<#Include Label="ToDoListEntryWithContraposition2959217358">
+<#Include Label="DescriptionOfImplication2214626046">
+<#Include Label="ToDoListEntryForEqualAttributes8096932409">
+<#Include Label="ToDoListEntryForEquivalentAttributes6178543832">
 </Section>

@@ -11,9 +11,9 @@
   [33X[0;0YThis  global  variable stores all the streams and some additional data, like
   chapter names.[133X
   
-  [1X2.1-2 CreateAutoDoc[101X
+  [1X2.1-2 CreateAutomaticDocumentation[101X
   
-  [29X[2XCreateAutoDoc[102X( [3Xpackage_name[103X, [3Xdocumentation_file[103X, [3Xpath_to_xml_file[103X, [3Xcreate_full_docu[103X[, [3Xsection_intros[103X] ) [32X function
+  [29X[2XCreateAutomaticDocumentation[102X( [3Xpackage_name[103X, [3Xdocumentation_file[103X, [3Xpath_to_xml_file[103X, [3Xcreate_full_docu[103X[, [3Xsection_intros[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
   
   [33X[0;0YThis  is  the  main method of the package. After loading the package, run it
@@ -143,7 +143,7 @@
   [33X[0;0YThis  method  declares  a global function like DeclareGlobalFunction( [3Xname[103X )
   would   do.  The  description  string  is  added  to  the  documentation  if
   CreateAutoDoc  is  called.  It  can either be a string or a list of strings.
-  Lists  will  be  concatenated  with  a  space between them.[3Xreturn_value[103X is a
+  Lists  will  be  concatenated  with  a space between them. [3Xreturn_value[103X is a
   string  displayed  as  the return value of the function. It is not optional.
   [3Xarguments[103X  is  an optional string which is displayed in the documentation as
   attributes  of  the  operation. [3Xchapter_and_section[103X is an optional arguments

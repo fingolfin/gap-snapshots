@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.6.3, 18-Mar-2013
+                           Release 4.6.4, 04-May-2013
   
   
                                  The GAP Group
@@ -1396,12 +1396,13 @@
     39.1 [33X[0;0YGroup Elements[133X
     39.2 [33X[0;0YCreating Groups[133X
       39.2-1 Group
-      39.2-2 GroupWithGenerators
-      39.2-3 GeneratorsOfGroup
-      39.2-4 AsGroup
-      39.2-5 ConjugateGroup
-      39.2-6 IsGroup
-      39.2-7 InfoGroup
+      39.2-2 GroupByGenerators
+      39.2-3 GroupWithGenerators
+      39.2-4 GeneratorsOfGroup
+      39.2-5 AsGroup
+      39.2-6 ConjugateGroup
+      39.2-7 IsGroup
+      39.2-8 InfoGroup
     39.3 [33X[0;0YSubgroups[133X
       39.3-1 Subgroup
       39.3-2 [33X[0;0YIndex ([5XGAP[105X operation)[133X
