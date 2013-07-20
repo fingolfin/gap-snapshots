@@ -9,13 +9,15 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap0"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
 <div class="pcenter">
@@ -23,12 +25,12 @@
 <h1>GAP 4 Package <strong class="pkg">hecke</strong></h1>
 
 
-<h2><strong class="pkg">Hecke</strong> - a port of <strong class="pkg">Specht</strong> 2.4 to GAP 4</h2>
+<h2><strong class="pkg">Hecke</strong> - a port of <strong class="pkg">Specht</strong> <span class="SimpleMath">2.4</span> to GAP 4</h2>
 
 <p>
-      1.3</p>
+      1.4</p>
 
-<p>September 2010</p>
+<p>July 2013</p>
 
 </div>
 <p><b>Dmitriy Traytel
@@ -42,37 +44,46 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2010 by Dmitriy Traytel</p>
+<p>© 2010–2013 by Dmitriy Traytel</p>
 
 <p>This package may be distributed under the terms and conditions of the GNU Public License Version 2 or higher.</p>
 
 <p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
 
 <div class="contents">
-<h3>Contents</h3>
+<h3>Contents<a id="contents" name="contents"></a></h3>
 
 <div class="ContChap"><a href="chap1.html#X7CD78FC183A57690">1 <span class="Heading">Decomposition numbers of Hecke algebras of type A</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7BBCB13F82ACC213">1.1 <span class="Heading">Description</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7BBCB13F82ACC213">1.1 <span class="Heading">Description</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A3BD2F77A4AC7EA">1.2 <span class="Heading">The modular representation theory of Hecke algebras</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A3BD2F77A4AC7EA">1.2 <span class="Heading">The modular representation theory of Hecke algebras</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8226F6F77ACF26D8">1.3 <span class="Heading">Two small examples</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8226F6F77ACF26D8">1.3 <span class="Heading">Two small examples</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X786BACDB82918A65">1.4 <span class="Heading">Overview over this manual</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X786BACDB82918A65">1.4 <span class="Heading">Overview over this manual</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8779AFAF8411A26A">1.5 <span class="Heading">Credits</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8779AFAF8411A26A">1.5 <span class="Heading">Credits</span></a>
+</span>
 </div>
 </div>
-<div class="ContChap"><a href="chap2.html#X79845447824F3333">2 <span class="Heading">Installation of the <strong class="pkg">hecke</strong>-Package</span></a>
+<div class="ContChap"><a href="chap2.html#X878604E87ECCEAFA">2 <span class="Heading">Installation of the <strong class="pkg">hecke</strong>-Package</span></a>
 </div>
 <div class="ContChap"><a href="chap3.html#X7ED1AB5C7E41D277">3 <span class="Heading">Specht functionality</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X78AA2DBD7D5D3F02">3.1 <span class="Heading">Porting notes</span></a>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8340A4F97986693C">3.1-1 <span class="Heading">Structure of <strong class="pkg">Hecke</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X78AA2DBD7D5D3F02">3.1 <span class="Heading">Porting notes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8751E264810E0136">3.1-1 <span class="Heading">Structure of <strong class="pkg">Hecke</strong></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8120A27282B82CC8">3.1-2 <span class="Heading">Renamings</span></a>
 </span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A7DF4FC796EF66F">3.2 <span class="Heading">Specht functions</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A7DF4FC796EF66F">3.2 <span class="Heading">Specht functions</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7FE26921867C440A">3.2-1 Specht</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8037763587274161">3.2-2 <span class="Heading">Simple information access</span></a>
 </span>
@@ -89,16 +100,21 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84F0F9E47D5EEBCF">3.2-8 DecompositionMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F616CCE808FA11E">3.2-9 CrystalDecompositionMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X829A23A97EE4C20E">3.2-10 DecompositionNumber</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X78B0F76B826C620C">3.3 <span class="Heading">Partitions in <strong class="pkg">Hecke</strong></span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7C5B169286EFC900">3.3 <span class="Heading">Partitions in <strong class="pkg">Hecke</strong></span></a>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X87A6E8DD85F3F020">3.4 <span class="Heading">Inducing and restricting modules</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X87A6E8DD85F3F020">3.4 <span class="Heading">Inducing and restricting modules</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81D7F7A4812BB04D">3.4-1 RInducedModule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X780709B3865BC344">3.4-2 SInducedModule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X783BC74E81A7D0E6">3.4-3 RRestrictedModule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8041ABFA86D7A3EF">3.4-4 SRestrictedModule</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X79F430837BA7BAD2">3.5 <span class="Heading">Operations on decomposition matrices</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X79F430837BA7BAD2">3.5 <span class="Heading">Operations on decomposition matrices</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D257389845738DB">3.5-1 InducedDecompositionMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X803A99987E501AC9">3.5-2 IsNewIndecomposable</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X802E811683E611EE">3.5-3 InvertDecompositionMatrix</a></span>
@@ -110,12 +126,16 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B05627D83E6977E">3.5-9 AddIndecomposable</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79FA055E8250E6A2">3.5-10 RemoveIndecomposable</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8434DC7C8364CB54">3.5-11 MissingIndecomposables</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A697AAA799BA7D4">3.6 <span class="Heading">Calculating dimensions</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A697AAA799BA7D4">3.6 <span class="Heading">Calculating dimensions</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X828528747E4AC4C9">3.6-1 SimpleDimension</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B98631580E193BB">3.6-2 SpechtDimension</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X78F1DC277875BAFD">3.7 <span class="Heading">Combinatorics on Young diagrams</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X78F1DC277875BAFD">3.7 <span class="Heading">Combinatorics on Young diagrams</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X820A908F8337F59C">3.7-1 Schaper</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7FB82B3184287362">3.7-2 IsSimpleModule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A6262B684185E3D">3.7-3 MullineuxMap</a></span>
@@ -132,8 +152,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7DE3773C78BC324C">3.7-14 HookLengthDiagram</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F2ACCBF788A62E8">3.7-15 RemoveRimHook</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CEA98C779BDBD1A">3.7-16 AddRimHook</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X8350934A7F9AB5BE">3.8 <span class="Heading">Operations on partitions</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8350934A7F9AB5BE">3.8 <span class="Heading">Operations on partitions</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X867496487DC35776">3.8-1 ECore</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8236220C87814790">3.8-2 IsECore</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8538AAAF8628A725">3.8-3 EQuotient</a></span>
@@ -149,27 +171,33 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84DB1DD37AF227CF">3.8-13 LengthLexicographic</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8480188D81ECBD92">3.8-14 Lexicographic</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78F41DF77D6F8292">3.8-15 ReverseDominance</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X83890936806E3A34">3.9 <span class="Heading">Miscellaneous functions on modules</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X83890936806E3A34">3.9 <span class="Heading">Miscellaneous functions on modules</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A8E810C85A62DD6">3.9-1 Specialized</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8232C0A1846A27FB">3.9-2 ERegulars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X822E8193835DD1D9">3.9-3 SplitECores</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E92948B80075E46">3.9-4 Coefficient</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79FB3FE67D55BCFA">3.9-5 InnerProduct</a></span>
-</div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D473E167C866CEC">3.10 <span class="Heading">Semi-standard and standard tableaux</span></a>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D473E167C866CEC">3.10 <span class="Heading">Semi-standard and standard tableaux</span></a>
+</span>
+<div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F0F9663796E6978">3.10-1 Tableau</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79ADB1B980D12A14">3.10-2 SemiStandardTableaux</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E51D6107DBE2A74">3.10-3 StandardTableaux</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7869DA9A8198BD28">3.10-4 ConjugateTableau</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E5351C27C9253D9">3.10-5 ShapeTableau</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CABF92D7BF07DD1">3.10-6 TypeTableau</a></span>
+</div></div>
 </div>
-</div>
+<div class="ContChap"><a href="chapBib.html"><span class="Heading">References</span></a></div>
+<div class="ContChap"><a href="chapInd.html"><span class="Heading">Index</span></a></div>
 <br />
 </div>
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

@@ -10,6 +10,10 @@
   \indexspace
 
   \item \texttt  {CreateAutomaticDocumentation}, \hyperpage{5}
+  \item \texttt  {CreateDocEntryForAttribute}, \hyperpage{9}
+  \item \texttt  {CreateDocEntryForCategory}, \hyperpage{8}
+  \item \texttt  {CreateDocEntryForOperation}, \hyperpage{8}
+  \item \texttt  {CreateDocEntryForRepresentation}, \hyperpage{8}
 
   \indexspace
 

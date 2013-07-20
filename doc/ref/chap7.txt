@@ -168,17 +168,21 @@
   
   [1X7.3-1 TraceMethods[101X
   
+  [29X[2XTraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function
   [29X[2XTraceMethods[102X( [3Xoprs[103X ) [32X function
   
-  [33X[0;0YAfter  the  call  of [10XTraceMethods[110X with a list [3Xoprs[103X of operations, whenever a
-  method  of  one  of  the operations in [3Xoprs[103X is called the information string
-  used in the installation of the method is printed.[133X
+  [33X[0;0YAfter  the  call of [10XTraceMethods[110X, whenever a method of one of the operations
+  [3Xopr1[103X,  [3Xopr2[103X,  ... is called, the information string used in the installation
+  of  the  method  is  printed.  The  second form has the same effect for each
+  operation from the list [3Xoprs[103X of operations.[133X
   
   [1X7.3-2 UntraceMethods[101X
   
+  [29X[2XUntraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function
   [29X[2XUntraceMethods[102X( [3Xoprs[103X ) [32X function
   
-  [33X[0;0Yturns the tracing off for all operations in [3Xoprs[103X.[133X
+  [33X[0;0Yturns  the  tracing  off for all operations [3Xopr1[103X, [3Xopr2[103X, ... or in the second
+  form, for all operations in the list [3Xoprs[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTraceMethods( [ Size ] );[127X[104X

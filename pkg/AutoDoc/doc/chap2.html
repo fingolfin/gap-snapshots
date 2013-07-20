@@ -21,7 +21,7 @@
 
 <p><a id="X7B4150D1848BA072" name="X7B4150D1848BA072"></a></p>
 <div class="ChapSects"><a href="chap2.html#X7B4150D1848BA072">2 <span class="Heading">The main functions in the <strong class="pkg">AutoDoc</strong> Package</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8173135A7D187358">2.1 <span class="Heading">The functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X78A295DF814B52A7">2.1 <span class="Heading">The install functions</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85FE8A148090985E">2.1-1 AUTOMATIC_DOCUMENTATION</a></span>
@@ -35,13 +35,21 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B8162A87F499094">2.1-9 DeclareGlobalFunctionWithDocumentation</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CADC9C87BEF79D8">2.1-10 DeclareGlobalVariableWithDocumentation</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X867C32EB80B3168D">2.2 <span class="Heading">Create documentation entries</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84F4A859796C32CF">2.2-1 CreateDocEntryForCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X866D1D097E50D094">2.2-2 CreateDocEntryForRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DE1062382198EF2">2.2-3 CreateDocEntryForOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83DEB2BA82368AD0">2.2-4 CreateDocEntryForAttribute</a></span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">The main functions in the <strong class="pkg">AutoDoc</strong> Package</span></h3>
 
-<p><a id="X8173135A7D187358" name="X8173135A7D187358"></a></p>
+<p><a id="X78A295DF814B52A7" name="X78A295DF814B52A7"></a></p>
 
-<h4>2.1 <span class="Heading">The functions</span></h4>
+<h4>2.1 <span class="Heading">The install functions</span></h4>
 
 <p><a id="X85FE8A148090985E" name="X85FE8A148090985E"></a></p>
 
@@ -72,7 +80,7 @@
 
 <h5>2.1-4 DeclareRepresentationWithDocumentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>], <var class="Arg">function</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
 
 <p>This method declares a representation, like DeclareRepresentation( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
@@ -84,16 +92,16 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperationWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
 
-<p>This method declares a operation, like DeclareOperation( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+<p>This method declares an operation, like DeclareOperation( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
 
 <p><a id="X85CD8A4B7DAEDE74" name="X85CD8A4B7DAEDE74"></a></p>
 
 <h5>2.1-6 InstallMethodWithDocumentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethodWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">func</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethodWithDocumentation</code>( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>], <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: <code class="code">true</code></p>
 
-<p>This method declares a operation, like InstallMethod( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">func</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+<p>This method installs a method, like InstallMethod( <var class="Arg">name</var>, <var class="Arg">short_descr</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">func</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
 
 <p><a id="X833A38277FA4848A" name="X833A38277FA4848A"></a></p>
 
@@ -130,6 +138,46 @@
 <p>Returns: <code class="code">true</code></p>
 
 <p>This method declares a global variable like DeclareGlobalVariable( <var class="Arg">name</var> ) would do. The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this variable should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X867C32EB80B3168D" name="X867C32EB80B3168D"></a></p>
+
+<h4>2.2 <span class="Heading">Create documentation entries</span></h4>
+
+<p><a id="X84F4A859796C32CF" name="X84F4A859796C32CF"></a></p>
+
+<h5>2.2-1 CreateDocEntryForCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateDocEntryForCategory</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X866D1D097E50D094" name="X866D1D097E50D094"></a></p>
+
+<h5>2.2-2 CreateDocEntryForRepresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateDocEntryForRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">list_of_req_entries</var>, <var class="Arg">description</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>], <var class="Arg">function</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attribute of the tester. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this category should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X7DE1062382198EF2" name="X7DE1062382198EF2"></a></p>
+
+<h5>2.2-3 CreateDocEntryForOperation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateDocEntryForOperation</code>( <var class="Arg">name</var>, <var class="Arg">list_of_filters</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">arguments</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the method. It is not optional. <var class="Arg">arguments</var> is an optional string which is displayed in the documentation as attributes of the operation. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this method should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
+
+<p><a id="X83DEB2BA82368AD0" name="X83DEB2BA82368AD0"></a></p>
+
+<h5>2.2-4 CreateDocEntryForAttribute</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateDocEntryForAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>, <var class="Arg">description</var>, <var class="Arg">return_value</var>[, <var class="Arg">argument</var>][, <var class="Arg">chapter_and_section</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="code">true</code></p>
+
+<p>The description string is added to the documentation if CreateAutoDoc is called. It can either be a string or a list of strings. Lists will be concatenated with a space between them. <var class="Arg">return_value</var> is a string displayed as the return value of the attribute. It is not optional. <var class="Arg">argument</var> is an optional string which is displayed in the documentation as attribute of the attribute. <var class="Arg">chapter_and_section</var> is an optional arguments which must be a list with two strings, naming the chapter and the section in which this attribute should be displayed in the automatic generated documentation. There are no spaces allowed in this string, underscores will be converted to spaces in the header of the chapter or the section.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>

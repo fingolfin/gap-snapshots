@@ -1,5 +1,5 @@
   
-  [1X9 [33X[0;0YCatenary and Tame degrees of numerical semigroups[133X[101X
+  [1X9 [33X[0;0YNonunique invariants for factorizations in numerical semigroups[133X[101X
   
   
   [1X9.1 [33X[0;0YFactorizations in Numerical Semigroups[133X[101X
@@ -36,7 +36,21 @@
   with [22Xm[122X the multiplicity of the semigroup and [22Xn[122X its largest minimal generator
   (see [CHM06] or [GH06]).[133X
   
-  [1X9.1-1 FactorizationsElementWRTNumericalSemigroup[101X
+  [1X9.1-1 FactorizationsIntegerWRTList[101X
+  
+  [29X[2XFactorizationsIntegerWRTList[102X( [3Xn[103X, [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is  a  list  of  integers  and  [3Xn[103X  an  integer. The output is the set of
+  factorizations  of  [3Xn[103X in terms of the elements in the list [3Xls[103X. This function
+  uses RestrictedPartitions.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFactorizationsIntegerWRTList(100,[11,13,15,19]);[127X[104X
+    [4X[28X[ [ 2, 6, 0, 0 ], [ 3, 4, 1, 0 ], [ 4, 2, 2, 0 ], [ 5, 0, 3, 0 ], [128X[104X
+    [4X[28X  [ 5, 2, 0, 1 ], [ 6, 0, 1, 1 ], [ 0, 1, 2, 3 ], [ 1, 1, 0, 4 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-2 FactorizationsElementWRTNumericalSemigroup[101X
   
   [29X[2XFactorizationsElementWRTNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -47,11 +61,41 @@
     [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(101,113,196,272,278,286);[127X[104X
     [4X[28X<Numerical semigroup with 6 generators>[128X[104X
     [4X[25Xgap>[125X [27XFactorizationsElementWRTNumericalSemigroup(1100,s);[127X[104X
-    [4X[28X[ [ 0, 0, 0, 2, 2, 0 ], [ 0, 2, 3, 0, 0, 1 ], [ 0, 8, 1, 0, 0, 0 ],[128X[104X
-    [4X[28X  [ 5, 1, 1, 0, 0, 1 ] ][128X[104X
+    [4X[28X[ [ 0, 8, 1, 0, 0, 0 ], [ 0, 0, 0, 2, 2, 0 ], [ 5, 1, 1, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 2, 3, 0, 0, 1 ] ][128X[104X
   [4X[32X[104X
   
-  [1X9.1-2 LengthsOfFactorizationsElementWRTNumericalSemigroup[101X
+  [1X9.1-3 LengthsOfFactorizationsIntegerWRTList[101X
+  
+  [29X[2XLengthsOfFactorizationsIntegerWRTList[102X( [3Xn[103X, [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is a list of integers and [3Xn[103X an integer. The output is the set of lengths
+  of the factorizations of [3Xn[103X in terms of the elements in [3Xls[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLengthsOfFactorizationsIntegerWRTList(100,[11,13,15,19]);[127X[104X
+    [4X[28X[ 6, 8 ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-4 RClassesOfSetOfFactorizations[101X
+  
+  [29X[2XRClassesOfSetOfFactorizations[102X( [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is a set of factorizations (a list of lists of nonnegative integers with
+  the  same lenght). The output is the set of [22Xmathcal R[122X-classes of this set of
+  factorizations as defined in Chapter 7 of [RG09].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(10,11,19,23);;[127X[104X
+    [4X[25Xgap>[125X [27XBettiElementsOfNumericalSemigroup(s);[127X[104X
+    [4X[28X[ 30, 33, 42, 57, 69 ][128X[104X
+    [4X[25Xgap>[125X [27XFactorizationsElementWRTNumericalSemigroup(69,s);[127X[104X
+    [4X[28X[ [ 5, 0, 1, 0 ], [ 2, 1, 2, 0 ], [ 0, 0, 0, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRClassesOfSetOfFactorizations(last);[127X[104X
+    [4X[28X[ [ [ 2, 1, 2, 0 ], [ 5, 0, 1, 0 ] ], [ [ 0, 0, 0, 3 ] ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-5 LengthsOfFactorizationsElementWRTNumericalSemigroup[101X
   
   [29X[2XLengthsOfFactorizationsElementWRTNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -66,7 +110,7 @@
     [4X[28X[ 4, 6, 8, 9 ][128X[104X
   [4X[32X[104X
   
-  [1X9.1-3 ElasticityOfFactorizationsElementWRTNumericalSemigroup[101X
+  [1X9.1-6 ElasticityOfFactorizationsElementWRTNumericalSemigroup[101X
   
   [29X[2XElasticityOfFactorizationsElementWRTNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -81,7 +125,7 @@
     [4X[28X9/4[128X[104X
   [4X[32X[104X
   
-  [1X9.1-4 ElasticityOfNumericalSemigroup[101X
+  [1X9.1-7 ElasticityOfNumericalSemigroup[101X
   
   [29X[2XElasticityOfNumericalSemigroup[102X( [3XS[103X ) [32X function
   
@@ -94,7 +138,21 @@
     [4X[28X286/101[128X[104X
   [4X[32X[104X
   
-  [1X9.1-5 DeltaSetOfFactorizationsElementWRTNumericalSemigroup[101X
+  [1X9.1-8 DeltaSetOfSetOfIntegers[101X
+  
+  [29X[2XDeltaSetOfSetOfIntegers[102X( [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is  list of integers. The output is the Delta set of the elements in [3Xls[103X,
+  that is, the set of differences of consecutive elements in the list.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLengthsOfFactorizationsIntegerWRTList(100,[11,13,15,19]);[127X[104X
+    [4X[28X[ 6, 8 ][128X[104X
+    [4X[25Xgap>[125X [27XDeltaSetOfSetOfIntegers(last);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-9 DeltaSetOfFactorizationsElementWRTNumericalSemigroup[101X
   
   [29X[2XDeltaSetOfFactorizationsElementWRTNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -109,7 +167,7 @@
     [4X[28X[ 1, 2 ][128X[104X
   [4X[32X[104X
   
-  [1X9.1-6 MaximumDegreeOfElementWRTNumericalSemigroup[101X
+  [1X9.1-10 MaximumDegreeOfElementWRTNumericalSemigroup[101X
   
   [29X[2XMaximumDegreeOfElementWRTNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -124,7 +182,23 @@
     [4X[28X9[128X[104X
   [4X[32X[104X
   
-  [1X9.1-7 CatenaryDegreeOfNumericalSemigroup[101X
+  [1X9.1-11 CatenaryDegreeOfSetOfFactorizations[101X
+  
+  [29X[2XCatenaryDegreeOfSetOfFactorizations[102X( [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is a set of factorizations (a list of lists of nonnegative integers with
+  the  same  lenght).  The  output  is  the  catenary  degree  of  this set of
+  factorizations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFactorizationsIntegerWRTList(100,[11,13,15,19]);[127X[104X
+    [4X[28X[ [ 2, 6, 0, 0 ], [ 3, 4, 1, 0 ], [ 4, 2, 2, 0 ], [ 5, 0, 3, 0 ], [128X[104X
+    [4X[28X  [ 5, 2, 0, 1 ], [ 6, 0, 1, 1 ], [ 0, 1, 2, 3 ], [ 1, 1, 0, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCatenaryDegreeOfSetOfFactorizations(last);[127X[104X
+    [4X[28X5[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-12 CatenaryDegreeOfNumericalSemigroup[101X
   
   [29X[2XCatenaryDegreeOfNumericalSemigroup[102X( [3XS[103X ) [32X function
   
@@ -137,7 +211,7 @@
     [4X[28X8[128X[104X
   [4X[32X[104X
   
-  [1X9.1-8 CatenaryDegreeOfElementInNumericalSemigroup[101X
+  [1X9.1-13 CatenaryDegreeOfElementInNumericalSemigroup[101X
   
   [29X[2XCatenaryDegreeOfElementInNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -151,7 +225,23 @@
     [4X[28X18[128X[104X
   [4X[32X[104X
   
-  [1X9.1-9 TameDegreeOfNumericalSemigroup[101X
+  [1X9.1-14 TameDegreeOfSetOfFactorizations[101X
+  
+  [29X[2XTameDegreeOfSetOfFactorizations[102X( [3Xls[103X ) [32X function
+  
+  [33X[0;0Y[3Xls[103X  is a set of factorizations (a list of lists of nonnegative integers with
+  the   same   lenght).  The  output  is  the  tame  degree  of  this  set  of
+  factorizations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFactorizationsIntegerWRTList(100,[11,13,15,19]);[127X[104X
+    [4X[28X[ [ 2, 6, 0, 0 ], [ 3, 4, 1, 0 ], [ 4, 2, 2, 0 ], [ 5, 0, 3, 0 ], [ 5, 2, 0, 1 ], [ 6, 0, 1, 1 ], [ 0, 1, 2, 3 ],[128X[104X
+    [4X[28X  [ 1, 1, 0, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XTameDegreeOfSetOfFactorizations(last);[127X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-15 TameDegreeOfNumericalSemigroup[101X
   
   [29X[2XTameDegreeOfNumericalSemigroup[102X( [3XS[103X ) [32X function
   
@@ -164,7 +254,7 @@
     [4X[28X14[128X[104X
   [4X[32X[104X
   
-  [1X9.1-10 TameDegreeOfElementInNumericalSemigroup[101X
+  [1X9.1-16 TameDegreeOfElementInNumericalSemigroup[101X
   
   [29X[2XTameDegreeOfElementInNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -178,7 +268,7 @@
     [4X[28X5[128X[104X
   [4X[32X[104X
   
-  [1X9.1-11 OmegaPrimalityOfElementInNumericalSemigroup[101X
+  [1X9.1-17 OmegaPrimalityOfElementInNumericalSemigroup[101X
   
   [29X[2XOmegaPrimalityOfElementInNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -188,11 +278,11 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(10,11,13);        [127X[104X
     [4X[28X<Numerical semigroup with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XOmegaPrimalityOfElementinNumericalSemigroup(100,s);[127X[104X
+    [4X[25Xgap>[125X [27XOmegaPrimalityOfElementInNumericalSemigroup(100,s);[127X[104X
     [4X[28X13[128X[104X
   [4X[32X[104X
   
-  [1X9.1-12 OmegaPrimalityOfNumericalSemigroup[101X
+  [1X9.1-18 OmegaPrimalityOfNumericalSemigroup[101X
   
   [29X[2XOmegaPrimalityOfNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   

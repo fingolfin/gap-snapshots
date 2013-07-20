@@ -7,10 +7,10 @@
                          Modules over Computable Rings[101X
   
   
-                               Version 2013.04.19
+                               Version 2013.05.05
   
   
-                                   April 2013
+                                    May 2013
   
   
                                 Mohamed Barakat

@@ -6,7 +6,7 @@
                       [1Xa nice way to create documentations[101X
   
   
-                               Version 2013.01.16
+                               Version 2013.06.26
   
   
                                  September 2012
@@ -48,7 +48,7 @@
     1.1 [33X[0;0YWhat is the idea of the [5XAutoDoc[105X package?[133X
     1.2 [33X[0;0YHow to use AutoDoc[133X
   2 [33X[0;0YThe main functions in the [5XAutoDoc[105X Package[133X
-    2.1 [33X[0;0YThe functions[133X
+    2.1 [33X[0;0YThe install functions[133X
       2.1-1 AUTOMATIC_DOCUMENTATION
       2.1-2 CreateAutomaticDocumentation
       2.1-3 DeclareCategoryWithDocumentation
@@ -59,6 +59,11 @@
       2.1-8 DeclarePropertyWithDocumentation
       2.1-9 DeclareGlobalFunctionWithDocumentation
       2.1-10 DeclareGlobalVariableWithDocumentation
+    2.2 [33X[0;0YCreate documentation entries[133X
+      2.2-1 CreateDocEntryForCategory
+      2.2-2 CreateDocEntryForRepresentation
+      2.2-3 CreateDocEntryForOperation
+      2.2-4 CreateDocEntryForAttribute
   
   
   [32X

@@ -21,6 +21,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
 <p><a id="X8324E5D97DC2A801" name="X8324E5D97DC2A801"></a></p>
 <div class="ChapSects"><a href="chap2.html#X8324E5D97DC2A801">2 <span class="Heading">
                 Numerical Semigroups
@@ -179,7 +180,7 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,11);</span>
-&lt;Numerical semigroup with 2 generators&gt;
+&lt;Modular numerical semigroup satisfying 22x mod 33 &lt;= x &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GapsOfNumericalSemigroup(s);</span>
 [ 1, 2, 4, 5, 7, 8, 10, 13, 16, 19 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:=NumericalSemigroupByGaps(last);</span>
@@ -221,7 +222,7 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,7);</span>
-&lt;Numerical semigroup with 2 generators&gt;
+&lt;Modular numerical semigroup satisfying 7x mod 21 &lt;= x &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupWRTElement(s,30);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:=NumericalSemigroupByAperyList(last);</span>
 &lt;Numerical semigroup&gt;
@@ -264,7 +265,7 @@ false
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,7);</span>
-&lt;Numerical semigroup with 2 generators&gt;
+&lt;Modular numerical semigroup satisfying 7x mod 21 &lt;= x &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L:=GapsOfNumericalSemigroup(s);</span>
 [ 1, 2, 4, 5, 8, 11 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentsGapsOfNumericalSemigroup(L);</span>
@@ -299,7 +300,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := NumericalSemigroup("modular", 5,53);</span>
 &lt;Modular numerical semigroup satisfying 5x mod 53 &lt;= x &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(2,3);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=NumericalSemigroup(2,3);</span>
 &lt;Modular numerical semigroup satisfying 3x mod 6 &lt;= x &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfNumericalSemigroup(T,S);</span>
 true

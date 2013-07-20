@@ -1,4 +1,4 @@
-gap> START_TEST("$Id: test.tst,v 1.8 2011/05/18 14:37:33 gap Exp $");
+gap> START_TEST("$Id$");
 gap> LoadPackage ("irredsol", "", false);
 true
 gap> SetInfoLevel (InfoIrredsol, 0);
@@ -140,5 +140,5 @@ gap> G2:=Group([ [ [ Z(7), Z(7)^5 ], [ Z(7), Z(7)^0 ] ],[ [ Z(7), Z(7)^3 ], [Z(7
 gap> IdIrreducibleSolvableMatrixGroup(G2);
 [ 2, 7, 1, 21 ]
 gap> STOP_TEST("test.tst", 0);
-$Id: test.tst,v 1.8 2011/05/18 14:37:33 gap Exp $
+$Id$
 GAP4stones: 0

@@ -9,3 +9,7 @@
 \indexentry{DeclarePropertyWithDocumentation@\texttt  {DeclarePropertyWithDocumentation}|hyperpage}{7}
 \indexentry{DeclareGlobalFunctionWithDocumentation@\texttt  {Declare}\discretionary {-}{}{}\texttt  {Global}\discretionary {-}{}{}\texttt  {Function}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Documentation}|hyperpage}{7}
 \indexentry{DeclareGlobalVariableWithDocumentation@\texttt  {Declare}\discretionary {-}{}{}\texttt  {Global}\discretionary {-}{}{}\texttt  {Variable}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Documentation}|hyperpage}{8}
+\indexentry{CreateDocEntryForCategory@\texttt  {CreateDocEntryForCategory}|hyperpage}{8}
+\indexentry{CreateDocEntryForRepresentation@\texttt  {CreateDocEntryForRepresentation}|hyperpage}{8}
+\indexentry{CreateDocEntryForOperation@\texttt  {CreateDocEntryForOperation}|hyperpage}{8}
+\indexentry{CreateDocEntryForAttribute@\texttt  {CreateDocEntryForAttribute}|hyperpage}{9}

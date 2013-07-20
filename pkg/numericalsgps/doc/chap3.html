@@ -21,6 +21,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
 <p><a id="X7A9D13C778697F6C" name="X7A9D13C778697F6C"></a></p>
 <div class="ChapSects"><a href="chap3.html#X7A9D13C778697F6C">3 <span class="Heading">
                 Basic operations with numerical semigroups
@@ -36,7 +37,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79D6E4727B612B54">3.1-4 SmallElementsOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F0EDFA77F929120">3.1-5 FirstElementsOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86C699F2800F9ED0">3.1-6 AperyListOfNumericalSemigroupWRTElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8022CC477E9BF678">3.1-7 AperyListOfNumericalSemigroupAsGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X877266A18524982E">3.1-7 AperyListOfNumericalSemigroupWRTInteger</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8022CC477E9BF678">3.1-8 AperyListOfNumericalSemigroupAsGraph</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7F97E0127A1D2835">3.2 <span class="Heading">Frobenius Number</span></a>
 </span>
@@ -162,17 +164,39 @@
 [ 0, 13, 26, 39, 52, 53, 54, 43, 32, 33, 22, 11 ]
 </pre></div>
 
+<p><a id="X877266A18524982E" name="X877266A18524982E"></a></p>
+
+<h5>3.1-7 AperyListOfNumericalSemigroupWRTInteger</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AperyListOfNumericalSemigroupWRTInteger</code>( <var class="Arg">S</var>, <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><var class="Arg">S</var> is a numerical semigroup and <var class="Arg">m</var> is a positive integer. Computes the Apéry list of <var class="Arg">S</var> with respect to <var class="Arg">m</var>, that is, the set of elements <span class="SimpleMath">x</span> in <var class="Arg">S</var> such that <span class="SimpleMath">x-</span><var class="Arg">m</var> is not in <var class="Arg">S</var>. If <var class="Arg">m</var> is an element in <var class="Arg">S</var>, then the output, as sets, is the same as <var class="Arg">AperyListOfNumericalSemigroupWRTInteger</var>, though without side effects, in the sense that this information is no longer used by the package.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> s:=NumericalSemigroup(10,13,19,27);</span>
+&lt;Numerical semigroup with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupWRTInteger(s,11);</span>
+[ 0, 10, 13, 19, 20, 23, 26, 27, 29, 32, 33, 36, 39, 42, 45, 46, 52, 55 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(last);</span>
+18
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupWRTInteger(s,10);</span>
+[ 0, 13, 19, 26, 27, 32, 38, 45, 51, 54 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupWRTElement(s,10);</span>
+[ 0, 51, 32, 13, 54, 45, 26, 27, 38, 19 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(last);</span>
+10
+</pre></div>
+
 <p><a id="X8022CC477E9BF678" name="X8022CC477E9BF678"></a></p>
 
-<h5>3.1-7 AperyListOfNumericalSemigroupAsGraph</h5>
+<h5>3.1-8 AperyListOfNumericalSemigroupAsGraph</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AperyListOfNumericalSemigroupAsGraph</code>( <var class="Arg">ap</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><var class="Arg">ap</var> is the Apéry list of a numerical semigroup. This function returns the adjacency list of the graph <span class="SimpleMath">(ap, E)</span> where the edge <span class="SimpleMath">u -&gt; v</span> is in <span class="SimpleMath">E</span> iff <span class="SimpleMath">v - u</span> is in <span class="SimpleMath">ap</span>. The 0 is ignored.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,7);</span>
-&lt;Numerical semigroup with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupWRTElement(s,10);</span>
 [ 0, 21, 12, 3, 14, 15, 6, 7, 18, 9 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AperyListOfNumericalSemigroupAsGraph(last);</span>

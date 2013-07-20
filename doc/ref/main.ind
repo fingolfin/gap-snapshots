@@ -4558,7 +4558,9 @@
   \item \texttt  {TracedCosetFpGroup}, \hyperpage{659}
   \item \texttt  {TraceImmediateMethods}, \hyperpage{102}
   \item \texttt  {TraceMat}, \hyperpage{311}
-  \item \texttt  {TraceMethods}, \hyperpage{101}
+  \item \texttt  {TraceMethods}
+    \subitem for a list of operations, \hyperpage{101}
+    \subitem for operations, \hyperpage{101}
   \item \texttt  {TracePolynomial}, \hyperpage{815}
   \item \texttt  {TransferDiagram}, \hyperpage{1116}
   \item \texttt  {Transformation}, \hyperpage{777}
@@ -4729,7 +4731,9 @@
   \item \texttt  {UnprofileFunctions}, \hyperpage{108}
   \item \texttt  {UnprofileMethods}, \hyperpage{108}
   \item \texttt{until}, \hyperpage{62}
-  \item \texttt  {UntraceMethods}, \hyperpage{102}
+  \item \texttt  {UntraceMethods}
+    \subitem for a list of operations, \hyperpage{102}
+    \subitem for operations, \hyperpage{102}
   \item \texttt  {UpdateMap}, \hyperpage{1114}
   \item \texttt  {UpEnv}, \hyperpage{88}
   \item \texttt  {UpperCentralSeriesOfGroup}, \hyperpage{522}

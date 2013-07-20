@@ -2,8 +2,6 @@
 ##
 ##  recognize.gd                 IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: recognize.gd,v 1.5 2011/04/07 07:58:09 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

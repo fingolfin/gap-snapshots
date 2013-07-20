@@ -19,12 +19,13 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap0_mj.html">[MathJax on]</a></p>
 <p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
 <div class="pcenter">
 
-<h1>Numerical Semigroups</h1>
+<h1><strong class="pkg">numericalsgps</strong>, a package for numerical semigroups</h1>
 
-<p>( Version 0.971
+<p>( Version 0.98
 
  )</p>
 
@@ -48,7 +49,7 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2005--2011 Centro de Matemática da Universidade do Porto, Portugal and Universidad de Granada, Spain</p>
+<p>© 2005--2013 Centro de Matemática da Universidade do Porto, Portugal and Universidad de Granada, Spain</p>
 
 <p><em>Numericalsgps</em> is free software; you can redistribute it and/or modify it under the terms of the <span class="URL"><a href="http://www.fsf.org/licenses/gpl.html">GNU General Public License</a></span> as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</p>
 
@@ -56,17 +57,17 @@
 <h3>Acknowledgements</h3>
 <p>The first author's work was (partially) supported by the <em>Centro de Matemática da Universidade do Porto</em> (CMUP), financed by FCT (Portugal) through the programs POCTI (Programa Operacional "Ciência, Tecnologia, Inovação") and POSI (Programa Operacional Sociedade da Informação), with national and European Community structural funds and a sabbatical grant of FCT.</p>
 
-<p>The second author was supported by the projects MTM2004-01446, MTM2010-15595, FQM-343, and FQM-5849, and FEDER founds.</p>
+<p>The second author was supported by the projects MTM2004-01446, FQM-343, and FEDER founds.</p>
 
 <p>The third author acknowledges financial support of FCT and the POCTI program through a scholarship given by <em>Centro de Matemática da Universidade do Porto</em>.</p>
 
-<p>The authors wish to thank J. I. García-García for many helpful discussions and for helping in the programming of preliminary versions of some functions.</p>
+<p>The authors wish to thank J. I. García-García and Alfredo Sánchez-R. Navarro for many helpful discussions and for helping in the programming of preliminary versions of some functions, and also to A. Sammartano for his contributions (see Contributions Chapter).</p>
 
-<p>Concerning the mantainment:</p>
+<p><strong class="button">Concerning the mantainment:</strong></p>
 
 <p>The first author was/is (partially) supported by the FCT project PTDC/MAT/65481/2006 and also by the <em>Centro de Matemática da Universidade do Porto</em> (CMUP), funded by the European Regional Development Fund through the programme COMPETE and by the Portuguese Government through the FCT - Fundação para a Ciência e a Tecnologia under the project PEst-C/MAT/UI0144/2011.</p>
 
-<p>The second author was/is supported by the projects MTM2007-62346 and MTM2010-15595.</p>
+<p>The second author was/is supported by the projects MTM2007-62346, MTM2010-15595, and FQM-5849.</p>
 
 <p><a id="X7982162280BC7A61" name="X7982162280BC7A61"></a></p>
 <h3>Colophon</h3>
@@ -123,7 +124,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79D6E4727B612B54">3.1-4 SmallElementsOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F0EDFA77F929120">3.1-5 FirstElementsOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86C699F2800F9ED0">3.1-6 AperyListOfNumericalSemigroupWRTElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8022CC477E9BF678">3.1-7 AperyListOfNumericalSemigroupAsGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X877266A18524982E">3.1-7 AperyListOfNumericalSemigroupWRTInteger</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8022CC477E9BF678">3.1-8 AperyListOfNumericalSemigroupAsGraph</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7F97E0127A1D2835">3.2 <span class="Heading">Frobenius Number</span></a>
 </span>
@@ -149,10 +151,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7969F7F27AAF0BF1">4.1 <span class="Heading">Presentations of Numerical Semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8028208F84950722">4.1-1 FortenTruncatedNCForNumericalSemigroups</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D8199858781EB41">4.1-2 MinimalPresentationOfNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81CC5A6C870377E1">4.1-3 GraphAssociatedToElementInNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X836B6BF4853DB8E2">4.1-4 BettiElementsOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D8199858781EB41">4.1-1 MinimalPresentationOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81CC5A6C870377E1">4.1-2 GraphAssociatedToElementInNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X836B6BF4853DB8E2">4.1-3 BettiElementsOfNumericalSemigroup</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap5.html#X8148F05A830EE2D5">5 <span class="Heading">
@@ -192,8 +193,30 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C8AB03F7E0B71F0">6.1-4 AnIrreducibleNumericalSemigroupWithFrobeniusNumber</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78345A267ADEFBAB">6.1-5 IrreducibleNumericalSemigroupsWithFrobeniusNumber</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8227EF2B7F67E2FB">6.1-6 DecomposeIntoIrreducibles</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X848FCB49851D19B8">6.1-7 AsGluingOfNumericalSemigroups</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86BE7CD17E99BE23">6.1-8 IsACompleteIntersectionNumericalSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7D3FD9C8786B5D72">6.2 <span class="Heading">
+                    Complete intersection numerical semigroups
+                </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X848FCB49851D19B8">6.2-1 AsGluingOfNumericalSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86BE7CD17E99BE23">6.2-2 IsACompleteIntersectionNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86350BCE7D047599">6.2-3 CompleteIntersectionNumericalSemigroupsWithFrobeniusNumber</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78FF54BF79F19AB3">6.2-4 IsFreeNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86B4BA6A79F734A8">6.2-5 FreeNumericalSemigroupsWithFrobeniusNumber</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7807E8998663F8C0">6.2-6 IsTelescopicNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84475353846384E8">6.2-7 TelescopicNumericalSemigroupsWithFrobeniusNumber</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X847CD0EF8452F771">6.2-8 IsNumericalSemigroupAssociatedIrreduciblePlanarCurveSingularity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85BD8C3680F22594">6.2-9 NumericalSemigroupsAssociatedIrreduciblePlanarCurveSingularityWithFrobeniusNumber</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7998FF857F70C9A2">6.3 <span class="Heading">
+                    Almost-symmetric numerical semigroups
+                </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A81F31479DB5DF2">6.3-1 AlmostSymmetricNumericalSemigroupsFromIrreducible</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X847CD0EF8452F771">6.3-2 IsNumericalSemigroupAssociatedIrreduciblePlanarCurveSingularity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B0DF2FE7D00A9E0">6.3-3 AlmostSymmetricNumericalSemigroupsWithFrobeniusNumber</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap7.html#X83C2F0CF825B3869">7 <span class="Heading">
@@ -226,6 +249,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X835890A078F5D6DC">7.1-20 CanonicalIdealOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X85CC100F78608D5E">7.1-21 IntersectionIdealsOfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A04B8887F493733">7.1-22 IsMonomialNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D14AA4D7EE12369">7.1-23 AperyListOfIdealOfNumericalSemigroupWRTElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D14AA4D7EE12369">7.1-24 AperyListOfIdealOfNumericalSemigroupWRTElement</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap8.html#X7D2E70FC82D979D3">8 <span class="Heading">
@@ -248,6 +273,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8255C5907F8968B9">8.2-1 IsArfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7FE10E2F85CB01A2">8.2-2 ArfNumericalSemigroupClosure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C0D2F7986165DDE">8.2-3 MinimalArfGeneratingSystemOfArfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85CD144384FD55F3">8.2-4 ArfNumericalSemigroupsWithFrobeniusNumber</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7E6D857179E5BF1B">8.3 <span class="Heading">
                     Saturated numerical semigroups
@@ -256,28 +282,35 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C5D0FFA85044DF7">8.3-1 IsSaturatedNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8752A66B7E500645">8.3-2 SaturatedNumericalSemigroupClosure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CC07D997880E298">8.3-3 SaturatedNumericalSemigroupsWithFrobeniusNumber</a></span>
 </div></div>
 </div>
-<div class="ContChap"><a href="chap9.html#X7C76B03A84BA7574">9 <span class="Heading">
-		Catenary and Tame degrees of numerical semigroups
+<div class="ContChap"><a href="chap9.html#X7B6F914879CD505F">9 <span class="Heading">
+		Nonunique invariants for factorizations in numerical semigroups
 	</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7FDB54217B15148F">9.1 <span class="Heading">
         Factorizations in Numerical Semigroups
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X78C6D3BF7C7C2760">9.1-1 FactorizationsElementWRTNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FDE4F94870951B1">9.1-2 LengthsOfFactorizationsElementWRTNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X85C2987C7827D18D">9.1-3 ElasticityOfFactorizationsElementWRTNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FE2D6F77BE96716">9.1-4 ElasticityOfNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8384DBFE7D82A634">9.1-5 DeltaSetOfFactorizationsElementWRTNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E3ED34D78F3A8CA">9.1-6 MaximumDegreeOfElementWRTNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FAF204E85D9C21B">9.1-7 CatenaryDegreeOfNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X812500217B183FC3">9.1-8 CatenaryDegreeOfElementInNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X860BDF5B85975B73">9.1-9 TameDegreeOfNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8738B4F87E782ED2">9.1-10 TameDegreeOfElementInNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86B0E91684B39839">9.1-11 OmegaPrimalityOfElementInNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7919066C7A7265E1">9.1-12 OmegaPrimalityOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8429AECF78EE7EAB">9.1-1 FactorizationsIntegerWRTList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X78C6D3BF7C7C2760">9.1-2 FactorizationsElementWRTNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7D4CC092859AF81F">9.1-3 LengthsOfFactorizationsIntegerWRTList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X813D2A3A83916A36">9.1-4 RClassesOfSetOfFactorizations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FDE4F94870951B1">9.1-5 LengthsOfFactorizationsElementWRTNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X85C2987C7827D18D">9.1-6 ElasticityOfFactorizationsElementWRTNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FE2D6F77BE96716">9.1-7 ElasticityOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X84667349840AF1F9">9.1-8 DeltaSetOfSetOfIntegers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8384DBFE7D82A634">9.1-9 DeltaSetOfFactorizationsElementWRTNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E3ED34D78F3A8CA">9.1-10 MaximumDegreeOfElementWRTNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E8A56F3810F1769">9.1-11 CatenaryDegreeOfSetOfFactorizations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FAF204E85D9C21B">9.1-12 CatenaryDegreeOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X812500217B183FC3">9.1-13 CatenaryDegreeOfElementInNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86D5A10183C150FC">9.1-14 TameDegreeOfSetOfFactorizations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X860BDF5B85975B73">9.1-15 TameDegreeOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8738B4F87E782ED2">9.1-16 TameDegreeOfElementInNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86B0E91684B39839">9.1-17 OmegaPrimalityOfElementInNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7919066C7A7265E1">9.1-18 OmegaPrimalityOfNumericalSemigroup</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chapA.html#X7AF8D94A7E56C049">A <span class="Heading">Generalities</span></a>
@@ -292,6 +325,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X8466A4DC82F07579">A.2-1 RepresentsPeriodicSubAdditiveFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X7DFEDA6B87BB2E1F">A.2-2 IsListOfIntegersNS</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chapB.html#X86746B487B54A2D6">B <span class="Heading">Random functions</span></a>
@@ -313,6 +347,11 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X87A47D22814E0DA8">C.1-2 IsMpureNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X83C96D0D7C8A507D">C.1-3 IsPureNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X7A5752C0836370FA">C.1-4 IsGradedAssociatedRingNumericalSemigroupGorenstein</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X7800C5D68641E2B7">C.1-5 IsGradedAssociatedRingNumericalSemigroupCI</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X80CAA1FA7F6FF4FD">C.1-6 IsAperySetGammaRectangular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X7E6E262C7C421635">C.1-7 IsAperySetBetaRectangular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X86F52FB67F76D2CB">C.1-8 IsAperySetAlphaRectangular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapC.html#X7D2A75F086A5466B">C.1-9 TypeSequenceOfNumericalSemigroup</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chapBib.html"><span class="Heading">References</span></a></div>

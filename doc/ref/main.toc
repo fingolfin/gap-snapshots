@@ -138,8 +138,8 @@
 \contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Inspecting Applicable Methods}}{101}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }ApplicableMethod}}{101}{subsection.7.2.1}
 \contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }Tracing Methods}}{101}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}\leavevmode {\color {Chapter }TraceMethods}}{101}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}\leavevmode {\color {Chapter }UntraceMethods}}{102}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.1}\leavevmode {\color {Chapter }TraceMethods (for operations)}}{101}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}\leavevmode {\color {Chapter }UntraceMethods (for operations)}}{102}{subsection.7.3.2}
 \contentsline {subsection}{\numberline {7.3.3}\leavevmode {\color {Chapter }TraceImmediateMethods}}{102}{subsection.7.3.3}
 \contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Info Functions}}{103}{section.7.4}
 \contentsline {subsection}{\numberline {7.4.1}\leavevmode {\color {Chapter }NewInfoClass}}{103}{subsection.7.4.1}

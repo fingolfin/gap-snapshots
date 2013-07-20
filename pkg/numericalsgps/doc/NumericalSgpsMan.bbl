@@ -1,11 +1,23 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{RGSGGJM04}
 
+\bibitem[AGS13]{AGS13}
+A.~Assi and P.~A. García-Sánchez.
+\newblock Constructing the set of complete intersection numerical semigroups
+  with a given frobenius number.
+\newblock {\em Applicable Algebra in Engineering, Communication and Computing},
+  2013.
+
 \bibitem[BA08]{B-A08}
 M.~Bras-Amorós.
 \newblock Fibonacci-like behavior of the number of numerical semigroups of a
   given genus.
 \newblock {\em Semigroup Forum}, 76:379--384, 2008.
+
+\bibitem[BC77]{BC77}
+J.~Bertin and P.~Carbonne.
+\newblock Semi-groupes d'entiers et application aux branches.
+\newblock {\em J. Algebra}, 49(1):81--95, 1977.
 
 \bibitem[BDF97]{BDF97}
 V.~Barucci, D.~D. Dobbs, and M.~Fontana.
@@ -26,11 +38,22 @@ V.~Blanco, P.~A. García-Sánchez, and A~Geroldinger.
   with applications to numerical monoids and krull monoids.
 \newblock {\em arXiv}, 1006.4222v1, 2010.
 
+\bibitem[BR97]{BF97}
+V.~Barucci and Fröberg R.
+\newblock One-dimensional almost gorenstein rings.
+\newblock {\em J. Algebra}, 188:418--442, 1997.
+
 \bibitem[BR08]{Ros05}
 M.~Bullejos and J.~C. Rosales.
 \newblock Proportionally modular diophantine inequalities and the stern-brocot
   tree.
 \newblock {\em Math. Comput.}, 2008.
+
+\bibitem[BR13]{BR13}
+V.~Blanco and J.C. Rosales.
+\newblock The tree of irreducible numerical semigroups with fixed frobenius
+  number.
+\newblock {\em Forum Math.}, to appear 2013.
 
 \bibitem[Bry10]{Br}
 L.~Bryant.
@@ -38,11 +61,10 @@ L.~Bryant.
   associated graded rings.
 \newblock {\em Comm. Algebra}, 38(6):2092--2128, 2010.
 
-\bibitem[CD94]{MR1283022}
-E.~Contejean and H.~Devie.
-\newblock An efficient incremental algorithm for solving systems of linear
-  {D}iophantine equations.
-\newblock {\em Inform. and Comput.}, 113(1):143--172, 1994.
+\bibitem[CBJZA13]{CJZ}
+T.~Cortadellas~Benítez, R.~Jafari, and S.~Zarzuela~Armengou.
+\newblock On teh apéry sets of monomial curves.
+\newblock {\em Semigroup Forum}, 86:289--320, 2013.
 
 \bibitem[CGSD07]{CGL}
 S.~T. Chapman, P.~A. García-Sánchez, and Llena D.
@@ -62,8 +84,8 @@ S.~T. Chapman, M.~T. Holden, and T.~A. Moore.
 \newblock {\em Rocky Mountain J. Math.}, 36(5):1437--1455, 2006.
 
 \bibitem[DGSM06]{JMDA}
-M.~Delgado, P.~A. Garc{\'{\i}}a-S{\'a}nchez, and J.~Morais.
-\newblock On the {GAP} package {\it numericalsgps}.
+M.~Delgado, P.~A. García-Sánchez, and J.~Morais.
+\newblock On the {GAP} package numericalsgps.
 \newblock In {\em Fifth {C}onference on {D}iscrete {M}athematics and {C}omputer
   {S}cience ({S}panish)}, volume~23 of {\em Ciencias (Valladolid)}, pages
   271--278. Univ. Valladolid, Secr. Publ. Intercamb. Ed., Valladolid, 2006.
@@ -72,6 +94,17 @@ M.~Delgado, P.~A. Garc{\'{\i}}a-S{\'a}nchez, and J.~Morais.
 M.~D'Anna, V.~Micale, and A.~Sammartano.
 \newblock On the associated graded ring of a semigroup ring.
 \newblock {\em J. Commut. Algebra}, 3(2):147--168, 2011.
+
+\bibitem[DMS13a]{DAMSClasses}
+M.~D'Anna, V.~Micale, and A.~Sammartano.
+\newblock Classes of complete intersection numerical semigroups.
+\newblock {\em arXiv:1304.4290}, 2013.
+
+\bibitem[DMS13b]{DAMSwhen}
+M.~D'Anna, V.~Micale, and A.~Sammartano.
+\newblock When the associated graded ring of a semigroup ring is complete
+  intersection.
+\newblock {\em arXiv:1111.1294}, 2013.
 
 \bibitem[DMV09]{DA-M-M}
 M.~D'Anna, M.~Mezzasalma, and Micale V.
@@ -85,7 +118,7 @@ J.~Elias.
 \newblock {\em Math. Proc. Camb. Phil. Soc.}, 131:227--240, 2001.
 
 \bibitem[FGR87]{FGH87}
-R.~Fr\"oberg, C.~Gottlieb, and Häggkvist R.
+R.~Fröberg, C.~Gottlieb, and Häggkvist R.
 \newblock On numerical semigroups.
 \newblock {\em Semigroup Forum}, 35(1):63--83, 1987.
 
@@ -105,6 +138,13 @@ K.~Herzinger and R.~Sanford.
 \newblock Minimal generating sets for relative ideals in numerical semigroups
   of multiplicity eight.
 \newblock {\em Communications in Algebra}, 32(12):4713--4731, 2004.
+
+\bibitem[KP95]{KP95}
+Christoph Kirfel and Ruud Pellikaan.
+\newblock The minimum distance of codes in an array coming from telescopic
+  semigroups.
+\newblock {\em IEEE Trans. Inform. Theory}, 41(6, part 1):1720--1732, 1995.
+\newblock Special issue on algebraic geometry codes.
 
 \bibitem[Mic02]{VMic02}
 V.~Micale.
@@ -131,6 +171,12 @@ J.~C. Rosales and P.~A. García-Sánchez.
 J.~C. Rosales and P.~A. García-Sánchez.
 \newblock {\em Numerical Semigroups}.
 \newblock Springer, 2009.
+
+\bibitem[RGS13]{RGS13}
+J.~C. Rosales and P.A. García-Sánchez.
+\newblock Constructing almost symmetric numerical semigroups from almost
+  irreducible numerical semigroups.
+\newblock {\em Comm. Algebra}, to appear 2013.
 
 \bibitem[RGSGGB03]{RGGB03}
 J.~C. Rosales, P.~A. García-Sánchez, J.~I. García-García, and M.~B. Branco.
@@ -164,5 +210,10 @@ J.~C. Rosales.
 J.~C. Rosales.
 \newblock On numerical semigroups.
 \newblock {\em Semigroup Forum}, 52:307--318, 1996.
+
+\bibitem[Zar86]{Z86}
+O.~Zariski.
+\newblock {\em Le problème des modules pour les courbes planes}.
+\newblock Hermann, 1986.
 
 \end{thebibliography}

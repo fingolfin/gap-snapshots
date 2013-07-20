@@ -2,8 +2,6 @@
 ##
 ##  iterators.gi                   IRREDSOL                 Burkhard Höfling
 ##
-##  @(#)$Id: iterators.gi,v 1.7 2011/04/07 07:58:09 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

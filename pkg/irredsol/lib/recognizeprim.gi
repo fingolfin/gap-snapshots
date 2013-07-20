@@ -2,8 +2,6 @@
 ##
 ##  recognizeprim.gi              IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: recognizeprim.gi,v 1.1 2011/05/18 16:40:29 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 
@@ -70,7 +68,7 @@ InstallGlobalFunction (RecognitionPrimitiveSolvableGroup,
         
         mats := [];
         
-        C := Complementclasses (G, N);
+        C := ComplementClassesRepresentatives (G, N);
         if Length (C) <> 1 then
           Error ("G must be primitive");
         fi;

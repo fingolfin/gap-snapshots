@@ -1224,8 +1224,10 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ShowOtherMethods}{7.1.5}{X7E5E2E7B85029E34}
 \makelabel{ref:ApplicableMethod}{7.2.1}{X80848FF486BD6F9F}
 \makelabel{ref:ApplicableMethodTypes}{7.2.1}{X80848FF486BD6F9F}
-\makelabel{ref:TraceMethods}{7.3.1}{X7D82FAD881B262D1}
-\makelabel{ref:UntraceMethods}{7.3.2}{X782793B3861A2E8D}
+\makelabel{ref:TraceMethods (for operations)}{7.3.1}{X80B044017C9E4137}
+\makelabel{ref:TraceMethods (for a list of operations)}{7.3.1}{X80B044017C9E4137}
+\makelabel{ref:UntraceMethods (for operations)}{7.3.2}{X7EB04D387C53E4C1}
+\makelabel{ref:UntraceMethods (for a list of operations)}{7.3.2}{X7EB04D387C53E4C1}
 \makelabel{ref:TraceImmediateMethods}{7.3.3}{X81078D3387A38E31}
 \makelabel{ref:NewInfoClass}{7.4.1}{X7AA1A1CF79F20790}
 \makelabel{ref:DeclareInfoClass}{7.4.2}{X7B3709C584B3DA1E}

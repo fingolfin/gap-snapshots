@@ -7,25 +7,7 @@
   
   [1X4.1 [33X[0;0YPresentations of Numerical Semigroups[133X[101X
   
-  [1X4.1-1 FortenTruncatedNCForNumericalSemigroups[101X
-  
-  [29X[2XFortenTruncatedNCForNumericalSemigroups[102X( [3XL[103X ) [32X function
-  
-  [33X[0;0Y[3XL[103X  contains  the  list  of  coefficients  of  a single linear equation. This
-  function  gives  a  minimal generator of the affine semigroup of nonnegative
-  solutions  of  this  equation  with  the  first coordinate equal to one (see
-  [CD94]). Returns [10Xfail[110X if no solution exists.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XFortenTruncatedNCForNumericalSemigroups([ -57, 3 ]);[127X[104X
-    [4X[28X[ 1, 19 ][128X[104X
-    [4X[25Xgap>[125X [27XFortenTruncatedNCForNumericalSemigroups([ -57, 33 ]);[127X[104X
-    [4X[28Xfail[128X[104X
-    [4X[25Xgap>[125X [27XFortenTruncatedNCForNumericalSemigroups([ -57, 19 ]);[127X[104X
-    [4X[28X[ 1, 3 ][128X[104X
-  [4X[32X[104X
-  
-  [1X4.1-2 MinimalPresentationOfNumericalSemigroup[101X
+  [1X4.1-1 MinimalPresentationOfNumericalSemigroup[101X
   
   [29X[2XMinimalPresentationOfNumericalSemigroup[102X( [3XS[103X ) [32X function
   
@@ -45,8 +27,8 @@
     [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,5,7);[127X[104X
     [4X[28X<Numerical semigroup with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XMinimalPresentationOfNumericalSemigroup(s);[127X[104X
-    [4X[28X[ [ [ 1, 0, 1 ], [ 0, 2, 0 ] ], [ [ 4, 0, 0 ], [ 0, 1, 1 ] ],[128X[104X
-    [4X[28X  [ [ 3, 1, 0 ], [ 0, 0, 2 ] ] ][128X[104X
+    [4X[28X[ [ [ 0, 2, 0 ], [ 1, 0, 1 ] ], [ [ 3, 1, 0 ], [ 0, 0, 2 ] ], [128X[104X
+    [4X[28X  [ [ 4, 0, 0 ], [ 0, 1, 1 ] ] ][128X[104X
     [4X[28X[128X[104X
     [4X[28X                        [128X[104X
   [4X[32X[104X
@@ -54,7 +36,7 @@
   [33X[0;0YThe first element in the list means that [22X1× 3+1× 7=2× 5[122X, and the others have
   similar meanings.[133X
   
-  [1X4.1-3 GraphAssociatedToElementInNumericalSemigroup[101X
+  [1X4.1-2 GraphAssociatedToElementInNumericalSemigroup[101X
   
   [29X[2XGraphAssociatedToElementInNumericalSemigroup[102X( [3Xn[103X, [3XS[103X ) [32X function
   
@@ -69,15 +51,14 @@
   semigroup [3XS[103X, as explained in [Ros96a].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,5,7);[127X[104X
-    [4X[28X<Numerical semigroup with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,5,7);;[127X[104X
     [4X[25Xgap>[125X [27XGraphAssociatedToElementInNumericalSemigroup(10,s);[127X[104X
     [4X[28X[ [ 3, 5, 7 ], [ [ 3, 7 ] ] ][128X[104X
     [4X[28X[128X[104X
     [4X[28X                        [128X[104X
   [4X[32X[104X
   
-  [1X4.1-4 BettiElementsOfNumericalSemigroup[101X
+  [1X4.1-3 BettiElementsOfNumericalSemigroup[101X
   
   [29X[2XBettiElementsOfNumericalSemigroup[102X( [3XS[103X ) [32X function
   
@@ -87,8 +68,7 @@
   nonconnected [GO10].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,5,7);[127X[104X
-    [4X[28X<Numerical semigroup with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,5,7);;[127X[104X
     [4X[25Xgap>[125X [27XBettiElementsOfNumericalSemigroup(s);[127X[104X
     [4X[28X[ 10, 12, 14 ][128X[104X
     [4X[28X[128X[104X

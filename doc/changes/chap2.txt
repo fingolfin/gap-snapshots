@@ -320,3 +320,34 @@
         straight  line  programs  had  a  bug which triggered an error, if the
         straight line program contained unnecessary steps.[133X
   
+  
+  [1X2.4 [33X[0;0Y[5XGAP[105X[101X[1X 4.6.5 (July 2013)[133X[101X
+  
+  [33X[0;0YImproved functionality:[133X
+  
+  [30X    [33X[0;6Y[2XTraceMethods[102X    ([14XReference:   TraceMethods   (for   operations)[114X)   and
+        [2XUntraceMethods[102X ([14XReference: UntraceMethods (for operations)[114X) now better
+        check  their  arguments  and provide a sensible error message if being
+        called  without arguments. Also, both variants of calling them are now
+        documented.[133X
+  
+  [30X    [33X[0;6YLibrary  methods  for  [2XSortex[102X  ([14XReference: Sortex[114X) are now replaced by
+        faster  ones  using  the kernel [2XSortParallel[102X ([14XReference: SortParallel[114X)
+        functionality instead of making expensive zipped lists.[133X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6Y[2XIntHexString[102X   ([14XReference:  IntHexString[114X)  wrongly  produced  a  large
+        integer  when  there  were  too  many  leading zeros. [Reported by Joe
+        Bohanon][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YA    bug    that    may    occur   in   some   cases   while   calling
+        [2XTransitiveIdentification[102X     ([14XReference:    TransitiveIdentification[114X).
+        [Reported by Izumi Miyamoto][133X
+  
+  [30X    [33X[0;6YThe new code for semidirect products of permutation groups, introduced
+        in  [5XGAP[105X  4.6,  had  a  bug  which  was causing problems for [2XProjection[102X
+        ([14XReference: Projection[114X). [Reported by Graham Ellis][133X
+  

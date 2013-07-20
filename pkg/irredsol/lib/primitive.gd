@@ -2,8 +2,6 @@
 ##
 ##  primitive.gd                 IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: primitive.gd,v 1.4 2011/05/18 16:41:11 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

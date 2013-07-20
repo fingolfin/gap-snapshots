@@ -2,8 +2,6 @@
 ##
 ##  init.g                       IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: init.g,v 1.11 2011/05/18 14:26:57 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

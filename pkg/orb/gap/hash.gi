@@ -778,21 +778,10 @@ else
       end );
 fi;
 
-if CompareVersionNumbers(GAPInfo.Version,"4.7") then
-    InstallGlobalFunction( ORB_HashFunctionForTransformations,
-     function(t,data)
-       if IsTrans2Rep(t) then 
-         return HashKeyBag(t,255,0,2*DegreeOfTransformation(t)) mod data + 1;
-       else
-         return HashKeyBag(t,255,0,4*DegreeOfTransformation(t)) mod data + 1; 
-       fi;
-      end );
-else
-    InstallGlobalFunction( ORB_HashFunctionForTransformations,
-      function(t,data)
-        return ORB_HashFunctionForPlainFlatList(t![1],data);
-      end );
-fi;
+InstallGlobalFunction( ORB_HashFunctionForTransformations,
+function(t,data)
+  return ORB_HashFunctionForPlainFlatList(t![1],data);
+end );
 
 InstallGlobalFunction( MakeHashFunctionForPlainFlatList,
   function( len )
@@ -811,19 +800,11 @@ InstallMethod( ChooseHashFunction, "for permutations",
     return rec( func := ORB_HashFunctionForPermutations, data := hashlen );
   end );
 
-if CompareVersionNumbers(GAPInfo.Version,"4.7") then
-    InstallMethod( ChooseHashFunction, "for transformations",
-      [IsTransformation, IsInt],
-      function(t,hashlen)
-        return rec(func := ORB_HashFunctionForTransformations, data:=hashlen);
-      end );
-else
-    InstallMethod( ChooseHashFunction, "for transformations",
-      [IsTransformationRep, IsInt],
-      function(t,hashlen)
-        return rec(func := ORB_HashFunctionForTransformations, data:=hashlen);
-      end );
-fi;
+InstallMethod( ChooseHashFunction, "for transformations",
+  [IsTransformationRep, IsInt],
+  function(t,hashlen)
+    return rec( func := ORB_HashFunctionForTransformations, data := hashlen );
+  end );
 
 InstallGlobalFunction( ORB_HashFunctionForIntList,
 function(v,data)
@@ -896,23 +877,6 @@ InstallMethod( ChooseHashFunction,
     fi;
     TryNextMethod();
   end );
-
-if CompareVersionNumbers(GAPInfo.Version,"4.7") then
-    InstallGlobalFunction( ORB_HashFunctionForPartialPerms,
-    function(t,data)
-      if IsPPerm2Rep(t) then 
-        return HashKeyBag(t,255,2,2*DegreeOfPartialPerm(t)) mod data + 1;
-      else
-        return HashKeyBag(t,255,4,4*DegreeOfPartialPerm(t)) mod data + 1; 
-      fi;
-    end );
-
-    InstallMethod( ChooseHashFunction, "for partial perms",
-      [IsPartialPerm, IsInt],
-      function(t,hashlen)
-        return rec( func := ORB_HashFunctionForPartialPerms, data := hashlen );
-      end );
-fi;
 
 ##
 ##  This program is free software: you can redistribute it and/or modify

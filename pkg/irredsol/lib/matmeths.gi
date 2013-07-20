@@ -2,8 +2,6 @@
 ##
 ##  matmeths.gi                  IRREDSOL                   Burkhard Höfling
 ##
-##  @(#)$Id: matmeths.gi,v 1.7 2011/05/18 16:37:10 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 
@@ -874,7 +872,7 @@ InstallMethod (ConjugatingMatTraceField, "for irreducible FFE matrix group",
             module := moduleG;
             ext := FieldOfMatrixGroup (G);
         else
-            ext := GF(Characteristic (G)^MTX.DegreeSplittingField (moduleG));
+            ext := GF(CharacteristicOfField (G)^MTX.DegreeSplittingField (moduleG));
             module := GModuleByMats (GeneratorsOfGroup (G), ext);
             repeat
                 basis := MTX.ProperSubmoduleBasis (module);

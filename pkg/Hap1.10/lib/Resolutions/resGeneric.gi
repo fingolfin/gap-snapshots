@@ -18,13 +18,18 @@ Tz:=TietzeReducedResolution;
    return ResolutionAbelianGroup(G,N);
    fi;
 
-   if Order(G)<32 then
+   if Order(G)<33 then
    return Tz(ResolutionFiniteGroup(G,N));
    fi;
 
-   if IsPGroup(G) and Order(G)<256 then
+   if IsPGroup(G) then
    return ResolutionNormalSeries(LowerCentralSeries(G),N);
    fi;
+
+L:=LowerCentralSeries(G);
+if Maximum(List(L,Order)) <1000 then
+return  ResolutionNormalSeries(LowerCentralSeries(G),N);
+fi;
 
    if IsNilpotent(G) then
    return ResolutionNilpotentGroup(G,N);

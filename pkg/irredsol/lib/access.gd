@@ -2,8 +2,6 @@
 ##
 ##  access.gd                      IRREDSOL                 Burkhard Höfling
 ##
-##  @(#)$Id: access.gd,v 1.5 2011/05/18 16:25:44 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

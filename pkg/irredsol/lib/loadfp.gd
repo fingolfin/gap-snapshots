@@ -2,8 +2,6 @@
 ##
 ##  loadfp.gd                    IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: loadfp.gd,v 1.5 2011/04/07 07:58:08 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

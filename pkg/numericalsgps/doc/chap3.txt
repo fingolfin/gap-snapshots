@@ -110,7 +110,33 @@
     [4X[28X[ 0, 13, 26, 39, 52, 53, 54, 43, 32, 33, 22, 11 ][128X[104X
   [4X[32X[104X
   
-  [1X3.1-7 AperyListOfNumericalSemigroupAsGraph[101X
+  [1X3.1-7 AperyListOfNumericalSemigroupWRTInteger[101X
+  
+  [29X[2XAperyListOfNumericalSemigroupWRTInteger[102X( [3XS[103X, [3Xm[103X ) [32X operation
+  
+  [33X[0;0Y[3XS[103X  is  a numerical semigroup and [3Xm[103X is a positive integer. Computes the Apéry
+  list  of  [3XS[103X with respect to [3Xm[103X, that is, the set of elements [22Xx[122X in [3XS[103X such that
+  [22Xx-[122X[3Xm[103X  is  not in [3XS[103X. If [3Xm[103X is an element in [3XS[103X, then the output, as sets, is the
+  same   as   [3XAperyListOfNumericalSemigroupWRTInteger[103X,   though  without  side
+  effects,  in  the  sense  that  this  information  is  no longer used by the
+  package.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X s:=NumericalSemigroup(10,13,19,27);[127X[104X
+    [4X[28X<Numerical semigroup with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XAperyListOfNumericalSemigroupWRTInteger(s,11);[127X[104X
+    [4X[28X[ 0, 10, 13, 19, 20, 23, 26, 27, 29, 32, 33, 36, 39, 42, 45, 46, 52, 55 ][128X[104X
+    [4X[25Xgap>[125X [27XLength(last);[127X[104X
+    [4X[28X18[128X[104X
+    [4X[25Xgap>[125X [27XAperyListOfNumericalSemigroupWRTInteger(s,10);[127X[104X
+    [4X[28X[ 0, 13, 19, 26, 27, 32, 38, 45, 51, 54 ][128X[104X
+    [4X[25Xgap>[125X [27XAperyListOfNumericalSemigroupWRTElement(s,10);[127X[104X
+    [4X[28X[ 0, 51, 32, 13, 54, 45, 26, 27, 38, 19 ][128X[104X
+    [4X[25Xgap>[125X [27XLength(last);[127X[104X
+    [4X[28X10[128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-8 AperyListOfNumericalSemigroupAsGraph[101X
   
   [29X[2XAperyListOfNumericalSemigroupAsGraph[102X( [3Xap[103X ) [32X function
   
@@ -119,8 +145,7 @@
   is in [22Xap[122X. The 0 is ignored.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,7);[127X[104X
-    [4X[28X<Numerical semigroup with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xs:=NumericalSemigroup(3,7);;[127X[104X
     [4X[25Xgap>[125X [27XAperyListOfNumericalSemigroupWRTElement(s,10);[127X[104X
     [4X[28X[ 0, 21, 12, 3, 14, 15, 6, 7, 18, 9 ][128X[104X
     [4X[25Xgap>[125X [27XAperyListOfNumericalSemigroupAsGraph(last);[127X[104X

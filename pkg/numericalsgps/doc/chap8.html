@@ -21,6 +21,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
 <p><a id="X7D2E70FC82D979D3" name="X7D2E70FC82D979D3"></a></p>
 <div class="ChapSects"><a href="chap8.html#X7D2E70FC82D979D3">8 <span class="Heading">
                 Numerical semigroups with maximal embedding dimension
@@ -42,6 +43,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8255C5907F8968B9">8.2-1 IsArfNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7FE10E2F85CB01A2">8.2-2 ArfNumericalSemigroupClosure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C0D2F7986165DDE">8.2-3 MinimalArfGeneratingSystemOfArfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85CD144384FD55F3">8.2-4 ArfNumericalSemigroupsWithFrobeniusNumber</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7E6D857179E5BF1B">8.3 <span class="Heading">
                     Saturated numerical semigroups
@@ -50,6 +52,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C5D0FFA85044DF7">8.3-1 IsSaturatedNumericalSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8752A66B7E500645">8.3-2 SaturatedNumericalSemigroupClosure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CC07D997880E298">8.3-3 SaturatedNumericalSemigroupsWithFrobeniusNumber</a></span>
 </div></div>
 </div>
 
@@ -185,6 +188,26 @@ true
 
                         </pre></div>
 
+<p><a id="X85CD144384FD55F3" name="X85CD144384FD55F3"></a></p>
+
+<h5>8.2-4 ArfNumericalSemigroupsWithFrobeniusNumber</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ArfNumericalSemigroupsWithFrobeniusNumber</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p><var class="Arg">f</var> is an integer greater than or equal to -1. The output is the set of all Arf numerical semigroups with Frobenius number <var class="Arg">f</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ArfNumericalSemigroupsWithFrobeniusNumber(10);</span>
+[ &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, 
+  &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, 
+  &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(last,MinimalGeneratingSystemOfNumericalSemigroup);</span>
+[ [ 7, 9, 11, 12, 13, 15, 17 ], [ 3, 11, 13 ], [ 6, 9, 11, 13, 14, 16 ], 
+  [ 9, 11, 12, 13, 14, 15, 16, 17, 19 ], [ 4, 11, 13, 14 ], 
+  [ 8, 11, 12, 13, 14, 15, 17, 18 ], [ 7, 11, 12, 13, 15, 16, 17 ], 
+  [ 6, 11, 13, 14, 15, 16 ], [ 11 .. 21 ] ]
+</pre></div>
+
 <p><a id="X7E6D857179E5BF1B" name="X7E6D857179E5BF1B"></a></p>
 
 <h4>8.3 <span class="Heading">
@@ -223,10 +246,30 @@ false
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SaturatedNumericalSemigroupClosure(NumericalSemigroup(8, 9, 12, 13, 15, 1$</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SaturatedNumericalSemigroupClosure(NumericalSemigroup(8, 9, 12, 13, 15));</span>
 &lt;Numerical semigroup&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalGeneratingSystemOfNumericalSemigroup(last);                        </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalGeneratingSystemOfNumericalSemigroup(last);</span>
 [ 8 .. 15 ]
+</pre></div>
+
+<p><a id="X7CC07D997880E298" name="X7CC07D997880E298"></a></p>
+
+<h5>8.3-3 SaturatedNumericalSemigroupsWithFrobeniusNumber</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaturatedNumericalSemigroupsWithFrobeniusNumber</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p><var class="Arg">f</var> is an integer greater than or equal to -1. The output is the set of all Saturated numerical semigroups with Frobenius number <var class="Arg">f</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SaturatedNumericalSemigroupsWithFrobeniusNumber(10);</span>
+[ &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, 
+  &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt;, 
+  &lt;Numerical semigroup&gt;, &lt;Numerical semigroup&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"> List(last,MinimalGeneratingSystemOfNumericalSemigroup);</span>
+[ [ 3, 11, 13 ], [ 4, 11, 13, 14 ], [ 6, 9, 11, 13, 14, 16 ], 
+  [ 6, 11, 13, 14, 15, 16 ], [ 7, 11, 12, 13, 15, 16, 17 ], 
+  [ 8, 11, 12, 13, 14, 15, 17, 18 ], [ 9, 11, 12, 13, 14, 15, 16, 17, 19 ], 
+  [ 11 .. 21 ] ]
 </pre></div>
 
 

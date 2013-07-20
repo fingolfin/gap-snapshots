@@ -2,8 +2,6 @@
 ##
 ##  util.g                        IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: util.g,v 1.2 2011/05/07 18:55:55 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

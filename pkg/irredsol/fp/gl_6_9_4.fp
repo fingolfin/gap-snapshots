@@ -2,8 +2,6 @@
 ##
 ##  gl_6_9_4.fp                IRREDSOL                  Burkhard Höfling
 ##
-##  @(#)$Id: gl_6_9_4.fp,v 1.1 2011/05/07 18:44:35 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

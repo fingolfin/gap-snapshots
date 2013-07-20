@@ -2,7 +2,7 @@
   [1X2 [33X[0;0YThe main functions in the [5XAutoDoc[105X[101X[1X Package[133X[101X
   
   
-  [1X2.1 [33X[0;0YThe functions[133X[101X
+  [1X2.1 [33X[0;0YThe install functions[133X[101X
   
   [1X2.1-1 AUTOMATIC_DOCUMENTATION[101X
   
@@ -52,7 +52,7 @@
   
   [1X2.1-4 DeclareRepresentationWithDocumentation[101X
   
-  [29X[2XDeclareRepresentationWithDocumentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xlist_of_req_entries[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [29X[2XDeclareRepresentationWithDocumentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xlist_of_req_entries[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X], [3Xfunction[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
   
   [33X[0;0YThis  method  declares  a  representation, like DeclareRepresentation( [3Xname[103X,
@@ -71,7 +71,7 @@
   [29X[2XDeclareOperationWithDocumentation[102X( [3Xname[103X, [3Xlist_of_filters[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
   
-  [33X[0;0YThis   method   declares   a   operation,   like   DeclareOperation(   [3Xname[103X,
+  [33X[0;0YThis   method   declares   an   operation,   like   DeclareOperation(  [3Xname[103X,
   [3Xlist_of_filters[103X  )  would  do.  The  description  string  is  added  to  the
   documentation  if  CreateAutoDoc  is  called. It can either be a string or a
   list  of  strings.  Lists  will  be  concatenated with a space between them.
@@ -86,10 +86,10 @@
   
   [1X2.1-6 InstallMethodWithDocumentation[101X
   
-  [29X[2XInstallMethodWithDocumentation[102X( [3Xname[103X, [3Xshort_descr[103X, [3Xlist_of_filters[103X, [3Xfunc[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [29X[2XInstallMethodWithDocumentation[102X( [3Xname[103X, [3Xshort_descr[103X, [3Xlist_of_filters[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X], [3Xfunc[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
   
-  [33X[0;0YThis  method  declares  a  operation, like InstallMethod( [3Xname[103X, [3Xshort_descr[103X,
+  [33X[0;0YThis  method  installs  a  method,  like  InstallMethod(  [3Xname[103X, [3Xshort_descr[103X,
   [3Xlist_of_filters[103X,  [3Xfunc[103X  )  would  do. The description string is added to the
   documentation  if  CreateAutoDoc  is  called. It can either be a string or a
   list  of  strings.  Lists  will  be  concatenated with a space between them.
@@ -166,4 +166,69 @@
   automatic  generated  documentation.  There  are  no  spaces allowed in this
   string, underscores will be converted to spaces in the header of the chapter
   or the section.[133X
+  
+  
+  [1X2.2 [33X[0;0YCreate documentation entries[133X[101X
+  
+  [1X2.2-1 CreateDocEntryForCategory[101X
+  
+  [29X[2XCreateDocEntryForCategory[102X( [3Xname[103X, [3Xfilter[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThe  description  string  is  added to the documentation if CreateAutoDoc is
+  called.  It  can  either  be  a  string  or a list of strings. Lists will be
+  concatenated  with  a  space  between  them. [3Xarguments[103X is an optional string
+  which  is  displayed  in  the  documentation  as  attribute  of  the tester.
+  [3Xchapter_and_section[103X  is  an optional arguments which must be a list with two
+  strings, naming the chapter and the section in which this category should be
+  displayed  in  the  automatic  generated  documentation. There are no spaces
+  allowed  in  this  string,  underscores  will  be converted to spaces in the
+  header of the chapter or the section.[133X
+  
+  [1X2.2-2 CreateDocEntryForRepresentation[101X
+  
+  [29X[2XCreateDocEntryForRepresentation[102X( [3Xname[103X, [3Xfilter[103X, [3Xlist_of_req_entries[103X, [3Xdescription[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X], [3Xfunction[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThe  description  string  is  added to the documentation if CreateAutoDoc is
+  called.  It  can  either  be  a  string  or a list of strings. Lists will be
+  concatenated  with  a  space  between  them. [3Xarguments[103X is an optional string
+  which  is  displayed  in  the  documentation  as  attribute  of  the tester.
+  [3Xchapter_and_section[103X  is  an optional arguments which must be a list with two
+  strings, naming the chapter and the section in which this category should be
+  displayed  in  the  automatic  generated  documentation. There are no spaces
+  allowed  in  this  string,  underscores  will  be converted to spaces in the
+  header of the chapter or the section.[133X
+  
+  [1X2.2-3 CreateDocEntryForOperation[101X
+  
+  [29X[2XCreateDocEntryForOperation[102X( [3Xname[103X, [3Xlist_of_filters[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xarguments[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThe  description  string  is  added to the documentation if CreateAutoDoc is
+  called.  It  can  either  be  a  string  or a list of strings. Lists will be
+  concatenated  with  a space between them. [3Xreturn_value[103X is a string displayed
+  as  the  return  value  of  the  method. It is not optional. [3Xarguments[103X is an
+  optional string which is displayed in the documentation as attributes of the
+  operation. [3Xchapter_and_section[103X is an optional arguments which must be a list
+  with  two  strings,  naming the chapter and the section in which this method
+  should  be  displayed in the automatic generated documentation. There are no
+  spaces  allowed  in  this string, underscores will be converted to spaces in
+  the header of the chapter or the section.[133X
+  
+  [1X2.2-4 CreateDocEntryForAttribute[101X
+  
+  [29X[2XCreateDocEntryForAttribute[102X( [3Xname[103X, [3Xfilter[103X, [3Xdescription[103X, [3Xreturn_value[103X[, [3Xargument[103X][, [3Xchapter_and_section[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X[133X
+  
+  [33X[0;0YThe  description  string  is  added to the documentation if CreateAutoDoc is
+  called.  It  can  either  be  a  string  or a list of strings. Lists will be
+  concatenated  with  a space between them. [3Xreturn_value[103X is a string displayed
+  as  the  return  value  of the attribute. It is not optional. [3Xargument[103X is an
+  optional  string which is displayed in the documentation as attribute of the
+  attribute. [3Xchapter_and_section[103X is an optional arguments which must be a list
+  with two strings, naming the chapter and the section in which this attribute
+  should  be  displayed in the automatic generated documentation. There are no
+  spaces  allowed  in  this string, underscores will be converted to spaces in
+  the header of the chapter or the section.[133X
   

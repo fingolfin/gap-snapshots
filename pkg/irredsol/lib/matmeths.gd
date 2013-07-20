@@ -2,8 +2,6 @@
 ##
 ##  matmeths.gd                    IRREDSOL                 Burkhard Höfling
 ##
-##  @(#)$Id: matmeths.gd,v 1.4 2011/04/07 07:58:08 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 

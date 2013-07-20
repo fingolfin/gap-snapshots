@@ -2,8 +2,6 @@
 ##
 ##  primitive.gi                   IRREDSOL                 Burkhard Höfling
 ##
-##  @(#)$Id: primitive.gi,v 1.6 2011/05/18 16:42:35 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 
@@ -269,7 +267,7 @@ InstallGlobalFunction (IrreducibleMatrixGroupPrimitiveSolvableGroup,
                     if not IsIrreducibleMatrixGroup (matgrp, GF(p)) then
                         Error ("G must be primitive");
                     else
-                        compl := Complementclasses (G, F);
+                        compl := ComplementClassesRepresentatives (G, F);
                         if Length (compl) <> 1 then
                             Error ("G must be primitive");
                         fi;

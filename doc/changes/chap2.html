@@ -36,6 +36,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X82859C4083F0D7B9">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.4 (April 2013)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7F7F29B27BF76872">2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.5 (July 2013)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.5 and <strong class="pkg">GAP</strong> 4.6</span></h3>
@@ -305,6 +308,40 @@
 
 </li>
 <li><p>The method for <code class="func">SlotUsagePattern</code> (<a href="../../doc/ref/chap37.html#X84C83CE98194FD03"><span class="RefLink">Reference: SlotUsagePattern</span></a>) for straight line programs had a bug which triggered an error, if the straight line program contained unnecessary steps.</p>
+
+</li>
+</ul>
+<p><a id="X7F7F29B27BF76872" name="X7F7F29B27BF76872"></a></p>
+
+<h4>2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.6.5 (July 2013)</span></h4>
+
+<p>Improved functionality:</p>
+
+
+<ul>
+<li><p><code class="func">TraceMethods</code> (<a href="../../doc/ref/chap7.html#X80B044017C9E4137"><span class="RefLink">Reference: TraceMethods (for operations)</span></a>) and <code class="func">UntraceMethods</code> (<a href="../../doc/ref/chap7.html#X7EB04D387C53E4C1"><span class="RefLink">Reference: UntraceMethods (for operations)</span></a>) now better check their arguments and provide a sensible error message if being called without arguments. Also, both variants of calling them are now documented.</p>
+
+</li>
+<li><p>Library methods for <code class="func">Sortex</code> (<a href="../../doc/ref/chap21.html#X87287FCA81E2B06A"><span class="RefLink">Reference: Sortex</span></a>) are now replaced by faster ones using the kernel <code class="func">SortParallel</code> (<a href="../../doc/ref/chap21.html#X791F2B2C7E9B9A46"><span class="RefLink">Reference: SortParallel</span></a>) functionality instead of making expensive zipped lists.</p>
+
+</li>
+</ul>
+<p>Fixed bugs which could lead to incorrect results:</p>
+
+
+<ul>
+<li><p><code class="func">IntHexString</code> (<a href="../../doc/ref/chap27.html#X7B6D118184F692A0"><span class="RefLink">Reference: IntHexString</span></a>) wrongly produced a large integer when there were too many leading zeros. [Reported by Joe Bohanon]</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>A bug that may occur in some cases while calling <code class="func">TransitiveIdentification</code> (<a href="../../doc/ref/chap50.html#X7EE614D780C713D1"><span class="RefLink">Reference: TransitiveIdentification</span></a>). [Reported by Izumi Miyamoto]</p>
+
+</li>
+<li><p>The new code for semidirect products of permutation groups, introduced in <strong class="pkg">GAP</strong> 4.6, had a bug which was causing problems for <code class="func">Projection</code> (<a href="../../doc/ref/chap32.html#X8769E8DA80BC96C1"><span class="RefLink">Reference: Projection</span></a>). [Reported by Graham Ellis]</p>
 
 </li>
 </ul>

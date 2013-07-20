@@ -1,4 +1,4 @@
-# makefile prototype for the EDIM package                         Frank Lübeck
+# makefile prototype for the EDIM package                         Frank LÃ¼beck
 
 CONFIGNAME=@CONFIGNAME@
 

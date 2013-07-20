@@ -1,9 +1,9 @@
   
   
-                              [1XNumerical Semigroups[101X
+               [1X[5Xnumericalsgps[105X, a package for numerical semigroups[101X
   
   
-                               ( Version 0.971 )
+                                ( Version 0.98 )
   
   
                                  Manuel Delgado
@@ -23,7 +23,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©  2005--2011  Centro  de  Matemática da Universidade do Porto, Portugal and
+  [33X[0;0Y©  2005--2013  Centro  de  Matemática da Universidade do Porto, Portugal and
   Universidad de Granada, Spain[133X
   
   [33X[0;0Y[13XNumericalsgps[113X  is  free  software;  you can redistribute it and/or modify it
@@ -42,18 +42,19 @@
   national  and  European Community structural funds and a sabbatical grant of
   FCT.[133X
   
-  [33X[0;0YThe   second   author   was   supported   by   the  projects  MTM2004-01446,
-  MTM2010-15595, FQM-343, and FQM-5849, and FEDER founds.[133X
+  [33X[0;0YThe  second author was supported by the projects MTM2004-01446, FQM-343, and
+  FEDER founds.[133X
   
   [33X[0;0YThe third author acknowledges financial support of FCT and the POCTI program
   through  a  scholarship  given  by  [13XCentro  de Matemática da Universidade do
   Porto[113X.[133X
   
-  [33X[0;0YThe  authors  wish to thank J. I. García-García for many helpful discussions
-  and  for  helping  in  the  programming  of  preliminary  versions  of  some
-  functions.[133X
+  [33X[0;0YThe authors wish to thank J. I. García-García and Alfredo Sánchez-R. Navarro
+  for  many  helpful  discussions  and  for  helping  in  the  programming  of
+  preliminary  versions  of  some functions, and also to A. Sammartano for his
+  contributions (see Contributions Chapter).[133X
   
-  [33X[0;0YConcerning the mantainment:[133X
+  [33X[0;0Y[12XConcerning the mantainment:[112X[133X
   
   [33X[0;0YThe   first   author   was/is  (partially)  supported  by  the  FCT  project
   PTDC/MAT/65481/2006  and also by the [13XCentro de Matemática da Universidade do
@@ -62,8 +63,8 @@
   Fundação    para    a   Ciência   e   a   Tecnologia   under   the   project
   PEst-C/MAT/UI0144/2011.[133X
   
-  [33X[0;0YThe  second  author  was/is  supported  by  the  projects  MTM2007-62346 and
-  MTM2010-15595.[133X
+  [33X[0;0YThe   second   author   was/is  supported  by  the  projects  MTM2007-62346,
+  MTM2010-15595, and FQM-5849.[133X
   
   
   -------------------------------------------------------
@@ -109,7 +110,8 @@
       3.1-4 SmallElementsOfNumericalSemigroup
       3.1-5 FirstElementsOfNumericalSemigroup
       3.1-6 AperyListOfNumericalSemigroupWRTElement
-      3.1-7 AperyListOfNumericalSemigroupAsGraph
+      3.1-7 AperyListOfNumericalSemigroupWRTInteger
+      3.1-8 AperyListOfNumericalSemigroupAsGraph
     3.2 [33X[0;0YFrobenius Number[133X
       3.2-1 FrobeniusNumberOfNumericalSemigroup
       3.2-2 FrobeniusNumber
@@ -123,10 +125,9 @@
       3.3-4 SpecialGapsOfNumericalSemigroup
   4 [33X[0;0YPresentations of Numerical Semigroups[133X
     4.1 [33X[0;0YPresentations of Numerical Semigroups[133X
-      4.1-1 FortenTruncatedNCForNumericalSemigroups
-      4.1-2 MinimalPresentationOfNumericalSemigroup
-      4.1-3 GraphAssociatedToElementInNumericalSemigroup
-      4.1-4 BettiElementsOfNumericalSemigroup
+      4.1-1 MinimalPresentationOfNumericalSemigroup
+      4.1-2 GraphAssociatedToElementInNumericalSemigroup
+      4.1-3 BettiElementsOfNumericalSemigroup
   5 [33X[0;0YConstructing numerical semigroups from others[133X
     5.1 [33X[0;0YAdding and removing elements of a numerical semigroup[133X
       5.1-1 RemoveMinimalGeneratorFromNumericalSemigroup
@@ -146,8 +147,20 @@
       6.1-4 AnIrreducibleNumericalSemigroupWithFrobeniusNumber
       6.1-5 IrreducibleNumericalSemigroupsWithFrobeniusNumber
       6.1-6 DecomposeIntoIrreducibles
-      6.1-7 AsGluingOfNumericalSemigroups
-      6.1-8 IsACompleteIntersectionNumericalSemigroup
+    6.2 [33X[0;0YComplete intersection numerical semigroups[133X
+      6.2-1 AsGluingOfNumericalSemigroups
+      6.2-2 IsACompleteIntersectionNumericalSemigroup
+      6.2-3 CompleteIntersectionNumericalSemigroupsWithFrobeniusNumber
+      6.2-4 IsFreeNumericalSemigroup
+      6.2-5 FreeNumericalSemigroupsWithFrobeniusNumber
+      6.2-6 IsTelescopicNumericalSemigroup
+      6.2-7 TelescopicNumericalSemigroupsWithFrobeniusNumber
+      6.2-8 IsNumericalSemigroupAssociatedIrreduciblePlanarCurveSingularity
+      6.2-9 NumericalSemigroupsAssociatedIrreduciblePlanarCurveSingularityWithFrobeniusNumber
+    6.3 [33X[0;0YAlmost-symmetric numerical semigroups[133X
+      6.3-1 AlmostSymmetricNumericalSemigroupsFromIrreducible
+      6.3-2 IsNumericalSemigroupAssociatedIrreduciblePlanarCurveSingularity
+      6.3-3 AlmostSymmetricNumericalSemigroupsWithFrobeniusNumber
   7 [33X[0;0YIdeals of numerical semigroups[133X
     7.1 [33X[0;0YIdeals of numerical semigroups[133X
       7.1-1 IdealOfNumericalSemigroup
@@ -172,6 +185,8 @@
       7.1-20 CanonicalIdealOfNumericalSemigroup
       7.1-21 IntersectionIdealsOfNumericalSemigroup
       7.1-22 IsMonomialNumericalSemigroup
+      7.1-23 AperyListOfIdealOfNumericalSemigroupWRTElement
+      7.1-24 AperyListOfIdealOfNumericalSemigroupWRTElement
   8 [33X[0;0YNumerical semigroups with maximal embedding dimension[133X
     8.1 [33X[0;0YNumerical semigroups with maximal embedding dimension[133X
       8.1-1 IsMEDNumericalSemigroup
@@ -181,23 +196,31 @@
       8.2-1 IsArfNumericalSemigroup
       8.2-2 ArfNumericalSemigroupClosure
       8.2-3 MinimalArfGeneratingSystemOfArfNumericalSemigroup
+      8.2-4 ArfNumericalSemigroupsWithFrobeniusNumber
     8.3 [33X[0;0YSaturated numerical semigroups[133X
       8.3-1 IsSaturatedNumericalSemigroup
       8.3-2 SaturatedNumericalSemigroupClosure
-  9 [33X[0;0YCatenary and Tame degrees of numerical semigroups[133X
+      8.3-3 SaturatedNumericalSemigroupsWithFrobeniusNumber
+  9 [33X[0;0YNonunique invariants for factorizations in numerical semigroups[133X
     9.1 [33X[0;0YFactorizations in Numerical Semigroups[133X
-      9.1-1 FactorizationsElementWRTNumericalSemigroup
-      9.1-2 LengthsOfFactorizationsElementWRTNumericalSemigroup
-      9.1-3 ElasticityOfFactorizationsElementWRTNumericalSemigroup
-      9.1-4 ElasticityOfNumericalSemigroup
-      9.1-5 DeltaSetOfFactorizationsElementWRTNumericalSemigroup
-      9.1-6 MaximumDegreeOfElementWRTNumericalSemigroup
-      9.1-7 CatenaryDegreeOfNumericalSemigroup
-      9.1-8 CatenaryDegreeOfElementInNumericalSemigroup
-      9.1-9 TameDegreeOfNumericalSemigroup
-      9.1-10 TameDegreeOfElementInNumericalSemigroup
-      9.1-11 OmegaPrimalityOfElementInNumericalSemigroup
-      9.1-12 OmegaPrimalityOfNumericalSemigroup
+      9.1-1 FactorizationsIntegerWRTList
+      9.1-2 FactorizationsElementWRTNumericalSemigroup
+      9.1-3 LengthsOfFactorizationsIntegerWRTList
+      9.1-4 RClassesOfSetOfFactorizations
+      9.1-5 LengthsOfFactorizationsElementWRTNumericalSemigroup
+      9.1-6 ElasticityOfFactorizationsElementWRTNumericalSemigroup
+      9.1-7 ElasticityOfNumericalSemigroup
+      9.1-8 DeltaSetOfSetOfIntegers
+      9.1-9 DeltaSetOfFactorizationsElementWRTNumericalSemigroup
+      9.1-10 MaximumDegreeOfElementWRTNumericalSemigroup
+      9.1-11 CatenaryDegreeOfSetOfFactorizations
+      9.1-12 CatenaryDegreeOfNumericalSemigroup
+      9.1-13 CatenaryDegreeOfElementInNumericalSemigroup
+      9.1-14 TameDegreeOfSetOfFactorizations
+      9.1-15 TameDegreeOfNumericalSemigroup
+      9.1-16 TameDegreeOfElementInNumericalSemigroup
+      9.1-17 OmegaPrimalityOfElementInNumericalSemigroup
+      9.1-18 OmegaPrimalityOfNumericalSemigroup
   A [33X[0;0YGeneralities[133X
     A.1 [33X[0;0YBézout sequences[133X
       A.1-1 BezoutSequence
@@ -205,6 +228,7 @@
       A.1-3 CeilingOfRational
     A.2 [33X[0;0YPeriodic subadditive functions[133X
       A.2-1 RepresentsPeriodicSubAdditiveFunction
+      A.2-2 IsListOfIntegersNS
   B [33X[0;0YRandom functions[133X
     B.1 [33X[0;0YRandom functions[133X
       B.1-1 RandomNumericalSemigroup
@@ -218,6 +242,11 @@
       C.1-2 IsMpureNumericalSemigroup
       C.1-3 IsPureNumericalSemigroup
       C.1-4 IsGradedAssociatedRingNumericalSemigroupGorenstein
+      C.1-5 IsGradedAssociatedRingNumericalSemigroupCI
+      C.1-6 IsAperySetGammaRectangular
+      C.1-7 IsAperySetBetaRectangular
+      C.1-8 IsAperySetAlphaRectangular
+      C.1-9 TypeSequenceOfNumericalSemigroup
   
   
   [32X

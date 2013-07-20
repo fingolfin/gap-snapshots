@@ -2,8 +2,6 @@
 ##  
 ##  PackageInfo.g                 IRREDSOL                 Burkhard Höfling
 ##
-##  @(#)$Id: PackageInfo.g,v 1.22 2011/11/22 15:16:28 gap Exp $
-##
 ##  Copyright © Burkhard Höfling (burkhard@hoefling.name)
 ##
 
@@ -13,14 +11,13 @@ SetPackageInfo( rec(
 ##  This is case sensitive, use your preferred spelling.
 
 PackageName := "IRREDSOL",
-Subtitle := "A Library of irreducible solvable linear groups over finite fields \
-          and of finite primivite soluble groups",
+Subtitle := "A Library of irreducible solvable linear groups over finite fields and of finite primivite soluble groups",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "1.2.1",
+Version := "1.2.3",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-Date := "22/11/2011",
+Date := "24/05/2013",
 
 BannerString := Concatenation("\
 ----------------------------------------------------------------------\n\
@@ -33,7 +30,7 @@ BannerString := Concatenation("\
 ##  the format extension(s), like '.zoo', which are given next.
 ##  The archive file name *must be changed* with each version of the archive
 ##  (and probably somehow contain the package name and version).
-ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/irredsol-1r2n1",
+ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/irredsol-1r2n3",
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -163,8 +160,6 @@ PackageWWWHome := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/index.html",
 ##  On the GAP Website there is an online version of all manuals in the
 ##  GAP distribution. To handle the documentation of a package it is
 ##  necessary to have:
-##     - an archive containing the package documentation (in at least one 
-##       of HTML or PDF-format, preferably both formats)
 ##     - the start file of the HTML documentation (if provided), *relative to
 ##       package root*
 ##     - the PDF-file (if provided) *relative to the package root*
@@ -181,7 +176,6 @@ PackageWWWHome := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/index.html",
 PackageDoc := rec(
   BookName := "irredsol",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  # Archive := "http://www.math.rwth-aachen.de/~Frank.Luebeck/EDIM/edimdoc-1p1.tar.bz2",
   ArchiveURLSubset := ["doc", "html"],
   HTMLStart := "html/chapters.htm",
   PDFFile := "doc/manual.pdf",
@@ -201,7 +195,7 @@ PackageDoc := rec(
 Dependencies := rec(
   # GAP version, use version strings for specifying exact versions,
   # prepend a '>=' for specifying a least version.
-  GAP := ">=4.4.12",
+  GAP := ">=4.5",
   # list of pairs [package name, (least) version],  package name is case
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load

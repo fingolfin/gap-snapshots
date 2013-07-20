@@ -21,6 +21,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap4_mj.html">[MathJax on]</a></p>
 <p><a id="X7969F7F27AAF0BF1" name="X7969F7F27AAF0BF1"></a></p>
 <div class="ChapSects"><a href="chap4.html#X7969F7F27AAF0BF1">4 <span class="Heading">
                 Presentations of Numerical Semigroups
@@ -28,10 +29,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7969F7F27AAF0BF1">4.1 <span class="Heading">Presentations of Numerical Semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8028208F84950722">4.1-1 FortenTruncatedNCForNumericalSemigroups</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D8199858781EB41">4.1-2 MinimalPresentationOfNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81CC5A6C870377E1">4.1-3 GraphAssociatedToElementInNumericalSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X836B6BF4853DB8E2">4.1-4 BettiElementsOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D8199858781EB41">4.1-1 MinimalPresentationOfNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81CC5A6C870377E1">4.1-2 GraphAssociatedToElementInNumericalSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X836B6BF4853DB8E2">4.1-3 BettiElementsOfNumericalSemigroup</a></span>
 </div></div>
 </div>
 
@@ -45,26 +45,9 @@
 
 <h4>4.1 <span class="Heading">Presentations of Numerical Semigroups</span></h4>
 
-<p><a id="X8028208F84950722" name="X8028208F84950722"></a></p>
-
-<h5>4.1-1 FortenTruncatedNCForNumericalSemigroups</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FortenTruncatedNCForNumericalSemigroups</code>( <var class="Arg">L</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p><var class="Arg">L</var> contains the list of coefficients of a single linear equation. This function gives a minimal generator of the affine semigroup of nonnegative solutions of this equation with the first coordinate equal to one (see <a href="chapBib.html#biBMR1283022">[CD94]</a>). Returns <code class="code">fail</code> if no solution exists.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FortenTruncatedNCForNumericalSemigroups([ -57, 3 ]);</span>
-[ 1, 19 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FortenTruncatedNCForNumericalSemigroups([ -57, 33 ]);</span>
-fail
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FortenTruncatedNCForNumericalSemigroups([ -57, 19 ]);</span>
-[ 1, 3 ]
-</pre></div>
-
 <p><a id="X7D8199858781EB41" name="X7D8199858781EB41"></a></p>
 
-<h5>4.1-2 MinimalPresentationOfNumericalSemigroup</h5>
+<h5>4.1-1 MinimalPresentationOfNumericalSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalPresentationOfNumericalSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><var class="Arg">S</var> is a numerical semigroup. The output is a list of lists with two elements. Each list of two elements represents a relation between the minimal generators of the numerical semigroup. If <span class="SimpleMath">{ {x_1,y_1},...,{x_k,y_k}}</span> is the output and <span class="SimpleMath">{m_1,...,m_n}</span> is the minimal system of generators of the numerical semigroup, then <span class="SimpleMath">{x_i,y_i}={{a_i_1,...,a_i_n},{b_i_1,...,b_i_n}}</span> and <span class="SimpleMath">a_i_1m_1+⋯+a_i_nm_n= b_i_1m_1+ ⋯ +b_i_nm_n.</span></p>
@@ -78,8 +61,8 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,5,7);</span>
 &lt;Numerical semigroup with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalPresentationOfNumericalSemigroup(s);</span>
-[ [ [ 1, 0, 1 ], [ 0, 2, 0 ] ], [ [ 4, 0, 0 ], [ 0, 1, 1 ] ],
-  [ [ 3, 1, 0 ], [ 0, 0, 2 ] ] ]
+[ [ [ 0, 2, 0 ], [ 1, 0, 1 ] ], [ [ 3, 1, 0 ], [ 0, 0, 2 ] ], 
+  [ [ 4, 0, 0 ], [ 0, 1, 1 ] ] ]
 
                         </pre></div>
 
@@ -87,7 +70,7 @@ fail
 
 <p><a id="X81CC5A6C870377E1" name="X81CC5A6C870377E1"></a></p>
 
-<h5>4.1-3 GraphAssociatedToElementInNumericalSemigroup</h5>
+<h5>4.1-2 GraphAssociatedToElementInNumericalSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphAssociatedToElementInNumericalSemigroup</code>( <var class="Arg">n</var>, <var class="Arg">S</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><var class="Arg">S</var> is a numerical semigroup and <var class="Arg">n</var> is an element in <var class="Arg">S</var>.</p>
@@ -98,8 +81,7 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,5,7);</span>
-&lt;Numerical semigroup with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,5,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphAssociatedToElementInNumericalSemigroup(10,s);</span>
 [ [ 3, 5, 7 ], [ [ 3, 7 ] ] ]
 
@@ -107,7 +89,7 @@ fail
 
 <p><a id="X836B6BF4853DB8E2" name="X836B6BF4853DB8E2"></a></p>
 
-<h5>4.1-4 BettiElementsOfNumericalSemigroup</h5>
+<h5>4.1-3 BettiElementsOfNumericalSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BettiElementsOfNumericalSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><var class="Arg">S</var> is a numerical semigroup.</p>
@@ -116,8 +98,7 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,5,7);</span>
-&lt;Numerical semigroup with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=NumericalSemigroup(3,5,7);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BettiElementsOfNumericalSemigroup(s);</span>
 [ 10, 12, 14 ]
 

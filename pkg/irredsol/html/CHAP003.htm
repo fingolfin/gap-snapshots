@@ -39,7 +39,7 @@ This function returns <code>true</code> if <code>IdIrreducibleSolvableMatrixGrou
 <li><code>IdIrreducibleSolvableMatrixGroup(</code><var>G</var><code>) A</code>
 <p>
 If the matrix group <var>G</var> is solvable and irreducible over <var>F
-= <code>FieldOfMatrixGroup</code>(<var>G</var>)</var>, (see <a href="../../../doc/ref/chap45.html#X78A9F0E580DA613A">FieldOfMatrixGroup</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual), and a conjugate in
+= <code>FieldOfMatrixGroup</code>(<var>G</var>)</var>, (see <a href="../../../doc/ref/chap44.html#X78A9F0E580DA613A">FieldOfMatrixGroup</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual), and a conjugate in
 <var>GL(<var>n</var>, <var>F</var>)</var> of <var><var>G</var></var> belongs to the data base of  irreducible solvable groups in
 <font face="Gill Sans,Helvetica,Arial">IRREDSOL</font>, this function returns a list <code>[</code><var>n</var><code>, </code><var>q</var><code>, </code><var>d</var><code>, </code><var>k</var><code>]</code> such that <var>G</var> is
 conjugate to  <code>IrreducibleSolvableMatrixGroup</code>(<var>n</var>, <var>q</var>, <var>d</var>, <var>k</var>) (see
@@ -112,14 +112,14 @@ Note that the ids returned by the functions for absolutely irreducible groups wa
 <h2><a name="SECT002">3.2 Compatibility with other data libraries</a></h2>
 <p><p>
 A library of irreducible solvable subgroups of <var>GL(n, p)</var>, where <var>p</var> is a 
-prime and <var>p<sup>n</sup> leq255</var> already exists in <font face="Gill Sans,Helvetica,Arial">GAP</font>, see Section <a href="../../../doc/ref/chap51.html#X82FD673384BF353B">Irreducible Solvable Matrix Groups</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual. The following functions
+prime and <var>p<sup>n</sup> leq255</var> already exists in <font face="Gill Sans,Helvetica,Arial">GAP</font>, see Section <a href="../../../doc/ref/chap50.html#X82FD673384BF353B">Irreducible Solvable Matrix Groups</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual. The following functions
 allow one to translate between between that library and the <font face="Gill Sans,Helvetica,Arial">IRREDSOL</font> library. 
 <p>
 <a name = "SSEC002.1"></a>
 <li><code>IdIrreducibleSolvableMatrixGroupIndexMS(</code><var>n</var><code>, </code><var>p</var><code>, </code><var>k</var><code>) F</code>
 <p>
 This function returns the id (see <a href="CHAP003.htm#SSEC001.3">IdIrreducibleSolvableMatrixGroup</a>) of <var>G</var>, 
-where <var>G</var> is <code>IrreducibleSolvableGroupMS</code>(<var>n</var>, <var>p</var>, <var>k</var>) (see <a href="../../../doc/ref/chap51.html#X7DF4B4D683A727E8">IrreducibleSolvableGroupMS</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual).
+where <var>G</var> is <code>IrreducibleSolvableGroupMS</code>(<var>n</var>, <var>p</var>, <var>k</var>) (see <a href="../../../doc/ref/chap50.html#X7DF4B4D683A727E8">IrreducibleSolvableGroupMS</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual).
 <p>
 <pre>
 gap&gt; IdIrreducibleSolvableMatrixGroupIndexMS (6, 2, 5);
@@ -140,7 +140,7 @@ true
 <li><code>IndexMSIdIrreducibleSolvableMatrixGroup(</code><var>n</var><code>, </code><var>q</var><code>, </code><var>d</var><code>, </code><var>k</var><code>) F</code>
 <p>
 This function returns a triple [<var>n</var>, <var>p</var>, <var>l</var>] such that
-<code>IrreducibleSolvableGroupMS</code>(<var>n</var>, <var>p</var>, <var>l</var>) (see <a href="../../../doc/ref/chap51.html#X7DF4B4D683A727E8">IrreducibleSolvableGroupMS</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual) is conjugate to
+<code>IrreducibleSolvableGroupMS</code>(<var>n</var>, <var>p</var>, <var>l</var>) (see <a href="../../../doc/ref/chap50.html#X7DF4B4D683A727E8">IrreducibleSolvableGroupMS</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> reference manual) is conjugate to
 <code>IrreducibleSolvableMatrixGroup</code>(<var>n</var>, <var>q</var>, <var>d</var>, <var>k</var>) (see <a href="CHAP002.htm#SSEC002.3">IrreducibleSolvableMatrixGroup</a>).
 <p>
 <pre>
@@ -189,5 +189,5 @@ data is automatically re-loaded when required.
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>IRREDSOL manual<br>November 2011
+<address>IRREDSOL manual<br>May 2013
 </address></body></html>

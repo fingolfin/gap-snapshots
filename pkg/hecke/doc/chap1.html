@@ -9,25 +9,32 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
 </head>
-<body>
+<body class="chap1"  onload="jscontent()">
 
 
 <div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap0.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap2.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p><a id="X7CD78FC183A57690" name="X7CD78FC183A57690"></a></p>
 <div class="ChapSects"><a href="chap1.html#X7CD78FC183A57690">1 <span class="Heading">Decomposition numbers of Hecke algebras of type A</span></a>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7BBCB13F82ACC213">1.1 <span class="Heading">Description</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7BBCB13F82ACC213">1.1 <span class="Heading">Description</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A3BD2F77A4AC7EA">1.2 <span class="Heading">The modular representation theory of Hecke algebras</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A3BD2F77A4AC7EA">1.2 <span class="Heading">The modular representation theory of Hecke algebras</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8226F6F77ACF26D8">1.3 <span class="Heading">Two small examples</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8226F6F77ACF26D8">1.3 <span class="Heading">Two small examples</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X786BACDB82918A65">1.4 <span class="Heading">Overview over this manual</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X786BACDB82918A65">1.4 <span class="Heading">Overview over this manual</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8779AFAF8411A26A">1.5 <span class="Heading">Credits</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8779AFAF8411A26A">1.5 <span class="Heading">Credits</span></a>
+</span>
 </div>
 </div>
 
@@ -37,32 +44,32 @@
 
 <h4>1.1 <span class="Heading">Description</span></h4>
 
-<p><strong class="pkg">Hecke</strong> is a port of the <strong class="pkg">GAP</strong> 3-package <strong class="pkg">Specht</strong> 2.4 to <strong class="pkg">GAP</strong> 4.</p>
+<p><strong class="pkg">Hecke</strong> is a port of the <strong class="pkg">GAP</strong> 3-package <strong class="pkg">Specht</strong> <span class="SimpleMath">2.4</span> to <strong class="pkg">GAP</strong> 4.</p>
 
 <p>This package contains functions for computing the decomposition matrices for Iwahori-Hecke algebras of the symmetric groups. As the (modular) representation theory of these algebras closely resembles that of the (modular) representation theory of the symmetric groups (indeed, the latter is a special case of the former) many of the combinatorial tools from the representation theory of the symmetric group are included in the package.</p>
 
-<p>These programs grew out of the attempts by Gordon James and Andrew Mathas <a href="chapBib.html#biBJM1">[JM96]</a> to understand the decomposition matrices of Hecke algebras of type <em>A</em> when q=-1. The package is now much more general and its highlights include:</p>
+<p>These programs grew out of the attempts by Gordon James and Andrew Mathas <a href="chapBib.html#biBJM1">[JM96]</a> to understand the decomposition matrices of Hecke algebras of type <em>A</em> when <span class="SimpleMath">q=-1</span>. The package is now much more general and its highlights include:</p>
 
 <ol>
-<li><p><strong class="pkg">Hecke</strong> provides a means of working in the Grothendieck ring of a Hecke algebra H using the three natural bases corresponding to the Specht modules, projective indecomposable modules, and simple modules.</p>
+<li><p><strong class="pkg">Hecke</strong> provides a means of working in the Grothendieck ring of a Hecke algebra <span class="SimpleMath">H</span> using the three natural bases corresponding to the Specht modules, projective indecomposable modules, and simple modules.</p>
 
 </li>
 <li><p>For Hecke algebras defined over fields of characteristic zero, the algorithm of Lascoux, Leclerc, and Thibon <a href="chapBib.html#biBLLT">[LLT96]</a> for computing decomposition numbers and "crystallized decomposition matrices" has been implemented. In principle, this gives all of the decomposition matrices of Hecke algebras defined over fields of characteristic zero.</p>
 
 </li>
-<li><p><strong class="pkg">Hecke</strong> provides a way of inducing and restricting modules. In addition, it is possible to "induce" decomposition matrices; this function is quite effective in calculating the decomposition matrices of Hecke algebras for small n.</p>
+<li><p><strong class="pkg">Hecke</strong> provides a way of inducing and restricting modules. In addition, it is possible to "induce" decomposition matrices; this function is quite effective in calculating the decomposition matrices of Hecke algebras for small <span class="SimpleMath">n</span>.</p>
 
 </li>
-<li><p>The q-analogue of Schaper's theorem <a href="chapBib.html#biBJM2">[JM97]</a> is included, as is Kleshchev's <a href="chapBib.html#biBK">[Kle96]</a> algorithm of calculating the Mullineux map. Both are used extensively when inducing decomposition matrices.</p>
+<li><p>The <span class="SimpleMath">q</span>-analogue of Schaper's theorem <a href="chapBib.html#biBJM2">[JM97]</a> is included, as is Kleshchev's <a href="chapBib.html#biBK">[Kle96]</a> algorithm of calculating the Mullineux map. Both are used extensively when inducing decomposition matrices.</p>
 
 </li>
-<li><p><strong class="pkg">Hecke</strong> can be used to compute the decomposition numbers of q-Schur algebras (and the general linear groups), although there is less direct support for these algebras. The decomposition matrices for the q-Schur algebras defined over fields of characteristic zero for n&lt;11 and all e are included in <strong class="pkg">Hecke</strong>.</p>
+<li><p><strong class="pkg">Hecke</strong> can be used to compute the decomposition numbers of <span class="SimpleMath">q</span>-Schur algebras (and the general linear groups), although there is less direct support for these algebras. The decomposition matrices for the <span class="SimpleMath">q</span>-Schur algebras defined over fields of characteristic zero for <span class="SimpleMath">n&lt;11</span> and all <span class="SimpleMath">e</span> are included in <strong class="pkg">Hecke</strong>.</p>
 
 </li>
 <li><p>The Littlewood-Richard rule, its inverse, and functions for many of the standard operations on partitions (such as calculating cores, quotients, and adding and removing hooks), are included.</p>
 
 </li>
-<li><p>The decomposition matrices for the symmetric groups S_n are included for n&lt;15 and for all primes.</p>
+<li><p>The decomposition matrices for the symmetric groups <span class="SimpleMath">S_n</span> are included for <span class="SimpleMath">n&lt;15</span> and for all primes.</p>
 
 </li>
 </ol>
@@ -72,15 +79,15 @@
 
 <p>The "modular" representation theory of the Iwahori-Hecke algebras of type <em>A</em> was pioneered by Dipper and James <a href="chapBib.html#biBDJ1">[DJ86]</a> <a href="chapBib.html#biBDJ2">[DJ87]</a>; here the theory is briefly outlined, referring the reader to the references for details.</p>
 
-<p>Given a commutative integral domain R and a non-zero unit q in R, let H=H_R, q be the Hecke algebra of the symmetric group S_n on n symbols defined over R and with parameter q. For each partition mu of n, Dipper and James defined a <em>Specht module</em> S(mu). Let rad~S(mu) be the radical of S(mu) and define D(mu)=S(mu)/rad~S(mu). When R is a field, D(mu) is either zero or absolutely irreducible. Henceforth, we will always assume that R is a field.</p>
+<p>Given a commutative integral domain <span class="SimpleMath">R</span> and a non-zero unit <span class="SimpleMath">q</span> in <span class="SimpleMath">R</span>, let <span class="SimpleMath">H=H_R, q</span> be the Hecke algebra of the symmetric group <span class="SimpleMath">S_n</span> on <span class="SimpleMath">n</span> symbols defined over <span class="SimpleMath">R</span> and with parameter <span class="SimpleMath">q</span>. For each partition <span class="SimpleMath">μ</span> of <span class="SimpleMath">n</span>, Dipper and James defined a <em>Specht module</em> <span class="SimpleMath">S(μ)</span>. Let <span class="SimpleMath">rad~S(μ)</span> be the radical of <span class="SimpleMath">S(μ)</span> and define <span class="SimpleMath">D(μ)=S(μ)/rad~S(μ)</span>. When <span class="SimpleMath">R</span> is a field, <span class="SimpleMath">D(μ)</span> is either zero or absolutely irreducible. Henceforth, we will always assume that <span class="SimpleMath">R</span> is a field.</p>
 
-<p>Given a non-negative integer i, let [i]_q=1+q+...+q^i-1. Define e to be the smallest non-negative integer such that [e]_q=0; if no such integer exists, we set e equal to 0. Many of the functions in this package depend upon e; the integer e is the Hecke algebras analogue of the characteristic of the field in the modular representation theory of finite groups.</p>
+<p>Given a non-negative integer <span class="SimpleMath">i</span>, let <span class="SimpleMath">[i]_q=1+q+...+q^i-1</span>. Define <span class="SimpleMath">e</span> to be the smallest non-negative integer such that <span class="SimpleMath">[e]_q=0</span>; if no such integer exists, we set <span class="SimpleMath">e</span> equal to <span class="SimpleMath">0</span>. Many of the functions in this package depend upon e; the integer <span class="SimpleMath">e</span> is the Hecke algebras analogue of the characteristic of the field in the modular representation theory of finite groups.</p>
 
-<p>A partition mu=(mu_1,mu_2,...) is <em>e-singular</em> if there exists an integer i such that mu_i=mu_i+1=cdots= mu_i+e-1&gt;0; otherwise, mu is <em>e-regular</em>. Dipper and James <a href="chapBib.html#biBDJ1">[DJ86]</a> showed that D(nu)&lt;&gt; 0 if and only if nu is e-regular and that the D(nu) give a complete set of non-isomorphic irreducible H-modules as nu runs over the e-regular partitions of n. Further, S(mu) and S(nu) belong to the same block if and only if mu and nu have the same e-core <a href="chapBib.html#biBDJ2">[DJ87]</a><a href="chapBib.html#biBJM2">[JM97]</a>. Note that these results depend only on e and not directly on R or q.</p>
+<p>A partition <span class="SimpleMath">μ=(μ_1,μ_2,...)</span> is <em><span class="SimpleMath">e</span>-singular</em> if there exists an integer <span class="SimpleMath">i</span> such that <span class="SimpleMath">μ_i=μ_i+1=⋯= μ_i+e-1&gt;0</span>; otherwise, <span class="SimpleMath">μ</span> is <em><span class="SimpleMath">e</span>-regular</em>. Dipper and James <a href="chapBib.html#biBDJ1">[DJ86]</a> showed that <span class="SimpleMath">D(ν)≠ 0</span> if and only if <span class="SimpleMath">ν</span> is <span class="SimpleMath">e</span>-regular and that the <span class="SimpleMath">D(ν)</span> give a complete set of non-isomorphic irreducible <span class="SimpleMath">H</span>-modules as <span class="SimpleMath">ν</span> runs over the <span class="SimpleMath">e</span>-regular partitions of <span class="SimpleMath">n</span>. Further, <span class="SimpleMath">S(μ)</span> and <span class="SimpleMath">S(ν)</span> belong to the same block if and only if <span class="SimpleMath">μ</span> and <span class="SimpleMath">ν</span> have the same <span class="SimpleMath">e</span>-core <a href="chapBib.html#biBDJ2">[DJ87]</a><a href="chapBib.html#biBJM2">[JM97]</a>. Note that these results depend only on <span class="SimpleMath">e</span> and not directly on <span class="SimpleMath">R</span> or <span class="SimpleMath">q</span>.</p>
 
-<p>Given two partitions mu and nu, where nu is e -regular, let d_mu,nu be the composition multiplicity of D(nu) in S(nu). The matrix D=(d_mu,nu) is the <em> decomposition matrix</em> of H. When the rows and columns are ordered in a way compatible with dominance, D is lower unitriangular.</p>
+<p>Given two partitions <span class="SimpleMath">μ</span> and <span class="SimpleMath">ν</span>, where <span class="SimpleMath">ν</span> is <span class="SimpleMath">e</span> -regular, let <span class="SimpleMath">d_μ,ν</span> be the composition multiplicity of <span class="SimpleMath">D(ν)</span> in <span class="SimpleMath">S(ν)</span>. The matrix <span class="SimpleMath">D=(d_μ,ν)</span> is the <em> decomposition matrix</em> of <span class="SimpleMath">H</span>. When the rows and columns are ordered in a way compatible with dominance, <span class="SimpleMath">D</span> is lower unitriangular.</p>
 
-<p>The indecomposable H-modules P(nu) are indexed by e -regular partitions nu. By general arguments, P(nu) has the same composition factors as sum_mu d_mu,nu S(mu); so these linear combinations of modules become identified in the Grothendieck ring of H. Similarly, D(nu) = sum_mu d_nu,mu^-1 S(mu) in the Grothendieck ring. These observations are the basis for many of the computations in <strong class="pkg">Hecke</strong>.</p>
+<p>The indecomposable <span class="SimpleMath">H</span>-modules <span class="SimpleMath">P(ν)</span> are indexed by <span class="SimpleMath">e</span> -regular partitions <span class="SimpleMath">ν</span>. By general arguments, <span class="SimpleMath">P(ν)</span> has the same composition factors as <span class="SimpleMath">∑_μ d_μ,ν S(μ)</span>; so these linear combinations of modules become identified in the Grothendieck ring of <span class="SimpleMath">H</span>. Similarly, <span class="SimpleMath">D(ν) = ∑_μ d_ν,μ^-1 S(μ)</span> in the Grothendieck ring. These observations are the basis for many of the computations in <strong class="pkg">Hecke</strong>.</p>
 
 <p><a id="X8226F6F77ACF26D8" name="X8226F6F77ACF26D8"></a></p>
 
@@ -89,28 +96,26 @@
 <p>Because of the algorithm of <a href="chapBib.html#biBLLT">[LLT96]</a>, in principle, all of decomposition matrices for all Hecke algebras defined over fields of characteristic zero are known and available using <strong class="pkg">Hecke</strong>. The algorithm is recursive; however, it is quite quick and, as with a car, you need never look at the engine:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; H:=Specht(4);   # e=4, 'R' a field of characteristic 0
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=Specht(4);   # e=4, 'R' a field of characteristic 0</span>
 &lt;Hecke algebra with e = 4&gt;
-gap&gt; RInducedModule(MakePIM(H,12,2));
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RInducedModule(MakePIM(H,12,2));</span>
 &lt;direct sum of 5 P-modules&gt;
-gap&gt; Display(last);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);</span>
 P(13,2) + P(12,3) + P(12,2,1) + P(10,3,2) + P(9,6)
-</pre></td></tr></table>
+</pre></div>
 
 <p>The <a href="chapBib.html#biBLLT">[LLT96]</a> algorithm was applied 24 times during this calculation.</p>
 
-<p>For Hecke algebras defined over fields of positive characteristic the major tool provided by <strong class="pkg">Hecke</strong>, apart from the decomposition matrices contained in the libraries, is a way of "inducing" decomposition matrices. This makes it fairly easy to calculate the associated decomposition matrices for "small" n. For example, the <strong class="pkg">Hecke</strong> libraries contain the decomposition matrices for the symmetric groups S_n over fields of characteristic 3 for n&lt;15. These matrices were calculated by <strong class="pkg">Hecke</strong> using the following commands:</p>
+<p>For Hecke algebras defined over fields of positive characteristic the major tool provided by <strong class="pkg">Hecke</strong>, apart from the decomposition matrices contained in the libraries, is a way of "inducing" decomposition matrices. This makes it fairly easy to calculate the associated decomposition matrices for "small" <span class="SimpleMath">n</span>. For example, the <strong class="pkg">Hecke</strong> libraries contain the decomposition matrices for the symmetric groups <span class="SimpleMath">S_n</span> over fields of characteristic <span class="SimpleMath">3</span> for <span class="SimpleMath">n&lt;15</span>. These matrices were calculated by <strong class="pkg">Hecke</strong> using the following commands:</p>
 
 
-<table class="example">
-<tr><td><pre>
-gap&gt; H:=Specht(3,3);   # e=3, 'R' field of characteristic 3
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H:=Specht(3,3);   # e=3, 'R' field of characteristic 3</span>
 &lt;Hecke algebra with e = 3&gt;
-gap&gt; d:=DecompositionMatrix(H,5);  # known for n&lt;2e
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d:=DecompositionMatrix(H,5);  # known for n&lt;2e</span>
 &lt;7x5 decomposition matrix&gt;
-gap&gt; Display(last);
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);</span>
 5    | 1
 4,1  | . 1
 3,2  | . 1 1
@@ -118,28 +123,28 @@ gap&gt; Display(last);
 2^2,1| 1 . . . 1
 2,1^3| . . . . 1
 1^5  | . . 1 . .
-gap&gt; for n in [6..14] do
-&gt;       d:=InducedDecompositionMatrix(d); SaveDecompositionMatrix(d);
-&gt;    od;
-</pre></td></tr></table>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for n in [6..14] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      d:=InducedDecompositionMatrix(d); SaveDecompositionMatrix(d);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
+</pre></div>
 
 <p>The function <code class="code">InducedDecompositionMatrix</code> contains almost every trick for computing decomposition matrices (except using the spin groups).</p>
 
-<p><strong class="pkg">Hecke</strong> can also be used to calculate the decomposition numbers of the q-Schur algebras; although, as yet, here no additional routines for calculating the projective indecomposables indexed by e-singular partitions. Such routines may be included in a future release, together with the (conjectural) algorithm <a href="chapBib.html#biBLT">[LT96]</a> for computing the decomposition matrices of the q-Schur algebras over fields of characteristic zero.</p>
+<p><strong class="pkg">Hecke</strong> can also be used to calculate the decomposition numbers of the <span class="SimpleMath">q</span>-Schur algebras; although, as yet, here no additional routines for calculating the projective indecomposables indexed by <span class="SimpleMath">e</span>-singular partitions. Such routines may be included in a future release, together with the (conjectural) algorithm <a href="chapBib.html#biBLT">[LT96]</a> for computing the decomposition matrices of the <span class="SimpleMath">q</span>-Schur algebras over fields of characteristic zero.</p>
 
 <p><a id="X786BACDB82918A65" name="X786BACDB82918A65"></a></p>
 
 <h4>1.4 <span class="Heading">Overview over this manual</span></h4>
 
-<p>Chapter <a href="chap2.html#X79845447824F3333"><b>2</b></a> describes the installation of this package. Chapter <a href="chap3.html#X7ED1AB5C7E41D277"><b>3</b></a> shows instructive examples for the usage of this package.</p>
+<p>Chapter <a href="chap2.html#X878604E87ECCEAFA"><span class="RefLink">2</span></a> describes the installation of this package. Chapter <a href="chap3.html#X7ED1AB5C7E41D277"><span class="RefLink">3</span></a> shows instructive examples for the usage of this package.</p>
 
 <p><a id="X8779AFAF8411A26A" name="X8779AFAF8411A26A"></a></p>
 
 <h4>1.5 <span class="Heading">Credits</span></h4>
 
-<p>I would like to thank Anne Henke for offering me the interesting project of porting <strong class="pkg">Specht</strong> 2.4 to the current <strong class="pkg">GAP</strong> version, Max Neunhöffer for giving me an excellent introduction to the <strong class="pkg">GAP</strong> 4-style of programming and Benjamin Wilson for supporting the project and helping me to understand the mathematics behind <strong class="pkg">Hecke</strong>.</p>
+<p>I would like to thank Anne Henke for offering me the interesting project of porting <strong class="pkg">Specht</strong> <span class="SimpleMath">2.4</span> to the current <strong class="pkg">GAP</strong> version, Max Neunhöffer for giving me an excellent introduction to the <strong class="pkg">GAP</strong> 4-style of programming and Benjamin Wilson for supporting the project and helping me to understand the mathematics behind <strong class="pkg">Hecke</strong>.</p>
 
-<p>Also I thank Andrew Mathas for allowing me to use his <strong class="pkg">GAP</strong> 3-code of the <strong class="pkg">Specht</strong> 2.4 package.</p>
+<p>Also I thank Andrew Mathas for allowing me to use his <strong class="pkg">GAP</strong> 3-code of the <strong class="pkg">Specht</strong> <span class="SimpleMath">2.4</span> package.</p>
 
 <p>The lastest version of <strong class="pkg">Hecke</strong> can be obtained from</p>
 
@@ -152,7 +157,7 @@ gap&gt; for n in [6..14] do
 <p>Technische Universität München, 2010.</p>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap0.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap2.html">Next Chapter</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
 
 
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>

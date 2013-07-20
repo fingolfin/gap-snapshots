@@ -98,7 +98,7 @@
 {\Huge \textbf{a nice way to create documentations\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.01.16\mbox{}}\\[1cm]
+{\Huge Version 2013.06.26\mbox{}}\\[1cm]
 {September 2012\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
@@ -175,9 +175,9 @@ documented with AutoDoc, so you can find a example for the usage there. }
 \hyperdef{L}{X7B4150D1848BA072}{}
 {
   
-\section{\textcolor{Chapter }{The functions}}\label{functions}
+\section{\textcolor{Chapter }{The install functions}}\label{functions}
 \logpage{[ 2, 1, 0 ]}
-\hyperdef{L}{X8173135A7D187358}{}
+\hyperdef{L}{X78A295DF814B52A7}{}
 {
   
 
@@ -248,7 +248,7 @@ section. }
 \subsection{\textcolor{Chapter }{DeclareRepresentationWithDocumentation}}
 \logpage{[ 2, 1, 4 ]}\nobreak
 \hyperdef{L}{X7E24A6497A41CDE7}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDocumentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareRepresentationWithDocumentation@\texttt{Declare}\-\texttt{Representation}\-\texttt{With}\-\texttt{Documentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDocumentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section], function})\index{DeclareRepresentationWithDocumentation@\texttt{Declare}\-\texttt{Representation}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareRepresentationWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -278,7 +278,7 @@ section. }
 
 
 
- This method declares a operation, like DeclareOperation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}} ) would do. The description string is added to the documentation if
+ This method declares an operation, like DeclareOperation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}} ) would do. The description string is added to the documentation if
 CreateAutoDoc is called. It can either be a string or a list of strings. Lists
 will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
 the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
@@ -292,7 +292,7 @@ section. }
 \subsection{\textcolor{Chapter }{InstallMethodWithDocumentation}}
 \logpage{[ 2, 1, 6 ]}\nobreak
 \hyperdef{L}{X85CD8A4B7DAEDE74}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDocumentation({\mdseries\slshape name, short{\textunderscore}descr, list{\textunderscore}of{\textunderscore}filters, func, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{InstallMethodWithDocumentation@\texttt{InstallMethodWithDocumentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDocumentation({\mdseries\slshape name, short{\textunderscore}descr, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section], func})\index{InstallMethodWithDocumentation@\texttt{InstallMethodWithDocumentation}}
 \label{InstallMethodWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -300,7 +300,7 @@ section. }
 
 
 
- This method declares a operation, like InstallMethod( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape short{\textunderscore}descr}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}}, \mbox{\texttt{\mdseries\slshape func}} ) would do. The description string is added to the documentation if
+ This method installs a method, like InstallMethod( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape short{\textunderscore}descr}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}}, \mbox{\texttt{\mdseries\slshape func}} ) would do. The description string is added to the documentation if
 CreateAutoDoc is called. It can either be a string or a list of strings. Lists
 will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
 the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
@@ -393,6 +393,102 @@ section. }
 CreateAutoDoc is called. It can either be a string or a list of strings. Lists
 will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
 chapter and the section in which this variable should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Create documentation entries}}\label{non_install_functions}
+\logpage{[ 2, 2, 0 ]}
+\hyperdef{L}{X867C32EB80B3168D}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForCategory}}
+\logpage{[ 2, 2, 1 ]}\nobreak
+\hyperdef{L}{X84F4A859796C32CF}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForCategory({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForCategory@\texttt{CreateDocEntryForCategory}}
+\label{CreateDocEntryForCategory}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ The description string is added to the documentation if CreateAutoDoc is
+called. It can either be a string or a list of strings. Lists will be
+concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
+the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this category should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForRepresentation}}
+\logpage{[ 2, 2, 2 ]}\nobreak
+\hyperdef{L}{X866D1D097E50D094}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForRepresentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section], function})\index{CreateDocEntryForRepresentation@\texttt{CreateDocEntryForRepresentation}}
+\label{CreateDocEntryForRepresentation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ The description string is added to the documentation if CreateAutoDoc is
+called. It can either be a string or a list of strings. Lists will be
+concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
+the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this category should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForOperation}}
+\logpage{[ 2, 2, 3 ]}\nobreak
+\hyperdef{L}{X7DE1062382198EF2}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForOperation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForOperation@\texttt{CreateDocEntryForOperation}}
+\label{CreateDocEntryForOperation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ The description string is added to the documentation if CreateAutoDoc is
+called. It can either be a string or a list of strings. Lists will be
+concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
+the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this method should be displayed in the
+automatic generated documentation. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForAttribute}}
+\logpage{[ 2, 2, 4 ]}\nobreak
+\hyperdef{L}{X83DEB2BA82368AD0}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForAttribute({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForAttribute@\texttt{CreateDocEntryForAttribute}}
+\label{CreateDocEntryForAttribute}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true}
+
+
+
+ The description string is added to the documentation if CreateAutoDoc is
+called. It can either be a string or a list of strings. Lists will be
+concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the attribute. It is not
+optional. \mbox{\texttt{\mdseries\slshape argument}} is an optional string which is displayed in the documentation as attribute of
+the attribute. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
+chapter and the section in which this attribute should be displayed in the
 automatic generated documentation. There are no spaces allowed in this string,
 underscores will be converted to spaces in the header of the chapter or the
 section. }

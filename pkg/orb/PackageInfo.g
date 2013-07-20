@@ -17,15 +17,15 @@ PackageName := "orb",
 
 Subtitle := "orb - Methods to enumerate Orbits",
 
-Version := "4.6",
+Version := "4.5",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-Date := "02/05/2013",
+Date := "30/05/2012",
 
-ArchiveURL := "http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb/orb-4.6",
+ArchiveURL := "http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orbfor4.5/orb-4.5_for4.5",
 
 ArchiveFormats := ".tar.gz",
 
@@ -128,7 +128,7 @@ Status := "deposited",
 README_URL := 
   "http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb/README.orb",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb/PackageInfo.g",
+  "http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orbfor4.5/PackageInfo.g",
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -158,9 +158,9 @@ PackageDoc := rec(
 
 
 Dependencies := rec(
-  GAP := ">=4.4.12",
-  NeededOtherPackages := [["GAPDoc", ">= 1.2"]],
-  SuggestedOtherPackages := [["IO",">= 3.3"]],
+  GAP := ">=4.5",
+  NeededOtherPackages := [["GAPDoc", ">= 1.5"]],
+  SuggestedOtherPackages := [["IO",">= 4.2"]],
   ExternalConditions := []
                       
 ),
