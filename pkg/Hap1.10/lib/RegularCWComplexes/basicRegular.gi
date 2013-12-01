@@ -9,7 +9,7 @@ local
         Orientation, 
         cnt,b,bb,k,n,s,x,i,j,dim ;
 
-K:=arg[1];
+K:=IntegerSimplicialComplex(arg[1]);
 if Length(arg)>1 then dim:=arg[2]; else dim:=Dimension(K); fi; 
 
 ####################
@@ -24,13 +24,15 @@ Properties:=[["dimension",dim]];
 
 #############################
 Orientation:=[];
-Orientation[1]:=ListWithIdenticalEntries(K!.nrSimplices(0),[1]);
+#Orientation[1]:=ListWithIdenticalEntries(K!.nrSimplices(0),[1]);
+Orientation[1]:=List([1..K!.nrSimplices(0)],i->[1]); #more memory but safer!!
 for n in [1..dim] do
   tmp:=[];  
   for i in [1..n+1] do
   Add(tmp,(-1)^(i+1));
   od;
-Orientation[n+1]:=ListWithIdenticalEntries(K!.nrSimplices(n),tmp);
+#Orientation[n+1]:=ListWithIdenticalEntries(K!.nrSimplices(n),tmp);
+Orientation[n+1]:=List([1..K!.nrSimplices(n)],i->StructuralCopy(tmp));
 od;
 
 #############################
@@ -116,7 +118,7 @@ end);
 InstallGlobalFunction(HAPContractRegularCWComplex,
 function(Y)
 local
-      Contract, nn, dim, bool, BOOL;
+      Contract, nn, dim, bool, BOOL, FREE;
 
 #############################################
 ##### The work-horse function.###############
@@ -152,11 +154,18 @@ C:=Length(MCoboundaries);
 
 #######################
 #######################THIS TAKES ALL THE TIME
-Free:=Filtered([1..C],i->MCoboundaries[i][1]=1);
-if Length(Free)=0 then return false;fi;
-#######################
-#######################
+if not IsBound(FREE) then FREE:=[1..C]; fi;
 
+Free:=[];
+for i in FREE do
+if MCoboundaries[i][1]=1 then Add(Free,i);fi;
+od;
+
+#Print([Length(FREE),Length(Free)],"  ");
+
+if Length(Free)=0 then Unbind(FREE); return false;fi;
+#######################
+#######################
 
 for i in Free do
 if MCoboundaries[i][1]=1 then
@@ -205,8 +214,8 @@ Y!.nrCells:=function(k);
             return Length(Filtered(Y!.bnd[k+1],x->not x[1]=0));
             end;
 
-if Length(Free)>0 then return true;
-else return false; fi;
+if Length(Free)>0 then FREE:=Free; return true;
+else Unbind(FREE); return false; fi;
 
 end;
 ####End of work-horse function.#############
@@ -306,7 +315,7 @@ end);
 ##########################################################
 InstallGlobalFunction(CriticalCellsOfRegularCWComplex,
 function(arg)
-local Y,ContractSpace,cells,dim,c,pos,ppos;
+local Y,ContractSpace,cells,dim,c,pos,ppos,  b,x, bbooll;
 
 Y:=arg[1];
 if not Y!.criticalCells=fail then
@@ -360,11 +369,26 @@ return cells; fi;
 
   pos:=pos+ppos-1;
 
+
+#######
+#######
+if dim=0 then bbooll:=true; else
+bbooll:=false;
+for b in Y!.bnd[dim+1][pos]{[2..Length(Y!.bnd[dim+1][pos])]} do
+if bbooll then break; fi;
+if Y!.cobnd[dim][b][1]=2 then bbooll:=true; break; fi;
+od;
+fi;
+#######
+#######
+ 
     c:=HAPRemoveCellFromRegularCWComplex(Y,dim,pos);
 
     Add(cells,c);
 
+if bbooll then
     ContractSpace(Y);
+fi;
 
   od;
 od;
@@ -513,15 +537,15 @@ function(Y)
 local
 	C, Dimension, Boundary, one, zero, n, dim, characteristic;
 
-#Dimension:=Y!.nrCells;
+
+dim:=EvaluateProperty(Y,"dimension");
 ##########################
 Dimension:=function(n);
-if n<0 then return 0; fi;
+if n<0 or n>dim then return 0; fi;
 return Length(Y!.boundaries[n+1]);
 end;
 ##########################
 
-dim:=EvaluateProperty(Y,"dimension");
 
 zero:=[];
 for n in [1..dim+1] do
@@ -534,6 +558,8 @@ one:=One(GF(2));
 ######################
 Boundary:=function(n,k)
 local b,i,j,B;
+
+if n>dim then return [one]; fi;
 
 b:=StructuralCopy(zero[n]);
 B:=Y!.boundaries[n+1][k];
@@ -580,12 +606,41 @@ end);
 ##########################################################
 ##########################################################
 
+
 ##########################################################
 ##########################################################
 InstallGlobalFunction(ChainComplexOfRegularCWComplexWithVectorField,
 function(Y)
 local
-        basis, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn;
+        basis, bool, bij,Dimension, Boundary, one, zero, b, n, dim, characteristic, DeformCell,DeformCellSgn, HomotopicalDeformCell, 
+        HDCrec, DCSrec, AlgRed, HtpyRed;
+
+#HAP_Sequence2Boundaries(Y);
+
+#############################################
+HtpyRed:=function(w)
+local cnt, tog;
+
+cnt:=1;
+tog:=true;
+
+while tog do
+tog:=false;
+while cnt<Length(w) do
+if w[cnt]=-w[cnt+1] then
+w[cnt]:=0; w[cnt+1]:=0;
+cnt:=cnt+2; tog:=true;
+else cnt:=cnt+1;
+fi;
+od;
+w:=Filtered(w,i->not i=0);
+od;
+return w;
+end;
+#############################################
+
+AlgRed:=AlgebraicReduction;
+
 
 dim:=EvaluateProperty(Y,"dimension");
 
@@ -602,7 +657,10 @@ od;
 
 ###############################
 Dimension:=function(n);
+if IsBound(basis[n+1]) then
 return Length(basis[n+1]);
+else
+return 0; fi;
 end;
 ###############################
 
@@ -640,6 +698,7 @@ end;
 ###############################
 ###############################
 
+DCSrec:=List([1..dim+1],i->[]);;
 ###############################
 ###############################
 DeformCellSgn:=function(n,kk)
@@ -656,6 +715,16 @@ fi;
 if n>0 then
 if IsBound(Y!.vectorField[n][k]) then return []; fi;
 fi;
+
+if IsBound(DCSrec[n+1][k]) then
+if sgnk=1 then return DCSrec[n+1][k];
+else
+#return -Reversed(DCSrec[n+1][k]);
+return -DCSrec[n+1][k];
+fi;
+fi;
+
+
 
 f:=Y!.inverseVectorField[n+1][k];
 bnd:=Y!.boundaries[n+2][f];
@@ -678,20 +747,109 @@ Add(def2,sn[x-1]*bnd[x]);
 od;
 
 if sgnn=1 then 
-def:=-Concatenation(Reversed(def1),Reversed(def2));
+#def:=-Concatenation(Reversed(def1),Reversed(def2));
+def:=-Concatenation(def1,def2);
 else
 def:=Concatenation(def2,def1);
 fi;
 
 Apply(def,x->DeformCellSgn(n,x));
 
-if sgnk=1 then return Flat(def);
+
+def:=Flat(def);
+Apply(def,x->[x,0]);
+
+def:=AlgRed(def);
+
+
+Apply(def,x->x[1]);
+
+DCSrec[n+1][k]:=def;
+
+if sgnk=1 then return def;
 else
-return -Reversed(Flat(def));
+#return -Reversed(def);
+return -def;
 fi;
 end;
 ###############################
 ###############################
+
+HDCrec:=List([1..dim+1],i->[]);;
+###############################
+###############################
+HomotopicalDeformCell:=function(n,kk)
+local sgnn,x,f,k,sgnk,cnt,bnd,def,sn,tog,def1,def2;
+                                #This will return an ordered list of signed 
+				#n-cells into which the k-th n-cell is 
+				#deformed.
+
+k:=AbsInt(kk);
+sgnk:=SignInt(kk);
+if [n,k] in Y!.criticalCells then
+return [kk];
+fi;
+
+if n>0 then
+if IsBound(Y!.vectorField[n][k]) then return []; fi;
+fi;
+
+if IsBound(HDCrec[n+1][k]) then
+if sgnk=1 then return HDCrec[n+1][k];
+else
+return -Reversed(HDCrec[n+1][k]);
+fi;
+fi;
+
+f:=Y!.inverseVectorField[n+1][k];
+bnd:=Y!.boundaries[n+2][f];
+sn:=Y!.orientation[n+2][f];
+
+def:=[]; def1:=[];def2:=[];
+
+for x in [2..Length(bnd)] do
+if not bnd[x]=k then
+Add(def1,sn[x-1]*bnd[x]);
+else
+sgnn:=sn[x-1];
+break;
+fi;
+od;
+cnt:=x+1;
+
+for x in [cnt..Length(bnd)] do
+Add(def2,sn[x-1]*bnd[x]);
+od;
+
+if sgnn=1 then
+def:=-Concatenation(Reversed(def1),Reversed(def2));
+else
+def:=Concatenation(def2,def1);
+fi;
+
+Apply(def,x->HomotopicalDeformCell(n,x));
+
+
+def:=Flat(def);
+Apply(def,x->[x,0]);
+
+def:=HtpyRed(def);
+
+
+Apply(def,x->x[1]);
+
+HDCrec[n+1][k]:=def;
+
+if sgnk=1 then return def;
+else
+return -Reversed(def);
+fi;
+end;
+###############################
+###############################
+
+
+
 
 
 if not IsBound(Y!.orientation) then
@@ -743,12 +901,14 @@ end;
 fi;
 
 if IsBound(Y!.orientation) then DeformCell:=DeformCellSgn; fi;
+
 return
 Objectify(HapChainComplex,
            rec(
            dimension:=Dimension,
            boundary:=Boundary,
            deform:=DeformCell,
+           homotopicalDeform:=HomotopicalDeformCell,
            basis:=basis,
            bij:=bij,
            properties:=[
@@ -773,6 +933,7 @@ InstallMethod( ChainComplex,
  end);
 ##########################################################
 ##########################################################
+
 
 ##########################################################
 ##########################################################
@@ -1088,4 +1249,701 @@ end);
 ##########################################################
 ##########################################################
 
+
+#######################################################
+#######################################################
+InstallGlobalFunction(RegularCWComplex,
+function(arg)
+local bnd, Y, dim, Coboundaries, k, i, j, n, b;
+
+bnd:=arg[1];
+Y:=Objectify(HapRegularCWComplex, rec());
+dim:=PositionProperty(bnd,IsEmpty)-2;
+Y!.properties:=[["dimension",dim]];
+
+
+### COBOUNDARIES BEGIN ######################
+Coboundaries:=[];; #Coboundaries[n+1] contains the info on n-cells.
+for n in [0..dim] do
+  #k:=2*(n+1)+1;#k:=1+2^(n+1);
+  Coboundaries[n+1]:=List(bnd[n+1],i->[0]);
+  for j in [1..Length(bnd[n+2])] do
+    b:=bnd[n+2][j];
+    k:=Length(b);
+    for i in b{[2..k]} do
+      Coboundaries[n+1][i][1]:=Coboundaries[n+1][i][1]+1;
+      Add(Coboundaries[n+1][i],j);
+    od;
+  od;
+od;
+Coboundaries[dim+1]:=List(bnd[dim+1],a->[0]);
+### COBOUNDARIES END ###############################
+
+
+Y!.boundaries:=bnd;
+Y!.coboundaries:=Coboundaries;
+Y!.vectorField:=fail;
+Y!.inverseVectorField:=fail;
+Y!.criticalCells:=fail;
+if Length(arg)=2 then Y!.orientation:=arg[2]; fi;
+
+####################
+Y!.nrCells:=function(n);
+if n>dim then return 0; fi;
+return Length(Filtered(Y!.boundaries[n+1],x->not x[1]=0));
+end;
+####################
+
+return Y;
+end);
+#######################################################
+#######################################################
+
+#######################################################
+#######################################################
+InstallGlobalFunction(ContractedRegularCWComplex,
+function(W)
+local Y, perm, d, d1, n, x, i, b, cnt, bnd,  dim , F, bool, orien;
+
+if IsBound(W!.orientation) then
+Y:=RegularCWComplex(W!.boundaries,W!.orientation);
+else
+Y:=RegularCWComplex(W!.boundaries);
+fi;
+
+if IsBound(Y!.orientation) then bool:=true;
+orien:=StructuralCopy(Y!.orientation);
+else bool:=false; fi;
+
+HAPContractRegularCWComplex(Y);
+
+bnd:=StructuralCopy(Y!.bnd);
+
+perm:=[];  ##perm[d][i] will be the new position of
+           ##the old i-th cell of dimension d;
+
+for d in [1..Length(bnd)] do
+perm[d]:=[];
+cnt:=0;
+for n in [1..Length(bnd[d])] do
+if bnd[d][n][1]=0 then cnt:=cnt+1;
+else
+perm[d][n]:=n-cnt;
+fi;
+od;
+od;
+
+for d in [1..Length(bnd)] do
+F:=Filtered([1..Length(bnd[d])],i->not bnd[d][i][1]=0);
+#bnd[d]:=Filtered(bnd[d],x->not x[1]=0);
+bnd[d]:=bnd[d]{F};
+if bool and IsBound(orien[d]) then orien[d]:=orien[d]{F}; fi;
+if d>1 then
+d1:=d-1;
+for x in bnd[d] do
+for i in [2..Length(x)] do
+x[i]:=perm[d1][x[i]];
+od;
+od;
+fi;
+od;
+
+if bool then return RegularCWComplex(bnd, orien);
+else return RegularCWComplex(bnd);fi;
+end);
+#######################################################
+#######################################################
+
+################################################
+################################################
+InstallGlobalFunction(VerticesOfRegularCWCell,
+function(Y,n,k)
+local V, U, N, tmp, v ;
+
+if n=0 then return [k]; fi;
+
+N:=n+1;
+V:=StructuralCopy(Y!.boundaries[N][k]);
+V:=V{[2..Length(V)]};
+V:=SSortedList(V);
+N:=N-1;
+
+while N>1 do
+tmp:=[];
+for v in V do
+U:=StructuralCopy(Y!.boundaries[N][v]);
+U:=U{[2..Length(U)]};
+Append(tmp,U);
+od;
+tmp:=SSortedList(tmp);
+V:=tmp;
+N:=N-1;
+od;
+
+return V;
+end);
+################################################
+################################################
+
+################################################
+################################################
+InstallGlobalFunction(BoundaryOfRegularCWCell,
+function(Y,n,k)
+local V, U, N, tmp, v , cells;
+
+if n=0 then return []; fi;
+
+N:=n+1;
+V:=StructuralCopy(Y!.boundaries[N][k]);
+V:=V{[2..Length(V)]};
+V:=SSortedList(V);
+cells:=List(V,i->[N-1,i]);
+N:=N-1;
+
+while N>1 do
+tmp:=[];
+for v in V do
+U:=StructuralCopy(Y!.boundaries[N][v]);
+U:=U{[2..Length(U)]};
+Append(tmp,U);
+Append(cells,List(U,i->[N-1,i]));
+od;
+tmp:=SSortedList(tmp);
+cells:=SSortedList(cells);
+V:=tmp;
+N:=N-1;
+od;
+
+return cells;
+end);
+################################################
+################################################
+
+
+
+#######################################################
+#######################################################
+InstallGlobalFunction(SimplifiedRegularCWComplex,
+function(Y)
+local W , a, b, OnceSimplifiedRegularCWComplex;
+
+
+#######################################################
+#######################################################
+OnceSimplifiedRegularCWComplex:=function(W)
+local Y, perm, cnt, JoinCells, d, d1, n, x, i, b,  cobnd, bnd,  dim , F, bool, orien,  pos;
+
+if IsBound(W!.orientation) then
+Y:=RegularCWComplex(StructuralCopy(W!.boundaries),StructuralCopy(W!.orientation));
+else
+Y:=RegularCWComplex(StructuralCopy(W!.boundaries));
+fi;
+
+if IsBound(Y!.orientation) then bool:=true;
+orien:=StructuralCopy(Y!.orientation);
+else bool:=false; fi;
+
+bnd:=Y!.boundaries;
+cobnd:=Y!.coboundaries;
+
+
+###################################################
+###################################################
+JoinCells:=function(d1,n)
+                                 #The n-th cell in dimension d=d1-1 is removed
+                                 #assuming it has a coboundary of size 2.
+local V1,V2,V3,cob, d, a, b, d2,d3, m, s, t, pos, poss ;
+
+##
+##CHECK IF REMOVAL SHOULD TAKE PLACE
+
+V1:=BoundaryOfRegularCWCell(Y,d1-1,n);
+V2:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][2]);
+V3:=BoundaryOfRegularCWCell(Y,d1,cobnd[d1][n][3]);
+#if not Size(V1)=Size(Intersection(V1,V2,V3)) then Print([d1-1,n],V1,V2,V3,"\n\n");
+# fi;
+if 
+not (
+cobnd[d1][n][1] =2 
+and bnd[d1][n][1]>0  
+and 1+Size(V1)=Size(Intersection(V2,V3)) )
+then return false; fi;
+##
+##CHECK DONE
+
+d2:=d1+1;
+d3:=d2+1;
+cob:=StructuralCopy(cobnd[d1][n]);
+if not SortedList(cobnd[d2][cob[2]])= SortedList(cobnd[d2][cob[3]]) then return false; fi;
+
+##
+##REDUCE COBOUNDARIES OF BOUNDARIES OF nTH CELL
+if d1>1 then
+d:=d1-1;
+for m in bnd[d1][n]{[2..Length(bnd[d1][n])]} do
+t:=cobnd[d][m]{[2..Length(cobnd[d][m])]};
+poss:=Position(t,n);
+Remove(t,poss);
+cobnd[d][m]:=Concatenation([Length(t)],t);
+od;
+
+fi;
+##
+##COBOUNDARIES OF BOUNDARIES REDUCED
+
+##
+##REMOVE nTH CELL, ITS COBOUNDARY, AND ADJUST ITS PRESENCE IN BOUNDARIES
+##OF ITS COBOUNDARIES
+bnd[d1][n]:=[0];
+cobnd[d1][n]:=[0];
+
+s:=bnd[d2][cob[2]];
+s:=s{[2..Length(s)]};
+pos:=Position(s,n);
+Remove(s,pos);
+
+if bool then a:=orien[d2][cob[2]][pos]; Remove(orien[d2][cob[2]],pos); fi;
+
+t:=bnd[d2][cob[3]];
+t:=t{[2..Length(t)]};
+pos:=Position(t,n);
+Remove(t,pos);
+
+if bool then b:=orien[d2][cob[3]][pos]; Remove(orien[d2][cob[3]],pos); fi;
+
+bnd[d2][cob[2]]:=Concatenation([Length(s)+Length(t)],s,t);
+
+if bool then orien[d2][cob[2]]:=Concatenation(orien[d2][cob[2]],-a*b*orien[d2][cob[3]]); fi;
+##
+##nTH CELL AND ITS PRESENCE REMOVED
+
+
+##
+##FOR SECOND CELL OF DIMENSION n+1  REDUCE THE BOUNDARIES OF ITS 
+##COBOUNDARIES
+
+for m in cobnd[d2][cob[3]]{[2..Length(cobnd[d2][cob[3]])]} do
+t:=bnd[d3][m]{[2..Length(bnd[d3][m])]};
+
+pos:=Position(t,cob[3]);
+Remove(t,pos);
+bnd[d3][m]:=Concatenation([Length(t)],t);
+if bool then Remove(orien[d3][m],pos); fi;
+od;
+
+
+##
+##SECOND CELL  BOUNDARIES OF ITS COBOUNDARIES REDUCED
+
+##
+##REMOVE PRESENCE OF SECOND CELL IN COBOUNDARIES OF ITS BOUNDARIES
+for m in bnd[d2][cob[3]]{[2..Length(bnd[d2][cob[3]])]} do
+if cobnd[d1][m][1]>0 then
+
+t:=cobnd[d1][m]{[2..Length(cobnd[d1][m])]};
+
+pos:=Position(t,cob[3]);
+t[pos]:=cob[2];
+t:=SSortedList(t);
+cobnd[d1][m]:=Concatenation([Length(t)],t);
+
+fi;
+od;
+
+
+
+bnd[d2][cob[3]]:=[0];
+cobnd[d2][cob[3]]:=[0];
+end;
+
+
+###################################################
+###################################################
+
+###################################################
+######SIMPLIFICATION STARTS########################
+
+for d in [0..Dimension(Y)-1] do
+d1:=d+1;
+for n in [1..Length(bnd[d1])] do
+if cobnd[d1][n][1] =2 and bnd[d1][n][1]>0 then 
+JoinCells(d1,n);  
+fi;
+od;
+
+od;
+
+
+######SIMPLIFICATION DONE##########################
+###################################################
+
+perm:=[];  ##perm[d][i] will be the new position of
+           ##the old i-th cell of dimension d;
+
+for d in [1..Length(bnd)] do
+perm[d]:=[];
+cnt:=0;
+for n in [1..Length(bnd[d])] do
+if bnd[d][n][1]=0 then cnt:=cnt+1;
+else
+perm[d][n]:=n-cnt;
+fi;
+od;
+od;
+
+for d in [1..Length(bnd)] do
+F:=Filtered([1..Length(bnd[d])],i->not bnd[d][i][1]=0);
+bnd[d]:=bnd[d]{F};
+if bool and IsBound(orien[d]) then orien[d]:=orien[d]{F}; fi;
+
+if d>1 then
+d1:=d-1;
+for x in bnd[d] do
+for i in [2..Length(x)] do
+x[i]:=StructuralCopy(perm[d1][x[i]]);
+od;
+od;
+fi;
+od;
+
+if bool then return RegularCWComplex(bnd, orien);
+else
+return RegularCWComplex(bnd);
+fi;
+end;
+#######################################################
+#######################################################
+
+
+W:=OnceSimplifiedRegularCWComplex(Y);
+#return W;
+
+a:=Size(Y);
+b:=Size(W);
+
+while a>b do
+W:=OnceSimplifiedRegularCWComplex(W);
+a:=b;
+b:=Size(W);
+od;
+
+return W;
+end);
+#######################################################
+#######################################################
+
+
+#####################################################
+#####################################################
+InstallGlobalFunction(IsPureRegularCWComplex,
+function(Y)
+local n, x, dim, bool;
+
+dim:=Dimension(Y);
+bool:=true;
+
+for n in [1..dim] do
+if not bool then break; fi;
+for x in Y!.coboundaries[n] do
+if x[1]=0 then bool:=false; break; fi;
+od;
+od;
+
+return bool;
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(BoundaryOfPureRegularCWComplex,
+function(Y)
+local F, n, m, d, t, i, x, bool, perm, cnt, d1,  dim, bnd, cobnd, orien, B;
+
+if not IsPureRegularCWComplex(Y) then return fail; fi;
+
+
+dim:=Dimension(Y);
+
+bnd:=Y!.boundaries*1;
+cobnd:=Y!.coboundaries*1;
+if IsBound(Y!.orientation) then
+orien:=Y!.orientation*1; bool:=true;
+else bool:=false;
+fi;
+
+bnd[dim+1]:=[];
+
+d:=dim;
+  for n in [1..Length(bnd[d])] do
+    if cobnd[d][n][1]>1 then
+      if d>1 then
+        t:=bnd[d][n];
+        for m in t{[2..Length(t)]} do
+          cobnd[d-1][m][1]:=cobnd[d-1][m][1]-1;
+        od;
+      fi;
+      bnd[d][n]:=[0];
+    fi;
+  od;
+
+
+for d in Reversed([1..dim-1]) do
+  for n in [1..Length(bnd[d])] do
+    if cobnd[d][n][1]=0 then
+      if d>1 then
+        t:=bnd[d][n];
+        for m in t{[2..Length(t)]} do
+          cobnd[d-1][m][1]:=cobnd[d-1][m][1]-1;
+        od;
+      fi;
+      bnd[d][n]:=[0];
+    fi;
+  od;
+od;
+
+
+perm:=[];  ##perm[d][i] will be the new position of
+           ##the old i-th cell of dimension d;
+
+for d in [1..Length(bnd)] do
+perm[d]:=[];
+cnt:=0;
+for n in [1..Length(bnd[d])] do
+if bnd[d][n][1]=0 then cnt:=cnt+1;
+else
+perm[d][n]:=n-cnt;
+fi;
+od;
+od;
+
+for d in [1..Length(bnd)] do
+F:=Filtered([1..Length(bnd[d])],i->not bnd[d][i][1]=0);
+#bnd[d]:=Filtered(bnd[d],x->not x[1]=0);
+bnd[d]:=bnd[d]{F};
+if bool and IsBound(orien[d]) then orien[d]:=orien[d]{F}; fi;
+if d>1 then
+d1:=d-1;
+for x in bnd[d] do
+for i in [2..Length(x)] do
+x[i]:=perm[d1][x[i]];
+od;
+od;
+fi;
+od;
+
+
+if IsBound(orien) then
+B:=RegularCWComplex(bnd,orien);
+B!.perm:=perm;
+return B;
+else
+B:=RegularCWComplex(bnd);
+B!.perm:=perm;
+return B;
+fi;
+
+end);
+#####################################################
+#####################################################
+
+##################################################
+##################################################
+InstallGlobalFunction(OrientRegularCWComplex,
+function(Y)
+local bnd, cobnd, orien, dim, d, d1, d2, x, i, j, b, bb, sn, m, S, T, s, t, 
+       L, bool ;
+
+#Print("Function not yet implemented.\n\n");
+#return fail;
+
+dim:=Dimension(Y);
+bnd:=Y!.boundaries;
+cobnd:=Y!.coboundaries;
+orien:=bnd*0;
+for x in orien do
+Apply(x,y->y{[2..Length(y)]});
+od;
+
+Apply(orien[1], x->x+1);
+Apply(orien[2],x->[1,-1]);
+
+
+#######################
+for d in [3..dim+1] do
+  d1:=d-1;
+  d2:=d-2;
+  for i in [1..Length(bnd[d])] do
+    b:=bnd[d][i]{[2..Length(bnd[d][i])]};
+    bb:=[];
+    for j in [1..Length(b)] do
+      Add(bb, bnd[d1][b[j]]{[2..Length(bnd[d1][b[j]])]}   );
+    od;
+    orien[d][i][1]:=1;
+    S:=[1..Length(b)];
+    T:=[1..Length(b)];
+    for s in [2..Length(b)] do
+    Unbind(S[s]);
+    od;
+    Unbind(T[1]);
+
+    while 0 in orien[d][i] do
+    ###############################
+    bool:=false;
+    for s in S do
+    for t in T do
+      L:=Intersection(bb[s], bb[t]);
+      if Length(L)>0 then
+        S[t]:=t;
+        Unbind(T[t]);   
+        bool:=true;
+        if orien[d][i][s]*orien[d1][b[s]][Position(bb[s],L[1])]=
+           orien[d1][b[t]][Position(bb[t],L[1])]
+           then orien[d][i][t]:=-1;
+           else
+           orien[d][i][t]:=1;
+        fi; 
+        break;
+      fi;
+    od;
+    od;
+    ###############################
+    od;
+  od;
+od;
+#######################
+
+
+Y!.orientation:=orien;
+end);
+##################################################
+##################################################
+
+#############################################
+#############################################
+InstallGlobalFunction(HAP_Sequence2Boundaries,
+function(Y)
+
+local orien, b, i, bb, newb, neworien, pos, s, t;
+
+for i in [1..Y!.nrCells(2)] do
+  b:=Y!.boundaries[3][i];
+  orien:=Y!.orientation[3][i];
+  bb:=List(b{[2..Length(b)]},  j->Y!.boundaries[2][j]{[2,3]});
+
+  s:=bb[1];
+  Unbind(bb[1]);
+  newb:=[b[1],b[2]];
+  neworien:=[orien[1]];
+  while Length(newb)<Length(b) do
+    for t in bb do
+      if Length(Intersection(s,t))>0 then pos:=Position(bb,t); break; fi;
+    od;
+    s:=bb[pos];
+    Unbind(bb[pos]);
+    Add(newb,b[pos+1]);
+    Add(neworien,orien[pos]);
+  od;
+  Y!.boundaries[3][i]:=newb;
+  Y!.orientation[3][i]:=neworien;
+
+
+od;
+end);
+#############################################
+#############################################
+
+############################################
+InstallGlobalFunction(CubicalComplex,
+function(A)
+local dim, dims;
+
+dim:=ArrayDimension(A);
+dims:=ArrayDimensions(A);
+
+
+return Objectify(HapCubicalComplex,
+           rec(
+           binaryArray:=A,
+           properties:=[
+           ["dimension",dim],
+           ["arraySize",dims]]
+           ));
+
+end);
+############################################
+############################################
+############################################
+InstallGlobalFunction(ReadImageAsWeightFunction,
+function(file,f)
+local MM,F, M, A, B, C, Y, k,k1, i,j,W, weight, coord, x1;
+
+MM:=ReadImageAsFilteredCubicalComplex(file,f);
+A:=PureCubicalComplexToCubicalComplex(MM);;
+A:=0*A!.binaryArray;
+
+for i in [1..f] do
+F:=FiltrationTerm(MM,i);
+F:=PureCubicalComplexToCubicalComplex(F);
+A:=A+F!.binaryArray;
+od;
+
+
+B:=A*0;;
+for i in [1..Length(A)] do
+for j in [1..Length(A[1])] do
+if A[i][j]>0 then B[i][j]:=1; fi;
+od;od;
+
+M:=CubicalComplex(B);
+C:=ChainComplex(M);
+
+W:=[];
+for k in [1..1+Dimension(M)] do
+W[k]:=[];k1:=k-1;
+for i in [1..C!.dimension(k1)] do
+coord:=C!.positionToCoordinate[k][i];
+W[k][i]:=A[coord[2]][coord[1]];
+od;
+od;
+
+Unbind(C);
+Y:=CubicalComplexToRegularCWComplex(M);
+Unbind(M);
+
+#####################
+weight:=function(k,i);
+return W[k+1][i];
+end;
+#####################
+
+
+return [Y, weight];
+
+end);
+#######################################################
+#######################################################
+
+
+######################################################
+#######################################################
+InstallGlobalFunction(EulerIntegral,
+function(Y,weight)
+local k, i, eulint, alpha, sn;
+
+eulint:=0;
+for k in [0..Dimension(Y)] do
+sn:=(-1)^k;
+alpha:=0;
+for i in [1..Y!.nrCells(k)] do
+alpha:=alpha+weight(k,i);
+od;
+eulint:=eulint+sn*alpha;
+od;
+
+return eulint;
+
+end);
+######################################################
+######################################################
 

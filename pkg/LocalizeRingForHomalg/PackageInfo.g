@@ -2,6 +2,7 @@
 ##  
 ##  PackageInfo.g for the package `LocalizeRingForHomalg'    Mohamed Barakat
 ##                                                    Markus Lange-Hegermann
+##                                                                Vinay Wagh
 ##
 ##  (created from Frank Lübeck's PackageInfo.g template file)
 ##  
@@ -31,7 +32,11 @@ Subtitle := "A Package for Localization of Polynomial Rings",
 Version := Maximum( [ ##To prevent merge conflicts
   "2011.04.26", ## Markus' version
 ## this line prevents merge conflicts
-  "2012.10.26", ## Mohamed's version
+  "2013.10.25", ## Mohamed's version
+## this line prevents merge conflicts
+  "2013.07.15", ## Vinay's version
+## this line prevents merge conflicts
+  "2013.11.11", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -155,6 +160,22 @@ Persons := [
     Place         := "Aachen",
     Institution   := "RWTH Aachen University"
   ),
+  rec(
+    LastName      := "Wagh",
+    FirstNames    := "Vinay",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waghoba@gmail.com",
+    WWWHome       := "http://www.iitg.ernet.in/vinay.wagh/",
+    PostalAddress := Concatenation( [
+                       "E-102, Department of Mathematics,\n",
+                       "Indian Institute of Technology Guwahati,\n",
+                       "Guwahati, Assam, India.\n",
+                       "PIN: 781 039.\n",
+                       "India" ] ),
+    Place         := "Guwahati",
+    Institution   := "Indian Institute of Technology Guwahati"
+  ),
 # provide such a record for each author and/or maintainer ...
   
 ],
@@ -269,9 +290,11 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [
-                   [ "MatricesForHomalg", ">= 2012.05.27" ],
-                   [ "HomalgToCAS", ">= 2011.08.10" ],
-                   [ "GAPDoc", ">= 1.0" ] ],
+                   [ "MatricesForHomalg", ">= 2013.10.25" ],
+                   [ "HomalgToCAS", ">= 2013.07.12" ],
+                   [ "Modules", ">= 2013.06.06" ],
+                   [ "GAPDoc", ">= 1.0" ]
+                   ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [ ],

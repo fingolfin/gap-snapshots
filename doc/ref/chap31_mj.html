@@ -251,7 +251,7 @@
 
 <h4>31.6 <span class="Heading">Domain Categories</span></h4>
 
-<p>As mentioned in <a href="chap31_mj.html#X859C7AB97B34F55F"><span class="RefLink">31.1</span></a>, the operational structure of a domain is fixed when the domain is constructed. For example, if <var class="Arg">D</var> was constructed by <code class="func">Monoid</code> (<a href="chap52_mj.html#X7F95328B7C7E49EA"><span class="RefLink">52.1-2</span></a>) then <var class="Arg">D</var> is in general not regarded as a group in <strong class="pkg">GAP</strong>, even if <var class="Arg">D</var> is in fact closed under taking inverses. In this case, <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) returns <code class="keyw">false</code> for <var class="Arg">D</var>. The operational structure determines which operations are applicable for a domain, so for example <code class="func">SylowSubgroup</code> (<a href="chap39_mj.html#X7AA351308787544C"><span class="RefLink">39.13-1</span></a>) is not defined for <var class="Arg">D</var> and therefore will signal an error.</p>
+<p>As mentioned in <a href="chap31_mj.html#X859C7AB97B34F55F"><span class="RefLink">31.1</span></a>, the operational structure of a domain is fixed when the domain is constructed. For example, if <var class="Arg">D</var> was constructed by <code class="func">Monoid</code> (<a href="chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">51.2-2</span></a>) then <var class="Arg">D</var> is in general not regarded as a group in <strong class="pkg">GAP</strong>, even if <var class="Arg">D</var> is in fact closed under taking inverses. In this case, <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) returns <code class="keyw">false</code> for <var class="Arg">D</var>. The operational structure determines which operations are applicable for a domain, so for example <code class="func">SylowSubgroup</code> (<a href="chap39_mj.html#X7AA351308787544C"><span class="RefLink">39.13-1</span></a>) is not defined for <var class="Arg">D</var> and therefore will signal an error.</p>
 
 <p><code class="code">Is<var class="Arg">Struct</var>( <var class="Arg">D</var> )</code></p>
 
@@ -469,9 +469,19 @@ true
 <h5>31.10-4 MultiplicativeZeroOp</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeZeroOp</code>( <var class="Arg">elt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>for an element <var class="Arg">elt</var> in the category <code class="func">IsMultiplicativeElementWithZero</code> (<a href="chap31_mj.html#X8703BFC2841BBD63"><span class="RefLink">31.14-12</span></a>), returns the element <span class="SimpleMath">\(z\)</span> in the family <span class="SimpleMath">\(F\)</span> of <var class="Arg">elt</var> with the property that <span class="SimpleMath">\(z * m = z = m * z\)</span> holds for all <span class="SimpleMath">\(m \in F\)</span>, if such an element is known.</p>
+<p>Returns: A multiplicative zero element.</p>
 
-<p>Families of elements in the category <code class="func">IsMultiplicativeElementWithZero</code> (<a href="chap31_mj.html#X8703BFC2841BBD63"><span class="RefLink">31.14-12</span></a>) often arise from adjoining a new zero to an existing magma. See <code class="func">InjectionZeroMagma</code> (<a href="chap35_mj.html#X8620878D7FD98823"><span class="RefLink">35.2-12</span></a>) for details.</p>
+<p>for an element <var class="Arg">elt</var> in the category <code class="func">IsMultiplicativeElementWithZero</code> (<a href="chap31_mj.html#X8703BFC2841BBD63"><span class="RefLink">31.14-12</span></a>), <code class="code">MultiplicativeZeroOp</code> returns the element <span class="SimpleMath">\(z\)</span> in the family <span class="SimpleMath">\(F\)</span> of <var class="Arg">elt</var> with the property that <span class="SimpleMath">\(z * m = z = m * z\)</span> holds for all <span class="SimpleMath">\(m \in F\)</span>, if such an element can be determined.</p>
+
+<p>Families of elements in the category <code class="func">IsMultiplicativeElementWithZero</code> (<a href="chap31_mj.html#X8703BFC2841BBD63"><span class="RefLink">31.14-12</span></a>) often arise from adjoining a new zero to an existing magma. See <code class="func">InjectionZeroMagma</code> (<a href="chap35_mj.html#X8620878D7FD98823"><span class="RefLink">35.2-13</span></a>) or <code class="func">MagmaWithZeroAdjoined</code> (<a href="chap35_mj.html#X8620878D7FD98823"><span class="RefLink">35.2-13</span></a>) for details.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=AlternatingGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Representative(MagmaWithZeroAdjoined(G));</span>
+&lt;group with 0 adjoined elt: ()&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZeroOp(x);</span>
+&lt;group with 0 adjoined elt: 0&gt;</pre></div>
 
 <p><a id="X814D78347858EC13" name="X814D78347858EC13"></a></p>
 
@@ -837,7 +847,23 @@ true
 <h5>31.14-12 IsMultiplicativeElementWithZero</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMultiplicativeElementWithZero</code>( <var class="Arg">elt</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>Elements in a family which can be the operands of the <code class="code">*</code> and the operation MultiplicativeZero.</p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This is the category of elements in a family which can be the operands of <code class="code">*</code> (multiplication) and the operation <code class="func">MultiplicativeZero</code> (<a href="chap35_mj.html#X7B39F93C8136D642"><span class="RefLink">35.4-11</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 1, 1 ] ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=MagmaWithZeroAdjoined(S);</span>
+&lt;&lt;commutative transformation semigroup on 3 pts with 1 generator&gt;
+with 0 adjoined&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Representative(M);</span>
+&lt;semigroup with 0 adjoined elt: Transformation( [ 1, 1, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMultiplicativeElementWithZero(x);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZeroOp(x);</span>
+&lt;semigroup with 0 adjoined elt: 0&gt;
+</pre></div>
 
 <p><a id="X7FDB14E57814FA3B" name="X7FDB14E57814FA3B"></a></p>
 

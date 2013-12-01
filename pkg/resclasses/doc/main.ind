@@ -9,7 +9,7 @@
 		\hyperpage{12}
     \subitem by ring and modulus, \hyperpage{12}
   \item \texttt{AllResidues}
-    \subitem by ring and modulus, \hyperpage{5}
+    \subitem for ring and modulus, \hyperpage{5}
   \item \texttt{AsListOfClasses}
     \subitem for a union of residue classes with fixed rep's, 
 		\hyperpage{12}
@@ -117,8 +117,10 @@
     \subitem for an iterator of a residue class union, \hyperpage{8}
   \item \texttt{NoninvertiblePrimes}
     \subitem of a semilocalization of Z, \hyperpage{16}
+  \item \texttt{NrResidues}
+    \subitem for ring and modulus, \hyperpage{5}
   \item \texttt{NumberOfResidues}
-    \subitem by ring and modulus, \hyperpage{5}
+    \subitem for ring and modulus, \hyperpage{5}
 
   \indexspace
 

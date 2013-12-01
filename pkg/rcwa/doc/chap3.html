@@ -202,6 +202,23 @@ true
 
 </pre></div>
 
+<p>The group CT(ℤ) has an outer automorphism which is given by conjugation with <span class="SimpleMath">n ↦ -n - 1</span>. This automorphism can be applied to an rcwa mapping of ℤ or to an rcwa group over ℤ by the operation <code class="code">Mirrored</code>. The group <code class="code">Mirrored(</code><var class="Arg">G</var><code class="code">)</code> acts on the nonnegative integers as <var class="Arg">G</var> acts on the negative integers, and vice versa.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ct := ClassTransposition(0,2,1,6);</span>
+( 0(2), 1(6) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Mirrored(ct);</span>
+( 1(2), 4(6) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShortOrbits(G,[-100..100],100);</span>
+[ [ 0, 1, 2, 3, 4, 5 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShortOrbits(Mirrored(G),[-100..100],100);</span>
+[ [ -6, -5, -4, -3, -2, -1 ] ]
+
+</pre></div>
+
 <p>Under the hypothesis that CT(ℤ) is the setwise stabilizer of <span class="SimpleMath">ℕ_0</span> in RCWA(ℤ), the elements of CT(ℤ) with modulus dividing a given positive integer <span class="SimpleMath">m</span> are parametrized by the ordered partitions of ℤ into <span class="SimpleMath">m</span> residue classes. The list of these elements for given <span class="SimpleMath">m</span> can be obtained by the function <code class="code">AllElementsOfCTZWithGivenModulus</code>, and the numbers of such elements for <span class="SimpleMath">m ≤ 24</span> are stored in the list <code class="code">NrElementsOfCTZWithGivenModulus</code>.</p>
 
 
@@ -533,20 +550,18 @@ infinity
 
 <p>The argument <var class="Arg">r</var> is the "search radius", i.e. the radius of the ball around 1 which is scanned for relations. In general, the larger <var class="Arg">r</var> is chosen the smaller the kernel of the returned epimorphism is. If the group <var class="Arg">G</var> has finite presentations, the kernel will in principle get trivial provided that <var class="Arg">r</var> is chosen large enough.</p>
 
-<p>Both the performance and the returned epimorphism depend on whether the package <strong class="pkg">FR</strong> <a href="chapBib.html#biBFR">[Bar10]</a> is present or not.</p>
-
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := ClassTransposition(2,4,3,4);;  SetName(a,"a");</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := ClassTransposition(4,6,8,12);; SetName(b,"b");</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := ClassTransposition(3,4,4,6);;  SetName(c,"c");</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(a,b,c);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := ClassTransposition(2,4,3,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := ClassTransposition(4,6,8,12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := ClassTransposition(3,4,4,6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SparseRep(Group(a,b,c));</span>
 &lt;rcwa group over Z with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := EpimorphismFromFpGroup(G,6);</span>
-[ a, b, c ] -&gt; [ a, b, c ]
+[ a, b, c ] -&gt; [ ( 2(4), 3(4) ), ( 4(6), 8(12) ), ( 3(4), 4(6) ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup(Source(phi));</span>
-[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ]
+[ a^2, b^2, c^2, (b*c)^3, (a*b)^6, (a*b*c*b)^3, (a*b*a*c)^12 ]
 
 </pre></div>
 
@@ -724,6 +739,8 @@ true
 
 <p>We are only talking about a <em>cycle</em> of residue classes of an rcwa permutation <span class="SimpleMath">g</span> if the restrictions of <span class="SimpleMath">g</span> to all contained residue classes are affine. Similarly we are only talking about an <em>orbit</em> of residue classes under the action of an rcwa group <span class="SimpleMath">G</span> if the restrictions of all elements of <span class="SimpleMath">G</span> to all residue classes in the orbit are affine.</p>
 
+<p>The returned lists may contain additional cycles, resp., orbits, which do not contain a residue class <span class="SimpleMath">r(m)</span> such that <span class="SimpleMath">m</span> divides <var class="Arg">modulusbound</var>, but which happen to be found without additional efforts.</p>
+
 
 <div class="example"><pre>
 
@@ -733,14 +750,18 @@ true
 [ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
   [ 20(24), 21(24), 31(36), 30(36) ], 
   [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
-  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ], 
+  [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) 
+     ], 
+  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
+      120(144) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));</span>
 &lt;rcwa group over Z with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShortResidueClassOrbits(G,48,10);</span>
 [ [ 7(12) ], [ 8(12) ], [ 1(24), 4(36) ], [ 2(24), 3(36) ], 
   [ 12(24), 17(24), 28(36) ], [ 18(24), 23(24), 27(36) ], 
-  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ], 
-  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ] ]
+  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ], 
+  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ] ]
 
 </pre></div>
 
@@ -991,7 +1012,8 @@ infinity
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionOnRespectedPartition</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfActionOnRespectedPartition</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: the action of the tame rcwa group <var class="Arg">G</var> on <code class="code">RespectedPartition(<var class="Arg">G</var>)</code> or the kernel of this action, respectively.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfKernelOfActionOnRespectedPartition</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: the action of the tame rcwa group <var class="Arg">G</var> on <code class="code">RespectedPartition(<var class="Arg">G</var>)</code>, the kernel of this action or the rank of the latter, respectively.</p>
 
 <p>The method for <code class="code">KernelOfActionOnRespectedPartition</code> uses the package <strong class="pkg">Polycyclic</strong> <a href="chapBib.html#biBPolycyclic">[EN09]</a>. The rank of the largest free abelian subgroup of the kernel of the action of <var class="Arg">G</var> on its stored respected partition can be computed by <code class="code">RankOfKernelOfActionOnRespectedPartition(<var class="Arg">G</var>)</code>.</p>
 

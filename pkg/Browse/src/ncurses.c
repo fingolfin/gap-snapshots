@@ -8,7 +8,7 @@
 **
 */
 
-#define VERSION "1.8.2"
+#define VERSION "1.8.3"
 
 const char * Revision_ncurses_c =
    "VERSION";
@@ -1018,6 +1018,17 @@ Obj WAttroff(Obj self, Obj num, Obj attrs) {
     return False;
 } 
 
+/* wattr_get is a macro and allows NULL pointers as arguments, this is 
+   checked in the code. 
+   If we call it with arguments which are obviously never NULL, then 
+   gcc >= 4.6 with -Wall or -Waddress issues a warning that a pointer 
+   is checked for not being NULL although it is never NULL. 
+   We wrap that macro in a function to avoid the warning.   */
+int wattr_get_fun(WINDOW *win, attr_t * pa, short *ps, void *opts) {
+  int ret;
+  ret = wattr_get(win, pa, ps, opts);
+  return ret;
+}
 Obj WAttrCPGet(Obj self, Obj num) {
   WINDOW *win;
   attr_t a;
@@ -1026,7 +1037,7 @@ Obj WAttrCPGet(Obj self, Obj num) {
   win = winnum(num);
   if (!win)
     return False;
-  wattr_get(win, &a, &cp, NULL);
+  wattr_get_fun(win, &a, &cp, NULL);
   res = NEW_PLIST(T_PLIST, 2);
   SET_LEN_PLIST(res, 2);
   SET_ELM_PLIST(res, 1, INTOBJ_INT((int)a));

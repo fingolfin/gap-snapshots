@@ -72,7 +72,17 @@
     <Email>frank.luebeck@math.rwth-aachen.de</Email>
     <Homepage>http://www.math.rwth-aachen.de/~Frank.Luebeck/</Homepage>
   </Author>
-  <Date>February 2013</Date>
+  <Author>Vinay Wagh<Alt Only="LaTeX"><Br/></Alt>
+    <Address>
+      E-102, Department of Mathematics, <Br/>
+      Indian Institute of Technology Guwahati, <Br/>
+      Guwahati, Assam, India. <Br/>
+      PIN: 781 039.
+    </Address>
+    <Email>waghoba@gmail.com</Email>
+    <Homepage>http://www.iitg.ernet.in/vinay.wagh/</Homepage>
+  </Author>
+  <Date>July 2013</Date>
   
   <Copyright>
     &copyright; 2007-2013 by Mohamed Barakat, Thomas Breuer, Simon Görtzen, and Frank Lübeck.<P/>

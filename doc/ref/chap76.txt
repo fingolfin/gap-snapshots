@@ -1,9 +1,9 @@
   
-  [1X76 [33X[0;0YGAP Packages[133X[101X
+  [1X76 [33X[0;0YUsing GAP Packages[133X[101X
   
   [33X[0;0YThe  functionality  of  [5XGAP[105X  can  be  extended  by loading [5XGAP[105X packages. [5XGAP[105X
   distribution  already contains all currently redistributed with [5XGAP[105X packages
-  in the [11Xgap4r6/pkg[111X directory.[133X
+  in the [11Xgap4r7/pkg[111X directory.[133X
   
   [33X[0;0Y[5XGAP[105X  packages  are written by (groups of) [5XGAP[105X users which may not be members
   of the [5XGAP[105X developer team. The responsibility and copyright of a [5XGAP[105X package
@@ -609,4 +609,22 @@
     [4X[28X  keywords =         {groups; *; gap; manual}[128X[104X
     [4X[28X}[128X[104X
   [4X[32X[104X
+  
+  [1X76.3-15 Cite[101X
+  
+  [29X[2XCite[102X( [[3Xpkgname[103X[, [3Xkey[103X]] ) [32X function
+  
+  [33X[0;0YUsed  with  no  arguments  or  with  argument [10X"GAP"[110X (case-insensitive), [2XCite[102X
+  displays  instructions  on  citing  the  version  of [5XGAP[105X that is being used.
+  Suggestions  are  given  in plain text, HTML, BibXML and BibTeX formats. The
+  same  instructions  are  also contained in the [11XCITATION[111X file in the [5XGAP[105X root
+  directory.[133X
+  
+  [33X[0;0YIf [3Xpkgname[103X is the name of a [5XGAP[105X package, instructions on citing this package
+  will  be displayed. They will be produced from the [11XPackageInfo.g[111X file of the
+  working  version  of  this  package  that  must  be  available  in  the  [5XGAP[105X
+  installation  being  used. Otherwise, one will get a warning that no working
+  version of the package is available.[133X
+  
+  [33X[0;0YThe optional 2nd argument [3Xkey[103X has the same meaning as in [2XBibEntry[102X ([14X76.3-14[114X).[133X
   

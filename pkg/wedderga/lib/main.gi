@@ -4,7 +4,7 @@
 #W                                                        Alexander Konovalov
 #W                                                            Aurora Olivieri
 #W                                                           Gabriela Olteanu
-#W                                                              ¡ngel del RÌo
+#W                                                              √Ångel del R√≠o
 #W                                                          Inneke Van Gelder
 ##
 #############################################################################
@@ -334,7 +334,6 @@ else
       n := x[1];
       z := x[2];
       if Length(x) = 2 then 
-        z := x[2];
         F :=  Field(Union(GeneratorsOfField(z),GeneratorsOfField(K)));
         a := Dimension(z)*Dimension(K)/Dimension(F);
         for i in [1..a] do
@@ -913,7 +912,7 @@ function( FG, chi )
                         # Wedderburn component of QG
         sylow,      	  # the list of Sylow subgroups of Gal
         i,          	  # counter
-        cf,         	  # character field of chi
+        cf,         	  # character field of chi, 
         Gal,        	  # Gal(L/cf)
         d,          	  # integer
         pr,         	  # prime divisors of d
@@ -935,16 +934,17 @@ function( FG, chi )
         P,          	  # p-Sylow subgroup of GalList[controlcounter]
         genP,       	  # set of generators of P
         x,                # 5-tuples, output of AddCrossedProductBySST
-        sprod;      	  # (chi_M,psi)
-        
+        sprod,      	  # (chi_M,psi)
+        F1,n,ok,Gal1,coc,F2,F3,a1,b1,Fxi,d1,condK,redmok,redmcondK,gal,x1; # For bugfix
+
 
 # if not IsSemisimpleZeroCharacteristicGroupAlgebra( FG ) then
 #   Error("<FG> must be a zero-characteristic semisimple group algebra !!!");       
 # fi;   
     
   G := UnderlyingMagma(FG);      
-  cf := Field( chi );
-  L := CF(Exponent(G));  
+  cf := Field( chi );                          
+  L := CF(Exponent(G));   
   sspsub:=[];
   Gal := GaloisGroup(AsField(cf,L));
   d:=Gcd(Size(Gal),chi[1]);
@@ -1007,20 +1007,76 @@ function( FG, chi )
         od;
         subcounter:=subcounter-1;
   od;
-  
- if Length(sspsub)=2 then
-    return SimpleAlgebraByData( [ sspsub[1][1], sspsub[2] ] );
- else
+# bugfix for Field adjustment
+    
+  if Length(sspsub)=2 then
+        F1:=LeftActingDomain(FG);
+	a1:=PrimitiveElement(F1);
+	b1:=PrimitiveElement(cf);
+	F2:=Field([a1,b1]);
+    return  SimpleAlgebraByData( [ sspsub[1][1], F2 ] );
+    
+  elif Size(sspsub[4])=1 then
+    return [ sspsub[1][1], F2 ]; # sspsub[3] ];   
+  else
     x:=AddCrossedProductBySST( Exponent(G), 
-                               sspsub[1][1], 
-                               sspsub[2], 
-                               sspsub[4], 
-                               sspsub[3]);
-     if not IsInt(x[1]) then 
+                              sspsub[1][1], 
+                              sspsub[2], 
+                              sspsub[4], 
+                              sspsub[3]); 
+# Field adjustment 
+	F1:=LeftActingDomain(FG);
+	a1:=PrimitiveElement(F1);
+        b1:=PrimitiveElement(cf);
+     if (a1 in cf) then 
+        return SimpleAlgebraByData(x);
+     else
+	n := x[1];
+      	#z := x[2]; z is cf
+	ok := x[3];
+        Gal1 := x[4];
+        coc := x[5];
+        F2 :=  Field([a1,b1]);
+	F3 :=  Field([a1,b1,E(ok)]);  
+        #a := Dimension(z)*Dimension(K)/Dimension(F); #a not needed, only one component
+        Fxi := Field([b1,E(ok)]);
+        d1 := (Dimension(Fxi)*Dimension(F2))/(Dimension(cf)*Dimension(F3));
+	#  Dimension(Field([b1,E(ok)]))/Dimension(Fxi);
+        condK := Conductor(F1);
+        m := Lcm(condK,ok);
+        redmok := ReductionModnZ(m,ok);
+        redmcondK := ReductionModnZ(m,condK);
+        gal := Subgroup(Units(ZmodnZ(ok)),
+                    Filtered(Gal1,y->
+                            Size(
+                                Intersection(
+                                    GaloisStabilizer(F2),
+                                    List(PreImages(redmok,y),w->Int(w^redmcondK))
+                                            )
+                                )<>0
+                            )
+                        );
+        #for i in [1..a] do
+            x1:=[n*d1,F2,ok,gal,coc];
+        #od;
+      #return SimpleAlgebraByData( x1 );  
+
+##############################
+  
+# if Length(sspsub)=2 then
+#    return SimpleAlgebraByData( [ sspsub[1][1], sspsub[2] ] );
+# else
+#    x:=AddCrossedProductBySST( Exponent(G), 
+#                               sspsub[1][1], 
+#                               sspsub[2], 
+#                               sspsub[4], 
+#                               sspsub[3]);
+     if not IsInt(x1[1]) then 
       Print("Wedderga: Warning!\nThe output is a FRACTIONAL MATRIX ALGEBRA!!!\n\n");
      fi;                         
-     return SimpleAlgebraByData(x);  
+     return SimpleAlgebraByData(x1);  
  fi;
+fi;
 
  
 end);
@@ -1336,6 +1392,7 @@ true,
 0,
 function( FG, chi )
 
+
 local G,               # underlying group 
        ratchi,          # rationalized of chi
        L,          	    # Splitting Field of G
@@ -1366,7 +1423,8 @@ local G,               # underlying group
         p,          	  # element of primes[controlcounter]
         P,          	  # p-Sylow subgroup of GalList[controlcounter]
         genP,       	  # set of generators of P
-        sprod;      	  # (chi_M,psi)
+        sprod,      	  # (chi_M,psi)
+	x,F1,n,ok,Gal1,coc,F2,F3,a1,b1,Fxi,d1,condK,redmok,redmcondK,gal,x1; # For bugfix
 
 # if not IsSemisimpleZeroCharacteristicGroupAlgebra( FG ) then
 #   Error("<FG> must be a zero-characteristic semisimple group algebra !!!");       
@@ -1439,21 +1497,61 @@ local G,               # underlying group
     od;
     
   if Length(sspsub)=2 then
-    return  [ sspsub[1][1], sspsub[2] ] ;
+        F1:=LeftActingDomain(FG);
+	a1:=PrimitiveElement(F1);
+	b1:=PrimitiveElement(cf);
+	F2:=Field([a1,b1]);
+    return  [ sspsub[1][1], F2 ] ;
     
   elif Size(sspsub[4])=1 then
-    return [ sspsub[1][1], sspsub[2], sspsub[3] ];   
+    return [ sspsub[1][1], F2 ]; # sspsub[3] ];   
   else
-    return SimpleAlgebraInfoByData( 
-      AddCrossedProductBySST( Exponent(G), 
+    x:=AddCrossedProductBySST( Exponent(G), 
                               sspsub[1][1], 
                               sspsub[2], 
                               sspsub[4], 
-                              sspsub[3]) ); 
+                              sspsub[3]); 
+# Field adjustment 
+	F1:=LeftActingDomain(FG);
+	a1:=PrimitiveElement(F1);
+        b1:=PrimitiveElement(cf);
+     if (a1 in cf) then 
+        return SimpleAlgebraInfoByData(x);
+     else
+	n := x[1];
+      	#z := x[2]; z is cf
+	ok := x[3];
+        Gal1 := x[4];
+        coc := x[5];
+        F2 :=  Field([a1,b1]);
+	F3 :=  Field([a1,b1,E(ok)]);  
+        #a := Dimension(z)*Dimension(K)/Dimension(F); #a not needed, only one component
+        Fxi := Field([b1,E(ok)]);
+        d1 := (Dimension(Fxi)*Dimension(F2))/(Dimension(cf)*Dimension(F3));
+#  Dimension(Field([b1,E(ok)]))/Dimension(Fxi);
+        condK := Conductor(F1);
+        m := Lcm(condK,ok);
+        redmok := ReductionModnZ(m,ok);
+        redmcondK := ReductionModnZ(m,condK);
+        gal := Subgroup(Units(ZmodnZ(ok)),
+                    Filtered(Gal1,y->
+                            Size(
+                                Intersection(
+                                    GaloisStabilizer(F2),
+                                    List(PreImages(redmok,y),w->Int(w^redmcondK))
+                                            )
+                                )<>0
+                            )
+                        );
+        #for i in [1..a] do
+            x1:=[n*d1,F2,ok,gal,coc];
+        #od;
+# End Field adjustment
+      return SimpleAlgebraInfoByData( x1 );    
+      fi; 
   fi;  
   
 end);
-
 
 #############################################################################
 ##
@@ -1665,7 +1763,7 @@ local   G,          # Group
                         RemInt(Position(Potk,gen[i]^Order(Gen[i])),ok) ]),
                  List( [1..Length(Gen)-1], i -> 
                    List( [i+1..Length(Gen)], j -> 
-                     RemInt(Position(Potk,Comm(gen[j],gen[i])),ok))) ];
+                     RemInt(Position(Potk,Comm(gen[i],gen[j])),ok))) ];
     fi;
 end);
 
@@ -2298,7 +2396,7 @@ else
 		b_odd := Random(G)^0;
 	else
 		b_odd := PreImage(epi,MinimalGeneratingSet(ComplementClassesRepresentatives(
-													QEK_odd,Subgroup(QNK,[Image(epi,a_odd)]))))[1];
+													QEK_odd,Subgroup(QNK,[Image(epi,a_odd)]))[1]))[1];
 	fi;
 fi;
 

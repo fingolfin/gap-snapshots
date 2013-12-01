@@ -3,45 +3,45 @@ The top-level auxiliary file: manual.aux
 The style file: alpha.bst
 Database file #1: manualbib.xml.bib
 Warning--empty journal in OV2
-You've used 10 entries,
+You've used 17 entries,
             2543 wiz_defined-function locations,
-            635 strings with 5893 characters,
-and the built_in function-call counts, 4339 in all, are:
-= -- 427
-> -- 141
-< -- 7
-+ -- 45
-- -- 43
-* -- 350
-:= -- 692
-add.period$ -- 32
-call.type$ -- 10
-change.case$ -- 53
-chr.to.int$ -- 10
-cite$ -- 11
-duplicate$ -- 149
-empty$ -- 365
-format.name$ -- 58
-if$ -- 886
+            691 strings with 6587 characters,
+and the built_in function-call counts, 7292 in all, are:
+= -- 719
+> -- 219
+< -- 14
++ -- 68
+- -- 65
+* -- 594
+:= -- 1145
+add.period$ -- 53
+call.type$ -- 17
+change.case$ -- 88
+chr.to.int$ -- 17
+cite$ -- 18
+duplicate$ -- 256
+empty$ -- 627
+format.name$ -- 92
+if$ -- 1496
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 13
-newline$ -- 55
-num.names$ -- 30
-pop$ -- 46
+missing$ -- 22
+newline$ -- 90
+num.names$ -- 51
+pop$ -- 75
 preamble$ -- 1
-purify$ -- 66
+purify$ -- 110
 quote$ -- 0
-skip$ -- 114
+skip$ -- 193
 stack$ -- 0
-substring$ -- 459
-swap$ -- 13
-text.length$ -- 7
-text.prefix$ -- 5
+substring$ -- 794
+swap$ -- 24
+text.length$ -- 14
+text.prefix$ -- 10
 top$ -- 0
-type$ -- 68
+type$ -- 116
 warning$ -- 1
-while$ -- 31
-width$ -- 14
-write$ -- 136
+while$ -- 52
+width$ -- 21
+write$ -- 229
 (There was 1 warning)

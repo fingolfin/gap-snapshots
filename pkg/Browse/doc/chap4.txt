@@ -108,8 +108,7 @@
         [33X[0;6YSorting  can be undone globally, i. e., one can return to the unsorted
         table.[133X
   
-  [8XSorting and Categorizing:
-  [108X
+  [8XSorting and Categorizing:[108X
         [33X[0;6YIf  a  column is selected then the main table can be sorted w.r.t. the
         entries in this column, and additionally these entries are turned into
         [13Xcategory  rows[113X,  i. e.,  additional  rows are added to the main table,
@@ -127,8 +126,7 @@
         [33X[0;6YSorting and categorizing can be undone globally, i. e., one can return
         to the unsorted table without category rows.[133X
   
-  [8XFiltering:
-  [108X
+  [8XFiltering:[108X
         [33X[0;6YThe browse table can be restricted to those rows or columns in which a
         given search string occurs. (Also entries in collapsed rows can match;
         they  remain  collapsed then.) As a consequence, the category rows are
@@ -194,11 +192,10 @@
         depends  on  the  application what this [5XGAP[105X object is. In order to use
         this  feature,  one  has  to provide a record whose components are [5XGAP[105X
         functions,  see Section [14X5.4-1[114X for details. If mouse events are enabled
-        then  also  mouse  clicks can be used as an alternative to hitting the
-        [12XEnter[112X key.[133X
+        (see  [2XNCurses.UseMouse[102X ([14X2.2-10[114X)) then also mouse clicks can be used as
+        an alternative to hitting the [12XEnter[112X key.[133X
   
-  [8XReturn Value:
-  [108X
+  [8XReturn Value:[108X
         [33X[0;6YThe  function  [2XNCurses.BrowseGeneric[102X  ([14X4.3-1[114X)  may have an application
         dependent  return value. A typical situation is that a list of objects
         corresponding  to  those cells is returned that were [21Xclicked[121X in visual

@@ -272,11 +272,7 @@ InstallMethod( String,
         "for homalg external ring elements",
         [ IsHomalgExternalRingElementRep ],
         
-  function( r )
-    
-    return Name( r );
-    
-end );
+  Name );
 
 ##
 InstallMethod( homalgSetName,
@@ -345,6 +341,29 @@ InstallGlobalFunction( AppendTohomalgTablesOfCreatedExternalRings,
             fi;
         fi;
     od;
+    
+end );
+
+##
+InstallMethod( \/,
+        "for a homalg external ring element and a homalg external ring",
+        [ IsHomalgExternalRingElementRep, IsHomalgExternalRingRep ],
+        
+  function( r, R )
+    local RP;
+    
+    RP := homalgTable( R );
+    
+    if not IsIdenticalObj( HomalgRing( r ), R ) and
+       IsHomalgExternalRingRep( HomalgRing( r ) ) and
+       IsIdenticalObj( homalgStream( HomalgRing( r ) ), homalgStream( R ) ) and
+       IsBound( RP!.CopyElement ) then	## make a "copy" over a different ring
+        
+        return HomalgExternalRingElement( RP!.CopyElement( r, R ), R );
+        
+    fi;
+    
+    TryNextMethod( );
     
 end );
 
@@ -544,7 +563,20 @@ InstallGlobalFunction( HomalgExternalRingElement,
         fi;
     od;
     
-    pointer := arg[1];
+    if IsString( arg[1] ) then
+        pointer := function( R )
+            local RP;
+            RP := homalgTable( R );
+            if IsBound( RP!.RingElement ) then
+                return RP!.RingElement( R )( arg[1] );
+            else
+                return arg[1];
+            fi;
+            
+        end;
+    else
+        pointer := arg[1];
+    fi;
     
     if IsBound( ring ) then
         
@@ -555,7 +587,6 @@ InstallGlobalFunction( HomalgExternalRingElement,
         r := rec( cas := cas, ring := ring );
     else
         r := rec( cas := cas );
-        
     fi;
     
     ## Objectify:
@@ -570,6 +601,58 @@ InstallGlobalFunction( HomalgExternalRingElement,
     fi;
     
     return r;
+    
+end );
+
+##
+InstallMethod( \in,
+        "for a finite field element and an external ring",
+        [ IsRingElement, IsHomalgExternalRingRep ],
+
+  function( r, R )
+    
+    if not IsHomalgExternalRingElementRep( r ) then
+        return false;
+    elif not IsIdenticalObj( HomalgRing( r ), R ) then
+        return false;
+    fi;
+    
+    return true;
+    
+end );
+        
+##
+InstallMethod( \/,
+        "for a finite field element and an external ring",
+        [ IsFFE, IsHomalgExternalRingRep ],
+        
+  function( r, R )
+    local k, c, d, z;
+    
+    if HasCoefficientsRing( R ) then
+        k := CoefficientsRing( R );
+    else
+        k := R;
+    fi;
+    
+    if not ( HasCharacteristic( k ) and HasDegreeOverPrimeField( k ) ) then
+        TryNextMethod( );
+    fi;
+    
+    c := Characteristic( k );
+    d := DegreeOverPrimeField( k );
+    
+    if d = 1 then
+        return HomalgRingElement( String( Int( r ) ), R );
+    fi;
+    
+    if not IsBound( k!.NameOfPrimitiveElement ) then
+        Error( "no NameOfPrimitiveElement bound\n" );
+    fi;
+    
+    z := k!.NameOfPrimitiveElement;
+    
+    return HomalgRingElement( FFEToString( r, c, d, z ), R );
     
 end );
 

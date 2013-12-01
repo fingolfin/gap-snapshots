@@ -130,5 +130,21 @@
                              <C>G</C>roup</other>
 </misc></entry>
 
+<entry id="TomLib"><misc>
+  <author>
+    <name><first>Liam</first><last>Naughton</last></name>
+    <name><first>Thomas</first><last>Merkwitz</last></name>
+    <name><first>Götz</first><last>Pfeiffer</last></name>
+  </author>
+  <title><C>TomLib</C>,
+         The <Wrap Name="Package">GAP</Wrap> Library of Tables of Marks,
+         <C>V</C>ersion 1.2.1</title>
+  <howpublished><URL>http://schmidt.nuigalway.ie/tomlib/tomlib</URL></howpublished>
+  <month>Jan</month>
+  <year>2011</year>
+  <note>GAP package</note>
+  <keywords>table of marks; Burnside matrix; subgroup lattice; finite simple groups; Moebius function; Euler function</keywords>
+</misc></entry>
+
 </file>
 

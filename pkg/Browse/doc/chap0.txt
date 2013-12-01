@@ -3,10 +3,10 @@
                                      [1X[5XBrowse[105X[101X
   
   
-                               ( Version 1.8.2 )
+                               ( Version 1.8.3 )
   
   
-                                   July 2012
+                                  October 2013
   
   
                                  Thomas Breuer
@@ -24,7 +24,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2006-2012 by Thomas Breuer and Frank Lübeck[133X
+  [33X[0;0Y© 2006-2013 by Thomas Breuer and Frank Lübeck[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 3 or later, see [7Xhttp://www.gnu.org/licenses[107X.[133X
@@ -42,6 +42,10 @@
       1.2-2 [33X[0;0YApplications of [10Xncurses[110X[133X
       1.2-3 [33X[0;0YThe interface to browse two-dimensional arrays[133X
       1.2-4 [33X[0;0YApplications of the generic function [10XNCurses.BrowseGeneric[110X[133X
+    1.3 [33X[0;0YUser preferences provided by the [5XBrowse[105X package[133X
+      1.3-1 [33X[0;0YThe user preference [10XEnableMouseEvents[110X[133X
+      1.3-2 [33X[0;0YThe user preference [10XSelectHelpMatches[110X[133X
+      1.3-3 [33X[0;0YThe user preference [10XSelectPackageName[110X[133X
   2 [33X[0;0YInterface to the [10Xncurses[110X Library[133X
     2.1 [33X[0;0YThe [10Xncurses[110X Library[133X
       2.1-1 [33X[0;0YSetting the terminal[133X
@@ -117,29 +121,31 @@
       6.8-1 BrowseProfile
     6.9 [33X[0;0YVariables defined in [5XGAP[105X packages–a Variant[133X
       6.9-1 BrowsePackageVariables
-    6.10 [33X[0;0YOverview of [5XGAP[105X Data[133X
-      6.10-1 BrowseGapData
-      6.10-2 BrowseGapDataAdd
-    6.11 [33X[0;0YNavigating in a Directory Tree[133X
-      6.11-1 BrowseDirectory
-    6.12 [33X[0;0YA Puzzle[133X
-      6.12-1 BrowsePuzzle
-    6.13 [33X[0;0YPeg Solitaire[133X
-      6.13-1 PegSolitaire
-    6.14 [33X[0;0YRubik's Cube[133X
-      6.14-1 BrowseRubiksCube
-    6.15 [33X[0;0YChanging Sides[133X
-      6.15-1 BrowseChangeSides
-    6.16 [33X[0;0YSudoku[133X
-      6.16-1 Sudoku.Init
-      6.16-2 Sudoku.Place
-      6.16-3 Sudoku.RandomGame
-      6.16-4 Sudoku.SimpleDisplay
-      6.16-5 Sudoku.DisplayString
-      6.16-6 Sudoku.OneSolution
-      6.16-7 Sudoku.UniqueSolution
-      6.16-8 PlaySudoku
-      6.16-9 Sudoku.HTMLGame
+    6.10 [33X[0;0YConfiguring User preferences–a Variant[133X
+      6.10-1 BrowseUserPreferences
+    6.11 [33X[0;0YOverview of [5XGAP[105X Data[133X
+      6.11-1 BrowseGapData
+      6.11-2 BrowseGapDataAdd
+    6.12 [33X[0;0YNavigating in a Directory Tree[133X
+      6.12-1 BrowseDirectory
+    6.13 [33X[0;0YA Puzzle[133X
+      6.13-1 BrowsePuzzle
+    6.14 [33X[0;0YPeg Solitaire[133X
+      6.14-1 PegSolitaire
+    6.15 [33X[0;0YRubik's Cube[133X
+      6.15-1 BrowseRubiksCube
+    6.16 [33X[0;0YChanging Sides[133X
+      6.16-1 BrowseChangeSides
+    6.17 [33X[0;0YSudoku[133X
+      6.17-1 Sudoku.Init
+      6.17-2 Sudoku.Place
+      6.17-3 Sudoku.RandomGame
+      6.17-4 Sudoku.SimpleDisplay
+      6.17-5 Sudoku.DisplayString
+      6.17-6 Sudoku.OneSolution
+      6.17-7 Sudoku.UniqueSolution
+      6.17-8 PlaySudoku
+      6.17-9 Sudoku.HTMLGame
   A [33X[0;0YSome Tools for Database Handling[133X
     A.1 [33X[0;0Y[5XGAP[105X Objects for Database Handling[133X
       A.1-1 [33X[0;0YDatabase Id Enumerators[133X
@@ -160,6 +166,8 @@
       A.4-2 TransitiveGroupsData.AllTransitiveGroups
       A.4-3 TransitiveGroupsData
       A.4-4 [33X[0;0YAdditional Database Attributes for Transitive Groups[133X
+    A.5 [33X[0;0YExample: An Overview of the [5XGAP[105X Library of Tables of Marks[133X
+      A.5-1 BrowseTomLibInfo
   
   
   [32X

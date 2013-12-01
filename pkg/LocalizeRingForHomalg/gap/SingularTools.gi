@@ -1,9 +1,10 @@
 #############################################################################
 ##
-##  SingularTools.gi                           LocalizeRingForHomalg package
+##  SingularTools.gi                           LocalizeRingForHomalg package  
 ##
-##  Copyright 2009-2011, Mohamed Barakat, University of Kaiserslautern
-##                       Markus Lange-Hegermann, RWTH-Aachen University
+##  Copyright 2013, Mohamed Barakat, University of Kaiserslautern
+##                  Markus Lange-Hegermann, RWTH-Aachen University
+##                  Vinay Wagh, Indian Institute of Technology Guwahati
 ##
 ##  Implementations for the rings provided by Singular.
 ##
@@ -131,6 +132,30 @@ proc GetUnitPositionLocal (matrix M, list pos_list, matrix max_ideal)\n\
     }\n\
   }\n\
   return(\"fail\");\n\
+}\n\n",
+    
+    Diff := "\n\
+proc Diff (matrix m, matrix n) // following the Macaulay2 convention \n\
+{\n\
+  int f = nrows(m);\n\
+  int p = ncols(m);\n\
+  int g = nrows(n);\n\
+  int q = ncols(n);\n\
+  matrix h[f*g][p*q]=0;\n\
+  for (int i=1; i<=f; i=i+1)\n\
+    {\n\
+    for (int j=1; j<=g; j=j+1)\n\
+      {\n\
+      for (int k=1; k<=p; k=k+1)\n\
+        {\n\
+        for (int l=1; l<=q; l=l+1)\n\
+          {\n\
+            h[g*(i-1)+j,q*(k-1)+l] = diff( ideal(m[i,k]), ideal(n[j,l]) )[1,1];\n\
+          }\n\
+        }\n\
+      }\n\
+    }\n\
+  return(h)\n\
 }\n\n",
     
     )
@@ -616,6 +641,7 @@ InstallValue( HomalgTableForLocalizedRingsForSingularTools,
                    fi;
                    
                  end,
+               
         )
 );
 
@@ -662,6 +688,8 @@ InstallMethod( _LocalizePolynomialRingAtZeroWithMora,
         Add( properties, IsPrincipalIdealRing );
     fi;
     
+    var := List( var, String );
+    
     ## create the new ring
     ext_obj := homalgSendBlocking( [ Characteristic( globalR ), ",(", var, "),ds" ] , [ "ring" ], globalR, properties, ValueGlobal( "TheTypeHomalgExternalRingObjectInSingular" ), HOMALG_IO.Pictograms.CreateHomalgRing );
     
@@ -686,3 +714,22 @@ InstallMethod( _LocalizePolynomialRingAtZeroWithMora,
     
 end );
 
+##
+InstallValue( CommonHomalgTableForHomalgFakeLocalRing,
+        
+        rec(
+                   
+        )
+);
+                 
+
+##
+InstallValue( FakeLocalizeRingMacrosForSingular,
+        rec(
+            
+    _CAS_name := "Singular",
+    
+    _Identifier := "FakeLocalizeRingForHomalg",
+    
+      )
+);

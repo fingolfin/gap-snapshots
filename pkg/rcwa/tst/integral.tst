@@ -1702,7 +1702,10 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
 [ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
   [ 20(24), 21(24), 31(36), 30(36) ], 
   [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
-  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ], 
+  [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) ], 
+  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
+      120(144) ] ]
 gap> CycleRepresentativesAndLengths(g,[0..50]);
 [ [ 2, 2 ], [ 4, 4 ], [ 8, 6 ], [ 10, 2 ], [ 14, 2 ], [ 16, 8 ], [ 20, 4 ], 
   [ 22, 2 ], [ 26, 2 ], [ 28, 4 ], [ 32, 10 ], [ 34, 2 ], [ 38, 2 ], 
@@ -1869,6 +1872,47 @@ gap> BG := Ball(G,One(G),5);;
 gap> BH := Ball(H,One(H),5);;
 gap> BG=BH;
 true
+gap> ct := ClassTransposition(0,2,1,6);
+( 0(2), 1(6) )
+gap> Mirrored(ct);
+( 1(2), 4(6) )
+gap> G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;
+gap> ShortOrbits(G,[-100..100],100);
+[ [ 0, 1, 2, 3, 4, 5 ] ]
+gap> ShortOrbits(Mirrored(G),[-100..100],100);
+[ [ -6, -5, -4, -3, -2, -1 ] ]
+gap> f := RcwaMapping([[0,1,-1,-1,1]]);
+Rcwa mapping of Z: n -> -n - 1
+gap> Coefficients(f^-1);
+[ [ 0, 1, -1, -1, 1 ] ]
+gap> f=f^-1;
+true
+gap> f*f^-1;
+IdentityMapping( Integers )
+gap> f^2;
+IdentityMapping( Integers )
+gap> D0 := Group(ClassShift(0,1),ClassReflection(0,1));
+<rcwa group over Z with 2 generators>
+gap> H := Group(D0.1^2,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+2
+gap> IsNormal(D0,H);
+true
+gap> H := Group(D0.1^3,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+3
+gap> IsNormal(D0,H);
+false
+gap> H := Group(D0.1^4,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+4
+gap> H := Group(D0.1^5,D0.2);
+<rcwa group over Z with 2 generators>
+gap> Index(D0,H);
+5
 gap> RCWADoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "integral.tst", 8000000000 );
 

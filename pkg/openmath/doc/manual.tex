@@ -98,8 +98,8 @@
 {\Huge \textbf{\textsf{OpenMath} functionality in GAP\mbox{}}}\\
 \vfill
 
-{\Huge Version 11.1.4\mbox{}}\\[1cm]
-{27 March 2013\mbox{}}\\[1cm]
+{\Huge Version 11.2.0\mbox{}}\\[1cm]
+{16 November 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Marco Costantini    \mbox{}}}\\
 {\Large \textbf{Alexander Konovalov    \mbox{}}}\\
@@ -521,9 +521,9 @@ omitted.
  }
 
   
-\section{\textcolor{Chapter }{Reading \textsf{OpenMath} code from streams}}\label{Reading OpenMath from streams}
+\section{\textcolor{Chapter }{Reading \textsf{OpenMath} code from streams and strings}}\label{Reading OpenMath from streams}
 \logpage{[ 2, 2, 0 ]}
-\hyperdef{L}{X7A6FF7C384BCD9C1}{}
+\hyperdef{L}{X7EB959397AB2B646}{}
 {
   
 
@@ -565,6 +565,30 @@ encoding is used):
  
 
  For XML \textsf{OpenMath}, this function requires that the \textsf{GAP} package \textsf{GAPDoc} is available. }
+
+ 
+
+\subsection{\textcolor{Chapter }{EvalOMString}}
+\logpage{[ 2, 2, 2 ]}\nobreak
+\hyperdef{L}{X7BFA1BAB7DA665F4}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{EvalOMString({\mdseries\slshape omstr})\index{EvalOMString@\texttt{EvalOMString}}
+\label{EvalOMString}
+}\hfill{\scriptsize (function)}}\\
+
+
+ This function is an analog of \texttt{EvalString} (\textbf{Reference: EvalString}). Its argument \mbox{\texttt{\mdseries\slshape omstr}} must be a string containing a single \textsf{OpenMath} object. \texttt{EvalOMString} will return the \textsf{GAP} object represented by \mbox{\texttt{\mdseries\slshape omstr}}. 
+
+ If \mbox{\texttt{\mdseries\slshape omstr}} contains more \textsf{OpenMath} objects, the rest will be ignored. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  
+  !gapprompt@gap>| !gapinput@s:="<OMOBJ><OMS cd=\"setname1\" name=\"Z\"/></OMOBJ>";;|
+  !gapprompt@gap>| !gapinput@EvalOMString(s);|
+  Integers
+  !gapprompt@gap>| !gapinput@G:=SL(2,5);; G=EvalOMString(OMString(G));|
+  true
+  
+\end{Verbatim}
+ }
 
  }
 

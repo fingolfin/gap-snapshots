@@ -227,18 +227,19 @@
   [1X49.4-1 WreathProduct[101X
   
   [29X[2XWreathProduct[102X( [3XG[103X, [3XH[103X[, [3Xhom[103X] ) [32X operation
+  [29X[2XStandardWreathProduct[102X( [3XG[103X, [3XH[103X ) [32X operation
   
-  [33X[0;0Yconstructs the wreath product of the group [3XG[103X with the group [3XH[103X.[133X
+  [33X[0;0Y[10XWreathProduct[110X constructs the wreath product of the group [3XG[103X with the group [3XH[103X,
+  acting as a permutation group.[133X
   
   [33X[0;0YIf  a  third  argument [3Xhom[103X is given, it must be a homomorphism from [3XH[103X into a
   permutation  group,  and  the  action  of  this group on its moved points is
   considered.[133X
   
-  [33X[0;0YIf  only two arguments are given and [3XH[103X is a permutation group, the action on
-  its  moved  points  is  considered,  see [2XMovedPoints[102X ([14X42.3-3[114X). The result of
-  [2XIsomorphismPermGroup[102X  ([14X43.3-1[114X)  applied to [3XH[103X is used as the default for [3Xhom[103X.
-  Note  that  the  degree  of  the  permutation image may depend on the method
-  chosen and thus is not well-defined.[133X
+  [33X[0;0YIf only two arguments are given, [3XH[103X must be a permutation group.[133X
+  
+  [33X[0;0Y[10XStandardWreathProduct[110X  returns  the  wreath  product for the (right regular)
+  permutation action of [3XH[103X on its elements.[133X
   
   [33X[0;0YFor a wreath product [22XW[122X of [3XG[103X with a permutation group [22XP[122X of degree [22Xn[122X and [22X1 ≤ i
   ≤  n[122X  calling  [2XEmbedding[102X ([14X32.2-10[114X) with [22XW[122X and [22Xi[122X yields the embedding of [3XG[103X in

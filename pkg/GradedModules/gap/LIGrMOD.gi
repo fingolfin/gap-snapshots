@@ -32,10 +32,6 @@ InstallValue( LIGrMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_properties_specific_shared_with_factors_modulo_ideals :=
             [ 
-              "AffineDimension",
-              "AffineDegree",
-              "ProjectiveDegree",
-              "HilbertPolynomial",
               ],
             
             intrinsic_properties_specific_not_shared_with_subobjects :=
@@ -81,7 +77,7 @@ InstallValue( LIGrMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_attributes_specific_shared_with_subobjects_and_ideals :=
             [ 
-              "BettiDiagram",
+              "BettiTable",
               "CastelnuovoMumfordRegularity",
               "CastelnuovoMumfordRegularityOfSheafification",
               ],
@@ -89,6 +85,13 @@ InstallValue( LIGrMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_attributes_specific_shared_with_factors_modulo_ideals :=
             [ 
+              "AffineDimension",
+              "AffineDegree",
+              "ProjectiveDegree",
+              "PrimaryDecomposition",	## wrong, we need the preimages of this
+              "RadicalDecomposition",	## wrong, we need the preimages of this
+              "RadicalSubobject",	## wrong, we need the preimages of this
+              "HilbertPolynomial",
               ],
             
             intrinsic_attributes_specific_not_shared_with_subobjects :=
@@ -424,7 +427,7 @@ InstallMethod( Annihilator,
 end );
 
 ##
-InstallMethod( BettiDiagram,
+InstallMethod( BettiTable,
         "LIGrMOD: for homalg graded modules",
         [ IsHomalgGradedModule ],
         
@@ -470,7 +473,7 @@ InstallMethod( BettiDiagram,
     ## the Betti table
     beta := List( r, i -> List( l, j -> Length( Filtered( degrees[j], a -> a = i + ( j - 1 ) ) ) ) );
     
-    return HomalgBettiDiagram( beta, r, C_degrees, M );
+    return HomalgBettiTable( beta, r, C_degrees, M );
     
 end );
 
@@ -486,9 +489,9 @@ InstallMethod( CastelnuovoMumfordRegularity,
     
     if not HasBaseRing( S ) or IsIdenticalObj( BaseRing( S ), CoefficientsRing( S ) ) then
         
-        betti := BettiDiagram( Resolution( M ) );
+        betti := BettiTable( Resolution( M ) );
         
-        degrees := RowDegreesOfBettiDiagram( betti );
+        degrees := RowDegreesOfBettiTable( betti );
         
         return degrees[Length(degrees)];
     
@@ -664,11 +667,11 @@ InstallMethod( ZerothRegularity,
   function( M )
     local B, r_min, r_max, c, last_column, reg, i, j;
     
-    B := BettiDiagram( Resolution( M ) );
+    B := BettiTable( Resolution( M ) );
     
-    r_min := HomalgElementToInteger( RowDegreesOfBettiDiagram( B )[ 1 ] );
-    r_max := HomalgElementToInteger( RowDegreesOfBettiDiagram( B )[ Length( RowDegreesOfBettiDiagram( B ) ) ] );
-    c := Length( ColumnDegreesOfBettiDiagram( B ) );
+    r_min := HomalgElementToInteger( RowDegreesOfBettiTable( B )[ 1 ] );
+    r_max := HomalgElementToInteger( RowDegreesOfBettiTable( B )[ Length( RowDegreesOfBettiTable( B ) ) ] );
+    c := Length( ColumnDegreesOfBettiTable( B ) );
     
     last_column := List( MatrixOfDiagram( B ), function( a ) return a[c]; end );
     
@@ -731,7 +734,7 @@ InstallMethod( CoefficientsOfNumeratorOfHilbertPoincareSeries,
         "for a homalg graded module",
         [ IsGradedModuleRep ],
         
-  CoefficientsOfNumeratorOfHilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution );
+  CoefficientsOfNumeratorOfHilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution );
 
 ##
 InstallMethod( CoefficientsOfNumeratorOfHilbertPoincareSeries,
@@ -824,7 +827,7 @@ InstallMethod( HilbertPoincareSeries,
         "for a homalg graded module",
         [ IsGradedModuleRep, IsRingElement ],
         
-  HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution );
+  HilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution );
 
 ##
 InstallMethod( HilbertPoincareSeries,
@@ -864,13 +867,13 @@ end );
 ##
 InstallMethod( HilbertPoincareSeries,
         "for a Betti diagram, an integer, and a ring element",
-        [ IsBettiDiagram, IsInt, IsRingElement ],
+        [ IsBettiTable, IsInt, IsRingElement ],
         
   function( betti, n, s )
     local row_range, col_range, r, hilb;
     
-    row_range := RowDegreesOfBettiDiagram( betti );
-    col_range := ColumnDegreesOfBettiDiagram( betti );
+    row_range := RowDegreesOfBettiTable( betti );
+    col_range := ColumnDegreesOfBettiTable( betti );
     
     r := Length( row_range );
     
@@ -890,7 +893,7 @@ end );
 
 ##
 InstallMethod( HilbertPoincareSeries,
-               [ IsBettiDiagram, IsHomalgElement, IsRingElement ],
+               [ IsBettiTable, IsHomalgElement, IsRingElement ],
                
   function( betti, n, s )
     
@@ -901,7 +904,7 @@ end );
 ##
 InstallMethod( HilbertPoincareSeries,
         "for a Betti diagram and an integer",
-        [ IsBettiDiagram, IsInt ],
+        [ IsBettiTable, IsInt ],
         
   function( betti, n )
     local s;
@@ -914,7 +917,7 @@ end );
 
 ##
 InstallMethod( HilbertPoincareSeries,
-               [ IsBettiDiagram, IsHomalgElement ],
+               [ IsBettiTable, IsHomalgElement ],
                
   function( betti, n )
     
@@ -927,7 +930,7 @@ InstallMethod( HilbertPolynomial,
         "for a homalg graded module",
         [ IsGradedModuleRep, IsRingElement ],
         
-  HilbertPolynomial_ViaBettiDiagramOfMinimalFreeResolution );
+  HilbertPolynomial_ViaBettiTableOfMinimalFreeResolution );
 
 ##
 InstallMethod( HilbertPolynomial,
@@ -967,7 +970,7 @@ end );
 ##
 InstallMethod( HilbertPolynomial,
         "for a Betti diagram, an integer, and a ring element",
-        [ IsBettiDiagram, IsInt, IsRingElement ],
+        [ IsBettiTable, IsInt, IsRingElement ],
         
   function( betti, n, s )
     local series;
@@ -981,7 +984,7 @@ end );
 ##
 InstallMethod( HilbertPolynomial,
         "for a Betti diagram and an integer",
-        [ IsBettiDiagram, IsInt ],
+        [ IsBettiTable, IsInt ],
         
   function( betti, n )
     local t;
@@ -994,7 +997,7 @@ end );
 
 ##
 InstallMethod( HilbertPolynomial,
-               [ IsBettiDiagram, IsHomalgElement, IsRingElement ],
+               [ IsBettiTable, IsHomalgElement, IsRingElement ],
                
   function( betti, n, s )
     
@@ -1004,7 +1007,7 @@ end );
 
 ##
 InstallMethod( HilbertPolynomial,
-               [ IsBettiDiagram, IsHomalgElement ],
+               [ IsBettiTable, IsHomalgElement ],
                
   function( betti, n )
     
@@ -1085,7 +1088,7 @@ InstallMethod( ConstantTermOfHilbertPolynomial,
 end );
 
 ##
-InstallGlobalFunction( HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution,
+InstallGlobalFunction( HilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution,
   function( arg )
     local M, s, betti, n;
     
@@ -1105,7 +1108,7 @@ InstallGlobalFunction( HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolut
         return 0 * s;
     fi;
     
-    betti := BettiDiagram( Resolution( M ) );
+    betti := BettiTable( Resolution( M ) );
     
     n := Length( IndeterminatesOfPolynomialRing( HomalgRing( M ) ) );
     
@@ -1114,22 +1117,22 @@ InstallGlobalFunction( HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolut
 end );
 
 ##
-InstallGlobalFunction( CoefficientsOfNumeratorOfHilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution,
+InstallGlobalFunction( CoefficientsOfNumeratorOfHilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution,
   function( M )
     local series;
     
-    series := HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution( M );
+    series := HilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution( M );
     
     return CoefficientsOfNumeratorOfHilbertPoincareSeries( series );
     
 end );
 
 ##
-InstallGlobalFunction( HilbertPolynomial_ViaBettiDiagramOfMinimalFreeResolution,
+InstallGlobalFunction( HilbertPolynomial_ViaBettiTableOfMinimalFreeResolution,
   function( arg )
     local series;
     
-    series := CallFuncList( HilbertPoincareSeries_ViaBettiDiagramOfMinimalFreeResolution, arg );
+    series := CallFuncList( HilbertPoincareSeries_ViaBettiTableOfMinimalFreeResolution, arg );
     
     return HilbertPolynomialOfHilbertPoincareSeries( series );
     
@@ -1141,12 +1144,9 @@ InstallMethod( PrimaryDecomposition,
         [ IsGradedModuleRep ],
         
   function( M )
-    local degrees, graded, tr, subobject, mat, primary_decomposition;
     
-    primary_decomposition := PrimaryDecomposition( UnderlyingModule( M ) );
-    
-    primary_decomposition :=
-      List( primary_decomposition,
+    return
+      List( PrimaryDecomposition( UnderlyingModule( M ) ),
             function( pp )
               local primary, prime;
               
@@ -1159,12 +1159,29 @@ InstallMethod( PrimaryDecomposition,
             end
           );
     
-    return primary_decomposition;
+end );
+
+##
+InstallMethod( RadicalDecomposition,
+        "for homalg graded modules",
+        [ IsGradedModuleRep ],
+        
+  function( M )
+    
+    return
+      List( RadicalDecomposition( UnderlyingModule( M ) ),
+            function( pp )
+              
+              ##FIXME: fix the degrees
+              return ImageSubobject( GradedMap( pp!.map_having_subobject_as_its_image, "create", "create", HomalgRing( M ) ) );
+              
+            end
+          );
     
 end );
 
 ##
-InstallMethod( KaehlerDifferentials,
+InstallMethod( ModuleOfKaehlerDifferentials,
         "for homalg rings",
         [ IsHomalgRing and HasRingRelations ],
         
@@ -1190,7 +1207,7 @@ InstallMethod( KaehlerDifferentials,
 end );
 
 ##
-InstallMethod( KaehlerDifferentials,
+InstallMethod( ModuleOfKaehlerDifferentials,
         "for homalg rings",
         [ IsHomalgGradedRingRep and HasRingRelations ],
         
@@ -1199,8 +1216,258 @@ InstallMethod( KaehlerDifferentials,
     
     R := UnderlyingNonGradedRing( S );
     
-    K := KaehlerDifferentials( R );
+    K := ModuleOfKaehlerDifferentials( R );
     
     return GradedModule( K, S );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for a homalg matrix",
+        [ IsHomalgMatrixOverGradedRingRep, IsList ],
+        
+  function( M, gvar )
+    local n, R, Sym, weights, rel;
+    
+    n := NrColumns( M );
+    
+    if not n = Length( gvar ) then
+        Error( "the length of the list of variables is ",
+               "not equal to the number of columns of the matrix\n" );
+    fi;
+    
+    R := HomalgRing( M );
+    Sym := R * gvar;
+    
+    weights := Concatenation(
+                       ListWithIdenticalEntries( Length( Indeterminates( R ) ), 0 ),
+                       ListWithIdenticalEntries( Length( gvar ), 1 ) );
+    
+    SetWeightsOfIndeterminates( Sym, weights );
+    
+    gvar := RelativeIndeterminatesOfPolynomialRing( Sym );
+    gvar := HomalgMatrix( gvar, Length( gvar ), 1, Sym );
+    
+    rel := GradedLeftSubmodule( ( Sym * M ) * gvar );
+    
+    Sym := Sym / rel;
+    
+    SetDefiningIdeal( Sym, rel );
+    
+    return Sym;
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for a homalg matrix",
+        [ IsHomalgMatrixOverGradedRingRep, IsList ],
+        
+  function( M, gvar )
+    local n, R, S, weights, A, rel;
+    
+    n := NrColumns( M );
+    
+    if not n = Length( gvar ) then
+        Error( "the length of the list of variables is ",
+               "not equal to the number of columns of the matrix\n" );
+    fi;
+    
+    R := HomalgRing( M );
+    S := R * List( gvar, v -> Concatenation( "XX", v ) );
+    
+    weights := Concatenation(
+                       ListWithIdenticalEntries( Length( Indeterminates( R ) ), 0 ),
+                       ListWithIdenticalEntries( Length( gvar ), -1 ) );
+    
+    SetWeightsOfIndeterminates( S, weights );
+    
+    A := KoszulDualRing( S, gvar );
+    
+    gvar := IndeterminateAntiCommutingVariablesOfExteriorRing( A );
+    gvar := HomalgMatrix( gvar, Length( gvar ), 1, A );
+    
+    rel := GradedLeftSubmodule( ( A * M ) * gvar );
+    
+    A := A / rel;
+    
+    SetDefiningIdeal( A, rel );
+    
+    return A;
+    
+end );
+
+##
+InstallMethod( SymmetricPower,
+        "for free modules",
+        [ IsInt, IsGradedModuleRep and IsFree ],
+        
+  function( k, M )
+    local R, r, degrees, l, P, powers;
+    
+    if HasSymmetricPowers( M ) then
+        powers := SymmetricPowers( M );
+    else
+        powers := rec( );
+    fi;
+    
+    if IsBound( powers!.( k ) ) then
+        return powers!.( k );
+    fi;
+    
+    R := HomalgRing( M );
+    r := Rank( M );
+    
+    degrees := DegreesOfGenerators( M );
+    
+    l := Length( degrees );
+    
+    if k in [ 0 .. l ] then
+        degrees := List( UnorderedTuples( [ 1 .. l ], k ),
+                     i -> Sum( degrees{i} ) );
+    else
+        degrees := [ ];
+    fi;
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
+        P := FreeLeftModuleWithDegrees( R, degrees );
+    else
+        P := FreeRightModuleWithDegrees( R, degrees );
+    fi;
+    
+    SetIsSymmetricPower( P, true );
+    SetSymmetricPowerExponent( P, k );
+    SetSymmetricPowerBaseModule( P, M );
+    
+    powers!.( k ) := P;
+    SetSymmetricPowers( M, powers );
+    
+    return P;
+end );
+
+##
+InstallMethod( SymmetricPower,
+        "for graded modules",
+        [ IsInt, IsGradedModuleRep ],
+        
+  function( k, M )
+    local phi, T;
+    
+    if k = 0 then
+        return One( M );
+    elif k = 1 then
+        return M;
+    elif not k in [ 2 .. NrGenerators( M ) ] then
+        return Zero( M );
+    fi;
+    
+    phi := PresentationMorphism( M );
+    
+    T := SymmetricPower( k, Range( phi ) );
+    
+    phi := SymmetricPowerOfPresentationMorphism( k, phi );
+    
+    phi := GradedMap( phi, "free", T );
+    
+    return Cokernel( phi );
+    
+end );
+
+##
+InstallMethod( ExteriorPower,
+        "for free modules",
+        [ IsInt, IsGradedModuleRep and IsFree ],
+        
+  function( k, M )
+    local R, r, degrees, l, P, powers;
+    
+    if HasExteriorPowers( M ) then
+        powers := ExteriorPowers( M );
+    else
+        powers := rec( );
+    fi;
+    
+    if IsBound( powers!.( k ) ) then
+        return powers!.( k );
+    fi;
+    
+    R := HomalgRing( M );
+    r := Rank( M );
+    
+    degrees := DegreesOfGenerators( M );
+    
+    l := Length( degrees );
+    
+    if k in [ 0 .. l ] then
+        degrees := List( Combinations( [ 1 .. l ], k ),
+                     i -> Sum( degrees{i} ) );
+    else
+        degrees := [ ];
+    fi;
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
+        P := FreeLeftModuleWithDegrees( R, degrees );
+    else
+        P := FreeRightModuleWithDegrees( R, degrees );
+    fi;
+    
+    SetIsExteriorPower( P, true );
+    SetExteriorPowerExponent( P, k );
+    SetExteriorPowerBaseModule( P, M );
+    
+    powers!.( k ) := P;
+    SetExteriorPowers( M, powers );
+    
+    return P;
+end );
+
+##
+InstallMethod( ExteriorPower,
+        "for a graded map",
+        [ IsInt, IsMapOfGradedModulesRep ],
+        
+  function( k, phi )
+    local S, T, mat;
+    
+    S := Source( phi );
+    T := Range( phi );
+    
+    mat := MatrixOfMap( phi );
+    
+    S := ExteriorPower( k, S );
+    T := ExteriorPower( k, T );
+    
+    mat := ExteriorPower( k, mat );
+    
+    return GradedMap( mat, S, T );
+    
+end );
+
+##
+InstallMethod( ExteriorPower,
+        "for graded modules",
+        [ IsInt, IsGradedModuleRep ],
+        
+  function( k, M )
+    local phi, T;
+    
+    if k = 0 then
+        return One( M );
+    elif k = 1 then
+        return M;
+    elif not k in [ 2 .. NrGenerators( M ) ] then
+        return Zero( M );
+    fi;
+    
+    phi := PresentationMorphism( M );
+    
+    T := ExteriorPower( k, Range( phi ) );
+    
+    phi := ExteriorPowerOfPresentationMorphism( k, phi );
+    
+    phi := GradedMap( phi, "free", T );
+    
+    return Cokernel( phi );
     
 end );

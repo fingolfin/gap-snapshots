@@ -255,7 +255,8 @@ BindGlobal( "BrowseProfile", function( arg )
           pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
           func:= info.funs[ pos ];
           file:= FilenameFunc( func );
-          if file = fail or file = "*stdin*" then
+          if file = fail or file = "*stdin*" 
+                         or not IsReadableFile( file ) then
             # Show the code in a pager.
             lines:= "";
             stream:= OutputTextString( lines, true );

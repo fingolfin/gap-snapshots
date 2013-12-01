@@ -15,7 +15,9 @@ local
 		start,
 		b, r, x;
 
-if not (IsHapResolution(R) or IsHapNonFreeResolution(R)) then
+if not 
+(IsHapResolution(R) or IsHapNonFreeResolution(R)
+or IsHapEquivariantCWComplex(R)) then
 Print("This function must be applied to a resolution. \n");
 return fail;
 fi;
@@ -240,12 +242,12 @@ local
                 src,trg,
                 B,i,a, b,bb,x,y,g,lst,bool;
 
-if not (IsHapResolution(R)) then
+if not (IsHapResolution(R) or IsHapEquivariantCWComplex(R)) then
 Print("This function must be applied to a resolution. \n");
 return fail;
 fi;
 
-if not EvaluateProperty(R,"characteristic")=0 then
+if IsHapResolution(R) and not EvaluateProperty(R,"characteristic")=0 then
 Print("This function only works in characteristic 0. \n");
 return fail;
 fi;
@@ -342,6 +344,8 @@ od;
 fi;
 
 NTree:=NNTree;
+Print(Tree,"\n\n");
+Print(NTree,"\n\n");
 
 VertElts:=[];
 if Length(NTree)=0 then VertElts[1]:=1;fi;
@@ -350,6 +354,7 @@ VertElts[AbsInt(x[1][1])]:=x[1][2];
 VertElts[AbsInt(x[2][1])]:=x[2][2];
 od;
 
+Print(VertElts,"\n\n");
 
 ##########################
 #HRels will be a list of relators given as ordered edges of a polygon.
@@ -389,12 +394,14 @@ Gens:=[];
 for i in [1..Length(HGens)] do
 if not i in Tree then cnt:=cnt+1; index[i]:=cnt; Add(Gens,HGens[i]);fi;
 od;
+
 #Gens contains the information needed to return gens
 #Gens:=List(Gens,x->Mult(Inv(x[1][2]),x[2][2])); #IMPORTANT: NEEDS FIXING    
 Gens:=List(Gens,x->
 Mult(Inv(VertElts[AbsInt(x[2][1])]),  
 Mult(
 Mult(VertElts[AbsInt(x[1][1])],Inv(x[1][2])),x[2][2])));
+
 
 HRels1:=[];
 for x in HRels do

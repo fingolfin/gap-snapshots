@@ -286,7 +286,7 @@
   [4X[32X[104X
   
   
-  [1X2.2 [33X[0;0YReading [5XOpenMath[105X[101X[1X code from streams[133X[101X
+  [1X2.2 [33X[0;0YReading [5XOpenMath[105X[101X[1X code from streams and strings[133X[101X
   
   [1X2.2-1 OMGetObject[101X
   
@@ -333,6 +333,26 @@
   
   [33X[0;0YFor  XML  [5XOpenMath[105X,  this  function  requires that the [5XGAP[105X package [5XGAPDoc[105X is
   available.[133X
+  
+  [1X2.2-2 EvalOMString[101X
+  
+  [29X[2XEvalOMString[102X( [3Xomstr[103X ) [32X function
+  
+  [33X[0;0YThis  function  is  an  analog  of  [2XEvalString[102X  ([14XReference: EvalString[114X). Its
+  argument  [3Xomstr[103X  must  be  a  string  containing  a  single [5XOpenMath[105X object.
+  [2XEvalOMString[102X will return the [5XGAP[105X object represented by [3Xomstr[103X.[133X
+  
+  [33X[0;0YIf [3Xomstr[103X contains more [5XOpenMath[105X objects, the rest will be ignored.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs:="<OMOBJ><OMS cd=\"setname1\" name=\"Z\"/></OMOBJ>";;[127X[104X
+    [4X[25Xgap>[125X [27XEvalOMString(s);[127X[104X
+    [4X[28XIntegers[128X[104X
+    [4X[25Xgap>[125X [27XG:=SL(2,5);; G=EvalOMString(OMString(G));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
   
   
   [1X2.3 [33X[0;0YWriting [5XOpenMath[105X[101X[1X code to streams[133X[101X

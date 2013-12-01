@@ -84,7 +84,9 @@ BindGlobal( "TheTypeHomalgExternalRingInMacaulay2",
 #
 ####################################
 
-##
+## will be automatically invoked in homalgSendBlocking once stream.active_ring is set;
+## so there is no need to invoke it explicitly for a ring which can never be
+## created as the first ring in the stream!
 InstallGlobalFunction( _Macaulay2_SetRing,
   function( R )
     local stream;
@@ -448,7 +450,7 @@ InstallMethod( PolynomialRing,
     
     var := List( var, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( var, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( var, Name );
     
     SetIsFreePolynomialRing( S, true );
     
@@ -459,8 +461,6 @@ InstallMethod( PolynomialRing,
     fi;
     
     SetRingProperties( S, r, var );
-    
-    _Macaulay2_SetRing( R );
     
     RP := homalgTable( S );
     
@@ -504,15 +504,13 @@ InstallMethod( RingOfDerivations,
     
     der := List( der, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( der, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( der, Name );
     
     SetIsWeylRing( S, true );
     
     SetBaseRing( S, R );
     
     SetRingProperties( S, R, der );
-    
-    _Macaulay2_SetRing( S );
     
     RP := homalgTable( S );
     
@@ -554,19 +552,17 @@ InstallMethod( ExteriorRing,
 
     anti := List( anti , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( anti, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( anti, Name );
     
     comm := List( comm , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( comm, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( comm, Name );
     
     SetIsExteriorRing( S, true );
     
     SetBaseRing( S, Base );
     
     SetRingProperties( S, R, anti );
-    
-    _Macaulay2_SetRing( S );
     
     RP := homalgTable( S );
     
@@ -648,11 +644,11 @@ InstallMethod( MatElm,
         [ IsHomalgExternalMatrixRep, IsPosInt, IsPosInt, IsHomalgExternalRingInMacaulay2Rep ],
         
   function( M, r, c, R )
-    local ext_obj;
+    local Mrc;
     
-    ext_obj := homalgSendBlocking( [ "(entries ", M, "^{", r - 1, "}_{", c - 1, "})#0#0" ], HOMALG_IO.Pictograms.MatElm );
+    Mrc := homalgSendBlocking( [ "(entries ", M, "^{", r - 1, "}_{", c - 1, "})#0#0" ], HOMALG_IO.Pictograms.MatElm );
     
-    return HomalgExternalRingElement( ext_obj, R );
+    return HomalgExternalRingElement( Mrc, R );
     
 end );
 

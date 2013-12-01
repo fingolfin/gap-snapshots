@@ -235,14 +235,15 @@ InstallGlobalFunction( DatabaseAttributeValueDefault, function( attr, id )
       else
         pos:= Position( attr.idenumerator.identifiers, id );
       fi;
-#T what if pos is `fail'?
-      if IsBound( attr.data[ pos ] ) then
-        result:= attr.data[ pos ];
-      elif IsBound( attr.name ) then
-        result:= attr.create( attr, id );
-        attr.data[ pos ]:= result;
-      else
-        result:= attr.dataDefault;
+      if pos <> fail then
+        if IsBound( attr.data[ pos ] ) then
+          result:= attr.data[ pos ];
+        elif IsBound( attr.name ) then
+          result:= attr.create( attr, id );
+          attr.data[ pos ]:= result;
+        else
+          result:= attr.dataDefault;
+        fi;
       fi;
     elif attr.isSorted then
       for comp in [ attr.data.automatic, attr.data.nonautomatic ] do
@@ -415,30 +416,39 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
         fi;
       fi;
 
+      Info( InfoDatabaseAttribute, 1,
+            "DatabaseAttributeCompute: start for attribute ",
+            attridentifier );
+
       for i in [ 1 .. Length( idenum.identifiers ) ] do
         if ( not IsBound( attr.data[i] ) ) or ( what <> "new" ) then
           new:= attr.create( attr, idenum.identifiers[i] );
           if IsBound( attr.data[i] ) then
             if IsBound( attr.dataDefault ) and new = attr.dataDefault then
-              Info( InfoDatabaseAttribute, 1,
+              Info( InfoDatabaseAttribute, 2,
                     "difference in recompute for ", idenum.identifiers[i],
                      ":\n#E  deleting entry\n", attr.data[i] );
               Unbind( attr.data[i] );
             elif new <> attr.data[i] then
-              Info( InfoDatabaseAttribute, 1,
+              Info( InfoDatabaseAttribute, 2,
                     "difference in recompute for ", idenum.identifiers[i],
                      ":\n#E  replacing entry\n#E  ", attr.data[i],
                      "\n#E  by\n#E  ", new );
               attr.data[i]:= new;
             fi;
           elif not IsBound( attr.dataDefault ) or new <> attr.dataDefault then
-            Info( InfoDatabaseAttribute, 1,
+            Info( InfoDatabaseAttribute, 2,
                   "recompute: new entry for ", idenum.identifiers[i],
                   ":\n#I  ", new );
             attr.data[i]:= new;
           fi;
         fi;
       od;
+
+      Info( InfoDatabaseAttribute, 1,
+            "DatabaseAttributeCompute: done for attribute ",
+            attridentifier );
+
       attr.version:= idenum.version;
     else
       if not IsBound( attr.data ) then
@@ -453,6 +463,11 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
       oldautomatic:= List( attr.data.automatic, x -> x[1] );
       automatic:= [];
       newautomatic:= [];
+
+      Info( InfoDatabaseAttribute, 1,
+            "DatabaseAttributeCompute: start for attribute ",
+            attridentifier );
+
       for id in idenum.identifiers do
         if not ( ( what in [ "automatic", "new" ] and id in oldnonautomatic ) or
            ( what = "new" and id in oldautomatic ) ) then
@@ -462,7 +477,7 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
 
             # Handle the case that a nonautomatic value becomes automatic.
             if what = "all" and id in oldnonautomatic then
-              Info( InfoDatabaseAttribute, 1,
+              Info( InfoDatabaseAttribute, 2,
                     "recompute: formerly nonautomatic value for ", id,
                     "#I  is now automatic" );
               Add( newautomatic, id );
@@ -475,6 +490,11 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
         attr.data.nonautomatic:= Filtered( attr.data.nonautomatic,
             pair -> not pair[1] in newautomatic );
       fi;
+
+      Info( InfoDatabaseAttribute, 1,
+            "DatabaseAttributeCompute: done for attribute ",
+            attridentifier );
+
       attr.version:= idenum.version;
     fi;
 

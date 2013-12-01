@@ -190,7 +190,7 @@
     [4X[28X<fp monoid on the generators [ f1, f1^-1, f2, f2^-1, f3, f3^-1 ]>[128X[104X
     [4X[25Xgap>[125X [27Xk:=KnuthBendixRewritingSystem(mon);[127X[104X
     [4X[28XKnuth Bendix Rewriting System for Monoid( [128X[104X
-    [4X[28X[ f1, f1^-1, f2, f2^-1, f3, f3^-1 ], ... ) with rules [128X[104X
+    [4X[28X[ f1, f1^-1, f2, f2^-1, f3, f3^-1 ] ) with rules [128X[104X
     [4X[28X[ [ f1*f1^-1, <identity ...> ], [ f1^-1*f1, <identity ...> ], [128X[104X
     [4X[28X  [ f2*f2^-1, <identity ...> ], [ f2^-1*f2, <identity ...> ], [128X[104X
     [4X[28X  [ f3*f3^-1, <identity ...> ], [ f3^-1*f3, <identity ...> ], [128X[104X
@@ -239,7 +239,7 @@
   
   [33X[0;0YUnder  Unix, it is possible to use the [5Xkbmag[105X package to replace the built-in
   rewriting  by  this  packages  efficient  C  implementation. You can do this
-  (after  loading the [5Xkbmag[105X package) by assigning the variable [2XKB_REW[102X ([14X53.6-2[114X)
+  (after  loading the [5Xkbmag[105X package) by assigning the variable [2XKB_REW[102X ([14X52.6-2[114X)
   to   [10XKBMAG_REW[110X.   Assignment   to   [10XGAPKB_REW[110X   reverts   to   the  built-in
   implementation.[133X
   
@@ -259,7 +259,7 @@
   This is because a rewriting system often evolves through a session, starting
   with  some  rules  which  define the algebra [3XA[103X as relations, and then adding
   more  rules  to  make  the  system  confluent.  For  example, in the case of
-  Knuth-Bendix    rewriting    systems    (see   Chapter [14X53[114X),   the   function
+  Knuth-Bendix    rewriting    systems    (see   Chapter [14X52[114X),   the   function
   [10XCreateKnuthBendixRewritingSystem[110X  creating the rewriting system (in the file
   [11Xlib/kbsemi.gi[111X) uses[133X
   

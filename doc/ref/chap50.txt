@@ -114,7 +114,19 @@
     [4X[28X<pc group of size 8192 with 13 generators>[128X[104X
   [4X[32X[104X
   
-  [1X50.1-5 DihedralGroup[101X
+  [1X50.1-5 FreeAbelianGroup[101X
+  
+  [29X[2XFreeAbelianGroup[102X( [[3Xfilt[103X, ][3Xrank[103X ) [32X function
+  
+  [33X[0;0Yconstructs  the  free  abelian  group of rank [3Xn[103X in the category given by the
+  filter [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsFpGroup[102X ([14X47.1-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeAbelianGroup(4);[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2, f3, f4 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X50.1-6 DihedralGroup[101X
   
   [29X[2XDihedralGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   
@@ -126,7 +138,7 @@
     [4X[28X<pc group of size 10 with 2 generators>[128X[104X
   [4X[32X[104X
   
-  [1X50.1-6 QuaternionGroup[101X
+  [1X50.1-7 QuaternionGroup[101X
   
   [29X[2XQuaternionGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   [29X[2XDicyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
@@ -144,7 +156,7 @@
     [4X[28XGroup([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])[128X[104X
   [4X[32X[104X
   
-  [1X50.1-7 ExtraspecialGroup[101X
+  [1X50.1-8 ExtraspecialGroup[101X
   
   [29X[2XExtraspecialGroup[102X( [[3Xfilt[103X, ][3Xorder[103X, [3Xexp[103X ) [32X function
   
@@ -168,7 +180,7 @@
   [4X[32X[104X
   
   
-  [1X50.1-8 [33X[0;0YAlternatingGroup[133X[101X
+  [1X50.1-9 [33X[0;0YAlternatingGroup[133X[101X
   
   [29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function
   [29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
@@ -184,7 +196,7 @@
   [4X[32X[104X
   
   
-  [1X50.1-9 [33X[0;0YSymmetricGroup[133X[101X
+  [1X50.1-10 [33X[0;0YSymmetricGroup[133X[101X
   
   [29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function
   [29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
@@ -202,7 +214,7 @@
   [33X[0;0YNote  that  permutation  groups  provide  special treatment of symmetric and
   alternating groups, see [14X43.4[114X.[133X
   
-  [1X50.1-10 MathieuGroup[101X
+  [1X50.1-11 MathieuGroup[101X
   
   [29X[2XMathieuGroup[102X( [[3Xfilt[103X, ][3Xdegree[103X ) [32X function
   
@@ -215,7 +227,7 @@
     [4X[28XGroup([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ])[128X[104X
   [4X[32X[104X
   
-  [1X50.1-11 SuzukiGroup[101X
+  [1X50.1-12 SuzukiGroup[101X
   
   [29X[2XSuzukiGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
   [29X[2XSz[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
@@ -231,7 +243,7 @@
     [4X[28XSz(32)[128X[104X
   [4X[32X[104X
   
-  [1X50.1-12 ReeGroup[101X
+  [1X50.1-13 ReeGroup[101X
   
   [29X[2XReeGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
   [29X[2XRee[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
@@ -784,10 +796,10 @@
   
   [33X[0;0YThe  arrangement  and the names of the groups of degree up to 15 is the same
   as  given  in  [CHM98].  With the exception of the symmetric and alternating
-  group (which are represented as [2XSymmetricGroup[102X ([14X50.1-9[114X) and [2XAlternatingGroup[102X
-  ([14X50.1-8[114X))  the  generators  for these groups also conform to this paper with
-  the  only  difference that 0 (which is not permitted in [5XGAP[105X for permutations
-  to act on) is always replaced by the degree.[133X
+  group    (which    are   represented   as   [2XSymmetricGroup[102X   ([14X50.1-10[114X)   and
+  [2XAlternatingGroup[102X  ([14X50.1-9[114X))  the generators for these groups also conform to
+  this  paper  with  the only difference that 0 (which is not permitted in [5XGAP[105X
+  for permutations to act on) is always replaced by the degree.[133X
   
   [1X50.6-1 TransitiveGroup[101X
   
@@ -2188,8 +2200,8 @@
     [4X[25Xgap>[125X [27XP := Image( phi );[127X[104X
     [4X[28XGroup([ (1,7,6)(2,9)(4,5,10), (2,3,4,5)(6,9,8,7) ])[128X[104X
     [4X[25Xgap>[125X [27XD := DerivedSubgroup( P );[127X[104X
-    [4X[28XGroup([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), [128X[104X
-    [4X[28X (1,2)(4,5)(6,7)(9,10), (1,8)(2,6,9,5)(3,10)(4,7) ])[128X[104X
+    [4X[28XGroup([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), (1,9)[128X[104X
+    [4X[28X(2,10)(3,6,8,5)(4,7) ])[128X[104X
     [4X[25Xgap>[125X [27XSize( D );[127X[104X
     [4X[28X960[128X[104X
     [4X[25Xgap>[125X [27XIsPerfectGroup( D );[127X[104X
@@ -2197,28 +2209,23 @@
     [4X[25Xgap>[125X [27X# We have found the solvable residuum of P,[127X[104X
     [4X[25Xgap>[125X [27X# now move the results back to the matrix group G.[127X[104X
     [4X[25Xgap>[125X [27XR := PreImage( phi, D );[127X[104X
-    [4X[28X<matrix group of size 960 with 4 generators>[128X[104X
+    [4X[28X<matrix group of size 960 with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27Xfor m in GeneratorsOfGroup( R ) do PrintArray( m ); od;[127X[104X
     [4X[28X[ [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X [   0,  -1,   0,   0,   0 ],[128X[104X
-    [4X[28X [   0,   0,   0,   1,   0 ],[128X[104X
-    [4X[28X [   0,   0,   1,   0,   0 ],[128X[104X
-    [4X[28X [  -1,  -1,   0,   0,   1 ] ][128X[104X
+    [4X[28X  [   0,  -1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   0,   1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,   1,   0,   0 ],[128X[104X
+    [4X[28X  [  -1,  -1,   0,   0,   1 ] ][128X[104X
     [4X[28X[ [   0,   0,  -1,   0,   0 ],[128X[104X
-    [4X[28X [   0,  -1,   0,   0,   0 ],[128X[104X
-    [4X[28X [   1,   0,   0,   0,   0 ],[128X[104X
-    [4X[28X [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X [   0,  -1,  -1,   0,   1 ] ][128X[104X
-    [4X[28X[ [   1,   1,   1,   1,  -2 ],[128X[104X
-    [4X[28X [   0,   1,   0,   0,   0 ],[128X[104X
-    [4X[28X [   0,   0,   0,   1,   0 ],[128X[104X
-    [4X[28X [   0,   0,   1,   0,   0 ],[128X[104X
-    [4X[28X [   0,   1,   1,   1,  -1 ] ][128X[104X
-    [4X[28X[ [   0,   0,   0,  -1,   0 ],[128X[104X
-    [4X[28X [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X [   0,   0,  -1,   0,   0 ],[128X[104X
-    [4X[28X [   1,   0,   0,   0,   0 ],[128X[104X
-    [4X[28X [   0,   0,  -1,  -1,   1 ] ][128X[104X
+    [4X[28X  [   0,  -1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   1,   0,   0,   0,   0 ],[128X[104X
+    [4X[28X  [  -1,  -1,  -1,  -1,   2 ],[128X[104X
+    [4X[28X  [   0,  -1,  -1,   0,   1 ] ][128X[104X
+    [4X[28X[ [  -1,  -1,  -1,  -1,   2 ],[128X[104X
+    [4X[28X  [   0,   0,   0,  -1,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -1,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   1,   0,   0,   0 ],[128X[104X
+    [4X[28X  [   0,   0,  -1,  -1,   1 ] ][128X[104X
   [4X[32X[104X
   
   [1X50.12-6 IsomorphismPermGroupImfGroup[101X

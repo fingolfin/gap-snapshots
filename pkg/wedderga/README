@@ -1,11 +1,12 @@
 #############################################################################
 ##
 #W  README.wedderga       The Wedderga package            Osnel Broche Cristo
+#W                                                               Allen Herman
 #W                                                        Alexander Konovalov
 #W                                                            Aurora Olivieri
 #W                                                           Gabriela Olteanu
-#W                                                              Ángel del Río
-#W																				                                      Inneke Van Gelder
+#W                                                              Ãngel del RÃ­o
+#W                                                          Inneke Van Gelder
 ##
 #############################################################################
 
@@ -42,7 +43,7 @@ restrictions on  the type  of the operating system. It is designed for GAP4.5
 and no compatibility with previous releases of GAP4 is guaranteed.
 
 To use the Wedderga online  help it is necessary  to install the GAP4 package 
-GAPDoc by Frank Lübeck and  Max  Neunhöffer,  which is available from the GAP 
+GAPDoc by Frank LÃ¼beck and  Max  NeunhÃ¶ffer,  which is available from the GAP 
 site or from http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/.
 
 Wedderga is distributed in standard formats  (tar.gz, tar.bz2, -win.zip)  and 
@@ -65,4 +66,4 @@ gap> LoadPackage("wedderga");
 
 
 
-The Wedderga team                                                January 2013
+The Wedderga team                                               November 2013

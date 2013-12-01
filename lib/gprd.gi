@@ -774,16 +774,24 @@ end);
 # wreath products: generic code
 #
 
-InstallOtherMethod( WreathProduct,"generic groups", true,
+InstallOtherMethod( WreathProduct,"generic groups, no perm", true,
+ [ IsGroup, IsGroup ], 0,
+function(G,H)
+  if IsPermGroup(H) then TryNextMethod();fi;
+  Error("WreathProduct requires permgroup or group and permrep");
+end);
+
+InstallMethod( WreathProduct,"generic groups with perm", true,
+ [ IsGroup, IsPermGroup ], 0,
+function(G,H)
+  return WreathProduct(G,H,IdentityMapping(H));
+end);
+
+InstallMethod( StandardWreathProduct,"generic groups", true,
  [ IsGroup, IsGroup ], 0,
 function(G,H)
 local iso;
-  # take the regular action, unless permutation group
-  if IsPermGroup(H) then
-    iso:=IdentityMapping(H);
-  else
-    iso:=ActionHomomorphism(H,Elements(H),OnRight,"surjective");
-  fi;
+  iso:=ActionHomomorphism(H,Elements(H),OnRight,"surjective");
   return WreathProduct(G,H,iso);
 end);
 
@@ -797,14 +805,19 @@ function(G,H,alpha)
 local I,n,fam,typ,gens,hgens,id,i,e,info,W,p,dom;
   I:=Image(alpha,H);
 
-  # avoid sparse points.
+  # avoid sparse first points.
   dom:=MovedPoints(I);
-  if Maximum(dom)>Length(dom) then
+  if Length(dom)=0 then
+    dom:=[1];
+    n:=1;
+  elif Maximum(dom)>Length(dom) then
     alpha:=alpha*ActionHomomorphism(I,dom);
     I:=Image(alpha,H);
+    n:=LargestMovedPoint(I);
+  else
+    n:=LargestMovedPoint(I);
   fi;
 
-  n:=LargestMovedPoint(I);
   fam:=NewFamily("WreathProductElemFamily",IsWreathProductElement);
   typ:=NewType(fam,IsWreathProductElementDefaultRep);
   fam!.defaultType:=typ;

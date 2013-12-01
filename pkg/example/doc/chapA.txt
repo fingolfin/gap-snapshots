@@ -3,7 +3,7 @@
   
   [33X[0;0YThis  appendix  explains the basics of how to write a [5XGAP[105X package so that it
   interfaces  properly  to  [5XGAP[105X.  For the role of [5XGAP[105X packages and the ways to
-  load them, see Chapter [14X'Reference: GAP Packages'[114X.[133X
+  load them, see Chapter [14X'Reference: Using GAP Packages'[114X.[133X
   
   [33X[0;0YThere are two basic aspects of creating a [5XGAP[105X package.[133X
   
@@ -540,7 +540,7 @@
   
   [33X[0;0YFirstly,    there    is    a   function   [2XShowPackageVariables[102X   ([14XReference:
   ShowPackageVariables[114X).  If  the  package  [3Xpkgname[103X  is  available but not yet
-  loaded  then  [10XDisplayPackageVariables(  pkgname  )[110X  prints  a list of global
+  loaded  then  [10XShowPackageVariables(  pkgname  )[110X  prints  a  list  of  global
   variables  that  become  bound and of methods that become installed when the
   package  is  loaded  (for  that,  the  package  will  be actually loaded, so
   [10XShowPackageVariables[110X  can  be  called  only once for the same package in the

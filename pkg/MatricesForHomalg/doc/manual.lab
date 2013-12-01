@@ -127,9 +127,10 @@
 \makelabel{matricesforhomalg:AreUnitsCentral}{3.3.55}{X781617F678CC0BA8}
 \makelabel{matricesforhomalg:IsMinusOne}{3.3.56}{X85B6710082984863}
 \makelabel{matricesforhomalg:IsMonic (for homalg ring elements)}{3.3.57}{X7A0A3A927BE3F352}
-\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.58}{X811A01D5803ADCA3}
-\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.59}{X7E99731F83A41777}
-\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.60}{X80A3294C834D8F21}
+\makelabel{matricesforhomalg:IsMonicUptoUnit (for homalg ring elements)}{3.3.58}{X785EF83B8054D2FF}
+\makelabel{matricesforhomalg:IsLeftRegular (for homalg ring elements)}{3.3.59}{X811A01D5803ADCA3}
+\makelabel{matricesforhomalg:IsRightRegular (for homalg ring elements)}{3.3.60}{X7E99731F83A41777}
+\makelabel{matricesforhomalg:IsRegular (for homalg ring elements)}{3.3.61}{X80A3294C834D8F21}
 \makelabel{matricesforhomalg:Inverse (for homalg ring elements)}{3.4.1}{X8066502785A109B8}
 \makelabel{matricesforhomalg:homalgTable}{3.4.2}{X7AFD26D480AA9323}
 \makelabel{matricesforhomalg:RingElementConstructor}{3.4.3}{X816D807781E8F854}

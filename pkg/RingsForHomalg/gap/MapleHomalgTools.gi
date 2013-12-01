@@ -19,11 +19,16 @@ InstallValue( CommonHomalgTableForMapleHomalgTools,
         
         rec(
                Zero := HomalgExternalRingElement( function( R ) homalgSendBlocking( [ "`homalg/homalg_options`(", R, "[-1])" ], "need_command", HOMALG_IO.Pictograms.initialize );
-                                                                return homalgSendBlocking( [ "convert( ", R, "[-1][Zero](), symbol )" ], "need_output", HOMALG_IO.Pictograms.Zero ); end, "Maple", IsZero ),
+                                                                return homalgSendBlocking( [ R, "[-1][Zero]()" ], HOMALG_IO.Pictograms.Zero ); end, "Maple", IsZero ),
                
-               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ "convert( ", R, "[-1][One], symbol )" ], "need_output", HOMALG_IO.Pictograms.One ), "Maple", IsOne ),
+               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ R, "[-1][One]" ], HOMALG_IO.Pictograms.One ), "Maple", IsOne ),
                
-               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "convert( ", R, "[-1][Minus](", Zero( R ), One( R ), R, "[1]), symbol )" ], "need_output", HOMALG_IO.Pictograms.MinusOne ), "Maple", IsMinusOne ),
+               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ R, "[-1][Minus](", Zero( R ), One( R ), R, "[1])" ], HOMALG_IO.Pictograms.MinusOne ), "Maple", IsMinusOne ),
+               
+               ## ring elements in Maple do not know their ring,
+               ## this is a source of bugs: 1+1=2<>0 in char 2;
+               ## so avoid using ring arithmetics in Maple
+               RingElement := R -> r -> homalgSendBlocking( [ r ], R, HOMALG_IO.Pictograms.define ),
                
                IsZero := r -> homalgSendBlocking( [ "evalb( ", r, " = ",  Zero( r ), " )" ] , "need_output", HOMALG_IO.Pictograms.IsZero ) = "true",
                
@@ -35,7 +40,7 @@ InstallValue( CommonHomalgTableForMapleHomalgTools,
                    
                    R := HomalgRing( a );
                    
-                   return homalgSendBlocking( [ "convert(", R, "[-1][Minus](", a, ",", b, ",", R, "[1]),symbol)" ], "need_output", HOMALG_IO.Pictograms.Minus ); ## do not delete "," in case a and b are passed as strings
+                   return homalgSendBlocking( [ R, "[-1][Minus](", a, ",", b, ",", R, "[1])" ], HOMALG_IO.Pictograms.Minus ); ## do not delete "," in case a and b are passed as strings
                    
                  end,
                
@@ -45,7 +50,7 @@ InstallValue( CommonHomalgTableForMapleHomalgTools,
                    
                    R := HomalgRing( a );
                    
-                   return homalgSendBlocking( [ "convert(", R, "[-1][DivideByUnit](", a, ",", u, ",", R, "[1]),symbol)" ], "need_output", HOMALG_IO.Pictograms.DivideByUnit ); ## do not delete "," in case a and b are passed as strings
+                   return homalgSendBlocking( [ R, "[-1][DivideByUnit](", a, ",", u, ",", R, "[1])" ], HOMALG_IO.Pictograms.DivideByUnit ); ## do not delete "," in case a and b are passed as strings
                    
                  end,
                
@@ -59,17 +64,17 @@ InstallValue( CommonHomalgTableForMapleHomalgTools,
                Gcd :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "gcd(", a, b, ")" ], [ "need_output" ], HOMALG_IO.Pictograms.Gcd );
+                   return homalgSendBlocking( [ "gcd(", a, ",", b, ")" ], HOMALG_IO.Pictograms.Gcd ); ## do not delete "," in case a and b are passed as strings
                    
                  end,
                
                CancelGcd :=
                  function( a, b )
-                   local g, a_g, b_g;
+                   local a_g, b_g;
                    
-                   g := homalgSendBlocking( [ "gcd(", a, b, ")" ], "need_output", HOMALG_IO.Pictograms.Gcd );
-                   a_g := homalgSendBlocking( [ "normal((", a, ") / (", g, "))" ], "need_output", HOMALG_IO.Pictograms.CancelGcd );
-                   b_g := homalgSendBlocking( [ "normal((", b, ") / (", g, "))" ], "need_output", HOMALG_IO.Pictograms.CancelGcd );
+                   homalgSendBlocking( [ "g := gcd(", a, ",", b, ")" ], "need_command", HOMALG_IO.Pictograms.Gcd ); ## do not delete "," in case a and b are passed as strings
+                   a_g := homalgSendBlocking( [ "normal((", a, ") / g)" ], HOMALG_IO.Pictograms.CancelGcd );
+                   b_g := homalgSendBlocking( [ "normal((", b, ") / g)" ], HOMALG_IO.Pictograms.CancelGcd );
                    
                    return [ a_g, b_g ];
                    
@@ -420,6 +425,13 @@ InstallValue( CommonHomalgTableForMapleHomalgTools,
                    fi;
                    
                    return -1;
+                   
+                 end,
+               
+               MonomialMatrix :=
+                 function( i, vars, R )
+                   
+                   return homalgSendBlocking( [ "`homalg/MonomialMatrix`(", i, vars, R, ")" ], HOMALG_IO.Pictograms.MonomialMatrix );
                    
                  end,
                

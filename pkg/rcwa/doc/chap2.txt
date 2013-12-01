@@ -731,6 +731,10 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YAlso  there are attributes [10XShiftsUpOn[110X and [10XShiftsDownOn[110X which store the union
+  of  the residue classes (mod [10XMod([3Xf[103X[10X)[110X) on which an rcwa mapping [3Xf[103X of ℤ induces
+  affine mappings [22Xn ↦ n + c[122X for [22Xc > 0[122X, respectively, [22Xc < 0[122X.[133X
+  
   [33X[0;0YFinally,  there  are epimorphisms from the subgroup of RCWA(ℤ) formed by all
   class-wise order-preserving elements to (ℤ,+) and from RCWA(ℤ) itself to the
   cyclic group of order 2, respectively:[133X
@@ -1326,17 +1330,17 @@
   
   [1X2.9 [33X[0;0YSaving memory -- the sparse representation of rcwa mappings[133X[101X
   
-  [33X[0;0YIt  happens  quite  commonly in computations that an rcwa mapping with large
-  modulus  has  only  few  distinct  affine partial mappings. In this case the
-  [21Xstandard[121X  representation  which stores a coefficient triple for each residue
-  class  modulo  the  modulus is unsuitable. For this reason there is a second
-  representation of rcwa mappings, the [21Xsparse[121X representation. Depending on the
-  rcwa  mappings involved, using this representation may speed up computations
-  and  reduce  memory  requirements  by orders of magnitude. For rcwa mappings
-  with  almost  as  many distinct affine partial mappings as there are residue
-  classes  modulo  the modulus, using sparse representation makes computations
-  somewhat   slower   and   more   memory-consuming.   Presently,  the  sparse
-  representation is only available for rcwa mappings of ℤ.[133X
+  [33X[0;0YIt  is  quite  common  that  an rcwa mapping with large modulus has only few
+  distinct  affine  partial mappings. In this case the [21Xstandard[121X representation
+  which  stores a coefficient triple for each residue class modulo the modulus
+  is  unsuitable.  For  this  reason  there is a second representation of rcwa
+  mappings,   the  [21Xsparse[121X  representation.  Depending  on  the  rcwa  mappings
+  involved,  using  this  representation  may speed up computations and reduce
+  memory requirements by orders of magnitude. For rcwa mappings with almost as
+  many  distinct  affine  partial mappings as there are residue classes modulo
+  the  modulus, using sparse representation makes computations somewhat slower
+  and  more  memory-consuming.  Presently,  the  sparse representation is only
+  available for rcwa mappings of ℤ.[133X
   
   [33X[0;0YThe  sparse  representation of an rcwa mapping consists of the modulus and a
   list  of  5-tuples  [22X(r,m,a_r(m),b_r(m),c_r(m))[122X of integers. Any such 5-tuple
@@ -1382,14 +1386,6 @@
     [4X[28X<rcwa permutation of Z with modulus 288 and 21 affine parts>[128X[104X
     [4X[25Xgap>[125X [27Xg = h;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xh^2;[127X[104X
-    [4X[28X<rcwa permutation of Z with modulus 13824 and 71 affine parts>[128X[104X
-    [4X[25Xgap>[125X [27Xh^3;[127X[104X
-    [4X[28X<rcwa permutation of Z with modulus 663552 and 201 affine parts>[128X[104X
-    [4X[25Xgap>[125X [27XMemoryUsage(h^3);[127X[104X
-    [4X[28X10002[128X[104X
-    [4X[25Xgap>[125X [27XMemoryUsage(StandardRep(h^3));[127X[104X
-    [4X[28X23888226[128X[104X
     [4X[25Xgap>[125X [27XCoefficients(h);[127X[104X
     [4X[28X[ [ 0, 6, 1, 0, 1 ], [ 1, 3, 16, -1, 3 ], [ 2, 96, 9, 14, 16 ], [128X[104X
     [4X[28X  [ 3, 24, 9, 5, 4 ], [ 5, 24, 3, 1, 4 ], [ 8, 36, 2, -7, 9 ], [128X[104X
@@ -1398,7 +1394,18 @@
     [4X[28X  [ 21, 24, 1, -3, 6 ], [ 23, 24, 27, 19, 4 ], [ 26, 48, 3, 2, 8 ], [128X[104X
     [4X[28X  [ 32, 36, 4, -11, 9 ], [ 33, 48, 9, 7, 8 ], [ 38, 48, 9, 10, 8 ], [128X[104X
     [4X[28X  [ 41, 48, 27, 29, 8 ], [ 50, 96, 27, 58, 16 ], [ 56, 72, 1, 0, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xh^2;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 13824 and 71 affine parts>[128X[104X
+    [4X[25Xgap>[125X [27Xh^3;[127X[104X
+    [4X[28X<rcwa permutation of Z with modulus 663552 and 201 affine parts>[128X[104X
     [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMemoryUsage(h^3); # on a 32-bit machine[127X[104X
+    [4X[28X9978[128X[104X
+    [4X[25Xgap>[125X [27XMemoryUsage(StandardRep(h^3));[127X[104X
+    [4X[28X23888202[128X[104X
   [4X[32X[104X
   
   

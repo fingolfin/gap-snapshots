@@ -254,11 +254,14 @@ Group([ (1,2,3), (1,2)(4,5), (4,5,6) ])
 <h5>49.4-1 WreathProduct</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">hom</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>constructs the wreath product of the group <var class="Arg">G</var> with the group <var class="Arg">H</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardWreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">WreathProduct</code> constructs the wreath product of the group <var class="Arg">G</var> with the group <var class="Arg">H</var>, acting as a permutation group.</p>
 
 <p>If a third argument <var class="Arg">hom</var> is given, it must be a homomorphism from <var class="Arg">H</var> into a permutation group, and the action of this group on its moved points is considered.</p>
 
-<p>If only two arguments are given and <var class="Arg">H</var> is a permutation group, the action on its moved points is considered, see <code class="func">MovedPoints</code> (<a href="chap42.html#X85E61B9C7A6B0CCA"><span class="RefLink">42.3-3</span></a>). The result of <code class="func">IsomorphismPermGroup</code> (<a href="chap43.html#X80B7B1C783AA1567"><span class="RefLink">43.3-1</span></a>) applied to <var class="Arg">H</var> is used as the default for <var class="Arg">hom</var>. Note that the degree of the permutation image may depend on the method chosen and thus is not well-defined.</p>
+<p>If only two arguments are given, <var class="Arg">H</var> must be a permutation group.</p>
+
+<p><code class="code">StandardWreathProduct</code> returns the wreath product for the (right regular) permutation action of <var class="Arg">H</var> on its elements.</p>
 
 <p>For a wreath product <span class="SimpleMath">W</span> of <var class="Arg">G</var> with a permutation group <span class="SimpleMath">P</span> of degree <span class="SimpleMath">n</span> and <span class="SimpleMath">1 ≤ i ≤ n</span> calling <code class="func">Embedding</code> (<a href="chap32.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) with <span class="SimpleMath">W</span> and <span class="SimpleMath">i</span> yields the embedding of <var class="Arg">G</var> in the <span class="SimpleMath">i</span>-th component of the direct product of the base group <span class="SimpleMath"><var class="Arg">G</var>^n</span> of <span class="SimpleMath">W</span>. For <span class="SimpleMath">i = n+1</span>, <code class="func">Embedding</code> (<a href="chap32.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) yields the embedding of <span class="SimpleMath">P</span> into <span class="SimpleMath">W</span>. Calling <code class="func">Projection</code> (<a href="chap32.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">W</span> yields the projection onto the acting group <span class="SimpleMath">P</span>, see <a href="chap49.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
 

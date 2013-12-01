@@ -837,6 +837,19 @@ DeclareProperty( "IsMinusOne",
 DeclareProperty( "IsMonic",
         IsHomalgRingElement );
 
+##  <#GAPDoc Label="IsMonicUptoUnit:ringelement">
+##  <ManSection>
+##    <Prop Arg="r" Name="IsMonicUptoUnit" Label="for homalg ring elements"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      Check if leading coefficient of the &homalg; ring element <A>r</A> is a unit.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsMonicUptoUnit",
+        IsHomalgRingElement );
+
 ##  <#GAPDoc Label="IsLeftRegular:ringelement">
 ##  <ManSection>
 ##    <Prop Arg="r" Name="IsLeftRegular" Label="for homalg ring elements"/>
@@ -1203,6 +1216,19 @@ DeclareAttribute( "BaseRing",
 DeclareAttribute( "KrullDimension",
         IsHomalgRing );
 
+##  <#GAPDoc Label="DegreeOverPrimeField">
+##  <ManSection>
+##    <Attr Arg="R" Name="DegreeOverPrimeField"/>
+##    <Returns>a positive integer</Returns>
+##    <Description>
+##      The degree over the prime field over the &homalg; field <A>R</A>.
+##   </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "DegreeOverPrimeField",
+        IsHomalgRing );
+
 ##  <#GAPDoc Label="LeftGlobalDimension">
 ##  <ManSection>
 ##    <Attr Arg="R" Name="LeftGlobalDimension"/>
@@ -1312,6 +1338,9 @@ DeclareGlobalFunction( "HomalgFieldOfRationals" );
 
 DeclareGlobalFunction( "HomalgRingElement" );
 
+DeclareOperation( "AddRationalParameters",
+        [ IsHomalgRing, IsList ] );
+
 DeclareOperation( "/",
         [ IsRingElement, IsHomalgRing ] );
 
@@ -1354,6 +1383,24 @@ DeclareOperation( "KoszulDualRing",
 
 DeclareOperation( "KoszulDualRing",
         [ IsHomalgRing ] );
+
+DeclareOperation( "UnivariatePolynomial",
+        [ IsList, IsString ] );
+
+DeclareOperation( "Homogenization",
+        [ IsHomalgRingElement, IsHomalgRing ] );
+
+DeclareOperation( "LcmOp",
+        [ IsList, IsHomalgRingElement ] );
+
+DeclareOperation( "LcmOp",
+        [ IsHomalgRingElement, IsHomalgRingElement ] );
+
+DeclareOperation( "Numerator",
+        [ IsHomalgRingElement ] );
+
+DeclareOperation( "Denominator",
+        [ IsHomalgRingElement ] );
 
 # basic operations:
 
@@ -1415,6 +1462,9 @@ DeclareOperation( "SetRingProperties",
         [ IsHomalgRing, IsInt ] );
 
 DeclareOperation( "SetRingProperties",
+        [ IsHomalgRing, IsInt, IsInt ] );
+
+DeclareOperation( "SetRingProperties",
         [ IsHomalgRing, IsHomalgRing, IsList ] );
 
 DeclareOperation( "SetRingProperties",
@@ -1434,6 +1484,3 @@ DeclareOperation( "Random",
 
 DeclareOperation( "Random",
         [ IsHomalgRing, IsInt ] );
-
-#DeclareOperation( "Random",
-#        [ IsHomalgRing ] );

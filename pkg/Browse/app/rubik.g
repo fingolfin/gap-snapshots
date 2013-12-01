@@ -153,6 +153,7 @@
 ##  >        input{ [ 26 .. 30 ] },
 ##  >        "Q" ) );;               # quit the browse table
 ##  gap> BrowseRubiksCube( Product( cubegens{ choice } ) );;
+##  gap> BrowseRubiksCube( "large", Product( cubegens{ choice } ) );;
 ##  gap> BrowseData.SetReplay( false );
 ##  ]]></Example>
 ##

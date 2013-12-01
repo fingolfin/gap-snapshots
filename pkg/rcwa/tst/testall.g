@@ -62,9 +62,9 @@ end;
 STONE_ALL := [];
 
 SHOW_STONES := function( next )
-    Print( FormattedString(STONE_FILE,-16), "    ",
-           FormattedString(STONE_STONE,8), "       ",
-           FormattedString(STONE_RTIME,8) );
+    Print( String(STONE_FILE,-16), "    ",
+           String(STONE_STONE,8), "       ",
+           String(STONE_RTIME,8) );
     Add( STONE_ALL, STONE_STONE );
     if 0 < next and STONE_FSUM <> 0  then
         Print( "    (next ~ ", Int(STONE_SUM*next*10/STONE_FSUM),
@@ -125,7 +125,7 @@ Print(FormatParagraph(Concatenation(
   "indicate a problem.")),"\n");
 Print(FormatParagraph(Concatenation(
   "The runtime of the following tests (in general) increases. ",
-  "The `next' time is an approximation of the running time for ",
+  "The `next' time is an approximation of the run time for ",
   "the next test. The more GAP4stones you get, the faster your system ",
   "is. Since RCWA caches some data, subsequent runs of the test suite ",
   "within the same GAP session will usually be faster than ",
@@ -157,9 +157,9 @@ Print("-------------------------------------------\n");
 if STONE_COUNT=0 then
   STONE_COUNT:=1;
 fi;
-Print( FormattedString("total",-16), "    ",
-       FormattedString(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
-       FormattedString(STONE_SUM,8), "\n" );
+Print( String("total",-16), "    ",
+       String(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
+       String(STONE_SUM,8), "\n" );
 Print("\n");
 
 SizeScreen(oldSizeScreen);

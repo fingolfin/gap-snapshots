@@ -603,9 +603,11 @@ functions</span></h4>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     NCurses.wattrset(win, NCurses.ColorAttr(a, b));</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     NCurses.waddstr(win, Concatenation(a,"/",b,"\t"));</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od; od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NCurses.update_panels();; NCurses.doupdate();;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NCurses.napms(5000); # show for 5 seconds</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">if NCurses.IsStdoutATty() then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     NCurses.update_panels();; NCurses.doupdate();;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     NCurses.napms(5000);;     # show for 5 seconds</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   fi;</span>
 </pre></div>
 
 <p><a id="X879D81B37A0A4E8F" name="X879D81B37A0A4E8F"></a></p>

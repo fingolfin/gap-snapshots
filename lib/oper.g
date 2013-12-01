@@ -1472,29 +1472,6 @@ end );
 
 #############################################################################
 ##
-#F  ViewLength( <len> )
-##
-##  <ManSection>
-##  <Func Name="ViewLength" Arg='len'/>
-##
-##  <Description>
-##  <Ref Func="View"/> will usually display objects in short form if they would need
-##  more than <A>len</A> lines.
-##  The default is 3.
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "ViewLength", function(arg)
-  if LEN_LIST( arg ) = 0 then
-    return GAPInfo.ViewLength;
-  else
-    GAPInfo.ViewLength:= arg[1];
-  fi;
-end );
-
-
-#############################################################################
-##
 #F  TraceMethods( <oprs> )
 ##
 ##  <#GAPDoc Label="TraceMethods">

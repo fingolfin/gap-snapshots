@@ -125,6 +125,9 @@
 ##  >      BrowseData.SetReplay( Concatenation(
 ##  >          PegSolitaireSolutions.( String( n ) ), "Q" ) );
 ##  >      PegSolitaire( n );
+##  >      PegSolitaire( "large", n );
+##  >      PegSolitaire( n, true );
+##  >      PegSolitaire( "large", n, true );
 ##  > od;
 ##  gap> BrowseData.SetReplay( false );
 ##  ]]></Example>

@@ -806,6 +806,10 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76.html#X787DFEB383545A49"><span class="RefLink">76.3-6</span></a>).</p>
 
+<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-15</span></a>).</p>
+
+<p>If you wish to report a problem to <strong class="pkg">GAP</strong> Support or <strong class="pkg">GAP</strong> Forum, it may be useful to not only report the version used, but also to include the <strong class="pkg">GAP</strong> banner displays the information about the architecture for which the <strong class="pkg">GAP</strong> binary is built, used libraries and loaded packages.</p>
+
 <p><a id="X801051CC86594630" name="X801051CC86594630"></a></p>
 
 <h4>7.9 <span class="Heading">Test Files</span></h4>
@@ -856,7 +860,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read( Filename( DirectoriesLibrary( "tst" ), "testinstall.g" ) );</span>
 </pre></div>
 
-<p>The test requires about 512MB of memory and runs about one minute on an Intel Core 2 Duo / 2.53 GHz machine. You will get a large number of lines with output about the progress of the tests.</p>
+<p>The test requires about 750MB of memory and runs about one minute on an Intel Core 2 Duo / 2.53 GHz machine. You will get a large number of lines with output about the progress of the tests.</p>
 
 
 <div class="example"><pre>
@@ -876,7 +880,7 @@ gaussian.tst               0             10
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read( Filename( DirectoriesLibrary( "tst" ), "testall.g" ) );</span>
 </pre></div>
 
-<p>The test requires about 512MB of memory and runs about one hour on an Intel Core 2 Duo / 2.53 GHz machine, and produces an output similar to the <code class="file">testinstall.g</code> test.</p>
+<p>The test requires about 750MB of memory and runs about one hour on an Intel Core 2 Duo / 2.53 GHz machine, and produces an output similar to the <code class="file">testinstall.g</code> test.</p>
 
 <p><a id="X87712F9D8732193C" name="X87712F9D8732193C"></a></p>
 

@@ -1,6 +1,6 @@
 # scscp, chapter 7
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/examples.xml", 71, 93 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/examples.xml", 71, 93 ]
 
 gap> LoadPackage("anupq");
 -------------------------------------------------------------
@@ -23,7 +23,7 @@ gap> IdStandardPresented512Group( H );
 [ 512, 2042 ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/examples.xml", 144, 157 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/examples.xml", 144, 157 ]
 
 gap> IdGroup512 := function( G )
 >    local code, result;
@@ -37,7 +37,7 @@ gap> IdGroup512 := function( G )
 > end;;
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/examples.xml", 163, 168 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/examples.xml", 163, 168 ]
 
 gap> IdGroup512(DihedralGroup(512));
 [ 512, 2042 ]

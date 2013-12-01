@@ -36,6 +36,10 @@ ReadPackage("browse", "app/conwaypols.g");
 ReadPackage("browse", "app/methods.g");
 ReadPackage("browse", "app/packages.g");
 ReadPackage( "browse", "app/profile.g" );
+if IsPackageMarkedForLoading( "tomlib", "1.2.0" ) then
+  ReadPackage( "browse", "app/tmdbattr.g" );
+fi;
+ReadPackage( "browse", "app/userpref.g" );
 
 # demo
 ReadPackage("browse", "app/demo.g");

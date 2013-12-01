@@ -210,6 +210,28 @@ InstallMethod( IsIdenticalObjForFunctors,
     
 end );
 
+##
+InstallMethod( \*,
+        "for a ring element and a module element",
+        [ IsRingElement, IsHomalgModuleElement ],
+        
+  function( r, elm )
+    
+    return HomalgElement( r * UnderlyingMorphism( elm ) );
+    
+end );
+
+##
+InstallMethod( \*,
+        "for a module element and ring element",
+        [ IsRingElement, IsHomalgModuleElement ],
+        
+  function( elm, r )
+    
+    return HomalgElement( r * UnderlyingMorphism( elm ) );
+    
+end );
+
 ####################################
 #
 # constructor functions and methods:
@@ -572,10 +594,12 @@ InstallMethod( ViewString,
     mat := EntriesOfHomalgMatrix( mat ) ;
     
     if IsHomalgInternalRingRep( R ) then
-        return String( mat );
+        mat := List( mat, String );
     else
-        return Concatenation( "[ ", JoinStringsWithSeparator( List( mat, Name ), ", " ), " ]" );
+        mat := List( mat, Name );
     fi;
+    
+    return Concatenation( "( ", JoinStringsWithSeparator( mat, ", " ), " )" );
     
 end );
 

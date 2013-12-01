@@ -1,14 +1,15 @@
-
-
-
 SetPackageInfo( rec(
 
 PackageName := "AutoDoc",
 
-Subtitle := "Tools for generating automatic GAPDoc documentations",
+Subtitle := "Generate documentation from GAP source code",
 
 Version := Maximum( [
-  "2013.06.26", ## Sebas' version
+  "2013.09.20", ## Sebas' version
+## This line prevents merge conflicts
+  "2013.08.19", ## Max' version
+## This line prevents merge conflicts
+  "2013.08.08.23:06", ## Mohamed's version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -18,36 +19,34 @@ ArchiveURL := Concatenation( "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packa
 
 ArchiveFormats := ".tar.gz",
 
-
-
 Persons := [
   rec(
     LastName      := "Gutsche",
     FirstNames    := "Sebastian",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "sebastian.gutsche@rwth-aachen.de",
+    Email         := "gutsche@mathematik.uni-kl.de",
     WWWHome       := "http://wwwb.math.rwth-aachen.de/~gutsche/",
     PostalAddress := Concatenation( [
-                       "Sebastian Gutsche\n",
-                       "Lehrstuhl B fuer Mathematik, RWTH Aachen\n",
-                       "Templergraben 64\n",
-                       "52062 Aachen\n",
+                       "Department of Mathematics\n",
+                       "University of Kaiserslautern\n",
+                       "67653 Kaiserslautern\n",
                        "Germany" ] ),
-    Place         := "Aachen",
-    Institution   := "RWTH Aachen University"
+    Place         := "Kaiserslautern",
+    Institution   := "University of Kaiserslautern"
   ),
+  
   rec( LastName := "Horn",
        FirstNames := "Max",
        IsAuthor := true,
        IsMaintainer := true,
-       Email := "max@quendi.de",
-       WWWHome := "http://www.quendi.de/math.php",
+       Email := "max.horn@math.uni-giessen.de",
+       WWWHome := "http://www.quendi.de/math",
        PostalAddress := Concatenation(
                "AG Algebra\n",
                "Mathematisches Institut\n",
                "JLU Gießen\n",
-               "Arndtstrasse 2\n",
+               "Arndtstraße 2\n",
                "D-35392 Gießen\n",
                "Germany" ),
        Place := "Gießen",
@@ -58,11 +57,10 @@ Persons := [
 
 Status := "deposited",
 
-
 README_URL := 
   "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/AutoDoc/README.AutoDoc",
 PackageInfoURL := 
-   "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/AutoDoc/PackageInfo.g",
+  "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/AutoDoc/PackageInfo.g",
 
 AbstractHTML := 
   "",
@@ -73,14 +71,12 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Tools for generating automatic documentation",
-  Autoload  := false
+  LongTitle := "Generate documentation from GAP source code",
 ),
 
-
 Dependencies := rec(
-  GAP := ">=4.4",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.0" ] ],
+  GAP := ">= 4.5",
+  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
                       
@@ -90,22 +86,19 @@ AvailabilityTest := function()
     return true;
   end,
 
-# BannerString := Concatenation( 
-#   "----------------------------------------------------------------\n",
-#   "Loading  AutoDoc ", ~.Version, "\n",
-#   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-#         " (", ~.Persons[1].WWWHome, ")\n",
-#   "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
-#         " (", ~.Persons[2].WWWHome, ")\n",
-#   "Type:\n",
-#   "  ?AutoDoc:        ## for the contents of the manual\n",
-#   "  ?AutoDoc:x       ## for chapter/section/topic x\n",
-#   "----------------------------------------------------------------\n" ),
-
 Autoload := false,
 
+Keywords := [ "Automatic documentation, GAP, GAPDoc" ],
 
-Keywords := [  ]
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+                    "&copyright; 2012-2013 by Sebastian Gutsche and Max Horn<P/>\n\n",
+                    "This package may be distributed under the terms and conditions of the\n",
+                    "GNU Public License Version 2.\n"
+                ),
+    )
+),
 
 ));
 

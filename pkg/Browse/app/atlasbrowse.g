@@ -97,11 +97,10 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
                       isUnderCollapsedCategory:= false,
                       isRejectedCategory:= false ) );
 
-      Append( labelsRow,
-              List( infoprgs.list, x -> [ "" ] ) );
       for entry in infoprgs.list do
         if   Length( entry ) = 1 then
           Add( info, [ rec( rows:= entry, align:= "l" ) ] );
+          Add( labelsRow, [ "" ] );
         elif 1 < Length( entry ) then
           Add( cats, rec( pos:= 2 * Length( info ) + 2,
                           level:= 2,
@@ -112,6 +111,8 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
           Append( info,
               List( entry{ [ 2 .. Length( entry ) ] },
                     x -> [ rec( rows:= [ x ], align:= "l" ) ] ) );
+          Append( labelsRow,
+              List( [ 2 .. Length( entry ) ], x -> [ "" ] ) );
         fi;
       od;
     fi;
@@ -448,7 +449,7 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  </Returns>
 ##
 ##  <Description>
-##  This function shows the informtion available via the &GAP; package
+##  This function shows the information available via the &GAP; package
 ##  <Package>AtlasRep</Package> in a browse table,
 ##  cf. Section&nbsp;<Ref Sect="Accessing Data of the AtlasRep Package"
 ##  BookName="atlasrep"/> in the <Package>AtlasRep</Package> manual.
@@ -478,8 +479,8 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  <P/>
 ##  The following example shows how
 ##  <Ref Func="BrowseAtlasInfo" Label="overview of groups"/> can be
-##  used to fetch permutation representations of the alternating groups
-##  <M>A_5</M> and <M>A_6</M>:
+##  used to fetch info records about permutation representations of the
+##  alternating groups <M>A_5</M> and <M>A_6</M>:
 ##  We search for the group name <C>"A5"</C> in the overview table, and the
 ##  first cell in the table row for <M>A_5</M> becomes selected;
 ##  hitting the <B>Enter</B> key causes a new window to be opened, with an
@@ -510,7 +511,11 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  >        c,             # click the first row,
 ##  >        "Q",           # quit the second level table,
 ##  >        "Q" ) );       # and quit the application.
-##  gap> tworeps:= BrowseAtlasInfo();;
+##  gap> if IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then
+##  >      tworeps:= BrowseAtlasInfo();
+##  >    else
+##  >      tworeps:= [ fail ];
+##  >    fi;
 ##  gap> BrowseData.SetReplay( false );
 ##  gap> if fail in tworeps then
 ##  >      Print( "no access to the Web ATLAS\n" );
@@ -560,7 +565,7 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  <#/GAPDoc>
 ##
 BindGlobal( "BrowseAtlasInfo", function( arg )
-    local log, replay, result, i, pos;
+    local log, replay, result, i, pos, pos2;
 
     # A record at the first position may prescribe the replay with history.
     log:= fail;
@@ -593,19 +598,26 @@ BindGlobal( "BrowseAtlasInfo", function( arg )
         result[i]:= OneAtlasGeneratingSetInfo( result[i][1], Position,
                         result[i][2] );
       else
-        # a program
+        # a program; turn the display values into inputs.
         if   result[i][2] = "maxes" then
-          pos:= Position( result[i][3], ':' );
-          if pos = fail then
-            result[i][3]:= Int( NormalizedWhitespace( result[i][3] ) );
-          else
-            result[i][3]:= Int( NormalizedWhitespace( result[i][3]{
-                                                        [ 1 .. pos-1 ] } ) );
+          # perhaps standard generators of the subgroup
+          pos:= PositionSublist( result[i][3], "(std. " );
+          if pos <> fail then
+            pos2:= Position( result[i][3], ')', pos );
+            result[i][4]:= Int( result[i][3]{ [ pos+6 .. pos2-1 ] } );
           fi;
+          pos:= Position( result[i][3], ':' );
+          if pos <> fail then
+            result[i][3]:= result[i][3]{ [ 1 .. pos-1 ] };
+          fi;
+          result[i][3]:= Int( NormalizedWhitespace( result[i][3] ) );
         elif result[i][2] = "out" then
           result[i][2]:= "automorphism";
         elif result[i][2] = "pres" then
           result[i][2]:= "presentation";
+        elif result[i][2] = "kernel" then
+          pos:= PositionSublist( result[i][3], " -> " );
+          result[i][3]:= result[i][3]{ [ pos+4 .. Length( result[i][3] ) ] };
         fi;
         result[i]:= CallFuncList( AtlasProgramInfo, result[i] );
       fi;

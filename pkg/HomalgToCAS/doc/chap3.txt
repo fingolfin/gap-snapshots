@@ -296,6 +296,9 @@
     [4X  ## optional ring operations:[104X
     [4X  ##[104X
     [4X  [104X
+    [4X  ## copy an element:[104X
+    [4X  CopyElement                             := "a>a",[104X
+    [4X  [104X
     [4X  ## add two ring elements:[104X
     [4X  Sum                                     := "a+b",[104X
     [4X  [104X
@@ -310,6 +313,15 @@
     [4X  [104X
     [4X  ## random polynomial:[104X
     [4X  RandomPol                               := "rpl",[104X
+    [4X  [104X
+    [4X  ## numerator:[104X
+    [4X  Numerator                               := "num",[104X
+    [4X  [104X
+    [4X  ## denominator:[104X
+    [4X  Denominator                             := "den",[104X
+    [4X  [104X
+    [4X  ## evaluate polynomial:[104X
+    [4X  Evaluate                                := "evl",[104X
     [4X  [104X
     [4X  ## degree of a multivariate polynomial[104X
     [4X  DegreeOfRingElement                     := "deg",[104X
@@ -574,7 +586,11 @@
     [4X  ## eliminate variables:[104X
     [4X  Eliminate                               := "eli",[104X
     [4X  [104X
+    [4X  ## leading module:[104X
     [4X  LeadingModule                           := "led",[104X
+    [4X  [104X
+    [4X  ## the i-th monomial matrix[104X
+    [4X  MonomialMatrix                          := "mon",[104X
     [4X  [104X
     [4X  ## matrix of symbols:[104X
     [4X  MatrixOfSymbols                         := "smb",[104X

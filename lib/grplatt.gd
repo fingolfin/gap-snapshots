@@ -402,5 +402,26 @@ DeclareGlobalFunction("SubgroupsTrivialFitting");
 
 #############################################################################
 ##
+#A  TomDataAlmostSimpleRecognition(<G>) Tom Library Identification
+##
+##  <#GAPDoc Label="TomDataAlmostSimpleRecognition">
+##  <ManSection>
+##  <Attr Name="TomDataAlmostSimpleRecognition" Arg='G'/>
+##
+##  <Description>
+##  For an almost simple group, this returns a list: isomorphism, table of
+##  marks
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute("TomDataAlmostSimpleRecognition",IsGroup);
+
+# functions return list of (maximal/all) subgroups of almost simple fetched
+# from tom library, or `fail' if data is not there.
+DeclareGlobalFunction("TomDataMaxesAlmostSimple");
+DeclareGlobalFunction("TomDataSubgroupsAlmostSimple");
+
+#############################################################################
+##
 #E
 

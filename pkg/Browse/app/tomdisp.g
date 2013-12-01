@@ -39,7 +39,8 @@
 ##  <Ref Func="NCurses.BrowseGeneric"/> is available.
 ##  <P/>
 ##  <Example><![CDATA[
-##  gap> BrowseData.SetReplay( Concatenation(
+##  gap> if TestPackageAvailability( "TomLib" ) = true then
+##  >      BrowseData.SetReplay( Concatenation(
 ##  >         # scroll in the table
 ##  >         "DDRRR",
 ##  >         # search for the (exact) value 100 (three times)
@@ -51,8 +52,9 @@
 ##  >         [ NCurses.keys.ENTER ],
 ##  >         # and quit the application
 ##  >         "Q" ) );
-##  gap> Browse( TableOfMarks( "A10" ) );
-##  gap> BrowseData.SetReplay( false );
+##  >      Browse( TableOfMarks( "A10" ) );
+##  >      BrowseData.SetReplay( false );
+##  >    fi;
 ##  ]]></Example>
 ##  <P/>
 ##  <E>Implementation remarks</E>:

@@ -25,7 +25,9 @@
   eight  points,  and  assigned  it to the identifier [10Xs8[110X. Now [22XS_8[122X contains the
   alternating  group  on  eight points which can be described in several ways,
   e.g.,  as  the  group  of  all  even  permutations  in [10Xs8[110X, or as its derived
-  subgroup.[133X
+  subgroup.  Once  we ask [5XGAP[105X to verify that the group is an alternating group
+  acting  in  its  natural permutation representation, the system will display
+  the group accordingly.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xa8 := DerivedSubgroup( s8 );[127X[104X
@@ -35,6 +37,10 @@
     [4X[28X20160[128X[104X
     [4X[28Xfalse[128X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsNaturalAlternatingGroup(a8);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa8;[127X[104X
+    [4X[28XAlt( [ 1 .. 8 ] )[128X[104X
   [4X[32X[104X
   
   [33X[0;0YOnce information about a group like [10Xs8[110X or [10Xa8[110X has been computed, it is stored
@@ -599,7 +605,7 @@
   stabilizer in the natural action of [10Xa8[110X on eight points.[133X
   
   [33X[0;0YHere  is  a  [13Xwarning[113X:  If  you  specify  [2XOnSets[102X ([14XReference: OnSets[114X) as third
-  argument  to a function like [2XStabilizer[102X ([14XReference: Stabilizer[114X), you have to
+  argument to a function like [2XStabilizer[102X ([14XReference: Stabilizers[114X), you have to
   make  sure  that  the  point  (i.e.  the  second  argument) is indeed a set.
   Otherwise  you  will  get a puzzling error message or even wrong results! In
   the  above  example,  the  second  argument [10Xblocks[1][110X came from the function
@@ -626,7 +632,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XStabilizer[102X  ([14XReference: Stabilizer[114X) is not only applicable to groups like [10Xa8[110X
+  [33X[0;0Y[2XStabilizer[102X ([14XReference: Stabilizers[114X) is not only applicable to groups like [10Xa8[110X
   but  also  to  their  subgroups  like  [10Xu56[110X.  So another method to find a new
   subgroup is to compute the stabilizer of another point in [10Xu56[110X. Note that [10Xu56[110X
   already leaves 1 and 2 fixed.[133X
@@ -720,7 +726,7 @@
   [4X[32X[104X
   
   [33X[0;0YOf  course  the  stabilizer  [10Xu105[110X  is in fact the centralizer of the element
-  [10X(1,2)(3,4)(5,6)(7,8)[110X.  [2XStabilizer[102X  ([14XReference:  Stabilizer[114X) notices that and
+  [10X(1,2)(3,4)(5,6)(7,8)[110X.  [2XStabilizer[102X  ([14XReference: Stabilizers[114X) notices that and
   computes  the  stabilizer  using  the  centralizer algorithm for permutation
   groups. In the usual way we now look for the subgroups above [10Xu105[110X.[133X
   
@@ -728,9 +734,9 @@
     [4X[25Xgap>[125X [27Xblocks := Blocks( a8, orb );; Length( blocks );[127X[104X
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27Xblocks[1];[127X[104X
-    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8), [128X[104X
-    [4X[28X  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5), [128X[104X
-    [4X[28X  (1,8)(2,7)(3,5)(4,6) ][128X[104X
+    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7), [128X[104X
+    [4X[28X  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6), [128X[104X
+    [4X[28X  (1,8)(2,7)(3,6)(4,5) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YTo  find  the  subgroup  of  index 15 we again use closure. Now we must be a
@@ -801,7 +807,7 @@
     [4X[25Xgap>[125X [27XImage( hom, (1,2,3) );[127X[104X
     [4X[28X(1,2,3)[128X[104X
     [4X[25Xgap>[125X [27XImage( hom, DerivedSubgroup(s4) );[127X[104X
-    [4X[28XGroup([ (1,3,2), (1,2,3) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (1,3,2) ])[128X[104X
   [4X[32X[104X
   
   [4X[32X  Example  [32X[104X
@@ -1027,7 +1033,7 @@
     [4X[28XGroup([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismGroups( niceaut, SymmetricGroup( 4 ) );[127X[104X
     [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -> [128X[104X
-    [4X[28X[ (1,3,4,2), (1,4,2), (1,4)(2,3), (1,2)(3,4) ][128X[104X
+    [4X[28X[ (1,2,4,3), (1,4,3), (1,4)(2,3), (1,3)(2,4) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  range  of  a  nice  monomorphism  is in most cases a permutation group,

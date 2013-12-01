@@ -50,7 +50,7 @@ and the <C>?&lt;nr&gt;</C> syntax still works.
 If you want the original behavior call
 <C>SetUserPreference( "Browse", "SelectHelpMatches", false );</C>
 in your &GAP; session or <F>gap.ini</F> file,
-see&nbsp;<Ref Subsect="User preferences" BookName="ref"/>.
+see&nbsp;<Ref Subsect="Configuring User preferences" BookName="ref"/>.
 
 </Subsection>
 
@@ -65,7 +65,7 @@ After loading the <Package>Browse</Package> package,
 If you want the original behavior call
 <C>SetUserPreference( "Browse", "SelectPackageName", false );</C>
 in your &GAP; session or <F>gap.ini</F> file,
-see&nbsp;<Ref Subsect="User preferences" BookName="ref"/>.
+see&nbsp;<Ref Subsect="Configuring User preferences" BookName="ref"/>.
 
 </Subsection>
 

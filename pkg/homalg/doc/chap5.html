@@ -35,6 +35,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D16A0BB80BA69DC">5.3-1 IsZero</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7886344B7A8B9304">5.3-2 IsCyclicGenerator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80C6B26284721409">5.3-3 IsTorsion</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X875351A77DEB949A">5.4 <span class="Heading">Elements: Attributes</span></a>
 </span>
@@ -102,6 +103,15 @@
 
 <p>Check if the object element <var class="Arg">m</var> is a cyclic generator.</p>
 
+<p><a id="X80C6B26284721409" name="X80C6B26284721409"></a></p>
+
+<h5>5.3-3 IsTorsion</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Check if the object element <var class="Arg">m</var> is a torsion element.</p>
+
 <p><a id="X875351A77DEB949A" name="X875351A77DEB949A"></a></p>
 
 <h4>5.4 <span class="Heading">Elements: Attributes</span></h4>
@@ -135,7 +145,7 @@ Z
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := 2 * ZZ;</span>
 &lt;A free left module of rank 2 on free generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := HomalgModuleElement( "[ 6, 0 ]", M );</span>
-[ 6, 0 ]
+( 6, 0 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Subobject( HomalgMap( "[ 2, 0 ]", 1 * ZZ, M ) );</span>
 &lt;A free left submodule given by a cyclic generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := Subobject( HomalgMap( "[ 4, 0 ]", 1 * ZZ, M ) );</span>

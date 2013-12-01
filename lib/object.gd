@@ -694,26 +694,31 @@ DeclareOperation( "KnownPropertiesOfObject", [ IsObject ] );
 ##  gap> KnownPropertiesOfObject(g);
 ##  [ "IsFinite", "CanEasilyCompareElements", "CanEasilySortElements", 
 ##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", 
-##    "IsAssociative", "IsSimpleSemigroup", "IsFinitelyGeneratedGroup", 
-##    "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose", 
-##    "IsNilpotentByFinite" ]
+##    "IsAssociative", "IsSimpleSemigroup", "IsRegularSemigroup", 
+##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
+##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
+##    "KnowsHowToDecompose", "IsNilpotentByFinite" ]
 ##  gap> Size(g);
 ##  6
 ##  gap> KnownPropertiesOfObject(g);
 ##  [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
 ##    "CanEasilyCompareElements", "CanEasilySortElements", 
 ##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", 
-##    "IsAssociative", "IsSimpleSemigroup", "IsFinitelyGeneratedGroup", 
-##    "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose", 
-##    "IsPerfectGroup", "IsSolvableGroup", "IsPolycyclicGroup", 
-##    "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ]
+##    "IsAssociative", "IsSimpleSemigroup", "IsRegularSemigroup", 
+##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
+##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
+##    "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup", 
+##    "IsPolycyclicGroup", "IsNilpotentByFinite", "IsTorsionFree", 
+##    "IsFreeAbelian" ]
 ##  gap> KnownTruePropertiesOfObject(g);
 ##  [ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", 
 ##    "CanEasilySortElements", "IsDuplicateFree", 
 ##    "IsGeneratorsOfMagmaWithInverses", "IsAssociative", 
-##    "IsSimpleSemigroup", "IsFinitelyGeneratedGroup", 
-##    "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose", 
-##    "IsSolvableGroup", "IsPolycyclicGroup", "IsNilpotentByFinite" ]
+##    "IsSimpleSemigroup", "IsRegularSemigroup", 
+##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
+##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
+##    "KnowsHowToDecompose", "IsSolvableGroup", "IsPolycyclicGroup", 
+##    "IsNilpotentByFinite" ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -735,15 +740,15 @@ DeclareOperation( "KnownTruePropertiesOfObject", [ IsObject ]  );
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2),(1,2,3));;
 ##  gap> CategoriesOfObject(g);
-##  [ "IsListOrCollection", "IsCollection", "IsExtLElement", 
-##    "CategoryCollections(IsExtLElement)", "IsExtRElement", 
-##    "CategoryCollections(IsExtRElement)", 
-##    "CategoryCollections(IsMultiplicativeElement)", 
-##    "CategoryCollections(IsMultiplicativeElementWithOne)", 
-##    "CategoryCollections(IsMultiplicativeElementWithInverse)", 
-##    "CategoryCollections(IsAssociativeElement)", 
-##    "CategoryCollections(IsFiniteOrderElement)", "IsGeneralizedDomain", 
-##    "CategoryCollections(IsPerm)", "IsMagma", "IsMagmaWithOne", 
+##  [ "IsListOrCollection", "IsCollection", "IsExtLElement",
+##    "CategoryCollections(IsExtLElement)", "IsExtRElement",
+##    "CategoryCollections(IsExtRElement)",
+##    "CategoryCollections(IsMultiplicativeElement)",
+##    "CategoryCollections(IsMultiplicativeElementWithOne)",
+##    "CategoryCollections(IsMultiplicativeElementWithInverse)",
+##    "CategoryCollections(IsAssociativeElement)",
+##    "CategoryCollections(IsFiniteOrderElement)", "IsGeneralizedDomain",
+##    "CategoryCollections(IsPerm)", "IsMagma", "IsMagmaWithOne",
 ##    "IsMagmaWithInversesIfNonzero", "IsMagmaWithInverses" ]
 ##  ]]></Example>
 ##  </Description>

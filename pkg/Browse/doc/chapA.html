@@ -58,6 +58,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X83E9FAAE85F80223">A.4-4 <span class="Heading">Additional Database Attributes for Transitive Groups</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X831C7F817C6C4AA0">A.5 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
+</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X844D143980A0E20D">A.5-1 BrowseTomLibInfo</a></span>
+</div></div>
 </div>
 
 <h3>A <span class="Heading">Some Tools for Database Handling</span></h3>
@@ -75,7 +81,7 @@
 </ul>
 <p>The <strong class="pkg">GAP</strong> objects introduced for that are <em>database id enumerators</em> (see <a href="chapA.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>) and <em>database attributes</em> (see <a href="chapA.html#X7D2804F97EE18BA5"><span class="RefLink">A.1-2</span></a>).</p>
 
-<p>Contrary to the individual interfaces to the <strong class="pkg">GAP</strong> manuals (see Section <a href="chap6.html#X81E6DDC17B7E2CF8"><span class="RefLink">6.6</span></a>), the <strong class="pkg">GAP</strong> bibliography (see Section <a href="chap6.html#X7EAE9E8281728C44"><span class="RefLink">6.7</span></a>), and the overviews of <strong class="pkg">GAP</strong> packages, <strong class="pkg">GAP</strong> methods, and Conway polynomials available in <strong class="pkg">GAP</strong> (see Section <a href="chap6.html#X80B8A3C48751E87B"><span class="RefLink">6.10</span></a>), the approach that will be described here assumes a special way to access database entries. Thus it depends on the structure of a given database whether the tools described here are useful, or whether an individual interface fits better. Perhaps the examples shown in Sections <a href="chapA.html#X808BDD24857F3904"><span class="RefLink">A.3</span></a> and <a href="chapA.html#X858E7FC37DCAA719"><span class="RefLink">A.4</span></a> give an impression what is possible.</p>
+<p>Contrary to the individual interfaces to the <strong class="pkg">GAP</strong> manuals (see Section <a href="chap6.html#X81E6DDC17B7E2CF8"><span class="RefLink">6.6</span></a>), the <strong class="pkg">GAP</strong> bibliography (see Section <a href="chap6.html#X7EAE9E8281728C44"><span class="RefLink">6.7</span></a>), and the overviews of <strong class="pkg">GAP</strong> packages, <strong class="pkg">GAP</strong> methods, and Conway polynomials available in <strong class="pkg">GAP</strong> (see Section <a href="chap6.html#X80B8A3C48751E87B"><span class="RefLink">6.11</span></a>), the approach that will be described here assumes a special way to access database entries. Thus it depends on the structure of a given database whether the tools described here are useful, or whether an individual interface fits better. Perhaps the examples shown in Sections <a href="chapA.html#X808BDD24857F3904"><span class="RefLink">A.3</span></a> and <a href="chapA.html#X858E7FC37DCAA719"><span class="RefLink">A.4</span></a> give an impression what is possible.</p>
 
 <p><a id="X86DA1A0082C465DD" name="X86DA1A0082C465DD"></a></p>
 
@@ -856,6 +862,56 @@ true
 </pre></div>
 
 <p>Removing the <code class="code">datafile</code> component from the four database attributes would yield the situation that attribute values are computed at runtime. Computing the values for all groups in the library –for example by categorizing the Browse table by one of the columns that correspond to these database attributes– will require several seconds. Note that if we assume that the information about solvability is already known, the test for <code class="func">IsPerfectGroup</code> (<a href="../../../doc/ref/chap39.html#X8755147280C84DBB"><span class="RefLink">Reference: IsPerfectGroup</span></a>) is needed only for the few nonsolvable groups in the library but each such test is expensive; on the other hand, each test for <code class="func">IsAbelian</code> (<a href="../../../doc/ref/chap35.html#X830A4A4C795FBC2D"><span class="RefLink">Reference: IsAbelian</span></a>) is cheap but such tests are needed for the many solvable groups in the library, in particular these groups must be constructed for the tests.</p>
+
+<p><a id="X831C7F817C6C4AA0" name="X831C7F817C6C4AA0"></a></p>
+
+<h4>A.5 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
+</span></h4>
+
+<p>The example shown in this section deals with <strong class="pkg">GAP</strong>'s Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package <a href="chapBib.html#biBTomLib">[NMP11]</a>).</p>
+
+<p><a id="X844D143980A0E20D" name="X844D143980A0E20D"></a></p>
+
+<h5>A.5-1 BrowseTomLibInfo</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTomLibInfo</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: nothing.</p>
+
+<p>This function shows the contents of the <strong class="pkg">GAP</strong> Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package, see <a href="chapBib.html#biBTomLib">[NMP11]</a>) in a browse table.</p>
+
+<p>The first call may take substantial time (about <span class="SimpleMath">40</span> seconds), because the data files of the <strong class="pkg">TomLib</strong> package are evaluated. This could be improved by precomputing and caching the values. Another possibility would be to call <code class="func">BrowseTomLibInfo</code> once before creating a <strong class="pkg">GAP</strong> workspace. The subsequent calls are not expensive.</p>
+
+<p>The table rows correspond to the tables of marks, one column of row labels shows the identifier of the table. The columns of the table contain information about the group order, the number of conjugacy classes of subgroups, the identifiers of tables of marks with fusions to and from the given table, and the name of the file that contains the table of marks data.</p>
+
+<p>The full functionality of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) is available.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:= [ NCurses.keys.ENTER ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:= [ 14, 14, 14 ];;  # ``do nothing''</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( Concatenation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scrrsc",   # categorize the list by source tables of fusions,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "srdd",     # choose a source table,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "x",        # expand the list of targets of fusions</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       n,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "!",        # revert the categorization</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "q",        # leave the mode in which a row is selected</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scrrrrsc", # categorize the list by filenames</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "X",        # expand all categories</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       n,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "!",        # revert the categorization</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scso",     # sort the list by group order</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       n,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "!q",       # revert the sorting and selection</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "?",        # open the help window</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       n,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "Q",        # close the help window</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "/A5", c,   # search for the first occurrence of "A5"</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       n,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "Q" ) );;   # and quit the browse table</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseTomLibInfo();</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( false );</span>
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>

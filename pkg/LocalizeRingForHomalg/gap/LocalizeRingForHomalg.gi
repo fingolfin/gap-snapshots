@@ -1,10 +1,10 @@
 #############################################################################
 ##
-##  LocalizeRingForHomalg.gd  LocalizeRingForHomalg package  Mohamed Barakat
-##                                                    Markus Lange-Hegermann
+##  LocalizeRingForHomalg.gi                   LocalizeRingForHomalg package  
 ##
-##  Copyright 2009, Mohamed Barakat, Universität des Saarlandes
-##           Markus Lange-Hegermann, RWTH-Aachen University
+##  Copyright 2013, Mohamed Barakat, University of Kaiserslautern
+##                  Markus Lange-Hegermann, RWTH-Aachen University
+##                  Vinay Wagh, Indian Institute of Technology Guwahati
 ##
 ##  Implementation stuff for LocalizeRingForHomalg.
 ##
@@ -47,4 +47,3 @@ InstallValue( CommonHomalgTableForLocalizedRings,
               
          )
 );
-

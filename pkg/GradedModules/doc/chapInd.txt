@@ -2,7 +2,7 @@
   
   [1XIndex[101X
   
-  [2XBettiDiagram[102X (for modules)  5.4-1
+  [2XBettiTable[102X (for modules)  5.4-1
   [2XCastelnuovoMumfordRegularity[102X  5.4-2
   [2XCastelnuovoMumfordRegularityOfSheafification[102X  5.4-3
   [2XGeneratorsOfHomogeneousPart[102X  5.6-3

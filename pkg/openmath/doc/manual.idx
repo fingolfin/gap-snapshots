@@ -2,13 +2,14 @@
 \indexentry{OMPrint@\texttt  {OMPrint}|hyperpage}{6}
 \indexentry{OMString@\texttt  {OMString}|hyperpage}{11}
 \indexentry{OMGetObject@\texttt  {OMGetObject}|hyperpage}{11}
+\indexentry{EvalOMString@\texttt  {EvalOMString}|hyperpage}{12}
 \indexentry{IsOpenMathWriter@\texttt  {IsOpenMathWriter}|hyperpage}{12}
 \indexentry{IsOpenMathXMLWriter@\texttt  {IsOpenMathXMLWriter}|hyperpage}{12}
 \indexentry{IsOpenMathBinaryWriter@\texttt  {IsOpenMathBinaryWriter}|hyperpage}{12}
 \indexentry{OpenMathXMLWriter@\texttt  {OpenMathXMLWriter}|hyperpage}{12}
-\indexentry{OpenMathBinaryWriter@\texttt  {OpenMathBinaryWriter}|hyperpage}{12}
-\indexentry{OMPutObject@\texttt  {OMPutObject}|hyperpage}{12}
-\indexentry{OMPutObjectNoOMOBJtags@\texttt  {OMPutObjectNoOMOBJtags}|hyperpage}{12}
+\indexentry{OpenMathBinaryWriter@\texttt  {OpenMathBinaryWriter}|hyperpage}{13}
+\indexentry{OMPutObject@\texttt  {OMPutObject}|hyperpage}{13}
+\indexentry{OMPutObjectNoOMOBJtags@\texttt  {OMPutObjectNoOMOBJtags}|hyperpage}{13}
 \indexentry{OMPlainString@\texttt  {OMPlainString}|hyperpage}{13}
 \indexentry{OMTestXML@\texttt  {OMTestXML}|hyperpage}{14}
 \indexentry{OMTest@\texttt  {OMTest}|hyperpage}{14}

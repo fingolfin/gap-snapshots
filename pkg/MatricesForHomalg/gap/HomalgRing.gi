@@ -339,6 +339,17 @@ InstallMethod( Indeterminates,
 end );
 
 ##
+InstallMethod( Indeterminates,
+        "for homalg fields",
+        [ IsHomalgRing and IsFieldForHomalg ],
+        
+  function( R )
+    
+    return [ ];
+    
+end );
+
+##
 InstallMethod( AssignGeneratorVariables,
         "for homalg rings",
         [ IsHomalgRing ],
@@ -569,7 +580,11 @@ InstallMethod( RingName,
         if c = 0 then
             return "Z";
         elif IsPrime( c ) then
-            r := [ "GF(", String( c ), ")" ];
+            if HasDegreeOverPrimeField( R ) and DegreeOverPrimeField( R ) > 1 then
+                r := [ "GF(", String( c ), "^", String( DegreeOverPrimeField( R ) ), ")" ];
+            else
+                r := [ "GF(", String( c ), ")" ];
+            fi;
         else
             r := [ "Z/", String( c ), "Z" ];
         fi;
@@ -681,6 +696,10 @@ InstallMethod( SetRingProperties,
     
     d := Length( var );
     
+    if d > 0 then
+        SetIsFinite( S, false );
+    fi;
+    
     SetCoefficientsRing( S, R );
     
     if HasRationalParameters( R ) then
@@ -748,6 +767,10 @@ InstallMethod( SetRingProperties,
     var := IndeterminatesOfPolynomialRing( R );
     
     d := Length( var );
+    
+    if d > 0 then
+        SetIsFinite( S, false );
+    fi;
     
     SetCoefficientsRing( S, r );
     
@@ -1039,7 +1062,39 @@ InstallMethod( SetRingProperties,
     
     SetCharacteristic( R, c );
     
-    if HasRationalParameters( R ) and RationalParameters( R ) > 0 then
+    if HasRationalParameters( R ) and Length( RationalParameters( R ) ) > 0 then
+        SetIsRationalsForHomalg( R, false );
+        SetIsResidueClassRingOfTheIntegers( R, false );
+    else
+        SetDegreeOverPrimeField( R, 1 );
+    fi;
+    
+    RP := homalgTable( R );
+    
+    if IsBound( RP!.RowRankOfMatrixOverDomain ) then
+        RP!.RowRankOfMatrix := RP!.RowRankOfMatrixOverDomain;
+    fi;
+    
+    if IsBound( RP!.ColumnRankOfMatrixOverDomain ) then
+        RP!.ColumnRankOfMatrix := RP!.ColumnRankOfMatrixOverDomain;
+    fi;
+    
+    SetBasisAlgorithmRespectsPrincipalIdeals( R, true );
+    
+end );
+
+##
+InstallMethod( SetRingProperties,
+        "for homalg rings",
+        [ IsHomalgRing and IsFieldForHomalg, IsInt, IsInt ],
+        
+  function( R, c, d )
+    local RP;
+    
+    SetCharacteristic( R, c );
+    SetDegreeOverPrimeField( R, d );
+    
+    if HasRationalParameters( R ) and Length( RationalParameters( R ) ) > 0 then
         SetIsRationalsForHomalg( R, false );
         SetIsResidueClassRingOfTheIntegers( R, false );
     fi;
@@ -1069,7 +1124,7 @@ InstallGlobalFunction( CreateHomalgRing,
   function( arg )
     local nargs, r, IdentityMatrices, statistics, asserts,
           homalg_ring, table, properties, ar, type, matrix_type,
-          ring_element_constructor, c, el;
+          ring_element_constructor, finalizers, c, el;
     
     nargs := Length( arg );
     
@@ -1229,6 +1284,8 @@ InstallGlobalFunction( CreateHomalgRing,
             type := ar;
         elif not IsBound( ring_element_constructor ) and IsFunction( ar ) then
             ring_element_constructor := ar;
+        elif not IsBound( finalizers ) and IsList( ar ) and ForAll( ar, IsFunction ) then
+            finalizers := ar;
         fi;
     od;
     
@@ -1269,6 +1326,12 @@ InstallGlobalFunction( CreateHomalgRing,
     
     ## do not invoke SetRingProperties here, since I might be
     ## the first step of creating a residue class ring!
+    
+    ## this has to be invoked before we set the distinguished ring elements below;
+    ## these functions are used to finalize the construction of the ring
+    if IsBound( finalizers ) then
+        Perform( finalizers, function( f ) f( homalg_ring ); end );
+    fi;
     
     ## add distinguished ring elements like 0 and 1
     ## (sometimes also -1) to the homalg table:
@@ -1322,7 +1385,7 @@ end );
 ##
 InstallGlobalFunction( HomalgRingOfIntegers,
   function( arg )
-    local nargs, R, c, rel;
+    local nargs, R, c, d, rel;
     
     nargs := Length( arg );
     
@@ -1336,7 +1399,15 @@ InstallGlobalFunction( HomalgRingOfIntegers,
                 Error( "the package GaussForHomalg failed to load\n" );
             fi;
             if IsPrime( c ) then
-                R := CreateHomalgRing( GF( c ) );
+                if nargs > 1 and IsPosInt( arg[2] ) then
+                    d := arg[2];
+                else
+                    d := 1;
+                fi;
+                R := CreateHomalgRing( GF( c, d ) );
+                R!.NameOfPrimitiveElement := Concatenation( "Z", String( c ), "_", String( d ) );
+                SetIsFieldForHomalg( R, true );
+                SetRingProperties( R, c, d );
             else
                 R := CreateHomalgRing( ZmodnZ( c ) );
             fi;
@@ -1394,6 +1465,10 @@ InstallMethod( ParseListOfIndeterminates,
         
   function( _indets )
     local err, l, indets, i, v, l1, l2, p1, p2, c;
+    
+    if _indets = [ ] then
+        return [ ];
+    fi;
     
     err := function( ) Error( "a list of variable strings or range strings is expected\n" ); end;
     
@@ -1523,6 +1598,10 @@ InstallMethod( PolynomialRing,
         
   function( R, _var )
     local var;
+    
+    if _var = "" then
+        return R;
+    fi;
     
     var := ParseListOfIndeterminates( SplitString( _var, "," ) );
     
@@ -1763,6 +1842,129 @@ InstallGlobalFunction( _CreateHomalgRingToTestProperties,
     CallFuncList( ObjectifyWithAttributes, Concatenation([ homalg_ring, type ], arg ) );
     
     return homalg_ring;
+    
+end );
+
+##
+InstallMethod( UnivariatePolynomial,
+        "for a list and a string",
+        [ IsList, IsString ],
+        
+  function( coeffs, r )
+    local pol;
+    
+    pol := List( Reversed( [ 1 .. Length( coeffs ) ] ),
+                 i -> Concatenation( "(", String( coeffs[i] ), ")*", r, "^", String( i - 1 ) )
+                 );
+    
+    return JoinStringsWithSeparator( pol, "+" );
+    
+end );
+
+##
+InstallMethod( Homogenization,
+        "for a homalg ring element and a homalg ring",
+        [ IsHomalgRingElement, IsHomalgRing ],
+        
+  function( r, S )
+    local R, d, indetsR, indetsS, indR, indS, z, coeffs, monoms, diff;
+    
+    if IsZero( r ) then
+        return Zero( S );
+    fi;
+    
+    R := HomalgRing( r );
+    
+    if not HasIsFreePolynomialRing( R ) and IsFreePolynomialRing( R ) and
+       not HasIsFreePolynomialRing( S ) and IsFreePolynomialRing( S ) then
+        TryNextMethod( );
+    fi;
+    
+    d := Degree( r );
+    
+    if d = 0 then
+        return r / S;
+    fi;
+    
+    indetsR := Indeterminates( R );
+    indetsS := Indeterminates( S );
+    
+    indS := List( indetsS, String );
+    indR := List( indetsR, String );
+    
+    
+    if not IsSubset( indS, indR ) then
+        Error( "the indeterminates of the second argument do not contain the indeterminates of the ring underlying the given ring element\n" );
+    fi;
+    
+    z := Difference( indS, indR );
+    
+    if Length( z ) <> 1 then
+        Error( "the indeterminates of the second argument are not exactly one more than the indeterminates of the ring underlying the given ring element\n" );
+    fi;
+    
+    z := Filtered( indetsS, a -> String( a ) = z[1] )[1];
+    
+    coeffs := Coefficients( r );
+    monoms := coeffs!.monomials;
+    
+    coeffs := List( EntriesOfHomalgMatrix( coeffs ), c -> c / S );
+    monoms := List( monoms, m -> ( m / S ) * z^( d - Degree( m ) ) );
+    
+    return Sum( ListN( coeffs, monoms, \* ) );
+    
+end );
+
+##
+InstallMethod( \*,
+        "for an FFE and a homalg ring element",
+        [ IsFFE, IsHomalgRingElement ],
+        
+  function( f, r )
+    local R, e;
+    
+    R := HomalgRing( r );
+    
+    e := LogFFE( f, Z( Characteristic( R ), DegreeOverPrimeField( R ) ) );
+    
+    return PrimitiveElement( R )^e * r;
+    
+end );
+
+##
+InstallMethod( \*,
+        "for a homalg ring element and an FFE",
+        [ IsHomalgRingElement, IsFFE ],
+        
+  function( r, f )
+    
+    return f * r;
+    
+end );
+
+## the second argument is there for method selection
+InstallMethod( LcmOp,
+        "for homalg objects",
+        [ IsList, IsHomalgRingElement ],
+        
+  function( L, r )
+    
+    return Iterated( L, LcmOp );
+    
+end );
+
+##
+InstallMethod( LcmOp,
+        "for homalg ring elements",
+        [ IsHomalgRingElement, IsHomalgRingElement ],
+        
+  function( p, q )
+    
+    if IsZero( p ) or IsZero( q ) then
+        return Zero( p );
+    fi;
+    
+    return p * q / GcdOp( p, q );
     
 end );
 

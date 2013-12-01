@@ -22,16 +22,24 @@ InstallMethod( LeadingModule,
   function( mat )
     local R, RP, lead;
     
+    ## we are in the left module convention, i.e., row convention;
+    ## so ideals are passed as a one column matrix
+    
     R := HomalgRing( mat );
     
     RP := homalgTable( R );
     
-    if not IsBound(RP!.LeadingModule) then
-        Error( "could not find a procedure called LeadingModule ",
+    if IsBound(RP!.LeadingModule) then
+        lead := RP!.LeadingModule( mat );
+    elif IsBound(RP!.LeadingIdeal) then
+        if not NrColumns( mat ) = 1 then
+            Error( "the matrix of generators of the ideal should be a one column matrix\n" );
+        fi;
+        lead := RP!.LeadingIdeal( mat );
+    else
+        Error( "could not find a procedure called LeadingModule (or LeadingIdeal) ",
                "in the homalgTable of the ring\n" );
     fi;
-    
-    lead := RP!.LeadingModule( mat );
     
     return HomalgMatrix( lead, NrRows( mat ), NrColumns( mat ), R );
     
@@ -816,13 +824,17 @@ InstallMethod( HilbertPoincareSeries,
         [ IsHomalgMatrix, IsRingElement ],
         
   function( M, lambda )
-    local R, RP, hilb, n, d;
+    local R, RP, hilb, n, d, weights, degrees;
     
     R := HomalgRing( M );
     
     RP := homalgTable( R );
     
-    if IsBound( RP!.CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries ) then
+    if HasIsDivisionRingForHomalg( R ) and IsDivisionRingForHomalg( R ) then
+        
+        return ( NrColumns( M ) - RowRankOfMatrix( M ) ) * lambda^0;
+        
+    elif IsBound( RP!.CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries ) then
         
         hilb := UnreducedNumeratorOfHilbertPoincareSeries( M, lambda );
         
@@ -837,6 +849,14 @@ InstallMethod( HilbertPoincareSeries,
         d := AffineDimension( M );
         
         return hilb / ( 1 - lambda )^d;
+        
+    elif IsBound( RP!.CoefficientsOfUnreducedNumeratorOfWeightedHilbertPoincareSeries ) then
+        
+        weights := ListWithIdenticalEntries( Length( Indeterminates( R ) ), 1 );
+        
+        degrees := ListWithIdenticalEntries( NrColumns( M ), 0 );
+        
+        return HilbertPoincareSeries( LeadingModule( M ), weights, degrees, lambda );
         
     fi;
     
@@ -1046,7 +1066,7 @@ InstallMethod( HilbertPolynomial,
         [ IsHomalgMatrix, IsRingElement ],
         
   function( M, lambda )
-    local R, RP, free, hilb;
+    local R, RP, free, hilb, weights, degrees;
     
     ## take care of n x 0 matrices
     if NrColumns( M ) = 0 then
@@ -1057,7 +1077,11 @@ InstallMethod( HilbertPolynomial,
     
     RP := homalgTable( R );
     
-    if IsBound( RP!.CoefficientsOfHilbertPolynomial ) then
+    if HasIsDivisionRingForHomalg( R ) and IsDivisionRingForHomalg( R ) then
+        
+        return ( NrColumns( M ) - RowRankOfMatrix( M ) ) * lambda^0;
+        
+    elif IsBound( RP!.CoefficientsOfHilbertPolynomial ) then
         
         if IsZero( M ) then
             ## take care of zero matrices, especially of 0 x n matrices
@@ -1078,6 +1102,14 @@ InstallMethod( HilbertPolynomial,
         hilb := HilbertPoincareSeries( M, lambda );
         
         return HilbertPolynomialOfHilbertPoincareSeries( hilb );
+        
+    elif IsBound( RP!.CoefficientsOfUnreducedNumeratorOfWeightedHilbertPoincareSeries ) then
+        
+        weights := ListWithIdenticalEntries( Length( Indeterminates( R ) ), 1 );
+        
+        degrees := ListWithIdenticalEntries( NrColumns( M ), 0 );
+        
+        return HilbertPolynomial( LeadingModule( M ), weights, degrees, lambda );
         
     fi;
     
@@ -1282,7 +1314,7 @@ InstallMethod( AffineDegree,
         [ IsHomalgMatrix ],
         
   function( M )
-    local R, RP, hilb;
+    local R, RP, hilb, weights, degrees;
     
     ## take care of n x 0 matrices
     if NrColumns( M ) = 0 then
@@ -1299,6 +1331,14 @@ InstallMethod( AffineDegree,
         hilb := CoefficientsOfNumeratorOfHilbertPoincareSeries( M );
         
         return Sum( hilb );
+
+    elif IsBound( RP!.CoefficientsOfUnreducedNumeratorOfWeightedHilbertPoincareSeries ) then
+        
+        weights := ListWithIdenticalEntries( Length( Indeterminates( R ) ), 1 );
+        
+        degrees := ListWithIdenticalEntries( NrColumns( M ), 0 );
+        
+        return AffineDegree( LeadingModule( M ), weights, degrees );
         
     fi;
     
@@ -1653,12 +1693,36 @@ InstallMethod( IndexOfRegularity,
 end );
 
 ##
+InstallMethod( IsPrimeModule,
+        "for a homalg matrix",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    local R, RP;
+    
+    R := HomalgRing( M );
+    
+    if IsZero( M ) and HasIsIntegralDomain( R ) and IsIntegralDomain( R ) then
+        return true;
+    fi;
+    
+    RP := homalgTable( R );
+    
+    if IsBound( RP!.IsPrime ) then
+        return RP!.IsPrime( M );
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
 InstallMethod( PrimaryDecompositionOp,
         "for a homalg matrix",
         [ IsHomalgMatrix ],
         
   function( M )
-    local R, RP, one;
+    local R, RP, triv;
     
     if IsBound( M!.PrimaryDecomposition ) then
         return M!.PrimaryDecomposition;
@@ -1667,8 +1731,12 @@ InstallMethod( PrimaryDecompositionOp,
     R := HomalgRing( M );
     
     if IsZero( M ) then
-        one := HomalgIdentityMatrix( 1, 1, R );
-        M!.PrimaryDecomposition := [ [ one, one ] ];
+        if NrColumns( M ) = 0 then
+            triv := HomalgZeroMatrix( 0, 0, R );
+        else
+            triv := HomalgZeroMatrix( 0, 1, R );
+        fi;
+        M!.PrimaryDecomposition := [ [ triv, triv ] ];
         return M!.PrimaryDecomposition;
     fi;
     
@@ -1694,11 +1762,30 @@ InstallMethod( PrimaryDecompositionOp,
         [ IsHomalgResidueClassMatrixRep ],
         
   function( M )
-    local R;
+    local R, triv, rel, m;
     
     R := HomalgRing( M );
     
-    return List( PrimaryDecompositionOp( Eval( M ) ), a -> List( a, b -> R * b ) );
+    if IsZero( M ) then
+        if NrColumns( M ) = 0 then
+            triv := HomalgIdentityMatrix( 1, R );
+        else
+            triv := HomalgZeroMatrix( 0, 1, R );
+        fi;
+        M!.PrimaryDecomposition := [ [ triv, triv ] ];
+        return M!.PrimaryDecomposition;
+    fi;
+    
+    rel := RingRelations( R );
+    rel := MatrixOfRelations( rel );
+    rel := ListWithIdenticalEntries( NrColumns( M ), rel );
+    rel := DiagMat( rel );
+    
+    m := UnionOfRows( Eval( M ), rel );
+    
+    M!.PrimaryDecomposition := List( PrimaryDecompositionOp( m ), a -> List( a, b -> R * b ) );
+    
+    return M!.PrimaryDecomposition;
     
 end );
 
@@ -1708,7 +1795,7 @@ InstallMethod( RadicalDecompositionOp,
         [ IsHomalgMatrix ],
         
   function( M )
-    local R, RP, one;
+    local R, RP, triv;
     
     if IsBound( M!.RadicalDecomposition ) then
         return M!.RadicalDecomposition;
@@ -1717,8 +1804,12 @@ InstallMethod( RadicalDecompositionOp,
     R := HomalgRing( M );
     
     if IsZero( M ) then
-        one := HomalgIdentityMatrix( 1, 1, R );
-        M!.RadicalDecomposition := [ one ];
+        if NrColumns( M ) = 0 then
+            triv := HomalgZeroMatrix( 0, 0, R );
+        else
+            triv := HomalgZeroMatrix( 0, 1, R );
+        fi;
+        M!.RadicalDecomposition := [ triv ];
         return M!.RadicalDecomposition;
     fi;
     
@@ -1773,7 +1864,7 @@ InstallMethod( IntersectWithSubalgebra,
                " to be a subset of the set of indeterminates ", indets, "\n" );
     fi;
     
-    J := Eliminate( I, Difference( indets, var ) );
+    J := Eliminate( I, Difference( indets, var ), R );
     
     S := CoefficientsRing( R ) * var;
     

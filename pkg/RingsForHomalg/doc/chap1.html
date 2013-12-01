@@ -101,10 +101,6 @@ GF(2)(s)
 Z
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZ );</span>
 &lt;An external ring residing in the CAS Singular&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZs := HomalgRingOfIntegersInSingular( "s", F2 );</span>
-Z(s)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZs );</span>
-&lt;An external ring residing in the CAS Singular&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := HomalgFieldOfRationalsInSingular( F2 );</span>
 Q
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Q );</span>
@@ -143,17 +139,9 @@ GF(2)(s)[x,y,z][w]
 Z[x,y,z]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZxyz );</span>
 &lt;An external ring residing in the CAS Singular&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZsxyz := ZZs * "x,y,z";</span>
-Z(s)[x,y,z]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZsxyz );</span>
-&lt;An external ring residing in the CAS Singular&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZxyzw := ZZxyz * "w";</span>
 Z[x,y,z][w]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZxyzw );</span>
-&lt;An external ring residing in the CAS Singular&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZsxyzw := ZZsxyz * "w";</span>
-Z(s)[x,y,z][w]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ZZsxyzw );</span>
 &lt;An external ring residing in the CAS Singular&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Qxyz := Q * "x,y,z";</span>
 Q[x,y,z]

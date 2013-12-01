@@ -2,7 +2,7 @@
 ##  
 ##  PackageInfo.g for the package `Example'                     Werner Nickel
 ##                                                                Greg Gamble
-##  (created from Frank Lübeck's PackageInfo.g template file)
+##  (created from Frank LÃ¼beck's PackageInfo.g template file)
 ##  
 ##  This is a GAP readable file. Of course you can change and remove all
 ##  comments as you like.
@@ -38,16 +38,16 @@ Subtitle := "Example/Template of a GAP Package and Guidelines for Package Author
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "3.4.3",
+Version := "3.4.4",
 ##  Release date of the current version in dd/mm/yyyy format.
 ##
-Date := "27/03/2013",
+Date := "30/10/2013",
 ##  Optional: if the package manual uses GAPDoc, you may duplicate the 
 ##  version and the release date as shown below to read them while building
 ##  the manual using GAPDoc facilities to distibute documents across files.
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.4.3">
-##  <!ENTITY RELEASEDATE "27 March 2013">
+##  <!ENTITY VERSION "3.4.4">
+##  <!ENTITY RELEASEDATE "30 October 2013">
 ##  <#/GAPDoc>
 
 PackageWWWHome :=
@@ -114,7 +114,7 @@ ArchiveFormats := ".tar.gz",
 ##     rec(
 ##     # these are compulsory, the strings can be encoded in UTF-8 or latin1,
 ##     # so using German umlauts or other special characters is ok:
-##     LastName := "Müller",
+##     LastName := "MÃ¼ller",
 ##     FirstNames := "Fritz Eduard",
 ##  
 ##     # At least one of the following two entries must be given and set 
@@ -131,7 +131,7 @@ ArchiveFormats := ".tar.gz",
 ##     # complete URL, starting with protocol
 ##     WWWHome := "http://www.no.org/~Mueller",
 ##     # separate lines by '\n' (*optional*)
-##     PostalAddress := "Dr. F. Müller\nNo Org Institute\nNo Place 13\n\
+##     PostalAddress := "Dr. F. MÃ¼ller\nNo Org Institute\nNo Place 13\n\
 ##     12345 Notown\nNocountry"
 ##     
 ##     # If you want, add one or both of the following entries (*optional*)

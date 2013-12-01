@@ -21,12 +21,12 @@ PackageName := "Gauss",
 
 ##  This may be used by a default banner or on a Web page, should fit on
 ##  one line.
-Subtitle := "Gauss - Extended Gauss Functionality for GAP",
+Subtitle := "Extended Gauss functionality for GAP",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "2013.03.07",
+Version := "2013.06.26",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -262,7 +262,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "Gauss - Extended Gauss Functionality for GAP",
+  LongTitle := "Extended Gauss functionality for GAP",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := false
@@ -313,16 +313,16 @@ end,
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-BannerString := Concatenation(
-  "----------------------------------------------------------------\n",
-  "Loading  Gauss ", ~.Version, "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
-  "Type ?Gauss:     for help contents,\n",
-  "     ?Gauss:n    to read chapter n,\n",
-  "     ?Gauss:term to search for a certain term.\n",
-  "----------------------------------------------------------------\n" ),
-
+## BannerString := Concatenation(
+##   "----------------------------------------------------------------\n",
+##   "Loading  Gauss ", ~.Version, "\n",
+##   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+##         " (", ~.Persons[1].WWWHome, ")\n",
+##   "Type ?Gauss:     for help contents,\n",
+##   "     ?Gauss:n    to read chapter n,\n",
+##   "     ?Gauss:term to search for a certain term.\n",
+##   "----------------------------------------------------------------\n" ),
+## 
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
 ##  started.  This should usually be 'false'. Say 'true' only if your package 
 ##  provides some improvements of the GAP library which are likely to enhance 

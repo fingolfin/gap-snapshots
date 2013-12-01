@@ -180,7 +180,7 @@ x:= Polymake();
 if x=1 then
 Print("Presentation is aspherical.\n\n"); return true;
 else
-Print("Presentation is NOT piece-wise Euclidean non-positively curved.\n\n");
+Print("Test inconclusive.\n\n");
 return fail; fi;
 
 end);

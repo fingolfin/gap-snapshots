@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "RCWA",
 Subtitle         := "Residue-Class-Wise Affine Groups",
-Version          := "3.5.1",
-Date             := "30/12/2012",
-ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.5.1",
+Version          := "3.6.1",
+Date             := "18/11/2013",
+ArchiveURL       := "http://www.gap-system.org/DevelopersPages/StefanKohl/rcwa/rcwa-3.6.1",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -47,8 +47,8 @@ PackageDoc       := rec(
                          Autoload         := true
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.6.0",
-                         NeededOtherPackages    := [ ["ResClasses",">=3.3.0"], ["GRAPE",">=4.3"],
+                         GAP                    := ">=4.7.0",
+                         NeededOtherPackages    := [ ["ResClasses",">=3.3.1"], ["GRAPE",">=4.3"],
                                                      ["Polycyclic",">=2.6"], ["GAPDoc",">=1.4"] ],
                          SuggestedOtherPackages := [ ["FR",">=1.1.3"] ],
                          ExternalConditions     := [ ]
@@ -58,7 +58,6 @@ BannerString     := Concatenation( "\nLoading RCWA ", ~.Version,
                                    " ([R]esidue-[C]lass-[W]ise [A]ffine groups)",
                                    "\n  by Stefan Kohl, stefan@mcs.st-and.ac.uk.",
                                    "\nSee ?RCWA:About for information about the package.\n\n" ),
-Autoload         := false,
 TestFile         := "tst/testinstall.tst",
 Keywords         := [ "infinite permutation groups", "permutation groups over rings",
                       "combinatorial group theory", "residue-class-wise affine groups",

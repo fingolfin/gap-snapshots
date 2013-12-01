@@ -5,6 +5,13 @@
 #Y  Copyright (C) 2006-2007, Lehrstuhl D für Mathematik, RWTH Aachen, Germany
 ##
 
+# make sure that TERM is set in environment, if not we set it to "dumb"
+# (here only in GAP's info about the environment setting, but in kernel
+# code we also change the actual environment)
+if not IsBound(GAPInfo.SystemEnvironment.TERM) then
+  GAPInfo.SystemEnvironment.TERM := "dumb";
+fi;
+
 # load kernel module
 if (not IsBound(NCurses)) and 
    ("ncurses" in SHOW_STAT()) then
@@ -32,6 +39,7 @@ if not IsBound(NCurses) then
            " Without NCurses PLEASE COMPILE!!!");
     SetUserPreference( "browse", "SelectHelpMatches", false );
     SetUserPreference( "browse", "SelectPackageName", false );
+    SetUserPreference( "browse", "EnableMouseEvents", false );
   fi;
 fi;
 if GAPInfo.PackagesLoaded.browse[2] <> NCurses.KernelModuleVersion then
@@ -51,4 +59,4 @@ ReadPackage( "Browse", "lib/brdbattr.gd" );
 # utilities for Browse applications (must be read before `read.g')
 ReadPackage( "Browse", "lib/brutils.g" );
 
-Browse_svnRevision := "465";
+Browse_svnRevision := "524";

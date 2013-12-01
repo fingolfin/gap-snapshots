@@ -104,3 +104,32 @@
   solitaire,  and  Sudoku  (including  functions  to create new puzzles and to
   solve puzzles).[133X
   
+  
+  [1X1.3 [33X[0;0YUser preferences provided by the [5XBrowse[105X[101X[1X package[133X[101X
+  
+  
+  [1X1.3-1 [33X[0;0YThe user preference [10XEnableMouseEvents[110X[101X[1X[133X[101X
+  
+  [33X[0;0YThis  user preference defines whether mouse events are enabled by default in
+  visual  mode  (value [9Xtrue[109X) or not (value [9Xfalse[109X, this is the default). During
+  the  [5XGAP[105X  session, the value can be changed using [2XNCurses.UseMouse[102X ([14X2.2-10[114X).
+  Inside   browse  applications  based  on  [2XNCurses.BrowseGeneric[102X  ([14X4.3-1[114X)  or
+  [2XNCurses.Select[102X  ([14X3.1-2[114X),  the  value can be toggled usually by hitting the [12XM[112X
+  key.[133X
+  
+  
+  [1X1.3-2 [33X[0;0YThe user preference [10XSelectHelpMatches[110X[101X[1X[133X[101X
+  
+  [33X[0;0YIn  the  case  that  the  [5XGAP[105X  help system finds multiple matches, [9Xtrue[109X (the
+  default)  means that the user can choose one entry from a list that is shown
+  via  [2XNCurses.Select[102X ([14X3.1-2[114X), and [9Xfalse[109X means that the matches are just shown
+  in a pager.[133X
+  
+  
+  [1X1.3-3 [33X[0;0YThe user preference [10XSelectPackageName[110X[101X[1X[133X[101X
+  
+  [33X[0;0YIn  the  case  that  [2XLoadPackage[102X  ([14XReference:  LoadPackage[114X) is called with a
+  prefix  of  some  package  names, [9Xtrue[109X (the default) means that the user can
+  choose  one  matching  entry,  and  [9Xfalse[109X  means  that  the matches are just
+  printed.[133X
+  

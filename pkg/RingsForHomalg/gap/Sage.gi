@@ -233,7 +233,7 @@ InstallMethod( PolynomialRing,
     
     var := List( var, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( var, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( var, Name );
     
     SetIsFreePolynomialRing( S, true );
     
@@ -335,7 +335,7 @@ InstallMethod( MatElm,
   function( M, r, c, R )
     local Mrc;
     
-    Mrc := MatElmAsString( M, r, c, R );
+    Mrc := homalgSendBlocking( [ M, "[", r-1, c-1, "]" ], HOMALG_IO.Pictograms.MatElm );
     
     return HomalgExternalRingElement( Mrc, R );
     

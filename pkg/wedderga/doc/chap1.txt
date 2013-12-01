@@ -78,19 +78,19 @@
   [33X[0;0Y[2XWedderburnDecomposition[102X ([14X2.1-1[114X) computes a list of simple algebras such that
   their  direct product is isomorphic to the group algebra [22XFG[122X, given as input.
   Thus,  the  direct  product  of  the entries of the output is the [13XWedderburn
-  decomposition[113X ([14X8.3[114X) of [22XFG[122X.[133X
+  decomposition[113X ([14X9.3[114X) of [22XFG[122X.[133X
   
   [33X[0;0YIf  [22XF[122X is an abelian number field then the entries of the output are given as
-  matrix  algebras  over  cyclotomic algebras (see [14X8.11[114X), thus, the entries of
+  matrix  algebras  over  cyclotomic algebras (see [14X9.11[114X), thus, the entries of
   the  output  of  [2XWedderburnDecomposition[102X  ([14X2.1-1[114X)  are  realizations  of the
-  [13XWedderburn  components[113X  ([14X8.3[114X)  of [22XFG[122X as algebras which are [13XBrauer equivalent[113X
-  ([14X8.5[114X)  to  [13Xcyclotomic  algebras[113X  ([14X8.11[114X). Recall that the Brauer-Witt Theorem
+  [13XWedderburn  components[113X  ([14X9.3[114X)  of [22XFG[122X as algebras which are [13XBrauer equivalent[113X
+  ([14X9.5[114X)  to  [13Xcyclotomic  algebras[113X  ([14X9.11[114X). Recall that the Brauer-Witt Theorem
   ensures  that  every  simple  factor of a semisimple group ring [22XFG[122X is Brauer
   equivalent  (that  is  represents  the same class in the Brauer group of its
   centre)  to  a  cyclotomic  algebra  ([Yam74]. In this case the algorithm is
   based  in  a  computational oriented proof of the Brauer-Witt Theorem due to
   Olteanu  [Olt07]  which  uses  previous  work by Olivieri, del Río and Simón
-  [ORS04] for rational group algebras of [13Xstrongly monomial groups[113X ([14X8.16[114X).[133X
+  [ORS04] for rational group algebras of [13Xstrongly monomial groups[113X ([14X9.16[114X).[133X
   
   [33X[0;0YThe Wedderburn components of [22XFG[122X are also matrix algebras over division rings
   which  are  finite  extensions  of  the  field [22XF[122X. If [22XF[122X is finite then by the
@@ -132,5 +132,5 @@
   
   [33X[0;0YInstead  of  [2XWedderburnDecomposition[102X  ([14X2.1-1[114X),  that  returns  a list of [5XGAP[105X
   objects,   [2XWedderburnDecompositionInfo[102X   ([14X2.1-2[114X)   returns   the   numerical
-  description of these objects. See Section [14X8.12[114X for theoretical background.[133X
+  description of these objects. See Section [14X9.12[114X for theoretical background.[133X
   

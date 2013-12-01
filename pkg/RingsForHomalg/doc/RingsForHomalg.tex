@@ -98,8 +98,8 @@
 {\Huge \textbf{Dictionaries of External Rings for the \textsf{GAP} Package \textsf{homalg}\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.04.19\mbox{}}\\[1cm]
-{April 2013\mbox{}}\\[1cm]
+{\Huge Version 2013.11.01\mbox{}}\\[1cm]
+{November 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -119,6 +119,8 @@
     \mbox{}}}\\
 {\Large \textbf{Andreas Steenpa{\ss}\\
     \mbox{}}}\\
+{\Large \textbf{Vinay Wagh\\
+    \mbox{}}}\\
 \hypersetup{pdfauthor=Mohamed Barakat\\
     ; Simon Goertzen\\
     ; Markus Kirschmer\\
@@ -128,6 +130,7 @@
     ; Daniel Robertz\\
     ; Hans Sch{\"o}nemann\\
     ; Andreas Steenpa{\ss}\\
+    ; Vinay Wagh\\
     }
 \mbox{}\\[2cm]
 \begin{minipage}{12cm}\noindent
@@ -241,6 +244,16 @@ package is part of the \textsf{homalg}-project: \\
  67653 Kaiserslautern, \\
  Germany \end{minipage}
 }\\
+{\mbox{}\\
+\small \noindent \textbf{Vinay Wagh\\
+    }  Email: \href{mailto://waghoba@gmail.com} {\texttt{waghoba@gmail.com}}\\
+  Homepage: \href{http://www.iitg.ernet.in/vinay.wagh/} {\texttt{http://www.iitg.ernet.in/vinay.wagh/}}\\
+  Address: \begin{minipage}[t]{8cm}\noindent
+ E-102, Department of Mathematics, \\
+ Indian Institute of Technology Guwahati, \\
+ Guwahati, Assam, India. \\
+ PIN: 781 039. \end{minipage}
+}\\
 \end{titlepage}
 
 \newpage\setcounter{page}{2}
@@ -322,10 +335,6 @@ Public License Version 2. \mbox{}}\\[1cm]
   Z
   !gapprompt@gap>| !gapinput@Display( ZZ );|
   <An external ring residing in the CAS Singular>
-  !gapprompt@gap>| !gapinput@ZZs := HomalgRingOfIntegersInSingular( "s", F2 );|
-  Z(s)
-  !gapprompt@gap>| !gapinput@Display( ZZs );|
-  <An external ring residing in the CAS Singular>
   !gapprompt@gap>| !gapinput@Q := HomalgFieldOfRationalsInSingular( F2 );|
   Q
   !gapprompt@gap>| !gapinput@Display( Q );|
@@ -361,17 +370,9 @@ Public License Version 2. \mbox{}}\\[1cm]
   Z[x,y,z]
   !gapprompt@gap>| !gapinput@Display( ZZxyz );|
   <An external ring residing in the CAS Singular>
-  !gapprompt@gap>| !gapinput@ZZsxyz := ZZs * "x,y,z";|
-  Z(s)[x,y,z]
-  !gapprompt@gap>| !gapinput@Display( ZZsxyz );|
-  <An external ring residing in the CAS Singular>
   !gapprompt@gap>| !gapinput@ZZxyzw := ZZxyz * "w";|
   Z[x,y,z][w]
   !gapprompt@gap>| !gapinput@Display( ZZxyzw );|
-  <An external ring residing in the CAS Singular>
-  !gapprompt@gap>| !gapinput@ZZsxyzw := ZZsxyz * "w";|
-  Z(s)[x,y,z][w]
-  !gapprompt@gap>| !gapinput@Display( ZZsxyzw );|
   <An external ring residing in the CAS Singular>
   !gapprompt@gap>| !gapinput@Qxyz := Q * "x,y,z";|
   Q[x,y,z]

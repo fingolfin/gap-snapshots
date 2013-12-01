@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  26 OCT 2012 21:49
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  28 OCT 2013 22:32
 entering extended mode
 **homalg
 (./homalg.tex
@@ -552,7 +552,11 @@ File: upsy.fd 2001/06/04 font definitions for U/psy.
 Package: enumitem 2004/07/19 v1.0 Customized lists
 \labelindent=\skip43
 \enit@outerparindent=\dimen106
-) (./homalg.aux)
+) (./homalg.aux
+
+LaTeX Warning: Label `IsTorsion' multiply defined.
+
+)
 \openout1 = `homalg.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
@@ -569,8 +573,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
 LaTeX Font Info:    ... okay on input line 87.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 87.
-
-(/sw/share/texmf-dist/tex/latex/base/ts1cmr.fd
+ (/sw/share/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 87.
@@ -845,7 +848,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1609--1611
 
 [24] [25] [26] [27]
 Chapter 5.
-[28
+! pdfTeX warning (ext4): destination with the same identifier (name{L.X80C6B262
+84721409}) has been already used, duplicate ignored
+<to be read again> 
+                   \penalty 
+l.2009 \hyperdef{L}{X80C6B26284721409}{}
+                                         [28
 
 ] [29] [30]
 Chapter 6.
@@ -854,7 +862,7 @@ Chapter 6.
 ] [32] [33] [34] [35] [36] [37] [38] [39]
 Chapter 7.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2760--2761
+Underfull \hbox (badness 10000) in paragraph at lines 2775--2776
 []\T1/ptm/m/n/10.95 (It is a sub-cat-e-gory of the \T1/phv/m/n/10.95 GAP \T1/pt
 m/m/n/10.95 cat-e-gories \T1/cmtt/m/n/10.95 IsHomalgChainMorphism \T1/ptm/m/n/1
 0.95 and
@@ -863,12 +871,12 @@ m/m/n/10.95 cat-e-gories \T1/cmtt/m/n/10.95 IsHomalgChainMorphism \T1/ptm/m/n/1
 [40
 
 ] [41] [42]
-Underfull \hbox (badness 10000) in paragraph at lines 3009--3011
+Underfull \hbox (badness 10000) in paragraph at lines 3024--3026
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3025--3027
+Underfull \hbox (badness 10000) in paragraph at lines 3040--3042
 
  []
 
@@ -881,7 +889,7 @@ Chapter 9.
 [49
 
 ] [50]
-Underfull \hbox (badness 1803) in paragraph at lines 3627--3629
+Underfull \hbox (badness 1803) in paragraph at lines 3642--3644
 []\T1/ptm/m/n/10.95 The dif-fer-en-tial of the re-sult-ing level []$\OT1/ztmcm/
 m/n/10.95 +1$ \T1/ptm/m/n/10.95 ob-ject can a pos-te-ri-ori be com-puted us-ing
 
@@ -890,7 +898,7 @@ m/n/10.95 +1$ \T1/ptm/m/n/10.95 ob-ject can a pos-te-ri-ori be com-puted us-ing
 [51] [52] [53]
 Chapter 10.
 
-Underfull \hbox (badness 10000) in paragraph at lines 3874--3878
+Underfull \hbox (badness 10000) in paragraph at lines 3889--3893
 
  []
 
@@ -899,40 +907,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 3874--3878
 ] [55] [56] [57] [58]
 Chapter 11.
 
-Underfull \hbox (badness 1082) in paragraph at lines 4161--4165
+Underfull \hbox (badness 1082) in paragraph at lines 4176--4180
 \T1/ptm/m/n/10.95 such a func-tor ob-ject and cre-ate op-er-a-tions in or-der t
 o ap-ply the func-tor on ob-jects, mor-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4176--4181
+Underfull \hbox (badness 10000) in paragraph at lines 4191--4196
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4176--4181
+Underfull \hbox (badness 10000) in paragraph at lines 4191--4196
 
  []
 
 [59
 
 ] [60] [61] [62] [63]
-Underfull \hbox (badness 10000) in paragraph at lines 4555--4558
+Underfull \hbox (badness 10000) in paragraph at lines 4570--4573
 
  []
 
 [64]
-Underfull \hbox (badness 10000) in paragraph at lines 4584--4587
+Underfull \hbox (badness 10000) in paragraph at lines 4599--4602
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4637--4640
+Underfull \hbox (badness 10000) in paragraph at lines 4652--4655
 
  []
 
 [65]
-Underfull \hbox (badness 10000) in paragraph at lines 4680--4683
+Underfull \hbox (badness 10000) in paragraph at lines 4695--4698
 
  []
 
@@ -950,7 +958,7 @@ Appendix B.
 
 ]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 5203.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 5218.
  [77] [78] [79]
 Appendix C.
 [80
@@ -958,22 +966,22 @@ Appendix C.
 ]
 Appendix D.
 
-Underfull \hbox (badness 10000) in paragraph at lines 5342--5347
+Underfull \hbox (badness 10000) in paragraph at lines 5357--5362
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5342--5347
+Underfull \hbox (badness 10000) in paragraph at lines 5357--5362
 
  []
 
 
-Overfull \hbox (80.77538pt too wide) in paragraph at lines 5348--5376
+Overfull \hbox (80.77538pt too wide) in paragraph at lines 5363--5391
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5379--5380
+Underfull \hbox (badness 10000) in paragraph at lines 5394--5395
 []\T1/ptm/m/n/10.95 In par-tic-u-lar, if \T1/phv/m/n/10.95 homalg \T1/ptm/m/n/1
 0.95 del-e-gates ma-trix op-er-a-tions to an ex-ter-nal sys-tem then
  []
@@ -990,7 +998,7 @@ Appendix F.
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 5603.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 5618.
  [86] (./homalg.bbl (./homalg.brf)
 \tf@brf=\write9
 \openout9 = `homalg.brf'.
@@ -1153,30 +1161,34 @@ ely\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Generated\T1/ptm/m/n/10.95 -
 
 [91] [92
 
-]) (./homalg.aux) ) 
+]) (./homalg.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 5653 strings out of 94500
- 80142 string characters out of 1176115
- 129327 words of memory out of 1500000
+ 5654 strings out of 94500
+ 80156 string characters out of 1176115
+ 129362 words of memory out of 1500000
  8002 multiletter control sequences out of 10000+50000
  105589 words of font info for 129 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
  27i,7n,36p,908b,575s stack positions out of 5000i,500n,6000p,200000b,5000s
 PDF statistics:
- 1711 PDF objects out of 65536
- 684 named destinations out of 20000
+ 1713 PDF objects out of 65536
+ 685 named destinations out of 20000
  689 words of extra memory for PDF output out of 65536
-</sw/share/texmf-dist/fonts/type1/bluesky/symbols/msbm10.pfb
->{/sw/share/texmf-dist/fonts/enc/dvips/psnfss/8r.enc}</sw/share/texmf-dist/font
-s/type1/urw/times/utmbi8a.pfb></sw/share/texmf-dist/fonts/type1/urw/symbol/usyr
-.pfb></sw/share/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></sw/share/texmf-dis
-t/fonts/type1/bluesky/cm/cmr10.pfb> </sw/var/lib/texmf/fonts/pk/ljfour/jknappen
-/ec/ecst1095.600pk></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmmi10.pfb></sw
-/share/texmf-dist/fonts/type1/bluesky/cm/cmsy10.pfb> </sw/var/lib/texmf/fonts/p
-k/ljfour/jknappen/ec/ectt1000.600pk></sw/share/texmf-dist/fonts/type1/urw/helve
-tic/uhvro8a.pfb></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb> </sw
-/var/lib/texmf/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk></sw/share/texmf-dist
-/fonts/type1/urw/times/utmri8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/
-utmr8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></sw/share/te
-xmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on homalg.pdf (93 pages, 561284 bytes).
+</sw/share/texmf-dist/fonts/type1/bluesky/symbols/msbm10.pfb>{/sw/share/texmf
+-dist/fonts/enc/dvips/psnfss/8r.enc}</sw/share/texmf-dist/fonts/type1/urw/times
+/utmbi8a.pfb></sw/share/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></sw/share/t
+exmf-dist/fonts/type1/urw/symbol/usyr.pfb></sw/share/texmf-dist/fonts/type1/blu
+esky/cm/cmr10.pfb> </sw/var/lib/texmf/fonts/pk/ljfour/jknappen/ec/ecst1095.600p
+k></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmmi10.pfb></sw/share/texmf-dist
+/fonts/type1/bluesky/cm/cmsy10.pfb> </sw/var/lib/texmf/fonts/pk/ljfour/jknappen
+/ec/ectt1000.600pk></sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb><
+/sw/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb> </sw/var/lib/texmf/fo
+nts/pk/ljfour/jknappen/ec/ectt1095.600pk></sw/share/texmf-dist/fonts/type1/urw/
+times/utmri8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></sw/s
+hare/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></sw/share/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvb8a.pfb>
+Output written on homalg.pdf (93 pages, 561768 bytes).

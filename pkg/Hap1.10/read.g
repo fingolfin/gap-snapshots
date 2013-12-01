@@ -85,6 +85,7 @@ fi;
 ################# POLYMAKING COMMANDS ####################################
 if IsPackageMarkedForLoading("polymaking","0.0") then
 ReadPackage("HAP", "lib/Polymake/convexCWspace.gi");
+ReadPackage("HAP", "lib/Polymake/fix.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
 
@@ -93,6 +94,12 @@ if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackage("HAP", "lib/RegularCWComplexes/equivariantCW.gi");
 fi;
 ################# POLYMAKING COMMANDS DONE #################################
+
+################# XMOD COMMANDS ############################################
+if IsPackageMarkedForLoading("xmod","0.0") then
+ReadPackage("HAP", "lib/SimplicialGroups/identity.gi");
+fi;
+################# XMOD COMMANDS DONE #######################################
 
 
 
@@ -240,6 +247,7 @@ ReadPackage("HAP", "lib/Polymake/polyGens.gi");
 ReadPackage("HAP", "lib/Polymake/stabilizer.gi");
 ReadPackage("HAP", "lib/Polymake/polyFaces.gi");
 ReadPackage("HAP", "lib/Polymake/orbitPoly.gi");
+#ReadPackage("HAP", "lib/Polymake/fix.gi");
 
 ################### POLYCYLIC ######################################
 ReadPackage("HAP", "lib/Polycyclic/resAbPcpGroup.gi");
@@ -285,13 +293,19 @@ if COMPILED=false then
 ################### MEAT AXE #######################################
 ReadPackage("HAP","lib/FpGmodules/meataxe.gi");
 
+################## PURE COMPLEXES #############################
+ReadPackage("HAP","lib/PureComplexes/pureComplexes.gi");
+
+
 ################## POLYTOPAL COMPLEXES #############################
 ReadPackage("HAP","lib/PolyComplexes/arrayOps.gi");
 ReadPackage("HAP","lib/PolyComplexes/pureCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/sparseCubicalComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/chainComplexes.gi");
 ReadPackage("HAP","lib/PolyComplexes/twoDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/twoDimensionalPerm.gi");
 ReadPackage("HAP","lib/PolyComplexes/threeDimensional.gi");
+ReadPackage("HAP","lib/PolyComplexes/threeDimensionalPerm.gi");
 ReadPackage("HAP","lib/PolyComplexes/dvf.gi");
 ReadPackage("HAP","lib/PolyComplexes/rips.gi");
 
@@ -302,6 +316,7 @@ ReadPackage("HAP","lib/PolyComplexes/metrics.gi");
 ReadPackage("HAP","lib/PolyComplexes/graphviz.gi");
 ReadPackage("HAP","lib/PolyComplexes/hap2chomp.gi");
 ReadPackage("HAP","lib/PolyComplexes/filteredCubical.gi");
+ReadPackage("HAP","lib/PolyComplexes/purePermutahedralComplexes.gi");
 fi;
 
 
@@ -321,19 +336,32 @@ ReadPackage("HAP","lib/GOuterGroups/homtogouter.gi");
 
 if COMPILED=false then
 ################## SIMPLICIAL GROUPS ###############################
-#ReadPackage("HAP","lib/SimplicialGroups/Kpinmap.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/eilenbergMacLane.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/nerveOfCatOneGroup.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
+#ReadPackage("HAP","lib/SimplicialGroups/quasiIsomorph.gi");
+
 ReadPackage("HAP","lib/SimplicialGroups/eilenbergMacLane.gi");
-#ReadPackage("HAP","lib/SimplicialGroups/simplicialmap.gi");
 ReadPackage("HAP","lib/SimplicialGroups/nerveOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/mooreComplex.gi");
-ReadPackage("HAP","lib/SimplicialGroups/barresolution.gi");
-ReadPackage("HAP","lib/SimplicialGroups/barcomplex.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barResolutionEquivalence.gi");
+ReadPackage("HAP","lib/SimplicialGroups/barComplexEquivalence.gi");
 ReadPackage("HAP","lib/SimplicialGroups/chainComplexOfSimplicialGroup.gi");
-ReadPackage("HAP","lib/SimplicialGroups/Kpin.gi");
 ReadPackage("HAP","lib/SimplicialGroups/tensor2chains.gi");
-#ReadPackage("HAP","lib/SimplicialGroups/lowerCentralSeriesOfCatOneGroup.gi");
 ReadPackage("HAP","lib/SimplicialGroups/homotopyLowerCenterSeries.gi");
+ReadPackage("HAP","lib/SimplicialGroups/crossedModule.gi");
 ReadPackage("HAP","lib/SimplicialGroups/quasiIsomorph.gi");
+ReadPackage("HAP","lib/SimplicialGroups/homology.gi");
+ReadPackage("HAP","lib/SimplicialGroups/persistentHomology.gi");
+ReadPackage("HAP","lib/SimplicialGroups/dataCatOneGroups.gi");
+ReadPackage("HAP","lib/SimplicialGroups/catOneGroupsByGroup.gi");
+ReadPackage("HAP","lib/SimplicialGroups/quasiCatOneGroup.gi");
 
 
 ################## REGULAR CW_COMPLEXES ###############################
@@ -341,6 +369,7 @@ ReadPackage("HAP","lib/RegularCWComplexes/basicRegular.gi");
 #ReadPackage("HAP","lib/RegularCWComplexes/contractAlt.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/fundamental.gi");
 ReadPackage("HAP","lib/RegularCWComplexes/cocontract.gi");
+ReadPackage("HAP","lib/RegularCWComplexes/piZero.gi");
 fi;
 
 if IsPackageMarkedForLoading("congruence","0.0") then
@@ -367,10 +396,10 @@ ReadPackage("HAP","lib/Sparse/sparse.gi");
 ################# CRYSTALLOGRAPHIC GROUPS #####################
 if IsPackageMarkedForLoading("HAPcryst","0.0") then
 ReadPackage("HAP","lib/ArithmeticGroups/crystGbasis.gi");
-ReadPackage("HAP","lib/ArithmeticGroups/crystGbasisnew.gi");
+#ReadPackage("HAP","lib/ArithmeticGroups/crystGbasisnew.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystVarious.gi");
 ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplex.gi");
-ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
+#ReadPackage("HAP","lib/ArithmeticGroups/crystGcomplexnew.gi");
 fi;
 
 

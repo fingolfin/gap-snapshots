@@ -292,7 +292,13 @@
     [4X    RP := homalgTable( R );[104X
     [4X    [104X
     [4X    if NrRows( C ) <> NrColumns( C ) then[104X
-    [4X        Error( "the matrix is not quadratic\n" );[104X
+    [4X        Error( "the matrix is not a square matrix\n" );[104X
+    [4X    fi;[104X
+    [4X    [104X
+    [4X    if IsEmptyMatrix( C ) then[104X
+    [4X        return One( R );[104X
+    [4X    elif IsZero( C ) then[104X
+    [4X        return Zero( R );[104X
     [4X    fi;[104X
     [4X    [104X
     [4X    if IsBound(RP!.Determinant) then[104X

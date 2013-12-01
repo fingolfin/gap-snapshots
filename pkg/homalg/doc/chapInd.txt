@@ -8,7 +8,7 @@
   [2XAnnihilator[102X (for static objects)  3.4-11
   [2XAnnihilator[102X (for elements)  5.4-1
   [2XAsDifferentialObject[102X (for homalg bigraded objects stemming from a bicomplex)  9.2-2
-  [2XBettiDiagram[102X (for complexes)  6.4-1
+  [2XBettiTable[102X (for complexes)  6.4-1
   [2XByASmallerPresentation[102X (for spectral sequences)  10.4-1
   [2XByASmallerPresentation[102X (for morphisms)  4.5-1
   [2XByASmallerPresentation[102X (for complexes)  6.5-2
@@ -158,6 +158,7 @@
   [2XIsStaticFinitelyPresentedSubobjectRep[102X  3.1-6
   [2XIsStaticMorphismOfFinitelyGeneratedObjectsRep[102X  4.1-5
   [2XIsTorsion[102X  3.3-11
+  [2XIsTorsion[102X  5.3-3
   [2XIsTorsionFree[102X  3.3-9
   [2XIsTransposedWRTTheAssociatedComplex[102X  8.3-3
   [2XIsTriangle[102X  6.3-10

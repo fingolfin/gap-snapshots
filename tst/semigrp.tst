@@ -129,21 +129,24 @@ gap> ########################
 gap> f := FreeGroup("a");;
 gap> g := f/[f.1^4];;
 gap> phi := InjectionZeroMagma(g);
-MappingByFunction( <fp group of size 4 on the generators [ a ]>, <monoid with 
-4 generators>, function( g ) ... end )
+MappingByFunction( <fp group of size 4 on the generators 
+[ a ]>, <<fp group of size 4 on the generators 
+[ a ]> with 0 adjoined>, function( elt ) ... end, function( x ) ... end )
 gap> m := Range(phi);
-<monoid with 4 generators>
+<<fp group of size 4 on the generators [ a ]> with 0 adjoined>
 gap> el := Elements(m);;
 gap> Size(m)=5;
 true
 gap> c := MagmaCongruenceByGeneratingPairs(m,[[el[2],el[3]]]);
 <semigroup congruence with 1 generating pairs>
 gap> EquivalenceRelationPartition(c);
-[ [ <identity ...>, a, a^2, a^-1 ] ]
+[ [ <group with 0 adjoined elt: <identity ...>>, 
+      <group with 0 adjoined elt: a>, <group with 0 adjoined elt: a^2>, 
+      <group with 0 adjoined elt: a^-1> ] ]
 gap> IsReesCongruence(c);
 false
 gap> MagmaIdealByGenerators(m,EquivalenceRelationPartition(c)[1]);
-<SemigroupIdeal with 4 generators>
+<semigroup ideal with 4 generators>
 gap> Size(last);
 5
 gap> ###############################
@@ -274,7 +277,7 @@ gap> IsMonoid(G0);
 true
 gap> g := AsSSortedList(G0);;
 gap> g[1]*g[2];
-0
+<group with 0 adjoined elt: 0>
 gap> g[3]*g[2];;
 gap> g[3]*g[4];;
 gap> IsZeroGroup(G0);

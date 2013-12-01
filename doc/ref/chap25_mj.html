@@ -551,7 +551,7 @@ rec( B := [ 4, 4, 75/16, 168/25, 32/7 ],
 <p>computes all possible orthogonal embeddings of a lattice given by its Gram matrix <var class="Arg">gram</var>, which must be a regular matrix. In other words, all solutions <span class="SimpleMath">\(X\)</span> of the problem</p>
 
 <p class="center">\[
-X^{tr} \cdot X = <var class="Arg">gram</var>
+X^{tr} \cdot X = gram
 \]</p>
 
 <p>are calculated (see <a href="chapBib_mj.html#biBPle90">[Ple95]</a>). Usually there are many solutions <span class="SimpleMath">\(X\)</span> but all their rows are chosen from a small set of vectors, so <code class="func">OrthogonalEmbeddings</code> returns the solutions in an encoded form, namely as a record with the following components.</p>

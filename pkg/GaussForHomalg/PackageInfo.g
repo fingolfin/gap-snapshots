@@ -21,12 +21,12 @@ PackageName := "GaussForHomalg",
 
 ##  This may be used by a default banner or on a Web page, should fit on
 ##  one line.
-Subtitle := "GaussForHomalg - Gauss Functionality for homalg",
+Subtitle := "Gauss functionality for the homalg project",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "2012.10.22",
+Version := "2013.09.20",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -122,7 +122,7 @@ Persons := [
     LastName      := "Goertzen",
     FirstNames    := "Simon",
     IsAuthor      := true,
-    IsMaintainer  := true,
+    IsMaintainer  := false,
     Email         := "simon.goertzen@rwth-aachen.de",
     WWWHome       := "http://wwwb.math.rwth-aachen.de/goertzen",
     PostalAddress := Concatenation( [
@@ -246,7 +246,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "GaussForHomalg - Gauss Functionality for homalg",
+  LongTitle := "Gauss functionality for the homalg project",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := false
@@ -264,7 +264,7 @@ Dependencies := rec(
   # without these, the package will not load
   NeededOtherPackages := [
                 [ "Gauss", ">= 2009.10.07" ],
-                [ "MatricesForHomalg", ">= 2012.08.29" ],
+                [ "MatricesForHomalg", ">= 2013.06.26" ],
                 [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
   SuggestedOtherPackages := [ ],
@@ -295,16 +295,16 @@ AvailabilityTest := function()
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-BannerString := Concatenation( 
-  "----------------------------------------------------------------\n",
-  "Loading  GaussForHomalg ", ~.Version, "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
-  "Type ?GaussForHomalg:     for help contents,\n",
-  "     ?GaussForHomalg:n    to read chapter n,\n",
-  "     ?GaussForHomalg:term to search for a certain term.\n",
-  "----------------------------------------------------------------\n" ),
-                
+## BannerString := Concatenation( 
+##   "----------------------------------------------------------------\n",
+##   "Loading  GaussForHomalg ", ~.Version, "\n",
+##   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+##         " (", ~.Persons[1].WWWHome, ")\n",
+##   "Type ?GaussForHomalg:     for help contents,\n",
+##   "     ?GaussForHomalg:n    to read chapter n,\n",
+##   "     ?GaussForHomalg:term to search for a certain term.\n",
+##   "----------------------------------------------------------------\n" ),
+##                 
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
 ##  started.  This should usually be 'false'. Say 'true' only if your package 
 ##  provides some improvements of the GAP library which are likely to enhance 

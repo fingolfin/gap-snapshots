@@ -47,6 +47,13 @@ gap> Print(List(li,i->i),"\n");
   [ 720, 66 ], [ 720, 66 ], [ 720, 66 ], [ 720, 66 ], [ 720, 66 ], 
   [ 1440, 66 ], [ 1440, 66 ], [ 7920, 12 ], [ 7920, 12 ], [ 95040, 1 ] ]
 gap> LatticeSubgroups(Group((1,2,3,4,5,6)));;
+gap> g:=WreathProduct(g,TransitiveGroup(6,13));;
+gap> l:=MaximalSubgroupClassReps(g);;
+gap> Collected(List(l,x->Index(g,x)));
+[ [ 2, 3 ], [ 9, 1 ], [ 2985984, 2 ], [ 82653950016, 2 ], 
+  [ 8916100448256, 1 ], [ 113379904000000, 2 ], [ 3856302691946496, 1 ], 
+  [ 14710627334390625, 2 ], [ 5289852801024000000, 1 ], 
+  [ 81587891664322560000, 1 ] ]
 gap> g := Group( (1,2,3,4)(5,6,7,8), (1,5,3,7)(2,8,4,6) );;
 gap> AsSortedList(List(ConjugacyClassesSubgroups(g),i->Size(Representative(i))));
 [ 1, 2, 4, 4, 4, 8 ]

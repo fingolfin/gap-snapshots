@@ -95,6 +95,8 @@ InstallGlobalFunction( _MAGMA_SetRing,
     
     if HasCoefficientsRing( R ) then
         indets := Indeterminates( R );
+        indets := List( indets, String );
+        indets := JoinStringsWithSeparator( indets );
         homalgSendBlocking( [ "_<", indets, "> := ", R ], "need_command", "break_lists", HOMALG_IO.Pictograms.initialize );
     fi;
     
@@ -493,7 +495,7 @@ end );
 ##
 InstallGlobalFunction( HomalgRingOfIntegersInMAGMA,
   function( arg )
-    local nargs, l, c, R;
+    local nargs, l, c, d, R;
     
     nargs := Length( arg );
     
@@ -502,9 +504,15 @@ InstallGlobalFunction( HomalgRingOfIntegersInMAGMA,
         ## characteristic:
         c := AbsInt( arg[1] );
         if IsPrime( c ) then
-            R := [ "GaloisField(", c, ")" ];
+            if nargs > 1 and IsPosInt( arg[2] ) then
+                d := arg[2];
+                l := 3;
+            else
+                d := 1;
+            fi;
+            R := [ [ "GaloisField(", c, d, ")" ], [ ], [ "<Z", c, "_", d, ">" ] ];
         else
-            R := [ "IntegerRing(", c, ")" ];
+            R := [ [ "IntegerRing(", c, ")" ] ];
         fi;
     else
         if nargs > 0 and arg[1] = 0 then
@@ -514,20 +522,26 @@ InstallGlobalFunction( HomalgRingOfIntegersInMAGMA,
         fi;
         ## characteristic:
         c := 0;
-        R := [ "IntegerRing()" ];
+        R := [ [ "IntegerRing()" ] ];
     fi;
     
     if not ( IsZero( c ) or IsPrime( c ) ) then
         Error( "the ring Z/", c, "Z (", c, " non-prime) is not yet supported for MAGMA!\nYou can use the generic residue class ring constructor '/' provided by homalg after defining the ambient ring (over the integers)\nfor help type: ?homalg: constructor for residue class rings\n" );
     fi;
     
-    R := Concatenation( [ R, IsPrincipalIdealRing ], arg{[ l .. nargs ]} );
+    R := Concatenation( R, [ IsPrincipalIdealRing ], arg{[ l .. nargs ]} );
     
     R := CallFuncList( RingForHomalgInMAGMA, R );
     
-    SetIsResidueClassRingOfTheIntegers( R, true );
-    
-    SetRingProperties( R, c );
+    if IsBound( d ) and d > 1 then
+        R!.NameOfPrimitiveElement := Concatenation( "Z", String( c ), "_", String( d ) );
+        SetIsFieldForHomalg( R, true );
+        SetRingProperties( R, c, d );
+        SetName( R, Concatenation( "GF(", String( c ), "^", String( d ), ")" ) );
+    else
+        SetIsResidueClassRingOfTheIntegers( R, true );
+        SetRingProperties( R, c );
+    fi;
     
     return R;
     
@@ -619,7 +633,7 @@ InstallMethod( PolynomialRing,
     
     var := List( var, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( var, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( var, Name );
     
     SetIsFreePolynomialRing( S, true );
     
@@ -658,11 +672,11 @@ InstallMethod( ExteriorRing,
     
     anti := List( anti , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( anti, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( anti, Name );
     
     comm := List( comm , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( comm, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( comm, Name );
     
     SetIsExteriorRing( S, true );
     
@@ -761,7 +775,7 @@ InstallMethod( MatElm,
   function( M, r, c, R )
     local Mrc;
     
-    Mrc := MatElmAsString( M, r, c, R );
+    Mrc := homalgSendBlocking( [ M, "[", r, c, "]" ], HOMALG_IO.Pictograms.MatElm );
     
     return HomalgExternalRingElement( Mrc, R );
     

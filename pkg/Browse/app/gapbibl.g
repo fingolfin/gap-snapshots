@@ -1004,8 +1004,11 @@ fi;
 
 #############################################################################
 ##
-##  Add the Browse application to the list shown by `BrowseGapData'.
+##  Add the Browse applications to the list shown by `BrowseGapData'.
 ##
+BrowseGapDataAdd( "AMS Math. Subject Classif.", BrowseMSC, false, "\
+an overview of the current AMS Mathematics Subject Classification codes" );
+
 BrowseGapDataAdd( "GAP Bibliography", BrowseBibliography, true, "\
 an overview of GAP related publications, in a browse table \
 whose columns show authors, title, year, journal, and MSC code; \

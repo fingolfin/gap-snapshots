@@ -6,15 +6,17 @@
                         [1XMatrices for the [5Xhomalg[105X project[101X
   
   
-                               Version 2013.04.16
+                               Version 2013.11.20
   
   
-                                   April 2013
+                                 November 2013
   
   
                                 Mohamed Barakat
   
                              Markus Lange-Hegermann
+  
+                                   Vinay Wagh
   
   
   
@@ -43,6 +45,15 @@
       Homepage: [7Xhttp://wwwb.math.rwth-aachen.de/~markus/[107X
       Address:  [33X[0;14YLehrstuhl  B  für  Mathematik,  RWTH Aachen, Templergraben 64,
                 52056 Aachen, Germany[133X
+  
+  
+  Vinay Wagh
+      Email:    [7Xmailto:waghoba@gmail.com[107X
+      Homepage: [7Xhttp://www.iitg.ernet.in/vinay.wagh/[107X
+      Address:  [33X[0;14YE-102, Department of Mathematics,[133X
+                [33X[0;14YIndian Institute of Technology Guwahati,[133X
+                [33X[0;14YGuwahati, Assam, India.[133X
+                [33X[0;14YPIN: 781 039.[133X
   
   
   
@@ -135,9 +146,10 @@
       3.3-55 AreUnitsCentral
       3.3-56 IsMinusOne
       3.3-57 IsMonic
-      3.3-58 IsLeftRegular
-      3.3-59 IsRightRegular
-      3.3-60 IsRegular
+      3.3-58 IsMonicUptoUnit
+      3.3-59 IsLeftRegular
+      3.3-60 IsRightRegular
+      3.3-61 IsRegular
     3.4 [33X[0;0YRings: Attributes[133X
       3.4-1 Inverse
       3.4-2 homalgTable

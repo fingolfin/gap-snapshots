@@ -56,6 +56,8 @@ as a user interrupt.
 
 <#Include Label="BrowsePackageVariables_section">
 
+<#Include Label="BrowseUserPreferences_section">
+
 <#Include Label="GAPData_section">
 
 <#Include Label="Filetree_section">

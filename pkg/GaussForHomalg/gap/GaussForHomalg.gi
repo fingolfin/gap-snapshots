@@ -31,10 +31,10 @@ InstallMethod( MatElm,
   function( M, i, j, R )
     local m;
     m := Eval( M );
-    if IsSparseMatrix( m ) then
-        return GetEntry( m, i, j ); #calls GetEntry for sparse matrices
+    if not IsSparseMatrix( m ) then
+        TryNextMethod();
     fi;
-    TryNextMethod();
+    return GetEntry( m, i, j ); #calls GetEntry for sparse matrices
   end
 );
   
@@ -55,11 +55,10 @@ InstallMethod( SetMatElm,
   function( M, i, j, e, R )
     local m;
     m := Eval( M );
-    if IsSparseMatrix( m ) then
-        SetEntry( m, i, j, e ); #calls SetEntry for sparse matrices
-    else
+    if not IsSparseMatrix( m ) then
         TryNextMethod();
     fi;
+    SetEntry( m, i, j, e ); #calls SetEntry for sparse matrices
   end
 );
 
@@ -81,11 +80,10 @@ InstallMethod( AddToMatElm,
   function( M, i, j, e, R )
     local m;
     m := Eval( M );
-    if IsSparseMatrix( m ) then
-        AddToEntry( m, i, j, e ); #calls AddToEntry for sparse matrices
-    else
+    if not IsSparseMatrix( m ) then
         TryNextMethod();
     fi;
+    AddToEntry( m, i, j, e ); #calls AddToEntry for sparse matrices
   end
 );
 
@@ -95,43 +93,41 @@ InstallMethod( GetListOfHomalgMatrixAsString,
         [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
         
   function( M, R )
-    local m, r;
+    local m;
     
     m := Eval( M );
     
-    if IsSparseMatrix( m ) then
-        r := HomalgRing( R );
-        m := ConvertSparseMatrixToMatrix( m );
-        if Characteristic( m ) > 0 then
-            return String( Concatenation( List( m, r -> List( r, Int ) ) ) );
-        fi;
-        return String( Concatenation( m ) );
+    if not IsSparseMatrix( m ) then
+        TryNextMethod( );
     fi;
     
-    TryNextMethod( );
+    m := ConvertSparseMatrixToMatrix( m );
+    
+    if Characteristic( R ) > 0 then
+        return String( Concatenation( List( m, r -> List( r, Int ) ) ) );
+    fi;
+    
+    return String( Concatenation( m ) );
     
 end );
 
 ##
-InstallMethod( GetListListOfHomalgMatrixAsString,
+InstallMethod( GetListListOfStringsOfHomalgMatrix,
         "for sparse matrices",
         [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
         
   function( M, R )
-    local m, r;
+    local m;
     
     m := Eval( M );
     
-    if IsSparseMatrix( m ) then
-        r := HomalgRing( R );
-        m := ConvertSparseMatrixToMatrix( m );
-        if Characteristic( m ) > 0 then
-            return String( List( m, r -> List( r, Int ) ) );
-        fi;
-        return String( m );
+    if not IsSparseMatrix( m ) then
+        TryNextMethod( );
     fi;
     
-    TryNextMethod( );
+    m := ConvertSparseMatrixToMatrix( m );
+    
+    return GetListListOfStringsOfMatrix( m, R );
     
 end );
 
@@ -141,32 +137,32 @@ InstallMethod( GetSparseListOfHomalgMatrixAsString,
         [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
         
   function( M, R )
-    local m, r, s, c, i, j, e;
+    local m, s, c, i, j, e;
     
     m := Eval( M );
     
-    if IsSparseMatrix( m ) then
-        r := HomalgRing( R );
-	s := [ ];
-        m := ConvertSparseMatrixToMatrix( m );
-        if Characteristic( m ) > 0 then
-            m := List( m, r -> List( r, Int ) );
-        fi;
-        c := Length( m[1] );
-        for i in [ 1 .. Length( m ) ] do
-            for j in [ 1 .. c ] do
-                e := m[i][j];
-                if not IsZero( e ) then
-                    Add( s, [ String( i ), String( j ), String( e ) ] );
-                fi;
-            od;
-        od;
-        s := JoinStringsWithSeparator( List( s, JoinStringsWithSeparator ), "],[" );
-        
-        return Concatenation( "[[", s, "]]" );
+    if not IsSparseMatrix( m ) then
+        TryNextMethod( );
     fi;
     
-    TryNextMethod( );
+    s := [ ];
+    m := ConvertSparseMatrixToMatrix( m );
+    if Characteristic( R ) > 0 then
+        m := List( m, r -> List( r, Int ) );
+    fi;
+    c := Length( m[1] );
+    for i in [ 1 .. Length( m ) ] do
+        for j in [ 1 .. c ] do
+            e := m[i][j];
+            if not IsZero( e ) then
+                Add( s, [ String( i ), String( j ), String( e ) ] );
+            fi;
+        od;
+    od;
+    
+    s := JoinStringsWithSeparator( List( s, JoinStringsWithSeparator ), "],[" );
+    
+    return Concatenation( "[[", s, "]]" );
     
 end );
 

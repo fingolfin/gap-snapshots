@@ -156,7 +156,8 @@
   available.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XBrowseData.SetReplay( Concatenation([127X[104X
+    [4X[25Xgap>[125X [27Xif TestPackageAvailability( "CTblLib" ) = true then[127X[104X
+    [4X[25X>[125X [27X     BrowseData.SetReplay( Concatenation([127X[104X
     [4X[25X>[125X [27X        # scroll in the table[127X[104X
     [4X[25X>[125X [27X        "DRULdddddrrrrrlluu",[127X[104X
     [4X[25X>[125X [27X        # select an entry and move it around[127X[104X
@@ -173,8 +174,9 @@
     [4X[25X>[125X [27X        "xd",[127X[104X
     [4X[25X>[125X [27X        # and quit the application[127X[104X
     [4X[25X>[125X [27X        "Q" ) );[127X[104X
-    [4X[25Xgap>[125X [27XBrowse( CharacterTable( "HN" ) );[127X[104X
-    [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
+    [4X[25X>[125X [27X     Browse( CharacterTable( "HN" ) );[127X[104X
+    [4X[25X>[125X [27X     BrowseData.SetReplay( false );[127X[104X
+    [4X[25X>[125X [27Xfi;[127X[104X
   [4X[32X[104X
   
   [33X[0;0Y[13XImplementation  remarks[113X:  The  first  part of the code in the [2XBrowse[102X ([14X6.1-1[114X)
@@ -277,7 +279,8 @@
   available.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XBrowseData.SetReplay( Concatenation([127X[104X
+    [4X[25Xgap>[125X [27Xif TestPackageAvailability( "TomLib" ) = true then[127X[104X
+    [4X[25X>[125X [27X     BrowseData.SetReplay( Concatenation([127X[104X
     [4X[25X>[125X [27X        # scroll in the table[127X[104X
     [4X[25X>[125X [27X        "DDRRR",[127X[104X
     [4X[25X>[125X [27X        # search for the (exact) value 100 (three times)[127X[104X
@@ -289,8 +292,9 @@
     [4X[25X>[125X [27X        [ NCurses.keys.ENTER ],[127X[104X
     [4X[25X>[125X [27X        # and quit the application[127X[104X
     [4X[25X>[125X [27X        "Q" ) );[127X[104X
-    [4X[25Xgap>[125X [27XBrowse( TableOfMarks( "A10" ) );[127X[104X
-    [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
+    [4X[25X>[125X [27X     Browse( TableOfMarks( "A10" ) );[127X[104X
+    [4X[25X>[125X [27X     BrowseData.SetReplay( false );[127X[104X
+    [4X[25X>[125X [27X   fi;[127X[104X
   [4X[32X[104X
   
   [33X[0;0Y[13XImplementation remarks[113X: Rows and columns are indexed by their positions. The
@@ -323,8 +327,8 @@
   [29X[2XBrowseAtlasInfo[102X( [3Xgapname[103X[, [3Xstd[103X][, [3X...[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ythe list of [21Xclicked[121X info records.[133X
   
-  [33X[0;0YThis function shows the informtion available via the [5XGAP[105X package [5XAtlasRep[105X in
-  a  browse  table,  cf.  Section [14X'AtlasRep:  Accessing  Data  of the AtlasRep
+  [33X[0;0YThis  function  shows the information available via the [5XGAP[105X package [5XAtlasRep[105X
+  in  a  browse  table,  cf. Section [14X'AtlasRep: Accessing Data of the AtlasRep
   Package'[114X in the [5XAtlasRep[105X manual.[133X
   
   [33X[0;0YThe  optional  arguments  can  be  used  to  restrict the table to public or
@@ -345,12 +349,12 @@
   [33X[0;0YThe  full  functionality  of  the  function [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) is
   available.[133X
   
-  [33X[0;0YThe  following  example  shows  how  [2XBrowseAtlasInfo[102X  can  be  used to fetch
-  permutation representations of the alternating groups [22XA_5[122X and [22XA_6[122X: We search
-  for  the  group  name  [10X"A5"[110X in the overview table, and the first cell in the
-  table  row  for  [22XA_5[122X  becomes  selected;  hitting the [12XEnter[112X key causes a new
-  window  to be opened, with an overview of the data available for [22XA_5[122X; moving
-  down   two   rows  and  hitting  the  [12XEnter[112X  key  again  causes  the  second
+  [33X[0;0YThe  following  example  shows how [2XBrowseAtlasInfo[102X can be used to fetch info
+  records  about permutation representations of the alternating groups [22XA_5[122X and
+  [22XA_6[122X:  We search for the group name [10X"A5"[110X in the overview table, and the first
+  cell in the table row for [22XA_5[122X becomes selected; hitting the [12XEnter[112X key causes
+  a  new  window to be opened, with an overview of the data available for [22XA_5[122X;
+  moving  down  two  rows  and  hitting  the [12XEnter[112X key again causes the second
   representation  to  be added to the result list; hitting [12XQ[112X closes the second
   window,  and  we  are back in the overview table; we move the selection down
   twice  (to  the  row for the group [22XA_6[122X), and choose the first representation
@@ -374,7 +378,11 @@
     [4X[25X>[125X [27X       c,             # click the first row,[127X[104X
     [4X[25X>[125X [27X       "Q",           # quit the second level table,[127X[104X
     [4X[25X>[125X [27X       "Q" ) );       # and quit the application.[127X[104X
-    [4X[25Xgap>[125X [27Xtworeps:= BrowseAtlasInfo();;[127X[104X
+    [4X[25Xgap>[125X [27Xif IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then[127X[104X
+    [4X[25X>[125X [27X     tworeps:= BrowseAtlasInfo();[127X[104X
+    [4X[25X>[125X [27X   else[127X[104X
+    [4X[25X>[125X [27X     tworeps:= [ fail ];[127X[104X
+    [4X[25X>[125X [27X   fi;[127X[104X
     [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
     [4X[25Xgap>[125X [27Xif fail in tworeps then[127X[104X
     [4X[25X>[125X [27X     Print( "no access to the Web ATLAS\n" );[127X[104X
@@ -795,18 +803,16 @@
   [1X6.9-1 BrowsePackageVariables[101X
   
   [29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function
-  [29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X, [3Xinfo[103X[, [3Xarec[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
-  [33X[0;0YIn the first version, the arguments are the same as for [2XShowPackageVariables[102X
-  ([14XReference:  ShowPackageVariables[114X),  that  is,  [3Xpkgname[103X is the name of a [5XGAP[105X
-  package, and the optional arguments [3Xversion[103X and [3Xarec[103X are a version number of
-  this package and a record used for customizing the output, respectively.[133X
+  [33X[0;0YThe  arguments  can  be  the  same  as  for [2XShowPackageVariables[102X ([14XReference:
+  ShowPackageVariables[114X),  that  is,  [3Xpkgname[103X is the name of a [5XGAP[105X package, and
+  the optional arguments [3Xversion[103X and [3Xarec[103X are a version number of this package
+  and a record used for customizing the output, respectively.[133X
   
-  [33X[0;0YIn  the  second  version,  [3Xpkgname[103X is the name of a [5XGAP[105X package, [3Xinfo[103X is the
-  output  of  [2XPackageVariablesInfo[102X  ([14XReference: PackageVariablesInfo[114X) for this
-  package,  and  the  optional  record  [3Xarec[103X  has  the  same  meaning  as  for
-  [2XShowPackageVariables[102X ([14XReference: ShowPackageVariables[114X).[133X
+  [33X[0;0YAlternatively,   the   second   argument   can   be   the   output  [10Xinfo[110X  of
+  [2XPackageVariablesInfo[102X  ([14XReference:  PackageVariablesInfo[114X)  for the package in
+  question, instead of the version number.[133X
   
   [33X[0;0Y[2XBrowsePackageVariables[102X  opens a Browse table that shows the global variables
   that  become  bound and the methods that become installed when [5XGAP[105X loads the
@@ -819,15 +825,15 @@
   names  of  the package files. Clicking a selected row of the table opens the
   relevant package file at the code in question.[133X
   
-  [33X[0;0YThe  idea  behind  the argument [3Xinfo[103X is that using the same arguments as for
+  [33X[0;0YThe  idea  behind  the argument [10Xinfo[110X is that using the same arguments as for
   [2XShowPackageVariables[102X ([14XReference: ShowPackageVariables[114X) does not allow one to
   apply  [2XBrowsePackageVariables[102X  to  packages that have been loaded before the
-  [5XBrowse[105X  package.  Thus one can compute the underlying data [3Xinfo[103X first, using
+  [5XBrowse[105X  package.  Thus one can compute the underlying data [10Xinfo[110X first, using
   [2XPackageVariablesInfo[102X ([14XReference: PackageVariablesInfo[114X), then load the [5XBrowse[105X
   package, and finally call [2XBrowsePackageVariables[102X.[133X
   
   [33X[0;0YFor  example,  the  overview of package variables for [5XBrowse[105X can be shown by
-  starting [5XGAP[105X without packages and entering the following lines.[133X
+  starting [5XGAP[105X without packages and then entering the following lines.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xpkgname:= "Browse";;[127X[104X
@@ -836,8 +842,57 @@
     [4X[25Xgap>[125X [27XBrowsePackageVariables( pkgname, info );[127X[104X
   [4X[32X[104X
   
+  [33X[0;0YIf  the  arguments  are  the  same  as  for [2XShowPackageVariables[102X ([14XReference:
+  ShowPackageVariables[114X)  then  this  function  is  actually  called,  with the
+  consequence  that  the  package  gets  loaded when [2XBrowsePackageVariables[102X is
+  called.  This  is  not  the  case  if  the  output  of  [2XPackageVariablesInfo[102X
+  ([14XReference: PackageVariablesInfo[114X) is entered as the second argument.[133X
   
-  [1X6.10 [33X[0;0YOverview of [5XGAP[105X[101X[1X Data[133X[101X
+  
+  [1X6.10 [33X[0;0YConfiguring User preferences–a Variant[133X[101X
+  
+  [33X[0;0YA  [5XBrowse[105X adapted way to show and edit [5XGAP[105X's user preferences is to show the
+  overview that is printed by the [5XGAP[105X function [2XShowUserPreferences[102X ([14XReference:
+  ShowUserPreferences[114X) in a [5XBrowse[105X table.[133X
+  
+  [1X6.10-1 BrowseUserPreferences[101X
+  
+  [29X[2XBrowseUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThe   arguments   are   the  same  as  for  [2XShowUserPreferences[102X  ([14XReference:
+  ShowUserPreferences[114X),  that is, calling the function with no argument yields
+  an  overview  of  all  known  user  preferences,  and if one or more strings
+  [3Xpackage1[103X,  [22X...[122X  are  given then only the user preferences for these packages
+  are shown.[133X
+  
+  [33X[0;0Y[2XBrowseUserPreferences[102X opens a Browse table with the following columns:[133X
+  
+  [8X[21XPackage[121X[108X
+        [33X[0;6Ycontains  the  names of the [5XGAP[105X packages to which the user preferences
+        belong,[133X
+  
+  [8X[21XPref. names[121X[108X
+        [33X[0;6Ycontains the names of the user preferences, and[133X
+  
+  [8X[21XDescription[121X[108X
+        [33X[0;6Ycontains   the   [10Xdescription[110X   texts  from  the  [2XDeclareUserPreference[102X
+        ([14XReference:  DeclareUserPreference[114X)  calls  and the default values (if
+        applicable), and the actual values.[133X
+  
+  [33X[0;0YWhen  one  [21Xclicks[121X on one of the table rows or entries then the values of the
+  user preference in question can be edited. If a list of admissible values is
+  known  then this means that one can choose from this list via [2XNCurses.Select[102X
+  ([14X3.1-2[114X), otherwise one can enter the desired value as text.[133X
+  
+  [33X[0;0YThe  values  of  the  user preferences are not changed before one closes the
+  Browse  table.  When  the  table is left and if one has changed at least one
+  value, one is asked whether the changes shall be applied.[133X
+  
+  [33X[0;0YThe code can be found in the file [11Xapp/userpref.g[111X of the package.[133X
+  
+  
+  [1X6.11 [33X[0;0YOverview of [5XGAP[105X[101X[1X Data[133X[101X
   
   [33X[0;0YThe [5XGAP[105X system contains several data collections such as libraries of groups
   and character tables. Clearly the function [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) can
@@ -847,7 +902,7 @@
   objects.   (One   possibility   to   create   such  overviews  is  given  by
   [2XBrowseTableFromDatabaseIdEnumerator[102X ([14XA.2-2[114X).)[133X
   
-  [1X6.10-1 BrowseGapData[101X
+  [1X6.11-1 BrowseGapData[101X
   
   [29X[2XBrowseGapData[102X(  ) [32X function
   [6XReturns:[106X  [33X[0;10Ythe return value of the chosen application if there is one.[133X
@@ -858,18 +913,22 @@
   choices is closed.[133X
   
   [33X[0;0YThe  idea  is  that  each  entry of [10XBrowseData.GapDataOverviews[110X describes an
-  overview of a [5XGAP[105X data collection.[133X
+  overview of a data collection.[133X
   
   [33X[0;0YThe [5XBrowse[105X package provides overviews of[133X
   
-  [30X    [33X[0;6Ythe  contents of the [5XAtlasRep[105X package (only if this package is loaded,
-        see Section [14X6.5[114X),[133X
+  [30X    [33X[0;6Ythe   current   AMS  Mathematics  Subject  Classification  codes  (see
+        [2XBrowseMSC[102X ([14X6.7-2[114X)),[133X
+  
+  [30X    [33X[0;6Ythe  contents  of the [5XAtlasRep[105X package [WPNBB07] (only if this package
+        is loaded, see Section [14X6.5[114X),[133X
   
   [30X    [33X[0;6Ythe Conway polynomials in [5XGAP[105X (calls [10XBrowseConwayPolynomials()[110X),[133X
   
   [30X    [33X[0;6Yprofile information for [5XGAP[105X functions (see Section [14X6.8[114X),[133X
   
-  [30X    [33X[0;6Ythe [5XGAP[105X bibliography (see Section [14X6.7[114X),[133X
+  [30X    [33X[0;6Ythe   list   of   [5XGAP[105X   related   bibliography  entries  in  the  file
+        [11Xbibl/gap-publishednicer.bib[111X of the [5XBrowse[105X package (see Section [14X6.7[114X),[133X
   
   [30X    [33X[0;6Ythe [5XGAP[105X manuals (see Section [14X6.6[114X),[133X
   
@@ -877,10 +936,36 @@
   
   [30X    [33X[0;6Ythe installed [5XGAP[105X packages (calls [10XBrowseGapPackages()[110X),[133X
   
-  [30X    [33X[0;6Yand [5XGAP[105X's Library of Transitive Groups (see Section [14XA.4[114X).[133X
+  [30X    [33X[0;6Y[5XGAP[105X's user preferences (see Section [14X6.10[114X),[133X
+  
+  [30X    [33X[0;6Ythe  contents  of  the [5XTomLib[105X package [NMP11] (only if this package is
+        loaded, see Section [14XA.5[114X),[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X's Library of Transitive Groups (see Section [14XA.4[114X).[133X
   
   [33X[0;0YOther   [5XGAP[105X   packages   may   add   more   overviews,  using  the  function
-  [2XBrowseGapDataAdd[102X ([14X6.10-2[114X).[133X
+  [2XBrowseGapDataAdd[102X ([14X6.11-2[114X). For example, there are overviews of[133X
+  
+  [30X    [33X[0;6Ythe  bibliographies in the [5XATLAS[105X of Finite Groups [CCNPW85] and in the
+        [5XATLAS[105X       of       Brauer       Characters       [JLPW95]       (see
+        [2XBrowseBibliographySporadicSimple[102X                            ([14XAtlasRep:
+        BrowseBibliographySporadicSimple[114X)),[133X
+  
+  [30X    [33X[0;6Yatomic  irrationalities that occur in character tables in the [5XATLAS[105X of
+        Finite  Groups  [CCNPW85]  or  the [5XATLAS[105X of Brauer Characters [JLPW95]
+        (see        Section        [2XBrowseCommonIrrationalities[102X       ([14XCTblLib:
+        BrowseCommonIrrationalities[114X)),[133X
+  
+  [30X    [33X[0;6Ythe  differences  between  the versions of the character table data in
+        the  [5XCTblLib[105X  package  (see Section [2XBrowseCTblLibDifferences[102X ([14XCTblLib:
+        BrowseCTblLibDifferences[114X)),[133X
+  
+  [30X    [33X[0;6Ythe   information   in   [5XGAP[105X  Character  Table  Library  (see  Section
+        [2XBrowseCTblLibInfo[102X ([14XCTblLib: BrowseCTblLibInfo[114X)),[133X
+  
+  [30X    [33X[0;6Yan  overview  of minimal degrees of representations of groups from the
+        [5XATLAS[105X  of  Group  Representations  (see  Section  [2XBrowseMinimalDegrees[102X
+        ([14XAtlasRep: BrowseMinimalDegrees[114X)).[133X
   
   [33X[0;0YExcept that always one table cell is selected, the full functionality of the
   function [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) is available.[133X
@@ -910,24 +995,24 @@
   
   [33X[0;0YThe code can be found in the file [11Xapp/gapdata.g[111X of the package.[133X
   
-  [1X6.10-2 BrowseGapDataAdd[101X
+  [1X6.11-2 BrowseGapDataAdd[101X
   
   [29X[2XBrowseGapDataAdd[102X( [3Xtitle[103X, [3Xcall[103X, [3Xret[103X, [3Xdocumentation[103X ) [32X function
   
   [33X[0;0YThis  function  extends the list [10XBrowseData.GapDataOverviews[110X by a new entry.
-  The list is used by [2XBrowseGapData[102X ([14X6.10-1[114X).[133X
+  The list is used by [2XBrowseGapData[102X ([14X6.11-1[114X).[133X
   
   [33X[0;0Y[3Xtitle[103X  must be a string of length at most [22X76[122X; it will be shown in the browse
-  table that is opened by [2XBrowseGapData[102X ([14X6.10-1[114X). [3Xcall[103X must be a function that
+  table that is opened by [2XBrowseGapData[102X ([14X6.11-1[114X). [3Xcall[103X must be a function that
   takes  no  arguments;  it  will be called when [3Xtitle[103X is [21Xclicked[121X. [3Xret[103X must be
-  [9Xtrue[109X  if  [3Xcall[103X has a return value and if [2XBrowseGapData[102X ([14X6.10-1[114X) shall return
+  [9Xtrue[109X  if  [3Xcall[103X has a return value and if [2XBrowseGapData[102X ([14X6.11-1[114X) shall return
   this  value,  and  [9Xfalse[109X  otherwise.  [3Xdocumentation[103X  must  be  a string that
   describes what happens when the function [3Xcall[103X is called; it will be shown in
-  the  footer  of  the  table  opened  by [2XBrowseGapData[102X ([14X6.10-1[114X) when [3Xtitle[103X is
+  the  footer  of  the  table  opened  by [2XBrowseGapData[102X ([14X6.11-1[114X) when [3Xtitle[103X is
   selected.[133X
   
   
-  [1X6.11 [33X[0;0YNavigating in a Directory Tree[133X[101X
+  [1X6.12 [33X[0;0YNavigating in a Directory Tree[133X[101X
   
   [33X[0;0YA  natural  way to visualize the contents of a directory is via a tree whose
   leaves  denote  plain  files,  and the other vertices denote subdirectories.
@@ -935,7 +1020,7 @@
   displaying such trees; the leaves correspond to the data rows, and the other
   vertices correspond to category rows.[133X
   
-  [1X6.11-1 BrowseDirectory[101X
+  [1X6.12-1 BrowseDirectory[101X
   
   [29X[2XBrowseDirectory[102X( [[3Xstartpath[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ya list of the [21Xclicked[121X filenames.[133X
@@ -957,8 +1042,8 @@
     [4X[25X>[125X [27X       "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"[127X[104X
     [4X[25X>[125X [27X       n, "Q" ) );                           # and quit[127X[104X
     [4X[25Xgap>[125X [27Xdir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;[127X[104X
-    [4X[25Xgap>[125X [27Xif IsPackageMarkedForLoading( "io", "" ) then[127X[104X
-    [4X[25X>[125X [27X     BrowseDirectory( dir );;[127X[104X
+    [4X[25Xgap>[125X [27Xif IsBound( BrowseDirectory ) then[127X[104X
+    [4X[25X>[125X [27X     BrowseDirectory( dir );[127X[104X
     [4X[25X>[125X [27X   fi;[127X[104X
     [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
   [4X[32X[104X
@@ -987,7 +1072,7 @@
   [33X[0;0YThe code can be found in the file [11Xapp/filetree.g[111X of the package.[133X
   
   
-  [1X6.12 [33X[0;0YA Puzzle[133X[101X
+  [1X6.13 [33X[0;0YA Puzzle[133X[101X
   
   [33X[0;0YWe  consider  an [22Xm[122X by [22Xn[122X rectangle of squares numbered from [22X1[122X to [22Xm n - 1[122X, the
   bottom  right  square  is  left  empty. The numbered squares are permuted by
@@ -1006,10 +1091,10 @@
   
   [33X[0;0YThe aim of the game is to order the numbered squares via these moves.[133X
   
-  [33X[0;0YFor  the  case  [22Xm  =  n  =  4[122X, the puzzle is known under the name [21XSam Loyd's
-  Fifteen[121X, see [Bog] and [OR] for more information and references.[133X
+  [33X[0;0YFor  the  case  [22Xm = n = 4[122X, the puzzle is (erroneously?) known under the name
+  [21XSam Loyd's Fifteen[121X, see [Bog] and [OR] for more information and references.[133X
   
-  [1X6.12-1 BrowsePuzzle[101X
+  [1X6.13-1 BrowsePuzzle[101X
   
   [29X[2XBrowsePuzzle[102X( [[3Xm[103X, [3Xn[103X[, [3Xpi[103X]] ) [32X function
   [6XReturns:[106X  [33X[0;10Ya record describing the initial and final status of the puzzle.[133X
@@ -1053,7 +1138,7 @@
   [33X[0;0YThe code can be found in the file [11Xapp/puzzle.g[111X of the package.[133X
   
   
-  [1X6.13 [33X[0;0YPeg Solitaire[133X[101X
+  [1X6.14 [33X[0;0YPeg Solitaire[133X[101X
   
   [33X[0;0YPeg  solitaire  is  a  board game for one player. The game board consists of
   several  holes some of which contain pegs. In each step of the game, one peg
@@ -1079,7 +1164,7 @@
   [33X[0;0YWe  consider  the game that in the beginning, exactly one hole is empty, and
   in the end, exactly one peg is left.[133X
   
-  [1X6.13-1 PegSolitaire[101X
+  [1X6.14-1 PegSolitaire[101X
   
   [29X[2XPegSolitaire[102X( [[3Xformat[103X, ][[3Xnrholes[103X, ][[3XtwoModes[103X] ) [32X function
   
@@ -1109,6 +1194,9 @@
     [4X[25X>[125X [27X     BrowseData.SetReplay( Concatenation([127X[104X
     [4X[25X>[125X [27X         PegSolitaireSolutions.( String( n ) ), "Q" ) );[127X[104X
     [4X[25X>[125X [27X     PegSolitaire( n );[127X[104X
+    [4X[25X>[125X [27X     PegSolitaire( "large", n );[127X[104X
+    [4X[25X>[125X [27X     PegSolitaire( n, true );[127X[104X
+    [4X[25X>[125X [27X     PegSolitaire( "large", n, true );[127X[104X
     [4X[25X>[125X [27Xod;[127X[104X
     [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
   [4X[32X[104X
@@ -1131,7 +1219,7 @@
   [33X[0;0YThe code can be found in the file [11Xapp/solitair.g[111X of the package.[133X
   
   
-  [1X6.14 [33X[0;0YRubik's Cube[133X[101X
+  [1X6.15 [33X[0;0YRubik's Cube[133X[101X
   
   [33X[0;0YWe  visualize  the  transformations of Rubik's magic cube in a model that is
   given by [21Xunfolding[121X the faces and numbering them as follows.[133X
@@ -1168,7 +1256,7 @@
   announcements of [5XGAP[105X 3 releases. For a [5XGAP[105X 4 equivalent, see [Sch]. For more
   information and references (not [5XGAP[105X related) about Rubik's cube, see [Kölb].[133X
   
-  [1X6.14-1 BrowseRubiksCube[101X
+  [1X6.15-1 BrowseRubiksCube[101X
   
   [29X[2XBrowseRubiksCube[102X( [[3Xformat[103X, ][[3Xpi[103X] ) [32X function
   
@@ -1208,6 +1296,7 @@
     [4X[25X>[125X [27X       input{ [ 26 .. 30 ] },[127X[104X
     [4X[25X>[125X [27X       "Q" ) );;               # quit the browse table[127X[104X
     [4X[25Xgap>[125X [27XBrowseRubiksCube( Product( cubegens{ choice } ) );;[127X[104X
+    [4X[25Xgap>[125X [27XBrowseRubiksCube( "large", Product( cubegens{ choice } ) );;[127X[104X
     [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
   [4X[32X[104X
   
@@ -1232,7 +1321,7 @@
   [33X[0;0YThe code can be found in the file [11Xapp/rubik.g[111X of the package.[133X
   
   
-  [1X6.15 [33X[0;0YChanging Sides[133X[101X
+  [1X6.16 [33X[0;0YChanging Sides[133X[101X
   
   [33X[0;0YWe  consider  a  [22X5[122X by [22X5[122X board of squares filled with two types of stones, as
   follows. The square in the middle is left empty.[133X
@@ -1257,7 +1346,7 @@
   
   [33X[0;0YThis game has been part of the MacTutor system [OR00].[133X
   
-  [1X6.15-1 BrowseChangeSides[101X
+  [1X6.16-1 BrowseChangeSides[101X
   
   [29X[2XBrowseChangeSides[102X(  ) [32X function
   
@@ -1290,7 +1379,7 @@
   [33X[0;0YThe code can be found in the file [11Xapp/knight.g[111X of the package.[133X
   
   
-  [1X6.16 [33X[0;0YSudoku[133X[101X
+  [1X6.17 [33X[0;0YSudoku[133X[101X
   
   [33X[0;0YWe  consider  a  [22X9[122X  by [22X9[122X board of squares. Some squares are initially filled
   with  numbers  from [22X1[122X to [22X9[122X. The aim of the game is to fill the empty squares
@@ -1320,10 +1409,10 @@
   
   [33X[0;0YThe [5XBrowse[105X package contains functions to create, play and solve these games.
   There  are  basic  command line functions for this, which we describe first,
-  and there is a user interface [2XPlaySudoku[102X ([14X6.16-8[114X) which is implemented using
+  and there is a user interface [2XPlaySudoku[102X ([14X6.17-8[114X) which is implemented using
   the generic browse functionality described in Chapter [14X4[114X.[133X
   
-  [1X6.16-1 Sudoku.Init[101X
+  [1X6.17-1 Sudoku.Init[101X
   
   [29X[2XSudoku.Init[102X( [[3Xarg[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10YA record describing a Sudoku board or [9Xfail[109X.[133X
@@ -1358,14 +1447,14 @@
     [4X[25X>[125X [27X 6  47   |45  2    |89   2 1 | 4   8 7 | ");;[127X[104X
   [4X[32X[104X
   
-  [1X6.16-2 Sudoku.Place[101X
+  [1X6.17-2 Sudoku.Place[101X
   
   [29X[2XSudoku.Place[102X( [3Xgame[103X, [3Xi[103X, [3Xn[103X ) [32X function
   [29X[2XSudoku.Remove[102X( [3Xgame[103X, [3Xi[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YThe changed [3Xgame[103X.[133X
   
   [33X[0;0YHere  [3Xgame[103X is a record describing a Sudoku board, as returned by [2XSudoku.Init[102X
-  ([14X6.16-1[114X).  The argument [3Xi[103X is the number of an entry, counted row-wise from 1
+  ([14X6.17-1[114X).  The argument [3Xi[103X is the number of an entry, counted row-wise from 1
   to  81,  and  [3Xn[103X  is  an integer from 1 to 9 to be placed on the board. These
   functions change [3Xgame[103X.[133X
   
@@ -1390,7 +1479,7 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X6.16-3 Sudoku.RandomGame[101X
+  [1X6.17-3 Sudoku.RandomGame[101X
   
   [29X[2XSudoku.RandomGame[102X( [[3Xseed[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10YA pair [10X[str, seed][110X of string and seed.[133X
@@ -1398,7 +1487,7 @@
   [33X[0;0YThe  optional argument [3Xseed[103X, if given, must be an integer. If not given some
   random integer from the current [5XGAP[105X session is used. This function returns a
   random  proper Sudoku game, where the board is described by a string [10Xstr[110X, as
-  explained  in  [2XSudoku.Init[102X  ([14X6.16-1[114X).  With  the same [3Xseed[103X the same board is
+  explained  in  [2XSudoku.Init[102X  ([14X6.17-1[114X).  With  the same [3Xseed[103X the same board is
   returned.[133X
   
   [33X[0;0YThe  games  computed  by this function have the property that after removing
@@ -1412,11 +1501,11 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X6.16-4 Sudoku.SimpleDisplay[101X
+  [1X6.17-4 Sudoku.SimpleDisplay[101X
   
   [29X[2XSudoku.SimpleDisplay[102X( [3Xgame[103X ) [32X function
   
-  [33X[0;0YDisplays  a Sudoku board on the terminal. (But see [2XPlaySudoku[102X ([14X6.16-8[114X) for a
+  [33X[0;0YDisplays  a Sudoku board on the terminal. (But see [2XPlaySudoku[102X ([14X6.17-8[114X) for a
   fancier interface.)[133X
   
   [4X[32X  Example  [32X[104X
@@ -1436,7 +1525,7 @@
     [4X[28X   |   |   [128X[104X
   [4X[32X[104X
   
-  [1X6.16-5 Sudoku.DisplayString[101X
+  [1X6.17-5 Sudoku.DisplayString[101X
   
   [29X[2XSudoku.DisplayString[102X( [3Xgame[103X ) [32X function
   
@@ -1471,12 +1560,12 @@
     [4X[28X                     ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛[128X[104X
   [4X[32X[104X
   
-  [1X6.16-6 Sudoku.OneSolution[101X
+  [1X6.17-6 Sudoku.OneSolution[101X
   
   [29X[2XSudoku.OneSolution[102X( [3Xgame[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YA completed Sudoku board that solves [3Xgame[103X, or [9Xfail[109X.[133X
   
-  [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.16-1[114X). It is
+  [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.17-1[114X). It is
   not  necessary  that  [3Xgame[103X  describes  a  proper  Sudoku  game (has a unique
   solution).  It  may  have  several  solutions,  then  one random solution is
   returned. Or it may have no solution, then [9Xfail[109X is returned.[133X
@@ -1496,12 +1585,12 @@
     [4X[28X614|287|395[128X[104X
   [4X[32X[104X
   
-  [1X6.16-7 Sudoku.UniqueSolution[101X
+  [1X6.17-7 Sudoku.UniqueSolution[101X
   
   [29X[2XSudoku.UniqueSolution[102X( [3Xgame[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YA completed Sudoku board that solves [3Xgame[103X, or [9Xfalse[109X, or [9Xfail[109X.[133X
   
-  [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.16-1[114X). It is
+  [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.17-1[114X). It is
   not  necessary  that  [3Xgame[103X describes a proper Sudoku game. If it has several
   solutions,  then  [9Xfalse[109X  is  returned.  If  it has no solution, then [9Xfail[109X is
   returned. Otherwise a board with the unique solution is returned.[133X
@@ -1524,7 +1613,7 @@
     [4X[28X379|124|865[128X[104X
   [4X[32X[104X
   
-  [1X6.16-8 PlaySudoku[101X
+  [1X6.17-8 PlaySudoku[101X
   
   [29X[2XPlaySudoku[102X( [[3Xarg[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10YA record describing the latest status of a Sudoku board.[133X
@@ -1532,8 +1621,8 @@
   [33X[0;0YThis  function  allows  one to solve Sudoku puzzles interactively. There are
   several  possibilities  for  the  optional  argument [3Xarg[103X. It can either be a
   string,  matrix  or  list  of holes and integers as described in [2XSudoku.Init[102X
-  ([14X6.16-1[114X),  or  a  board as returned by [2XSudoku.Init[102X ([14X6.16-1[114X). Furthermore [3Xarg[103X
-  can  be  an integer or not be given, in that case [2XSudoku.RandomGame[102X ([14X6.16-3[114X)
+  ([14X6.17-1[114X),  or  a  board as returned by [2XSudoku.Init[102X ([14X6.17-1[114X). Furthermore [3Xarg[103X
+  can  be  an integer or not be given, in that case [2XSudoku.RandomGame[102X ([14X6.17-3[114X)
   is called to produce a random game.[133X
   
   [33X[0;0YThe  usage of this function is self-explanatory, pressing the [12X?[112X key displays
@@ -1566,7 +1655,7 @@
   
   [33X[0;0YThe code can be found in the file [11Xapp/sudoku.g[111X of the package.[133X
   
-  [1X6.16-9 Sudoku.HTMLGame[101X
+  [1X6.17-9 Sudoku.HTMLGame[101X
   
   [29X[2XSudoku.HTMLGame[102X( [3Xgame[103X ) [32X function
   [29X[2XSudoku.LaTeXGame[102X( [3Xgame[103X ) [32X function

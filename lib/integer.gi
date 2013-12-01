@@ -925,7 +925,7 @@ InstallGlobalFunction( IsOddInt, n -> n mod 2 = 1 );
 ##  the  ring $Z_n[\sqrt{d}] and computes the  traces of $a^n$ and $a^{n+1}$.
 ##  If $n$ is a prime, this  ring is the field of  order $n^2$ and raising to
 ##  the $n$th power is conjugation, so $trace(a^n)=p$ and $trace(a^{n+1})=2$.
-##  However, these identities hold only for extremly few composite numbers.
+##  However, these identities hold only for extremely few composite numbers.
 ##
 ##  Note that  this  test  for $trace(a^n) = p$  and  $trace(a^{n+1}) = 2$ is
 ##  usually formulated using the Lucas sequences  $U_k = (a^k-b^k)/(a-b)$ and
@@ -1679,13 +1679,15 @@ InstallMethod( QuotientMod,
     true,
     [ IsIntegers, IsInt, IsInt, IsInt ], 0,
     function ( Integers, r, s, m )
-    if s>m then s:=s mod m;fi;
-    if   m = 1 then
+    if s > m then 
+        s := s mod m;
+    fi;
+    if m = 1 then
         return 0;
-    elif r mod GcdInt( s, m ) = 0  then
-        return r/s mod m;
-    else
+    elif GcdInt( s, m ) <> 1 then
         return fail;
+    else
+        return r/s mod m;
     fi;
     end );
 

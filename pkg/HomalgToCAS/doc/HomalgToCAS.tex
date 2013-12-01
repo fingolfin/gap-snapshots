@@ -98,8 +98,8 @@
 {\Huge \textbf{A window to the outer world\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.02.22\mbox{}}\\[1cm]
-{February 2013\mbox{}}\\[1cm]
+{\Huge Version 2013.08.07\mbox{}}\\[1cm]
+{July 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -109,10 +109,13 @@
     \mbox{}}}\\
 {\Large \textbf{Frank L{\"u}beck\\
     \mbox{}}}\\
+{\Large \textbf{Vinay Wagh\\
+    \mbox{}}}\\
 \hypersetup{pdfauthor=Mohamed Barakat\\
     ; Thomas Breuer\\
     ; Simon G{\"o}rtzen\\
     ; Frank L{\"u}beck\\
+    ; Vinay Wagh\\
     }
 \mbox{}\\[2cm]
 \begin{minipage}{12cm}\noindent
@@ -170,6 +173,16 @@
  Templergraben 64\\
  52062 Aachen\\
  Germany \end{minipage}
+}\\
+{\mbox{}\\
+\small \noindent \textbf{Vinay Wagh\\
+    }  Email: \href{mailto://waghoba@gmail.com} {\texttt{waghoba@gmail.com}}\\
+  Homepage: \href{http://www.iitg.ernet.in/vinay.wagh/} {\texttt{http://www.iitg.ernet.in/vinay.wagh/}}\\
+  Address: \begin{minipage}[t]{8cm}\noindent
+ E-102, Department of Mathematics, \\
+ Indian Institute of Technology Guwahati, \\
+ Guwahati, Assam, India. \\
+ PIN: 781 039. \end{minipage}
 }\\
 \end{titlepage}
 
@@ -599,6 +612,9 @@ same-input-same-output).
     ## optional ring operations:
     ##
     
+    ## copy an element:
+    CopyElement                             := "a>a",
+    
     ## add two ring elements:
     Sum                                     := "a+b",
     
@@ -613,6 +629,15 @@ same-input-same-output).
     
     ## random polynomial:
     RandomPol                               := "rpl",
+    
+    ## numerator:
+    Numerator                               := "num",
+    
+    ## denominator:
+    Denominator                             := "den",
+    
+    ## evaluate polynomial:
+    Evaluate                                := "evl",
     
     ## degree of a multivariate polynomial
     DegreeOfRingElement                     := "deg",
@@ -877,7 +902,11 @@ same-input-same-output).
     ## eliminate variables:
     Eliminate                               := "eli",
     
+    ## leading module:
     LeadingModule                           := "led",
+    
+    ## the i-th monomial matrix
+    MonomialMatrix                          := "mon",
     
     ## matrix of symbols:
     MatrixOfSymbols                         := "smb",

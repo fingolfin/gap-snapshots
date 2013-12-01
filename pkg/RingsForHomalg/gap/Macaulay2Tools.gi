@@ -18,11 +18,13 @@
 InstallValue( CommonHomalgTableForMacaulay2Tools,
         
         rec(
-               Zero := HomalgExternalRingElement( R -> homalgPointer( homalgSendBlocking( [ R, "#0" ], HOMALG_IO.Pictograms.Zero ) ), "Macaulay2", IsZero ),
+               Zero := HomalgExternalRingElement( R -> homalgSendBlocking( [ R, "#0" ], HOMALG_IO.Pictograms.Zero ), "Macaulay2", IsZero ),
                
-               One := HomalgExternalRingElement( R -> homalgPointer( homalgSendBlocking( [ R, "#1" ], HOMALG_IO.Pictograms.One ) ), "Macaulay2", IsOne ),
+               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ R, "#1" ], HOMALG_IO.Pictograms.One ), "Macaulay2", IsOne ),
                
-               MinusOne := HomalgExternalRingElement( R -> homalgPointer( homalgSendBlocking( [ "-", R, "#1" ], HOMALG_IO.Pictograms.MinusOne ) ), "Macaulay2", IsMinusOne ),
+               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "-", R, "#1" ], HOMALG_IO.Pictograms.MinusOne ), "Macaulay2", IsMinusOne ),
+               
+               RingElement := R -> r -> homalgSendBlocking( [ R, "#1 * (", r, ")" ], HOMALG_IO.Pictograms.define ),
                
                IsZero := r -> homalgSendBlocking( [ "zero(", r, ")" ] , "need_output", HOMALG_IO.Pictograms.IsZero ) = "true",
                
@@ -31,14 +33,14 @@ InstallValue( CommonHomalgTableForMacaulay2Tools,
                Minus :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "toString(", a, "-(", b, "))" ], "need_output", HOMALG_IO.Pictograms.Minus );
+                   return homalgSendBlocking( [ a, "-(", b, ")" ], HOMALG_IO.Pictograms.Minus );
                    
                  end,
                
                DivideByUnit :=
                  function( a, u )
                    
-                   return homalgSendBlocking( [ "toString((", a, ")/(", u, "))"  ], "need_output", HOMALG_IO.Pictograms.DivideByUnit );
+                   return homalgSendBlocking( [ "(", a, ")/(", u, ")"  ], HOMALG_IO.Pictograms.DivideByUnit );
                    
                  end,
                
@@ -52,31 +54,31 @@ InstallValue( CommonHomalgTableForMacaulay2Tools,
                Sum :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "toString(", a, "+", b, ")" ], "need_output", HOMALG_IO.Pictograms.Sum );
+                   return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
                    
                  end,
                
                Product :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "toString((", a, ")*(", b, "))" ], "need_output", HOMALG_IO.Pictograms.Product );
+                   return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], HOMALG_IO.Pictograms.Product );
                    
                  end,
                
                Gcd :=
                  function( a, b )
 
-                   return homalgSendBlocking( [ "toString(gcd(", a, b, "))" ], "need_output", HOMALG_IO.Pictograms.Gcd );
+                   return homalgSendBlocking( [ "gcd(", a, b, ")" ], HOMALG_IO.Pictograms.Gcd );
 
                  end,
                
                CancelGcd :=
                  function( a, b )
-                   local g, a_g, b_g;
+                   local a_g, b_g;
                    
-                   g := homalgSendBlocking( [ "toString(gcd(", a, b, "))" ], "need_output", HOMALG_IO.Pictograms.Gcd );
-                   a_g := homalgSendBlocking( [ "(", a, ") // (", g, ")" ], HOMALG_IO.Pictograms.CancelGcd );
-                   b_g := homalgSendBlocking( [ "(", b, ") // (", g, ")" ], HOMALG_IO.Pictograms.CancelGcd );
+                   homalgSendBlocking( [ "g=gcd(", a, b, ")" ], "need_command", HOMALG_IO.Pictograms.Gcd );
+                   a_g := homalgSendBlocking( [ "(", a, ") // g" ], HOMALG_IO.Pictograms.CancelGcd );
+                   b_g := homalgSendBlocking( [ "(", b, ") // g" ], HOMALG_IO.Pictograms.CancelGcd );
                    
                    return [ a_g, b_g ];
                    
@@ -505,6 +507,13 @@ InstallValue( CommonHomalgTableForMacaulay2Tools,
                  function( r, R )
                    
                    return Int( homalgSendBlocking( [ "DegreeForHomalg(", r, ")" ], "need_output", HOMALG_IO.Pictograms.DegreeOfRingElement ) );
+                   
+                 end,
+               
+               MonomialMatrix :=
+                 function( i, vars, R )
+                   
+                   return homalgSendBlocking( [ "map(", R, "^(binomial(", i, "+#(", vars, ")-1,", i, ")),", R, "^1,transpose gens((ideal(", vars, "))^", i, "))" ], "break_lists", R, HOMALG_IO.Pictograms.MonomialMatrix );
                    
                  end,
                

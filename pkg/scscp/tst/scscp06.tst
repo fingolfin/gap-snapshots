@@ -1,6 +1,6 @@
 # scscp, chapter 6
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/connect.gd", 47, 61 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/connect.gd", 47, 61 ]
 
 gap> SetInfoLevel( InfoSCSCP, 2 );
 gap> s:=NewSCSCPconnection("localhost",26133);
@@ -15,7 +15,7 @@ gap> s:=NewSCSCPconnection("localhost",26133);
 gap> CloseSCSCPconnection(s);
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/connect.gd", 85, 92 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/connect.gd", 85, 92 ]
 
 gap> SetInfoLevel( InfoSCSCP, 0 );
 gap> s:=NewSCSCPconnection("localhost",26133);
@@ -23,7 +23,7 @@ gap> s:=NewSCSCPconnection("localhost",26133);
 gap> CloseSCSCPconnection(s);
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/process.gd", 142, 150 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/process.gd", 142, 150 ]
 
 gap> s := NewProcess( "WS_Factorial", [10], "localhost", 26133 );                  
 < process at localhost:26133 pid=52918 >
@@ -32,7 +32,7 @@ rec( attributes := [ [ "call_id", "localhost:26133:52918:TPNiMjCT" ] ],
   object := 3628800 )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 541, 561 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 541, 561 ]
 
 gap> EvaluateBySCSCP( "WS_Factorial",[10],"localhost",26133);
 #I  Creating a socket ...
@@ -53,7 +53,7 @@ rec( attributes := [ [ "call_id", "localhost:26133:2442:9QHQrCjv" ] ],
   object := "procedure completed" )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 60, 73 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 60, 73 ]
 
 gap> G:=SymmetricGroup(4);
 Sym( [ 1 .. 4 ] )
@@ -67,7 +67,7 @@ rec( attributes := [ [ "call_id", "localhost:26133:2442:xOilXtnw" ],
   object := [ 24, 12 ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 77, 91 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 77, 91 ]
 
 gap> IdGroupWS := function( G )
 >    local H, result;
@@ -82,7 +82,7 @@ gap> IdGroupWS := function( G )
 > end;;
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 95, 102 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 95, 102 ]
 
 gap> G:=DihedralGroup(64);
 <pc group of size 64 with 6 generators>
@@ -90,13 +90,13 @@ gap> IdGroupWS(G);
 [ 64, 52 ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 115, 120 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 115, 120 ]
 
 gap> x := [ Z(3)^0, Z(3), 0*Z(3) ];
 [ Z(3)^0, Z(3), 0*Z(3) ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 122, 135 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 122, 135 ]
 
 gap> OMString( x );
 "<OMOBJ> <OMA> <OMS cd=\"list1\" name=\"list\"/> <OMA> <OMS cd=\"arith1\" name\
@@ -110,7 +110,7 @@ gap> Length( OMString(x) );
 452
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 273, 311 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 273, 311 ]
 
 gap> stream:=InputOutputTCPStream( "localhost", 26133 );
 < input/output TCP stream to localhost:26133 >
@@ -149,13 +149,13 @@ rec( attributes := [ [ "call_id", "4" ] ],
 gap> CloseStream(stream);
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/remote.gd", 74, 79 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/remote.gd", 74, 79 ]
 
 gap> s:=StoreAsRemoteObject( SymmetricGroup(3), "localhost", 26133 );
 < remote object scscp://localhost:26133/TEMPVarSCSCPLvIUUtL3 >
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 337, 346 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 337, 346 ]
 
 gap> s![1]; 
 "TEMPVarSCSCPLvIUUtL3"
@@ -165,7 +165,7 @@ gap> s![3];
 26133
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 352, 359 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 352, 359 ]
 
 gap> OMPrint(s);
 <OMOBJ>
@@ -173,7 +173,7 @@ gap> OMPrint(s);
 </OMOBJ>
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 364, 371 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 364, 371 ]
 
 gap> EvaluateBySCSCP("WS_IdGroup",[s],"localhost",26133);  
 rec( attributes := [ [ "call_id", "localhost:26133:52918:Viq6EWBP" ] ],
@@ -181,19 +181,19 @@ Line 183 :
   object := [ 6, 1 ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/remote.gd", 105, 110 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/remote.gd", 105, 110 ]
 
 gap> RetrieveRemoteObject(s);
 Group([ (1,2,3), (1,2) ])
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/remote.gd", 134, 139 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/remote.gd", 134, 139 ]
 
 gap> UnbindRemoteObject(s);
 true
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 381, 388 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 381, 388 ]
 
 gap> s:=StoreAsRemoteObject( SymmetricGroup(3), "localhost", 26133 );
 < remote object scscp://localhost:26133/TEMPVarSCSCPNqc8Bkan >
@@ -201,7 +201,7 @@ gap> EvaluateBySCSCP( "WS_IdGroup", [ s ], "localhost", 26134 );
 rec( object := [ 6, 1 ], attributes := [ [ "call_id", "localhost:26134:7414" ] ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/client.xml", 392, 398 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/client.xml", 392, 398 ]
 
 gap> EvaluateBySCSCP("WS_IdGroup",[s],"localhost",26133 : output:="cookie" );
 rec( attributes := [ [ "call_id", "localhost:26133:52918:mRU6w471" ] ], 

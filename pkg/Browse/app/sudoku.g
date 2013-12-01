@@ -337,7 +337,7 @@
 ##  using <Ref Func="PrintFormattedString" BookName="gapdoc"/>.
 ##  The result depends on the value of <C>GAPInfo.TermEncoding</C>.
 ##  <P/>
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> game := Sudoku.Init(" 3   68  | 85  1 69|  97   53|      79 |\
 ##  >  6  47   |45  2    |89   2 1 | 4   8 7 | ");;
 ##  gap> str:= Sudoku.DisplayString( game );;
@@ -361,7 +361,7 @@
 ##                       ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨
 ##                       ┃   │   │   ┃   │   │   ┃   │   │   ┃
 ##                       ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  

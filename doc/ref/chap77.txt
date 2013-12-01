@@ -95,6 +95,19 @@
         [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)           
         [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)               
   
+  [1X77.4-1 InfoObsolete[101X
+  
+  [29X[2XInfoObsolete[102X[32X global variable
+  
+  [33X[0;0Yis  an  info class to display warnings when an obsolete variable is used. By
+  default, these warnings are switched off since the info level for this class
+  is  0.  Setting  it  to  1  will trigger warnings if [5XGAP[105X will detect that an
+  obsolete  variable  is used at runtime (this detection is possible, however,
+  only for obsolete variables declared using [10XDeclareObsoleteSynonym[110X).[133X
+  
+  [33X[0;0YTo  check  that  the [5XGAP[105X code does not use obsolete variables at the parsing
+  time, and not at a runtime, use [10X-O[110X command line option, see [14X3.1[114X.[133X
+  
   
   [1X77.5 [33X[0;0YThe former .gaprc file[133X[101X
   

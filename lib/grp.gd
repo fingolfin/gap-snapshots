@@ -1195,10 +1195,10 @@ DeclareAttribute( "PerfectResiduum", IsGroup );
 ##  gap> m11:=TransitiveGroup(11,6);
 ##  M(11)
 ##  gap> r:=RepresentativesPerfectSubgroups(m11);
-##  [ Group([ (2,3,4)(5,6,8)(7,11,9), (3,11)(4,5)(6,10)(7,8) ]), 
-##    Group([ (1,2,3)(5,9,6)(7,8,11), (3,11)(4,5)(6,10)(7,8) ]), 
-##    Group([ (2,3,4,11,6)(5,7,10,8,9), (3,11)(4,5)(6,10)(7,8) ]), 
-##    Group([ (1,2,3)(4,6,11)(7,9,10), (3,11)(4,5)(6,10)(7,8) ]), M(11), 
+##  [ Group([ (3,9,11)(4,8,6)(5,10,7), (1,3)(2,11)(4,6)(7,8) ]), 
+##    Group([ (2,3,4)(5,6,8)(7,11,9), (1,3)(2,11)(4,6)(7,8) ]), 
+##    Group([ (4,11,10,9)(5,7,8,6), (1,6,4)(2,9,7)(8,11,10) ]), 
+##    Group([ (3,5,8)(4,11,7)(6,9,10), (1,3)(2,11)(4,6)(7,8) ]), M(11), 
 ##    Group(()) ]
 ##  gap> List(r,Size);
 ##  [ 60, 60, 360, 660, 7920, 1 ]
@@ -1224,14 +1224,14 @@ DeclareAttribute( "RepresentativesSimpleSubgroups", IsGroup );
 ##  (see <Ref Func="RepresentativesPerfectSubgroups"/>.)
 ##  <Example><![CDATA[
 ##  gap> ConjugacyClassesPerfectSubgroups(m11);
-##  [ Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), 
-##        ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
-##    Group( [ ( 1, 2, 3)( 5, 9, 6)( 7, 8,11), 
-##        ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
-##    Group( [ ( 2, 3, 4,11, 6)( 5, 7,10, 8, 9), 
-##        ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, 
-##    Group( [ ( 1, 2, 3)( 4, 6,11)( 7, 9,10), 
-##        ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, M(11)^G, Group( () )^G ]
+##  [ Group( [ ( 3, 9,11)( 4, 8, 6)( 5,10, 7), 
+##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
+##    Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), 
+##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
+##    Group( [ ( 4,11,10, 9)( 5, 7, 8, 6), ( 1, 6, 4)( 2, 9, 7)( 8,11,10) 
+##       ] )^G, 
+##    Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), 
+##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, M(11)^G, Group( () )^G ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -3252,10 +3252,9 @@ KeyDependentOperation( "SylowComplement", IsGroup, IsPosInt, "prime" );
 ##  [ <permutation group of size 96 with 6 generators>, 
 ##    <permutation group of size 96 with 6 generators> ]
 ##  gap> HallSubgroup(h,[3,31]);
-##  Group(
-##  [ (2,18,11)(3,20,7)(4,19,9)(5,21,8)(6,17,10)(12,29,22)(13,27,26)(14,
-##      31,23)(15,30,24)(16,28,25), (1,6,18,3,16,10,9,28,8,21,2,30,26,20,
-##      5,7,12,23,22,11,25,13,14,31,15,17,4,24,29,27,19) ])
+##  Group([ (2,29,7)(3,30,11)(4,28,8)(5,27,9)(6,31,10)(12,24,21)(13,25,20)
+##  (14,23,17)(15,22,19)(16,26,18), (1,20,31,23,11,25,29,3,21,24,6,19,5,
+##  17,12,14,4,18,8,10,30,27,16,26,22,13,7,15,28,9,2) ])
 ##  gap> HallSubgroup(h,[5,31]);
 ##  fail
 ##  ]]></Example>
@@ -3297,9 +3296,9 @@ DeclareOperation( "NrConjugacyClassesInSupergroup", [ IsGroup, IsGroup ] );
 ##  The attribute <Ref Attr="MappingGeneratorsImages"/> of this map gives a
 ##  list of generators and corresponding letters.
 ##  <P/>
-##  The algorithm used computes all elements of the group to ensure a short
+##  The algorithm used forms all elements of the group to ensure a short
 ##  word is found. Therefore this function should <E>not</E> be used when the
-##  group <A>G</A> has more than a few thousand elements.
+##  group <A>G</A> has more than a few million elements.
 ##  Because of this, one should not call this function within algorithms,
 ##  but use homomorphisms instead.
 ##  <Example><![CDATA[
@@ -3321,6 +3320,49 @@ DeclareOperation( "NrConjugacyClassesInSupergroup", [ IsGroup, IsGroup ] );
 ##
 DeclareOperation( "Factorization",
                   [ IsGroup, IsMultiplicativeElementWithInverse ] );
+
+#############################################################################
+##
+#O  GrowthFunctionOfGroup( <G> )
+#O  GrowthFunctionOfGroup( <G>, <r> )
+##
+##  <#GAPDoc Label="GrowthFunctionOfGroup">
+##  <ManSection>
+##  <Oper Name="GrowthFunctionOfGroup" Arg='G'/>
+##  <Oper Name="GrowthFunctionOfGroup" Arg='G, radius' Label="with word length limit"/>
+##
+##  <Description>
+##  For a group <A>G</A> with a generating set given in
+##  <Ref Func="GeneratorsOfGroup"/>, 
+##  this function calculates the number of elements whose shortest expression as
+##  words in the generating set is of a particular length. It returns a list
+##  <A>L</A>, whose <M>i+1</M> entry counts the number of elements whose
+##  shortest word expression has length <M>i</M>.
+##  If a maximal length <A>radius</A> is given, only words up to length
+##  <A>radius</A> are counted. Otherwise the group must be finite and all
+##  elements are enumerated.
+##  <Example><![CDATA[
+##  gap> GrowthFunctionOfGroup(MathieuGroup(12));  
+##  [ 1, 5, 19, 70, 255, 903, 3134, 9870, 25511, 38532, 16358, 382 ]
+##  gap> GrowthFunctionOfGroup(MathieuGroup(12),2);
+##  [ 1, 5, 19 ]
+##  gap> GrowthFunctionOfGroup(MathieuGroup(12),99);
+##  [ 1, 5, 19, 70, 255, 903, 3134, 9870, 25511, 38532, 16358, 382 ]
+##  gap> free:=FreeGroup("a","b");
+##  <free group on the generators [ a, b ]>
+##  gap> product:=free/ParseRelators(free,"a2,b3");
+##  <fp group on the generators [ a, b ]>
+##  gap> SetIsFinite(product,false);
+##  gap> GrowthFunctionOfGroup(product,10);
+##  [ 1, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64 ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "GrowthFunctionOfGroup",IsGroup and HasGeneratorsOfGroup);
+DeclareOperation( "GrowthFunctionOfGroup",
+                  [ IsGroup and HasGeneratorsOfGroup,IsPosInt]);
 
 #############################################################################
 ##
@@ -3923,7 +3965,7 @@ DeclareAttribute( "IsomorphismSpecialPcGroup", IsGroup );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute("IsomorphismPermGroup",IsGroup);
+DeclareAttribute("IsomorphismPermGroup",IsSemigroup);
 
 
 #############################################################################
@@ -4294,6 +4336,7 @@ DeclareFilter("IsGroupOfFamily");
 ##
 DeclareGlobalFunction("Group_PseudoRandom");
 
+DeclareGlobalFunction("GroupEnumeratorByClosure");
 
 #############################################################################
 ##

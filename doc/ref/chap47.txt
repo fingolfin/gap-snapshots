@@ -208,7 +208,7 @@
   [33X[0;0YThe  method  employed  by  [5XGAP[105X  for such an equality test use the underlying
   finitely  presented group. First (unless this group is known to be infinite)
   [5XGAP[105X  tries  to  find  a  faithful  permutation  representation  by a bounded
-  Todd-Coxeter.  If this fails, a Knuth-Bendix (see [14X53.6[114X) is attempted and the
+  Todd-Coxeter.  If this fails, a Knuth-Bendix (see [14X52.6[114X) is attempted and the
   words are compared via their normal form.[133X
   
   [33X[0;0YIf  only elements in a subgroup are to be tested for equality it thus can be
@@ -1278,8 +1278,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGQuotients(fp,Group((1,2,3),(1,2)));[127X[104X
-    [4X[28X[ [ f1, f2 ] -> [ (2,3), (1,2) ], [ f1, f2 ] -> [ (2,3), (1,2,3) ], [128X[104X
-    [4X[28X  [ f1, f2 ] -> [ (1,2,3), (1,2) ] ][128X[104X
+    [4X[28X[ [ f1, f2 ] -> [ (1,2), (2,3) ], [ f1, f2 ] -> [ (2,3), (1,2,3) ], [128X[104X
+    [4X[28X  [ f1, f2 ] -> [ (1,2,3), (2,3) ] ][128X[104X
   [4X[32X[104X
   
   [1X47.14-5 SolvableQuotient[101X

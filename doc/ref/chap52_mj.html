@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (ref) - Chapter 52: Monoids</title>
+<title>GAP (ref) - Chapter 52: Finitely Presented Semigroups and Monoids</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -23,120 +23,526 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap51_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap53_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap52.html">[MathJax off]</a></p>
-<p><a id="X872FE34A7814C0DC" name="X872FE34A7814C0DC"></a></p>
-<div class="ChapSects"><a href="chap52_mj.html#X872FE34A7814C0DC">52 <span class="Heading">Monoids</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X7F3D35A38738DEB9">52.1 <span class="Heading">Functions for Monoids</span></a>
+<p><a id="X7DE7C52A7C4BDADE" name="X7DE7C52A7C4BDADE"></a></p>
+<div class="ChapSects"><a href="chap52_mj.html#X7DE7C52A7C4BDADE">52 <span class="Heading">Finitely Presented Semigroups and Monoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X78C80F1A84C58E1E">52.1 <span class="Heading">IsSubsemigroupFpSemigroup (Filter)</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X861C523483C6248C">52.1-1 IsMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7F95328B7C7E49EA">52.1-2 <span class="Heading">Monoid</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X8496E23C80453C33">52.1-1 IsSubsemigroupFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X82128D4D83ACA683">52.1-2 IsSubmonoidFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X8239EF2B853411E9">52.1-3 IsFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7C2BA01D86087D11">52.1-4 IsFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X81ABBE997A4C19B7">52.1-5 IsElementOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7A570B89862C7399">52.1-6 IsElementOfFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7DC8A5D380AFE5DB">52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X84B8E3257E2E4134">52.2 <span class="Heading">Creating Finitely Presented Semigroups</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X8322D01E84912FD7">52.1-3 Submonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X85129EE387CC4D28">52.1-4 MonoidByGenerators</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7B22038F832B9C0F">52.1-5 AsMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7C9A12DE8287B2D3">52.1-6 AsSubmonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X83CA2E7279C44718">52.1-7 GeneratorsOfMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7EC77C0184587181">52.1-8 TrivialSubmonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X79FA3FA978CA2E43">52.1-9 <span class="Heading">FreeMonoid</span></a>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7D3B9E317DD5AC8A">52.2-1 \/</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X822F04B2833BE254">52.2-2 FactorFreeSemigroupByRelations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X869F966B8196F28C">52.2-3 IsomorphismFpSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X85E7C8407C9D5FBE">52.3 <span class="Heading">Comparison of Elements of Finitely Presented Semigroups</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7BFE938E857CA27D">52.1-10 MonoidByMultiplicationTable</a></span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7DD9D81F863EBE31">52.3-1 \=</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X7D3EA628804E05D4">52.4 <span class="Heading">Preimages in the Free Semigroup</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X818E25C887512E89">52.4-1 UnderlyingElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X847012347856C55E">52.4-2 ElementOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X8726523779601873">52.4-3 FreeSemigroupOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X79A39402806B5EB7">52.4-4 FreeGeneratorsOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X862BE9FA7C987CAB">52.4-5 RelationsOfFpSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X7E79A80382563C26">52.5 <span class="Heading">Finitely presented monoids</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X82B5E4A27AAB6749">52.5-1 \/</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X87693BDC79DC6EBF">52.6 <span class="Heading">Rewriting Systems and the Knuth-Bendix Procedure</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7D8F804E814D894D">52.6-1 ReducedConfluentRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7A3F8AE285C41D80">52.6-2 KB_REW</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X87A3823483E4FF86">52.6-3 <span class="Heading">KnuthBendixRewritingSystem</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7966343587A04AFF">52.6-4 SemigroupOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7EAB3E067D7557F6">52.6-5 MonoidOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X80B8115C8147F605">52.6-6 FreeSemigroupOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X84CE48BE7F870808">52.6-7 FreeMonoidOfRewritingSystem</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52_mj.html#X812C28217F3E6720">52.7 <span class="Heading">Todd-Coxeter Procedure</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52_mj.html#X7C24508A7F677520">52.7-1 CosetTableOfFpSemigroup</a></span>
 </div></div>
 </div>
 
-<h3>52 <span class="Heading">Monoids</span></h3>
+<h3>52 <span class="Heading">Finitely Presented Semigroups and Monoids</span></h3>
 
-<p>This chapter describes functions for monoids. Currently there are only few of them. More general functions for magmas and semigroups can be found in Chapters <a href="chap35_mj.html#X873E502F7D21C39C"><span class="RefLink">35</span></a> and <a href="chap51_mj.html#X80AF5F307DBDC2B4"><span class="RefLink">51</span></a>.</p>
+<p>A <em>finitely presented semigroup</em> (resp. <em>finitely presented monoid</em>) is a quotient of a free semigroup (resp. free monoid) on a finite number of generators over a finitely generated congruence on the free semigroup (resp. free monoid).</p>
 
-<p><a id="X7F3D35A38738DEB9" name="X7F3D35A38738DEB9"></a></p>
+<p>Finitely presented semigroups are obtained by factoring a free semigroup by a set of relations (a generating set for the congruence), i.e., a set of pairs of words in the free semigroup.</p>
 
-<h4>52.1 <span class="Heading">Functions for Monoids</span></h4>
 
-<p><a id="X861C523483C6248C" name="X861C523483C6248C"></a></p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=FreeSemigroup("a","b");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=GeneratorsOfSemigroup(f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=f/[ [x[1]*x[2],x[2]*x[1]] ];</span>
+&lt;fp semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup(s);</span>
+[ a, b ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpSemigroup(s);</span>
+[ [ a*b, b*a ] ]
+</pre></div>
 
-<h5>52.1-1 IsMonoid</h5>
+<p>Finitely presented monoids are obtained by factoring a free monoid by a set of relations, i.e. a set of pairs of words in the free monoid.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoid</code>( <var class="Arg">D</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>A <em>monoid</em> is a magma-with-one (see <a href="chap35_mj.html#X873E502F7D21C39C"><span class="RefLink">35</span></a>) with associative multiplication.</p>
 
-<p><a id="X7F95328B7C7E49EA" name="X7F95328B7C7E49EA"></a></p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=FreeMonoid("a","b");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=GeneratorsOfMonoid(f);</span>
+[ a, b ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:=Identity(f);</span>
+&lt;identity ...&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:=f/[ [x[1]*x[2],e] ];</span>
+&lt;fp monoid on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpMonoid(m);</span>
+[ [ a*b, &lt;identity ...&gt; ] ]
+</pre></div>
 
-<h5>52.1-2 <span class="Heading">Monoid</span></h5>
+<p>Notice that for <strong class="pkg">GAP</strong> a finitely presented monoid is not a finitely presented semigroup.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Monoid</code>( <var class="Arg">gen1</var>, <var class="Arg">gen2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Monoid</code>( <var class="Arg">gens</var>[, <var class="Arg">id</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>In the first form, <code class="func">Monoid</code> returns the monoid generated by the arguments <var class="Arg">gen1</var>, <var class="Arg">gen2</var>, <span class="SimpleMath">\(\ldots\)</span>, that is, the closure of these elements under multiplication and taking the 0-th power. In the second form, <code class="func">Monoid</code> returns the monoid generated by the elements in the homogeneous list <var class="Arg">gens</var>; a square matrix as only argument is treated as one generator, not as a list of generators. In the second form, the identity element <var class="Arg">id</var> may be given as the second argument.</p>
 
-<p>It is <em>not</em> checked whether the underlying multiplication is associative, use <code class="func">MagmaWithOne</code> (<a href="chap35_mj.html#X7854B23286B17321"><span class="RefLink">35.2-2</span></a>) and <code class="func">IsAssociative</code> (<a href="chap35_mj.html#X7C83B5A47FD18FB7"><span class="RefLink">35.4-7</span></a>) if you want to check whether a magma-with-one is in fact a monoid.</p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFpSemigroup(m);</span>
+false
+</pre></div>
 
-<p><a id="X8322D01E84912FD7" name="X8322D01E84912FD7"></a></p>
+<p>However, one can build a finitely presented semigroup isomorphic to that finitely presented monoid (see <code class="func">IsomorphismFpSemigroup</code> (<a href="chap52_mj.html#X869F966B8196F28C"><span class="RefLink">52.2-3</span></a>)).</p>
 
-<h5>52.1-3 Submonoid</h5>
+<p>Also note that is not possible to refer to the generators by their names. These names are not variables, but just display figures. So, if one wants to access the generators by their names, one first has to introduce the respective variables and to assign the generators to them.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Submonoid</code>( <var class="Arg">M</var>, <var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubmonoidNC</code>( <var class="Arg">M</var>, <var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>are just synonyms of <code class="func">SubmagmaWithOne</code> (<a href="chap35_mj.html#X7F295EBC7A9CE87E"><span class="RefLink">35.2-8</span></a>) and <code class="func">SubmagmaWithOneNC</code> (<a href="chap35_mj.html#X7F295EBC7A9CE87E"><span class="RefLink">35.2-8</span></a>), respectively.</p>
 
-<p><a id="X85129EE387CC4D28" name="X85129EE387CC4D28"></a></p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Unbind(a);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=FreeSemigroup("a","b");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=GeneratorsOfSemigroup(f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=f/[ [x[1]*x[2],x[2]*x[1]] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a;</span>
+Error, Variable: 'a' must have a value
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=GeneratorsOfSemigroup(s)[1];</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b:=GeneratorsOfSemigroup(s)[2];</span>
+b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in f;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a in s;</span>
+true
+</pre></div>
 
-<h5>52.1-4 MonoidByGenerators</h5>
+<p>The generators of the free semigroup (resp. free monoid) are different from the generators of the finitely presented semigroup (resp. finitely presented monoid) (even though they are displayed by the same names). This means that words in the generators of the free semigroup (resp. free monoid) are not elements of the finitely presented semigroup (resp. finitely presented monoid). Conversely elements of the finitely presented semigroup (resp. finitely presented monoid) are not words of the free semigroup (resp. free monoid).</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonoidByGenerators</code>( <var class="Arg">gens</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>is the underlying operation of <code class="func">Monoid</code> (<a href="chap52_mj.html#X7F95328B7C7E49EA"><span class="RefLink">52.1-2</span></a>).</p>
+<p>Calculations comparing elements of an finitely presented semigroup may run into problems: there are finitely presented semigroups for which no algorithm exists (it is known that no such algorithm can exist) that will tell for two arbitrary words in the generators whether the corresponding elements in the finitely presented semigroup are equal. Therefore the methods used by <strong class="pkg">GAP</strong> to compute in finitely presented semigroups may run into warning errors, run out of memory or run forever. If the finitely presented semigroup is (by theory) known to be finite the algorithms are guaranteed to terminate (if there is sufficient memory available), but the time needed for the calculation cannot be bounded a priori. The same can be said for monoids. (See <a href="chap52_mj.html#X87693BDC79DC6EBF"><span class="RefLink">52.6</span></a>.)</p>
 
-<p><a id="X7B22038F832B9C0F" name="X7B22038F832B9C0F"></a></p>
 
-<h5>52.1-5 AsMonoid</h5>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a*b=a^5;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a^5*b^2*a=a^6*b^2;</span>
+true
+</pre></div>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMonoid</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>If <var class="Arg">C</var> is a collection whose elements form a monoid (see <code class="func">IsMonoid</code> (<a href="chap52_mj.html#X861C523483C6248C"><span class="RefLink">52.1-1</span></a>)) then <code class="func">AsMonoid</code> returns this monoid. Otherwise <code class="keyw">fail</code> is returned.</p>
+<p>Note that elements of a finitely presented semigroup (or monoid) are not printed in a unique way:</p>
 
-<p><a id="X7C9A12DE8287B2D3" name="X7C9A12DE8287B2D3"></a></p>
 
-<h5>52.1-6 AsSubmonoid</h5>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a^5*b^2*a;</span>
+a^5*b^2*a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a^6*b^2;</span>
+a^6*b^2
+</pre></div>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSubmonoid</code>( <var class="Arg">D</var>, <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Let <var class="Arg">D</var> be a domain and <var class="Arg">C</var> a collection. If <var class="Arg">C</var> is a subset of <var class="Arg">D</var> that forms a monoid then <code class="func">AsSubmonoid</code> returns this monoid, with parent <var class="Arg">D</var>. Otherwise <code class="keyw">fail</code> is returned.</p>
+<p><a id="X78C80F1A84C58E1E" name="X78C80F1A84C58E1E"></a></p>
 
-<p><a id="X83CA2E7279C44718" name="X83CA2E7279C44718"></a></p>
+<h4>52.1 <span class="Heading">IsSubsemigroupFpSemigroup (Filter)</span></h4>
 
-<h5>52.1-7 GeneratorsOfMonoid</h5>
+<p><a id="X8496E23C80453C33" name="X8496E23C80453C33"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfMonoid</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Monoid generators of a monoid <var class="Arg">M</var> are the same as magma-with-one generators (see <code class="func">GeneratorsOfMagmaWithOne</code> (<a href="chap35_mj.html#X87DD93EC8061DD81"><span class="RefLink">35.4-2</span></a>)).</p>
+<h5>52.1-1 IsSubsemigroupFpSemigroup</h5>
 
-<p><a id="X7EC77C0184587181" name="X7EC77C0184587181"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsemigroupFpSemigroup</code>( <var class="Arg">t</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>true if <var class="Arg">t</var> is a finitely presented semigroup or a subsemigroup of a finitely presented semigroup (generally speaking, such a subsemigroup can be constructed with <code class="code">Semigroup(<var class="Arg">gens</var>)</code>, where <var class="Arg">gens</var> is a list of elements of a finitely presented semigroup).</p>
 
-<h5>52.1-8 TrivialSubmonoid</h5>
+<p><a id="X82128D4D83ACA683" name="X82128D4D83ACA683"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSubmonoid</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>is just a synonym for <code class="func">TrivialSubmagmaWithOne</code> (<a href="chap35_mj.html#X837DA95883CFB985"><span class="RefLink">35.4-14</span></a>).</p>
+<h5>52.1-2 IsSubmonoidFpMonoid</h5>
 
-<p><a id="X79FA3FA978CA2E43" name="X79FA3FA978CA2E43"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubmonoidFpMonoid</code>( <var class="Arg">t</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>true if <var class="Arg">t</var> is a finitely presented monoid or a submonoid of a finitely presented monoid (generally speaking, such a semigroup can be constructed with <code class="code">Monoid(<var class="Arg">gens</var>)</code>, where <var class="Arg">gens</var> is a list of elements of a finitely presented monoid).</p>
 
-<h5>52.1-9 <span class="Heading">FreeMonoid</span></h5>
+<p>A submonoid of a monoid has the same identity as the monoid.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeMonoid</code> returns a free monoid on <var class="Arg">rank</var> generators. If the optional argument <var class="Arg">name</var> is given then the generators are printed as <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc., that is, each name is the concatenation of the string <var class="Arg">name</var> and an integer from <code class="code">1</code> to <var class="Arg">range</var>. The default for <var class="Arg">name</var> is the string <code class="code">"m"</code>.</p>
+<p><a id="X8239EF2B853411E9" name="X8239EF2B853411E9"></a></p>
 
-<p>Called in the second form, <code class="func">FreeMonoid</code> returns a free monoid on as many generators as arguments, printed as <var class="Arg">name1</var>, <var class="Arg">name2</var> etc.</p>
+<h5>52.1-3 IsFpSemigroup</h5>
 
-<p>Called in the third form, <code class="func">FreeMonoid</code> returns a free monoid on as many generators as the length of the list <var class="Arg">names</var>, the <span class="SimpleMath">\(i\)</span>-th generator being printed as <var class="Arg">names</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>is a synonym for <code class="code">IsSubsemigroupFpSemigroup(<var class="Arg">s</var>)</code> and <code class="code">IsWholeFamily(<var class="Arg">s</var>)</code> (this is because a subsemigroup of a finitely presented semigroup is not necessarily finitely presented).</p>
 
-<p>Called in the fourth form, <code class="func">FreeMonoid</code> returns a free monoid on infinitely many generators, where the first generators are printed by the names in the list <var class="Arg">init</var>, and the other generators by <var class="Arg">name</var> and an appended number.</p>
+<p><a id="X7C2BA01D86087D11" name="X7C2BA01D86087D11"></a></p>
 
-<p>If the extra argument <var class="Arg">wfilt</var> is given, it must be either <code class="func">IsSyllableWordsFamily</code> (<a href="chap37_mj.html#X7869716C84EA9D81"><span class="RefLink">37.6-6</span></a>) or <code class="func">IsLetterWordsFamily</code> (<a href="chap37_mj.html#X7E36F7897D82417F"><span class="RefLink">37.6-2</span></a>) or <code class="func">IsWLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>) or <code class="func">IsBLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>). This filter then specifies the representation used for the elements of the free monoid (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+<h5>52.1-4 IsFpMonoid</h5>
 
-<p>Also see Chapter <a href="chap52_mj.html#X872FE34A7814C0DC"><span class="RefLink">52</span></a>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpMonoid</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>is a synonym for <code class="code">IsSubmonoidFpMonoid(<var class="Arg">m</var>)</code> and <code class="code">IsWholeFamily(<var class="Arg">m</var>)</code> (this is because a submonoid of a finitely presented monoid is not necessarily finitely presented).</p>
 
-<p><a id="X7BFE938E857CA27D" name="X7BFE938E857CA27D"></a></p>
+<p><a id="X81ABBE997A4C19B7" name="X81ABBE997A4C19B7"></a></p>
 
-<h5>52.1-10 MonoidByMultiplicationTable</h5>
+<h5>52.1-5 IsElementOfFpSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonoidByMultiplicationTable</code>( <var class="Arg">A</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns the monoid whose multiplication is defined by the square matrix <var class="Arg">A</var> (see <code class="func">MagmaByMultiplicationTable</code> (<a href="chap35_mj.html#X85CD1E7678295CA6"><span class="RefLink">35.3-1</span></a>)) if such a monoid exists. Otherwise <code class="keyw">fail</code> is returned.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFpSemigroup</code>( <var class="Arg">elm</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>returns true if <var class="Arg">elm</var> is an element of a finitely presented semigroup.</p>
+
+<p><a id="X7A570B89862C7399" name="X7A570B89862C7399"></a></p>
+
+<h5>52.1-6 IsElementOfFpMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFpMonoid</code>( <var class="Arg">elm</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>returns true if <var class="Arg">elm</var> is an element of a finitely presented monoid.</p>
+
+<p><a id="X7DC8A5D380AFE5DB" name="X7DC8A5D380AFE5DB"></a></p>
+
+<h5>52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpGrpMonSmgOfFpGrpMonSmgElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the finitely presented group, monoid or semigroup to which <var class="Arg">elm</var> belongs</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup("a","b");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := GeneratorsOfSemigroup( f )[ 1 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := GeneratorsOfSemigroup( f )[ 2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := f / [ [ a^2 , a*b ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFpSemigroup( s );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := Semigroup( [ GeneratorsOfSemigroup( s )[ 1 ] ]);</span>
+&lt;semigroup with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupFpSemigroup( t );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsElementOfFpSemigroup( GeneratorsOfSemigroup( t )[ 1 ] );</span>
+true
+</pre></div>
+
+<p><a id="X84B8E3257E2E4134" name="X84B8E3257E2E4134"></a></p>
+
+<h4>52.2 <span class="Heading">Creating Finitely Presented Semigroups</span></h4>
+
+<p><a id="X7D3B9E317DD5AC8A" name="X7D3B9E317DD5AC8A"></a></p>
+
+<h5>52.2-1 \/</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">F</var>, <var class="Arg">rels</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>creates a finitely presented semigroup given by the presentation <span class="SimpleMath">\(\langle gens \mid \textit{rels} \rangle\)</span> where <span class="SimpleMath">\(gens\)</span> are the generators of the free semigroup <var class="Arg">F</var>, and the relations <var class="Arg">rels</var> are entered as pairs of words in the generators of the free semigroup.</p>
+
+<p>The same result is obtained with the infix operator <code class="code">/</code>, i.e., as <var class="Arg">F</var> <code class="code">/</code> <var class="Arg">rels</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=FreeSemigroup(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=GeneratorsOfSemigroup(f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f/[ [s[1]*s[2]*s[1],s[1]] , [s[2]^4,s[1]] ];</span>
+&lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
+</pre></div>
+
+<p><a id="X822F04B2833BE254" name="X822F04B2833BE254"></a></p>
+
+<h5>52.2-2 FactorFreeSemigroupByRelations</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorFreeSemigroupByRelations</code>( <var class="Arg">f</var>, <var class="Arg">rels</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>for a free semigroup <var class="Arg">f</var> and <var class="Arg">rels</var> is a list of pairs of elements of <var class="Arg">f</var>. Returns the finitely presented semigroup which is the quotient of <var class="Arg">f</var> by the least congruence on <var class="Arg">f</var> generated by the pairs in <var class="Arg">rels</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorFreeSemigroupByRelations(f,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           [[s[1]*s[2]*s[1],s[1]],[s[2]^4,s[1]]]);</span>
+&lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
+</pre></div>
+
+<p><a id="X869F966B8196F28C" name="X869F966B8196F28C"></a></p>
+
+<h5>52.2-3 IsomorphismFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>for a semigroup <var class="Arg">s</var> returns an isomorphism from <var class="Arg">s</var> to a finitely presented semigroup</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeGroup(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := f/[f.1^4,f.2^5];</span>
+&lt;fp group on the generators [ f1, f2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := IsomorphismFpSemigroup(g);</span>
+MappingByFunction( &lt;fp group on the generators 
+[ f1, f2 ]&gt;, &lt;fp semigroup on the generators 
+[ &lt;identity ...&gt;, f1^-1, f1, f2^-1, f2 
+ ]&gt;, function( x ) ... end, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Range(phi);</span>
+&lt;fp semigroup on the generators [ &lt;identity ...&gt;, f1^-1, f1, f2^-1, 
+  f2 ]&gt;
+</pre></div>
+
+<p><a id="X85E7C8407C9D5FBE" name="X85E7C8407C9D5FBE"></a></p>
+
+<h4>52.3 <span class="Heading">Comparison of Elements of Finitely Presented Semigroups</span></h4>
+
+<p><a id="X7DD9D81F863EBE31" name="X7DD9D81F863EBE31"></a></p>
+
+<h5>52.3-1 \=</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Two elements <var class="Arg">a</var>, <var class="Arg">b</var> of a finitely presented semigroup are equal if they are equal in the semigroup. Nevertheless they may be represented as different words in the generators. Because of the fundamental problems mentioned in the introduction to this chapter such a test may take a very long time and cannot be guaranteed to finish (see <a href="chap52_mj.html#X87693BDC79DC6EBF"><span class="RefLink">52.6</span></a>).</p>
+
+<p><a id="X7D3EA628804E05D4" name="X7D3EA628804E05D4"></a></p>
+
+<h4>52.4 <span class="Heading">Preimages in the Free Semigroup</span></h4>
+
+<p>Elements of a finitely presented semigroup are not words, but are represented using a word from the free semigroup as representative.</p>
+
+<p><a id="X818E25C887512E89" name="X818E25C887512E89"></a></p>
+
+<h5>52.4-1 UnderlyingElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>for an element <var class="Arg">elm</var> of a finitely presented semigroup, it returns the word from the free semigroup that is used as a representative for <var class="Arg">elm</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup( "a" , "b" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := GeneratorsOfSemigroup( f )[ 1 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := GeneratorsOfSemigroup( f )[ 2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := f / [ [ a^3 , a ] , [ b^3 , b ] , [ a*b , b*a ] ];</span>
+&lt;fp semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := GeneratorsOfSemigroup(s)[1] * GeneratorsOfSemigroup(s)[2];</span>
+a*b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWord (w );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ue := UnderlyingElement( w );</span>
+a*b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWord( ue );</span>
+true
+</pre></div>
+
+<p><a id="X847012347856C55E" name="X847012347856C55E"></a></p>
+
+<h5>52.4-2 ElementOfFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfFpSemigroup</code>( <var class="Arg">fam</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>for a family <var class="Arg">fam</var> of elements of a finitely presented semigroup and a word <var class="Arg">w</var> in the free generators underlying this finitely presented semigroup, this operation creates the element of the finitely presented semigroup with the representative <var class="Arg">w</var> in the free semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fam := FamilyObj( GeneratorsOfSemigroup(s)[1] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ge := ElementOfFpSemigroup( fam, a*b );</span>
+a*b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ge in f;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ge in s;</span>
+true
+</pre></div>
+
+<p><a id="X8726523779601873" name="X8726523779601873"></a></p>
+
+<h5>52.4-3 FreeSemigroupOfFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroupOfFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the underlying free semigroup for the finitely presented semigroup <var class="Arg">s</var>, ie, the free semigroup over which <var class="Arg">s</var> is defined as a quotient (this is the free semigroup generated by the free generators provided by <code class="code">FreeGeneratorsOfFpSemigroup(<var class="Arg">s</var>)</code>).</p>
+
+<p><a id="X79A39402806B5EB7" name="X79A39402806B5EB7"></a></p>
+
+<h5>52.4-4 FreeGeneratorsOfFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGeneratorsOfFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the underlying free generators corresponding to the generators of the finitely presented semigroup <var class="Arg">s</var>.</p>
+
+<p><a id="X862BE9FA7C987CAB" name="X862BE9FA7C987CAB"></a></p>
+
+<h5>52.4-5 RelationsOfFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelationsOfFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the relations of the finitely presented semigroup <var class="Arg">s</var> as pairs of words in the free generators provided by <code class="code">FreeGeneratorsOfFpSemigroup(<var class="Arg">s</var>)</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup( "a" , "b" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := GeneratorsOfSemigroup( f )[ 1 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := GeneratorsOfSemigroup( f )[ 2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := f / [ [ a^3 , a ] , [ b^3 , b ] , [ a*b , b*a ] ];</span>
+&lt;fp semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( s );</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fs := FreeSemigroupOfFpSemigroup( s );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f = fs;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGeneratorsOfFpSemigroup( s );</span>
+[ a, b ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpSemigroup( s );</span>
+[ [ a^3, a ], [ b^3, b ], [ a*b, b*a ] ]
+</pre></div>
+
+<p><a id="X7E79A80382563C26" name="X7E79A80382563C26"></a></p>
+
+<h4>52.5 <span class="Heading">Finitely presented monoids</span></h4>
+
+<p>The functionality available for finitely presented monoids is essentially the same as that available for finitely presented semigroups, and thus the previous sections apply (with the obvious changes) to finitely presented monoids.</p>
+
+<p><a id="X82B5E4A27AAB6749" name="X82B5E4A27AAB6749"></a></p>
+
+<h5>52.5-1 \/</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">F</var>, <var class="Arg">rels</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>creates a finitely presented monoid given by the monoid presentation <span class="SimpleMath">\(\langle \textit{gens} \mid \textit{rels} \rangle\)</span> where <var class="Arg">gens</var> are the generators of the free monoid <var class="Arg">F</var>, and the relations <var class="Arg">rels</var> are entered as pairs of words in both the identity and the generators of the free monoid.</p>
+
+<p>The same result is obtained with the infix operator <code class="code">/</code>, i.e., as <code class="code"><var class="Arg">F</var>/<var class="Arg">rels</var></code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeMonoid( 3 );</span>
+&lt;free monoid on the generators [ m1, m2, m3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := GeneratorsOfMonoid( f );</span>
+[ m1, m2, m3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e:= Identity ( f );</span>
+&lt;identity ...&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := f/[ [x[1]^3,e] , [x[1]*x[2],x[2] ]];</span>
+&lt;fp monoid on the generators [ m1, m2, m3 ]&gt;
+</pre></div>
+
+<p><a id="X87693BDC79DC6EBF" name="X87693BDC79DC6EBF"></a></p>
+
+<h4>52.6 <span class="Heading">Rewriting Systems and the Knuth-Bendix Procedure</span></h4>
+
+<p>If a finitely presented semigroup has a confluent rewriting system then it has a solvable word problem, that is, there is an algorithm to decide when two words in the free underlying semigroup represent the same element of the finitely presented semigroup. Indeed, once we have a confluent rewriting system, it is possible to successfully test that two words represent the same element in the semigroup, by reducing both words using the rewriting system rules. This is, at the moment, the method that <strong class="pkg">GAP</strong> uses to check equality in finitely presented semigroups and monoids.</p>
+
+<p><a id="X7D8F804E814D894D" name="X7D8F804E814D894D"></a></p>
+
+<h5>52.6-1 ReducedConfluentRewritingSystem</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedConfluentRewritingSystem</code>( <var class="Arg">S</var>[, <var class="Arg">ordering</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns a reduced confluent rewriting system of the finitely presented semigroup or monoid <var class="Arg">S</var> with respect to the reduction ordering <var class="Arg">ordering</var> (see <a href="chap34_mj.html#X7E4AAA7382D42361"><span class="RefLink">34</span></a>).</p>
+
+<p>The default for <var class="Arg">ordering</var> is the length plus lexicographic ordering on words, also called the shortlex ordering; for the definition see for example <a href="chapBib_mj.html#biBSims94">[Sim94]</a>.</p>
+
+<p>Notice that this might not terminate. In particular, if the semigroup or monoid <var class="Arg">S</var> does not have a solvable word problem then it this will certainly never end. Also, in this case, the object returned is an immutable rewriting system, because once we have a confluent rewriting system for a finitely presented semigroup or monoid we do not want to allow it to change (as it was most probably very time consuming to get it in the first place). Furthermore, this is also an attribute storing object (see <a href="chap13_mj.html#X8698205F8648EB33"><span class="RefLink">13.4</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup( "a" , "b" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := GeneratorsOfSemigroup( f )[ 1 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := GeneratorsOfSemigroup( f )[ 2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := f /  [ [ a^2 , a*b ] , [ a^4 , b] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rws := ReducedConfluentRewritingSystem(g);</span>
+Rewriting System for Semigroup( [ a, b ] ) with rules 
+[ [ a*b, a^2 ], [ a^4, b ], [ b*a, a^2 ], [ b^2, a^2 ] ]
+</pre></div>
+
+<p>The creation of a reduced confluent rewriting system for a semigroup or for a monoid, in <strong class="pkg">GAP</strong>, uses the Knuth-Bendix procedure for strings, which manipulates a rewriting system of the semigroup or monoid and attempts to make it confluent (See <a href="chap38_mj.html#X7CA8FCFD81AA1890"><span class="RefLink">38</span></a>. See also Sims <a href="chapBib_mj.html#biBSims94">[Sim94]</a>). (Since the word problem for semigroups/monoids is not solvable in general, Knuth-Bendix procedure cannot always terminate).</p>
+
+<p>In order to apply this procedure we will build a rewriting system for the semigroup or monoid, which we will call a <em>Knuth-Bendix Rewriting System</em> (we need to define this because we need the rewriting system to store some information needed for the implementation of the Knuth-Bendix procedure).</p>
+
+<p>Actually, Knuth-Bendix Rewriting Systems do not only serve this purpose. Indeed these are objects which are mutable and which can be manipulated (see <a href="chap38_mj.html#X7CA8FCFD81AA1890"><span class="RefLink">38</span></a>).</p>
+
+<p>Note that the implemented version of the Knuth-Bendix procedure, in <strong class="pkg">GAP</strong> returns, if it terminates, a confluent rewriting system which is reduced. Also, a reduction ordering has to be specified when building a rewriting system. If none is specified, the shortlex ordering is assumed (note that the procedure may terminate with a certain ordering and not with another one).</p>
+
+<p>On Unix systems it is possible to replace the built-in Knuth-Bendix by other routines, for example the package <strong class="pkg">kbmag</strong> offers such a possibility.</p>
+
+<p><a id="X7A3F8AE285C41D80" name="X7A3F8AE285C41D80"></a></p>
+
+<h5>52.6-2 KB_REW</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KB_REW</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPKB_REW</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<p><code class="code">KB_REW</code> is a global record variable whose components contain functions used for Knuth-Bendix. By default <code class="code">KB_REW</code> is assigned to <code class="code">GAPKB_REW</code>, which contains the KB functions provided by the GAP library.</p>
+
+<p><a id="X87A3823483E4FF86" name="X87A3823483E4FF86"></a></p>
+
+<h5>52.6-3 <span class="Heading">KnuthBendixRewritingSystem</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">s</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">m</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>in the first form, for a semigroup <var class="Arg">s</var> and a reduction ordering for the underlying free semigroup, it returns the Knuth-Bendix rewriting system of the finitely presented semigroup <var class="Arg">s</var> using the reduction ordering <var class="Arg">wordord</var>. In the second form, for a monoid <var class="Arg">m</var> and a reduction ordering for the underlying free monoid, it returns the Knuth-Bendix rewriting system of the finitely presented monoid <var class="Arg">m</var> using the reduction ordering <var class="Arg">wordord</var>.</p>
+
+<p><a id="X7966343587A04AFF" name="X7966343587A04AFF"></a></p>
+
+<h5>52.6-4 SemigroupOfRewritingSystem</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the semigroup over which <var class="Arg">rws</var> is a rewriting system</p>
+
+<p><a id="X7EAB3E067D7557F6" name="X7EAB3E067D7557F6"></a></p>
+
+<h5>52.6-5 MonoidOfRewritingSystem</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonoidOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the monoid over which <var class="Arg">rws</var> is a rewriting system</p>
+
+<p><a id="X80B8115C8147F605" name="X80B8115C8147F605"></a></p>
+
+<h5>52.6-6 FreeSemigroupOfRewritingSystem</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroupOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the free semigroup over which <var class="Arg">rws</var> is a rewriting system</p>
+
+<p><a id="X84CE48BE7F870808" name="X84CE48BE7F870808"></a></p>
+
+<h5>52.6-7 FreeMonoidOfRewritingSystem</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoidOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the free monoid over which <var class="Arg">rws</var> is a rewriting system</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := FreeSemigroupOfRewritingSystem(rws);</span>
+&lt;free semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1=f;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := SemigroupOfRewritingSystem(rws);</span>
+&lt;fp semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1=g;</span>
+true
+</pre></div>
+
+<p>As mentioned before, having a confluent rewriting system, one can decide whether two words represent the same element of a finitely presented semigroup (or finitely presented monoid).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := GeneratorsOfSemigroup( g )[ 1 ];</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := GeneratorsOfSemigroup( g )[ 2 ];</span>
+b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a*b*a=a^3;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReducedForm(rws,UnderlyingElement(a*b*a));</span>
+a^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReducedForm(rws,UnderlyingElement(a^3));</span>
+a^3
+</pre></div>
+
+<p><a id="X812C28217F3E6720" name="X812C28217F3E6720"></a></p>
+
+<h4>52.7 <span class="Heading">Todd-Coxeter Procedure</span></h4>
+
+<p>This procedure gives a standard way of finding a transformation representation of a finitely presented semigroup. Usually one does not explicitly call this procedure but uses <code class="func">IsomorphismTransformationSemigroup</code> (<a href="chap53_mj.html#X78F29C817CF6827F"><span class="RefLink">53.7-5</span></a>).</p>
+
+<p><a id="X7C24508A7F677520" name="X7C24508A7F677520"></a></p>
+
+<h5>52.7-1 CosetTableOfFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetTableOfFpSemigroup</code>( <var class="Arg">r</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p><var class="Arg">r</var> is a right congruence of an fp-semigroup <var class="Arg">S</var>. This attribute is the coset table of FP semigroup <var class="Arg">S</var> on a right congruence <var class="Arg">r</var>. Given a right congruence <var class="Arg">r</var> we represent <var class="Arg">S</var> as a set of transformations of the congruence classes of <var class="Arg">r</var>.</p>
+
+<p>The images of the cosets under the generators are compiled in a list <var class="Arg">table</var> such that <var class="Arg">table[i][s]</var> contains the image of coset <var class="Arg">s</var> under generator <var class="Arg">i</var>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap51_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap53_mj.html">[Next Chapter]</a>&nbsp;  </div>

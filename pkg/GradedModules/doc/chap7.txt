@@ -19,7 +19,7 @@
     [4X[25Xgap>[125X [27Xd := Resolution( M );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti := BettiDiagram( d );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti := BettiTable( d );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti );[127X[104X
@@ -37,7 +37,7 @@
     [4X[25Xgap>[125X [27Xd2 := Resolution( M2 );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti2 := BettiDiagram( d2 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti2 := BettiTable( d2 );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti2 );[127X[104X
@@ -62,7 +62,7 @@
     [4X[25Xgap>[125X [27Xd := Resolution( M );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti := BettiDiagram( d );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti := BettiTable( d );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti );[127X[104X
@@ -78,7 +78,7 @@
     [4X[25Xgap>[125X [27Xd2 := Resolution( m );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti2 := BettiDiagram( d2 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti2 := BettiTable( d2 );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti2 );[127X[104X
@@ -102,7 +102,7 @@
     [4X[25Xgap>[125X [27XMr := Resolution( M );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>[128X[104X
-    [4X[25Xgap>[125X [27XbettiM := BettiDiagram( Mr );[127X[104X
+    [4X[25Xgap>[125X [27XbettiM := BettiTable( Mr );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( bettiM );[127X[104X
@@ -121,7 +121,7 @@
     [4X[25Xgap>[125X [27XNr := Resolution( N );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>[128X[104X
-    [4X[25Xgap>[125X [27XbettiN := BettiDiagram( Nr );[127X[104X
+    [4X[25Xgap>[125X [27XbettiN := BettiTable( Nr );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( bettiN );[127X[104X
@@ -148,7 +148,7 @@
     [4X[25Xgap>[125X [27XJr := Resolution( J );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti := BettiDiagram( Jr );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti := BettiTable( Jr );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti );[127X[104X
@@ -177,7 +177,7 @@
     [4X[25Xgap>[125X [27XMr := Resolution( M );[127X[104X
     [4X[28X<A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti := BettiDiagram( Mr );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti := BettiTable( Mr );[127X[104X
     [4X[28X<A Betti diagram of <A right acyclic complex containing[128X[104X
     [4X[28X3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti );[127X[104X
@@ -276,14 +276,15 @@
     [4X[25Xgap>[125X [27XIsMorphism( phi );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XM := GuessModuleOfGlobalSectionsFromATateMap( 2, phi );[127X[104X
-    [4X[28X#I  GuessModuleOfGlobalSectionsFromATateMap uses unproven assumptions.[128X[104X
-    [4X[28X Do not trust the result.[128X[104X
+    [4X[28X#I  GuessModuleOfGlobalSectionsFromATateMap uses a heuristic for efficiency;[128X[104X
+    [4X[28Xplease check the correctness of the following result[128X[104X
+    [4X[28X[128X[104X
     [4X[28X<A graded left module presented by yet unknown relations for 19 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsPure( M );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XRank( M );[127X[104X
     [4X[28X2 [128X[104X
-    [4X[25Xgap>[125X [27XDisplay( BettiDiagram( Resolution( M ) ) );[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( BettiTable( Resolution( M ) ) );[127X[104X
     [4X[28X total:  19 35 20  2[128X[104X
     [4X[28X--------------------[128X[104X
     [4X[28X     3:   4  .  .  .[128X[104X
@@ -291,18 +292,18 @@
     [4X[28X     5:   .  .  .  2[128X[104X
     [4X[28X--------------------[128X[104X
     [4X[28Xdegree:   0  1  2  3[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( BettiDiagram( TateResolution( M, -4, 6 ) ) );[127X[104X
-    [4X[28Xtotal:   37  14  10   5   2   5  10  14  37 100 210   ?   ?   ?   ?[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( BettiTable( TateResolution( M, -5, 5 ) ) );[127X[104X
+    [4X[28Xtotal:  100  37  14  10   5   2   5  10  14  37 100   ?   ?   ?   ?[128X[104X
     [4X[28X----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|[128X[104X
-    [4X[28X    4:   35   4   .   .   .   .   .   .   .   .   .   0   0   0   0[128X[104X
-    [4X[28X    3:    *   2  10  10   5   .   .   .   .   .   .   .   0   0   0[128X[104X
-    [4X[28X    2:    *   *   .   .   .   .   2   .   .   .   .   .   .   0   0[128X[104X
-    [4X[28X    1:    *   *   *   .   .   .   .   .   5  10  10   2   .   .   0[128X[104X
-    [4X[28X    0:    *   *   *   *   .   .   .   .   .   .   .   4  35 100 210[128X[104X
-    [4X[28X----------|---|---|---|---|---|---|---|---|---|---|---|---|---S---|[128X[104X
-    [4X[28Xtwist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6[128X[104X
+    [4X[28X    4:  100  35   4   .   .   .   .   .   .   .   .   0   0   0   0[128X[104X
+    [4X[28X    3:    *   .   2  10  10   5   .   .   .   .   .   .   0   0   0[128X[104X
+    [4X[28X    2:    *   *   .   .   .   .   .   2   .   .   .   .   .   0   0[128X[104X
+    [4X[28X    1:    *   *   *   .   .   .   .   .   .   5  10  10   2   .   0[128X[104X
+    [4X[28X    0:    *   *   *   *   .   .   .   .   .   .   .   .   4  35 100[128X[104X
+    [4X[28X----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---S[128X[104X
+    [4X[28Xtwist:   -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5[128X[104X
     [4X[28X-------------------------------------------------------------------[128X[104X
-    [4X[28XEuler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210[128X[104X
+    [4X[28XEuler:  100  35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100[128X[104X
     [4X[25Xgap>[125X [27XM;[127X[104X
     [4X[28X<A graded reflexive non-projective rank 2 left module presented by 94 \[128X[104X
     [4X[28Xrelations for 19 generators>[128X[104X

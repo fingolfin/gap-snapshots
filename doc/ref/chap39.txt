@@ -472,9 +472,9 @@
   [2XMappingGeneratorsImages[102X ([14X40.10-2[114X) of this map gives a list of generators and
   corresponding letters.[133X
   
-  [33X[0;0YThe algorithm used computes all elements of the group to ensure a short word
-  is  found.  Therefore  this function should [13Xnot[113X be used when the group [3XG[103X has
-  more than a few thousand elements. Because of this, one should not call this
+  [33X[0;0YThe algorithm used forms all elements of the group to ensure a short word is
+  found.  Therefore this function should [13Xnot[113X be used when the group [3XG[103X has more
+  than  a  few  million  elements.  Because  of this, one should not call this
   function within algorithms, but use homomorphisms instead.[133X
   
   [4X[32X  Example  [32X[104X
@@ -489,6 +489,35 @@
     [4X[28X(1,2,3)[128X[104X
     [4X[25Xgap>[125X [27XMappingGeneratorsImages(EpimorphismFromFreeGroup(H));[127X[104X
     [4X[28X[ [ x1, x2 ], [ (3,4), (1,2,3,4,5,6) ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.5-3 GrowthFunctionOfGroup[101X
+  
+  [29X[2XGrowthFunctionOfGroup[102X( [3XG[103X ) [32X operation
+  [29X[2XGrowthFunctionOfGroup[102X( [3XG[103X, [3Xradius[103X ) [32X operation
+  
+  [33X[0;0YFor  a  group  [3XG[103X  with a generating set given in [2XGeneratorsOfGroup[102X ([14X39.2-4[114X),
+  this function calculates the number of elements whose shortest expression as
+  words  in the generating set is of a particular length. It returns a list [3XL[103X,
+  whose [22Xi+1[122X entry counts the number of elements whose shortest word expression
+  has  length  [22Xi[122X. If a maximal length [3Xradius[103X is given, only words up to length
+  [3Xradius[103X  are counted. Otherwise the group must be finite and all elements are
+  enumerated.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGrowthFunctionOfGroup(MathieuGroup(12));  [127X[104X
+    [4X[28X[ 1, 5, 19, 70, 255, 903, 3134, 9870, 25511, 38532, 16358, 382 ][128X[104X
+    [4X[25Xgap>[125X [27XGrowthFunctionOfGroup(MathieuGroup(12),2);[127X[104X
+    [4X[28X[ 1, 5, 19 ][128X[104X
+    [4X[25Xgap>[125X [27XGrowthFunctionOfGroup(MathieuGroup(12),99);[127X[104X
+    [4X[28X[ 1, 5, 19, 70, 255, 903, 3134, 9870, 25511, 38532, 16358, 382 ][128X[104X
+    [4X[25Xgap>[125X [27Xfree:=FreeGroup("a","b");[127X[104X
+    [4X[28X<free group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27Xproduct:=free/ParseRelators(free,"a2,b3");[127X[104X
+    [4X[28X<fp group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XSetIsFinite(product,false);[127X[104X
+    [4X[25Xgap>[125X [27XGrowthFunctionOfGroup(product,10);[127X[104X
+    [4X[28X[ 1, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64 ][128X[104X
   [4X[32X[104X
   
   
@@ -1408,10 +1437,9 @@
     [4X[28X[ <permutation group of size 96 with 6 generators>, [128X[104X
     [4X[28X  <permutation group of size 96 with 6 generators> ][128X[104X
     [4X[25Xgap>[125X [27XHallSubgroup(h,[3,31]);[127X[104X
-    [4X[28XGroup([128X[104X
-    [4X[28X[ (2,18,11)(3,20,7)(4,19,9)(5,21,8)(6,17,10)(12,29,22)(13,27,26)(14,[128X[104X
-    [4X[28X    31,23)(15,30,24)(16,28,25), (1,6,18,3,16,10,9,28,8,21,2,30,26,20,[128X[104X
-    [4X[28X    5,7,12,23,22,11,25,13,14,31,15,17,4,24,29,27,19) ])[128X[104X
+    [4X[28XGroup([ (2,29,7)(3,30,11)(4,28,8)(5,27,9)(6,31,10)(12,24,21)(13,25,20)[128X[104X
+    [4X[28X(14,23,17)(15,22,19)(16,26,18), (1,20,31,23,11,25,29,3,21,24,6,19,5,[128X[104X
+    [4X[28X17,12,14,4,18,8,10,30,27,16,26,22,13,7,15,28,9,2) ])[128X[104X
     [4X[25Xgap>[125X [27XHallSubgroup(h,[5,31]);[127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
@@ -2599,10 +2627,10 @@
     [4X[25Xgap>[125X [27Xm11:=TransitiveGroup(11,6);[127X[104X
     [4X[28XM(11)[128X[104X
     [4X[25Xgap>[125X [27Xr:=RepresentativesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group([ (2,3,4)(5,6,8)(7,11,9), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
-    [4X[28X  Group([ (1,2,3)(5,9,6)(7,8,11), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
-    [4X[28X  Group([ (2,3,4,11,6)(5,7,10,8,9), (3,11)(4,5)(6,10)(7,8) ]), [128X[104X
-    [4X[28X  Group([ (1,2,3)(4,6,11)(7,9,10), (3,11)(4,5)(6,10)(7,8) ]), M(11), [128X[104X
+    [4X[28X[ Group([ (3,9,11)(4,8,6)(5,10,7), (1,3)(2,11)(4,6)(7,8) ]), [128X[104X
+    [4X[28X  Group([ (2,3,4)(5,6,8)(7,11,9), (1,3)(2,11)(4,6)(7,8) ]), [128X[104X
+    [4X[28X  Group([ (4,11,10,9)(5,7,8,6), (1,6,4)(2,9,7)(8,11,10) ]), [128X[104X
+    [4X[28X  Group([ (3,5,8)(4,11,7)(6,9,10), (1,3)(2,11)(4,6)(7,8) ]), M(11), [128X[104X
     [4X[28X  Group(()) ][128X[104X
     [4X[25Xgap>[125X [27XList(r,Size);[127X[104X
     [4X[28X[ 60, 60, 360, 660, 7920, 1 ][128X[104X
@@ -2617,14 +2645,14 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XConjugacyClassesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), [128X[104X
-    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 1, 2, 3)( 5, 9, 6)( 7, 8,11), [128X[104X
-    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 2, 3, 4,11, 6)( 5, 7,10, 8, 9), [128X[104X
-    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 1, 2, 3)( 4, 6,11)( 7, 9,10), [128X[104X
-    [4X[28X      ( 3,11)( 4, 5)( 6,10)( 7, 8) ] )^G, M(11)^G, Group( () )^G ][128X[104X
+    [4X[28X[ Group( [ ( 3, 9,11)( 4, 8, 6)( 5,10, 7), [128X[104X
+    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, [128X[104X
+    [4X[28X  Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), [128X[104X
+    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, [128X[104X
+    [4X[28X  Group( [ ( 4,11,10, 9)( 5, 7, 8, 6), ( 1, 6, 4)( 2, 9, 7)( 8,11,10) [128X[104X
+    [4X[28X     ] )^G, [128X[104X
+    [4X[28X  Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), [128X[104X
+    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, M(11)^G, Group( () )^G ][128X[104X
   [4X[32X[104X
   
   [1X39.20-8 Zuppos[101X

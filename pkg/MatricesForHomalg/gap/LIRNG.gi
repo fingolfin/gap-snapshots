@@ -83,6 +83,7 @@ InstallValue( LIRNG,
                                      "IndeterminateAntiCommutingVariablesOfExteriorRing",
                                      "IndeterminatesOfExteriorRing",
                                      "Characteristic",
+                                     "DegreeOverPrimeField",
                                      "CoefficientsRing",
                                      "BaseRing",
                                      "IndeterminatesOfPolynomialRing",
@@ -392,6 +393,9 @@ AddLeftRightLogicalImplicationsForHomalg( LogicalImplicationsForHomalgRings,
 InstallValue( LogicalImplicationsForHomalgRingElements,
         [
           
+          [ IsMonic,
+            "implies", IsMonicUptoUnit ],
+          
           [ IsOne,
             "implies", IsRegular ],
           
@@ -432,6 +436,34 @@ InstallImmediateMethod( IsZero,
     
     if ContainsAField( R ) then
         return false;
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallImmediateMethod( IsFinite,
+        IsFieldForHomalg and HasCharacteristic, 0,
+        
+  function( R )
+    
+    if Characteristic( R ) = 0 then
+        return false;
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallImmediateMethod( IsFinite,
+        IsFieldForHomalg and HasCharacteristic and HasDegreeOverPrimeField, 0,
+        
+  function( R )
+    
+    if Characteristic( R ) > 0 then
+        return IsInt( DegreeOverPrimeField( R ) );
     fi;
     
     TryNextMethod( );
@@ -842,7 +874,26 @@ InstallMethod( IsMonic,
         
   function( r )
     
+    if IsZero( r ) then
+        return false;
+    fi;
+    
     return IsOne( LeadingCoefficient( r ) );
+    
+end );
+
+##
+InstallMethod( IsMonicUptoUnit,
+        "for homalg ring elements",
+        [ IsHomalgRingElement ],
+        
+  function( r )
+    
+    if IsZero( r ) then
+        return false;
+    fi;
+    
+    return IsUnit( LeadingCoefficient( r ) );
     
 end );
 
@@ -957,6 +1008,17 @@ InstallMethod( IsIrreducible,
   function( r )
     
     return IsIrreducibleHomalgRingElement( r );
+    
+end );
+
+##
+InstallMethod( IsIntegralDomain,
+        "for a homalg ring",
+        [ IsHomalgRing and HasDefiningIdeal ],
+        
+  function( R )
+    
+    return IsPrime( DefiningIdeal( R ) );
     
 end );
 

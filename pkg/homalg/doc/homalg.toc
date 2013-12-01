@@ -109,6 +109,7 @@
 \contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Elements: Properties}}{28}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }IsZero (for elements)}}{28}{subsection.5.3.1}
 \contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }IsCyclicGenerator}}{28}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }IsTorsion}}{29}{subsection.5.3.3}
 \contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Elements: Attributes}}{29}{section.5.4}
 \contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }Annihilator (for elements)}}{29}{subsection.5.4.1}
 \contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Elements: Operations and Functions}}{29}{section.5.5}
@@ -134,7 +135,7 @@
 \contentsline {subsection}{\numberline {6.3.10}\leavevmode {\color {Chapter }IsTriangle}}{35}{subsection.6.3.10}
 \contentsline {subsection}{\numberline {6.3.11}\leavevmode {\color {Chapter }IsExactTriangle}}{35}{subsection.6.3.11}
 \contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Complexes: Attributes}}{35}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }BettiDiagram (for complexes)}}{35}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }BettiTable (for complexes)}}{35}{subsection.6.4.1}
 \contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }FiltrationByShortExactSequence (for complexes)}}{35}{subsection.6.4.2}
 \contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Complexes: Operations and Functions}}{36}{section.6.5}
 \contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }Add (to complexes given a morphism)}}{36}{subsection.6.5.1}

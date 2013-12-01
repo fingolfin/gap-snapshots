@@ -190,8 +190,7 @@ and&nbsp;<Ref Chap="ch:appl"/>.
   Sorting can be undone globally, i.&nbsp;e., one can return to the
   unsorted table.
 </Item>
-<Mark>Sorting and Categorizing:<Index>categorizing a browse table</Index>
-</Mark>
+<Mark>Sorting and Categorizing:<Index>categorizing a browse table</Index></Mark>
 <Item>
   If a column is selected then the main table can be sorted w.r.t.
   the entries in this column,
@@ -221,8 +220,7 @@ and&nbsp;<Ref Chap="ch:appl"/>.
   Sorting and categorizing can be undone globally, i.&nbsp;e.,
   one can return to the unsorted table without category rows.
 </Item>
-<Mark>Filtering:<Index>filtering a browse table</Index>
-</Mark>
+<Mark>Filtering:<Index>filtering a browse table</Index></Mark>
 <Item>
   The browse table can be restricted to those rows or columns in which
   a given search string occurs.
@@ -305,11 +303,11 @@ They require additional programming.
   are &GAP; functions, see Section&nbsp;<Ref Subsect="BrowseData"/>
   for details.
   If mouse events <Index>mouse events</Index> are enabled
+  (see <Ref Func="NCurses.UseMouse"/>)
   then also mouse clicks can be used as an alternative
   to hitting the <B>Enter</B> key.
 </Item>
-<Mark>Return Value:<Index>return value of a browse table session</Index>
-</Mark>
+<Mark>Return Value:<Index>return value of a browse table session</Index></Mark>
 <Item>
   The function <Ref Func="NCurses.BrowseGeneric"/> may have
   an application dependent return value.

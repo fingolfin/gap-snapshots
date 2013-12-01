@@ -104,6 +104,26 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe group CT(ℤ) has an outer automorphism which is given by conjugation with
+  [22Xn  ↦  -n - 1[122X. This automorphism can be applied to an rcwa mapping of ℤ or to
+  an  rcwa  group over ℤ by the operation [10XMirrored[110X. The group [10XMirrored([110X[3XG[103X[10X)[110X acts
+  on  the  nonnegative  integers  as [3XG[103X acts on the negative integers, and vice
+  versa.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xct := ClassTransposition(0,2,1,6);[127X[104X
+    [4X[28X( 0(2), 1(6) )[128X[104X
+    [4X[25Xgap>[125X [27XMirrored(ct);[127X[104X
+    [4X[28X( 1(2), 4(6) )[128X[104X
+    [4X[25Xgap>[125X [27XG := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;[127X[104X
+    [4X[25Xgap>[125X [27XShortOrbits(G,[-100..100],100);[127X[104X
+    [4X[28X[ [ 0, 1, 2, 3, 4, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XShortOrbits(Mirrored(G),[-100..100],100);[127X[104X
+    [4X[28X[ [ -6, -5, -4, -3, -2, -1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   [33X[0;0YUnder the hypothesis that CT(ℤ) is the setwise stabilizer of [22Xℕ_0[122X in RCWA(ℤ),
   the  elements  of CT(ℤ) with modulus dividing a given positive integer [22Xm[122X are
   parametrized by the ordered partitions of ℤ into [22Xm[122X residue classes. The list
@@ -520,20 +540,17 @@
   presentations,  the  kernel will in principle get trivial provided that [3Xr[103X is
   chosen large enough.[133X
   
-  [33X[0;0YBoth  the  performance  and  the  returned epimorphism depend on whether the
-  package [5XFR[105X [Bar10] is present or not.[133X
-  
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xa := ClassTransposition(2,4,3,4);;  SetName(a,"a");[127X[104X
-    [4X[25Xgap>[125X [27Xb := ClassTransposition(4,6,8,12);; SetName(b,"b");[127X[104X
-    [4X[25Xgap>[125X [27Xc := ClassTransposition(3,4,4,6);;  SetName(c,"c");[127X[104X
-    [4X[25Xgap>[125X [27XG := Group(a,b,c);[127X[104X
+    [4X[25Xgap>[125X [27Xa := ClassTransposition(2,4,3,4);;[127X[104X
+    [4X[25Xgap>[125X [27Xb := ClassTransposition(4,6,8,12);;[127X[104X
+    [4X[25Xgap>[125X [27Xc := ClassTransposition(3,4,4,6);;[127X[104X
+    [4X[25Xgap>[125X [27XG := SparseRep(Group(a,b,c));[127X[104X
     [4X[28X<rcwa group over Z with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27Xphi := EpimorphismFromFpGroup(G,6);[127X[104X
-    [4X[28X[ a, b, c ] -> [ a, b, c ][128X[104X
+    [4X[28X[ a, b, c ] -> [ ( 2(4), 3(4) ), ( 4(6), 8(12) ), ( 3(4), 4(6) ) ][128X[104X
     [4X[25Xgap>[125X [27XRelatorsOfFpGroup(Source(phi));[127X[104X
-    [4X[28X[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ][128X[104X
+    [4X[28X[ a^2, b^2, c^2, (b*c)^3, (a*b)^6, (a*b*c*b)^3, (a*b*a*c)^12 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -768,6 +785,10 @@
   action  of  an  rcwa group [22XG[122X if the restrictions of all elements of [22XG[122X to all
   residue classes in the orbit are affine.[133X
   
+  [33X[0;0YThe  returned  lists  may contain additional cycles, resp., orbits, which do
+  not contain a residue class [22Xr(m)[122X such that [22Xm[122X divides [3Xmodulusbound[103X, but which
+  happen to be found without additional efforts.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xg := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);[127X[104X
@@ -776,14 +797,18 @@
     [4X[28X[ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], [128X[104X
     [4X[28X  [ 20(24), 21(24), 31(36), 30(36) ], [128X[104X
     [4X[28X  [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], [128X[104X
-    [4X[28X  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ][128X[104X
+    [4X[28X  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ], [128X[104X
+    [4X[28X  [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) [128X[104X
+    [4X[28X     ], [128X[104X
+    [4X[28X  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), [128X[104X
+    [4X[28X      120(144) ] ][128X[104X
     [4X[25Xgap>[125X [27XG := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));[127X[104X
     [4X[28X<rcwa group over Z with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XShortResidueClassOrbits(G,48,10);[127X[104X
     [4X[28X[ [ 7(12) ], [ 8(12) ], [ 1(24), 4(36) ], [ 2(24), 3(36) ], [128X[104X
     [4X[28X  [ 12(24), 17(24), 28(36) ], [ 18(24), 23(24), 27(36) ], [128X[104X
-    [4X[28X  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ], [128X[104X
-    [4X[28X  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ] ][128X[104X
+    [4X[28X  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ], [128X[104X
+    [4X[28X  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1070,8 +1095,9 @@
   
   [29X[2XActionOnRespectedPartition[102X( [3XG[103X ) [32X attribute
   [29X[2XKernelOfActionOnRespectedPartition[102X( [3XG[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10Ythe  action  of  the tame rcwa group [3XG[103X on [10XRespectedPartition([3XG[103X[10X)[110X or
-            the kernel of this action, respectively.[133X
+  [29X[2XRankOfKernelOfActionOnRespectedPartition[102X( [3XG[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ythe  action of the tame rcwa group [3XG[103X on [10XRespectedPartition([3XG[103X[10X)[110X, the
+            kernel of this action or the rank of the latter, respectively.[133X
   
   [33X[0;0YThe   method   for   [10XKernelOfActionOnRespectedPartition[110X   uses  the  package
   [5XPolycyclic[105X [EN09].  The  rank  of  the  largest free abelian subgroup of the

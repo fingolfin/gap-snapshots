@@ -28,7 +28,7 @@
     [4X[25Xgap>[125X [27XT := TateResolution( O, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti := BettiDiagram( T );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti := BettiTable( T );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti );[127X[104X
@@ -65,7 +65,7 @@
     [4X[25Xgap>[125X [27XT0 := TateResolution( U0, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti0 := BettiDiagram( T0 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti0 := BettiTable( T0 );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti0 );[127X[104X
@@ -106,7 +106,7 @@
     [4X[25Xgap>[125X [27XT1 := TateResolution( U1, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti1 := BettiDiagram( T1 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti1 := BettiTable( T1 );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti1 );[127X[104X
@@ -131,7 +131,7 @@
     [4X[25Xgap>[125X [27XT2 := TateResolution( U2, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti2 := BettiDiagram( T2 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti2 := BettiTable( T2 );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti2 );[127X[104X
@@ -160,7 +160,7 @@
     [4X[25Xgap>[125X [27XT3 := TateResolution( U3, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xbetti3 := BettiDiagram( T3 );[127X[104X
+    [4X[25Xgap>[125X [27Xbetti3 := BettiTable( T3 );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( betti3 );[127X[104X
@@ -185,7 +185,7 @@
     [4X[25Xgap>[125X [27Xt2 := TateResolution( u2, -5, 5 );[127X[104X
     [4X[28X<An acyclic cocomplex containing[128X[104X
     [4X[28X10 morphisms of graded right modules at degrees [ -5 .. 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XBettiDiagram( t2 );[127X[104X
+    [4X[25Xgap>[125X [27XBettiTable( t2 );[127X[104X
     [4X[28X<A Betti diagram of <An acyclic cocomplex containing [128X[104X
     [4X[28X10 morphisms of graded right modules at degrees [ -5 .. 5 ]>>[128X[104X
     [4X[25Xgap>[125X [27XDisplay( last );[127X[104X

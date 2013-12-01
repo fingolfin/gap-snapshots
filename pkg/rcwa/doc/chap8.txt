@@ -1,29 +1,53 @@
   
   [1X8 [33X[0;0YThe Algorithms Implemented in RCWA[133X[101X
   
-  [33X[0;0YThis  chapter  lists  brief  descriptions  of  a  part of the algorithms and
-  methods  implemented  in  this  package.  These  descriptions  are kept very
-  informal  and  short, and some of them provide only rudimentary information.
-  They  are  listed  in  alphabetical order. The word [21Xtrivial[121X as a description
-  means that essentially nothing is done except of storing or recalling one or
-  several values, and [21Xstraightforward[121X means that no sophisticated algorithm is
-  used. Note that [21Xtrivial[121X and [21Xstraightforward[121X are to be read as [13Xmathematically[113X
-  trivial  respectively  straightforward,  and  that the code of a function or
-  method  attributed in this way can still be reasonably long and complicated.
-  Longer  and better descriptions of many of the algorithms and methods can be
-  found in [Koh08].[133X
-  
-  [33X[0;0YFinally   please  note  that  the  descriptions  given  here  represent  the
-  functionality  of [5XRCWA[105X in May 2007. Since then, a lot of code has been added
-  to  this  package, and much of the older code has been improved and uses now
-  better algorithms than in 2007.[133X
+  [33X[0;0YThis  chapter  lists  brief  descriptions  of  the  algorithms  and  methods
+  implemented  in  this package. These descriptions are kept very informal and
+  short,  and  some  of  them  provide  only rudimentary information. They are
+  listed  in  alphabetical order. The word [21Xtrivial[121X as a description means that
+  essentially  nothing is done except of performing I/O operations, storing or
+  recalling  one  or  several  values  or  doing  very basic computations, and
+  [21Xstraightforward[121X  means  that  no  sophisticated algorithm is used. Note that
+  [21Xtrivial[121X  and  [21Xstraightforward[121X  are  to  be  read  as  [13Xmathematically[113X trivial
+  respectively  straightforward,  and  that  the  code of a function or method
+  attributed  in this way can still be reasonably long and complicated. Longer
+  and  better  descriptions of [13Xsome[113X of the algorithms and methods can be found
+  in [Koh08].[133X
   
   [8X
       [10XActionOnRespectedPartition([3XG[103X[10X)[110X
     [108X
         [33X[0;6Y[21XStraightforward[121X   after  having  computed  a  respected  partition  by
-        [10XRespectedPartition[110X.  One  only  needs to know how to compute images of
-        residue classes under affine mappings.[133X
+        [10XRespectedPartition[110X.[133X
+  
+  [8X
+      [10XAllElementsOfCTZWithGivenModulus([3Xm[103X[10X)[110X
+    [108X
+        [33X[0;6YThis  function  first  determines  a  list of all unordered partitions
+        [22XmathcalP[122X  of  ℤ  into  [3Xm[103X  residue classes. Then for any such partition
+        [22XmathcalP[122X  it  runs  a loop over the elements of the symmetric group of
+        degree [3Xm[103X. For any [22Xσ ∈ S_m[122X and any partition [22XmathcalP[122X it constructs the
+        element  of  [22XCT(Z)[122X  with  modulus  dividing  [22Xm[122X  which maps the ordered
+        partition [22X{0(m), 1(m), dots, m-1(m)}[122X to the ordered partition obtained
+        from  [22XmathcalP[122X  by  permuting  the  residue classes with [22Xσ[122X. Finally it
+        discards  the  elements  whose  modulus  is a proper divisor of [3Xm[103X, and
+        returns the [21Xrest[121X.[133X
+  
+  [8X
+      [10XAllProducts([3Xl[103X[10X,[3Xk[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X
+      [10XAllSmoothIntegers([3Xmaxp[103X[10X,[3Xmaxn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.  -- The taken time is essentially proportional to the
+        size of the resulting list.[133X
+  
+  [8X
+      [10XAssignGlobals([3Xrecord[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XBall([3XG[103X[10X,[3Xg[103X[10X,[3Xr[103X[10X)[110X
@@ -38,7 +62,7 @@
   [8X
       [10XClassPairs([3Xm[103X[10X)[110X
     [108X
-        [33X[0;6YRuns  over  all  4-tuples  of  nonnegative  integers  less than [3Xm[103X, and
+        [33X[0;6YRuns a loop over all 4-tuples of nonnegative integers less than [3Xm[103X, and
         filters by congruence criteria and ordering of the entries.[133X
   
   [8X
@@ -76,7 +100,7 @@
   [8X
       [10XCommonRightInverse([3Xl[103X[10X,[3Xr[103X[10X)[110X
     [108X
-        [33X[0;6Y(See [10XRightInverse[110X.)[133X
+        [33X[0;6YSee [10XRightInverse[110X.[133X
   
   [8X
       [10XCT([3XR[103X[10X)[110X
@@ -90,6 +114,16 @@
         coefficients as indicated.[133X
   
   [8X
+      [10XCycleRepresentativesAndLengths([3Xg[103X[10X,[3XS[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X
+      [10XCyclesOnFiniteOrbit([3XG[103X[10X,[3Xg[103X[10X,[3Xn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X
       [10XDerivedSubgroup([3XG[103X[10X)[110X
     [108X
         [33X[0;6YNo genuine method -- [5XGAP[105X Library methods already work for tame groups.[133X
@@ -99,6 +133,11 @@
     [108X
         [33X[0;6YEvaluation  of  the  given  expression.  For  the mathematical meaning
         (epimorphism!), see Theorem 2.11.9 in [Koh05].[133X
+  
+  [8X
+      [10XDifferencesList([3Xl[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XDirectProduct([3XG1[103X[10X,[3XG2[103X[10X, ... )[110X
@@ -112,9 +151,20 @@
         [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
+      [10XDistanceToNextSmallerPointInOrbit([3XG[103X[10X,[3Xn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X  --  computes  balls of radius [22Xr[122X about [3Xn[103X for [22Xr = 1, 2,
+        dots[122X until a point smaller than [22Xn[122X is found.[133X
+  
+  [8X
       [10XDivisor([3Xf[103X[10X)[110X
     [108X
         [33X[0;6YLcm of coefficients, as indicated.[133X
+  
+  [8X
+      [10XDrawGrid([3XU[103X[10X,[3Xrange_y[103X[10X,[3Xrange_x[103X[10X,[3Xfilename[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
   
   [8X
       [10XDrawOrbitPicture[110X
@@ -127,20 +177,22 @@
         the distance from the starting points in case of a colored picture.[133X
   
   [8X
+      [10XEpimorphismByGenerators([3XG[103X[10X,[3XH[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
       [10XEpimorphismFromFpGroup([3XG[103X[10X,[3Xr[103X[10X)[110X
     [108X
-        [33X[0;6YIf   the   package   [5XFR[105X [Bar10]  is  loaded,  then  use  its  function
-        [10XFindGroupRelations[110X  to  find  relations. Otherwise proceed as follows:
-        First  compute  the  ball of radius [3Xr[103X around 1 in the free group whose
-        rank  is the number of stored generators of [3XG[103X. Then compute the images
-        of  the  elements  of  that ball under the natural projection onto the
-        group [3XG[103X. Take pairs of elements of the ball whose images coincide, and
-        add  their  quotients  to the set of known relations. For images which
-        have  finite  order,  add  the corresponding power relations. Finally,
-        regardless  of  whether  [5XFR[105X  is  present or not, simplify the finitely
-        presented  group  with  the  determined  relations  by  the  operation
-        [10XIsomorphismSimplifiedFpGroup[110X  from  the  [5XGAP[105X  Library,  and return the
-        natural epimorphism from it to [3XG[103X.[133X
+        [33X[0;6YComputes  orders of elements in the ball of radius [3Xr[103X about 1 in [3XG[103X, and
+        uses the corresponding relations if they affect the abelian invariants
+        of [3XG[103X, [3XG'[103X, [3XG''[103X, etc..[133X
+  
+  [8X
+      [10XEquivalenceClasses([3Xlist[103X[10X,[3Xrelation[103X[10X)[110X,  
+      [10XEquivalenceClasses([3Xlist[103X[10X,[3Xclassinvariant[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
   
   [8X
       [10XExponent([3XG[103X[10X)[110X
@@ -156,17 +208,28 @@
         does not know a proof.[133X
   
   [8X
-      [10XFactorizationIntoCSCRCT([3Xg[103X[10X)[110X
+      [10XExponentOfPrime([3Xn[103X[10X,[3Xp[103X[10X)[110X
     [108X
-        [33X[0;6YThis uses a rather sophisticated method which will likely some time be
-        published  elsewhere. At the moment termination is not guaranteed, but
-        in  case of termination the result is certain. The strategy is roughly
-        first  to  make  the mapping class-wise order-preserving and balanced,
-        and  then  to remove all prime factors from multiplier and divisor one
-        after  the  other in decreasing order by dividing by appropriate class
-        transpositions.  The remaining integral mapping can be factored almost
-        similarly easily as a permutation of a finite set can be factored into
-        transpositions.[133X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XExtRepOfObj([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XFactorizationIntoCSCRCT([3Xg[103X[10X)[110X,  
+      [10XFactorization([3Xg[103X[10X)[110X
+    [108X
+        [33X[0;6YThe  method  used  here  is rather sophisticated, and will likely some
+        time  be  published  elsewhere.  At  the  moment  termination  is  not
+        guaranteed,  but  in  case  of  termination the result is certain. The
+        strategy   is   roughly   first   to   make   the  mapping  class-wise
+        order-preserving  and  balanced,  and then to remove all prime factors
+        from multiplier and divisor one after the other in decreasing order by
+        dividing  by  appropriate class transpositions. The remaining integral
+        mapping  can be factored in a similar way as a permutation of a finite
+        set can be factored into transpositions.[133X
   
   [8X
       [10XFactorizationOnConnectedComponents([3Xf[103X[10X,[3Xm[103X[10X)[110X
@@ -181,9 +244,34 @@
         [33X[0;6Y[21XStraightforward[121X.[133X
   
   [8X
+      [10XFixedResidueClasses([3Xg[103X[10X,[3Xmaxmod[103X[10X)[110X,  
+      [10XFixedResidueClasses([3XG[103X[10X,[3Xmaxmod[103X[10X)[110X
+    [108X
+        [33X[0;6YRuns a loop over all moduli [22Xm ≤[122X [3Xmaxmod[103X and all residues [22Xr[122X modulo these
+        moduli,  and  selects  those  residue classes [22Xr(m)[122X which are mapped to
+        itself by [3Xg[103X, respectively, by all generators of [3XG[103X.[133X
+  
+  [8X
+      [10XFloatQuotientsList([3Xl[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XGeneratorsAndInverses([3XG[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
       [10XGluckTaylorInvariant([3Xa[103X[10X)[110X
     [108X
         [33X[0;6YEvaluation of the given expression.[133X
+  
+  [8X
+      [10XGroupByResidueClasses([3Xclasses[103X[10X)[110X
+    [108X
+        [33X[0;6YFinds  all  pairs  of  residue  classes  in the list [3Xclasses[103X which are
+        disjoint, forms the corresponding class transpositions and returns the
+        group generated by them.[133X
   
   [8X
       [10XGuessedDivergence([3Xf[103X[10X)[110X
@@ -192,7 +280,7 @@
         converge [21Xoften[121X. Caution!!![133X
   
   [8X
-      [10XImage([3Xf[103X[10X)[110X, [10XImage([3Xf[103X[10X,[3XS[103X[10X)[110X
+      [10XImage([3Xf[103X[10X)[110X,   [10XImage([3Xf[103X[10X,[3XS[103X[10X)[110X
     [108X
         [33X[0;6Y[21XStraightforward[121X  if  one  can  compute images of residue classes under
         affine  mappings  and  unite  and  intersect  residue classes (Chinese
@@ -349,14 +437,14 @@
         under [3Xf[103X and [10Xim[110X under [3Xf[103X and [10Xcl[110X is subtracted from [10Xpre[110X.[133X
   
   [8X
-      [10XIntegralConjugate([3Xf[103X[10X)[110X, 
+      [10XIntegralConjugate([3Xf[103X[10X)[110X,  
       [10XIntegralConjugate([3XG[103X[10X)[110X
     [108X
         [33X[0;6YUses   the   algorithm   described  in  the  proof  of  Theorem 2.5.14
         in [Koh05].[133X
   
   [8X
-      [10XIntegralizingConjugator([3Xf[103X[10X)[110X, 
+      [10XIntegralizingConjugator([3Xf[103X[10X)[110X,  
       [10XIntegralizingConjugator([3XG[103X[10X)[110X
     [108X
         [33X[0;6YUses   the   algorithm   described  in  the  proof  of  Theorem 2.5.14
@@ -373,6 +461,11 @@
     [108X
         [33X[0;6YChecks  whether  the  sets  of prime factors of the multiplier and the
         divisor of [3Xf[103X are the same.[133X
+  
+  [8X
+      [10XIsBijective([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X, respectively, see [10XIsInjective[110X and [10XIsSurjective[110X.[133X
   
   [8X
       [10XIsClassReflection([3Xg[103X[10X)[110X
@@ -393,16 +486,18 @@
         shift.[133X
   
   [8X
-      [10XIsClassTransposition([3Xg[103X[10X)[110X
+      [10XIsClassTransposition([3Xg[103X[10X),  
+         IsGeneralizedClassTransposition([3Xg[103X[10X)[110X
     [108X
         [33X[0;6YComputes  the  support  of [3Xg[103X,  writes  it  as  a disjoint union of two
         residue  classes  and  compares [3Xg[103X  with  the class transposition which
         interchanges them.[133X
   
   [8X
-      [10XIsClassWiseOrderPreserving([3Xf[103X[10X)[110X
+      [10XIsClassWiseOrderPreserving([3Xf[103X[10X)[110X,  
+      [10XIsClassWiseTranslating([3Xf[103X[10X)[110X
     [108X
-        [33X[0;6YTests whether the first entry of all coefficient triples is positive.[133X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XIsConjugate(RCWA(Integers),[3Xf[103X[10X,[3Xg[103X[10X)[110X
@@ -432,6 +527,12 @@
       [10XIsIntegral([3Xf[103X[10X)[110X
     [108X
         [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XIsNaturalCT([3XG[103X[10X)[110X,  
+      [10XIsNaturalRCWA([3XG[103X[10X)[110X
+    [108X
+        [33X[0;6YOnly checks a set flag.[133X
   
   [8X
       [10XIsomorphismMatrixGroup([3XG[103X[10X)[110X
@@ -470,6 +571,11 @@
         given on page 27 in [dlH00] from PSL(2,ℂ) to RCWA(ℤ). As an equivalent
         for  the closed discs used there, the method takes the residue classes
         modulo two times the rank of the free group.[133X
+  
+  [8X
+      [10XIsOne([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XIsPerfect([3XG[103X[10X)[110X
@@ -582,6 +688,20 @@
         [33X[0;6YIf it terminates: If [22XS = ℤ[122X, return [10Xtrue[110X, otherwise return [10Xfalse[110X.[133X
   
   [8X
+      [10XIsTransitiveOnNonnegativeIntegersInSupport([3XG[103X[10X)[110X
+    [108X
+        [33X[0;6YComputes  balls about 1 with successively increasing radii, and checks
+        whether  the  union  of the sets where the elements of these balls are
+        decreasing  or  shifting  down  equals the support of [3XG[103X. If a positive
+        answer  is  found,  transitivity on [21Xsmall[121X points (nonnegative integers
+        less than an explicit bound) is verified.[133X
+  
+  [8X
+      [10XIsZero([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
       [10XKernelOfActionOnRespectedPartition([3XG[103X[10X)[110X
     [108X
         [33X[0;6YFirst  determine  the  abelian  invariants  of the kernel [10XK[110X. For this,
@@ -604,7 +724,13 @@
         whose corresponding coefficient triples are equal.[133X
   
   [8X
-      [10XLaTeXStringRcwaMapping([3Xf[103X[10X)[110X
+      [10XLaTeXStringFactorsInt([3Xn[103X[10X)[110X
+    [108X
+        [33X[0;6YInteger factorization and straightforward string operations.[133X
+  
+  [8X
+      [10XLaTeXStringRcwaMapping([3Xf[103X[10X)[110X,  
+      [10XLaTeXAndXDVI([3Xf[103X[10X)[110X
     [108X
         [33X[0;6YCollects  residue  classes those corresponding coefficient triples are
         equal.[133X
@@ -617,9 +743,30 @@
         prescribed bound. Form the union of the detected cycles.[133X
   
   [8X
+      [10XListOfPowers([3Xg[103X[10X,[3Xn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X -- but uses only [22Xn-1[122X multiplications.[133X
+  
+  [8X
       [10XLocalizedRcwaMapping([3Xf[103X[10X,[3Xp[103X[10X)[110X
     [108X
         [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XLoadBitmapPicture([3Xfilename[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X, interprets the format of bitmap picture files.[133X
+  
+  [8X
+      [10XLoadDatabaseOf...()[110X,   [10XLoadRCWAExamples()[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.  --  These  functions do nothing more than reading in certain
+        files.[133X
+  
+  [8X
+      [10XLog2HTML([3Xlogfilename[103X[10X)[110X
+    [108X
+        [33X[0;6YStraightforward string operations.[133X
   
   [8X
       [10XLoops([3Xf[103X[10X)[110X
@@ -627,6 +774,16 @@
         [33X[0;6YRuns  over  the  residue  classes modulo the modulus of [3Xf[103X, and selects
         those  of them which [3Xf[103X does not map to themselves, but which intersect
         non-trivially with their images under [3Xf[103X.[133X
+  
+  [8X
+      [10XMaximalShift([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XMirrored([3Xg[103X[10X)[110X,   [10XMirrored([3XG[103X[10X)[110X
+    [108X
+        [33X[0;6YConjugates with [22Xn ↦ -n - 1[122X, as indicated in the definition.[133X
   
   [8X
       [10XmKnot([3Xm[103X[10X)[110X
@@ -663,9 +820,32 @@
         the coefficients of the corresponding affine mapping.[133X
   
   [8X
+      [10XNrClassPairs([3Xm[103X[10X)[110X
+    [108X
+        [33X[0;6YRelatively  straightforward.  --  Practical for values of [3Xm[103X ranging up
+        into the hundreds and corresponding counts of $10^9$ and more.[133X
+  
+  [8X
+      [10XNrConjugacyClassesOfCTZOfOrder([3Xord[103X[10X)[110X,
+    [108X
+        [33X[0;6YEvaluation               of               the               expression
+        [10XLength(Filtered(Combinations(DivisorsInt(ord)),  l  ->  l  <>  []  and
+        Lcm(l) = ord))[110X.[133X
+  
+  [8X
       [10XNrConjugacyClassesOfRCWAZOfOrder([3Xord[103X[10X)[110X
     [108X
         [33X[0;6YThe class numbers are taken from Corollary 2.7.1 in [Koh05].[133X
+  
+  [8X
+      [10XObjByExtRep([3Xfam[103X[10X,[3Xl[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
+  
+  [8X
+      [10XOne([3Xf[103X[10X)[110X,   [10XOne([3XG[103X[10X)[110X, 
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XOrbit([3XG[103X[10X,[3Xpnt[103X[10X,[3Xgens[103X[10X,[3Xacts[103X[10X,[3Xact[103X[10X)[110X
@@ -704,12 +884,19 @@
         Otherwise use Corollary 2.5.10 in [Koh05].[133X
   
   [8X
+      [10XPermutationOpNC([3Xsigma[103X[10X,[3XP[103X[10X,[3Xact[103X[10X)[110X
+    [108X
+        [33X[0;6YSeveral  different  methods  for  different  types of arguments, which
+        either   provide  straightforward  optimizations  via  computing  with
+        coefficients directly, or just delegate to [10XPermutationOp[110X.[133X
+  
+  [8X
       [10XPreImage([3Xf[103X[10X,[3XS[103X[10X)[110X
     [108X
         [33X[0;6YSee [10XImage[110X.[133X
   
   [8X
-      [10XPreImagesRepresentative([3Xphi[103X[10X,[3Xg[103X[10X)[110X,
+      [10XPreImagesRepresentative([3Xphi[103X[10X,[3Xg[103X[10X)[110X,  
       [10XPreImagesRepresentatives([3Xphi[103X[10X,[3Xg[103X[10X)[110X
     [108X
         [33X[0;6YAs  described  in  the  documentation of these methods. The underlying
@@ -720,7 +907,7 @@
         computed and stored.[133X
   
   [8X
-      [10XPrimeSet([3Xf[103X[10X)[110X,
+      [10XPrimeSet([3Xf[103X[10X)[110X,  
       [10XPrimeSet([3XG[103X[10X)[110X
     [108X
         [33X[0;6Y[21XStraightforward[121X.[133X
@@ -742,11 +929,21 @@
         in [Koh05].[133X
   
   [8X
-      [10XProjections([3XG[103X[10X,[3Xm[103X[10X)[110X
+      [10XProjectionsToCoordinates([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6YStraightforward coefficient operations.[133X
+  
+  [8X
+      [10XProjectionsToInvariantUnionsOfResidueClasses([3XG[103X[10X,[3Xm[103X[10X)[110X
     [108X
         [33X[0;6YUse  [10XOrbitsModulo[110X  to  determine  the  supports  of  the images of the
         epimorphisms  to  be determined, and use [10XRestrictedPerm[110X to compute the
         images of the generators of [3XG[103X under these epimorphisms.[133X
+  
+  [8X
+      [10XQuotientsList([3Xl[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XRandom(RCWA(Integers))[110X
@@ -758,8 +955,14 @@
   [8X
       [10XRankOfKernelOfActionOnRespectedPartition([3XG[103X[10X)[110X
     [108X
-        [33X[0;6YThis  performs  basically  the  first part of the computations done by
+        [33X[0;6YPerforms  basically  the  first  part  of  the  computations  done  by
         [10XKernelOfActionOnRespectedPartition[110X.[133X
+  
+  [8X
+      [10XRcwa([3XR[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.  --  Attributes  and  properties set can be derived easily or
+        hold by definition.[133X
   
   [8X
       [10XRCWA([3XR[103X[10X)[110X
@@ -768,25 +971,46 @@
         Theorem 2.1.2, Corollary 2.1.6 and Theorem 2.12.8 in [Koh05].[133X
   
   [8X
+      [10XRCWABuildManual()[110X
+    [108X
+        [33X[0;6YConsists of a call to a function from the [5XGAPDoc[105X package.[133X
+  
+  [8X
       [10XRcwaGroupByPermGroup([3XG[103X[10X)[110X
     [108X
         [33X[0;6YUses [10XRcwaMapping[110X, Part (d).[133X
+  
+  [8X
+      [10XRCWAInfo([3Xn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XRcwaMapping[110X
     [108X
         [33X[0;6Y(a)-(c):  [21Xtrivial[121X,  (d):  [10Xn^perm - n[110X for determining the coefficients,
         (e):  [21Xaffine  mappings  by  values  at  two given points[121X, (f) and (g):
-        [21Xtrivial[121X, (h) and (i): correspond to Lemma 2.1.4 in [Koh05].[133X
+        [21Xtrivial[121X,  (h) and (i): correspond to Lemma 2.1.4 in [Koh05], (j): uses
+        a simple parser for the permitted expressions.[133X
+  
+  [8X
+      [10XRCWATestAll()[110X,   [10XRCWATestInstall()[110X
+    [108X
+        [33X[0;6YJust read in files running / containing the tests.[133X
+  
+  [8X
+      [10XRCWATestExamples()[110X
+    [108X
+        [33X[0;6YRuns the example tester from the [5XGAPDoc[105X package.[133X
   
   [8X
       [10XRepresentativeAction([3XG[103X[10X,[3Xsrc[103X[10X,[3Xdest[103X[10X,[3Xact[103X[10X)[110X,
-      [10XRepresentativeActionPreImage[110X
+        [10XRepresentativeActionPreImage[110X
     [108X
         [33X[0;6YAs  described  in  the  documentation of these methods. The underlying
         idea  to successively compute two balls around [3Xsrc[103X and [3Xdest[103X until they
         intersect  non-trivially  is  standard  in computational group theory.
-        Words  standing  for  products  of  generators of [3XG[103X are stored for any
+        Words  standing  for  products of generators of [3XG[103X are stored for every
         image of [3Xsrc[103X or [3Xdest[103X.[133X
   
   [8X
@@ -803,13 +1027,28 @@
         [10Xx[110X such that [10X[3Xf[103X[10X^x = [3Xg[103X[10X[110X.[133X
   
   [8X
-      [10XRespectedPartition([3Xf[103X[10X)[110X,
+      [10XRespectedPartition([3Xf[103X[10X)[110X,  
       [10XRespectedPartition([3XG[103X[10X)[110X
     [108X
-        [33X[0;6YUses the algorithm described in the proof of Theorem 2.5.8 in [Koh05].[133X
+        [33X[0;6YThere  are  presently  two  sophisticated  algorithms  implemented for
+        finding  respected  partitions.  One  of  them  has  evolved  from the
+        algorithm  described  in  the  proof  of Theorem 2.5.8 in [Koh05]. The
+        other  one  starts  with  the coarsest partition of the base ring such
+        that  every  generator of [3XG[103X is affine on every part. This partition is
+        then refined successively until a respected partition is obtained. The
+        refinement  step  is  basically  as  follows:  Take  the images of the
+        partition  under  all  generators  of  [3XG[103X. This way one obtains as many
+        further partitions of the base ring as there are generators of [3XG[103X. Then
+        the  [21Xnew[121X  partition  is  the  coarsest  common refinement of all these
+        partitions.[133X
   
   [8X
       [10XRespectsPartition([3XG[103X[10X,[3XP[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X
+      [10XRestrictedBall([3XG[103X[10X,[3Xg[103X[10X,[3Xr[103X[10X,[3Xmodulusbound[103X[10X)[110X
     [108X
         [33X[0;6Y[21XStraightforward[121X.[133X
   
@@ -855,17 +1094,40 @@
         [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
+      [10XRunDemonstration([3Xfilename[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X -- only I/O operations.[133X
+  
+  [8X
+      [10XSaveAsBitmapPicture([3Xpicture[103X[10X,[3Xfilename[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X  -- only needs to know how to produce a bitmap picture
+        file.[133X
+  
+  [8X
       [10XSemilocalizedRcwaMapping([3Xf[103X[10X,[3Xpi[103X[10X)[110X
     [108X
         [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
-      [10XShortCycles([3Xf[103X[10X,[3Xmaxlng[103X[10X)[110X
+      [10XShiftsDownOn([3Xf[103X[10X)[110X,   [10XShiftsUpOn([3Xf[103X[10X)[110X
     [108X
-        [33X[0;6YLooks for fixed points of affine partial mappings of powers of [3Xf[103X.[133X
+        [33X[0;6YStraightforward coefficient- and residue class operations.[133X
   
   [8X
-      [10XShortOrbits([3XG[103X[10X,[3XS[103X[10X,[3Xmaxlng[103X[10X)[110X
+      [10XShortCycles([3Xg[103X[10X,[3Xmaxlng[103X[10X)[110X
+    [108X
+        [33X[0;6YLooks for fixed points of affine partial mappings of powers of [3Xg[103X.[133X
+  
+  [8X
+      [10XShortCycles([3Xg[103X[10X,[3XS[103X[10X,[3Xmaxlng[103X[10X)[110X,  
+      [10XShortCycles([3Xg[103X[10X,[3XS[103X[10X,[3Xmaxlng[103X[10X,[3Xmaxn[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XStraightforward[121X.[133X
+  
+  [8X
+      [10XShortOrbits([3XG[103X[10X,[3XS[103X[10X,[3Xmaxlng[103X[10X)[110X,  
+      [10XShortOrbits([3XG[103X[10X,[3XS[103X[10X,[3Xmaxlng[103X[10X,[3Xmaxn[103X[10X)[110X
     [108X
         [33X[0;6Y[21XStraightforward[121X.[133X
   
@@ -913,12 +1175,25 @@
         return the length of the resulting list.[133X
   
   [8X
+      [10XSmallGeneratingSet([3XG[103X[10X)[110X
+    [108X
+        [33X[0;6YEliminates  generators  [22Xg[122X  which  can be found to be redundant [13Xeasily[113X,
+        i.e.  by checking whether the balls about 1 and [22Xg[122X of some small radius
+        [22Xr[122X in the group generated by all generators of [3XG[103X except for [22Xg[122X intersect
+        nontrivially.[133X
+  
+  [8X
       [10XSources([3Xf[103X[10X)[110X
     [108X
         [33X[0;6YComputes  the strongly connected components of the transition graph by
         the  function [10XSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH[110X, and selects those
         which  are  proper  supersets of their preimages and proper subsets of
         their images under [3Xf[103X.[133X
+  
+  [8X
+      [10XSparseRep([3Xf[103X[10X)[110X,   [10XStandardRep([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6YStraightforward coefficient operations.[133X
   
   [8X
       [10XSplittedClassTransposition([3Xct[103X[10X,[3Xk[103X[10X)[110X
@@ -937,6 +1212,11 @@
       [10X[3Xf[103X[10X+[3Xg[103X[10X[110X
     [108X
         [33X[0;6YPointwise addition of affine mappings.[133X
+  
+  [8X
+      [10XString([3Xobj[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   
   [8X
       [10XSupport([3XG[103X[10X)[110X
@@ -981,4 +1261,9 @@
         [33X[0;6YRestricts  [3XG[103X to the residue class 3(4), and encodes the generator of [3XZ[103X
         as [22Xτ_0(2),1(2) ⋅ τ_0(2),1(4)[122X. It is used that the images of 3(4) under
         powers of this mapping are pairwise disjoint residue classes.[133X
+  
+  [8X
+      [10XZero([3Xf[103X[10X)[110X
+    [108X
+        [33X[0;6Y[21XTrivial[121X.[133X
   

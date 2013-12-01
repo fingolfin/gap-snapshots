@@ -5,7 +5,7 @@
 ##  
 
 ##
-#H @(#)$Id: convert.gi, v 0.7.8 2010/06/03 21:29:50 gap Exp $
+#H @(#)$Id: convert.gi, v 0.8.1 2013/11/16 17:55:19 gap Exp $
 ##
 #Y	 Copyright (C) 2006 Marc Roeder 
 #Y 
@@ -23,8 +23,8 @@
 #Y along with this program; if not, write to the Free Software 
 #Y Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
-Revision.("/Users/roeder/gap/polymaking/polymaking/lib/convert_gi"):=
-	"@(#)$Id: convert.gi, v 0.7.8 2010/06/03   21:29:50  gap Exp $";
+Revision.("convert_gi"):=
+	"@(#)$Id: convert.gi, v 0.8.1 2013/11/16   17:55:19  gap Exp $";
 InstallMethod(ConvertPolymakeOutputToGapNotation,[IsString],
         function(string)
     local   split,  blockpositions,  splitblocks,  returnlist,  
@@ -86,14 +86,14 @@ InstallMethod(SplitPolymakeOutputStringIntoBlocks,[IsString],
         if not IsEmptyString(line) 
            then
             if IsUpperAlphaChar(line[1]) 
-               and ForAll(line,c->IsUpperAlphaChar(c) or c='_' or IsDigitChar(c))
+               and ForAll(line,c->IsUpperAlphaChar(c) or c in ['_','-','>'] or IsDigitChar(c))
                then
                 if blocks=[] and newblock=[]
                    then
-                    newblock:=[line];
+                    newblock:=[MapKeyWordFromPolymakeFormat(line)];
                 else
                     Add(blocks,ShallowCopy(newblock));
-                    newblock:=[line];
+                    newblock:=[MapKeyWordFromPolymakeFormat(line)];
                 fi;
             else
                 Add(newblock,line);
@@ -386,63 +386,6 @@ InstallMethod(ConvertPolymakeGraphToGAP,[IsDenseList],
     return rec(vertices:=vertices,edges:=Set(edgelist));
 end);
     
-
-
-#############################################################################
-##
-## Hasse Diagrams:
-##
-InstallMethod(ConvertPolymakeHasseDiagramToGAP,[IsDenseList],
-       function(stringlist)
-    local   startnumbers,  rest,  nodes,  node,  stringpair,  
-            faceblocks,  facenumber,  i,  faceindices;
-    
-    ###
-    # convert the first line to a list of integers
-    # and remove the leading "<" from the rest.
-    # Throw away the last line, as it only consists of ">"
-    ###
-    startnumbers:=List(SplitString(stringlist[1]," "),ConvertPolymakeNumber);
-    rest:=stringlist{[2..Size(stringlist)-1]};
-    rest[1]:=ReplacedString(rest[1],"<","");
-    nodes:=[];
-    ###
-    # convert each line of the remaining output 
-    # to two lists of integers.
-    ###    
-    for node in rest 
-      do
-        stringpair:=ReplacedString(ReplacedString(node,")",""),"(","");
-        stringpair:=SplitString(stringpair,"","}");
-        Append(stringpair[1],"}");
-        Append(stringpair[2],"}");
-        Add(nodes,List(stringpair,i->ConvertPolymakeSetToGAP([i])));
-    od;
-    
-    startnumbers:=Concatenation([0],startnumbers);
-    
-    faceblocks:=List([2..Size(startnumbers)],i->[startnumbers[i-1]..startnumbers[i]-1]);
-    facenumber:=startnumbers[Size(startnumbers)]+1;
-    Apply(faceblocks,i->i+1);
-    Add(faceblocks,[facenumber]);
-    
-    for i in [1..facenumber]
-      do
-        Apply(nodes[i],i->i+1);
-    od;
-    
-    for node in nodes
-      do
-        Apply(node,Set);
-    od;
-    
-    MakeImmutable(nodes);
-    MakeImmutable(faceblocks);
-    return rec(hasse:=nodes, 
-                faceindices:=Set(faceblocks)
-                );
-end);
-
 
 
 #############################################################################

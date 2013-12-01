@@ -324,7 +324,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Two elements of a finitely presented group are equal if they are equal in this group. Nevertheless they may be represented as different words in the generators. Because of the fundamental problems mentioned in the introduction to this chapter such a test may take very long and cannot be guaranteed to finish.</p>
 
-<p>The method employed by <strong class="pkg">GAP</strong> for such an equality test use the underlying finitely presented group. First (unless this group is known to be infinite) <strong class="pkg">GAP</strong> tries to find a faithful permutation representation by a bounded Todd-Coxeter. If this fails, a Knuth-Bendix (see <a href="chap53_mj.html#X87693BDC79DC6EBF"><span class="RefLink">53.6</span></a>) is attempted and the words are compared via their normal form.</p>
+<p>The method employed by <strong class="pkg">GAP</strong> for such an equality test use the underlying finitely presented group. First (unless this group is known to be infinite) <strong class="pkg">GAP</strong> tries to find a faithful permutation representation by a bounded Todd-Coxeter. If this fails, a Knuth-Bendix (see <a href="chap52_mj.html#X87693BDC79DC6EBF"><span class="RefLink">52.6</span></a>) is attempted and the words are compared via their normal form.</p>
 
 <p>If only elements in a subgroup are to be tested for equality it thus can be useful to translate the problem in a new finitely presented group by rewriting (see <code class="func">IsomorphismFpGroup</code> (<a href="chap47_mj.html#X7F28268F850F454E"><span class="RefLink">47.11-1</span></a>));</p>
 
@@ -1173,8 +1173,8 @@ Group(&lt;fp, no generators known&gt;)
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GQuotients(fp,Group((1,2,3),(1,2)));</span>
-[ [ f1, f2 ] -&gt; [ (2,3), (1,2) ], [ f1, f2 ] -&gt; [ (2,3), (1,2,3) ], 
-  [ f1, f2 ] -&gt; [ (1,2,3), (1,2) ] ]
+[ [ f1, f2 ] -&gt; [ (1,2), (2,3) ], [ f1, f2 ] -&gt; [ (2,3), (1,2,3) ], 
+  [ f1, f2 ] -&gt; [ (1,2,3), (2,3) ] ]
 </pre></div>
 
 <p><a id="X869F70CC818C946D" name="X869F70CC818C946D"></a></p>

@@ -18,11 +18,13 @@
 InstallValue( CommonHomalgTableForGAPHomalgTools,
         
         rec(
-               Zero := HomalgExternalRingElement( R -> EvalString( homalgSendBlocking( [ "String( Zero( ", R, " ) )" ], "need_output", HOMALG_IO.Pictograms.Zero ) ), "GAP", IsZero ),
+               Zero := HomalgExternalRingElement( R -> homalgSendBlocking( [ "Zero( ", R, " )" ], HOMALG_IO.Pictograms.Zero ), "GAP", IsZero ),
                
-               One := HomalgExternalRingElement( R -> EvalString( homalgSendBlocking( [ "String( One( ", R, " ) )" ], "need_output", HOMALG_IO.Pictograms.One ) ), "GAP", IsOne ),
+               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ "One( ", R, " )" ], HOMALG_IO.Pictograms.One ), "GAP", IsOne ),
                
-               MinusOne := HomalgExternalRingElement( R -> EvalString( homalgSendBlocking( [ "String( MinusOne( ", R, " ) )" ], "need_output", HOMALG_IO.Pictograms.MinusOne ) ), "GAP", IsMinusOne ),
+               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "MinusOne( ", R, " )" ], HOMALG_IO.Pictograms.MinusOne ), "GAP", IsMinusOne ),
+               
+               RingElement := R -> r -> homalgSendBlocking( [ "One(", R, ")*(", r, ")" ], HOMALG_IO.Pictograms.define ),
                
                IsZero := r -> homalgSendBlocking( [ "IsZero(", r, ")" ] , "need_output", HOMALG_IO.Pictograms.IsZero ) = "true",
                
@@ -31,14 +33,14 @@ InstallValue( CommonHomalgTableForGAPHomalgTools,
                Minus :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ a, "-(", b, ")" ], "need_output", HOMALG_IO.Pictograms.Minus );
+                   return homalgSendBlocking( [ a, "-(", b, ")" ], HOMALG_IO.Pictograms.Minus );
                    
                  end,
                
                DivideByUnit :=
                  function( a, u )
                    
-                   return homalgSendBlocking( [ "(", a, ")/(", u, ")"  ], "need_output", HOMALG_IO.Pictograms.DivideByUnit );
+                   return homalgSendBlocking( [ "(", a, ")/(", u, ")"  ], HOMALG_IO.Pictograms.DivideByUnit );
                    
                  end,
                
@@ -52,14 +54,14 @@ InstallValue( CommonHomalgTableForGAPHomalgTools,
                Sum :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ a, "+", b ], "need_output", HOMALG_IO.Pictograms.Sum );
+                   return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
                    
                  end,
                
                Product :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], "need_output", HOMALG_IO.Pictograms.Product );
+                   return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], HOMALG_IO.Pictograms.Product );
                    
                  end,
                
@@ -72,8 +74,8 @@ InstallValue( CommonHomalgTableForGAPHomalgTools,
                    ## Cancel is declared in the package LocalizeRingForHomalg, so we cannot call it directly
                    ## unless LocalizeRingForHomalg has been loaded in external GAP
                    homalgSendBlocking( [ "ccd := homalgTable(", R, ")!.CancelGcd(", a, b, ")" ], "need_command", HOMALG_IO.Pictograms.CancelGcd );
-                   a_g := homalgSendBlocking( [ "ccd[1]" ], "need_output", R, HOMALG_IO.Pictograms.CancelGcd );
-                   b_g := homalgSendBlocking( [ "ccd[2]" ], "need_output", R, HOMALG_IO.Pictograms.CancelGcd );
+                   a_g := homalgSendBlocking( [ "ccd[1]" ], R, HOMALG_IO.Pictograms.CancelGcd );
+                   b_g := homalgSendBlocking( [ "ccd[2]" ], R, HOMALG_IO.Pictograms.CancelGcd );
                    
                    a_g := HomalgExternalRingElement( a_g, R );
                    b_g := HomalgExternalRingElement( b_g, R );

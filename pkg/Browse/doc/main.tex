@@ -95,8 +95,8 @@
 
 \hypersetup{pdftitle=\textsf{Browse}}
 \markright{\scriptsize \mbox{}\hfill \textsf{Browse} \hfill\mbox{}}
-{\Huge ( Version 1.8.2 ) \mbox{}}\\[1cm]
-{July 2012\mbox{}}\\[1cm]
+{\Huge ( Version 1.8.3 ) \mbox{}}\\[1cm]
+{October 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Thomas Breuer   \mbox{}}}\\
 {\Large \textbf{ Frank L{\"u}beck   \mbox{}}}\\
@@ -116,7 +116,7 @@
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2006-2012 by Thomas Breuer and Frank L{\"u}beck 
+ {\copyright} 2006-2013 by Thomas Breuer and Frank L{\"u}beck 
 
   This package may be distributed under the terms and conditions of the GNU
 Public License Version 3 or later, see \href{http://www.gnu.org/licenses} {\texttt{http://www.gnu.org/licenses}}. \mbox{}}\\[1cm]
@@ -219,6 +219,36 @@ for this package). Then there are applications for browsing through data
 collections, e.g., the data available through the \textsf{AtlasRep} package, the \textsf{GAP} bibliography or the sections of the \textsf{GAP} manuals. Finally, there are several games like Sam Loyd's fifteen puzzle
 (generalized), peg solitaire, and Sudoku (including functions to create new
 puzzles and to solve puzzles). }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{User preferences provided by the \textsf{Browse} package}}\label{sec:pkg_userprefs}
+\logpage{[ 1, 3, 0 ]}
+\hyperdef{L}{X82216D7A8636AEAD}{}
+{
+  
+\subsection{\textcolor{Chapter }{The user preference \texttt{EnableMouseEvents}}}\label{subsec:EnableMouseEvents}
+\logpage{[ 1, 3, 1 ]}
+\hyperdef{L}{X81518A3583A457DF}{}
+{
+  This user preference defines whether mouse events are enabled by default in
+visual mode (value \texttt{true}) or not (value \texttt{false}, this is the default). During the \textsf{GAP} session, the value can be changed using \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse}). Inside browse applications based on \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) or \texttt{NCurses.Select} (\ref{NCurses.Select}), the value can be toggled usually by hitting the \textsc{M} key. }
+
+ 
+\subsection{\textcolor{Chapter }{The user preference \texttt{SelectHelpMatches}}}\label{subsec:SelectHelpMatches}
+\logpage{[ 1, 3, 2 ]}
+\hyperdef{L}{X7F6062478043DCD7}{}
+{
+  In the case that the \textsf{GAP} help system finds multiple matches, \texttt{true} (the default) means that the user can choose one entry from a list that is
+shown via \texttt{NCurses.Select} (\ref{NCurses.Select}), and \texttt{false} means that the matches are just shown in a pager. }
+
+ 
+\subsection{\textcolor{Chapter }{The user preference \texttt{SelectPackageName}}}\label{subsec:SelectPackageName}
+\logpage{[ 1, 3, 3 ]}
+\hyperdef{L}{X7DAD10F07CE2651E}{}
+{
+  In the case that \texttt{LoadPackage} (\textbf{Reference: LoadPackage}) is called with a prefix of some package names, \texttt{true} (the default) means that the user can choose one matching entry, and \texttt{false} means that the matches are just printed. }
 
  }
 
@@ -569,9 +599,11 @@ color of the terminal use \texttt{-1} as \mbox{\texttt{\mdseries\slshape bgcolor
   !gapprompt@>| !gapinput@     NCurses.wattrset(win, NCurses.ColorAttr(a, b));|
   !gapprompt@>| !gapinput@     NCurses.waddstr(win, Concatenation(a,"/",b,"\t"));|
   !gapprompt@>| !gapinput@   od; od;|
-  !gapprompt@gap>| !gapinput@NCurses.update_panels();; NCurses.doupdate();;|
-  !gapprompt@gap>| !gapinput@NCurses.napms(5000); # show for 5 seconds|
-  !gapprompt@gap>| !gapinput@NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;|
+  !gapprompt@gap>| !gapinput@if NCurses.IsStdoutATty() then|
+  !gapprompt@>| !gapinput@     NCurses.update_panels();; NCurses.doupdate();;|
+  !gapprompt@>| !gapinput@     NCurses.napms(5000);;     # show for 5 seconds|
+  !gapprompt@>| !gapinput@     NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;|
+  !gapprompt@>| !gapinput@   fi;|
 \end{Verbatim}
  }
 
@@ -933,10 +965,12 @@ case \texttt{false} is returned.
 \item[{\texttt{items}}] The list of attribute lines as described above.
 \item[{\texttt{single}}] Boolean with the same meaning as the optional argument \mbox{\texttt{\mdseries\slshape single}}.
 \item[{\texttt{none}}] Boolean with the same meaning as the optional argument \mbox{\texttt{\mdseries\slshape none}}.
-\item[{\texttt{size}}] The size of the window like the first two arguments of \texttt{NCurses.newwin} (default is \texttt{[0, 0]}, as big as possible). 
-\item[{\texttt{begin}}] Top-left corner of the window like the last two arguments of \texttt{NCurses.newwin} (default is \texttt{[0, 0]}, top-left of the screen). 
+\item[{\texttt{size}}] The size of the window like the first two arguments of \texttt{NCurses.newwin} (default is \texttt{[0, 0]}, as big as possible), or the string \texttt{"fit"} which means the smallest possible window. 
+\item[{\texttt{align}}]  A substring of \texttt{"bclt"}, which describes the alignment of the window in the terminal. The meaning and
+the default are the same as for \texttt{BrowseData.IsBrowseTableCellData} (\ref{BrowseData.IsBrowseTableCellData}). 
+\item[{\texttt{begin}}] Top-left corner of the window like the last two arguments of \texttt{NCurses.newwin} (default is \texttt{[0, 0]}, top-left of the screen). This value has priority over the \texttt{align} component. 
 \item[{\texttt{attribute}}] An attribute used for the display of the window (default is \texttt{NCurses.attrs.NORMAL}).
-\item[{\texttt{border}}] Set to \texttt{true} if the window should be displayed with a border (default is \texttt{false}).
+\item[{\texttt{border}}]  If the window should be displayed with a border then set to \texttt{true} (default is \texttt{false}) or to an integer representing attributes such as the components of \texttt{NCurses.attrs} (see Section{\nobreakspace}\ref{ssec:ncursesAttrs}) or the return value of \texttt{NCurses.ColorAttr} (\ref{NCurses.ColorAttr}); these attributes are used for the border of the box. The default is \texttt{NCurses.attrs.NORMAL}. 
 \item[{\texttt{header}}] An attribute line used as header line (the default depends on the settings of \texttt{single} and \texttt{none}).
 \item[{\texttt{hint}}] An attribute line used as hint in the last line of the window (the default
 depends on the settings of \texttt{single} and \texttt{none}).
@@ -946,6 +980,9 @@ window is kept open, waiting for new inputs; if the function returns a
 nonempty list of attribute lines then these messages are shown using \texttt{NCurses.Alert} (\ref{NCurses.Alert}). 
 \end{description}
  
+
+ If mouse events are enabled (see \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse}))\index{mouse events} then the window can be moved on the screen via mouse events, the focus can be
+moved to an entry, and (if \texttt{single} is \texttt{false}) the selection of an entry can be toggled. 
 
  
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -1050,7 +1087,7 @@ border, see \texttt{NCurses.WBorder} (\ref{NCurses.WBorder}).
 matches. The matches are shown via \texttt{NCurses.Select} (\ref{NCurses.Select}), the list can be searched and filtered, and one can choose one match for
 immediate display. It is possible to not choose a match and the \texttt{?{\textless}nr{\textgreater}} syntax still works. 
 
- If you want the original behavior call \texttt{SetUserPreference( "Browse", "SelectHelpMatches", false );} in your \textsf{GAP} session or \texttt{gap.ini} file, see{\nobreakspace} (\textbf{Reference: User preferences}). }
+ If you want the original behavior call \texttt{SetUserPreference( "Browse", "SelectHelpMatches", false );} in your \textsf{GAP} session or \texttt{gap.ini} file, see{\nobreakspace} (\textbf{Reference: Configuring User preferences}). }
 
  
 \subsection{\textcolor{Chapter }{Selection of package names}}\label{ssec:selpackagename}
@@ -1060,7 +1097,7 @@ immediate display. It is possible to not choose a match and the \texttt{?{\textl
   The function \texttt{LoadPackage} (\textbf{Reference: LoadPackage}) shows a list of matches if only a prefix of a package name is given. After
 loading the \textsf{Browse} package, \texttt{NCurses.Select} (\ref{NCurses.Select}) is used for that, and one can choose a match. 
 
- If you want the original behavior call \texttt{SetUserPreference( "Browse", "SelectPackageName", false );} in your \textsf{GAP} session or \texttt{gap.ini} file, see{\nobreakspace} (\textbf{Reference: User preferences}). }
+ If you want the original behavior call \texttt{SetUserPreference( "Browse", "SelectPackageName", false );} in your \textsf{GAP} session or \texttt{gap.ini} file, see{\nobreakspace} (\textbf{Reference: Configuring User preferences}). }
 
  }
 
@@ -1173,7 +1210,7 @@ is already sorted by a column/row then this ordering is reset first.
 
  Sorting can be undone globally, i.{\nobreakspace}e., one can return to the
 unsorted table. 
-\item[{Sorting and Categorizing:\index{categorizing a browse table} }]  If a column is selected then the main table can be sorted w.r.t. the entries
+\item[{Sorting and Categorizing:\index{categorizing a browse table}}]  If a column is selected then the main table can be sorted w.r.t. the entries
 in this column, and additionally these entries are turned into \emph{category rows}, i.{\nobreakspace}e., additional rows are added to the main table, appearing
 immediately above the table rows with a fixed value in the selected column,
 and showing this column value. (There should be no danger to mix up this
@@ -1184,7 +1221,7 @@ whether a row of the browse table appears under different category rows.
 
   Sorting and categorizing can be undone globally, i.{\nobreakspace}e., one can
 return to the unsorted table without category rows. 
-\item[{Filtering:\index{filtering a browse table} }]  The browse table can be restricted to those rows or columns in which a given
+\item[{Filtering:\index{filtering a browse table}}]  The browse table can be restricted to those rows or columns in which a given
 search string occurs. (Also entries in collapsed rows can match; they remain
 collapsed then.) As a consequence, the category rows are restricted to those
 under which a matching row occurs. (It is irrelevant whether the search string
@@ -1227,9 +1264,8 @@ require additional programming.
 \begin{description}
 \item[{Clicking:\index{click on an entry of a browse table}}]  One possible action is to ``click'' a selected cell, row, or column, by hitting the \textsc{Enter} key. It depends on the application what the effect is. A typical situation is
 that a corresponding \textsf{GAP} object is added to the list of return values of \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}). Again it depends on the application what this \textsf{GAP} object is. In order to use this feature, one has to provide a record whose
-components are \textsf{GAP} functions, see Section{\nobreakspace}\ref{BrowseData} for details. If mouse events \index{mouse events} are enabled then also mouse clicks can be used as an alternative to hitting
-the \textsc{Enter} key. 
-\item[{Return Value:\index{return value of a browse table session} }]  The function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) may have an application dependent return value. A typical situation is that a
+components are \textsf{GAP} functions, see Section{\nobreakspace}\ref{BrowseData} for details. If mouse events \index{mouse events} are enabled (see \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse})) then also mouse clicks can be used as an alternative to hitting the \textsc{Enter} key. 
+\item[{Return Value:\index{return value of a browse table session}}]  The function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) may have an application dependent return value. A typical situation is that a
 list of objects corresponding to those cells is returned that were ``clicked'' in visual mode. In order to use this feature, one has to assign the desired
 value to the component \texttt{dynamic.Return} of the browse table. 
 \end{description}
@@ -1743,9 +1779,6 @@ this aspect themselves.) The default is to do nothing.
 \begin{description}
 \item[{\texttt{changed}}]  is a Boolean that must be set to \texttt{true} by action functions whenever a refresh of the window is necessary; it is
 automatically reset to \texttt{false} after the refresh. 
-\item[{\texttt{useMouse}\index{mouse events}}]  is \texttt{true} if mouse events are enabled in the browse application (see \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse})), and \texttt{false} otherwise, the default value is \texttt{false}; an action in the table can change the value; when the browse application is
-left, \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse}) is called with argument \texttt{false}; mouse events are disabled also in the break loop that is entered by the
-action in \texttt{BrowseData.actions.Error} (\ref{BrowseData.actions.Error}). 
 \item[{\texttt{indexRow}}]  is a list of positive integers. The entry $k$ at position $i$ means that the $k$-th row in the \texttt{mainFormatted} table is shown as the $i$-th row. Note that depending on the current status of the browse table, the
 rows of \texttt{mainFormatted} (and of \texttt{main}) may be permuted, or it may even happen that a row in \texttt{mainFormatted} is shown several times, for example under different category rows. It is
 assumed (as a ``sort convention'') \index{sort convention} that the \emph{even} positions in \texttt{indexRow} point to \emph{even} numbers, and that the subsequent \emph{odd} positions (corresponding to the following separators) point to the subsequent \emph{odd} numbers. The default value is the list $[ 1, 2, \ldots, m ]$, where $m$ is the number of rows in \texttt{mainFormatted} (including the separator rows, so $m$ is always odd). 
@@ -2084,7 +2117,8 @@ values are described in{\nobreakspace} (\textbf{Reference: Printing Character Ta
 
  
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( Concatenation(|
+  !gapprompt@gap>| !gapinput@if TestPackageAvailability( "CTblLib" ) = true then|
+  !gapprompt@>| !gapinput@     BrowseData.SetReplay( Concatenation(|
   !gapprompt@>| !gapinput@        # scroll in the table|
   !gapprompt@>| !gapinput@        "DRULdddddrrrrrlluu",|
   !gapprompt@>| !gapinput@        # select an entry and move it around|
@@ -2101,8 +2135,9 @@ values are described in{\nobreakspace} (\textbf{Reference: Printing Character Ta
   !gapprompt@>| !gapinput@        "xd",|
   !gapprompt@>| !gapinput@        # and quit the application|
   !gapprompt@>| !gapinput@        "Q" ) );|
-  !gapprompt@gap>| !gapinput@Browse( CharacterTable( "HN" ) );|
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
+  !gapprompt@>| !gapinput@     Browse( CharacterTable( "HN" ) );|
+  !gapprompt@>| !gapinput@     BrowseData.SetReplay( false );|
+  !gapprompt@>| !gapinput@fi;|
 \end{Verbatim}
  
 
@@ -2205,7 +2240,8 @@ values are described in{\nobreakspace} (\textbf{Reference: Printing Tables of Ma
 
  
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( Concatenation(|
+  !gapprompt@gap>| !gapinput@if TestPackageAvailability( "TomLib" ) = true then|
+  !gapprompt@>| !gapinput@     BrowseData.SetReplay( Concatenation(|
   !gapprompt@>| !gapinput@        # scroll in the table|
   !gapprompt@>| !gapinput@        "DDRRR",|
   !gapprompt@>| !gapinput@        # search for the (exact) value 100 (three times)|
@@ -2217,8 +2253,9 @@ values are described in{\nobreakspace} (\textbf{Reference: Printing Tables of Ma
   !gapprompt@>| !gapinput@        [ NCurses.keys.ENTER ],|
   !gapprompt@>| !gapinput@        # and quit the application|
   !gapprompt@>| !gapinput@        "Q" ) );|
-  !gapprompt@gap>| !gapinput@Browse( TableOfMarks( "A10" ) );|
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
+  !gapprompt@>| !gapinput@     Browse( TableOfMarks( "A10" ) );|
+  !gapprompt@>| !gapinput@     BrowseData.SetReplay( false );|
+  !gapprompt@>| !gapinput@   fi;|
 \end{Verbatim}
  
 
@@ -2256,7 +2293,7 @@ of contents of this database can be displayed via the function \texttt{DisplayAt
 
 
 
- This function shows the informtion available via the \textsf{GAP} package \textsf{AtlasRep} in a browse table, cf. Section{\nobreakspace} (\textbf{AtlasRep: Accessing Data of the AtlasRep Package}) in the \textsf{AtlasRep} manual. 
+ This function shows the information available via the \textsf{GAP} package \textsf{AtlasRep} in a browse table, cf. Section{\nobreakspace} (\textbf{AtlasRep: Accessing Data of the AtlasRep Package}) in the \textsf{AtlasRep} manual. 
 
  The optional arguments can be used to restrict the table to public or private
 data, or to show an overview for one particular group. The arguments are the
@@ -2268,7 +2305,8 @@ the information available for this group is shown, and ``clicking'' on one of th
 
  The full functionality of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) is available. 
 
- The following example shows how \texttt{BrowseAtlasInfo} can be used to fetch permutation representations of the alternating groups $A_5$ and $A_6$: We search for the group name \texttt{"A5"} in the overview table, and the first cell in the table row for $A_5$ becomes selected; hitting the \textsc{Enter} key causes a new window to be opened, with an overview of the data available
+ The following example shows how \texttt{BrowseAtlasInfo} can be used to fetch info records about permutation representations of the
+alternating groups $A_5$ and $A_6$: We search for the group name \texttt{"A5"} in the overview table, and the first cell in the table row for $A_5$ becomes selected; hitting the \textsc{Enter} key causes a new window to be opened, with an overview of the data available
 for $A_5$; moving down two rows and hitting the \textsc{Enter} key again causes the second representation to be added to the result list;
 hitting \textsc{Q} closes the second window, and we are back in the overview table; we move the
 selection down twice (to the row for the group $A_6$), and choose the first representation for this group; finally we leave the
@@ -2293,7 +2331,11 @@ representations.
   !gapprompt@>| !gapinput@       c,             # click the first row,|
   !gapprompt@>| !gapinput@       "Q",           # quit the second level table,|
   !gapprompt@>| !gapinput@       "Q" ) );       # and quit the application.|
-  !gapprompt@gap>| !gapinput@tworeps:= BrowseAtlasInfo();;|
+  !gapprompt@gap>| !gapinput@if IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then|
+  !gapprompt@>| !gapinput@     tworeps:= BrowseAtlasInfo();|
+  !gapprompt@>| !gapinput@   else|
+  !gapprompt@>| !gapinput@     tworeps:= [ fail ];|
+  !gapprompt@>| !gapinput@   fi;|
   !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
   !gapprompt@gap>| !gapinput@if fail in tworeps then|
   !gapprompt@>| !gapinput@     Print( "no access to the Web ATLAS\n" );|
@@ -2650,18 +2692,15 @@ parameters.
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowsePackageVariables({\mdseries\slshape pkgname[, version][, arec]})\index{BrowsePackageVariables@\texttt{BrowsePackageVariables}}
 \label{BrowsePackageVariables}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowsePackageVariables({\mdseries\slshape pkgname, info[, arec]})\index{BrowsePackageVariables@\texttt{BrowsePackageVariables}}
-\label{BrowsePackageVariables}
-}\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
  nothing. 
 
 
 
- In the first version, the arguments are the same as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}), that is, \mbox{\texttt{\mdseries\slshape pkgname}} is the name of a \textsf{GAP} package, and the optional arguments \mbox{\texttt{\mdseries\slshape version}} and \mbox{\texttt{\mdseries\slshape arec}} are a version number of this package and a record used for customizing the
+ The arguments can be the same as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}), that is, \mbox{\texttt{\mdseries\slshape pkgname}} is the name of a \textsf{GAP} package, and the optional arguments \mbox{\texttt{\mdseries\slshape version}} and \mbox{\texttt{\mdseries\slshape arec}} are a version number of this package and a record used for customizing the
 output, respectively. 
 
- In the second version, \mbox{\texttt{\mdseries\slshape pkgname}} is the name of a \textsf{GAP} package, \mbox{\texttt{\mdseries\slshape info}} is the output of \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}) for this package, and the optional record \mbox{\texttt{\mdseries\slshape arec}} has the same meaning as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}). 
+ Alternatively, the second argument can be the output \texttt{info} of \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}) for the package in question, instead of the version number. 
 
  \texttt{BrowsePackageVariables} opens a Browse table that shows the global variables that become bound and the
 methods that become installed when \textsf{GAP} loads the package \mbox{\texttt{\mdseries\slshape pkgname}}. 
@@ -2671,9 +2710,9 @@ operations, methods, info classes, synonyms, other globals). The column ``Doc.?'
 column as a filter or for categorizing. The column ``Filename'' shows the names of the package files. Clicking a selected row of the table
 opens the relevant package file at the code in question. 
 
- The idea behind the argument \mbox{\texttt{\mdseries\slshape info}} is that using the same arguments as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}) does not allow one to apply \texttt{BrowsePackageVariables} to packages that have been loaded before the \textsf{Browse} package. Thus one can compute the underlying data \mbox{\texttt{\mdseries\slshape info}} first, using \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}), then load the \textsf{Browse} package, and finally call \texttt{BrowsePackageVariables}. 
+ The idea behind the argument \texttt{info} is that using the same arguments as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}) does not allow one to apply \texttt{BrowsePackageVariables} to packages that have been loaded before the \textsf{Browse} package. Thus one can compute the underlying data \texttt{info} first, using \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}), then load the \textsf{Browse} package, and finally call \texttt{BrowsePackageVariables}. 
 
- For example, the overview of package variables for \textsf{Browse} can be shown by starting \textsf{GAP} without packages and entering the following lines. 
+ For example, the overview of package variables for \textsf{Browse} can be shown by starting \textsf{GAP} without packages and then entering the following lines. 
 
  
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -2682,13 +2721,57 @@ opens the relevant package file at the code in question.
   !gapprompt@gap>| !gapinput@LoadPackage( "Browse" );;|
   !gapprompt@gap>| !gapinput@BrowsePackageVariables( pkgname, info );|
 \end{Verbatim}
+ 
+
+ If the arguments are the same as for \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}) then this function is actually called, with the consequence that the package
+gets loaded when \texttt{BrowsePackageVariables} is called. This is not the case if the output of \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}) is entered as the second argument. }
+
  }
+
+ 
+\section{\textcolor{Chapter }{Configuring User preferences{\textendash}a Variant}}\label{sec:userpref}
+\logpage{[ 6, 10, 0 ]}
+\hyperdef{L}{X7CD025147D528741}{}
+{
+  A \textsf{Browse} adapted way to show and edit \textsf{GAP}'s user preferences is to show the overview that is printed by the \textsf{GAP} function \texttt{ShowUserPreferences} (\textbf{Reference: ShowUserPreferences}) in a \textsf{Browse} table. 
+
+\subsection{\textcolor{Chapter }{BrowseUserPreferences}}
+\logpage{[ 6, 10, 1 ]}\nobreak
+\hyperdef{L}{X7A7B712E7A06449F}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseUserPreferences({\mdseries\slshape package1, package2, ...})\index{BrowseUserPreferences@\texttt{BrowseUserPreferences}}
+\label{BrowseUserPreferences}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+ nothing. 
+
+
+
+ The arguments are the same as for \texttt{ShowUserPreferences} (\textbf{Reference: ShowUserPreferences}), that is, calling the function with no argument yields an overview of all
+known user preferences, and if one or more strings \mbox{\texttt{\mdseries\slshape package1}}, $\ldots$ are given then only the user preferences for these packages are shown. 
+
+ \texttt{BrowseUserPreferences} opens a Browse table with the following columns: 
+\begin{description}
+\item[{``Package''}]  contains the names of the \textsf{GAP} packages to which the user preferences belong, 
+\item[{``Pref. names''}]  contains the names of the user preferences, and 
+\item[{``Description''}]  contains the \texttt{description} texts from the \texttt{DeclareUserPreference} (\textbf{Reference: DeclareUserPreference}) calls and the default values (if applicable), and the actual values. 
+\end{description}
+ 
+
+ When one ``clicks'' on one of the table rows or entries then the values of the user preference in
+question can be edited. If a list of admissible values is known then this
+means that one can choose from this list via \texttt{NCurses.Select} (\ref{NCurses.Select}), otherwise one can enter the desired value as text. 
+
+ The values of the user preferences are not changed before one closes the
+Browse table. When the table is left and if one has changed at least one
+value, one is asked whether the changes shall be applied. 
+
+ The code can be found in the file \texttt{app/userpref.g} of the package. }
 
  }
 
  
 \section{\textcolor{Chapter }{Overview of \textsf{GAP} Data}}\label{sec:datadisp}
-\logpage{[ 6, 10, 0 ]}
+\logpage{[ 6, 11, 0 ]}
 \hyperdef{L}{X80B8A3C48751E87B}{}
 {
   The \textsf{GAP} system contains several data collections such as libraries of groups and
@@ -2698,7 +2781,7 @@ table shows a piece of information about the objects. (One possibility to
 create such overviews is given by \texttt{BrowseTableFromDatabaseIdEnumerator} (\ref{BrowseTableFromDatabaseIdEnumerator}).) 
 
 \subsection{\textcolor{Chapter }{BrowseGapData}}
-\logpage{[ 6, 10, 1 ]}\nobreak
+\logpage{[ 6, 11, 1 ]}\nobreak
 \hyperdef{L}{X850C786C87A4877B}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseGapData({\mdseries\slshape })\index{BrowseGapData@\texttt{BrowseGapData}}
 \label{BrowseGapData}
@@ -2710,22 +2793,33 @@ create such overviews is given by \texttt{BrowseTableFromDatabaseIdEnumerator} (
 
  The function \texttt{BrowseGapData} shows the choices in the list \texttt{BrowseData.GapDataOverviews}, in a browse table with one column. When an entry is ``clicked'' then the associated function is called, and the table of choices is closed. 
 
- The idea is that each entry of \texttt{BrowseData.GapDataOverviews} describes an overview of a \textsf{GAP} data collection. 
+ The idea is that each entry of \texttt{BrowseData.GapDataOverviews} describes an overview of a data collection. 
 
  The \textsf{Browse} package provides overviews of 
 \begin{itemize}
-\item  the contents of the \textsf{AtlasRep} package (only if this package is loaded, see Section{\nobreakspace}\ref{sec:atlasdisp}), 
+\item  the current AMS Mathematics Subject Classification codes (see \texttt{BrowseMSC} (\ref{BrowseMSC})), 
+\item  the contents of the \textsf{AtlasRep} package \cite{AtlasRep} (only if this package is loaded, see Section{\nobreakspace}\ref{sec:atlasdisp}), 
 \item  \index{BrowseConwayPolynomials@\texttt{BrowseConwayPolynomials}!see BrowseGapData} the Conway polynomials in \textsf{GAP} (calls \texttt{BrowseConwayPolynomials()}), 
 \item  profile information for \textsf{GAP} functions (see Section{\nobreakspace}\ref{sec:profiledisp}), 
-\item  the \textsf{GAP} bibliography (see Section{\nobreakspace}\ref{sec:gapbibl}), 
+\item  the list of \textsf{GAP} related bibliography entries in the file \texttt{bibl/gap-publishednicer.bib} of the \textsf{Browse} package (see Section{\nobreakspace}\ref{sec:gapbibl}), 
 \item  the \textsf{GAP} manuals (see Section{\nobreakspace}\ref{sec:manualdisp}), 
 \item  \index{BrowseGapMethods@\texttt{BrowseGapMethods}!see BrowseGapData} \textsf{GAP} operations and methods (calls \texttt{BrowseGapMethods()}), 
 \item  \index{BrowseGapPackages@\texttt{BrowseGapPackages}!see BrowseGapData} the installed \textsf{GAP} packages (calls \texttt{BrowseGapPackages()}), 
-\item  and \textsf{GAP}'s Library of Transitive Groups (see Section{\nobreakspace}\ref{sect:transgrps}). 
+\item  \textsf{GAP}'s user preferences (see Section{\nobreakspace}\ref{sec:userpref}), 
+\item  the contents of the \textsf{TomLib} package \cite{TomLib} (only if this package is loaded, see Section{\nobreakspace}\ref{sect:tomlibinfo}), 
+\item  \textsf{GAP}'s Library of Transitive Groups (see Section{\nobreakspace}\ref{sect:transgrps}). 
 \end{itemize}
  
 
- Other \textsf{GAP} packages may add more overviews, using the function \texttt{BrowseGapDataAdd} (\ref{BrowseGapDataAdd}).   
+ Other \textsf{GAP} packages may add more overviews, using the function \texttt{BrowseGapDataAdd} (\ref{BrowseGapDataAdd}). For example, there are overviews of 
+\begin{itemize}
+\item  the bibliographies in the \textsf{ATLAS} of Finite Groups \cite{CCN85} and in the \textsf{ATLAS} of Brauer Characters \cite{JLPW95} (see \texttt{BrowseBibliographySporadicSimple} (\textbf{AtlasRep: BrowseBibliographySporadicSimple})), 
+\item  atomic irrationalities that occur in character tables in the \textsf{ATLAS} of Finite Groups \cite{CCN85} or the \textsf{ATLAS} of Brauer Characters \cite{JLPW95} (see Section \texttt{BrowseCommonIrrationalities} (\textbf{CTblLib: BrowseCommonIrrationalities})), 
+\item  the differences between the versions of the character table data in the \textsf{CTblLib} package (see Section \texttt{BrowseCTblLibDifferences} (\textbf{CTblLib: BrowseCTblLibDifferences})), 
+\item  the information in \textsf{GAP} Character Table Library (see Section \texttt{BrowseCTblLibInfo} (\textbf{CTblLib: BrowseCTblLibInfo})), 
+\item  an overview of minimal degrees of representations of groups from the \textsf{ATLAS} of Group Representations (see Section \texttt{BrowseMinimalDegrees} (\textbf{AtlasRep: BrowseMinimalDegrees})). 
+\end{itemize}
+   
 
  Except that always one table cell is selected, the full functionality of the
 function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) is available. 
@@ -2758,7 +2852,7 @@ selected.
  
 
 \subsection{\textcolor{Chapter }{BrowseGapDataAdd}}
-\logpage{[ 6, 10, 2 ]}\nobreak
+\logpage{[ 6, 11, 2 ]}\nobreak
 \hyperdef{L}{X7FC24FCE7A0C6058}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseGapDataAdd({\mdseries\slshape title, call, ret, documentation})\index{BrowseGapDataAdd@\texttt{BrowseGapDataAdd}}
 \label{BrowseGapDataAdd}
@@ -2773,7 +2867,7 @@ selected.
 
  
 \section{\textcolor{Chapter }{Navigating in a Directory Tree}}\label{sec:filetree}
-\logpage{[ 6, 11, 0 ]}
+\logpage{[ 6, 12, 0 ]}
 \hyperdef{L}{X7E3FDA927E62D963}{}
 {
   A natural way to visualize the contents of a directory is via a tree whose
@@ -2781,7 +2875,7 @@ leaves denote plain files, and the other vertices denote subdirectories. \textsf
 other vertices correspond to category rows. 
 
 \subsection{\textcolor{Chapter }{BrowseDirectory}}
-\logpage{[ 6, 11, 1 ]}\nobreak
+\logpage{[ 6, 12, 1 ]}\nobreak
 \hyperdef{L}{X859682DE8397261E}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseDirectory({\mdseries\slshape [startpath]})\index{BrowseDirectory@\texttt{BrowseDirectory}}
 \label{BrowseDirectory}
@@ -2806,8 +2900,8 @@ the sense of \texttt{Directory} (\textbf{Reference: Directory}), and the content
   !gapprompt@>| !gapinput@       "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"|
   !gapprompt@>| !gapinput@       n, "Q" ) );                           # and quit|
   !gapprompt@gap>| !gapinput@dir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;|
-  !gapprompt@gap>| !gapinput@if IsPackageMarkedForLoading( "io", "" ) then|
-  !gapprompt@>| !gapinput@     BrowseDirectory( dir );;|
+  !gapprompt@gap>| !gapinput@if IsBound( BrowseDirectory ) then|
+  !gapprompt@>| !gapinput@     BrowseDirectory( dir );|
   !gapprompt@>| !gapinput@   fi;|
   !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
 \end{Verbatim}
@@ -2835,7 +2929,7 @@ this selection by hitting the \textsc{q} key.)
 
  
 \section{\textcolor{Chapter }{A Puzzle}}\label{sec:mnpuzzle}
-\logpage{[ 6, 12, 0 ]}
+\logpage{[ 6, 13, 0 ]}
 \hyperdef{L}{X7FAE33037D09CC4E}{}
 {
   \index{game!A Puzzle} We consider an $m$ by $n$ rectangle of squares numbered from $1$ to $m n - 1$, the bottom right square is left empty. The numbered squares are permuted by
@@ -2867,10 +2961,10 @@ $ $\\
 
  The aim of the game is to order the numbered squares via these moves. 
 
- For the case $m = n = 4$, the puzzle is known under the name ``Sam Loyd's Fifteen'', see{\nobreakspace}\cite{LoydFifteenWeb} and{\nobreakspace}\cite{HistGames} for more information and references. 
+ For the case $m = n = 4$, the puzzle is (erroneously?) known under the name ``Sam Loyd's Fifteen'', see{\nobreakspace}\cite{LoydFifteenWeb} and{\nobreakspace}\cite{HistGames} for more information and references. 
 
 \subsection{\textcolor{Chapter }{BrowsePuzzle}}
-\logpage{[ 6, 12, 1 ]}\nobreak
+\logpage{[ 6, 13, 1 ]}\nobreak
 \hyperdef{L}{X7EF5FCBD7DAFFAF3}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowsePuzzle({\mdseries\slshape [m, n[, pi]]})\index{BrowsePuzzle@\texttt{BrowsePuzzle}}
 \label{BrowsePuzzle}
@@ -2914,7 +3008,7 @@ in this application.
 
  
 \section{\textcolor{Chapter }{Peg Solitaire}}\label{sec:solitaire}
-\logpage{[ 6, 13, 0 ]}
+\logpage{[ 6, 14, 0 ]}
 \hyperdef{L}{X7FFF943D78A403C9}{}
 {
   \index{game!Peg Solitaire} \index{solitaire game} Peg solitaire is a board game for one player. The game board consists of
@@ -2942,7 +3036,7 @@ over a neighboring peg which is then removed from the board.   \begin{center} \b
 the end, exactly one peg is left. 
 
 \subsection{\textcolor{Chapter }{PegSolitaire}}
-\logpage{[ 6, 13, 1 ]}\nobreak
+\logpage{[ 6, 14, 1 ]}\nobreak
 \hyperdef{L}{X82C8691380FCB674}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PegSolitaire({\mdseries\slshape [format, ][nrholes, ][twoModes]})\index{PegSolitaire@\texttt{PegSolitaire}}
 \label{PegSolitaire}
@@ -2970,6 +3064,9 @@ a neighboring peg to an adjacent hole via the \texttt{j} key followed by the app
   !gapprompt@>| !gapinput@     BrowseData.SetReplay( Concatenation(|
   !gapprompt@>| !gapinput@         PegSolitaireSolutions.( String( n ) ), "Q" ) );|
   !gapprompt@>| !gapinput@     PegSolitaire( n );|
+  !gapprompt@>| !gapinput@     PegSolitaire( "large", n );|
+  !gapprompt@>| !gapinput@     PegSolitaire( n, true );|
+  !gapprompt@>| !gapinput@     PegSolitaire( "large", n, true );|
   !gapprompt@>| !gapinput@od;|
   !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
 \end{Verbatim}
@@ -2994,7 +3091,7 @@ in this application.
 
  
 \section{\textcolor{Chapter }{Rubik's Cube}}\label{sec:rubikscube}
-\logpage{[ 6, 14, 0 ]}
+\logpage{[ 6, 15, 0 ]}
 \hyperdef{L}{X862CB73B7E0BE170}{}
 {
   \index{game!Rubik's Cube} We visualize the transformations of Rubik's magic cube in a model that is
@@ -3037,7 +3134,7 @@ are represented by the following permutations.
 announcements of \textsf{GAP}{\nobreakspace}3 releases. For a \textsf{GAP}{\nobreakspace}4 equivalent, see{\nobreakspace}\cite{RubiksCubeGAPWeb}. For more information and references (not \textsf{GAP} related) about Rubik's cube, see{\nobreakspace}\cite{RubiksCubeWeb}. 
 
 \subsection{\textcolor{Chapter }{BrowseRubiksCube}}
-\logpage{[ 6, 14, 1 ]}\nobreak
+\logpage{[ 6, 15, 1 ]}\nobreak
 \hyperdef{L}{X8100659E81FFE9A2}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseRubiksCube({\mdseries\slshape [format, ][pi]})\index{BrowseRubiksCube@\texttt{BrowseRubiksCube}}
 \label{BrowseRubiksCube}
@@ -3075,6 +3172,7 @@ from colors to numbers and back.
   !gapprompt@>| !gapinput@       input{ [ 26 .. 30 ] },|
   !gapprompt@>| !gapinput@       "Q" ) );;               # quit the browse table|
   !gapprompt@gap>| !gapinput@BrowseRubiksCube( Product( cubegens{ choice } ) );;|
+  !gapprompt@gap>| !gapinput@BrowseRubiksCube( "large", Product( cubegens{ choice } ) );;|
   !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
 \end{Verbatim}
  \emph{Implementation remarks}: The cube is implemented via a browse table, without row and column labels,
@@ -3098,7 +3196,7 @@ in this application.
 
  
 \section{\textcolor{Chapter }{Changing Sides}}\label{sec:knight}
-\logpage{[ 6, 15, 0 ]}
+\logpage{[ 6, 16, 0 ]}
 \hyperdef{L}{X7ADD618186541123}{}
 {
   \index{game!Changing Sides} We consider a $5$ by $5$ board of squares filled with two types of stones, as follows. The square in
@@ -3119,7 +3217,7 @@ those moves are allowed that increase or decrease one coordinate by $2$ and incr
  This game has been part of the MacTutor system \cite{MacTutor}. 
 
 \subsection{\textcolor{Chapter }{BrowseChangeSides}}
-\logpage{[ 6, 15, 1 ]}\nobreak
+\logpage{[ 6, 16, 1 ]}\nobreak
 \hyperdef{L}{X7FCFC5858584F46E}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseChangeSides({\mdseries\slshape })\index{BrowseChangeSides@\texttt{BrowseChangeSides}}
 \label{BrowseChangeSides}
@@ -3156,7 +3254,7 @@ in this application.
 
  
 \section{\textcolor{Chapter }{Sudoku}}\label{sec:sudoku}
-\logpage{[ 6, 16, 0 ]}
+\logpage{[ 6, 17, 0 ]}
 \hyperdef{L}{X7DDE46668321B5E9}{}
 {
   \index{game!Sudoku} We consider a $9$ by $9$ board of squares. Some squares are initially filled with numbers from $1$ to $9$. The aim of the game is to fill the empty squares in such a way that each
@@ -3181,7 +3279,7 @@ user interface \texttt{PlaySudoku} (\ref{PlaySudoku}) which is implemented using
 Chapter \ref{chap:browse-user}. 
 
 \subsection{\textcolor{Chapter }{Sudoku.Init}}
-\logpage{[ 6, 16, 1 ]}\nobreak
+\logpage{[ 6, 17, 1 ]}\nobreak
 \hyperdef{L}{X789D3D4C818F4BC2}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.Init({\mdseries\slshape [arg]})\index{Sudoku.Init@\texttt{Sudoku.Init}}
 \label{Sudoku.Init}
@@ -3217,7 +3315,7 @@ concatenation of the rows of the matrix (so, a list of integers and holes).
  
 
 \subsection{\textcolor{Chapter }{Sudoku.Place}}
-\logpage{[ 6, 16, 2 ]}\nobreak
+\logpage{[ 6, 17, 2 ]}\nobreak
 \hyperdef{L}{X86A5C6CE79DD67EE}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.Place({\mdseries\slshape game, i, n})\index{Sudoku.Place@\texttt{Sudoku.Place}}
 \label{Sudoku.Place}
@@ -3252,7 +3350,7 @@ The changed \mbox{\texttt{\mdseries\slshape game}}.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.RandomGame}}
-\logpage{[ 6, 16, 3 ]}\nobreak
+\logpage{[ 6, 17, 3 ]}\nobreak
 \hyperdef{L}{X8401B31A879F9F9F}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.RandomGame({\mdseries\slshape [seed]})\index{Sudoku.RandomGame@\texttt{Sudoku.RandomGame}}
 \label{Sudoku.RandomGame}
@@ -3282,7 +3380,7 @@ given entry the puzzle does no longer have a unique solution.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.SimpleDisplay}}
-\logpage{[ 6, 16, 4 ]}\nobreak
+\logpage{[ 6, 17, 4 ]}\nobreak
 \hyperdef{L}{X86917AC57C25A68F}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.SimpleDisplay({\mdseries\slshape game})\index{Sudoku.SimpleDisplay@\texttt{Sudoku.SimpleDisplay}}
 \label{Sudoku.SimpleDisplay}
@@ -3313,7 +3411,7 @@ given entry the puzzle does no longer have a unique solution.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.DisplayString}}
-\logpage{[ 6, 16, 5 ]}\nobreak
+\logpage{[ 6, 17, 5 ]}\nobreak
 \hyperdef{L}{X81F98C6C7C8415AB}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.DisplayString({\mdseries\slshape game})\index{Sudoku.DisplayString@\texttt{Sudoku.DisplayString}}
 \label{Sudoku.DisplayString}
@@ -3353,7 +3451,7 @@ given entry the puzzle does no longer have a unique solution.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.OneSolution}}
-\logpage{[ 6, 16, 6 ]}\nobreak
+\logpage{[ 6, 17, 6 ]}\nobreak
 \hyperdef{L}{X7C73C6D08293B3B8}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.OneSolution({\mdseries\slshape game})\index{Sudoku.OneSolution@\texttt{Sudoku.OneSolution}}
 \label{Sudoku.OneSolution}
@@ -3387,7 +3485,7 @@ then \texttt{fail} is returned.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.UniqueSolution}}
-\logpage{[ 6, 16, 7 ]}\nobreak
+\logpage{[ 6, 17, 7 ]}\nobreak
 \hyperdef{L}{X865DDBDC7E16217F}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.UniqueSolution({\mdseries\slshape game})\index{Sudoku.UniqueSolution@\texttt{Sudoku.UniqueSolution}}
 \label{Sudoku.UniqueSolution}
@@ -3422,7 +3520,7 @@ A completed Sudoku board that solves \mbox{\texttt{\mdseries\slshape game}}, or 
  
 
 \subsection{\textcolor{Chapter }{PlaySudoku}}
-\logpage{[ 6, 16, 8 ]}\nobreak
+\logpage{[ 6, 17, 8 ]}\nobreak
 \hyperdef{L}{X7D19224478E86BB4}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PlaySudoku({\mdseries\slshape [arg]})\index{PlaySudoku@\texttt{PlaySudoku}}
 \label{PlaySudoku}
@@ -3466,7 +3564,7 @@ in this application.
  
 
 \subsection{\textcolor{Chapter }{Sudoku.HTMLGame}}
-\logpage{[ 6, 16, 9 ]}\nobreak
+\logpage{[ 6, 17, 9 ]}\nobreak
 \hyperdef{L}{X804D66D67B908F30}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.HTMLGame({\mdseries\slshape game})\index{Sudoku.HTMLGame@\texttt{Sudoku.HTMLGame}}
 \label{Sudoku.HTMLGame}
@@ -4343,6 +4441,68 @@ library, in particular these groups must be constructed for the tests. }
 
  }
 
+  
+\section{\textcolor{Chapter }{Example: An Overview of the \textsf{GAP} Library of Tables of Marks }}\label{sect:tomlibinfo}
+\logpage{[ "A", 5, 0 ]}
+\hyperdef{L}{X831C7F817C6C4AA0}{}
+{
+  The example shown in this section deals with \textsf{GAP}'s Library of Tables of Marks (the \textsf{TomLib} package \cite{TomLib}). 
+
+\subsection{\textcolor{Chapter }{BrowseTomLibInfo}}
+\logpage{[ "A", 5, 1 ]}\nobreak
+\hyperdef{L}{X844D143980A0E20D}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseTomLibInfo({\mdseries\slshape })\index{BrowseTomLibInfo@\texttt{BrowseTomLibInfo}}
+\label{BrowseTomLibInfo}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+ nothing. 
+
+
+
+ This function shows the contents of the \textsf{GAP} Library of Tables of Marks (the \textsf{TomLib} package, see \cite{TomLib}) in a browse table. 
+
+ The first call may take substantial time (about $40$ seconds), because the data files of the \textsf{TomLib} package are evaluated. This could be improved by precomputing and caching the
+values. Another possibility would be to call \texttt{BrowseTomLibInfo} once before creating a \textsf{GAP} workspace. The subsequent calls are not expensive. 
+
+ The table rows correspond to the tables of marks, one column of row labels
+shows the identifier of the table. The columns of the table contain
+information about the group order, the number of conjugacy classes of
+subgroups, the identifiers of tables of marks with fusions to and from the
+given table, and the name of the file that contains the table of marks data. 
+
+ The full functionality of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) is available. 
+
+ 
+\begin{Verbatim}[commandchars=@|F,fontsize=\small,frame=single,label=Example]
+  @gapprompt|gap>F @gapinput|c:= [ NCurses.keys.ENTER ];;F
+  @gapprompt|gap>F @gapinput|n:= [ 14, 14, 14 ];;  # ``do nothing''F
+  @gapprompt|gap>F @gapinput|BrowseData.SetReplay( Concatenation(F
+  @gapprompt|>F @gapinput|       "scrrsc",   # categorize the list by source tables of fusions,F
+  @gapprompt|>F @gapinput|       "srdd",     # choose a source table,F
+  @gapprompt|>F @gapinput|       "x",        # expand the list of targets of fusionsF
+  @gapprompt|>F @gapinput|       n,F
+  @gapprompt|>F @gapinput|       "!",        # revert the categorizationF
+  @gapprompt|>F @gapinput|       "q",        # leave the mode in which a row is selectedF
+  @gapprompt|>F @gapinput|       "scrrrrsc", # categorize the list by filenamesF
+  @gapprompt|>F @gapinput|       "X",        # expand all categoriesF
+  @gapprompt|>F @gapinput|       n,F
+  @gapprompt|>F @gapinput|       "!",        # revert the categorizationF
+  @gapprompt|>F @gapinput|       "scso",     # sort the list by group orderF
+  @gapprompt|>F @gapinput|       n,F
+  @gapprompt|>F @gapinput|       "!q",       # revert the sorting and selectionF
+  @gapprompt|>F @gapinput|       "?",        # open the help windowF
+  @gapprompt|>F @gapinput|       n,F
+  @gapprompt|>F @gapinput|       "Q",        # close the help windowF
+  @gapprompt|>F @gapinput|       "/A5", c,   # search for the first occurrence of "A5"F
+  @gapprompt|>F @gapinput|       n,F
+  @gapprompt|>F @gapinput|       "Q" ) );;   # and quit the browse tableF
+  @gapprompt|gap>F @gapinput|BrowseTomLibInfo();F
+  @gapprompt|gap>F @gapinput|BrowseData.SetReplay( false );F
+\end{Verbatim}
+ }
+
+ }
+
  }
 
 \def\bibname{References\logpage{[ "Bib", 0, 0 ]}
@@ -4350,7 +4510,7 @@ library, in particular these groups must be constructed for the tests. }
 }
 
 \bibliographystyle{alpha}
-\bibliography{browsebib.xml}
+\bibliography{browsebib.xml,manualbib.xml}
 
 \addcontentsline{toc}{chapter}{References}
 

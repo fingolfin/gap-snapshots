@@ -598,8 +598,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Embeddings and Projections for Group Products}{49.6}{X798FDA1386A0EAC6}
 \makelabel{ref:Group Libraries}{50}{X81B00B667D2BD022}
 \makelabel{ref:Basic Groups}{50.1}{X839981CC7D9B671B}
-\makelabel{ref:AlternatingGroup}{50.1.8}{X7E54D3E778E6A53E}
-\makelabel{ref:SymmetricGroup}{50.1.9}{X858666F97BD85ABB}
+\makelabel{ref:AlternatingGroup}{50.1.9}{X7E54D3E778E6A53E}
+\makelabel{ref:SymmetricGroup}{50.1.10}{X858666F97BD85ABB}
 \makelabel{ref:Classical Groups}{50.2}{X8674AAA578FE4AEE}
 \makelabel{ref:GeneralLinearGroup}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:SpecialLinearGroup}{50.2.2}{X7CA3F7BF83992C6B}
@@ -617,32 +617,48 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Index numbers of primitive groups}{50.10}{X7DA239CC848F6CAE}
 \makelabel{ref:Irreducible Solvable Matrix Groups}{50.11}{X82FD673384BF353B}
 \makelabel{ref:Irreducible Maximal Finite Integral Matrix Groups}{50.12}{X7873506D873EDB95}
-\makelabel{ref:Semigroups}{51}{X80AF5F307DBDC2B4}
-\makelabel{ref:IsSemigroup (Filter)}{51.1}{X82AD02117C086D6F}
+\makelabel{ref:Semigroups and Monoids}{51}{X8665D8737FDD5B10}
+\makelabel{ref:Semigroups}{51.1}{X80AF5F307DBDC2B4}
 \makelabel{ref:Semigroup}{51.1.2}{X7F55D28F819B2817}
-\makelabel{ref:FreeSemigroup}{51.1.8}{X7C72E4747BF642BB}
-\makelabel{ref:Properties of Semigroups}{51.2}{X78274024827F306D}
-\makelabel{ref:Making transformation semigroups}{51.3}{X872369257F69EA20}
-\makelabel{ref:Ideals of semigroups}{51.4}{X7BB32D508183C0F1}
-\makelabel{ref:Congruences for semigroups}{51.5}{X7C0782D57C01E327}
-\makelabel{ref:Quotients}{51.6}{X87CE9EAB7EE3A128}
-\makelabel{ref:Green's Relations}{51.7}{X80C6C718801855E9}
-\makelabel{ref:Rees Matrix Semigroups}{51.8}{X8225A9EC87A255E6}
-\makelabel{ref:Monoids}{52}{X872FE34A7814C0DC}
-\makelabel{ref:Functions for Monoids}{52.1}{X7F3D35A38738DEB9}
-\makelabel{ref:Monoid}{52.1.2}{X7F95328B7C7E49EA}
-\makelabel{ref:FreeMonoid}{52.1.9}{X79FA3FA978CA2E43}
-\makelabel{ref:Finitely Presented Semigroups and Monoids}{53}{X7DE7C52A7C4BDADE}
-\makelabel{ref:IsSubsemigroupFpSemigroup (Filter)}{53.1}{X78C80F1A84C58E1E}
-\makelabel{ref:Creating Finitely Presented Semigroups}{53.2}{X84B8E3257E2E4134}
-\makelabel{ref:Comparison of Elements of Finitely Presented Semigroups}{53.3}{X85E7C8407C9D5FBE}
-\makelabel{ref:Preimages in the Free Semigroup}{53.4}{X7D3EA628804E05D4}
-\makelabel{ref:Finitely presented monoids}{53.5}{X7E79A80382563C26}
-\makelabel{ref:Rewriting Systems and the Knuth-Bendix Procedure}{53.6}{X87693BDC79DC6EBF}
-\makelabel{ref:KnuthBendixRewritingSystem}{53.6.3}{X87A3823483E4FF86}
-\makelabel{ref:Todd-Coxeter Procedure}{53.7}{X812C28217F3E6720}
-\makelabel{ref:Transformations}{54}{X860026B880BCB2A5}
-\makelabel{ref:Functions for Transformations}{54.1}{X7EB5F6967BC9D340}
+\makelabel{ref:FreeSemigroup}{51.1.9}{X7C72E4747BF642BB}
+\makelabel{ref:Monoids}{51.2}{X872FE34A7814C0DC}
+\makelabel{ref:Monoid}{51.2.2}{X7F95328B7C7E49EA}
+\makelabel{ref:FreeMonoid}{51.2.9}{X79FA3FA978CA2E43}
+\makelabel{ref:Inverse semigroups and monoids}{51.3}{X840847B6810BD0E1}
+\makelabel{ref:Properties of Semigroups}{51.4}{X78274024827F306D}
+\makelabel{ref:Ideals of semigroups}{51.5}{X7BB32D508183C0F1}
+\makelabel{ref:Congruences for semigroups}{51.6}{X7C0782D57C01E327}
+\makelabel{ref:Quotients}{51.7}{X87CE9EAB7EE3A128}
+\makelabel{ref:Green's Relations}{51.8}{X80C6C718801855E9}
+\makelabel{ref:Rees Matrix Semigroups}{51.9}{X8225A9EC87A255E6}
+\makelabel{ref:Rows and columns}{51.9.9}{X82FC5D6980C66AC4}
+\makelabel{ref:Finitely Presented Semigroups and Monoids}{52}{X7DE7C52A7C4BDADE}
+\makelabel{ref:IsSubsemigroupFpSemigroup (Filter)}{52.1}{X78C80F1A84C58E1E}
+\makelabel{ref:Creating Finitely Presented Semigroups}{52.2}{X84B8E3257E2E4134}
+\makelabel{ref:Comparison of Elements of Finitely Presented Semigroups}{52.3}{X85E7C8407C9D5FBE}
+\makelabel{ref:Preimages in the Free Semigroup}{52.4}{X7D3EA628804E05D4}
+\makelabel{ref:Finitely presented monoids}{52.5}{X7E79A80382563C26}
+\makelabel{ref:Rewriting Systems and the Knuth-Bendix Procedure}{52.6}{X87693BDC79DC6EBF}
+\makelabel{ref:KnuthBendixRewritingSystem}{52.6.3}{X87A3823483E4FF86}
+\makelabel{ref:Todd-Coxeter Procedure}{52.7}{X812C28217F3E6720}
+\makelabel{ref:Transformations}{53}{X860026B880BCB2A5}
+\makelabel{ref:The family and categories of transformations}{53.1}{X7CF9291C7CC42340}
+\makelabel{ref:Creating transformations}{53.2}{X80F3086F87E93DF8}
+\makelabel{ref:RandomTransformation}{53.2.7}{X8475448F87E8CB8A}
+\makelabel{ref:Changing the representation of a transformation}{53.3}{X7F81A18B813C9DF0}
+\makelabel{ref:Operators for transformations}{53.4}{X812CEC008609A8A2}
+\makelabel{ref:Attributes for transformations}{53.5}{X86DE4F7A7C535820}
+\makelabel{ref:Displaying transformations}{53.6}{X810D23017A5527B7}
+\makelabel{ref:Semigroups of transformations}{53.7}{X7B51CE257B814B09}
+\makelabel{ref:Partial permutations}{54}{X7D6495F77B8A77BD}
+\makelabel{ref:The family and categories of partial permutations}{54.1}{X87B0D6657A3F2B0E}
+\makelabel{ref:Creating partial permutations}{54.2}{X7B9D451D7FDA1DD8}
+\makelabel{ref:RandomPartialPerm}{54.2.7}{X7E6ADC8583C31530}
+\makelabel{ref:Attributes for partial permutations}{54.3}{X8779F0997D0FDA78}
+\makelabel{ref:Changing the representation of a partial permutation}{54.4}{X8585AA8B78E9CDFB}
+\makelabel{ref:Operators and operations for partial permutations}{54.5}{X848CD855802C6CE1}
+\makelabel{ref:Displaying partial permutations}{54.6}{X7849595B81D063EE}
+\makelabel{ref:Semigroups and inverse semigroups of partial permutations}{54.7}{X7CCC82E07A73EB55}
 \makelabel{ref:Additive Magmas}{55}{X7D0D096B81365B02}
 \makelabel{ref:(Near-)Additive Magma Categories}{55.1}{X82A4AB7B812B063B}
 \makelabel{ref:(Near-)Additive Magma Generation}{55.2}{X7C39F9DE7CA22688}
@@ -882,7 +898,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:TestSubnormallyMonomial}{75.4.5}{X7E56A0EA868CC34A}
 \makelabel{ref:TestRelativelySM}{75.4.6}{X83EF7B8D7C1C2CA3}
 \makelabel{ref:Minimal Nonmonomial Groups}{75.5}{X7B5735897DE29BCB}
-\makelabel{ref:GAP Packages}{76}{X816DC7C580D41F49}
+\makelabel{ref:Using GAP Packages}{76}{X7B6CD527825945CD}
 \makelabel{ref:Installing a GAP Package}{76.1}{X82473E4B8756C6CD}
 \makelabel{ref:Loading a GAP Package}{76.2}{X825CBC5B86F8F811}
 \makelabel{ref:Functions for GAP Packages}{76.3}{X7C6CE28B7E142804}
@@ -2592,7 +2608,10 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:SubmagmaWithInversesNC}{35.2.9}{X79441F1F7A277E28}
 \makelabel{ref:AsMagma}{35.2.10}{X84ED076D7E46AB79}
 \makelabel{ref:AsSubmagma}{35.2.11}{X87EEEC018129F0F4}
-\makelabel{ref:InjectionZeroMagma}{35.2.12}{X8620878D7FD98823}
+\makelabel{ref:IsMagmaWithZeroAdjoined}{35.2.12}{X8553F44D8123B2C6}
+\makelabel{ref:InjectionZeroMagma}{35.2.13}{X8620878D7FD98823}
+\makelabel{ref:MagmaWithZeroAdjoined}{35.2.13}{X8620878D7FD98823}
+\makelabel{ref:UnderlyingInjectionZeroMagma}{35.2.14}{X7B353674859BF659}
 \makelabel{ref:MagmaByMultiplicationTable}{35.3.1}{X85CD1E7678295CA6}
 \makelabel{ref:MagmaWithOneByMultiplicationTable}{35.3.2}{X865526C881645D65}
 \makelabel{ref:MagmaWithInversesByMultiplicationTable}{35.3.3}{X7EDAFB987EE8A770}
@@ -2616,9 +2635,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsAbelian}{35.4.9}{X830A4A4C795FBC2D}
 \makelabel{ref:MultiplicativeNeutralElement}{35.4.10}{X7EE2EA5F7EB7FEC2}
 \makelabel{ref:MultiplicativeZero}{35.4.11}{X7B39F93C8136D642}
-\makelabel{ref:IsMultiplicativeZero}{35.4.12}{X86FC794E7A066F78}
-\makelabel{ref:SquareRoots}{35.4.13}{X867DB05A8218FB1E}
-\makelabel{ref:TrivialSubmagmaWithOne}{35.4.14}{X837DA95883CFB985}
+\makelabel{ref:IsMultiplicativeZero}{35.4.11}{X7B39F93C8136D642}
+\makelabel{ref:SquareRoots}{35.4.12}{X867DB05A8218FB1E}
+\makelabel{ref:TrivialSubmagmaWithOne}{35.4.13}{X837DA95883CFB985}
 \makelabel{ref:IsWord}{36.1.1}{X843F5C3A82239398}
 \makelabel{ref:IsWordWithOne}{36.1.1}{X843F5C3A82239398}
 \makelabel{ref:IsWordWithInverse}{36.1.1}{X843F5C3A82239398}
@@ -2776,6 +2795,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:words in generators}{39.5}{X7E19F92284F6684E}
 \makelabel{ref:EpimorphismFromFreeGroup}{39.5.1}{X7FE8A3B08458A1BF}
 \makelabel{ref:Factorization}{39.5.2}{X8357294D7B164106}
+\makelabel{ref:GrowthFunctionOfGroup}{39.5.3}{X871508DD808EB487}
+\makelabel{ref:GrowthFunctionOfGroup (with word length limit)}{39.5.3}{X871508DD808EB487}
 \makelabel{ref:StructureDescription}{39.6.1}{X8199B74B84446971}
 \makelabel{ref:right cosets}{39.7}{X81002AA87DDBC02F}
 \makelabel{ref:coset}{39.7}{X81002AA87DDBC02F}
@@ -3159,6 +3180,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:MappingPermListList}{42.5.3}{X8087DCC780B9656A}
 \makelabel{ref:RestrictedPerm}{42.5.4}{X7EF8388E7DA8E600}
 \makelabel{ref:RestrictedPermNC}{42.5.4}{X7EF8388E7DA8E600}
+\makelabel{ref:AsPermutation}{42.5.5}{X8353AB8987E35DF3}
 \makelabel{ref:IsPermGroup}{43.1.1}{X7879877482F59676}
 \makelabel{ref:OrbitPerms}{43.2.1}{X84CFA16D858B00B8}
 \makelabel{ref:OrbitsPerms}{43.2.2}{X81F98222818DA35B}
@@ -3525,6 +3547,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Projection example for subdirect products}{49.3.1}{X82112D768085AD98}
 \makelabel{ref:SubdirectProducts}{49.3.2}{X814204E97812894C}
 \makelabel{ref:WreathProduct}{49.4.1}{X8786EFBC78D7D6ED}
+\makelabel{ref:StandardWreathProduct}{49.4.1}{X8786EFBC78D7D6ED}
 \makelabel{ref:Embedding example for wreath products}{49.4.1}{X8786EFBC78D7D6ED}
 \makelabel{ref:Projection example for wreath products}{49.4.1}{X8786EFBC78D7D6ED}
 \makelabel{ref:WreathProductImprimitiveAction}{49.4.2}{X8589DCFA7C2E5FAA}
@@ -3540,19 +3563,20 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:CyclicGroup}{50.1.2}{X7A7C473D87B31F3B}
 \makelabel{ref:AbelianGroup}{50.1.3}{X81CCC3BF8005A2D7}
 \makelabel{ref:ElementaryAbelianGroup}{50.1.4}{X8778256286E50743}
-\makelabel{ref:DihedralGroup}{50.1.5}{X838DE1AB7B3D70FF}
-\makelabel{ref:QuaternionGroup}{50.1.6}{X87865686856910E4}
-\makelabel{ref:DicyclicGroup}{50.1.6}{X87865686856910E4}
-\makelabel{ref:ExtraspecialGroup}{50.1.7}{X86E76B3A796BEFA8}
-\makelabel{ref:AlternatingGroup (for a degree)}{50.1.8}{X7E54D3E778E6A53E}
-\makelabel{ref:AlternatingGroup (for a domain)}{50.1.8}{X7E54D3E778E6A53E}
-\makelabel{ref:SymmetricGroup (for a degree)}{50.1.9}{X858666F97BD85ABB}
-\makelabel{ref:SymmetricGroup (for a domain)}{50.1.9}{X858666F97BD85ABB}
-\makelabel{ref:MathieuGroup}{50.1.10}{X788FA7DE84E0FE6A}
-\makelabel{ref:SuzukiGroup}{50.1.11}{X8469DBBF82F8E5C3}
-\makelabel{ref:Sz}{50.1.11}{X8469DBBF82F8E5C3}
-\makelabel{ref:ReeGroup}{50.1.12}{X87E5B0F679CA7FE4}
-\makelabel{ref:Ree}{50.1.12}{X87E5B0F679CA7FE4}
+\makelabel{ref:FreeAbelianGroup}{50.1.5}{X7F43050D8587E767}
+\makelabel{ref:DihedralGroup}{50.1.6}{X838DE1AB7B3D70FF}
+\makelabel{ref:QuaternionGroup}{50.1.7}{X87865686856910E4}
+\makelabel{ref:DicyclicGroup}{50.1.7}{X87865686856910E4}
+\makelabel{ref:ExtraspecialGroup}{50.1.8}{X86E76B3A796BEFA8}
+\makelabel{ref:AlternatingGroup (for a degree)}{50.1.9}{X7E54D3E778E6A53E}
+\makelabel{ref:AlternatingGroup (for a domain)}{50.1.9}{X7E54D3E778E6A53E}
+\makelabel{ref:SymmetricGroup (for a degree)}{50.1.10}{X858666F97BD85ABB}
+\makelabel{ref:SymmetricGroup (for a domain)}{50.1.10}{X858666F97BD85ABB}
+\makelabel{ref:MathieuGroup}{50.1.11}{X788FA7DE84E0FE6A}
+\makelabel{ref:SuzukiGroup}{50.1.12}{X8469DBBF82F8E5C3}
+\makelabel{ref:Sz}{50.1.12}{X8469DBBF82F8E5C3}
+\makelabel{ref:ReeGroup}{50.1.13}{X87E5B0F679CA7FE4}
+\makelabel{ref:Ree}{50.1.13}{X87E5B0F679CA7FE4}
 \makelabel{ref:GeneralLinearGroup (for dimension and a ring)}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:GL (for dimension and a ring)}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:GeneralLinearGroup (for dimension and field size)}{50.2.1}{X85D607DD82AF3E27}
@@ -3665,157 +3689,293 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Semigroup (for a list)}{51.1.2}{X7F55D28F819B2817}
 \makelabel{ref:Subsemigroup}{51.1.3}{X8678D40878CC09A1}
 \makelabel{ref:SubsemigroupNC}{51.1.3}{X8678D40878CC09A1}
-\makelabel{ref:SemigroupByGenerators}{51.1.4}{X79FBBEC9841544F3}
-\makelabel{ref:AsSemigroup}{51.1.5}{X80ED104F85AE5134}
-\makelabel{ref:AsSubsemigroup}{51.1.6}{X7B1EEA3E82BFE09F}
-\makelabel{ref:GeneratorsOfSemigroup}{51.1.7}{X78147A247963F23B}
-\makelabel{ref:FreeSemigroup (for given rank)}{51.1.8}{X7C72E4747BF642BB}
-\makelabel{ref:FreeSemigroup (for various names)}{51.1.8}{X7C72E4747BF642BB}
-\makelabel{ref:FreeSemigroup (for a list of names)}{51.1.8}{X7C72E4747BF642BB}
-\makelabel{ref:FreeSemigroup (for infinitely many generators)}{51.1.8}{X7C72E4747BF642BB}
-\makelabel{ref:SemigroupByMultiplicationTable}{51.1.9}{X7E67E13F7A01F8D3}
-\makelabel{ref:IsRegularSemigroup}{51.2.1}{X7C4663827C5ACEF1}
-\makelabel{ref:IsRegularSemigroupElement}{51.2.2}{X87532A76854347E0}
-\makelabel{ref:IsSimpleSemigroup}{51.2.3}{X836F4692839F4874}
-\makelabel{ref:IsZeroSimpleSemigroup}{51.2.4}{X8193A60F839C064E}
-\makelabel{ref:IsZeroGroup}{51.2.5}{X85F7E5CD86F0643B}
-\makelabel{ref:IsReesCongruenceSemigroup}{51.2.6}{X7FFEC81F7F2C4EAA}
-\makelabel{ref:IsTransformationSemigroup}{51.3.1}{X7EAF835D7FE4026F}
-\makelabel{ref:IsTransformationMonoid}{51.3.1}{X7EAF835D7FE4026F}
-\makelabel{ref:DegreeOfTransformationSemigroup}{51.3.2}{X7EA699C687952544}
-\makelabel{ref:IsomorphismTransformationSemigroup}{51.3.3}{X78F29C817CF6827F}
-\makelabel{ref:HomomorphismTransformationSemigroup}{51.3.3}{X78F29C817CF6827F}
-\makelabel{ref:IsFullTransformationSemigroup}{51.3.4}{X85C58E1E818C838C}
-\makelabel{ref:FullTransformationSemigroup}{51.3.5}{X7D2B0685815B4053}
-\makelabel{ref:SemigroupIdealByGenerators}{51.4.1}{X7D5CEE4D7D4318ED}
-\makelabel{ref:ReesCongruenceOfSemigroupIdeal}{51.4.2}{X7F01FFB18125DED5}
-\makelabel{ref:IsLeftSemigroupIdeal}{51.4.3}{X7A3FF85984345540}
-\makelabel{ref:IsRightSemigroupIdeal}{51.4.3}{X7A3FF85984345540}
-\makelabel{ref:IsSemigroupIdeal}{51.4.3}{X7A3FF85984345540}
-\makelabel{ref:IsSemigroupCongruence}{51.5.1}{X78E34B737F0E009F}
-\makelabel{ref:IsReesCongruence}{51.5.2}{X822DB78579BCB7B5}
-\makelabel{ref:IsQuotientSemigroup}{51.6.1}{X80EF3E6F842BE64E}
-\makelabel{ref:HomomorphismQuotientSemigroup}{51.6.2}{X7CAD3D1687956F7F}
-\makelabel{ref:QuotientSemigroupPreimage}{51.6.3}{X87120C46808F7289}
-\makelabel{ref:QuotientSemigroupCongruence}{51.6.3}{X87120C46808F7289}
-\makelabel{ref:QuotientSemigroupHomomorphism}{51.6.3}{X87120C46808F7289}
-\makelabel{ref:GreensRRelation}{51.7.1}{X786CEDD4814A9079}
-\makelabel{ref:GreensLRelation}{51.7.1}{X786CEDD4814A9079}
-\makelabel{ref:GreensJRelation}{51.7.1}{X786CEDD4814A9079}
-\makelabel{ref:GreensDRelation}{51.7.1}{X786CEDD4814A9079}
-\makelabel{ref:GreensHRelation}{51.7.1}{X786CEDD4814A9079}
-\makelabel{ref:IsGreensRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensRRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensLRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensJRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensHRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensDRelation}{51.7.2}{X8364D69987D49DE1}
-\makelabel{ref:IsGreensClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensRClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensLClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensJClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensHClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensDClass}{51.7.3}{X82A11A087AFB3EB0}
-\makelabel{ref:IsGreensLessThanOrEqual}{51.7.4}{X7AA204C8850F9070}
-\makelabel{ref:RClassOfHClass}{51.7.5}{X86FE5F5585EBCF13}
-\makelabel{ref:LClassOfHClass}{51.7.5}{X86FE5F5585EBCF13}
-\makelabel{ref:EggBoxOfDClass}{51.7.6}{X78C56F4A78E0088A}
-\makelabel{ref:DisplayEggBoxOfDClass}{51.7.7}{X803237F17ACD44E3}
-\makelabel{ref:GreensRClassOfElement}{51.7.8}{X87C75A9D86122D93}
-\makelabel{ref:GreensLClassOfElement}{51.7.8}{X87C75A9D86122D93}
-\makelabel{ref:GreensDClassOfElement}{51.7.8}{X87C75A9D86122D93}
-\makelabel{ref:GreensJClassOfElement}{51.7.8}{X87C75A9D86122D93}
-\makelabel{ref:GreensHClassOfElement}{51.7.8}{X87C75A9D86122D93}
-\makelabel{ref:GreensRClasses}{51.7.9}{X844D20467A644811}
-\makelabel{ref:GreensLClasses}{51.7.9}{X844D20467A644811}
-\makelabel{ref:GreensJClasses}{51.7.9}{X844D20467A644811}
-\makelabel{ref:GreensDClasses}{51.7.9}{X844D20467A644811}
-\makelabel{ref:GreensHClasses}{51.7.9}{X844D20467A644811}
-\makelabel{ref:GroupHClassOfGreensDClass}{51.7.10}{X7CB4A18685B850E2}
-\makelabel{ref:IsGroupHClass}{51.7.11}{X79D740EF7F0E53BD}
-\makelabel{ref:IsRegularDClass}{51.7.12}{X7F5860927CAD920F}
-\makelabel{ref:ReesMatrixSemigroup}{51.8.1}{X8526AA557CDF6C49}
-\makelabel{ref:ReesZeroMatrixSemigroup}{51.8.2}{X872CEF99839085B1}
-\makelabel{ref:IsReesMatrixSemigroup}{51.8.3}{X780BB78A79275244}
-\makelabel{ref:IsReesZeroMatrixSemigroup}{51.8.4}{X7EEBAEE9857C5EBA}
-\makelabel{ref:ReesMatrixSemigroupElement}{51.8.5}{X7A0DE1F28470295E}
-\makelabel{ref:ReesZeroMatrixSemigroupElement}{51.8.5}{X7A0DE1F28470295E}
-\makelabel{ref:IsReesMatrixSemigroupElement}{51.8.6}{X7F6B852B81488C86}
-\makelabel{ref:IsReesZeroMatrixSemigroupElement}{51.8.6}{X7F6B852B81488C86}
-\makelabel{ref:SandwichMatrixOfReesMatrixSemigroup}{51.8.7}{X7D3366928253D5D3}
-\makelabel{ref:SandwichMatrixOfReesZeroMatrixSemigroup}{51.8.7}{X7D3366928253D5D3}
-\makelabel{ref:RowIndexOfReesMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:RowIndexOfReesZeroMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:ColumnIndexOfReesMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:ColumnIndexOfReesZeroMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:UnderlyingElementOfReesMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:UnderlyingElementOfReesZeroMatrixSemigroupElement}{51.8.8}{X7FAF2F3E864CA202}
-\makelabel{ref:ReesZeroMatrixSemigroupElementIsZero}{51.8.9}{X7FA034937CA3C41F}
-\makelabel{ref:AssociatedReesMatrixSemigroupOfDClass}{51.8.10}{X7D1D9A0382064B8F}
-\makelabel{ref:IsomorphismReesMatrixSemigroup}{51.8.11}{X7964B5C97FB9C07D}
-\makelabel{ref:IsMonoid}{52.1.1}{X861C523483C6248C}
-\makelabel{ref:Monoid (for various generators)}{52.1.2}{X7F95328B7C7E49EA}
-\makelabel{ref:Monoid (for a list)}{52.1.2}{X7F95328B7C7E49EA}
-\makelabel{ref:Submonoid}{52.1.3}{X8322D01E84912FD7}
-\makelabel{ref:SubmonoidNC}{52.1.3}{X8322D01E84912FD7}
-\makelabel{ref:MonoidByGenerators}{52.1.4}{X85129EE387CC4D28}
-\makelabel{ref:AsMonoid}{52.1.5}{X7B22038F832B9C0F}
-\makelabel{ref:AsSubmonoid}{52.1.6}{X7C9A12DE8287B2D3}
-\makelabel{ref:GeneratorsOfMonoid}{52.1.7}{X83CA2E7279C44718}
-\makelabel{ref:TrivialSubmonoid}{52.1.8}{X7EC77C0184587181}
-\makelabel{ref:FreeMonoid (for given rank)}{52.1.9}{X79FA3FA978CA2E43}
-\makelabel{ref:FreeMonoid (for various names)}{52.1.9}{X79FA3FA978CA2E43}
-\makelabel{ref:FreeMonoid (for a list of names)}{52.1.9}{X79FA3FA978CA2E43}
-\makelabel{ref:FreeMonoid (for infinitely many generators)}{52.1.9}{X79FA3FA978CA2E43}
-\makelabel{ref:MonoidByMultiplicationTable}{52.1.10}{X7BFE938E857CA27D}
-\makelabel{ref:IsSubsemigroupFpSemigroup}{53.1.1}{X8496E23C80453C33}
-\makelabel{ref:IsSubmonoidFpMonoid}{53.1.2}{X82128D4D83ACA683}
-\makelabel{ref:IsFpSemigroup}{53.1.3}{X8239EF2B853411E9}
-\makelabel{ref:IsFpMonoid}{53.1.4}{X7C2BA01D86087D11}
-\makelabel{ref:IsElementOfFpSemigroup}{53.1.5}{X81ABBE997A4C19B7}
-\makelabel{ref:IsElementOfFpMonoid}{53.1.6}{X7A570B89862C7399}
-\makelabel{ref:FpGrpMonSmgOfFpGrpMonSmgElement}{53.1.7}{X7DC8A5D380AFE5DB}
-\makelabel{ref:quotient of free semigroup}{53.2.1}{X7D3B9E317DD5AC8A}
-\makelabel{ref:FactorFreeSemigroupByRelations}{53.2.2}{X822F04B2833BE254}
-\makelabel{ref:IsomorphismFpSemigroup}{53.2.3}{X869F966B8196F28C}
-\makelabel{ref:comparison fp semigroup elements}{53.3.1}{X7DD9D81F863EBE31}
-\makelabel{ref:UnderlyingElement (fp semigroup elements)}{53.4.1}{X818E25C887512E89}
-\makelabel{ref:ElementOfFpSemigroup}{53.4.2}{X847012347856C55E}
-\makelabel{ref:FreeSemigroupOfFpSemigroup}{53.4.3}{X8726523779601873}
-\makelabel{ref:FreeGeneratorsOfFpSemigroup}{53.4.4}{X79A39402806B5EB7}
-\makelabel{ref:RelationsOfFpSemigroup}{53.4.5}{X862BE9FA7C987CAB}
-\makelabel{ref:quotient of free monoid}{53.5.1}{X82B5E4A27AAB6749}
-\makelabel{ref:ReducedConfluentRewritingSystem}{53.6.1}{X7D8F804E814D894D}
-\makelabel{ref:KBREW}{53.6.2}{X7A3F8AE285C41D80}
-\makelabel{ref:GAPKBREW}{53.6.2}{X7A3F8AE285C41D80}
-\makelabel{ref:KnuthBendixRewritingSystem (for a semigroup and a reduction ordering)}{53.6.3}{X87A3823483E4FF86}
-\makelabel{ref:KnuthBendixRewritingSystem (for a monoid and a reduction ordering)}{53.6.3}{X87A3823483E4FF86}
-\makelabel{ref:SemigroupOfRewritingSystem}{53.6.4}{X7966343587A04AFF}
-\makelabel{ref:MonoidOfRewritingSystem}{53.6.5}{X7EAB3E067D7557F6}
-\makelabel{ref:FreeSemigroupOfRewritingSystem}{53.6.6}{X80B8115C8147F605}
-\makelabel{ref:FreeMonoidOfRewritingSystem}{53.6.7}{X84CE48BE7F870808}
-\makelabel{ref:CosetTableOfFpSemigroup}{53.7.1}{X7C24508A7F677520}
-\makelabel{ref:IsTransformation}{54.1.1}{X7B6259467974FB70}
-\makelabel{ref:IsTransformationCollection}{54.1.1}{X7B6259467974FB70}
-\makelabel{ref:TransformationFamily}{54.1.2}{X7E58AFA1832FF064}
-\makelabel{ref:TransformationType}{54.1.2}{X7E58AFA1832FF064}
-\makelabel{ref:TransformationData}{54.1.2}{X7E58AFA1832FF064}
-\makelabel{ref:Transformation}{54.1.3}{X7B2E556E7BCF9CDF}
-\makelabel{ref:TransformationNC}{54.1.3}{X7B2E556E7BCF9CDF}
-\makelabel{ref:IdentityTransformation}{54.1.4}{X8268A58685BEFD6F}
-\makelabel{ref:RandomTransformation}{54.1.5}{X8475448F87E8CB8A}
-\makelabel{ref:DegreeOfTransformation}{54.1.6}{X78A209C87CF0E32B}
-\makelabel{ref:ImageListOfTransformation}{54.1.7}{X7AEC9E6687B3505A}
-\makelabel{ref:ImageSetOfTransformation}{54.1.8}{X839A6D6082A21D1F}
-\makelabel{ref:RankOfTransformation}{54.1.9}{X85F22DDD84C28583}
-\makelabel{ref:KernelOfTransformation}{54.1.10}{X80FCB5048789CF75}
-\makelabel{ref:PreimagesOfTransformation}{54.1.11}{X82F5DEEC837B60A3}
-\makelabel{ref:RestrictedTransformation}{54.1.12}{X846A6F6B7B715188}
-\makelabel{ref:AsTransformation}{54.1.13}{X7C5360B2799943F3}
-\makelabel{ref:AsTransformationNC}{54.1.13}{X7C5360B2799943F3}
-\makelabel{ref:PermLeftQuoTransformation}{54.1.14}{X83DBA2A18719EFA8}
-\makelabel{ref:BinaryRelationTransformation}{54.1.15}{X7CCD27327CC84626}
-\makelabel{ref:TransformationRelation}{54.1.16}{X7BF5FA5C8068EB3B}
+\makelabel{ref:IsSubsemigroup}{51.1.4}{X782B7BDD8252581C}
+\makelabel{ref:SemigroupByGenerators}{51.1.5}{X79FBBEC9841544F3}
+\makelabel{ref:AsSemigroup}{51.1.6}{X80ED104F85AE5134}
+\makelabel{ref:AsSubsemigroup}{51.1.7}{X7B1EEA3E82BFE09F}
+\makelabel{ref:GeneratorsOfSemigroup}{51.1.8}{X78147A247963F23B}
+\makelabel{ref:FreeSemigroup (for given rank)}{51.1.9}{X7C72E4747BF642BB}
+\makelabel{ref:FreeSemigroup (for various names)}{51.1.9}{X7C72E4747BF642BB}
+\makelabel{ref:FreeSemigroup (for a list of names)}{51.1.9}{X7C72E4747BF642BB}
+\makelabel{ref:FreeSemigroup (for infinitely many generators)}{51.1.9}{X7C72E4747BF642BB}
+\makelabel{ref:SemigroupByMultiplicationTable}{51.1.10}{X7E67E13F7A01F8D3}
+\makelabel{ref:IsMonoid}{51.2.1}{X861C523483C6248C}
+\makelabel{ref:Monoid (for various generators)}{51.2.2}{X7F95328B7C7E49EA}
+\makelabel{ref:Monoid (for a list)}{51.2.2}{X7F95328B7C7E49EA}
+\makelabel{ref:Submonoid}{51.2.3}{X8322D01E84912FD7}
+\makelabel{ref:SubmonoidNC}{51.2.3}{X8322D01E84912FD7}
+\makelabel{ref:MonoidByGenerators}{51.2.4}{X85129EE387CC4D28}
+\makelabel{ref:AsMonoid}{51.2.5}{X7B22038F832B9C0F}
+\makelabel{ref:AsSubmonoid}{51.2.6}{X7C9A12DE8287B2D3}
+\makelabel{ref:GeneratorsOfMonoid}{51.2.7}{X83CA2E7279C44718}
+\makelabel{ref:TrivialSubmonoid}{51.2.8}{X7EC77C0184587181}
+\makelabel{ref:FreeMonoid (for given rank)}{51.2.9}{X79FA3FA978CA2E43}
+\makelabel{ref:FreeMonoid (for various names)}{51.2.9}{X79FA3FA978CA2E43}
+\makelabel{ref:FreeMonoid (for a list of names)}{51.2.9}{X79FA3FA978CA2E43}
+\makelabel{ref:FreeMonoid (for infinitely many generators)}{51.2.9}{X79FA3FA978CA2E43}
+\makelabel{ref:MonoidByMultiplicationTable}{51.2.10}{X7BFE938E857CA27D}
+\makelabel{ref:InverseSemigroup}{51.3.1}{X78B13FED7AFB4326}
+\makelabel{ref:InverseMonoid}{51.3.2}{X80D9B9A98736051B}
+\makelabel{ref:GeneratorsOfInverseSemigroup}{51.3.3}{X87C373597F787250}
+\makelabel{ref:GeneratorsOfInverseMonoid}{51.3.4}{X7A3B262C85B6D475}
+\makelabel{ref:IsInverseSubsemigroup}{51.3.5}{X7C4C6EE681E7A57E}
+\makelabel{ref:IsRegularSemigroup}{51.4.1}{X7C4663827C5ACEF1}
+\makelabel{ref:IsRegularSemigroupElement}{51.4.2}{X87532A76854347E0}
+\makelabel{ref:InversesOfSemigroupElement}{51.4.3}{X7AFDE0F17AE516C5}
+\makelabel{ref:IsSimpleSemigroup}{51.4.4}{X836F4692839F4874}
+\makelabel{ref:IsZeroSimpleSemigroup}{51.4.5}{X8193A60F839C064E}
+\makelabel{ref:IsZeroGroup}{51.4.6}{X85F7E5CD86F0643B}
+\makelabel{ref:IsReesCongruenceSemigroup}{51.4.7}{X7FFEC81F7F2C4EAA}
+\makelabel{ref:IsInverseSemigroup}{51.4.8}{X83F1529479D56665}
+\makelabel{ref:IsInverseMonoid}{51.4.8}{X83F1529479D56665}
+\makelabel{ref:SemigroupIdealByGenerators}{51.5.1}{X7D5CEE4D7D4318ED}
+\makelabel{ref:ReesCongruenceOfSemigroupIdeal}{51.5.2}{X7F01FFB18125DED5}
+\makelabel{ref:IsLeftSemigroupIdeal}{51.5.3}{X7A3FF85984345540}
+\makelabel{ref:IsRightSemigroupIdeal}{51.5.3}{X7A3FF85984345540}
+\makelabel{ref:IsSemigroupIdeal}{51.5.3}{X7A3FF85984345540}
+\makelabel{ref:IsSemigroupCongruence}{51.6.1}{X78E34B737F0E009F}
+\makelabel{ref:IsReesCongruence}{51.6.2}{X822DB78579BCB7B5}
+\makelabel{ref:IsQuotientSemigroup}{51.7.1}{X80EF3E6F842BE64E}
+\makelabel{ref:HomomorphismQuotientSemigroup}{51.7.2}{X7CAD3D1687956F7F}
+\makelabel{ref:QuotientSemigroupPreimage}{51.7.3}{X87120C46808F7289}
+\makelabel{ref:QuotientSemigroupCongruence}{51.7.3}{X87120C46808F7289}
+\makelabel{ref:QuotientSemigroupHomomorphism}{51.7.3}{X87120C46808F7289}
+\makelabel{ref:GreensRRelation}{51.8.1}{X786CEDD4814A9079}
+\makelabel{ref:GreensLRelation}{51.8.1}{X786CEDD4814A9079}
+\makelabel{ref:GreensJRelation}{51.8.1}{X786CEDD4814A9079}
+\makelabel{ref:GreensDRelation}{51.8.1}{X786CEDD4814A9079}
+\makelabel{ref:GreensHRelation}{51.8.1}{X786CEDD4814A9079}
+\makelabel{ref:IsGreensRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensRRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensLRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensJRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensHRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensDRelation}{51.8.2}{X8364D69987D49DE1}
+\makelabel{ref:IsGreensClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensRClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensLClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensJClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensHClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensDClass}{51.8.3}{X82A11A087AFB3EB0}
+\makelabel{ref:IsGreensLessThanOrEqual}{51.8.4}{X7AA204C8850F9070}
+\makelabel{ref:RClassOfHClass}{51.8.5}{X86FE5F5585EBCF13}
+\makelabel{ref:LClassOfHClass}{51.8.5}{X86FE5F5585EBCF13}
+\makelabel{ref:EggBoxOfDClass}{51.8.6}{X78C56F4A78E0088A}
+\makelabel{ref:DisplayEggBoxOfDClass}{51.8.7}{X803237F17ACD44E3}
+\makelabel{ref:GreensRClassOfElement}{51.8.8}{X87C75A9D86122D93}
+\makelabel{ref:GreensLClassOfElement}{51.8.8}{X87C75A9D86122D93}
+\makelabel{ref:GreensDClassOfElement}{51.8.8}{X87C75A9D86122D93}
+\makelabel{ref:GreensJClassOfElement}{51.8.8}{X87C75A9D86122D93}
+\makelabel{ref:GreensHClassOfElement}{51.8.8}{X87C75A9D86122D93}
+\makelabel{ref:GreensRClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GreensLClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GreensJClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GreensDClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GreensHClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GroupHClassOfGreensDClass}{51.8.10}{X7CB4A18685B850E2}
+\makelabel{ref:IsGroupHClass}{51.8.11}{X79D740EF7F0E53BD}
+\makelabel{ref:IsRegularDClass}{51.8.12}{X7F5860927CAD920F}
+\makelabel{ref:ReesMatrixSemigroup}{51.9.1}{X8526AA557CDF6C49}
+\makelabel{ref:ReesZeroMatrixSemigroup}{51.9.1}{X8526AA557CDF6C49}
+\makelabel{ref:ReesMatrixSubsemigroup}{51.9.2}{X78D2A48C87FC8E38}
+\makelabel{ref:ReesZeroMatrixSubsemigroup}{51.9.2}{X78D2A48C87FC8E38}
+\makelabel{ref:IsomorphismReesMatrixSemigroup}{51.9.3}{X7964B5C97FB9C07D}
+\makelabel{ref:IsReesMatrixSemigroupElement}{51.9.4}{X7F6B852B81488C86}
+\makelabel{ref:IsReesZeroMatrixSemigroupElement}{51.9.4}{X7F6B852B81488C86}
+\makelabel{ref:ReesMatrixSemigroupElement}{51.9.5}{X7A0DE1F28470295E}
+\makelabel{ref:ReesZeroMatrixSemigroupElement}{51.9.5}{X7A0DE1F28470295E}
+\makelabel{ref:IsReesMatrixSubsemigroup}{51.9.6}{X7F03BE707AC7F8A0}
+\makelabel{ref:IsReesZeroMatrixSubsemigroup}{51.9.6}{X7F03BE707AC7F8A0}
+\makelabel{ref:IsReesMatrixSemigroup}{51.9.7}{X780BB78A79275244}
+\makelabel{ref:IsReesZeroMatrixSemigroup}{51.9.7}{X780BB78A79275244}
+\makelabel{ref:Matrix}{51.9.8}{X879384D479EB1D82}
+\makelabel{ref:Rows}{51.9.9}{X82FC5D6980C66AC4}
+\makelabel{ref:Columns}{51.9.9}{X82FC5D6980C66AC4}
+\makelabel{ref:UnderlyingSemigroup (for a Rees matrix semigroup)}{51.9.10}{X7D9719F887AFCF8F}
+\makelabel{ref:UnderlyingSemigroup (for a Rees 0-matrix semigroup)}{51.9.10}{X7D9719F887AFCF8F}
+\makelabel{ref:AssociatedReesMatrixSemigroupOfDClass}{51.9.11}{X7D1D9A0382064B8F}
+\makelabel{ref:IsSubsemigroupFpSemigroup}{52.1.1}{X8496E23C80453C33}
+\makelabel{ref:IsSubmonoidFpMonoid}{52.1.2}{X82128D4D83ACA683}
+\makelabel{ref:IsFpSemigroup}{52.1.3}{X8239EF2B853411E9}
+\makelabel{ref:IsFpMonoid}{52.1.4}{X7C2BA01D86087D11}
+\makelabel{ref:IsElementOfFpSemigroup}{52.1.5}{X81ABBE997A4C19B7}
+\makelabel{ref:IsElementOfFpMonoid}{52.1.6}{X7A570B89862C7399}
+\makelabel{ref:FpGrpMonSmgOfFpGrpMonSmgElement}{52.1.7}{X7DC8A5D380AFE5DB}
+\makelabel{ref:quotient of free semigroup}{52.2.1}{X7D3B9E317DD5AC8A}
+\makelabel{ref:FactorFreeSemigroupByRelations}{52.2.2}{X822F04B2833BE254}
+\makelabel{ref:IsomorphismFpSemigroup}{52.2.3}{X869F966B8196F28C}
+\makelabel{ref:comparison fp semigroup elements}{52.3.1}{X7DD9D81F863EBE31}
+\makelabel{ref:UnderlyingElement (fp semigroup elements)}{52.4.1}{X818E25C887512E89}
+\makelabel{ref:ElementOfFpSemigroup}{52.4.2}{X847012347856C55E}
+\makelabel{ref:FreeSemigroupOfFpSemigroup}{52.4.3}{X8726523779601873}
+\makelabel{ref:FreeGeneratorsOfFpSemigroup}{52.4.4}{X79A39402806B5EB7}
+\makelabel{ref:RelationsOfFpSemigroup}{52.4.5}{X862BE9FA7C987CAB}
+\makelabel{ref:quotient of free monoid}{52.5.1}{X82B5E4A27AAB6749}
+\makelabel{ref:ReducedConfluentRewritingSystem}{52.6.1}{X7D8F804E814D894D}
+\makelabel{ref:KBREW}{52.6.2}{X7A3F8AE285C41D80}
+\makelabel{ref:GAPKBREW}{52.6.2}{X7A3F8AE285C41D80}
+\makelabel{ref:KnuthBendixRewritingSystem (for a semigroup and a reduction ordering)}{52.6.3}{X87A3823483E4FF86}
+\makelabel{ref:KnuthBendixRewritingSystem (for a monoid and a reduction ordering)}{52.6.3}{X87A3823483E4FF86}
+\makelabel{ref:SemigroupOfRewritingSystem}{52.6.4}{X7966343587A04AFF}
+\makelabel{ref:MonoidOfRewritingSystem}{52.6.5}{X7EAB3E067D7557F6}
+\makelabel{ref:FreeSemigroupOfRewritingSystem}{52.6.6}{X80B8115C8147F605}
+\makelabel{ref:FreeMonoidOfRewritingSystem}{52.6.7}{X84CE48BE7F870808}
+\makelabel{ref:CosetTableOfFpSemigroup}{52.7.1}{X7C24508A7F677520}
+\makelabel{ref:IsTransformation}{53.1.1}{X7B6259467974FB70}
+\makelabel{ref:IsTransformationCollection}{53.1.2}{X7A6747CE85F2E6EA}
+\makelabel{ref:TransformationFamily}{53.1.3}{X7E58AFA1832FF064}
+\makelabel{ref:Transformation (for an image list)}{53.2.1}{X86ADBDE57A20E323}
+\makelabel{ref:Transformation (for a list and function)}{53.2.1}{X86ADBDE57A20E323}
+\makelabel{ref:TransformationList (for an image list)}{53.2.1}{X86ADBDE57A20E323}
+\makelabel{ref:Transformation (for a source and destination)}{53.2.2}{X8040642687531E7F}
+\makelabel{ref:TransformationListList (for a source and destination)}{53.2.2}{X8040642687531E7F}
+\makelabel{ref:TransformationByImageAndKernel (for an image and kernel)}{53.2.3}{X7E82EBD68455EE4A}
+\makelabel{ref:Idempotent}{53.2.4}{X85D1071484CE004C}
+\makelabel{ref:TransformationOp}{53.2.5}{X7C2A3FC9782F2099}
+\makelabel{ref:TransformationOpNC}{53.2.5}{X7C2A3FC9782F2099}
+\makelabel{ref:TransformationNumber}{53.2.6}{X7D6FCC417DE86CD1}
+\makelabel{ref:NumberTransformation}{53.2.6}{X7D6FCC417DE86CD1}
+\makelabel{ref:RandomTransformation}{53.2.7}{X8475448F87E8CB8A}
+\makelabel{ref:IdentityTransformation}{53.2.8}{X8268A58685BEFD6F}
+\makelabel{ref:ConstantTransformation}{53.2.9}{X7F1E4B5184210D2B}
+\makelabel{ref:AsTransformation}{53.3.1}{X7C5360B2799943F3}
+\makelabel{ref:RestrictedTransformation}{53.3.2}{X846A6F6B7B715188}
+\makelabel{ref:RestrictedTransformationNC}{53.3.2}{X846A6F6B7B715188}
+\makelabel{ref:PermutationOfImage}{53.3.3}{X8708AE247F5B129B}
+\makelabel{ref:LQUO for a permutation and transformation}{53.4}{X812CEC008609A8A2}
+\makelabel{ref:smaller for transformations}{53.4}{X812CEC008609A8A2}
+\makelabel{ref:equality for transformations}{53.4}{X812CEC008609A8A2}
+\makelabel{ref:PermLeftQuoTransformation}{53.4.1}{X83DBA2A18719EFA8}
+\makelabel{ref:PermLeftQuoTransformationNC}{53.4.1}{X83DBA2A18719EFA8}
+\makelabel{ref:IsInjectiveListTrans}{53.4.2}{X8275DFAA8270BB59}
+\makelabel{ref:ComponentTransformationInt}{53.4.3}{X834A313B7DAF06D5}
+\makelabel{ref:PreImagesOfTransformation}{53.4.4}{X82F5DEEC837B60A3}
+\makelabel{ref:DegreeOfTransformation}{53.5.1}{X78A209C87CF0E32B}
+\makelabel{ref:DegreeOfTransformationCollection}{53.5.1}{X78A209C87CF0E32B}
+\makelabel{ref:ImageListOfTransformation}{53.5.2}{X7AEC9E6687B3505A}
+\makelabel{ref:ListTransformation}{53.5.2}{X7AEC9E6687B3505A}
+\makelabel{ref:ImageSetOfTransformation}{53.5.3}{X839A6D6082A21D1F}
+\makelabel{ref:RankOfTransformation (for a transformation and a positive integer)}{53.5.4}{X818EBB167C7EA37B}
+\makelabel{ref:RankOfTransformation (for a transformation and a list)}{53.5.4}{X818EBB167C7EA37B}
+\makelabel{ref:MovedPoints (for a transformation)}{53.5.5}{X844F00F982D5BD3C}
+\makelabel{ref:MovedPoints (for a transformation coll)}{53.5.5}{X844F00F982D5BD3C}
+\makelabel{ref:NrMovedPoints (for a transformation)}{53.5.6}{X7FA6A4B57FDA003D}
+\makelabel{ref:NrMovedPoints (for a transformation coll)}{53.5.6}{X7FA6A4B57FDA003D}
+\makelabel{ref:SmallestMovedPoint (for a transformation)}{53.5.7}{X86C0DDDC7881273A}
+\makelabel{ref:SmallestMovedPoint (for a transformation coll)}{53.5.7}{X86C0DDDC7881273A}
+\makelabel{ref:LargestMovedPoint (for a transformation)}{53.5.8}{X8383A7727AC97724}
+\makelabel{ref:LargestMovedPoint (for a transformation coll)}{53.5.8}{X8383A7727AC97724}
+\makelabel{ref:SmallestImageOfMovedPoint (for a transformation)}{53.5.9}{X7CCFE27E83676572}
+\makelabel{ref:SmallestImageOfMovedPoint (for a transformation coll)}{53.5.9}{X7CCFE27E83676572}
+\makelabel{ref:LargestImageOfMovedPoint (for a transformation)}{53.5.10}{X7E7172567C3A3E63}
+\makelabel{ref:LargestImageOfMovedPoint (for a transformation coll)}{53.5.10}{X7E7172567C3A3E63}
+\makelabel{ref:FlatKernelOfTransformation}{53.5.11}{X8083794579274E87}
+\makelabel{ref:KernelOfTransformation}{53.5.12}{X80FCB5048789CF75}
+\makelabel{ref:InverseOfTransformation}{53.5.13}{X860306EB7FAAD2D4}
+\makelabel{ref:Inverse (for a transformation)}{53.5.14}{X7BB9DB6E8558356D}
+\makelabel{ref:IndexPeriodOfTransformation}{53.5.15}{X863216CB7AF88BED}
+\makelabel{ref:SmallestIdempotentPower (for a transformation)}{53.5.16}{X85FE9F20810BCC70}
+\makelabel{ref:ComponentsOfTransformation}{53.5.17}{X858E944481F6B591}
+\makelabel{ref:NrComponentsOfTransformation}{53.5.18}{X8640AE1C79201470}
+\makelabel{ref:ComponentRepsOfTransformation}{53.5.19}{X784650B583CEAF7D}
+\makelabel{ref:CyclesOfTransformation}{53.5.20}{X7EAA15557D55D93B}
+\makelabel{ref:CycleTransformationInt}{53.5.21}{X786EB02A829260DB}
+\makelabel{ref:LeftOne (for a transformation)}{53.5.22}{X845869E0815A6AA6}
+\makelabel{ref:RightOne (for a transformation)}{53.5.22}{X845869E0815A6AA6}
+\makelabel{ref:TrimTransformation}{53.5.23}{X7F19C9C77F9F8981}
+\makelabel{ref:IsTransformationSemigroup}{53.7.1}{X7EAF835D7FE4026F}
+\makelabel{ref:IsTransformationMonoid}{53.7.1}{X7EAF835D7FE4026F}
+\makelabel{ref:DegreeOfTransformationSemigroup}{53.7.2}{X7EA699C687952544}
+\makelabel{ref:FullTransformationSemigroup}{53.7.3}{X7D2B0685815B4053}
+\makelabel{ref:FullTransformationMonoid}{53.7.3}{X7D2B0685815B4053}
+\makelabel{ref:IsFullTransformationSemigroup}{53.7.4}{X85C58E1E818C838C}
+\makelabel{ref:IsFullTransformationMonoid}{53.7.4}{X85C58E1E818C838C}
+\makelabel{ref:IsomorphismTransformationSemigroup}{53.7.5}{X78F29C817CF6827F}
+\makelabel{ref:IsomorphismTransformationMonoid}{53.7.5}{X78F29C817CF6827F}
+\makelabel{ref:AntiIsomorphismTransformationSemigroup}{53.7.6}{X820ECE00846E480F}
+\makelabel{ref:IsPartialPerm}{54.1.1}{X7EECE133792B30FC}
+\makelabel{ref:IsPartialPermCollection}{54.1.2}{X8262A827790DD1CC}
+\makelabel{ref:PartialPermFamily}{54.1.3}{X7E63D17780F64FBA}
+\makelabel{ref:PartialPerm (for a domain and image)}{54.2.1}{X8538BAE77F2FB2F8}
+\makelabel{ref:PartialPerm (for a dense image)}{54.2.1}{X8538BAE77F2FB2F8}
+\makelabel{ref:PartialPermOp}{54.2.2}{X81188D9F83F64222}
+\makelabel{ref:PartialPermOpNC}{54.2.2}{X81188D9F83F64222}
+\makelabel{ref:RestrictedPartialPerm}{54.2.3}{X80ABBF4883C79060}
+\makelabel{ref:JoinOfPartialPerms}{54.2.4}{X849668DD7B0B9E3B}
+\makelabel{ref:JoinOfIdempotentPartialPermsNC}{54.2.4}{X849668DD7B0B9E3B}
+\makelabel{ref:MeetOfPartialPerms}{54.2.5}{X81E2B6977E28CD00}
+\makelabel{ref:EmptyPartialPerm}{54.2.6}{X80EFB142817A0A9F}
+\makelabel{ref:RandomPartialPerm (for a positive integer)}{54.2.7}{X7E6ADC8583C31530}
+\makelabel{ref:RandomPartialPerm (for a set of positive
+      integers)}{54.2.7}{X7E6ADC8583C31530}
+\makelabel{ref:RandomPartialPerm (for domain and image)}{54.2.7}{X7E6ADC8583C31530}
+\makelabel{ref:DegreeOfPartialPerm}{54.3.1}{X8612A4DC864E7959}
+\makelabel{ref:DegreeOfPartialPermCollection}{54.3.1}{X8612A4DC864E7959}
+\makelabel{ref:CodegreeOfPartialPerm}{54.3.2}{X8413D0EF7DEE1FFF}
+\makelabel{ref:CodegreeOfPartialPermCollection}{54.3.2}{X8413D0EF7DEE1FFF}
+\makelabel{ref:RankOfPartialPerm}{54.3.3}{X7C1ABD8A80E95B39}
+\makelabel{ref:RankOfPartialPermCollection}{54.3.3}{X7C1ABD8A80E95B39}
+\makelabel{ref:DomainOfPartialPerm}{54.3.4}{X784A14F787E041D7}
+\makelabel{ref:DomainOfPartialPermCollection}{54.3.4}{X784A14F787E041D7}
+\makelabel{ref:ImageOfPartialPermCollection}{54.3.5}{X7CD84B107831E0FC}
+\makelabel{ref:ImageListOfPartialPerm}{54.3.6}{X8333293F87F654FA}
+\makelabel{ref:ImageSetOfPartialPerm}{54.3.7}{X7F0724A07A14DCF7}
+\makelabel{ref:FixedPointsOfPartialPerm (for a partial perm)}{54.3.8}{X82AAFF938623422E}
+\makelabel{ref:FixedPointsOfPartialPerm (for a partial perm coll)}{54.3.8}{X82AAFF938623422E}
+\makelabel{ref:MovedPoints (for a partial perm)}{54.3.9}{X82FE981A87FAA2DC}
+\makelabel{ref:MovedPoints (for a partial perm coll)}{54.3.9}{X82FE981A87FAA2DC}
+\makelabel{ref:NrFixedPoints (for a partial perm)}{54.3.10}{X7FAF969C84CDC742}
+\makelabel{ref:NrFixedPoints (for a partial perm coll)}{54.3.10}{X7FAF969C84CDC742}
+\makelabel{ref:NrMovedPoints (for a partial perm)}{54.3.11}{X81F5C64E7DAD27A7}
+\makelabel{ref:NrMovedPoints (for a partial perm coll)}{54.3.11}{X81F5C64E7DAD27A7}
+\makelabel{ref:SmallestMovedPoint (for a partial perm)}{54.3.12}{X84A49C977E1E29AA}
+\makelabel{ref:SmallestMovedPoint (for a partial perm coll)}{54.3.12}{X84A49C977E1E29AA}
+\makelabel{ref:LargestMovedPoint (for a partial perm)}{54.3.13}{X7D4290A785ABC86D}
+\makelabel{ref:LargestMovedPoint (for a partial perm coll)}{54.3.13}{X7D4290A785ABC86D}
+\makelabel{ref:SmallestImageOfMovedPoint (for a partial permutation)}{54.3.14}{X85280F1A7B1014BA}
+\makelabel{ref:SmallestImageOfMovedPoint (for a partial permutation coll)}{54.3.14}{X85280F1A7B1014BA}
+\makelabel{ref:LargestImageOfMovedPoint (for a partial permutation)}{54.3.15}{X7A95CD437BC1CB1A}
+\makelabel{ref:LargestImageOfMovedPoint (for a partial permutation coll)}{54.3.15}{X7A95CD437BC1CB1A}
+\makelabel{ref:IndexPeriodOfPartialPerm}{54.3.16}{X873A9F717DA75CBC}
+\makelabel{ref:SmallestIdempotentPower (for a partial perm)}{54.3.17}{X7C04AA377F080722}
+\makelabel{ref:ComponentsOfPartialPerm}{54.3.18}{X8185065E788BDD0D}
+\makelabel{ref:NrComponentsOfPartialPerm}{54.3.19}{X7CB51EB67FFA95E9}
+\makelabel{ref:ComponentRepsOfPartialPerm}{54.3.20}{X7AAAAE4082B30E18}
+\makelabel{ref:LeftOne (for a partial perm)}{54.3.21}{X7A8FB86C78C49F85}
+\makelabel{ref:RightOne (for a partial perm)}{54.3.21}{X7A8FB86C78C49F85}
+\makelabel{ref:One (for a partial perm)}{54.3.22}{X857FC10C81507E8B}
+\makelabel{ref:Zero (for a partial perm)}{54.3.23}{X83B6AE4881C7253B}
+\makelabel{ref:AsPartialPerm (for a permutation and a set of
+    positive integers)}{54.4.1}{X81B32CB182489ACA}
+\makelabel{ref:AsPartialPerm (for a permutation)}{54.4.1}{X81B32CB182489ACA}
+\makelabel{ref:AsPartialPerm (for a permutation and a positive integer)}{54.4.1}{X81B32CB182489ACA}
+\makelabel{ref:AsPartialPerm (for a transformation and a
+      set of positive integer)}{54.4.2}{X87EC67747B260E98}
+\makelabel{ref:AsPartialPerm (for a transformation and a
+      positive integer)}{54.4.2}{X87EC67747B260E98}
+\makelabel{ref:AsPartialPerm (for a transformation)}{54.4.2}{X87EC67747B260E98}
+\makelabel{ref:LQUO for a permutation or partial permutation
+        and partial permutation}{54.5}{X848CD855802C6CE1}
+\makelabel{ref:PermLeftQuoPartialPerm}{54.5.1}{X8382A0F8875CEB08}
+\makelabel{ref:PermLeftQuoPartialPermNC}{54.5.1}{X8382A0F8875CEB08}
+\makelabel{ref:PreImagePartialPerm}{54.5.2}{X7C7F5EAB7E9A381D}
+\makelabel{ref:ComponentPartialPermInt}{54.5.3}{X797A6CC084068219}
+\makelabel{ref:NaturalLeqPartialPerm}{54.5.4}{X87B1ED93785257C1}
+\makelabel{ref:ShortLexLeqPartialPerm}{54.5.5}{X81BD69307D294A1C}
+\makelabel{ref:TrimPartialPerm}{54.5.6}{X83560BE678ACF855}
+\makelabel{ref:IsPartialPermSemigroup}{54.7.1}{X7D161674800B50E0}
+\makelabel{ref:IsPartialPermMonoid}{54.7.1}{X7D161674800B50E0}
+\makelabel{ref:DegreeOfPartialPermSemigroup}{54.7.2}{X7D7F0BAB82F0D820}
+\makelabel{ref:CodegreeOfPartialPermSemigroup}{54.7.2}{X7D7F0BAB82F0D820}
+\makelabel{ref:RankOfPartialPermSemigroup}{54.7.2}{X7D7F0BAB82F0D820}
+\makelabel{ref:SymmetricInverseSemigroup}{54.7.3}{X81D271B380995F8A}
+\makelabel{ref:SymmetricInverseMonoid}{54.7.3}{X81D271B380995F8A}
+\makelabel{ref:IsSymmetricInverseSemigroup}{54.7.4}{X7C8AEA50834060DD}
+\makelabel{ref:IsSymmetricInverseMonoid}{54.7.4}{X7C8AEA50834060DD}
+\makelabel{ref:NaturalPartialOrder}{54.7.5}{X7EA51F087CF7621F}
+\makelabel{ref:ReverseNaturalPartialOrder}{54.7.5}{X7EA51F087CF7621F}
+\makelabel{ref:IsomorphismPartialPermMonoid}{54.7.6}{X857F68DF7EDA3BE4}
+\makelabel{ref:IsomorphismPartialPermSemigroup}{54.7.6}{X857F68DF7EDA3BE4}
 \makelabel{ref:IsNearAdditiveMagma}{55.1.1}{X8129E95D83227658}
 \makelabel{ref:IsNearAdditiveMagmaWithZero}{55.1.2}{X7DADE4577D0A7208}
 \makelabel{ref:IsNearAdditiveGroup}{55.1.3}{X7FC3A9C178185942}
@@ -5054,7 +5214,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsRelativelySM (for a character)}{75.4.6}{X83EF7B8D7C1C2CA3}
 \makelabel{ref:IsMinimalNonmonomial}{75.5.1}{X7D7E2667821A23CD}
 \makelabel{ref:MinimalNonmonomialGroup}{75.5.2}{X7B416BBD80072079}
-\makelabel{ref:package}{76}{X816DC7C580D41F49}
+\makelabel{ref:package}{76}{X7B6CD527825945CD}
 \makelabel{ref:automatic loading of GAP packages}{76.2}{X825CBC5B86F8F811}
 \makelabel{ref:disable automatic loading}{76.2}{X825CBC5B86F8F811}
 \makelabel{ref:LoadPackage}{76.2.1}{X79B373A77B29D1F5}
@@ -5084,6 +5244,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ShowPackageVariables}{76.3.13}{X7D34AC3287611B15}
 \makelabel{ref:PackageVariablesInfo}{76.3.13}{X7D34AC3287611B15}
 \makelabel{ref:BibEntry}{76.3.14}{X79EA4BD37940AD25}
+\makelabel{ref:Cite}{76.3.15}{X79637D9A7B1AD7F7}
 \makelabel{ref:obsolete}{77}{X78C85ED17F00DCC1}
 \makelabel{ref:deprecated}{77}{X78C85ED17F00DCC1}
 \makelabel{ref:legacy}{77}{X78C85ED17F00DCC1}
@@ -5107,6 +5268,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NormedVectors}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MutableIdentityMat}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MutableNullMat}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:InfoObsolete}{77.4.1}{X87348614848EAD64}
 \makelabel{ref:operation}{78}{X8058CC8187162644}
 \makelabel{ref:method}{78}{X8058CC8187162644}
 \makelabel{ref:InstallMethod}{78.2.1}{X837EFDAB7BEF290B}

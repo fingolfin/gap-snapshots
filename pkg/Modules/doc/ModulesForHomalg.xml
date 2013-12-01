@@ -18,6 +18,7 @@
 	  <!ENTITY MatricesForHomalg "<Package>MatricesForHomalg</Package>">
 	  <!ENTITY homalg "<Package>homalg</Package>">
 	  <!ENTITY Modules "<Package>Modules</Package>">
+	  <!ENTITY GradedModules "<Package>GradedModules</Package>">
 	  <!ENTITY ResidueClassRingForHomalg "<Package>ResidueClassRingForHomalg</Package>">
 	  <!ENTITY LIRNG "<Package>LIRNG</Package>">
 	  <!ENTITY LIMAP "<Package>LIMAP</Package>">
@@ -73,6 +74,7 @@
 <#Include SYSTEM "Maps.xml">
 <#Include SYSTEM "ModuleElements.xml">
 <#Include SYSTEM "Functors.xml">
+<#Include SYSTEM "SymmetricAlgebra.xml">
 <#Include SYSTEM "ExteriorAlgebra.xml">
 <#Include SYSTEM "examples.xml">
 </Body>

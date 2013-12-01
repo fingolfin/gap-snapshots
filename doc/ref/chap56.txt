@@ -950,7 +950,7 @@
   
   [33X[0;0Y[3XR[103X   must  be  a  Euclidean  ring  (see  [2XIsEuclideanRing[102X  ([14X56.6-1[114X))  so  that
   [2XEuclideanRemainder[102X ([14X56.6-4[114X) can be applied. If the modular quotient does not
-  exist, [9Xfail[109X is returned.[133X
+  exist (i.e. when [3Xs[103X and [3Xm[103X are not coprime), [9Xfail[109X is returned.[133X
   
   [33X[0;0YThe  quotient  [22Xq[122X  of  [3Xr[103X  and [3Xs[103X modulo [3Xm[103X is an element of [3XR[103X such that [22Xq [3Xs[103X = [3Xr[103X[122X
   modulo  [22Xm[122X,  i.e.,  such  that  [22Xq  [3Xs[103X - [3Xr[103X[122X is divisible by [3Xm[103X in [3XR[103X and that [22Xq[122X is

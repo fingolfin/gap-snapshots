@@ -31,7 +31,7 @@ Subtitle := "A window to the outer world",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "2013.02.22",
+Version := "2013.08.07",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -124,6 +124,22 @@ ArchiveFormats := ".tar.gz",
 ##  
 Persons := [
   rec(
+    LastName      := "Bächler",
+    FirstNames    := "Thomas",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "thomas@momo.math.rwth-aachen.de",
+    WWWHome       := "http://wwwb.math.rwth-aachen.de/~thomas/",
+    PostalAddress := Concatenation( [
+                       "Thomas Bächler\n",
+                       "Lehrstuhl B fuer Mathematik, RWTH Aachen\n",
+                       "Templergraben 64\n",
+                       "52062 Aachen\n",
+                       "Germany" ] ),
+    Place         := "Aachen",
+    Institution   := "RWTH Aachen University"
+  ),
+  rec(
     LastName      := "Barakat",
     FirstNames    := "Mohamed",
     IsAuthor      := true,
@@ -201,6 +217,22 @@ Persons := [
                        "Germany" ] ),
     Place         := "Aachen",
     Institution   := "RWTH Aachen University"
+  ),
+  rec(
+    LastName      := "Wagh",
+    FirstNames    := "Vinay",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waghoba@gmail.com",
+    WWWHome       := "http://www.iitg.ernet.in/vinay.wagh/",
+    PostalAddress := Concatenation( [
+                       "E-102, Department of Mathematics,\n",
+                       "Indian Institute of Technology Guwahati,\n",
+                       "Guwahati, Assam, India.\n",
+                       "PIN: 781 039.\n",
+                       "India" ] ),
+    Place         := "Guwahati",
+    Institution   := "Indian Institute of Technology Guwahati"
   ),
 # provide such a record for each author and/or maintainer ...
   
@@ -314,7 +346,11 @@ Dependencies := rec(
   # list of pairs [package name, (least) version],  package name is case
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
-  NeededOtherPackages := [ [ "IO", ">= 2.3" ], [ "MatricesForHomalg", ">= 2011.09.04" ], [ "GAPDoc", ">= 1.0" ] ],
+  NeededOtherPackages := [
+                [ "IO", ">= 2.3" ],
+                [ "MatricesForHomalg", ">= 2011.09.04" ],
+                [ "GAPDoc", ">= 1.0" ]
+                ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [ ],

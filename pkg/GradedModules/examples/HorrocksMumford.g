@@ -18,14 +18,15 @@
 ##  gap> IsMorphism( phi );
 ##  true
 ##  gap> M := GuessModuleOfGlobalSectionsFromATateMap( 2, phi );
-##  #I  GuessModuleOfGlobalSectionsFromATateMap uses unproven assumptions.
-##   Do not trust the result.
+##  #I  GuessModuleOfGlobalSectionsFromATateMap uses a heuristic for efficiency;
+##  please check the correctness of the following result
+##  
 ##  <A graded left module presented by yet unknown relations for 19 generators>
 ##  gap> IsPure( M );
 ##  true
 ##  gap> Rank( M );
 ##  2 
-##  gap> Display( BettiDiagram( Resolution( M ) ) );
+##  gap> Display( BettiTable( Resolution( M ) ) );
 ##   total:  19 35 20  2
 ##  --------------------
 ##       3:   4  .  .  .
@@ -33,18 +34,18 @@
 ##       5:   .  .  .  2
 ##  --------------------
 ##  degree:   0  1  2  3
-##  gap> Display( BettiDiagram( TateResolution( M, -4, 6 ) ) );
-##  total:   37  14  10   5   2   5  10  14  37 100 210   ?   ?   ?   ?
+##  gap> Display( BettiTable( TateResolution( M, -5, 5 ) ) );
+##  total:  100  37  14  10   5   2   5  10  14  37 100   ?   ?   ?   ?
 ##  ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-##      4:   35   4   .   .   .   .   .   .   .   .   .   0   0   0   0
-##      3:    *   2  10  10   5   .   .   .   .   .   .   .   0   0   0
-##      2:    *   *   .   .   .   .   2   .   .   .   .   .   .   0   0
-##      1:    *   *   *   .   .   .   .   .   5  10  10   2   .   .   0
-##      0:    *   *   *   *   .   .   .   .   .   .   .   4  35 100 210
-##  ----------|---|---|---|---|---|---|---|---|---|---|---|---|---S---|
-##  twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
+##      4:  100  35   4   .   .   .   .   .   .   .   .   0   0   0   0
+##      3:    *   .   2  10  10   5   .   .   .   .   .   .   0   0   0
+##      2:    *   *   .   .   .   .   .   2   .   .   .   .   .   0   0
+##      1:    *   *   *   .   .   .   .   .   .   5  10  10   2   .   0
+##      0:    *   *   *   *   .   .   .   .   .   .   .   .   4  35 100
+##  ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---S
+##  twist:   -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5
 ##  -------------------------------------------------------------------
-##  Euler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210
+##  Euler:  100  35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100
 ##  gap> M;
 ##  <A graded reflexive non-projective rank 2 left module presented by 94 \
 ##  relations for 19 generators>
@@ -106,9 +107,9 @@ IsPure( M );
 
 Rank( M );
 
-Display( BettiDiagram( Resolution( M ) ) );
+Display( BettiTable( Resolution( M ) ) );
 
-CT := BettiDiagram( TateResolution( M, -4, 6 ) );
+CT := BettiTable( TateResolution( M, -4, 6 ) );
 
 Display( CT );
 

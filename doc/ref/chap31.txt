@@ -271,7 +271,7 @@
   
   [33X[0;0YAs  mentioned  in [14X31.1[114X,  the operational structure of a domain is fixed when
   the  domain  is  constructed.  For  example,  if [3XD[103X was constructed by [2XMonoid[102X
-  ([14X52.1-2[114X)  then  [3XD[103X is in general not regarded as a group in [5XGAP[105X, even if [3XD[103X is
+  ([14X51.2-2[114X)  then  [3XD[103X is in general not regarded as a group in [5XGAP[105X, even if [3XD[103X is
   in fact closed under taking inverses. In this case, [2XIsGroup[102X ([14X39.2-7[114X) returns
   [9Xfalse[109X  for  [3XD[103X.  The  operational  structure  determines which operations are
   applicable  for  a  domain,  so  for  example [2XSylowSubgroup[102X ([14X39.13-1[114X) is not
@@ -612,14 +612,25 @@
   [1X31.10-4 MultiplicativeZeroOp[101X
   
   [29X[2XMultiplicativeZeroOp[102X( [3Xelt[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA multiplicative zero element.[133X
   
   [33X[0;0Yfor   an   element   [3Xelt[103X  in  the  category  [2XIsMultiplicativeElementWithZero[102X
-  ([14X31.14-12[114X),  returns  the element [22Xz[122X in the family [22XF[122X of [3Xelt[103X with the property
-  that [22Xz * m = z = m * z[122X holds for all [22Xm ∈ F[122X, if such an element is known.[133X
+  ([14X31.14-12[114X),  [10XMultiplicativeZeroOp[110X  returns  the element [22Xz[122X in the family [22XF[122X of
+  [3Xelt[103X with the property that [22Xz * m = z = m * z[122X holds for all [22Xm ∈ F[122X, if such an
+  element can be determined.[133X
   
   [33X[0;0YFamilies   of   elements  in  the  category  [2XIsMultiplicativeElementWithZero[102X
   ([14X31.14-12[114X)  often  arise  from  adjoining  a  new zero to an existing magma.
-  See [2XInjectionZeroMagma[102X ([14X35.2-12[114X) for details.[133X
+  See [2XInjectionZeroMagma[102X  ([14X35.2-13[114X)  or  [2XMagmaWithZeroAdjoined[102X  ([14X35.2-13[114X)  for
+  details.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG:=AlternatingGroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:=Representative(MagmaWithZeroAdjoined(G));[127X[104X
+    [4X[28X<group with 0 adjoined elt: ()>[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZeroOp(x);[127X[104X
+    [4X[28X<group with 0 adjoined elt: 0>[128X[104X
+  [4X[32X[104X
   
   [1X31.10-5 IsOne[101X
   
@@ -1117,9 +1128,23 @@
   [1X31.14-12 IsMultiplicativeElementWithZero[101X
   
   [29X[2XIsMultiplicativeElementWithZero[102X( [3Xelt[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YElements  in  a  family which can be the operands of the [10X*[110X and the operation
-  MultiplicativeZero.[133X
+  [33X[0;0YThis  is the category of elements in a family which can be the operands of [10X*[110X
+  (multiplication) and the operation [2XMultiplicativeZero[102X ([14X35.4-11[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 1, 1 ] ));;[127X[104X
+    [4X[25Xgap>[125X [27XM:=MagmaWithZeroAdjoined(S);[127X[104X
+    [4X[28X<<commutative transformation semigroup on 3 pts with 1 generator>[128X[104X
+    [4X[28Xwith 0 adjoined>[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Representative(M);[127X[104X
+    [4X[28X<semigroup with 0 adjoined elt: Transformation( [ 1, 1, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XIsMultiplicativeElementWithZero(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZeroOp(x);[127X[104X
+    [4X[28X<semigroup with 0 adjoined elt: 0>[128X[104X
+  [4X[32X[104X
   
   [1X31.14-13 IsMultiplicativeElementWithInverse[101X
   

@@ -464,9 +464,9 @@ c:= [ NCurses.keys.ENTER ];;  n:= [ 14, 14, 14 ];;  # ``do nothing''\n\
 BrowseData.SetReplay( Concatenation(\n\
   \"/A5\",     # Find the string A5\n\
   d, d, r, c, c, n,  # s. t. just the word matches, enter, click on A5,\n\
-  d, c, n,  # move down, click on this row (return to the first table),\n\
-  d, d, c, c, n, n, # move down twice, click on A6, click on the first row\n\
-  \"Q\" ) );        # and quit\n\
+  d, c, \"Q\",  # move down, click on this row, return to the first table,\n\
+  d, d, c, d, c, n, # move down twice, click on A6, click on the first row\n\
+  \"Q\", \"Q\" ) );     # and quit the two nested tables\n\
 ",
 "tworeps:= BrowseAtlasInfo();;\n\
 BrowseData.SetReplay( false );\n\
@@ -519,7 +519,6 @@ cleanup:= "BrowseData.SetReplay( false );\n\
 ##
 ##  gapbibl.g
 ##
-if IsPackageMarkedForLoading( "gapdoc", "1.0" ) then
 Add( NCurses.DemoDefaults,
 rec( title:= "The GAP Bibliography (non-interactive)",
 inputblocks:= [
@@ -551,7 +550,6 @@ footer:= "(enter 'Q' for interrupting)",
 cleanup:= "BrowseData.SetReplay( false );\n\
 ",
 ) );
-fi;
 
 
 #############################################################################

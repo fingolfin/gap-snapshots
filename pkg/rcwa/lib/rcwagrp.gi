@@ -71,6 +71,52 @@ InstallMethod( IsWholeFamily,
 
 #############################################################################
 ##
+#S  Conversion of rcwa groups between standard and sparse representation. ///
+##
+#############################################################################
+
+#############################################################################
+##
+#M  SparseRepresentation( <G> )
+##
+InstallMethod( SparseRepresentation,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  G_sparse;
+
+    G_sparse := GroupByGenerators(List(GeneratorsOfGroup(G),SparseRep));
+    if HasIsTame(G) then SetIsTame(G_sparse,IsTame(G)); fi;
+    if   HasModulusOfRcwaMonoid(G)
+    then SetModulusOfRcwaMonoid(G_sparse,ModulusOfRcwaMonoid(G)); fi;
+    if HasSize(G) then SetSize(G_sparse,Size(G)); fi;
+    return G_sparse;
+  end );
+
+#############################################################################
+##
+#M  StandardRepresentation( <G> )
+##
+InstallMethod( StandardRepresentation,
+               "for rcwa groups over Z (RCWA)",
+               true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  G_standard;
+
+    G_standard := GroupByGenerators(List(GeneratorsOfGroup(G),StandardRep));
+    if HasIsTame(G) then SetIsTame(G_standard,IsTame(G)); fi;
+    if   HasModulusOfRcwaMonoid(G)
+    then SetModulusOfRcwaMonoid(G_standard,ModulusOfRcwaMonoid(G)); fi;
+    if HasSize(G) then SetSize(G_standard,Size(G)); fi;
+    return G_standard;
+  end );
+
+#############################################################################
+##
 #S  Methods for `View', `Print', `Display' etc. /////////////////////////////
 ##
 #############################################################################
@@ -1421,7 +1467,7 @@ InstallMethod( RepresentativeActionOp,
 
 #############################################################################
 ##
-#S  Conjugacy in RCWA(R) and CT(R). /////////////////////////////////////////
+#S  Conjugacy of elements in RCWA(R) and CT(R). /////////////////////////////
 ##
 #############################################################################
 
@@ -1678,6 +1724,95 @@ InstallGlobalFunction( NrConjugacyClassesOfCTZOfOrder,
                             "stabilizer of N_0 in RCWA(Z).");
          return Length(Filtered(Combinations(DivisorsInt(ord)),
                                 l -> l <> [] and Lcm(l) = ord));
+    fi;
+  end );
+
+#############################################################################
+##
+#S  Conjugacy of subgroups in RCWA(R) and CT(R). ////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  RepresentativeActionOp( RCWA(Integers), <G>, <H>, <act> )
+##
+InstallMethod( RepresentativeActionOp,
+               "for RCWA(Z) and two rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsNaturalRCWA_Z, IsRcwaGroupOverZ, IsRcwaGroupOverZ,
+                 IsFunction ], 0,
+
+  function ( RCWA_Z, G, H, act )
+
+    local  PG, PH, Gp, Hp, suppG, suppH, fixG, fixH, d, i, j, m, g, perm,
+           dontdelegate;
+
+    if act <> OnPoints then TryNextMethod(); fi;   
+    if   (Density(Support(G))  = 1 and Density(Support(H)) <> 1)
+      or (Density(Support(G)) <> 1 and Density(Support(H))  = 1)
+    then return fail; fi;
+    if IsTame(G) <> IsTame(H) or Size(G) <> Size(H) then return fail; fi;
+
+    dontdelegate := ValueOption("dontdelegate") = true;
+
+    if IsTame(G) then
+      PG := RespectedPartition(G);
+      PH := RespectedPartition(H);
+      if IsIntegers(Support(G)) and Length(PG) <> Length(PH) then
+        if dontdelegate then
+          return "gave up: supp(G) = supp(H) = Z and |P_G| <> |P_H|";
+        fi;
+        TryNextMethod();
+      fi;
+      suppG := Filtered(PG,cl->IsSubset(Support(G),cl));
+      suppH := Filtered(PH,cl->IsSubset(Support(H),cl));
+      if Length(suppG) <> Length(suppH) then
+        if dontdelegate then
+          return "gave up: #classes in supp(G) and supp(H) are distinct";
+        fi;
+        TryNextMethod();
+      fi;
+      d := Length(PG) - Length(PH);
+      if d < 0 then
+        fixG := Difference(PG,suppG);
+        for i in [1..-d] do
+          m := Minimum(List(fixG,Mod));
+          j := First([1..Length(fixG)],j->Mod(fixG[j])=m);
+          fixG[j] := SplittedClass(fixG[j],2);
+          fixG := Set(Flat(fixG)); 
+        od;
+        PG := Concatenation(suppG,fixG);
+      elif d > 0 then
+        fixH := Difference(PH,suppH);
+        for i in [1..d] do
+          m := Minimum(List(fixH,Mod));
+          j := First([1..Length(fixH)],j->Mod(fixH[j])=m);
+          fixH[j] := SplittedClass(fixH[j],2);
+          fixH := Set(Flat(fixH)); 
+        od;
+        PH := Concatenation(suppH,fixH);
+      fi;
+      Gp := Action(G,PG);
+      Hp := Action(H,PH);
+      perm := RepresentativeAction(SymmetricGroup(Length(PG)),
+                                   Gp,Hp,OnPoints);
+      if perm = fail then
+        if dontdelegate then
+          return "gave up: actions of G on P_G and H on P_H not conjugate";
+        fi;
+        TryNextMethod();
+      fi;
+      g := RcwaMapping(PG,Permuted(PH,perm^-1));
+      if IsSignPreserving(G) and IsSignPreserving(H) then return g; fi;
+      if G^g = H then return g; else
+        if dontdelegate then
+          return "gave up: conjugation test failed: G^g <> H";
+        fi;
+        TryNextMethod();
+      fi;
+    else
+      if dontdelegate then return "gave up: both groups are wild"; fi;
+      TryNextMethod();
     fi;
   end );
 
@@ -2204,6 +2339,30 @@ InstallMethod( Induction,
     if HasSize(G)   then SetSize(Gf,Size(G)); fi;
 
     return Gf;
+  end );
+
+#############################################################################
+##
+#S  The automorphism switching action on negative and nonnegative integers. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Mirrored( <G> ) . . . . . . . . . . . . . . . . .  for rcwa groups over Z
+##
+InstallOtherMethod( Mirrored,
+                    "for rcwa groups over Z (RCWA)",
+                    true, [ IsRcwaGroupOverZ ], 0,
+
+  function ( G )
+
+    local  img;
+
+    img := GroupByGenerators(List(GeneratorsOfGroup(G),Mirrored));
+    if HasIsTame(G) then SetIsTame(img,IsTame(G)); fi;
+    if HasSize(G)   then SetSize(img,Size(G)); fi;
+    return img;
   end );
 
 #############################################################################
@@ -2894,6 +3053,149 @@ InstallMethod( RespectedPartition,
 
 #############################################################################
 ##
+#M  RespectedPartition( <G> ) . . . . . . . . . for finite subgroups of CT(Z)
+##
+InstallMethod( RespectedPartition,
+               "for finite subgroups of CT(Z) (RCWA)", true,
+               [ IsRcwaGroupOverZ ], 5,
+
+  function ( G )
+
+    local  P, orbit, gens, coeffs, compute_moduli, moduli, modulibound,
+           primes, primes_multdiv, primes_onlymod, powers_impossible,
+           orb, orbitlengthbound, modulusbound, density, m, n, r, i, j, k;
+
+    compute_moduli := function (  )
+      moduli := AllSmoothIntegers(primes,modulibound);
+      moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    end;
+
+    orbit := function ( cl0 )
+
+      local  B, r, cl, img, inter, densitysum, c, i, j;
+
+      B := [[cl0]];
+      r := 0;
+      densitysum := 1/cl0[2];
+      repeat
+        r := r + 1;
+        Add(B,[]);
+        for i in [1..Length(B[r])] do
+          for j in [1..Length(coeffs)] do
+            cl := B[r][i];
+            inter := Filtered(coeffs[j],
+                              c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if    Length(inter) > 1
+              and Length(Set(List(inter,c->c{[3..5]}))) > 1
+            then return fail; fi;
+            c := inter[1];
+            img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+            img[1] := img[1] mod img[2];
+            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi;
+            if img <> cl0 and (img[1]-cl0[1]) mod Gcd(img[2],cl0[2]) = 0 then
+              Info(InfoRCWA,2,"RespectedPartition: loop detected for cl0 = ",
+                              cl0[1],"(",cl0[2],"), at r = ",r);
+              return "loop";
+            fi;
+            Add(B[r+1],img);
+          od;
+        od;
+        B[r+1] := Set(B[r+1]);
+        densitysum := densitysum + Sum(B[r+1],cl->1/cl[2]);
+        if densitysum > 1 then
+          Info(InfoRCWA,2,"RespectedPartition: density sum exceeded 1 ",
+                          "for cl0 = ",cl0[1],"(",cl0[2],"), at r = ",r);
+          return "loop";
+        fi;
+        if B[r+1] <> [] and Sum(List(B,Length)) > orbitlengthbound then
+          Info(InfoRCWA,2,"RespectedPartition: orbit length for ",
+                          "for cl0 = ",cl0[1],"(",cl0[2],") exceeded ",
+                          orbitlengthbound," at r = ",r);
+          return "abort";
+        fi;
+      until B[r+1] = [];
+      return Concatenation(B);
+    end;
+
+    if ValueOption("classic") = true then TryNextMethod(); fi;
+    orbitlengthbound := ValueOption("orbitlengthbound");
+    if orbitlengthbound = fail then orbitlengthbound := infinity; fi;
+    modulusbound := ValueOption("modulusbound");
+    if modulusbound = fail then modulusbound := infinity; fi;
+    if IsTrivial(G) then return [ Integers ]; fi;
+    if not IsSignPreserving(G) then TryNextMethod(); fi;
+    gens := Set(GeneratorsAndInverses(SparseRep(G)));
+    coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
+    for i in [1..Length(coeffs)] do
+      Sort(coeffs[i],function(c1,c2)
+                       return c1{[2,1]} < c2{[2,1]};
+                     end);
+    od;
+    primes := PrimeSet(G);
+    primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_multdiv := Difference(primes_multdiv,[1]);
+    primes_onlymod := Difference(primes,primes_multdiv);
+    m := Lcm(List(gens,Mod));
+    powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
+    modulibound := 2^16;
+    compute_moduli();
+    P := List(AsUnionOfFewClasses(Difference(Integers,Support(G))),
+              cl->[Residue(cl),Modulus(cl)]);
+    repeat
+      n := -1;
+      repeat
+        n := n + 1;
+      until ForAll(P,cl->n mod cl[2] <> cl[1]);
+      i := 0;
+      repeat
+        i := i + 1;
+        if i > Length(moduli) then
+          if modulibound < modulusbound then
+            Error("exceeded modulus bound ",modulibound,
+                  ", maybe the group is infinite?\n",
+                  "Enter return; to proceed with new bound ",
+                  16 * modulibound,".\n");
+            modulibound := modulibound * 16;
+            compute_moduli();
+          else
+            Info(InfoRCWA,2,"RespectedPartition: exceeded bound ",
+                            modulusbound," on the smallest modulus of ",
+                            "a residue class in an orbit.");
+            return "computation aborted"; 
+          fi;
+        fi;
+        m := moduli[i];
+        orb := orbit([n mod m,m]);
+      until orb <> fail;
+      if orb = "loop" then
+        SetModulusOfRcwaMonoid(G,0);
+        SetSize(G,infinity);
+        return fail; 
+      fi;
+      if orb = "abort" then
+        return "computation aborted"; 
+      fi;
+      Info(InfoRCWA,3,"RespectedPartition: found orbit of length ",
+                      Length(orb),", with representative ",orb[1]);
+      P := Union(P,orb);
+      density := Sum(List(P,cl->1/cl[2]));
+    until density >= 1;
+    if density <> 1 then
+      # Error("RespectedPartition: internal failure!\n",
+      #       "Enter 'return;' to try a different method.\n");
+      Info(InfoRCWA,1,"RespectedPartition: advanced method failed. ",
+                      " -- Trying standard method ... "); 
+      TryNextMethod();
+    fi;
+    Sort(P,function(c1,c2)
+             return c1{[2,1]} < c2{[2,1]};
+           end);
+    SetModulusOfRcwaMonoid(G,Lcm(List(P,cl->cl[2])));
+    return List(P,ResidueClass);
+  end );
+
+#############################################################################
+##
 #M  RespectsPartition( <G>, <P> ) . . . . . . . . . . . . . . for rcwa groups
 ##
 InstallMethod( RespectsPartition,
@@ -2917,7 +3219,15 @@ InstallMethod( RespectsPartition,
 ##
 InstallMethod( ActionOnRespectedPartition,
                "for tame rcwa groups (RCWA)", true, [ IsRcwaGroup ], 0,
-               G -> Action( G, RespectedPartition( G ) ) );
+
+  function ( G )
+
+    local  P;
+
+    P := RespectedPartition(G);
+    return Group(List(GeneratorsOfGroup(G),
+                      g->PermutationOpNC(g,P,OnPoints)));
+  end );
 
 #############################################################################
 ##
@@ -2929,22 +3239,17 @@ InstallMethod( RankOfKernelOfActionOnRespectedPartition,
 
   function ( G )
 
-    local  P, H, Pq, Hq, indices, bound, primepowers, prod, p, q;
+    local  P, H, Pq, Hq, indices, bound, primepowers;
 
     if IsTrivial(G) then return 0; fi;
+
     P     := RespectedPartition(G);
     H     := ActionOnRespectedPartition(G);
-    bound :=   Modulus(G) * Size(H)
-             * Maximum(List(GeneratorsOfGroup(G),
-                            g->Maximum(List(Coefficients(g),
-                                            c->AbsInt(c[2])))));
-    if bound < 5 then bound := 5; fi;
-    primepowers := []; q := 1; prod := 1;
-    while prod <= bound do
-      repeat q := q + 1; until IsPrimePowerInt(q);
-      Add(primepowers,q);
-      prod := prod * q;
-    od;
+    bound := Maximum(List(GeneratorsOfGroup(G),
+                          g->Maximum(List(Coefficients(g),
+                                          c->AbsInt(c[2])))));
+    if bound < 7 then bound := 7; fi;
+    primepowers := Filtered([2..bound],IsPrimePowerInt);
     Pq := List(primepowers,q->Flat(List(P,cl->SplittedClass(cl,q))));
     Hq := List(Pq,P->Group(List(GeneratorsOfGroup(G),
                                 gen->PermutationOpNC(gen,P,OnPoints))));
@@ -3238,7 +3543,7 @@ InstallMethod( IsomorphismMatrixGroup,
     H := Action(G,P); h := GeneratorsOfGroup(H);
     m := [];
     for i in [1..Length(g)] do
-      m[i] := MutableNullMat(deg,deg,R);
+      m[i] := NullMat(deg,deg,R);
       for j in [1..deg/2] do
         b := [[0,0],[0,1]] * One(R);
         r := Residues(P[j])[1] mod Modulus(g[i]);
@@ -4227,8 +4532,8 @@ InstallMethod( TryIsTransitiveOnNonnegativeIntegersInSupport,
       if IsSubset(D,S) then
         b := Maximum(List(B,MaximalShift));
         p0 := Minimum(Intersection([0..b],Support(G)));
-        Info(InfoRCWA,2,"Checking transitivity on ",
-                        Intersection([0..b],Support(G)));
+        Info(InfoRCWA,2,"Checking transitivity on moved points ",
+                        "0 <= n <= ",b);
         B_act := [p0]; r_act := 1;
         repeat
           B_act_old := B_act;
@@ -4771,7 +5076,7 @@ InstallMethod( ShortResidueClassOrbits,
   function ( G, modulusbound, maxlng )
 
     local  orbits, orbit, sphere, cl, covered, B, B_old,
-           gens, affsrc, m, p, r;
+           gens, affsrc, U, m, p, r, i, j;
 
     gens   := GeneratorsOfGroup(G);
     affsrc := List(gens,LargestSourcesOfAffineMappings);
@@ -4807,10 +5112,112 @@ InstallMethod( ShortResidueClassOrbits,
       od;
     od;
 
+    for i in [2..Length(orbits)] do
+      for j in [1..i-1] do
+        if Intersection(orbits[i][1],orbits[j][1]) <> [] then
+          if Mod(orbits[i][1]) > Mod(orbits[j][1]) then
+            U := Union(orbits[i]);
+            orbits[j] := List(orbits[j],cl->Difference(cl,U));
+          else
+            U := Union(orbits[j]);
+            orbits[i] := List(orbits[i],cl->Difference(cl,U));
+          fi;
+        fi;
+      od;
+    od;
+
+    if not ForAll(orbits,orb->ForAll(orb,IsResidueClass)) then
+      orbits := Orbits(G,Flat(List(Concatenation(orbits),
+                                   AsUnionOfFewClasses)));
+    fi;
+
     return orbits;
   end );
 
 #############################################################################
+##
+#M  ShortResidueClassOrbits( <G>, <modulusbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassOrbits,
+              "for an rcwa group over Z and 2 positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaGroupOverZ, IsPosInt, IsPosInt ], 5,
+
+  function ( G, modulusbound, maxlng )
+
+    local  orbit, orbits, gens, coeffs, moduli,
+           primes, primes_multdiv, primes_onlymod,
+           powers_impossible, orb, m, n, r, i, j, k;
+
+    orbit := function ( cl0 )
+
+      local  B, r, cl, img, inter, c, i, j;
+
+      B := [[cl0]];
+      r := 0;
+      repeat
+        r := r + 1;
+        Add(B,[]);
+        for i in [1..Length(B[r])] do
+          for j in [1..Length(coeffs)] do
+            cl := B[r][i];
+            inter := Filtered(coeffs[j],
+                              c->(cl[1]-c[1]) mod Gcd(cl[2],c[2]) = 0);
+            if    Length(inter) > 1
+              and Length(Set(List(inter,c->c{[3..5]}))) > 1
+            then return fail; fi;
+            c := inter[1];
+            img := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+            img[1] := img[1] mod img[2];
+            if img in B[r] or (r > 1 and img in B[r-1]) then continue; fi; 
+            Add(B[r+1],img);
+          od;
+        od;
+        B[r+1] := Set(B[r+1]);
+        if Sum(List(B,Length)) > maxlng then return fail; fi;
+      until B[r+1] = [];
+      return Concatenation(B);
+    end;
+
+    if ValueOption("classic") = true then TryNextMethod(); fi;
+    if IsTrivial(G) then return [ [ Integers ] ]; fi;
+    G := SparseRep(G);
+    gens := Set(GeneratorsAndInverses(G));
+    coeffs := List(gens,g->ShallowCopy(Coefficients(g)));
+    for i in [1..Length(coeffs)] do
+      Sort(coeffs[i],function(c1,c2)
+                       return c1{[2,1]} < c2{[2,1]};
+                     end);
+    od;
+    primes := PrimeSet(G);
+    primes_multdiv := Union(List(gens,g->Set(Factors(Mult(g)*Div(g)))));
+    primes_multdiv := Difference(primes_multdiv,[1]);
+    primes_onlymod := Difference(primes,primes_multdiv);
+    m := Lcm(List(gens,Mod));
+    powers_impossible := List(primes_onlymod,p->p^(ExponentOfPrime(m,p)+1));
+    moduli := AllSmoothIntegers(primes,modulusbound);
+    moduli := Filtered(moduli,m->ForAll(powers_impossible,q->m mod q<>0));
+    orbits := [];
+    n      := -1;
+    repeat
+      repeat
+        n := n + 1;
+      until ForAll(orbits,orb->ForAll(orb,cl->n mod cl[2] <> cl[1]));
+      i := 0;
+      repeat
+        i := i + 1;
+        m := moduli[i];
+        orb := orbit([n mod m,m]);
+      until orb <> fail or i = Length(moduli);
+      if orb <> fail then Add(orbits,Set(orb)); fi;
+    until n > modulusbound;
+    orbits := List(orbits,orb->Set(List(orb,ResidueClass)));
+    Sort(orbits,function(orb1,orb2)
+                  return [Length(orb1),orb1] < [Length(orb2),orb2];
+                end);
+    return orbits;
+  end );
+
+###################################################################
 ##
 #M  FixedResidueClasses( <G>, <maxmod> )
 ##
@@ -4850,7 +5257,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       white := 2^24-1;
       grid  := List([1..height],i->List([1..width],j->white));
       if IsInt(p0[1]) then # One orbit, color reflects distance from p0.
-        balls := List([1..r+1],k->Ball(G,p0,k-1,action));
+        balls := List([1..r+1],k->Union(Ball(G,p0,k-1,action:Spheres)));
         if   Minimum(Flat(balls[r+1])) < 0
         then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
         for k in [2..r+1] do
@@ -4866,7 +5273,7 @@ InstallGlobalFunction( DrawOrbitPicture,
         ps := p0; orbits := [];
         while ps <> [] do
           p0    := ps[1];
-          orbit := Ball(G,p0,r,action);
+          orbit := Union(Ball(G,p0,r,action:Spheres));
           ps    := Difference(ps,orbit);
           Add(orbits,orbit);
         od;
@@ -4890,7 +5297,7 @@ InstallGlobalFunction( DrawOrbitPicture,
       if IsInt(p0[1]) then ps := [p0]; else ps := p0; fi; orbit := [];
       for p0 in ps do
         if   not p0 in orbit
-        then orbit := Union(orbit,Ball(G,p0,r,action)); fi;
+        then orbit := Union(orbit,Union(Ball(G,p0,r,action:Spheres))); fi;
       od;
       if   Minimum(Flat(orbit)) < 0
       then offset := [Int(height/2)+1,Int(width/2)+1]; fi;
@@ -4915,7 +5322,8 @@ InstallGlobalFunction( DrawOrbitPicture,
 ##
 InstallMethod( RepresentativesActionPreImage,
                "for rcwa groups and permutation groups (RCWA)", ReturnTrue,
-               [ IsGroup, IsObject, IsObject, IsFunction, IsFreeGroup ], 0,
+               [ IsFinitelyGeneratedGroup, IsObject, IsObject,
+                 IsFunction, IsFreeGroup ], 0,
 
   function ( G, src, dest, act, F )
 
@@ -5024,7 +5432,8 @@ InstallMethod( RepresentativeActionPreImage,
 ##
 InstallMethod( RepresentativeActionOp,
                "for rcwa groups (RCWA)", ReturnTrue,
-               [ IsRcwaGroup, IsObject, IsObject, IsFunction ], 0,
+               [ IsRcwaGroup and IsFinitelyGeneratedGroup,
+                 IsObject, IsObject, IsFunction ], 0,
 
   function ( G, src, dest, act )
 
@@ -5369,7 +5778,7 @@ InstallMethod( NaturalHomomorphismByNormalSubgroupNCOrig,
 
 #############################################################################
 ##
-#M  EpimorphismFromFpGroup( <G>, <r> )
+#M  EpimorphismFromFpGroup( <G>, <r> ) . . . . default method for f.g. groups
 ##
 InstallMethod( EpimorphismFromFpGroup,
                "default method (RCWA)", ReturnTrue,
@@ -5416,6 +5825,101 @@ InstallMethod( EpimorphismFromFpGroup,
     phiFpS := InverseGeneralMapping(IsomorphismSimplifiedFpGroup(Fp));
 
     return CompositionMapping(phiFp,phiFpS);
+  end );
+
+#############################################################################
+##
+#M  EpimorphismFromFpGroup( <G>, <r> ) . . . . . . . . . . .  for rcwa groups
+##
+InstallMethod( EpimorphismFromFpGroup,
+               "for rcwa groups over Z (RCWA)", ReturnTrue,
+               [ IsRcwaGroup and IsFinitelyGeneratedGroup, IsPosInt ], 10,
+
+  function ( G, r )
+
+    local  gensG, gensF, F, Q, D, rels, relsnew, relsgenspows, relsmain,
+           abinvs, invs, d, B, W, phi, n, letters, m, onlyperfect,
+           timeout, starttime, involutions, g, h, v, w, i, j, k, pos;
+
+    onlyperfect := ValueOption("onlyperfect") = true
+                or ValueOption("OnlyPerfect") = true;
+    timeout     := ValueOption("timeout");
+    starttime   := Runtime();
+
+    letters := ["a","b","c","d","e","f","g","h","k","l","m","n"];
+    gensG   := GeneratorsOfGroup(G);
+    n       := Length(gensG);
+    if n <= 12 then F := FreeGroup(letters{[1..n]});
+               else F := FreeGroup(n); fi;
+    gensF   := GeneratorsOfGroup(F);
+
+    involutions := Set(gensG,Order) = [2];
+
+    Info(InfoRCWA,2,"EpimorphismFromFpGroup: computing ball of radius ",
+                    r,"\n");
+
+    B := Ball(G,One(G),r:Spheres);
+    W := [[One(F)]];
+    for i in [2..r+1] do
+      W[i] := [];
+      for j in [1..Length(B[i-1])] do
+        g := B[i-1][j];
+        v := W[i-1][j];
+        for k in [1..n] do
+          h := g*gensG[k];
+          w := v*gensF[k];
+          pos := Position(B[i],h);
+          if pos <> fail then
+            W[i][pos] := w;
+          fi;
+        od;
+      od;
+    od;
+
+    Info(InfoRCWA,2,"EpimorphismFromFpGroup: searching for relations");
+
+    rels   := [];
+    abinvs := [ListWithIdenticalEntries(n,0)];
+    for i in [2..r+1] do
+      if IsInt(timeout) and Runtime()-starttime >= timeout
+      then break; fi;
+      Info(InfoRCWA,2,"r = ",i-1,"\n");
+      for j in [1..Length(B[i])] do
+        if IsInt(timeout) and Runtime()-starttime >= timeout
+        then break; fi;
+        Info(InfoRCWA,3,"Element number = ",j,"\n");
+        g := B[i][j];
+        w := W[i][j];
+        if involutions 
+          and Set(Collected(LetterRepAssocWord(w)),l->l[2]) mod 2 = [0]
+        then continue; fi;
+        m := Order(g);
+        if IsInfinity(m) then continue; fi;
+        if   i > 2 and onlyperfect and involutions and m mod 2 = 0
+        then continue; fi;
+        relsnew := Concatenation(rels,[w^m]);
+        Q := F/relsnew; D := Q; d := 1;
+        repeat
+          invs := AbelianInvariants(D);
+          if not IsBound(abinvs[d]) or invs <> abinvs[d] then
+            abinvs[d] := invs;
+            rels := relsnew;
+            break;
+          elif invs = [] or 0 in invs then break;
+          elif onlyperfect then break;
+          else D := DerivedSubgroup(D);
+               d := d + 1;
+          fi;
+        until invs = [] or 0 in invs;
+      od;
+    od;
+    relsgenspows := Filtered(rels,w->Length(ExtRepOfObj(w))=2);
+    relsmain     := Difference(rels,relsgenspows);
+    rels := Union(relsgenspows,
+                  Set(relsmain,w->NormalizedRelator(w,List(gensG,Order))));
+    Q := F/rels;
+    phi := EpimorphismByGenerators(Q,G);
+    return phi;
   end );
 
 #############################################################################
@@ -5642,6 +6146,18 @@ InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy3ClassTranspositions,
     return ReadAsFunction(
              Concatenation(PackageInfo("rcwa")[1].InstallationPath,
                            "/data/3ctsgrpdata.g"))();
+  end );
+
+#############################################################################
+##
+#F  LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions( )
+##
+InstallGlobalFunction( LoadDatabaseOfGroupsGeneratedBy4ClassTranspositions,
+
+  function ( )
+    return ReadAsFunction(
+             Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                           "/data/4ctsgrpdata.g"))();
   end );
 
 #############################################################################

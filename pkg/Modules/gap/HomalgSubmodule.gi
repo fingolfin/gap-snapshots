@@ -392,6 +392,21 @@ InstallMethod( MatchPropertiesAndAttributesOfSubobjectAndUnderlyingObject,
 end );
 
 ##
+InstallMethod( \in,
+        "for an element and an ideal",
+        [ IsRingElement, IsStaticFinitelyPresentedSubobjectRep and ConstructedAsAnIdeal ],
+        
+  function( r, I )
+    
+    r := HomalgMatrix( [ r ], 1, 1, HomalgRing( r ) );
+    
+    r := Subobject( r, SuperObject( I ) );
+    
+    return IsSubset( I, r );
+    
+end );
+
+##
 InstallMethod( RadicalIdealMembership,
         "for an element and an ideal",
         [ IsHomalgRingElement, IsFinitelyPresentedSubmoduleRep and ConstructedAsAnIdeal ],
@@ -652,7 +667,7 @@ InstallMethod( LeftSubmodule,
     local Gen;
     
     if gen = [ ] then
-        return FullSubobject( 1 * R );
+        return ZeroLeftSubmodule( R );
     fi;
     
     Gen := List( gen,
@@ -679,7 +694,7 @@ InstallMethod( LeftSubmodule,
     local Gen;
     
     if gen = [ ] then
-        return FullSubobject( 1 * R );
+        return ZeroLeftSubmodule( R );
     fi;
     
     Gen := ShallowCopy( gen );
@@ -794,7 +809,7 @@ InstallMethod( RightSubmodule,
     local Gen;
     
     if gen = [ ] then
-        return FullSubobject( R * 1 );
+        return ZeroRightSubmodule( R );
     fi;
     
     Gen := List( gen,
@@ -821,7 +836,7 @@ InstallMethod( RightSubmodule,
     local Gen;
     
     if gen = [ ] then
-        return FullSubobject( 1 * R );
+        return ZeroRightSubmodule( R );
     fi;
     
     Gen := ShallowCopy( gen );
@@ -961,7 +976,12 @@ InstallMethod( ViewString,
     if IsHomalgLeftObjectOrMorphismOfLeftObjects( J ) then
         if vs then
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Append( s, " (left) " );
+                if IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                   and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true then
+                    Append( s, " " );
+                else
+                    Append( s, " (left) " );
+                fi;
             else
                 Append( s, " left " );
             fi;
@@ -969,7 +989,10 @@ InstallMethod( ViewString,
         elif ConstructedAsAnIdeal( J ) then
             Append( s, " principal " );
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Append( s, "(left) " );
+                if not ( IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                         and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true ) then
+                    Append( s, "(left) " );
+                fi;
             else
                 Append( s, "left " );
             fi;
@@ -980,7 +1003,12 @@ InstallMethod( ViewString,
     else
         if vs then
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Append( s, " (right) " );
+                if IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                   and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true then
+                    Append( s, " " );
+                else
+                    Append( s, " (right) " );
+                fi;
             else
                 Append( s, " right " );
             fi;
@@ -988,7 +1016,10 @@ InstallMethod( ViewString,
         elif ConstructedAsAnIdeal( J ) then
             Append( s, " principal " );
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Append( s, "(right) " );
+                if not ( IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                         and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true ) then
+                    Append( s, "(right) " );
+                fi;
             else
                 Append( s, "right " );
             fi;
@@ -1063,10 +1094,15 @@ InstallMethod( ViewString,
     
     vs := HasIsDivisionRingForHomalg( R ) and IsDivisionRingForHomalg( R );
     
-    if IsHomalgLeftObjectOrMorphismOfLeftObjects( J ) then
-        s := " zero (left) ";
-    else
-        s := " zero (right) ";
+    s := " zero ";
+    
+    if not ( IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+             and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true ) then
+        if IsHomalgLeftObjectOrMorphismOfLeftObjects( J ) then
+            Append( s, "(left) " );
+        else
+            Append( s, "(right) " );
+        fi;
     fi;
     
     if vs then
@@ -1093,15 +1129,20 @@ InstallMethod( Display,
     
     Display( gen );
     
-    Print( "\nA " );
+    Print( "\nA" );
     
     if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
         l := NrRows( gen );
         if ConstructedAsAnIdeal( M ) then
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Print( "(left)" );
+                if IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                   and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true then
+                    Print( "n" );
+                else
+                    Print( " (left)" );
+                fi;
             else
-                Print( "left" );
+                Print( " left" );
             fi;
             Print( " ideal generated by the " );
             if l = 1 then
@@ -1110,7 +1151,7 @@ InstallMethod( Display,
                 Print( l, " entries" );
             fi;
         else
-            Print( "left submodule generated by the " );
+            Print( " left submodule generated by the " );
             if l = 1 then
                 Print( "row" );
             else
@@ -1122,9 +1163,14 @@ InstallMethod( Display,
         l := NrColumns( gen );
         if ConstructedAsAnIdeal( M ) then
             if HasIsCommutative( R ) and IsCommutative( R ) then
-                Print( "(right)" );
+                if IsBound( HOMALG.SuppressParityInViewObjForCommutativeStructureObjects )
+                   and HOMALG.SuppressParityInViewObjForCommutativeStructureObjects = true then
+                    Print( "n" );
+                else
+                    Print( " (right)" );
+                fi;
             else
-                Print( "right" );
+                Print( " right" );
             fi;
             Print( " ideal generated by the " );
             if l = 1 then
@@ -1133,7 +1179,7 @@ InstallMethod( Display,
                 Print( l, " entries" );
             fi;
         else
-            Print( "right submodule generated by the " );
+            Print( " right submodule generated by the " );
             if l = 1 then
                 Print( "column" );
             else

@@ -5,6 +5,10 @@
 # this script creates a "Makefile-myconf" from "Makefile.in" with
 # a link to "Makefile"
 
+# some tools on OS X made locale related problems, so:
+export LANG=C
+export LC_ALL=C
+
 # read arguments
 while [ x"$1" != "x" ]; do
   if [ ${1#CONFIGNAME=} = ${1} ]; then

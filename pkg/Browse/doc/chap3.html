@@ -107,11 +107,15 @@ fail
 
 </dd>
 <dt><strong class="Mark"><code class="code">size</code></strong></dt>
-<dd><p>The size of the window like the first two arguments of <code class="code">NCurses.newwin</code> (default is <code class="code">[0, 0]</code>, as big as possible).</p>
+<dd><p>The size of the window like the first two arguments of <code class="code">NCurses.newwin</code> (default is <code class="code">[0, 0]</code>, as big as possible), or the string <code class="code">"fit"</code> which means the smallest possible window.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">align</code></strong></dt>
+<dd><p>A substring of <code class="code">"bclt"</code>, which describes the alignment of the window in the terminal. The meaning and the default are the same as for <code class="func">BrowseData.IsBrowseTableCellData</code> (<a href="chap4.html#X82157A2684969A5F"><span class="RefLink">4.2-1</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">begin</code></strong></dt>
-<dd><p>Top-left corner of the window like the last two arguments of <code class="code">NCurses.newwin</code> (default is <code class="code">[0, 0]</code>, top-left of the screen).</p>
+<dd><p>Top-left corner of the window like the last two arguments of <code class="code">NCurses.newwin</code> (default is <code class="code">[0, 0]</code>, top-left of the screen). This value has priority over the <code class="code">align</code> component.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">attribute</code></strong></dt>
@@ -119,7 +123,7 @@ fail
 
 </dd>
 <dt><strong class="Mark"><code class="code">border</code></strong></dt>
-<dd><p>Set to <code class="keyw">true</code> if the window should be displayed with a border (default is <code class="keyw">false</code>).</p>
+<dd><p>If the window should be displayed with a border then set to <code class="keyw">true</code> (default is <code class="keyw">false</code>) or to an integer representing attributes such as the components of <code class="code">NCurses.attrs</code> (see Section <a href="chap2.html#X793D897483674294"><span class="RefLink">2.1-7</span></a>) or the return value of <code class="func">NCurses.ColorAttr</code> (<a href="chap2.html#X83ADB4E37C105B8C"><span class="RefLink">2.2-1</span></a>); these attributes are used for the border of the box. The default is <code class="code">NCurses.attrs.NORMAL</code>.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">header</code></strong></dt>
@@ -135,6 +139,8 @@ fail
 
 </dd>
 </dl>
+<p>If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>)) then the window can be moved on the screen via mouse events, the focus can be moved to an entry, and (if <code class="code">single</code> is <code class="keyw">false</code>) the selection of an entry can be toggled.</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">index := NCurses.Select(["Apples", "Pears", "Oranges"]);</span>
@@ -241,7 +247,7 @@ fail
 
 <p>After loading the <strong class="pkg">Browse</strong> package <strong class="pkg">GAP</strong>'s help system behaves slightly different when a request yields several matches. The matches are shown via <code class="func">NCurses.Select</code> (<a href="chap3.html#X833D321E86528981"><span class="RefLink">3.1-2</span></a>), the list can be searched and filtered, and one can choose one match for immediate display. It is possible to not choose a match and the <code class="code">?&lt;nr&gt;</code> syntax still works.</p>
 
-<p>If you want the original behavior call <code class="code">SetUserPreference( "Browse", "SelectHelpMatches", false );</code> in your <strong class="pkg">GAP</strong> session or <code class="file">gap.ini</code> file, see <a href="../../../doc/ref/chap3.html#X79C78FE1869C9004"><span class="RefLink">Reference: User preferences</span></a>.</p>
+<p>If you want the original behavior call <code class="code">SetUserPreference( "Browse", "SelectHelpMatches", false );</code> in your <strong class="pkg">GAP</strong> session or <code class="file">gap.ini</code> file, see <a href="../../../doc/ref/chap3.html#X7B0AD104839B6C3C"><span class="RefLink">Reference: Configuring User preferences</span></a>.</p>
 
 <p><a id="X867BB82985D7953A" name="X867BB82985D7953A"></a></p>
 
@@ -249,7 +255,7 @@ fail
 
 <p>The function <code class="func">LoadPackage</code> (<a href="../../../doc/ref/chap76.html#X79B373A77B29D1F5"><span class="RefLink">Reference: LoadPackage</span></a>) shows a list of matches if only a prefix of a package name is given. After loading the <strong class="pkg">Browse</strong> package, <code class="func">NCurses.Select</code> (<a href="chap3.html#X833D321E86528981"><span class="RefLink">3.1-2</span></a>) is used for that, and one can choose a match.</p>
 
-<p>If you want the original behavior call <code class="code">SetUserPreference( "Browse", "SelectPackageName", false );</code> in your <strong class="pkg">GAP</strong> session or <code class="file">gap.ini</code> file, see <a href="../../../doc/ref/chap3.html#X79C78FE1869C9004"><span class="RefLink">Reference: User preferences</span></a>.</p>
+<p>If you want the original behavior call <code class="code">SetUserPreference( "Browse", "SelectPackageName", false );</code> in your <strong class="pkg">GAP</strong> session or <code class="file">gap.ini</code> file, see <a href="../../../doc/ref/chap3.html#X7B0AD104839B6C3C"><span class="RefLink">Reference: Configuring User preferences</span></a>.</p>
 
 <p><a id="X7EF34E0E7FBD3A3B" name="X7EF34E0E7FBD3A3B"></a></p>
 

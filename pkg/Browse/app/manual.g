@@ -386,11 +386,7 @@ BindGlobal( "BrowseGapManuals", function( arg )
           if t.dynamic.selectedEntry <> [ 0, 0 ] then
             pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
             showfun:= HELP_VIEWER_INFO.screen.show;
-            if ( IsBound( GAPInfo.UserPreferences ) and
-                 IsBound( GAPInfo.UserPreferences.Pager ) and
-                 GAPInfo.UserPreferences.Pager = "builtin" ) or
-               ( IsBoundGlobal( "PAGER" ) and
-                 ValueGlobal( "PAGER" ) = "builtin" ) then
+            if UserPreference( "Pager" ) = "builtin" then
               HELP_VIEWER_INFO.screen.show:= function( lines )
                 if IsList( lines ) then
                   lines:= List( lines, StripEscapeSequences );

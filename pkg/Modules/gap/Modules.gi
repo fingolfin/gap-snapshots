@@ -613,7 +613,7 @@ InstallMethod( PushPresentationByIsomorphism,
     SetNrRows( T, NrColumns( TI ) );
     SetNrColumns( T, NrRows( TI ) );
     
-    SetEvalMatrixOperation( T, [ a -> MatrixOfMap( a^-1, pos[2], pos[1] ), [ iso ] ] );
+    SetEvalMatrixOperation( T, [ a -> Eval( MatrixOfMap( a^-1, pos[2], pos[1] ) ), [ iso ] ] );
     
     return AddANewPresentation( M, RelationsOfModule( Source( iso ), pos[1] ), T, TI );
     
@@ -670,38 +670,6 @@ InstallMethod( Intersect2,
     fi;
     
     return im;
-    
-end );
-
-##
-InstallMethod( Intersect2,
-        "for homalg submodules",
-        [ IsFinitelyPresentedSubmoduleRep, IsFinitelyPresentedSubmoduleRep ],
-        
-  function( K, J )
-    local M, mapK, mapJ, int;
-    
-    M := SuperObject( J );
-    
-    if not IsIdenticalObj( M, SuperObject( K ) ) then
-        Error( "the super objects must coincide\n" );
-    fi;
-    
-    mapK := MatrixOfSubobjectGenerators( K );
-    mapJ := MatrixOfSubobjectGenerators( J );
-    
-    if IsHomalgLeftObjectOrMorphismOfLeftObjects( J ) then
-        mapK := HomalgRelationsForLeftModule( mapK );
-        mapJ := HomalgRelationsForLeftModule( mapJ );
-    else
-        mapK := HomalgRelationsForRightModule( mapK );
-        mapJ := HomalgRelationsForRightModule( mapJ );
-    fi;
-    
-    int := Intersect2( mapK, mapJ );
-    int := MatrixOfRelations( int );
-    
-    return Subobject( int, M );
     
 end );
 
@@ -857,8 +825,6 @@ InstallMethod( Eliminate,
     local gen;
     
     gen := MatrixOfGenerators( N );
-    
-    gen := EntriesOfHomalgMatrix( gen );
     
     gen := Eliminate( gen, indets );
     
@@ -1771,7 +1737,7 @@ InstallMethod( AMaximalIdealContaining,
             
             n := m + ideal( v, R );
             
-            if not ( n = 1 ) then
+            if not IsOne( n ) then
                 n_is_one := false;
                 break;
             fi;
@@ -1797,7 +1763,7 @@ InstallMethod( AMaximalIdealContaining,
                 
                 n := m + ideal( [ v^k + a ], R );
                 
-                if not ( n = 1 ) then
+                if not IsOne( n ) then
                     break;
                 fi;
                 
@@ -1824,5 +1790,45 @@ InstallMethod( AMaximalIdealContaining,
     SetAffineDimension( m, 0 );
     
     return m;
+    
+end );
+
+##
+InstallMethod( IdealOfRationalPoints,
+        "for an ideal",
+        [ IsFinitelyPresentedSubmoduleRep and ConstructedAsAnIdeal, IsHomalgRing and IsFieldForHomalg ],
+        
+  function( I, F )
+    local R, c, d, indets, S;
+    
+    c := Characteristic( F );
+    
+    if not IsPrime( c ) then
+        Error( "the characteristic of the given field ", F, " is not prime\n" );
+    fi;
+    
+    d := DegreeOverPrimeField( F );
+    
+    if not d in Integers then
+        Error( "the given field ", F, " is not finite\n" );
+    fi;
+    
+    R := HomalgRing( I );
+    
+    indets := Indeterminates( R );
+    
+    S := F * List( indets, Name );
+    
+    indets := List( indets, x -> x / S );
+    
+    indets := List( indets, x -> x^(c^d) - x );
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( I ) then
+        indets := LeftSubmodule( indets );
+    else
+        indets := RightSubmodule( indets );
+    fi;
+    
+    return ( S * I ) + indets;
     
 end );

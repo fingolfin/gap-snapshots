@@ -62,9 +62,9 @@ end;
 STONE_ALL := [];
 
 SHOW_STONES := function( next )
-    Print( FormattedString(STONE_FILE,-16), "    ",
-           FormattedString(STONE_STONE,8), "       ",
-           FormattedString(STONE_RTIME,8) );
+    Print( String(STONE_FILE,-16), "    ",
+           String(STONE_STONE,8), "       ",
+           String(STONE_RTIME,8) );
     Add( STONE_ALL, STONE_STONE );
     if 0 < next and STONE_FSUM <> 0  then
         Print( "    (next ~ ", Int(STONE_SUM*next*10/STONE_FSUM),
@@ -98,9 +98,9 @@ Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 ##
 #X  read all test files
 ##
-Print("You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'.\n");
+Print("You should start GAP4 using:  `gap -A -x 80 -r -m 100m'.\n");
 Print("\n");
-Print("Architecture: ", GAP_ARCHITECTURE, "\n");
+Print("Architecture: ", GAPInfo.Architecture, "\n");
 Print("\n");
 Print("test file         GAP4stones     time(msec)\n");
 Print("-------------------------------------------\n");
@@ -127,9 +127,9 @@ Print("-------------------------------------------\n");
 if STONE_COUNT=0 then
   STONE_COUNT:=1;
 fi;
-Print( FormattedString("total",-16), "    ",
-       FormattedString(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
-       FormattedString(STONE_SUM,8), "\n" );
+Print( String("total",-16), "    ",
+       String(RootInt(STONE_PROD,STONE_COUNT),8), "       ",
+       String(STONE_SUM,8), "\n" );
 Print("\n");
 
 InfoRead1  := infoRead1;

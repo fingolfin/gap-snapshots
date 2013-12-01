@@ -193,9 +193,11 @@ InstallValue( MapleMacros,
     
     Eliminate := "\n\
 Eliminate := proc(L,indets::list,var::list)\n\
-local IB;\n\
+local IB,elim;\n\
 IB := `Involutive/InvolutiveBasis`(L,[indets,remove(member,var,indets)]);\n\
-remove(has,IB,indets);\n\
+elim := remove(has,IB,indets);\n\
+if elim = [] then elim := matrix([[]]); fi;\n\
+elim;\n\
 end:\n\n",
     
     CoefficientsOfPolynomial := "\n\
@@ -333,14 +335,14 @@ InstallGlobalFunction( RingForHomalgInMapleUsingPIR,
     RP!.Sum :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert(", a, "+(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Sum );
+        return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
         
       end;
     
     RP!.Product :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert((", a, ")*(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Product );
+        return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], HOMALG_IO.Pictograms.Product );
         
       end;
     
@@ -450,14 +452,14 @@ InstallGlobalFunction( RingForHomalgInMapleUsingInvolutive,
     RP!.Sum :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert(", a, "+(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Sum );
+        return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
         
       end;
     
     RP!.Product :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert((", a, ")*(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Product );
+        return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], HOMALG_IO.Pictograms.Product );
         
       end;
     
@@ -638,7 +640,7 @@ InstallGlobalFunction( RingForHomalgInMapleUsingJanetOre,
     RP!.Sum :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert(", a, "+(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Sum );
+        return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
         
       end;
     
@@ -722,7 +724,7 @@ InstallGlobalFunction( RingForHomalgInMapleUsingOreModules,
     RP!.Sum :=
       function( a, b )
         
-        return homalgSendBlocking( [ "convert(", a, "+(", b, "),symbol)" ], "need_output", HOMALG_IO.Pictograms.Sum );
+        return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
         
       end;
     
@@ -733,31 +735,46 @@ end );
 ##
 InstallGlobalFunction( HomalgRingOfIntegersInMaple,
   function( arg )
-    local nargs, l, c, R;
+    local nargs, c, d, param, minimal_polynomial, R, name;
     
     nargs := Length( arg );
     
     if nargs > 0 and IsInt( arg[1] ) and arg[1] <> 0 then
-        l := 2;
         ## characteristic:
         c := AbsInt( arg[1] );
+        arg := arg{[ 2 .. nargs ]};
+        if nargs > 1 and IsPosInt( arg[1] ) then
+            d := arg[1];
+            if d > 1 then
+                param := Concatenation( "Z", String( c ), "_", String( d ) );
+                minimal_polynomial := UnivariatePolynomial( ConwayPol( c, d ), param );
+                arg := Concatenation( [ c ], arg{[ 2 .. nargs - 1 ]} );
+                R := CallFuncList( RingForHomalgInMapleUsingPIR, arg );
+                SetIsFieldForHomalg( R, true );
+                SetRingProperties( R, c, d );
+                R!.NameOfPrimitiveElement := param;
+                name := homalgSendBlocking( [ "convert(", minimal_polynomial, ",symbol)" ], "need_output", R, HOMALG_IO.Pictograms.homalgSetName );
+                R!.MinimalPolynomialOfPrimitiveElement := name;
+                SetName( R, Concatenation( "GF(", String( c ), "^", String( d ), ")" ) );
+                return R;
+            fi;
+            arg := arg{[ 2 .. Length( arg ) ]};
+        fi;
         if IsPrime( c ) then
             R := [ c ];
         else
             R := [ [ ], [ c ] ];
         fi;
     else
-        if nargs > 0 and arg[1] = 0 then
-            l := 2;
-        else
-            l := 1;
-        fi;
         ## characteristic:
         c := 0;
+        if nargs > 0 and arg[1] = 0 then
+            arg := arg{[ 2 .. nargs ]};
+        fi;
         R := [ ];
     fi;
     
-    R := Concatenation( [ R ], arg{[ l .. nargs ]} );
+    R := Concatenation( [ R, IsPrincipalIdealRing ], arg );
     
     R := CallFuncList( RingForHomalgInMapleUsingPIR, R );
     
@@ -794,19 +811,17 @@ InstallMethod( PolynomialRing,
         [ IsHomalgExternalRingInMapleRep, IsList ],
         
   function( R, indets )
-    local var, c, r, stream, show_banner, var_of_coeff_ring, S, RP;
+    local ar, r, var, nr_var, properties, param, c, stream, show_banner, S, l, RP;
     
-    if IsString( indets ) and indets <> "" then
-        var := SplitString( indets, "," ); 
-    elif indets <> [ ] and ForAll( indets, i -> IsString( i ) and i <> "" ) then
-        var := indets;
-    else
-        Error( "either a non-empty list of indeterminates or a comma separated string of them must be provided as the second argument\n" );
-    fi;
+    ar := _PrepareInputForPolynomialRing( R, indets );
+    
+    r := ar[1];
+    var := ar[2];	## all indeterminates, relative and base
+    nr_var := ar[3];	## the number of relative indeterminates
+    properties := ar[4];
+    param := ar[5];
     
     c := Characteristic( R );
-    
-    r := R;
     
     if Length( var ) = 1 and HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
         stream := homalgStream( R );
@@ -825,15 +840,6 @@ InstallMethod( PolynomialRing,
     else
         if HasIndeterminatesOfPolynomialRing( R ) then
             r := CoefficientsRing( R );
-            var_of_coeff_ring := IndeterminatesOfPolynomialRing( R );
-            if not ForAll( var_of_coeff_ring, HasName ) then
-                Error( "the indeterminates of coefficients ring must all have a name (use SetName)\n" );
-            fi;
-            var_of_coeff_ring := List( var_of_coeff_ring, Name );
-            if Intersection2( var_of_coeff_ring, var ) <> [ ] then
-                Error( "the following indeterminates are already elements of the coefficients ring: ", Intersection2( var_of_coeff_ring, var ), "\n" );
-            fi;
-            var := Concatenation( var_of_coeff_ring, var );
         fi;
         
         S := RingForHomalgInMapleUsingInvolutive( var, R );
@@ -858,12 +864,14 @@ InstallMethod( PolynomialRing,
     
     var := List( var, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( var, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( var, Name );
     
     SetIsFreePolynomialRing( S, true );
     
     if HasIndeterminatesOfPolynomialRing( R ) and IndeterminatesOfPolynomialRing( R ) <> [ ] then
         SetBaseRing( S, R );
+        l := Length( var );
+        SetRelativeIndeterminatesOfPolynomialRing( S, var{[ l - nr_var + 1 .. l ]} );
     fi;
     
     SetRingProperties( S, r, var );
@@ -913,10 +921,6 @@ InstallMethod( RingOfDerivations,
         Error( "the following indeterminates are already elements of the base ring: ", Intersection2( der , var ), "\n" );
     fi;
     
-    if not ForAll( var, HasName ) then
-        Error( "the indeterminates of base ring must all have a name (use SetName)\n" );
-    fi;
-    
     properties := [ ];
     
     stream := homalgStream( R );
@@ -953,7 +957,7 @@ InstallMethod( RingOfDerivations,
     
     der := List( der , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( der, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( der, Name );
     
     SetIsWeylRing( S, true );
     
@@ -995,11 +999,11 @@ InstallMethod( ExteriorRing,
     
     anti := List( anti , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( anti, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( anti, Name );
     
     comm := List( comm , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( comm, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( comm, Name );
     
     SetIsExteriorRing( S, true );
     
@@ -1133,7 +1137,7 @@ InstallMethod( MatElm,
   function( M, r, c, R )
     local Mrc;
     
-    Mrc := MatElmAsString( M, r, c, R );
+    Mrc := homalgSendBlocking( [ M, "[", r, c, "]" ], HOMALG_IO.Pictograms.MatElm );
     
     return HomalgExternalRingElement( Mrc, R );
     

@@ -10,34 +10,6 @@
 
 #############################################################################
 ##
-#S  Some GAP Library bugfixes. //////////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
-#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
-#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
-##
-##  In GAP 4.4.7, the GAP Library function `DirectProduct' and the general
-##  method for `DirectProductOp' run into error if one of the factors is
-##  known to be infinite. The methods below are installed as a workaround.
-##  As maybe there are further similar places where finiteness is assumed
-##  implicitly, it may be good if these methods remain available after 4.4.8.
-##
-InstallMethod( \*, "for positive integer and infinity (RCWA)",
-               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
-               function ( n, infty ) return infinity; end );
-InstallMethod( \*, "for infinity and positive integer (RCWA)",
-               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
-               function ( infty, n ) return infinity; end );
-InstallMethod( \*, "for infinity and infinity (RCWA)",
-               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
-               function ( infty1, infty2 ) return infinity; end );
-
-#############################################################################
-##
 #S  Some utility functions for lists and records. ///////////////////////////
 ##
 #############################################################################
@@ -229,6 +201,7 @@ InstallOtherMethod( Trajectory,
 #############################################################################
 ##
 #F  AllSmoothIntegers( <maxp>, <maxn> )
+#F  AllSmoothIntegers( <primes>, <maxn> )
 ##
 InstallGlobalFunction( AllSmoothIntegers,
 
@@ -247,10 +220,33 @@ InstallGlobalFunction( AllSmoothIntegers,
       od;
     end;
 
-    primes := Filtered([2..maxp],IsPrimeInt);
+    if   IsInt(maxp)
+    then primes := Filtered([2..maxp],IsPrimeInt);
+    elif IsList(maxp) and ForAll(maxp,p->IsInt(p) and IsPrimeInt(p))
+    then primes := maxp;
+    else return fail; fi;
+    if not IsPosInt(maxn) then return fail; fi;
+
     nums := [];
     extend(1,1);
     return Set(nums);
+  end );
+
+#############################################################################
+##
+#F  ExponentOfPrime( <n>, <p> )
+##
+InstallGlobalFunction( ExponentOfPrime,
+
+  function ( n, p )
+
+    local  k;
+
+    if IsZero(p) then return fail; fi;
+    if IsZero(n) then return infinity; fi;
+    k := 0;
+    while IsZero(n mod p) do n := n/p; k := k + 1; od;
+    return k;
   end );
 
 #############################################################################
@@ -300,6 +296,28 @@ InstallGlobalFunction( RestrictedPartitionsWithoutRepetitions,
     look([],n,S);
     return comps;
   end );
+
+#############################################################################
+##
+#S  Multiplication with infinity. ///////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  \*( <n>, infinity ) . . . . . . . . . . for positive integer and infinity
+#M  \*( infinity, <n> ) . . . . . . . . . . for infinity and positive integer
+#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
+##
+InstallMethod( \*, "for positive integer and infinity (RCWA)",
+               ReturnTrue, [ IsPosInt, IsInfinity ], 0,
+               function ( n, infty ) return infinity; end );
+InstallMethod( \*, "for infinity and positive integer (RCWA)",
+               ReturnTrue, [ IsInfinity, IsPosInt ], 0,
+               function ( infty, n ) return infinity; end );
+InstallMethod( \*, "for infinity and infinity (RCWA)",
+               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
+               function ( infty1, infty2 ) return infinity; end );
 
 #############################################################################
 ##
@@ -399,27 +417,59 @@ InstallMethod( AbelianInvariants,
 
 #############################################################################
 ##
-#F  ReducedWordByOrdersOfGenerators( <w>, <orders> )
-##
-##  Reduce exponents of powers in a word modulo the orders of the
-##  corresponding generators.
+#F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
 ##
 InstallGlobalFunction(  ReducedWordByOrdersOfGenerators,
 
-  function ( w, orders )
+  function ( w, gensords )
 
     local  ext, fam, i;
 
     fam := FamilyObj(w);
     ext := ShallowCopy(ExtRepOfObj(w));
     for i in [1,3..Length(ext)-1] do
-      if orders[ext[i]] < infinity then
-        ext[i+1] := ext[i+1] mod orders[ext[i]];
-        if   ext[i+1] > orders[ext[i]]/2
-        then ext[i+1] := ext[i+1] - orders[ext[i]]; fi;
+      if gensords[ext[i]] < infinity then
+        ext[i+1] := ext[i+1] mod gensords[ext[i]];
+        if   ext[i+1] > gensords[ext[i]]/2
+        then ext[i+1] := ext[i+1] - gensords[ext[i]]; fi;
       fi;
     od;
     return ObjByExtRep(fam,ext);
+  end );
+
+#############################################################################
+##
+#M  NormalizedRelator( <w>, <gensords> )
+##
+InstallMethod( NormalizedRelator,
+               "for a word and a list of orders of generators", ReturnTrue,
+               [ IsAssocWord, IsList ], 0,
+
+  function ( w, gensords )
+
+    local  c, old, twice, words, min, max, start, i, j;
+
+    c := ShallowCopy(ExtRepOfObj(w));
+    repeat
+      old := ShallowCopy(c);
+      for i in [2,4..Length(c)] do
+        if   gensords[c[i-1]] < infinity
+        then c[i] := c[i] mod gensords[c[i-1]]; fi;
+      od;
+      c := ShallowCopy(ExtRepOfObj(ObjByExtRep(FamilyObj(w),c)));
+      if c = [] then return One(w); fi;
+      min   := Minimum(c{[1,3..Length(c)-1]});
+      start := Filtered([1,3..Length(c)-1],i->c[i]=min);
+      max   := Maximum(c{start+1});
+      start := Filtered(start,i->c[i+1]=max);
+      twice := Concatenation(c,c);
+      words := List(start,i->twice{[i..i+Length(c)-1]});
+      SortParallel(List(words,v->[v{[1,3..Length(v)-1]},
+                                  v{[2,4..Length(v)]}]),words);
+      c := words[1];
+    until c = old;
+    w := ObjByExtRep(FamilyObj(w),c);
+    return w;
   end );
 
 #############################################################################
@@ -691,13 +741,13 @@ InstallGlobalFunction( RunDemonstration,
 
 #############################################################################
 ##
-#S  Utility to convert GAP log files to XHTML 1.0 Strict. ///////////////////
+#S  Utility to convert GAP logfiles to XHTML 1.0 Strict. ////////////////////
 ##
 #############################################################################
 
 #############################################################################
 ##
-#F  Log2HTML ( logfilename ) . . . . convert GAP log file to XHTML 1.0 Strict
+#F  Log2HTML ( logfilename ) . . . .  convert GAP logfile to XHTML 1.0 Strict
 ##
 InstallGlobalFunction( Log2HTML,
 
@@ -760,9 +810,6 @@ InstallGlobalFunction( Log2HTML,
 #S  Test utilities. /////////////////////////////////////////////////////////
 ##
 #############################################################################
-
-# For compatibility with 4.5.2: 
-if not IsBoundGlobal( "Test" ) then BindGlobal( "Test", ReadTest ); fi;
 
 #############################################################################
 ##

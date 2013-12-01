@@ -287,17 +287,6 @@
 ##    whenever a refresh of the window is necessary;
 ##    it is automatically reset to <K>false</K> after the refresh.
 ##  </Item>
-##  <Mark><C>useMouse</C><Index>mouse events</Index></Mark>
-##  <Item>
-##    is <K>true</K> if mouse events are enabled in the browse application
-##    (see <Ref Func="NCurses.UseMouse"/>), and <K>false</K> otherwise,
-##    the default value is <K>false</K>;
-##    an action in the table can change the value;
-##    when the browse application is left, <Ref Func="NCurses.UseMouse"/> is
-##    called with argument <K>false</K>;
-##    mouse events are disabled also in the break loop that is entered by
-##    the action in <Ref Var="BrowseData.actions.Error"/>.
-##  </Item>
 ##  <Mark><C>indexRow</C></Mark>
 ##  <Item>
 ##    is a list of positive integers.

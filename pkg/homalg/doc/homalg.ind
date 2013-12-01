@@ -17,7 +17,7 @@
 
   \indexspace
 
-  \item \texttt  {BettiDiagram}
+  \item \texttt  {BettiTable}
     \subitem for complexes, \hyperpage{35}
   \item \texttt  {ByASmallerPresentation}
     \subitem for bicomplexes, \hyperpage{47}
@@ -241,7 +241,7 @@
 		\hyperpage{12}
   \item \texttt  {IsStatic}\discretionary {-}{}{}\texttt  {Morphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Finitely}\discretionary {-}{}{}\texttt  {Generated}\discretionary {-}{}{}\texttt  {ObjectsRep}, 
 		\hyperpage{22}
-  \item \texttt  {IsTorsion}, \hyperpage{14}
+  \item \texttt  {IsTorsion}, \hyperpage{14}, \hyperpage{29}
   \item \texttt  {IsTorsionFree}, \hyperpage{14}
   \item \texttt  {IsTransposedWRTTheAssociatedComplex}, \hyperpage{47}
   \item \texttt  {IsTriangle}, \hyperpage{35}

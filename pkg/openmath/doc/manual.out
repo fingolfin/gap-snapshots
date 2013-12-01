@@ -3,7 +3,7 @@
 \BOOKMARK [1][-]{section.1.2}{Installation of the package}{chapter.1}
 \BOOKMARK [0][-]{chapter.2}{OpenMath functionality in GAP}{}
 \BOOKMARK [1][-]{section.2.1}{Viewing OpenMath representation of an object}{chapter.2}
-\BOOKMARK [1][-]{section.2.2}{Reading OpenMath code from streams}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Reading OpenMath code from streams and strings}{chapter.2}
 \BOOKMARK [1][-]{section.2.3}{Writing OpenMath code to streams}{chapter.2}
 \BOOKMARK [1][-]{section.2.4}{Utilities}{chapter.2}
 \BOOKMARK [0][-]{chapter.3}{Extending the OpenMath package}{}

@@ -6,10 +6,10 @@
       [1XExample/Template of a [5XGAP[105X Package and Guidelines for Package Authors[101X
   
   
-                                 Version 3.4.3
+                                 Version 3.4.4
   
   
-                                 27 March 2013
+                                30 October 2013
   
   
                                  Werner Nickel

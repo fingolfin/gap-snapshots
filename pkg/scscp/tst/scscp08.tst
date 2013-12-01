@@ -1,6 +1,6 @@
 # scscp, chapter 8
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/process.gd", 203, 215 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/process.gd", 203, 215 ]
 
 gap> a:=NewProcess( "WS_Factorial", [10], "localhost", 26133 );
 < process at localhost:26133 pid=2064 >
@@ -13,7 +13,7 @@ gap> SynchronizeProcesses(a,b);
       object := 2432902008176640000 ) ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/process.gd", 240, 250 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/process.gd", 240, 250 ]
 
 gap> a:=NewProcess( "WS_Factorial", [10], "localhost", 26133 );
 < process at localhost:26133 pid=2064 >
@@ -24,7 +24,7 @@ rec( attributes := [ [ "call_id", "localhost:26133:2064:mdb8RaO2" ] ],
   object := 3628800 )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 594, 601 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 594, 601 ]
 
 gap> ParQuickWithSCSCP( [ "WS_FactorsECM", "WS_FactorsMPQS" ], [ 2^150+1 ] );
 rec( attributes := [ [ "call_id", "localhost:26133:53877:GQX8MhC8" ] ],
@@ -32,7 +32,7 @@ rec( attributes := [ [ "call_id", "localhost:26133:53877:GQX8MhC8" ] ],
       [ 2175126601, 15767865236223301 ] ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/process.gd", 282, 292 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/process.gd", 282, 292 ]
 
 gap> a:=NewProcess( "IsPrimeInt", [2^15013-1], "localhost", 26134 );
 < process at localhost:26134 pid=42554 >
@@ -43,7 +43,7 @@ gap> FirstTrueProcess(a,b);
       object := true ) ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/process.gd", 294, 306 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/process.gd", 294, 306 ]
 
 gap> a:=NewProcess( "IsPrimeInt", [2^520-1], "localhost", 26133 );
 < process at localhost:26133 pid=42448 >
@@ -56,7 +56,7 @@ gap> FirstTrueProcess(a,b);
       object := false ) ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 639, 654 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 639, 654 ]
 
 gap> ParListWithSCSCP( List( [2..6], n -> SymmetricGroup(n)), "WS_IdGroup" );
 #I  master -> [ "localhost", 26133 ] : SymmetricGroup( [ 1 .. 2 ] )
@@ -72,7 +72,7 @@ gap> ParListWithSCSCP( List( [2..6], n -> SymmetricGroup(n)), "WS_IdGroup" );
 [ [ 2, 1 ], [ 6, 1 ], [ 24, 12 ], [ 120, 34 ], [ 720, 763 ] ]
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/parallel.xml", 176, 189 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/parallel.xml", 176, 189 ]
 
 gap> ReadPackage("scscp/example/karatsuba.g");
 gap> fam:=FamilyObj(1);;

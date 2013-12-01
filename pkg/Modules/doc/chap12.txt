@@ -1,362 +1,112 @@
   
-  [1X12 [33X[0;0YExamples[133X[101X
+  [1X12 [33X[0;0YExterior Algebra and Koszul Complex[133X[101X
+  
+  [33X[0;0YWhat  follows  are  several  operations related to the exterior algebra of a
+  free module:[133X
+  
+  [30X    [33X[0;6YA  constructor  for the graded parts of the exterior algebra ([21Xexterior
+        powers[121X)[133X
+  
+  [30X    [33X[0;6YSeveral Operations on elements of these exterior powers[133X
+  
+  [30X    [33X[0;6YA constructor for the [21XKoszul complex[121X[133X
+  
+  [30X    [33X[0;6YAn  implementation  of  the  [21XCayley  determinant[121X as defined in [CQ11],
+        which  allows  calculating  greatest  common divisors from finite free
+        resolutions.[133X
   
   
-  [1X12.1 [33X[0;0YExtExt[133X[101X
+  [1X12.1 [33X[0;0YExterior Algebra: Constructor[133X[101X
   
-  [33X[0;0YThis corresponds to Example B.2 in [Bar].[133X
+  [1X12.1-1 ExteriorPower[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
-    [4X[28XZ[128X[104X
-    [4X[25Xgap>[125X [27Ximat := HomalgMatrix( "[ \[127X[104X
-    [4X[25X>[125X [27X  262,  -33,   75,  -40, \[127X[104X
-    [4X[25X>[125X [27X  682,  -86,  196, -104, \[127X[104X
-    [4X[25X>[125X [27X 1186, -151,  341, -180, \[127X[104X
-    [4X[25X>[125X [27X-1932,  248, -556,  292, \[127X[104X
-    [4X[25X>[125X [27X 1018, -127,  293, -156  \[127X[104X
-    [4X[25X>[125X [27X]", 5, 4, ZZ );[127X[104X
-    [4X[28X<A 5 x 4 matrix over an internal ring>[128X[104X
-    [4X[25Xgap>[125X [27XM := LeftPresentation( imat );[127X[104X
-    [4X[28X<A left module presented by 5 relations for 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XN := Hom( ZZ, M );[127X[104X
-    [4X[28X<A rank 1 right module on 4 generators satisfying yet unknown relations>[128X[104X
-    [4X[25Xgap>[125X [27XF := InsertObjectInMultiFunctor( Functor_Hom_for_fp_modules, 2, N, "TensorN" );[127X[104X
-    [4X[28X<The functor TensorN for f.p. modules and their maps over computable rings>[128X[104X
-    [4X[25Xgap>[125X [27XG := LeftDualizingFunctor( ZZ );;[127X[104X
-    [4X[25Xgap>[125X [27XII_E := GrothendieckSpectralSequence( F, G, M );[127X[104X
-    [4X[28X<A stable homological spectral sequence with sheets at levels [128X[104X
-    [4X[28X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[128X[104X
-    [4X[28X[ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( II_E );[127X[104X
-    [4X[28XThe associated transposed spectral sequence:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa homological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ 0 .. 1 ], [ -1 .. 0 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XNow the spectral sequence of the bicomplex:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa homological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ -1 .. 0 ], [ 0 .. 1 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[25Xgap>[125X [27Xfilt := FiltrationBySpectralSequence( II_E, 0 );[127X[104X
-    [4X[28X<An ascending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X   0:	<A non-torsion left module presented by 3 relations for 4 generators>[128X[104X
-    [4X[28X  -1:	<A non-zero left module presented by 33 relations for 8 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A non-zero left module presented by 27 relations for 19 generators>>[128X[104X
-    [4X[25Xgap>[125X [27XByASmallerPresentation( filt );[127X[104X
-    [4X[28X<An ascending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X   0:	<A non-torsion left module presented by 2 relations for 3 generators>[128X[104X
-    [4X[28X  [128X[104X
-    [4X[28X-1:	<A non-zero torsion left module presented by 6 relations for 6 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A rank 1 left module presented by 8 relations for 9 generators>>[128X[104X
-    [4X[25Xgap>[125X [27Xm := IsomorphismOfFiltration( filt );[127X[104X
-    [4X[28X<A non-zero isomorphism of left modules>[128X[104X
-  [4X[32X[104X
+  [29X[2XExteriorPower[102X( [3Xk[103X, [3XM[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X module[133X
+  
+  [33X[0;0YConstruct the [3Xk[103X-th exterior power of module [3XM[103X.[133X
   
   
-  [1X12.2 [33X[0;0YPurity[133X[101X
+  [1X12.2 [33X[0;0YExterior Algebra: Properties and Attributes[133X[101X
   
-  [33X[0;0YThis corresponds to Example B.3 in [Bar].[133X
+  [1X12.2-1 IsExteriorPower[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
-    [4X[28XZ[128X[104X
-    [4X[25Xgap>[125X [27Ximat := HomalgMatrix( "[ \[127X[104X
-    [4X[25X>[125X [27X  262,  -33,   75,  -40, \[127X[104X
-    [4X[25X>[125X [27X  682,  -86,  196, -104, \[127X[104X
-    [4X[25X>[125X [27X 1186, -151,  341, -180, \[127X[104X
-    [4X[25X>[125X [27X-1932,  248, -556,  292, \[127X[104X
-    [4X[25X>[125X [27X 1018, -127,  293, -156  \[127X[104X
-    [4X[25X>[125X [27X]", 5, 4, ZZ );[127X[104X
-    [4X[28X<A 5 x 4 matrix over an internal ring>[128X[104X
-    [4X[25Xgap>[125X [27XM := LeftPresentation( imat );[127X[104X
-    [4X[28X<A left module presented by 5 relations for 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27Xfilt := PurityFiltration( M );[127X[104X
-    [4X[28X<The ascending purity filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X   0:	<A free left module of rank 1 on a free generator>[128X[104X
-    [4X[28X  [128X[104X
-    [4X[28X-1:	<A non-zero torsion left module presented by 2 relations for 2 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A non-pure rank 1 left module presented by 2 relations for 3 generators>>[128X[104X
-    [4X[25Xgap>[125X [27XM;[127X[104X
-    [4X[28X<A non-pure rank 1 left module presented by 2 relations for 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XII_E := SpectralSequence( filt );[127X[104X
-    [4X[28X<A stable homological spectral sequence with sheets at levels [128X[104X
-    [4X[28X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[128X[104X
-    [4X[28X[ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( II_E );[127X[104X
-    [4X[28XThe associated transposed spectral sequence:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa homological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ 0 .. 1 ], [ -1 .. 0 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s .[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XNow the spectral sequence of the bicomplex:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa homological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ -1 .. 0 ], [ 0 .. 1 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s .[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[25Xgap>[125X [27Xm := IsomorphismOfFiltration( filt );[127X[104X
-    [4X[28X<A non-zero isomorphism of left modules>[128X[104X
-    [4X[25Xgap>[125X [27XIsIdenticalObj( Range( m ), M );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSource( m );[127X[104X
-    [4X[28X<A non-torsion left module presented by 2 relations for 3 generators (locked)>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( last );[127X[104X
-    [4X[28X[ [   0,   2,   0 ],[128X[104X
-    [4X[28X  [   0,   0,  12 ] ][128X[104X
-    [4X[28X[128X[104X
-    [4X[28XCokernel of the map[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XZ^(1x2) --> Z^(1x3),[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xcurrently represented by the above matrix[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( filt );[127X[104X
-    [4X[28XDegree 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XZ^(1 x 1)[128X[104X
-    [4X[28X----------[128X[104X
-    [4X[28XDegree -1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XZ/< 2 > + Z/< 12 > [128X[104X
-  [4X[32X[104X
+  [29X[2XIsExteriorPower[102X( [3XM[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YMarks a module as an exterior power of another module.[133X
+  
+  [1X12.2-2 ExteriorPowerExponent[101X
+  
+  [29X[2XExteriorPowerExponent[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YThe exponent of the exterior power.[133X
+  
+  [1X12.2-3 ExteriorPowerBaseModule[101X
+  
+  [29X[2XExteriorPowerBaseModule[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya homalg module[133X
+  
+  [33X[0;0YThe module that [3XM[103X is an exterior power of.[133X
   
   
-  [1X12.3 [33X[0;0YTorExt-Grothendieck[133X[101X
+  [1X12.3 [33X[0;0YExterior Algebra: Element Properties[133X[101X
   
-  [33X[0;0YThis corresponds to Example B.5 in [Bar].[133X
+  [1X12.3-1 IsExteriorPowerElement[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
-    [4X[28XZ[128X[104X
-    [4X[25Xgap>[125X [27Ximat := HomalgMatrix( "[ \[127X[104X
-    [4X[25X>[125X [27X  262,  -33,   75,  -40, \[127X[104X
-    [4X[25X>[125X [27X  682,  -86,  196, -104, \[127X[104X
-    [4X[25X>[125X [27X 1186, -151,  341, -180, \[127X[104X
-    [4X[25X>[125X [27X-1932,  248, -556,  292, \[127X[104X
-    [4X[25X>[125X [27X 1018, -127,  293, -156  \[127X[104X
-    [4X[25X>[125X [27X]", 5, 4, ZZ );[127X[104X
-    [4X[28X<A 5 x 4 matrix over an internal ring>[128X[104X
-    [4X[25Xgap>[125X [27XM := LeftPresentation( imat );[127X[104X
-    [4X[28X<A left module presented by 5 relations for 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XF := InsertObjectInMultiFunctor( Functor_TensorProduct_for_fp_modules, 2, M, "TensorM" );[127X[104X
-    [4X[28X<The functor TensorM for f.p. modules and their maps over computable rings>[128X[104X
-    [4X[25Xgap>[125X [27XG := LeftDualizingFunctor( ZZ );;[127X[104X
-    [4X[25Xgap>[125X [27XII_E := GrothendieckSpectralSequence( F, G, M );[127X[104X
-    [4X[28X<A stable cohomological spectral sequence with sheets at levels [128X[104X
-    [4X[28X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[128X[104X
-    [4X[28X[ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( II_E );[127X[104X
-    [4X[28XThe associated transposed spectral sequence:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa cohomological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ 0 .. 1 ], [ -1 .. 0 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XNow the spectral sequence of the bicomplex:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa cohomological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ -1 .. 0 ], [ 0 .. 1 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[25Xgap>[125X [27Xfilt := FiltrationBySpectralSequence( II_E, 0 );[127X[104X
-    [4X[28X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X-1:	<A non-zero left module presented by yet unknown relations for 9 generator\[128X[104X
-    [4X[28Xs>[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X0:	<A non-zero left module presented by yet unknown relations for 4 generators\[128X[104X
-    [4X[28X>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A left module presented by yet unknown relations for 29 generators>>[128X[104X
-    [4X[25Xgap>[125X [27XByASmallerPresentation( filt );[127X[104X
-    [4X[28X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X  -1:	<A non-zero left module presented by 4 relations for 4 generators>[128X[104X
-    [4X[28X   0:	<A non-torsion left module presented by 2 relations for 3 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A non-torsion left module presented by 6 relations for 7 generators>>[128X[104X
-    [4X[25Xgap>[125X [27Xm := IsomorphismOfFiltration( filt );[127X[104X
-    [4X[28X<A non-zero isomorphism of left modules>[128X[104X
-  [4X[32X[104X
+  [29X[2XIsExteriorPowerElement[102X( [3Xx[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YChecks if the element [3Xx[103X is from an exterior power.[133X
   
   
-  [1X12.4 [33X[0;0YTorExt[133X[101X
+  [1X12.4 [33X[0;0YExterior Algebra: Element Operations[133X[101X
   
-  [33X[0;0YThis corresponds to Example B.6 in [Bar].[133X
+  [1X12.4-1 Wedge[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
-    [4X[28XZ[128X[104X
-    [4X[25Xgap>[125X [27Ximat := HomalgMatrix( "[ \[127X[104X
-    [4X[25X>[125X [27X  262,  -33,   75,  -40, \[127X[104X
-    [4X[25X>[125X [27X  682,  -86,  196, -104, \[127X[104X
-    [4X[25X>[125X [27X 1186, -151,  341, -180, \[127X[104X
-    [4X[25X>[125X [27X-1932,  248, -556,  292, \[127X[104X
-    [4X[25X>[125X [27X 1018, -127,  293, -156  \[127X[104X
-    [4X[25X>[125X [27X]", 5, 4, ZZ );[127X[104X
-    [4X[28X<A 5 x 4 matrix over an internal ring>[128X[104X
-    [4X[25Xgap>[125X [27XM := LeftPresentation( imat );[127X[104X
-    [4X[28X<A left module presented by 5 relations for 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XP := Resolution( M );[127X[104X
-    [4X[28X<A non-zero right acyclic complex containing a single morphism of left modules\[128X[104X
-    [4X[28X at degrees [ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XGP := Hom( P );[127X[104X
-    [4X[28X<A non-zero acyclic cocomplex containing a single morphism of right modules at\[128X[104X
-    [4X[28X degrees [ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XFGP := GP * P;[127X[104X
-    [4X[28X<A non-zero acyclic cocomplex containing a single morphism of left complexes a\[128X[104X
-    [4X[28Xt degrees [ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XBC := HomalgBicomplex( FGP );[127X[104X
-    [4X[28X<A non-zero bicocomplex containing left modules at bidegrees [ 0 .. 1 ]x[128X[104X
-    [4X[28X[ -1 .. 0 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xp_degrees := ObjectDegreesOfBicomplex( BC )[1];[127X[104X
-    [4X[28X[ 0, 1 ][128X[104X
-    [4X[25Xgap>[125X [27XII_E := SecondSpectralSequenceWithFiltration( BC, p_degrees );[127X[104X
-    [4X[28X<A stable cohomological spectral sequence with sheets at levels [128X[104X
-    [4X[28X[ 0 .. 2 ] each consisting of left modules at bidegrees [ -1 .. 0 ]x[128X[104X
-    [4X[28X[ 0 .. 1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( II_E );[127X[104X
-    [4X[28XThe associated transposed spectral sequence:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa cohomological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ 0 .. 1 ], [ -1 .. 0 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . .[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XNow the spectral sequence of the bicomplex:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28Xa cohomological spectral sequence at bidegrees[128X[104X
-    [4X[28X[ [ -1 .. 0 ], [ 0 .. 1 ] ][128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 0:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 1:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X * *[128X[104X
-    [4X[28X---------[128X[104X
-    [4X[28XLevel 2:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X s s[128X[104X
-    [4X[28X . s[128X[104X
-    [4X[25Xgap>[125X [27Xfilt := FiltrationBySpectralSequence( II_E, 0 );[127X[104X
-    [4X[28X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X-1:	<A non-zero left module presented by yet unknown relations for 10 generato\[128X[104X
-    [4X[28Xrs>[128X[104X
-    [4X[28X   0:	<A rank 1 left module presented by 3 relations for 4 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A left module presented by yet unknown relations for 13 generators>>[128X[104X
-    [4X[25Xgap>[125X [27XByASmallerPresentation( filt );[127X[104X
-    [4X[28X<A descending filtration with degrees [ -1 .. 0 ] and graded parts:[128X[104X
-    [4X[28X  -1:	<A non-zero left module presented by 4 relations for 4 generators>[128X[104X
-    [4X[28X   0:	<A rank 1 left module presented by 2 relations for 3 generators>[128X[104X
-    [4X[28Xof[128X[104X
-    [4X[28X<A non-torsion left module presented by 6 relations for 7 generators>>[128X[104X
-    [4X[25Xgap>[125X [27Xm := IsomorphismOfFiltration( filt );[127X[104X
-    [4X[28X<A non-zero isomorphism of left modules>[128X[104X
-  [4X[32X[104X
+  [29X[2XWedge[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Yan element of an exterior power[133X
+  
+  [33X[0;0YCalculate [22X[3Xx[103X ∧ [3Xy[103X[122X.[133X
+  
+  [1X12.4-2 ExteriorPowerElementDual[101X
+  
+  [29X[2XExteriorPowerElementDual[102X( [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Yan element of an exterior power[133X
+  
+  [33X[0;0YFor  [3Xx[103X in a q-th exterior power of a free module of rank n, return [22X[3Xx[103X*[122X in the
+  (n-q)-th exterior power, as defined in [CQ11].[133X
+  
+  [1X12.4-3 SingleValueOfExteriorPowerElement[101X
+  
+  [29X[2XSingleValueOfExteriorPowerElement[102X( [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YFor  [3Xx[103X  in  a  highest  exterior power, returns its single coordinate in the
+  canonical basis; i.e. [22X[[3Xx[103X][122X as defined in [CQ11].[133X
+  
+  
+  [1X12.5 [33X[0;0YKoszul complex and Cayley determinant[133X[101X
+  
+  [1X12.5-1 KoszulCocomplex[101X
+  
+  [29X[2XKoszulCocomplex[102X( [3Xa[103X, [3XE[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X cocomplex[133X
+  
+  [33X[0;0YCalculate the [3XE[103X-valued Koszul complex of [3Xa[103X.[133X
+  
+  [1X12.5-2 CayleyDeterminant[101X
+  
+  [29X[2XCayleyDeterminant[102X( [3XC[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YCalculate the Cayley determinant of the complex [3XC[103X, as defined in [CQ11].[133X
+  
+  [1X12.5-3 Gcd_UsingCayleyDeterminant[101X
+  
+  [29X[2XGcd_UsingCayleyDeterminant[102X( [3Xx[103X, [3Xy[103X[, [3X...[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Ya ring element[133X
+  
+  [33X[0;0YReturns  the  greatest common divisor of the given ring elements, calculated
+  using the Cayley determinant.[133X
   

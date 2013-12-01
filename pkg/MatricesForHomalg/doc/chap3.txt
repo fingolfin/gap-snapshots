@@ -159,6 +159,10 @@
     [4X[25Xgap>[125X [27XDisplay( Z256 );[127X[104X
     [4X[28X<A residue class ring>[128X[104X
     [4X[25Xgap>[125X [27XZ2 := Z256 / 6;[127X[104X
+    [4X[28XZ/( 256, 6 )[128X[104X
+    [4X[25Xgap>[125X [27XBasisOfRows( MatrixOfRelations( Z2 ) );[127X[104X
+    [4X[28X<An unevaluated non-zero 1 x 1 matrix over an internal ring>[128X[104X
+    [4X[25Xgap>[125X [27XZ2;[127X[104X
     [4X[28XZ/( 2 )[128X[104X
     [4X[25Xgap>[125X [27XDisplay( Z2 );[127X[104X
     [4X[28X<A residue class ring>[128X[104X
@@ -591,21 +595,28 @@
   
   [33X[0;0YCheck if the [5Xhomalg[105X ring element [3Xr[103X is monic.[133X
   
-  [1X3.3-58 IsLeftRegular[101X
+  [1X3.3-58 IsMonicUptoUnit[101X
+  
+  [29X[2XIsMonicUptoUnit[102X( [3Xr[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YCheck if leading coefficient of the [5Xhomalg[105X ring element [3Xr[103X is a unit.[133X
+  
+  [1X3.3-59 IsLeftRegular[101X
   
   [29X[2XIsLeftRegular[102X( [3Xr[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
   [33X[0;0YCheck if the [5Xhomalg[105X ring element [3Xr[103X is left regular.[133X
   
-  [1X3.3-59 IsRightRegular[101X
+  [1X3.3-60 IsRightRegular[101X
   
   [29X[2XIsRightRegular[102X( [3Xr[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
   [33X[0;0YCheck if the [5Xhomalg[105X ring element [3Xr[103X is right regular.[133X
   
-  [1X3.3-60 IsRegular[101X
+  [1X3.3-61 IsRegular[101X
   
   [29X[2XIsRegular[102X( [3Xr[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X

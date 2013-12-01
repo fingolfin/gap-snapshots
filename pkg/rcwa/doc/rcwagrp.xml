@@ -154,6 +154,29 @@ true
   </Description>
 </ManSection>
 
+<Index Key="Mirrored"> <C>Mirrored</C> </Index>
+
+The group CT(&ZZ;) has an outer automorphism which is given by conjugation
+with <M>n \mapsto -n - 1</M>. This automorphism can be applied to an
+rcwa mapping of &ZZ; or to an rcwa group over &ZZ; by the operation
+<C>Mirrored</C>. The group <C>Mirrored(</C><A>G</A><C>)</C> acts on the
+nonnegative integers as <A>G</A> acts on the negative integers, and vice
+versa.
+
+<Example>
+<![CDATA[
+gap> ct := ClassTransposition(0,2,1,6);
+( 0(2), 1(6) )
+gap> Mirrored(ct);
+( 1(2), 4(6) )
+gap> G := Group(List([[0,2,1,2],[0,3,2,3],[2,4,1,6]],ClassTransposition));;
+gap> ShortOrbits(G,[-100..100],100);
+[ [ 0, 1, 2, 3, 4, 5 ] ]
+gap> ShortOrbits(Mirrored(G),[-100..100],100);
+[ [ -6, -5, -4, -3, -2, -1 ] ]
+]]>
+</Example>
+
 <Index Key="AllElementsOfCTZWithGivenModulus">
   <C>AllElementsOfCTZWithGivenModulus</C>
 </Index>
@@ -707,23 +730,18 @@ the generators:
     In general, the larger <A>r</A> is chosen the smaller the kernel
     of the returned epimorphism is. If the group&nbsp;<A>G</A> has
     finite presentations, the kernel will in principle get trivial
-    provided that <A>r</A> is chosen large enough.  <P/>
-
-    Both the performance and the returned epimorphism depend on whether
-    the package <Package>FR</Package>&nbsp;<Cite Key="FR"/> is present
-    or&nbsp;not.
-
+    provided that <A>r</A> is chosen large enough.
 <Example>
 <![CDATA[
-gap> a := ClassTransposition(2,4,3,4);;  SetName(a,"a");
-gap> b := ClassTransposition(4,6,8,12);; SetName(b,"b");
-gap> c := ClassTransposition(3,4,4,6);;  SetName(c,"c");
-gap> G := Group(a,b,c);
+gap> a := ClassTransposition(2,4,3,4);;
+gap> b := ClassTransposition(4,6,8,12);;
+gap> c := ClassTransposition(3,4,4,6);;
+gap> G := SparseRep(Group(a,b,c));
 <rcwa group over Z with 3 generators>
 gap> phi := EpimorphismFromFpGroup(G,6);
-[ a, b, c ] -> [ a, b, c ]
+[ a, b, c ] -> [ ( 2(4), 3(4) ), ( 4(6), 8(12) ), ( 3(4), 4(6) ) ]
 gap> RelatorsOfFpGroup(Source(phi));
-[ a^2, b^2, c^2, (b*c)^3, (a*c*b*c)^3, (a*b)^6 ]
+[ a^2, b^2, c^2, (b*c)^3, (a*b)^6, (a*b*c*b)^3, (a*b*a*c)^12 ]
 ]]>
 </Example>
   </Description>
@@ -1032,7 +1050,12 @@ gap> List(CyclesOnFiniteOrbit(G,G.1*G.2*G.3*G.1*G.3*G.2,32),Length);
     Similarly we are only talking about an <E>orbit</E> of residue
     classes under the action of an rcwa group <M>G</M> if the
     restrictions of all elements of <M>G</M> to all residue classes
-    in the orbit are affine.
+    in the orbit are affine. <P/>
+
+    The returned lists may contain additional cycles, resp., orbits,
+    which do not contain a residue class <M>r(m)</M> such that <M>m</M>
+    divides <A>modulusbound</A>, but which happen to be found without
+    additional efforts.
 <Example>
 <![CDATA[
 gap> g := ClassTransposition(0,2,1,2)*ClassTransposition(0,4,1,6);
@@ -1041,14 +1064,18 @@ gap> ShortResidueClassCycles(g,Mod(g)^2,20);
 [ [ 2(12), 3(12) ], [ 10(12), 11(12) ], [ 4(24), 5(24), 7(36), 6(36) ], 
   [ 20(24), 21(24), 31(36), 30(36) ], 
   [ 8(48), 9(48), 13(72), 19(108), 18(108), 12(72) ], 
-  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ] ]
+  [ 40(48), 41(48), 61(72), 91(108), 90(108), 60(72) ], 
+  [ 16(96), 17(96), 25(144), 37(216), 55(324), 54(324), 36(216), 24(144) 
+     ], 
+  [ 80(96), 81(96), 121(144), 181(216), 271(324), 270(324), 180(216), 
+      120(144) ] ]
 gap> G := Group(List([[0,6,5,6],[1,4,4,6],[2,4,3,6]],ClassTransposition));
 <rcwa group over Z with 3 generators>
 gap> ShortResidueClassOrbits(G,48,10);
 [ [ 7(12) ], [ 8(12) ], [ 1(24), 4(36) ], [ 2(24), 3(36) ], 
   [ 12(24), 17(24), 28(36) ], [ 18(24), 23(24), 27(36) ], 
-  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ], 
-  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ] ]
+  [ 37(48), 58(72), 87(108) ], [ 38(48), 57(72), 88(108) ], 
+  [ 0(48), 5(48), 10(72), 15(108) ], [ 6(48), 11(48), 9(72), 16(108) ] ]
 ]]>
 </Example>
   </Description>
@@ -1418,10 +1445,12 @@ gap> P := RespectedPartition(G);
         Arg="G" Label="for a tame rcwa group"/>
   <Attr Name="KernelOfActionOnRespectedPartition"
         Arg="G" Label="for a tame rcwa group"/>
+  <Attr Name="RankOfKernelOfActionOnRespectedPartition"
+        Arg="G" Label="for a tame rcwa group"/>
   <Returns>
     the action of the tame rcwa group&nbsp;<A>G</A> on
-    <C>RespectedPartition(<A>G</A>)</C> or the kernel of
-    this action, respectively.
+    <C>RespectedPartition(<A>G</A>)</C>, the kernel of
+    this action or the rank of the latter, respectively.
   </Returns>
   <Description>
     The method for <C>KernelOfActionOnRespectedPartition</C> uses the

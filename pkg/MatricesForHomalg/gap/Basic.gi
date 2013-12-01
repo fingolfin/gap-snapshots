@@ -70,14 +70,14 @@ InstallMethod( DecideZero,
         [ IsRingElement, IsHomalgMatrix ],
         
   function( r, rel )
-    local r_mat, red;
+    local red;
     
-    r_mat := HomalgMatrix( [ r ], 1, 1, HomalgRing( rel ) );
+    r := HomalgMatrix( [ r ], 1, 1, HomalgRing( rel ) );
     
     if NrColumns( rel ) = 1 then
-        red := DecideZeroRows( r_mat, rel );
+        red := DecideZeroRows( r, rel );
     elif NrRows( rel ) = 1 then
-        red := DecideZeroColumns( r_mat, rel );
+        red := DecideZeroColumns( r, rel );
     else
         Error( "either the number of columns or the number of rows of the matrix of relations must be 1\n" );
     fi;
@@ -92,7 +92,6 @@ InstallMethod( DecideZero,
         [ IsRingElement, IsHomalgRingRelations ],
         
   function( r, rel )
-    local r_mat, red;
     
     return DecideZero( r, MatrixOfRelations( rel ) );
     
@@ -103,14 +102,17 @@ InstallMethod( DecideZero,
         "for homalg matrices",
         [ IsHomalgMatrix, IsHomalgMatrix ], 1001,
         
-  function( M, subs )
-    local rel, red;
+  function( M, rel )
     
-    if NrColumns( subs ) = 1 then
-        rel := DiagMat( ListWithIdenticalEntries( NrColumns( M ), subs ) );
+    if IsEmptyMatrix( M ) then
+        return M;
+    fi;
+    
+    if NrColumns( rel ) = 1 then
+        rel := DiagMat( ListWithIdenticalEntries( NrColumns( M ), rel ) );
         return DecideZeroRows( M, rel );
-    elif NrRows( subs ) = 1 then
-        rel := DiagMat( ListWithIdenticalEntries( NrRows( M ), subs ) );
+    elif NrRows( rel ) = 1 then
+        rel := DiagMat( ListWithIdenticalEntries( NrRows( M ), rel ) );
         return DecideZeroColumns( M, rel );
     fi;
     
@@ -123,12 +125,12 @@ InstallMethod( DecideZero,
         "for homalg matrices",
         [ IsHomalgMatrix, IsList ],
         
-  function( M, subs )
-    local R, rel;
+  function( M, rel )
+    local R;
     
     R := HomalgRing( M );
     
-    rel := List( subs,
+    rel := List( rel,
                  function( r )
                    if IsString( r ) then
                        return HomalgRingElement( r, R );
@@ -387,6 +389,9 @@ InstallMethod( RightDivide,			### defines: RightDivide (RightDivideF)
     ## check assertion
     Assert( 5, X * A = B );
     
+    ## CA might not yet know its number of columns
+    SetNrColumns( X, NrRows( A ) );
+    
     return X;
     
     ## technical: -CB * CA = (-CB) * CA and COLEM should take over since CB := -matrix
@@ -442,6 +447,9 @@ InstallMethod( LeftDivide,			### defines: LeftDivide (LeftDivideF)
     
     ## check assertion
     Assert( 5, A * X = B );
+    
+    ## CA might not yet know its number of rows
+    SetNrRows( X, NrColumns( A ) );
     
     return X;
     
@@ -686,6 +694,28 @@ end );
 ##    </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
+
+##
+InstallMethod( IsRightInvertibleMatrix,
+        "for homalg matrices",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    
+    return not RightInverse( M ) = fail;
+    
+end );
+
+##
+InstallMethod( IsLeftInvertibleMatrix,
+        "for homalg matrices",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    
+    return not LeftInverse( M ) = fail;
+    
+end );
 
 ##  <#GAPDoc Label="GenerateSameRowModule">
 ##  <ManSection>

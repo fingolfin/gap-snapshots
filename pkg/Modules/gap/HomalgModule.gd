@@ -85,6 +85,32 @@ DeclareProperty( "IsCyclic",
 DeclareProperty( "IsHolonomic",
         IsHomalgModule );
 
+##  <#GAPDoc Label="IsReduced">
+##  <ManSection>
+##    <Prop Arg="M" Name="IsReduced" Label="for modules"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      Check if the &homalg; module <A>M</A> is reduced.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsReduced",
+        IsHomalgModule );
+
+##  <#GAPDoc Label="IsPrimeModule">
+##  <ManSection>
+##    <Prop Arg="M" Name="IsPrimeModule" Label="for modules"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      Check if the &homalg; module <A>M</A> is prime.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsPrimeModule",
+        IsHomalgModule );
+
 ####################################
 #
 # attributes:
@@ -117,6 +143,68 @@ DeclareAttribute( "PrimaryDecomposition",
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "RadicalDecomposition",
+        IsHomalgModule );
+
+##  <#GAPDoc Label="ModuleOfKaehlerDifferentials">
+##  <ManSection>
+##    <Attr Arg="R" Name="ModuleOfKaehlerDifferentials"/>
+##    <Returns>a &homalg; module</Returns>
+##    <Description>
+##      The module of Kaehler differentials of the (residue class ring) <A>R</A>. <Br/>
+##      (method installed in package &GradedModules;)
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "ModuleOfKaehlerDifferentials",
+        IsHomalgRing );
+
+DeclareAttribute( "AssociatedPrimes",
+        IsHomalgModule );
+
+DeclareAttribute( "AssociatedMaximalIdeals",
+        IsHomalgModule );
+
+DeclareAttribute( "AssociatedPrimesOfMaximalCodimension",
+        IsHomalgModule );
+
+##  <#GAPDoc Label="RadicalSubobject">
+##  <ManSection>
+##    <Prop Arg="M" Name="RadicalSubobject"/>
+##    <Returns>a function</Returns>
+##    <Description>
+##      <A>M</A> is a &homalg; module.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "RadicalSubobject",
+        IsHomalgModule );
+
+##  <#GAPDoc Label="SymmetricAlgebra">
+##  <ManSection>
+##    <Attr Arg="M" Name="SymmetricAlgebra"/>
+##    <Returns>a &homalg; ring</Returns>
+##    <Description>
+##      The symmetric algebra of the module <A>M</A>.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "SymmetricAlgebra",
+        IsHomalgModule );
+
+##  <#GAPDoc Label="ExteriorAlgebra">
+##  <ManSection>
+##    <Attr Arg="M" Name="ExteriorAlgebra"/>
+##    <Returns>a &homalg; ring</Returns>
+##    <Description>
+##      The exterior algebra of the module <A>M</A>.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "ExteriorAlgebra",
         IsHomalgModule );
 
 ##
@@ -494,6 +582,9 @@ DeclareOperation( "LeadingModule",
 DeclareOperation( "AssociatedGradedModule",
         [ IsHomalgModule ] );
 
+DeclareOperation( "IsPrime",
+        [ IsHomalgStaticObject ] );
+
 DeclareOperation( "CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries",
         [ IsHomalgModule, IsList, IsList ] );
 
@@ -584,6 +675,24 @@ DeclareOperation( "ChernPolynomial",
 
 DeclareOperation( "ChernCharacter",
         [ IsHomalgModule, IsList, IsList ] );
+
+DeclareOperation( "SymmetricAlgebra",
+        [ IsHomalgMatrix, IsList ] );
+
+DeclareOperation( "SymmetricAlgebra",
+        [ IsHomalgModule, IsList ] );
+
+DeclareOperation( "SymmetricAlgebraFromSyzygiesObject",
+        [ IsHomalgModule, IsList ] );
+
+DeclareOperation( "ExteriorAlgebra",
+        [ IsHomalgMatrix, IsList ] );
+
+DeclareOperation( "ExteriorAlgebra",
+        [ IsHomalgModule, IsList ] );
+
+DeclareOperation( "ExteriorAlgebraFromSyzygiesObject",
+        [ IsHomalgModule, IsList ] );
 
 ####################################
 #

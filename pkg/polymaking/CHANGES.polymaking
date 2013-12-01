@@ -1,3 +1,24 @@
+0.8.1:
+
+
+no more support for "old" polymake features. 
+This version is for next-generation polymake run in
+compatibility mode. More specifically:
+- use of clients is no longer supported
+- some keywords are no longer supported (e.g. HASSE_DIAGRAM)
+
+------------------
+
+0.7.9:
+
+- support for two "next-generation" keywords:
+  - "FACES" calls "HASSE_DIAGRAM->FACES"
+  - "DIMS"  calls "HASSE_DIAGRAM->DIMS"
+  these two keywords cannot be used with old versions of polymake.
+
+- test changed: tests of unsupported features in recent polymake
+  versions removed (clients, some keywords), "FACES DIMS" tested.------------------
+
 0.7.8:
 
 ------------------

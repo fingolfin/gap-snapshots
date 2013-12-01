@@ -197,6 +197,7 @@
 \makelabel{homalg:IsElementOfAnObjectGivenByAMorphismRep}{5.1.2}{X87F3740E85E9AA51}
 \makelabel{homalg:IsZero (for elements)}{5.3.1}{X7D16A0BB80BA69DC}
 \makelabel{homalg:IsCyclicGenerator}{5.3.2}{X7886344B7A8B9304}
+\makelabel{homalg:IsTorsion}{5.3.3}{X80C6B26284721409}
 \makelabel{homalg:Annihilator (for elements)}{5.4.1}{X8557F75878DEEA58}
 \makelabel{homalg:in (for elements)}{5.5.1}{X7A4ED0528640EEFE}
 \makelabel{homalg:IsHomalgComplex}{6.1.1}{X8166F9FD7BFDA207}
@@ -221,7 +222,7 @@
 \makelabel{homalg:IsSplitShortExactSequence}{6.3.9}{X7BAF581986905995}
 \makelabel{homalg:IsTriangle}{6.3.10}{X84B794FB86C169CF}
 \makelabel{homalg:IsExactTriangle}{6.3.11}{X81E57EE37FC94539}
-\makelabel{homalg:BettiDiagram (for complexes)}{6.4.1}{X8148B0227E77C74F}
+\makelabel{homalg:BettiTable (for complexes)}{6.4.1}{X7DE6E8D8875B515F}
 \makelabel{homalg:FiltrationByShortExactSequence (for complexes)}{6.4.2}{X80EDFDD281834882}
 \makelabel{homalg:Add (to complexes given a morphism)}{6.5.1}{X7F10893B78FEDEB7}
 \makelabel{homalg:Add (to complexes given a matrix)}{6.5.1}{X7F10893B78FEDEB7}

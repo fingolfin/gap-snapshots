@@ -814,6 +814,14 @@
   version number of the version of [5XGAP[105X. Its value can be checked other version
   number using [2XCompareVersionNumbers[102X ([14X76.3-6[114X).[133X
   
+  [33X[0;0YTo  produce  sample  citations  for the used version of [5XGAP[105X or for a package
+  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-15[114X).[133X
+  
+  [33X[0;0YIf  you  wish  to  report  a  problem to [5XGAP[105X Support or [5XGAP[105X Forum, it may be
+  useful  to  not  only  report  the version used, but also to include the [5XGAP[105X
+  banner  displays  the  information  about the architecture for which the [5XGAP[105X
+  binary is built, used libraries and loaded packages.[133X
+  
   
   [1X7.9 [33X[0;0YTest Files[133X[101X
   
@@ -883,7 +891,7 @@
     [4X[25Xgap>[125X [27XRead( Filename( DirectoriesLibrary( "tst" ), "testinstall.g" ) );[127X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  test  requires  about  512MB  of memory and runs about one minute on an
+  [33X[0;0YThe  test  requires  about  750MB  of memory and runs about one minute on an
   Intel  Core  2  Duo / 2.53 GHz machine. You will get a large number of lines
   with output about the progress of the tests.[133X
   
@@ -905,7 +913,7 @@
     [4X[25Xgap>[125X [27XRead( Filename( DirectoriesLibrary( "tst" ), "testall.g" ) );[127X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  test requires about 512MB of memory and runs about one hour on an Intel
+  [33X[0;0YThe  test requires about 750MB of memory and runs about one hour on an Intel
   Core  2  Duo  /  2.53  GHz  machine,  and  produces an output similar to the
   [11Xtestinstall.g[111X test.[133X
   

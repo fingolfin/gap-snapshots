@@ -2,7 +2,7 @@
   [1X2 [33X[0;0YWedderburn decomposition[133X[101X
   
   
-  [1X2.1 [33X[0;0YWedderburn decomposition[133X[101X
+  [1X2.1 [33X[0;0YWedderburn decomposition of a group algebra[133X[101X
   
   [1X2.1-1 WedderburnDecomposition[101X
   
@@ -14,9 +14,9 @@
   cyclotomic  extension  of the rationals) or a finite field of characteristic
   coprime with the order of [22XG[122X.[133X
   
-  [33X[0;0YThe  function  returns  the  list  of all [13XWedderburn components[113X ([14X8.3[114X) of the
+  [33X[0;0YThe  function  returns  the  list  of all [13XWedderburn components[113X ([14X9.3[114X) of the
   group  algebra  [3XFG[103X.  If  [22XF[122X  is  an abelian number field then each Wedderburn
-  component  is given as a matrix algebra of a [13Xcyclotomic algebra[113X ([14X8.11[114X). If [22XF[122X
+  component  is given as a matrix algebra of a [13Xcyclotomic algebra[113X ([14X9.11[114X). If [22XF[122X
   is  a  finite  field  then  the  Wedderburn  components  are given as matrix
   algebras over finite fields.[133X
   
@@ -37,7 +37,7 @@
   [4X[32X[104X
   
   [33X[0;0YThe  previous examples show that if [22XD_16[122X denotes the dihedral group of order
-  [22X16[122X  then  the [13XWedderburn decomposition[113X ([14X8.3[114X) of [22XF_5 D_16[122X, [22Xℚ D_16[122X and [22Xℚ (ξ_5)
+  [22X16[122X  then  the [13XWedderburn decomposition[113X ([14X9.3[114X) of [22XF_5 D_16[122X, [22Xℚ D_16[122X and [22Xℚ (ξ_5)
   D_16[122X are respectively[133X
   
   
@@ -56,7 +56,7 @@
         (F(\xi_{40})/F,t),[133X [124X[133X
   
   
-  [33X[0;0Ywhere  [22X(K(ξ_8)/K,t)[122X  is a [13Xcyclotomic algebra[113X ([14X8.11[114X) with the centre [22XK=NF(8,[
+  [33X[0;0Ywhere  [22X(K(ξ_8)/K,t)[122X  is a [13Xcyclotomic algebra[113X ([14X9.11[114X) with the centre [22XK=NF(8,[
   1,  7  ])=  ℚ (sqrt2)[122X, [22X(F(ξ_40)/F,t) = ℚ (sqrt2,ξ_5)[122X is a cyclotomic algebra
   with centre [22XF=NF(40,[ 1, 31 ])[122X and [22Xξ_n[122X denotes a [22Xn[122X-th root of unity.[133X
   
@@ -83,10 +83,10 @@
   
   [33X[0;0YIn  some  cases,  in  characteristic  zero,  some  entries  of the output of
   [2XWedderburnDecomposition[102X   do   not  provide  full  matrix  algebras  over  a
-  [13Xcyclotomic  algebra[113X  ([14X8.11[114X), but "fractional matrix algebras". That entry is
+  [13Xcyclotomic  algebra[113X  ([14X9.11[114X), but "fractional matrix algebras". That entry is
   not an algebra that can be used as a [5XGAP[105X object. Instead it is a pair formed
   by  a  rational giving the "size" of the matrices and a crossed product. See
-  [14X8.3[114X for a theoretical explanation of this phenomenon. In this case a warning
+  [14X9.3[114X for a theoretical explanation of this phenomenon. In this case a warning
   message is displayed.[133X
   
   [4X[32X  Example  [32X[104X
@@ -111,7 +111,7 @@
   
   [29X[2XWedderburnDecompositionInfo[102X( [3XFG[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA  list  with  each  entry a numerical description of a [13Xcyclotomic
-            algebra[113X ([14X8.11[114X).[133X
+            algebra[113X ([14X9.11[114X).[133X
   
   [33X[0;0YThe input [3XFG[103X should be a group algebra of a finite group [22XG[122X over the field [22XF[122X,
   where  [22XF[122X  is  either  an  abelian  number field (i.e. a subfield of a finite
@@ -138,7 +138,7 @@
   
   
   [33X[0;0Ywhere  [22XF[122X  is a field and [22Xn,k,d,α,β[122X are non-negative integers, satisfying the
-  conditions  mentioned in Section [14X8.12[114X. It represents the [22Xn× n[122X matrix algebra
+  conditions  mentioned in Section [14X9.12[114X. It represents the [22Xn× n[122X matrix algebra
   [22XM_n(A)[122X over the cyclic algebra[133X
   
   
@@ -155,14 +155,14 @@
   
   
   [33X[0;0Ywhere  [22XF[122X  is a field and [22Xn,k,d_i,α_i,β_i,γ_i,j[122X are non-negative integers. It
-  represents the [22Xn× n[122X matrix algebra [22XM_n(A)[122X over the [13Xcyclotomic algebra[113X ([14X8.11[114X)[133X
+  represents the [22Xn× n[122X matrix algebra [22XM_n(A)[122X over the [13Xcyclotomic algebra[113X ([14X9.11[114X)[133X
   
   
         [33X[1;6Y[24X[33X[0;0YA = F(\xi_k)[g_1,\ldots,g_m \mid \xi_k^{g_i} = \xi_k^{\alpha_i},
         g_i^{d_i}=\xi_k^{\beta_i}, g_jg_i=\xi_k^{\gamma_{ij}} g_i g_j],[133X [124X[133X
   
   
-  [33X[0;0Ywhere [22Xξ_k[122X is a primitive [22Xk[122X-th root of unity (see [14X8.12[114X).[133X
+  [33X[0;0Ywhere [22Xξ_k[122X is a primitive [22Xk[122X-th root of unity (see [14X9.12[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -176,7 +176,7 @@
   [4X[32X[104X
   
   [33X[0;0YThe  interpretation  of  the  previous  example  gives rise to the following
-  [13XWedderburn  decompositions[113X  ([14X8.3[114X), where [22XD_16[122X is the dihedral group of order
+  [13XWedderburn  decompositions[113X  ([14X9.3[114X), where [22XD_16[122X is the dihedral group of order
   16 and [22Xξ_5[122X is a primitive [22X5[122X-th root of unity.[133X
   
   
@@ -225,7 +225,7 @@
         [33X[1;6Y[24X[33X[0;0Yℚ S_{4} = 2 ℚ \oplus 2 M_3( ℚ ) \oplus B,[133X [124X[133X
   
   
-  [33X[0;0Ywhere [22XA[122X and [22XB[122X are [13Xcrossed products[113X ([14X8.6[114X) with coefficients in the cyclotomic
+  [33X[0;0Ywhere [22XA[122X and [22XB[122X are [13Xcrossed products[113X ([14X9.6[114X) with coefficients in the cyclotomic
   fields  [22Xℚ  (ξ_8)[122X  and [22Xℚ (ξ_3)[122X respectively. This output can be used as a [5XGAP[105X
   object,  but  it  does  not  give  clear information on the structure of the
   algebras [22XA[122X and [22XB[122X.[133X
@@ -258,7 +258,7 @@
   [33X[0;0YThe next example shows the output of [10XWedderburnDecompositionInfo[110X for [22Xℚ G[122X and
   [22Xℚ  (ξ_3)  G[122X,  where  [22XG=SmallGroup(48,15)[122X.  The  user can compare it with the
   output of [2XWedderburnDecomposition[102X ([14X2.1-1[114X) for the same group in the previous
-  section. Notice that the last entry of the [13XWedderburn decomposition[113X ([14X8.3[114X) of
+  section. Notice that the last entry of the [13XWedderburn decomposition[113X ([14X9.3[114X) of
   [22Xℚ  G[122X  is  not  given  as  a matrix algebra of a cyclic algebra. However, the
   corresponding entry of [22Xℚ (ξ_3) G[122X is a matrix algebra of a cyclic algebra.[133X
   
@@ -279,8 +279,8 @@
   
   [33X[0;0YIn   some   cases   some   of   the   first   entries   of   the  output  of
   [2XWedderburnDecompositionInfo[102X   are  not  integers  and  so  the  correspoding
-  [13XWedderburn  components[113X  ([14X8.3[114X)  are  given as "fractional matrix algebras" of
-  [13Xcyclotomic  algebras[113X  ([14X8.11[114X).  See [14X8.3[114X for a theoretical explanation of this
+  [13XWedderburn  components[113X  ([14X9.3[114X)  are  given as "fractional matrix algebras" of
+  [13Xcyclotomic  algebras[113X  ([14X9.11[114X).  See [14X9.3[114X for a theoretical explanation of this
   phenomenon.  In  that  case  a  warning message will be displayed during the
   first call of [10XWedderburnDecompositionInfo[110X.[133X
   
@@ -300,7 +300,7 @@
   [4X[32X[104X
   
   [33X[0;0YThe  interpretation  of the output in the previous example gives rise to the
-  following  [13XWedderburn  decomposition[113X  ([14X8.3[114X)  of  [22Xℚ  G[122X  for [22XG[122X the small group
+  following  [13XWedderburn  decomposition[113X  ([14X9.3[114X)  of  [22Xℚ  G[122X  for [22XG[122X the small group
   [22X[240,89][122X:[133X
   
   
@@ -314,14 +314,14 @@
         [33X[1;6Y[24X[33X[0;0YA = ℚ (\xi_{10})[u|\xi_{10}^u = \xi_{10}^3, u^4 = -1],[133X [124X[133X
   
   
-  [33X[0;0Y[22XB[122X is an algebra of degree [22X(4*2 )/2 = 4[122X which is [13XBrauer equivalent[113X ([14X8.5[114X) to[133X
+  [33X[0;0Y[22XB[122X is an algebra of degree [22X(4*2 )/2 = 4[122X which is [13XBrauer equivalent[113X ([14X9.5[114X) to[133X
   
   
         [33X[1;6Y[24X[33X[0;0YB_1 = ℚ (\xi_{60})[u,v|\xi_{60}^u = \xi_{60}^{13}, u^4 = \xi_{60}^5,
         \xi_{60}^v = \xi_{60}^{11}, v^2 = 1, vu=uv],[133X [124X[133X
   
   
-  [33X[0;0Yand [22XC[122X is an algebra of degree [22X(4*2)*3/4 = 6[122X which is [13XBrauer equivalent[113X ([14X8.5[114X)
+  [33X[0;0Yand [22XC[122X is an algebra of degree [22X(4*2)*3/4 = 6[122X which is [13XBrauer equivalent[113X ([14X9.5[114X)
   to[133X
   
   
@@ -339,11 +339,11 @@
   [29X[2XSimpleAlgebraByCharacter[102X( [3XFG[103X, [3Xchi[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10YA simple algebra.[133X
   
-  [33X[0;0YThe  first input [3XFG[103X should be a [13Xsemisimple group algebra[113X ([14X8.2[114X) over a finite
+  [33X[0;0YThe  first input [3XFG[103X should be a [13Xsemisimple group algebra[113X ([14X9.2[114X) over a finite
   group [22XG[122X and the second input should be an irreducible character of [22XG[122X.[133X
   
-  [33X[0;0YThe  output  is  a  matrix  algebra of a [13Xcyclotomic algebras[113X ([14X8.11[114X) which is
-  isomorphic to the unique [13XWedderburn component[113X ([14X8.3[114X) [22XA[122X of [3XFG[103X such that [22Xχ(A)ne
+  [33X[0;0YThe  output  is  a  matrix  algebra of a [13Xcyclotomic algebras[113X ([14X9.11[114X) which is
+  isomorphic to the unique [13XWedderburn component[113X ([14X9.3[114X) [22XA[122X of [3XFG[103X such that [22Xχ(A)ne
   0[122X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -368,14 +368,14 @@
   [6XReturns:[106X  [33X[0;10YThe     numerical     description     of     the     output     of
             [2XSimpleAlgebraByCharacter[102X ([14X2.2-1[114X).[133X
   
-  [33X[0;0YThe first input [3XFG[103X is a [13Xsemisimple group algebra[113X ([14X8.2[114X) over a finite group [22XG[122X
+  [33X[0;0YThe first input [3XFG[103X is a [13Xsemisimple group algebra[113X ([14X9.2[114X) over a finite group [22XG[122X
   and the second input is an irreducible character of [22XG[122X.[133X
   
-  [33X[0;0YThe  output  is  the  numerical  description  [14X8.12[114X of the [13Xcyclotomic algebra[113X
-  ([14X8.11[114X)  which is isomorphic to the unique [13XWedderburn component[113X ([14X8.3[114X) [22XA[122X of [3XFG[103X
+  [33X[0;0YThe  output  is  the  numerical  description  [14X9.12[114X of the [13Xcyclotomic algebra[113X
+  ([14X9.11[114X)  which is isomorphic to the unique [13XWedderburn component[113X ([14X9.3[114X) [22XA[122X of [3XFG[103X
   such that [22Xχ(A)ne 0[122X.[133X
   
-  [33X[0;0YSee  [14X8.12[114X  for  the interpretation of the numerical information given by the
+  [33X[0;0YSee  [14X9.12[114X  for  the interpretation of the numerical information given by the
   output.[133X
   
   [4X[32X  Example  [32X[104X
@@ -401,19 +401,19 @@
   [6XReturns:[106X  [33X[0;10YA simple algebra.[133X
   
   [33X[0;0YIn  the  three-argument  version  the  input  must be formed by a [13Xsemisimple
-  rational  group  algebra[113X  [3XQG[103X  (see [14X8.2[114X) and two subgroups [3XK[103X and [3XH[103X of [22XG[122X which
-  form a [13Xstrong Shoda pair[113X ([14X8.15[114X) of [22XG[122X.[133X
+  rational  group  algebra[113X  [3XQG[103X  (see [14X9.2[114X) and two subgroups [3XK[103X and [3XH[103X of [22XG[122X which
+  form a [13Xstrong Shoda pair[113X ([14X9.15[114X) of [22XG[122X.[133X
   
-  [33X[0;0YThe  three-argument  version  returns  the Wedderburn component ([14X8.3[114X) of the
+  [33X[0;0YThe  three-argument  version  returns  the Wedderburn component ([14X9.3[114X) of the
   rational group algebra [3XQG[103X realized by the strong Shoda pair ([3XK[103X,[3XH[103X).[133X
   
   [33X[0;0YIn the four-argument version the first argument is a semisimple finite group
   algebra  [3XFG[103X,  [3X(K,H)[103X is a strong Shoda pair of [22XG[122X and the fourth input data is
   either  a  generating  [22Xq[122X-cyclotomic  class  modulo  the index of [3XH[103X in [3XK[103X or a
   representative of a generating [22Xq[122X-cyclotomic class modulo the index of [3XH[103X in [3XK[103X
-  (see [14X8.17[114X).[133X
+  (see [14X9.17[114X).[133X
   
-  [33X[0;0YThe  four-argument  version  returns  the  Wedderburn component ([14X8.3[114X) of the
+  [33X[0;0YThe  four-argument  version  returns  the  Wedderburn component ([14X9.3[114X) of the
   finite  group  algebra  [3XFG[103X  realized  by the strong Shoda pair ([3XK[103X,[3XH[103X) and the
   cyclotomic class [3XC[103X (or the cyclotomic class containing [3XC[103X).[133X
   
@@ -447,16 +447,16 @@
   [6XReturns:[106X  [33X[0;10YA numerical description of one simple algebra.[133X
   
   [33X[0;0YIn  the  three-argument  version  the  input  must be formed by a [13Xsemisimple
-  rational  group algebra[113X ([14X8.2[114X) [3XQG[103X and two subgroups [3XK[103X and [3XH[103X of [22XG[122X which form a
-  [13Xstrong  Shoda  pair[113X  ([14X8.15[114X)  of  [22XG[122X.  It  returns  the  numerical information
-  describing  the Wedderburn component ([14X8.12[114X) of the rational group algebra [3XQG[103X
+  rational  group algebra[113X ([14X9.2[114X) [3XQG[103X and two subgroups [3XK[103X and [3XH[103X of [22XG[122X which form a
+  [13Xstrong  Shoda  pair[113X  ([14X9.15[114X)  of  [22XG[122X.  It  returns  the  numerical information
+  describing  the Wedderburn component ([14X9.12[114X) of the rational group algebra [3XQG[103X
   realized by a the strong Shoda pair ([3XK[103X,[3XH[103X).[133X
   
   [33X[0;0YIn  the  four-argument  version the first input is a semisimple finite group
   algebra  [3XFG[103X,  [3X(K,H)[103X is a strong Shoda pair of [22XG[122X and the fourth input data is
   either  a  generating  [22Xq[122X-cyclotomic  class  modulo  the index of [3XH[103X in [3XK[103X or a
   representative of a generating [22Xq[122X-cyclotomic class modulo the index of [3XH[103X in [3XK[103X
-  ([14X8.17[114X).  It returns a pair of positive integers [22X[n,r][122X which represent the [22Xn×
+  ([14X9.17[114X).  It returns a pair of positive integers [22X[n,r][122X which represent the [22Xn×
   n[122X  matrix  algebra  over  the  field  of  order [22Xr[122X which is isomorphic to the
   Wedderburn component of [3XFG[103X realized by a the strong Shoda pair ([3XK[103X,[3XH[103X) and the
   cyclotomic class [3XC[103X (or the cyclotomic class containing the integer [3XC[103X).[133X

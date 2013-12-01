@@ -22,10 +22,11 @@ local
         Dimension, Boundary,
         BasisKerd1, BasisImaged2, Rels, Rank, RankM1, RankM2,
         LengthM1,LengthM2,
-        prime,
+        prime, field,
         i;
 
 prime:=EvaluateProperty(C,"characteristic");
+if IsPrimeInt(prime) then field:=GF(prime); else field:=Rationals; fi;
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
@@ -34,13 +35,13 @@ if Dimension(n)=0 then return rec( rank:=0); fi;
 
 ########################
 if n=0 then
-#BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
+#BasisKerd1:=IdentityMat(Dimension(n))*One(field);
 M1:=[];
 fi;
 
 if n>0 then
 M1:=[];
- if Dimension(n-1)=0 then BasisKerd1:=Basis(GF(prime)^Dimension(n));
+ if Dimension(n-1)=0 then BasisKerd1:=Basis(field^Dimension(n));
  else
 
  for i in [1..Dimension(n)] do
@@ -90,10 +91,11 @@ local
         rankM1, rankM2,
         Dimension, Boundary,
         BasisKerd1, BasisImaged2, Rels, Rank,
-        prime,
+        prime,field,
         i,k,tmp;
 
 prime:=EvaluateProperty(C,"characteristic");
+if IsPrimeInt(prime) then field:=GF(prime); else field:=Rationals; fi;
 Dimension:=C!.dimension;
 Boundary:=C!.boundary;
 
@@ -101,7 +103,7 @@ if n <0 then return false; fi;
 
 ########################
 if n=0 then
-BasisKerd1:=IdentityMat(Dimension(n))*One(GF(prime));
+BasisKerd1:=IdentityMat(Dimension(n))*One(field);
 fi;
 
 if n>0 then
@@ -110,7 +112,7 @@ M1:=[];
 
 if Dimension(n-1)=0 then
   for i in [1..Dimension(n)] do
-  M1[i]:=[Zero(GF(prime))];
+  M1[i]:=[Zero(field)];
   od;
 else
   for i in [1..Dimension(n)] do
@@ -138,7 +140,7 @@ k:=0;
  k:=Minimum(Dimension(n+1),k+100);
  Append(tmp,BaseMat(M2));
  od;
- Add(tmp,[1..Dimension(n)]*Zero(GF(prime)) );
+ Add(tmp,[1..Dimension(n)]*Zero(field) );
 
 BasisImaged2:=BaseMat(tmp); tmp:=0;
 dim:=Length(BasisImaged2);

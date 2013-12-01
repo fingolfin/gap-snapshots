@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.6.5, 20-Jul-2013
+                           Release 4.7.2, 01-Dec-2013
   
   
                                  The GAP Group
@@ -1279,7 +1279,9 @@
       35.2-9 SubmagmaWithInverses
       35.2-10 AsMagma
       35.2-11 AsSubmagma
-      35.2-12 InjectionZeroMagma
+      35.2-12 IsMagmaWithZeroAdjoined
+      35.2-13 InjectionZeroMagma
+      35.2-14 UnderlyingInjectionZeroMagma
     35.3 [33X[0;0YMagmas Defined by Multiplication Tables[133X
       35.3-1 MagmaByMultiplicationTable
       35.3-2 MagmaWithOneByMultiplicationTable
@@ -1298,9 +1300,8 @@
       35.4-9 IsCommutative
       35.4-10 MultiplicativeNeutralElement
       35.4-11 MultiplicativeZero
-      35.4-12 IsMultiplicativeZero
-      35.4-13 SquareRoots
-      35.4-14 TrivialSubmagmaWithOne
+      35.4-12 SquareRoots
+      35.4-13 TrivialSubmagmaWithOne
   36 [33X[0;0YWords[133X
     36.1 [33X[0;0YCategories of Words and Nonassociative Words[133X
       36.1-1 IsWord
@@ -1424,6 +1425,7 @@
     39.5 [33X[0;0YExpressing Group Elements as Words in Generators[133X
       39.5-1 EpimorphismFromFreeGroup
       39.5-2 Factorization
+      39.5-3 GrowthFunctionOfGroup
     39.6 [33X[0;0YStructure Descriptions[133X
       39.6-1 StructureDescription
     39.7 [33X[0;0YCosets[133X
@@ -1756,6 +1758,7 @@
       42.5-2 PermList
       42.5-3 MappingPermListList
       42.5-4 RestrictedPerm
+      42.5-5 AsPermutation
   43 [33X[0;0YPermutation Groups[133X
     43.1 [33X[0;0YIsPermGroup (Filter)[133X
       43.1-1 IsPermGroup
@@ -2157,14 +2160,15 @@
       50.1-2 CyclicGroup
       50.1-3 AbelianGroup
       50.1-4 ElementaryAbelianGroup
-      50.1-5 DihedralGroup
-      50.1-6 QuaternionGroup
-      50.1-7 ExtraspecialGroup
-      50.1-8 [33X[0;0YAlternatingGroup[133X
-      50.1-9 [33X[0;0YSymmetricGroup[133X
-      50.1-10 MathieuGroup
-      50.1-11 SuzukiGroup
-      50.1-12 ReeGroup
+      50.1-5 FreeAbelianGroup
+      50.1-6 DihedralGroup
+      50.1-7 QuaternionGroup
+      50.1-8 ExtraspecialGroup
+      50.1-9 [33X[0;0YAlternatingGroup[133X
+      50.1-10 [33X[0;0YSymmetricGroup[133X
+      50.1-11 MathieuGroup
+      50.1-12 SuzukiGroup
+      50.1-13 ReeGroup
     50.2 [33X[0;0YClassical Groups[133X
       50.2-1 [33X[0;0YGeneralLinearGroup[133X
       50.2-2 [33X[0;0YSpecialLinearGroup[133X
@@ -2232,129 +2236,224 @@
       50.12-4 ImfMatrixGroup
       50.12-5 IsomorphismPermGroup
       50.12-6 IsomorphismPermGroupImfGroup
-  51 [33X[0;0YSemigroups[133X
-    51.1 [33X[0;0YIsSemigroup (Filter)[133X
+  51 [33X[0;0YSemigroups and Monoids[133X
+    51.1 [33X[0;0YSemigroups[133X
       51.1-1 IsSemigroup
       51.1-2 [33X[0;0YSemigroup[133X
       51.1-3 Subsemigroup
-      51.1-4 SemigroupByGenerators
-      51.1-5 AsSemigroup
-      51.1-6 AsSubsemigroup
-      51.1-7 GeneratorsOfSemigroup
-      51.1-8 [33X[0;0YFreeSemigroup[133X
-      51.1-9 SemigroupByMultiplicationTable
-    51.2 [33X[0;0YProperties of Semigroups[133X
-      51.2-1 IsRegularSemigroup
-      51.2-2 IsRegularSemigroupElement
-      51.2-3 IsSimpleSemigroup
-      51.2-4 IsZeroSimpleSemigroup
-      51.2-5 IsZeroGroup
-      51.2-6 IsReesCongruenceSemigroup
-    51.3 [33X[0;0YMaking transformation semigroups[133X
-      51.3-1 IsTransformationSemigroup
-      51.3-2 DegreeOfTransformationSemigroup
-      51.3-3 IsomorphismTransformationSemigroup
-      51.3-4 IsFullTransformationSemigroup
-      51.3-5 FullTransformationSemigroup
-    51.4 [33X[0;0YIdeals of semigroups[133X
-      51.4-1 SemigroupIdealByGenerators
-      51.4-2 ReesCongruenceOfSemigroupIdeal
-      51.4-3 IsLeftSemigroupIdeal
-    51.5 [33X[0;0YCongruences for semigroups[133X
-      51.5-1 IsSemigroupCongruence
-      51.5-2 IsReesCongruence
-    51.6 [33X[0;0YQuotients[133X
-      51.6-1 IsQuotientSemigroup
-      51.6-2 HomomorphismQuotientSemigroup
-      51.6-3 QuotientSemigroupPreimage
-    51.7 [33X[0;0YGreen's Relations[133X
-      51.7-1 GreensRRelation
-      51.7-2 IsGreensRelation
-      51.7-3 IsGreensClass
-      51.7-4 IsGreensLessThanOrEqual
-      51.7-5 RClassOfHClass
-      51.7-6 EggBoxOfDClass
-      51.7-7 DisplayEggBoxOfDClass
-      51.7-8 GreensRClassOfElement
-      51.7-9 GreensRClasses
-      51.7-10 GroupHClassOfGreensDClass
-      51.7-11 IsGroupHClass
-      51.7-12 IsRegularDClass
-    51.8 [33X[0;0YRees Matrix Semigroups[133X
-      51.8-1 ReesMatrixSemigroup
-      51.8-2 ReesZeroMatrixSemigroup
-      51.8-3 IsReesMatrixSemigroup
-      51.8-4 IsReesZeroMatrixSemigroup
-      51.8-5 ReesMatrixSemigroupElement
-      51.8-6 IsReesMatrixSemigroupElement
-      51.8-7 SandwichMatrixOfReesMatrixSemigroup
-      51.8-8 RowIndexOfReesMatrixSemigroupElement
-      51.8-9 ReesZeroMatrixSemigroupElementIsZero
-      51.8-10 AssociatedReesMatrixSemigroupOfDClass
-      51.8-11 IsomorphismReesMatrixSemigroup
-  52 [33X[0;0YMonoids[133X
-    52.1 [33X[0;0YFunctions for Monoids[133X
-      52.1-1 IsMonoid
-      52.1-2 [33X[0;0YMonoid[133X
-      52.1-3 Submonoid
-      52.1-4 MonoidByGenerators
-      52.1-5 AsMonoid
-      52.1-6 AsSubmonoid
-      52.1-7 GeneratorsOfMonoid
-      52.1-8 TrivialSubmonoid
-      52.1-9 [33X[0;0YFreeMonoid[133X
-      52.1-10 MonoidByMultiplicationTable
-  53 [33X[0;0YFinitely Presented Semigroups and Monoids[133X
-    53.1 [33X[0;0YIsSubsemigroupFpSemigroup (Filter)[133X
-      53.1-1 IsSubsemigroupFpSemigroup
-      53.1-2 IsSubmonoidFpMonoid
-      53.1-3 IsFpSemigroup
-      53.1-4 IsFpMonoid
-      53.1-5 IsElementOfFpSemigroup
-      53.1-6 IsElementOfFpMonoid
-      53.1-7 FpGrpMonSmgOfFpGrpMonSmgElement
-    53.2 [33X[0;0YCreating Finitely Presented Semigroups[133X
-      53.2-1 \/
-      53.2-2 FactorFreeSemigroupByRelations
-      53.2-3 IsomorphismFpSemigroup
-    53.3 [33X[0;0YComparison of Elements of Finitely Presented Semigroups[133X
-      53.3-1 \=
-    53.4 [33X[0;0YPreimages in the Free Semigroup[133X
-      53.4-1 UnderlyingElement
-      53.4-2 ElementOfFpSemigroup
-      53.4-3 FreeSemigroupOfFpSemigroup
-      53.4-4 FreeGeneratorsOfFpSemigroup
-      53.4-5 RelationsOfFpSemigroup
-    53.5 [33X[0;0YFinitely presented monoids[133X
-      53.5-1 \/
-    53.6 [33X[0;0YRewriting Systems and the Knuth-Bendix Procedure[133X
-      53.6-1 ReducedConfluentRewritingSystem
-      53.6-2 KB_REW
-      53.6-3 [33X[0;0YKnuthBendixRewritingSystem[133X
-      53.6-4 SemigroupOfRewritingSystem
-      53.6-5 MonoidOfRewritingSystem
-      53.6-6 FreeSemigroupOfRewritingSystem
-      53.6-7 FreeMonoidOfRewritingSystem
-    53.7 [33X[0;0YTodd-Coxeter Procedure[133X
-      53.7-1 CosetTableOfFpSemigroup
-  54 [33X[0;0YTransformations[133X
-    54.1 [33X[0;0YFunctions for Transformations[133X
-      54.1-1 IsTransformation
-      54.1-2 TransformationFamily
-      54.1-3 Transformation
-      54.1-4 IdentityTransformation
-      54.1-5 RandomTransformation
-      54.1-6 DegreeOfTransformation
-      54.1-7 ImageListOfTransformation
-      54.1-8 ImageSetOfTransformation
-      54.1-9 RankOfTransformation
-      54.1-10 KernelOfTransformation
-      54.1-11 PreimagesOfTransformation
-      54.1-12 RestrictedTransformation
-      54.1-13 AsTransformation
-      54.1-14 PermLeftQuoTransformation
-      54.1-15 BinaryRelationTransformation
-      54.1-16 TransformationRelation
+      51.1-4 IsSubsemigroup
+      51.1-5 SemigroupByGenerators
+      51.1-6 AsSemigroup
+      51.1-7 AsSubsemigroup
+      51.1-8 GeneratorsOfSemigroup
+      51.1-9 [33X[0;0YFreeSemigroup[133X
+      51.1-10 SemigroupByMultiplicationTable
+    51.2 [33X[0;0YMonoids[133X
+      51.2-1 IsMonoid
+      51.2-2 [33X[0;0YMonoid[133X
+      51.2-3 Submonoid
+      51.2-4 MonoidByGenerators
+      51.2-5 AsMonoid
+      51.2-6 AsSubmonoid
+      51.2-7 GeneratorsOfMonoid
+      51.2-8 TrivialSubmonoid
+      51.2-9 [33X[0;0YFreeMonoid[133X
+      51.2-10 MonoidByMultiplicationTable
+    51.3 [33X[0;0YInverse semigroups and monoids[133X
+      51.3-1 InverseSemigroup
+      51.3-2 InverseMonoid
+      51.3-3 GeneratorsOfInverseSemigroup
+      51.3-4 GeneratorsOfInverseMonoid
+      51.3-5 IsInverseSubsemigroup
+    51.4 [33X[0;0YProperties of Semigroups[133X
+      51.4-1 IsRegularSemigroup
+      51.4-2 IsRegularSemigroupElement
+      51.4-3 InversesOfSemigroupElement
+      51.4-4 IsSimpleSemigroup
+      51.4-5 IsZeroSimpleSemigroup
+      51.4-6 IsZeroGroup
+      51.4-7 IsReesCongruenceSemigroup
+      51.4-8 IsInverseSemigroup
+    51.5 [33X[0;0YIdeals of semigroups[133X
+      51.5-1 SemigroupIdealByGenerators
+      51.5-2 ReesCongruenceOfSemigroupIdeal
+      51.5-3 IsLeftSemigroupIdeal
+    51.6 [33X[0;0YCongruences for semigroups[133X
+      51.6-1 IsSemigroupCongruence
+      51.6-2 IsReesCongruence
+    51.7 [33X[0;0YQuotients[133X
+      51.7-1 IsQuotientSemigroup
+      51.7-2 HomomorphismQuotientSemigroup
+      51.7-3 QuotientSemigroupPreimage
+    51.8 [33X[0;0YGreen's Relations[133X
+      51.8-1 GreensRRelation
+      51.8-2 IsGreensRelation
+      51.8-3 IsGreensClass
+      51.8-4 IsGreensLessThanOrEqual
+      51.8-5 RClassOfHClass
+      51.8-6 EggBoxOfDClass
+      51.8-7 DisplayEggBoxOfDClass
+      51.8-8 GreensRClassOfElement
+      51.8-9 GreensRClasses
+      51.8-10 GroupHClassOfGreensDClass
+      51.8-11 IsGroupHClass
+      51.8-12 IsRegularDClass
+    51.9 [33X[0;0YRees Matrix Semigroups[133X
+      51.9-1 ReesMatrixSemigroup
+      51.9-2 ReesMatrixSubsemigroup
+      51.9-3 IsomorphismReesMatrixSemigroup
+      51.9-4 IsReesMatrixSemigroupElement
+      51.9-5 ReesMatrixSemigroupElement
+      51.9-6 IsReesMatrixSubsemigroup
+      51.9-7 IsReesMatrixSemigroup
+      51.9-8 Matrix
+      51.9-9 [33X[0;0YRows and columns[133X
+      51.9-10 UnderlyingSemigroup
+      51.9-11 AssociatedReesMatrixSemigroupOfDClass
+  52 [33X[0;0YFinitely Presented Semigroups and Monoids[133X
+    52.1 [33X[0;0YIsSubsemigroupFpSemigroup (Filter)[133X
+      52.1-1 IsSubsemigroupFpSemigroup
+      52.1-2 IsSubmonoidFpMonoid
+      52.1-3 IsFpSemigroup
+      52.1-4 IsFpMonoid
+      52.1-5 IsElementOfFpSemigroup
+      52.1-6 IsElementOfFpMonoid
+      52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement
+    52.2 [33X[0;0YCreating Finitely Presented Semigroups[133X
+      52.2-1 \/
+      52.2-2 FactorFreeSemigroupByRelations
+      52.2-3 IsomorphismFpSemigroup
+    52.3 [33X[0;0YComparison of Elements of Finitely Presented Semigroups[133X
+      52.3-1 \=
+    52.4 [33X[0;0YPreimages in the Free Semigroup[133X
+      52.4-1 UnderlyingElement
+      52.4-2 ElementOfFpSemigroup
+      52.4-3 FreeSemigroupOfFpSemigroup
+      52.4-4 FreeGeneratorsOfFpSemigroup
+      52.4-5 RelationsOfFpSemigroup
+    52.5 [33X[0;0YFinitely presented monoids[133X
+      52.5-1 \/
+    52.6 [33X[0;0YRewriting Systems and the Knuth-Bendix Procedure[133X
+      52.6-1 ReducedConfluentRewritingSystem
+      52.6-2 KB_REW
+      52.6-3 [33X[0;0YKnuthBendixRewritingSystem[133X
+      52.6-4 SemigroupOfRewritingSystem
+      52.6-5 MonoidOfRewritingSystem
+      52.6-6 FreeSemigroupOfRewritingSystem
+      52.6-7 FreeMonoidOfRewritingSystem
+    52.7 [33X[0;0YTodd-Coxeter Procedure[133X
+      52.7-1 CosetTableOfFpSemigroup
+  53 [33X[0;0YTransformations[133X
+    53.1 [33X[0;0YThe family and categories of transformations[133X
+      53.1-1 IsTransformation
+      53.1-2 IsTransformationCollection
+      53.1-3 TransformationFamily
+    53.2 [33X[0;0YCreating transformations[133X
+      53.2-1 Transformation
+      53.2-2 Transformation
+      53.2-3 TransformationByImageAndKernel
+      53.2-4 Idempotent
+      53.2-5 TransformationOp
+      53.2-6 TransformationNumber
+      53.2-7 [33X[0;0YRandomTransformation[133X
+      53.2-8 IdentityTransformation
+      53.2-9 ConstantTransformation
+    53.3 [33X[0;0YChanging the representation of a transformation[133X
+      53.3-1 AsTransformation
+      53.3-2 RestrictedTransformation
+      53.3-3 PermutationOfImage
+    53.4 [33X[0;0YOperators for transformations[133X
+      53.4-1 PermLeftQuoTransformation
+      53.4-2 IsInjectiveListTrans
+      53.4-3 ComponentTransformationInt
+      53.4-4 PreImagesOfTransformation
+    53.5 [33X[0;0YAttributes for transformations[133X
+      53.5-1 DegreeOfTransformation
+      53.5-2 ImageListOfTransformation
+      53.5-3 ImageSetOfTransformation
+      53.5-4 RankOfTransformation
+      53.5-5 MovedPoints
+      53.5-6 NrMovedPoints
+      53.5-7 SmallestMovedPoint
+      53.5-8 LargestMovedPoint
+      53.5-9 SmallestImageOfMovedPoint
+      53.5-10 LargestImageOfMovedPoint
+      53.5-11 FlatKernelOfTransformation
+      53.5-12 KernelOfTransformation
+      53.5-13 InverseOfTransformation
+      53.5-14 Inverse
+      53.5-15 IndexPeriodOfTransformation
+      53.5-16 SmallestIdempotentPower
+      53.5-17 ComponentsOfTransformation
+      53.5-18 NrComponentsOfTransformation
+      53.5-19 ComponentRepsOfTransformation
+      53.5-20 CyclesOfTransformation
+      53.5-21 CycleTransformationInt
+      53.5-22 LeftOne
+      53.5-23 TrimTransformation
+    53.6 [33X[0;0YDisplaying transformations[133X
+    53.7 [33X[0;0YSemigroups of transformations[133X
+      53.7-1 IsTransformationSemigroup
+      53.7-2 DegreeOfTransformationSemigroup
+      53.7-3 FullTransformationSemigroup
+      53.7-4 IsFullTransformationSemigroup
+      53.7-5 IsomorphismTransformationSemigroup
+      53.7-6 AntiIsomorphismTransformationSemigroup
+  54 [33X[0;0YPartial permutations[133X
+    54.1 [33X[0;0YThe family and categories of partial permutations[133X
+      54.1-1 IsPartialPerm
+      54.1-2 IsPartialPermCollection
+      54.1-3 PartialPermFamily
+    54.2 [33X[0;0YCreating partial permutations[133X
+      54.2-1 PartialPerm
+      54.2-2 PartialPermOp
+      54.2-3 RestrictedPartialPerm
+      54.2-4 JoinOfPartialPerms
+      54.2-5 MeetOfPartialPerms
+      54.2-6 EmptyPartialPerm
+      54.2-7 [33X[0;0YRandomPartialPerm[133X
+    54.3 [33X[0;0YAttributes for partial permutations[133X
+      54.3-1 DegreeOfPartialPerm
+      54.3-2 CodegreeOfPartialPerm
+      54.3-3 RankOfPartialPerm
+      54.3-4 DomainOfPartialPerm
+      54.3-5 ImageOfPartialPermCollection
+      54.3-6 ImageListOfPartialPerm
+      54.3-7 ImageSetOfPartialPerm
+      54.3-8 FixedPointsOfPartialPerm
+      54.3-9 MovedPoints
+      54.3-10 NrFixedPoints
+      54.3-11 NrMovedPoints
+      54.3-12 SmallestMovedPoint
+      54.3-13 LargestMovedPoint
+      54.3-14 SmallestImageOfMovedPoint
+      54.3-15 LargestImageOfMovedPoint
+      54.3-16 IndexPeriodOfPartialPerm
+      54.3-17 SmallestIdempotentPower
+      54.3-18 ComponentsOfPartialPerm
+      54.3-19 NrComponentsOfPartialPerm
+      54.3-20 ComponentRepsOfPartialPerm
+      54.3-21 LeftOne
+      54.3-22 One
+      54.3-23 Zero
+    54.4 [33X[0;0YChanging the representation of a partial permutation[133X
+      54.4-1 AsPartialPerm
+      54.4-2 AsPartialPerm
+    54.5 [33X[0;0YOperators and operations for partial permutations[133X
+      54.5-1 PermLeftQuoPartialPerm
+      54.5-2 PreImagePartialPerm
+      54.5-3 ComponentPartialPermInt
+      54.5-4 NaturalLeqPartialPerm
+      54.5-5 ShortLexLeqPartialPerm
+      54.5-6 TrimPartialPerm
+    54.6 [33X[0;0YDisplaying partial permutations[133X
+    54.7 [33X[0;0YSemigroups and inverse semigroups of partial permutations[133X
+      54.7-1 IsPartialPermSemigroup
+      54.7-2 DegreeOfPartialPermSemigroup
+      54.7-3 SymmetricInverseSemigroup
+      54.7-4 IsSymmetricInverseSemigroup
+      54.7-5 NaturalPartialOrder
+      54.7-6 IsomorphismPartialPermMonoid
   55 [33X[0;0YAdditive Magmas[133X
     55.1 [33X[0;0Y(Near-)Additive Magma Categories[133X
       55.1-1 IsNearAdditiveMagma
@@ -3426,7 +3525,7 @@
     75.5 [33X[0;0YMinimal Nonmonomial Groups[133X
       75.5-1 IsMinimalNonmonomial
       75.5-2 MinimalNonmonomialGroup
-  76 [33X[0;0YGAP Packages[133X
+  76 [33X[0;0YUsing GAP Packages[133X
     76.1 [33X[0;0YInstalling a GAP Package[133X
     76.2 [33X[0;0YLoading a GAP Package[133X
       76.2-1 LoadPackage
@@ -3448,11 +3547,13 @@
       76.3-12 ValidatePackageInfo
       76.3-13 ShowPackageVariables
       76.3-14 BibEntry
+      76.3-15 Cite
   77 [33X[0;0YReplaced and Removed Command Names[133X
     77.1 [33X[0;0YGroup Actions – Name Changes[133X
     77.2 [33X[0;0YPackage Interface – Obsolete Functions and Name Changes[133X
     77.3 [33X[0;0YNormal Forms of Integer Matrices – Name Changes[133X
     77.4 [33X[0;0YMiscellaneous Name Changes or Removed Names[133X
+      77.4-1 InfoObsolete
     77.5 [33X[0;0YThe former .gaprc file[133X
   78 [33X[0;0YMethod Selection[133X
     78.1 [33X[0;0YOperations and Methods[133X

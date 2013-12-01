@@ -182,7 +182,7 @@
   [2XIsLeftNoetherian[102X  3.3-33
   [2XIsLeftOreDomain[102X  3.3-42
   [2XIsLeftPrincipalIdealRing[102X  3.3-45
-  [2XIsLeftRegular[102X (for homalg ring elements)  3.3-58
+  [2XIsLeftRegular[102X (for homalg ring elements)  3.3-59
   [2XIsLeftRegular[102X  5.3-7
   [2XIsLocal[102X  3.3-23
   [2XIsLocalizedWeylRing[102X  3.3-16
@@ -190,6 +190,7 @@
   [2XIsLowerTriangularMatrix[102X  5.3-16
   [2XIsMinusOne[102X  3.3-56
   [2XIsMonic[102X (for homalg ring elements)  3.3-57
+  [2XIsMonicUptoUnit[102X (for homalg ring elements)  3.3-58
   [2XIsMonomorphism[102X (for ring maps)  4.3-3
   [2XIsMorphism[102X (for ring maps)  4.3-1
   [2XIsNoetherian[102X  3.3-32
@@ -203,7 +204,7 @@
   [2XIsReducedBasisOfColumnsMatrix[102X  5.3-25
   [2XIsReducedBasisOfRowsMatrix[102X  5.3-24
   [2XIsRegular[102X  3.3-47
-  [2XIsRegular[102X (for homalg ring elements)  3.3-60
+  [2XIsRegular[102X (for homalg ring elements)  3.3-61
   [2XIsResidueClassRingOfTheIntegers[102X  3.3-7
   [2XIsRightArtinian[102X  3.3-40
   [2XIsRightFiniteFreePresentationRing[102X  3.3-50
@@ -214,7 +215,7 @@
   [2XIsRightNoetherian[102X  3.3-34
   [2XIsRightOreDomain[102X  3.3-43
   [2XIsRightPrincipalIdealRing[102X  3.3-46
-  [2XIsRightRegular[102X (for homalg ring elements)  3.3-59
+  [2XIsRightRegular[102X (for homalg ring elements)  3.3-60
   [2XIsRightRegular[102X  5.3-8
   [2XIsRingRelationsRep[102X  6.1-4
   [2XIsScalarlMatrix[102X  5.3-14

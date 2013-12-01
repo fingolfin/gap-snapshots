@@ -1,0 +1,256 @@
+\begin{theindex}
+
+  \item \texttt  {\texttt  {\char 92\relax }{\textless }}
+    \subitem for Green's classes, \hyperpage{34}
+
+  \indexspace
+
+  \item \texttt  {CanonicalForm}
+    \subitem for a free inverse semigroup element, \hyperpage{71}
+  \item \texttt  {ClosureInverseSemigroup}, \hyperpage{12}
+  \item \texttt  {ClosureSemigroup}, \hyperpage{13}
+  \item \texttt  {Component}\discretionary {-}{}{}\texttt  {Reps}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Transformation}\discretionary {-}{}{}\texttt  {Semigroup}, 
+		\hyperpage{50}
+
+  \indexspace
+
+  \item \texttt  {DClass}, \hyperpage{26}
+  \item \texttt  {DClasses}, \hyperpage{28}
+  \item \texttt  {DClassNC}, \hyperpage{27}
+  \item \texttt  {DClassOfHClass}, \hyperpage{25}
+  \item \texttt  {DClassOfLClass}, \hyperpage{25}
+  \item \texttt  {DClassOfRClass}, \hyperpage{25}
+  \item \texttt  {DClassReps}, \hyperpage{32}
+  \item \texttt  {DotDClasses}, \hyperpage{67}
+    \subitem for a semigroup, \hyperpage{67}
+
+  \indexspace
+
+  \item \texttt  {EnumeratePosition}, \hyperpage{73}
+  \item \texttt  {EvaluateWord}, \hyperpage{23}
+
+  \indexspace
+
+  \item \texttt  {Factorization}, \hyperpage{24}
+  \item \texttt  {FreeInverseSemigroup}
+    \subitem for a given rank, \hyperpage{70}
+    \subitem for a list of names, \hyperpage{70}
+    \subitem for various names, \hyperpage{70}
+  \item \texttt  {FullMatrixSemigroup}, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {GeneralLinearSemigroup}, \hyperpage{18}
+  \item \texttt  {Generators}, \hyperpage{43}
+  \item \texttt  {GreensDClasses}, \hyperpage{28}
+  \item \texttt  {GreensDClassOfElement}, \hyperpage{26}
+  \item \texttt  {GreensDClassOfElementNC}, \hyperpage{27}
+  \item \texttt  {GreensHClasses}, \hyperpage{28}
+  \item \texttt  {GreensHClassOfElement}, \hyperpage{26}
+  \item \texttt  {GreensHClassOfElementNC}, \hyperpage{27}
+  \item \texttt  {GreensJClasses}, \hyperpage{29}
+  \item \texttt  {GreensLClasses}, \hyperpage{29}
+  \item \texttt  {GreensLClassOfElement}, \hyperpage{26}
+  \item \texttt  {GreensLClassOfElementNC}, \hyperpage{27}
+  \item \texttt  {GreensRClasses}, \hyperpage{29}
+  \item \texttt  {GreensRClassOfElement}, \hyperpage{26}
+  \item \texttt  {GreensRClassOfElementNC}, \hyperpage{27}
+  \item \texttt  {GroupHClass}, \hyperpage{28}
+  \item \texttt  {GroupOfUnits}, \hyperpage{44}
+
+  \indexspace
+
+  \item \texttt  {HClass}, \hyperpage{26}
+  \item \texttt  {HClasses}, \hyperpage{29}
+  \item \texttt  {HClassNC}, \hyperpage{27}
+  \item \texttt  {HClassReps}, \hyperpage{32}
+
+  \indexspace
+
+  \item \texttt  {IdempotentGeneratedSubsemigroup}, \hyperpage{47}
+  \item \texttt  {Idempotents}, \hyperpage{45}
+  \item \texttt  {InfoSemigroups}, \hyperpage{8}
+  \item \texttt  {InjectionPrincipalFactor}, \hyperpage{34}
+  \item \texttt  {InverseSubsemigroupByProperty}, \hyperpage{14}
+  \item \texttt  {IrredundantGeneratingSubset}, \hyperpage{47}
+  \item \texttt  {IsAperiodicSemigroup}, \hyperpage{57}
+  \item \texttt  {IsBand}, \hyperpage{51}
+  \item \texttt  {IsBlockGroup}, \hyperpage{51}
+  \item \texttt  {IsBrandtSemigroup}, \hyperpage{61}
+  \item \texttt  {IsCliffordSemigroup}, \hyperpage{61}
+  \item \texttt  {IsCombinatorialSemigroup}, \hyperpage{57}
+  \item \texttt  {IsCommutativeSemigroup}, \hyperpage{52}
+  \item \texttt  {IsCompletelyRegularSemigroup}, \hyperpage{52}
+  \item \texttt  {IsCompletelySimpleSemigroup}, \hyperpage{58}
+  \item \texttt  {IsDTrivial}, \hyperpage{57}
+  \item \texttt  {IsFactorisableSemigroup}, \hyperpage{61}
+  \item \texttt  {IsFreeInverseSemigroup}, \hyperpage{70}
+  \item \texttt  {IsFreeInverseSemigroupElement}, \hyperpage{70}
+  \item \texttt  {IsFullMatrixSemigroup}, \hyperpage{18}
+  \item \texttt  {IsGeneralLinearSemigroup}, \hyperpage{18}
+  \item \texttt  {IsGreensClassNC}, \hyperpage{42}
+  \item \texttt  {IsGreensDLeq}, \hyperpage{42}
+  \item \texttt  {IsGroupAsSemigroup}, \hyperpage{53}
+  \item \texttt  {IsHTrivial}, \hyperpage{57}
+  \item \texttt  {IsIdempotentGenerated}, \hyperpage{53}
+  \item \texttt  {IsJoinIrreducible}, \hyperpage{62}
+  \item \texttt  {IsLeftSimple}, \hyperpage{53}
+  \item \texttt  {IsLeftZeroSemigroup}, \hyperpage{54}
+  \item \texttt  {IsLTrivial}, \hyperpage{57}
+  \item \texttt  {IsMajorantlyClosed}, \hyperpage{62}
+  \item \texttt  {IsMonogenicInverseSemigroup}, \hyperpage{63}
+  \item \texttt  {IsMonogenicSemigroup}, \hyperpage{54}
+  \item \texttt  {IsMonoidAsSemigroup}, \hyperpage{55}
+  \item \texttt  {IsomorphismPermGroup}, \hyperpage{16}
+  \item \texttt  {IsomorphismReesMatrixSemigroup}, \hyperpage{34}
+  \item \texttt  {IsomorphismTransformationMonoid}, \hyperpage{16}
+  \item \texttt  {IsomorphismTransformationSemigroup}, \hyperpage{16}
+  \item \texttt  {IsOrthodoxSemigroup}, \hyperpage{55}
+  \item \texttt  {IsPartialPermSemigroupGreensClass}, \hyperpage{42}
+  \item \texttt  {IsRectangularBand}, \hyperpage{56}
+  \item \texttt  {IsRegularClass}, \hyperpage{35}
+  \item \texttt  {IsRegularSemigroup}, \hyperpage{56}
+  \item \texttt  {IsRightSimple}, \hyperpage{53}
+  \item \texttt  {IsRightZeroSemigroup}, \hyperpage{56}
+  \item \texttt  {IsRTrivial}, \hyperpage{57}
+  \item \texttt  {IsSemiBand}, \hyperpage{53}
+  \item \texttt  {IsSemigroupWithCommutingIdempotents}, \hyperpage{51}
+  \item \texttt  {IsSemilatticeAsSemigroup}, \hyperpage{57}
+  \item \texttt  {IsSimpleSemigroup}, \hyperpage{58}
+  \item \texttt  {IsSynchronizingSemigroup}, \hyperpage{58}
+  \item \texttt  {IsTransformation}\discretionary {-}{}{}\texttt  {Semigroup}\discretionary {-}{}{}\texttt  {Greens}\discretionary {-}{}{}\texttt  {Class}, 
+		\hyperpage{42}
+  \item \texttt  {IsZeroGroup}, \hyperpage{58}
+  \item \texttt  {IsZeroRectangularBand}, \hyperpage{59}
+  \item \texttt  {IsZeroSemigroup}, \hyperpage{59}
+  \item \texttt  {IsZeroSimpleSemigroup}, \hyperpage{60}
+  \item \texttt  {IteratorOfDClasses}, \hyperpage{31}
+  \item \texttt  {IteratorOfDClassReps}, \hyperpage{30}
+  \item \texttt  {IteratorOfHClasses}, \hyperpage{31}
+  \item \texttt  {IteratorOfHClassReps}, \hyperpage{30}
+  \item \texttt  {IteratorOfLClasses}, \hyperpage{31}
+  \item \texttt  {IteratorOfLClassReps}, \hyperpage{30}
+  \item \texttt  {IteratorOfRClasses}, \hyperpage{31}
+  \item \texttt  {IteratorOfRClassReps}, \hyperpage{30}
+
+  \indexspace
+
+  \item \texttt  {JClasses}, \hyperpage{29}
+  \item \texttt  {JoinIrreducibleDClasses}, \hyperpage{63}
+
+  \indexspace
+
+  \item \texttt  {LClass}, \hyperpage{26}
+  \item \texttt  {LClasses}, \hyperpage{29}
+  \item \texttt  {LClassNC}, \hyperpage{27}
+  \item \texttt  {LClassOfHClass}, \hyperpage{25}
+  \item \texttt  {LClassReps}, \hyperpage{32}
+  \item \texttt  {LookForInOrb}, \hyperpage{73}
+
+  \indexspace
+
+  \item \texttt  {MajorantClosure}, \hyperpage{63}
+  \item \texttt  {MaximalDClasses}, \hyperpage{40}
+  \item \texttt  {MaximalSubsemigroups}, \hyperpage{50}
+  \item \texttt  {MinimalDClass}, \hyperpage{40}
+  \item \texttt  {MinimalIdeal}, \hyperpage{48}
+  \item \texttt  {MinimalWord}
+    \subitem for free inverse semigroup element, \hyperpage{71}
+  \item \texttt  {Minorants}, \hyperpage{64}
+  \item \texttt  {MultiplicativeNeutralElement}
+    \subitem for an H-class, \hyperpage{41}
+  \item \texttt  {MultiplicativeZero}, \hyperpage{48}
+  \item \texttt  {MunnSemigroup}, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {NrDClasses}, \hyperpage{37}
+  \item \texttt  {NrHClasses}, \hyperpage{37}
+  \item \texttt  {NrIdempotents}, \hyperpage{46}
+  \item \texttt  {NrLClasses}, \hyperpage{37}
+  \item \texttt  {NrRClasses}, \hyperpage{37}
+  \item \texttt  {NrRegularDClasses}, \hyperpage{36}
+
+  \indexspace
+
+  \item \texttt  {OrbSCC}, \hyperpage{74}
+  \item \texttt  {OrbSCCLookup}, \hyperpage{74}
+  \item \texttt  {OrbSCCTruthTable}, \hyperpage{74}
+  \item \texttt  {OrderEndomorphisms}
+    \subitem monoid of order preserving transformations, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {PartialOrderOfDClasses}, \hyperpage{38}
+  \item \texttt  {PartialTransformationSemigroup}, \hyperpage{18}
+  \item \texttt  {POI}
+    \subitem monoid of order preserving partial perms, \hyperpage{19}
+  \item \texttt  {POPI}
+    \subitem monoid of orientation preserving partial perms, 
+		\hyperpage{19}
+  \item \texttt  {PrimitiveIdempotents}, \hyperpage{64}
+  \item \texttt  {PrincipalFactor}, \hyperpage{35}
+
+  \indexspace
+
+  \item \texttt  {Random}
+    \subitem for a semigroup, \hyperpage{49}
+  \item \texttt  {RandomBinaryRelationMonoid}, \hyperpage{12}
+  \item \texttt  {RandomBinaryRelationSemigroup}, \hyperpage{12}
+  \item \texttt  {RandomInverseMonoid}, \hyperpage{11}
+  \item \texttt  {RandomInverseSemigroup}, \hyperpage{11}
+  \item \texttt  {RandomPartialPermMonoid}, \hyperpage{12}
+  \item \texttt  {RandomPartialPermSemigroup}, \hyperpage{12}
+  \item \texttt  {RandomTransformationMonoid}, \hyperpage{11}
+  \item \texttt  {RandomTransformationSemigroup}, \hyperpage{11}
+  \item \texttt  {RClass}, \hyperpage{26}
+  \item \texttt  {RClasses}, \hyperpage{29}
+  \item \texttt  {RClassNC}, \hyperpage{27}
+  \item \texttt  {RClassOfHClass}, \hyperpage{25}
+  \item \texttt  {RClassReps}, \hyperpage{32}
+  \item \texttt  {ReadGenerators}, \hyperpage{9}
+  \item \texttt  {RegularBinaryRelationSemigroup}, \hyperpage{20}
+  \item \texttt  {ReverseSchreierTreeOfSCC}, \hyperpage{75}
+  \item \texttt  {RightCosetsOfInverseSemigroup}, \hyperpage{65}
+
+  \indexspace
+
+  \item \texttt  {SameMinorantsSubgroup}, \hyperpage{65}
+  \item \texttt  {SchreierTreeOfSCC}, \hyperpage{76}
+  \item \texttt  {SchutzenbergerGroup}, \hyperpage{39}
+  \item \textsf{Semigroups} package overview, \hyperpage{5}
+  \item \texttt  {SemigroupsDir}, \hyperpage{8}
+  \item \texttt  {SemigroupsMakeDoc}, \hyperpage{7}
+  \item \texttt  {SemigroupsOptionsRec}, \hyperpage{16}
+  \item \texttt  {SemigroupsTestAll}, \hyperpage{8}
+  \item \texttt  {SemigroupsTestInstall}, \hyperpage{8}
+  \item \texttt  {SemigroupsTestManualExamples}, \hyperpage{8}
+  \item \texttt  {SingularTransformationSemigroup}, \hyperpage{20}
+  \item \texttt  {Smaller}\discretionary {-}{}{}\texttt  {Degree}\discretionary {-}{}{}\texttt  {Partial}\discretionary {-}{}{}\texttt  {Perm}\discretionary {-}{}{}\texttt  {Representation}, 
+		\hyperpage{66}
+  \item \texttt  {SmallGeneratingSet}, \hyperpage{49}
+  \item \texttt  {StructureDescription}
+    \subitem for an H-class, \hyperpage{42}
+  \item \texttt  {Structure}\discretionary {-}{}{}\texttt  {Description}\discretionary {-}{}{}\texttt  {Maximal}\discretionary {-}{}{}\texttt  {Subgroups}, 
+		\hyperpage{41}
+  \item \texttt  {Structure}\discretionary {-}{}{}\texttt  {Description}\discretionary {-}{}{}\texttt  {Schutzenberger}\discretionary {-}{}{}\texttt  {Groups}, 
+		\hyperpage{40}
+  \item \texttt  {SubsemigroupByProperty}
+    \subitem for a semigroup and function, \hyperpage{13}
+    \subitem for a semigroup, function, and limit on the size of the subsemigroup, 
+		\hyperpage{13}
+
+  \indexspace
+
+  \item \texttt  {TraceSchreierTreeOfSCCBack}, \hyperpage{76}
+  \item \texttt  {TraceSchreierTreeOfSCCForward}, \hyperpage{77}
+
+  \indexspace
+
+  \item \texttt  {VagnerPrestonRepresentation}, \hyperpage{66}
+
+  \indexspace
+
+  \item \texttt  {WriteGenerators}, \hyperpage{9}
+
+\end{theindex}

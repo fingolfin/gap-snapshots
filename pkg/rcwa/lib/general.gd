@@ -46,6 +46,14 @@ DeclareGlobalFunction( "AllSmoothIntegers" );
 
 #############################################################################
 ##
+#F  ExponentOfPrime( <n>, <p> )
+##
+##  The exponent of the prime <p> in the prime factorization of <n>.
+##
+DeclareGlobalFunction( "ExponentOfPrime" );
+
+#############################################################################
+##
 #O  AllProducts( <D>, <k> ) . . all products of <k>-tuples of elements of <D>
 #M  AllProducts( <l>, <k> ) . . . . . . . . . . . . . . . . . . . . for lists
 ##
@@ -92,12 +100,30 @@ DeclareGlobalFunction( "EpimorphismByGenerators" );
 
 #############################################################################
 ##
-#F  ReducedWordByOrdersOfGenerators( <w>, <orders> )
+#F  ReducedWordByOrdersOfGenerators( <w>, <gensords> )
 ##
-##  Reduce exponents of powers in a word modulo the orders of the
-##  corresponding generators.
+##  Given a word <w>, this function returns the word obtained from <w> by
+##  reducing the exponents of powers of generators modulo their orders, as
+##  specified in the list <gensords>.
 ##
 DeclareGlobalFunction( "ReducedWordByOrdersOfGenerators" );
+
+#############################################################################
+##
+#O  NormalizedRelator( <w>, <gensords> )
+##
+##  Given a word <w>, this operation returns its normal form obtained by
+##
+##    1. reducing the exponents of powers of generators modulo their orders,
+##       as specified in the list <gensords>,
+##    2. cyclic reduction and
+##    3. cyclic conjugation to the lexicographically smallest such conjugate.
+##
+##  As the name of the operation suggests, the main purpose of this operation
+##  is to get the relators in a finite presentation short and nice, and to be
+##  able to spot and remove redundant relators in easy cases.
+##
+DeclareOperation( "NormalizedRelator", [ IsAssocWord, IsList ] );
 
 #############################################################################
 ##

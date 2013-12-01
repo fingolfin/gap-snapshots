@@ -76,6 +76,37 @@
 ##  <#/GAPDoc>
 ##
 
+BIND_GLOBAL( "DeclareObsoleteSynonym", function( name_obsolete, name_current, desc )
+    local value, orig_value;
+    if not ForAll( [ name_obsolete, name_current, desc ], IsString ) then
+        Error("Each argument of DeclareObsoleteSynonym must be a string\n");
+    fi;
+    value := EvalString( name_current );
+    if IsFunction( value ) then
+        orig_value := value;
+        value := function (arg)
+            local res;
+            Info( InfoObsolete, 1, "'", name_obsolete, "' is obsolete.",
+                "\n#I  It may be removed in the future release of GAP ", desc,
+                "\n#I  Use ", name_current, " instead.");
+            # TODO: This will error out if orig_value is a function which returns nothing.
+            #return CallFuncList(orig_value, arg);
+            res := CALL_WITH_CATCH(orig_value, arg);
+            if Length(res) = 2 then
+                return res[2];
+            fi; 
+        end;
+    fi;
+    BIND_GLOBAL( name_obsolete, value );
+end );
+
+BIND_GLOBAL( "DeclareObsoleteSynonymAttr", function( name_obsolete, name_current, desc )
+    Assert(0, IsFunction( ValueGlobal( name_current ) ) );
+    DeclareObsoleteSynonym( name_obsolete, name_current, desc );
+    DeclareObsoleteSynonym( Concatenation("Set", name_obsolete), Concatenation("Set", name_current), desc );
+    DeclareObsoleteSynonym( Concatenation("Has", name_obsolete), Concatenation("Has", name_current), desc );
+end );
+
 
 #############################################################################
 ##
@@ -177,8 +208,7 @@ BindGlobal( "PACKAGES_VERSIONS", rec() );
 ##  Moved to obsoletes in May 2003. 
 ##  Still used in autpgrp, ctbllib, polycyclic, sophus.
 ##
-DeclareSynonymAttr( "NormedVectors", NormedRowVectors );
-
+DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors", "4.8" );
 
 #############################################################################
 ##
@@ -215,7 +245,7 @@ DeclareSynonymAttr( "NormedVectors", NormedRowVectors );
 ##  Moved to obsolete in Dec 2007, but as on Dec 2012 still used in ctbllib, 
 ##  gbnp, GradedModules, nilmat, rcwa and resclasses packages.
 ##
-BIND_GLOBAL( "FormattedString", String );
+DeclareObsoleteSynonym( "FormattedString", "String", "4.8" );
 
 
 #############################################################################
@@ -228,8 +258,8 @@ BIND_GLOBAL( "FormattedString", String );
 #F  Tuple( ... ) - still used by anupq, cubefree, fr, gpd, grpconst, openmath, 
 ##                 sonata (12/2012)
 ##
-DeclareSynonym( "IsTuple", IsDirectProductElement );
-DeclareSynonym( "Tuple", DirectProductElement );
+DeclareObsoleteSynonym( "IsTuple", "IsDirectProductElement", "4.8" );
+DeclareObsoleteSynonym( "Tuple", "DirectProductElement", "4.8" );
 
 ##  from GAPs "classical" random number generator:
 
@@ -291,15 +321,15 @@ BindGlobal( "RestoreStateRandom", function(seed)
 end);
 
 # older documentation referred to `StatusRandom'. 
-DeclareSynonym("StatusRandom",StateRandom);
+DeclareObsoleteSynonym( "StatusRandom", "StateRandom", "4.8" );
 
 # synonym formerly declared in factgrp.gd
 # Moved to obsoletes in October 2011, still used by xgap (12/2012)
-DeclareSynonym( "FactorCosetOperation",FactorCosetAction);
+DeclareObsoleteSynonym( "FactorCosetOperation", "FactorCosetAction", "4.8" );
 
 # synonym retained for backwards compatibility with GAP 4.4.
 # Moved to obsoletes in April 2012. Still used by grpconst, irredsol (12/2012)
-DeclareSynonym( "Complementclasses", ComplementClassesRepresentatives );
+DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives", "4.8" );
 
 
 #############################################################################
@@ -426,7 +456,7 @@ DeclareGlobalFunction( "ConnectGroupAndCharacterTable" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareSynonym( "MutableIdentityMat", IdentityMat );
+DeclareObsoleteSynonym( "MutableIdentityMat", "IdentityMat", "4.8" );
 
 
 #############################################################################
@@ -447,7 +477,7 @@ DeclareSynonym( "MutableIdentityMat", IdentityMat );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareSynonym( "MutableNullMat", NullMat );
+DeclareObsoleteSynonym( "MutableNullMat", "NullMat", "4.8" );
 
 
 #############################################################################

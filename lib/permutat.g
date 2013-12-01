@@ -11,7 +11,6 @@
 ##  This file deals with permutations.
 ##
 
-
 #############################################################################
 ##
 ##  <#GAPDoc Label="[1]{permutat}">
@@ -84,7 +83,7 @@
 ##
 DeclareCategoryKernel( "IsPerm",
     IsMultiplicativeElementWithInverse and IsAssociativeElement and
-        IsFiniteOrderElement,
+    IsFiniteOrderElement,
     IS_PERM );
 
 
@@ -684,35 +683,47 @@ end );
 ##
 #m  String( <perm> )  . . . . . . . . . . . . . . . . . . . for a permutation
 ##
-InstallMethod( String,
-    "for a permutation",
-    [ IsPerm ],
-    function( perm )
-    local   str,  i,  j;
+BIND_GLOBAL("DoStringPerm",function( perm,hint )
+local   str,  i,  j;
 
-    if IsOne( perm ) then
-        str := "()";
-    else
-        str := "";
-        for i  in [ 1 .. LargestMovedPoint( perm ) ]  do
-            j := i ^ perm;
-            while j > i  do j := j ^ perm;  od;
-            if j = i and i ^ perm <> i  then
-                Append( str, "(" );
-                Append( str, String( i ) );
-                j := i ^ perm;
-                while j > i do
-                    Append( str, "," );
-                    Append( str, String( j ) );
-                    j := j ^ perm;
-                od;
-                Append( str, ")" );
-            fi;
-        od;
-        ConvertToStringRep( str );
-    fi;
-    return str;
-    end );
+  if IsOne( perm ) then
+      str := "()";
+  else
+      str := "";
+      for i  in [ 1 .. LargestMovedPoint( perm ) ]  do
+	  j := i ^ perm;
+	  while j > i  do j := j ^ perm;  od;
+	  if j = i and i ^ perm <> i  then
+	      Append( str, "(" );
+	      Append( str, String( i ) );
+	      j := i ^ perm;
+	      while j > i do
+		  Append( str, "," );
+		  if hint then Append(str,"\<\>"); fi;
+		  Append( str, String( j ) );
+		  j := j ^ perm;
+	      od;
+	      Append( str, ")" );
+	      if hint then Append(str,"\<\<\>\>"); fi;
+	  fi;
+      od;
+      if Length(str)>4 and str{[Length(str)-3..Length(str)]}="\<\<\>\>" then
+	str:=str{[1..Length(str)-4]}; # remove tailing line breaker
+      fi;
+      ConvertToStringRep( str );
+  fi;
+  return str;
+end );
+
+InstallMethod( String, "for a permutation", [ IsPerm ],function(perm)
+  return DoStringPerm(perm,false);
+end);
+
+InstallMethod( ViewString, "for a permutation", [ IsPerm ],function(perm)
+  return DoStringPerm(perm,true);
+end);
+
+ 
 
 
 #############################################################################

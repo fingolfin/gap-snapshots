@@ -96,9 +96,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X781617F678CC0BA8">3.3-55 AreUnitsCentral</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85B6710082984863">3.3-56 IsMinusOne</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A0A3A927BE3F352">3.3-57 IsMonic</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811A01D5803ADCA3">3.3-58 IsLeftRegular</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E99731F83A41777">3.3-59 IsRightRegular</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80A3294C834D8F21">3.3-60 IsRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X785EF83B8054D2FF">3.3-58 IsMonicUptoUnit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811A01D5803ADCA3">3.3-59 IsLeftRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E99731F83A41777">3.3-60 IsRightRegular</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80A3294C834D8F21">3.3-61 IsRegular</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X867290E7847A5101">3.4 <span class="Heading">Rings: Attributes</span></a>
 </span>
@@ -302,6 +303,10 @@ Z/( 256 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Z256 );</span>
 &lt;A residue class ring&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Z2 := Z256 / 6;</span>
+Z/( 256, 6 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BasisOfRows( MatrixOfRelations( Z2 ) );</span>
+&lt;An unevaluated non-zero 1 x 1 matrix over an internal ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Z2;</span>
 Z/( 2 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Z2 );</span>
 &lt;A residue class ring&gt;
@@ -842,9 +847,18 @@ Z/( 2 )
 
 <p>Check if the <strong class="pkg">homalg</strong> ring element <var class="Arg">r</var> is monic.</p>
 
+<p><a id="X785EF83B8054D2FF" name="X785EF83B8054D2FF"></a></p>
+
+<h5>3.3-58 IsMonicUptoUnit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonicUptoUnit</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Check if leading coefficient of the <strong class="pkg">homalg</strong> ring element <var class="Arg">r</var> is a unit.</p>
+
 <p><a id="X811A01D5803ADCA3" name="X811A01D5803ADCA3"></a></p>
 
-<h5>3.3-58 IsLeftRegular</h5>
+<h5>3.3-59 IsLeftRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
@@ -853,7 +867,7 @@ Z/( 2 )
 
 <p><a id="X7E99731F83A41777" name="X7E99731F83A41777"></a></p>
 
-<h5>3.3-59 IsRightRegular</h5>
+<h5>3.3-60 IsRightRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
@@ -862,7 +876,7 @@ Z/( 2 )
 
 <p><a id="X80A3294C834D8F21" name="X80A3294C834D8F21"></a></p>
 
-<h5>3.3-60 IsRegular</h5>
+<h5>3.3-61 IsRegular</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">r</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p>Returns: <code class="code">true</code> or <code class="code">false</code></p>

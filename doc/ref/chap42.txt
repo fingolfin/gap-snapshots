@@ -282,3 +282,49 @@
     [4X[28X(3,4)[128X[104X
   [4X[32X[104X
   
+  [1X42.5-5 AsPermutation[101X
+  
+  [29X[2XAsPermutation[102X( [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA permutation or [9Xfail[109X.[133X
+  
+  [33X[0;0YPartial   permutations   and   transformations   which  define  permutations
+  (mathematically) can be converted into [5XGAP[105X permutations using [10XAsPermutation[110X;
+  see  Chapters  [14X53[114X  and [14X54[114X for more details about transformations and partial
+  permutations.[133X
+  
+  [8Xfor partial permutations[108X
+        [33X[0;6YIf  the  partial  permutation  [3Xf[103X  is  a permutation of its image, then
+        [10XAsPermutation[110X  returns  this  permutation.  If  [3Xf[103X does not permute its
+        image, then [9Xfail[109X is returned.[133X
+  
+  [8Xfor transformations[108X
+        [33X[0;6YA  transformation  is a permutation if and only if its rank equals its
+        degree.   If   a   transformation   in  [5XGAP[105X  is  a  permutation,  then
+        [10XAsPermutation[110X  returns  this  permutation.  If [3Xf[103X is not a permutation,
+        then [9Xfail[109X is returned.[133X
+  
+  [33X[0;0YThe  function  [2XPermutation[102X  ([14X41.9-1[114X)  can  also  be  used to convert partial
+  permutations and transformations into permutations where appropriate.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],[127X[104X
+    [4X[25X>[125X [27X[ 2, 7, 9, 4, 1, 10, 5, 6, 3, 8 ] );[127X[104X
+    [4X[28X(1,2,7,5)(3,9)(4)(6,10,8)[128X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28X(1,2,7,5)(3,9)(6,10,8)[128X[104X
+    [4X[25Xgap>[125X [27Xf:= PartialPerm( [ 1, 2, 3, 4, 5, 7, 8 ], [ 5, 3, 8, 1, 9, 4, 10 ] );[127X[104X
+    [4X[28X[2,3,8,10][7,4,1,5,9][128X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28Xfail  [128X[104X
+    [4X[25Xgap>[125X [27Xf:=Transformation( [ 1, 3, 6, 6, 2, 10, 2, 3, 10, 5 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Transformation( [ 2, 7, 9, 4, 1, 10, 5, 6, 3, 8 ] );[127X[104X
+    [4X[28XTransformation( [ 2, 7, 9, 4, 1, 10, 5, 6, 3, 8 ] )[128X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28X(1,2,7,5)(3,9)(6,10,8)[128X[104X
+  [4X[32X[104X
+  

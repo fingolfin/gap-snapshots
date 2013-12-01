@@ -98,15 +98,18 @@
 {\Huge \textbf{Localize Commutative \textsf{homalg} Rings at Maximal Ideals\mbox{}}}\\
 \vfill
 
-{\Huge Version 2012.10.26\mbox{}}\\[1cm]
-{October 2012\mbox{}}\\[1cm]
+{\Huge Version 2013.11.11\mbox{}}\\[1cm]
+{October 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
 {\Large \textbf{Markus Lange-Hegermann\\
     \mbox{}}}\\
+{\Large \textbf{Vinay Wagh\\
+    \mbox{}}}\\
 \hypersetup{pdfauthor=Mohamed Barakat\\
     ; Markus Lange-Hegermann\\
+    ; Vinay Wagh\\
     }
 \mbox{}\\[2cm]
 \begin{minipage}{12cm}\noindent
@@ -137,13 +140,23 @@
  Lehrstuhl B f{\"u}r Mathematik, RWTH Aachen, Templergraben 64, 52056 Aachen,
 Germany \end{minipage}
 }\\
+{\mbox{}\\
+\small \noindent \textbf{Vinay Wagh\\
+    }  Email: \href{mailto://waghoba@gmail.com} {\texttt{waghoba@gmail.com}}\\
+  Homepage: \href{http://www.iitg.ernet.in/vinay.wagh/} {\texttt{http://www.iitg.ernet.in/vinay.wagh/}}\\
+  Address: \begin{minipage}[t]{8cm}\noindent
+ E-102, Department of Mathematics, \\
+ Indian Institute of Technology Guwahati, \\
+ Guwahati, Assam, India. \\
+ PIN: 781 039. \end{minipage}
+}\\
 \end{titlepage}
 
 \newpage\setcounter{page}{2}
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2009-2012 by Mohamed Barakat and Markus Lange-Hegermann 
+ {\copyright} 2009-2013 by Mohamed Barakat and Markus Lange-Hegermann 
 
  This package may be distributed under the terms and conditions of the GNU
 Public License Version 2. \mbox{}}\\[1cm]
@@ -915,7 +928,7 @@ functor $Hom(Hom(-,R/2^7R),R/2^4R)$ (and its left derived functors) applied to t
  Try a localization of a residue class ring: 
 \begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>B !gapinput@R1 := Qxy / ec;B
-  Q[x,y]/( x^3+x^2-2*y^2 )
+  Q[x,y]/( -x^3-x^2+2*y^2 )
   !gapprompt@gap>B !gapinput@Display( R1 );B
   <A residue class ring>
   !gapprompt@gap>B !gapinput@wmat1 := R1 * wmat;B
@@ -968,7 +981,7 @@ functor $Hom(Hom(-,R/2^7R),R/2^4R)$ (and its left derived functors) applied to t
   !gapprompt@gap>| !gapinput@wmat0 := R0 * wmat;|
   <A 2 x 2 matrix over a local ring>
   !gapprompt@gap>| !gapinput@R01 := R0 / ( ec / R0 );|
-  Q[x,y]_< x, y >/( (x^3+x^2-2*y^2)/1 )
+  Q[x,y]_< x, y >/( (-x^3-x^2+2*y^2)/1 )
   !gapprompt@gap>| !gapinput@Display( R01 );|
   <A residue class ring>
   !gapprompt@gap>| !gapinput@wmat01 := R01 * wmat0;|

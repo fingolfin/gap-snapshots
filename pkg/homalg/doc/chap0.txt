@@ -6,10 +6,10 @@
       [1XA homological algebra meta-package for computable Abelian categories[101X
   
   
-                               Version 2012.10.28
+                               Version 2013.10.10
   
   
-                                  October 2012
+                                   July 2013
   
   
                                 Mohamed Barakat
@@ -48,7 +48,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2007-2012 by Mohamed Barakat and Markus Lange-Hegermann[133X
+  [33X[0;0Y© 2007-2013 by Mohamed Barakat and Markus Lange-Hegermann[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2.[133X
@@ -259,6 +259,7 @@
     5.3 [33X[0;0YElements: Properties[133X
       5.3-1 IsZero
       5.3-2 IsCyclicGenerator
+      5.3-3 IsTorsion
     5.4 [33X[0;0YElements: Attributes[133X
       5.4-1 Annihilator
     5.5 [33X[0;0YElements: Operations and Functions[133X
@@ -284,7 +285,7 @@
       6.3-10 IsTriangle
       6.3-11 IsExactTriangle
     6.4 [33X[0;0YComplexes: Attributes[133X
-      6.4-1 BettiDiagram
+      6.4-1 BettiTable
       6.4-2 FiltrationByShortExactSequence
     6.5 [33X[0;0YComplexes: Operations and Functions[133X
       6.5-1 Add

@@ -1,0 +1,35 @@
+\BOOKMARK [0][-]{chapter.1}{The Semigroups package}{}% 1
+\BOOKMARK [1][-]{section.1.1}{An important note}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Introduction}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Installing the Semigroups package}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Compiling the documentation}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{Testing the installation}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{More information during a computation}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{Reading and writing transformations and partial permutations to a file}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{Use R-classes not L-classes}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{New methods for existing functions}{chapter.1}% 10
+\BOOKMARK [0][-]{chapter.2}{Creating semigroups and monoids}{}% 11
+\BOOKMARK [1][-]{section.2.1}{Random semigroups}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.2}{New semigroups from old}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.3}{Options when creating semigroups}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.4}{Changing the representation of a semigroup}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.5}{Standard examples}{chapter.2}% 16
+\BOOKMARK [1][-]{section.2.6}{The examples directory}{chapter.2}% 17
+\BOOKMARK [0][-]{chapter.3}{ Determining the structure of a semigroup }{}% 18
+\BOOKMARK [1][-]{section.3.1}{Expressing semigroup elements as words in generators}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.2}{Creating Green's classes}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{Iterators and enumerators of classes and representatives }{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.4}{Attributes and properties directly related to Green's classes}{chapter.3}% 22
+\BOOKMARK [1][-]{section.3.5}{Further attributes of semigroups}{chapter.3}% 23
+\BOOKMARK [1][-]{section.3.6}{Further properties of semigroups}{chapter.3}% 24
+\BOOKMARK [1][-]{section.3.7}{Properties and attributes of inverse semigroups}{chapter.3}% 25
+\BOOKMARK [1][-]{section.3.8}{Visualising the D-class structure}{chapter.3}% 26
+\BOOKMARK [0][-]{chapter.4}{Free inverse semigroups}{}% 27
+\BOOKMARK [1][-]{section.4.1}{ Free inverse semigroups}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.2}{ Displaying free inverse semigroup elements }{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.3}{Operators and operations for free inverse semigroup elements }{chapter.4}% 30
+\BOOKMARK [0][-]{chapter.5}{ Orbits }{}% 31
+\BOOKMARK [1][-]{section.5.1}{Looking for something in an orbit}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.2}{Strongly connected components of orbits}{chapter.5}% 33
+\BOOKMARK [0][-]{chapter*.5}{References}{}% 34
+\BOOKMARK [0][-]{section*.6}{Index}{}% 35

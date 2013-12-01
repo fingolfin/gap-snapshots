@@ -16,9 +16,9 @@
   
   [1X5.4 [33X[0;0YGradedModules: Attributes[133X[101X
   
-  [1X5.4-1 BettiDiagram[101X
+  [1X5.4-1 BettiTable[101X
   
-  [29X[2XBettiDiagram[102X( [3XM[103X ) [32X attribute
+  [29X[2XBettiTable[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X diagram[133X
   
   [33X[0;0YThe Betti diagram of the [5Xhomalg[105X graded module [3XM[103X.[133X

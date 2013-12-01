@@ -16,21 +16,16 @@
 
 #############################################################################
 ##
-#M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
 ##
-InstallMethod( ViewString, "for a rational (ResClasses)", true, [ IsRat ], 0,
-               function ( rat )
-                 if IsInt(rat) or (IsBoundGlobal("Z_PI_RCWAMAPPING_FAMILIES")
-                   and Length(ValueGlobal("Z_PI_RCWAMAPPING_FAMILIES")) >= 1)
-                 then return String(rat);
-                 else TryNextMethod(); fi;
-               end );
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
-InstallMethod( ViewString, "for a string (ResClasses)", true,
-               [ IsString ], 0, String );
+
+if CompareVersionNumbers(GAPInfo.Version,"4.7.1") <> true then
+  InstallMethod( ViewString, "for a string (ResClasses)", true,
+                 [ IsString ], 5, str -> Concatenation( "\"", str, "\"" ) );
+fi;
 
 #############################################################################
 ##
@@ -42,26 +37,25 @@ InstallMethod( ViewString,
 
   function ( P )
 
-    local  str, R, F, F_el, F_elints, lngs1, lngs2, i;
+    local  str, R, F, coeffs, coeffstrings, coeffintstrings, i;
 
-    str := String(P);
     if   ValueGlobal("GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES") = []
     then TryNextMethod(); fi;
+
+    str := String(P);
 
     R := DefaultRing(P);
     F := LeftActingDomain(R);
     if not IsFinite(F) then TryNextMethod(); fi;
     if not IsPrimeField(F) then return str; fi;
 
-    F_el     := List(AsList(F),String);
-    F_elints := List(List(AsList(F),Int),String);
-    lngs1    := -List(F_el,Length);
-    lngs2    := ShallowCopy(lngs1);
-    SortParallel(lngs1,F_el);
-    SortParallel(lngs2,F_elints);
+    coeffs          := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
+    coeffs          := Concatenation(coeffs,[Zero(F),One(F)]);
+    coeffstrings    := List(coeffs,String);
+    coeffintstrings := List(List(coeffs,Int),String);
 
-    for i in [1..Length(F_el)] do
-      str := ReplacedString(str,F_el[i],F_elints[i]);
+    for i in [1..Length(coeffstrings)] do
+      str := ReplacedString(str,coeffstrings[i],coeffintstrings[i]);
     od;
 
     return str;
@@ -273,6 +267,17 @@ InstallGlobalFunction( BlankFreeString,
 
     str := String(obj);
     RemoveCharacters(str," ");
+    return str;
+  end );
+
+#############################################################################
+##
+#F  QuotesStripped( <obj> ) . . . . . . . . . . . . . . string without blanks
+##
+InstallGlobalFunction( QuotesStripped,
+
+  function ( str )
+    RemoveCharacters(str,"\"");
     return str;
   end );
 

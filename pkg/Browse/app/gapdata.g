@@ -37,13 +37,18 @@
 ##  and the table of choices is closed.
 ##  <P/>
 ##  The idea is that each entry of <C>BrowseData.GapDataOverviews</C>
-##  describes an overview of a &GAP; data collection.
+##  describes an overview of a data collection.
 ##  <P/>
 ##  The &Browse; package provides overviews of
 ##  <List>
 ##  <Item>
-##      the contents of the <Package>AtlasRep</Package> package (only if this
-##      package is loaded, see Section&nbsp;<Ref Sect="sec:atlasdisp"/>),
+##      the current AMS Mathematics Subject Classification codes
+##      (see <Ref Func="BrowseMSC"/>),
+##  </Item>
+##  <Item>
+##      the contents of the <Package>AtlasRep</Package> package
+##      <Cite Key="AtlasRep"/> (only if this package is loaded,
+##      see Section&nbsp;<Ref Sect="sec:atlasdisp"/>),
 ##  </Item>
 ##  <Item>
 ##      <Index Key="BrowseConwayPolynomials" Subkey="see BrowseGapData">
@@ -56,7 +61,10 @@
 ##      (see Section&nbsp;<Ref Sect="sec:profiledisp"/>),
 ##  </Item>
 ##  <Item>
-##      the &GAP; bibliography (see Section&nbsp;<Ref Sect="sec:gapbibl"/>),
+##      the list of &GAP; related bibliography entries in the file
+##      <F>bibl/gap-publishednicer.bib</F> of the <Package>Browse</Package>
+##      package
+##      (see Section&nbsp;<Ref Sect="sec:gapbibl"/>),
 ##  </Item>
 ##  <Item>
 ##      the &GAP; manuals (see Section&nbsp;<Ref Sect="sec:manualdisp"/>),
@@ -74,16 +82,55 @@
 ##      (calls <C>BrowseGapPackages()</C>),
 ##  </Item>
 ##  <Item>
-##      and &GAP;'s Library of Transitive Groups
+##      &GAP;'s user preferences
+##      (see Section&nbsp;<Ref Sect="sec:userpref"/>),
+##  </Item>
+##  <Item>
+##      the contents of the <Package>TomLib</Package> package
+##      <Cite Key="TomLib"/> (only if this package is loaded,
+##      see Section&nbsp;<Ref Sect="sect:tomlibinfo"/>),
+##  </Item>
+##  <Item>
+##      &GAP;'s Library of Transitive Groups
 ##      (see Section&nbsp;<Ref Sect="sect:transgrps"/>).
 ##  </Item>
 ##  </List>
 ##  <P/>
 ##  Other &GAP; packages may add more overviews,
 ##  using the function <Ref Func="BrowseGapDataAdd"/>.
-##  <!-- add references to the MFER package, to TomLib? -->
-##  <!-- there are ``Bibliography of Sporadic Simple Groups'' and
-##  ``Minimal Degrees of Representations'' -->
+##  For example, there are overviews of
+##  <List>
+##  <Item>
+##      the bibliographies in the <Package>ATLAS</Package> of Finite Groups
+##      <Cite Key="CCN85"/> and in the
+##      <Package>ATLAS</Package> of Brauer Characters <Cite Key="JLPW95"/>
+##      (see
+##      <Ref Func="BrowseBibliographySporadicSimple" BookName="atlasrep"/>),
+##  </Item>
+##  <Item>
+##      atomic irrationalities that occur in character tables in the
+##      <Package>ATLAS</Package> of Finite Groups <Cite Key="CCN85"/>
+##      or the <Package>ATLAS</Package> of Brauer Characters
+##      <Cite Key="JLPW95"/> (see
+##      Section <Ref Func="BrowseCommonIrrationalities" BookName="ctbllib"/>),
+##  </Item>
+##  <Item>
+##      the differences between the versions of the character table data
+##      in the <Package>CTblLib</Package> package (see Section
+##      <Ref Func="BrowseCTblLibDifferences" BookName="ctbllib"/>),
+##  </Item>
+##  <Item>
+##      the information in &GAP; Character Table Library
+##      (see Section <Ref Func="BrowseCTblLibInfo" BookName="ctbllib"/>),
+##  </Item>
+##  <Item>
+##      an overview of minimal degrees of representations of groups from the
+##      <Package>ATLAS</Package> of Group Representations
+##      (see Section <Ref Func="BrowseMinimalDegrees" BookName="atlasrep"/>).
+##  </Item>
+##  </List>
+##  <!-- add reference to the MFER package? -->
+##  <!-- as soon as BrowseMOSS becomes public, add it -->
 ##  <P/>
 ##  Except that always one table cell is selected,
 ##  the full functionality of the function

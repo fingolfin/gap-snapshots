@@ -264,9 +264,9 @@
   
   [1X6.4 [33X[0;0YComplexes: Attributes[133X[101X
   
-  [1X6.4-1 BettiDiagram[101X
+  [1X6.4-1 BettiTable[101X
   
-  [29X[2XBettiDiagram[102X( [3XC[103X ) [32X attribute
+  [29X[2XBettiTable[102X( [3XC[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X diagram[133X
   
   [33X[0;0YThe Betti diagram of the [5Xhomalg[105X complex [3XC[103X of graded modules.[133X

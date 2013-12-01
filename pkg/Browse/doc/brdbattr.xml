@@ -525,5 +525,17 @@ how these two functionalities are implemented.
 
 </Section>
 
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="sect:tomlibinfo">
+<Heading>Example: An Overview of the &GAP; Library of Tables of Marks
+</Heading>
+
+The example shown in this section deals with &GAP;'s Library of
+Tables of Marks (the <Package>TomLib</Package> package <Cite Key="TomLib"/>).
+
+<#Include Label="BrowseTomLibInfo_man">
+
+</Section>
+
 </Appendix>
 

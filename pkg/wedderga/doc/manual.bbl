@@ -5,6 +5,27 @@ O.~Broche and {\a'A}.~del R{\a'\i}o.
 \newblock Wedderburn decomposition of finite group algebras.
 \newblock {\em Finite Fields Appl.}, 13(1):71{\textendash}79, 2007.
 
+\bibitem[Ben76]{B}
+M.~Benard.
+\newblock Schur indices and cyclic defect groups.
+\newblock {\em Ann. of Math. (2)}, 103(2):283{\textendash}304, 1976.
+
+\bibitem[BS72]{BS}
+M.~Benard and M.~Schacher.
+\newblock The schur subgroup. ii.
+\newblock {\em J. Algebra}, 22(1):378{\textendash}385, 1972.
+
+\bibitem[Jan75]{J}
+G.~Janusz.
+\newblock Generators for the schur group of local and global number fields.
+\newblock {\em Pacific J. Math.}, 56(2):525{\textendash}546, 1975.
+
+\bibitem[Nav98]{N}
+G.~Navarro.
+\newblock {\em Characters and Blocks of Finite Groups}, volume 250 of {\em
+  Lecture Note Series}.
+\newblock London Mathematical Society, Cambridge, UK, 1998.
+
 \bibitem[OdR03]{OR}
 A.~Olivieri and {\a'A}.~del R{\a'\i}o.
 \newblock An algorithm to compute the primitive central idempotents and the
@@ -40,6 +61,12 @@ D.~S. Passman.
   Mathematics}.
 \newblock Academic Press Inc., Boston, MA, 1989.
 
+\bibitem[Pie82]{Pi}
+R.~S. Pierce.
+\newblock {\em Associative Algebras}, volume~88 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer Verlag, New York - Berlin, 1982.
+
 \bibitem[Rei03]{R}
 I.~Reiner.
 \newblock {\em Maximal orders}, volume~28 of {\em London Mathematical Society
@@ -47,6 +74,16 @@ I.~Reiner.
 \newblock The Clarendon Press Oxford University Press, Oxford, 2003.
 \newblock Corrected reprint of the 1975 original, With a foreword by M. J.
   Taylor.
+
+\bibitem[RS96]{RSch}
+U.~Riese and P.~Schmid.
+\newblock Schur indices and schur groups, ii.
+\newblock {\em J. Algebra}, 182(1):183{\textendash}200, 1996.
+
+\bibitem[Sch94]{Sch}
+P.~Schmid.
+\newblock Schur indices and schur groups.
+\newblock {\em J. Algebra}, 169(15):226{\textendash}247, 1994.
 
 \bibitem[Sho33]{S}
 K.~Shoda.

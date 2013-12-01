@@ -47,17 +47,20 @@
 \BOOKMARK [1][-]{section.10.5}{Tool Functors}{chapter.10}
 \BOOKMARK [1][-]{section.10.6}{Other Functors}{chapter.10}
 \BOOKMARK [1][-]{section.10.7}{Functors: Operations and Functions}{chapter.10}
-\BOOKMARK [0][-]{chapter.11}{Exterior Algebra and Koszul Complex}{}
-\BOOKMARK [1][-]{section.11.1}{Exterior Algebra: Constructor}{chapter.11}
-\BOOKMARK [1][-]{section.11.2}{Exterior Algebra: Properties and Attributes}{chapter.11}
-\BOOKMARK [1][-]{section.11.3}{Exterior Algebra: Element Properties}{chapter.11}
-\BOOKMARK [1][-]{section.11.4}{Exterior Algebra: Element Operations}{chapter.11}
-\BOOKMARK [1][-]{section.11.5}{Koszul complex and Cayley determinant}{chapter.11}
-\BOOKMARK [0][-]{chapter.12}{Examples}{}
-\BOOKMARK [1][-]{section.12.1}{ExtExt}{chapter.12}
-\BOOKMARK [1][-]{section.12.2}{Purity}{chapter.12}
-\BOOKMARK [1][-]{section.12.3}{TorExt-Grothendieck}{chapter.12}
-\BOOKMARK [1][-]{section.12.4}{TorExt}{chapter.12}
+\BOOKMARK [0][-]{chapter.11}{Symmetric Algebra and Koszul Complex}{}
+\BOOKMARK [1][-]{section.11.1}{Symmetric Algebra: Constructor}{chapter.11}
+\BOOKMARK [1][-]{section.11.2}{Symmetric Algebra: Properties and Attributes}{chapter.11}
+\BOOKMARK [0][-]{chapter.12}{Exterior Algebra and Koszul Complex}{}
+\BOOKMARK [1][-]{section.12.1}{Exterior Algebra: Constructor}{chapter.12}
+\BOOKMARK [1][-]{section.12.2}{Exterior Algebra: Properties and Attributes}{chapter.12}
+\BOOKMARK [1][-]{section.12.3}{Exterior Algebra: Element Properties}{chapter.12}
+\BOOKMARK [1][-]{section.12.4}{Exterior Algebra: Element Operations}{chapter.12}
+\BOOKMARK [1][-]{section.12.5}{Koszul complex and Cayley determinant}{chapter.12}
+\BOOKMARK [0][-]{chapter.13}{Examples}{}
+\BOOKMARK [1][-]{section.13.1}{ExtExt}{chapter.13}
+\BOOKMARK [1][-]{section.13.2}{Purity}{chapter.13}
+\BOOKMARK [1][-]{section.13.3}{TorExt-Grothendieck}{chapter.13}
+\BOOKMARK [1][-]{section.13.4}{TorExt}{chapter.13}
 \BOOKMARK [0][-]{appendix.A}{The Mathematical Idea behind Modules}{}
 \BOOKMARK [0][-]{appendix.B}{Logic Subpackages}{}
 \BOOKMARK [1][-]{section.B.1}{LIMOD: Logical Implications for Modules}{appendix.B}

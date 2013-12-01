@@ -9,4 +9,10 @@
 ##
 #############################################################################
 
-DeclareGlobalFunction( "AutoDoc_WriteEntry" );
+DeclareGlobalFunction( "AUTODOC_OutputTextFile" );
+
+DeclareGlobalFunction( "AutoDoc_CreateCompleteEntry" );
+
+DeclareGlobalFunction( "AutoDoc_CreateCompleteEntry_WithOptions" );
+
+DeclareGlobalFunction( "AutoDoc_WriteDocEntry" );

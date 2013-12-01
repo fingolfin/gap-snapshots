@@ -555,8 +555,9 @@
   [4X[32X[104X
   
   [33X[0;0YThis  output  format is always used for [2XDisplay[102X. For [2XViewObj[102X it is used only
-  if its length would not exceed [10XViewLength()[110X lines. Longer output is replaced
-  by [10X<<an element of GF([3Xp[103X[10X, [3Xd[103X[10X)>>[110X.[133X
+  if  its  length  would  not exceed the number of lines specified in the user
+  preference  [10XViewLength[110X  (see  [2XSetUserPreference[102X  ([14X3.2-3[114X).  Longer  output is
+  replaced by [10X<<an element of GF([3Xp[103X[10X, [3Xd[103X[10X)>>[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XZ(2,409)^100000;[127X[104X

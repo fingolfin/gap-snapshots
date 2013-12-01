@@ -449,6 +449,22 @@ InstallMethod( ConjugacyClasses, "for natural sl", true,
                0,
     G -> ConjugacyClassesOfNaturalGroup( G, true ) );
 
+#############################################################################
+##
+#M  ConjugacyClasses
+##
+InstallMethod(ConjugacyClasses,"matrix groups: test naturality",true,
+  [IsFFEMatrixGroup and IsFinite and IsHandledByNiceMonomorphism],0,
+function(g)
+local mon,cl,clg,c,i;
+  if (((not HasIsNaturalGL(g)) and IsNaturalGL(g))
+      or ((not HasIsNaturalSL(g)) and IsNaturalSL(g))) then
+    # redispatch as we found something out
+    return ConjugacyClasses(g);
+  fi;
+  TryNextMethod();
+end);
+
 
 #############################################################################
 ##

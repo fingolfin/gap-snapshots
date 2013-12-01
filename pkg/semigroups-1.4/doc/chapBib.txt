@@ -1,0 +1,29 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XGGR68[120X]  [16XGraham,  N.,  Graham,  R.  and Rhodes, J.[116X, [17XMaximal subsemigroups of
+  finite semigroups[117X, [18XJ. Combinatorial Theory[118X, [19X4[119X (1968), 203--209.
+  
+  [[20XHow95[120X]  [16XHowie, J. M.[116X, [17XFundamentals of semigroup theory[117X, The Clarendon Press
+  Oxford University Press, London Mathematical Society Monographs. New Series,
+  [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).
+  
+  [[20XLM90[120X]  [16XLallement,  G.  and  McFadden,  R.[116X,  [17XOn the determination of Green's
+  relations  in  finite  transformation semigroups[117X, [18XJ. Symbolic Comput.[118X, [19X10[119X, 5
+  (1990), 481--498.
+  
+  [[20XLPRR98[120X] [16XLinton, S. A., Pfeiffer, G., Robertson, E. F. and Ru{\v{s}}kuc, N.[116X,
+  [17XGroups  and  actions  in transformation semigroups[117X, [18XMath. Z.[118X, [19X228[119X, 3 (1998),
+  435--450.
+  
+  [[20XLPRR02[120X] [16XLinton, S. A., Pfeiffer, G., Robertson, E. F. and Ru{\v{s}}kuc, N.[116X,
+  [17XComputing  transformation  semigroups[117X,  [18XJ.  Symbolic  Comput.[118X, [19X33[119X, 2 (2002),
+  145--162.
+  
+  [[20XSch92[120X]  [16XSchein,  B.  M.[116X,  [17XThe minimal degree of a finite inverse semigroup[117X,
+  [18XTrans. Amer. Math. Soc.[118X, [19X333[119X, 2 (1992), 877--888.
+  
+  
+  
+  [32X

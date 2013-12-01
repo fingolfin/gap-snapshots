@@ -13,8 +13,8 @@
   [2XBrowseAtlasInfo[102X (overview for one group)  6.5-1
   [2XBrowseAtlasInfo[102X (overview of groups)  6.5-1
   [2XBrowseBibliography[102X  6.7-1
-  [2XBrowseChangeSides[102X  6.15-1
-  [10XBrowseConwayPolynomials[110X, see BrowseGapData  6.10-1
+  [2XBrowseChangeSides[102X  6.16-1
+  [10XBrowseConwayPolynomials[110X, see BrowseGapData  6.11-1
   [2XBrowseData[102X  5.4-1
   [2XBrowseData.actions.Error[102X  5.4-7
   [2XBrowseData.actions.QuitMode[102X  5.4-6
@@ -37,20 +37,21 @@
   [10XBrowseData.ShowHelpTable[110X  5.4-4
   BrowseData.ShowTables  5.2
   [2XBrowseDecompositionMatrix[102X  6.3-2
-  [2XBrowseDirectory[102X  6.11-1
-  [2XBrowseGapData[102X  6.10-1
-  [2XBrowseGapDataAdd[102X  6.10-2
+  [2XBrowseDirectory[102X  6.12-1
+  [2XBrowseGapData[102X  6.11-1
+  [2XBrowseGapDataAdd[102X  6.11-2
   [2XBrowseGapManuals[102X  6.6-1
-  [10XBrowseGapMethods[110X, see BrowseGapData  6.10-1
-  [10XBrowseGapPackages[110X, see BrowseGapData  6.10-1
+  [10XBrowseGapMethods[110X, see BrowseGapData  6.11-1
+  [10XBrowseGapPackages[110X, see BrowseGapData  6.11-1
   [2XBrowseMSC[102X  6.7-2
   [2XBrowsePackageVariables[102X  6.9-1
-  [2XBrowsePackageVariables[102X  6.9-1
   [2XBrowseProfile[102X  6.8-1
-  [2XBrowsePuzzle[102X  6.12-1
-  [2XBrowseRubiksCube[102X  6.14-1
+  [2XBrowsePuzzle[102X  6.13-1
+  [2XBrowseRubiksCube[102X  6.15-1
   [2XBrowseTableFromDatabaseIdEnumerator[102X  A.2-2
+  [2XBrowseTomLibInfo[102X  A.5-1
   [2XBrowseTransitiveGroupsInfo[102X  A.4-1
+  [2XBrowseUserPreferences[102X  6.10-1
   categorizing a browse table  4.1
   [10Xcbreak[110X  2.1-1
   checkbox, see NCurses.Select  3.1-2
@@ -78,11 +79,11 @@
   filtering a browse table  4.1
   footer of a browse table  4.
   game  1.1
-  game, A Puzzle  6.12
-  game, Changing Sides  6.15
-  game, Peg Solitaire  6.13
-  game, Rubik's Cube  6.14
-  game, Sudoku  6.16
+  game, A Puzzle  6.13
+  game, Changing Sides  6.16
+  game, Peg Solitaire  6.14
+  game, Rubik's Cube  6.15
+  game, Sudoku  6.17
   [10Xgetbegyx[110X  2.1-2
   [10Xgetmaxyx[110X  2.1-2
   [10Xgetmouse[110X  2.1-8
@@ -106,11 +107,11 @@
   [10Xmnap[110X  2.1-9
   mode of a browse table  5.2
   mouse events  3.1-1
+  mouse events  3.1-2
   mouse events  4.1
   mouse events  4.1
-  mouse events  5.4-1
   mouse events  5.4-3
-  mouse events  6.12-1
+  mouse events  6.13-1
   [10Xmouseinterval[110X  2.1-8
   [10Xmousemask[110X  2.1-8
   [10Xmove_panel[110X  2.1-3
@@ -151,8 +152,8 @@
   [10Xpanel_above[110X  2.1-3
   [10Xpanel_below[110X  2.1-3
   partial input in a browse table  5.1
-  [2XPegSolitaire[102X  6.13-1
-  [2XPlaySudoku[102X  6.16-8
+  [2XPegSolitaire[102X  6.14-1
+  [2XPlaySudoku[102X  6.17-8
   radio button, see NCurses.Select  3.1-2
   [10Xraw[110X  2.1-1
   replay of a browse table session  4.1
@@ -166,19 +167,19 @@
   [10XSearchStringWithStartParameters[110X  5.4-1
   selecting entries of a browse table  4.1
   [10Xshow_panel[110X  2.1-3
-  solitaire game  6.13
+  solitaire game  6.14
   sort convention  5.4-1
   sorting a browse table  4.1
-  [2XSudoku.DisplayString[102X  6.16-5
-  [2XSudoku.HTMLGame[102X  6.16-9
-  [2XSudoku.Init[102X  6.16-1
-  [2XSudoku.LaTeXGame[102X  6.16-9
-  [2XSudoku.OneSolution[102X  6.16-6
-  [2XSudoku.Place[102X  6.16-2
-  [2XSudoku.RandomGame[102X  6.16-3
-  [2XSudoku.Remove[102X  6.16-2
-  [2XSudoku.SimpleDisplay[102X  6.16-4
-  [2XSudoku.UniqueSolution[102X  6.16-7
+  [2XSudoku.DisplayString[102X  6.17-5
+  [2XSudoku.HTMLGame[102X  6.17-9
+  [2XSudoku.Init[102X  6.17-1
+  [2XSudoku.LaTeXGame[102X  6.17-9
+  [2XSudoku.OneSolution[102X  6.17-6
+  [2XSudoku.Place[102X  6.17-2
+  [2XSudoku.RandomGame[102X  6.17-3
+  [2XSudoku.Remove[102X  6.17-2
+  [2XSudoku.SimpleDisplay[102X  6.17-4
+  [2XSudoku.UniqueSolution[102X  6.17-7
   [10Xtop_panel[110X  2.1-3
   [2XTransitiveGroupsData[102X  A.4-3
   [2XTransitiveGroupsData.AllTransitiveGroups[102X  A.4-2

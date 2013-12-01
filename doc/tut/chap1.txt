@@ -37,8 +37,8 @@
   language,  and use them in just the same way as the programs which form part
   of  the  system (the [21Xlibrary[121X). Indeed, we actively support the contribution,
   refereeing  and distribution of extensions to the system, in the form of [21X[5XGAP[105X
-  packages[121X.  Further  details  of this can be found in chapter [14X'Reference: GAP
-  Packages'[114X, and on our website.[133X
+  packages[121X.  Further details of this can be found in chapter [14X'Reference: Using
+  GAP Packages'[114X, and on our website.[133X
   
   [33X[0;0YDevelopment  of  [5XGAP[105X began at Lehrstuhl D für Mathematik, RWTH-Aachen, under
   the leadership of Joachim Neubüser in 1985. Version 2.4 was released in 1988
@@ -134,8 +134,8 @@
   Finite  Group Representations; therefore, installation and usage of packages
   is recommended.[133X
   
-  [33X[0;0YFurther  details  about [5XGAP[105X packages can be found in chapter [14X'Reference: GAP
-  Packages'[114X,        and       on       the       [5XGAP[105X       website       here:
+  [33X[0;0YFurther details about [5XGAP[105X packages can be found in chapter [14X'Reference: Using
+  GAP      Packages'[114X,      and      on      the      [5XGAP[105X     website     here:
   [7Xhttp://www.gap-system.org/Packages/packages.html[107X.[133X
   
   
@@ -185,5 +185,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y20-Jul-2013[133X
+  [33X[0;0Y01-Dec-2013[133X
   

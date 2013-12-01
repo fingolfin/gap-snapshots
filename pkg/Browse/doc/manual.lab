@@ -9,6 +9,10 @@
 \makelabel{browse:Applications of ncurses}{1.2.2}{X84F5140B82CBE86D}
 \makelabel{browse:The interface to browse two-dimensional arrays}{1.2.3}{X7CF47ACC83A95689}
 \makelabel{browse:Applications of the generic function NCurses.BrowseGeneric}{1.2.4}{X81C36C4B7ABC99A0}
+\makelabel{browse:User preferences provided by the Browse package}{1.3}{X82216D7A8636AEAD}
+\makelabel{browse:The user preference EnableMouseEvents}{1.3.1}{X81518A3583A457DF}
+\makelabel{browse:The user preference SelectHelpMatches}{1.3.2}{X7F6062478043DCD7}
+\makelabel{browse:The user preference SelectPackageName}{1.3.3}{X7DAD10F07CE2651E}
 \makelabel{browse:Interface to the ncurses Library}{2}{X7D56AC1386FF15C4}
 \makelabel{browse:The ncurses Library}{2.1}{X82F844F68017DF5A}
 \makelabel{browse:Setting the terminal}{2.1.1}{X8499A3A384BF1F2D}
@@ -47,13 +51,14 @@
 \makelabel{browse:Overview of the GAP Bibliography}{6.7}{X7EAE9E8281728C44}
 \makelabel{browse:Profiling GAP functions–a Variant}{6.8}{X78AB965980D7F85E}
 \makelabel{browse:Variables defined in GAP packages–a Variant}{6.9}{X7ACBE4FD7ED75EA7}
-\makelabel{browse:Overview of GAP Data}{6.10}{X80B8A3C48751E87B}
-\makelabel{browse:Navigating in a Directory Tree}{6.11}{X7E3FDA927E62D963}
-\makelabel{browse:A Puzzle}{6.12}{X7FAE33037D09CC4E}
-\makelabel{browse:Peg Solitaire}{6.13}{X7FFF943D78A403C9}
-\makelabel{browse:Rubik's Cube}{6.14}{X862CB73B7E0BE170}
-\makelabel{browse:Changing Sides}{6.15}{X7ADD618186541123}
-\makelabel{browse:Sudoku}{6.16}{X7DDE46668321B5E9}
+\makelabel{browse:Configuring User preferences–a Variant}{6.10}{X7CD025147D528741}
+\makelabel{browse:Overview of GAP Data}{6.11}{X80B8A3C48751E87B}
+\makelabel{browse:Navigating in a Directory Tree}{6.12}{X7E3FDA927E62D963}
+\makelabel{browse:A Puzzle}{6.13}{X7FAE33037D09CC4E}
+\makelabel{browse:Peg Solitaire}{6.14}{X7FFF943D78A403C9}
+\makelabel{browse:Rubik's Cube}{6.15}{X862CB73B7E0BE170}
+\makelabel{browse:Changing Sides}{6.16}{X7ADD618186541123}
+\makelabel{browse:Sudoku}{6.17}{X7DDE46668321B5E9}
 \makelabel{browse:Some Tools for Database Handling}{A}{X85D4199E82A7DFA5}
 \makelabel{browse:GAP Objects for Database Handling}{A.1}{X86DA1A0082C465DD}
 \makelabel{browse:Database Id Enumerators}{A.1.1}{X7999CF7F79ACA240}
@@ -64,6 +69,7 @@
 \makelabel{browse:Example: Database Id Enumerators and Database Attributes}{A.3}{X808BDD24857F3904}
 \makelabel{browse:Example: An Overview of the GAP Library of Transitive Groups}{A.4}{X858E7FC37DCAA719}
 \makelabel{browse:Additional Database Attributes for Transitive Groups}{A.4.4}{X83E9FAAE85F80223}
+\makelabel{browse:Example: An Overview of the GAP Library of Tables of Marks}{A.5}{X831C7F817C6C4AA0}
 \makelabel{browse:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{browse:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{browse:Index}{Ind}{X83A0356F839C696F}
@@ -165,6 +171,7 @@
 \makelabel{browse:NCurses.Select}{3.1.2}{X833D321E86528981}
 \makelabel{browse:checkbox see NCurses.Select}{3.1.2}{X833D321E86528981}
 \makelabel{browse:radio button see NCurses.Select}{3.1.2}{X833D321E86528981}
+\makelabel{browse:mouse events}{3.1.2}{X833D321E86528981}
 \makelabel{browse:NCurses.GetLineFromUser}{3.1.3}{X837EFD8A842257EA}
 \makelabel{browse:NCurses.Pager}{3.1.4}{X87E1B2787F588CC0}
 \makelabel{browse:NCurses.Demo}{3.2.1}{X8681359F8064597B}
@@ -201,7 +208,6 @@
 \makelabel{browse:BrowseData}{5.4.1}{X86E80E578085F137}
 \makelabel{browse:BrowseData.FormattedEntry}{5.4.1}{X86E80E578085F137}
 \makelabel{browse:BrowseData.HeightLabelsCol}{5.4.1}{X86E80E578085F137}
-\makelabel{browse:mouse events}{5.4.1}{X86E80E578085F137}
 \makelabel{browse:sort convention}{5.4.1}{X86E80E578085F137}
 \makelabel{browse:hide convention}{5.4.1}{X86E80E578085F137}
 \makelabel{browse:SearchStringWithStartParameters}{5.4.1}{X86E80E578085F137}
@@ -233,35 +239,35 @@
 \makelabel{browse:BrowseMSC}{6.7.2}{X81F1558678ACDB4A}
 \makelabel{browse:BrowseProfile}{6.8.1}{X7B42091982DE7AE7}
 \makelabel{browse:BrowsePackageVariables}{6.9.1}{X8030B1688335783D}
-\makelabel{browse:BrowsePackageVariables}{6.9.1}{X8030B1688335783D}
-\makelabel{browse:BrowseGapData}{6.10.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseConwayPolynomials see BrowseGapData}{6.10.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseGapMethods see BrowseGapData}{6.10.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseGapPackages see BrowseGapData}{6.10.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseGapDataAdd}{6.10.2}{X7FC24FCE7A0C6058}
-\makelabel{browse:BrowseDirectory}{6.11.1}{X859682DE8397261E}
-\makelabel{browse:game A Puzzle}{6.12}{X7FAE33037D09CC4E}
-\makelabel{browse:BrowsePuzzle}{6.12.1}{X7EF5FCBD7DAFFAF3}
-\makelabel{browse:mouse events}{6.12.1}{X7EF5FCBD7DAFFAF3}
-\makelabel{browse:game Peg Solitaire}{6.13}{X7FFF943D78A403C9}
-\makelabel{browse:solitaire game}{6.13}{X7FFF943D78A403C9}
-\makelabel{browse:PegSolitaire}{6.13.1}{X82C8691380FCB674}
-\makelabel{browse:game Rubik's Cube}{6.14}{X862CB73B7E0BE170}
-\makelabel{browse:BrowseRubiksCube}{6.14.1}{X8100659E81FFE9A2}
-\makelabel{browse:game Changing Sides}{6.15}{X7ADD618186541123}
-\makelabel{browse:BrowseChangeSides}{6.15.1}{X7FCFC5858584F46E}
-\makelabel{browse:game Sudoku}{6.16}{X7DDE46668321B5E9}
-\makelabel{browse:Sudoku.Init}{6.16.1}{X789D3D4C818F4BC2}
-\makelabel{browse:Sudoku.Place}{6.16.2}{X86A5C6CE79DD67EE}
-\makelabel{browse:Sudoku.Remove}{6.16.2}{X86A5C6CE79DD67EE}
-\makelabel{browse:Sudoku.RandomGame}{6.16.3}{X8401B31A879F9F9F}
-\makelabel{browse:Sudoku.SimpleDisplay}{6.16.4}{X86917AC57C25A68F}
-\makelabel{browse:Sudoku.DisplayString}{6.16.5}{X81F98C6C7C8415AB}
-\makelabel{browse:Sudoku.OneSolution}{6.16.6}{X7C73C6D08293B3B8}
-\makelabel{browse:Sudoku.UniqueSolution}{6.16.7}{X865DDBDC7E16217F}
-\makelabel{browse:PlaySudoku}{6.16.8}{X7D19224478E86BB4}
-\makelabel{browse:Sudoku.HTMLGame}{6.16.9}{X804D66D67B908F30}
-\makelabel{browse:Sudoku.LaTeXGame}{6.16.9}{X804D66D67B908F30}
+\makelabel{browse:BrowseUserPreferences}{6.10.1}{X7A7B712E7A06449F}
+\makelabel{browse:BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseConwayPolynomials see BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseGapMethods see BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseGapPackages see BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseGapDataAdd}{6.11.2}{X7FC24FCE7A0C6058}
+\makelabel{browse:BrowseDirectory}{6.12.1}{X859682DE8397261E}
+\makelabel{browse:game A Puzzle}{6.13}{X7FAE33037D09CC4E}
+\makelabel{browse:BrowsePuzzle}{6.13.1}{X7EF5FCBD7DAFFAF3}
+\makelabel{browse:mouse events}{6.13.1}{X7EF5FCBD7DAFFAF3}
+\makelabel{browse:game Peg Solitaire}{6.14}{X7FFF943D78A403C9}
+\makelabel{browse:solitaire game}{6.14}{X7FFF943D78A403C9}
+\makelabel{browse:PegSolitaire}{6.14.1}{X82C8691380FCB674}
+\makelabel{browse:game Rubik's Cube}{6.15}{X862CB73B7E0BE170}
+\makelabel{browse:BrowseRubiksCube}{6.15.1}{X8100659E81FFE9A2}
+\makelabel{browse:game Changing Sides}{6.16}{X7ADD618186541123}
+\makelabel{browse:BrowseChangeSides}{6.16.1}{X7FCFC5858584F46E}
+\makelabel{browse:game Sudoku}{6.17}{X7DDE46668321B5E9}
+\makelabel{browse:Sudoku.Init}{6.17.1}{X789D3D4C818F4BC2}
+\makelabel{browse:Sudoku.Place}{6.17.2}{X86A5C6CE79DD67EE}
+\makelabel{browse:Sudoku.Remove}{6.17.2}{X86A5C6CE79DD67EE}
+\makelabel{browse:Sudoku.RandomGame}{6.17.3}{X8401B31A879F9F9F}
+\makelabel{browse:Sudoku.SimpleDisplay}{6.17.4}{X86917AC57C25A68F}
+\makelabel{browse:Sudoku.DisplayString}{6.17.5}{X81F98C6C7C8415AB}
+\makelabel{browse:Sudoku.OneSolution}{6.17.6}{X7C73C6D08293B3B8}
+\makelabel{browse:Sudoku.UniqueSolution}{6.17.7}{X865DDBDC7E16217F}
+\makelabel{browse:PlaySudoku}{6.17.8}{X7D19224478E86BB4}
+\makelabel{browse:Sudoku.HTMLGame}{6.17.9}{X804D66D67B908F30}
+\makelabel{browse:Sudoku.LaTeXGame}{6.17.9}{X804D66D67B908F30}
 \makelabel{browse:DatabaseIdEnumerator}{A.1.4}{X7AE32F217CF16EDF}
 \makelabel{browse:DatabaseAttributeAdd}{A.1.5}{X8573522782D939FE}
 \makelabel{browse:DatabaseAttributeValueDefault}{A.1.6}{X7C8DB23E79567A60}
@@ -273,3 +279,4 @@
 \makelabel{browse:TransitiveGroupsData.AllTransitiveGroups}{A.4.2}{X7FA5513D84EE81AB}
 \makelabel{browse:TransitiveGroupsData.OneTransitiveGroup}{A.4.2}{X7FA5513D84EE81AB}
 \makelabel{browse:TransitiveGroupsData}{A.4.3}{X7AC030827D5CDE03}
+\makelabel{browse:BrowseTomLibInfo}{A.5.1}{X844D143980A0E20D}

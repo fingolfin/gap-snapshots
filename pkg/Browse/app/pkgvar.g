@@ -22,25 +22,22 @@
 ##
 ##  <ManSection>
 ##  <Func Name="BrowsePackageVariables" Arg="pkgname[, version][, arec]"/>
-##  <Func Name="BrowsePackageVariables" Arg="pkgname, info[, arec]"/>
 ##
 ##  <Returns>
 ##  nothing.
 ##  </Returns>
 ##
 ##  <Description>
-##  In the first version, the arguments are the same as for
+##  The arguments can be the same as for
 ##  <Ref Func="ShowPackageVariables" BookName="ref"/>, that is,
 ##  <A>pkgname</A> is the name of a &GAP; package,
 ##  and the optional arguments <A>version</A> and <A>arec</A> are a version
 ##  number of this package and a record used for customizing the output,
 ##  respectively.
 ##  <P/>
-##  In the second version, <A>pkgname</A> is the name of a &GAP; package,
-##  <A>info</A> is the output of
-##  <Ref Func="PackageVariablesInfo" BookName="ref"/> for this package,
-##  and the optional record <A>arec</A> has the same meaning as for
-##  <Ref Func="ShowPackageVariables" BookName="ref"/>.
+##  Alternatively, the second argument can be the output <C>info</C> of
+##  <Ref Func="PackageVariablesInfo" BookName="ref"/> for the package in
+##  question, instead of the version number.
 ##  <P/>
 ##  <Ref Func="BrowsePackageVariables"/> opens a Browse table that shows the
 ##  global variables that become bound and the methods that become installed
@@ -54,18 +51,18 @@
 ##  Clicking a selected row of the table opens the relevant package file at
 ##  the code in question.
 ##  <P/>
-##  The idea behind the argument <A>info</A> is that using the same arguments
+##  The idea behind the argument <C>info</C> is that using the same arguments
 ##  as for <Ref Func="ShowPackageVariables" BookName="ref"/> does not allow
 ##  one to apply <Ref Func="BrowsePackageVariables"/> to packages that have
 ##  been loaded before the <Package>Browse</Package> package.
-##  Thus one can compute the underlying data <A>info</A> first,
+##  Thus one can compute the underlying data <C>info</C> first,
 ##  using <Ref Func="PackageVariablesInfo" BookName="ref"/>,
 ##  then load the <Package>Browse</Package> package,
 ##  and finally call <Ref Func="BrowsePackageVariables"/>.
 ##  <P/>
 ##  For example, the overview of package variables for
 ##  <Package>Browse</Package> can be shown by starting &GAP; without packages
-##  and entering the following lines.
+##  and then entering the following lines.
 ##  <P/>
 ##  <Log><![CDATA[
 ##  gap> pkgname:= "Browse";;
@@ -73,6 +70,14 @@
 ##  gap> LoadPackage( "Browse" );;
 ##  gap> BrowsePackageVariables( pkgname, info );
 ##  ]]></Log>
+##  <P/>
+##  If the arguments are the same as for
+##  <Ref Func="ShowPackageVariables" BookName="ref"/> then
+##  this function is actually called, with the consequence that the package
+##  gets loaded when <Ref Func="BrowsePackageVariables"/> is called.
+##  This is not the case if the output of
+##  <Ref Func="PackageVariablesInfo" BookName="ref"/> is entered as the
+##  second argument.
 ##  </Description>
 ##  </ManSection>
 ##  </Section>
@@ -204,16 +209,23 @@ BindGlobal( "BrowsePackageVariables", function( arg )
         if t.dynamic.selectedEntry <> [ 0, 0 ] then
           pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
           file:= jump[ pos ][1];
-          if file <> fail then
+          if file = fail or file = "*stdin*"
+                         or not IsReadableFile( file ) then
+            # Show the code in a pager.
+            lines:= "";
+            stream:= OutputTextString( lines, true );
+            PrintTo( stream, func );
+            CloseStream( stream );
+          else
             # Show the file in a pager.
             lines:= rec( lines:= StringFile( file ),
-                         start:= jump[ pos ][2] );
-            if BrowseData.IsDoneReplay( t.dynamic.replay ) then
-              NCurses.Pager( lines );
-              NCurses.update_panels();
-              NCurses.doupdate();
-              NCurses.curs_set( 0 );
-            fi;
+                         start:= StartlineFunc( func ) );
+          fi;
+          if BrowseData.IsDoneReplay( t.dynamic.replay ) then
+            NCurses.Pager( lines );
+            NCurses.update_panels();
+            NCurses.doupdate();
+            NCurses.curs_set( 0 );
           fi;
         fi;
         return t.dynamic.changed;

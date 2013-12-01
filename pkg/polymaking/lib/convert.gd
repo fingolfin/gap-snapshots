@@ -5,7 +5,7 @@
 ##  
 
 ##
-#H @(#)$Id: convert.gd, v 0.7.8 2010/06/03 21:29:50 gap Exp $
+#H @(#)$Id: convert.gd, v 0.8.1 2013/11/16 17:55:19 gap Exp $
 ##
 #Y	 Copyright (C) 2006 Marc Roeder 
 #Y 
@@ -23,8 +23,8 @@
 #Y along with this program; if not, write to the Free Software 
 #Y Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
-Revision.("/Users/roeder/gap/polymaking/polymaking/lib/convert_gd"):=
-	"@(#)$Id: convert.gd, v 0.7.8 2010/06/03   21:29:50  gap Exp $";
+Revision.("convert_gd"):=
+	"@(#)$Id: convert.gd, v 0.8.1 2013/11/16   17:55:19  gap Exp $";
 DeclareOperation("ConvertPolymakeOutputToGapNotation",[IsString]);
 DeclareOperation("SplitPolymakeOutputStringIntoBlocks",[IsString]);
 DeclareOperation("ConvertedObject",[IsString,IsDenseList]);
@@ -53,5 +53,4 @@ DeclareOperation("ConvertPolymakeListOfSetsToGAPPlusOne",[IsDenseList]);
 
 DeclareOperation("ConvertPolymakeSetOfSetsToGAP",[IsDenseList]);
 DeclareOperation("ConvertPolymakeGraphToGAP",[IsDenseList]);
-DeclareOperation("ConvertPolymakeHasseDiagramToGAP",[IsDenseList]);
 DeclareOperation("ConvertPolymakeFaceLatticeToGAP",[IsDenseList]);

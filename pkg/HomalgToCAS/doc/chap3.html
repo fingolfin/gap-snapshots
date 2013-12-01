@@ -392,6 +392,9 @@ Pictograms := rec(
   ## optional ring operations:
   ##
   
+  ## copy an element:
+  CopyElement                             := "a&gt;a",
+  
   ## add two ring elements:
   Sum                                     := "a+b",
   
@@ -406,6 +409,15 @@ Pictograms := rec(
   
   ## random polynomial:
   RandomPol                               := "rpl",
+  
+  ## numerator:
+  Numerator                               := "num",
+  
+  ## denominator:
+  Denominator                             := "den",
+  
+  ## evaluate polynomial:
+  Evaluate                                := "evl",
   
   ## degree of a multivariate polynomial
   DegreeOfRingElement                     := "deg",
@@ -670,7 +682,11 @@ Pictograms := rec(
   ## eliminate variables:
   Eliminate                               := "eli",
   
+  ## leading module:
   LeadingModule                           := "led",
+  
+  ## the i-th monomial matrix
+  MonomialMatrix                          := "mon",
   
   ## matrix of symbols:
   MatrixOfSymbols                         := "smb",

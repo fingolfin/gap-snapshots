@@ -17,11 +17,13 @@
 InstallValue( CommonHomalgTableForMAGMATools,
         
         rec(
-               Zero := HomalgExternalRingElement( R -> homalgSendBlocking( [ "Zero(", R, ")" ], "need_output", HOMALG_IO.Pictograms.Zero ), "MAGMA", IsZero ),
+               Zero := HomalgExternalRingElement( R -> homalgSendBlocking( [ "Zero(", R, ")" ], HOMALG_IO.Pictograms.Zero ), "MAGMA", IsZero ),
                
-               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ "One(", R, ")" ], "need_output", HOMALG_IO.Pictograms.One ), "MAGMA", IsOne ),
+               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ "One(", R, ")" ], HOMALG_IO.Pictograms.One ), "MAGMA", IsOne ),
                
-               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "-One(", R, ")" ], "need_output", HOMALG_IO.Pictograms.MinusOne ), "MAGMA", IsMinusOne ),
+               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "-One(", R, ")" ], HOMALG_IO.Pictograms.MinusOne ), "MAGMA", IsMinusOne ),
+               
+               RingElement := R -> r -> homalgSendBlocking( [ R, "!(", r, ")" ], HOMALG_IO.Pictograms.define ),
                
                IsZero := r -> homalgSendBlocking( [ "IsZero(", r, ")" ] , "need_output", HOMALG_IO.Pictograms.IsZero ) = "true",
                
@@ -30,14 +32,14 @@ InstallValue( CommonHomalgTableForMAGMATools,
                Minus :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ a, "-(", b, ")" ], "need_output", HOMALG_IO.Pictograms.Minus );
+                   return homalgSendBlocking( [ a, "-(", b, ")" ], HOMALG_IO.Pictograms.Minus );
                    
                  end,
                
                DivideByUnit :=
                  function( a, u )
                    
-                   return homalgSendBlocking( [ "(", a, ")/(", u, ")"  ], "need_output", HOMALG_IO.Pictograms.DivideByUnit );
+                   return homalgSendBlocking( [ "(", a, ")/(", u, ")"  ], HOMALG_IO.Pictograms.DivideByUnit );
                    
                  end,
                
@@ -51,14 +53,14 @@ InstallValue( CommonHomalgTableForMAGMATools,
                Sum :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ a, "+", b ], "need_output", HOMALG_IO.Pictograms.Sum );
+                   return homalgSendBlocking( [ a, "+(", b, ")" ], HOMALG_IO.Pictograms.Sum );
                    
                  end,
                
                Product :=
                  function( a, b )
                    
-                   return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], "need_output", HOMALG_IO.Pictograms.Product );
+                   return homalgSendBlocking( [ "(", a, ")*(", b, ")" ], HOMALG_IO.Pictograms.Product );
                    
                  end,
                
@@ -80,6 +82,13 @@ InstallValue( CommonHomalgTableForMAGMATools,
                    return [ a_g, b_g ];
                    
                  end,
+               
+               # CopyElement :=
+               #   function( r, R )
+                   
+               #     return homalgSendBlocking( [ R, "!", r ], HomalgRing( r ), HOMALG_IO.Pictograms.CopyElement );
+                   
+               #   end,
                
                ShallowCopy := C -> homalgSendBlocking( [ C ], HOMALG_IO.Pictograms.CopyMatrix ),
                
@@ -399,6 +408,20 @@ InstallValue( CommonHomalgTableForMAGMATools,
                    
                  end,
                
+               IsPrime :=
+                 function( mat )
+                   local R, v, c;
+                   
+                   R := HomalgRing( mat );
+                   
+                   v := homalgStream( R )!.variable_name;
+                   
+                   mat := EntriesOfHomalgMatrix( mat );
+                   
+                   return homalgSendBlocking( [ "IsPrime(ideal<", R, "|", mat, ">)" ], "need_output", "break_lists", HOMALG_IO.Pictograms.PrimaryDecomposition ) = "true";
+                   
+                 end,
+               
                PrimaryDecomposition :=
                  function( mat )
                    local R, v, c;
@@ -478,6 +501,24 @@ InstallValue( CommonHomalgTableForMAGMATools,
                  function( r, R )
                    
                    return Int( homalgSendBlocking( [ "Deg(", r, R, ")" ], "need_output", HOMALG_IO.Pictograms.DegreeOfRingElement ) );
+                   
+                 end,
+               
+               LeadingIdeal :=
+                 function( mat )
+                   local R;
+                   
+                   R := HomalgRing( mat );
+                   
+                   return homalgSendBlocking( [ "Transpose(Matrix([GroebnerBasis(LeadingMonomialIdeal(ideal<", R, "|", EntriesOfHomalgMatrix( mat ), ">))]))" ], "break_lists", HOMALG_IO.Pictograms.LeadingModule );
+                   
+                 end,
+               
+               
+               MonomialMatrix :=
+                 function( i, vars, R )
+                   
+                   return homalgSendBlocking( [ "Matrix(1,MonomialsOfDegree(", R, i, ",{", R, ".i : i in [ 1 .. Rank(", R, ")]} diff {", vars, "}))" ], "break_lists", HOMALG_IO.Pictograms.MonomialMatrix );
                    
                  end,
                

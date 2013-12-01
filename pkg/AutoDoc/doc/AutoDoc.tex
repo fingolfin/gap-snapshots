@@ -90,20 +90,23 @@
 \begin{titlepage}
 \mbox{}\vfill
 
-\begin{center}{\maintitlesize \textbf{Automatic Documentation \mbox{}}}\\
+\begin{center}{\maintitlesize \textbf{\textsf{AutoDoc}\mbox{}}}\\
 \vfill
 
-\hypersetup{pdftitle=Automatic Documentation }
-\markright{\scriptsize \mbox{}\hfill Automatic Documentation  \hfill\mbox{}}
-{\Huge \textbf{a nice way to create documentations\mbox{}}}\\
+\hypersetup{pdftitle=\textsf{AutoDoc}}
+\markright{\scriptsize \mbox{}\hfill \textsf{AutoDoc} \hfill\mbox{}}
+{\Huge \textbf{Generate documentation from \textsf{GAP} source code\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.06.26\mbox{}}\\[1cm]
-{September 2012\mbox{}}\\[1cm]
+{\Huge Version 2013.09.20\mbox{}}\\[1cm]
+{20/09/2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Sebastian Gutsche\\
     \mbox{}}}\\
+{\Large \textbf{Max Horn\\
+    \mbox{}}}\\
 \hypersetup{pdfauthor=Sebastian Gutsche\\
+    ; Max Horn\\
     }
 \mbox{}\\[2cm]
 \begin{minipage}{12cm}\noindent
@@ -111,18 +114,34 @@
 \\
  This manual is best viewed as an \textsc{HTML} document. An \textsc{offline} version should be included in the documentation subfolder of the package. \\
 \\
- \href{http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/AutoDoc} {\texttt{http://wwwb.math.rwth-aachen.de/\texttt{\symbol{126}}gutsche/gap{\textunderscore}packages/AutoDoc}} \end{minipage}
+ \end{minipage}
 
 \end{center}\vfill
 
 \mbox{}\\
 {\mbox{}\\
 \small \noindent \textbf{Sebastian Gutsche\\
-    }  Email: \href{mailto://sebastian.gutsche@rwth-aachen.de} {\texttt{sebastian.gutsche@rwth-aachen.de}}\\
+    }  Email: \href{mailto://gutsche@mathematik.uni-kl.de} {\texttt{gutsche@mathematik.uni-kl.de}}\\
   Homepage: \href{http://wwwb.math.rwth-aachen.de/~gutsche/} {\texttt{http://wwwb.math.rwth-aachen.de/\texttt{\symbol{126}}gutsche/}}\\
   Address: \begin{minipage}[t]{8cm}\noindent
- Lehrstuhl B f{\"u}r Mathematik, RWTH Aachen, Templergraben 64, 52056 Aachen,
-Germany \end{minipage}
+ Department of Mathematics\\
+ University of Kaiserslautern\\
+ 67653 Kaiserslautern\\
+ Germany\\
+ \end{minipage}
+}\\
+{\mbox{}\\
+\small \noindent \textbf{Max Horn\\
+    }  Email: \href{mailto://max.horn@math.uni-giessen.de} {\texttt{max.horn@math.uni-giessen.de}}\\
+  Homepage: \href{http://www.quendi.de/math} {\texttt{http://www.quendi.de/math}}\\
+  Address: \begin{minipage}[t]{8cm}\noindent
+ AG Algebra\\
+ Mathematisches Institut\\
+ JLU Gie{\ss}en\\
+ Arndtstra{\ss}e 2\\
+ D-35392 Gie{\ss}en\\
+ Germany\\
+ \end{minipage}
 }\\
 \end{titlepage}
 
@@ -130,7 +149,7 @@ Germany \end{minipage}
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2012 by Sebastian Gutsche
+ {\copyright} 2012-2013 by Sebastian Gutsche and Max Horn
 
  This package may be distributed under the terms and conditions of the GNU
 Public License Version 2. \mbox{}}\\[1cm]
@@ -165,24 +184,604 @@ methods to install your methods with documentations. When you want to create
 the documentation, use the CreateAutomaticDocumentation method to create the
 documentation xml files. After that, you need to process them with GAPDoc to
 get the usual documentation. The Package ToolsForHomalg is completely
-documented with AutoDoc, so you can find a example for the usage there. }
+documented with AutoDoc, so you can find an example for the usage there. }
 
   }
 
-    
-\chapter{\textcolor{Chapter }{The main functions in the \textsf{AutoDoc} Package}}\label{main_functions}
+ 
+\chapter{\textcolor{Chapter }{Getting started using \textsf{AutoDoc}}}\label{Tutorials}
 \logpage{[ 2, 0, 0 ]}
-\hyperdef{L}{X7B4150D1848BA072}{}
+\hyperdef{L}{X80F6B32B7E4942F7}{}
+{
+  In this chapter we describe how \textsf{AutoDoc} can aide package authors in creating and maintaing their package's
+documentation. To this end, we will assume from now on that your package is
+called \textsf{SomePackage}. 
+\section{\textcolor{Chapter }{Creating a package manual from scratch}}\label{Tut:Scratch}
+\logpage{[ 2, 1, 0 ]}
+\hyperdef{L}{X7BFBC6907B26AA95}{}
+{
+  Suppose your package is already up and running, but so far has no manual. Then
+you can rapidly generate a ``scaffold'' for a manual using the \texttt{AutoDoc} (\ref{AutoDoc}) command like this: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  LoadPackage("AutoDoc");
+  AutoDoc("SomePackage" : scaffold := true );
+\end{Verbatim}
+ This creates two XML files \texttt{doc/SomePackage.xml} and \texttt{doc/title.xml} insider the package directory and then runs \textsf{GAPDoc} on them to produce a nice initial PDF and HTML version of your fresh manual. 
+
+ To ensure that the \textsf{GAP} help system picks up your package manual, you should also add the following
+(or a variation of it) to your \texttt{PackageInfo.g}: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  PackageDoc := rec(
+    BookName  := ~.PackageName,
+    ArchiveURLSubset := ["doc"],
+    HTMLStart := "doc/chap0.html",
+    PDFFile   := "doc/manual.pdf",
+    SixFile   := "doc/manual.six",
+    LongTitle := ~.Subtitle,
+  ),
+\end{Verbatim}
+ Congratulations, your package now has a minimal working manual. Of course it
+will be mostly empty for now, but it already should contain some useful
+information, based on the data in your \texttt{PackageInfo.g}. This includes your package's name, version and description as well as
+information about its authors. And if you ever change the package data, (e.g.
+because your email address changed), just re-run the above command to
+regenerate the two main XML files with the latest information. 
+
+ Next of course you need to provide actual content (unfortunately, we were not
+yet able to automate \emph{that} for you, more research on artificial intelligence is required). To add more
+content, you have several options: You could add further \textsf{GAPDoc} XML files containing extra chapters, sections and so on. Or you could use
+classic \textsf{GAPDoc} source comments (in either case, see Section \ref{Tut:IntegrateExisting} on how to teach the \texttt{AutoDoc} (\ref{AutoDoc}) command to include this extra documentation). Or you could use the special
+documentation facilities \textsf{AutoDoc} provides (see Section \ref{Tut:AdvancedAutoDoc}). 
+
+ You may also wish to consult Section \ref{Tut:AutoRegenerate} for hints on automatically re-generating your package manual when necessary. }
+
+ 
+\section{\textcolor{Chapter }{Documenting code with \textsf{AutoDoc}}}\label{Tut:AdvancedAutoDoc}
+\logpage{[ 2, 2, 0 ]}
+\hyperdef{L}{X7A32EA8F7CD306FE}{}
+{
+  To get one of your global functions, operations, attributes etc. to appear in
+the package manual, simply insert an \textsf{AutoDoc} comment of the form \texttt{\#!} directly in front of it. For example: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #!
+  DeclareOperation( "ToricVariety", [ IsConvexObject ] );
+\end{Verbatim}
+ This tiny change is already sufficient to ensure that the operation appears in
+the manual. In general, you will want to add further information about the
+operation, such as in the following example: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @Arguments conv
+  #! @Returns a toric variety
+  #! @Description
+  #!  Creates a toric variety out
+  #!  of the convex object <A>conv</A>.
+  DeclareOperation( "ToricVariety", [ IsConvexObject ] );
+\end{Verbatim}
+ For a thorough description of what you can do with \textsf{AutoDoc} documentation comments, please refer to chapter \ref{Comments}. 
+
+   Suppose you have not been using \textsf{GAPDoc} before but instead used the process described in section \ref{Tut:Scratch} to create your manual. Then the following \textsf{GAP} command will regenerate the manual and automatically include all newly
+documented functions, operations etc.: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  LoadPackage("AutoDoc");
+  AutoDoc("SomePackage" : scaffold := true, autodoc := true );
+\end{Verbatim}
+ If you are not using the scaffolding feature, e.g. because you already have an
+existing \textsf{GAPDoc} based manual, then you can still use \textsf{AutoDoc} documentation comments. Just make sure to first edit the main XML file of your
+documentation, and insert the line 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #Include SYSTEM "AutoDocMainFile.xml"
+\end{Verbatim}
+ in a suitable place. This means that you can mix \textsf{AutoDoc} documentation comment freely with your existing documentation; you can even
+still make use of any existing \textsf{GAPDoc} documentation comments in your code. The following command should be useful
+for you in this case; it still scans the package code for \textsf{AutoDoc} documentation comments and the runs \textsf{GAPDoc} to produce HTML and PDF output, but does not touch your documentation XML
+files otherwise. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  LoadPackage("AutoDoc");
+  AutoDoc("SomePackage" : autodoc := true );
+\end{Verbatim}
+  }
+
+ 
+\section{\textcolor{Chapter }{Using \textsf{AutoDoc} in an existing \textsf{GAPDoc} manual}}\label{Tut:IntegrateExisting}
+\logpage{[ 2, 3, 0 ]}
+\hyperdef{L}{X86F2DE187B493932}{}
+{
+  TODO: Explain that it might still be interesting to switch to using
+scaffolding? 
+
+ TODO: Demonstrate how to add / mix your own XML files, \textsf{AutoDoc} generated XML files, and \textsf{GAPDoc} stuff... }
+
+ 
+\section{\textcolor{Chapter }{Automatic regeneration of the manual}}\label{Tut:AutoRegenerate}
+\logpage{[ 2, 4, 0 ]}
+\hyperdef{L}{X8345699079126E0B}{}
+{
+  You will probably want to re-run the \texttt{AutoDoc} (\ref{AutoDoc}) command frequently, e.g. whenever you modified your documentation or your \texttt{PackageInfo.g}. To make this more convenient and reproducible, we recommend putting its
+invocation into a file \texttt{makedoc.g} in your package directory. Then you can regenerate the manual from the command
+line with the following simple command (assuming you are in the package
+directory): 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  gap makedoc.g
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{What is taken from \texttt{PackageInfo.g}}}\label{Tut:PackageInfo}
+\logpage{[ 2, 5, 0 ]}
+\hyperdef{L}{X7B903EAE86BB1C28}{}
+{
+  \textsf{AutoDoc} can extract data from \texttt{PackageInfo.g} in order to generate a title page. Specifically, the following components of
+the package info record are looked at: 
+\begin{description}
+\item[{Version}]  This is used to set the \texttt{{\textless}Version{\textgreater}} element of the title page, with the string ``Version '' prepended. 
+\item[{Date}]  This is used to set the \texttt{{\textless}Date{\textgreater}} element of the title page. 
+\item[{Subtitle}]  This is used to set the \texttt{{\textless}Subtitle{\textgreater}} element of the title page (the \texttt{{\textless}Title{\textgreater}} is set to the package name). 
+\item[{Persons}]  This is used to generate \texttt{{\textless}Author{\textgreater}} elements in the generated title page. 
+\item[{PackageDoc}]  This is a record (or a list of records) which is used to tell the \textsf{GAP} help system about the package manual. Currently \textsf{AutoDoc} extracts the value of the \texttt{PackageDoc.BookName} component and then passes that on to \textsf{GAPDoc} when creating the HTML, PDF and text versions of the manual. 
+\item[{AutoDoc}]  This is a record which can be used to control the scaffolding performed by \textsf{AutoDoc}, specifically to provide extra information for the title page. For example,
+you can set \texttt{AutoDoc.TitlePage.Copyright} to a string which will then be inserted on the generated title page. Using
+this method you can customize the following title page elements: \texttt{TitleComment}, \texttt{Abstract}, \texttt{Copyright}, \texttt{Acknowledgements} and \texttt{Colophon}. 
+
+ Note that \texttt{AutoDoc.TitlePage} behaves exactly the same as the \texttt{scaffold.TitlePage} parameter of the \texttt{AutoDoc} (\ref{AutoDoc}) function. 
+\end{description}
+ }
+
+ }
+
+ 
+\chapter{\textcolor{Chapter }{\textsf{AutoDoc} documentation comments}}\label{Comments}
+\logpage{[ 3, 0, 0 ]}
+\hyperdef{L}{X8141B1A583434E12}{}
+{
+  You can document declarations of global functions and variables, operations,
+attributes etc. by inserting \textsf{AutoDoc} comments into your sources before these declaration. An \textsf{AutoDoc} comment always starts with \texttt{\#!}. This is also the smallest possible \textsf{AutoDoc} command. If you want your declaration documented, just write \texttt{\#!} at the line before the documentation. For example: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #!
+  DeclareOperation( "AnOperation",
+                    [ IsList ] );
+\end{Verbatim}
+ This will produce a manual entry for the operation \texttt{AnOperation}. 
+\section{\textcolor{Chapter }{Documenting declarations}}\logpage{[ 3, 1, 0 ]}
+\hyperdef{L}{X871482CE838C68F6}{}
+{
+  In the bare form above, the manual entry for \texttt{AnOperation} will not contain much more than the name of the operation. In order to change
+this, there are several commands you can put into the \textsf{AutoDoc} comment before the declaration. Currently, the following commands are
+provided: 
+\subsection{\textcolor{Chapter }{@Description \mbox{\texttt{\mdseries\slshape descr}}}}\label{@Description}
+\logpage{[ 3, 1, 1 ]}
+\hyperdef{L}{X8707DB2E7A8F0C3A}{}
+{
+ \index{@Description@\texttt{@Description}}  Adds the text in the following lines of the \textsf{AutoDoc} to the description of the declaration in the manual. Lines are until the next \textsf{AutoDoc} command or until the declaration is reached. }
+
+ 
+\subsection{\textcolor{Chapter }{@Returns \mbox{\texttt{\mdseries\slshape ret{\textunderscore}val}}}}\label{@Returns}
+\logpage{[ 3, 1, 2 ]}
+\hyperdef{L}{X86B758CA82D73B41}{}
+{
+ \index{@Returns@\texttt{@Returns}}  The string \mbox{\texttt{\mdseries\slshape ret{\textunderscore}val}} is added to the documentation, with the text ``Returns: '' put in front of it. This should usually give a brief hint about the type or
+meaning of the value retuned by the documented function. }
+
+ 
+\subsection{\textcolor{Chapter }{@Arguments \mbox{\texttt{\mdseries\slshape args}}}}\label{@Arguments}
+\logpage{[ 3, 1, 3 ]}
+\hyperdef{L}{X83FDE7028649130A}{}
+{
+ \index{@Arguments@\texttt{@Arguments}}  The string \mbox{\texttt{\mdseries\slshape args}} contains a description of the arguments the function expects, including
+optional parts, which are denoted by square brackets. The argument names can
+be separated by whitespace, commas or square brackets for the optional
+arguments, like ``grp[, elm]'' or ``xx[y[z] ]''. If \textsf{GAP} options are used, this can be followed by a colon : and one or more
+assignments, like ``n[, r]: tries := 100''. }
+
+ 
+\subsection{\textcolor{Chapter }{@Group \mbox{\texttt{\mdseries\slshape grpname}}}}\label{@Group}
+\logpage{[ 3, 1, 4 ]}
+\hyperdef{L}{X86A674A5869BAEC2}{}
+{
+ \index{@Group@\texttt{@Group}}  Adds the following method to a group with the given name. See section \ref{Groups} for more information about groups. }
+
+ 
+\subsection{\textcolor{Chapter }{@FunctionLabel \mbox{\texttt{\mdseries\slshape label}}}}\label{@FunctionLabel}
+\logpage{[ 3, 1, 5 ]}
+\hyperdef{L}{X876AD82D854564C6}{}
+{
+ \index{@FunctionLabel@\texttt{@FunctionLabel}}  Adds label to the function as label. If this is not specified, then for
+declarations that involve a list of input filters (as is the case for \texttt{DeclareOperation}, \texttt{DeclareAttribute}, etc.), a default label is generated from this filter list.  }
+
+ 
+\subsection{\textcolor{Chapter }{@ChapterInfo \mbox{\texttt{\mdseries\slshape chapter, section}}}}\label{@ChapterInfo}
+\logpage{[ 3, 1, 6 ]}
+\hyperdef{L}{X7E44B99686FE9DC2}{}
+{
+ \index{@ChapterInfo@\texttt{@ChapterInfo}}  Adds the entry to the given chapter and section. Here, \mbox{\texttt{\mdseries\slshape chapter}} and \mbox{\texttt{\mdseries\slshape section}} are the respective titles. }
+
+ As an example, a full \textsf{AutoDoc} comment for with all options could look like this: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @Description
+  #! Computes the list of lists of degrees of ordinary characters
+  #! associated to the <A>p</A>-blocks of the group <A>G</A>
+  #! with <A>p</A>-modular character table <A>modtbl</A>
+  #! and underlying ordinary character table <A>ordtbl</A>.
+  #! @Returns a list
+  #! @Arguments modtbl
+  #! @Group CharacterDegreesOfBlocks
+  #! @FunctionLabel chardegblocks
+  #! @ChapterInfo Blocks, Attributes
+  DeclareAttribute( "CharacterDegreesOfBlocks",
+          IsBrauerTable );
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Other documentation comments}}\logpage{[ 3, 2, 0 ]}
+\hyperdef{L}{X8152FEF9844B1ACD}{}
+{
+  There are also some commands which can be used in \textsf{AutoDoc} comments that are not associated to any declaration. 
+\subsection{\textcolor{Chapter }{@Chapter \mbox{\texttt{\mdseries\slshape name}}}}\label{@Chapter}
+\logpage{[ 3, 2, 1 ]}
+\hyperdef{L}{X82747BD18578D5DA}{}
+{
+ \index{@Chapter@\texttt{@Chapter}}  Sets a chapter, all functions without seperate info will be added to this
+chapter. Also all text comments, i.e. lines that begin with \#! without a
+command, and which do not follow after @description, will be added to the
+chapter as regular text. Example: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @Chapter My chapter
+  #!  This is my chapter.
+  #!  I document my stuff in it.
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@Section \mbox{\texttt{\mdseries\slshape name}}}}\label{@Section}
+\logpage{[ 3, 2, 2 ]}
+\hyperdef{L}{X83651A8B7EAE7F65}{}
+{
+ \index{@Section@\texttt{@Section}}  Sets a section like chapter sets a chapter. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @Section My first manual section
+  #!  In this section I am going to document my first method.
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@EndSection}}\label{@EndSection}
+\logpage{[ 3, 2, 3 ]}
+\hyperdef{L}{X852C1B327A127225}{}
+{
+ \index{@EndSection@\texttt{@EndSection}}  Closes the current section. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @EndSection
+  #### The following text again belongs to the chapter
+  #! Now we have a second section.
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@AutoDoc}}\label{@AutoDoc}
+\logpage{[ 3, 2, 4 ]}
+\hyperdef{L}{X7CBD8AAF7DCEF352}{}
+{
+ \index{@AutoDoc@\texttt{@AutoDoc}}  Causes all subsequent declarations to be documented in the manual, regardless
+of whether they have an \textsf{AutoDoc} comment in front of them or not. }
+
+ 
+\subsection{\textcolor{Chapter }{@EndAutoDoc}}\label{@EndAutoDoc}
+\logpage{[ 3, 2, 5 ]}
+\hyperdef{L}{X782E748B82E264EB}{}
+{
+ \index{@EndAutoDoc@\texttt{@EndAutoDoc}}  Ends the affect of \texttt{@AutoDoc}. So from here on, again only declarations with an explicit \textsf{AutoDoc} comment in front are added to the manual. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @AutoDoc
+  
+  DeclareOperation( "Operation1", [ IsList ] );
+  
+  DeclareProperty( "IsProperty", IsList );
+  
+  #! @EndAutoDoc
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@BeginGroup \mbox{\texttt{\mdseries\slshape [grpname]}}}}\label{@BeginGroup}
+\logpage{[ 3, 2, 6 ]}
+\hyperdef{L}{X7937E2BA7E142CC9}{}
+{
+ \index{@BeginGroup@\texttt{@BeginGroup}}  Starts a group. All following documented declarations without an explicit \texttt{@Group} command are grouped together in the same group with the given name. If no name
+is given, then a new nameless group is generated. The effect of this command
+is ended when an \texttt{@EndGroup} command is reached. 
+
+ See section \ref{Groups} for more information about groups. }
+
+ 
+\subsection{\textcolor{Chapter }{@EndGroup}}\label{@EndGroup}
+\logpage{[ 3, 2, 7 ]}
+\hyperdef{L}{X7C17EB007FD42C87}{}
+{
+ \index{@EndGroup@\texttt{@EndGroup}}  Ends the current group. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @BeginGroup MyGroup
+  #!
+  DeclareAttribute( "GroupedAttribute",
+                    IsList );
+  
+  DeclareOperation( "NonGroupedOperation",
+                    [ IsObject ] );
+  
+  #!
+  DeclareOperation( "GroupedOperation",
+                    [ IsList, IsRubbish ] );
+  #! @EndGroup
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@Level \mbox{\texttt{\mdseries\slshape lvl}}}}\label{@Level}
+\logpage{[ 3, 2, 8 ]}
+\hyperdef{L}{X855AB48C8380D5BE}{}
+{
+ \index{@Level@\texttt{@Level}}  Sets the current level of the documentation. All items created after this,
+chapters, sections, and items, are given the level \mbox{\texttt{\mdseries\slshape lvl}}, until the \texttt{@ResetLevel} command resets the level to 0 or another level is set. 
+
+ See section \ref{Level} for more information about groups. }
+
+ 
+\subsection{\textcolor{Chapter }{@ResetLevel}}\label{@ResetLevel}
+\logpage{[ 3, 2, 9 ]}
+\hyperdef{L}{X7C6723D57F424215}{}
+{
+ \index{@ResetLevel@\texttt{@ResetLevel}}  Resets the current level to 0. 
+
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@Example and @EndExample}}\label{@Example}
+\logpage{[ 3, 2, 10 ]}
+\hyperdef{L}{X872D68497D3EFBDD}{}
+{
+ \index{@Example@\texttt{@Example and @EndExample}}  @Example inserts an example into the manual. The syntax is like the example
+enviroment in GAPDoc. This examples can be tested by GAPDoc, and also stay
+readable by GAP. The GAP prompt is added by AutoDoc. @EndExample ends the
+example block. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @Example
+  S3 := SymmetricGroup(5);
+  #! Sym( [ 1 .. 5 ] )
+  Order(S3);
+  #! 120
+  #! @EndExample
+\end{Verbatim}
+ }
+
+ 
+\subsection{\textcolor{Chapter }{@System \mbox{\texttt{\mdseries\slshape name}} and @InsertSystem \mbox{\texttt{\mdseries\slshape name}}}}\label{@System}
+\logpage{[ 3, 2, 11 ]}
+\hyperdef{L}{X7C31282882B20278}{}
+{
+ \index{@System@\texttt{@System and @InsertSystem}}  @System makes the next documentation item (can be an example, a text or a
+function) not to be inserted in the documentation at it's point in the file,
+but at the point where the @InsertSystem \mbox{\texttt{\mdseries\slshape name}} command is. This can be used to insert examples from different files at a
+specific point in the documentation. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @System Example_Symmetric_Group
+  #! @Example
+  S3 := SymmetricGroup(5);
+  #! Sym( [ 1 .. 5 ] )
+  Order(S3);
+  #! 120
+  #! @EndExample
+\end{Verbatim}
+ 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! @SInsertystem Example_Symmetric_Group
+\end{Verbatim}
+ }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Grouping}}\label{Groups}
+\logpage{[ 3, 3, 0 ]}
+\hyperdef{L}{X7D7A38F87BC40C48}{}
+{
+  TODO: explain more about groups and what they do, how they look in the
+generated output etc. 
+
+ Note that group names are globally unique throughout the whole manual. That
+is, groups with the same name are in fact merged into a single group, even if
+they were declared in different source files. Thus you can have multiple \texttt{@BeginGroup} / \texttt{@EndGroup} pairs using the same group name, in different places, and these all will refer
+to the same group. 
+
+ Moreover, this means that you can add items to a group via the \texttt{@Group} command in the \textsf{AutoDoc} comment of an arbitrary declaration, at any time. }
+
+ 
+\section{\textcolor{Chapter }{Level}}\label{Level}
+\logpage{[ 3, 4, 0 ]}
+\hyperdef{L}{X8209AFDE8209AFDE}{}
+{
+  Levels can be set to not write certain parts in the manual by default. Every
+entry has by default the level 0. The command \texttt{@Level} can be used to set the level of the following part to a higher level, for
+example 1, and prevent it from being printed to the manual by default.
+However, if one sets the level to a higher value in the autodoc option of \texttt{AutoDoc}, the parts will be included in the manual at the specific place. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+  #! This text will be printed to the manual.
+  #! @Level 1
+  #! This text will be printed to the manual if created with level 1 or higher.
+  #! @Level 2
+  #! This text will be printed to the manual if created with level 2 or higher.
+  #! @ResetLevel
+  #! This text will be printed to the manual.
+\end{Verbatim}
+ }
+
+ }
+
+     
+\chapter{\textcolor{Chapter }{AutoDoc}}\label{Chapter_AutoDoc_automatically_generated_documentation_parts}
+\logpage{[ 4, 0, 0 ]}
+\hyperdef{L}{X7CBD8AAF7DCEF352}{}
 {
   
-\section{\textcolor{Chapter }{The install functions}}\label{functions}
-\logpage{[ 2, 1, 0 ]}
-\hyperdef{L}{X78A295DF814B52A7}{}
+\section{\textcolor{Chapter }{The AutoDoc() function}}\label{Chapter_AutoDoc_Section_The_AutoDoc()_function_automatically_generated_documentation_parts}
+\logpage{[ 4, 1, 0 ]}
+\hyperdef{L}{X863584DB8497D8BA}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{AutoDoc}}
+\logpage{[ 4, 1, 1 ]}\nobreak
+\hyperdef{L}{X7CBD8AAF7DCEF352}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AutoDoc({\mdseries\slshape package{\textunderscore}name[, option{\textunderscore}record]})\index{AutoDoc@\texttt{AutoDoc}}
+\label{AutoDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This is the main function of the \textsf{AutoDoc} package. It can perform any combination of the following three tasks: 
+\begin{enumerate}
+\item  It can (re)generate a scaffold for your package manual. That is, it can
+produce two XML files in \textsf{GAPDoc} format to be used as part of your manual: First, a file named \texttt{doc/PACKAGENAME.xml} (with your package's name substituted) which is used as main file for the
+package manual, i.e. this file sets the XML DOCTYPE and defines various XML
+entities, includes other XML files (both those generated by \textsf{AutoDoc} as well as additional files created by other means), tells \textsf{GAPDoc} to generate a table of content and an index, and more. Secondly, it creates a
+file \texttt{doc/title.xml} containing a title page for your documentation, with information about your
+package (name, description, version), its authors and more, based on the data
+in your \texttt{PackageInfo.g}. 
+\item  It can invoke \texttt{CreateAutomaticDocumentation} (\ref{CreateAutomaticDocumentation}) to scan your package for \textsf{AutoDoc} based documentation (defined using \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}) and its siblings. This will produce further XML files to be used as part of
+the package manual. 
+\item  It can use \textsf{GAPDoc} to generate PDF, text and HTML (with MathJaX enabled) documentation from the \textsf{GAPDoc} XML files it generated as well as additional such files provided by you. For
+this, it invokes \texttt{MakeGAPDocDoc} (\textbf{GAPDoc: MakeGAPDocDoc}) to convert the XML sources, and it also instructs \textsf{GAPDoc} to copy supplementary files (such as CSS style files) into your doc directory
+(see \texttt{CopyHTMLStyleFiles} (\textbf{GAPDoc: CopyHTMLStyleFiles})). 
+\end{enumerate}
+ For more information and some examples, please refer to Chapter \ref{Tutorials}. 
+
+ The parameters have the following meanings: 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape package{\textunderscore}name}}}]  The name of the package whose documentation should be(re)generated. 
+\item[{\mbox{\texttt{\mdseries\slshape option{\textunderscore}record}}}]  \mbox{\texttt{\mdseries\slshape option{\textunderscore}record}} can be a record with some additional options. The following are currently
+supported: 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape dir}}}]  This should be a string containing a (relative) path or a Directory() object
+specifying where the package documentation (i.e. the \textsf{GAPDoc} XML files) are stored. \\
+ \emph{Default value: \texttt{"doc/"}.} 
+\item[{\mbox{\texttt{\mdseries\slshape scaffold}}}]  This controls whether and how to generate scaffold XML files for the main and
+title page of the package's documentation. 
+
+ The value should be either \texttt{true}, \texttt{false} or a record. If it is a record or \texttt{true} (the latter is equivalent to specifying an empty record), then this feature is
+enabled. It is also enabled if \mbox{\texttt{\mdseries\slshape opt.scaffold}} is missing but the package's info record in \texttt{PackageInfo.g} has an \texttt{AutoDoc} entry. In all other cases (in particular if \mbox{\texttt{\mdseries\slshape opt.scaffold}} is \texttt{false}), scaffolding is disabled. 
+
+ If \mbox{\texttt{\mdseries\slshape opt.scaffold}} is a record, it may contain the following entries. 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape includes}}}]  A list of XML files to be included in the body of the main XML file. If you
+specify this list and also are using \textsf{AutoDoc} to document your operations via \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}) and its siblings, you can add \texttt{AutoDocMainFile.xml} to this list to control at which point the documentation produced by \textsf{AutoDoc} is inserted. If you do not do this, it will be added after the last of your
+own XML files. 
+\item[{\mbox{\texttt{\mdseries\slshape appendix}}}]  This entry is similar to \mbox{\texttt{\mdseries\slshape opt.scaffold.includes}} but is used to specify files to include after the main body of the manual,
+i.e. typically appendices. 
+\item[{\mbox{\texttt{\mdseries\slshape bib}}}]  The name of a bibliography file, in Bibtex or XML format. If this key is not
+set, but there is a file \texttt{doc/PACKAGENAME.bib} then it is assumed that you want to use this as your bibliography. 
+\item[{\mbox{\texttt{\mdseries\slshape TitlePage}}}]  A record whose entries are used to embellish the generated titlepage for the
+package manual with extra information, such as a copyright statement or
+acknowledgments. To this end, the names of the record components are used as
+XML element names, and the values of the components are outputted as content
+of these XML elements. For example, you could pass the following record to set
+a custom acknowledgements text: 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+      rec( Acknowledgements := "Many thanks to ..." )
+\end{Verbatim}
+ For a list of valid entries in the titlepage, please refer to the \textsf{GAPDoc} manual, specifically section  (\textbf{GAPDoc: Title}) and following. 
+\end{description}
+ 
+\item[{\mbox{\texttt{\mdseries\slshape autodoc}}}]  This controls whether and how to generate addition XML documentation files by
+scanning for \textsf{AutoDoc} documentation comments. 
+
+ The value should be either \texttt{true}, \texttt{false} or a record. If it is a record or \texttt{true} (the latter is equivalent to specifying an empty record), then this feature is
+enabled. It is also enabled if \mbox{\texttt{\mdseries\slshape opt.autodoc}} is missing but the package depends (directly) on the \textsf{AutoDoc} package. In all other cases (in particular if \mbox{\texttt{\mdseries\slshape opt.autodoc}} is \texttt{false}), this feature is disabled. 
+
+ If \mbox{\texttt{\mdseries\slshape opt.autodoc}} is a record, it may contain the following entries. 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape files}}}]  A list of files (given by paths relative to the package directory) to be
+scanned for \textsf{AutoDoc} documentation comments. Usually it is more convenient to use \mbox{\texttt{\mdseries\slshape autodoc.scan{\textunderscore}dirs}}, see below. 
+\item[{\mbox{\texttt{\mdseries\slshape scan{\textunderscore}dirs}}}]  A list of subdirectories of the package directory (given as relative paths)
+which \textsf{AutoDoc} then scans for .gi, .gd and .g files; all of these files are then scanned for \textsf{AutoDoc} documentation comments. \\
+ \emph{Default value: \texttt{[ "gap", "lib", "examples", "examples/doc" ]}.} 
+\item[{\mbox{\texttt{\mdseries\slshape level}}}]  This defines the level of the created documentation. The default value is 0.
+When parts of the manual are declared with a higher value they will not be
+printed into the manual. 
+\end{description}
+ 
+\item[{\mbox{\texttt{\mdseries\slshape gapdoc}}}]  This controls whether and how to invoke \textsf{GAPDoc} to create HTML, PDF and text files from your various XML files. 
+
+ The value should be either \texttt{true}, \texttt{false} or a record. If it is a record or \texttt{true} (the latter is equivalent to specifying an empty record), then this feature is
+enabled. It is also enabled if \mbox{\texttt{\mdseries\slshape opt.gapdoc}} is missing. In all other cases (in particular if \mbox{\texttt{\mdseries\slshape opt.gapdoc}} is \texttt{false}), this feature is disabled. 
+
+ If \mbox{\texttt{\mdseries\slshape opt.gapdoc}} is a record, it may contain the following entries. 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape main}}}]  The name of the main XML file of the package manual. This exists primarily to
+support packages with existing manual which use a filename here which differs
+from the default. In particular, specifying this is unnecessary when using
+scaffolding. \\
+ \emph{Default value: \texttt{PACKAGENAME.xml}}. 
+\item[{\mbox{\texttt{\mdseries\slshape files}}}]  A list of files (given by paths relative to the package directory) to be
+scanned for \textsf{GAPDoc} documentation comments. Usually it is more convenient to use \mbox{\texttt{\mdseries\slshape gapdoc.scan{\textunderscore}dirs}}, see below. 
+\item[{\mbox{\texttt{\mdseries\slshape scan{\textunderscore}dirs}}}]  A list of subdirectories of the package directory (given as relative paths)
+which \textsf{AutoDoc} then scans for .gi, .gd and .g files; all of these files are then scanned for \textsf{GAPDoc} documentation comments. \\
+ \emph{Default value: \texttt{[ "gap", "lib", "examples", "examples/doc" ]}.} 
+\end{description}
+ 
+\end{description}
+ 
+\end{description}
+ }
+
+ }
+
+ }
+
+   
+\chapter{\textcolor{Chapter }{The main functions}}\label{Chapter_The_main_functions_automatically_generated_documentation_parts}
+\logpage{[ 5, 0, 0 ]}
+\hyperdef{L}{X7D3DC4ED855DC13C}{}
+{
+  
+\section{\textcolor{Chapter }{The main function}}\label{Chapter_The_main_functions_Section_The_main_function_automatically_generated_documentation_parts}
+\logpage{[ 5, 1, 0 ]}
+\hyperdef{L}{X80ABA2918548E108}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{CreateAutomaticDocumentation}}
+\logpage{[ 5, 1, 1 ]}\nobreak
+\hyperdef{L}{X87E8381784333A1A}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateAutomaticDocumentation({\mdseries\slshape package{\textunderscore}name, path{\textunderscore}to{\textunderscore}xml{\textunderscore}file[, section{\textunderscore}intros]})\index{CreateAutomaticDocumentation@\texttt{CreateAutomaticDocumentation}}
+\label{CreateAutomaticDocumentation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ After loading the package, run it with the name of the package you want to
+create a documentation of as first argument. Make sure you have included this
+file as source if you run your \textsf{GAPDoc} documentation creating script. The second argument is a path to the directory
+where it can store the \textsf{GAPDoc} XML files. It will produce several files out of the Declare*WithDoc
+declarations you have used in your package \mbox{\texttt{\mdseries\slshape package{\textunderscore}name}}, and one named AutoDocMainFile.xml, which you can simply include to your
+documentation. \mbox{\texttt{\mdseries\slshape section{\textunderscore}intros}} is optional, it must be a list containing lists of of either two or three
+strings. If two are given, first one must be a chapter title, with underscores
+instead of spaces, and the second one a string which will be displayed in the
+documentation at the beginning of the chapter. If three are given, first one
+must be a chapter, second a section, third the description. }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Global variable}}\label{Chapter_The_main_functions_Section_Global_variable_automatically_generated_documentation_parts}
+\logpage{[ 5, 2, 0 ]}
+\hyperdef{L}{X7D21DBC981FD7F3A}{}
 {
   
 
 \subsection{\textcolor{Chapter }{AUTOMATIC{\textunderscore}DOCUMENTATION}}
-\logpage{[ 2, 1, 1 ]}\nobreak
+\logpage{[ 5, 2, 1 ]}\nobreak
 \hyperdef{L}{X85FE8A148090985E}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AUTOMATIC{\textunderscore}DOCUMENTATION\index{AUTOMATICDOCUMENTATION@\texttt{AUT}\-\texttt{O}\-\texttt{M}\-\texttt{A}\-\texttt{T}\-\texttt{I}\-\texttt{C{\textunderscore}}\-\texttt{D}\-\texttt{O}\-\texttt{C}\-\texttt{U}\-\texttt{M}\-\texttt{E}\-\texttt{N}\-\texttt{T}\-\texttt{A}\-\texttt{TION}}
 \label{AUTOMATICDOCUMENTATION}
@@ -192,308 +791,561 @@ documented with AutoDoc, so you can find a example for the usage there. }
  This global variable stores all the streams and some additional data, like
 chapter names. }
 
- 
+ }
 
-\subsection{\textcolor{Chapter }{CreateAutomaticDocumentation}}
-\logpage{[ 2, 1, 2 ]}\nobreak
-\hyperdef{L}{X87E8381784333A1A}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateAutomaticDocumentation({\mdseries\slshape package{\textunderscore}name, documentation{\textunderscore}file, path{\textunderscore}to{\textunderscore}xml{\textunderscore}file, create{\textunderscore}full{\textunderscore}docu[, section{\textunderscore}intros]})\index{CreateAutomaticDocumentation@\texttt{CreateAutomaticDocumentation}}
-\label{CreateAutomaticDocumentation}
+ 
+\section{\textcolor{Chapter }{The declare functions}}\label{Chapter_The_main_functions_Section_The_declare_functions_automatically_generated_documentation_parts}
+\logpage{[ 5, 3, 0 ]}
+\hyperdef{L}{X84DA168280C48278}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{DeclareOperationWithDocumentation}}
+\logpage{[ 5, 3, 1 ]}\nobreak
+\hyperdef{L}{X82FAF5637E4A651F}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareOperationWithDocumentation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclareOperationWithDocumentation@\texttt{DeclareOperationWithDocumentation}}
+\label{DeclareOperationWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This is the main method of the package. After loading the package, run it with
-the name of the pacckage you want to create a documentation of as first
-argument, with an (empty) filepath (everything will be overwritten) as second
-argument. Make sure you have included this file as source if you run your
-GAPDoc documentation creating script. The third argument is a path to the
-directory where it can store the GAPDoc XML files. The path MUST end with a
-slash. It will produce several files out of the Declare*WithDocumentation
-declarations you have used in your package \mbox{\texttt{\mdseries\slshape package{\textunderscore}name}}, and one named AutoDocMainFile.xml, which you can simply include to your
-documentation. \mbox{\texttt{\mdseries\slshape create{\textunderscore}full{\textunderscore}docu}} can either be true or false. If true, a full documentation with title file is
-created. The only thing left for you to do is run GAPDoc and provide a
-bibliography. \mbox{\texttt{\mdseries\slshape section{\textunderscore}intros}} is optional, it must be a list containing lists of of either two or three
-strings. If two are given, first one must be a chapter title, with underscores
-instead of spaces, and the second one a string which will be displayed in the
-documentation at the beginning of the chapter. If three are given, first one
-must be a chapter, second a section, third the description. }
+ This method declares an operation, like DeclareOperation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}} ) would do. In addition, it specifies various information documenting the
+declared operation. They can be used to generate \textsf{GAPDoc} documentation files by calling \texttt{CreateAutomaticDocumentation} (\ref{CreateAutomaticDocumentation}) in a suitable way. \\
+ The additional parameters have the following meaning: 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape description}}}]  This contains a descriptive text which is added to the generated
+documentation. It can either be a string or a list of strings. If it is a list
+of strings, then these strings are concatenated with a space between them. 
+\item[{\mbox{\texttt{\mdseries\slshape return{\textunderscore}value}}}]  A string displayed as description of the return value. 
+\item[{\mbox{\texttt{\mdseries\slshape arguments}}}]  An optional string which is displayed in the documentation as arguments list
+of the operation. 
+\item[{\mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}}}]  An optional argument which, if present, must be a list of two strings, naming
+the chapter and the section in which the generated documentation for the
+operation should be placed. There are no spaces allowed in this string,
+underscores will be converted to spaces in the header of the chapter or the
+section. 
+\item[{\mbox{\texttt{\mdseries\slshape option{\textunderscore}record}}}]  \mbox{\texttt{\mdseries\slshape option{\textunderscore}record}} can be a record with some additional options. The following are currently
+supported: 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape group}}}]  This must be a string and is used to group functions with the same group name
+together in the documentation. Their description will be concatenated, chapter
+and section info of the first element in the group will be used. 
+\item[{\mbox{\texttt{\mdseries\slshape function{\textunderscore}label}}}]  This sets the label of the function to the string \mbox{\texttt{\mdseries\slshape function{\textunderscore}label}}. It might be useful for reference purposes, also this string is displayed as
+argument of this method in the manual. This really sets the label of the
+function, not the label of the ManItem. Please see the \textsf{GAPDoc} manual for more infos on labels and references. 
+\end{description}
+ 
+\end{description}
+ }
 
  
 
 \subsection{\textcolor{Chapter }{DeclareCategoryWithDocumentation}}
-\logpage{[ 2, 1, 3 ]}\nobreak
+\logpage{[ 5, 3, 2 ]}\nobreak
 \hyperdef{L}{X813266C082A412F9}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareCategoryWithDocumentation({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareCategoryWithDocumentation@\texttt{DeclareCategoryWithDocumentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareCategoryWithDocumentation({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclareCategoryWithDocumentation@\texttt{DeclareCategoryWithDocumentation}}
 \label{DeclareCategoryWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares a category, like DeclareCategory( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
-the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this category should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This method declares a category, like DeclareCategory( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
 
  
 
 \subsection{\textcolor{Chapter }{DeclareRepresentationWithDocumentation}}
-\logpage{[ 2, 1, 4 ]}\nobreak
+\logpage{[ 5, 3, 3 ]}\nobreak
 \hyperdef{L}{X7E24A6497A41CDE7}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDocumentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section], function})\index{DeclareRepresentationWithDocumentation@\texttt{Declare}\-\texttt{Representation}\-\texttt{With}\-\texttt{Documentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDocumentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclareRepresentationWithDocumentation@\texttt{Declare}\-\texttt{Representation}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareRepresentationWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares a representation, like DeclareRepresentation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}req{\textunderscore}entries}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
-the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this category should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
-
- 
-
-\subsection{\textcolor{Chapter }{DeclareOperationWithDocumentation}}
-\logpage{[ 2, 1, 5 ]}\nobreak
-\hyperdef{L}{X82FAF5637E4A651F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareOperationWithDocumentation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareOperationWithDocumentation@\texttt{DeclareOperationWithDocumentation}}
-\label{DeclareOperationWithDocumentation}
-}\hfill{\scriptsize (function)}}\\
-\textbf{\indent Returns:\ }
-\texttt{true}
-
-
-
- This method declares an operation, like DeclareOperation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
-the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this method should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
-
- 
-
-\subsection{\textcolor{Chapter }{InstallMethodWithDocumentation}}
-\logpage{[ 2, 1, 6 ]}\nobreak
-\hyperdef{L}{X85CD8A4B7DAEDE74}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDocumentation({\mdseries\slshape name, short{\textunderscore}descr, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section], func})\index{InstallMethodWithDocumentation@\texttt{InstallMethodWithDocumentation}}
-\label{InstallMethodWithDocumentation}
-}\hfill{\scriptsize (function)}}\\
-\textbf{\indent Returns:\ }
-\texttt{true}
-
-
-
- This method installs a method, like InstallMethod( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape short{\textunderscore}descr}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}}, \mbox{\texttt{\mdseries\slshape func}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
-the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this method should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This method declares a representation, like DeclareRepresentation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}req{\textunderscore}entries}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
 
  
 
 \subsection{\textcolor{Chapter }{DeclareAttributeWithDocumentation}}
-\logpage{[ 2, 1, 7 ]}\nobreak
+\logpage{[ 5, 3, 4 ]}\nobreak
 \hyperdef{L}{X833A38277FA4848A}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareAttributeWithDocumentation({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareAttributeWithDocumentation@\texttt{DeclareAttributeWithDocumentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareAttributeWithDocumentation({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclareAttributeWithDocumentation@\texttt{DeclareAttributeWithDocumentation}}
 \label{DeclareAttributeWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares an attribute, like DeclareAttribute( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the attribute. It is not
-optional. \mbox{\texttt{\mdseries\slshape argument}} is an optional string which is displayed in the documentation as attribute of
-the attribute. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this attribute should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This method declares an attribute, like DeclareAttribute( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
 
  
 
 \subsection{\textcolor{Chapter }{DeclarePropertyWithDocumentation}}
-\logpage{[ 2, 1, 8 ]}\nobreak
+\logpage{[ 5, 3, 5 ]}\nobreak
 \hyperdef{L}{X7E376CD17AA0566F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclarePropertyWithDocumentation({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclarePropertyWithDocumentation@\texttt{DeclarePropertyWithDocumentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclarePropertyWithDocumentation({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclarePropertyWithDocumentation@\texttt{DeclarePropertyWithDocumentation}}
 \label{DeclarePropertyWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares a property, like DeclareProperty( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
-the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this property should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This method declares a property, like DeclareProperty( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape filter}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
 
  
 
 \subsection{\textcolor{Chapter }{DeclareGlobalFunctionWithDocumentation}}
-\logpage{[ 2, 1, 9 ]}\nobreak
+\logpage{[ 5, 3, 6 ]}\nobreak
 \hyperdef{L}{X7B8162A87F499094}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalFunctionWithDocumentation({\mdseries\slshape name, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareGlobalFunctionWithDocumentation@\texttt{Declare}\-\texttt{Global}\-\texttt{Function}\-\texttt{With}\-\texttt{Documentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalFunctionWithDocumentation({\mdseries\slshape name, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{DeclareGlobalFunctionWithDocumentation@\texttt{Declare}\-\texttt{Global}\-\texttt{Function}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareGlobalFunctionWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares a global function like DeclareGlobalFunction( \mbox{\texttt{\mdseries\slshape name}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the function. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
-the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this function should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This method declares a global function like DeclareGlobalFunction( \mbox{\texttt{\mdseries\slshape name}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
 
  
 
 \subsection{\textcolor{Chapter }{DeclareGlobalVariableWithDocumentation}}
-\logpage{[ 2, 1, 10 ]}\nobreak
+\logpage{[ 5, 3, 7 ]}\nobreak
 \hyperdef{L}{X7CADC9C87BEF79D8}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalVariableWithDocumentation({\mdseries\slshape name, description[, chapter{\textunderscore}and{\textunderscore}section]})\index{DeclareGlobalVariableWithDocumentation@\texttt{Declare}\-\texttt{Global}\-\texttt{Variable}\-\texttt{With}\-\texttt{Documentation}}
 \label{DeclareGlobalVariableWithDocumentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- This method declares a global variable like DeclareGlobalVariable( \mbox{\texttt{\mdseries\slshape name}} ) would do. The description string is added to the documentation if
-CreateAutoDoc is called. It can either be a string or a list of strings. Lists
-will be concatenated with a space between them. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this variable should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
+ This method declares a global variable like DeclareGlobalVariable( \mbox{\texttt{\mdseries\slshape name}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareOperationWithDoc}}
+\logpage{[ 5, 3, 8 ]}\nobreak
+\hyperdef{L}{X796564167CB1974C}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareOperationWithDoc({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters: description, return{\textunderscore}value, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareOperationWithDoc@\texttt{DeclareOperationWithDoc}}
+\label{DeclareOperationWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares an operation, like DeclareOperation( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}} ) would do. In addition, it specifies various information documenting the
+declared operation. There can be used to generate \textsf{GAPDoc} documentation files by calling \texttt{CreateAutomaticDocumentation} (\ref{CreateAutomaticDocumentation}) in a suitable way. \\
+ The remaining parameters are all optional and are passed via GAP's ``function call with options'' syntax. For example, you might write 
+\begin{Verbatim}[fontsize=\small,frame=single,label=]
+      DeclareOperationWithDoc( "SomeOp", [IsInt] : description := "desc" )
+      
+\end{Verbatim}
+ in order to declare an operation with a certain description text. For details
+on the options syntax, see  (\textbf{Reference: Function Call With Options}). All of them are optional, a documentation entry will be created even if you
+specify none of them. The additional parameters have the following meaning: 
+\begin{description}
+\item[{\mbox{\texttt{\mdseries\slshape description}}}]  This contains a descriptive text which is added to the generated
+documentation. It can either be a string or a list of strings. If it is a list
+of strings, then these strings are concatenated with a space between them. 
+\item[{\mbox{\texttt{\mdseries\slshape return{\textunderscore}value}}}]  A string displayed as description of the return value. 
+\item[{\mbox{\texttt{\mdseries\slshape arguments}}}]  An optional string which is displayed in the documentation as arguments list
+of the operation. 
+\item[{\mbox{\texttt{\mdseries\slshape chapter{\textunderscore}info}}}]  An optional argument which, if present, must be a list of two strings, naming
+the chapter and the section in which the generated documentation for the
+operation should be placed. There are no spaces allowed in this string,
 underscores will be converted to spaces in the header of the chapter or the
-section. }
+section. 
+\item[{\mbox{\texttt{\mdseries\slshape group}}}]  This must be a string and is used to group functions with the same group name
+together in the documentation. Their description will be concatenated, chapter
+and section info of the first element in the group will be used. 
+\item[{\mbox{\texttt{\mdseries\slshape function{\textunderscore}label}}}]  This sets the label of the function to the string \mbox{\texttt{\mdseries\slshape function{\textunderscore}label}}. It might be useful for reference purposes, also this string is displayed as
+argument of this method in the manual. This really sets the label of the
+function, not the label of the ManItem. Please see the \textsf{GAPDoc} manual for more infos on labels and references. 
+\end{description}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareCategoryWithDoc}}
+\logpage{[ 5, 3, 9 ]}\nobreak
+\hyperdef{L}{X7F977DCC7FA189DA}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareCategoryWithDoc({\mdseries\slshape arg: description, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareCategoryWithDoc@\texttt{DeclareCategoryWithDoc}}
+\label{DeclareCategoryWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares a category, like DeclareCategory( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining options behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareRepresentationWithDoc}}
+\logpage{[ 5, 3, 10 ]}\nobreak
+\hyperdef{L}{X8020E6177862F37C}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareRepresentationWithDoc({\mdseries\slshape arg: description, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareRepresentationWithDoc@\texttt{DeclareRepresentationWithDoc}}
+\label{DeclareRepresentationWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares a representation, like DeclareRepresentation( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining options behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareAttributeWithDoc}}
+\logpage{[ 5, 3, 11 ]}\nobreak
+\hyperdef{L}{X7C937D657D5F76D9}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareAttributeWithDoc({\mdseries\slshape arg: description, return{\textunderscore}value, argument, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareAttributeWithDoc@\texttt{DeclareAttributeWithDoc}}
+\label{DeclareAttributeWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares an attribute, like DeclareAttribute( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining options behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclarePropertyWithDoc}}
+\logpage{[ 5, 3, 12 ]}\nobreak
+\hyperdef{L}{X788E879C87A5CD4C}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclarePropertyWithDoc({\mdseries\slshape arg: description, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclarePropertyWithDoc@\texttt{DeclarePropertyWithDoc}}
+\label{DeclarePropertyWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares a property, like DeclareProperty( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareGlobalFunctionWithDoc}}
+\logpage{[ 5, 3, 13 ]}\nobreak
+\hyperdef{L}{X8035AA567D6AAE0F}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalFunctionWithDoc({\mdseries\slshape arg: description, return{\textunderscore}value, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareGlobalFunctionWithDoc@\texttt{DeclareGlobalFunctionWithDoc}}
+\label{DeclareGlobalFunctionWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares a global function like DeclareGlobalFunction( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{DeclareGlobalVariableWithDoc}}
+\logpage{[ 5, 3, 14 ]}\nobreak
+\hyperdef{L}{X7BF0ACDF79CC4743}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DeclareGlobalVariableWithDoc({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{DeclareGlobalVariableWithDoc@\texttt{DeclareGlobalVariableWithDoc}}
+\label{DeclareGlobalVariableWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method declares a global variable like DeclareGlobalVariable( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
 
  }
 
  
-\section{\textcolor{Chapter }{Create documentation entries}}\label{non_install_functions}
-\logpage{[ 2, 2, 0 ]}
-\hyperdef{L}{X867C32EB80B3168D}{}
+\section{\textcolor{Chapter }{The install functions}}\label{Chapter_The_main_functions_Section_The_install_functions_automatically_generated_documentation_parts}
+\logpage{[ 5, 4, 0 ]}
+\hyperdef{L}{X78A295DF814B52A7}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{InstallMethodWithDocumentation}}
+\logpage{[ 5, 4, 1 ]}\nobreak
+\hyperdef{L}{X85CD8A4B7DAEDE74}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDocumentation({\mdseries\slshape name, short{\textunderscore}descr, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section], func})\index{InstallMethodWithDocumentation@\texttt{InstallMethodWithDocumentation}}
+\label{InstallMethodWithDocumentation}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method installs a method, like InstallMethod( \mbox{\texttt{\mdseries\slshape name}}, \mbox{\texttt{\mdseries\slshape short{\textunderscore}descr}}, \mbox{\texttt{\mdseries\slshape list{\textunderscore}of{\textunderscore}filters}}, \mbox{\texttt{\mdseries\slshape func}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}). }
+
+ 
+
+\subsection{\textcolor{Chapter }{InstallMethodWithDoc}}
+\logpage{[ 5, 4, 2 ]}\nobreak
+\hyperdef{L}{X82F149DB87D95C0A}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{InstallMethodWithDoc({\mdseries\slshape arg: description, return{\textunderscore}value, arguments, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{InstallMethodWithDoc@\texttt{InstallMethodWithDoc}}
+\label{InstallMethodWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This method installs a method, like InstallMethod( \mbox{\texttt{\mdseries\slshape arg}} ) would do. \\
+ \\
+ The remaining parameters behave as described for \texttt{DeclareOperationWithDoc} (\ref{DeclareOperationWithDoc}). }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{The create functions}}\label{Chapter_The_main_functions_Section_The_create_functions_automatically_generated_documentation_parts}
+\logpage{[ 5, 5, 0 ]}
+\hyperdef{L}{X86D40CDE79CFC003}{}
 {
   
 
 \subsection{\textcolor{Chapter }{CreateDocEntryForCategory}}
-\logpage{[ 2, 2, 1 ]}\nobreak
+\logpage{[ 5, 5, 1 ]}\nobreak
 \hyperdef{L}{X84F4A859796C32CF}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForCategory({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForCategory@\texttt{CreateDocEntryForCategory}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForCategory({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{CreateDocEntryForCategory@\texttt{CreateDocEntryForCategory}}
 \label{CreateDocEntryForCategory}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- The description string is added to the documentation if CreateAutoDoc is
-called. It can either be a string or a list of strings. Lists will be
-concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
-the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this category should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This works like \texttt{DeclareCategoryWithDocumentation} (\ref{DeclareCategoryWithDocumentation}) except that it does not call DeclareCategory. }
 
  
 
 \subsection{\textcolor{Chapter }{CreateDocEntryForRepresentation}}
-\logpage{[ 2, 2, 2 ]}\nobreak
+\logpage{[ 5, 5, 2 ]}\nobreak
 \hyperdef{L}{X866D1D097E50D094}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForRepresentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section], function})\index{CreateDocEntryForRepresentation@\texttt{CreateDocEntryForRepresentation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForRepresentation({\mdseries\slshape name, filter, list{\textunderscore}of{\textunderscore}req{\textunderscore}entries, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{CreateDocEntryForRepresentation@\texttt{CreateDocEntryForRepresentation}}
 \label{CreateDocEntryForRepresentation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- The description string is added to the documentation if CreateAutoDoc is
-called. It can either be a string or a list of strings. Lists will be
-concatenated with a space between them. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attribute of
-the tester. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this category should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This works like \texttt{DeclareRepresentationWithDocumentation} (\ref{DeclareRepresentationWithDocumentation}) except that it does not call DeclareRepresentation. }
 
  
 
 \subsection{\textcolor{Chapter }{CreateDocEntryForOperation}}
-\logpage{[ 2, 2, 3 ]}\nobreak
+\logpage{[ 5, 5, 3 ]}\nobreak
 \hyperdef{L}{X7DE1062382198EF2}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForOperation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForOperation@\texttt{CreateDocEntryForOperation}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForOperation({\mdseries\slshape name, list{\textunderscore}of{\textunderscore}filters, description, return{\textunderscore}value[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{CreateDocEntryForOperation@\texttt{CreateDocEntryForOperation}}
 \label{CreateDocEntryForOperation}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- The description string is added to the documentation if CreateAutoDoc is
-called. It can either be a string or a list of strings. Lists will be
-concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the method. It is not optional. \mbox{\texttt{\mdseries\slshape arguments}} is an optional string which is displayed in the documentation as attributes of
-the operation. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this method should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
-section. }
+ This works like \texttt{DeclareOperationWithDocumentation} (\ref{DeclareOperationWithDocumentation}) except that it does not call DeclareOperation. }
 
  
 
 \subsection{\textcolor{Chapter }{CreateDocEntryForAttribute}}
-\logpage{[ 2, 2, 4 ]}\nobreak
+\logpage{[ 5, 5, 4 ]}\nobreak
 \hyperdef{L}{X83DEB2BA82368AD0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForAttribute({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section]})\index{CreateDocEntryForAttribute@\texttt{CreateDocEntryForAttribute}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForAttribute({\mdseries\slshape name, filter, description, return{\textunderscore}value[, argument][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{CreateDocEntryForAttribute@\texttt{CreateDocEntryForAttribute}}
 \label{CreateDocEntryForAttribute}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
-\texttt{true}
+nothing
 
 
 
- The description string is added to the documentation if CreateAutoDoc is
-called. It can either be a string or a list of strings. Lists will be
-concatenated with a space between them. \mbox{\texttt{\mdseries\slshape return{\textunderscore}value}} is a string displayed as the return value of the attribute. It is not
-optional. \mbox{\texttt{\mdseries\slshape argument}} is an optional string which is displayed in the documentation as attribute of
-the attribute. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}and{\textunderscore}section}} is an optional arguments which must be a list with two strings, naming the
-chapter and the section in which this attribute should be displayed in the
-automatic generated documentation. There are no spaces allowed in this string,
-underscores will be converted to spaces in the header of the chapter or the
+ This works like \texttt{DeclareAttributeWithDocumentation} (\ref{DeclareAttributeWithDocumentation}) except that it does not call DeclareAttribute. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForProperty}}
+\logpage{[ 5, 5, 5 ]}\nobreak
+\hyperdef{L}{X7C2F48087F208A04}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForProperty({\mdseries\slshape name, filter, description[, arguments][, chapter{\textunderscore}and{\textunderscore}section][, option{\textunderscore}record]})\index{CreateDocEntryForProperty@\texttt{CreateDocEntryForProperty}}
+\label{CreateDocEntryForProperty}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ This works like \texttt{DeclarePropertyWithDocumentation} (\ref{DeclarePropertyWithDocumentation}) except that it does not call DeclareProperty. }
+
+ 
+
+\subsection{\textcolor{Chapter }{CreateDocEntryForCategory{\textunderscore}WithOptions}}
+\logpage{[ 5, 5, 6 ]}\nobreak
+\label{WithDocGroup}
+\hyperdef{L}{X7B0CCAC68228D281}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForCategory{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForCategoryWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Category{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForCategoryWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForRepresentation{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForRepresentationWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Representation{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForRepresentationWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForProperty{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForPropertyWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Property{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForPropertyWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForAttribute{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForAttributeWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Attribute{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForAttributeWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForOperation{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForOperationWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Operation{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForOperationWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForGlobalFunction{\textunderscore}WithOptions({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForGlobalFunctionWithOptions@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Global}\-\texttt{Function{\textunderscore}}\-\texttt{With}\-\texttt{Options}}
+\label{CreateDocEntryForGlobalFunctionWithOptions}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{CreateDocEntryForGlobalVariable{\textunderscore}WithDoc({\mdseries\slshape arg: description, chapter{\textunderscore}info, label, function{\textunderscore}label, group})\index{CreateDocEntryForGlobalVariableWithDoc@\texttt{Create}\-\texttt{Doc}\-\texttt{Entry}\-\texttt{For}\-\texttt{Global}\-\texttt{Variable{\textunderscore}}\-\texttt{WithDoc}}
+\label{CreateDocEntryForGlobalVariableWithDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+nothing
+
+
+
+ Does the same as Declare*WithDoc but without declaring anything. }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Additional functions}}\label{Chapter_The_main_functions_Section_Additional_functions_automatically_generated_documentation_parts}
+\logpage{[ 5, 6, 0 ]}
+\hyperdef{L}{X80E9EA5E866890E8}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{SetCurrentAutoDocChapter}}
+\logpage{[ 5, 6, 1 ]}\nobreak
+\label{SetCurrent}
+\hyperdef{L}{X787280E67900FF00}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{SetCurrentAutoDocChapter({\mdseries\slshape name})\index{SetCurrentAutoDocChapter@\texttt{SetCurrentAutoDocChapter}}
+\label{SetCurrentAutoDocChapter}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ResetCurrentAutoDocChapter({\mdseries\slshape })\index{ResetCurrentAutoDocChapter@\texttt{ResetCurrentAutoDocChapter}}
+\label{ResetCurrentAutoDocChapter}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{SetCurrentAutoDocSection({\mdseries\slshape name})\index{SetCurrentAutoDocSection@\texttt{SetCurrentAutoDocSection}}
+\label{SetCurrentAutoDocSection}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{ResetCurrentAutoDocSection({\mdseries\slshape })\index{ResetCurrentAutoDocSection@\texttt{ResetCurrentAutoDocSection}}
+\label{ResetCurrentAutoDocSection}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+
+
+
+
+ These functions set or reset a current chapter or section, which will be
+applied to entries without a \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}info}} instead of the default one. Note that setting a section without a chapter does
+nothing, and reseting the chapter also resets the section. }
+
+ 
+
+\subsection{\textcolor{Chapter }{WriteStringIntoDoc}}
+\logpage{[ 5, 6, 2 ]}\nobreak
+\hyperdef{L}{X7DDFB34D81712814}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{WriteStringIntoDoc({\mdseries\slshape description: chapter{\textunderscore}info})\index{WriteStringIntoDoc@\texttt{WriteStringIntoDoc}}
+\label{WriteStringIntoDoc}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+
+
+
+
+ Writes a string or a list of strings given as argument \mbox{\texttt{\mdseries\slshape description}} into doc. \mbox{\texttt{\mdseries\slshape chapter{\textunderscore}info}} is optional, but without a current chapter set, this would cause an error.
+Also it is possible here to only give the chapter, not the section. It will be
+written in the chapter at the current point, i.e. after the last written
 section. }
 
-  }
+ }
+
+ }
+
+   
+\chapter{\textcolor{Chapter }{AutoDoc worksheets}}\label{Chapter_AutoDoc_worksheets_automatically_generated_documentation_parts}
+\logpage{[ 6, 0, 0 ]}
+\hyperdef{L}{X80ED3C2A78146AD1}{}
+{
+  
+\section{\textcolor{Chapter }{Worksheets}}\label{Chapter_AutoDoc_worksheets_Section_Worksheets_automatically_generated_documentation_parts}
+\logpage{[ 6, 1, 0 ]}
+\hyperdef{L}{X801D4A2F8292704C}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{AutoDocWorksheet}}
+\logpage{[ 6, 1, 1 ]}\nobreak
+\hyperdef{L}{X809FE4137C08B28D}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{AutoDocWorksheet({\mdseries\slshape list{\textunderscore}of{\textunderscore}filenames: BookName, TestFile, OutputFolder, TestFileCommands, Bibliography})\index{AutoDocWorksheet@\texttt{AutoDocWorksheet}}
+\label{AutoDocWorksheet}
+}\hfill{\scriptsize (function)}}\\
+
+
+ This function takes a filename and returns a complete GAPDoc document created
+out of the file. All AutoDoc commands can be used to create such a file. Also
+there are some special tags, which have only effect in files if the files are
+parsed with this command. Those commands are: 
+\begin{description}
+\item[{Title \mbox{\texttt{\mdseries\slshape title}}}]  This adds a title to the document 
+\item[{Author \mbox{\texttt{\mdseries\slshape author}}}]  This adds an author to the document. 
+\end{description}
+ Note that some commands have no effect, i.e. the level command. The options
+are as follows. 
+\begin{description}
+\item[{BookName}]  The option BookName is an optional string, specifying the name of the manual
+book. If there is no BookName, the title is used. If there is no title, the
+filename of the first file is used. 
+\item[{TestFile}]  If TestFile is set to false, no testfile is produced. If TestFile is a string,
+then it is used as name of the testfile. If nothing is given, the testfile
+will be maketest.g 
+\item[{OutputFolder}]  All files will be stored in OutputFolder. If OutputFolder is not given, the
+folder of the first file will be used. 
+\item[{TestFileCommands}]  String or list of strings to be added at beginning of testfile. 
+\item[{Bibliography}]  Path to a bibliography file. 
+\end{description}
+ }
+
+ }
 
  }
 

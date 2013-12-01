@@ -1452,7 +1452,7 @@ InstallMethod( OrbitsDomain, "for arbitrary domains", true,
 function( G, D, gens, acts, act )
 local   orbs, orb,sort,plist,pos,use,o;
   
-  if Length(D)>0 and not IsMutable(D) and IsSSortedList(D) 
+  if Length(D)>0 and not IsMutable(D) and HasIsSSortedList(D) and IsSSortedList(D) 
     and CanEasilySortElements(D[1]) then
     return OrbitsByPosOp( G, D, gens, acts, act );
   fi;
@@ -1908,9 +1908,10 @@ InstallMethod( PermutationOp, "object on list", true,
             pnt := act( pnt, g );
             new := PositionCanonical( D, pnt );
 	    if new=fail then
+	      Info(InfoWarning,2,"PermutationOp: mapping does not leave the domain invariant");
 	      return fail;
 	    elif blist[new] then
-	      Info(InfoWarning,1,"PermutationOp: mapping is not a permutation");
+	      Info(InfoWarning,2,"PermutationOp: mapping is not injective");
 	      return fail;
 	    fi;
             blist[ new ] := true;

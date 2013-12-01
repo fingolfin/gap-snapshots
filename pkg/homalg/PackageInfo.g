@@ -27,7 +27,7 @@ Subtitle := "A homological algebra meta-package for computable Abelian categorie
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
 Version := Maximum( [
-  "2012.10.28", ## Mohamed's version
+  "2013.10.10", ## Mohamed's version
 ## this line prevents merge conflicts
   "2012.09.17", ## Markus' version
 ## this line prevents merge conflicts
@@ -267,7 +267,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "A Meta-Package for Homological Algebra",
+  LongTitle := "A homological algebra meta-package for computable Abelian categories",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := false
@@ -316,21 +316,21 @@ AvailabilityTest := function()
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-BannerString := Concatenation( 
-  "----------------------------------------------------------------\n",
-  "Loading  homalg ", ~.Version, "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
-  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
-        " (", ~.Persons[2].WWWHome, ")\n",
-  "   ", ~.Persons[3].FirstNames, " ", ~.Persons[3].LastName,
-        " (", ~.Persons[3].WWWHome, ")\n",
-  "Type:\n",
-  "  ?homalg:                   ## for the contents of the manual\n",
-  "  ?homalg:x                  ## for chapter/section/topic x\n",
-  "  ExamplesForHomalg();       ## for a guide to create a ring\n",
-  "----------------------------------------------------------------\n" ),
-
+#BannerString := Concatenation( 
+#  "----------------------------------------------------------------\n",
+#  "Loading  homalg ", ~.Version, "\n",
+#  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+#        " (", ~.Persons[1].WWWHome, ")\n",
+#  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
+#        " (", ~.Persons[2].WWWHome, ")\n",
+#  "   ", ~.Persons[3].FirstNames, " ", ~.Persons[3].LastName,
+#        " (", ~.Persons[3].WWWHome, ")\n",
+#  "Type:\n",
+#  "  ?homalg:                   ## for the contents of the manual\n",
+#  "  ?homalg:x                  ## for chapter/section/topic x\n",
+#  "  ExamplesForHomalg();       ## for a guide to create a ring\n",
+#  "----------------------------------------------------------------\n" ),
+#
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
 ##  started.  This should usually be 'false'. Say 'true' only if your package 
 ##  provides some improvements of the GAP library which are likely to enhance 

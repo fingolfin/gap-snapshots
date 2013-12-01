@@ -34,10 +34,9 @@ InstallValue( LIMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_properties_specific_shared_with_factors_modulo_ideals :=
             [ 
-              "AffineDimension",
-              "AffineDegree",
-              "ProjectiveDegree",
+              "IsPrimeModule",
               "IsHolonomic",
+              "IsReduced",
               ],
             
             intrinsic_properties_specific_not_shared_with_subobjects :=
@@ -88,6 +87,12 @@ InstallValue( LIMOD,
             ## used in a InstallLogicalImplicationsForHomalgSubobjects call below
             intrinsic_attributes_specific_shared_with_factors_modulo_ideals :=
             [ 
+              "AffineDimension",
+              "AffineDegree",
+              "ProjectiveDegree",
+              "PrimaryDecomposition",	## wrong, we need the preimages of this
+              "RadicalDecomposition",	## wrong, we need the preimages of this
+              "RadicalSubobject",	## wrong, we need the preimages of this
               "ElementaryDivisors",
               "FittingIdeal",
               "NonFlatLocus",
@@ -1364,6 +1369,69 @@ InstallMethod( IsFree,
     
 end );
 
+##
+InstallMethod( IsReduced,
+        "LIMOD: for homalg modules",
+        [ IsHomalgModule ],
+        
+  function( M )
+    local I;
+    
+    I := Annihilator( M );
+    
+    return IsSubset( I, RadicalSubobject( I ) );
+    
+end );
+
+## fallback method
+InstallMethod( IsPrimeModule,
+        "for homalg modules",
+        [ IsHomalgModule ],
+        
+  function( M )
+    local dec;
+    
+    dec := PrimaryDecomposition( M );
+    
+    return Length( dec ) = 1 and IsSubset( dec[1][1], dec[1][2] );
+    
+end );
+
+##
+InstallMethod( IsPrimeModule,
+        "for homalg modules",
+        [ IsFinitelyPresentedModuleRep ],
+        
+  function( M )
+    local R, RP, tr, subobject, mat;
+    
+    R := HomalgRing( M );
+    
+    RP := homalgTable( R );
+    
+    if not IsBound( RP!.IsPrime ) then
+        TryNextMethod( );
+    fi;
+    
+    if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
+        tr := IdFunc;
+    else
+        tr := Involution;
+    fi;
+    
+    mat := MatrixOfRelations( M );
+    
+    return IsPrimeModule( tr( mat ) );
+    
+end );
+
+## IsPrime is unfortunately hijacked as an operation
+InstallMethod( IsPrime,
+        "for homalg modules",
+        [ IsHomalgModule ],
+        
+  IsPrimeModule );
+
 ####################################
 #
 # methods for attributes:
@@ -1915,14 +1983,14 @@ end );
 
 ##
 InstallMethod( PrimaryDecomposition,
-        "for homalg graded modules",
+        "for homalg modules",
         [ IsFinitelyPresentedModuleRep ],
         
   function( M )
     local tr, subobject, mat;
     
     if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
-        tr := a -> a;
+        tr := IdFunc;
         subobject := LeftSubmodule;
     else
         tr := Involution;
@@ -1946,21 +2014,10 @@ InstallMethod( PrimaryDecomposition,
     
 end );
 
-##
-InstallMethod( PrimaryDecomposition,
-        "for homalg submodules",
-        [ IsFinitelyPresentedSubmoduleRep ],
-        
-  function( N )
-    
-    return PrimaryDecomposition( FactorObject( N ) );
-    
-end );
-
 ## fallback method
 InstallMethod( RadicalDecomposition,
         "for homalg modules",
-        [ IsFinitelyPresentedModuleRep ],
+        [ IsHomalgModule and IsFinitelyPresentedObjectRep ],
         
   function( M )
     
@@ -1985,7 +2042,7 @@ InstallMethod( RadicalDecomposition,
     fi;
     
     if IsHomalgLeftObjectOrMorphismOfLeftObjects( M ) then
-        tr := a -> a;
+        tr := IdFunc;
         subobject := LeftSubmodule;
     else
         tr := Involution;
@@ -1999,14 +2056,14 @@ InstallMethod( RadicalDecomposition,
     
 end );
 
-##
-InstallMethod( RadicalDecomposition,
-        "for homalg submodules",
-        [ IsFinitelyPresentedSubmoduleRep ],
+## fallback method
+InstallMethod( RadicalSubobject,
+        "for homalg modules",
+        [ IsHomalgModule and IsFinitelyPresentedObjectRep ],
         
-  function( N )
+  function( J )
     
-    return RadicalDecomposition( FactorObject( N ) );
+    return Intersect( RadicalDecomposition( J ) );
     
 end );
 
@@ -2125,6 +2182,256 @@ InstallMethod( LargestMinimalNumberOfLocalGenerators,
     
     ## should never be reached
     Error( "something went wrong\n" );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for a homalg matrix",
+        [ IsHomalgMatrix, IsList ],
+        
+  function( M, gvar )
+    local n, Sym, rel;
+    
+    n := NrColumns( M );
+    
+    if not n = Length( gvar ) then
+        Error( "the length of the list of variables is ",
+               "not equal to the number of columns of the matrix\n" );
+    fi;
+    
+    Sym := HomalgRing( M ) * gvar;
+    
+    gvar := RelativeIndeterminatesOfPolynomialRing( Sym );
+    gvar := HomalgMatrix( gvar, Length( gvar ), 1, Sym );
+    
+    rel := LeftSubmodule( ( Sym * M ) * gvar );
+    
+    Sym := Sym / rel;
+    
+    SetDefiningIdeal( Sym, rel );
+    
+    return Sym;
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for homalg modules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedObjectRep, IsList ],
+        
+  function( M, gvar )
+    local rel;
+    
+    rel := MatrixOfRelations( M );
+    
+    if IsHomalgRightObjectOrMorphismOfRightObjects( M ) then
+        rel := Involution( rel );
+    fi;
+    
+    return SymmetricAlgebra( rel, gvar );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsList ],
+        
+  function( M, gvar )
+    
+    return SymmetricAlgebra( UnderlyingObject( M ), gvar );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for homalg modules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedObjectRep, IsString ],
+        
+  function( M, str )
+    local n;
+    
+    n := NrGenerators( M );
+    
+    str := ParseListOfIndeterminates( SplitString( str, "," ) );
+    
+    if Length( str ) = 1 and not n = 1 then
+        str := str[1];
+        str := List( [ 1 .. n ], i -> Concatenation( str, String( i ) ) );
+    fi;
+    
+    return SymmetricAlgebra( M, str );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebra,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsString ],
+        
+  function( M, str )
+    
+    return SymmetricAlgebra( UnderlyingObject( M ), str );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebraFromSyzygiesObject,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsList ],
+        
+  function( M, gvar )
+    
+    M := MatrixOfSubobjectGenerators( M );
+    
+    return SymmetricAlgebra( M, gvar );
+    
+end );
+
+##
+InstallMethod( SymmetricAlgebraFromSyzygiesObject,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsString ],
+        
+  function( M, str )
+    local n;
+    
+    n := NrGenerators( M );
+    
+    str := ParseListOfIndeterminates( SplitString( str, "," ) );
+    
+    if Length( str ) = 1 and not n = 1 then
+        str := str[1];
+        str := List( [ 1 .. n ], i -> Concatenation( str, String( i ) ) );
+    fi;
+    
+    return SymmetricAlgebraFromSyzygiesObject( M, str );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for a homalg matrix",
+        [ IsHomalgMatrix, IsList ],
+        
+  function( M, gvar )
+    local n, A, rel;
+    
+    n := NrColumns( M );
+    
+    if not n = Length( gvar ) then
+        Error( "the length of the list of variables is ",
+               "not equal to the number of columns of the matrix\n" );
+    fi;
+    
+    A := ExteriorRing( HomalgRing( M ) * List( gvar, v -> Concatenation( "XX", v ) ), gvar );
+    
+    gvar := IndeterminateAntiCommutingVariablesOfExteriorRing( A );
+    gvar := HomalgMatrix( gvar, Length( gvar ), 1, A );
+    
+    rel := LeftSubmodule( ( A * M ) * gvar );
+    
+    A := A / rel;
+    
+    SetDefiningIdeal( A, rel );
+    
+    return A;
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for homalg modules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedObjectRep, IsList ],
+        
+  function( M, gvar )
+    local rel;
+    
+    rel := MatrixOfRelations( M );
+    
+    if IsHomalgRightObjectOrMorphismOfRightObjects( M ) then
+        rel := Involution( rel );
+    fi;
+    
+    return ExteriorAlgebra( rel, gvar );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsList ],
+        
+  function( M, gvar )
+    
+    return ExteriorAlgebra( UnderlyingObject( M ), gvar );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for homalg modules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedObjectRep, IsString ],
+        
+  function( M, str )
+    local n;
+    
+    n := NrGenerators( M );
+    
+    str := ParseListOfIndeterminates( SplitString( str, "," ) );
+    
+    if Length( str ) = 1 and not n = 1 then
+        str := str[1];
+        str := List( [ 1 .. n ], i -> Concatenation( str, String( i ) ) );
+    fi;
+    
+    return ExteriorAlgebra( M, str );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebra,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsString ],
+        
+  function( M, str )
+    
+    return ExteriorAlgebra( UnderlyingObject( M ), str );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebraFromSyzygiesObject,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsList ],
+        
+  function( M, gvar )
+    
+    M := MatrixOfSubobjectGenerators( M );
+    
+    return ExteriorAlgebra( M, gvar );
+    
+end );
+
+##
+InstallMethod( ExteriorAlgebraFromSyzygiesObject,
+        "for homalg submodules",
+        [ IsHomalgModule and IsStaticFinitelyPresentedSubobjectRep, IsString ],
+        
+  function( M, str )
+    local n;
+    
+    n := NrGenerators( M );
+    
+    str := ParseListOfIndeterminates( SplitString( str, "," ) );
+    
+    if Length( str ) = 1 and not n = 1 then
+        str := str[1];
+        str := List( [ 1 .. n ], i -> Concatenation( str, String( i ) ) );
+    fi;
+    
+    return ExteriorAlgebraFromSyzygiesObject( M, str );
     
 end );
 

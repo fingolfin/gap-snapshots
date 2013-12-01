@@ -7,10 +7,10 @@
                          Modules over Computable Rings[101X
   
   
-                               Version 2013.05.05
+                               Version 2013.11.07
   
   
-                                    May 2013
+                                  October 2013
   
   
                                 Mohamed Barakat
@@ -135,24 +135,30 @@
     7.3 [33X[0;0YModules: Properties[133X
       7.3-1 IsCyclic
       7.3-2 IsHolonomic
-      7.3-3 IsPrimeIdeal
+      7.3-3 IsReduced
+      7.3-4 IsPrimeIdeal
+      7.3-5 IsPrimeModule
     7.4 [33X[0;0YModules: Attributes[133X
       7.4-1 ResidueClassRing
       7.4-2 PrimaryDecomposition
       7.4-3 RadicalDecomposition
-      7.4-4 ElementaryDivisors
-      7.4-5 FittingIdeal
-      7.4-6 NonFlatLocus
-      7.4-7 LargestMinimalNumberOfLocalGenerators
-      7.4-8 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries
-      7.4-9 CoefficientsOfNumeratorOfHilbertPoincareSeries
-      7.4-10 UnreducedNumeratorOfHilbertPoincareSeries
-      7.4-11 NumeratorOfHilbertPoincareSeries
-      7.4-12 HilbertPoincareSeries
-      7.4-13 AffineDegree
-      7.4-14 DataOfHilbertFunction
-      7.4-15 HilbertFunction
-      7.4-16 IndexOfRegularity
+      7.4-4 ModuleOfKaehlerDifferentials
+      7.4-5 RadicalSubobject
+      7.4-6 SymmetricAlgebra
+      7.4-7 ExteriorAlgebra
+      7.4-8 ElementaryDivisors
+      7.4-9 FittingIdeal
+      7.4-10 NonFlatLocus
+      7.4-11 LargestMinimalNumberOfLocalGenerators
+      7.4-12 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries
+      7.4-13 CoefficientsOfNumeratorOfHilbertPoincareSeries
+      7.4-14 UnreducedNumeratorOfHilbertPoincareSeries
+      7.4-15 NumeratorOfHilbertPoincareSeries
+      7.4-16 HilbertPoincareSeries
+      7.4-17 AffineDegree
+      7.4-18 DataOfHilbertFunction
+      7.4-19 HilbertFunction
+      7.4-20 IndexOfRegularity
     7.5 [33X[0;0YModules: Operations and Functions[133X
       7.5-1 HomalgRing
       7.5-2 ByASmallerPresentation
@@ -210,28 +216,35 @@
     10.5 [33X[0;0YTool Functors[133X
     10.6 [33X[0;0YOther Functors[133X
     10.7 [33X[0;0YFunctors: Operations and Functions[133X
-  11 [33X[0;0YExterior Algebra and Koszul Complex[133X
-    11.1 [33X[0;0YExterior Algebra: Constructor[133X
-      11.1-1 ExteriorPower
-    11.2 [33X[0;0YExterior Algebra: Properties and Attributes[133X
-      11.2-1 IsExteriorPower
-      11.2-2 ExteriorPowerExponent
-      11.2-3 ExteriorPowerBaseModule
-    11.3 [33X[0;0YExterior Algebra: Element Properties[133X
-      11.3-1 IsExteriorPowerElement
-    11.4 [33X[0;0YExterior Algebra: Element Operations[133X
-      11.4-1 Wedge
-      11.4-2 ExteriorPowerElementDual
-      11.4-3 SingleValueOfExteriorPowerElement
-    11.5 [33X[0;0YKoszul complex and Cayley determinant[133X
-      11.5-1 KoszulCocomplex
-      11.5-2 CayleyDeterminant
-      11.5-3 Gcd_UsingCayleyDeterminant
-  12 [33X[0;0YExamples[133X
-    12.1 [33X[0;0YExtExt[133X
-    12.2 [33X[0;0YPurity[133X
-    12.3 [33X[0;0YTorExt-Grothendieck[133X
-    12.4 [33X[0;0YTorExt[133X
+  11 [33X[0;0YSymmetric Algebra and Koszul Complex[133X
+    11.1 [33X[0;0YSymmetric Algebra: Constructor[133X
+      11.1-1 SymmetricPower
+    11.2 [33X[0;0YSymmetric Algebra: Properties and Attributes[133X
+      11.2-1 IsSymmetricPower
+      11.2-2 SymmetricPowerExponent
+      11.2-3 SymmetricPowerBaseModule
+  12 [33X[0;0YExterior Algebra and Koszul Complex[133X
+    12.1 [33X[0;0YExterior Algebra: Constructor[133X
+      12.1-1 ExteriorPower
+    12.2 [33X[0;0YExterior Algebra: Properties and Attributes[133X
+      12.2-1 IsExteriorPower
+      12.2-2 ExteriorPowerExponent
+      12.2-3 ExteriorPowerBaseModule
+    12.3 [33X[0;0YExterior Algebra: Element Properties[133X
+      12.3-1 IsExteriorPowerElement
+    12.4 [33X[0;0YExterior Algebra: Element Operations[133X
+      12.4-1 Wedge
+      12.4-2 ExteriorPowerElementDual
+      12.4-3 SingleValueOfExteriorPowerElement
+    12.5 [33X[0;0YKoszul complex and Cayley determinant[133X
+      12.5-1 KoszulCocomplex
+      12.5-2 CayleyDeterminant
+      12.5-3 Gcd_UsingCayleyDeterminant
+  13 [33X[0;0YExamples[133X
+    13.1 [33X[0;0YExtExt[133X
+    13.2 [33X[0;0YPurity[133X
+    13.3 [33X[0;0YTorExt-Grothendieck[133X
+    13.4 [33X[0;0YTorExt[133X
   A [33X[0;0YThe Mathematical Idea behind [5XModules[105X[133X
   B [33X[0;0YLogic Subpackages[133X
     B.1 [33X[0;0Y[5XLIMOD[105X: Logical Implications for Modules[133X

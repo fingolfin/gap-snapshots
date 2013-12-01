@@ -12,7 +12,7 @@
 
 InstallMethod( FittingFreeLiftSetup, "permutation", true, [ IsPermGroup ],0,
 function( G )
-local   pcgs,r,hom,A,iso;
+local   pcgs,r,hom,A,iso,p,i;
   
   r:=RadicalGroup(G);
   hom:=NaturalHomomorphismByNormalSubgroup(G,r);
@@ -24,7 +24,9 @@ local   pcgs,r,hom,A,iso;
   if not HasPcgsElementaryAbelianSeries(r) then
     SetPcgsElementaryAbelianSeries(r,pcgs);
   fi;
-  A := PermpcgsPcGroupPcgs( pcgs, IndicesEANormalSteps(pcgs), false );
+
+  A:=CreateIsomorphicPcGroup(pcgs,true,false);
+
   iso := GroupHomomorphismByImagesNC( G, A, pcgs, GeneratorsOfGroup( A ));
   SetIsBijective( iso, true );
   return rec(pcgs:=pcgs,
@@ -34,126 +36,6 @@ local   pcgs,r,hom,A,iso;
 	     factorhom:=hom);
 
 end );
-
-InstallGlobalFunction(FittingFreeSubgroupSetup,function(G,U)
-local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r;
-  ffs:=FittingFreeLiftSetup(G);
-
-  # result cached?
-  if not IsBound(U!.cachedFFS) then
-    cache:=[];
-    U!.cachedFFS:=cache;
-  else
-    cache:=U!.cachedFFS;
-  fi;
-  r:=First(cache,x->IsIdenticalObj(x[1],ffs));
-  if r<>fail then
-    return r[2];
-  fi;
-
-  pcisom:=ffs.pcisom;
-
-  rest:=RestrictedMapping(ffs.factorhom,U);
-
-  # in radical?
-  if ForAll(MappingGeneratorsImages(rest)[2],IsOne) then
-    ker:=U;
-    k:=InducedPcgsByGeneratorsNC(ffs.pcgs,GeneratorsOfGroup(U));
-  elif Length(ffs.pcgs)=0 then
-    # no radical
-    ker:=TrivialSubgroup(G);
-    k:=ffs.pcgs;
-  else
-
-    it:=CoKernelGensIterator(InverseGeneralMapping(rest));
-    kpc:=TrivialSubgroup(Image(pcisom));
-    while not IsDoneIterator(it) do
-      x:=ImagesRepresentative(pcisom,NextIterator(it));
-      if not x in kpc then
-	kpc:=ClosureGroup(kpc,x);
-      fi;
-    od;
-    SetSize(U,Size(Image(rest))*Size(kpc));
-    k:=InducedPcgs(FamilyPcgs(Image(pcisom)),kpc);
-    k:=List(k,x->PreImagesRepresentative(pcisom,x));
-    k:=InducedPcgsByPcSequenceNC(ffs.pcgs,k);
-    ker:=SubgroupNC(G,k);
-    SetSize(ker,Size(kpc));
-  fi;
-
-  SetPcgs(ker,k);
-  SetKernelOfMultiplicativeGeneralMapping(rest,ker);
-  if Length(ffs.pcgs)=0 then
-    r:=[1];
-  else
-    r:=Concatenation(k!.depthsInParent,[Length(ffs.pcgs)+1]);
-  fi;
-
-  r:=rec(parentffs:=ffs,
-            rest:=rest,
-            ker:=ker,
-	    pcgs:=k,
-	    serdepths:=List(ffs.depths,y->First([1..Length(r)],x->r[x]>=y))
-	    );
-  Add(cache,[ffs,r]); # keep
-  return r;
-
-end);
-
-InstallGlobalFunction(SubgroupByFittingFreeData,function(G,gens,imgs,ipcgs)
-local ffs,hom,U,rest,ker,r;
-
-  ffs:=FittingFreeLiftSetup(G);
-  hom:=ffs.factorhom;
-
-  U:=SubgroupNC(G,Concatenation(gens,ipcgs));
-
-  gens:=Concatenation(gens,ipcgs);
-  imgs:=Concatenation(imgs,List(ipcgs,x->One(Range(hom))));
-
-  if IsPermGroup(U) and AssertionLevel()>0 then
-    rest:=GroupHomomorphismByImages(U,Range(hom),gens,imgs);
-  else
-    RUN_IN_GGMBI:=true; # hack to skip Nice treatment
-    rest:=GroupHomomorphismByImagesNC(U,Range(hom),gens,imgs);
-    RUN_IN_GGMBI:=false;
-  fi;
-  if rest=fail then Error("can't build homomorphism"); fi;
-
-  if HasRecogDecompinfoHomomorphism(hom) then
-    SetRecogDecompinfoHomomorphism(rest,RecogDecompinfoHomomorphism(hom));
-  fi;
-
-  ker:=SubgroupNC(G,ipcgs);
-  SetPcgs(ker,ipcgs);
-  if Length(ipcgs)=0 then
-    SetSize(ker,1);
-  else
-    SetSize(ker,Product(RelativeOrders(ipcgs)));
-  fi;
-  SetKernelOfMultiplicativeGeneralMapping(rest,ker);
-
-  SetSize(U,Size(Group(imgs,One(Image(ffs.factorhom))))*Size(ker));
-
-  if Length(ipcgs)=0 then
-    r:=[Length(ffs.pcgs)+1];
-  elif IsBound(ipcgs!.depthsInParent) then
-    r:=Concatenation(ipcgs!.depthsInParent,[Length(ffs.pcgs)+1]);
-  else
-    r:=Concatenation(List(ipcgs,x->DepthOfPcElement(ffs.pcgs,x)),
-      [Length(ffs.pcgs)+1]);
-  fi;
-  r:=rec(parentffs:=ffs,
-            rest:=rest,
-            ker:=ker,
-	    pcgs:=ipcgs,
-	    serdepths:=List(ffs.depths,y->First([1..Length(r)],x->r[x]>=y))
-	    );
-
-  U!.cachedFFS:=[[ffs,r]];
-  return U;
-
-end);
 
 
 #testfunction for AutomorphismRepresentingGroup
@@ -217,7 +99,11 @@ local G0,a0,tryrep,sel,selin,a,s,dom,iso,stabs,outs,map,i,j,p,found,seln,
   sel:=Difference([1..Length(autos)],selin);
 
   # first try given rep
-  if not IsSubset(MovedPoints(G),[1..LargestMovedPoint(G)]) then
+  if NrMovedPoints(G)^3>Size(G) then
+    # likely too high degree. Try to reduce first
+    a:=SmallerDegreePermutationRepresentation(G);
+    a:=tryrep(a,4*NrMovedPoints(Image(a)));
+  elif not IsSubset(MovedPoints(G),[1..LargestMovedPoint(G)]) then
     a:=tryrep(ActionHomomorphism(G,MovedPoints(G),"surjective"),
 	        4*NrMovedPoints(G));
   else

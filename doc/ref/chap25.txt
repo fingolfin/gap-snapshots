@@ -542,7 +542,7 @@
   of the problem[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YX^tr ⋅ X = [3Xgram[103X[133X[124X[133X
+        [33X[1;6Y[24X[33X[0;0YX^tr ⋅ X = gram[133X[124X[133X
   
   
   [33X[0;0Yare  calculated  (see [Ple95]).  Usually  there are many solutions [22XX[122X but all

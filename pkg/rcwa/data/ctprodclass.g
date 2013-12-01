@@ -82,6 +82,9 @@
 ##  of the product of the i-th and the j-th class transposition in the list
 ##  List(ClassPairs(6),ClassTransposition);.
 ##
+##  For the description of the components CTProds12 and CTProds32, see the
+##  files ctprods12.g and ctprods32.g, respectively.
+##
 #############################################################################
 
 return rec(
@@ -5386,7 +5389,15 @@ OrdersMatrix :=
       infinity, 6, 6, 6, 12, 2, 2, 2, 3, 3, 12, 6, infinity, 6, infinity, 6, 
       2, 6, 6, infinity, 6, 6, 6, 6, infinity, 6, 6, 6, 2, 2, 3, 3, 6, 6, 6, 
       infinity, 6, 2, 6, infinity, 6, 6, 2, 3, 3, 6, 6, infinity, 6, 3, 3, 1 
-     ] ]
+     ] ],
+
+CTProds12 := ReadAsFunction(
+               Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                             "/data/ctprods12.g"))(),
+
+CTProds32 := ReadAsFunction(
+               Concatenation(PackageInfo("rcwa")[1].InstallationPath,
+                             "/data/ctprods32.g"))()
 
 );
 

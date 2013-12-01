@@ -268,7 +268,7 @@ InstallMethod( IN,
     IsElmsColls,
     [ IsObject, IsCollection and IsWholeFamily ],
     SUM_FLAGS, # can't do better
-    RETURN_TRUE );
+    ReturnTrue );
 
 
 #############################################################################
@@ -326,6 +326,53 @@ InstallMethod( String,
     ConvertToStringRep( str );
     return str;
     end );
+
+InstallMethod( ViewString, "call ViewString and incorporate hints",
+  [ IsList and IsFinite],
+function ( list )
+local   str,ls, i;
+
+  # We have to handle empty string and empty list specially because
+  # IsString( [ ] ) returns true
+
+  if Length(list) = 0 then
+    if IsEmptyString( list ) then
+      return "\"\"";
+    else
+      return "[  ]";
+    fi;
+  fi;
+
+  if IsString( list ) then
+    return Concatenation("\"", list, "\"");
+  fi;
+
+  # make strings for objects in l
+  ls:=[];
+  for i in [1..Length(list)] do
+    if IsBound(list[i]) then
+      str:=ViewString(list[i]);
+      if str=DEFAULTVIEWSTRING then
+	# there might not be a method
+	str:=String(list[i]);
+      fi;
+      ls[i]:=str;
+    else
+      ls[i]:="";
+    fi;
+  od;
+
+  str := "[ ";
+  for i in [ 1 .. Length( list ) ]  do
+    Append(str,ls[i]);
+    if i<>Length(list)  then
+      Append(str,",\<\> ");
+    fi;
+  od;
+  Append( str, " ]" );
+  ConvertToStringRep( str );
+  return str;
+end );
 
 InstallMethod( String,
     "for a range",
@@ -1203,7 +1250,7 @@ InstallMethod( Position,
     [ IsHomogeneousList,
       IsObject,
       IsInt ],
-    RETURN_FAIL );
+    ReturnFail );
 
 InstallMethod( Position,
     "for a small sorted list, an object, and an integer",

@@ -1,6 +1,6 @@
 # scscp, chapter 5
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 721, 729 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 721, 729 ]
 
 gap> GetServiceDescription( "localhost", 26133 );
 rec(
@@ -9,7 +9,7 @@ rec(
   version := "GAP 4.4.12 + SCSCP 2.0.0" )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 688, 698 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 688, 698 ]
 
 gap> GetAllowedHeads("localhost",26133);
 rec( scscp_transient_1 := [ "GroupIdentificationService", 
@@ -20,7 +20,7 @@ rec( scscp_transient_1 := [ "GroupIdentificationService",
       "WS_IdGroup", "WS_Karatsuba", "WS_Phi" ] )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 848, 855 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 848, 855 ]
 
 gap> IsAllowedHead( "permgp1", "group", "localhost", 26133 );
 true
@@ -28,7 +28,7 @@ gap> IsAllowedHead( "nums1", "pi", "localhost", 26133 );
 false
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 800, 817 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 800, 817 ]
 
 gap> GetTransientCD( "scscp_transient_1", "localhost", 26133 );
 rec( CDDate := "2011-10-08", 
@@ -46,7 +46,7 @@ rec( CDDate := "2011-10-08",
   Description := "This is a transient CD for the GAP SCSCP service" )
 
 
-# [ "/Users/alexk/gap4r5p4May26/pkg/scscp/doc/../lib/scscp.gd", 762, 769 ]
+# [ "/Users/alexk/gap4r7p1pre/pkg/scscp/doc/../lib/scscp.gd", 762, 769 ]
 
 gap> GetSignature("scscp_transient_1","WS_Factorial","localhost",26133);
 rec( maxarg := 1, minarg := 1,

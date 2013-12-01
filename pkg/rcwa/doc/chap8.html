@@ -25,16 +25,38 @@
 
 <h3>8 <span class="Heading">The Algorithms Implemented in RCWA</span></h3>
 
-<p>This chapter lists brief descriptions of a part of the algorithms and methods implemented in this package. These descriptions are kept very informal and short, and some of them provide only rudimentary information. They are listed in alphabetical order. The word "trivial" as a description means that essentially nothing is done except of storing or recalling one or several values, and "straightforward" means that no sophisticated algorithm is used. Note that "trivial" and "straightforward" are to be read as <em>mathematically</em> trivial respectively straightforward, and that the code of a function or method attributed in this way can still be reasonably long and complicated. Longer and better descriptions of many of the algorithms and methods can be found in <a href="chapBib.html#biBKohl08b">[Koh08]</a>.</p>
-
-<p>Finally please note that the descriptions given here represent the functionality of <strong class="pkg">RCWA</strong> in May 2007. Since then, a lot of code has been added to this package, and much of the older code has been improved and uses now better algorithms than in 2007.</p>
+<p>This chapter lists brief descriptions of the algorithms and methods implemented in this package. These descriptions are kept very informal and short, and some of them provide only rudimentary information. They are listed in alphabetical order. The word "trivial" as a description means that essentially nothing is done except of performing I/O operations, storing or recalling one or several values or doing very basic computations, and "straightforward" means that no sophisticated algorithm is used. Note that "trivial" and "straightforward" are to be read as <em>mathematically</em> trivial respectively straightforward, and that the code of a function or method attributed in this way can still be reasonably long and complicated. Longer and better descriptions of <em>some</em> of the algorithms and methods can be found in <a href="chapBib.html#biBKohl08b">[Koh08]</a>.</p>
 
 
 <dl>
 <dt><strong class="Mark">
     <code class="code">ActionOnRespectedPartition(<var class="Arg">G</var>)</code>
   </strong></dt>
-<dd><p>"Straightforward" after having computed a respected partition by <code class="code">RespectedPartition</code>. One only needs to know how to compute images of residue classes under affine mappings.</p>
+<dd><p>"Straightforward" after having computed a respected partition by <code class="code">RespectedPartition</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">AllElementsOfCTZWithGivenModulus(<var class="Arg">m</var>)</code>
+  </strong></dt>
+<dd><p>This function first determines a list of all unordered partitions <span class="SimpleMath">mathcalP</span> of ℤ into <var class="Arg">m</var> residue classes. Then for any such partition <span class="SimpleMath">mathcalP</span> it runs a loop over the elements of the symmetric group of degree <var class="Arg">m</var>. For any <span class="SimpleMath">σ ∈ S_m</span> and any partition <span class="SimpleMath">mathcalP</span> it constructs the element of <span class="SimpleMath">CT(Z)</span> with modulus dividing <span class="SimpleMath">m</span> which maps the ordered partition <span class="SimpleMath">{0(m), 1(m), dots, m-1(m)}</span> to the ordered partition obtained from <span class="SimpleMath">mathcalP</span> by permuting the residue classes with <span class="SimpleMath">σ</span>. Finally it discards the elements whose modulus is a proper divisor of <var class="Arg">m</var>, and returns the "rest".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">AllProducts(<var class="Arg">l</var>,<var class="Arg">k</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">AllSmoothIntegers(<var class="Arg">maxp</var>,<var class="Arg">maxn</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward". -- The taken time is essentially proportional to the size of the resulting list.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">AssignGlobals(<var class="Arg">record</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -52,7 +74,7 @@
 <dt><strong class="Mark">
     <code class="code">ClassPairs(<var class="Arg">m</var>)</code>
   </strong></dt>
-<dd><p>Runs over all 4-tuples of nonnegative integers less than <var class="Arg">m</var>, and filters by congruence criteria and ordering of the entries.</p>
+<dd><p>Runs a loop over all 4-tuples of nonnegative integers less than <var class="Arg">m</var>, and filters by congruence criteria and ordering of the entries.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -94,7 +116,7 @@
 <dt><strong class="Mark">
     <code class="code">CommonRightInverse(<var class="Arg">l</var>,<var class="Arg">r</var>)</code>
   </strong></dt>
-<dd><p>(See <code class="code">RightInverse</code>.)</p>
+<dd><p>See <code class="code">RightInverse</code>.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -110,6 +132,18 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">CycleRepresentativesAndLengths(<var class="Arg">g</var>,<var class="Arg">S</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">CyclesOnFiniteOrbit(<var class="Arg">G</var>,<var class="Arg">g</var>,<var class="Arg">n</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">DerivedSubgroup(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>No genuine method -- <strong class="pkg">GAP</strong> Library methods already work for tame groups.</p>
@@ -119,6 +153,12 @@
     <code class="code">Determinant(<var class="Arg">g</var>)</code>
   </strong></dt>
 <dd><p>Evaluation of the given expression. For the mathematical meaning (epimorphism!), see Theorem 2.11.9 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">DifferencesList(<var class="Arg">l</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -134,9 +174,21 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">DistanceToNextSmallerPointInOrbit(<var class="Arg">G</var>,<var class="Arg">n</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward" -- computes balls of radius <span class="SimpleMath">r</span> about <var class="Arg">n</var> for <span class="SimpleMath">r = 1, 2, dots</span> until a point smaller than <span class="SimpleMath">n</span> is found.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">Divisor(<var class="Arg">f</var>)</code>
   </strong></dt>
 <dd><p>Lcm of coefficients, as indicated.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">DrawGrid(<var class="Arg">U</var>,<var class="Arg">range_y</var>,<var class="Arg">range_x</var>,<var class="Arg">filename</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -146,9 +198,22 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">EpimorphismByGenerators(<var class="Arg">G</var>,<var class="Arg">H</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">EpimorphismFromFpGroup(<var class="Arg">G</var>,<var class="Arg">r</var>)</code>
   </strong></dt>
-<dd><p>If the package <strong class="pkg">FR</strong> <a href="chapBib.html#biBFR">[Bar10]</a> is loaded, then use its function <code class="code">FindGroupRelations</code> to find relations. Otherwise proceed as follows: First compute the ball of radius <var class="Arg">r</var> around 1 in the free group whose rank is the number of stored generators of <var class="Arg">G</var>. Then compute the images of the elements of that ball under the natural projection onto the group <var class="Arg">G</var>. Take pairs of elements of the ball whose images coincide, and add their quotients to the set of known relations. For images which have finite order, add the corresponding power relations. Finally, regardless of whether <strong class="pkg">FR</strong> is present or not, simplify the finitely presented group with the determined relations by the operation <code class="code">IsomorphismSimplifiedFpGroup</code> from the <strong class="pkg">GAP</strong> Library, and return the natural epimorphism from it to <var class="Arg">G</var>.</p>
+<dd><p>Computes orders of elements in the ball of radius <var class="Arg">r</var> about 1 in <var class="Arg">G</var>, and uses the corresponding relations if they affect the abelian invariants of <var class="Arg">G</var>, <var class="Arg">G'</var>, <var class="Arg">G''</var>, etc..</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">EquivalenceClasses(<var class="Arg">list</var>,<var class="Arg">relation</var>)</code>,  
+    <code class="code">EquivalenceClasses(<var class="Arg">list</var>,<var class="Arg">classinvariant</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -160,9 +225,22 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">FactorizationIntoCSCRCT(<var class="Arg">g</var>)</code>
+    <code class="code">ExponentOfPrime(<var class="Arg">n</var>,<var class="Arg">p</var>)</code>
   </strong></dt>
-<dd><p>This uses a rather sophisticated method which will likely some time be published elsewhere. At the moment termination is not guaranteed, but in case of termination the result is certain. The strategy is roughly first to make the mapping class-wise order-preserving and balanced, and then to remove all prime factors from multiplier and divisor one after the other in decreasing order by dividing by appropriate class transpositions. The remaining integral mapping can be factored almost similarly easily as a permutation of a finite set can be factored into transpositions.</p>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">ExtRepOfObj(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">FactorizationIntoCSCRCT(<var class="Arg">g</var>)</code>,  
+    <code class="code">Factorization(<var class="Arg">g</var>)</code>
+  </strong></dt>
+<dd><p>The method used here is rather sophisticated, and will likely some time be published elsewhere. At the moment termination is not guaranteed, but in case of termination the result is certain. The strategy is roughly first to make the mapping class-wise order-preserving and balanced, and then to remove all prime factors from multiplier and divisor one after the other in decreasing order by dividing by appropriate class transpositions. The remaining integral mapping can be factored in a similar way as a permutation of a finite set can be factored into transpositions.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -178,9 +256,34 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">FixedResidueClasses(<var class="Arg">g</var>,<var class="Arg">maxmod</var>)</code>,  
+    <code class="code">FixedResidueClasses(<var class="Arg">G</var>,<var class="Arg">maxmod</var>)</code>
+  </strong></dt>
+<dd><p>Runs a loop over all moduli <span class="SimpleMath">m ≤</span> <var class="Arg">maxmod</var> and all residues <span class="SimpleMath">r</span> modulo these moduli, and selects those residue classes <span class="SimpleMath">r(m)</span> which are mapped to itself by <var class="Arg">g</var>, respectively, by all generators of <var class="Arg">G</var>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">FloatQuotientsList(<var class="Arg">l</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">GeneratorsAndInverses(<var class="Arg">G</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">GluckTaylorInvariant(<var class="Arg">a</var>)</code>
   </strong></dt>
 <dd><p>Evaluation of the given expression.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">GroupByResidueClasses(<var class="Arg">classes</var>)</code>
+  </strong></dt>
+<dd><p>Finds all pairs of residue classes in the list <var class="Arg">classes</var> which are disjoint, forms the corresponding class transpositions and returns the group generated by them.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -190,7 +293,7 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">Image(<var class="Arg">f</var>)</code>, <code class="code">Image(<var class="Arg">f</var>,<var class="Arg">S</var>)</code>
+    <code class="code">Image(<var class="Arg">f</var>)</code>,   <code class="code">Image(<var class="Arg">f</var>,<var class="Arg">S</var>)</code>
   </strong></dt>
 <dd><p>"Straightforward" if one can compute images of residue classes under affine mappings and unite and intersect residue classes (Chinese Remainder Theorem). See Lemma 1.2.1 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
 
@@ -260,14 +363,14 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IntegralConjugate(<var class="Arg">f</var>)</code>, 
+    <code class="code">IntegralConjugate(<var class="Arg">f</var>)</code>,  
     <code class="code">IntegralConjugate(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>Uses the algorithm described in the proof of Theorem 2.5.14 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IntegralizingConjugator(<var class="Arg">f</var>)</code>, 
+    <code class="code">IntegralizingConjugator(<var class="Arg">f</var>)</code>,  
     <code class="code">IntegralizingConjugator(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>Uses the algorithm described in the proof of Theorem 2.5.14 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
@@ -283,6 +386,12 @@
     <code class="code">IsBalanced(<var class="Arg">f</var>)</code>
   </strong></dt>
 <dd><p>Checks whether the sets of prime factors of the multiplier and the divisor of <var class="Arg">f</var> are the same.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">IsBijective(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial", respectively, see <code class="code">IsInjective</code> and <code class="code">IsSurjective</code>.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -304,15 +413,17 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IsClassTransposition(<var class="Arg">g</var>)</code>
+    <code class="code">IsClassTransposition(<var class="Arg">g</var>),  
+       IsGeneralizedClassTransposition(<var class="Arg">g</var>)</code>
   </strong></dt>
 <dd><p>Computes the support of <var class="Arg">g</var>, writes it as a disjoint union of two residue classes and compares <var class="Arg">g</var> with the class transposition which interchanges them.</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">IsClassWiseOrderPreserving(<var class="Arg">f</var>)</code>
+    <code class="code">IsClassWiseOrderPreserving(<var class="Arg">f</var>)</code>,  
+    <code class="code">IsClassWiseTranslating(<var class="Arg">f</var>)</code>
   </strong></dt>
-<dd><p>Tests whether the first entry of all coefficient triples is positive.</p>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -338,6 +449,13 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">IsNaturalCT(<var class="Arg">G</var>)</code>,  
+    <code class="code">IsNaturalRCWA(<var class="Arg">G</var>)</code>
+  </strong></dt>
+<dd><p>Only checks a set flag.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">IsomorphismMatrixGroup(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>Uses the algorithm described in the proof of Theorem 2.6.3 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
@@ -357,6 +475,12 @@
 <p>The method for free products of finite groups uses the Table-Tennis Lemma (which is also known as <em>Ping-Pong Lemma</em>, cf. e.g. Section II.B. in <a href="chapBib.html#biBLaHarpe00">[dlH00]</a>). It uses regular permutation representations of the factors <span class="SimpleMath">G_r</span> (<span class="SimpleMath">r = 0, dots ,m-1</span>) of the free product on residue classes modulo <span class="SimpleMath">n_r := |G_r|</span>. The basic idea is that since point stabilizers in regular permutation groups are trivial, all non-identity elements map any of the permuted residue classes into their complements. To get into a situation where the Table-Tennis Lemma is applicable, the method computes conjugates of the images of the mentioned permutation representations under rcwa permutations <span class="SimpleMath">σ_r</span> which satisfy <span class="SimpleMath">0(n_r)^σ_r = ℤ ∖ r(m)</span>.</p>
 
 <p>The method for free groups uses an adaptation of the construction given on page 27 in <a href="chapBib.html#biBLaHarpe00">[dlH00]</a> from PSL(2,ℂ) to RCWA(ℤ). As an equivalent for the closed discs used there, the method takes the residue classes modulo two times the rank of the free group.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">IsOne(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -432,6 +556,18 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">IsTransitiveOnNonnegativeIntegersInSupport(<var class="Arg">G</var>)</code>
+  </strong></dt>
+<dd><p>Computes balls about 1 with successively increasing radii, and checks whether the union of the sets where the elements of these balls are decreasing or shifting down equals the support of <var class="Arg">G</var>. If a positive answer is found, transitivity on "small" points (nonnegative integers less than an explicit bound) is verified.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">IsZero(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">KernelOfActionOnRespectedPartition(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>First determine the abelian invariants of the kernel <code class="code">K</code>. For this, compute sufficiently many quotients of orders of permutation groups induced by <var class="Arg">G</var> on refinements of the stored respected partition <code class="code">P</code> by the order of the permutation group induced by <var class="Arg">G</var> on <code class="code">P</code> itself. Then use a random walk through the group <var class="Arg">G</var>. Compute powers of elements encountered along the way which fix <code class="code">P</code>. Translate these kernel elements into elements of a polycyclically presented group isomorphic to the <code class="code">|P|</code>-fold direct product of the infinite dihedral group (<code class="code">K</code> certainly embeds into this group). Use <strong class="pkg">Polycyclic</strong> <a href="chapBib.html#biBPolycyclic">[EN09]</a> to collect independent "nice" generators of <code class="code">K</code>. Proceed until the permutation groups induced by <code class="code">K</code> on the refined respected partitions all equal the initially stored quotients.</p>
@@ -444,7 +580,14 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">LaTeXStringRcwaMapping(<var class="Arg">f</var>)</code>
+    <code class="code">LaTeXStringFactorsInt(<var class="Arg">n</var>)</code>
+  </strong></dt>
+<dd><p>Integer factorization and straightforward string operations.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">LaTeXStringRcwaMapping(<var class="Arg">f</var>)</code>,  
+    <code class="code">LaTeXAndXDVI(<var class="Arg">f</var>)</code>
   </strong></dt>
 <dd><p>Collects residue classes those corresponding coefficient triples are equal.</p>
 
@@ -456,15 +599,51 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">ListOfPowers(<var class="Arg">g</var>,<var class="Arg">n</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial" -- but uses only <span class="SimpleMath">n-1</span> multiplications.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">LocalizedRcwaMapping(<var class="Arg">f</var>,<var class="Arg">p</var>)</code>
   </strong></dt>
 <dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">LoadBitmapPicture(<var class="Arg">filename</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward", interprets the format of bitmap picture files.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">LoadDatabaseOf...()</code>,   <code class="code">LoadRCWAExamples()</code>
+  </strong></dt>
+<dd><p>"Trivial". -- These functions do nothing more than reading in certain files.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">Log2HTML(<var class="Arg">logfilename</var>)</code>
+  </strong></dt>
+<dd><p>Straightforward string operations.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">Loops(<var class="Arg">f</var>)</code>
   </strong></dt>
 <dd><p>Runs over the residue classes modulo the modulus of <var class="Arg">f</var>, and selects those of them which <var class="Arg">f</var> does not map to themselves, but which intersect non-trivially with their images under <var class="Arg">f</var>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">MaximalShift(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">Mirrored(<var class="Arg">g</var>)</code>,   <code class="code">Mirrored(<var class="Arg">G</var>)</code>
+  </strong></dt>
+<dd><p>Conjugates with <span class="SimpleMath">n ↦ -n - 1</span>, as indicated in the definition.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -504,9 +683,33 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">NrClassPairs(<var class="Arg">m</var>)</code>
+  </strong></dt>
+<dd><p>Relatively straightforward. -- Practical for values of <var class="Arg">m</var> ranging up into the hundreds and corresponding counts of $10^9$ and more.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">NrConjugacyClassesOfCTZOfOrder(<var class="Arg">ord</var>)</code>,
+  </strong></dt>
+<dd><p>Evaluation of the expression <code class="code">Length(Filtered(Combinations(DivisorsInt(ord)), l -&gt; l &lt;&gt; [] and Lcm(l) = ord))</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">NrConjugacyClassesOfRCWAZOfOrder(<var class="Arg">ord</var>)</code>
   </strong></dt>
 <dd><p>The class numbers are taken from Corollary 2.7.1 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">ObjByExtRep(<var class="Arg">fam</var>,<var class="Arg">l</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">One(<var class="Arg">f</var>)</code>,   <code class="code">One(<var class="Arg">G</var>)</code>, 
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -538,20 +741,26 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">PermutationOpNC(<var class="Arg">sigma</var>,<var class="Arg">P</var>,<var class="Arg">act</var>)</code>
+  </strong></dt>
+<dd><p>Several different methods for different types of arguments, which either provide straightforward optimizations via computing with coefficients directly, or just delegate to <code class="code">PermutationOp</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">PreImage(<var class="Arg">f</var>,<var class="Arg">S</var>)</code>
   </strong></dt>
 <dd><p>See <code class="code">Image</code>.</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">PreImagesRepresentative(<var class="Arg">phi</var>,<var class="Arg">g</var>)</code>,
+    <code class="code">PreImagesRepresentative(<var class="Arg">phi</var>,<var class="Arg">g</var>)</code>,  
     <code class="code">PreImagesRepresentatives(<var class="Arg">phi</var>,<var class="Arg">g</var>)</code>
   </strong></dt>
 <dd><p>As described in the documentation of these methods. The underlying idea to successively compute two balls around 1 and <var class="Arg">g</var> until they intersect non-trivially is standard in computational group theory. For rcwa groups it would mean wasting both memory and run time to actually compute group elements. Thus only images of tuples of points are computed and stored.</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">PrimeSet(<var class="Arg">f</var>)</code>,
+    <code class="code">PrimeSet(<var class="Arg">f</var>)</code>,  
     <code class="code">PrimeSet(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>"Straightforward".</p>
@@ -576,9 +785,21 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">Projections(<var class="Arg">G</var>,<var class="Arg">m</var>)</code>
+    <code class="code">ProjectionsToCoordinates(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>Straightforward coefficient operations.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">ProjectionsToInvariantUnionsOfResidueClasses(<var class="Arg">G</var>,<var class="Arg">m</var>)</code>
   </strong></dt>
 <dd><p>Use <code class="code">OrbitsModulo</code> to determine the supports of the images of the epimorphisms to be determined, and use <code class="code">RestrictedPerm</code> to compute the images of the generators of <var class="Arg">G</var> under these epimorphisms.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">QuotientsList(<var class="Arg">l</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -590,7 +811,13 @@
 <dt><strong class="Mark">
     <code class="code">RankOfKernelOfActionOnRespectedPartition(<var class="Arg">G</var>)</code>
   </strong></dt>
-<dd><p>This performs basically the first part of the computations done by <code class="code">KernelOfActionOnRespectedPartition</code>.</p>
+<dd><p>Performs basically the first part of the computations done by <code class="code">KernelOfActionOnRespectedPartition</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">Rcwa(<var class="Arg">R</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial". -- Attributes and properties set can be derived easily or hold by definition.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -600,22 +827,46 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">RCWABuildManual()</code>
+  </strong></dt>
+<dd><p>Consists of a call to a function from the <strong class="pkg">GAPDoc</strong> package.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">RcwaGroupByPermGroup(<var class="Arg">G</var>)</code>
   </strong></dt>
 <dd><p>Uses <code class="code">RcwaMapping</code>, Part (d).</p>
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">RCWAInfo(<var class="Arg">n</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">RcwaMapping</code>
   </strong></dt>
-<dd><p>(a)-(c): "trivial", (d): <code class="code">n^perm - n</code> for determining the coefficients, (e): "affine mappings by values at two given points", (f) and (g): "trivial", (h) and (i): correspond to Lemma 2.1.4 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
+<dd><p>(a)-(c): "trivial", (d): <code class="code">n^perm - n</code> for determining the coefficients, (e): "affine mappings by values at two given points", (f) and (g): "trivial", (h) and (i): correspond to Lemma 2.1.4 in <a href="chapBib.html#biBKohl05">[Koh05]</a>, (j): uses a simple parser for the permitted expressions.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">RCWATestAll()</code>,   <code class="code">RCWATestInstall()</code>
+  </strong></dt>
+<dd><p>Just read in files running / containing the tests.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">RCWATestExamples()</code>
+  </strong></dt>
+<dd><p>Runs the example tester from the <strong class="pkg">GAPDoc</strong> package.</p>
 
 </dd>
 <dt><strong class="Mark">
     <code class="code">RepresentativeAction(<var class="Arg">G</var>,<var class="Arg">src</var>,<var class="Arg">dest</var>,<var class="Arg">act</var>)</code>,
-    <code class="code">RepresentativeActionPreImage</code>
+      <code class="code">RepresentativeActionPreImage</code>
   </strong></dt>
-<dd><p>As described in the documentation of these methods. The underlying idea to successively compute two balls around <var class="Arg">src</var> and <var class="Arg">dest</var> until they intersect non-trivially is standard in computational group theory. Words standing for products of generators of <var class="Arg">G</var> are stored for any image of <var class="Arg">src</var> or <var class="Arg">dest</var>.</p>
+<dd><p>As described in the documentation of these methods. The underlying idea to successively compute two balls around <var class="Arg">src</var> and <var class="Arg">dest</var> until they intersect non-trivially is standard in computational group theory. Words standing for products of generators of <var class="Arg">G</var> are stored for every image of <var class="Arg">src</var> or <var class="Arg">dest</var>.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -631,14 +882,20 @@
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">RespectedPartition(<var class="Arg">f</var>)</code>,
+    <code class="code">RespectedPartition(<var class="Arg">f</var>)</code>,  
     <code class="code">RespectedPartition(<var class="Arg">G</var>)</code>
   </strong></dt>
-<dd><p>Uses the algorithm described in the proof of Theorem 2.5.8 in <a href="chapBib.html#biBKohl05">[Koh05]</a>.</p>
+<dd><p>There are presently two sophisticated algorithms implemented for finding respected partitions. One of them has evolved from the algorithm described in the proof of Theorem 2.5.8 in <a href="chapBib.html#biBKohl05">[Koh05]</a>. The other one starts with the coarsest partition of the base ring such that every generator of <var class="Arg">G</var> is affine on every part. This partition is then refined successively until a respected partition is obtained. The refinement step is basically as follows: Take the images of the partition under all generators of <var class="Arg">G</var>. This way one obtains as many further partitions of the base ring as there are generators of <var class="Arg">G</var>. Then the "new" partition is the coarsest common refinement of all these partitions.</p>
 
 </dd>
 <dt><strong class="Mark">
     <code class="code">RespectsPartition(<var class="Arg">G</var>,<var class="Arg">P</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">RestrictedBall(<var class="Arg">G</var>,<var class="Arg">g</var>,<var class="Arg">r</var>,<var class="Arg">modulusbound</var>)</code>
   </strong></dt>
 <dd><p>"Straightforward".</p>
 
@@ -684,19 +941,45 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">RunDemonstration(<var class="Arg">filename</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial" -- only I/O operations.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">SaveAsBitmapPicture(<var class="Arg">picture</var>,<var class="Arg">filename</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward" -- only needs to know how to produce a bitmap picture file.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">SemilocalizedRcwaMapping(<var class="Arg">f</var>,<var class="Arg">pi</var>)</code>
   </strong></dt>
 <dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">ShortCycles(<var class="Arg">f</var>,<var class="Arg">maxlng</var>)</code>
+    <code class="code">ShiftsDownOn(<var class="Arg">f</var>)</code>,   <code class="code">ShiftsUpOn(<var class="Arg">f</var>)</code>
   </strong></dt>
-<dd><p>Looks for fixed points of affine partial mappings of powers of <var class="Arg">f</var>.</p>
+<dd><p>Straightforward coefficient- and residue class operations.</p>
 
 </dd>
 <dt><strong class="Mark">
-    <code class="code">ShortOrbits(<var class="Arg">G</var>,<var class="Arg">S</var>,<var class="Arg">maxlng</var>)</code>
+    <code class="code">ShortCycles(<var class="Arg">g</var>,<var class="Arg">maxlng</var>)</code>
+  </strong></dt>
+<dd><p>Looks for fixed points of affine partial mappings of powers of <var class="Arg">g</var>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">ShortCycles(<var class="Arg">g</var>,<var class="Arg">S</var>,<var class="Arg">maxlng</var>)</code>,  
+    <code class="code">ShortCycles(<var class="Arg">g</var>,<var class="Arg">S</var>,<var class="Arg">maxlng</var>,<var class="Arg">maxn</var>)</code>
+  </strong></dt>
+<dd><p>"Straightforward".</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">ShortOrbits(<var class="Arg">G</var>,<var class="Arg">S</var>,<var class="Arg">maxlng</var>)</code>,  
+    <code class="code">ShortOrbits(<var class="Arg">G</var>,<var class="Arg">S</var>,<var class="Arg">maxlng</var>,<var class="Arg">maxn</var>)</code>
   </strong></dt>
 <dd><p>"Straightforward".</p>
 
@@ -726,9 +1009,21 @@
 
 </dd>
 <dt><strong class="Mark">
+    <code class="code">SmallGeneratingSet(<var class="Arg">G</var>)</code>
+  </strong></dt>
+<dd><p>Eliminates generators <span class="SimpleMath">g</span> which can be found to be redundant <em>easily</em>, i.e. by checking whether the balls about 1 and <span class="SimpleMath">g</span> of some small radius <span class="SimpleMath">r</span> in the group generated by all generators of <var class="Arg">G</var> except for <span class="SimpleMath">g</span> intersect nontrivially.</p>
+
+</dd>
+<dt><strong class="Mark">
     <code class="code">Sources(<var class="Arg">f</var>)</code>
   </strong></dt>
 <dd><p>Computes the strongly connected components of the transition graph by the function <code class="code">STRONGLY_CONNECTED_COMPONENTS_DIGRAPH</code>, and selects those which are proper supersets of their preimages and proper subsets of their images under <var class="Arg">f</var>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">SparseRep(<var class="Arg">f</var>)</code>,   <code class="code">StandardRep(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>Straightforward coefficient operations.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -747,6 +1042,12 @@
     <code class="code"><var class="Arg">f</var>+<var class="Arg">g</var></code>
   </strong></dt>
 <dd><p>Pointwise addition of affine mappings.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">String(<var class="Arg">obj</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -795,6 +1096,12 @@
     <code class="code">WreathProduct(<var class="Arg">G</var>,<var class="Arg">Z</var>)</code>
   </strong></dt>
 <dd><p>Restricts <var class="Arg">G</var> to the residue class 3(4), and encodes the generator of <var class="Arg">Z</var> as <span class="SimpleMath">τ_0(2),1(2) ⋅ τ_0(2),1(4)</span>. It is used that the images of 3(4) under powers of this mapping are pairwise disjoint residue classes.</p>
+
+</dd>
+<dt><strong class="Mark">
+    <code class="code">Zero(<var class="Arg">f</var>)</code>
+  </strong></dt>
+<dd><p>"Trivial".</p>
 
 </dd>
 </dl>

@@ -99,8 +99,8 @@
 over a computable graded ring\mbox{}}}\\
 \vfill
 
-{\Huge Version 2013.02.07\mbox{}}\\[1cm]
-{February 2013\mbox{}}\\[1cm]
+{\Huge Version 2013.10.27\mbox{}}\\[1cm]
+{October 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -337,11 +337,11 @@ a \textsf{homalg} ring map
 {
    
 
-\subsection{\textcolor{Chapter }{BettiDiagram (for modules)}}
+\subsection{\textcolor{Chapter }{BettiTable (for modules)}}
 \logpage{[ 5, 4, 1 ]}\nobreak
-\hyperdef{L}{X7C689B3E831DF3E7}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BettiDiagram({\mdseries\slshape M})\index{BettiDiagram@\texttt{BettiDiagram}!for modules}
-\label{BettiDiagram:for modules}
+\hyperdef{L}{X78E2B4AD7F671293}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BettiTable({\mdseries\slshape M})\index{BettiTable@\texttt{BettiTable}!for modules}
+\label{BettiTable:for modules}
 }\hfill{\scriptsize (attribute)}}\\
 \textbf{\indent Returns:\ }
 a \textsf{homalg} diagram
@@ -866,7 +866,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@T := TateResolution( O, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@betti := BettiDiagram( T );C
+  !gapprompt@gap>C !gapinput@betti := BettiTable( T );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( betti );C
@@ -898,7 +898,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@T0 := TateResolution( U0, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@betti0 := BettiDiagram( T0 );C
+  !gapprompt@gap>C !gapinput@betti0 := BettiTable( T0 );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( betti0 );C
@@ -935,7 +935,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@T1 := TateResolution( U1, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@betti1 := BettiDiagram( T1 );C
+  !gapprompt@gap>C !gapinput@betti1 := BettiTable( T1 );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( betti1 );C
@@ -957,7 +957,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@T2 := TateResolution( U2, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@betti2 := BettiDiagram( T2 );C
+  !gapprompt@gap>C !gapinput@betti2 := BettiTable( T2 );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( betti2 );C
@@ -983,7 +983,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@T3 := TateResolution( U3, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@betti3 := BettiDiagram( T3 );C
+  !gapprompt@gap>C !gapinput@betti3 := BettiTable( T3 );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded left modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( betti3 );C
@@ -1006,7 +1006,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>C !gapinput@t2 := TateResolution( u2, -5, 5 );C
   <An acyclic cocomplex containing
   10 morphisms of graded right modules at degrees [ -5 .. 5 ]>
-  !gapprompt@gap>C !gapinput@BettiDiagram( t2 );C
+  !gapprompt@gap>C !gapinput@BettiTable( t2 );C
   <A Betti diagram of <An acyclic cocomplex containing 
   10 morphisms of graded right modules at degrees [ -5 .. 5 ]>>
   !gapprompt@gap>C !gapinput@Display( last );C
@@ -1033,7 +1033,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
 \hyperdef{L}{X7A489A5D79DA9E5C}{}
 {
   
-\section{\textcolor{Chapter }{Betti Diagrams}}\label{BettiDiagram}
+\section{\textcolor{Chapter }{Betti Diagrams}}\label{BettiTable}
 \logpage{[ 7, 1, 0 ]}
 \hyperdef{L}{X81A7E0D380CE7F31}{}
 {
@@ -1055,7 +1055,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@d := Resolution( M );|
   <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>
-  !gapprompt@gap>| !gapinput@betti := BettiDiagram( d );|
+  !gapprompt@gap>| !gapinput@betti := BettiTable( d );|
   <A Betti diagram of <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>
   !gapprompt@gap>| !gapinput@Display( betti );|
@@ -1073,7 +1073,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@d2 := Resolution( M2 );|
   <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>
-  !gapprompt@gap>| !gapinput@betti2 := BettiDiagram( d2 );|
+  !gapprompt@gap>| !gapinput@betti2 := BettiTable( d2 );|
   <A Betti diagram of <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>
   !gapprompt@gap>| !gapinput@Display( betti2 );|
@@ -1102,7 +1102,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@d := Resolution( M );|
   <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>
-  !gapprompt@gap>| !gapinput@betti := BettiDiagram( d );|
+  !gapprompt@gap>| !gapinput@betti := BettiTable( d );|
   <A Betti diagram of <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>
   !gapprompt@gap>| !gapinput@Display( betti );|
@@ -1118,7 +1118,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@d2 := Resolution( m );|
   <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>
-  !gapprompt@gap>| !gapinput@betti2 := BettiDiagram( d2 );|
+  !gapprompt@gap>| !gapinput@betti2 := BettiTable( d2 );|
   <A Betti diagram of <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>
   !gapprompt@gap>| !gapinput@Display( betti2 );|
@@ -1144,7 +1144,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@Mr := Resolution( M );|
   <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>
-  !gapprompt@gap>| !gapinput@bettiM := BettiDiagram( Mr );|
+  !gapprompt@gap>| !gapinput@bettiM := BettiTable( Mr );|
   <A Betti diagram of <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>
   !gapprompt@gap>| !gapinput@Display( bettiM );|
@@ -1163,7 +1163,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@Nr := Resolution( N );|
   <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>
-  !gapprompt@gap>| !gapinput@bettiN := BettiDiagram( Nr );|
+  !gapprompt@gap>| !gapinput@bettiN := BettiTable( Nr );|
   <A Betti diagram of <A right acyclic complex containing
   2 morphisms of graded right modules at degrees [ 0 .. 2 ]>>
   !gapprompt@gap>| !gapinput@Display( bettiN );|
@@ -1192,7 +1192,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@Jr := Resolution( J );|
   <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>
-  !gapprompt@gap>| !gapinput@betti := BettiDiagram( Jr );|
+  !gapprompt@gap>| !gapinput@betti := BettiTable( Jr );|
   <A Betti diagram of <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>
   !gapprompt@gap>| !gapinput@Display( betti );|
@@ -1223,7 +1223,7 @@ bundle shifted by $1$. Observe how a single $1$ travels along the diagnoal in th
   !gapprompt@gap>| !gapinput@Mr := Resolution( M );|
   <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>
-  !gapprompt@gap>| !gapinput@betti := BettiDiagram( Mr );|
+  !gapprompt@gap>| !gapinput@betti := BettiTable( Mr );|
   <A Betti diagram of <A right acyclic complex containing
   3 morphisms of graded right modules at degrees [ 0 .. 3 ]>>
   !gapprompt@gap>| !gapinput@Display( betti );|
@@ -1340,14 +1340,15 @@ bundle.
   @gappromptJgap>N @gapinputJIsMorphism( phi );N
   true
   @gappromptJgap>N @gapinputJM := GuessModuleOfGlobalSectionsFromATateMap( 2, phi );N
-  #I  GuessModuleOfGlobalSectionsFromATateMap uses unproven assumptions.
-   Do not trust the result.
+  #I  GuessModuleOfGlobalSectionsFromATateMap uses a heuristic for efficiency;
+  please check the correctness of the following result
+  
   <A graded left module presented by yet unknown relations for 19 generators>
   @gappromptJgap>N @gapinputJIsPure( M );N
   true
   @gappromptJgap>N @gapinputJRank( M );N
   2 
-  @gappromptJgap>N @gapinputJDisplay( BettiDiagram( Resolution( M ) ) );N
+  @gappromptJgap>N @gapinputJDisplay( BettiTable( Resolution( M ) ) );N
    total:  19 35 20  2
   --------------------
        3:   4  .  .  .
@@ -1355,18 +1356,18 @@ bundle.
        5:   .  .  .  2
   --------------------
   degree:   0  1  2  3
-  @gappromptJgap>N @gapinputJDisplay( BettiDiagram( TateResolution( M, -4, 6 ) ) );N
-  total:   37  14  10   5   2   5  10  14  37 100 210   ?   ?   ?   ?
+  @gappromptJgap>N @gapinputJDisplay( BettiTable( TateResolution( M, -5, 5 ) ) );N
+  total:  100  37  14  10   5   2   5  10  14  37 100   ?   ?   ?   ?
   ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-      4:   35   4   .   .   .   .   .   .   .   .   .   0   0   0   0
-      3:    *   2  10  10   5   .   .   .   .   .   .   .   0   0   0
-      2:    *   *   .   .   .   .   2   .   .   .   .   .   .   0   0
-      1:    *   *   *   .   .   .   .   .   5  10  10   2   .   .   0
-      0:    *   *   *   *   .   .   .   .   .   .   .   4  35 100 210
-  ----------|---|---|---|---|---|---|---|---|---|---|---|---|---S---|
-  twist:   -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
+      4:  100  35   4   .   .   .   .   .   .   .   .   0   0   0   0
+      3:    *   .   2  10  10   5   .   .   .   .   .   .   0   0   0
+      2:    *   *   .   .   .   .   .   2   .   .   .   .   .   0   0
+      1:    *   *   *   .   .   .   .   .   .   5  10  10   2   .   0
+      0:    *   *   *   *   .   .   .   .   .   .   .   .   4  35 100
+  ----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---S
+  twist:   -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5
   -------------------------------------------------------------------
-  Euler:   35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100 210
+  Euler:  100  35   2 -10 -10  -5   0   2   0  -5 -10 -10   2  35 100
   @gappromptJgap>N @gapinputJM;N
   <A graded reflexive non-projective rank 2 left module presented by 94 \
   relations for 19 generators>

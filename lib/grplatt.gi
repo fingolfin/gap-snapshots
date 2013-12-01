@@ -835,7 +835,29 @@ end);
 InstallGlobalFunction(LatticeViaRadical,function(arg)
   local G,H,HN,HNI,ser, pcgs, u, hom, f, c, nu, nn, nf, a, k, ohom, mpcgs, gf,
   act, nts, orbs, n, ns, nim, fphom, as, p, isn, isns, lmpc, npcgs, ocr, v,
-  com, cg, i, j, w, ii,first,cgs,cs,presmpcgs,select,fselect;
+  com, cg, i, j, w, ii,first,cgs,cs,presmpcgs,select,fselect,
+  makesubgroupclasses,cefastersize;
+
+  #group order below which cyclic extension is usually faster
+  if LoadPackage("tomlib")=true then
+    cefastersize:=1; 
+  else
+    cefastersize:=40000; 
+  fi;
+
+  makesubgroupclasses:=function(g,l)
+  local i,m,c;
+    m:=[];
+    for i in l do
+      c:=ConjugacyClassSubgroups(g,i);
+      if IsBound(i!.GNormalizer) then
+	SetStabilizerOfExternalSet(c,i!.GNormalizer);
+	Unbind(i!.GNormalizer);
+      fi;
+      Add(m,c);
+    od;
+    return m;
+  end;
 
   G:=arg[1];
   H:=fail;
@@ -866,8 +888,24 @@ InstallGlobalFunction(LatticeViaRadical,function(arg)
       return LatticeByCyclicExtension(G,[u->IsSubset(H,u),u->IsSubset(H,u)]);
     elif select<>fail then
       return LatticeByCyclicExtension(G,select);
-    else
+    elif (HasIsSimpleGroup(G) and IsSimpleGroup(G)) 
+      or Size(G)<=cefastersize then
+      # in the simple case we cannot go back into trivial fitting case
+      # or cyclic extension is faster as group is small
+      if IsSimpleGroup(G) then
+	c:=TomDataSubgroupsAlmostSimple(G);
+	if c<>fail then
+	  c:=makesubgroupclasses(G,c);
+	  return LatticeFromClasses(G,c);
+	fi;
+      fi;
+
       return LatticeByCyclicExtension(G);
+    else
+      c:=SubgroupsTrivialFitting(G);
+      c:=makesubgroupclasses(G,c);
+      u:=[List(c,Representative),List(c,StabilizerOfExternalSet)];
+      #return LatticeByCyclicExtension(G);
     fi;
   else
     hom:=NaturalHomomorphismByNormalSubgroupNC(G,ser[1]);
@@ -883,8 +921,11 @@ InstallGlobalFunction(LatticeViaRadical,function(arg)
       fselect:=U->not IsSolvableGroup(U);
     elif select<>fail then
       c:=LatticeByCyclicExtension(f,select)!.conjugacyClassesSubgroups;
-    else
+    elif Size(f)<=cefastersize then
       c:=LatticeByCyclicExtension(f)!.conjugacyClassesSubgroups;
+    else
+      c:=SubgroupsTrivialFitting(f);
+      c:=makesubgroupclasses(f,c);
     fi;
     if select<>fail then
       nu:=Filtered(c,i->select(Representative(i)));
@@ -1823,7 +1864,7 @@ local G,	# group
 	      j!.lattfpres:=IsomorphismFpGroupByChiefSeriesFactor(j,"x",M);
 	    fi;
 	    ocr.factorfphom:=j!.lattfpres;
-	    Assert(2,KernelOfMultiplicativeGeneralMapping(ocr.factorfphom)=M);
+	    Assert(3,KernelOfMultiplicativeGeneralMapping(ocr.factorfphom)=M);
 
 	    # we want only normal complements. Therefore the 1-Coboundaries must
 	    # be trivial. We compute these first.
@@ -1855,7 +1896,7 @@ local G,	# group
 			if not IsPcGroup(k) then
 			  k!.lattfpres:=ComplementFactorFpHom(
 			    ocr.factorfphom,l,M,N,k,ocr.generators,comp);
-	    Assert(1,KernelOfMultiplicativeGeneralMapping(k!.lattfpres)=N);
+	    Assert(3,KernelOfMultiplicativeGeneralMapping(k!.lattfpres)=N);
 			fi;
                         k!.obtain:="compl";
 		      fi;
@@ -2039,7 +2080,7 @@ local G,	# group
       for i in [1..firsts] do
 	l:=nt[i];
 	if IsBound(l!.lattfpres) then
-	  Assert(1,KernelOfMultiplicativeGeneralMapping(l!.lattfpres)=M);
+	  Assert(3,KernelOfMultiplicativeGeneralMapping(l!.lattfpres)=M);
 	  # lift presentation
 	  # note: if notabelian mpcgs is an fp hom
 	  l!.lattfpres:=LiftFactorFpHom(l!.lattfpres,l,M,N,mpcgs);
@@ -2076,9 +2117,16 @@ InstallMethod(Socle,"from normal subgroups",true,[IsGroup],0,
 function(G)
 local n,i,s;
   if Size(G)=1 then return G;fi;
-  # this could be a bit shorter, but the groups in question have few normal
-  # subgroups
-  n:=NormalSubgroups(G);
+  # deal with lareg EA socle factor for fitting free
+
+  # this could be a bit shorter.
+  if Size(RadicalGroup(G))=1 then
+    n:=NormalSubgroups(PerfectResiduum(G));
+    n:=Filtered(n,x->IsNormal(G,x));
+  else
+    n:=NormalSubgroups(G);
+  fi;
+  
   n:=Filtered(n,i->2=Number(n,j->IsSubset(i,j)));
   s:=n[1];
   for i in [2..Length(n)] do
@@ -2263,6 +2311,7 @@ local l,mark,i,b,M,no,cnt,j,q,As,a,hom,c,p,ap,prea,prestab,new,sz,k,h;
       b:=Bs[i];
       Add(l,b);
       M:=Normalizer(G,b);
+      b!.GNormalizer:=M;
       no:=Intersection(M,N); # normalizer in N
       if Index(G,M)>Index(N,no) then
         # there are further conjugates
@@ -2294,6 +2343,10 @@ local l,mark,i,b,M,no,cnt,j,q,As,a,hom,c,p,ap,prea,prestab,new,sz,k,h;
 	  prea:=PreImage(q,Representative(a));
 	  prestab:=PreImage(q,Stabilizer(a));
 	  hom:=NaturalHomomorphismByNormalSubgroup(prea,b);
+	  if IsPermGroup(Range(hom)) and NrMovedPoints(Range(hom))>Index(prea,b)/LogInt(Index(prea,b),2)^2 then
+	    hom:=hom*SmallerDegreePermutationRepresentation(Image(hom));
+	    Info(InfoLattice,3,"Reducedegee!!");
+	  fi;
 
 	  #AAA:=[Image(hom),Image(hom,no)];
 	  c:=ComplementClassesRepresentatives(Image(hom),Image(hom,no));
@@ -2469,17 +2522,10 @@ if Size(g)<>Size(j[1])*Size(s[1])/Size(f) then Error("sudi\n");fi;
 end);
 
 InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
-  local s,a,n,fac,iso,types,t,p,i,map,go,gold,nf;
-  # find socle by derived
-  s:=G;
-  repeat
-    a:=s;
-    s:=DerivedSubgroup(s);
-  until Size(s)=Size(a);
+  local s,a,n,fac,iso,types,t,p,i,map,go,gold,nf,tom,sub,len;
 
-  # now try s as socle -- find minimal normals
-  n:=Filtered(NormalSubgroups(s),x->Size(x)>1);
-  n:=Filtered(n,x->not ForAny(n,y->Size(y)<Size(x) and IsSubset(x,y)));
+  n:=DirectFactorsFittingFreeSocle(G);
+  s:=Socle(G);
 
   a:=TrivialSubgroup(G);
   fac:=[];
@@ -2497,8 +2543,28 @@ InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
       p:=Position(types,t);
       if p=fail then
 	Add(types,t);
-	go:=SimpleGroup(t);
+
+	# fetch subgroup data from tom library, if possible
+	tom:=TomDataAlmostSimpleRecognition(i);
+	if tom<>fail then
+	  go:=ImagesSource(tom[1]);
+	  tom:=tom[2];
+	  if tom<>fail then
+	    Info(InfoLattice,1, "Fetching subgroups of simple ",
+	      Identifier(tom)," from table of marks");
+	    len:=LengthsTom(tom);
+	    sub:=List([1..Length(len)],x->RepresentativeTom(tom,x));
+	    sub:=List(sub,x->ConjugacyClassSubgroups(go,x));
+	    SetConjugacyClassesSubgroups(go,sub);
+	  fi;
+	fi;
+
+	if tom=fail then
+	  go:=SimpleGroup(t);
+	fi;
 	Add(gold,go);
+
+
 	p:=Length(types);
       fi;
       Add(iso,IsomorphismGroups(i,gold[p]));
@@ -2539,3 +2605,92 @@ InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
   Info(InfoLattice,1,"Overall ",Length(s)," subgroups");
   return s;
 end);
+
+## transfer of Tom Library information
+
+InstallMethod(TomDataAlmostSimpleRecognition,"alt",true,
+  [IsNaturalAlternatingGroup],0,
+function(G)
+local dom,n,t,map;
+  dom:=Set(MovedPoints(G));
+  n:=Length(dom);
+  if dom=[1..n] then
+    map:=IdentityMapping(G);
+  else
+    map:=MappingPermListList(dom,[1..n]);
+    map:=ConjugatorIsomorphism(G,map);
+  fi;
+
+  LoadPackage("tomlib"); # force tomlib load
+  t:=TableOfMarks(Concatenation("A",String(n)));
+  return [map,t];
+end);
+
+InstallMethod(TomDataAlmostSimpleRecognition,"generic",true,
+  [IsGroup],0,
+function(G)
+local T,t,hom,inf,nam,i,aut;
+  T:=PerfectResiduum(G);
+  inf:=DataAboutSimpleGroup(T);
+  Info(InfoLattice,1,"Simple type: ",inf.idSimple.name);
+  # missing?
+  if inf=fail then return fail;fi;
+
+  LoadPackage("tomlib"); # force tomlib load
+  nam:=inf.tomName;
+
+  # simple group
+  if Index(G,T)=1 then
+    t:=TableOfMarks(nam);
+    if not HasUnderlyingGroup(t) then
+      Info(InfoLattice,2,"Table of marks has no group");
+      return fail;
+    fi;
+    Info(InfoLattice,3,"Trying Isomorphism");
+    hom:=IsomorphismGroups(G,UnderlyingGroup(t));
+    if hom=fail then
+      Error("could not find isomorphism");
+    fi;
+    Info(InfoLattice,1,"Found isomorphism ",Identifier(t));
+    return [hom,t];
+  fi;
+
+  #extension
+  inf:=Filtered(inf.allExtensions,i->i[1]=Index(G,T));
+  for i in inf do
+    t:=TableOfMarks(Concatenation(nam,".",i[2]));
+    if t<>fail and HasUnderlyingGroup(t) then
+      Info(InfoLattice,3,"Trying Isomorphism");
+      hom:=IsomorphismGroups(G,UnderlyingGroup(t));
+      if hom<>fail then
+	Info(InfoLattice,1,"Found isomorphism ",Identifier(t));
+	return [hom,t];
+      fi;
+      Info(InfoLattice,2,Identifier(t)," not isomorphic");
+    fi;
+  od;
+  Info(InfoLattice,1,"Recognition failed");
+  return fail;
+end);
+
+InstallGlobalFunction(TomDataMaxesAlmostSimple,function(G)
+local recog,m;
+  recog:=TomDataAlmostSimpleRecognition(G);
+  if recog=fail then return fail; fi;
+  m:=List(MaximalSubgroupsTom(recog[2])[1],i->RepresentativeTom(recog[2],i));
+  Info(InfoLattice,1,"Recognition found ",Length(m)," classes");
+  m:=List(m,i->PreImage(recog[1],i));
+  return m;
+end);
+
+InstallGlobalFunction(TomDataSubgroupsAlmostSimple,function(G)
+local recog,m,len;
+  recog:=TomDataAlmostSimpleRecognition(G);
+  if recog=fail then return fail; fi;
+  len:=LengthsTom(recog[2]);
+  m:=List([1..Length(len)],i->RepresentativeTom(recog[2],i));
+  Info(InfoLattice,1,"Recognition found ",Length(m)," classes");
+  m:=List(m,i->PreImage(recog[1],i));
+  return m;
+end);
+

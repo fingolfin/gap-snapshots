@@ -12,7 +12,7 @@ about subsequent update releases for &GAP; 4.6.
 <Heading>&GAP; 4.6.2 (February 2013)</Heading>
 
 <Subsection Label="Changes in the core GAP46 system"> 
-<Heading>Changes in the core &GAP; system</Heading>
+<Heading>Changes in the core &GAP; system introduced in &GAP; 4.6</Heading>
 
 Improved and extended functionality:
 <List>  
@@ -151,7 +151,6 @@ bind its components in &GAP; packages.
 <Subsection Label="New and updated packages since GAP 4.5.4"> 
 <Heading>New and updated packages since &GAP; 4.5.4</Heading>
 
-<Index>Packages, new</Index>
 At the time of the release of &GAP; 4.5 there were 99 packages redistributed with &GAP;. 
 The first public release of &GAP;&nbsp;4.6 contains 106 packages. 
 <P/>
@@ -202,7 +201,6 @@ commutative algebra structure and by their combinatorics.
 </Item>
 </List>
 
-<Index>Packages, upgraded</Index>
 Furthermore, some packages have been upgraded substantially 
 since the &GAP;&nbsp;4.5.4 release:
 <List>

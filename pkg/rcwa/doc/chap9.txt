@@ -4,7 +4,7 @@
   
   [1X9.1 [33X[0;0YRequirements[133X[101X
   
-  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.6.0,  [5XResClasses[105X 3.3.0,
+  [33X[0;0YThis   version   of   [5XRCWA[105X   needs  at  least  [5XGAP[105X 4.7.0,  [5XResClasses[105X 3.3.1,
   [5XGRAPE[105X 4.3 [Soi06],   [5XPolycyclic[105X 2.6 [EN09]   and   [5XGAPDoc[105X 1.4 [LN11].   With
   possible  exception  of  the  most  recent version of [5XResClasses[105X, all needed
   packages are already present in an up-to-date standard [5XGAP[105X installation. The
@@ -194,6 +194,8 @@
   
   [33X[0;0YFinally,  the  function  [10XAllSmoothIntegers([3Xmaxp[103X[10X,[3Xmaxn[103X[10X)[110X  returns a list of all
   integers  less  than  or  equal  to  [3Xmaxn[103X  which  do not have prime divisors
-  exceeding  [3Xmaxp[103X, and the function [10XLaTeXStringFactorsInt([3Xn[103X[10X)[110X returns the prime
-  factorization of an integer [3Xn[103X as a string in LaTeX format.[133X
+  exceeding  [3Xmaxp[103X,  the  function [10XExponentOfPrime([3Xn[103X[10X,[3Xp[103X[10X)[110X returns the exponent of
+  the   prime   [3Xp[103X   in   the  prime  factorization  of  [3Xn[103X,  and  the  function
+  [10XLaTeXStringFactorsInt([3Xn[103X[10X)[110X  returns the prime factorization of an integer [3Xn[103X as
+  a string in LaTeX format.[133X
   

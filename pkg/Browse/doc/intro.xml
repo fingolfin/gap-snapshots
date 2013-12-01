@@ -134,5 +134,44 @@ puzzles).
 </Section>
 
 
+<Section Label="sec:pkg_userprefs">
+<Heading>User preferences provided by the &Browse; package</Heading>
+
+<Subsection Label="subsec:EnableMouseEvents">
+<Heading>The user preference <C>EnableMouseEvents</C></Heading>
+
+This user preference defines whether mouse events are enabled by default
+in visual mode (value <K>true</K>) or not
+(value <K>false</K>, this is the default).
+During the &GAP; session, the value can be changed using
+<Ref Func="NCurses.UseMouse"/>.
+Inside browse applications based on <Ref Func="NCurses.BrowseGeneric"/>
+or <Ref Func="NCurses.Select"/>,
+the value can be toggled usually by hitting the <B>M</B> key.
+
+</Subsection>
+
+<Subsection Label="subsec:SelectHelpMatches">
+<Heading>The user preference <C>SelectHelpMatches</C></Heading>
+
+In the case that the &GAP; help system finds multiple matches,
+<K>true</K> (the default) means that the user can choose one entry
+from a list that is shown via <Ref Func="NCurses.Select"/>,
+and <K>false</K> means that the matches are just shown in a pager.
+
+</Subsection>
+
+<Subsection Label="subsec:SelectPackageName">
+<Heading>The user preference <C>SelectPackageName</C></Heading>
+
+In the case that <Ref Func="LoadPackage" BookName="ref"/> is called
+with a prefix of some package names,
+<K>true</K> (the default) means that the user can choose one matching entry,
+and <K>false</K> means that the matches are just printed.
+
+</Subsection>
+
+</Section>
+
 </Chapter>
 

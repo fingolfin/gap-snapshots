@@ -56,10 +56,6 @@
     [4X[28XZ[128X[104X
     [4X[25Xgap>[125X [27XDisplay( ZZ );[127X[104X
     [4X[28X<An external ring residing in the CAS Singular>[128X[104X
-    [4X[25Xgap>[125X [27XZZs := HomalgRingOfIntegersInSingular( "s", F2 );[127X[104X
-    [4X[28XZ(s)[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( ZZs );[127X[104X
-    [4X[28X<An external ring residing in the CAS Singular>[128X[104X
     [4X[25Xgap>[125X [27XQ := HomalgFieldOfRationalsInSingular( F2 );[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27XDisplay( Q );[127X[104X
@@ -97,17 +93,9 @@
     [4X[28XZ[x,y,z][128X[104X
     [4X[25Xgap>[125X [27XDisplay( ZZxyz );[127X[104X
     [4X[28X<An external ring residing in the CAS Singular>[128X[104X
-    [4X[25Xgap>[125X [27XZZsxyz := ZZs * "x,y,z";[127X[104X
-    [4X[28XZ(s)[x,y,z][128X[104X
-    [4X[25Xgap>[125X [27XDisplay( ZZsxyz );[127X[104X
-    [4X[28X<An external ring residing in the CAS Singular>[128X[104X
     [4X[25Xgap>[125X [27XZZxyzw := ZZxyz * "w";[127X[104X
     [4X[28XZ[x,y,z][w][128X[104X
     [4X[25Xgap>[125X [27XDisplay( ZZxyzw );[127X[104X
-    [4X[28X<An external ring residing in the CAS Singular>[128X[104X
-    [4X[25Xgap>[125X [27XZZsxyzw := ZZsxyz * "w";[127X[104X
-    [4X[28XZ(s)[x,y,z][w][128X[104X
-    [4X[25Xgap>[125X [27XDisplay( ZZsxyzw );[127X[104X
     [4X[28X<An external ring residing in the CAS Singular>[128X[104X
     [4X[25Xgap>[125X [27XQxyz := Q * "x,y,z";[127X[104X
     [4X[28XQ[x,y,z][128X[104X

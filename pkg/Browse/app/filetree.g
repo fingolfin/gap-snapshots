@@ -129,8 +129,8 @@ fi;
 ##  >        "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"
 ##  >        n, "Q" ) );                           # and quit
 ##  gap> dir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;
-##  gap> if IsPackageMarkedForLoading( "io", "" ) then
-##  >      BrowseDirectory( dir );;
+##  gap> if IsBound( BrowseDirectory ) then
+##  >      BrowseDirectory( dir );
 ##  >    fi;
 ##  gap> BrowseData.SetReplay( false );
 ##  ]]></Example>

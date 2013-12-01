@@ -504,6 +504,74 @@ InstallMethod( MatElm,
 end );
 
 ##
+InstallMethod( GetListOfMatrixAsString,
+        "for matrices",
+        [ IsList ],
+        
+  function( M )
+    
+    M := List( M, row -> List( row, String ) );
+    
+    M := List( M, JoinStringsWithSeparator );
+    
+    M := JoinStringsWithSeparator( M );
+    
+    return Concatenation( "[", M, "]" );
+    
+end );
+
+##
+InstallMethod( GetListListOfStringsOfMatrix,
+        "for matrices and a homalg internal ring",
+        [ IsList, IsHomalgInternalRingRep ],
+        
+  function( M, R )
+    local c, d, z;
+    
+    if not ForAll( M, IsList ) then
+        TryNextMethod( );
+    fi;
+    
+    if not HasCharacteristic( R ) then
+        Error( "characteristic not set\n" );
+    fi;
+    
+    c := Characteristic( R );
+    
+    if HasCoefficientsRing( R ) then
+        TryNextMethod( );
+    elif c = 0 then
+        return List( M, a -> List( a, String ) );
+    elif IsPrime( c ) then
+        if HasDegreeOverPrimeField( R ) and DegreeOverPrimeField( R ) > 1 then
+            d := DegreeOverPrimeField( R );
+            z := R!.NameOfPrimitiveElement;
+            return List( M, a -> List( a, b -> FFEToString( b, c, d, z ) ) );
+        fi;
+        
+        return List( M, a -> List( a, b -> String( IntFFE( b ) ) ) );
+    fi;
+    
+    return List( M, a -> List( a, b -> String( b![1] ) ) );
+    
+end );
+
+##
+InstallMethod( GetListListOfStringsOfHomalgMatrix,
+        "for homalg internal matrices",
+        [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
+        
+  function( M, R )
+    
+    if not IsInternalMatrixHull( Eval( M ) ) then
+        TryNextMethod( );
+    fi;
+    
+    return GetListListOfStringsOfMatrix( Eval( M )!.matrix, R );
+    
+end );
+
+##
 InstallMethod( GetListOfHomalgMatrixAsString,
         "for homalg matrices",
         [ IsHomalgMatrix ],
@@ -600,30 +668,15 @@ InstallMethod( GetListListOfHomalgMatrixAsString,
         [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
         
   function( M, R )
-    local s, m;
+    local s;
     
-    if not IsInternalMatrixHull( Eval( M ) ) then
-        TryNextMethod( );
-    fi;
+    s := GetListListOfStringsOfHomalgMatrix( M, R );
     
-    s := Eval( M )!.matrix;
+    s := List( List( s, JoinStringsWithSeparator ), r -> Concatenation( "[", r, "]" ) );
     
-    if HasCharacteristic( R ) then
-        m := Characteristic( R );
-        if m > 0 and not HasCoefficientsRing( R ) then ## FIXME: we can only deal with Z/mZ and GF(p): m = Size( R ) !!!
-            if IsPrime( m ) then
-                s := List( s, a -> List( a, IntFFE ) );
-            else
-                s := List( s, a -> List( a, b -> b![1] ) );
-            fi;
-        fi;
-    fi;
+    s := JoinStringsWithSeparator( s );
     
-    s := String( s );
-    
-    RemoveCharacters( s, "\\\n " );
-    
-    return s;
+    return Concatenation( "[", s, "]" );
     
 end );
 
@@ -671,15 +724,11 @@ InstallMethod( GetSparseListOfHomalgMatrixAsString,
         [ IsHomalgInternalMatrixRep, IsHomalgInternalRingRep ],
         
   function( M, R )
-    local r, c, z, s, m;
+    local s, m, r, c, z;
     
     if not IsInternalMatrixHull( Eval( M ) ) then
         TryNextMethod( );
     fi;
-    
-    r := NrRows( M );
-    c := NrColumns( M );
-    z := Zero( R );
     
     s := Eval( M )!.matrix;
     
@@ -693,6 +742,10 @@ InstallMethod( GetSparseListOfHomalgMatrixAsString,
             fi;
         fi;
     fi;
+    
+    r := NrRows( M );
+    c := NrColumns( M );
+    z := Zero( R );
     
     s := List( [ 1 .. r ], a -> Filtered( List( [ 1 .. c ], function( b ) if s[a][b] <> z then return [ a, b, s[a][b] ]; else return 0; fi; end ), x -> x <> 0 ) );
     
@@ -1534,6 +1587,82 @@ InstallMethod( SetIsMutableMatrix,
     
 end );
 
+##
+InstallMethod( Iterator,
+        "of homalg matrices",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    local R, c, d, rank, iter, save, F, r;
+    
+    R := HomalgRing( M );
+    
+    if not IsFieldForHomalg( R ) or
+       ( not HasCharacteristic( R ) or Characteristic( R ) = 0 ) or
+       ( not HasDegreeOverPrimeField( R ) or not IsInt( DegreeOverPrimeField( R ) ) ) then
+        TryNextMethod( );
+    fi;
+    
+    c := Characteristic( R );
+    d := DegreeOverPrimeField( R );
+    
+    M := BasisOfRows( M );
+    
+    if not IsLeftRegular( M ) then
+        TryNextMethod( );
+    fi;
+    
+    rank := RowRankOfMatrix( M );
+    
+    iter := Iterator( GF(c^d)^rank );
+    
+    if IsHomalgInternalRingRep( R ) then
+        F := R;
+    else
+        F := HomalgRingOfIntegers( c, d );
+    fi;
+    
+    r := rec(
+             ring := R,
+             iter := iter,
+             matrix := M,
+             rank := rank,
+             GF := F,
+             
+             NextIterator :=
+             function( i )
+               local mat;
+               mat := HomalgMatrix( NextIterator( i!.iter ), 1, i!.rank, i!.GF );
+               SetNrRows( mat, 1 );	## should be obsolete
+               SetNrColumns( mat, i!.rank );	## should be obsolete
+               return ( i!.ring * mat ) * i!.matrix;
+             end,
+             
+             IsDoneIterator :=
+             function( i )
+               return IsDoneIterator( i!.iter );
+             end,
+             
+             ShallowCopy :=
+             function( i );
+                 return
+                   rec(
+                       ring := i!.ring,
+                       iter := ShallowCopy( i!.iter ),
+                       matrix := i!.matrix,
+                       rank := i!.rank,
+                       GF := i!.GF,
+                       NextIterator := i!.NextIterator,
+                       IsDoneIterator := i!.IsDoneIterator,
+                       ShallowCopy := i!.ShallowCopy
+                       );
+             end
+             );
+    
+    return IteratorByFunctions( r );
+    
+end );
+
 ####################################
 #
 # constructor functions and methods:
@@ -1768,14 +1897,14 @@ InstallMethod( CreateHomalgMatrixFromList,
   function( L, R )
     local M;
     
-    if IsMatrix( L ) and ForAll( L, r -> ForAll( r, IsRingElement ) ) then
+    if IsList( L[1] ) then
         M := List( L, r -> List( r, String ) );
         M := Concatenation( "[[", JoinStringsWithSeparator( List( M, r -> JoinStringsWithSeparator( r ) ), "],[" ), "]]" );
-    elif IsList( L ) and ForAll( L, IsRingElement ) then
+    else
         ## this resembles NormalizeInput in Maple's homalg ( a legacy ;) )
         M := Concatenation( "[[", JoinStringsWithSeparator( List( L, String ), "],[" ), "]]" );
-    else
-        M := String( L );
+        ## What is the use case for this? Wouldn't it be better to replace this by an error message?
+        # Error( "the number of rows and columns must be specified to construct a matrix from a list" );
     fi;
     
     return CreateHomalgMatrixFromString( M, R );
@@ -1790,13 +1919,11 @@ InstallMethod( CreateHomalgMatrixFromList,
   function( L, r, c, R )
     local M;
     
-    if IsMatrix( L ) and ForAll( L, r -> ForAll( r, IsRingElement ) ) then
-        M := List( L, r -> List( r, String ) );
-        M := Concatenation( "[[", JoinStringsWithSeparator( List( M, r -> JoinStringsWithSeparator( r ) ), "],[" ), "]]" );
-    elif IsList( L ) and ForAll( L, IsRingElement ) then
-        M := Concatenation( "[", JoinStringsWithSeparator( List( L, String ) ), "]" );
+    if IsList( L[1] ) then
+        M := List( Concatenation( L ), String );
+        M := Concatenation( "[", JoinStringsWithSeparator( M ), "]" );
     else
-        M := String( L );
+        M := Concatenation( "[", JoinStringsWithSeparator( List( L, String ) ), "]" );
     fi;
     
     return CreateHomalgMatrixFromString( M, r, c, R );
@@ -1896,7 +2023,7 @@ InstallGlobalFunction( HomalgMatrix,
             return CallFuncList( CreateHomalgMatrixFromString, arg );
             
         elif not IsHomalgInternalRingRep( R ) and		## the ring R is not internal,
-          ( ( IsList( M ) and ForAll( M, IsRingElement ) ) or	## while M is either a list of ring elements,
+          ( IsList( M )  or				## while M is either a list of ring elements,
             IsMatrix( M ) ) then				## or a matrix of (hopefully) ring elements
             
             return CallFuncList( CreateHomalgMatrixFromList, arg );

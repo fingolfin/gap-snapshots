@@ -147,6 +147,9 @@ InstallValue( HOMALG_IO,
                 ## optional ring operations:
                 ##
                 
+                ## copy an element:
+                CopyElement                             := "a>a",
+                
                 ## add two ring elements:
                 Sum                                     := "a+b",
                 
@@ -161,6 +164,15 @@ InstallValue( HOMALG_IO,
                 
                 ## random polynomial:
                 RandomPol                               := "rpl",
+                
+                ## numerator:
+                Numerator                               := "num",
+                
+                ## denominator:
+                Denominator                             := "den",
+                
+                ## evaluate polynomial:
+                Evaluate                                := "evl",
                 
                 ## degree of a multivariate polynomial
                 DegreeOfRingElement                     := "deg",
@@ -425,7 +437,11 @@ InstallValue( HOMALG_IO,
                 ## eliminate variables:
                 Eliminate                               := "eli",
                 
+                ## leading module:
                 LeadingModule                           := "led",
+                
+                ## the i-th monomial matrix
+                MonomialMatrix                          := "mon",
                 
                 ## matrix of symbols:
                 MatrixOfSymbols                         := "smb",

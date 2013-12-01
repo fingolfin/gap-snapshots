@@ -92,7 +92,9 @@ BindGlobal( "TheTypeHomalgExternalRingInSingular",
 #
 ####################################
 
-##
+## will be automatically invoked in homalgSendBlocking once stream.active_ring is set;
+## so there is no need to invoke it explicitly for a ring which can never be
+## created as the first ring in the stream!
 InstallGlobalFunction( _Singular_SetRing,
   function( R )
     local stream;
@@ -954,7 +956,6 @@ proc MatrixOfSymbols_workaround (matrix m)\n\
   int r=nrows(m);\n\
   int c=ncols(m);\n\
   matrix n[r][c]=0;\n\
-  // lead(e) below works around a bug\n\
   for(i=1;i<=r;i++)\n\
   {\n\
     for(j=1;j<=c;j++)\n\
@@ -967,6 +968,30 @@ proc MatrixOfSymbols_workaround (matrix m)\n\
   return(n);\n\
 }\n\n",
 
+    NumeratorAndDenominatorOfPolynomial := "\n\
+proc NumeratorAndDenominatorOfPolynomial( poly f )\n\
+{\n\
+    poly numer, denom;\n\
+    \n\
+    denom = coeffs( cleardenom ( var(1)*f+1 ), var(1) )[ 1, 1 ];\n\
+    numer = f * denom;\n\
+    \n\
+    return( numer, denom );\n\
+}\n\n",
+      
+      EvaluateMatrix := "\n\
+proc EvaluateMatrix( matrix M, list l )\n\
+{\n\
+    int r, c, i, j;\n\
+    r = nrows( M );\n\
+    c = ncols( M );\n\
+    matrix N[ r ][ c ];\n\
+    for ( i = 1; i <= r; i++ ){\n\
+        for ( j = 1; j <= c; j++ ){\n\
+            N[ i, j ] = subst( M[ i, j ], l[ 1 .. size( l ) ] );}}\n\
+    return ( N );\n\
+}\n\n"
+      
     )
 
 );
@@ -978,7 +1003,7 @@ InstallGlobalFunction( InitializeSingularMacros,
     
     v := stream.variable_name;
     
-    homalgSendBlocking( [ "int ", v, "i; int ", v, "j; int ", v, "k; list ", v, "l;\n\n" ], "need_command", stream, HOMALG_IO.Pictograms.initialize );
+    homalgSendBlocking( [ "int ", v, "i; int ", v, "j; int ", v, "k; list ", v, "l; string ", v, "s;\n\n" ], "need_command", stream, HOMALG_IO.Pictograms.initialize );
     
     return InitializeMacros( SingularMacros, stream );
     
@@ -993,7 +1018,13 @@ end );
 ##
 InstallGlobalFunction( RingForHomalgInSingular,
   function( arg )
-    local nargs, ar, R, RP;
+    local finalizers, nargs, ar, R, RP;
+    
+    finalizers := PositionProperty( arg, i -> IsList( i ) and ForAll( i, IsFunction ) );
+    
+    if not finalizers = fail then
+        finalizers := Remove( arg, finalizers );
+    fi;
     
     nargs := Length( arg );
     
@@ -1010,6 +1041,10 @@ InstallGlobalFunction( RingForHomalgInSingular,
     ar := [ ar, TheTypeHomalgExternalRingInSingular ];
     
     Add( ar, "HOMALG_IO_Singular" );
+    
+    if not finalizers = fail then
+        Add( ar, finalizers );
+    fi;
     
     R := CallFuncList( CreateHomalgExternalRing, ar );
     
@@ -1033,7 +1068,7 @@ end );
 ##
 InstallGlobalFunction( HomalgRingOfIntegersInSingular,
   function( arg )
-    local nargs, c, param, minimal_polynomial, r, R;
+    local nargs, c, d, param, minimal_polynomial, r, R;
     
     nargs := Length( arg );
     
@@ -1041,6 +1076,20 @@ InstallGlobalFunction( HomalgRingOfIntegersInSingular,
         ## characteristic:
         c := AbsInt( arg[1] );
         arg := arg{[ 2 .. nargs ]};
+        if nargs > 1 and IsPosInt( arg[1] ) then
+            d := arg[1];
+            if d > 1 then
+                param := Concatenation( "Z", String( c ), "_", String( d ) );
+                minimal_polynomial := UnivariatePolynomial( ConwayPol( c, d ), param );
+                arg := Concatenation( [ c, param, minimal_polynomial ], arg{[ 2 .. nargs - 1 ]} );
+                R := CallFuncList( HomalgRingOfIntegersInSingular, arg );
+                SetRingProperties( R, c, d );
+                R!.NameOfPrimitiveElement := param;
+                SetName( R, Concatenation( "GF(", String( c ), "^", String( d ), ")" ) );
+                return R;
+            fi;
+            arg := arg{[ 2 .. Length( arg ) ]};
+        fi;
     else
         ## characteristic:
         c := 0;
@@ -1095,29 +1144,39 @@ InstallGlobalFunction( HomalgRingOfIntegersInSingular,
         Add( R, r );
     fi;
     
-    R := CallFuncList( RingForHomalgInSingular, R );
-    
     if IsBound( minimal_polynomial ) then
         ## FIXME: we assume the polynomial is irreducible of degree > 1
-        homalgSendBlocking( [ "minpoly=", minimal_polynomial ], "need_command", R, HOMALG_IO.Pictograms.define );
-        R!.MinimalPolynomialOfPrimitiveElement := minimal_polynomial;
+        Add( R,
+             [ function( R )
+                 local name;
+                 
+                 name := homalgSendBlocking( [ minimal_polynomial ], "need_output", R, HOMALG_IO.Pictograms.homalgSetName );
+                 if name[1] = '(' and name[Length( name )] = ')' then
+                     name := name{[ 2 .. Length( name ) - 1 ]};
+                 fi;
+                 R!.MinimalPolynomialOfPrimitiveElement := name;
+                 homalgSendBlocking( [ "minpoly=", minimal_polynomial ], "need_command", R, HOMALG_IO.Pictograms.define );
+               end ] );
     fi;
+    
+    R := CallFuncList( RingForHomalgInSingular, R );
     
     if IsBound( param ) then
         
-        param := List( param, a -> HomalgExternalRingElement( a, R ) );
-        
-        Perform( param, function( v ) SetName( v, homalgPointer( v ) ); end );
+        param := List( param, function( a ) local r; r := HomalgExternalRingElement( a, R ); SetName( r, a ); return r; end );
         
         SetRationalParameters( R, param );
-        
-        SetCoefficientsRing( R, r );
         
         SetIsResidueClassRingOfTheIntegers( R, false );
         
         if IsPrime( c ) then
             SetIsFieldForHomalg( R, true );
+            ## FIXME: we assume the polynomial is irreducible of degree > 1
+            if not IsBound( minimal_polynomial ) then
+                SetCoefficientsRing( R, r );
+            fi;
         else
+            SetCoefficientsRing( R, r );
             SetIsFieldForHomalg( R, false );
             SetIsPrincipalIdealRing( R, true );
             SetIsCommutative( R, true );
@@ -1174,19 +1233,26 @@ InstallGlobalFunction( HomalgFieldOfRationalsInSingular,
         Add( R, Q );
     fi;
     
-    R := CallFuncList( RingForHomalgInSingular, R );
-    
     if IsBound( minimal_polynomial ) then
         ## FIXME: we assume the polynomial is irreducible of degree > 1
-        homalgSendBlocking( [ "minpoly=", minimal_polynomial ], "need_command", R, HOMALG_IO.Pictograms.define );
-        R!.MinimalPolynomialOfPrimitiveElement := minimal_polynomial;
+        Add( R,
+             [ function( R )
+                 local name;
+                 
+                 name := homalgSendBlocking( [ minimal_polynomial ], "need_output", R, HOMALG_IO.Pictograms.homalgSetName );
+                 if name[1] = '(' and name[Length( name )] = ')' then
+                     name := name{[ 2 .. Length( name ) - 1 ]};
+                 fi;
+                 R!.MinimalPolynomialOfPrimitiveElement := name;
+                 homalgSendBlocking( [ "minpoly=", minimal_polynomial ], "need_command", R, HOMALG_IO.Pictograms.define );
+               end ] );
     fi;
+    
+    R := CallFuncList( RingForHomalgInSingular, R );
     
     if IsBound( param ) then
         
-        param := List( param, a -> HomalgExternalRingElement( a, R ) );
-        
-        Perform( param, function( v ) SetName( v, homalgPointer( v ) ); end );
+        param := List( param, function( a ) local r; r := HomalgExternalRingElement( a, R ); SetName( r, a ); return r; end );
         
         SetRationalParameters( R, param );
         
@@ -1229,15 +1295,18 @@ InstallMethod( PolynomialRing,
         ext_obj := homalgSendBlocking( [ "(", Characteristic( R ), param, "),(", var, "),dp" ], [ "ring" ], TheTypeHomalgExternalRingObjectInSingular, properties, R, HOMALG_IO.Pictograms.CreateHomalgRing );
     fi;
     
-    S := CreateHomalgExternalRing( ext_obj, TheTypeHomalgExternalRingInSingular );
-    
+    ## this must precede CreateHomalgExternalRing as otherwise
+    ## the definition of 0,1,-1 would precede "minpoly=";
+    ## causing an error in the new Singular
     if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
-        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", S, HOMALG_IO.Pictograms.define );
+        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", ext_obj, HOMALG_IO.Pictograms.define );
     fi;
+    
+    S := CreateHomalgExternalRing( ext_obj, TheTypeHomalgExternalRingInSingular );
     
     var := List( var, a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( var, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( var, Name );
     
     SetIsFreePolynomialRing( S, true );
     
@@ -1248,8 +1317,6 @@ InstallMethod( PolynomialRing,
     fi;
     
     SetRingProperties( S, r, var );
-    
-    _Singular_SetRing( S );
     
     RP := homalgTable( S );
     
@@ -1337,6 +1404,12 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
         fi;
     fi;
     
+    ## as we are not yet done we cannot call CreateHomalgExternalRing
+    ## to create a HomalgRing, and only then would homalgSendBlocking call stream.setring,
+    ## so till then we have to prevent the garbage collector from stepping in
+    stream.DeletePeriod_save := stream.DeletePeriod;
+    stream.DeletePeriod := false;
+    
     if base <> "" then
         b := Length( base );
         n := b + Length( var ) + Length( der );
@@ -1349,23 +1422,28 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
         ext_obj := homalgSendBlocking( [ "Weyl()" ], [ "def" ], TheTypeHomalgExternalRingObjectInSingular, ext_obj, HOMALG_IO.Pictograms.CreateHomalgRing );
     fi;
     
+    ## this must precede CreateHomalgExternalRing as otherwise
+    ## the definition of 0,1,-1 would precede "minpoly=";
+    ## causing an error in the new Singular
+    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
+        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", ext_obj, HOMALG_IO.Pictograms.define );
+    fi;
+    
     S := CreateHomalgExternalRing( ext_obj, TheTypeHomalgExternalRingInSingular );
     
-    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
-        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", S, HOMALG_IO.Pictograms.define );
-    fi;
+    ## now it is safe to call the garbage collector
+    stream.DeletePeriod := stream.DeletePeriod_save;
+    Unbind( stream.DeletePeriod_save );
     
     der := List( der , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( der, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( der, Name );
     
     SetIsWeylRing( S, true );
     
     SetBaseRing( S, R );
     
     SetRingProperties( S, R, der );
-    
-    _Singular_SetRing( S );
     
     RP := homalgTable( S );
     
@@ -1374,8 +1452,8 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
         homalgSendBlocking( Concatenation(
                 [ "\nproc Involution (matrix M)\n{\n" ],
                 [ "  map F = ", R, ", " ],
-                IndeterminateCoordinatesOfRingOfDerivations( R ),
-                Concatenation( List( IndeterminateDerivationsOfRingOfDerivations( R ), a -> [ ", -" , a ] ) ),
+                [ JoinStringsWithSeparator( List( IndeterminateCoordinatesOfRingOfDerivations( R ), String ) ) ],
+                Concatenation( List( IndeterminateDerivationsOfRingOfDerivations( R ), a -> [ ", -" , String( a ) ] ) ),
                 [ ";\n  return( transpose( involution( M, F ) ) );\n}\n\n" ]
                 ), "need_command", HOMALG_IO.Pictograms.define );
     end;
@@ -1479,25 +1557,37 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
     else
         ext_obj := homalgSendBlocking( [ "(", Characteristic( R ), param, "),(", var, der, "),wp(", weights, ")" ], [ "ring" ], R, HOMALG_IO.Pictograms.initialize );
     fi;
+    
+    ## as we are not yet done we cannot call CreateHomalgExternalRing
+    ## to create a HomalgRing, and only then would homalgSendBlocking call stream.setring,
+    ## so till then we have to prevent the garbage collector from stepping in
+    stream.DeletePeriod_save := stream.DeletePeriod;
+    stream.DeletePeriod := false;
+    
     ext_obj := homalgSendBlocking( [ "Weyl();" ], [ "def" ], TheTypeHomalgExternalRingObjectInSingular, ext_obj, HOMALG_IO.Pictograms.CreateHomalgRing );
+    
+    ## this must precede CreateHomalgExternalRing as otherwise
+    ## the definition of 0,1,-1 would precede "minpoly=";
+    ## causing an error in the new Singular
+    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
+        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", ext_obj, HOMALG_IO.Pictograms.define );
+    fi;
     
     S := CreateHomalgExternalRing( ext_obj, TheTypeHomalgExternalRingInSingular );
     
-    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
-        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", S, HOMALG_IO.Pictograms.define );
-    fi;
+    ## now it is safe to call the garbage collector
+    stream.DeletePeriod := stream.DeletePeriod_save;
+    Unbind( stream.DeletePeriod_save );
     
     der := List( der , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( der, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( der, Name );
     
     SetIsWeylRing( S, true );
     
     SetBaseRing( S, R );
     
     SetRingProperties( S, R, der );
-    
-    _Singular_SetRing( S );
     
     RP := homalgTable( S );
     
@@ -1506,8 +1596,8 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
         homalgSendBlocking( Concatenation(
                 [ "\nproc Involution (matrix M)\n{\n" ],
                 [ "  map F = ", R, ", " ],
-                IndeterminateCoordinatesOfRingOfDerivations( R ),
-                Concatenation( List( IndeterminateDerivationsOfRingOfDerivations( R ), a -> [ ", -" , a ] ) ),
+                [ JoinStringsWithSeparator( List( IndeterminateCoordinatesOfRingOfDerivations( R ), String ) ) ],
+                Concatenation( List( IndeterminateDerivationsOfRingOfDerivations( R ), a -> [ ", -" , String( a ) ] ) ),
                 [ ";\n  return( transpose( involution( M, F ) ) );\n}\n\n" ]
                 ), "need_command", HOMALG_IO.Pictograms.define );
     end;
@@ -1617,29 +1707,40 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
     ## add the exterior structure
     ext_obj := homalgSendBlocking( [ "(", Characteristic( R ), param, "),(", Concatenation( comm, anti ), "),dp" ], [ "ring" ], R, HOMALG_IO.Pictograms.initialize );
     
+    ## as we are not yet done we cannot call CreateHomalgExternalRing
+    ## to create a HomalgRing, and only then would homalgSendBlocking call stream.setring,
+    ## so till then we have to prevent the garbage collector from stepping in
+    stream.DeletePeriod_save := stream.DeletePeriod;
+    stream.DeletePeriod := false;
+    
     ext_obj := homalgSendBlocking( [ "superCommutative_ForHomalg(", Length( comm ) + 1, ");" ], [ "def" ], TheTypeHomalgExternalRingObjectInSingular, ext_obj, HOMALG_IO.Pictograms.CreateHomalgRing );
+    
+    ## this must precede CreateHomalgExternalRing as otherwise
+    ## the definition of 0,1,-1 would precede "minpoly=";
+    ## causing an error in the new Singular
+    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
+        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", ext_obj, HOMALG_IO.Pictograms.define );
+    fi;
     
     S := CreateHomalgExternalRing( ext_obj, TheTypeHomalgExternalRingInSingular );
     
-    if IsBound( r!.MinimalPolynomialOfPrimitiveElement ) then
-        homalgSendBlocking( [ "minpoly=", r!.MinimalPolynomialOfPrimitiveElement ], "need_command", S, HOMALG_IO.Pictograms.define );
-    fi;
+    ## now it is safe to call the garbage collector
+    stream.DeletePeriod := stream.DeletePeriod_save;
+    Unbind( stream.DeletePeriod_save );
     
     anti := List( anti , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( anti, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( anti, Name );
     
     comm := List( comm , a -> HomalgExternalRingElement( a, S ) );
     
-    Perform( comm, function( v ) SetName( v, homalgPointer( v ) ); end );
+    Perform( comm, Name );
     
     SetIsExteriorRing( S, true );
     
     SetBaseRing( S, Base );
     
     SetRingProperties( S, R, anti );
-    
-    _Singular_SetRing( S );
     
     homalgSendBlocking( "option(redTail);option(redSB);", "need_command", stream, HOMALG_IO.Pictograms.initialize );
     
@@ -1650,7 +1751,7 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
         homalgSendBlocking( Concatenation(
                 [ "\nproc Involution (matrix M)\n{\n" ],
                 [ "  map F = ", R ],
-                Concatenation( List( IndeterminatesOfExteriorRing( R ), a -> [ a ] ) ),
+                Concatenation( List( IndeterminatesOfExteriorRing( R ), a -> [ ", ", String( a ) ] ) ),
                 [ ";\n  return( transpose( involution( M, F ) ) );\n}\n\n" ]
                 ), "need_command", HOMALG_IO.Pictograms.define );
     end;
@@ -1679,6 +1780,85 @@ FB Mathematik der Universitaet, D-67653 Kaiserslautern\033[0m\n\
     fi;
     
     return S;
+    
+end );
+
+##
+InstallMethod( AddRationalParameters,
+        "for Singular rings",
+        [ IsHomalgExternalRingInSingularRep and IsFieldForHomalg, IsList ],
+        
+  function( R, param )
+    local c, par;
+    
+    if IsString( param ) then
+        param := [ param ];
+    fi;
+    
+    param := List( param, String );
+    
+    c := Characteristic( R );
+    
+    if HasRationalParameters( R ) then
+        par := RationalParameters( R );
+        par := List( par, String );
+    else
+        par := [ ];
+    fi;
+    
+    par := Concatenation( par, param );
+    par := JoinStringsWithSeparator( par );
+    
+    ## TODO: take care of the rest
+    if c = 0 then
+        return HomalgFieldOfRationalsInSingular( par, R );
+    fi;
+    
+    return HomalgRingOfIntegersInSingular( c, par, R );
+    
+end );
+
+##
+InstallMethod( AddRationalParameters,
+        "for Singular rings",
+        [ IsHomalgExternalRingInSingularRep and IsFreePolynomialRing, IsList ],
+        
+  function( R, param )
+    local c, par, indets, r;
+    
+    if IsString( param ) then
+        param := [ param ];
+    fi;
+    
+    param := List( param, String );
+    
+    c := Characteristic( R );
+    
+    if HasRationalParameters( R ) then
+        par := RationalParameters( R );
+        par := List( par, String );
+    else
+        par := [ ];
+    fi;
+    
+    par := Concatenation( par, param );
+    par := JoinStringsWithSeparator( par );
+    
+    indets := Indeterminates( R );
+    indets := List( indets, String );
+    
+    r := CoefficientsRing( R );
+    
+    if not IsFieldForHomalg( r ) then
+        Error( "the coefficients ring is not a field\n" );
+    fi;
+    
+    ## TODO: take care of the rest
+    if c = 0 then
+        return HomalgFieldOfRationalsInSingular( par, r ) * indets;
+    fi;
+    
+    return HomalgRingOfIntegersInSingular( c, par, r ) * indets;
     
 end );
 
@@ -1759,11 +1939,11 @@ InstallMethod( MatElm,
         [ IsHomalgExternalMatrixRep, IsPosInt, IsPosInt, IsHomalgExternalRingInSingularRep ],
         
   function( M, r, c, R )
-    local ext_obj;
+    local Mrc;
     
-    ext_obj := homalgSendBlocking( [ M, "[", c, r, "]" ], [ "def" ], HOMALG_IO.Pictograms.MatElm );
+    Mrc := homalgSendBlocking( [ M, "[", c, r, "]" ], [ "def" ], HOMALG_IO.Pictograms.MatElm );
     
-    return HomalgExternalRingElement( ext_obj, R );
+    return HomalgExternalRingElement( Mrc, R );
     
 end );
 
@@ -1791,22 +1971,23 @@ InstallMethod( GetListListOfHomalgMatrixAsString,
         [ IsHomalgExternalMatrixRep, IsHomalgExternalRingInSingularRep ],
         
   function( M, R )
-    local command;
+    local v, command;
     
-      command := [
-          "matrix m[", NrColumns( M ),"][1];",
-          "string s = \"[\";",
-          "for(int i=1;i<=", NrRows( M ), ";i++){",
-            "m = ", M, "[1..", NrColumns( M ), ",i];",#remark: matrices are saved transposed in singular
-            "if(i!=1){s=s+\",\";};",
-            "s=s+\"[\"+string(m)+\"]\";",
-          "};",
-          "s=s+\"]\";"
-        ];
-        
-        homalgSendBlocking( command, "need_command", HOMALG_IO.Pictograms.GetListListOfHomalgMatrixAsString );
+    v := homalgStream( R ).variable_name;
     
-        return homalgSendBlocking( [ "s" ], "need_output", R, HOMALG_IO.Pictograms.GetListListOfHomalgMatrixAsString );
+    command := [
+                "matrix ", v, "m[", NrColumns( M ),"][1]; ",
+                v, "s=\"[\"; ",
+                "for(int i=1;i<=", NrRows( M ), ";i++){",
+                v, "m=", M, "[1..", NrColumns( M ), ",i]; ",	## matrices are saved transposed in Singular
+                "if(i!=1){", v, "s=", v, "s+\",\";}; ",
+                v, "s=", v, "s+\"[\"+string(", v, "m)+\"]\";}; ",
+                v, "s=", v, "s+\"]\"; kill ", v, "m"
+                ];
+    
+    homalgSendBlocking( command, "need_command", HOMALG_IO.Pictograms.GetListListOfHomalgMatrixAsString );
+    
+    return homalgSendBlocking( [ v, "s; ", v, "s=\"\"" ], "need_output", R, HOMALG_IO.Pictograms.GetListListOfHomalgMatrixAsString );
     
 end );
 
@@ -1836,7 +2017,7 @@ InstallMethod( SaveHomalgMatrixToFile,
         [ IsString, IsHomalgMatrix, IsHomalgExternalRingInSingularRep ],
         
   function( filename, M, R )
-    local mode, command;
+    local mode, v, command;
     
     if not IsBound( M!.SaveAs ) then
         mode := "ListList";
@@ -1845,19 +2026,23 @@ InstallMethod( SaveHomalgMatrixToFile,
     fi;
     
     if mode = "ListList" then
-
-        command := [ 
-          "matrix m[", NrColumns( M ),"][1];",
-          "string s = \"[\";",
-          "for(int i=1;i<=", NrRows( M ), ";i++)",
-          "{m = ", M, "[1..", NrColumns( M ), ",i]; if(i!=1){s=s+\",\";};s=s+\"[\"+string(m)+\"]\";};",
-          #remark: matrices are saved transposed in singular
-          "s=s+\"]\";",
-          "write(\"w: ", filename,"\",s);"
-        ];
-
+        
+        v := homalgStream( R ).variable_name;
+        
+        command := [
+                    "matrix ", v, "m[", NrColumns( M ),"][1]; ",
+                    v, "s=\"[\"; ",
+                    "for(int i=1;i<=", NrRows( M ), ";i++) ",
+                    "{", v, "m=", M, "[1..", NrColumns( M ), ",i]; ",	## matrices are saved transposed in Singular
+                    "if(i!=1){", v, "s=", v, "s+\",\";}; ",
+                    v, "s=", v, "s+\"[\"+string(", v, "m)+\"]\";}; ",
+                    v, "s=", v, "s+\"]\"; ",
+                    "write(\"w: ", filename,"\",", v, "s); ",
+                    "kill ", v, "m; ", v, "s=\"\""
+                    ];
+        
         homalgSendBlocking( command, "need_command", HOMALG_IO.Pictograms.SaveHomalgMatrixToFile );
-
+        
     fi;
     
     return true;
@@ -1870,7 +2055,7 @@ InstallMethod( LoadHomalgMatrixFromFile,
         [ IsString, IsInt, IsInt, IsHomalgExternalRingInSingularRep ],
         
   function( filename, r, c, R )
-    local mode, fs, str, fname, command, M;
+    local mode, fs, str, fname, v, command, M;
     
     if not IsBound( R!.LoadAs ) then
         mode := "ListList";
@@ -1912,9 +2097,14 @@ InstallMethod( LoadHomalgMatrixFromFile,
     
     if mode = "ListList" then
         
-        command := [ "string s=read(\"r: ", fname, "\");",
-                     "execute( \"matrix ", M, "[", r, "][", c, "] = \" + s + \";\" );",
-                     M, " = transpose(", M, ")" ];#remark: matrices are saved transposed in singular
+        v := homalgStream( R ).variable_name;
+        
+        command := [
+                    v, "s=read(\"r: ", fname, "\"); ",
+                    "execute( \"matrix ", M, "[", r, "][", c, "] = \" + ", v, "s + \";\" ); ",
+                    M, "=transpose(", M, "); ",	## matrices are saved transposed in Singular
+                    v, "s=\"\""
+                    ];
         
         homalgSendBlocking( command, "need_command", HOMALG_IO.Pictograms.LoadHomalgMatrixFromFile );
         
@@ -1966,4 +2156,3 @@ InstallMethod( DisplayRing,
     homalgDisplay( [ "print(", o, ")" ] );
     
 end );
-

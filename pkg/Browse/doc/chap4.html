@@ -89,15 +89,13 @@
 <p>Sorting can be undone globally, i. e., one can return to the unsorted table.</p>
 
 </dd>
-<dt><strong class="Mark">Sorting and Categorizing:
-</strong></dt>
+<dt><strong class="Mark">Sorting and Categorizing:</strong></dt>
 <dd><p>If a column is selected then the main table can be sorted w.r.t. the entries in this column, and additionally these entries are turned into <em>category rows</em>, i. e., additional rows are added to the main table, appearing immediately above the table rows with a fixed value in the selected column, and showing this column value. (There should be no danger to mix up this notion of categories with the one introduced in <a href="../../../doc/ref/chap13.html#X7CC6903E78F24167"><span class="RefLink">Reference: Categories</span></a>.) The category rows can be <em>collapsed</em> (that is, the table rows that belong to this category row are not shown) or <em>expanded</em> (that is, the corresponding table rows are shown). Some of the global search parameters affect the category rows, for example, whether the category rows shall involve a counter showing the number of corresponding data rows, or whether a row of the browse table appears under different category rows.</p>
 
 <p>Sorting and categorizing can be undone globally, i. e., one can return to the unsorted table without category rows.</p>
 
 </dd>
-<dt><strong class="Mark">Filtering:
-</strong></dt>
+<dt><strong class="Mark">Filtering:</strong></dt>
 <dd><p>The browse table can be restricted to those rows or columns in which a given search string occurs. (Also entries in collapsed rows can match; they remain collapsed then.) As a consequence, the category rows are restricted to those under which a matching row occurs. (It is irrelevant whether the search string occurs in category rows.)</p>
 
 <p>If the search string does not occur at all then a message is printed, and the table remains as it was before. If a browse table is restricted then this fact is indicated by the message "restricted table" in the lower right corner of the window.</p>
@@ -129,11 +127,10 @@
 
 <dl>
 <dt><strong class="Mark">Clicking:</strong></dt>
-<dd><p>One possible action is to "click" a selected cell, row, or column, by hitting the <strong class="button">Enter</strong> key. It depends on the application what the effect is. A typical situation is that a corresponding <strong class="pkg">GAP</strong> object is added to the list of return values of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). Again it depends on the application what this <strong class="pkg">GAP</strong> object is. In order to use this feature, one has to provide a record whose components are <strong class="pkg">GAP</strong> functions, see Section <a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a> for details. If mouse events are enabled then also mouse clicks can be used as an alternative to hitting the <strong class="button">Enter</strong> key.</p>
+<dd><p>One possible action is to "click" a selected cell, row, or column, by hitting the <strong class="button">Enter</strong> key. It depends on the application what the effect is. A typical situation is that a corresponding <strong class="pkg">GAP</strong> object is added to the list of return values of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). Again it depends on the application what this <strong class="pkg">GAP</strong> object is. In order to use this feature, one has to provide a record whose components are <strong class="pkg">GAP</strong> functions, see Section <a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a> for details. If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>)) then also mouse clicks can be used as an alternative to hitting the <strong class="button">Enter</strong> key.</p>
 
 </dd>
-<dt><strong class="Mark">Return Value:
-</strong></dt>
+<dt><strong class="Mark">Return Value:</strong></dt>
 <dd><p>The function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) may have an application dependent return value. A typical situation is that a list of objects corresponding to those cells is returned that were "clicked" in visual mode. In order to use this feature, one has to assign the desired value to the component <code class="code">dynamic.Return</code> of the browse table.</p>
 
 </dd>

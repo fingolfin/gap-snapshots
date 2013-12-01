@@ -8,6 +8,28 @@
 
 #############################################################################
 ##
+DeclareUserPreference( rec(
+    name:= "EnableMouseEvents",
+    description:= [
+"This user preference defines whether mouse events are enabled by default \
+in visual mode (value 'true') or not (value 'false', this is the default).  \
+During the &GAP; session, \
+the value can be changed using 'NCurses.UseMouse'.  \
+Inside browse applications based on 'NCurses.BrowseGeneric' \
+or 'NCurses.Select', \
+the value can be toggled usually by hitting the 'M' key." ],
+    default:= false,
+    values:= [ true, false ],
+    multi:= false,
+    ) );
+
+if UserPreference( "Browse", "EnableMouseEvents" ) = true then
+  NCurses.UseMouse( true );
+fi;
+
+
+#############################################################################
+##
 #V  BrowseData
 ##
 BrowseData.actions:= rec();
@@ -92,7 +114,7 @@ BrowseData.defaults:= rec(
           selectedEntry:= [ 0, 0 ],
           selectedCategory:= [ 0, 0 ],
 
-          # for enabling/disabling mouse actions
+#T not used anymore, but some applications may rely on its presence
           useMouse:= false,
 
           # for the search feature
@@ -1045,7 +1067,6 @@ BrowseData.GetCharacter:= function( t )
         t.dynamic.window:= CallFuncList( NCurses.newwin,
                                          t.work.windowParameters );
         t.dynamic.panel:= NCurses.new_panel( t.dynamic.window );
-        t.dynamic.useMouseOld:= NCurses.UseMouse( t.dynamic.useMouse ).old;
       fi;
       c:= NCurses.wgetch( t.dynamic.window );
       if c = NCurses.keys.MOUSE then
@@ -1307,16 +1328,18 @@ BrowseData.GetPatternEditParameters:= function( arg )
           # If the first button is released somewhere
           # then we move the alert box by the difference.
           data:= c[2];
-          if   data[1].event = "BUTTON1_PRESSED" and data[1].win = win then
-            pressdata:= data[ Length( data ) ];
-            buttondown:= true;
-          elif data[1].event = "BUTTON1_RELEASED" and buttondown then
-            data:= data[ Length( data ) ];
-            winposy:= Minimum( Maximum( 0, winposy + data.y - pressdata.y ),
-                               yx[1] - height );
-            winposx:= Minimum( Maximum( 0, winposx + data.x - pressdata.x ),
-                               yx[2] - width );
-            buttondown:= false;
+          if 0 < Length( data ) then
+            if   data[1].event = "BUTTON1_PRESSED" and data[1].win = win then
+              pressdata:= data[ Length( data ) ];
+              buttondown:= true;
+            elif data[1].event = "BUTTON1_RELEASED" and buttondown then
+              data:= data[ Length( data ) ];
+              winposy:= Minimum( Maximum( 0, winposy + data.y - pressdata.y ),
+                                 yx[1] - height );
+              winposx:= Minimum( Maximum( 0, winposx + data.x - pressdata.x ),
+                                 yx[2] - width );
+              buttondown:= false;
+            fi;
           fi;
         elif not c in [ NCurses.keys.ENTER, IntChar( '' ), 27 ] then
           if ins and Length( res ) < max then
@@ -2239,10 +2262,7 @@ end;
 BrowseData.actions.Error := rec(
   helplines := [ "enter a break loop (for debugging purposes)" ],
   action := function( t )
-    local old;
 
-    # Remember the mouse status.
-    old:= NCurses.UseMouse( false ).old;
     if NCurses.IsStdoutATty() then
       if not NCurses.isendwin() then
         NCurses.endwin();
@@ -2259,7 +2279,6 @@ BrowseData.actions.Error := rec(
       NCurses.doupdate();
       NCurses.curs_set( 0 );
     fi;
-    NCurses.UseMouse( old );
   end );
 
 
@@ -6530,12 +6549,15 @@ end;
 BrowseData.actions.ToggleMouseEvents := rec(
   helplines := [ "toggle enabling/disabling mouse events" ],
   action := function( t )
-    t.dynamic.useMouse:= NCurses.UseMouse( not t.dynamic.useMouse ).new;
-    if t.dynamic.useMouse then
-      BrowseData.AlertWithReplay( t, [ "mouse events enabled" ],
+    local data;
+
+    data:= NCurses.UseMouse( true );
+    if data.old = true or data.new = false then
+      data:= NCurses.UseMouse( false );
+      BrowseData.AlertWithReplay( t, [ "mouse events disabled" ],
                                   NCurses.attrs.BOLD );
     else
-      BrowseData.AlertWithReplay( t, [ "mouse events disabled" ],
+      BrowseData.AlertWithReplay( t, [ "mouse events enabled" ],
                                   NCurses.attrs.BOLD );
     fi;
     t.dynamic.changed:= true;
@@ -7582,7 +7604,6 @@ NCurses.BrowseGeneric:= function( arg )
           NCurses.curs_set( 0 );
           t.dynamic.window:= CallFuncList( NCurses.newwin, winPar );
           t.dynamic.panel:= NCurses.new_panel( t.dynamic.window );
-          t.dynamic.useMouseOld:= NCurses.UseMouse( t.dynamic.useMouse ).old;
 
           t.dynamic.statuswindow:= NCurses.newwin( 1, winPar[2],
                                                    maxyx[1]-1, 0 );
@@ -7622,8 +7643,10 @@ NCurses.BrowseGeneric:= function( arg )
         t.dynamic.changed:= true;
       else
         if IsList( c ) and c[1] = NCurses.keys.MOUSE then
-          Add( userinput, c[1] );
-          Add( userinput, c[2][1].event );
+          if 0 < Length( c[2] ) then
+            Add( userinput, c[1] );
+            Add( userinput, c[2][1].event );
+          fi;
         else
           Add( userinput, c );
         fi;
@@ -7748,7 +7771,6 @@ NCurses.BrowseGeneric:= function( arg )
       NCurses.delwin( t.dynamic.statuswindow );
       NCurses.resetty();
       NCurses.endwin();
-      NCurses.UseMouse( t.dynamic.useMouseOld );
       Unbind( t.dynamic.window );
       Unbind( t.dynamic.panel );
       Unbind( t.dynamic.statuswindow );

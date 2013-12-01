@@ -4,17 +4,99 @@
 \makelabel{autodoc:Table of Contents}{}{X8537FEB07AF2BEC8}
 \makelabel{autodoc:Introduction}{1}{X7DFB63A97E67C0A1}
 \makelabel{autodoc:What is the idea of the AutoDoc package?}{1.1}{X7DE75C127D2A1334}
-\makelabel{autodoc:The main functions in the AutoDoc Package}{2}{X7B4150D1848BA072}
-\makelabel{autodoc:The functions}{2.1}{X8173135A7D187358}
+\makelabel{autodoc:How to use AutoDoc}{1.2}{X7CAB1F157A8D51EB}
+\makelabel{autodoc:Getting started using AutoDoc}{2}{X80F6B32B7E4942F7}
+\makelabel{autodoc:Creating a package manual from scratch}{2.1}{X7BFBC6907B26AA95}
+\makelabel{autodoc:Documenting code with AutoDoc}{2.2}{X7A32EA8F7CD306FE}
+\makelabel{autodoc:Using AutoDoc in an existing GAPDoc manual}{2.3}{X86F2DE187B493932}
+\makelabel{autodoc:Automatic regeneration of the manual}{2.4}{X8345699079126E0B}
+\makelabel{autodoc:What is taken from PackageInfo.g}{2.5}{X7B903EAE86BB1C28}
+\makelabel{autodoc:AutoDoc documentation comments}{3}{X8141B1A583434E12}
+\makelabel{autodoc:Documenting declarations}{3.1}{X871482CE838C68F6}
+\makelabel{autodoc:@Description descr}{3.1.1}{X8707DB2E7A8F0C3A}
+\makelabel{autodoc:@Returns retval}{3.1.2}{X86B758CA82D73B41}
+\makelabel{autodoc:@Arguments args}{3.1.3}{X83FDE7028649130A}
+\makelabel{autodoc:@Group grpname}{3.1.4}{X86A674A5869BAEC2}
+\makelabel{autodoc:@FunctionLabel label}{3.1.5}{X876AD82D854564C6}
+\makelabel{autodoc:@ChapterInfo chapter, section}{3.1.6}{X7E44B99686FE9DC2}
+\makelabel{autodoc:Other documentation comments}{3.2}{X8152FEF9844B1ACD}
+\makelabel{autodoc:@Chapter name}{3.2.1}{X82747BD18578D5DA}
+\makelabel{autodoc:@Section name}{3.2.2}{X83651A8B7EAE7F65}
+\makelabel{autodoc:@EndSection}{3.2.3}{X852C1B327A127225}
+\makelabel{autodoc:@AutoDoc}{3.2.4}{X7CBD8AAF7DCEF352}
+\makelabel{autodoc:@EndAutoDoc}{3.2.5}{X782E748B82E264EB}
+\makelabel{autodoc:@BeginGroup [grpname]}{3.2.6}{X7937E2BA7E142CC9}
+\makelabel{autodoc:@EndGroup}{3.2.7}{X7C17EB007FD42C87}
+\makelabel{autodoc:@Level lvl}{3.2.8}{X855AB48C8380D5BE}
+\makelabel{autodoc:@ResetLevel}{3.2.9}{X7C6723D57F424215}
+\makelabel{autodoc:@Example and @EndExample}{3.2.10}{X872D68497D3EFBDD}
+\makelabel{autodoc:@System name and @InsertSystem name}{3.2.11}{X7C31282882B20278}
+\makelabel{autodoc:Grouping}{3.3}{X7D7A38F87BC40C48}
+\makelabel{autodoc:Level}{3.4}{X8209AFDE8209AFDE}
+\makelabel{autodoc:AutoDoc}{4}{X7CBD8AAF7DCEF352}
+\makelabel{autodoc:The AutoDoc() function}{4.1}{X863584DB8497D8BA}
+\makelabel{autodoc:The main functions}{5}{X7D3DC4ED855DC13C}
+\makelabel{autodoc:The main function}{5.1}{X80ABA2918548E108}
+\makelabel{autodoc:Global variable}{5.2}{X7D21DBC981FD7F3A}
+\makelabel{autodoc:The declare functions}{5.3}{X84DA168280C48278}
+\makelabel{autodoc:The install functions}{5.4}{X78A295DF814B52A7}
+\makelabel{autodoc:The create functions}{5.5}{X86D40CDE79CFC003}
+\makelabel{autodoc:Additional functions}{5.6}{X80E9EA5E866890E8}
+\makelabel{autodoc:AutoDoc worksheets}{6}{X80ED3C2A78146AD1}
+\makelabel{autodoc:Worksheets}{6.1}{X801D4A2F8292704C}
 \makelabel{autodoc:Index}{Ind}{X83A0356F839C696F}
 \makelabel{autodoc:AutoDoc}{}{X8537FEB07AF2BEC8}
-\makelabel{autodoc:AUTOMATICDOCUMENTATION}{2.1.1}{X85FE8A148090985E}
-\makelabel{autodoc:CreateAutoDoc}{2.1.2}{X7B9CAA7879526E64}
-\makelabel{autodoc:DeclareCategoryWithDocumentation}{2.1.3}{X813266C082A412F9}
-\makelabel{autodoc:DeclareRepresentationWithDocumentation}{2.1.4}{X7E24A6497A41CDE7}
-\makelabel{autodoc:DeclareOperationWithDocumentation}{2.1.5}{X82FAF5637E4A651F}
-\makelabel{autodoc:InstallMethodWithDocumentation}{2.1.6}{X85CD8A4B7DAEDE74}
-\makelabel{autodoc:DeclareAttributeWithDocumentation}{2.1.7}{X833A38277FA4848A}
-\makelabel{autodoc:DeclarePropertyWithDocumentation}{2.1.8}{X7E376CD17AA0566F}
-\makelabel{autodoc:DeclareGlobalFunctionWithDocumentation}{2.1.9}{X7B8162A87F499094}
-\makelabel{autodoc:DeclareGlobalVariableWithDocumentation}{2.1.10}{X7CADC9C87BEF79D8}
+\makelabel{autodoc:@Description}{3.1.1}{X8707DB2E7A8F0C3A}
+\makelabel{autodoc:@Returns}{3.1.2}{X86B758CA82D73B41}
+\makelabel{autodoc:@Arguments}{3.1.3}{X83FDE7028649130A}
+\makelabel{autodoc:@Group}{3.1.4}{X86A674A5869BAEC2}
+\makelabel{autodoc:@FunctionLabel}{3.1.5}{X876AD82D854564C6}
+\makelabel{autodoc:@ChapterInfo}{3.1.6}{X7E44B99686FE9DC2}
+\makelabel{autodoc:@Chapter}{3.2.1}{X82747BD18578D5DA}
+\makelabel{autodoc:@Section}{3.2.2}{X83651A8B7EAE7F65}
+\makelabel{autodoc:@EndSection}{3.2.3}{X852C1B327A127225}
+\makelabel{autodoc:@AutoDoc}{3.2.4}{X7CBD8AAF7DCEF352}
+\makelabel{autodoc:@EndAutoDoc}{3.2.5}{X782E748B82E264EB}
+\makelabel{autodoc:@BeginGroup}{3.2.6}{X7937E2BA7E142CC9}
+\makelabel{autodoc:@EndGroup}{3.2.7}{X7C17EB007FD42C87}
+\makelabel{autodoc:@Level}{3.2.8}{X855AB48C8380D5BE}
+\makelabel{autodoc:@ResetLevel}{3.2.9}{X7C6723D57F424215}
+\makelabel{autodoc:@Example and @EndExample}{3.2.10}{X872D68497D3EFBDD}
+\makelabel{autodoc:@System and @InsertSystem}{3.2.11}{X7C31282882B20278}
+\makelabel{autodoc:AutoDoc}{4.1.1}{X7CBD8AAF7DCEF352}
+\makelabel{autodoc:CreateAutomaticDocumentation}{5.1.1}{X87E8381784333A1A}
+\makelabel{autodoc:AUTOMATICDOCUMENTATION}{5.2.1}{X85FE8A148090985E}
+\makelabel{autodoc:DeclareOperationWithDocumentation}{5.3.1}{X82FAF5637E4A651F}
+\makelabel{autodoc:DeclareCategoryWithDocumentation}{5.3.2}{X813266C082A412F9}
+\makelabel{autodoc:DeclareRepresentationWithDocumentation}{5.3.3}{X7E24A6497A41CDE7}
+\makelabel{autodoc:DeclareAttributeWithDocumentation}{5.3.4}{X833A38277FA4848A}
+\makelabel{autodoc:DeclarePropertyWithDocumentation}{5.3.5}{X7E376CD17AA0566F}
+\makelabel{autodoc:DeclareGlobalFunctionWithDocumentation}{5.3.6}{X7B8162A87F499094}
+\makelabel{autodoc:DeclareGlobalVariableWithDocumentation}{5.3.7}{X7CADC9C87BEF79D8}
+\makelabel{autodoc:DeclareOperationWithDoc}{5.3.8}{X796564167CB1974C}
+\makelabel{autodoc:DeclareCategoryWithDoc}{5.3.9}{X7F977DCC7FA189DA}
+\makelabel{autodoc:DeclareRepresentationWithDoc}{5.3.10}{X8020E6177862F37C}
+\makelabel{autodoc:DeclareAttributeWithDoc}{5.3.11}{X7C937D657D5F76D9}
+\makelabel{autodoc:DeclarePropertyWithDoc}{5.3.12}{X788E879C87A5CD4C}
+\makelabel{autodoc:DeclareGlobalFunctionWithDoc}{5.3.13}{X8035AA567D6AAE0F}
+\makelabel{autodoc:DeclareGlobalVariableWithDoc}{5.3.14}{X7BF0ACDF79CC4743}
+\makelabel{autodoc:InstallMethodWithDocumentation}{5.4.1}{X85CD8A4B7DAEDE74}
+\makelabel{autodoc:InstallMethodWithDoc}{5.4.2}{X82F149DB87D95C0A}
+\makelabel{autodoc:CreateDocEntryForCategory}{5.5.1}{X84F4A859796C32CF}
+\makelabel{autodoc:CreateDocEntryForRepresentation}{5.5.2}{X866D1D097E50D094}
+\makelabel{autodoc:CreateDocEntryForOperation}{5.5.3}{X7DE1062382198EF2}
+\makelabel{autodoc:CreateDocEntryForAttribute}{5.5.4}{X83DEB2BA82368AD0}
+\makelabel{autodoc:CreateDocEntryForProperty}{5.5.5}{X7C2F48087F208A04}
+\makelabel{autodoc:CreateDocEntryForCategoryWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForRepresentationWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForPropertyWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForAttributeWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForOperationWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForGlobalFunctionWithOptions}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:CreateDocEntryForGlobalVariableWithDoc}{5.5.6}{X7B0CCAC68228D281}
+\makelabel{autodoc:SetCurrentAutoDocChapter}{5.6.1}{X787280E67900FF00}
+\makelabel{autodoc:ResetCurrentAutoDocChapter}{5.6.1}{X787280E67900FF00}
+\makelabel{autodoc:SetCurrentAutoDocSection}{5.6.1}{X787280E67900FF00}
+\makelabel{autodoc:ResetCurrentAutoDocSection}{5.6.1}{X787280E67900FF00}
+\makelabel{autodoc:WriteStringIntoDoc}{5.6.2}{X7DDFB34D81712814}
+\makelabel{autodoc:AutoDocWorksheet}{6.1.1}{X809FE4137C08B28D}

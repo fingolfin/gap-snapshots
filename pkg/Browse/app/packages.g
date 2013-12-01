@@ -2,7 +2,7 @@
 ##
 #W  packages.g            GAP 4 package `browse'                Thomas Breuer
 ##
-#Y  Copyright (C)  2007,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,  Lehrstuhl D für Mathematik,   RWTH Aachen,  Germany
 ##
 
 

@@ -6,13 +6,15 @@
                    [1XWedderburn Decomposition of Group Algebras[101X
   
   
-                                 Version 4.5.4
+                                 Version 4.6.1
   
   
-                                 28 March 2013
+                                17 November 2013
   
   
                               Osnel Broche Cristo
+  
+                                  Allen Herman
   
                               Alexander Konovalov
   
@@ -31,6 +33,15 @@
       Address:  [33X[0;14YDepartamento  de  Ciências  Exatas,  Universidade  Federal  de
                 Lavras  -  UFLA,  Campus  Universitário  -  Caixa Postal 3037,
                 37200-000, Lavras - MG, Brazil[133X
+  
+  
+  Allen Herman
+      Email:    [7Xmailto:aherman@math.uregina.ca[107X
+      Homepage: [7Xhttp://www.math.uregina.ca/~aherman/[107X
+      Address:  [33X[0;14YDepartment of Mathematics and Statistics,[133X
+                [33X[0;14YUniversity of Regina,[133X
+                [33X[0;14Y3737 Wascana Parkway,[133X
+                [33X[0;14YRegina, SK, S0G 0E0, Canada[133X
   
   
   Alexander Konovalov
@@ -88,8 +99,8 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©  2006-2013  by  Osnel Broche Cristo, Alexander Konovalov, Aurora Olivieri,
-  Gabriela Olteanu, Ángel del Río and Inneke Van Gelder.[133X
+  [33X[0;0Y©  2006-2013  by  Osnel  Broche  Cristo,  Allen Herman, Alexander Konovalov,
+  Aurora Olivieri, Gabriela Olteanu, Ángel del Río and Inneke Van Gelder.[133X
   
   [33X[0;0Y[5XWedderga[105X  is  free  software; you can redistribute it and/or modify it under
   the  terms  of  the  GNU  General  Public  License  as published by the Free
@@ -98,14 +109,13 @@
   [7Xhttp://www.gnu.org/licenses/gpl.html[107X.[133X
   
   [33X[0;0YIf you obtained [5XWedderga[105X, we would be grateful for a short notification sent
-  to one of the authors.[133X
+  to  one of the authors. If you publish a result which was partially obtained
+  with the usage of [5XWedderga[105X, please cite it in the following form:[133X
   
-  [33X[0;0YIf  you  publish  a  result  which  was partially obtained with the usage of
-  [5XWedderga[105X, please cite it in the following form:[133X
-  
-  [33X[0;0YO.  Broche  Cristo, A. Konovalov, A. Olivieri, G. Olteanu, Á. del Río and I.
-  Van Gelder. [13XWedderga --- Wedderburn Decomposition of Group Algebras, Version
-  4.5.4;[113X 2013 ([7Xhttp://www.cs.st-andrews.ac.uk/~alexk/wedderga[107X).[133X
+  [33X[0;0YO.  Broche  Cristo, A. Herman, A. Konovalov, A. Olivieri, G. Olteanu, Á. del
+  Río  and  I.  Van  Gelder.  [13XWedderga  ---  Wedderburn Decomposition of Group
+  Algebras,                 Version                 4.6.1;[113X                2013
+  ([7Xhttp://www.cs.st-andrews.ac.uk/~alexk/wedderga[107X).[133X
   
   
   -------------------------------------------------------
@@ -147,7 +157,7 @@
     1.2 [33X[0;0YInstallation and system requirements[133X
     1.3 [33X[0;0YMain functions of [5XWedderga[105X package[133X
   2 [33X[0;0YWedderburn decomposition[133X
-    2.1 [33X[0;0YWedderburn decomposition[133X
+    2.1 [33X[0;0YWedderburn decomposition of a group algebra[133X
       2.1-1 WedderburnDecomposition
       2.1-2 WedderburnDecompositionInfo
     2.2 [33X[0;0YSimple quotients[133X
@@ -174,7 +184,7 @@
     cyclotomic classes[133X
       4.4-1 PrimitiveIdempotentsNilpotent
       4.4-2 PrimitiveIdempotentsTrivialTwisting
-  5 [33X[0;0YCrossed products[133X
+  5 [33X[0;0YCrossed products and their elements[133X
     5.1 [33X[0;0YConstruction of crossed products[133X
       5.1-1 CrossedProduct
     5.2 [33X[0;0YCrossed product elements and their properties[133X
@@ -195,30 +205,57 @@
       6.3-2 IsCyclotomicClass
     6.4 [33X[0;0YOther commands[133X
       6.4-1 InfoWedderga
-  7 [33X[0;0YApplications of the Wedderga package[133X
-    7.1 [33X[0;0YApplications to coding theory[133X
-      7.1-1 CodeWordByGroupRingElement
-      7.1-2 CodeByLeftIdeal
-  8 [33X[0;0YThe basic theory behind [5XWedderga[105X[133X
-    8.1 [33X[0;0YGroup rings and group algebras[133X
-    8.2 [33X[0;0YSemisimple group algebras[133X
-    8.3 [33X[0;0YWedderburn decomposition[133X
-    8.4 [33X[0;0YCharacters and primitive central idempotents[133X
-    8.5 [33X[0;0YCentral simple algebras and Brauer equivalence[133X
-    8.6 [33X[0;0YCrossed Products[133X
-    8.7 [33X[0;0YCyclic Crossed Products[133X
-    8.8 [33X[0;0YAbelian Crossed Products[133X
-    8.9 [33X[0;0YClassical crossed products[133X
-    8.10 [33X[0;0YCyclic Algebras[133X
-    8.11 [33X[0;0YCyclotomic algebras[133X
-    8.12 [33X[0;0YNumerical description of cyclotomic algebras[133X
-    8.13 [33X[0;0YIdempotents given by subgroups[133X
-    8.14 [33X[0;0YShoda pairs[133X
-    8.15 [33X[0;0YStrong Shoda pairs[133X
-    8.16 [33X[0;0YStrongly monomial characters and strongly monomial groups[133X
-    8.17 [33X[0;0YCyclotomic Classes and Strong Shoda Pairs[133X
-    8.18 [33X[0;0YA complete set of orthogonal primitive idempotents[133X
-    8.19 [33X[0;0YApplications to coding theory[133X
+  7 [33X[0;0YFunctions for calculating Schur indices and identifying division algebras[133X
+    7.1 [33X[0;0YMain Schur Index and Division Algebra Functions[133X
+      7.1-1 WedderburnDecompositionWithDivAlgParts
+      7.1-2 CyclotomicAlgebraWithDivAlgPart
+      7.1-3 SchurIndex
+    7.2 [33X[0;0YCyclotomic Reciprocity Functions[133X
+      7.2-1 PPartOfN
+      7.2-2 PSplitSubextension
+      7.2-3 SplittingDegreeAtP
+    7.3 [33X[0;0YLocal index functions for Cyclic Cyclotomic Algebras[133X
+      7.3-1 LocalIndicesOfCyclicCyclotomicAlgebra
+      7.3-2 LocalIndexAtInfty
+    7.4 [33X[0;0YLocal index functions for Non-Cyclic Cyclotomic Algebras[133X
+      7.4-1 LocalIndicesOfCyclotomicAlgebra
+      7.4-2 RootOfDimensionOfCyclotomicAlgebra
+      7.4-3 DefiningGroupOfCyclotomicAlgebra
+      7.4-4 LocalIndexAtInftyByCharacter
+      7.4-5 LocalIndexAtPByBrauerCharacter
+      7.4-6 LocalIndexAtOddPByCharacter
+    7.5 [33X[0;0YLocal index functions for Rational Quaternion Algebras[133X
+      7.5-1 LocalIndicesOfRationalQuaternionAlgebra
+      7.5-2 IsRationalQuaternionAlgebraADivisionRing
+    7.6 [33X[0;0YFunctions involving Cyclic Algebras[133X
+      7.6-1 DecomposeCyclotomicAlgebra
+      7.6-2 ConvertCyclicAlgToCyclicCyclotomicAlg
+      7.6-3 ConvertQuaternionAlgToQuadraticAlg
+  8 [33X[0;0YApplications of the Wedderga package[133X
+    8.1 [33X[0;0YCoding theory applications[133X
+      8.1-1 CodeWordByGroupRingElement
+      8.1-2 CodeByLeftIdeal
+  9 [33X[0;0YThe basic theory behind [5XWedderga[105X[133X
+    9.1 [33X[0;0YGroup rings and group algebras[133X
+    9.2 [33X[0;0YSemisimple group algebras[133X
+    9.3 [33X[0;0YWedderburn components[133X
+    9.4 [33X[0;0YCharacters and primitive central idempotents[133X
+    9.5 [33X[0;0YCentral simple algebras and Brauer equivalence[133X
+    9.6 [33X[0;0YCrossed Products[133X
+    9.7 [33X[0;0YCyclic Crossed Products[133X
+    9.8 [33X[0;0YAbelian Crossed Products[133X
+    9.9 [33X[0;0YClassical crossed products[133X
+    9.10 [33X[0;0YCyclic Algebras[133X
+    9.11 [33X[0;0YCyclotomic algebras[133X
+    9.12 [33X[0;0YNumerical description of cyclotomic algebras[133X
+    9.13 [33X[0;0YIdempotents given by subgroups[133X
+    9.14 [33X[0;0YShoda pairs of a group[133X
+    9.15 [33X[0;0YStrong Shoda pairs of a group[133X
+    9.16 [33X[0;0YStrongly monomial characters and strongly monomial groups[133X
+    9.17 [33X[0;0YCyclotomic Classes and Strong Shoda Pairs[133X
+    9.18 [33X[0;0YTheory for Local Schur Index and Division Algebra Part Calculations[133X
+    9.19 [33X[0;0YA complete set of orthogonal primitive idempotents[133X
+    9.20 [33X[0;0YApplications to coding theory[133X
   
   
   [32X

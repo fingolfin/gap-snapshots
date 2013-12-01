@@ -457,7 +457,14 @@
   
   [33X[0;0YCheck if the [5Xhomalg[105X module [3XM[103X is holonomic.[133X
   
-  [1X7.3-3 IsPrimeIdeal[101X
+  [1X7.3-3 IsReduced[101X
+  
+  [29X[2XIsReduced[102X( [3XM[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YCheck if the [5Xhomalg[105X module [3XM[103X is reduced.[133X
+  
+  [1X7.3-4 IsPrimeIdeal[101X
   
   [29X[2XIsPrimeIdeal[102X( [3XJ[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -465,6 +472,13 @@
   [33X[0;0YCheck  if  the  [5Xhomalg[105X  submodule  [3XJ[103X  is  a  prime ideal. The ring has to be
   commutative.[133X
   [33X[0;0Y(no method installed)[133X
+  
+  [1X7.3-5 IsPrimeModule[101X
+  
+  [29X[2XIsPrimeModule[102X( [3XM[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YCheck if the [5Xhomalg[105X module [3XM[103X is prime.[133X
   
   [33X[0;0YFor   more  properties  see  the  corresponding  section  [14X'homalg:  Objects:
   Properties'[114X) in the documentation of the [5Xhomalg[105X package.[133X
@@ -497,7 +511,36 @@
   commutative.[133X
   [33X[0;0Y(no method installed)[133X
   
-  [1X7.4-4 ElementaryDivisors[101X
+  [1X7.4-4 ModuleOfKaehlerDifferentials[101X
+  
+  [29X[2XModuleOfKaehlerDifferentials[102X( [3XR[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X module[133X
+  
+  [33X[0;0YThe module of Kaehler differentials of the (residue class ring) [3XR[103X.[133X
+  [33X[0;0Y(method installed in package [5XGradedModules[105X)[133X
+  
+  [1X7.4-5 RadicalSubobject[101X
+  
+  [29X[2XRadicalSubobject[102X( [3XM[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
+  
+  [1X7.4-6 SymmetricAlgebra[101X
+  
+  [29X[2XSymmetricAlgebra[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring[133X
+  
+  [33X[0;0YThe symmetric algebra of the module [3XM[103X.[133X
+  
+  [1X7.4-7 ExteriorAlgebra[101X
+  
+  [29X[2XExteriorAlgebra[102X( [3XM[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5Xhomalg[105X ring[133X
+  
+  [33X[0;0YThe exterior algebra of the module [3XM[103X.[133X
+  
+  [1X7.4-8 ElementaryDivisors[101X
   
   [29X[2XElementaryDivisors[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of ring elements[133X
@@ -505,84 +548,84 @@
   [33X[0;0YThe list of elementary divisors of the [5Xhomalg[105X module [3XM[103X, in case they exist.[133X
   [33X[0;0Y(no method installed)[133X
   
-  [1X7.4-5 FittingIdeal[101X
+  [1X7.4-9 FittingIdeal[101X
   
   [29X[2XFittingIdeal[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list[133X
   
   [33X[0;0YThe Fitting ideal of [3XM[103X.[133X
   
-  [1X7.4-6 NonFlatLocus[101X
+  [1X7.4-10 NonFlatLocus[101X
   
   [29X[2XNonFlatLocus[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list[133X
   
   [33X[0;0YThe non flat locus of [3XM[103X.[133X
   
-  [1X7.4-7 LargestMinimalNumberOfLocalGenerators[101X
+  [1X7.4-11 LargestMinimalNumberOfLocalGenerators[101X
   
   [29X[2XLargestMinimalNumberOfLocalGenerators[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya nonnegative integer[133X
   
   [33X[0;0YThe minimal number of [13Xlocal[113X generators of the module [3XM[103X.[133X
   
-  [1X7.4-8 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[101X
+  [1X7.4-12 CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[101X
   
   [29X[2XCoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of integers[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-9 CoefficientsOfNumeratorOfHilbertPoincareSeries[101X
+  [1X7.4-13 CoefficientsOfNumeratorOfHilbertPoincareSeries[101X
   
   [29X[2XCoefficientsOfNumeratorOfHilbertPoincareSeries[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya list of integers[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-10 UnreducedNumeratorOfHilbertPoincareSeries[101X
+  [1X7.4-14 UnreducedNumeratorOfHilbertPoincareSeries[101X
   
   [29X[2XUnreducedNumeratorOfHilbertPoincareSeries[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya univariate polynomial with rational coefficients[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-11 NumeratorOfHilbertPoincareSeries[101X
+  [1X7.4-15 NumeratorOfHilbertPoincareSeries[101X
   
   [29X[2XNumeratorOfHilbertPoincareSeries[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya univariate polynomial with rational coefficients[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-12 HilbertPoincareSeries[101X
+  [1X7.4-16 HilbertPoincareSeries[101X
   
   [29X[2XHilbertPoincareSeries[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya univariate rational function with rational coefficients[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-13 AffineDegree[101X
+  [1X7.4-17 AffineDegree[101X
   
   [29X[2XAffineDegree[102X( [3XM[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Ya nonnegative integer[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-14 DataOfHilbertFunction[101X
+  [1X7.4-18 DataOfHilbertFunction[101X
   
   [29X[2XDataOfHilbertFunction[102X( [3XM[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Ya function[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-15 HilbertFunction[101X
+  [1X7.4-19 HilbertFunction[101X
   
   [29X[2XHilbertFunction[102X( [3XM[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Ya function[133X
   
   [33X[0;0Y[3XM[103X is a [5Xhomalg[105X module.[133X
   
-  [1X7.4-16 IndexOfRegularity[101X
+  [1X7.4-20 IndexOfRegularity[101X
   
   [29X[2XIndexOfRegularity[102X( [3XM[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Ya function[133X

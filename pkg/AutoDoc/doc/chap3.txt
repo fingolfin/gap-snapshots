@@ -1,0 +1,269 @@
+  
+  [1X3 [33X[0;0Y[5XAutoDoc[105X[101X[1X documentation comments[133X[101X
+  
+  [33X[0;0YYou can document declarations of global functions and variables, operations,
+  attributes etc. by inserting [5XAutoDoc[105X comments into your sources before these
+  declaration.  An  [5XAutoDoc[105X  comment  always  starts with [10X#![110X. This is also the
+  smallest  possible [5XAutoDoc[105X command. If you want your declaration documented,
+  just write [10X#![110X at the line before the documentation. For example:[133X
+  
+  [4X[32X[104X
+    [4X#![104X
+    [4XDeclareOperation( "AnOperation",[104X
+    [4X                  [ IsList ] );[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis will produce a manual entry for the operation [10XAnOperation[110X.[133X
+  
+  
+  [1X3.1 [33X[0;0YDocumenting declarations[133X[101X
+  
+  [33X[0;0YIn  the  bare  form above, the manual entry for [10XAnOperation[110X will not contain
+  much more than the name of the operation. In order to change this, there are
+  several   commands   you  can  put  into  the  [5XAutoDoc[105X  comment  before  the
+  declaration. Currently, the following commands are provided:[133X
+  
+  
+  [1X3.1-1 [33X[0;0Y@Description [3Xdescr[103X[101X[1X[133X[101X
+  
+  [33X[0;0YAdds  the  text  in the following lines of the [5XAutoDoc[105X to the description of
+  the  declaration  in the manual. Lines are until the next [5XAutoDoc[105X command or
+  until the declaration is reached.[133X
+  
+  
+  [1X3.1-2 [33X[0;0Y@Returns [3Xret_val[103X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  string  [3Xret_val[103X  is added to the documentation, with the text [21XReturns: [121X
+  put  in front of it. This should usually give a brief hint about the type or
+  meaning of the value retuned by the documented function.[133X
+  
+  
+  [1X3.1-3 [33X[0;0Y@Arguments [3Xargs[103X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  string  [3Xargs[103X  contains  a  description  of  the  arguments the function
+  expects, including optional parts, which are denoted by square brackets. The
+  argument names can be separated by whitespace, commas or square brackets for
+  the  optional  arguments,  like  [21Xgrp[, elm][121X or [21Xxx[y[z] ][121X. If [5XGAP[105X options are
+  used,  this  can  be followed by a colon : and one or more assignments, like
+  [21Xn[, r]: tries := 100[121X.[133X
+  
+  
+  [1X3.1-4 [33X[0;0Y@Group [3Xgrpname[103X[101X[1X[133X[101X
+  
+  [33X[0;0YAdds  the  following  method to a group with the given name. See section [14X3.3[114X
+  for more information about groups.[133X
+  
+  
+  [1X3.1-5 [33X[0;0Y@FunctionLabel [3Xlabel[103X[101X[1X[133X[101X
+  
+  [33X[0;0YAdds  label  to  the  function  as label. If this is not specified, then for
+  declarations  that  involve  a  list  of  input  filters (as is the case for
+  [10XDeclareOperation[110X, [10XDeclareAttribute[110X, etc.), a default label is generated from
+  this filter list.[133X
+  
+  
+  [1X3.1-6 [33X[0;0Y@ChapterInfo [3Xchapter, section[103X[101X[1X[133X[101X
+  
+  [33X[0;0YAdds  the  entry to the given chapter and section. Here, [3Xchapter[103X and [3Xsection[103X
+  are the respective titles.[133X
+  
+  [33X[0;0YAs  an  example, a full [5XAutoDoc[105X comment for with all options could look like
+  this:[133X
+  
+  [4X[32X[104X
+    [4X#! @Description[104X
+    [4X#! Computes the list of lists of degrees of ordinary characters[104X
+    [4X#! associated to the <A>p</A>-blocks of the group <A>G</A>[104X
+    [4X#! with <A>p</A>-modular character table <A>modtbl</A>[104X
+    [4X#! and underlying ordinary character table <A>ordtbl</A>.[104X
+    [4X#! @Returns a list[104X
+    [4X#! @Arguments modtbl[104X
+    [4X#! @Group CharacterDegreesOfBlocks[104X
+    [4X#! @FunctionLabel chardegblocks[104X
+    [4X#! @ChapterInfo Blocks, Attributes[104X
+    [4XDeclareAttribute( "CharacterDegreesOfBlocks",[104X
+    [4X        IsBrauerTable );[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YOther documentation comments[133X[101X
+  
+  [33X[0;0YThere  are also some commands which can be used in [5XAutoDoc[105X comments that are
+  not associated to any declaration.[133X
+  
+  
+  [1X3.2-1 [33X[0;0Y@Chapter [3Xname[103X[101X[1X[133X[101X
+  
+  [33X[0;0YSets  a  chapter,  all functions without seperate info will be added to this
+  chapter.  Also  all  text  comments, i.e. lines that begin with #! without a
+  command,  and  which  do not follow after @description, will be added to the
+  chapter as regular text. Example:[133X
+  
+  [4X[32X[104X
+    [4X#! @Chapter My chapter[104X
+    [4X#!  This is my chapter.[104X
+    [4X#!  I document my stuff in it.[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-2 [33X[0;0Y@Section [3Xname[103X[101X[1X[133X[101X
+  
+  [33X[0;0YSets a section like chapter sets a chapter.[133X
+  
+  [4X[32X[104X
+    [4X#! @Section My first manual section[104X
+    [4X#!  In this section I am going to document my first method.[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-3 [33X[0;0Y@EndSection[133X[101X
+  
+  [33X[0;0YCloses the current section.[133X
+  
+  [4X[32X[104X
+    [4X#! @EndSection[104X
+    [4X#### The following text again belongs to the chapter[104X
+    [4X#! Now we have a second section.[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-4 [33X[0;0Y@AutoDoc[133X[101X
+  
+  [33X[0;0YCauses   all  subsequent  declarations  to  be  documented  in  the  manual,
+  regardless of whether they have an [5XAutoDoc[105X comment in front of them or not.[133X
+  
+  
+  [1X3.2-5 [33X[0;0Y@EndAutoDoc[133X[101X
+  
+  [33X[0;0YEnds  the  affect of [10X@AutoDoc[110X. So from here on, again only declarations with
+  an explicit [5XAutoDoc[105X comment in front are added to the manual.[133X
+  
+  [4X[32X[104X
+    [4X#! @AutoDoc[104X
+    [4X[104X
+    [4XDeclareOperation( "Operation1", [ IsList ] );[104X
+    [4X[104X
+    [4XDeclareProperty( "IsProperty", IsList );[104X
+    [4X[104X
+    [4X#! @EndAutoDoc[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-6 [33X[0;0Y@BeginGroup [3X[grpname][103X[101X[1X[133X[101X
+  
+  [33X[0;0YStarts  a  group.  All following documented declarations without an explicit
+  [10X@Group[110X  command  are grouped together in the same group with the given name.
+  If  no  name is given, then a new nameless group is generated. The effect of
+  this command is ended when an [10X@EndGroup[110X command is reached.[133X
+  
+  [33X[0;0YSee section [14X3.3[114X for more information about groups.[133X
+  
+  
+  [1X3.2-7 [33X[0;0Y@EndGroup[133X[101X
+  
+  [33X[0;0YEnds the current group.[133X
+  
+  [4X[32X[104X
+    [4X#! @BeginGroup MyGroup[104X
+    [4X#![104X
+    [4XDeclareAttribute( "GroupedAttribute",[104X
+    [4X                  IsList );[104X
+    [4X[104X
+    [4XDeclareOperation( "NonGroupedOperation",[104X
+    [4X                  [ IsObject ] );[104X
+    [4X[104X
+    [4X#![104X
+    [4XDeclareOperation( "GroupedOperation",[104X
+    [4X                  [ IsList, IsRubbish ] );[104X
+    [4X#! @EndGroup[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-8 [33X[0;0Y@Level [3Xlvl[103X[101X[1X[133X[101X
+  
+  [33X[0;0YSets  the  current level of the documentation. All items created after this,
+  chapters,   sections,  and  items,  are  given  the  level  [3Xlvl[103X,  until  the
+  [10X@ResetLevel[110X command resets the level to 0 or another level is set.[133X
+  
+  [33X[0;0YSee section [14X3.4[114X for more information about groups.[133X
+  
+  
+  [1X3.2-9 [33X[0;0Y@ResetLevel[133X[101X
+  
+  [33X[0;0YResets the current level to 0.[133X
+  
+  
+  [1X3.2-10 [33X[0;0Y@Example and @EndExample[133X[101X
+  
+  [33X[0;0Y@Example  inserts an example into the manual. The syntax is like the example
+  enviroment  in  GAPDoc. This examples can be tested by GAPDoc, and also stay
+  readable  by  GAP.  The GAP prompt is added by AutoDoc. @EndExample ends the
+  example block.[133X
+  
+  [4X[32X[104X
+    [4X#! @Example[104X
+    [4XS3 := SymmetricGroup(5);[104X
+    [4X#! Sym( [ 1 .. 5 ] )[104X
+    [4XOrder(S3);[104X
+    [4X#! 120[104X
+    [4X#! @EndExample[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2-11 [33X[0;0Y@System [3Xname[103X[101X[1X and @InsertSystem [3Xname[103X[101X[1X[133X[101X
+  
+  [33X[0;0Y@System  makes  the  next documentation item (can be an example, a text or a
+  function) not to be inserted in the documentation at it's point in the file,
+  but  at  the point where the @InsertSystem [3Xname[103X command is. This can be used
+  to  insert  examples  from  different  files  at  a  specific  point  in the
+  documentation.[133X
+  
+  [4X[32X[104X
+    [4X#! @System Example_Symmetric_Group[104X
+    [4X#! @Example[104X
+    [4XS3 := SymmetricGroup(5);[104X
+    [4X#! Sym( [ 1 .. 5 ] )[104X
+    [4XOrder(S3);[104X
+    [4X#! 120[104X
+    [4X#! @EndExample[104X
+  [4X[32X[104X
+  
+  [4X[32X[104X
+    [4X#! @SInsertystem Example_Symmetric_Group[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YGrouping[133X[101X
+  
+  [33X[0;0YTODO:  explain  more  about  groups  and  what they do, how they look in the
+  generated output etc.[133X
+  
+  [33X[0;0YNote  that group names are globally unique throughout the whole manual. That
+  is,  groups  with the same name are in fact merged into a single group, even
+  if  they were declared in different source files. Thus you can have multiple
+  [10X@BeginGroup[110X  /  [10X@EndGroup[110X  pairs  using  the  same  group name, in different
+  places, and these all will refer to the same group.[133X
+  
+  [33X[0;0YMoreover,  this  means  that  you  can  add  items to a group via the [10X@Group[110X
+  command in the [5XAutoDoc[105X comment of an arbitrary declaration, at any time.[133X
+  
+  
+  [1X3.4 [33X[0;0YLevel[133X[101X
+  
+  [33X[0;0YLevels can be set to not write certain parts in the manual by default. Every
+  entry  has by default the level 0. The command [10X@Level[110X can be used to set the
+  level of the following part to a higher level, for example 1, and prevent it
+  from  being printed to the manual by default. However, if one sets the level
+  to  a  higher  value  in  the  autodoc  option of [10XAutoDoc[110X, the parts will be
+  included in the manual at the specific place.[133X
+  
+  [4X[32X[104X
+    [4X#! This text will be printed to the manual.[104X
+    [4X#! @Level 1[104X
+    [4X#! This text will be printed to the manual if created with level 1 or higher.[104X
+    [4X#! @Level 2[104X
+    [4X#! This text will be printed to the manual if created with level 2 or higher.[104X
+    [4X#! @ResetLevel[104X
+    [4X#! This text will be printed to the manual.[104X
+  [4X[32X[104X
+  

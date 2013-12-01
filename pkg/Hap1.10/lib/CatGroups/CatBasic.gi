@@ -1,24 +1,29 @@
+
 ############################################################
 ############################################################
-InstallGlobalFunction(XmodToHAP,
-function(X)
-local   C;
-
-if IsHapCatOneGroup(X) then return X; fi;
-
-if IsComponentObjectRep(X) then
-if "TailMap" in NamesOfComponents(X)  and "HeadMap" in NamesOfComponents(X)
-then
-     C:=Objectify(HapCatOneGroup,rec(
-             sourceMap:=X!.TailMap,
-             targetMap:=X!.HeadMap));
-     return C;
-fi;
-fi;
-
-Print("Argument is not a cat-1-group from the Xmod package.\n");
-return fail;
-
+InstallGlobalFunction(AbelianGOuterGroupToCatOneGroup,
+function(N)
+    local
+    A,G,GC,alpha,
+    AutA,GensA,GensG,GensGC,phi,
+    Pro,Emb1,sC,tC;
+   
+    A:=ActedGroup(N);
+    G:=ActingGroup(N);
+    alpha:=OuterAction(N);
+    AutA:=AutomorphismGroup(A);
+    GensA:=GeneratorsOfGroup(A);
+    GensG:=GeneratorsOfGroup(G);
+    phi:=GroupHomomorphismByImages(G,AutA,GensG,List(GensG,g->GroupHomomorphismByImages(A,A,GensA,List(GensA,a->alpha(g,a)))));
+    GC:=SemidirectProduct(G,phi,A);
+    Pro:=Projection(GC);
+    Emb1:=Embedding(GC,1);
+    GensGC:=GeneratorsOfGroup(GC);
+    sC:=GroupHomomorphismByImages(GC,GC,GensGC,List(GensGC,x->Image(Emb1,Image(Pro,x))));
+    tC:=GroupHomomorphismByImages(GC,GC,GensGC,List(GensGC,x->Image(Emb1,Image(Pro,x))));
+    return Objectify(HapCatOneGroup,
+                    rec(sourceMap:=sC,
+                    targetMap:=tC));
 end);
 ############################################################
 ############################################################

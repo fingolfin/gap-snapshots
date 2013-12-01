@@ -36,10 +36,11 @@ end;
 
 #############################################################################
 ##  
+#F  BrowseData.ReplacedCharacterValueString( <val> )
 #F  BrowseData.CompareCharacterValues( <a>, <b> )
 ##  
-##  This function is used to sort strings <a>, <b> representing the
-##  display values of character table entries.
+##  `BrowseData.CompareCharacterValues' is used to sort strings <a>, <b>
+##  representing the display values of character table entries.
 ##  Strings involving the substring `" = "' (used in categories)
 ##  are replaced by the expression to the right of this substring,
 ##  strings representing integers are sorted by their values,
@@ -94,8 +95,6 @@ end;
 ##  under `BrowseData.SplitStringIntoNumbersAndNonnumbers', and to sort this
 ##  list w.r.t. GAP's \< (using the kernel function) than to sort the given
 ##  strings with second argument `BrowseData.CompareAsNumbersAndNonnumbers'.
-##
-#T a variant of this function is SplitGroupName in ctbllib/gap4/utils.g!
 ##
 BrowseData.SplitStringIntoNumbersAndNonnumbers:= function( str )
   local len, result, i, ii;
@@ -527,7 +526,7 @@ end;
 ##  <#/GAPDoc>
 ##
 BindGlobal( "BrowseGapDataAdd", function( title, call, ret, documentation )
-    local pos;
+    local currpkg, pos;
 
     if not IsBound( BrowseData.GapDataOverviews ) then
       BrowseData.GapDataOverviews:= [];
@@ -541,6 +540,14 @@ BindGlobal( "BrowseGapDataAdd", function( title, call, ret, documentation )
     elif not IsString( documentation ) then
       Error( "<documentation> must be a string" );
     fi;
+
+    if IsBound( GAPInfo.PackageCurrent ) then
+      currpkg:= GAPInfo.PackageCurrent.PackageName;
+      if LowercaseString( currpkg ) <> "browse" then
+        title:= Concatenation( title, " (", currpkg, ")" );
+      fi;
+    fi;
+
     pos:= PositionProperty( BrowseData.GapDataOverviews, x -> x[1] = title );
     if pos = fail then
       AddSet( BrowseData.GapDataOverviews,

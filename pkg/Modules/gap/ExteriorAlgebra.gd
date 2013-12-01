@@ -11,9 +11,26 @@
 DeclareAttribute( "ExteriorPowers",
         IsHomalgModule, "mutable" );
 
+##  <#GAPDoc Label="ExteriorPower">
+##  <ManSection>
+##    <Oper Arg="k, M" Name="ExteriorPower"/>
+##    <Returns>a &homalg; module</Returns>
+##    <Description>
+##      Construct the <A>k</A>-th exterior power of module <A>M</A>.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 DeclareOperation( "ExteriorPower",
         [ IsInt, IsHomalgModule ]);
 
+DeclareOperation( "ExteriorPower",
+        [ IsInt, IsHomalgMatrix ]);
+
+DeclareOperation( "ExteriorPower",
+        [ IsInt, IsHomalgMorphism ]);
+
+DeclareOperation( "ExteriorPowerOfPresentationMorphism",
+        [ IsInt, IsHomalgMorphism ]);
 
 ##  <#GAPDoc Label="IsExteriorPower">
 ##  <ManSection>
@@ -111,3 +128,7 @@ DeclareAttribute( "CayleyDeterminant",
 ##
 DeclareGlobalFunction( "Gcd_UsingCayleyDeterminant" );
 
+DeclareOperation( "GcdOp",
+        [ IsHomalgRingElement, IsHomalgRingElement ] );
+
+DeclareGlobalFunction( "Lcm_UsingCayleyDeterminant" );

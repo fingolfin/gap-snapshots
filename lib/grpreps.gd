@@ -9,7 +9,7 @@
 
 #############################################################################
 ##
-#O  AbsoluteIrrlyeducibleModules( <G>, <F>, <dim> )
+#O  AbsolutelyIrreducibleModules( <G>, <F>, <dim> )
 #O  AbsoluteIrreducibleModules( <G>, <F>, <dim> )
 #O  AbsolutIrreducibleModules( <G>, <F>, <dim> )
 ##

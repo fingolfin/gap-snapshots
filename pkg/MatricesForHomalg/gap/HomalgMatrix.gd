@@ -989,6 +989,15 @@ fi;
 DeclareOperation( "MatElm",
         [ IsHomalgMatrix, IsInt, IsInt, IsHomalgRing ] );
 
+DeclareOperation( "GetListOfMatrixAsString",
+        [ IsList ] );
+
+DeclareOperation( "GetListListOfStringsOfMatrix",
+        [ IsList, IsHomalgRing ] );
+
+DeclareOperation( "GetListListOfStringsOfHomalgMatrix",
+        [ IsHomalgMatrix, IsHomalgRing ] );
+
 DeclareOperation( "GetListOfHomalgMatrixAsString",
         [ IsHomalgMatrix, IsHomalgRing ] );
 
@@ -1103,6 +1112,12 @@ DeclareOperation( "Minors",
 DeclareOperation( "MaximalMinors",
         [ IsHomalgMatrix ] );
 
+DeclareOperation( "Numerator",
+        [ IsHomalgMatrix ] );
+
+DeclareOperation( "Denominator",
+        [ IsHomalgMatrix ] );
+
 DeclareOperation( "CoefficientsOfUnreducedNumeratorOfHilbertPoincareSeries",
         [ IsHomalgMatrix, IsList, IsList ] );
 
@@ -1171,6 +1186,12 @@ DeclareOperation( "ConstantTermOfHilbertPolynomial",
 
 DeclareOperation( "Pullback",
         [ IsHomalgRingMap, IsHomalgMatrix ] );
+
+DeclareOperation( "NoetherNormalization",
+        [ IsHomalgMatrix ] );
+
+DeclareOperation( "Iterator",
+        [ IsHomalgMatrix ] );
 
 ####################################
 #

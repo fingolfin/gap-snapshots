@@ -150,7 +150,7 @@
   
   [1X43.4 [33X[0;0YSymmetric and Alternating Groups[133X[101X
   
-  [33X[0;0YThe  commands  [2XSymmetricGroup[102X  ([14X50.1-9[114X)  and  [2XAlternatingGroup[102X ([14X50.1-8[114X) (see
+  [33X[0;0YThe  commands  [2XSymmetricGroup[102X  ([14X50.1-10[114X)  and [2XAlternatingGroup[102X ([14X50.1-9[114X) (see
   Section [14X50.1[114X)  construct  symmetric  and alternating permutation groups. [5XGAP[105X
   can  also  detect  whether  a  given  permutation  group  is  a symmetric or
   alternating  group  on  the set of its moved points; if so then the group is

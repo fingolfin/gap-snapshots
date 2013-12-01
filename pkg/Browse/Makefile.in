@@ -1,4 +1,4 @@
-# makefile prototype for the Browse package                    Frank Lübeck
+# makefile prototype for the Browse package                    Frank LÃ¼beck
 
 CONFIGNAME=@CONFIGNAME@
 

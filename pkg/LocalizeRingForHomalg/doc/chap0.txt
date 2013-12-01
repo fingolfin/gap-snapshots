@@ -6,15 +6,17 @@
               [1XLocalize Commutative [5Xhomalg[105X Rings at Maximal Ideals[101X
   
   
-                               Version 2012.10.26
+                               Version 2013.11.11
   
   
-                                  October 2012
+                                  October 2013
   
   
                                 Mohamed Barakat
   
                              Markus Lange-Hegermann
+  
+                                   Vinay Wagh
   
   
   
@@ -42,10 +44,19 @@
                 52056 Aachen, Germany[133X
   
   
+  Vinay Wagh
+      Email:    [7Xmailto:waghoba@gmail.com[107X
+      Homepage: [7Xhttp://www.iitg.ernet.in/vinay.wagh/[107X
+      Address:  [33X[0;14YE-102, Department of Mathematics,[133X
+                [33X[0;14YIndian Institute of Technology Guwahati,[133X
+                [33X[0;14YGuwahati, Assam, India.[133X
+                [33X[0;14YPIN: 781 039.[133X
+  
+  
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2009-2012 by Mohamed Barakat and Markus Lange-Hegermann[133X
+  [33X[0;0Y© 2009-2013 by Mohamed Barakat and Markus Lange-Hegermann[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2.[133X

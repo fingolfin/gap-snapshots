@@ -7,22 +7,18 @@
 <Chapter Label="ch:algorithms">
 <Heading>The Algorithms Implemented in RCWA</Heading>
 
-This chapter lists brief descriptions of a part of the algorithms and methods
+This chapter lists brief descriptions of the algorithms and methods
 implemented in this package. These descriptions are kept very informal and
 short, and some of them provide only rudimentary information. They are listed
 in alphabetical order. The word <Q>trivial</Q> as a description means that
-essentially nothing is done except of storing or recalling one or several
-values, and <Q>straightforward</Q> means that no sophisticated algorithm
-is used. Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
+essentially nothing is done except of performing I/O operations, storing or
+recalling one or several values or doing very basic computations, and
+<Q>straightforward</Q> means that no sophisticated algorithm is used.
+Note that <Q>trivial</Q> and <Q>straightforward</Q> are to be read
 as <E>mathematically</E> trivial respectively straightforward, and that the
 code of a function or method attributed in this way can still be reasonably
-long and complicated. Longer and better descriptions of many of the
-algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>. <P/>
-
-Finally please note that the descriptions given here represent the
-functionality of &RCWA; in May 2007. Since then, a lot of code has been
-added to this package, and much of the older code has been improved
-and uses now better algorithms than in 2007.
+long and complicated. Longer and better descriptions of <E>some</E> of the
+algorithms and methods can be found in&nbsp;<Cite Key="Kohl08b"/>.
 
 <List>
 
@@ -31,8 +27,47 @@ and uses now better algorithms than in 2007.
   </Mark>
   <Item>
     <Q>Straightforward</Q> after having computed a respected partition
-    by <C>RespectedPartition</C>. One only needs to know how to compute
-    images of residue classes under affine mappings.
+    by <C>RespectedPartition</C>. 
+  </Item>
+
+  <Mark>
+    <C>AllElementsOfCTZWithGivenModulus(<A>m</A>)</C>
+  </Mark>
+  <Item>
+    This function first determines a list of all unordered partitions
+    <M>\mathcal{P}</M> of &ZZ; into <A>m</A> residue classes.
+    Then for any such partition <M>\mathcal{P}</M> it runs a loop
+    over the elements of the symmetric group of degree <A>m</A>.
+    For any <M>\sigma \in {\rm S}_m</M> and any partition <M>\mathcal{P}</M>
+    it constructs the element of <M>{\rm CT}(\mathbb{Z})</M> with modulus
+    dividing <M>m</M> which maps the ordered partition <M>\{0(m), 1(m),
+    \dots, m-1(m)\}</M> to the ordered partition obtained from
+    <M>\mathcal{P}</M> by permuting the residue classes with <M>\sigma</M>.
+    Finally it discards the elements whose modulus is a proper divisor
+    of <A>m</A>, and returns the <Q>rest</Q>.
+  </Item>
+
+  <Mark>
+    <C>AllProducts(<A>l</A>,<A>k</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>AllSmoothIntegers(<A>maxp</A>,<A>maxn</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>. --
+    The taken time is essentially proportional to the size of the
+    resulting list.
+  </Item>
+
+  <Mark>
+    <C>AssignGlobals(<A>record</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -53,7 +88,7 @@ and uses now better algorithms than in 2007.
     <C>ClassPairs(<A>m</A>)</C>
   </Mark>
   <Item>
-    Runs over all 4-tuples of nonnegative integers less than <A>m</A>,
+    Runs a loop over all 4-tuples of nonnegative integers less than <A>m</A>,
     and filters by congruence criteria and ordering of the entries.
   </Item>
 
@@ -105,7 +140,7 @@ and uses now better algorithms than in 2007.
     <C>CommonRightInverse(<A>l</A>,<A>r</A>)</C>
   </Mark>
   <Item>
-    (See <C>RightInverse</C>.)
+    See <C>RightInverse</C>.
   </Item>
 
   <Mark>
@@ -125,6 +160,20 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>CycleRepresentativesAndLengths(<A>g</A>,<A>S</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>CyclesOnFiniteOrbit(<A>G</A>,<A>g</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
     <C>DerivedSubgroup(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -138,6 +187,13 @@ and uses now better algorithms than in 2007.
     Evaluation of the given expression.
     For the mathematical meaning (epimorphism!), see Theorem&nbsp;2.11.9
     in&nbsp;<Cite Key="Kohl05"/>.
+  </Item>
+
+  <Mark>
+    <C>DifferencesList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -157,10 +213,26 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>DistanceToNextSmallerPointInOrbit(<A>G</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q> -- computes balls of radius <M>r</M>
+    about <A>n</A> for <M>r = 1, 2, \dots</M> until a point smaller
+    than <M>n</M> is found.
+  </Item>
+
+  <Mark>
     <C>Divisor(<A>f</A>)</C>
   </Mark>
   <Item>
     Lcm of coefficients, as indicated.
+  </Item>
+
+  <Mark>
+    <C>DrawGrid(<A>U</A>,<A>range_y</A>,<A>range_x</A>,<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -176,23 +248,28 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>EpimorphismByGenerators(<A>G</A>,<A>H</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>EpimorphismFromFpGroup(<A>G</A>,<A>r</A>)</C>
   </Mark>
   <Item>
-    If the package <Package>FR</Package>&nbsp;<Cite Key="FR"/> is loaded,
-    then use its function <C>FindGroupRelations</C> to find relations.
-    Otherwise proceed as follows: First compute the ball of
-    radius&nbsp;<A>r</A> around&nbsp;1 in the free group whose rank is the
-    number of stored generators of&nbsp;<A>G</A>. Then compute the images
-    of the elements of that ball under the natural projection onto the
-    group&nbsp;<A>G</A>. Take pairs of elements of the ball whose images
-    coincide, and add their quotients to the set of known relations.
-    For images which have finite order, add the corresponding power
-    relations. Finally, regardless of whether <Package>FR</Package>
-    is present or not, simplify the finitely presented group with the
-    determined relations by the operation <C>IsomorphismSimplifiedFpGroup</C>
-    from the &GAP; Library, and return the natural epimorphism from it
-    to&nbsp;<A>G</A>.
+    Computes orders of elements in the ball of
+    radius&nbsp;<A>r</A> about&nbsp;1 in&nbsp;<A>G</A>,
+    and uses the corresponding relations if they affect
+    the abelian invariants of <A>G</A>, <A>G'</A>, <A>G''</A>, etc..
+  </Item>
+
+  <Mark>
+    <C>EquivalenceClasses(<A>list</A>,<A>relation</A>)</C>, &nbsp;
+    <C>EquivalenceClasses(<A>list</A>,<A>classinvariant</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
   </Item>
 
   <Mark>
@@ -212,19 +289,33 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>FactorizationIntoCSCRCT(<A>g</A>)</C>
+    <C>ExponentOfPrime(<A>n</A>,<A>p</A>)</C>
   </Mark>
   <Item>
-    This uses a rather sophisticated method which will likely
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>ExtRepOfObj(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>FactorizationIntoCSCRCT(<A>g</A>)</C>, &nbsp;
+    <C>Factorization(<A>g</A>)</C>
+  </Mark>
+  <Item>
+    The method used here is rather sophisticated, and will likely
     some time be published elsewhere. At the moment termination is not
     guaranteed, but in case of termination the result is certain.
     The strategy is roughly first to make the mapping class-wise
     order-preserving and balanced, and then to remove all prime factors
     from multiplier and divisor one after the other in decreasing order
     by dividing by appropriate class transpositions.
-    The remaining integral mapping can be factored almost similarly
-    easily as a permutation of a finite set can be factored into
-    transpositions.
+    The remaining integral mapping can be factored in a similar way
+    as a permutation of a finite set can be factored into transpositions.
   </Item>
 
   <Mark>
@@ -245,10 +336,45 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>FixedResidueClasses(<A>g</A>,<A>maxmod</A>)</C>, &nbsp;
+    <C>FixedResidueClasses(<A>G</A>,<A>maxmod</A>)</C>
+  </Mark>
+  <Item>
+    Runs a loop over all moduli <M>m \leq</M> <A>maxmod</A>
+    and all residues <M>r</M> modulo these moduli,
+    and selects those residue classes <M>r(m)</M> which are
+    mapped to itself by <A>g</A>, respectively, by all generators
+    of <A>G</A>.
+  </Item>
+
+  <Mark>
+    <C>FloatQuotientsList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>GeneratorsAndInverses(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>GluckTaylorInvariant(<A>a</A>)</C>
   </Mark>
   <Item>
     Evaluation of the given expression.
+  </Item>
+
+  <Mark>
+    <C>GroupByResidueClasses(<A>classes</A>)</C>
+  </Mark>
+  <Item>
+    Finds all pairs of residue classes in the list <A>classes</A>
+    which are disjoint, forms the corresponding class transpositions
+    and returns the group generated by them.
   </Item>
 
   <Mark>
@@ -260,7 +386,7 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>Image(<A>f</A>)</C>, <C>Image(<A>f</A>,<A>S</A>)</C>
+    <C>Image(<A>f</A>)</C>, &nbsp; <C>Image(<A>f</A>,<A>S</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q> if one can compute images of residue classes
@@ -469,7 +595,7 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IntegralConjugate(<A>f</A>)</C>, 
+    <C>IntegralConjugate(<A>f</A>)</C>, &nbsp;
     <C>IntegralConjugate(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -478,7 +604,7 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IntegralizingConjugator(<A>f</A>)</C>, 
+    <C>IntegralizingConjugator(<A>f</A>)</C>, &nbsp;
     <C>IntegralizingConjugator(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -500,6 +626,14 @@ and uses now better algorithms than in 2007.
   <Item>
     Checks whether the sets of prime factors of the multiplier and
     the divisor of&nbsp;<A>f</A> are the same.
+  </Item>
+
+  <Mark>
+    <C>IsBijective(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>, respectively, see <C>IsInjective</C> and
+    <C>IsSurjective</C>.
   </Item>
 
   <Mark>
@@ -528,7 +662,8 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IsClassTransposition(<A>g</A>)</C>
+    <C>IsClassTransposition(<A>g</A>), &nbsp;
+       IsGeneralizedClassTransposition(<A>g</A>)</C>
   </Mark>
   <Item>
     Computes the support of&nbsp;<A>g</A>, writes it as a disjoint union of
@@ -537,10 +672,11 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>IsClassWiseOrderPreserving(<A>f</A>)</C>
+    <C>IsClassWiseOrderPreserving(<A>f</A>)</C>, &nbsp;
+    <C>IsClassWiseTranslating(<A>f</A>)</C>
   </Mark>
   <Item>
-    Tests whether the first entry of all coefficient triples is positive.
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -577,6 +713,14 @@ and uses now better algorithms than in 2007.
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>IsNaturalCT(<A>G</A>)</C>, &nbsp;
+    <C>IsNaturalRCWA(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Only checks a set flag.
   </Item>
 
   <Mark>
@@ -625,6 +769,13 @@ and uses now better algorithms than in 2007.
     on page&nbsp;27 in&nbsp;<Cite Key="LaHarpe00"/> from PSL(2,&CC;) to
     RCWA(&ZZ;). As an equivalent for the closed discs used there, the method
     takes the residue classes modulo two times the rank of the free group.
+  </Item>
+
+  <Mark>
+    <C>IsOne(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -776,6 +927,25 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>IsTransitiveOnNonnegativeIntegersInSupport(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Computes balls about 1 with successively increasing radii,
+    and checks whether the union of the sets where the elements
+    of these balls are decreasing or shifting down equals the
+    support of <A>G</A>. If a positive answer is found,
+    transitivity on <Q>small</Q> points (nonnegative integers
+    less than an explicit bound) is verified.
+  </Item>
+
+  <Mark>
+    <C>IsZero(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
     <C>KernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -805,7 +975,15 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>LaTeXStringRcwaMapping(<A>f</A>)</C>
+    <C>LaTeXStringFactorsInt(<A>n</A>)</C>
+  </Mark>
+  <Item>
+    Integer factorization and straightforward string operations.
+  </Item>
+
+  <Mark>
+    <C>LaTeXStringRcwaMapping(<A>f</A>)</C>, &nbsp;
+    <C>LaTeXAndXDVI(<A>f</A>)</C>
   </Mark>
   <Item>
     Collects residue classes those corresponding coefficient triples
@@ -822,10 +1000,39 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>ListOfPowers(<A>g</A>,<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q> -- but uses only <M>n-1</M> multiplications.
+  </Item>
+
+  <Mark>
     <C>LocalizedRcwaMapping(<A>f</A>,<A>p</A>)</C>
   </Mark>
   <Item>
     <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>LoadBitmapPicture(<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>, interprets the format of bitmap picture files.
+  </Item>
+
+  <Mark>
+    <C>LoadDatabaseOf...()</C>, &nbsp; <C>LoadRCWAExamples()</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>. --
+    These functions do nothing more than reading in certain files.
+  </Item>
+
+  <Mark>
+    <C>Log2HTML(<A>logfilename</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward string operations.
   </Item>
 
   <Mark>
@@ -835,6 +1042,20 @@ and uses now better algorithms than in 2007.
     Runs over the residue classes modulo the modulus of&nbsp;<A>f</A>,
     and selects those of them which <A>f</A> does not map to themselves,
     but which intersect non-trivially with their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>MaximalShift(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>Mirrored(<A>g</A>)</C>, &nbsp; <C>Mirrored(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Conjugates with <M>n \mapsto -n - 1</M>, as indicated in the definition.
   </Item>
 
   <Mark>
@@ -886,11 +1107,43 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>NrClassPairs(<A>m</A>)</C>
+  </Mark>
+  <Item>
+    Relatively straightforward. --
+    Practical for values of <A>m</A> ranging up into the hundreds
+    and corresponding counts of $10^9$ and more.
+  </Item>
+
+  <Mark>
+    <C>NrConjugacyClassesOfCTZOfOrder(<A>ord</A>)</C>,
+  </Mark>
+  <Item>
+    Evaluation of the expression 
+    <C>Length(Filtered(Combinations(DivisorsInt(ord)),
+       l -&gt; l &lt;&gt; [] and Lcm(l) = ord))</C>.
+  </Item>
+
+  <Mark>
     <C>NrConjugacyClassesOfRCWAZOfOrder(<A>ord</A>)</C>
   </Mark>
   <Item>
     The class numbers are taken from Corollary&nbsp;2.7.1
     in&nbsp;<Cite Key="Kohl05"/>.
+  </Item>
+
+  <Mark>
+    <C>ObjByExtRep(<A>fam</A>,<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
+  </Item>
+
+  <Mark>
+    <C>One(<A>f</A>)</C>, &nbsp; <C>One(<A>G</A>)</C>, 
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -944,6 +1197,15 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>PermutationOpNC(<A>sigma</A>,<A>P</A>,<A>act</A>)</C>
+  </Mark>
+  <Item>
+    Several different methods for different types of arguments,
+    which either provide straightforward optimizations via computing
+    with coefficients directly, or just delegate to <C>PermutationOp</C>.
+  </Item>
+
+  <Mark>
     <C>PreImage(<A>f</A>,<A>S</A>)</C>
   </Mark>
   <Item>
@@ -951,7 +1213,7 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>PreImagesRepresentative(<A>phi</A>,<A>g</A>)</C>,
+    <C>PreImagesRepresentative(<A>phi</A>,<A>g</A>)</C>, &nbsp;
     <C>PreImagesRepresentatives(<A>phi</A>,<A>g</A>)</C>
   </Mark>
   <Item>
@@ -964,7 +1226,7 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>PrimeSet(<A>f</A>)</C>,
+    <C>PrimeSet(<A>f</A>)</C>, &nbsp;
     <C>PrimeSet(<A>G</A>)</C>
   </Mark>
   <Item>
@@ -994,12 +1256,26 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>Projections(<A>G</A>,<A>m</A>)</C>
+    <C>ProjectionsToCoordinates(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward coefficient operations.
+  </Item>
+
+  <Mark>
+    <C>ProjectionsToInvariantUnionsOfResidueClasses(<A>G</A>,<A>m</A>)</C>
   </Mark>
   <Item>
     Use <C>OrbitsModulo</C> to determine the supports of the images of the
     epimorphisms to be determined, and use <C>RestrictedPerm</C> to compute
     the images of the generators of&nbsp;<A>G</A> under these epimorphisms.
+  </Item>
+
+  <Mark>
+    <C>QuotientsList(<A>l</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1015,8 +1291,17 @@ and uses now better algorithms than in 2007.
     <C>RankOfKernelOfActionOnRespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    This performs basically the first part of the computations done by
+    Performs basically the first part of the computations done by
     <C>KernelOfActionOnRespectedPartition</C>.
+  </Item>
+
+  <Mark>
+    <C>Rcwa(<A>R</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>. --
+    Attributes and properties set can be derived easily or hold
+    by definition.
   </Item>
 
   <Mark>
@@ -1029,10 +1314,24 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>RCWABuildManual()</C>
+  </Mark>
+  <Item>
+    Consists of a call to a function from the &GAPDoc; package.
+  </Item>
+
+  <Mark>
     <C>RcwaGroupByPermGroup(<A>G</A>)</C>
   </Mark>
   <Item>
     Uses <C>RcwaMapping</C>, Part&nbsp;(d).
+  </Item>
+
+  <Mark>
+    <C>RCWAInfo(<A>n</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1043,19 +1342,34 @@ and uses now better algorithms than in 2007.
     (d): <C>n&circum;perm - n</C> for determining the coefficients,
     (e): <Q>affine mappings by values at two given points</Q>,
     (f) and (g): <Q>trivial</Q>,
-    (h) and (i): correspond to Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>.
+    (h) and (i): correspond to Lemma&nbsp;2.1.4 in&nbsp;<Cite Key="Kohl05"/>,
+    (j): uses a simple parser for the permitted expressions.
+  </Item>
+
+  <Mark>
+    <C>RCWATestAll()</C>, &nbsp; <C>RCWATestInstall()</C>
+  </Mark>
+  <Item>
+    Just read in files running / containing the tests.
+  </Item>
+
+  <Mark>
+    <C>RCWATestExamples()</C>
+  </Mark>
+  <Item>
+    Runs the example tester from the &GAPDoc; package.
   </Item>
 
   <Mark>
     <C>RepresentativeAction(<A>G</A>,<A>src</A>,<A>dest</A>,<A>act</A>)</C>,
-    <C>RepresentativeActionPreImage</C>
+    &nbsp; <C>RepresentativeActionPreImage</C>
   </Mark>
   <Item>
     As described in the documentation of these methods.
     The underlying idea to successively compute two balls around
     <A>src</A> and <A>dest</A> until they intersect non-trivially
     is standard in computational group theory. Words standing for
-    products of generators of <A>G</A> are stored for any image
+    products of generators of <A>G</A> are stored for every image
     of <A>src</A> or <A>dest</A>.    
   </Item>
 
@@ -1078,16 +1392,33 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>RespectedPartition(<A>f</A>)</C>,
+    <C>RespectedPartition(<A>f</A>)</C>, &nbsp;
     <C>RespectedPartition(<A>G</A>)</C>
   </Mark>
   <Item>
-    Uses the algorithm described in the proof of Theorem&nbsp;2.5.8
-    in&nbsp;<Cite Key="Kohl05"/>.
+    There are presently two sophisticated algorithms implemented
+    for finding respected partitions. One of them has evolved
+    from the algorithm described in the proof of Theorem&nbsp;2.5.8
+    in&nbsp;<Cite Key="Kohl05"/>. The other one starts with the
+    coarsest partition of the base ring such that every generator
+    of <A>G</A> is affine on every part. This partition is then
+    refined successively until a respected partition is obtained.
+    The refinement step is basically as follows: Take the images
+    of the partition under all generators of <A>G</A>. This way one
+    obtains as many further partitions of the base ring as there
+    are generators of&nbsp;<A>G</A>. Then the <Q>new</Q> partition
+    is the coarsest common refinement of all these partitions.    
   </Item>
 
   <Mark>
     <C>RespectsPartition(<A>G</A>,<A>P</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>RestrictedBall(<A>G</A>,<A>g</A>,<A>r</A>,<A>modulusbound</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
@@ -1154,6 +1485,21 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>RunDemonstration(<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q> -- only I/O operations.
+  </Item>
+
+  <Mark>
+    <C>SaveAsBitmapPicture(<A>picture</A>,<A>filename</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q> -- only needs to know how to produce
+    a bitmap picture file.
+  </Item>
+
+  <Mark>
     <C>SemilocalizedRcwaMapping(<A>f</A>,<A>pi</A>)</C>
   </Mark>
   <Item>
@@ -1161,15 +1507,31 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
-    <C>ShortCycles(<A>f</A>,<A>maxlng</A>)</C>
+    <C>ShiftsDownOn(<A>f</A>)</C>, &nbsp; <C>ShiftsUpOn(<A>f</A>)</C>
   </Mark>
   <Item>
-    Looks for fixed points of affine partial mappings of powers
-    of&nbsp;<A>f</A>.
+    Straightforward coefficient- and residue class operations.
   </Item>
 
   <Mark>
-    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>)</C>
+    <C>ShortCycles(<A>g</A>,<A>maxlng</A>)</C>
+  </Mark>
+  <Item>
+    Looks for fixed points of affine partial mappings of powers
+    of&nbsp;<A>g</A>.
+  </Item>
+
+  <Mark>
+    <C>ShortCycles(<A>g</A>,<A>S</A>,<A>maxlng</A>)</C>, &nbsp;
+    <C>ShortCycles(<A>g</A>,<A>S</A>,<A>maxlng</A>,<A>maxn</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Straightforward</Q>.
+  </Item>
+
+  <Mark>
+    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>)</C>, &nbsp;
+    <C>ShortOrbits(<A>G</A>,<A>S</A>,<A>maxlng</A>,<A>maxn</A>)</C>
   </Mark>
   <Item>
     <Q>Straightforward</Q>.
@@ -1233,6 +1595,16 @@ and uses now better algorithms than in 2007.
   </Item>
 
   <Mark>
+    <C>SmallGeneratingSet(<A>G</A>)</C>
+  </Mark>
+  <Item>
+    Eliminates generators <M>g</M> which can be found to be redundant
+    <E>easily</E>, i.e. by checking whether the balls about 1 and <M>g</M>
+    of some small radius <M>r</M> in the group generated by all generators
+    of <A>G</A> except for <M>g</M> intersect nontrivially.
+  </Item>
+
+  <Mark>
     <C>Sources(<A>f</A>)</C>
   </Mark>
   <Item>
@@ -1241,6 +1613,13 @@ and uses now better algorithms than in 2007.
     <C>STRONGLY&uscore;CONNECTED&uscore;COMPONENTS&uscore;DIGRAPH</C>,
     and selects those which are proper supersets of their preimages and
     proper subsets of their images under&nbsp;<A>f</A>.
+  </Item>
+
+  <Mark>
+    <C>SparseRep(<A>f</A>)</C>, &nbsp; <C>StandardRep(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    Straightforward coefficient operations.
   </Item>
 
   <Mark>
@@ -1265,6 +1644,13 @@ and uses now better algorithms than in 2007.
   </Mark>
   <Item>
     Pointwise addition of affine mappings.
+  </Item>
+
+  <Mark>
+    <C>String(<A>obj</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
   <Mark>
@@ -1328,6 +1714,13 @@ and uses now better algorithms than in 2007.
     generator of&nbsp;<A>Z</A> as <M>\tau_{0(2),1(2)} \cdot
     \tau_{0(2),1(4)}</M>. It is used that the images of&nbsp;3(4) under
     powers of this mapping are pairwise disjoint residue classes.
+  </Item>
+
+  <Mark>
+    <C>Zero(<A>f</A>)</C>
+  </Mark>
+  <Item>
+    <Q>Trivial</Q>.
   </Item>
 
 </List>

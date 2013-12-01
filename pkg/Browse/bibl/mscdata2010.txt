@@ -1,5 +1,5 @@
 %%  This file was derived from the contents of
-%%  http://www.ams.org/mathscinet/msc/pdfs/classifications2010.pdf
+%%  http://www.ams.org/msc/pdfs/classifications2010.pdf
 %%  [MSC Source Date: Monday 21 December 2009 09:49],
 %%  which states the following:
 %%  [Licence: This text is available under the

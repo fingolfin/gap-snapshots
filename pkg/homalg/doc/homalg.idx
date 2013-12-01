@@ -87,6 +87,7 @@
 \indexentry{IsElementOfAnObjectGivenByAMorphismRep@\texttt  {IsElement}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {An}\discretionary {-}{}{}\texttt  {Object}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {MorphismRep}|hyperpage}{28}
 \indexentry{IsZero@\texttt  {IsZero}!for elements|hyperpage}{28}
 \indexentry{IsCyclicGenerator@\texttt  {IsCyclicGenerator}|hyperpage}{28}
+\indexentry{IsTorsion@\texttt  {IsTorsion}|hyperpage}{29}
 \indexentry{Annihilator@\texttt  {Annihilator}!for elements|hyperpage}{29}
 \indexentry{in@\texttt  {in}!for elements|hyperpage}{29}
 \indexentry{IsHomalgComplex@\texttt  {IsHomalgComplex}|hyperpage}{31}
@@ -111,7 +112,7 @@
 \indexentry{IsSplitShortExactSequence@\texttt  {IsSplitShortExactSequence}|hyperpage}{35}
 \indexentry{IsTriangle@\texttt  {IsTriangle}|hyperpage}{35}
 \indexentry{IsExactTriangle@\texttt  {IsExactTriangle}|hyperpage}{35}
-\indexentry{BettiDiagram@\texttt  {BettiDiagram}!for complexes|hyperpage}{35}
+\indexentry{BettiTable@\texttt  {BettiTable}!for complexes|hyperpage}{35}
 \indexentry{FiltrationByShortExactSequence@\texttt  {FiltrationByShortExactSequence}!for complexes|hyperpage}{35}
 \indexentry{Add@\texttt  {Add}!to complexes given a morphism|hyperpage}{36}
 \indexentry{Add@\texttt  {Add}!to complexes given a matrix|hyperpage}{36}

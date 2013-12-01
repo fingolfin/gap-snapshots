@@ -29,16 +29,17 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7A7C473D87B31F3B">50.1-2 CyclicGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X81CCC3BF8005A2D7">50.1-3 AbelianGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8778256286E50743">50.1-4 ElementaryAbelianGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X838DE1AB7B3D70FF">50.1-5 DihedralGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87865686856910E4">50.1-6 QuaternionGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-7 ExtraspecialGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-8 <span class="Heading">AlternatingGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7F43050D8587E767">50.1-5 FreeAbelianGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X838DE1AB7B3D70FF">50.1-6 DihedralGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87865686856910E4">50.1-7 QuaternionGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-8 ExtraspecialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-9 <span class="Heading">AlternatingGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-9 <span class="Heading">SymmetricGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-10 <span class="Heading">SymmetricGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-10 MathieuGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-11 SuzukiGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-12 ReeGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-11 MathieuGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-12 SuzukiGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-13 ReeGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap50.html#X8674AAA578FE4AEE">50.2 <span class="Heading">Classical Groups</span></a>
 </span>
@@ -256,9 +257,22 @@ GF(2)
 &lt;pc group of size 8192 with 13 generators&gt;
 </pre></div>
 
+<p><a id="X7F43050D8587E767" name="X7F43050D8587E767"></a></p>
+
+<h5>50.1-5 FreeAbelianGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeAbelianGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">rank</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>constructs the free abelian group of rank <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsFpGroup</code> (<a href="chap47.html#X850B9DF17D90C3A2"><span class="RefLink">47.1-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeAbelianGroup(4);</span>
+&lt;fp group on the generators [ f1, f2, f3, f4 ]&gt;
+</pre></div>
+
 <p><a id="X838DE1AB7B3D70FF" name="X838DE1AB7B3D70FF"></a></p>
 
-<h5>50.1-5 DihedralGroup</h5>
+<h5>50.1-6 DihedralGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DihedralGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>constructs the dihedral group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
@@ -271,7 +285,7 @@ GF(2)
 
 <p><a id="X87865686856910E4" name="X87865686856910E4"></a></p>
 
-<h5>50.1-6 QuaternionGroup</h5>
+<h5>50.1-7 QuaternionGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuaternionGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DicyclicGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
@@ -287,7 +301,7 @@ Group([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])
 
 <p><a id="X86E76B3A796BEFA8" name="X86E76B3A796BEFA8"></a></p>
 
-<h5>50.1-7 ExtraspecialGroup</h5>
+<h5>50.1-8 ExtraspecialGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtraspecialGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">order</var>, <var class="Arg">exp</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <var class="Arg">order</var> be of the form <span class="SimpleMath">p^{2n+1}</span>, for a prime integer <span class="SimpleMath">p</span> and a positive integer <span class="SimpleMath">n</span>. <code class="func">ExtraspecialGroup</code> returns the extraspecial group of order <var class="Arg">order</var> that is determined by <var class="Arg">exp</var>, in the category given by the filter <var class="Arg">filt</var>.</p>
@@ -308,7 +322,7 @@ Group([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])
 
 <p><a id="X7E54D3E778E6A53E" name="X7E54D3E778E6A53E"></a></p>
 
-<h5>50.1-8 <span class="Heading">AlternatingGroup</span></h5>
+<h5>50.1-9 <span class="Heading">AlternatingGroup</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlternatingGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">deg</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlternatingGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">dom</var> )</td><td class="tdright">( function )</td></tr></table></div>
@@ -322,7 +336,7 @@ Alt( [ 1 .. 5 ] )
 
 <p><a id="X858666F97BD85ABB" name="X858666F97BD85ABB"></a></p>
 
-<h5>50.1-9 <span class="Heading">SymmetricGroup</span></h5>
+<h5>50.1-10 <span class="Heading">SymmetricGroup</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">deg</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">dom</var> )</td><td class="tdright">( function )</td></tr></table></div>
@@ -338,7 +352,7 @@ Sym( [ 1 .. 10 ] )
 
 <p><a id="X788FA7DE84E0FE6A" name="X788FA7DE84E0FE6A"></a></p>
 
-<h5>50.1-10 MathieuGroup</h5>
+<h5>50.1-11 MathieuGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MathieuGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">degree</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>constructs the Mathieu group of degree <var class="Arg">degree</var> in the category given by the filter <var class="Arg">filt</var>, where <var class="Arg">degree</var> must be in the set <span class="SimpleMath">{ 9, 10, 11, 12, 21, 22, 23, 24 }</span>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>).</p>
@@ -351,7 +365,7 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ])
 
 <p><a id="X8469DBBF82F8E5C3" name="X8469DBBF82F8E5C3"></a></p>
 
-<h5>50.1-11 SuzukiGroup</h5>
+<h5>50.1-12 SuzukiGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SuzukiGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sz</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
@@ -367,7 +381,7 @@ Sz(32)
 
 <p><a id="X87E5B0F679CA7FE4" name="X87E5B0F679CA7FE4"></a></p>
 
-<h5>50.1-12 ReeGroup</h5>
+<h5>50.1-13 ReeGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReeGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Ree</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
@@ -779,7 +793,7 @@ end;
 
 <p>This library was computed by Gregory Butler, John McKay, Gordon Royle and Alexander Hulpke. The list of transitive groups up to degree 11 was published in <a href="chapBib.html#biBBM83">[BM83]</a>, the list of degree 12 was published in <a href="chapBib.html#biBRoy87">[Roy87]</a>, degree 14 and 15 were published in <a href="chapBib.html#biBButler93">[But93]</a> and degrees 16-30 were published in <a href="chapBib.html#biBHulpke96">[Hul96]</a> and <a href="chapBib.html#biBHulpkeTG">[Hul05]</a>. (Groups of prime degree of course are primitive and were known long before.)</p>
 
-<p>The arrangement and the names of the groups of degree up to 15 is the same as given in <a href="chapBib.html#biBConwayHulpkeMcKay98">[CHM98]</a>. With the exception of the symmetric and alternating group (which are represented as <code class="func">SymmetricGroup</code> (<a href="chap50.html#X858666F97BD85ABB"><span class="RefLink">50.1-9</span></a>) and <code class="func">AlternatingGroup</code> (<a href="chap50.html#X7E54D3E778E6A53E"><span class="RefLink">50.1-8</span></a>)) the generators for these groups also conform to this paper with the only difference that 0 (which is not permitted in <strong class="pkg">GAP</strong> for permutations to act on) is always replaced by the degree.</p>
+<p>The arrangement and the names of the groups of degree up to 15 is the same as given in <a href="chapBib.html#biBConwayHulpkeMcKay98">[CHM98]</a>. With the exception of the symmetric and alternating group (which are represented as <code class="func">SymmetricGroup</code> (<a href="chap50.html#X858666F97BD85ABB"><span class="RefLink">50.1-10</span></a>) and <code class="func">AlternatingGroup</code> (<a href="chap50.html#X7E54D3E778E6A53E"><span class="RefLink">50.1-9</span></a>)) the generators for these groups also conform to this paper with the only difference that 0 (which is not permitted in <strong class="pkg">GAP</strong> for permutations to act on) is always replaced by the degree.</p>
 
 <p><a id="X7F062EC17EB8287D" name="X7F062EC17EB8287D"></a></p>
 
@@ -1909,8 +1923,8 @@ ImfMatrixGroup(5,1,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := Image( phi );</span>
 Group([ (1,7,6)(2,9)(4,5,10), (2,3,4,5)(6,9,8,7) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DerivedSubgroup( P );</span>
-Group([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), 
- (1,2)(4,5)(6,7)(9,10), (1,8)(2,6,9,5)(3,10)(4,7) ])
+Group([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), (1,9)
+(2,10)(3,6,8,5)(4,7) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( D );</span>
 960
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPerfectGroup( D );</span>
@@ -1918,28 +1932,23 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># We have found the solvable residuum of P,</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># now move the results back to the matrix group G.</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PreImage( phi, D );</span>
-&lt;matrix group of size 960 with 4 generators&gt;
+&lt;matrix group of size 960 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for m in GeneratorsOfGroup( R ) do PrintArray( m ); od;</span>
 [ [  -1,  -1,  -1,  -1,   2 ],
- [   0,  -1,   0,   0,   0 ],
- [   0,   0,   0,   1,   0 ],
- [   0,   0,   1,   0,   0 ],
- [  -1,  -1,   0,   0,   1 ] ]
+  [   0,  -1,   0,   0,   0 ],
+  [   0,   0,   0,   1,   0 ],
+  [   0,   0,   1,   0,   0 ],
+  [  -1,  -1,   0,   0,   1 ] ]
 [ [   0,   0,  -1,   0,   0 ],
- [   0,  -1,   0,   0,   0 ],
- [   1,   0,   0,   0,   0 ],
- [  -1,  -1,  -1,  -1,   2 ],
- [   0,  -1,  -1,   0,   1 ] ]
-[ [   1,   1,   1,   1,  -2 ],
- [   0,   1,   0,   0,   0 ],
- [   0,   0,   0,   1,   0 ],
- [   0,   0,   1,   0,   0 ],
- [   0,   1,   1,   1,  -1 ] ]
-[ [   0,   0,   0,  -1,   0 ],
- [  -1,  -1,  -1,  -1,   2 ],
- [   0,   0,  -1,   0,   0 ],
- [   1,   0,   0,   0,   0 ],
- [   0,   0,  -1,  -1,   1 ] ]
+  [   0,  -1,   0,   0,   0 ],
+  [   1,   0,   0,   0,   0 ],
+  [  -1,  -1,  -1,  -1,   2 ],
+  [   0,  -1,  -1,   0,   1 ] ]
+[ [  -1,  -1,  -1,  -1,   2 ],
+  [   0,   0,   0,  -1,   0 ],
+  [   0,   0,  -1,   0,   0 ],
+  [   0,   1,   0,   0,   0 ],
+  [   0,   0,  -1,  -1,   1 ] ]
 </pre></div>
 
 <p><a id="X7CEDB6CE7BAC4518" name="X7CEDB6CE7BAC4518"></a></p>

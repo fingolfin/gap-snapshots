@@ -17,7 +17,7 @@
   
   [33X[0;0YContrary  to the individual interfaces to the [5XGAP[105X manuals (see Section [14X6.6[114X),
   the  [5XGAP[105X  bibliography (see Section [14X6.7[114X), and the overviews of [5XGAP[105X packages,
-  [5XGAP[105X methods, and Conway polynomials available in [5XGAP[105X (see Section [14X6.10[114X), the
+  [5XGAP[105X methods, and Conway polynomials available in [5XGAP[105X (see Section [14X6.11[114X), the
   approach  that  will  be  described  here  assumes  a  special way to access
   database  entries.  Thus  it  depends  on  the structure of a given database
   whether  the  tools  described  here  are  useful,  or whether an individual
@@ -1031,4 +1031,60 @@
   for  [2XIsAbelian[102X ([14XReference: IsAbelian[114X) is cheap but such tests are needed for
   the  many solvable groups in the library, in particular these groups must be
   constructed for the tests.[133X
+  
+  
+  [1XA.5 [33X[0;0YExample: An Overview of the [5XGAP[105X[101X[1X Library of Tables of Marks[133X[101X
+  
+  [33X[0;0YThe  example  shown  in  this  section deals with [5XGAP[105X's Library of Tables of
+  Marks (the [5XTomLib[105X package [NMP11]).[133X
+  
+  [1XA.5-1 BrowseTomLibInfo[101X
+  
+  [29X[2XBrowseTomLibInfo[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function shows the contents of the [5XGAP[105X Library of Tables of Marks (the
+  [5XTomLib[105X package, see [NMP11]) in a browse table.[133X
+  
+  [33X[0;0YThe  first  call  may  take substantial time (about [22X40[122X seconds), because the
+  data  files  of  the [5XTomLib[105X package are evaluated. This could be improved by
+  precomputing  and  caching  the values. Another possibility would be to call
+  [2XBrowseTomLibInfo[102X  once before creating a [5XGAP[105X workspace. The subsequent calls
+  are not expensive.[133X
+  
+  [33X[0;0YThe  table  rows correspond to the tables of marks, one column of row labels
+  shows  the  identifier  of  the  table.  The  columns  of  the table contain
+  information  about  the  group  order,  the  number  of conjugacy classes of
+  subgroups,  the  identifiers of tables of marks with fusions to and from the
+  given table, and the name of the file that contains the table of marks data.[133X
+  
+  [33X[0;0YThe  full  functionality  of  the  function [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) is
+  available.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xc:= [ NCurses.keys.ENTER ];;[127X[104X
+    [4X[25Xgap>[125X [27Xn:= [ 14, 14, 14 ];;  # ``do nothing''[127X[104X
+    [4X[25Xgap>[125X [27XBrowseData.SetReplay( Concatenation([127X[104X
+    [4X[25X>[125X [27X       "scrrsc",   # categorize the list by source tables of fusions,[127X[104X
+    [4X[25X>[125X [27X       "srdd",     # choose a source table,[127X[104X
+    [4X[25X>[125X [27X       "x",        # expand the list of targets of fusions[127X[104X
+    [4X[25X>[125X [27X       n,[127X[104X
+    [4X[25X>[125X [27X       "!",        # revert the categorization[127X[104X
+    [4X[25X>[125X [27X       "q",        # leave the mode in which a row is selected[127X[104X
+    [4X[25X>[125X [27X       "scrrrrsc", # categorize the list by filenames[127X[104X
+    [4X[25X>[125X [27X       "X",        # expand all categories[127X[104X
+    [4X[25X>[125X [27X       n,[127X[104X
+    [4X[25X>[125X [27X       "!",        # revert the categorization[127X[104X
+    [4X[25X>[125X [27X       "scso",     # sort the list by group order[127X[104X
+    [4X[25X>[125X [27X       n,[127X[104X
+    [4X[25X>[125X [27X       "!q",       # revert the sorting and selection[127X[104X
+    [4X[25X>[125X [27X       "?",        # open the help window[127X[104X
+    [4X[25X>[125X [27X       n,[127X[104X
+    [4X[25X>[125X [27X       "Q",        # close the help window[127X[104X
+    [4X[25X>[125X [27X       "/A5", c,   # search for the first occurrence of "A5"[127X[104X
+    [4X[25X>[125X [27X       n,[127X[104X
+    [4X[25X>[125X [27X       "Q" ) );;   # and quit the browse table[127X[104X
+    [4X[25Xgap>[125X [27XBrowseTomLibInfo();[127X[104X
+    [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
+  [4X[32X[104X
   

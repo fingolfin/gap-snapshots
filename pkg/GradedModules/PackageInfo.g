@@ -26,7 +26,7 @@ PackageName := "GradedModules",
 
 ##  This may be used by a default banner or on a Web page, should fit on
 ##  one line.
-Subtitle := "A homalg based package for the Abelian category of finitely presented graded modules over a computable graded ring",
+Subtitle := "A homalg based package for the Abelian category of finitely presented graded modules over computable graded rings",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
@@ -34,11 +34,11 @@ Subtitle := "A homalg based package for the Abelian category of finitely present
 Version := Maximum( [
   "2012.10.22", ## Markus' version
 ## this line prevents merge conflicts
-  "2013.02.07", ## Mohamed's version
+  "2013.10.27", ## Mohamed's version
 ## this line prevents merge conflicts
   "2011.05.05", ## Sebastian's version
 ## this line prevents merge conflicts
-  "2012.11.23", ## Sebas' version
+  "2013.08.08", ## Sebas' version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -321,7 +321,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "A homalg based package for the Abelian category of finitely presented graded modules over a computable graded ring",
+  LongTitle := "A homalg based package for the Abelian category of finitely presented graded modules over computable graded rings",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := false
@@ -338,12 +338,12 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [
-                   [ "MatricesForHomalg", ">= 2012.06.21" ],
+                   [ "MatricesForHomalg", ">= 2013.10.27" ],
                    [ "HomalgToCAS", ">= 2011.10.05" ],
-                   [ "RingsForHomalg", ">= 2011.10.05" ],
-                   [ "GradedRingForHomalg", ">= 2012.06.22" ],
-                   [ "Modules", ">= 2013.02.05" ],
-                   [ "homalg", ">= 2012.10.24" ],
+                   [ "RingsForHomalg", ">= 2013.04.16" ],
+                   [ "GradedRingForHomalg", ">= 2013.10.27" ],
+                   [ "Modules", ">= 2013.10.27" ],
+                   [ "homalg", ">= 2013.06.23" ],
                    [ "GAPDoc", ">= 1.0" ] ],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],

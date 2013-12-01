@@ -2,6 +2,18 @@
                     Version history of the ResClasses package
                     =========================================
 
+
+Changes between version 3.3.1 and version 3.3.2 (November 18, 2013):
+
+ - Removed a potential performance problem in a `ViewString' method
+   for polynomials over finite fields.
+ 
+Changes between version 3.3.0 and version 3.3.1 (October 28, 2013):
+
+ - Minor adjustments to changes in the GAP Library.
+   Note that only RCWA in version 3.6.0 or newer works with this version
+   of ResClasses. -- So if you still have an old RCWA, you need to upgrade.
+
 Changes between version 3.2.0 and version 3.3.0 (December 12, 2012):
 
  - The operation `PartitionsIntoResidueClasses' has now an optional

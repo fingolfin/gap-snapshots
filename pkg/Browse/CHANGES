@@ -1,6 +1,47 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.3
+  - The new user preference 'EnableMouseEvents' sets the default behaviour
+    for the GAP session.
+    Enabling/disabling mouse events is now regarded as one global status
+    in the current GAP session,
+    and browse applications should not set this status when they are entered.
+    Note that more and more browse tables are opened from within other
+    browse tables, and it is not clear to the user where this happens.
+    Thus it does not make sense to assign a ``mouse events status value''
+    to individual browse tables.
+    As a consequence, the component 'dynamic.useMouse' in the records
+    processed by 'NCurses.BrowseGeneric' is now obsolete;
+    we keep this component because some code may rely on its presence,
+    but its use is not recommended.
+  - Avoid some compiler warnings with 'gcc -Wall' for gcc >= 4.6 (by
+    wrapping the macro wattr_get in a function).
+  - Changed encoding of Makefile.in to UTF-8 and setting LANG and LC_ALL to
+    "C" ./configure script (this is workaround to some problems with 'sed' 
+    on newer OS X systems).
+  - Fixed 'BrowseGapMethods', 'BrowsePackageVariables', and 'BrowseProfile':
+    Up to now, the attempt to show the code of a function in a pager
+    ran into an error if the file in question is not available, or if the
+    'FilenameFunc' value of the function involves the string "GAPROOT"
+    (which happens for compiled functions in lib)
+    [This bug had been reported by Vinay Wagh.]
+  - Fixed 'BrowseAtlasInfo':
+    Up to now, unnecessary lines at the end of the details table were
+    possible.
+  - We now handle the case when TERM is not set at all in environment
+    (e.g., when workspaces are created from cron jobs).
+  - Extended 'NCurses.Select', as follows:
+    - support mouse events (and to enable/disable mouse events)
+    - admit "fit" as the value of the 'size' component,
+      meaning the smallest possible window size
+    - admit an optional 'align' component,
+      meaning the alignment of the window in the terminal
+    - admit an attribute number instead of 'true'
+      for the optional 'border' component
+  - New applications 'BrowseUserPreferences', 'BrowseTomLibInfo'.
+  - Extended 'BrowseGapData' and its documentation.
+
 1.8.2
  - `BrowseAtlasInfo' now admits a user input 'Y' (show an overview of the
    entries chosen for the result) and prints a message in the footer whenever

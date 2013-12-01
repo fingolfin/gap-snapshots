@@ -510,7 +510,9 @@ InstallMethod( FittingIdeal,
     
     Fitt_i := FittingIdeal( i, UnderlyingModule( M ) );
     
-    Fitt.(String( i )) := GradedModule( Fitt_i, HomalgRing( M ) );
+    Fitt_i := GradedModule( Fitt_i, HomalgRing( M ) );
+    
+    Fitt.(String( i )) := Fitt_i;
     
     return Fitt_i;
     

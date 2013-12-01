@@ -175,7 +175,9 @@ InstallMethod(IsOne,"using `MappingGeneratorsImages'",true,
   [IsGroupHomomorphism and HasMappingGeneratorsImages],0,
 function(a)
   local m;
-  if Source(a)=Range(a) and IsBijective(a) then
+  # if a is total it is defined on all of the source, if gens and images are
+  # the same it automatically is bijective
+  if Source(a)=Range(a) and IsTotal(a) then
     m:=MappingGeneratorsImages(a);
     return ForAll([1..Length(m[1])],i->m[1][i]=m[2][i]);
   fi;

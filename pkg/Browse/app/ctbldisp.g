@@ -58,7 +58,8 @@
 ##  <Ref Func="NCurses.BrowseGeneric"/> is available.
 ##  <P/>
 ##  <Example><![CDATA[
-##  gap> BrowseData.SetReplay( Concatenation(
+##  gap> if TestPackageAvailability( "CTblLib" ) = true then
+##  >      BrowseData.SetReplay( Concatenation(
 ##  >         # scroll in the table
 ##  >         "DRULdddddrrrrrlluu",
 ##  >         # select an entry and move it around
@@ -75,8 +76,9 @@
 ##  >         "xd",
 ##  >         # and quit the application
 ##  >         "Q" ) );
-##  gap> Browse( CharacterTable( "HN" ) );
-##  gap> BrowseData.SetReplay( false );
+##  >      Browse( CharacterTable( "HN" ) );
+##  >      BrowseData.SetReplay( false );
+##  > fi;
 ##  ]]></Example>
 ##  <P/>
 ##  <E>Implementation remarks</E>:

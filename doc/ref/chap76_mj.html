@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (ref) - Chapter 76: GAP Packages</title>
+<title>GAP (ref) - Chapter 76: Using GAP Packages</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -23,8 +23,8 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap75_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap77_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap76.html">[MathJax off]</a></p>
-<p><a id="X816DC7C580D41F49" name="X816DC7C580D41F49"></a></p>
-<div class="ChapSects"><a href="chap76_mj.html#X816DC7C580D41F49">76 <span class="Heading">GAP Packages</span></a>
+<p><a id="X7B6CD527825945CD" name="X7B6CD527825945CD"></a></p>
+<div class="ChapSects"><a href="chap76_mj.html#X7B6CD527825945CD">76 <span class="Heading">Using GAP Packages</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap76_mj.html#X82473E4B8756C6CD">76.1 <span class="Heading">Installing a GAP Package</span></a>
 </span>
 </div>
@@ -55,12 +55,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76_mj.html#X79767C2482FF6F55">76.3-12 ValidatePackageInfo</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76_mj.html#X7D34AC3287611B15">76.3-13 ShowPackageVariables</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76_mj.html#X79EA4BD37940AD25">76.3-14 BibEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76_mj.html#X79637D9A7B1AD7F7">76.3-15 Cite</a></span>
 </div></div>
 </div>
 
-<h3>76 <span class="Heading">GAP Packages</span></h3>
+<h3>76 <span class="Heading">Using GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. <strong class="pkg">GAP</strong> distribution already contains all currently redistributed with <strong class="pkg">GAP</strong> packages in the <code class="file">gap4r6/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. <strong class="pkg">GAP</strong> distribution already contains all currently redistributed with <strong class="pkg">GAP</strong> packages in the <code class="file">gap4r7/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users which may not be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -446,6 +447,17 @@ you can 'return;' to continue
   keywords =         {groups; *; gap; manual}
 }
 </pre></div>
+
+<p><a id="X79637D9A7B1AD7F7" name="X79637D9A7B1AD7F7"></a></p>
+
+<h5>76.3-15 Cite</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cite</code>( [<var class="Arg">pkgname</var>[, <var class="Arg">key</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Used with no arguments or with argument <code class="code">"GAP"</code> (case-insensitive), <code class="func">Cite</code> displays instructions on citing the version of <strong class="pkg">GAP</strong> that is being used. Suggestions are given in plain text, HTML, BibXML and BibTeX formats. The same instructions are also contained in the <code class="file">CITATION</code> file in the <strong class="pkg">GAP</strong> root directory.</p>
+
+<p>If <var class="Arg">pkgname</var> is the name of a <strong class="pkg">GAP</strong> package, instructions on citing this package will be displayed. They will be produced from the <code class="file">PackageInfo.g</code> file of the working version of this package that must be available in the <strong class="pkg">GAP</strong> installation being used. Otherwise, one will get a warning that no working version of the package is available.</p>
+
+<p>The optional 2nd argument <var class="Arg">key</var> has the same meaning as in <code class="func">BibEntry</code> (<a href="chap76_mj.html#X79EA4BD37940AD25"><span class="RefLink">76.3-14</span></a>).</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap75_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap77_mj.html">[Next Chapter]</a>&nbsp;  </div>

@@ -11,189 +11,212 @@ entries :=
       1, 4, "preface", "X874E1D45845007FE" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges between \033[5XGAP\033[105X\033[101X\027\\
-033[1X\027 4.5 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6\033[133X\
+033[1X\027 4.6 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.7\033[133X\
 \033[101X", "2", [ 2, 0, 0 ], 1, 5, 
+      "changes between gap\027\027 4.6 and gap\027\027 4.7", 
+      "X871220D17E7EE651" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.7.2\
+ (December 2013)\033[133X\033[101X", "2.1", [ 2, 1, 0 ], 7, 5, 
+      "gap\027\027 4.7.2 december 2013", "X78594AB2871B379E" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YChanges in the core \033[5XGAP\033[105X\033[101X\\
+027\033[1X\027 system introduced in \033[5XGAP\033[105X\033[101X\027\033[1X\
+\027 4.7\033[133X\033[101X", "2.1-1", [ 2, 1, 1 ], 10, 5, 
+      "changes in the core gap\027\027 system introduced in gap\027\027 4.7", 
+      "X8346E4677FA78976" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YNew and updated packages since \033[5XGAP\033[105\
+X\033[101X\027\033[1X\027 4.6.5\033[133X\033[101X", "2.1-2", [ 2, 1, 2 ], 
+      246, 9, "new and updated packages since gap\027\027 4.6.5", 
+      "X7EF0C705829B5D2B" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YChanges between \033[5XGAP\033[105X\033[101X\027\\
+033[1X\027 4.5 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6\033[133X\
+\033[101X", "3", [ 3, 0, 0 ], 1, 11, 
       "changes between gap\027\027 4.5 and gap\027\027 4.6", 
       "X8175857F79C8AD8E" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6.2\
- (February 2013)\033[133X\033[101X", "2.1", [ 2, 1, 0 ], 9, 5, 
+ (February 2013)\033[133X\033[101X", "3.1", [ 3, 1, 0 ], 9, 11, 
       "gap\027\027 4.6.2 february 2013", "X837BB2577D478E55" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges in the core \033[5XGAP\033[105X\033[101X\\
-027\033[1X\027 system\033[133X\033[101X", "2.1-1", [ 2, 1, 1 ], 12, 5, 
-      "changes in the core gap\027\027 system", "X7C1300337DD936C4" ], 
+027\033[1X\027 system introduced in \033[5XGAP\033[105X\033[101X\027\033[1X\
+\027 4.6\033[133X\033[101X", "3.1-1", [ 3, 1, 1 ], 12, 11, 
+      "changes in the core gap\027\027 system introduced in gap\027\027 4.6", 
+      "X8436976E7E7ED84B" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YNew and updated packages since \033[5XGAP\033[105\
-X\033[101X\027\033[1X\027 4.5.4\033[133X\033[101X", "2.1-2", [ 2, 1, 2 ], 
-      114, 7, "new and updated packages since gap\027\027 4.5.4", 
+X\033[101X\027\033[1X\027 4.5.4\033[133X\033[101X", "3.1-2", [ 3, 1, 2 ], 
+      114, 13, "new and updated packages since gap\027\027 4.5.4", 
       "X79A4DFE97A230E6D" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6.3\
- (March 2013)\033[133X\033[101X", "2.2", [ 2, 2, 0 ], 165, 7, 
+ (March 2013)\033[133X\033[101X", "3.2", [ 3, 2, 0 ], 165, 13, 
       "gap\027\027 4.6.3 march 2013", "X7C2A78667F08A971" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6.4\
- (April 2013)\033[133X\033[101X", "2.3", [ 2, 3, 0 ], 268, 9, 
+ (April 2013)\033[133X\033[101X", "3.3", [ 3, 3, 0 ], 268, 15, 
       "gap\027\027 4.6.4 april 2013", "X82859C4083F0D7B9" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.6.5\
- (July 2013)\033[133X\033[101X", "2.4", [ 2, 4, 0 ], 323, 10, 
+ (July 2013)\033[133X\033[101X", "3.4", [ 3, 4, 0 ], 323, 16, 
       "gap\027\027 4.6.5 july 2013", "X7F7F29B27BF76872" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges between \033[5XGAP\033[105X\033[101X\027\\
 033[1X\027 4.4 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.5\033[133X\
-\033[101X", "3", [ 3, 0, 0 ], 1, 11, 
+\033[101X", "4", [ 4, 0, 0 ], 1, 17, 
       "changes between gap\027\027 4.4 and gap\027\027 4.5", 
       "X837AADDA7EA9A541" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges in the core \033[5XGAP\033[105X\033[101X\\
 027\033[1X\027 system introduced in \033[5XGAP\033[105X\033[101X\027\033[1X\
-\027 4.5\033[133X\033[101X", "3.1", [ 3, 1, 0 ], 10, 11, 
+\027 4.5\033[133X\033[101X", "4.1", [ 4, 1, 0 ], 10, 17, 
       "changes in the core gap\027\027 system introduced in gap\027\027 4.5", 
       "X7DA602757C152B0C" ], 
   [ "\033[1X\033[33X\033[0;-2YImproved functionality\033[133X\033[101X", 
-      "3.1-1", [ 3, 1, 1 ], 18, 11, "improved functionality", 
+      "4.1-1", [ 4, 1, 1 ], 18, 17, "improved functionality", 
       "X84FC44718386FA1A" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges in distribution formats\033[133X\033[101X\
-", "3.1-2", [ 3, 1, 2 ], 267, 15, "changes in distribution formats", 
+", "4.1-2", [ 4, 1, 2 ], 267, 21, "changes in distribution formats", 
       "X7E24E9DE7CADD1B7" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YImprovements to the user interface\033[133X\033[1\
-01X", "3.1-3", [ 3, 1, 3 ], 326, 16, "improvements to the user interface", 
+01X", "4.1-3", [ 4, 1, 3 ], 326, 22, "improvements to the user interface", 
       "X80AB8641792E74C9" ], 
   [ "\033[1X\033[33X\033[0;-2YBetter documentation\033[133X\033[101X", 
-      "3.1-4", [ 3, 1, 4 ], 395, 17, "better documentation", 
+      "4.1-4", [ 4, 1, 4 ], 395, 23, "better documentation", 
       "X81318FC0873923C3" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YPackages in \033[5XGAP\033[105X\033[101X\027\033[\
-1X\027 4.5\033[133X\033[101X", "3.2", [ 3, 2, 0 ], 425, 18, 
+1X\027 4.5\033[133X\033[101X", "4.2", [ 4, 2, 0 ], 425, 24, 
       "packages in gap\027\027 4.5", "X85D796968453CFBF" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YInterface between the core system and packages\\
-033[133X\033[101X", "3.2-1", [ 3, 2, 1 ], 432, 18, 
+033[133X\033[101X", "4.2-1", [ 4, 2, 1 ], 432, 24, 
       "interface between the core system and packages", "X7E8089C881AB6BA1" ],
   [ "\033[1X\033[33X\033[0;-2YNew and updated packages since \033[5XGAP\033[10\
-5X\033[101X\027\033[1X\027 4.4.12\033[133X\033[101X", "3.2-2", [ 3, 2, 2 ], 
-      473, 18, "new and updated packages since gap\027\027 4.4.12", 
+5X\033[101X\027\033[1X\027 4.4.12\033[133X\033[101X", "4.2-2", [ 4, 2, 2 ], 
+      474, 24, "new and updated packages since gap\027\027 4.4.12", 
       "X81A313117C30EC28" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.5.5\
- (July 2012)\033[133X\033[101X", "3.3", [ 3, 3, 0 ], 761, 23, 
+ (July 2012)\033[133X\033[101X", "4.3", [ 4, 3, 0 ], 762, 29, 
       "gap\027\027 4.5.5 july 2012", "X83D3FC7781921387" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.5.6\
- (September 2012)\033[133X\033[101X", "3.4", [ 3, 4, 0 ], 864, 24, 
+ (September 2012)\033[133X\033[101X", "4.4", [ 4, 4, 0 ], 865, 30, 
       "gap\027\027 4.5.6 september 2012", "X79311F9185A267DB" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.5.7\
- (December 2012)\033[133X\033[101X", "3.5", [ 3, 5, 0 ], 979, 26, 
+ (December 2012)\033[133X\033[101X", "4.5", [ 4, 5, 0 ], 980, 32, 
       "gap\027\027 4.5.7 december 2012", "X81528B5F78B996D2" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YOverview of updates for \033[5XGAP\033[105X\033[1\
-01X\027\033[1X\027 4.4\033[133X\033[101X", "4", [ 4, 0, 0 ], 1, 28, 
+01X\027\033[1X\027 4.4\033[133X\033[101X", "5", [ 5, 0, 0 ], 1, 34, 
       "overview of updates for gap\027\027 4.4", "X78AE465E7AA00F25" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 B\
-ugfix 2 (April 2004)\033[133X\033[101X", "4.1", [ 4, 1, 0 ], 7, 28, 
+ugfix 2 (April 2004)\033[133X\033[101X", "5.1", [ 5, 1, 0 ], 7, 34, 
       "gap\027\027 4.4 bugfix 2 april 2004", "X82AB84287ED2B8FF" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 B\
-ugfix 3 (May 2004)\033[133X\033[101X", "4.2", [ 4, 2, 0 ], 24, 28, 
+ugfix 3 (May 2004)\033[133X\033[101X", "5.2", [ 5, 2, 0 ], 24, 34, 
       "gap\027\027 4.4 bugfix 3 may 2004", "X8208E7F578754467" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 B\
-ugfix 4 (December 2004)\033[133X\033[101X", "4.3", [ 4, 3, 0 ], 69, 29, 
+ugfix 4 (December 2004)\033[133X\033[101X", "5.3", [ 5, 3, 0 ], 69, 35, 
       "gap\027\027 4.4 bugfix 4 december 2004", "X87A965F97E6E6BD0" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 5 (May 2005)\033[133X\033[101X", "4.4", [ 4, 4, 0 ], 131, 30, 
+pdate 5 (May 2005)\033[133X\033[101X", "5.4", [ 5, 4, 0 ], 131, 36, 
       "gap\027\027 4.4 update 5 may 2005", "X80221EDA877CC106" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 6 (September 2005)\033[133X\033[101X", "4.5", [ 4, 5, 0 ], 361, 34, 
+pdate 6 (September 2005)\033[133X\033[101X", "5.5", [ 5, 5, 0 ], 361, 40, 
       "gap\027\027 4.4 update 6 september 2005", "X80F9D3E07DD59BD9" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 7 (March 2006)\033[133X\033[101X", "4.6", [ 4, 6, 0 ], 615, 38, 
+pdate 7 (March 2006)\033[133X\033[101X", "5.6", [ 5, 6, 0 ], 615, 44, 
       "gap\027\027 4.4 update 7 march 2006", "X7B8B22C77DC970F8" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 8 (September 2006)\033[133X\033[101X", "4.7", [ 4, 7, 0 ], 835, 41, 
+pdate 8 (September 2006)\033[133X\033[101X", "5.7", [ 5, 7, 0 ], 835, 47, 
       "gap\027\027 4.4 update 8 september 2006", "X7B61699179F631E0" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 9 (November 2006)\033[133X\033[101X", "4.8", [ 4, 8, 0 ], 996, 44, 
+pdate 9 (November 2006)\033[133X\033[101X", "5.8", [ 5, 8, 0 ], 996, 50, 
       "gap\027\027 4.4 update 9 november 2006", "X81B223647C9BD9B9" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 10 (October 2007)\033[133X\033[101X", "4.9", [ 4, 9, 0 ], 1024, 44, 
+pdate 10 (October 2007)\033[133X\033[101X", "5.9", [ 5, 9, 0 ], 1024, 50, 
       "gap\027\027 4.4 update 10 october 2007", "X7BB4EC1F7B130FD5" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 11 (December 2008)\033[133X\033[101X", "4.10", [ 4, 10, 0 ], 1204, 47, 
+pdate 11 (December 2008)\033[133X\033[101X", "5.10", [ 5, 10, 0 ], 1204, 53, 
       "gap\027\027 4.4 update 11 december 2008", "X7E4C6820809F2384" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4 U\
-pdate 12 (December 2008)\033[133X\033[101X", "4.11", [ 4, 11, 0 ], 1356, 50, 
+pdate 12 (December 2008)\033[133X\033[101X", "5.11", [ 5, 11, 0 ], 1356, 56, 
       "gap\027\027 4.4 update 12 december 2008", "X7F5BBE877AAA4BEE" ], 
   [ "\033[1X\033[33X\033[0;-2YChanges from Earlier Versions\033[133X\033[101X"
-        , "5", [ 5, 0, 0 ], 1, 51, "changes from earlier versions", 
+        , "6", [ 6, 0, 0 ], 1, 57, "changes from earlier versions", 
       "X7F5DE9997CF43125" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YChanges between \033[5XGAP\033[105X\033[101X\027\\
 033[1X\027 4.3 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.4\033[133X\
-\033[101X", "5.1", [ 5, 1, 0 ], 4, 51, 
+\033[101X", "6.1", [ 6, 1, 0 ], 4, 57, 
       "changes between gap\027\027 4.3 and gap\027\027 4.4", 
       "X7DBACE2286A43A31" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YPotentially Incompatible Changes\033[133X\033[101\
-X", "5.1-1", [ 5, 1, 1 ], 9, 51, "potentially incompatible changes", 
+X", "6.1-1", [ 6, 1, 1 ], 9, 57, "potentially incompatible changes", 
       "X7C5AC61F824086D6" ], 
-  [ "\033[1X\033[33X\033[0;-2YNew Packages\033[133X\033[101X", "5.1-2", 
-      [ 5, 1, 2 ], 83, 52, "new packages", "X7D9702E3815BE9FB" ], 
+  [ "\033[1X\033[33X\033[0;-2YNew Packages\033[133X\033[101X", "6.1-2", 
+      [ 6, 1, 2 ], 83, 58, "new packages", "X7D9702E3815BE9FB" ], 
   [ "\033[1X\033[33X\033[0;-2YPerformance Enhancements\033[133X\033[101X", 
-      "5.1-3", [ 5, 1, 3 ], 109, 52, "performance enhancements", 
+      "6.1-3", [ 6, 1, 3 ], 109, 58, "performance enhancements", 
       "X7DA8709A850E772D" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YNew Programming and User Features\033[133X\033[10\
-1X", "5.1-4", [ 5, 1, 4 ], 165, 53, "new programming and user features", 
+1X", "6.1-4", [ 6, 1, 4 ], 165, 59, "new programming and user features", 
       "X83E1A0D87D3D1EAF" ], 
-  [ "\033[1X\033[33X\033[0;-2YEarlier Changes\033[133X\033[101X", "5.2", 
-      [ 5, 2, 0 ], 182, 54, "earlier changes", "X8205C966783E6F37" ], 
-  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 57, "index", "X83A0356F839C696F" ], 
-  [ "Packages, new", "2.1-2", [ 2, 1, 2 ], 114, 7, "packages new", 
-      "X79A4DFE97A230E6D" ], 
-  [ "Packages, upgraded", "2.1-2", [ 2, 1, 2 ], 114, 7, "packages upgraded", 
-      "X79A4DFE97A230E6D" ], 
-  [ "\033[5XGMP support\033[105X", "3.1-1", [ 3, 1, 1 ], 18, 11, 
+  [ "\033[1X\033[33X\033[0;-2YEarlier Changes\033[133X\033[101X", "6.2", 
+      [ 6, 2, 0 ], 182, 60, "earlier changes", "X8205C966783E6F37" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 63, "index", "X83A0356F839C696F" ], 
+  [ "Packages, new", "2.1-2", [ 2, 1, 2 ], 246, 9, "packages new", 
+      "X7EF0C705829B5D2B" ], 
+  [ "Packages, upgraded", "2.1-2", [ 2, 1, 2 ], 246, 9, "packages upgraded", 
+      "X7EF0C705829B5D2B" ], 
+  [ "\033[5XGMP support\033[105X", "4.1-1", [ 4, 1, 1 ], 18, 17, 
       "gmp support", "X84FC44718386FA1A" ], 
-  [ "Floats", "3.1-1", [ 3, 1, 1 ], 18, 11, "floats", "X84FC44718386FA1A" ], 
-  [ "Data libraries", "3.1-1", [ 3, 1, 1 ], 18, 11, "data libraries", 
+  [ "Floats", "4.1-1", [ 4, 1, 1 ], 18, 17, "floats", "X84FC44718386FA1A" ], 
+  [ "Data libraries", "4.1-1", [ 4, 1, 1 ], 18, 17, "data libraries", 
       "X84FC44718386FA1A" ], 
-  [ "Completion files (withdrawn)", "3.1-1", [ 3, 1, 1 ], 18, 11, 
+  [ "Completion files (withdrawn)", "4.1-1", [ 4, 1, 1 ], 18, 17, 
       "completion files withdrawn", "X84FC44718386FA1A" ], 
-  [ "\033[5XGAP\033[105X\302\2403 compatibility mode (withdrawn)", "3.1-1", 
-      [ 3, 1, 1 ], 18, 11, "gapa\2403 compatibility mode withdrawn", 
+  [ "\033[5XGAP\033[105X\302\2403 compatibility mode (withdrawn)", "4.1-1", 
+      [ 4, 1, 1 ], 18, 17, "gapa\2403 compatibility mode withdrawn", 
       "X84FC44718386FA1A" ], 
-  [ "\033[5XGAP\033[105X compiler (no longer recommended)", "3.1-1", 
-      [ 3, 1, 1 ], 18, 11, "gap compiler no longer recommended", 
+  [ "\033[5XGAP\033[105X compiler (no longer recommended)", "4.1-1", 
+      [ 4, 1, 1 ], 18, 17, "gap compiler no longer recommended", 
       "X84FC44718386FA1A" ], 
-  [ "\033[11Xtools\033[111X archive", "3.1-2", [ 3, 1, 2 ], 267, 15, 
+  [ "\033[11Xtools\033[111X archive", "4.1-2", [ 4, 1, 2 ], 267, 21, 
       "tools archive", "X7E24E9DE7CADD1B7" ], 
-  [ "Bugfixes and packages archives (withdrawn)", "3.1-2", [ 3, 1, 2 ], 267, 
-      15, "bugfixes and packages archives withdrawn", "X7E24E9DE7CADD1B7" ], 
-  [ "\033[5XGAP\033[105X binary distributions", "3.1-2", [ 3, 1, 2 ], 267, 
-      15, "gap binary distributions", "X7E24E9DE7CADD1B7" ], 
-  [ "\033[5Xreadline\033[105X support", "3.1-3", [ 3, 1, 3 ], 326, 16, 
+  [ "Bugfixes and packages archives (withdrawn)", "4.1-2", [ 4, 1, 2 ], 267, 
+      21, "bugfixes and packages archives withdrawn", "X7E24E9DE7CADD1B7" ], 
+  [ "\033[5XGAP\033[105X binary distributions", "4.1-2", [ 4, 1, 2 ], 267, 
+      21, "gap binary distributions", "X7E24E9DE7CADD1B7" ], 
+  [ "\033[5Xreadline\033[105X support", "4.1-3", [ 4, 1, 3 ], 326, 22, 
       "readline support", "X80AB8641792E74C9" ], 
-  [ "User interface customisation", "3.1-3", [ 3, 1, 3 ], 326, 16, 
+  [ "User interface customisation", "4.1-3", [ 4, 1, 3 ], 326, 22, 
       "user interface customisation", "X80AB8641792E74C9" ], 
-  [ "\033[5XMathJax support\033[105X", "3.1-4", [ 3, 1, 4 ], 395, 17, 
+  [ "\033[5XMathJax support\033[105X", "4.1-4", [ 4, 1, 4 ], 395, 23, 
       "mathjax support", "X81318FC0873923C3" ], 
-  [ "Namespaces", "3.2-1", [ 3, 2, 1 ], 432, 18, "namespaces", 
+  [ "Namespaces", "4.2-1", [ 4, 2, 1 ], 432, 24, "namespaces", 
       "X7E8089C881AB6BA1" ], 
-  [ "Packages under Windows", "3.2-2", [ 3, 2, 2 ], 473, 18, 
+  [ "Packages under Windows", "4.2-2", [ 4, 2, 2 ], 474, 24, 
       "packages under windows", "X81A313117C30EC28" ] ]
 );

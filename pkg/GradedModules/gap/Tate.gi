@@ -222,7 +222,7 @@ InstallGlobalFunction( _Functor_TateResolution_OnGradedModules , ### defines: Ta
     
     SetIsAcyclic( T, true );
     
-    ## pass some options to the operation BettiDiagram (applied on complexes):
+    ## pass some options to the operation BettiTable (applied on complexes):
     
     T!.display_twist := true;
     T!.EulerCharacteristic := HilbertPolynomial( M );
@@ -249,7 +249,7 @@ InstallGlobalFunction( _Functor_TateResolution_OnGradedModules , ### defines: Ta
     
     SetIsAcyclic( result, true );
     
-    ## pass some options to the operation BettiDiagram (applied on complexes):
+    ## pass some options to the operation BettiTable (applied on complexes):
     
     result!.display_twist := true;
     result!.EulerCharacteristic := HilbertPolynomial( M );
@@ -452,6 +452,48 @@ Functor_TateResolution_ForGradedModules!.ContainerForWeakPointersOnComputedBasic
 
 InstallFunctor( Functor_TateResolution_ForGradedModules );
 
+## written for Sepp's talk, it has to become functorial in the future
+InstallMethod( TateResolution,
+        "for homalg modules",
+        [ IsHomalgModule, IsInt, IsInt ],
+        
+  function( L, degree_lowest, degree_highest )
+    local A, mu0, tate, inj, mu;
+    
+    A := HomalgRing( L );
+    
+    if not ( HasIsExteriorRing( A ) and IsExteriorRing( A ) ) then
+        TryNextMethod( );
+    fi;
+    
+    mu0 := FirstMorphismOfResolution( L );
+    
+    tate := HomalgCocomplex( mu0 );
+    
+    CompleteComplexByResolution( -degree_lowest, tate );
+    
+    if degree_highest < 2 then
+        return tate;
+    fi;
+    
+    inj := HomalgComplex( GradedHom( mu0 ) );
+    
+    inj := GradedHom( CompleteComplexByResolution( degree_highest - 1, inj ) );
+    
+    inj := MorphismsOfComplex( inj );
+    
+    inj := inj{[ 2 .. Length( inj ) ]};
+    
+    inj[1] := PreCompose( NatTrIdToHomHom_R( Range( mu0 ) ), inj[1] );
+    
+    for mu in inj do
+        Add( tate, mu );
+    od;
+    
+    return tate;
+    
+end );
+
 ##
 ## LinearStrandOfTateResolution
 ##
@@ -619,7 +661,7 @@ InstallGlobalFunction( _Functor_LinearStrandOfTateResolution_OnGradedModules , #
         fi;
     fi;
     
-    ## pass some options to the operation BettiDiagram (applied on complexes):
+    ## pass some options to the operation BettiTable (applied on complexes):
     
     T!.display_twist := true;
     
@@ -633,7 +675,7 @@ InstallGlobalFunction( _Functor_LinearStrandOfTateResolution_OnGradedModules , #
     
     result := Subcomplex( T, degree_lowest, degree_highest );
     
-    ## pass some options to the operation BettiDiagram (applied on complexes):
+    ## pass some options to the operation BettiTable (applied on complexes):
     
     result!.display_twist := true;
     

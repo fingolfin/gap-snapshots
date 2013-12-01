@@ -4,7 +4,7 @@
 #W                                                        Alexander Konovalov
 #W                                                            Aurora Olivieri
 #W                                                           Gabriela Olteanu
-#W                                                              Ángel del Río
+#W                                                              Ãngel del RÃ­o
 #W                                                          Inneke Van Gelder
 ##
 #############################################################################
@@ -14,11 +14,11 @@ SetPackageInfo( rec(
 PackageName    := "Wedderga",
 Subtitle       := Concatenation( [
                   "Wedderburn Decomposition of Group Algebras" ] ),
-Version        := "4.5.4",
-Date           := "28/03/2013",
+Version        := "4.6.1",
+Date           := "17/11/2013",
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "4.5.4">
-##  <!ENTITY RELEASEDATE "28 March 2013">
+##  <!ENTITY VERSION "4.6.1">
+##  <!ENTITY RELEASEDATE "17 November 2013">
 ##  <!ENTITY RELEASEYEAR "2013">
 ##  <#/GAPDoc>
 
@@ -36,12 +36,26 @@ Persons :=
        IsMaintainer  := true,
        Email         := "osnel@ufla.br",
        PostalAddress := Concatenation( [
-                        "Departamento de Ciências Exatas\n",
+                        "Departamento de CiÃªncias Exatas\n",
                         "Universidade Federal de Lavras - UFLA\n",
-                        "Campus Universitário - Caixa Postal 3037\n",
+                        "Campus UniversitÃ¡rio - Caixa Postal 3037\n",
                         "37200-000, Lavras - MG, Brazil" ] ),
        Place         := "Lavras - MG",
        Institution   := "Universidade Federal de Lavras - UFLA"
+     ),
+rec(
+       LastName      := "Herman",
+       FirstNames    := "Allen",
+       IsAuthor      := true,
+       IsMaintainer  := true,
+       Email         := "aherman@math.uregina.ca",
+       PostalAddress := Concatenation( [
+                        "Department of Mathematics and Statistics\n",
+                        "University of Regina\n",
+                        "3737 Wascana Parkway\n",
+                        "Regina, SK, S0G 0E0 Canada"] ),
+       Place         := "Regina",
+       Institution   := "University of Regina"
      ),
      rec(
        LastName      := "Konovalov",
@@ -80,12 +94,12 @@ Persons :=
        IsMaintainer  := true,
        Email         := "olivieri@usb.ve",
        PostalAddress := Concatenation( [
-                        "Departamento de Matemáticas\n",
-                        "Universidad Simón Bolívar\n",
+                        "Departamento de MatemÃ¡ticas\n",
+                        "Universidad SimÃ³n BolÃ­var\n",
                         "Apartado Postal 89000\n", 
                         "Caracas 1080-A, Venezuela" ] ),
        Place         := "Caracas",
-       Institution   := "Universidad Simón Bolívar"
+       Institution   := "Universidad SimÃ³n BolÃ­var"
      ),     
      rec(
        LastName      := "del Rio",
@@ -95,7 +109,7 @@ Persons :=
        Email         := "adelrio@um.es",
        WWWHome       := "http://www.um.es/adelrio",
        PostalAddress := Concatenation( [
-                        "Departamento de Matemáticas\n",
+                        "Departamento de MatemÃ¡ticas\n",
                         "Universidad de Murcia\n", 
                         "30100 Murcia, Spain" ] ),
        Place         := "Murcia",
@@ -127,7 +141,7 @@ README_URL :=
 PackageInfoURL := 
   Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
   
-AbstractHTML := "<span class=\"pkgname\">Wedderga</span> is the package to compute the simple components of the Wedderburn decomposition of semisimple group algebras of finite groups over finite fields and over subfields of finite cyclotomic extensions of the rational. It also contains functions that produce the primitive central idempotents of semisimple group algebras. Other functions of <span class=\"pkgname\">Wedderga</span> allows to construct crossed products over a group with coefficients in an associative ring with identity and the multiplication determined by a given action and twisting.",
+AbstractHTML := "<span class=\"pkgname\">Wedderga</span> is the package to compute the simple components of the Wedderburn decomposition of semisimple group algebras of finite groups over finite fields and over subfields of finite cyclotomic extensions of the rationals. It also contains functions that produce the primitive central idempotents of semisimple group algebras and functions for computing Schur indices. Other functions of <span class=\"pkgname\">Wedderga</span> allow one to construct crossed products over a group with coefficients in an associative ring with identity and the multiplication determined by a given action and twisting.",
                   
 PackageDoc := rec(
   BookName := "Wedderga",
@@ -140,7 +154,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP                    := ">=4.5",
+  GAP                    := ">=4.7",
   NeededOtherPackages    := [ ["GAPDoc", ">= 1.5.1"] ],
   SuggestedOtherPackages := [ ["laguna", ">= 3.4"], ["GUAVA", ">= 3.12"] ],
   ExternalConditions     := []

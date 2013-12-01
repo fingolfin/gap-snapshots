@@ -12,7 +12,7 @@
   [33X[0;0YThe input [3XFG[103X should be a semisimple group algebra.[133X
   
   [33X[0;0YReturns  the list of primitive central idempotents of [3XFG[103X using the character
-  table of [22XG[122X ([14X8.4[114X).[133X
+  table of [22XG[122X ([14X9.4[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -85,14 +85,14 @@
   coefficient field [22XF[122X is either a finite field or the field [22Xℚ[122X of rationals.[133X
   
   [33X[0;0YIf [22XF = ℚ[122X then the output is the list of primitive central idempotents of the
-  group algebra [3XFG[103X realizable by strong Shoda pairs ([14X8.15[114X) of [22XG[122X.[133X
+  group algebra [3XFG[103X realizable by strong Shoda pairs ([14X9.15[114X) of [22XG[122X.[133X
   
   [33X[0;0YIf  [22XF[122X  is  a  finite  field then the output is the list of primitive central
   idempotents  of  [3XFG[103X  realizable  by  strong  Shoda  pairs  [22X(K,H)[122X  of  [22XG[122X  and
-  [22Xq[122X-cyclotomic classes modulo the index of [22XH[122X in [22XK[122X ([14X8.17[114X).[133X
+  [22Xq[122X-cyclotomic classes modulo the index of [22XH[122X in [22XK[122X ([14X9.17[114X).[133X
   
   [33X[0;0YIf  the  list  of  primitive  central idempotents given by the output is not
-  complete  (i.e.  if  the  group  [22XG[122X  is  not [13Xstrongly monomial[113X ([14X8.16[114X)) then a
+  complete  (i.e.  if  the  group  [22XG[122X  is  not [13Xstrongly monomial[113X ([14X9.16[114X)) then a
   warning is displayed.[133X
   
   [4X[32X  Example  [32X[104X
@@ -216,7 +216,7 @@
   [22X|F|[122X-cyclotomic class modulo [22X[H:K][122X (w.r.t. the generator [22Xgq[122X of [22XH/K[122X)[133X
   
   [33X[0;0YThe  output  is  a  complete  set of orthogonal primitive idempotents of the
-  simple algebra [22XFGe_C(G,H,K)[122X ([14X8.18[114X).[133X
+  simple algebra [22XFGe_C(G,H,K)[122X ([14X9.19[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -256,7 +256,7 @@
   that the simple component [22XFGe_C(G,H,K)[122X has a trivial twisting.[133X
   
   [33X[0;0YThe  output  is  a  complete  set of orthogonal primitive idempotents of the
-  simple algebra [22XFGe_C(G,H,K)[122X ([14X8.18[114X).[133X
+  simple algebra [22XFGe_C(G,H,K)[122X ([14X9.19[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

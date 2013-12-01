@@ -1,9 +1,9 @@
   
-  [1X5 [33X[0;0YCrossed products[133X[101X
+  [1X5 [33X[0;0YCrossed products and their elements[133X[101X
   
   [33X[0;0YThe package [5XWedderga[105X provides functions to construct crossed products over a
   group  with  coefficients in an associative ring with identity, and with the
-  multiplication  determined  by  a  given  action  and  twisting (see [14X8.6[114X for
+  multiplication  determined  by  a  given  action  and  twisting (see [14X9.6[114X for
   definitions). This can be done using the function [2XCrossedProduct[102X ([14X5.1-1[114X).[133X
   
   [33X[0;0YNote  that  this function does not check the associativity conditions, so in
@@ -227,7 +227,7 @@
   [4X[32X[104X
   
   [33X[0;0YSome   more   examples   of  crossed  products  arise  from  the  [13XWedderburn
-  decomposition[113X ([14X8.3[114X) of group algebras.[133X
+  decomposition[113X ([14X9.3[114X) of group algebras.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

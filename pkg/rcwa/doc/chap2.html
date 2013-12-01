@@ -692,6 +692,8 @@ true
 
 </pre></div>
 
+<p>Also there are attributes <code class="code">ShiftsUpOn</code> and <code class="code">ShiftsDownOn</code> which store the union of the residue classes (mod <code class="code">Mod(<var class="Arg">f</var>)</code>) on which an rcwa mapping <var class="Arg">f</var> of ℤ induces affine mappings <span class="SimpleMath">n ↦ n + c</span> for <span class="SimpleMath">c &gt; 0</span>, respectively, <span class="SimpleMath">c &lt; 0</span>.</p>
+
 <p>Finally, there are epimorphisms from the subgroup of RCWA(ℤ) formed by all class-wise order-preserving elements to (ℤ,+) and from RCWA(ℤ) itself to the cyclic group of order 2, respectively:</p>
 
 <p><a id="X7B1E53127D9AE52F" name="X7B1E53127D9AE52F"></a></p>
@@ -1227,7 +1229,7 @@ See ?LikelyContractionCentre for more information.
   Saving memory -- the sparse representation of rcwa mappings
 </span></h4>
 
-<p>It happens quite commonly in computations that an rcwa mapping with large modulus has only few distinct affine partial mappings. In this case the "standard" representation which stores a coefficient triple for each residue class modulo the modulus is unsuitable. For this reason there is a second representation of rcwa mappings, the "sparse" representation. Depending on the rcwa mappings involved, using this representation may speed up computations and reduce memory requirements by orders of magnitude. For rcwa mappings with almost as many distinct affine partial mappings as there are residue classes modulo the modulus, using sparse representation makes computations somewhat slower and more memory-consuming. Presently, the sparse representation is only available for rcwa mappings of ℤ.</p>
+<p>It is quite common that an rcwa mapping with large modulus has only few distinct affine partial mappings. In this case the "standard" representation which stores a coefficient triple for each residue class modulo the modulus is unsuitable. For this reason there is a second representation of rcwa mappings, the "sparse" representation. Depending on the rcwa mappings involved, using this representation may speed up computations and reduce memory requirements by orders of magnitude. For rcwa mappings with almost as many distinct affine partial mappings as there are residue classes modulo the modulus, using sparse representation makes computations somewhat slower and more memory-consuming. Presently, the sparse representation is only available for rcwa mappings of ℤ.</p>
 
 <p>The sparse representation of an rcwa mapping consists of the modulus and a list of 5-tuples <span class="SimpleMath">(r,m,a_r(m),b_r(m),c_r(m))</span> of integers. Any such 5-tuple specifies the coefficients of the restriction <span class="SimpleMath">n ↦ (a_r(m) ⋅ n + b_r(m))/c_r(m)</span> of the mapping to a residue class <span class="SimpleMath">r(m)</span>. The <span class="SimpleMath">r(m)</span> are chosen to form the coarsest possible partition of ℤ into residue classes such that the restriction of the mapping to any of them is affine. Also the list of coefficient triples is sorted, all <span class="SimpleMath">c_r(m)</span> are positive and <span class="SimpleMath">gcd(c_r(m),gcd(a_r(m),b_r(m))) = 1</span>. This way the coefficient list of an rcwa mapping of ℤ is unique.</p>
 
@@ -1260,14 +1262,6 @@ See ?LikelyContractionCentre for more information.
 &lt;rcwa permutation of Z with modulus 288 and 21 affine parts&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g = h;</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h^2;</span>
-&lt;rcwa permutation of Z with modulus 13824 and 71 affine parts&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h^3;</span>
-&lt;rcwa permutation of Z with modulus 663552 and 201 affine parts&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MemoryUsage(h^3);</span>
-10002
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MemoryUsage(StandardRep(h^3));</span>
-23888226
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Coefficients(h);</span>
 [ [ 0, 6, 1, 0, 1 ], [ 1, 3, 16, -1, 3 ], [ 2, 96, 9, 14, 16 ], 
   [ 3, 24, 9, 5, 4 ], [ 5, 24, 3, 1, 4 ], [ 8, 36, 2, -7, 9 ], 
@@ -1276,7 +1270,19 @@ true
   [ 21, 24, 1, -3, 6 ], [ 23, 24, 27, 19, 4 ], [ 26, 48, 3, 2, 8 ], 
   [ 32, 36, 4, -11, 9 ], [ 33, 48, 9, 7, 8 ], [ 38, 48, 9, 10, 8 ], 
   [ 41, 48, 27, 29, 8 ], [ 50, 96, 27, 58, 16 ], [ 56, 72, 1, 0, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h^2;</span>
+&lt;rcwa permutation of Z with modulus 13824 and 71 affine parts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h^3;</span>
+&lt;rcwa permutation of Z with modulus 663552 and 201 affine parts&gt;
 
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MemoryUsage(h^3); # on a 32-bit machine</span>
+9978
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MemoryUsage(StandardRep(h^3));</span>
+23888202
 </pre></div>
 
 <p><a id="X83FA71DD842377F0" name="X83FA71DD842377F0"></a></p>

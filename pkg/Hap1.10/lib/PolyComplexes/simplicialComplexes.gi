@@ -3,11 +3,26 @@
 InstallOtherMethod(Dimension,
 "Dimension of  simplicial complex",
 [IsHapSimplicialComplex],
-function(f) return EvaluateProperty(f,"dimension");
-return EvaluateProperty(f,"dimension");
+function(K) return EvaluateProperty(K,"dimension");
 end);
 #####################################################################
 #####################################################################
+
+#####################################################################
+#####################################################################
+InstallOtherMethod(Size,
+"Size of  simplicial complex",
+[IsHapSimplicialComplex],
+function(K) local n,s;
+s:=0;
+for n in [0..Dimension(K)] do
+s:=s+K!.nrSimplices(n);
+od;
+return s;
+end);
+#####################################################################
+#####################################################################
+
 
 #####################################################################
 #####################################################################
@@ -38,12 +53,12 @@ end);
 InstallOtherMethod(Homology,
 "Integral homologies  of a simplicial complex",
 [IsHapSimplicialComplex,IsInt],
-#function(M,n) ;
-#return
-#Homology(ChainComplex(M),n);
 function(M,n) local P, PM, i, answer,C,A;
+if Dimension(M)=2 and n=1 then
+return FirstHomologySimplicialTwoComplex(M);
+fi;
 P:=PathComponentsOfSimplicialComplex(M,0);
-if n=0 then return P;fi;
+if n=0 then return [1..P]*0;fi;
 answer:=[];
 for i in [1..P] do
 PM:=PathComponentsOfSimplicialComplex(M,i);
@@ -280,6 +295,10 @@ local
         dim,
         n,v,x;
 
+for n in [1..Length(L)] do
+Apply(L[n],x->SSortedList(x));
+od;
+Apply(L,l->SSortedList(l));
 dim:=PositionProperty(L,x->Size(x)=0);
 if dim=fail then dim:=Length(L)-1; else dim:=dim-2; fi;
 if Length(L)>0 then
@@ -1008,6 +1027,7 @@ end);
 ############################################
 ############################################
 
+InstallValue(PathComponentOfSimplicialComplex,PathComponentsOfSimplicialComplex);
 
 
 #################################################################
@@ -1140,4 +1160,150 @@ return L;
 end);
 ############################################
 ############################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(RandomSimplicialGraph,
+function(N,p)
+local num,den,P, K, i,j,k, Edges;
+
+num:=NumeratorRat(p);
+den:=DenominatorRat(p);
+
+P:=[1..den];
+
+
+Edges:=List([1..N],i->[i]);
+
+for i in [1..N] do
+for j in [i+1..N] do
+if Random(P)<=num then
+Add(Edges, [i,j]);
+fi;
+od;od;
+
+K:=MaximalSimplicesToSimplicialComplex(Edges);
+
+return K;
+end);
+#####################################################
+#####################################################
+
+
+
+#####################################################
+#####################################################
+InstallGlobalFunction(RandomSimplicialTwoComplex,
+function(N,p)
+local num,den,P, K, i,j,k, Faces;
+
+num:=NumeratorRat(p);
+den:=DenominatorRat(p);
+
+P:=[1..den];
+
+
+Faces:=[];
+
+for i in [1..N] do
+for j in [i+1..N] do
+Add(Faces,[i,j]); #Here we actually add an edge and not a face!
+od;od;
+
+
+for i in [1..N] do
+for j in [i+1..N] do
+for k in [j+1..N] do
+if Random(P)<=num then
+Add(Faces, [i,j,k]);
+fi;
+od;od;od;
+
+K:=MaximalSimplicesToSimplicialComplex(Faces);
+
+return K;
+end);
+#####################################################
+#####################################################
+
+
+#####################################################
+#####################################################
+InstallGlobalFunction(FirstHomologySimplicialTwoComplex,
+function(K)
+local S, c, L, A, Y, x;
+
+Y:=SimplicialComplexToRegularCWComplex(K);
+c:=CriticalCellsOfRegularCWComplex(Y,1);
+if Length(Filtered(c,x->x[1]=1))=0 then return []; fi;
+
+Apply(K!.simplicesLst[3],x->SSortedList(x));
+Apply(K!.simplicesLst[2],x->SSortedList(x));
+
+S:=ContractibleSubcomplexOfSimplicialComplex(K);
+L:=SSortedList(S!.simplicesLst[2]);
+Apply(L,x->SSortedList(x));
+A:=[];
+
+for x in K!.simplicesLst[3] do
+if x{[1,2]} in L and x{[1,3]} in L and x{[2,3]} in L then
+Add(A,x);
+fi;
+od;
+
+#Print("Length(A)= ",Length(A),"\n");
+A:=Difference(A,S!.simplicesLst[3]);
+#Print("Length(A)= ",Length(A),"\n");
+
+L:=Difference(K!.simplicesLst[3],A);
+L:=Concatenation(L,K!.simplicesLst[2],K!.simplicesLst[1]);
+L:=MaximalSimplicesToSimplicialComplex(L);
+Y:=SimplicialComplexToRegularCWComplex(L);
+
+return Homology(Y,1);
+end);
+#####################################################
+#####################################################
+
+#####################################################
+#####################################################
+InstallGlobalFunction(FundamentalGroupSimplicialTwoComplex,
+function(K)
+local S, c, L, A, Y, x;
+
+Y:=SimplicialComplexToRegularCWComplex(K);
+c:=CriticalCellsOfRegularCWComplex(Y,1);
+if Length(Filtered(c,x->x[1]=1))=0 then return
+Image(IsomorphismFpGroup(Group(()))); fi;
+
+Apply(K!.simplicesLst[3],x->SSortedList(x));
+Apply(K!.simplicesLst[2],x->SSortedList(x));
+
+S:=ContractibleSubcomplexOfSimplicialComplex(K);
+L:=SSortedList(S!.simplicesLst[2]);
+Apply(L,x->SSortedList(x));
+A:=[];
+
+for x in K!.simplicesLst[3] do
+if x{[1,2]} in L and x{[1,3]} in L and x{[2,3]} in L then
+Add(A,x);
+fi;
+od;
+
+#Print("Length(A)= ",Length(A),"\n");
+A:=Difference(A,S!.simplicesLst[3]);
+#Print("Length(A)= ",Length(A),"\n");
+
+L:=Difference(K!.simplicesLst[3],A);
+L:=Concatenation(L,K!.simplicesLst[2],K!.simplicesLst[1]);
+L:=MaximalSimplicesToSimplicialComplex(L);
+Y:=SimplicialComplexToRegularCWComplex(L);
+
+return FundamentalGroup(Y);
+end);
+#####################################################
+#####################################################
+
+
+
 

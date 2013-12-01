@@ -18,11 +18,13 @@
 InstallValue( CommonHomalgTableForSingularTools,
         
         rec(
-               Zero := HomalgExternalRingElement( "0", "Singular", IsZero ),
+               Zero := HomalgExternalRingElement( R -> homalgSendBlocking( [ "0" ], [ "number" ], R, HOMALG_IO.Pictograms.Zero ), "Singular", IsZero ),
                
-               One := HomalgExternalRingElement( "1", "Singular", IsOne ),
+               One := HomalgExternalRingElement( R -> homalgSendBlocking( [ "1" ], [ "number" ], R, HOMALG_IO.Pictograms.One ), "Singular", IsOne ),
                
-               MinusOne := HomalgExternalRingElement( "-1", "Singular", IsMinusOne ),
+               MinusOne := HomalgExternalRingElement( R -> homalgSendBlocking( [ "-1" ], [ "number" ], R, HOMALG_IO.Pictograms.MinusOne ), "Singular", IsMinusOne ),
+               
+               RingElement := R -> r -> homalgSendBlocking( [ r ], [ "poly" ], R, HOMALG_IO.Pictograms.define ),
                
                IsZero := r -> homalgSendBlocking( [ r, "==0" ] , "need_output", HOMALG_IO.Pictograms.IsZero ) = "1",
                
@@ -97,6 +99,13 @@ InstallValue( CommonHomalgTableForSingularTools,
                    b_g := homalgSendBlocking( [ "poly(", b, ") / (", g, ")" ], [ "def" ], HOMALG_IO.Pictograms.CancelGcd );
                    
                    return [ a_g, b_g ];
+                   
+                 end,
+               
+               CopyElement :=
+                 function( r, R )
+                   
+                   return homalgSendBlocking( [ "imap(", HomalgRing( r ), r, ")" ], [ "poly" ], R, HOMALG_IO.Pictograms.CopyElement );
                    
                  end,
                
@@ -577,6 +586,10 @@ InstallValue( CommonHomalgTableForSingularTools,
                  function( mat )
                    local R, v, c;
                    
+                   if not NrColumns( mat ) = 1 then
+                       Error( "only primary decomposition of one-column matrices is supported\n" );
+                   fi;
+                   
                    R := HomalgRing( mat );
                    
                    v := homalgStream( R )!.variable_name;
@@ -660,6 +673,13 @@ InstallValue( CommonHomalgTableForSingularTools,
                    
                  end,
                
+               MonomialMatrix :=
+                 function( i, vars, R )
+                   
+                   return homalgSendBlocking( [ "matrix(ideal(", vars, ")^", i, ")" ], [ "matrix" ], R, HOMALG_IO.Pictograms.MonomialMatrix );
+                   
+                 end,
+               
                MatrixOfSymbols :=
                  function( mat )
                    
@@ -693,6 +713,42 @@ InstallValue( CommonHomalgTableForSingularTools,
                    R := arg[1];
                    
                    return homalgSendBlocking( [ "sparsepoly(", arg{[ 2 .. Length( arg ) ]}, ")" ], [ "def" ], R, HOMALG_IO.Pictograms.RandomPol );
+                   
+                 end,
+               
+               Evaluate :=
+                 function( p, L )
+                     
+                   # Remember here the list L is of the form var1, val1, var2, val2, ...
+                   return homalgSendBlocking( [ "subst(", p, L, ")" ], [ "poly" ], HOMALG_IO.Pictograms.Evaluate );
+                   
+                 end,
+               
+               EvaluateMatrix :=
+                 function( M, L )
+                   
+                   # Remember here the list L is of the form var1, val1, var2, val2, ...
+                   return homalgSendBlocking( [ "EvaluateMatrix(", M, L, ")" ], [ "matrix" ], HOMALG_IO.Pictograms.Evaluate );
+                   
+                 end,
+               
+               NumeratorAndDenominatorOfPolynomial :=    
+                 function( p )
+                   local R, v, numer, denom;
+                   
+                   R := HomalgRing( p );
+                   
+                   v := homalgStream( R )!.variable_name;
+                   
+                   homalgSendBlocking( [ "list ", v, "l=NumeratorAndDenominatorOfPolynomial(", p, ")" ], "need_command", HOMALG_IO.Pictograms.Numerator );
+                   
+                   numer := homalgSendBlocking( [ v, "l[1]" ], [ "poly" ], R, HOMALG_IO.Pictograms.Numerator );
+                   denom := homalgSendBlocking( [ v, "l[2]" ], [ "poly" ], R, HOMALG_IO.Pictograms.Numerator );
+                   
+                   numer := HomalgExternalRingElement( numer, R );
+                   denom := HomalgExternalRingElement( denom, R );
+                   
+                   return [ numer, denom ];
                    
                  end,
                

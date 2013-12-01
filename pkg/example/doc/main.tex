@@ -98,8 +98,8 @@
 {\Huge \textbf{Example/Template of a \textsf{GAP} Package and Guidelines for Package Authors\mbox{}}}\\
 \vfill
 
-{\Huge Version 3.4.3\mbox{}}\\[1cm]
-{27 March 2013\mbox{}}\\[1cm]
+{\Huge Version 3.4.4\mbox{}}\\[1cm]
+{30 October 2013\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Werner Nickel   \mbox{}}}\\
 {\Large \textbf{ Greg Gamble   \mbox{}}}\\
@@ -373,7 +373,7 @@ So for example if you install the package in the \texttt{\texttt{\symbol{126}}/.
 \logpage{[ "A", 0, 0 ]}
 \hyperdef{L}{X7EE8E5D97B0F8AFF}{}
 {
-  This appendix explains the basics of how to write a \textsf{GAP} package so that it interfaces properly to \textsf{GAP}. For the role of \textsf{GAP} packages and the ways to load them, see Chapter{\nobreakspace} (\textbf{Reference: GAP Packages}). 
+  This appendix explains the basics of how to write a \textsf{GAP} package so that it interfaces properly to \textsf{GAP}. For the role of \textsf{GAP} packages and the ways to load them, see Chapter{\nobreakspace} (\textbf{Reference: Using GAP Packages}). 
 
  There are two basic aspects of creating a \textsf{GAP} package. 
 
@@ -713,7 +713,7 @@ about any interdependence. The \texttt{Declare...} statements should go in files
  \index{ShowPackageVariables@\texttt{ShowPackageVariables}} In conclusion, here is some practical advice on how to check which variables
 are used by the package. 
 
- Firstly, there is a function \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}). If the package \mbox{\texttt{\mdseries\slshape pkgname}} is available but not yet loaded then \texttt{DisplayPackageVariables( pkgname )} prints a list of global variables that become bound and of methods that become
+ Firstly, there is a function \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}). If the package \mbox{\texttt{\mdseries\slshape pkgname}} is available but not yet loaded then \texttt{ShowPackageVariables( pkgname )} prints a list of global variables that become bound and of methods that become
 installed when the package is loaded (for that, the package will be actually
 loaded, so \texttt{ShowPackageVariables} can be called only once for the same package in the same \textsf{GAP} session.) The second optional argument \mbox{\texttt{\mdseries\slshape version}} may specify a particular package version to be loaded. An error message will
 be printed if (the given version of) the package is not available or already

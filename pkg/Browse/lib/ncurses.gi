@@ -675,9 +675,6 @@ end;
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-#T Add a remark about using `NCurses.Pager' for redisplaying the output of
-#T NCurses.SaveWin!
-##  
 ##  NCurses.SaveWin saves the current content of a window. The return value
 ##  can be used with NCurses.RestoreWin to write the saved content in
 ##  a window (starting from top-left corner, as much as fits).
@@ -823,9 +820,11 @@ end;
 ##  >      NCurses.wattrset(win, NCurses.ColorAttr(a, b));
 ##  >      NCurses.waddstr(win, Concatenation(a,"/",b,"\t"));
 ##  >    od; od;
-##  gap> NCurses.update_panels();; NCurses.doupdate();;
-##  gap> NCurses.napms(5000); # show for 5 seconds
-##  gap> NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;
+##  gap> if NCurses.IsStdoutATty() then
+##  >      NCurses.update_panels();; NCurses.doupdate();;
+##  >      NCurses.napms(5000);;     # show for 5 seconds
+##  >      NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;
+##  >    fi;
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -945,7 +944,7 @@ end;
 ##  in <Ref Subsect="ssec:ncursesLines" />. The given arguments specify
 ##  the top and bottom row of the grid, its left and right column, and 
 ##  lists of row and column numbers where lines should be drawn. 
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> fun := function() local win, pan;
 ##  >      win := NCurses.newwin(0,0,0,0);
 ##  >      pan := NCurses.new_panel(win);
@@ -957,7 +956,7 @@ end;
 ##  >      NCurses.del_panel(pan); NCurses.delwin(win);
 ##  > end;;
 ##  gap> fun();
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1235,10 +1234,10 @@ end;
 ##  </Item>
 ##  </List>
 ##  <P/>
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> str := NCurses.GetLineFromUser("Your Name: ");;
 ##  gap> Print("Hello ", str, "!\n");
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1349,7 +1348,8 @@ end;
 ##  <ESC> stops the cycle without transfering the changed values.
 ##
 NCurses.EditFields := function( win, arecs )
-    local results, i, yx, curs, field, createfield, fillfield, arec, res,
+    local results, i, yx, curs, field, createfield, fillfield, b, helppage,
+          arec, res,
           max, pos, ins, c;
 
     # Initializations.
@@ -1434,6 +1434,39 @@ NCurses.EditFields := function( win, arecs )
     createfield( arecs[ field ] );
     fillfield( arecs[ field ], results[ field ], 1, true );
 
+    # Prepare a help menu.
+    b:= NCurses.attrs.BOLD;
+    helppage:= [
+      [b, "<Esc>:"],
+      "      quit without submitting values",
+      [b, "<Return>:"],
+      "      submit the current values",
+    ];
+    if 1 < Length( arecs ) then
+      Append(helppage, [
+        [b, "<Tab>:"],
+        "      move focus to the next field",
+        ] );
+    fi;
+    Append(helppage, [
+      [b, "<Left>:"],
+      "      move cursor left",
+      [b, "<Right>:"],
+      "      move cursor right",
+      [b, "<Home>:"],
+      "      move cursor to the beginning",
+      [b, "<End>:"],
+      "      move cursor to the end",
+      [b, "<Del>:"],
+      "      delete character under cursor",
+      [b, "<Backspace>:"],
+      "      delete character left from cursor",
+      [b, "<Insert>:"],
+      "      toggle insertion/overwrite mode",
+      [b, "<F1>:"],
+      "      show this help",
+      ] );
+
     # Start the loop over the fields.
     while true do
 
@@ -1483,6 +1516,14 @@ NCurses.EditFields := function( win, arecs )
           fi;
         elif c in [ NCurses.keys.ENTER, IntChar(''), 27, 9 ] then
           break;
+        elif c in [ NCurses.keys.F1 ] then
+          NCurses.Pager(rec( lines := helppage,
+              size := [Minimum(NCurses.getmaxyx(0)[1]-2, Length(helppage)+2),
+                      Maximum(List(helppage, Length)) + 2],
+              begin := [1, 2],
+              border := true,
+              hint := " [ q to leave help ] ",
+              thisishelp := true ));
         else
           if ins then
             InsertElmList( res, pos, CHAR_INT( c mod 256 ) );
@@ -1583,10 +1624,10 @@ end;
 ##  As an abbreviation the information from <C>border</C>, <C>size</C> and
 ##  <C>begin</C> can also be specified in optional arguments.
 ##  
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> lines := List([1..100],i-> ["line ",NCurses.attrs.BOLD,String(i)]);;
 ##  gap> NCurses.Pager(lines);
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1837,18 +1878,34 @@ end;
 ##  <Arg>none</Arg>.</Item>
 ##  <Mark><C>size</C></Mark>
 ##  <Item>The size of the window like the first two arguments of 
-##  <C>NCurses.newwin</C> (default is <C>[0, 0]</C>, as big as possible).
+##  <C>NCurses.newwin</C> (default is <C>[0, 0]</C>, as big as possible),
+##  or the string <C>"fit"</C> which means the smallest possible window.
+##  </Item>
+##  <Mark><C>align</C></Mark>
+##  <Item>
+##    A substring of <C>"bclt"</C>, which describes the alignment of the
+##    window in the terminal.
+##    The meaning and the default are the same as for
+##    <Ref Func="BrowseData.IsBrowseTableCellData"/>.
 ##  </Item>
 ##  <Mark><C>begin</C></Mark>
 ##  <Item>Top-left corner of the window like the last two arguments of
 ##  <C>NCurses.newwin</C> (default is <C>[0, 0]</C>, top-left of the screen).
+##    This value has priority over the <C>align</C> component.
 ##  </Item>
 ##  <Mark><C>attribute</C></Mark>
 ##  <Item>An attribute used for the display of the window (default is
 ##  <C>NCurses.attrs.NORMAL</C>).</Item>
 ##  <Mark><C>border</C></Mark>
-##  <Item>Set to <K>true</K> if the window should be displayed with a border
-##  (default is <K>false</K>).</Item>
+##  <Item>
+##    If the window should be displayed with a border then set to
+##    <K>true</K> (default is <K>false</K>) or to an integer
+##    representing attributes such as the components of <C>NCurses.attrs</C>
+##    (see Section&nbsp;<Ref Subsect="ssec:ncursesAttrs"/>)
+##    or the return value of <Ref Func="NCurses.ColorAttr"/>;
+##    these attributes are used for the border of the box.
+##    The default is <C>NCurses.attrs.NORMAL</C>.
+##  </Item>
 ##  <Mark><C>header</C></Mark>
 ##  <Item>An attribute line used as header line (the default depends on 
 ##  the settings of <C>single</C> and <C>none</C>).</Item>
@@ -1868,7 +1925,14 @@ end;
 ##  </Item>
 ##  </List>
 ##  <P/>
-##  <Example><![CDATA[
+##  If mouse events are enabled
+##  (see <Ref Func="NCurses.UseMouse"/>)<Index>mouse events</Index>
+##  then the window can be moved on the screen via mouse events,
+##  the focus can be moved to an entry,
+##  and (if <C>single</C> is <K>false</K>) the selection of an entry can be
+##  toggled.
+##  <P/>
+##  <Log><![CDATA[
 ##  gap> index := NCurses.Select(["Apples", "Pears", "Oranges"]);
 ##  gap> index := NCurses.Select(rec(
 ##  >                     items := ["Apples", "Pears", "Oranges"],
@@ -1885,7 +1949,7 @@ end;
 ##  >                         return true;
 ##  >                       fi;
 ##  >                     end ) );
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1895,10 +1959,12 @@ end;
 ##       .single         if 'true' (default) one (or none) item is to 
 ##                       be selected
 ##       .none           if 'true' a 'q' is allowed to quit without selection
-##       .size
+##       .size           window size or "fit"
+##       .align          a substring of "bclt"
 ##       .begin
 ##       .attribute
-##       .border
+##       .border         'false' (default) or 'true' or an integer denoting
+##                       attributes of the border
 ##       .header
 ##       .hint
 ##       .onSubmitFunction
@@ -2088,11 +2154,12 @@ end;
 
 #args: r[, single[, none]]
 NCurses.Select := function(arg)
-  local r, t, labels, len, mwin, mpan, size, offitems, offitemsv, start, 
-        b, max, ind, sel, pos, draw, c, a, helppage,
+  local r, t, labels, len, mwin, winparas, mpan, size, offitems, offitemsv,
+        start, b, max, ind, sel, pos, draw, c, a, helppage,
         searchString, searchParameters, filterParameters, isvisible,
-        nrvisible, jumpto, digits, resetjump, str, pos2, move, onsubmit,
-        cand, candlen, i;
+        nrvisible, jumpto, digits, buttondown, resetjump, str, pos2, move,
+        onsubmit, cand, candlen, i,
+        data, event, pressdata, diff, newpos;
 
   # If we know that there will be no chance to show anything
   # in visual mode then print a warning and give up.
@@ -2119,12 +2186,6 @@ NCurses.Select := function(arg)
   fi;
   if not IsBound(r.none) then
     r.none := false;
-  fi;
-  if not IsBound(r.size) then
-    r.size := [0, 0];
-  fi;
-  if not IsBound(r.begin) then
-    r.begin := [0, 0];
   fi;
   if not IsBound(r.border) then
     r.border := false;
@@ -2176,17 +2237,70 @@ NCurses.Select := function(arg)
         Add(a, ' ');
       od;
     od;
+  else
+    len:= 5;
   fi;
-  
+
+  # window size and alignment
+  size:= NCurses.getmaxyx(0);
+  if not IsBound(r.size) then
+    # maximal possible window size, alignment questions do not arise
+    r.size := size;
+    if not IsBound(r.begin) then
+      r.begin := [0, 0];
+    fi;
+  else
+    if r.size = "fit" then
+      r.size:= [ Length( r.items ) + 3,
+                 Maximum( NCurses.WidthAttributeLine( r.header ) + 4,
+                          NCurses.WidthAttributeLine( r.hint ) + 6,
+                          Maximum( List( r.items, Length ) ) + len + 4 ) ];
+    fi;
+
+    # The window size cannot be larger than the terminal size.
+    # (Scrolling would not work if 'r.size' is too large.)
+    if size[1] < r.size[1] then
+      r.size:= [ size[1], r.size[2] ];
+    fi;
+    if size[2] < r.size[2] then
+      r.size:= [ r.size[1], size[2] ];
+    fi;
+
+    # alignment of the window in the terminal
+    if not IsBound(r.begin) then
+      r.begin := [0, 0];
+      if IsBound( r.align ) then
+        if 'c' in r.align then
+          # horizontally centered
+          r.begin[2]:= QuoInt( size[2] - r.size[2] + 1, 2 );
+        elif not 'l' in r.align then
+          # default: right aligned
+          r.begin[2]:= size[2] - r.size[2];
+        fi;
+        if 'b' in r.align then
+          # bottom aligned
+          r.begin[1]:= size[1] - r.size[1];
+        elif not 't' in r.align then
+          # default: vertically centered
+          r.begin[1]:= QuoInt( size[1] - r.size[1] + 1, 2 );
+        fi;
+      fi;
+    fi;
+
+  fi;
+
   # set standard terminal flags and create window and panel
   NCurses.savetty();
   NCurses.SetTerm();
   mwin := NCurses.newwin(r.size[1], r.size[2], r.begin[1], r.begin[2]);
+  winparas:= [ r.size[1], r.size[2], r.begin[1], r.begin[2] ];
   if mwin = false then
     mwin := NCurses.newwin(r.size[1], r.size[2], 0, 0);
+    winparas:= [ r.size[1], r.size[2], 0, 0 ];
   fi;
   if mwin = false then
     mwin := NCurses.newwin(0, 0, 0, 0);
+    winparas:= [ 0, 0, 0, 0 ];
   fi;
   if mwin = false then
     return fail;
@@ -2195,14 +2309,13 @@ NCurses.Select := function(arg)
   if IsBound(r.attribute) then
     NCurses.wbkgdset(mwin, r.attribute);
   fi;
-  size := NCurses.getmaxyx(mwin);
   # offset for viewable items
   offitems := 0;
   offitemsv:= 0;
   # line of first displayed item
   start := 0;
   # number of items that can be displayed
-  max := size[1];
+  max:= r.size[1];
   if Length(r.header) > 0 then
     max := max - 1;
     start := start + 1;
@@ -2210,7 +2323,7 @@ NCurses.Select := function(arg)
   if Length(r.hint) > 0 then
     max := max - 1;
   fi;
-  if r.border then
+  if r.border <> false then
     if Length(r.hint) > 0 then
       max := max - 1;
     else
@@ -2219,7 +2332,7 @@ NCurses.Select := function(arg)
     start := start + 1;
   fi;
   # indent of text
-  if r.border then
+  if r.border <> false then
     ind := 1;
   else
     ind := 0;
@@ -2278,6 +2391,16 @@ NCurses.Select := function(arg)
     "      ask for a filtering string, and filter",
     [b, "'!':"],
     "      reset the filtering",
+    [b, "'M':"],
+    "      toggle enabling/disabling mouse events",
+    [b, "<Mouse1Down>:"],
+    "      starting point for moving the window",
+    [b, "<Mouse1Up>:"],
+    "      end point for moving the window",
+    [b, "<Mouse1Click>:"],
+    "      move the focus or toggle the selection",
+    [b, "<Mouse1DoubleClick>:"],
+    "      move the focus and toggle the selection",
     [b, "<F1>, 'h':"],
     "      show this help",
     ] );
@@ -2345,14 +2468,24 @@ NCurses.Select := function(arg)
       NCurses.wclrtoeol(mwin);
       NCurses.PutLine(mwin, start + max - 1, ind, " > > >");
     fi;
-    if r.border <> false then
+    if r.border = true then
+      NCurses.wborder( mwin, 0 );
+    elif IsInt( r.border ) then
+      NCurses.wattrset( mwin, r.border );
+      NCurses.wborder( mwin, 0 );
+      NCurses.wattrset( mwin, NCurses.attrs.NORMAL );
+    elif r.border <> false then
       NCurses.WBorder(mwin, r.border);
     fi;
     if Length(r.hint) > 0 then
-      NCurses.PutLine(mwin, size[1] - 1, Maximum(ind + 1, QuoInt(size[2] - 
+      NCurses.PutLine(mwin, winparas[1] - 1, Maximum(ind + 1,
+                      QuoInt(winparas[2] - 
                       NCurses.WidthAttributeLine(r.hint), 2)), r.hint);
     fi;
   end;
+
+  # move the window via mouse actions
+  buttondown:= false;
 
   while true do
     draw();
@@ -2557,6 +2690,71 @@ NCurses.Select := function(arg)
           border := true,
           hint := " [ q to leave help ] ",
           thisishelp := true ));
+    elif c in [ IntChar( 'M' ) ] then
+      # Toggle mouse events.
+      data:= NCurses.UseMouse( true );
+      if data.old = true or data.new = false then
+        data:= NCurses.UseMouse( false );
+        NCurses.Alert( [ "mouse events disabled" ], 0, NCurses.attrs.BOLD );
+      else
+        NCurses.Alert( [ "mouse events enabled" ], 0, NCurses.attrs.BOLD );
+      fi;
+    elif c = NCurses.keys.MOUSE then
+      data:= NCurses.GetMouseEvent();
+      if 0 < Length( data ) then
+        # There is a indow below the position where the mouse was released.
+        # (If not then we cannot move the window.)
+        event:= data[1].event;
+        if   event = "BUTTON1_PRESSED" and data[1].win = mwin then
+          # Store the info where the button was pressed.
+          pressdata:= data[ Length( data ) ];
+          buttondown:= true;
+        elif event = "BUTTON1_RELEASED" and buttondown then
+          # Move the window by the difference.
+          data:= data[ Length( data ) ];
+          winparas[3]:= Maximum( 0, winparas[3] + data.y - pressdata.y );
+          winparas[4]:= Maximum( 0, winparas[4] + data.x - pressdata.x );
+          NCurses.del_panel( mpan );
+          NCurses.delwin( mwin );
+          mwin:= CallFuncList( NCurses.newwin, winparas );
+          mpan:= NCurses.new_panel( mwin );
+          if IsBound( r.attribute ) then
+            NCurses.wbkgdset( mwin, r.attribute );
+          fi;
+          NCurses.update_panels();
+          NCurses.doupdate();
+          buttondown:= false;
+        elif event = "BUTTON1_CLICKED" and data[1].win = mwin then
+          # If the button was clicked on an entry then move the focus there.
+          # If the focus was already there and if multiple entries can be
+          # selected then toggle the selection.
+          diff:= data[1].y - start;
+          newpos:= diff + offitems + 1;
+          if newpos = pos then
+            if not r.single then
+              # Toggle the selection at `pos'.
+              sel[ pos ]:= not sel[ pos ];
+            fi;
+          elif ( 0 < diff or ( offitemsv = 0 and 0 <= diff ) ) and
+               ( diff < max - 1 or ( offitemsv + max >= nrvisible and
+                                     diff <= max - 1 ) ) then
+            pos:= newpos;
+          fi;
+        elif event = "BUTTON1_DOUBLE_CLICKED" and data[1].win = mwin then
+          # If the button was clicked on an entry then move the focus there,
+          # and toggle the selection if multiple entries can be selected.
+          diff:= data[1].y - start;
+          newpos:= diff + offitems + 1;
+          if ( 0 < diff or ( offitemsv = 0 and 0 <= diff ) ) and
+             ( diff < max - 1 or ( offitemsv + max >= nrvisible and
+                                   diff <= max - 1 ) ) then
+            pos:= newpos;
+            if not r.single then
+              sel[ pos ]:= not sel[ pos ];
+            fi;
+          fi;
+        fi;
+      fi;
     fi;
     if resetjump then
       # We have read a non-digit, reset the buffer.
@@ -2723,17 +2921,19 @@ NCurses.Alert := function( arg )
           # If the first button is released somewhere
           # then we move the alert box by the difference.
           data:= NCurses.GetMouseEvent();
-          event:= data[1].event;
-          if   event = "BUTTON1_PRESSED" and data[1].win = win then
-            pressdata:= data[ Length( data ) ];
-            buttondown:= true;
-          elif event = "BUTTON1_RELEASED" and buttondown then
-            data:= data[ Length( data ) ];
-            winposy:= Minimum( Maximum( 0, winposy + data.y - pressdata.y ),
-                               yx[1] - height );
-            winposx:= Minimum( Maximum( 0, winposx + data.x - pressdata.x ),
-                               yx[2] - width );
-            buttondown:= false;
+          if 0 < Length( data ) then
+            event:= data[1].event;
+            if   event = "BUTTON1_PRESSED" and data[1].win = win then
+              pressdata:= data[ Length( data ) ];
+              buttondown:= true;
+            elif event = "BUTTON1_RELEASED" and buttondown then
+              data:= data[ Length( data ) ];
+              winposy:= Minimum( Maximum( 0, winposy + data.y - pressdata.y ),
+                                 yx[1] - height );
+              winposx:= Minimum( Maximum( 0, winposx + data.x - pressdata.x ),
+                                 yx[2] - width );
+              buttondown:= false;
+            fi;
           fi;
         fi;
       else

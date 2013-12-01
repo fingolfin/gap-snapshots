@@ -1,6 +1,41 @@
-This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
-Scanning input file AutoDoc.idx....done (15 entries accepted, 0 rejected).
-Sorting entries....done (60 comparisons).
-Generating output file AutoDoc.ind....done (35 lines written, 0 warnings).
+This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+Scanning input file AutoDoc.idx....
+!! Input index error (file = AutoDoc.idx, line = 2):
+   -- Extra `@' at position 13 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 3):
+   -- Extra `@' at position 9 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 4):
+   -- Extra `@' at position 11 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 5):
+   -- Extra `@' at position 7 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 6):
+   -- Extra `@' at position 15 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 7):
+   -- Extra `@' at position 13 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 8):
+   -- Extra `@' at position 9 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 9):
+   -- Extra `@' at position 9 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 10):
+   -- Extra `@' at position 12 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 11):
+   -- Extra `@' at position 9 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 12):
+   -- Extra `@' at position 12 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 13):
+   -- Extra `@' at position 12 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 14):
+   -- Extra `@' at position 10 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 15):
+   -- Extra `@' at position 7 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 16):
+   -- Extra `@' at position 12 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 17):
+   -- Extra `@' at position 9 of first argument.
+!! Input index error (file = AutoDoc.idx, line = 18):
+   -- Extra `@' at position 8 of first argument.
+done (38 entries accepted, 17 rejected).
+Sorting entries....done (240 comparisons).
+Generating output file AutoDoc.ind....done (74 lines written, 0 warnings).
 Output written in AutoDoc.ind.
 Transcript written in AutoDoc.ilg.

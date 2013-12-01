@@ -9,7 +9,7 @@
 \makelabel{openmath:Installation of the package}{1.2}{X79E1ED167D631DCC}
 \makelabel{openmath:OpenMath functionality in GAP}{2}{X83C7040B7B389CA5}
 \makelabel{openmath:Viewing OpenMath representation of an object}{2.1}{X8393E7C57E539406}
-\makelabel{openmath:Reading OpenMath code from streams}{2.2}{X7A6FF7C384BCD9C1}
+\makelabel{openmath:Reading OpenMath code from streams and strings}{2.2}{X7EB959397AB2B646}
 \makelabel{openmath:Writing OpenMath code to streams}{2.3}{X87E11972845542AE}
 \makelabel{openmath:Utilities}{2.4}{X7DFC90B87DC503A1}
 \makelabel{openmath:Extending the OpenMath package}{3}{X84EBC4EC7D3DC9CB}
@@ -22,6 +22,7 @@
 \makelabel{openmath:OMPrint}{2.1.1}{X7B1815F078D8312B}
 \makelabel{openmath:OMString}{2.1.2}{X876AD5BC7A8812C3}
 \makelabel{openmath:OMGetObject}{2.2.1}{X7FBDCB3C83BBB115}
+\makelabel{openmath:EvalOMString}{2.2.2}{X7BFA1BAB7DA665F4}
 \makelabel{openmath:IsOpenMathWriter}{2.3.1}{X79EE2E8B7C83E0F4}
 \makelabel{openmath:IsOpenMathXMLWriter}{2.3.1}{X79EE2E8B7C83E0F4}
 \makelabel{openmath:IsOpenMathBinaryWriter}{2.3.1}{X79EE2E8B7C83E0F4}

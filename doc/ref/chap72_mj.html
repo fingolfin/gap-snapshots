@@ -879,9 +879,8 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Irr( S4 ), KernelOfCharacter );</span>
-[ Group([ (), (1,2)(3,4), (1,2,3) ]), Group(()), 
-  Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
-  Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
+[ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+  Group(()), Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 </pre></div>
 
 <p><a id="X7B4708B47D9C05B3" name="X7B4708B47D9C05B3"></a></p>
@@ -939,7 +938,7 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">der:= DerivedSubgroup( S4 );</span>
-Group([ (1,3,2), (2,4,3) ])
+Alt( [ 1 .. 4 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Irr( der ), chi -&gt; InertiaSubgroup( S4, chi ) );</span>
 [ S4, Alt( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ), S4 ]
 </pre></div>

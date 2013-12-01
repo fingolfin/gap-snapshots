@@ -39,11 +39,13 @@ Version := Maximum( [
 ## this line prevents merge conflicts
   "2011.06.16", ## Markus K's version
 ## this line prevents merge conflicts
-  "2013.04.19", ## Mohamed's version
+  "2013.11.01", ## Mohamed's version
 ## this line prevents merge conflicts
   "2011.12.13", ## Andreas's version
 ## this line prevents merge conflicts
   "2012.12.11", ## Sebas' version
+## this line prevents merge conflicts
+  "2013.07.16", ## Vinay's version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -277,6 +279,22 @@ Persons := [
     Place         := "Kaiserslautern",
     Institution   := "University of Kaiserslautern"
   ),
+  rec(
+    LastName      := "Wagh",
+    FirstNames    := "Vinay",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waghoba@gmail.com",
+    WWWHome       := "http://www.iitg.ernet.in/vinay.wagh/",
+    PostalAddress := Concatenation( [
+                       "E-102, Department of Mathematics,\n",
+                       "Indian Institute of Technology Guwahati,\n",
+                       "Guwahati, Assam, India.\n",
+                       "PIN: 781 039.\n",
+                       "India" ] ),
+    Place         := "Guwahati",
+    Institution   := "Indian Institute of Technology Guwahati"
+  ),
 # provide such a record for each author and/or maintainer ...
   
 ],
@@ -392,8 +410,8 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [
-                   [ "MatricesForHomalg", ">= 2012.10.25" ],
-                   [ "HomalgToCAS", ">= 2012.06.27" ],
+                   [ "MatricesForHomalg", ">= 2013.07.14" ],
+                   [ "HomalgToCAS", ">= 2013.07.15" ],
                    [ "GAPDoc", ">= 1.0" ]
                    ],
   # without these the package will issue a warning while loading

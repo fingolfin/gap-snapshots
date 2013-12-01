@@ -6,10 +6,10 @@
                          [1X[5XGauss[105X Functionality for [5Xhomalg[105X[101X
   
   
-                               Version 2012.10.22
+                               Version 2013.09.20
   
   
-                                  October 2012
+                                 September 2013
   
   
                                  Simon Goertzen
@@ -36,7 +36,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2007-2012 by Simon Goertzen[133X
+  [33X[0;0Y© 2007-2013 by Simon Goertzen[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2.[133X
@@ -46,11 +46,11 @@
   [1XAcknowledgements[101X
   [33X[0;0YMany  thanks  to  Mohamed Barakat and the Lehrstuhl B für Mathematik at RWTH
   Aachen  University  in  general  for  their support. It should be noted that
-  [5XGaussForHomalg[105X is dependant on the [5XGAP[105X [5Xhomalg[105X package by M. Barakat [Bar09],
-  as  well  as  the  [5XGauss[105X  package by myself [Gör08]. This should be clear as
-  [5XGaussForHomalg[105X  presents  a link between these two packages. This manual was
-  created  with  the help of the [5XGAPDoc[105X package by M. Neunhöffer and F. Lübeck
-  [LN08].[133X
+  [5XGaussForHomalg[105X  is  dependant  on  the  [5XGAP[105X  [5XMatricesForHomalg[105X package by M.
+  Barakat et al. [Bar09], as well as the [5XGauss[105X package by myself [Gör08]. This
+  should  be  clear  as  [5XGaussForHomalg[105X  presents  a  link  between  these two
+  packages.  This manual was created with the help of the [5XGAPDoc[105X package by M.
+  Neunhöffer and F. Lübeck [LN08].[133X
   
   
   -------------------------------------------------------

@@ -25,7 +25,7 @@
 
 <h1>GAP - Reference Manual</h1>
 
-<p>Release 4.6.5, 20-Jul-2013</p>
+<p>Release 4.7.2, 01-Dec-2013</p>
 
 </div>
 <p><b>The GAP Group
@@ -2159,7 +2159,9 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X79441F1F7A277E28">35.2-9 SubmagmaWithInverses</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X84ED076D7E46AB79">35.2-10 AsMagma</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X87EEEC018129F0F4">35.2-11 AsSubmagma</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X8620878D7FD98823">35.2-12 InjectionZeroMagma</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X8553F44D8123B2C6">35.2-12 IsMagmaWithZeroAdjoined</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X8620878D7FD98823">35.2-13 InjectionZeroMagma</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X7B353674859BF659">35.2-14 UnderlyingInjectionZeroMagma</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap35.html#X782215B982F2F01C">35.3 <span class="Heading">Magmas Defined by Multiplication Tables</span></a>
 </span>
@@ -2185,9 +2187,8 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X830A4A4C795FBC2D">35.4-9 IsCommutative</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X7EE2EA5F7EB7FEC2">35.4-10 MultiplicativeNeutralElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X7B39F93C8136D642">35.4-11 MultiplicativeZero</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X86FC794E7A066F78">35.4-12 IsMultiplicativeZero</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X867DB05A8218FB1E">35.4-13 SquareRoots</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X837DA95883CFB985">35.4-14 TrivialSubmagmaWithOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X867DB05A8218FB1E">35.4-12 SquareRoots</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35.html#X837DA95883CFB985">35.4-13 TrivialSubmagmaWithOne</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap36.html#X7CB0D2F780D15136">36 <span class="Heading">Words</span></a>
@@ -2388,6 +2389,7 @@ several arguments</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7FE8A3B08458A1BF">39.5-1 EpimorphismFromFreeGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X8357294D7B164106">39.5-2 Factorization</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X871508DD808EB487">39.5-3 GrowthFunctionOfGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X87BF1B887C91CA2E">39.6 <span class="Heading">Structure Descriptions</span></a>
 </span>
@@ -2889,6 +2891,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X78D611D17EA6E3BC">42.5-2 PermList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X8087DCC780B9656A">42.5-3 MappingPermListList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X7EF8388E7DA8E600">42.5-4 RestrictedPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X8353AB8987E35DF3">42.5-5 AsPermutation</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap43.html#X85ED46007CED6191">43 <span class="Heading">Permutation Groups</span></a>
@@ -3543,16 +3546,17 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7A7C473D87B31F3B">50.1-2 CyclicGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X81CCC3BF8005A2D7">50.1-3 AbelianGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8778256286E50743">50.1-4 ElementaryAbelianGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X838DE1AB7B3D70FF">50.1-5 DihedralGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87865686856910E4">50.1-6 QuaternionGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-7 ExtraspecialGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-8 <span class="Heading">AlternatingGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7F43050D8587E767">50.1-5 FreeAbelianGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X838DE1AB7B3D70FF">50.1-6 DihedralGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87865686856910E4">50.1-7 QuaternionGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-8 ExtraspecialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-9 <span class="Heading">AlternatingGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-9 <span class="Heading">SymmetricGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-10 <span class="Heading">SymmetricGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-10 MathieuGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-11 SuzukiGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-12 ReeGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-11 MathieuGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-12 SuzukiGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-13 ReeGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap50.html#X8674AAA578FE4AEE">50.2 <span class="Heading">Classical Groups</span></a>
 </span>
@@ -3659,187 +3663,322 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7CEDB6CE7BAC4518">50.12-6 IsomorphismPermGroupImfGroup</a></span>
 </div></div>
 </div>
-<div class="ContChap"><a href="chap51.html#X80AF5F307DBDC2B4">51 <span class="Heading">Semigroups</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X82AD02117C086D6F">51.1 <span class="Heading">IsSemigroup (Filter)</span></a>
+<div class="ContChap"><a href="chap51.html#X8665D8737FDD5B10">51 <span class="Heading">Semigroups and Monoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X80AF5F307DBDC2B4">51.1 <span class="Heading">Semigroups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7B412E5B8543E9B7">51.1-1 IsSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F55D28F819B2817">51.1-2 <span class="Heading">Semigroup</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8678D40878CC09A1">51.1-3 Subsemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X79FBBEC9841544F3">51.1-4 SemigroupByGenerators</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X80ED104F85AE5134">51.1-5 AsSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7B1EEA3E82BFE09F">51.1-6 AsSubsemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78147A247963F23B">51.1-7 GeneratorsOfSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C72E4747BF642BB">51.1-8 <span class="Heading">FreeSemigroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X782B7BDD8252581C">51.1-4 IsSubsemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X79FBBEC9841544F3">51.1-5 SemigroupByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X80ED104F85AE5134">51.1-6 AsSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7B1EEA3E82BFE09F">51.1-7 AsSubsemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78147A247963F23B">51.1-8 GeneratorsOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C72E4747BF642BB">51.1-9 <span class="Heading">FreeSemigroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7E67E13F7A01F8D3">51.1-9 SemigroupByMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7E67E13F7A01F8D3">51.1-10 SemigroupByMultiplicationTable</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X78274024827F306D">51.2 <span class="Heading">Properties of Semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X872FE34A7814C0DC">51.2 <span class="Heading">Monoids</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C4663827C5ACEF1">51.2-1 IsRegularSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87532A76854347E0">51.2-2 IsRegularSemigroupElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X836F4692839F4874">51.2-3 IsSimpleSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8193A60F839C064E">51.2-4 IsZeroSimpleSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X85F7E5CD86F0643B">51.2-5 IsZeroGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7FFEC81F7F2C4EAA">51.2-6 IsReesCongruenceSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X861C523483C6248C">51.2-1 IsMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F95328B7C7E49EA">51.2-2 <span class="Heading">Monoid</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8322D01E84912FD7">51.2-3 Submonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X85129EE387CC4D28">51.2-4 MonoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7B22038F832B9C0F">51.2-5 AsMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C9A12DE8287B2D3">51.2-6 AsSubmonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X83CA2E7279C44718">51.2-7 GeneratorsOfMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7EC77C0184587181">51.2-8 TrivialSubmonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X79FA3FA978CA2E43">51.2-9 <span class="Heading">FreeMonoid</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7BFE938E857CA27D">51.2-10 MonoidByMultiplicationTable</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X872369257F69EA20">51.3 <span class="Heading">Making transformation semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X840847B6810BD0E1">51.3 <span class="Heading">Inverse semigroups and monoids</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7EAF835D7FE4026F">51.3-1 IsTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7EA699C687952544">51.3-2 DegreeOfTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78F29C817CF6827F">51.3-3 IsomorphismTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X85C58E1E818C838C">51.3-4 IsFullTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D2B0685815B4053">51.3-5 FullTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78B13FED7AFB4326">51.3-1 InverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X80D9B9A98736051B">51.3-2 InverseMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87C373597F787250">51.3-3 GeneratorsOfInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A3B262C85B6D475">51.3-4 GeneratorsOfInverseMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C4C6EE681E7A57E">51.3-5 IsInverseSubsemigroup</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7BB32D508183C0F1">51.4 <span class="Heading">Ideals of semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X78274024827F306D">51.4 <span class="Heading">Properties of Semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D5CEE4D7D4318ED">51.4-1 SemigroupIdealByGenerators</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F01FFB18125DED5">51.4-2 ReesCongruenceOfSemigroupIdeal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A3FF85984345540">51.4-3 IsLeftSemigroupIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7C4663827C5ACEF1">51.4-1 IsRegularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87532A76854347E0">51.4-2 IsRegularSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7AFDE0F17AE516C5">51.4-3 InversesOfSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X836F4692839F4874">51.4-4 IsSimpleSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8193A60F839C064E">51.4-5 IsZeroSimpleSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X85F7E5CD86F0643B">51.4-6 IsZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7FFEC81F7F2C4EAA">51.4-7 IsReesCongruenceSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X83F1529479D56665">51.4-8 IsInverseSemigroup</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7C0782D57C01E327">51.5 <span class="Heading">Congruences for semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7BB32D508183C0F1">51.5 <span class="Heading">Ideals of semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78E34B737F0E009F">51.5-1 IsSemigroupCongruence</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X822DB78579BCB7B5">51.5-2 IsReesCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D5CEE4D7D4318ED">51.5-1 SemigroupIdealByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F01FFB18125DED5">51.5-2 ReesCongruenceOfSemigroupIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A3FF85984345540">51.5-3 IsLeftSemigroupIdeal</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X87CE9EAB7EE3A128">51.6 <span class="Heading">Quotients</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7C0782D57C01E327">51.6 <span class="Heading">Congruences for semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X80EF3E6F842BE64E">51.6-1 IsQuotientSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7CAD3D1687956F7F">51.6-2 HomomorphismQuotientSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87120C46808F7289">51.6-3 QuotientSemigroupPreimage</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78E34B737F0E009F">51.6-1 IsSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X822DB78579BCB7B5">51.6-2 IsReesCongruence</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X80C6C718801855E9">51.7 <span class="Heading">Green's Relations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X87CE9EAB7EE3A128">51.7 <span class="Heading">Quotients</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X786CEDD4814A9079">51.7-1 GreensRRelation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8364D69987D49DE1">51.7-2 IsGreensRelation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X82A11A087AFB3EB0">51.7-3 IsGreensClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7AA204C8850F9070">51.7-4 IsGreensLessThanOrEqual</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X86FE5F5585EBCF13">51.7-5 RClassOfHClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78C56F4A78E0088A">51.7-6 EggBoxOfDClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X803237F17ACD44E3">51.7-7 DisplayEggBoxOfDClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87C75A9D86122D93">51.7-8 GreensRClassOfElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X844D20467A644811">51.7-9 GreensRClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7CB4A18685B850E2">51.7-10 GroupHClassOfGreensDClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X79D740EF7F0E53BD">51.7-11 IsGroupHClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F5860927CAD920F">51.7-12 IsRegularDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X80EF3E6F842BE64E">51.7-1 IsQuotientSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7CAD3D1687956F7F">51.7-2 HomomorphismQuotientSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87120C46808F7289">51.7-3 QuotientSemigroupPreimage</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X8225A9EC87A255E6">51.8 <span class="Heading">Rees Matrix Semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X80C6C718801855E9">51.8 <span class="Heading">Green's Relations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8526AA557CDF6C49">51.8-1 ReesMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X872CEF99839085B1">51.8-2 ReesZeroMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X780BB78A79275244">51.8-3 IsReesMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7EEBAEE9857C5EBA">51.8-4 IsReesZeroMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A0DE1F28470295E">51.8-5 ReesMatrixSemigroupElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F6B852B81488C86">51.8-6 IsReesMatrixSemigroupElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D3366928253D5D3">51.8-7 SandwichMatrixOfReesMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7FAF2F3E864CA202">51.8-8 RowIndexOfReesMatrixSemigroupElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7FA034937CA3C41F">51.8-9 ReesZeroMatrixSemigroupElementIsZero</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D1D9A0382064B8F">51.8-10 AssociatedReesMatrixSemigroupOfDClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7964B5C97FB9C07D">51.8-11 IsomorphismReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X786CEDD4814A9079">51.8-1 GreensRRelation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8364D69987D49DE1">51.8-2 IsGreensRelation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X82A11A087AFB3EB0">51.8-3 IsGreensClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7AA204C8850F9070">51.8-4 IsGreensLessThanOrEqual</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X86FE5F5585EBCF13">51.8-5 RClassOfHClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78C56F4A78E0088A">51.8-6 EggBoxOfDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X803237F17ACD44E3">51.8-7 DisplayEggBoxOfDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X87C75A9D86122D93">51.8-8 GreensRClassOfElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X844D20467A644811">51.8-9 GreensRClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7CB4A18685B850E2">51.8-10 GroupHClassOfGreensDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X79D740EF7F0E53BD">51.8-11 IsGroupHClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F5860927CAD920F">51.8-12 IsRegularDClass</a></span>
 </div></div>
-</div>
-<div class="ContChap"><a href="chap52.html#X872FE34A7814C0DC">52 <span class="Heading">Monoids</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X7F3D35A38738DEB9">52.1 <span class="Heading">Functions for Monoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X8225A9EC87A255E6">51.9 <span class="Heading">Rees Matrix Semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X861C523483C6248C">52.1-1 IsMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7F95328B7C7E49EA">52.1-2 <span class="Heading">Monoid</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X8526AA557CDF6C49">51.9-1 ReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78D2A48C87FC8E38">51.9-2 ReesMatrixSubsemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7964B5C97FB9C07D">51.9-3 IsomorphismReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F6B852B81488C86">51.9-4 IsReesMatrixSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A0DE1F28470295E">51.9-5 ReesMatrixSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F03BE707AC7F8A0">51.9-6 IsReesMatrixSubsemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X780BB78A79275244">51.9-7 IsReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X879384D479EB1D82">51.9-8 Matrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X82FC5D6980C66AC4">51.9-9 <span class="Heading">Rows and columns</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X8322D01E84912FD7">52.1-3 Submonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X85129EE387CC4D28">52.1-4 MonoidByGenerators</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7B22038F832B9C0F">52.1-5 AsMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7C9A12DE8287B2D3">52.1-6 AsSubmonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X83CA2E7279C44718">52.1-7 GeneratorsOfMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7EC77C0184587181">52.1-8 TrivialSubmonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X79FA3FA978CA2E43">52.1-9 <span class="Heading">FreeMonoid</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7BFE938E857CA27D">52.1-10 MonoidByMultiplicationTable</a></span>
-</div></div>
-</div>
-<div class="ContChap"><a href="chap53.html#X7DE7C52A7C4BDADE">53 <span class="Heading">Finitely Presented Semigroups and Monoids</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X78C80F1A84C58E1E">53.1 <span class="Heading">IsSubsemigroupFpSemigroup (Filter)</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8496E23C80453C33">53.1-1 IsSubsemigroupFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X82128D4D83ACA683">53.1-2 IsSubmonoidFpMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8239EF2B853411E9">53.1-3 IsFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7C2BA01D86087D11">53.1-4 IsFpMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X81ABBE997A4C19B7">53.1-5 IsElementOfFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7A570B89862C7399">53.1-6 IsElementOfFpMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7DC8A5D380AFE5DB">53.1-7 FpGrpMonSmgOfFpGrpMonSmgElement</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X84B8E3257E2E4134">53.2 <span class="Heading">Creating Finitely Presented Semigroups</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7D3B9E317DD5AC8A">53.2-1 \/</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X822F04B2833BE254">53.2-2 FactorFreeSemigroupByRelations</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X869F966B8196F28C">53.2-3 IsomorphismFpSemigroup</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X85E7C8407C9D5FBE">53.3 <span class="Heading">Comparison of Elements of Finitely Presented Semigroups</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7DD9D81F863EBE31">53.3-1 \=</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X7D3EA628804E05D4">53.4 <span class="Heading">Preimages in the Free Semigroup</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X818E25C887512E89">53.4-1 UnderlyingElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X847012347856C55E">53.4-2 ElementOfFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8726523779601873">53.4-3 FreeSemigroupOfFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X79A39402806B5EB7">53.4-4 FreeGeneratorsOfFpSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X862BE9FA7C987CAB">53.4-5 RelationsOfFpSemigroup</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X7E79A80382563C26">53.5 <span class="Heading">Finitely presented monoids</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X82B5E4A27AAB6749">53.5-1 \/</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X87693BDC79DC6EBF">53.6 <span class="Heading">Rewriting Systems and the Knuth-Bendix Procedure</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7D8F804E814D894D">53.6-1 ReducedConfluentRewritingSystem</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7A3F8AE285C41D80">53.6-2 KB_REW</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X87A3823483E4FF86">53.6-3 <span class="Heading">KnuthBendixRewritingSystem</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7966343587A04AFF">53.6-4 SemigroupOfRewritingSystem</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7EAB3E067D7557F6">53.6-5 MonoidOfRewritingSystem</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X80B8115C8147F605">53.6-6 FreeSemigroupOfRewritingSystem</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X84CE48BE7F870808">53.6-7 FreeMonoidOfRewritingSystem</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X812C28217F3E6720">53.7 <span class="Heading">Todd-Coxeter Procedure</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7C24508A7F677520">53.7-1 CosetTableOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D9719F887AFCF8F">51.9-10 UnderlyingSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7D1D9A0382064B8F">51.9-11 AssociatedReesMatrixSemigroupOfDClass</a></span>
 </div></div>
 </div>
-<div class="ContChap"><a href="chap54.html#X860026B880BCB2A5">54 <span class="Heading">Transformations</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X7EB5F6967BC9D340">54.1 <span class="Heading">Functions for Transformations</span></a>
+<div class="ContChap"><a href="chap52.html#X7DE7C52A7C4BDADE">52 <span class="Heading">Finitely Presented Semigroups and Monoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X78C80F1A84C58E1E">52.1 <span class="Heading">IsSubsemigroupFpSemigroup (Filter)</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7B6259467974FB70">54.1-1 IsTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7E58AFA1832FF064">54.1-2 TransformationFamily</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7B2E556E7BCF9CDF">54.1-3 Transformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8268A58685BEFD6F">54.1-4 IdentityTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8475448F87E8CB8A">54.1-5 RandomTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X78A209C87CF0E32B">54.1-6 DegreeOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7AEC9E6687B3505A">54.1-7 ImageListOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X839A6D6082A21D1F">54.1-8 ImageSetOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X85F22DDD84C28583">54.1-9 RankOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X80FCB5048789CF75">54.1-10 KernelOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X82F5DEEC837B60A3">54.1-11 PreimagesOfTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X846A6F6B7B715188">54.1-12 RestrictedTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C5360B2799943F3">54.1-13 AsTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X83DBA2A18719EFA8">54.1-14 PermLeftQuoTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7CCD27327CC84626">54.1-15 BinaryRelationTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7BF5FA5C8068EB3B">54.1-16 TransformationRelation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X8496E23C80453C33">52.1-1 IsSubsemigroupFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X82128D4D83ACA683">52.1-2 IsSubmonoidFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X8239EF2B853411E9">52.1-3 IsFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7C2BA01D86087D11">52.1-4 IsFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X81ABBE997A4C19B7">52.1-5 IsElementOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7A570B89862C7399">52.1-6 IsElementOfFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7DC8A5D380AFE5DB">52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X84B8E3257E2E4134">52.2 <span class="Heading">Creating Finitely Presented Semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7D3B9E317DD5AC8A">52.2-1 \/</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X822F04B2833BE254">52.2-2 FactorFreeSemigroupByRelations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X869F966B8196F28C">52.2-3 IsomorphismFpSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X85E7C8407C9D5FBE">52.3 <span class="Heading">Comparison of Elements of Finitely Presented Semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7DD9D81F863EBE31">52.3-1 \=</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X7D3EA628804E05D4">52.4 <span class="Heading">Preimages in the Free Semigroup</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X818E25C887512E89">52.4-1 UnderlyingElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X847012347856C55E">52.4-2 ElementOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X8726523779601873">52.4-3 FreeSemigroupOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X79A39402806B5EB7">52.4-4 FreeGeneratorsOfFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X862BE9FA7C987CAB">52.4-5 RelationsOfFpSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X7E79A80382563C26">52.5 <span class="Heading">Finitely presented monoids</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X82B5E4A27AAB6749">52.5-1 \/</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X87693BDC79DC6EBF">52.6 <span class="Heading">Rewriting Systems and the Knuth-Bendix Procedure</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7D8F804E814D894D">52.6-1 ReducedConfluentRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7A3F8AE285C41D80">52.6-2 KB_REW</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X87A3823483E4FF86">52.6-3 <span class="Heading">KnuthBendixRewritingSystem</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7966343587A04AFF">52.6-4 SemigroupOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7EAB3E067D7557F6">52.6-5 MonoidOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X80B8115C8147F605">52.6-6 FreeSemigroupOfRewritingSystem</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X84CE48BE7F870808">52.6-7 FreeMonoidOfRewritingSystem</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap52.html#X812C28217F3E6720">52.7 <span class="Heading">Todd-Coxeter Procedure</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap52.html#X7C24508A7F677520">52.7-1 CosetTableOfFpSemigroup</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap53.html#X860026B880BCB2A5">53 <span class="Heading">Transformations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X7CF9291C7CC42340">53.1 <span class="Heading">The family and categories of transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7B6259467974FB70">53.1-1 IsTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7A6747CE85F2E6EA">53.1-2 IsTransformationCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7E58AFA1832FF064">53.1-3 TransformationFamily</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X80F3086F87E93DF8">53.2 <span class="Heading">Creating transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X86ADBDE57A20E323">53.2-1 Transformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8040642687531E7F">53.2-2 Transformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7E82EBD68455EE4A">53.2-3 TransformationByImageAndKernel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X85D1071484CE004C">53.2-4 Idempotent</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7C2A3FC9782F2099">53.2-5 TransformationOp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7D6FCC417DE86CD1">53.2-6 TransformationNumber</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8475448F87E8CB8A">53.2-7 <span class="Heading">RandomTransformation</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8268A58685BEFD6F">53.2-8 IdentityTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7F1E4B5184210D2B">53.2-9 ConstantTransformation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X7F81A18B813C9DF0">53.3 <span class="Heading">Changing the representation of a transformation</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7C5360B2799943F3">53.3-1 AsTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X846A6F6B7B715188">53.3-2 RestrictedTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8708AE247F5B129B">53.3-3 PermutationOfImage</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X812CEC008609A8A2">53.4 <span class="Heading">Operators for transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X83DBA2A18719EFA8">53.4-1 PermLeftQuoTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8275DFAA8270BB59">53.4-2 IsInjectiveListTrans</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X834A313B7DAF06D5">53.4-3 ComponentTransformationInt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X82F5DEEC837B60A3">53.4-4 PreImagesOfTransformation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X86DE4F7A7C535820">53.5 <span class="Heading">Attributes for transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X78A209C87CF0E32B">53.5-1 DegreeOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7AEC9E6687B3505A">53.5-2 ImageListOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X839A6D6082A21D1F">53.5-3 ImageSetOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X818EBB167C7EA37B">53.5-4 RankOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X844F00F982D5BD3C">53.5-5 MovedPoints</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7FA6A4B57FDA003D">53.5-6 NrMovedPoints</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X86C0DDDC7881273A">53.5-7 SmallestMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8383A7727AC97724">53.5-8 LargestMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7CCFE27E83676572">53.5-9 SmallestImageOfMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7E7172567C3A3E63">53.5-10 LargestImageOfMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8083794579274E87">53.5-11 FlatKernelOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X80FCB5048789CF75">53.5-12 KernelOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X860306EB7FAAD2D4">53.5-13 InverseOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7BB9DB6E8558356D">53.5-14 Inverse</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X863216CB7AF88BED">53.5-15 IndexPeriodOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X85FE9F20810BCC70">53.5-16 SmallestIdempotentPower</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X858E944481F6B591">53.5-17 ComponentsOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8640AE1C79201470">53.5-18 NrComponentsOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X784650B583CEAF7D">53.5-19 ComponentRepsOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7EAA15557D55D93B">53.5-20 CyclesOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X786EB02A829260DB">53.5-21 CycleTransformationInt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X845869E0815A6AA6">53.5-22 LeftOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7F19C9C77F9F8981">53.5-23 TrimTransformation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X810D23017A5527B7">53.6 <span class="Heading">Displaying transformations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X7B51CE257B814B09">53.7 <span class="Heading">Semigroups of transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7EAF835D7FE4026F">53.7-1 IsTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7EA699C687952544">53.7-2 DegreeOfTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7D2B0685815B4053">53.7-3 FullTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X85C58E1E818C838C">53.7-4 IsFullTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X78F29C817CF6827F">53.7-5 IsomorphismTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X820ECE00846E480F">53.7-6 AntiIsomorphismTransformationSemigroup</a></span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap54.html#X7D6495F77B8A77BD">54 <span class="Heading">Partial permutations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X87B0D6657A3F2B0E">54.1 <span class="Heading">The family and categories of partial permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7EECE133792B30FC">54.1-1 IsPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8262A827790DD1CC">54.1-2 IsPartialPermCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7E63D17780F64FBA">54.1-3 PartialPermFamily</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X7B9D451D7FDA1DD8">54.2 <span class="Heading">Creating partial permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8538BAE77F2FB2F8">54.2-1 PartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81188D9F83F64222">54.2-2 PartialPermOp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X80ABBF4883C79060">54.2-3 RestrictedPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X849668DD7B0B9E3B">54.2-4 JoinOfPartialPerms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81E2B6977E28CD00">54.2-5 MeetOfPartialPerms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X80EFB142817A0A9F">54.2-6 EmptyPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7E6ADC8583C31530">54.2-7 <span class="Heading">RandomPartialPerm</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X8779F0997D0FDA78">54.3 <span class="Heading">Attributes for partial permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8612A4DC864E7959">54.3-1 DegreeOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8413D0EF7DEE1FFF">54.3-2 CodegreeOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C1ABD8A80E95B39">54.3-3 RankOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X784A14F787E041D7">54.3-4 DomainOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7CD84B107831E0FC">54.3-5 ImageOfPartialPermCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8333293F87F654FA">54.3-6 ImageListOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7F0724A07A14DCF7">54.3-7 ImageSetOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X82AAFF938623422E">54.3-8 FixedPointsOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X82FE981A87FAA2DC">54.3-9 MovedPoints</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7FAF969C84CDC742">54.3-10 NrFixedPoints</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81F5C64E7DAD27A7">54.3-11 NrMovedPoints</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X84A49C977E1E29AA">54.3-12 SmallestMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7D4290A785ABC86D">54.3-13 LargestMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X85280F1A7B1014BA">54.3-14 SmallestImageOfMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7A95CD437BC1CB1A">54.3-15 LargestImageOfMovedPoint</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X873A9F717DA75CBC">54.3-16 IndexPeriodOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C04AA377F080722">54.3-17 SmallestIdempotentPower</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8185065E788BDD0D">54.3-18 ComponentsOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7CB51EB67FFA95E9">54.3-19 NrComponentsOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7AAAAE4082B30E18">54.3-20 ComponentRepsOfPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7A8FB86C78C49F85">54.3-21 LeftOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X857FC10C81507E8B">54.3-22 One</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X83B6AE4881C7253B">54.3-23 Zero</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X8585AA8B78E9CDFB">54.4 <span class="Heading">Changing the representation of a partial permutation</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81B32CB182489ACA">54.4-1 AsPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X87EC67747B260E98">54.4-2 AsPartialPerm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X848CD855802C6CE1">54.5 <span class="Heading">Operators and operations for partial permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X8382A0F8875CEB08">54.5-1 PermLeftQuoPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C7F5EAB7E9A381D">54.5-2 PreImagePartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X797A6CC084068219">54.5-3 ComponentPartialPermInt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X87B1ED93785257C1">54.5-4 NaturalLeqPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81BD69307D294A1C">54.5-5 ShortLexLeqPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X83560BE678ACF855">54.5-6 TrimPartialPerm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X7849595B81D063EE">54.6 <span class="Heading">Displaying partial permutations</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54.html#X7CCC82E07A73EB55">54.7 <span class="Heading">Semigroups and inverse semigroups of partial permutations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7D161674800B50E0">54.7-1 IsPartialPermSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7D7F0BAB82F0D820">54.7-2 DegreeOfPartialPermSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X81D271B380995F8A">54.7-3 SymmetricInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7C8AEA50834060DD">54.7-4 IsSymmetricInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X7EA51F087CF7621F">54.7-5 NaturalPartialOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54.html#X857F68DF7EDA3BE4">54.7-6 IsomorphismPartialPermMonoid</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap55.html#X7D0D096B81365B02">55 <span class="Heading">Additive Magmas</span></a>
@@ -5492,7 +5631,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap75.html#X7B416BBD80072079">75.5-2 MinimalNonmonomialGroup</a></span>
 </div></div>
 </div>
-<div class="ContChap"><a href="chap76.html#X816DC7C580D41F49">76 <span class="Heading">GAP Packages</span></a>
+<div class="ContChap"><a href="chap76.html#X7B6CD527825945CD">76 <span class="Heading">Using GAP Packages</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap76.html#X82473E4B8756C6CD">76.1 <span class="Heading">Installing a GAP Package</span></a>
 </span>
 </div>
@@ -5523,6 +5662,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79767C2482FF6F55">76.3-12 ValidatePackageInfo</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7D34AC3287611B15">76.3-13 ShowPackageVariables</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79EA4BD37940AD25">76.3-14 BibEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79637D9A7B1AD7F7">76.3-15 Cite</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap77.html#X78C85ED17F00DCC1">77 <span class="Heading">Replaced and Removed Command Names</span></a>
@@ -5537,7 +5677,9 @@ several arguments</span></a>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77.html#X7F6A6CBC7C9E91E5">77.4 <span class="Heading">Miscellaneous Name Changes or Removed Names</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap77.html#X87348614848EAD64">77.4-1 InfoObsolete</a></span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77.html#X7F2FF72A7AD60E0C">77.5 <span class="Heading">The former .gaprc file</span></a>
 </span>
 </div>

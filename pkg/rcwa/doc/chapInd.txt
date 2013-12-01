@@ -72,6 +72,7 @@
   [10XEquivalenceClasses[110X, for a list and a function computing a class invariant  9.9
   [10XEquivalenceClasses[110X, for a list and a function describing an equivalence relation  9.9
   [10XExponent[110X, of an rcwa group  3.2-1
+  [10XExponentOfPrime[110X  9.9
   [10XExtRepOfObj[110X  2.10-1
   [2XFactorization[102X (for an rcwa permutation of Z)  2.5-1
   [2XFactorizationIntoCSCRCT[102X (for an rcwa permutation of Z)  2.5-1
@@ -177,6 +178,7 @@
   [10XListOfPowers[110X  9.9
   [10XLoadBitmapPicture[110X, filename  9.7-1
   [2XLoadDatabaseOfGroupsGeneratedBy3ClassTranspositions[102X  6.2-1
+  [2XLoadDatabaseOfGroupsGeneratedBy4ClassTranspositions[102X  6.2-2
   [2XLoadDatabaseOfNonbalancedProductsOfClassTranspositions[102X  6.3-2
   [2XLoadDatabaseOfProductsOf2ClassTranspositions[102X  6.3-1
   [2XLoadRCWAExamples[102X  6.1-1
@@ -186,6 +188,7 @@
   [2XLoops[102X (of an rcwa mapping)  2.8-9
   maximal shift, definition  2.4
   [10XMaximalShift[110X, of an rcwa mapping of Z  2.4
+  [10XMirrored[110X  3.1-3
   [2XmKnot[102X (for an odd integer)  2.5-3
   [10XMod[110X, for an rcwa group  3.1-8
   [10XMod[110X, for an rcwa mapping  2.3
@@ -246,6 +249,7 @@
   [10XQuotientsList[110X  9.9
   [10XRandom[110X, CT(R)  3.5
   [10XRandom[110X, RCWA(R)  3.5
+  [2XRankOfKernelOfActionOnRespectedPartition[102X (for a tame rcwa group)  3.4-2
   [2XRCWA[102X (the group formed by all rcwa permutations of a ring)  3.1-2
   [2XRcwa[102X (the monoid formed by all rcwa mappings of a ring)  4.1-1
   [10XRCWA[110X, the group formed by all rcwa permutations of Z x Z  5.4
@@ -334,6 +338,8 @@
   [2XRunDemonstration[102X (filename)  9.6-1
   [2XSaveAsBitmapPicture[102X (picture, filename)  9.7-1
   [2XSemilocalizedRcwaMapping[102X (for an rcwa mapping of Z and a set of primes)  2.2-6
+  [10XShiftsDownOn[110X  2.4-3
+  [10XShiftsUpOn[110X  2.4-3
   [2XShortCycles[102X (for rcwa permutation and bound on length)  3.3-3
   [2XShortCycles[102X (for rcwa permutation, set of points and bound on length)  3.3-3
   [2XShortCycles[102X (for rcwa permutation, set of points and bounds on length and points)  3.3-3

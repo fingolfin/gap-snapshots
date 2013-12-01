@@ -10,12 +10,16 @@
 ##
 #############################################################################
 
+ReadPackage( "AutoDoc", "gap/DocumentationTree.gd" );
 
-ReadPackage( "AutoDoc", "gap/InstallMethodWithDocumentation.gd" );
+ReadPackage( "AutoDoc", "gap/Parser.gd" );
 
-ReadPackage( "AutoDoc", "gap/CreateDocumentationEntries.gd" );
+ReadPackage( "AutoDoc", "gap/AutoDocMainFunction.gd" );
 
 ReadPackage( "AutoDoc", "gap/ToolFunctions.gd" );
 
-## We REALLY need to stop supporting GAP 4.4.12
-ReadPackage( "AutoDoc", "gap/InstallMethodWithDocumentation.gi" );
+ReadPackage( "AutoDoc", "gap/CreateDocumentationEntries.gd" );
+
+ReadPackage( "AutoDoc", "gap/DeclareWithDocumentation.gd" );
+
+ReadPackage( "AutoDoc", "gap/Magic.gd" );

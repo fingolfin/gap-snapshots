@@ -55,8 +55,8 @@
 ##
 ##  The aim of the game is to order the numbered squares via these moves.
 ##  <P/>
-##  For the case <M>m = n = 4</M>, the puzzle is known under the name
-##  <Q>Sam Loyd's Fifteen</Q>, see&nbsp;<Cite Key="LoydFifteenWeb"/>
+##  For the case <M>m = n = 4</M>, the puzzle is (erroneously?) known under
+##  the name <Q>Sam Loyd's Fifteen</Q>, see&nbsp;<Cite Key="LoydFifteenWeb"/>
 ##  and&nbsp;<Cite Key="HistGames"/> for more information and references.
 ##
 ##  <ManSection>

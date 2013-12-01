@@ -1207,9 +1207,10 @@ InstallMethod( RcwaMappingNC,
     then TryNextMethod(); fi;
 
     for i in [1..Length(coeffs)] do
+      coeffs[i][2] := AbsInt(coeffs[i][2]);
       coeffs[i][1] := coeffs[i][1] mod coeffs[i][2];
       coeffs[i]{[3..5]} := coeffs[i]{[3..5]}/Gcd(coeffs[i]{[3..5]});
-      if coeffs[i][5] < 0 then coeffs[i] := -coeffs[i]; fi;
+      if coeffs[i][5] < 0 then coeffs[i]{[3..5]} := -coeffs[i]{[3..5]}; fi;
     od;
 
     coeffset  := Set(List(coeffs,c->c{[3..5]}));
@@ -1557,6 +1558,26 @@ InstallOtherMethod( Projection,
 
     return RcwaMapping(c_proj);
   end );
+
+#############################################################################
+##
+#S  The automorphism switching action on negative and nonnegative integers. /
+##
+#############################################################################
+
+#############################################################################
+##
+#M  Mirrored( <f> ) . . . . . . . . . for rcwa mappings of Z in standard rep.
+#M  Mirrored( <f> ) . . . . . . . . . for rcwa mappings of Z in sparse rep.
+##
+InstallOtherMethod( Mirrored,
+                    "for rcwa mappings of Z in standard rep. (RCWA)",
+                    true, [ IsRcwaMappingOfZInStandardRep ], 0,
+                    f -> f^RcwaMapping( [ [ -1, -1, 1 ] ] ) );
+InstallOtherMethod( Mirrored,
+                    "for rcwa mappings of Z in sparse rep. (RCWA)",
+                    true, [ IsRcwaMappingOfZInSparseRep ], 0,
+                    f -> f^RcwaMapping( [ [ 0, 1, -1, -1, 1 ] ] ) );
 
 #############################################################################
 ##
@@ -2449,10 +2470,12 @@ InstallMethod( ViewString, "for class transpositions (RCWA)", true,
     else name := "GeneralizedClassTransposition"; fi;
     if    ValueOption("CycleNotation") <> false
       and ValueOption("AbridgedNotation") <> false
-    then return Concatenation(List(["( ",cls[1],", ",cls[2]," )"],
-                                   ViewString));
-    else return Concatenation(List([name,"( ",cls[1],", ",cls[2]," )"],
-                                   ViewString));
+    then return QuotesStripped(Concatenation(List(["( ",cls[1],", ",
+                                                        cls[2]," )"],
+                                                  ViewString)));
+    else return QuotesStripped(Concatenation(List([name,"( ",cls[1],", ",
+                                                             cls[2]," )"],
+                                                  ViewString)));
     fi;
 
   end );
@@ -2554,7 +2577,7 @@ InstallGlobalFunction( ClassPairs,
       moduli := Filtered(AllResidues(R,m),r->IsPosInt(Degree(r)));
       for m1 in moduli do
         for m2 in moduli do
-          if Degree(m1) > Degree(m2) then continue; fi;
+          if m1 > m2 then continue; fi;
           for r1 in AllResidues(R,m1) do
             for r2 in AllResidues(R,m2) do
               if (m1 <> m2 or r1 < r2) and not IsZero((r1-r2) mod Gcd(m1,m2))
@@ -5213,10 +5236,14 @@ InstallMethod( ImagesElm, "for rcwa mapping of Z^2 and row vector (RCWA)",
 ##
 ##  Returns the image of the set <S> under the rcwa mapping <f>.
 ##
+##  The method rank offset SUM_FLAGS is to ensure that this method also gets
+##  called for rcwa zero mappings, instead of a Library method which returns
+##  the zero module.
+##
 InstallMethod( ImagesSet,
                "for an rcwa mapping and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMappingInStandardRep,
-                             IsListOrCollection ], 2 * SUM_FLAGS,
+                             IsCollection ], SUM_FLAGS,
 
   function ( f, S )
 
@@ -5234,16 +5261,71 @@ InstallMethod( ImagesSet,
 ##
 #M  ImagesSet( <f>, <S> )  for an rcwa mapping of Z and a residue class union
 ##
+##  Returns the image of the set <S> under the rcwa mapping <f> of Z which is
+##  assumed to be in "sparse" representation.
+##
+##  For the reason of the method rank offset SUM_FLAGS, see above.
+##
 InstallMethod( ImagesSet,
                "for an rcwa mapping of Z and a residue class union (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
-                             IsListOrCollection ], 2 * SUM_FLAGS,
+                             IsCollection ], SUM_FLAGS,
 
   function ( f, S )
     if not IsSubset(Integers,S) then TryNextMethod(); fi;
     if IsList(S) then return Set(List(S,n->n^f)); fi;
     return Union(List(f!.coeffs,
              c->(Intersection(S,ResidueClass(c[1],c[2]))*c[3]+c[4])/c[5]));
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <cl> ) . . . for an rcwa mapping of Z and a residue class
+##
+##  Returns the image of the residue class <cl> under the rcwa mapping <f>.
+##  It is required that <f> is injective and in standard representation, and
+##  that the modulus of <f> divides the modulus of <cl>.
+##
+##  The rank offset SUM_FLAGS is needed to override the default method.
+##
+InstallMethod( ImagesSet,
+               "for an rcwa mapping of Z and a residue class (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInStandardRep and IsInjective,
+                             IsResidueClassUnionOfZ and IsResidueClass ],
+               SUM_FLAGS,
+
+  function ( f, cl )
+
+    local  c;
+
+    if cl!.m mod f!.modulus <> 0 then TryNextMethod(); fi;
+    c := f!.coeffs[(cl!.r[1]) mod f!.modulus + 1];
+    return ResidueClass(Integers,c[1]*cl!.m/c[3],(c[1]*cl!.r[1]+c[2])/c[3]);
+  end );
+
+#############################################################################
+##
+#M  ImagesSet( <f>, <cl> ) . . . for an rcwa mapping of Z and a residue class
+##
+##  Returns the image of the residue class <cl> under the rcwa mapping <f>
+##  of Z. It is required that <f> is injective and in sparse representation,
+##  and that <cl> lies in the source of one affine partial mapping of <f>.
+##
+##  The rank offset SUM_FLAGS is needed to override the default method.
+##
+InstallMethod( ImagesSet,
+               "for an rcwa mapping of Z and a residue class (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep and IsInjective,
+                             IsResidueClassUnionOfZ and IsResidueClass ],
+               SUM_FLAGS,
+
+  function ( f, cl )
+
+    local  c;
+
+    c := First(f!.coeffs,c->cl!.r[1] mod c[2] = c[1] and cl!.m mod c[2] = 0);
+    if c = fail then TryNextMethod(); fi;
+    return ResidueClass(Integers,c[3]*cl!.m/c[5],(c[3]*cl!.r[1]+c[4])/c[5]);
   end );
 
 #############################################################################
@@ -5764,7 +5846,7 @@ InstallMethod( IsSurjective,
 
     coeffs := f!.coeffs;
     if IsInjective(f) then
-      return Sum(List(coeffs,c->c[5]/(c[2]*c[3]))) = 1;
+      return Sum(List(coeffs,c->c[5]/(c[2]*AbsInt(c[3])))) = 1;
     else
       imgs := List(Filtered(coeffs,c->c[3]<>0),
                    c->ResidueClass((c[3]*c[1]+c[4])/c[5],(c[3]*c[2])/c[5]));
@@ -7346,24 +7428,73 @@ InstallMethod( RespectsPartition,
 ##
 #M  PermutationOpNC( <sigma>, <P>, <act> ) . .  for rcwa map. and resp. part.
 ##
+##  This method serves only as a placeholder for something better.
+##
 InstallMethod( PermutationOpNC,
-               "for an rcwa mapping and a respected partition (RCWA)", true,
-               [ IsRcwaMapping, IsList, IsFunction ], 0,
+               "for an rcwa mapping and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMapping, IsList, IsFunction ], 0,
+
+  function ( sigma, P, act )
+    return PermutationOp(sigma,P,act); 
+  end );
+
+#############################################################################
+##
+#M  PermutationOpNC( <sigma>, <P>, <act> ) for rcwa map. of Z and resp. part.
+##
+InstallMethod( PermutationOpNC,
+               "for an rcwa mapping of Z and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInSparseRep,
+                             IsList, IsFunction ], 0,
 
   function ( sigma, P, act )
 
-    local  rep, img, i, j;
+    local  cls, imgs, coeffs, conj, cl, img, c, i;
 
-    if   act <> OnPoints or not ForAll(P,IsResidueClassUnion)
-    then return PermutationOp(sigma,P,act); fi;
-    rep := List(P,cl->Representative(cl)^sigma);
-    img := [];
-    for i in [1..Length(P)] do
-      j := 0;
-      repeat j := j + 1; until rep[i] in P[j];
-      img[i] := j;
+    if Length(P) = 1 then TryNextMethod(); fi;
+    cls    := List(P,cl->[cl!.r[1],cl!.m]);
+    coeffs := sigma!.coeffs;
+    conj   := SortingPerm(cls)^-1;
+    cls    := Set(cls);
+    imgs   := [];
+    for i in [1..Length(cls)] do
+      cl      := cls[i];
+      c       := First(coeffs,c->cl[1] mod c[2] = c[1]);
+      img     := [(c[3]*cl[1]+c[4])/c[5],c[3]*cl[2]/c[5]];
+      img[1]  := img[1] mod img[2];
+      imgs[i] := PositionSorted(cls,img);
     od;
-    return PermList(img);
+    return PermList(imgs)^conj;
+  end );
+
+#############################################################################
+##
+#M  PermutationOpNC( <sigma>, <P>, <act> ) for rcwa map. of Z and resp. part.
+##
+InstallMethod( PermutationOpNC,
+               "for an rcwa mapping of Z and a respected partition (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZInStandardRep,
+                             IsList, IsFunction ], 0,
+
+  function ( sigma, P, act )
+
+    local  cls, imgs, m, coeffs, conj, cl, img, c, i;
+
+    if Length(P) = 1 then TryNextMethod(); fi;
+    cls    := List(P,cl->[cl!.r[1],cl!.m]);
+    m      := sigma!.modulus;
+    coeffs := sigma!.coeffs;
+    conj   := SortingPerm(cls)^-1;
+    cls    := Set(cls);
+    imgs   := [];
+    for i in [1..Length(cls)] do
+      cl      := cls[i];
+      c       := coeffs[cl[1] mod m + 1];
+      img     := [(c[1]*cl[1]+c[2])/c[3],c[1]*cl[2]/c[3]];
+      img[1]  := img[1] mod img[2];
+      imgs[i] := PositionSorted(cls,img);
+    od;
+    return PermList(imgs)^conj;
   end );
 
 #############################################################################
@@ -7450,7 +7581,7 @@ InstallMethod( Order,
   function ( g )
 
     local  P, k, p, gtilde, e, e_old, e_max, l, l_max, stabiter,
-           n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
+           loopcheckbound, n0, n, b1, b2, m1, m2, r, cycs, pow, exp, c, i;
 
     if   not IsBijective(g) 
     then Error("Order: <rcwa mapping> must be bijective"); fi;
@@ -7472,10 +7603,22 @@ InstallMethod( Order,
         Info(InfoRCWA,3,"       Hence <g> has infinite order.");
         return infinity;
       fi;
-      if Loops(g) <> [] then
-        Info(InfoRCWA,3,"Order: <g> has infinite order, by loop criterion.");
-        SetIsTame(g,false);
-        return infinity;
+      if not IsIntegral(g) then
+        loopcheckbound := ValueOption("loopcheckbound");
+        if loopcheckbound = fail then
+          loopcheckbound := RootInt(Mod(g),3) + 1; # 'reasonable' limit?
+        fi;
+        pow := g;
+        for k in [1..loopcheckbound] do
+          if Loops(pow) <> [] then
+            Info(InfoRCWA,3,"Order: <g>^",k," has loops, hence <g> ",
+                            "has infinite order.");
+            SetIsTame(g,false);
+            return infinity;
+          fi;
+          if k < loopcheckbound then pow := pow * g; fi;
+          if IsIntegral(pow) then break; fi;
+        od;
       fi;
     fi;
 
@@ -7550,7 +7693,7 @@ InstallMethod( Order,
 
     if IsRcwaMappingOfZxZ(g) then TryNextMethod(); fi;
 
-    if not IsTame(g) then
+    if not IsRcwaMappingOfZ(g) and not IsTame(g) then
       Info(InfoRCWA,3,"Order: <g> is wild, thus has infinite order.");
       return infinity;
     fi;
@@ -7630,7 +7773,7 @@ InstallMethod( TransitionMatrix,
     R := Source(f); Resm := AllResidues(R,m);
     mTest := Modulus(f) * Lcm(m,Divisor(f));
     ResmTest := AllResidues(R,mTest);
-    T := MutableNullMat(Length(Resm),Length(Resm));
+    T := NullMat(Length(Resm),Length(Resm));
     for n in ResmTest do
       i := Position(Resm,n   mod m);
       j := Position(Resm,n^f mod m);
@@ -8311,6 +8454,8 @@ InstallMethod( CycleRepresentativesAndLengths,
 ##
 #M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
 ##
+##  Probably now obsolete; superseded by method below.
+##
 InstallMethod( ShortResidueClassCycles,
                "for an rcwa permutation of Z and 2 positive integers (RCWA)",
                ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 0,
@@ -8366,6 +8511,23 @@ InstallMethod( ShortResidueClassCycles,
       od;
     od;
 
+    return cycles;
+  end );
+
+#############################################################################
+##
+#M  ShortResidueClassCycles( <g>, <modbound>, <maxlng> )
+##
+InstallMethod( ShortResidueClassCycles,
+               "for an rcwa permutation of Z and 2 positive integers (RCWA)",
+               ReturnTrue, [ IsRcwaMappingOfZ, IsPosInt, IsPosInt ], 5,
+
+  function ( g, modbound, maxlng )
+
+    local  cycles, orbits;
+
+    orbits := ShortResidueClassOrbits(Group(g),modbound,maxlng);
+    cycles := Set(List(orbits,orb->Cycle(g,orb[1])));
     return cycles;
   end );
 

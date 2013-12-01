@@ -12,6 +12,16 @@
   GAP,      Version     4.21[117X     (2004),     ((Refereed     GAP     package)),
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/xgap4.html.
   
+  [[20XCCNPW85[120X]  [16XConway,  J.  H.,  Curtis, R. T., Norton, S. P., Parker, R. A. and
+  Wilson,  R.  A.[116X,  [17XAtlas  of  finite groups[117X, Oxford University Press, Eynsham
+  (1985),  xxxiv+252  pages,  ((Maximal  subgroups and ordinary characters for
+  simple groups, With computational assistance from J. G. Thackray)).
+  
+  [[20XJLPW95[120X]  [16XJansen, C., Lux, K., Parker, R. and Wilson, R.[116X, [17XAn atlas of Brauer
+  characters[117X, The Clarendon Press Oxford University Press, London Mathematical
+  Society  Monographs.  New  Series,  [19X11[119X,  New  York  (1995), xviii+327 pages,
+  ((Appendix 2 by T. Breuer and S. Norton, Oxford Science Publications)).
+  
   [[20XKöla[120X]            [16XKöller,            J.[116X,            [17XPeg           Solitaire[117X,
   http://www.mathematische-basteleien.de/solitaire.htm.
   
@@ -21,6 +31,10 @@
   [[20XLN07[120X]  [16XLübeck,  F.  and  Neunhöffer,  M.[116X,  [17XGAPDoc,  A  Meta Package for GAP
   Documentation,    Version    1.0[117X    (2007),    ((Refereed   GAP   package)),
   http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc.
+  
+  [[20XNMP11[120X] [16XNaughton, L., Merkwitz, T. and Pfeiffer, G.[116X, [17XTomLib, The GAP Library
+  of    Tables    of   Marks,   Version   1.2.1[117X   (2011),   ((GAP   package)),
+  http://schmidt.nuigalway.ie/tomlib/tomlib.
   
   [[20XNeu07[120X] [16XNeunhöffer, M.[116X, [17XIO, Bindings for low level C library IO, Version 2.2[117X
   (2007),                           ((GAP                           package)),

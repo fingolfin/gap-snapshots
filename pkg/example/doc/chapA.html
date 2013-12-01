@@ -109,7 +109,7 @@
 
 <h3>A <span class="Heading">Guidelines for Writing a GAP Package</span></h3>
 
-<p>This appendix explains the basics of how to write a <strong class="pkg">GAP</strong> package so that it interfaces properly to <strong class="pkg">GAP</strong>. For the role of <strong class="pkg">GAP</strong> packages and the ways to load them, see Chapter <a href="../../../doc/ref/chap76.html#X816DC7C580D41F49"><span class="RefLink">Reference: GAP Packages</span></a>.</p>
+<p>This appendix explains the basics of how to write a <strong class="pkg">GAP</strong> package so that it interfaces properly to <strong class="pkg">GAP</strong>. For the role of <strong class="pkg">GAP</strong> packages and the ways to load them, see Chapter <a href="../../../doc/ref/chap76.html#X7B6CD527825945CD"><span class="RefLink">Reference: Using GAP Packages</span></a>.</p>
 
 <p>There are two basic aspects of creating a <strong class="pkg">GAP</strong> package.</p>
 
@@ -362,7 +362,7 @@ Pager(StringFile(Filename(DirectoriesLibrary(),
 
 <p>In conclusion, here is some practical advice on how to check which variables are used by the package.</p>
 
-<p>Firstly, there is a function <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>). If the package <var class="Arg">pkgname</var> is available but not yet loaded then <code class="code">DisplayPackageVariables( pkgname )</code> prints a list of global variables that become bound and of methods that become installed when the package is loaded (for that, the package will be actually loaded, so <code class="code">ShowPackageVariables</code> can be called only once for the same package in the same <strong class="pkg">GAP</strong> session.) The second optional argument <var class="Arg">version</var> may specify a particular package version to be loaded. An error message will be printed if (the given version of) the package is not available or already loaded.</p>
+<p>Firstly, there is a function <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>). If the package <var class="Arg">pkgname</var> is available but not yet loaded then <code class="code">ShowPackageVariables( pkgname )</code> prints a list of global variables that become bound and of methods that become installed when the package is loaded (for that, the package will be actually loaded, so <code class="code">ShowPackageVariables</code> can be called only once for the same package in the same <strong class="pkg">GAP</strong> session.) The second optional argument <var class="Arg">version</var> may specify a particular package version to be loaded. An error message will be printed if (the given version of) the package is not available or already loaded.</p>
 
 <p>Info lines for undocumented variables will be marked with an asterisk <code class="code">*</code>. Note that the <strong class="pkg">GAP</strong> help system is case insensitive, so it is difficult to document identifiers that differ only by case.</p>
 

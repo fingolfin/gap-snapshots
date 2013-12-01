@@ -374,14 +374,6 @@
         refresh of the window is necessary; it is automatically reset to [9Xfalse[109X
         after the refresh.[133X
   
-  [8X[10XuseMouse[110X[108X
-        [33X[0;6Yis  [9Xtrue[109X  if  mouse  events are enabled in the browse application (see
-        [2XNCurses.UseMouse[102X  ([14X2.2-10[114X)), and [9Xfalse[109X otherwise, the default value is
-        [9Xfalse[109X;  an  action  in the table can change the value; when the browse
-        application is left, [2XNCurses.UseMouse[102X ([14X2.2-10[114X) is called with argument
-        [9Xfalse[109X;  mouse  events  are  disabled  also  in  the break loop that is
-        entered by the action in [2XBrowseData.actions.Error[102X ([14X5.4-7[114X).[133X
-  
   [8X[10XindexRow[110X[108X
         [33X[0;6Yis  a  list of positive integers. The entry [22Xk[122X at position [22Xi[122X means that
         the [22Xk[122X-th row in the [10XmainFormatted[110X table is shown as the [22Xi[122X-th row. Note

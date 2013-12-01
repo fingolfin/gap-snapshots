@@ -4,7 +4,7 @@
 #W                                                        Alexander Konovalov
 #W                                                            Aurora Olivieri
 #W                                                           Gabriela Olteanu
-#W                                                              ¡ngel del RÌ≠o
+#W                                                              √Ångel del R√≠¬≠o
 #W                                                          Inneke Van Gelder
 ##
 #############################################################################
@@ -22,3 +22,6 @@ ReadPackage( "wedderga/lib/others.gi" );
 ReadPackage( "wedderga/lib/crossed.gi" );
 
 ReadPackage( "wedderga/lib/BW.gi" );
+
+ReadPackage( "wedderga/lib/div-alg.gi" );
+

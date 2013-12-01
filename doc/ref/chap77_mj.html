@@ -36,7 +36,9 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77_mj.html#X7F6A6CBC7C9E91E5">77.4 <span class="Heading">Miscellaneous Name Changes or Removed Names</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap77_mj.html#X87348614848EAD64">77.4-1 InfoObsolete</a></span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77_mj.html#X7F2FF72A7AD60E0C">77.5 <span class="Heading">The former .gaprc file</span></a>
 </span>
 </div>
@@ -153,6 +155,15 @@
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
+
+<p><a id="X87348614848EAD64" name="X87348614848EAD64"></a></p>
+
+<h5>77.4-1 InfoObsolete</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoObsolete</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<p>is an info class to display warnings when an obsolete variable is used. By default, these warnings are switched off since the info level for this class is 0. Setting it to 1 will trigger warnings if <strong class="pkg">GAP</strong> will detect that an obsolete variable is used at runtime (this detection is possible, however, only for obsolete variables declared using <code class="code">DeclareObsoleteSynonym</code>).</p>
+
+<p>To check that the <strong class="pkg">GAP</strong> code does not use obsolete variables at the parsing time, and not at a runtime, use <code class="code">-O</code> command line option, see <a href="chap3_mj.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>.</p>
 
 <p><a id="X7F2FF72A7AD60E0C" name="X7F2FF72A7AD60E0C"></a></p>
 

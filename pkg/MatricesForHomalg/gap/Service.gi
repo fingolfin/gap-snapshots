@@ -658,6 +658,9 @@ InstallMethod( DecideZeroRows,			### defines: DecideZeroRows (Reduce)
   function( A, B )
     local R, RP, t, l, m, n, id, zz, M, C;
     
+    ## we can only reduce with respect to a distinguished basis
+    B := BasisOfRowModule( B );
+    
     if IsBound( A!.DecideZeroRows ) and
        IsIdenticalObj( A!.DecideZeroRows, B ) then
         
@@ -813,6 +816,9 @@ InstallMethod( DecideZeroColumns,		### defines: DecideZeroColumns (Reduce)
         
   function( A, B )
     local R, RP, t, l, m, n, id, zz, M, C;
+    
+    ## we can only reduce with respect to a distinguished basis
+    B := BasisOfColumnModule( B );
     
     if IsBound( A!.DecideZeroColumns ) and
        IsIdenticalObj( A!.DecideZeroColumns, B ) then
@@ -2076,6 +2082,7 @@ InstallMethod( BasisOfRowsCoeff,		### defines: BasisOfRowsCoeff (BasisCoeff)
         else
             SetPreEval( T, M!.BasisOfRowsCoeff );
         fi;
+        ResetFilterObj( T, IsVoidMatrix );
         ## M!.BasisOfRows should be bounded as well
         return M!.BasisOfRows;
     fi;
@@ -2246,6 +2253,7 @@ InstallMethod( BasisOfColumnsCoeff,		### defines: BasisOfColumnsCoeff (BasisCoef
         else
             SetPreEval( T, M!.BasisOfColumnsCoeff );
         fi;
+        ResetFilterObj( T, IsVoidMatrix );
         ## M!.BasisOfColumns should be bounded as well
         return M!.BasisOfColumns;
     fi;

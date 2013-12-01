@@ -1,6 +1,7 @@
 #############################################################################
 ##  
 ##  PackageInfo.g for the package `MatricesForHomalg'         Mohamed Barakat
+##                                                                 Vinay Wagh
 ##  (created from Frank Lübeck's PackageInfo.g template file)
 ##  
 
@@ -29,9 +30,13 @@ Subtitle := "Matrices for the homalg project",
 Version := Maximum( [
   "2011.12.05", ## Markus' version
 ## this line prevents merge conflicts
-  "2013.04.16", ## Mohamed's version
+  "2013.11.20", ## Mohamed's version
 ## this line prevents merge conflicts
-  "2012.10.17", ## Sebas' version
+  "2013.07.11", ## Sebas' version
+## this line prevents merge conflicts
+  "2013.07.20", ## Vinay's version
+## this line prevents merge conflicts
+  "2013.08.26", ## Martin's version
 ] ),
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
@@ -154,6 +159,38 @@ Persons := [
                        "Germany" ] ),
     Place         := "Aachen",
     Institution   := "RWTH Aachen University"
+  ),
+  rec(
+    LastName      := "Leuner",
+    FirstNames    := "Martin",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "leuner@momo.math.rwth-aachen.de",
+    WWWHome       := "http://wwwb.math.rwth-aachen.de/Mitarbeiter/leuner.php",
+    PostalAddress := Concatenation( [
+                       "Martin Leuner\n",
+                       "Lehrstuhl B fuer Mathematik, RWTH Aachen\n",
+                       "Templergraben 64\n",
+                       "52062 Aachen\n",
+                       "Germany" ] ),
+    Place         := "Aachen",
+    Institution   := "RWTH Aachen University"
+  ),
+  rec(
+    LastName      := "Wagh",
+    FirstNames    := "Vinay",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waghoba@gmail.com",
+    WWWHome       := "http://www.iitg.ernet.in/vinay.wagh/",
+    PostalAddress := Concatenation( [
+                       "E-102, Department of Mathematics,\n",
+                       "Indian Institute of Technology Guwahati,\n",
+                       "Guwahati, Assam, India.\n",
+                       "PIN: 781 039.\n",
+                       "India" ] ),
+    Place         := "Guwahati",
+    Institution   := "Indian Institute of Technology Guwahati"
   ),
 # provide such a record for each author and/or maintainer ...
   

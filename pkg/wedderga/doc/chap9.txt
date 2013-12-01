@@ -48,7 +48,7 @@
   semisimple artinian rings.[133X
   
   
-  [1X9.3 [33X[0;0YWedderburn decomposition[133X[101X
+  [1X9.3 [33X[0;0YWedderburn components[133X[101X
   
   [33X[0;0YIf  [22XR[122X  is  a [13Xsemisimple ring[113X ([14X9.2[114X) then the [13XWedderburn decomposition[113X of [22XR[122X is
   the  decomposition  of [22XR[122X as a direct product of simple algebras. The factors
@@ -474,7 +474,7 @@
   [22Xe_C(G,K,H)[122X is a primitive central idempotent of [22XFG[122X (see [14X9.17[114X).[133X
   
   
-  [1X9.14 [33X[0;0YShoda pairs[133X[101X
+  [1X9.14 [33X[0;0YShoda pairs of a group[133X[101X
   
   [33X[0;0YLet [22XG[122X be a finite group. A [13XShoda pair[113X of [22XG[122X is a pair [22X(K,H)[122X of subgroups of [22XG[122X
   for  which  there  is  a linear character [22Xχ[122X of [22XK[122X with kernel [22XH[122X such that the
@@ -499,7 +499,7 @@
   Shoda pair of [22XG[122X.[133X
   
   
-  [1X9.15 [33X[0;0YStrong Shoda pairs[133X[101X
+  [1X9.15 [33X[0;0YStrong Shoda pairs of a group[133X[101X
   
   [33X[0;0YA  [13Xstrong  Shoda  pair[113X of [22XG[122X is a pair [22X(K,H)[122X of subgroups of [22XG[122X satisfying the
   following conditions:[133X
@@ -637,7 +637,7 @@
   
   [1X9.18 [33X[0;0YTheory for Local Schur Index and Division Algebra Part Calculations[133X[101X
   
-  [33X[0;0Y(By Allen Herman, December 2012.)[133X
+  [33X[0;0Y(By Allen Herman, May 2013.)[133X
   
   [33X[0;0YThe   division   algebra   parts   of  simple  algebras  in  the  Wedderburn
   Decomposition  of the group algebra of a finite group over an abelian number
@@ -654,7 +654,7 @@
   numerator   of  the  local  invariants  among  these  primes  are  uniformly
   distributed among the integers [22Xr[122X coprime to [22Xm_p[122X [BS72].[133X
   
-  [33X[0;0YThe  main  div-alg  functions  in  wedderga produce a list of the nontrivial
+  [33X[0;0YThe local Schur index functions in wedderga produce a list of the nontrivial
   local  indices  of  the  division  algebra part of the simple algebra at all
   rational  primes.  The Schur index of the simple algebra over [22XF[122X is the least
   common  multiple [22Xm[122X of these local indices, and the dimension of the division
@@ -662,55 +662,61 @@
   identify  these  division  algebras  up to ring isomorphism in general, this
   list  of  local  indices  does  identify  the  division  algebra  up to ring
   isomorphism  whenever  there  is no pair of local indices at odd primes that
-  are  greater  than  2. (We believe this is the case for groups of order less
-  than  7^2*3^2*13^2.)  So  it  gives  the  information  desired in most basic
-  situations,  and  allows  one  to  distinguish  almost  all  pairs of simple
-  components   of  group  algebras.  By  using  wedderga's  Info  versions  of
-  presentations  of  crossed  products,  one  can  normally  see relationships
-  between  factor  sets of pairs of algebras that can give further information
-  to help distinguish them.[133X
+  are greater than 2. (This is at least the case for groups of order less than
+  3^2*7*13.) So it gives the information desired in most basic situations, and
+  allows  one  to  distinguish  almost all pairs of simple components of group
+  algebras.[133X
   
-  [33X[0;0YWedderga's  div-alg  functions  compute  local  indices  for  three types of
-  algebras:  generalized  quaternion algebras, cyclic cyclotomic algebras, and
-  non-cyclic  crossed  product  algebras  of  Y-type. There is also a function
-  available  that  computes  the  [22Xp[122X-local  index  for  an ordinary irreducible
-  character  [22Xχ[122X of a [22Xp[122X-solvable group using the values of an irreducible Brauer
-  character  in  the same [22Xp[122X-block that is correct when the [22Xp[122X-defect group of [22Xχ[122X
-  is  cyclic. Our approach to rational quaternion algebras is the standard one
-  given, for example, in [Pie82]. The Legendre symbol operation in GAP is used
-  to  determine  the  local  index  at  odd  primes.  The  local  index of the
-  generalized  quaternion algebra [22X(a,b)[122X over [22XQ[122X at the infinite prime will be [22X2[122X
-  if both [22Xa[122X and [22Xb[122X are negative, and otherwise [22X1[122X. We avoid the complicated case
-  of    quadratic   reciprocity   when   working   over   Q   by   using   the
+  [33X[0;0YWedderga's  functions  compute  local  indices  for  generalized  quaternion
+  algebras defined over the rationals and cyclotomic algebras defined over any
+  abelian  number  field.  Special shortcut functions are available for cyclic
+  cyclotomic  algebras.  There are also versions of the functions that compute
+  the  local  and  global  Schur index of a character of a finite group over a
+  given  abelian  number  field.  The steps in the general character-theoretic
+  method  involve  1) a Brauer-Witt reduction to a cyclic-by-abelian group, 2)
+  use of the Frobenius-Schur indicator to compute the local index at infinity,
+  3)  computing the [22Xp[122X-local index for an ordinary irreducible character [22Xχ[122X of a
+  [22Xp[122X-solvable  group using the values of an irreducible Brauer character in the
+  same [22Xp[122X-block in cases where the [22Xp[122X-defect group of [22Xχ[122X is cyclic, and 4) use of
+  Riese  and  Schmid's  characterization  of  dyadic Schur groups ([Sch94] and
+  [RS96])  to handle the exceptional cases where step 3) is not available. Our
+  approach  to  rational  quaternion  algebras  is the standard one given, for
+  example,  in  [Pie82].  The  Legendre  symbol  operation  in  GAP is used to
+  determine  the local index at odd primes. The local index of the generalized
+  quaternion  algebra  [22X(a,b)[122X  over [22XQ[122X at the infinite prime will be [22X2[122X if both [22Xa[122X
+  and  [22Xb[122X  are  negative,  and  otherwise  [22X1[122X.  We avoid the complicated case of
+  quadratic    reciprocity    when    working    over    Q    by   using   the
   Hasse-Brauer-Albert-Noether  Theorem  ([Rei03],  pg. 276): since we know the
   other  primes of [22XQ[122X where the local index is [22X2[122X, it determines the local index
   at  the  prime  [22X2[122X.  For generalized quaternion algebras over number fields [22XF[122X
   other than [22XQ[122X, we have to convert to cyclic or cyclic cyclotomic algebras and
-  use the other two local index functions.[133X
+  use  the  other  local  index functions, or appeal to a number theory system
+  outside of GAP that can solve norm equations.[133X
   
-  [33X[0;0YThere  are  three  subroutines  used  to  compute  local  indices  of cyclic
+  [33X[0;0YThere  are  three shortcut functions used to compute local indices of cyclic
   cyclotomic  algebras,  which  wedderga's -Info functions produce in the form
-  [22X[r,F,n,[a,b,c]][122X. Since there is no way to connect to a specific character of
-  a  group  that would make the Frobenius-Schur indicator available, the local
-  index at infinity is calculated by determining if the real completion of the
-  corresponding algebra will produce a real quaternion algebra. In order to do
-  this,  [22XF[122X  must  be  a  real subfield, [22Xn[122X must be strictly greater than [22X2[122X, and
-  [22XE(n)^c[122X (which has to be a root of unity in [22XF[122X) must be [22X-1[122X. Calculation of the
-  local  indices  at  a  odd primes makes direct use of the following lemma of
-  Janusz: If [22XE_p/F_p[122X is a Galois extension of [22Xp[122X-local fields with ramification
-  index [22Xe[122X, and [22Xz[122X is a root of unity with order prime to [22Xp[122X, then [22Xz[122X is a norm in
-  [22XE_p/F_p[122X  if  and  only  if  it  is  the  [22Xe[122X-th power of a root of unity in [22XF[122X.
-  ([Jan75], pg. 535). It follows that in order to calculate the local index at
-  [22Xp[122X  of  a  cyclic  cyclotomic algebra [22X[r,F,n,[a,b,c]][122X, we first determine the
-  splitting  degree, residue degree, and ramification index [22Xe[122X of the extension
-  [22XF(ζ_n)/F[122X  at  [22Xp[122X by comparing the behaviour of the Galois automorphism [22Xσ_b[122X to
-  the behaviour of the Frobenius automorphism at [22Xp[122X. This information allows us
-  to  determine the order of the largest root of unity [22Xz[122X with order coprime to
-  [22Xp[122X  in  the  [22Xp[122X-completion [22XF_p[122X. The local index [22Xm_p[122X is then the least power of
+  [22X[r,F,n,[a,b,c]][122X. The local index at infinity is calculated by determining if
+  the  real  completion  of  the  corresponding  algebra  will  produce a real
+  quaternion  algebra.  In order to do this, [22XF[122X must be a real subfield, [22Xn[122X must
+  be  strictly  greater than [22X2[122X, and [22XE(n)^c[122X (which has to be a root of unity in
+  [22XF[122X)  must  be [22X-1[122X. These facts can be checked directly, so this is faster than
+  calculating  the  character  table  of the group and checking the value of a
+  Frobenius-Schur  indicator.  The  shortcut to calculate the local index of a
+  cyclic  cyclotomic algebra at an odd prime makes direct use of the following
+  lemma  of  Janusz:  If  [22XE_p/F_p[122X is a Galois extension of [22Xp[122X-local fields with
+  ramification index [22Xe[122X, and [22Xz[122X is a root of unity with order prime to [22Xp[122X, then [22Xz[122X
+  is  a norm in [22XE_p/F_p[122X if and only if it is the [22Xe[122X-th power of a root of unity
+  in  [22XF[122X.  ([Jan75],  pg. 535). It follows that in order to calculate the local
+  index  at  [22Xp[122X  of  a  cyclic  cyclotomic  algebra  [22X[r,F,n,[a,b,c]][122X,  we first
+  determine  the splitting degree, residue degree, and ramification index [22Xe[122X of
+  the  extension  [22XF(ζ_n)/F[122X  at  [22Xp[122X.  Comparing  the  behaviour  of  the  Galois
+  automorphism  [22Xσ_b[122X to the behaviour of the Frobenius automorphism at [22Xp[122X allows
+  us  to determine the order of the largest root of unity [22Xz[122X with order coprime
+  to [22Xp[122X in the [22Xp[122X-completion [22XF_p[122X. The local index [22Xm_p[122X is then the least power of
   [22XE(n)^c[122X that lies in the group generated by [22Xz^e[122X.[133X
   
   [33X[0;0YCalculation  of  the  local  index at the prime [22X2[122X makes use of the following
-  consequence   of   ([Jan75],   Theorem   5):  A  cyclic  cyclotomic  algebra
+  consequence   of   ([Jan75],  T  heorem  5):  A  cyclic  cyclotomic  algebra
   [22X[r,F_2,n,[a,b,c]][122X  over  a  [22X2[122X-local  field  [22XF_2[122X  that  is  a  subfield  of a
   cyclotomic  extension  of  the rational [22X2[122X-local field [22XQ_2[122X has Schur index at
   most [22X2[122X. It has Schur index [22X2[122X if and only if [22X4[122X divides [22Xn[122X, [22XF_2(ζ_4)[122X is totally
@@ -719,49 +725,19 @@
   number,  and  [22X(F_2:Q_2)[122X  is odd. The same approach to cyclotomic reciprocity
   makes it possible to check all of these conditions in the [22X2[122X-local situation.[133X
   
-  [33X[0;0YCalculation  of local indices of crossed products in wedderga defined over a
-  non-cyclic   Galois   group   of   Y-type  are  those  with  wedderga  -Info
-  presentations  in  the  form  [22X[r,F,n,[[a1,b1,c1],[a2,b2,c2]],[[d]]][122X. In this
-  case  the  approach is to decompose the algebra as the tensor product of two
-  cyclic   algebras:  [22X[F,K1,[a]][122X  and  [22X[F,K2,[b]][122X.  This  is  accomplished  by
-  modifying  one  of  the  factor  sets  (i.e.  [22Xc1[122X or [22Xc2[122X), so that the ensuing
-  commutator  (i.e.  the  [22Xd[122X) becomes trivial. The algorithm provided for doing
-  this  has  not  been  proven  to  be  completely  reliable. It generates the
-  required  element  it  needs starting with a primitive element of [22XK1[122X (or [22XK2[122X)
-  that  will  make  the  ensuing commutator trivial, but there is no guarantee
-  that  the  ensuing  factor  set  [22Xa[122X  (or  [22Xb[122X) lies in [22XF[122X. It does check if this
-  happens  and  returns a warning "fail" label if the factor set it calculates
-  does  not  lie  in  [22XF[122X.  (For  groups  of order up to 200, no such warning is
-  generated!)  If  this  tensor  decomposition  does not fail, the local Schur
-  indices of the two cyclic algebras are handled in two steps. The first is to
-  check  if  it  is easy to see that the [22Xa[122X (or the [22Xb[122X) is a norm, in which case
-  the Schur index is automatically 1. In the second step, the function appeals
-  to a library of the cyclic algebras that occur for groups of order up to 200
-  that  has  been  generated  by solving norm equations by hand. Although done
-  initially  by  hand, most of its local indices can and have been checked for
-  consistency with the other local index computation methods. Only in very few
-  cases  do  they rely only on the norm calculations done by hand. Significant
-  extension of this local index library is a likely feature of future releases
-  of  wedderga.  The  algorithm  is  then  completed  by calculating the local
-  indices of the tensor product. Again this operation could give an indefinite
-  answer,  because  there  is no way to dtermine the local index of the tensor
-  product at [22Xp[122X when the local indices of both cyclic algebras at [22Xp[122X are greater
-  than [22X2[122X.[133X
-  
   [33X[0;0YThe  wedderga  function  that  computes  the  [22Xp[122X-local  index  of an ordinary
-  irreducible  character [22Xχ[122X of a finite [22Xp[122X-solvable group [22XG[122X is based directly on
-  a theorem of Benard [Ben76] that applies whenever the [22Xp[122X-defect group of [22Xχ[122X is
-  cyclic. We have to restrict our application of it to small [22Xp[122X-solvable groups
-  because  GAP's  records for irreducible Brauer characters are only available
-  in  these cases. In order to use this approach effectively, it helps to have
-  a  function  that  determines  a  list  of  possible [22Xp[122X-defect groups for the
-  ordinary  character [22Xχ[122X. This is done by finding the [22Xp[122X-subgroups of [22XG[122X that are
-  the  intersection  of a Sylow [22Xp[122X-subgroup [22XQ[122X of [22XG[122X with a conjugate [22XQ^x[122X by some
-  [22Xp[122X-regular  element  [22Xx[122X  of  [22XG[122X. That defect groups are such intersections is a
-  theorem  of  Green  (see [Nav98], pg. 94). We are indebted to Michael Geline
-  for  suggesting  this  approach to determining defect groups in GAP. In most
-  cases,  it allows one to determine whether or not the defect group is cyclic
-  - the smallest exception occurs for a group of order 72.[133X
+  irreducible  character [22Xχ[122X of a finite non-nilpotent cyclic-by-abelian group [22XG[122X
+  is  based  directly on a theorem of Benard [Ben76] that applies whenever the
+  [22Xp[122X-defect  group of [22Xχ[122X is cyclic. We have to restrict our application of it to
+  groups  whose  orders are small because GAP's records for irreducible Brauer
+  characters  are only available in these cases. In order to use this approach
+  effectively,  it helps to have a function that determines a list of possible
+  [22Xp[122X-defect  groups  for  the ordinary character [22Xχ[122X. This is done by finding the
+  [22Xp[122X-subgroups of [22XG[122X that are both the intersection of a Sylow [22Xp[122X-subgroup [22XQ[122X of [22XG[122X
+  with  a  conjugate  [22XQ^x[122X  by  some  [22Xp[122X-regular  element  [22Xx[122X of [22XG[122X, and the Sylow
+  [22Xp[122X-subgroups of the centralizers of [22Xp[122X-regular elements of [22XG[122X (see [Nav98], pg.
+  94).  We  are  indebted  to  Michael  Geline for suggesting this approach to
+  determining defect groups in GAP.[133X
   
   
   [1X9.19 [33X[0;0YA complete set of orthogonal primitive idempotents[133X[101X
@@ -817,7 +793,7 @@
               [\overline{b_2},\overline{c_2}]=1 \rangle,[133X [124X[133X
   
   
-        [33X[0;6Ywith  [22Xr≡  1  mod  4[122X  (or  equivalently  [22Xoverlinea_2hspace1pt^2^n-2}[122X is
+        [33X[0;6Ywith  [22Xr  ≡  1  mod  4[122X  (or equivalently [22Xoverlinea_2hspace1pt^2^n-2}[122X is
         central in [22XE_2/K[122X). Then[133X
   
         [31X1[131X   [33X[0;12Y[22XT_2={1,a_2,a_2^2,dots,               a_2^2^k-1}[122X,              if
@@ -865,7 +841,7 @@
         [33X[1;6Y[24X[33X[0;0YP= \left( \begin{array}{rrrrrr} 1 & 1 & 1 & \cdots & 1 & 1\\ 1 & -1 &
         0 & \cdots & 0 & 0\\ 1 & 0 & -1 & \cdots & 0 & 0\\ \vdots & \vdots &
         \vdots & \ddots & \vdots & \vdots\\ 1 & 0 & 0 & \cdots & -1 & 0\\ 1 &
-        0 & 0 & \cdots & 0 & -1\\ \end{array} \right) \quad \text{and} \quad
+        0 & 0 & \cdots & 0 & -1\\ \end{array} \right) \quad {\rm and } \quad
         A= \left( \begin{array}{ccccc} 0 & 0 & \cdots & 0 & 1\\ 1 & 0 & \cdots
         & 0 & 0\\ 0 & 1 & \cdots & 0 & 0\\ \vdots & \vdots & \ddots & \vdots &
         \vdots\\ 0 & 0 & \cdots & 0 & 0\\ 0 & 0 & \cdots & 1 & 0\\ \end{array}
