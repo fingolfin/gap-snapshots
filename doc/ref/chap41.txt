@@ -862,6 +862,7 @@
   [1X41.10-1 [33X[0;0YIsTransitive[133X[101X
   
   [29X[2XIsTransitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [29X[2XIsTransitive[102X( [3XG[103X ) [32X property
   [29X[2XIsTransitive[102X( [3Xxset[103X ) [32X property
   
   [33X[0;0Yreturns  [9Xtrue[109X if the action implied by the arguments is transitive, or [9Xfalse[109X
@@ -869,6 +870,10 @@
   
   [33X[0;0YWe  say  that  a  group [3XG[103X acts [13Xtransitively[113X on a domain [22XD[122X if and only if for
   every pair of points [22Xd, e ∈ D[122X there is an element [22Xg[122X in [3XG[103X such that [22Xd^g = e[122X.[133X
+  
+  [33X[0;0YFor  permutation  groups,  the  syntax [10XIsTransitive([3XG[103X[10X)[110X is also permitted and
+  tests whether the group is transitive on the points moved by it, that is the
+  group [22X⟨ (2,3,4),(2,3) ⟩[122X is transitive (on 3 points).[133X
   
   
   [1X41.10-2 [33X[0;0YTransitivity[133X[101X
@@ -890,10 +895,6 @@
     [4X[25Xgap>[125X [27XTransitivity(g,[1..4]);[127X[104X
     [4X[28X2[128X[104X
   [4X[32X[104X
-  
-  [33X[0;0Y[13XNote:[113X  For  permutation groups, the syntax [10XIsTransitive([3XG[103X[10X)[110X is also permitted
-  and tests whether the group is transitive on the points moved by it, that is
-  the group [22X⟨ (2,3,4),(2,3) ⟩[122X is transitive (on 3 points).[133X
   
   
   [1X41.10-3 [33X[0;0YRankAction[133X[101X

@@ -427,7 +427,7 @@ CharacterTable( "Sym(4)" )
 
 <p><code class="func">SupportedCharacterTableInfo</code> is used when (ordinary or Brauer) character table objects are created from records, using <code class="func">ConvertToCharacterTable</code> (<a href="chap71_mj.html#X8195BC057B1DFAD5"><span class="RefLink">71.3-5</span></a>).</p>
 
-<p>New attributes and properties can be notified to <code class="func">SupportedCharacterTableInfo</code> by creating them with <code class="code">DeclareAttributeSuppCT</code> and <code class="code">DeclarePropertySuppCT</code> instead of <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.17-3</span></a>) and <code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.17-4</span></a>).</p>
+<p>New attributes and properties can be notified to <code class="func">SupportedCharacterTableInfo</code> by creating them with <code class="code">DeclareAttributeSuppCT</code> and <code class="code">DeclarePropertySuppCT</code> instead of <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-3</span></a>) and <code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.18-4</span></a>).</p>
 
 <p><a id="X8195BC057B1DFAD5" name="X8195BC057B1DFAD5"></a></p>
 
@@ -435,7 +435,7 @@ CharacterTable( "Sym(4)" )
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToCharacterTable</code>( <var class="Arg">record</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToCharacterTableNC</code>( <var class="Arg">record</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Let <var class="Arg">record</var> be a record. <code class="func">ConvertToCharacterTable</code> converts <var class="Arg">record</var> into a component object (see <a href="chap79_mj.html#X866E223484649E5A"><span class="RefLink">79.9</span></a>) representing a character table. The values of those components of <var class="Arg">record</var> whose names occur in <code class="func">SupportedCharacterTableInfo</code> (<a href="chap71_mj.html#X7DBEF4BF87F10CD6"><span class="RefLink">71.3-4</span></a>) correspond to attribute values of the returned character table. All other components of the record simply become components of the character table object.</p>
+<p>Let <var class="Arg">record</var> be a record. <code class="func">ConvertToCharacterTable</code> converts <var class="Arg">record</var> into a component object (see <a href="chap79_mj.html#X866E223484649E5A"><span class="RefLink">79.10</span></a>) representing a character table. The values of those components of <var class="Arg">record</var> whose names occur in <code class="func">SupportedCharacterTableInfo</code> (<a href="chap71_mj.html#X7DBEF4BF87F10CD6"><span class="RefLink">71.3-4</span></a>) correspond to attribute values of the returned character table. All other components of the record simply become components of the character table object.</p>
 
 <p>If inconsistencies in <var class="Arg">record</var> are detected, <code class="keyw">fail</code> is returned. <var class="Arg">record</var> must have the component <code class="code">UnderlyingCharacteristic</code> bound (cf. <code class="func">UnderlyingCharacteristic</code> (<a href="chap71_mj.html#X7F58A82F7D88000A"><span class="RefLink">71.9-5</span></a>)), since this decides about whether the returned character table lies in <code class="func">IsOrdinaryTable</code> (<a href="chap71_mj.html#X82FF82C87CF82ADF"><span class="RefLink">71.4-1</span></a>) or in <code class="func">IsBrauerTable</code> (<a href="chap71_mj.html#X82FF82C87CF82ADF"><span class="RefLink">71.4-1</span></a>).</p>
 
@@ -2143,7 +2143,7 @@ true
 
 <p>The class to use for splitting is chosen via <code class="func">BestSplittingMatrix</code> (<a href="chap71_mj.html#X7BFD4C1A821731FB"><span class="RefLink">71.17-5</span></a>) and the options described for this function apply here.</p>
 
-<p><code class="func">DixonSplit</code> returns <code class="keyw">true</code> if a split was performed, and <code class="keyw">fail</code> otherwise.</p>
+<p><code class="func">DixonSplit</code> returns the number of the class that was used for splitting if a split was performed, and <code class="keyw">fail</code> otherwise.</p>
 
 <p><a id="X7BFD4C1A821731FB" name="X7BFD4C1A821731FB"></a></p>
 
@@ -2236,12 +2236,12 @@ PSL(4, 3)
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DixonSplit( d );</span>
-#I  Matrix 9,Representative of Order 3,Centralizer: 5832
+#I  Matrix 2,Representative of Order 3,Centralizer: 5832
 #I  Dimensions: [ 1, 2, 1, 4, 12, 1, 1, 2, 1, 2, 1 ]
 #I  Two-dim space split
 #I  Two-dim space split
 #I  Two-dim space split
-9
+2
 </pre></div>
 
 <p>In this case spaces of the listed dimensions are a result of the splitting process. The three two dimensional spaces are split successfully by combinatoric means.</p>
@@ -2307,9 +2307,9 @@ PSL(4, 3)
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l.irreducibles[1];</span>
 Character( CharacterTable( PSL(4, 3) ),
- [ 640, E(13)^7+E(13)^8+E(13)^11, E(13)^4+E(13)^10+E(13)^12, 
-  E(13)^2+E(13)^5+E(13)^6, E(13)+E(13)^3+E(13)^9, 0, -8, 0, -8, 0, 0, 
-  0, 0, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1 ] )
+ [ 640, -8, -8, -8, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)^4+E(13)^10+E(13)^12, 
+  E(13)^2+E(13)^5+E(13)^6, E(13)+E(13)^3+E(13)^9, 0 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l:=List(l.irreducibles,ValuesOfClassFunction);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DxIncludeIrreducibles( d, l );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( d.irreducibles );</span>
@@ -2323,7 +2323,7 @@ Character( CharacterTable( PSL(4, 3) ),
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">irrs:= DixontinI( d );;</span>
-#I  Total:1 matrices,[ 9 ]
+#I  Total:1 matrices,[ 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetIrr(g,irrs);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(Irr(c));</span>
 29

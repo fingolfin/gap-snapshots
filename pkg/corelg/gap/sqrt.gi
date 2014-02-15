@@ -5,6 +5,13 @@
 #
 #
 
+###############################################
+# Do deal with Flat for lists of matrices
+#
+corelg.myflat := function(L)
+   return Concatenation(L);
+end;
+
 
 ###############################################
 # DUE TO A BUG IN BasisNC
@@ -651,7 +658,7 @@ end);
 ##########################################################################
 
 
-InstallGlobalFunction(SqrtFieldEltCoefficients, function(e)
+InstallGlobalFunction(CoefficientsOfSqrtFieldElt, function(e)
 local cfs, i, x;
    if not IsSqrtFieldElement(e) then 
       Error("input must be SqrtFieldElement"); 

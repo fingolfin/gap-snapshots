@@ -406,8 +406,9 @@
   clarifications, additions and updated examples.[133X
   
   [33X[0;0YWe  now  provide  two  HTML versions of the manual, one of them with [5XMathJax[105X
-  ([7Xwww.mathjax.org[107X)  support for better display of mathematical symbols. Also,
-  there are two PDF versions of the manual - a coloured and a monochrome one.[133X
+  ([7Xhttp://www.mathjax.org[107X) support for better display of mathematical symbols.
+  Also, there are two PDF versions of the manual - a coloured and a monochrome
+  one.[133X
   
   [33X[0;0YSeveral separate manuals now became parts of the [5XGAP[105X Reference manual. Thus,
   now there are three main [5XGAP[105X manual books:[133X

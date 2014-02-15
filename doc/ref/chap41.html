@@ -896,10 +896,13 @@ S_4(6c) = 1/2[2^3]S(3)
 <h5>41.10-1 <span class="Heading">IsTransitive</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is transitive, or <code class="keyw">false</code> otherwise.</p>
 
 <p>We say that a group <var class="Arg">G</var> acts <em>transitively</em> on a domain <span class="SimpleMath">D</span> if and only if for every pair of points <span class="SimpleMath">d, e ∈ D</span> there is an element <span class="SimpleMath">g</span> in <var class="Arg">G</var> such that <span class="SimpleMath">d^g = e</span>.</p>
+
+<p>For permutation groups, the syntax <code class="code">IsTransitive(<var class="Arg">G</var>)</code> is also permitted and tests whether the group is transitive on the points moved by it, that is the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is transitive (on 3 points).</p>
 
 <p><a id="X8295D733796B7A37" name="X8295D733796B7A37"></a></p>
 
@@ -919,8 +922,6 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transitivity(g,[1..4]);</span>
 2
 </pre></div>
-
-<p><em>Note:</em> For permutation groups, the syntax <code class="code">IsTransitive(<var class="Arg">G</var>)</code> is also permitted and tests whether the group is transitive on the points moved by it, that is the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is transitive (on 3 points).</p>
 
 <p><a id="X8166A6A17C8D6E73" name="X8166A6A17C8D6E73"></a></p>
 

@@ -101,9 +101,10 @@
   
   [33X[0;0YExact  conversion  to  and  from  floating-point  format  may  be done using
   external  representations. The "external representation" of a floating-point
-  number  [10Xx[110X  is  a  pair [10X[m,e][110X of integers, such that [10Xx=m*2^(1+e-LogInt(m,2))[110X.
-  Conversion  to  and from external representation is performed as usual using
-  [2XExtRepOfObj[102X ([14X79.15-1[114X) and [2XObjByExtRep[102X ([14X79.15-1[114X):[133X
+  number     [10Xx[110X     is    a    pair    [10X[m,e][110X    of    integers,    such    that
+  [10Xx=m*2^(-1+e-LogInt(AbsInt(m),2))[110X.    Conversion   to   and   from   external
+  representation  is  performed  as  usual  using  [2XExtRepOfObj[102X  ([14X79.16-1[114X)  and
+  [2XObjByExtRep[102X ([14X79.16-1[114X):[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XExtRepOfObj(3.14);[127X[104X
@@ -320,8 +321,11 @@
   number [3Xf[103X was created from, though it returns the most `reasonable' one given
   the precision of [3Xf[103X.[133X
   
-  [33X[0;0YIf used in the form [10XRat(f:maxdenom:=max)[110X, the rational returned is the first
-  one with denominator at most [3Xmax[103X.[133X
+  [33X[0;0YTwo options control the precision of the rational approximation: In the form
+  [10XRat(f:maxdenom:=md,maxpartial:=mp)[110X,  the  rational returned is such that the
+  denominator  is  at  most  [3Xmd[103X  and  the  partials  in its continued fraction
+  expansion  are  at  most  [3Xmp[103X.  The  default values are [10Xmaxpartial:=10000[110X and
+  [10Xmaxdenom:=2^(precision/2)[110X.[133X
   
   [1X19.2-9 SetFloats[101X
   

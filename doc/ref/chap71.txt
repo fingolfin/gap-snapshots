@@ -365,7 +365,7 @@
   
   [33X[0;0YNew attributes and properties can be notified to [2XSupportedCharacterTableInfo[102X
   by  creating  them  with  [10XDeclareAttributeSuppCT[110X  and  [10XDeclarePropertySuppCT[110X
-  instead of [2XDeclareAttribute[102X ([14X79.17-3[114X) and [2XDeclareProperty[102X ([14X79.17-4[114X).[133X
+  instead of [2XDeclareAttribute[102X ([14X79.18-3[114X) and [2XDeclareProperty[102X ([14X79.18-4[114X).[133X
   
   [1X71.3-5 ConvertToCharacterTable[101X
   
@@ -373,7 +373,7 @@
   [29X[2XConvertToCharacterTableNC[102X( [3Xrecord[103X ) [32X function
   
   [33X[0;0YLet  [3Xrecord[103X  be  a  record.  [2XConvertToCharacterTable[102X  converts [3Xrecord[103X into a
-  component  object  (see [14X79.9[114X)  representing a character table. The values of
+  component  object  (see [14X79.10[114X) representing a character table. The values of
   those  components of [3Xrecord[103X whose names occur in [2XSupportedCharacterTableInfo[102X
   ([14X71.3-4[114X) correspond to attribute values of the returned character table. All
   other  components  of  the  record simply become components of the character
@@ -2408,7 +2408,8 @@
   [33X[0;0YThe  class  to use for splitting is chosen via [2XBestSplittingMatrix[102X ([14X71.17-5[114X)
   and the options described for this function apply here.[133X
   
-  [33X[0;0Y[2XDixonSplit[102X returns [9Xtrue[109X if a split was performed, and [9Xfail[109X otherwise.[133X
+  [33X[0;0Y[2XDixonSplit[102X  returns the number of the class that was used for splitting if a
+  split was performed, and [9Xfail[109X otherwise.[133X
   
   [1X71.17-5 BestSplittingMatrix[101X
   
@@ -2515,12 +2516,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDixonSplit( d );[127X[104X
-    [4X[28X#I  Matrix 9,Representative of Order 3,Centralizer: 5832[128X[104X
+    [4X[28X#I  Matrix 2,Representative of Order 3,Centralizer: 5832[128X[104X
     [4X[28X#I  Dimensions: [ 1, 2, 1, 4, 12, 1, 1, 2, 1, 2, 1 ][128X[104X
     [4X[28X#I  Two-dim space split[128X[104X
     [4X[28X#I  Two-dim space split[128X[104X
     [4X[28X#I  Two-dim space split[128X[104X
-    [4X[28X9[128X[104X
+    [4X[28X2[128X[104X
   [4X[32X[104X
   
   [33X[0;0YIn  this  case spaces of the listed dimensions are a result of the splitting
@@ -2590,9 +2591,9 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl.irreducibles[1];[127X[104X
     [4X[28XCharacter( CharacterTable( PSL(4, 3) ),[128X[104X
-    [4X[28X [ 640, E(13)^7+E(13)^8+E(13)^11, E(13)^4+E(13)^10+E(13)^12, [128X[104X
-    [4X[28X  E(13)^2+E(13)^5+E(13)^6, E(13)+E(13)^3+E(13)^9, 0, -8, 0, -8, 0, 0, [128X[104X
-    [4X[28X  0, 0, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1 ] )[128X[104X
+    [4X[28X [ 640, -8, -8, -8, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, E(13)^7+E(13)^8+E(13)^11, E(13)^4+E(13)^10+E(13)^12, [128X[104X
+    [4X[28X  E(13)^2+E(13)^5+E(13)^6, E(13)+E(13)^3+E(13)^9, 0 ] )[128X[104X
     [4X[25Xgap>[125X [27Xl:=List(l.irreducibles,ValuesOfClassFunction);;[127X[104X
     [4X[25Xgap>[125X [27XDxIncludeIrreducibles( d, l );[127X[104X
     [4X[25Xgap>[125X [27XLength( d.irreducibles );[127X[104X
@@ -2607,7 +2608,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xirrs:= DixontinI( d );;[127X[104X
-    [4X[28X#I  Total:1 matrices,[ 9 ][128X[104X
+    [4X[28X#I  Total:1 matrices,[ 2 ][128X[104X
     [4X[25Xgap>[125X [27XSetIrr(g,irrs);[127X[104X
     [4X[25Xgap>[125X [27XLength(Irr(c));[127X[104X
     [4X[28X29[128X[104X

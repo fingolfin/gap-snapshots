@@ -2928,7 +2928,7 @@
   free module.[133X
   
   [33X[0;0YAlso    enumerators    for    non-domains    can    be    implemented    via
-  [2XEnumeratorByFunctions[102X ([14X30.3-4[114X); for a discussion, see [14X79.12[114X.[133X
+  [2XEnumeratorByFunctions[102X ([14X30.3-4[114X); for a discussion, see [14X79.13[114X.[133X
   
   [1X21.23-1 IsQuickPositionList[101X
   

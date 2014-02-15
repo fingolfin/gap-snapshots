@@ -2,9 +2,9 @@
 ##
 #W  selfs.gi             automgrp package                      Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -470,6 +470,18 @@ InstallGlobalFunction(PermOnLevelAsMatrix, function(g, lev)
   m := List([1..d^lev], x -> List([1..d^lev], x -> 0));
   for i in [1..d^lev] do
     m[i][i^perm] := 1;
+  od;
+  return m;
+end);
+
+
+InstallGlobalFunction(TransformationOnLevelAsMatrix, function(g, lev)
+  local trans, i, j, m, d;
+  trans := TransformationOnLevel(g, lev);
+  d := DegreeOfTransformation(trans);
+  m := List([1..d], x -> List([1..d], x -> 0));
+  for i in [1..d] do
+    m[i][i^trans] := 1;
   od;
   return m;
 end);
@@ -1668,14 +1680,6 @@ function(G, n)
   od;
 
   return GroupWithGenerators(old_gens);
-end);
-
-
-InstallGlobalFunction(MarkovOperator, function(G, n)
-  local gens;
-  gens := ShallowCopy(GeneratorsOfGroup(G));
-  Append(gens, List(gens, x -> x^-1));
-  return Sum(List(gens, x -> PermOnLevelAsMatrix(x, n)))/Length(gens);
 end);
 
 

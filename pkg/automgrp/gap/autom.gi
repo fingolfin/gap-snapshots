@@ -2,9 +2,9 @@
 ##
 #W  autom.gi                 automgrp package                  Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -26,7 +26,7 @@ DeclareRepresentation("IsAutomRep",
                       ["word", "states", "perm", "deg"]);
 
 
-InstallGlobalFunction($AG_CreateAutom,
+InstallGlobalFunction(__AG_CreateAutom,
 function(family, word, states, perm, invertible)
   local a, cat;
 
@@ -126,7 +126,7 @@ function(w, fam)
     od;
   fi;
 
-  return $AG_CreateAutom(fam, w, wstates, nperm, invertible);
+  return __AG_CreateAutom(fam, w, wstates, nperm, invertible);
 end);
 
 
@@ -268,10 +268,44 @@ function(a1, a2)
       od;
     fi;
 
-    return $AG_CreateAutom(FamilyObj(a1), word, states, a1!.perm * a2!.perm,
+    return __AG_CreateAutom(FamilyObj(a1), word, states, a1!.perm * a2!.perm,
                            IsInvertibleAutom(a1) and IsInvertibleAutom(a2));
 end);
 
+
+AG_IsOne_Autom := function(a)
+  local deg, w, aw, checked, to_check;
+
+  if IsOne(a!.word) then
+    return true;
+  fi;
+
+  if not IsOne(a!.perm) then
+    return false;
+  fi;
+
+  deg := a!.deg;
+  checked := [];
+  to_check := Filtered(a!.states, w -> not IsOne(w) and w <> a!.word);
+
+  while not IsEmpty(to_check) do
+    w := Remove(to_check, Length(to_check));
+    # TODO Use AddSet() here?
+    Add(checked, w);
+    aw := Autom(w, a);
+    if not IsOne(aw!.perm) then
+      return false;
+    fi;
+    for w in aw!.states do
+      if not IsOne(w) and not w in checked and not w in to_check then
+        # TODO Use AddSet() here?
+        Add(to_check, w);
+      fi;
+    od;
+  od;
+
+  return true;
+end;
 
 ###############################################################################
 ##
@@ -287,6 +321,9 @@ function(a)
   if G <>fail and HasIsContracting(G) and IsContracting(G) and FamilyObj(a)!.use_contraction = true  then
     return IsOneContr(a);
   fi;
+
+  # this seems working well enough
+  return AG_IsOne_Autom(a);
 
   d := a!.deg;
   autlist := FamilyObj(a)!.automatonlist;
@@ -331,7 +368,6 @@ end);
 ##
 #M  a1 = a2
 ##
-## TODO
 InstallMethod(\=, "for [IsAutom, IsAutom]", IsIdenticalObj, [IsAutom, IsAutom],
 function(a1, a2)
   local areequalstates, exp, i, d, checked, autlist, G, trivstate;
@@ -339,6 +375,11 @@ function(a1, a2)
   G := GroupOfAutomFamily(FamilyObj(a1));
   if G <> fail and HasIsContracting(G) and IsContracting(G) and UseContraction(G) then
     return IsOneContr(a1*a2^-1);
+  fi;
+
+  # TODO can there be a problem if we do this?
+  if G <> fail then
+    return AG_IsOne_Autom(a1*a2^-1);
   fi;
 
   d := a1!.deg;
@@ -464,7 +505,7 @@ function(a)
     od;
   fi;
 
-  return $AG_CreateAutom(FamilyObj(a), word, states, a!.perm^-1, true);
+  return __AG_CreateAutom(FamilyObj(a), word, states, a!.perm^-1, true);
 end);
 
 
@@ -691,6 +732,30 @@ InstallMethod(IsTransitiveOnLevel, "for [IsInvertibleAutom, IsPosInt]",
               [IsInvertibleAutom, IsPosInt],
 function(a, lev)
   return Length(OrbitPerms([PermOnLevel(a, lev)], 1)) = a!.deg^lev;
+end);
+
+
+
+#########################################################################
+##
+#M  AllSections( <a> )
+##
+InstallMethod(AllSections, "for [IsAutom]",
+              [IsAutom],
+function(a)
+  local states, find_all_sections;
+
+  find_all_sections := function(s)
+    local i;
+    if not s in states then
+      Add(states, s);
+      for i in [1..s!.deg] do find_all_sections(Section(s, i)); od;
+    fi;
+  end;
+
+  states := [];
+  find_all_sections(a);
+  return states;
 end);
 
 

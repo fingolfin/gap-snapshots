@@ -200,6 +200,13 @@
   (see [2XMagmaByMultiplicationTable[102X   ([14X35.3-1[114X))  if  such  a  semigroup  exists.
   Otherwise [9Xfail[109X is returned.[133X
   
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);[127X[104X
+    [4X[28X<semigroup with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,2,1]]);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
   
   [1X51.2 [33X[0;0YMonoids[133X[101X
   
@@ -309,6 +316,13 @@
   [33X[0;0Yreturns  the  monoid  whose multiplication is defined by the square matrix [3XA[103X
   (see [2XMagmaByMultiplicationTable[102X ([14X35.3-1[114X)) if such a monoid exists. Otherwise
   [9Xfail[109X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMonoidByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);[127X[104X
+    [4X[28X<monoid with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMonoidByMultiplicationTable([[1,2,3],[2,3,1],[1,3,2]]);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
   
   
   [1X51.3 [33X[0;0YInverse semigroups and monoids[133X[101X

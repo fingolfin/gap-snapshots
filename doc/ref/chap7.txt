@@ -514,7 +514,7 @@
   [29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function
   
   [33X[0;0YCalled  with  argument  [9Xtrue[109X, [2XProfileGlobalFunctions[102X starts profiling of all
-  functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.17-7[114X). Old
+  functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.18-7[114X). Old
   profile information for all these functions is cleared. A function call with
   the  argument  [9Xfalse[109X  stops  profiling  of  all  these  functions.  Recorded
   information  is  still  kept,  so  you can display it even after turning the

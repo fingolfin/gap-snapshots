@@ -325,7 +325,7 @@
   has length two.[133X
   
   [33X[0;0YOne can create a nonassociative word from a family of words and the external
-  representation of a nonassociative word using [2XObjByExtRep[102X ([14X79.15-1[114X).[133X
+  representation of a nonassociative word using [2XObjByExtRep[102X ([14X79.16-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= FreeMagma( 2 );;  gens:= GeneratorsOfMagma( m );[127X[104X

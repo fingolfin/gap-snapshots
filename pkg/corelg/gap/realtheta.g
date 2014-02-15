@@ -38,7 +38,8 @@ corelg.isom:= function( L, H1, H2, grad )
     b1:= SLAfcts.canbas( L, c1 );
     b2:= SLAfcts.canbas( L, c2 );
 
-    return AlgebraHomomorphismByImagesNC( L, L, Flat(b1), Flat(b2) );
+    return AlgebraHomomorphismByImagesNC( L, L, corelg.myflat(b1), 
+                                                corelg.myflat(b2) );
 
 end;
 
@@ -65,9 +66,9 @@ Zgrading:= function( L, d )
     SetCartanDecomposition( D, rec( CartanInv:= cd.CartanInv,
                                     K:= Intersection( cd.K, D ),
                                     P:= Intersection( cd.P, D ) ) );
-    H:= CartanSubalgebras(D);
+    H:= CartanSubalgebrasOfRealForm(D);
     cc:= BasisVectors( Basis( LieCentre(K0) ) );
-    SetCartanSubalgebras( K0, List( H, U -> 
+    SetCartanSubalgebrasOfRealForm( K0, List( H, U -> 
                           Subalgebra(K0,Concatenation(BasisVectors(Basis(U)),cc))));
     return rec( grading:= rec( g0:= gr[3], gp:= gr[1], gn:= gr[2] ), K0:= K0 );
 
@@ -215,7 +216,9 @@ imagesCarr:= function( L, H2, f, car, grp, C )
         p0:= List( posi, u -> List( u, k -> rv[k^g] ) );
         n0:= List( negi, u -> List( u, k -> rv[k^g] ) );
         g0:= List( g0i, k -> rv[k^g] );
-        U:= Subalgebra( L, Concatenation( Flat(g0), Flat(p0), Flat(n0) ) );
+        U:= Subalgebra( L, Concatenation( corelg.myflat(g0), 
+                                          corelg.myflat(p0), 
+                                          corelg.myflat(n0) ) );
         if ForAll( Basis(U), x -> sig(x) in U ) then
            # found one...
            Add( algs, rec( U:= U, posdeg:= p0, negdeg:= n0, g0:= g0 ) );
@@ -296,11 +299,11 @@ Print("carrier candidates... ",Length(crs),"\n");
               SetCartanDecomposition( DN, rec( CartanInv:= CartanDecomposition(L).CartanInv,
                          P:= Intersection( DN, CartanDecomposition(L).P ), 
                          K:= Intersection( DN, CartanDecomposition(L).K ) ) );
-              HD:= CartanSubalgebras(DN);
-              SetCartanSubalgebras( N, List( HD, U -> Subalgebra( N, Concatenation( Basis(U),
+              HD:= CartanSubalgebrasOfRealForm(DN);
+              SetCartanSubalgebrasOfRealForm( N, List( HD, U -> Subalgebra( N, Concatenation( Basis(U),
                          Basis(CN) ) ) ) );
            fi;
-           HN:= CartanSubalgebras(N);
+           HN:= CartanSubalgebrasOfRealForm(N);
            mcpt:= Maximum( List( HN, u -> Dimension(Intersection(u,NP)) ) );
 Print( List( HN, u -> Dimension(Intersection(u,NP))), " ",Dimension(Intersection(H2,NP)),"\n" ); 
            if mcpt = Dimension(Intersection(H2,NP)) then
@@ -733,7 +736,7 @@ realOrbits:= function( type, rank, grading ) # At the moment only for Z-gradings
    zg:= Zgrading( L, grading );
    Print("Computed the Z-grading...\n");
 
-   H:= CartanSubalgebras( zg.K0 );
+   H:= CartanSubalgebrasOfRealForm( zg.K0 );
 
    if not H[1] = CartanSubalgebra(L) then 
       Print("Something WRONG with the Cartan subalgs of K0...\n");

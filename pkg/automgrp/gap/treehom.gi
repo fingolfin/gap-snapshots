@@ -2,9 +2,9 @@
 ##
 #W  treehom.gi                 automgrp package                Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -451,7 +451,8 @@ end);
 ##
 #M  \=(<a1>, <a2>)
 ##
-InstallMethod(\=, "for [IsTreeHomomorphism, IsTreeHomomorphism]",
+# TODO: can lead to infinite recursion
+InstallMethod(\=, "for [IsTreeHomomorphism, IsTreeHomomorphism]", ReturnTrue,
               [IsTreeHomomorphism, IsTreeHomomorphism],
 function(a1, a2)
   return TransformationOnLevel(a1, 1) = TransformationOnLevel(a2, 1) and
@@ -596,6 +597,9 @@ end);
 #   inv_states := List([1..Length(states)], i -> Inverse(states[i^perm]));
 #   return TreeHomomorphism(inv_states, perm);
 # end);
+
+
+
 
 
 #E

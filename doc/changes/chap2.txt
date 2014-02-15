@@ -311,3 +311,35 @@
         finite  groups,  cyclotomic  algebras  over abelian number fields, and
         rational quaternion algebras (contribution by Allen Herman).[133X
   
+  
+  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.3 (February 2013)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YIncorrect  result returned by [10XAutomorphismGroup(PSp(4,2^n))[110X. [Reported
+        by Anvita][133X
+  
+  [30X    [33X[0;6YThe  [2XOrder[102X  ([14XReference:  Order[114X)  method  for group homomorphisms newly
+        introduced  in  [5XGAP[105X 4.7  had  a bug that caused it to sometimes return
+        incorrect results. [Reported by Benjamin Sambale][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YSeveral bugs were fixed and missing methods were introduced in the new
+        code for transformations, partial permutations and semigroups that was
+        first  included  in  [5XGAP[105X 4.7.  Some minor corrections were made in the
+        documentation for transformations.[133X
+  
+  [30X    [33X[0;6YBreak  loop  in  [10XIsomorphismFpMonoid[110X when prefixes in generators names
+        were  longer  than  one letter. [Reported by Dmytro Savchuk and Yevgen
+        Muntyan][133X
+  
+  [30X    [33X[0;6YBreak      loop      while      displaying      the      result     of
+        [2XMagmaWithInversesByMultiplicationTable[102X                     ([14XReference:
+        MagmaWithInversesByMultiplicationTable[114X). [Reported by Grahame Erskine][133X
+  
+  [33X[0;0YImproved functionality:[133X
+  
+  [30X    [33X[0;6YBetter   detection   of  UTF-8  terminal  encoding  on  some  systems.
+        [Suggested by Andries Brouwer][133X
+  

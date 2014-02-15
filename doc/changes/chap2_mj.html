@@ -33,6 +33,9 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7EF0C705829B5D2B">2.1-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.6.5</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X809E635D8028D2ED">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2013)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.6 and <strong class="pkg">GAP</strong> 4.7</span></h3>
@@ -243,6 +246,43 @@ MaximalSubgroupClassReps(g);
 
 </li>
 <li><p><strong class="pkg">Wedderga</strong> package by Osnel Broche Cristo, Allen Herman, Alexander Konovalov, Aurora Olivieri, Gabriela Olteanu, Ángel del Río and Inneke Van Gelder has been extended to include functions for calculating local and global Schur indices of ordinary irreducible characters of finite groups, cyclotomic algebras over abelian number fields, and rational quaternion algebras (contribution by Allen Herman).</p>
+
+</li>
+</ul>
+<p><a id="X809E635D8028D2ED" name="X809E635D8028D2ED"></a></p>
+
+<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2013)</span></h4>
+
+<p>Fixed bugs which could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Incorrect result returned by <code class="code">AutomorphismGroup(PSp(4,2^n))</code>. [Reported by Anvita]</p>
+
+</li>
+<li><p>The <code class="func">Order</code> (<a href="../../doc/ref/chap31_mj.html#X84F59A2687C62763"><span class="RefLink">Reference: Order</span></a>) method for group homomorphisms newly introduced in <strong class="pkg">GAP</strong> 4.7 had a bug that caused it to sometimes return incorrect results. [Reported by Benjamin Sambale]</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>Several bugs were fixed and missing methods were introduced in the new code for transformations, partial permutations and semigroups that was first included in <strong class="pkg">GAP</strong> 4.7. Some minor corrections were made in the documentation for transformations.</p>
+
+</li>
+<li><p>Break loop in <code class="code">IsomorphismFpMonoid</code> when prefixes in generators names were longer than one letter. [Reported by Dmytro Savchuk and Yevgen Muntyan]</p>
+
+</li>
+<li><p>Break loop while displaying the result of <code class="func">MagmaWithInversesByMultiplicationTable</code> (<a href="../../doc/ref/chap35_mj.html#X7EDAFB987EE8A770"><span class="RefLink">Reference: MagmaWithInversesByMultiplicationTable</span></a>). [Reported by Grahame Erskine]</p>
+
+</li>
+</ul>
+<p>Improved functionality:</p>
+
+
+<ul>
+<li><p>Better detection of UTF-8 terminal encoding on some systems. [Suggested by Andries Brouwer]</p>
 
 </li>
 </ul>

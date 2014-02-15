@@ -2,12 +2,10 @@
 ##
 #W  utilsfrgrp.gi              automgrp package                Yevgen Muntyan
 ##                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
-
-##  TODO everything
 
 
 #############################################################################
@@ -623,34 +621,23 @@ function(pairs)
 end);
 
 
+
 #############################################################################
 ##
 #M  <F1> = <F2>
+##  TODO:RELEASE Remove it if possible (i.e. if our code doesn't use it)
 ##
 InstallMethod(\=, "method for two subgroups of free group",
               IsIdenticalObj, [IsFreeGroup, IsFreeGroup],
 function(F1, F2)
-  local gens1, gens2;
-
-  gens1 := GeneratorsOfGroup(F1);
-  gens2 := GeneratorsOfGroup(F2);
-#   Print(gens1, "\n", gens2, "\n");
-
-  if Difference(AG_ReducedListOfWordsByNielsen(gens1)[1], [One(F1)]) =
-          Difference(AG_ReducedListOfWordsByNielsen(gens2)[1], [One(F1)])
-  then
-#     Print("true\n");
-    return true;
-  else
-#     Print("false\n");
-    return false;
-  fi;
+  return FreeGeneratorsOfGroup(F1) = FreeGeneratorsOfGroup(F2);
 end);
 
 
 #############################################################################
 ##
 #M  <w> in <F2>
+##  TODO:RELEASE Remove it if possible (i.e. if our code doesn't use it)
 ##
 InstallMethod(\in, "method for element and subgroup of free group",
               [IsAssocWord, IsFreeGroup],
@@ -660,18 +647,8 @@ function(w, F)
   if IsOne(w) then return true;
   elif IsTrivial(F) then return false; fi;
 
-  gens := GeneratorsOfGroup(F);
-#   Print(w, "\n", gens, "\n");
-
-  if Difference(AG_ReducedListOfWordsByNielsen(gens)[1], [One(w)]) =
-    Difference(AG_ReducedListOfWordsByNielsen(Concatenation(gens, [w]))[1], [One(w)])
-  then
-#     Print("true\n");
-    return true;
-  else
-#     Print("false\n");
-    return false;
-  fi;
+  gens := FreeGeneratorsOfGroup(F);
+  return FreeGeneratorsOfGroup(Group(Concatenation(gens, [w]))) = gens;
 end);
 
 
@@ -679,24 +656,12 @@ end);
 ##
 #M  IsSubset(<F1>, <F2>)
 ##  F1 > F2
+##  TODO:RELEASE Remove it if possible (i.e. if our code doesn't use it)
 ##
 InstallMethod(IsSubset, "method for two subgroups of free group",
               IsIdenticalObj, [IsFreeGroup, IsFreeGroup],
 function(F1, F2)
-  local gens1, gens2, g;
-
-  gens1 := GeneratorsOfGroup(F1);
-  gens2 := GeneratorsOfGroup(F2);
-#  Print(gens1, "\n", gens2, "\n");
-
-  for g in gens2 do
-    if not g in F1 then
-#      Print("false\n");
-      return false;
-    fi;
-  od;
-#  Print("true\n");
-  return true;
+  return ForAll(GeneratorsOfGroup(F2), g -> g in F1);
 end);
 
 

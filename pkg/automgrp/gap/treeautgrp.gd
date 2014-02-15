@@ -2,9 +2,9 @@
 ##
 #W  treeautgrp.gd              automgrp package                Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -194,10 +194,10 @@ DeclareOperation("ProjectionNC", [IsTreeAutomorphismGroup, IsObject]);
 DeclareOperation("ProjStab", [IsTreeAutomorphismGroup, IsObject]);
 
 
-DeclareOperation("$AG_SubgroupOnLevel", [IsTreeAutomorphismGroup,
+DeclareOperation("__AG_SubgroupOnLevel", [IsTreeAutomorphismGroup,
                                          IsTreeHomomorphismCollection,
                                          IsPosInt]);
-DeclareOperation("$AG_SimplifyGroupGenerators", [IsTreeHomomorphismCollection]);
+DeclareOperation("__AG_SimplifyGroupGenerators", [IsObject]);
 
 
 ###############################################################################

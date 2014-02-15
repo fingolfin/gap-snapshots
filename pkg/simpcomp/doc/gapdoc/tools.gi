@@ -67,7 +67,7 @@
 ## gap&gt; SCMailIsEnabled();
 ## true
 ## gap&gt; SCMailSend("Hello, this is simpcomp.");
-## WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-bjA1wb/pkcs11: No such file or directory
+## WARNING: gnome-keyring:: couldn't connect to: /tmp/keyring-1ChErV/pkcs11: No such file or directory
 ## true
 ## </Example>
 ## </Description>
@@ -149,7 +149,7 @@
 ## Line 1075 : 
 ## + simpcomp package test
 ## Line 1076 : 
-## + GAP4stones: 105119
+## + GAP4stones: 99314
 ## true
 ## </Example>
 ## </Description>

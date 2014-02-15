@@ -2,9 +2,9 @@
 ##
 #W  rws.gd                  automgrp package                   Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -118,8 +118,7 @@ DeclareOperation("AG_RewritingSystem", [IsObject]);
 ##  gap> AG_UseRewritingSystem(G);
 ##  gap> AG_RewritingSystemRules(G);
 ##  [ [ a^2, <identity ...> ], [ b^2, <identity ...> ], [ c^2, <identity ...> ],
-##    [ d^2, <identity ...> ], [ a^-1, a ], [ b^-1, b ], [ c^-1, c ], [ d^-1, d ]
-##   ]
+##    [ d^2, <identity ...> ], [ A, a ], [ B, b ], [ C, c ], [ D, d ] ]
 ##  \endexample
 ##
 DeclareOperation("AG_RewritingSystemRules", [IsObject]);

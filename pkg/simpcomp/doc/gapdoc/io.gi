@@ -156,6 +156,22 @@
 ##<#/GAPDoc>
 ################################################################################
 ################################################################################
+##<#GAPDoc Label="SCExportRecognizer">
+## <ManSection>
+## <Func Name="SCExportPolymake" Arg="complex, filename"/>
+## <Returns><K>true</K> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>
+## Exports the gluings of the tetrahedra of a given combinatorial <M>3</M>-manifold <Arg>complex</Arg> in a format compatible with Matveev's <M>3</M>-manifold software <C>Recognizer</C>.
+## <Example>
+## gap&gt; c:=SCBdCrossPolytope(4);;
+## gap&gt; SCExportRecognizer(c,"/tmp/bdbeta4.mv");
+## true
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
 ##<#GAPDoc Label="SCExportJavaView">
 ## <ManSection>
 ## <Func Name="SCExportJavaView" Arg="complex, file, coords"/>

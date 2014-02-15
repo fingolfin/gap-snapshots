@@ -2,9 +2,9 @@
 ##
 #W  automaton.gd              automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -26,6 +26,7 @@ DeclareCategoryCollections("IsMealyAutomaton");
 #O  MealyAutomaton( <table>[, <names>[, <alphabet>]] )
 #O  MealyAutomaton( <string> )
 #O  MealyAutomaton( <autom> )
+#O  MealyAutomaton( <tree_hom_list> )
 ##
 ##  Creates the Mealy automaton (see "Short math background") defined by the argument <table>, <string>
 ##  or <autom>. Format of the argument <table> is
@@ -35,7 +36,8 @@ DeclareCategoryCollections("IsMealyAutomaton");
 ##  state.  Format of the string <string> is the same as in `AutomatonGroup' (see~"AutomatonGroup").
 ##  The third form of this operation takes a tree homomorphism <autom> as its argument.
 ##  It returns noninitial automaton constructed from the sections of <autom>, whose first state
-##  corresponds to <autom> itself.
+##  corresponds to <autom> itself. The fourth form creates a noninitial automaton constructed
+##  of the states of all tree homomorphisms from the <tree_hom_list>.
 ##
 ##  \beginexample
 ##  gap> A := MealyAutomaton([[1,2,(1,2)],[3,1,()],[3,3,(1,2)]], ["a","b","c"]);
@@ -61,6 +63,10 @@ DeclareOperation("MealyAutomaton", [IsList]);
 DeclareOperation("MealyAutomaton", [IsList, IsList]);
 DeclareOperation("MealyAutomaton", [IsList, IsList, IsList]);
 DeclareOperation("MealyAutomaton", [IsTreeHomomorphism]);
+
+
+DeclareOperation("SetStateName", [IsMealyAutomaton, IsInt, IsString]);
+DeclareOperation("SetStateNames", [IsMealyAutomaton, IsList]);
 
 
 # ###############################################################################
@@ -158,30 +164,6 @@ DeclareGlobalFunction("MinimizationOfAutomaton");
 ##  \endexample
 ##
 DeclareGlobalFunction("MinimizationOfAutomatonTrack");
-
-
-################################################################################
-##
-#F  AutomatonWithInverses ( <A> )
-##
-##  Returns an automaton obtained from automaton <A> by adding inverse elements and
-##  the identity element, and minimizing the result.
-##
-DeclareGlobalFunction("AutomatonWithInverses");
-
-
-################################################################################
-##
-#F  AutomatonWithInversesTrack ( <A> )
-##
-##  Returns an automaton `A_new' obtained from automaton <A> by adding inverse elements and
-##  the identity element, and minimizing the result. Returns the list
-##  `[A_new,track_s,track_l]', where
-##  `track_s' is how new states are expressed in terms of the old ones, and
-##  `track_l' is how old states are expressed in terms of the new ones.
-##
-DeclareGlobalFunction("AutomatonWithInversesTrack");
-
 
 
 #############################################################################
@@ -298,7 +280,7 @@ DeclareOperation("InverseAutomaton", [IsMealyAutomaton]);
 
 ################################################################################
 ##
-#O  IsBireversible ( <A> )
+#P  IsBireversible ( <A> )
 ##
 ##  Computes whether or not the automaton <A> is bireversible, i.e. <A>, the dual of <A> and
 ##  the dual of the inverse of <A> are invertible. The example below shows that the
@@ -315,7 +297,34 @@ DeclareProperty("IsBireversible", IsMealyAutomaton);
 
 ################################################################################
 ##
-#O  IsTrivial ( <A> )
+#P  IsReversible ( <A> )
+##
+##  Computes whether or not the automaton <A> is reversible, i.e. the dual of <A>
+##  is invertible.
+##
+DeclareProperty("IsReversible", IsMealyAutomaton);
+
+
+################################################################################
+##
+#P  IsIRAutomaton ( <A> )
+##
+##  Computes whether or not the automaton <A> is an IR-automaton, i.e. <A> and its dual are invertible.
+##  The example below shows that the automaton generating lamplighter group is an IR-automaton.
+##  \beginexample
+##  gap> L := MealyAutomaton("a=(b,a)(1,2), b=(a,b)");
+##  <automaton>
+##  gap> IsIRAutomaton(L);
+##  true
+##  \endexample
+
+DeclareProperty("IsIRAutomaton", IsMealyAutomaton);
+
+
+
+################################################################################
+##
+#P  IsTrivial ( <A> )
 ##
 ##  Computes whether the automaton <A> is equivalent to the trivial automaton.
 ##  \beginexample
@@ -326,6 +335,49 @@ DeclareProperty("IsBireversible", IsMealyAutomaton);
 ##  \endexample
 ##
 DeclareProperty("IsTrivial", IsMealyAutomaton);
+
+
+################################################################################
+##
+#O  MDReduction ( <A> )
+##
+##  Performs the process of MD-reduction of automaton <A> (alternating
+##  applications of minimization and dualization procedures) until a pair of
+##  minimal automata dual to each other is reached. Returns this pair. The main
+##  point of this procedure is in the fact that the (semi)group generated by the
+##  original automaton is finite if and only each of the (semi)groups generated
+##  by the output automata is finite.
+##  \beginexample
+##  gap> A:=MealyAutomaton("a=(d,d,d,d)(1,2)(3,4),b=(b,b,b,b)(1,4)(2,3),\\
+##  >                       c=(a,c,a,c),          d=(c,a,c,a)");
+##  <automaton>
+##  gap> NumberOfStates(MinimizationOfAutomaton(A));
+##  4
+##  gap> MDR:=MDReduction(A);
+##  [ <automaton>, <automaton> ]
+##  gap> Print(MDR[1]);
+##  d1 = (d2, d2, d1, d1)(1,4,3), d2 = (d1, d1, d2, d2)(1,4)
+##  gap> Print(MDR[2]);
+##  d1 = (d4, d4)(1,2), d2 = (d2, d2)(1,2), d3 = (d1, d3), d4 = (d3, d1)
+##  \endexample
+DeclareOperation("MDReduction", [IsMealyAutomaton]);
+
+
+################################################################################
+##
+#P  IsMDTrivial ( <A> )
+##
+##  Returns `true' if <A> is MD-trivial (i.e. if MD-reduction proedure returns the
+##  trivial automaton) and `false' otherwise.
+DeclareProperty("IsMDTrivial", IsMealyAutomaton);
+
+
+################################################################################
+##
+#P  IsMDReduced ( <A> )
+##
+##  Returns `true' if <A> is MD-reduced and `false' otherwise.
+DeclareProperty("IsMDReduced", IsMealyAutomaton);
 
 
 ################################################################################
@@ -399,6 +451,42 @@ DeclareOperation("SubautomatonWithStates", [IsMealyAutomaton, IsList]);
 DeclareOperation("AutomatonNucleus", [IsMealyAutomaton]);
 
 
+###############################################################################
+##
+#A  AdjacencyMatrix( <A> )
+##
+##  Returns the adjacency matrix of a Mealy automaton <A>, in which the $ij$-th entry
+##  contains the number of arrows in the Moore diagram of <A> from state $i$ to state $j$.
+##
+##  \beginexample
+##  gap> A:=MealyAutomaton("a=(a,a,b)(1,2,3),b=(a,c,b)(1,2),c=(a,a,a)");
+##  <automaton>
+##  gap> AdjacencyMatrix(A);
+##  [ [ 2, 1, 0 ], [ 1, 1, 1 ], [ 3, 0, 0 ] ]
+##  \endexample
+##
+DeclareAttribute("AdjacencyMatrix", IsMealyAutomaton);
+
+
+################################################################################
+##
+#P  IsAcyclic ( <A> )
+##
+##  Computes whether or not an automaton <A> is acyclic in the sense of Sidki~\cite{Sid00}.
+##  I.e. returns `true' if the Moore diagram of <A> does not contain cycles with two or more
+##  states and `false' otherwise.
+##  \beginexample
+##  gap> A:=MealyAutomaton("a=(a,a,b)(1,2,3),b=(c,c,b)(1,2),c=(d,c,1),d=(d,1,d)");
+##  <automaton>
+##  gap> IsAcyclic(A);
+##  true
+##  gap> A:=MealyAutomaton("a=(a,a,b)(1,2,3),b=(c,c,d)(1,2),c=(d,c,1),d=(b,1,d)");
+##  <automaton>
+##  gap> IsAcyclic(A);
+##  false
+##  \endexample
+##
+DeclareProperty("IsAcyclic", IsMealyAutomaton);
 
 ##  PassToPowerOfAlphabet ( <A>, <power> )
 

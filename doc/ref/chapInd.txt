@@ -739,27 +739,27 @@
   [2XDaysInMonth[102X  27.9-2
   [2XDaysInYear[102X  27.9-1
   DEC  25.4
-  [2XDeclareAttribute[102X  79.17-3
+  [2XDeclareAttribute[102X  79.18-3
   [10XDeclareAttribute[110X, example  80.5
   [10XDeclareAttribute!example[110X  80.8-3
   [10XDeclareAutoPackage[110X  77.2
   [2XDeclareAutoreadableVariables[102X  76.3-8
-  [2XDeclareCategory[102X  79.17-1
-  [2XDeclareFilter[102X  79.17-5
-  [2XDeclareGlobalFunction[102X  79.17-7
-  [2XDeclareGlobalVariable[102X  79.17-8
+  [2XDeclareCategory[102X  79.18-1
+  [2XDeclareFilter[102X  79.18-5
+  [2XDeclareGlobalFunction[102X  79.18-7
+  [2XDeclareGlobalVariable[102X  79.18-8
   [2XDeclareHandlingByNiceBasis[102X  61.12-1
   [2XDeclareInfoClass[102X  7.4-2
-  [2XDeclareOperation[102X  79.17-6
+  [2XDeclareOperation[102X  79.18-6
   [10XDeclarePackage[110X  77.2
   [10XDeclarePackageAutoDocumentation[110X  77.2
   [10XDeclarePackageDocumentation[110X  77.2
-  [2XDeclareProperty[102X  79.17-4
-  [2XDeclareRepresentation[102X  79.17-2
-  [10XDeclareRepresentation[110X, belongs to implementation part  79.18
+  [2XDeclareProperty[102X  79.18-4
+  [2XDeclareRepresentation[102X  79.18-2
+  [10XDeclareRepresentation[110X, belongs to implementation part  79.19
   [10XDeclareRepresentation[110X, example  80.6
-  [2XDeclareSynonym[102X  79.17-10
-  [2XDeclareSynonymAttr[102X  79.17-10
+  [2XDeclareSynonym[102X  79.18-10
+  [2XDeclareSynonymAttr[102X  79.18-10
   [2XDeclareUserPreference[102X  3.2-4
   [2XDecodeTree[102X  48.10-1
   decompose, a group character  72.8-5
@@ -1108,7 +1108,7 @@
   [2XExtRepDenominatorRatFun[102X  66.21-3
   [2XExtRepNumeratorRatFun[102X  66.21-2
   [2XExtRepOfObj[102X (for a cyclotomic)  18.1-12
-  [2XExtRepOfObj[102X  79.15-1
+  [2XExtRepOfObj[102X  79.16-1
   [2XExtRepPolynomialRatFun[102X  66.21-6
   [2XEY[102X  18.4-3
   [22Xf_N[122X (irrational value)  18.4-1
@@ -1167,7 +1167,7 @@
   [2XFloat[102X  19.2-7
   [2XFloor[102X  19.2-1
   flush character  27.2
-  [2XFlushCaches[102X  79.17-11
+  [2XFlushCaches[102X  79.18-11
   FOA triples  85.
   [9Xfor[109X loop  4.20
   [2XForAll[102X  21.20-23
@@ -1608,8 +1608,8 @@
   [2XInstallCharReadHookFunc[102X  10.10-1
   [2XInstalledPackageVersion[102X  76.3-3
   [2XInstallFactorMaintenance[102X  31.13-5
-  [2XInstallFlushableValue[102X  79.17-9
-  [2XInstallGlobalFunction[102X  79.17-7
+  [2XInstallFlushableValue[102X  79.18-9
+  [2XInstallGlobalFunction[102X  79.18-7
   [2XInstallHandlingByNiceBasis[102X  61.12-1
   [2XInstallImmediateMethod[102X  78.6-1
   [2XInstallIsomorphismMaintenance[102X  31.13-6
@@ -1618,7 +1618,7 @@
   [10XInstallReadlineMacro[110X  6.9-4
   [2XInstallSubsetMaintenance[102X  31.13-4
   [2XInstallTrueMethod[102X  78.7-1
-  [2XInstallValue[102X  79.17-9
+  [2XInstallValue[102X  79.18-9
   [2XInt[102X  14.2-3
   [2XInt[102X (for a cyclotomic)  18.1-5
   [2XInt[102X (for strings)  27.8-1
@@ -2334,6 +2334,7 @@
   [2XIsTransformationMonoid[102X  53.7-1
   [2XIsTransformationSemigroup[102X  53.7-1
   [2XIsTransitive[102X (for a group, an action domain, etc.)  41.10-1
+  [2XIsTransitive[102X (for a permutation group)  41.10-1
   [2XIsTransitive[102X (for an external set)  41.10-1
   [2XIsTransitive[102X (for a character)  72.8-15
   [2XIsTransitiveBinaryRelation[102X  33.2-3
@@ -2819,7 +2820,7 @@
   [2XNamesFilter[102X  13.2-2
   [2XNamesGVars[102X  4.9-8
   [2XNamesLocalVariablesFunction[102X  5.1-3
-  [2XNamesOfComponents[102X  79.9-1
+  [2XNamesOfComponents[102X  79.10-1
   [2XNamesOfFusionSources[102X  73.3-5
   namespace  4.6-1
   namespace  4.9
@@ -2852,8 +2853,9 @@
   [2XNewAttribute[102X  79.3-1
   [10XNewAttribute[110X, example  80.5
   [2XNewCategory[102X  79.1-1
+  [2XNewConstructor[102X  79.6-1
   [2XNewDictionary[102X  28.2-1
-  [2XNewFamily[102X  79.6-1
+  [2XNewFamily[102X  79.7-1
   [2XNewFilter[102X  79.4-1
   [2XNewFloat[102X  19.2-7
   [2XNewInfoClass[102X  7.4-1
@@ -2863,7 +2865,7 @@
   [2XNewProperty[102X  79.3-2
   [2XNewRepresentation[102X  79.2-1
   [10XNewRepresentation[110X, example  80.6
-  [2XNewType[102X  79.7-1
+  [2XNewType[102X  79.8-1
   [2XNextIterator[102X  30.8-5
   [2XNextPrimeInt[102X  14.4-5
   [2XNF[102X  60.1-2
@@ -2976,9 +2978,9 @@
   [2XNumeratorOfRationalFunction[102X  66.4-2
   [2XNumeratorRat[102X  17.2-4
   [2XObjByExtRep[102X (for creating a UEALattice element)  64.14-3
-  [2XObjByExtRep[102X  79.15-1
-  [2XObjectify[102X  79.8-1
-  [2XObjectifyWithAttributes[102X  79.8-2
+  [2XObjByExtRep[102X  79.16-1
+  [2XObjectify[102X  79.9-1
+  [2XObjectifyWithAttributes[102X  79.9-2
   obsolete  77.
   [2XOCOneCocycles[102X  39.23-3
   octal character codes  27.2

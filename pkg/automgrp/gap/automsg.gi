@@ -2,9 +2,9 @@
 ##
 #W  automsg.gi               automgrp package                  Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -153,9 +153,9 @@ end);
 
 # ###############################################################################
 # ##
-# #M  $AG_SubgroupOnLevel(<G>, <gens>, <level>)
+# #M  __AG_SubgroupOnLevel(<G>, <gens>, <level>)
 # ##
-# InstallMethod($AG_SubgroupOnLevel, [IsAutomGroup,
+# InstallMethod(__AG_SubgroupOnLevel, [IsAutomGroup,
 #                                  IsList and IsTreeAutomorphismCollection,
 #                                  IsPosInt],
 # function(G, gens, level)
@@ -174,12 +174,12 @@ end);
 #   return SubgroupNC(overgroup, gens);
 # end);
 #
-# InstallMethod($AG_SubgroupOnLevel, [IsAutomGroup, IsList and IsEmpty, IsPosInt],
+# InstallMethod(__AG_SubgroupOnLevel, [IsAutomGroup, IsList and IsEmpty, IsPosInt],
 # function(G, gens, level)
 #   return TrivialSubgroup(G);
 # end);
 #
-# InstallMethod($AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
+# InstallMethod(__AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
 #                                  IsList and IsAutomCollection,
 #                                  IsPosInt],
 # function(G, gens, level)
@@ -194,7 +194,7 @@ end);
 #   return SubgroupNC(overgroup, gens);
 # end);
 #
-# InstallMethod($AG_SimplifyGroupGenerators, [IsList and IsAutomCollection],
+# InstallMethod(__AG_SimplifyGroupGenerators, [IsList and IsAutomCollection],
 # function(gens)
 #   local words, fam;
 #
@@ -505,17 +505,6 @@ end);
 #   fi;
 #   return f;
 # end);
-#
-#
-# ###############################################################################
-# ##
-# #M  IndexInFreeGroup(<G>)
-# ##
-# InstallMethod(IndexInFreeGroup, "for [IsAutomGroup]",
-#               [IsAutomGroup],
-# function(G)
-#   return IndexInWholeGroup(UnderlyingFreeSubgroup(G));
-# end);
 
 
 ###############################################################################
@@ -596,6 +585,8 @@ InstallMethod(IsAutomatonSemigroup, "for [IsAutomSemigroup]",
 function(G)
   if not HasIsAutomatonSemigroup(G) then return false; fi;
 end);
+
+
 
 
 #E

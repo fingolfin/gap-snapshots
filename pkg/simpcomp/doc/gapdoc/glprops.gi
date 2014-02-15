@@ -556,7 +556,7 @@
 ## <Meth Name="SCDualGraph" Arg="complex"/>
 ## <Returns>1-dimensional simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Computes the dual graph of <Arg>complex</Arg>.
+## Computes the dual graph of the pure simplicial complex <Arg>complex</Arg>.
 ## <Example>
 ## gap&gt; sphere:=SCBdSimplex(5);;
 ## gap&gt; graph:=SCFaces(sphere,1);       

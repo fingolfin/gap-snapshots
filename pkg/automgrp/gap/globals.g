@@ -2,9 +2,9 @@
 ##
 #W  globals.g               automgrp package                   Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -23,9 +23,9 @@ BindGlobal("AG_Globals", rec(
   bind_vars_autom_family := true,
   round_spectra := 7,
   scilab_stacksize := 100000000,
-  use_inv_order_in_apply_nielsen := true,
   run_tests_forever := false,
   max_rws_relator_len := 2,
+  unit_test_dots := false,
 ));
 
 

@@ -23,6 +23,7 @@
 ## <#Include Label="SCImportPolymake"/>
 ## <#Include Label="SCExportLatexTable"/>
 ## <#Include Label="SCExportJavaView"/>
+## <#Include Label="SCExportRecognizer"/>
 ## <#Include Label="SCExportSnapPy"/>
 ##
 ## </Section>

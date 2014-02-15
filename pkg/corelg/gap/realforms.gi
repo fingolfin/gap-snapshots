@@ -2,7 +2,7 @@
 #
 # These are the functions contained here:
 #
-#  CartanSubalgebras
+#  CartanSubalgebrasOfRealForm
 #  CartanSubspace
 #  VoganDiagram
 #  SatakeDiagram
@@ -2132,7 +2132,7 @@ local cd, h, rank, theta, sigma, R, C, base, cg, pr, ct, cb, algs, cgs,
   #ct    := CartanType(corelg.CartanMatrixOfCanonicalGeneratingSet(L,cg));
 
    cgs  := List(ranks,x-> List(cg,i->i{x})); 
-   algs := List(cgs,x->SubalgebraNC(L,Flat(x))); 
+   algs := List(cgs,x->SubalgebraNC(L,corelg.myflat(x))); 
    
 
    #### small test if all is compatible
@@ -3634,7 +3634,7 @@ end;
 
 
 ##############################################################################################
-InstallMethod( CartanSubalgebras,
+InstallMethod( CartanSubalgebrasOfRealForm,
    "for a Lie algebra",
    true,
    [ IsLieAlgebra ], 0, function( L )

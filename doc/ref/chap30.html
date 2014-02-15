@@ -128,7 +128,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollectionsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>For a family <var class="Arg">Fam</var>, <code class="func">CollectionsFamily</code> returns the family of all collections over <var class="Arg">Fam</var>, that is, of all dense lists and domains that consist of objects in <var class="Arg">Fam</var>.</p>
 
-<p>The <code class="func">NewFamily</code> (<a href="chap79.html#X7FB4123E7E22137D"><span class="RefLink">79.6-1</span></a>) call in the standard method of <code class="func">CollectionsFamily</code> is executed with second argument <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>), since every object in the collections family must be a collection, and with third argument the collections categories of the involved categories in the implied filter of <var class="Arg">Fam</var>.</p>
+<p>The <code class="func">NewFamily</code> (<a href="chap79.html#X7FB4123E7E22137D"><span class="RefLink">79.7-1</span></a>) call in the standard method of <code class="func">CollectionsFamily</code> is executed with second argument <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>), since every object in the collections family must be a collection, and with third argument the collections categories of the involved categories in the implied filter of <var class="Arg">Fam</var>.</p>
 
 <p>Note that families (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>) are used to describe relations between objects. Important such relations are that between an element <span class="SimpleMath">e</span> and each collection of elements that lie in the same family as <span class="SimpleMath">e</span>, and that between two collections whose elements lie in the same family. Therefore, all collections of elements in the family <var class="Arg">Fam</var> form the new family <code class="code">CollectionsFamily( <var class="Arg">Fam</var> )</code>.</p>
 
@@ -273,7 +273,7 @@ false
 </dl>
 <p>If the result is known to have additional properties such as being strictly sorted (see <code class="func">IsSSortedList</code> (<a href="chap21.html#X80CDAF45782E8DCB"><span class="RefLink">21.17-4</span></a>)) then it can be useful to set these properties after the construction of the enumerator, before it is used for the first time. And in the case that a new sorted enumerator of a domain is implemented via <code class="func">EnumeratorByFunctions</code>, and this construction is installed as a method for the operation <code class="func">Enumerator</code> (<a href="chap30.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>), then it should be installed also as a method for <code class="func">EnumeratorSorted</code> (<a href="chap30.html#X80CD7DDC7D0C60D5"><span class="RefLink">30.3-3</span></a>).</p>
 
-<p>Note that it is <em>not</em> checked that <code class="func">EnumeratorByFunctions</code> really returns a dense and duplicate-free list. <code class="func">EnumeratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place, see <a href="chap79.html#X82E86CF37B123FD4"><span class="RefLink">79.8</span></a>.</p>
+<p>Note that it is <em>not</em> checked that <code class="func">EnumeratorByFunctions</code> really returns a dense and duplicate-free list. <code class="func">EnumeratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place, see <a href="chap79.html#X82E86CF37B123FD4"><span class="RefLink">79.9</span></a>.</p>
 
 <p>It would be easy to implement a slightly generalized setup for enumerators that need not be duplicate-free (where the three argument version of <code class="func">Position</code> (<a href="chap21.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) is supported), but the resulting overhead for the methods seems not to be justified.</p>
 
@@ -861,7 +861,7 @@ true
 </dl>
 <p>Further (data) components may be contained in <var class="Arg">record</var> which can be used by these function.</p>
 
-<p><code class="func">IteratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place (see Section  <a href="chap79.html#X82E86CF37B123FD4"><span class="RefLink">79.8</span></a>).</p>
+<p><code class="func">IteratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place (see Section  <a href="chap79.html#X82E86CF37B123FD4"><span class="RefLink">79.9</span></a>).</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap29.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap31.html">[Next Chapter]</a>&nbsp;  </div>

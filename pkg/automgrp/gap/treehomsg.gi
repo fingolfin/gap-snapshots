@@ -2,9 +2,9 @@
 ##
 #W  treehomsg.gi             automgrp package                  Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -228,5 +228,82 @@ function(G, k)
   psemigroup := SemigroupByGenerators(pgens);
   return psemigroup;
 end);
+
+
+###############################################################################
+##
+#M  MarkovOperator(<G>, <lev>, <weights>)
+##
+InstallMethod(MarkovOperator, "for [IsTreeHomomorphismSemigroup, IsCyclotomic, IsList]",
+              [IsTreeHomomorphismSemigroup, IsCyclotomic, IsList],
+function(G, n, weights)
+  local gens,R,indet;
+  gens := ShallowCopy(GeneratorsOfSemigroup(G));
+  if Length(weights)<>Length(gens) then Error("The number of weights must match the number of generators"); fi;
+  if IsString(weights[1]) then
+    R:=PolynomialRing(Integers,weights);
+    indet:=IndeterminatesOfPolynomialRing(R);
+    return Sum(List([1..Length(gens)], x -> indet[x]*TransformationOnLevelAsMatrix(gens[x], n)));
+  else
+    return Sum(List([1..Length(gens)], x -> weights[x]*TransformationOnLevelAsMatrix(gens[x], n)));
+  fi;
+end);
+
+
+###############################################################################
+##
+#M  MarkovOperator(<G>, <lev>)
+##
+InstallMethod(MarkovOperator, "for [IsTreeHomomorphismSemigroup, IsCyclotomic]",
+              [IsTreeHomomorphismSemigroup, IsCyclotomic],
+function(G, n)
+  return MarkovOperator(G,n,List([1..Length(GeneratorsOfGroup(G))],x->1/(2*Length(GeneratorsOfGroup(G)))));
+end);
+
+
+###############################################################################
+##
+#M  Section(<G>, <v>)
+##
+InstallMethod(Section, "for [IsTreeHomomorphismSemigroup, IsList]",
+              [IsTreeHomomorphismSemigroup, IsList],
+function(G, v)
+  local gens, g, sec_gens;
+  gens:=GeneratorsOfSemigroup(G);
+  for g in gens do
+    if v^g<>v then
+      Error("Section([IsTreeHomomorphismSemigroup, IsList]): <G> does not fix <v>");
+      return fail;
+    fi;
+  od;
+
+  if not IsAutomSemigroup(G) then
+    return Semigroup(List(gens,x->Section(x,v)));
+  else
+    sec_gens:=[];
+    for g in List(gens,x->Section(x,v)) do
+      if not IsOne(g) and not g in sec_gens then
+        Add(sec_gens, g);
+      fi;
+    od;
+    if Length(sec_gens)>0 then
+      return Semigroup(sec_gens);
+    else
+      return Semigroup([One(FamilyObj(Section(gens[1],v)))]);
+    fi;
+  fi;
+end);
+
+
+###############################################################################
+##
+#M  Section(<G>, <n>)
+##
+InstallMethod(Section, "for [IsTreeHomomorphismSemigroup, IsPosInt]",
+              [IsTreeHomomorphismSemigroup, IsPosInt],
+function(G, n)
+  return Section(G,[n]);
+end);
+
 
 #E

@@ -925,19 +925,20 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Creating Attributes and Properties}{79.3}{X7A38E7E87CCCEDD1}
 \makelabel{ref:Creating Other Filters}{79.4}{X80B191247B4287FC}
 \makelabel{ref:Creating Operations}{79.5}{X79F32D71839CD196}
-\makelabel{ref:Creating Families}{79.6}{X8401A9367E8CAA37}
-\makelabel{ref:Creating Types}{79.7}{X786FFAD97EE72B40}
-\makelabel{ref:Creating Objects}{79.8}{X82E86CF37B123FD4}
-\makelabel{ref:Component Objects}{79.9}{X866E223484649E5A}
-\makelabel{ref:Positional Objects}{79.10}{X834893D07FAA6FD2}
-\makelabel{ref:Implementing New List Objects}{79.11}{X82309B3F81DD2237}
-\makelabel{ref:Example – Constructing Enumerators}{79.12}{X849D8BC278649EA5}
-\makelabel{ref:Example – Constructing Iterators}{79.13}{X7F6BF6CE7AD04EFC}
-\makelabel{ref:Arithmetic Issues in the Implementation of New Kinds of Lists}{79.14}{X829629E87E30090C}
-\makelabel{ref:External Representation}{79.15}{X7EBB961E7FE1B0EB}
-\makelabel{ref:Mutability and Copying}{79.16}{X8090219A7C76AF55}
-\makelabel{ref:Global Variables in the Library}{79.17}{X87E29BA57C8208A4}
-\makelabel{ref:Declaration and Implementation Part}{79.18}{X7837CA9A83D93B38}
+\makelabel{ref:Creating Constructors}{79.6}{X7D2593D6854C4F93}
+\makelabel{ref:Creating Families}{79.7}{X8401A9367E8CAA37}
+\makelabel{ref:Creating Types}{79.8}{X786FFAD97EE72B40}
+\makelabel{ref:Creating Objects}{79.9}{X82E86CF37B123FD4}
+\makelabel{ref:Component Objects}{79.10}{X866E223484649E5A}
+\makelabel{ref:Positional Objects}{79.11}{X834893D07FAA6FD2}
+\makelabel{ref:Implementing New List Objects}{79.12}{X82309B3F81DD2237}
+\makelabel{ref:Example – Constructing Enumerators}{79.13}{X849D8BC278649EA5}
+\makelabel{ref:Example – Constructing Iterators}{79.14}{X7F6BF6CE7AD04EFC}
+\makelabel{ref:Arithmetic Issues in the Implementation of New Kinds of Lists}{79.15}{X829629E87E30090C}
+\makelabel{ref:External Representation}{79.16}{X7EBB961E7FE1B0EB}
+\makelabel{ref:Mutability and Copying}{79.17}{X8090219A7C76AF55}
+\makelabel{ref:Global Variables in the Library}{79.18}{X87E29BA57C8208A4}
+\makelabel{ref:Declaration and Implementation Part}{79.19}{X7837CA9A83D93B38}
 \makelabel{ref:Examples of Extending the System}{80}{X8186831682A00097}
 \makelabel{ref:Addition of a Method}{80.1}{X7B42DF6E7CCF507D}
 \makelabel{ref:Extending the Range of Definition of an Existing Operation}{80.2}{X837CF3267EF0CFB3}
@@ -3113,6 +3114,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:CycleIndex (for a permutation and an action domain)}{41.9.7}{X87FDA6838065CDCB}
 \makelabel{ref:CycleIndex (for a permutation group and an action domain)}{41.9.7}{X87FDA6838065CDCB}
 \makelabel{ref:IsTransitive (for a group, an action domain, etc.)}{41.10.1}{X79B15750851828CB}
+\makelabel{ref:IsTransitive (for a permutation group)}{41.10.1}{X79B15750851828CB}
 \makelabel{ref:IsTransitive (for an external set)}{41.10.1}{X79B15750851828CB}
 \makelabel{ref:transitive}{41.10.1}{X79B15750851828CB}
 \makelabel{ref:Transitivity (for a group and an action domain)}{41.10.2}{X8295D733796B7A37}
@@ -5287,28 +5289,29 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:SetFilterObj}{79.4.2}{X7C92D53E7920CE02}
 \makelabel{ref:ResetFilterObj}{79.4.3}{X8117FD03870FB02E}
 \makelabel{ref:NewOperation}{79.5.1}{X85A9E019795B79D6}
-\makelabel{ref:NewFamily}{79.6.1}{X7FB4123E7E22137D}
-\makelabel{ref:NewType}{79.7.1}{X7CE39E9478AEC826}
-\makelabel{ref:Objectify}{79.8.1}{X7CB5C12E813F512B}
-\makelabel{ref:ObjectifyWithAttributes}{79.8.2}{X85377AC07E775066}
-\makelabel{ref:NamesOfComponents}{79.9.1}{X823965BF7DFDACC9}
-\makelabel{ref:ExtRepOfObj}{79.15.1}{X8542B32A8206118C}
-\makelabel{ref:ObjByExtRep}{79.15.1}{X8542B32A8206118C}
-\makelabel{ref:DeclareCategory}{79.17.1}{X879DE2A17A6C6E92}
-\makelabel{ref:DeclareRepresentation}{79.17.2}{X7C81FB2682AE54CD}
-\makelabel{ref:DeclareAttribute}{79.17.3}{X7A00FC8A7A677A56}
-\makelabel{ref:DeclareProperty}{79.17.4}{X7F4602F082682A04}
-\makelabel{ref:DeclareFilter}{79.17.5}{X846EA18A7D36626C}
-\makelabel{ref:DeclareOperation}{79.17.6}{X843F48137B899BC3}
-\makelabel{ref:DeclareGlobalFunction}{79.17.7}{X834A8CC587A609BE}
-\makelabel{ref:InstallGlobalFunction}{79.17.7}{X834A8CC587A609BE}
-\makelabel{ref:DeclareGlobalVariable}{79.17.8}{X8324B5DE8300E0F2}
-\makelabel{ref:InstallValue}{79.17.9}{X7A23F09886E936D2}
-\makelabel{ref:InstallFlushableValue}{79.17.9}{X7A23F09886E936D2}
-\makelabel{ref:DeclareSynonym}{79.17.10}{X851654DA87616207}
-\makelabel{ref:DeclareSynonymAttr}{79.17.10}{X851654DA87616207}
-\makelabel{ref:FlushCaches}{79.17.11}{X87A4316C818B3DE3}
-\makelabel{ref:DeclareRepresentation belongs to implementation part}{79.18}{X7837CA9A83D93B38}
+\makelabel{ref:NewConstructor}{79.6.1}{X783FA45E7858A8CF}
+\makelabel{ref:NewFamily}{79.7.1}{X7FB4123E7E22137D}
+\makelabel{ref:NewType}{79.8.1}{X7CE39E9478AEC826}
+\makelabel{ref:Objectify}{79.9.1}{X7CB5C12E813F512B}
+\makelabel{ref:ObjectifyWithAttributes}{79.9.2}{X85377AC07E775066}
+\makelabel{ref:NamesOfComponents}{79.10.1}{X823965BF7DFDACC9}
+\makelabel{ref:ExtRepOfObj}{79.16.1}{X8542B32A8206118C}
+\makelabel{ref:ObjByExtRep}{79.16.1}{X8542B32A8206118C}
+\makelabel{ref:DeclareCategory}{79.18.1}{X879DE2A17A6C6E92}
+\makelabel{ref:DeclareRepresentation}{79.18.2}{X7C81FB2682AE54CD}
+\makelabel{ref:DeclareAttribute}{79.18.3}{X7A00FC8A7A677A56}
+\makelabel{ref:DeclareProperty}{79.18.4}{X7F4602F082682A04}
+\makelabel{ref:DeclareFilter}{79.18.5}{X846EA18A7D36626C}
+\makelabel{ref:DeclareOperation}{79.18.6}{X843F48137B899BC3}
+\makelabel{ref:DeclareGlobalFunction}{79.18.7}{X834A8CC587A609BE}
+\makelabel{ref:InstallGlobalFunction}{79.18.7}{X834A8CC587A609BE}
+\makelabel{ref:DeclareGlobalVariable}{79.18.8}{X8324B5DE8300E0F2}
+\makelabel{ref:InstallValue}{79.18.9}{X7A23F09886E936D2}
+\makelabel{ref:InstallFlushableValue}{79.18.9}{X7A23F09886E936D2}
+\makelabel{ref:DeclareSynonym}{79.18.10}{X851654DA87616207}
+\makelabel{ref:DeclareSynonymAttr}{79.18.10}{X851654DA87616207}
+\makelabel{ref:FlushCaches}{79.18.11}{X87A4316C818B3DE3}
+\makelabel{ref:DeclareRepresentation belongs to implementation part}{79.19}{X7837CA9A83D93B38}
 \makelabel{ref:NewAttribute example}{80.5}{X874AF11D864AEC1B}
 \makelabel{ref:DeclareAttribute example}{80.5}{X874AF11D864AEC1B}
 \makelabel{ref:IsAttributeStoringRep}{80.5}{X874AF11D864AEC1B}

@@ -222,7 +222,7 @@ RedispatchOnCondition(NormalizerOp,IsIdenticalObj,
 SylowNormalizer:=NewOperation("SylowNormalizer",[IsGroup,IsPosInt]);
 </pre></div>
 
-<p>(Note that we are using <code class="func">NewOperation</code> (<a href="chap79_mj.html#X85A9E019795B79D6"><span class="RefLink">79.5-1</span></a>) instead of <code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.17-6</span></a>) as used in the library. The only difference other than that <code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.17-6</span></a>) saves some typing, is that it also protects the variables against overwriting. When testing code (when one probably wants to change things) this might be restricting. If this does not bother you, you can use</p>
+<p>(Note that we are using <code class="func">NewOperation</code> (<a href="chap79_mj.html#X85A9E019795B79D6"><span class="RefLink">79.5-1</span></a>) instead of <code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.18-6</span></a>) as used in the library. The only difference other than that <code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.18-6</span></a>) saves some typing, is that it also protects the variables against overwriting. When testing code (when one probably wants to change things) this might be restricting. If this does not bother you, you can use</p>
 
 
 <div class="example"><pre>
@@ -258,7 +258,7 @@ HasPrimesDividingSize:=Tester(PrimesDividingSize);
 SetPrimesDividingSize:=Setter(PrimesDividingSize);
 </pre></div>
 
-<p>Alternatively, there is a declaration command <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.17-3</span></a>) that executes all three assignments simultaneously and protects the variables against overwriting:</p>
+<p>Alternatively, there is a declaration command <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-3</span></a>) that executes all three assignments simultaneously and protects the variables against overwriting:</p>
 
 
 <div class="example"><pre>

@@ -13,13 +13,13 @@ PackageName := "AutomGrp",
 ##  one line.
 Subtitle := "Automata groups",
 
-Version := "1.1.4.1",
+Version := "1.2.4",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 #
-Date := "19/09/2008",
+Date := "27/01/2014",
 
-ArchiveURL := "http://downloads.sourceforge.net/finautom/automgrp-1.1.4.1",
+ArchiveURL := "http://sourceforge.net/projects/finautom/files/automgrp/1.2.4/automgrp-1.2.4",
 
 ArchiveFormats := ".tar.bz2 .tar.gz -win.zip",
 
@@ -29,11 +29,10 @@ Persons := [
     FirstNames    := "Yevgen",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "muntyan@math.tamu.edu",
-    WWWHome       := "http://www.math.tamu.edu/~muntyan/",
+    Email         := "muntyan@fastmail.fm",
     PostalAddress := "",
-    Place         := "College Station, TX, USA",
-    Institution   := "Texas A&M University"
+    Place         := "Bellevue, WA, USA",
+    Institution   := ""
   ),
   rec(
     LastName      := "Savchuk",
@@ -41,10 +40,10 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "dmytro.savchuk@gmail.com",
-    WWWHome       := "http://www.math.tamu.edu/~savchuk/",
+    WWWHome       := "http://savchuk.myweb.usf.edu/",
     PostalAddress := "",
-    Place         := "College Station, TX, USA",
-    Institution   := "Texas A&M University"
+    Place         := "Tampa, FL, USA",
+    Institution   := "University of South Florida"
   ),
 ],
 
@@ -125,15 +124,22 @@ AvailabilityTest := ReturnTrue,
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-#BannerString := Concatenation(
-#  "----------------------------------------------------------------\n",
-#  "Loading  Example ", ~.Version, "\n",
-#  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-#        " (", ~.Persons[1].WWWHome, ")\n",
-#  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
-#        " (", ~.Persons[2].WWWHome, ")\n",
-#  "For help, type: ?Example package \n",
-#  "----------------------------------------------------------------\n" ),
+BannerString := Concatenation(
+  "----------------------------------------------------------------\n",
+  "     ^                                    ___                   \n",
+  "    / \\                                  /   \\                  \n",
+  "   /   \\           _______  ___         ||        ___   __      \n",
+  "  /_____\\   ||  ||    |    /   \\  |\\ /| ||   __ |/   | |  \\    \n",
+  " /       \\  ||  ||    |   ||   || | V | ||   || |      |__/    \n",
+  "/         \\  \\__/     |    \\___/  |   |  \\___/  |      |        \n",
+  "                                                                \n",
+  "Loading  AutomGrp ", ~.Version, " (Automata Groups and Semigroups)\n",
+  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+        " (", ~.Persons[1].Email, ")\n",
+  "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
+        " (", ~.Persons[2].WWWHome, ")\n",
+  "Homepage: http://finautom.sourceforge.net/\n",
+  "----------------------------------------------------------------\n" ),
 
 ##  Suggest here if the package should be *automatically loaded* when GAP is
 ##  started.  This should usually be 'false'. Say 'true' only if your package
@@ -143,7 +149,7 @@ Autoload := false,
 
 ##  *Optional*, but recommended: path relative to package root to a file which
 ##  contains as many tests of the package functionality as sensible.
-TestFile := "tst/testall.g",
+TestFile := "tst/testall.tst",
 
 ##  *Optional*: Here you can list some keyword related to the topic
 ##  of the package.

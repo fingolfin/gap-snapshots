@@ -293,6 +293,12 @@ MappingByFunction( &lt;transformation monoid on 8 pts with 2 generators&gt;
 
 <p>The ordering of elements is defined by <span class="SimpleMath">m_1 &lt; m_2 &lt; ⋯ &lt; m_n</span>, so <span class="SimpleMath">m_i</span> can be accessed as <code class="code">MagmaElement( <var class="Arg">M</var>, <var class="Arg">i</var> )</code>, see <code class="func">MagmaElement</code> (<a href="chap35.html#X828BED4580D28FB8"><span class="RefLink">35.3-4</span></a>).</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MagmaByMultiplicationTable([[1,2,3],[2,3,1],[1,1,1]]);</span>
+&lt;magma with 3 generators&gt;
+</pre></div>
+
 <p><a id="X865526C881645D65" name="X865526C881645D65"></a></p>
 
 <h5>35.3-2 MagmaWithOneByMultiplicationTable</h5>
@@ -300,12 +306,28 @@ MappingByFunction( &lt;transformation monoid on 8 pts with 2 generators&gt;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaWithOneByMultiplicationTable</code>( <var class="Arg">A</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>The only differences between <code class="func">MagmaByMultiplicationTable</code> (<a href="chap35.html#X85CD1E7678295CA6"><span class="RefLink">35.3-1</span></a>) and <code class="func">MagmaWithOneByMultiplicationTable</code> are that the latter returns a magma-with-one (see <code class="func">MagmaWithOne</code> (<a href="chap35.html#X7854B23286B17321"><span class="RefLink">35.2-2</span></a>)) if the magma described by the matrix <var class="Arg">A</var> has an identity, and returns <code class="keyw">fail</code> if not.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MagmaWithOneByMultiplicationTable([[1,2,3],[2,3,1],[3,1,1]]);</span>
+&lt;magma-with-one with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MagmaWithOneByMultiplicationTable([[1,2,3],[2,3,1],[1,1,1]]);</span>
+fail
+</pre></div>
+
 <p><a id="X7EDAFB987EE8A770" name="X7EDAFB987EE8A770"></a></p>
 
 <h5>35.3-3 MagmaWithInversesByMultiplicationTable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaWithInversesByMultiplicationTable</code>( <var class="Arg">A</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">MagmaByMultiplicationTable</code> (<a href="chap35.html#X85CD1E7678295CA6"><span class="RefLink">35.3-1</span></a>) and <code class="func">MagmaWithInversesByMultiplicationTable</code> differ only in that the latter returns magma-with-inverses (see <code class="func">MagmaWithInverses</code> (<a href="chap35.html#X7A2B51F67EF4DA28"><span class="RefLink">35.2-3</span></a>)) if each element in the magma described by the matrix <var class="Arg">A</var> has an inverse, and returns <code class="keyw">fail</code> if not.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MagmaWithInversesByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);</span>
+&lt;magma-with-inverses with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MagmaWithInversesByMultiplicationTable([[1,2,3],[2,3,1],[3,2,1]]);</span>
+fail
+</pre></div>
 
 <p><a id="X828BED4580D28FB8" name="X828BED4580D28FB8"></a></p>
 

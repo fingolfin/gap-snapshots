@@ -12,7 +12,7 @@
 ##<#GAPDoc Label="SCFromGenerators">
 ## <ManSection>
 ## <Meth Name="SCFromGenerators" Arg="group, generators"/>
-## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, fail otherwise.</Returns>
+## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## Constructs a simplicial complex object from the set of <Arg>generators</Arg> on which the group <Arg>group</Arg> acts, i.e. a complex which has <Arg>group</Arg> as a subgroup of the automorphism group and a facet list that consists of the <Arg>group</Arg>-orbits specified by the list of representatives passed in <Arg>generators</Arg>. Note that <Arg>group</Arg> is not stored as an attribute of the resulting complex as it might just be a subgroup of the actual automorphism group. Internally calls <C>Orbits</C> and <Ref Func="SCFromFacets" />. 
 ## <Example>
@@ -48,7 +48,7 @@
 ##<#GAPDoc Label="SCFromFacets">
 ## <ManSection>
 ## <Meth Name="SCFromFacets" Arg="facets"/>
-## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, fail otherwise.</Returns>
+## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## Constructs a simplicial complex object from the given facet list. The facet list <Arg>facets</Arg> has to be a duplicate free list (or set) which consists of duplicate free entries, which are in turn lists or sets. For the vertex labels (i. e. the entries of the list items of <Arg>facets</Arg>) an ordering via the less-operator has to be defined. Following Section 4.11 of the &GAP; manual this is the case for objects of the following families: rationals <C>IsRat</C>, cyclotomics <C>IsCyclotomic</C>, finite field elements <C>IsFFE</C>, permutations <C>IsPerm</C>, booleans <C>IsBool</C>, characters <C>IsChar</C> and lists (strings) <C>IsList</C>.<P/>
 ## Internally the vertices are mapped to the standard labeling <M>1..n</M>, where <M>n</M> is the number of vertices of the complex and the vertex labels of the original complex are stored in the property ''VertexLabels'', see <Ref Func="SCLabels" /> and the <C>SCRelabel..</C> functions like <Ref Func="SCRelabel" /> or <Ref Func="SCRelabelStandard" />. 
@@ -80,7 +80,7 @@
 ##<#GAPDoc Label="SC">
 ## <ManSection>
 ## <Meth Name="SC" Arg="facets"/>
-## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, fail otherwise.</Returns>
+## <Returns>simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## A shorter function to create a simplicial complex from a facet list, just calls <Ref Func="SCFromFacets" Style="Text"/>(<Arg>facets</Arg>).
 ## <Example>
@@ -1471,6 +1471,32 @@
 ## [ [ 1, 1, 24691357816 ], [ 2, 4, 24691357812 ], [ 3, 3, 24691357812 ], 
 ##   [ 4, 12345678907, 12345678907 ] ]
 ## 0
+## </Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+################################################################################
+##<#GAPDoc Label="SCSeriesS2xS2">
+## <ManSection>
+## <Func Name="SCSeriesS2xS2" Arg="k"/>
+## <Returns> simplicial complex of type <C>SCSimplicialComplex</C> upon success, <K>fail</K> otherwise.</Returns>
+## <Description>	
+## Generates a combinatorial version of <M>(S^2 \times S^2)^{\# k}</M>.
+## <Example>
+## gap&gt; c:=SCSeriesS2xS2(3);
+## [SimplicialComplex
+## 
+##  Properties known: DifferenceCycles, Dim, FacetsEx, Name, 
+##                    TopologicalType, Vertices.
+## 
+##  Name="(S^2 x S^2)^(# 3)"
+##  Dim=4
+##  TopologicalType="(S^2 x S^2)^(# 3)"
+## 
+## /SimplicialComplex]
+## gap&gt; c.Homology;
+## [ [ 0, [  ] ], [ 0, [  ] ], [ 6, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
 ## </Example>
 ## </Description>
 ## </ManSection>

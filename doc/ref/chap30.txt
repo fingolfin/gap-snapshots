@@ -38,7 +38,7 @@
   over [3XFam[103X, that is, of all dense lists and domains that consist of objects in
   [3XFam[103X.[133X
   
-  [33X[0;0YThe  [2XNewFamily[102X  ([14X79.6-1[114X) call in the standard method of [2XCollectionsFamily[102X is
+  [33X[0;0YThe  [2XNewFamily[102X  ([14X79.7-1[114X) call in the standard method of [2XCollectionsFamily[102X is
   executed  with  second argument [2XIsCollection[102X ([14X30.1-1[114X), since every object in
   the  collections  family  must  be a collection, and with third argument the
   collections  categories  of the involved categories in the implied filter of
@@ -240,7 +240,7 @@
   
   [33X[0;0YNote  that  it  is  [13Xnot[113X  checked that [2XEnumeratorByFunctions[102X really returns a
   dense and duplicate-free list. [2XEnumeratorByFunctions[102X does [13Xnot[113X make a shallow
-  copy of [3Xrecord[103X, this record is changed in place, see [14X79.8[114X.[133X
+  copy of [3Xrecord[103X, this record is changed in place, see [14X79.9[114X.[133X
   
   [33X[0;0YIt  would  be easy to implement a slightly generalized setup for enumerators
   that  need  not  be  duplicate-free  (where  the  three  argument version of
@@ -956,5 +956,5 @@
   these function.[133X
   
   [33X[0;0Y[2XIteratorByFunctions[102X  does  [13Xnot[113X make a shallow copy of [3Xrecord[103X, this record is
-  changed in place (see Section  [14X79.8[114X).[133X
+  changed in place (see Section  [14X79.9[114X).[133X
   

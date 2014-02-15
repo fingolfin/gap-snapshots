@@ -785,7 +785,7 @@
   
   [33X[0;0YIf  a  family  knows  ab  initio  that it can compare elements this property
   should  be  set as implied filter [13Xand[113X filter for the family (the 3rd and 4th
-  argument  of  [2XNewFamily[102X  ([14X79.6-1[114X)  respectively).  This guarantees that code
+  argument  of  [2XNewFamily[102X  ([14X79.7-1[114X)  respectively).  This guarantees that code
   which directly asks the family gets a right answer.[133X
   
   [33X[0;0YThe      property      [2XCanEasilySortElements[102X      and      the      function
@@ -1224,7 +1224,7 @@
   
   [33X[0;0YThe  following  categories  of  elements  are  to  be  understood  mainly as
   categories  for  all  objects  in  a  family, they are usually used as third
-  argument  of  [10XNewFamily[110X  (see [14X79.6[114X).  The  purpose  of each of the following
+  argument  of  [10XNewFamily[110X  (see [14X79.7[114X).  The  purpose  of each of the following
   categories  is  then  to  guarantee  that  each  collection  of its elements
   automatically  lies  in  its  collections  category (see [2XCategoryCollections[102X
   ([14X30.2-4[114X)).[133X

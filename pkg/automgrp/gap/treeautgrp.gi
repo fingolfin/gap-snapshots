@@ -2,9 +2,9 @@
 ##
 #W  treeautgrp.gi              automgrp package                Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -93,6 +93,13 @@ InstallMethod(IsSphericallyTransitive, "for [IsTreeAutomorphismGroup]",
 function (G)
   local i, k, stab;
 
+  if DegreeOfTree(G)=1 then
+    Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): true");
+    Info(InfoAutomGrp, 3, "  G acts on 1-ary tree");
+    return true;
+  fi;
+
+
   if HasIsFinite(G) and IsFinite(G) then
     Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
     Info(InfoAutomGrp, 3, "  G is finite");
@@ -108,7 +115,7 @@ function (G)
   fi;
 
   if IsActingOnBinaryTree(G) then
-    if AG_AbelImageSpherTrans in AbelImage(G) then
+    if AG_AbelImageSpherTrans() in AbelImage(G) then
       Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): true");
       Info(InfoAutomGrp, 3, "  using AbelImage");
       Info(InfoAutomGrp, 3, "  G = ", G);
@@ -163,13 +170,21 @@ end);
 
 InstallImmediateMethod(IsFractal, IsTreeAutomorphismGroup and HasIsFinite, 0,
 function(G)
-  if IsFinite(G) then return false; fi;
+  if IsFinite(G) and DegreeOfTree(G)>1 then return false; fi;
   TryNextMethod();
 end);
 
 InstallMethod(IsFractal, "for [IsTreeAutomorphismGroup]", [IsTreeAutomorphismGroup],
 function(G)
   local i;
+
+  if DegreeOfTree(G)=1 then 
+    SetIsSphericallyTransitive(G, true);
+    Info(InfoAutomGrp, 3, "IsFractal(G): true");
+    Info(InfoAutomGrp, 3, "  G acts on 1-ary tree");
+    return true;
+  fi;
+
 
   if not IsTransitive(PermGroupOnLevel(G, 1), [1..DegreeOfTree(G)]) then
     SetIsSphericallyTransitive(G, false);
@@ -208,13 +223,13 @@ end);
 ##
 InstallImmediateMethod(Size, HasIsFractal, 0,
 function(G)
-  if IsFractal(G) then return infinity; fi;
+  if IsFractal(G) and DegreeOfTree(G)>1 then return infinity; fi;
   TryNextMethod();
 end);
 
 InstallImmediateMethod(Size, HasIsSphericallyTransitive, 0,
 function(G)
-  if IsSphericallyTransitive(G) then return infinity; fi;
+  if IsSphericallyTransitive(G) and DegreeOfTree(G)>1 then return infinity; fi;
   TryNextMethod();
 end);
 
@@ -268,6 +283,10 @@ InstallMethod(StabilizerOfLevelOp,
 function (G, k)
   local perms, S, F, hom, chooser, s, f, gens;
 
+  if DegreeOfTree(G)=1 then
+    return G;
+  fi;
+
   if FixesLevel(G, k) then
     Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
     Info(InfoAutomGrp, 3, "  G is not transitive on level", k);
@@ -283,7 +302,7 @@ function (G, k)
   gens := FreeGeneratorsOfGroup(Kernel(hom));
   gens := List(gens, w  ->
     MappedWord(w, GeneratorsOfGroup(F), GeneratorsOfGroup(G)));
-  gens := $AG_SimplifyGroupGenerators(gens);
+  gens := __AG_SimplifyGroupGenerators(gens);
   if IsEmpty(gens) then
     return TrivialSubgroup(G);
   else
@@ -330,7 +349,7 @@ function (G, k)
   gens := FreeGeneratorsOfGroup(Stabilizer(F, k, action));
   gens := List(gens, w  ->
     MappedWord(w, GeneratorsOfGroup(F), GeneratorsOfGroup(G)));
-  gens := $AG_SimplifyGroupGenerators(gens);
+  gens := __AG_SimplifyGroupGenerators(gens);
   if IsEmpty(gens) then
     return TrivialSubgroup(G);
   else
@@ -378,7 +397,7 @@ function (G, seq)
   gens := FreeGeneratorsOfGroup(Stabilizer(F, v, action));
   gens := List(gens, w  ->
     MappedWord(w, GeneratorsOfGroup(F), GeneratorsOfGroup(G)));
-  gens := $AG_SimplifyGroupGenerators(gens);
+  gens := __AG_SimplifyGroupGenerators(gens);
   if IsEmpty(gens) then
     return TrivialSubgroup(G);
   else
@@ -395,10 +414,12 @@ InstallMethod(FixesLevel, "for [IsTreeAutomorphismGroup, IsPosInt]",
               [IsTreeAutomorphismGroup, IsPosInt],
 function(G, k)
   if IsTrivial(PermGroupOnLevel(G, k)) then
-    Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
+    if DegreeOfTree(G)>1 then
+      Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
+      SetIsSphericallyTransitive(G, false);
+    fi;
     Info(InfoAutomGrp, 3, "  G fixes level", k);
     Info(InfoAutomGrp, 3, "  G = ", G);
-    SetIsSphericallyTransitive(G, false);
     return true;
   else
     return false;
@@ -418,10 +439,12 @@ function(G, v)
   for g in gens do
     if not FixesVertex(g, v) then return false; fi;
   od;
-  Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
-  Info(InfoAutomGrp, 3, "  G fixes vertex", v);
-  Info(InfoAutomGrp, 3, "  G = ", G);
-  SetIsSphericallyTransitive(G, false);
+  if DegreeOfTree(G)>1 then
+    Info(InfoAutomGrp, 3, "IsSphericallyTransitive(G): false");
+    Info(InfoAutomGrp, 3, "  G fixes vertex", v);
+    Info(InfoAutomGrp, 3, "  G = ", G);
+    SetIsSphericallyTransitive(G, false);
+  fi;
   return true;
 end);
 
@@ -439,7 +462,7 @@ end);
 
 # TODO: check whether gens are from the same overgroup;
 # check degree of tree and stuff
-InstallMethod($AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
+InstallMethod(__AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
                                     IsList and IsTreeAutomorphismCollection,
                                     IsPosInt],
 function(G, gens, level)
@@ -451,14 +474,14 @@ function(G, gens, level)
   return Group(gens);
 end);
 
-InstallMethod($AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
+InstallMethod(__AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
                                     IsList and IsEmpty,
                                     IsPosInt],
 function(G, gens, level)
   return Group(Section(One(G), List([1..level], i -> 1)));
 end);
 
-InstallMethod($AG_SimplifyGroupGenerators, "for [IsList and IsTreeAutomorphismCollection]",
+InstallMethod(__AG_SimplifyGroupGenerators, "for [IsList and IsTreeAutomorphismCollection]",
                               [IsList and IsTreeAutomorphismCollection],
 function(gens)
   if IsEmpty(gens) then
@@ -484,9 +507,9 @@ function(G, v)
 
   gens := GeneratorsOfGroup(G);
   pgens := List(gens, g -> Section(g, v));
-  pgens := $AG_SimplifyGroupGenerators(pgens);
+  pgens := __AG_SimplifyGroupGenerators(pgens);
 
-  return $AG_SubgroupOnLevel(G, pgens, Length(v));
+  return __AG_SubgroupOnLevel(G, pgens, Length(v));
 end);
 
 ###############################################################################
@@ -712,6 +735,83 @@ function(G)
   return SphericallyTransitiveElement(G);
 end);
 
+
+###############################################################################
+##
+#M  MarkovOperator(<G>, <lev>, <weights>)
+##
+InstallMethod(MarkovOperator, "for [IsTreeAutomorphismGroup, IsCyclotomic, IsList]",
+              [IsTreeAutomorphismGroup, IsCyclotomic, IsList],
+function(G, n, weights)
+  local gens,R,indet;
+  gens := ShallowCopy(GeneratorsOfGroup(G));
+  if Length(weights)<>2*Length(gens) then Error("The number of weights must be twice as big as the number of generators"); fi;
+  Append(gens, List(gens, x -> x^-1));
+  if IsString(weights[1]) then
+    R:=PolynomialRing(Integers,weights);
+    indet:=IndeterminatesOfPolynomialRing(R);
+    return Sum(List([1..Length(gens)], x -> indet[x]*PermOnLevelAsMatrix(gens[x], n)));
+  else
+    return Sum(List([1..Length(gens)], x -> weights[x]*PermOnLevelAsMatrix(gens[x], n)));
+  fi;
+end);
+
+
+
+###############################################################################
+##
+#M  MarkovOperator(<G>, <lev>)
+##
+InstallMethod(MarkovOperator, "for [IsTreeAutomorphismGroup, IsCyclotomic]",
+              [IsTreeAutomorphismGroup, IsCyclotomic],
+function(G, n)
+  return MarkovOperator(G,n,List([1..2*Length(GeneratorsOfGroup(G))],x->1/(2*Length(GeneratorsOfGroup(G)))));
+end);
+
+
+###############################################################################
+##
+#M  Section(<G>, <v>)
+##
+InstallMethod(Section, "for [IsTreeAutomorphismGroup, IsList]",
+              [IsTreeAutomorphismGroup, IsList],
+function(G, v)
+  local gens, sec_gens, g;
+  gens:=GeneratorsOfGroup(G);
+  for g in gens do
+    if v^g<>v then
+      Error("Section([IsTreeAutomorphismGroup, IsList]): <G> does not fix <v>");
+      return fail;
+    fi;
+  od;
+
+  if not IsAutomGroup(G) then
+    return Group(List(gens,x->Section(x,v)));
+  else
+    sec_gens:=[];
+    for g in List(gens,x->Section(x,v)) do
+      if not IsOne(g) and not g in sec_gens then
+        Add(sec_gens, g);
+      fi;
+    od;
+    if Length(sec_gens)>0 then
+      return Group(sec_gens);
+    else
+      return Group([One(FamilyObj(Section(gens[1],v)))]);
+    fi;
+  fi;
+end);
+
+
+###############################################################################
+##
+#M  Section(<G>, <n>)
+##
+InstallMethod(Section, "for [IsTreeAutomorphismGroup, IsPosInt]",
+              [IsTreeAutomorphismGroup, IsPosInt],
+function(G, n)
+  return Section(G,[n]);
+end);
 
 
 #E

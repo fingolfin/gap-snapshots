@@ -2,9 +2,9 @@
 ##
 #W  automaton.gi              automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -104,7 +104,7 @@ function(table, states, alphabet)
 end);
 
 
-BindGlobal("$AG_PrintPerm",
+BindGlobal("__AG_PrintPerm",
 function(p)
   if IsPerm(p) then
     Print(p);
@@ -139,24 +139,68 @@ end);
 
 InstallMethod(MealyAutomaton, [IsTreeHomomorphism],
 function(a)
-  local states, MealyAutomatonLocal, aut_list;
+  return MealyAutomaton([a]);
+end);
+
+InstallMethod(MealyAutomaton, [IsList and IsTreeHomomorphismCollection],
+function(tree_hom_list)
+  return MealyAutomaton(tree_hom_list, false);
+end);
+
+###############################################################################
+##
+##  MealyAutomaton( <list>, <name_func> )
+##  MealyAutomaton( <list>, <true> )
+##
+##  Creates a noninitial automaton constructed of the states of tree
+##  homomorphisms in the <list>. If <name_func> is a function then it is used
+##  to name the states of the newly constructed automaton. If it is <true>
+##  then states of automata from the <list> are used. If it <false> then new
+##  states are named a_1, a_2, etc.
+##
+##  \beginexample
+##  gap> g := AutomatonGroup("a=(b,a),b=(b,a)(1,2)");
+##  < a, b >
+##  gap> MealyAutomaton([a*b]);; Display(last);
+##  a1 = (a2, a4)(1,2), a2 = (a3, a1), a3 = (a3, a1)(1,2), a4 = (a2, a4)
+##  gap> MealyAutomaton([a*b], true);; Display(last);
+##  <a*b> = (<b^2>, <a^2>)(1,2), <b^2> = (<b*a>, <a*b>), <b*a> = (<b*a>, <a*b>)(1,2), <a^2> = (<b^2>, <a^2>)
+##  gap> MealyAutomaton([a*b], String);; Display(last);
+##  a*b = (b^2, a^2)(1,2), b^2 = (b*a, a*b), b*a = (b*a, a*b)(1,2), a^2 = (b^2, a^2)
+##  \endexample
+##
+InstallOtherMethod(MealyAutomaton, [IsList, IsObject],
+function(tree_hom_list, name_func)
+  local a, states, names, MealyAutomatonLocal, aut_list;
 
   MealyAutomatonLocal := function(g)
     local cur_state;
     if g in states then return Position(states, g); fi;
     Add(states, g);
+    if IsFunction(name_func) then
+      Add(names, name_func(g));
+    elif name_func = true then
+      Add(names, Concatenation("<", String(g), ">"));
+    fi;
     cur_state := Length(states);
     aut_list[cur_state] := List([1..g!.deg], x -> MealyAutomatonLocal(Section(g, x)));
     Add(aut_list[cur_state], g!.perm);
     return cur_state;
   end;
 
+  names := [];
   states := [];
   aut_list := [];
-  MealyAutomatonLocal(a);
-  return MealyAutomaton(aut_list);
-end);
+  for a in tree_hom_list do
+    MealyAutomatonLocal(a);
+  od;
 
+  if not IsEmpty(names) then
+    return MealyAutomaton(aut_list, names);
+  else
+    return MealyAutomaton(aut_list);
+  fi;
+end);
 
 InstallMethod(MealyAutomaton, [IsSelfSim],
 function(a)
@@ -179,6 +223,29 @@ function(a)
 end);
 
 
+InstallMethod(SetStateName, [IsMealyAutomaton, IsInt, IsString],
+function(aut, k, name)
+  local new_names;
+  if k < 1 or k > aut!.n_states then
+    Error("wrong state number ", k);
+  fi;
+  new_names := List(aut!.states);
+  new_names[k] := name;
+  SetStateNames(aut, new_names);
+end);
+
+InstallMethod(SetStateNames, [IsMealyAutomaton, IsList],
+function(aut, names)
+  if not IsDenseList(names) or Length(names) <> aut!.n_states or
+     not ForAll(names, IsString) or Length(AsSet(names)) <> aut!.n_states
+  then
+    Error("invalid state names list, it must be a dense list of strings of length ",
+          aut!.n_states, " without duplicates");
+  fi;
+  aut!.states := MakeImmutable(List(names));
+end);
+
+
 InstallMethod(ViewObj, [IsMealyAutomaton],
 function(a)
   Print("<automaton>");
@@ -198,7 +265,7 @@ function(a)
     od;
     Print(")");
     if not IsOne(a!.perms[i]) then
-      $AG_PrintPerm(a!.perms[i]);
+      __AG_PrintPerm(a!.perms[i]);
     fi;
     if i <> a!.n_states then
       Print(", ");
@@ -512,10 +579,68 @@ end);
 InstallMethod(IsBireversible, "for [IsMealyAutomaton]", true,
               [IsMealyAutomaton],
 function(A)
-  local list, inv_list, states, n;
-
   return IsInvertible(A) and IsInvertible(DualAutomaton(A)) and
          IsInvertible(DualAutomaton(InverseAutomaton(A)));
+end);
+
+
+InstallMethod(IsReversible, "for [IsMealyAutomaton]", true,
+              [IsMealyAutomaton],
+function(A)
+  return IsInvertible(DualAutomaton(A));
+end);
+
+
+InstallMethod(IsIRAutomaton, "for [IsMealyAutomaton]", true,
+              [IsMealyAutomaton],
+function(A)
+  return IsInvertible(A) and IsInvertible(DualAutomaton(A));
+end);
+
+
+InstallMethod(MDReduction, "for [IsMealyAutomaton]",
+              [IsMealyAutomaton],
+function(A)
+  local B, DB, MDB;
+  B:=MinimizationOfAutomaton(A);
+  DB:=DualAutomaton(B);
+  MDB:=MinimizationOfAutomaton(DB);
+  while NumberOfStates(MDB)<NumberOfStates(DB) do
+    B:=MDB;
+    DB:=DualAutomaton(B);
+    MDB:=MinimizationOfAutomaton(DB);
+  od;
+  return [B,MDB];
+end);
+
+
+InstallMethod(IsMDTrivial, "for [IsMealyAutomaton]", true,
+              [IsMealyAutomaton],
+function(A)
+  local MDT;
+  MDT:=MDReduction(A);
+  if NumberOfStates(MDT[1])=1 then
+    return true;
+  fi;
+  return false;
+end);
+
+
+InstallMethod(IsMDReduced, "for [IsMealyAutomaton]", true,
+              [IsMealyAutomaton],
+function(A)
+  local B, DB, MDB;
+  B:=MinimizationOfAutomaton(A);
+  if NumberOfStates(B)<NumberOfStates(A) then
+    return false;
+  else
+    DB:=DualAutomaton(B);
+    MDB:=MinimizationOfAutomaton(DB);
+    if NumberOfStates(MDB)<NumberOfStates(DB) then
+      return false;
+    fi;
+  fi;
+  return true;
 end);
 
 
@@ -684,4 +809,35 @@ function(A)
 
   return SubautomatonWithStates(A, Nucl);
 end);
+
+
+InstallMethod(AdjacencyMatrix, "for [IsMealyAutomaton]", [IsMealyAutomaton],
+function(A)
+  local i, s, d, M, aut_list;
+  aut_list := AutomatonList(A);
+  M:=List([1..A!.n_states],x->List([1..A!.n_states],x->0));
+  d := A!.degree;
+  for s in [1..A!.n_states] do
+    for i in [1..d] do
+      M[s][aut_list[s][i]]:=M[s][aut_list[s][i]]+1;
+    od;
+  od;
+  return M;
+end);
+
+InstallMethod(IsAcyclic, "for [IsMealyAutomaton]", [IsMealyAutomaton],
+function(A)
+  local i, j, M, N;
+  M:=AdjacencyMatrix(A);
+  N:=StructuralCopy(M);
+  for i in [1..(A!.n_states-1)] do
+    N:=N*M;
+    for j in [1..A!.n_states] do
+      if N[j][j]<>M[j][j]^(i+1) then return false; fi;
+    od;
+  od;
+  return true;
+end);
+
+
 #E

@@ -2,9 +2,9 @@
 ##
 #W  tree.gd                 automgrp package                   Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -94,15 +94,6 @@ DeclareOperation("FixesVertex", [IsActingOnTree, IsObject]);
 ##  <lev>.
 ##
 DeclareOperation("FixesLevel", [IsActingOnTree, IsPosInt]);
-
-#############################################################################
-##
-#A  FirstMovedLevel (<obj>)
-##
-##  Returns the first level on which <obj> acts non-trivially if such a level exists
-##  (i.e. if <obj> is not trivial), or `infinity' otherwise.
-##
-DeclareAttribute("FirstMovedLevel", IsActingOnTree);
 
 #############################################################################
 ##

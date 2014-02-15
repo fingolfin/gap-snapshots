@@ -58,7 +58,7 @@
   described  above,  with  names  [3Xname[103X, [3Xname[103X[10XOp[110X, and [10XComputed[110X[3Xname[103X[10Xs[110X. [3Xdom-req[103X and
   [3Xkey-req[103X  specify  the  required filters for the first and second argument of
   the  operation  [3Xname[103X[10XOp[110X,  which  are  needed  to  create  this operation with
-  [2XDeclareOperation[102X  ([14X79.17-6[114X).  [3Xdom-req[103X  is  also  the required filter for the
+  [2XDeclareOperation[102X  ([14X79.18-6[114X).  [3Xdom-req[103X  is  also  the required filter for the
   corresponding  attribute  [10XComputed[110X[3Xname[103X[10Xs[110X.  The fourth argument [3Xkey-test[103X is in
   general a function to which the second argument [3Xinfo[103X of [10X[3Xname[103X[10X( [3XD[103X[10X, [3Xinfo[103X[10X )[110X will
   be  passed.  This  function can perform tests on [3Xinfo[103X, and raise an error if
@@ -137,13 +137,13 @@
   described  above,  with  names [3Xname[103X, [3Xname[103X[10XOp[110X, and [3Xname[103X[10XInParent[110X. [3Xsuper-req[103X and
   [3Xsub-req[103X  specify  the  required filters for the first and second argument of
   the  operation  [3Xname[103X[10XOp[110X,  which  are  needed  to  create  this operation with
-  [2XDeclareOperation[102X  ([14X79.17-6[114X).  [3Xsub-req[103X  is  also  the required filter for the
+  [2XDeclareOperation[102X  ([14X79.18-6[114X).  [3Xsub-req[103X  is  also  the required filter for the
   corresponding  attribute  [3Xname[103X[10XInParent[110X;  note that [2XHasParent[102X ([14X31.7-1[114X) is [13Xnot[113X
   required  for  the argument [3XU[103X of [3Xname[103X[10XInParent[110X, because even without a parent
   stored,  [10XParent(  [3XU[103X[10X  )[110X  is  legal,  meaning  [3XU[103X itself (see [14X31.7[114X). The fourth
-  argument  must  be  [2XDeclareProperty[102X  ([14X79.17-4[114X)  if  [3Xname[103X[10XInParent[110X  takes only
+  argument  must  be  [2XDeclareProperty[102X  ([14X79.18-4[114X)  if  [3Xname[103X[10XInParent[110X  takes only
   boolean   values   (for   example   in   the   case  [10XIsNormalInParent[110X),  and
-  [2XDeclareAttribute[102X ([14X79.17-3[114X) otherwise.[133X
+  [2XDeclareAttribute[102X ([14X79.18-3[114X) otherwise.[133X
   
   [33X[0;0YFor  example,  to  set  up  the  three  objects [2XIndex[102X ([14X39.3-2[114X), [10XIndexOp[110X, and
   [10XIndexInParent[110X  together,  the  declaration  file  [11Xlib/domain.gd[111X contains the
@@ -214,7 +214,7 @@
   call of [10Xop[110X with second argument [10Xxset[110X rather than with [10XD[110X. This allows certain
   methods  for  [10Xop[110X  to make use of the type of [10Xxset[110X, in which the types of the
   external  subsets  of  [10Xxset[110X  and  of the external orbits in [10Xxset[110X are stored.
-  (This  is used to avoid repeated calls of [2XNewType[102X ([14X79.7-1[114X) in functions like
+  (This  is used to avoid repeated calls of [2XNewType[102X ([14X79.8-1[114X) in functions like
   [10XExternalOrbits(  xset  )[110X,  which call [10XExternalOrbit( xset, pnt )[110X for several
   values of [10Xpnt[110X.)[133X
   

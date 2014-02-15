@@ -1,3 +1,39 @@
+Changes from 1.2.3 to 1.2.4
+
+- The date format in PackageInfo.g was changed to comply with GAP standards for packages
+
+Changes from 1.2.2 to 1.2.3
+
+- The EOL issue was fixed in the test file /tst/testall.tst
+
+Changes from 1.2.1 to 1.2.2
+
+- The order of generators in AG_UseRewritingSystem was updated according to a new GAP release
+- References to bibliography were updated
+- Documentation was cleaned
+
+Changes from 1.2 to 1.2.1
+
+- Broken URLs were fixed
+- AllSections was extended to IsAutom argument
+- Section was extended to work with (semi)groups, not only with their elements
+
+
+Changes from 1.1.4.2 to 1.2
+
+- Added IsAcyclic for Mealy automata
+- Added IsReversible, IsMDTrivial, MDReduction
+- Added MihailovaSystem
+- MarkovOperator is implemented for semigroups and now can accept the (possibly symbolic) weights
+- Added a possibility to define automata over 1-letter alphabet (needed for MD-reduction)
+- Suppressed the output of dots while performing the tests
+- Banner Added
+
+Changes from 1.1.4.1 to 1.1.4.2
+
+- Replaced $ character in identifiers with underscores
+
+
 Changes from 1.1.4 to 1.1.4.1
 
 - Methods with more than six arguments were really removed this time

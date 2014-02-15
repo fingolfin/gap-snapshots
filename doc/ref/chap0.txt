@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.7.2, 01-Dec-2013
+                           Release 4.7.3, 15-Feb-2014
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2013)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2014)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
@@ -3585,36 +3585,38 @@
       79.4-3 ResetFilterObj
     79.5 [33X[0;0YCreating Operations[133X
       79.5-1 NewOperation
-    79.6 [33X[0;0YCreating Families[133X
-      79.6-1 NewFamily
-    79.7 [33X[0;0YCreating Types[133X
-      79.7-1 NewType
-    79.8 [33X[0;0YCreating Objects[133X
-      79.8-1 Objectify
-      79.8-2 ObjectifyWithAttributes
-    79.9 [33X[0;0YComponent Objects[133X
-      79.9-1 NamesOfComponents
-    79.10 [33X[0;0YPositional Objects[133X
-    79.11 [33X[0;0YImplementing New List Objects[133X
-    79.12 [33X[0;0YExample – Constructing Enumerators[133X
-    79.13 [33X[0;0YExample – Constructing Iterators[133X
-    79.14 [33X[0;0YArithmetic Issues in the Implementation of New Kinds of Lists[133X
-    79.15 [33X[0;0YExternal Representation[133X
-      79.15-1 ExtRepOfObj
-    79.16 [33X[0;0YMutability and Copying[133X
-    79.17 [33X[0;0YGlobal Variables in the Library[133X
-      79.17-1 DeclareCategory
-      79.17-2 DeclareRepresentation
-      79.17-3 DeclareAttribute
-      79.17-4 DeclareProperty
-      79.17-5 DeclareFilter
-      79.17-6 DeclareOperation
-      79.17-7 DeclareGlobalFunction
-      79.17-8 DeclareGlobalVariable
-      79.17-9 InstallValue
-      79.17-10 DeclareSynonym
-      79.17-11 FlushCaches
-    79.18 [33X[0;0YDeclaration and Implementation Part[133X
+    79.6 [33X[0;0YCreating Constructors[133X
+      79.6-1 NewConstructor
+    79.7 [33X[0;0YCreating Families[133X
+      79.7-1 NewFamily
+    79.8 [33X[0;0YCreating Types[133X
+      79.8-1 NewType
+    79.9 [33X[0;0YCreating Objects[133X
+      79.9-1 Objectify
+      79.9-2 ObjectifyWithAttributes
+    79.10 [33X[0;0YComponent Objects[133X
+      79.10-1 NamesOfComponents
+    79.11 [33X[0;0YPositional Objects[133X
+    79.12 [33X[0;0YImplementing New List Objects[133X
+    79.13 [33X[0;0YExample – Constructing Enumerators[133X
+    79.14 [33X[0;0YExample – Constructing Iterators[133X
+    79.15 [33X[0;0YArithmetic Issues in the Implementation of New Kinds of Lists[133X
+    79.16 [33X[0;0YExternal Representation[133X
+      79.16-1 ExtRepOfObj
+    79.17 [33X[0;0YMutability and Copying[133X
+    79.18 [33X[0;0YGlobal Variables in the Library[133X
+      79.18-1 DeclareCategory
+      79.18-2 DeclareRepresentation
+      79.18-3 DeclareAttribute
+      79.18-4 DeclareProperty
+      79.18-5 DeclareFilter
+      79.18-6 DeclareOperation
+      79.18-7 DeclareGlobalFunction
+      79.18-8 DeclareGlobalVariable
+      79.18-9 InstallValue
+      79.18-10 DeclareSynonym
+      79.18-11 FlushCaches
+    79.19 [33X[0;0YDeclaration and Implementation Part[133X
   80 [33X[0;0YExamples of Extending the System[133X
     80.1 [33X[0;0YAddition of a Method[133X
     80.2 [33X[0;0YExtending the Range of Definition of an Existing Operation[133X

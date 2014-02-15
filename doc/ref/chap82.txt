@@ -73,9 +73,9 @@
   multiplied.  This  distinction  is  made  via  the [13Xtype[113X of the objects. More
   precisely, we declare a new [13Xfilter[113X, a function that will return [9Xtrue[109X for our
   new  objects,  and  [9Xfalse[109X  for  all  other  [5XGAP[105X objects. This can be done by
-  calling  [2XDeclareFilter[102X  ([14X79.17-5[114X), but since our objects will know about the
+  calling  [2XDeclareFilter[102X  ([14X79.18-5[114X), but since our objects will know about the
   value  already  when  they  are  constructed, the filter can be created with
-  [2XDeclareCategory[102X ([14X79.17-1[114X) or [2XNewCategory[102X ([14X79.1-1[114X).[133X
+  [2XDeclareCategory[102X ([14X79.18-1[114X) or [2XNewCategory[102X ([14X79.1-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XDeclareCategory( "IsMyObject", IsObject );[128X[104X
@@ -87,8 +87,8 @@
   [33X[0;0YThe  next question is what internal data our new objects store, and how they
   are  accessed.  The  easiest solution is to store the [21Xunderlying[121X object from
   the  field  [22XF[122X.  [5XGAP[105X  provides  two  general possibilities how to store this,
-  namely   record-like   and  list-like  structures  (for  examples,  see [14X79.9[114X
-  and [14X79.10[114X).  We  decide  to  store  the  data  in  a list-like structure, at
+  namely   record-like  and  list-like  structures  (for  examples,  see [14X79.10[114X
+  and [14X79.11[114X).  We  decide  to  store  the  data  in  a list-like structure, at
   position 1. This [13Xrepresentation[113X is declared as follows.[133X
   
   [4X[32X  Example  [32X[104X
@@ -196,7 +196,7 @@
   integers   via  repeated  squaring.  So  we  want  that  [10XIsMyObject[110X  implies
   [2XIsMultiplicativeElement[102X   ([14X31.14-10[114X).   The  easiest  way  to  achieve  such
   implications  is  to  use  the  implied  filter  as  second  argument of the
-  [2XDeclareCategory[102X  ([14X79.17-1[114X)  call; but since we do not want to start anew, we
+  [2XDeclareCategory[102X  ([14X79.18-1[114X)  call; but since we do not want to start anew, we
   can also install the implication afterwards.[133X
   
   [4X[32X  Example  [32X[104X

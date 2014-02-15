@@ -344,7 +344,7 @@
   structures underlying such objects cannot be manipulated at the [5XGAP[105X level.[133X
   
   [33X[0;0YAll  other  objects are either in the representation [10XIsComponentObjectRep[110X or
-  in the representation [10XIsPositionalObjectRep[110X, see [14X79.9[114X and [14X79.10[114X.[133X
+  in the representation [10XIsPositionalObjectRep[110X, see [14X79.10[114X and [14X79.11[114X.[133X
   
   [33X[0;0YAn object can belong to several representations in the sense that it lies in
   several     subrepresentations     of     [10XIsComponentObjectRep[110X     or     of
@@ -475,8 +475,8 @@
   setter  explicitly, for example, [10XSetter( Size )( [3Xobj[103X[10X, [3Xval[103X[10X )[110X sets [3Xval[103X as size
   of the object [3Xobj[103X if the size was not yet known.[133X
   
-  [33X[0;0YFor  each  attribute  [3Xattr[103X  that is declared with [2XDeclareAttribute[102X ([14X79.17-3[114X)
-  resp. [2XDeclareProperty[102X   ([14X79.17-4[114X)   (see [14X79.17[114X),   tester   and  setter  are
+  [33X[0;0YFor  each  attribute  [3Xattr[103X  that is declared with [2XDeclareAttribute[102X ([14X79.18-3[114X)
+  resp. [2XDeclareProperty[102X   ([14X79.18-4[114X)   (see [14X79.18[114X),   tester   and  setter  are
   automatically   made   accessible   by   the   names  [10XHas[3Xattr[103X[10X[110X  and  [10XSet[3Xattr[103X[10X[110X,
   respectively.  For  example, the tester for [2XSize[102X ([14X30.4-6[114X) is called [10XHasSize[110X,
   and the setter is called [10XSetSize[110X.[133X

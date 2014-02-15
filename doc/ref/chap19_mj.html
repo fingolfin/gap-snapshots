@@ -120,7 +120,7 @@
 
 <p>Floating-point numbers may also be converted to other <strong class="pkg">GAP</strong> formats using the usual commands <code class="func">Int</code> (<a href="chap14_mj.html#X87CA734380B5F68C"><span class="RefLink">14.2-3</span></a>), <code class="func">Rat</code> (<a href="chap17_mj.html#X7EB4C646806A2BDE"><span class="RefLink">17.2-6</span></a>), <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>).</p>
 
-<p>Exact conversion to and from floating-point format may be done using external representations. The "external representation" of a floating-point number <code class="code">x</code> is a pair <code class="code">[m,e]</code> of integers, such that <code class="code">x=m*2^(1+e-LogInt(m,2))</code>. Conversion to and from external representation is performed as usual using <code class="func">ExtRepOfObj</code> (<a href="chap79_mj.html#X8542B32A8206118C"><span class="RefLink">79.15-1</span></a>) and <code class="func">ObjByExtRep</code> (<a href="chap79_mj.html#X8542B32A8206118C"><span class="RefLink">79.15-1</span></a>):</p>
+<p>Exact conversion to and from floating-point format may be done using external representations. The "external representation" of a floating-point number <code class="code">x</code> is a pair <code class="code">[m,e]</code> of integers, such that <code class="code">x=m*2^(-1+e-LogInt(AbsInt(m),2))</code>. Conversion to and from external representation is performed as usual using <code class="func">ExtRepOfObj</code> (<a href="chap79_mj.html#X8542B32A8206118C"><span class="RefLink">79.16-1</span></a>) and <code class="func">ObjByExtRep</code> (<a href="chap79_mj.html#X8542B32A8206118C"><span class="RefLink">79.16-1</span></a>):</p>
 
 
 <div class="example"><pre>
@@ -335,7 +335,7 @@ false
 
 <p>This command constructs a rational approximation to the floating-point number <var class="Arg">f</var>. Of course, it is not guaranteed to return the original rational number <var class="Arg">f</var> was created from, though it returns the most `reasonable' one given the precision of <var class="Arg">f</var>.</p>
 
-<p>If used in the form <code class="code">Rat(f:maxdenom:=max)</code>, the rational returned is the first one with denominator at most <var class="Arg">max</var>.</p>
+<p>Two options control the precision of the rational approximation: In the form <code class="code">Rat(f:maxdenom:=md,maxpartial:=mp)</code>, the rational returned is such that the denominator is at most <var class="Arg">md</var> and the partials in its continued fraction expansion are at most <var class="Arg">mp</var>. The default values are <code class="code">maxpartial:=10000</code> and <code class="code">maxdenom:=2^(precision/2)</code>.</p>
 
 <p><a id="X7A962B0983FA66E8" name="X7A962B0983FA66E8"></a></p>
 

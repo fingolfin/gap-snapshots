@@ -259,6 +259,11 @@
   [33X[0;0YThe  ordering  of  elements is defined by [22Xm_1 < m_2 < ⋯ < m_n[122X, so [22Xm_i[122X can be
   accessed as [10XMagmaElement( [3XM[103X[10X, [3Xi[103X[10X )[110X, see [2XMagmaElement[102X ([14X35.3-4[114X).[133X
   
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMagmaByMultiplicationTable([[1,2,3],[2,3,1],[1,1,1]]);[127X[104X
+    [4X[28X<magma with 3 generators>[128X[104X
+  [4X[32X[104X
+  
   [1X35.3-2 MagmaWithOneByMultiplicationTable[101X
   
   [29X[2XMagmaWithOneByMultiplicationTable[102X( [3XA[103X ) [32X function
@@ -267,6 +272,13 @@
   [2XMagmaWithOneByMultiplicationTable[102X    are   that   the   latter   returns   a
   magma-with-one  (see [2XMagmaWithOne[102X  ([14X35.2-2[114X))  if  the magma described by the
   matrix [3XA[103X has an identity, and returns [9Xfail[109X if not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMagmaWithOneByMultiplicationTable([[1,2,3],[2,3,1],[3,1,1]]);[127X[104X
+    [4X[28X<magma-with-one with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMagmaWithOneByMultiplicationTable([[1,2,3],[2,3,1],[1,1,1]]);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
   
   [1X35.3-3 MagmaWithInversesByMultiplicationTable[101X
   
@@ -277,6 +289,13 @@
   returns magma-with-inverses (see [2XMagmaWithInverses[102X ([14X35.2-3[114X)) if each element
   in  the  magma described by the matrix [3XA[103X has an inverse, and returns [9Xfail[109X if
   not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMagmaWithInversesByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);[127X[104X
+    [4X[28X<magma-with-inverses with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMagmaWithInversesByMultiplicationTable([[1,2,3],[2,3,1],[3,2,1]]);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
   
   [1X35.3-4 MagmaElement[101X
   

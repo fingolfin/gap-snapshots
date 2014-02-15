@@ -77,7 +77,7 @@
   \item \texttt{\texttt{\symbol{92}}/}
     \subitem for a transformation and a permutation, \hyperpage{795}
   \item \texttt{\texttt{\symbol{92}}{\textless}}
-    \subitem for transformations, \hyperpage{795}
+    \subitem for transformations, \hyperpage{796}
   \item \texttt{\texttt{\symbol{92}}=}
     \subitem for transformations, \hyperpage{796}
   \item \texttt{\texttt{\symbol{92}}\texttt{\symbol{94}}}
@@ -304,7 +304,7 @@
 		\hyperpage{559}
   \item \texttt  {AssociatedPartition}, \hyperpage{211}
   \item \texttt  {Associated}\discretionary {-}{}{}\texttt  {Rees}\discretionary {-}{}{}\texttt  {Matrix}\discretionary {-}{}{}\texttt  {Semigroup}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {D}\discretionary {-}{}{}\texttt  {Class}, 
-		\hyperpage{776}
+		\hyperpage{777}
   \item \texttt  {Associates}, \hyperpage{852}
   \item associativity, \hyperpage{57}
   \item \texttt  {AssocWordByLetterRep}, \hyperpage{475}
@@ -459,15 +459,15 @@
   \item \texttt  {CategoryFamily}, \hyperpage{1215}
   \item \texttt  {Ceil}, \hyperpage{235}
   \item \texttt  {Center}, \hyperpage{458}
-  \item center, \hyperpage{457}
+  \item center, \hyperpage{458}
   \item central character, \hyperpage{1130}
   \item \texttt  {CentralCharacter}, \hyperpage{1130}
   \item \texttt  {CentralIdempotentsOfAlgebra}, \hyperpage{930}
-  \item centraliser, \hyperpage{457}
+  \item centraliser, \hyperpage{458}
   \item \texttt  {Centralizer}
-    \subitem for a class of objects in a magma, \hyperpage{457}
-    \subitem for a magma and a submagma, \hyperpage{457}
-    \subitem for a magma and an element, \hyperpage{457}
+    \subitem for a class of objects in a magma, \hyperpage{458}
+    \subitem for a magma and a submagma, \hyperpage{458}
+    \subitem for a magma and an element, \hyperpage{458}
   \item \texttt{Centralizer}
     \subitem for groups with pcgs, \hyperpage{642}
   \item \texttt  {CentralizerInGLnZ}, \hyperpage{619}
@@ -860,7 +860,7 @@
   \item DeclareAttribute
     \subitem \texttt{DeclareAttribute
       \subsubitem example}, \hyperpage{1245}
-  \item \texttt  {DeclareAttribute}, \hyperpage{1232}
+  \item \texttt  {DeclareAttribute}, \hyperpage{1233}
   \item \texttt{DeclareAttribute}
     \subitem example, \hyperpage{1240}
   \item \texttt{DeclareAutoPackage}, \hyperpage{1207}
@@ -868,7 +868,7 @@
   \item \texttt  {DeclareCategory}, \hyperpage{1232}
   \item \texttt  {DeclareFilter}, \hyperpage{1233}
   \item \texttt  {DeclareGlobalFunction}, \hyperpage{1233}
-  \item \texttt  {DeclareGlobalVariable}, \hyperpage{1233}
+  \item \texttt  {DeclareGlobalVariable}, \hyperpage{1234}
   \item \texttt  {DeclareHandlingByNiceBasis}, \hyperpage{911}
   \item \texttt  {DeclareInfoClass}, \hyperpage{103}
   \item \texttt  {DeclareOperation}, \hyperpage{1233}
@@ -1004,7 +1004,7 @@
     \subitem for class functions, \hyperpage{1122}
   \item \texttt  {DisplayCacheStats}, \hyperpage{112}
   \item \texttt  {DisplayCompositionSeries}, \hyperpage{525}
-  \item \texttt  {DisplayEggBoxOfDClass}, \hyperpage{768}
+  \item \texttt  {DisplayEggBoxOfDClass}, \hyperpage{769}
   \item \texttt  {DisplayImfInvariants}, \hyperpage{748}
   \item \texttt  {DisplayInformationPerfectGroups}
     \subitem for a pair [ order, index ], \hyperpage{739}
@@ -1077,7 +1077,7 @@
   \item \texttt  {EE}, \hyperpage{224}
   \item \texttt  {EF}, \hyperpage{224}
   \item \texttt  {EG}, \hyperpage{224}
-  \item \texttt  {EggBoxOfDClass}, \hyperpage{768}
+  \item \texttt  {EggBoxOfDClass}, \hyperpage{769}
   \item \texttt  {EH}, \hyperpage{224}
   \item \texttt  {EI}, \hyperpage{225}
   \item \texttt  {Eigenspaces}, \hyperpage{320}
@@ -1265,7 +1265,7 @@
   \item \texttt  {ExtraspecialGroup}, \hyperpage{720}
   \item \texttt  {ExtRepDenominatorRatFun}, \hyperpage{1014}
   \item \texttt  {ExtRepNumeratorRatFun}, \hyperpage{1014}
-  \item \texttt  {ExtRepOfObj}, \hyperpage{1229}
+  \item \texttt  {ExtRepOfObj}, \hyperpage{1230}
     \subitem for a cyclotomic, \hyperpage{222}
   \item \texttt  {ExtRepPolynomialRatFun}, \hyperpage{1014}
   \item \texttt  {EY}, \hyperpage{225}
@@ -1337,7 +1337,7 @@
   \item \texttt  {Float}, \hyperpage{237}
   \item \texttt  {Floor}, \hyperpage{235}
   \item flush character, \hyperpage{349}
-  \item \texttt  {FlushCaches}, \hyperpage{1234}
+  \item \texttt  {FlushCaches}, \hyperpage{1235}
   \item FOA triples, \hyperpage{1284}
   \item \texttt{for} loop, \hyperpage{63}
   \item \texttt  {ForAll}, \hyperpage{284}
@@ -1533,14 +1533,14 @@
   \item \texttt  {GeneratorsOfGroup}, \hyperpage{491}
   \item \texttt  {GeneratorsOfIdeal}, \hyperpage{847}
   \item \texttt  {GeneratorsOfInverseMonoid}, \hyperpage{763}
-  \item \texttt  {GeneratorsOfInverseSemigroup}, \hyperpage{762}
+  \item \texttt  {GeneratorsOfInverseSemigroup}, \hyperpage{763}
   \item \texttt  {GeneratorsOfLeftIdeal}, \hyperpage{847}
   \item \texttt  {GeneratorsOfLeftModule}, \hyperpage{860}
   \item \texttt  {Generators}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Left}\discretionary {-}{}{}\texttt  {Operator}\discretionary {-}{}{}\texttt  {Additive}\discretionary {-}{}{}\texttt  {Group}, 
 		\hyperpage{860}
   \item \texttt  {GeneratorsOfLeftVectorSpace}, \hyperpage{894}
   \item \texttt  {GeneratorsOfMagma}, \hyperpage{457}
-  \item \texttt  {GeneratorsOfMagmaWithInverses}, \hyperpage{457}
+  \item \texttt  {GeneratorsOfMagmaWithInverses}, \hyperpage{458}
   \item \texttt  {GeneratorsOfMagmaWithOne}, \hyperpage{457}
   \item \texttt  {GeneratorsOfMonoid}, \hyperpage{760}
   \item \texttt  {GeneratorsOfNearAdditiveGroup}, \hyperpage{840}
@@ -1587,20 +1587,20 @@
   \item \texttt  {Grading}, \hyperpage{931}
   \item graphviz, \hyperpage{533}
   \item \texttt  {GreensDClasses}, \hyperpage{769}
-  \item \texttt  {GreensDClassOfElement}, \hyperpage{768}
-  \item \texttt  {GreensDRelation}, \hyperpage{767}
+  \item \texttt  {GreensDClassOfElement}, \hyperpage{769}
+  \item \texttt  {GreensDRelation}, \hyperpage{768}
   \item \texttt  {GreensHClasses}, \hyperpage{769}
   \item \texttt  {GreensHClassOfElement}, \hyperpage{769}
-  \item \texttt  {GreensHRelation}, \hyperpage{767}
+  \item \texttt  {GreensHRelation}, \hyperpage{768}
   \item \texttt  {GreensJClasses}, \hyperpage{769}
-  \item \texttt  {GreensJClassOfElement}, \hyperpage{768}
-  \item \texttt  {GreensJRelation}, \hyperpage{767}
+  \item \texttt  {GreensJClassOfElement}, \hyperpage{769}
+  \item \texttt  {GreensJRelation}, \hyperpage{768}
   \item \texttt  {GreensLClasses}, \hyperpage{769}
-  \item \texttt  {GreensLClassOfElement}, \hyperpage{768}
-  \item \texttt  {GreensLRelation}, \hyperpage{767}
+  \item \texttt  {GreensLClassOfElement}, \hyperpage{769}
+  \item \texttt  {GreensLRelation}, \hyperpage{768}
   \item \texttt  {GreensRClasses}, \hyperpage{769}
-  \item \texttt  {GreensRClassOfElement}, \hyperpage{768}
-  \item \texttt  {GreensRRelation}, \hyperpage{767}
+  \item \texttt  {GreensRClassOfElement}, \hyperpage{769}
+  \item \texttt  {GreensRRelation}, \hyperpage{768}
   \item \texttt  {GroebnerBasis}
     \subitem for a list and a monomial ordering, \hyperpage{1010}
     \subitem for an ideal and a monomial ordering, \hyperpage{1010}
@@ -1697,7 +1697,7 @@
   \item \texttt  {IdentityFromSCTable}, \hyperpage{918}
   \item \texttt  {IdentityMapping}, \hyperpage{421}
   \item \texttt  {IdentityMat}, \hyperpage{314}
-  \item \texttt  {IdentityTransformation}, \hyperpage{792}
+  \item \texttt  {IdentityTransformation}, \hyperpage{793}
   \item \texttt  {IdFunc}, \hyperpage{74}
   \item \texttt  {IdGap3SolvableGroup}, \hyperpage{735}
   \item \texttt  {IdGroup}, \hyperpage{734}
@@ -1941,7 +1941,7 @@
   \item \texttt  {InverseOp}, \hyperpage{405}
   \item \texttt  {InverseRepresentative}, \hyperpage{606}
   \item \texttt  {InverseSameMutability}, \hyperpage{405}
-  \item \texttt  {InverseSemigroup}, \hyperpage{761}
+  \item \texttt  {InverseSemigroup}, \hyperpage{762}
   \item \texttt  {InverseSM}, \hyperpage{405}
   \item \texttt  {InversesOfSemigroupElement}, \hyperpage{764}
   \item \texttt{InvocationReadlineMacro}, \hyperpage{95}
@@ -2006,7 +2006,7 @@
   \item \texttt  {IsAnticommutative}, \hyperpage{851}
   \item \texttt  {IsAntisymmetricBinaryRelation}, \hyperpage{437}
   \item \texttt  {IsAssociated}, \hyperpage{852}
-  \item \texttt  {IsAssociative}, \hyperpage{458}
+  \item \texttt  {IsAssociative}, \hyperpage{459}
   \item \texttt  {IsAssociativeElement}, \hyperpage{415}
   \item \texttt  {IsAssociativeElementCollColl}, \hyperpage{415}
   \item \texttt  {IsAssociativeElementCollection}, \hyperpage{415}
@@ -2219,24 +2219,24 @@
   \item \texttt  {IsGlobalRandomSource}, \hyperpage{188}
   \item \texttt  {IsGreensClass}, \hyperpage{768}
   \item \texttt  {IsGreensDClass}, \hyperpage{768}
-  \item \texttt  {IsGreensDRelation}, \hyperpage{767}
+  \item \texttt  {IsGreensDRelation}, \hyperpage{768}
   \item \texttt  {IsGreensHClass}, \hyperpage{768}
-  \item \texttt  {IsGreensHRelation}, \hyperpage{767}
+  \item \texttt  {IsGreensHRelation}, \hyperpage{768}
   \item \texttt  {IsGreensJClass}, \hyperpage{768}
-  \item \texttt  {IsGreensJRelation}, \hyperpage{767}
+  \item \texttt  {IsGreensJRelation}, \hyperpage{768}
   \item \texttt  {IsGreensLClass}, \hyperpage{768}
   \item \texttt  {IsGreensLessThanOrEqual}, \hyperpage{768}
-  \item \texttt  {IsGreensLRelation}, \hyperpage{767}
+  \item \texttt  {IsGreensLRelation}, \hyperpage{768}
   \item \texttt  {IsGreensRClass}, \hyperpage{768}
-  \item \texttt  {IsGreensRelation}, \hyperpage{767}
-  \item \texttt  {IsGreensRRelation}, \hyperpage{767}
+  \item \texttt  {IsGreensRelation}, \hyperpage{768}
+  \item \texttt  {IsGreensRRelation}, \hyperpage{768}
   \item \texttt  {IsGroup}, \hyperpage{492}
   \item \texttt  {IsGroupGeneralMapping}, \hyperpage{429}
   \item \texttt  {IsGroup}\discretionary {-}{}{}\texttt  {General}\discretionary {-}{}{}\texttt  {Mapping}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {As}\discretionary {-}{}{}\texttt  {Group}\discretionary {-}{}{}\texttt  {General}\discretionary {-}{}{}\texttt  {Mapping}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Images}, 
 		\hyperpage{563}
   \item \texttt  {IsGroupGeneralMappingByImages}, \hyperpage{563}
   \item \texttt  {IsGroupGeneralMappingByPcgs}, \hyperpage{564}
-  \item \texttt  {IsGroupHClass}, \hyperpage{769}
+  \item \texttt  {IsGroupHClass}, \hyperpage{770}
   \item \texttt  {IsGroupHomomorphism}, \hyperpage{429}
   \item \texttt  {IsGroupOfAutomorphisms}, \hyperpage{557}
   \item \texttt  {IsGroupRing}, \hyperpage{980}
@@ -2507,7 +2507,7 @@
   \item \texttt  {IsQuaternionCollColl}, \hyperpage{924}
   \item \texttt  {IsQuaternionCollection}, \hyperpage{924}
   \item \texttt  {IsQuickPositionList}, \hyperpage{291}
-  \item \texttt  {IsQuotientSemigroup}, \hyperpage{766}
+  \item \texttt  {IsQuotientSemigroup}, \hyperpage{767}
   \item \texttt  {IsRandomSource}, \hyperpage{187}
   \item \texttt  {IsRange}, \hyperpage{289}
   \item \texttt  {IsRat}, \hyperpage{216}
@@ -2529,17 +2529,17 @@
   \item \texttt  {IsReesCongruence}, \hyperpage{766}
   \item \texttt  {IsReesCongruenceSemigroup}, \hyperpage{765}
   \item \texttt  {IsReesMatrixSemigroup}, \hyperpage{774}
-  \item \texttt  {IsReesMatrixSemigroupElement}, \hyperpage{772}
-  \item \texttt  {IsReesMatrixSubsemigroup}, \hyperpage{773}
+  \item \texttt  {IsReesMatrixSemigroupElement}, \hyperpage{773}
+  \item \texttt  {IsReesMatrixSubsemigroup}, \hyperpage{774}
   \item \texttt  {IsReesZeroMatrixSemigroup}, \hyperpage{774}
-  \item \texttt  {IsReesZeroMatrixSemigroupElement}, \hyperpage{772}
-  \item \texttt  {IsReesZeroMatrixSubsemigroup}, \hyperpage{773}
+  \item \texttt  {IsReesZeroMatrixSemigroupElement}, \hyperpage{773}
+  \item \texttt  {IsReesZeroMatrixSubsemigroup}, \hyperpage{774}
   \item \texttt  {IsReflexiveBinaryRelation}, \hyperpage{437}
   \item \texttt  {IsRegular}
     \subitem for a group, an action domain, etc., \hyperpage{580}
     \subitem for an external set, \hyperpage{580}
-  \item \texttt  {IsRegularDClass}, \hyperpage{769}
-  \item \texttt  {IsRegularSemigroup}, \hyperpage{763}
+  \item \texttt  {IsRegularDClass}, \hyperpage{770}
+  \item \texttt  {IsRegularSemigroup}, \hyperpage{764}
   \item \texttt  {IsRegularSemigroupElement}, \hyperpage{764}
   \item \texttt  {IsRelativelySM}
     \subitem for a character, \hyperpage{1193}
@@ -2590,7 +2590,7 @@
     \subitem for a character table, \hyperpage{1074}
   \item \texttt  {IsSimpleAlgebra}, \hyperpage{923}
   \item \texttt  {IsSimpleGroup}, \hyperpage{517}
-  \item \texttt  {IsSimpleSemigroup}, \hyperpage{764}
+  \item \texttt  {IsSimpleSemigroup}, \hyperpage{765}
   \item \texttt  {IsSingleValued}, \hyperpage{422}
   \item \texttt  {IsSL}, \hyperpage{615}
   \item \texttt  {IsSolvable}
@@ -2657,6 +2657,7 @@
   \item \texttt  {IsTransitive}
     \subitem for a character, \hyperpage{1130}
     \subitem for a group, an action domain, etc., \hyperpage{579}
+    \subitem for a permutation group, \hyperpage{579}
     \subitem for an external set, \hyperpage{579}
   \item \texttt  {IsTransitiveBinaryRelation}, \hyperpage{437}
   \item \texttt  {IsTranslationInvariantOrdering}, \hyperpage{447}
@@ -2696,7 +2697,7 @@
   \item \texttt  {IsXInfinity}, \hyperpage{236}
   \item \texttt  {IsZero}, \hyperpage{405}
   \item \texttt  {IsZeroGroup}, \hyperpage{765}
-  \item \texttt  {IsZeroSimpleSemigroup}, \hyperpage{764}
+  \item \texttt  {IsZeroSimpleSemigroup}, \hyperpage{765}
   \item \texttt  {IsZeroSquaredElement}, \hyperpage{417}
   \item \texttt  {IsZeroSquaredElementCollColl}, \hyperpage{417}
   \item \texttt  {IsZeroSquaredElementCollection}, \hyperpage{417}
@@ -3019,7 +3020,7 @@
   \item \texttt  {MatLieAlgebra}, \hyperpage{952}
   \item matrices
     \subitem commutator, \hyperpage{311}
-  \item \texttt  {Matrix}, \hyperpage{775}
+  \item \texttt  {Matrix}, \hyperpage{776}
   \item matrix automorphisms, \hyperpage{1160}
   \item matrix spaces, \hyperpage{902}
   \item \texttt  {MatrixAlgebra}, \hyperpage{919}
@@ -3097,8 +3098,8 @@
   \item \texttt  {MolienSeriesInfo}, \hyperpage{1144}
   \item \texttt  {MolienSeriesWithGivenDenominator}, \hyperpage{1146}
   \item \texttt  {Monoid}
-    \subitem for a list, \hyperpage{759}
-    \subitem for various generators, \hyperpage{759}
+    \subitem for a list, \hyperpage{760}
+    \subitem for various generators, \hyperpage{760}
   \item \texttt  {MonoidByGenerators}, \hyperpage{760}
   \item \texttt  {MonoidByMultiplicationTable}, \hyperpage{761}
   \item \texttt  {MonoidOfRewritingSystem}, \hyperpage{786}
@@ -3244,6 +3245,7 @@
   \item \texttt{NewAttribute}
     \subitem example, \hyperpage{1240}
   \item \texttt  {NewCategory}, \hyperpage{1215}
+  \item \texttt  {NewConstructor}, \hyperpage{1218}
   \item \texttt  {NewDictionary}, \hyperpage{367}
   \item \texttt  {NewFamily}, \hyperpage{1219}
   \item \texttt  {NewFilter}, \hyperpage{1217}
@@ -3256,7 +3258,7 @@
   \item \texttt  {NewRepresentation}, \hyperpage{1216}
   \item \texttt{NewRepresentation}
     \subitem example, \hyperpage{1241}
-  \item \texttt  {NewType}, \hyperpage{1219}
+  \item \texttt  {NewType}, \hyperpage{1220}
   \item \texttt  {NextIterator}, \hyperpage{392}
   \item \texttt  {NextPrimeInt}, \hyperpage{181}
   \item \texttt  {NF}, \hyperpage{885}
@@ -3379,7 +3381,7 @@
 
   \indexspace
 
-  \item \texttt  {ObjByExtRep}, \hyperpage{1229}
+  \item \texttt  {ObjByExtRep}, \hyperpage{1230}
     \subitem for creating a UEALattice element, \hyperpage{974}
   \item \texttt  {Objectify}, \hyperpage{1220}
   \item \texttt  {ObjectifyWithAttributes}, \hyperpage{1220}
@@ -4003,13 +4005,13 @@
   \item \texttt  {ReduceStabChain}, \hyperpage{608}
   \item \texttt  {Ree}, \hyperpage{722}
   \item \texttt  {ReeGroup}, \hyperpage{722}
-  \item \texttt  {ReesCongruenceOfSemigroupIdeal}, \hyperpage{765}
+  \item \texttt  {ReesCongruenceOfSemigroupIdeal}, \hyperpage{766}
   \item \texttt  {ReesMatrixSemigroup}, \hyperpage{771}
   \item \texttt  {ReesMatrixSemigroupElement}, \hyperpage{773}
-  \item \texttt  {ReesMatrixSubsemigroup}, \hyperpage{771}
+  \item \texttt  {ReesMatrixSubsemigroup}, \hyperpage{772}
   \item \texttt  {ReesZeroMatrixSemigroup}, \hyperpage{771}
   \item \texttt  {ReesZeroMatrixSemigroupElement}, \hyperpage{773}
-  \item \texttt  {ReesZeroMatrixSubsemigroup}, \hyperpage{771}
+  \item \texttt  {ReesZeroMatrixSubsemigroup}, \hyperpage{772}
   \item \texttt  {RefinedPcGroup}, \hyperpage{649}
   \item \texttt  {ReflectionMat}, \hyperpage{316}
   \item reflexive relation, \hyperpage{437}
@@ -4202,7 +4204,7 @@
   \item semigroup, \hyperpage{756}
   \item \texttt  {SemigroupByGenerators}, \hyperpage{757}
   \item \texttt  {SemigroupByMultiplicationTable}, \hyperpage{759}
-  \item \texttt  {SemigroupIdealByGenerators}, \hyperpage{765}
+  \item \texttt  {SemigroupIdealByGenerators}, \hyperpage{766}
   \item \texttt  {SemigroupOfRewritingSystem}, \hyperpage{786}
   \item semiregular, \hyperpage{580}
   \item \texttt  {SemiSimpleType}, \hyperpage{957}
@@ -4319,7 +4321,7 @@
     \subitem associative words, \hyperpage{470}
     \subitem elements of finitely presented groups, \hyperpage{660}
     \subitem for pcwords, \hyperpage{646}
-    \subitem for transformations, \hyperpage{795}
+    \subitem for transformations, \hyperpage{796}
     \subitem nonassociative words, \hyperpage{463}
     \subitem rational functions, \hyperpage{989}
   \item smaller or equal, \hyperpage{56}
@@ -4772,7 +4774,7 @@
   \item \texttt  {TrivialSubgroup}, \hyperpage{510}
   \item \texttt  {TrivialSubmagmaWithOne}, \hyperpage{460}
   \item \texttt  {TrivialSubmodule}, \hyperpage{863}
-  \item \texttt  {TrivialSubmonoid}, \hyperpage{760}
+  \item \texttt  {TrivialSubmonoid}, \hyperpage{761}
   \item \texttt  {TrivialSubnearAdditiveMagmaWithZero}, \hyperpage{841}
   \item \texttt  {TrivialSubspace}, \hyperpage{894}
   \item \texttt  {Trunc}, \hyperpage{235}
@@ -4859,8 +4861,8 @@
   \item \texttt  {UnderlyingRelation}, \hyperpage{423}
   \item \texttt  {UnderlyingRingElement}, \hyperpage{950}
   \item \texttt  {UnderlyingSemigroup}
-    \subitem for a Rees 0-matrix semigroup, \hyperpage{776}
-    \subitem for a Rees matrix semigroup, \hyperpage{776}
+    \subitem for a Rees 0-matrix semigroup, \hyperpage{777}
+    \subitem for a Rees matrix semigroup, \hyperpage{777}
   \item \texttt  {UnInstallCharReadHookFunc}, \hyperpage{146}
   \item \texttt  {Union}
     \subitem for a list, \hyperpage{388}

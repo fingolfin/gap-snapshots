@@ -134,7 +134,7 @@
 <h5>53.1-1 IsTransformation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformation</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>Every transformation in <strong class="pkg">GAP</strong> belongs to the category <code class="code">IsTransformation</code>. Basic operations for transformations are <code class="func">ImageListOfTransformation</code> (<a href="chap53_mj.html#X7AEC9E6687B3505A"><span class="RefLink">53.5-2</span></a>), <code class="func">ImageSetOfTransformation</code> (<a href="chap53_mj.html#X839A6D6082A21D1F"><span class="RefLink">53.5-3</span></a>), <code class="func">KernelOfTransformation</code> (<a href="chap53_mj.html#X80FCB5048789CF75"><span class="RefLink">53.5-12</span></a>), <code class="func">FlatKernelOfTransformation</code> (<a href="chap53_mj.html#X8083794579274E87"><span class="RefLink">53.5-11</span></a>), <code class="func">RankOfTransformation</code> (<a href="chap53_mj.html#X818EBB167C7EA37B"><span class="RefLink">53.5-4</span></a>), <code class="func">DegreeOfTransformation</code> (<a href="chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">53.5-1</span></a>), multiplication of two transformations via <code class="keyw">*</code>, and exponentiation with the first argument a positive integer <code class="code">i</code> and second argument a partial permutation <code class="code">f</code> where the result is the image <code class="code">i^f</code> of the point <code class="code">i</code> under <code class="code">f</code>.</p>
+<p>Every transformation in <strong class="pkg">GAP</strong> belongs to the category <code class="code">IsTransformation</code>. Basic operations for transformations are <code class="func">ImageListOfTransformation</code> (<a href="chap53_mj.html#X7AEC9E6687B3505A"><span class="RefLink">53.5-2</span></a>), <code class="func">ImageSetOfTransformation</code> (<a href="chap53_mj.html#X839A6D6082A21D1F"><span class="RefLink">53.5-3</span></a>), <code class="func">KernelOfTransformation</code> (<a href="chap53_mj.html#X80FCB5048789CF75"><span class="RefLink">53.5-12</span></a>), <code class="func">FlatKernelOfTransformation</code> (<a href="chap53_mj.html#X8083794579274E87"><span class="RefLink">53.5-11</span></a>), <code class="func">RankOfTransformation</code> (<a href="chap53_mj.html#X818EBB167C7EA37B"><span class="RefLink">53.5-4</span></a>), <code class="func">DegreeOfTransformation</code> (<a href="chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">53.5-1</span></a>), multiplication of two transformations via <code class="keyw">*</code>, and exponentiation with the first argument a positive integer <code class="code">i</code> and second argument a transformation <code class="code">f</code> where the result is the image <code class="code">i^f</code> of the point <code class="code">i</code> under <code class="code">f</code>.</p>
 
 <p><a id="X7A6747CE85F2E6EA" name="X7A6747CE85F2E6EA"></a></p>
 
@@ -290,8 +290,15 @@ Transformation( [ 1, 1, 2 ] )</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomTransformation(6);             </span>
-Transformation( [ 2, 1, 2, 1, 1, 2 ] )</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 3, 3, 5, 3, 3 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberTransformation(f, 5);</span>
+1613
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberTransformation(f, 10);</span>
+2242256790
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationNumber(2242256790, 10);</span>
+Transformation( [ 3, 3, 5, 3, 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationNumber(1613, 5); </span>
+Transformation( [ 3, 3, 5, 3, 3 ] )</pre></div>
 
 <p><a id="X8475448F87E8CB8A" name="X8475448F87E8CB8A"></a></p>
 
@@ -1167,7 +1174,7 @@ false</pre></div>
 <h5>53.7-2 DegreeOfTransformationSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A positive integer.</p>
+<p>Returns: A non-negative integer.</p>
 
 <p>The <em>degree</em> of a transformation semigroup <var class="Arg">S</var> is just the maximum of the degrees of the elements of <var class="Arg">S</var>.</p>
 

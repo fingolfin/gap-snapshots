@@ -2,9 +2,9 @@
 ##
 #W  testutil.g               automata package                  Dmytro Savchuk
 #W                                                             Yevgen Muntyan
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Dmytro Savchuk, Yevgen Muntyan
+#Y  Copyright (C) 2003 - 2014 Dmytro Savchuk, Yevgen Muntyan
 ##
 ##  This is a very simple version of unittest found in Java, C, Python, etc.
 ##  It can't inspect the tests code, it can't handle errors in tests,
@@ -30,9 +30,9 @@
 ##  end);
 
 UnitTestData := rec();
-$ut_arg := "UnitTestSpecialArgument";
-$ut_arg1 := "UnitTestSpecialArgument1";
-$ut_arg2 := "UnitTestSpecialArgument2";
+_ut_arg := "UnitTestSpecialArgument";
+_ut_arg1 := "UnitTestSpecialArgument1";
+_ut_arg2 := "UnitTestSpecialArgument2";
 
 UnitTestInit := function(name)
   UnitTestData := rec(name := name,
@@ -56,7 +56,10 @@ UnitTestRun := function()
 
   for t in UnitTestData.tests do
     UnitTestData.current_test := t;
-    Print(t.name, " .");
+    Print(t.name, " ");
+    if AG_Globals.unit_test_dots then
+      Print(".\c");
+    fi;
     t.func();
     Print(" done\n");
   od;
@@ -79,11 +82,11 @@ UnitTestRun := function()
       r := t.results[i];
       Print("test ", i, " of ", Length(t.results), ": ");
       for m in r[3] do
-        if m = $ut_arg then
+        if m = _ut_arg then
           Print(r[2][1]);
-        elif m = $ut_arg1 then
+        elif m = _ut_arg1 then
           Print(r[2][2]);
-        elif m = $ut_arg2 then
+        elif m = _ut_arg2 then
           Print(r[2][3]);
         else
           Print(m);
@@ -109,10 +112,14 @@ Assert_ := function(condition, test_args, msg_args, def_msg_args)
 
   if condition then
     result := [true];
-    Print(".");
+    if AG_Globals.unit_test_dots then
+      Print(".\c");
+    fi;
   else
     result := [false, test_args, msg_args];
-    Print("F");
+    if AG_Globals.unit_test_dots then
+      Print("F\c");
+    fi;
   fi;
 
   Add(UnitTestData.current_test.results, result);
@@ -120,42 +127,42 @@ end;
 
 AssertTrue := function(arg)
   Assert_(IsIdenticalObj(arg[1], true), [arg[1], arg[1], ], arg{[2..Length(arg)]},
-          ["assertion '", $ut_arg, "' failed"]);
+          ["assertion '", _ut_arg, "' failed"]);
 end;
 
 AssertFalse := function(arg)
   Assert_(IsIdenticalObj(arg[1], false), [arg[1], arg[1], ], arg{[2..Length(arg)]},
-          ["assertion 'not ", $ut_arg, "' failed"]);
+          ["assertion 'not ", _ut_arg, "' failed"]);
 end;
 
 AssertFail := function(arg)
   Assert_(IsIdenticalObj(arg[1], fail), [arg[1], arg[1], ], arg{[2..Length(arg)]},
-          ["assertion '", $ut_arg, " = fail' failed"]);
+          ["assertion '", _ut_arg, " = fail' failed"]);
 end;
 
 AssertEqual := function(arg)
   Assert_(arg[1] = arg[2], [, arg[1], arg[2]], arg{[3..Length(arg)]},
-          ["assertion '", $ut_arg1, " = ", $ut_arg2, "' failed"]);
+          ["assertion '", _ut_arg1, " = ", _ut_arg2, "' failed"]);
 end;
 
 AssertLess := function(arg)
   Assert_(arg[1] < arg[2], [, arg[1], arg[2]], arg{[3..Length(arg)]},
-          ["assertion '", $ut_arg1, " < ", $ut_arg2, "' failed"]);
+          ["assertion '", _ut_arg1, " < ", _ut_arg2, "' failed"]);
 end;
 
 AssertLessOrEqualThan := function(arg)
   Assert_(arg[1] <= arg[2], [, arg[1], arg[2]], arg{[3..Length(arg)]},
-          ["assertion '", $ut_arg1, " <= ", $ut_arg2, "' failed"]);
+          ["assertion '", _ut_arg1, " <= ", _ut_arg2, "' failed"]);
 end;
 
 AssertNotEqual := function(arg)
   Assert_(arg[1] <> arg[2], [, arg[1], arg[2]], arg{[3..Length(arg)]},
-          ["assertion '", $ut_arg1, " <> ", $ut_arg2, "' failed"]);
+          ["assertion '", _ut_arg1, " <> ", _ut_arg2, "' failed"]);
 end;
 
 AssertIn := function(arg)
   Assert_(arg[1] in arg[2], [, arg[1], arg[2]], arg{[3..Length(arg)]},
-          ["assertion '", $ut_arg1, " in ", $ut_arg2, "' failed"]);
+          ["assertion '", _ut_arg1, " in ", _ut_arg2, "' failed"]);
 end;
 
 AssertNotReached := function(arg)

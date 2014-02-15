@@ -600,7 +600,7 @@
   [33X[0;0YThen  actually the global variable [10Xa@xYz[110X is assigned. Further accesses to [10Xa@[110X
   within  the  package code will all be redirected to [10Xa@xYz[110X. This includes all
   the  functions  described  in  Section  [14X4.9[114X  and  indeed  all  the functions
-  described  Section  [14X79.17[114X  like  for example [2XDeclareCategory[102X ([14X79.17-1[114X). Note
+  described  Section  [14X79.18[114X  like  for example [2XDeclareCategory[102X ([14X79.18-1[114X). Note
   that  from  code in the same package it is still possible to access the same
   global variable via [10Xa@xYz[110X explicitly.[133X
   

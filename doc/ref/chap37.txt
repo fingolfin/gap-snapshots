@@ -464,7 +464,7 @@
   [29X[2XIsSyllableAssocWordRep[102X( [3Xobj[103X ) [32X Representation
   
   [33X[0;0YA word in syllable representation stores generator/exponents pairs (as given
-  by [2XExtRepOfObj[102X ([14X79.15-1[114X). Syllable access is fast, letter access is slow for
+  by [2XExtRepOfObj[102X ([14X79.16-1[114X). Syllable access is fast, letter access is slow for
   such words.[133X
   
   [1X37.6-6 IsSyllableWordsFamily[101X

@@ -114,7 +114,7 @@
 ##<#GAPDoc Label="SCLibUpdate">
 ## <ManSection>
 ## <Func Name="SCLibUpdate" Arg="repository [, recalc]"/>
-## <Returns>library repository of type <C>SCLibRepository</C> upon success, fail otherwise.</Returns>
+## <Returns>library repository of type <C>SCLibRepository</C> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## Recreates the index of a given repository (either via a repository object or a base path of a repository <Arg>repository</Arg>) by scanning the base path for all <C>.sc</C> files containing simplicial complexes of the repository. Returns a repository object with the newly created index on success or <K>fail</K> in case of an error. The optional boolean argument <Arg>recalc</Arg> forces <Package>simpcomp</Package> to recompute all the indexed properties (such as f-vector, homology, etc.) of the simplicial complexes in the repository if set to <K>true</K>. 
 ## <Example>
@@ -164,7 +164,7 @@
 ## gap&gt; myRepository:=SCLibInit("~/myrepository");
 ## [Simplicial complex library. Properties:
 ## CalculateIndexAttributes=true
-## Number of complexes in library=1
+## Number of complexes in library=3
 ## IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
 ##   "IsManifold" ]
 ## Loaded=true
@@ -172,7 +172,7 @@
 ## ]
 ## gap&gt; complex:=SCBdCrossPolytope(4);;
 ## gap&gt; SCLibAdd(myRepository,complex);
-## #I  SCLibAdd: saving complex to file "complex_2013-01-31_00-05-43.scb".
+## #I  SCLibAdd: saving complex to file "complex_2013-11-28_01-37-17.scb".
 ## true
 ## gap&gt; myRepository.Add(complex);; # alternative syntax
 ## </Example>
@@ -189,9 +189,14 @@
 ## Deletes the simplicial complex with the given id <Arg>id</Arg> from the given repository <Arg>repository</Arg>. Apart from deleting the complexes' index entry, the associated <C>.sc</C> file is also deleted.
 ## <Example>
 ## gap&gt; myRepository:=SCLibInit("~/myrepository");
+## Found a self-reference to an unknown object!
+## #I  IO_Unpicklers.SCLR: Error while unpicking library repository. Delete file complexes.idx and complexes.idxb and recreate them with SCLibInit.
+## #I  SCIntFunc.SCLibInit: error loading binary index  -- trying to reconstruct it.
+## #I  SCLibUpdate: rebuilding index for /home/jonathan/myrepository/.
+## #I  SCLibUpdate: rebuilding index done.
 ## [Simplicial complex library. Properties:
 ## CalculateIndexAttributes=true
-## Number of complexes in library=2
+## Number of complexes in library=4
 ## IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
 ##   "IsManifold" ]
 ## Loaded=true
@@ -325,14 +330,9 @@
 ## The library index of a library repository is stored in its base path in the XML file <C>complexes.idx</C>, the complexes are stored in files with suffix <C>.sc</C>, also in XML format.
 ## <Example>
 ## gap&gt; myRepository:=SCLibInit("~/myrepository");
-## Found a self-reference to an unknown object!
-## #I  IO_Unpicklers.SCLR: Error while unpicking library repository. Delete file complexes.idx and complexes.idxb and recreate them with SCLibInit.
-## #I  SCIntFunc.SCLibInit: error loading binary index  -- trying to reconstruct it.
-## #I  SCLibUpdate: rebuilding index for /home/jonathan/myrepository/.
-## #I  SCLibUpdate: rebuilding index done.
 ## [Simplicial complex library. Properties:
 ## CalculateIndexAttributes=true
-## Number of complexes in library=2
+## Number of complexes in library=4
 ## IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
 ##   "IsManifold" ]
 ## Loaded=true

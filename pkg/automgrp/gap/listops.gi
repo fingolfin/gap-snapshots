@@ -2,9 +2,9 @@
 ##
 #W  listops.gi             automgrp package                    Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -35,7 +35,7 @@ function(list, invertible)
   od;
 
   deg := Length(list[1]) - 1;
-  if deg < 2 then
+  if deg < 1 then
     return false;
   fi;
 
@@ -229,7 +229,7 @@ function(state, list)
 
   check := function(s)
     if IsInt(s) then return state=AbsInt(s);
-                else return s=[] or state=AbsInt(s[1]);
+                else return s=[] or (Length(s)=1 and state=AbsInt(s[1]));
     fi;
   end;
 

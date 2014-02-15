@@ -1252,11 +1252,11 @@
 \contentsline {section}{\numberline {35.4}\leavevmode {\color {Chapter }Attributes and Properties for Magmas}}{457}{section.35.4}
 \contentsline {subsection}{\numberline {35.4.1}\leavevmode {\color {Chapter }GeneratorsOfMagma}}{457}{subsection.35.4.1}
 \contentsline {subsection}{\numberline {35.4.2}\leavevmode {\color {Chapter }GeneratorsOfMagmaWithOne}}{457}{subsection.35.4.2}
-\contentsline {subsection}{\numberline {35.4.3}\leavevmode {\color {Chapter }GeneratorsOfMagmaWithInverses}}{457}{subsection.35.4.3}
-\contentsline {subsection}{\numberline {35.4.4}\leavevmode {\color {Chapter }Centralizer (for a magma and an element)}}{457}{subsection.35.4.4}
+\contentsline {subsection}{\numberline {35.4.3}\leavevmode {\color {Chapter }GeneratorsOfMagmaWithInverses}}{458}{subsection.35.4.3}
+\contentsline {subsection}{\numberline {35.4.4}\leavevmode {\color {Chapter }Centralizer (for a magma and an element)}}{458}{subsection.35.4.4}
 \contentsline {subsection}{\numberline {35.4.5}\leavevmode {\color {Chapter }Centre}}{458}{subsection.35.4.5}
 \contentsline {subsection}{\numberline {35.4.6}\leavevmode {\color {Chapter }Idempotents}}{458}{subsection.35.4.6}
-\contentsline {subsection}{\numberline {35.4.7}\leavevmode {\color {Chapter }IsAssociative}}{458}{subsection.35.4.7}
+\contentsline {subsection}{\numberline {35.4.7}\leavevmode {\color {Chapter }IsAssociative}}{459}{subsection.35.4.7}
 \contentsline {subsection}{\numberline {35.4.8}\leavevmode {\color {Chapter }IsCentral}}{459}{subsection.35.4.8}
 \contentsline {subsection}{\numberline {35.4.9}\leavevmode {\color {Chapter }IsCommutative}}{459}{subsection.35.4.9}
 \contentsline {subsection}{\numberline {35.4.10}\leavevmode {\color {Chapter }MultiplicativeNeutralElement}}{459}{subsection.35.4.10}
@@ -2211,66 +2211,66 @@
 \contentsline {subsection}{\numberline {51.1.10}\leavevmode {\color {Chapter }SemigroupByMultiplicationTable}}{759}{subsection.51.1.10}
 \contentsline {section}{\numberline {51.2}\leavevmode {\color {Chapter }Monoids}}{759}{section.51.2}
 \contentsline {subsection}{\numberline {51.2.1}\leavevmode {\color {Chapter }IsMonoid}}{759}{subsection.51.2.1}
-\contentsline {subsection}{\numberline {51.2.2}\leavevmode {\color {Chapter }Monoid}}{759}{subsection.51.2.2}
+\contentsline {subsection}{\numberline {51.2.2}\leavevmode {\color {Chapter }Monoid}}{760}{subsection.51.2.2}
 \contentsline {subsection}{\numberline {51.2.3}\leavevmode {\color {Chapter }Submonoid}}{760}{subsection.51.2.3}
 \contentsline {subsection}{\numberline {51.2.4}\leavevmode {\color {Chapter }MonoidByGenerators}}{760}{subsection.51.2.4}
 \contentsline {subsection}{\numberline {51.2.5}\leavevmode {\color {Chapter }AsMonoid}}{760}{subsection.51.2.5}
 \contentsline {subsection}{\numberline {51.2.6}\leavevmode {\color {Chapter }AsSubmonoid}}{760}{subsection.51.2.6}
 \contentsline {subsection}{\numberline {51.2.7}\leavevmode {\color {Chapter }GeneratorsOfMonoid}}{760}{subsection.51.2.7}
-\contentsline {subsection}{\numberline {51.2.8}\leavevmode {\color {Chapter }TrivialSubmonoid}}{760}{subsection.51.2.8}
+\contentsline {subsection}{\numberline {51.2.8}\leavevmode {\color {Chapter }TrivialSubmonoid}}{761}{subsection.51.2.8}
 \contentsline {subsection}{\numberline {51.2.9}\leavevmode {\color {Chapter }FreeMonoid}}{761}{subsection.51.2.9}
 \contentsline {subsection}{\numberline {51.2.10}\leavevmode {\color {Chapter }MonoidByMultiplicationTable}}{761}{subsection.51.2.10}
-\contentsline {section}{\numberline {51.3}\leavevmode {\color {Chapter }Inverse semigroups and monoids}}{761}{section.51.3}
-\contentsline {subsection}{\numberline {51.3.1}\leavevmode {\color {Chapter }InverseSemigroup}}{761}{subsection.51.3.1}
+\contentsline {section}{\numberline {51.3}\leavevmode {\color {Chapter }Inverse semigroups and monoids}}{762}{section.51.3}
+\contentsline {subsection}{\numberline {51.3.1}\leavevmode {\color {Chapter }InverseSemigroup}}{762}{subsection.51.3.1}
 \contentsline {subsection}{\numberline {51.3.2}\leavevmode {\color {Chapter }InverseMonoid}}{762}{subsection.51.3.2}
-\contentsline {subsection}{\numberline {51.3.3}\leavevmode {\color {Chapter }GeneratorsOfInverseSemigroup}}{762}{subsection.51.3.3}
+\contentsline {subsection}{\numberline {51.3.3}\leavevmode {\color {Chapter }GeneratorsOfInverseSemigroup}}{763}{subsection.51.3.3}
 \contentsline {subsection}{\numberline {51.3.4}\leavevmode {\color {Chapter }GeneratorsOfInverseMonoid}}{763}{subsection.51.3.4}
 \contentsline {subsection}{\numberline {51.3.5}\leavevmode {\color {Chapter }IsInverseSubsemigroup}}{763}{subsection.51.3.5}
-\contentsline {section}{\numberline {51.4}\leavevmode {\color {Chapter }Properties of Semigroups}}{763}{section.51.4}
-\contentsline {subsection}{\numberline {51.4.1}\leavevmode {\color {Chapter }IsRegularSemigroup}}{763}{subsection.51.4.1}
+\contentsline {section}{\numberline {51.4}\leavevmode {\color {Chapter }Properties of Semigroups}}{764}{section.51.4}
+\contentsline {subsection}{\numberline {51.4.1}\leavevmode {\color {Chapter }IsRegularSemigroup}}{764}{subsection.51.4.1}
 \contentsline {subsection}{\numberline {51.4.2}\leavevmode {\color {Chapter }IsRegularSemigroupElement}}{764}{subsection.51.4.2}
 \contentsline {subsection}{\numberline {51.4.3}\leavevmode {\color {Chapter }InversesOfSemigroupElement}}{764}{subsection.51.4.3}
-\contentsline {subsection}{\numberline {51.4.4}\leavevmode {\color {Chapter }IsSimpleSemigroup}}{764}{subsection.51.4.4}
-\contentsline {subsection}{\numberline {51.4.5}\leavevmode {\color {Chapter }IsZeroSimpleSemigroup}}{764}{subsection.51.4.5}
+\contentsline {subsection}{\numberline {51.4.4}\leavevmode {\color {Chapter }IsSimpleSemigroup}}{765}{subsection.51.4.4}
+\contentsline {subsection}{\numberline {51.4.5}\leavevmode {\color {Chapter }IsZeroSimpleSemigroup}}{765}{subsection.51.4.5}
 \contentsline {subsection}{\numberline {51.4.6}\leavevmode {\color {Chapter }IsZeroGroup}}{765}{subsection.51.4.6}
 \contentsline {subsection}{\numberline {51.4.7}\leavevmode {\color {Chapter }IsReesCongruenceSemigroup}}{765}{subsection.51.4.7}
 \contentsline {subsection}{\numberline {51.4.8}\leavevmode {\color {Chapter }IsInverseSemigroup}}{765}{subsection.51.4.8}
-\contentsline {section}{\numberline {51.5}\leavevmode {\color {Chapter }Ideals of semigroups}}{765}{section.51.5}
-\contentsline {subsection}{\numberline {51.5.1}\leavevmode {\color {Chapter }SemigroupIdealByGenerators}}{765}{subsection.51.5.1}
-\contentsline {subsection}{\numberline {51.5.2}\leavevmode {\color {Chapter }ReesCongruenceOfSemigroupIdeal}}{765}{subsection.51.5.2}
+\contentsline {section}{\numberline {51.5}\leavevmode {\color {Chapter }Ideals of semigroups}}{766}{section.51.5}
+\contentsline {subsection}{\numberline {51.5.1}\leavevmode {\color {Chapter }SemigroupIdealByGenerators}}{766}{subsection.51.5.1}
+\contentsline {subsection}{\numberline {51.5.2}\leavevmode {\color {Chapter }ReesCongruenceOfSemigroupIdeal}}{766}{subsection.51.5.2}
 \contentsline {subsection}{\numberline {51.5.3}\leavevmode {\color {Chapter }IsLeftSemigroupIdeal}}{766}{subsection.51.5.3}
 \contentsline {section}{\numberline {51.6}\leavevmode {\color {Chapter }Congruences for semigroups}}{766}{section.51.6}
 \contentsline {subsection}{\numberline {51.6.1}\leavevmode {\color {Chapter }IsSemigroupCongruence}}{766}{subsection.51.6.1}
 \contentsline {subsection}{\numberline {51.6.2}\leavevmode {\color {Chapter }IsReesCongruence}}{766}{subsection.51.6.2}
-\contentsline {section}{\numberline {51.7}\leavevmode {\color {Chapter }Quotients}}{766}{section.51.7}
-\contentsline {subsection}{\numberline {51.7.1}\leavevmode {\color {Chapter }IsQuotientSemigroup}}{766}{subsection.51.7.1}
+\contentsline {section}{\numberline {51.7}\leavevmode {\color {Chapter }Quotients}}{767}{section.51.7}
+\contentsline {subsection}{\numberline {51.7.1}\leavevmode {\color {Chapter }IsQuotientSemigroup}}{767}{subsection.51.7.1}
 \contentsline {subsection}{\numberline {51.7.2}\leavevmode {\color {Chapter }HomomorphismQuotientSemigroup}}{767}{subsection.51.7.2}
 \contentsline {subsection}{\numberline {51.7.3}\leavevmode {\color {Chapter }QuotientSemigroupPreimage}}{767}{subsection.51.7.3}
 \contentsline {section}{\numberline {51.8}\leavevmode {\color {Chapter }Green's Relations}}{767}{section.51.8}
-\contentsline {subsection}{\numberline {51.8.1}\leavevmode {\color {Chapter }GreensRRelation}}{767}{subsection.51.8.1}
-\contentsline {subsection}{\numberline {51.8.2}\leavevmode {\color {Chapter }IsGreensRelation}}{767}{subsection.51.8.2}
+\contentsline {subsection}{\numberline {51.8.1}\leavevmode {\color {Chapter }GreensRRelation}}{768}{subsection.51.8.1}
+\contentsline {subsection}{\numberline {51.8.2}\leavevmode {\color {Chapter }IsGreensRelation}}{768}{subsection.51.8.2}
 \contentsline {subsection}{\numberline {51.8.3}\leavevmode {\color {Chapter }IsGreensClass}}{768}{subsection.51.8.3}
 \contentsline {subsection}{\numberline {51.8.4}\leavevmode {\color {Chapter }IsGreensLessThanOrEqual}}{768}{subsection.51.8.4}
 \contentsline {subsection}{\numberline {51.8.5}\leavevmode {\color {Chapter }RClassOfHClass}}{768}{subsection.51.8.5}
-\contentsline {subsection}{\numberline {51.8.6}\leavevmode {\color {Chapter }EggBoxOfDClass}}{768}{subsection.51.8.6}
-\contentsline {subsection}{\numberline {51.8.7}\leavevmode {\color {Chapter }DisplayEggBoxOfDClass}}{768}{subsection.51.8.7}
-\contentsline {subsection}{\numberline {51.8.8}\leavevmode {\color {Chapter }GreensRClassOfElement}}{768}{subsection.51.8.8}
+\contentsline {subsection}{\numberline {51.8.6}\leavevmode {\color {Chapter }EggBoxOfDClass}}{769}{subsection.51.8.6}
+\contentsline {subsection}{\numberline {51.8.7}\leavevmode {\color {Chapter }DisplayEggBoxOfDClass}}{769}{subsection.51.8.7}
+\contentsline {subsection}{\numberline {51.8.8}\leavevmode {\color {Chapter }GreensRClassOfElement}}{769}{subsection.51.8.8}
 \contentsline {subsection}{\numberline {51.8.9}\leavevmode {\color {Chapter }GreensRClasses}}{769}{subsection.51.8.9}
 \contentsline {subsection}{\numberline {51.8.10}\leavevmode {\color {Chapter }GroupHClassOfGreensDClass}}{769}{subsection.51.8.10}
-\contentsline {subsection}{\numberline {51.8.11}\leavevmode {\color {Chapter }IsGroupHClass}}{769}{subsection.51.8.11}
-\contentsline {subsection}{\numberline {51.8.12}\leavevmode {\color {Chapter }IsRegularDClass}}{769}{subsection.51.8.12}
-\contentsline {section}{\numberline {51.9}\leavevmode {\color {Chapter }Rees Matrix Semigroups}}{769}{section.51.9}
+\contentsline {subsection}{\numberline {51.8.11}\leavevmode {\color {Chapter }IsGroupHClass}}{770}{subsection.51.8.11}
+\contentsline {subsection}{\numberline {51.8.12}\leavevmode {\color {Chapter }IsRegularDClass}}{770}{subsection.51.8.12}
+\contentsline {section}{\numberline {51.9}\leavevmode {\color {Chapter }Rees Matrix Semigroups}}{770}{section.51.9}
 \contentsline {subsection}{\numberline {51.9.1}\leavevmode {\color {Chapter }ReesMatrixSemigroup}}{771}{subsection.51.9.1}
-\contentsline {subsection}{\numberline {51.9.2}\leavevmode {\color {Chapter }ReesMatrixSubsemigroup}}{771}{subsection.51.9.2}
+\contentsline {subsection}{\numberline {51.9.2}\leavevmode {\color {Chapter }ReesMatrixSubsemigroup}}{772}{subsection.51.9.2}
 \contentsline {subsection}{\numberline {51.9.3}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroup}}{772}{subsection.51.9.3}
-\contentsline {subsection}{\numberline {51.9.4}\leavevmode {\color {Chapter }IsReesMatrixSemigroupElement}}{772}{subsection.51.9.4}
+\contentsline {subsection}{\numberline {51.9.4}\leavevmode {\color {Chapter }IsReesMatrixSemigroupElement}}{773}{subsection.51.9.4}
 \contentsline {subsection}{\numberline {51.9.5}\leavevmode {\color {Chapter }ReesMatrixSemigroupElement}}{773}{subsection.51.9.5}
-\contentsline {subsection}{\numberline {51.9.6}\leavevmode {\color {Chapter }IsReesMatrixSubsemigroup}}{773}{subsection.51.9.6}
+\contentsline {subsection}{\numberline {51.9.6}\leavevmode {\color {Chapter }IsReesMatrixSubsemigroup}}{774}{subsection.51.9.6}
 \contentsline {subsection}{\numberline {51.9.7}\leavevmode {\color {Chapter }IsReesMatrixSemigroup}}{774}{subsection.51.9.7}
-\contentsline {subsection}{\numberline {51.9.8}\leavevmode {\color {Chapter }Matrix}}{775}{subsection.51.9.8}
+\contentsline {subsection}{\numberline {51.9.8}\leavevmode {\color {Chapter }Matrix}}{776}{subsection.51.9.8}
 \contentsline {subsection}{\numberline {51.9.9}\leavevmode {\color {Chapter }Rows and columns}}{776}{subsection.51.9.9}
-\contentsline {subsection}{\numberline {51.9.10}\leavevmode {\color {Chapter }UnderlyingSemigroup (for a Rees matrix semigroup)}}{776}{subsection.51.9.10}
-\contentsline {subsection}{\numberline {51.9.11}\leavevmode {\color {Chapter }AssociatedReesMatrixSemigroupOfDClass}}{776}{subsection.51.9.11}
+\contentsline {subsection}{\numberline {51.9.10}\leavevmode {\color {Chapter }UnderlyingSemigroup (for a Rees matrix semigroup)}}{777}{subsection.51.9.10}
+\contentsline {subsection}{\numberline {51.9.11}\leavevmode {\color {Chapter }AssociatedReesMatrixSemigroupOfDClass}}{777}{subsection.51.9.11}
 \contentsline {chapter}{\numberline {52}\leavevmode {\color {Chapter }Finitely Presented Semigroups and Monoids}}{778}{chapter.52}
 \contentsline {section}{\numberline {52.1}\leavevmode {\color {Chapter }IsSubsemigroupFpSemigroup (Filter)}}{780}{section.52.1}
 \contentsline {subsection}{\numberline {52.1.1}\leavevmode {\color {Chapter }IsSubsemigroupFpSemigroup}}{780}{subsection.52.1.1}
@@ -2317,7 +2317,7 @@
 \contentsline {subsection}{\numberline {53.2.5}\leavevmode {\color {Chapter }TransformationOp}}{791}{subsection.53.2.5}
 \contentsline {subsection}{\numberline {53.2.6}\leavevmode {\color {Chapter }TransformationNumber}}{792}{subsection.53.2.6}
 \contentsline {subsection}{\numberline {53.2.7}\leavevmode {\color {Chapter }RandomTransformation}}{792}{subsection.53.2.7}
-\contentsline {subsection}{\numberline {53.2.8}\leavevmode {\color {Chapter }IdentityTransformation}}{792}{subsection.53.2.8}
+\contentsline {subsection}{\numberline {53.2.8}\leavevmode {\color {Chapter }IdentityTransformation}}{793}{subsection.53.2.8}
 \contentsline {subsection}{\numberline {53.2.9}\leavevmode {\color {Chapter }ConstantTransformation}}{793}{subsection.53.2.9}
 \contentsline {section}{\numberline {53.3}\leavevmode {\color {Chapter }Changing the representation of a transformation}}{793}{section.53.3}
 \contentsline {subsection}{\numberline {53.3.1}\leavevmode {\color {Chapter }AsTransformation}}{793}{subsection.53.3.1}
@@ -3546,36 +3546,38 @@
 \contentsline {subsection}{\numberline {79.4.3}\leavevmode {\color {Chapter }ResetFilterObj}}{1218}{subsection.79.4.3}
 \contentsline {section}{\numberline {79.5}\leavevmode {\color {Chapter }Creating Operations}}{1218}{section.79.5}
 \contentsline {subsection}{\numberline {79.5.1}\leavevmode {\color {Chapter }NewOperation}}{1218}{subsection.79.5.1}
-\contentsline {section}{\numberline {79.6}\leavevmode {\color {Chapter }Creating Families}}{1218}{section.79.6}
-\contentsline {subsection}{\numberline {79.6.1}\leavevmode {\color {Chapter }NewFamily}}{1219}{subsection.79.6.1}
-\contentsline {section}{\numberline {79.7}\leavevmode {\color {Chapter }Creating Types}}{1219}{section.79.7}
-\contentsline {subsection}{\numberline {79.7.1}\leavevmode {\color {Chapter }NewType}}{1219}{subsection.79.7.1}
-\contentsline {section}{\numberline {79.8}\leavevmode {\color {Chapter }Creating Objects}}{1220}{section.79.8}
-\contentsline {subsection}{\numberline {79.8.1}\leavevmode {\color {Chapter }Objectify}}{1220}{subsection.79.8.1}
-\contentsline {subsection}{\numberline {79.8.2}\leavevmode {\color {Chapter }ObjectifyWithAttributes}}{1220}{subsection.79.8.2}
-\contentsline {section}{\numberline {79.9}\leavevmode {\color {Chapter }Component Objects}}{1220}{section.79.9}
-\contentsline {subsection}{\numberline {79.9.1}\leavevmode {\color {Chapter }NamesOfComponents}}{1222}{subsection.79.9.1}
-\contentsline {section}{\numberline {79.10}\leavevmode {\color {Chapter }Positional Objects}}{1222}{section.79.10}
-\contentsline {section}{\numberline {79.11}\leavevmode {\color {Chapter }Implementing New List Objects}}{1223}{section.79.11}
-\contentsline {section}{\numberline {79.12}\leavevmode {\color {Chapter }Example {\textendash } Constructing Enumerators}}{1224}{section.79.12}
-\contentsline {section}{\numberline {79.13}\leavevmode {\color {Chapter }Example {\textendash } Constructing Iterators}}{1227}{section.79.13}
-\contentsline {section}{\numberline {79.14}\leavevmode {\color {Chapter }Arithmetic Issues in the Implementation of New Kinds of Lists}}{1227}{section.79.14}
-\contentsline {section}{\numberline {79.15}\leavevmode {\color {Chapter }External Representation}}{1229}{section.79.15}
-\contentsline {subsection}{\numberline {79.15.1}\leavevmode {\color {Chapter }ExtRepOfObj}}{1229}{subsection.79.15.1}
-\contentsline {section}{\numberline {79.16}\leavevmode {\color {Chapter }Mutability and Copying}}{1230}{section.79.16}
-\contentsline {section}{\numberline {79.17}\leavevmode {\color {Chapter }Global Variables in the Library}}{1232}{section.79.17}
-\contentsline {subsection}{\numberline {79.17.1}\leavevmode {\color {Chapter }DeclareCategory}}{1232}{subsection.79.17.1}
-\contentsline {subsection}{\numberline {79.17.2}\leavevmode {\color {Chapter }DeclareRepresentation}}{1232}{subsection.79.17.2}
-\contentsline {subsection}{\numberline {79.17.3}\leavevmode {\color {Chapter }DeclareAttribute}}{1232}{subsection.79.17.3}
-\contentsline {subsection}{\numberline {79.17.4}\leavevmode {\color {Chapter }DeclareProperty}}{1233}{subsection.79.17.4}
-\contentsline {subsection}{\numberline {79.17.5}\leavevmode {\color {Chapter }DeclareFilter}}{1233}{subsection.79.17.5}
-\contentsline {subsection}{\numberline {79.17.6}\leavevmode {\color {Chapter }DeclareOperation}}{1233}{subsection.79.17.6}
-\contentsline {subsection}{\numberline {79.17.7}\leavevmode {\color {Chapter }DeclareGlobalFunction}}{1233}{subsection.79.17.7}
-\contentsline {subsection}{\numberline {79.17.8}\leavevmode {\color {Chapter }DeclareGlobalVariable}}{1233}{subsection.79.17.8}
-\contentsline {subsection}{\numberline {79.17.9}\leavevmode {\color {Chapter }InstallValue}}{1234}{subsection.79.17.9}
-\contentsline {subsection}{\numberline {79.17.10}\leavevmode {\color {Chapter }DeclareSynonym}}{1234}{subsection.79.17.10}
-\contentsline {subsection}{\numberline {79.17.11}\leavevmode {\color {Chapter }FlushCaches}}{1234}{subsection.79.17.11}
-\contentsline {section}{\numberline {79.18}\leavevmode {\color {Chapter }Declaration and Implementation Part}}{1235}{section.79.18}
+\contentsline {section}{\numberline {79.6}\leavevmode {\color {Chapter }Creating Constructors}}{1218}{section.79.6}
+\contentsline {subsection}{\numberline {79.6.1}\leavevmode {\color {Chapter }NewConstructor}}{1218}{subsection.79.6.1}
+\contentsline {section}{\numberline {79.7}\leavevmode {\color {Chapter }Creating Families}}{1218}{section.79.7}
+\contentsline {subsection}{\numberline {79.7.1}\leavevmode {\color {Chapter }NewFamily}}{1219}{subsection.79.7.1}
+\contentsline {section}{\numberline {79.8}\leavevmode {\color {Chapter }Creating Types}}{1220}{section.79.8}
+\contentsline {subsection}{\numberline {79.8.1}\leavevmode {\color {Chapter }NewType}}{1220}{subsection.79.8.1}
+\contentsline {section}{\numberline {79.9}\leavevmode {\color {Chapter }Creating Objects}}{1220}{section.79.9}
+\contentsline {subsection}{\numberline {79.9.1}\leavevmode {\color {Chapter }Objectify}}{1220}{subsection.79.9.1}
+\contentsline {subsection}{\numberline {79.9.2}\leavevmode {\color {Chapter }ObjectifyWithAttributes}}{1220}{subsection.79.9.2}
+\contentsline {section}{\numberline {79.10}\leavevmode {\color {Chapter }Component Objects}}{1221}{section.79.10}
+\contentsline {subsection}{\numberline {79.10.1}\leavevmode {\color {Chapter }NamesOfComponents}}{1222}{subsection.79.10.1}
+\contentsline {section}{\numberline {79.11}\leavevmode {\color {Chapter }Positional Objects}}{1222}{section.79.11}
+\contentsline {section}{\numberline {79.12}\leavevmode {\color {Chapter }Implementing New List Objects}}{1224}{section.79.12}
+\contentsline {section}{\numberline {79.13}\leavevmode {\color {Chapter }Example {\textendash } Constructing Enumerators}}{1224}{section.79.13}
+\contentsline {section}{\numberline {79.14}\leavevmode {\color {Chapter }Example {\textendash } Constructing Iterators}}{1227}{section.79.14}
+\contentsline {section}{\numberline {79.15}\leavevmode {\color {Chapter }Arithmetic Issues in the Implementation of New Kinds of Lists}}{1228}{section.79.15}
+\contentsline {section}{\numberline {79.16}\leavevmode {\color {Chapter }External Representation}}{1229}{section.79.16}
+\contentsline {subsection}{\numberline {79.16.1}\leavevmode {\color {Chapter }ExtRepOfObj}}{1230}{subsection.79.16.1}
+\contentsline {section}{\numberline {79.17}\leavevmode {\color {Chapter }Mutability and Copying}}{1230}{section.79.17}
+\contentsline {section}{\numberline {79.18}\leavevmode {\color {Chapter }Global Variables in the Library}}{1232}{section.79.18}
+\contentsline {subsection}{\numberline {79.18.1}\leavevmode {\color {Chapter }DeclareCategory}}{1232}{subsection.79.18.1}
+\contentsline {subsection}{\numberline {79.18.2}\leavevmode {\color {Chapter }DeclareRepresentation}}{1232}{subsection.79.18.2}
+\contentsline {subsection}{\numberline {79.18.3}\leavevmode {\color {Chapter }DeclareAttribute}}{1233}{subsection.79.18.3}
+\contentsline {subsection}{\numberline {79.18.4}\leavevmode {\color {Chapter }DeclareProperty}}{1233}{subsection.79.18.4}
+\contentsline {subsection}{\numberline {79.18.5}\leavevmode {\color {Chapter }DeclareFilter}}{1233}{subsection.79.18.5}
+\contentsline {subsection}{\numberline {79.18.6}\leavevmode {\color {Chapter }DeclareOperation}}{1233}{subsection.79.18.6}
+\contentsline {subsection}{\numberline {79.18.7}\leavevmode {\color {Chapter }DeclareGlobalFunction}}{1233}{subsection.79.18.7}
+\contentsline {subsection}{\numberline {79.18.8}\leavevmode {\color {Chapter }DeclareGlobalVariable}}{1234}{subsection.79.18.8}
+\contentsline {subsection}{\numberline {79.18.9}\leavevmode {\color {Chapter }InstallValue}}{1234}{subsection.79.18.9}
+\contentsline {subsection}{\numberline {79.18.10}\leavevmode {\color {Chapter }DeclareSynonym}}{1234}{subsection.79.18.10}
+\contentsline {subsection}{\numberline {79.18.11}\leavevmode {\color {Chapter }FlushCaches}}{1235}{subsection.79.18.11}
+\contentsline {section}{\numberline {79.19}\leavevmode {\color {Chapter }Declaration and Implementation Part}}{1235}{section.79.19}
 \contentsline {chapter}{\numberline {80}\leavevmode {\color {Chapter }Examples of Extending the System}}{1237}{chapter.80}
 \contentsline {section}{\numberline {80.1}\leavevmode {\color {Chapter }Addition of a Method}}{1237}{section.80.1}
 \contentsline {section}{\numberline {80.2}\leavevmode {\color {Chapter }Extending the Range of Definition of an Existing Operation}}{1239}{section.80.2}

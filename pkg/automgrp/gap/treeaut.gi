@@ -2,9 +2,9 @@
 ##
 #W  treeaut.gi                 automgrp package                Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -539,23 +539,9 @@ end);
 ##
 #M  \=(<a1>, <a2>)
 ##
-InstallMethod(\=, [IsTreeAutomorphism and IsTreeAutomorphismRep,
-                        IsTreeAutomorphism and IsTreeAutomorphismRep],
-function(a1, a2)
-  local i;
-  if a1!.perm <> a2!.perm then return false; fi;
-  for i in [1..a1!.deg] do
-    if a1!.states[i] <> a2!.states[i] then return false; fi;
-  od;
-  return true;
-end);
-
-
-###############################################################################
-##
-#M  \=(<a1>, <a2>)
-##
-InstallMethod(\=, [IsTreeAutomorphism, IsTreeAutomorphism],
+# TODO: can lead to infinite recursion
+InstallMethod(\=, "for [IsTreeAutomorphism, IsTreeAutomorphism]", ReturnTrue,
+              [IsTreeAutomorphism, IsTreeAutomorphism],
 function(a1, a2)
   return Perm(a1) = Perm(a2) and Sections(a1) = Sections(a2);
 end);

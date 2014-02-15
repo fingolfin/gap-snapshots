@@ -2,9 +2,9 @@
 ##
 #W  selfsimgroup.gi           automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.1.4.1
+##  automgrp v 1.2.4
 ##
-#Y  Copyright (C) 2003 - 2008 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2014 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -142,9 +142,9 @@ end);
 
 ###############################################################################
 ##
-#M  $AG_SubgroupOnLevel(<G>, <gens>, <level>)
+#M  __AG_SubgroupOnLevel(<G>, <gens>, <level>)
 ##
-InstallMethod($AG_SubgroupOnLevel, [IsSelfSimGroup,
+InstallMethod(__AG_SubgroupOnLevel, [IsSelfSimGroup,
                                     IsList and IsTreeAutomorphismCollection,
                                     IsPosInt],
 function(G, gens, level)
@@ -163,12 +163,12 @@ function(G, gens, level)
   return SubgroupNC(overgroup, gens);
 end);
 
-InstallMethod($AG_SubgroupOnLevel, [IsSelfSimGroup, IsList and IsEmpty, IsPosInt],
+InstallMethod(__AG_SubgroupOnLevel, [IsSelfSimGroup, IsList and IsEmpty, IsPosInt],
 function(G, gens, level)
   return TrivialSubgroup(G);
 end);
 
-InstallMethod($AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
+InstallMethod(__AG_SubgroupOnLevel, [IsTreeAutomorphismGroup,
                                     IsList and IsSelfSimCollection,
                                     IsPosInt],
 function(G, gens, level)
@@ -183,7 +183,7 @@ function(G, gens, level)
   return SubgroupNC(overgroup, gens);
 end);
 
-InstallMethod($AG_SimplifyGroupGenerators, "for [IsList and IsInvertibleSelfSimCollection]",
+InstallMethod(__AG_SimplifyGroupGenerators, "for [IsList and IsInvertibleSelfSimCollection]",
                           [IsList and IsInvertibleSelfSimCollection],
 function(gens)
   local words, fam;
@@ -642,48 +642,12 @@ end);
 
 ###############################################################################
 ##
-#M  IndexInFreeGroup(<G>)
-##
-InstallMethod(IndexInFreeGroup, "for [IsSelfSimGroup]",
-              [IsSelfSimGroup],
-function(G)
-  return IndexInWholeGroup(UnderlyingFreeSubgroup(G));
-end);
-
-
-###############################################################################
-##
 #M  UnderlyingFreeGenerators(<G>)
 ##
 InstallMethod(UnderlyingFreeGenerators, "for [IsSelfSimGroup]",
               [IsSelfSimGroup],
 function(G)
   return List(GeneratorsOfGroup(G), g -> Word(g));
-end);
-
-
-###############################################################################
-##
-##  AG_ApplyNielsen(<G>)
-##
-InstallMethod(AG_ApplyNielsen, "for [IsSelfSimGroup]",
-              [IsSelfSimGroup],
-function(G)
-  local fgens;
-
-  fgens := List(GeneratorsOfGroup(G), g -> Word(g));
-  fgens := AG_ReducedByNielsen(fgens);
-  fgens := Difference(fgens, [One(fgens[1])]);
-
-  if IsEmpty(fgens) then
-    SetUnderlyingFreeGenerators(G, [One(UnderlyingFreeGroup(G))]);
-    SetUnderlyingFreeSubgroup(G, TrivialSubgroup(UnderlyingFreeGroup(G)));
-  else
-    SetUnderlyingFreeGenerators(G, fgens);
-    SetUnderlyingFreeSubgroup(G, Subgroup(UnderlyingFreeGroup(G), fgens));
-  fi;
-
-  return fgens;
 end);
 
 
@@ -773,6 +737,7 @@ function(G)
         gens_in_freegrp, images_in_freegrp, preimages_in_freegrp, F, pi, pi_bar, \
         preimage_in_freegrp, MealyAutomatonLocalFinite;
 
+# if we do not know much, we compare just words in free group
   MealyAutomatonLocal := function(g)
     local cur_state;
     if g!.word in states then return Position(states, g!.word); fi;
@@ -783,7 +748,7 @@ function(G)
     return cur_state;
   end;
 
-
+# if we do know that the groups is finite, we compare actual elements of the group
   MealyAutomatonLocalFinite := function(g)
     local cur_state;
     if g in states then return Position(states, g); fi;
@@ -795,6 +760,7 @@ function(G)
   end;
 
 
+  if IsTrivial(G) then return true; fi;
 
   states := [];
   aut_list := [];
@@ -814,6 +780,11 @@ function(G)
   fi;
 
   H := AutomatonGroup(aut_list);
+
+  if IsTrivial(H) then 
+    SetIsTrivial( G, true);
+    return true;
+  fi;
 
   images := UnderlyingAutomFamily(H)!.oldstates{images};
 
