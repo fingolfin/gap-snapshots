@@ -14,10 +14,10 @@ PackageName := "IRREDSOL",
 Subtitle := "A Library of irreducible solvable linear groups over finite fields and of finite primivite soluble groups",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "1.2.3",
+Version := "1.2.4",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-Date := "24/05/2013",
+Date := "18/02/2014",
 
 BannerString := Concatenation("\
 ----------------------------------------------------------------------\n\
@@ -30,7 +30,7 @@ BannerString := Concatenation("\
 ##  the format extension(s), like '.zoo', which are given next.
 ##  The archive file name *must be changed* with each version of the archive
 ##  (and probably somehow contain the package name and version).
-ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/irredsol-1r2n3",
+ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/irredsol/irredsol-1r2n4",
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -50,25 +50,10 @@ ArchiveFormats := ".tar.bz2", # the others are generated automatically
 ##  If not all of the archive formats mentioned above are provided, these 
 ##  can be produced at the GAP side. Therefore it is necessary to know which
 ##  files of the package distribution are text files which should be unpacked
-##  with operating system specific line breaks. There are the following 
-##  possibilities to specify the text files:
-##  
-##    - specify below a component 'TextFiles' which is a list of names of the 
-##      text files, relative to the package root directory (e.g., "lib/bla.g")
-##    - specify below a component 'BinaryFiles' as list of names, then all other
-##      files are taken as text files.
-##    - if no 'TextFiles' or 'BinaryFiles' are given and a .zoo archive is
-##      provided, then the files in that archive with a "!TEXT!" comment are
-##      taken as text files
-##    - otherwise: exactly the files with names matching the regular expression
-##      ".*\(\.txt\|\.gi\|\.gd\|\.g\|\.c\|\.h\|\.htm\|\.html\|\.xml\|\.tex\|\.six\|\.bib\|\.tst\|README.*\|INSTALL.*\|Makefile\)"
-##      are taken as text files
-##  
-##  (Remark: Just providing a .tar.gz file will often result in useful
-##  archives)
+##  with operating system specific line breaks. 
 ##  
 ##  These entries are *optional*.
-BinaryFiles := ["doc/manual.pdf"],
+TextBinaryFilesPatterns := [ "B*.pdf", "T*" ],
 
 ##  Information about authors and maintainers. Specify for each person a 
 ##  record with the following information:

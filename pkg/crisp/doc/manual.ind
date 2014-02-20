@@ -1,184 +1,184 @@
 \letter A
-  abelian groups, class of, 23
-  abelian groups of bounded exponent, class of, 23
-  `AbelianGroups', 23
-  `AbelianGroupsOfExponent', 23
-  `AbelianMinimalNormalSubgroups', 21
-  `AbelianSocle', 21
-  `AbelianSocleComponents', 21
-  `AllInvariantSubgroupsWithNProperty', 22
-  `AllInvariantSubgroupsWithQProperty', 16
-  `AllNormalSubgroupsWithNProperty', 22
-  `AllNormalSubgroupsWithQProperty', 16
-  attributes, of Fitting classes, 20
-    \sub of Fitting sets, 20
-    \sub of formation, 14
-    \sub of group classes, 9
-    \sub of primitive solvable group, 11
-    \sub of Schunck class, 10
+  abelian groups, class of, 24
+  abelian groups of bounded exponent, class of, 24
+  `AbelianGroups', 24
+  `AbelianGroupsOfExponent', 24
+  `AbelianMinimalNormalSubgroups', 22
+  `AbelianSocle', 22
+  `AbelianSocleComponents', 22
+  `AllInvariantSubgroupsWithNProperty', 23
+  `AllInvariantSubgroupsWithQProperty', 17
+  `AllNormalSubgroupsWithNProperty', 23
+  `AllNormalSubgroupsWithQProperty', 17
+  attributes, of Fitting classes, 21
+    \sub of Fitting sets, 21
+    \sub of formation, 15
+    \sub of group classes, 10
+    \sub of primitive solvable group, 12
+    \sub of Schunck class, 11
 \letter B
-  `Basis', 10
-  `Boundary', 10
-  `BoundaryFunction', 11
+  `Basis', 11
+  `Boundary', 11
+  `BoundaryFunction', 12
 \letter C
-  Carter subgroup, 23
-  `Characteristic', 9
-  `CharacteristicSubgroups', 14
-  `Class', 4
-  class, of all $\pi $-groups, 23
-    \sub of all $p$-groups, 23
-    \sub of all abelian groups, 23
-    \sub of all abelian groups of bounded exponent, 23
-    \sub of all nilpotent groups, 23
-    \sub of all supersolvable groups, 23
-    \sub of all trivial groups, 23
-  classes, creation of, 4
-    \sub properties of, 5
-  closure properties, of group classes, 7
-  comparison, for classes, 5
-  `Complement', 5
-  `ContainsTrivialGroup', 7
-  `CoveringSubgroup', 11
-  CRISP, 3
+  Carter subgroup, 24
+  `Characteristic', 10
+  `CharacteristicSubgroups', 15
+  `Class', 5
+  class, of all $\pi $-groups, 24
+    \sub of all $p$-groups, 24
+    \sub of all abelian groups, 24
+    \sub of all abelian groups of bounded exponent, 24
+    \sub of all nilpotent groups, 24
+    \sub of all supersolvable groups, 24
+    \sub of all trivial groups, 24
+  classes, creation of, 5
+    \sub properties of, 6
+  closure properties, of group classes, 8
+  comparison, for classes, 6
+  `Complement', 6
+  `ContainsTrivialGroup', 8
+  `CoveringSubgroup', 12
+  CRISP, 4
 \letter D
-  `Difference', 5
-  `Display', for classes, 4
+  `Difference', 6
+  `Display', for classes, 5
 \letter E
-  element test, for classes, 4
-  equality, for classes, 5
+  element test, for classes, 5
+  equality, for classes, 6
 \letter F
-  factor groups, with properties inherited by factor groups, 15
-  Fitting classes, attributes of, 20
-    \sub creating, 17
-    \sub creating Fitting formations, 18
-    \sub operations for, 20
-  Fitting formations, creating, 18
-  Fitting sets, attributes of, 20
+  factor groups, with properties inherited by factor groups, 16
+  Fitting classes, attributes of, 21
     \sub creating, 18
-    \sub operations for, 20
-  `FittingClass', 17
-  `FittingFormation', 18
-  `FittingFormationProduct', 13, 17
-  `FittingProduct', 17
-  `FittingSet', 18
-  FORMAT package, 3
-  `FormationProduct', 13
-  formations, attributes for, 14
-    \sub creating, 12
-    \sub creating Fitting formations, 18
-    \sub operations for, 14
+    \sub creating Fitting formations, 19
+    \sub operations for, 21
+  Fitting formations, creating, 19
+  Fitting sets, attributes of, 21
+    \sub creating, 19
+    \sub operations for, 21
+  `FittingClass', 18
+  `FittingFormation', 19
+  `FittingFormationProduct', 14, 18
+  `FittingProduct', 18
+  `FittingSet', 19
+  FORMAT package, 4
+  `FormationProduct', 14
+  formations, attributes for, 15
+    \sub creating, 13
+    \sub creating Fitting formations, 19
+    \sub operations for, 15
 \letter G
-  group classes, attributes for, 9
-    \sub closure properties of, 7
-    \sub creation of, 6
-    \sub properties of, 8
-  `GroupClass', 6
+  group classes, attributes for, 10
+    \sub closure properties of, 8
+    \sub creation of, 7
+    \sub properties of, 9
+  `GroupClass', 7
 \letter H
-  `HasIsFittingClass', 8
-  `HasIsFittingFormation', 9
-  `HasIsFormation', 8
-  `HasIsOrdinaryFormation', 8
-  `HasIsSaturatedFittingFormation', 9
-  `HasIsSaturatedFormation', 9
+  `HasIsFittingClass', 9
+  `HasIsFittingFormation', 10
+  `HasIsFormation', 9
+  `HasIsOrdinaryFormation', 9
+  `HasIsSaturatedFittingFormation', 10
+  `HasIsSaturatedFormation', 10
 \letter I
-  `ImageFittingSet', 19
-  `in', for classes, 4
-  `Injector', 20
-  `InjectorFunction', 20
-  `Intersection', of classes, 5
-    \sub of Fitting sets, 19
-    \sub of group classes, 7
-  `INTERSECTION_LIMIT', 5
-  invariant normal subgroups, with properties inherited by normal subgroups, 22
-    \sub with properties inherited by normal subgroups above, 15
-  `IsClass', 4
-  `IsDirectProductClosed', 8
-  `IsEmpty', for classes, 5
-  `IsFittingClass', 8
-  `IsFittingFormation', 9
-  `IsFittingSet', 18
-  `IsFormation', 9
-  `IsGroupClass', 7
-  `IsNormalProductClosed', 8
-  `IsNormalSubgroupClosed', 8
-  `IsOrdinaryFormation', 9
-  `IsPrimitiveSolvable', 11
-  `IsPrimitiveSolvableGroup', 11
-  `IsQuotientClosed', 8
-  `IsResiduallyClosed', 8
-  `IsSaturated', 8
-  `IsSaturatedFittingFormation', 9
-  `IsSaturatedFormation', 9
-  `IsSchunckClass', 8
-  `IsSubgroupClosed', 8
-\letter L
-  lattice operations, for classes, 5
-  `LocalDefinitionFunction', 14
-\letter M
-  `MemberFunction', 5
-  membership test, for classes, 4
-  minimal normal subgroups, 21
-\letter N
-  nilpotent groups, class of, 23
-  `NilpotentProjector', 23
-  normal subgroups, with properties inherited by normal subgroups, 22
-    \sub with properties inherited by normal subgroups above, 15
-  `NormalSubgroups', 14
-\letter O
-  `OneInvariantSubgroupMaxWrtNProperty', 22
-  `OneInvariantSubgroupMinWrtQProperty', 15
-  `OneNormalSubgroupMinWrtQProperty', 16
-  `OneNormalSubgroupWithNProperty', 22
-  operations, for Fitting classes, 20
-    \sub for Fitting sets, 20
-    \sub for formation, 14
-    \sub for Schunck class, 10
-  `OrdinaryFormation', 12
-\letter P
-  `PGroups', 23
-  `PiGroups', 23
-  `PreImageFittingSet', 19
-  primes, set of all, 24
-  primitive solvable group, attributes of, 11
-  `Print', for classes, 4
-  `Projector', 11
-  `ProjectorFunction', 11
-  properties, of classes, 5
+  `ImageFittingSet', 20
+  `in', for classes, 5
+  `Injector', 21
+  `InjectorFunction', 21
+  `Intersection', of classes, 6
+    \sub of Fitting sets, 20
     \sub of group classes, 8
-  `PSocle', 21
-  `PSocleComponents', 21
+  `INTERSECTION_LIMIT', 6
+  invariant normal subgroups, with properties inherited by normal subgroups, 23
+    \sub with properties inherited by normal subgroups above, 16
+  `IsClass', 5
+  `IsDirectProductClosed', 9
+  `IsEmpty', for classes, 6
+  `IsFittingClass', 9
+  `IsFittingFormation', 10
+  `IsFittingSet', 19
+  `IsFormation', 10
+  `IsGroupClass', 8
+  `IsNormalProductClosed', 9
+  `IsNormalSubgroupClosed', 9
+  `IsOrdinaryFormation', 10
+  `IsPrimitiveSolvable', 12
+  `IsPrimitiveSolvableGroup', 12
+  `IsQuotientClosed', 9
+  `IsResiduallyClosed', 9
+  `IsSaturated', 9
+  `IsSaturatedFittingFormation', 10
+  `IsSaturatedFormation', 10
+  `IsSchunckClass', 9
+  `IsSubgroupClosed', 9
+\letter L
+  lattice operations, for classes, 6
+  `LocalDefinitionFunction', 15
+\letter M
+  `MemberFunction', 6
+  membership test, for classes, 5
+  minimal normal subgroups, 22
+\letter N
+  nilpotent groups, class of, 24
+  `NilpotentProjector', 24
+  normal subgroups, with properties inherited by normal subgroups, 23
+    \sub with properties inherited by normal subgroups above, 16
+  `NormalSubgroups', 15
+\letter O
+  `OneInvariantSubgroupMaxWrtNProperty', 23
+  `OneInvariantSubgroupMinWrtQProperty', 16
+  `OneNormalSubgroupMinWrtQProperty', 17
+  `OneNormalSubgroupWithNProperty', 23
+  operations, for Fitting classes, 21
+    \sub for Fitting sets, 21
+    \sub for formation, 15
+    \sub for Schunck class, 11
+  `OrdinaryFormation', 13
+\letter P
+  `PGroups', 24
+  `PiGroups', 24
+  `PreImageFittingSet', 20
+  primes, set of all, 25
+  primitive solvable group, attributes of, 12
+  `Print', for classes, 5
+  `Projector', 12
+  `ProjectorFunction', 12
+  properties, of classes, 6
+    \sub of group classes, 9
+  `PSocle', 22
+  `PSocleComponents', 22
 \letter Q
-  quotient groups, with properties inherited by quotients, 15
+  quotient groups, with properties inherited by quotients, 16
 \letter R
-  `Radical', 20
-  `RadicalFunction', 20
-  `Residual', 14
-  `ResidualFunction', 14
-  `Residuum', 14
+  `Radical', 21
+  `RadicalFunction', 21
+  `Residual', 15
+  `ResidualFunction', 15
+  `Residuum', 15
 \letter S
-  `SaturatedFittingFormation', 18
-  `SaturatedFormation', 12
-  Schunck class, attributes of, 10
-    \sub creating, 10
-    \sub operations for, 10
-  `SchunckClass', 10
-  set, of all primes, 24
-  `SetIsFittingClass', 8
-  `SetIsFittingFormation', 9
-  `SetIsFormation', 9
-  `SetIsOrdinaryFormation', 9
-  `SetIsSaturatedFittingFormation', 9
-  `SetIsSaturatedFormation', 9
-  `Socle', 21
-  `SocleComplement', 12
-  `SocleComponents', 21
-  `SolvableSocle', 21
-  `SolvableSocleComponents', 21
-  supersolvable groups, class of, 23
-  `SupersolvableProjector', 23
+  `SaturatedFittingFormation', 19
+  `SaturatedFormation', 13
+  Schunck class, attributes of, 11
+    \sub creating, 11
+    \sub operations for, 11
+  `SchunckClass', 11
+  set, of all primes, 25
+  `SetIsFittingClass', 9
+  `SetIsFittingFormation', 10
+  `SetIsFormation', 10
+  `SetIsOrdinaryFormation', 10
+  `SetIsSaturatedFittingFormation', 10
+  `SetIsSaturatedFormation', 10
+  `Socle', 22
+  `SocleComplement', 13
+  `SocleComponents', 22
+  `SolvableSocle', 22
+  `SolvableSocleComponents', 22
+  supersolvable groups, class of, 24
+  `SupersolvableProjector', 24
 \letter T
-  trivial groups, class of, 23
+  trivial groups, class of, 24
 \letter U
-  `Union', 5
+  `Union', 6
 \letter V
-  `View', for classes, 4
+  `View', for classes, 5

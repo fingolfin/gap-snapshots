@@ -343,3 +343,11 @@
   [30X    [33X[0;6YBetter   detection   of  UTF-8  terminal  encoding  on  some  systems.
         [Suggested by Andries Brouwer][133X
   
+  
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.4 (February 2013)[133X[101X
+  
+  [33X[0;0YThis  release  was prepared immediately after [5XGAP[105X 4.7.3 to revert the fix of
+  the  error  handling  for  the  single  quote  at  the end of an input line,
+  contained  in  [5XGAP[105X  4.7.3. It happened that (only on Windows) the fix caused
+  error messages in one of the packages.[133X
+  
