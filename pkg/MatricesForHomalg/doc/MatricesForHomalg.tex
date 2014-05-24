@@ -98,8 +98,8 @@
 {\Huge \textbf{Matrices for the \textsf{homalg} project\mbox{}}}\\
 \vfill
 
-{\Huge Version 2014.01.29\mbox{}}\\[1cm]
-{January 2014\mbox{}}\\[1cm]
+{\Huge Version 2014.04.08\mbox{}}\\[1cm]
+{April 2014\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{Mohamed Barakat\\
     \mbox{}}}\\
@@ -2181,22 +2181,9 @@ a \textsf{homalg} ring
 
  The \textsf{GAP} category of \textsf{homalg} matrices. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Code]
-  if CompareVersionNumbers( "4.4.99", VERSION ) then
-      
-      ## GAP 4.4 style:
-      DeclareCategory( "IsHomalgMatrix",
-              IsAdditiveElementWithInverse and
-              IsMultiplicativeElementWithInverse and
-              IsAttributeStoringRep );
-      
-  else
-      
-      ## GAP 4.5 style: Max's matrix category
-      DeclareCategory( "IsHomalgMatrix",
-              IsMatrixObj and
-              IsAttributeStoringRep );
-      
-  fi;
+  DeclareCategory( "IsHomalgMatrix",
+          IsMatrixObj and
+          IsAttributeStoringRep );
 \end{Verbatim}
  }
 

@@ -596,11 +596,10 @@
   [29X[2XDegreeOfTransformationCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
-  [33X[0;0YThe  [13Xdegree[113X  of  a transformation [10Xf[110X is the largest value such that [10Xn^f<>n[110X or
-  [10Xi^f=n[110X  for  some  [10Xi<>n[110X.  Equivalently, the degree of a transformation is the
-  least value [10Xn[110X such that [10X[1..n][110X is fixed setwise by [10Xf[110X.[133X
-  
-  [33X[0;0YThe degree a collection of transformations [3Xcoll[103X is the maximum degree of any
+  [33X[0;0YThe  [13Xdegree[113X  of  a transformation [3Xf[103X is the largest value such that [10Xn^[3Xf[103X[10X<>n[110X or
+  [10Xi^[3Xf[103X[10X=n[110X  for  some  [10Xi<>n[110X.  Equivalently, the degree of a transformation is the
+  least  value [10Xn[110X such that [10X[n+1,n+2,...][110X is fixed pointwise by [3Xf[103X. The degree a
+  collection   of   transformations   [3Xcoll[103X   is  the  maximum  degree  of  any
   transformation in [3Xcoll[103X.[133X
   
   [4X[32X  Example  [32X[104X

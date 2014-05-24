@@ -312,7 +312,7 @@
         rational quaternion algebras (contribution by Allen Herman).[133X
   
   
-  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.3 (February 2013)[133X[101X
+  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.3 (February 2014)[133X[101X
   
   [33X[0;0YFixed bugs which could lead to incorrect results:[133X
   
@@ -344,10 +344,65 @@
         [Suggested by Andries Brouwer][133X
   
   
-  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.4 (February 2013)[133X[101X
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.4 (February 2014)[133X[101X
   
   [33X[0;0YThis  release  was prepared immediately after [5XGAP[105X 4.7.3 to revert the fix of
   the  error  handling  for  the  single  quote  at  the end of an input line,
   contained  in  [5XGAP[105X  4.7.3. It happened that (only on Windows) the fix caused
   error messages in one of the packages.[133X
+  
+  
+  [1X2.4 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.5 (May 2014)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6Y[2XInstallValue[102X ([14XReference: InstallValue[114X) cannot handle immediate values,
+        characters  or booleans for technical reasons. A check for such values
+        was  introduced  to  trigger  an  error  message and prevent incorrect
+        results caused by this. [Reported by Sebastian Gutsche][133X
+  
+  [30X    [33X[0;6Y[2XKnowsDictionary[102X   ([14XReference:  KnowsDictionary[114X)  and  [2XLookupDictionary[102X
+        ([14XReference:  LookupDictionary[114X) methods for [10XIsListLookupDictionary[110X were
+        using  [2XPositionFirstComponent[102X ([14XReference: PositionFirstComponent[114X); the
+        latter  is  only  valid on sorted lists, but in [10XIsListLookupDictionary[110X
+        the  underlying  list  is  NOT  sorted  in  general,  leading to bogus
+        results.[133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YA      bug      in      [10XDirectProductElementsFamily[110X     which     used
+        [2XCanEasilyCompareElements[102X ([14XReference: CanEasilyCompareElements[114X) instead
+        of [2XCanEasilySortElements[102X ([14XReference: CanEasilySortElements[114X).[133X
+  
+  [30X    [33X[0;6YFixed  wrong  [10XInfolevel[110X  message  that  caused  a  break loop for some
+        automorphism group computations.[133X
+  
+  [30X    [33X[0;6YFixed  an  error  that  sometimes  caused a break loop in [2XHallSubgroup[102X
+        ([14XReference: HallSubgroup[114X). [Reported by Benjamin Sambale][133X
+  
+  [30X    [33X[0;6YFixed  a  rare  error  in computation of conjugacy classes of a finite
+        group   by   homomorphic  images,  providing  fallback  to  a  default
+        algorithm.[133X
+  
+  [30X    [33X[0;6YFixed  an error in the calculation of Frattini subgroup in the case of
+        the trivial radical.[133X
+  
+  [30X    [33X[0;6YSeveral  minor  bugs  were  fixed  in  the  documentation, kernel, and
+        library code for transformations.[133X
+  
+  [30X    [33X[0;6YFixed  errors  in [2XNumberPerfectGroups[102X ([14XReference: NumberPerfectGroups[114X)
+        and [2XNumberPerfectLibraryGroups[102X ([14XReference: NumberPerfectLibraryGroups[114X)
+        not being aware that there are no perfect groups of odd order.[133X
+  
+  [30X    [33X[0;6YRestored  the  ability  to  build  [5XGAP[105X on OS X 10.4 and 10.5 which was
+        accidentally  broken  in  the  previous [5XGAP[105X release by using the build
+        option not supported by these versions.[133X
+  
+  [30X    [33X[0;6YFixed  some  problems  for  ia64 and sparc architectures. [Reported by
+        Bill Allombert and Volker Braun][133X
+  
+  [33X[0;0YNew package added for the redistribution with [5XGAP[105X:[133X
+  
+  [30X    [33X[0;6Y[5Xpermut[105X   package   by   A.Ballester-Bolinches,   E.Cosme-Llópez,   and
+        R.Esteban-Romero to deal with permutability in finite groups.[133X
   

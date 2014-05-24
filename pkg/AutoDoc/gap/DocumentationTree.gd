@@ -6,6 +6,24 @@
 ##
 #############################################################################
 
+######################################
+##
+## Tools
+##
+######################################
+
+DeclareGlobalFunction( "AUTODOC_TREE_NODE_NAME_ITERATOR" );
+
+DeclareGlobalFunction( "AUTODOC_TRANSLATE_CONTEXT" );
+
+DeclareGlobalFunction( "AUTODOC_INSTALL_TREE_SETTERS" );
+
+######################################
+##
+## Categories
+##
+######################################
+
 DeclareCategory( "IsTreeForDocumentation",
                  IsObject );
 
@@ -29,6 +47,9 @@ DeclareAttribute( "ChapterInfo",
 DeclareAttribute( "DummyName",
                   IsTreeForDocumentationNode );
 
+DeclareAttribute( "GroupName",
+                  IsTreeForDocumentationNode );
+
 ######################################
 ##
 ## Constructors
@@ -38,29 +59,11 @@ DeclareAttribute( "DummyName",
 DeclareOperation( "DocumentationTree",
                   [ ] );
 
-DeclareOperation( "DocumentationChapter",
-                  [ IsString ] );
+DeclareOperation( "DocumentationStructurePart",
+                  [ IsTreeForDocumentation, IsList ] );
 
-DeclareOperation( "DocumentationSection",
-                  [ IsString ] );
-
-DeclareOperation( "DocumentationText",
-                  [ IsList, IsList ] );
-
-DeclareOperation( "DocumentationItem",
-                  [ IsRecord ] );
-
-DeclareOperation( "DocumentationDummy",
-                  [ IsString, IsList ] );
-
-DeclareOperation( "DocumentationExample",
-                  [ IsList, IsList ] );
-
-######################################
-##
-## Build methods
-##
-######################################
+DeclareOperation( "DocumentationStructurePart",
+                  [ IsTreeForDocumentation, IsRecord ] );
 
 DeclareOperation( "ChapterInTree",
                   [ IsTreeForDocumentation, IsString ] );
@@ -68,14 +71,56 @@ DeclareOperation( "ChapterInTree",
 DeclareOperation( "SectionInTree",
                   [ IsTreeForDocumentation, IsString, IsString ] );
 
-DeclareOperation( "GroupInTree",
+DeclareOperation( "SubsectionInTree",
+                  [ IsTreeForDocumentation, IsString, IsString, IsString ] );
+
+DeclareOperation( "DocumentationExample",
+                  [ IsTreeForDocumentation, IsList ] );
+
+DeclareOperation( "DocumentationExample",
+                  [ IsTreeForDocumentation ] );
+
+DeclareOperation( "DocumentationDummy",
+                  [ IsTreeForDocumentation, IsString, IsList ] );
+
+DeclareOperation( "DocumentationDummy",
                   [ IsTreeForDocumentation, IsString ] );
+
+DeclareOperation( "DocumentationManItem",
+                  [ IsTreeForDocumentation ] );
+
+DeclareOperation( "SetManItemToDescription",
+                  [ IsTreeForDocumentationNode ] );
+
+DeclareOperation( "SetManItemToReturnValue",
+                  [ IsTreeForDocumentationNode ] );
+
+DeclareOperation( "DocumentationGroup",
+                  [ IsTreeForDocumentation, IsString ] );
+
+DeclareOperation( "DocumentationGroup",
+                  [ IsTreeForDocumentation, IsString, IsList ] );
 
 DeclareOperation( "Add",
                   [ IsTreeForDocumentation, IsTreeForDocumentationNode ] );
 
+DeclareOperation( "Add",
+                  [ IsTreeForDocumentationNode, IsTreeForDocumentationNode ] );
+
+DeclareOperation( "Add",
+                  [ IsTreeForDocumentation, IsTreeForDocumentationNode, IsList ] );
+
+DeclareOperation( "Add",
+                  [ IsTreeForDocumentation, IsTreeForDocumentationNode, IsString ] );
+
+DeclareOperation( "Add",
+                  [ IsTreeForDocumentationNode, IsString ] );
+
 DeclareOperation( "MergeGroupEntries",
                   [ IsTreeForDocumentationNode, IsTreeForDocumentationNode ] );
+
+DeclareOperation( "Add",
+                  [ IsTreeForDocumentation, IsString ] );
 
 #######################################
 ##
@@ -90,7 +135,7 @@ DeclareOperation( "WriteDocumentation",
                   [ IsTreeForDocumentationNode, IsStream ] );
 
 DeclareOperation( "WriteDocumentation",
-                  [ IsTreeForDocumentationNode, IsStream, IsString ] );
+                  [ IsList, IsStream ] );
 
 DeclareOperation( "WriteDocumentation",
                   [ IsTreeForDocumentationNode, IsStream, IsDirectory ] );

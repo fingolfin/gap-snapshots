@@ -13,7 +13,6 @@
 <TableOfContents/>
 <Body>
 <Index>&AutoDoc;</Index>
-<#Include SYSTEM "intro.xml">
 <#Include SYSTEM "Tutorials.xml">
 <#Include SYSTEM "Comments.xml">
 <#Include SYSTEM "AutoDocMainFile.xml">

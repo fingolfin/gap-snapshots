@@ -1215,9 +1215,10 @@
   of [2XFlushCaches[102X ([14X79.18-11[114X) will assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.[133X
   
   [33X[0;0Y[2XInstallValue[102X  does  [13Xnot[113X  work  if  [3Xvalue[103X  is  an  [21Ximmediate object[121X, i.e., an
-  internally  represented  small integer or finite field element. Furthermore,
-  [2XInstallFlushableValue[102X  works only if [3Xvalue[103X is a list or a record. (Note that
-  [2XInstallFlushableValue[102X makes sense only for [13Xmutable[113X global variables.)[133X
+  internally  represented small integer or finite field element. It also fails
+  for  booleans.  Furthermore,  [2XInstallFlushableValue[102X works only if [3Xvalue[103X is a
+  list  or  a  record.  (Note  that [2XInstallFlushableValue[102X makes sense only for
+  [13Xmutable[113X global variables.)[133X
   
   [1X79.18-10 DeclareSynonym[101X
   

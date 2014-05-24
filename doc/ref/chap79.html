@@ -927,7 +927,7 @@ InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var>. <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.18-11</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>.</p>
 
-<p><code class="func">InstallValue</code> does <em>not</em> work if <var class="Arg">value</var> is an "immediate object", i.e., an internally represented small integer or finite field element. Furthermore, <code class="func">InstallFlushableValue</code> works only if <var class="Arg">value</var> is a list or a record. (Note that <code class="func">InstallFlushableValue</code> makes sense only for <em>mutable</em> global variables.)</p>
+<p><code class="func">InstallValue</code> does <em>not</em> work if <var class="Arg">value</var> is an "immediate object", i.e., an internally represented small integer or finite field element. It also fails for booleans. Furthermore, <code class="func">InstallFlushableValue</code> works only if <var class="Arg">value</var> is a list or a record. (Note that <code class="func">InstallFlushableValue</code> makes sense only for <em>mutable</em> global variables.)</p>
 
 <p><a id="X851654DA87616207" name="X851654DA87616207"></a></p>
 

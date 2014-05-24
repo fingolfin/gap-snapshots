@@ -4,8 +4,8 @@
 ##
 #Y  Copyright (C) 2006-2007, Lehrstuhl D für Mathematik, RWTH Aachen, Germany
 ##
-##  This file is empty for the moment, because we bind everything to the
-##  kernel generated record 'NCurses'.
+##  Note that the kernel has generated the record 'NCurses'.
 ##  
 
+NCurses.CTRL := function(c) return CharInt(IntChar(c) mod 32); end;
 

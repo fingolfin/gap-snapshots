@@ -7,8 +7,9 @@
 \makelabel{changes:GAP 4.7.2 (December 2013)}{2.1}{X78594AB2871B379E}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.7}{2.1.1}{X8346E4677FA78976}
 \makelabel{changes:New and updated packages since GAP 4.6.5}{2.1.2}{X7EF0C705829B5D2B}
-\makelabel{changes:GAP 4.7.3 (February 2013)}{2.2}{X809E635D8028D2ED}
-\makelabel{changes:GAP 4.7.4 (February 2013)}{2.3}{X792E73AC82BB63B5}
+\makelabel{changes:GAP 4.7.3 (February 2014)}{2.2}{X79782A077CCDDD27}
+\makelabel{changes:GAP 4.7.4 (February 2014)}{2.3}{X80C83AF67E5E6C7F}
+\makelabel{changes:GAP 4.7.5 (May 2014)}{2.4}{X864C03527D410BF8}
 \makelabel{changes:Changes between GAP 4.5 and GAP 4.6}{3}{X8175857F79C8AD8E}
 \makelabel{changes:GAP 4.6.2 (February 2013)}{3.1}{X837BB2577D478E55}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.6}{3.1.1}{X8436976E7E7ED84B}

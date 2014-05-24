@@ -25,3 +25,7 @@ ReadPackage( "ToolsForHomalg", "gap/ToDoLists.gi" );
 
 
 ReadPackage( "ToolsForHomalg", "gap/Trees.gi" );
+
+ReadPackage( "ToolsForHomalg", "gap/ToDoListWeakPointer.gi" );
+
+ReadPackage( "ToolsForHomalg", "gap/GenericView.gi" );

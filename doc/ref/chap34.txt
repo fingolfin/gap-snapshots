@@ -183,7 +183,7 @@
   
   [33X[0;0Yfor  an  ordering  [3Xord[103X on a family of associative words, returns [9Xtrue[109X if and
   only if the ordering is a reduction ordering. An ordering [3Xord[103X is a reduction
-  ordering if it is founded and translation invariant.[133X
+  ordering if it is well founded and translation invariant.[133X
   
   [1X34.4-4 OrderingOnGenerators[101X
   

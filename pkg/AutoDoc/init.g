@@ -1,4 +1,4 @@
-#############################################################################
+  #############################################################################
 ##
 ##  init.g                                    AutoDoc package
 ##
@@ -18,8 +18,10 @@ ReadPackage( "AutoDoc", "gap/AutoDocMainFunction.gd" );
 
 ReadPackage( "AutoDoc", "gap/ToolFunctions.gd" );
 
-ReadPackage( "AutoDoc", "gap/CreateDocumentationEntries.gd" );
-
-ReadPackage( "AutoDoc", "gap/DeclareWithDocumentation.gd" );
-
 ReadPackage( "AutoDoc", "gap/Magic.gd" );
+
+ReadPackage( "AutoDoc", "gap/ContextObject.gd" );
+
+ReadPackage( "AutoDoc", "gap/Markdown.gd" );
+
+ReadPackage( "AutoDoc", "gap/compat.gi" );

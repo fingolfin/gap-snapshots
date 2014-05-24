@@ -3,10 +3,10 @@
                                      [1X[5XBrowse[105X[101X
   
   
-                               ( Version 1.8.3 )
+                               ( Version 1.8.5 )
   
   
-                                  October 2013
+                                 February 2014
   
   
                                  Thomas Breuer
@@ -24,7 +24,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2006-2013 by Thomas Breuer and Frank Lübeck[133X
+  [33X[0;0Y© 2006-2014 by Thomas Breuer and Frank Lübeck[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 3 or later, see [7Xhttp://www.gnu.org/licenses[107X.[133X

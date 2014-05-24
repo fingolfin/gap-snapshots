@@ -96,7 +96,7 @@ true
 gap> BrowseData.IsBrowseTableCellData( [] );
 true
 
-##  doc/../lib/browse.gi (1996-2002)
+##  doc/../lib/browse.gi (1997-2003)
 gap> BrowseData.BlockEntry( "abc", 3, 5 );
 [ "     ", "  abc", "     " ]
 gap> BrowseData.BlockEntry( rec( rows:= [ "ab", "cd" ],
@@ -185,7 +185,7 @@ gap> xpl4:= rec(
 gap> BrowseData.IsBrowseTable( xpl4 );
 true
 
-##  doc/../lib/browse.gi (5417-5428)
+##  doc/../lib/browse.gi (5418-5429)
 gap> xpl1.work.ShowHelp:= BrowseData.ShowHelpPager;;
 gap> BrowseData.SetReplay( "?Q" );
 gap> Unbind( xpl1.dynamic );

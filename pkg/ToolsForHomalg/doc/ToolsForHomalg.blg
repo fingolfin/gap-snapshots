@@ -1,11 +1,21 @@
-This is BibTeX, Version 0.99d (TeX Live 2012/Arch Linux)
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ToolsForHomalg.aux
 The style file: alpha.bst
-Database file #1: ToolsForHomalgBib.xml.bib
+Database file #1: ToolsForHomalg.bib.bib
+I was expecting a `,' or a `}'---line 14 of file ToolsForHomalg.bib.bib
+ :    
+ :    note = {http://homalg.math.rwth-aachen.de/maple/homalg_mtns06.pdf}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 23 of file ToolsForHomalg.bib.bib
+ :    
+ :    note = {http://homalg.math.rwth-aachen.de/maple/homalg_eaca06.pdf}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
 You've used 1 entry,
             2543 wiz_defined-function locations,
-            563 strings with 4569 characters,
+            563 strings with 4566 characters,
 and the built_in function-call counts, 282 in all, are:
 = -- 25
 > -- 8
@@ -44,3 +54,4 @@ warning$ -- 0
 while$ -- 2
 width$ -- 2
 write$ -- 14
+(There were 2 error messages)

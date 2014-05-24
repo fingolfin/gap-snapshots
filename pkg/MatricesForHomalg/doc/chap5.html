@@ -172,22 +172,9 @@
 
 
 <div class="example"><pre>
-if CompareVersionNumbers( "4.4.99", VERSION ) then
-    
-    ## GAP 4.4 style:
-    DeclareCategory( "IsHomalgMatrix",
-            IsAdditiveElementWithInverse and
-            IsMultiplicativeElementWithInverse and
-            IsAttributeStoringRep );
-    
-else
-    
-    ## GAP 4.5 style: Max's matrix category
-    DeclareCategory( "IsHomalgMatrix",
-            IsMatrixObj and
-            IsAttributeStoringRep );
-    
-fi;
+DeclareCategory( "IsHomalgMatrix",
+        IsMatrixObj and
+        IsAttributeStoringRep );
 </pre></div>
 
 <p><a id="X7FE94FC47F460E35" name="X7FE94FC47F460E35"></a></p>

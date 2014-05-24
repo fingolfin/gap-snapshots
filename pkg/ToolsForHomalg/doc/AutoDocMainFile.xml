@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<!--
- This is an automatically generated file. 
- -->
-<#Include SYSTEM "ToDo-list.xml"><#Include SYSTEM "Trees.xml"><#Include SYSTEM "Basics.xml"><#Include SYSTEM "Pointers.xml"><#Include SYSTEM "Tools.xml">
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "Chapter_ToDo-list.xml">
+<#Include SYSTEM "Chapter_ToolsForHomalg_automatic_generated_documentation.xml">
+<#Include SYSTEM "Chapter_Basics.xml">
+<#Include SYSTEM "Chapter_Pointers.xml">
+<#Include SYSTEM "Chapter_Tools.xml">
+<#Include SYSTEM "Chapter_Trees.xml">

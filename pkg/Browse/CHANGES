@@ -1,6 +1,16 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.5
+  - "Further improvement" of the Ctrl-M issue from 1.8.4.
+  - Fixed two problems with non-breakable spaces in gap-publishednicer.bib.
+  
+1.8.4
+  - Fixed the handling of the 'version' component of database attributes;
+    before the fix, it was possible that an attribute was regarded as
+    up-to-date, without checking the version number in the data file.
+  - Avoid literal Ctrl-M characters to work around a bug in Windows 8.
+
 1.8.3
   - The new user preference 'EnableMouseEvents' sets the default behaviour
     for the GAP session.

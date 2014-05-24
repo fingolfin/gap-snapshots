@@ -1,3 +1,4 @@
+
 SetPackageInfo( rec(
 
 PackageName := "AutoDoc",
@@ -5,11 +6,11 @@ PackageName := "AutoDoc",
 Subtitle := "Generate documentation from GAP source code",
 
 Version := Maximum( [
-  "2013.09.20", ## Sebas' version
+  "2014.03.04", ## Sebas' version
 ## This line prevents merge conflicts
-  "2013.08.19", ## Max' version
+  "2014.03.27", ## Max' version
 ## This line prevents merge conflicts
-  "2013.08.08.23:06", ## Mohamed's version
+  "2013.11.01", ## Mohamed's version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -93,7 +94,7 @@ Keywords := [ "Automatic documentation, GAP, GAPDoc" ],
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-                    "&copyright; 2012-2013 by Sebastian Gutsche and Max Horn<P/>\n\n",
+                    "&copyright; 2012-2014 by Sebastian Gutsche and Max Horn<P/>\n\n",
                     "This package may be distributed under the terms and conditions of the\n",
                     "GNU Public License Version 2.\n"
                 ),

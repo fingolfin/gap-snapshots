@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.19)  29 JAN 2014 18:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.3.23)  13 APR 2014 13:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **MatricesForHomalg
 (./MatricesForHomalg.tex
 LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+Babel <3.9j> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/size11.clo
@@ -909,21 +909,21 @@ Chapter 5.
 [26
 
 ] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40]
-[41] [42] [43] [44] [45]
-Underfull \hbox (badness 8189) in paragraph at lines 4009--4010
+[41] [42] [43] [44]
+Underfull \hbox (badness 8189) in paragraph at lines 3996--3997
 []\T1/ptm/m/n/10.95 Like \T1/cmtt/m/n/10.95 BasisOfRowModule\T1/ptm/m/n/10.95 (
  [] ) but where the ma-trix \T1/cmtt/m/n/10.95 SyzygiesGeneratorsOfRows\T1/ptm/
 m/n/10.95 (
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 4054--4055
+[45]
+Underfull \hbox (badness 10000) in paragraph at lines 4041--4042
 []\T1/ptm/m/n/10.95 Like \T1/cmtt/m/n/10.95 SyzygiesGeneratorsOfColumns\T1/ptm/
 m/n/10.95 ( [] ) but where the ma-trix
  []
 
 
-Underfull \hbox (badness 3098) in paragraph at lines 4054--4055
+Underfull \hbox (badness 3098) in paragraph at lines 4041--4042
 \T1/cmtt/m/n/10.95 SyzygiesGeneratorsOfColumns\T1/ptm/m/n/10.95 ( \T1/cmtt/m/n/
 10.95 ReducedSyzygiesGeneratorsOfColumns\T1/ptm/m/n/10.95 ( [] ) ) con-tains
  []
@@ -939,9 +939,9 @@ Appendix A.
 ] [55]
 Appendix B.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 4683.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 4670.
 
-Underfull \hbox (badness 1924) in paragraph at lines 4716--4717
+Underfull \hbox (badness 1924) in paragraph at lines 4703--4704
 []\T1/ptm/m/n/10.95 Let $\OML/ztmcm/m/it/10.95 R \OT1/ztmcm/m/n/10.95 :=$ \T1/c
 mtt/m/n/10.95 HomalgRing$\OT1/ztmcm/m/n/10.95 ([])$ \T1/ptm/m/n/10.95 and $\OML
 /ztmcm/m/it/10.95 RP \OT1/ztmcm/m/n/10.95 :=$ \T1/cmtt/m/n/10.95 homalgTable$\O
@@ -950,7 +950,7 @@ T1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 R\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/1
  []
 
 
-Underfull \hbox (badness 1314) in paragraph at lines 4716--4717
+Underfull \hbox (badness 1314) in paragraph at lines 4703--4704
 \T1/ptm/m/n/10.95 nent $\OML/ztmcm/m/it/10.95 RP$\T1/ptm/m/n/10.95 !.\T1/cmtt/m
 /n/10.95 InitialIdentityMatrix \T1/ptm/m/n/10.95 is bound then the method \T1/c
 mtt/m/n/10.95 Eval \T1/ptm/m/n/10.95 ([][]C.4.2[][]) re-sets the fil-ter
@@ -959,7 +959,7 @@ mtt/m/n/10.95 Eval \T1/ptm/m/n/10.95 ([][]C.4.2[][]) re-sets the fil-ter
 [56
 
 ] [57] [58] [59] [60] [61] [62] [63] [64] [65]
-Underfull \hbox (badness 3375) in paragraph at lines 5380--5381
+Underfull \hbox (badness 3375) in paragraph at lines 5367--5368
 []\T1/ptm/m/n/10.95 Let $\OML/ztmcm/m/it/10.95 R \OT1/ztmcm/m/n/10.95 :=$ \T1/c
 mtt/m/n/10.95 HomalgRing$\OT1/ztmcm/m/n/10.95 ([])$ \T1/ptm/m/n/10.95 and $\OML
 /ztmcm/m/it/10.95 RP \OT1/ztmcm/m/n/10.95 :=$ \T1/cmtt/m/n/10.95 homalgTable$\O
@@ -968,20 +968,20 @@ T1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 R\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/1
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5380--5381
+Underfull \hbox (badness 10000) in paragraph at lines 5367--5368
 \T1/ptm/m/n/10.95 po-nent $\OML/ztmcm/m/it/10.95 RP$\T1/ptm/m/n/10.95 !.\T1/cmt
 t/m/n/10.95 GetColumnIndependentUnitPositions \T1/ptm/m/n/10.95 is bound then t
 he stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5380--5381
+Underfull \hbox (badness 10000) in paragraph at lines 5367--5368
 \T1/ptm/m/n/10.95 of the op-er-a-tion \T1/cmtt/m/n/10.95 GetColumnIndependentUn
 itPositions \T1/ptm/m/n/10.95 ([][]5.5.18[][]) shown be-low re-turns
  []
 
 [66]
-Underfull \hbox (badness 3375) in paragraph at lines 5455--5456
+Underfull \hbox (badness 3375) in paragraph at lines 5442--5443
 []\T1/ptm/m/n/10.95 Let $\OML/ztmcm/m/it/10.95 R \OT1/ztmcm/m/n/10.95 :=$ \T1/c
 mtt/m/n/10.95 HomalgRing$\OT1/ztmcm/m/n/10.95 ([])$ \T1/ptm/m/n/10.95 and $\OML
 /ztmcm/m/it/10.95 RP \OT1/ztmcm/m/n/10.95 :=$ \T1/cmtt/m/n/10.95 homalgTable$\O
@@ -990,20 +990,20 @@ T1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 R\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/1
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5455--5456
+Underfull \hbox (badness 10000) in paragraph at lines 5442--5443
 \T1/ptm/m/n/10.95 po-nent $\OML/ztmcm/m/it/10.95 RP$\T1/ptm/m/n/10.95 !.\T1/cmt
 t/m/n/10.95 GetRowIndependentUnitPositions \T1/ptm/m/n/10.95 is bound then the 
 stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5455--5456
+Underfull \hbox (badness 10000) in paragraph at lines 5442--5443
 \T1/ptm/m/n/10.95 of the op-er-a-tion \T1/cmtt/m/n/10.95 GetRowIndependentUnitP
 ositions \T1/ptm/m/n/10.95 ([][]5.5.19[][]) shown be-low re-turns
  []
 
 [67] [68]
-Underfull \hbox (badness 3375) in paragraph at lines 5585--5586
+Underfull \hbox (badness 3375) in paragraph at lines 5572--5573
 []\T1/ptm/m/n/10.95 Let $\OML/ztmcm/m/it/10.95 R \OT1/ztmcm/m/n/10.95 :=$ \T1/c
 mtt/m/n/10.95 HomalgRing$\OT1/ztmcm/m/n/10.95 ([])$ \T1/ptm/m/n/10.95 and $\OML
 /ztmcm/m/it/10.95 RP \OT1/ztmcm/m/n/10.95 :=$ \T1/cmtt/m/n/10.95 homalgTable$\O
@@ -1012,20 +1012,20 @@ T1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 R\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/1
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5585--5586
+Underfull \hbox (badness 10000) in paragraph at lines 5572--5573
 \T1/ptm/m/n/10.95 po-nent $\OML/ztmcm/m/it/10.95 RP$\T1/ptm/m/n/10.95 !.\T1/cmt
 t/m/n/10.95 PositionOfFirstNonZeroEntryPerRow \T1/ptm/m/n/10.95 is bound then t
 he stan-dard method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5585--5586
+Underfull \hbox (badness 10000) in paragraph at lines 5572--5573
 \T1/ptm/m/n/10.95 of the at-tribute \T1/cmtt/m/n/10.95 PositionOfFirstNonZeroEn
 tryPerRow \T1/ptm/m/n/10.95 ([][]5.4.8[][]) shown be-low re-turns
  []
 
 [69]
-Underfull \hbox (badness 3375) in paragraph at lines 5642--5643
+Underfull \hbox (badness 3375) in paragraph at lines 5629--5630
 []\T1/ptm/m/n/10.95 Let $\OML/ztmcm/m/it/10.95 R \OT1/ztmcm/m/n/10.95 :=$ \T1/c
 mtt/m/n/10.95 HomalgRing$\OT1/ztmcm/m/n/10.95 ([])$ \T1/ptm/m/n/10.95 and $\OML
 /ztmcm/m/it/10.95 RP \OT1/ztmcm/m/n/10.95 :=$ \T1/cmtt/m/n/10.95 homalgTable$\O
@@ -1034,14 +1034,14 @@ T1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 R\OT1/ztmcm/m/n/10.95 )$\T1/ptm/m/n/1
  []
 
 
-Underfull \hbox (badness 2435) in paragraph at lines 5642--5643
+Underfull \hbox (badness 2435) in paragraph at lines 5629--5630
 \T1/ptm/m/n/10.95 po-nent $\OML/ztmcm/m/it/10.95 RP$\T1/ptm/m/n/10.95 !.\T1/cmt
 t/m/n/10.95 PositionOfFirstNonZeroEntryPerColumn \T1/ptm/m/n/10.95 is bound the
 n the stan-dard method
  []
 
 
-Underfull \hbox (badness 6641) in paragraph at lines 5642--5643
+Underfull \hbox (badness 6641) in paragraph at lines 5629--5630
 \T1/ptm/m/n/10.95 of the at-tribute \T1/cmtt/m/n/10.95 PositionOfFirstNonZeroEn
 tryPerColumn \T1/ptm/m/n/10.95 ([][]5.4.9[][]) shown be-low re-turns
  []
@@ -1049,7 +1049,7 @@ tryPerColumn \T1/ptm/m/n/10.95 ([][]5.4.9[][]) shown be-low re-turns
 [70] [71]
 Appendix C.
 
-Underfull \hbox (badness 2057) in paragraph at lines 5734--5735
+Underfull \hbox (badness 2057) in paragraph at lines 5721--5722
 []\T1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \T1/cmtt/m/n/10.
 95 HomalgInitialMatrix \T1/ptm/m/n/10.95 ([][]5.2.1[][]) then the fil-ter
  []
@@ -1057,44 +1057,44 @@ Underfull \hbox (badness 2057) in paragraph at lines 5734--5735
 [72
 
 ]
-Underfull \hbox (badness 1803) in paragraph at lines 5786--5787
+Underfull \hbox (badness 1803) in paragraph at lines 5773--5774
 \T1/ptm/m/n/10.95 fil-ter \T1/cmtt/m/n/10.95 IsInitialIdentityMatrix \T1/ptm/m/
 n/10.95 for [] is set to true and the \T1/cmtt/m/n/10.95 homalgTable \T1/ptm/m/
 n/10.95 func-tion ($\OMS/ztmcm/m/n/10.95 !$
  []
 
 [73] [74] [75]
-Underfull \hbox (badness 4673) in paragraph at lines 5971--5972
+Underfull \hbox (badness 4673) in paragraph at lines 5958--5959
 []\T1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \T1/cmtt/m/n/10.
 95 LeftInverseLazy \T1/ptm/m/n/10.95 ([][]5.5.4[][]) then the fil-ter
  []
 
 [76]
-Underfull \hbox (badness 3646) in paragraph at lines 6005--6006
+Underfull \hbox (badness 3646) in paragraph at lines 5992--5993
 []\T1/ptm/m/n/10.95 In case the ma-trix [] was cre-ated us-ing \T1/cmtt/m/n/10.
 95 RightInverseLazy \T1/ptm/m/n/10.95 ([][]5.5.5[][]) then the fil-ter
  []
 
 [77] [78]
-Underfull \hbox (badness 10000) in paragraph at lines 6132--6133
+Underfull \hbox (badness 10000) in paragraph at lines 6119--6120
 []\T1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \T1/cmtt/m/n/10.95 
 CertainColumns \T1/ptm/m/n/10.95 ([][]5.5.8[][]) then the fil-ter
  []
 
 [79]
-Underfull \hbox (badness 10000) in paragraph at lines 6233--6234
+Underfull \hbox (badness 10000) in paragraph at lines 6220--6221
 []\T1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \T1/cmtt/m/n/10.95 
 UnionOfColumns \T1/ptm/m/n/10.95 ([][]5.5.10[][]) then the fil-ter
  []
 
 [80] [81]
-Underfull \hbox (badness 10000) in paragraph at lines 6350--6351
+Underfull \hbox (badness 10000) in paragraph at lines 6337--6338
 []\T1/ptm/m/n/10.95 In case the ma-trix was cre-ated us-ing \T1/cmtt/m/n/10.95 
 KroneckerMat \T1/ptm/m/n/10.95 ([][]5.5.12[][]) then the fil-ter
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 6350--6351
+Underfull \hbox (badness 1490) in paragraph at lines 6337--6338
 \T1/cmtt/m/n/10.95 HasEvalKroneckerMat \T1/ptm/m/n/10.95 for [] is set to true 
 and the \T1/cmtt/m/n/10.95 homalgTable \T1/ptm/m/n/10.95 func-tion \T1/cmtt/m/n
 /10.95 KroneckerMat
@@ -1107,17 +1107,17 @@ Appendix D.
 ] [88] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100]
 Appendix E.
 
-Underfull \hbox (badness 10000) in paragraph at lines 7669--7674
+Underfull \hbox (badness 10000) in paragraph at lines 7656--7661
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7669--7674
+Underfull \hbox (badness 10000) in paragraph at lines 7656--7661
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7694--7698
+Underfull \hbox (badness 10000) in paragraph at lines 7681--7685
 
  []
 
@@ -1125,21 +1125,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 7694--7698
 
 ] [102]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 7786.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 7773.
 
-Underfull \hbox (badness 10000) in paragraph at lines 7795--7798
+Underfull \hbox (badness 10000) in paragraph at lines 7782--7785
 
  []
 
 
-Overfull \hbox (12.49619pt too wide) in paragraph at lines 7803--7838
+Overfull \hbox (12.49619pt too wide) in paragraph at lines 7790--7825
  [] 
  []
 
 [103] [104]
 Appendix F.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 7940.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 7927.
 [105
 
 ] [106] (./MatricesForHomalg.bbl (./MatricesForHomalg.brf)
@@ -1255,26 +1255,26 @@ bert\T1/ptm/m/n/10.95 -\T1/cmtt/m/n/10.95 Poincare\T1/ptm/m/n/10.95 -
  []
 
 [113])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 8087.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 8087.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 8074.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 8074.
  (./MatricesForHomalg.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 8087.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 8087.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 8074.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 8074.
 
 Package rerunfilecheck Info: File `MatricesForHomalg.out' has not changed.
 (rerunfilecheck)             Checksum: 406B786EFF985AB200D5494D9E4CDC76;4084.
 Package rerunfilecheck Info: File `MatricesForHomalg.brf' has not changed.
 (rerunfilecheck)             Checksum: 54122D2B06F660B764650318E784BF79;252.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8087.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8074.
  ) 
 Here is how much of TeX's memory you used:
  8495 strings out of 493308
  130628 string characters out of 6137822
- 216330 words of memory out of 5000000
+ 215345 words of memory out of 5000000
  10945 multiletter control sequences out of 15000+600000
  93386 words of font info for 108 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 32i,7n,28p,1299b,631s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,7n,28p,1299b,635s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
 live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texl
@@ -1292,7 +1292,7 @@ ts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a
 .pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on MatricesForHomalg.pdf (114 pages, 465978 bytes).
+Output written on MatricesForHomalg.pdf (114 pages, 465186 bytes).
 PDF statistics:
  2255 PDF objects out of 2487 (max. 8388607)
  2101 compressed objects within 22 object streams

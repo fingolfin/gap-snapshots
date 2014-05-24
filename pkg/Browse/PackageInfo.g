@@ -1,9 +1,9 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.3",
-Date := "18/10/2013",
+Version := "1.8.5",
+Date := "20/02/2014",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.3",
+ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.5",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(

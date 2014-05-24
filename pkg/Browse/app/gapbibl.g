@@ -422,7 +422,7 @@ end );
 ##  For categorizing by authors (or by MSC codes), the sort parameter
 ##  <C>"split rows on categorizing"</C> is set to <C>"yes"</C>,
 ##  so the authors (codes) are distributed to different category rows,
-##  hence each entry appears once for each of its authors (MSC codes)
+##  hence each entry appears once for each of its authors (or its MSC codes)
 ##  in the categorized table.
 ##  When a data row or an entry in a data row is selected,
 ##  <Q>click</Q> adds the corresponding bibliographhy entry to the result.
@@ -669,8 +669,12 @@ BindGlobal( "BrowseBibliography", function( arg )
     fi;
 
     # Sort the entries if required.
+    # (If no file argument is given then sort the entries by authors;
+    # this was the behaviour before the source file was sorted.)
     if sortKeyFunction <> fail then
       SortParallel( List( entries, e -> sortKeyFunction( e[1] ) ), entries );
+    elif Length( arg ) = 0 then
+      SortParallel( List( entries, e -> e[1].author ), entries );
     fi;
 
     # Construct a database id enumerator from the contents.

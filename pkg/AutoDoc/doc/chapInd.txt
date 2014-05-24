@@ -2,61 +2,38 @@
   
   [1XIndex[101X
   
-  [10X@Arguments[110X  3.1-3
-  [10X@AutoDoc[110X  3.2-4
-  [10X@BeginGroup[110X  3.2-6
-  [10X@Chapter[110X  3.2-1
-  [10X@ChapterInfo[110X  3.1-6
-  [10X@Description[110X  3.1-1
-  [10X@EndAutoDoc[110X  3.2-5
-  [10X@EndGroup[110X  3.2-7
-  [10X@EndSection[110X  3.2-3
-  [10X@Example and @EndExample[110X  3.2-10
-  [10X@FunctionLabel[110X  3.1-5
-  [10X@Group[110X  3.1-4
-  [10X@Level[110X  3.2-8
-  [10X@ResetLevel[110X  3.2-9
-  [10X@Returns[110X  3.1-2
-  [10X@Section[110X  3.2-2
-  [10X@System and @InsertSystem[110X  3.2-11
+  [10X@Arguments[110X  2.1-3
+  [10X@AutoDoc[110X  2.2-6
+  [10X@BeginGroup[110X  2.2-8
+  [10X@Chapter[110X  2.2-1
+  [10X@ChapterInfo[110X  2.1-8
+  [10X@Chunk, @EndChunk, and @InsertChunk[110X  2.2-16
+  [10X@Code, @EndCode, and @InsertCode[110X  2.2-17
+  [10X@Description[110X  2.1-1
+  [10X@EndAutoDoc[110X  2.2-7
+  [10X@EndGroup[110X  2.2-9
+  [10X@EndSection[110X  2.2-3
+  [10X@EndSubsection[110X  2.2-5
+  [10X@Example and @EndExample[110X  2.2-12
+  [10X@Group[110X  2.1-4
+  [10X@Label[110X  2.1-5
+  [10X@@LatexOnly, @BeginLatexOnly, and @EndLatexOnly[110X  2.2-18
+  [10X@Level[110X  2.2-10
+  [10X@ResetLevel[110X  2.2-11
+  [10X@Returns[110X  2.1-2
+  [10X@Section[110X  2.2-2
+  [10X@Subsection[110X  2.2-4
+  [10X@System, @EndSystem, and @InsertSystem[110X  2.2-15
+  [2XAProperty[102X (testlabel)  2.1-6
+  [2XAProperty[102X (for IsObject)  2.1-7
   [5XAutoDoc[105X  .-2
   [2XAutoDoc[102X  4.1-1
-  [2XAutoDocWorksheet[102X  6.1-1
-  [2XAUTOMATIC_DOCUMENTATION[102X  5.2-1
-  [2XCreateAutomaticDocumentation[102X  5.1-1
-  [2XCreateDocEntryForAttribute[102X  5.5-4
-  [2XCreateDocEntryForAttribute_WithOptions[102X  5.5-6
-  [2XCreateDocEntryForCategory[102X  5.5-1
-  [2XCreateDocEntryForCategory_WithOptions[102X  5.5-6
-  [2XCreateDocEntryForGlobalFunction_WithOptions[102X  5.5-6
-  [2XCreateDocEntryForGlobalVariable_WithDoc[102X  5.5-6
-  [2XCreateDocEntryForOperation[102X  5.5-3
-  [2XCreateDocEntryForOperation_WithOptions[102X  5.5-6
-  [2XCreateDocEntryForProperty[102X  5.5-5
-  [2XCreateDocEntryForProperty_WithOptions[102X  5.5-6
-  [2XCreateDocEntryForRepresentation[102X  5.5-2
-  [2XCreateDocEntryForRepresentation_WithOptions[102X  5.5-6
-  [2XDeclareAttributeWithDoc[102X  5.3-11
-  [2XDeclareAttributeWithDocumentation[102X  5.3-4
-  [2XDeclareCategoryWithDoc[102X  5.3-9
-  [2XDeclareCategoryWithDocumentation[102X  5.3-2
-  [2XDeclareGlobalFunctionWithDoc[102X  5.3-13
-  [2XDeclareGlobalFunctionWithDocumentation[102X  5.3-6
-  [2XDeclareGlobalVariableWithDoc[102X  5.3-14
-  [2XDeclareGlobalVariableWithDocumentation[102X  5.3-7
-  [2XDeclareOperationWithDoc[102X  5.3-8
-  [2XDeclareOperationWithDocumentation[102X  5.3-1
-  [2XDeclarePropertyWithDoc[102X  5.3-12
-  [2XDeclarePropertyWithDocumentation[102X  5.3-5
-  [2XDeclareRepresentationWithDoc[102X  5.3-10
-  [2XDeclareRepresentationWithDocumentation[102X  5.3-3
-  [2XInstallMethodWithDoc[102X  5.4-2
-  [2XInstallMethodWithDocumentation[102X  5.4-1
-  [2XResetCurrentAutoDocChapter[102X  5.6-1
-  [2XResetCurrentAutoDocSection[102X  5.6-1
-  [2XSetCurrentAutoDocChapter[102X  5.6-1
-  [2XSetCurrentAutoDocSection[102X  5.6-1
-  [2XWriteStringIntoDoc[102X  5.6-2
+  [2XAutoDocWorksheet[102X  3.1-1
+  [10X@DoNotReadRestOfFile[110X  2.2-14
+  [2XFirstOperation[102X (for IsInt)  2.5-1
+  [10X@Log and @EndLog[110X  2.2-13
+  [2XSecondOperation[102X (for IsInt, IsGroup)  2.5-1
+  [2XThirdOperation[102X (for IsGroupIsGroup, )  2.5-1
   
   
   -------------------------------------------------------

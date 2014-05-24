@@ -3,6 +3,7 @@
 ##  Magic.gd                                         AutoDoc package
 ##
 ##  Copyright 2013, Max Horn, JLU Giessen
+##                  Sebastian Gutsche, University of Kaiserslautern
 ##
 #############################################################################
 
@@ -27,9 +28,9 @@
 #!     on the data in your <F>PackageInfo.g</F>.
 #! </Item>
 #! <Item>
-#!     It can invoke <Ref Func='CreateAutomaticDocumentation'/> to scan your
-#!     package for &AutoDoc; based documentation (defined using
-#!     <Ref Func='DeclareOperationWithDocumentation'/> and its siblings. This will
+#!     It can scan your package for &AutoDoc; based documentation (by using &AutoDoc;
+#!     tags and the Autodoc command.
+#!     This will
 #!     produce further XML files to be used as part of the package manual.
 #! </Item>
 #! <Item>
@@ -89,8 +90,8 @@
 #!         <Item>
 #!             A list of XML files to be included in the body of the main XML file.
 #!             If you specify this list and also are using &AutoDoc; to document
-#!             your operations via <Ref Func='DeclareOperationWithDocumentation'/>
-#!             and its siblings, you can add <F>AutoDocMainFile.xml</F> to this list
+#!             your operations with &AutoDoc; comments,
+#!             you can add <F>AutoDocMainFile.xml</F> to this list
 #!             to control at which point the documentation produced by &AutoDoc;
 #!             is inserted. If you do not do this, it will be added after the last
 #!             of your own XML files.
@@ -116,12 +117,15 @@
 ####
 ####                 <Mark><A>entities</A></Mark>
 ####                 <Item>
-####                     A list of package names which are used to define corresponding XML entities.
+####                     A list of package names or other entities which are used to define corresponding XML entities.
 ####                     For example, if set to a list containing the string <Q>SomePackage</Q>,
 ####                     then the following is added to the XML preamble:
 ####                     <Listing><![CDATA[<!ENTITY SomePackage '<Package>SomePackage</Package>'>]]></Listing>
 ####                     This allows you to write <Q>&amp;SomePackage;</Q> in your documentation
-####                     to reference that package.
+####                     to reference that package. If another type of entity is desired, one can simply add,
+####                     instead of a string, add a two entry list <A>a</A> to the list. It will be handled as
+####                     <Listing><![CDATA[<!ENTITY a[ 2 ] '<a[ 1 ]>a[ 2 ]</a[ 1 ]>'>]]></Listing>,
+####                     so please be careful.
 ####                 </Item>
 #!
 #!         <Mark><A>TitlePage</A></Mark>
@@ -138,6 +142,25 @@
 #!             For a list of valid entries in the titlepage, please refer to the
 #!             &GAPDoc; manual, specifically section <Ref Subsect='Title' BookName='gapdoc'/>
 #!             and following.
+#!         </Item>
+#!         <Mark><A>document_class</A></Mark>
+#!         <Item>
+#!             Sets the document class of the resulting pdf. The value can either be a string
+#!             which has to be the name of the new document class, a list containing this string, or
+#!             a list of two strings. Then the first one has to be the document class name, the second one
+#!             the option string ( contained in [ ] ) in LaTeX.
+#!         </Item>
+#!         <Mark><A>latex_header_file</A></Mark>
+#!         <Item>
+#!             Replaces the standard header from &GAPDoc; completely with the header in this LaTeX file.
+#!             Please be careful here, and look at GAPDoc's latexheader.tex file for an example.
+#!         </Item>
+#!         <Mark><A>gapdoc_latex_options</A></Mark>
+#!         <Item>
+#!             Must be a record with entries which can be understood by SetGapDocLaTeXOptions. Each entry can be a string, which
+#!             will be given to &GAPDoc; directly, or a list containing of two entries: The first one must be the string "file",
+#!             the second one a filename. This file will be read and then its content is passed to &GAPDoc; as option with the name
+#!             of the entry.
 #!         </Item>
 #!
 #!         </List>
@@ -253,7 +276,25 @@
 #!
 #!         </List>
 #!     </Item>
-#!
+## This is the maketest part. Still under construction.
+#!        <Mark><A>maketest</A></Mark>
+#!        <Item>
+#!          The maketest item can be true or a record. When it is true,
+#!          a simple maketest.g is created in the main package directory,
+#!          which can be used to test the examples from the manual. As a record,
+#!          the entry can have the following entries itself, to specify some options.
+#!          <List>
+#!          <Mark>filename</Mark>
+#!          <Item>
+#!            Sets the name of the test file.
+#!          </Item>
+#!          <Mark>commands</Mark>
+#!          <Item>
+#!            A list of strings, each one a command, which
+#!            will be executed at the beginning of the test file.
+#!          </Item>
+#!          </List>
+#!        </Item>
 #!
 #!     </List>
 #! </Item>

@@ -1341,7 +1341,8 @@ BrowseData.GetPatternEditParameters:= function( arg )
               buttondown:= false;
             fi;
           fi;
-        elif not c in [ NCurses.keys.ENTER, IntChar( '' ), 27 ] then
+        elif not c in [ NCurses.keys.ENTER, 
+                        IntChar(NCurses.CTRL( 'M' )), 27 ] then
           if ins and Length( res ) < max then
             InsertElmList( res, pos, CHAR_INT( c mod 256 ) );
             pos:= pos + 1;
@@ -1350,7 +1351,7 @@ BrowseData.GetPatternEditParameters:= function( arg )
             pos:= pos + 1;
           fi;
         fi;
-      until c in [ NCurses.keys.ENTER, IntChar( '' ), 27 ];
+      until c in [ NCurses.keys.ENTER, IntChar(NCurses.CTRL( 'M' )), 27 ];
 
       if t <> fail and not BrowseData.IsQuietSession( t.dynamic.replay ) then
         NCurses.show_panel( t.dynamic.statuspanel );

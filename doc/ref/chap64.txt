@@ -34,7 +34,9 @@
   elements  of [10XF[110X and [10XL[110X are in bijection, only the multiplications via [10X*[110X differ
   for  both  families.  More  exactly,  if  [10Xl1[110X  and  [10Xl2[110X  are  the Lie elements
   corresponding  to  the elements [10Xf1[110X and [10Xf2[110X in [10XF[110X, we have [10Xl1 * l2[110X equal to the
-  Lie element corresponding to [10Xf1 * f2 - f2 * f1[110X.[133X
+  Lie  element corresponding to [10Xf1 * f2 - f2 * f1[110X. Furthermore, the product of
+  Lie  elements  [10Xl1[110X,  [10Xl2[110X  and  [10Xl3[110X is left-normed, that is [10Xl1*l2*l3[110X is equal to
+  [10X(l1*l2)*l3[110X.[133X
   
   [33X[0;0YThe main reason to distinguish elements and Lie elements on the family level
   is  that  this  helps to avoid forming domains that contain elements of both

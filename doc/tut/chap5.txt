@@ -575,14 +575,10 @@
   the  stabilizer  [10Xu56[110X  is not maximal. Let us try to find its supergroups. We
   use  the  function  [2XBlocks[102X  ([14XReference:  Blocks[114X) to find a block system. The
   (optional)  third argument in the following example tells [2XBlocks[102X ([14XReference:
-  Blocks[114X) that we want a block system where 1 and 14 lie in one block.[133X
+  Blocks[114X) that we want a block system where 1 and 3 lie in one block.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := Blocks( a8_56, [1..56], [1,14] );[127X[104X
-    [4X[28X[ [ 1, 3, 4, 5, 6, 14, 31 ], [ 2, 13, 15, 16, 17, 23, 24 ], [128X[104X
-    [4X[28X  [ 7, 8, 22, 34, 37, 47, 49 ], [ 9, 11, 18, 20, 35, 38, 48 ], [128X[104X
-    [4X[28X  [ 10, 25, 26, 27, 32, 39, 50 ], [ 12, 28, 29, 30, 33, 36, 40 ], [128X[104X
-    [4X[28X  [ 19, 21, 42, 43, 45, 46, 55 ], [ 41, 44, 51, 52, 53, 54, 56 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xblocks := Blocks( a8_56, [1..56], [1,3] );;[127X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  result  is  a  list of sets, such that [10Xa8_56[110X acts on those sets. Now we

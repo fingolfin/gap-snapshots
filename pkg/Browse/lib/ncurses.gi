@@ -1311,7 +1311,7 @@ NCurses.GetLineFromUser := function( arec )
       if pos <= Length(res) then
         RemoveElmList(res, pos);
       fi;
-    elif not c in [ NCurses.keys.ENTER, IntChar(''), 27 ] then
+    elif not c in [ NCurses.keys.ENTER, IntChar(NCurses.CTRL('M')), 27 ] then
       if ins and Length(res) < max then
         InsertElmList(res, pos, CHAR_INT(c mod 256));
         pos := pos + 1;
@@ -1320,7 +1320,7 @@ NCurses.GetLineFromUser := function( arec )
         pos := pos + 1;
       fi;
     fi;
-  until c in [ NCurses.keys.ENTER, IntChar(''), 27 ];
+  until c in [ NCurses.keys.ENTER, IntChar(NCurses.CTRL('M')), 27 ];
   NCurses.del_panel(pan);
   NCurses.delwin(win);
   NCurses.curs_set(curs);
@@ -1514,7 +1514,7 @@ NCurses.EditFields := function( win, arecs )
           if pos <= Length( res ) then
             RemoveElmList( res, pos );
           fi;
-        elif c in [ NCurses.keys.ENTER, IntChar(''), 27, 9 ] then
+        elif c in [ NCurses.keys.ENTER, IntChar(NCurses.CTRL('M')), 27, 9 ] then
           break;
         elif c in [ NCurses.keys.F1 ] then
           NCurses.Pager(rec( lines := helppage,

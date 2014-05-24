@@ -1,3 +1,0 @@
-#!/bin/sh
-
-gap -A -q -T < make_doc.g

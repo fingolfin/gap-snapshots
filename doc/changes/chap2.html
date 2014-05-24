@@ -30,10 +30,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EF0C705829B5D2B">2.1-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.6.5</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X809E635D8028D2ED">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2013)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X79782A077CCDDD27">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2014)</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X792E73AC82BB63B5">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.4 (February 2013)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X80C83AF67E5E6C7F">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.4 (February 2014)</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X864C03527D410BF8">2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.5 (May 2014)</span></a>
 </span>
 </div>
 </div>
@@ -249,9 +252,9 @@ MaximalSubgroupClassReps(g);
 
 </li>
 </ul>
-<p><a id="X809E635D8028D2ED" name="X809E635D8028D2ED"></a></p>
+<p><a id="X79782A077CCDDD27" name="X79782A077CCDDD27"></a></p>
 
-<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2013)</span></h4>
+<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.3 (February 2014)</span></h4>
 
 <p>Fixed bugs which could lead to incorrect results:</p>
 
@@ -286,12 +289,67 @@ MaximalSubgroupClassReps(g);
 
 </li>
 </ul>
-<p><a id="X792E73AC82BB63B5" name="X792E73AC82BB63B5"></a></p>
+<p><a id="X80C83AF67E5E6C7F" name="X80C83AF67E5E6C7F"></a></p>
 
-<h4>2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.4 (February 2013)</span></h4>
+<h4>2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.4 (February 2014)</span></h4>
 
 <p>This release was prepared immediately after <strong class="pkg">GAP</strong> 4.7.3 to revert the fix of the error handling for the single quote at the end of an input line, contained in <strong class="pkg">GAP</strong> 4.7.3. It happened that (only on Windows) the fix caused error messages in one of the packages.</p>
 
+<p><a id="X864C03527D410BF8" name="X864C03527D410BF8"></a></p>
+
+<h4>2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.5 (May 2014)</span></h4>
+
+<p>Fixed bugs which could lead to incorrect results:</p>
+
+
+<ul>
+<li><p><code class="func">InstallValue</code> (<a href="../../doc/ref/chap79.html#X7A23F09886E936D2"><span class="RefLink">Reference: InstallValue</span></a>) cannot handle immediate values, characters or booleans for technical reasons. A check for such values was introduced to trigger an error message and prevent incorrect results caused by this. [Reported by Sebastian Gutsche]</p>
+
+</li>
+<li><p><code class="func">KnowsDictionary</code> (<a href="../../doc/ref/chap28.html#X808C885D7E267285"><span class="RefLink">Reference: KnowsDictionary</span></a>) and <code class="func">LookupDictionary</code> (<a href="../../doc/ref/chap28.html#X863706BF847A47EB"><span class="RefLink">Reference: LookupDictionary</span></a>) methods for <code class="code">IsListLookupDictionary</code> were using <code class="func">PositionFirstComponent</code> (<a href="../../doc/ref/chap21.html#X8132A2F5823F0CC0"><span class="RefLink">Reference: PositionFirstComponent</span></a>); the latter is only valid on sorted lists, but in <code class="code">IsListLookupDictionary</code> the underlying list is NOT sorted in general, leading to bogus results.</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>A bug in <code class="code">DirectProductElementsFamily</code> which used <code class="func">CanEasilyCompareElements</code> (<a href="../../doc/ref/chap31.html#X7EFE013B8634D214"><span class="RefLink">Reference: CanEasilyCompareElements</span></a>) instead of <code class="func">CanEasilySortElements</code> (<a href="../../doc/ref/chap31.html#X7EFE013B8634D214"><span class="RefLink">Reference: CanEasilySortElements</span></a>).</p>
+
+</li>
+<li><p>Fixed wrong <code class="code">Infolevel</code> message that caused a break loop for some automorphism group computations.</p>
+
+</li>
+<li><p>Fixed an error that sometimes caused a break loop in <code class="func">HallSubgroup</code> (<a href="../../doc/ref/chap39.html#X7EDBA19E828CD584"><span class="RefLink">Reference: HallSubgroup</span></a>). [Reported by Benjamin Sambale]</p>
+
+</li>
+<li><p>Fixed a rare error in computation of conjugacy classes of a finite group by homomorphic images, providing fallback to a default algorithm.</p>
+
+</li>
+<li><p>Fixed an error in the calculation of Frattini subgroup in the case of the trivial radical.</p>
+
+</li>
+<li><p>Several minor bugs were fixed in the documentation, kernel, and library code for transformations.</p>
+
+</li>
+<li><p>Fixed errors in <code class="func">NumberPerfectGroups</code> (<a href="../../doc/ref/chap50.html#X7D68BE547FE5C0F5"><span class="RefLink">Reference: NumberPerfectGroups</span></a>) and <code class="func">NumberPerfectLibraryGroups</code> (<a href="../../doc/ref/chap50.html#X7FE695DA86A066E1"><span class="RefLink">Reference: NumberPerfectLibraryGroups</span></a>) not being aware that there are no perfect groups of odd order.</p>
+
+</li>
+<li><p>Restored the ability to build <strong class="pkg">GAP</strong> on OS X 10.4 and 10.5 which was accidentally broken in the previous <strong class="pkg">GAP</strong> release by using the build option not supported by these versions.</p>
+
+</li>
+<li><p>Fixed some problems for ia64 and sparc architectures. [Reported by Bill Allombert and Volker Braun]</p>
+
+</li>
+</ul>
+<p>New package added for the redistribution with <strong class="pkg">GAP</strong>:</p>
+
+
+<ul>
+<li><p><strong class="pkg">permut</strong> package by A.Ballester-Bolinches, E.Cosme-Llópez, and R.Esteban-Romero to deal with permutability in finite groups.</p>
+
+</li>
+</ul>
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 

@@ -199,7 +199,7 @@ InstallGlobalFunction( DatabaseAttributeAdd, function( dbidenum, arec )
     if not IsBound( arec.categoryValue ) then
       arec.categoryValue:= arec.viewValue;
     fi;
-    if not IsBound( arec.version ) then
+    if not IsBound( arec.version ) and not IsBound( arec.datafile ) then
       arec.version:= dbidenum.version;
     fi;
 
@@ -330,6 +330,9 @@ InstallGlobalFunction( DatabaseIdEnumeratorUpdate, function( dbidenum )
     local name, attr;
 
     if dbidenum.update( dbidenum ) <> true then
+      Info( InfoDatabaseAttribute, 1,
+            "DatabaseIdEnumeratorUpdate: <dbidenum>.update returned ",
+            "'false'" );
       return false;
     fi;
 
@@ -349,6 +352,9 @@ InstallGlobalFunction( DatabaseIdEnumeratorUpdate, function( dbidenum )
         if IsBound( attr.update ) and attr.update( attr ) = true then
           attr.version:= dbidenum.version;
         else
+          Info( InfoDatabaseAttribute, 1,
+                "DatabaseIdEnumeratorUpdate: <attr>.update for attribute '",
+                name, "' returned 'false'" );
           return false;
         fi;
       fi;
@@ -393,7 +399,11 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
     # Update the needed attributes if necessary.
     for attrid in attr.neededAttributes do
       attr2:= idenum.attributes.( attrid );
-      if attr2.version <> idenum.version then
+      if not IsBound( attr2.version ) and not IsBound( attr2.data ) and
+         IsBound( attr2.datafile ) and IsReadableFile( attr2.datafile ) then
+        Read( attr2.datafile );
+      fi;
+      if not IsBound( attr2.version ) or attr2.version <> idenum.version then
         Info( InfoDatabaseAttribute, 1,
               "DatabaseAttributeCompute for attribute ", attridentifier,
               ":\n#I  compute needed attribute ", attrid );

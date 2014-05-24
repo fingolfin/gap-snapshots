@@ -15,7 +15,7 @@
 <body class="chap0"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -23,39 +23,35 @@
 <p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
 <div class="pcenter">
 
-<h1><strong class="pkg">AutoDoc</strong></h1>
+<h1>AutoDoc</h1>
 
 
 <h2>Generate documentation from <strong class="pkg">GAP</strong> source code</h2>
 
-<p>Version 2013.09.20</p>
+<p>
+    2014.03.27</p>
 
-<p>20/09/2013</p>
+<p>
+    27/03/2014
+  </p>
 
 </div>
-<p>
-    <br />
-<br />
+<p><b>
+    Sebastian Gutsche
 
-    This manual is best viewed as an <strong class="button">HTML</strong> document.
-    An <strong class="button">offline</strong> version should be included in the documentation
-    subfolder of the package.
-    <br />
-<br />
 
-  </p>
-<p><b>Sebastian Gutsche
-    
-    
-    
+
+
   </b>
 <br />Email: <span class="URL"><a href="mailto:gutsche@mathematik.uni-kl.de">gutsche@mathematik.uni-kl.de</a></span>
 <br />Homepage: <span class="URL"><a href="http://wwwb.math.rwth-aachen.de/~gutsche/">http://wwwb.math.rwth-aachen.de/~gutsche/</a></span>
 <br />Address: <br />Department of Mathematics<br /> University of Kaiserslautern<br /> 67653 Kaiserslautern<br /> Germany<br />
-</p><p><b>Max Horn
-    
-    
-    
+</p><p><b>
+    Max Horn
+
+
+
+
   </b>
 <br />Email: <span class="URL"><a href="mailto:max.horn@math.uni-giessen.de">max.horn@math.uni-giessen.de</a></span>
 <br />Homepage: <span class="URL"><a href="http://www.quendi.de/math">http://www.quendi.de/math</a></span>
@@ -64,7 +60,7 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2012-2013 by Sebastian Gutsche and Max Horn</p>
+<p>© 2012-2014 by Sebastian Gutsche and Max Horn</p>
 
 <p>This package may be distributed under the terms and conditions of the GNU Public License Version 2.</p>
 
@@ -73,145 +69,119 @@
 <div class="contents">
 <h3>Contents<a id="contents" name="contents"></a></h3>
 
-<div class="ContChap"><a href="chap1.html#X7DFB63A97E67C0A1">1 <span class="Heading">Introduction</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7DE75C127D2A1334">1.1 <span class="Heading">What is the idea of the <strong class="pkg">AutoDoc</strong> package?</span></a>
+<div class="ContChap"><a href="chap1.html#X80F6B32B7E4942F7">1 <span class="Heading">Getting started using <strong class="pkg">AutoDoc</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7BFBC6907B26AA95">1.1 <span class="Heading">Creating a package manual from scratch</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7CAB1F157A8D51EB">1.2 <span class="Heading"> How to use AutoDoc </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7A32EA8F7CD306FE">1.2 <span class="Heading">Documenting code with <strong class="pkg">AutoDoc</strong></span></a>
 </span>
 </div>
-</div>
-<div class="ContChap"><a href="chap2.html#X80F6B32B7E4942F7">2 <span class="Heading">Getting started using <strong class="pkg">AutoDoc</strong></span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7BFBC6907B26AA95">2.1 <span class="Heading">Creating a package manual from scratch</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86F2DE187B493932">1.3 <span class="Heading">Using <strong class="pkg">AutoDoc</strong> in an existing <strong class="pkg">GAPDoc</strong> manual</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A32EA8F7CD306FE">2.2 <span class="Heading">Documenting code with <strong class="pkg">AutoDoc</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8345699079126E0B">1.4 <span class="Heading">Automatic regeneration of the manual</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X86F2DE187B493932">2.3 <span class="Heading">Using <strong class="pkg">AutoDoc</strong> in an existing <strong class="pkg">GAPDoc</strong> manual</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8345699079126E0B">2.4 <span class="Heading">Automatic regeneration of the manual</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7B903EAE86BB1C28">2.5 <span class="Heading">What is taken from <code class="file">PackageInfo.g</code></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B903EAE86BB1C28">1.5 <span class="Heading">What is taken from <code class="file">PackageInfo.g</code></span></a>
 </span>
 </div>
 </div>
-<div class="ContChap"><a href="chap3.html#X8141B1A583434E12">3 <span class="Heading"><strong class="pkg">AutoDoc</strong> documentation comments</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X871482CE838C68F6">3.1 <span class="Heading">Documenting declarations</span></a>
+<div class="ContChap"><a href="chap2.html#X8141B1A583434E12">2 <span class="Heading"><strong class="pkg">AutoDoc</strong> documentation comments</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X871482CE838C68F6">2.1 <span class="Heading">Documenting declarations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8707DB2E7A8F0C3A">3.1-1 <span class="Heading">@Description <var class="Arg">descr</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8707DB2E7A8F0C3A">2.1-1 <span class="Heading">@Description <var class="Arg">descr</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86B758CA82D73B41">3.1-2 <span class="Heading">@Returns <var class="Arg">ret_val</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86B758CA82D73B41">2.1-2 <span class="Heading">@Returns <var class="Arg">ret_val</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83FDE7028649130A">3.1-3 <span class="Heading">@Arguments <var class="Arg">args</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83FDE7028649130A">2.1-3 <span class="Heading">@Arguments <var class="Arg">args</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86A674A5869BAEC2">3.1-4 <span class="Heading">@Group <var class="Arg">grpname</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86A674A5869BAEC2">2.1-4 <span class="Heading">@Group <var class="Arg">grpname</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X876AD82D854564C6">3.1-5 <span class="Heading">@FunctionLabel <var class="Arg">label</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8749960C85248897">2.1-5 <span class="Heading">@Label <var class="Arg">label</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E44B99686FE9DC2">3.1-6 <span class="Heading">@ChapterInfo <var class="Arg">chapter, section</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83B63B847B5199CF">2.1-6 AProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78A9022A7D5CB20E">2.1-7 AProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E44B99686FE9DC2">2.1-8 <span class="Heading">@ChapterInfo <var class="Arg">chapter, section</var></span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8152FEF9844B1ACD">3.2 <span class="Heading">Other documentation comments</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8152FEF9844B1ACD">2.2 <span class="Heading">Other documentation comments</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82747BD18578D5DA">3.2-1 <span class="Heading">@Chapter <var class="Arg">name</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82747BD18578D5DA">2.2-1 <span class="Heading">@Chapter <var class="Arg">name</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83651A8B7EAE7F65">3.2-2 <span class="Heading">@Section <var class="Arg">name</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83651A8B7EAE7F65">2.2-2 <span class="Heading">@Section <var class="Arg">name</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X852C1B327A127225">3.2-3 <span class="Heading">@EndSection</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X852C1B327A127225">2.2-3 <span class="Heading">@EndSection</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CBD8AAF7DCEF352">3.2-4 <span class="Heading">@AutoDoc</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8077F8E87C72A051">2.2-4 <span class="Heading">@Subsection <var class="Arg">name</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X782E748B82E264EB">3.2-5 <span class="Heading">@EndAutoDoc</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83F70B0F85628361">2.2-5 <span class="Heading">@EndSubsection</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7937E2BA7E142CC9">3.2-6 <span class="Heading">@BeginGroup <var class="Arg">[grpname]</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CBD8AAF7DCEF352">2.2-6 <span class="Heading">@AutoDoc</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C17EB007FD42C87">3.2-7 <span class="Heading">@EndGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X782E748B82E264EB">2.2-7 <span class="Heading">@EndAutoDoc</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X855AB48C8380D5BE">3.2-8 <span class="Heading">@Level <var class="Arg">lvl</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7937E2BA7E142CC9">2.2-8 <span class="Heading">@BeginGroup <var class="Arg">[grpname]</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C6723D57F424215">3.2-9 <span class="Heading">@ResetLevel</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C17EB007FD42C87">2.2-9 <span class="Heading">@EndGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X872D68497D3EFBDD">3.2-10 <span class="Heading">@Example and @EndExample</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X855AB48C8380D5BE">2.2-10 <span class="Heading">@Level <var class="Arg">lvl</var></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C31282882B20278">3.2-11 <span class="Heading">@System <var class="Arg">name</var> and @InsertSystem <var class="Arg">name</var></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6723D57F424215">2.2-11 <span class="Heading">@ResetLevel</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X872D68497D3EFBDD">2.2-12 <span class="Heading">@Example and @EndExample</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84F880A781E1839C">2.2-13 <span class="Heading">@Log and @EndLog</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78DC644E8519280C">2.2-14 <span class="Heading">@DoNotReadRestOfFile</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C0067DB79654996">2.2-15 <span class="Heading">@System <var class="Arg">name</var>, @EndSystem, and @InsertSystem <var class="Arg">name</var></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8031B57B85D15A6C">2.2-16 <span class="Heading">@Chunk <var class="Arg">name</var>, @EndChunk, and @InsertChunk <var class="Arg">name</var></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EAB1D56788E7DDC">2.2-17 <span class="Heading">@Code <var class="Arg">name</var>, @EndCode, and @InsertCode <var class="Arg">name</var></span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X828C684E8582A9D0">2.2-18 <span class="Heading">@LatexOnly <var class="Arg">text</var>, @BeginLatexOnly , and @EndLatexOnly</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D7A38F87BC40C48">3.3 <span class="Heading">Grouping</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X841E3AD584F5385C">2.3 <span class="Heading">Title page commands</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8209AFDE8209AFDE">3.4 <span class="Heading">Level</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X828AE38F80CB02E7">2.4 <span class="Heading">Plain text files</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7D7A38F87BC40C48">2.5 <span class="Heading">Grouping</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X859517FC87560167">2.5-1 FirstOperation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8209AFDE8209AFDE">2.6 <span class="Heading">Level</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X87D89E447B20A1BA">2.7 <span class="Heading">Some syntax for <strong class="pkg">AutoDoc</strong> text</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B256AE5780F140A">2.7-1 <span class="Heading">Lists</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X871412737A0E12E2">2.7-2 <span class="Heading">Math modes</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ED0330479146EFC">2.7-3 <span class="Heading">Emphasize</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap3.html#X80ED3C2A78146AD1">3 <span class="Heading">AutoDoc worksheets</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X801D4A2F8292704C">3.1 <span class="Heading">Worksheets</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X809FE4137C08B28D">3.1-1 AutoDocWorksheet</a></span>
+</div></div>
 </div>
 <div class="ContChap"><a href="chap4.html#X7CBD8AAF7DCEF352">4 <span class="Heading">AutoDoc</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X863584DB8497D8BA">4.1 <span class="Heading">The AutoDoc() function</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7CBD8AAF7DCEF352">4.1-1 AutoDoc</a></span>
-</div></div>
-</div>
-<div class="ContChap"><a href="chap5.html#X7D3DC4ED855DC13C">5 <span class="Heading">The main functions</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X80ABA2918548E108">5.1 <span class="Heading">The main function</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87E8381784333A1A">5.1-1 CreateAutomaticDocumentation</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D21DBC981FD7F3A">5.2 <span class="Heading">Global variable</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85FE8A148090985E">5.2-1 AUTOMATIC_DOCUMENTATION</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X84DA168280C48278">5.3 <span class="Heading">The declare functions</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82FAF5637E4A651F">5.3-1 DeclareOperationWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X813266C082A412F9">5.3-2 DeclareCategoryWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E24A6497A41CDE7">5.3-3 DeclareRepresentationWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X833A38277FA4848A">5.3-4 DeclareAttributeWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E376CD17AA0566F">5.3-5 DeclarePropertyWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7B8162A87F499094">5.3-6 DeclareGlobalFunctionWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CADC9C87BEF79D8">5.3-7 DeclareGlobalVariableWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X796564167CB1974C">5.3-8 DeclareOperationWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F977DCC7FA189DA">5.3-9 DeclareCategoryWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8020E6177862F37C">5.3-10 DeclareRepresentationWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C937D657D5F76D9">5.3-11 DeclareAttributeWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X788E879C87A5CD4C">5.3-12 DeclarePropertyWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8035AA567D6AAE0F">5.3-13 DeclareGlobalFunctionWithDoc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7BF0ACDF79CC4743">5.3-14 DeclareGlobalVariableWithDoc</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X78A295DF814B52A7">5.4 <span class="Heading">The install functions</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85CD8A4B7DAEDE74">5.4-1 InstallMethodWithDocumentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82F149DB87D95C0A">5.4-2 InstallMethodWithDoc</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X86D40CDE79CFC003">5.5 <span class="Heading">The create functions</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84F4A859796C32CF">5.5-1 CreateDocEntryForCategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X866D1D097E50D094">5.5-2 CreateDocEntryForRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7DE1062382198EF2">5.5-3 CreateDocEntryForOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83DEB2BA82368AD0">5.5-4 CreateDocEntryForAttribute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C2F48087F208A04">5.5-5 CreateDocEntryForProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7B0CCAC68228D281">5.5-6 CreateDocEntryForCategory_WithOptions</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X80E9EA5E866890E8">5.6 <span class="Heading">Additional functions</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X787280E67900FF00">5.6-1 SetCurrentAutoDocChapter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7DDFB34D81712814">5.6-2 WriteStringIntoDoc</a></span>
-</div></div>
-</div>
-<div class="ContChap"><a href="chap6.html#X80ED3C2A78146AD1">6 <span class="Heading">AutoDoc worksheets</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X801D4A2F8292704C">6.1 <span class="Heading">Worksheets</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X809FE4137C08B28D">6.1-1 AutoDocWorksheet</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chapInd.html"><span class="Heading">Index</span></a></div>
@@ -221,7 +191,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

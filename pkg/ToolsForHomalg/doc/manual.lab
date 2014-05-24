@@ -7,30 +7,37 @@
 \makelabel{toolsforhomalg:ToolsForHomalg provides ...}{1.1.1}{X85A9AA3C7A4EE1AC}
 \makelabel{toolsforhomalg:Installation of the ToolsForHomalg Package}{2}{X808C72EC7B094FC8}
 \makelabel{toolsforhomalg:ToDo-list}{3}{X7B4028057844FD6B}
-\makelabel{toolsforhomalg:Proof tracking}{3.1}{X7AB979547B1614FD}
+\makelabel{toolsforhomalg:Blueprints}{3.1}{X849630B07F560FF5}
 \makelabel{toolsforhomalg:ToDo-list entries}{3.2}{X86137045808AF035}
-\makelabel{toolsforhomalg:Blueprints}{3.3}{X849630B07F560FF5}
-\makelabel{toolsforhomalg:Category}{3.4}{X7D9151158577E272}
-\makelabel{toolsforhomalg:Constructor}{3.5}{X7ABF649E831D4D8E}
-\makelabel{toolsforhomalg:This is the magic}{3.6}{X7B69858A7C5DD48B}
-\makelabel{toolsforhomalg:Methods for all objects}{3.7}{X844D8E5879757C61}
+\makelabel{toolsforhomalg:Category}{3.3}{X7D9151158577E272}
+\makelabel{toolsforhomalg:Constructor}{3.4}{X7ABF649E831D4D8E}
+\makelabel{toolsforhomalg:This is the magic}{3.5}{X7B69858A7C5DD48B}
+\makelabel{toolsforhomalg:Methods for all objects}{3.6}{X844D8E5879757C61}
+\makelabel{toolsforhomalg:Proof tracking}{3.7}{X7AB979547B1614FD}
 \makelabel{toolsforhomalg:Maintainance}{3.8}{X8716E6D386B3DF40}
-\makelabel{toolsforhomalg:Trees}{4}{X82EAC5E57CAA5FC5}
-\makelabel{toolsforhomalg:Trees}{4.1}{X82EAC5E57CAA5FC5}
+\makelabel{toolsforhomalg:ToolsForHomalg automatic generated documentation}{4}{X7F9E54617D8E2ABE}
+\makelabel{toolsforhomalg:ToolsForHomalg automatic generated documentation of global variables}{4.1}{X814916B5784B31B8}
 \makelabel{toolsforhomalg:Basics}{5}{X868F7BAB7AC2EEBC}
-\makelabel{toolsforhomalg:Variables}{5.1}{X7A4C2D0E7E286B4F}
-\makelabel{toolsforhomalg:Categories}{5.2}{X7CC6903E78F24167}
+\makelabel{toolsforhomalg:Categories}{5.1}{X7CC6903E78F24167}
 \makelabel{toolsforhomalg:Pointers}{6}{X81C68E82799A72EA}
 \makelabel{toolsforhomalg:Weak pointer objects}{6.1}{X86D963DC7968899B}
 \makelabel{toolsforhomalg:Pointer objects}{6.2}{X7D48F98C7CA131A2}
 \makelabel{toolsforhomalg:Tools}{7}{X8508AEF8845565A1}
 \makelabel{toolsforhomalg:Functions}{7.1}{X86FA580F8055B274}
 \makelabel{toolsforhomalg:Examplefunctions}{7.2}{X8581825F7E412802}
+\makelabel{toolsforhomalg:Trees}{8}{X82EAC5E57CAA5FC5}
+\makelabel{toolsforhomalg:Trees}{8.1}{X82EAC5E57CAA5FC5}
 \makelabel{toolsforhomalg:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{toolsforhomalg:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{toolsforhomalg:Index}{Ind}{X83A0356F839C696F}
 \makelabel{toolsforhomalg:ToolsForHomalg}{}{X8537FEB07AF2BEC8}
-\makelabel{toolsforhomalg:TraceProof (for IsObject, IsString, IsObject)}{3.1.1}{X86E9744B84BB30D1}
+\makelabel{toolsforhomalg:ToDoListEntryToMaintainEqualAttributes (for IsList, IsList, IsList)}{3.1.1}{X8627840881B04F30}
+\makelabel{toolsforhomalg:ToDoListEntryToMaintainFollowingAttributes (for IsList, IsList, IsList)}{3.1.2}{X83C3ABAA78446811}
+\makelabel{toolsforhomalg:ToDoListEntry (for IsList, IsList)}{3.1.3}{X829D3C967A146C7B}
+\makelabel{toolsforhomalg:ToDoListthisobject}{3.1.4}{X84032B267EDC4FAC}
+\makelabel{toolsforhomalg:ToDoListEntryToMaintainEqualAttributesBlueprint (for IsObject, IsList, IsList, IsList)}{3.1.5}{X87779438810212EE}
+\makelabel{toolsforhomalg:ToDoListEntryToMaintainFollowingAttributesBlueprint (for IsObject, IsList, IsList, IsList)}{3.1.6}{X7FFB4C148359E579}
+\makelabel{toolsforhomalg:ToDoListEntryBlueprint (for IsObject, IsList, IsList)}{3.1.7}{X7A7B0E87843AF435}
 \makelabel{toolsforhomalg:AddToToDoList (for IsToDoListEntry)}{3.2.1}{X7EB7863D7F4DC75E}
 \makelabel{toolsforhomalg:SourcePart (for IsToDoListEntry)}{3.2.2}{X876F23977AA5C19E}
 \makelabel{toolsforhomalg:TargetPart (for IsToDoListEntry)}{3.2.3}{X86B9FC7A78FF9347}
@@ -43,41 +50,24 @@
 \makelabel{toolsforhomalg:DescriptionOfImplication (for IsToDoListEntry)}{3.2.10}{X81E733C27D96F9C8}
 \makelabel{toolsforhomalg:ToDoListEntryForEqualAttributes (for IsObject, IsString, IsObject, IsString)}{3.2.11}{X83F78A1D7DF72241}
 \makelabel{toolsforhomalg:ToDoListEntryForEquivalentAttributes (for IsObject, IsString, IsObject, IsObject, IsString, IsObject)}{3.2.12}{X7F1C9BF878D60312}
-\makelabel{toolsforhomalg:ToDoListEntryToMaintainEqualAttributes (for IsList, IsList, IsList)}{3.3.1}{X8627840881B04F30}
-\makelabel{toolsforhomalg:ToDoListEntryToMaintainFollowingAttributes (for IsList, IsList, IsList)}{3.3.2}{X83C3ABAA78446811}
-\makelabel{toolsforhomalg:ToDoListEntry (for IsList, IsList)}{3.3.3}{X829D3C967A146C7B}
-\makelabel{toolsforhomalg:ToDoListthisobject}{3.3.4}{X84032B267EDC4FAC}
-\makelabel{toolsforhomalg:ToDoListEntryToMaintainEqualAttributesBlueprint (for IsObject, IsList, IsList, IsList)}{3.3.5}{X87779438810212EE}
-\makelabel{toolsforhomalg:ToDoListEntryToMaintainFollowingAttributesBlueprint (for IsObject, IsList, IsList, IsList)}{3.3.6}{X7FFB4C148359E579}
-\makelabel{toolsforhomalg:ToDoListEntryBlueprint (for IsObject, IsList, IsList)}{3.3.7}{X7A7B0E87843AF435}
-\makelabel{toolsforhomalg:IsToDoList (for IsObject)}{3.4.1}{X86D2B9E180E01856}
-\makelabel{toolsforhomalg:NewToDoList (for )}{3.5.1}{X846756CA825D07AD}
-\makelabel{toolsforhomalg:ProcessAToDoListEntry}{3.6.1}{X788F2635833587F8}
-\makelabel{toolsforhomalg:ProcessToDoList (for IsObject)}{3.6.2}{X7AD403197873FE42}
-\makelabel{toolsforhomalg:ToDoList (for IsObject)}{3.7.1}{X87B1AEB986DECB11}
+\makelabel{toolsforhomalg:IsToDoList (for IsObject)}{3.3.1}{X86D2B9E180E01856}
+\makelabel{toolsforhomalg:NewToDoList (for )}{3.4.1}{X846756CA825D07AD}
+\makelabel{toolsforhomalg:ProcessAToDoListEntry}{3.5.1}{X788F2635833587F8}
+\makelabel{toolsforhomalg:ProcessToDoList (for IsObject)}{3.5.2}{X7AD403197873FE42}
+\makelabel{toolsforhomalg:ToDoList (for IsObject)}{3.6.1}{X87B1AEB986DECB11}
+\makelabel{toolsforhomalg:TraceProof (for IsObject, IsString, IsObject)}{3.7.1}{X86E9744B84BB30D1}
 \makelabel{toolsforhomalg:ActivateToDoList (for IsObject)}{3.8.1}{X83B49FF387DDD845}
 \makelabel{toolsforhomalg:ActivateToDoList (for )}{3.8.2}{X7F896F5E809DD09F}
 \makelabel{toolsforhomalg:DeactivateToDoList (for IsObject)}{3.8.3}{X7946D5AC84D7ACBD}
 \makelabel{toolsforhomalg:DeactivateToDoList (for )}{3.8.4}{X7EA3FF9D7A1B647E}
 \makelabel{toolsforhomalg:ActivateWhereInfosInEntries}{3.8.5}{X82A37E2D78476607}
 \makelabel{toolsforhomalg:DeactivateWhereInfosInEntries}{3.8.6}{X82089CAA87F9930B}
-\makelabel{toolsforhomalg:IsTree (for IsObject)}{4.1.1}{X7ACE7DC5811BC3E6}
-\makelabel{toolsforhomalg:Content (for IsTree)}{4.1.2}{X7F3BD31F8167E2AD}
-\makelabel{toolsforhomalg:ListOfSuccessors (for IsTree)}{4.1.3}{X87364E1880BAFD86}
-\makelabel{toolsforhomalg:Predecessor (for IsTree)}{4.1.4}{X7963601778389D55}
-\makelabel{toolsforhomalg:ListOfSentinels (for IsTree)}{4.1.5}{X7DBFDC727BD18391}
-\makelabel{toolsforhomalg:RemoveHead (for IsTree)}{4.1.6}{X82C8BE577AF4389D}
-\makelabel{toolsforhomalg:Tree (for )}{4.1.7}{X8507B90983E191EF}
-\makelabel{toolsforhomalg:Tree (for IsObject)}{4.1.8}{X822ED357788C5AE8}
-\makelabel{toolsforhomalg:Add (for IsTree, IsTree)}{4.1.9}{X7C9C3B5F81D1B816}
-\makelabel{toolsforhomalg:ContentListFromSentinelToHead (for IsTree)}{4.1.10}{X874C552787D43D73}
-\makelabel{toolsforhomalg:PostOrder (for IsTree)}{4.1.11}{X851053447BC5684C}
-\makelabel{toolsforhomalg:HOMALGTOOLS}{5.1.1}{X7CB459E282D621B2}
-\makelabel{toolsforhomalg:IsStructureObjectOrObjectOrMorphism (for IsAttributeStoringRep)}{5.2.1}{X7E36B19C7FFEC100}
-\makelabel{toolsforhomalg:IsStructureObjectOrObject (for IsStructureObjectOrObjectOrMorphism)}{5.2.2}{X7A9BB94E7D9F3AB6}
-\makelabel{toolsforhomalg:IsStructureObject (for IsStructureObjectOrObject)}{5.2.3}{X85DC9C0A83ADB0C6}
-\makelabel{toolsforhomalg:IsStructureObjectMorphism (for IsAttributeStoringRep)}{5.2.4}{X7D2734947FBEB2EF}
-\makelabel{toolsforhomalg:IsHomalgRingOrModule (for IsStructureObjectOrObject)}{5.2.5}{X8346DBCF876C70F7}
+\makelabel{toolsforhomalg:HOMALGTOOLS}{4.1.1}{X7CB459E282D621B2}
+\makelabel{toolsforhomalg:IsStructureObjectOrObjectOrMorphism (for IsAttributeStoringRep)}{5.1.1}{X7E36B19C7FFEC100}
+\makelabel{toolsforhomalg:IsStructureObjectOrObject (for IsStructureObjectOrObjectOrMorphism)}{5.1.2}{X7A9BB94E7D9F3AB6}
+\makelabel{toolsforhomalg:IsStructureObject (for IsStructureObjectOrObject)}{5.1.3}{X85DC9C0A83ADB0C6}
+\makelabel{toolsforhomalg:IsStructureObjectMorphism (for IsAttributeStoringRep)}{5.1.4}{X7D2734947FBEB2EF}
+\makelabel{toolsforhomalg:IsHomalgRingOrModule (for IsStructureObjectOrObject)}{5.1.5}{X8346DBCF876C70F7}
 \makelabel{toolsforhomalg:IsContainerForWeakPointers (for IsComponentObjectRep)}{6.1.1}{X7AF6D36B86EF4FBD}
 \makelabel{toolsforhomalg:ContainerForWeakPointers}{6.1.2}{X78528671799AA08D}
 \makelabel{toolsforhomalg:UpdateContainerOfWeakPointers (for IsContainerForWeakPointers)}{6.1.3}{X81A9F7857F8526B2}
@@ -127,6 +117,19 @@
 \makelabel{toolsforhomalg:IncreaseExistingCounterInObjectWithTiming}{7.1.35}{X78DDBC728516654B}
 \makelabel{toolsforhomalg:IncreaseCounterInObject}{7.1.36}{X797F5F0A7840EBD8}
 \makelabel{toolsforhomalg:MemoryToString}{7.1.37}{X818E23CC81FC0355}
-\makelabel{toolsforhomalg:homalgLaTeX (for IsObject)}{7.1.38}{X7C4259BE7D66F63A}
+\makelabel{toolsforhomalg:PrimePowerExponent}{7.1.38}{X861CC82A8236E488}
+\makelabel{toolsforhomalg:ViewList (for IsList)}{7.1.39}{X7960EFE481EB7D7D}
+\makelabel{toolsforhomalg:homalgLaTeX (for IsObject)}{7.1.40}{X7C4259BE7D66F63A}
 \makelabel{toolsforhomalg:ExamplesForHomalg (for )}{7.2.1}{X833FFEE081B5D3F9}
 \makelabel{toolsforhomalg:ExamplesForHomalg (for IsInt)}{7.2.2}{X8041FC897BF996CB}
+\makelabel{toolsforhomalg:IsTree (for IsObject)}{8.1.1}{X7ACE7DC5811BC3E6}
+\makelabel{toolsforhomalg:Content (for IsTree)}{8.1.2}{X7F3BD31F8167E2AD}
+\makelabel{toolsforhomalg:ListOfSuccessors (for IsTree)}{8.1.3}{X87364E1880BAFD86}
+\makelabel{toolsforhomalg:Predecessor (for IsTree)}{8.1.4}{X7963601778389D55}
+\makelabel{toolsforhomalg:ListOfSentinels (for IsTree)}{8.1.5}{X7DBFDC727BD18391}
+\makelabel{toolsforhomalg:RemoveHead (for IsTree)}{8.1.6}{X82C8BE577AF4389D}
+\makelabel{toolsforhomalg:Tree (for )}{8.1.7}{X8507B90983E191EF}
+\makelabel{toolsforhomalg:Tree (for IsObject)}{8.1.8}{X822ED357788C5AE8}
+\makelabel{toolsforhomalg:Add (for IsTree, IsTree)}{8.1.9}{X7C9C3B5F81D1B816}
+\makelabel{toolsforhomalg:ContentListFromSentinelToHead (for IsTree)}{8.1.10}{X874C552787D43D73}
+\makelabel{toolsforhomalg:PostOrder (for IsTree)}{8.1.11}{X851053447BC5684C}

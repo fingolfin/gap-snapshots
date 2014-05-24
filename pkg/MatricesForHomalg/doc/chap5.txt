@@ -12,22 +12,9 @@
   [33X[0;0YThe [5XGAP[105X category of [5Xhomalg[105X matrices.[133X
   
   [4X[32X  Code  [32X[104X
-    [4Xif CompareVersionNumbers( "4.4.99", VERSION ) then[104X
-    [4X    [104X
-    [4X    ## GAP 4.4 style:[104X
-    [4X    DeclareCategory( "IsHomalgMatrix",[104X
-    [4X            IsAdditiveElementWithInverse and[104X
-    [4X            IsMultiplicativeElementWithInverse and[104X
-    [4X            IsAttributeStoringRep );[104X
-    [4X    [104X
-    [4Xelse[104X
-    [4X    [104X
-    [4X    ## GAP 4.5 style: Max's matrix category[104X
-    [4X    DeclareCategory( "IsHomalgMatrix",[104X
-    [4X            IsMatrixObj and[104X
-    [4X            IsAttributeStoringRep );[104X
-    [4X    [104X
-    [4Xfi;[104X
+    [4XDeclareCategory( "IsHomalgMatrix",[104X
+    [4X        IsMatrixObj and[104X
+    [4X        IsAttributeStoringRep );[104X
   [4X[32X[104X
   
   [1X5.1-2 IsHomalgInternalMatrixRep[101X

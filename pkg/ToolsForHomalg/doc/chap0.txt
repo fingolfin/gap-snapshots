@@ -6,10 +6,10 @@
                           [1XTools for the [5Xhomalg[105X project[101X
   
   
-                               Version 2013.04.16
+                               Version 2014.04.10
   
   
-                                  October 2012
+                                 December 2013
   
   
                                 Mohamed Barakat
@@ -57,7 +57,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y©   2007-2012   by   Mohamed   Barakat,   Sebastian   Gutsche,   and  Markus
+  [33X[0;0Y©   2007-2013   by   Mohamed   Barakat,   Sebastian   Gutsche,   and  Markus
   Lange-Hegermann[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
@@ -74,8 +74,14 @@
       1.1-1 [33X[0;0Y[5XToolsForHomalg[105X provides ...[133X
   2 [33X[0;0YInstallation of the [5XToolsForHomalg[105X Package[133X
   3 [33X[0;0YToDo-list[133X
-    3.1 [33X[0;0YProof tracking[133X
-      3.1-1 TraceProof
+    3.1 [33X[0;0YBlueprints[133X
+      3.1-1 ToDoListEntryToMaintainEqualAttributes
+      3.1-2 ToDoListEntryToMaintainFollowingAttributes
+      3.1-3 ToDoListEntry
+      3.1-4 ToDoList_this_object
+      3.1-5 ToDoListEntryToMaintainEqualAttributesBlueprint
+      3.1-6 ToDoListEntryToMaintainFollowingAttributesBlueprint
+      3.1-7 ToDoListEntryBlueprint
     3.2 [33X[0;0YToDo-list entries[133X
       3.2-1 AddToToDoList
       3.2-2 SourcePart
@@ -89,23 +95,17 @@
       3.2-10 DescriptionOfImplication
       3.2-11 ToDoListEntryForEqualAttributes
       3.2-12 ToDoListEntryForEquivalentAttributes
-    3.3 [33X[0;0YBlueprints[133X
-      3.3-1 ToDoListEntryToMaintainEqualAttributes
-      3.3-2 ToDoListEntryToMaintainFollowingAttributes
-      3.3-3 ToDoListEntry
-      3.3-4 ToDoList_this_object
-      3.3-5 ToDoListEntryToMaintainEqualAttributesBlueprint
-      3.3-6 ToDoListEntryToMaintainFollowingAttributesBlueprint
-      3.3-7 ToDoListEntryBlueprint
-    3.4 [33X[0;0YCategory[133X
-      3.4-1 IsToDoList
-    3.5 [33X[0;0YConstructor[133X
-      3.5-1 NewToDoList
-    3.6 [33X[0;0YThis is the magic[133X
-      3.6-1 Process_A_ToDo_List_Entry
-      3.6-2 ProcessToDoList
-    3.7 [33X[0;0YMethods for all objects[133X
-      3.7-1 ToDoList
+    3.3 [33X[0;0YCategory[133X
+      3.3-1 IsToDoList
+    3.4 [33X[0;0YConstructor[133X
+      3.4-1 NewToDoList
+    3.5 [33X[0;0YThis is the magic[133X
+      3.5-1 Process_A_ToDo_List_Entry
+      3.5-2 ProcessToDoList
+    3.6 [33X[0;0YMethods for all objects[133X
+      3.6-1 ToDoList
+    3.7 [33X[0;0YProof tracking[133X
+      3.7-1 TraceProof
     3.8 [33X[0;0YMaintainance[133X
       3.8-1 ActivateToDoList
       3.8-2 ActivateToDoList
@@ -113,28 +113,16 @@
       3.8-4 DeactivateToDoList
       3.8-5 ActivateWhereInfosInEntries
       3.8-6 DeactivateWhereInfosInEntries
-  4 [33X[0;0YTrees[133X
-    4.1 [33X[0;0YTrees[133X
-      4.1-1 IsTree
-      4.1-2 Content
-      4.1-3 ListOfSuccessors
-      4.1-4 Predecessor
-      4.1-5 ListOfSentinels
-      4.1-6 RemoveHead
-      4.1-7 Tree
-      4.1-8 Tree
-      4.1-9 Add
-      4.1-10 ContentListFromSentinelToHead
-      4.1-11 PostOrder
+  4 [33X[0;0YToolsForHomalg automatic generated documentation[133X
+    4.1 [33X[0;0YToolsForHomalg automatic generated documentation of global variables[133X
+      4.1-1 HOMALG_TOOLS
   5 [33X[0;0YBasics[133X
-    5.1 [33X[0;0YVariables[133X
-      5.1-1 HOMALG_TOOLS
-    5.2 [33X[0;0YCategories[133X
-      5.2-1 IsStructureObjectOrObjectOrMorphism
-      5.2-2 IsStructureObjectOrObject
-      5.2-3 IsStructureObject
-      5.2-4 IsStructureObjectMorphism
-      5.2-5 IsHomalgRingOrModule
+    5.1 [33X[0;0YCategories[133X
+      5.1-1 IsStructureObjectOrObjectOrMorphism
+      5.1-2 IsStructureObjectOrObject
+      5.1-3 IsStructureObject
+      5.1-4 IsStructureObjectMorphism
+      5.1-5 IsHomalgRingOrModule
   6 [33X[0;0YPointers[133X
     6.1 [33X[0;0YWeak pointer objects[133X
       6.1-1 IsContainerForWeakPointers
@@ -189,10 +177,25 @@
       7.1-35 IncreaseExistingCounterInObjectWithTiming
       7.1-36 IncreaseCounterInObject
       7.1-37 MemoryToString
-      7.1-38 homalgLaTeX
+      7.1-38 PrimePowerExponent
+      7.1-39 ViewList
+      7.1-40 homalgLaTeX
     7.2 [33X[0;0YExamplefunctions[133X
       7.2-1 ExamplesForHomalg
       7.2-2 ExamplesForHomalg
+  8 [33X[0;0YTrees[133X
+    8.1 [33X[0;0YTrees[133X
+      8.1-1 IsTree
+      8.1-2 Content
+      8.1-3 ListOfSuccessors
+      8.1-4 Predecessor
+      8.1-5 ListOfSentinels
+      8.1-6 RemoveHead
+      8.1-7 Tree
+      8.1-8 Tree
+      8.1-9 Add
+      8.1-10 ContentListFromSentinelToHead
+      8.1-11 PostOrder
   
   
   [32X

@@ -620,8 +620,8 @@
   [33X[0;0YFor  categorizing  by  authors  (or by MSC codes), the sort parameter [10X"split
   rows  on  categorizing"[110X  is  set  to  [10X"yes"[110X,  so  the  authors  (codes)  are
   distributed  to  different  category rows, hence each entry appears once for
-  each of its authors (MSC codes) in the categorized table. When a data row or
-  an   entry  in  a  data  row  is  selected,  [21Xclick[121X  adds  the  corresponding
+  each of its authors (or its MSC codes) in the categorized table. When a data
+  row  or  an  entry  in  a data row is selected, [21Xclick[121X adds the corresponding
   bibliographhy entry to the result.[133X
   
   [33X[0;0YThe width of the title column is preset; usually titles are too long for one

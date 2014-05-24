@@ -24,10 +24,9 @@
         information  about  your  package  (name,  description,  version), its
         authors and more, based on the data in your [11XPackageInfo.g[111X.[133X
   
-  [31X2[131X   [33X[0;6YIt  can  invoke  [2XCreateAutomaticDocumentation[102X  ([14X5.1-1[114X)  to  scan  your
-        package    for    [5XAutoDoc[105X    based    documentation   (defined   using
-        [2XDeclareOperationWithDocumentation[102X  ([14X5.3-1[114X) and its siblings. This will
-        produce further XML files to be used as part of the package manual.[133X
+  [31X2[131X   [33X[0;6YIt  can  scan  your  package for [5XAutoDoc[105X based documentation (by using
+        [5XAutoDoc[105X  tags  and  the Autodoc command. This will produce further XML
+        files to be used as part of the package manual.[133X
   
   [31X3[131X   [33X[0;6YIt  can  use  [5XGAPDoc[105X  to  generate  PDF,  text  and HTML (with MathJaX
         enabled)  documentation from the [5XGAPDoc[105X XML files it generated as well
@@ -37,7 +36,7 @@
         style  files) into your doc directory (see [2XCopyHTMLStyleFiles[102X ([14XGAPDoc:
         CopyHTMLStyleFiles[114X)).[133X
   
-  [33X[0;0YFor more information and some examples, please refer to Chapter [14X2[114X.[133X
+  [33X[0;0YFor more information and some examples, please refer to Chapter [14X1[114X.[133X
   
   [33X[0;0YThe parameters have the following meanings:[133X
   
@@ -71,12 +70,11 @@
               [8X[3Xincludes[103X[108X
                     [33X[0;18YA list of XML files to be included in the body of the main
                     XML  file.  If  you  specify  this list and also are using
-                    [5XAutoDoc[105X     to     document     your     operations    via
-                    [2XDeclareOperationWithDocumentation[102X    ([14X5.3-1[114X)    and    its
-                    siblings,  you can add [11XAutoDocMainFile.xml[111X to this list to
-                    control  at  which  point  the  documentation  produced by
-                    [5XAutoDoc[105X  is  inserted.  If  you do not do this, it will be
-                    added after the last of your own XML files.[133X
+                    [5XAutoDoc[105X to document your operations with [5XAutoDoc[105X comments,
+                    you can add [11XAutoDocMainFile.xml[111X to this list to control at
+                    which  point  the  documentation  produced  by  [5XAutoDoc[105X is
+                    inserted.  If  you  do not do this, it will be added after
+                    the last of your own XML files.[133X
   
               [8X[3Xappendix[103X[108X
                     [33X[0;18YThis entry is similar to [3Xopt.scaffold.includes[103X but is used
@@ -100,12 +98,34 @@
                     acknowledgements text:[133X
   
   [4X                  [32X[104X
-                      [4X    rec( Acknowledgements := "Many thanks to ..." )[104X
+                      [4X rec( Acknowledgements := "Many thanks to ..." )[104X
                     [4X[32X[104X
   
                     [33X[0;18YFor a list of valid entries in the titlepage, please refer
                     to the [5XGAPDoc[105X manual, specifically section [14X'GAPDoc: Title'[114X
                     and following.[133X
+  
+              [8X[3Xdocument_class[103X[108X
+                    [33X[0;18YSets  the  document  class of the resulting pdf. The value
+                    can either be a string which has to be the name of the new
+                    document  class,  a list containing this string, or a list
+                    of  two strings. Then the first one has to be the document
+                    class  name,  the second one the option string ( contained
+                    in [ ] ) in LaTeX.[133X
+  
+              [8X[3Xlatex_header_file[103X[108X
+                    [33X[0;18YReplaces  the  standard header from [5XGAPDoc[105X completely with
+                    the header in this LaTeX file. Please be careful here, and
+                    look at GAPDoc's latexheader.tex file for an example.[133X
+  
+              [8X[3Xgapdoc_latex_options[103X[108X
+                    [33X[0;18YMust  be  a record with entries which can be understood by
+                    SetGapDocLaTeXOptions.  Each  entry can be a string, which
+                    will  be given to [5XGAPDoc[105X directly, or a list containing of
+                    two  entries: The first one must be the string "file", the
+                    second one a filename. This file will be read and then its
+                    content is passed to [5XGAPDoc[105X as option with the name of the
+                    entry.[133X
   
         [8X[3Xautodoc[103X[108X
               [33X[0;12YThis   controls   whether  and  how  to  generate  addition  XML
@@ -175,4 +195,18 @@
                     [5XGAPDoc[105X documentation comments.[133X
                     [33X[0;18Y[13XDefault  value: [10X[ "gap", "lib", "examples", "examples/doc"
                     ][110X.[113X[133X
+  
+        [8X[3Xmaketest[103X[108X
+              [33X[0;12YThe  maketest  item  can be true or a record. When it is true, a
+              simple  maketest.g  is  created  in  the main package directory,
+              which  can  be  used  to test the examples from the manual. As a
+              record,  the  entry  can  have  the following entries itself, to
+              specify some options.[133X
+  
+              [8Xfilename[108X
+                    [33X[0;18YSets the name of the test file.[133X
+  
+              [8Xcommands[108X
+                    [33X[0;18YA  list  of  strings,  each  one  a command, which will be
+                    executed at the beginning of the test file.[133X
   
