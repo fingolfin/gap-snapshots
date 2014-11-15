@@ -294,7 +294,7 @@ InstallImmediateMethod( IsModuleOfGlobalSectionsTruncatedAtCertainDegree,
   function( M )
     local UM;
     
-    return -999999;
+    return true;
     
 end );
 
@@ -487,14 +487,22 @@ InstallMethod( CastelnuovoMumfordRegularity,
     
     S := HomalgRing( M );
     
+    ## TODO: Every ring should have a base ring
     if not HasBaseRing( S ) or IsIdenticalObj( BaseRing( S ), CoefficientsRing( S ) ) then
+        
+        if IsZero( M ) then
+            return -999999;
+        ## do not use IsQuasiZero unless it does not fall back to CastelnuovoMumfordRegularity
+        elif AffineDimension( M ) = 0 then
+            return Degree( HilbertPoincareSeries( M ) );
+        fi;
         
         betti := BettiTable( Resolution( M ) );
         
         degrees := RowDegreesOfBettiTable( betti );
         
         return degrees[Length(degrees)];
-    
+        
     fi;
     
     B := BaseRing( S );
@@ -564,6 +572,59 @@ InstallMethod( CastelnuovoMumfordRegularityOfSheafification,
     
     if HasCastelnuovoMumfordRegularityOfSheafification( M ) then
         return CastelnuovoMumfordRegularityOfSheafification( M );
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( LinearRegularity,
+        "LIGrMOD: for homalg graded modules",
+        [ IsGradedModuleRep ],
+        
+  function( M )
+    local S, dim, betti, cols, mat, rows, degrees;
+    
+    S := HomalgRing( M );
+    
+    ## TODO: Every ring should have a base ring
+    if not HasBaseRing( S ) or IsIdenticalObj( BaseRing( S ), CoefficientsRing( S ) ) then
+        
+        if IsZero( M ) then
+            return -999999;
+        ## do not use IsQuasiZero unless it does not fall back to CastelnuovoMumfordRegularity
+        elif AffineDimension( M ) = 0 then
+            return Degree( HilbertPoincareSeries( M ) );
+        fi;
+        
+        if HasRelativeIndeterminatesOfPolynomialRing( S ) then
+            dim := Length( RelativeIndeterminatesOfPolynomialRing( S ) );
+        else
+            dim := Length( IndeterminatesOfPolynomialRing( S ) );
+        fi;
+        
+        betti := BettiTable( Resolution( M ) );
+        
+        cols := ColumnDegreesOfBettiTable( betti );
+        cols := Intersection2( cols, [ dim - 1, dim ] );
+        
+        if IsEmpty( cols ) then
+            return -999999;
+        fi;
+        
+        cols := cols + 1;
+        
+        degrees := RowDegreesOfBettiTable( betti );
+        
+        mat := List( betti!.matrix, b -> b{cols} );
+        
+        rows := Filtered( [ 1 .. Length( mat ) ], a -> not IsZero( mat[a] ) );
+        
+        degrees := degrees{rows};
+        
+        return degrees[Length( rows )];
+        
     fi;
     
     TryNextMethod( );

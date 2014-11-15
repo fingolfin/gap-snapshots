@@ -3,7 +3,7 @@
                                [1XGAP --- A Tutorial[101X
   
   
-                           Release 4.7.5, 24-May-2014
+                           Release 4.7.6, 15-Nov-2014
   
   
                                  The GAP Group

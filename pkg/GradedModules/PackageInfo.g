@@ -32,13 +32,13 @@ Subtitle := "A homalg based package for the Abelian category of finitely present
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
 Version := Maximum( [
-  "2012.10.22", ## Markus' version
+  "2014.08.27", ## Markus' version
 ## this line prevents merge conflicts
-  "2013.10.27", ## Mohamed's version
+  "2014.09.17", ## Mohamed's version
 ## this line prevents merge conflicts
   "2011.05.05", ## Sebastian's version
 ## this line prevents merge conflicts
-  "2014.02.25", ## Sepp's version
+  "2014.07.25", ## Sepp's version
 ## this line prevents merge conflicts
   "2013.08.08", ## Sebas' version
 ] ),
@@ -59,7 +59,7 @@ Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := Concatenation( "http://homalg.math.rwth-aachen.de/~markus/GradedModules/GradedModules-", ~.Version ),
+ArchiveURL := Concatenation( "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/GradedModules/GradedModules-", ~.Version ),
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -261,9 +261,9 @@ Status := "deposited",
 ##  and updating of the package in the GAP distribution.
 #
 README_URL := 
-  "http://homalg.math.rwth-aachen.de/~markus/GradedModules/README.GradedModules",
+  "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/GradedModules/README.GradedModules",
 PackageInfoURL := 
-  "http://homalg.math.rwth-aachen.de/~markus/GradedModules/PackageInfo.g",
+  "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/GradedModules/PackageInfo.g",
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -282,7 +282,7 @@ PackageInfoURL :=
 #
 AbstractHTML :=
   "This homalg based package realizes the computability of the Abelian category of finitely presented graded modules over a computable graded ring",
-PackageWWWHome := "http://homalg.math.rwth-aachen.de/~markus/GradedModules/",
+PackageWWWHome := "http://homalg.math.rwth-aachen.de/~barakat/homalg-project/GradedModules/",
 #               
 ##  Here is the information on the help books of the package, used for
 ##  loading into GAP's online help and maybe for an online copy of the 

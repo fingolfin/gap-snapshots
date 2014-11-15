@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.3.23)  13 APR 2014 13:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.4)  14 SEP 2014 14:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **homalg
 (./homalg.tex
 LaTeX2e <2011/06/27>
-Babel <3.9j> and hyphenation patterns for 78 languages loaded.
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/size11.clo
@@ -1259,7 +1259,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5731.
  ) 
 Here is how much of TeX's memory you used:
  8312 strings out of 493308
- 125046 string characters out of 6137822
+ 125046 string characters out of 6137823
  209555 words of memory out of 5000000
  10933 multiletter control sequences out of 15000+600000
  105229 words of font info for 128 fonts, out of 8000000 for 9000
@@ -1282,7 +1282,7 @@ symbol/usyr.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8
 a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></u
 sr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/t
 exlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on homalg.pdf (93 pages, 405431 bytes).
+Output written on homalg.pdf (93 pages, 405428 bytes).
 PDF statistics:
  1897 PDF objects out of 2073 (max. 8388607)
  1768 compressed objects within 18 object streams

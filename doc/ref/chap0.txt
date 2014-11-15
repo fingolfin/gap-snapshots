@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.7.5, 24-May-2014
+                           Release 4.7.6, 15-Nov-2014
   
   
                                  The GAP Group
@@ -893,9 +893,10 @@
     27.3 [33X[0;0YInternally Represented Strings[133X
       27.3-1 IsStringRep
       27.3-2 ConvertToStringRep
-      27.3-3 IsEmptyString
-      27.3-4 EmptyString
-      27.3-5 CharsFamily
+      27.3-3 CopyToStringRep
+      27.3-4 IsEmptyString
+      27.3-5 EmptyString
+      27.3-6 CharsFamily
     27.4 [33X[0;0YRecognizing Characters[133X
       27.4-1 IsDigitChar
       27.4-2 IsLowerAlphaChar

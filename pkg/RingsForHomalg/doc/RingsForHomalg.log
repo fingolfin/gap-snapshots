@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.8)  18 JAN 2014 13:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.4)  26 AUG 2014 10:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **RingsForHomalg
 (./RingsForHomalg.tex
 LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/size11.clo
@@ -1009,7 +1009,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1543.
 Here is how much of TeX's memory you used:
  7321 strings out of 493308
  108080 string characters out of 6137823
- 187418 words of memory out of 5000000
+ 187433 words of memory out of 5000000
  10535 multiletter control sequences out of 15000+600000
  80264 words of font info for 89 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -1026,7 +1026,7 @@ fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on RingsForHomalg.pdf (27 pages, 191850 bytes).
+Output written on RingsForHomalg.pdf (27 pages, 191840 bytes).
 PDF statistics:
  367 PDF objects out of 1000 (max. 8388607)
  324 compressed objects within 4 object streams

@@ -796,6 +796,7 @@
   \item \texttt  {CopyListEntries}, \hyperpage{250}
   \item \texttt  {CopyOptionsDefaults}, \hyperpage{607}
   \item \texttt  {CopyStabChain}, \hyperpage{607}
+  \item \texttt  {CopyToStringRep}, \hyperpage{350}
   \item \texttt  {Core}, \hyperpage{509}
   \item \texttt  {CorrespondingGeneratorsByModuloPcgs}, \hyperpage{632}
   \item \texttt  {Cos}, \hyperpage{234}
@@ -2673,7 +2674,7 @@
   \item \texttt  {IsUnivariatePolynomialRing}, \hyperpage{1005}
   \item \texttt  {IsUnivariateRationalFunction}, \hyperpage{991}
   \item \texttt  {IsUnknown}, \hyperpage{1184}
-  \item \texttt  {IsUpperAlphaChar}, \hyperpage{351}
+  \item \texttt  {IsUpperAlphaChar}, \hyperpage{352}
   \item \texttt  {IsUpperTriangularMat}, \hyperpage{313}
   \item \texttt  {IsValidIdentifier}, \hyperpage{49}
   \item \texttt  {IsVector}, \hyperpage{414}
@@ -4487,7 +4488,7 @@
   \item \texttt  {StringFactorizationWord}, \hyperpage{660}
   \item \texttt  {StringNumbers}, \hyperpage{358}
   \item \texttt  {StringOfResultOfStraightLineProgram}, \hyperpage{479}
-  \item \texttt  {StringPP}, \hyperpage{354}
+  \item \texttt  {StringPP}, \hyperpage{355}
   \item strings
     \subitem equality of, \hyperpage{352}
     \subitem inequality of, \hyperpage{352}

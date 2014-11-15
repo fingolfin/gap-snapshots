@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdftex 2012.12.12)  25 NOV 2013 14:52
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdftex 2012.12.12)  16 SEP 2014 08:24
 entering extended mode
  %&-line parsing enabled.
 **manual
@@ -52,14 +52,17 @@ Chapter `Contents' .
 \openout4 = `manual.aux'.
 
  (./intro.tex
-Chapter `Introduction' .
-) (./lierings.tex [3.1]
+Chapter `Preamble' .
+[3.1]
 Chapter `Lie p-rings' .
-[4.2] [5.2] [6.2] [7.2] [8.2] [9.2]) (./database.tex [10.2]
+Reference `Khu' undefined.
+) (./lierings.tex [4.2]
+Chapter `LiePRings in GAP' .
+[5.3] [6.3] [7.3] [8.3] [9.3] [10.3]) (./database.tex [11.3]
 Chapter `The Database' .
-[11.3] [12.3] [13.3] [14.3]) [15.3]
+[12.4] [13.4] [14.4] [15.4] [16.4]) [17.4]
 Chapter `Bibliography' .
-(./manual.bbl) [16.4]
+(./manual.bbl) [18.5]
 Chapter `Index' .
 No file manual.ind.
 ##
@@ -68,9 +71,10 @@ No file manual.ind.
 ## Section index entries written on manual.six.
 ## Label definitions written on manual.lab.
 ## Table of contents written on manual.toc.
+## There were undefined labels or references.
 ## Labels have changed, run again. (Or they were multiply defined.)
 ##
-[17.5] )pdfTeX warning (dest): name{Index} has been referenced but does not exi
+[19.6] )pdfTeX warning (dest): name{Index} has been referenced but does not exi
 st, replaced by a fixed one
 
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
@@ -78,17 +82,18 @@ st, replaced by a fixed one
 ive/fonts/type1/public/amsfonts/cm/cminch.pfb></usr/share/texmf-texlive/fonts/t
 ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public
 /amsfonts/cm/cmmi7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmssdc10.pfb></usr/share/texmf-texlive/fonts/typ
-e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
-msfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msam7.
-pfb>
-Output written on manual.pdf (17 pages, 198185 bytes).
+/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fo
+nts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-texlive/fonts/type1/p
+ublic/amsfonts/cm/cmssdc10.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+sy7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
+sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
+xmf-texlive/fonts/type1/public/amsfonts/symbols/msam7.pfb>
+Output written on manual.pdf (19 pages, 228484 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
- 18 named destinations out of 1000 (max. 500000)
- 145 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 211 PDF objects out of 1000 (max. 8388607)
+ 19 named destinations out of 1000 (max. 500000)
+ 153 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -453,7 +453,7 @@
   [2XCharacterTableWithStoredGroup[102X  71.6-4
   [2XCharacterTableWreathSymmetric[102X  71.20-5
   [2XCharInt[102X  27.7-2
-  [2XCharsFamily[102X  27.3-5
+  [2XCharsFamily[102X  27.3-6
   [2XCharSInt[102X  27.7-4
   [2XCheckDigitISBN[102X  14.6-1
   [2XCheckDigitISBN13[102X  14.6-1
@@ -688,6 +688,7 @@
   [2XCopyListEntries[102X  21.4-4
   [2XCopyOptionsDefaults[102X  43.11-2
   [2XCopyStabChain[102X  43.11-1
+  [2XCopyToStringRep[102X  27.3-3
   [2XCore[102X  39.11-2
   [2XCorrespondingGeneratorsByModuloPcgs[102X  45.9-6
   [2XCos[102X  19.2-1
@@ -991,7 +992,7 @@
   [2XEmptyPlist[102X  21.9-1
   [2XEmptySCTable[102X  62.4-3
   [2XEmptyStabChain[102X  43.11-7
-  [2XEmptyString[102X  27.3-4
+  [2XEmptyString[102X  27.3-5
   [2XEnableAttributeValueStoring[102X  13.6-6
   [9Xend[109X  4.23
   [2XEnd[102X  61.10-6
@@ -1850,7 +1851,7 @@
   [2XIsElementOfMagmaRingModuloRelationsFamily[102X  65.4-2
   [2XIsElementOfMagmaRingModuloSpanOfZeroFamily[102X  65.5-1
   [2XIsEmpty[102X  30.4-1
-  [2XIsEmptyString[102X  27.3-3
+  [2XIsEmptyString[102X  27.3-4
   [2XIsEndOfStream[102X  10.3-7
   [2XIsEndoGeneralMapping[102X  32.13-3
   [10XIsEndoGeneralMapping[110X, same as IsBinaryRelation  33.
@@ -3763,7 +3764,7 @@
   [2XShowPackageVariables[102X  76.3-13
   [2XShowUserPreferences[102X  3.2-3
   [2XShrinkAllocationPlist[102X  21.9-1
-  [2XShrinkAllocationString[102X  27.3-4
+  [2XShrinkAllocationString[102X  27.3-5
   [2XShrinkRowVector[102X  23.5-3
   [2XShuffle[102X  21.20-8
   [2XSiftedPcElement[102X  45.5-8

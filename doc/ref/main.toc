@@ -854,13 +854,14 @@
 \contentsline {section}{\numberline {27.3}\leavevmode {\color {Chapter }Internally Represented Strings}}{350}{section.27.3}
 \contentsline {subsection}{\numberline {27.3.1}\leavevmode {\color {Chapter }IsStringRep}}{350}{subsection.27.3.1}
 \contentsline {subsection}{\numberline {27.3.2}\leavevmode {\color {Chapter }ConvertToStringRep}}{350}{subsection.27.3.2}
-\contentsline {subsection}{\numberline {27.3.3}\leavevmode {\color {Chapter }IsEmptyString}}{350}{subsection.27.3.3}
-\contentsline {subsection}{\numberline {27.3.4}\leavevmode {\color {Chapter }EmptyString}}{351}{subsection.27.3.4}
-\contentsline {subsection}{\numberline {27.3.5}\leavevmode {\color {Chapter }CharsFamily}}{351}{subsection.27.3.5}
+\contentsline {subsection}{\numberline {27.3.3}\leavevmode {\color {Chapter }CopyToStringRep}}{350}{subsection.27.3.3}
+\contentsline {subsection}{\numberline {27.3.4}\leavevmode {\color {Chapter }IsEmptyString}}{350}{subsection.27.3.4}
+\contentsline {subsection}{\numberline {27.3.5}\leavevmode {\color {Chapter }EmptyString}}{351}{subsection.27.3.5}
+\contentsline {subsection}{\numberline {27.3.6}\leavevmode {\color {Chapter }CharsFamily}}{351}{subsection.27.3.6}
 \contentsline {section}{\numberline {27.4}\leavevmode {\color {Chapter }Recognizing Characters}}{351}{section.27.4}
 \contentsline {subsection}{\numberline {27.4.1}\leavevmode {\color {Chapter }IsDigitChar}}{351}{subsection.27.4.1}
 \contentsline {subsection}{\numberline {27.4.2}\leavevmode {\color {Chapter }IsLowerAlphaChar}}{351}{subsection.27.4.2}
-\contentsline {subsection}{\numberline {27.4.3}\leavevmode {\color {Chapter }IsUpperAlphaChar}}{351}{subsection.27.4.3}
+\contentsline {subsection}{\numberline {27.4.3}\leavevmode {\color {Chapter }IsUpperAlphaChar}}{352}{subsection.27.4.3}
 \contentsline {subsection}{\numberline {27.4.4}\leavevmode {\color {Chapter }IsAlphaChar}}{352}{subsection.27.4.4}
 \contentsline {section}{\numberline {27.5}\leavevmode {\color {Chapter }Comparisons of Strings}}{352}{section.27.5}
 \contentsline {subsection}{\numberline {27.5.1}\leavevmode {\color {Chapter }\texttt {\char 92\relax }= (for two strings)}}{352}{subsection.27.5.1}
@@ -874,7 +875,7 @@
 \contentsline {subsection}{\numberline {27.6.6}\leavevmode {\color {Chapter }String}}{354}{subsection.27.6.6}
 \contentsline {subsection}{\numberline {27.6.7}\leavevmode {\color {Chapter }StripLineBreakCharacters}}{354}{subsection.27.6.7}
 \contentsline {subsection}{\numberline {27.6.8}\leavevmode {\color {Chapter }HexStringInt}}{354}{subsection.27.6.8}
-\contentsline {subsection}{\numberline {27.6.9}\leavevmode {\color {Chapter }StringPP}}{354}{subsection.27.6.9}
+\contentsline {subsection}{\numberline {27.6.9}\leavevmode {\color {Chapter }StringPP}}{355}{subsection.27.6.9}
 \contentsline {subsection}{\numberline {27.6.10}\leavevmode {\color {Chapter }WordAlp}}{355}{subsection.27.6.10}
 \contentsline {subsection}{\numberline {27.6.11}\leavevmode {\color {Chapter }LowercaseString}}{355}{subsection.27.6.11}
 \contentsline {subsection}{\numberline {27.6.12}\leavevmode {\color {Chapter }SplitString}}{355}{subsection.27.6.12}

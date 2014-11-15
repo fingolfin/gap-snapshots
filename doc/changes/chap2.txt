@@ -406,3 +406,44 @@
   [30X    [33X[0;6Y[5Xpermut[105X   package   by   A.Ballester-Bolinches,   E.Cosme-Llópez,   and
         R.Esteban-Romero to deal with permutability in finite groups.[133X
   
+  
+  [1X2.5 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.6 (November 2014)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YA  bug  that may cause [2XShortestVectors[102X ([14XReference: ShortestVectors[114X) to
+        return an incomplete list. [Reported by Florian Beye][133X
+  
+  [30X    [33X[0;6YA  bug  that may lead to incorrect results and infinite loops when [5XGAP[105X
+        is compiled without GMP support using gcc 4.9.[133X
+  
+  [30X    [33X[0;6YA    bug    that    may    cause    [2XOrthogonalEmbeddings[102X   ([14XReference:
+        OrthogonalEmbeddings[114X)  to  return  an  incomplete result. [Reported by
+        Benjamin Sambale][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6Y[2XClosureGroup[102X  ([14XReference:  ClosureGroup[114X)  should  be  used  instead of
+        [2XClosureSubgroup[102X  ([14XReference:  ClosureSubgroup[114X)  in  case  there  is no
+        parent group, otherwise some calculations such as e.g. [2XNormalSubgroups[102X
+        ([14XReference: NormalSubgroups[114X) may fail. [Reported by Dmitrii Pasechnik][133X
+  
+  [30X    [33X[0;6YFixed  a line in the code that used a hard-coded identity permutation,
+        not a generic identity element of a group. [Reported by Toshio Sumi][133X
+  
+  [30X    [33X[0;6YFixed a problem in the new code for calculating maximal subgroups that
+        caused  a  break  loop  for  some  groups  from  the transitive groups
+        library. [Reported by Petr Savicky][133X
+  
+  [30X    [33X[0;6YFixed  a  problem  in [2XClosureSubgroup[102X ([14XReference: ClosureSubgroup[114X) not
+        accepting some groups without [2XParent[102X ([14XReference: Parent[114X). [Reported by
+        Inneke van Gelder][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YEliminated  a  number  of  compiler  warnings detected with some newer
+        versions of [5XC[105X compilers.[133X
+  
+  [30X    [33X[0;6YSome minor bugs in the transformation and partial permutation code and
+        documentation were resolved.[133X
+  

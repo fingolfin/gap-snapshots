@@ -2144,10 +2144,11 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:convert to a string}{27.3}{X82AEC07487C45ECD}
 \makelabel{ref:IsStringRep}{27.3.1}{X7A17EDF8785C9F58}
 \makelabel{ref:ConvertToStringRep}{27.3.2}{X7CE2415F7FEC5809}
-\makelabel{ref:IsEmptyString}{27.3.3}{X7D944D507CBB24CD}
-\makelabel{ref:EmptyString}{27.3.4}{X836078DC829A8221}
-\makelabel{ref:ShrinkAllocationString}{27.3.4}{X836078DC829A8221}
-\makelabel{ref:CharsFamily}{27.3.5}{X7DA671FC7F490C16}
+\makelabel{ref:CopyToStringRep}{27.3.3}{X7FFC464683CC8023}
+\makelabel{ref:IsEmptyString}{27.3.4}{X7D944D507CBB24CD}
+\makelabel{ref:EmptyString}{27.3.5}{X836078DC829A8221}
+\makelabel{ref:ShrinkAllocationString}{27.3.5}{X836078DC829A8221}
+\makelabel{ref:CharsFamily}{27.3.6}{X7DA671FC7F490C16}
 \makelabel{ref:IsDigitChar}{27.4.1}{X78566FD57B95ECBE}
 \makelabel{ref:IsLowerAlphaChar}{27.4.2}{X854114A97BAFEAEA}
 \makelabel{ref:IsUpperAlphaChar}{27.4.3}{X87B1A13D81353AD8}

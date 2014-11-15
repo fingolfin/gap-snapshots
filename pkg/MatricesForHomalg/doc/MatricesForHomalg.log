@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.3.23)  13 APR 2014 13:07
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.4)  8 SEP 2014 23:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **MatricesForHomalg
 (./MatricesForHomalg.tex
 LaTeX2e <2011/06/27>
-Babel <3.9j> and hyphenation patterns for 78 languages loaded.
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/size11.clo
@@ -1269,7 +1269,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8074.
  ) 
 Here is how much of TeX's memory you used:
  8495 strings out of 493308
- 130628 string characters out of 6137822
+ 130628 string characters out of 6137823
  215345 words of memory out of 5000000
  10945 multiletter control sequences out of 15000+600000
  93386 words of font info for 108 fonts, out of 8000000 for 9000
@@ -1292,7 +1292,7 @@ ts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a
 .pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on MatricesForHomalg.pdf (114 pages, 465186 bytes).
+Output written on MatricesForHomalg.pdf (114 pages, 465183 bytes).
 PDF statistics:
  2255 PDF objects out of 2487 (max. 8388607)
  2101 compressed objects within 22 object streams
