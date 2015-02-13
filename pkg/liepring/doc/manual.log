@@ -1,7 +1,5 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdftex 2012.12.12)  16 SEP 2014 08:24
-entering extended mode
- %&-line parsing enabled.
-**manual
+This is TeX, Version 3.1415926 (TeX Live 2009/Debian) (format=tex 2012.12.12)  2 DEC 2014 09:50
+**manual.tex
 (./manual.tex (./gapmacro.tex
 (/usr/share/texmf-texlive/tex/plain/amsfonts/amssym.tex
 (/usr/share/texmf-texlive/tex/plain/amsfonts/amssym.def
@@ -9,7 +7,7 @@ entering extended mode
 \msbfam=\fam9
 \eufmfam=\fam10
 ))
-Running PDFTeX
+Running TeX
 \pagewidth=\dimen16
 \pageheight=\dimen17
 \colwidth=\dimen18
@@ -24,17 +22,17 @@ Running PDFTeX
 \tocout=\write3
 \citeout=\write4
 \ans=\write5
-\labelin=\read1
-\indexin=\read2
-\tocin=\read3
-\citein=\read4
-\secno=\count27
-\subsecno=\count28
-\exno=\count29
-\indentno=\count30
-\chapnum=\count31
-\ortoks=\toks13
-) (../VERSION) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+\labelin=\read0
+\indexin=\read1
+\tocin=\read2
+\citein=\read3
+\secno=\count26
+\subsecno=\count27
+\exno=\count28
+\indentno=\count29
+\chapnum=\count30
+\ortoks=\toks12
+) (../VERSION) [1]
 \makelabel{LiePRing:Contents}{{\setbox 0=\hbox {1}\vrule width 0pt height\ht 0}
 }
 Chapter `Contents' .
@@ -74,26 +72,5 @@ No file manual.ind.
 ## There were undefined labels or references.
 ## Labels have changed, run again. (Or they were multiply defined.)
 ##
-[19.6] )pdfTeX warning (dest): name{Index} has been referenced but does not exi
-st, replaced by a fixed one
-
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
-/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cminch.pfb></usr/share/texmf-texlive/fonts/t
-ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmmi7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fo
-nts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-texlive/fonts/type1/p
-ublic/amsfonts/cm/cmssdc10.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-sy7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
-xmf-texlive/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on manual.pdf (19 pages, 228484 bytes).
-PDF statistics:
- 211 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+[19.6] )
+Output written on manual.dvi (19 pages, 44996 bytes).

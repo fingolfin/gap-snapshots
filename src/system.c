@@ -68,10 +68,10 @@
 /****************************************************************************
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . . name of the architecture
-** do not edit the following line. Occurences of `4.7.6' and `today'
+** do not edit the following line. Occurences of `4.7.7' and `today'
 ** will be replaced by string matching by distribution wrapping scripts.
 */
-const Char * SyKernelVersion = "4.7.6";
+const Char * SyKernelVersion = "4.7.7";
 
 /****************************************************************************
 *V  SyWindowsPath  . . . . . . . . . . . . . . . . . default path for Windows
