@@ -517,3 +517,41 @@
   [30X    [33X[0;6Y[5XSglPPow[105X package by Bettina Eick and Michael Vaughan-Lee, providing the
         database of [22Xp[122X-groups of order [22Xp^7[122X for [22Xp > 11[122X, and of order [22X3^8[122X.[133X
   
+  
+  [1X2.7 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.8 (June 2015)[133X[101X
+  
+  [33X[0;0YFixed bugs which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YAdded  two  groups of degree 1575 which were missing in the library of
+        first primitive groups. [Reported by Gordon Royle][133X
+  
+  [30X    [33X[0;6YFixed  the  error  in  the  code for algebra module elements in packed
+        representation  caused  by the use of [2XObjectify[102X ([14XReference: Objectify[114X)
+        with  the  type of the given object instead of [2XObjByExtRep[102X ([14XReference:
+        ObjByExtRep[114X)  as  recommended  in  [14X'Reference: Further Improvements in
+        Implementing   Residue  Class  Rings'[114X.  The  problem  was  that  after
+        calculating  [10Xu+v[110X  where one of the summands was known to be zero, this
+        knowledge  was  wrongly  passed  to the sum via the type. [Reported by
+        Istvan Szollosi][133X
+  
+  [30X    [33X[0;6YFixed  a  bug  in [2XPowerMod[102X ([14XReference: PowerMod[114X) causing wrong results
+        for  univariate  Laurent polynomials when the two polynomial arguments
+        are stored with the same non-zero shift. [Reported by Max Horn][133X
+  
+  [33X[0;0YFurthermore,  new  packages that have been added to the redistribution since
+  the release of [5XGAP[105X 4.7.7 are:[133X
+  
+  [30X    [33X[0;6Y[5XPatternClass[105X  by  Michael  Albert,  Ruth  Hoffmann  and  Steve Linton,
+        allowing  to  explore  the  permutation pattern classes build by token
+        passing  networks. Amongst other things, it can compute the basis of a
+        permutation pattern class, create automata from token passing networks
+        and  check if the deterministic automaton is a possible representative
+        of a token passing network.[133X
+  
+  [30X    [33X[0;6Y[5XQPA[105X  by Edward Green and Øyvind Solberg, providing data structures and
+        algorithms  for computations with finite dimensional quotients of path
+        algebras,  and  with finitely generated modules over such algebras. It
+        implements  data  structures  for quivers, quotients of path algebras,
+        and  modules, homomorphisms and complexes of modules over quotients of
+        path algebras.[133X
+  

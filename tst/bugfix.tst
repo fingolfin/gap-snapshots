@@ -2761,6 +2761,47 @@ gap> G := NextIterator(it); # 2F(4,2)'
 gap> ClassicalIsomorphismTypeFiniteSimpleGroup(G);
 rec( parameter := [ "T" ], series := "Spor" )
 
+# 2015/02/16 (CJ, Reported by TB)
+gap> a:= rec();; a.( "" ):= 1;; a; Print( a,"\n" );
+rec( ("") := 1 )
+rec(
+  ("") := 1 )
+
+#2015/02/16 (CJ, reported by TB)
+gap> f1:= function( x, l ) return ( not x ) in l; end;;
+gap> f2:= function( x, l ) return not ( x in l ); end;;
+gap> f3:= function( x, l ) return not x in l;     end;;
+gap> [f1(true,[]), f2(true,[]), f3(true,[])];
+[ false, true, true ]
+gap> Print([f1,f2,f3],"\n");
+[ function ( x, l )
+        return (not x) in l;
+    end, function ( x, l )
+        return not x in l;
+    end, function ( x, l )
+        return not x in l;
+    end ]
+
+#############################################################################
+##
+## Changes 4.7.7 -> 4.7.8
+
+#2015/05/12 (WdG, reported by Istvan Szollosi)
+gap> L:= SimpleLieAlgebra("A",1,Rationals);
+<Lie algebra of dimension 3 over Rationals>
+gap> V:= HighestWeightModule(L,[2]);
+<3-dimensional left-module over <Lie algebra of dimension 3 over Rationals>>
+gap> v:= Basis(V)[1];
+1*v0
+gap> z:= Zero(V);
+0*v0
+gap> IsZero(z);
+true
+gap> w:= z+v;
+1*v0
+gap> -w+w;
+0*v0
+
 #############################################################################
 #
 # Tests requiring loading some packages must be performed at the end.
@@ -2901,6 +2942,11 @@ gap> if LoadPackage("cvec",false) <> fail then mat := [[Z(2)]];
 # 2012/06/18 (MH)
 gap> if LoadPackage("anupq",false) <> fail then
 > for i in [1..192] do Q:=Pq( FreeGroup(2) : Prime:=3, ClassBound:=1 ); od; fi;
+
+# 2015/04/01 (SL)
+gap> p := 227;; x := X(GF(p), "x");; f := x^(7^2) - x;;
+gap> PowerMod(x, p, f);
+x^35
 
 #############################################################################
 gap> STOP_TEST( "bugfix.tst", 15319000000*10 );

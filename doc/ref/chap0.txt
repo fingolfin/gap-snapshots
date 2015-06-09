@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.7.7, 13-Feb-2015
+                           Release 4.7.8, 09-Jun-2015
   
   
                                  The GAP Group

@@ -45,6 +45,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X86AF9F587D98F31F">2.6 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.7 (February 2015)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7EB1879587C27876">2.7 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.8 (June 2015)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.6 and <strong class="pkg">GAP</strong> 4.7</span></h3>
@@ -470,6 +473,35 @@ MaximalSubgroupClassReps(g);
 
 </li>
 <li><p><strong class="pkg">SglPPow</strong> package by Bettina Eick and Michael Vaughan-Lee, providing the database of <span class="SimpleMath">p</span>-groups of order <span class="SimpleMath">p^7</span> for <span class="SimpleMath">p &gt; 11</span>, and of order <span class="SimpleMath">3^8</span>.</p>
+
+</li>
+</ul>
+<p><a id="X7EB1879587C27876" name="X7EB1879587C27876"></a></p>
+
+<h4>2.7 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.8 (June 2015)</span></h4>
+
+<p>Fixed bugs which could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Added two groups of degree 1575 which were missing in the library of first primitive groups. [Reported by Gordon Royle]</p>
+
+</li>
+<li><p>Fixed the error in the code for algebra module elements in packed representation caused by the use of <code class="func">Objectify</code> (<a href="../../doc/ref/chap79.html#X7CB5C12E813F512B"><span class="RefLink">Reference: Objectify</span></a>) with the type of the given object instead of <code class="func">ObjByExtRep</code> (<a href="../../doc/ref/chap79.html#X8542B32A8206118C"><span class="RefLink">Reference: ObjByExtRep</span></a>) as recommended in <a href="../../doc/ref/chap81.html#X81CA1C7087A815DE"><span class="RefLink">Reference: Further Improvements in Implementing Residue Class Rings</span></a>. The problem was that after calculating <code class="code">u+v</code> where one of the summands was known to be zero, this knowledge was wrongly passed to the sum via the type. [Reported by Istvan Szollosi]</p>
+
+</li>
+<li><p>Fixed a bug in <code class="func">PowerMod</code> (<a href="../../doc/ref/chap56.html#X805A35D684B7A952"><span class="RefLink">Reference: PowerMod</span></a>) causing wrong results for univariate Laurent polynomials when the two polynomial arguments are stored with the same non-zero shift. [Reported by Max Horn]</p>
+
+</li>
+</ul>
+<p>Furthermore, new packages that have been added to the redistribution since the release of <strong class="pkg">GAP</strong> 4.7.7 are:</p>
+
+
+<ul>
+<li><p><strong class="pkg">PatternClass</strong> by Michael Albert, Ruth Hoffmann and Steve Linton, allowing to explore the permutation pattern classes build by token passing networks. Amongst other things, it can compute the basis of a permutation pattern class, create automata from token passing networks and check if the deterministic automaton is a possible representative of a token passing network.</p>
+
+</li>
+<li><p><strong class="pkg">QPA</strong> by Edward Green and Øyvind Solberg, providing data structures and algorithms for computations with finite dimensional quotients of path algebras, and with finitely generated modules over such algebras. It implements data structures for quivers, quotients of path algebras, and modules, homomorphisms and complexes of modules over quotients of path algebras.</p>
 
 </li>
 </ul>
