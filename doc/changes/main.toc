@@ -9,6 +9,7 @@
 \contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.6 (November 2014)}}{12}{section.2.5}
 \contentsline {section}{\numberline {2.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.7 (February 2015)}}{13}{section.2.6}
 \contentsline {section}{\numberline {2.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.8 (June 2015)}}{14}{section.2.7}
+\contentsline {section}{\numberline {2.8}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.9 (November 2015)}}{15}{section.2.8}
 \contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.5 and \textsf {GAP} 4.6}}{16}{chapter.3}
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.2 (February 2013)}}{16}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.6}}{16}{subsection.3.1.1}

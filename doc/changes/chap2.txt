@@ -555,3 +555,19 @@
         and  modules, homomorphisms and complexes of modules over quotients of
         path algebras.[133X
   
+  
+  [1X2.8 [33X[0;0Y[5XGAP[105X[101X[1X 4.7.9 (November 2015)[133X[101X
+  
+  [33X[0;0YFixed bug which could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFixed  an error in [10XDataAboutSimpleGroup[110Xcalculation, which caused wrong
+        result  in  calculation of the automorphism group of [22XJ_2[122X. [Reported by
+        Fatemeh Koorepazan-Moftakhar][133X
+  
+  [33X[0;0YImproved and extended functionality:[133X
+  
+  [30X    [33X[0;6Y[2XGModuleByMats[102X  ([14XReference:  GModuleByMats[114X)  and some related functions
+        now  work  for  infinite  fields,  in  particular in characteristic 0.
+        However, this only applies for functions that do not need the MeatAxe,
+        as that is still tied to finite fields.[133X
+  

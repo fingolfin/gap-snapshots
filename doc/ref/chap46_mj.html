@@ -564,7 +564,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats := List( Pcgs( G ), x -&gt; IdentityMat( 1, GF(2) ) );</span>
 [ &lt;a 1x1 matrix over GF2&gt;, &lt;a 1x1 matrix over GF2&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := GModuleByMats( mats, GF(2) );</span>
-rec( dimension := 1, field := GF(2), 
+rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
   generators := [ &lt;an immutable 1x1 matrix over GF2&gt;, 
       &lt;an immutable 1x1 matrix over GF2&gt; ], isMTXModule := true )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TwoCoboundaries( G, M );</span>

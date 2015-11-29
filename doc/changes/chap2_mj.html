@@ -51,6 +51,9 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7EB1879587C27876">2.7 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.8 (June 2015)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7BDCA4E27A6C40F7">2.8 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.9 (November 2015)</span></a>
+</span>
+</div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.6 and <strong class="pkg">GAP</strong> 4.7</span></h3>
@@ -505,6 +508,26 @@ MaximalSubgroupClassReps(g);
 
 </li>
 <li><p><strong class="pkg">QPA</strong> by Edward Green and Øyvind Solberg, providing data structures and algorithms for computations with finite dimensional quotients of path algebras, and with finitely generated modules over such algebras. It implements data structures for quivers, quotients of path algebras, and modules, homomorphisms and complexes of modules over quotients of path algebras.</p>
+
+</li>
+</ul>
+<p><a id="X7BDCA4E27A6C40F7" name="X7BDCA4E27A6C40F7"></a></p>
+
+<h4>2.8 <span class="Heading"><strong class="pkg">GAP</strong> 4.7.9 (November 2015)</span></h4>
+
+<p>Fixed bug which could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Fixed an error in <code class="code">DataAboutSimpleGroup</code>calculation, which caused wrong result in calculation of the automorphism group of <span class="SimpleMath">\(J_2\)</span>. [Reported by Fatemeh Koorepazan-Moftakhar]</p>
+
+</li>
+</ul>
+<p>Improved and extended functionality:</p>
+
+
+<ul>
+<li><p><code class="func">GModuleByMats</code> (<a href="../../doc/ref/chap69_mj.html#X801022027B066497"><span class="RefLink">Reference: GModuleByMats</span></a>) and some related functions now work for infinite fields, in particular in characteristic 0. However, this only applies for functions that do not need the MeatAxe, as that is still tied to finite fields.</p>
 
 </li>
 </ul>
